@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BCC7307481;
-	Fri, 21 Nov 2025 13:59:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 375952874F6;
+	Fri, 21 Nov 2025 13:59:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733549; cv=none; b=HXhnHYF/+zx3dAUnFApJy2PHcAIPV5QKOe40E1NWd/DYJy0JC2BNQmTcxpQ/TzOGPOel5S7l7Cv0XTmuH9m+1NkdiZsyQU0vJVVcbIkt+hGNqaAIrWXBDv9+ihD1HP1IOcYq3/OnNWTzuvo05FkC0Vta8FddsFFxbMNxRCldxhw=
+	t=1763733552; cv=none; b=baqFzBp+w6A+42sTQLIYLxL8eLWS9UCY/KZnNnGOVqW+5hrC0tEZiZf/QSsUFJVP1fC7low2I/xuIurTctjx6h81/U0yiPkA97ReZ4kMU5f0mPbnY0SvcfBblZ6VFHtpsqnr47GaEDDr3YfNM7fkEdT5xA5IVNc4JAde4tnHYmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733549; c=relaxed/simple;
-	bh=YaJnkBkrefdnbaznyf5QjD5OBY9HVYMCvE/tMjJwZF0=;
+	s=arc-20240116; t=1763733552; c=relaxed/simple;
+	bh=hZU1c/q5QoszjcXQTblYbCPtEAwRPnAh1LPRhIJVqDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acdvQ1G0s1DNfjtPFu++Mkkd04gsYp7L8y1T0np2PYyAMdtm2pJ10XNrheXYNZ43Ixo4tlcj8RGhq37ajMGHwQVO0dVuCv4gejtoTx00rCIBimDunrCwzABnCDMaLulOsKv+YXskjKfmaRg2SbqgexhRC8mMnz+1SFPcB557uAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RHhb04xN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OInnCvm7Ua1PhIH//EQHFQny7fPVQX9cwDHcDccyNxUDxqgXfgG4KWR4idrq8HTVC8fw0+2fXM5EUvgfR4U8Bd5WpGfRoPaWiS5mzDEDcs/5KtZlZPDHBIjUZJQQ7vIruTVBkmHOPzoBIGCdE5/QHbBWhdQXtugSpjRYKCaEIZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJWmeORj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RHhb04xN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E23ACC4CEF1;
-	Fri, 21 Nov 2025 13:59:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJWmeORj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67E1C4CEF1;
+	Fri, 21 Nov 2025 13:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733549;
-	bh=YaJnkBkrefdnbaznyf5QjD5OBY9HVYMCvE/tMjJwZF0=;
+	s=korg; t=1763733552;
+	bh=hZU1c/q5QoszjcXQTblYbCPtEAwRPnAh1LPRhIJVqDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RHhb04xN/vo8kvdZjSnTnMh16fC4THCFdceuhn3L1jYH3QCgKHukA7Zgl3sOdxcjQ
-	 usBlNHWnQC6Mb5IbYXkp21EFopgYN4VLHaakp6Cps5rZczRH8yrCUkz3aSkK8WQFcK
-	 Wutm1jqg10k7CiKR2BHqK5n88C60o1Gui+W+yRnA=
+	b=BJWmeORj33EGmTJ6tS0fA/JapXLT/na+S1axSSLrFFEQTCWrp3jg+YjaJiDW93wzq
+	 /g+bDhEByjOeqO9PuK/KK/2v8ZjyMYcT3VorP1pfQbtCQaAe8w6EVMb3zpWS10i3jT
+	 CCgxZD7goKUgBE7KL4t0cRZCMZZN/LdZKFfTBEK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Amit Pundir <amit.pundir@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bart Van Assche <bvanassche@acm.org>,
-	Peter Griffin <peter.griffin@linaro.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 507/529] scsi: ufs: core: Add UFSHCD_QUIRK_KEYS_IN_PRDT
-Date: Fri, 21 Nov 2025 14:13:26 +0100
-Message-ID: <20251121130249.061174456@linuxfoundation.org>
+Subject: [PATCH 6.6 508/529] scsi: ufs: core: Add a quirk for handling broken LSDBS field in controller capabilities register
+Date: Fri, 21 Nov 2025 14:13:27 +0100
+Message-ID: <20251121130249.108860036@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,90 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@google.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 4c45dba50a3750a0834353c4187e7896b158bc0c ]
+[ Upstream commit cd06b713a6880997ca5aecac8e33d5f9c541749e ]
 
-Since the nonstandard inline encryption support on Exynos SoCs requires
-that raw cryptographic keys be copied into the PRDT, it is desirable to
-zeroize those keys after each request to keep them from being left in
-memory.  Therefore, add a quirk bit that enables the zeroization.
+'Legacy Queue & Single Doorbell Support (LSDBS)' field in the controller
+capabilities register is supposed to report whether the legacy single
+doorbell mode is supported in the controller or not. But some controllers
+report '1' in this field which corresponds to 'LSDB not supported', but
+they indeed support LSDB. So let's add a quirk to handle those controllers.
 
-We could instead do the zeroization unconditionally.  However, using a
-quirk bit avoids adding the zeroization overhead to standard devices.
+If the quirk is enabled by the controller driver, then LSDBS register field
+will be ignored and legacy single doorbell mode is assumed to be enabled
+always.
 
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240816-ufs-bug-fix-v3-1-e6fe0e18e2a3@linaro.org
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20240708235330.103590-6-ebiggers@kernel.org
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: d968e99488c4 ("scsi: ufs: ufs-pci: Set UFSHCD_QUIRK_PERFORM_LINK_STARTUP_ONCE for Intel ADL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd-crypto.h |   17 +++++++++++++++++
- drivers/ufs/core/ufshcd.c        |    1 +
- include/ufs/ufshcd.h             |    8 ++++++++
- 3 files changed, 26 insertions(+)
+ drivers/ufs/core/ufshcd.c |    6 +++++-
+ include/ufs/ufshcd.h      |    8 ++++++++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/ufs/core/ufshcd-crypto.h
-+++ b/drivers/ufs/core/ufshcd-crypto.h
-@@ -50,6 +50,20 @@ static inline int ufshcd_crypto_fill_prd
- 	return 0;
- }
- 
-+static inline void ufshcd_crypto_clear_prdt(struct ufs_hba *hba,
-+					    struct ufshcd_lrb *lrbp)
-+{
-+	if (!(hba->quirks & UFSHCD_QUIRK_KEYS_IN_PRDT))
-+		return;
-+
-+	if (!(scsi_cmd_to_rq(lrbp->cmd)->crypt_ctx))
-+		return;
-+
-+	/* Zeroize the PRDT because it can contain cryptographic keys. */
-+	memzero_explicit(lrbp->ucd_prdt_ptr,
-+			 ufshcd_sg_entry_size(hba) * scsi_sg_count(lrbp->cmd));
-+}
-+
- bool ufshcd_crypto_enable(struct ufs_hba *hba);
- 
- int ufshcd_hba_init_crypto_capabilities(struct ufs_hba *hba);
-@@ -73,6 +87,9 @@ static inline int ufshcd_crypto_fill_prd
- 	return 0;
- }
- 
-+static inline void ufshcd_crypto_clear_prdt(struct ufs_hba *hba,
-+					    struct ufshcd_lrb *lrbp) { }
-+
- static inline bool ufshcd_crypto_enable(struct ufs_hba *hba)
- {
- 	return false;
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -5512,6 +5512,7 @@ void ufshcd_release_scsi_cmd(struct ufs_
- 	struct scsi_cmnd *cmd = lrbp->cmd;
+@@ -2368,7 +2368,11 @@ static inline int ufshcd_hba_capabilitie
+ 	 * 0h: legacy single doorbell support is available
+ 	 * 1h: indicate that legacy single doorbell support has been removed
+ 	 */
+-	hba->lsdb_sup = !FIELD_GET(MASK_LSDB_SUPPORT, hba->capabilities);
++	if (!(hba->quirks & UFSHCD_QUIRK_BROKEN_LSDBS_CAP))
++		hba->lsdb_sup = !FIELD_GET(MASK_LSDB_SUPPORT, hba->capabilities);
++	else
++		hba->lsdb_sup = true;
++
+ 	if (!hba->mcq_sup)
+ 		return 0;
  
- 	scsi_dma_unmap(cmd);
-+	ufshcd_crypto_clear_prdt(hba, lrbp);
- 	ufshcd_release(hba);
- 	ufshcd_clk_scaling_update_busy(hba);
- }
 --- a/include/ufs/ufshcd.h
 +++ b/include/ufs/ufshcd.h
-@@ -662,6 +662,14 @@ enum ufshcd_quirks {
- 	 * host controller initialization fails if that bit is set.
+@@ -670,6 +670,14 @@ enum ufshcd_quirks {
+ 	 * the standard best practice for managing keys).
  	 */
- 	UFSHCD_QUIRK_BROKEN_CRYPTO_ENABLE		= 1 << 23,
+ 	UFSHCD_QUIRK_KEYS_IN_PRDT			= 1 << 24,
 +
 +	/*
-+	 * This quirk needs to be enabled if the host controller driver copies
-+	 * cryptographic keys into the PRDT in order to send them to hardware,
-+	 * and therefore the PRDT should be zeroized after each request (as per
-+	 * the standard best practice for managing keys).
++	 * This quirk indicates that the controller reports the value 1 (not
++	 * supported) in the Legacy Single DoorBell Support (LSDBS) bit of the
++	 * Controller Capabilities register although it supports the legacy
++	 * single doorbell mode.
 +	 */
-+	UFSHCD_QUIRK_KEYS_IN_PRDT			= 1 << 24,
++	UFSHCD_QUIRK_BROKEN_LSDBS_CAP			= 1 << 25,
  };
  
  enum ufshcd_caps {
