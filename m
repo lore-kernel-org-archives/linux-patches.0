@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6A16346FB8;
-	Fri, 21 Nov 2025 13:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98474346FB8;
+	Fri, 21 Nov 2025 13:41:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732490; cv=none; b=ohw41zKndqWn28NoVyO0aaIxbbW1dCfuAHAj7uVcOWrrDlFQVhZVTV16rLmZ0kSazgnK/LXprh4eRgsea2Cby5vQu16vrdniSVMsjl6FIEep0BKdWsk4QxylGWZRUqRYmM68cZnyTjuG3BlHtecmvfv20G2EU6Eyi3mEH1fwbjw=
+	t=1763732493; cv=none; b=Wmnz0mrhN1+FUuY1fYLYLiCcPCyB/ayIgs2A0iWauGas1nW7mnslRArWtqcivMri1c7e+ps6VNnKvd4F/ms+e/54fhg4VhtEhaiHu1wdx9X/8tckzGKddNTyWbTda3iqnK0F+YoM6/JmgNqRFAMW2RrIZnQ+WqN+v8iW2u8Q8wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732490; c=relaxed/simple;
-	bh=R+g9c4aKCmwKAjCcIkLq9R7DRv5Tdqr+nauZvcT45S8=;
+	s=arc-20240116; t=1763732493; c=relaxed/simple;
+	bh=HdysWF3PNUqiCgV5RlOpW56qyLP7BwGT+uWJuXxzllg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZJOFCDTdstPTuLM2o0V/ZajX8RuB5jZruVoU5N0wjH2nd7pcwliPDBFR2a2R4HfapAsPo0ybcKuOTA3JLWXJzDTWEvlwnRq16HR8I2jCq/0rrDS6tUtHJb5DsRqVGOZIe8B45hEB9DBiGwiOWOzXRwqfqYMgS9l2Xs9wZAi/FRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z+gijSr7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hj37LvTM1QpJF171eYF0VXFADHvdSQOmVFrFk4sbRxeeOJ3wEfyRXemIGKnojNCxk0rCl7NdWWikC6I8j+FDJneK/R4cRCB7hXfldbWTh4PdHqPZtgcoIT3zp9xAKrouMSBBA8t2pB4bUSgu8jyC/czAvr9a2yXeN7oLJ/4J7lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEb6daik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z+gijSr7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3824CC4CEF1;
-	Fri, 21 Nov 2025 13:41:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEb6daik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202ADC4CEF1;
+	Fri, 21 Nov 2025 13:41:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732490;
-	bh=R+g9c4aKCmwKAjCcIkLq9R7DRv5Tdqr+nauZvcT45S8=;
+	s=korg; t=1763732493;
+	bh=HdysWF3PNUqiCgV5RlOpW56qyLP7BwGT+uWJuXxzllg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z+gijSr7M4MWKujzR9TIfm+rjYZFk8qfDHARh3pElsGlOu/+IylmxdKrxuHBgxTo+
-	 ykgWSNk4c/UUlI9Bj81nubH1M2IkFmZfmNroMZxczP3tV3ikhtbyqOEJ7ihVAOAXbX
-	 tqrR6sEfci8wXcDTXMN2p+s/1pbCG3S41v9qbi8M=
+	b=IEb6daikAt/D7/kiOOQ4tWG4/H+Vf0CDalFxKlWF1a0zlk5dlfJAH4syxwkOh2TEN
+	 j54fbYic9pO/B3xtOUl/VESJxoin1+PcrRo+uxDnSwA2d07++hcdxv2409WBBQwGQH
+	 4hFoHTjXoLuux3e1y964Y84ogAkqv/IQqjTXT6m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 140/529] s390/pci: Use pci_uevent_ers() in PCI recovery
-Date: Fri, 21 Nov 2025 14:07:19 +0100
-Message-ID: <20251121130235.998445028@linuxfoundation.org>
+Subject: [PATCH 6.6 141/529] bridge: Redirect to backup port when port is administratively down
+Date: Fri, 21 Nov 2025 14:07:20 +0100
+Message-ID: <20251121130236.033661843@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,78 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit dab32f2576a39d5f54f3dbbbc718d92fa5109ce9 ]
+[ Upstream commit 3d05b24429e1de7a17c8fdccb04a04dbc8ad297b ]
 
-Issue uevents on s390 during PCI recovery using pci_uevent_ers() as done by
-EEH and AER PCIe recovery routines.
+If a backup port is configured for a bridge port, the bridge will
+redirect known unicast traffic towards the backup port when the primary
+port is administratively up but without a carrier. This is useful, for
+example, in MLAG configurations where a system is connected to two
+switches and there is a peer link between both switches. The peer link
+serves as the backup port in case one of the switches loses its
+connection to the multi-homed system.
 
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-2-adf85b0620b0@linux.ibm.com
+In order to avoid flooding when the primary port loses its carrier, the
+bridge does not flush dynamic FDB entries pointing to the port upon STP
+disablement, if the port has a backup port.
+
+The above means that known unicast traffic destined to the primary port
+will be blackholed when the port is put administratively down, until the
+FDB entries pointing to it are aged-out.
+
+Given that the current behavior is quite weird and unlikely to be
+depended on by anyone, amend the bridge to redirect to the backup port
+also when the primary port is administratively down and not only when it
+does not have a carrier.
+
+The change is motivated by a report from a user who expected traffic to
+be redirected to the backup port when the primary port was put
+administratively down while debugging a network issue.
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250812080213.325298-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_event.c | 3 +++
- drivers/pci/pci-driver.c  | 2 +-
- include/linux/pci.h       | 2 +-
- 3 files changed, 5 insertions(+), 2 deletions(-)
+ net/bridge/br_forward.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/pci/pci_event.c b/arch/s390/pci/pci_event.c
-index e60a66dd8c400..bd4172db26345 100644
---- a/arch/s390/pci/pci_event.c
-+++ b/arch/s390/pci/pci_event.c
-@@ -83,6 +83,7 @@ static pci_ers_result_t zpci_event_notify_error_detected(struct pci_dev *pdev,
- 	pci_ers_result_t ers_res = PCI_ERS_RESULT_DISCONNECT;
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index e19b583ff2c6d..49dd8cd526f46 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -148,7 +148,8 @@ void br_forward(const struct net_bridge_port *to,
+ 		goto out;
  
- 	ers_res = driver->err_handler->error_detected(pdev,  pdev->error_state);
-+	pci_uevent_ers(pdev, ers_res);
- 	if (ers_result_indicates_abort(ers_res))
- 		pr_info("%s: Automatic recovery failed after initial reporting\n", pci_name(pdev));
- 	else if (ers_res == PCI_ERS_RESULT_NEED_RESET)
-@@ -212,6 +213,7 @@ static pci_ers_result_t zpci_event_attempt_error_recovery(struct pci_dev *pdev)
- 		ers_res = zpci_event_do_reset(pdev, driver);
+ 	/* redirect to backup link if the destination port is down */
+-	if (rcu_access_pointer(to->backup_port) && !netif_carrier_ok(to->dev)) {
++	if (rcu_access_pointer(to->backup_port) &&
++	    (!netif_carrier_ok(to->dev) || !netif_running(to->dev))) {
+ 		struct net_bridge_port *backup_port;
  
- 	if (ers_res != PCI_ERS_RESULT_RECOVERED) {
-+		pci_uevent_ers(pdev, PCI_ERS_RESULT_DISCONNECT);
- 		pr_err("%s: Automatic recovery failed; operator intervention is required\n",
- 		       pci_name(pdev));
- 		goto out_unlock;
-@@ -220,6 +222,7 @@ static pci_ers_result_t zpci_event_attempt_error_recovery(struct pci_dev *pdev)
- 	pr_info("%s: The device is ready to resume operations\n", pci_name(pdev));
- 	if (driver->err_handler->resume)
- 		driver->err_handler->resume(pdev);
-+	pci_uevent_ers(pdev, PCI_ERS_RESULT_RECOVERED);
- out_unlock:
- 	device_unlock(&pdev->dev);
- 
-diff --git a/drivers/pci/pci-driver.c b/drivers/pci/pci-driver.c
-index 1705d2d0ed126..11a90b55c1873 100644
---- a/drivers/pci/pci-driver.c
-+++ b/drivers/pci/pci-driver.c
-@@ -1598,7 +1598,7 @@ static int pci_uevent(const struct device *dev, struct kobj_uevent_env *env)
- 	return 0;
- }
- 
--#if defined(CONFIG_PCIEAER) || defined(CONFIG_EEH)
-+#if defined(CONFIG_PCIEAER) || defined(CONFIG_EEH) || defined(CONFIG_S390)
- /**
-  * pci_uevent_ers - emit a uevent during recovery path of PCI device
-  * @pdev: PCI device undergoing error recovery
-diff --git a/include/linux/pci.h b/include/linux/pci.h
-index e4338237a0545..052d956d3ba1f 100644
---- a/include/linux/pci.h
-+++ b/include/linux/pci.h
-@@ -2667,7 +2667,7 @@ static inline bool pci_is_thunderbolt_attached(struct pci_dev *pdev)
- 	return false;
- }
- 
--#if defined(CONFIG_PCIEPORTBUS) || defined(CONFIG_EEH)
-+#if defined(CONFIG_PCIEPORTBUS) || defined(CONFIG_EEH) || defined(CONFIG_S390)
- void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
- #endif
- 
+ 		backup_port = rcu_dereference(to->backup_port);
 -- 
 2.51.0
 
