@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4DE2F12A4;
-	Fri, 21 Nov 2025 13:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1EB2F363E;
+	Fri, 21 Nov 2025 13:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730872; cv=none; b=PB+Ngi5J241LwqSWNjVY35n2WA9e4XxtY3u7AgPHp5P6eg/66rLI2TmJ5tkdW9DUaemwgvqHv9mJoXE3BCAPluY2FIPzi30XTGVZLKxhqe+MZHsM/lsjTSkVIcvp+fdo+gpHvNEwDluXqlbAae8/U3rJtzqhnFun7PvUVeUQe7A=
+	t=1763730875; cv=none; b=fTVxaiseBecK1BzfpgHhp3TelmyTSChm9MpPGXIHTgRvAdEFNrrJRYtkF8TDX6wsNyvDOgJY3hhzWvQwijHR76sc8PCtkurr6euvS4rHLU1XNlmbl8UB6f0Ygu+GTVLVj0JQqfs9FZ+NR6UVQOxEcirPyPGGxTWL5jcNoOP4qiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730872; c=relaxed/simple;
-	bh=dpseHaQpLG7t7pSowCgx0kc1CSmOEhpRBXtIjLHD7TY=;
+	s=arc-20240116; t=1763730875; c=relaxed/simple;
+	bh=8hQs+m1/m5JeHnVZTR5nwrHjvuPIMNj9dMwJEfcsqGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s+qW+1gU/toNGlpXB2yZr4K1Ls8abI/APOjSZQv/lJnbdbNnild62Ptq1NzhYnIkdcJov8djL6WDjtQlLIjOrT9mr6m/TlNv0g2PPttxZ6rkE3wiV8oIcXYZCbrvm8z/w/3vzC9b7PFtB6+Pz0qB7+4iB2ZFe3JvvJ9zQn186wo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l+3DkCki; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VPyX1hN+CWPbMIiLBcyZXSCD9ycWeIsIkIYrYA1CZTTkGqCk4g777JWu1AKUJn3BzSAD7UzWBgnXFjJ1hSFgEqXPiOiXvnmQgtyJQyFshUsnCUhdZWxBwCWB5rS08WYtHRVQYkAMQfS7kZrihOEMWLSAPQgPA5Tu2lqBK/STo6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtSVqeol; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l+3DkCki"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87174C4CEF1;
-	Fri, 21 Nov 2025 13:14:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtSVqeol"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750EDC4CEF1;
+	Fri, 21 Nov 2025 13:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730871;
-	bh=dpseHaQpLG7t7pSowCgx0kc1CSmOEhpRBXtIjLHD7TY=;
+	s=korg; t=1763730874;
+	bh=8hQs+m1/m5JeHnVZTR5nwrHjvuPIMNj9dMwJEfcsqGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+3DkCkiZjbEyo4ueuFNERVbjbDfPnRXWVsmZM8GMoDWW6Hx5fLZnRjfQVrnnVJAd
-	 w21Qxol/ZWGHwDAzEnNHV9Y0btdqcTL4BeAqSz0Zc4L3IoAZYluaV6JCTzuwkdr4on
-	 iuacSa+OC8mLZaaWOxOhFHvhZfDT/H5M8A7607xo=
+	b=HtSVqeolbvkh/Rr1EeHHmee+5g64VDWP/W1b1aQq5mjweCB23/EtQ3BPW7wSAp/Lt
+	 u7+av5EETg07wzX6P/B9bXy5zGdXXZWP+mSpP4g1JmdjZJfwp832FwsDaabfdVIrcq
+	 dKT2f7wAjgGMCC2pHe42l8gi3pQip/QgoUeYDOVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 004/247] drm/i915: Fix conversion between clock ticks and nanoseconds
-Date: Fri, 21 Nov 2025 14:09:11 +0100
-Message-ID: <20251121130154.753585550@linuxfoundation.org>
+Subject: [PATCH 6.17 005/247] drm/amdgpu: set default gfx reset masks for gfx6-8
+Date: Fri, 21 Nov 2025 14:09:12 +0100
+Message-ID: <20251121130154.790062647@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,57 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 7d44ad6b43d0be43d080180413a1b6c24cfbd266 ]
+[ Upstream commit 90b75e12a6e831c8516498f690058d4165d5a5d6 ]
 
-When tick values are large, the multiplication by NSEC_PER_SEC is larger
-than 64 bits and results in bad conversions.
+These were not set so soft recovery was inadvertantly
+disabled.
 
-The issue is seen in PMU busyness counters that look like they have
-wrapped around due to bad conversion. i915 PMU implementation returns
-monotonically increasing counters. If a count is lesser than previous
-one, it will only return the larger value until the smaller value
-catches up. The user will see this as zero delta between two
-measurements even though the engines are busy.
-
-Fix it by using mul_u64_u32_div()
-
-Fixes: 77cdd054dd2c ("drm/i915/pmu: Connect engine busyness stats from GuC to pmu")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14955
-Signed-off-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://lore.kernel.org/r/20251016000350.1152382-2-umesh.nerlige.ramappa@intel.com
-(cherry picked from commit 2ada9cb1df3f5405a01d013b708b1b0914efccfe)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-[Rodrigo: Added the Fixes tag while cherry-picking to fixes]
+Fixes: 6ac55eab4fc4 ("drm/amdgpu: move reset support type checks into the caller")
+Reviewed-by: Jesse Zhang <Jesse.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1972763505d728c604b537180727ec8132e619df)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c | 5 +++++
+ drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c | 5 +++++
+ drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c | 5 +++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c b/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c
-index 6c499692d61ef..3eb4206b371d2 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_clock_utils.c
-@@ -205,7 +205,7 @@ static u64 div_u64_roundup(u64 nom, u32 den)
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+index 70d7a1f434c4b..e2cf598f773a4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v6_0.c
+@@ -3103,6 +3103,11 @@ static int gfx_v6_0_sw_init(struct amdgpu_ip_block *ip_block)
+ 			return r;
+ 	}
  
- u64 intel_gt_clock_interval_to_ns(const struct intel_gt *gt, u64 count)
- {
--	return div_u64_roundup(count * NSEC_PER_SEC, gt->clock_frequency);
-+	return mul_u64_u32_div(count, NSEC_PER_SEC, gt->clock_frequency);
++	adev->gfx.gfx_supported_reset =
++		amdgpu_get_soft_full_reset_mask(&adev->gfx.gfx_ring[0]);
++	adev->gfx.compute_supported_reset =
++		amdgpu_get_soft_full_reset_mask(&adev->gfx.compute_ring[0]);
++
+ 	return r;
  }
  
- u64 intel_gt_pm_interval_to_ns(const struct intel_gt *gt, u64 count)
-@@ -215,7 +215,7 @@ u64 intel_gt_pm_interval_to_ns(const struct intel_gt *gt, u64 count)
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
+index 2aa323dab34e3..df1993d137364 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v7_0.c
+@@ -4400,6 +4400,11 @@ static int gfx_v7_0_sw_init(struct amdgpu_ip_block *ip_block)
  
- u64 intel_gt_ns_to_clock_interval(const struct intel_gt *gt, u64 ns)
- {
--	return div_u64_roundup(gt->clock_frequency * ns, NSEC_PER_SEC);
-+	return mul_u64_u32_div(ns, gt->clock_frequency, NSEC_PER_SEC);
+ 	gfx_v7_0_gpu_early_init(adev);
+ 
++	adev->gfx.gfx_supported_reset =
++		amdgpu_get_soft_full_reset_mask(&adev->gfx.gfx_ring[0]);
++	adev->gfx.compute_supported_reset =
++		amdgpu_get_soft_full_reset_mask(&adev->gfx.compute_ring[0]);
++
+ 	return r;
  }
  
- u64 intel_gt_ns_to_pm_interval(const struct intel_gt *gt, u64 ns)
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+index 367449d8061b0..13e38b44540bd 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v8_0.c
+@@ -2024,6 +2024,11 @@ static int gfx_v8_0_sw_init(struct amdgpu_ip_block *ip_block)
+ 	if (r)
+ 		return r;
+ 
++	adev->gfx.gfx_supported_reset =
++		amdgpu_get_soft_full_reset_mask(&adev->gfx.gfx_ring[0]);
++	adev->gfx.compute_supported_reset =
++		amdgpu_get_soft_full_reset_mask(&adev->gfx.compute_ring[0]);
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
