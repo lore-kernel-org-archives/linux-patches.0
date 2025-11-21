@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BBE734DB75;
-	Fri, 21 Nov 2025 13:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37EE13538B3;
+	Fri, 21 Nov 2025 13:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732825; cv=none; b=V/PhKvqjl6bdlnnHg9lTXyXZSSA5mqhBki75a3r6Fn5hRTuh0UgCGgtywQTXRjApoxDMeW+O3tZ4gEXEwwE4oINGFojo1jw2FO57gqBNNyLVpk1Zq8uhPSu+g97rxWyGCxIUNKwJw2DZa2+9GcNsxsv2t/5s/43S/l5MjFOoxvk=
+	t=1763732828; cv=none; b=WKFeYWoxJtc4BKEzlk6rcYiLykWUjJ5wvKUPrjg9KK8MqW64ledEakBoEhijxd1mJ7R2gButy56D0mIEjDGtzAqSq2j9PqGuFIEh6bW0cxIvXqFY1mvUhXSAP7X1+j2yRTaXYBYOCh+tslrvBZ+yIDG+CQV/giBHW5qWcrjkIFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732825; c=relaxed/simple;
-	bh=CygEJ61OgXefYgUx0v61zJKYQJw0NqeYaOSPhafLk2I=;
+	s=arc-20240116; t=1763732828; c=relaxed/simple;
+	bh=ZXf5q6CzCsO+WtN8zXtEQALJj9RnTlJkwtuf2IcRw7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eswC+JWBsBaHlcmdK11GyowQ0sS/dSGLUjHOeQvHayXWyy+vtO6VNvV+70tH+x40caxN3fgX/VazQrybedCXi0nUQcns86nQ7TWU0kuLls8lL1Et3tqpZmke18Qgcmg3HU++17fSV5zTdGJCG5V1yOf24SYvWLwA5y+D5fUQ6Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gc7zm0RW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4/E7dK4vc/7EPgwN+rHxFmlDMxlG2g+l3aq94mSwZ3MyXAutVsw1nrZoGZUqJAT+mMhN7CUBRolU4fc+TH9+vtkAYlKijsjuUiTlL9ey+GcH+FENVj3CgK40+jhFBbswoc1HvzJ64Fo9wUm41GEad8NqckJ1hjv3cyBdCs5niQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeBcd7/g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gc7zm0RW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B08BC4CEF1;
-	Fri, 21 Nov 2025 13:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeBcd7/g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8152C16AAE;
+	Fri, 21 Nov 2025 13:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732825;
-	bh=CygEJ61OgXefYgUx0v61zJKYQJw0NqeYaOSPhafLk2I=;
+	s=korg; t=1763732828;
+	bh=ZXf5q6CzCsO+WtN8zXtEQALJj9RnTlJkwtuf2IcRw7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gc7zm0RW+laXdrSdEW0awG+oVZoPJf6sHdo+vp40wKYJyDx4XuTSjDUXHHENGomUw
-	 /+LgwpN4XvmeUNPFBj1xGOrDJx/ixb8o8Jxy2amgPsTJCpf9w3Ku+GSWXF2Z3eCBCB
-	 QsGrmUfn4Y8XnqKmajxjcOnDTbewNKq17wn3dMBY=
+	b=ZeBcd7/goCK9mr5ly3rlHakznnZ3Frw9MXpn90ADCLnEMEWNY2mT7V0/BpuZgTkjN
+	 thbZqMzh+GLy5KH+SHRwGrrU+a9lQVH4f9MTzcWryY4FPK1YwWQDwPaPB2SUn0njTC
+	 jlkhJL7fNJDtDWpFcW6lsvslLOs2sOrMHgtwfxS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seyediman Seyedarab <ImanDevel@gmail.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 257/529] iommu/vt-d: Replace snprintf with scnprintf in dmar_latency_snapshot()
-Date: Fri, 21 Nov 2025 14:09:16 +0100
-Message-ID: <20251121130240.165563842@linuxfoundation.org>
+Subject: [PATCH 6.6 258/529] wifi: ath10k: Fix connection after GTK rekeying
+Date: Fri, 21 Nov 2025 14:09:17 +0100
+Message-ID: <20251121130240.200689935@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,128 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seyediman Seyedarab <ImanDevel@gmail.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 75c02a037609f34db17e91be195cedb33b61bae0 ]
+[ Upstream commit 487e8a8c3421df0af3707e54c7e069f1d89cbda7 ]
 
-snprintf() returns the number of bytes that would have been written, not
-the number actually written. Using this for offset tracking can cause
-buffer overruns if truncation occurs.
+It appears that not all hardware/firmware implementations support
+group key deletion correctly, which can lead to connection hangs
+and deauthentication following GTK rekeying (delete and install).
 
-Replace snprintf() with scnprintf() to ensure the offset stays within
-bounds.
+To avoid this issue, instead of attempting to delete the key using
+the special WMI_CIPHER_NONE value, we now replace the key with an
+invalid (random) value.
 
-Since scnprintf() never returns a negative value, and zero is not possible
-in this context because 'bytes' starts at 0 and 'size - bytes' is
-DEBUG_BUFFER_SIZE in the first call, which is large enough to hold the
-string literals used, the return value is always positive. An integer
-overflow is also completely out of reach here due to the small and fixed
-buffer size. The error check in latency_show_one() is therefore
-unnecessary. Remove it and make dmar_latency_snapshot() return void.
+This behavior has been observed with WCN39xx chipsets.
 
-Signed-off-by: Seyediman Seyedarab <ImanDevel@gmail.com>
-Link: https://lore.kernel.org/r/20250731225048.131364-1-ImanDevel@gmail.com
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Closes: https://lore.kernel.org/all/DAWJQ2NIKY28.1XOG35E4A682G@linaro.org
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # QRB2210 RB1
+Link: https://patch.msgid.link/20250902143225.837487-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/debugfs.c | 10 ++--------
- drivers/iommu/intel/perf.c    | 10 ++++------
- drivers/iommu/intel/perf.h    |  5 ++---
- 3 files changed, 8 insertions(+), 17 deletions(-)
+ drivers/net/wireless/ath/ath10k/mac.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/debugfs.c b/drivers/iommu/intel/debugfs.c
-index 1f925285104ee..aa9cfcb6039e2 100644
---- a/drivers/iommu/intel/debugfs.c
-+++ b/drivers/iommu/intel/debugfs.c
-@@ -562,17 +562,11 @@ DEFINE_SHOW_ATTRIBUTE(ir_translation_struct);
- static void latency_show_one(struct seq_file *m, struct intel_iommu *iommu,
- 			     struct dmar_drhd_unit *drhd)
- {
--	int ret;
--
- 	seq_printf(m, "IOMMU: %s Register Base Address: %llx\n",
- 		   iommu->name, drhd->reg_base_addr);
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index 655fb5cdf01f8..233e5c619fa4e 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -14,6 +14,7 @@
+ #include <linux/acpi.h>
+ #include <linux/of.h>
+ #include <linux/bitfield.h>
++#include <linux/random.h>
  
--	ret = dmar_latency_snapshot(iommu, debug_buf, DEBUG_BUFFER_SIZE);
--	if (ret < 0)
--		seq_puts(m, "Failed to get latency snapshot");
--	else
--		seq_puts(m, debug_buf);
--	seq_puts(m, "\n");
-+	dmar_latency_snapshot(iommu, debug_buf, DEBUG_BUFFER_SIZE);
-+	seq_printf(m, "%s\n", debug_buf);
- }
+ #include "hif.h"
+ #include "core.h"
+@@ -287,8 +288,15 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
+ 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV;
  
- static int latency_show(struct seq_file *m, void *v)
-diff --git a/drivers/iommu/intel/perf.c b/drivers/iommu/intel/perf.c
-index 94ee70ac38e30..ae64e1123f257 100644
---- a/drivers/iommu/intel/perf.c
-+++ b/drivers/iommu/intel/perf.c
-@@ -113,7 +113,7 @@ static char *latency_type_names[] = {
- 	"     svm_prq"
- };
- 
--int dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size)
-+void dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size)
- {
- 	struct latency_statistic *lstat = iommu->perf_statistic;
- 	unsigned long flags;
-@@ -122,7 +122,7 @@ int dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size)
- 	memset(str, 0, size);
- 
- 	for (i = 0; i < COUNTS_NUM; i++)
--		bytes += snprintf(str + bytes, size - bytes,
-+		bytes += scnprintf(str + bytes, size - bytes,
- 				  "%s", latency_counter_names[i]);
- 
- 	spin_lock_irqsave(&latency_lock, flags);
-@@ -130,7 +130,7 @@ int dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size)
- 		if (!dmar_latency_enabled(iommu, i))
- 			continue;
- 
--		bytes += snprintf(str + bytes, size - bytes,
-+		bytes += scnprintf(str + bytes, size - bytes,
- 				  "\n%s", latency_type_names[i]);
- 
- 		for (j = 0; j < COUNTS_NUM; j++) {
-@@ -156,11 +156,9 @@ int dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size)
- 				break;
- 			}
- 
--			bytes += snprintf(str + bytes, size - bytes,
-+			bytes += scnprintf(str + bytes, size - bytes,
- 					  "%12lld", val);
- 		}
+ 	if (cmd == DISABLE_KEY) {
+-		arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
+-		arg.key_data = NULL;
++		if (flags & WMI_KEY_GROUP) {
++			/* Not all hardware handles group-key deletion operation
++			 * correctly. Replace the key with a junk value to invalidate it.
++			 */
++			get_random_bytes(key->key, key->keylen);
++		} else {
++			arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
++			arg.key_data = NULL;
++		}
  	}
- 	spin_unlock_irqrestore(&latency_lock, flags);
--
--	return bytes;
- }
-diff --git a/drivers/iommu/intel/perf.h b/drivers/iommu/intel/perf.h
-index fd6db8049d1a7..1e481e9e4ad04 100644
---- a/drivers/iommu/intel/perf.h
-+++ b/drivers/iommu/intel/perf.h
-@@ -41,7 +41,7 @@ void dmar_latency_disable(struct intel_iommu *iommu, enum latency_type type);
- bool dmar_latency_enabled(struct intel_iommu *iommu, enum latency_type type);
- void dmar_latency_update(struct intel_iommu *iommu, enum latency_type type,
- 			 u64 latency);
--int dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size);
-+void dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size);
- #else
- static inline int
- dmar_latency_enable(struct intel_iommu *iommu, enum latency_type type)
-@@ -65,9 +65,8 @@ dmar_latency_update(struct intel_iommu *iommu, enum latency_type type, u64 laten
- {
- }
  
--static inline int
-+static inline void
- dmar_latency_snapshot(struct intel_iommu *iommu, char *str, size_t size)
- {
--	return 0;
- }
- #endif /* CONFIG_DMAR_PERF */
+ 	return ath10k_wmi_vdev_install_key(arvif->ar, &arg);
 -- 
 2.51.0
 
