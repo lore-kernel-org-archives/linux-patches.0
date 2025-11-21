@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE3C348468;
-	Fri, 21 Nov 2025 13:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D133246FD;
+	Fri, 21 Nov 2025 13:16:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731008; cv=none; b=oCxPfIoGG7ejdgw7c02KhXV95gwiRmO3GC5PWnJAzlhzXfZZwYzcas9BiV9sXpcbpQPJSEmdzojTn0uqyhl4RWjpSgYHzDKHggF0uv5sxARwJumwgAUAOoO2FVvXAZJPq0ag/YL8EEIWU91+0l65xZBayW0lbbWgVwhWiLR5Bjk=
+	t=1763731011; cv=none; b=c0++63zF6G3ufWHe76N8HxgHB+GDQux+Duu6VSgSsR72eqadduF9vFXjTiycyCA5NaXsS3AvRoiMuusa1fMrgMnkbW01EdpZyu09MFakDbsiBkcBvAmcoiYiJU96pxVPh/if1LeVBzJgtizanGcM56keMf4Ox9sHRIm4SuXERkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731008; c=relaxed/simple;
-	bh=/C94JiCETdRSw/Ow+UQVwin75mzNOX/lqTuYSU/mPUY=;
+	s=arc-20240116; t=1763731011; c=relaxed/simple;
+	bh=U2gGaLVeK3BD/5EISOTDPnUY2TkvW7u2OPsp/IHUqTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p8BEdtOt1a2iHnsxjlhMRBMUsahdufnC3ZBlTaMi43dGCsp6eaMCxlpn4RzNDjcA59At6RDJVou+64xqCp61p0uLuir8IrQe3WZeQPoryWhGoIYdCVnXluXGo9UR7hxue2kx+DiFxbM51AVRELWMXAJoD51rnwUFrXX8Y85iM7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqVSYdYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QcwvGZWCIEV1hXXla9HwsUONJhw1GqA8TdbCPQ/1OrolXQG5vhxGgjwh84RM02E/B9gkZTgIpRymWgqzXFzwLoAfA1X8nkXVzYOJlSYlTAQ9pRfQUfmEh5CE6ABB4fe5KN4Q9hzbSWIMqEfoeaaFzIwCo5C+/joO4eWZEbC1ZYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NwtLqdAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqVSYdYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FD3C4CEF1;
-	Fri, 21 Nov 2025 13:16:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NwtLqdAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9702C4CEF1;
+	Fri, 21 Nov 2025 13:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731008;
-	bh=/C94JiCETdRSw/Ow+UQVwin75mzNOX/lqTuYSU/mPUY=;
+	s=korg; t=1763731011;
+	bh=U2gGaLVeK3BD/5EISOTDPnUY2TkvW7u2OPsp/IHUqTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqVSYdYkW3u7jE/0dgSkj/dmr+4ZVKoQepvyyO3zYnou7N24YUFMPfdGozLTYxGZ7
-	 RY1ZlmbwbUp8sUNqVtUVV4MCzoeRbiv/s857ceMqJfUJi7bkPfrm/poS0IFzCZqvhJ
-	 I0w1Z5e9m6eeTAVawFCQJir3tXlOzVa4ihOS1bG4=
+	b=NwtLqdAFObqV5PfnkG22cQJCdv2USJkWlFTbRXCWxO9ML9Qedgag/t5w4GXP/0lqX
+	 Uc2cgh+nr0HQ4Bv2UjSZ7vW71QG7N/tJO65+/FHdH8UjIvhyo8dHlvC+w3tfQUpr/H
+	 0omESQQpbPRfuVDseHcsL+cZSeym0FAZH9BdyrYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 059/247] Bluetooth: 6lowpan: Dont hold spin lock over sleeping functions
-Date: Fri, 21 Nov 2025 14:10:06 +0100
-Message-ID: <20251121130156.722254985@linuxfoundation.org>
+Subject: [PATCH 6.17 060/247] Bluetooth: hci_conn: Fix not cleaning up PA_LINK connections
+Date: Fri, 21 Nov 2025 14:10:07 +0100
+Message-ID: <20251121130156.758267034@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,147 +50,147 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 98454bc812f3611551e4b1f81732da4aa7b9597e ]
+[ Upstream commit 41bf23338a501e745c398e0faee948dd05d0be98 ]
 
-disconnect_all_peers() calls sleeping function (l2cap_chan_close) under
-spinlock.  Holding the lock doesn't actually do any good -- we work on a
-local copy of the list, and the lock doesn't protect against peer->chan
-having already been freed.
+Contrary to what was stated on d36349ea73d8 ("Bluetooth: hci_conn:
+Fix running bis_cleanup for hci_conn->type PA_LINK") the PA_LINK does
+in fact needs to run bis_cleanup in order to terminate the PA Sync,
+since that is bond to the listening socket which is the entity that
+controls the lifetime of PA Sync, so if it is closed/released the PA
+Sync shall be terminated, terminating the PA Sync shall not result in
+the BIG Sync being terminated since once the later is established it
+doesn't depend on the former anymore.
 
-Fix by taking refcounts of peer->chan instead.  Clean up the code and
-old comments a bit.
+If the use user wants to reconnect/rebind a number of BIS(s) it shall
+keep the socket open until it no longer needs the PA Sync, which means
+it retains full control of the lifetime of both PA and BIG Syncs.
 
-Take devices_lock instead of RCU, because the kfree_rcu();
-l2cap_chan_put(); construct in chan_close_cb() does not guarantee
-peer->chan is necessarily valid in RCU.
-
-Also take l2cap_chan_lock() which is required for l2cap_chan_close().
-
-Log: (bluez 6lowpan-tester Client Connect - Disable)
-------
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:575
-...
-<TASK>
-...
-l2cap_send_disconn_req (net/bluetooth/l2cap_core.c:938 net/bluetooth/l2cap_core.c:1495)
-...
-? __pfx_l2cap_chan_close (net/bluetooth/l2cap_core.c:809)
-do_enable_set (net/bluetooth/6lowpan.c:1048 net/bluetooth/6lowpan.c:1068)
-------
-
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Fixes: d36349ea73d8 ("Bluetooth: hci_conn: Fix running bis_cleanup for hci_conn->type PA_LINK")
+Fixes: a7bcffc673de ("Bluetooth: Add PA_LINK to distinguish BIG sync and PA sync connections")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 68 ++++++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 25 deletions(-)
+ net/bluetooth/hci_conn.c  | 33 +++++++++++++++++++--------------
+ net/bluetooth/hci_event.c |  7 +------
+ net/bluetooth/hci_sync.c  |  2 +-
+ 3 files changed, 21 insertions(+), 21 deletions(-)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 0d8c2e2e9a6cf..588d7e94e6069 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -53,6 +53,11 @@ static bool enable_6lowpan;
- static struct l2cap_chan *listen_chan;
- static DEFINE_MUTEX(set_lock);
- 
-+enum {
-+	LOWPAN_PEER_CLOSING,
-+	LOWPAN_PEER_MAXBITS
-+};
-+
- struct lowpan_peer {
- 	struct list_head list;
- 	struct rcu_head rcu;
-@@ -61,6 +66,8 @@ struct lowpan_peer {
- 	/* peer addresses in various formats */
- 	unsigned char lladdr[ETH_ALEN];
- 	struct in6_addr peer_addr;
-+
-+	DECLARE_BITMAP(flags, LOWPAN_PEER_MAXBITS);
- };
- 
- struct lowpan_btle_dev {
-@@ -1014,41 +1021,52 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
- static void disconnect_all_peers(void)
- {
- 	struct lowpan_btle_dev *entry;
--	struct lowpan_peer *peer, *tmp_peer, *new_peer;
--	struct list_head peers;
--
--	INIT_LIST_HEAD(&peers);
-+	struct lowpan_peer *peer;
-+	int nchans;
- 
--	/* We make a separate list of peers as the close_cb() will
--	 * modify the device peers list so it is better not to mess
--	 * with the same list at the same time.
-+	/* l2cap_chan_close() cannot be called from RCU, and lock ordering
-+	 * chan->lock > devices_lock prevents taking write side lock, so copy
-+	 * then close.
- 	 */
- 
- 	rcu_read_lock();
-+	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list)
-+		list_for_each_entry_rcu(peer, &entry->peers, list)
-+			clear_bit(LOWPAN_PEER_CLOSING, peer->flags);
-+	rcu_read_unlock();
- 
--	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
--		list_for_each_entry_rcu(peer, &entry->peers, list) {
--			new_peer = kmalloc(sizeof(*new_peer), GFP_ATOMIC);
--			if (!new_peer)
--				break;
-+	do {
-+		struct l2cap_chan *chans[32];
-+		int i;
- 
--			new_peer->chan = peer->chan;
--			INIT_LIST_HEAD(&new_peer->list);
-+		nchans = 0;
- 
--			list_add(&new_peer->list, &peers);
--		}
--	}
-+		spin_lock(&devices_lock);
- 
--	rcu_read_unlock();
-+		list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
-+			list_for_each_entry_rcu(peer, &entry->peers, list) {
-+				if (test_and_set_bit(LOWPAN_PEER_CLOSING,
-+						     peer->flags))
-+					continue;
- 
--	spin_lock(&devices_lock);
--	list_for_each_entry_safe(peer, tmp_peer, &peers, list) {
--		l2cap_chan_close(peer->chan, ENOENT);
-+				l2cap_chan_hold(peer->chan);
-+				chans[nchans++] = peer->chan;
- 
--		list_del_rcu(&peer->list);
--		kfree_rcu(peer, rcu);
--	}
--	spin_unlock(&devices_lock);
-+				if (nchans >= ARRAY_SIZE(chans))
-+					goto done;
-+			}
-+		}
-+
-+done:
-+		spin_unlock(&devices_lock);
-+
-+		for (i = 0; i < nchans; ++i) {
-+			l2cap_chan_lock(chans[i]);
-+			l2cap_chan_close(chans[i], ENOENT);
-+			l2cap_chan_unlock(chans[i]);
-+			l2cap_chan_put(chans[i]);
-+		}
-+	} while (nchans);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index c021c6cb3d9a5..5846b4bae77a3 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -769,21 +769,23 @@ static void find_bis(struct hci_conn *conn, void *data)
+ 	d->count++;
  }
  
- struct set_enable {
+-static int hci_le_big_terminate(struct hci_dev *hdev, u8 big, struct hci_conn *conn)
++static int hci_le_big_terminate(struct hci_dev *hdev, struct hci_conn *conn)
+ {
+ 	struct iso_list_data *d;
+ 	int ret;
+ 
+-	bt_dev_dbg(hdev, "big 0x%2.2x sync_handle 0x%4.4x", big, conn->sync_handle);
++	bt_dev_dbg(hdev, "hcon %p big 0x%2.2x sync_handle 0x%4.4x", conn,
++		   conn->iso_qos.bcast.big, conn->sync_handle);
+ 
+ 	d = kzalloc(sizeof(*d), GFP_KERNEL);
+ 	if (!d)
+ 		return -ENOMEM;
+ 
+-	d->big = big;
++	d->big = conn->iso_qos.bcast.big;
+ 	d->sync_handle = conn->sync_handle;
+ 
+-	if (test_and_clear_bit(HCI_CONN_PA_SYNC, &conn->flags)) {
++	if (conn->type == PA_LINK &&
++	    test_and_clear_bit(HCI_CONN_PA_SYNC, &conn->flags)) {
+ 		hci_conn_hash_list_flag(hdev, find_bis, PA_LINK,
+ 					HCI_CONN_PA_SYNC, d);
+ 
+@@ -801,6 +803,9 @@ static int hci_le_big_terminate(struct hci_dev *hdev, u8 big, struct hci_conn *c
+ 			d->big_sync_term = true;
+ 	}
+ 
++	if (!d->pa_sync_term && !d->big_sync_term)
++		return 0;
++
+ 	ret = hci_cmd_sync_queue(hdev, big_terminate_sync, d,
+ 				 terminate_big_destroy);
+ 	if (ret)
+@@ -852,8 +857,7 @@ static void bis_cleanup(struct hci_conn *conn)
+ 
+ 		hci_le_terminate_big(hdev, conn);
+ 	} else {
+-		hci_le_big_terminate(hdev, conn->iso_qos.bcast.big,
+-				     conn);
++		hci_le_big_terminate(hdev, conn);
+ 	}
+ }
+ 
+@@ -995,19 +999,20 @@ static struct hci_conn *__hci_conn_add(struct hci_dev *hdev, int type, bdaddr_t
+ 		conn->mtu = hdev->le_mtu ? hdev->le_mtu : hdev->acl_mtu;
+ 		break;
+ 	case CIS_LINK:
+-	case BIS_LINK:
+-	case PA_LINK:
+ 		/* conn->src should reflect the local identity address */
+ 		hci_copy_identity_address(hdev, &conn->src, &conn->src_type);
+ 
+-		/* set proper cleanup function */
+-		if (!bacmp(dst, BDADDR_ANY))
+-			conn->cleanup = bis_cleanup;
+-		else if (conn->role == HCI_ROLE_MASTER)
++		if (conn->role == HCI_ROLE_MASTER)
+ 			conn->cleanup = cis_cleanup;
+ 
+-		conn->mtu = hdev->iso_mtu ? hdev->iso_mtu :
+-			    hdev->le_mtu ? hdev->le_mtu : hdev->acl_mtu;
++		conn->mtu = hdev->iso_mtu;
++		break;
++	case PA_LINK:
++	case BIS_LINK:
++		/* conn->src should reflect the local identity address */
++		hci_copy_identity_address(hdev, &conn->src, &conn->src_type);
++		conn->cleanup = bis_cleanup;
++		conn->mtu = hdev->iso_mtu;
+ 		break;
+ 	case SCO_LINK:
+ 		if (lmp_esco_capable(hdev))
+diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
+index 7ee8bc7ac5a2a..0380d2f596c97 100644
+--- a/net/bluetooth/hci_event.c
++++ b/net/bluetooth/hci_event.c
+@@ -7011,14 +7011,9 @@ static void hci_le_big_sync_established_evt(struct hci_dev *hdev, void *data,
+ 				continue;
+ 		}
+ 
+-		if (ev->status != 0x42) {
++		if (ev->status != 0x42)
+ 			/* Mark PA sync as established */
+ 			set_bit(HCI_CONN_PA_SYNC, &bis->flags);
+-			/* Reset cleanup callback of PA Sync so it doesn't
+-			 * terminate the sync when deleting the connection.
+-			 */
+-			conn->cleanup = NULL;
+-		}
+ 
+ 		bis->sync_handle = conn->sync_handle;
+ 		bis->iso_qos.bcast.big = ev->handle;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 73fc41b68b687..6e76798ec786b 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6999,7 +6999,7 @@ static void create_pa_complete(struct hci_dev *hdev, void *data, int err)
+ 
+ 	hci_dev_lock(hdev);
+ 
+-	if (!hci_conn_valid(hdev, conn))
++	if (hci_conn_valid(hdev, conn))
+ 		clear_bit(HCI_CONN_CREATE_PA_SYNC, &conn->flags);
+ 
+ 	if (!err)
 -- 
 2.51.0
 
