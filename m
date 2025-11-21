@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711F125DAEA;
-	Fri, 21 Nov 2025 13:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31FF8275B18;
+	Fri, 21 Nov 2025 13:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730945; cv=none; b=oApIhNvAPfth8M6ft1cHB6/PqucJRoGZzT3V+ycWmZIJanbUa9fwgHI8CnLP8kTyW+8oZ9qtYYKWDrHgkNnfuXmnfwfNVzLIez3NBmllOJGedZFm92sOXMlaS2ximDebVMwUQZV1Z3+KlDkPhGM0Qw/I0CzBYNvEZcni9Rc106U=
+	t=1763730949; cv=none; b=Bitg6LcyUDKdDFr8e3/6CUQF3D1+cXP3K7G8MmRLajHSJ3/FCLMM5rmdHvaq4ENmHYABXYl3sFA47BFMukoos4fG7DtNuBmwqyAX40rT1NQWGHYrcJcukDtVzrdvF3MJP0CmnvJPCWavaVNloEhfrrQWqs/N7ZNDVrxQB1eKeIc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730945; c=relaxed/simple;
-	bh=RYJCali2wYr36JGR9Wvv9a0jhjG6tjlWn+RcWOUgiGo=;
+	s=arc-20240116; t=1763730949; c=relaxed/simple;
+	bh=s/DNfGB/gGh9UmMy/EbAcAbeMeWtdzjMu2QQjLn3/tE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CH9CR8rNGTxdjUbpVSpjv8ow0TZqBex5j8zYqm7jDTwXN+5vlYU2xprSFp6UffuXB9+RTq6mJ+nXjoWfdSCy/zsZBWBcx2nMNSYgr2exWX1CV7Ac0CSI2JgEVdWr+k8GNog22zt6/ecSBa09OVYEJkQGVLnJu8wRkDo8zm7Bdds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exQcdUP0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kPFKIaFypLXyM8i/oC/KxLQ02bow4lChdd4/NxJmIuuMaw1MqXEpE0FPSNfgj0DgQke9iPViyo+6IObZSZRkgTEenCDi/bpTv1VmU2YAR6okrg6GODJ0FIDXjBIP7T1I3HszjOPIZFdY7GyHFJIm/F40uuznhgeceQzy0Rvp/64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idtiaAVE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exQcdUP0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3F6C4CEF1;
-	Fri, 21 Nov 2025 13:15:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idtiaAVE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9D9C4CEF1;
+	Fri, 21 Nov 2025 13:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730944;
-	bh=RYJCali2wYr36JGR9Wvv9a0jhjG6tjlWn+RcWOUgiGo=;
+	s=korg; t=1763730947;
+	bh=s/DNfGB/gGh9UmMy/EbAcAbeMeWtdzjMu2QQjLn3/tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exQcdUP0/y7stBwhX9umJ7etzo6KEY1ub0HXrL+Dfjjke+P/BGvQaRCFIE08lq0CP
-	 UyywqEcjqCXH5+oKc387GM2t7CnJmlg/C+pwflIkTy0J/WiHe8NWdZbusFW3vbj3Xn
-	 SAqQ87V2D54T8UJo68gjhQZuA3qNP1vLl9XlkDk0=
+	b=idtiaAVED8m8w3gKsxzdzhPLHnDpoTSdPbs5wSsZoOv0sdDJjsTVhM9qxzMsfE8RQ
+	 B3zLLKRHsMUWM/JAn30UZCsiniBG2OOy5XH7hR00cNoVeQCeJAZg5if6whLW6NSTmI
+	 1V/CaOn4F4sa+yQfXwTmUflfy0JKW1QCw3EN6+48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Mayhew <smayhew@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Oleg Makarenko <oleg@makarenk.ooo>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 036/247] NFS: check if suid/sgid was cleared after a write as needed
-Date: Fri, 21 Nov 2025 14:09:43 +0100
-Message-ID: <20251121130155.900301047@linuxfoundation.org>
+Subject: [PATCH 6.17 037/247] HID: quirks: Add ALWAYS_POLL quirk for VRS R295 steering wheel
+Date: Fri, 21 Nov 2025 14:09:44 +0100
+Message-ID: <20251121130155.935684919@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,43 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Oleg Makarenko <oleg@makarenk.ooo>
 
-[ Upstream commit 9ff022f3820a31507cb93be6661bf5f3ca0609a4 ]
+[ Upstream commit 1141ed52348d3df82d3fd2316128b3fc6203a68c ]
 
-I noticed xfstests generic/193 and generic/355 started failing against
-knfsd after commit e7a8ebc305f2 ("NFSD: Offer write delegation for OPEN
-with OPEN4_SHARE_ACCESS_WRITE").
+This patch adds ALWAYS_POLL quirk for the VRS R295 steering wheel joystick.
+This device reboots itself every 8-10 seconds if it is not polled.
 
-I ran those same tests against ONTAP (which has had write delegation
-support for a lot longer than knfsd) and they fail there too... so
-while it's a new failure against knfsd, it isn't an entirely new
-failure.
-
-Add the NFS_INO_REVAL_FORCED flag so that the presence of a delegation
-doesn't keep the inode from being revalidated to fetch the updated mode.
-
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Oleg Makarenko <oleg@makarenk.ooo>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/write.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hid/hid-ids.h    | 1 +
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/fs/nfs/write.c b/fs/nfs/write.c
-index 647c53d1418ae..d9edcc36b0b44 100644
---- a/fs/nfs/write.c
-+++ b/fs/nfs/write.c
-@@ -1521,7 +1521,8 @@ static int nfs_writeback_done(struct rpc_task *task,
- 	/* Deal with the suid/sgid bit corner case */
- 	if (nfs_should_remove_suid(inode)) {
- 		spin_lock(&inode->i_lock);
--		nfs_set_cache_invalid(inode, NFS_INO_INVALID_MODE);
-+		nfs_set_cache_invalid(inode, NFS_INO_INVALID_MODE
-+				| NFS_INO_REVAL_FORCED);
- 		spin_unlock(&inode->i_lock);
- 	}
- 	return 0;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index d05a62bbafffb..0723b4b1c9eca 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1435,6 +1435,7 @@
+ 
+ #define USB_VENDOR_ID_VRS	0x0483
+ #define USB_DEVICE_ID_VRS_DFP	0xa355
++#define USB_DEVICE_ID_VRS_R295	0xa44c
+ 
+ #define USB_VENDOR_ID_VTL		0x0306
+ #define USB_DEVICE_ID_VTL_MULTITOUCH_FF3F	0xff3f
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index d7105a8395982..bcd4bccf1a7ce 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -207,6 +207,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UCLOGIC, USB_DEVICE_ID_UCLOGIC_TABLET_KNA5), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UCLOGIC, USB_DEVICE_ID_UCLOGIC_TABLET_TWA60), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGTIZER, USB_DEVICE_ID_UGTIZER_TABLET_WP5540), HID_QUIRK_MULTI_INPUT },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_VRS, USB_DEVICE_ID_VRS_R295), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_WALTOP, USB_DEVICE_ID_WALTOP_MEDIA_TABLET_10_6_INCH), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_WALTOP, USB_DEVICE_ID_WALTOP_MEDIA_TABLET_14_1_INCH), HID_QUIRK_MULTI_INPUT },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_WALTOP, USB_DEVICE_ID_WALTOP_SIRIUS_BATTERY_FREE_TABLET), HID_QUIRK_MULTI_INPUT },
 -- 
 2.51.0
 
