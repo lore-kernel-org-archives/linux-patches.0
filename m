@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E51347FF8;
-	Fri, 21 Nov 2025 13:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CAD346FD2;
+	Fri, 21 Nov 2025 13:56:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733361; cv=none; b=tXbRuhRTfMWT8Sob14Ss0XZoGiz9PqZKj0rUcWShFj3ev6QTg9ekfIBtehApIomBwBbrI9+ZI+eV5Rce5zJMa+0D8ZWDjZdJCCoO3brI8RJRX+M70JU9WW/8uQH/oL/Iy8Fg22gr9xLtViIIYuM1io09GhmuyKhlplWomUH0mKg=
+	t=1763733364; cv=none; b=aNLjyzq3aokSsblfNAl4tRCYrrtXJ6Xl4tiTUZANRRl0h2Qr167HcjWeDig6+pXldRdTWqgfif6D+Bl1poo3HvCGPHDWWJajxBxzbfFHFUSmqise8OPkf3ZmTQ7zHF1Umu1JE04s8NQ5X0Ttmk3ooCWOwQOVaQzchHJ6dyBr4wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733361; c=relaxed/simple;
-	bh=wfAZVjRTAFSTEsa4t7QB9IWD5Q0vkVa1kdSwkv5t7gs=;
+	s=arc-20240116; t=1763733364; c=relaxed/simple;
+	bh=fU5YlP0L7DeNo9NWSQHEmzMYmbWnGmdFJOPszv89Gkk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iegj6BBgs/ZUHl6BlQYvNb7cIStgiJYPzzN5/ku+RKq4TYNrn1WO1LQY3+2s1RntA2OGhQ2yczljZyR/vKI3TQ26NTz9A9Q/xLXgp+RCWcfjn+wtaV9pfXl6HaAEW99QK1LLzV841Ri7mQ+hGFhjhN624rPdEfE7l4yYM7xWGko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fyi1K7EF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alg8c405dCnVJzLt0tlsl5R3bf+FQs2nxKTZQMWfpigOtr3dHjQpWc7l3g2XtxLVbMPt2TDe0oSt17dQoxY651CyUlpeQZz2GO0kEZ9nVPFl8cQ1jS0finSEBJcWXnUF192VDwaQQlGqgTiEj8QaomjU0UI+WjnXGuXKvZaJWq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FtYRc3GV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fyi1K7EF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0B2C4CEF1;
-	Fri, 21 Nov 2025 13:56:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FtYRc3GV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D2DC4CEF1;
+	Fri, 21 Nov 2025 13:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733361;
-	bh=wfAZVjRTAFSTEsa4t7QB9IWD5Q0vkVa1kdSwkv5t7gs=;
+	s=korg; t=1763733364;
+	bh=fU5YlP0L7DeNo9NWSQHEmzMYmbWnGmdFJOPszv89Gkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fyi1K7EFnBFD2rJ/qTdnr+WeDIwPPXDZTyLWGSPks5onrOsi7rFR7NxXXhnzZgzAj
-	 eiiZQBeb3UDp4FwPigY/rkKyDybKQwVoO3QJvqn+HDVFztfAmWtvPYfjiNaSS+qYN2
-	 6mkhBB4sfFWTwEscaR1qu8t3U2aHkcFGO0svXngk=
+	b=FtYRc3GVEhvF5xT6Qg5Y1rgk8btJq9G7qYzSzg14jFhC3lRNq6bI+KTkLbuTmHVVA
+	 dGr1xMLWibf4bKBBO9Tn4hW5x75tVKYgqd79WL3E/YDk48NFqO5/JR3iPigbm4b/ED
+	 xCS27gErWV6K64hjsdx6/fiwr26DDzM7xWCR/smY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@Huawei.com>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 442/529] acpi: Break out nesting for hmat_parse_locality()
-Date: Fri, 21 Nov 2025 14:12:21 +0100
-Message-ID: <20251121130246.739361300@linuxfoundation.org>
+Subject: [PATCH 6.6 443/529] acpi: numa: Add setting of generic port system locality attributes
+Date: Fri, 21 Nov 2025 14:12:22 +0100
+Message-ID: <20251121130246.773981247@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -56,77 +55,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 79205651120620c2683f90c25ef3d2ac8e454026 ]
+[ Upstream commit a3a3e341f169511823f7b2d140a0bdfbd620dcbd ]
 
-Refactor hmat_parse_locality() to break up the deep nesting of the
-function.
+Add generic port support for the parsing of HMAT system locality sub-table.
+The attributes will be added to the third array member of the access
+coordinates in order to not mix with the existing memory attributes. It
+only provides the system locality attributes from initiator to the
+generic port targets and is missing the rest of the data to the actual
+memory device.
 
-Suggested-by: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+The complete attributes will be updated when a memory device is
+attached and the system locality information is calculated end to end.
+
+Through hmat_update_target_attrs(), the best performance attributes will
+be setup in target->coord.
+
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/170319617537.2212653.10625501075519862509.stgit@djiang5-mobl3
+Link: https://lore.kernel.org/r/170319618135.2212653.13778540010384821833.stgit@djiang5-mobl3
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Stable-dep-of: 214291cbaace ("acpi/hmat: Fix lockdep warning for hmem_register_resource()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/numa/hmat.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/acpi/numa/hmat.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
 diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
-index 21722cbec324d..4cae2e84251a2 100644
+index 4cae2e84251a2..8a1802e078f3c 100644
 --- a/drivers/acpi/numa/hmat.c
 +++ b/drivers/acpi/numa/hmat.c
-@@ -322,11 +322,28 @@ static __init void hmat_add_locality(struct acpi_hmat_locality *hmat_loc)
+@@ -61,6 +61,7 @@ struct target_cache {
+ enum {
+ 	NODE_ACCESS_CLASS_0 = 0,
+ 	NODE_ACCESS_CLASS_1,
++	NODE_ACCESS_CLASS_GENPORT_SINK,
+ 	NODE_ACCESS_CLASS_MAX,
+ };
+ 
+@@ -654,6 +655,11 @@ static void hmat_update_target_attrs(struct memory_target *target,
+ 	u32 best = 0;
+ 	int i;
+ 
++	/* Don't update for generic port if there's no device handle */
++	if (access == NODE_ACCESS_CLASS_GENPORT_SINK &&
++	    !(*(u16 *)target->gen_port_device_handle))
++		return;
++
+ 	bitmap_zero(p_nodes, MAX_NUMNODES);
+ 	/*
+ 	 * If the Address Range Structure provides a local processor pxm, set
+@@ -723,6 +729,14 @@ static void __hmat_register_target_initiators(struct memory_target *target,
  	}
  }
  
-+static __init void hmat_update_target(unsigned int tgt_pxm, unsigned int init_pxm,
-+				      u8 mem_hier, u8 type, u32 value)
++static void hmat_register_generic_target_initiators(struct memory_target *target)
 +{
-+	struct memory_target *target = find_mem_target(tgt_pxm);
++	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
 +
-+	if (mem_hier != ACPI_HMAT_MEMORY)
-+		return;
-+
-+	if (target && target->processor_pxm == init_pxm) {
-+		hmat_update_target_access(target, type, value,
-+					  NODE_ACCESS_CLASS_0);
-+		/* If the node has a CPU, update access 1 */
-+		if (node_state(pxm_to_node(init_pxm), N_CPU))
-+			hmat_update_target_access(target, type, value,
-+						  NODE_ACCESS_CLASS_1);
-+	}
++	__hmat_register_target_initiators(target, p_nodes,
++					  NODE_ACCESS_CLASS_GENPORT_SINK);
 +}
 +
- static __init int hmat_parse_locality(union acpi_subtable_headers *header,
- 				      const unsigned long end)
+ static void hmat_register_target_initiators(struct memory_target *target)
  {
- 	struct acpi_hmat_locality *hmat_loc = (void *)header;
--	struct memory_target *target;
- 	unsigned int init, targ, total_size, ipds, tpds;
- 	u32 *inits, *targs, value;
- 	u16 *entries;
-@@ -367,17 +384,8 @@ static __init int hmat_parse_locality(union acpi_subtable_headers *header,
- 				inits[init], targs[targ], value,
- 				hmat_data_type_suffix(type));
+ 	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
+@@ -774,6 +788,17 @@ static void hmat_register_target(struct memory_target *target)
+ 	 */
+ 	hmat_register_target_devices(target);
  
--			if (mem_hier == ACPI_HMAT_MEMORY) {
--				target = find_mem_target(targs[targ]);
--				if (target && target->processor_pxm == inits[init]) {
--					hmat_update_target_access(target, type, value,
--								  NODE_ACCESS_CLASS_0);
--					/* If the node has a CPU, update access 1 */
--					if (node_state(pxm_to_node(inits[init]), N_CPU))
--						hmat_update_target_access(target, type, value,
--									  NODE_ACCESS_CLASS_1);
--				}
--			}
-+			hmat_update_target(targs[targ], inits[init],
-+					   mem_hier, type, value);
- 		}
- 	}
- 
++	/*
++	 * Register generic port perf numbers. The nid may not be
++	 * initialized and is still NUMA_NO_NODE.
++	 */
++	mutex_lock(&target_lock);
++	if (*(u16 *)target->gen_port_device_handle) {
++		hmat_register_generic_target_initiators(target);
++		target->registered = true;
++	}
++	mutex_unlock(&target_lock);
++
+ 	/*
+ 	 * Skip offline nodes. This can happen when memory
+ 	 * marked EFI_MEMORY_SP, "specific purpose", is applied
 -- 
 2.51.0
 
