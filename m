@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9086B26560A;
-	Fri, 21 Nov 2025 13:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A232874F6;
+	Fri, 21 Nov 2025 13:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731832; cv=none; b=Qv5olX6kl7K+puwog31r+ds72+FLGK4wB+gVEIbJR3oe2atePQsR0w4mEB9oCjPVSAv7VS/FcVYhX7qtjh1ptV6wV6w5zhBbMKowFqpy/vFN+j1c1qkEBffskHiiuRRhpsT5YhS/qFqe8PmDxiHSAKkt4UgBV3D3j8zTJPv6qvE=
+	t=1763731835; cv=none; b=f+fojR8T95zgoxCvO+0AZ5skhZvHOV+vHvVkq7iYd1mOiR0bgSUbGV8j2cRC8qN0XfkWwmLgVr/gm90JrVmpkLdC/unMALn39qn3DNA7VvYfUBca82jvxAkmosu6okOfkmLkr2Zp0raZxe3RVWBJKqluGkYpW3Mb74IGrSgGRqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731832; c=relaxed/simple;
-	bh=qd07o7yjCDKL2QP7SHGEyXSiSQdGnPBZVc9Q5IYtCp0=;
+	s=arc-20240116; t=1763731835; c=relaxed/simple;
+	bh=fcVY611J2w+qIu86AGzFMzUKWQ9pRpWWNAkNOuV5UBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kTJNyD4YPzx0ROAhJREjS1HSQrOJ9rQMWyqjtk2NFzy91Vz5vJSE5O0ghKWRBJne+ZYLfs+Zd2eM1oXQVqLsBhBdhPbpRuHAfIuPUUkzPWZICKmU7qNwGuTO9zf0UB55vlwycGGiqHXZxSlgI1K024YarBLe5+Nq/FcOE6q8KYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pNq58utD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oENk8DagtsPNfHhVhwiMZ3AIGAVEidiMfiVdoIBtd+KQ9bQ+kpo7lDZERkaIfTlXgAbsrIC0Y1h8uNqDJdosOoVsOls1rCZV1/DDIa81ZOgbHKwCGgWIjfy+7DS8JAypFbtAqUjhGtf07SiaxEpCRHK+IQDeV/6V/rvS6bc6aew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2MDst2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pNq58utD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA2EC4CEF1;
-	Fri, 21 Nov 2025 13:30:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2MDst2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BB5C4CEF1;
+	Fri, 21 Nov 2025 13:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731832;
-	bh=qd07o7yjCDKL2QP7SHGEyXSiSQdGnPBZVc9Q5IYtCp0=;
+	s=korg; t=1763731835;
+	bh=fcVY611J2w+qIu86AGzFMzUKWQ9pRpWWNAkNOuV5UBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pNq58utD1nFKsLToi6chxqxn+avEt+W4ZI+xpzThfinTcM2l67f4NYE+vS5tqSMYH
-	 nkZkLoBJo2v3FkBCGnFT5QtW7Zfpo5OJw2cB8n+IaLlfwGJsUXPCAPWSe6sffHTMbs
-	 mVl/pploFnyir97h97Qv0ij6X3WGMCFH0qNHS1Uc=
+	b=J2MDst2k4hAr+aK22EyWQrxp43O7fF+uCmyH1tR7m3wsYI6gON909N+0BceNW72C2
+	 ud+U8lEU/67j0iUk8tXmiaIMT/zwREQ/RX4zW2G+sezzy6/Xv8BHI09Y5ZfxPCKLmD
+	 aWgWp3PuX+RjntQUh/CZrIEG+gPj8Kzt3vE0yiLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/185] Revert "netfilter: nf_tables: Reintroduce shortened deletion notifications"
-Date: Fri, 21 Nov 2025 14:12:04 +0100
-Message-ID: <20251121130147.367182283@linuxfoundation.org>
+Subject: [PATCH 6.12 098/185] netfilter: nf_tables: reject duplicate device on updates
+Date: Fri, 21 Nov 2025 14:12:05 +0100
+Message-ID: <20251121130147.409867053@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,97 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-This is a partial revert of commit dbe85d3115c7e6b5124c8b028f4f602856ea51dd.
+commit cf5fb87fcdaaaafec55dcc0dc5a9e15ead343973 upstream.
 
-This update breaks old nftables userspace because monitor parser cannot
-handle this shortened deletion, this patch was added as a Stable-dep:,
-let's revert it.
+A chain/flowtable update with duplicated devices in the same batch is
+possible. Unfortunately, netdev event path only removes the first
+device that is found, leaving unregistered the hook of the duplicated
+device.
 
+Check if a duplicated device exists in the transaction batch, bail out
+with EEXIST in such case.
+
+WARNING is hit when unregistering the hook:
+
+ [49042.221275] WARNING: CPU: 4 PID: 8425 at net/netfilter/core.c:340 nf_hook_entry_head+0xaa/0x150
+ [49042.221375] CPU: 4 UID: 0 PID: 8425 Comm: nft Tainted: G S                  6.16.0+ #170 PREEMPT(full)
+ [...]
+ [49042.221382] RIP: 0010:nf_hook_entry_head+0xaa/0x150
+
+Fixes: 78d9f48f7f44 ("netfilter: nf_tables: add devices to existing flowtable")
+Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 36 ++---------------------------------
- 1 file changed, 2 insertions(+), 34 deletions(-)
+ net/netfilter/nf_tables_api.c | 30 ++++++++++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 3028d388b2933..2f3684dcbef8c 100644
+index 2f3684dcbef8c..e1c617b488889 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -1032,12 +1032,6 @@ static int nf_tables_fill_table_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_TABLE_PAD))
- 		goto nla_put_failure;
+@@ -2642,6 +2642,7 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
+ 	struct nft_chain *chain = ctx->chain;
+ 	struct nft_chain_hook hook = {};
+ 	struct nft_stats *stats = NULL;
++	struct nftables_pernet *nft_net;
+ 	struct nft_hook *h, *next;
+ 	struct nf_hook_ops *ops;
+ 	struct nft_trans *trans;
+@@ -2682,6 +2683,20 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
+ 				if (nft_hook_list_find(&basechain->hook_list, h)) {
+ 					list_del(&h->list);
+ 					kfree(h);
++					continue;
++				}
++
++				nft_net = nft_pernet(ctx->net);
++				list_for_each_entry(trans, &nft_net->commit_list, list) {
++					if (trans->msg_type != NFT_MSG_NEWCHAIN ||
++					    trans->table != ctx->table ||
++					    !nft_trans_chain_update(trans))
++						continue;
++
++					if (nft_hook_list_find(&nft_trans_chain_hooks(trans), h)) {
++						nft_chain_release_hook(&hook);
++						return -EEXIST;
++					}
+ 				}
+ 			}
+ 		} else {
+@@ -8686,6 +8701,7 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+ {
+ 	const struct nlattr * const *nla = ctx->nla;
+ 	struct nft_flowtable_hook flowtable_hook;
++	struct nftables_pernet *nft_net;
+ 	struct nft_hook *hook, *next;
+ 	struct nft_trans *trans;
+ 	bool unregister = false;
+@@ -8701,6 +8717,20 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+ 		if (nft_hook_list_find(&flowtable->hook_list, hook)) {
+ 			list_del(&hook->list);
+ 			kfree(hook);
++			continue;
++		}
++
++		nft_net = nft_pernet(ctx->net);
++		list_for_each_entry(trans, &nft_net->commit_list, list) {
++			if (trans->msg_type != NFT_MSG_NEWFLOWTABLE ||
++			    trans->table != ctx->table ||
++			    !nft_trans_flowtable_update(trans))
++				continue;
++
++			if (nft_hook_list_find(&nft_trans_flowtable_hooks(trans), hook)) {
++				err = -EEXIST;
++				goto err_flowtable_update_hook;
++			}
+ 		}
+ 	}
  
--	if (event == NFT_MSG_DELTABLE ||
--	    event == NFT_MSG_DESTROYTABLE) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_TABLE_FLAGS,
- 			 htonl(table->flags & NFT_TABLE_F_MASK)))
- 		goto nla_put_failure;
-@@ -1893,13 +1887,6 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_CHAIN_PAD))
- 		goto nla_put_failure;
- 
--	if (!hook_list &&
--	    (event == NFT_MSG_DELCHAIN ||
--	     event == NFT_MSG_DESTROYCHAIN)) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nft_is_base_chain(chain)) {
- 		const struct nft_base_chain *basechain = nft_base_chain(chain);
- 		struct nft_stats __percpu *stats;
-@@ -4685,12 +4672,6 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
- 			 NFTA_SET_PAD))
- 		goto nla_put_failure;
- 
--	if (event == NFT_MSG_DELSET ||
--	    event == NFT_MSG_DESTROYSET) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (set->flags != 0)
- 		if (nla_put_be32(skb, NFTA_SET_FLAGS, htonl(set->flags)))
- 			goto nla_put_failure;
-@@ -8021,18 +8002,12 @@ static int nf_tables_fill_obj_info(struct sk_buff *skb, struct net *net,
- 
- 	if (nla_put_string(skb, NFTA_OBJ_TABLE, table->name) ||
- 	    nla_put_string(skb, NFTA_OBJ_NAME, obj->key.name) ||
--	    nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
- 	    nla_put_be64(skb, NFTA_OBJ_HANDLE, cpu_to_be64(obj->handle),
- 			 NFTA_OBJ_PAD))
- 		goto nla_put_failure;
- 
--	if (event == NFT_MSG_DELOBJ ||
--	    event == NFT_MSG_DESTROYOBJ) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
--	if (nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
-+	if (nla_put_be32(skb, NFTA_OBJ_TYPE, htonl(obj->ops->type->type)) ||
-+	    nla_put_be32(skb, NFTA_OBJ_USE, htonl(obj->use)) ||
- 	    nft_object_dump(skb, NFTA_OBJ_DATA, obj, reset))
- 		goto nla_put_failure;
- 
-@@ -9048,13 +9023,6 @@ static int nf_tables_fill_flowtable_info(struct sk_buff *skb, struct net *net,
- 			 NFTA_FLOWTABLE_PAD))
- 		goto nla_put_failure;
- 
--	if (!hook_list &&
--	    (event == NFT_MSG_DELFLOWTABLE ||
--	     event == NFT_MSG_DESTROYFLOWTABLE)) {
--		nlmsg_end(skb, nlh);
--		return 0;
--	}
--
- 	if (nla_put_be32(skb, NFTA_FLOWTABLE_USE, htonl(flowtable->use)) ||
- 	    nla_put_be32(skb, NFTA_FLOWTABLE_FLAGS, htonl(flowtable->data.flags)))
- 		goto nla_put_failure;
 -- 
 2.51.0
 
