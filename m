@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A66F346FB8;
-	Fri, 21 Nov 2025 13:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F94C346E55;
+	Fri, 21 Nov 2025 13:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731985; cv=none; b=qbQ5cQCv0hp4IOhR9/MoF4Pyavjh/ZNiVywSfJFFvtCS9FapWpxst8a4gG9w60f78kdnSWqItwd3eBVJCrVwkKcySAsN1WRjRT05W0fLNKsQXtKrZ7hWVJ+bbnAJJ0suXZCj4kYRX0ti1ey6cmJnEd5IyrsqsfHidpvGaA+8puI=
+	t=1763731988; cv=none; b=CwYDwJi5HPOARu2Y49fl+jgf5OMzWh1edXteEX3zE/N7RielafX24K5UwqpD22jwKe7ceRmAJR2TDNkfMC0fgTBx7ui9azNG89qWfPM5UJiJf8tGEfa3za/+1IMxhZRO+EpMsdnk6dgQJDt3Jdkoqb8B+ixHsT3Y2ppj1qaXFLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731985; c=relaxed/simple;
-	bh=dXC4bjubCXaFhu71+yKpbGuHVAtRah5vN4PEKyyjDV0=;
+	s=arc-20240116; t=1763731988; c=relaxed/simple;
+	bh=2nv1ddhawb3mAU+JgEjOh2yLSf/nhwVlCGB0eqfYV1U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gRJdynvPoGwvLJ352aByjxygBJM4tymeH+zytKSaqnmrUKYyYMqL/7eQYuG/9ZVzGuD4ypr0S0hvTPvatX3vXThw5OnShXy7BKfaS6Wv+eKGbd4hlLM+zeB0KAAKR2mHtanWK/F95kG1eLzs3RAzb2FGzscuhMKlGLf7Cusk6Ro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3ifBvUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OQAOAUr2uasoKPMH4slIakOzqSrRWNrYjuVfqUVaGd5qNM/lpty42pm5168NyQLh3lVtwhzlS1wZ0PQiZ9pzbnz8pzURGr6mTYcIpKfn+QRa31QrGPz/jnS3nPYtuy1ZdLVwBAbT6QgV5lUs5Q76jmjyk3Dut87a++fcq1No25U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LwZlCLfY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3ifBvUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BA8C4CEF1;
-	Fri, 21 Nov 2025 13:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LwZlCLfY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75ECEC4CEF1;
+	Fri, 21 Nov 2025 13:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731984;
-	bh=dXC4bjubCXaFhu71+yKpbGuHVAtRah5vN4PEKyyjDV0=;
+	s=korg; t=1763731987;
+	bh=2nv1ddhawb3mAU+JgEjOh2yLSf/nhwVlCGB0eqfYV1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3ifBvUpYKiBmbDnRunHQNO70L5kNo7pCZWnpnk39ENWr3H9HRrZuAAh9Qq4oKsHY
-	 sBlnKKol/2pCwH+2yZpXpczrUnZ6JzpmnLEstSdxxgKb1NZWf7tqpvtNMGCAYfZ2UM
-	 CzQLhNk51ykWClIkJq93VpwwPdvwuMDZhX1I2BSw=
+	b=LwZlCLfYrlu7msbevIxypDc0H+aZMcbh5vfW3tr4nRfKKKIwnRH9HPKFMWZDkEpZe
+	 E7EuNuggiBqIm7YT6zBY0LuaO9lGjIauYnZygXXlbQpMWAxV7dPFIGTkNrdhvqEUvX
+	 f/4gk53n/2by4qW8RVSvzuWYybL1aYl4j8Kxhv2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 149/185] drm/amdgpu: disable peer-to-peer access for DCC-enabled GC12 VRAM surfaces
-Date: Fri, 21 Nov 2025 14:12:56 +0100
-Message-ID: <20251121130149.255982330@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 123/185] wifi: mac80211: reject address change while connecting
+Date: Fri, 21 Nov 2025 14:12:30 +0100
+Message-ID: <20251121130148.314348500@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -45,71 +43,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vitaly Prosyak <vitaly.prosyak@amd.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 22a36e660d014925114feb09a2680bb3c2d1e279 upstream.
+commit a9da90e618cd0669a22bcc06a96209db5dd96e9b upstream.
 
-Certain multi-GPU configurations (especially GFX12) may hit
-data corruption when a DCC-compressed VRAM surface is shared across GPUs
-using peer-to-peer (P2P) DMA transfers.
+While connecting, the MAC address can already no longer be
+changed. The change is already rejected if netif_carrier_ok(),
+but of course that's not true yet while connecting. Check for
+auth_data or assoc_data, so the MAC address cannot be changed.
 
-Such surfaces rely on device-local metadata and cannot be safely accessed
-through a remote GPU’s page tables. Attempting to import a DCC-enabled
-surface through P2P leads to incorrect rendering or GPU faults.
+Also more comprehensively check that there are no stations on
+the interface being changed - if any peer station is added it
+will know about our address already, so we cannot change it.
 
-This change disables P2P for DCC-enabled VRAM buffers that are contiguous
-and allocated on GFX12+ hardware.  In these cases, the importer falls back
-to the standard system-memory path, avoiding invalid access to compressed
-surfaces.
-
-Future work could consider optional migration (VRAM→System→VRAM) if a
-performance regression is observed when `attach->peer2peer = false`.
-
-Tested on:
- - Dual RX 9700 XT (Navi4x) setup
- - GNOME and Wayland compositor scenarios
- - Confirmed no corruption after disabling P2P under these conditions
-v2: Remove check TTM_PL_VRAM & TTM_PL_FLAG_CONTIGUOUS.
-v3: simplify for upsteam and fix ip version check (Alex)
-
-Suggested-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9dff2bb709e6fbd97e263fd12bf12802d2b5a0cf)
 Cc: stable@vger.kernel.org
+Fixes: 3c06e91b40db ("wifi: mac80211: Support POWERED_ADDR_CHANGE feature")
+Link: https://patch.msgid.link/20251105154119.f9f6c1df81bb.I9bb3760ede650fb96588be0d09a5a7bdec21b217@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/mac80211/iface.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
-@@ -81,6 +81,18 @@ static int amdgpu_dma_buf_attach(struct
- 	struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
- 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -224,6 +224,10 @@ static int ieee80211_can_powered_addr_ch
+ 	if (netif_carrier_ok(sdata->dev))
+ 		return -EBUSY;
+ 
++	/* if any stations are set known (so they know this vif too), reject */
++	if (sta_info_get_by_idx(sdata, 0))
++		return -EBUSY;
++
+ 	/* First check no ROC work is happening on this iface */
+ 	list_for_each_entry(roc, &local->roc_list, list) {
+ 		if (roc->sdata != sdata)
+@@ -243,12 +247,16 @@ static int ieee80211_can_powered_addr_ch
+ 			ret = -EBUSY;
+ 	}
  
 +	/*
-+	 * Disable peer-to-peer access for DCC-enabled VRAM surfaces on GFX12+.
-+	 * Such buffers cannot be safely accessed over P2P due to device-local
-+	 * compression metadata. Fallback to system-memory path instead.
-+	 * Device supports GFX12 (GC 12.x or newer)
-+	 * BO was created with the AMDGPU_GEM_CREATE_GFX12_DCC flag
-+	 *
++	 * More interface types could be added here but changing the
++	 * address while powered makes the most sense in client modes.
 +	 */
-+	if (amdgpu_ip_version(adev, GC_HWIP, 0) >= IP_VERSION(12, 0, 0) &&
-+	    bo->flags & AMDGPU_GEM_CREATE_GFX12_DCC)
-+		attach->peer2peer = false;
-+
- 	if (!amdgpu_dmabuf_is_xgmi_accessible(attach_adev, bo) &&
- 	    pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
- 		attach->peer2peer = false;
+ 	switch (sdata->vif.type) {
+ 	case NL80211_IFTYPE_STATION:
+ 	case NL80211_IFTYPE_P2P_CLIENT:
+-		/* More interface types could be added here but changing the
+-		 * address while powered makes the most sense in client modes.
+-		 */
++		/* refuse while connecting */
++		if (sdata->u.mgd.auth_data || sdata->u.mgd.assoc_data)
++			return -EBUSY;
+ 		break;
+ 	default:
+ 		ret = -EOPNOTSUPP;
 
 
