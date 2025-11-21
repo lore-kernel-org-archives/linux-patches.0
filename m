@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5C326CE33;
-	Fri, 21 Nov 2025 13:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21B91F09B3;
+	Fri, 21 Nov 2025 13:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731247; cv=none; b=kzRJ5vquqQJ6OhsLMK2hIPj7eTDkmuo5aHdyezO9kBHM/6IV4t1hD60dqpp3p4YzpksEh30AFlMlAuhxjdF7NdZc7vXcZUzYZgZ1t/kKLLYW1W+UVsMWxUDJj6OH0pG96Fghcdedv4BqTqfGbmORDgsEAvowDDeXyenEdM4txXg=
+	t=1763731250; cv=none; b=rUc/ywWDKbSBiUrI8BQdYZuMG4u+nWOcnmc7e+TD6+yH4oga6/EEFRfGbBr6UFN9KzY6SAW89OcPXvmMtOL0M1hnP2zl262TfZ7asjVJIdwrVdbdneE3SZV+8al18XcVpyBs7R0K2gSmdAgNZ9JtZK1FgDjZZKPOU760W/TmFb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731247; c=relaxed/simple;
-	bh=ivqBYN+6ThktE3XzatE0XzD+468QmYQOFbJRoYZvACU=;
+	s=arc-20240116; t=1763731250; c=relaxed/simple;
+	bh=mpFht4rcPK9jmQlP9cqzbfBzaD+1+NTjHjfEfgIDZWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HBpgV/kxtwRcPqlTW8zAYMnJwW/+A+4BkJ/abXSAmXq97Vpx1KbSPBcPGax3n0G4vtwzF0xf22hHe8RehBgcyi97kAKX63NFvj6c5gipzolocOW2KzIwn5YC2NufCl3ufuhVJcDZq/EqAytMmcaRx9FgD2h63JLDc6prTFvuwuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXmjq8aT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwZxUgHwan0VA0F8yBjbwrgJ2xdpXStiqh8iJOu+TVka2hDptTWkYj8tcGwYBehJeWfeil5v9Fmwlc8d/inuCDKiBQS1aPO7e+V1GmGDcXWJ5dOC6cGIsSIB3XpFOpPSiKLRKkrPsdUchdVmJH5G6yLGrPjzpxuwVojwYzygWEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fh5mWXCB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXmjq8aT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02537C4CEF1;
-	Fri, 21 Nov 2025 13:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fh5mWXCB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBAE9C4CEF1;
+	Fri, 21 Nov 2025 13:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731247;
-	bh=ivqBYN+6ThktE3XzatE0XzD+468QmYQOFbJRoYZvACU=;
+	s=korg; t=1763731250;
+	bh=mpFht4rcPK9jmQlP9cqzbfBzaD+1+NTjHjfEfgIDZWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXmjq8aTzyd2X6Wm/cILsTlnR49Va+vYhoAmfNGB5EnTVnJvCPdIPYjj6V60AReek
-	 Bby1aB/Q/S2ksBlQLbBG73pM7NwIAniwGYD2bwIqZiE3VUgcE/aNJoZARxBZsfuVRc
-	 CdXwLuAG2/1ld2l0/ynkZ8RPUI3S2Hy2/4iGLKTA=
+	b=Fh5mWXCBV7o8bfjZdhj0yoYkMjksMDnFKiIyDG7f9UqU5g6omOSVf1oL6dTQGg4F5
+	 k9g2sN3AZYcRiVk6qZ3hphQ47ko5zUzw0gdg6yneCAX4sZqBmXfTl5Cy2iA5sZHFoA
+	 DM/s44fJPoiA8i4rjc1OONSNXXVxMTMUX1EVh+xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Masami Ichikawa <masami256@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 141/247] arm64: dts: imx8mp-kontron: Fix USB OTG role switching
-Date: Fri, 21 Nov 2025 14:11:28 +0100
-Message-ID: <20251121130159.786748219@linuxfoundation.org>
+Subject: [PATCH 6.17 142/247] HID: hid-ntrig: Prevent memory leak in ntrig_report_version()
+Date: Fri, 21 Nov 2025 14:11:29 +0100
+Message-ID: <20251121130159.821518976@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,79 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frieder Schrempf <frieder.schrempf@kontron.de>
+From: Masami Ichikawa <masami256@gmail.com>
 
-[ Upstream commit 6504297872c7a5d0d06247970d32940eba26b8b3 ]
+[ Upstream commit 53f731f5bba0cf03b751ccceb98b82fadc9ccd1e ]
 
-The VBUS supply regulator is currently assigned to the PHY node.
-This causes the VBUS to be always on, even when the controller
-needs to be switched to peripheral mode.
+Use a scope-based cleanup helper for the buffer allocated with kmalloc()
+in ntrig_report_version() to simplify the cleanup logic and prevent
+memory leaks (specifically the !hid_is_usb()-case one).
 
-Fix the OTG role switching by adding a connector node and moving
-the VBUS supply regulator to that node. This way the VBUS gets
-correctly switched according to the current role.
-
-Fixes: 946ab10e3f40 ("arm64: dts: Add support for Kontron OSM-S i.MX8MP SoM and BL carrier board")
-Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+[jkosina@suse.com: elaborate on the actual existing leak]
+Fixes: 185c926283da ("HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()")
+Signed-off-by: Masami Ichikawa <masami256@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/freescale/imx8mp-kontron-bl-osm-s.dts | 24 +++++++++++++++----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+ drivers/hid/hid-ntrig.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts b/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts
-index 0eb9e726a9b81..6c63f0a5fa91b 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts
-@@ -16,11 +16,20 @@
- 		ethernet1 = &eqos;
- 	};
+diff --git a/drivers/hid/hid-ntrig.c b/drivers/hid/hid-ntrig.c
+index 0f76e241e0afb..a7f10c45f62bd 100644
+--- a/drivers/hid/hid-ntrig.c
++++ b/drivers/hid/hid-ntrig.c
+@@ -142,13 +142,13 @@ static void ntrig_report_version(struct hid_device *hdev)
+ 	int ret;
+ 	char buf[20];
+ 	struct usb_device *usb_dev = hid_to_usb_dev(hdev);
+-	unsigned char *data = kmalloc(8, GFP_KERNEL);
++	unsigned char *data __free(kfree) = kmalloc(8, GFP_KERNEL);
  
--	extcon_usbc: usbc {
--		compatible = "linux,extcon-usb-gpio";
-+	connector {
-+		compatible = "gpio-usb-b-connector", "usb-b-connector";
-+		id-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
-+		label = "Type-C";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_usb1_id>;
--		id-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
-+		type = "micro";
-+		vbus-supply = <&reg_usb1_vbus>;
-+
-+		port {
-+			usb_dr_connector: endpoint {
-+				remote-endpoint = <&usb3_dwc>;
-+			};
-+		};
- 	};
+ 	if (!hid_is_usb(hdev))
+ 		return;
  
- 	leds {
-@@ -230,9 +239,15 @@
- 	hnp-disable;
- 	srp-disable;
- 	dr_mode = "otg";
--	extcon = <&extcon_usbc>;
- 	usb-role-switch;
-+	role-switch-default-mode = "peripheral";
- 	status = "okay";
-+
-+	port {
-+		usb3_dwc: endpoint {
-+			remote-endpoint = <&usb_dr_connector>;
-+		};
-+	};
- };
+ 	if (!data)
+-		goto err_free;
++		return;
  
- &usb_dwc3_1 {
-@@ -261,7 +276,6 @@
- };
+ 	ret = usb_control_msg(usb_dev, usb_rcvctrlpipe(usb_dev, 0),
+ 			      USB_REQ_CLEAR_FEATURE,
+@@ -163,9 +163,6 @@ static void ntrig_report_version(struct hid_device *hdev)
+ 		hid_info(hdev, "Firmware version: %s (%02x%02x %02x%02x)\n",
+ 			 buf, data[2], data[3], data[4], data[5]);
+ 	}
+-
+-err_free:
+-	kfree(data);
+ }
  
- &usb3_phy0 {
--	vbus-supply = <&reg_usb1_vbus>;
- 	status = "okay";
- };
- 
+ static ssize_t show_phys_width(struct device *dev,
 -- 
 2.51.0
 
