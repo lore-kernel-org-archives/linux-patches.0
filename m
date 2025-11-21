@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A703128A0;
-	Fri, 21 Nov 2025 13:43:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F85535958;
+	Fri, 21 Nov 2025 13:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732615; cv=none; b=mtu644Z1lcbbyDhC3ISqu+knrQkj6fXoagNlsKIN++K0IKYgyf7H4icfDjKAS00N8ddTVUvHuHMNN3U5GsLGdlvqeWwAhBPSh49cqcNzRSjq5OhsivPVe+BwlXJSqNyBg5aJ5DhC36eUOw3pxSKtI4Wf7xjB5x5FNrbV5cn8tQA=
+	t=1763732618; cv=none; b=sUKHxkXuqnl2t62k3AHFEwQKNBlUUneQC4sY9VZAzoVYWPAlCel2qi0AYIKwckqF5bl7DUYd9AwQ4cbP83MmQaoRKWZFgoAB51gO/G8mplSZbu25rLEM6PG+S8ITlRCbY56x5PVRE4i3zMiyuPYfkuXs7QYA4LbPUsHAgMmoCtk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732615; c=relaxed/simple;
-	bh=WvGCMR+YAWbJ3DHaoDm2ZadZRhF9RyfqEkHNjQ1Qaoc=;
+	s=arc-20240116; t=1763732618; c=relaxed/simple;
+	bh=Sw3cWt8I709S5BFFh64U/ZRmobWCbxDcdQb6azYS8XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uzq3C15ilkE1/xA1MTqhk9w4QD5R4JHyiQHfkcagFBNOqtyWh1LIIw5AmTpmNMkj93k5f90L6ByLwVLCdLTNcikVmGVkRC1KQI4Y4GNsY8uLSYunhanvInuqlgj/FKeV5zN5Hcs9Bl8ObPm8I095bAOh6kSwmwnlJmWb/T4PTH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7bwwwMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUT9oIw992O+dJs6G5f6jNE5D/a9h77A9SBcqck4XWt1oUEkl1I+25OjdVNSSsvKS8GmCR0Dd5u4p5RtXnuVURXosJnnX0pf3Mdu67raLdPh0aFF0QveD+8lP2UqVOP1NflEP8tzHVmBy0+7gLv2NFw1Cx5cIdpkdaNBoLIIJUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVVwuObs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7bwwwMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C34FC4CEF1;
-	Fri, 21 Nov 2025 13:43:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVVwuObs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179DCC4CEF1;
+	Fri, 21 Nov 2025 13:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732615;
-	bh=WvGCMR+YAWbJ3DHaoDm2ZadZRhF9RyfqEkHNjQ1Qaoc=;
+	s=korg; t=1763732618;
+	bh=Sw3cWt8I709S5BFFh64U/ZRmobWCbxDcdQb6azYS8XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7bwwwMoa5pJvPWMxT9fWRgzxeP/NQQRTDe36re0EmTJmPClR5071mHaqCZdNPP4j
-	 p7XYsD/MDIt9NMN1Zju+wXlO0pOtBwYR6WGa9mldYfpEVHqCci5oZ6EGZeII7m6TJP
-	 X+Ztx6rBwMgY+i9mgtNXYy3IcRj9SZ/ziyx0V+x4=
+	b=uVVwuObsVrXcalSCuvVboAyjyODs+sefrDRqV3F2JcWvs+/NEmJ7ujAArZ7qNZOab
+	 P1TRzXzuvbBe9WrjLQ2RbJZeQNQ1mnhFSbzGuy+LFLnUhdL4ndlIoI/SMqcLLo2HUT
+	 j+eUN96z5Z8L+yWlQ6hEUmHNCC5Y1kQ50jkHjbwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	David Francis <David.Francis@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/529] drm/amdgpu: Allow kfd CRIU with no buffer objects
-Date: Fri, 21 Nov 2025 14:08:03 +0100
-Message-ID: <20251121130237.566769115@linuxfoundation.org>
+Subject: [PATCH 6.6 185/529] ipv6: Add sanity checks on ipv6_devconf.rpl_seg_enabled
+Date: Fri, 21 Nov 2025 14:08:04 +0100
+Message-ID: <20251121130237.602339555@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,38 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Francis <David.Francis@amd.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit 85705b18ae7674347f8675f64b2b3115fb1d5629 ]
+[ Upstream commit 3d95261eeb74958cd496e1875684827dc5d028cc ]
 
-The kfd CRIU checkpoint ioctl would return an error if trying
-to checkpoint a process with no kfd buffer objects.
+In ipv6_rpl_srh_rcv() we use min(net->ipv6.devconf_all->rpl_seg_enabled,
+idev->cnf.rpl_seg_enabled) is intended to return 0 when either value is
+zero, but if one of the values is negative it will in fact return non-zero.
 
-This is a normal case and should not be an error.
-
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: David Francis <David.Francis@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://patch.msgid.link/20250901123726.1972881-3-yuehaibing@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 76196ab75475e..2e194aa608489 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2572,8 +2572,8 @@ static int criu_restore(struct file *filep,
- 	pr_debug("CRIU restore (num_devices:%u num_bos:%u num_objects:%u priv_data_size:%llu)\n",
- 		 args->num_devices, args->num_bos, args->num_objects, args->priv_data_size);
- 
--	if (!args->bos || !args->devices || !args->priv_data || !args->priv_data_size ||
--	    !args->num_devices || !args->num_bos)
-+	if ((args->num_bos > 0 && !args->bos) || !args->devices || !args->priv_data ||
-+	    !args->priv_data_size || !args->num_devices)
- 		return -EINVAL;
- 
- 	mutex_lock(&p->mutex);
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 1c3b0ba289fbd..0e49ee83533b5 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -7102,7 +7102,9 @@ static const struct ctl_table addrconf_sysctl[] = {
+ 		.data		= &ipv6_devconf.rpl_seg_enabled,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
++		.proc_handler   = proc_dointvec_minmax,
++		.extra1         = SYSCTL_ZERO,
++		.extra2         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		.procname	= "ioam6_enabled",
 -- 
 2.51.0
 
