@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C61F342526;
-	Fri, 21 Nov 2025 13:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D731230CD88;
+	Fri, 21 Nov 2025 13:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731087; cv=none; b=urEEQ5COi5zgaCd7iR+DRu6pc/o8xOBV/4SgqbZJxapjZtrNPvt5UoDb7Aku3e/QbRZd4fvkX7vPEqBg8caOCiYHTZn4XO/eyruvpFUFmA6RTECDRzCkUh6P8vfxXceS/hzDR4P2EYBXmzoogyFIOBSA/2iVnoO5CrsfMGq+brs=
+	t=1763731089; cv=none; b=g+WyA09zVNGFbqugYw+8E/DYjtvipsD7Qug344bWgpHnSqK3mcmAVttPCj/ZaYRtjnm0pv0R6zHecLssTprGnOgX+JuBfHo1KnCr7rFDDWGjj834ffa+e+j79xgQI0D92XH0MVpCFLNFJTZDm9+MjRYWF1G3V0H/uSlVJP0qq8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731087; c=relaxed/simple;
-	bh=iE6ulZQAz/XuEjPzg9Js1SaWNmQbChXt5xPLusUcNfc=;
+	s=arc-20240116; t=1763731089; c=relaxed/simple;
+	bh=NDXIxDdqm64Df4Q9j4hWa1uJ6zyiOO/39cCx0W7/shU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DoZG9fDEsyR94ZaMN52ikb+BEDMWkoOuIPQ9nQ10SimEyrEpCX1dVE8G3ayVMpcoA20hJH3X5cwKDnOlfBmiyqHMr75mCULsCdRdndasrumOiL6kUsigoIXWgqHMP4Xx5zifxk6JjP8UeuD/2rlxgFEFvkQqB/6zYV4d4/BNQdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lF37V1Np; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ar6hY/cuchGTHKzio/6B+qwej0RE5RztY9c5g5A4LujiX1FSOSIUXQO8PbX7bQOG22er0d60Pi0hBsr3vkT56Vu3mi0MbgSesVdGVbFt9DJfi0JomFgXeZ+k9Li75StZti0b8vvweee3fdjc8USmzMB8pVs+len2hdYj1KyBFOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkJ1OBEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lF37V1Np"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F09C4CEF1;
-	Fri, 21 Nov 2025 13:18:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkJ1OBEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615F5C4CEF1;
+	Fri, 21 Nov 2025 13:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731086;
-	bh=iE6ulZQAz/XuEjPzg9Js1SaWNmQbChXt5xPLusUcNfc=;
+	s=korg; t=1763731089;
+	bh=NDXIxDdqm64Df4Q9j4hWa1uJ6zyiOO/39cCx0W7/shU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lF37V1NpZuyv8YxOiUXVrpRSreD1ERLM2+WddyhL3iQpApcZNU8PUCtSUghIpiONy
-	 1OAbkyHVC+nP3PXSNCKWfqf9Dk/f8Bh9DpKwjy/7PNBgno3MBRtrKr8B2/o4404mrn
-	 54C5Xi+sb3/VYYBIZCxxNSjVKLHuln1YQfgOBBtc=
+	b=xkJ1OBEqU5eviQ1NBpbiU1fXEwVjKHoKxfGHYALXBH6bKJ36HVjoJwh+E2KJYAtKe
+	 nuEJoyR1ieGqwlPnUKlZcKEtIEYp49uXbD/Kg7sBgTNGqHjZI16onowuF9uBTN/LXz
+	 04bqBzn0t3isbq25I8vLIJ3vvV52Yj+TLkv0x9a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Mingcong Bai <jeffbai@aosc.io>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Dawn Gardner <dawn.auroali@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 053/247] rust: Add -fno-isolate-erroneous-paths-dereference to bindgen_skip_c_flags
-Date: Fri, 21 Nov 2025 14:10:00 +0100
-Message-ID: <20251121130156.509582780@linuxfoundation.org>
+Subject: [PATCH 6.17 044/247] ALSA: hda/realtek: Fix mute led for HP Omen 17-cb0xxx
+Date: Fri, 21 Nov 2025 14:09:51 +0100
+Message-ID: <20251121130156.184589542@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,38 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Dawn Gardner <dawn.auroali@gmail.com>
 
-[ Upstream commit fe4b3a34e9a9654d98d274218dac0270779db0ae ]
+[ Upstream commit 2a786348004b34c5f61235d51c40c1c718b1f8f9 ]
 
-It's used to work around an objtool issue since commit abb2a5572264
-("LoongArch: Add cflag -fno-isolate-erroneous-paths-dereference"), but
-it's then passed to bindgen and cause an error because Clang does not
-have this option.
+This laptop uses the ALC285 codec, fixed by enabling
+the ALC285_FIXUP_HP_MUTE_LED quirk
 
-Fixes: abb2a5572264 ("LoongArch: Add cflag -fno-isolate-erroneous-paths-dereference")
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Tested-by: Mingcong Bai <jeffbai@aosc.io>
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Dawn Gardner <dawn.auroali@gmail.com>
+Link: https://patch.msgid.link/20251016184218.31508-3-dawn.auroali@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- rust/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/rust/Makefile b/rust/Makefile
-index 9ec1119c02d39..403ce8518381d 100644
---- a/rust/Makefile
-+++ b/rust/Makefile
-@@ -299,7 +299,7 @@ bindgen_skip_c_flags := -mno-fp-ret-in-387 -mpreferred-stack-boundary=% \
- 	-fno-inline-functions-called-once -fsanitize=bounds-strict \
- 	-fstrict-flex-arrays=% -fmin-function-alignment=% \
- 	-fzero-init-padding-bits=% -mno-fdpic \
--	--param=% --param asan-%
-+	--param=% --param asan-% -fno-isolate-erroneous-paths-dereference
- 
- # Derived from `scripts/Makefile.clang`.
- BINDGEN_TARGET_x86	:= x86_64-linux-gnu
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 28297e936a96f..19604352317dd 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6399,6 +6399,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x854a, "HP EliteBook 830 G6", ALC285_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x85c6, "HP Pavilion x360 Convertible 14-dy1xxx", ALC295_FIXUP_HP_MUTE_LED_COEFBIT11),
+ 	SND_PCI_QUIRK(0x103c, 0x85de, "HP Envy x360 13-ar0xxx", ALC285_FIXUP_HP_ENVY_X360),
++	SND_PCI_QUIRK(0x103c, 0x8603, "HP Omen 17-cb0xxx", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x860c, "HP ZBook 17 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x860f, "HP ZBook 15 G6", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x861f, "HP Elite Dragonfly G1", ALC285_FIXUP_HP_GPIO_AMP_INIT),
 -- 
 2.51.0
 
