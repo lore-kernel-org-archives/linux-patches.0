@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2362347FF8;
-	Fri, 21 Nov 2025 14:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A7B34C81D;
+	Fri, 21 Nov 2025 14:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733601; cv=none; b=kU5iCBCc1iDG4rbZn3qzByLFIFOzS+SqqKmPdkER1qN+C1S6l/9YrXD4VM5ZFgLn0N3waahoq5uGTYuTIyWRCgzU1GwlqBzUG/SczomOg8bGNyM+Z79LPXteT0CVK4+jgmtGLiKLKx5jxKZMmUl4/yjnNLV6f1R/xQmuUjTrCUE=
+	t=1763733604; cv=none; b=MKb1keeNm5ADwkuMRZcvlaO12+bJKZ2zTnWTUwBIQz8PqQowpoz85cu9ziY4wZCWyhfgMb1vxcRHwuJJnWsoZ0VYtckakLGVhmc8G2ZzoeY7PCFsBDLt5RkvLxjUCMCuGrtm5zDTFR8L2vY1oKhRQN/Cc+32ifiSag7rJYY/UzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733601; c=relaxed/simple;
-	bh=ZYxK78o6vI3DIPflXWuZQVW3U0CHrNMjN8lwwR1tZKg=;
+	s=arc-20240116; t=1763733604; c=relaxed/simple;
+	bh=v+3s3+8WnDIQ+B5Bm5HINCNzwCrA/QvjEkZprVOIcqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPumWd5zunStpu9bJVATCYXP5d1v/teIWMBiQltdhfDk+A3EKuYxEu2a5cEjggWL0Ypqla2ZBIV8qGVCjiCXYLkPR1pLSftf3P4BCH2A53dF1wUkumlp4+i4Fgql8NR7po6ShyTOonRGoLjckGYpTBZ5D6NhgR4bAyo8GLIlrSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOPUSsM5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EZE5Ji+2feFxYUFPeHl3oC7xtsk5xlHM8WQDhQKak98VTgu3l8eg2aR+MLV+4k2SWraAnOJXeGBzst4FWxD3IslhBrBUsjmr/wER6a7G4Ul3asZdC10qjXd3SAprVJtrmQx+ZgZSav7wtzxBPFiChjC3L8sdPy1egOzbfFa1tl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6bNoREx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOPUSsM5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06043C4CEF1;
-	Fri, 21 Nov 2025 14:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6bNoREx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDEDC4CEF1;
+	Fri, 21 Nov 2025 14:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733601;
-	bh=ZYxK78o6vI3DIPflXWuZQVW3U0CHrNMjN8lwwR1tZKg=;
+	s=korg; t=1763733604;
+	bh=v+3s3+8WnDIQ+B5Bm5HINCNzwCrA/QvjEkZprVOIcqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOPUSsM5bPJUHiNX7FF6GPYQj/+74VXViqAAZV656ZV3XhdAwwpCIERRogrFqvcDC
-	 XLK4h/xNyTcj/cGsiTxkClTX/ZTrcw7cnf0okA16xRdYxL4Mml2qmBlMqTdvSPXvg3
-	 nKPxBe7lPPHWSR3Jyckm5TQONU15ZSbfKkprwkvA=
+	b=s6bNoRExGDbz5Uh887nqULCKRpk6de3ISuXgFm6MVaSb70gXkjyi64OQSYnrmOP4O
+	 L/PoijFRut+R7KcD5+mPEdcpV/ari195DfxtZ7D4N52hygFXW+amdBaSBh74cXrTKJ
+	 WtsPI4jbTwjaOBOPX60HAHZ9PUj392BjjE4NV0LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Sperbeck <jsperbeck@google.com>,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 523/529] net: netpoll: ensure skb_pool list is always initialized
-Date: Fri, 21 Nov 2025 14:13:42 +0100
-Message-ID: <20251121130249.655089129@linuxfoundation.org>
+	Nhat Pham <nphamcs@gmail.com>,
+	syzbot+b7f13b2d0cc156edf61a@syzkaller.appspotmail.com,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	David Hildenbrand <david@redhat.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Kairui Song <kasong@tencent.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yosry Ahmed <yosryahmed@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 524/529] cachestat: do not flush stats in recency check
+Date: Fri, 21 Nov 2025 14:13:43 +0100
+Message-ID: <20251121130249.690298752@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,91 +60,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Sperbeck <jsperbeck@google.com>
+From: Nhat Pham <nphamcs@gmail.com>
 
-commit f0d0277796db613c124206544b6dbe95b520ab6c upstream.
+commit 5a4d8944d6b1e1aaaa83ea42c116b520b4ed0394 upstream.
 
-When __netpoll_setup() is called directly, instead of through
-netpoll_setup(), the np->skb_pool list head isn't initialized.
-If skb_pool_flush() is later called, then we hit a NULL pointer
-in skb_queue_purge_reason().  This can be seen with this repro,
-when CONFIG_NETCONSOLE is enabled as a module:
+syzbot detects that cachestat() is flushing stats, which can sleep, in its
+RCU read section (see [1]).  This is done in the workingset_test_recent()
+step (which checks if the folio's eviction is recent).
 
-    ip tuntap add mode tap tap0
-    ip link add name br0 type bridge
-    ip link set dev tap0 master br0
-    modprobe netconsole netconsole=4444@10.0.0.1/br0,9353@10.0.0.2/
-    rmmod netconsole
+Move the stat flushing step to before the RCU read section of cachestat,
+and skip stat flushing during the recency check.
 
-The backtrace is:
+[1]: https://lore.kernel.org/cgroups/000000000000f71227061bdf97e0@google.com/
 
-    BUG: kernel NULL pointer dereference, address: 0000000000000008
-    #PF: supervisor write access in kernel mode
-    #PF: error_code(0x0002) - not-present page
-    ... ... ...
-    Call Trace:
-     <TASK>
-     __netpoll_free+0xa5/0xf0
-     br_netpoll_cleanup+0x43/0x50 [bridge]
-     do_netpoll_cleanup+0x43/0xc0
-     netconsole_netdev_event+0x1e3/0x300 [netconsole]
-     unregister_netdevice_notifier+0xd9/0x150
-     cleanup_module+0x45/0x920 [netconsole]
-     __se_sys_delete_module+0x205/0x290
-     do_syscall_64+0x70/0x150
-     entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-Move the skb_pool list setup and initial skb fill into __netpoll_setup().
-
-Fixes: 221a9c1df790 ("net: netpoll: Individualize the skb pool")
-Signed-off-by: John Sperbeck <jsperbeck@google.com>
-Reviewed-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20250114011354.2096812-1-jsperbeck@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20240627201737.3506959-1-nphamcs@gmail.com
+Fixes: b00684722262 ("mm: workingset: move the stats flush into workingset_test_recent()")
+Signed-off-by: Nhat Pham <nphamcs@gmail.com>
+Reported-by: syzbot+b7f13b2d0cc156edf61a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/cgroups/000000000000f71227061bdf97e0@google.com/
+Debugged-by: Johannes Weiner <hannes@cmpxchg.org>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: "Huang, Ying" <ying.huang@intel.com>
+Cc: Kairui Song <kasong@tencent.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yosry Ahmed <yosryahmed@google.com>
+Cc: <stable@vger.kernel.org>	[6.8+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netpoll.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/linux/swap.h |    3 ++-
+ mm/filemap.c         |    5 ++++-
+ mm/workingset.c      |   14 +++++++++++---
+ 3 files changed, 17 insertions(+), 5 deletions(-)
 
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -634,6 +634,8 @@ int __netpoll_setup(struct netpoll *np,
- 	const struct net_device_ops *ops;
- 	int err;
+--- a/include/linux/swap.h
++++ b/include/linux/swap.h
+@@ -343,7 +343,8 @@ static inline swp_entry_t page_swap_entr
+ }
  
-+	skb_queue_head_init(&np->skb_pool);
+ /* linux/mm/workingset.c */
+-bool workingset_test_recent(void *shadow, bool file, bool *workingset);
++bool workingset_test_recent(void *shadow, bool file, bool *workingset,
++				bool flush);
+ void workingset_age_nonresident(struct lruvec *lruvec, unsigned long nr_pages);
+ void *workingset_eviction(struct folio *folio, struct mem_cgroup *target_memcg);
+ void workingset_refault(struct folio *folio, void *shadow);
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -4210,6 +4210,9 @@ static void filemap_cachestat(struct add
+ 	XA_STATE(xas, &mapping->i_pages, first_index);
+ 	struct folio *folio;
+ 
++	/* Flush stats (and potentially sleep) outside the RCU read section. */
++	mem_cgroup_flush_stats_ratelimited(NULL);
 +
- 	if (ndev->priv_flags & IFF_DISABLE_NETPOLL) {
- 		np_err(np, "%s doesn't support polling, aborting\n",
- 		       ndev->name);
-@@ -669,6 +671,9 @@ int __netpoll_setup(struct netpoll *np,
- 	strscpy(np->dev_name, ndev->name, IFNAMSIZ);
- 	npinfo->netpoll = np;
+ 	rcu_read_lock();
+ 	xas_for_each(&xas, folio, last_index) {
+ 		int order;
+@@ -4273,7 +4276,7 @@ static void filemap_cachestat(struct add
+ 					goto resched;
+ 			}
+ #endif
+-			if (workingset_test_recent(shadow, true, &workingset))
++			if (workingset_test_recent(shadow, true, &workingset, false))
+ 				cs->nr_recently_evicted += nr_pages;
  
-+	/* fill up the skb queue */
-+	refill_skbs(np);
-+
- 	/* last thing to do is link it to the net device structure */
- 	rcu_assign_pointer(ndev->npinfo, npinfo);
+ 			goto resched;
+--- a/mm/workingset.c
++++ b/mm/workingset.c
+@@ -411,10 +411,12 @@ void *workingset_eviction(struct folio *
+  * @file: whether the corresponding folio is from the file lru.
+  * @workingset: where the workingset value unpacked from shadow should
+  * be stored.
++ * @flush: whether to flush cgroup rstat.
+  *
+  * Return: true if the shadow is for a recently evicted folio; false otherwise.
+  */
+-bool workingset_test_recent(void *shadow, bool file, bool *workingset)
++bool workingset_test_recent(void *shadow, bool file, bool *workingset,
++				bool flush)
+ {
+ 	struct mem_cgroup *eviction_memcg;
+ 	struct lruvec *eviction_lruvec;
+@@ -466,10 +468,16 @@ bool workingset_test_recent(void *shadow
  
-@@ -688,8 +693,6 @@ int netpoll_setup(struct netpoll *np)
- 	struct in_device *in_dev;
- 	int err;
+ 	/*
+ 	 * Flush stats (and potentially sleep) outside the RCU read section.
++	 *
++	 * Note that workingset_test_recent() itself might be called in RCU read
++	 * section (for e.g, in cachestat) - these callers need to skip flushing
++	 * stats (via the flush argument).
++	 *
+ 	 * XXX: With per-memcg flushing and thresholding, is ratelimiting
+ 	 * still needed here?
+ 	 */
+-	mem_cgroup_flush_stats_ratelimited(eviction_memcg);
++	if (flush)
++		mem_cgroup_flush_stats_ratelimited(eviction_memcg);
  
--	skb_queue_head_init(&np->skb_pool);
--
- 	rtnl_lock();
- 	if (np->dev_name[0]) {
- 		struct net *net = current->nsproxy->net_ns;
-@@ -789,9 +792,6 @@ put_noaddr:
- 		}
- 	}
+ 	eviction_lruvec = mem_cgroup_lruvec(eviction_memcg, pgdat);
+ 	refault = atomic_long_read(&eviction_lruvec->nonresident_age);
+@@ -557,7 +565,7 @@ void workingset_refault(struct folio *fo
  
--	/* fill up the skb queue */
--	refill_skbs(np);
--
- 	err = __netpoll_setup(np, ndev);
- 	if (err)
- 		goto flush;
+ 	mod_lruvec_state(lruvec, WORKINGSET_REFAULT_BASE + file, nr);
+ 
+-	if (!workingset_test_recent(shadow, file, &workingset))
++	if (!workingset_test_recent(shadow, file, &workingset, true))
+ 		return;
+ 
+ 	folio_set_active(folio);
 
 
