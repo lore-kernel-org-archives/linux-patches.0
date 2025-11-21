@@ -1,51 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5707337B90;
-	Fri, 21 Nov 2025 13:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AEC2FC01B;
+	Fri, 21 Nov 2025 13:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733580; cv=none; b=bvOL4R/k43LEBYrvbdPYqE7EB18zpkCDrv/Nh4IJhKkca5euZ5yQyPt3hTpB/6QjvqvmcPN/k/eWnJdNAg4FEs196Z3GsxEvuSwB8KvTQmBxEYRsLkwXjxnKFTzE8SkQY5PIL5liU+WZXpGYSIiThgOWHNBhiE9mnubxpn/2rN4=
+	t=1763733583; cv=none; b=C2n0UrQEFFMBK4tkQjtph5D/CF8BnT8aTJ0XZ2Ogk9jgUE2xyI6CeYFZvlIp7zQHQESPSAbyp7GgpxoCUFFt/8GKcPS3ztfxdg5168R3tyZnWz0Xcd68mPPnEtoyAcHiqNtDmaZBiR9nxrw+DI73R63OSfcPAjL6tDRvXx868Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733580; c=relaxed/simple;
-	bh=U+bl/PNNy0iMTD0CXlcu5Ntt59yjTOxgcQMLf9+0dEA=;
+	s=arc-20240116; t=1763733583; c=relaxed/simple;
+	bh=ApZmMtLUeJAaPaX0ywX+8PGJeEfkkEwlmrB0wskXWJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJBTaQ8mHafWEINiIFW3OLvgE0dvP5E8Ohu9KXsQraXwzSa6WEt2drRw0nE6Yf0t6l/2sFSec4U244xiyw7fHUbTT06FPUur6JTHyWtpCEbIU1nBkldODG/gTpsG75bXn+Casr7k1WkpalRbFYOW3avYSk/uqSDRRYY0O29K1yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0V6T9eL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GZaSf1wfORR/63dDqhQdahME+Xhw6/Qyne1qh8Pj9CQQQIKnjNSupxYEAjd/y60n4DuIzp/eb1vJLzR67yaGabZh7+UtUhwzX+jQ7Atvs+a3K0PdbFqkhbG8Wk+4l/mdfgXAwcwYSYyqBOqdqs+BX40SjusfVMMcIVdwg3pCrfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPa2h1nv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0V6T9eL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152D6C4CEF1;
-	Fri, 21 Nov 2025 13:59:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPa2h1nv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DA4C4CEF1;
+	Fri, 21 Nov 2025 13:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733580;
-	bh=U+bl/PNNy0iMTD0CXlcu5Ntt59yjTOxgcQMLf9+0dEA=;
+	s=korg; t=1763733583;
+	bh=ApZmMtLUeJAaPaX0ywX+8PGJeEfkkEwlmrB0wskXWJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y0V6T9eLFtKckb2HTPvK5icpTr3iCPNp6FX2Ko5aA07fqc7np3KbUfeTKcGusddXz
-	 roZc2yXOy876zpbryDq1aGtGXOF81dBePuVcDh/bWMMK8xwumcOvP0jkyvndu2jH/6
-	 7YxnaIFR2naekSgMmP+G/FW2mwP2A+DGp7qWycWI=
+	b=qPa2h1nvHsCV+cBXsDKUgPd6lyWDFCFXa5TP2dB8YilcQh/6oAE3NYxATnq7shg1V
+	 szcV04+2nEIu7Y7g1q4ZAS9EG9afMtZNXcrqM6y/9piFsTTn/mUh38LXcWAtSqFnr4
+	 1CTpF5yrRAkpmr4qNtGwtErWCnC/s+fb8+xURw14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yosry Ahmed <yosryahmed@google.com>,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
-	Shakeel Butt <shakeelb@google.com>,
-	Chris Li <chrisl@kernel.org>,
-	Greg Thelen <gthelen@google.com>,
-	Ivan Babrou <ivan@cloudflare.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Michal Koutny <mkoutny@suse.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
-	Waiman Long <longman@redhat.com>,
-	Wei Xu <weixugc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Leon Huang Fu <leon.huangfu@shopee.com>
-Subject: [PATCH 6.6 517/529] mm: memcg: restore subtree stats flushing
-Date: Fri, 21 Nov 2025 14:13:36 +0100
-Message-ID: <20251121130249.439611114@linuxfoundation.org>
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Pankaj Raghav <p.raghav@samsung.com>,
+	David Howells <dhowells@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Dave Chinner <dchinner@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Kiryl Shutsemau <kas@kernel.org>
+Subject: [PATCH 6.6 518/529] filemap: cap PTE range to be created to allowed zero fill in folio_map_range()
+Date: Fri, 21 Nov 2025 14:13:37 +0100
+Message-ID: <20251121130249.475995161@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -64,318 +58,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosryahmed@google.com>
+From: Pankaj Raghav <p.raghav@samsung.com>
 
-[ Upstream commit 7d7ef0a4686abe43cd76a141b340a348f45ecdf2 ]
+commit 743a2753a02e805347969f6f89f38b736850d808 upstream.
 
-Stats flushing for memcg currently follows the following rules:
-- Always flush the entire memcg hierarchy (i.e. flush the root).
-- Only one flusher is allowed at a time. If someone else tries to flush
-  concurrently, they skip and return immediately.
-- A periodic flusher flushes all the stats every 2 seconds.
+Usually the page cache does not extend beyond the size of the inode,
+therefore, no PTEs are created for folios that extend beyond the size.
 
-The reason this approach is followed is because all flushes are serialized
-by a global rstat spinlock.  On the memcg side, flushing is invoked from
-userspace reads as well as in-kernel flushers (e.g.  reclaim, refault,
-etc).  This approach aims to avoid serializing all flushers on the global
-lock, which can cause a significant performance hit under high
-concurrency.
+But with LBS support, we might extend page cache beyond the size of the
+inode as we need to guarantee folios of minimum order. While doing a
+read, do_fault_around() can create PTEs for pages that lie beyond the
+EOF leading to incorrect error return when accessing a page beyond the
+mapped file.
 
-This approach has the following problems:
-- Occasionally a userspace read of the stats of a non-root cgroup will
-  be too expensive as it has to flush the entire hierarchy [1].
-- Sometimes the stats accuracy are compromised if there is an ongoing
-  flush, and we skip and return before the subtree of interest is
-  actually flushed, yielding stale stats (by up to 2s due to periodic
-  flushing). This is more visible when reading stats from userspace,
-  but can also affect in-kernel flushers.
+Cap the PTE range to be created for the page cache up to the end of
+file(EOF) in filemap_map_pages() so that return error codes are consistent
+with POSIX[1] for LBS configurations.
 
-The latter problem is particulary a concern when userspace reads stats
-after an event occurs, but gets stats from before the event. Examples:
-- When memory usage / pressure spikes, a userspace OOM handler may look
-  at the stats of different memcgs to select a victim based on various
-  heuristics (e.g. how much private memory will be freed by killing
-  this). Reading stale stats from before the usage spike in this case
-  may cause a wrongful OOM kill.
-- A proactive reclaimer may read the stats after writing to
-  memory.reclaim to measure the success of the reclaim operation. Stale
-  stats from before reclaim may give a false negative.
-- Reading the stats of a parent and a child memcg may be inconsistent
-  (child larger than parent), if the flush doesn't happen when the
-  parent is read, but happens when the child is read.
+generic/749 has been created to trigger this edge case. This also fixes
+generic/749 for tmpfs with huge=always on systems with 4k base page size.
 
-As for in-kernel flushers, they will occasionally get stale stats.  No
-regressions are currently known from this, but if there are regressions,
-they would be very difficult to debug and link to the source of the
-problem.
+[1](from mmap(2))  SIGBUS
+    Attempted access to a page of the buffer that lies beyond the end
+    of the mapped file.  For an explanation of the treatment  of  the
+    bytes  in  the  page that corresponds to the end of a mapped file
+    that is not a multiple of the page size, see NOTES.
 
-This patch aims to fix these problems by restoring subtree flushing, and
-removing the unified/coalesced flushing logic that skips flushing if there
-is an ongoing flush.  This change would introduce a significant regression
-with global stats flushing thresholds.  With per-memcg stats flushing
-thresholds, this seems to perform really well.  The thresholds protect the
-underlying lock from unnecessary contention.
-
-This patch was tested in two ways to ensure the latency of flushing is
-up to par, on a machine with 384 cpus:
-
-- A synthetic test with 5000 concurrent workers in 500 cgroups doing
-  allocations and reclaim, as well as 1000 readers for memory.stat
-  (variation of [2]). No regressions were noticed in the total runtime.
-  Note that significant regressions in this test are observed with
-  global stats thresholds, but not with per-memcg thresholds.
-
-- A synthetic stress test for concurrently reading memcg stats while
-  memory allocation/freeing workers are running in the background,
-  provided by Wei Xu [3]. With 250k threads reading the stats every
-  100ms in 50k cgroups, 99.9% of reads take <= 50us. Less than 0.01%
-  of reads take more than 1ms, and no reads take more than 100ms.
-
-[1] https://lore.kernel.org/lkml/CABWYdi0c6__rh-K7dcM_pkf9BJdTRtAU08M43KO9ME4-dsgfoQ@mail.gmail.com/
-[2] https://lore.kernel.org/lkml/CAJD7tka13M-zVZTyQJYL1iUAYvuQ1fcHbCjcOBZcz6POYTV-4g@mail.gmail.com/
-[3] https://lore.kernel.org/lkml/CAAPL-u9D2b=iF5Lf_cRnKxUfkiEe0AMDTu6yhrUAzX0b6a6rDg@mail.gmail.com/
-
-[akpm@linux-foundation.org: fix mm/zswap.c]
-[yosryahmed@google.com: remove stats flushing mutex]
-  Link: https://lkml.kernel.org/r/CAJD7tkZgP3m-VVPn+fF_YuvXeQYK=tZZjJHj=dzD=CcSSpp2qg@mail.gmail.com
-Link: https://lkml.kernel.org/r/20231129032154.3710765-6-yosryahmed@google.com
-Signed-off-by: Yosry Ahmed <yosryahmed@google.com>
-Tested-by: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
-Acked-by: Shakeel Butt <shakeelb@google.com>
-Cc: Chris Li <chrisl@kernel.org>
-Cc: Greg Thelen <gthelen@google.com>
-Cc: Ivan Babrou <ivan@cloudflare.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Michal Koutny <mkoutny@suse.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Tejun Heo <tj@kernel.org>
-Cc: Waiman Long <longman@redhat.com>
-Cc: Wei Xu <weixugc@google.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Leon Huang Fu <leon.huangfu@shopee.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
+Link: https://lore.kernel.org/r/20240822135018.1931258-6-kernel@pankajraghav.com
+Tested-by: David Howells <dhowells@redhat.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/memcontrol.h |    8 ++---
- mm/memcontrol.c            |   68 +++++++++++++++++++++++++--------------------
- mm/vmscan.c                |    2 -
- mm/workingset.c            |   10 ++++--
- 4 files changed, 51 insertions(+), 37 deletions(-)
+ mm/filemap.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/include/linux/memcontrol.h
-+++ b/include/linux/memcontrol.h
-@@ -1039,8 +1039,8 @@ static inline unsigned long lruvec_page_
- 	return x;
- }
- 
--void mem_cgroup_flush_stats(void);
--void mem_cgroup_flush_stats_ratelimited(void);
-+void mem_cgroup_flush_stats(struct mem_cgroup *memcg);
-+void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg);
- 
- void __mod_memcg_lruvec_state(struct lruvec *lruvec, enum node_stat_item idx,
- 			      int val);
-@@ -1515,11 +1515,11 @@ static inline unsigned long lruvec_page_
- 	return node_page_state(lruvec_pgdat(lruvec), idx);
- }
- 
--static inline void mem_cgroup_flush_stats(void)
-+static inline void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
- {
- }
- 
--static inline void mem_cgroup_flush_stats_ratelimited(void)
-+static inline void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg)
- {
- }
- 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -667,7 +667,6 @@ struct memcg_vmstats {
-  */
- static void flush_memcg_stats_dwork(struct work_struct *w);
- static DECLARE_DEFERRABLE_WORK(stats_flush_dwork, flush_memcg_stats_dwork);
--static atomic_t stats_flush_ongoing = ATOMIC_INIT(0);
- static u64 flush_last_time;
- 
- #define FLUSH_TIME (2UL*HZ)
-@@ -728,35 +727,40 @@ static inline void memcg_rstat_updated(s
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3608,7 +3608,7 @@ vm_fault_t filemap_map_pages(struct vm_f
+ 	struct vm_area_struct *vma = vmf->vma;
+ 	struct file *file = vma->vm_file;
+ 	struct address_space *mapping = file->f_mapping;
+-	pgoff_t last_pgoff = start_pgoff;
++	pgoff_t file_end, last_pgoff = start_pgoff;
+ 	unsigned long addr;
+ 	XA_STATE(xas, &mapping->i_pages, start_pgoff);
+ 	struct folio *folio;
+@@ -3632,6 +3632,11 @@ vm_fault_t filemap_map_pages(struct vm_f
+ 		folio_put(folio);
+ 		goto out;
  	}
- }
- 
--static void do_flush_stats(void)
-+static void do_flush_stats(struct mem_cgroup *memcg)
- {
--	/*
--	 * We always flush the entire tree, so concurrent flushers can just
--	 * skip. This avoids a thundering herd problem on the rstat global lock
--	 * from memcg flushers (e.g. reclaim, refault, etc).
--	 */
--	if (atomic_read(&stats_flush_ongoing) ||
--	    atomic_xchg(&stats_flush_ongoing, 1))
--		return;
--
--	WRITE_ONCE(flush_last_time, jiffies_64);
--
--	cgroup_rstat_flush(root_mem_cgroup->css.cgroup);
-+	if (mem_cgroup_is_root(memcg))
-+		WRITE_ONCE(flush_last_time, jiffies_64);
- 
--	atomic_set(&stats_flush_ongoing, 0);
-+	cgroup_rstat_flush(memcg->css.cgroup);
- }
- 
--void mem_cgroup_flush_stats(void)
-+/*
-+ * mem_cgroup_flush_stats - flush the stats of a memory cgroup subtree
-+ * @memcg: root of the subtree to flush
-+ *
-+ * Flushing is serialized by the underlying global rstat lock. There is also a
-+ * minimum amount of work to be done even if there are no stat updates to flush.
-+ * Hence, we only flush the stats if the updates delta exceeds a threshold. This
-+ * avoids unnecessary work and contention on the underlying lock.
-+ */
-+void mem_cgroup_flush_stats(struct mem_cgroup *memcg)
- {
--	if (memcg_should_flush_stats(root_mem_cgroup))
--		do_flush_stats();
-+	if (mem_cgroup_disabled())
-+		return;
 +
-+	if (!memcg)
-+		memcg = root_mem_cgroup;
++	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
++	if (end_pgoff > file_end)
++		end_pgoff = file_end;
 +
-+	if (memcg_should_flush_stats(memcg))
-+		do_flush_stats(memcg);
- }
+ 	do {
+ 		unsigned long end;
  
--void mem_cgroup_flush_stats_ratelimited(void)
-+void mem_cgroup_flush_stats_ratelimited(struct mem_cgroup *memcg)
- {
- 	/* Only flush if the periodic flusher is one full cycle late */
- 	if (time_after64(jiffies_64, READ_ONCE(flush_last_time) + 2*FLUSH_TIME))
--		mem_cgroup_flush_stats();
-+		mem_cgroup_flush_stats(memcg);
- }
- 
- static void flush_memcg_stats_dwork(struct work_struct *w)
-@@ -765,7 +769,7 @@ static void flush_memcg_stats_dwork(stru
- 	 * Deliberately ignore memcg_should_flush_stats() here so that flushing
- 	 * in latency-sensitive paths is as cheap as possible.
- 	 */
--	do_flush_stats();
-+	do_flush_stats(root_mem_cgroup);
- 	queue_delayed_work(system_unbound_wq, &stats_flush_dwork, FLUSH_TIME);
- }
- 
-@@ -1597,7 +1601,7 @@ static void memcg_stat_format(struct mem
- 	 *
- 	 * Current memory state:
- 	 */
--	mem_cgroup_flush_stats();
-+	mem_cgroup_flush_stats(memcg);
- 
- 	for (i = 0; i < ARRAY_SIZE(memory_stats); i++) {
- 		u64 size;
-@@ -4047,7 +4051,7 @@ static int memcg_numa_stat_show(struct s
- 	int nid;
- 	struct mem_cgroup *memcg = mem_cgroup_from_seq(m);
- 
--	mem_cgroup_flush_stats();
-+	mem_cgroup_flush_stats(memcg);
- 
- 	for (stat = stats; stat < stats + ARRAY_SIZE(stats); stat++) {
- 		seq_printf(m, "%s=%lu", stat->name,
-@@ -4122,7 +4126,7 @@ static void memcg1_stat_format(struct me
- 
- 	BUILD_BUG_ON(ARRAY_SIZE(memcg1_stat_names) != ARRAY_SIZE(memcg1_stats));
- 
--	mem_cgroup_flush_stats();
-+	mem_cgroup_flush_stats(memcg);
- 
- 	for (i = 0; i < ARRAY_SIZE(memcg1_stats); i++) {
- 		unsigned long nr;
-@@ -4624,7 +4628,7 @@ void mem_cgroup_wb_stats(struct bdi_writ
- 	struct mem_cgroup *memcg = mem_cgroup_from_css(wb->memcg_css);
- 	struct mem_cgroup *parent;
- 
--	mem_cgroup_flush_stats();
-+	mem_cgroup_flush_stats(memcg);
- 
- 	*pdirty = memcg_page_state(memcg, NR_FILE_DIRTY);
- 	*pwriteback = memcg_page_state(memcg, NR_WRITEBACK);
-@@ -6704,7 +6708,7 @@ static int memory_numa_stat_show(struct
- 	int i;
- 	struct mem_cgroup *memcg = mem_cgroup_from_seq(m);
- 
--	mem_cgroup_flush_stats();
-+	mem_cgroup_flush_stats(memcg);
- 
- 	for (i = 0; i < ARRAY_SIZE(memory_stats); i++) {
- 		int nid;
-@@ -7868,7 +7872,11 @@ bool obj_cgroup_may_zswap(struct obj_cgr
- 			break;
- 		}
- 
--		cgroup_rstat_flush(memcg->css.cgroup);
-+		/*
-+		 * mem_cgroup_flush_stats() ignores small changes. Use
-+		 * do_flush_stats() directly to get accurate stats for charging.
-+		 */
-+		do_flush_stats(memcg);
- 		pages = memcg_page_state(memcg, MEMCG_ZSWAP_B) / PAGE_SIZE;
- 		if (pages < max)
- 			continue;
-@@ -7933,8 +7941,10 @@ void obj_cgroup_uncharge_zswap(struct ob
- static u64 zswap_current_read(struct cgroup_subsys_state *css,
- 			      struct cftype *cft)
- {
--	cgroup_rstat_flush(css->cgroup);
--	return memcg_page_state(mem_cgroup_from_css(css), MEMCG_ZSWAP_B);
-+	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
-+
-+	mem_cgroup_flush_stats(memcg);
-+	return memcg_page_state(memcg, MEMCG_ZSWAP_B);
- }
- 
- static int zswap_max_show(struct seq_file *m, void *v)
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -2911,7 +2911,7 @@ static void prepare_scan_count(pg_data_t
- 	 * Flush the memory cgroup stats, so that we read accurate per-memcg
- 	 * lruvec stats for heuristics.
- 	 */
--	mem_cgroup_flush_stats();
-+	mem_cgroup_flush_stats(sc->target_mem_cgroup);
- 
- 	/*
- 	 * Determine the scan balance between anon and file LRUs.
---- a/mm/workingset.c
-+++ b/mm/workingset.c
-@@ -464,8 +464,12 @@ bool workingset_test_recent(void *shadow
- 
- 	rcu_read_unlock();
- 
--	/* Flush stats (and potentially sleep) outside the RCU read section */
--	mem_cgroup_flush_stats_ratelimited();
-+	/*
-+	 * Flush stats (and potentially sleep) outside the RCU read section.
-+	 * XXX: With per-memcg flushing and thresholding, is ratelimiting
-+	 * still needed here?
-+	 */
-+	mem_cgroup_flush_stats_ratelimited(eviction_memcg);
- 
- 	eviction_lruvec = mem_cgroup_lruvec(eviction_memcg, pgdat);
- 	refault = atomic_long_read(&eviction_lruvec->nonresident_age);
-@@ -676,7 +680,7 @@ static unsigned long count_shadow_nodes(
- 		struct lruvec *lruvec;
- 		int i;
- 
--		mem_cgroup_flush_stats_ratelimited();
-+		mem_cgroup_flush_stats_ratelimited(sc->memcg);
- 		lruvec = mem_cgroup_lruvec(sc->memcg, NODE_DATA(sc->nid));
- 		for (pages = 0, i = 0; i < NR_LRU_LISTS; i++)
- 			pages += lruvec_page_state_local(lruvec,
 
 
