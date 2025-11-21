@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8D03396E5;
-	Fri, 21 Nov 2025 13:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEBB2F3632;
+	Fri, 21 Nov 2025 13:24:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731494; cv=none; b=G6aSxJYsnvK6+7Pw19+YedUZ4Yq/xYFfXhAOukTBKQZUUJwRA93td+X3E9cCgXYRqKandpTdpS0FNRdYd77rPZVQm9ZPJEwnGdGdsioZTW+4sPN3P96oz//XVj/VaoeCwO4YOiB1K7U4T8VODLIIVuVuwpLrGLwMCkZpTz/V9cI=
+	t=1763731497; cv=none; b=hYxsZZ3zOkdY679SjPXdSYHpqGQjx+NDNX5Qz15+Zor4bFlB8crBOQh6QcYQbW4v0Bksmj2cJbY0D/jRzSmNCztxtZVQMPzAX7QSdU0PAdXBSx7PqmoQdc79rsWisTM3Ro6o51NWhco4qbCET4fTxUNv0s0SvmnjRL3yKK+VkR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731494; c=relaxed/simple;
-	bh=WLm56B2LvgXRijHQnap7bpzSXv+WenEj36b9/DEbQbQ=;
+	s=arc-20240116; t=1763731497; c=relaxed/simple;
+	bh=C3T6DwGyt6yTbiLtP52POH4N7ff3CYog7A3Gy2z+egU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ES2i3FqYWPGEsIAwZXN+tR/yMyVT1wVJmi1rq+EN1Nkx33rHKSNzDfcmj3pFRVNwpMYGdVFDaQ6MHT/Rx2r9M3OvQ7rq7XZzx5ZL6/llk8mUebmJm7gmXDz7jMQhp2kHA+QXwPKTy5UTlKO1/Rz/DKgF2NdOikbjgPDngu675Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ti5s3wZH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qf0qbi9FfIUaxrdiMeOAxWlfb/GOB6cFl09kHCdF0zPsOoAEx5RxcdCLGeEbog/A4Xvm59vdWV4PKHtUdusxWB8CxKVM+zBbZROJVsC51ePvcK88X1ZnZEWpkkLUKhL/rookRBEIrnA0hhCBq94ZGwHFrjm1C6Pn4i7AAlnVakU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pARI3j6r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ti5s3wZH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E9BC4CEF1;
-	Fri, 21 Nov 2025 13:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pARI3j6r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBBC3C4CEF1;
+	Fri, 21 Nov 2025 13:24:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731494;
-	bh=WLm56B2LvgXRijHQnap7bpzSXv+WenEj36b9/DEbQbQ=;
+	s=korg; t=1763731497;
+	bh=C3T6DwGyt6yTbiLtP52POH4N7ff3CYog7A3Gy2z+egU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ti5s3wZHLEB1caG/KIKzx/1ttbjwO0PJJVj2x++p2Tol7KxytgCOKDRmX8cyANNlQ
-	 GVfoc+gc5apN0zhIpc6pUr1WO+WuUNyuIZw+coFnFlMG7/cdon+/lpYWwq0ocUlBVf
-	 /1O3xRVfcw5J4Z/QU373wZS9m9NiyRx5e1tQuKrg=
+	b=pARI3j6rSDpRi+fEQ3S6Uq6tJ1aq8PEB8ZrAOFRUsgmRZM9Qx/ndNPymWLUKSsw1G
+	 tdL3S1CFACYynu0KAEXL2BwKUxWi1S0uNL1uGdhT6tI+F6W2v4bptsNSj65uMi5YaR
+	 Y9+NRecY/7m2qzs5eAaW1XH7BfTBg5BZokgMDfuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.17 193/247] ALSA: hda/hdmi: Fix breakage at probing nvhdmi-mcp driver
-Date: Fri, 21 Nov 2025 14:12:20 +0100
-Message-ID: <20251121130201.650261037@linuxfoundation.org>
+Subject: [PATCH 6.17 194/247] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
+Date: Fri, 21 Nov 2025 14:12:21 +0100
+Message-ID: <20251121130201.686829291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,41 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit 82420bd4e17bdaba8453fbf9e10c58c9ed0c9727 upstream.
+commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf upstream.
 
-After restructuring and splitting the HDMI codec driver code, each
-HDMI codec driver contains the own build_controls and build_pcms ops.
-A copy-n-paste error put the wrong entries for nvhdmi-mcp driver; both
-build_controls and build_pcms are swapped.  Unfortunately both
-callbacks have the very same form, and the compiler didn't complain
-it, either.  This resulted in a NULL dereference because the PCM
-instance hasn't been initialized at calling the build_controls
-callback.
+The PCM stream data in USB-audio driver is transferred over USB URB
+packet buffers, and each packet size is determined dynamically.  The
+packet sizes are limited by some factors such as wMaxPacketSize USB
+descriptor.  OTOH, in the current code, the actually used packet sizes
+are determined only by the rate and the PPS, which may be bigger than
+the size limit above.  This results in a buffer overflow, as reported
+by syzbot.
 
-Fix it by passing the proper entries.
+Basically when the limit is smaller than the calculated packet size,
+it implies that something is wrong, most likely a weird USB
+descriptor.  So the best option would be just to return an error at
+the parameter setup time before doing any further operations.
 
-Fixes: ad781b550f9a ("ALSA: hda/hdmi: Rewrite to new probe method")
+This patch introduces such a sanity check, and returns -EINVAL when
+the packet size is greater than maxpacksize.  The comparison with
+ep->packsize[1] alone should suffice since it's always equal or
+greater than ep->packsize[0].
+
+Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
+Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
+Cc: Lizhi Xu <lizhi.xu@windriver.com>
 Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220743
-Link: https://patch.msgid.link/20251106104647.25805-1-tiwai@suse.de
+Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/hdmi/nvhdmi-mcp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/usb/endpoint.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/sound/hda/codecs/hdmi/nvhdmi-mcp.c
-+++ b/sound/hda/codecs/hdmi/nvhdmi-mcp.c
-@@ -351,8 +351,8 @@ static int nvhdmi_mcp_probe(struct hda_c
- static const struct hda_codec_ops nvhdmi_mcp_codec_ops = {
- 	.probe = nvhdmi_mcp_probe,
- 	.remove = snd_hda_hdmi_simple_remove,
--	.build_controls = nvhdmi_mcp_build_pcms,
--	.build_pcms = nvhdmi_mcp_build_controls,
-+	.build_pcms = nvhdmi_mcp_build_pcms,
-+	.build_controls = nvhdmi_mcp_build_controls,
- 	.init = nvhdmi_mcp_init,
- 	.unsol_event = snd_hda_hdmi_simple_unsol_event,
- };
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1386,6 +1386,11 @@ int snd_usb_endpoint_set_params(struct s
+ 	ep->sample_rem = ep->cur_rate % ep->pps;
+ 	ep->packsize[0] = ep->cur_rate / ep->pps;
+ 	ep->packsize[1] = (ep->cur_rate + (ep->pps - 1)) / ep->pps;
++	if (ep->packsize[1] > ep->maxpacksize) {
++		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
++			      ep->maxpacksize, ep->cur_rate, ep->pps);
++		return -EINVAL;
++	}
+ 
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
 
 
