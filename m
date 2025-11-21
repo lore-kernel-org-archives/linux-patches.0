@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2342E20CCE4;
-	Fri, 21 Nov 2025 13:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32832FC88B;
+	Fri, 21 Nov 2025 13:53:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733207; cv=none; b=l0lPkNRZdWreV0YFlSin7Ntn7K7PXbMD+5B5aVCDO7eVsCgie0cjlw8/oBNl14IsS2Dzf+yRBpNktAKQJlaNuNLvr5ARoGEkL+JHZr3xpfys3YIC6Awg9mK9fSt7OR3WEm9Mgzo4AcidEneObHCixYBp0RD02GVjv0ZKCiMTgzE=
+	t=1763733209; cv=none; b=XHj5W+rZ9dnHUW7Cl2/8g9cN80GQWyQPG6MOigyYxvNRAUGKfv/ap5+HhJ1tLSxPkO93OZrN9XmBdTZbLFUe4ta3EjIUyWLk1vc0gdwePHIZO3HAgNC6YARY/FoULgPeBLILQ6QH7oP5AQpt17VajMs28hUXEoKf2Dr8tXe7h0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733207; c=relaxed/simple;
-	bh=XLY5pvtNjLPWknlfg4WUjz+7niV9qsjuGMw761vqmjg=;
+	s=arc-20240116; t=1763733209; c=relaxed/simple;
+	bh=lKTw5B4HUm+YppOP2B12GbRMgDpOGmR+wvmwWy67LSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y8QM4PWSyC0Q1jqRXQ+G6lAAfwGCrpziF5Phlk079ftttiVd3+PfWDLsKHLCFnV2SoxWFu5aNdViy+O0oW7PFQdlw7uGDszWq4b9Z3cDOcTp8A4xlG7u+eWY3/m+uXwec2Z/+T+spuT4cV0pnS+F1TJEA7B5rFeFNTqKWBdlI2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DkvC/ZFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nWZVx3Wl66x8ZdI8aMlPNzPS6IWexoin1toiRxHYTkXGJsg54FguAKpbM3KVJVP/U4TGEoHbJLNmt5kk1SufjexCpFIVOyqKDq3Te6n/z3UgdC+LvCtcATjWUsWep3YdtHotAOM9/8YfqNkNdhcgHppBdIO1igLpzC6jJX5ljfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkX7PgMc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DkvC/ZFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08C4C116C6;
-	Fri, 21 Nov 2025 13:53:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkX7PgMc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59ED0C4CEF1;
+	Fri, 21 Nov 2025 13:53:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733207;
-	bh=XLY5pvtNjLPWknlfg4WUjz+7niV9qsjuGMw761vqmjg=;
+	s=korg; t=1763733209;
+	bh=lKTw5B4HUm+YppOP2B12GbRMgDpOGmR+wvmwWy67LSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DkvC/ZFB1G8Bz4h52aVZKX0tNKqZA5yW2HIaZxbmqGMh6H3brtsAFagpGiKZHldpf
-	 vXhkj6QodyJ+rLpZqqz4ZFGqTcHK8Zt66JvtbQVbQddUqkLVebb8KlRuk4oTjoXts1
-	 EEbTQVEKt0/rRKEtB2nDc2WhGcq+CXa3KJKftdQc=
+	b=nkX7PgMcLhUp/KlJlyZbuYM9CtZ9Pcmvd+kAnLBjsR61SRxSSpQ4aW4LfMgRv0mVf
+	 1YNxP8WGEsh+SkXP5whN3Bi5QmYbyW3mLnNyr9PEqvkyE6D3x96BWKgH60eqfgdASX
+	 TX0N+1nY9ZQTxEIZJZF2NlDtmcdBhBB+7OKAhXkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Alex Lazar <alazar@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 355/529] net/mlx5e: Fix return value in case of module EEPROM read error
-Date: Fri, 21 Nov 2025 14:10:54 +0100
-Message-ID: <20251121130243.660742285@linuxfoundation.org>
+Subject: [PATCH 6.6 356/529] net/mlx5e: SHAMPO, Fix skb size check for 64K pages
+Date: Fri, 21 Nov 2025 14:10:55 +0100
+Message-ID: <20251121130243.695537530@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,72 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit d1c94bc5b90c21b65469d30d4a6bc8ed715c1bfe ]
+[ Upstream commit bacd8d80181ebe34b599a39aa26bf73a44c91e55 ]
 
-mlx5e_get_module_eeprom_by_page() has weird error handling.
+mlx5e_hw_gro_skb_has_enough_space() uses a formula to check if there is
+enough space in the skb frags to store more data. This formula is
+incorrect for 64K page sizes and it triggers early GRO session
+termination because the first fragment will blow up beyond
+GRO_LEGACY_MAX_SIZE.
 
-First, it is treating -EINVAL as a special case, but it is unclear why.
+This patch adds a special case for page sizes >= GRO_LEGACY_MAX_SIZE
+(64K) which uses the skb->len instead. Within this context,
+the check is safe from fragment overflow because the hardware
+will continuously fill the data up to the reservation size of 64K
+and the driver will coalesce all data from the same page to the same
+fragment. This means that the data will span one fragment or at most
+two for such a large page size.
 
-Second, it tries to fail "gracefully" by returning the number of bytes
-read even in case of an error. This results in wrongly returning
-success (0 return value) if the error occurs before any bytes were
-read.
+It is expected that the if statement will be optimized out as the
+check is done with constants.
 
-Simplify the error handling by returning an error when such occurs. This
-also aligns with the error handling we have in mlx5e_get_module_eeprom()
-for the old API.
-
-This fixes the following case where the query fails, but userspace
-ethtool wrongly treats it as success and dumps an output:
-
-  # ethtool -m eth2
-  netlink warning: mlx5_core: Query module eeprom by page failed, read 0 bytes, err -5
-  netlink warning: mlx5_core: Query module eeprom by page failed, read 0 bytes, err -5
-  Offset		Values
-  ------		------
-  0x0000:		00 00 00 00 05 00 04 00 00 00 00 00 05 00 05 00
-  0x0010:		00 00 00 00 05 00 06 00 50 00 00 00 67 65 20 66
-  0x0020:		61 69 6c 65 64 2c 20 72 65 61 64 20 30 20 62 79
-  0x0030:		74 65 73 2c 20 65 72 72 20 2d 35 00 14 00 03 00
-  0x0040:		08 00 01 00 03 00 00 00 08 00 02 00 1a 00 00 00
-  0x0050:		14 00 04 00 08 00 01 00 04 00 00 00 08 00 02 00
-  0x0060:		0e 00 00 00 14 00 05 00 08 00 01 00 05 00 00 00
-  0x0070:		08 00 02 00 1a 00 00 00 14 00 06 00 08 00 01 00
-
-Fixes: e109d2b204da ("net/mlx5: Implement get_module_eeprom_by_page()")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Alex Lazar <alazar@nvidia.com>
+Fixes: 92552d3abd32 ("net/mlx5e: HW_GRO cqe handler implementation")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1762265736-1028868-1-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1762238915-1027590-3-git-send-email-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index b189220f8a877..ccd2ebfd26737 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -1839,14 +1839,12 @@ static int mlx5e_get_module_eeprom_by_page(struct net_device *netdev,
- 		if (!size_read)
- 			return i;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index fcf7437174e18..1d586451900b8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -2321,7 +2321,10 @@ mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb, u16 data_bcnt)
+ {
+ 	int nr_frags = skb_shinfo(skb)->nr_frags;
  
--		if (size_read == -EINVAL)
--			return -EINVAL;
- 		if (size_read < 0) {
- 			NL_SET_ERR_MSG_FMT_MOD(
- 				extack,
- 				"Query module eeprom by page failed, read %u bytes, err %d\n",
- 				i, size_read);
--			return i;
-+			return size_read;
- 		}
+-	return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
++	if (PAGE_SIZE >= GRO_LEGACY_MAX_SIZE)
++		return skb->len + data_bcnt <= GRO_LEGACY_MAX_SIZE;
++	else
++		return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
+ }
  
- 		i += size_read;
+ static void
 -- 
 2.51.0
 
