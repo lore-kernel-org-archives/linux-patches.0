@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37F430AADC;
-	Fri, 21 Nov 2025 13:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C533451A3;
+	Fri, 21 Nov 2025 13:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731704; cv=none; b=dE0UCQYA0A5PruRkW9E+vYgMcSkUTsl62WRUnyCvRye2iyN/qbNGxYzXg0JD2zhhFwn9Avpe8BiwN7ohrlvWuc2A0DqfGpTEZS87S6dsPUFW3bR2c/J02fH8EHmLRAlnWCW611sQFbCVPhLpJrGlGhhRG9ACmzf8qSxKptuZqKI=
+	t=1763731706; cv=none; b=lhmSHo/BP0lgaEjdoByPleJMVLbcAq+m7q/QrL+I44g5uQ3fd867OjF0X3ST4sfriZBRIwIL3UzIrWyrqk3U8I7F8HbDHur8PjWcFmamnpeuvmIdn3cp+oBzEqQjhQhTI68KKxsXedg0nR6GFEHQZKhgL92v+TdpA4X3aGnvZm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731704; c=relaxed/simple;
-	bh=WKXSOm0SPAZtelLWB3gDfLjVg8mJn3EZBp1W+146uUc=;
+	s=arc-20240116; t=1763731706; c=relaxed/simple;
+	bh=5aUlO81byvI7fNzIdP65RsUUUgEh/1a4yTKIfN5IdSw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uGyjcws4yFCqvYWlZfa8bq4hnDOG+j2pQIQwXw7kKe/BGkDhCW5Vxlqv5/pauvowi1HqalajX+i0zGN0GGqtYhSSB+Nvt44SB1NPwmzpCqP3Qzh4jAa2lGLObBtg/1r5hrSzk3TMCzv9An1udK4v8FGQS4+2LjzYKdWH9orDLZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rkxyOfzG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FvSsCc5/KQeUzhFAw6HudmJs1+qkZC/wMYzZyql/AeWdL2tSvt3BiNUH6f+0Wy+LOUbL30qnoYGSq3Dd3Yz1QUW66B8VyLYgO194PI4VXjDx5mK1IVyxCIjjZaVppzxL52LTya8Cid0Z21yZ8P2Gt9GU4VCvzMdHbDinz6y7ONo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzzH5US4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rkxyOfzG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78072C116C6;
-	Fri, 21 Nov 2025 13:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzzH5US4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4425FC4CEF1;
+	Fri, 21 Nov 2025 13:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731703;
-	bh=WKXSOm0SPAZtelLWB3gDfLjVg8mJn3EZBp1W+146uUc=;
+	s=korg; t=1763731706;
+	bh=5aUlO81byvI7fNzIdP65RsUUUgEh/1a4yTKIfN5IdSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rkxyOfzGi5yOFNQvFWw7oE95otpfhSD5Lsn8MOffJry1+DlMCnJ3xLkby0mvPwNJP
-	 7G0NVSvFO/E0db5ki1eyPdnmlTuQD/iQRgEKshTPR+WkYcGtEPWtLOxy8TOSggJM7E
-	 2GAKC056ZmxHFOE4ldX2v6WWCkMsHhZsWX7H6TZc=
+	b=rzzH5US4Q2h5cEDcSaIdvhcO39c55bKSI9vXWyn2ItIHP22yi/sEGcM9VpjTX4dRH
+	 jRgn/6/IJfwLC4t/eSCtHI94cHyeLnosmP/rvFiIUbH91EE9wPIMj/62TqTm0lHHtb
+	 ipE646YlOygWvqB3H2CptznhEURGsd62MFa3VSQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Joshua Watt <jpewhacker@gmail.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/185] drm/amdgpu: Fix NULL pointer dereference in VRAM logic for APU devices
-Date: Fri, 21 Nov 2025 14:10:45 +0100
-Message-ID: <20251121130144.533376655@linuxfoundation.org>
+Subject: [PATCH 6.12 019/185] NFS4: Fix state renewals missing after boot
+Date: Fri, 21 Nov 2025 14:10:46 +0100
+Message-ID: <20251121130144.569365213@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -47,114 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jesse.Zhang <Jesse.Zhang@amd.com>
+From: Joshua Watt <jpewhacker@gmail.com>
 
-[ Upstream commit 883f309add55060233bf11c1ea6947140372920f ]
+[ Upstream commit 9bb3baa9d1604cd20f49ae7dac9306b4037a0e7a ]
 
-Previously, APU platforms (and other scenarios with uninitialized VRAM managers)
-triggered a NULL pointer dereference in `ttm_resource_manager_usage()`. The root
-cause is not that the `struct ttm_resource_manager *man` pointer itself is NULL,
-but that `man->bdev` (the backing device pointer within the manager) remains
-uninitialized (NULL) on APUs—since APUs lack dedicated VRAM and do not fully
-set up VRAM manager structures. When `ttm_resource_manager_usage()` attempts to
-acquire `man->bdev->lru_lock`, it dereferences the NULL `man->bdev`, leading to
-a kernel OOPS.
+Since the last renewal time was initialized to 0 and jiffies start
+counting at -5 minutes, any clients connected in the first 5 minutes
+after a reboot would have their renewal timer set to a very long
+interval. If the connection was idle, this would result in the client
+state timing out on the server and the next call to the server would
+return NFS4ERR_BADSESSION.
 
-1. **amdgpu_cs.c**: Extend the existing bandwidth control check in
-   `amdgpu_cs_get_threshold_for_moves()` to include a check for
-   `ttm_resource_manager_used()`. If the manager is not used (uninitialized
-   `bdev`), return 0 for migration thresholds immediately—skipping VRAM-specific
-   logic that would trigger the NULL dereference.
+Fix this by initializing the last renewal time to the current jiffies
+instead of 0.
 
-2. **amdgpu_kms.c**: Update the `AMDGPU_INFO_VRAM_USAGE` ioctl and memory info
-   reporting to use a conditional: if the manager is used, return the real VRAM
-   usage; otherwise, return 0. This avoids accessing `man->bdev` when it is
-   NULL.
-
-3. **amdgpu_virt.c**: Modify the vf2pf (virtual function to physical function)
-   data write path. Use `ttm_resource_manager_used()` to check validity: if the
-   manager is usable, calculate `fb_usage` from VRAM usage; otherwise, set
-   `fb_usage` to 0 (APUs have no discrete framebuffer to report).
-
-This approach is more robust than APU-specific checks because it:
-- Works for all scenarios where the VRAM manager is uninitialized (not just APUs),
-- Aligns with TTM's design by using its native helper function,
-- Preserves correct behavior for discrete GPUs (which have fully initialized
-  `man->bdev` and pass the `ttm_resource_manager_used()` check).
-
-v4: use ttm_resource_manager_used(&adev->mman.vram_mgr.manager) instead of checking the adev->gmc.is_app_apu flag (Christian)
-
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Joshua Watt <jpewhacker@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c   | 2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c  | 7 ++++---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c | 4 ++--
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4client.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 082fc12fe28dc..844e49d1499ed 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -691,7 +691,7 @@ static void amdgpu_cs_get_threshold_for_moves(struct amdgpu_device *adev,
- 	 */
- 	const s64 us_upper_bound = 200000;
- 
--	if (!adev->mm_stats.log2_max_MBps) {
-+	if ((!adev->mm_stats.log2_max_MBps) || !ttm_resource_manager_used(&adev->mman.vram_mgr.manager)) {
- 		*max_bytes = 0;
- 		*max_vis_bytes = 0;
- 		return;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-index 016a6f6c4267b..1291ca57a1cb3 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -707,7 +707,8 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		ui64 = atomic64_read(&adev->num_vram_cpu_page_faults);
- 		return copy_to_user(out, &ui64, min(size, 8u)) ? -EFAULT : 0;
- 	case AMDGPU_INFO_VRAM_USAGE:
--		ui64 = ttm_resource_manager_usage(&adev->mman.vram_mgr.manager);
-+		ui64 = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-+			ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) : 0;
- 		return copy_to_user(out, &ui64, min(size, 8u)) ? -EFAULT : 0;
- 	case AMDGPU_INFO_VIS_VRAM_USAGE:
- 		ui64 = amdgpu_vram_mgr_vis_usage(&adev->mman.vram_mgr);
-@@ -753,8 +754,8 @@ int amdgpu_info_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
- 		mem.vram.usable_heap_size = adev->gmc.real_vram_size -
- 			atomic64_read(&adev->vram_pin_size) -
- 			AMDGPU_VM_RESERVED_VRAM;
--		mem.vram.heap_usage =
--			ttm_resource_manager_usage(vram_man);
-+		mem.vram.heap_usage = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-+				ttm_resource_manager_usage(vram_man) : 0;
- 		mem.vram.max_allocation = mem.vram.usable_heap_size * 3 / 4;
- 
- 		mem.cpu_accessible_vram.total_heap_size =
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 01dccd489a805..9247cd7b1868c 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -595,8 +595,8 @@ static int amdgpu_virt_write_vf2pf_data(struct amdgpu_device *adev)
- 	vf2pf_info->driver_cert = 0;
- 	vf2pf_info->os_info.all = 0;
- 
--	vf2pf_info->fb_usage =
--		ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) >> 20;
-+	vf2pf_info->fb_usage = ttm_resource_manager_used(&adev->mman.vram_mgr.manager) ?
-+		 ttm_resource_manager_usage(&adev->mman.vram_mgr.manager) >> 20 : 0;
- 	vf2pf_info->fb_vis_usage =
- 		amdgpu_vram_mgr_vis_usage(&adev->mman.vram_mgr) >> 20;
- 	vf2pf_info->fb_size = adev->gmc.real_vram_size >> 20;
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 37c17f70cebe3..aaf723471228b 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -222,6 +222,7 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
+ 	clp->cl_state = 1 << NFS4CLNT_LEASE_EXPIRED;
+ 	clp->cl_mvops = nfs_v4_minor_ops[cl_init->minorversion];
+ 	clp->cl_mig_gen = 1;
++	clp->cl_last_renewal = jiffies;
+ #if IS_ENABLED(CONFIG_NFS_V4_1)
+ 	init_waitqueue_head(&clp->cl_lock_waitq);
+ #endif
 -- 
 2.51.0
 
