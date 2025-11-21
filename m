@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCD9349AF4;
-	Fri, 21 Nov 2025 13:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC21825F7BF;
+	Fri, 21 Nov 2025 13:38:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732319; cv=none; b=rbhUZLY1c/RXvPsNiJ41nTaQtDUJKYxfeO8GYbnYrq9EeyOoZYWvLAsADS1imRg5Tbo0ftAmMp/F5kPafCpOuey4KlTpmE9hiVbbK/fO/Vffp2cZO159kWM8CPF8KjSKQdTy32m+VtRXGpfT3Y1RRWvUlq7qSGhaN52ysfcgoEA=
+	t=1763732321; cv=none; b=AuAoum7Zub4uqj76+RA4v/cHdMcoGQZ0qpUzToqHEtCInEijniEKN9EME9SRuGmTk3cTkABmi4iNVZdQyiqw+9Jw5ezYN2ersNjiobtg8EMYxKP+UPIDieUWfxFrxEHgGucb3CEGOClSH7lsvxIYgkfkOc8ymhDFPbd2NezEef0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732319; c=relaxed/simple;
-	bh=VHwWbSkOCrz8OE2ZRvLd8UNDB7zSY45xYwtOtGy2l9c=;
+	s=arc-20240116; t=1763732321; c=relaxed/simple;
+	bh=ad1GzY4VHSdIXyIlgXURRoNbccC4R7PZBM+B2i2Nd2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnCAJ8Goa5Mo0xqIF3tXBcAPHk/HOf8BIHmQ1tWtURt1+/0HCA5+v4ylUt5I0+r6ej0sZXAVmMGr2+bFdp4wR108ZycmvaaKZTtsl5WTo3a0h7zTSfNTjxz8rLTCDEn5PxBVCNuhku7J0QR0F4vKlEV0I3Kk5lsg71AA4+cFCTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OumiSscv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JhEuh1DCjJ3SdLAeAvnaQrqb/wp24XtS9Q9yipFtiGuOqzqrXDPFEb0mTVk/BI03a+2f/h/MoUhlhAknHenq037vOcJOId4Py0S7T7QdW9MntAdGZO6LrdGMHOfuNECync4JfLd+rkkdwtQSugqVxkHEr5WwFOgidMPOUnhAhK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9dIMDO4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OumiSscv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6EAC4CEF1;
-	Fri, 21 Nov 2025 13:38:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9dIMDO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CD3C4CEF1;
+	Fri, 21 Nov 2025 13:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732318;
-	bh=VHwWbSkOCrz8OE2ZRvLd8UNDB7zSY45xYwtOtGy2l9c=;
+	s=korg; t=1763732321;
+	bh=ad1GzY4VHSdIXyIlgXURRoNbccC4R7PZBM+B2i2Nd2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OumiSscvdq7c0qmpPrqEps7FRuwYbBSsgdynT2qnfNkt3UjJzuN40vPgJLhln0Aiq
-	 3SKLb2F9vQ/YIEHn/L7lspbY2bB7b1YcCD13teTMrEoKSNqxoJgJIkluUgSAhmWwii
-	 9Z8h1QjRTfIV8a5FjMedVkwkRIsfYBk12tI1TqEM=
+	b=I9dIMDO43LcynGeSc/wFo3oKsb6M1dpIqQsbcfNTZ9wpB260HVkFYfq0YVWrf9MHt
+	 sJCKiT2NSIKTm04LjCWGx57trHbik331CGcf6NjVTCMr02JHz8kuQ15OvSt3IcIGrl
+	 PIhk4tpPup3VTZ9IY8aPnVxaTYmQB8Xo2Zm+eVoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Ming Wang <wangming01@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/529] hwmon: sy7636a: add alias
-Date: Fri, 21 Nov 2025 14:06:18 +0100
-Message-ID: <20251121130233.834198198@linuxfoundation.org>
+Subject: [PATCH 6.6 080/529] irqchip/loongson-pch-lpc: Use legacy domain for PCH-LPC IRQ controller
+Date: Fri, 21 Nov 2025 14:06:19 +0100
+Message-ID: <20251121130233.869253933@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,29 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Ming Wang <wangming01@loongson.cn>
 
-[ Upstream commit 80038a758b7fc0cdb6987532cbbf3f75b13e0826 ]
+[ Upstream commit c33c43f71bda362b292a6e57ac41b64342dc87b3 ]
 
-Add module alias to have it autoloaded.
+On certain Loongson platforms, drivers attempting to request a legacy
+ISA IRQ directly via request_irq() (e.g., IRQ 4) may fail. The
+virtual IRQ descriptor is not fully initialized and lacks a valid irqchip.
 
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://lore.kernel.org/r/20250909080249.30656-1-andreas@kemnade.info
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This issue does not affect ACPI-enumerated devices described in DSDT,
+as their interrupts are properly mapped via the GSI translation path.
+This indicates the LPC irqdomain itself is functional but is not correctly
+handling direct VIRQ-to-HWIRQ mappings.
+
+The root cause is the use of irq_domain_create_linear(). This API sets
+up a domain for dynamic, on-demand mapping, typically triggered by a GSI
+request. It does not pre-populate the mappings for the legacy VIRQ range
+(0-15). Consequently, if no ACPI device claims a specific GSI
+(e.g., GSI 4), the corresponding VIRQ (e.g., VIRQ 4) is never mapped to
+the LPC domain. A direct call to request_irq(4, ...) then fails because
+the kernel cannot resolve this VIRQ to a hardware interrupt managed by
+the LPC controller.
+
+The PCH-LPC interrupt controller is an i8259-compatible legacy device
+that requires a deterministic, static 1-to-1 mapping for IRQs 0-15 to
+support legacy drivers.
+
+Fix this by replacing irq_domain_create_linear() with
+irq_domain_create_legacy(). This API is specifically designed for such
+controllers. It establishes the required static 1-to-1 VIRQ-to-HWIRQ
+mapping for the entire legacy range (0-15) immediately upon domain
+creation. This ensures that any VIRQ in this range is always resolvable,
+making direct calls to request_irq() for legacy IRQs function correctly.
+
+Signed-off-by: Ming Wang <wangming01@loongson.cn>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sy7636a-hwmon.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-loongson-pch-lpc.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/sy7636a-hwmon.c b/drivers/hwmon/sy7636a-hwmon.c
-index ed110884786b4..a12fc0ce70e76 100644
---- a/drivers/hwmon/sy7636a-hwmon.c
-+++ b/drivers/hwmon/sy7636a-hwmon.c
-@@ -104,3 +104,4 @@ module_platform_driver(sy7636a_sensor_driver);
+diff --git a/drivers/irqchip/irq-loongson-pch-lpc.c b/drivers/irqchip/irq-loongson-pch-lpc.c
+index 9b35492fb6be9..1e9fcea1826f8 100644
+--- a/drivers/irqchip/irq-loongson-pch-lpc.c
++++ b/drivers/irqchip/irq-loongson-pch-lpc.c
+@@ -198,8 +198,13 @@ int __init pch_lpc_acpi_init(struct irq_domain *parent,
+ 		goto iounmap_base;
+ 	}
  
- MODULE_DESCRIPTION("SY7636A sensor driver");
- MODULE_LICENSE("GPL");
-+MODULE_ALIAS("platform:sy7636a-temperature");
+-	priv->lpc_domain = irq_domain_create_linear(irq_handle, LPC_COUNT,
+-					&pch_lpc_domain_ops, priv);
++	/*
++	 * The LPC interrupt controller is a legacy i8259-compatible device,
++	 * which requires a static 1:1 mapping for IRQs 0-15.
++	 * Use irq_domain_create_legacy to establish this static mapping early.
++	 */
++	priv->lpc_domain = irq_domain_create_legacy(irq_handle, LPC_COUNT, 0, 0,
++						    &pch_lpc_domain_ops, priv);
+ 	if (!priv->lpc_domain) {
+ 		pr_err("Failed to create IRQ domain\n");
+ 		goto free_irq_handle;
 -- 
 2.51.0
 
