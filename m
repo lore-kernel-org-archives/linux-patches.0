@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA341F09B3;
-	Fri, 21 Nov 2025 13:29:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5949190477;
+	Fri, 21 Nov 2025 13:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731741; cv=none; b=XylxClrEyNNN0oFAxoeCQu78tx4p4YdGGhbkfQCKEp7HV6wQSlD9N3WDfzI5M3/zgW0i8qjyT86MM6SJVn+I1dqb554qUZST/Vu6je6UzvH6d3a2MGFsbhRUcFpDudRnENyqKzvV5bwpQsiBxHtp9DrD6W9dK9HEXOkwJXX6J68=
+	t=1763731744; cv=none; b=ccsP3dnrPYo/uFbrYtz8jdwNEEoo1d8Mp5veKnOaVtuR8oh4X5yGtKr/ZSHOdDrgGIhDppnEj0gr9d0c9d5aIevN5bfC4vs6TyWu+pBLZIW55Y/3HTySacMSnhJQptKgze6b1diqtZw7rdinjkkjAZ2zO3PMjYBY9loX5zUE7Sw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731741; c=relaxed/simple;
-	bh=gDbsgXuSaiPr/UN2sxdV4g2h1JidFDX2L2rM9bIJBSk=;
+	s=arc-20240116; t=1763731744; c=relaxed/simple;
+	bh=fLOcMbXhM8aoj2JLJbGMpaXCIwVNSPDBEvrg8LmC09c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6dBsPwVvmPkQNkJ4jq/FSTZigv2Tc2Q2ALj5nHcXMeP0vtosEdchWq2zfaGEF6EcJC9RVD2bmQzRQCdAlfTkbbpfEHd1ZlVmu5qaxfSwEvDLEEBjkEbDoM1STYwd4OFkublG/fSCrq+bbVze/tK4OIT7NxkCkJM3evltsCVUug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjZyUjAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KamtsM13+p1itpgEjp7bcX0dPywvyAZ3iS2CUng9j5t3xnFrvQPQptohCzXfmeUFd5ev50IAjFQlzVK7Rc+fac9XQq+DDrlPtnNn0iNic6fgTixq5aYQHjl3dksZ/AqDX5uBiwZQuZYY6E0yi96BIzFlyMCRatQQijKCfwQLWWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saP00pQQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjZyUjAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39F5C4CEF1;
-	Fri, 21 Nov 2025 13:29:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saP00pQQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729BFC4CEF1;
+	Fri, 21 Nov 2025 13:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731741;
-	bh=gDbsgXuSaiPr/UN2sxdV4g2h1JidFDX2L2rM9bIJBSk=;
+	s=korg; t=1763731743;
+	bh=fLOcMbXhM8aoj2JLJbGMpaXCIwVNSPDBEvrg8LmC09c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjZyUjAqXP2fhhnSuCzYDI31yQbCTMju3fergH0NwkkVx65Q2hIxXxZtT70rDZ2Jh
-	 76ctv12hrQZsAKlYjgXTkFd7M2RyxBHsFw0uK98qYSAlQcnQ1BTE6B4o7c2o1ZXp4p
-	 +1uFRMJZM18szbJuCcb1X4Xmd4CQCUk616aIYJ30=
+	b=saP00pQQZZsqcUt7dKttIGSEWyWeQ0XqBxuFGlwPwXFm1s4lwaLgSHv4TeHmSbTGQ
+	 P6ILy6ugUVyYMGPwdBovaf2Hr2ehW/R1ZKMmup8LOjGIpM4IRyMNhy2NsT0wPuupWB
+	 Em+0lf8105CQidjYM3P4EZEcfcz8N20JTdXGlq1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>,
-	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Pauli Virtanen <pav@iki.fi>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 065/185] ACPI: CPPC: Limit perf ctrs in PCC check only to online CPUs
-Date: Fri, 21 Nov 2025 14:11:32 +0100
-Message-ID: <20251121130146.222714090@linuxfoundation.org>
+Subject: [PATCH 6.12 066/185] Bluetooth: L2CAP: export l2cap_chan_hold for modules
+Date: Fri, 21 Nov 2025 14:11:33 +0100
+Message-ID: <20251121130146.258562140@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,43 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautham R. Shenoy <gautham.shenoy@amd.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 0fce75870666b46b700cfbd3216380b422f975da ]
+[ Upstream commit e060088db0bdf7932e0e3c2d24b7371c4c5b867c ]
 
-per_cpu(cpc_desc_ptr, cpu) object is initialized for only the online
-CPU via acpi_soft_cpu_online() --> __acpi_processor_start() -->
-acpi_cppc_processor_probe().
+l2cap_chan_put() is exported, so export also l2cap_chan_hold() for
+modules.
 
-However the function cppc_perf_ctrs_in_pcc() checks if the CPPC
-perf-ctrs are in a PCC region for all the present CPUs, which breaks
-when the kernel is booted with "nosmt=force".
+l2cap_chan_hold() has use case in net/bluetooth/6lowpan.c
 
-Hence, limit the check only to the online CPUs.
-
-Fixes: ae2df912d1a5 ("ACPI: CPPC: Disable FIE if registers in PCC regions")
-Reviewed-by: "Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>
-Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://patch.msgid.link/20251107074145.2340-5-gautham.shenoy@amd.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/cppc_acpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index c4a1fee4b4873..62b723f6c48df 100644
---- a/drivers/acpi/cppc_acpi.c
-+++ b/drivers/acpi/cppc_acpi.c
-@@ -1366,7 +1366,7 @@ bool cppc_perf_ctrs_in_pcc(void)
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 7dafc3e0a15aa..41197f9fdf980 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -497,6 +497,7 @@ void l2cap_chan_hold(struct l2cap_chan *c)
+ 
+ 	kref_get(&c->kref);
+ }
++EXPORT_SYMBOL_GPL(l2cap_chan_hold);
+ 
+ struct l2cap_chan *l2cap_chan_hold_unless_zero(struct l2cap_chan *c)
  {
- 	int cpu;
- 
--	for_each_present_cpu(cpu) {
-+	for_each_online_cpu(cpu) {
- 		struct cpc_register_resource *ref_perf_reg;
- 		struct cpc_desc *cpc_desc;
- 
 -- 
 2.51.0
 
