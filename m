@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D32832FC88B;
-	Fri, 21 Nov 2025 13:53:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DDF34C150;
+	Fri, 21 Nov 2025 13:53:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733209; cv=none; b=XHj5W+rZ9dnHUW7Cl2/8g9cN80GQWyQPG6MOigyYxvNRAUGKfv/ap5+HhJ1tLSxPkO93OZrN9XmBdTZbLFUe4ta3EjIUyWLk1vc0gdwePHIZO3HAgNC6YARY/FoULgPeBLILQ6QH7oP5AQpt17VajMs28hUXEoKf2Dr8tXe7h0Q=
+	t=1763733212; cv=none; b=Gk5IAluUltaaOwn86UT0n4nBcr3bIotk6ndNcq83qABmoASNG4qQ6R0xlZrm+QvrpWl6zuEJ5DfiinDKty+ZCvLNVm7jZM+0eP9O9pDkBFZ3Y4Wbu/KPJiBR1bP3qRMWM2aEEOSUljXiBLEKDw6/eu/D6V1Q5OQE9tlISYodJiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733209; c=relaxed/simple;
-	bh=lKTw5B4HUm+YppOP2B12GbRMgDpOGmR+wvmwWy67LSc=;
+	s=arc-20240116; t=1763733212; c=relaxed/simple;
+	bh=hk9rGIg3j6mNJ87k03zFN594Gw3684lDR/lIkqHPsA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nWZVx3Wl66x8ZdI8aMlPNzPS6IWexoin1toiRxHYTkXGJsg54FguAKpbM3KVJVP/U4TGEoHbJLNmt5kk1SufjexCpFIVOyqKDq3Te6n/z3UgdC+LvCtcATjWUsWep3YdtHotAOM9/8YfqNkNdhcgHppBdIO1igLpzC6jJX5ljfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nkX7PgMc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IxScz/1u7uPcCDgTWt4gF9g45Phzzba54QSfGia86xCkFCnAqf4WQtaJ/+ORUFW/L5ki18nISGsmT+3pXP4E8PoXRj7iUFlWC8M8vvqKlXQmEYtLhKsX4SUyk2sFKlqUEkzAXfgJuRjdBOLElEPRLYT6AUCg6D7+Nr3fG27J6iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=meOwp+ag; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nkX7PgMc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59ED0C4CEF1;
-	Fri, 21 Nov 2025 13:53:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="meOwp+ag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDECC4CEF1;
+	Fri, 21 Nov 2025 13:53:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733209;
-	bh=lKTw5B4HUm+YppOP2B12GbRMgDpOGmR+wvmwWy67LSc=;
+	s=korg; t=1763733212;
+	bh=hk9rGIg3j6mNJ87k03zFN594Gw3684lDR/lIkqHPsA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nkX7PgMcLhUp/KlJlyZbuYM9CtZ9Pcmvd+kAnLBjsR61SRxSSpQ4aW4LfMgRv0mVf
-	 1YNxP8WGEsh+SkXP5whN3Bi5QmYbyW3mLnNyr9PEqvkyE6D3x96BWKgH60eqfgdASX
-	 TX0N+1nY9ZQTxEIZJZF2NlDtmcdBhBB+7OKAhXkg=
+	b=meOwp+agXqKqECtxnK33MwbIbTC21Vrban4bbP41I7VVKuiWGQ7C0kNLjJm5tOUNi
+	 HduNR2nkfn5mTM1WrqS9F5HlLiFRAHj56EKOcb1TnHWQWJCWf1eSH58bd8NmypU+nQ
+	 0iB/3MKfhaI+hqL7LgTQ6W6gGQa/0ev0f7l0nAkM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 356/529] net/mlx5e: SHAMPO, Fix skb size check for 64K pages
-Date: Fri, 21 Nov 2025 14:10:55 +0100
-Message-ID: <20251121130243.695537530@linuxfoundation.org>
+Subject: [PATCH 6.6 347/529] net: dsa: b53: stop reading ARL entries if search is done
+Date: Fri, 21 Nov 2025 14:10:46 +0100
+Message-ID: <20251121130243.378293613@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,54 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit bacd8d80181ebe34b599a39aa26bf73a44c91e55 ]
+[ Upstream commit 0be04b5fa62a82a9929ca261f6c9f64a3d0a28da ]
 
-mlx5e_hw_gro_skb_has_enough_space() uses a formula to check if there is
-enough space in the skb frags to store more data. This formula is
-incorrect for 64K page sizes and it triggers early GRO session
-termination because the first fragment will blow up beyond
-GRO_LEGACY_MAX_SIZE.
+The switch clears the ARL_SRCH_STDN bit when the search is done, i.e. it
+finished traversing the ARL table.
 
-This patch adds a special case for page sizes >= GRO_LEGACY_MAX_SIZE
-(64K) which uses the skb->len instead. Within this context,
-the check is safe from fragment overflow because the hardware
-will continuously fill the data up to the reservation size of 64K
-and the driver will coalesce all data from the same page to the same
-fragment. This means that the data will span one fragment or at most
-two for such a large page size.
+This means that there will be no valid result, so we should not attempt
+to read and process any further entries.
 
-It is expected that the if statement will be optimized out as the
-check is done with constants.
+We only ever check the validity of the entries for 4 ARL bin chips, and
+only after having passed the first entry to the b53_fdb_copy().
 
-Fixes: 92552d3abd32 ("net/mlx5e: HW_GRO cqe handler implementation")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/1762238915-1027590-3-git-send-email-tariqt@nvidia.com
+This means that we always pass an invalid entry at the end to the
+b53_fdb_copy(). b53_fdb_copy() does check the validity though before
+passing on the entry, so it never gets passed on.
+
+On < 4 ARL bin chips, we will even continue reading invalid entries
+until we reach the result limit.
+
+Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251102100758.28352-3-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index fcf7437174e18..1d586451900b8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -2321,7 +2321,10 @@ mlx5e_hw_gro_skb_has_enough_space(struct sk_buff *skb, u16 data_bcnt)
- {
- 	int nr_frags = skb_shinfo(skb)->nr_frags;
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 3c5bf65aca6a2..ffe8db7c2f1f4 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1816,7 +1816,7 @@ static int b53_arl_search_wait(struct b53_device *dev)
+ 	do {
+ 		b53_read8(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_CTL, &reg);
+ 		if (!(reg & ARL_SRCH_STDN))
+-			return 0;
++			return -ENOENT;
  
--	return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
-+	if (PAGE_SIZE >= GRO_LEGACY_MAX_SIZE)
-+		return skb->len + data_bcnt <= GRO_LEGACY_MAX_SIZE;
-+	else
-+		return PAGE_SIZE * nr_frags + data_bcnt <= GRO_LEGACY_MAX_SIZE;
- }
- 
- static void
+ 		if (reg & ARL_SRCH_VLID)
+ 			return 0;
 -- 
 2.51.0
 
