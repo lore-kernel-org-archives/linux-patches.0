@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B451A1F09B3;
-	Fri, 21 Nov 2025 13:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5C326CE33;
+	Fri, 21 Nov 2025 13:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731244; cv=none; b=XGOKdq5O7u3GgRZ82GqACbqYghBs1AugI1K0V1aLU/lqh/sADW4nIM5WZfpaH2T7wtG9rCnfS161qdpFFTxpponeRodCrbTJrDEREWHKTh23CUljrTX1jkg7lIxUor1PqAYWg7esXWMO6VGmiKnzJsempVwmL94CpW+4kda/AkI=
+	t=1763731247; cv=none; b=kzRJ5vquqQJ6OhsLMK2hIPj7eTDkmuo5aHdyezO9kBHM/6IV4t1hD60dqpp3p4YzpksEh30AFlMlAuhxjdF7NdZc7vXcZUzYZgZ1t/kKLLYW1W+UVsMWxUDJj6OH0pG96Fghcdedv4BqTqfGbmORDgsEAvowDDeXyenEdM4txXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731244; c=relaxed/simple;
-	bh=fTIN3qyeRNeHEXB7Lgn+kGx+Ik/t1iYfdibrj2yCKLI=;
+	s=arc-20240116; t=1763731247; c=relaxed/simple;
+	bh=ivqBYN+6ThktE3XzatE0XzD+468QmYQOFbJRoYZvACU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fpKGateoYOryqPok8oh9S056ySpcOCoSQsvmHSr3GPHT7DgwVaqAScRs4SwmuT1b+uPaFfqDANpS2ntbDKt6KXqE0YIelio39rGhvi9DrvwBfKvkGIqphl4ho8JE8EX91DvPF262il5a3dlmJVQZKDqioJW3jLh9OuI0cMrh7L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjM/l0mA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HBpgV/kxtwRcPqlTW8zAYMnJwW/+A+4BkJ/abXSAmXq97Vpx1KbSPBcPGax3n0G4vtwzF0xf22hHe8RehBgcyi97kAKX63NFvj6c5gipzolocOW2KzIwn5YC2NufCl3ufuhVJcDZq/EqAytMmcaRx9FgD2h63JLDc6prTFvuwuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXmjq8aT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjM/l0mA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD07C4CEF1;
-	Fri, 21 Nov 2025 13:20:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXmjq8aT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02537C4CEF1;
+	Fri, 21 Nov 2025 13:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731244;
-	bh=fTIN3qyeRNeHEXB7Lgn+kGx+Ik/t1iYfdibrj2yCKLI=;
+	s=korg; t=1763731247;
+	bh=ivqBYN+6ThktE3XzatE0XzD+468QmYQOFbJRoYZvACU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjM/l0mAwXNbyQ6DeDc1xdIREVsNcKM7DuKybhKL9FLn6kMeoXecxy208HFvLpMdb
-	 pdRpZpGfa9MjsTtHkJXyCgHXHF0LY2fcBK/IReNLeQ34wYAg7LdEfWiU42iokRpWzH
-	 jToLL4+Iqq1WiQjeDFAd7C82NW8oavCFEaXNAO98=
+	b=ZXmjq8aTzyd2X6Wm/cILsTlnR49Va+vYhoAmfNGB5EnTVnJvCPdIPYjj6V60AReek
+	 Bby1aB/Q/S2ksBlQLbBG73pM7NwIAniwGYD2bwIqZiE3VUgcE/aNJoZARxBZsfuVRc
+	 CdXwLuAG2/1ld2l0/ynkZ8RPUI3S2Hy2/4iGLKTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <joao.goncalves@toradex.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 140/247] arm64: dts: imx8-ss-img: Avoid gpio0_mipi_csi GPIOs being deferred
-Date: Fri, 21 Nov 2025 14:11:27 +0100
-Message-ID: <20251121130159.751265668@linuxfoundation.org>
+Subject: [PATCH 6.17 141/247] arm64: dts: imx8mp-kontron: Fix USB OTG role switching
+Date: Fri, 21 Nov 2025 14:11:28 +0100
+Message-ID: <20251121130159.786748219@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -46,53 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: João Paulo Gonçalves <joao.goncalves@toradex.com>
+From: Frieder Schrempf <frieder.schrempf@kontron.de>
 
-[ Upstream commit ec4daace64a44b53df76f0629e82684ef09ce869 ]
+[ Upstream commit 6504297872c7a5d0d06247970d32940eba26b8b3 ]
 
-The gpio0_mipi_csi DT nodes are enabled by default, but they are
-dependent on the irqsteer_csi nodes, which are not enabled. This causes
-the gpio0_mipi_csi GPIOs to be probe deferred. Since these GPIOs can be
-used independently of the CSI controller, enable irqsteer_csi by default
-too to prevent them from being deferred and to ensure they work out of
-the box.
+The VBUS supply regulator is currently assigned to the PHY node.
+This causes the VBUS to be always on, even when the controller
+needs to be switched to peripheral mode.
 
-Fixes: 2217f8243714 ("arm64: dts: imx8: add capture controller for i.MX8's img subsystem")
-Signed-off-by: João Paulo Gonçalves <joao.goncalves@toradex.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Fix the OTG role switching by adding a connector node and moving
+the VBUS supply regulator to that node. This way the VBUS gets
+correctly switched according to the current role.
+
+Fixes: 946ab10e3f40 ("arm64: dts: Add support for Kontron OSM-S i.MX8MP SoM and BL carrier board")
+Signed-off-by: Frieder Schrempf <frieder.schrempf@kontron.de>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ .../dts/freescale/imx8mp-kontron-bl-osm-s.dts | 24 +++++++++++++++----
+ 1 file changed, 19 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi
-index 2cf0f7208350a..a72b2f1c4a1b2 100644
---- a/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi
-@@ -67,7 +67,6 @@ img_subsys: bus@58000000 {
- 		power-domains = <&pd IMX_SC_R_CSI_0>;
- 		fsl,channel = <0>;
- 		fsl,num-irqs = <32>;
--		status = "disabled";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts b/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts
+index 0eb9e726a9b81..6c63f0a5fa91b 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mp-kontron-bl-osm-s.dts
+@@ -16,11 +16,20 @@
+ 		ethernet1 = &eqos;
  	};
  
- 	gpio0_mipi_csi0: gpio@58222000 {
-@@ -144,7 +143,6 @@ img_subsys: bus@58000000 {
- 		power-domains = <&pd IMX_SC_R_CSI_1>;
- 		fsl,channel = <0>;
- 		fsl,num-irqs = <32>;
--		status = "disabled";
+-	extcon_usbc: usbc {
+-		compatible = "linux,extcon-usb-gpio";
++	connector {
++		compatible = "gpio-usb-b-connector", "usb-b-connector";
++		id-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
++		label = "Type-C";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_usb1_id>;
+-		id-gpios = <&gpio1 10 GPIO_ACTIVE_HIGH>;
++		type = "micro";
++		vbus-supply = <&reg_usb1_vbus>;
++
++		port {
++			usb_dr_connector: endpoint {
++				remote-endpoint = <&usb3_dwc>;
++			};
++		};
  	};
  
- 	gpio0_mipi_csi1: gpio@58242000 {
+ 	leds {
+@@ -230,9 +239,15 @@
+ 	hnp-disable;
+ 	srp-disable;
+ 	dr_mode = "otg";
+-	extcon = <&extcon_usbc>;
+ 	usb-role-switch;
++	role-switch-default-mode = "peripheral";
+ 	status = "okay";
++
++	port {
++		usb3_dwc: endpoint {
++			remote-endpoint = <&usb_dr_connector>;
++		};
++	};
+ };
+ 
+ &usb_dwc3_1 {
+@@ -261,7 +276,6 @@
+ };
+ 
+ &usb3_phy0 {
+-	vbus-supply = <&reg_usb1_vbus>;
+ 	status = "okay";
+ };
+ 
 -- 
 2.51.0
 
