@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DCDE34F46F;
-	Fri, 21 Nov 2025 13:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A4330AABC;
+	Fri, 21 Nov 2025 13:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732708; cv=none; b=GTjq2x4Ao+UzZU39rhNoxN50P0cvjimkxyIpa+Zo7ME1jh/fTIl/w6J/0jHO1aeVATslDIN+FQbWb8qY5fR/XthxRjjrpJBPVwbBVcDyLIiTrPHqJRLCBNjlljU5xNav/OLUKXvkFowF6gbSJ+7D/qj25fba/0dg4Nc6juTFmj8=
+	t=1763732710; cv=none; b=GC6kqF2n3cQnLiGZtl+dM5NmA1q35jXCWe4VUA3EOQwW8Muhe8e+CNXuKEJbQ5+JHAlpkZVBwG136qjB1LkJqHHGLviIOD9jhncnutR+GXi6JzD4upOepk19ud1xTIjZTCWIVpHVIiK0Tw9b/qeMfjpscj0gfHv7pAHUJF5GU/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732708; c=relaxed/simple;
-	bh=aWh7D9ae01qbFfIBdkp/wXAbN4++Nv2Bx/LDNM7SoZA=;
+	s=arc-20240116; t=1763732710; c=relaxed/simple;
+	bh=ULAOVPYQ57L4vEQDM7AqvqtZb9xmQK/l4SMivOUsxRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uKUvKnpDeVBZi8IW/UvS5D5ZRskXQ9yyMhs1no+D3glv6EvTpM7/+kcGWETOX/EJaQ53sKonGhlZqpv7Y+U0oquUuZCcArJCKP3lvlZ/sSVNJFfbLozpFxgmt3uU1w540b4qlO/aEK5DsL9vGTOyjnJSrVm8Gs2ld2MUTfuNB88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZFByMBzX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Spd7SKwTk+6PPdvgvk+0zk8bh4IsIQFLkgJOEkj1yFLPGUE58OgsiZEbBB3suZTYwRPK/oVx2lQdg0G9Q+6EUeRETg/AjdMXk4zo23ZjCIydXOYopvhw7CQCScDwKL640ROybm8tLnIACnawbcr3nn0M+urz7jqmPrG1elRNvHw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hrSPmxkW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZFByMBzX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B42C4CEF1;
-	Fri, 21 Nov 2025 13:45:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hrSPmxkW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F58C4CEF1;
+	Fri, 21 Nov 2025 13:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732707;
-	bh=aWh7D9ae01qbFfIBdkp/wXAbN4++Nv2Bx/LDNM7SoZA=;
+	s=korg; t=1763732710;
+	bh=ULAOVPYQ57L4vEQDM7AqvqtZb9xmQK/l4SMivOUsxRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFByMBzXzUjyhnoYfb8U1RcYHHcR0fImee0NhoaEToJTVvzwmlanug/BsUlyLwPo0
-	 9apaTvE1LYCpe+lilfUvTbDEmqPdToAvlpiAYyT0Fu3x2XRDYPbygo50TrIaDbNzoD
-	 cQr9pFdb37Yinx346fq0ik6OiURNGfuZnb2ECE98=
+	b=hrSPmxkWEqV9eKwB0O3uG8VaZ5+RTVyZ/98e9uRtkgr0a/mBcRQV5Ye6BbIIad51P
+	 dfKFvfmSWH/nszlF7M8RhRZUyaG/qqfWkO55ZIk6+ARAd7xU6dfRnlhaaMvNb9Ao8w
+	 JK54smrW3r+I17WHDjtjkmslQugtSjgLaaGW6T1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Petr Machata <petrm@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/529] media: redrat3: use int type to store negative error codes
-Date: Fri, 21 Nov 2025 14:08:35 +0100
-Message-ID: <20251121130238.700828419@linuxfoundation.org>
+Subject: [PATCH 6.6 217/529] selftests: traceroute: Use require_command()
+Date: Fri, 21 Nov 2025 14:08:36 +0100
+Message-ID: <20251121130238.736079872@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,38 +53,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianfeng Rong <rongqianfeng@vivo.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit ecba852dc9f4993f4f894ea1f352564560e19a3e ]
+[ Upstream commit 47efbac9b768553331b9459743a29861e0acd797 ]
 
-Change "ret" from u8 to int type in redrat3_enable_detector() to store
-negative error codes or zero returned by redrat3_send_cmd() and
-usb_submit_urb() - this better aligns with the coding standards and
-maintains code consistency.
+Use require_command() so that the test will return SKIP (4) when a
+required command is not present.
 
-No effect on runtime.
+Before:
 
-Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+ # ./traceroute.sh
+ SKIP: Could not run IPV6 test without traceroute6
+ SKIP: Could not run IPV4 test without traceroute
+ $ echo $?
+ 0
+
+After:
+
+ # ./traceroute.sh
+ TEST: traceroute6 not installed                                    [SKIP]
+ $ echo $?
+ 4
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20250908073238.119240-6-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/redrat3.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/traceroute.sh | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
-index 9f2947af33aa7..880981e1c507e 100644
---- a/drivers/media/rc/redrat3.c
-+++ b/drivers/media/rc/redrat3.c
-@@ -422,7 +422,7 @@ static int redrat3_send_cmd(int cmd, struct redrat3_dev *rr3)
- static int redrat3_enable_detector(struct redrat3_dev *rr3)
- {
- 	struct device *dev = rr3->dev;
--	u8 ret;
-+	int ret;
+diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
+index de9ca97abc306..9cb5e96e64333 100755
+--- a/tools/testing/selftests/net/traceroute.sh
++++ b/tools/testing/selftests/net/traceroute.sh
+@@ -209,11 +209,6 @@ setup_traceroute6()
  
- 	ret = redrat3_send_cmd(RR3_RC_DET_ENABLE, rr3);
- 	if (ret != 0)
+ run_traceroute6()
+ {
+-	if [ ! -x "$(command -v traceroute6)" ]; then
+-		echo "SKIP: Could not run IPV6 test without traceroute6"
+-		return
+-	fi
+-
+ 	setup_traceroute6
+ 
+ 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
+@@ -278,11 +273,6 @@ setup_traceroute()
+ 
+ run_traceroute()
+ {
+-	if [ ! -x "$(command -v traceroute)" ]; then
+-		echo "SKIP: Could not run IPV4 test without traceroute"
+-		return
+-	fi
+-
+ 	setup_traceroute
+ 
+ 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
+@@ -316,6 +306,9 @@ do
+ 	esac
+ done
+ 
++require_command traceroute6
++require_command traceroute
++
+ run_tests
+ 
+ printf "\nTests passed: %3d\n" ${nsuccess}
 -- 
 2.51.0
 
