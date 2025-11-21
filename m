@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3177352FA3;
-	Fri, 21 Nov 2025 13:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE8B2DCF55;
+	Fri, 21 Nov 2025 13:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732661; cv=none; b=UVoDSMpA5FfhA1o7muc0r5wAx5O+iKycnvHpCBDOkSgkdFm8Wjf45UALRlrBFvxFtgHoZk09pbo8m50O7qyG0pLGrVjVenVWiGZhI5CYzwECMZU5UAipxfSLpXaZYcteuKTYhZH6ptPWp4JaS3qMuGOQ6UaNbQCf814I3CiIS9g=
+	t=1763732664; cv=none; b=YxcJ2yZiPrb5QZXn4UfFLjESGwtVUlPPXl0uWmK7VzjbcLIYoOQ1WC8Tb3u+N9GLtbvrMBWszLlbvHVcCXOtENW7BReRYWSEINr1HlqLzApuSqanbCbk1SA8GPrY9viKxoglzYU6ME2gT3aWA1XbKxt3Ke9pJ5uiKNM07CcoWlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732661; c=relaxed/simple;
-	bh=eqadG0TNa2I5vt8hH9zyHEJip1ZNp1M44Y7gowd2jBM=;
+	s=arc-20240116; t=1763732664; c=relaxed/simple;
+	bh=UWYlOnY10kvlg7WkfsAmeH4zt1kKLRpKSvBc3aluKew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PAH1yksgCMM914Ph+GmG2D0Jf+uX6TKbb0LMbY1NMSmR1pU0S9i8mLNf8vKBKLAkyOAflXHGOEZQKUTh1Sonc/4gpvMi8HUU+yPz1UkWrhMFs/T3qSs8ZqOFQFp+eucBFGRjumkzCOsQqWC1JZqn1FCw3ckLvtpZ6YykXGUjMC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f7ocPAIv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PS50VS9X6qUK8a1l8jdwnPhV4nUvSmQpmnkMc7VyXMm4vbP8fZrMhCP99zKIJ70K6xG4D3z8k/sCYkfRtcG0uAzb6ddCd16va1+vsg2kDUOU9AtbiA1wy54AEC2ALJSBCrPaX6DqMjW5LPGzzQ+rCntKZ7dG9gOpPn3w3TezdDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdzepUwz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f7ocPAIv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC94C4CEFB;
-	Fri, 21 Nov 2025 13:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdzepUwz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6366C4CEF1;
+	Fri, 21 Nov 2025 13:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732661;
-	bh=eqadG0TNa2I5vt8hH9zyHEJip1ZNp1M44Y7gowd2jBM=;
+	s=korg; t=1763732664;
+	bh=UWYlOnY10kvlg7WkfsAmeH4zt1kKLRpKSvBc3aluKew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7ocPAIv+Z6+MzHJSijOz/0D4SDWUZykHj/h1NeLhC9rBsif7nhLKB/fCzPMXO7/h
-	 bwEoBtHIIrUasB956rJubdtpM0yzi5vyfViB1yz5CEwwjfXUpFK+7/5hfpDZwFIjfM
-	 h2+lIVJ1injMVmWO5a+9V88tnUAS0E8/ZpkF+rGk=
+	b=hdzepUwzjtYPXt/cdZ3nnkIYQzQKhXM3vLJEzKoQQWmteZJL9c4L65XxfVNQeYXQv
+	 hrszgmPSWbjCnQf1mQu8L2/FFTHTnpMLquqoCFeN8+ECJoFHj9r4dsiwjx6kNTsEbL
+	 92VfLiD9Aqg9bL01Kd2uCJhwueJfLQ6y2x8isCFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
+	William Wu <william.wu@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/529] drm/amdgpu: add support for cyan skillfish gpu_info
-Date: Fri, 21 Nov 2025 14:08:17 +0100
-Message-ID: <20251121130238.061593151@linuxfoundation.org>
+Subject: [PATCH 6.6 199/529] usb: gadget: f_hid: Fix zero length packet transfer
+Date: Fri, 21 Nov 2025 14:08:18 +0100
+Message-ID: <20251121130238.097640009@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -50,42 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: William Wu <william.wu@rock-chips.com>
 
-[ Upstream commit fa819e3a7c1ee994ce014cc5a991c7fd91bc00f1 ]
+[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
 
-Some SOCs which are part of the cyan skillfish family
-rely on an explicit firmware for IP discovery.  Add support
-for the gpu_info firmware.
+Set the hid req->zero flag of ep0/in_ep to true by default,
+then the UDC drivers can transfer a zero length packet at
+the end if the hid transfer with size divisible to EPs max
+packet size according to the USB 2.0 spec.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: William Wu <william.wu@rock-chips.com>
+Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/gadget/function/f_hid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 200b59318759d..475d93d4a40bf 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -93,6 +93,7 @@ MODULE_FIRMWARE("amdgpu/picasso_gpu_info.bin");
- MODULE_FIRMWARE("amdgpu/raven2_gpu_info.bin");
- MODULE_FIRMWARE("amdgpu/arcturus_gpu_info.bin");
- MODULE_FIRMWARE("amdgpu/navi12_gpu_info.bin");
-+MODULE_FIRMWARE("amdgpu/cyan_skillfish_gpu_info.bin");
- 
- #define AMDGPU_RESUME_MS		2000
- #define AMDGPU_MAX_RETRY_LIMIT		2
-@@ -1939,6 +1940,9 @@ static int amdgpu_device_parse_gpu_info_fw(struct amdgpu_device *adev)
- 	case CHIP_NAVI12:
- 		chip_name = "navi12";
- 		break;
-+	case CHIP_CYAN_SKILLFISH:
-+		chip_name = "cyan_skillfish";
-+		break;
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 2f1ec03d17d6d..d8dafebeabea4 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -494,7 +494,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
  	}
  
- 	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_gpu_info.bin", chip_name);
+ 	req->status   = 0;
+-	req->zero     = 0;
++	req->zero     = 1;
+ 	req->length   = count;
+ 	req->complete = f_hidg_req_complete;
+ 	req->context  = hidg;
+@@ -765,7 +765,7 @@ static int hidg_setup(struct usb_function *f,
+ 	return -EOPNOTSUPP;
+ 
+ respond:
+-	req->zero = 0;
++	req->zero = 1;
+ 	req->length = length;
+ 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+ 	if (status < 0)
 -- 
 2.51.0
 
