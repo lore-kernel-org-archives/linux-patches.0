@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DD126CE33;
-	Fri, 21 Nov 2025 13:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7E7339B3C;
+	Fri, 21 Nov 2025 13:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732607; cv=none; b=sMK7vCCubyOLyMZEn0qrRR2sR21x28MWa9s9bFUc140nNuAn2a3MpOYJ6aR+FrOJOcqY8LF2aO4UDMEhsyVDpgwl8AV/OWSM6yQhMal7BbKATkk4X8QonZrgaVTO1xm29AMlziZHtfN/FvEqI3fwyeH7DGmQLc19/7nfPJ+SzGA=
+	t=1763732610; cv=none; b=D0kDw8nthRh8WsdjJb6ioOwXOaCOycS+XC4epLvRnCHfDenD1YGOJWHNs/SwUjp3IvEqxr7BytgjLTtO4P55UEanIfyx2yudY+u5FrFhHRw7XwCRn9hHsG3i2VaBfeAOko9moD0z6X5NcRfAkrqPJlOo3UGkKCeCmRk1RbTOHW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732607; c=relaxed/simple;
-	bh=dTisBosMkuA+1UZ5/Rbb1ax0o5/P6v3/WN6SRhKVljE=;
+	s=arc-20240116; t=1763732610; c=relaxed/simple;
+	bh=UB48A6IVvLKvqsHantBgbTPKo/ef/FqfaT7WDRYahOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYnU2YiMXYw6wIRctFYM4e63EPoCCLJJnX0jQfaDfD6HvkMAn+PzmbJ4Da5DGmlhSWWCVelC64Xd/ThZeJn0wmrACUv1h9ji4ZA6pQtcOnVGzjm9U4xRfjbMnnL/U31ghrVzS7FLjadg9xB5ryOuMwvVF3gqTw1JAibonZ4PagQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=erOaYkiw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q8ARY1nV/lTEjbPYYlXlcdTtl/+/QtJtmIAOaynhfxQYeKvdH3xhmdUHU0L/1ZWNHtvFT3e4ljI8s5KJ3Qdt7SZH36sD6qL34/LnW9JS2ljfpdEys8ZtRlPKJFeZhl3PbSLVIOx5dJ/a6M5cuyTE5aRMk+Ruf9G3mcgh9Q6/xGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xE92pzM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="erOaYkiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF15C4CEF1;
-	Fri, 21 Nov 2025 13:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xE92pzM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E8AC4CEF1;
+	Fri, 21 Nov 2025 13:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732607;
-	bh=dTisBosMkuA+1UZ5/Rbb1ax0o5/P6v3/WN6SRhKVljE=;
+	s=korg; t=1763732610;
+	bh=UB48A6IVvLKvqsHantBgbTPKo/ef/FqfaT7WDRYahOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=erOaYkiwLoBryZ+B11oO01iXMCl1MF0ta2O/sFpqCqld08bEZ93vfzWGO3sI6MZdl
-	 4rXljmhTgXGfuKTYa+06t0+mvDsaJ3vKz1uky/hoPQi3miT2J1/iHx92ZAh1Xa18xv
-	 p7uQLKMVq0rH5u2da89hVGxWIyOwB2GBtGKHeHb0=
+	b=xE92pzM9Yy0BJ9AznFctXi2xlom3mmCr53cwZA3ZXHkEB7xoP0A5dCUUhp4sn1phE
+	 oHvUo7DB4l147Ry+jHFUh3683XrUKbi6F3qnn1qR4xxCk6qUI8q+J/N565CDQNRVnR
+	 dp7wWMO0fNpXq+EQWdB4bzZMv68UAUrkgeYXj7WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devendra K Verma <devverma@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 181/529] dmaengine: dw-edma: Set status for callback_result
-Date: Fri, 21 Nov 2025 14:08:00 +0100
-Message-ID: <20251121130237.457269267@linuxfoundation.org>
+Subject: [PATCH 6.6 182/529] drm/msm/dsi/phy: Toggle back buffer resync after preparing PLL
+Date: Fri, 21 Nov 2025 14:08:01 +0100
+Message-ID: <20251121130237.492444221@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,72 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devendra K Verma <devverma@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 5e742de97c806a4048418237ef1283e7d71eaf4b ]
+[ Upstream commit b63f008f395ca5f6bc89123db97440bdc19981c4 ]
 
-DMA Engine has support for the callback_result which provides
-the status of the request and the residue. This helps in
-determining the correct status of the request and in
-efficient resource management of the request.
-The 'callback_result' method is preferred over the deprecated
-'callback' method.
+According to Hardware Programming Guide for DSI PHY, the retime buffer
+resync should be done after PLL clock users (byte_clk and intf_byte_clk)
+are enabled.  Downstream also does it as part of configuring the PLL.
 
-Signed-off-by: Devendra K Verma <devverma@amd.com>
-Link: https://lore.kernel.org/r/20250821121505.318179-1-devverma@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Driver was only turning off the resync FIFO buffer, but never bringing it
+on again.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/657823/
+Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 68236247059d1..9ae789d4aca7b 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -595,6 +595,25 @@ dw_edma_device_prep_interleaved_dma(struct dma_chan *dchan,
- 	return dw_edma_device_transfer(&xfer);
- }
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+index f72ce6a3c456d..47ee2fd569db4 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+@@ -445,6 +445,10 @@ static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
+ 	if (pll_7nm->slave)
+ 		dsi_pll_enable_global_clk(pll_7nm->slave);
  
-+static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
-+					enum dmaengine_tx_result result)
-+{
-+	u32 residue = 0;
-+	struct dw_edma_desc *desc;
-+	struct dmaengine_result *res;
++	writel(0x1, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
++	if (pll_7nm->slave)
++		writel(0x1, pll_7nm->slave->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
 +
-+	if (!vd->tx.callback_result)
-+		return;
-+
-+	desc = vd2dw_edma_desc(vd);
-+	if (desc)
-+		residue = desc->alloc_sz - desc->xfer_sz;
-+
-+	res = &vd->tx_result;
-+	res->result = result;
-+	res->residue = residue;
-+}
-+
- static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- {
- 	struct dw_edma_desc *desc;
-@@ -608,6 +627,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- 		case EDMA_REQ_NONE:
- 			desc = vd2dw_edma_desc(vd);
- 			if (!desc->chunks_alloc) {
-+				dw_hdma_set_callback_result(vd,
-+							    DMA_TRANS_NOERROR);
- 				list_del(&vd->node);
- 				vchan_cookie_complete(vd);
- 			}
-@@ -644,6 +665,7 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 	vd = vchan_next_desc(&chan->vc);
- 	if (vd) {
-+		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
- 	}
+ error:
+ 	return rc;
+ }
 -- 
 2.51.0
 
