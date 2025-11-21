@@ -1,37 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033991F09B3;
-	Fri, 21 Nov 2025 13:34:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3C534C83A;
+	Fri, 21 Nov 2025 13:34:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732060; cv=none; b=NzsX2NdoX4DtI09hck2O7R+yoKJ9yuYZVDgL5NCf5M+5gwYYh5bQLNnnk4vTyx1UfTLQQwy2q9UfJ5t6L+PR9nVaekyV+cBtAiWwKgQYde2WeKYZ3fTP9zbpUZGbp+msMk1Szx/6jyj/5P7+vxG5TBt2JxgnNIYrsfihWmHVpfE=
+	t=1763732062; cv=none; b=BBSDcpmU93PHeyNVMho8SzZ0tOl17Gp2euFBhXLWpXTDm29uMm8uwtNHk5UaE8PBAxCVUQJAvmgoAUph5J+2aYexnKXXhhnSTmWP2JIpqFY3Gm2Cppri8L2rYWdRDOzIra6AKcy8rEqEhwvCuYvSfn8tYP7pzmQZUfMN3o+r0I4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732060; c=relaxed/simple;
-	bh=BLakVuQ9Ndz6UTFhBXOrbpDirh2yD+MNU4lTuR69lUQ=;
+	s=arc-20240116; t=1763732062; c=relaxed/simple;
+	bh=0qaAWi9gkjXt1Mx8CIeeIontv2Eg2EoL/njIAe8qyXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ahG2YoTfoYWiSchFSW0SV+ajVSeBWyEw7Se47ddZeikNYmzDOMOL51mW28WrszKdIVuqNjhWerM/aISenXRhk2HPIZMKWlF1TV4dnoNVv81wMUdLnGb6QVT3YPh0NBSRnFZ4XGd2DoNc39h0/hbBX9UbEX5vOoj8F1o5WSnt178=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ff2X/AHL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RiHEtWydLmiAF/Kh9BejynJbrI9aYEy4jbhPYHRnRpZOkp/N1uAS97sb2Rf6+LmQVuItMDCKW3k6rCYeoSkZs54OW2rB7TrzXrH4Vtd+XOc1yixSxbZBR/8VHRLgdzWUplFco7pjWUjd9NauMAWtQr2sPQ6lY4DKsriMB97tqjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqMZyRXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ff2X/AHL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6427DC4CEF1;
-	Fri, 21 Nov 2025 13:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqMZyRXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBADC4CEF1;
+	Fri, 21 Nov 2025 13:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732059;
-	bh=BLakVuQ9Ndz6UTFhBXOrbpDirh2yD+MNU4lTuR69lUQ=;
+	s=korg; t=1763732062;
+	bh=0qaAWi9gkjXt1Mx8CIeeIontv2Eg2EoL/njIAe8qyXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ff2X/AHLQhhUs7z9e1Hpp7hOVLsg+p9AwAMwpK0l4dwfPJRvpX+kr6knkojShhzye
-	 Dbsef0ZZMjxDmDRNVJcLMnTOnh+vAPAy9QjiQIOdx9iPfVsVMxOQ9nFYoHZYZiJJiU
-	 0yE0dYy4bwdEYhocHhlTdYY3mqMrruUeyQWXlbXg=
+	b=oqMZyRXV6tsNummFGIftOjKdGcDrHlALxWaIs6FoVpXIQS9/e88gtqR9wB80vBF2N
+	 upzAPnwyQlvq9O3ukBqLiX53E48jG7EJVYeXSYtDw7sp05ia0ynAJRy4xAMJSCC/PZ
+	 DhnKfVl/5HFqz/dcC+GxDjTZ1TB4DOstBIIAJszQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 158/185] selftests: mptcp: join: properly kill background tasks
-Date: Fri, 21 Nov 2025 14:13:05 +0100
-Message-ID: <20251121130149.576825972@linuxfoundation.org>
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 176/185] mm/memory: do not populate page table entries beyond i_size
+Date: Fri, 21 Nov 2025 14:13:23 +0100
+Message-ID: <20251121130150.241665641@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -50,142 +67,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Kiryl Shutsemau <kas@kernel.org>
 
-commit 852b644acbce1529307a4bb283752c4e77b5cda7 upstream.
+commit 74207de2ba10c2973334906822dc94d2e859ffc5 upstream.
 
-The 'run_tests' function is executed in the background, but killing its
-associated PID would not kill the children tasks running in the
-background.
+Patch series "Fix SIGBUS semantics with large folios", v3.
 
-To properly kill all background tasks, 'kill -- -PID' could be used, but
-this requires kill from procps-ng. Instead, all children tasks are
-listed using 'ps', and 'kill' is called with all PIDs of this group.
+Accessing memory within a VMA, but beyond i_size rounded up to the next
+page size, is supposed to generate SIGBUS.
 
-Fixes: 31ee4ad86afd ("selftests: mptcp: join: stop transfer when check is done (part 1)")
-Cc: stable@vger.kernel.org
-Fixes: 04b57c9e096a ("selftests: mptcp: join: stop transfer when check is done (part 2)")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251110-net-mptcp-sft-join-unstable-v1-6-a4332c714e10@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Darrick reported[1] an xfstests regression in v6.18-rc1.  generic/749
+failed due to missing SIGBUS.  This was caused by my recent changes that
+try to fault in the whole folio where possible:
+
+        19773df031bc ("mm/fault: try to map the entire file folio in finish_fault()")
+        357b92761d94 ("mm/filemap: map entire large folio faultaround")
+
+These changes did not consider i_size when setting up PTEs, leading to
+xfstest breakage.
+
+However, the problem has been present in the kernel for a long time -
+since huge tmpfs was introduced in 2016.  The kernel happily maps
+PMD-sized folios as PMD without checking i_size.  And huge=always tmpfs
+allocates PMD-size folios on any writes.
+
+I considered this corner case when I implemented a large tmpfs, and my
+conclusion was that no one in their right mind should rely on receiving a
+SIGBUS signal when accessing beyond i_size.  I cannot imagine how it could
+be useful for the workload.
+
+But apparently filesystem folks care a lot about preserving strict SIGBUS
+semantics.
+
+Generic/749 was introduced last year with reference to POSIX, but no real
+workloads were mentioned.  It also acknowledged the tmpfs deviation from
+the test case.
+
+POSIX indeed says[3]:
+
+        References within the address range starting at pa and
+        continuing for len bytes to whole pages following the end of an
+        object shall result in delivery of a SIGBUS signal.
+
+The patchset fixes the regression introduced by recent changes as well as
+more subtle SIGBUS breakage due to split failure on truncation.
+
+
+This patch (of 2):
+
+Accesses within VMA, but beyond i_size rounded up to PAGE_SIZE are
+supposed to generate SIGBUS.
+
+Recent changes attempted to fault in full folio where possible.  They did
+not respect i_size, which led to populating PTEs beyond i_size and
+breaking SIGBUS semantics.
+
+Darrick reported generic/749 breakage because of this.
+
+However, the problem existed before the recent changes.  With huge=always
+tmpfs, any write to a file leads to PMD-size allocation.  Following the
+fault-in of the folio will install PMD mapping regardless of i_size.
+
+Fix filemap_map_pages() and finish_fault() to not install:
+  - PTEs beyond i_size;
+  - PMD mappings across i_size;
+
+Make an exception for shmem/tmpfs that for long time intentionally
+mapped with PMDs across i_size.
+
+Link: https://lkml.kernel.org/r/20251027115636.82382-1-kirill@shutemov.name
+Link: https://lkml.kernel.org/r/20251027115636.82382-2-kirill@shutemov.name
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Fixes: 6795801366da ("xfs: Support large folios")
+Reported-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   18 +++++++++---------
- tools/testing/selftests/net/mptcp/mptcp_lib.sh  |   21 +++++++++++++++++++++
- 2 files changed, 30 insertions(+), 9 deletions(-)
+ mm/filemap.c |   20 +++++++++++++++-----
+ mm/memory.c  |   23 +++++++++++++++++++++--
+ 2 files changed, 36 insertions(+), 7 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3616,7 +3616,7 @@ userspace_tests()
- 		chk_mptcp_info subflows 0 subflows 0
- 		chk_subflows_total 1 1
- 		kill_events_pids
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 	fi
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3653,13 +3653,27 @@ vm_fault_t filemap_map_pages(struct vm_f
+ 	vm_fault_t ret = 0;
+ 	unsigned long rss = 0;
+ 	unsigned int nr_pages = 0, mmap_miss = 0, mmap_miss_saved, folio_type;
++	bool can_map_large;
  
- 	# userspace pm create destroy subflow
-@@ -3644,7 +3644,7 @@ userspace_tests()
- 		chk_mptcp_info subflows 0 subflows 0
- 		chk_subflows_total 1 1
- 		kill_events_pids
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 	fi
+ 	rcu_read_lock();
+ 	folio = next_uptodate_folio(&xas, mapping, end_pgoff);
+ 	if (!folio)
+ 		goto out;
  
- 	# userspace pm create id 0 subflow
-@@ -3665,7 +3665,7 @@ userspace_tests()
- 		chk_mptcp_info subflows 1 subflows 1
- 		chk_subflows_total 2 2
- 		kill_events_pids
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 	fi
- 
- 	# userspace pm remove initial subflow
-@@ -3689,7 +3689,7 @@ userspace_tests()
- 		chk_mptcp_info subflows 1 subflows 1
- 		chk_subflows_total 1 1
- 		kill_events_pids
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 	fi
- 
- 	# userspace pm send RM_ADDR for ID 0
-@@ -3715,7 +3715,7 @@ userspace_tests()
- 		chk_mptcp_info subflows 1 subflows 1
- 		chk_subflows_total 1 1
- 		kill_events_pids
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 	fi
- }
- 
-@@ -3745,7 +3745,7 @@ endpoint_tests()
- 		pm_nl_add_endpoint $ns2 10.0.2.2 flags signal
- 		pm_nl_check_endpoint "modif is allowed" \
- 			$ns2 10.0.2.2 id 1 flags signal
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 	fi
- 
- 	if reset_with_tcp_filter "delete and re-add" ns2 10.0.3.2 REJECT OUTPUT &&
-@@ -3800,7 +3800,7 @@ endpoint_tests()
- 			chk_mptcp_info subflows 3 subflows 3
- 		done
- 
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 
- 		kill_events_pids
- 		chk_evt_nr ns1 MPTCP_LIB_EVENT_LISTENER_CREATED 1
-@@ -3874,7 +3874,7 @@ endpoint_tests()
- 		wait_mpj $ns2
- 		chk_subflow_nr "after re-re-add ID 0" 3
- 		chk_mptcp_info subflows 3 subflows 3
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 
- 		kill_events_pids
- 		chk_evt_nr ns1 MPTCP_LIB_EVENT_LISTENER_CREATED 1
-@@ -3922,7 +3922,7 @@ endpoint_tests()
- 		wait_mpj $ns2
- 		pm_nl_add_endpoint $ns1 10.0.3.1 id 2 flags signal
- 		wait_mpj $ns2
--		mptcp_lib_kill_wait $tests_pid
-+		mptcp_lib_kill_group_wait $tests_pid
- 
- 		join_syn_tx=3 join_connect_err=1 \
- 			chk_join_nr 2 2 2
---- a/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_lib.sh
-@@ -327,6 +327,27 @@ mptcp_lib_kill_wait() {
- 	wait "${1}" 2>/dev/null
- }
- 
-+# $1: PID
-+mptcp_lib_pid_list_children() {
-+	local curr="${1}"
-+	# evoke 'ps' only once
-+	local pids="${2:-"$(ps o pid,ppid)"}"
+-	if (filemap_map_pmd(vmf, folio, start_pgoff)) {
++	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
++	end_pgoff = min(end_pgoff, file_end);
 +
-+	echo "${curr}"
++	/*
++	 * Do not allow to map with PTEs beyond i_size and with PMD
++	 * across i_size to preserve SIGBUS semantics.
++	 *
++	 * Make an exception for shmem/tmpfs that for long time
++	 * intentionally mapped with PMDs across i_size.
++	 */
++	can_map_large = shmem_mapping(mapping) ||
++		file_end >= folio_next_index(folio);
 +
-+	local pid
-+	for pid in $(echo "${pids}" | awk "\$2 == ${curr} { print \$1 }"); do
-+		mptcp_lib_pid_list_children "${pid}" "${pids}"
-+	done
-+}
++	if (can_map_large && filemap_map_pmd(vmf, folio, start_pgoff)) {
+ 		ret = VM_FAULT_NOPAGE;
+ 		goto out;
+ 	}
+@@ -3672,10 +3686,6 @@ vm_fault_t filemap_map_pages(struct vm_f
+ 		goto out;
+ 	}
+ 
+-	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
+-	if (end_pgoff > file_end)
+-		end_pgoff = file_end;
+-
+ 	folio_type = mm_counter_file(folio);
+ 	do {
+ 		unsigned long end;
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -68,6 +68,7 @@
+ #include <linux/gfp.h>
+ #include <linux/migrate.h>
+ #include <linux/string.h>
++#include <linux/shmem_fs.h>
+ #include <linux/memory-tiers.h>
+ #include <linux/debugfs.h>
+ #include <linux/userfaultfd_k.h>
+@@ -5088,6 +5089,8 @@ fallback:
+ 	else
+ 		page = vmf->page;
+ 
++	folio = page_folio(page);
 +
-+# $1: PID
-+mptcp_lib_kill_group_wait() {
-+	# Some users might not have procps-ng: cannot use "kill -- -PID"
-+	mptcp_lib_pid_list_children "${1}" | xargs -r kill &>/dev/null
-+	wait "${1}" 2>/dev/null
-+}
+ 	/*
+ 	 * check even for read faults because we might have lost our CoWed
+ 	 * page
+@@ -5098,8 +5101,25 @@ fallback:
+ 			return ret;
+ 	}
+ 
++	if (!needs_fallback && vma->vm_file) {
++		struct address_space *mapping = vma->vm_file->f_mapping;
++		pgoff_t file_end;
 +
- # $1: IP address
- mptcp_lib_is_v6() {
- 	[ -z "${1##*:*}" ]
++		file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE);
++
++		/*
++		 * Do not allow to map with PTEs beyond i_size and with PMD
++		 * across i_size to preserve SIGBUS semantics.
++		 *
++		 * Make an exception for shmem/tmpfs that for long time
++		 * intentionally mapped with PMDs across i_size.
++		 */
++		needs_fallback = !shmem_mapping(mapping) &&
++			file_end < folio_next_index(folio);
++	}
++
+ 	if (pmd_none(*vmf->pmd)) {
+-		if (PageTransCompound(page)) {
++		if (!needs_fallback && PageTransCompound(page)) {
+ 			ret = do_set_pmd(vmf, page);
+ 			if (ret != VM_FAULT_FALLBACK)
+ 				return ret;
+@@ -5111,7 +5131,6 @@ fallback:
+ 			return VM_FAULT_OOM;
+ 	}
+ 
+-	folio = page_folio(page);
+ 	nr_pages = folio_nr_pages(folio);
+ 
+ 	/*
 
 
