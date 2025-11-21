@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA441F09AC;
-	Fri, 21 Nov 2025 13:21:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D9AF26E6F4;
+	Fri, 21 Nov 2025 13:21:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731267; cv=none; b=Rt0swRieZzEYIXmNw9mypekcyNAvaF8QkuFA5fIVH6AD24JIQb3Ebd3fXbyIlLLCd5p4+B9zuRMRCsUb676S0L2T1xSa4yvKJcW6cX+p8CK9mRUD3e7oqbrBq7Pa1Qr6kVmXac324sh+jum1lr9P2iYRE/kcs566W5f9aFov65Q=
+	t=1763731270; cv=none; b=luHeVdvo8NO5TjE+itBT/ZSUZkhwrYx7ZoMkXuPiuJntgFa3LtkpfvtyJD0bP2tLKWXCa+O6kS5AaA7vevi/mLJ2/D/pAccL5ywpa62EHnBTvS5yTHVrt5zTLVBJ6jTEufPOsbwQueuOd1LzucYqeT7INCJpR0CF4No9iRH+PPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731267; c=relaxed/simple;
-	bh=ESr4MwQeQ77RTJpWm+kBMbfttRLTJlZLOkLu+59wwa4=;
+	s=arc-20240116; t=1763731270; c=relaxed/simple;
+	bh=yJIdz6Oov/kG6TWyzHMvZuO8SOtYrLa2qsM95yV2u9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+V3iMFqCBs3IVz08uFuvfnAuxx+hDmXShWXG8am8Q7Hld7F4H1csgQt5snFItUIimLRihrEecw6LA1h0nJcabMGZMFJgPjd8g8n5rTBD/F0gGBZE/5PA8itffuq0XkZn970y1O0h/9Y9lWaeN5T03PP7m3glPGSeB70tjgAleQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuyO6Y1Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c3qIEw0FyzJktu+nr0ywQ4a5Sl6uQeeyBiA4VgUshmflvVkqkggKIFK+whtYDArJZaQXMZF1M0430ecIFAG46Q37qNfCdEIYXEQRPudxk5nrVZc/WrsOygaZeeqrkLJWxjEA0sH82+BQhOxEVxpdF5S+F6hD7ibvGb0U5OVcT0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0XOdgYV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuyO6Y1Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD6FDC4CEF1;
-	Fri, 21 Nov 2025 13:21:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0XOdgYV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6798C4CEF1;
+	Fri, 21 Nov 2025 13:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731267;
-	bh=ESr4MwQeQ77RTJpWm+kBMbfttRLTJlZLOkLu+59wwa4=;
+	s=korg; t=1763731270;
+	bh=yJIdz6Oov/kG6TWyzHMvZuO8SOtYrLa2qsM95yV2u9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuyO6Y1ZgjnZWD3EUeICz4Lj3X44rn4P4ouWTbE4sqXh9jN/8FLeGewZ0KgVPFdat
-	 dwTKyrGpiG/AYzum/X1YVbR60bf6r84DXmRPbHOxBI/H1Ash3JftMSqn1jQJLO9Yty
-	 25Xq2VuEkXiFNic6ZbOLxMVCZD1IlCw1fvbX7sbc=
+	b=v0XOdgYVEboBJT+xFl0z4WMYbZ03Yzk5AMPKtruJWfv6usRPVcETXVqdN279qxau2
+	 r4dQjDlEiqm5n98V4z+ID3sS76ISWQjiGlknKhNmXqD/ad7ySwjrmjT2/jbi+GNff9
+	 qywrwWFWYJNyVzUzzFKj9to1p5Vfkk5SeNSOr3ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Silvan Jegen <s.jegen@gmail.com>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 147/247] HID: playstation: Fix memory leak in dualshock4_get_calibration_data()
-Date: Fri, 21 Nov 2025 14:11:34 +0100
-Message-ID: <20251121130200.003660389@linuxfoundation.org>
+Subject: [PATCH 6.17 148/247] HID: uclogic: Fix potential memory leak in error path
+Date: Fri, 21 Nov 2025 14:11:35 +0100
+Message-ID: <20251121130200.039279451@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,40 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 8513c154f8ad7097653dd9bf43d6155e5aad4ab3 ]
+[ Upstream commit a78eb69d60ce893de48dd75f725ba21309131fc2 ]
 
-The memory allocated for buf is not freed in the error paths when
-ps_get_report() fails. Free buf before jumping to transfer_failed label
+In uclogic_params_ugee_v2_init_event_hooks(), the memory allocated for
+event_hook is not freed in the next error path. Fix that by freeing it.
 
-Fixes: 947992c7fa9e ("HID: playstation: DS4: Fix calibration workaround for clone devices")
+Fixes: a251d6576d2a ("HID: uclogic: Handle wireless device reconnection")
 Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-uclogic-params.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 1468fb11e39df..657e9ae1be1ee 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -1807,6 +1807,7 @@ static int dualshock4_get_calibration_data(struct dualshock4 *ds4)
+diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
+index 4a17f7332c3f5..016d1f08bd1db 100644
+--- a/drivers/hid/hid-uclogic-params.c
++++ b/drivers/hid/hid-uclogic-params.c
+@@ -1369,8 +1369,10 @@ static int uclogic_params_ugee_v2_init_event_hooks(struct hid_device *hdev,
+ 	event_hook->hdev = hdev;
+ 	event_hook->size = ARRAY_SIZE(reconnect_event);
+ 	event_hook->event = kmemdup(reconnect_event, event_hook->size, GFP_KERNEL);
+-	if (!event_hook->event)
++	if (!event_hook->event) {
++		kfree(event_hook);
+ 		return -ENOMEM;
++	}
  
- 				hid_warn(hdev, "Failed to retrieve DualShock4 calibration info: %d\n", ret);
- 				ret = -EILSEQ;
-+				kfree(buf);
- 				goto transfer_failed;
- 			} else {
- 				break;
-@@ -1824,6 +1825,7 @@ static int dualshock4_get_calibration_data(struct dualshock4 *ds4)
+ 	list_add_tail(&event_hook->list, &p->event_hooks->list);
  
- 		if (ret) {
- 			hid_warn(hdev, "Failed to retrieve DualShock4 calibration info: %d\n", ret);
-+			kfree(buf);
- 			goto transfer_failed;
- 		}
- 	}
 -- 
 2.51.0
 
