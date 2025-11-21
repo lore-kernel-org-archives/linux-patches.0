@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A713491F3;
-	Fri, 21 Nov 2025 14:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D9234320A;
+	Fri, 21 Nov 2025 14:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733607; cv=none; b=km0ZP2Io5kr58JK0emQm1ShtuTSe2EwffT1Jl19DtxYRooJGDf4HARxeVIR58TRF79TAGtty8Ram9vHwucOsfQYdTdCSYOvHGfDWXzKu/6hHAfZacZ5IPABLiVsuy+VIY1r9uCctULpGkqg4qmEyZY8BvzkASwEZt9iMVciX8uk=
+	t=1763733610; cv=none; b=bK+WjhWl4/DzOY8VGuOfezY4SR7LT9xaWZHQz8wBBp6K3F4EYFRt/KMljSLgpbkjBoQ1EaG/llyLtmK15b8Q9d+RXmN0fT7zChZrNK1WRqw5oODMWcqgP8Jp9qKWYwBgma3UM0DaqcivWyjl3yz2h4S15AvPLsUU+zkCYBMFo90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733607; c=relaxed/simple;
-	bh=V+VaxAIcuKEj58mLY/t0ZzNZZEX5mYYeykpcYmZiXd8=;
+	s=arc-20240116; t=1763733610; c=relaxed/simple;
+	bh=SL3pE5aEhjKlVH7bspzdHUJplv3TRwLHsCzSpFNgiXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V52nWBrtw4YmScAsqfenAXMX1G/rrAZCoZDbVRVZImS8YblkAv88G88LGXM1Ccl7ILiSOQuprxcQoLU5iP6ZJlonys8gCeNbbPeSbxCRe5q9TVpw3IOtMEDWOQIJFHR9WaPXsiSP+OjYgCWyjghxq3aOY54c5qCDriULVK2qc1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZjIH7CZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpioLgT+sB1aUXLpUTC11vvFzi03qEfeZeg+E96zM8K+zKQOvFiqzpl64uvu5/d91zpBx6oqIgWMN/hQzwUUsq+JwbB3EKIDGHx5hF2ipK0EGkf90o8nVBCRYG1bFFK48WG4/P4qjdsKxB0mvtk0qpHoGRy/xBM7+eVtJBNEEo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQQerSCN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZjIH7CZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B03C4CEF1;
-	Fri, 21 Nov 2025 14:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQQerSCN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B104C4CEF1;
+	Fri, 21 Nov 2025 14:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733607;
-	bh=V+VaxAIcuKEj58mLY/t0ZzNZZEX5mYYeykpcYmZiXd8=;
+	s=korg; t=1763733610;
+	bh=SL3pE5aEhjKlVH7bspzdHUJplv3TRwLHsCzSpFNgiXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PZjIH7CZWTvg1y4KN2t7IJBqfrAugJZa6L++uM4vjbMR3q0FTy4rpCXxW6xoTX0gn
-	 iGeRzzuVQVtFTnioYqSRFWpmtUwghY/S7ouw5E7tgKwT73rTMo5961Os0MWPLAC3yH
-	 jMrIaVRuL4OtVm6g8lYGr1LYqFT/YEMPelS2pktw=
+	b=ZQQerSCN3N9AKxaPsYFhSc08CE+OGPsU25QYOW3xBpi+sLszbnWRQP/2dwx+XZdvo
+	 wT64ySxFNzoexwo6TOLJ1jt0BKBMNSVDyDs9pdKTstl/YzWL7GtwO+P+Ef/R7260/Q
+	 IJ9DfdsS6ZS3U3bjLsmJnj6N1+/Tm+xkPj0JiEb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Huang, Ying" <ying.huang@intel.com>,
-	Waiman Long <longman@redhat.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 525/529] memory tiers: use default_dram_perf_ref_source in log message
-Date: Fri, 21 Nov 2025 14:13:44 +0100
-Message-ID: <20251121130249.726357469@linuxfoundation.org>
+	Joao Martins <joao.m.martins@oracle.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 495/529] iommufd: Dont overflow during division for dirty tracking
+Date: Fri, 21 Nov 2025 14:13:14 +0100
+Message-ID: <20251121130248.623893574@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,62 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ying Huang <ying.huang@intel.com>
+From: Jason Gunthorpe <jgg@ziepe.ca>
 
-commit a530bbc53826c607f64e8ee466c3351efaf6aea5 upstream.
+[ Upstream commit cb30dfa75d55eced379a42fd67bd5fb7ec38555e ]
 
-Commit 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
-added a default_dram_perf_ref_source variable that was initialized but
-never used.  This causes kmemleak to report the following memory leak:
+If pgshift is 63 then BITS_PER_TYPE(*bitmap->bitmap) * pgsize will overflow
+to 0 and this triggers divide by 0.
 
-unreferenced object 0xff11000225a47b60 (size 16):
-  comm "swapper/0", pid 1, jiffies 4294761654
-  hex dump (first 16 bytes):
-    41 43 50 49 20 48 4d 41 54 00 c1 4b 7d b7 75 7c  ACPI HMAT..K}.u|
-  backtrace (crc e6d0e7b2):
-    [<ffffffff95d5afdb>] __kmalloc_node_track_caller_noprof+0x36b/0x440
-    [<ffffffff95c276d6>] kstrdup+0x36/0x60
-    [<ffffffff95dfabfa>] mt_set_default_dram_perf+0x23a/0x2c0
-    [<ffffffff9ad64733>] hmat_init+0x2b3/0x660
-    [<ffffffff95203cec>] do_one_initcall+0x11c/0x5c0
-    [<ffffffff9ac9cfc4>] do_initcalls+0x1b4/0x1f0
-    [<ffffffff9ac9d52e>] kernel_init_freeable+0x4ae/0x520
-    [<ffffffff97c789cc>] kernel_init+0x1c/0x150
-    [<ffffffff952aecd1>] ret_from_fork+0x31/0x70
-    [<ffffffff9520b18a>] ret_from_fork_asm+0x1a/0x30
+In this case the index should just be 0, so reorganize things to divide
+by shift and avoid hitting any overflows.
 
-This reminds us that we forget to use the performance data source
-information.  So, use the variable in the error log message to help
-identify the root cause of inconsistent performance number.
-
-Link: https://lkml.kernel.org/r/87y13mvo0n.fsf@yhuang6-desk2.ccr.corp.intel.com
-Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
-Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
-Reported-by: Waiman Long <longman@redhat.com>
-Acked-by: Waiman Long <longman@redhat.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://patch.msgid.link/r/0-v1-663679b57226+172-iommufd_dirty_div0_jgg@nvidia.com
+Cc: stable@vger.kernel.org
+Fixes: 58ccf0190d19 ("vfio: Add an IOVA bitmap support")
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+Reported-by: syzbot+093a8a8b859472e6c257@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=093a8a8b859472e6c257
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+[ drivers/iommu/iommufd/iova_bitmap.c => drivers/vfio/iova_bitmap.c ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory-tiers.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/vfio/iova_bitmap.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/mm/memory-tiers.c
-+++ b/mm/memory-tiers.c
-@@ -649,10 +649,10 @@ int mt_set_default_dram_perf(int nid, st
- 		pr_info(
- "memory-tiers: the performance of DRAM node %d mismatches that of the reference\n"
- "DRAM node %d.\n", nid, default_dram_perf_ref_nid);
--		pr_info("  performance of reference DRAM node %d:\n",
--			default_dram_perf_ref_nid);
-+		pr_info("  performance of reference DRAM node %d from %s:\n",
-+			default_dram_perf_ref_nid, default_dram_perf_ref_source);
- 		dump_hmem_attrs(&default_dram_perf, "    ");
--		pr_info("  performance of DRAM node %d:\n", nid);
-+		pr_info("  performance of DRAM node %d from %s:\n", nid, source);
- 		dump_hmem_attrs(perf, "    ");
- 		pr_info(
- "  disable default DRAM node performance based abstract distance algorithm.\n");
+--- a/drivers/vfio/iova_bitmap.c
++++ b/drivers/vfio/iova_bitmap.c
+@@ -127,9 +127,8 @@ struct iova_bitmap {
+ static unsigned long iova_bitmap_offset_to_index(struct iova_bitmap *bitmap,
+ 						 unsigned long iova)
+ {
+-	unsigned long pgsize = 1UL << bitmap->mapped.pgshift;
+-
+-	return iova / (BITS_PER_TYPE(*bitmap->bitmap) * pgsize);
++	return (iova >> bitmap->mapped.pgshift) /
++	       BITS_PER_TYPE(*bitmap->bitmap);
+ }
+ 
+ /*
 
 
