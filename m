@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391B534029C;
-	Fri, 21 Nov 2025 13:59:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC36A34D4CB;
+	Fri, 21 Nov 2025 13:59:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733561; cv=none; b=GeUPWV7AbtSesbHSR/QJiIRSE6REEXB++e+4l9tl+GdORYQ0lHhO1MoJDG5xF0BAVp15uVs6YkGkCd7+oXyyLWc6z8wtBHeookXFeOg3q2twVrP72kV5U5LVdxjmQeByCeR5S6bBZlDIM6g/X22Urb8jVOVzOFyQl6V2gcYETAE=
+	t=1763733563; cv=none; b=QwvQxt+igLiQFyWJVs4IGCBpYHA8GvdaGq0j8fz+9NFFRNa+wjMVLk1WT4dv+dCQc83/VhtDcjLPDnk/10kvzXQklH3KUFkjsJeDZqcWs2hc5+gw1/KVbN/WSGMu8O4YTU4oqhWMP2V3Y+ppyy/iLhPFGiIMzccSujB0Mios4WU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733561; c=relaxed/simple;
-	bh=AG523CzcmCX9BZ7hTK8gPtir7AXcPDxdET3BAJH1kZk=;
+	s=arc-20240116; t=1763733563; c=relaxed/simple;
+	bh=JWJoUMNIxrDEKHmdD35A7sDsyaXIwjDqPn01SuOIZsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJndhhzXRKijAVIQSyGyRYi4RA5XqsKrosQnUBrOHW08T+XkHbGXjg8PQhkN5+HbBAIQ3brcDqKhA69hR80Xa7Mjw1N6mdukHWTcLIJw1biF+sQfyLCl+s5Jni6ylfJgaYHcvcpUBEsX21BXdYLcOMHV38e7rEp3WwjawwEbt6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5hrlgG7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qiy7HnJ4Z9zk3oHNem37Z4sgPd6W47qJVyqeCV+iHdn8XUr6wXHbaWhpteifYssMyzcaazN7QhfhYJ6GmHCeEdmU4ax0wSAnksyJqXn23WdTGMIyDqktB3VyW8R8Cq9cjuUgk8wclL+G27iqQEniHQ2ORV9DLDXcMO+q4mfaP7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrcj8kO1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5hrlgG7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC3EC4CEF1;
-	Fri, 21 Nov 2025 13:59:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrcj8kO1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A839C4CEF1;
+	Fri, 21 Nov 2025 13:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733560;
-	bh=AG523CzcmCX9BZ7hTK8gPtir7AXcPDxdET3BAJH1kZk=;
+	s=korg; t=1763733563;
+	bh=JWJoUMNIxrDEKHmdD35A7sDsyaXIwjDqPn01SuOIZsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5hrlgG7Mo1CvXtrwvRCyqF0FEzIghucLryv68435VexkvnxAZDSfyE/Rf3tpTocZ
-	 LymywXvwPF5k/VIxo9a9bS7pVoUEyvUV9eCisLFaJRTBsFT4Q1UZwVHRX1a9x2KpFV
-	 aDTJey7eFngrcZyo7s2FSplv6z7a8t/1/BdXJ8xs=
+	b=rrcj8kO1iT+sWe3b9JHKaSNds4+Nb7sD8NejvXGtVyw3kk8d5buRQvbXRm1Isp1hH
+	 pLknLlFbJkGmvyAhSLJKa8/rKgNvdG2SKQxV/aHknp+h12jvhij077EUt+8w/avdvf
+	 R/dO338aqZ9vN03eLG2EWBg4q0toFeKA4ak8HLjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ariel DAlessandro <ariel.dalessandro@collabora.com>,
-	Daniel Stone <daniels@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 493/529] drm/mediatek: Disable AFBC support on Mediatek DRM driver
-Date: Fri, 21 Nov 2025 14:13:12 +0100
-Message-ID: <20251121130248.549645750@linuxfoundation.org>
+	Xin Hao <vernhao@tencent.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shakeel Butt <shakeelb@google.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Leon Huang Fu <leon.huangfu@shopee.com>
+Subject: [PATCH 6.6 511/529] mm: memcg: add THP swap out info for anonymous reclaim
+Date: Fri, 21 Nov 2025 14:13:30 +0100
+Message-ID: <20251121130249.218124865@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,109 +56,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ariel D'Alessandro <ariel.dalessandro@collabora.com>
+From: Xin Hao <vernhao@tencent.com>
 
-[ Upstream commit 9882a40640036d5bbc590426a78981526d4f2345 ]
+[ Upstream commit 811244a501b967b00fecb1ae906d5dc6329c91e0 ]
 
-Commit c410fa9b07c3 ("drm/mediatek: Add AFBC support to Mediatek DRM
-driver") added AFBC support to Mediatek DRM and enabled the
-32x8/split/sparse modifier.
+At present, we support per-memcg reclaim strategy, however we do not know
+the number of transparent huge pages being reclaimed, as we know the
+transparent huge pages need to be splited before reclaim them, and they
+will bring some performance bottleneck effect.  for example, when two
+memcg (A & B) are doing reclaim for anonymous pages at same time, and 'A'
+memcg is reclaiming a large number of transparent huge pages, we can
+better analyze that the performance bottleneck will be caused by 'A'
+memcg.  therefore, in order to better analyze such problems, there add THP
+swap out info for per-memcg.
 
-However, this is currently broken on Mediatek MT8188 (Genio 700 EVK
-platform); tested using upstream Kernel and Mesa (v25.2.1), AFBC is used by
-default since Mesa v25.0.
-
-Kernel trace reports vblank timeouts constantly, and the render is garbled:
-
-```
-[CRTC:62:crtc-0] vblank wait timed out
-WARNING: CPU: 7 PID: 70 at drivers/gpu/drm/drm_atomic_helper.c:1835 drm_atomic_helper_wait_for_vblanks.part.0+0x24c/0x27c
-[...]
-Hardware name: MediaTek Genio-700 EVK (DT)
-Workqueue: events_unbound commit_work
-pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : drm_atomic_helper_wait_for_vblanks.part.0+0x24c/0x27c
-lr : drm_atomic_helper_wait_for_vblanks.part.0+0x24c/0x27c
-sp : ffff80008337bca0
-x29: ffff80008337bcd0 x28: 0000000000000061 x27: 0000000000000000
-x26: 0000000000000001 x25: 0000000000000000 x24: ffff0000c9dcc000
-x23: 0000000000000001 x22: 0000000000000000 x21: ffff0000c66f2f80
-x20: ffff0000c0d7d880 x19: 0000000000000000 x18: 000000000000000a
-x17: 000000040044ffff x16: 005000f2b5503510 x15: 0000000000000000
-x14: 0000000000000000 x13: 74756f2064656d69 x12: 742074696177206b
-x11: 0000000000000058 x10: 0000000000000018 x9 : ffff800082396a70
-x8 : 0000000000057fa8 x7 : 0000000000000cce x6 : ffff8000823eea70
-x5 : ffff0001fef5f408 x4 : ffff80017ccee000 x3 : ffff0000c12cb480
-x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0000c12cb480
-Call trace:
- drm_atomic_helper_wait_for_vblanks.part.0+0x24c/0x27c (P)
- drm_atomic_helper_commit_tail_rpm+0x64/0x80
- commit_tail+0xa4/0x1a4
- commit_work+0x14/0x20
- process_one_work+0x150/0x290
- worker_thread+0x2d0/0x3ec
- kthread+0x12c/0x210
- ret_from_fork+0x10/0x20
----[ end trace 0000000000000000 ]---
-```
-
-Until this gets fixed upstream, disable AFBC support on this platform, as
-it's currently broken with upstream Mesa.
-
-Fixes: c410fa9b07c3 ("drm/mediatek: Add AFBC support to Mediatek DRM driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ariel D'Alessandro <ariel.dalessandro@collabora.com>
-Reviewed-by: Daniel Stone <daniels@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20251024202756.811425-1-ariel.dalessandro@collabora.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-[ Applied to mtk_drm_plane.c instead of mtk_plane.c ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[akpm@linux-foundation.orgL fix swap_writepage_fs(), per Johannes]
+  Link: https://lkml.kernel.org/r/20230913213343.GB48476@cmpxchg.org
+Link: https://lkml.kernel.org/r/20230913164938.16918-1-vernhao@tencent.com
+Signed-off-by: Xin Hao <vernhao@tencent.com>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Shakeel Butt <shakeelb@google.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Leon Huang Fu <leon.huangfu@shopee.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_plane.c |   24 +-----------------------
- 1 file changed, 1 insertion(+), 23 deletions(-)
+ Documentation/admin-guide/cgroup-v2.rst |    9 +++++++++
+ mm/memcontrol.c                         |    2 ++
+ mm/page_io.c                            |    8 ++++----
+ mm/vmscan.c                             |    1 +
+ 4 files changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/mediatek/mtk_drm_plane.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_plane.c
-@@ -21,9 +21,6 @@
+--- a/Documentation/admin-guide/cgroup-v2.rst
++++ b/Documentation/admin-guide/cgroup-v2.rst
+@@ -1532,6 +1532,15 @@ PAGE_SIZE multiple when read back.
+ 		collapsing an existing range of pages. This counter is not
+ 		present when CONFIG_TRANSPARENT_HUGEPAGE is not set.
  
- static const u64 modifiers[] = {
- 	DRM_FORMAT_MOD_LINEAR,
--	DRM_FORMAT_MOD_ARM_AFBC(AFBC_FORMAT_MOD_BLOCK_SIZE_32x8 |
--				AFBC_FORMAT_MOD_SPLIT |
--				AFBC_FORMAT_MOD_SPARSE),
- 	DRM_FORMAT_MOD_INVALID,
++	  thp_swpout (npn)
++		Number of transparent hugepages which are swapout in one piece
++		without splitting.
++
++	  thp_swpout_fallback (npn)
++		Number of transparent hugepages which were split before swapout.
++		Usually because failed to allocate some continuous swap space
++		for the huge page.
++
+   memory.numa_stat
+ 	A read-only nested-keyed file which exists on non-root cgroups.
+ 
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -704,6 +704,8 @@ static const unsigned int memcg_vm_event
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+ 	THP_FAULT_ALLOC,
+ 	THP_COLLAPSE_ALLOC,
++	THP_SWPOUT,
++	THP_SWPOUT_FALLBACK,
+ #endif
  };
  
-@@ -71,26 +68,7 @@ static bool mtk_plane_format_mod_support
- 					   uint32_t format,
- 					   uint64_t modifier)
+--- a/mm/page_io.c
++++ b/mm/page_io.c
+@@ -208,8 +208,10 @@ int swap_writepage(struct page *page, st
+ static inline void count_swpout_vm_event(struct folio *folio)
  {
--	if (modifier == DRM_FORMAT_MOD_LINEAR)
--		return true;
--
--	if (modifier != DRM_FORMAT_MOD_ARM_AFBC(
--				AFBC_FORMAT_MOD_BLOCK_SIZE_32x8 |
--				AFBC_FORMAT_MOD_SPLIT |
--				AFBC_FORMAT_MOD_SPARSE))
--		return false;
--
--	if (format != DRM_FORMAT_XRGB8888 &&
--	    format != DRM_FORMAT_ARGB8888 &&
--	    format != DRM_FORMAT_BGRX8888 &&
--	    format != DRM_FORMAT_BGRA8888 &&
--	    format != DRM_FORMAT_ABGR8888 &&
--	    format != DRM_FORMAT_XBGR8888 &&
--	    format != DRM_FORMAT_RGB888 &&
--	    format != DRM_FORMAT_BGR888)
--		return false;
--
--	return true;
-+	return modifier == DRM_FORMAT_MOD_LINEAR;
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	if (unlikely(folio_test_pmd_mappable(folio)))
++	if (unlikely(folio_test_pmd_mappable(folio))) {
++		count_memcg_folio_events(folio, THP_SWPOUT, 1);
+ 		count_vm_event(THP_SWPOUT);
++	}
+ #endif
+ 	count_vm_events(PSWPOUT, folio_nr_pages(folio));
  }
+@@ -278,9 +280,6 @@ static void sio_write_complete(struct ki
+ 			set_page_dirty(page);
+ 			ClearPageReclaim(page);
+ 		}
+-	} else {
+-		for (p = 0; p < sio->pages; p++)
+-			count_swpout_vm_event(page_folio(sio->bvec[p].bv_page));
+ 	}
  
- static void mtk_drm_plane_destroy_state(struct drm_plane *plane,
+ 	for (p = 0; p < sio->pages; p++)
+@@ -296,6 +295,7 @@ static void swap_writepage_fs(struct pag
+ 	struct file *swap_file = sis->swap_file;
+ 	loff_t pos = page_file_offset(page);
+ 
++	count_swpout_vm_event(page_folio(page));
+ 	set_page_writeback(page);
+ 	unlock_page(page);
+ 	if (wbc->swap_plug)
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1922,6 +1922,7 @@ retry:
+ 								folio_list))
+ 						goto activate_locked;
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
++					count_memcg_folio_events(folio, THP_SWPOUT_FALLBACK, 1);
+ 					count_vm_event(THP_SWPOUT_FALLBACK);
+ #endif
+ 					if (!add_to_swap(folio))
 
 
