@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21C3B2F656A;
-	Fri, 21 Nov 2025 13:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033CB246762;
+	Fri, 21 Nov 2025 13:28:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731688; cv=none; b=bgKmkwrqVeKvQDRrdi18ZFHs2y+crBYTNPVVfUgrXhqssEmkfR1b119JTIhCL9WGDzpaRgx0RSZOnsTO3GcDquZoYChqMcmHrfMGSfqegaEdoARAgTVTrN3IehoPKjjwbtOd0QPmFom/05FY//BDwOo7Y4J4+9/8SVZQ2zB+mzk=
+	t=1763731693; cv=none; b=XVJ9PQIikfn89FAsnkeCsEVpozHj/IE5l/45aYaBNe/gdAYODgVf9w5Z4Da8qxk/BJXA+PjrKDcdSlA+YyjxtK6H+I/YlCyUCaOXjjDuVTS9HiAce5BdURNXeo+Xpr3B9sNvHvYvFWx6egEng0hT1sxd8qtSeBxt9+lICvpkcGc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731688; c=relaxed/simple;
-	bh=6BPL69heS1vrD+ksl3Bpkr0t8cH/+N977zGKgdVeORA=;
+	s=arc-20240116; t=1763731693; c=relaxed/simple;
+	bh=IBkD4e6EMaJ97t1sLnk4GIOBE1w4pu4hjXZFGL1ESgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aPfyO5sFrY4YGqqVOFIXpmF5yUScwayAsIwAcREWcOk/guya9PNBwFJc+YVzVhC4f+mNgv9rC3iGRK5W4e6GVY/ZZf+j5GzfMq+q0iGD4tm8/neo8p1vvG207JzYAeSJ7LvCdjWLMT5DtshhwyjjtDeg1a4pPT55TbS0OFvQs5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qy5m7mJo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=INzEWhMTunhN+8zVXOFISv3gTenxqAjht6riT3I1MUZ0xpMdAaU9MVplTd9mCGsdm/rzmkCPfu7LSDrX/MTLGzIDMLNc6hTdFe5in8QvAuU4DB1zhGI02DY3oDuibTaY00UFRC0Z7Zk1/nuOWDOSDEleqHVdBrS+cbYPdXwY5pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3+7/X6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qy5m7mJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40250C4CEF1;
-	Fri, 21 Nov 2025 13:28:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3+7/X6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E53C4CEF1;
+	Fri, 21 Nov 2025 13:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731684;
-	bh=6BPL69heS1vrD+ksl3Bpkr0t8cH/+N977zGKgdVeORA=;
+	s=korg; t=1763731690;
+	bh=IBkD4e6EMaJ97t1sLnk4GIOBE1w4pu4hjXZFGL1ESgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qy5m7mJo7O4zfzMMIiMjiFHz+aFlJwQ+JZX8/Ab5yGfuk9Biq0RrYSaT8gsubXNE9
-	 jvBEir//KZ08lx80o3D2oHudPEwsk2SDfbcByKp5YuXiUhNRvdbMzhEjlhw9BEJg4l
-	 FIkbYmg7xduoMQdKVKD7AWlGYLJAMh08OGG8B6no=
+	b=l3+7/X6AGvKt8ZZxsnbcX/oZH1NqK/lh6i93oNYnrEL4mQLxAJ5Id8nbSvIya/um9
+	 9KnwImkpibhifwhAtZYUDHDRvaDLMl02cEX3V/8aEDFTrgvG/zrEnGvhPZPlTUOjBg
+	 fZjdBYqWnR9aJFAcrgvvptFNd3QqbHq/yqdGRHwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xin Long <lucien.xin@gmail.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/185] sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto
-Date: Fri, 21 Nov 2025 14:11:11 +0100
-Message-ID: <20251121130145.470624481@linuxfoundation.org>
+Subject: [PATCH 6.12 046/185] net/handshake: Fix memory leak in tls_handshake_accept()
+Date: Fri, 21 Nov 2025 14:11:13 +0100
+Message-ID: <20251121130145.541523526@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -54,83 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 1534ff77757e44bcc4b98d0196bc5c0052fce5fa ]
+[ Upstream commit 3072f00bba764082fa41b3c3a2a7b013335353d2 ]
 
-syzbot reported a possible shift-out-of-bounds [1]
+In tls_handshake_accept(), a netlink message is allocated using
+genlmsg_new(). In the error handling path, genlmsg_cancel() is called
+to cancel the message construction, but the message itself is not freed.
+This leads to a memory leak.
 
-Blamed commit added rto_alpha_max and rto_beta_max set to 1000.
+Fix this by calling nlmsg_free() in the error path after genlmsg_cancel()
+to release the allocated memory.
 
-It is unclear if some sctp users are setting very large rto_alpha
-and/or rto_beta.
-
-In order to prevent user regression, perform the test at run time.
-
-Also add READ_ONCE() annotations as sysctl values can change under us.
-
-[1]
-
-UBSAN: shift-out-of-bounds in net/sctp/transport.c:509:41
-shift exponent 64 is too large for 32-bit type 'unsigned int'
-CPU: 0 UID: 0 PID: 16704 Comm: syz.2.2320 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
-  ubsan_epilogue lib/ubsan.c:233 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x27f/0x420 lib/ubsan.c:494
-  sctp_transport_update_rto.cold+0x1c/0x34b net/sctp/transport.c:509
-  sctp_check_transmitted+0x11c4/0x1c30 net/sctp/outqueue.c:1502
-  sctp_outq_sack+0x4ef/0x1b20 net/sctp/outqueue.c:1338
-  sctp_cmd_process_sack net/sctp/sm_sideeffect.c:840 [inline]
-  sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1372 [inline]
-
-Fixes: b58537a1f562 ("net: sctp: fix permissions for rto_alpha and rto_beta knobs")
-Reported-by: syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/690c81ae.050a0220.3d0d33.014e.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251106111054.3288127-1-edumazet@google.com
+Fixes: 2fd5532044a89 ("net/handshake: Add a kernel API for requesting a TLSv1.3 handshake")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20251106144511.3859535-1-zilin@seu.edu.cn
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/transport.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/handshake/tlshd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/transport.c b/net/sctp/transport.c
-index 31eca29b6cfbf..abb44c0ac1a0b 100644
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -495,6 +495,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
+diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
+index d6f52839827ea..822507b87447c 100644
+--- a/net/handshake/tlshd.c
++++ b/net/handshake/tlshd.c
+@@ -253,6 +253,7 @@ static int tls_handshake_accept(struct handshake_req *req,
  
- 	if (tp->rttvar || tp->srtt) {
- 		struct net *net = tp->asoc->base.net;
-+		unsigned int rto_beta, rto_alpha;
- 		/* 6.3.1 C3) When a new RTT measurement R' is made, set
- 		 * RTTVAR <- (1 - RTO.Beta) * RTTVAR + RTO.Beta * |SRTT - R'|
- 		 * SRTT <- (1 - RTO.Alpha) * SRTT + RTO.Alpha * R'
-@@ -506,10 +507,14 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 		 * For example, assuming the default value of RTO.Alpha of
- 		 * 1/8, rto_alpha would be expressed as 3.
- 		 */
--		tp->rttvar = tp->rttvar - (tp->rttvar >> net->sctp.rto_beta)
--			+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> net->sctp.rto_beta);
--		tp->srtt = tp->srtt - (tp->srtt >> net->sctp.rto_alpha)
--			+ (rtt >> net->sctp.rto_alpha);
-+		rto_beta = READ_ONCE(net->sctp.rto_beta);
-+		if (rto_beta < 32)
-+			tp->rttvar = tp->rttvar - (tp->rttvar >> rto_beta)
-+				+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> rto_beta);
-+		rto_alpha = READ_ONCE(net->sctp.rto_alpha);
-+		if (rto_alpha < 32)
-+			tp->srtt = tp->srtt - (tp->srtt >> rto_alpha)
-+				+ (rtt >> rto_alpha);
- 	} else {
- 		/* 6.3.1 C2) When the first RTT measurement R is made, set
- 		 * SRTT <- R, RTTVAR <- R/2.
+ out_cancel:
+ 	genlmsg_cancel(msg, hdr);
++	nlmsg_free(msg);
+ out:
+ 	return ret;
+ }
 -- 
 2.51.0
 
