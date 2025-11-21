@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 779571F03D7;
-	Fri, 21 Nov 2025 13:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAEB3F9D2;
+	Fri, 21 Nov 2025 13:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731852; cv=none; b=K6qLOV+VaDNZ91MfRYPciUFrzIjbs70OcjA1Zs/qR9gJYSduTB78WwBhOoBijmgYEkWR8PoEagPb9NtEMxel+uf1AoE9qbfjtmD0Iqb9YX4YlGK8RN8eHp7pYwl82HPbfm+KRL6TMIQmmkOn6zf/9IIIpVFb8ucKxAaQMbT8IfM=
+	t=1763731855; cv=none; b=f1gl8WiBcKmTfSyY9vpZmEDA80mEroB5PeKHLNUDU6c//LGCXF+CaSXMd4heaSVDch2rWAiJCmlPpcFQ2IhDdpnQk06TfDqcNA0U8kiJZtstRqtWxdRwt//mynr8DDkKVOFddv4zok+qL6iILm6kK0/Ba3z6BR7XUGk8C1IkzlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731852; c=relaxed/simple;
-	bh=UlKZVUhtFVEKL3VH77v6xqsVZBgoDh0un4OxvFmyHvw=;
+	s=arc-20240116; t=1763731855; c=relaxed/simple;
+	bh=oMIv46PoKYfj168AbrRszBoAC+0/ZAhzJBP63RQywU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rs58iG55Sl/+c5fg1dNwa8wKQ0pW0WqT1u2b0U12FCMNbPGD0ApZmiq3bsV14OmG8aT9q5P7nD6zbAhUpUjbdCZtzzchXmiJsRdT2dHM3U9QRxObzUUrv5p/9w76M7MqU2iR7tcaPkSE688TOixaz81eOZ0+Jeya9HxRnGNaAgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o37SEM+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nwmpnXtVFqsBElrmZ7GM4eXTnnV6JZi39Od+FApqBRkU44CPuVFyt/kSf6m8NEhgNM5QN91EEawxtQt2clHZEW9vHKcyPjThzE+zLC81hHtUcPJiHKUjXxb0ZUjr9Wfb7kGVOUwLfA+RmqgC9kT3NoY5nOyCCg2bE8TEotYNyEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9ySuY2L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o37SEM+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41BBC4CEF1;
-	Fri, 21 Nov 2025 13:30:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9ySuY2L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A5AC4CEF1;
+	Fri, 21 Nov 2025 13:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731852;
-	bh=UlKZVUhtFVEKL3VH77v6xqsVZBgoDh0un4OxvFmyHvw=;
+	s=korg; t=1763731855;
+	bh=oMIv46PoKYfj168AbrRszBoAC+0/ZAhzJBP63RQywU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o37SEM+oyk1EK/e4rA71yH6asAAAtneUJKX7EiUU4thWO2BgpP//IIfYPDsy4VzQb
-	 ofp9mzlbR3mDkTE5xPMO6utSRnfqrovcKcxLh1NB9dIlGfBhsJ/hMuFLT5BokK7esv
-	 WL/I2e17f1ghhG0FPdy65oRscx9xzO03W03zV8MQ=
+	b=m9ySuY2LqIykxgOsRsLNLDuxYE2njoZVno331Wp6XFml4FmfLCMoTHld/19JiroeL
+	 GmVo8aUouItt5tXJM1pSf/3w0iLvdtDEj29JRsWOOHvIblWlGxUIDFdMRnbG+MRfVz
+	 hE1N771/j6bRkxlb5EyC4Sv5m/Bk+UD3Y3pEEU3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f9238a0a31f9b5603fef@syzkaller.appspotmail.com,
-	Penglei Jiang <superman.xpt@gmail.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Adrian Ratiu <adrian.ratiu@collabora.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Felix Moessbauer <felix.moessbauer@siemens.com>,
-	Jeff layton <jlayton@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Mateusz Guzik <mjguzik@gmail.com>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	xu xin <xu.xin16@zte.com.cn>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Jakub Acs <acsjakub@amazon.de>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Silvan Jegen <s.jegen@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 086/185] proc: fix the issue of proc_mem_open returning NULL
-Date: Fri, 21 Nov 2025 14:11:53 +0100
-Message-ID: <20251121130146.971272499@linuxfoundation.org>
+Subject: [PATCH 6.12 104/185] HID: playstation: Fix memory leak in dualshock4_get_calibration_data()
+Date: Fri, 21 Nov 2025 14:12:11 +0100
+Message-ID: <20251121130147.626558855@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -63,131 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Penglei Jiang <superman.xpt@gmail.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit 65c66047259fad1b868d4454bc5af95b46a5f954 ]
+[ Upstream commit 8513c154f8ad7097653dd9bf43d6155e5aad4ab3 ]
 
-proc_mem_open() can return an errno, NULL, or mm_struct*.  If it fails to
-acquire mm, it returns NULL, but the caller does not check for the case
-when the return value is NULL.
+The memory allocated for buf is not freed in the error paths when
+ps_get_report() fails. Free buf before jumping to transfer_failed label
 
-The following conditions lead to failure in acquiring mm:
-
-  - The task is a kernel thread (PF_KTHREAD)
-  - The task is exiting (PF_EXITING)
-
-Changes:
-
-  - Add documentation comments for the return value of proc_mem_open().
-  - Add checks in the caller to return -ESRCH when proc_mem_open()
-    returns NULL.
-
-Link: https://lkml.kernel.org/r/20250404063357.78891-1-superman.xpt@gmail.com
-Reported-by: syzbot+f9238a0a31f9b5603fef@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000f52642060d4e3750@google.com
-Signed-off-by: Penglei Jiang <superman.xpt@gmail.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Adrian Ratiu <adrian.ratiu@collabora.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Felix Moessbauer <felix.moessbauer@siemens.com>
-Cc: Jeff layton <jlayton@kernel.org>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: xu xin <xu.xin16@zte.com.cn>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ acsjakub: applied cleanly ]
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Fixes: 947992c7fa9e ("HID: playstation: DS4: Fix calibration workaround for clone devices")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Silvan Jegen <s.jegen@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/base.c       | 12 +++++++++---
- fs/proc/task_mmu.c   | 12 ++++++------
- fs/proc/task_nommu.c |  4 ++--
- 3 files changed, 17 insertions(+), 11 deletions(-)
+ drivers/hid/hid-playstation.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/proc/base.c b/fs/proc/base.c
-index a2541f5204af0..d060af34a6e83 100644
---- a/fs/proc/base.c
-+++ b/fs/proc/base.c
-@@ -828,7 +828,13 @@ static const struct file_operations proc_single_file_operations = {
- 	.release	= single_release,
- };
+diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
+index 1468fb11e39df..657e9ae1be1ee 100644
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -1807,6 +1807,7 @@ static int dualshock4_get_calibration_data(struct dualshock4 *ds4)
  
--
-+/*
-+ * proc_mem_open() can return errno, NULL or mm_struct*.
-+ *
-+ *   - Returns NULL if the task has no mm (PF_KTHREAD or PF_EXITING)
-+ *   - Returns mm_struct* on success
-+ *   - Returns error code on failure
-+ */
- struct mm_struct *proc_mem_open(struct inode *inode, unsigned int mode)
- {
- 	struct task_struct *task = get_proc_task(inode);
-@@ -853,8 +859,8 @@ static int __mem_open(struct inode *inode, struct file *file, unsigned int mode)
- {
- 	struct mm_struct *mm = proc_mem_open(inode, mode);
+ 				hid_warn(hdev, "Failed to retrieve DualShock4 calibration info: %d\n", ret);
+ 				ret = -EILSEQ;
++				kfree(buf);
+ 				goto transfer_failed;
+ 			} else {
+ 				break;
+@@ -1824,6 +1825,7 @@ static int dualshock4_get_calibration_data(struct dualshock4 *ds4)
  
--	if (IS_ERR(mm))
--		return PTR_ERR(mm);
-+	if (IS_ERR_OR_NULL(mm))
-+		return mm ? PTR_ERR(mm) : -ESRCH;
- 
- 	file->private_data = mm;
- 	return 0;
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index 8f5ad591d7625..08a06fd37f0e1 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -212,8 +212,8 @@ static int proc_maps_open(struct inode *inode, struct file *file,
- 
- 	priv->inode = inode;
- 	priv->mm = proc_mem_open(inode, PTRACE_MODE_READ);
--	if (IS_ERR(priv->mm)) {
--		int err = PTR_ERR(priv->mm);
-+	if (IS_ERR_OR_NULL(priv->mm)) {
-+		int err = priv->mm ? PTR_ERR(priv->mm) : -ESRCH;
- 
- 		seq_release_private(inode, file);
- 		return err;
-@@ -1316,8 +1316,8 @@ static int smaps_rollup_open(struct inode *inode, struct file *file)
- 
- 	priv->inode = inode;
- 	priv->mm = proc_mem_open(inode, PTRACE_MODE_READ);
--	if (IS_ERR(priv->mm)) {
--		ret = PTR_ERR(priv->mm);
-+	if (IS_ERR_OR_NULL(priv->mm)) {
-+		ret = priv->mm ? PTR_ERR(priv->mm) : -ESRCH;
- 
- 		single_release(inode, file);
- 		goto out_free;
-@@ -2049,8 +2049,8 @@ static int pagemap_open(struct inode *inode, struct file *file)
- 	struct mm_struct *mm;
- 
- 	mm = proc_mem_open(inode, PTRACE_MODE_READ);
--	if (IS_ERR(mm))
--		return PTR_ERR(mm);
-+	if (IS_ERR_OR_NULL(mm))
-+		return mm ? PTR_ERR(mm) : -ESRCH;
- 	file->private_data = mm;
- 	return 0;
- }
-diff --git a/fs/proc/task_nommu.c b/fs/proc/task_nommu.c
-index bce6745330003..59bfd61d653aa 100644
---- a/fs/proc/task_nommu.c
-+++ b/fs/proc/task_nommu.c
-@@ -260,8 +260,8 @@ static int maps_open(struct inode *inode, struct file *file,
- 
- 	priv->inode = inode;
- 	priv->mm = proc_mem_open(inode, PTRACE_MODE_READ);
--	if (IS_ERR(priv->mm)) {
--		int err = PTR_ERR(priv->mm);
-+	if (IS_ERR_OR_NULL(priv->mm)) {
-+		int err = priv->mm ? PTR_ERR(priv->mm) : -ESRCH;
- 
- 		seq_release_private(inode, file);
- 		return err;
+ 		if (ret) {
+ 			hid_warn(hdev, "Failed to retrieve DualShock4 calibration info: %d\n", ret);
++			kfree(buf);
+ 			goto transfer_failed;
+ 		}
+ 	}
 -- 
 2.51.0
 
