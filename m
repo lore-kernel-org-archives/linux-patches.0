@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 026113469EC;
-	Fri, 21 Nov 2025 13:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823232737FC;
+	Fri, 21 Nov 2025 13:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730908; cv=none; b=neIy+O7jZQDNoBEVE740ObjOAXCXEhuzLDoiY9+PZ5aLiHeH0qA/CCrD01wi57dMcgBL644CKs16EgkbS9C5C2+AuRppbQu/iFX7NFoAiocPbM5VE8GlPdOGJM01nCc51Utyq7IvqSYLi3rBv4oiYabpxVKiwSh86uwnO0nvv/4=
+	t=1763730909; cv=none; b=Jiz42OSKzuJWAqLG8dq0O1TBeInBa5lo6LP5FgzvS+C+pYzAFVn1aLvLO4RPz2l1cV+Kg+hlwTEsTxvW0lRgjSwnyQmox1wGFTpf7MuTTcyGFu1KcsB9l0jpc+3sz67dTreET5INeGVGK8v5TI2hHWy31Hcsdy3pOvv8XeK3cx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730908; c=relaxed/simple;
-	bh=uGbbMbhEpukgFKIOPRcj0VOOTlKoZ7787yD0E1+IAvs=;
+	s=arc-20240116; t=1763730909; c=relaxed/simple;
+	bh=cO5oKSZMXKGYUwOIzq0FgXTQSzVbGeynsRzzKGqysn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G9g3jHuZ4djo/InsF3mICOl6UBK/0S8JTgOKkKmbdeY+tPfCWcw28qdUpCrSDEJusP5wAJg9PRoirjg7TJAGSPJ0TUiQHimLaYr4X+Up3kH9J555oZLfqLr+OqKA/oNzGRP+dUL3/yfU1uQxBsJVO4fXwkKlbZE7nuClwNwSyZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1t6aE4N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oseN6N1ZkNgfLSqxJzSV11CJHcneklQ12XrS8F7cfBcBhrdnM/oF9cOI3UEirLcK3ru+89QyS+e+E95K8IAxThXUIVvm5X+bBFmWcbgmcFR8TJCkMIXCghawTCGDBPgQzYfWQLmS7XsR07aGmGBO94edKsTRHeynqDOm2pDzY1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1KyyrR4U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1t6aE4N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D71C4CEFB;
-	Fri, 21 Nov 2025 13:15:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1KyyrR4U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C158C4CEF1;
+	Fri, 21 Nov 2025 13:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730907;
-	bh=uGbbMbhEpukgFKIOPRcj0VOOTlKoZ7787yD0E1+IAvs=;
+	s=korg; t=1763730904;
+	bh=cO5oKSZMXKGYUwOIzq0FgXTQSzVbGeynsRzzKGqysn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1t6aE4NdWnA8isRGaTO1ZiFMsVK4RfSSWV0tLVyRzlpihQ01fpVsS1j3qJa9SG9a
-	 Ai21vk7SgL9CGp0yrbdqZ1CC3EU54HZ2rm8HuXNq/Y6QHWVyrYTdMwaDMqS5e+0WJC
-	 Bj6XZFoP6oXMDR7LaSFaJbUVzKPJVoGqo81xHbf4=
+	b=1KyyrR4UqLoOyBbs/RLgKjgaCO4OOFEjKTKm4boVy7dA76HQLdy2gclSgDERhZOkR
+	 3/ju7PIhjcDdhhQix1V0UNceOQUHwNMyebJYVG0w3rH0WQRGrQ2dLet4jtt+ob70dC
+	 P79ezcnY8oNHN/yFJ/hPnXWPnxlGPPv7khCcmfwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Albershteyn <aalbersh@kernel.org>,
-	Jan Kara <jack@suse.cz>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <brauner@kernel.org>,
+	Han Gao <rabenda.cn@gmail.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 024/247] fs: return EOPNOTSUPP from file_setattr/file_getattr syscalls
-Date: Fri, 21 Nov 2025 14:09:31 +0100
-Message-ID: <20251121130155.471328969@linuxfoundation.org>
+Subject: [PATCH 6.17 023/247] riscv: acpi: avoid errors caused by probing DT devices when ACPI is used
+Date: Fri, 21 Nov 2025 14:09:30 +0100
+Message-ID: <20251121130155.435186050@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,45 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Albershteyn <aalbersh@redhat.com>
+From: Han Gao <rabenda.cn@gmail.com>
 
-[ Upstream commit d90ad28e8aa482e397150e22f3762173d918a724 ]
+[ Upstream commit 69a8b62a7aa1e54ff7623064f6507fa29c1d0d4e ]
 
-These syscalls call to vfs_fileattr_get/set functions which return
-ENOIOCTLCMD if filesystem doesn't support setting file attribute on an
-inode. For syscalls EOPNOTSUPP would be more appropriate return error.
+Similar to the ARM64 commit 3505f30fb6a9s ("ARM64 / ACPI: If we chose
+to boot from acpi then disable FDT"), let's not do DT hardware probing
+if ACPI is enabled in early boot.  This avoids errors caused by
+repeated driver probing.
 
-Signed-off-by: Andrey Albershteyn <aalbersh@kernel.org>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Han Gao <rabenda.cn@gmail.com>
+Link: https://lore.kernel.org/r/20250910112401.552987-1-rabenda.cn@gmail.com
+[pjw@kernel.org: cleaned up patch description and subject]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file_attr.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/riscv/kernel/setup.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/file_attr.c b/fs/file_attr.c
-index 460b2dd21a852..1dcec88c06805 100644
---- a/fs/file_attr.c
-+++ b/fs/file_attr.c
-@@ -416,6 +416,8 @@ SYSCALL_DEFINE5(file_getattr, int, dfd, const char __user *, filename,
- 	}
+diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
+index f90cce7a3acea..d7ee62837aa4f 100644
+--- a/arch/riscv/kernel/setup.c
++++ b/arch/riscv/kernel/setup.c
+@@ -330,11 +330,14 @@ void __init setup_arch(char **cmdline_p)
+ 	/* Parse the ACPI tables for possible boot-time configuration */
+ 	acpi_boot_table_init();
  
- 	error = vfs_fileattr_get(filepath.dentry, &fa);
-+	if (error == -ENOIOCTLCMD || error == -ENOTTY)
-+		error = -EOPNOTSUPP;
- 	if (error)
- 		return error;
++	if (acpi_disabled) {
+ #if IS_ENABLED(CONFIG_BUILTIN_DTB)
+-	unflatten_and_copy_device_tree();
++		unflatten_and_copy_device_tree();
+ #else
+-	unflatten_device_tree();
++		unflatten_device_tree();
+ #endif
++	}
++
+ 	misc_mem_init();
  
-@@ -483,6 +485,8 @@ SYSCALL_DEFINE5(file_setattr, int, dfd, const char __user *, filename,
- 	if (!error) {
- 		error = vfs_fileattr_set(mnt_idmap(filepath.mnt),
- 					 filepath.dentry, &fa);
-+		if (error == -ENOIOCTLCMD || error == -ENOTTY)
-+			error = -EOPNOTSUPP;
- 		mnt_drop_write(filepath.mnt);
- 	}
- 
+ 	init_resources();
 -- 
 2.51.0
 
