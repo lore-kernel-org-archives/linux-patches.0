@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E61734D93E;
-	Fri, 21 Nov 2025 13:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E89341ADF;
+	Fri, 21 Nov 2025 13:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732539; cv=none; b=CGcQ5LVf7D+4QGAwfEfIFMR57K2SrrOCv3IFdj5Y+rS0/Ls7CSC2tCjsVscACTz4+wqgPV1xUA42s6udpnaW0uZ2CSwsKO3Exlqx51Oxi0g3v/T96/J8ZH6Idj6rSL0tf74uEB0i49MrElbEynrcATynwv3FCHv6wkwLwrCjSG0=
+	t=1763732542; cv=none; b=I3hG2/hNcd/tENtoPK+c4tvOoEfM7IOHIh2jPDehwaJzYuMTvL3vUgySwMnD6ReOQwUpkxwucId128BxjK0gI5a/c67nQ29hoxdg0Ds5EHYb3/X4eZhtKyXiiq0rZxBBcOcBOmA/KaMTu5hJenaiYt0xraRvFhm83vPtrORQCF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732539; c=relaxed/simple;
-	bh=NZ22hQ+OVbEOz0m4FxXvJ2IEKfz+B2dVnTGJ1zBa4E4=;
+	s=arc-20240116; t=1763732542; c=relaxed/simple;
+	bh=cK/Tof/r2vt6I6PLznSHaA1KlHC2whgGHESXNsOzp/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ugtbSVh9VapUcDcTRPeLtzQXxiAEcvgzgaEO6A5uCJ3JnDetVhyI+Vi4Ex4xHYr2BiLwt3T6f2D0KthbaIvyagCYInSdUigTf+8vPcIJJRlYl9ZuJ1CGx1vuBIWPMlHxykNYQufk4ur8cW/8H535nPer/SYvlT+ixGF+GZpVnlw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuDcaFA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMaK3SeSnSWWVhbJDncwdhMpywemtr+Y+3HHQVJ2eLM1rwsmC3D0gSVSRK0SNsGiuN6YVQOjE1H2bYe+c4POkHNK3c0HKdbFwBn4VqIri3wqKbkUiLVfDB5rFsdGA6a2edFKZPW44+OTGNziCPkxyRI2IV+BJdMgkwwW3Z/5Tbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ssgE7xiZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuDcaFA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0499C4CEF1;
-	Fri, 21 Nov 2025 13:42:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ssgE7xiZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7068CC116C6;
+	Fri, 21 Nov 2025 13:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732539;
-	bh=NZ22hQ+OVbEOz0m4FxXvJ2IEKfz+B2dVnTGJ1zBa4E4=;
+	s=korg; t=1763732541;
+	bh=cK/Tof/r2vt6I6PLznSHaA1KlHC2whgGHESXNsOzp/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OuDcaFA9HcK8Brq+ANG7NwbXlHVOCpLggUNjSKJJTPGMqYfOX3tEHYNqtqgphUy6W
-	 KRAJR9LNcN3jVoGhGihUkFqrgHvquOO5NNBIkWADuPbdLnNZ0BWqMiJtDnaE11i+tb
-	 RMBJMVUEZsdcJOz4S3GSSrgG//wBDu7NJZrPNWUs=
+	b=ssgE7xiZYyhbgerPe7JhKMP6zBcJsNmWM7HKG2Ffx3Y7xfpiGno4kgbjKIohUsBio
+	 p3Y7SRqqsMpHcG1H9dDMtctdWLSJAXmIlwA6UI0ilF0NllD1qM7SvQJmqxrcQJ3wn0
+	 dzJn5xf2ekdtMxkqVPjJoan7jIP4V2sMLjRpmEZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 156/529] net: stmmac: Correctly handle Rx checksum offload errors
-Date: Fri, 21 Nov 2025 14:07:35 +0100
-Message-ID: <20251121130236.570670010@linuxfoundation.org>
+Subject: [PATCH 6.6 157/529] net: Call trace_sock_exceed_buf_limit() for memcg failure with SK_MEM_RECV.
+Date: Fri, 21 Nov 2025 14:07:36 +0100
+Message-ID: <20251121130236.605945504@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,47 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ee0aace5f844ef59335148875d05bec8764e71e8 ]
+[ Upstream commit 9d85c565a7b7c78b732393c02bcaa4d5c275fe58 ]
 
-The stmmac_rx function would previously set skb->ip_summed to
-CHECKSUM_UNNECESSARY if hardware checksum offload (CoE) was enabled
-and the packet was of a known IP ethertype.
+Initially, trace_sock_exceed_buf_limit() was invoked when
+__sk_mem_raise_allocated() failed due to the memcg limit or the
+global limit.
 
-However, this logic failed to check if the hardware had actually
-reported a checksum error. The hardware status, indicating a header or
-payload checksum failure, was being ignored at this stage. This could
-cause corrupt packets to be passed up the network stack as valid.
+However, commit d6f19938eb031 ("net: expose sk wmem in
+sock_exceed_buf_limit tracepoint") somehow suppressed the event
+only when memcg failed to charge for SK_MEM_RECV, although the
+memcg failure for SK_MEM_SEND still triggers the event.
 
-This patch corrects the logic by checking the `csum_none` status flag,
-which is set when the hardware reports a checksum error. If this flag
-is set, skb->ip_summed is now correctly set to CHECKSUM_NONE,
-ensuring the kernel's network stack will perform its own validation and
-properly handle the corrupt packet.
+Let's restore the event for SK_MEM_RECV.
 
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20250818090217.2789521-2-o.rempel@pengutronix.de
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20250815201712.1745332-5-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/sock.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 5096b70f82e1a..c5d08d042f223 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5527,7 +5527,8 @@ static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
- 		stmmac_rx_vlan(priv->dev, skb);
- 		skb->protocol = eth_type_trans(skb, priv->dev);
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 9918a9a337b61..23c11c656dafa 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -3141,8 +3141,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
+ 		}
+ 	}
  
--		if (unlikely(!coe) || !stmmac_has_ip_ethertype(skb))
-+		if (unlikely(!coe) || !stmmac_has_ip_ethertype(skb) ||
-+		    (status & csum_none))
- 			skb_checksum_none_assert(skb);
- 		else
- 			skb->ip_summed = CHECKSUM_UNNECESSARY;
+-	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
+-		trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
++	trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
+ 
+ 	sk_memory_allocated_sub(sk, amt);
+ 
 -- 
 2.51.0
 
