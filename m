@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C50726E717;
-	Fri, 21 Nov 2025 13:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED72A3F9D2;
+	Fri, 21 Nov 2025 13:15:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730925; cv=none; b=XxyG/EgfmUyc5HKnXUbZ6PqYtiAs52r5UQ+HPBJRlMlYF/KxNglVjGEjc/bizgn/o961skFD2i/dEx09aypq6g6KYLy9xkUaQLdqFydWcNPD7p7etIDzE2cwo9NxFSHYe2+ZkQt9HynaUzTu+/GAgt8JdizvBcpgVBaey9dBovk=
+	t=1763730928; cv=none; b=dcqCtCks8LfPuVeaGhLKSSZi8iUUPODr1qh8XIt4XbNQmkYd6eEIA+4ctbfRL4JlcHI+DL1N43YfamnSoAgbOr5mphojgPXZ4ACzt9cOL1jsfTrbd/b5U+61vFh26W1Vtr1OTWzNL6ZqK2xdF2pYdeNMpt6s1MyOtznFXKuNXRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730925; c=relaxed/simple;
-	bh=okE+cX0AgDbW/Ayb7YVJMv9yqU5qL9Mj4GGmMCUkpo8=;
+	s=arc-20240116; t=1763730928; c=relaxed/simple;
+	bh=QLwipdWQcfxEy4gT3589nfZJx2sqPRV6ASC2LnzRJHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i3pUqSXgWql3z3nMLmKcxlNY76fGtDxkAvD/1QZSD8S05moybf5x1jM41saeGpVMEh4NRAPUoNXPbGDbvT6Ovmgi60VzV8pilYLvOuTjhb8i2VIVcPzzQGRusPE6k01p3Xrd5V+WEJlXsmM1HFKL0M8vL+xWP6nutC9KKMzktCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FK/LI64i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R0DoL+uL9huHdEkN6Uk6FRBIuvD2Q4oJUW8md8BponbJWL1BdN+Isf7Y3ToK1gj4WknhgxNlKVXgYjVQ+oTmjI+Of5DbRjWw8OtnkI6HxoKERQFE2FkoLaoOsvWownsw2NiEzTzJdS0sKzDT7jgu1PG2V7uDj791/jo+Q8sQLaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyJHe1fU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FK/LI64i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C61C4CEF1;
-	Fri, 21 Nov 2025 13:15:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyJHe1fU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F49C4CEF1;
+	Fri, 21 Nov 2025 13:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730925;
-	bh=okE+cX0AgDbW/Ayb7YVJMv9yqU5qL9Mj4GGmMCUkpo8=;
+	s=korg; t=1763730927;
+	bh=QLwipdWQcfxEy4gT3589nfZJx2sqPRV6ASC2LnzRJHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FK/LI64igTII6eV/lkC1ai3FJNVGb1knikPWaLd1gnPptskoSsFFrbzokBXtVaYt9
-	 +4sQVUm8+yAkT6bbTwK8cpFxbkNCzTPX/ACm5oG3rEP0OgLVY/iPxWlIrfQ5lTBvZY
-	 pKXF0/BKD9uYHxFI++QdKym/7Yl7lmg0Q+6HhYyM=
+	b=CyJHe1fUrgUyL8o7hzVIMAzrJmFiN8gn39Y5EaiUs5piTF8b7FKvzqmdKTzWrSjJD
+	 eXyZARiOg1Dc9hBpZ2Z9XmI33mbuy3sPhkUhh8vGniwdRmKB4inN03OgtxRtSHlS+t
+	 LZEpwgGwnzfyKgViPPa9QVD6pAHGjWQxnpL/3s3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Watt <jpewhacker@gmail.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Jonathan Kim <jonathan.kim@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 029/247] NFS4: Fix state renewals missing after boot
-Date: Fri, 21 Nov 2025 14:09:36 +0100
-Message-ID: <20251121130155.650591569@linuxfoundation.org>
+Subject: [PATCH 6.17 030/247] drm/amdkfd: fix suspend/resume all calls in mes based eviction path
+Date: Fri, 21 Nov 2025 14:09:37 +0100
+Message-ID: <20251121130155.685554184@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,39 +52,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Watt <jpewhacker@gmail.com>
+From: Jonathan Kim <jonathan.kim@amd.com>
 
-[ Upstream commit 9bb3baa9d1604cd20f49ae7dac9306b4037a0e7a ]
+[ Upstream commit 079ae5118e1f0dcf5b1ab68ffdb5760b06ed79a2 ]
 
-Since the last renewal time was initialized to 0 and jiffies start
-counting at -5 minutes, any clients connected in the first 5 minutes
-after a reboot would have their renewal timer set to a very long
-interval. If the connection was idle, this would result in the client
-state timing out on the server and the next call to the server would
-return NFS4ERR_BADSESSION.
+Suspend/resume all gangs should be done with the device lock is held.
 
-Fix this by initializing the last renewal time to the current jiffies
-instead of 0.
-
-Signed-off-by: Joshua Watt <jpewhacker@gmail.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: Jonathan Kim <jonathan.kim@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Harish Kasiviswanathan <harish.kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4client.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../drm/amd/amdkfd/kfd_device_queue_manager.c | 73 ++++++-------------
+ 1 file changed, 21 insertions(+), 52 deletions(-)
 
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index 6fddf43d729c8..5998d6bd8a4f4 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -222,6 +222,7 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
- 	clp->cl_state = 1 << NFS4CLNT_LEASE_EXPIRED;
- 	clp->cl_mvops = nfs_v4_minor_ops[cl_init->minorversion];
- 	clp->cl_mig_gen = 1;
-+	clp->cl_last_renewal = jiffies;
- #if IS_ENABLED(CONFIG_NFS_V4_1)
- 	init_waitqueue_head(&clp->cl_lock_waitq);
- #endif
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+index 6c5c7c1bf5eda..6e7bc983fc0b6 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
+@@ -1209,6 +1209,15 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
+ 	pr_debug_ratelimited("Evicting process pid %d queues\n",
+ 			    pdd->process->lead_thread->pid);
+ 
++	if (dqm->dev->kfd->shared_resources.enable_mes) {
++		pdd->last_evict_timestamp = get_jiffies_64();
++		retval = suspend_all_queues_mes(dqm);
++		if (retval) {
++			dev_err(dev, "Suspending all queues failed");
++			goto out;
++		}
++	}
++
+ 	/* Mark all queues as evicted. Deactivate all active queues on
+ 	 * the qpd.
+ 	 */
+@@ -1221,23 +1230,27 @@ static int evict_process_queues_cpsch(struct device_queue_manager *dqm,
+ 		decrement_queue_count(dqm, qpd, q);
+ 
+ 		if (dqm->dev->kfd->shared_resources.enable_mes) {
+-			int err;
+-
+-			err = remove_queue_mes(dqm, q, qpd);
+-			if (err) {
++			retval = remove_queue_mes(dqm, q, qpd);
++			if (retval) {
+ 				dev_err(dev, "Failed to evict queue %d\n",
+ 					q->properties.queue_id);
+-				retval = err;
++				goto out;
+ 			}
+ 		}
+ 	}
+-	pdd->last_evict_timestamp = get_jiffies_64();
+-	if (!dqm->dev->kfd->shared_resources.enable_mes)
++
++	if (!dqm->dev->kfd->shared_resources.enable_mes) {
++		pdd->last_evict_timestamp = get_jiffies_64();
+ 		retval = execute_queues_cpsch(dqm,
+ 					      qpd->is_debug ?
+ 					      KFD_UNMAP_QUEUES_FILTER_ALL_QUEUES :
+ 					      KFD_UNMAP_QUEUES_FILTER_DYNAMIC_QUEUES, 0,
+ 					      USE_DEFAULT_GRACE_PERIOD);
++	} else {
++		retval = resume_all_queues_mes(dqm);
++		if (retval)
++			dev_err(dev, "Resuming all queues failed");
++	}
+ 
+ out:
+ 	dqm_unlock(dqm);
+@@ -3098,61 +3111,17 @@ int kfd_dqm_suspend_bad_queue_mes(struct kfd_node *knode, u32 pasid, u32 doorbel
+ 	return ret;
+ }
+ 
+-static int kfd_dqm_evict_pasid_mes(struct device_queue_manager *dqm,
+-				   struct qcm_process_device *qpd)
+-{
+-	struct device *dev = dqm->dev->adev->dev;
+-	int ret = 0;
+-
+-	/* Check if process is already evicted */
+-	dqm_lock(dqm);
+-	if (qpd->evicted) {
+-		/* Increment the evicted count to make sure the
+-		 * process stays evicted before its terminated.
+-		 */
+-		qpd->evicted++;
+-		dqm_unlock(dqm);
+-		goto out;
+-	}
+-	dqm_unlock(dqm);
+-
+-	ret = suspend_all_queues_mes(dqm);
+-	if (ret) {
+-		dev_err(dev, "Suspending all queues failed");
+-		goto out;
+-	}
+-
+-	ret = dqm->ops.evict_process_queues(dqm, qpd);
+-	if (ret) {
+-		dev_err(dev, "Evicting process queues failed");
+-		goto out;
+-	}
+-
+-	ret = resume_all_queues_mes(dqm);
+-	if (ret)
+-		dev_err(dev, "Resuming all queues failed");
+-
+-out:
+-	return ret;
+-}
+-
+ int kfd_evict_process_device(struct kfd_process_device *pdd)
+ {
+ 	struct device_queue_manager *dqm;
+ 	struct kfd_process *p;
+-	int ret = 0;
+ 
+ 	p = pdd->process;
+ 	dqm = pdd->dev->dqm;
+ 
+ 	WARN(debug_evictions, "Evicting pid %d", p->lead_thread->pid);
+ 
+-	if (dqm->dev->kfd->shared_resources.enable_mes)
+-		ret = kfd_dqm_evict_pasid_mes(dqm, &pdd->qpd);
+-	else
+-		ret = dqm->ops.evict_process_queues(dqm, &pdd->qpd);
+-
+-	return ret;
++	return dqm->ops.evict_process_queues(dqm, &pdd->qpd);
+ }
+ 
+ int reserve_debug_trap_vmid(struct device_queue_manager *dqm,
 -- 
 2.51.0
 
