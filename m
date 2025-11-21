@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BED351FBF;
-	Fri, 21 Nov 2025 13:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65275351FDB;
+	Fri, 21 Nov 2025 13:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733078; cv=none; b=HJM9GXsUKJ6Ll2atT2JXXAvSpxmHUEHkn/X4gsegiQq8WZ2pI/qfL+8cd+FfnxNm8j/zui2G9s1WpiN7BvWW4pe2gepCo4BPzRoXeUZPOjhgrCZN2nWB2GGEkklco/zmLGniWiQvph0O1ddk5NsR8v57BgEvqlg6I3U8ENrXqNo=
+	t=1763733081; cv=none; b=fDeV8TPcQ7HQmcg55JNde2Oiu2nbY9TIV3RLOigfC2BJl+rLV3SkFQePjGWI5clZwR/iwqEbX3UQFyyeYYbhM8opxBSglqqS8IbrQ4mgpd+HOfZq9QVoMzc5pwjLTD4/S0lOiSJfVC2ZGl1dRkJvUuWJQdIHVLaGSa/jwyUU3PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733078; c=relaxed/simple;
-	bh=VMtGZZmyOowG7QXkcfW3iAd0mk3w0Z1ZietlrvQeiXA=;
+	s=arc-20240116; t=1763733081; c=relaxed/simple;
+	bh=wSL9WYsMpS4SS8PpSty/Je8MdEto/qicmIquwrCLTao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gll6NELtEeUUQWJW/LVW1+IfG2O0/RLs0iTU8V96QxIjmo/0mtKOzu0bNo3/hn9wl7dz+Wxz/1arQ8zg/1R8SOzJm6YXcbHSMcrfh7XIOB25shSJDvJbVkv1ROE5tEMNLNVBFofW24JKlRYLBlcn7201dF7I+Eo+/2fl1HkVEA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aG52vjES; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MkSK1Egx7l4MwIyxxOMGf180Jbo+SkPmL2jh6mTODNUKqVTt/bKXpq4r2oUHbuLvRBysozAxOm/7o8eChXqoREBMTZGu8G8JyC3wbf5Kwre63bqXRvTbPeOLMgXiHKRel4zlw2NbdZaQ+wqMcAIHob4AVA515AJmmJH4+u2R3Yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IArZqCTy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aG52vjES"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260BDC4CEFB;
-	Fri, 21 Nov 2025 13:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IArZqCTy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A2BC4CEF1;
+	Fri, 21 Nov 2025 13:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733078;
-	bh=VMtGZZmyOowG7QXkcfW3iAd0mk3w0Z1ZietlrvQeiXA=;
+	s=korg; t=1763733081;
+	bh=wSL9WYsMpS4SS8PpSty/Je8MdEto/qicmIquwrCLTao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aG52vjESAX/mRzFb3ZzUao0oKmv3MDeycD51wI6ehqOPIpNXWNuuojjTNdGF/cMIo
-	 rjDPSOZEcRSfMvL9IJgAALp+tOprlWlRovkd5DUmZ7G0BIbAbGdKhDLqfvHuxKa4ec
-	 imMe3NBOz3VaapjuAaPscZ7IOAhQumjeCPVEGhUo=
+	b=IArZqCTyLUX+DGhSn5ch30OQ1LwLPnA9el+9PPkXk7Uq0UoCuiS8GxF89ER/Ktn40
+	 3nEfgVzAO9EXmFDdVNtnewh7BD9EyTiSbmr6Vv/nolTsJI0/gsBDXHK7qo8oyvLiok
+	 b9nrQTv0lIrfbrflH890B7waa/g81gD47oJPTrao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wei <dw@davidwei.uk>,
+	Wang Liang <wangliang74@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 342/529] netdevsim: add Makefile for selftests
-Date: Fri, 21 Nov 2025 14:10:41 +0100
-Message-ID: <20251121130243.200904914@linuxfoundation.org>
+Subject: [PATCH 6.6 343/529] selftests: netdevsim: Fix ethtool-coalesce.sh fail by installing ethtool-common.sh
+Date: Fri, 21 Nov 2025 14:10:42 +0100
+Message-ID: <20251121130243.236052979@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,59 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Wei <dw@davidwei.uk>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit 8ff25dac88f616ebebb30830e3a20f079d7a30c9 ]
+[ Upstream commit d01f8136d46b925798abcf86b35a4021e4cfb8bb ]
 
-Add a Makefile for netdevsim selftests and add selftests path to
-MAINTAINERS
+The script "ethtool-common.sh" is not installed in INSTALL_PATH, and
+triggers some errors when I try to run the test
+'drivers/net/netdevsim/ethtool-coalesce.sh':
 
-Signed-off-by: David Wei <dw@davidwei.uk>
-Link: https://lore.kernel.org/r/20240130214620.3722189-5-dw@davidwei.uk
+  TAP version 13
+  1..1
+  # timeout set to 600
+  # selftests: drivers/net/netdevsim: ethtool-coalesce.sh
+  # ./ethtool-coalesce.sh: line 4: ethtool-common.sh: No such file or directory
+  # ./ethtool-coalesce.sh: line 25: make_netdev: command not found
+  # ethtool: bad command line argument(s)
+  # ./ethtool-coalesce.sh: line 124: check: command not found
+  # ./ethtool-coalesce.sh: line 126: [: -eq: unary operator expected
+  # FAILED /0 checks
+  not ok 1 selftests: drivers/net/netdevsim: ethtool-coalesce.sh # exit=1
+
+Install this file to avoid this error. After this patch:
+
+  TAP version 13
+  1..1
+  # timeout set to 600
+  # selftests: drivers/net/netdevsim: ethtool-coalesce.sh
+  # PASSED all 22 checks
+  ok 1 selftests: drivers/net/netdevsim: ethtool-coalesce.sh
+
+Fixes: fbb8531e58bd ("selftests: extract common functions in ethtool-common.sh")
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Link: https://patch.msgid.link/20251030040340.3258110-1-wangliang74@huawei.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d01f8136d46b ("selftests: netdevsim: Fix ethtool-coalesce.sh fail by installing ethtool-common.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- MAINTAINERS                                     |  1 +
- .../selftests/drivers/net/netdevsim/Makefile    | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
- create mode 100644 tools/testing/selftests/drivers/net/netdevsim/Makefile
+ tools/testing/selftests/drivers/net/netdevsim/Makefile | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 294d2ce29b735..c1aafeb3babf9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -14725,6 +14725,7 @@ NETDEVSIM
- M:	Jakub Kicinski <kuba@kernel.org>
- S:	Maintained
- F:	drivers/net/netdevsim/*
-+F:	tools/testing/selftests/drivers/net/netdevsim/*
- 
- NETEM NETWORK EMULATOR
- M:	Stephen Hemminger <stephen@networkplumber.org>
 diff --git a/tools/testing/selftests/drivers/net/netdevsim/Makefile b/tools/testing/selftests/drivers/net/netdevsim/Makefile
-new file mode 100644
-index 0000000000000..7a29a05bea8bc
---- /dev/null
+index 7a29a05bea8bc..50932e13cb5a8 100644
+--- a/tools/testing/selftests/drivers/net/netdevsim/Makefile
 +++ b/tools/testing/selftests/drivers/net/netdevsim/Makefile
-@@ -0,0 +1,17 @@
-+# SPDX-License-Identifier: GPL-2.0+ OR MIT
+@@ -14,4 +14,8 @@ TEST_PROGS = devlink.sh \
+ 	tc-mq-visibility.sh \
+ 	udp_tunnel_nic.sh \
+ 
++TEST_FILES := \
++	ethtool-common.sh
++# end of TEST_FILES
 +
-+TEST_PROGS = devlink.sh \
-+	devlink_in_netns.sh \
-+	devlink_trap.sh \
-+	ethtool-coalesce.sh \
-+	ethtool-fec.sh \
-+	ethtool-pause.sh \
-+	ethtool-ring.sh \
-+	fib.sh \
-+	hw_stats_l3.sh \
-+	nexthop.sh \
-+	psample.sh \
-+	tc-mq-visibility.sh \
-+	udp_tunnel_nic.sh \
-+
-+include ../../../lib.mk
+ include ../../../lib.mk
 -- 
 2.51.0
 
