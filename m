@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89F872745E;
-	Fri, 21 Nov 2025 13:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E312745E;
+	Fri, 21 Nov 2025 13:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732166; cv=none; b=CnftHWD2//4OMbAM4PrJXjQu3QOGnmINJ1Bb4wKazqph5eauhZbrxOXTvBXc4qah3QVZVqMb77TPX5spZL01nKX4Wpn/LrAirWsXd7xFjdgZlbJleeZzohFbNkIoBV6WvkPap5Pa/+Z6pb6+k4SWRDGBNNC4p3llhZA7F8mGZb4=
+	t=1763732169; cv=none; b=mRa/Pk1vayb812kVShm+4/MxitSKRaj3orN1LrLoSABR3HTFfn/I9Ga8HRuN0PNbVvF3ONmtE7cGnAFFScTS9D2q/BKSkHu8AwHV1cw+2spO0poOnmnfYCUO5XHwiyMoF3bm6J+TbVdOWnqshly0FZRKnryO7GfWY2o+o290iek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732166; c=relaxed/simple;
-	bh=bF8pIwj4d6CXcT1d3cB84TjOejqE5kN6sZ0+KG4ANPQ=;
+	s=arc-20240116; t=1763732169; c=relaxed/simple;
+	bh=H3aD3LtK9BXGubrFuc5SpBTQCj+xbgGaBWccqMAiYoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nZTRxLSnJfPfby+rid0Hfk8P1UCf6WdxknpRYPeKULWTFyASGrB2OkL1azwZaHq8rRrA1dLFaFhwCOdDcvR1Jo0ybKWiSLcpuun6W1EHkCKE5NgT+k/+1ntEwV35T/BdkhovGJjgafB+M5fU22/jUL3DntPu3M0/tnQEH63ivTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKfkhh0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DErN1ntpGkqcZAZpR3HT3SfYpAcJGuv29uSoP6r/ge9GAuROaXXFVnZDo6rj1PSQy3T/QKDDsPmdDVHZfrhwLINtLZUImgY4UlS9QZTyd/T6F16c+EdSZlcEPc9ExyQ6MH9dyiefl8LyTg0xdAQF8NiIzkNnSKqlan+FJwuknnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSXzxP2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKfkhh0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 152DDC4CEF1;
-	Fri, 21 Nov 2025 13:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSXzxP2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DF3C4CEFB;
+	Fri, 21 Nov 2025 13:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732166;
-	bh=bF8pIwj4d6CXcT1d3cB84TjOejqE5kN6sZ0+KG4ANPQ=;
+	s=korg; t=1763732169;
+	bh=H3aD3LtK9BXGubrFuc5SpBTQCj+xbgGaBWccqMAiYoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKfkhh0Ii7/sco+bu6gvLcL9lfN3UhR1biTiy2uC7ACBYZvjHqxUQhjnAb7EBp6kC
-	 OWycfTM5mqTDg4n4UVVAeB7GSuUIGADqZhMYPpSXetCSBUFT1yDt66KsiwfUdJCURR
-	 1leyrvnV/S+vgbhqADUw3kKJ5dlRgJF5srV/OsXs=
+	b=cSXzxP2FENLkmiC9nGyqSnjjwRa+NlFnRLRD33dxF6QxZ62OdwehPaEbQURX6hWOP
+	 Jqwfb4A5jdSgsbLabKmpm1VWzB1Pn4xtCq8QNS2fRdP2oYlMlvqlcmxPA4XPj/0jTV
+	 py2k8g6iGn10unCOzfGZd9rCNCUlRuYlmaRjCBCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+793cf822d213be1a74f2@syzkaller.appspotmail.com,
-	Junjie Cao <junjie.cao@intel.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 007/529] fbdev: bitblit: bound-check glyph index in bit_putcs*
-Date: Fri, 21 Nov 2025 14:05:06 +0100
-Message-ID: <20251121130231.259150257@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 008/529] Bluetooth: rfcomm: fix modem control handling
+Date: Fri, 21 Nov 2025 14:05:07 +0100
+Message-ID: <20251121130231.294236100@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,70 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junjie Cao <junjie.cao@intel.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 18c4ef4e765a798b47980555ed665d78b71aeadf upstream.
+commit 91d35ec9b3956d6b3cf789c1593467e58855b03a upstream.
 
-bit_putcs_aligned()/unaligned() derived the glyph pointer from the
-character value masked by 0xff/0x1ff, which may exceed the actual font's
-glyph count and read past the end of the built-in font array.
-Clamp the index to the actual glyph count before computing the address.
+The RFCOMM driver confuses the local and remote modem control signals,
+which specifically means that the reported DTR and RTS state will
+instead reflect the remote end (i.e. DSR and CTS).
 
-This fixes a global out-of-bounds read reported by syzbot.
+This issue dates back to the original driver (and a follow-on update)
+merged in 2002, which resulted in a non-standard implementation of
+TIOCMSET that allowed controlling also the TS07.10 IC and DV signals by
+mapping them to the RI and DCD input flags, while TIOCMGET failed to
+return the actual state of DTR and RTS.
 
-Reported-by: syzbot+793cf822d213be1a74f2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=793cf822d213be1a74f2
-Tested-by: syzbot+793cf822d213be1a74f2@syzkaller.appspotmail.com
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Note that the bogus control of input signals in tiocmset() is just
+dead code as those flags will have been masked out by the tty layer
+since 2003.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/core/bitblit.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/bluetooth/rfcomm/tty.c |   26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
 
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -79,12 +79,16 @@ static inline void bit_putcs_aligned(str
- 				     struct fb_image *image, u8 *buf, u8 *dst)
+--- a/net/bluetooth/rfcomm/tty.c
++++ b/net/bluetooth/rfcomm/tty.c
+@@ -651,8 +651,8 @@ static void rfcomm_dev_modem_status(stru
+ 		tty_port_tty_hangup(&dev->port, true);
+ 
+ 	dev->modem_status =
+-		((v24_sig & RFCOMM_V24_RTC) ? (TIOCM_DSR | TIOCM_DTR) : 0) |
+-		((v24_sig & RFCOMM_V24_RTR) ? (TIOCM_RTS | TIOCM_CTS) : 0) |
++		((v24_sig & RFCOMM_V24_RTC) ? TIOCM_DSR : 0) |
++		((v24_sig & RFCOMM_V24_RTR) ? TIOCM_CTS : 0) |
+ 		((v24_sig & RFCOMM_V24_IC)  ? TIOCM_RI : 0) |
+ 		((v24_sig & RFCOMM_V24_DV)  ? TIOCM_CD : 0);
+ }
+@@ -1063,10 +1063,14 @@ static void rfcomm_tty_hangup(struct tty
+ static int rfcomm_tty_tiocmget(struct tty_struct *tty)
  {
- 	u16 charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
-+	unsigned int charcnt = vc->vc_font.charcount;
- 	u32 idx = vc->vc_font.width >> 3;
- 	u8 *src;
+ 	struct rfcomm_dev *dev = tty->driver_data;
++	struct rfcomm_dlc *dlc = dev->dlc;
++	u8 v24_sig;
  
- 	while (cnt--) {
--		src = vc->vc_font.data + (scr_readw(s++)&
--					  charmask)*cellsize;
-+		u16 ch = scr_readw(s++) & charmask;
+ 	BT_DBG("tty %p dev %p", tty, dev);
+ 
+-	return dev->modem_status;
++	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
 +
-+		if (ch >= charcnt)
-+			ch = 0;
-+		src = vc->vc_font.data + (unsigned int)ch * cellsize;
++	return (v24_sig & (TIOCM_DTR | TIOCM_RTS)) | dev->modem_status;
+ }
  
- 		if (attr) {
- 			update_attr(buf, src, attr, vc);
-@@ -112,14 +116,18 @@ static inline void bit_putcs_unaligned(s
- 				       u8 *dst)
- {
- 	u16 charmask = vc->vc_hi_font_mask ? 0x1ff : 0xff;
-+	unsigned int charcnt = vc->vc_font.charcount;
- 	u32 shift_low = 0, mod = vc->vc_font.width % 8;
- 	u32 shift_high = 8;
- 	u32 idx = vc->vc_font.width >> 3;
- 	u8 *src;
+ static int rfcomm_tty_tiocmset(struct tty_struct *tty, unsigned int set, unsigned int clear)
+@@ -1079,23 +1083,15 @@ static int rfcomm_tty_tiocmset(struct tt
  
- 	while (cnt--) {
--		src = vc->vc_font.data + (scr_readw(s++)&
--					  charmask)*cellsize;
-+		u16 ch = scr_readw(s++) & charmask;
-+
-+		if (ch >= charcnt)
-+			ch = 0;
-+		src = vc->vc_font.data + (unsigned int)ch * cellsize;
+ 	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
  
- 		if (attr) {
- 			update_attr(buf, src, attr, vc);
+-	if (set & TIOCM_DSR || set & TIOCM_DTR)
++	if (set & TIOCM_DTR)
+ 		v24_sig |= RFCOMM_V24_RTC;
+-	if (set & TIOCM_RTS || set & TIOCM_CTS)
++	if (set & TIOCM_RTS)
+ 		v24_sig |= RFCOMM_V24_RTR;
+-	if (set & TIOCM_RI)
+-		v24_sig |= RFCOMM_V24_IC;
+-	if (set & TIOCM_CD)
+-		v24_sig |= RFCOMM_V24_DV;
+ 
+-	if (clear & TIOCM_DSR || clear & TIOCM_DTR)
++	if (clear & TIOCM_DTR)
+ 		v24_sig &= ~RFCOMM_V24_RTC;
+-	if (clear & TIOCM_RTS || clear & TIOCM_CTS)
++	if (clear & TIOCM_RTS)
+ 		v24_sig &= ~RFCOMM_V24_RTR;
+-	if (clear & TIOCM_RI)
+-		v24_sig &= ~RFCOMM_V24_IC;
+-	if (clear & TIOCM_CD)
+-		v24_sig &= ~RFCOMM_V24_DV;
+ 
+ 	rfcomm_dlc_set_modem_status(dlc, v24_sig);
+ 
 
 
