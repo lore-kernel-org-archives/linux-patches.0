@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEB034EEE3;
-	Fri, 21 Nov 2025 13:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EA734BA21;
+	Fri, 21 Nov 2025 13:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732178; cv=none; b=GT1hTBWcuSgQdbIG09yxi2GuuFRlzpu2daHI9nYh4DBQYO+bEcNgYlh8qvLQbIKoftwDivGBh7UICwwLBejIVX+t3Da5dDvcLSwAbrdcGdO3DE/9P2B53UZN3jh3tovhjmC6Oj+Op0I+PiIC+p92i0dtP2PBVwCegWbJWWx04FM=
+	t=1763732181; cv=none; b=HH24Sh1hmCEjisA4A6bJRLLyVZUkutn7ruXpzM4bFeCNYR0nlAKg2JiuwoyQhiwpgv4RrKF5TqQsT9VpPWlf8Rmu0zcjmCDy8cULg5iUgvVaNjxZNKhnfm2HjISxwj1A9xxGwDVcLKhvNPnqvhNDqCF/wblukTKqWTZ5fo7f1xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732178; c=relaxed/simple;
-	bh=QOURxnPE2UN2dpHtr5VqWERprB82JQxe6R9urJl+QhM=;
+	s=arc-20240116; t=1763732181; c=relaxed/simple;
+	bh=nhsqUwMsmPa0rO/++WT2cSGtL1TSgsZAVM+4/T0P7v4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H4QOA/+j7QgbdSAUNLdbGrHmZIKQvhFAzcSUexrlDky2FJXjTQYSc86B7xo6D/rscWjfJAx5Fd7iZ+Rm1ZcE7lEh0KcHcq2AefBlwTcxSRPrHbs564M6M4QwVUWBLmW3mx7LPVW6Uy2qXlXKrNzi+ikR6v5+XpusMfykWL0KBYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11AAHelY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qWp6ZbFeRt95wpmnQeT4gMrBogf5M1ROKP+cb3LLbpAAuiEEi+jaNZwu2hAtb6dzHo0xWiqATTLYRrxI1jYiDx341vcK/3j3HcOxTsyCIwZFDQ1IdQoEa8k0/uxRHtPFEd02Zeq5zLklSNY5y5Aez8acRgrj9UWnSapqw8KvtM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U2gqRQoX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11AAHelY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311A6C4CEF1;
-	Fri, 21 Nov 2025 13:36:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U2gqRQoX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0873CC4CEFB;
+	Fri, 21 Nov 2025 13:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732178;
-	bh=QOURxnPE2UN2dpHtr5VqWERprB82JQxe6R9urJl+QhM=;
+	s=korg; t=1763732181;
+	bh=nhsqUwMsmPa0rO/++WT2cSGtL1TSgsZAVM+4/T0P7v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11AAHelYpUIwHlPIKjFAWWIHSOwjWh+tgKPmJILXe0rVHd47ztJr/VzJvMUJR54s7
-	 aAw5tKjr4trUfnhXOaM221McZNVM48gfMXoYBfYNTMQ3n9AYy/RambM5MktQ8Cl6LN
-	 WdMoYNpzEs1a3lKlw4MMCAn4pgo7S86jMq3oj49U=
+	b=U2gqRQoXIXEnMiiyr2jjWrjD+Cd9B5sVIiY5or0jVcPbwDY1m7EzowMKwzbFoMJln
+	 FLE7JnVtiHj7Fb5cLm9lEKjcGuhWyQI36uZhdbiky5xuzqCq+tAzTdSbz+YG38nbWP
+	 WYOLmArBay0lMhhX1MmUJG689/rODLsiHLYa1x0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wonkon Kim <wkon.kim@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/529] scsi: ufs: core: Initialize value of an attribute returned by uic cmd
-Date: Fri, 21 Nov 2025 14:05:22 +0100
-Message-ID: <20251121130231.826084680@linuxfoundation.org>
+Subject: [PATCH 6.6 032/529] Bluetooth: btmtksdio: Add pmctrl handling for BT closed state during reset
+Date: Fri, 21 Nov 2025 14:05:31 +0100
+Message-ID: <20251121130232.141370210@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,40 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wonkon Kim <wkon.kim@samsung.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 6fe4c679dde3075cb481beb3945269bb2ef8b19a ]
+[ Upstream commit 77343b8b4f87560f8f03e77b98a81ff3a147b262 ]
 
-If ufshcd_send_cmd() fails, *mib_val may have a garbage value. It can
-get an unintended value of an attribute.
+This patch adds logic to handle power management control when the
+Bluetooth function is closed during the SDIO reset sequence.
 
-Make ufshcd_dme_get_attr() always initialize *mib_val.
+Specifically, if BT is closed before reset, the driver enables the
+SDIO function and sets driver pmctrl. After reset, if BT remains
+closed, the driver sets firmware pmctrl and disables the SDIO function.
 
-Fixes: 12b4fdb4f6bc ("[SCSI] ufs: add dme configuration primitives")
-Signed-off-by: Wonkon Kim <wkon.kim@samsung.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251020061539.28661-2-wkon.kim@samsung.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+These changes ensure proper power management and device state consistency
+across the reset flow.
+
+Fixes: 8fafe702253d ("Bluetooth: mt7921s: support bluetooth reset mechanism")
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/btmtksdio.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 7dcdaac31546b..2080b251580c8 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4176,8 +4176,8 @@ int ufshcd_dme_get_attr(struct ufs_hba *hba, u32 attr_sel,
- 			get, UIC_GET_ATTR_ID(attr_sel),
- 			UFS_UIC_COMMAND_RETRIES - retries);
+diff --git a/drivers/bluetooth/btmtksdio.c b/drivers/bluetooth/btmtksdio.c
+index f9a3444753c2b..97659b4792e69 100644
+--- a/drivers/bluetooth/btmtksdio.c
++++ b/drivers/bluetooth/btmtksdio.c
+@@ -1257,6 +1257,12 @@ static void btmtksdio_cmd_timeout(struct hci_dev *hdev)
  
--	if (mib_val && !ret)
--		*mib_val = uic_cmd.argument3;
-+	if (mib_val)
-+		*mib_val = ret == 0 ? uic_cmd.argument3 : 0;
+ 	sdio_claim_host(bdev->func);
  
- 	if (peer && (hba->quirks & UFSHCD_QUIRK_DME_PEER_ACCESS_AUTO_MODE)
- 	    && pwr_mode_change)
++	/* set drv_pmctrl if BT is closed before doing reset */
++	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state)) {
++		sdio_enable_func(bdev->func);
++		btmtksdio_drv_pmctrl(bdev);
++	}
++
+ 	sdio_writel(bdev->func, C_INT_EN_CLR, MTK_REG_CHLPCR, NULL);
+ 	skb_queue_purge(&bdev->txq);
+ 	cancel_work_sync(&bdev->txrx_work);
+@@ -1272,6 +1278,12 @@ static void btmtksdio_cmd_timeout(struct hci_dev *hdev)
+ 		goto err;
+ 	}
+ 
++	/* set fw_pmctrl back if BT is closed after doing reset */
++	if (!test_bit(BTMTKSDIO_FUNC_ENABLED, &bdev->tx_state)) {
++		btmtksdio_fw_pmctrl(bdev);
++		sdio_disable_func(bdev->func);
++	}
++
+ 	clear_bit(BTMTKSDIO_PATCH_ENABLED, &bdev->tx_state);
+ err:
+ 	sdio_release_host(bdev->func);
 -- 
 2.51.0
 
