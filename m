@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D59734CFAD;
-	Fri, 21 Nov 2025 13:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14AB31578E;
+	Fri, 21 Nov 2025 13:51:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733070; cv=none; b=e/JrVqNZWfevJT34SZzG/QNi9OnrGXJ2bi/+BdS6/iNXXz8TnkJLxD3QfHY9/eBU358IgUzB63LAiPKys109o5ZEvuK/00c6auXFi096Fc3GpsmLAzz2xLNY4I52LYQHBu2pTYVaeeC3qhSykk3ojPTBwm+/1c01BO06fz2WGmc=
+	t=1763733072; cv=none; b=JywrShPc1beZrYT/TreVgAFT8JhSy2Rb/8gfh51oIFIZK5o68tJovpEwgtq3koIAFEXdQVQWs33e0WJneeb3CNwWpKU61jG0EUJnpEhxO1yD8+IJz+f+cqOljuwW5Tc/hCiqtcxUy6Y+267irYQqymW46Fee93EMxIYrQPKY1ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733070; c=relaxed/simple;
-	bh=mxSdOTvXrwuF23cJ9ECG7lzhPbd5ObRMGhAPT4v+HMo=;
+	s=arc-20240116; t=1763733072; c=relaxed/simple;
+	bh=XSF/8pk00X005vXnDF8Bnwc3H5kBtMKjUGSoI2qWSwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcRjkzs7VwVDcLa9/9kXhqGVe9t1f+/pC0ItUGgiWV/4049RP29SOcLg7WNSzEFSPLBR/wmc+JE4aP5KXmyCyT8kcAOHfoMPEVKl4W3pBH3hYFTidgKX11AE+KKR8peCRmIyo0aGdrnZYEaX3+enAyoM4DjOXGih9+SWcJK2bFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJUIpax2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmQ6Ks2MBk5ykGRCqWXii8KOxKZJvcAb1qqB9Yz/HCqPqMziHHiYLkIowHhNyd1+X/X6/psMOwvpuqqhI8OBwECXArY9qsTwP2zMhA0i3MuHg0a6qiUjLVR74T/a4C1vfYjak5c99RuAMYXK7i7X4XakeFwWo4xiQhSOLnur2YY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ffr4esQr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJUIpax2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD0EC4CEF1;
-	Fri, 21 Nov 2025 13:51:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ffr4esQr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C572C4CEF1;
+	Fri, 21 Nov 2025 13:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733070;
-	bh=mxSdOTvXrwuF23cJ9ECG7lzhPbd5ObRMGhAPT4v+HMo=;
+	s=korg; t=1763733072;
+	bh=XSF/8pk00X005vXnDF8Bnwc3H5kBtMKjUGSoI2qWSwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IJUIpax2Z13zSgNcpnoX0n3ZxJyKki0px5SOuUGD5hR/YoA/5rex76kl3h4vis2L9
-	 vof9FYj5ZzXQw5vDpo3VNwiqDR1YfQMD4wzAoRkQDoKJx6wsNYhTQJnV6PTtZEyqEI
-	 Zr5aH995kLCKbDFkI4pKIiRc5NucyAZQu+bVD9ic=
+	b=Ffr4esQrE7gPWXk2IcWZFbTYQmkVNSB3BIgwdSMt0kWsaKvkEcvVY6+yVtn2W5V+S
+	 u+3KSBz6w8LEYVCINGTUgM+pRRLswbmWqXDkKhgzsgthin+EoQi1UyCaYL/P1BXkqO
+	 3dQcg/YU0vo/Dv0NkIdM+29Z9hsmRn/MGt6jlEN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Gobert <richardbgobert@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Jon Mason <jdmason@kudzu.us>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 340/529] selftests/net: fix GRO coalesce test and add ext header coalesce tests
-Date: Fri, 21 Nov 2025 14:10:39 +0100
-Message-ID: <20251121130243.129023706@linuxfoundation.org>
+Subject: [PATCH 6.6 314/529] NTB: epf: Allow arbitrary BAR mapping
+Date: Fri, 21 Nov 2025 14:10:13 +0100
+Message-ID: <20251121130242.198000281@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,197 +51,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Gobert <richardbgobert@gmail.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 4e321d590cec6053cb3c566413794706035ee638 ]
+[ Upstream commit 5ad865862a0fd349163243e1834ed98ba9b81905 ]
 
-Currently there is no test which checks that IPv6 extension header packets
-successfully coalesce. This commit adds a test, which verifies two IPv6
-packets with HBH extension headers do coalesce, and another test which
-checks that packets with different extension header data do not coalesce
-in GRO.
+The NTB epf host driver assumes the BAR number associated with a memory
+window is just incremented from the BAR number associated with MW1. This
+seems to have been enough so far but this is not really how the endpoint
+side work and the two could easily become mis-aligned.
 
-I changed the receive socket filter to accept a packet with one extension
-header. This change exposed a bug in the fragment test -- the old BPF did
-not accept the fragment packet. I updated correct_num_packets in the
-fragment test accordingly.
+ntb_epf_mw_to_bar() even assumes that the BAR number is the memory window
+index + 2, which means the function only returns a proper result if BAR_2
+is associated with MW1.
 
-Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/69282fed-2415-47e8-b3d3-34939ec3eb56@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f8e8486702ab ("selftests/net: use destination options instead of hop-by-hop")
+Instead, fully describe and allow arbitrary NTB BAR mapping.
+
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Jon Mason <jdmason@kudzu.us>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/gro.c | 93 +++++++++++++++++++++++++++++--
- 1 file changed, 87 insertions(+), 6 deletions(-)
+ drivers/ntb/hw/epf/ntb_hw_epf.c | 103 ++++++++++++++++----------------
+ 1 file changed, 53 insertions(+), 50 deletions(-)
 
-diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
-index ad7b07084ca24..9c6f5b4033c37 100644
---- a/tools/testing/selftests/net/gro.c
-+++ b/tools/testing/selftests/net/gro.c
-@@ -71,6 +71,12 @@
- #define MAX_PAYLOAD (IP_MAXPACKET - sizeof(struct tcphdr) - sizeof(struct ipv6hdr))
- #define NUM_LARGE_PKT (MAX_PAYLOAD / MSS)
- #define MAX_HDR_LEN (ETH_HLEN + sizeof(struct ipv6hdr) + sizeof(struct tcphdr))
-+#define MIN_EXTHDR_SIZE 8
-+#define EXT_PAYLOAD_1 "\x00\x00\x00\x00\x00\x00"
-+#define EXT_PAYLOAD_2 "\x11\x11\x11\x11\x11\x11"
-+
-+#define ipv6_optlen(p)  (((p)->hdrlen+1) << 3) /* calculate IPv6 extension header len */
-+#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
+diff --git a/drivers/ntb/hw/epf/ntb_hw_epf.c b/drivers/ntb/hw/epf/ntb_hw_epf.c
+index b640aa0bf45e6..5e79cfce8649c 100644
+--- a/drivers/ntb/hw/epf/ntb_hw_epf.c
++++ b/drivers/ntb/hw/epf/ntb_hw_epf.c
+@@ -49,6 +49,7 @@
+ #define NTB_EPF_COMMAND_TIMEOUT	1000 /* 1 Sec */
  
- static const char *addr6_src = "fdaa::2";
- static const char *addr6_dst = "fdaa::1";
-@@ -104,7 +110,7 @@ static void setup_sock_filter(int fd)
- 	const int dport_off = tcp_offset + offsetof(struct tcphdr, dest);
- 	const int ethproto_off = offsetof(struct ethhdr, h_proto);
- 	int optlen = 0;
--	int ipproto_off;
-+	int ipproto_off, opt_ipproto_off;
- 	int next_off;
+ enum pci_barno {
++	NO_BAR = -1,
+ 	BAR_0,
+ 	BAR_1,
+ 	BAR_2,
+@@ -57,16 +58,26 @@ enum pci_barno {
+ 	BAR_5,
+ };
  
- 	if (proto == PF_INET)
-@@ -116,14 +122,30 @@ static void setup_sock_filter(int fd)
- 	if (strcmp(testname, "ip") == 0) {
- 		if (proto == PF_INET)
- 			optlen = sizeof(struct ip_timestamp);
--		else
--			optlen = sizeof(struct ip6_frag);
-+		else {
-+			BUILD_BUG_ON(sizeof(struct ip6_hbh) > MIN_EXTHDR_SIZE);
-+			BUILD_BUG_ON(sizeof(struct ip6_dest) > MIN_EXTHDR_SIZE);
-+			BUILD_BUG_ON(sizeof(struct ip6_frag) > MIN_EXTHDR_SIZE);
++enum epf_ntb_bar {
++	BAR_CONFIG,
++	BAR_PEER_SPAD,
++	BAR_DB,
++	BAR_MW1,
++	BAR_MW2,
++	BAR_MW3,
++	BAR_MW4,
++	NTB_BAR_NUM,
++};
 +
-+			/* same size for HBH and Fragment extension header types */
-+			optlen = MIN_EXTHDR_SIZE;
-+			opt_ipproto_off = ETH_HLEN + sizeof(struct ipv6hdr)
-+				+ offsetof(struct ip6_ext, ip6e_nxt);
-+		}
++#define NTB_EPF_MAX_MW_COUNT	(NTB_BAR_NUM - BAR_MW1)
++
+ struct ntb_epf_dev {
+ 	struct ntb_dev ntb;
+ 	struct device *dev;
+ 	/* Mutex to protect providing commands to NTB EPF */
+ 	struct mutex cmd_lock;
+ 
+-	enum pci_barno ctrl_reg_bar;
+-	enum pci_barno peer_spad_reg_bar;
+-	enum pci_barno db_reg_bar;
+-	enum pci_barno mw_bar;
++	const enum pci_barno *barno_map;
+ 
+ 	unsigned int mw_count;
+ 	unsigned int spad_count;
+@@ -85,17 +96,6 @@ struct ntb_epf_dev {
+ 
+ #define ntb_ndev(__ntb) container_of(__ntb, struct ntb_epf_dev, ntb)
+ 
+-struct ntb_epf_data {
+-	/* BAR that contains both control region and self spad region */
+-	enum pci_barno ctrl_reg_bar;
+-	/* BAR that contains peer spad region */
+-	enum pci_barno peer_spad_reg_bar;
+-	/* BAR that contains Doorbell region and Memory window '1' */
+-	enum pci_barno db_reg_bar;
+-	/* BAR that contains memory windows*/
+-	enum pci_barno mw_bar;
+-};
+-
+ static int ntb_epf_send_command(struct ntb_epf_dev *ndev, u32 command,
+ 				u32 argument)
+ {
+@@ -144,7 +144,7 @@ static int ntb_epf_mw_to_bar(struct ntb_epf_dev *ndev, int idx)
+ 		return -EINVAL;
  	}
  
-+	/* this filter validates the following:
-+	 *	- packet is IPv4/IPv6 according to the running test.
-+	 *	- packet is TCP. Also handles the case of one extension header and then TCP.
-+	 *	- checks the packet tcp dport equals to DPORT. Also handles the case of one
-+	 *	  extension header and then TCP.
-+	 */
- 	struct sock_filter filter[] = {
- 			BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, ethproto_off),
--			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, ntohs(ethhdr_proto), 0, 7),
-+			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, ntohs(ethhdr_proto), 0, 9),
- 			BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, ipproto_off),
-+			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_TCP, 2, 0),
-+			BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, opt_ipproto_off),
- 			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_TCP, 0, 5),
- 			BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, dport_off),
- 			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, DPORT, 2, 0),
-@@ -576,6 +598,39 @@ static void add_ipv4_ts_option(void *buf, void *optpkt)
- 	iph->check = checksum_fold(iph, sizeof(struct iphdr) + optlen, 0);
+-	return idx + 2;
++	return ndev->barno_map[BAR_MW1 + idx];
  }
  
-+static void add_ipv6_exthdr(void *buf, void *optpkt, __u8 exthdr_type, char *ext_payload)
-+{
-+	struct ipv6_opt_hdr *exthdr = (struct ipv6_opt_hdr *)(optpkt + tcp_offset);
-+	struct ipv6hdr *iph = (struct ipv6hdr *)(optpkt + ETH_HLEN);
-+	char *exthdr_payload_start = (char *)(exthdr + 1);
-+
-+	exthdr->hdrlen = 0;
-+	exthdr->nexthdr = IPPROTO_TCP;
-+
-+	memcpy(exthdr_payload_start, ext_payload, MIN_EXTHDR_SIZE - sizeof(*exthdr));
-+
-+	memcpy(optpkt, buf, tcp_offset);
-+	memcpy(optpkt + tcp_offset + MIN_EXTHDR_SIZE, buf + tcp_offset,
-+		sizeof(struct tcphdr) + PAYLOAD_LEN);
-+
-+	iph->nexthdr = exthdr_type;
-+	iph->payload_len = htons(ntohs(iph->payload_len) + MIN_EXTHDR_SIZE);
-+}
-+
-+static void send_ipv6_exthdr(int fd, struct sockaddr_ll *daddr, char *ext_data1, char *ext_data2)
-+{
-+	static char buf[MAX_HDR_LEN + PAYLOAD_LEN];
-+	static char exthdr_pck[sizeof(buf) + MIN_EXTHDR_SIZE];
-+
-+	create_packet(buf, 0, 0, PAYLOAD_LEN, 0);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data1);
-+	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
-+
-+	create_packet(buf, PAYLOAD_LEN * 1, 0, PAYLOAD_LEN, 0);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data2);
-+	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
-+}
-+
- /* IPv4 options shouldn't coalesce */
- static void send_ip_options(int fd, struct sockaddr_ll *daddr)
- {
-@@ -697,7 +752,7 @@ static void send_fragment6(int fd, struct sockaddr_ll *daddr)
- 		create_packet(buf, PAYLOAD_LEN * i, 0, PAYLOAD_LEN, 0);
- 		write_packet(fd, buf, bufpkt_len, daddr);
+ static int ntb_epf_mw_count(struct ntb_dev *ntb, int pidx)
+@@ -413,7 +413,9 @@ static int ntb_epf_mw_set_trans(struct ntb_dev *ntb, int pidx, int idx,
+ 		return -EINVAL;
  	}
--
-+	sleep(1);
- 	create_packet(buf, PAYLOAD_LEN * 2, 0, PAYLOAD_LEN, 0);
- 	memset(extpkt, 0, extpkt_len);
  
-@@ -760,6 +815,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
- 	vlog("}, Total %d packets\nReceived {", correct_num_pkts);
+-	bar = idx + ndev->mw_bar;
++	bar = ntb_epf_mw_to_bar(ndev, idx);
++	if (bar < 0)
++		return bar;
  
- 	while (1) {
-+		ip_ext_len = 0;
- 		pkt_size = recv(fd, buffer, IP_MAXPACKET + ETH_HLEN + 1, 0);
- 		if (pkt_size < 0)
- 			error(1, errno, "could not receive");
-@@ -767,7 +823,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
- 		if (iph->version == 4)
- 			ip_ext_len = (iph->ihl - 5) * 4;
- 		else if (ip6h->version == 6 && ip6h->nexthdr != IPPROTO_TCP)
--			ip_ext_len = sizeof(struct ip6_frag);
-+			ip_ext_len = MIN_EXTHDR_SIZE;
+ 	mw_size = pci_resource_len(ntb->pdev, bar);
  
- 		tcph = (struct tcphdr *)(buffer + tcp_offset + ip_ext_len);
+@@ -455,7 +457,9 @@ static int ntb_epf_peer_mw_get_addr(struct ntb_dev *ntb, int idx,
+ 	if (idx == 0)
+ 		offset = readl(ndev->ctrl_reg + NTB_EPF_MW1_OFFSET);
  
-@@ -888,7 +944,21 @@ static void gro_sender(void)
- 			sleep(1);
- 			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
- 		} else if (proto == PF_INET6) {
-+			sleep(1);
- 			send_fragment6(txfd, &daddr);
-+			sleep(1);
-+			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
+-	bar = idx + ndev->mw_bar;
++	bar = ntb_epf_mw_to_bar(ndev, idx);
++	if (bar < 0)
++		return bar;
+ 
+ 	if (base)
+ 		*base = pci_resource_start(ndev->ntb.pdev, bar) + offset;
+@@ -560,6 +564,11 @@ static int ntb_epf_init_dev(struct ntb_epf_dev *ndev)
+ 	ndev->mw_count = readl(ndev->ctrl_reg + NTB_EPF_MW_COUNT);
+ 	ndev->spad_count = readl(ndev->ctrl_reg + NTB_EPF_SPAD_COUNT);
+ 
++	if (ndev->mw_count > NTB_EPF_MAX_MW_COUNT) {
++		dev_err(dev, "Unsupported MW count: %u\n", ndev->mw_count);
++		return -EINVAL;
++	}
 +
-+			sleep(1);
-+			/* send IPv6 packets with ext header with same payload */
-+			send_ipv6_exthdr(txfd, &daddr, EXT_PAYLOAD_1, EXT_PAYLOAD_1);
-+			sleep(1);
-+			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
-+
-+			sleep(1);
-+			/* send IPv6 packets with ext header with different payload */
-+			send_ipv6_exthdr(txfd, &daddr, EXT_PAYLOAD_1, EXT_PAYLOAD_2);
-+			sleep(1);
- 			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
- 		}
- 	} else if (strcmp(testname, "large") == 0) {
-@@ -1005,6 +1075,17 @@ static void gro_receiver(void)
- 			 */
- 			printf("fragmented ip6 doesn't coalesce: ");
- 			correct_payload[0] = PAYLOAD_LEN * 2;
-+			correct_payload[1] = PAYLOAD_LEN;
-+			correct_payload[2] = PAYLOAD_LEN;
-+			check_recv_pkts(rxfd, correct_payload, 3);
-+
-+			printf("ipv6 with ext header does coalesce: ");
-+			correct_payload[0] = PAYLOAD_LEN * 2;
-+			check_recv_pkts(rxfd, correct_payload, 1);
-+
-+			printf("ipv6 with ext header with different payloads doesn't coalesce: ");
-+			correct_payload[0] = PAYLOAD_LEN;
-+			correct_payload[1] = PAYLOAD_LEN;
- 			check_recv_pkts(rxfd, correct_payload, 2);
- 		}
- 	} else if (strcmp(testname, "large") == 0) {
+ 	return 0;
+ }
+ 
+@@ -596,14 +605,15 @@ static int ntb_epf_init_pci(struct ntb_epf_dev *ndev,
+ 		dev_warn(&pdev->dev, "Cannot DMA highmem\n");
+ 	}
+ 
+-	ndev->ctrl_reg = pci_iomap(pdev, ndev->ctrl_reg_bar, 0);
++	ndev->ctrl_reg = pci_iomap(pdev, ndev->barno_map[BAR_CONFIG], 0);
+ 	if (!ndev->ctrl_reg) {
+ 		ret = -EIO;
+ 		goto err_pci_regions;
+ 	}
+ 
+-	if (ndev->peer_spad_reg_bar) {
+-		ndev->peer_spad_reg = pci_iomap(pdev, ndev->peer_spad_reg_bar, 0);
++	if (ndev->barno_map[BAR_PEER_SPAD] != ndev->barno_map[BAR_CONFIG]) {
++		ndev->peer_spad_reg = pci_iomap(pdev,
++						ndev->barno_map[BAR_PEER_SPAD], 0);
+ 		if (!ndev->peer_spad_reg) {
+ 			ret = -EIO;
+ 			goto err_pci_regions;
+@@ -614,7 +624,7 @@ static int ntb_epf_init_pci(struct ntb_epf_dev *ndev,
+ 		ndev->peer_spad_reg = ndev->ctrl_reg + spad_off  + spad_sz;
+ 	}
+ 
+-	ndev->db_reg = pci_iomap(pdev, ndev->db_reg_bar, 0);
++	ndev->db_reg = pci_iomap(pdev, ndev->barno_map[BAR_DB], 0);
+ 	if (!ndev->db_reg) {
+ 		ret = -EIO;
+ 		goto err_pci_regions;
+@@ -659,12 +669,7 @@ static void ntb_epf_cleanup_isr(struct ntb_epf_dev *ndev)
+ static int ntb_epf_pci_probe(struct pci_dev *pdev,
+ 			     const struct pci_device_id *id)
+ {
+-	enum pci_barno peer_spad_reg_bar = BAR_1;
+-	enum pci_barno ctrl_reg_bar = BAR_0;
+-	enum pci_barno db_reg_bar = BAR_2;
+-	enum pci_barno mw_bar = BAR_2;
+ 	struct device *dev = &pdev->dev;
+-	struct ntb_epf_data *data;
+ 	struct ntb_epf_dev *ndev;
+ 	int ret;
+ 
+@@ -675,18 +680,10 @@ static int ntb_epf_pci_probe(struct pci_dev *pdev,
+ 	if (!ndev)
+ 		return -ENOMEM;
+ 
+-	data = (struct ntb_epf_data *)id->driver_data;
+-	if (data) {
+-		peer_spad_reg_bar = data->peer_spad_reg_bar;
+-		ctrl_reg_bar = data->ctrl_reg_bar;
+-		db_reg_bar = data->db_reg_bar;
+-		mw_bar = data->mw_bar;
+-	}
++	ndev->barno_map = (const enum pci_barno *)id->driver_data;
++	if (!ndev->barno_map)
++		return -EINVAL;
+ 
+-	ndev->peer_spad_reg_bar = peer_spad_reg_bar;
+-	ndev->ctrl_reg_bar = ctrl_reg_bar;
+-	ndev->db_reg_bar = db_reg_bar;
+-	ndev->mw_bar = mw_bar;
+ 	ndev->dev = dev;
+ 
+ 	ntb_epf_init_struct(ndev, pdev);
+@@ -730,30 +727,36 @@ static void ntb_epf_pci_remove(struct pci_dev *pdev)
+ 	ntb_epf_deinit_pci(ndev);
+ }
+ 
+-static const struct ntb_epf_data j721e_data = {
+-	.ctrl_reg_bar = BAR_0,
+-	.peer_spad_reg_bar = BAR_1,
+-	.db_reg_bar = BAR_2,
+-	.mw_bar = BAR_2,
++static const enum pci_barno j721e_map[NTB_BAR_NUM] = {
++	[BAR_CONFIG]	= BAR_0,
++	[BAR_PEER_SPAD]	= BAR_1,
++	[BAR_DB]	= BAR_2,
++	[BAR_MW1]	= BAR_2,
++	[BAR_MW2]	= BAR_3,
++	[BAR_MW3]	= BAR_4,
++	[BAR_MW4]	= BAR_5
+ };
+ 
+-static const struct ntb_epf_data mx8_data = {
+-	.ctrl_reg_bar = BAR_0,
+-	.peer_spad_reg_bar = BAR_0,
+-	.db_reg_bar = BAR_2,
+-	.mw_bar = BAR_4,
++static const enum pci_barno mx8_map[NTB_BAR_NUM] = {
++	[BAR_CONFIG]	= BAR_0,
++	[BAR_PEER_SPAD]	= BAR_0,
++	[BAR_DB]	= BAR_2,
++	[BAR_MW1]	= BAR_4,
++	[BAR_MW2]	= BAR_5,
++	[BAR_MW3]	= NO_BAR,
++	[BAR_MW4]	= NO_BAR
+ };
+ 
+ static const struct pci_device_id ntb_epf_pci_tbl[] = {
+ 	{
+ 		PCI_DEVICE(PCI_VENDOR_ID_TI, PCI_DEVICE_ID_TI_J721E),
+ 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
+-		.driver_data = (kernel_ulong_t)&j721e_data,
++		.driver_data = (kernel_ulong_t)j721e_map,
+ 	},
+ 	{
+ 		PCI_DEVICE(PCI_VENDOR_ID_FREESCALE, 0x0809),
+ 		.class = PCI_CLASS_MEMORY_RAM << 8, .class_mask = 0xffff00,
+-		.driver_data = (kernel_ulong_t)&mx8_data,
++		.driver_data = (kernel_ulong_t)mx8_map,
+ 	},
+ 	{ },
+ };
 -- 
 2.51.0
 
