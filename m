@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8483330B19;
-	Fri, 21 Nov 2025 13:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3BA27147D;
+	Fri, 21 Nov 2025 13:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731225; cv=none; b=fU1Z0NLeNZ3wnI01XT37cuX7nZHDw4vOzdpEQ2xP2AYy+4FOwuGfA0CAoYgWm+iA4MFnKA5CgFY/u2ppo4qenRKUVl7CVHqxMzQn/Jn/jqL5BnYPgQ1dXg0Lx7IsDzXiWj1jNmFah9wkG82sAD2cLvmj5e9RPrv/cr5YU9VJfCU=
+	t=1763731227; cv=none; b=A871A2vLqUszU9DIzZ0t+Lc0XoYP908inZ+vWZyIOwwnXhl07YEqvuJ6X+G+HvXr6wmtVLBAafVq6CmCxsLe3siySUC4Ix/RfyiMykNF2BJwkm++HmFTiUDaBirUjqcTG29ebxWOSTNTCDrMKzyu8181psW8upb5qmEr7bkRFFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731225; c=relaxed/simple;
-	bh=VMC9EZvkeDlkFfKed2bTUQfH570ndegETyNtIzg5E0g=;
+	s=arc-20240116; t=1763731227; c=relaxed/simple;
+	bh=cT2O+8rDiGla8msjSy9kmYAeYTxf5w5VJ2BkXe8BOs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iiTYVtifJ+uQ8y0XKktIDYdtgPrmwKOVZYMvY2AozmgCFXhN4jgT3gJq0ofCrG/0nP5lZpvesKlp4Rkjr1aIV2KhjqH9gcPPffyjo4941P5Mb3HTBCcuQwhi5O2tCdHeQ13iHuAnMOs/DP03++VKyNXW6zBySRj+rDNkEd6JsdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDdRVGJG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cJCeIMhJxXZOCx3ha4YBkhrRbp5BnykL6bmxEF5TGE2pZN/V5IF7AcoQtEQxVoUe3/3F+69Y6eP1/x89c+bK1kjNJebvfYyB4OyVhuFCjFemvV4kQsUnpSJ6Zq+gC7JNg7iMTY20wyXfscyrgQ++L1MZTIQHyc5gJv+MWLq3KQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CC0faldD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDdRVGJG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF51DC4CEF1;
-	Fri, 21 Nov 2025 13:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CC0faldD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAEFCC116C6;
+	Fri, 21 Nov 2025 13:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731224;
-	bh=VMC9EZvkeDlkFfKed2bTUQfH570ndegETyNtIzg5E0g=;
+	s=korg; t=1763731227;
+	bh=cT2O+8rDiGla8msjSy9kmYAeYTxf5w5VJ2BkXe8BOs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDdRVGJGTROzQnWejwenO5VyjDydrNLCJjwgZFGcXiDMqcHFSpMZfVEPDWFu/pt5k
-	 PZiwkIQl7zcnmsmMgQIAtz+RWWZaB/PO0I/mCb3LC0AalPV4PLAP0UwX5RRH0YCfji
-	 1iH1EWjOO1na70kCOn1zQ3AC5p43RTHefA8HHbIU=
+	b=CC0faldDltDf0OdKT3/RHsbV9lORX2GnrU9qcZEglHqlKCzJLOqFPbqOfCDTjYdxN
+	 DW3XIGuz4vWOtguvKe9sMekHvVzkZiuQYkFdw56Xmpr7zsz4XIt948Obi43+LDzMW4
+	 Et0mG5zm276OvEV5bSujsZ6QJGIrhhYQwKqkEI5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ananth Narayan <ananth.narayan@amd.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Santosh Shukla <santosh.shukla@amd.com>,
-	Tycho Andersen <tycho@kernel.org>,
+	Aurelien Jarno <aurelien@aurel32.net>,
+	Anand Moon <linux.amoon@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 134/247] perf test: Fix lock contention test
-Date: Fri, 21 Nov 2025 14:11:21 +0100
-Message-ID: <20251121130159.537433750@linuxfoundation.org>
+Subject: [PATCH 6.17 135/247] arm64: dts: rockchip: Set correct pinctrl for I2S1 8ch TX on odroid-m1
+Date: Fri, 21 Nov 2025 14:11:22 +0100
+Message-ID: <20251121130159.573320520@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -63,139 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Anand Moon <linux.amoon@gmail.com>
 
-[ Upstream commit 3c723f449723db2dc2b75b7efe03c2a76e4c09f0 ]
+[ Upstream commit d425aef66e62221fa6bb0ccb94296df29e4cc107 ]
 
-Couple of independent fixes:
+Enable proper pin multiplexing for the I2S1 8-channel transmit interface by
+adding the default pinctrl configuration which esures correct signal routing
+and avoids pinmux conflicts during audio playback.
 
-1. Wire in SIGSEGV handler that terminates the test with a failure code.
+Changes fix the error
+[  116.856643] [    T782] rockchip-pinctrl pinctrl: pin gpio1-10 already requested by affinity_hint; cannot claim for fe410000.i2s
+[  116.857567] [    T782] rockchip-pinctrl pinctrl: error -EINVAL: pin-42 (fe410000.i2s)
+[  116.857618] [    T782] rockchip-pinctrl pinctrl: error -EINVAL: could not request pin 42 (gpio1-10) from group i2s1m0-sdi1 on device rockchip-pinctrl
+[  116.857659] [    T782] rockchip-i2s-tdm fe410000.i2s: Error applying setting, reverse things back
 
-2. Use "--lock-cgroup" instead of "-g"; "-g" was proposed but never
-   merged. See commit 4d1792d0a2564caf ("perf lock contention: Add
-   --lock-cgroup option")
+I2S1 on the M1 to the codec in the RK809 only uses the SCLK, LRCK, SDI0
+and SDO0 signals, so limit the claimed pins to those.
 
-3. Call cleanup() on every normal exit so trap_cleanup() doesn't mistake
-   it for an unexpected signal and emit a false-negative "Unexpected
-   signal in main" message.
+With this change audio output works as expected:
 
-Before patch:
+$ aplay -l
+**** List of PLAYBACK Hardware Devices ****
+card 0: HDMI [HDMI], device 0: fe400000.i2s-i2s-hifi i2s-hifi-0 [fe400000.i2s-i2s-hifi i2s-hifi-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
+card 1: RK817 [Analog RK817], device 0: fe410000.i2s-rk817-hifi rk817-hifi-0 [fe410000.i2s-rk817-hifi rk817-hifi-0]
+  Subdevices: 1/1
+  Subdevice #0: subdevice #0
 
-  # ./perf test -vv "lock contention"
-   85: kernel lock contention analysis test:
-  --- start ---
-  test child forked, pid 610711
-  Testing perf lock record and perf lock contention
-  Testing perf lock contention --use-bpf
-  Testing perf lock record and perf lock contention at the same time
-  Testing perf lock contention --threads
-  Testing perf lock contention --lock-addr
-  Testing perf lock contention --lock-cgroup
-  Unexpected signal in test_aggr_cgroup
-  ---- end(0) ----
-   85: kernel lock contention analysis test                            : Ok
-
-After patch:
-
-  # ./perf test -vv "lock contention"
-   85: kernel lock contention analysis test:
-  --- start ---
-  test child forked, pid 602637
-  Testing perf lock record and perf lock contention
-  Testing perf lock contention --use-bpf
-  Testing perf lock record and perf lock contention at the same time
-  Testing perf lock contention --threads
-  Testing perf lock contention --lock-addr
-  Testing perf lock contention --lock-cgroup
-  Testing perf lock contention --type-filter (w/ spinlock)
-  Testing perf lock contention --lock-filter (w/ tasklist_lock)
-  Testing perf lock contention --callstack-filter (w/ unix_stream)
-  [Skip] Could not find 'unix_stream'
-  Testing perf lock contention --callstack-filter with task aggregation
-  [Skip] Could not find 'unix_stream'
-  Testing perf lock contention --cgroup-filter
-  Testing perf lock contention CSV output
-  ---- end(0) ----
-   85: kernel lock contention analysis test                            : Ok
-
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ananth Narayan <ananth.narayan@amd.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Santosh Shukla <santosh.shukla@amd.com>
-Cc: Tycho Andersen <tycho@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 78f858447cb7 ("arm64: dts: rockchip: Add analog audio on ODROID-M1")
+Cc: Aurelien Jarno <aurelien@aurel32.net>
+Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+[adapted the commit message a bit]
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/lock_contention.sh | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/tests/shell/lock_contention.sh b/tools/perf/tests/shell/lock_contention.sh
-index 7248a74ca2a32..6dd90519f45ce 100755
---- a/tools/perf/tests/shell/lock_contention.sh
-+++ b/tools/perf/tests/shell/lock_contention.sh
-@@ -13,15 +13,18 @@ cleanup() {
- 	rm -f ${perfdata}
- 	rm -f ${result}
- 	rm -f ${errout}
--	trap - EXIT TERM INT
-+	trap - EXIT TERM INT ERR
- }
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts b/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts
+index 0f844806ec542..442a2bc43ba8e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts
+@@ -482,6 +482,8 @@
+ };
  
- trap_cleanup() {
-+	if (( $? == 139 )); then #SIGSEGV
-+		err=1
-+	fi
- 	echo "Unexpected signal in ${FUNCNAME[1]}"
- 	cleanup
- 	exit ${err}
- }
--trap trap_cleanup EXIT TERM INT
-+trap trap_cleanup EXIT TERM INT ERR
- 
- check() {
- 	if [ "$(id -u)" != 0 ]; then
-@@ -145,7 +148,7 @@ test_aggr_cgroup()
- 	fi
- 
- 	# the perf lock contention output goes to the stderr
--	perf lock con -a -b -g -E 1 -q -- perf bench sched messaging -p > /dev/null 2> ${result}
-+	perf lock con -a -b --lock-cgroup -E 1 -q -- perf bench sched messaging -p > /dev/null 2> ${result}
- 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
- 		echo "[Fail] BPF result count is not 1:" "$(cat "${result}" | wc -l)"
- 		err=1
-@@ -271,7 +274,7 @@ test_cgroup_filter()
- 		return
- 	fi
- 
--	perf lock con -a -b -g -E 1 -F wait_total -q -- perf bench sched messaging -p > /dev/null 2> ${result}
-+	perf lock con -a -b --lock-cgroup -E 1 -F wait_total -q -- perf bench sched messaging -p > /dev/null 2> ${result}
- 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
- 		echo "[Fail] BPF result should have a cgroup result:" "$(cat "${result}")"
- 		err=1
-@@ -279,7 +282,7 @@ test_cgroup_filter()
- 	fi
- 
- 	cgroup=$(cat "${result}" | awk '{ print $3 }')
--	perf lock con -a -b -g -E 1 -G "${cgroup}" -q -- perf bench sched messaging -p > /dev/null 2> ${result}
-+	perf lock con -a -b --lock-cgroup -E 1 -G "${cgroup}" -q -- perf bench sched messaging -p > /dev/null 2> ${result}
- 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
- 		echo "[Fail] BPF result should have a result with cgroup filter:" "$(cat "${cgroup}")"
- 		err=1
-@@ -338,4 +341,5 @@ test_aggr_task_stack_filter
- test_cgroup_filter
- test_csv_output
- 
-+cleanup
- exit ${err}
+ &i2s1_8ch {
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2s1m0_sclktx &i2s1m0_lrcktx &i2s1m0_sdi0 &i2s1m0_sdo0>;
+ 	rockchip,trcm-sync-tx-only;
+ 	status = "okay";
+ };
 -- 
 2.51.0
 
