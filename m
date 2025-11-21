@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3839A3A291;
-	Fri, 21 Nov 2025 13:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A986434BA4E;
+	Fri, 21 Nov 2025 13:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732104; cv=none; b=J0vUfscEJvcPTIHaJjcqaS9/N2FdWqpU6BLPopzbiLgis/qfMn2bi6gXdBVyh6JOdCzLnENZTBpRMQwXGq1EafrhOtJ95mpE29WKrwond1p+yAKeviu/wc+7LmvkCeT5vxJWMxKG+NgBJS+1yUAIc/0IAlOm37gdKvfMEn8K9RQ=
+	t=1763732105; cv=none; b=IFhVtfUOSbHYw+fOTE4LFgabaJsPJGjlfYb/s2ChmIr7AZJr7ok2+A0fBlQHCfwPpks36bJhrnoOI5L9NF1viYKG4RFIwX/OWFTJ896UGEwPUB6L1eaOM8bPigOFeckA2xYNJEb2H0KoYNeR1YOwCTHEjwJoWbZCVY+AKGeSDzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732104; c=relaxed/simple;
-	bh=8q7GOzJ7SFoCJ6yEudiumBf4YmSMChO9s/ufYW5xA8Q=;
+	s=arc-20240116; t=1763732105; c=relaxed/simple;
+	bh=Sks7V1H2+1/vdsYYVgRjV1GuYwY+MCWBdYYNZduCzWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GAyTz2hT6wpjI/Rh7Jm6YIqolDb9UHi0F6QxI1mTF71m5YF5RtFwRQf4iU17O5qDmCwW2a+imZgn/ykxLJ9ezuGSknNqLr14kjAFmLnWiInDvxALlVwhQ+0VtoE7FFgy/7IWMAdzsWd9KrGbu0D1aB1u8MCX5XxnaVjQ3YrPk3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9W7vID6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c5q7n3CAJ2bNIyFBJWybukV8VUpOaaZxU+iNuOBl19UZCAQA0FsgkhRvzIQmlqcP/Bi+Dz0PNH42i1bas/gLnjcKLR+Cr7WoYEYwQtog2xWJAW3kiEo6VXf4PsLMl0kvXs+HChh/cQiS97VHSJAcYMha9tz83GwddUDT0UkP2o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLuhaUiY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9W7vID6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BA3C4CEF1;
-	Fri, 21 Nov 2025 13:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLuhaUiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B8DC4CEF1;
+	Fri, 21 Nov 2025 13:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732102;
-	bh=8q7GOzJ7SFoCJ6yEudiumBf4YmSMChO9s/ufYW5xA8Q=;
+	s=korg; t=1763732105;
+	bh=Sks7V1H2+1/vdsYYVgRjV1GuYwY+MCWBdYYNZduCzWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9W7vID6i+DFLwtQR/ru2wvZoITKsDdrekP1A7TujSr9KwbWhMICdGB939QViygZ5
-	 L6TwnwMBEBLe4f5zmHb+VevjkEvY9o0CzKpocOoBbNj0Jse3vPzm+2+fSbrMyXKtL8
-	 5LfPVjziiCrVjCwNCZzyF6ZIbs2d3vg8Y5fBCxak=
+	b=YLuhaUiYjn5ZqYOh0v1SZdzETPrvs3mN3BhdVzNqE/gi1WtDCzvA/eNdS9EVcYWjF
+	 Hj0mLDh/syn1jvQ/0AbAM2RC3GTVgK4ghzSWbCV2mNSueOHQ00NJhoEHv3eNm7ddlk
+	 2qE4ueJjMeMF9IDXlvk1pCVbojh0scbzUeOvfudM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Yan Zhao <yan.y.zhao@intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/185] KVM: guest_memfd: Pass index, not gfn, to __kvm_gmem_get_pfn()
-Date: Fri, 21 Nov 2025 14:13:10 +0100
-Message-ID: <20251121130149.759327833@linuxfoundation.org>
+Subject: [PATCH 6.12 164/185] KVM: guest_memfd: Remove RCU-protected attribute from slot->gmem.file
+Date: Fri, 21 Nov 2025 14:13:11 +0100
+Message-ID: <20251121130149.796294327@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,95 +51,154 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yan Zhao <yan.y.zhao@intel.com>
 
-[ Upstream commit 4af18dc6a9204464db76d9771d1f40e2b46bf6ae ]
+[ Upstream commit 67b43038ce14d6b0673bdffb2052d879065c94ae ]
 
-Refactor guest_memfd usage of __kvm_gmem_get_pfn() to pass the index into
-the guest_memfd file instead of the gfn, i.e. resolve the index based on
-the slot+gfn in the caller instead of in __kvm_gmem_get_pfn().  This will
-allow kvm_gmem_get_pfn() to retrieve and return the specific "struct page",
-which requires the index into the folio, without a redoing the index
-calculation multiple times (which isn't costly, just hard to follow).
+Remove the RCU-protected attribute from slot->gmem.file. No need to use RCU
+primitives rcu_assign_pointer()/synchronize_rcu() to update this pointer.
 
-Opportunistically add a kvm_gmem_get_index() helper to make the copy+pasted
-code easier to understand.
+- slot->gmem.file is updated in 3 places:
+  kvm_gmem_bind(), kvm_gmem_unbind(), kvm_gmem_release().
+  All of them are protected by kvm->slots_lock.
 
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+- slot->gmem.file is read in 2 paths:
+  (1) kvm_gmem_populate
+        kvm_gmem_get_file
+        __kvm_gmem_get_pfn
+
+  (2) kvm_gmem_get_pfn
+         kvm_gmem_get_file
+         __kvm_gmem_get_pfn
+
+  Path (1) kvm_gmem_populate() requires holding kvm->slots_lock, so
+  slot->gmem.file is protected by the kvm->slots_lock in this path.
+
+  Path (2) kvm_gmem_get_pfn() does not require holding kvm->slots_lock.
+  However, it's also not guarded by rcu_read_lock() and rcu_read_unlock().
+  So synchronize_rcu() in kvm_gmem_unbind()/kvm_gmem_release() actually
+  will not wait for the readers in kvm_gmem_get_pfn() due to lack of RCU
+  read-side critical section.
+
+  The path (2) kvm_gmem_get_pfn() is safe without RCU protection because:
+  a) kvm_gmem_bind() is called on a new memslot, before the memslot is
+     visible to kvm_gmem_get_pfn().
+  b) kvm->srcu ensures that kvm_gmem_unbind() and freeing of a memslot
+     occur after the memslot is no longer visible to kvm_gmem_get_pfn().
+  c) get_file_active() ensures that kvm_gmem_get_pfn() will not access the
+     stale file if kvm_gmem_release() sets it to NULL.  This is because if
+     kvm_gmem_release() occurs before kvm_gmem_get_pfn(), get_file_active()
+     will return NULL; if get_file_active() does not return NULL,
+     kvm_gmem_release() should not occur until after kvm_gmem_get_pfn()
+     releases the file reference.
+
+Signed-off-by: Yan Zhao <yan.y.zhao@intel.com>
+Message-ID: <20241104084303.29909-1-yan.y.zhao@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-ID: <20241010182427.1434605-46-seanjc@google.com>
 Stable-dep-of: ae431059e75d ("KVM: guest_memfd: Remove bindings on memslot deletion when gmem is dying")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/guest_memfd.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ include/linux/kvm_host.h |    7 ++++++-
+ virt/kvm/guest_memfd.c   |   34 +++++++++++++++++++++-------------
+ 2 files changed, 27 insertions(+), 14 deletions(-)
 
+--- a/include/linux/kvm_host.h
++++ b/include/linux/kvm_host.h
+@@ -608,7 +608,12 @@ struct kvm_memory_slot {
+ 
+ #ifdef CONFIG_KVM_PRIVATE_MEM
+ 	struct {
+-		struct file __rcu *file;
++		/*
++		 * Writes protected by kvm->slots_lock.  Acquiring a
++		 * reference via kvm_gmem_get_file() is protected by
++		 * either kvm->slots_lock or kvm->srcu.
++		 */
++		struct file *file;
+ 		pgoff_t pgoff;
+ 	} gmem;
+ #endif
 --- a/virt/kvm/guest_memfd.c
 +++ b/virt/kvm/guest_memfd.c
-@@ -304,6 +304,11 @@ static inline struct file *kvm_gmem_get_
+@@ -261,15 +261,19 @@ static int kvm_gmem_release(struct inode
+ 	 * dereferencing the slot for existing bindings needs to be protected
+ 	 * against memslot updates, specifically so that unbind doesn't race
+ 	 * and free the memslot (kvm_gmem_get_file() will return NULL).
++	 *
++	 * Since .release is called only when the reference count is zero,
++	 * after which file_ref_get() and get_file_active() fail,
++	 * kvm_gmem_get_pfn() cannot be using the file concurrently.
++	 * file_ref_put() provides a full barrier, and get_file_active() the
++	 * matching acquire barrier.
+ 	 */
+ 	mutex_lock(&kvm->slots_lock);
+ 
+ 	filemap_invalidate_lock(inode->i_mapping);
+ 
+ 	xa_for_each(&gmem->bindings, index, slot)
+-		rcu_assign_pointer(slot->gmem.file, NULL);
+-
+-	synchronize_rcu();
++		WRITE_ONCE(slot->gmem.file, NULL);
+ 
+ 	/*
+ 	 * All in-flight operations are gone and new bindings can be created.
+@@ -298,8 +302,7 @@ static inline struct file *kvm_gmem_get_
+ 	/*
+ 	 * Do not return slot->gmem.file if it has already been closed;
+ 	 * there might be some time between the last fput() and when
+-	 * kvm_gmem_release() clears slot->gmem.file, and you do not
+-	 * want to spin in the meanwhile.
++	 * kvm_gmem_release() clears slot->gmem.file.
+ 	 */
  	return get_file_active(&slot->gmem.file);
  }
+@@ -510,11 +513,11 @@ int kvm_gmem_bind(struct kvm *kvm, struc
+ 	}
  
-+static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
-+{
-+	return gfn - slot->base_gfn + slot->gmem.pgoff;
-+}
+ 	/*
+-	 * No synchronize_rcu() needed, any in-flight readers are guaranteed to
+-	 * be see either a NULL file or this new file, no need for them to go
+-	 * away.
++	 * memslots of flag KVM_MEM_GUEST_MEMFD are immutable to change, so
++	 * kvm_gmem_bind() must occur on a new memslot.  Because the memslot
++	 * is not visible yet, kvm_gmem_get_pfn() is guaranteed to see the file.
+ 	 */
+-	rcu_assign_pointer(slot->gmem.file, file);
++	WRITE_ONCE(slot->gmem.file, file);
+ 	slot->gmem.pgoff = start;
+ 
+ 	xa_store_range(&gmem->bindings, start, end - 1, slot, GFP_KERNEL);
+@@ -550,8 +553,12 @@ void kvm_gmem_unbind(struct kvm_memory_s
+ 
+ 	filemap_invalidate_lock(file->f_mapping);
+ 	xa_store_range(&gmem->bindings, start, end - 1, NULL, GFP_KERNEL);
+-	rcu_assign_pointer(slot->gmem.file, NULL);
+-	synchronize_rcu();
 +
- static struct file_operations kvm_gmem_fops = {
- 	.open		= generic_file_open,
- 	.release	= kvm_gmem_release,
-@@ -553,12 +558,11 @@ void kvm_gmem_unbind(struct kvm_memory_s
- }
++	/*
++	 * synchronize_srcu(&kvm->srcu) ensured that kvm_gmem_get_pfn()
++	 * cannot see this memslot.
++	 */
++	WRITE_ONCE(slot->gmem.file, NULL);
+ 	filemap_invalidate_unlock(file->f_mapping);
  
- /* Returns a locked folio on success.  */
--static struct folio *
--__kvm_gmem_get_pfn(struct file *file, struct kvm_memory_slot *slot,
--		   gfn_t gfn, kvm_pfn_t *pfn, bool *is_prepared,
--		   int *max_order)
-+static struct folio *__kvm_gmem_get_pfn(struct file *file,
-+					struct kvm_memory_slot *slot,
-+					pgoff_t index, kvm_pfn_t *pfn,
-+					bool *is_prepared, int *max_order)
+ 	fput(file);
+@@ -563,11 +570,12 @@ static struct folio *__kvm_gmem_get_pfn(
+ 					pgoff_t index, kvm_pfn_t *pfn,
+ 					bool *is_prepared, int *max_order)
  {
--	pgoff_t index = gfn - slot->base_gfn + slot->gmem.pgoff;
++	struct file *gmem_file = READ_ONCE(slot->gmem.file);
  	struct kvm_gmem *gmem = file->private_data;
  	struct folio *folio;
  
-@@ -594,6 +598,7 @@ __kvm_gmem_get_pfn(struct file *file, st
- int kvm_gmem_get_pfn(struct kvm *kvm, struct kvm_memory_slot *slot,
- 		     gfn_t gfn, kvm_pfn_t *pfn, int *max_order)
- {
-+	pgoff_t index = kvm_gmem_get_index(slot, gfn);
- 	struct file *file = kvm_gmem_get_file(slot);
- 	struct folio *folio;
- 	bool is_prepared = false;
-@@ -602,7 +607,7 @@ int kvm_gmem_get_pfn(struct kvm *kvm, st
- 	if (!file)
- 		return -EFAULT;
+-	if (file != slot->gmem.file) {
+-		WARN_ON_ONCE(slot->gmem.file);
++	if (file != gmem_file) {
++		WARN_ON_ONCE(gmem_file);
+ 		return ERR_PTR(-EFAULT);
+ 	}
  
--	folio = __kvm_gmem_get_pfn(file, slot, gfn, pfn, &is_prepared, max_order);
-+	folio = __kvm_gmem_get_pfn(file, slot, index, pfn, &is_prepared, max_order);
- 	if (IS_ERR(folio)) {
- 		r = PTR_ERR(folio);
- 		goto out;
-@@ -650,6 +655,7 @@ long kvm_gmem_populate(struct kvm *kvm,
- 	for (i = 0; i < npages; i += (1 << max_order)) {
- 		struct folio *folio;
- 		gfn_t gfn = start_gfn + i;
-+		pgoff_t index = kvm_gmem_get_index(slot, gfn);
- 		bool is_prepared = false;
- 		kvm_pfn_t pfn;
- 
-@@ -658,7 +664,7 @@ long kvm_gmem_populate(struct kvm *kvm,
- 			break;
- 		}
- 
--		folio = __kvm_gmem_get_pfn(file, slot, gfn, &pfn, &is_prepared, &max_order);
-+		folio = __kvm_gmem_get_pfn(file, slot, index, &pfn, &is_prepared, &max_order);
- 		if (IS_ERR(folio)) {
- 			ret = PTR_ERR(folio);
- 			break;
 
 
