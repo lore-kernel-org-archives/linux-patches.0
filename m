@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB48A3128A0;
-	Fri, 21 Nov 2025 13:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A703128A0;
+	Fri, 21 Nov 2025 13:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732612; cv=none; b=UwMkdkMqwZD9ai17zPt1Jj6mKcjxzNvFjoQJQsLtC8bHR29uACfoKxfWdYyOFvXKoHYayNQyF+2ZtDikio5sdpJkUpr2YVDuacIshyOc531lLS7aVsf5PBzmgMcPt+mHVZ2rxzJYxx4dhC51xeeZ2RaH/HjfOip+wJfU2eme4nM=
+	t=1763732615; cv=none; b=mtu644Z1lcbbyDhC3ISqu+knrQkj6fXoagNlsKIN++K0IKYgyf7H4icfDjKAS00N8ddTVUvHuHMNN3U5GsLGdlvqeWwAhBPSh49cqcNzRSjq5OhsivPVe+BwlXJSqNyBg5aJ5DhC36eUOw3pxSKtI4Wf7xjB5x5FNrbV5cn8tQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732612; c=relaxed/simple;
-	bh=Pey6XSnrpcPKIglop5kpgVoMFnTdc2YH3Tr5KZTxm1g=;
+	s=arc-20240116; t=1763732615; c=relaxed/simple;
+	bh=WvGCMR+YAWbJ3DHaoDm2ZadZRhF9RyfqEkHNjQ1Qaoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPH8M2Zef9uhnYV3rhdSNpmRKMrEkMr4IrAoy1eKLazB+6TDnIJhrlC2NVbUH5xwGoUFHKtK6MzzaT6z1g+uaWMh6UWSAv7Ae1AdVjTeMS8o/QBpprUnaRf98/waFO0dVVWbHvLlVNiAxk5dIl50Q7IPX3nlI4tdKvM297+kpp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/goDzHn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uzq3C15ilkE1/xA1MTqhk9w4QD5R4JHyiQHfkcagFBNOqtyWh1LIIw5AmTpmNMkj93k5f90L6ByLwVLCdLTNcikVmGVkRC1KQI4Y4GNsY8uLSYunhanvInuqlgj/FKeV5zN5Hcs9Bl8ObPm8I095bAOh6kSwmwnlJmWb/T4PTH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7bwwwMo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/goDzHn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 658F9C4CEF1;
-	Fri, 21 Nov 2025 13:43:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7bwwwMo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C34FC4CEF1;
+	Fri, 21 Nov 2025 13:43:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732612;
-	bh=Pey6XSnrpcPKIglop5kpgVoMFnTdc2YH3Tr5KZTxm1g=;
+	s=korg; t=1763732615;
+	bh=WvGCMR+YAWbJ3DHaoDm2ZadZRhF9RyfqEkHNjQ1Qaoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/goDzHnY8ozFfA6XXxAa8HtJyTbOOvzW947OgG+YvTJwQqIBrzmbM4K1S5c3us4+
-	 IuIfnfJtzZJWt+yJcfDty3FSPCVdOt2bE5XSyymkrh++xCABezrbj06w1dRYg/gMb8
-	 PmwMIQfv1EcgVHsbwZPmyr+ULZZPSug53FZwdF9Q=
+	b=T7bwwwMoa5pJvPWMxT9fWRgzxeP/NQQRTDe36re0EmTJmPClR5071mHaqCZdNPP4j
+	 p7XYsD/MDIt9NMN1Zju+wXlO0pOtBwYR6WGa9mldYfpEVHqCci5oZ6EGZeII7m6TJP
+	 X+Ztx6rBwMgY+i9mgtNXYy3IcRj9SZ/ziyx0V+x4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Felix Kuehling <felix.kuehling@amd.com>,
+	David Francis <David.Francis@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 183/529] drm/msm/dsi/phy_7nm: Fix missing initial VCO rate
-Date: Fri, 21 Nov 2025 14:08:02 +0100
-Message-ID: <20251121130237.528195031@linuxfoundation.org>
+Subject: [PATCH 6.6 184/529] drm/amdgpu: Allow kfd CRIU with no buffer objects
+Date: Fri, 21 Nov 2025 14:08:03 +0100
+Message-ID: <20251121130237.566769115@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,52 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: David Francis <David.Francis@amd.com>
 
-[ Upstream commit 5ddcb0cb9d10e6e70a68e0cb8f0b8e3a7eb8ccaf ]
+[ Upstream commit 85705b18ae7674347f8675f64b2b3115fb1d5629 ]
 
-Driver unconditionally saves current state on first init in
-dsi_pll_7nm_init(), but does not save the VCO rate, only some of the
-divider registers.  The state is then restored during probe/enable via
-msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
-dsi_7nm_pll_restore_state().
+The kfd CRIU checkpoint ioctl would return an error if trying
+to checkpoint a process with no kfd buffer objects.
 
-Restoring calls dsi_pll_7nm_vco_set_rate() with
-pll_7nm->vco_current_rate=0, which basically overwrites existing rate of
-VCO and messes with clock hierarchy, by setting frequency to 0 to clock
-tree.  This makes anyway little sense - VCO rate was not saved, so
-should not be restored.
+This is a normal case and should not be an error.
 
-If PLL was not configured configure it to minimum rate to avoid glitches
-and configuring entire in clock hierarchy to 0 Hz.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/657827/
-Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-9-ee633e3ddbff@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: David Francis <David.Francis@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 47ee2fd569db4..bed9867ced6d4 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -797,6 +797,12 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 76196ab75475e..2e194aa608489 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -2572,8 +2572,8 @@ static int criu_restore(struct file *filep,
+ 	pr_debug("CRIU restore (num_devices:%u num_bos:%u num_objects:%u priv_data_size:%llu)\n",
+ 		 args->num_devices, args->num_bos, args->num_objects, args->priv_data_size);
  
- 	/* TODO: Remove this when we have proper display handover support */
- 	msm_dsi_phy_pll_save_state(phy);
-+	/*
-+	 * Store also proper vco_current_rate, because its value will be used in
-+	 * dsi_7nm_pll_restore_state().
-+	 */
-+	if (!dsi_pll_7nm_vco_recalc_rate(&pll_7nm->clk_hw, VCO_REF_CLK_RATE))
-+		pll_7nm->vco_current_rate = pll_7nm->phy->cfg->min_pll_rate;
+-	if (!args->bos || !args->devices || !args->priv_data || !args->priv_data_size ||
+-	    !args->num_devices || !args->num_bos)
++	if ((args->num_bos > 0 && !args->bos) || !args->devices || !args->priv_data ||
++	    !args->priv_data_size || !args->num_devices)
+ 		return -EINVAL;
  
- 	return 0;
- }
+ 	mutex_lock(&p->mutex);
 -- 
 2.51.0
 
