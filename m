@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D635934CFC6;
-	Fri, 21 Nov 2025 13:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDCC34D4DC;
+	Fri, 21 Nov 2025 13:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733394; cv=none; b=o6dxsglTS7dx3xPfy6vg8soN9SNmmP/A+3+E2ohvOK8PGIemN8u80JlYXCLJMAimXxdo2jIp3HiA8jl5PZ9E32Yg14zJv+iowcXBsMAs9pEDcscX2yXpJHUSbGYfqaMAVTsiFoak22I690I+MBzrMFKESld0USD/pwo9Dd3sR9U=
+	t=1763733398; cv=none; b=f57C/TobdVAIIky+mNBPnQj4dUU/+6PU/zPjJ5Eje8wfeI+QnBlPDnDRCctcpRZnoTata1MNtDnO6ryFiJkoERp3Rdl5MgbXSN+pK0u4L/iGR+wSQ75ZSTHZOuABwqmtSSahpzbbLfClO4ZrqSGvVOc2HzCvxireJR6SCfpwm2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733394; c=relaxed/simple;
-	bh=e+zUI+foOeFJpJTJdsSV9dSl8Cnl2JgiBYUAaeIOIQI=;
+	s=arc-20240116; t=1763733398; c=relaxed/simple;
+	bh=j03O68I7Sb/tLpMrZoVqoSR55gdeKN6HFcDJMn10g20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DRwV+mWvaWI8OZQdXntOqy99UeEAeFr9eT1eGKOaPYk7TwJL5HhuSXKUG4ioq338959l3FSBlknocYH1nJ+VdAw03SeLHXCium8QbRkD7yVC66DZQKWiyza+1rjuV4iNocOGT+3SnWn2IgoYqj70Xj1gFnG1QrMZ4s1HVLUeSYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqVgjiU/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SAAVCQoMUngBJM6GQf5TOVFpSs8BJN6fF8ankp6m1gkOfMZh+CstkstRsnWVEJCDCgxHo3h+I6Z8i8HrTOfstu3Q6RfONITLjYyxIZj81mDhMt7c+sp6Z9ZY7T0DiGwXPoBUA8tTZrShJ34dDQ2Q8V+Gc+btaAFbODJT1C7syCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7cSK6G/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqVgjiU/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1575C116D0;
-	Fri, 21 Nov 2025 13:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7cSK6G/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE05C4CEF1;
+	Fri, 21 Nov 2025 13:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733394;
-	bh=e+zUI+foOeFJpJTJdsSV9dSl8Cnl2JgiBYUAaeIOIQI=;
+	s=korg; t=1763733397;
+	bh=j03O68I7Sb/tLpMrZoVqoSR55gdeKN6HFcDJMn10g20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqVgjiU/3f70dafZIN1ok94MtAvPLtGKSRAIiXwweSsEFIB4mU00Mza7OWg5IvEg+
-	 wtxwaDQUGoIAonS9ITZjyhRqgDVK9MGBCg10Ejymwa7mSyFbg1dMxSuUqx46RgyzgT
-	 8MlhKJgxCBOKrmeW966OiAr0yhRxVPoHlo7zz35E=
+	b=z7cSK6G/gPvgXAn/7ohxE8gaxhgTNoB4gc2iyuXH2yEhjQS/q4ZlLLH0rxloQy7v/
+	 JyY/3k+Ujf53BB41xJbK7KGdiBTA6xTbUz6aELg/5A2C8h7RQ6fqVtp95VlTel1mbL
+	 9kUq4NFFC0QF1NU6Ic2/YjgUq77PXbqcH9EJUTZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Simon Horman <horms@kernel.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Ruohan Lan <ruohanlan@aliyun.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 452/529] espintcp: fix skb leaks
-Date: Fri, 21 Nov 2025 14:12:31 +0100
-Message-ID: <20251121130247.092082979@linuxfoundation.org>
+Subject: [PATCH 6.6 453/529] lib/crypto: arm/curve25519: Disable on CPU_BIG_ENDIAN
+Date: Fri, 21 Nov 2025 14:12:32 +0100
+Message-ID: <20251121130247.127272873@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,73 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 63c1f19a3be3169e51a5812d22a6d0c879414076 ]
+commit 44e8241c51f762aafa50ed116da68fd6ecdcc954 upstream.
 
-A few error paths are missing a kfree_skb.
+On big endian arm kernels, the arm optimized Curve25519 code produces
+incorrect outputs and fails the Curve25519 test.  This has been true
+ever since this code was added.
 
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
-[ Minor context change fixed. ]
-Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
+It seems that hardly anyone (or even no one?) actually uses big endian
+arm kernels.  But as long as they're ostensibly supported, we should
+disable this code on them so that it's not accidentally used.
+
+Note: for future-proofing, use !CPU_BIG_ENDIAN instead of
+CPU_LITTLE_ENDIAN.  Both of these are arch-specific options that could
+get removed in the future if big endian support gets dropped.
+
+Fixes: d8f1308a025f ("crypto: arm/curve25519 - wire up NEON implementation")
+Cc: stable@vger.kernel.org
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20251104054906.716914-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c     | 4 +++-
- net/ipv6/esp6.c     | 4 +++-
- net/xfrm/espintcp.c | 4 +++-
- 3 files changed, 9 insertions(+), 3 deletions(-)
+ arch/arm/crypto/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 49fd664f50fc0..2caf6a2a819b2 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -152,8 +152,10 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
+diff --git a/arch/arm/crypto/Kconfig b/arch/arm/crypto/Kconfig
+index 847b7a0033569..1f684e29cff2e 100644
+--- a/arch/arm/crypto/Kconfig
++++ b/arch/arm/crypto/Kconfig
+@@ -4,7 +4,7 @@ menu "Accelerated Cryptographic Algorithms for CPU (arm)"
  
- 	sk = esp_find_tcp_sk(x);
- 	err = PTR_ERR_OR_ZERO(sk);
--	if (err)
-+	if (err) {
-+		kfree_skb(skb);
- 		goto out;
-+	}
- 
- 	bh_lock_sock(sk);
- 	if (sock_owned_by_user(sk))
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index 7e4c8628cf983..2caaab61b9967 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -169,8 +169,10 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
- 
- 	sk = esp6_find_tcp_sk(x);
- 	err = PTR_ERR_OR_ZERO(sk);
--	if (err)
-+	if (err) {
-+		kfree_skb(skb);
- 		goto out;
-+	}
- 
- 	bh_lock_sock(sk);
- 	if (sock_owned_by_user(sk))
-diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
-index d3b3f9e720b3b..427072285b8c7 100644
---- a/net/xfrm/espintcp.c
-+++ b/net/xfrm/espintcp.c
-@@ -169,8 +169,10 @@ int espintcp_queue_out(struct sock *sk, struct sk_buff *skb)
- {
- 	struct espintcp_ctx *ctx = espintcp_getctx(sk);
- 
--	if (skb_queue_len(&ctx->out_queue) >= READ_ONCE(netdev_max_backlog))
-+	if (skb_queue_len(&ctx->out_queue) >= READ_ONCE(netdev_max_backlog)) {
-+		kfree_skb(skb);
- 		return -ENOBUFS;
-+	}
- 
- 	__skb_queue_tail(&ctx->out_queue, skb);
- 
+ config CRYPTO_CURVE25519_NEON
+ 	tristate "Public key crypto: Curve25519 (NEON)"
+-	depends on KERNEL_MODE_NEON
++	depends on KERNEL_MODE_NEON && !CPU_BIG_ENDIAN
+ 	select CRYPTO_LIB_CURVE25519_GENERIC
+ 	select CRYPTO_ARCH_HAVE_LIB_CURVE25519
+ 	help
 -- 
 2.51.0
 
