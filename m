@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0733E264612;
-	Fri, 21 Nov 2025 13:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21D741F09AC;
+	Fri, 21 Nov 2025 13:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731290; cv=none; b=MtEeOUlEl0cFbi7jlcgrgeqdZ3NSINUSvaj5oise5PLAsIS1GHkdA2b3J7fnRt/viNviSDY3Q5i7VHxkdzloIGd5vdHuaM2+ajYjGZzy1MVRQI5hk4AAjn3FH2g2EJviePbcZEXa8Esw9y8z2d4UQ1+gpvriCbhCaNTMd5SBSmM=
+	t=1763731293; cv=none; b=W1SfTIrHUHmi9UBo2YnwA4VM1dYsYF/4BMg4ZlS+v3kq80S2UmRspEFwe4HXDzw8Z9YUpYNPVV2NnPJJkM7wGzOTv2ed83kpdJYnzQFp+oLO9G0/275RD4GdMcciCOY3/WZz6MifksbnJES9QKwag8QJjXkG3I6H5T5XfYQD+e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731290; c=relaxed/simple;
-	bh=HehjfeLo+FrhOyu78Ph2T+AJxqUZ9HT5FCeGCKYUWw0=;
+	s=arc-20240116; t=1763731293; c=relaxed/simple;
+	bh=UYZR6iX/VC9QBfKscCP+kxVP9gXHEpCUlGR+ERmg3YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vGM1e+t99aByLHUl7yrRSX4mR6bmDZK/SasZ9btsmg5Uw7b7Zk0otjs3ZB7BiClSeMXxRTZP55Gi6L24AY0K4ZJlNajOFYatpErljLy6TdgXa1QiiEKnAsG8O00jvxUAPnXX3a6oZehX1t5wrT29tPumfWN+jm6RV3oJ6vzHOSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2n1t1WIU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmJe4HJzeL2RXrXoUtO9Kalucu7BLTheIVP7m1zCjIFj0YRW1xwO4EWe8gYgO4JqjW3HmAwle++tXyb+d46uXXPEjKYJ3JzYGjpUvMvnT4bFUCBKboD6QaDoP7Vwc4Rl4M2dm5s4aXBrsaRN4Pwux/Mgk3Guc1CLEy9OSpucioQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wj4ot3v/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2n1t1WIU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8540AC4CEF1;
-	Fri, 21 Nov 2025 13:21:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wj4ot3v/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EFA9C4CEF1;
+	Fri, 21 Nov 2025 13:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731289;
-	bh=HehjfeLo+FrhOyu78Ph2T+AJxqUZ9HT5FCeGCKYUWw0=;
+	s=korg; t=1763731292;
+	bh=UYZR6iX/VC9QBfKscCP+kxVP9gXHEpCUlGR+ERmg3YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2n1t1WIUoWOW+oUHoO+D4Y+XoI7tt2TO9m8bpEQEcov0y+j9Is+QRm3wipFEAKxGx
-	 qRfhwk8JIjycX5wPF7WGhS+Kbp5qzby9Fmq2wNg64X2uDnMvTyiyR8cHfsjH+ly4ik
-	 CkTocquwpz9EjBCxOLyLBjdlYds5RYBUrWAz2NPc=
+	b=Wj4ot3v/gSRHm4ubx5CxMKGcoo8pfFlTQEc/yyL3q/yttiw5wRwpIZ3Hn7Q0SgRlV
+	 r9eNKqwI2upAautXCuEXZJXtEuz8XwZfLCg0EpT2t9NXdwOQVR5UVb5K2iO2iWGyUx
+	 8lfKCWaR8vUf9MfbQ7ZBlZkJNPOzG2tgUgZeYCtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoffrey Thorpe <geoff@geoffthorpe.net>,
-	Hongbo Li <lihongbo22@huawei.com>,
+	Markus Suvanto <markus.suvanto@gmail.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 123/247] hostfs: Fix only passing host root in boot stage with new mount
-Date: Fri, 21 Nov 2025 14:11:10 +0100
-Message-ID: <20251121130158.998299567@linuxfoundation.org>
+Subject: [PATCH 6.17 124/247] afs: Fix dynamic lookup to fail on cell lookup failure
+Date: Fri, 21 Nov 2025 14:11:11 +0100
+Message-ID: <20251121130159.178130784@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,96 +54,358 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hongbo Li <lihongbo22@huawei.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2c2b67af5f5f77fc68261a137ad65dcfb8e52506 ]
+[ Upstream commit 330e2c514823008b22e6afd2055715bc46dd8d55 ]
 
-In the old mount proceedure, hostfs could only pass root directory during
-boot. This is because it constructed the root directory using the @root_ino
-event without any mount options. However, when using it with the new mount
-API, this step is no longer triggered. As a result, if users mounts without
-specifying any mount options, the @host_root_path remains uninitialized. To
-prevent this issue, the @host_root_path should be initialized at the time
-of allocation.
+When a process tries to access an entry in /afs, normally what happens is
+that an automount dentry is created by ->lookup() and then triggered, which
+jumps through the ->d_automount() op.  Currently, afs_dynroot_lookup() does
+not do cell DNS lookup, leaving that to afs_d_automount() to perform -
+however, it is possible to use access() or stat() on the automount point,
+which will always return successfully, have briefly created an afs_cell
+record if one did not already exist.
 
-Reported-by: Geoffrey Thorpe <geoff@geoffthorpe.net>
-Closes: https://lore.kernel.org/all/643333a0-f434-42fb-82ac-d25a0b56f3b7@geoffthorpe.net/
-Fixes: cd140ce9f611 ("hostfs: convert hostfs to use the new mount API")
-Signed-off-by: Hongbo Li <lihongbo22@huawei.com>
-Link: https://patch.msgid.link/20251011092235.29880-1-lihongbo22@huawei.com
+This means that something like:
+
+        test -d "/afs/.west" && echo Directory exists
+
+will print "Directory exists" even though no such cell is configured.  This
+breaks the "west" python module available on PIP as it expects this access
+to fail.
+
+Now, it could be possible to make afs_dynroot_lookup() perform the DNS[*]
+lookup, but that would make "ls --color /afs" do this for each cell in /afs
+that is listed but not yet probed.  kafs-client, probably wrongly, preloads
+the entire cell database and all the known cells are then listed in /afs -
+and doing ls /afs would be very, very slow, especially if any cell supplied
+addresses but was wholly inaccessible.
+
+ [*] When I say "DNS", actually read getaddrinfo(), which could use any one
+     of a host of mechanisms.  Could also use static configuration.
+
+To fix this, make the following changes:
+
+ (1) Create an enum to specify the origination point of a call to
+     afs_lookup_cell() and pass this value into that function in place of
+     the "excl" parameter (which can be derived from it).  There are six
+     points of origination:
+
+        - Cell preload through /proc/net/afs/cells
+        - Root cell config through /proc/net/afs/rootcell
+        - Lookup in dynamic root
+        - Automount trigger
+        - Direct mount with mount() syscall
+        - Alias check where YFS tells us the cell name is different
+
+ (2) Add an extra state into the afs_cell state machine to indicate a cell
+     that's been initialised, but not yet looked up.  This is separate from
+     one that can be considered active and has been looked up at least
+     once.
+
+ (3) Make afs_lookup_cell() vary its behaviour more, depending on where it
+     was called from:
+
+     If called from preload or root cell config, DNS lookup will not happen
+     until we definitely want to use the cell (dynroot mount, automount,
+     direct mount or alias check).  The cell will appear in /afs but stat()
+     won't trigger DNS lookup.
+
+     If the cell already exists, dynroot will not wait for the DNS lookup
+     to complete.  If the cell did not already exist, dynroot will wait.
+
+     If called from automount, direct mount or alias check, it will wait
+     for the DNS lookup to complete.
+
+ (4) Make afs_lookup_cell() return an error if lookup failed in one way or
+     another.  We try to return -ENOENT if the DNS says the cell does not
+     exist and -EDESTADDRREQ if we couldn't access the DNS.
+
+Reported-by: Markus Suvanto <markus.suvanto@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220685
+Signed-off-by: David Howells <dhowells@redhat.com>
+Link: https://patch.msgid.link/1784747.1761158912@warthog.procyon.org.uk
+Fixes: 1d0b929fc070 ("afs: Change dynroot to create contents on demand")
+Tested-by: Markus Suvanto <markus.suvanto@gmail.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hostfs/hostfs_kern.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ fs/afs/cell.c     | 78 +++++++++++++++++++++++++++++++++++++++--------
+ fs/afs/dynroot.c  |  3 +-
+ fs/afs/internal.h | 12 +++++++-
+ fs/afs/mntpt.c    |  3 +-
+ fs/afs/proc.c     |  3 +-
+ fs/afs/super.c    |  2 +-
+ fs/afs/vl_alias.c |  3 +-
+ 7 files changed, 86 insertions(+), 18 deletions(-)
 
-diff --git a/fs/hostfs/hostfs_kern.c b/fs/hostfs/hostfs_kern.c
-index 01e516175bcd7..30fcce80a2c35 100644
---- a/fs/hostfs/hostfs_kern.c
-+++ b/fs/hostfs/hostfs_kern.c
-@@ -979,7 +979,7 @@ static int hostfs_parse_param(struct fs_context *fc, struct fs_parameter *param)
+diff --git a/fs/afs/cell.c b/fs/afs/cell.c
+index f31359922e98d..d9b6fa1088b7b 100644
+--- a/fs/afs/cell.c
++++ b/fs/afs/cell.c
+@@ -229,7 +229,7 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
+  * @name:	The name of the cell.
+  * @namesz:	The strlen of the cell name.
+  * @vllist:	A colon/comma separated list of numeric IP addresses or NULL.
+- * @excl:	T if an error should be given if the cell name already exists.
++ * @reason:	The reason we're doing the lookup
+  * @trace:	The reason to be logged if the lookup is successful.
+  *
+  * Look up a cell record by name and query the DNS for VL server addresses if
+@@ -239,7 +239,8 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
+  */
+ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ 				 const char *name, unsigned int namesz,
+-				 const char *vllist, bool excl,
++				 const char *vllist,
++				 enum afs_lookup_cell_for reason,
+ 				 enum afs_cell_trace trace)
  {
- 	struct hostfs_fs_info *fsi = fc->s_fs_info;
- 	struct fs_parse_result result;
--	char *host_root;
-+	char *host_root, *tmp_root;
- 	int opt;
+ 	struct afs_cell *cell, *candidate, *cursor;
+@@ -247,12 +248,18 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ 	enum afs_cell_state state;
+ 	int ret, n;
  
- 	opt = fs_parse(fc, hostfs_param_specs, param, &result);
-@@ -990,11 +990,13 @@ static int hostfs_parse_param(struct fs_context *fc, struct fs_parameter *param)
- 	case Opt_hostfs:
- 		host_root = param->string;
- 		if (!*host_root)
--			host_root = "";
--		fsi->host_root_path =
--			kasprintf(GFP_KERNEL, "%s/%s", root_ino, host_root);
--		if (fsi->host_root_path == NULL)
-+			break;
-+		tmp_root = kasprintf(GFP_KERNEL, "%s%s",
-+				     fsi->host_root_path, host_root);
-+		if (!tmp_root)
- 			return -ENOMEM;
-+		kfree(fsi->host_root_path);
-+		fsi->host_root_path = tmp_root;
- 		break;
+-	_enter("%s,%s", name, vllist);
++	_enter("%s,%s,%u", name, vllist, reason);
+ 
+-	if (!excl) {
++	if (reason != AFS_LOOKUP_CELL_PRELOAD) {
+ 		cell = afs_find_cell(net, name, namesz, trace);
+-		if (!IS_ERR(cell))
++		if (!IS_ERR(cell)) {
++			if (reason == AFS_LOOKUP_CELL_DYNROOT)
++				goto no_wait;
++			if (cell->state == AFS_CELL_SETTING_UP ||
++			    cell->state == AFS_CELL_UNLOOKED)
++				goto lookup_cell;
+ 			goto wait_for_cell;
++		}
  	}
  
-@@ -1004,17 +1006,17 @@ static int hostfs_parse_param(struct fs_context *fc, struct fs_parameter *param)
- static int hostfs_parse_monolithic(struct fs_context *fc, void *data)
- {
- 	struct hostfs_fs_info *fsi = fc->s_fs_info;
--	char *host_root = (char *)data;
-+	char *tmp_root, *host_root = (char *)data;
+ 	/* Assume we're probably going to create a cell and preallocate and
+@@ -298,26 +305,69 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ 	rb_insert_color(&cell->net_node, &net->cells);
+ 	up_write(&net->cells_lock);
  
- 	/* NULL is printed as '(null)' by printf(): avoid that. */
- 	if (host_root == NULL)
--		host_root = "";
-+		return 0;
- 
--	fsi->host_root_path =
--		kasprintf(GFP_KERNEL, "%s/%s", root_ino, host_root);
--	if (fsi->host_root_path == NULL)
-+	tmp_root = kasprintf(GFP_KERNEL, "%s%s", fsi->host_root_path, host_root);
-+	if (!tmp_root)
- 		return -ENOMEM;
--
-+	kfree(fsi->host_root_path);
-+	fsi->host_root_path = tmp_root;
- 	return 0;
- }
- 
-@@ -1049,6 +1051,11 @@ static int hostfs_init_fs_context(struct fs_context *fc)
- 	if (!fsi)
- 		return -ENOMEM;
- 
-+	fsi->host_root_path = kasprintf(GFP_KERNEL, "%s/", root_ino);
-+	if (!fsi->host_root_path) {
-+		kfree(fsi);
-+		return -ENOMEM;
+-	afs_queue_cell(cell, afs_cell_trace_queue_new);
++lookup_cell:
++	if (reason != AFS_LOOKUP_CELL_PRELOAD &&
++	    reason != AFS_LOOKUP_CELL_ROOTCELL) {
++		set_bit(AFS_CELL_FL_DO_LOOKUP, &cell->flags);
++		afs_queue_cell(cell, afs_cell_trace_queue_new);
 +	}
- 	fc->s_fs_info = fsi;
- 	fc->ops = &hostfs_context_ops;
- 	return 0;
+ 
+ wait_for_cell:
+-	_debug("wait_for_cell");
+ 	state = smp_load_acquire(&cell->state); /* vs error */
+-	if (state != AFS_CELL_ACTIVE &&
+-	    state != AFS_CELL_DEAD) {
++	switch (state) {
++	case AFS_CELL_ACTIVE:
++	case AFS_CELL_DEAD:
++		break;
++	case AFS_CELL_UNLOOKED:
++	default:
++		if (reason == AFS_LOOKUP_CELL_PRELOAD ||
++		    reason == AFS_LOOKUP_CELL_ROOTCELL)
++			break;
++		_debug("wait_for_cell");
+ 		afs_see_cell(cell, afs_cell_trace_wait);
+ 		wait_var_event(&cell->state,
+ 			       ({
+ 				       state = smp_load_acquire(&cell->state); /* vs error */
+ 				       state == AFS_CELL_ACTIVE || state == AFS_CELL_DEAD;
+ 			       }));
++		_debug("waited_for_cell %d %d", cell->state, cell->error);
+ 	}
+ 
++no_wait:
+ 	/* Check the state obtained from the wait check. */
++	state = smp_load_acquire(&cell->state); /* vs error */
+ 	if (state == AFS_CELL_DEAD) {
+ 		ret = cell->error;
+ 		goto error;
+ 	}
++	if (state == AFS_CELL_ACTIVE) {
++		switch (cell->dns_status) {
++		case DNS_LOOKUP_NOT_DONE:
++			if (cell->dns_source == DNS_RECORD_FROM_CONFIG) {
++				ret = 0;
++				break;
++			}
++			fallthrough;
++		default:
++			ret = -EIO;
++			goto error;
++		case DNS_LOOKUP_GOOD:
++		case DNS_LOOKUP_GOOD_WITH_BAD:
++			ret = 0;
++			break;
++		case DNS_LOOKUP_GOT_NOT_FOUND:
++			ret = -ENOENT;
++			goto error;
++		case DNS_LOOKUP_BAD:
++			ret = -EREMOTEIO;
++			goto error;
++		case DNS_LOOKUP_GOT_LOCAL_FAILURE:
++		case DNS_LOOKUP_GOT_TEMP_FAILURE:
++		case DNS_LOOKUP_GOT_NS_FAILURE:
++			ret = -EDESTADDRREQ;
++			goto error;
++		}
++	}
+ 
+ 	_leave(" = %p [cell]", cell);
+ 	return cell;
+@@ -325,7 +375,7 @@ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ cell_already_exists:
+ 	_debug("cell exists");
+ 	cell = cursor;
+-	if (excl) {
++	if (reason == AFS_LOOKUP_CELL_PRELOAD) {
+ 		ret = -EEXIST;
+ 	} else {
+ 		afs_use_cell(cursor, trace);
+@@ -384,7 +434,8 @@ int afs_cell_init(struct afs_net *net, const char *rootcell)
+ 		return -EINVAL;
+ 
+ 	/* allocate a cell record for the root/workstation cell */
+-	new_root = afs_lookup_cell(net, rootcell, len, vllist, false,
++	new_root = afs_lookup_cell(net, rootcell, len, vllist,
++				   AFS_LOOKUP_CELL_ROOTCELL,
+ 				   afs_cell_trace_use_lookup_ws);
+ 	if (IS_ERR(new_root)) {
+ 		_leave(" = %ld", PTR_ERR(new_root));
+@@ -777,6 +828,7 @@ static bool afs_manage_cell(struct afs_cell *cell)
+ 	switch (cell->state) {
+ 	case AFS_CELL_SETTING_UP:
+ 		goto set_up_cell;
++	case AFS_CELL_UNLOOKED:
+ 	case AFS_CELL_ACTIVE:
+ 		goto cell_is_active;
+ 	case AFS_CELL_REMOVING:
+@@ -797,7 +849,7 @@ static bool afs_manage_cell(struct afs_cell *cell)
+ 		goto remove_cell;
+ 	}
+ 
+-	afs_set_cell_state(cell, AFS_CELL_ACTIVE);
++	afs_set_cell_state(cell, AFS_CELL_UNLOOKED);
+ 
+ cell_is_active:
+ 	if (afs_has_cell_expired(cell, &next_manage))
+@@ -807,6 +859,8 @@ static bool afs_manage_cell(struct afs_cell *cell)
+ 		ret = afs_update_cell(cell);
+ 		if (ret < 0)
+ 			cell->error = ret;
++		if (cell->state == AFS_CELL_UNLOOKED)
++			afs_set_cell_state(cell, AFS_CELL_ACTIVE);
+ 	}
+ 
+ 	if (next_manage < TIME64_MAX && cell->net->live) {
+diff --git a/fs/afs/dynroot.c b/fs/afs/dynroot.c
+index 8c6130789fde3..dc9d29e3739e7 100644
+--- a/fs/afs/dynroot.c
++++ b/fs/afs/dynroot.c
+@@ -108,7 +108,8 @@ static struct dentry *afs_dynroot_lookup_cell(struct inode *dir, struct dentry *
+ 		dotted = true;
+ 	}
+ 
+-	cell = afs_lookup_cell(net, name, len, NULL, false,
++	cell = afs_lookup_cell(net, name, len, NULL,
++			       AFS_LOOKUP_CELL_DYNROOT,
+ 			       afs_cell_trace_use_lookup_dynroot);
+ 	if (IS_ERR(cell)) {
+ 		ret = PTR_ERR(cell);
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index 1124ea4000cb1..87828d685293f 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -343,6 +343,7 @@ extern const char afs_init_sysname[];
+ 
+ enum afs_cell_state {
+ 	AFS_CELL_SETTING_UP,
++	AFS_CELL_UNLOOKED,
+ 	AFS_CELL_ACTIVE,
+ 	AFS_CELL_REMOVING,
+ 	AFS_CELL_DEAD,
+@@ -1047,9 +1048,18 @@ static inline bool afs_cb_is_broken(unsigned int cb_break,
+ extern int afs_cell_init(struct afs_net *, const char *);
+ extern struct afs_cell *afs_find_cell(struct afs_net *, const char *, unsigned,
+ 				      enum afs_cell_trace);
++enum afs_lookup_cell_for {
++	AFS_LOOKUP_CELL_DYNROOT,
++	AFS_LOOKUP_CELL_MOUNTPOINT,
++	AFS_LOOKUP_CELL_DIRECT_MOUNT,
++	AFS_LOOKUP_CELL_PRELOAD,
++	AFS_LOOKUP_CELL_ROOTCELL,
++	AFS_LOOKUP_CELL_ALIAS_CHECK,
++};
+ struct afs_cell *afs_lookup_cell(struct afs_net *net,
+ 				 const char *name, unsigned int namesz,
+-				 const char *vllist, bool excl,
++				 const char *vllist,
++				 enum afs_lookup_cell_for reason,
+ 				 enum afs_cell_trace trace);
+ extern struct afs_cell *afs_use_cell(struct afs_cell *, enum afs_cell_trace);
+ void afs_unuse_cell(struct afs_cell *cell, enum afs_cell_trace reason);
+diff --git a/fs/afs/mntpt.c b/fs/afs/mntpt.c
+index 9434a5399f2b0..828347fa26450 100644
+--- a/fs/afs/mntpt.c
++++ b/fs/afs/mntpt.c
+@@ -107,7 +107,8 @@ static int afs_mntpt_set_params(struct fs_context *fc, struct dentry *mntpt)
+ 		if (size > AFS_MAXCELLNAME)
+ 			return -ENAMETOOLONG;
+ 
+-		cell = afs_lookup_cell(ctx->net, p, size, NULL, false,
++		cell = afs_lookup_cell(ctx->net, p, size, NULL,
++				       AFS_LOOKUP_CELL_MOUNTPOINT,
+ 				       afs_cell_trace_use_lookup_mntpt);
+ 		if (IS_ERR(cell)) {
+ 			pr_err("kAFS: unable to lookup cell '%pd'\n", mntpt);
+diff --git a/fs/afs/proc.c b/fs/afs/proc.c
+index 40e879c8ca773..44520549b509a 100644
+--- a/fs/afs/proc.c
++++ b/fs/afs/proc.c
+@@ -122,7 +122,8 @@ static int afs_proc_cells_write(struct file *file, char *buf, size_t size)
+ 	if (strcmp(buf, "add") == 0) {
+ 		struct afs_cell *cell;
+ 
+-		cell = afs_lookup_cell(net, name, strlen(name), args, true,
++		cell = afs_lookup_cell(net, name, strlen(name), args,
++				       AFS_LOOKUP_CELL_PRELOAD,
+ 				       afs_cell_trace_use_lookup_add);
+ 		if (IS_ERR(cell)) {
+ 			ret = PTR_ERR(cell);
+diff --git a/fs/afs/super.c b/fs/afs/super.c
+index da407f2d6f0d1..d672b7ab57ae2 100644
+--- a/fs/afs/super.c
++++ b/fs/afs/super.c
+@@ -290,7 +290,7 @@ static int afs_parse_source(struct fs_context *fc, struct fs_parameter *param)
+ 	/* lookup the cell record */
+ 	if (cellname) {
+ 		cell = afs_lookup_cell(ctx->net, cellname, cellnamesz,
+-				       NULL, false,
++				       NULL, AFS_LOOKUP_CELL_DIRECT_MOUNT,
+ 				       afs_cell_trace_use_lookup_mount);
+ 		if (IS_ERR(cell)) {
+ 			pr_err("kAFS: unable to lookup cell '%*.*s'\n",
+diff --git a/fs/afs/vl_alias.c b/fs/afs/vl_alias.c
+index 709b4cdb723ee..fc9676abd2527 100644
+--- a/fs/afs/vl_alias.c
++++ b/fs/afs/vl_alias.c
+@@ -269,7 +269,8 @@ static int yfs_check_canonical_cell_name(struct afs_cell *cell, struct key *key)
+ 	if (!name_len || name_len > AFS_MAXCELLNAME)
+ 		master = ERR_PTR(-EOPNOTSUPP);
+ 	else
+-		master = afs_lookup_cell(cell->net, cell_name, name_len, NULL, false,
++		master = afs_lookup_cell(cell->net, cell_name, name_len, NULL,
++					 AFS_LOOKUP_CELL_ALIAS_CHECK,
+ 					 afs_cell_trace_use_lookup_canonical);
+ 	kfree(cell_name);
+ 	if (IS_ERR(master))
 -- 
 2.51.0
 
