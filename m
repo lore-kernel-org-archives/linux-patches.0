@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4150D29B78F;
-	Fri, 21 Nov 2025 13:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF5929B78F;
+	Fri, 21 Nov 2025 13:40:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732456; cv=none; b=adA+Xf9GTx70WU1+crg28ad4K1KQzptXaXXwPO3nCVz0DuNcFIsYQ25XY0V6vYfBTv64M5Y6qkQmSU9q7EjQ12e33t6FaP+ot4x0oePhwSkWG4rfQBLy4WZ/DhtJymBAgSx0IVM8WDm9q5IqxoBN8vBmVkn7U7Gl3haGPkwclmg=
+	t=1763732459; cv=none; b=UCClWQMx9p6pItmDPF0pLBvIlfOxphYlvWvSVupR1QD/8uxY0XIZqRMVDBzZI/kNaBjj/XnUKrh2ONNA0Z63bxyS9L/vgL/cI4PkWybiGJP38QSciGVJo/WfUt9RwawkMwBrSqNeSUakzzgHUEa6hx4Q/p7cBlVyG/ARqkv9weA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732456; c=relaxed/simple;
-	bh=IboGGDiHDKgOyHSRs1gA0qM6QREsNSlOjawlESnB+qs=;
+	s=arc-20240116; t=1763732459; c=relaxed/simple;
+	bh=RHaUU6V4Z9COEqB0eThhmb2GoH+mmxxFTcHOlufyMec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VkAl046gQZmkS57wgpm5GAKBPlDhEx4jRFbSQX5PCkCvzds97flZ9+8j3R128kOHLeMWl8jnVvaPqhpgwXeM4+JHpc3vUZ5rNFy8ZU7VwDeJDXN2HbqivsJVrOWTJfr1FjJLlMRg9Mg172Ajqi/Wl8My0kwRdT7JZPwNE1D0Xfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2e6USDe9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R4xo7SpWsLBFdPRFwAkwJqj29pTTdZvRmZXnxaPqMZNL+XDYl3cz4Odpoyd3YftzmmVKFcJFTJGt4FGrIFNnCX1Rbt4TIyvVawaFT1E4dggngcAdqQltsiyLWC0PbVU2EPWDi4fozomMvFqPG3xGczR97VnjhxBHoFeGyiPIw6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yFmo2wvO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2e6USDe9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CC4C4CEF1;
-	Fri, 21 Nov 2025 13:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yFmo2wvO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CEF0C4CEF1;
+	Fri, 21 Nov 2025 13:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732456;
-	bh=IboGGDiHDKgOyHSRs1gA0qM6QREsNSlOjawlESnB+qs=;
+	s=korg; t=1763732458;
+	bh=RHaUU6V4Z9COEqB0eThhmb2GoH+mmxxFTcHOlufyMec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2e6USDe9e2LclLoMetqseGblKyg96fVhtCwem0q+d3SHOiWeyQ/GoMdD2LfA2g7QU
-	 VaPsUtoKglJRDN+LXSV7PWRIoazjHT+Rm4sT3hls6XnDjZOrPBrQuRwdfx23aXDtV/
-	 qOMlhdOzaDrhm1m6+J++WNy6sskaV8P6e3oh4PXI=
+	b=yFmo2wvO2U0/cpmIAdb54mNyHG6oDxyiCViO/4ykByw33F+NIGZL6SuKimgkd01e+
+	 M97QZr8J9eSbVwALTKkjrLXf557UEcECz8r5O7c46++al3jrd/5JLWHNbXY0CP4eS1
+	 5JaR/yKzTNygNSzdw8tt3b5r8OC98SwdVFGVFIQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Oniszczuk <piotr.oniszczuk@gmail.com>,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Geoffrey McRae <geoffrey.mcrae@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/529] wifi: rtw88: sdio: use indirect IO for device registers before power-on
-Date: Fri, 21 Nov 2025 14:07:05 +0100
-Message-ID: <20251121130235.504902295@linuxfoundation.org>
+Subject: [PATCH 6.6 127/529] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
+Date: Fri, 21 Nov 2025 14:07:06 +0100
+Message-ID: <20251121130235.540893314@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,49 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Geoffrey McRae <geoffrey.mcrae@amd.com>
 
-[ Upstream commit 58de1f91e033b1fface8d8948984583125f93736 ]
+[ Upstream commit 57af162bfc8c05332a28c4d458d246cc46d2746d ]
 
-The register REG_SYS_CFG1 is used to determine chip basic information
-as arguments of following flows, such as download firmware and load PHY
-parameters, so driver read the value early (before power-on).
+Some kfd ioctls may not be available depending on the kernel version the
+user is running, as such we need to report -ENOTTY so userland can
+determine the cause of the ioctl failure.
 
-However, the direct IO is disallowed before power-on, or it causes wrong
-values, which driver recognizes a chip as a wrong type RF_1T1R, but
-actually RF_2T2R, causing driver warns:
-
-  rtw88_8822cs mmc1:0001:1: unsupported rf path (1)
-
-Fix it by using indirect IO before power-on.
-
-Reported-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
-Closes: https://lore.kernel.org/linux-wireless/699C22B4-A3E3-4206-97D0-22AB3348EBF6@gmail.com/T/#t
-Suggested-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Tested-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250724004815.7043-1-pkshih@realtek.com
+Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/sdio.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
-index 832a427279b40..df4248744d87a 100644
---- a/drivers/net/wireless/realtek/rtw88/sdio.c
-+++ b/drivers/net/wireless/realtek/rtw88/sdio.c
-@@ -143,6 +143,10 @@ static u32 rtw_sdio_to_io_address(struct rtw_dev *rtwdev, u32 addr,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 35dc926f234e3..f77324a5e9584 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -3252,8 +3252,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 	int retcode = -EINVAL;
+ 	bool ptrace_attached = false;
  
- static bool rtw_sdio_use_direct_io(struct rtw_dev *rtwdev, u32 addr)
- {
-+	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags) &&
-+	    !rtw_sdio_is_bus_addr(addr))
-+		return false;
-+
- 	return !rtw_sdio_is_sdio30_supported(rtwdev) ||
- 		rtw_sdio_is_bus_addr(addr);
- }
+-	if (nr >= AMDKFD_CORE_IOCTL_COUNT)
++	if (nr >= AMDKFD_CORE_IOCTL_COUNT) {
++		retcode = -ENOTTY;
+ 		goto err_i1;
++	}
+ 
+ 	if ((nr >= AMDKFD_COMMAND_START) && (nr < AMDKFD_COMMAND_END)) {
+ 		u32 amdkfd_size;
+@@ -3266,8 +3268,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 			asize = amdkfd_size;
+ 
+ 		cmd = ioctl->cmd;
+-	} else
++	} else {
++		retcode = -ENOTTY;
+ 		goto err_i1;
++	}
+ 
+ 	dev_dbg(kfd_device, "ioctl cmd 0x%x (#0x%x), arg 0x%lx\n", cmd, nr, arg);
+ 
 -- 
 2.51.0
 
