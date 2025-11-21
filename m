@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A7B34C81D;
-	Fri, 21 Nov 2025 14:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A713491F3;
+	Fri, 21 Nov 2025 14:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733604; cv=none; b=MKb1keeNm5ADwkuMRZcvlaO12+bJKZ2zTnWTUwBIQz8PqQowpoz85cu9ziY4wZCWyhfgMb1vxcRHwuJJnWsoZ0VYtckakLGVhmc8G2ZzoeY7PCFsBDLt5RkvLxjUCMCuGrtm5zDTFR8L2vY1oKhRQN/Cc+32ifiSag7rJYY/UzA=
+	t=1763733607; cv=none; b=km0ZP2Io5kr58JK0emQm1ShtuTSe2EwffT1Jl19DtxYRooJGDf4HARxeVIR58TRF79TAGtty8Ram9vHwucOsfQYdTdCSYOvHGfDWXzKu/6hHAfZacZ5IPABLiVsuy+VIY1r9uCctULpGkqg4qmEyZY8BvzkASwEZt9iMVciX8uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733604; c=relaxed/simple;
-	bh=v+3s3+8WnDIQ+B5Bm5HINCNzwCrA/QvjEkZprVOIcqU=;
+	s=arc-20240116; t=1763733607; c=relaxed/simple;
+	bh=V+VaxAIcuKEj58mLY/t0ZzNZZEX5mYYeykpcYmZiXd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZE5Ji+2feFxYUFPeHl3oC7xtsk5xlHM8WQDhQKak98VTgu3l8eg2aR+MLV+4k2SWraAnOJXeGBzst4FWxD3IslhBrBUsjmr/wER6a7G4Ul3asZdC10qjXd3SAprVJtrmQx+ZgZSav7wtzxBPFiChjC3L8sdPy1egOzbfFa1tl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6bNoREx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V52nWBrtw4YmScAsqfenAXMX1G/rrAZCoZDbVRVZImS8YblkAv88G88LGXM1Ccl7ILiSOQuprxcQoLU5iP6ZJlonys8gCeNbbPeSbxCRe5q9TVpw3IOtMEDWOQIJFHR9WaPXsiSP+OjYgCWyjghxq3aOY54c5qCDriULVK2qc1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZjIH7CZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6bNoREx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDEDC4CEF1;
-	Fri, 21 Nov 2025 14:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZjIH7CZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B03C4CEF1;
+	Fri, 21 Nov 2025 14:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733604;
-	bh=v+3s3+8WnDIQ+B5Bm5HINCNzwCrA/QvjEkZprVOIcqU=;
+	s=korg; t=1763733607;
+	bh=V+VaxAIcuKEj58mLY/t0ZzNZZEX5mYYeykpcYmZiXd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6bNoRExGDbz5Uh887nqULCKRpk6de3ISuXgFm6MVaSb70gXkjyi64OQSYnrmOP4O
-	 L/PoijFRut+R7KcD5+mPEdcpV/ari195DfxtZ7D4N52hygFXW+amdBaSBh74cXrTKJ
-	 WtsPI4jbTwjaOBOPX60HAHZ9PUj392BjjE4NV0LE=
+	b=PZjIH7CZWTvg1y4KN2t7IJBqfrAugJZa6L++uM4vjbMR3q0FTy4rpCXxW6xoTX0gn
+	 iGeRzzuVQVtFTnioYqSRFWpmtUwghY/S7ouw5E7tgKwT73rTMo5961Os0MWPLAC3yH
+	 jMrIaVRuL4OtVm6g8lYGr1LYqFT/YEMPelS2pktw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nhat Pham <nphamcs@gmail.com>,
-	syzbot+b7f13b2d0cc156edf61a@syzkaller.appspotmail.com,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	David Hildenbrand <david@redhat.com>,
 	"Huang, Ying" <ying.huang@intel.com>,
-	Kairui Song <kasong@tencent.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Yosry Ahmed <yosryahmed@google.com>,
+	Waiman Long <longman@redhat.com>,
+	Alistair Popple <apopple@nvidia.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 524/529] cachestat: do not flush stats in recency check
-Date: Fri, 21 Nov 2025 14:13:43 +0100
-Message-ID: <20251121130249.690298752@linuxfoundation.org>
+Subject: [PATCH 6.6 525/529] memory tiers: use default_dram_perf_ref_source in log message
+Date: Fri, 21 Nov 2025 14:13:44 +0100
+Message-ID: <20251121130249.726357469@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -60,119 +53,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nhat Pham <nphamcs@gmail.com>
+From: Ying Huang <ying.huang@intel.com>
 
-commit 5a4d8944d6b1e1aaaa83ea42c116b520b4ed0394 upstream.
+commit a530bbc53826c607f64e8ee466c3351efaf6aea5 upstream.
 
-syzbot detects that cachestat() is flushing stats, which can sleep, in its
-RCU read section (see [1]).  This is done in the workingset_test_recent()
-step (which checks if the folio's eviction is recent).
+Commit 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
+added a default_dram_perf_ref_source variable that was initialized but
+never used.  This causes kmemleak to report the following memory leak:
 
-Move the stat flushing step to before the RCU read section of cachestat,
-and skip stat flushing during the recency check.
+unreferenced object 0xff11000225a47b60 (size 16):
+  comm "swapper/0", pid 1, jiffies 4294761654
+  hex dump (first 16 bytes):
+    41 43 50 49 20 48 4d 41 54 00 c1 4b 7d b7 75 7c  ACPI HMAT..K}.u|
+  backtrace (crc e6d0e7b2):
+    [<ffffffff95d5afdb>] __kmalloc_node_track_caller_noprof+0x36b/0x440
+    [<ffffffff95c276d6>] kstrdup+0x36/0x60
+    [<ffffffff95dfabfa>] mt_set_default_dram_perf+0x23a/0x2c0
+    [<ffffffff9ad64733>] hmat_init+0x2b3/0x660
+    [<ffffffff95203cec>] do_one_initcall+0x11c/0x5c0
+    [<ffffffff9ac9cfc4>] do_initcalls+0x1b4/0x1f0
+    [<ffffffff9ac9d52e>] kernel_init_freeable+0x4ae/0x520
+    [<ffffffff97c789cc>] kernel_init+0x1c/0x150
+    [<ffffffff952aecd1>] ret_from_fork+0x31/0x70
+    [<ffffffff9520b18a>] ret_from_fork_asm+0x1a/0x30
 
-[1]: https://lore.kernel.org/cgroups/000000000000f71227061bdf97e0@google.com/
+This reminds us that we forget to use the performance data source
+information.  So, use the variable in the error log message to help
+identify the root cause of inconsistent performance number.
 
-Link: https://lkml.kernel.org/r/20240627201737.3506959-1-nphamcs@gmail.com
-Fixes: b00684722262 ("mm: workingset: move the stats flush into workingset_test_recent()")
-Signed-off-by: Nhat Pham <nphamcs@gmail.com>
-Reported-by: syzbot+b7f13b2d0cc156edf61a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/cgroups/000000000000f71227061bdf97e0@google.com/
-Debugged-by: Johannes Weiner <hannes@cmpxchg.org>
-Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: "Huang, Ying" <ying.huang@intel.com>
-Cc: Kairui Song <kasong@tencent.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: Yosry Ahmed <yosryahmed@google.com>
-Cc: <stable@vger.kernel.org>	[6.8+]
+Link: https://lkml.kernel.org/r/87y13mvo0n.fsf@yhuang6-desk2.ccr.corp.intel.com
+Fixes: 3718c02dbd4c ("acpi, hmat: calculate abstract distance with HMAT")
+Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
+Reported-by: Waiman Long <longman@redhat.com>
+Acked-by: Waiman Long <longman@redhat.com>
+Cc: Alistair Popple <apopple@nvidia.com>
+Cc: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/swap.h |    3 ++-
- mm/filemap.c         |    5 ++++-
- mm/workingset.c      |   14 +++++++++++---
- 3 files changed, 17 insertions(+), 5 deletions(-)
+ mm/memory-tiers.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/include/linux/swap.h
-+++ b/include/linux/swap.h
-@@ -343,7 +343,8 @@ static inline swp_entry_t page_swap_entr
- }
- 
- /* linux/mm/workingset.c */
--bool workingset_test_recent(void *shadow, bool file, bool *workingset);
-+bool workingset_test_recent(void *shadow, bool file, bool *workingset,
-+				bool flush);
- void workingset_age_nonresident(struct lruvec *lruvec, unsigned long nr_pages);
- void *workingset_eviction(struct folio *folio, struct mem_cgroup *target_memcg);
- void workingset_refault(struct folio *folio, void *shadow);
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -4210,6 +4210,9 @@ static void filemap_cachestat(struct add
- 	XA_STATE(xas, &mapping->i_pages, first_index);
- 	struct folio *folio;
- 
-+	/* Flush stats (and potentially sleep) outside the RCU read section. */
-+	mem_cgroup_flush_stats_ratelimited(NULL);
-+
- 	rcu_read_lock();
- 	xas_for_each(&xas, folio, last_index) {
- 		int order;
-@@ -4273,7 +4276,7 @@ static void filemap_cachestat(struct add
- 					goto resched;
- 			}
- #endif
--			if (workingset_test_recent(shadow, true, &workingset))
-+			if (workingset_test_recent(shadow, true, &workingset, false))
- 				cs->nr_recently_evicted += nr_pages;
- 
- 			goto resched;
---- a/mm/workingset.c
-+++ b/mm/workingset.c
-@@ -411,10 +411,12 @@ void *workingset_eviction(struct folio *
-  * @file: whether the corresponding folio is from the file lru.
-  * @workingset: where the workingset value unpacked from shadow should
-  * be stored.
-+ * @flush: whether to flush cgroup rstat.
-  *
-  * Return: true if the shadow is for a recently evicted folio; false otherwise.
-  */
--bool workingset_test_recent(void *shadow, bool file, bool *workingset)
-+bool workingset_test_recent(void *shadow, bool file, bool *workingset,
-+				bool flush)
- {
- 	struct mem_cgroup *eviction_memcg;
- 	struct lruvec *eviction_lruvec;
-@@ -466,10 +468,16 @@ bool workingset_test_recent(void *shadow
- 
- 	/*
- 	 * Flush stats (and potentially sleep) outside the RCU read section.
-+	 *
-+	 * Note that workingset_test_recent() itself might be called in RCU read
-+	 * section (for e.g, in cachestat) - these callers need to skip flushing
-+	 * stats (via the flush argument).
-+	 *
- 	 * XXX: With per-memcg flushing and thresholding, is ratelimiting
- 	 * still needed here?
- 	 */
--	mem_cgroup_flush_stats_ratelimited(eviction_memcg);
-+	if (flush)
-+		mem_cgroup_flush_stats_ratelimited(eviction_memcg);
- 
- 	eviction_lruvec = mem_cgroup_lruvec(eviction_memcg, pgdat);
- 	refault = atomic_long_read(&eviction_lruvec->nonresident_age);
-@@ -557,7 +565,7 @@ void workingset_refault(struct folio *fo
- 
- 	mod_lruvec_state(lruvec, WORKINGSET_REFAULT_BASE + file, nr);
- 
--	if (!workingset_test_recent(shadow, file, &workingset))
-+	if (!workingset_test_recent(shadow, file, &workingset, true))
- 		return;
- 
- 	folio_set_active(folio);
+--- a/mm/memory-tiers.c
++++ b/mm/memory-tiers.c
+@@ -649,10 +649,10 @@ int mt_set_default_dram_perf(int nid, st
+ 		pr_info(
+ "memory-tiers: the performance of DRAM node %d mismatches that of the reference\n"
+ "DRAM node %d.\n", nid, default_dram_perf_ref_nid);
+-		pr_info("  performance of reference DRAM node %d:\n",
+-			default_dram_perf_ref_nid);
++		pr_info("  performance of reference DRAM node %d from %s:\n",
++			default_dram_perf_ref_nid, default_dram_perf_ref_source);
+ 		dump_hmem_attrs(&default_dram_perf, "    ");
+-		pr_info("  performance of DRAM node %d:\n", nid);
++		pr_info("  performance of DRAM node %d from %s:\n", nid, source);
+ 		dump_hmem_attrs(perf, "    ");
+ 		pr_info(
+ "  disable default DRAM node performance based abstract distance algorithm.\n");
 
 
