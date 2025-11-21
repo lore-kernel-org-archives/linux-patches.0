@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2737130AD04;
-	Fri, 21 Nov 2025 13:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66F6258ECB;
+	Fri, 21 Nov 2025 13:50:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733036; cv=none; b=Jl7SQBOB/klQo760HzqeWYDWpMHshKpXtJtpsZx+CtEDu9W3k9qeqIFcRxaUwIQh3erOd90j8c5UG4RdvNyMJtcCPFkgfKMx+ECmKU1B/ut6lTJY4jmytcqPG31vVwwN8ORUxOBm32lLqdIm0JNOvKx3e4h0i/WPhenZ6EnDV40=
+	t=1763733039; cv=none; b=YQfHW1ShGMXQqP/NYSrf/B9KWadLdoQS+UrHHbAtEEPi4xJAIaB+GIViMoc7KBEJn4kiGZZw+GnDTbcYXjk3aj4zoiRXIbTc4BwgQdTPY7vRW6kAV7RNS8VFXCxCT+P9X/4QbvauzMKesBe3SEfgta9UkzGLlocDMbMzoPLHOL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733036; c=relaxed/simple;
-	bh=+HbrgTrr3yfTjlznnSw3OK/r+V/ZxTg8AxHl22obq44=;
+	s=arc-20240116; t=1763733039; c=relaxed/simple;
+	bh=hT21iXneMz5//QkhieUrOfgZFr3O1KUoSYdhaLRwk/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CNATWB7k0Zxuo7Yk/kHeIX64GQ107WfUSRn669+ZWjpi/Cp7YNU7LjgSIKsSii028+jYhICIff8sQcS/UsYmX64lQpHhtd/flCk7IzW/kzvuN7kXzeiIo/KS24p19Os0JvbxoOLCZXM/kdmpIGE5qSoCBq2nhLTkStJpn2wNhNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hLuAG7a6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDVcl1UAeyRZ7dY/Oj0hDdbBs/+MBnnHvwFh1wMtqGxUn7wZvPivu0EDngVt/9RQ3yfGH0ruZW/J9OnRGr7uIULPHrJIsmZpO3yZsOxhb+DPEDr9gmqsg2vL4kSX/nrYKgdr95LmvWaMzt2IjZH+OzrSOufbYqCi/HLGF1rH4Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3ZsM/ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hLuAG7a6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E01C4CEF1;
-	Fri, 21 Nov 2025 13:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3ZsM/ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E650C4CEF1;
+	Fri, 21 Nov 2025 13:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733036;
-	bh=+HbrgTrr3yfTjlznnSw3OK/r+V/ZxTg8AxHl22obq44=;
+	s=korg; t=1763733038;
+	bh=hT21iXneMz5//QkhieUrOfgZFr3O1KUoSYdhaLRwk/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hLuAG7a6M/U3CwSAD834GbpuyauR7pTwV9QqcXYJVCyZsNHY6I51tSyBVTGEG+CXl
-	 HJrEA2MM1PPwwhqGtemP1jzmp4hwR1GB5L45z9fUK+2WfonVfHEeObXCHItQZPguZH
-	 uVRCi7Rqit7twNfbidZIKE5bgMs3AXR/sNQ9Yd3s=
+	b=b3ZsM/ai2ltDx5jD4xqi+MihyxBa0NQD5VfI/iDAW7hcd8IkpRRud3cM/+rHQdTtX
+	 reQQs+WIYjOn67vGyyGpILEmlaCOzhlh/mI90ypc8fwMbptkllXhXpoVG+eCDXpiFb
+	 ODLw0RFT4S2Aoypj1IE9Cu49QNSoRdLbrhy+r/Mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 329/529] ALSA: hda/realtek: Audio disappears on HP 15-fc000 after warm boot again
-Date: Fri, 21 Nov 2025 14:10:28 +0100
-Message-ID: <20251121130242.734073705@linuxfoundation.org>
+	Angel4005 <ooara1337@gmail.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Hans de Goede <hansg@kernel.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: [PATCH 6.6 330/529] media: uvcvideo: Use heuristic to find stream entity
+Date: Fri, 21 Nov 2025 14:10:29 +0100
+Message-ID: <20251121130242.768769562@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,73 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit f4b3cef55f5f96fdb4e7f9ca90b7d6213689faeb ]
+commit 758dbc756aad429da11c569c0d067f7fd032bcf7 upstream.
 
-There was a similar bug in the past (Bug 217440), which was fixed for
-this laptop.
-The same issue is occurring again as of kernel v.6.12.2. The symptoms
-are very similar - initially audio works but after a warm reboot, the
-audio completely disappears until the computer is powered off (there
-is no audio output at all).
+Some devices, like the Grandstream GUV3100 webcam, have an invalid UVC
+descriptor where multiple entities share the same ID, this is invalid
+and makes it impossible to make a proper entity tree without heuristics.
 
-The issue is also related by caused by a different change now. By
-bisecting different kernel versions, I found that reverting
-cc3d0b5dd989 in patch_realtek.c[*] restores the sound and it works
-fine after the reboot.
+We have recently introduced a change in the way that we handle invalid
+entities that has caused a regression on broken devices.
 
-[*] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/sound/pci/hda/patch_realtek.c?h=v6.12.2&id=4ed7f16070a8475c088ff423b2eb11ba15eb89b6
+Implement a new heuristic to handle these devices properly.
 
-[ patch description reformatted by tiwai ]
-
-Fixes: cc3d0b5dd989 ("ALSA: hda/realtek: Update ALC256 depop procedure")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220109
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/5317ca723c82447a938414fcca85cbf5@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Angel4005 <ooara1337@gmail.com>
+Closes: https://lore.kernel.org/linux-media/CAOzBiVuS7ygUjjhCbyWg-KiNx+HFTYnqH5+GJhd6cYsNLT=DaA@mail.gmail.com/
+Fixes: 0e2ee70291e6 ("media: uvcvideo: Mark invalid entities with id UVC_INVALID_ENTITY_ID")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ drivers/media/usb/uvc/uvc_driver.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 5fe6b71d90f4f..65c9d47f03af5 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3644,6 +3644,15 @@ static void alc256_shutup(struct hda_codec *codec)
- 		hp_pin = 0x21;
+--- a/drivers/media/usb/uvc/uvc_driver.c
++++ b/drivers/media/usb/uvc/uvc_driver.c
+@@ -165,13 +165,26 @@ static struct uvc_entity *uvc_entity_by_
  
- 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
-+
-+	/* 3k pull low control for Headset jack. */
-+	/* NOTE: call this before clearing the pin, otherwise codec stalls */
-+	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
-+	 * when booting with headset plugged. So skip setting it for the codec alc257
+ static struct uvc_streaming *uvc_stream_by_id(struct uvc_device *dev, int id)
+ {
+-	struct uvc_streaming *stream;
++	struct uvc_streaming *stream, *last_stream;
++	unsigned int count = 0;
+ 
+ 	list_for_each_entry(stream, &dev->streams, list) {
++		count += 1;
++		last_stream = stream;
+ 		if (stream->header.bTerminalLink == id)
+ 			return stream;
+ 	}
+ 
++	/*
++	 * If the streaming entity is referenced by an invalid ID, notify the
++	 * user and use heuristics to guess the correct entity.
 +	 */
-+	if (spec->en_3kpull_low)
-+		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
++	if (count == 1 && id == UVC_INVALID_ENTITY_ID) {
++		dev_warn(&dev->intf->dev,
++			 "UVC non compliance: Invalid USB header. The streaming entity has an invalid ID, guessing the correct one.");
++		return last_stream;
++	}
 +
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
+ 	return NULL;
+ }
  
- 	if (hp_pin_sense) {
-@@ -3654,14 +3663,6 @@ static void alc256_shutup(struct hda_codec *codec)
- 
- 		msleep(75);
- 
--	/* 3k pull low control for Headset jack. */
--	/* NOTE: call this before clearing the pin, otherwise codec stalls */
--	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
--	 * when booting with headset plugged. So skip setting it for the codec alc257
--	 */
--		if (spec->en_3kpull_low)
--			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
--
- 		if (!spec->no_shutup_pins)
- 			snd_hda_codec_write(codec, hp_pin, 0,
- 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
--- 
-2.51.0
-
 
 
