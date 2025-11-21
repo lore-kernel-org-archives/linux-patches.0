@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679F4349AF4;
-	Fri, 21 Nov 2025 13:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D32F343D6C;
+	Fri, 21 Nov 2025 13:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732851; cv=none; b=b7OqylgAZNVTZSYRjewNskYWrI05L9qu4c8U1FjdgVCQdg/luW1GnrDq20Xo64gItSuIoARl1Q/cxRQItOzENSIT7SKeWTVXzZ2PlBznbYo/Wkb0krQqR/nWWlae0zDsrInX0VjIIEvnkdxq4Bm0RM4MZQaoglpUzPS2mgYo0+M=
+	t=1763732854; cv=none; b=m17174rRiLQwkIJUeu6PhXslAral6P15t7EiulYNGAQIWNSmYZsph1K85M6tLhmNEM8thhbbFigBgwlhjQHbRo9md4s23DLY7Csv2Znjry0RrL84q38r3QE2tvCFfuaDVUiej0jhhT9CDBj8UYemEzuQoFZy5LjQ4B2z/4G+vDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732851; c=relaxed/simple;
-	bh=TLkjKHlbP0wmd2avhhxWR92YVoONjItbYlQXW1P1qMo=;
+	s=arc-20240116; t=1763732854; c=relaxed/simple;
+	bh=uR+IzB2iGKqlr27hELKkktKA0iav1jtDjznEHS+7B7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nR/2Lzuh4j+/IYy7DMc/xcrtq0uc74CMXcIg2r8R+1fDmhvVK4R1XEnN/Vp1wBkmN21Q/sqRBpEdCJePAhWOruiJr6pdzcsX+Elq66CkR32zTo3PayH39Z5gEAvfEkbE/6qyeNscfQClpmmRhIuNQrR5n8Ox/tqA1dTV6shmMnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjeaHTH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jTORK2IabOSWpsadrH5/qFyy1GNOSN47IVrMyxyjapNjWxNFF3CqtWE8LwVauCxfaDWHBwCI4MAA7cHtz4LEy91DnC9Kopcvw2mpjTQSST7yapMUgsTwmaSAmUBD4pBvj3AFwnKdghfwRqFYf3uadoY54Rem66KV/kTWlbNRfmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f99DIzIc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjeaHTH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D70FFC4CEF1;
-	Fri, 21 Nov 2025 13:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f99DIzIc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5344C4CEF1;
+	Fri, 21 Nov 2025 13:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732851;
-	bh=TLkjKHlbP0wmd2avhhxWR92YVoONjItbYlQXW1P1qMo=;
+	s=korg; t=1763732854;
+	bh=uR+IzB2iGKqlr27hELKkktKA0iav1jtDjznEHS+7B7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjeaHTH4Tu5jLw3MABXPe08BTS6pbYXtQgqg38oN7gtcAu6rLI96xcCXBpcqTQQZV
-	 t9VQmlHRLE9fRP2ScKndKSWXTbNJOBQplYW8vKum6t4T2frg7SktBjNjLeAcXwM8al
-	 z/ALLBei9NNXJ5Asi5C22rLwjIFHkFbb+29/HFzM=
+	b=f99DIzIcIiL1m9fCwFwfX+deUzXYfC0TWZCk0TptfuCr55kc8DrbTBs3NjF3jvupv
+	 3Cq4Y7PK1N21PtlhEvKsKqhqeAcS/fgaScIu0OtpFNbi7SqBEvTrc/9yYu4fmRqOHC
+	 b9Ax4A/TeqBmcMCFTIlknXBksw6GID1Pn3DQc+XU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 265/529] PCI/PM: Skip resuming to D0 if device is disconnected
-Date: Fri, 21 Nov 2025 14:09:24 +0100
-Message-ID: <20251121130240.453117965@linuxfoundation.org>
+Subject: [PATCH 6.6 266/529] remoteproc: qcom: q6v5: Avoid handling handover twice
+Date: Fri, 21 Nov 2025 14:09:25 +0100
+Message-ID: <20251121130240.488355157@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -48,62 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 299fad4133677b845ce962f78c9cf75bded63f61 ]
+[ Upstream commit 54898664e1eb6b5b3e6cdd9343c6eb15da776153 ]
 
-When a device is surprise-removed (e.g., due to a dock unplug), the PCI
-core unconfigures all downstream devices and sets their error state to
-pci_channel_io_perm_failure. This marks them as disconnected via
-pci_dev_is_disconnected().
+A remoteproc could theoretically signal handover twice. This is unexpected
+and would break the reference counting for the handover resources (power
+domains, clocks, regulators, etc), so add a check to prevent that from
+happening.
 
-During device removal, the runtime PM framework may attempt to resume the
-device to D0 via pm_runtime_get_sync(), which calls into pci_power_up().
-Since the device is already disconnected, this resume attempt is
-unnecessary and results in a predictable errors like this, typically when
-undocking from a TBT3 or USB4 dock with PCIe tunneling:
-
-  pci 0000:01:00.0: Unable to change power state from D3cold to D0, device inaccessible
-
-Avoid powering up disconnected devices by checking their status early in
-pci_power_up() and returning -EIO.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-[bhelgaas: add typical message]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Rafael J. Wysocki <rafael@kernel.org>
-Link: https://patch.msgid.link/20250909031916.4143121-1-superm1@kernel.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-2-910b1a3aff71@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 5 +++++
+ drivers/remoteproc/qcom_q6v5.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index df7f7e2ed0064..9a3f6bb60eb4d 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -1257,6 +1257,11 @@ int pci_power_up(struct pci_dev *dev)
- 		return -EIO;
- 	}
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 769c6d6d6a731..58d5b85e58cda 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -164,6 +164,11 @@ static irqreturn_t q6v5_handover_interrupt(int irq, void *data)
+ {
+ 	struct qcom_q6v5 *q6v5 = data;
  
-+	if (pci_dev_is_disconnected(dev)) {
-+		dev->current_state = PCI_D3cold;
-+		return -EIO;
++	if (q6v5->handover_issued) {
++		dev_err(q6v5->dev, "Handover signaled, but it already happened\n");
++		return IRQ_HANDLED;
 +	}
 +
- 	pci_read_config_word(dev, dev->pm_cap + PCI_PM_CTRL, &pmcsr);
- 	if (PCI_POSSIBLE_ERROR(pmcsr)) {
- 		pci_err(dev, "Unable to change power state from %s to D0, device inaccessible\n",
+ 	if (q6v5->handover)
+ 		q6v5->handover(q6v5);
+ 
 -- 
 2.51.0
 
