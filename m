@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBF534165F;
-	Fri, 21 Nov 2025 13:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E282FD1DB;
+	Fri, 21 Nov 2025 13:53:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733221; cv=none; b=hO0tUa/htxElKZWcLfHEJyqO2UIuZRKyNn6I41yNK1pTJzVrv2NQYTT7LB1kt3tyJCtnhHDMisV+Na0ptw1+HZdZgOPBIjofa3z7p+j3+JI985U97Ws7Ud3HRlE3JcYhp7605u761qfpH+JLBe8QRsxzYWLbn3PxnSL3COhcunw=
+	t=1763733224; cv=none; b=ZmyY4llFYqOJ3oSyctcnNfuA4lxyqWKEG3pB98jS1AjSmtbcvhACRKbR+JLZZYVVV0bUyENfH129uwN2z+20xHVNURX5LFXAX63GVUuIx6ZIphGa1z94kL60WhdnaynABkSc2ZUs6oc+vbkzQL8kI4EQ2UA8L00JcQvM9F13hiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733221; c=relaxed/simple;
-	bh=IuboJO4YFa4cwbTDZGFkoOy/DJpIP/0XzuAxsGA06DU=;
+	s=arc-20240116; t=1763733224; c=relaxed/simple;
+	bh=ObINufOHkzyAAC5e0YLQtgnwpmspvZYkO2dTc4AugtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdINsj7nj92CmMSsADe818RMSAQGXPkLp2bAYummjCql4lCJd5ue6UK8w50jQj9qivdhUN6ea0+MWQwOE2gls18uHe2vhBUjSxZbTNmRKlVpUKAAJ7dEB3bJ9/YkBYUSbx3Y+/eBmHAOkZrymdLiWVbpyHBaosfkPIIMesVa2T8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYptSoq4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7dGzoVehURCoyoR/8vhspzjQAXsp60le+WxJK4Dv5zsGYkWW8vvJxzR6gA1ABQEdS6nL+7DnBBqWESzBm6ol8sEWEV+vND0wgrtIH/b1Zf3Vr5FVmdrfX36CchGTp8LxqZP/YaKX+1Y0UdaC9sZHD7YTeAR8zKJKKJNyo2og7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIBO+3Au; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYptSoq4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3362C4CEF1;
-	Fri, 21 Nov 2025 13:53:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIBO+3Au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8707C4CEF1;
+	Fri, 21 Nov 2025 13:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733221;
-	bh=IuboJO4YFa4cwbTDZGFkoOy/DJpIP/0XzuAxsGA06DU=;
+	s=korg; t=1763733224;
+	bh=ObINufOHkzyAAC5e0YLQtgnwpmspvZYkO2dTc4AugtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYptSoq40XWJd8hVOW45g6Squ43XQkEToJuHcPF8sZ5ZoH7j9b5oa1da9J+XliyyW
-	 BH34+claX0aL0yVNmTD/dkz6sIOwCsxustkOazmF3YCDEK9gSZZq+p1gaJT8KAg8YA
-	 msXKPukB3LCQwc7WmDawv7CGVmOv1Ho25LSNe6R8=
+	b=LIBO+3Au43mG/G1UuGXIIM7hLv6pbuWm4sOXIm03EX6Y6V11+4qA+ombTLc4k6VnO
+	 wLpEkJmutk4PiZh2nT5GaOZzscmwXRjds3GlExQlgbRgRBS2viIDwbgNTRHrldUh4r
+	 MAsKGC9spYDtPYlW01noUS1+ZuoBnbW/SVscjpZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 394/529] wifi: ath11k: zero init info->status in wmi_process_mgmt_tx_comp()
-Date: Fri, 21 Nov 2025 14:11:33 +0100
-Message-ID: <20251121130245.041673418@linuxfoundation.org>
+Subject: [PATCH 6.6 395/529] selftests: net: local_termination: Wait for interfaces to come up
+Date: Fri, 21 Nov 2025 14:11:34 +0100
+Message-ID: <20251121130245.077160599@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -53,51 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 9065b968752334f972e0d48e50c4463a172fc2a7 ]
+[ Upstream commit 57531b3416448d1ced36a2a974a4085ec43d57b0 ]
 
-When reporting tx completion using ieee80211_tx_status_xxx() family of
-functions, the status part of the struct ieee80211_tx_info nested in the
-skb is used to report things like transmit rates & retry count to mac80211
+It seems that most of the tests prepare the interfaces once before the test
+run (setup_prepare()), rely on setup_wait() to wait for link and only then
+run the test(s).
 
-On the TX data path, this is correctly memset to 0 before calling
-ieee80211_tx_status_ext(), but on the tx mgmt path this was not done.
+local_termination brings the physical interfaces down and up during test
+run but never wait for them to come up. If the auto-negotiation takes
+some seconds, first test packets are being lost, which leads to
+false-negative test results.
 
-This leads to mac80211 treating garbage values as valid transmit counters
-(like tx retries for example) and accounting them as real statistics that
-makes their way to userland via station dump.
+Use setup_wait() in run_test() to make sure auto-negotiation has been
+completed after all simple_if_init() calls on physical interfaces and test
+packets will not be lost because of the race against link establishment.
 
-The same issue was resolved in ath12k by commit 9903c0986f78 ("wifi:
-ath12k: Add memset and update default rate value in wmi tx completion")
-
-Tested-on: QCN9074 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251104083957.717825-1-nico.escande@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 90b9566aa5cd3f ("selftests: forwarding: add a test for local_termination.sh")
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20251106161213.459501-1-alexander.sverdlin@siemens.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/net/forwarding/local_termination.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 31dbabc9eaf33..16687223bdcba 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -5841,6 +5841,9 @@ static int wmi_process_mgmt_tx_comp(struct ath11k *ar,
- 	dma_unmap_single(ar->ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
+diff --git a/tools/testing/selftests/net/forwarding/local_termination.sh b/tools/testing/selftests/net/forwarding/local_termination.sh
+index 9b5a63519b949..6cde61f10fd0e 100755
+--- a/tools/testing/selftests/net/forwarding/local_termination.sh
++++ b/tools/testing/selftests/net/forwarding/local_termination.sh
+@@ -108,6 +108,8 @@ run_test()
+ 	local smac=$(mac_get $h1)
+ 	local rcv_dmac=$(mac_get $rcv_if_name)
  
- 	info = IEEE80211_SKB_CB(msdu);
-+	memset(&info->status, 0, sizeof(info->status));
-+	info->status.rates[0].idx = -1;
++	setup_wait
 +
- 	if ((!(info->flags & IEEE80211_TX_CTL_NO_ACK)) &&
- 	    !tx_compl_param->status) {
- 		info->flags |= IEEE80211_TX_STAT_ACK;
+ 	tcpdump_start $rcv_if_name
+ 
+ 	mc_route_prepare $h1
 -- 
 2.51.0
 
