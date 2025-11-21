@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4C41F09B3;
-	Fri, 21 Nov 2025 13:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EF4275B18;
+	Fri, 21 Nov 2025 13:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731641; cv=none; b=jz/RIKeHU5Xn5VM920SJ0jqmI7a72mO+8m58RxayZonl7A7CEz1au4qsLQUpKChP+s7cf/eCbGl0pGNyHtQfFYxq/KvKw7TY9AMJ8q7k9HPxECn2PSRrf4SYKhS7emSxp7cYSIsZ9gTaj6/5e3I3z2f2YQ3kMkryy49MNCORbaQ=
+	t=1763731644; cv=none; b=FUKaO2+/ohUFvaWOpSwI6UawtShMywbb2AFDzTz4aQYoluwbikQM3XBHyagOhk4+OApPyXy/Dn82WCFMt3cKZlmlQUuVyflbR2vMydnfPr9Ifg2l/OG/hEIg3yuMtF16qX8RJqekciCg6oTOUvyTyg/gYB9DxlD3gPHsRDq1JJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731641; c=relaxed/simple;
-	bh=yAPKDFNtjSYgU0ido9Gmy8uuDokoinorhdPryg3Z9dA=;
+	s=arc-20240116; t=1763731644; c=relaxed/simple;
+	bh=8qUL4Mrk7ez7jKywryLyaWAb2xkdufhYfsczvV32wws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usLPayqyn5FSKxQ7N4XtI9icEKScBKuCanCkPxF7aDO2BCYqJB8aAja+FdoERTdfUJsQtcunIKeZb65SbSS/nDJ9PR5J0LLx2n/iOIvPH7MJ1iwh9YLH1qRV9KBfrhI9DfvrXh04jX+MRWjkD4iieYXrKdhniiU1ErgrDmFCmLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBOSBkW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jEXe1AMkjIhzbjqsQxUAkddRoSzF5Osk8/RMbsABktcdwE4rj9NiwiSWSZjEghKCtPXdPdjfoRGzPQL3HC9U/YDaYJekKsOU0G0Er+3VR0XjI6BWaXVIkU+EHUdLRxtOwnu9OtSSy6Q+RE7ntyorCaI8wjXKU4wVx5Z50wvvJBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HeDQpF1Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBOSBkW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48403C4CEF1;
-	Fri, 21 Nov 2025 13:27:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HeDQpF1Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11529C116C6;
+	Fri, 21 Nov 2025 13:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731641;
-	bh=yAPKDFNtjSYgU0ido9Gmy8uuDokoinorhdPryg3Z9dA=;
+	s=korg; t=1763731644;
+	bh=8qUL4Mrk7ez7jKywryLyaWAb2xkdufhYfsczvV32wws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBOSBkW/In+3Q42v/7Zw9+zEiRDQS2T/Ol6/yVU6uE7WwJkIVOHgdiT3hkkoBcyKd
-	 YNiYzHbNu76319YhrjrQ7/VKi9ayLg0EDyMKkKY5a8QP0EP7jl1WKfEXwYRp+TbWfb
-	 Es5G7ShbjXyuQpgyQPdbsjCV7kcALE0ESk4opNY4=
+	b=HeDQpF1YvWfC0BMYd2YKiIDwMAnsmpT4wxBK0tH6eu2BIVPU+c2xC1utj6rOwwb0K
+	 MyRb+gLcn/PiB1+Vx9DDiojMoXKvthf0B9tG7JFahSQEUnKo4CdFCHlOrHquPEUlpR
+	 8SBEwsShDzyh4399WBXYzLSqkoJPnjWsKEKT+tLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Robert Morris <rtm@csail.mit.edu>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chunhai Guo <guochunhai@vivo.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 013/185] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
-Date: Fri, 21 Nov 2025 14:10:40 +0100
-Message-ID: <20251121130144.354395692@linuxfoundation.org>
+Subject: [PATCH 6.12 031/185] erofs: avoid infinite loop due to incomplete zstd-compressed data
+Date: Fri, 21 Nov 2025 14:10:58 +0100
+Message-ID: <20251121130144.998155705@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,46 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
+[ Upstream commit f2a12cc3b97f062186568a7b94ddb7aa2ef68140 ]
 
-openSBI v1.7 adds harts checks for ipi operations. Especially it
-adds comparison between hmask passed as an argument from linux
-and mask of online harts (from openSBI side). If they don't
-fit each other the error occurs.
+Currently, the decompression logic incorrectly spins if compressed
+data is truncated in crafted (deliberately corrupted) images.
 
-When cpu is offline, cpu_online_mask is explicitly cleared in
-__cpu_disable. However, there is no explicit clearing of
-mm_cpumask. mm_cpumask is used for rfence operations that
-call openSBI RFENCE extension which uses ipi to remote harts.
-If hart is offline there may be error if mask of linux is not
-as mask of online harts in openSBI.
-
-this patch adds explicit clearing of mm_cpumask for offline hart.
-
-Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
-[pjw@kernel.org: rewrote subject line for clarity]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Fixes: 7c35de4df105 ("erofs: Zstandard compression support")
+Reported-by: Robert Morris <rtm@csail.mit.edu>
+Closes: https://lore.kernel.org/r/50958.1761605413@localhost
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu-hotplug.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/erofs/decompressor_zstd.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
-index a1e38ecfc8be2..3f50d3dd76c6f 100644
---- a/arch/riscv/kernel/cpu-hotplug.c
-+++ b/arch/riscv/kernel/cpu-hotplug.c
-@@ -54,6 +54,7 @@ void arch_cpuhp_cleanup_dead_cpu(unsigned int cpu)
+diff --git a/fs/erofs/decompressor_zstd.c b/fs/erofs/decompressor_zstd.c
+index 7e177304967e1..24f4731a7a6d4 100644
+--- a/fs/erofs/decompressor_zstd.c
++++ b/fs/erofs/decompressor_zstd.c
+@@ -178,7 +178,6 @@ static int z_erofs_zstd_decompress(struct z_erofs_decompress_req *rq,
+ 	dctx.bounce = strm->bounce;
  
- 	pr_notice("CPU%u: off\n", cpu);
+ 	do {
+-		dctx.avail_out = out_buf.size - out_buf.pos;
+ 		dctx.inbuf_sz = in_buf.size;
+ 		dctx.inbuf_pos = in_buf.pos;
+ 		err = z_erofs_stream_switch_bufs(&dctx, &out_buf.dst,
+@@ -194,14 +193,18 @@ static int z_erofs_zstd_decompress(struct z_erofs_decompress_req *rq,
+ 		in_buf.pos = dctx.inbuf_pos;
  
-+	clear_tasks_mm_cpumask(cpu);
- 	/* Verify from the firmware if the cpu is really stopped*/
- 	if (cpu_ops->cpu_is_stopped)
- 		ret = cpu_ops->cpu_is_stopped(cpu);
+ 		zerr = zstd_decompress_stream(stream, &out_buf, &in_buf);
+-		if (zstd_is_error(zerr) || (!zerr && rq->outputsize)) {
++		dctx.avail_out = out_buf.size - out_buf.pos;
++		if (zstd_is_error(zerr) ||
++		    ((rq->outputsize + dctx.avail_out) && (!zerr || (zerr > 0 &&
++				!(rq->inputsize + in_buf.size - in_buf.pos))))) {
+ 			erofs_err(sb, "failed to decompress in[%u] out[%u]: %s",
+ 				  rq->inputsize, rq->outputsize,
+-				  zerr ? zstd_get_error_name(zerr) : "unexpected end of stream");
++				  zstd_is_error(zerr) ? zstd_get_error_name(zerr) :
++					"unexpected end of stream");
+ 			err = -EFSCORRUPTED;
+ 			break;
+ 		}
+-	} while (rq->outputsize || out_buf.pos < out_buf.size);
++	} while (rq->outputsize + dctx.avail_out);
+ 
+ 	if (dctx.kout)
+ 		kunmap_local(dctx.kout);
 -- 
 2.51.0
 
