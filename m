@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85EF4275B18;
-	Fri, 21 Nov 2025 13:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896C4246762;
+	Fri, 21 Nov 2025 13:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731644; cv=none; b=FUKaO2+/ohUFvaWOpSwI6UawtShMywbb2AFDzTz4aQYoluwbikQM3XBHyagOhk4+OApPyXy/Dn82WCFMt3cKZlmlQUuVyflbR2vMydnfPr9Ifg2l/OG/hEIg3yuMtF16qX8RJqekciCg6oTOUvyTyg/gYB9DxlD3gPHsRDq1JJ4=
+	t=1763731647; cv=none; b=Pc7ChFW8lJBSNCEUoz7IZeHwQfmRO4UvZQYEEUPYHkMP9U+KGC2wOso3rMV6GGKvl9X7wLXziTGX67bEHVUaPYQg7PnK3WeIWVzZRmrQafgHoxHMPrNpy/53XcyIlzZwWrxF62jvezm4D74UlxnWv9dwP1xfzNyk8Iwt9PWX+mU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731644; c=relaxed/simple;
-	bh=8qUL4Mrk7ez7jKywryLyaWAb2xkdufhYfsczvV32wws=;
+	s=arc-20240116; t=1763731647; c=relaxed/simple;
+	bh=j1cUTvWBFrbgX04zhQtTPcW5t34EAzUA2qzlodx7eRY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jEXe1AMkjIhzbjqsQxUAkddRoSzF5Osk8/RMbsABktcdwE4rj9NiwiSWSZjEghKCtPXdPdjfoRGzPQL3HC9U/YDaYJekKsOU0G0Er+3VR0XjI6BWaXVIkU+EHUdLRxtOwnu9OtSSy6Q+RE7ntyorCaI8wjXKU4wVx5Z50wvvJBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HeDQpF1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHNuXQpcmga5l1O3beWggpmLNxGyX4zR8HM3RJ8zPdx12YkYnaaVoM536ZXvjsIzBtu76jWWOS+XX9OnCpZODo33YdiT2vBwu75bUywfEZMwwcKxI6oyDwd4wVHuVlNeo5Fe1xDBEMO7rDkZTExOShDdhCFS58yoIe2IVCvXSis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUtBfDo5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HeDQpF1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11529C116C6;
-	Fri, 21 Nov 2025 13:27:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUtBfDo5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07777C4CEF1;
+	Fri, 21 Nov 2025 13:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731644;
-	bh=8qUL4Mrk7ez7jKywryLyaWAb2xkdufhYfsczvV32wws=;
+	s=korg; t=1763731647;
+	bh=j1cUTvWBFrbgX04zhQtTPcW5t34EAzUA2qzlodx7eRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HeDQpF1YvWfC0BMYd2YKiIDwMAnsmpT4wxBK0tH6eu2BIVPU+c2xC1utj6rOwwb0K
-	 MyRb+gLcn/PiB1+Vx9DDiojMoXKvthf0B9tG7JFahSQEUnKo4CdFCHlOrHquPEUlpR
-	 8SBEwsShDzyh4399WBXYzLSqkoJPnjWsKEKT+tLs=
+	b=oUtBfDo56MDYtuvFOvY03y27tOAwYKvbA2MCCX4D7p1BuMsMZdazukauTc2mdbTyM
+	 STuiFBIufOJzmfLBkhaMfiGmxYsyQs/9RetkM+xZbgX0mlphJ6tXwKoauQ3AdtW9mh
+	 OBZ7I/HTvs22kqokjCp7BMef1Hth3QnuvVVIdzMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Morris <rtm@csail.mit.edu>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chunhai Guo <guochunhai@vivo.com>,
-	Chao Yu <chao@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/185] erofs: avoid infinite loop due to incomplete zstd-compressed data
-Date: Fri, 21 Nov 2025 14:10:58 +0100
-Message-ID: <20251121130144.998155705@linuxfoundation.org>
+Subject: [PATCH 6.12 032/185] selftests: net: local_termination: Wait for interfaces to come up
+Date: Fri, 21 Nov 2025 14:10:59 +0100
+Message-ID: <20251121130145.034347844@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,58 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit f2a12cc3b97f062186568a7b94ddb7aa2ef68140 ]
+[ Upstream commit 57531b3416448d1ced36a2a974a4085ec43d57b0 ]
 
-Currently, the decompression logic incorrectly spins if compressed
-data is truncated in crafted (deliberately corrupted) images.
+It seems that most of the tests prepare the interfaces once before the test
+run (setup_prepare()), rely on setup_wait() to wait for link and only then
+run the test(s).
 
-Fixes: 7c35de4df105 ("erofs: Zstandard compression support")
-Reported-by: Robert Morris <rtm@csail.mit.edu>
-Closes: https://lore.kernel.org/r/50958.1761605413@localhost
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
+local_termination brings the physical interfaces down and up during test
+run but never wait for them to come up. If the auto-negotiation takes
+some seconds, first test packets are being lost, which leads to
+false-negative test results.
+
+Use setup_wait() in run_test() to make sure auto-negotiation has been
+completed after all simple_if_init() calls on physical interfaces and test
+packets will not be lost because of the race against link establishment.
+
+Fixes: 90b9566aa5cd3f ("selftests: forwarding: add a test for local_termination.sh")
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://patch.msgid.link/20251106161213.459501-1-alexander.sverdlin@siemens.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/decompressor_zstd.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/forwarding/local_termination.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/erofs/decompressor_zstd.c b/fs/erofs/decompressor_zstd.c
-index 7e177304967e1..24f4731a7a6d4 100644
---- a/fs/erofs/decompressor_zstd.c
-+++ b/fs/erofs/decompressor_zstd.c
-@@ -178,7 +178,6 @@ static int z_erofs_zstd_decompress(struct z_erofs_decompress_req *rq,
- 	dctx.bounce = strm->bounce;
+diff --git a/tools/testing/selftests/net/forwarding/local_termination.sh b/tools/testing/selftests/net/forwarding/local_termination.sh
+index ecd34f364125c..892895659c7e4 100755
+--- a/tools/testing/selftests/net/forwarding/local_termination.sh
++++ b/tools/testing/selftests/net/forwarding/local_termination.sh
+@@ -176,6 +176,8 @@ run_test()
+ 	local rcv_dmac=$(mac_get $rcv_if_name)
+ 	local should_receive
  
- 	do {
--		dctx.avail_out = out_buf.size - out_buf.pos;
- 		dctx.inbuf_sz = in_buf.size;
- 		dctx.inbuf_pos = in_buf.pos;
- 		err = z_erofs_stream_switch_bufs(&dctx, &out_buf.dst,
-@@ -194,14 +193,18 @@ static int z_erofs_zstd_decompress(struct z_erofs_decompress_req *rq,
- 		in_buf.pos = dctx.inbuf_pos;
++	setup_wait
++
+ 	tcpdump_start $rcv_if_name
  
- 		zerr = zstd_decompress_stream(stream, &out_buf, &in_buf);
--		if (zstd_is_error(zerr) || (!zerr && rq->outputsize)) {
-+		dctx.avail_out = out_buf.size - out_buf.pos;
-+		if (zstd_is_error(zerr) ||
-+		    ((rq->outputsize + dctx.avail_out) && (!zerr || (zerr > 0 &&
-+				!(rq->inputsize + in_buf.size - in_buf.pos))))) {
- 			erofs_err(sb, "failed to decompress in[%u] out[%u]: %s",
- 				  rq->inputsize, rq->outputsize,
--				  zerr ? zstd_get_error_name(zerr) : "unexpected end of stream");
-+				  zstd_is_error(zerr) ? zstd_get_error_name(zerr) :
-+					"unexpected end of stream");
- 			err = -EFSCORRUPTED;
- 			break;
- 		}
--	} while (rq->outputsize || out_buf.pos < out_buf.size);
-+	} while (rq->outputsize + dctx.avail_out);
- 
- 	if (dctx.kout)
- 		kunmap_local(dctx.kout);
+ 	mc_route_prepare $send_if_name
 -- 
 2.51.0
 
