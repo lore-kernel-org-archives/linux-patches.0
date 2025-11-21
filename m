@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896C4246762;
-	Fri, 21 Nov 2025 13:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67234275B18;
+	Fri, 21 Nov 2025 13:27:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731647; cv=none; b=Pc7ChFW8lJBSNCEUoz7IZeHwQfmRO4UvZQYEEUPYHkMP9U+KGC2wOso3rMV6GGKvl9X7wLXziTGX67bEHVUaPYQg7PnK3WeIWVzZRmrQafgHoxHMPrNpy/53XcyIlzZwWrxF62jvezm4D74UlxnWv9dwP1xfzNyk8Iwt9PWX+mU=
+	t=1763731650; cv=none; b=Po4FemTw40BmVNVBa397Hf1NbuMsdd+hmErqnxQY9ivDRU0L/fPfm7Qazzli5BURehodKZr4alHEH2/etqKR5Jfb4/paqnPQLkg0v39N4AXWAxgXdz+JkPMQPyByn74ub3nfYYbjOUdhn/mxNHXfK4w/tbnkhTTNQxLVktNUxJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731647; c=relaxed/simple;
-	bh=j1cUTvWBFrbgX04zhQtTPcW5t34EAzUA2qzlodx7eRY=;
+	s=arc-20240116; t=1763731650; c=relaxed/simple;
+	bh=F7xyzq2qrkjUSfihRwt1velGLdQDRchPKRq8Ljim3hw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mHNuXQpcmga5l1O3beWggpmLNxGyX4zR8HM3RJ8zPdx12YkYnaaVoM536ZXvjsIzBtu76jWWOS+XX9OnCpZODo33YdiT2vBwu75bUywfEZMwwcKxI6oyDwd4wVHuVlNeo5Fe1xDBEMO7rDkZTExOShDdhCFS58yoIe2IVCvXSis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oUtBfDo5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4Z0zdQUWy9dXHaNiCQTWcKSNrjiGPHmVeJ/dSDuDMq0yiZmMg5o7pH67vf3q3537hA6xY8QslZ5Ioe80ohCGrmayZyikYfildgBVgImydGM2ZQ2DcUQFD+Gg7N066yXlznW/2Eif7afJF3oFoYFkkV3Ec3jCVlsgcntBu4unzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjPWs2n/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oUtBfDo5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07777C4CEF1;
-	Fri, 21 Nov 2025 13:27:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjPWs2n/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BA3C4CEF1;
+	Fri, 21 Nov 2025 13:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731647;
-	bh=j1cUTvWBFrbgX04zhQtTPcW5t34EAzUA2qzlodx7eRY=;
+	s=korg; t=1763731650;
+	bh=F7xyzq2qrkjUSfihRwt1velGLdQDRchPKRq8Ljim3hw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oUtBfDo56MDYtuvFOvY03y27tOAwYKvbA2MCCX4D7p1BuMsMZdazukauTc2mdbTyM
-	 STuiFBIufOJzmfLBkhaMfiGmxYsyQs/9RetkM+xZbgX0mlphJ6tXwKoauQ3AdtW9mh
-	 OBZ7I/HTvs22kqokjCp7BMef1Hth3QnuvVVIdzMg=
+	b=hjPWs2n/D0tnCAEg4cnrNeX30701nhqMxkCU/tsI0Pfxe9sR6OE2bd+c4y9rPdD16
+	 yZKK6nvZZRDebF+ZW9Rr0dhuUR/NA/qyhEAxjjnR0YuiNWdFqysUVnHcVH3G03g5nQ
+	 GUQZB/8Y+sGyeIXww4Nb5/Ws9VACKyYp3rDfh3o0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/185] selftests: net: local_termination: Wait for interfaces to come up
-Date: Fri, 21 Nov 2025 14:10:59 +0100
-Message-ID: <20251121130145.034347844@linuxfoundation.org>
+Subject: [PATCH 6.12 033/185] net: fec: correct rx_bytes statistic for the case SHIFT16 is set
+Date: Fri, 21 Nov 2025 14:11:00 +0100
+Message-ID: <20251121130145.071105488@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,46 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 57531b3416448d1ced36a2a974a4085ec43d57b0 ]
+[ Upstream commit ad17e7e92a7c52ce70bb764813fcf99464f96903 ]
 
-It seems that most of the tests prepare the interfaces once before the test
-run (setup_prepare()), rely on setup_wait() to wait for link and only then
-run the test(s).
+Two additional bytes in front of each frame received into the RX FIFO if
+SHIFT16 is set, so we need to subtract the extra two bytes from pkt_len
+to correct the statistic of rx_bytes.
 
-local_termination brings the physical interfaces down and up during test
-run but never wait for them to come up. If the auto-negotiation takes
-some seconds, first test packets are being lost, which leads to
-false-negative test results.
-
-Use setup_wait() in run_test() to make sure auto-negotiation has been
-completed after all simple_if_init() calls on physical interfaces and test
-packets will not be lost because of the race against link establishment.
-
-Fixes: 90b9566aa5cd3f ("selftests: forwarding: add a test for local_termination.sh")
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20251106161213.459501-1-alexander.sverdlin@siemens.com
+Fixes: 3ac72b7b63d5 ("net: fec: align IP header in hardware")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251106021421.2096585-1-wei.fang@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/local_termination.sh | 2 ++
+ drivers/net/ethernet/freescale/fec_main.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/local_termination.sh b/tools/testing/selftests/net/forwarding/local_termination.sh
-index ecd34f364125c..892895659c7e4 100755
---- a/tools/testing/selftests/net/forwarding/local_termination.sh
-+++ b/tools/testing/selftests/net/forwarding/local_termination.sh
-@@ -176,6 +176,8 @@ run_test()
- 	local rcv_dmac=$(mac_get $rcv_if_name)
- 	local should_receive
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index d144494f97e91..d1800868c2e01 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1799,6 +1799,8 @@ fec_enet_rx_queue(struct net_device *ndev, int budget, u16 queue_id)
+ 		ndev->stats.rx_packets++;
+ 		pkt_len = fec16_to_cpu(bdp->cbd_datlen);
+ 		ndev->stats.rx_bytes += pkt_len;
++		if (fep->quirks & FEC_QUIRK_HAS_RACC)
++			ndev->stats.rx_bytes -= 2;
  
-+	setup_wait
-+
- 	tcpdump_start $rcv_if_name
- 
- 	mc_route_prepare $send_if_name
+ 		index = fec_enet_get_bd_index(bdp, &rxq->bd);
+ 		page = rxq->rx_skb_info[index].page;
 -- 
 2.51.0
 
