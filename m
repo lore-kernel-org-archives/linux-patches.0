@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297CB2459C6;
-	Fri, 21 Nov 2025 13:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29F42DCF55;
+	Fri, 21 Nov 2025 13:56:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733384; cv=none; b=XjTJRHqh4c1vldnYCsyT8qFYR5dQJcigmKmh6f+zuothzrtvPR74PUotDoEtaXY6vrSB8dbQTqxsn7VNTxNCc8gzuHJUjtdUAhAuWMZjHqYF7/RckpCRpDcNea/j1yDf23dDwCN7FcWEm21jpiyEJWaLbD2fk2nwYL5uqb5nAGY=
+	t=1763733387; cv=none; b=i1P2uqC1HtNokgJx7r9HeS0I6iMCUuoA1ZXF6tQOLWZshe+aMyVG3bk/xDN/nRQJDcNC7TIHIyvCYsGG/JLQPOi+rRaWNTgGU6V6FiBcimRZdmxvIOIw8c6KMx62IknepOHpyWUUouiHEWhbZvJfT+UZyzWodON+fjxnOO06y0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733384; c=relaxed/simple;
-	bh=IOcKTFgwub30QBtm5SbTFePKOT07j/dYfV5yQVfGNcY=;
+	s=arc-20240116; t=1763733387; c=relaxed/simple;
+	bh=OUHuSespMvVjU54JaAFjHTWmMQ8BjceobL1QcUnyYOA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBuRvQrMV7a5CmCTAxCzHrfa4T4RAecZ+TK9iXS8Q0B3vSLtLHfZHs18zqbxXq3MIFeSVC5ecfux++8owFpF4jsPu75XCOVaBO4fP5iI1ajsTIFJELJkaZbsELE7VhQNc8ReYkPkACfYk4rddwVNT4iZf/MQWLtRkPDFDMPICKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lJISUJ2b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bxBgIVxkkaqd3GzTJ/CMqkQ19kcf0eUkBMauhay2NMvcICSB8Gv67cH8Zrh186ObPmM/TQqmYcZYg3XbGGeebj5uMdXIIaBb0j3PN9JS6/Y0Rn1upM48pFyPx1+UIG+gUns3BplHVgWSmhN4QSwpW5VQI24ICAo2Bq6tySG2Q3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY4TOa6D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lJISUJ2b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F49C4CEF1;
-	Fri, 21 Nov 2025 13:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY4TOa6D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB902C4CEF1;
+	Fri, 21 Nov 2025 13:56:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733384;
-	bh=IOcKTFgwub30QBtm5SbTFePKOT07j/dYfV5yQVfGNcY=;
+	s=korg; t=1763733387;
+	bh=OUHuSespMvVjU54JaAFjHTWmMQ8BjceobL1QcUnyYOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lJISUJ2bagR26HTbAoEhM46Ix5fA3+TKgemRg2sg/n27k59kyck2ikTUZmXJEedM3
-	 Nx5KCqkrGo46WJURsndbl0ZyKq96ZajrXGzg0LnJEtiHUrJuaxLF7DczIk5VtXVL5/
-	 2rvfMiKYqqnZLOhaQYBeZtZS052ek8db50AZfttY=
+	b=mY4TOa6DdqCxonomAMMIIMbc9cdx33qfT7PhUZP7xHKf2QGPz/zlb2DEJWKhfFXEl
+	 MQ12U+IpqaK+ivp8h2eRirwMEgJ/IPI+suMRpJZ9HI6cRH2ehzg1Lt9RygD4VBT33L
+	 gBV0al3XZp9ebdbjy31l9ymw1A2leZpAJNPd1k7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Wang Liang <wangliang74@huawei.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rajani Kantha <681739313@139.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Wenshan Lan <jetlan9@163.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 449/529] net: fix NULL pointer dereference in l3mdev_l3_rcv
-Date: Fri, 21 Nov 2025 14:12:28 +0100
-Message-ID: <20251121130246.986797527@linuxfoundation.org>
+Subject: [PATCH 6.6 450/529] net: allow small head cache usage with large MAX_SKB_FRAGS values
+Date: Fri, 21 Nov 2025 14:12:29 +0100
+Message-ID: <20251121130247.021846331@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -54,65 +53,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Liang <wangliang74@huawei.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 0032c99e83b9ce6d5995d65900aa4b6ffb501cce ]
+[ Upstream commit 14ad6ed30a10afbe91b0749d6378285f4225d482 ]
 
-When delete l3s ipvlan:
+Sabrina reported the following splat:
 
-    ip link del link eth0 ipvlan1 type ipvlan mode l3s
+    WARNING: CPU: 0 PID: 1 at net/core/dev.c:6935 netif_napi_add_weight_locked+0x8f2/0xba0
+    Modules linked in:
+    CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.14.0-rc1-net-00092-g011b03359038 #996
+    Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS Arch Linux 1.16.3-1-1 04/01/2014
+    RIP: 0010:netif_napi_add_weight_locked+0x8f2/0xba0
+    Code: e8 c3 e6 6a fe 48 83 c4 28 5b 5d 41 5c 41 5d 41 5e 41 5f c3 cc cc cc cc c7 44 24 10 ff ff ff ff e9 8f fb ff ff e8 9e e6 6a fe <0f> 0b e9 d3 fe ff ff e8 92 e6 6a fe 48 8b 04 24 be ff ff ff ff 48
+    RSP: 0000:ffffc9000001fc60 EFLAGS: 00010293
+    RAX: 0000000000000000 RBX: ffff88806ce48128 RCX: 1ffff11001664b9e
+    RDX: ffff888008f00040 RSI: ffffffff8317ca42 RDI: ffff88800b325cb6
+    RBP: ffff88800b325c40 R08: 0000000000000001 R09: ffffed100167502c
+    R10: ffff88800b3a8163 R11: 0000000000000000 R12: ffff88800ac1c168
+    R13: ffff88800ac1c168 R14: ffff88800ac1c168 R15: 0000000000000007
+    FS:  0000000000000000(0000) GS:ffff88806ce00000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: ffff888008201000 CR3: 0000000004c94001 CR4: 0000000000370ef0
+    DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+    DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+    Call Trace:
+    <TASK>
+    gro_cells_init+0x1ba/0x270
+    xfrm_input_init+0x4b/0x2a0
+    xfrm_init+0x38/0x50
+    ip_rt_init+0x2d7/0x350
+    ip_init+0xf/0x20
+    inet_init+0x406/0x590
+    do_one_initcall+0x9d/0x2e0
+    do_initcalls+0x23b/0x280
+    kernel_init_freeable+0x445/0x490
+    kernel_init+0x20/0x1d0
+    ret_from_fork+0x46/0x80
+    ret_from_fork_asm+0x1a/0x30
+    </TASK>
+    irq event stamp: 584330
+    hardirqs last  enabled at (584338): [<ffffffff8168bf87>] __up_console_sem+0x77/0xb0
+    hardirqs last disabled at (584345): [<ffffffff8168bf6c>] __up_console_sem+0x5c/0xb0
+    softirqs last  enabled at (583242): [<ffffffff833ee96d>] netlink_insert+0x14d/0x470
+    softirqs last disabled at (583754): [<ffffffff8317c8cd>] netif_napi_add_weight_locked+0x77d/0xba0
 
-This may cause a null pointer dereference:
+on kernel built with MAX_SKB_FRAGS=45, where SKB_WITH_OVERHEAD(1024)
+is smaller than GRO_MAX_HEAD.
 
-    Call trace:
-     ip_rcv_finish+0x48/0xd0
-     ip_rcv+0x5c/0x100
-     __netif_receive_skb_one_core+0x64/0xb0
-     __netif_receive_skb+0x20/0x80
-     process_backlog+0xb4/0x204
-     napi_poll+0xe8/0x294
-     net_rx_action+0xd8/0x22c
-     __do_softirq+0x12c/0x354
+Such built additionally contains the revert of the single page frag cache
+so that napi_get_frags() ends up using the page frag allocator, triggering
+the splat.
 
-This is because l3mdev_l3_rcv() visit dev->l3mdev_ops after
-ipvlan_l3s_unregister() assign the dev->l3mdev_ops to NULL. The process
-like this:
+Note that the underlying issue is independent from the mentioned
+revert; address it ensuring that the small head cache will fit either TCP
+and GRO allocation and updating napi_alloc_skb() and __netdev_alloc_skb()
+to select kmalloc() usage for any allocation fitting such cache.
 
-    (CPU1)                     | (CPU2)
-    l3mdev_l3_rcv()            |
-      check dev->priv_flags:   |
-        master = skb->dev;     |
-                               |
-                               | ipvlan_l3s_unregister()
-                               |   set dev->priv_flags
-                               |   dev->l3mdev_ops = NULL;
-                               |
-      visit master->l3mdev_ops |
-
-To avoid this by do not set dev->l3mdev_ops when unregister l3s ipvlan.
-
-Suggested-by: David Ahern <dsahern@kernel.org>
-Fixes: c675e06a98a4 ("ipvlan: decouple l3s mode dependencies from other modes")
-Signed-off-by: Wang Liang <wangliang74@huawei.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250321090353.1170545-1-wangliang74@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Rajani Kantha <681739313@139.com>
+Reported-by: Sabrina Dubroca <sd@queasysnail.net>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Fixes: 3948b05950fd ("net: introduce a config option to tweak MAX_SKB_FRAGS")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Minor context change fixed. ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ipvlan/ipvlan_l3s.c | 1 -
- 1 file changed, 1 deletion(-)
+ include/net/gro.h |  3 +++
+ net/core/gro.c    |  3 ---
+ net/core/skbuff.c | 10 +++++++---
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ipvlan/ipvlan_l3s.c b/drivers/net/ipvlan/ipvlan_l3s.c
-index d5b05e8032199..ca35a50bb6405 100644
---- a/drivers/net/ipvlan/ipvlan_l3s.c
-+++ b/drivers/net/ipvlan/ipvlan_l3s.c
-@@ -224,5 +224,4 @@ void ipvlan_l3s_unregister(struct ipvl_port *port)
+diff --git a/include/net/gro.h b/include/net/gro.h
+index 018343254c90a..9260ed367c919 100644
+--- a/include/net/gro.h
++++ b/include/net/gro.h
+@@ -10,6 +10,9 @@
+ #include <linux/skbuff.h>
+ #include <net/udp.h>
  
- 	dev->priv_flags &= ~IFF_L3MDEV_RX_HANDLER;
- 	ipvlan_unregister_nf_hook(read_pnet(&port->pnet));
--	dev->l3mdev_ops = NULL;
- }
++/* This should be increased if a protocol with a bigger head is added. */
++#define GRO_MAX_HEAD (MAX_HEADER + 128)
++
+ struct napi_gro_cb {
+ 	union {
+ 		struct {
+diff --git a/net/core/gro.c b/net/core/gro.c
+index 397cf59842503..b8cc44406e69b 100644
+--- a/net/core/gro.c
++++ b/net/core/gro.c
+@@ -6,9 +6,6 @@
+ 
+ #define MAX_GRO_SKBS 8
+ 
+-/* This should be increased if a protocol with a bigger head is added. */
+-#define GRO_MAX_HEAD (MAX_HEADER + 128)
+-
+ static DEFINE_SPINLOCK(offload_lock);
+ struct list_head offload_base __read_mostly = LIST_HEAD_INIT(offload_base);
+ /* Maximum number of GRO_NORMAL skbs to batch up for list-RX */
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 867832f8bbaea..073e2c5274079 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -67,6 +67,7 @@
+ #include <net/dst.h>
+ #include <net/sock.h>
+ #include <net/checksum.h>
++#include <net/gro.h>
+ #include <net/gso.h>
+ #include <net/ip6_checksum.h>
+ #include <net/xfrm.h>
+@@ -96,7 +97,9 @@ static struct kmem_cache *skbuff_ext_cache __ro_after_init;
+ 
+ static struct kmem_cache *skb_small_head_cache __ro_after_init;
+ 
+-#define SKB_SMALL_HEAD_SIZE SKB_HEAD_ALIGN(MAX_TCP_HEADER)
++#define GRO_MAX_HEAD_PAD (GRO_MAX_HEAD + NET_SKB_PAD + NET_IP_ALIGN)
++#define SKB_SMALL_HEAD_SIZE SKB_HEAD_ALIGN(max(MAX_TCP_HEADER, \
++					       GRO_MAX_HEAD_PAD))
+ 
+ /* We want SKB_SMALL_HEAD_CACHE_SIZE to not be a power of two.
+  * This should ensure that SKB_SMALL_HEAD_HEADROOM is a unique
+@@ -708,7 +711,7 @@ struct sk_buff *__netdev_alloc_skb(struct net_device *dev, unsigned int len,
+ 	/* If requested length is either too small or too big,
+ 	 * we use kmalloc() for skb->head allocation.
+ 	 */
+-	if (len <= SKB_WITH_OVERHEAD(1024) ||
++	if (len <= SKB_WITH_OVERHEAD(SKB_SMALL_HEAD_CACHE_SIZE) ||
+ 	    len > SKB_WITH_OVERHEAD(PAGE_SIZE) ||
+ 	    (gfp_mask & (__GFP_DIRECT_RECLAIM | GFP_DMA))) {
+ 		skb = __alloc_skb(len, gfp_mask, SKB_ALLOC_RX, NUMA_NO_NODE);
+@@ -785,7 +788,8 @@ struct sk_buff *__napi_alloc_skb(struct napi_struct *napi, unsigned int len,
+ 	 * When the small frag allocator is available, prefer it over kmalloc
+ 	 * for small fragments
+ 	 */
+-	if ((!NAPI_HAS_SMALL_PAGE_FRAG && len <= SKB_WITH_OVERHEAD(1024)) ||
++	if ((!NAPI_HAS_SMALL_PAGE_FRAG &&
++	     len <= SKB_WITH_OVERHEAD(SKB_SMALL_HEAD_CACHE_SIZE)) ||
+ 	    len > SKB_WITH_OVERHEAD(PAGE_SIZE) ||
+ 	    (gfp_mask & (__GFP_DIRECT_RECLAIM | GFP_DMA))) {
+ 		skb = __alloc_skb(len, gfp_mask, SKB_ALLOC_RX | SKB_ALLOC_NAPI,
 -- 
 2.51.0
 
