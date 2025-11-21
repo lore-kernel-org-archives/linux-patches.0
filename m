@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C5F34886B;
-	Fri, 21 Nov 2025 13:52:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80E4266584;
+	Fri, 21 Nov 2025 13:52:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733129; cv=none; b=QooqsKb/CbDcRUhmfFTni1P22ewHzkXqYu5d6wvndECi5+AYtuM5HfQLUhkAUHfX5VyoO+ZvrYFGiHq7WQIToEZKIA3AV36Um0GYSD4m96E/CyBekKvQeeQ2an8Ni2rLj2Hts1/oYS2AF30NCejKBdKkZYEMe+FgorTAP0Mhk8M=
+	t=1763733132; cv=none; b=u+MNPmvj2qndCQIo/YDQohUeT5ZhLEWvUGIMkCm8/hReg2M3d1DLgjtYS6PHDd5AuVSYZYieRETBFDtQpOWjbEmdFizRdGH2XX7WLL6lGnVcQQO14gyPY2SwPzC5fKXFW2PXVS/Wuj9uJvUAlFRpfNi97Koxc2pCrRGoeTUWK9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733129; c=relaxed/simple;
-	bh=evbpnrkTsHCb5olAesq2YNU79eGT036owWQscp3pZiA=;
+	s=arc-20240116; t=1763733132; c=relaxed/simple;
+	bh=7YyrhZ84gSn10tqHNYDMBcg1Eb1+KdsEj0ZknwEAfPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NuTWKQx78EzJXJb5yuL5MvxhQog8xbK28tgqKgOBKgag2kKnnWMQprld7jHBVrdN33wwlINGu1lPby3B7mVLnQfYo96mMQcMfyldBqGGSjpyDKT5WeWAkLwHU9Z82MLpZv3/6aIlqPRE48oqoXjD+rvG664yK96e+BLDhBNNz9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tfr2DkbC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=krelN+MeVfe/ClvezA3NpEShQx6BPZ2GkEi0Bu4jjAtykFOQjnOKWVhJUxeKoRmlg0hmHSBf/bBB5mW3XvzCEelbzvnxiZQdke+ZREWAkkMPMQjcTF9AYRbBbJ++ZfckZqa6TG8AMAAztkgePKKYzAmAZBTDAJM0+aGIvTFuC7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQRl7K9R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tfr2DkbC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8788C4CEF1;
-	Fri, 21 Nov 2025 13:52:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQRl7K9R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72075C4CEF1;
+	Fri, 21 Nov 2025 13:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733129;
-	bh=evbpnrkTsHCb5olAesq2YNU79eGT036owWQscp3pZiA=;
+	s=korg; t=1763733131;
+	bh=7YyrhZ84gSn10tqHNYDMBcg1Eb1+KdsEj0ZknwEAfPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tfr2DkbCsdiq8NQbusOrxI4mDieRXyefdvsLsMjLY9DcaVQz4S8YdyiQVlZkle6KH
-	 LWcE23Q50jZBiN7Z0YkTQ93EURlwm0f80pxg6UoYuHwI0TPAUCclqGIk64gbsMKprO
-	 DNz2KuFxPilqzs4NHx/oJXF0p/x4LgQH/OjFlG3U=
+	b=uQRl7K9RFF5wOSa6YDXJ8FUIYmeNGhStgdCc89MOuWYJQvw6Iv8cfbOe9vRoKQBjH
+	 EOS6S7xSGQ6PPbjPZ4UbsPAyQystjKbZ8WR0lyUCvKcyEcgmopQcQV7ClHtjnKzebn
+	 IP16Npfx9waYKY9ivW6ARKUi8652e+MN2jMERAeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Wayne Lin <Wayne.Lin@amd.com>
-Subject: [PATCH 6.6 362/529] drm/amd/display: Enable mst when its detected but yet to be initialized
-Date: Fri, 21 Nov 2025 14:11:01 +0100
-Message-ID: <20251121130243.908160263@linuxfoundation.org>
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>,
+	Philipp Stanner <phasta@kernel.org>
+Subject: [PATCH 6.6 363/529] drm/sched: Fix deadlock in drm_sched_entity_kill_jobs_cb
+Date: Fri, 21 Nov 2025 14:11:02 +0100
+Message-ID: <20251121130243.943767343@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -47,69 +46,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
 
-commit 3c6a743c6961cc2cab453b343bb157d6bbbf8120 upstream.
+commit 487df8b698345dd5a91346335f05170ed5f29d4e upstream.
 
-[Why]
-drm_dp_mst_topology_queue_probe() is used under the assumption that
-mst is already initialized. If we connect system with SST first
-then switch to the mst branch during suspend, we will fail probing
-topology by calling the wrong API since the mst manager is yet to
-be initialized.
+The Mesa issue referenced below pointed out a possible deadlock:
 
-[How]
-At dm_resume(), once it's detected as mst branc connected, check if
-the mst is initialized already. If not, call
-dm_helpers_dp_mst_start_top_mgr() instead to initialize mst
+[ 1231.611031]  Possible interrupt unsafe locking scenario:
 
-V2: Adjust the commit msg a bit
+[ 1231.611033]        CPU0                    CPU1
+[ 1231.611034]        ----                    ----
+[ 1231.611035]   lock(&xa->xa_lock#17);
+[ 1231.611038]                                local_irq_disable();
+[ 1231.611039]                                lock(&fence->lock);
+[ 1231.611041]                                lock(&xa->xa_lock#17);
+[ 1231.611044]   <Interrupt>
+[ 1231.611045]     lock(&fence->lock);
+[ 1231.611047]
+                *** DEADLOCK ***
 
-Fixes: bc068194f548 ("drm/amd/display: Don't write DP_MSTM_CTRL after LT")
-Cc: Fangzhi Zuo <jerry.zuo@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 62320fb8d91a0bddc44a228203cfa9bfbb5395bd)
-Cc: stable@vger.kernel.org
+In this example, CPU0 would be any function accessing job->dependencies
+through the xa_* functions that don't disable interrupts (eg:
+drm_sched_job_add_dependency(), drm_sched_entity_kill_jobs_cb()).
+
+CPU1 is executing drm_sched_entity_kill_jobs_cb() as a fence signalling
+callback so in an interrupt context. It will deadlock when trying to
+grab the xa_lock which is already held by CPU0.
+
+Replacing all xa_* usage by their xa_*_irq counterparts would fix
+this issue, but Christian pointed out another issue: dma_fence_signal
+takes fence.lock and so does dma_fence_add_callback.
+
+  dma_fence_signal() // locks f1.lock
+  -> drm_sched_entity_kill_jobs_cb()
+  -> foreach dependencies
+     -> dma_fence_add_callback() // locks f2.lock
+
+This will deadlock if f1 and f2 share the same spinlock.
+
+To fix both issues, the code iterating on dependencies and re-arming them
+is moved out to drm_sched_entity_kill_jobs_work().
+
+Cc: stable@vger.kernel.org # v6.2+
+Fixes: 2fdb8a8f07c2 ("drm/scheduler: rework entity flush, kill and fini")
+Link: https://gitlab.freedesktop.org/mesa/mesa/-/issues/13908
+Reported-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Pierre-Eric Pelloux-Prayer <pierre-eric.pelloux-prayer@amd.com>
+[phasta: commit message nits]
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251104095358.15092-1-pierre-eric.pelloux-prayer@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |   34 +++++++++++++++++--------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2993,6 +2993,7 @@ static int dm_resume(void *handle)
- 	/* Do mst topology probing after resuming cached state*/
- 	drm_connector_list_iter_begin(ddev, &iter);
- 	drm_for_each_connector_iter(connector, &iter) {
-+		bool init = false;
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -163,26 +163,15 @@ int drm_sched_entity_error(struct drm_sc
+ }
+ EXPORT_SYMBOL(drm_sched_entity_error);
  
- 		if (connector->connector_type == DRM_MODE_CONNECTOR_WRITEBACK)
- 			continue;
-@@ -3002,7 +3003,14 @@ static int dm_resume(void *handle)
- 		    aconnector->mst_root)
- 			continue;
++static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
++					  struct dma_fence_cb *cb);
++
+ static void drm_sched_entity_kill_jobs_work(struct work_struct *wrk)
+ {
+ 	struct drm_sched_job *job = container_of(wrk, typeof(*job), work);
+-
+-	drm_sched_fence_scheduled(job->s_fence, NULL);
+-	drm_sched_fence_finished(job->s_fence, -ESRCH);
+-	WARN_ON(job->s_fence->parent);
+-	job->sched->ops->free_job(job);
+-}
+-
+-/* Signal the scheduler finished fence when the entity in question is killed. */
+-static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
+-					  struct dma_fence_cb *cb)
+-{
+-	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
+-						 finish_cb);
++	struct dma_fence *f;
+ 	unsigned long index;
  
--		drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
-+		scoped_guard(mutex, &aconnector->mst_mgr.lock) {
-+			init = !aconnector->mst_mgr.mst_primary;
-+		}
-+		if (init)
-+			dm_helpers_dp_mst_start_top_mgr(aconnector->dc_link->ctx,
-+				aconnector->dc_link, false);
-+		else
-+			drm_dp_mst_topology_queue_probe(&aconnector->mst_mgr);
+-	dma_fence_put(f);
+-
+ 	/* Wait for all dependencies to avoid data corruptions */
+ 	xa_for_each(&job->dependencies, index, f) {
+ 		struct drm_sched_fence *s_fence = to_drm_sched_fence(f);
+@@ -210,6 +199,21 @@ static void drm_sched_entity_kill_jobs_c
+ 		dma_fence_put(f);
  	}
- 	drm_connector_list_iter_end(&iter);
  
++	drm_sched_fence_scheduled(job->s_fence, NULL);
++	drm_sched_fence_finished(job->s_fence, -ESRCH);
++	WARN_ON(job->s_fence->parent);
++	job->sched->ops->free_job(job);
++}
++
++/* Signal the scheduler finished fence when the entity in question is killed. */
++static void drm_sched_entity_kill_jobs_cb(struct dma_fence *f,
++					  struct dma_fence_cb *cb)
++{
++	struct drm_sched_job *job = container_of(cb, struct drm_sched_job,
++						 finish_cb);
++
++	dma_fence_put(f);
++
+ 	INIT_WORK(&job->work, drm_sched_entity_kill_jobs_work);
+ 	schedule_work(&job->work);
+ }
 
 
