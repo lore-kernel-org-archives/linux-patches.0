@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319FE35292A;
-	Fri, 21 Nov 2025 13:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF94351FDB;
+	Fri, 21 Nov 2025 13:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733244; cv=none; b=p/x1+wB/hUVH+v8yfCuoujttwcVWWUdjdVtYqcEjbRfSuMvhco/TsEaF8RdUK2BXRaov0byzM3Js+jBVp4kT/h9HWy8eKjyVULfzaCtuGZhnUFsGtzspg6/hB50D3cBwQEE997n9xOxkUQkv14O8Eib4FifxzwgXePengSTjSwE=
+	t=1763733247; cv=none; b=ZiEOWzLb/R4DUWAHvPQ0tEG0yD2MzsB9fdXWMp/pwUDkSC21cRcvRS3QG0yZLdcxCB/kPlXqUGFu0z4KbfDcJPr31+7+VoLligGFM/oiz1lIxfZ0wg49ABDrnPaZFvGDmaNJq1qzqST1GW/rmrLK2gq9eStqPHlDR1SPYm4s7VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733244; c=relaxed/simple;
-	bh=hAuPARZCqmovAr9j2jPOV1lvJeS8BgPslVZoadPhbtE=;
+	s=arc-20240116; t=1763733247; c=relaxed/simple;
+	bh=r6GTFkaPzG/m00rGu5V6cKZUrMhyEX4H9BYVy3E38ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qc/md6zUZvBwnz14qNnIFDHs1TFT2DoROhjuiyaIeJVdlhX0zDV48FsYtZhoFJktJtSrMEefL/wLRnWedveU6t6hI/XGEmvrzSziBdITFEnsTOMX5nJX2w4q8bUYx9+2F339bjNQyJ83l0srmxjd9byYrFaJuiewOEXNptOqK/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mwwlHp1v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dn+5c7OzdXcNMUa3g8StetOWuPiOoe3gr2qQMqvGpWSNAI11hVnAHTTzqLNwLeHz7f8SfSVvzN3dYTEzFToHogTX1NJ2PqbfKoLuz4xHEAHqWWcC4d64dWeJ8B0QEIVOivPIA9GluKb8r6i/RjngBJ6grP8BiaNV+y4UjIg5Src=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z3ZPqAm6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mwwlHp1v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF584C4CEF1;
-	Fri, 21 Nov 2025 13:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z3ZPqAm6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9D3C4CEF1;
+	Fri, 21 Nov 2025 13:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733244;
-	bh=hAuPARZCqmovAr9j2jPOV1lvJeS8BgPslVZoadPhbtE=;
+	s=korg; t=1763733247;
+	bh=r6GTFkaPzG/m00rGu5V6cKZUrMhyEX4H9BYVy3E38ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mwwlHp1viFHmMKTIKfcrb3aGM7iZVAnUpn/ZeKMWbwpRjE+l2kVRDraLyNUgMG/nC
-	 chvdq0dVxW0ovCDpl/6tNA3ytaDD9fCmh1jueMbVBNHpl/M+pb8qzKCEYyqxCutQ8j
-	 Rm58av9AkeyQmR6ZCdCD+spxzivpF4F7JOwkf14U=
+	b=z3ZPqAm6IOLCBtnCW05TRWzftKQgJtXsJeAFOoWHtNK11dyhL4paDrKsTbQ8I3Kva
+	 XDVZXCfX+Ss8VpEybrTCyFZqmjyuOfoppJQ1xjBQ+UuONMeeC0d3DV7yWndogN/6aO
+	 9mROpZlQcHzbd8k3mDTQXMfqRstwlFlKL/tDhHEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 402/529] sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto
-Date: Fri, 21 Nov 2025 14:11:41 +0100
-Message-ID: <20251121130245.324645176@linuxfoundation.org>
+Subject: [PATCH 6.6 385/529] drm/amd/pm: Disable MCLK switching on SI at high pixel clocks
+Date: Fri, 21 Nov 2025 14:11:24 +0100
+Message-ID: <20251121130244.723301797@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -48,89 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit 1534ff77757e44bcc4b98d0196bc5c0052fce5fa ]
+[ Upstream commit 5c05bcf6ae7732da1bd4dc1958d527b5f07f216a ]
 
-syzbot reported a possible shift-out-of-bounds [1]
+On various SI GPUs, a flickering can be observed near the bottom
+edge of the screen when using a single 4K 60Hz monitor over DP.
+Disabling MCLK switching works around this problem.
 
-Blamed commit added rto_alpha_max and rto_beta_max set to 1000.
-
-It is unclear if some sctp users are setting very large rto_alpha
-and/or rto_beta.
-
-In order to prevent user regression, perform the test at run time.
-
-Also add READ_ONCE() annotations as sysctl values can change under us.
-
-[1]
-
-UBSAN: shift-out-of-bounds in net/sctp/transport.c:509:41
-shift exponent 64 is too large for 32-bit type 'unsigned int'
-CPU: 0 UID: 0 PID: 16704 Comm: syz.2.2320 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
-  ubsan_epilogue lib/ubsan.c:233 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x27f/0x420 lib/ubsan.c:494
-  sctp_transport_update_rto.cold+0x1c/0x34b net/sctp/transport.c:509
-  sctp_check_transmitted+0x11c4/0x1c30 net/sctp/outqueue.c:1502
-  sctp_outq_sack+0x4ef/0x1b20 net/sctp/outqueue.c:1338
-  sctp_cmd_process_sack net/sctp/sm_sideeffect.c:840 [inline]
-  sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1372 [inline]
-
-Fixes: b58537a1f562 ("net: sctp: fix permissions for rto_alpha and rto_beta knobs")
-Reported-by: syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/690c81ae.050a0220.3d0d33.014e.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251106111054.3288127-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/transport.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/sctp/transport.c b/net/sctp/transport.c
-index 31eca29b6cfbf..abb44c0ac1a0b 100644
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -495,6 +495,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 
- 	if (tp->rttvar || tp->srtt) {
- 		struct net *net = tp->asoc->base.net;
-+		unsigned int rto_beta, rto_alpha;
- 		/* 6.3.1 C3) When a new RTT measurement R' is made, set
- 		 * RTTVAR <- (1 - RTO.Beta) * RTTVAR + RTO.Beta * |SRTT - R'|
- 		 * SRTT <- (1 - RTO.Alpha) * SRTT + RTO.Alpha * R'
-@@ -506,10 +507,14 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 		 * For example, assuming the default value of RTO.Alpha of
- 		 * 1/8, rto_alpha would be expressed as 3.
- 		 */
--		tp->rttvar = tp->rttvar - (tp->rttvar >> net->sctp.rto_beta)
--			+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> net->sctp.rto_beta);
--		tp->srtt = tp->srtt - (tp->srtt >> net->sctp.rto_alpha)
--			+ (rtt >> net->sctp.rto_alpha);
-+		rto_beta = READ_ONCE(net->sctp.rto_beta);
-+		if (rto_beta < 32)
-+			tp->rttvar = tp->rttvar - (tp->rttvar >> rto_beta)
-+				+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> rto_beta);
-+		rto_alpha = READ_ONCE(net->sctp.rto_alpha);
-+		if (rto_alpha < 32)
-+			tp->srtt = tp->srtt - (tp->srtt >> rto_alpha)
-+				+ (rtt >> rto_alpha);
- 	} else {
- 		/* 6.3.1 C2) When the first RTT measurement R is made, set
- 		 * SRTT <- R, RTTVAR <- R/2.
+diff --git a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+index 2863dc65ffc6f..e5f68b2b8def3 100644
+--- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
++++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
+@@ -3485,6 +3485,11 @@ static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
+ 	 * for these GPUs to calculate bandwidth requirements.
+ 	 */
+ 	if (high_pixelclock_count) {
++		/* Work around flickering lines at the bottom edge
++		 * of the screen when using a single 4K 60Hz monitor.
++		 */
++		disable_mclk_switching = true;
++
+ 		/* On Oland, we observe some flickering when two 4K 60Hz
+ 		 * displays are connected, possibly because voltage is too low.
+ 		 * Raise the voltage by requiring a higher SCLK.
 -- 
 2.51.0
 
