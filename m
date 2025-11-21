@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B3F2F5466;
-	Fri, 21 Nov 2025 13:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D5C267F57;
+	Fri, 21 Nov 2025 13:25:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731503; cv=none; b=i49CyIZ1DiykuORwvcNa0gtEH8pUR4VceRaI7yyw0ueqhebWw+5W9oeCDQUuV37m6sDmsr9/8tWS+QbdIUfo6BVQzdpVCehfk8Elm+vhyDTJtawAUJTyzz9jrbx9XtuaJsoP8XqUHs/j2JHrrSxFKAtB8JH4vPvDnNSGQP9UOtk=
+	t=1763731506; cv=none; b=oOoGM8hjazTkc2j9hy8dhjIN9rzXhhsKayRwu7ExmkHN0JUZjO/xQ47XxR0QReDCNOOOqQfntkhPVy8TWvnG98a0++hdxahoYlFScoYHuvssXeGiVQQVLWKnv3O+2VYMf5IQ/XGPWAa90E8Tnq8TT/1c45Og4j9K9bF+tqLPey0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731503; c=relaxed/simple;
-	bh=rKt0pgZAIxzYLTGEtAmV9a5YMTeDuuUw5A4KUjjX+hU=;
+	s=arc-20240116; t=1763731506; c=relaxed/simple;
+	bh=8uPidkjyXiV3086O5t2cIdQhqkJCR91KTnD6z8r6Pzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njq6VLPgHo69AmhgKAQdlvJEGPcnKQnIfQDB2Pl39kX80EAnr4SGBwH9spjdbjLEfZYcWQHuFPhiRn2Ts/ZPxG/0HPCV3XxJ0tr+KQ4jM54w2iAsqx3RJiZGJm0pYFkqwBqVN3dFbKZ7mHbzvebBRhIpdlmnQMSv4fMVRGIBRx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmnAmxA8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ucMR+H+J/9osN/f9SzBKVJMmZ8wnkPXq2ocX2KfwBaLLrEEYPNWWw0kp00Qraqz1x7ZWddqLkzuXP60YbQTHdu8GhvPg19UvAhJV3bHVrVJ9gAgvhWGtqwVbGQU9f+/0ode9hLg5BH5ulVvwyPPMeRVMTitw+AdduI0gj9AfG94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylHZXJC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmnAmxA8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99B02C4CEF1;
-	Fri, 21 Nov 2025 13:25:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylHZXJC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91973C4CEF1;
+	Fri, 21 Nov 2025 13:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731503;
-	bh=rKt0pgZAIxzYLTGEtAmV9a5YMTeDuuUw5A4KUjjX+hU=;
+	s=korg; t=1763731506;
+	bh=8uPidkjyXiV3086O5t2cIdQhqkJCR91KTnD6z8r6Pzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmnAmxA8g60YczX+7wmaj5ldQN4iqh3catt1xWAUx7vemozmtcS8lefnPEY1ZkkGf
-	 hsA3tlA1l9RHZnSkrOR/a8nl/3jah9PhrOqNTUnSTwZuVxu/TpUQq07iSoK3qfS9F4
-	 8qSbkCd5nFLBWDzLOaolP8Ra0L1x0Updx9co4bK8=
+	b=ylHZXJC8GwinRLkhw3p/74VqOiZA3GwFqxkVKSbBvBFaFYnbUvPhv1DO2TsimCndr
+	 s4IEI3+cG2ViY12XeP0qamQZNIgS55FhS5yQpaRqLBl9c3AZHxrHyrqjWowX53uumD
+	 S/wBUC3JR6QtmBpOQynLhk70Ao6fUTahb4Sm0YYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+72afd4c236e6bc3f4bac@syzkaller.appspotmail.com,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Edward Adam Davis <eadavis@qq.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.17 196/247] cifs: client: fix memory leak in smb3_fs_context_parse_param
-Date: Fri, 21 Nov 2025 14:12:23 +0100
-Message-ID: <20251121130201.758178694@linuxfoundation.org>
+	Dev Jain <dev.jain@arm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Pedro Falcato <pfalcato@suse.de>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Barry Song <baohua@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 187/247] mm/mremap: honour writable bit in mremap pte batching
+Date: Fri, 21 Nov 2025 14:12:14 +0100
+Message-ID: <20251121130201.434661089@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,58 +57,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Dev Jain <dev.jain@arm.com>
 
-commit e8c73eb7db0a498cd4b22d2819e6ab1a6f506bd6 upstream.
+commit 04d1c9d60c6ec4c0003d433572eaa45f8b217788 upstream.
 
-The user calls fsconfig twice, but when the program exits, free() only
-frees ctx->source for the second fsconfig, not the first.
-Regarding fc->source, there is no code in the fs context related to its
-memory reclamation.
+Currently mremap folio pte batch ignores the writable bit during figuring
+out a set of similar ptes mapping the same folio.  Suppose that the first
+pte of the batch is writable while the others are not - set_ptes will end
+up setting the writable bit on the other ptes, which is a violation of
+mremap semantics.  Therefore, use FPB_RESPECT_WRITE to check the writable
+bit while determining the pte batch.
 
-To fix this memory leak, release the source memory corresponding to ctx
-or fc before each parsing.
-
-syzbot reported:
-BUG: memory leak
-unreferenced object 0xffff888128afa360 (size 96):
-  backtrace (crc 79c9c7ba):
-    kstrdup+0x3c/0x80 mm/util.c:84
-    smb3_fs_context_parse_param+0x229b/0x36c0 fs/smb/client/fs_context.c:1444
-
-BUG: memory leak
-unreferenced object 0xffff888112c7d900 (size 96):
-  backtrace (crc 79c9c7ba):
-    smb3_fs_context_fullpath+0x70/0x1b0 fs/smb/client/fs_context.c:629
-    smb3_fs_context_parse_param+0x2266/0x36c0 fs/smb/client/fs_context.c:1438
-
-Reported-by: syzbot+72afd4c236e6bc3f4bac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=72afd4c236e6bc3f4bac
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://lkml.kernel.org/r/20251028063952.90313-1-dev.jain@arm.com
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Fixes: f822a9a81a31 ("mm: optimize mremap() by PTE batching")
+Reported-by: David Hildenbrand <david@redhat.com>
+Debugged-by: David Hildenbrand <david@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>	[6.17+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c |    2 ++
- 1 file changed, 2 insertions(+)
+ mm/mremap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -1437,12 +1437,14 @@ static int smb3_fs_context_parse_param(s
- 			cifs_errorf(fc, "Unknown error parsing devname\n");
- 			goto cifs_parse_mount_err;
- 		}
-+		kfree(ctx->source);
- 		ctx->source = smb3_fs_context_fullpath(ctx, '/');
- 		if (IS_ERR(ctx->source)) {
- 			ctx->source = NULL;
- 			cifs_errorf(fc, "OOM when copying UNC string\n");
- 			goto cifs_parse_mount_err;
- 		}
-+		kfree(fc->source);
- 		fc->source = kstrdup(ctx->source, GFP_KERNEL);
- 		if (fc->source == NULL) {
- 			cifs_errorf(fc, "OOM when copying UNC string\n");
+diff --git a/mm/mremap.c b/mm/mremap.c
+index bd7314898ec5..419a0ea0a870 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -187,7 +187,7 @@ static int mremap_folio_pte_batch(struct vm_area_struct *vma, unsigned long addr
+ 	if (!folio || !folio_test_large(folio))
+ 		return 1;
+ 
+-	return folio_pte_batch(folio, ptep, pte, max_nr);
++	return folio_pte_batch_flags(folio, NULL, ptep, &pte, max_nr, FPB_RESPECT_WRITE);
+ }
+ 
+ static int move_ptes(struct pagetable_move_control *pmc,
+-- 
+2.52.0
+
 
 
