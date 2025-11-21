@@ -1,50 +1,57 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7592DEA7E;
-	Fri, 21 Nov 2025 13:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFD830F93B;
+	Fri, 21 Nov 2025 13:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731219; cv=none; b=nToGQuATpMt0GEyOF7j3fz5P2MOtqINKgfmfkjRasQ8p+iifgJVc9Nm8TCFuFxE9TK+TwLUPtgrm/hWWwJmSKP2nDXLtcdunOYNXLtX1x20iYxfyQJd1JOAmVlHtmbnOC0SLCM1K6msdGcNvOUMJ8B3taxekULi4szPdaQymjy0=
+	t=1763731222; cv=none; b=sFBMBnffww0uIqFwF4wcL9iuyr9f9utAtc4hWnHhZWOJxwkHGj+dWHQbqN8VSb5YWNEGP1jhD0H3Nx8oVZCAoQskQk8VwaO7N3Vn6bfhm+9cnbJwsnZihBQs/GhwPQiQEsAp2+ZDxuEFeDSoV01HxQhUQqOOy0RFGZ1XCs6JHyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731219; c=relaxed/simple;
-	bh=6rTqn48+bDpiN9A9GRvFnLX9xnPH1nrbZGwRve3a+AI=;
+	s=arc-20240116; t=1763731222; c=relaxed/simple;
+	bh=gOKwVzia8hzpc+R3OVhT3xtddWXOvdJmUk7rm1K9F9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPzfrH+OFkvFMcARaP9YOGEJfJnN9OpI5ieSP0ew07BioZx9YGtnkOJkop5dDzyZ2IRep//B4kUQCRwqdhUhDjJkek3XRMTkbHFP+5bkm+02dqbcAlk1MjID6YpQAhd+ovzSvaYb0+66c669vGDVofrVkNf00LBKQjOpHsnfc4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSh/GpwJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WH6fmCehXCV89vzkRxCK+KQO4ySoZwpDuo2qg8fuqBOrUX9gfdkU8YYOFmsxNxbrvN6PVOiMqRRAJRY6cB8SCd7hdeHta7q6ILWUMav+r9rUmC6y7gR//zsoJlm2p/YZZp0qfb//KyGhc7xC6KhoOCn6J94P3PtqmUVYEd900os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeslH6w6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSh/GpwJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591C7C4CEF1;
-	Fri, 21 Nov 2025 13:20:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeslH6w6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312BEC4CEF1;
+	Fri, 21 Nov 2025 13:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731218;
-	bh=6rTqn48+bDpiN9A9GRvFnLX9xnPH1nrbZGwRve3a+AI=;
+	s=korg; t=1763731221;
+	bh=gOKwVzia8hzpc+R3OVhT3xtddWXOvdJmUk7rm1K9F9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSh/GpwJbuJrEj3Xar3928nfZzHtaESF5sjjrKnNzVjgVJVj/56mpqYYjg4vZA5rD
-	 qz1DqNCkXAGPRCZbl0QHDKaAwhr3xgBPZ+wg93s2Xr+5fd0psb8lsqixW1BrGSiy9G
-	 whI/nQ78VhlXxRe7/lFQRhzFCaYfXhhPQSHUva4A=
+	b=EeslH6w6Dg1gnYYF2He0FNCmGMgUqo71mIHtLAs4tR4VqSzoUgUnKhK1qU5GouiI5
+	 hW3/v2auHYU0mLg1zb99kol7wWXdnINzPitMb3X3pf/2pTX9o+xs2f/05o5pC4oKtF
+	 JGsRclpaAT74NyPH+TSCu5rr/KZDvj34K/51Wnas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	James Clark <james.clark@linaro.org>,
 	Ian Rogers <irogers@google.com>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ananth Narayan <ananth.narayan@amd.com>,
+	Athira Rajeev <atrajeev@linux.ibm.com>,
+	Blake Jones <blakejones@google.com>,
+	Chun-Tse Shao <ctshao@google.com>,
+	Collin Funk <collin.funk1@gmail.com>,
+	Howard Chu <howardchu95@gmail.com>,
 	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
+	Jan Polensky <japo@linux.ibm.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Li Huafei <lihuafei1@huawei.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Nam Cao <namcao@linutronix.de>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Sandipan Das <sandipan.das@amd.com>,
-	Santosh Shukla <santosh.shukla@amd.com>,
+	"Steinar H. Gunderson" <sesse@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 132/247] perf lock: Fix segfault due to missing kernel map
-Date: Fri, 21 Nov 2025 14:11:19 +0100
-Message-ID: <20251121130159.464355028@linuxfoundation.org>
+Subject: [PATCH 6.17 133/247] perf test shell lock_contention: Extra debug diagnostics
+Date: Fri, 21 Nov 2025 14:11:20 +0100
+Message-ID: <20251121130159.500690665@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -63,59 +70,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ravi Bangoria <ravi.bangoria@amd.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit d0206db94b36c998c11458cfdae2f45ba20bc4fb ]
+[ Upstream commit 8b93f8933d37591d17c59fd71b18fc61966d9515 ]
 
-Kernel maps are encoded in PERF_RECORD_MMAP2 samples but "perf lock
-report" and "perf lock contention" do not process MMAP2 samples.
+In test_record_concurrent, as stderr is sent to /dev/null, error
+messages are hidden. Change this to gather the error messages and dump
+them on failure.
 
-Because of that, machine->vmlinux_map stays NULL and any later access
-triggers a segmentation fault.
+Some minor sh->bash changes to add some more diagnostics in
+trap_cleanup.
 
-Fix it by adding ->mmap2() callbacks.
-
-Fixes: 53b00ff358dc75b1 ("perf record: Make --buildid-mmap the default")
-Reported-by: Tycho Andersen (AMD) <tycho@kernel.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Tested-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Reviewed-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ananth Narayan <ananth.narayan@amd.com>
+Cc: Athira Rajeev <atrajeev@linux.ibm.com>
+Cc: Blake Jones <blakejones@google.com>
+Cc: Chun-Tse Shao <ctshao@google.com>
+Cc: Collin Funk <collin.funk1@gmail.com>
+Cc: Howard Chu <howardchu95@gmail.com>
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
+Cc: Jan Polensky <japo@linux.ibm.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Li Huafei <lihuafei1@huawei.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Nam Cao <namcao@linutronix.de>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Sandipan Das <sandipan.das@amd.com>
-Cc: Santosh Shukla <santosh.shukla@amd.com>
+Cc: Steinar H. Gunderson <sesse@google.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20250821163820.1132977-5-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 3c723f449723 ("perf test: Fix lock contention test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-lock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/perf/tests/shell/lock_contention.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
-index 078634461df27..e8962c985d34a 100644
---- a/tools/perf/builtin-lock.c
-+++ b/tools/perf/builtin-lock.c
-@@ -1867,6 +1867,7 @@ static int __cmd_report(bool display_info)
- 	eops.sample		 = process_sample_event;
- 	eops.comm		 = perf_event__process_comm;
- 	eops.mmap		 = perf_event__process_mmap;
-+	eops.mmap2		 = perf_event__process_mmap2;
- 	eops.namespaces		 = perf_event__process_namespaces;
- 	eops.tracing_data	 = perf_event__process_tracing_data;
- 	session = perf_session__new(&data, &eops);
-@@ -2023,6 +2024,7 @@ static int __cmd_contention(int argc, const char **argv)
- 	eops.sample		 = process_sample_event;
- 	eops.comm		 = perf_event__process_comm;
- 	eops.mmap		 = perf_event__process_mmap;
-+	eops.mmap2		 = perf_event__process_mmap2;
- 	eops.tracing_data	 = perf_event__process_tracing_data;
+diff --git a/tools/perf/tests/shell/lock_contention.sh b/tools/perf/tests/shell/lock_contention.sh
+index d33d9e4392b06..7248a74ca2a32 100755
+--- a/tools/perf/tests/shell/lock_contention.sh
++++ b/tools/perf/tests/shell/lock_contention.sh
+@@ -7,14 +7,17 @@ set -e
+ err=0
+ perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
+ result=$(mktemp /tmp/__perf_test.result.XXXXX)
++errout=$(mktemp /tmp/__perf_test.errout.XXXXX)
  
- 	perf_env__init(&host_env);
+ cleanup() {
+ 	rm -f ${perfdata}
+ 	rm -f ${result}
++	rm -f ${errout}
+ 	trap - EXIT TERM INT
+ }
+ 
+ trap_cleanup() {
++	echo "Unexpected signal in ${FUNCNAME[1]}"
+ 	cleanup
+ 	exit ${err}
+ }
+@@ -75,10 +78,12 @@ test_bpf()
+ test_record_concurrent()
+ {
+ 	echo "Testing perf lock record and perf lock contention at the same time"
+-	perf lock record -o- -- perf bench sched messaging -p 2> /dev/null | \
++	perf lock record -o- -- perf bench sched messaging -p 2> ${errout} | \
+ 	perf lock contention -i- -E 1 -q 2> ${result}
+ 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
+ 		echo "[Fail] Recorded result count is not 1:" "$(cat "${result}" | wc -l)"
++		cat ${errout}
++		cat ${result}
+ 		err=1
+ 		exit
+ 	fi
 -- 
 2.51.0
 
