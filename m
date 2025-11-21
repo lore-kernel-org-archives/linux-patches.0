@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69636264612;
-	Fri, 21 Nov 2025 13:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE6A264612;
+	Fri, 21 Nov 2025 13:21:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731284; cv=none; b=nHqX/R8CuUHie9uJP32YTpdvsqGE21v7b7dtYO9Mx0LjfGOhoRGM68dOvkIobRLF0ZIjJ40+UY71Pyo1tD97YJMSDLDlxo69htHDDD+snoSLzfjuOCG9te+wWUWope3u7ERbwkGtYVBPpscRgjmW+jMiLeCgLs3A+vqANUyhhWM=
+	t=1763731287; cv=none; b=Ty2DkwVXNQ/aQnMD1jBEDKdFGJ/gj2/PngmmWXV5lFK7CJVsVAwW5yCfWuIECV5wAS6eN/zQZIVf02hhbECXK5qZjvl2HsZGxQQr+H+dfJgtIAgmALsn/8/vzAxevl2CDclwYns7aLO5SAb0q44N2qcPEzEjTeipCbY+HyCWGrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731284; c=relaxed/simple;
-	bh=FYLN6Xl3Evm9od3e874g4J82eZZI5seGOtA6DisBIZg=;
+	s=arc-20240116; t=1763731287; c=relaxed/simple;
+	bh=DxK6KQ7I57YXZ9HbleXNB5DRXQj48g3hQ7kQMwSCuuI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tYkz5K0iUI1EgoWUBKeEiJkibxWOnlUdl5kBxxa5KBJnSDaV6zV4iErwZ/22Dv45AcZ3v5U27ptUi30iXV+g4jScW/Sim+b5lAfnW2qlZZYo2VNE+rLK03Ukb+oAWYebua/kABvIAVdA6UOBhcj8Jr4zBuJtmZhs1DFFIL8r6l0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEhUF0/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jyqhzj1dnYHs8qoC6ungwl/IHpSfx5XhtSWib59lmLKLO0uAAnIsZ7UPebdOqQvq7ZqsN1Mw4yYfaBF9sC+8wbpdyK/SE7zInw/Rlz4x61kt5Pxj/Y+suLSqBIqmdsXtgU0lVpJXr07iveZke/dGj9G9dSTt3gmzt+Nrb9xxcIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+vp3+Sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEhUF0/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7FA9C4CEF1;
-	Fri, 21 Nov 2025 13:21:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+vp3+Sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31DEC4CEF1;
+	Fri, 21 Nov 2025 13:21:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731284;
-	bh=FYLN6Xl3Evm9od3e874g4J82eZZI5seGOtA6DisBIZg=;
+	s=korg; t=1763731287;
+	bh=DxK6KQ7I57YXZ9HbleXNB5DRXQj48g3hQ7kQMwSCuuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEhUF0/aW3QIuGJp72yqYyjeH5QeweSlLxscNzKG1E/WuSFsoTIC7SQhSabG/IjHp
-	 na8XV2lWslSwET4EIzW1ntueqUANUqB3szTM26q7mGXaGxaffxch58MmivXRK/wUT8
-	 R7EKJo5R/OisnxwZJBcgOGksawr9fCWOmADWkIyo=
+	b=t+vp3+SzQ/qsaXwZhpeUV8Je4nIOEnKHMTFWPoIRggB1jPi7JLAmxpIW0HANO6ah8
+	 t2nMe4v+HiBacdrC3Mwo/rXXpbY9oa01WoeTGUyjYJIHtt827Wu7+jJV+IEJ/zvE5W
+	 1XFBeEF2KZhQS8B3pXdWAIXw6PPgkGHXdLto4D2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c47ad18f978d4394986@syzkaller.appspotmail.com,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Eslam Khafagy <eslam.medhat1993@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 121/247] posix-timers: Plug potential memory leak in do_timer_create()
-Date: Fri, 21 Nov 2025 14:11:08 +0100
-Message-ID: <20251121130158.927339722@linuxfoundation.org>
+Subject: [PATCH 6.17 122/247] lib/crypto: arm/curve25519: Disable on CPU_BIG_ENDIAN
+Date: Fri, 21 Nov 2025 14:11:09 +0100
+Message-ID: <20251121130158.962675596@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,61 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eslam Khafagy <eslam.medhat1993@gmail.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit e0fd4d42e27f761e9cc82801b3f183e658dc749d ]
+commit 44e8241c51f762aafa50ed116da68fd6ecdcc954 upstream.
 
-When posix timer creation is set to allocate a given timer ID and the
-access to the user space value faults, the function terminates without
-freeing the already allocated posix timer structure.
+On big endian arm kernels, the arm optimized Curve25519 code produces
+incorrect outputs and fails the Curve25519 test.  This has been true
+ever since this code was added.
 
-Move the allocation after the user space access to cure that.
+It seems that hardly anyone (or even no one?) actually uses big endian
+arm kernels.  But as long as they're ostensibly supported, we should
+disable this code on them so that it's not accidentally used.
 
-[ tglx: Massaged change log ]
+Note: for future-proofing, use !CPU_BIG_ENDIAN instead of
+CPU_LITTLE_ENDIAN.  Both of these are arch-specific options that could
+get removed in the future if big endian support gets dropped.
 
-Fixes: ec2d0c04624b3 ("posix-timers: Provide a mechanism to allocate a given timer ID")
-Reported-by: syzbot+9c47ad18f978d4394986@syzkaller.appspotmail.com
-Suggested-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Signed-off-by: Eslam Khafagy <eslam.medhat1993@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Link: https://patch.msgid.link/20251114122739.994326-1-eslam.medhat1993@gmail.com
-Closes: https://lore.kernel.org/all/69155df4.a70a0220.3124cb.0017.GAE@google.com/T/
+Fixes: d8f1308a025f ("crypto: arm/curve25519 - wire up NEON implementation")
+Cc: stable@vger.kernel.org
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20251104054906.716914-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/posix-timers.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm/crypto/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/posix-timers.c b/kernel/time/posix-timers.c
-index 8b582174b1f94..42db8396f1999 100644
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -476,12 +476,6 @@ static int do_timer_create(clockid_t which_clock, struct sigevent *event,
- 	if (!kc->timer_create)
- 		return -EOPNOTSUPP;
+diff --git a/arch/arm/crypto/Kconfig b/arch/arm/crypto/Kconfig
+index 1e5f3cdf691c4..a00ab9265280f 100644
+--- a/arch/arm/crypto/Kconfig
++++ b/arch/arm/crypto/Kconfig
+@@ -4,7 +4,7 @@ menu "Accelerated Cryptographic Algorithms for CPU (arm)"
  
--	new_timer = alloc_posix_timer();
--	if (unlikely(!new_timer))
--		return -EAGAIN;
--
--	spin_lock_init(&new_timer->it_lock);
--
- 	/* Special case for CRIU to restore timers with a given timer ID. */
- 	if (unlikely(current->signal->timer_create_restore_ids)) {
- 		if (copy_from_user(&req_id, created_timer_id, sizeof(req_id)))
-@@ -491,6 +485,12 @@ static int do_timer_create(clockid_t which_clock, struct sigevent *event,
- 			return -EINVAL;
- 	}
- 
-+	new_timer = alloc_posix_timer();
-+	if (unlikely(!new_timer))
-+		return -EAGAIN;
-+
-+	spin_lock_init(&new_timer->it_lock);
-+
- 	/*
- 	 * Add the timer to the hash table. The timer is not yet valid
- 	 * after insertion, but has a unique ID allocated.
+ config CRYPTO_CURVE25519_NEON
+ 	tristate
+-	depends on KERNEL_MODE_NEON
++	depends on KERNEL_MODE_NEON && !CPU_BIG_ENDIAN
+ 	select CRYPTO_KPP
+ 	select CRYPTO_LIB_CURVE25519_GENERIC
+ 	select CRYPTO_ARCH_HAVE_LIB_CURVE25519
 -- 
 2.51.0
 
