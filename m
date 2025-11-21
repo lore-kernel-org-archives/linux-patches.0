@@ -1,42 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC6D1F09AC;
-	Fri, 21 Nov 2025 13:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7592DEA7E;
+	Fri, 21 Nov 2025 13:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731216; cv=none; b=bt7LyVU+ZqY0aNyZ38AI8aYkzeb5g5f07dv4JInEgHhQeA0Ov1OzPZ67LDbIwkBNQKgQ8ynoTCs6+nKXGKhAGDWQ095V3ZXFnIoweGniAF60NJjyhfS1YtZoowiOaSD1IMEY+3lGLq/Bk3HLquFBMk46C0BEvlotX8jxWNn/gRo=
+	t=1763731219; cv=none; b=nToGQuATpMt0GEyOF7j3fz5P2MOtqINKgfmfkjRasQ8p+iifgJVc9Nm8TCFuFxE9TK+TwLUPtgrm/hWWwJmSKP2nDXLtcdunOYNXLtX1x20iYxfyQJd1JOAmVlHtmbnOC0SLCM1K6msdGcNvOUMJ8B3taxekULi4szPdaQymjy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731216; c=relaxed/simple;
-	bh=1fJD62HOoQS0NPtUOWpPOWnybksdVzzCx6eUY5M7aIc=;
+	s=arc-20240116; t=1763731219; c=relaxed/simple;
+	bh=6rTqn48+bDpiN9A9GRvFnLX9xnPH1nrbZGwRve3a+AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UAMqnoYPulk+jEbH+Bz4dbTuVMaok/GhOIMJeJl3aO2rQHZEDykXsNJIY4cDcgxYIBlS7CA7yHxyysxYrDQ5p1BwFsajlsf9f1Whkk/oYC8ajPuuBoaaGzUGqcRXj/3msXa7agLY0jrATDJe48e4JFPb6Z0c52PyJWMObZzQS7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFG/lD16; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EPzfrH+OFkvFMcARaP9YOGEJfJnN9OpI5ieSP0ew07BioZx9YGtnkOJkop5dDzyZ2IRep//B4kUQCRwqdhUhDjJkek3XRMTkbHFP+5bkm+02dqbcAlk1MjID6YpQAhd+ovzSvaYb0+66c669vGDVofrVkNf00LBKQjOpHsnfc4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSh/GpwJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFG/lD16"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8946CC4CEF1;
-	Fri, 21 Nov 2025 13:20:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSh/GpwJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591C7C4CEF1;
+	Fri, 21 Nov 2025 13:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731215;
-	bh=1fJD62HOoQS0NPtUOWpPOWnybksdVzzCx6eUY5M7aIc=;
+	s=korg; t=1763731218;
+	bh=6rTqn48+bDpiN9A9GRvFnLX9xnPH1nrbZGwRve3a+AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NFG/lD16DalLxyfkBrerSZrJZm5xWU0BFZBt/n3tU5VmBr7qSMOjMKIXtA76DiOZX
-	 1z7zhVt+z6jS4R5u7i3Sq51f6EKVeDHr1w6MMcfvfKyYsgw2fsOAfhCyn8KAjWMP98
-	 fMSfSTT5OdUBtaCKXLRHaDwLz1ZN7G03+Ice/ato=
+	b=qSh/GpwJbuJrEj3Xar3928nfZzHtaESF5sjjrKnNzVjgVJVj/56mpqYYjg4vZA5rD
+	 qz1DqNCkXAGPRCZbl0QHDKaAwhr3xgBPZ+wg93s2Xr+5fd0psb8lsqixW1BrGSiy9G
+	 whI/nQ78VhlXxRe7/lFQRhzFCaYfXhhPQSHUva4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
 	Ian Rogers <irogers@google.com>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ananth Narayan <ananth.narayan@amd.com>,
+	Ingo Molnar <mingo@redhat.com>,
 	James Clark <james.clark@linaro.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Santosh Shukla <santosh.shukla@amd.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 131/247] perf build: Dont fail fast path feature detection when binutils-devel is not available
-Date: Fri, 21 Nov 2025 14:11:18 +0100
-Message-ID: <20251121130159.428934865@linuxfoundation.org>
+Subject: [PATCH 6.17 132/247] perf lock: Fix segfault due to missing kernel map
+Date: Fri, 21 Nov 2025 14:11:19 +0100
+Message-ID: <20251121130159.464355028@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -55,86 +63,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@kernel.org>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit a09e5967ad6819379fd31894634d7aed29c18409 ]
+[ Upstream commit d0206db94b36c998c11458cfdae2f45ba20bc4fb ]
 
-This is one more remnant of the BUILD_NONDISTRO series to make building
-with binutils-devel opt-in due to license incompatibility.
+Kernel maps are encoded in PERF_RECORD_MMAP2 samples but "perf lock
+report" and "perf lock contention" do not process MMAP2 samples.
 
-In this case just the references at link time were still in place, which
-make building the test-all.bin file fail, which wasn't detected before
-probably because the last test was done with binutils-devel available,
-doh.
+Because of that, machine->vmlinux_map stays NULL and any later access
+triggers a segmentation fault.
 
-Now:
+Fix it by adding ->mmap2() callbacks.
 
-  $ rpm -q binutils-devel
-  package binutils-devel is not installed
-  $ file /tmp/build/perf-tools/feature/test-all.bin
-  /tmp/build/perf-tools/feature/test-all.bin: ELF 64-bit LSB executable, x86-64, version 1 (SYSV),
-  dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2,
-  BuildID[sha1]=4b5388a346b51f1b993f0b0dbd49f4570769b03c, for GNU/Linux 3.2.0, not stripped
-  $
-
-Fixes: 970ae86307718c34 ("perf build: The bfd features are opt-in, stop testing for them by default")
+Fixes: 53b00ff358dc75b1 ("perf record: Make --buildid-mmap the default")
+Reported-by: Tycho Andersen (AMD) <tycho@kernel.org>
 Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Tested-by: Tycho Andersen (AMD) <tycho@kernel.org>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ananth Narayan <ananth.narayan@amd.com>
+Cc: Ingo Molnar <mingo@redhat.com>
 Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Santosh Shukla <santosh.shukla@amd.com>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/build/feature/Makefile | 4 ++--
- tools/perf/Makefile.config   | 5 ++---
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ tools/perf/builtin-lock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/build/feature/Makefile b/tools/build/feature/Makefile
-index bd615a708a0aa..049d5d2b36468 100644
---- a/tools/build/feature/Makefile
-+++ b/tools/build/feature/Makefile
-@@ -110,7 +110,7 @@ all: $(FILES)
- __BUILD = $(CC) $(CFLAGS) -MD -Wall -Werror -o $@ $(patsubst %.bin,%.c,$(@F)) $(LDFLAGS)
-   BUILD = $(__BUILD) > $(@:.bin=.make.output) 2>&1
-   BUILD_BFD = $(BUILD) -DPACKAGE='"perf"' -lbfd -ldl
--  BUILD_ALL = $(BUILD) -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 -ldw -lelf -lnuma -lelf -lslang $(FLAGS_PERL_EMBED) $(FLAGS_PYTHON_EMBED) -DPACKAGE='"perf"' -lbfd -ldl -lz -llzma -lzstd
-+  BUILD_ALL = $(BUILD) -fstack-protector-all -O2 -D_FORTIFY_SOURCE=2 -ldw -lelf -lnuma -lelf -lslang $(FLAGS_PERL_EMBED) $(FLAGS_PYTHON_EMBED) -ldl -lz -llzma -lzstd
+diff --git a/tools/perf/builtin-lock.c b/tools/perf/builtin-lock.c
+index 078634461df27..e8962c985d34a 100644
+--- a/tools/perf/builtin-lock.c
++++ b/tools/perf/builtin-lock.c
+@@ -1867,6 +1867,7 @@ static int __cmd_report(bool display_info)
+ 	eops.sample		 = process_sample_event;
+ 	eops.comm		 = perf_event__process_comm;
+ 	eops.mmap		 = perf_event__process_mmap;
++	eops.mmap2		 = perf_event__process_mmap2;
+ 	eops.namespaces		 = perf_event__process_namespaces;
+ 	eops.tracing_data	 = perf_event__process_tracing_data;
+ 	session = perf_session__new(&data, &eops);
+@@ -2023,6 +2024,7 @@ static int __cmd_contention(int argc, const char **argv)
+ 	eops.sample		 = process_sample_event;
+ 	eops.comm		 = perf_event__process_comm;
+ 	eops.mmap		 = perf_event__process_mmap;
++	eops.mmap2		 = perf_event__process_mmap2;
+ 	eops.tracing_data	 = perf_event__process_tracing_data;
  
- __BUILDXX = $(CXX) $(CXXFLAGS) -MD -Wall -Werror -o $@ $(patsubst %.bin,%.cpp,$(@F)) $(LDFLAGS)
-   BUILDXX = $(__BUILDXX) > $(@:.bin=.make.output) 2>&1
-@@ -118,7 +118,7 @@ __BUILDXX = $(CXX) $(CXXFLAGS) -MD -Wall -Werror -o $@ $(patsubst %.bin,%.cpp,$(
- ###############################
- 
- $(OUTPUT)test-all.bin:
--	$(BUILD_ALL) || $(BUILD_ALL) -lopcodes -liberty
-+	$(BUILD_ALL)
- 
- $(OUTPUT)test-hello.bin:
- 	$(BUILD)
-diff --git a/tools/perf/Makefile.config b/tools/perf/Makefile.config
-index 5a5832ee7b53c..5a3026bba31c6 100644
---- a/tools/perf/Makefile.config
-+++ b/tools/perf/Makefile.config
-@@ -323,9 +323,6 @@ FEATURE_CHECK_LDFLAGS-libpython := $(PYTHON_EMBED_LDOPTS)
- 
- FEATURE_CHECK_LDFLAGS-libaio = -lrt
- 
--FEATURE_CHECK_LDFLAGS-disassembler-four-args = -lbfd -lopcodes -ldl
--FEATURE_CHECK_LDFLAGS-disassembler-init-styled = -lbfd -lopcodes -ldl
--
- CORE_CFLAGS += -fno-omit-frame-pointer
- CORE_CFLAGS += -Wall
- CORE_CFLAGS += -Wextra
-@@ -921,6 +918,8 @@ ifdef BUILD_NONDISTRO
- 
-   ifeq ($(feature-libbfd), 1)
-     EXTLIBS += -lbfd -lopcodes
-+    FEATURE_CHECK_LDFLAGS-disassembler-four-args = -lbfd -lopcodes -ldl
-+    FEATURE_CHECK_LDFLAGS-disassembler-init-styled = -lbfd -lopcodes -ldl
-   else
-     # we are on a system that requires -liberty and (maybe) -lz
-     # to link against -lbfd; test each case individually here
+ 	perf_env__init(&host_env);
 -- 
 2.51.0
 
