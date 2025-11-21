@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36F625F7BF;
-	Fri, 21 Nov 2025 13:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904E125F7BF;
+	Fri, 21 Nov 2025 13:47:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732842; cv=none; b=FrorTnVm7APCfJiPKgUjZiHEoLEsGRpjEaLufCUyydX8jizNUpKV8nJWv+R6P7chCoUqzpmONV7kEHh2UrNz15201lZgKqVMLVQphfDEfcnKbp+C34k6IR5QzWRbIH3uk5PIgJYxJaDkwYnb4xnGJT9fCuS90hUKsbuIOUeEUFs=
+	t=1763732845; cv=none; b=Z38alfHnk0OOUJQ0JGYAQm+lC4zCXAJc1oW+P8/tvYFsIvVvnG9ymvhNszOn8aDQC2vvDMlrcbr+otIiknf6dSODqxha/iqnduLHBnEU7oAtdzXcGBlritlRmK5uErQ/U7/3mEmhb9td+DOWe475yJ7ksHbQdvb2NmOTXNWsevM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732842; c=relaxed/simple;
-	bh=HiwdzYY6qpiS+9tQvJQNy6UKcESIzL0S44xQ+fvyXho=;
+	s=arc-20240116; t=1763732845; c=relaxed/simple;
+	bh=C/ssxmmYXkbwDeopQtWCa18ci4OHonesgSVd8Ojrbh4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rC3Dtth6jP8Vy3fH7/FjyPwsHo6/Sm7bwJJC+q/yRdaaogRZn2QoO7mfh/MaerjHi/gHZ7Z1wVwo7u77BtU3y2JGTeZPLnRTL7bfjrsAEaKAjYS8JeKYhrv3WLVmfuj9r9LgJ0tDO3esPOmaOoluR+ETZpz5FTuxPrPyXO+bIag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8JcF2dl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oaz267t4R5YT3wxFC4pU0o339P3vU5yBz86GeKKc4tXb+MTSGrM2PjpIixTfuufD3oA6kHvCQ4bq/6J4YwtbDfXxcInRhn4uIQK24W7LB+54d7iD7dPnqSasMAFdeFdt8GMJ+hMBF8VvcQOh6plYlSLOXfPYu1BTMWs9hhwifF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QrYok+Jt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8JcF2dl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42560C4CEF1;
-	Fri, 21 Nov 2025 13:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QrYok+Jt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DC3C4CEF1;
+	Fri, 21 Nov 2025 13:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732842;
-	bh=HiwdzYY6qpiS+9tQvJQNy6UKcESIzL0S44xQ+fvyXho=;
+	s=korg; t=1763732845;
+	bh=C/ssxmmYXkbwDeopQtWCa18ci4OHonesgSVd8Ojrbh4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8JcF2dli49w2D6HhzRm+RwonIfrCazmLWgsd9gBQ0oJVJhQ5oGYiKlX3nYlPRRA4
-	 6ayje3AoAAETftd9PaUWKMy0/p41PrV0kdbEYGmPDaFmLX2xkYbklW22lSawU08Uyb
-	 MVPFT1vvT4jBMPyxG3r1MOhT9ayBtGI/PGn/KYJQ=
+	b=QrYok+JtAOnH2NDLQmyuto1r1hmCZrsyQN8nu1pIS4UBLTDXaLyfl48brcCnEPRR1
+	 gVDi8oZ6Rz8mjdMgCs6ngyTm9baliRHeRPnsYHALRgCW46clk5ucqftVrSOU9ZYYSB
+	 EP1lKF59QZNf8vsf6gNlLd4DsPdM0z/kjWHnTmqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koakuma <koachan@protonmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 262/529] sparc/module: Add R_SPARC_UA64 relocation handling
-Date: Fri, 21 Nov 2025 14:09:21 +0100
-Message-ID: <20251121130240.345353546@linuxfoundation.org>
+Subject: [PATCH 6.6 263/529] sparc64: fix prototypes of reads[bwl]()
+Date: Fri, 21 Nov 2025 14:09:22 +0100
+Message-ID: <20251121130240.380681330@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,46 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koakuma <koachan@protonmail.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 05457d96175d25c976ab6241c332ae2eb5e07833 ]
+[ Upstream commit 7205ef77dfe167df1b83aea28cf00fc02d662990 ]
 
-This is needed so that the kernel can handle R_SPARC_UA64 relocations,
-which is emitted by LLVM's IAS.
+Conventions for readsl() are the same as for readl() - any __iomem
+pointer is acceptable, both const and volatile ones being OK.  Same
+for readsb() and readsw().
 
-Signed-off-by: Koakuma <koachan@protonmail.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com> # Making sparc64 subject prefix
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/include/asm/elf_64.h | 1 +
- arch/sparc/kernel/module.c      | 1 +
- 2 files changed, 2 insertions(+)
+ arch/sparc/include/asm/io_64.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/sparc/include/asm/elf_64.h b/arch/sparc/include/asm/elf_64.h
-index 8fb09eec8c3e7..694ed081cf8d9 100644
---- a/arch/sparc/include/asm/elf_64.h
-+++ b/arch/sparc/include/asm/elf_64.h
-@@ -58,6 +58,7 @@
- #define R_SPARC_7		43
- #define R_SPARC_5		44
- #define R_SPARC_6		45
-+#define R_SPARC_UA64		54
+diff --git a/arch/sparc/include/asm/io_64.h b/arch/sparc/include/asm/io_64.h
+index 9303270b22f3c..f9d370324729e 100644
+--- a/arch/sparc/include/asm/io_64.h
++++ b/arch/sparc/include/asm/io_64.h
+@@ -250,19 +250,19 @@ void insl(unsigned long, void *, unsigned long);
+ #define insw insw
+ #define insl insl
  
- /* Bits present in AT_HWCAP, primarily for Sparc32.  */
- #define HWCAP_SPARC_FLUSH       0x00000001
-diff --git a/arch/sparc/kernel/module.c b/arch/sparc/kernel/module.c
-index 66c45a2764bc8..a7780907fc2f9 100644
---- a/arch/sparc/kernel/module.c
-+++ b/arch/sparc/kernel/module.c
-@@ -117,6 +117,7 @@ int apply_relocate_add(Elf_Shdr *sechdrs,
- 			break;
- #ifdef CONFIG_SPARC64
- 		case R_SPARC_64:
-+		case R_SPARC_UA64:
- 			location[0] = v >> 56;
- 			location[1] = v >> 48;
- 			location[2] = v >> 40;
+-static inline void readsb(void __iomem *port, void *buf, unsigned long count)
++static inline void readsb(const volatile void __iomem *port, void *buf, unsigned long count)
+ {
+ 	insb((unsigned long __force)port, buf, count);
+ }
+ #define readsb readsb
+ 
+-static inline void readsw(void __iomem *port, void *buf, unsigned long count)
++static inline void readsw(const volatile void __iomem *port, void *buf, unsigned long count)
+ {
+ 	insw((unsigned long __force)port, buf, count);
+ }
+ #define readsw readsw
+ 
+-static inline void readsl(void __iomem *port, void *buf, unsigned long count)
++static inline void readsl(const volatile void __iomem *port, void *buf, unsigned long count)
+ {
+ 	insl((unsigned long __force)port, buf, count);
+ }
 -- 
 2.51.0
 
