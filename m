@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1212351FBA;
-	Fri, 21 Nov 2025 13:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C38351FD0;
+	Fri, 21 Nov 2025 13:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732247; cv=none; b=cfKUm9d4j7zNoSoXcbKh87qemVl7uV6ggjgUMRLT8Wy/T5GYLDwaonrdZ34poHhbjW6Dc7M5HM6YoUrCurvszxI3SGDdT3/yXdsExdBKYzjNPOnAUsJdkDBv55F+bgEv5dut8ysrAZRJLxnjc5D3ynfxI3woAB0a89Lfm7uknaY=
+	t=1763732250; cv=none; b=mlPxI+klWVN2Qy5AUXoko9QBMlXTQFgskd2nNX0sJSTRZ4/TOa5RsbzuVV0gkIVSVc4Z8Mg02P2ulD6SiVPbusb+V0rBSqQN3EVR+q3yVAz1BORoe+xTvNReG9tpS7XIChp/vyAxnqHqHcDNoEpW9Bdfm9fC9BvAIT33qkNhmes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732247; c=relaxed/simple;
-	bh=156CL9nTebgNYvh9oA9yMApbdYq2o7HjnUz1is/lxd8=;
+	s=arc-20240116; t=1763732250; c=relaxed/simple;
+	bh=NUR/cAj9OKzsy99JIKaz+JUIl3Ic13NTlu+jWdJc+fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1mGCXLHxGL2qOtMafR2UrwBYJ0BzQqzY/Eic1XayD4UitHoZI7YYh/9HBVyOJT809PRpy5NYt/BytJLcV0b53ylO+5FLY7K63rl71X73hUXwbwjv+sj/sA373u4bsU5nzj7GumGLuKEzQjnEVWcZ2S5osYf/n7fd53iQ/MRoLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CRZhhLXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wdp74mwS9tdpxPrHEadATE1L9YHotooiirTYPi2yEHuFa9s5BU3RI1zEswd7gWm8jvSuyup2PZplzMpQJCZqfFZ8hH4sGqof/37O4uRDXwj/hHkuCQGxQRUIOFA7ZH4FT/kwVTE4xXx+rOqxB88HrwWgtZHparODKs3Fxa/h5YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0HSH0ZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CRZhhLXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43FD9C4CEF1;
-	Fri, 21 Nov 2025 13:37:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0HSH0ZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 150A9C4CEF1;
+	Fri, 21 Nov 2025 13:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732247;
-	bh=156CL9nTebgNYvh9oA9yMApbdYq2o7HjnUz1is/lxd8=;
+	s=korg; t=1763732250;
+	bh=NUR/cAj9OKzsy99JIKaz+JUIl3Ic13NTlu+jWdJc+fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CRZhhLXxS/ZKsEC5tYljW4/4vSsgmN5XP6StoHg6r4KllHN3blQa17KK/9RdyBrcH
-	 2Mu9V/PHPvgr0KEgBicXc/5VGed0uniUggeByZWI9Y4pIuOxJn9lJKPgpSd5Qowmtf
-	 LHebntT5BouQYlsRg5wZHvFKIBahHpoiS6JLvlM0=
+	b=Q0HSH0ZB06dJELP8QqqG91V4+r1ZXQktmX6IKCcXHQlu8/n2l2D9RqUuiI+r/olDO
+	 7kcF7D4dEGlncnfVMSL6vuAIzDxKpms5Zo/nHJ1YMu99BbFM1CuXzJ0CoU2tzLWxWm
+	 w3wT6m8gwb/Xhk7f+gcm/+MTLE9qgmEM47dUI0EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Capitulino <luizcap@redhat.com>,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	David Hildenbrand <david@redhat.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.6 053/529] s390: Disable ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP
-Date: Fri, 21 Nov 2025 14:05:52 +0100
-Message-ID: <20251121130232.900855114@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 054/529] drm/sched: Fix race in drm_sched_entity_select_rq()
+Date: Fri, 21 Nov 2025 14:05:53 +0100
+Message-ID: <20251121130232.937694018@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,53 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-[ Upstream commit 64e2f60f355e556337fcffe80b9bcff1b22c9c42 ]
+[ Upstream commit d25e3a610bae03bffc5c14b5d944a5d0cd844678 ]
 
-As reported by Luiz Capitulino enabling HVO on s390 leads to reproducible
-crashes. The problem is that kernel page tables are modified without
-flushing corresponding TLB entries.
+In a past bug fix it was forgotten that entity access must be protected
+by the entity lock. That's a data race and potentially UB.
 
-Even if it looks like the empty flush_tlb_all() implementation on s390 is
-the problem, it is actually a different problem: on s390 it is not allowed
-to replace an active/valid page table entry with another valid page table
-entry without the detour over an invalid entry. A direct replacement may
-lead to random crashes and/or data corruption.
+Move the spin_unlock() to the appropriate position.
 
-In order to invalidate an entry special instructions have to be used
-(e.g. ipte or idte). Alternatively there are also special instructions
-available which allow to replace a valid entry with a different valid
-entry (e.g. crdte or cspg).
-
-Given that the HVO code currently does not provide the hooks to allow for
-an implementation which is compliant with the s390 architecture
-requirements, disable ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP again, which is
-basically a revert of the original patch which enabled it.
-
-Reported-by: Luiz Capitulino <luizcap@redhat.com>
-Closes: https://lore.kernel.org/all/20251028153930.37107-1-luizcap@redhat.com/
-Fixes: 00a34d5a99c0 ("s390: select ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP")
-Cc: stable@vger.kernel.org
-Tested-by: Luiz Capitulino <luizcap@redhat.com>
-Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-[ Adjust context ]
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: ac4eb83ab255 ("drm/sched: select new rq even if there is only one v3")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251022063402.87318-2-phasta@kernel.org
+[ adapted lock field name from entity->lock to entity->rq_lock ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/Kconfig |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -128,7 +128,6 @@ config S390
- 	select ARCH_WANT_DEFAULT_BPF_JIT
- 	select ARCH_WANT_IPC_PARSE_VERSION
- 	select ARCH_WANT_KERNEL_PMD_MKWRITE
--	select ARCH_WANT_OPTIMIZE_HUGETLB_VMEMMAP
- 	select BUILDTIME_TABLE_SORT
- 	select CLONE_BACKWARDS2
- 	select DMA_OPS if PCI
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -531,10 +531,11 @@ void drm_sched_entity_select_rq(struct d
+ 		drm_sched_rq_remove_entity(entity->rq, entity);
+ 		entity->rq = rq;
+ 	}
+-	spin_unlock(&entity->rq_lock);
+ 
+ 	if (entity->num_sched_list == 1)
+ 		entity->sched_list = NULL;
++
++	spin_unlock(&entity->rq_lock);
+ }
+ 
+ /**
 
 
