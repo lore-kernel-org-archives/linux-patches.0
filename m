@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1CE1F09B3;
-	Fri, 21 Nov 2025 13:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BEA2874F6;
+	Fri, 21 Nov 2025 13:32:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731953; cv=none; b=G+cshJXJOa7wjtyFpM6CCHvrgpX46vqm9Ts9pXOgNp1bCw7Rn4SYo16tn1aFiZyOkOI7Pk5ZslSUdt+AUM5mgOOyx1riGAIZaGv9rdsbrJv5702QJ0Sr5vtgjjqxh7mnEhq0A+YOXC4sFrCJpCQzQhPSqWyXYFG3rar8cGPyCHo=
+	t=1763731956; cv=none; b=N4mFyXYPIKi6qhHUuSv3qzjKLQlkc46shGewVPjZjPFWugX0SNrajmO+stzqwT9T5eSb7Wu/IjKnvr7PonV+tMnl1Q3OL/a4U2dljvDIi/tmozvTW7yXoV1muIqOjSLjJwWJRBkyiLoOW/g+jZY9MMQNk3wGW96dd62N6SETCf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731953; c=relaxed/simple;
-	bh=k4RLjh2J8JbMGmhA80DHfQZ06AqT+BIkhcy2LJbB6I0=;
+	s=arc-20240116; t=1763731956; c=relaxed/simple;
+	bh=qgnWTxE0JdCnHZt9znke5GJjlsIEvKHmf+Z4SxIlNfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHRLOdci+FsqSWV7ss3gaVKfqbtpX2yiKAcwNnmb7FdEfv08ngR1KypQclD5dKVv9GNa1gowpELfRYZ/L908mocV/cIj5M3Gxg4o3HAcnR+F2S3B7MRt0MaaUSk0fQ+RyYYe5FnGqIUH1kfP9kyInMtL+Ox51oBwAmGZyukZBVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fi8PO4yN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o5k0gTTQkWkq5kpBsejXTwnJk9qdqBfVDIr2wgVF5ejGrxOpGw7QMGMhHSGaYal6fstUFNeXwXNcwtZl+GrBs+vHXLqgQi81+hDeEd/pS9q6CZR21eetz4HzIjlldNe3KKcm783vHaQTQRNVIMTIQkwExeiybRQHzpYot3Uhlpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wi/1lvUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fi8PO4yN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E72C4CEF1;
-	Fri, 21 Nov 2025 13:32:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wi/1lvUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EBCC4CEF1;
+	Fri, 21 Nov 2025 13:32:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731953;
-	bh=k4RLjh2J8JbMGmhA80DHfQZ06AqT+BIkhcy2LJbB6I0=;
+	s=korg; t=1763731956;
+	bh=qgnWTxE0JdCnHZt9znke5GJjlsIEvKHmf+Z4SxIlNfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fi8PO4yNhEvDmi9zkKOMLgykEzfkDvM1ajCjhuex4PqWezUyHXXZIBcvRMlI5uFXS
-	 2AZRm1x2Kskv92j3wc4YYpENc5/KXyrsjv4Mvk8d5+eHwUvfMU1eppJEoo1jk/aA51
-	 DOk0B6Vii6YcXNTUFQvslxOMc5RJJ1UZF5h/RMFk=
+	b=Wi/1lvUp1V8iCmc89YUEG0Ke5dSdz3CjhirHflqDnBG6OJZyJyR+7owPkfL/HYVqK
+	 R/OzRMzMCHCiciHxJx5y4Jzr/gU3JBOnjKo3SCecEoNUoJRL4FEuBEnXUPBplU6hJG
+	 DANk/rcDcXLbF8kz7TOTzZcN0sqkCcHUw0qq4euY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.12 139/185] LoongArch: Use physical addresses for CSR_MERRENTRY/CSR_TLBRENTRY
-Date: Fri, 21 Nov 2025 14:12:46 +0100
-Message-ID: <20251121130148.891221755@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.12 122/185] selftests/tracing: Run sample events to clear page cache events
+Date: Fri, 21 Nov 2025 14:12:29 +0100
+Message-ID: <20251121130148.278915387@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -49,34 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 4e67526840fc55917581b90f6a4b65849a616dd8 upstream.
+commit dd4adb986a86727ed8f56c48b6d0695f1e211e65 upstream.
 
-Now we use virtual addresses to fill CSR_MERRENTRY/CSR_TLBRENTRY, but
-hardware hope physical addresses. Now it works well because the high
-bits are ignored above PA_BITS (48 bits), but explicitly use physical
-addresses can avoid potential bugs. So fix it.
+The tracing selftest "event-filter-function.tc" was failing because it
+first runs the "sample_events" function that triggers the kmem_cache_free
+event and it looks at what function was used during a call to "ls".
+
+But the first time it calls this, it could trigger events that are used to
+pull pages into the page cache.
+
+The rest of the test uses the function it finds during that call to see if
+it will be called in subsequent "sample_events" calls. But if there's no
+need to pull pages into the page cache, it will not trigger that function
+and the test will fail.
+
+Call the "sample_events" twice to trigger all the page cache work before
+it calls it to find a function to use in subsequent checks.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: eb50d0f250e96 ("selftests/ftrace: Choose target function for filter test from samples")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/traps.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/loongarch/kernel/traps.c
-+++ b/arch/loongarch/kernel/traps.c
-@@ -1123,8 +1123,8 @@ static void configure_exception_vector(v
- 	tlbrentry = (unsigned long)exception_handlers + 80*VECSIZE;
+--- a/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
++++ b/tools/testing/selftests/ftrace/test.d/filter/event-filter-function.tc
+@@ -20,6 +20,10 @@ sample_events() {
+ echo 0 > tracing_on
+ echo 0 > events/enable
  
- 	csr_write64(eentry, LOONGARCH_CSR_EENTRY);
--	csr_write64(eentry, LOONGARCH_CSR_MERRENTRY);
--	csr_write64(tlbrentry, LOONGARCH_CSR_TLBRENTRY);
-+	csr_write64(__pa(eentry), LOONGARCH_CSR_MERRENTRY);
-+	csr_write64(__pa(tlbrentry), LOONGARCH_CSR_TLBRENTRY);
- }
- 
- void per_cpu_trap_init(int cpu)
++# Clear functions caused by page cache; run sample_events twice
++sample_events
++sample_events
++
+ echo "Get the most frequently calling function"
+ echo > trace
+ sample_events
 
 
