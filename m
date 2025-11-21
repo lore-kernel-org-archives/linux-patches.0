@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A3B43A291;
-	Fri, 21 Nov 2025 13:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D4634C983;
+	Fri, 21 Nov 2025 13:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732390; cv=none; b=twq+Tp2MnntSxp/YMxkei02wr0vRHYUHQUyo/emJYT0L3GLNGskyXNtC0lDTf/v2HTbq7WbpeHZmjoSxEVImPhvW5KYh5Ij0OKtzxiO5jWcMmpaa/P0AnuyTgj97jGZfTqul1riRRtdXHCP4aKFMy4L2cPWbIt5+svIwsaC2bGc=
+	t=1763732393; cv=none; b=mVD5xxI1kLf/G/WjRQRuQNhqx9v9i3/HmDVGcz6wccX2mJITojUEK1A4eK+EkRvarkeZwTX/R7RdWzlFw25JUC2q7iIzM9fk7J/4iXM4Q5mfey7Xg4KEa9CEQSSThWfNTWLwlSiLeQxlkkQ/nKsh9pT/b+NcZoFAiunY7hccMBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732390; c=relaxed/simple;
-	bh=wL7RQPtdehHbUoHWzhqWCDFEOgHiev0oeZhdS/YCHik=;
+	s=arc-20240116; t=1763732393; c=relaxed/simple;
+	bh=LBDHh0sxgCoQXZBPol6949V2tknGqFWR2sQcJOliSK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BmxtMwFAnYFyp2y0kVDLHms7tz9O1oM5Gd4b4N6/eXYpG4g7hZw3iFtf1rh0LVGuEjo3fg8Mm16G6w7XQjieqR70lapMnOmDtnQWYm+iLb564Ysp+H+PwWXzITUsxkUg65W7B4MC/nOaa3YsZCb21SJBhp77arawPFrRtmakqhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WdAIeV8B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V9c59X6uWHVDgc9mwzyoorxYixwJHMDCZLmoMpQfPP/+LWA8oLL/maqiGIgnJigGO0HktDao+0H8XJsMruBgv06ishqum1PQcPRJTMvn4RSxAmQk1Ck7dgNS1qDyDVi2MtEeZg28pgNoVYGasbqcixb3vlfq81dIxtg3thGp4iM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dpGTmEF4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WdAIeV8B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D13C4CEF1;
-	Fri, 21 Nov 2025 13:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dpGTmEF4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA698C4CEF1;
+	Fri, 21 Nov 2025 13:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732390;
-	bh=wL7RQPtdehHbUoHWzhqWCDFEOgHiev0oeZhdS/YCHik=;
+	s=korg; t=1763732393;
+	bh=LBDHh0sxgCoQXZBPol6949V2tknGqFWR2sQcJOliSK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WdAIeV8B7wSN2OTT8kDFYWzmaCjvB8ceARSqt3FnpNQVIPd4R0nm65Yuilr4brNI/
-	 ISDsCQ/+nDKHs6yjgARfkbzx6eSMElSBZh3Lt4h9Sn002+TFX+IQOy9xx+7bpb2To+
-	 HRw080UPbEw+UCCXj8FqQyz9i+p+uUSPG/OeW8js=
+	b=dpGTmEF46636DV9aoj3CMSSegmj4XOUXg7ojMkqI5Rzf3bxfvcHFuV8nqeHA98Uwn
+	 H3ewDVQxHx7SME7d9TeBDwBwapy7fM+Zl0uASM+xiyt37L+wd+vv4h7rk5sTF18F0a
+	 TXDmCO08wIOedkkPTTzmAxhHrzcxAZa8nn8uS7X4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Copeland <ben.copeland@linaro.org>,
-	Eugene Shalygin <eugene.shalygin@gmail.com>,
+	Armin Wolf <W_Armin@gmx.de>,
 	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 105/529] hwmon: (asus-ec-sensors) increase timeout for locking ACPI mutex
-Date: Fri, 21 Nov 2025 14:06:44 +0100
-Message-ID: <20251121130234.760384523@linuxfoundation.org>
+Subject: [PATCH 6.6 106/529] hwmon: (dell-smm) Add support for Dell OptiPlex 7040
+Date: Fri, 21 Nov 2025 14:06:45 +0100
+Message-ID: <20251121130234.795514277@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,36 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Copeland <ben.copeland@linaro.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 584d55be66ef151e6ef9ccb3dcbc0a2155559be1 ]
+[ Upstream commit 53d3bd48ef6ff1567a75ca77728968f5ab493cb4 ]
 
-Some motherboards require more time to acquire the ACPI mutex,
-causing "Failed to acquire mutex" messages to appear in the kernel log.
-Increase the timeout from 500ms to 800ms to accommodate these cases.
+The Dell OptiPlex 7040 supports the legacy SMM interface for reading
+sensors and performing fan control. Whitelist this machine so that
+this driver loads automatically.
 
-Signed-off-by: Ben Copeland <ben.copeland@linaro.org>
-Signed-off-by: Eugene Shalygin <eugene.shalygin@gmail.com>
-Link: https://lore.kernel.org/r/20250923192935.11339-3-eugene.shalygin@gmail.com
+Closes: https://github.com/Wer-Wolf/i8kutils/issues/15
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250917181036.10972-5-W_Armin@gmx.de
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/asus-ec-sensors.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/hwmon/asus-ec-sensors.c b/drivers/hwmon/asus-ec-sensors.c
-index ce2f14a62754e..bc2197f1dfb7f 100644
---- a/drivers/hwmon/asus-ec-sensors.c
-+++ b/drivers/hwmon/asus-ec-sensors.c
-@@ -49,7 +49,7 @@ static char *mutex_path_override;
-  */
- #define ASUS_EC_MAX_BANK	3
- 
--#define ACPI_LOCK_DELAY_MS	500
-+#define ACPI_LOCK_DELAY_MS	800
- 
- /* ACPI mutex for locking access to the EC for the firmware */
- #define ASUS_HW_ACCESS_MUTEX_ASMX	"\\AMW0.ASMX"
+diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+index 8d94ecc3cc468..9844843bdfadc 100644
+--- a/drivers/hwmon/dell-smm-hwmon.c
++++ b/drivers/hwmon/dell-smm-hwmon.c
+@@ -1158,6 +1158,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
+ 		},
+ 		.driver_data = (void *)&i8k_config_data[DELL_PRECISION_490],
+ 	},
++	{
++		.ident = "Dell OptiPlex 7040",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7040"),
++		},
++	},
+ 	{
+ 		.ident = "Dell Precision",
+ 		.matches = {
 -- 
 2.51.0
 
