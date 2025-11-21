@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014AE3321D9;
-	Fri, 21 Nov 2025 13:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA9E2D1932;
+	Fri, 21 Nov 2025 13:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763730934; cv=none; b=C0uN4Qnh8SSJnpc/0/zfcgfLvC1uP+FuTQG7dwsKA2pNcRGbWOFJDvJAmP28Tr5Yd4LaeEjRHPfk4wmHaCdL6EODOGFAOGtqJlypFR0qTEXq1bIBTzQjYQXdP1CXDKxlHtnnGs/E1AhhaXYrhqAfXchtXyzTmZEus9txqVToAuc=
+	t=1763730936; cv=none; b=iRywqZ/m+emQqCbj84BM5ZTz4qPOevUSe7EL+g6k/IBo3y5D/8XdgNqICwcQLnzwlbU3OHMJ3IqSCcNDf96qQhrFh8yK9in2/oayDdTwKSkEj+4iOdLwXx0FfdtVORBtp/15xBLc9s9KXawfv7wU/7DzA96kLqc006qsy5pAFqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763730934; c=relaxed/simple;
-	bh=tPexeb7t2x0D/LGFt4OeB7Vy4FxzhM9g3q37FhxfWPk=;
+	s=arc-20240116; t=1763730936; c=relaxed/simple;
+	bh=OKO6tVQH+w68e2N9rDu3yNHz+oYDIn21avusAw4zA1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fnw/a7wPjAQhfmw1IkZMYwi0ZnevqVW+jI4c3smHXgUeb1bU+4rb7SvPdAtIJX62TyBV8nJ6XeuY2mWDwPUvIy14QeqnbIz7jwQctFIUmhuo945gOftodBhwHjf+VkLhC1y1h4nTDpoG7VtohYHRKhMWpzlIrAPNoYxyVhFLMrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3eAi6O0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmkPQb9lKPe6shliIMgB7kqlq1XFetEJmIbwuhw0PagBoMWq664OcU94vG5N0jn6xmdTHjWjSOPKYoWUuR56gpanLvuZmX0NjVIFHGdxTkAmYFzy+3/wXHlyo+7XJPHLYlGBeRD8ooDNUJ8AyFkftKwmGLt551mSggpyPGgBD9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFgEK+m/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3eAi6O0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 279C2C4CEF1;
-	Fri, 21 Nov 2025 13:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFgEK+m/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9BFFC4CEF1;
+	Fri, 21 Nov 2025 13:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763730933;
-	bh=tPexeb7t2x0D/LGFt4OeB7Vy4FxzhM9g3q37FhxfWPk=;
+	s=korg; t=1763730936;
+	bh=OKO6tVQH+w68e2N9rDu3yNHz+oYDIn21avusAw4zA1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3eAi6O0g6HqHJRkVniA1YVf/gsr1z8IC/fFkROhlahgCgWTwUzj/s/R6q/IX2g3w
-	 0G6Cqg+dYBEZDEP8YhVqIxbzRTZbDmS9twzXD/VHWwTVfzbzZ5nb/yibZXyl83CIIx
-	 JKDOw4SMVwAAK07qYYYhvUWJjodxTBGhwxBgtS4c=
+	b=GFgEK+m/kcjuuUAWwAt8yjtXkBdLXCgLb+14CSGPEiN5m9WfE83ljythQQGjWwgDM
+	 2ikTXfJAgZUzBYOXwgtGsar/JQkRfsrZVy/TMNRZBp3/vAFE8cXgNInMaJZuOEeZ5B
+	 /6q239ka1n2WibhIlMicqCKQVJvSy9Q2iDf7BxKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhishek Tamboli <abhishektamboli9@gmail.com>,
-	Even Xu <even.xu@intel.com>,
+	Tristan Lobb <tristan.lobb@it-lobb.de>,
 	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 032/247] HID: intel-thc-hid: intel-quickspi: Add ARL PCI Device Ids
-Date: Fri, 21 Nov 2025 14:09:39 +0100
-Message-ID: <20251121130155.757206294@linuxfoundation.org>
+Subject: [PATCH 6.17 033/247] HID: quirks: avoid Cooler Master MM712 dongle wakeup bug
+Date: Fri, 21 Nov 2025 14:09:40 +0100
+Message-ID: <20251121130155.792466608@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,61 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhishek Tamboli <abhishektamboli9@gmail.com>
+From: Tristan Lobb <tristan.lobb@it-lobb.de>
 
-[ Upstream commit 50f1f782f8d621a90108340c632bcb6ab4307d2e ]
+[ Upstream commit 0be4253bf878d9aaa2b96031ac8683fceeb81480 ]
 
-Add the missing PCI ID for the quickspi device used on
-the Lenovo Yoga Pro 9i 16IAH10.
+The Cooler Master Mice Dongle includes a vendor defined HID interface
+alongside its mouse interface. Not polling it will cause the mouse to
+stop responding to polls on any interface once woken up again after
+going into power saving mode.
 
-Buglink: https://bugzilla.kernel.org/show_bug.cgi?id=220567
+Add the HID_QUIRK_ALWAYS_POLL quirk alongside the Cooler Master VID and
+the Dongle's PID.
 
-Signed-off-by: Abhishek Tamboli <abhishektamboli9@gmail.com>
-Reviewed-by: Even Xu <even.xu@intel.com>
+Signed-off-by: Tristan Lobb <tristan.lobb@it-lobb.de>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c | 6 ++++++
- drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h | 2 ++
- 2 files changed, 8 insertions(+)
+ drivers/hid/hid-ids.h    | 3 +++
+ drivers/hid/hid-quirks.c | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-index 84314989dc534..14cabd5dc6ddb 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/pci-quickspi.c
-@@ -33,6 +33,10 @@ struct quickspi_driver_data ptl = {
- 	.max_packet_size_value = MAX_PACKET_SIZE_VALUE_LNL,
- };
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 5721b8414bbdf..d05a62bbafffb 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -342,6 +342,9 @@
+ #define USB_DEVICE_ID_CODEMERCS_IOW_FIRST	0x1500
+ #define USB_DEVICE_ID_CODEMERCS_IOW_LAST	0x15ff
  
-+struct quickspi_driver_data arl = {
-+	.max_packet_size_value = MAX_PACKET_SIZE_VALUE_MTL,
-+};
++#define USB_VENDOR_ID_COOLER_MASTER	0x2516
++#define USB_DEVICE_ID_COOLER_MASTER_MICE_DONGLE	0x01b7
 +
- /* THC QuickSPI ACPI method to get device properties */
- /* HIDSPI Method: {6e2ac436-0fcf-41af-a265-b32a220dcfab} */
- static guid_t hidspi_guid =
-@@ -978,6 +982,8 @@ static const struct pci_device_id quickspi_pci_tbl[] = {
- 	{PCI_DEVICE_DATA(INTEL, THC_PTL_U_DEVICE_ID_SPI_PORT2, &ptl), },
- 	{PCI_DEVICE_DATA(INTEL, THC_WCL_DEVICE_ID_SPI_PORT1, &ptl), },
- 	{PCI_DEVICE_DATA(INTEL, THC_WCL_DEVICE_ID_SPI_PORT2, &ptl), },
-+	{PCI_DEVICE_DATA(INTEL, THC_ARL_DEVICE_ID_SPI_PORT1, &arl), },
-+	{PCI_DEVICE_DATA(INTEL, THC_ARL_DEVICE_ID_SPI_PORT2, &arl), },
- 	{}
- };
- MODULE_DEVICE_TABLE(pci, quickspi_pci_tbl);
-diff --git a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-index f3532d866749c..c30e1a42eb098 100644
---- a/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-+++ b/drivers/hid/intel-thc-hid/intel-quickspi/quickspi-dev.h
-@@ -21,6 +21,8 @@
- #define PCI_DEVICE_ID_INTEL_THC_PTL_U_DEVICE_ID_SPI_PORT2	0xE44B
- #define PCI_DEVICE_ID_INTEL_THC_WCL_DEVICE_ID_SPI_PORT1 	0x4D49
- #define PCI_DEVICE_ID_INTEL_THC_WCL_DEVICE_ID_SPI_PORT2 	0x4D4B
-+#define PCI_DEVICE_ID_INTEL_THC_ARL_DEVICE_ID_SPI_PORT1 	0x7749
-+#define PCI_DEVICE_ID_INTEL_THC_ARL_DEVICE_ID_SPI_PORT2 	0x774B
- 
- /* HIDSPI special ACPI parameters DSM methods */
- #define ACPI_QUICKSPI_REVISION_NUM			2
+ #define USB_VENDOR_ID_CORSAIR		0x1b1c
+ #define USB_DEVICE_ID_CORSAIR_K90	0x1b02
+ #define USB_DEVICE_ID_CORSAIR_K70R      0x1b09
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index ffd034566e2e1..d7105a8395982 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -57,6 +57,7 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_FLIGHT_SIM_YOKE), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_PEDALS), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_THROTTLE), HID_QUIRK_NOGET },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_COOLER_MASTER, USB_DEVICE_ID_COOLER_MASTER_MICE_DONGLE), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB_RAPIDFIRE), HID_QUIRK_NO_INIT_REPORTS | HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K70RGB), HID_QUIRK_NO_INIT_REPORTS },
 -- 
 2.51.0
 
