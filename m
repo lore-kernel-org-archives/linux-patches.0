@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E81A274FE3;
-	Fri, 21 Nov 2025 13:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29C9190477;
+	Fri, 21 Nov 2025 13:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731683; cv=none; b=KJaH46BHrdFJoI/5k+poevfWoYcXfWEDniJHTg5hcimNVtMF5o1UfufmLTsijf+Qmtk060TCoMqiViNRrzbVjClsGgK45NdX5WkyUXV8F97iJI27M2Y+1IEhM3eaDxsidRfN43u87/pInprXzAH9x5vbaCueSwBoYSq1+zLYjV0=
+	t=1763731687; cv=none; b=VMwzeP+z67yt8QQiYeHIqytwap8e5goXZh6IcmS2uwYLL9nESOJBOrG2At9tr1x+0StSFa/1/q16dwEoCjgiWezuQhhFAh3uFRq/r+/bRx7Qxja5SYKKEWPAP+H89MNNNcvhVDKGPEtiMYSRFllYQm3b9nR8ZsuhZsXyE+XA3Y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731683; c=relaxed/simple;
-	bh=Gl0Agtu2KLmmQhQFo0GBmNJjXKIJc2X6nBgHhhZYFSM=;
+	s=arc-20240116; t=1763731687; c=relaxed/simple;
+	bh=yM4Jxw4qS+VL40hD/odKc4KURq3/Z0/WVYiV72Os5KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V290UYbJ69mEDESO8u5hakgWfBu1CYT13sN5tkeuRbSx3LZLzoHdHD/bFKXGIGCEumL3giQbBWFNgKzoEvndAfpckGIDqkLSVgne6XmmwTA+f7Gi78PpwM2K8EsVCOVA2wTc+V5LBlqfwjDZWeyfl3gk7BV+8F2gGBkOkNp51eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ympksPOp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XW1PspB1JTuhC+dbw7200DbzpCadNrYaLXbZSpVYzZEg+kqkPTZ5b9yb2yWaVsnjmzZyNqEUsT1xP/iTSH9lq1hU+51DCHKC9gXzGOMUYvgQcjbLSaW134ZdNPiaC4btYP7sYK2hDS8d/GtBnvnX4lVN8iImOrwFunQCEDG/MhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tdl5oQvf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ympksPOp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74602C4CEF1;
-	Fri, 21 Nov 2025 13:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tdl5oQvf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35416C116D0;
+	Fri, 21 Nov 2025 13:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731681;
-	bh=Gl0Agtu2KLmmQhQFo0GBmNJjXKIJc2X6nBgHhhZYFSM=;
+	s=korg; t=1763731687;
+	bh=yM4Jxw4qS+VL40hD/odKc4KURq3/Z0/WVYiV72Os5KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ympksPOp5PddgVOQZyfP1biVojB0+gTJ2T0cxghwQ473T4ikdIJQ3YylTq1FKl0uL
-	 9kdDFmBeoFf7bHiC5Y2QvokOTic668i7xEm9+RoC6gqQ7YNFUKwZaErjRQtjY4C1Zo
-	 swxz9heC6yBnnHuXDpq5OD99oT3UQRUyCq7kO2OQ=
+	b=Tdl5oQvfyKY0WaM1NFTuh0kuBTwqh4PajeFRZUqLjygU23zDvwjq21iyTOEiWEoLI
+	 qemQ6BkgsLopw7cLtXOO60puEDJA1VkFSv42A70nlwYKTgix+7ML1HdKuUJSgVZvNb
+	 Enf64+H8tQ1sLuZlmIumbJzqjG2jhjs1dyXqRpiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/185] Bluetooth: 6lowpan: Dont hold spin lock over sleeping functions
-Date: Fri, 21 Nov 2025 14:11:10 +0100
-Message-ID: <20251121130145.434455882@linuxfoundation.org>
+Subject: [PATCH 6.12 045/185] net/smc: fix mismatch between CLC header and proposal
+Date: Fri, 21 Nov 2025 14:11:12 +0100
+Message-ID: <20251121130145.505641796@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -45,153 +46,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: D. Wythe <alibuda@linux.alibaba.com>
 
-[ Upstream commit 98454bc812f3611551e4b1f81732da4aa7b9597e ]
+[ Upstream commit ec33f2e5a2d0dbbfd71435209aee812fdc9369b8 ]
 
-disconnect_all_peers() calls sleeping function (l2cap_chan_close) under
-spinlock.  Holding the lock doesn't actually do any good -- we work on a
-local copy of the list, and the lock doesn't protect against peer->chan
-having already been freed.
+The current CLC proposal message construction uses a mix of
+`ini->smc_type_v1/v2` and `pclc_base->hdr.typev1/v2` to decide whether
+to include optional extensions (IPv6 prefix extension for v1, and v2
+extension). This leads to a critical inconsistency: when
+`smc_clc_prfx_set()` fails - for example, in IPv6-only environments with
+only link-local addresses, or when the local IP address and the outgoing
+interface’s network address are not in the same subnet.
 
-Fix by taking refcounts of peer->chan instead.  Clean up the code and
-old comments a bit.
+As a result, the proposal message is assembled using the stale
+`ini->smc_type_v1` value—causing the IPv6 prefix extension to be
+included even though the header indicates v1 is not supported.
+The peer then receives a malformed CLC proposal where the header type
+does not match the payload, and immediately resets the connection.
 
-Take devices_lock instead of RCU, because the kfree_rcu();
-l2cap_chan_put(); construct in chan_close_cb() does not guarantee
-peer->chan is necessarily valid in RCU.
+The fix ensures consistency between the CLC header flags and the actual
+payload by synchronizing `ini->smc_type_v1` with `pclc_base->hdr.typev1`
+when prefix setup fails.
 
-Also take l2cap_chan_lock() which is required for l2cap_chan_close().
-
-Log: (bluez 6lowpan-tester Client Connect - Disable)
-------
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:575
-...
-<TASK>
-...
-l2cap_send_disconn_req (net/bluetooth/l2cap_core.c:938 net/bluetooth/l2cap_core.c:1495)
-...
-? __pfx_l2cap_chan_close (net/bluetooth/l2cap_core.c:809)
-do_enable_set (net/bluetooth/6lowpan.c:1048 net/bluetooth/6lowpan.c:1068)
-------
-
-Fixes: 90305829635d ("Bluetooth: 6lowpan: Converting rwlocks to use RCU")
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 8c3dca341aea ("net/smc: build and send V2 CLC proposal")
+Signed-off-by: D. Wythe <alibuda@linux.alibaba.com>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20251107024029.88753-1-alibuda@linux.alibaba.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 68 ++++++++++++++++++++++++++---------------
- 1 file changed, 43 insertions(+), 25 deletions(-)
+ net/smc/smc_clc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 73fe151a52a12..e5186a438290a 100644
---- a/net/bluetooth/6lowpan.c
-+++ b/net/bluetooth/6lowpan.c
-@@ -52,6 +52,11 @@ static bool enable_6lowpan;
- static struct l2cap_chan *listen_chan;
- static DEFINE_MUTEX(set_lock);
- 
-+enum {
-+	LOWPAN_PEER_CLOSING,
-+	LOWPAN_PEER_MAXBITS
-+};
-+
- struct lowpan_peer {
- 	struct list_head list;
- 	struct rcu_head rcu;
-@@ -60,6 +65,8 @@ struct lowpan_peer {
- 	/* peer addresses in various formats */
- 	unsigned char lladdr[ETH_ALEN];
- 	struct in6_addr peer_addr;
-+
-+	DECLARE_BITMAP(flags, LOWPAN_PEER_MAXBITS);
- };
- 
- struct lowpan_btle_dev {
-@@ -1013,41 +1020,52 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
- static void disconnect_all_peers(void)
- {
- 	struct lowpan_btle_dev *entry;
--	struct lowpan_peer *peer, *tmp_peer, *new_peer;
--	struct list_head peers;
--
--	INIT_LIST_HEAD(&peers);
-+	struct lowpan_peer *peer;
-+	int nchans;
- 
--	/* We make a separate list of peers as the close_cb() will
--	 * modify the device peers list so it is better not to mess
--	 * with the same list at the same time.
-+	/* l2cap_chan_close() cannot be called from RCU, and lock ordering
-+	 * chan->lock > devices_lock prevents taking write side lock, so copy
-+	 * then close.
- 	 */
- 
- 	rcu_read_lock();
-+	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list)
-+		list_for_each_entry_rcu(peer, &entry->peers, list)
-+			clear_bit(LOWPAN_PEER_CLOSING, peer->flags);
-+	rcu_read_unlock();
- 
--	list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
--		list_for_each_entry_rcu(peer, &entry->peers, list) {
--			new_peer = kmalloc(sizeof(*new_peer), GFP_ATOMIC);
--			if (!new_peer)
--				break;
-+	do {
-+		struct l2cap_chan *chans[32];
-+		int i;
- 
--			new_peer->chan = peer->chan;
--			INIT_LIST_HEAD(&new_peer->list);
-+		nchans = 0;
- 
--			list_add(&new_peer->list, &peers);
--		}
--	}
-+		spin_lock(&devices_lock);
- 
--	rcu_read_unlock();
-+		list_for_each_entry_rcu(entry, &bt_6lowpan_devices, list) {
-+			list_for_each_entry_rcu(peer, &entry->peers, list) {
-+				if (test_and_set_bit(LOWPAN_PEER_CLOSING,
-+						     peer->flags))
-+					continue;
- 
--	spin_lock(&devices_lock);
--	list_for_each_entry_safe(peer, tmp_peer, &peers, list) {
--		l2cap_chan_close(peer->chan, ENOENT);
-+				l2cap_chan_hold(peer->chan);
-+				chans[nchans++] = peer->chan;
- 
--		list_del_rcu(&peer->list);
--		kfree_rcu(peer, rcu);
--	}
--	spin_unlock(&devices_lock);
-+				if (nchans >= ARRAY_SIZE(chans))
-+					goto done;
-+			}
-+		}
-+
-+done:
-+		spin_unlock(&devices_lock);
-+
-+		for (i = 0; i < nchans; ++i) {
-+			l2cap_chan_lock(chans[i]);
-+			l2cap_chan_close(chans[i], ENOENT);
-+			l2cap_chan_unlock(chans[i]);
-+			l2cap_chan_put(chans[i]);
-+		}
-+	} while (nchans);
- }
- 
- struct set_enable {
+diff --git a/net/smc/smc_clc.c b/net/smc/smc_clc.c
+index 8a794333e9927..b3a8053d4ab4b 100644
+--- a/net/smc/smc_clc.c
++++ b/net/smc/smc_clc.c
+@@ -887,6 +887,7 @@ int smc_clc_send_proposal(struct smc_sock *smc, struct smc_init_info *ini)
+ 				return SMC_CLC_DECL_CNFERR;
+ 			}
+ 			pclc_base->hdr.typev1 = SMC_TYPE_N;
++			ini->smc_type_v1 = SMC_TYPE_N;
+ 		} else {
+ 			pclc_base->iparea_offset = htons(sizeof(*pclc_smcd));
+ 			plen += sizeof(*pclc_prfx) +
 -- 
 2.51.0
 
