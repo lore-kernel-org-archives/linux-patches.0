@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 657E12745E;
-	Fri, 21 Nov 2025 13:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C72E334690;
+	Fri, 21 Nov 2025 13:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732022; cv=none; b=ZaIiVbElIEKlBN7xCapLQ9HT10f3Y0gEibjWxFOnPdV5Cgy1Xf2zPq3l+1npS9S9G6luCB7nJD0SfEmqtHPSadoJyNg2jPMWUn2AZ4/5nQ3zov7D8lLd+UUYRALqrI7DNkQYLzWIy0YRBzUaQBISVK+s84x5EZR1EpQ5FUsXVaI=
+	t=1763732025; cv=none; b=ZRTMJ7sr41WZUI8u+defELvrmM7BhUBdDSvQ8M7t3CEKPsCBIaUdheEsko7MeWTAjvqo97s15NAF82URVWUH8jz8y1uMSXsrPFSGjq6Jtx7HPYCGV4moWvNeF2Q0DknYPeDUPQRpjgn7CoYuCNgCcGEnZ62UdS3So5I/GxwVq64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732022; c=relaxed/simple;
-	bh=Ec4p98RmaJ/xrzvHyc7oHygDRrPQWODjpXMp80pU+yg=;
+	s=arc-20240116; t=1763732025; c=relaxed/simple;
+	bh=o7+3ETAT4kIxerDAKS1I5fwA3p+omcIkqVJZ/9WcTPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u89u5hxW4toSh+cpd+tZRS4SEgp20lzDifGHITFaAKdErXO9Sv+7UR92Rsu/9InafUl8FjPqdgyC9VpqHnb4jybBZxB1+ZfBjcDtfya5MzpdSRgHXARZIBpQpxGuMXi6R28UUuVL5k54eNhgRjPUvY5OqvMT9z3/rR9OfCwl7LA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYw+jrMB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fXjihwYm0fDho8xZ4JEOE5dS+/7crTan8U21bbaWglJix+yzIKK1z6sq5kvtWZhCf3KlMGdO6v4yI0ccqUWx02iCFghbZP5C7aRgaWlf5M37Z9tbva03Ag4ktDmix3JJegPa8o8MffZbQrHS20thPyFnqxBciBQgFtr4vFpdySI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4rV1DDf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYw+jrMB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0402C4CEF1;
-	Fri, 21 Nov 2025 13:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4rV1DDf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C0EC4CEF1;
+	Fri, 21 Nov 2025 13:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732022;
-	bh=Ec4p98RmaJ/xrzvHyc7oHygDRrPQWODjpXMp80pU+yg=;
+	s=korg; t=1763732025;
+	bh=o7+3ETAT4kIxerDAKS1I5fwA3p+omcIkqVJZ/9WcTPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rYw+jrMB2uHZy50igqPlEGx7xk3TJeIyNYtoJewdmYtl9CHpj+LVTgPTtkSLXzfxy
-	 LnX0YhYxTFOroeH8vLrO2u3g7WQpORwBw0R/gewsBUWdRN2mtZcmydVtBbaRka1ROF
-	 OVI0YRuBB1i3B6MSzdZFeKA7nrhDFai5pwGMvPh4=
+	b=r4rV1DDfSy2UakSSytwWrq6iIt8ge2EYk5JYLTJuXP6IEFodBGT/9ReHZYSbJc16u
+	 04bQ6XQE6iqgVW71rGdMNz6Fy4czmXJ0nE4omvWHC2juAhr/0yXuWANvVAb+gjEucW
+	 LI7EUntXmEm6qmurkahV3su2gzDvFUKvqY7F0+VI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 129/185] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
-Date: Fri, 21 Nov 2025 14:12:36 +0100
-Message-ID: <20251121130148.531200002@linuxfoundation.org>
+	Chuang Wang <nashuiliang@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 120/185] ipv4: route: Prevent rt_bind_exception() from rebinding stale fnhe
+Date: Fri, 21 Nov 2025 14:12:27 +0100
+Message-ID: <20251121130148.205203178@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,53 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Chuang Wang <nashuiliang@gmail.com>
 
-commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf upstream.
+commit ac1499fcd40fe06479e9b933347b837ccabc2a40 upstream.
 
-The PCM stream data in USB-audio driver is transferred over USB URB
-packet buffers, and each packet size is determined dynamically.  The
-packet sizes are limited by some factors such as wMaxPacketSize USB
-descriptor.  OTOH, in the current code, the actually used packet sizes
-are determined only by the rate and the PPS, which may be bigger than
-the size limit above.  This results in a buffer overflow, as reported
-by syzbot.
+The sit driver's packet transmission path calls: sit_tunnel_xmit() ->
+update_or_create_fnhe(), which lead to fnhe_remove_oldest() being called
+to delete entries exceeding FNHE_RECLAIM_DEPTH+random.
 
-Basically when the limit is smaller than the calculated packet size,
-it implies that something is wrong, most likely a weird USB
-descriptor.  So the best option would be just to return an error at
-the parameter setup time before doing any further operations.
+The race window is between fnhe_remove_oldest() selecting fnheX for
+deletion and the subsequent kfree_rcu(). During this time, the
+concurrent path's __mkroute_output() -> find_exception() can fetch the
+soon-to-be-deleted fnheX, and rt_bind_exception() then binds it with a
+new dst using a dst_hold(). When the original fnheX is freed via RCU,
+the dst reference remains permanently leaked.
 
-This patch introduces such a sanity check, and returns -EINVAL when
-the packet size is greater than maxpacksize.  The comparison with
-ep->packsize[1] alone should suffice since it's always equal or
-greater than ep->packsize[0].
+CPU 0                             CPU 1
+__mkroute_output()
+  find_exception() [fnheX]
+                                  update_or_create_fnhe()
+                                    fnhe_remove_oldest() [fnheX]
+  rt_bind_exception() [bind dst]
+                                  RCU callback [fnheX freed, dst leak]
 
-Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
-Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This issue manifests as a device reference count leak and a warning in
+dmesg when unregistering the net device:
+
+  unregister_netdevice: waiting for sitX to become free. Usage count = N
+
+Ido Schimmel provided the simple test validation method [1].
+
+The fix clears 'oldest->fnhe_daddr' before calling fnhe_flush_routes().
+Since rt_bind_exception() checks this field, setting it to zero prevents
+the stale fnhe from being reused and bound to a new dst just before it
+is freed.
+
+[1]
+ip netns add ns1
+ip -n ns1 link set dev lo up
+ip -n ns1 address add 192.0.2.1/32 dev lo
+ip -n ns1 link add name dummy1 up type dummy
+ip -n ns1 route add 192.0.2.2/32 dev dummy1
+ip -n ns1 link add name gretap1 up arp off type gretap \
+    local 192.0.2.1 remote 192.0.2.2
+ip -n ns1 route add 198.51.0.0/16 dev gretap1
+taskset -c 0 ip netns exec ns1 mausezahn gretap1 \
+    -A 198.51.100.1 -B 198.51.0.0/16 -t udp -p 1000 -c 0 -q &
+taskset -c 2 ip netns exec ns1 mausezahn gretap1 \
+    -A 198.51.100.1 -B 198.51.0.0/16 -t udp -p 1000 -c 0 -q &
+sleep 10
+ip netns pids ns1 | xargs kill
+ip netns del ns1
+
+Cc: stable@vger.kernel.org
+Fixes: 67d6d681e15b ("ipv4: make exception cache less predictible")
+Signed-off-by: Chuang Wang <nashuiliang@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251111064328.24440-1-nashuiliang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    5 +++++
+ net/ipv4/route.c |    5 +++++
  1 file changed, 5 insertions(+)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1386,6 +1386,11 @@ int snd_usb_endpoint_set_params(struct s
- 	ep->sample_rem = ep->cur_rate % ep->pps;
- 	ep->packsize[0] = ep->cur_rate / ep->pps;
- 	ep->packsize[1] = (ep->cur_rate + (ep->pps - 1)) / ep->pps;
-+	if (ep->packsize[1] > ep->maxpacksize) {
-+		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
-+			      ep->maxpacksize, ep->cur_rate, ep->pps);
-+		return -EINVAL;
-+	}
- 
- 	/* calculate the frequency in 16.16 format */
- 	ep->freqm = ep->freqn;
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -605,6 +605,11 @@ static void fnhe_remove_oldest(struct fn
+ 			oldest_p = fnhe_p;
+ 		}
+ 	}
++
++	/* Clear oldest->fnhe_daddr to prevent this fnhe from being
++	 * rebound with new dsts in rt_bind_exception().
++	 */
++	oldest->fnhe_daddr = 0;
+ 	fnhe_flush_routes(oldest);
+ 	*oldest_p = oldest->fnhe_next;
+ 	kfree_rcu(oldest, rcu);
 
 
