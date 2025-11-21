@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9E3351FBD;
-	Fri, 21 Nov 2025 13:58:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 922D13502A0;
+	Fri, 21 Nov 2025 13:58:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733488; cv=none; b=pZt+gYhbTGKJp+zGd28zFNDWIsiYBbox7x64uQk7rxmo4gs6xYX6xptwxOgua1uuEQitHRyHFlTWrjXQKoKSTajH62DfXpx1M5Aa/cUNAl4m4Ucvq2aC+w+fM6y95cU8zmI7wz6V84UuhrphMeHjMBlq8P6IhylvwAbmLQu5dAU=
+	t=1763733489; cv=none; b=DAOSPkvvk28OBk90clhsW3fUMXj30kRZ1l+o+uhnfKFegFahE3mgIFt3UqR3VIvv/DQ3uu3Pz2BScjdtBqQFIpDOZO8An0oWBtSNQI0AxNH1b/9KYY+k8Dsaddms5szD0xy34OmDVS633UcqObxk6eHU21mBuFI52FLQfzKQ6vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733488; c=relaxed/simple;
-	bh=eApUGkwmwQvYnBRCzhlM8IxSQ5S1ZUk6P5tvzIjci0s=;
+	s=arc-20240116; t=1763733489; c=relaxed/simple;
+	bh=1rw38aQmcEfvrMWjzMjMYDXBwIrM962pfukkdI1/+No=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rC/6vzCV+4NQ5qIqOm3s4dRdtHzboo/qNIg8RpSV48ROCpqKI3Vvq3C7xK224VSKzg1kdtGj+p1MgDRLHzzZkI8MbmiXb3HHo//127FiLZUGQz6CH2EGXhBwegxHu0tESHIaO2XyoagdGbQFqgE7M8FuYGL5qhVhPH42t5Y91hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7iflR+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJBlz7SP+zg7RJUgH9DMmDsv6pbVeqof2UPBMvCmJEZplhSABOdh+/VfSOSKuXC/BZo9v0VlHg+GazFDBMU0Ch3eMAFxVpnuQKsFkKGPvblMP4D0mxYwcTjXiM9a6jw8zZjQ7J/fbkpi6WTE8iR/nQfvtzEM4elEwDjTFMOCni4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ji8Ey/lE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7iflR+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85DAC4CEF1;
-	Fri, 21 Nov 2025 13:58:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ji8Ey/lE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39E9C116C6;
+	Fri, 21 Nov 2025 13:58:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733486;
-	bh=eApUGkwmwQvYnBRCzhlM8IxSQ5S1ZUk6P5tvzIjci0s=;
+	s=korg; t=1763733489;
+	bh=1rw38aQmcEfvrMWjzMjMYDXBwIrM962pfukkdI1/+No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D7iflR+op4YczrMRRNzafyWD+l6kluZqmaV9s6K/r1eXCLrtII6NsFw4172eDwjw/
-	 Do8uuZznGJqQXUyZLzW4lVdnz6tKlztw4V4W2OxG3CWKObYxYTuiYY6b0ANN8Kx41s
-	 yRFpZOhx6GXdEGHLXwE0jWf4U5ORWTno7v0a465o=
+	b=Ji8Ey/lEsvfsNYu5hqpvfqHzbHnF7/fH3tyxYWc7pucQb31Xv1s5RgUAuMVfF0ai1
+	 uHfZJhF1C9wQdRhD5mW2MQCBZtULm484tfwNXGIWNlGjtvx1Rjh7deVtnhGSvq0Gk8
+	 0XZe2bWFDBcR4gsOS8BvRyEVr0KwQHD/ftvOseGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.6 484/529] EDAC/altera: Handle OCRAM ECC enable after warm reset
-Date: Fri, 21 Nov 2025 14:13:03 +0100
-Message-ID: <20251121130248.228969823@linuxfoundation.org>
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 458/529] ARM: dts: imx51-zii-rdu1: Fix audmux node names
+Date: Fri, 21 Nov 2025 14:12:37 +0100
+Message-ID: <20251121130247.307015857@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,55 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-commit fd3ecda38fe0cb713d167b5477d25f6b350f0514 upstream.
+[ Upstream commit f31e261712a0d107f09fb1d3dc8f094806149c83 ]
 
-The OCRAM ECC is always enabled either by the BootROM or by the Secure Device
-Manager (SDM) during a power-on reset on SoCFPGA.
+Rename the 'ssi2' and 'aud3' nodes to 'mux-ssi2' and 'mux-aud3' in the
+audmux configuration of imx51-zii-rdu1.dts to comply with the naming
+convention in imx-audmux.yaml.
 
-However, during a warm reset, the OCRAM content is retained to preserve data,
-while the control and status registers are reset to their default values. As
-a result, ECC must be explicitly re-enabled after a warm reset.
+This fixes the following dt-schema warning:
 
-Fixes: 17e47dc6db4f ("EDAC/altera: Add Stratix10 OCRAM ECC support")
-Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251111080801.1279401-1-niravkumarlaxmidas.rabara@altera.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  imx51-zii-rdu1.dtb: audmux@83fd0000 (fsl,imx51-audmux): 'aud3', 'ssi2'
+  do not match any of the regexes: '^mux-[0-9a-z]*$', '^pinctrl-[0-9]+$'
+
+Fixes: ceef0396f367f ("ARM: dts: imx: add ZII RDU1 board")
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1194,10 +1194,22 @@ altr_check_ocram_deps_init(struct altr_e
- 	if (ret)
- 		return ret;
+diff --git a/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts b/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts
+index 5d4b29d765853..6cc4c2f08b15d 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts
++++ b/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts
+@@ -259,7 +259,7 @@
+ 	pinctrl-0 = <&pinctrl_audmux>;
+ 	status = "okay";
  
--	/* Verify OCRAM has been initialized */
-+	/*
-+	 * Verify that OCRAM has been initialized.
-+	 * During a warm reset, OCRAM contents are retained, but the control
-+	 * and status registers are reset to their default values. Therefore,
-+	 * ECC must be explicitly re-enabled in the control register.
-+	 * Error condition: if INITCOMPLETEA is clear and ECC_EN is already set.
-+	 */
- 	if (!ecc_test_bits(ALTR_A10_ECC_INITCOMPLETEA,
--			   (base + ALTR_A10_ECC_INITSTAT_OFST)))
--		return -ENODEV;
-+			   (base + ALTR_A10_ECC_INITSTAT_OFST))) {
-+		if (!ecc_test_bits(ALTR_A10_ECC_EN,
-+				   (base + ALTR_A10_ECC_CTRL_OFST)))
-+			ecc_set_bits(ALTR_A10_ECC_EN,
-+				     (base + ALTR_A10_ECC_CTRL_OFST));
-+		else
-+			return -ENODEV;
-+	}
+-	ssi2 {
++	mux-ssi2 {
+ 		fsl,audmux-port = <1>;
+ 		fsl,port-config = <
+ 			(IMX_AUDMUX_V2_PTCR_SYN |
+@@ -271,7 +271,7 @@
+ 		>;
+ 	};
  
- 	/* Enable IRQ on Single Bit Error */
- 	writel(ALTR_A10_ECC_SERRINTEN, (base + ALTR_A10_ECC_ERRINTENS_OFST));
+-	aud3 {
++	mux-aud3 {
+ 		fsl,audmux-port = <2>;
+ 		fsl,port-config = <
+ 			IMX_AUDMUX_V2_PTCR_SYN
+-- 
+2.51.0
+
 
 
