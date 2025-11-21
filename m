@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0204E2FF173;
-	Fri, 21 Nov 2025 13:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB72D341ADF;
+	Fri, 21 Nov 2025 13:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732774; cv=none; b=oRG4CY8GvVDmRbPlO66uZpZZDNjclG5YNYsWjx2RWo07zeGEWuo69QtuzMnn/uingN0Agsg2H6CCL+MMfEKmbLmMIS9W7HLc8wMLFVaS1f4s+2DqMH0f7mtzW9Nfz0/St0a/EM/c+3X6ZPrG1yG2KUQRK2wokRecFBvTqvM+iCo=
+	t=1763732776; cv=none; b=Vt0uKfJerXOK+79H32odaqTAkOao/ksTZlRR+nMAutv32b3TS4JpgIiJjpAVtDaRQeZtSTTT1qt6EqqEVzPpnJN01CFm6DHrqe3mR/p73lT+FPjzn7GUwGqojd50MEplvJumNF9+9dutHuftU08T6TFbP82ymGXuhH2gXHLfKRg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732774; c=relaxed/simple;
-	bh=H/XP9pYj58CpnbgUMPj1e9VFKjyNIB5Do5vaOX9EAoE=;
+	s=arc-20240116; t=1763732776; c=relaxed/simple;
+	bh=wMk3WpWS6Hz57VXqi6I+TG4Hw3MLMc6QMuwTJGwXlbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gX6wmuXIBD+Onsveu6IPpvlFlIbVuwbhKszURQAvSI0jjmT3uXSf6kCZS9yJnJvmnTJg409NVwv9uYkmpZ277aaVIz5KUDSiEl70PIo5WNXSdlYsFov3WuLYRA8tWnW20+797DFb6P7nv587PZw2P3eOwOg3TQQRUvUMNWJ1ugI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZvxFQew1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bC4ySDwm2K01Pl+LbJIj6bY0kH/hqR1JzoZbjtkOpWFsobAdQmtltFSVEWDIk5WosXudIZDwiltFFE8xD7TRgOqIB7zMk+NozO0W5nnEaowuQZ/+ajMpj4s6vYHmEHol8Kmdym6o4905K/ZltrlCugcBOsRsnKfF/KFjv43NpUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GekpKoJj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZvxFQew1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43AF8C4CEF1;
-	Fri, 21 Nov 2025 13:46:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GekpKoJj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF35C116C6;
+	Fri, 21 Nov 2025 13:46:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732773;
-	bh=H/XP9pYj58CpnbgUMPj1e9VFKjyNIB5Do5vaOX9EAoE=;
+	s=korg; t=1763732776;
+	bh=wMk3WpWS6Hz57VXqi6I+TG4Hw3MLMc6QMuwTJGwXlbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZvxFQew1HUGgfMDYZ2qUmZ9ZZnW/wUF/vyZM3CR6/dQM9zZc11Y69GPQ9RuXThK6K
-	 tnW5Emj6EO3Qhii18/2k6wL7r/b/J5yIpwZcjbe65terJjr92Lktxg3xTc370wypvb
-	 To4QTEyBjZZ12IU7rtD0OMS3d5UD6KH6nrDtQNkw=
+	b=GekpKoJjejcgov4kif1RpibzFhfaR4LzNBVdMsadRFUIyFPCbmMHYvsCP8swVpL8q
+	 7/q9NVxkNV/Y5H0rgplWiIlkPc4SVVSu7sp0WTFrPHdQjnddpYQC0lnapWF6YvxWlU
+	 Lz6/hBDwU44Y8Fp9kkxj/FTouxSLDfIt264HN3Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mina Almasry <almasrymina@google.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 237/529] page_pool: always add GFP_NOWARN for ATOMIC allocations
-Date: Fri, 21 Nov 2025 14:08:56 +0100
-Message-ID: <20251121130239.452092381@linuxfoundation.org>
+Subject: [PATCH 6.6 238/529] ethernet: Extend device_get_mac_address() to use NVMEM
+Date: Fri, 21 Nov 2025 14:08:57 +0100
+Message-ID: <20251121130239.486898216@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,41 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit f3b52167a0cb23b27414452fbc1278da2ee884fc ]
+[ Upstream commit d2d3f529e7b6ff2aa432b16a2317126621c28058 ]
 
-Driver authors often forget to add GFP_NOWARN for page allocation
-from the datapath. This is annoying to users as OOMs are a fact
-of life, and we pretty much expect network Rx to hit page allocation
-failures during OOM. Make page pool add GFP_NOWARN for ATOMIC allocations
-by default.
+A lot of modern SoC have the ability to store MAC addresses in their
+NVMEM. So extend the generic function device_get_mac_address() to
+obtain the MAC address from an nvmem cell named 'mac-address' in
+case there is no firmware node which contains the MAC address directly.
 
-Reviewed-by: Mina Almasry <almasrymina@google.com>
-Link: https://patch.msgid.link/20250912161703.361272-1-kuba@kernel.org
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250912140332.35395-3-wahrenst@gmx.net
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/ethernet/eth.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 2f2f63c8cf4b0..b78c742052947 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -422,6 +422,12 @@ static struct page *__page_pool_alloc_pages_slow(struct page_pool *pool,
- 	struct page *page;
- 	int i, nr_pages;
- 
-+	/* Unconditionally set NOWARN if allocating from NAPI.
-+	 * Drivers forget to set it, and OOM reports on packet Rx are useless.
-+	 */
-+	if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
-+		gfp |= __GFP_NOWARN;
+diff --git a/net/ethernet/eth.c b/net/ethernet/eth.c
+index 049c3adeb8504..b4a6e26ec2871 100644
+--- a/net/ethernet/eth.c
++++ b/net/ethernet/eth.c
+@@ -615,7 +615,10 @@ EXPORT_SYMBOL(fwnode_get_mac_address);
+  */
+ int device_get_mac_address(struct device *dev, char *addr)
+ {
+-	return fwnode_get_mac_address(dev_fwnode(dev), addr);
++	if (!fwnode_get_mac_address(dev_fwnode(dev), addr))
++		return 0;
 +
- 	/* Don't support bulk alloc for high-order pages */
- 	if (unlikely(pp_order))
- 		return __page_pool_alloc_page_order(pool, gfp);
++	return nvmem_get_mac_address(dev, addr);
+ }
+ EXPORT_SYMBOL(device_get_mac_address);
+ 
 -- 
 2.51.0
 
