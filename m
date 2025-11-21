@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A1A2773F7;
-	Fri, 21 Nov 2025 13:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4A026E6F4;
+	Fri, 21 Nov 2025 13:22:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731336; cv=none; b=hzFMGRVowVl0Yn+6AU3Vr+bgw2IPrYcnm4mUcwaJKK/dmZdLMWmQ8wZrtuoaSCrGNg+i1k3UFm4Oc/nkciPhze5ykLlfhrgIu4gNqFk1K5HocwBkaJOfDWCIHpYbEdZdb4RH6sY7BD+hihQNM5Q5OD5qSPazk8WKFK6IH9Ct5+w=
+	t=1763731339; cv=none; b=r1XWMKlwMYU6dyUSdTEWGWaojd30X9H9mdsKo7w0cDuNjZJpYaAA9nr+Lv1fBO/oBykNcrGxVONczmEAY+9/Sop9v/WOdnHiX7WGGkUJxvKvuUDz38skP+wPYqSZh1fQl3QmLGPvDZ/5RSO+dv2em9SYOl4Y2eZGZSB7n5LynBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731336; c=relaxed/simple;
-	bh=2a0AZKiIU/BxINWWLr7MAdTE7lydimUHETsKeOGc6C4=;
+	s=arc-20240116; t=1763731339; c=relaxed/simple;
+	bh=keLyYB07+nk8ANsooJwPD3GXYNdTblpPD6vw1hMXNo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGvW2fEZ4GBJbECbdZ+6u8q/yG+RVyiwTSEUQlqdRh5RwqAwSU/pkuPyY68A1NPNgLCncSZ7nz6iRUM7naPRRDybuDlXETeXb07sl6X9xlifQF6eUqHj5XkM5OZVE9Ml8ds57mREVmiybDRXotIcEg1iG977MZdTw0pzDyauYF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6ZD+iv1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P4tE+S7hVnU/UD/Qz1glszZDPhZaUxP6aq1k7ngQVt/4S3bSDExdb4TOHzgDLIe3ES61WJAV0mrTxu4XNVNzb9ui7047tx8VbaJ8FFzI4Dt2SGlktTa00tqUvkyELHOlVT3zbF+k8NRzm7pQDPzXJlrGLqxJ0bpC32FFQsnLtDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eac3rKsz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6ZD+iv1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90987C4CEF1;
-	Fri, 21 Nov 2025 13:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eac3rKsz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CCCC4CEF1;
+	Fri, 21 Nov 2025 13:22:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731336;
-	bh=2a0AZKiIU/BxINWWLr7MAdTE7lydimUHETsKeOGc6C4=;
+	s=korg; t=1763731339;
+	bh=keLyYB07+nk8ANsooJwPD3GXYNdTblpPD6vw1hMXNo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6ZD+iv19VrAo7F2XMweZYFhhg1kb8gAhS0C7p/hdduW15v9A/u+pckwIl2aOdX5d
-	 lfPRIHXnthsJjHPcuvpsARZLoJ5nQE/2/9baFw1yhJTiln6F183Qgnp04z1O2NljJ/
-	 ZBRyd5AnQnd4t18w9FRRhzkEklwmzJn6OYN97BnE=
+	b=Eac3rKsz+WvZOhZgAYOA7KRekbq82ugY8J6GM+ZA7faammU+P+YDOnarLUSni1ibZ
+	 w8M+y0pvjwyD1V6OJxxHa3GhZr2zinI8MLzVF6GTzDFfnU+I5TWsGk2D60bqIH9lD1
+	 Wo6d0EvtL+LbE+bHtR6WuLTTx1EBF6nJ6yWWCEFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.17 172/247] LoongArch: Use correct accessor to read FWPC/MWPC
-Date: Fri, 21 Nov 2025 14:11:59 +0100
-Message-ID: <20251121130200.893976916@linuxfoundation.org>
+	Liupu Wang <wangliupu@loongson.cn>,
+	Tianyang Zhang <zhangtianyang@loongson.cn>
+Subject: [PATCH 6.17 173/247] LoongArch: Let {pte,pmd}_modify() record the status of _PAGE_DIRTY
+Date: Fri, 21 Nov 2025 14:12:00 +0100
+Message-ID: <20251121130200.929507298@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -49,38 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Tianyang Zhang <zhangtianyang@loongson.cn>
 
-commit eeeeaafa62ea0cd4b86390f657dc0aea73bff4f5 upstream.
+commit a073d637c8cfbfbab39b7272226a3fbf3b887580 upstream.
 
-CSR.FWPC and CSR.MWPC are 32bit registers, so use csr_read32() rather
-than csr_read64() to read the values of FWPC/MWPC.
+Now if the PTE/PMD is dirty with _PAGE_DIRTY but without _PAGE_MODIFIED,
+after {pte,pmd}_modify() we lose _PAGE_DIRTY, then {pte,pmd}_dirty()
+return false and lead to data loss. This can happen in certain scenarios
+such as HW PTW doesn't set _PAGE_MODIFIED automatically, so here we need
+_PAGE_MODIFIED to record the dirty status (_PAGE_DIRTY).
+
+The new modification involves checking whether the original PTE/PMD has
+the _PAGE_DIRTY flag. If it exists, the _PAGE_MODIFIED bit is also set,
+ensuring that the {pte,pmd}_dirty() interface can always return accurate
+information.
 
 Cc: stable@vger.kernel.org
-Fixes: edffa33c7bb5a73 ("LoongArch: Add hardware breakpoints/watchpoints support")
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Co-developed-by: Liupu Wang <wangliupu@loongson.cn>
+Signed-off-by: Liupu Wang <wangliupu@loongson.cn>
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/hw_breakpoint.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/loongarch/include/asm/pgtable.h |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/loongarch/include/asm/hw_breakpoint.h
-+++ b/arch/loongarch/include/asm/hw_breakpoint.h
-@@ -134,13 +134,13 @@ static inline void hw_breakpoint_thread_
- /* Determine number of BRP registers available. */
- static inline int get_num_brps(void)
+--- a/arch/loongarch/include/asm/pgtable.h
++++ b/arch/loongarch/include/asm/pgtable.h
+@@ -424,6 +424,9 @@ static inline unsigned long pte_accessib
+ 
+ static inline pte_t pte_modify(pte_t pte, pgprot_t newprot)
  {
--	return csr_read64(LOONGARCH_CSR_FWPC) & CSR_FWPC_NUM;
-+	return csr_read32(LOONGARCH_CSR_FWPC) & CSR_FWPC_NUM;
++	if (pte_val(pte) & _PAGE_DIRTY)
++		pte_val(pte) |= _PAGE_MODIFIED;
++
+ 	return __pte((pte_val(pte) & _PAGE_CHG_MASK) |
+ 		     (pgprot_val(newprot) & ~_PAGE_CHG_MASK));
+ }
+@@ -547,9 +550,11 @@ static inline struct page *pmd_page(pmd_
+ 
+ static inline pmd_t pmd_modify(pmd_t pmd, pgprot_t newprot)
+ {
+-	pmd_val(pmd) = (pmd_val(pmd) & _HPAGE_CHG_MASK) |
+-				(pgprot_val(newprot) & ~_HPAGE_CHG_MASK);
+-	return pmd;
++	if (pmd_val(pmd) & _PAGE_DIRTY)
++		pmd_val(pmd) |= _PAGE_MODIFIED;
++
++	return __pmd((pmd_val(pmd) & _HPAGE_CHG_MASK) |
++		     (pgprot_val(newprot) & ~_HPAGE_CHG_MASK));
  }
  
- /* Determine number of WRP registers available. */
- static inline int get_num_wrps(void)
- {
--	return csr_read64(LOONGARCH_CSR_MWPC) & CSR_MWPC_NUM;
-+	return csr_read32(LOONGARCH_CSR_MWPC) & CSR_MWPC_NUM;
- }
- 
- #endif	/* __KERNEL__ */
+ static inline pmd_t pmd_mkinvalid(pmd_t pmd)
 
 
