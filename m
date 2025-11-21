@@ -1,145 +1,123 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC94C298987
-	for <patches@lists.linux.dev>; Fri, 21 Nov 2025 23:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E3021B9FD
+	for <patches@lists.linux.dev>; Fri, 21 Nov 2025 23:40:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763768213; cv=none; b=aEoSb3/Zxt5Z9dTGyJb04SWQSBy4tY/s0RYeqZe4Ahbx3xaX0atYY2JCkqhA+pn+vy//JbfXXEPcDKQzufYYN2XpK4GS5ld+S/P/vHH4ZCVW7ypsUd6B2EKwQph5CAuiW2Bmb0iCCNZAZNJnwfA78mtzSB+beFOWOktf+NXUZ3M=
+	t=1763768453; cv=none; b=C+9HxJ5Vh/WdkTTfkg28zBqoTdv2lUeo2FG2m2qmep5iM7sADa+K2EFHvdaVonspI/SqoiFHR3YUJmTBs0oCD1TSpCl7iqjbtYcPT7aZgmFC06sJ2t1qLReX7nWpE7El96m6NS+muSte70JQ3eHdOMMDYMN5h1JglfUuUs8VroQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763768213; c=relaxed/simple;
-	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dFZSTMlJf+FftAtGXMB9vsxCLfwDOshkkegTM3mx5l5ZEVlgOjZ31ZkkQKM2PS0CWqt5iS4mSQBCKWbFxyiFCF+IOXBn0lMFS1LelxwjLMXS3/r/fVHy5HkWEZoZyxHit/yXrvhtCIGhMuYXH2rpYWwlQM7ifVqL1p4PHusppAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=F0faFFG8; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1763768453; c=relaxed/simple;
+	bh=3qKLYC0y3/7eM1Ro2EkyDit0kfLQH7qiYWQQLEn79jE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UaSmwUGbr6Wrl8sNy16VML/ZuqIi8v6EXnNKNfEm4YENciCuVzROmUDHVgAhqorkvj0f0/Y0kKmWlhP+5VrPkeEm1eJTUwj6Ppc+4TZZ+J9dCcX23m6noTmk0/PrybNRx3nPv8FFSXgcMe6R5bgWNRDx/EeuZdzfv4xGtCK0sSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=Bu8sJERR; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="F0faFFG8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1763768205; x=1764373005; i=rwarsow@gmx.de;
-	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=F0faFFG8K+C8qq7tz4NQTuU8aI9v7S8VjLtyHIiQBwFMgYx3IAzHzHrAM9xXfzBF
-	 rndgiec3lpeYo90zIrpc8uR1DhdFQqg9y3oscx0KRT/fXBoiWhNg6swUL5wA0lw/V
-	 /O0nYHmCDnn1YWK/8Q2GXjApE/YpiPXJmY0xiHJyI4TJ3+siz2MbYYh6w6XIv+vkc
-	 nJ4QwGwe1aPNR6mrZc5nta6aZFDfIpiBvAgZF+srMQxDpm7EGc4z3gp4l7EAwYHmV
-	 5RO/R143icSdTOqyAOM0g7qgEogzWWAifWUCYNfPyibildeAipsQpH+DnEv8pMjcj
-	 7rSvReuvA9lnidaoHQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.200.20] ([46.142.33.160]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N17YY-1w76T03Juc-016Xdp; Sat, 22
- Nov 2025 00:36:44 +0100
-Message-ID: <71afbdd2-65ac-41dc-a875-7702d89dc600@gmx.de>
-Date: Sat, 22 Nov 2025 00:36:43 +0100
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="Bu8sJERR"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b98a619f020so1978141a12.2
+        for <patches@lists.linux.dev>; Fri, 21 Nov 2025 15:40:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1763768451; x=1764373251; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aeX++7UhHM3U5MYi5MXg2Yp5C2j3UwwuMQxs7wJVylA=;
+        b=Bu8sJERRkuplm2yze0H+l8svNwY1sKDp+wB3LaOP6gVwVHEBZyDk1mDpDf8/NBzZ4E
+         yM7WKZY7bjm+o5Q0vzRg0zLc/vWzFJlAoGaUnWkeKLV779DXQTUKWDzvB5+N+dYmPAP0
+         y2gGTb4+EE4TF7MXYGsSnUqyIPPClxGDbj4kLhFmneei/KIcax73cJft1CmdZdWGbcpW
+         UIuGfbbnmiDcpKcIoSMDS0hsnIikARBYilA5nGwV+E2FpoZ0JgWL1tvHTKcU4xGOGqZl
+         aHCJQVohGnMsDsDqL+MdwBkuXcVxp2VLwQzzMOnyjpm3N0X2JEmX4lk8xW4oxyB7FD/j
+         D4rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1763768451; x=1764373251;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=aeX++7UhHM3U5MYi5MXg2Yp5C2j3UwwuMQxs7wJVylA=;
+        b=wPOPsqk4YWisA5gCSlJlTZu5jmEfC2VMaRR4Y6VIUnDrjT42kLcHlTYzAbe7Ek9R/z
+         PFbrDhPtfDLClPl0Z8IH8bgTRyOtbLpJ5GpVnotu0Kce0unzXjMo/gAyxxU8T0IlVLqQ
+         IrwJjRH0aCTnOaifBhDqv0gC9g8pxTVYXWqGRJJ17rse4upomqSywFz9WYhsDfRd3u2g
+         8WHbjaIEvNNkMoNxEJo33mZVLXeOAa0x3d8I94IgaEuwETwVc9Ok2pJJbgUg40B9lkg8
+         IfGHlq4ybZ+Zmnl2sjoqbJBvUVQvC7l3+F8Fqkv3811brblg6HUEb/xgWVdREv16ctq4
+         uNHA==
+X-Forwarded-Encrypted: i=1; AJvYcCVE46K/gYwDD72tsQLssfk69VFdpebXtMQgLyCeDfRfp7ynhibMFr9jpKxGHMYTokCwTHiZdktY@lists.linux.dev
+X-Gm-Message-State: AOJu0YxikO2pHZ/1hIASaQOoeJT5b64vyCn9jm753HuRlm350u9xZVS7
+	j7MlnnDRsyQnYSH7LqzMIClS8jSW8GBAV0RVe4HjHCbcflN/4UtKvyPTXQgXzcmtgxwfBo73CHc
+	0SFbfxJRqLWc7L8GY5pNW5v7gMNsKAr3+zRXDK1Ba+A==
+X-Gm-Gg: ASbGncu17RvsEhueh3SrT767RF9co7CyrmIfk5g7rgnnBYzpCG9v9yT6+yJNUCOKgr2
+	uuq5YSyzxHNf13zqnbe8GL9Z6+dff5W7n9FllWCcCKxfkoO2000JkikPaGXZsr1zc7HDrzg5t56
+	bkwC7a9S81hrNGPdJ+VivjBTsxqcEO34y4YW4YAnXZgPzA4whtusCEzlN3knPyD2npahajE2MnG
+	VRaG8NXS/2gNxy10d+s4Xi1kEejAfExIouRPvqWvsLr3dCwwTMIZqKkZKAUFSlUXbWD7G226Q==
+X-Google-Smtp-Source: AGHT+IEvjILi8jPgmj67eLHNTGh2Gf5jq2eQOxSNUsNue7zggTnn0E3XTOioFvOBB0AM1Qz9f6QfZ67h3rcAhVUSWmE=
+X-Received: by 2002:a05:7022:504:b0:119:e56c:189c with SMTP id
+ a92af1059eb24-11c9d60e728mr1789175c88.4.1763768451161; Fri, 21 Nov 2025
+ 15:40:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.17 000/244] 6.17.9-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
 References: <20251121160640.254872094@linuxfoundation.org>
-From: Ronald Warsow <rwarsow@gmx.de>
-Content-Language: de-DE, en-US
 In-Reply-To: <20251121160640.254872094@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:To3bkroBWi1ENSfLDpITcBxa89vYidtPDb+6BIW9hwy0ON4xKSn
- 8GnTPgSSoviccmUqcwoT8fKMEpnHUbsBXNiVqqCR1fYYgsNUc+rwZT+74AeQnn0AFknXkG2
- Bh4D4DvXdljizE+h4fR7cx0zQW0VqPq/ev4T2shYZOypbbMR9tigrRAPdlLxaJcQ2VaBwTZ
- C79ESEP/Mv3MmQM6sQe4A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:4aZPheLWxmA=;nNoAGO3i3fwFf6EZ9TOZsWwqRpe
- M2Emf2UJcAseOerX437nwrwESYCfT+z0W/NR37ELxOC8tWkdogCvBcyCXDOdUHXmxmZRn/FCz
- dxkc9zJ2qYUIiwOzLhfG94AoxPb7l/rM6bNOs6OjJvOu9qFnJ79Hp9X7YRf7sKIIkg6KUABk7
- JY1cdkpHFCyAkW/Jm2rXNrsvhGjS3Rv/JzjFPM/3wLWUB3UiTF2uxu5r/IwAMMThLhHisis1K
- GwgXCKtieRW+sJuS4TO1ZjMz3b24I3JxhnZ0fOLQ71LxQRuGetjPgVhuAwtA8WfRNnJvkNzdY
- OfGvqrXyqRX/ktsBWOT68Qs4mogg+h65plTqZQhUOQyzqc8MrhTCLMkGAXYr7Y0hPGO180ZKI
- GlYqoMLo/qYs+MaRpQSC0DQrO9lBJZveYm1DOL9fNFKKVMgYFPtbc1nLjvF/U77wRS7d8L3R/
- t04Vdf7KsLJ5OttLdeMuOIuJfr8dd5LFKaoHSBXKwtI1um3i1WNwBg/veJULcPFKdqoKBqtb3
- 2jPww8RSVQKIZd9ftmzIwpbcLBzNH7DTpS2RC5goj6JdULibNSMtP/YZbUc5W3aSU5yVyRH2v
- 2yJB/3SKGuSpByTyJ7JndvpiKDFzY/rT+3XQ/w92HisQwc1M0yWYZhWMB/N8hyjGIsSRv11ww
- VAwm/ZhYqXlveX5MVUsqZJJBx1xr3/9ceZmCgEmVdGAk+sQWvitFQ4vHGBDL6fLN/CB2UxlNy
- 2VpdNgybygVKP7yug5uprLVAtF5iEKGxX+pskhHUiBSQM/J1q27pMtcHg+l1VzxytdpK9sT2Y
- pPn1ted7neEKb1VzM3B7qQC267KRRbW7qotNhH9pC27UtQvrlCV38F56/Cw/OX9cBZ1MDxFll
- vyTdj2wt57i8CG4zBEevEraKzDFptPADoGHvHkz/SYRFcfZjpJrmyiUy/EON1s0TAhmIjW4nl
- Ttu/SfSl8FeItedgMV+LHJSXfI8xYkfIbdiTXF1o5b/QoS3rxLOy4EQ3yzSmbRJVu10nSrVE3
- +5whxW/8/qtfFp35naf0LgN1QjLETsO/GlXfp/pA1ScTJVyCGADOjBhL9sFQEjjnZ9C3UjvLT
- CQOACHsRH2RMkEY4gv9y4FZxIor8WcjP51Rboyh+fNTbrMbwSdMcqafULNW9NsWZV2GXbCj/I
- c/VdPPKZWdBzZ+tHGJK3/QicxX96+2txqdUjgY5R6z9ZXG9Pj79p5J6+03F32j2J0KxK8Dfli
- 2f9bBl3vYDNhBJO6wHvjDbeKbtvUETVIPzGIZyD75r6vWvcbCviCJGv+rJh56IH3KNbMbrWdx
- cm5UlOVT9zZK+b+7M5jQLo+2ckLi++F2JsMdoSt1OY41K0pwGw1tMtN/6XwTReyZWQGwb/dgD
- Ocgkk2xj9r69Cl6041+zV/8HQqRWC8dAHE1iCjnb+hs7KL1JLjQxslhXEWxAzxpE/t/fm7Y9d
- yqPh2/jnRQjL1bwStJjkmd/VKIYjL4cBzMvUCNvMhp5NYw/MdFSSbVzfZ3pyIWuv4tg5gkzl4
- mr9JotJ4x4LTyo/vnJSj7zZ7JGLZkf+Y7KpC1P1ZCqEPgYaPD1WUle/399/Una5RH9kMNIlhf
- sDx66hye6Ctji9uOlRBj4fMLEgVT9LXzh/+UlInjoKLiJ+08ZUTcIH5xitkhVsTotBal1LgFk
- WpiquYCwvxuP8NuJqqxzCp+yQluRdvWbc8ybhOzZkhZzxRbvg/KiTL2RKjemG8VaTkplZy7vh
- lSqJw829VJvl/NR4fvLmVtRM9eT3LOCnCU8jkLefDtxmyInscSbkdnHlDS8lTXbqXYjWYzZEN
- WfCw2EwE+Z86g2pQsaqDzVLPV2yc4D//Doj+HdJghld65mIC/LJKEoMu14JEMHaHkR+7HD+OB
- XJVRBlDcYUZMKHLqaaeUqyv8o5EnF61Gfcboqeu6xEhI1rjdjrlJ5ZNTj21KiHEv9x2t09r39
- hJn0sqgu4zuCxmCAACWhAg4+d08h+SZYh6sVmJHOuhuM+6ZsSqfbZbpOXArQLa4wZwZwWLQwL
- T9GjnVyFashNkyWiw6mgDc6yY4ATh9ykx+4v1z+2+xJFVQ8NWJ3rGma3xlCXDaeKGt9C/Mjh/
- 3Z7se5lkfj501TbnH7p8q9Wu7XPd99a+VQUJzhLpMGvPpCAHwKBlbLi0DUz5/vBN3NC50jdZa
- SAuhWF0kYiOumg6Sr6fRH6B61RYaxOgqVMMf9Kriw0+iWrptPcy+gGxfE1EsQWWvK0ccFIA6P
- IwoHMaFoF9jk4pmFeHm/WxIVUQMUIrC2JQvFGMDMTPAu9p32SV6MsEr8ueKsiZIoesIup7E5s
- HiCF4hCEym2zAFfWLNAV617AMwrBiEk5gV4IJMFaTZeEQ6sBoaodps7RBSTkPWA80cQcZuxEL
- M2IixXMtrCTbEiPDfNzvwSdc5nhKdP2JIHgBe0G7obnPtdaJI9+XtyQts/BqbqdGjq8RKRp0n
- TFz01yPvPyaPiWBQJ9gEIRhyAA3KCwnWPBR/ZhiPPNcalITKWrqFyVp2VEbcsn8UETQ50rVA1
- s41F45NVvdbtaHEBIgl+tKzLvoEixS8ciwThj8UqfrLCDqQkvDPhYE3XU9Al/7nzaEUiy1FpU
- 2Jou314XHfEqbawKTdVFuymO3eveKOs+YVTLoRL5Q21v7XOqkmj48YzsWujScmq/m5k1ylF8Q
- 9Rj5A0YDhGRXRlJUw4NKJITf+4UhNlw3ePs3nqC9NIjuLNLTEhgCuyGS5BlpMmJQY3DxqzlJi
- tX0VMJz6ky7952LpNmA07cb5taolwAOPizs4CrMseFRS8BY7pz23RWMeNcshHwxmiCoyTRUBQ
- 7LZ3rIHwjajhKtJsCZdXCvlZeyurkCzUHsbatXxDGGqHAWC1dG2ReGOVaQbqTnBkCnLiK0BnQ
- 1BHjcbvxPu3KHld6gYdgJ+XP3XGJCr/6IrqQp8R3dSfB0tPDXfrEvlDi+Un8T5/7XzeYj11yh
- neMEBCCV8QMbPQRQp6gSQcvptx1gCSlF+oXq3yY7SIiawiQ0Tix8pzMJ6fckiav/pw6pYjyTG
- yaAFFRHvEpVfQcw6JQjDETbewr7LeyOKic+1B7gX/wRddY6WjpggjxwZAupJC/ueBHljURjxP
- GRXKr6wG1icCkse6erBcDBdbKgMti6ov/3d2exeiUiY0e580soRF6pJ22oYSIDyqokCAEredz
- fCtIfhdgj3YkrffioHGtWYtERJ9YQkBHkANrNoy+xqCPFixgiCcsk/HJggQz1Ejy0jDOQ45Y9
- ltnt29y1DRKPKY3mwSSr9toZHIx6eSlMJKf7A8FEbDM67y3PnAPc8NcIgz7CoJaxSGlkMpawn
- 281tPU3DqRc4R4IDcsjeOeGnuNMhvF4PtGB1Ij594izi539aLXKWPl+uod7JdOlEK4KC81xFj
- 0E1NibF6VOzorcvce8PNgjCBvqZPILjMWqN7id8m5m6LE0JJt4mv3KTL+ra0Ay9aqeDAgHuKt
- XH3r/AYkMkgznnZ3TQj7ieqEOzKHBtsSPuuEk1PVsGXWze924ygRj9f87L0ZoVOjA1IrXaHVj
- OBxpH/Tb7gma65B2iopML7hKPOmOBJbUoAPeBRUHgGpVlOf3zyZqq1qcwB0fGpTdaepB8xiZr
- Ho6K20eTz1IP66EkOuLGjDSncWkO7BrwKVxN3MwcV8PwkcakSzRk482jS76qhiHWkl4O65ZQD
- wfXY2TvprUn5JDmy/IoZNP5dcBHwf9qRtzN4g6j8ULPaD3UKGBh5Xh3UPEfc/Zr2ec7Ym6w9h
- H2LA2fSlzBN627+r6zfTpz+B0xqzAzQmCQXgO6fUM25JTSjeBY9sCjKoisXH4qu+7IVVIH+EF
- PHkku+Q24wd0i+aWITFwynSU5BcJYpEh1xjSn6QlmvDYy0jR65rlThEv2VVR1Zf0P/8/kRkXM
- X50+UWTOXxrdmoN0O0toiNVkjLSQqZKmuytJFzVDRuvlEM81/2vaK/7AsC0muML/hGf96600i
- G2KE4z0uFIrz/q0imsgmdOZxOOXJq75sQkD4ljNjQW7Neo4Py8j2CmXpWVMIZfDQzfDrXQZg8
- l71RQCx0/UELxsR2J8JbVOTNaZq1AQM71Zhyz10ZReCK8LPMAho9IZPbDby1TldzLV6UtSznh
- dhnkC7cmfEyL+MOBwj1AOJkLlsWeaIwmNo5cao0JYkTwE/DjVDi51Q2HDcqmL5F2D1SfUfjP0
- DxV6o7ef3aggOtRh+4R5Pxvgu7NQWrwlXvz2lAB9gU2wDSSRJkzYban61KjgfE4wru3j7c1bv
- XUlAsXNIAdub3+zyBF/uxw2DLmAg5MMI9RyW1QLIkvRNitqoDiUBsY2N+sYLLam8QeEhA7cFj
- W2hpWIZq4GmVmI6VD+XPOY2VaKdl6pNIWN/SQWq0L7N8w2W+cIkf3vG6WFed6oNE0FbivraTr
- bdD77sx812RTB0EZ5urkx+AbgbY8/34amovqvLgeXJXzWsfpClQmXOsGHVYZsqFTqZurrh0Ny
- /TL2eMD8yMcDbRuacO8B5TufLo4pxhzPY26CjMav7TTBd+cvDRofPCSjqDzhkJv6DhG2M4aAc
- A7OVIkVDtm5SQrpXmJQSytg6lFrNOsPCZeVTu2jY3fEUuQ2QxKSkLH+zHB9DG/Dh2iwXg4dUm
- gUFoxL+pHF6nL3V6gV2i+H+eNtSVJFOh+R+QouX/kZZ9WQmpovnfbxbo5JThFwdSFdfWl83ah
- r4ya/HCc7ydhqnO/F92VmRoqjrVDqGEOk2jq/pfdq0Q0qh6XNkyGYhaCqKAYhVLJqs0bwMBDY
- 92K4fkSO1NEz8fgdmE7Awyc55mgsoiblvlDjhp2xUNm4XfKqLG4fpjloFO0JNfBxmNBIje6TD
- biKHKF1ZBvwJycpX882Q2zdZ6ux7+dEoHMsFKgHNgpm6SO69/2ZFgvcrj1c14/mxsju0oFwiH
- YpX5Imi2OwKzBDGKK3im1pnILdAvtQEiXRYNi0SsJH6IvEL9UJm+ljIau4niBZ+C09MyI0Qtf
- rmS2sh1soSsQPkoZfRNHYbekT4Xb8Vchjv7TZpBiiX/6hKf0dMsJmMGJVbcgHuWhLqKY1IsHe
- 5KEbA==
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Sat, 22 Nov 2025 08:40:35 +0900
+X-Gm-Features: AWmQ_bn36b82vaOzTxXjSggsbwhgXP5TiPk3YE4ScibLRlbPoKTv2WS9EFlfEL8
+Message-ID: <CAKL4bV6qcgNCMMoAb8gWWQnUUUg8mH2OJVnh2+hNahnjQKeDCw@mail.gmail.com>
+Subject: Re: [PATCH 6.17 000/244] 6.17.9-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi
+Hi Greg
 
-no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+On Sat, Nov 22, 2025 at 1:07=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.17.9 release.
+> There are 244 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 23 Nov 2025 16:05:54 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.17.9-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.17.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+
+6.17.9-rc2 tested.
+
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.17.9-rc2rv-gddfe918dc24b
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20251112, GNU ld (GNU
+Binutils) 2.45.1) #1 SMP PREEMPT_DYNAMIC Sat Nov 22 07:50:12 JST 2025
 
 Thanks
 
-Tested-by: Ronald Warsow <rwarsow@gmx.de>
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
