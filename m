@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11BDD2745E;
-	Fri, 21 Nov 2025 13:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43C2874F6;
+	Fri, 21 Nov 2025 13:30:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731824; cv=none; b=pibRb2WlKyXzdQDSDnxjgk4ZbSzvTRXuDLmDRMiwHCACTOdGUHSDViUxPjQXQgn37vZnReRJVmPaLy95dwoi45h+FwYhgEotblQzvHo2628TjxZ4nIj/Mcz0oplCkRwyT6Uq8q9OQZdwL0hB7ASD0nKtF0nEmOS+9+u8XSwbU48=
+	t=1763731826; cv=none; b=lTuuugscRIbFL/0IMXFs6qAPH09pEHhgHvVp6td54pG/9R+lhORYSrpX2a6d901t60rYWJjDi3gvcX0cyM2Asum5uDKihjfU4mQAjHr3fRI/hYMJFtAzd0V69Pl7I3tf+48BQajPXSK2yBCqVKuxviR9oRNwSUUwsWsmQ4CFNJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731824; c=relaxed/simple;
-	bh=1gjVNsrj3cRqCVOfrdqqsG337gz2cIC7FikyULHnqZM=;
+	s=arc-20240116; t=1763731826; c=relaxed/simple;
+	bh=TcNsIkRPxbLAm/Nq2hOx1XE0L6pvCA686l0bYLOlmjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fM4x0oJvwVBvCWnAf1c39qj5qqRtSbI5rLnTMxyAEp7gj4Ws6Xbr3JvzxycHIXZ6pl+ewLBYdmCN/o0QHG8cJ2DJd/MiEu/7Hos+rr72d996u+fhSGu+hCoApw2/qy9JSm413mdooZwdt32in69tPgt/OjXyHUt4NoYTpp3b5v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCwTc6gr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W/x6Re8G3zodaA/Su/KLuaWzdgv9O1LUvaSs7XL2Nu3hgBFkNIp+zxywY+h3uFKCtVRHS4Zt2SFgHlghxfb+WDwowc5B088dicZwo3zWHBHpgBrEx2gxRQxpbBtCKS0bsSe0zMID4x+YoOaZnmYXyglt2aNjkMGTr6dCeY50cL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeAxD4++; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCwTc6gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4605AC4CEF1;
-	Fri, 21 Nov 2025 13:30:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeAxD4++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA18C4CEF1;
+	Fri, 21 Nov 2025 13:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731823;
-	bh=1gjVNsrj3cRqCVOfrdqqsG337gz2cIC7FikyULHnqZM=;
+	s=korg; t=1763731826;
+	bh=TcNsIkRPxbLAm/Nq2hOx1XE0L6pvCA686l0bYLOlmjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rCwTc6gr9dD0OqIg8MGv88PxDLykX0iU1jj1gsQkplIqoLU54nCDGicMgb6dBN4Z6
-	 xgPpiG+D+oFHXNs42kuBpNBut36/mzC0av80xKbTvErIzpCf+i79fUgBdMGncoWtJh
-	 pX4fXyl9zzvHXHR8/9WKfDaSbfU3uO+72mi0dY48=
+	b=EeAxD4++vuTJR5EV/FFCKHhwvxrze64ZbyVy+Yd9w83+MVZizQNJomvRoBQaS9ZMs
+	 h+ppGpin4HzmVnrdGls1m37EPSY9gjYASOqt66pIqbe0xLpTQ5AVcaqK4BFJ32/z7q
+	 T5GI3BTBGjIIeq4foNzpmZY4m+JFRNxxMZ23B6KU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
 	Christian Brauner <brauner@kernel.org>,
+	Andrei Vagin <avagin@google.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/185] virtio-fs: fix incorrect check for fsvq->kobj
-Date: Fri, 21 Nov 2025 14:12:01 +0100
-Message-ID: <20251121130147.260172910@linuxfoundation.org>
+Subject: [PATCH 6.12 095/185] fs/namespace: correctly handle errors returned by grab_requested_mnt_ns
+Date: Fri, 21 Nov 2025 14:12:02 +0100
+Message-ID: <20251121130147.295930289@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,38 +52,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Andrei Vagin <avagin@google.com>
 
-[ Upstream commit c014021253d77cd89b2d8788ce522283d83fbd40 ]
+[ Upstream commit 78f0e33cd6c939a555aa80dbed2fec6b333a7660 ]
 
-In virtio_fs_add_queues_sysfs(), the code incorrectly checks fs->mqs_kobj
-after calling kobject_create_and_add(). Change the check to fsvq->kobj
-(fs->mqs_kobj -> fsvq->kobj) to ensure the per-queue kobject is
-successfully created.
+grab_requested_mnt_ns was changed to return error codes on failure, but
+its callers were not updated to check for error pointers, still checking
+only for a NULL return value.
 
-Fixes: 87cbdc396a31 ("virtio_fs: add sysfs entries for queue information")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20251027104658.1668537-1-alok.a.tiwari@oracle.com
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+This commit updates the callers to use IS_ERR() or IS_ERR_OR_NULL() and
+PTR_ERR() to correctly check for and propagate errors.
+
+This also makes sure that the logic actually works and mount namespace
+file descriptors can be used to refere to mounts.
+
+Christian Brauner <brauner@kernel.org> says:
+
+Rework the patch to be more ergonomic and in line with our overall error
+handling patterns.
+
+Fixes: 7b9d14af8777 ("fs: allow mount namespace fd")
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Link: https://patch.msgid.link/20251111062815.2546189-1-avagin@google.com
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/virtio_fs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/namespace.c             | 32 ++++++++++++++++----------------
+ include/uapi/linux/mount.h |  2 +-
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
-index 749c9f66d74c6..c81f7b888c385 100644
---- a/fs/fuse/virtio_fs.c
-+++ b/fs/fuse/virtio_fs.c
-@@ -372,7 +372,7 @@ static int virtio_fs_add_queues_sysfs(struct virtio_fs *fs)
+diff --git a/fs/namespace.c b/fs/namespace.c
+index cc4926d53e7de..035d6f1f0b6ef 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -158,7 +158,8 @@ static void mnt_ns_release(struct mnt_namespace *ns)
+ 		kfree(ns);
+ 	}
+ }
+-DEFINE_FREE(mnt_ns_release, struct mnt_namespace *, if (_T) mnt_ns_release(_T))
++DEFINE_FREE(mnt_ns_release, struct mnt_namespace *,
++	    if (!IS_ERR(_T)) mnt_ns_release(_T))
  
- 		sprintf(buff, "%d", i);
- 		fsvq->kobj = kobject_create_and_add(buff, fs->mqs_kobj);
--		if (!fs->mqs_kobj) {
-+		if (!fsvq->kobj) {
- 			ret = -ENOMEM;
- 			goto out_del;
- 		}
+ static void mnt_ns_tree_remove(struct mnt_namespace *ns)
+ {
+@@ -5325,7 +5326,7 @@ static int copy_mnt_id_req(const struct mnt_id_req __user *req,
+ 	ret = copy_struct_from_user(kreq, sizeof(*kreq), req, usize);
+ 	if (ret)
+ 		return ret;
+-	if (kreq->spare != 0)
++	if (kreq->mnt_ns_fd != 0 && kreq->mnt_ns_id)
+ 		return -EINVAL;
+ 	/* The first valid unique mount id is MNT_UNIQUE_ID_OFFSET + 1. */
+ 	if (kreq->mnt_id <= MNT_UNIQUE_ID_OFFSET)
+@@ -5342,16 +5343,12 @@ static struct mnt_namespace *grab_requested_mnt_ns(const struct mnt_id_req *kreq
+ {
+ 	struct mnt_namespace *mnt_ns;
+ 
+-	if (kreq->mnt_ns_id && kreq->spare)
+-		return ERR_PTR(-EINVAL);
+-
+-	if (kreq->mnt_ns_id)
+-		return lookup_mnt_ns(kreq->mnt_ns_id);
+-
+-	if (kreq->spare) {
++	if (kreq->mnt_ns_id) {
++		mnt_ns = lookup_mnt_ns(kreq->mnt_ns_id);
++	} else if (kreq->mnt_ns_fd) {
+ 		struct ns_common *ns;
+ 
+-		CLASS(fd, f)(kreq->spare);
++		CLASS(fd, f)(kreq->mnt_ns_fd);
+ 		if (fd_empty(f))
+ 			return ERR_PTR(-EBADF);
+ 
+@@ -5366,6 +5363,8 @@ static struct mnt_namespace *grab_requested_mnt_ns(const struct mnt_id_req *kreq
+ 	} else {
+ 		mnt_ns = current->nsproxy->mnt_ns;
+ 	}
++	if (!mnt_ns)
++		return ERR_PTR(-ENOENT);
+ 
+ 	refcount_inc(&mnt_ns->passive);
+ 	return mnt_ns;
+@@ -5390,8 +5389,8 @@ SYSCALL_DEFINE4(statmount, const struct mnt_id_req __user *, req,
+ 		return ret;
+ 
+ 	ns = grab_requested_mnt_ns(&kreq);
+-	if (!ns)
+-		return -ENOENT;
++	if (IS_ERR(ns))
++		return PTR_ERR(ns);
+ 
+ 	if (kreq.mnt_ns_id && (ns != current->nsproxy->mnt_ns) &&
+ 	    !ns_capable_noaudit(ns->user_ns, CAP_SYS_ADMIN))
+@@ -5500,8 +5499,8 @@ static void __free_klistmount_free(const struct klistmount *kls)
+ static inline int prepare_klistmount(struct klistmount *kls, struct mnt_id_req *kreq,
+ 				     size_t nr_mnt_ids)
+ {
+-
+ 	u64 last_mnt_id = kreq->param;
++	struct mnt_namespace *ns;
+ 
+ 	/* The first valid unique mount id is MNT_UNIQUE_ID_OFFSET + 1. */
+ 	if (last_mnt_id != 0 && last_mnt_id <= MNT_UNIQUE_ID_OFFSET)
+@@ -5515,9 +5514,10 @@ static inline int prepare_klistmount(struct klistmount *kls, struct mnt_id_req *
+ 	if (!kls->kmnt_ids)
+ 		return -ENOMEM;
+ 
+-	kls->ns = grab_requested_mnt_ns(kreq);
+-	if (!kls->ns)
+-		return -ENOENT;
++	ns = grab_requested_mnt_ns(kreq);
++	if (IS_ERR(ns))
++		return PTR_ERR(ns);
++	kls->ns = ns;
+ 
+ 	kls->mnt_parent_id = kreq->mnt_id;
+ 	return 0;
+diff --git a/include/uapi/linux/mount.h b/include/uapi/linux/mount.h
+index 225bc366ffcbf..dbf65f2ffcf33 100644
+--- a/include/uapi/linux/mount.h
++++ b/include/uapi/linux/mount.h
+@@ -186,7 +186,7 @@ struct statmount {
+  */
+ struct mnt_id_req {
+ 	__u32 size;
+-	__u32 spare;
++	__u32 mnt_ns_fd;
+ 	__u64 mnt_id;
+ 	__u64 param;
+ 	__u64 mnt_ns_id;
 -- 
 2.51.0
 
