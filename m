@@ -1,57 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFD830F93B;
-	Fri, 21 Nov 2025 13:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8483330B19;
+	Fri, 21 Nov 2025 13:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731222; cv=none; b=sFBMBnffww0uIqFwF4wcL9iuyr9f9utAtc4hWnHhZWOJxwkHGj+dWHQbqN8VSb5YWNEGP1jhD0H3Nx8oVZCAoQskQk8VwaO7N3Vn6bfhm+9cnbJwsnZihBQs/GhwPQiQEsAp2+ZDxuEFeDSoV01HxQhUQqOOy0RFGZ1XCs6JHyM=
+	t=1763731225; cv=none; b=fU1Z0NLeNZ3wnI01XT37cuX7nZHDw4vOzdpEQ2xP2AYy+4FOwuGfA0CAoYgWm+iA4MFnKA5CgFY/u2ppo4qenRKUVl7CVHqxMzQn/Jn/jqL5BnYPgQ1dXg0Lx7IsDzXiWj1jNmFah9wkG82sAD2cLvmj5e9RPrv/cr5YU9VJfCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731222; c=relaxed/simple;
-	bh=gOKwVzia8hzpc+R3OVhT3xtddWXOvdJmUk7rm1K9F9k=;
+	s=arc-20240116; t=1763731225; c=relaxed/simple;
+	bh=VMC9EZvkeDlkFfKed2bTUQfH570ndegETyNtIzg5E0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WH6fmCehXCV89vzkRxCK+KQO4ySoZwpDuo2qg8fuqBOrUX9gfdkU8YYOFmsxNxbrvN6PVOiMqRRAJRY6cB8SCd7hdeHta7q6ILWUMav+r9rUmC6y7gR//zsoJlm2p/YZZp0qfb//KyGhc7xC6KhoOCn6J94P3PtqmUVYEd900os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EeslH6w6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iiTYVtifJ+uQ8y0XKktIDYdtgPrmwKOVZYMvY2AozmgCFXhN4jgT3gJq0ofCrG/0nP5lZpvesKlp4Rkjr1aIV2KhjqH9gcPPffyjo4941P5Mb3HTBCcuQwhi5O2tCdHeQ13iHuAnMOs/DP03++VKyNXW6zBySRj+rDNkEd6JsdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QDdRVGJG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EeslH6w6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312BEC4CEF1;
-	Fri, 21 Nov 2025 13:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QDdRVGJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF51DC4CEF1;
+	Fri, 21 Nov 2025 13:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731221;
-	bh=gOKwVzia8hzpc+R3OVhT3xtddWXOvdJmUk7rm1K9F9k=;
+	s=korg; t=1763731224;
+	bh=VMC9EZvkeDlkFfKed2bTUQfH570ndegETyNtIzg5E0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EeslH6w6Dg1gnYYF2He0FNCmGMgUqo71mIHtLAs4tR4VqSzoUgUnKhK1qU5GouiI5
-	 hW3/v2auHYU0mLg1zb99kol7wWXdnINzPitMb3X3pf/2pTX9o+xs2f/05o5pC4oKtF
-	 JGsRclpaAT74NyPH+TSCu5rr/KZDvj34K/51Wnas=
+	b=QDdRVGJGTROzQnWejwenO5VyjDydrNLCJjwgZFGcXiDMqcHFSpMZfVEPDWFu/pt5k
+	 PZiwkIQl7zcnmsmMgQIAtz+RWWZaB/PO0I/mCb3LC0AalPV4PLAP0UwX5RRH0YCfji
+	 1iH1EWjOO1na70kCOn1zQ3AC5p43RTHefA8HHbIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@linaro.org>,
 	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.ibm.com>,
-	Blake Jones <blakejones@google.com>,
-	Chun-Tse Shao <ctshao@google.com>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Howard Chu <howardchu95@gmail.com>,
+	Ananth Narayan <ananth.narayan@amd.com>,
 	Ingo Molnar <mingo@redhat.com>,
-	Jan Polensky <japo@linux.ibm.com>,
+	James Clark <james.clark@linaro.org>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Li Huafei <lihuafei1@huawei.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Nam Cao <namcao@linutronix.de>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	"Steinar H. Gunderson" <sesse@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sandipan Das <sandipan.das@amd.com>,
+	Santosh Shukla <santosh.shukla@amd.com>,
+	Tycho Andersen <tycho@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 133/247] perf test shell lock_contention: Extra debug diagnostics
-Date: Fri, 21 Nov 2025 14:11:20 +0100
-Message-ID: <20251121130159.500690665@linuxfoundation.org>
+Subject: [PATCH 6.17 134/247] perf test: Fix lock contention test
+Date: Fri, 21 Nov 2025 14:11:21 +0100
+Message-ID: <20251121130159.537433750@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -70,81 +63,139 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Ravi Bangoria <ravi.bangoria@amd.com>
 
-[ Upstream commit 8b93f8933d37591d17c59fd71b18fc61966d9515 ]
+[ Upstream commit 3c723f449723db2dc2b75b7efe03c2a76e4c09f0 ]
 
-In test_record_concurrent, as stderr is sent to /dev/null, error
-messages are hidden. Change this to gather the error messages and dump
-them on failure.
+Couple of independent fixes:
 
-Some minor sh->bash changes to add some more diagnostics in
-trap_cleanup.
+1. Wire in SIGSEGV handler that terminates the test with a failure code.
 
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
+2. Use "--lock-cgroup" instead of "-g"; "-g" was proposed but never
+   merged. See commit 4d1792d0a2564caf ("perf lock contention: Add
+   --lock-cgroup option")
+
+3. Call cleanup() on every normal exit so trap_cleanup() doesn't mistake
+   it for an unexpected signal and emit a false-negative "Unexpected
+   signal in main" message.
+
+Before patch:
+
+  # ./perf test -vv "lock contention"
+   85: kernel lock contention analysis test:
+  --- start ---
+  test child forked, pid 610711
+  Testing perf lock record and perf lock contention
+  Testing perf lock contention --use-bpf
+  Testing perf lock record and perf lock contention at the same time
+  Testing perf lock contention --threads
+  Testing perf lock contention --lock-addr
+  Testing perf lock contention --lock-cgroup
+  Unexpected signal in test_aggr_cgroup
+  ---- end(0) ----
+   85: kernel lock contention analysis test                            : Ok
+
+After patch:
+
+  # ./perf test -vv "lock contention"
+   85: kernel lock contention analysis test:
+  --- start ---
+  test child forked, pid 602637
+  Testing perf lock record and perf lock contention
+  Testing perf lock contention --use-bpf
+  Testing perf lock record and perf lock contention at the same time
+  Testing perf lock contention --threads
+  Testing perf lock contention --lock-addr
+  Testing perf lock contention --lock-cgroup
+  Testing perf lock contention --type-filter (w/ spinlock)
+  Testing perf lock contention --lock-filter (w/ tasklist_lock)
+  Testing perf lock contention --callstack-filter (w/ unix_stream)
+  [Skip] Could not find 'unix_stream'
+  Testing perf lock contention --callstack-filter with task aggregation
+  [Skip] Could not find 'unix_stream'
+  Testing perf lock contention --cgroup-filter
+  Testing perf lock contention CSV output
+  ---- end(0) ----
+   85: kernel lock contention analysis test                            : Ok
+
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.ibm.com>
-Cc: Blake Jones <blakejones@google.com>
-Cc: Chun-Tse Shao <ctshao@google.com>
-Cc: Collin Funk <collin.funk1@gmail.com>
-Cc: Howard Chu <howardchu95@gmail.com>
+Cc: Ananth Narayan <ananth.narayan@amd.com>
 Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jan Polensky <japo@linux.ibm.com>
+Cc: James Clark <james.clark@linaro.org>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Li Huafei <lihuafei1@huawei.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Nam Cao <namcao@linutronix.de>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steinar H. Gunderson <sesse@google.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20250821163820.1132977-5-irogers@google.com
+Cc: Sandipan Das <sandipan.das@amd.com>
+Cc: Santosh Shukla <santosh.shukla@amd.com>
+Cc: Tycho Andersen <tycho@kernel.org>
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 3c723f449723 ("perf test: Fix lock contention test")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/lock_contention.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ tools/perf/tests/shell/lock_contention.sh | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/tools/perf/tests/shell/lock_contention.sh b/tools/perf/tests/shell/lock_contention.sh
-index d33d9e4392b06..7248a74ca2a32 100755
+index 7248a74ca2a32..6dd90519f45ce 100755
 --- a/tools/perf/tests/shell/lock_contention.sh
 +++ b/tools/perf/tests/shell/lock_contention.sh
-@@ -7,14 +7,17 @@ set -e
- err=0
- perfdata=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
- result=$(mktemp /tmp/__perf_test.result.XXXXX)
-+errout=$(mktemp /tmp/__perf_test.errout.XXXXX)
- 
- cleanup() {
+@@ -13,15 +13,18 @@ cleanup() {
  	rm -f ${perfdata}
  	rm -f ${result}
-+	rm -f ${errout}
- 	trap - EXIT TERM INT
+ 	rm -f ${errout}
+-	trap - EXIT TERM INT
++	trap - EXIT TERM INT ERR
  }
  
  trap_cleanup() {
-+	echo "Unexpected signal in ${FUNCNAME[1]}"
++	if (( $? == 139 )); then #SIGSEGV
++		err=1
++	fi
+ 	echo "Unexpected signal in ${FUNCNAME[1]}"
  	cleanup
  	exit ${err}
  }
-@@ -75,10 +78,12 @@ test_bpf()
- test_record_concurrent()
- {
- 	echo "Testing perf lock record and perf lock contention at the same time"
--	perf lock record -o- -- perf bench sched messaging -p 2> /dev/null | \
-+	perf lock record -o- -- perf bench sched messaging -p 2> ${errout} | \
- 	perf lock contention -i- -E 1 -q 2> ${result}
- 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
- 		echo "[Fail] Recorded result count is not 1:" "$(cat "${result}" | wc -l)"
-+		cat ${errout}
-+		cat ${result}
- 		err=1
- 		exit
+-trap trap_cleanup EXIT TERM INT
++trap trap_cleanup EXIT TERM INT ERR
+ 
+ check() {
+ 	if [ "$(id -u)" != 0 ]; then
+@@ -145,7 +148,7 @@ test_aggr_cgroup()
  	fi
+ 
+ 	# the perf lock contention output goes to the stderr
+-	perf lock con -a -b -g -E 1 -q -- perf bench sched messaging -p > /dev/null 2> ${result}
++	perf lock con -a -b --lock-cgroup -E 1 -q -- perf bench sched messaging -p > /dev/null 2> ${result}
+ 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
+ 		echo "[Fail] BPF result count is not 1:" "$(cat "${result}" | wc -l)"
+ 		err=1
+@@ -271,7 +274,7 @@ test_cgroup_filter()
+ 		return
+ 	fi
+ 
+-	perf lock con -a -b -g -E 1 -F wait_total -q -- perf bench sched messaging -p > /dev/null 2> ${result}
++	perf lock con -a -b --lock-cgroup -E 1 -F wait_total -q -- perf bench sched messaging -p > /dev/null 2> ${result}
+ 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
+ 		echo "[Fail] BPF result should have a cgroup result:" "$(cat "${result}")"
+ 		err=1
+@@ -279,7 +282,7 @@ test_cgroup_filter()
+ 	fi
+ 
+ 	cgroup=$(cat "${result}" | awk '{ print $3 }')
+-	perf lock con -a -b -g -E 1 -G "${cgroup}" -q -- perf bench sched messaging -p > /dev/null 2> ${result}
++	perf lock con -a -b --lock-cgroup -E 1 -G "${cgroup}" -q -- perf bench sched messaging -p > /dev/null 2> ${result}
+ 	if [ "$(cat "${result}" | wc -l)" != "1" ]; then
+ 		echo "[Fail] BPF result should have a result with cgroup filter:" "$(cat "${cgroup}")"
+ 		err=1
+@@ -338,4 +341,5 @@ test_aggr_task_stack_filter
+ test_cgroup_filter
+ test_csv_output
+ 
++cleanup
+ exit ${err}
 -- 
 2.51.0
 
