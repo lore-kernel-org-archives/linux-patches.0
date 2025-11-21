@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1431F09AC;
-	Fri, 21 Nov 2025 13:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2721F09AC;
+	Fri, 21 Nov 2025 13:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731327; cv=none; b=GCwJOZGoPj1Fs8sFraNpZYbBzsvuwjVSgHXyM5ULLN6baIR7VhCKFbrRd2ebyyAUNT5j7S4hRvB8YlNNDLca7QOOj12RDsPoCnCvi8m/Y3zVi9OGQkINqaFjMhTDQ8KyW4nP+kGjIMav8oFk53+EMyEvMuX2lOA+Rl9wrvlUhfc=
+	t=1763731330; cv=none; b=Et8pQCsZ9QE+N9g68uk7b2MxUmLd/CPEtrGO46+K4IAeoc2Vda/bZuWaejc40li19Oy9/EErDfKNENC01aLilSRqE96xUGyn/zGlHMN7MSOv48F2c0hPCNFkusZTlojkw27RxqpQ/FoW3mQkRds182pj5fLE3r9QZbz3mG9ac9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731327; c=relaxed/simple;
-	bh=BUUBbKGhzM7yqmWOC2Jna4PVu73MlyyLq5gKb29/gCY=;
+	s=arc-20240116; t=1763731330; c=relaxed/simple;
+	bh=ZyiAtsLoPKPOxJYyNemO/acLajjBdHvGs8bIwxZAdyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVJ1SOWHXrHzblddwDQoXeKm3PEUZBe9CNayTTdZP7zRl7uz360dnlJUKVm+Lo+RrKQnMWRT/iFyPoYHqP2f8Qq4DSkxY2+NWuxotG1tDB1DozwjKHVSnHePPt3Vfxw35Qo7SGPVpPmAfUiqdwEM5/ycN18zMLxqqEAaC2F7OrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIR4qeGn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GFkgja/JNMkEksB6JJMswMjc+kik+k/HmozgGljJmO6/qtuyHDcWPxNSbij1UWDmwRB0g/DiSBQQTXxscPGWj8ASCXsBbljCuzE5BfmEOfiAxaxWXcuYKoniZzz2+SJBZcsX3Y8GjO+ihevXds2+d49DaB/VvpN+Wo3nMdQZx6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A5pM14iI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIR4qeGn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DBAC4CEF1;
-	Fri, 21 Nov 2025 13:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A5pM14iI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3773C4CEFB;
+	Fri, 21 Nov 2025 13:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731327;
-	bh=BUUBbKGhzM7yqmWOC2Jna4PVu73MlyyLq5gKb29/gCY=;
+	s=korg; t=1763731330;
+	bh=ZyiAtsLoPKPOxJYyNemO/acLajjBdHvGs8bIwxZAdyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIR4qeGnL9FPG1RNWN1/xMrbJsBHL6zNWR3FuUPoDXCl8Mr9sDz6zdugYeNgU8Kz2
-	 ufFYSqWjEcp+yp8VV264IvWSqrqN+5OT8Jhc/JWm+ywu0OiqaBcJBXMLZYGh7eOSST
-	 1HFK7XMjPkDVBk6huzeZxpyFJhhyuPaoVuR9h9l8=
+	b=A5pM14iIcb1ThwRi8JwjNcvpz+NMwYgsVlk8Uxy1bUUHqwz8CTu9F3xpfGyKDCyQc
+	 D/SfPVBEvKeF/22pB7fvMpqPpAopyh4cudL48OUSByespKzaGV+/gtUhHFBhI75A+d
+	 k0yl2alaYZ33dvT0ukz/s6RgvA5oEZBPUBRv4hzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaiser <martin@kaiser.cx>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 170/247] maple_tree: fix tracepoint string pointers
-Date: Fri, 21 Nov 2025 14:11:57 +0100
-Message-ID: <20251121130200.822211535@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.17 171/247] LoongArch: Consolidate early_ioremap()/ioremap_prot()
+Date: Fri, 21 Nov 2025 14:11:58 +0100
+Message-ID: <20251121130200.858167615@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,174 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Kaiser <martin@kaiser.cx>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 91a54090026f84ceffaa12ac53c99b9f162946f6 upstream.
+commit 43a9e6a10bdde32445ad2725f568e08a94e51dc9 upstream.
 
-maple_tree tracepoints contain pointers to function names. Such a pointer
-is saved when a tracepoint logs an event. There's no guarantee that it's
-still valid when the event is parsed later and the pointer is dereferenced.
+1. Use phys_addr_t instead of u64, which can work for both 32/64 bits.
+2. Check whether the input physical address is above TO_PHYS_MASK (and
+   return NULL if yes) for the DMW version.
 
-The kernel warns about these unsafe pointers.
+Note: In theory early_ioremap() also need the TO_PHYS_MASK checking, but
+the UEFI BIOS pass some DMW virtual addresses.
 
-	event 'ma_read' has unsafe pointer field 'fn'
-	WARNING: kernel/trace/trace.c:3779 at ignore_event+0x1da/0x1e4
-
-Mark the function names as tracepoint_string() to fix the events.
-
-One case that doesn't work without my patch would be trace-cmd record
-to save the binary ringbuffer and trace-cmd report to parse it in
-userspace.  The address of __func__ can't be dereferenced from
-userspace but tracepoint_string will add an entry to
-/sys/kernel/tracing/printk_formats
-
-Link: https://lkml.kernel.org/r/20251030155537.87972-1-martin@kaiser.cx
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Martin Kaiser <martin@kaiser.cx>
-Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ arch/loongarch/include/asm/io.h |    5 ++++-
+ arch/loongarch/mm/ioremap.c     |    2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -64,6 +64,8 @@
- #define CREATE_TRACE_POINTS
- #include <trace/events/maple_tree.h>
+--- a/arch/loongarch/include/asm/io.h
++++ b/arch/loongarch/include/asm/io.h
+@@ -14,7 +14,7 @@
+ #include <asm/pgtable-bits.h>
+ #include <asm/string.h>
  
-+#define TP_FCT tracepoint_string(__func__)
-+
- /*
-  * Kernel pointer hashing renders much of the maple tree dump useless as tagged
-  * pointers get hashed to arbitrary values.
-@@ -2976,7 +2978,7 @@ static inline void mas_rebalance(struct
- 	MA_STATE(l_mas, mas->tree, mas->index, mas->last);
- 	MA_STATE(r_mas, mas->tree, mas->index, mas->last);
+-extern void __init __iomem *early_ioremap(u64 phys_addr, unsigned long size);
++extern void __init __iomem *early_ioremap(phys_addr_t phys_addr, unsigned long size);
+ extern void __init early_iounmap(void __iomem *addr, unsigned long size);
  
--	trace_ma_op(__func__, mas);
-+	trace_ma_op(TP_FCT, mas);
- 
- 	/*
- 	 * Rebalancing occurs if a node is insufficient.  Data is rebalanced
-@@ -3337,7 +3339,7 @@ static void mas_split(struct ma_state *m
- 	MA_STATE(prev_l_mas, mas->tree, mas->index, mas->last);
- 	MA_STATE(prev_r_mas, mas->tree, mas->index, mas->last);
- 
--	trace_ma_op(__func__, mas);
-+	trace_ma_op(TP_FCT, mas);
- 
- 	mast.l = &l_mas;
- 	mast.r = &r_mas;
-@@ -3512,7 +3514,7 @@ static bool mas_is_span_wr(struct ma_wr_
- 			return false;
- 	}
- 
--	trace_ma_write(__func__, wr_mas->mas, wr_mas->r_max, entry);
-+	trace_ma_write(TP_FCT, wr_mas->mas, wr_mas->r_max, entry);
- 	return true;
- }
- 
-@@ -3756,7 +3758,7 @@ static noinline void mas_wr_spanning_sto
- 	 * of data may happen.
- 	 */
- 	mas = wr_mas->mas;
--	trace_ma_op(__func__, mas);
-+	trace_ma_op(TP_FCT, mas);
- 
- 	if (unlikely(!mas->index && mas->last == ULONG_MAX))
- 		return mas_new_root(mas, wr_mas->entry);
-@@ -3894,7 +3896,7 @@ done:
- 	} else {
- 		memcpy(wr_mas->node, newnode, sizeof(struct maple_node));
- 	}
--	trace_ma_write(__func__, mas, 0, wr_mas->entry);
-+	trace_ma_write(TP_FCT, mas, 0, wr_mas->entry);
- 	mas_update_gap(mas);
- 	mas->end = new_end;
- 	return;
-@@ -3938,7 +3940,7 @@ static inline void mas_wr_slot_store(str
- 		mas->offset++; /* Keep mas accurate. */
- 	}
- 
--	trace_ma_write(__func__, mas, 0, wr_mas->entry);
-+	trace_ma_write(TP_FCT, mas, 0, wr_mas->entry);
- 	/*
- 	 * Only update gap when the new entry is empty or there is an empty
- 	 * entry in the original two ranges.
-@@ -4059,7 +4061,7 @@ static inline void mas_wr_append(struct
- 		mas_update_gap(mas);
- 
- 	mas->end = new_end;
--	trace_ma_write(__func__, mas, new_end, wr_mas->entry);
-+	trace_ma_write(TP_FCT, mas, new_end, wr_mas->entry);
- 	return;
- }
- 
-@@ -4073,7 +4075,7 @@ static void mas_wr_bnode(struct ma_wr_st
+ #define early_memremap early_ioremap
+@@ -25,6 +25,9 @@ extern void __init early_iounmap(void __
+ static inline void __iomem *ioremap_prot(phys_addr_t offset, unsigned long size,
+ 					 pgprot_t prot)
  {
- 	struct maple_big_node b_node;
++	if (offset > TO_PHYS_MASK)
++		return NULL;
++
+ 	switch (pgprot_val(prot) & _CACHE_MASK) {
+ 	case _CACHE_CC:
+ 		return (void __iomem *)(unsigned long)(CACHE_BASE + offset);
+--- a/arch/loongarch/mm/ioremap.c
++++ b/arch/loongarch/mm/ioremap.c
+@@ -6,7 +6,7 @@
+ #include <asm/io.h>
+ #include <asm-generic/early_ioremap.h>
  
--	trace_ma_write(__func__, wr_mas->mas, 0, wr_mas->entry);
-+	trace_ma_write(TP_FCT, wr_mas->mas, 0, wr_mas->entry);
- 	memset(&b_node, 0, sizeof(struct maple_big_node));
- 	mas_store_b_node(wr_mas, &b_node, wr_mas->offset_end);
- 	mas_commit_b_node(wr_mas, &b_node);
-@@ -5405,7 +5407,7 @@ void *mas_store(struct ma_state *mas, vo
- 	int request;
- 	MA_WR_STATE(wr_mas, mas, entry);
- 
--	trace_ma_write(__func__, mas, 0, entry);
-+	trace_ma_write(TP_FCT, mas, 0, entry);
- #ifdef CONFIG_DEBUG_MAPLE_TREE
- 	if (MAS_WARN_ON(mas, mas->index > mas->last))
- 		pr_err("Error %lX > %lX " PTR_FMT "\n", mas->index, mas->last,
-@@ -5506,7 +5508,7 @@ void mas_store_prealloc(struct ma_state
- 	}
- 
- store:
--	trace_ma_write(__func__, mas, 0, entry);
-+	trace_ma_write(TP_FCT, mas, 0, entry);
- 	mas_wr_store_entry(&wr_mas);
- 	MAS_WR_BUG_ON(&wr_mas, mas_is_err(mas));
- 	mas_destroy(mas);
-@@ -6319,7 +6321,7 @@ void *mtree_load(struct maple_tree *mt,
- 	MA_STATE(mas, mt, index, index);
- 	void *entry;
- 
--	trace_ma_read(__func__, &mas);
-+	trace_ma_read(TP_FCT, &mas);
- 	rcu_read_lock();
- retry:
- 	entry = mas_start(&mas);
-@@ -6362,7 +6364,7 @@ int mtree_store_range(struct maple_tree
- 	MA_STATE(mas, mt, index, last);
- 	int ret = 0;
- 
--	trace_ma_write(__func__, &mas, 0, entry);
-+	trace_ma_write(TP_FCT, &mas, 0, entry);
- 	if (WARN_ON_ONCE(xa_is_advanced(entry)))
- 		return -EINVAL;
- 
-@@ -6585,7 +6587,7 @@ void *mtree_erase(struct maple_tree *mt,
- 	void *entry = NULL;
- 
- 	MA_STATE(mas, mt, index, index);
--	trace_ma_op(__func__, &mas);
-+	trace_ma_op(TP_FCT, &mas);
- 
- 	mtree_lock(mt);
- 	entry = mas_erase(&mas);
-@@ -6923,7 +6925,7 @@ void *mt_find(struct maple_tree *mt, uns
- 	unsigned long copy = *index;
- #endif
- 
--	trace_ma_read(__func__, &mas);
-+	trace_ma_read(TP_FCT, &mas);
- 
- 	if ((*index) > max)
- 		return NULL;
+-void __init __iomem *early_ioremap(u64 phys_addr, unsigned long size)
++void __init __iomem *early_ioremap(phys_addr_t phys_addr, unsigned long size)
+ {
+ 	return ((void __iomem *)TO_CACHE(phys_addr));
+ }
 
 
