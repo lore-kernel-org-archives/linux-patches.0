@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 907122EFD81;
-	Fri, 21 Nov 2025 13:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D79352936;
+	Fri, 21 Nov 2025 13:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732271; cv=none; b=q3kEhCECTr6qWJrRad2HoydQoPcFLkO14utzEcXGY+w+X+Q6+4pG9JWrybNMj4m8TQoRHDI7JrPkkKE/OSzApaWictNbS9wB9fYlSS7+dhTh0zPKYNfjL4LDvuMHPhphh9d+eot6gs/gsMVJZZFb6PtslSP2GfiCg69HxojC6Qc=
+	t=1763732274; cv=none; b=aF4M0wZV0lCnCJUsBZocp6axLmNIqncxujEl2aEjidX0YZeouxFt/SUlb2JIQ+zkdyLmeUI7EzKGXqIu65gcOMogQgB5v7arqXbgcdqGZoncLCfjKeALDs/lg8rxXtcUPW8I7qo08dAkK6w+yQZUI+J2U1LpjWogdPUZGCAUkZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732271; c=relaxed/simple;
-	bh=RHvIzzYmMuT5lBzIZ+myBZC8dTSLlZFjIDfjsfDfyXE=;
+	s=arc-20240116; t=1763732274; c=relaxed/simple;
+	bh=/RB27YNgfPCoEYTA6/xlV5dPNKpAfB/TBVHUwfFUmjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YrHql0M5/dOBk+M99eVG12RXnwxalKY5tDXDg5f5RcUSVQhkDMU1hIgp7slYDorCJWNs7OELC4vgAl/8OsjkE13JVekIv/yK499pFGK6K6oFON6esKoeQCZxuhoYMonk0d1ykOOFPFaqt1vagW36lU+VH8574+3/cofM6A2jZ3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ms3Z6sWr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jhb0f4GOsDAZW8hT7fuNTLm1GFZD3F+0lhZFJQNMNIwahF3QWAFMVew74m3GCMuAskCvavrMPI39Cmu8ar8oJt7AwhJRIHcTiOk4or9ppnOrOp+Hv5uq115F25gWqis/bTlF2+Yltwno/Dy8V52gwWdua6AZowtJE0SVnOIoeH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DO6R61+7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ms3Z6sWr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E825C116C6;
-	Fri, 21 Nov 2025 13:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DO6R61+7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB627C4CEF1;
+	Fri, 21 Nov 2025 13:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732270;
-	bh=RHvIzzYmMuT5lBzIZ+myBZC8dTSLlZFjIDfjsfDfyXE=;
+	s=korg; t=1763732273;
+	bh=/RB27YNgfPCoEYTA6/xlV5dPNKpAfB/TBVHUwfFUmjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ms3Z6sWrkClnBjTX93rjaiYi1wFTnLp7voRa1k5yroRQv5wPWmwOVPDPVfeLFaScv
-	 hYSnRsjtbNnY7Z7GPGovIwqYgs3ehwyX8BLzbitL/ng4qWOZBy7supVNuGtNznVEG+
-	 xHokYMadV1WU36n7HH3rLHK+rwgNVMItqOMayVZo=
+	b=DO6R61+7Kji6Lf4QcRPYRXsGp3qM8xHAv/snrdjDgAJki2EjxSbM0BCPUe0yFp5XY
+	 PBDsSnqfs1wgxjvw1prVpaDS5r4nw9Sqy5GgYJos1N7SAYhVX2NOkkWZksqBmmkGTz
+	 /qb3lAHeZtsw4ZLRUYjOHS9Irf4bP7MzqZMeezyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Sam Sun <samsun1006219@gmail.com>,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/529] libbpf: Fix powerpcs stack register definition in bpf_tracing.h
-Date: Fri, 21 Nov 2025 14:05:28 +0100
-Message-ID: <20251121130232.036157347@linuxfoundation.org>
+Subject: [PATCH 6.6 030/529] usbnet: Prevents free active kevent
+Date: Fri, 21 Nov 2025 14:05:29 +0100
+Message-ID: <20251121130232.070949014@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,42 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Lizhi Xu <lizhi.xu@windriver.com>
 
-[ Upstream commit 7221b9caf84b3294688228a19273d74ea19a2ee4 ]
+[ Upstream commit 420c84c330d1688b8c764479e5738bbdbf0a33de ]
 
-retsnoop's build on powerpc (ppc64le) architecture ([0]) failed due to
-wrong definition of PT_REGS_SP() macro. Looking at powerpc's
-implementation of stack unwinding in perf_callchain_user_64() clearly
-shows that stack pointer register is gpr[1].
+The root cause of this issue are:
+1. When probing the usbnet device, executing usbnet_link_change(dev, 0, 0);
+put the kevent work in global workqueue. However, the kevent has not yet
+been scheduled when the usbnet device is unregistered. Therefore, executing
+free_netdev() results in the "free active object (kevent)" error reported
+here.
 
-Fix libbpf's definition of __PT_SP_REG for powerpc to fix all this.
+2. Another factor is that when calling usbnet_disconnect()->unregister_netdev(),
+if the usbnet device is up, ndo_stop() is executed to cancel the kevent.
+However, because the device is not up, ndo_stop() is not executed.
 
-  [0] https://kojipkgs.fedoraproject.org/work/tasks/1544/137921544/build.log
+The solution to this problem is to cancel the kevent before executing
+free_netdev().
 
-Fixes: 138d6153a139 ("samples/bpf: Enable powerpc support")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/20251020203643.989467-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: a69e617e533e ("usbnet: Fix linkwatch use-after-free on disconnect")
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=8bfd7bcc98f7300afb84
+Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
+Link: https://patch.msgid.link/20251022024007.1831898-1-lizhi.xu@windriver.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf_tracing.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/usbnet.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
-index 1c13f8e88833b..66b925bd954eb 100644
---- a/tools/lib/bpf/bpf_tracing.h
-+++ b/tools/lib/bpf/bpf_tracing.h
-@@ -311,7 +311,7 @@ struct pt_regs___arm64 {
- #define __PT_RET_REG regs[31]
- #define __PT_FP_REG __unsupported__
- #define __PT_RC_REG gpr[3]
--#define __PT_SP_REG sp
-+#define __PT_SP_REG gpr[1]
- #define __PT_IP_REG nip
+diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
+index fd6b5865ac513..e6a1864f03f94 100644
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1650,6 +1650,8 @@ void usbnet_disconnect (struct usb_interface *intf)
+ 	net = dev->net;
+ 	unregister_netdev (net);
  
- #elif defined(bpf_target_sparc)
++	cancel_work_sync(&dev->kevent);
++
+ 	while ((urb = usb_get_from_anchor(&dev->deferred))) {
+ 		dev_kfree_skb(urb->context);
+ 		kfree(urb->sg);
 -- 
 2.51.0
 
