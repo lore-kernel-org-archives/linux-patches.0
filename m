@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE171F09B3;
-	Fri, 21 Nov 2025 13:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761FD2F360C;
+	Fri, 21 Nov 2025 13:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731167; cv=none; b=lUGukzNHfeB+9IlUI3JkyeK0+EAv0A1BaPvnTwGRNelHB1fXjyrxtuXs9e/GGfh4y6LncMX2gJu4PpeAvgVJ4eWWWFNFJRFe9V4JG4mxh4P1aMslXzF9etSw4D4rjNhcooByx7qZ1oCS1BkGxHpnip54surj5bhxb5+Hf2koYs4=
+	t=1763731170; cv=none; b=ID/2aj8Rr/xNaHErNJQBc5J8uNsFvSQqBwjf8jPRs9tzQKSj2TQJjswMI1voHr+sdCwmvQaDRYEHT7pQsWXz/TM+77vUkW9GCtoe41iF6Tr2WS0bm9o8T6Ck+uEdLbEmHNlTFIjrbjNph1t/lRYqPNAeu7gOMw+NR4CTPOK0SVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731167; c=relaxed/simple;
-	bh=S3OgCF7pHC8K7dncM45/EuxVYGVBIsLEaOCj0PudpgA=;
+	s=arc-20240116; t=1763731170; c=relaxed/simple;
+	bh=VmCcJ+a3extd72GdlIWYPYqvoBKg84fV8h+BQoYCcBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DixJeM5rkPs6jsFuxnE+pfgZD3zSyIGuQop1bdJe4ZlG9E43LfzaQmAKsB+fUiQzwpkpnWnydw2t66EOcjmpM1DLnb15WJNtktHFNP5yS47bmYtbmU5vso//kOjdaCu7miJzYkmQ+qL/809ALax+vw2Ue6iSExU0OBmB8pyqmtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvCD3Dg3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jb4l5ZqJ0m8Bla8a5Apx1GFhezgO1sU3mNtAws0NOxcN8HpZ9R17imKlDghhOt4NErQL73WayJXFgq1U9Oo4iVO20MFPGLPuLNinddmgsiKXhN5dNVdabb8dHoeVkHKWYIw6EVieP/8hlBknbljO9hVmzqKl7CFjL8EigLHOK/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WMTtg983; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvCD3Dg3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F578C4CEF1;
-	Fri, 21 Nov 2025 13:19:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WMTtg983"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8116C4CEF1;
+	Fri, 21 Nov 2025 13:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731167;
-	bh=S3OgCF7pHC8K7dncM45/EuxVYGVBIsLEaOCj0PudpgA=;
+	s=korg; t=1763731170;
+	bh=VmCcJ+a3extd72GdlIWYPYqvoBKg84fV8h+BQoYCcBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvCD3Dg3ZYruOvFkwM3BtC0uMb2ibjfLJe6+r3s+4QAMF7vjazeM+yXvVi8n88Wgt
-	 AYOWqIH+/xr4QczNLaX0fmY7abkRAFQof+3W3GLvDj/EP3omGaCP5hdtOpkL6RF0iW
-	 MirIYJOEFxwchvXo5DVQFDC8pybjEuZC2wHwggZs=
+	b=WMTtg983qXY3vmq6pWvhc45F7Vg6jpZ2uBHpf2raZ85iweitLZfoKNvfOKzaghsK8
+	 A/BIYu1pGznSnQu+zAj52Zh/djdk/JH2KSgGhP4lqK52EzLb9RaliqGd4liiIA4xqa
+	 HKNyBXo1E1CA5Tq3/d1A1jZR844Ixlmj/Tr0lsdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Haein Lee <lhi0729@kaist.ac.kr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 112/247] NFS: Fix LTP test failures when timestamps are delegated
-Date: Fri, 21 Nov 2025 14:10:59 +0100
-Message-ID: <20251121130158.603639938@linuxfoundation.org>
+Subject: [PATCH 6.17 113/247] ALSA: usb-audio: Fix NULL pointer dereference in snd_usb_mixer_controls_badd
+Date: Fri, 21 Nov 2025 14:11:00 +0100
+Message-ID: <20251121130158.639182720@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -51,82 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Haein Lee <lhi0729@kaist.ac.kr>
 
-[ Upstream commit b623390045a81fc559decb9bfeb79319721d3dfb ]
+[ Upstream commit 632108ec072ad64c8c83db6e16a7efee29ebfb74 ]
 
-The utimes01 and utime06 tests fail when delegated timestamps are
-enabled, specifically in subtests that modify the atime and mtime
-fields using the 'nobody' user ID.
+In snd_usb_create_streams(), for UAC version 3 devices, the Interface
+Association Descriptor (IAD) is retrieved via usb_ifnum_to_if(). If this
+call fails, a fallback routine attempts to obtain the IAD from the next
+interface and sets a BADD profile. However, snd_usb_mixer_controls_badd()
+assumes that the IAD retrieved from usb_ifnum_to_if() is always valid,
+without performing a NULL check. This can lead to a NULL pointer
+dereference when usb_ifnum_to_if() fails to find the interface descriptor.
 
-The problem can be reproduced as follow:
+This patch adds a NULL pointer check after calling usb_ifnum_to_if() in
+snd_usb_mixer_controls_badd() to prevent the dereference.
 
-# echo "/media *(rw,no_root_squash,sync)" >> /etc/exports
-# export -ra
-# mount -o rw,nfsvers=4.2 127.0.0.1:/media /tmpdir
-# cd /opt/ltp
-# ./runltp -d /tmpdir -s utimes01
-# ./runltp -d /tmpdir -s utime06
+This issue was discovered by syzkaller, which triggered the bug by sending
+a crafted USB device descriptor.
 
-This issue occurs because nfs_setattr does not verify the inode's
-UID against the caller's fsuid when delegated timestamps are
-permitted for the inode.
-
-This patch adds the UID check and if it does not match then the
-request is sent to the server for permission checking.
-
-Fixes: e12912d94137 ("NFSv4: Add support for delegated atime and mtime attributes")
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: 17156f23e93c ("ALSA: usb: add UAC3 BADD profiles support")
+Signed-off-by: Haein Lee <lhi0729@kaist.ac.kr>
+Link: https://patch.msgid.link/vwhzmoba9j2f.vwhzmob9u9e2.g6@dooray.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/inode.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ sound/usb/mixer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/nfs/inode.c b/fs/nfs/inode.c
-index 49df9debb1a69..35bdb49236bac 100644
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -718,6 +718,8 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	struct nfs_fattr *fattr;
- 	loff_t oldsize = i_size_read(inode);
- 	int error = 0;
-+	kuid_t task_uid = current_fsuid();
-+	kuid_t owner_uid = inode->i_uid;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index cf296decefefc..f2058eb71fc8d 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -3080,6 +3080,8 @@ static int snd_usb_mixer_controls_badd(struct usb_mixer_interface *mixer,
+ 	int i;
  
- 	nfs_inc_stats(inode, NFSIOS_VFSSETATTR);
+ 	assoc = usb_ifnum_to_if(dev, ctrlif)->intf_assoc;
++	if (!assoc)
++		return -EINVAL;
  
-@@ -739,9 +741,11 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 	if (nfs_have_delegated_mtime(inode) && attr->ia_valid & ATTR_MTIME) {
- 		spin_lock(&inode->i_lock);
- 		if (attr->ia_valid & ATTR_MTIME_SET) {
--			nfs_set_timestamps_to_ts(inode, attr);
--			attr->ia_valid &= ~(ATTR_MTIME|ATTR_MTIME_SET|
-+			if (uid_eq(task_uid, owner_uid)) {
-+				nfs_set_timestamps_to_ts(inode, attr);
-+				attr->ia_valid &= ~(ATTR_MTIME|ATTR_MTIME_SET|
- 						ATTR_ATIME|ATTR_ATIME_SET);
-+			}
- 		} else {
- 			nfs_update_timestamps(inode, attr->ia_valid);
- 			attr->ia_valid &= ~(ATTR_MTIME|ATTR_ATIME);
-@@ -751,10 +755,12 @@ nfs_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
- 		   attr->ia_valid & ATTR_ATIME &&
- 		   !(attr->ia_valid & ATTR_MTIME)) {
- 		if (attr->ia_valid & ATTR_ATIME_SET) {
--			spin_lock(&inode->i_lock);
--			nfs_set_timestamps_to_ts(inode, attr);
--			spin_unlock(&inode->i_lock);
--			attr->ia_valid &= ~(ATTR_ATIME|ATTR_ATIME_SET);
-+			if (uid_eq(task_uid, owner_uid)) {
-+				spin_lock(&inode->i_lock);
-+				nfs_set_timestamps_to_ts(inode, attr);
-+				spin_unlock(&inode->i_lock);
-+				attr->ia_valid &= ~(ATTR_ATIME|ATTR_ATIME_SET);
-+			}
- 		} else {
- 			nfs_update_delegated_atime(inode);
- 			attr->ia_valid &= ~ATTR_ATIME;
+ 	/* Detect BADD capture/playback channels from AS EP descriptors */
+ 	for (i = 0; i < assoc->bInterfaceCount; i++) {
 -- 
 2.51.0
 
