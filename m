@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9744238C03;
-	Fri, 21 Nov 2025 13:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830A534CFC7;
+	Fri, 21 Nov 2025 13:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732384; cv=none; b=D0l65ePc1p01Uht24xuNQRlbfGiEpo/c8z7nZopdinD/kKK9O0h9VU3J07n1Xfk+rwIWErPKn08N4Ob0hV4h1srdIyUhTjZfP9C9nYGdxdATHtzByHC6+sy35Ycop4TX1eOSDkUHMUo4X2NecOPyMuCULhY3S6A5NRHKB3U/frU=
+	t=1763732387; cv=none; b=IlaMlmOg2W/vgfmhmt4dBFeeezmY643Sb/ssW5daJkBMzUzNL7Cjw2Q//Wum6bT/TVlj/IHbm/QoQUNU3w7jdTEqI8yrFcfXd7DY6Ks+ulm+HRDghg9J/y4DlxdMxlrnBiW+6lt82Y+b77t28UIVN0bO1KZZxgtjktOS27Yrydk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732384; c=relaxed/simple;
-	bh=knSjVujnyJIZJLHCYsW6HUsO8qKVujoIkBBb/UqgD7s=;
+	s=arc-20240116; t=1763732387; c=relaxed/simple;
+	bh=6fEvEaHN0E4F1Unj0DuChPeUXhhc50Es839cJ0eGsxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0t/YsCRb0hPQFGDd1xdMrxujpPukGWdbFgt6jWB7vrL1gmn2uNx0hjIwkgdOQpGcXFrmASTJyWKcPefuT+zCy7NBvQQNdc+9shu2HClloOw+9abzGaItzKDHGbDqyXT/kQ688lt+TbIB/bBSmjkNcgijlzQjBMd+Xw4ccU7Eso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sl9nX3L/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JidBDvKR2gGsCtwOqp8Can5tKERCgwUdkKx9ibjWIVBUJX/2T9lLdb5aYanl6BPgoG2/dqc7YeefFUClac8K/72hFKgs/YgOnheUzalzQMtbeBbyxQ/C5ITE0XEN7ld63miBo3x6VCnWZE174zYizJef4+oVPDvuBc5AY2SATis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwJhZQy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sl9nX3L/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA4BC4CEF1;
-	Fri, 21 Nov 2025 13:39:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwJhZQy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA26C4CEF1;
+	Fri, 21 Nov 2025 13:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732384;
-	bh=knSjVujnyJIZJLHCYsW6HUsO8qKVujoIkBBb/UqgD7s=;
+	s=korg; t=1763732387;
+	bh=6fEvEaHN0E4F1Unj0DuChPeUXhhc50Es839cJ0eGsxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sl9nX3L/nmRKbbgem/MqAbYLLYzCnLbnmnrVQPiJGbc4tU+s69Xa0m/Q6dwAtAmC9
-	 Ma+4HanXm6+exXi3OCPkv7IKTnPa6tTTi1LGZcJVCABI+D1saMwk5JXD/Cg5aZtAgL
-	 vPDMWukRladlID1HMX7/wR5qBcy7nwuXfJq+D8O4=
+	b=EwJhZQy+LgH8Wah8v7A2flyzz3eUgBvXKCd2L5uIDQgZri2DPPF0XYf29BIcT7zkY
+	 bGw9xQwtu7y4XUfi5KGkTc+v0+7/xGyutQ/+ZW0fPBpkgmsBRu9CxUEcS3kbVidtzR
+	 t70c6WDYmbXdz0Vqri90ELPOzRqPwpaEx+O/jk/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Stellard <tstellar@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/529] bpftool: Fix -Wuninitialized-const-pointer warnings with clang >= 21
-Date: Fri, 21 Nov 2025 14:06:34 +0100
-Message-ID: <20251121130234.407609693@linuxfoundation.org>
+Subject: [PATCH 6.6 104/529] uprobe: Do not emulate/sstep original instruction when ip is changed
+Date: Fri, 21 Nov 2025 14:06:43 +0100
+Message-ID: <20251121130234.724927482@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,59 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Stellard <tstellar@redhat.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 5612ea8b554375d45c14cbb0f8ea93ec5d172891 ]
+[ Upstream commit 4363264111e1297fa37aa39b0598faa19298ecca ]
 
-This fixes the build with -Werror -Wall.
+If uprobe handler changes instruction pointer we still execute single
+step) or emulate the original instruction and increment the (new) ip
+with its length.
 
-btf_dumper.c:71:31: error: variable 'finfo' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-   71 |         info.func_info = ptr_to_u64(&finfo);
-      |                                      ^~~~~
+This makes the new instruction pointer bogus and application will
+likely crash on illegal instruction execution.
 
-prog.c:2294:31: error: variable 'func_info' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
- 2294 |         info.func_info = ptr_to_u64(&func_info);
-      |
+If user decided to take execution elsewhere, it makes little sense
+to execute the original instruction, so let's skip it.
 
-v2:
-  - Initialize instead of using memset.
-
-Signed-off-by: Tom Stellard <tstellar@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250917183847.318163-1-tstellar@redhat.com
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20250916215301.664963-3-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/btf_dumper.c | 2 +-
- tools/bpf/bpftool/prog.c       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/uprobes.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/tools/bpf/bpftool/btf_dumper.c b/tools/bpf/bpftool/btf_dumper.c
-index 1b7f697146041..42c7b70f6996c 100644
---- a/tools/bpf/bpftool/btf_dumper.c
-+++ b/tools/bpf/bpftool/btf_dumper.c
-@@ -38,7 +38,7 @@ static int dump_prog_id_as_func_ptr(const struct btf_dumper *d,
- 	__u32 info_len = sizeof(info);
- 	const char *prog_name = NULL;
- 	struct btf *prog_btf = NULL;
--	struct bpf_func_info finfo;
-+	struct bpf_func_info finfo = {};
- 	__u32 finfo_rec_size;
- 	char prog_str[1024];
- 	int err;
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 174e076e56af2..90fa7a8d0f4b3 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -2203,7 +2203,7 @@ static void profile_print_readings(void)
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index a554f43d3ceb9..6304238293ae1 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -2255,6 +2255,13 @@ static void handle_swbp(struct pt_regs *regs)
  
- static char *profile_target_name(int tgt_fd)
- {
--	struct bpf_func_info func_info;
-+	struct bpf_func_info func_info = {};
- 	struct bpf_prog_info info = {};
- 	__u32 info_len = sizeof(info);
- 	const struct btf_type *t;
+ 	handler_chain(uprobe, regs);
+ 
++	/*
++	 * If user decided to take execution elsewhere, it makes little sense
++	 * to execute the original instruction, so let's skip it.
++	 */
++	if (instruction_pointer(regs) != bp_vaddr)
++		goto out;
++
+ 	if (arch_uprobe_skip_sstep(&uprobe->arch, regs))
+ 		goto out;
+ 
 -- 
 2.51.0
 
