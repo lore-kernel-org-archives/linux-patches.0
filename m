@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA97334DB6E;
-	Fri, 21 Nov 2025 13:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E501434DB6E;
+	Fri, 21 Nov 2025 13:39:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732348; cv=none; b=F9SQh70F03QRaLoAwJ/4vz28UXCHQ+qAjDZb/z1fUCXyYrcQfUHStbRSFO7jFHks3oTqkmzGd853YBmlsrsczemj/2w4vZeGMAUudplPaW9UrUaTW2GZ31k2d8HZB/tTeDhSr4DqSnj+0yaYgpRZMvP5BoH74F1Dt4fiYL9SaZ0=
+	t=1763732351; cv=none; b=fExz/RR7MEO4T6vHxN6fs7mLJ8lotGihoi2oc0Yr8grU3zcgkT38vqQxPWl0L21MjiUKIUzehgF7QZ+V4b9305JOtUL55yC8fVTZ4QgT4DqLIZ3CuK8HeXSIFCMF5bD0F95uyCtCFNfXzQrC/dF9YIppFvtRRebPXywOpM1P4ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732348; c=relaxed/simple;
-	bh=WpFYbWbyaZ4x+09z7N58UaujXyxKBeZZHCQXc9cSALY=;
+	s=arc-20240116; t=1763732351; c=relaxed/simple;
+	bh=YLsNGQePXmQtiW3oVVBXSav4hN/EF/Pkp4K2APiYqGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfTNaLCI4MLX5Jo7SKO7GEQzdHaWdKu1hTHqo7/F1ZLfJwlDa/anNwLoGv2Hqdk4+HV+uhvp4cZq7UbrTlGMGOxC+sevOa5vWOaAG1aAE5FNBd7QGyUbutzVIpuvW4JJnvxcuHc7aUh9MHCi5QrvAwpR4xAU3aVqTNR/YOLC9As=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FiESUzcK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bi4Qc6EYH19J9BxLIfkcKcpdbft2M9p9/qfhrsXmYpBtWLggdZy/pDpO4DT4IL/kG00IXbzOfO1OVbqPiD6/pYRQg1u6qaTM5i6b+3TYyC84KTQtGtkEeX+d835AbU50odCl6gRkTxCSdod3R2EN1r8QZkLY5xDRjEpxUVjV+WQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsGhEtD7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FiESUzcK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E25C4CEF1;
-	Fri, 21 Nov 2025 13:39:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsGhEtD7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466EFC4CEF1;
+	Fri, 21 Nov 2025 13:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732347;
-	bh=WpFYbWbyaZ4x+09z7N58UaujXyxKBeZZHCQXc9cSALY=;
+	s=korg; t=1763732350;
+	bh=YLsNGQePXmQtiW3oVVBXSav4hN/EF/Pkp4K2APiYqGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FiESUzcKFVcNzZpAzIJDNYCTll696K1BOBxxvJQftG2WKHwFyr8+XGRRGP3kcgaMr
-	 Qi4oGWTQWttvijsOrJYWLCZkPKTY/YqouKjbC4JeDHXOsFLawUii8ImhNFe9xMZ0KK
-	 tki1IzObGC2nmWWkeR9Qg1vEzvUjEvlCtmdUPt/A=
+	b=tsGhEtD7L62YSJZ1nLqbTJPazwWELRuhx6dOmcoG+hfxsFW20sXpkJs+sHqZNarwg
+	 pRR8PzaD5hpq+2HrCSpFS7PnkEc2uWJYInk6teV75y3FXh/RiYZsEcua0wMRSQSqHq
+	 70SlPy5bQEdK4bty5YskTxsK+EwNhWurbfBS2jKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Hannes Reinecke <hare@suse.de>,
 	Daniel Wagner <wagi@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 088/529] nvmet-fc: avoid scheduling association deletion twice
-Date: Fri, 21 Nov 2025 14:06:27 +0100
-Message-ID: <20251121130234.159891727@linuxfoundation.org>
+Subject: [PATCH 6.6 089/529] nvme-fc: use lock accessing port_state and rport state
+Date: Fri, 21 Nov 2025 14:06:28 +0100
+Message-ID: <20251121130234.195527958@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -55,68 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Wagner <wagi@kernel.org>
 
-[ Upstream commit f2537be4f8421f6495edfa0bc284d722f253841d ]
+[ Upstream commit 891cdbb162ccdb079cd5228ae43bdeebce8597ad ]
 
-When forcefully shutting down a port via the configfs interface,
-nvmet_port_subsys_drop_link() first calls nvmet_port_del_ctrls() and
-then nvmet_disable_port(). Both functions will eventually schedule all
-remaining associations for deletion.
-
-The current implementation checks whether an association is about to be
-removed, but only after the work item has already been scheduled. As a
-result, it is possible for the first scheduled work item to free all
-resources, and then for the same work item to be scheduled again for
-deletion.
-
-Because the association list is an RCU list, it is not possible to take
-a lock and remove the list entry directly, so it cannot be looked up
-again. Instead, a flag (terminating) must be used to determine whether
-the association is already in the process of being deleted.
+nvme_fc_unregister_remote removes the remote port on a lport object at
+any point in time when there is no active association. This races with
+with the reconnect logic, because nvme_fc_create_association is not
+taking a lock to check the port_state and atomically increase the
+active count on the rport.
 
 Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/all/rsdinhafrtlguauhesmrrzkybpnvwantwmyfq2ih5aregghax5@mhr7v3eryci3/
-Reviewed-by: Hannes Reinecke <hare@suse.de>
+Closes: https://lore.kernel.org/all/u4ttvhnn7lark5w3sgrbuy2rxupcvosp4qmvj46nwzgeo5ausc@uyrkdls2muwx
 Signed-off-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/nvme/host/fc.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index a15e764bae35b..188b9f1bdaca1 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1090,6 +1090,14 @@ nvmet_fc_delete_assoc_work(struct work_struct *work)
- static void
- nvmet_fc_schedule_delete_assoc(struct nvmet_fc_tgt_assoc *assoc)
- {
-+	int terminating;
-+
-+	terminating = atomic_xchg(&assoc->terminating, 1);
-+
-+	/* if already terminating, do nothing */
-+	if (terminating)
-+		return;
-+
- 	nvmet_fc_tgtport_get(assoc->tgtport);
- 	if (!queue_work(nvmet_wq, &assoc->del_work))
- 		nvmet_fc_tgtport_put(assoc->tgtport);
-@@ -1209,13 +1217,7 @@ nvmet_fc_delete_target_assoc(struct nvmet_fc_tgt_assoc *assoc)
- {
- 	struct nvmet_fc_tgtport *tgtport = assoc->tgtport;
- 	unsigned long flags;
--	int i, terminating;
--
--	terminating = atomic_xchg(&assoc->terminating, 1);
--
--	/* if already terminating, do nothing */
--	if (terminating)
--		return;
-+	int i;
+diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
+index 3e0da2422b334..bf9ab07257642 100644
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -3024,11 +3024,17 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
  
- 	spin_lock_irqsave(&tgtport->lock, flags);
- 	list_del_rcu(&assoc->a_list);
+ 	++ctrl->ctrl.nr_reconnects;
+ 
+-	if (ctrl->rport->remoteport.port_state != FC_OBJSTATE_ONLINE)
++	spin_lock_irqsave(&ctrl->rport->lock, flags);
++	if (ctrl->rport->remoteport.port_state != FC_OBJSTATE_ONLINE) {
++		spin_unlock_irqrestore(&ctrl->rport->lock, flags);
+ 		return -ENODEV;
++	}
+ 
+-	if (nvme_fc_ctlr_active_on_rport(ctrl))
++	if (nvme_fc_ctlr_active_on_rport(ctrl)) {
++		spin_unlock_irqrestore(&ctrl->rport->lock, flags);
+ 		return -ENOTUNIQ;
++	}
++	spin_unlock_irqrestore(&ctrl->rport->lock, flags);
+ 
+ 	dev_info(ctrl->ctrl.device,
+ 		"NVME-FC{%d}: create association : host wwpn 0x%016llx "
 -- 
 2.51.0
 
