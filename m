@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D2E25F7BF;
-	Fri, 21 Nov 2025 13:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E299E1F03D7;
+	Fri, 21 Nov 2025 13:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731875; cv=none; b=QBNfG1IZ5srU+F2m2SZNfdyLiLy6XgvDgu/n0c6pKmgR8mNczeh02N3jz2moEV74kmQUExOO5OU7yLftbDNrX91U3EOUu65VIVVd7o3aosDQ0FBYrYTOEMOOyaaeCmMQkWNSB8o/k1H/YFDQg2aJhohYejUzKvVjv7pMQmyJ7h8=
+	t=1763731878; cv=none; b=rhlRAW0HS2BW4E5Ivo+DcpfVQaLjyM+/4A4bBqLfGOfuGpArBGGUXwz02g3qxzKjRZB0NoCHrQOdR1xiq5/2aoC2qvdv4Xs4vkmCs2wTYIOsT4C3z8tXEUZpSO/1CFgADDO0CQjq1/aIfOD+gadT35PEyauFF8ZHMNqxEQjzT4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731875; c=relaxed/simple;
-	bh=uYqKYx+OW8wzBkvrHlNxn5CipID/3HNIgRgLDgG4tpc=;
+	s=arc-20240116; t=1763731878; c=relaxed/simple;
+	bh=vlGGIl9E1w5UrcAtjrg7JYfgOuMYBZ/yRzJLvooOZVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VWq1BKCWssv/clGVrG80bx3IQf9NO3tUa0hPBDStoacjvpBbahXu12kPSMJiBrEwVFn2UkrogoS84xRnQabWExFujZVSjb5TYlqzdfORs5Oc0oJQdOwKElGc5hM3QoGa6LhBh2ktl3LWSJD1hfvYs1wlevbFw8XzamcVJSj2Zdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=baS5vYaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kE25nZGpJIvlfOmYuNl6yRf4h/S7IS0UR8skvRj8DUTonN+OQCyT2ZHJCGwVhauflbkT8qxBBCiUskDyd4P4VwIXvcdwafIhLdPd3dRd4rWeObh+SqE7HA4ky2iB9Pl7Xz0i1vm2sUNuEkcOhAsvSZpQmWFFvnugOD8Z6rWOWsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCVx97EO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="baS5vYaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 801EBC4CEF1;
-	Fri, 21 Nov 2025 13:31:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCVx97EO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63ED4C4CEF1;
+	Fri, 21 Nov 2025 13:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731874;
-	bh=uYqKYx+OW8wzBkvrHlNxn5CipID/3HNIgRgLDgG4tpc=;
+	s=korg; t=1763731877;
+	bh=vlGGIl9E1w5UrcAtjrg7JYfgOuMYBZ/yRzJLvooOZVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=baS5vYaBKFPuX+rrW8vmWtbKw2WdY6adC9tfCbFzXHDRrD6GBceCS4KV4Pk43cxRt
-	 oj2Q3Nc1b59b0wmcI3QsCcHQt3dAhJ6ox49iBYDb1z3ZX3cV6xYd3S3MXlz5BIxVWc
-	 Cx3zexieD6BQirZ06z+5gu+JEHSPzk8FsGFxl0bU=
+	b=DCVx97EOHbCKu2srnovP0O5eePm0D4DagFi5BoIa9KG08dXgPC8vitOJKIGyix0Lc
+	 WOXOaUuMCDKcPAyIghzW3gETQb/OQM6zV+nrZpqVcPpxnJlK9f7rFXy03uE1geU12X
+	 ia+r7F5zLkBwLbbXVOaPVSrmKCvW+CTYPhyTyNmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	rtm@csail.mit.edu,
 	Olga Kornievskaia <okorniev@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 111/185] nfsd: add missing FATTR4_WORD2_CLONE_BLKSIZE from supported attributes
-Date: Fri, 21 Nov 2025 14:12:18 +0100
-Message-ID: <20251121130147.879751493@linuxfoundation.org>
+Subject: [PATCH 6.12 112/185] NFSD: free copynotify stateid in nfs4_free_ol_stateid()
+Date: Fri, 21 Nov 2025 14:12:19 +0100
+Message-ID: <20251121130147.916274960@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,30 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Olga Kornievskaia <okorniev@redhat.com>
 
-commit 4d3dbc2386fe051e44efad663e0ec828b98ab53f upstream.
+commit 4aa17144d5abc3c756883e3a010246f0dba8b468 upstream.
 
-RFC 7862 Section 4.1.2 says that if the server supports CLONE it MUST
-support clone_blksize attribute.
+Typically copynotify stateid is freed either when parent's stateid
+is being close/freed or in nfsd4_laundromat if the stateid hasn't
+been used in a lease period.
 
-Fixes: d6ca7d2643ee ("NFSD: Implement FATTR4_CLONE_BLKSIZE attribute")
+However, in case when the server got an OPEN (which created
+a parent stateid), followed by a COPY_NOTIFY using that stateid,
+followed by a client reboot. New client instance while doing
+CREATE_SESSION would force expire previous state of this client.
+It leads to the open state being freed thru release_openowner->
+nfs4_free_ol_stateid() and it finds that it still has copynotify
+stateid associated with it. We currently print a warning and is
+triggerred
+
+WARNING: CPU: 1 PID: 8858 at fs/nfsd/nfs4state.c:1550 nfs4_free_ol_stateid+0xb0/0x100 [nfsd]
+
+This patch, instead, frees the associated copynotify stateid here.
+
+If the parent stateid is freed (without freeing the copynotify
+stateids associated with it), it leads to the list corruption
+when laundromat ends up freeing the copynotify state later.
+
+[ 1626.839430] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+[ 1626.842828] Modules linked in: nfnetlink_queue nfnetlink_log bluetooth cfg80211 rpcrdma rdma_cm iw_cm ib_cm ib_core nfsd nfs_acl lockd grace nfs_localio ext4 crc16 mbcache jbd2 overlay uinput snd_seq_dummy snd_hrtimer qrtr rfkill vfat fat uvcvideo snd_hda_codec_generic videobuf2_vmalloc videobuf2_memops snd_hda_intel uvc snd_intel_dspcfg videobuf2_v4l2 videobuf2_common snd_hda_codec snd_hda_core videodev snd_hwdep snd_seq mc snd_seq_device snd_pcm snd_timer snd soundcore sg loop auth_rpcgss vsock_loopback vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vmw_vmci vsock xfs 8021q garp stp llc mrp nvme ghash_ce e1000e nvme_core sr_mod nvme_keyring nvme_auth cdrom vmwgfx drm_ttm_helper ttm sunrpc dm_mirror dm_region_hash dm_log iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi fuse dm_multipath dm_mod nfnetlink
+[ 1626.855594] CPU: 2 UID: 0 PID: 199 Comm: kworker/u24:33 Kdump: loaded Tainted: G    B   W           6.17.0-rc7+ #22 PREEMPT(voluntary)
+[ 1626.857075] Tainted: [B]=BAD_PAGE, [W]=WARN
+[ 1626.857573] Hardware name: VMware, Inc. VMware20,1/VBSA, BIOS VMW201.00V.24006586.BA64.2406042154 06/04/2024
+[ 1626.858724] Workqueue: nfsd4 laundromat_main [nfsd]
+[ 1626.859304] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[ 1626.860010] pc : __list_del_entry_valid_or_report+0x148/0x200
+[ 1626.860601] lr : __list_del_entry_valid_or_report+0x148/0x200
+[ 1626.861182] sp : ffff8000881d7a40
+[ 1626.861521] x29: ffff8000881d7a40 x28: 0000000000000018 x27: ffff0000c2a98200
+[ 1626.862260] x26: 0000000000000600 x25: 0000000000000000 x24: ffff8000881d7b20
+[ 1626.862986] x23: ffff0000c2a981e8 x22: 1fffe00012410e7d x21: ffff0000920873e8
+[ 1626.863701] x20: ffff0000920873e8 x19: ffff000086f22998 x18: 0000000000000000
+[ 1626.864421] x17: 20747562202c3839 x16: 3932326636383030 x15: 3030666666662065
+[ 1626.865092] x14: 6220646c756f6873 x13: 0000000000000001 x12: ffff60004fd9e4a3
+[ 1626.865713] x11: 1fffe0004fd9e4a2 x10: ffff60004fd9e4a2 x9 : dfff800000000000
+[ 1626.866320] x8 : 00009fffb0261b5e x7 : ffff00027ecf2513 x6 : 0000000000000001
+[ 1626.866938] x5 : ffff00027ecf2510 x4 : ffff60004fd9e4a3 x3 : 0000000000000000
+[ 1626.867553] x2 : 0000000000000000 x1 : ffff000096069640 x0 : 000000000000006d
+[ 1626.868167] Call trace:
+[ 1626.868382]  __list_del_entry_valid_or_report+0x148/0x200 (P)
+[ 1626.868876]  _free_cpntf_state_locked+0xd0/0x268 [nfsd]
+[ 1626.869368]  nfs4_laundromat+0x6f8/0x1058 [nfsd]
+[ 1626.869813]  laundromat_main+0x24/0x60 [nfsd]
+[ 1626.870231]  process_one_work+0x584/0x1050
+[ 1626.870595]  worker_thread+0x4c4/0xc60
+[ 1626.870893]  kthread+0x2f8/0x398
+[ 1626.871146]  ret_from_fork+0x10/0x20
+[ 1626.871422] Code: aa1303e1 aa1403e3 910e8000 97bc55d7 (d4210000)
+[ 1626.871892] SMP: stopping secondary CPUs
+
+Reported-by: rtm@csail.mit.edu
+Closes: https://lore.kernel.org/linux-nfs/d8f064c1-a26f-4eed-b4f0-1f7f608f415f@oracle.com/T/#t
+Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
 Cc: stable@vger.kernel.org
 Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsd.h |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4state.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsd.h
-+++ b/fs/nfsd/nfsd.h
-@@ -458,6 +458,7 @@ enum {
- #define NFSD4_2_SUPPORTED_ATTRS_WORD2 \
- 	(NFSD4_1_SUPPORTED_ATTRS_WORD2 | \
- 	FATTR4_WORD2_MODE_UMASK | \
-+	FATTR4_WORD2_CLONE_BLKSIZE | \
- 	NFSD4_2_SECURITY_ATTRS | \
- 	FATTR4_WORD2_XATTR_SUPPORT)
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1528,7 +1528,8 @@ static void nfs4_free_ol_stateid(struct
+ 	release_all_access(stp);
+ 	if (stp->st_stateowner)
+ 		nfs4_put_stateowner(stp->st_stateowner);
+-	WARN_ON(!list_empty(&stid->sc_cp_list));
++	if (!list_empty(&stid->sc_cp_list))
++		nfs4_free_cpntf_statelist(stid->sc_client->net, stid);
+ 	kmem_cache_free(stateid_slab, stid);
+ }
  
 
 
