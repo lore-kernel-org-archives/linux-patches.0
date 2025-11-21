@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAF634DB64;
-	Fri, 21 Nov 2025 13:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574A5341AC5;
+	Fri, 21 Nov 2025 13:46:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732759; cv=none; b=eVFBJVIFb1WWQqfaL7jlN8H6NsQrwHf4Xzckm9ilKW9Ho0iRu+9msmBM25mXtk3jfRz8Qy4XFD5+YQNDK5OKpYGGvthNQStUdoQSZvqY/3BOgDQ3rruJ3MzZNVdb9npZLagIxug0sqWNHGhTH+6EuY5ttm8m0+KuVGH3zHVrZh8=
+	t=1763732762; cv=none; b=LqRcBfLv+VY67fP8YIH7fZKTq3YigKoXqaHntWMcCYmkmSUER1KqErFrZY5dyMPTnP+Ymq+TXPs6sfrzBXL/Cwk/uwSf1FWXrcr6Ggbc0TFnlxLskrnCvdcxJFZgmPQPr1YbrePkm+iqq5QUIq0zHBfWZlkfMvOOc560q1iS0rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732759; c=relaxed/simple;
-	bh=lqQpN0WGg4mzrBFoaBZitWCJTLHUgg+OZiUa0v6nJtQ=;
+	s=arc-20240116; t=1763732762; c=relaxed/simple;
+	bh=ka/3wg+t3rnXbC+mQf0+XG9nRfaedVneH9nrT+YgsCI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S3vrn+IagE49LgVf0q3izEKE6Zd2lJbFUp78pzuZ5xdFVb4oaNnVkh+W3GUCTRI8nkh2rXVIj9v6ljO5eANgDv+HFfdXOmTp47XVxNu66C/aKC8R9KwId/Qu1EOB0E0UmprfXcsRzVxHoQT2LOTB9s3IELTu8AnS+eluBUP1RJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SlzAXgZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=spo7mqQ+ikjzfCCHzEF3HYGxkVA0xb6Nwt3vjo3EdQsRW8E+fNcOJZmVbI0SixOZlFDB6jNJqWlnQHoJ1V36husCkyvlTQfwzV2vlBf5virPM2KiaOuPVIBWZQ5rR9SBoNakWqPmLjoRN4I9hKKqX69ptUXubUXNV2cAGWcHruk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ibb9Mmzv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SlzAXgZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3411C4CEFB;
-	Fri, 21 Nov 2025 13:45:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ibb9Mmzv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC174C4CEF1;
+	Fri, 21 Nov 2025 13:46:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732759;
-	bh=lqQpN0WGg4mzrBFoaBZitWCJTLHUgg+OZiUa0v6nJtQ=;
+	s=korg; t=1763732762;
+	bh=ka/3wg+t3rnXbC+mQf0+XG9nRfaedVneH9nrT+YgsCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlzAXgZIARnmY/dzdezGrBlpjkkuR5RucuZQA9NjYyb87VUPJV/li9D93WNaZc7of
-	 ME7yq7lj7nntdhrSmWM96bSyFEBV5bD+kvqaEVCjjC719/ZeCVL2BHUrXW6AP2Mwct
-	 teonxOg95dZQRv94Fz39fLrgfkmjGWNG2Vjglp/A=
+	b=Ibb9Mmzvky/l2GcK8XjmrJ0LMIIrQT+LfF5godcxKdVKCPKxTo+4/nP5Kr/y4QpBq
+	 YxIVJK9heBiioRWwb4brFaPMOVAKmRfR95+qXZWcJ9VjB2/sG0dRIAGI3Li0rIs89l
+	 8UATTccKzPWl/JXGOiZ0VHrWpD4PAxzG4x6icTzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 206/529] scsi: ufs: host: mediatek: Enhance recovery on hibernation exit failure
-Date: Fri, 21 Nov 2025 14:08:25 +0100
-Message-ID: <20251121130238.347673232@linuxfoundation.org>
+Subject: [PATCH 6.6 233/529] drm/amdgpu: Use memdup_array_user in amdgpu_cs_wait_fences_ioctl
+Date: Fri, 21 Nov 2025 14:08:52 +0100
+Message-ID: <20251121130239.309983075@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,96 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit faac32d4ece30609f1a0930ca0ae951cf6dc1786 ]
+[ Upstream commit dea75df7afe14d6217576dbc28cc3ec1d1f712fb ]
 
-Improve the recovery process for hibernation exit failures. Trigger the
-error handler and break the suspend operation to ensure effective
-recovery from hibernation errors. Activate the error handling mechanism
-by ufshcd_force_error_recovery and scheduling the error handler work.
+Replace kmalloc_array() + copy_from_user() with memdup_array_user().
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This shrinks the source code and improves separation between the kernel
+and userspace slabs.
+
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c       |  3 ++-
- drivers/ufs/host/ufs-mediatek.c | 14 +++++++++++---
- include/ufs/ufshcd.h            |  1 +
- 3 files changed, 14 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 2080b251580c8..1e08bf4dfb034 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -6341,13 +6341,14 @@ void ufshcd_schedule_eh_work(struct ufs_hba *hba)
- 	}
- }
- 
--static void ufshcd_force_error_recovery(struct ufs_hba *hba)
-+void ufshcd_force_error_recovery(struct ufs_hba *hba)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+index 13c97ba7a820b..958034bc3b6d5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
+@@ -1732,30 +1732,21 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
  {
- 	spin_lock_irq(hba->host->host_lock);
- 	hba->force_reset = true;
- 	ufshcd_schedule_eh_work(hba);
- 	spin_unlock_irq(hba->host->host_lock);
- }
-+EXPORT_SYMBOL_GPL(ufshcd_force_error_recovery);
+ 	struct amdgpu_device *adev = drm_to_adev(dev);
+ 	union drm_amdgpu_wait_fences *wait = data;
+-	uint32_t fence_count = wait->in.fence_count;
+-	struct drm_amdgpu_fence *fences_user;
+ 	struct drm_amdgpu_fence *fences;
+ 	int r;
  
- static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
- {
-diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
-index 6f2e5b83ff0c9..c80780ade5aa5 100644
---- a/drivers/ufs/host/ufs-mediatek.c
-+++ b/drivers/ufs/host/ufs-mediatek.c
-@@ -1363,7 +1363,7 @@ static void ufs_mtk_dev_vreg_set_lpm(struct ufs_hba *hba, bool lpm)
- 	}
- }
+ 	/* Get the fences from userspace */
+-	fences = kmalloc_array(fence_count, sizeof(struct drm_amdgpu_fence),
+-			GFP_KERNEL);
+-	if (fences == NULL)
+-		return -ENOMEM;
+-
+-	fences_user = u64_to_user_ptr(wait->in.fences);
+-	if (copy_from_user(fences, fences_user,
+-		sizeof(struct drm_amdgpu_fence) * fence_count)) {
+-		r = -EFAULT;
+-		goto err_free_fences;
+-	}
++	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
++				   wait->in.fence_count,
++				   sizeof(struct drm_amdgpu_fence));
++	if (IS_ERR(fences))
++		return PTR_ERR(fences);
  
--static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
-+static int ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
- {
- 	int ret;
+ 	if (wait->in.wait_all)
+ 		r = amdgpu_cs_wait_all_fences(adev, filp, wait, fences);
+ 	else
+ 		r = amdgpu_cs_wait_any_fence(adev, filp, wait, fences);
  
-@@ -1374,8 +1374,16 @@ static void ufs_mtk_auto_hibern8_disable(struct ufs_hba *hba)
- 	ufs_mtk_wait_idle_state(hba, 5);
+-err_free_fences:
+ 	kfree(fences);
  
- 	ret = ufs_mtk_wait_link_state(hba, VS_LINK_UP, 100);
--	if (ret)
-+	if (ret) {
- 		dev_warn(hba->dev, "exit h8 state fail, ret=%d\n", ret);
-+
-+		ufshcd_force_error_recovery(hba);
-+
-+		/* trigger error handler and break suspend */
-+		ret = -EBUSY;
-+	}
-+
-+	return ret;
- }
- 
- static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
-@@ -1386,7 +1394,7 @@ static int ufs_mtk_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op,
- 
- 	if (status == PRE_CHANGE) {
- 		if (ufshcd_is_auto_hibern8_supported(hba))
--			ufs_mtk_auto_hibern8_disable(hba);
-+			return ufs_mtk_auto_hibern8_disable(hba);
- 		return 0;
- 	}
- 
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index e9db9682316a2..9eaf47dcc7277 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1425,5 +1425,6 @@ int __ufshcd_write_ee_control(struct ufs_hba *hba, u32 ee_ctrl_mask);
- int ufshcd_write_ee_control(struct ufs_hba *hba);
- int ufshcd_update_ee_control(struct ufs_hba *hba, u16 *mask,
- 			     const u16 *other_mask, u16 set, u16 clr);
-+void ufshcd_force_error_recovery(struct ufs_hba *hba);
- 
- #endif /* End of Header */
+ 	return r;
 -- 
 2.51.0
 
