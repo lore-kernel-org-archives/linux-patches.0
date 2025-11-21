@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA3734F49D;
-	Fri, 21 Nov 2025 13:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E3134FF41;
+	Fri, 21 Nov 2025 13:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732984; cv=none; b=XOL4zZhfc2ZJZVe/Rx6Ayln0tmT69l9KV0RrmrSx483cbrxwYVPUBK/ezWulun/e/aTADmBPmM3FC/FVD7JFapw7CjWlds1bjXjzTr6my/c3EEN8CBsjq8JDENFmna3cDc7ROGm8B4BpJxZ2MEDESW+lvetfHuRbYhUulmBmi64=
+	t=1763732987; cv=none; b=ZTN+UitF13ujIHi32B/D/9zBYNV0ayLcW30UYgnu08lWvKF8ONQTSG+RYjEn8viXmhqUuLM3o8fbJ2bT0tEaND1wI2hHVptDJxoZXpcNMWPZ5IC8peZAISThWcWQjVOMjbzxIeQCJgutpV+yxStKnLNMp6XuwLEebLle1tNDMMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732984; c=relaxed/simple;
-	bh=ATXdDLeGyL2K7WfD9Bu0DG5d7drfAT47G9qO+1bk1mQ=;
+	s=arc-20240116; t=1763732987; c=relaxed/simple;
+	bh=9krEOu6Qg4o35OZhyhjK9yja6YwW3LImjwI47Nokyv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sd2K8Ivi6DJQIP4p9iQPv5uNsfi5ooU61HYpCtfz6g3wRew4q8XsM57gm1mOPTBpR5tgViuoqPXXG49o8GaNyQbukB9sBwM2JX6I9fM8hPWvwB7GEIMr2OAPoTvtWjg0MmTj9FpCmOaqKildUT9u1fX/6O6J0Si24IIjngucBhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XOeMUDlU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=goc9fD78Opp2XNZWP0FD1QMhTiXq7HeXHaByhiSoJOeeUfR7bevaG7xdHdv/U9rRgCIzahJpIKK8BhI+TcCa+o0vRUDw8K5Gkr0B0ub+F8FjDuXMsyHF8KO7hEWpEwCjn7api5w42iPcRdaJr3wHGmX8pLSc85gDat4HubbE/oY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QYOGGa34; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XOeMUDlU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8426C4CEF1;
-	Fri, 21 Nov 2025 13:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QYOGGa34"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA8BC4CEF1;
+	Fri, 21 Nov 2025 13:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732984;
-	bh=ATXdDLeGyL2K7WfD9Bu0DG5d7drfAT47G9qO+1bk1mQ=;
+	s=korg; t=1763732986;
+	bh=9krEOu6Qg4o35OZhyhjK9yja6YwW3LImjwI47Nokyv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOeMUDlUY44YeKmNRhDJPApIpoPRMC58ZByXgGprvI8fiIyW2mZvbUwBps5sOTGAt
-	 fnJNMEcAfksjSjFWzq+/LUG2srguvrFo7ssUdoIHr5GgkiiJJhxbGFa3KEcGsCy7oy
-	 CxQ30ljiVf5o/SnMLZ7XJ/HQCiK/UfovxBqNxs8U=
+	b=QYOGGa34Mr2fitChRWjwlDukmdNXSCRkM1pS41A010sn4huafYCocOJgEiYdYNi0N
+	 PQSSbAvr2ikq8v3wZbrLYg6bIs3FFn+J8NwI3g2BhAT3TxfPQK/SMFTqxu+8utchro
+	 qyEAG/pb/Ncxh7Xd/Kgm0GI6FhIV5hLJQ+QAs2yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josua Mayer <josua@solid-run.com>,
-	Bruno Thomsen <bruno.thomsen@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Cristian Birsan <cristian.birsan@microchip.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 309/529] rtc: pcf2127: clear minute/second interrupt
-Date: Fri, 21 Nov 2025 14:10:08 +0100
-Message-ID: <20251121130242.018594795@linuxfoundation.org>
+Subject: [PATCH 6.6 310/529] ARM: at91: pm: save and restore ACR during PLL disable/enable
+Date: Fri, 21 Nov 2025 14:10:09 +0100
+Message-ID: <20251121130242.053680500@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,68 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josua Mayer <josua@solid-run.com>
+From: Nicolas Ferre <nicolas.ferre@microchip.com>
 
-[ Upstream commit a6f1a4f05970664004a9370459c6799c1b2f2dcf ]
+[ Upstream commit 0c01fe49651d387776abed6a28541e80c8a93319 ]
 
-PCF2127 can generate interrupt every full second or minute configured
-from control and status register 1, bits MI (1) and SI (0).
+Add a new word in assembly to store ACR value during the calls
+to at91_plla_disable/at91_plla_enable macros and use it.
 
-On interrupt control register 2 bit MSF (7) is set and must be cleared
-to continue normal operation.
-
-While the driver never enables this interrupt on its own, users or
-firmware may do so - e.g. as an easy way to test the interrupt.
-
-Add preprocessor definition for MSF bit and include it in the irq
-bitmask to ensure minute and second interrupts are cleared when fired.
-
-This fixes an issue where the rtc enters a test mode and becomes
-unresponsive after a second interrupt has fired and is not cleared in
-time. In this state register writes to control registers have no
-effect and the interrupt line is kept asserted [1]:
-
-[1] userspace commands to put rtc into unresponsive state:
-$ i2cget -f -y 2 0x51 0x00
-0x04
-$ i2cset -f -y 2 0x51 0x00 0x05 # set bit 0 SI
-$ i2cget -f -y 2 0x51 0x00
-0x84 # bit 8 EXT_TEST set
-$ i2cset -f -y 2 0x51 0x00 0x05 # try overwrite control register
-$ i2cget -f -y 2 0x51 0x00
-0x84 # no change
-
-Signed-off-by: Josua Mayer <josua@solid-run.com>
-Reviewed-by: Bruno Thomsen <bruno.thomsen@gmail.com>
-Link: https://lore.kernel.org/r/20250825-rtc-irq-v1-1-0133319406a7@solid-run.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+[cristian.birsan@microchip.com: remove ACR_DEFAULT_PLLA loading]
+Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
+Link: https://lore.kernel.org/r/20250827145427.46819-4-nicolas.ferre@microchip.com
+Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf2127.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm/mach-at91/pm_suspend.S | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
-index 502571f0c203f..e793c019fb9d7 100644
---- a/drivers/rtc/rtc-pcf2127.c
-+++ b/drivers/rtc/rtc-pcf2127.c
-@@ -41,6 +41,7 @@
- #define PCF2127_BIT_CTRL2_AF			BIT(4)
- #define PCF2127_BIT_CTRL2_TSF2			BIT(5)
- #define PCF2127_BIT_CTRL2_WDTF			BIT(6)
-+#define PCF2127_BIT_CTRL2_MSF			BIT(7)
- /* Control register 3 */
- #define PCF2127_REG_CTRL3		0x02
- #define PCF2127_BIT_CTRL3_BLIE			BIT(0)
-@@ -94,7 +95,8 @@
- #define PCF2127_CTRL2_IRQ_MASK ( \
- 		PCF2127_BIT_CTRL2_AF | \
- 		PCF2127_BIT_CTRL2_WDTF | \
--		PCF2127_BIT_CTRL2_TSF2)
-+		PCF2127_BIT_CTRL2_TSF2 | \
-+		PCF2127_BIT_CTRL2_MSF)
+diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
+index 94dece1839af3..99aaf5cf89696 100644
+--- a/arch/arm/mach-at91/pm_suspend.S
++++ b/arch/arm/mach-at91/pm_suspend.S
+@@ -689,6 +689,10 @@ sr_dis_exit:
+ 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
+ 	str	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
  
- #define PCF2127_MAX_TS_SUPPORTED	4
++	/* save acr */
++	ldr	tmp2, [pmc, #AT91_PMC_PLL_ACR]
++	str	tmp2, .saved_acr
++
+ 	/* save div. */
+ 	mov	tmp1, #0
+ 	ldr	tmp2, [pmc, #AT91_PMC_PLL_CTRL0]
+@@ -758,7 +762,7 @@ sr_dis_exit:
+ 	str	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
  
+ 	/* step 2. */
+-	ldr	tmp1, =AT91_PMC_PLL_ACR_DEFAULT_PLLA
++	ldr	tmp1, .saved_acr
+ 	str	tmp1, [pmc, #AT91_PMC_PLL_ACR]
+ 
+ 	/* step 3. */
+@@ -1134,6 +1138,8 @@ ENDPROC(at91_pm_suspend_in_sram)
+ 	.word 0
+ .saved_mckr:
+ 	.word 0
++.saved_acr:
++	.word 0
+ .saved_pllar:
+ 	.word 0
+ .saved_sam9_lpr:
 -- 
 2.51.0
 
