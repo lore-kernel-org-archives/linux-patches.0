@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08A152DCF55;
-	Fri, 21 Nov 2025 13:52:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E881C5D77;
+	Fri, 21 Nov 2025 13:52:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733172; cv=none; b=hrdM5IAr5VbTP1HMKIG9Q462IijQJa5uGgi1LmqyC/UunMqqh5m0A/2ABYhtSWcdW/CEpHyCqw6VaR/8RjO/xJfQ4AyBhgWGn/lsrzkrKEWpYxytRkshNoEwRATb1k5tGZombj5C1H0u+dZKajj6SekjijQY3JnOl47mk7CQmn8=
+	t=1763733175; cv=none; b=uKms8FCdFHbECFcOZ6UL6yOS1yttKLgpSX95Dou0WYj4WsZCI89w5Gf4IbJ5Jpb+b78UWeChQeZIrl8dEUTZefwb6mHW7qMYe8lAJaMCZcDnOp71NiN0kqGBmLIkhCevEWhHBByV2DRWEpEmQn7pgGafEWgxJBQQRF1apCBPKNA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733172; c=relaxed/simple;
-	bh=jjd+QWFKDXc2TH55UK05l50TZ9N+ASCqE/uznQwb1wM=;
+	s=arc-20240116; t=1763733175; c=relaxed/simple;
+	bh=rqfZ8lVoOHbbZoPyTCp+VRrtVhwSWL+VbAC2IV3tQg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phOnKgqWzpAm8lrDOKiFdyW8pkditSo6cNeKA7EfoDHChImFkp0M9yKsOftaIBIAUHntLS0DYM+NRha/wJsNCRte3hVZy4qCpD6vg6HRFFNZyLhoe3Cz4VMbuZU+v6ySM1L8V95Vg7BaMVSAfYXZU+mHbQK/DQjom9Eejc1SDXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4z5w2cQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b8Yx9lvcmCj2EpWAggh3CLqnZqvCcUVlF9S4uWMRUmTgn/tyIIlnN0oPTCXjQDh69lsPGxuB9usPCyNuSHh840M7Ik4v61wwmzQpipBaU1PmAPQFWUQYM8/R8qMR7TM2h5dcInIKQCwKjTvyBXWjP7OBoFMdSqL/R5K2gfh+AFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQFxbUoA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4z5w2cQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C9BC4CEF1;
-	Fri, 21 Nov 2025 13:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQFxbUoA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E6EC4CEF1;
+	Fri, 21 Nov 2025 13:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733171;
-	bh=jjd+QWFKDXc2TH55UK05l50TZ9N+ASCqE/uznQwb1wM=;
+	s=korg; t=1763733174;
+	bh=rqfZ8lVoOHbbZoPyTCp+VRrtVhwSWL+VbAC2IV3tQg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4z5w2cQO9Dth17vihU7EzRFoeQlJ4hmq3ToKKZtfn20Sc6QlKgAWtc29z3gtAgyQ
-	 XVOA72uLA7+iUuo1OsZjNQyQ8yGPDUlaPH88R+cvjS255t73+6RntywEpjk+eXRPx9
-	 YEqtDLQpUfOnvD8UNPR4wa+jHrQWAOoKKkA+dQ6A=
+	b=PQFxbUoA+oZ5um62spm/oxvCFGPvIxt61FeTCKHdtW9gMnwAsgdiH7lktj+nKMP62
+	 TT8myTMRZ54WZVBOMXJI755rkYFCWbItGYMfcwIhRIth4g3vD/3Zy5Wl7WJoHm6xle
+	 pc90fBVnFw0WKSGqb6iCe+bRxgzYpXunAWMBteRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Xin Long <lucien.xin@gmail.com>,
+	Stefan Wiehler <stefan.wiehler@nokia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 376/529] selftests: netdevsim: set test timeout to 10 minutes
-Date: Fri, 21 Nov 2025 14:11:15 +0100
-Message-ID: <20251121130244.405004126@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 350/529] sctp: Hold sock lock while iterating over address list
+Date: Fri, 21 Nov 2025 14:10:49 +0100
+Message-ID: <20251121130243.484613590@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,32 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Stefan Wiehler <stefan.wiehler@nokia.com>
 
-commit afbf75e8da8ce8a0698212953d350697bb4355a6 upstream.
+[ Upstream commit f1fc201148c7e684c10a72b6a3375597f28d1ef6 ]
 
-The longest running netdevsim test, nexthop.sh, currently takes
-5 min to finish. Around 260s to be exact, and 310s on a debug kernel.
-The default timeout in selftest is 45sec, so we need an explicit
-config. Give ourselves some headroom and use 10min.
+Move address list traversal in inet_assoc_attr_size() under the sock
+lock to avoid holding the RCU read lock.
 
-Commit under Fixes isn't really to "blame" but prior to that
-netdevsim tests weren't integrated with kselftest infra
-so blaming the tests themselves doesn't seem right, either.
-
-Fixes: 8ff25dac88f6 ("netdevsim: add Makefile for selftests")
+Suggested-by: Xin Long <lucien.xin@gmail.com>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251028161506.3294376-4-stefan.wiehler@nokia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/netdevsim/settings |    1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 tools/testing/selftests/drivers/net/netdevsim/settings
+ net/sctp/diag.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- /dev/null
-+++ b/tools/testing/selftests/drivers/net/netdevsim/settings
-@@ -0,0 +1 @@
-+timeout=600
+diff --git a/net/sctp/diag.c b/net/sctp/diag.c
+index 7799e5abdbd05..ad3e1462a896e 100644
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -230,14 +230,15 @@ struct sctp_comm_param {
+ 	bool net_admin;
+ };
+ 
+-static size_t inet_assoc_attr_size(struct sctp_association *asoc)
++static size_t inet_assoc_attr_size(struct sock *sk,
++				   struct sctp_association *asoc)
+ {
+ 	int addrlen = sizeof(struct sockaddr_storage);
+ 	int addrcnt = 0;
+ 	struct sctp_sockaddr_entry *laddr;
+ 
+ 	list_for_each_entry_rcu(laddr, &asoc->base.bind_addr.address_list,
+-				list)
++				list, lockdep_sock_is_held(sk))
+ 		addrcnt++;
+ 
+ 	return	  nla_total_size(sizeof(struct sctp_info))
+@@ -263,11 +264,14 @@ static int sctp_sock_dump_one(struct sctp_endpoint *ep, struct sctp_transport *t
+ 	if (err)
+ 		return err;
+ 
+-	rep = nlmsg_new(inet_assoc_attr_size(assoc), GFP_KERNEL);
+-	if (!rep)
++	lock_sock(sk);
++
++	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
++	if (!rep) {
++		release_sock(sk);
+ 		return -ENOMEM;
++	}
+ 
+-	lock_sock(sk);
+ 	if (ep != assoc->ep) {
+ 		err = -EAGAIN;
+ 		goto out;
+-- 
+2.51.0
+
 
 
