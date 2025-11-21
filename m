@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC6A3246FD;
-	Fri, 21 Nov 2025 13:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547B92765FF;
+	Fri, 21 Nov 2025 13:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731014; cv=none; b=Npm3dZG1pewAf/o/NGA1JIciLog/KRxWgoVNbuQCQoXlZID6rJSY1prIriJrbGyYr+gnS8SouUCDEsG1lLAXNMSlC9K1/Bep2m8sm+Jsbpms6do6P7VsQkANh/CeYzpHvZezPdIHNYStWKT/1CYVCrbcVaEVUKoMSfL1w+HSLy4=
+	t=1763731017; cv=none; b=OBHgEqHPxOGwkGWrMG2xpIBBD5bGq8ouTta015qdp2pEhXArEdr9jR2grN1ZJj6PXZxawa1zy3WhtDzcBaTweoyRS9OZT4dHEbogE+i0nxVLUwYU5yjkuauf4z+l+FyOEQ4xj0v+VD+U7fvFvziHWrpH8zA37TfMxVqTqm+I0do=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731014; c=relaxed/simple;
-	bh=XpgHAjJtyCaJZk9HcaFTq7HticZo/+n7bHOeCN4GghE=;
+	s=arc-20240116; t=1763731017; c=relaxed/simple;
+	bh=JSf3zAIhAvHzXaLV4Y7h12E0Fi6AdWtNtd2JnFS0/WE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NIyK6SLbNDv0r4vB8AlV3xRzzFgS0NeYI4xh7anBMcuUoRJ9I72Ic1kGE6K1EUzJBw62GsTuMtFCBaqcYKsSaCe16Bl0x3I+LDKpzvej5thHPJVqaWmZ1EOBBiCHbXKOrv07p7oTabyOcz+VHehIyMScEnfW9pyeLv0Gn27q0EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yF4yP5KS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bE3FSMbvrycbTrugc3aA4fhKTc7ING80PFlVW231pGPygwjuULAiJ7BG85DgwG1mvMzXdfWpF+iZS/AopDA3vHxhzVWhdQ+PqRqRqh9DKZQG6eMiCG14squzAGJ6Vz8F7l85cxJZyi8M+a75Qc1Oczz7p0nbAy4GFAm3pLO8ktw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRl9wL8q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yF4yP5KS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D571C4CEF1;
-	Fri, 21 Nov 2025 13:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRl9wL8q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CE2BC4CEF1;
+	Fri, 21 Nov 2025 13:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731014;
-	bh=XpgHAjJtyCaJZk9HcaFTq7HticZo/+n7bHOeCN4GghE=;
+	s=korg; t=1763731016;
+	bh=JSf3zAIhAvHzXaLV4Y7h12E0Fi6AdWtNtd2JnFS0/WE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yF4yP5KSSRnxKjjD88ZVJEObA29UNtPRHRlY3elAzZPgAcnZFCb8hvogYasbXSxhG
-	 Yxxra1BTedlMuKzrmcbI4hcivf/XdozqF6BngaJxuaNzsj6yZFUdBBnURRnAhgPCOJ
-	 NF4JUfX4UF+1zrvW6vXPn3vaZ7uWNAqAoMA25E+c=
+	b=rRl9wL8qj000bwX/pp56fp+b8WI0mjzy3xjQBGYtqKuPF9A4SmkAbH7N0IV/hA2Tu
+	 mq3TfHAey1auuUYZaBZxKNuPlOe84cVM83gfZLhcEPq+mo1dcNBSAIryseVJJcNORi
+	 Y6W3qz1sM0hFhkUv7KEkFeNjILhRZ68kwr2UVseQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xin Long <lucien.xin@gmail.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 061/247] sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto
-Date: Fri, 21 Nov 2025 14:10:08 +0100
-Message-ID: <20251121130156.793376157@linuxfoundation.org>
+Subject: [PATCH 6.17 062/247] net: dsa: tag_brcm: do not mark link local traffic as offloaded
+Date: Fri, 21 Nov 2025 14:10:09 +0100
+Message-ID: <20251121130156.828482482@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,83 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 1534ff77757e44bcc4b98d0196bc5c0052fce5fa ]
+[ Upstream commit 762e7e174da91cf4babfe77e45bc6b67334b1503 ]
 
-syzbot reported a possible shift-out-of-bounds [1]
+Broadcom switches locally terminate link local traffic and do not
+forward it, so we should not mark it as offloaded.
 
-Blamed commit added rto_alpha_max and rto_beta_max set to 1000.
+In some situations we still want/need to flood this traffic, e.g. if STP
+is disabled, or it is explicitly enabled via the group_fwd_mask. But if
+the skb is marked as offloaded, the kernel will assume this was already
+done in hardware, and the packets never reach other bridge ports.
 
-It is unclear if some sctp users are setting very large rto_alpha
-and/or rto_beta.
+So ensure that link local traffic is never marked as offloaded, so that
+the kernel can forward/flood these packets in software if needed.
 
-In order to prevent user regression, perform the test at run time.
+Since the local termination in not configurable, check the destination
+MAC, and never mark packets as offloaded if it is a link local ether
+address.
 
-Also add READ_ONCE() annotations as sysctl values can change under us.
+While modern switches set the tag reason code to BRCM_EG_RC_PROT_TERM
+for trapped link local traffic, they also set it for link local traffic
+that is flooded (01:80:c2:00:00:10 to 01:80:c2:00:00:2f), so we cannot
+use it and need to look at the destination address for them as well.
 
-[1]
-
-UBSAN: shift-out-of-bounds in net/sctp/transport.c:509:41
-shift exponent 64 is too large for 32-bit type 'unsigned int'
-CPU: 0 UID: 0 PID: 16704 Comm: syz.2.2320 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
-  ubsan_epilogue lib/ubsan.c:233 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x27f/0x420 lib/ubsan.c:494
-  sctp_transport_update_rto.cold+0x1c/0x34b net/sctp/transport.c:509
-  sctp_check_transmitted+0x11c4/0x1c30 net/sctp/outqueue.c:1502
-  sctp_outq_sack+0x4ef/0x1b20 net/sctp/outqueue.c:1338
-  sctp_cmd_process_sack net/sctp/sm_sideeffect.c:840 [inline]
-  sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1372 [inline]
-
-Fixes: b58537a1f562 ("net: sctp: fix permissions for rto_alpha and rto_beta knobs")
-Reported-by: syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/690c81ae.050a0220.3d0d33.014e.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251106111054.3288127-1-edumazet@google.com
+Fixes: 964dbf186eaa ("net: dsa: tag_brcm: add support for legacy tags")
+Fixes: 0e62f543bed0 ("net: dsa: Fix duplicate frames flooded by learning")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251109134635.243951-1-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/transport.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/dsa/tag_brcm.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/transport.c b/net/sctp/transport.c
-index 4d258a6e8033c..e0cf9a41e0e43 100644
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -495,6 +495,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
+diff --git a/net/dsa/tag_brcm.c b/net/dsa/tag_brcm.c
+index d9c77fa553b53..eadb358179ce3 100644
+--- a/net/dsa/tag_brcm.c
++++ b/net/dsa/tag_brcm.c
+@@ -176,7 +176,8 @@ static struct sk_buff *brcm_tag_rcv_ll(struct sk_buff *skb,
+ 	/* Remove Broadcom tag and update checksum */
+ 	skb_pull_rcsum(skb, BRCM_TAG_LEN);
  
- 	if (tp->rttvar || tp->srtt) {
- 		struct net *net = tp->asoc->base.net;
-+		unsigned int rto_beta, rto_alpha;
- 		/* 6.3.1 C3) When a new RTT measurement R' is made, set
- 		 * RTTVAR <- (1 - RTO.Beta) * RTTVAR + RTO.Beta * |SRTT - R'|
- 		 * SRTT <- (1 - RTO.Alpha) * SRTT + RTO.Alpha * R'
-@@ -506,10 +507,14 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 		 * For example, assuming the default value of RTO.Alpha of
- 		 * 1/8, rto_alpha would be expressed as 3.
- 		 */
--		tp->rttvar = tp->rttvar - (tp->rttvar >> net->sctp.rto_beta)
--			+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> net->sctp.rto_beta);
--		tp->srtt = tp->srtt - (tp->srtt >> net->sctp.rto_alpha)
--			+ (rtt >> net->sctp.rto_alpha);
-+		rto_beta = READ_ONCE(net->sctp.rto_beta);
-+		if (rto_beta < 32)
-+			tp->rttvar = tp->rttvar - (tp->rttvar >> rto_beta)
-+				+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> rto_beta);
-+		rto_alpha = READ_ONCE(net->sctp.rto_alpha);
-+		if (rto_alpha < 32)
-+			tp->srtt = tp->srtt - (tp->srtt >> rto_alpha)
-+				+ (rtt >> rto_alpha);
- 	} else {
- 		/* 6.3.1 C2) When the first RTT measurement R is made, set
- 		 * SRTT <- R, RTTVAR <- R/2.
+-	dsa_default_offload_fwd_mark(skb);
++	if (likely(!is_link_local_ether_addr(eth_hdr(skb)->h_dest)))
++		dsa_default_offload_fwd_mark(skb);
+ 
+ 	return skb;
+ }
+@@ -250,7 +251,8 @@ static struct sk_buff *brcm_leg_tag_rcv(struct sk_buff *skb,
+ 	/* Remove Broadcom tag and update checksum */
+ 	skb_pull_rcsum(skb, len);
+ 
+-	dsa_default_offload_fwd_mark(skb);
++	if (likely(!is_link_local_ether_addr(eth_hdr(skb)->h_dest)))
++		dsa_default_offload_fwd_mark(skb);
+ 
+ 	dsa_strip_etype_header(skb, len);
+ 
 -- 
 2.51.0
 
