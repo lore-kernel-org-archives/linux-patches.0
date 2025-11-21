@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058E93F9D2;
-	Fri, 21 Nov 2025 13:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D37831B124;
+	Fri, 21 Nov 2025 13:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731858; cv=none; b=DJhqBraSteUuexJr/zseYpu3d8DpIBX9US22uoQ8yj4+c/+P0xauCipy7d0cXppNiNz2AGPcXV+Qf94wkCW+2qnjJStBFFxfMq4Kk2DC88JVZ10qR5E5vUp+O7lv/yXmY/n6cec8dVzBfkbjMYGYxuwTAQyaWgBMjlQsp+OpLWY=
+	t=1763731861; cv=none; b=sU8XZqvdOTlEIMX57yQ4ky7mgjEDc5DkL6CPI7sI3CMcMzbxDK/lmDbEekZHW2fKdwnYfK3FB5pXQAs5oZFdneE2N13WW558bn+ENLsolJ6ENcWo1twew3BL9aD4nnm1fkcLBacxvOGeWs8eS3e1ejk6h5gCg/w9gwiEHFfLPt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731858; c=relaxed/simple;
-	bh=qmKRMspvxxmjAZi1q6yzMrYQRluPFc3oSzIr4+L3gCI=;
+	s=arc-20240116; t=1763731861; c=relaxed/simple;
+	bh=RzqIhO8No9nhu/rk0Fm4bpbHk3FuI928L89JYg+PNBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cuhlDclHdoE3rg/6f4vSritm/dNGG5EOv2ZUhW3y1eS7Cjhm65N7/WPE1I2RW9Kk425FKuAExKSkdrT40AwrbTCWhD2GTXnTIna3Cb8ogBj5VV/2aqbCut2MlatX7IvebAzMdYtRZKHYdfetuRVAnoK7Jpa9ysZj18Cwrt1KrOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fn4/EyyU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMaK0Ae47XR47kwrmpLLnaNaXzFrTSrtYR4fFB++ptLPNO4PAfmanI3l4vTx7VWhwpDomObtRXSyHrI12eHhHxJseeuKDutYfVdNkQcEEwPmAmHHk5PwGI3mDCyqkYWSujrAS3vlfniTyF6nmvzG3WGl2yYtpeUB9owdmWLra6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHGB1fNI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fn4/EyyU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82EDDC4CEF1;
-	Fri, 21 Nov 2025 13:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHGB1fNI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7464C4CEF1;
+	Fri, 21 Nov 2025 13:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731857;
-	bh=qmKRMspvxxmjAZi1q6yzMrYQRluPFc3oSzIr4+L3gCI=;
+	s=korg; t=1763731861;
+	bh=RzqIhO8No9nhu/rk0Fm4bpbHk3FuI928L89JYg+PNBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fn4/EyyUlRaQIcJfh1ifI3g5tpf0o3H+9RaakqUeBfe8QOlOcH37vdQg0GmVgtP7K
-	 SgoYj5jOEK76uvLJM1Y71fXVVc2R+sJTZNnQ6j2KJJhD4HeqioptD39oCX6Oyk/9w6
-	 C7vq7bNAs9ZEGpPv+ORLkL8PwWBED50m0egDULjU=
+	b=EHGB1fNI3n4gO4/DcRQdgZGRaq/2PnJCHfK8sp9mXA4cC/Es3a+ggMPnSkVi3SYvC
+	 Zi6s9G6bmoqVAfDgvl8ClOVpXKIHcbjDPbtVxm4bdL0xb2SnFOf+nLzZ7q7a9fmF3s
+	 UUCaG8Y4xhzxmzemK83WHioeypl2SGaA2ir+IkJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Jiri Kosina <jkosina@suse.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chen Yu <xnguchen@sina.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 105/185] HID: uclogic: Fix potential memory leak in error path
-Date: Fri, 21 Nov 2025 14:12:12 +0100
-Message-ID: <20251121130147.662512985@linuxfoundation.org>
+Subject: [PATCH 6.12 106/185] net: dsa: sja1105: fix kasan out-of-bounds warning in sja1105_table_delete_entry()
+Date: Fri, 21 Nov 2025 14:12:13 +0100
+Message-ID: <20251121130147.698852173@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,36 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a78eb69d60ce893de48dd75f725ba21309131fc2 ]
+[ Upstream commit 5f2b28b79d2d1946ee36ad8b3dc0066f73c90481 ]
 
-In uclogic_params_ugee_v2_init_event_hooks(), the memory allocated for
-event_hook is not freed in the next error path. Fix that by freeing it.
+There are actually 2 problems:
+- deleting the last element doesn't require the memmove of elements
+  [i + 1, end) over it. Actually, element i+1 is out of bounds.
+- The memmove itself should move size - i - 1 elements, because the last
+  element is out of bounds.
 
-Fixes: a251d6576d2a ("HID: uclogic: Handle wireless device reconnection")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+The out-of-bounds element still remains out of bounds after being
+accessed, so the problem is only that we touch it, not that it becomes
+in active use. But I suppose it can lead to issues if the out-of-bounds
+element is part of an unmapped page.
+
+Fixes: 6666cebc5e30 ("net: dsa: sja1105: Add support for VLAN operations")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250318115716.2124395-4-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chen Yu <xnguchen@sina.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-params.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/dsa/sja1105/sja1105_static_config.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
-index ef26c7defcf61..89fa2610f02ba 100644
---- a/drivers/hid/hid-uclogic-params.c
-+++ b/drivers/hid/hid-uclogic-params.c
-@@ -1367,8 +1367,10 @@ static int uclogic_params_ugee_v2_init_event_hooks(struct hid_device *hdev,
- 	event_hook->hdev = hdev;
- 	event_hook->size = ARRAY_SIZE(reconnect_event);
- 	event_hook->event = kmemdup(reconnect_event, event_hook->size, GFP_KERNEL);
--	if (!event_hook->event)
-+	if (!event_hook->event) {
-+		kfree(event_hook);
- 		return -ENOMEM;
+diff --git a/drivers/net/dsa/sja1105/sja1105_static_config.c b/drivers/net/dsa/sja1105/sja1105_static_config.c
+index baba204ad62f6..2ac91fe2a79bc 100644
+--- a/drivers/net/dsa/sja1105/sja1105_static_config.c
++++ b/drivers/net/dsa/sja1105/sja1105_static_config.c
+@@ -1921,8 +1921,10 @@ int sja1105_table_delete_entry(struct sja1105_table *table, int i)
+ 	if (i > table->entry_count)
+ 		return -ERANGE;
+ 
+-	memmove(entries + i * entry_size, entries + (i + 1) * entry_size,
+-		(table->entry_count - i) * entry_size);
++	if (i + 1 < table->entry_count) {
++		memmove(entries + i * entry_size, entries + (i + 1) * entry_size,
++			(table->entry_count - i - 1) * entry_size);
 +	}
  
- 	list_add_tail(&event_hook->list, &p->event_hooks->list);
+ 	table->entry_count--;
  
 -- 
 2.51.0
