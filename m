@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75C434EF00;
-	Fri, 21 Nov 2025 13:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D0534EF04;
+	Fri, 21 Nov 2025 13:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733424; cv=none; b=l72+vHCpP88iPmvRj0VfC5P/xo35xhOSa9xF82q2huc/FZ4JvAiqYChnT7P/GpDoSbriD06iDw3xSmfz9jc9cRaD4uuE2hUjgA6rBaAU4G5IbiNKYOymjtozeSonCMaIo8cSYn177fH3H/5tCGbKuwEtvnLBIrmjKI6yl4TLKJE=
+	t=1763733427; cv=none; b=sH9JswB6gf3xB9b7KBm6qD0juhNxwjK4fwnIUKu/EPjgBQhhmZDiChGKo/9YYLdxIBwbQZP5egn6GHCjm201wmqsX3La7pxUVDR2sRvH4hetw8TyowyKOOAuRDGvQ9O+qrWP0XDqA1wCqFflJl3ekkFQO6ptjr0Vy8/K4aieBoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733424; c=relaxed/simple;
-	bh=cP+EtvAqhxgKt/cVfJoqdUmay9BA8b7epDabSZIbk8o=;
+	s=arc-20240116; t=1763733427; c=relaxed/simple;
+	bh=HBBzTiuHRHCjr6N5jEBnYakwN0zleI7S5HV6SiXTo1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gshE5D0TuGcZrpjcsgf0OoVLv3ZKKvbyuLRWKC3yU+AUBB5TQFnQAdElQxZClwg+KWwH2u6pvEg6cEzk/LEwy1Tt82c5mveCVfx+f/pi8v3/P3Ua0Vl4UaUJnSXbCpS+axcYf++V0AD9jNuEloaU3hpOXjp924vmIEnQk6P+0+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TaIk9+Cy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkpHG42uKUiVKXQb8Aopg7mMMKHU+Ii+5/kblidF02iFeNTQTZ4K7Y8LuCqNbDrX33YlSzEE4PH/z5Bld1GqZY/nSOc/qMigUD0QImYnDMt+46TFYSqM6n2j5DqSn6j7weAHPSv7v6e1tawBr5p1fau8xYx51hjT453DaXQbbpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bu7wTVEO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TaIk9+Cy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F2AAC116D0;
-	Fri, 21 Nov 2025 13:57:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bu7wTVEO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E717C4CEF1;
+	Fri, 21 Nov 2025 13:57:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733424;
-	bh=cP+EtvAqhxgKt/cVfJoqdUmay9BA8b7epDabSZIbk8o=;
+	s=korg; t=1763733427;
+	bh=HBBzTiuHRHCjr6N5jEBnYakwN0zleI7S5HV6SiXTo1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TaIk9+CyAa3XbWZjgB9FpzfSaj6ClKjtFtxwLUSUq22+3PCXPMtB2SrW/JI2onA43
-	 bDrQtgV0+aGOMEOkhyM1WIpwAkyRWLmGfxGWpXkzXvj6/GqlohYZmS4CVMF69OLEiB
-	 zHzkyJMyXamU6xNuOUlnXJ3yTp1pB4eF6q0yLQdo=
+	b=bu7wTVEOkuh4lEUsOP/rP59MXuzVajtqDHJC27geg7HykcnV5GX3WlqXjN8m24Rzm
+	 /LlaGpvNcgY85OCYJzTe7rQPOh9kiIqxSZzGlqTaVBMg7LODidqWHOFbWuHaM2qnIz
+	 jHi4tv6qcvBA+M8fivPBybfjvQ2P8FMt9rh+FHRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 456/529] netfilter: nf_tables: reject duplicate device on updates
-Date: Fri, 21 Nov 2025 14:12:35 +0100
-Message-ID: <20251121130247.235309028@linuxfoundation.org>
+	Joshua Rogers <linux@joshua.hu>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 465/529] ksmbd: close accepted socket when per-IP limit rejects connection
+Date: Fri, 21 Nov 2025 14:12:44 +0100
+Message-ID: <20251121130247.554835332@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,98 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit cf5fb87fcdaaaafec55dcc0dc5a9e15ead343973 upstream.
+commit 98a5fd31cbf72d46bf18e50b3ab0ce86d5f319a9 upstream.
 
-A chain/flowtable update with duplicated devices in the same batch is
-possible. Unfortunately, netdev event path only removes the first
-device that is found, leaving unregistered the hook of the duplicated
-device.
+When the per-IP connection limit is exceeded in ksmbd_kthread_fn(),
+the code sets ret = -EAGAIN and continues the accept loop without
+closing the just-accepted socket. That leaks one socket per rejected
+attempt from a single IP and enables a trivial remote DoS.
 
-Check if a duplicated device exists in the transaction batch, bail out
-with EEXIST in such case.
+Release client_sk before continuing.
 
-WARNING is hit when unregistering the hook:
+This bug was found with ZeroPath.
 
- [49042.221275] WARNING: CPU: 4 PID: 8425 at net/netfilter/core.c:340 nf_hook_entry_head+0xaa/0x150
- [49042.221375] CPU: 4 UID: 0 PID: 8425 Comm: nft Tainted: G S                  6.16.0+ #170 PREEMPT(full)
- [...]
- [49042.221382] RIP: 0010:nf_hook_entry_head+0xaa/0x150
-
-Fixes: 78d9f48f7f44 ("netfilter: nf_tables: add devices to existing flowtable")
-Fixes: b9703ed44ffb ("netfilter: nf_tables: support for adding new devices to an existing netdev chain")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ fs/smb/server/transport_tcp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 5ca1d775e976d..80443b4eaeff0 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2576,6 +2576,7 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 	struct nft_chain *chain = ctx->chain;
- 	struct nft_chain_hook hook = {};
- 	struct nft_stats *stats = NULL;
-+	struct nftables_pernet *nft_net;
- 	struct nft_hook *h, *next;
- 	struct nf_hook_ops *ops;
- 	struct nft_trans *trans;
-@@ -2616,6 +2617,20 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 				if (nft_hook_list_find(&basechain->hook_list, h)) {
- 					list_del(&h->list);
- 					kfree(h);
-+					continue;
-+				}
-+
-+				nft_net = nft_pernet(ctx->net);
-+				list_for_each_entry(trans, &nft_net->commit_list, list) {
-+					if (trans->msg_type != NFT_MSG_NEWCHAIN ||
-+					    trans->ctx.table != ctx->table ||
-+					    !nft_trans_chain_update(trans))
-+						continue;
-+
-+					if (nft_hook_list_find(&nft_trans_chain_hooks(trans), h)) {
-+						nft_chain_release_hook(&hook);
-+						return -EEXIST;
-+					}
- 				}
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -286,8 +286,11 @@ static int ksmbd_kthread_fn(void *p)
  			}
- 		} else {
-@@ -8493,6 +8508,7 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
- {
- 	const struct nlattr * const *nla = ctx->nla;
- 	struct nft_flowtable_hook flowtable_hook;
-+	struct nftables_pernet *nft_net;
- 	struct nft_hook *hook, *next;
- 	struct nft_trans *trans;
- 	bool unregister = false;
-@@ -8508,6 +8524,20 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
- 		if (nft_hook_list_find(&flowtable->hook_list, hook)) {
- 			list_del(&hook->list);
- 			kfree(hook);
-+			continue;
-+		}
-+
-+		nft_net = nft_pernet(ctx->net);
-+		list_for_each_entry(trans, &nft_net->commit_list, list) {
-+			if (trans->msg_type != NFT_MSG_NEWFLOWTABLE ||
-+			    trans->ctx.table != ctx->table ||
-+			    !nft_trans_flowtable_update(trans))
-+				continue;
-+
-+			if (nft_hook_list_find(&nft_trans_flowtable_hooks(trans), hook)) {
-+				err = -EEXIST;
-+				goto err_flowtable_update_hook;
-+			}
  		}
- 	}
+ 		up_read(&conn_list_lock);
+-		if (ret == -EAGAIN)
++		if (ret == -EAGAIN) {
++			/* Per-IP limit hit: release the just-accepted socket. */
++			sock_release(client_sk);
+ 			continue;
++		}
  
--- 
-2.51.0
-
+ skip_max_ip_conns_limit:
+ 
 
 
