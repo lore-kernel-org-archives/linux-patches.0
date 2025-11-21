@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74F129B78F;
-	Fri, 21 Nov 2025 13:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70A634D4ED;
+	Fri, 21 Nov 2025 13:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732438; cv=none; b=foDfmb5fJ0hcheRX78URoLRJHaDTfopHD8xdGG4gQ5oiEZXm1YKeC6v5EDbml4xX7D36JRNeCMUyCkFgi7/eChP6IVbtpkvZBqQiup1L0gi8pkBlJDKDc8nvXDNsvVCrYfY0/+qCCKNmUotN6WOLHMsrlVUqW6IFWZIHzrX1TFk=
+	t=1763732441; cv=none; b=ZESb4HephvA8VMyM7zHS/JfF20fW/R58Urz2BNtqczlco4nPOuIOLtRxnItPRdqYHvppCoug5JYUVJ2qMC+u00ruqTfds8mb8CpO9OSW2qiBanpIP8wt5fRmUCQgF4c4JwK+wysmMq/Y8uZP7v+Xi6/V1mXq41HNMKGDtQIbqQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732438; c=relaxed/simple;
-	bh=JyRT3oWd7G4jBnnGGb78UZ7O270YsHkO59wgUgNbd8w=;
+	s=arc-20240116; t=1763732441; c=relaxed/simple;
+	bh=8/KyKQrRnd3r2zpNUchCZO9YfuyptC5UZDGUnjyuTJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+4q7SeVUCQqkPPGOeiirNBlKS2W7nEC40O6ZsqmPKBrfQCcLOr57TbTEMUyUTfLNmQ4CguofSCu5OkPGNf0WJ8tnZqfCn51UNn70PRa4dQoqL/3KtetsTwpSW5Bn+HRDHV9dDXeE/kgsjQsaDSPpwqkEBpy3zRqPppVL7GpYhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZhQ0wdSB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqZfm3XcyRgsKoilRKrkvU5EzzDS31KE4PxAUEB+6JicTIq+CZg5abawZVJAyqsRKifWHJWNfqwC9oCKf762MaqIlXrxogaL8SHpP0gpG8v27cHSdfUzIZdfzDiemU2vDMFBoVMiBVengVtXLqB2vFUm5oqLX8CJ7qrbDap5c9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNZzwhPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZhQ0wdSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DD5C4CEF1;
-	Fri, 21 Nov 2025 13:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNZzwhPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 323F9C4CEF1;
+	Fri, 21 Nov 2025 13:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732438;
-	bh=JyRT3oWd7G4jBnnGGb78UZ7O270YsHkO59wgUgNbd8w=;
+	s=korg; t=1763732441;
+	bh=8/KyKQrRnd3r2zpNUchCZO9YfuyptC5UZDGUnjyuTJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhQ0wdSBQ4rVLESH7wGtgaayQKEjbheeFqY9R7uyPK9olMrD8wuMy/mKSg+2NiXMW
-	 DpB0kdvLdDiU6riXEf1jeb1HT/E8XqmAB73gON1DVYELolWuweI3yRWglVtq7CxtuH
-	 L5T5LGGbBdEQznQrTzxS6Ju1YvPZN6/CnGhY9Mvw=
+	b=LNZzwhPmimdOXdkPbeSh+PwOw/rj9PQTX/LsM+FpGN092/qOGj1Khu0rFGG6OZ+YG
+	 ieTWpQUXLQHqKfClyhVylfd8LMuQkBpTaB0nX45RSQj0Zj752PcDioSYR/sQqgpsI+
+	 T2vEAEUxsbc7castGlppUiKV+ZJ1JglgHfEoY/14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathishkumar S <sathishkumar.sundararaju@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Seyediman Seyedarab <ImanDevel@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 121/529] drm/amdgpu/jpeg: Hold pg_lock before jpeg poweroff
-Date: Fri, 21 Nov 2025 14:07:00 +0100
-Message-ID: <20251121130235.329223366@linuxfoundation.org>
+Subject: [PATCH 6.6 122/529] drm/nouveau: replace snprintf() with scnprintf() in nvkm_snprintbf()
+Date: Fri, 21 Nov 2025 14:07:01 +0100
+Message-ID: <20251121130235.364189710@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,40 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sathishkumar S <sathishkumar.sundararaju@amd.com>
+From: Seyediman Seyedarab <imandevel@gmail.com>
 
-[ Upstream commit 0e7581eda8c76d1ca4cf519631a4d4eb9f82b94c ]
+[ Upstream commit 6510b62fe9303aaf48ff136ff69186bcfc32172d ]
 
-Acquire jpeg_pg_lock before changes to jpeg power state
-and release it after power off from idle work handler.
+snprintf() returns the number of characters that *would* have been
+written, which can overestimate how much you actually wrote to the
+buffer in case of truncation. That leads to 'data += this' advancing
+the pointer past the end of the buffer and size going negative.
 
-Signed-off-by: Sathishkumar S <sathishkumar.sundararaju@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Switching to scnprintf() prevents potential buffer overflows and ensures
+consistent behavior when building the output string.
+
+Signed-off-by: Seyediman Seyedarab <ImanDevel@gmail.com>
+Link: https://lore.kernel.org/r/20250724195913.60742-1-ImanDevel@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/core/enum.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
-index 2ff2897fd1db6..cd8fa1164d540 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
-@@ -87,10 +87,12 @@ static void amdgpu_jpeg_idle_work_handler(struct work_struct *work)
- 			fences += amdgpu_fence_count_emitted(&adev->jpeg.inst[i].ring_dec[j]);
- 	}
- 
--	if (!fences && !atomic_read(&adev->jpeg.total_submission_cnt))
-+	if (!fences && !atomic_read(&adev->jpeg.total_submission_cnt)) {
-+		mutex_lock(&adev->jpeg.jpeg_pg_lock);
- 		amdgpu_device_ip_set_powergating_state(adev, AMD_IP_BLOCK_TYPE_JPEG,
- 						       AMD_PG_STATE_GATE);
--	else
-+		mutex_unlock(&adev->jpeg.jpeg_pg_lock);
-+	} else
- 		schedule_delayed_work(&adev->jpeg.idle_work, JPEG_IDLE_TIMEOUT);
- }
- 
+diff --git a/drivers/gpu/drm/nouveau/nvkm/core/enum.c b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+index b9581feb24ccb..a23b40b27b81b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/core/enum.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+@@ -44,7 +44,7 @@ nvkm_snprintbf(char *data, int size, const struct nvkm_bitfield *bf, u32 value)
+ 	bool space = false;
+ 	while (size >= 1 && bf->name) {
+ 		if (value & bf->mask) {
+-			int this = snprintf(data, size, "%s%s",
++			int this = scnprintf(data, size, "%s%s",
+ 					    space ? " " : "", bf->name);
+ 			size -= this;
+ 			data += this;
 -- 
 2.51.0
 
