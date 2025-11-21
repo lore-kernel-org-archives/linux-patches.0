@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC23E1F09B3;
-	Fri, 21 Nov 2025 13:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5694F274FE3;
+	Fri, 21 Nov 2025 13:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731674; cv=none; b=d1PDsg/JU7w6iY34Eot82Zqw6t8Uf17cbiyGCaEjL/hgKvmEFeggpFvRYY5LAXbP27qg/DRbuq/Q3OVUC+VDRoBc/3Qm8ThfyR8cOfQzvBR9pH83ruQJmlcnjLCMbRRCzH4loGvEAhOiMcE/a77fdmNAxGyzsPGUWxGthIuwu6w=
+	t=1763731676; cv=none; b=iXtW4R92X4f3hpsHvPSJHEtBOyKzNEOlJtXjllRpYfMGSejWyviS6KdQcnR3PxYhZzaIeQhw5gDTaeCNKMgksdDO6bEslZ3BFqxDpR6C68Uwz25oph8E1NjZ6efEoJyweeFm3dzqtOxhMZgTvPkuLUVDAUXIZRShMyUgzU5LAdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731674; c=relaxed/simple;
-	bh=ZTn0xEib5ArylGW3/frl3sW+F+Q45qidTGzIECFCWMY=;
+	s=arc-20240116; t=1763731676; c=relaxed/simple;
+	bh=KgeflNdAEJ2/RMKO3gYYB3TUWHxnBZcTt+0dXmcIHDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoTOipncsQYdYw0IAzjd4xessHudkSq3b6KN/TDvWGepuKpX1+BZN+lZ75Zt3BS4lMlrVOG3chsqOdVCuljgjj2mgcokua9qKBB21V8V8WktJgZwr4ctKWqxw4rXm7+z/7g51Lm9gC4lnJNT0k5NCtBEwoXDY0vMT0Hu1eLzbG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJBfPGjy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgTSN5MkY2OHQ2Ww5r2g6OYuR0kbZbeVmJcgs3rPedgVGAAXLcmwVm0XOqCY7V6SBNTW+ABbd16RvpfkJKmi6NXl8N4K2T5yghG9JAnvO8LjKMx5X8KTEEbELkAIjzBvYBGIdjbQ08351JlulKdvRz0NeaZeWcJLIi7HNS7G3IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gM7mDNSI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJBfPGjy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12812C4CEF1;
-	Fri, 21 Nov 2025 13:27:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gM7mDNSI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46B9C4CEF1;
+	Fri, 21 Nov 2025 13:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731673;
-	bh=ZTn0xEib5ArylGW3/frl3sW+F+Q45qidTGzIECFCWMY=;
+	s=korg; t=1763731676;
+	bh=KgeflNdAEJ2/RMKO3gYYB3TUWHxnBZcTt+0dXmcIHDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iJBfPGjyQB7M70ggHeyZYux9FJTdNOVa6WC9jeszwAG0CsLVf+96gH/xz6i6hG4dH
-	 LI8fZmVdSSpUGgxZpNgvjqi3N61cJN9Jgxhwos6yJhRdovRykFqNEJJjAQNg8mNFg1
-	 P6VgMESSYwmISQpFIFFTKOfk7jRM/wA4WNoXQr80=
+	b=gM7mDNSIH5Fx9hrU4AFFAMoITnbldKRNifHgLZ7DAA06AoFfNPcKtC2+XfnUYBlNN
+	 8C6CqgxAPV4GxoP0cSR7pga46KPRPVfj2DrQjLK5zC24AsGgbib44KPVZKvkb43aYV
+	 QYzEM5DTfedyHsR1AR82Kd9ay9vJ87CvSGO9JKp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <rabenda.cn@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/185] riscv: acpi: avoid errors caused by probing DT devices when ACPI is used
-Date: Fri, 21 Nov 2025 14:10:41 +0100
-Message-ID: <20251121130144.390653670@linuxfoundation.org>
+Subject: [PATCH 6.12 041/185] Bluetooth: 6lowpan: reset link-local header on ipv6 recv path
+Date: Fri, 21 Nov 2025 14:11:08 +0100
+Message-ID: <20251121130145.362008326@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,45 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Han Gao <rabenda.cn@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 69a8b62a7aa1e54ff7623064f6507fa29c1d0d4e ]
+[ Upstream commit 3b78f50918276ab28fb22eac9aa49401ac436a3b ]
 
-Similar to the ARM64 commit 3505f30fb6a9s ("ARM64 / ACPI: If we chose
-to boot from acpi then disable FDT"), let's not do DT hardware probing
-if ACPI is enabled in early boot.  This avoids errors caused by
-repeated driver probing.
+Bluetooth 6lowpan.c netdev has header_ops, so it must set link-local
+header for RX skb, otherwise things crash, eg. with AF_PACKET SOCK_RAW
 
-Signed-off-by: Han Gao <rabenda.cn@gmail.com>
-Link: https://lore.kernel.org/r/20250910112401.552987-1-rabenda.cn@gmail.com
-[pjw@kernel.org: cleaned up patch description and subject]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Add missing skb_reset_mac_header() for uncompressed ipv6 RX path.
+
+For the compressed one, it is done in lowpan_header_decompress().
+
+Log: (BlueZ 6lowpan-tester Client Recv Raw - Success)
+------
+kernel BUG at net/core/skbuff.c:212!
+Call Trace:
+<IRQ>
+...
+packet_rcv (net/packet/af_packet.c:2152)
+...
+<TASK>
+__local_bh_enable_ip (kernel/softirq.c:407)
+netif_rx (net/core/dev.c:5648)
+chan_recv_cb (net/bluetooth/6lowpan.c:294 net/bluetooth/6lowpan.c:359)
+------
+
+Fixes: 18722c247023 ("Bluetooth: Enable 6LoWPAN support for BT LE devices")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/setup.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/bluetooth/6lowpan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/kernel/setup.c b/arch/riscv/kernel/setup.c
-index 194bda6d74ce7..4c430c9f017d8 100644
---- a/arch/riscv/kernel/setup.c
-+++ b/arch/riscv/kernel/setup.c
-@@ -298,11 +298,14 @@ void __init setup_arch(char **cmdline_p)
- 	/* Parse the ACPI tables for possible boot-time configuration */
- 	acpi_boot_table_init();
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 3c29778171c58..e313b066733f8 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -288,6 +288,7 @@ static int recv_pkt(struct sk_buff *skb, struct net_device *dev,
+ 		local_skb->pkt_type = PACKET_HOST;
+ 		local_skb->dev = dev;
  
-+	if (acpi_disabled) {
- #if IS_ENABLED(CONFIG_BUILTIN_DTB)
--	unflatten_and_copy_device_tree();
-+		unflatten_and_copy_device_tree();
- #else
--	unflatten_device_tree();
-+		unflatten_device_tree();
- #endif
-+	}
-+
- 	misc_mem_init();
++		skb_reset_mac_header(local_skb);
+ 		skb_set_transport_header(local_skb, sizeof(struct ipv6hdr));
  
- 	init_resources();
+ 		if (give_skb_to_upper(local_skb, dev) != NET_RX_SUCCESS) {
 -- 
 2.51.0
 
