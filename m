@@ -1,54 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F675246762;
-	Fri, 21 Nov 2025 13:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF059246762;
+	Fri, 21 Nov 2025 13:25:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731520; cv=none; b=AwjSW8JCrQiYcw3tEJajqFEsGNkdBkvjpyalIjp+mSc0MYCsvCgCxpDRicPmRMHWxpUkO667Sv5q/hUmoKBpTtkxIFkPODOiIFzPPIlld8QXMqmJl20Rxbo1rnzqS+9w+2X6Q+3pBvM63DfwpLpN6CiMcbrqyCbFBLLvl4lNrWI=
+	t=1763731523; cv=none; b=PCKHPpeIzTKcYBScYY/w7CTarVgic6f0a6b/mRop7uHU+MmoiOHTpXOh+iZLiaBiRukGU7BpvbT81XKnBayM5ChLbizr/Zts+eWvAe+LQr/0SSFOeMrKOgwkNdykkltH9+o4prnCtUwccVD7b/7heo+EJBDAl6jRxGC+oQf/oLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731520; c=relaxed/simple;
-	bh=DrtL3EdWyCP4C5PP4TDfOjEsTat25ECh2Y5t3hL88wc=;
+	s=arc-20240116; t=1763731523; c=relaxed/simple;
+	bh=EYkmFRWiCfxpMcKQCuT6gqAyFkJ9bN+mHpMbaklI7j4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqAm2WPAsHS1DcjqwHYNL5OuHVjCndPfpzhT8VtUvtpGXVGTu59J09IMIylwrw9nZSUaC/0JOu5rgOaoz8nn35zYDZlxna05VBkuYlroUvCJSHacoMmA1mztZNfjsUadhwvn6QlqcCCI2VgKI8SX6pTkBa6zAjuK9eRO+uWTXLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjXeQVgr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YlcT/9ntfSMRhB4vhma7L9PqL4EMdMEVB0y+/GMjVIuqe7fntmUBK/g7R2IWtnmFn6vsLjkF1UBcgRyhNR9q1mB6iG5oUbV0WIQpBOOBsmJax1sP+PL31wGuJgwQR1xPrKHhUQUxxr98lSHqiXZcqiSEkUd8WSA575lCoCLtEUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e5JZvVJY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjXeQVgr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AD1C4CEF1;
-	Fri, 21 Nov 2025 13:25:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e5JZvVJY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB95EC4CEF1;
+	Fri, 21 Nov 2025 13:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731520;
-	bh=DrtL3EdWyCP4C5PP4TDfOjEsTat25ECh2Y5t3hL88wc=;
+	s=korg; t=1763731523;
+	bh=EYkmFRWiCfxpMcKQCuT6gqAyFkJ9bN+mHpMbaklI7j4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjXeQVgrGHPQJU2dUdrG1vQdcx/UTf0mLaNFJpeEzPTvG1lsyVNTL8cPZZA5+k38J
-	 GbSF7DQMsrGxRBgAwC2cuGYttE8ihegg7M5Fo3BeYw0luDmLJUjjkmFMwlYiMA7Vt9
-	 xHf5vJVbLoWc3D5e/iL4U8GyB+aTPmP5LBGLAHw4=
+	b=e5JZvVJYjDH/GksvmB06mqsqXEUqwiepyYYf9qd/104gcfTWX5A0rev3ssPyzx2zO
+	 Mt4ltQKC5ygQolePpsJV/5eA0m5y69Qiv0IN21+NKe9y5MUFuP6fOzLXqmINPcz0yU
+	 aKZGDPSX57yWK0PD0OiQfgMosgp7m+uewGl4rxpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiryl Shutsemau <kas@kernel.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	David Hildenbrand <david@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Carlos Llamas <cmllamas@google.com>,
+	Breno Leitao <leitao@debian.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Elliot Berman <quic_eberman@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 237/247] mm/memory: do not populate page table entries beyond i_size
-Date: Fri, 21 Nov 2025 14:13:04 +0100
-Message-ID: <20251121130203.242057573@linuxfoundation.org>
+Subject: [PATCH 6.17 238/247] scripts/decode_stacktrace.sh: symbol: avoid trailing whitespaces
+Date: Fri, 21 Nov 2025 14:13:05 +0100
+Message-ID: <20251121130203.278948877@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -67,182 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau <kas@kernel.org>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 74207de2ba10c2973334906822dc94d2e859ffc5 upstream.
+commit d322f6a24ee5964a58294f61bf96a1b6404c676d upstream.
 
-Patch series "Fix SIGBUS semantics with large folios", v3.
-
-Accessing memory within a VMA, but beyond i_size rounded up to the next
-page size, is supposed to generate SIGBUS.
-
-Darrick reported[1] an xfstests regression in v6.18-rc1.  generic/749
-failed due to missing SIGBUS.  This was caused by my recent changes that
-try to fault in the whole folio where possible:
-
-        19773df031bc ("mm/fault: try to map the entire file folio in finish_fault()")
-        357b92761d94 ("mm/filemap: map entire large folio faultaround")
-
-These changes did not consider i_size when setting up PTEs, leading to
-xfstest breakage.
-
-However, the problem has been present in the kernel for a long time -
-since huge tmpfs was introduced in 2016.  The kernel happily maps
-PMD-sized folios as PMD without checking i_size.  And huge=always tmpfs
-allocates PMD-size folios on any writes.
-
-I considered this corner case when I implemented a large tmpfs, and my
-conclusion was that no one in their right mind should rely on receiving a
-SIGBUS signal when accessing beyond i_size.  I cannot imagine how it could
-be useful for the workload.
-
-But apparently filesystem folks care a lot about preserving strict SIGBUS
-semantics.
-
-Generic/749 was introduced last year with reference to POSIX, but no real
-workloads were mentioned.  It also acknowledged the tmpfs deviation from
-the test case.
-
-POSIX indeed says[3]:
-
-        References within the address range starting at pa and
-        continuing for len bytes to whole pages following the end of an
-        object shall result in delivery of a SIGBUS signal.
-
-The patchset fixes the regression introduced by recent changes as well as
-more subtle SIGBUS breakage due to split failure on truncation.
+A few patches slightly improving the output generated by
+decode_stacktrace.sh.
 
 
-This patch (of 2):
+This patch (of 3):
 
-Accesses within VMA, but beyond i_size rounded up to PAGE_SIZE are
-supposed to generate SIGBUS.
+Lines having a symbol to decode might not always have info after this
+symbol.  It means ${info_str} might not be set, but it will always be
+printed after a space, causing trailing whitespaces.
 
-Recent changes attempted to fault in full folio where possible.  They did
-not respect i_size, which led to populating PTEs beyond i_size and
-breaking SIGBUS semantics.
+That's a detail, but when the output is opened with an editor marking
+these trailing whitespaces, that's a bit disturbing.  It is easy to remove
+them by printing this variable with a space only if it is set.
 
-Darrick reported generic/749 breakage because of this.
+While at it, do the same with ${module} and print everything in one line.
 
-However, the problem existed before the recent changes.  With huge=always
-tmpfs, any write to a file leads to PMD-size allocation.  Following the
-fault-in of the folio will install PMD mapping regardless of i_size.
-
-Fix filemap_map_pages() and finish_fault() to not install:
-  - PTEs beyond i_size;
-  - PMD mappings across i_size;
-
-Make an exception for shmem/tmpfs that for long time intentionally
-mapped with PMDs across i_size.
-
-Link: https://lkml.kernel.org/r/20251027115636.82382-1-kirill@shutemov.name
-Link: https://lkml.kernel.org/r/20251027115636.82382-2-kirill@shutemov.name
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Fixes: 6795801366da ("xfs: Support large folios")
-Reported-by: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20250908-decode_strace_indent-v1-0-28e5e4758080@kernel.org
+Link: https://lkml.kernel.org/r/20250908-decode_strace_indent-v1-1-28e5e4758080@kernel.org
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Carlos Llamas <cmllamas@google.com>
+Cc: Elliot Berman <quic_eberman@quicinc.com>
+Cc: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c |   20 +++++++++++++++-----
- mm/memory.c  |   20 +++++++++++++++++++-
- 2 files changed, 34 insertions(+), 6 deletions(-)
+ scripts/decode_stacktrace.sh |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3743,13 +3743,27 @@ vm_fault_t filemap_map_pages(struct vm_f
- 	unsigned long rss = 0;
- 	unsigned int nr_pages = 0, folio_type;
- 	unsigned short mmap_miss = 0, mmap_miss_saved;
-+	bool can_map_large;
+--- a/scripts/decode_stacktrace.sh
++++ b/scripts/decode_stacktrace.sh
+@@ -323,12 +323,7 @@ handle_line() {
+ 	parse_symbol # modifies $symbol
  
- 	rcu_read_lock();
- 	folio = next_uptodate_folio(&xas, mapping, end_pgoff);
- 	if (!folio)
- 		goto out;
+ 	# Add up the line number to the symbol
+-	if [[ -z ${module} ]]
+-	then
+-		echo "${words[@]}" "$symbol ${info_str}"
+-	else
+-		echo "${words[@]}" "$symbol $module ${info_str}"
+-	fi
++	echo "${words[@]}" "${symbol}${module:+ ${module}}${info_str:+ ${info_str}}"
+ }
  
--	if (filemap_map_pmd(vmf, folio, start_pgoff)) {
-+	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-+	end_pgoff = min(end_pgoff, file_end);
-+
-+	/*
-+	 * Do not allow to map with PTEs beyond i_size and with PMD
-+	 * across i_size to preserve SIGBUS semantics.
-+	 *
-+	 * Make an exception for shmem/tmpfs that for long time
-+	 * intentionally mapped with PMDs across i_size.
-+	 */
-+	can_map_large = shmem_mapping(mapping) ||
-+		file_end >= folio_next_index(folio);
-+
-+	if (can_map_large && filemap_map_pmd(vmf, folio, start_pgoff)) {
- 		ret = VM_FAULT_NOPAGE;
- 		goto out;
- 	}
-@@ -3762,10 +3776,6 @@ vm_fault_t filemap_map_pages(struct vm_f
- 		goto out;
- 	}
- 
--	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
--	if (end_pgoff > file_end)
--		end_pgoff = file_end;
--
- 	folio_type = mm_counter_file(folio);
- 	do {
- 		unsigned long end;
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -65,6 +65,7 @@
- #include <linux/gfp.h>
- #include <linux/migrate.h>
- #include <linux/string.h>
-+#include <linux/shmem_fs.h>
- #include <linux/memory-tiers.h>
- #include <linux/debugfs.h>
- #include <linux/userfaultfd_k.h>
-@@ -5371,8 +5372,25 @@ fallback:
- 			return ret;
- 	}
- 
-+	if (!needs_fallback && vma->vm_file) {
-+		struct address_space *mapping = vma->vm_file->f_mapping;
-+		pgoff_t file_end;
-+
-+		file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE);
-+
-+		/*
-+		 * Do not allow to map with PTEs beyond i_size and with PMD
-+		 * across i_size to preserve SIGBUS semantics.
-+		 *
-+		 * Make an exception for shmem/tmpfs that for long time
-+		 * intentionally mapped with PMDs across i_size.
-+		 */
-+		needs_fallback = !shmem_mapping(mapping) &&
-+			file_end < folio_next_index(folio);
-+	}
-+
- 	if (pmd_none(*vmf->pmd)) {
--		if (folio_test_pmd_mappable(folio)) {
-+		if (!needs_fallback && folio_test_pmd_mappable(folio)) {
- 			ret = do_set_pmd(vmf, folio, page);
- 			if (ret != VM_FAULT_FALLBACK)
- 				return ret;
+ while read line; do
 
 
