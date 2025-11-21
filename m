@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033CB246762;
-	Fri, 21 Nov 2025 13:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B07A190477;
+	Fri, 21 Nov 2025 13:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731693; cv=none; b=XVJ9PQIikfn89FAsnkeCsEVpozHj/IE5l/45aYaBNe/gdAYODgVf9w5Z4Da8qxk/BJXA+PjrKDcdSlA+YyjxtK6H+I/YlCyUCaOXjjDuVTS9HiAce5BdURNXeo+Xpr3B9sNvHvYvFWx6egEng0hT1sxd8qtSeBxt9+lICvpkcGc=
+	t=1763731695; cv=none; b=i7C1JcvwVIvJh5E7rqRMSGj4j5tqHUfNDDG12hI6y7dTmX20srlSCiDsBl1yNFhwCVoaLqTAgcq/lGcI3E59thBzNoeGqsJ6Gb31LWQCe+XjGPIFzYQcfgxnnRkFemsGhhwV/03/WvCxb1raNBi5UXRAkkjkKEOsSJlPudMBSNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731693; c=relaxed/simple;
-	bh=IBkD4e6EMaJ97t1sLnk4GIOBE1w4pu4hjXZFGL1ESgY=;
+	s=arc-20240116; t=1763731695; c=relaxed/simple;
+	bh=qKsCRE5o5Ing10gBdcJIq/qxo93UoNivVVqY/2nu3Nw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=INzEWhMTunhN+8zVXOFISv3gTenxqAjht6riT3I1MUZ0xpMdAaU9MVplTd9mCGsdm/rzmkCPfu7LSDrX/MTLGzIDMLNc6hTdFe5in8QvAuU4DB1zhGI02DY3oDuibTaY00UFRC0Z7Zk1/nuOWDOSDEleqHVdBrS+cbYPdXwY5pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3+7/X6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g3ekTfV8Zz/ZMUCchCSDTYY4y0UMpXR8rq1C66+WcjG3sUGiMeYZgA91YNtAXQeIrW8kWOeFfXcNBHo3A3U670vHIo2Ihiv0+zIFtKm5zEcPmEVLfdOKizucNFwEuzG4/ofmI3VMyChbCHUmjJyso06jDHwuBe76JPC0gL6n17A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMWBWUGh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3+7/X6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E53C4CEF1;
-	Fri, 21 Nov 2025 13:28:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMWBWUGh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E587CC4CEF1;
+	Fri, 21 Nov 2025 13:28:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731690;
-	bh=IBkD4e6EMaJ97t1sLnk4GIOBE1w4pu4hjXZFGL1ESgY=;
+	s=korg; t=1763731695;
+	bh=qKsCRE5o5Ing10gBdcJIq/qxo93UoNivVVqY/2nu3Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3+7/X6AGvKt8ZZxsnbcX/oZH1NqK/lh6i93oNYnrEL4mQLxAJ5Id8nbSvIya/um9
-	 9KnwImkpibhifwhAtZYUDHDRvaDLMl02cEX3V/8aEDFTrgvG/zrEnGvhPZPlTUOjBg
-	 fZjdBYqWnR9aJFAcrgvvptFNd3QqbHq/yqdGRHwI=
+	b=jMWBWUGh+p2hBZCRDEpr7QdA3dDiVIl+SDp/wj88VwStaash8FlYQea4dbWbbcD6+
+	 wjp3Qflr64SE5zfN6LFKjMNxjqiCppA/4xENAiAMhyDtRuuETicPtXJeAMA3ykmqPB
+	 eH6VzspeInw3BCe49LZnJ5f2dmQtHfG+M2uZgrw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/185] net/handshake: Fix memory leak in tls_handshake_accept()
-Date: Fri, 21 Nov 2025 14:11:13 +0100
-Message-ID: <20251121130145.541523526@linuxfoundation.org>
+Subject: [PATCH 6.12 015/185] drm/amdgpu: remove two invalid BUG_ON()s
+Date: Fri, 21 Nov 2025 14:10:42 +0100
+Message-ID: <20251121130144.426579869@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -46,46 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit 3072f00bba764082fa41b3c3a2a7b013335353d2 ]
+[ Upstream commit 5d55ed19d4190d2c210ac05ac7a53f800a8c6fe5 ]
 
-In tls_handshake_accept(), a netlink message is allocated using
-genlmsg_new(). In the error handling path, genlmsg_cancel() is called
-to cancel the message construction, but the message itself is not freed.
-This leads to a memory leak.
+Those can be triggered trivially by userspace.
 
-Fix this by calling nlmsg_free() in the error path after genlmsg_cancel()
-to release the allocated memory.
-
-Fixes: 2fd5532044a89 ("net/handshake: Add a kernel API for requesting a TLSv1.3 handshake")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Link: https://patch.msgid.link/20251106144511.3859535-1-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/handshake/tlshd.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 2 --
+ drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c | 2 --
+ 2 files changed, 4 deletions(-)
 
-diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
-index d6f52839827ea..822507b87447c 100644
---- a/net/handshake/tlshd.c
-+++ b/net/handshake/tlshd.c
-@@ -253,6 +253,7 @@ static int tls_handshake_accept(struct handshake_req *req,
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index 96e5c520af316..c0a15d1920e28 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -5632,8 +5632,6 @@ static void gfx_v11_0_ring_emit_ib_gfx(struct amdgpu_ring *ring,
+ 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
+ 	u32 header, control = 0;
  
- out_cancel:
- 	genlmsg_cancel(msg, hdr);
-+	nlmsg_free(msg);
- out:
- 	return ret;
- }
+-	BUG_ON(ib->flags & AMDGPU_IB_FLAG_CE);
+-
+ 	header = PACKET3(PACKET3_INDIRECT_BUFFER, 2);
+ 
+ 	control |= ib->length_dw | (vmid << 24);
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+index adcfcf594286f..0c8581dfbee6e 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v12_0.c
+@@ -4330,8 +4330,6 @@ static void gfx_v12_0_ring_emit_ib_gfx(struct amdgpu_ring *ring,
+ 	unsigned vmid = AMDGPU_JOB_GET_VMID(job);
+ 	u32 header, control = 0;
+ 
+-	BUG_ON(ib->flags & AMDGPU_IB_FLAG_CE);
+-
+ 	header = PACKET3(PACKET3_INDIRECT_BUFFER, 2);
+ 
+ 	control |= ib->length_dw | (vmid << 24);
 -- 
 2.51.0
 
