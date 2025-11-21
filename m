@@ -1,55 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A279246762;
-	Fri, 21 Nov 2025 13:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F675246762;
+	Fri, 21 Nov 2025 13:25:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731518; cv=none; b=ZMPqK0id9DKCmEvp2Qbe/gEhAXtAX42UW31pqxPbMfR6/ecdDJMoRoZqxoKPqkzvewris/1re7aM4MNLI/lBhI6Rg6ALT3ODlG/zx7LzqV0FaNamnKcoULLVJzKbld98DBPB6g8nVBUec1tmJG2VL9j+mjSircfHg0qIbcUzfEE=
+	t=1763731520; cv=none; b=AwjSW8JCrQiYcw3tEJajqFEsGNkdBkvjpyalIjp+mSc0MYCsvCgCxpDRicPmRMHWxpUkO667Sv5q/hUmoKBpTtkxIFkPODOiIFzPPIlld8QXMqmJl20Rxbo1rnzqS+9w+2X6Q+3pBvM63DfwpLpN6CiMcbrqyCbFBLLvl4lNrWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731518; c=relaxed/simple;
-	bh=FbKaMs0U/ddSSnyNXF1xZB78gbjnWqlZJaR203mmGKY=;
+	s=arc-20240116; t=1763731520; c=relaxed/simple;
+	bh=DrtL3EdWyCP4C5PP4TDfOjEsTat25ECh2Y5t3hL88wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CobbpFIdzau2bZpJgXfD64g3dgPVpCmj3+YCDJN48Mv5ueqxibvXhEbmIC+cgRRsD3ryUG5Lw6pneM2fw20lFYW/wUo6Px5bvh7ZWCSoRF6f7HQW0fDCN7rivy1Fz21bAZfYjlgyGAKBSnn86TI7mbN1H9SL7VhS77wMUnJKjG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOmKu7mF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VqAm2WPAsHS1DcjqwHYNL5OuHVjCndPfpzhT8VtUvtpGXVGTu59J09IMIylwrw9nZSUaC/0JOu5rgOaoz8nn35zYDZlxna05VBkuYlroUvCJSHacoMmA1mztZNfjsUadhwvn6QlqcCCI2VgKI8SX6pTkBa6zAjuK9eRO+uWTXLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjXeQVgr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOmKu7mF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E890BC4CEF1;
-	Fri, 21 Nov 2025 13:25:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjXeQVgr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AD1C4CEF1;
+	Fri, 21 Nov 2025 13:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731517;
-	bh=FbKaMs0U/ddSSnyNXF1xZB78gbjnWqlZJaR203mmGKY=;
+	s=korg; t=1763731520;
+	bh=DrtL3EdWyCP4C5PP4TDfOjEsTat25ECh2Y5t3hL88wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOmKu7mFlybU2kO0B7In3B7UPtLW0Ju36PHAnWB9HBN6mHKQL4vFCOdbOn+eXxlRC
-	 twCHgl9BauA/Xv8zczOjDb+cSh3B5YsFvGSpT5VY+5LR5sP8/8WYw8/IlStoow+XvF
-	 OANKhtEPbAxnhX5tquK8yzd9JajEpbpYLTLrjTN0=
+	b=IjXeQVgrGHPQJU2dUdrG1vQdcx/UTf0mLaNFJpeEzPTvG1lsyVNTL8cPZZA5+k38J
+	 GbSF7DQMsrGxRBgAwC2cuGYttE8ihegg7M5Fo3BeYw0luDmLJUjjkmFMwlYiMA7Vt9
+	 xHf5vJVbLoWc3D5e/iL4U8GyB+aTPmP5LBGLAHw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	syzbot+e6367ea2fdab6ed46056@syzkaller.appspotmail.com,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Miaohe Lin <linmiaohe@huawei.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Jane Chu <jane.chu@oracle.com>,
-	Lance Yang <lance.yang@linux.dev>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Mariano Pache <npache@redhat.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Naoya Horiguchi <nao.horiguchi@gmail.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
 	Christian Brauner <brauner@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 236/247] mm/huge_memory: do not change split_huge_page*() target order silently
-Date: Fri, 21 Nov 2025 14:13:03 +0100
-Message-ID: <20251121130203.205984224@linuxfoundation.org>
+Subject: [PATCH 6.17 237/247] mm/memory: do not populate page table entries beyond i_size
+Date: Fri, 21 Nov 2025 14:13:04 +0100
+Message-ID: <20251121130203.242057573@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -68,200 +67,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Kiryl Shutsemau <kas@kernel.org>
 
-commit 77008e1b2ef73249bceb078a321a3ff6bc087afb upstream.
+commit 74207de2ba10c2973334906822dc94d2e859ffc5 upstream.
 
-Page cache folios from a file system that support large block size (LBS)
-can have minimal folio order greater than 0, thus a high order folio might
-not be able to be split down to order-0.  Commit e220917fa507 ("mm: split
-a folio in minimum folio order chunks") bumps the target order of
-split_huge_page*() to the minimum allowed order when splitting a LBS
-folio.  This causes confusion for some split_huge_page*() callers like
-memory failure handling code, since they expect after-split folios all
-have order-0 when split succeeds but in reality get min_order_for_split()
-order folios and give warnings.
+Patch series "Fix SIGBUS semantics with large folios", v3.
 
-Fix it by failing a split if the folio cannot be split to the target
-order.  Rename try_folio_split() to try_folio_split_to_order() to reflect
-the added new_order parameter.  Remove its unused list parameter.
+Accessing memory within a VMA, but beyond i_size rounded up to the next
+page size, is supposed to generate SIGBUS.
 
-[The test poisons LBS folios, which cannot be split to order-0 folios, and
-also tries to poison all memory.  The non split LBS folios take more
-memory than the test anticipated, leading to OOM.  The patch fixed the
-kernel warning and the test needs some change to avoid OOM.]
+Darrick reported[1] an xfstests regression in v6.18-rc1.  generic/749
+failed due to missing SIGBUS.  This was caused by my recent changes that
+try to fault in the whole folio where possible:
 
-Link: https://lkml.kernel.org/r/20251017013630.139907-1-ziy@nvidia.com
-Fixes: e220917fa507 ("mm: split a folio in minimum folio order chunks")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reported-by: syzbot+e6367ea2fdab6ed46056@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68d2c943.a70a0220.1b52b.02b3.GAE@google.com/
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Pankaj Raghav <p.raghav@samsung.com>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+        19773df031bc ("mm/fault: try to map the entire file folio in finish_fault()")
+        357b92761d94 ("mm/filemap: map entire large folio faultaround")
+
+These changes did not consider i_size when setting up PTEs, leading to
+xfstest breakage.
+
+However, the problem has been present in the kernel for a long time -
+since huge tmpfs was introduced in 2016.  The kernel happily maps
+PMD-sized folios as PMD without checking i_size.  And huge=always tmpfs
+allocates PMD-size folios on any writes.
+
+I considered this corner case when I implemented a large tmpfs, and my
+conclusion was that no one in their right mind should rely on receiving a
+SIGBUS signal when accessing beyond i_size.  I cannot imagine how it could
+be useful for the workload.
+
+But apparently filesystem folks care a lot about preserving strict SIGBUS
+semantics.
+
+Generic/749 was introduced last year with reference to POSIX, but no real
+workloads were mentioned.  It also acknowledged the tmpfs deviation from
+the test case.
+
+POSIX indeed says[3]:
+
+        References within the address range starting at pa and
+        continuing for len bytes to whole pages following the end of an
+        object shall result in delivery of a SIGBUS signal.
+
+The patchset fixes the regression introduced by recent changes as well as
+more subtle SIGBUS breakage due to split failure on truncation.
+
+
+This patch (of 2):
+
+Accesses within VMA, but beyond i_size rounded up to PAGE_SIZE are
+supposed to generate SIGBUS.
+
+Recent changes attempted to fault in full folio where possible.  They did
+not respect i_size, which led to populating PTEs beyond i_size and
+breaking SIGBUS semantics.
+
+Darrick reported generic/749 breakage because of this.
+
+However, the problem existed before the recent changes.  With huge=always
+tmpfs, any write to a file leads to PMD-size allocation.  Following the
+fault-in of the folio will install PMD mapping regardless of i_size.
+
+Fix filemap_map_pages() and finish_fault() to not install:
+  - PTEs beyond i_size;
+  - PMD mappings across i_size;
+
+Make an exception for shmem/tmpfs that for long time intentionally
+mapped with PMDs across i_size.
+
+Link: https://lkml.kernel.org/r/20251027115636.82382-1-kirill@shutemov.name
+Link: https://lkml.kernel.org/r/20251027115636.82382-2-kirill@shutemov.name
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Fixes: 6795801366da ("xfs: Support large folios")
+Reported-by: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
 Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Jane Chu <jane.chu@oracle.com>
-Cc: Lance Yang <lance.yang@linux.dev>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Mariano Pache <npache@redhat.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Naoya Horiguchi <nao.horiguchi@gmail.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
 Cc: Christian Brauner <brauner@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/huge_mm.h |   55 ++++++++++++++++++++----------------------------
- mm/huge_memory.c        |    9 -------
- mm/truncate.c           |    6 +++--
- 3 files changed, 28 insertions(+), 42 deletions(-)
+ mm/filemap.c |   20 +++++++++++++++-----
+ mm/memory.c  |   20 +++++++++++++++++++-
+ 2 files changed, 34 insertions(+), 6 deletions(-)
 
---- a/include/linux/huge_mm.h
-+++ b/include/linux/huge_mm.h
-@@ -354,45 +354,30 @@ bool non_uniform_split_supported(struct
- int folio_split(struct folio *folio, unsigned int new_order, struct page *page,
- 		struct list_head *list);
- /*
-- * try_folio_split - try to split a @folio at @page using non uniform split.
-+ * try_folio_split_to_order - try to split a @folio at @page to @new_order using
-+ * non uniform split.
-  * @folio: folio to be split
-- * @page: split to order-0 at the given page
-- * @list: store the after-split folios
-+ * @page: split to @new_order at the given page
-+ * @new_order: the target split order
-  *
-- * Try to split a @folio at @page using non uniform split to order-0, if
-- * non uniform split is not supported, fall back to uniform split.
-+ * Try to split a @folio at @page using non uniform split to @new_order, if
-+ * non uniform split is not supported, fall back to uniform split. After-split
-+ * folios are put back to LRU list. Use min_order_for_split() to get the lower
-+ * bound of @new_order.
-  *
-  * Return: 0: split is successful, otherwise split failed.
-  */
--static inline int try_folio_split(struct folio *folio, struct page *page,
--		struct list_head *list)
-+static inline int try_folio_split_to_order(struct folio *folio,
-+		struct page *page, unsigned int new_order)
- {
--	int ret = min_order_for_split(folio);
--
--	if (ret < 0)
--		return ret;
--
--	if (!non_uniform_split_supported(folio, 0, false))
--		return split_huge_page_to_list_to_order(&folio->page, list,
--				ret);
--	return folio_split(folio, ret, page, list);
-+	if (!non_uniform_split_supported(folio, new_order, /* warns= */ false))
-+		return split_huge_page_to_list_to_order(&folio->page, NULL,
-+				new_order);
-+	return folio_split(folio, new_order, page, NULL);
- }
- static inline int split_huge_page(struct page *page)
- {
--	struct folio *folio = page_folio(page);
--	int ret = min_order_for_split(folio);
--
--	if (ret < 0)
--		return ret;
--
--	/*
--	 * split_huge_page() locks the page before splitting and
--	 * expects the same page that has been split to be locked when
--	 * returned. split_folio(page_folio(page)) cannot be used here
--	 * because it converts the page to folio and passes the head
--	 * page to be split.
--	 */
--	return split_huge_page_to_list_to_order(page, NULL, ret);
-+	return split_huge_page_to_list_to_order(page, NULL, 0);
- }
- void deferred_split_folio(struct folio *folio, bool partially_mapped);
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -3743,13 +3743,27 @@ vm_fault_t filemap_map_pages(struct vm_f
+ 	unsigned long rss = 0;
+ 	unsigned int nr_pages = 0, folio_type;
+ 	unsigned short mmap_miss = 0, mmap_miss_saved;
++	bool can_map_large;
  
-@@ -560,13 +545,19 @@ static inline int split_huge_page(struct
- 	return 0;
- }
+ 	rcu_read_lock();
+ 	folio = next_uptodate_folio(&xas, mapping, end_pgoff);
+ 	if (!folio)
+ 		goto out;
  
-+static inline int min_order_for_split(struct folio *folio)
-+{
-+	VM_WARN_ON_ONCE_FOLIO(1, folio);
-+	return -EINVAL;
-+}
+-	if (filemap_map_pmd(vmf, folio, start_pgoff)) {
++	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
++	end_pgoff = min(end_pgoff, file_end);
 +
- static inline int split_folio_to_list(struct folio *folio, struct list_head *list)
- {
- 	return 0;
- }
++	/*
++	 * Do not allow to map with PTEs beyond i_size and with PMD
++	 * across i_size to preserve SIGBUS semantics.
++	 *
++	 * Make an exception for shmem/tmpfs that for long time
++	 * intentionally mapped with PMDs across i_size.
++	 */
++	can_map_large = shmem_mapping(mapping) ||
++		file_end >= folio_next_index(folio);
++
++	if (can_map_large && filemap_map_pmd(vmf, folio, start_pgoff)) {
+ 		ret = VM_FAULT_NOPAGE;
+ 		goto out;
+ 	}
+@@ -3762,10 +3776,6 @@ vm_fault_t filemap_map_pages(struct vm_f
+ 		goto out;
+ 	}
  
--static inline int try_folio_split(struct folio *folio, struct page *page,
--		struct list_head *list)
-+static inline int try_folio_split_to_order(struct folio *folio,
-+		struct page *page, unsigned int new_order)
- {
- 	return 0;
- }
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3680,8 +3680,6 @@ static int __folio_split(struct folio *f
- 
- 		min_order = mapping_min_folio_order(folio->mapping);
- 		if (new_order < min_order) {
--			VM_WARN_ONCE(1, "Cannot split mapped folio below min-order: %u",
--				     min_order);
- 			ret = -EINVAL;
- 			goto out;
- 		}
-@@ -4016,12 +4014,7 @@ int min_order_for_split(struct folio *fo
- 
- int split_folio_to_list(struct folio *folio, struct list_head *list)
- {
--	int ret = min_order_for_split(folio);
+-	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
+-	if (end_pgoff > file_end)
+-		end_pgoff = file_end;
 -
--	if (ret < 0)
--		return ret;
--
--	return split_huge_page_to_list_to_order(&folio->page, list, ret);
-+	return split_huge_page_to_list_to_order(&folio->page, list, 0);
- }
+ 	folio_type = mm_counter_file(folio);
+ 	do {
+ 		unsigned long end;
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -65,6 +65,7 @@
+ #include <linux/gfp.h>
+ #include <linux/migrate.h>
+ #include <linux/string.h>
++#include <linux/shmem_fs.h>
+ #include <linux/memory-tiers.h>
+ #include <linux/debugfs.h>
+ #include <linux/userfaultfd_k.h>
+@@ -5371,8 +5372,25 @@ fallback:
+ 			return ret;
+ 	}
  
- /*
---- a/mm/truncate.c
-+++ b/mm/truncate.c
-@@ -194,6 +194,7 @@ bool truncate_inode_partial_folio(struct
- 	size_t size = folio_size(folio);
- 	unsigned int offset, length;
- 	struct page *split_at, *split_at2;
-+	unsigned int min_order;
- 
- 	if (pos < start)
- 		offset = start - pos;
-@@ -223,8 +224,9 @@ bool truncate_inode_partial_folio(struct
- 	if (!folio_test_large(folio))
- 		return true;
- 
-+	min_order = mapping_min_folio_order(folio->mapping);
- 	split_at = folio_page(folio, PAGE_ALIGN_DOWN(offset) / PAGE_SIZE);
--	if (!try_folio_split(folio, split_at, NULL)) {
-+	if (!try_folio_split_to_order(folio, split_at, min_order)) {
- 		/*
- 		 * try to split at offset + length to make sure folios within
- 		 * the range can be dropped, especially to avoid memory waste
-@@ -254,7 +256,7 @@ bool truncate_inode_partial_folio(struct
- 		 */
- 		if (folio_test_large(folio2) &&
- 		    folio2->mapping == folio->mapping)
--			try_folio_split(folio2, split_at2, NULL);
-+			try_folio_split_to_order(folio2, split_at2, min_order);
- 
- 		folio_unlock(folio2);
- out:
++	if (!needs_fallback && vma->vm_file) {
++		struct address_space *mapping = vma->vm_file->f_mapping;
++		pgoff_t file_end;
++
++		file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE);
++
++		/*
++		 * Do not allow to map with PTEs beyond i_size and with PMD
++		 * across i_size to preserve SIGBUS semantics.
++		 *
++		 * Make an exception for shmem/tmpfs that for long time
++		 * intentionally mapped with PMDs across i_size.
++		 */
++		needs_fallback = !shmem_mapping(mapping) &&
++			file_end < folio_next_index(folio);
++	}
++
+ 	if (pmd_none(*vmf->pmd)) {
+-		if (folio_test_pmd_mappable(folio)) {
++		if (!needs_fallback && folio_test_pmd_mappable(folio)) {
+ 			ret = do_set_pmd(vmf, folio, page);
+ 			if (ret != VM_FAULT_FALLBACK)
+ 				return ret;
 
 
