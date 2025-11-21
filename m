@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A111F09B3;
-	Fri, 21 Nov 2025 13:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA621F09B3;
+	Fri, 21 Nov 2025 13:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731575; cv=none; b=BeF975wNdhS2tfYQuP++7iS3b5SXMee2NNnI12vhiCZIuf4SDR2LoWdJnbr2gEhw/ayC6lrAVhycTS1BK4nlewRBDIKyTPYR0Xx4CPI2LCsPqv0we533P90KVI+OWFvxvOfVEPFVWaxYNKTjOZcBNRubIokhUhomN2iCqVNIQn8=
+	t=1763731578; cv=none; b=jROKV+OtFWNS93Fi1DG16k8LlrcQQCNVd2KSai2psbD7ovJKkkwtn8odQkfWmE0L4EkUFRinCEvaim3HE6MUFH3A4kcsSiUpcM1BEa1Yli55UVy4RuPG0j1neRDHonOj8hnW0twq9cdYT5vgHH7WMe648xw06r1nHGJjdB0Ykis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731575; c=relaxed/simple;
-	bh=Ij+RZncpriJJZhOX5SJY6UjQYdw2dZRz7kMkycz6FAM=;
+	s=arc-20240116; t=1763731578; c=relaxed/simple;
+	bh=HOgVGsVeckMvPSKWSh9i0Abkj/X7bchOA8lajCCYHkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t38Q/XUmZeWaRUz0r+2uMRgpOxhm8Fa48nI9MCQ2GK7SpfiZlzm7TJEBs/WjIOWAROck29gxYYA0sWaS6HL2c4JzOO8WsZbOTGMyauv/OX83tuLTWDLYKIK8Mhs8sbvIN7cK1NpUAsExfXeImmpmA+24NqaP57v/RvGqQMk7HB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWAjvdr0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iFsNrBq+A2fzHblCnRDeVsiJYn/0FbIMD05u6dQ8iRhUcb2R0pDvjmuYdVBviQWx8dhOSXCxhyoXqRfOp9BaIAPCpPVXNFdUadF+rkcUDPdqU40mSv6HX8xHYwO/dhYjtYAZsdOmcqvCKHCsczJS4ygjJG0lfVz9KUfv/TBjCUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISx08xlJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWAjvdr0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A562CC4CEF1;
-	Fri, 21 Nov 2025 13:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISx08xlJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A1BC4CEF1;
+	Fri, 21 Nov 2025 13:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731575;
-	bh=Ij+RZncpriJJZhOX5SJY6UjQYdw2dZRz7kMkycz6FAM=;
+	s=korg; t=1763731578;
+	bh=HOgVGsVeckMvPSKWSh9i0Abkj/X7bchOA8lajCCYHkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWAjvdr08XvUbgoDKjABNqdRm4N6pN2ELuMvMxa+NxrsQu6NO4xa+87ApgXS1pyuQ
-	 IWdTV9T3q0BpdzBRNqTea+JHq75ZYVNSvRyqIuWoh7vvQUP40qHHROyWSO6tGDKiO+
-	 hIce1TpRiQb4KPyqnYPu0ZpP1awbHBLchVDItf4Q=
+	b=ISx08xlJXYkUzy8OyJ4KcXhRVxzNEDNk+c4YR1OXy6XkOP8UOtkD23I4u0LyUu0y2
+	 4fPyN9+flCQt4bnCya2TU+b54n4cKejMAirTQ4V/n12bOZGcE3WQaRhuRgT8gc7dqy
+	 oTA/Z0dOrMSTJaemPieGt06zHlFFc6kNXv+mIvmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.17 224/247] drm/xe/xe3: Extend wa_14023061436
-Date: Fri, 21 Nov 2025 14:12:51 +0100
-Message-ID: <20251121130202.773632377@linuxfoundation.org>
+	Jason-JH Lin <jason-jh.lin@mediatek.com>,
+	CK Hu <ck.hu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/185] drm/mediatek: Add pm_runtime support for GCE power control
+Date: Fri, 21 Nov 2025 14:10:28 +0100
+Message-ID: <20251121130143.917026781@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
-References: <20251121130154.587656062@linuxfoundation.org>
+In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
+References: <20251121130143.857798067@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
+From: Jason-JH Lin <jason-jh.lin@mediatek.com>
 
-commit fa3376319b83ba8b7fd55f2c1a268dcbf9d6eedc upstream.
+[ Upstream commit afcfb6c8474d9e750880aaa77952cc588f859613 ]
 
-Extend wa_14023061436 to Graphics Versions 30.03, 30.04
-and 30.05.
+Call pm_runtime_resume_and_get() before accessing GCE hardware in
+mbox_send_message(), and invoke pm_runtime_put_autosuspend() in the
+cmdq callback to release the PM reference and start autosuspend for
+GCE. This ensures correct power management for the GCE device.
 
-Signed-off-by: Tangudu Tilak Tirumalesh <tilak.tirumalesh.tangudu@intel.com>
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patch.msgid.link/20251030154626.3124565-1-tilak.tirumalesh.tangudu@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit 0dd656d06f50ae4cedf160634cf13fd9e0944cf7)
-Cc: stable@vger.kernel.org # v6.17+
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8afe816b0c99 ("mailbox: mtk-cmdq-mailbox: Implement Runtime PM with autosuspend")
+Signed-off-by: Jason-JH Lin <jason-jh.lin@mediatek.com>
+Reviewed-by: CK Hu <ck.hu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250829091727.3745415-3-jason-jh.lin@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_wa.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_crtc.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -653,6 +653,8 @@ static const struct xe_rtp_entry_sr engi
- 	},
- 	{ XE_RTP_NAME("14023061436"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION_RANGE(3000, 3001),
-+		       FUNC(xe_rtp_match_first_render_or_compute), OR,
-+		       GRAPHICS_VERSION_RANGE(3003, 3005),
- 		       FUNC(xe_rtp_match_first_render_or_compute)),
- 	  XE_RTP_ACTIONS(SET(TDL_CHICKEN, QID_WAIT_FOR_THREAD_NOT_RUN_DISABLE))
- 	},
+diff --git a/drivers/gpu/drm/mediatek/mtk_crtc.c b/drivers/gpu/drm/mediatek/mtk_crtc.c
+index bc7527542fdc6..c4c6d0249df56 100644
+--- a/drivers/gpu/drm/mediatek/mtk_crtc.c
++++ b/drivers/gpu/drm/mediatek/mtk_crtc.c
+@@ -283,6 +283,10 @@ static void ddp_cmdq_cb(struct mbox_client *cl, void *mssg)
+ 	unsigned int i;
+ 	unsigned long flags;
+ 
++	/* release GCE HW usage and start autosuspend */
++	pm_runtime_mark_last_busy(cmdq_cl->chan->mbox->dev);
++	pm_runtime_put_autosuspend(cmdq_cl->chan->mbox->dev);
++
+ 	if (data->sta < 0)
+ 		return;
+ 
+@@ -618,6 +622,9 @@ static void mtk_crtc_update_config(struct mtk_crtc *mtk_crtc, bool needs_vblank)
+ 		mtk_crtc->config_updating = false;
+ 		spin_unlock_irqrestore(&mtk_crtc->config_lock, flags);
+ 
++		if (pm_runtime_resume_and_get(mtk_crtc->cmdq_client.chan->mbox->dev) < 0)
++			goto update_config_out;
++
+ 		mbox_send_message(mtk_crtc->cmdq_client.chan, cmdq_handle);
+ 		mbox_client_txdone(mtk_crtc->cmdq_client.chan, 0);
+ 		goto update_config_out;
+-- 
+2.51.0
+
 
 
