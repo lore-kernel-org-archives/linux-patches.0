@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6AA33F38B;
-	Fri, 21 Nov 2025 13:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD51733F38B;
+	Fri, 21 Nov 2025 13:52:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733118; cv=none; b=OxNU1g6CwzDJCwTTonJrQt2Z3AO/hDqqz8xCAt0QtMVzY+eFSwSOJuy75p5EVUreIeHpdPDYrsOmK/pkjS0viIxKoTq8e8kFTvKUvYqREgDWgMaf7jTWOFWMhNxIMO4J6WQzyEIGuVEbL+pWKfAXqgFPjfacud8uJRynAPl8Twc=
+	t=1763733120; cv=none; b=ddquZu2WOI5wwU9k7YYDP8LT6xyCYt7WV4azEpuZq9ISMgsto3y5Ch+sRl84DDNNck00r/jIjvoBRJlrCnea4lZ83Qbr6jIugKqP7n9TOfqI2dQbeTcQA2EKZilDbDOM8Co+7FZ1gVAf62KZ3WKnekTQix4T1zpeCBwsjWp3pfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733118; c=relaxed/simple;
-	bh=4KtKzydnq9QX2SAt7LVVyP9ucfk7MSNQfRFEJBK7udU=;
+	s=arc-20240116; t=1763733120; c=relaxed/simple;
+	bh=d0jp65xFVoSP+yB/98YMHzDdpXWymVvfMnEM3pSUuTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E2yxn6JR3rWH7K95jL+XC6Oox2jK/h7A5AsQ0/qJ5cnfsL4u8muS+Yg0SZFEQl5WTDeNdqmQOuYyJ8NElP5cYurRfAPs8IBU1KmqwS4RxVFFVT2JmfxBsSJw+j+Se9Rbbsaq7SP9QoTzTPLHF8fXD3pACQaWDl+/23orP4vGcWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YR1Nyovj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzZxpJx1OFdhNYkjs3/jBnEfzuuTjiVQdCwPON9sD8HwzdrYPsgr8XdmtzghTuQfjWUi+CfRXTCALK2xD/5127Fg+qglXaskJI5PNDvTfY/SG99/el5q8R2WuzleQ4FvwlFXnQFe8bJ8tEXB7GOcpAhxJF/Q1Tn9XL7vcLDol10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q416pXpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YR1Nyovj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C16C4CEF1;
-	Fri, 21 Nov 2025 13:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q416pXpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4607AC4CEF1;
+	Fri, 21 Nov 2025 13:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733117;
-	bh=4KtKzydnq9QX2SAt7LVVyP9ucfk7MSNQfRFEJBK7udU=;
+	s=korg; t=1763733120;
+	bh=d0jp65xFVoSP+yB/98YMHzDdpXWymVvfMnEM3pSUuTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YR1NyovjNpv7JD9wnKTfKGCjfDp+0b1ke9r4naYXz9NblfDfTKi3gdPc5hZmAz3Hm
-	 YeKwhtli8Eu7LuZMhQRDw2Yv9f2onEuwRsEHv42jqDCc1XL+456EDCOlSC4MRFzns1
-	 HJ+RywUuG37LmRBwpt5c6wqnvZP/5ASxQ/cfVzIc=
+	b=Q416pXpthQ9oi1QBAROUU8A6laTcIn5mp57q5cJcF5Xka3TacWLBFC+hfOg18dz65
+	 hPOu0D4PGlOLvqJGKxCIZuhKZZg0af2zs/2gN65zZJnMAMTXG2/PfRdN50A6IeiiYj
+	 Vsd7AV9Ifw0D7/iOHEABk2m3DPg9y1ESIPh7RGRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	syzbot+dd280197f0f7ab3917be@syzkaller.appspotmail.com,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 358/529] lan966x: Fix sleeping in atomic context
-Date: Fri, 21 Nov 2025 14:10:57 +0100
-Message-ID: <20251121130243.766546554@linuxfoundation.org>
+Subject: [PATCH 6.6 359/529] net: bridge: fix use-after-free due to MST port state bypass
+Date: Fri, 21 Nov 2025 14:10:58 +0100
+Message-ID: <20251121130243.801600669@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,211 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 0216721ce71252f60d89af49c8dff613358058d3 ]
+[ Upstream commit 8dca36978aa80bab9d4da130c211db75c9e00048 ]
 
-The following warning was seen when we try to connect using ssh to the device.
+syzbot reported[1] a use-after-free when deleting an expired fdb. It is
+due to a race condition between learning still happening and a port being
+deleted, after all its fdbs have been flushed. The port's state has been
+toggled to disabled so no learning should happen at that time, but if we
+have MST enabled, it will bypass the port's state, that together with VLAN
+filtering disabled can lead to fdb learning at a time when it shouldn't
+happen while the port is being deleted. VLAN filtering must be disabled
+because we flush the port VLANs when it's being deleted which will stop
+learning. This fix adds a check for the port's vlan group which is
+initialized to NULL when the port is getting deleted, that avoids the port
+state bypass. When MST is enabled there would be a minimal new overhead
+in the fast-path because the port's vlan group pointer is cache-hot.
 
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:575
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 104, name: dropbear
-preempt_count: 1, expected: 0
-INFO: lockdep is turned off.
-CPU: 0 UID: 0 PID: 104 Comm: dropbear Tainted: G        W           6.18.0-rc2-00399-g6f1ab1b109b9-dirty #530 NONE
-Tainted: [W]=WARN
-Hardware name: Generic DT based system
-Call trace:
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x7c/0xac
- dump_stack_lvl from __might_resched+0x16c/0x2b0
- __might_resched from __mutex_lock+0x64/0xd34
- __mutex_lock from mutex_lock_nested+0x1c/0x24
- mutex_lock_nested from lan966x_stats_get+0x5c/0x558
- lan966x_stats_get from dev_get_stats+0x40/0x43c
- dev_get_stats from dev_seq_printf_stats+0x3c/0x184
- dev_seq_printf_stats from dev_seq_show+0x10/0x30
- dev_seq_show from seq_read_iter+0x350/0x4ec
- seq_read_iter from seq_read+0xfc/0x194
- seq_read from proc_reg_read+0xac/0x100
- proc_reg_read from vfs_read+0xb0/0x2b0
- vfs_read from ksys_read+0x6c/0xec
- ksys_read from ret_fast_syscall+0x0/0x1c
-Exception stack(0xf0b11fa8 to 0xf0b11ff0)
-1fa0:                   00000001 00001000 00000008 be9048d8 00001000 00000001
-1fc0: 00000001 00001000 00000008 00000003 be905920 0000001e 00000000 00000001
-1fe0: 0005404c be9048c0 00018684 b6ec2cd8
+[1] https://syzkaller.appspot.com/bug?extid=dd280197f0f7ab3917be
 
-It seems that we are using a mutex in a atomic context which is wrong.
-Change the mutex with a spinlock.
-
-Fixes: 12c2d0a5b8e2 ("net: lan966x: add ethtool configuration and statistics")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251105074955.1766792-1-horatiu.vultur@microchip.com
+Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
+Reported-by: syzbot+dd280197f0f7ab3917be@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69088ffa.050a0220.29fc44.003d.GAE@google.com/
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251105111919.1499702-2-razor@blackwall.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../microchip/lan966x/lan966x_ethtool.c        | 18 +++++++++---------
- .../ethernet/microchip/lan966x/lan966x_main.c  |  2 --
- .../ethernet/microchip/lan966x/lan966x_main.h  |  4 ++--
- .../microchip/lan966x/lan966x_vcap_impl.c      |  8 ++++----
- 4 files changed, 15 insertions(+), 17 deletions(-)
+ net/bridge/br_forward.c | 2 +-
+ net/bridge/br_input.c   | 4 ++--
+ net/bridge/br_private.h | 8 +++++---
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
-index 06811c60d598e..df10a0b68a08e 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ethtool.c
-@@ -294,7 +294,7 @@ static void lan966x_stats_update(struct lan966x *lan966x)
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index 49dd8cd526f46..e9f09cdb9848e 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -25,7 +25,7 @@ static inline int should_deliver(const struct net_bridge_port *p,
+ 
+ 	vg = nbp_vlan_group_rcu(p);
+ 	return ((p->flags & BR_HAIRPIN_MODE) || skb->dev != p->dev) &&
+-		(br_mst_is_enabled(p->br) || p->state == BR_STATE_FORWARDING) &&
++		(br_mst_is_enabled(p) || p->state == BR_STATE_FORWARDING) &&
+ 		br_allowed_egress(vg, skb) && nbp_switchdev_allowed_egress(p, skb) &&
+ 		!br_skb_isolated(p, skb);
+ }
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index e09000e38d071..951330c1a813b 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -93,7 +93,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 
+ 	br = p->br;
+ 
+-	if (br_mst_is_enabled(br)) {
++	if (br_mst_is_enabled(p)) {
+ 		state = BR_STATE_FORWARDING;
+ 	} else {
+ 		if (p->state == BR_STATE_DISABLED)
+@@ -411,7 +411,7 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
+ 		return RX_HANDLER_PASS;
+ 
+ forward:
+-	if (br_mst_is_enabled(p->br))
++	if (br_mst_is_enabled(p))
+ 		goto defer_stp_filtering;
+ 
+ 	switch (p->state) {
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index ef98ec4c3f51d..798960ef2dcd0 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -1880,10 +1880,12 @@ static inline bool br_vlan_state_allowed(u8 state, bool learn_allow)
+ /* br_mst.c */
+ #ifdef CONFIG_BRIDGE_VLAN_FILTERING
+ DECLARE_STATIC_KEY_FALSE(br_mst_used);
+-static inline bool br_mst_is_enabled(struct net_bridge *br)
++static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
  {
- 	int i, j;
- 
--	mutex_lock(&lan966x->stats_lock);
-+	spin_lock(&lan966x->stats_lock);
- 
- 	for (i = 0; i < lan966x->num_phys_ports; i++) {
- 		uint idx = i * lan966x->num_stats;
-@@ -310,7 +310,7 @@ static void lan966x_stats_update(struct lan966x *lan966x)
- 		}
- 	}
- 
--	mutex_unlock(&lan966x->stats_lock);
-+	spin_unlock(&lan966x->stats_lock);
++	/* check the port's vlan group to avoid racing with port deletion */
+ 	return static_branch_unlikely(&br_mst_used) &&
+-		br_opt_get(br, BROPT_MST_ENABLED);
++	       br_opt_get(p->br, BROPT_MST_ENABLED) &&
++	       rcu_access_pointer(p->vlgrp);
  }
  
- static int lan966x_get_sset_count(struct net_device *dev, int sset)
-@@ -365,7 +365,7 @@ static void lan966x_get_eth_mac_stats(struct net_device *dev,
- 
- 	idx = port->chip_port * lan966x->num_stats;
- 
--	mutex_lock(&lan966x->stats_lock);
-+	spin_lock(&lan966x->stats_lock);
- 
- 	mac_stats->FramesTransmittedOK =
- 		lan966x->stats[idx + SYS_COUNT_TX_UC] +
-@@ -424,7 +424,7 @@ static void lan966x_get_eth_mac_stats(struct net_device *dev,
- 		lan966x->stats[idx + SYS_COUNT_RX_LONG] +
- 		lan966x->stats[idx + SYS_COUNT_RX_PMAC_LONG];
- 
--	mutex_unlock(&lan966x->stats_lock);
-+	spin_unlock(&lan966x->stats_lock);
- }
- 
- static const struct ethtool_rmon_hist_range lan966x_rmon_ranges[] = {
-@@ -450,7 +450,7 @@ static void lan966x_get_eth_rmon_stats(struct net_device *dev,
- 
- 	idx = port->chip_port * lan966x->num_stats;
- 
--	mutex_lock(&lan966x->stats_lock);
-+	spin_lock(&lan966x->stats_lock);
- 
- 	rmon_stats->undersize_pkts =
- 		lan966x->stats[idx + SYS_COUNT_RX_SHORT] +
-@@ -508,7 +508,7 @@ static void lan966x_get_eth_rmon_stats(struct net_device *dev,
- 		lan966x->stats[idx + SYS_COUNT_TX_SZ_1024_1526] +
- 		lan966x->stats[idx + SYS_COUNT_TX_PMAC_SZ_1024_1526];
- 
--	mutex_unlock(&lan966x->stats_lock);
-+	spin_unlock(&lan966x->stats_lock);
- 
- 	*ranges = lan966x_rmon_ranges;
- }
-@@ -614,7 +614,7 @@ void lan966x_stats_get(struct net_device *dev,
- 
- 	idx = port->chip_port * lan966x->num_stats;
- 
--	mutex_lock(&lan966x->stats_lock);
-+	spin_lock(&lan966x->stats_lock);
- 
- 	stats->rx_bytes = lan966x->stats[idx + SYS_COUNT_RX_OCT] +
- 		lan966x->stats[idx + SYS_COUNT_RX_PMAC_OCT];
-@@ -696,7 +696,7 @@ void lan966x_stats_get(struct net_device *dev,
- 
- 	stats->collisions = lan966x->stats[idx + SYS_COUNT_TX_COL];
- 
--	mutex_unlock(&lan966x->stats_lock);
-+	spin_unlock(&lan966x->stats_lock);
- }
- 
- int lan966x_stats_init(struct lan966x *lan966x)
-@@ -712,7 +712,7 @@ int lan966x_stats_init(struct lan966x *lan966x)
- 		return -ENOMEM;
- 
- 	/* Init stats worker */
--	mutex_init(&lan966x->stats_lock);
-+	spin_lock_init(&lan966x->stats_lock);
- 	snprintf(queue_name, sizeof(queue_name), "%s-stats",
- 		 dev_name(lan966x->dev));
- 	lan966x->stats_queue = create_singlethread_workqueue(queue_name);
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index b424e75fd40c4..5466f14e000ce 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -1263,7 +1263,6 @@ static int lan966x_probe(struct platform_device *pdev)
- 
- 	cancel_delayed_work_sync(&lan966x->stats_work);
- 	destroy_workqueue(lan966x->stats_queue);
--	mutex_destroy(&lan966x->stats_lock);
- 
- 	debugfs_remove_recursive(lan966x->debugfs_root);
- 
-@@ -1281,7 +1280,6 @@ static int lan966x_remove(struct platform_device *pdev)
- 
- 	cancel_delayed_work_sync(&lan966x->stats_work);
- 	destroy_workqueue(lan966x->stats_queue);
--	mutex_destroy(&lan966x->stats_lock);
- 
- 	lan966x_mac_purge_entries(lan966x);
- 	lan966x_mdb_deinit(lan966x);
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-index 5a16d76eb000d..1f5a18b205bf2 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.h
-@@ -347,8 +347,8 @@ struct lan966x {
- 	const struct lan966x_stat_layout *stats_layout;
- 	u32 num_stats;
- 
--	/* workqueue for reading stats */
--	struct mutex stats_lock;
-+	/* lock for reading stats */
-+	spinlock_t stats_lock;
- 	u64 *stats;
- 	struct delayed_work stats_work;
- 	struct workqueue_struct *stats_queue;
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c b/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c
-index a4414f63c9b1c..c266f903ea8a6 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_vcap_impl.c
-@@ -403,11 +403,11 @@ static void lan966x_es0_read_esdx_counter(struct lan966x *lan966x,
- 	u32 counter;
- 
- 	id = id & 0xff; /* counter limit */
--	mutex_lock(&lan966x->stats_lock);
-+	spin_lock(&lan966x->stats_lock);
- 	lan_wr(SYS_STAT_CFG_STAT_VIEW_SET(id), lan966x, SYS_STAT_CFG);
- 	counter = lan_rd(lan966x, SYS_CNT(LAN966X_STAT_ESDX_GRN_PKTS)) +
- 		  lan_rd(lan966x, SYS_CNT(LAN966X_STAT_ESDX_YEL_PKTS));
--	mutex_unlock(&lan966x->stats_lock);
-+	spin_unlock(&lan966x->stats_lock);
- 	if (counter)
- 		admin->cache.counter = counter;
- }
-@@ -417,14 +417,14 @@ static void lan966x_es0_write_esdx_counter(struct lan966x *lan966x,
+ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
+@@ -1898,7 +1900,7 @@ int br_mst_fill_info(struct sk_buff *skb,
+ int br_mst_process(struct net_bridge_port *p, const struct nlattr *mst_attr,
+ 		   struct netlink_ext_ack *extack);
+ #else
+-static inline bool br_mst_is_enabled(struct net_bridge *br)
++static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
  {
- 	id = id & 0xff; /* counter limit */
- 
--	mutex_lock(&lan966x->stats_lock);
-+	spin_lock(&lan966x->stats_lock);
- 	lan_wr(SYS_STAT_CFG_STAT_VIEW_SET(id), lan966x, SYS_STAT_CFG);
- 	lan_wr(0, lan966x, SYS_CNT(LAN966X_STAT_ESDX_GRN_BYTES));
- 	lan_wr(admin->cache.counter, lan966x,
- 	       SYS_CNT(LAN966X_STAT_ESDX_GRN_PKTS));
- 	lan_wr(0, lan966x, SYS_CNT(LAN966X_STAT_ESDX_YEL_BYTES));
- 	lan_wr(0, lan966x, SYS_CNT(LAN966X_STAT_ESDX_YEL_PKTS));
--	mutex_unlock(&lan966x->stats_lock);
-+	spin_unlock(&lan966x->stats_lock);
+ 	return false;
  }
- 
- static void lan966x_vcap_cache_write(struct net_device *dev,
 -- 
 2.51.0
 
