@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDCD734679A;
-	Fri, 21 Nov 2025 13:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBF831578E;
+	Fri, 21 Nov 2025 13:17:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731023; cv=none; b=ThK/N3ALKCA9sacy5J4UdcHqynmApfLOltTjkqKQHtqeun4F7YAVwpofrHtyAc0s4KhJWJ8YH+mHLlmabRN/U5t/2oIWdCGF+31ScS6EmQdAJ+5LNZ6g1T4peB7ebygRQbYwwfLz3Oxw00noeM6Tx3q9Ovx3Rmy6qc3IbbueAPg=
+	t=1763731025; cv=none; b=fvFNeuUopt6/YKfF1vRCVLCNk+9UAHiNYiMbdMfCwXcZG9/LOWCM90bGpfk+kbN94x0Whh8J8wCvLhUqxRY5log4ik7+5k0lkDvbTkK5lfbchWDoE8zagyBQAlf26P1/ec1cWmw8H3AWtvBUSQLV93pFubzoVcly4plHlo5bVoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731023; c=relaxed/simple;
-	bh=72EaicwGIfSIp2ztO1z5/BM5HuqY7B8Aac5J4kxhUgE=;
+	s=arc-20240116; t=1763731025; c=relaxed/simple;
+	bh=hXBdNy5z8sHNDuMijwYmcDBZtBUdHSllySBw8nocReg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MtlI6wAldGjo4XzJ3F53uZSJhrdPZcO7d2RT9IVlSF/IumCUSaU2UPlHqLBH76CKYA9fK2svh1+i0JFGe3zPxCF5f4k4b5QcRx7wjqDASEWwtmdccnvRbvSUqAgfo+mulN4PAnh+BQU75xckq8o03PHU5UdUdFUsuJQUfxixNX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrf7OWgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zd3YZv2CwQwEjChhsVcaXm7nXZ6D+eKp3xFqhaUE6kbpaG754/FNIRCri9bLlgBXzmqbvLRQH761yDglmMo0kIIZlx0yZzFMWGCmroxQLJKFe3ZVn/RjPf8BoxUW/vi6qNMJTx2uIRg9vdy3E4u+UCWjwtQfVAucRNSI48N55eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZPMi/oM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrf7OWgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADFDC4CEF1;
-	Fri, 21 Nov 2025 13:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZPMi/oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5707CC4CEF1;
+	Fri, 21 Nov 2025 13:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731022;
-	bh=72EaicwGIfSIp2ztO1z5/BM5HuqY7B8Aac5J4kxhUgE=;
+	s=korg; t=1763731025;
+	bh=hXBdNy5z8sHNDuMijwYmcDBZtBUdHSllySBw8nocReg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrf7OWgF90I35WCQApn6/AXxAcD+d/y7f6mU8NdsY6p0cXLEkbVuM2/czQJoz2FB6
-	 IW18Dlw6Zukt36fyIuuzPOMpVFje6PdvKXsjzSmoYksMCM5Jj2rA129cMGlk/PazG7
-	 HkLgK2/OqteOxSYn/MArBRtY7GfhcpIQt50/nnfY=
+	b=lZPMi/oMh/tjR/qZtjsC/BS1IzI/zNGTSnsDi1MHOznwjTr/bpN7GNrjlrEGeT4af
+	 vGPsQde0n1NgyD1d44154conk5k0GTxAKYLU+7YUbVGT0NTVE1emBtr/bVy+gpNZPi
+	 FiqmewGN36REtLT1f0qmaeMejYlPLBovoxU3pFAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Escande <nico.escande@gmail.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 046/247] wifi: ath11k: zero init info->status in wmi_process_mgmt_tx_comp()
-Date: Fri, 21 Nov 2025 14:09:53 +0100
-Message-ID: <20251121130156.255498477@linuxfoundation.org>
+Subject: [PATCH 6.17 064/247] net/handshake: Fix memory leak in tls_handshake_accept()
+Date: Fri, 21 Nov 2025 14:10:11 +0100
+Message-ID: <20251121130156.899826615@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Escande <nico.escande@gmail.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 9065b968752334f972e0d48e50c4463a172fc2a7 ]
+[ Upstream commit 3072f00bba764082fa41b3c3a2a7b013335353d2 ]
 
-When reporting tx completion using ieee80211_tx_status_xxx() family of
-functions, the status part of the struct ieee80211_tx_info nested in the
-skb is used to report things like transmit rates & retry count to mac80211
+In tls_handshake_accept(), a netlink message is allocated using
+genlmsg_new(). In the error handling path, genlmsg_cancel() is called
+to cancel the message construction, but the message itself is not freed.
+This leads to a memory leak.
 
-On the TX data path, this is correctly memset to 0 before calling
-ieee80211_tx_status_ext(), but on the tx mgmt path this was not done.
+Fix this by calling nlmsg_free() in the error path after genlmsg_cancel()
+to release the allocated memory.
 
-This leads to mac80211 treating garbage values as valid transmit counters
-(like tx retries for example) and accounting them as real statistics that
-makes their way to userland via station dump.
-
-The same issue was resolved in ath12k by commit 9903c0986f78 ("wifi:
-ath12k: Add memset and update default rate value in wmi tx completion")
-
-Tested-on: QCN9074 PCI WLAN.HK.2.9.0.1-01977-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251104083957.717825-1-nico.escande@gmail.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Fixes: 2fd5532044a89 ("net/handshake: Add a kernel API for requesting a TLSv1.3 handshake")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://patch.msgid.link/20251106144511.3859535-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/wmi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/handshake/tlshd.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
-index 0491e3fd6b5e1..e3b444333deed 100644
---- a/drivers/net/wireless/ath/ath11k/wmi.c
-+++ b/drivers/net/wireless/ath/ath11k/wmi.c
-@@ -5961,6 +5961,9 @@ static int wmi_process_mgmt_tx_comp(struct ath11k *ar,
- 	dma_unmap_single(ar->ab->dev, skb_cb->paddr, msdu->len, DMA_TO_DEVICE);
+diff --git a/net/handshake/tlshd.c b/net/handshake/tlshd.c
+index 081093dfd5533..8f9532a15f43f 100644
+--- a/net/handshake/tlshd.c
++++ b/net/handshake/tlshd.c
+@@ -259,6 +259,7 @@ static int tls_handshake_accept(struct handshake_req *req,
  
- 	info = IEEE80211_SKB_CB(msdu);
-+	memset(&info->status, 0, sizeof(info->status));
-+	info->status.rates[0].idx = -1;
-+
- 	if ((!(info->flags & IEEE80211_TX_CTL_NO_ACK)) &&
- 	    !tx_compl_param->status) {
- 		info->flags |= IEEE80211_TX_STAT_ACK;
+ out_cancel:
+ 	genlmsg_cancel(msg, hdr);
++	nlmsg_free(msg);
+ out:
+ 	return ret;
+ }
 -- 
 2.51.0
 
