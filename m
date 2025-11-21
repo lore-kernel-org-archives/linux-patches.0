@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427F91F03D7;
-	Fri, 21 Nov 2025 13:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791F63F9D2;
+	Fri, 21 Nov 2025 13:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731838; cv=none; b=PyBRuj4E49rYV++YXh26RmIINMLv4EWmE1dkgoGRgSavdlp7rtMY8nxmypmSN/G5zYHz+VG1uh+VAoCmsLGXJOP3rbD6E1TQILOgNKbpQml1I24tjPGpV5Sb9Rxp5JreCUHllkA1ogpYfgDlkouO8673ACJ0caJ94Z8A8XPZjb0=
+	t=1763731841; cv=none; b=WGRfBDj30aVJfn+dcLYux759Q+dBntnCgMwS/smi0oTmGryXHAior9gzS/AAKkrLLbbyA08m0Xnu5qDt01d/2ZLiDtoHdYa1Pl1D19qHUGs9XOa9KvTkCs55frfXlERYnj5PmEwDxBGOZc57g7n+ZXUZLRgboxZqJdekeYemNV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731838; c=relaxed/simple;
-	bh=yusrO7CLszbz7jZbGOSjhklIkxOGl4XbqdV6n/vAmDA=;
+	s=arc-20240116; t=1763731841; c=relaxed/simple;
+	bh=v5JmMLjMXfTpDZxDlvoBJkLOgqb6xvMoj/1OyXjm3zo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVtuUJHDUJudDwxCn8ptbfWXN3XGEiNOWW6QtoJR8cNdkP4WREENWsb0Nee5VE1IgFcPXuSbbJkZ48H7IcmZczfTvOIskxDdZG0GVKzikhRS8nHAZqrvOkHOUMAy56UYLzcTNU1Mtp9uYvtBFRN0CysUW36Y/pBF4AHFVb0FWBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fpzVwYKo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLbcbsU3oI6PPinGzogRmPm3R5Ih+HWQrja+n7oOf4lo3WFscB6X0h7sUV15VuWnN9JHKrO+shw6lh7aLKeJRSZzK2l5BHZ+l+Aox1cj/VsJOJepSWjPawIde7FgV3YIOxRvKZxri1Hl5Q6umv1L/DpnQigiKc9SHTM3QwquCSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KRrxww/2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fpzVwYKo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5112C4CEF1;
-	Fri, 21 Nov 2025 13:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KRrxww/2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C89C116C6;
+	Fri, 21 Nov 2025 13:30:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731838;
-	bh=yusrO7CLszbz7jZbGOSjhklIkxOGl4XbqdV6n/vAmDA=;
+	s=korg; t=1763731841;
+	bh=v5JmMLjMXfTpDZxDlvoBJkLOgqb6xvMoj/1OyXjm3zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpzVwYKoTdthAh3H5nfiVVFiQK6Euul4Ep/Hn5H0gRYfCy9ucwXFfRsa2HFQQ8SUV
-	 pi57YzvTOnXkJ9Z30y8U/jpbTnn2rVSiMVBNz3kkZbeCwMMYgDHQKhvuhtVbXf0zlK
-	 2JpXzx/dfT1QazrTBbpJ6VXLa8UFkibNEXdvNCHQ=
+	b=KRrxww/2b3N9ITahMVQYXzleNDFx8lSF44Waqqnc2HDlnGswq2464sOfgy9xvsBXm
+	 8lepaNOkrhkOWdEpxu6YDSJEM2jYadcNi8l11fLYxj8TI2KzWsjAZPn5MrIcKtkTdF
+	 3eCx2D8imlU4AjolDgs6DxuFJLBy2GxR911JzLD4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurelien Jarno <aurelien@aurel32.net>,
-	Anand Moon <linux.amoon@gmail.com>,
+	Dragan Simic <dsimic@manjaro.org>,
 	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/185] arm64: dts: rockchip: Set correct pinctrl for I2S1 8ch TX on odroid-m1
-Date: Fri, 21 Nov 2025 14:12:06 +0100
-Message-ID: <20251121130147.446291980@linuxfoundation.org>
+Subject: [PATCH 6.12 100/185] arm64: dts: rockchip: Make RK3588 GPU OPP table naming less generic
+Date: Fri, 21 Nov 2025 14:12:07 +0100
+Message-ID: <20251121130147.482150840@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -52,57 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anand Moon <linux.amoon@gmail.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-[ Upstream commit d425aef66e62221fa6bb0ccb94296df29e4cc107 ]
+[ Upstream commit b3fd04e23f6e4496f5a2279466a33fbdc83500f0 ]
 
-Enable proper pin multiplexing for the I2S1 8-channel transmit interface by
-adding the default pinctrl configuration which esures correct signal routing
-and avoids pinmux conflicts during audio playback.
+Unify the naming of the existing GPU OPP table nodes found in the RK3588
+and RK3588J SoC dtsi files with the other SoC's GPU OPP nodes, following
+the more "modern" node naming scheme.
 
-Changes fix the error
-[  116.856643] [    T782] rockchip-pinctrl pinctrl: pin gpio1-10 already requested by affinity_hint; cannot claim for fe410000.i2s
-[  116.857567] [    T782] rockchip-pinctrl pinctrl: error -EINVAL: pin-42 (fe410000.i2s)
-[  116.857618] [    T782] rockchip-pinctrl pinctrl: error -EINVAL: could not request pin 42 (gpio1-10) from group i2s1m0-sdi1 on device rockchip-pinctrl
-[  116.857659] [    T782] rockchip-i2s-tdm fe410000.i2s: Error applying setting, reverse things back
-
-I2S1 on the M1 to the codec in the RK809 only uses the SCLK, LRCK, SDI0
-and SDO0 signals, so limit the claimed pins to those.
-
-With this change audio output works as expected:
-
-$ aplay -l
-**** List of PLAYBACK Hardware Devices ****
-card 0: HDMI [HDMI], device 0: fe400000.i2s-i2s-hifi i2s-hifi-0 [fe400000.i2s-i2s-hifi i2s-hifi-0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-card 1: RK817 [Analog RK817], device 0: fe410000.i2s-rk817-hifi rk817-hifi-0 [fe410000.i2s-rk817-hifi rk817-hifi-0]
-  Subdevices: 1/1
-  Subdevice #0: subdevice #0
-
-Fixes: 78f858447cb7 ("arm64: dts: rockchip: Add analog audio on ODROID-M1")
-Cc: Aurelien Jarno <aurelien@aurel32.net>
-Signed-off-by: Anand Moon <linux.amoon@gmail.com>
-[adapted the commit message a bit]
+Fixes: a7b2070505a2 ("arm64: dts: rockchip: Split GPU OPPs of RK3588 and RK3588j")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+[opp-table also is way too generic on systems with like 4-5 opp-tables]
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3588-opp.dtsi | 2 +-
+ arch/arm64/boot/dts/rockchip/rk3588j.dtsi    | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts b/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts
-index 6a02db4f073f2..a5426b82552ed 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-odroid-m1.dts
-@@ -482,6 +482,8 @@
- };
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588-opp.dtsi b/arch/arm64/boot/dts/rockchip/rk3588-opp.dtsi
+index 0f1a776973516..b5d630d2c879f 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588-opp.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-opp.dtsi
+@@ -115,7 +115,7 @@
+ 		};
+ 	};
  
- &i2s1_8ch {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&i2s1m0_sclktx &i2s1m0_lrcktx &i2s1m0_sdi0 &i2s1m0_sdo0>;
- 	rockchip,trcm-sync-tx-only;
- 	status = "okay";
- };
+-	gpu_opp_table: opp-table {
++	gpu_opp_table: opp-table-gpu {
+ 		compatible = "operating-points-v2";
+ 
+ 		opp-300000000 {
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588j.dtsi b/arch/arm64/boot/dts/rockchip/rk3588j.dtsi
+index 3045cb3bd68c6..baa8b5b6bfe55 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588j.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588j.dtsi
+@@ -66,7 +66,7 @@
+ 		};
+ 	};
+ 
+-	gpu_opp_table: opp-table {
++	gpu_opp_table: opp-table-gpu {
+ 		compatible = "operating-points-v2";
+ 
+ 		opp-300000000 {
 -- 
 2.51.0
 
