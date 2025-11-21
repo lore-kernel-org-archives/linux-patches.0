@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEAF29B78F;
-	Fri, 21 Nov 2025 13:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336C334D4CE;
+	Fri, 21 Nov 2025 13:40:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732447; cv=none; b=DbHMjOVkT7wTAg1tWLADNXDnUH4utubg9HdfdrsYXn8yXvYhESwB8ftWHGDoyDgMrJ0Rs1vEjz/Y/TzGhPSEK2A4xhLhRiOogq7Y7wSCQu0xIrK1dNJL2nLywiFwhdJJi5ecmbFrqqkDZuSJDCYrcSXo1cR/AJYA1rQ9YaDctQM=
+	t=1763732450; cv=none; b=nFcFeiDJGlHGVfnv6fc8NQtcD2F1aKiwl6O6YB+0mqaNqFw6UoHjPCx6hEXW62kG07663bEgK4k3uJzoFiAHMdRqIXGLPYpzMb9RdzmGOJM6ctI3RFBufdH6g8vSWX6TCLipUrkJTEbHeoPYv53Yh2PbS02CljXY3nTyNfid6G8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732447; c=relaxed/simple;
-	bh=+CSzQhb9Sph8yAVwA4OzBLIt4e4DjRvazfRmc4moB7U=;
+	s=arc-20240116; t=1763732450; c=relaxed/simple;
+	bh=Jaz782/8T5GUMoeOZbMnFVZt9Gv8giHiO8oRTJQqvwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWt+PqXHmJbAw5Yz8oCEFrRS2JKstivqpSJyOGQH8/8KnBl9pfUM3yZpwMOwIhDbkrIF8IhycKLEyXV8zXL6lQAFfvcsVwnESaa5s6PxEZDSaKf3AlYArUv60P6hcY8cslMxVjIy4wMD9HnyIJEq/gWeVeJGNlNpibmN1PqxmzA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DYiHWYQj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4OkckIS+4Wgl5k9ZScuRO32mz+tTiyF/AJ5nJOxLsVDY0A1KAYGAsFb+TXoZR9nw4vkujtkzabCYYIC74KIq9M963GXfGrn4zehLJCVSCyPK/yfiVQvAXZt9K0y/cWvUdvHBFevXuMwv2mgjOPFlvtkyOs8JrwG6du4XHJ0ywQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WT2vP0FO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DYiHWYQj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB53FC4CEF1;
-	Fri, 21 Nov 2025 13:40:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WT2vP0FO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4064C4CEFB;
+	Fri, 21 Nov 2025 13:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732447;
-	bh=+CSzQhb9Sph8yAVwA4OzBLIt4e4DjRvazfRmc4moB7U=;
+	s=korg; t=1763732450;
+	bh=Jaz782/8T5GUMoeOZbMnFVZt9Gv8giHiO8oRTJQqvwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DYiHWYQjX2jmZZaByXxLikB2ntYJrsSdwxgICVJoqVQbUVrBFCWgkep9krlrEd7CL
-	 699f3RHV2Qz5LQnbXfgCtUpBRpqEOAXp4fNF4DwJE1j3pmlqKUdD8HD+AJhqSAFRTL
-	 J9KLT2b5tdkV93rq9CvPX/6OuLoC26PlzIQNzF9Q=
+	b=WT2vP0FOmschNFNB7MT9IjFByiUbW+GHTqwli5gJ6xDVOXZwZX6cYFKbNVc4UcbRT
+	 e1EGXvVuneEtZFch1W7CdyGlknTE59CreLDtAp0tNGohbMNVRZHuwdJ8aJXIQ27wtd
+	 7EgKXDh849BH+3UX3ZYSVpSu6RkBQTabpIjv+nK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jann@thejh.net>,
-	Pranav Tyagi <pranav.tyagi03@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Wake Liu <wakel@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/529] futex: Dont leak robust_list pointer on exec race
-Date: Fri, 21 Nov 2025 14:06:36 +0100
-Message-ID: <20251121130234.478165169@linuxfoundation.org>
+Subject: [PATCH 6.6 124/529] selftests/net: Replace non-standard __WORDSIZE with sizeof(long) * 8
+Date: Fri, 21 Nov 2025 14:07:03 +0100
+Message-ID: <20251121130235.434135990@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,197 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pranav Tyagi <pranav.tyagi03@gmail.com>
+From: Wake Liu <wakel@google.com>
 
-[ Upstream commit 6b54082c3ed4dc9821cdf0edb17302355cc5bb45 ]
+[ Upstream commit c36748e8733ef9c5f4cd1d7c4327994e5b88b8df ]
 
-sys_get_robust_list() and compat_get_robust_list() use ptrace_may_access()
-to check if the calling task is allowed to access another task's
-robust_list pointer. This check is racy against a concurrent exec() in the
-target process.
+The `__WORDSIZE` macro, defined in the non-standard `<bits/wordsize.h>`
+header, is a GNU extension and not universally available with all
+toolchains, such as Clang when used with musl libc.
 
-During exec(), a task may transition from a non-privileged binary to a
-privileged one (e.g., setuid binary) and its credentials/memory mappings
-may change. If get_robust_list() performs ptrace_may_access() before
-this transition, it may erroneously allow access to sensitive information
-after the target becomes privileged.
+This can lead to build failures in environments where this header is
+missing.
 
-A racy access allows an attacker to exploit a window during which
-ptrace_may_access() passes before a target process transitions to a
-privileged state via exec().
+The intention of the code is to determine the bit width of a C `long`.
+Replace the non-portable `__WORDSIZE` with the standard and portable
+`sizeof(long) * 8` expression to achieve the same result.
 
-For example, consider a non-privileged task T that is about to execute a
-setuid-root binary. An attacker task A calls get_robust_list(T) while T
-is still unprivileged. Since ptrace_may_access() checks permissions
-based on current credentials, it succeeds. However, if T begins exec
-immediately afterwards, it becomes privileged and may change its memory
-mappings. Because get_robust_list() proceeds to access T->robust_list
-without synchronizing with exec() it may read user-space pointers from a
-now-privileged process.
+This change also removes the inclusion of the now-unused
+`<bits/wordsize.h>` header.
 
-This violates the intended post-exec access restrictions and could
-expose sensitive memory addresses or be used as a primitive in a larger
-exploit chain. Consequently, the race can lead to unauthorized
-disclosure of information across privilege boundaries and poses a
-potential security risk.
-
-Take a read lock on signal->exec_update_lock prior to invoking
-ptrace_may_access() and accessing the robust_list/compat_robust_list.
-This ensures that the target task's exec state remains stable during the
-check, allowing for consistent and synchronized validation of
-credentials.
-
-Suggested-by: Jann Horn <jann@thejh.net>
-Signed-off-by: Pranav Tyagi <pranav.tyagi03@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/linux-fsdevel/1477863998-3298-5-git-send-email-jann@thejh.net/
-Link: https://github.com/KSPP/linux/issues/119
+Signed-off-by: Wake Liu <wakel@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/syscalls.c | 106 +++++++++++++++++++++-------------------
- 1 file changed, 56 insertions(+), 50 deletions(-)
+ tools/testing/selftests/net/psock_tpacket.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/kernel/futex/syscalls.c b/kernel/futex/syscalls.c
-index a8074079b09e8..48feaa545b3c7 100644
---- a/kernel/futex/syscalls.c
-+++ b/kernel/futex/syscalls.c
-@@ -40,6 +40,56 @@ SYSCALL_DEFINE2(set_robust_list, struct robust_list_head __user *, head,
- 	return 0;
- }
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index 404a2ce759ab6..93092d13b3c59 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -33,7 +33,6 @@
+ #include <ctype.h>
+ #include <fcntl.h>
+ #include <unistd.h>
+-#include <bits/wordsize.h>
+ #include <net/ethernet.h>
+ #include <netinet/ip.h>
+ #include <arpa/inet.h>
+@@ -785,7 +784,7 @@ static int test_kernel_bit_width(void)
  
-+static inline void __user *futex_task_robust_list(struct task_struct *p, bool compat)
-+{
-+#ifdef CONFIG_COMPAT
-+	if (compat)
-+		return p->compat_robust_list;
-+#endif
-+	return p->robust_list;
-+}
-+
-+static void __user *futex_get_robust_list_common(int pid, bool compat)
-+{
-+	struct task_struct *p = current;
-+	void __user *head;
-+	int ret;
-+
-+	scoped_guard(rcu) {
-+		if (pid) {
-+			p = find_task_by_vpid(pid);
-+			if (!p)
-+				return (void __user *)ERR_PTR(-ESRCH);
-+		}
-+		get_task_struct(p);
-+	}
-+
-+	/*
-+	 * Hold exec_update_lock to serialize with concurrent exec()
-+	 * so ptrace_may_access() is checked against stable credentials
-+	 */
-+	ret = down_read_killable(&p->signal->exec_update_lock);
-+	if (ret)
-+		goto err_put;
-+
-+	ret = -EPERM;
-+	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
-+		goto err_unlock;
-+
-+	head = futex_task_robust_list(p, compat);
-+
-+	up_read(&p->signal->exec_update_lock);
-+	put_task_struct(p);
-+
-+	return head;
-+
-+err_unlock:
-+	up_read(&p->signal->exec_update_lock);
-+err_put:
-+	put_task_struct(p);
-+	return (void __user *)ERR_PTR(ret);
-+}
-+
- /**
-  * sys_get_robust_list() - Get the robust-futex list head of a task
-  * @pid:	pid of the process [zero for current task]
-@@ -50,36 +100,14 @@ SYSCALL_DEFINE3(get_robust_list, int, pid,
- 		struct robust_list_head __user * __user *, head_ptr,
- 		size_t __user *, len_ptr)
+ static int test_user_bit_width(void)
  {
--	struct robust_list_head __user *head;
--	unsigned long ret;
--	struct task_struct *p;
--
--	rcu_read_lock();
--
--	ret = -ESRCH;
--	if (!pid)
--		p = current;
--	else {
--		p = find_task_by_vpid(pid);
--		if (!p)
--			goto err_unlock;
--	}
--
--	ret = -EPERM;
--	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
--		goto err_unlock;
-+	struct robust_list_head __user *head = futex_get_robust_list_common(pid, false);
- 
--	head = p->robust_list;
--	rcu_read_unlock();
-+	if (IS_ERR(head))
-+		return PTR_ERR(head);
- 
- 	if (put_user(sizeof(*head), len_ptr))
- 		return -EFAULT;
- 	return put_user(head, head_ptr);
--
--err_unlock:
--	rcu_read_unlock();
--
--	return ret;
+-	return __WORDSIZE;
++	return sizeof(long) * 8;
  }
  
- long do_futex(u32 __user *uaddr, int op, u32 val, ktime_t *timeout,
-@@ -322,36 +350,14 @@ COMPAT_SYSCALL_DEFINE3(get_robust_list, int, pid,
- 			compat_uptr_t __user *, head_ptr,
- 			compat_size_t __user *, len_ptr)
- {
--	struct compat_robust_list_head __user *head;
--	unsigned long ret;
--	struct task_struct *p;
--
--	rcu_read_lock();
--
--	ret = -ESRCH;
--	if (!pid)
--		p = current;
--	else {
--		p = find_task_by_vpid(pid);
--		if (!p)
--			goto err_unlock;
--	}
--
--	ret = -EPERM;
--	if (!ptrace_may_access(p, PTRACE_MODE_READ_REALCREDS))
--		goto err_unlock;
-+	struct compat_robust_list_head __user *head = futex_get_robust_list_common(pid, true);
- 
--	head = p->compat_robust_list;
--	rcu_read_unlock();
-+	if (IS_ERR(head))
-+		return PTR_ERR(head);
- 
- 	if (put_user(sizeof(*head), len_ptr))
- 		return -EFAULT;
- 	return put_user(ptr_to_compat(head), head_ptr);
--
--err_unlock:
--	rcu_read_unlock();
--
--	return ret;
- }
- #endif /* CONFIG_COMPAT */
- 
+ static const char *tpacket_str[] = {
 -- 
 2.51.0
 
