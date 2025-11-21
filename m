@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E312745E;
-	Fri, 21 Nov 2025 13:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894952745E;
+	Fri, 21 Nov 2025 13:36:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732169; cv=none; b=mRa/Pk1vayb812kVShm+4/MxitSKRaj3orN1LrLoSABR3HTFfn/I9Ga8HRuN0PNbVvF3ONmtE7cGnAFFScTS9D2q/BKSkHu8AwHV1cw+2spO0poOnmnfYCUO5XHwiyMoF3bm6J+TbVdOWnqshly0FZRKnryO7GfWY2o+o290iek=
+	t=1763732172; cv=none; b=tKcbKjlpAtouYHrKmCNF/4KicPQOVolVvZUcMfYBGodMV+g4814aiza0O0BVAA3h0/i/xpCbSxoXgPzJa77q6Ql2D1xYoN911bIDfA6RM3B/dTc782aabbK0IyEPdNmHoWoXKaR1xbwYOgVZpkMdYVbMTQJecBmXDMHZTSrAurY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732169; c=relaxed/simple;
-	bh=H3aD3LtK9BXGubrFuc5SpBTQCj+xbgGaBWccqMAiYoM=;
+	s=arc-20240116; t=1763732172; c=relaxed/simple;
+	bh=2+yAtY/a52kuQu8goG9t1Ub6km4WjZ4Oj6RFkMKhO18=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DErN1ntpGkqcZAZpR3HT3SfYpAcJGuv29uSoP6r/ge9GAuROaXXFVnZDo6rj1PSQy3T/QKDDsPmdDVHZfrhwLINtLZUImgY4UlS9QZTyd/T6F16c+EdSZlcEPc9ExyQ6MH9dyiefl8LyTg0xdAQF8NiIzkNnSKqlan+FJwuknnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSXzxP2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSuOYhT2cSY6zWcnd1aQlaOJHoe2heWpdFt+aTFkmR1mgqyaieTTIOV2MWJl2rPVEifQoRd+6GA586JlcWoUzePs0eT2FqBCdPYztDaOqug2t/LbRw2lGom0MNPMITtiKjjtbzAjKYBA0Q2tDvDbzArzftPNjgcSL/brTncSOMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0GsJ+i7q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSXzxP2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05DF3C4CEFB;
-	Fri, 21 Nov 2025 13:36:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0GsJ+i7q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0874EC4CEFB;
+	Fri, 21 Nov 2025 13:36:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732169;
-	bh=H3aD3LtK9BXGubrFuc5SpBTQCj+xbgGaBWccqMAiYoM=;
+	s=korg; t=1763732172;
+	bh=2+yAtY/a52kuQu8goG9t1Ub6km4WjZ4Oj6RFkMKhO18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSXzxP2FENLkmiC9nGyqSnjjwRa+NlFnRLRD33dxF6QxZ62OdwehPaEbQURX6hWOP
-	 Jqwfb4A5jdSgsbLabKmpm1VWzB1Pn4xtCq8QNS2fRdP2oYlMlvqlcmxPA4XPj/0jTV
-	 py2k8g6iGn10unCOzfGZd9rCNCUlRuYlmaRjCBCI=
+	b=0GsJ+i7qshfQ+qfpzKJdfiB+FQRuprGK5C0mKzXjSTNzDh2wk6v/8eItDAsxMLdW8
+	 zizdQOyElm36bsaqhbVIkRAtDzJZ5GXNIguK/Hmzr784JQfdxoyCPFS24comTymnjj
+	 HF/BfBvMuiWjG8cs3ynnqjkHTcWRtcwlAdHfZUSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 008/529] Bluetooth: rfcomm: fix modem control handling
-Date: Fri, 21 Nov 2025 14:05:07 +0100
-Message-ID: <20251121130231.294236100@linuxfoundation.org>
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.6 009/529] wifi: brcmfmac: fix crash while sending Action Frames in standalone AP Mode
+Date: Fri, 21 Nov 2025 14:05:08 +0100
+Message-ID: <20251121130231.330691137@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -50,89 +51,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-commit 91d35ec9b3956d6b3cf789c1593467e58855b03a upstream.
+commit 3776c685ebe5f43e9060af06872661de55e80b9a upstream.
 
-The RFCOMM driver confuses the local and remote modem control signals,
-which specifically means that the reported DTR and RTS state will
-instead reflect the remote end (i.e. DSR and CTS).
+Currently, whenever there is a need to transmit an Action frame,
+the brcmfmac driver always uses the P2P vif to send the "actframe" IOVAR to
+firmware. The P2P interfaces were available when wpa_supplicant is managing
+the wlan interface.
 
-This issue dates back to the original driver (and a follow-on update)
-merged in 2002, which resulted in a non-standard implementation of
-TIOCMSET that allowed controlling also the TS07.10 IC and DV signals by
-mapping them to the RI and DCD input flags, while TIOCMGET failed to
-return the actual state of DTR and RTS.
+However, the P2P interfaces are not created/initialized when only hostapd
+is managing the wlan interface. And if hostapd receives an ANQP Query REQ
+Action frame even from an un-associated STA, the brcmfmac driver tries
+to use an uninitialized P2P vif pointer for sending the IOVAR to firmware.
+This NULL pointer dereferencing triggers a driver crash.
 
-Note that the bogus control of input signals in tiocmset() is just
-dead code as those flags will have been masked out by the tty layer
-since 2003.
+ [ 1417.074538] Unable to handle kernel NULL pointer dereference at virtual
+ address 0000000000000000
+ [...]
+ [ 1417.075188] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
+ [...]
+ [ 1417.075653] Call trace:
+ [ 1417.075662]  brcmf_p2p_send_action_frame+0x23c/0xc58 [brcmfmac]
+ [ 1417.075738]  brcmf_cfg80211_mgmt_tx+0x304/0x5c0 [brcmfmac]
+ [ 1417.075810]  cfg80211_mlme_mgmt_tx+0x1b0/0x428 [cfg80211]
+ [ 1417.076067]  nl80211_tx_mgmt+0x238/0x388 [cfg80211]
+ [ 1417.076281]  genl_family_rcv_msg_doit+0xe0/0x158
+ [ 1417.076302]  genl_rcv_msg+0x220/0x2a0
+ [ 1417.076317]  netlink_rcv_skb+0x68/0x140
+ [ 1417.076330]  genl_rcv+0x40/0x60
+ [ 1417.076343]  netlink_unicast+0x330/0x3b8
+ [ 1417.076357]  netlink_sendmsg+0x19c/0x3f8
+ [ 1417.076370]  __sock_sendmsg+0x64/0xc0
+ [ 1417.076391]  ____sys_sendmsg+0x268/0x2a0
+ [ 1417.076408]  ___sys_sendmsg+0xb8/0x118
+ [ 1417.076427]  __sys_sendmsg+0x90/0xf8
+ [ 1417.076445]  __arm64_sys_sendmsg+0x2c/0x40
+ [ 1417.076465]  invoke_syscall+0x50/0x120
+ [ 1417.076486]  el0_svc_common.constprop.0+0x48/0xf0
+ [ 1417.076506]  do_el0_svc+0x24/0x38
+ [ 1417.076525]  el0_svc+0x30/0x100
+ [ 1417.076548]  el0t_64_sync_handler+0x100/0x130
+ [ 1417.076569]  el0t_64_sync+0x190/0x198
+ [ 1417.076589] Code: f9401e80 aa1603e2 f9403be1 5280e483 (f9400000)
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fix this, by always using the vif corresponding to the wdev on which the
+Action frame Transmission request was initiated by the userspace. This way,
+even if P2P vif is not available, the IOVAR is sent to firmware on AP vif
+and the ANQP Query RESP Action frame is transmitted without crashing the
+driver.
+
+Move init_completion() for "send_af_done" from brcmf_p2p_create_p2pdev()
+to brcmf_p2p_attach(). Because the former function would not get executed
+when only hostapd is managing wlan interface, and it is not safe to do
+reinit_completion() later in brcmf_p2p_tx_action_frame(), without any prior
+init_completion().
+
+And in the brcmf_p2p_tx_action_frame() function, the condition check for
+P2P Presence response frame is not needed, since the wpa_supplicant is
+properly sending the P2P Presense Response frame on the P2P-GO vif instead
+of the P2P-Device vif.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 18e2f61db3b7 ("brcmfmac: P2P action frame tx")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20251013102819.9727-1-gokulkumar.sivakumar@infineon.com
+[Cc stable]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/rfcomm/tty.c |   26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |    3 -
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      |   28 ++++--------
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h      |    3 -
+ 3 files changed, 12 insertions(+), 22 deletions(-)
 
---- a/net/bluetooth/rfcomm/tty.c
-+++ b/net/bluetooth/rfcomm/tty.c
-@@ -651,8 +651,8 @@ static void rfcomm_dev_modem_status(stru
- 		tty_port_tty_hangup(&dev->port, true);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5594,8 +5594,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wip
+ 		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
+ 			  *cookie, le16_to_cpu(action_frame->len), freq);
  
- 	dev->modem_status =
--		((v24_sig & RFCOMM_V24_RTC) ? (TIOCM_DSR | TIOCM_DTR) : 0) |
--		((v24_sig & RFCOMM_V24_RTR) ? (TIOCM_RTS | TIOCM_CTS) : 0) |
-+		((v24_sig & RFCOMM_V24_RTC) ? TIOCM_DSR : 0) |
-+		((v24_sig & RFCOMM_V24_RTR) ? TIOCM_CTS : 0) |
- 		((v24_sig & RFCOMM_V24_IC)  ? TIOCM_RI : 0) |
- 		((v24_sig & RFCOMM_V24_DV)  ? TIOCM_CD : 0);
- }
-@@ -1063,10 +1063,14 @@ static void rfcomm_tty_hangup(struct tty
- static int rfcomm_tty_tiocmget(struct tty_struct *tty)
+-		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+-						  af_params);
++		ack = brcmf_p2p_send_action_frame(vif->ifp, af_params);
+ 
+ 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 					GFP_KERNEL);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -1529,6 +1529,7 @@ int brcmf_p2p_notify_action_tx_complete(
+ /**
+  * brcmf_p2p_tx_action_frame() - send action frame over fil.
+  *
++ * @ifp: interface to transmit on.
+  * @p2p: p2p info struct for vif.
+  * @af_params: action frame data/info.
+  *
+@@ -1538,12 +1539,11 @@ int brcmf_p2p_notify_action_tx_complete(
+  * The WLC_E_ACTION_FRAME_COMPLETE event will be received when the action
+  * frame is transmitted.
+  */
+-static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
++static s32 brcmf_p2p_tx_action_frame(struct brcmf_if *ifp,
++				     struct brcmf_p2p_info *p2p,
+ 				     struct brcmf_fil_af_params_le *af_params)
  {
- 	struct rfcomm_dev *dev = tty->driver_data;
-+	struct rfcomm_dlc *dlc = dev->dlc;
-+	u8 v24_sig;
+ 	struct brcmf_pub *drvr = p2p->cfg->pub;
+-	struct brcmf_cfg80211_vif *vif;
+-	struct brcmf_p2p_action_frame *p2p_af;
+ 	s32 err = 0;
  
- 	BT_DBG("tty %p dev %p", tty, dev);
+ 	brcmf_dbg(TRACE, "Enter\n");
+@@ -1552,14 +1552,7 @@ static s32 brcmf_p2p_tx_action_frame(str
+ 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_COMPLETED, &p2p->status);
+ 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_NOACK, &p2p->status);
  
--	return dev->modem_status;
-+	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
+-	/* check if it is a p2p_presence response */
+-	p2p_af = (struct brcmf_p2p_action_frame *)af_params->action_frame.data;
+-	if (p2p_af->subtype == P2P_AF_PRESENCE_RSP)
+-		vif = p2p->bss_idx[P2PAPI_BSSCFG_CONNECTION].vif;
+-	else
+-		vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
+-
+-	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe", af_params,
++	err = brcmf_fil_bsscfg_data_set(ifp, "actframe", af_params,
+ 					sizeof(*af_params));
+ 	if (err) {
+ 		bphy_err(drvr, " sending action frame has failed\n");
+@@ -1711,16 +1704,14 @@ static bool brcmf_p2p_check_dwell_overfl
+ /**
+  * brcmf_p2p_send_action_frame() - send action frame .
+  *
+- * @cfg: driver private data for cfg80211 interface.
+- * @ndev: net device to transmit on.
++ * @ifp: interface to transmit on.
+  * @af_params: configuration data for action frame.
+  */
+-bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+-				 struct net_device *ndev,
++bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 				 struct brcmf_fil_af_params_le *af_params)
+ {
++	struct brcmf_cfg80211_info *cfg = ifp->drvr->config;
+ 	struct brcmf_p2p_info *p2p = &cfg->p2p;
+-	struct brcmf_if *ifp = netdev_priv(ndev);
+ 	struct brcmf_fil_action_frame_le *action_frame;
+ 	struct brcmf_config_af_params config_af_params;
+ 	struct afx_hdl *afx_hdl = &p2p->afx_hdl;
+@@ -1857,7 +1848,7 @@ bool brcmf_p2p_send_action_frame(struct
+ 		if (af_params->channel)
+ 			msleep(P2P_AF_RETRY_DELAY_TIME);
+ 
+-		ack = !brcmf_p2p_tx_action_frame(p2p, af_params);
++		ack = !brcmf_p2p_tx_action_frame(ifp, p2p, af_params);
+ 		tx_retry++;
+ 		dwell_overflow = brcmf_p2p_check_dwell_overflow(requested_dwell,
+ 								dwell_jiffies);
+@@ -2217,7 +2208,6 @@ static struct wireless_dev *brcmf_p2p_cr
+ 
+ 	WARN_ON(p2p_ifp->bsscfgidx != bsscfgidx);
+ 
+-	init_completion(&p2p->send_af_done);
+ 	INIT_WORK(&p2p->afx_hdl.afx_work, brcmf_p2p_afx_handler);
+ 	init_completion(&p2p->afx_hdl.act_frm_scan);
+ 	init_completion(&p2p->wait_next_af);
+@@ -2513,6 +2503,8 @@ s32 brcmf_p2p_attach(struct brcmf_cfg802
+ 	pri_ifp = brcmf_get_ifp(cfg->pub, 0);
+ 	p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif = pri_ifp->vif;
+ 
++	init_completion(&p2p->send_af_done);
 +
-+	return (v24_sig & (TIOCM_DTR | TIOCM_RTS)) | dev->modem_status;
- }
- 
- static int rfcomm_tty_tiocmset(struct tty_struct *tty, unsigned int set, unsigned int clear)
-@@ -1079,23 +1083,15 @@ static int rfcomm_tty_tiocmset(struct tt
- 
- 	rfcomm_dlc_get_modem_status(dlc, &v24_sig);
- 
--	if (set & TIOCM_DSR || set & TIOCM_DTR)
-+	if (set & TIOCM_DTR)
- 		v24_sig |= RFCOMM_V24_RTC;
--	if (set & TIOCM_RTS || set & TIOCM_CTS)
-+	if (set & TIOCM_RTS)
- 		v24_sig |= RFCOMM_V24_RTR;
--	if (set & TIOCM_RI)
--		v24_sig |= RFCOMM_V24_IC;
--	if (set & TIOCM_CD)
--		v24_sig |= RFCOMM_V24_DV;
- 
--	if (clear & TIOCM_DSR || clear & TIOCM_DTR)
-+	if (clear & TIOCM_DTR)
- 		v24_sig &= ~RFCOMM_V24_RTC;
--	if (clear & TIOCM_RTS || clear & TIOCM_CTS)
-+	if (clear & TIOCM_RTS)
- 		v24_sig &= ~RFCOMM_V24_RTR;
--	if (clear & TIOCM_RI)
--		v24_sig &= ~RFCOMM_V24_IC;
--	if (clear & TIOCM_CD)
--		v24_sig &= ~RFCOMM_V24_DV;
- 
- 	rfcomm_dlc_set_modem_status(dlc, v24_sig);
- 
+ 	if (p2pdev_forced) {
+ 		err_ptr = brcmf_p2p_create_p2pdev(p2p, NULL, NULL);
+ 		if (IS_ERR(err_ptr)) {
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
+@@ -168,8 +168,7 @@ int brcmf_p2p_notify_action_frame_rx(str
+ int brcmf_p2p_notify_action_tx_complete(struct brcmf_if *ifp,
+ 					const struct brcmf_event_msg *e,
+ 					void *data);
+-bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+-				 struct net_device *ndev,
++bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 				 struct brcmf_fil_af_params_le *af_params);
+ bool brcmf_p2p_scan_finding_common_channel(struct brcmf_cfg80211_info *cfg,
+ 					   struct brcmf_bss_info_le *bi);
 
 
