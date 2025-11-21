@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7896D3176E1;
-	Fri, 21 Nov 2025 13:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1431F09AC;
+	Fri, 21 Nov 2025 13:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731324; cv=none; b=S+SYRrzKA2iZcyKIyoXpXN56CfRqUJj3MYyxck6zrRQjTsor8TL6p/2SyTG6MVfS4+vK+DtYtl7r/MOE6gmTpuru67cyuJCkc9UAJflUFLlNzatZZxTkiSDbdtblY2EdbvcwBnQipXJ6Q7Hz3w1u18BHwhfDT5w4lJvD36qZ3CA=
+	t=1763731327; cv=none; b=GCwJOZGoPj1Fs8sFraNpZYbBzsvuwjVSgHXyM5ULLN6baIR7VhCKFbrRd2ebyyAUNT5j7S4hRvB8YlNNDLca7QOOj12RDsPoCnCvi8m/Y3zVi9OGQkINqaFjMhTDQ8KyW4nP+kGjIMav8oFk53+EMyEvMuX2lOA+Rl9wrvlUhfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731324; c=relaxed/simple;
-	bh=TLf4y0pdkawNAOuFJsP6O3yD+K3m1KAFiAuEeeKUyFs=;
+	s=arc-20240116; t=1763731327; c=relaxed/simple;
+	bh=BUUBbKGhzM7yqmWOC2Jna4PVu73MlyyLq5gKb29/gCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUK3WGzsrh3Uhh/fhN+Hx2AgWUf3/npe6JDbenU2wpMv4QgAA7sL8SjNZVerownvof6zhFKuC1boAvei6+FU15X6aa/rfe92hPwTEBG6d1z6GO6zhYdlqzdydaRWMnAP3L6PeZeVW2z6J0sstd6aBpPJNKDJ3H4mbfWHWNDddBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SZD5Z4T9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVJ1SOWHXrHzblddwDQoXeKm3PEUZBe9CNayTTdZP7zRl7uz360dnlJUKVm+Lo+RrKQnMWRT/iFyPoYHqP2f8Qq4DSkxY2+NWuxotG1tDB1DozwjKHVSnHePPt3Vfxw35Qo7SGPVpPmAfUiqdwEM5/ycN18zMLxqqEAaC2F7OrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dIR4qeGn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SZD5Z4T9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDFE5C4CEF1;
-	Fri, 21 Nov 2025 13:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dIR4qeGn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DBAC4CEF1;
+	Fri, 21 Nov 2025 13:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731324;
-	bh=TLf4y0pdkawNAOuFJsP6O3yD+K3m1KAFiAuEeeKUyFs=;
+	s=korg; t=1763731327;
+	bh=BUUBbKGhzM7yqmWOC2Jna4PVu73MlyyLq5gKb29/gCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZD5Z4T90EPsvPXmogNVNTrciMkfm5qPZWSdd0FobejYdI5qc98kUvwFV0HCqUm07
-	 dKCUKVLL7YlD7W9ETGty247Z7eLqnfa0t8VHjD/flrKJnBPK9B0xu448ChwI24iyOW
-	 eMYwxVD29mm2h8v2Pdxq7hMzfLUixcZjXZwHoCZA=
+	b=dIR4qeGnL9FPG1RNWN1/xMrbJsBHL6zNWR3FuUPoDXCl8Mr9sDz6zdugYeNgU8Kz2
+	 ufFYSqWjEcp+yp8VV264IvWSqrqN+5OT8Jhc/JWm+ywu0OiqaBcJBXMLZYGh7eOSST
+	 1HFK7XMjPkDVBk6huzeZxpyFJhhyuPaoVuR9h9l8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barry Song <baohua@kernel.org>,
-	Qinxin Xia <xiaqinxin@huawei.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 6.17 169/247] dma-mapping: benchmark: Restore padding to ensure uABI remained consistent
-Date: Fri, 21 Nov 2025 14:11:56 +0100
-Message-ID: <20251121130200.785523551@linuxfoundation.org>
+	Martin Kaiser <martin@kaiser.cx>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 170/247] maple_tree: fix tracepoint string pointers
+Date: Fri, 21 Nov 2025 14:11:57 +0100
+Message-ID: <20251121130200.822211535@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,41 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qinxin Xia <xiaqinxin@huawei.com>
+From: Martin Kaiser <martin@kaiser.cx>
 
-commit 23ee8a2563a0f24cf4964685ced23c32be444ab8 upstream.
+commit 91a54090026f84ceffaa12ac53c99b9f162946f6 upstream.
 
-The padding field in the structure was previously reserved to
-maintain a stable interface for potential new fields, ensuring
-compatibility with user-space shared data structures.
-However,it was accidentally removed by tiantao in a prior commit,
-which may lead to incompatibility between user space and the kernel.
+maple_tree tracepoints contain pointers to function names. Such a pointer
+is saved when a tracepoint logs an event. There's no guarantee that it's
+still valid when the event is parsed later and the pointer is dereferenced.
 
-This patch reinstates the padding to restore the original structure
-layout and preserve compatibility.
+The kernel warns about these unsafe pointers.
 
-Fixes: 8ddde07a3d28 ("dma-mapping: benchmark: extract a common header file for map_benchmark definition")
-Cc: stable@vger.kernel.org
-Acked-by: Barry Song <baohua@kernel.org>
-Signed-off-by: Qinxin Xia <xiaqinxin@huawei.com>
-Reported-by: Barry Song <baohua@kernel.org>
-Closes: https://lore.kernel.org/lkml/CAGsJ_4waiZ2+NBJG+SCnbNk+nQ_ZF13_Q5FHJqZyxyJTcEop2A@mail.gmail.com/
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://lore.kernel.org/r/20251028120900.2265511-2-xiaqinxin@huawei.com
+	event 'ma_read' has unsafe pointer field 'fn'
+	WARNING: kernel/trace/trace.c:3779 at ignore_event+0x1da/0x1e4
+
+Mark the function names as tracepoint_string() to fix the events.
+
+One case that doesn't work without my patch would be trace-cmd record
+to save the binary ringbuffer and trace-cmd report to parse it in
+userspace.  The address of __func__ can't be dereferenced from
+userspace but tracepoint_string will add an entry to
+/sys/kernel/tracing/printk_formats
+
+Link: https://lkml.kernel.org/r/20251030155537.87972-1-martin@kaiser.cx
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Martin Kaiser <martin@kaiser.cx>
+Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/map_benchmark.h |    1 +
- 1 file changed, 1 insertion(+)
+ lib/maple_tree.c |   30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
---- a/include/linux/map_benchmark.h
-+++ b/include/linux/map_benchmark.h
-@@ -27,5 +27,6 @@ struct map_benchmark {
- 	__u32 dma_dir; /* DMA data direction */
- 	__u32 dma_trans_ns; /* time for DMA transmission in ns */
- 	__u32 granule;  /* how many PAGE_SIZE will do map/unmap once a time */
-+	__u8 expansion[76]; /* For future use */
- };
- #endif /* _KERNEL_DMA_BENCHMARK_H */
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -64,6 +64,8 @@
+ #define CREATE_TRACE_POINTS
+ #include <trace/events/maple_tree.h>
+ 
++#define TP_FCT tracepoint_string(__func__)
++
+ /*
+  * Kernel pointer hashing renders much of the maple tree dump useless as tagged
+  * pointers get hashed to arbitrary values.
+@@ -2976,7 +2978,7 @@ static inline void mas_rebalance(struct
+ 	MA_STATE(l_mas, mas->tree, mas->index, mas->last);
+ 	MA_STATE(r_mas, mas->tree, mas->index, mas->last);
+ 
+-	trace_ma_op(__func__, mas);
++	trace_ma_op(TP_FCT, mas);
+ 
+ 	/*
+ 	 * Rebalancing occurs if a node is insufficient.  Data is rebalanced
+@@ -3337,7 +3339,7 @@ static void mas_split(struct ma_state *m
+ 	MA_STATE(prev_l_mas, mas->tree, mas->index, mas->last);
+ 	MA_STATE(prev_r_mas, mas->tree, mas->index, mas->last);
+ 
+-	trace_ma_op(__func__, mas);
++	trace_ma_op(TP_FCT, mas);
+ 
+ 	mast.l = &l_mas;
+ 	mast.r = &r_mas;
+@@ -3512,7 +3514,7 @@ static bool mas_is_span_wr(struct ma_wr_
+ 			return false;
+ 	}
+ 
+-	trace_ma_write(__func__, wr_mas->mas, wr_mas->r_max, entry);
++	trace_ma_write(TP_FCT, wr_mas->mas, wr_mas->r_max, entry);
+ 	return true;
+ }
+ 
+@@ -3756,7 +3758,7 @@ static noinline void mas_wr_spanning_sto
+ 	 * of data may happen.
+ 	 */
+ 	mas = wr_mas->mas;
+-	trace_ma_op(__func__, mas);
++	trace_ma_op(TP_FCT, mas);
+ 
+ 	if (unlikely(!mas->index && mas->last == ULONG_MAX))
+ 		return mas_new_root(mas, wr_mas->entry);
+@@ -3894,7 +3896,7 @@ done:
+ 	} else {
+ 		memcpy(wr_mas->node, newnode, sizeof(struct maple_node));
+ 	}
+-	trace_ma_write(__func__, mas, 0, wr_mas->entry);
++	trace_ma_write(TP_FCT, mas, 0, wr_mas->entry);
+ 	mas_update_gap(mas);
+ 	mas->end = new_end;
+ 	return;
+@@ -3938,7 +3940,7 @@ static inline void mas_wr_slot_store(str
+ 		mas->offset++; /* Keep mas accurate. */
+ 	}
+ 
+-	trace_ma_write(__func__, mas, 0, wr_mas->entry);
++	trace_ma_write(TP_FCT, mas, 0, wr_mas->entry);
+ 	/*
+ 	 * Only update gap when the new entry is empty or there is an empty
+ 	 * entry in the original two ranges.
+@@ -4059,7 +4061,7 @@ static inline void mas_wr_append(struct
+ 		mas_update_gap(mas);
+ 
+ 	mas->end = new_end;
+-	trace_ma_write(__func__, mas, new_end, wr_mas->entry);
++	trace_ma_write(TP_FCT, mas, new_end, wr_mas->entry);
+ 	return;
+ }
+ 
+@@ -4073,7 +4075,7 @@ static void mas_wr_bnode(struct ma_wr_st
+ {
+ 	struct maple_big_node b_node;
+ 
+-	trace_ma_write(__func__, wr_mas->mas, 0, wr_mas->entry);
++	trace_ma_write(TP_FCT, wr_mas->mas, 0, wr_mas->entry);
+ 	memset(&b_node, 0, sizeof(struct maple_big_node));
+ 	mas_store_b_node(wr_mas, &b_node, wr_mas->offset_end);
+ 	mas_commit_b_node(wr_mas, &b_node);
+@@ -5405,7 +5407,7 @@ void *mas_store(struct ma_state *mas, vo
+ 	int request;
+ 	MA_WR_STATE(wr_mas, mas, entry);
+ 
+-	trace_ma_write(__func__, mas, 0, entry);
++	trace_ma_write(TP_FCT, mas, 0, entry);
+ #ifdef CONFIG_DEBUG_MAPLE_TREE
+ 	if (MAS_WARN_ON(mas, mas->index > mas->last))
+ 		pr_err("Error %lX > %lX " PTR_FMT "\n", mas->index, mas->last,
+@@ -5506,7 +5508,7 @@ void mas_store_prealloc(struct ma_state
+ 	}
+ 
+ store:
+-	trace_ma_write(__func__, mas, 0, entry);
++	trace_ma_write(TP_FCT, mas, 0, entry);
+ 	mas_wr_store_entry(&wr_mas);
+ 	MAS_WR_BUG_ON(&wr_mas, mas_is_err(mas));
+ 	mas_destroy(mas);
+@@ -6319,7 +6321,7 @@ void *mtree_load(struct maple_tree *mt,
+ 	MA_STATE(mas, mt, index, index);
+ 	void *entry;
+ 
+-	trace_ma_read(__func__, &mas);
++	trace_ma_read(TP_FCT, &mas);
+ 	rcu_read_lock();
+ retry:
+ 	entry = mas_start(&mas);
+@@ -6362,7 +6364,7 @@ int mtree_store_range(struct maple_tree
+ 	MA_STATE(mas, mt, index, last);
+ 	int ret = 0;
+ 
+-	trace_ma_write(__func__, &mas, 0, entry);
++	trace_ma_write(TP_FCT, &mas, 0, entry);
+ 	if (WARN_ON_ONCE(xa_is_advanced(entry)))
+ 		return -EINVAL;
+ 
+@@ -6585,7 +6587,7 @@ void *mtree_erase(struct maple_tree *mt,
+ 	void *entry = NULL;
+ 
+ 	MA_STATE(mas, mt, index, index);
+-	trace_ma_op(__func__, &mas);
++	trace_ma_op(TP_FCT, &mas);
+ 
+ 	mtree_lock(mt);
+ 	entry = mas_erase(&mas);
+@@ -6923,7 +6925,7 @@ void *mt_find(struct maple_tree *mt, uns
+ 	unsigned long copy = *index;
+ #endif
+ 
+-	trace_ma_read(__func__, &mas);
++	trace_ma_read(TP_FCT, &mas);
+ 
+ 	if ((*index) > max)
+ 		return NULL;
 
 
