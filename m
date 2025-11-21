@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438861F09AC;
-	Fri, 21 Nov 2025 13:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1247326E6F4;
+	Fri, 21 Nov 2025 13:20:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731253; cv=none; b=tLqlWUnru963rXOfI+hdmO7Mcs+65sY8whHhZib/EXf+FMCJ1BaRBkPEE72X9IEQdiSdJBScNhs/i403UpvtEZfXmMIOBOUwmoRq47bmIdlxn52LQjGDZglZphZrKZpWwSTJLgIwKLSc1iWsUIBuaYfPcYKmRnPmsu5fAXOtDTA=
+	t=1763731256; cv=none; b=qFKzaJzhA/N+DYnC/mwmE+rLhtgzV6CHyuu/jsYYfqxtBTywOMjIwu9boV8EV/L5wMm0HoqLQAYYWkZ4fN6ABTrlC+0Uz4LJhmHE6Eng1Hw3QQ39kwYOC82tOL23Fm5hiWJFFoqdlhjxys1N3pONjy7tTL1G5KH86x8wnW4guX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731253; c=relaxed/simple;
-	bh=9OK1+JIJWDgUtqsaqDoFm9OS3Cb8bV+Cl4w6jZpIp80=;
+	s=arc-20240116; t=1763731256; c=relaxed/simple;
+	bh=k0Eybc8zhrSha0FAXrEtxOvAio5BhaAsOKWrUMHtxpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hvqs/MXqkMa+xu8+7bT3PtAmB65nLRZY9hpzRfkHI7ZW0PonASiwMIbiTjGIZVi5rslpxfPYog0WOO30Mnp2OEKtuheKzMa937TZLMzJ9813pHh7/TevITa0GmbGrYaQz5TDLslc53lop5b6AH8are5MXavK6E9Mri1V0qdij44=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=neDEMXvy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WKNipzsvGJZPfW5/IrmxSqOjtWTSKc+3WRx7vc/C60NolLz52MHmn2pFotKP8DNHywOFv7BdDF1SvGbIqvlPlXkPSR1Mebe6/bBaoDJrinerMdAk+PqLkhtPhA4FPuxTo2Ec6cxPHQdCtlTdYD0mE0WRIoG1oavZWE+51e+uQxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfiiYAha; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="neDEMXvy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB0DC4CEF1;
-	Fri, 21 Nov 2025 13:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfiiYAha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B88C4CEF1;
+	Fri, 21 Nov 2025 13:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731253;
-	bh=9OK1+JIJWDgUtqsaqDoFm9OS3Cb8bV+Cl4w6jZpIp80=;
+	s=korg; t=1763731255;
+	bh=k0Eybc8zhrSha0FAXrEtxOvAio5BhaAsOKWrUMHtxpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neDEMXvy1gKUtVFUr2y5bhR4MSdmlzALGSggCMnd3S/vfgBK9xH1yko7tuKFSYQB4
-	 f6NOTD/FfWXumsHjQjAY1/wG7vSfYD86H2a4P2Nljpda9LIwGXIZ2HVCB1gSq+Vaui
-	 ocLpqbutC8sTzyLwRT3XBzm6G+ZIleJkNdo5Inig=
+	b=bfiiYAhaA+XzqIz5knlmnywCgWoamFSKgByjUmGqpDNbWJipM6Ah0Bgfw+GF/9eQA
+	 6LXRBy+604YvpCZe19QMADzcOBACmIqCDtgPmIuA5i6K9mk06WQKQVrmngBqaDBJZl
+	 hA8ttHpxnYdWmF0TQSm6UQ7KZ3Ja4cLHmAwssXWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Andrey Leonchikov <andreil499@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 143/247] ARM: dts: BCM53573: Fix address of Luxul XAP-1440s Ethernet PHY
-Date: Fri, 21 Nov 2025 14:11:30 +0100
-Message-ID: <20251121130159.856847079@linuxfoundation.org>
+Subject: [PATCH 6.17 144/247] arm64: dts: rockchip: Fix USB power enable pin for BTT CB2 and Pi2
+Date: Fri, 21 Nov 2025 14:11:31 +0100
+Message-ID: <20251121130159.893191127@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -45,43 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Andrey Leonchikov <andreil499@gmail.com>
 
-[ Upstream commit 3d1c795bdef43363ed1ff71e3f476d86c22e059b ]
+[ Upstream commit a59e927ff46a967f84ddf94e89cbb045810e8974 ]
 
-Luxul XAP-1440 has BCM54210E PHY at address 25.
+ Fix typo into regulator GPIO definition. With current
+ definition - USB powered off. Valid definition can be found on "pinctrl"
+ section:
+ 		vcc5v0_usb2t_en: vcc5v0-usb2t-en {
+ 				rockchip,pins = <3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_none>;
+ 				 		};
 
-Fixes: 44ad82078069 ("ARM: dts: BCM53573: Fix Ethernet info for Luxul devices")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/r/20251002194852.13929-1-zajec5@gmail.com
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
+ 		vcc5v0_usb2b_en: vcc5v0-usb2b-en {
+ 			rockchip,pins = <4 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
+ 		};
+
+Fixes: bfbc663d2733a ("arm64: dts: rockchip: Add BigTreeTech CB2 and Pi2")
+Signed-off-by: Andrey Leonchikov <andreil499@gmail.com>
+Link: https://patch.msgid.link/20251105210741.850031-1-andreil499@gmail.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dts | 4 ++--
+ arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dts b/arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dts
-index ac44c745bdf8e..a39a021a39107 100644
---- a/arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dts
-+++ b/arch/arm/boot/dts/broadcom/bcm47189-luxul-xap-1440.dts
-@@ -55,8 +55,8 @@
- 	mdio {
- 		/delete-node/ switch@1e;
- 
--		bcm54210e: ethernet-phy@0 {
--			reg = <0>;
-+		bcm54210e: ethernet-phy@25 {
-+			reg = <25>;
- 		};
- 	};
- };
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi b/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi
+index f74590af7e33f..b6cf03a7ba66b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-bigtreetech-cb2.dtsi
+@@ -187,7 +187,7 @@
+ 	vcc5v0_usb2b: regulator-vcc5v0-usb2b {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+-		gpio = <&gpio0 RK_PC4 GPIO_ACTIVE_HIGH>;
++		gpio = <&gpio4 RK_PC4 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vcc5v0_usb2b_en>;
+ 		regulator-name = "vcc5v0_usb2b";
+@@ -199,7 +199,7 @@
+ 	vcc5v0_usb2t: regulator-vcc5v0-usb2t {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+-		gpios = <&gpio0 RK_PD5 GPIO_ACTIVE_HIGH>;
++		gpios = <&gpio3 RK_PD5 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vcc5v0_usb2t_en>;
+ 		regulator-name = "vcc5v0_usb2t";
 -- 
 2.51.0
 
