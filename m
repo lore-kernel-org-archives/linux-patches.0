@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E202F8BD0;
-	Fri, 21 Nov 2025 13:45:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E16F3446A0;
+	Fri, 21 Nov 2025 13:45:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732725; cv=none; b=ktSsWerWZudXY9X9YbFkISFGh8cpSsmW9bAxwAmj6PsohDWV04haNazTCeZhGdTPK0t7+jF8gB3miHsy7GffxoHtWfQozLoCn8HGV28WhLHY55CICMSP8Y/RKeC0pDrk723/l2qVdZI8CaOnNzNCBwYEup0xDTveTL4k/kgwV+8=
+	t=1763732728; cv=none; b=o+9aV8qHXC74mfTxjLQDcbskPRc8a/l3pY+SrJgC5ZH17rX9KfBoXY+KtkuTQoOiW+9K0RiZTTIOQth6dTxKMjIU1KM+s00nAX1BsYKzK7vdffIT8DLAOC5TYBQgf63WnlrORhSmVuU3HG8PUZB0wlRUnKDsjul2YWOBVXI6h6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732725; c=relaxed/simple;
-	bh=/Pmn7uaOcOcP72CvwZlHj+aUas0tIgOVnwh2Vucfztk=;
+	s=arc-20240116; t=1763732728; c=relaxed/simple;
+	bh=5m3+L2vDNg0MmrAL5R+HRhRHH+NIAA8TsXxg2n60sUw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZB0/QmP2z7hvpzbpGdAIaTaEErKVCNINUz2Qn8l9Lrhg9JTIWq+gJmcS7Q0A0yxkU6AqBH0hsOboCO83kwhbjy/n73/Klolvc8LnxIInkA+0m8MiFPEZBGDU59QYrVQfqVs0Ep1Nm+oaPEGnUmMyPOE+ICQsssFfOFV/Jpg3JMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZRtWWd8W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfrfUMo0Bs5e8sVE9JkpRbyakCaxZzJTTbnWmv/ea3x/qd3aJS1cpbOPbq0KDtFo3/4qjHYMKXke5qY8cClWg2nexvCfcDDR3MZN7eeilY8Sg0te3kYPHiyGudtlG5XwWecmnf3Vpyu2A/g20Cosg2QS8iffyYY75pV31Hq5XkY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwO/9AYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZRtWWd8W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A5C6C4CEF1;
-	Fri, 21 Nov 2025 13:45:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwO/9AYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900CFC4CEF1;
+	Fri, 21 Nov 2025 13:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732724;
-	bh=/Pmn7uaOcOcP72CvwZlHj+aUas0tIgOVnwh2Vucfztk=;
+	s=korg; t=1763732728;
+	bh=5m3+L2vDNg0MmrAL5R+HRhRHH+NIAA8TsXxg2n60sUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZRtWWd8WOIC0JM51LNRHG4b8PnR+f896C+AvBjGciE0ngFOKxuHqzO3F41+g6MMdu
-	 ZpZzB2xihAbEN3gCH65pQ/eA1s8KjQEcRFM7mJYF0IcUWz8KKEnpxclZ5FY8j35vwV
-	 qBPAkXinhA8Abh6LvUZ3HFaKDRF3sug6fl0rxI5s=
+	b=CwO/9AYeu2vcPgzPYfIZspdSFKqLiDXJc/iHQh6U1sHqWKf5iF5Gpj/n6xyCQbABS
+	 8ziX5/6T84KU4mYvbXdXSkF8IDqWoMN7L4hjCO0lj9zeGzc/MAdJXyKlSXLVj7woYm
+	 NzxeUupnPvdmmx2hJ01F2pBh+b+dulJVG+pRkVVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 222/529] selftests: Replace sleep with slowwait
-Date: Fri, 21 Nov 2025 14:08:41 +0100
-Message-ID: <20251121130238.912850984@linuxfoundation.org>
+Subject: [PATCH 6.6 205/529] scsi: ufs: host: mediatek: Enhance recovery on resume failure
+Date: Fri, 21 Nov 2025 14:08:24 +0100
+Message-ID: <20251121130238.311969931@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,34 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Ahern <dsahern@kernel.org>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 2f186dd5585c3afb415df80e52f71af16c9d3655 ]
+[ Upstream commit 15ef3f5aa822f32524cba1463422a2c9372443f0 ]
 
-Replace the sleep in kill_procs with slowwait.
+Improve the recovery process for failed resume operations. Log the
+device's power status and return 0 if both resume and recovery fail to
+prevent I/O hang.
 
-Signed-off-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250910025828.38900-2-dsahern@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fcnal-test.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/host/ufs-mediatek.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
-index b4d7b1994091b..5d8f50cd38b7e 100755
---- a/tools/testing/selftests/net/fcnal-test.sh
-+++ b/tools/testing/selftests/net/fcnal-test.sh
-@@ -194,7 +194,7 @@ show_hint()
- kill_procs()
- {
- 	killall nettest ping ping6 >/dev/null 2>&1
--	sleep 1
-+	slowwait 2 sh -c 'test -z "$(pgrep '"'^(nettest|ping|ping6)$'"')"'
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index 7ede6531bf40c..6f2e5b83ff0c9 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -1444,8 +1444,21 @@ static int ufs_mtk_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	}
+ 
+ 	return 0;
++
+ fail:
+-	return ufshcd_link_recovery(hba);
++	/*
++	 * Check if the platform (parent) device has resumed, and ensure that
++	 * power, clock, and MTCMOS are all turned on.
++	 */
++	err = ufshcd_link_recovery(hba);
++	if (err) {
++		dev_err(hba->dev, "Device PM: req=%d, status:%d, err:%d\n",
++			hba->dev->power.request,
++			hba->dev->power.runtime_status,
++			hba->dev->power.runtime_error);
++	}
++
++	return 0; /* Cannot return a failure, otherwise, the I/O will hang. */
  }
  
- do_run_cmd()
+ static void ufs_mtk_dbg_register_dump(struct ufs_hba *hba)
 -- 
 2.51.0
 
