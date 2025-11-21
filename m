@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56500332904;
-	Fri, 21 Nov 2025 13:28:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA341F09B3;
+	Fri, 21 Nov 2025 13:29:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731738; cv=none; b=TFW1egE1yqdQBNsR11XcSsPfCnAFzqtTUj1BgHLt40s/vzLPTj1+YQLB9ZZC1lVrWWP+Pxr5BLLi4OXIpBapCb5HkDuH+UsDNoPbFLd7KuYRrFqjGrAnAmcBxvqzIXv1XgvASD4guWtVZcaqVo9PvF3U6NYUQxCTAEvWOqBsr6w=
+	t=1763731741; cv=none; b=XylxClrEyNNN0oFAxoeCQu78tx4p4YdGGhbkfQCKEp7HV6wQSlD9N3WDfzI5M3/zgW0i8qjyT86MM6SJVn+I1dqb554qUZST/Vu6je6UzvH6d3a2MGFsbhRUcFpDudRnENyqKzvV5bwpQsiBxHtp9DrD6W9dK9HEXOkwJXX6J68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731738; c=relaxed/simple;
-	bh=lxeSOqo6sPnoFelYY038M5a/9Pi1WQinnx45NU8GKoc=;
+	s=arc-20240116; t=1763731741; c=relaxed/simple;
+	bh=gDbsgXuSaiPr/UN2sxdV4g2h1JidFDX2L2rM9bIJBSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=muF8wbKIf+8UVnoickVfww0Cmhq+NBgFskHbcYpPxd1wXTESRA8H9nV+iFtb41luD1SKPTOo/e52jUf58krg1OZuxq51Pm68I6dgfOSGiqz0ppOJVzwAjrZtB0dYIa1gWsAhbyouHcFxytDUYgn7t3tSVx4eiTCNdgDsqeRIJR8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MclSZca9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V6dBsPwVvmPkQNkJ4jq/FSTZigv2Tc2Q2ALj5nHcXMeP0vtosEdchWq2zfaGEF6EcJC9RVD2bmQzRQCdAlfTkbbpfEHd1ZlVmu5qaxfSwEvDLEEBjkEbDoM1STYwd4OFkublG/fSCrq+bbVze/tK4OIT7NxkCkJM3evltsCVUug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjZyUjAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MclSZca9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF72C4CEF1;
-	Fri, 21 Nov 2025 13:28:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjZyUjAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A39F5C4CEF1;
+	Fri, 21 Nov 2025 13:29:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731738;
-	bh=lxeSOqo6sPnoFelYY038M5a/9Pi1WQinnx45NU8GKoc=;
+	s=korg; t=1763731741;
+	bh=gDbsgXuSaiPr/UN2sxdV4g2h1JidFDX2L2rM9bIJBSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MclSZca9AfGxS9hF2XAyhYaG3QDb/cOSvQA96WCO1InODSARKWLAMqRp4FBRudXTD
-	 Onxpb7J5+XFmV5tXi5WAQDMqQtrBjwpmdG+aA+CWalkdP8E2PIyJN8KiEE1wA5s8iX
-	 6Wxff544TSqlgMDOsnuoaBKUrO0yhtefFbGZFknM=
+	b=LjZyUjAqXP2fhhnSuCzYDI31yQbCTMju3fergH0NwkkVx65Q2hIxXxZtT70rDZ2Jh
+	 76ctv12hrQZsAKlYjgXTkFd7M2RyxBHsFw0uK98qYSAlQcnQ1BTE6B4o7c2o1ZXp4p
+	 +1uFRMJZM18szbJuCcb1X4Xmd4CQCUk616aIYJ30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/185] ACPI: CPPC: Perform fast check switch only for online CPUs
-Date: Fri, 21 Nov 2025 14:11:31 +0100
-Message-ID: <20251121130146.186825980@linuxfoundation.org>
+Subject: [PATCH 6.12 065/185] ACPI: CPPC: Limit perf ctrs in PCC check only to online CPUs
+Date: Fri, 21 Nov 2025 14:11:32 +0100
+Message-ID: <20251121130146.222714090@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -54,22 +54,22 @@ Content-Transfer-Encoding: 8bit
 
 From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 8821c8e80a65bc4eb73daf63b34aac6b8ad69461 ]
+[ Upstream commit 0fce75870666b46b700cfbd3216380b422f975da ]
 
 per_cpu(cpc_desc_ptr, cpu) object is initialized for only the online
-CPUs via acpi_soft_cpu_online() --> __acpi_processor_start() -->
+CPU via acpi_soft_cpu_online() --> __acpi_processor_start() -->
 acpi_cppc_processor_probe().
 
-However the function cppc_allow_fast_switch() checks for the validity
-of the _CPC object for all the present CPUs. This breaks when the
-kernel is booted with "nosmt=force".
+However the function cppc_perf_ctrs_in_pcc() checks if the CPPC
+perf-ctrs are in a PCC region for all the present CPUs, which breaks
+when the kernel is booted with "nosmt=force".
 
-Check fast_switch capability only on online CPUs
+Hence, limit the check only to the online CPUs.
 
-Fixes: 15eece6c5b05 ("ACPI: CPPC: Fix NULL pointer dereference when nosmp is used")
+Fixes: ae2df912d1a5 ("ACPI: CPPC: Disable FIE if registers in PCC regions")
 Reviewed-by: "Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>
 Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
-Link: https://patch.msgid.link/20251107074145.2340-4-gautham.shenoy@amd.com
+Link: https://patch.msgid.link/20251107074145.2340-5-gautham.shenoy@amd.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -77,18 +77,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/acpi/cppc_acpi.c b/drivers/acpi/cppc_acpi.c
-index 3ce5bb87d25b7..c4a1fee4b4873 100644
+index c4a1fee4b4873..62b723f6c48df 100644
 --- a/drivers/acpi/cppc_acpi.c
 +++ b/drivers/acpi/cppc_acpi.c
-@@ -463,7 +463,7 @@ bool cppc_allow_fast_switch(void)
- 	struct cpc_desc *cpc_ptr;
+@@ -1366,7 +1366,7 @@ bool cppc_perf_ctrs_in_pcc(void)
+ {
  	int cpu;
  
 -	for_each_present_cpu(cpu) {
 +	for_each_online_cpu(cpu) {
- 		cpc_ptr = per_cpu(cpc_desc_ptr, cpu);
- 		desired_reg = &cpc_ptr->cpc_regs[DESIRED_PERF];
- 		if (!CPC_IN_SYSTEM_MEMORY(desired_reg) &&
+ 		struct cpc_register_resource *ref_perf_reg;
+ 		struct cpc_desc *cpc_desc;
+ 
 -- 
 2.51.0
 
