@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7146233E366;
-	Fri, 21 Nov 2025 13:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE204274FE3;
+	Fri, 21 Nov 2025 13:27:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731668; cv=none; b=BW/NwFZU3bsEQNrWESN37NDSiVvuIbWSrYXh8A0QDLFpjLttn6N5xXkICLn3aNWGLccIaskhLCGXNGbj+l5BzxoYC+w87uJt8an4mWKagnxHzAPSRFDhQAlSD2CdiPTMm9g4eHdKm6TrFFnoIrCb09jaVRcau6nlekbMwR7xVy8=
+	t=1763731671; cv=none; b=gt6qYsV4CMzmczH3SkBFtRde1LvKWoPf2TYOW9UMbMLFLki/yAm0MV/LsOunrJ4oaUXlUS7ymSjBQo6vlseoWxamC2o85ZqoQ1hExcZ1aXtZyWIc0piLKNx2OGFWttN2n66wB1TXlqpJ6IDYuXQ6KURqiW8s2tZ7z/bamechQlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731668; c=relaxed/simple;
-	bh=vLVAgGzCmqFBtPlonoR4+4Ih813G+aHMorIddLBDXo0=;
+	s=arc-20240116; t=1763731671; c=relaxed/simple;
+	bh=LzEcXmli/XIX0fuPoDEYSCyqjDkYCZCa7xOcXGiDei4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kPRt6pS6Ck6MEua88t2JcHFTLbr/IUlZRKTPs5GsV0MHi28kWlY5Q4fflaaG6nKLdrAuyoLruEO1A4KNMQ/k02UqeSWsT4NsvYaUQslKuNR1khKyWCWiA07RNPeMTaqjOcNIpB/HzmyGR4uay1raT3W4U5GinjUedtUWrkt9mjM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dX8qVx0g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDJAlSIGtepYgtBJaYNar5s2iZZjwBI3AbIHKbPQhnsLDvMSTLoNVTVBuAuAmByiC6yiKxar/SEBYsUJ5lLP0a2/1KwbDpAzxVNih+mZvTd8LA+OX1ENHimKy6we8BlU8dx852ltNVQjgZBlWM5Z08wwQFMpDll2yr44VfZ3xJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FUyk/gXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dX8qVx0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F97C4CEF1;
-	Fri, 21 Nov 2025 13:27:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FUyk/gXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CD5C4CEF1;
+	Fri, 21 Nov 2025 13:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731667;
-	bh=vLVAgGzCmqFBtPlonoR4+4Ih813G+aHMorIddLBDXo0=;
+	s=korg; t=1763731670;
+	bh=LzEcXmli/XIX0fuPoDEYSCyqjDkYCZCa7xOcXGiDei4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dX8qVx0geevtbYclZBiRLCfBNZN5rpdppKcarZaI2DSmNhlEj+TXmzAKf+AmkEruC
-	 +/SZqxkb88sIQWBo/2VW7YSsj//db1MFYWey5Ug9i2W+gnBqboN83POGu8obFD26os
-	 2x94RsU6qcyleBpxoywPbgD8XZMULs33p3++X+1o=
+	b=FUyk/gXVq0LCdNBeaRWxHpSKgQxpnMlHsK7xEf2DQNTAaFgle8QrZ/rWsbjbzf7Es
+	 0dV/vFF1r9vMrCRlQB7TK07hG1PqsO/tYdtkrKUMaWGqT0nbAqgHlrZd17celjVqSs
+	 VuC1vdevJWAr68FDENxVFCUmUWcvghh9l45Qjkak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
+	syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com,
+	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/185] Bluetooth: MGMT: cancel mesh send timer when hdev removed
-Date: Fri, 21 Nov 2025 14:11:06 +0100
-Message-ID: <20251121130145.290549474@linuxfoundation.org>
+Subject: [PATCH 6.12 040/185] Bluetooth: btusb: reorder cleanup in btusb_disconnect to avoid UAF
+Date: Fri, 21 Nov 2025 14:11:07 +0100
+Message-ID: <20251121130145.326382374@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -51,54 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
 
-[ Upstream commit 55fb52ffdd62850d667ebed842815e072d3c9961 ]
+[ Upstream commit 23d22f2f71768034d6ef86168213843fc49bf550 ]
 
-mesh_send_done timer is not canceled when hdev is removed, which causes
-crash if the timer triggers after hdev is gone.
+There is a KASAN: slab-use-after-free read in btusb_disconnect().
+Calling "usb_driver_release_interface(&btusb_driver, data->intf)" will
+free the btusb data associated with the interface. The same data is
+then used later in the function, hence the UAF.
 
-Cancel the timer when MGMT removes the hdev, like other MGMT timers.
+Fix by moving the accesses to btusb data to before the data is free'd.
 
-Should fix the BUG: sporadically seen by BlueZ test bot
-(in "Mesh - Send cancel - 1" test).
-
-Log:
-------
-BUG: KASAN: slab-use-after-free in run_timer_softirq+0x76b/0x7d0
-...
-Freed by task 36:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x43/0x70
- kfree+0x103/0x500
- device_release+0x9a/0x210
- kobject_put+0x100/0x1e0
- vhci_release+0x18b/0x240
-------
-
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Link: https://lore.kernel.org/linux-bluetooth/67364c09.0c0a0220.113cba.39ff@mx.google.com/
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reported-by: syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2fc81b50a4f8263a159b
+Tested-by: syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com
+Fixes: fd913ef7ce619 ("Bluetooth: btusb: Add out-of-band wakeup support")
+Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bluetooth/btusb.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 57295c3a8920f..c54cc701cdd48 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -9492,6 +9492,7 @@ void mgmt_index_removed(struct hci_dev *hdev)
- 	cancel_delayed_work_sync(&hdev->discov_off);
- 	cancel_delayed_work_sync(&hdev->service_cache);
- 	cancel_delayed_work_sync(&hdev->rpa_expired);
-+	cancel_delayed_work_sync(&hdev->mesh_send_done);
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a734c5135a8be..aedb478614000 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4179,6 +4179,11 @@ static void btusb_disconnect(struct usb_interface *intf)
+ 
+ 	hci_unregister_dev(hdev);
+ 
++	if (data->oob_wake_irq)
++		device_init_wakeup(&data->udev->dev, false);
++	if (data->reset_gpio)
++		gpiod_put(data->reset_gpio);
++
+ 	if (intf == data->intf) {
+ 		if (data->isoc)
+ 			usb_driver_release_interface(&btusb_driver, data->isoc);
+@@ -4189,17 +4194,11 @@ static void btusb_disconnect(struct usb_interface *intf)
+ 			usb_driver_release_interface(&btusb_driver, data->diag);
+ 		usb_driver_release_interface(&btusb_driver, data->intf);
+ 	} else if (intf == data->diag) {
+-		usb_driver_release_interface(&btusb_driver, data->intf);
+ 		if (data->isoc)
+ 			usb_driver_release_interface(&btusb_driver, data->isoc);
++		usb_driver_release_interface(&btusb_driver, data->intf);
+ 	}
+ 
+-	if (data->oob_wake_irq)
+-		device_init_wakeup(&data->udev->dev, false);
+-
+-	if (data->reset_gpio)
+-		gpiod_put(data->reset_gpio);
+-
+ 	hci_free_dev(hdev);
  }
  
- void mgmt_power_on(struct hci_dev *hdev, int err)
 -- 
 2.51.0
 
