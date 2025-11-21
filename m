@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4B526CE33;
-	Fri, 21 Nov 2025 13:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3EB26E6F4;
+	Fri, 21 Nov 2025 13:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731173; cv=none; b=f7rp5IOMmsyiP+tGmDeCDwL4ZD4uHW5CaiQXW+81KqQEIQfIH943dCdqeSAB7WRvq7cdctJTDCDJm0L7vFxuWltIKVlX+o8MF6k2qJIvB9SX+v80NElbdmBfBuvfDReH9b2Lzw5CON3R3P4AIlXPolbPGx2TKoA2ZqBZrT59GT8=
+	t=1763731176; cv=none; b=hbDrHd9bjUxOwAlr8Bm2sk2kRC1otaVjqnCtVBG5/ARld9cgizF4NeNoaP8vCTMpVY1J1XZ6uoPTVUsVgx1STJ+ZsbBnrPY84C1q7iPGRNw3d7aZUC51CfnTxZdJU34eaRywjIcz+DFtPVa/ZBHj6wF4oP4caglOlZYBJvX3H2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731173; c=relaxed/simple;
-	bh=nST0DxULIe3PgNbdgKaBFzXBF4O472J9TZDok5wIc2U=;
+	s=arc-20240116; t=1763731176; c=relaxed/simple;
+	bh=IGpzDImmn3ciYGDF3HMtsPU81OLQI3Ifh7XDDy5S5b8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZH9Sfon+q5v7B3LFEJYjYB/5sA8uTzfVhbHAELIdEevPnIPiqfPtcCngmSzfVGvaLN2UXYRsnpU3ahk31KYOIfyiuYmbhi8nnqI8oYg7cY469HFBomMoLUEU8VKcuyAu7i9YXkwbdnNyDul0GQxKiruAZl2BbIk0HCBmXM9a0pA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K9lpFBm1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rCUHIR6dO7uzGqmU2d93kwL8J9tkvjfCT5owyfWN3OEPnn+VWVasMpCwWbTYqQhy+tr+QEQLJR+74ZNWk9hBMxtIeTuY8vKhZLxdSNoRVFpq1RY0eWOJdurY7u65cHxqC5ZLyitP72vH0MGpk7OcWFLtA4tXt8vrRrtcXwQxqGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkXsEcRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K9lpFBm1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D164C4CEF1;
-	Fri, 21 Nov 2025 13:19:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkXsEcRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90354C4CEF1;
+	Fri, 21 Nov 2025 13:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731172;
-	bh=nST0DxULIe3PgNbdgKaBFzXBF4O472J9TZDok5wIc2U=;
+	s=korg; t=1763731175;
+	bh=IGpzDImmn3ciYGDF3HMtsPU81OLQI3Ifh7XDDy5S5b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K9lpFBm18oA1cAw8xzUN/vdyzsb5voRbZhwpElKCuJF9ZgU2zDnShRV+9DtaqRvDV
-	 0CFAlLryacJdRqPRX4+Rvn+x/Z0hEELuQn+mDM0ZQQ7pNElrXQ0tA3vSw+naqz00pK
-	 BDQjazyDlyrEH9of4fMaAJm/M/Nl1MEiibpkZ+r0=
+	b=EkXsEcRxnGVzObtxTpoWCkhE+wvOYsKShd0TMB69q8YRd2L3DqZN7wjfXFDTBISje
+	 vs0i7tltgGdMkgi7+2w9P3eFVX0KI2sCqpHYBdcxTKr2Ul2WMD+461rUFowiRio3d9
+	 xuRF+/yZ6JPtmR7j6H1/LLMPOaufvZ/SE3XuPgI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Pratap Nirujogi <pratap.nirujogi@amd.com>,
-	Sultan Alsawaf <sultan@kerneltoast.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 114/247] drm/amd/amdgpu: Ensure isp_kernel_buffer_alloc() creates a new BO
-Date: Fri, 21 Nov 2025 14:11:01 +0100
-Message-ID: <20251121130158.674031245@linuxfoundation.org>
+Subject: [PATCH 6.17 115/247] acpi/hmat: Fix lockdep warning for hmem_register_resource()
+Date: Fri, 21 Nov 2025 14:11:02 +0100
+Message-ID: <20251121130158.709929965@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -53,44 +53,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sultan Alsawaf <sultan@kerneltoast.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 7132f7e025f9382157543dd86a62d161335b48b9 ]
+[ Upstream commit 214291cbaaceeb28debd773336642b1fca393ae0 ]
 
-When the BO pointer provided to amdgpu_bo_create_kernel() points to
-non-NULL, amdgpu_bo_create_kernel() takes it as a hint to pin that address
-rather than allocate a new BO.
+The following lockdep splat was observed while kernel auto-online a CXL
+memory region:
 
-This functionality is never desired for allocating ISP buffers. A new BO
-should always be created when isp_kernel_buffer_alloc() is called, per the
-description for isp_kernel_buffer_alloc().
+======================================================
+WARNING: possible circular locking dependency detected
+6.17.0djtest+ #53 Tainted: G        W
+------------------------------------------------------
+systemd-udevd/3334 is trying to acquire lock:
+ffffffff90346188 (hmem_resource_lock){+.+.}-{4:4}, at: hmem_register_resource+0x31/0x50
 
-Ensure this by zeroing *bo right before the amdgpu_bo_create_kernel() call.
+but task is already holding lock:
+ffffffff90338890 ((node_chain).rwsem){++++}-{4:4}, at: blocking_notifier_call_chain+0x2e/0x70
 
-Fixes: 55d42f616976 ("drm/amd/amdgpu: Add helper functions for isp buffers")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Reviewed-by: Pratap Nirujogi <pratap.nirujogi@amd.com>
-Signed-off-by: Sultan Alsawaf <sultan@kerneltoast.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 73c8c29baac7f0c7e703d92eba009008cbb5228e)
+which lock already depends on the new lock.
+[..]
+Chain exists of:
+  hmem_resource_lock --> mem_hotplug_lock --> (node_chain).rwsem
+
+ Possible unsafe locking scenario:
+
+       CPU0                    CPU1
+       ----                    ----
+  rlock((node_chain).rwsem);
+                               lock(mem_hotplug_lock);
+                               lock((node_chain).rwsem);
+  lock(hmem_resource_lock);
+
+The lock ordering can cause potential deadlock. There are instances
+where hmem_resource_lock is taken after (node_chain).rwsem, and vice
+versa.
+
+Split out the target update section of hmat_register_target() so that
+hmat_callback() only envokes that section instead of attempt to register
+hmem devices that it does not need to.
+
+[ dj: Fix up comment to be closer to 80cols. (Jonathan) ]
+
+Fixes: cf8741ac57ed ("ACPI: NUMA: HMAT: Register "soft reserved" memory as an "hmem" device")
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Tested-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Reviewed-by: Smita Koralahalli <Smita.KoralahalliChannabasappa@amd.com>
+Reviewed-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://patch.msgid.link/20251105235115.85062-3-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_isp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/acpi/numa/hmat.c | 46 ++++++++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_isp.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_isp.c
-index 9cddbf50442a4..37270c4dab8dd 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_isp.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_isp.c
-@@ -280,6 +280,8 @@ int isp_kernel_buffer_alloc(struct device *dev, u64 size,
- 	if (ret)
- 		return ret;
+diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+index 4958301f54179..9085375830605 100644
+--- a/drivers/acpi/numa/hmat.c
++++ b/drivers/acpi/numa/hmat.c
+@@ -908,10 +908,32 @@ static void hmat_register_target_devices(struct memory_target *target)
+ 	}
+ }
  
-+	/* Ensure *bo is NULL so a new BO will be created */
-+	*bo = NULL;
- 	ret = amdgpu_bo_create_kernel(adev,
- 				      size,
- 				      ISP_MC_ADDR_ALIGN,
+-static void hmat_register_target(struct memory_target *target)
++static void hmat_hotplug_target(struct memory_target *target)
+ {
+ 	int nid = pxm_to_node(target->memory_pxm);
+ 
++	/*
++	 * Skip offline nodes. This can happen when memory marked EFI_MEMORY_SP,
++	 * "specific purpose", is applied to all the memory in a proximity
++	 * domain leading to * the node being marked offline / unplugged, or if
++	 * memory-only "hotplug" node is offline.
++	 */
++	if (nid == NUMA_NO_NODE || !node_online(nid))
++		return;
++
++	guard(mutex)(&target_lock);
++	if (target->registered)
++		return;
++
++	hmat_register_target_initiators(target);
++	hmat_register_target_cache(target);
++	hmat_register_target_perf(target, ACCESS_COORDINATE_LOCAL);
++	hmat_register_target_perf(target, ACCESS_COORDINATE_CPU);
++	target->registered = true;
++}
++
++static void hmat_register_target(struct memory_target *target)
++{
+ 	/*
+ 	 * Devices may belong to either an offline or online
+ 	 * node, so unconditionally add them.
+@@ -929,25 +951,7 @@ static void hmat_register_target(struct memory_target *target)
+ 	}
+ 	mutex_unlock(&target_lock);
+ 
+-	/*
+-	 * Skip offline nodes. This can happen when memory
+-	 * marked EFI_MEMORY_SP, "specific purpose", is applied
+-	 * to all the memory in a proximity domain leading to
+-	 * the node being marked offline / unplugged, or if
+-	 * memory-only "hotplug" node is offline.
+-	 */
+-	if (nid == NUMA_NO_NODE || !node_online(nid))
+-		return;
+-
+-	mutex_lock(&target_lock);
+-	if (!target->registered) {
+-		hmat_register_target_initiators(target);
+-		hmat_register_target_cache(target);
+-		hmat_register_target_perf(target, ACCESS_COORDINATE_LOCAL);
+-		hmat_register_target_perf(target, ACCESS_COORDINATE_CPU);
+-		target->registered = true;
+-	}
+-	mutex_unlock(&target_lock);
++	hmat_hotplug_target(target);
+ }
+ 
+ static void hmat_register_targets(void)
+@@ -973,7 +977,7 @@ static int hmat_callback(struct notifier_block *self,
+ 	if (!target)
+ 		return NOTIFY_OK;
+ 
+-	hmat_register_target(target);
++	hmat_hotplug_target(target);
+ 	return NOTIFY_OK;
+ }
+ 
 -- 
 2.51.0
 
