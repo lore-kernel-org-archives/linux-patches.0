@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59A03F9D2;
-	Fri, 21 Nov 2025 13:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A620F2745E;
+	Fri, 21 Nov 2025 13:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731883; cv=none; b=bYpMldCtRNfAAqtBK3w89+PnxjyKloYYae918EcgF8u8Ms3dY33F2moh1HRo1XpW9fMYoAyCAsSFcxb8a3Q5LFDy/FlT3NLVoUkPtKiEcmVbOJ5CDs50G4grPhu7DLZaIjcSW4O3Bbg9WPa62J6xl53/ENknqks9eqvlvyZRhek=
+	t=1763731886; cv=none; b=bLa2xJk5f6/ZQXxPe9byBvShkCqfLPwuzCEvcMu5QRV5bGUHGlRf4EA5sl6CyBLIOrlpiar4Zsn8h4nr5fKpSDHmaB8p8zsUFr3ayr7gMHfz2WeEMuPe/jNkEGsNrsKl7qRxB4afUYcpqKdDd5bJGBWoxY5OQJ6eys+y1dH4MSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731883; c=relaxed/simple;
-	bh=kcmlUI3Jrjgg81yWUvq5mlq7apnswml0HMLXP6mYPqQ=;
+	s=arc-20240116; t=1763731886; c=relaxed/simple;
+	bh=EhcHgjU6NjS2c2SgXSWjVWU5nDZzafdPVaSoSmOXHQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgInp+CPPqDMPBODoke9TtfRNyvDAUnOg8nhz4LDZ7KuyiyGBQaV9Ins4kpGDSbPR4kRv3MVXEOERuDzDQNHyPUFufpDnhYbkOU09vuCZqHW445e/hRCcNNfG3rS1T1Rq5wjKSW5vWiFnmG6+J3ZiDYRh4qaKapMoUhEGVJbYGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tev3bfLA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I+V4oQdjOg3yA+AFpGooMMA/OMqOKo/RPWzx6DA6txpA8KKk0jGjJNdhAQY7ZE7TSCHSybku0PSwBdfXN5rDrU7+qJPlCOPeyZyjkYYoKk5+x5yI2y9+/FuyYZFOMpDMvLRvoWTJhwJAarskYvSC91KBRvuwtSKuMCA5mnFQPkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLZKNxAf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tev3bfLA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 221E1C4CEF1;
-	Fri, 21 Nov 2025 13:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLZKNxAf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29267C4CEF1;
+	Fri, 21 Nov 2025 13:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731883;
-	bh=kcmlUI3Jrjgg81yWUvq5mlq7apnswml0HMLXP6mYPqQ=;
+	s=korg; t=1763731886;
+	bh=EhcHgjU6NjS2c2SgXSWjVWU5nDZzafdPVaSoSmOXHQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tev3bfLAnzWS78tdZGyoEFZ5v74DO2pZDx1+6nRO42rrsGIbRGO0Zc5xZI3R67Wgn
-	 tuNJpaGaWkTI8Er0MkFHQpu+6qYeqYYoeDO3Pbce4uCQ48JAvy50DwSrhVwKoPw/lo
-	 t9pFACmBhVyPjCZcr66qE4OpJon+XutTX7IC23HY=
+	b=QLZKNxAfmbc4hMCCjkKdeJnpKs4coDzrXNCXkV4LaW7rC1oITTui27Viw/tMy0u2I
+	 L2qqT48I3a+h3k0wddEg59df1kDoSHTKLfsH3ogqqBfYntAwEHSzBU4PfhHQ4k+jdz
+	 SgeSuFBFeSWaxbTHQg84np+uou/TveoxAb8UPV2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Rajani Kantha <681739313@139.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 087/185] ext4: introduce ITAIL helper
-Date: Fri, 21 Nov 2025 14:11:54 +0100
-Message-ID: <20251121130147.007377018@linuxfoundation.org>
+	Joshua Rogers <linux@joshua.hu>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.12 114/185] ksmbd: close accepted socket when per-IP limit rejects connection
+Date: Fri, 21 Nov 2025 14:12:21 +0100
+Message-ID: <20251121130147.988504157@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,88 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ye Bin <yebin10@huawei.com>
+From: Joshua Rogers <linux@joshua.hu>
 
-[ Upstream commit 69f3a3039b0d0003de008659cafd5a1eaaa0a7a4 ]
+commit 98a5fd31cbf72d46bf18e50b3ab0ce86d5f319a9 upstream.
 
-Introduce ITAIL helper to get the bound of xattr in inode.
+When the per-IP connection limit is exceeded in ksmbd_kthread_fn(),
+the code sets ret = -EAGAIN and continues the accept loop without
+closing the just-accepted socket. That leaks one socket per rejected
+attempt from a single IP and enables a trivial remote DoS.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20250208063141.1539283-2-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Rajani Kantha <681739313@139.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Release client_sk before continuing.
+
+This bug was found with ZeroPath.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c | 10 +++++-----
- fs/ext4/xattr.h |  3 +++
- 2 files changed, 8 insertions(+), 5 deletions(-)
+ fs/smb/server/transport_tcp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index ce986312bf685..6946c1fc790ab 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -653,7 +653,7 @@ ext4_xattr_ibody_get(struct inode *inode, int name_index, const char *name,
- 		return error;
- 	raw_inode = ext4_raw_inode(&iloc);
- 	header = IHDR(inode, raw_inode);
--	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	end = ITAIL(inode, raw_inode);
- 	error = xattr_check_inode(inode, header, end);
- 	if (error)
- 		goto cleanup;
-@@ -797,7 +797,7 @@ ext4_xattr_ibody_list(struct dentry *dentry, char *buffer, size_t buffer_size)
- 		return error;
- 	raw_inode = ext4_raw_inode(&iloc);
- 	header = IHDR(inode, raw_inode);
--	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	end = ITAIL(inode, raw_inode);
- 	error = xattr_check_inode(inode, header, end);
- 	if (error)
- 		goto cleanup;
-@@ -883,7 +883,7 @@ int ext4_get_inode_usage(struct inode *inode, qsize_t *usage)
- 			goto out;
- 		raw_inode = ext4_raw_inode(&iloc);
- 		header = IHDR(inode, raw_inode);
--		end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+		end = ITAIL(inode, raw_inode);
- 		ret = xattr_check_inode(inode, header, end);
- 		if (ret)
- 			goto out;
-@@ -2249,7 +2249,7 @@ int ext4_xattr_ibody_find(struct inode *inode, struct ext4_xattr_info *i,
- 	header = IHDR(inode, raw_inode);
- 	is->s.base = is->s.first = IFIRST(header);
- 	is->s.here = is->s.first;
--	is->s.end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	is->s.end = ITAIL(inode, raw_inode);
- 	if (ext4_test_inode_state(inode, EXT4_STATE_XATTR)) {
- 		error = xattr_check_inode(inode, header, is->s.end);
- 		if (error)
-@@ -2800,7 +2800,7 @@ int ext4_expand_extra_isize_ea(struct inode *inode, int new_extra_isize,
- 	 */
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -286,8 +286,11 @@ static int ksmbd_kthread_fn(void *p)
+ 			}
+ 		}
+ 		up_read(&conn_list_lock);
+-		if (ret == -EAGAIN)
++		if (ret == -EAGAIN) {
++			/* Per-IP limit hit: release the just-accepted socket. */
++			sock_release(client_sk);
+ 			continue;
++		}
  
- 	base = IFIRST(header);
--	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
-+	end = ITAIL(inode, raw_inode);
- 	min_offs = end - base;
- 	total_ino = sizeof(struct ext4_xattr_ibody_header) + sizeof(u32);
- 
-diff --git a/fs/ext4/xattr.h b/fs/ext4/xattr.h
-index b25c2d7b5f991..5197f17ffd9a2 100644
---- a/fs/ext4/xattr.h
-+++ b/fs/ext4/xattr.h
-@@ -67,6 +67,9 @@ struct ext4_xattr_entry {
- 		((void *)raw_inode + \
- 		EXT4_GOOD_OLD_INODE_SIZE + \
- 		EXT4_I(inode)->i_extra_isize))
-+#define ITAIL(inode, raw_inode) \
-+	((void *)(raw_inode) + \
-+	 EXT4_SB((inode)->i_sb)->s_inode_size)
- #define IFIRST(hdr) ((struct ext4_xattr_entry *)((hdr)+1))
- 
- /*
--- 
-2.51.0
-
+ skip_max_ip_conns_limit:
+ 		if (server_conf.max_connections &&
 
 
