@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658F726E6F4;
-	Fri, 21 Nov 2025 13:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0A326E6F4;
+	Fri, 21 Nov 2025 13:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731184; cv=none; b=cMFifyf+VX0Cb55JTe+QScC/asYd019TKUMt3YUC56GyVT6Sb0diWSIatQVG2XJjADzNK+dH/x/YwhDJ3OspRTcZ7pxMigrvWADuI2SvTI8y2OC7xsdD6R5I2/r1rFDGeIRXoIv6MzBzO9QknczpLIUNnWComs0iuOlkyCEiRvE=
+	t=1763731187; cv=none; b=j7JrNGcxSSxyiGL9Wxtkpm3xOMJseT/UspGOxGSyvsyMbxllEQHguE9elc2jUMDyVwVnAjPO/a0HGkibTpGdiKpQUrpLWitWVCwzPCs6YY2zOPSKFLPjokom+3UmV+QwIn3bEtJynlpGbXaUoLdtnEt+YXQsMkmtDrbYgWOP1QA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731184; c=relaxed/simple;
-	bh=vCpWiO3bQYlX9JvZlMkakrZWO5TyeTyDM7YD4DCNqXE=;
+	s=arc-20240116; t=1763731187; c=relaxed/simple;
+	bh=3eLXLqes1peR43hA99gZ4i0kCxjdVOssv7L3j2UnkTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I8aStcGMhvq++M8qAPbk0H6+RsurTJMKc0r2TR92Z3GrLZtBs10ciTg6UWj3bw5j48jLg+yWbo8PQ5jxmivhEwrIz3GgCsuQMbH31FMQ9alN3xpqxhUHlM9svFtxL9adkIhuOYqg/7b2Jt0oSjgV/cr0DRmj4nFjBsls8eNyb7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vId28rbQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DO2aMWc7+RXOGUW0YDdchg30g8HXCUTq8KKeO/DakUFaymCorRlLufb6/N6qGfQ0AyG5mJhbni7RpSKGFi2UE/CgfFfTkC7Td2Hfz8lfOmbDDHf0sQn/qR6fQeWK8mTtFdxu1pwboBtKWDzxZ/35WOyu4u9rhUGzqwvnI8UthhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUEW55ij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vId28rbQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0613C4CEF1;
-	Fri, 21 Nov 2025 13:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUEW55ij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA8A0C4CEF1;
+	Fri, 21 Nov 2025 13:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731184;
-	bh=vCpWiO3bQYlX9JvZlMkakrZWO5TyeTyDM7YD4DCNqXE=;
+	s=korg; t=1763731187;
+	bh=3eLXLqes1peR43hA99gZ4i0kCxjdVOssv7L3j2UnkTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vId28rbQNAKUcq4tdm+DOgzAuY/xTGrU+WK5b2kHcv+wgduJ4IDchpURIM72xfzPT
-	 iHKESh9L5AdkrxCAlNNJ3vctPfHKzVfOtfol56GsS6FKWm1Sb8E3tAxWTNq1d60N3q
-	 AYzIboWlQL4MGec08+pA+zExcTkGHJh9XhYRpMEM=
+	b=iUEW55ijIxaQPyPiEiLLmhwKySEVd3QCcW4r0/QcRzm/RobPWYu28eHvTpsZpO85l
+	 fcvfUlJlyINtVPCYfNp5VyB3f/oSNwF18tH3H/WiCzy/7MfdA9q301QN5zquO8AGpB
+	 BaQB6u1guV/seLQglq2p7dmYkFnNrG/HjYuYRc1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alyssa Ross <hi@alyssa.is>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Felix Maurer <fmaurer@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 085/247] virtio-net: fix incorrect flags recording in big mode
-Date: Fri, 21 Nov 2025 14:10:32 +0100
-Message-ID: <20251121130157.646603682@linuxfoundation.org>
+Subject: [PATCH 6.17 086/247] hsr: Fix supervision frame sending on HSRv0
+Date: Fri, 21 Nov 2025 14:10:33 +0100
+Message-ID: <20251121130157.682292283@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -54,70 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Felix Maurer <fmaurer@redhat.com>
 
-[ Upstream commit 0eff2eaa5322b5b141ff5d5ded26fac4a52b5f7b ]
+[ Upstream commit 96a3a03abf3d8cc38cd9cb0d280235fbcf7c3f7f ]
 
-The purpose of commit 703eec1b2422 ("virtio_net: fixing XDP for fully
-checksummed packets handling") is to record the flags in advance, as
-their value may be overwritten in the XDP case. However, the flags
-recorded under big mode are incorrect, because in big mode, the passed
-buf does not point to the rx buffer, but rather to the page of the
-submitted buffer. This commit fixes this issue.
+On HSRv0, no supervision frames were sent. The supervison frames were
+generated successfully, but failed the check for a sufficiently long mac
+header, i.e., at least sizeof(struct hsr_ethhdr), in hsr_fill_frame_info()
+because the mac header only contained the ethernet header.
 
-For the small mode, the commit c11a49d58ad2 ("virtio_net: Fix mismatched
-buf address when unmapping for small packets") fixed it.
+Fix this by including the HSR header in the mac header when generating HSR
+supervision frames. Note that the mac header now also includes the TLV
+fields. This matches how we set the headers on rx and also the size of
+struct hsrv0_ethhdr_sp.
 
-Tested-by: Alyssa Ross <hi@alyssa.is>
-Fixes: 703eec1b2422 ("virtio_net: fixing XDP for fully checksummed packets handling")
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://patch.msgid.link/20251111090828.23186-1-xuanzhuo@linux.alibaba.com
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Closes: https://lore.kernel.org/netdev/aMONxDXkzBZZRfE5@fedora/
+Fixes: 9cfb5e7f0ded ("net: hsr: fix hsr_init_sk() vs network/transport headers.")
+Signed-off-by: Felix Maurer <fmaurer@redhat.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/4354114fea9a642fe71f49aeeb6c6159d1d61840.1762876095.git.fmaurer@redhat.com
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ net/hsr/hsr_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 35bdbf1f45ee6..36b1bc0d56846 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2632,22 +2632,28 @@ static void receive_buf(struct virtnet_info *vi, struct receive_queue *rq,
- 		return;
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index fbbc3ccf9df64..1235abb2d79fa 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -320,6 +320,9 @@ static void send_hsr_supervision_frame(struct hsr_port *port,
  	}
  
--	/* 1. Save the flags early, as the XDP program might overwrite them.
-+	/* About the flags below:
-+	 * 1. Save the flags early, as the XDP program might overwrite them.
- 	 * These flags ensure packets marked as VIRTIO_NET_HDR_F_DATA_VALID
- 	 * stay valid after XDP processing.
- 	 * 2. XDP doesn't work with partially checksummed packets (refer to
- 	 * virtnet_xdp_set()), so packets marked as
- 	 * VIRTIO_NET_HDR_F_NEEDS_CSUM get dropped during XDP processing.
- 	 */
--	flags = ((struct virtio_net_common_hdr *)buf)->hdr.flags;
- 
--	if (vi->mergeable_rx_bufs)
-+	if (vi->mergeable_rx_bufs) {
-+		flags = ((struct virtio_net_common_hdr *)buf)->hdr.flags;
- 		skb = receive_mergeable(dev, vi, rq, buf, ctx, len, xdp_xmit,
- 					stats);
--	else if (vi->big_packets)
-+	} else if (vi->big_packets) {
-+		void *p = page_address((struct page *)buf);
+ 	hsr_stag = skb_put(skb, sizeof(struct hsr_sup_tag));
++	skb_set_network_header(skb, ETH_HLEN + HSR_HLEN);
++	skb_reset_mac_len(skb);
 +
-+		flags = ((struct virtio_net_common_hdr *)p)->hdr.flags;
- 		skb = receive_big(dev, vi, rq, buf, len, stats);
--	else
-+	} else {
-+		flags = ((struct virtio_net_common_hdr *)buf)->hdr.flags;
- 		skb = receive_small(dev, vi, rq, buf, ctx, len, xdp_xmit, stats);
-+	}
+ 	set_hsr_stag_path(hsr_stag, (hsr->prot_version ? 0x0 : 0xf));
+ 	set_hsr_stag_HSR_ver(hsr_stag, hsr->prot_version);
  
- 	if (unlikely(!skb))
- 		return;
 -- 
 2.51.0
 
