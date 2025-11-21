@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E07D26E6F4;
-	Fri, 21 Nov 2025 13:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC682EA46B;
+	Fri, 21 Nov 2025 13:24:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731477; cv=none; b=YNVRmGhjPIXlw1RVe2prgkCHxSgCnbPSdVAXL7bU96XJTP9JgFoSwezq1NYZR4AhMXS++rIoy/xyr4HNctHv4cwyxy/lrxrYLIexUzAjRu7JjPW5+hxMG0LEvzVyrPQRu5qGYSu6cGCrpWhzRNEiJI8VHIm1/xom3yxeA1X/7Dw=
+	t=1763731480; cv=none; b=jPvzDjCcw3YjUssu+YQN0NLvHxmSf4qfoIEqS7M/G0gL/DdeCFtWcPaQr8j3oclDop7j2eft/xyvIF4LVaNyq2hzacM3MoOoyTqX9m7tro+JXFZN3S06jfZfRmicPRJ8SN3IEqNa+xeCqbPRMU1v85sDCFBlzjrO8wydaYjlJHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731477; c=relaxed/simple;
-	bh=Twf+PbOdsLOFjnnQLSixDS9YLmRNrSNp4AYeKbB4r/8=;
+	s=arc-20240116; t=1763731480; c=relaxed/simple;
+	bh=qa11pUmcf+JmJ61QfNzXuzwv4Ed4pd3KvKRZQwXVvHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hK6AAvdg924Jl+phoj0FD4aq5k2PaRc5h7Qsu13nea9wyIxC1P8vkqBDE0/1SVFuiXyyfwRMrDeDBLE6EhnZekHgQmeLiCOXwfetQR5sR/AIDCW/Vl0rrfcwzDpT8JST9G8sdnsTyrJ2TMVVMQvBwUGUoylxg2sKUDxyAMlEpL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3ioiTaN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cPWxgZGxxx6R4MJk8DKIUHoLIwT778SvOLV5SrQ1VCRYtreMhCk79AaIEGSiO4XqXotBDQXNDOOnL1GE5j9U0cgRkdvxifS/FdYbEdo1nadFDHgzfq7ow5AuQW9NW5qXN3FSKIO85f/b/f3qVZbXzhNLSb3qab3ZM9wh4pumWdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXIi3KEx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3ioiTaN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B22C4CEF1;
-	Fri, 21 Nov 2025 13:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXIi3KEx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0851C4CEFB;
+	Fri, 21 Nov 2025 13:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731477;
-	bh=Twf+PbOdsLOFjnnQLSixDS9YLmRNrSNp4AYeKbB4r/8=;
+	s=korg; t=1763731480;
+	bh=qa11pUmcf+JmJ61QfNzXuzwv4Ed4pd3KvKRZQwXVvHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F3ioiTaNo4Ys+0nh1uKTyqu+LCvFtWjwe5tbfMURvF9nWb+KQNXvbxCsnL3W0xbkN
-	 O0CXsS1dzmNyu4chuRmq/a06i8E/dDAFpQihzJB7AjXL07fezZ/pzbvcpwcO+uwdhi
-	 IyDbiFQGSrYHzYIQGE38Ab/QuCZ4DSVswf51FsJA=
+	b=GXIi3KExHli46OTseQZwEEGQikF8MmBz0doG+88xrmQTIZSApob4iTJoMZ7dG7D7J
+	 Epdz39yiuztH6guPsTNeK1FP4BSgjgq8N71/RAATrwOWoB7zqHC8sk5qdmBDzXbKnL
+	 q76yYj9xk9suAePeiSXvmrAWINy4xkoKwwTJll9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
+	Vitaly Prosyak <vitaly.prosyak@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 220/247] drm/amdgpu: fix lock warning in amdgpu_userq_fence_driver_process
-Date: Fri, 21 Nov 2025 14:12:47 +0100
-Message-ID: <20251121130202.630077958@linuxfoundation.org>
+Subject: [PATCH 6.17 221/247] drm/amdgpu: disable peer-to-peer access for DCC-enabled GC12 VRAM surfaces
+Date: Fri, 21 Nov 2025 14:12:48 +0100
+Message-ID: <20251121130202.665711109@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,77 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse.Zhang <Jesse.Zhang@amd.com>
+From: Vitaly Prosyak <vitaly.prosyak@amd.com>
 
-commit 6623c5f9fd877868fba133b4ae4dab0052e82dad upstream.
+commit 22a36e660d014925114feb09a2680bb3c2d1e279 upstream.
 
-Fix a potential deadlock caused by inconsistent spinlock usage
-between interrupt and process contexts in the userq fence driver.
+Certain multi-GPU configurations (especially GFX12) may hit
+data corruption when a DCC-compressed VRAM surface is shared across GPUs
+using peer-to-peer (P2P) DMA transfers.
 
-The issue occurs when amdgpu_userq_fence_driver_process() is called
-from both:
-- Interrupt context: gfx_v11_0_eop_irq() -> amdgpu_userq_fence_driver_process()
-- Process context: amdgpu_eviction_fence_suspend_worker() ->
-  amdgpu_userq_fence_driver_force_completion() -> amdgpu_userq_fence_driver_process()
+Such surfaces rely on device-local metadata and cannot be safely accessed
+through a remote GPU’s page tables. Attempting to import a DCC-enabled
+surface through P2P leads to incorrect rendering or GPU faults.
 
-In interrupt context, the spinlock was acquired without disabling
-interrupts, leaving it in {IN-HARDIRQ-W} state. When the same lock
-is acquired in process context, the kernel detects inconsistent
-locking since the process context acquisition would enable interrupts
-while holding a lock previously acquired in interrupt context.
+This change disables P2P for DCC-enabled VRAM buffers that are contiguous
+and allocated on GFX12+ hardware.  In these cases, the importer falls back
+to the standard system-memory path, avoiding invalid access to compressed
+surfaces.
 
-Kernel log shows:
-[ 4039.310790] inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
-[ 4039.310804] kworker/7:2/409 [HC0[0]:SC0[0]:HE1:SE1] takes:
-[ 4039.310818] ffff9284e1bed000 (&fence_drv->fence_list_lock){?...}-{3:3},
-[ 4039.310993] {IN-HARDIRQ-W} state was registered at:
-[ 4039.311004]   lock_acquire+0xc6/0x300
-[ 4039.311018]   _raw_spin_lock+0x39/0x80
-[ 4039.311031]   amdgpu_userq_fence_driver_process.part.0+0x30/0x180 [amdgpu]
-[ 4039.311146]   amdgpu_userq_fence_driver_process+0x17/0x30 [amdgpu]
-[ 4039.311257]   gfx_v11_0_eop_irq+0x132/0x170 [amdgpu]
+Future work could consider optional migration (VRAM→System→VRAM) if a
+performance regression is observed when `attach->peer2peer = false`.
 
-Fix by using spin_lock_irqsave()/spin_unlock_irqrestore() to properly
-manage interrupt state regardless of calling context.
+Tested on:
+ - Dual RX 9700 XT (Navi4x) setup
+ - GNOME and Wayland compositor scenarios
+ - Confirmed no corruption after disabling P2P under these conditions
+v2: Remove check TTM_PL_VRAM & TTM_PL_FLAG_CONTIGUOUS.
+v3: simplify for upsteam and fix ip version check (Alex)
 
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit ded3ad780cf97a04927773c4600823b84f7f3cc2)
+(cherry picked from commit 9dff2bb709e6fbd97e263fd12bf12802d2b5a0cf)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-@@ -143,15 +143,16 @@ void amdgpu_userq_fence_driver_process(s
- {
- 	struct amdgpu_userq_fence *userq_fence, *tmp;
- 	struct dma_fence *fence;
-+	unsigned long flags;
- 	u64 rptr;
- 	int i;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_dma_buf.c
+@@ -82,6 +82,18 @@ static int amdgpu_dma_buf_attach(struct
+ 	struct amdgpu_bo *bo = gem_to_amdgpu_bo(obj);
+ 	struct amdgpu_device *adev = amdgpu_ttm_adev(bo->tbo.bdev);
  
- 	if (!fence_drv)
- 		return;
- 
-+	spin_lock_irqsave(&fence_drv->fence_list_lock, flags);
- 	rptr = amdgpu_userq_fence_read(fence_drv);
- 
--	spin_lock(&fence_drv->fence_list_lock);
- 	list_for_each_entry_safe(userq_fence, tmp, &fence_drv->fences, link) {
- 		fence = &userq_fence->base;
- 
-@@ -166,7 +167,7 @@ void amdgpu_userq_fence_driver_process(s
- 		list_del(&userq_fence->link);
- 		dma_fence_put(fence);
- 	}
--	spin_unlock(&fence_drv->fence_list_lock);
-+	spin_unlock_irqrestore(&fence_drv->fence_list_lock, flags);
- }
- 
- void amdgpu_userq_fence_driver_destroy(struct kref *ref)
++	/*
++	 * Disable peer-to-peer access for DCC-enabled VRAM surfaces on GFX12+.
++	 * Such buffers cannot be safely accessed over P2P due to device-local
++	 * compression metadata. Fallback to system-memory path instead.
++	 * Device supports GFX12 (GC 12.x or newer)
++	 * BO was created with the AMDGPU_GEM_CREATE_GFX12_DCC flag
++	 *
++	 */
++	if (amdgpu_ip_version(adev, GC_HWIP, 0) >= IP_VERSION(12, 0, 0) &&
++	    bo->flags & AMDGPU_GEM_CREATE_GFX12_DCC)
++		attach->peer2peer = false;
++
+ 	if (!amdgpu_dmabuf_is_xgmi_accessible(attach_adev, bo) &&
+ 	    pci_p2pdma_distance(adev->pdev, attach->dev, false) < 0)
+ 		attach->peer2peer = false;
 
 
