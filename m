@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C0929B78F;
-	Fri, 21 Nov 2025 13:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4150D29B78F;
+	Fri, 21 Nov 2025 13:40:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732453; cv=none; b=W2YrNCvvNSvIbtQRgU+iOltXa3CJTlemN2CZ5mtZlXtz3RN3Is1MdBnyTfsZeZYzBPP/4RccIelPb2FtihG54F53OLe0dbSJb1052FD9smoEA8HDjQGlVxIu385gcR0cuxrsCd3mMMYY0bA7rLMzLek/eFxolKilEsiKnv76Yak=
+	t=1763732456; cv=none; b=adA+Xf9GTx70WU1+crg28ad4K1KQzptXaXXwPO3nCVz0DuNcFIsYQ25XY0V6vYfBTv64M5Y6qkQmSU9q7EjQ12e33t6FaP+ot4x0oePhwSkWG4rfQBLy4WZ/DhtJymBAgSx0IVM8WDm9q5IqxoBN8vBmVkn7U7Gl3haGPkwclmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732453; c=relaxed/simple;
-	bh=pmAX2kAwrRc7FbPxfoSN0ZCR3dq/YbDPZ3MLb36AVEw=;
+	s=arc-20240116; t=1763732456; c=relaxed/simple;
+	bh=IboGGDiHDKgOyHSRs1gA0qM6QREsNSlOjawlESnB+qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/g4yxUTZlu1BxK/Fu6yqqorLSig5ZAkV+xRFgPtoSwhrxSUCfwDiLv0DkWpuYZP0IcZoqd8FUqfCdwwXOCm9nwBLR+nG//jaGsxLGEi/7+y+LF9PNzy6q2EI88Gr8TUfihEOIoImacFiHOP847hbO0hOthBFMx4+Mmi2+nkGpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iGK1cJRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VkAl046gQZmkS57wgpm5GAKBPlDhEx4jRFbSQX5PCkCvzds97flZ9+8j3R128kOHLeMWl8jnVvaPqhpgwXeM4+JHpc3vUZ5rNFy8ZU7VwDeJDXN2HbqivsJVrOWTJfr1FjJLlMRg9Mg172Ajqi/Wl8My0kwRdT7JZPwNE1D0Xfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2e6USDe9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iGK1cJRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEF9C4CEF1;
-	Fri, 21 Nov 2025 13:40:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2e6USDe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CC4C4CEF1;
+	Fri, 21 Nov 2025 13:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732453;
-	bh=pmAX2kAwrRc7FbPxfoSN0ZCR3dq/YbDPZ3MLb36AVEw=;
+	s=korg; t=1763732456;
+	bh=IboGGDiHDKgOyHSRs1gA0qM6QREsNSlOjawlESnB+qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iGK1cJRaKP4k/5yAw1yMsSfekmGgTQNF1Qz0EYcfLrrt0Ax3DGmFesq8fwU1nMHOA
-	 7QVAUIv6vuhgXGY4pZic2Fws8ijylPU2pPDVCVAWlMsDXkyX1xF1kpJ6VODdBf/QaO
-	 CvfYEIN3Tu9KMwjoB4mwDMbLz+8iVz81jAUXxpZg=
+	b=2e6USDe9e2LclLoMetqseGblKyg96fVhtCwem0q+d3SHOiWeyQ/GoMdD2LfA2g7QU
+	 VaPsUtoKglJRDN+LXSV7PWRIoazjHT+Rm4sT3hls6XnDjZOrPBrQuRwdfx23aXDtV/
+	 qOMlhdOzaDrhm1m6+J++WNy6sskaV8P6e3oh4PXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Piotr Oniszczuk <piotr.oniszczuk@gmail.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/529] selftests/net: Ensure assert() triggers in psock_tpacket.c
-Date: Fri, 21 Nov 2025 14:07:04 +0100
-Message-ID: <20251121130235.469296304@linuxfoundation.org>
+Subject: [PATCH 6.6 126/529] wifi: rtw88: sdio: use indirect IO for device registers before power-on
+Date: Fri, 21 Nov 2025 14:07:05 +0100
+Message-ID: <20251121130235.504902295@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,43 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit bc4c0a48bdad7f225740b8e750fdc1da6d85e1eb ]
+[ Upstream commit 58de1f91e033b1fface8d8948984583125f93736 ]
 
-The get_next_frame() function in psock_tpacket.c was missing a return
-statement in its default switch case, leading to a compiler warning.
+The register REG_SYS_CFG1 is used to determine chip basic information
+as arguments of following flows, such as download firmware and load PHY
+parameters, so driver read the value early (before power-on).
 
-This was caused by a `bug_on(1)` call, which is defined as an
-`assert()`, being compiled out because NDEBUG is defined during the
-build.
+However, the direct IO is disallowed before power-on, or it causes wrong
+values, which driver recognizes a chip as a wrong type RF_1T1R, but
+actually RF_2T2R, causing driver warns:
 
-Instead of adding a `return NULL;` which would silently hide the error
-and could lead to crashes later, this change restores the original
-author's intent. By adding `#undef NDEBUG` before including <assert.h>,
-we ensure the assertion is active and will cause the test to abort if
-this unreachable code is ever executed.
+  rtw88_8822cs mmc1:0001:1: unsupported rf path (1)
 
-Signed-off-by: Wake Liu <wakel@google.com>
-Link: https://patch.msgid.link/20250809062013.2407822-1-wakel@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix it by using indirect IO before power-on.
+
+Reported-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/699C22B4-A3E3-4206-97D0-22AB3348EBF6@gmail.com/T/#t
+Suggested-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Tested-by: Piotr Oniszczuk <piotr.oniszczuk@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20250724004815.7043-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/psock_tpacket.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw88/sdio.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
-index 93092d13b3c59..ca0d9a5a9e08c 100644
---- a/tools/testing/selftests/net/psock_tpacket.c
-+++ b/tools/testing/selftests/net/psock_tpacket.c
-@@ -22,6 +22,7 @@
-  *   - TPACKET_V3: RX_RING
-  */
+diff --git a/drivers/net/wireless/realtek/rtw88/sdio.c b/drivers/net/wireless/realtek/rtw88/sdio.c
+index 832a427279b40..df4248744d87a 100644
+--- a/drivers/net/wireless/realtek/rtw88/sdio.c
++++ b/drivers/net/wireless/realtek/rtw88/sdio.c
+@@ -143,6 +143,10 @@ static u32 rtw_sdio_to_io_address(struct rtw_dev *rtwdev, u32 addr,
  
-+#undef NDEBUG
- #include <stdio.h>
- #include <stdlib.h>
- #include <sys/types.h>
+ static bool rtw_sdio_use_direct_io(struct rtw_dev *rtwdev, u32 addr)
+ {
++	if (!test_bit(RTW_FLAG_POWERON, rtwdev->flags) &&
++	    !rtw_sdio_is_bus_addr(addr))
++		return false;
++
+ 	return !rtw_sdio_is_sdio30_supported(rtwdev) ||
+ 		rtw_sdio_is_bus_addr(addr);
+ }
 -- 
 2.51.0
 
