@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45CF34D4C2;
-	Fri, 21 Nov 2025 13:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A82EE23BD1A;
+	Fri, 21 Nov 2025 13:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733183; cv=none; b=jUZ7jaoNdaOU+XVdkNS/WYfUctaDSGDxWDzj1BgDyQKxYqp6W1sWkaJacBKQg7ryDBtnkuuwWlSRKvIsLtYRcFq8TLfy+3A6eP6IWs8Dywol23XZxXF9QAv9Bff0UiE/Pvbd7bzLvzENZMfNbHlYAyRoyu621i1sKz1OPTdssg4=
+	t=1763733186; cv=none; b=b1i0st2LM8XKsK53nXro2m6bMeTgG0ZyRCQ0ypnfkcjQ9ReA9gBqQtz/HBZaDQLI7D5RNwlO0dnfZYXYSA0UxDUxfcAsCMVsuTuV0HJTQExmJRQLe2BEGbjMZt52SsfyO2cMV5gRgTHLKX3pxPsplEBqeR9EXStCsYYtkjHSkJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733183; c=relaxed/simple;
-	bh=DUyrikUyICw1TzvsCOyw5iN9Ucur/TVLjLVHV7rOCJg=;
+	s=arc-20240116; t=1763733186; c=relaxed/simple;
+	bh=loSl2tPm8DpNcnXkq87Bnq2p0Pt83BcZIj62PLvAO90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=st8bQjNSQ0TYN8UhMSVtDvgjFMGp9y3FWYmr90P5bfDbVwJhT/Jd493LVxN9Zb1iYwc6Yi86/TqYZ5kQEoaAam5HNRGDsyGqOSFTgHnJjZTmgFMsPCjPtmfYalnYZqK/ameuoQ4uQSNE9sGJflXeOQL/1SGfc2bLIZ85iNQurxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSN643lB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kCTaDjNfL05BbblqyiU2PzFlDh/5LoHeEe7E6PN5nIdaralM3CatICDjxMgCgDaeycByq2XHs1o7Ogz+7IDmNgkgggc1KBw1MpLeWiTeaazQoakOAGPaiD71K/1+B5HIr86OS1wxMk02cF4WVPsW3Q3ibBzUJZleVKZo0C9sAP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSWenWR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSN643lB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E85C4CEFB;
-	Fri, 21 Nov 2025 13:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSWenWR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33120C4CEF1;
+	Fri, 21 Nov 2025 13:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733183;
-	bh=DUyrikUyICw1TzvsCOyw5iN9Ucur/TVLjLVHV7rOCJg=;
+	s=korg; t=1763733186;
+	bh=loSl2tPm8DpNcnXkq87Bnq2p0Pt83BcZIj62PLvAO90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSN643lBVKuNP2YS+27X8GkUdjc4pdNvWF6x16Jlt7lkLI+/7MA3aofmlAMWTW5jt
-	 Sqy40Cr3dqhnW34EsMvUP6Rge6CEy2+AZUUyOYIg1saQrJgZ16n9zfYT02UO34keOA
-	 m6dKx1fDxuM5tM9Qc5AS5vHc5cWydlNuBxZwrDRE=
+	b=DSWenWR3Njc7zAIYKDnoGqX/a8Yb0+JYwaQJc6DGQiHynukkXm5IzLbQdU8bM2aU3
+	 hxp9nlrOE1VBoTomdbudDNcPTBZJw/x74eASvKNfzALKqCM/6WitUCgRAqVBLyBDtE
+	 ckphzhsI40NXEcI2XQ6b6wxWOCyVgG9EbFkAgNyY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Shuhao Fu <sfual@cse.ust.hk>,
-	Steve French <stfrench@microsoft.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
+	Alex Mastro <amastro@fb.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 379/529] smb: client: fix refcount leak in smb2_set_path_attr
-Date: Fri, 21 Nov 2025 14:11:18 +0100
-Message-ID: <20251121130244.510107908@linuxfoundation.org>
+Subject: [PATCH 6.6 380/529] iommufd: Make vfio_compats unmap succeed if the range is already empty
+Date: Fri, 21 Nov 2025 14:11:19 +0100
+Message-ID: <20251121130244.545148533@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,40 +52,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuhao Fu <sfual@cse.ust.hk>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit b540de9e3b4fab3b9e10f30714a6f5c1b2a50ec3 ]
+[ Upstream commit afb47765f9235181fddc61c8633b5a8cfae29fd2 ]
 
-Fix refcount leak in `smb2_set_path_attr` when path conversion fails.
+iommufd returns ENOENT when attempting to unmap a range that is already
+empty, while vfio type1 returns success. Fix vfio_compat to match.
 
-Function `cifs_get_writable_path` returns `cfile` with its reference
-counter `cfile->count` increased on success. Function `smb2_compound_op`
-would decrease the reference counter for `cfile`, as stated in its
-comment. By calling `smb2_rename_path`, the reference counter of `cfile`
-would leak if `cifs_convert_path_to_utf16` fails in `smb2_set_path_attr`.
-
-Fixes: 8de9e86c67ba ("cifs: create a helper to find a writeable handle by path name")
-Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: d624d6652a65 ("iommufd: vfio container FD ioctl compatibility")
+Link: https://patch.msgid.link/r/0-v1-76be45eff0be+5d-iommufd_unmap_compat_jgg@nvidia.com
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Alex Mastro <amastro@fb.com>
+Reported-by: Alex Mastro <amastro@fb.com>
+Closes: https://lore.kernel.org/r/aP0S5ZF9l3sWkJ1G@devgpu012.nha5.facebook.com
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iommu/iommufd/io_pagetable.c    | 12 +++---------
+ drivers/iommu/iommufd/ioas.c            |  4 ++++
+ tools/testing/selftests/iommu/iommufd.c |  2 ++
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 232a3c2890556..d6086394d0b84 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -1128,6 +1128,8 @@ static int smb2_set_path_attr(const unsigned int xid, struct cifs_tcon *tcon,
- 	smb2_to_name = cifs_convert_path_to_utf16(to_name, cifs_sb);
- 	if (smb2_to_name == NULL) {
- 		rc = -ENOMEM;
-+		if (cfile)
-+			cifsFileInfo_put(cfile);
- 		goto smb2_rename_path;
+diff --git a/drivers/iommu/iommufd/io_pagetable.c b/drivers/iommu/iommufd/io_pagetable.c
+index f058405c5fbb6..6bd37343061e0 100644
+--- a/drivers/iommu/iommufd/io_pagetable.c
++++ b/drivers/iommu/iommufd/io_pagetable.c
+@@ -488,7 +488,8 @@ static int iopt_unmap_iova_range(struct io_pagetable *iopt, unsigned long start,
+ 	struct iopt_area *area;
+ 	unsigned long unmapped_bytes = 0;
+ 	unsigned int tries = 0;
+-	int rc = -ENOENT;
++	/* If there are no mapped entries then success */
++	int rc = 0;
+ 
+ 	/*
+ 	 * The domains_rwsem must be held in read mode any time any area->pages
+@@ -552,8 +553,6 @@ static int iopt_unmap_iova_range(struct io_pagetable *iopt, unsigned long start,
+ 
+ 		down_write(&iopt->iova_rwsem);
  	}
- 	in_iov.iov_base = smb2_to_name;
+-	if (unmapped_bytes)
+-		rc = 0;
+ 
+ out_unlock_iova:
+ 	up_write(&iopt->iova_rwsem);
+@@ -590,13 +589,8 @@ int iopt_unmap_iova(struct io_pagetable *iopt, unsigned long iova,
+ 
+ int iopt_unmap_all(struct io_pagetable *iopt, unsigned long *unmapped)
+ {
+-	int rc;
+-
+-	rc = iopt_unmap_iova_range(iopt, 0, ULONG_MAX, unmapped);
+ 	/* If the IOVAs are empty then unmap all succeeds */
+-	if (rc == -ENOENT)
+-		return 0;
+-	return rc;
++	return iopt_unmap_iova_range(iopt, 0, ULONG_MAX, unmapped);
+ }
+ 
+ /* The caller must always free all the nodes in the allowed_iova rb_root. */
+diff --git a/drivers/iommu/iommufd/ioas.c b/drivers/iommu/iommufd/ioas.c
+index 0407e2b758ef4..18bbbeef5cccd 100644
+--- a/drivers/iommu/iommufd/ioas.c
++++ b/drivers/iommu/iommufd/ioas.c
+@@ -317,6 +317,10 @@ int iommufd_ioas_unmap(struct iommufd_ucmd *ucmd)
+ 				     &unmapped);
+ 		if (rc)
+ 			goto out_put;
++		if (!unmapped) {
++			rc = -ENOENT;
++			goto out_put;
++		}
+ 	}
+ 
+ 	cmd->length = unmapped;
+diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
+index 890a81f4ff618..67fcc99fbd6d3 100644
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -1728,6 +1728,8 @@ TEST_F(vfio_compat_mock_domain, map)
+ 	ASSERT_EQ(0, ioctl(self->fd, VFIO_IOMMU_MAP_DMA, &map_cmd));
+ 	ASSERT_EQ(0, ioctl(self->fd, VFIO_IOMMU_UNMAP_DMA, &unmap_cmd));
+ 	ASSERT_EQ(BUFFER_SIZE, unmap_cmd.size);
++	/* Unmap of empty is success */
++	ASSERT_EQ(0, ioctl(self->fd, VFIO_IOMMU_UNMAP_DMA, &unmap_cmd));
+ 
+ 	/* UNMAP_FLAG_ALL requres 0 iova/size */
+ 	ASSERT_EQ(0, ioctl(self->fd, VFIO_IOMMU_MAP_DMA, &map_cmd));
 -- 
 2.51.0
 
