@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 404D434C990;
-	Fri, 21 Nov 2025 13:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB3E33C526;
+	Fri, 21 Nov 2025 13:48:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732935; cv=none; b=KwP/G0wCClkWHH28xttdzpH7GwYsAzDaMbbqDvxr9csX6rBeQrSgfdwwrU0U4o8oYNnnWLLmiocYwA/kp7BWPxBPBzhmSsvKEsOny6O92BeMlr6rf7OOU4/7n98AQTF0v2akyrLUAJe+rrMX+YlL/UOtdhFoRhjrn+fTqOiN2+E=
+	t=1763732939; cv=none; b=mgbbEoXrl7b8AM3hazVghsmMpLxWGCKJA+YV1DeHU291cdjyEXGoZk+84U5mkxo5CXWQba0d7JVeCP4hODVKQqppwCFeIUWKcQ/95L5Pohmx0K2kVbSdkqpf/JGFAGGYZOccRFG247iShBj56cfut8NahlbtbV+xjVwTAmxMgW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732935; c=relaxed/simple;
-	bh=GLFhhwoQ3c6L1ge/k+suuxfBtWB5MlWg0/sjjB/8V9I=;
+	s=arc-20240116; t=1763732939; c=relaxed/simple;
+	bh=VhGdg3U9sumP4Ki+NAI7VtwcV83U/JHbnZHZgXdAozQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FM/HADXYTj9KGpH3r+yyNK0Mdxw8IyXGpvdN0bv47h3u3B3XiXnnKhfMbeMkUcwYIwjhi1hJRX5UN52h11uXrmC8WRbyy3xq2Bu3jCQ8lmuL1vtpy7GhRSnoEN5w1PUVVYQ6II5fs/jm66p/0k+AeydFlY7Sa/zRX6jnxAoDSs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Inima+ns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMYk5QoID+5Y49NyIxp1OwxsbgcjEgzypJFNucUm2absu3WdXdjlx+wNuG33ppiKFsWeAL3KH0Ljxo8CNssgHqZt2qAT3+x2CaPA74KR2A+w8gMJ2oz36eJgRGc3D4C/N/dPuo7En+L2U+9k3Wqj5ANwt76ga6nH+E2PGODlh/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCAJWVY+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Inima+ns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B10C3C4CEF1;
-	Fri, 21 Nov 2025 13:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCAJWVY+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6934C4CEF1;
+	Fri, 21 Nov 2025 13:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732935;
-	bh=GLFhhwoQ3c6L1ge/k+suuxfBtWB5MlWg0/sjjB/8V9I=;
+	s=korg; t=1763732938;
+	bh=VhGdg3U9sumP4Ki+NAI7VtwcV83U/JHbnZHZgXdAozQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Inima+ns1B7lw6XoMMs8S04wLbTh57+A5eNMpKufr+YUUGU/3iquEQAbQDdeu816E
-	 MJW8zWyrdG2ZvCeEBXoO6MM2yjY6r7wQlHcI6eoN3JxnQ9PAn/5AeTapmm7j4kBsJQ
-	 sPxW7wRReEs3z2bK7lbkAFFNjKCBP/B7VURYNw8o=
+	b=KCAJWVY+nCydgoayDIC6+Pa50Jx/H11cv/klW/DXP78m5ho192pL0ghQ6HmSSLVcB
+	 SjjbcQwgTqtXB+un/zK1JiAPvo1mSbvkMpdrL1kpHK52+XbTaT0ukuiy+AIEtv4hTI
+	 ogkmJ0oFHTK6ezcCLdJr3RVlxcSMyD9tBysI7YV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Sinyuk <konstantin.sinyuk@intel.com>,
-	Koby Elbaz <koby.elbaz@intel.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 277/529] accel/habanalabs/gaudi2: read preboot status after recovering from dirty state
-Date: Fri, 21 Nov 2025 14:09:36 +0100
-Message-ID: <20251121130240.886306321@linuxfoundation.org>
+Subject: [PATCH 6.6 295/529] ksmbd: use sock_create_kern interface to create kernel socket
+Date: Fri, 21 Nov 2025 14:09:54 +0100
+Message-ID: <20251121130241.524400317@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,50 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Sinyuk <konstantin.sinyuk@intel.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit a0d866bab184161ba155b352650083bf6695e50e ]
+[ Upstream commit 3677ca67b9791481af16d86e47c3c7d1f2442f95 ]
 
-Dirty state can occur when the host VM undergoes a reset while the
-device does not. In such a case, the driver must reset the device before
-it can be used again. As part of this reset, the device capabilities
-are zeroed. Therefore, the driver must read the Preboot status again to
-learn the Preboot state, capabilities, and security configuration.
+we should use sock_create_kern() if the socket resides in kernel space.
 
-Signed-off-by: Konstantin Sinyuk <konstantin.sinyuk@intel.com>
-Reviewed-by: Koby Elbaz <koby.elbaz@intel.com>
-Signed-off-by: Koby Elbaz <koby.elbaz@intel.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/gaudi2/gaudi2.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/smb/server/transport_tcp.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/accel/habanalabs/gaudi2/gaudi2.c b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-index 31c74ca70a2e5..01df5435d92c4 100644
---- a/drivers/accel/habanalabs/gaudi2/gaudi2.c
-+++ b/drivers/accel/habanalabs/gaudi2/gaudi2.c
-@@ -2985,7 +2985,6 @@ static int gaudi2_early_init(struct hl_device *hdev)
- 	rc = hl_fw_read_preboot_status(hdev);
- 	if (rc) {
- 		if (hdev->reset_on_preboot_fail)
--			/* we are already on failure flow, so don't check if hw_fini fails. */
- 			hdev->asic_funcs->hw_fini(hdev, true, false);
- 		goto pci_fini;
- 	}
-@@ -2997,6 +2996,13 @@ static int gaudi2_early_init(struct hl_device *hdev)
- 			dev_err(hdev->dev, "failed to reset HW in dirty state (%d)\n", rc);
- 			goto pci_fini;
- 		}
-+
-+		rc = hl_fw_read_preboot_status(hdev);
-+		if (rc) {
-+			if (hdev->reset_on_preboot_fail)
-+				hdev->asic_funcs->hw_fini(hdev, true, false);
-+			goto pci_fini;
-+		}
- 	}
+diff --git a/fs/smb/server/transport_tcp.c b/fs/smb/server/transport_tcp.c
+index 665d21d40e7a1..279a61d0dcc6b 100644
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -476,12 +476,13 @@ static int create_socket(struct interface *iface)
+ 	struct socket *ksmbd_socket;
+ 	bool ipv4 = false;
  
- 	return 0;
+-	ret = sock_create(PF_INET6, SOCK_STREAM, IPPROTO_TCP, &ksmbd_socket);
++	ret = sock_create_kern(current->nsproxy->net_ns, PF_INET6, SOCK_STREAM,
++			IPPROTO_TCP, &ksmbd_socket);
+ 	if (ret) {
+ 		if (ret != -EAFNOSUPPORT)
+ 			pr_err("Can't create socket for ipv6, fallback to ipv4: %d\n", ret);
+-		ret = sock_create(PF_INET, SOCK_STREAM, IPPROTO_TCP,
+-				  &ksmbd_socket);
++		ret = sock_create_kern(current->nsproxy->net_ns, PF_INET,
++				SOCK_STREAM, IPPROTO_TCP, &ksmbd_socket);
+ 		if (ret) {
+ 			pr_err("Can't create socket for ipv4: %d\n", ret);
+ 			goto out_clear;
 -- 
 2.51.0
 
