@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EB9345750;
-	Fri, 21 Nov 2025 13:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CCA332904;
+	Fri, 21 Nov 2025 13:17:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731063; cv=none; b=MwsTBqxZBzGq6cUWzPW648S/G8uMqOLPsYJPvGfBQVW8fIKzLrJuNm4Tvf/+2Xdru1NMdChXweOz4lEs4PaqA5nXykhXf+82FzvIjDherwA5gWvqfHkePgrQu6fjz4pQUjh7LP7mEyFvjT0DYRpWqUMnczQ02mde01Yp2bYXioM=
+	t=1763731066; cv=none; b=kBw0l14aH1HgY6H1y5GBXeRhEMAdG78/PADHbdN/wTe5nZo3XnDUJpQlMGbmiAbg1QXPpPGknEQLidnbTn1kmc6L5ABjc2RzdewTFnaUEGZr+TBj3AaldAglwDjfm7WXy8sU14opvIUCZa4YCoGiGzK9DqkS+qO0LDPp+QLWtDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731063; c=relaxed/simple;
-	bh=H3oeyQWWKzUT/zAeSDaWO0AXwjSYXHNXV/H9RatCilM=;
+	s=arc-20240116; t=1763731066; c=relaxed/simple;
+	bh=GU2YJE6da1vFszGXyhEI+0lS19E7Ewluu3+vLSKTBek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fgmYVr6fsKJ455gpIfmgnPv884LaFluD//GTnPQpupe0mzueinYFOKToBQ9Jdin2yfILPX0SF6WDhNmEz+C4BZoAGR9dQM/Ne0UhATgx/EPZcf2Ngs0SA2GuqzCO6MrPDAuhgrli9WmYVr6JyTU5h2hyr4WSuOz9sMfIlrWJ77o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qxta484/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uf3MWOt1pnxtDQL/PbzvkSFCddbWmuXTMRGUKbzmt90P2TpiysjWSj0i8blD1xF8l6aCDeIKxr/73tUfxk4MfSN10Nx+W5/OHI/LkW1m6hEA5AR5om4NNhetcARDXqIye4JGs3SGV/Kf2oCuU0M4T4wdnTM9P20Mh5YfMUd5PrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pAJDZ1Y6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qxta484/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA3FC4CEF1;
-	Fri, 21 Nov 2025 13:17:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pAJDZ1Y6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 026E9C4CEF1;
+	Fri, 21 Nov 2025 13:17:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731063;
-	bh=H3oeyQWWKzUT/zAeSDaWO0AXwjSYXHNXV/H9RatCilM=;
+	s=korg; t=1763731066;
+	bh=GU2YJE6da1vFszGXyhEI+0lS19E7Ewluu3+vLSKTBek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qxta484/4TPFi4YpsIXRHLsfpb3yrWMlvOIAjc8fv7tH/6epxFD9qqfzt+BRS4via
-	 CeR0Zil2qAIoOOzNJsIZ9I1fUM5TfoDVEpo0Ax2WIrM8GQw3KK+rmrW96hkUGH+gK/
-	 z1yFsKMGsbI34axkc3xTZ8uyf162IkYu4ng9cXoE=
+	b=pAJDZ1Y6XeWWG3kwQfVy3hhBqR0Noy5B2y3+L5aoldMA4xwXK2AtHvLesVWBCXbwt
+	 4tRQmCFEvYxV37d8XOphnqksSIg0efsAJNDA6+7CB16Mvu6JtJKNLMq6ox7Um6p9sA
+	 N697LtIrI6PT+VkPJOtqZx3BeYdpzOtm0jWFbfBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 076/247] net/mlx5e: Fix wraparound in rate limiting for values above 255 Gbps
-Date: Fri, 21 Nov 2025 14:10:23 +0100
-Message-ID: <20251121130157.324825467@linuxfoundation.org>
+Subject: [PATCH 6.17 077/247] net/mlx5e: Fix potentially misleading debug message
+Date: Fri, 21 Nov 2025 14:10:24 +0100
+Message-ID: <20251121130157.360651026@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -55,58 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 43b27d1bd88a4bce34ec2437d103acfae9655f9e ]
+[ Upstream commit 9fcc2b6c10523f7e75db6387946c86fcf19dc97e ]
 
-Add validation to reject rates exceeding 255 Gbps that would overflow
-the 8 bits max bandwidth field.
+Change the debug message to print the correct units instead of always
+assuming Gbps, as the value can be in either 100 Mbps or 1 Gbps units.
 
-Fixes: d8880795dabf ("net/mlx5e: Implement DCBNL IEEE max rate")
+Fixes: 5da8bc3effb6 ("net/mlx5e: DCBNL, Add debug messages log")
 Signed-off-by: Gal Pressman <gal@nvidia.com>
 Reviewed-by: Nimrod Oren <noren@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1762681073-1084058-5-git-send-email-tariqt@nvidia.com
+Link: https://patch.msgid.link/1762681073-1084058-6-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 3456144710528..d88a48210fdcb 100644
+index d88a48210fdcb..9b93da4d52f64 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -596,11 +596,13 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
- 	u8 max_bw_value[IEEE_8021QAZ_MAX_TCS];
- 	u8 max_bw_unit[IEEE_8021QAZ_MAX_TCS];
+@@ -598,6 +598,19 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
  	__u64 upper_limit_mbps;
-+	__u64 upper_limit_gbps;
+ 	__u64 upper_limit_gbps;
  	int i;
++	struct {
++		int scale;
++		const char *units_str;
++	} units[] = {
++		[MLX5_100_MBPS_UNIT] = {
++			.scale = 100,
++			.units_str = "Mbps",
++		},
++		[MLX5_GBPS_UNIT] = {
++			.scale = 1,
++			.units_str = "Gbps",
++		},
++	};
  
  	memset(max_bw_value, 0, sizeof(max_bw_value));
  	memset(max_bw_unit, 0, sizeof(max_bw_unit));
- 	upper_limit_mbps = 255 * MLX5E_100MB;
-+	upper_limit_gbps = 255 * MLX5E_1GB;
- 
- 	for (i = 0; i <= mlx5_max_tc(mdev); i++) {
- 		if (!maxrate->tc_maxrate[i]) {
-@@ -612,10 +614,16 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
- 						  MLX5E_100MB);
- 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
- 			max_bw_unit[i]  = MLX5_100_MBPS_UNIT;
--		} else {
-+		} else if (max_bw_value[i] <= upper_limit_gbps) {
- 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
- 						  MLX5E_1GB);
- 			max_bw_unit[i]  = MLX5_GBPS_UNIT;
-+		} else {
-+			netdev_err(netdev,
-+				   "tc_%d maxrate %llu Kbps exceeds limit %llu\n",
-+				   i, maxrate->tc_maxrate[i],
-+				   upper_limit_gbps);
-+			return -EINVAL;
- 		}
+@@ -628,8 +641,9 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
  	}
  
+ 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
+-		netdev_dbg(netdev, "%s: tc_%d <=> max_bw %d Gbps\n",
+-			   __func__, i, max_bw_value[i]);
++		netdev_dbg(netdev, "%s: tc_%d <=> max_bw %u %s\n", __func__, i,
++			   max_bw_value[i] * units[max_bw_unit[i]].scale,
++			   units[max_bw_unit[i]].units_str);
+ 	}
+ 
+ 	return mlx5_modify_port_ets_rate_limit(mdev, max_bw_value, max_bw_unit);
 -- 
 2.51.0
 
