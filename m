@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAA11F09B3;
-	Fri, 21 Nov 2025 13:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E83190477;
+	Fri, 21 Nov 2025 13:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731598; cv=none; b=PbbXpaTXLhreZN6aWdPvSnhO3Pobup0as4YPl/gHMItWVwIwnAaKIRIRcRpjgSfVHoIoprBL79qdAoYgfvW+X6ith/tvfjykHJblx918NZsOrI2YZtirKpxAVtYN8fDz2MG05ja27tkR3hmw9IozhZb+xxMhHj9hpwD9bIB9pwk=
+	t=1763731601; cv=none; b=kWySG+9xsL/9PRO5bWO/l7efhtj+cx+XEauRGK2fjvaQ2Ma+tyuiyJXej49Qv86Wr9S2UO7o1IXCaJkfDkVrJK4qrpYy7DXM+KY9YX9uTTTHmXivTh+FOkZkcRGKntuH8tCRefWu9Sd2iQcrgKRwDPDYa7vdHtvp1HiR+qHTEaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731598; c=relaxed/simple;
-	bh=SuaAFycqUEu3JxUoUxASGf/vgiXEiG0ooKUy4BCGCnc=;
+	s=arc-20240116; t=1763731601; c=relaxed/simple;
+	bh=JVruydgNVdmh3mj9BF74jUqTDECNrG+JJnH3z4G8bpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WNmN6BbtmATZ3pgyS5+AJTWarQDjpB5g73P16Q3qOmFDzFuLPmsZ9Aty+5gKNFnkl4CfwdYcK2xvI1UFHBR9AiwYiJmsdwYp9MH6fFqp/VR70KhfdCtxk3FpqF1N55gcMYJt7q5tLOPLulcfqAXPWoOhXQqF15VMrwwcwwGgblM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8fwCbHH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvjgLe89DolzpSWCiTSd79i3XdJObBUii6nVV6X/03mZaTJZcwmJ0H08wqkQJ4Fphgdwrz/zk4nzO5LvxfASlz4q7a7wjND1RC3l3Ln9YEp3MtnA+mn8WTjoUlcHXMqkZMGZwhHBPmgaF/NSWt/sh0t80eVPB1U8nt72EbW0Y+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OCVIYhJC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8fwCbHH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2258C4CEF1;
-	Fri, 21 Nov 2025 13:26:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OCVIYhJC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41D1C4CEF1;
+	Fri, 21 Nov 2025 13:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731598;
-	bh=SuaAFycqUEu3JxUoUxASGf/vgiXEiG0ooKUy4BCGCnc=;
+	s=korg; t=1763731601;
+	bh=JVruydgNVdmh3mj9BF74jUqTDECNrG+JJnH3z4G8bpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8fwCbHHan3izQT5BzEynKm7JH8xmQInWFdZ90QgfGBeHB6b11X3a/YGdK1T1J0SC
-	 assaFdqlfjqamM1vJ2gSrUrwYL8p/ypL/qJVgVaM2zYy7W7sp9uNjXX+Sot6OS+qZ1
-	 KnnCVJ3EhgTHegaoZ8Y7j6+vROGBGdo+4PEqld+s=
+	b=OCVIYhJCakeeYixmeEKIjMiczAJO/1X1wn0zhzgyTbh7blL+YfZ5djEHG/Z2R7Pt1
+	 odBHRycepgWwWxeoAqvT9y/aM+VyjjfTHuiTyTjdfy9Z5aTSAmrkwlJxkM5uqp+rds
+	 nwFF/WvHd6R8QZs/EMPLeV8yGvEgYsdFx5CXstXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhanjun Dong <zhanjun.dong@intel.com>,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Tejas Upadhyay <tejas.upadhyay@intel.com>,
 	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/185] drm/xe/guc: Synchronize Dead CT worker with unbind
-Date: Fri, 21 Nov 2025 14:10:34 +0100
-Message-ID: <20251121130144.133982141@linuxfoundation.org>
+Subject: [PATCH 6.12 008/185] drm/xe: Move declarations under conditional branch
+Date: Fri, 21 Nov 2025 14:10:35 +0100
+Message-ID: <20251121130144.170171089@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,41 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+From: Tejas Upadhyay <tejas.upadhyay@intel.com>
 
-[ Upstream commit 95af8f4fdce8349a5fe75264007f1af2aa1082ea ]
+[ Upstream commit 9cd27eec872f0b95dcdd811edc39d2d32e4158c8 ]
 
-Cancel and wait for any Dead CT worker to complete before continuing
-with device unbinding. Else the worker will end up using resources freed
-by the undind operation.
+The xe_device_shutdown() function was needing a few declarations
+that were only required under a specific condition. This change
+moves those declarations to be within that conditional branch
+to avoid unnecessary declarations.
 
-Cc: Zhanjun Dong <zhanjun.dong@intel.com>
-Fixes: d2c5a5a926f4 ("drm/xe/guc: Dead CT helper")
-Signed-off-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://patch.msgid.link/20251103123144.3231829-6-balasubramani.vivekanandan@intel.com
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20251007100208.1407021-1-tejas.upadhyay@intel.com
+Signed-off-by: Tejas Upadhyay <tejas.upadhyay@intel.com>
+(cherry picked from commit 15b3036045188f4da4ca62b2ed01b0f160252e9b)
 Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 492671339114e376aaa38626d637a2751cdef263)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Stable-dep-of: b11a020d914c ("drm/xe: Do clean shutdown also when using flr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/xe/xe_device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc_ct.c b/drivers/gpu/drm/xe/xe_guc_ct.c
-index d692e279d9fbf..7619b48dbfe43 100644
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -188,6 +188,9 @@ static void guc_ct_fini(struct drm_device *drm, void *arg)
- {
- 	struct xe_guc_ct *ct = arg;
+diff --git a/drivers/gpu/drm/xe/xe_device.c b/drivers/gpu/drm/xe/xe_device.c
+index 2e1d6d248d2e0..3fab4e67ef8c1 100644
+--- a/drivers/gpu/drm/xe/xe_device.c
++++ b/drivers/gpu/drm/xe/xe_device.c
+@@ -809,12 +809,12 @@ void xe_device_remove(struct xe_device *xe)
  
-+#if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
-+	cancel_work_sync(&ct->dead.worker);
-+#endif
- 	ct_exit_safe_mode(ct);
- 	destroy_workqueue(ct->g2h_wq);
- 	xa_destroy(&ct->fence_lookup);
+ void xe_device_shutdown(struct xe_device *xe)
+ {
+-	struct xe_gt *gt;
+-	u8 id;
+-
+ 	drm_dbg(&xe->drm, "Shutting down device\n");
+ 
+ 	if (xe_driver_flr_disabled(xe)) {
++		struct xe_gt *gt;
++		u8 id;
++
+ 		xe_display_pm_shutdown(xe);
+ 
+ 		xe_irq_suspend(xe);
 -- 
 2.51.0
 
