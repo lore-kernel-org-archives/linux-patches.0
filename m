@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243A434845D;
-	Fri, 21 Nov 2025 13:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C397F2F28F0;
+	Fri, 21 Nov 2025 13:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732161; cv=none; b=Ef2yv7e2A6JPzhPIdUGFWrxwLGSmqStXBQczHq5mIq2EvAjxD3xJVjgFrm3YCO4H+lgKHbSJiBAbe31xZtSrsIX0XLpdb77Q+dNYbHHgQ0hbOeI+y3xgXVvKNgeKyw0JcyAMJ4fYM+XS2xK1j30RwDIrTrF9rCE0IfacvBJcR5Q=
+	t=1763732163; cv=none; b=ljIGIf5ZPZDeIFC4u81lb9AlVtUVWKFzlvNCvC8DWnIej6mHulpYblgYgcuoP2rBKyCoWZ0GiDfnrzaJJ269ruuOeArt7ZOm/I4e+7mWOTVkVKoFSs1uNP3ApAkCJjHMbXgEVV9uF1thHHTf7v5/6W6Rm8fd0MLtJe7fdYp2WOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732161; c=relaxed/simple;
-	bh=GvJaBHt+49RwFLBcRexZPIchVmJp/MqKNgUS6aKIzTg=;
+	s=arc-20240116; t=1763732163; c=relaxed/simple;
+	bh=E9rOGcPXsaU9aapr2eMKtex71l4zjlx1s02QfdBApBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XQjVOPhg6E72bWrRudkTB0vEyMXiRIxpqtwlrq9T/HYKDzwaQgrvDAlb07PbwiR+NifhwATRC+kab6REWaYjUslxcxzcTdWFeapZXdP66xjFSq0dWIX4WKx/M78BI+WW/ndYwUimgUxv0dQ8mGotJXvfZGRT+23PmKBfFmMyjPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9m/8GcC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RZBZLH8nWHVhINGyapdpGZjWY6IHdC1RutYP21dxP3zhb2iRaRTgCSqrReCrDPw/bLcWbFS2D3oIqW1Tgx/+OKkslbqAGYFJsFfjDr9dLLBWj1EX7HP5e0/2DtUAGSJgEfmg4I27M5Pan4I3zhe2svm0vsAefwyTT8vI3I6DXJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJgbekXD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9m/8GcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EC8C4CEF1;
-	Fri, 21 Nov 2025 13:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJgbekXD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477A2C4CEF1;
+	Fri, 21 Nov 2025 13:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732160;
-	bh=GvJaBHt+49RwFLBcRexZPIchVmJp/MqKNgUS6aKIzTg=;
+	s=korg; t=1763732163;
+	bh=E9rOGcPXsaU9aapr2eMKtex71l4zjlx1s02QfdBApBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9m/8GcCeePtckri7Qn8S6uv9E6WELjv2Cn4ZJWsKPd3qHIQZNw8Z60lfLjPFzvM1
-	 DywLtSgbtPGo2HocqABthhC6j772Jtsj0YDzKT3HBUGSEEcoVr31FU+oBMT1tO949e
-	 Wk/EJ7DhAg1pygCEbmaoTeBGr0QlIuG5CbkHk0Kg=
+	b=rJgbekXD3dJswY9hHGbal5WN0cKHDL/xgajEMxuASG/Wl9V3j2oquGz2LLAVxeZuq
+	 fCORENjmHeHhIi+4uWD8h0KkRbC7O/4sRt4ywgWO0Sbo15efvknC1PYlVG2/0H9vsW
+	 sDAa628Wkiu0kmZUrsrYgIMb1GbzmSsJ60MFfLow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Hans de Goede <hansg@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.6 005/529] ACPI: video: Fix use-after-free in acpi_video_switch_brightness()
-Date: Fri, 21 Nov 2025 14:05:04 +0100
-Message-ID: <20251121130231.186512303@linuxfoundation.org>
+Subject: [PATCH 6.6 006/529] ACPI: button: Call input_free_device() on failing input device registration
+Date: Fri, 21 Nov 2025 14:05:05 +0100
+Message-ID: <20251121130231.222910259@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -51,49 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuhao Jiang <danisjiang@gmail.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-commit 8f067aa59430266386b83c18b983ca583faa6a11 upstream.
+commit 20594cd104abaaabb676c7a2915b150ae5ff093d upstream.
 
-The switch_brightness_work delayed work accesses device->brightness
-and device->backlight, freed by acpi_video_dev_unregister_backlight()
-during device removal.
+Make acpi_button_add() call input_free_device() when
+input_register_device() fails as required according to the
+documentation of the latter.
 
-If the work executes after acpi_video_bus_unregister_backlight()
-frees these resources, it causes a use-after-free when
-acpi_video_switch_brightness() dereferences device->brightness or
-device->backlight.
-
-Fix this by calling cancel_delayed_work_sync() for each device's
-switch_brightness_work in acpi_video_bus_remove_notify_handler()
-after removing the notify handler that queues the work. This ensures
-the work completes before the memory is freed.
-
-Fixes: 8ab58e8e7e097 ("ACPI / video: Fix backlight taking 2 steps on a brightness up/down keypress")
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Yuhao Jiang <danisjiang@gmail.com>
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-[ rjw: Changelog edit ]
-Link: https://patch.msgid.link/20251022200704.2655507-1-danisjiang@gmail.com
+Fixes: 0d51157dfaac ("ACPI: button: Eliminate the driver notify callback")
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Cc: 6.5+ <stable@vger.kernel.org> # 6.5+
+[ rjw: Subject and changelog rewrite, Fixes: tag ]
+Link: https://patch.msgid.link/20251006084706.971855-1-kaushlendra.kumar@intel.com
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/acpi_video.c |    4 +++-
+ drivers/acpi/button.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/acpi_video.c
-+++ b/drivers/acpi/acpi_video.c
-@@ -1952,8 +1952,10 @@ static void acpi_video_bus_remove_notify
- 	struct acpi_video_device *dev;
+--- a/drivers/acpi/button.c
++++ b/drivers/acpi/button.c
+@@ -603,8 +603,10 @@ static int acpi_button_add(struct acpi_d
  
- 	mutex_lock(&video->device_list_lock);
--	list_for_each_entry(dev, &video->video_device_list, entry)
-+	list_for_each_entry(dev, &video->video_device_list, entry) {
- 		acpi_video_dev_remove_notify_handler(dev);
-+		cancel_delayed_work_sync(&dev->switch_brightness_work);
+ 	input_set_drvdata(input, device);
+ 	error = input_register_device(input);
+-	if (error)
++	if (error) {
++		input_free_device(input);
+ 		goto err_remove_fs;
 +	}
- 	mutex_unlock(&video->device_list_lock);
  
- 	acpi_video_bus_stop_devices(video);
+ 	switch (device->device_type) {
+ 	case ACPI_BUS_TYPE_POWER_BUTTON:
 
 
