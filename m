@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5E0433438C;
-	Fri, 21 Nov 2025 13:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310043502AE;
+	Fri, 21 Nov 2025 13:42:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763732529; cv=none; b=ChpyAnb8TjoqawtpJ6gNwkCmyz8qVXnPZGwohccX8GaB1B/OtOnko5dfYQLlUWqgAysHMqMp4hxUQ47p4BURw+Oc9wAeq3VbBLV0wa4ON2rmuWkveYxvt3AfiSWrdJ/+SCrL7EZZk4hlygITLwYFquj7LqugwXwwNmnteencFuc=
+	t=1763732530; cv=none; b=adoQmNbE509bxXclu/nKiIHnhNv8CzT+/ST5mJ+Y89hP1j6bdvG1gWLN182EQ65HDAatbL6J1xKyYZvJEatyGxE4KkOPEJTmJJLmWPCPYLLfPormr0AnWPRdWWK4r1pijPQW66qvifPypxSYoEn7lFnDIZ6y2pol9TnstLLyH0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763732529; c=relaxed/simple;
-	bh=p+9+I52CXyKLKQ0tL2hpgd/MLTesw4yzDoVKU46lv8w=;
+	s=arc-20240116; t=1763732530; c=relaxed/simple;
+	bh=+XqAGBxbcgGgdhN8AJMfgrYgNUEOop/6syomlWJvWhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LO6tU8roauFOhDr03xoePAQ5vw660tHFKzWOIJGHHQ04vN6zQ89s1K3MAJuepi6bKBgCYBlQwpBzfjmjD8F0NhgfrSd9CYdG6hkZxgntSyoKXtoeHVOQIwGksP5O4CX8AeG/ceL6BglZoecncaewx6OR1Aydc31aUdc17799S7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/35xhOM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SwwcAyQ0gfSst7cenPszL2rWOHKUdbW3hHqUUMqm/+3wk/YRbUMqNs5ar4ERI+nMpGBNwVrRahAkgggmScLQPWAJouB8ZXKwEToxaq6+EkUzLp3xpS4EhDcrkPWVvf0KpMum3u/EhWzjyF2ss4WGGGrz9D7XB2vne62qnsIh5eA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GeFCdKAD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/35xhOM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F0AC4CEF1;
-	Fri, 21 Nov 2025 13:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GeFCdKAD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7CCC4CEFB;
+	Fri, 21 Nov 2025 13:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763732527;
-	bh=p+9+I52CXyKLKQ0tL2hpgd/MLTesw4yzDoVKU46lv8w=;
+	s=korg; t=1763732530;
+	bh=+XqAGBxbcgGgdhN8AJMfgrYgNUEOop/6syomlWJvWhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/35xhOMKHaeut4BOTrR3vU8BDaqHeTPIvxZ/mxZAKPIRd9u7iROhUiVzi/Q93RzO
-	 RDWotIXVxGClIaWaP9bH0EOs4hQgz8iflqYknn8RVOVtKOKxb3YeTAw4OrzMzbDg5r
-	 9yu5UxizLB/JhLEmCMD9/RgrGwt/2TfnmjUoCdKM=
+	b=GeFCdKADzgHnRoqeXdKRJfv5QKDiODJc0Jsz6JdO685LbmTYj7wu1ZVISGLy6ycTp
+	 AWMTtR+ZsYHeC4y5iSDKhCES9StoNQKyNATHdkIBLrbLfC13s1thEiSVYrtLCGgnM7
+	 rVqizdYDD7dlIBFg49ecN3GJGzTGCpKAe1TwH84c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	raub camaioni <raubcameo@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 152/529] usb: gadget: f_ncm: Fix MAC assignment NCM ethernet
-Date: Fri, 21 Nov 2025 14:07:31 +0100
-Message-ID: <20251121130236.427303812@linuxfoundation.org>
+Subject: [PATCH 6.6 153/529] char: misc: Make misc_register() reentry for miscdevice who wants dynamic minor
+Date: Fri, 21 Nov 2025 14:07:32 +0100
+Message-ID: <20251121130236.463229492@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -50,54 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: raub camaioni <raubcameo@gmail.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 956606bafb5fc6e5968aadcda86fc0037e1d7548 ]
+[ Upstream commit 52e2bb5ff089d65e2c7d982fe2826dc88e473d50 ]
 
-This fix is already present in f_ecm.c and was never
-propagated to f_ncm.c
+For miscdevice who wants dynamic minor, it may fail to be registered again
+without reinitialization after being de-registered, which is illustrated
+by kunit test case miscdev_test_dynamic_reentry() newly added.
 
-When creating multiple NCM ethernet devices
-on a composite usb gadget device
-each MAC address on the HOST side will be identical.
-Having the same MAC on different network interfaces is bad.
+There is a real case found by cascardo when a part of minor range were
+contained by range [0, 255):
 
-This fix updates the MAC address inside the
-ncm_strings_defs global during the ncm_bind call.
-This ensures each device has a unique MAC.
-In f_ecm.c ecm_string_defs is updated in the same way.
+1) wmi/dell-smbios registered minor 122, and acpi_thermal_rel registered
+   minor 123
+2) unbind "int3400 thermal" driver from its device, this will de-register
+   acpi_thermal_rel
+3) rmmod then insmod dell_smbios again, now wmi/dell-smbios is using minor
+   123
+4) bind the device to "int3400 thermal" driver again, acpi_thermal_rel
+   fails to register.
 
-The defunct MAC assignment in ncm_alloc has been removed.
+Some drivers may reuse the miscdevice structure after they are deregistered
+If the intention is to allocate a dynamic minor, if the minor number is not
+reset to MISC_DYNAMIC_MINOR before calling misc_register(), it will try to
+register a previously dynamically allocated minor number, which may have
+been registered by a different driver.
 
-Signed-off-by: raub camaioni <raubcameo@gmail.com>
-Link: https://lore.kernel.org/r/20250815131358.1047525-1-raubcameo@gmail.com
+One such case is the acpi_thermal_rel misc device, registered by the
+int3400 thermal driver. If the device is unbound from the driver and later
+bound, if there was another dynamic misc device registered in between, it
+would fail to register the acpi_thermal_rel misc device. Other drivers
+behave similarly.
+
+Actually, this kind of issue is prone to happen if APIs
+misc_register()/misc_deregister() are invoked by driver's
+probe()/remove() separately.
+
+Instead of fixing all the drivers, just reset the minor member to
+MISC_DYNAMIC_MINOR in misc_deregister() in case it was a dynamically
+allocated minor number, as error handling of misc_register() does.
+
+Cc: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-5-2ed949665bde@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/misc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
-index 7aad737901e83..1da4e59338c56 100644
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1449,6 +1449,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 
- 	ncm_opts->bound = true;
- 
-+	ncm_string_defs[1].s = ncm->ethaddr;
-+
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
- 	if (IS_ERR(us))
-@@ -1696,7 +1698,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
- 		mutex_unlock(&opts->lock);
- 		return ERR_PTR(-EINVAL);
- 	}
--	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
- 
- 	spin_lock_init(&ncm->lock);
- 	ncm_reset_values(ncm);
+diff --git a/drivers/char/misc.c b/drivers/char/misc.c
+index 30178e20d962d..9ee78c76e8663 100644
+--- a/drivers/char/misc.c
++++ b/drivers/char/misc.c
+@@ -300,6 +300,8 @@ void misc_deregister(struct miscdevice *misc)
+ 	list_del(&misc->list);
+ 	device_destroy(&misc_class, MKDEV(MISC_MAJOR, misc->minor));
+ 	misc_minor_free(misc->minor);
++	if (misc->minor > MISC_DYNAMIC_MINOR)
++		misc->minor = MISC_DYNAMIC_MINOR;
+ 	mutex_unlock(&misc_mtx);
+ }
+ EXPORT_SYMBOL(misc_deregister);
 -- 
 2.51.0
 
