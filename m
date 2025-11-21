@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD2C1F09AC;
-	Fri, 21 Nov 2025 13:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B451A1F09B3;
+	Fri, 21 Nov 2025 13:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731241; cv=none; b=AzOMcPCKdKWb1c56JMNBOFi29jPFbZLwYRw5EQmqD8r9h55RDRKLSkLlJh2zFelLXfkPvd/bkM53vEyryJSaESEntPqW9r0J1dGRmn/CSllhHALmvFmzjuNZ/6OD6pyxW+BxYbY76dV2+oST4/H89LkuxuibS1y+e5mkI3A1YOA=
+	t=1763731244; cv=none; b=XGOKdq5O7u3GgRZ82GqACbqYghBs1AugI1K0V1aLU/lqh/sADW4nIM5WZfpaH2T7wtG9rCnfS161qdpFFTxpponeRodCrbTJrDEREWHKTh23CUljrTX1jkg7lIxUor1PqAYWg7esXWMO6VGmiKnzJsempVwmL94CpW+4kda/AkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731241; c=relaxed/simple;
-	bh=ZUvF81NJjo6hUUC8kOuCYYAohQVV0nm9lzKbJ34E9N0=;
+	s=arc-20240116; t=1763731244; c=relaxed/simple;
+	bh=fTIN3qyeRNeHEXB7Lgn+kGx+Ik/t1iYfdibrj2yCKLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=si5UVoovWvTuNWbgtPVNo1/4axMDHG6YAfOg7L4u6wiIKnr2ltYcRioX+0q2b38ltl7wK0ZQs/+z0uiAk49mEIAw3+dwpIYBcKM2UR7lNA3egqDG9vm+POoDQKzbDMg15yGi2UfBvPV+VwCPlLbF9JgtR9GfvboZAEAl8WuMTOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t3tN6DiX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fpKGateoYOryqPok8oh9S056ySpcOCoSQsvmHSr3GPHT7DgwVaqAScRs4SwmuT1b+uPaFfqDANpS2ntbDKt6KXqE0YIelio39rGhvi9DrvwBfKvkGIqphl4ho8JE8EX91DvPF262il5a3dlmJVQZKDqioJW3jLh9OuI0cMrh7L4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DjM/l0mA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t3tN6DiX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F98DC4CEF1;
-	Fri, 21 Nov 2025 13:20:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DjM/l0mA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD07C4CEF1;
+	Fri, 21 Nov 2025 13:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731241;
-	bh=ZUvF81NJjo6hUUC8kOuCYYAohQVV0nm9lzKbJ34E9N0=;
+	s=korg; t=1763731244;
+	bh=fTIN3qyeRNeHEXB7Lgn+kGx+Ik/t1iYfdibrj2yCKLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t3tN6DiXP7CPhseu4fbnpftv2hPSmhPeSgk9DPTcFQfNcmhTPnCRAy8+hj87ZTQrh
-	 t8BvU6qn+T3e2gugWbp2MUmnLRuTMGZwhQ/YIaTqIz163bBfTSRuljzt7p5Tc7iEvU
-	 BDK8JsR5J7DWdvbL+YOHbtpFhzuj4egsQbMBqfB4=
+	b=DjM/l0mAwXNbyQ6DeDc1xdIREVsNcKM7DuKybhKL9FLn6kMeoXecxy208HFvLpMdb
+	 pdRpZpGfa9MjsTtHkJXyCgHXHF0LY2fcBK/IReNLeQ34wYAg7LdEfWiU42iokRpWzH
+	 jToLL4+Iqq1WiQjeDFAd7C82NW8oavCFEaXNAO98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	=?UTF-8?q?Jo=C3=A3o=20Paulo=20Gon=C3=A7alves?= <joao.goncalves@toradex.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 139/247] ARM: dts: imx51-zii-rdu1: Fix audmux node names
-Date: Fri, 21 Nov 2025 14:11:26 +0100
-Message-ID: <20251121130159.715775086@linuxfoundation.org>
+Subject: [PATCH 6.17 140/247] arm64: dts: imx8-ss-img: Avoid gpio0_mipi_csi GPIOs being deferred
+Date: Fri, 21 Nov 2025 14:11:27 +0100
+Message-ID: <20251121130159.751265668@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -45,55 +46,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: João Paulo Gonçalves <joao.goncalves@toradex.com>
 
-[ Upstream commit f31e261712a0d107f09fb1d3dc8f094806149c83 ]
+[ Upstream commit ec4daace64a44b53df76f0629e82684ef09ce869 ]
 
-Rename the 'ssi2' and 'aud3' nodes to 'mux-ssi2' and 'mux-aud3' in the
-audmux configuration of imx51-zii-rdu1.dts to comply with the naming
-convention in imx-audmux.yaml.
+The gpio0_mipi_csi DT nodes are enabled by default, but they are
+dependent on the irqsteer_csi nodes, which are not enabled. This causes
+the gpio0_mipi_csi GPIOs to be probe deferred. Since these GPIOs can be
+used independently of the CSI controller, enable irqsteer_csi by default
+too to prevent them from being deferred and to ensure they work out of
+the box.
 
-This fixes the following dt-schema warning:
-
-  imx51-zii-rdu1.dtb: audmux@83fd0000 (fsl,imx51-audmux): 'aud3', 'ssi2'
-  do not match any of the regexes: '^mux-[0-9a-z]*$', '^pinctrl-[0-9]+$'
-
-Fixes: ceef0396f367f ("ARM: dts: imx: add ZII RDU1 board")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Fixes: 2217f8243714 ("arm64: dts: imx8: add capture controller for i.MX8's img subsystem")
+Signed-off-by: João Paulo Gonçalves <joao.goncalves@toradex.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts b/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts
-index 06545a6052f71..43ff5eafb2bb8 100644
---- a/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts
-+++ b/arch/arm/boot/dts/nxp/imx/imx51-zii-rdu1.dts
-@@ -259,7 +259,7 @@
- 	pinctrl-0 = <&pinctrl_audmux>;
- 	status = "okay";
- 
--	ssi2 {
-+	mux-ssi2 {
- 		fsl,audmux-port = <1>;
- 		fsl,port-config = <
- 			(IMX_AUDMUX_V2_PTCR_SYN |
-@@ -271,7 +271,7 @@
- 		>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi b/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi
+index 2cf0f7208350a..a72b2f1c4a1b2 100644
+--- a/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8-ss-img.dtsi
+@@ -67,7 +67,6 @@ img_subsys: bus@58000000 {
+ 		power-domains = <&pd IMX_SC_R_CSI_0>;
+ 		fsl,channel = <0>;
+ 		fsl,num-irqs = <32>;
+-		status = "disabled";
  	};
  
--	aud3 {
-+	mux-aud3 {
- 		fsl,audmux-port = <2>;
- 		fsl,port-config = <
- 			IMX_AUDMUX_V2_PTCR_SYN
+ 	gpio0_mipi_csi0: gpio@58222000 {
+@@ -144,7 +143,6 @@ img_subsys: bus@58000000 {
+ 		power-domains = <&pd IMX_SC_R_CSI_1>;
+ 		fsl,channel = <0>;
+ 		fsl,num-irqs = <32>;
+-		status = "disabled";
+ 	};
+ 
+ 	gpio0_mipi_csi1: gpio@58242000 {
 -- 
 2.51.0
 
