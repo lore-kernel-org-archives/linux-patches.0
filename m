@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F06F26E6F4;
-	Fri, 21 Nov 2025 13:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F007E1F09AC;
+	Fri, 21 Nov 2025 13:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731198; cv=none; b=sEQDVWqkmgaZvCBoT9wGxK2ORg+FYA6U7QtftIKVVX8HtKFNVomjPV2AMhPwE/DAUQv5tWAoxYK9P9vqd/UUBXvvlXrG47iX8Oat6QsoqX9Sg033iFlOI4tf+AhF2BSAMhIR4hX3NKmYlnZ3Z5x4YNxtfz/gYbfp8akNk3kXBiM=
+	t=1763731202; cv=none; b=E+fRAVGbhevWC61H822jww+7mTER2y0q384Y6nMR1SlM871ZUkf2E0chq/VvQUKfsemv39lSD0jNIXXVS0llWDPeuhjU2hRaKVKmP5/ii4EBNibfQBe/kzH79YIWUqpgR2JQ8+2Aw6//HfJUgqz7eQkLlUsEyswWSuxt0YwsZCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731198; c=relaxed/simple;
-	bh=m0NWgeqrSxErVqHoIvbc8iTKlv37Z6CmcGtC7d36oKo=;
+	s=arc-20240116; t=1763731202; c=relaxed/simple;
+	bh=BK1+JPk/DcDzIFVVYl/CN9OiGJA96Iyg7OYlEBK+rzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F2unvQjTIqOqOBqaqzfC3Uod9eTSwK/k4Q9mxF3/903rfrguuAoTdDxw6loBoBHunryZeVxPcjjTLc/ohALuxWhqvwVpv71UYOkOBMlU7aHeVSCEU6TQz4Okupb8bnpXo9iUapR8f7rFezB2pqBj4rRE3ya7q4ZpXfw4jUvJ89k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxvxPAQJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XZZ9DS/Jyr4GqVZRDmV6ydqg+QbHrIq/GD8YeTyE5FcKgK/mJY4jawmKtxFDf+xOEL4La4x8xHb15JWsNKFG5M9oYGWoWzGnzD9NhwWSwXxEGamTV+ReRzuaqmtp5jEbYSopcqvqLw8mhhAiY2Xk7rWUH3WuGl0ChWbK+IKJQP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mu2kfjpd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxvxPAQJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF0CC4CEF1;
-	Fri, 21 Nov 2025 13:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mu2kfjpd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15B55C4CEF1;
+	Fri, 21 Nov 2025 13:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731198;
-	bh=m0NWgeqrSxErVqHoIvbc8iTKlv37Z6CmcGtC7d36oKo=;
+	s=korg; t=1763731201;
+	bh=BK1+JPk/DcDzIFVVYl/CN9OiGJA96Iyg7OYlEBK+rzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kxvxPAQJtUr005pFJuqpgSOZKSwYCh9JtBNAX4BhaSN1RVNdKrldkNI59e8o0OQ8l
-	 tP7XV/9uJL555BxkL9Mh6pSaeUaA0svYLARz7JcKUELhZwZnkrIVOuGiwnzqOLunys
-	 Gp40XuWeQpYAmtMmcG5BL35dvfFcEINgROenwyLE=
+	b=Mu2kfjpdooMVE5QiW2/P244hdVptaacUamRE5ELXSnnfGFu/+EH1FRLlt6wGlIGBr
+	 Szmvsbh3vijrgGtqmJO8kIV/W3kpT+55qfdfmkiUI+2VZLh6NNcTITGpQ/PvE6hI/m
+	 IR8g1jbjRltsU09lfeaRTjHnNk9aYXnsjVapFxYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 117/247] drm/client: fix MODULE_PARM_DESC string for "active"
-Date: Fri, 21 Nov 2025 14:11:04 +0100
-Message-ID: <20251121130158.782067033@linuxfoundation.org>
+Subject: [PATCH 6.17 126/247] virtio-fs: fix incorrect check for fsvq->kobj
+Date: Fri, 21 Nov 2025 14:11:13 +0100
+Message-ID: <20251121130159.250192591@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130154.587656062@linuxfoundation.org>
 References: <20251121130154.587656062@linuxfoundation.org>
@@ -52,47 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 0a4a18e888ae8c8004582f665c5792c84a681668 ]
+[ Upstream commit c014021253d77cd89b2d8788ce522283d83fbd40 ]
 
-The MODULE_PARM_DESC string for the "active" parameter is missing a
-space and has an extraneous trailing ']' character. Correct these.
+In virtio_fs_add_queues_sysfs(), the code incorrectly checks fs->mqs_kobj
+after calling kobject_create_and_add(). Change the check to fsvq->kobj
+(fs->mqs_kobj -> fsvq->kobj) to ensure the per-queue kobject is
+successfully created.
 
-Before patch:
-$ modinfo -p ./drm_client_lib.ko
-active:Choose which drm client to start, default isfbdev] (string)
-
-After patch:
-$ modinfo -p ./drm_client_lib.ko
-active:Choose which drm client to start, default is fbdev (string)
-
-Fixes: f7b42442c4ac ("drm/log: Introduce a new boot logger to draw the kmsg on the screen")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20251112010920.2355712-1-rdunlap@infradead.org
+Fixes: 87cbdc396a31 ("virtio_fs: add sysfs entries for queue information")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Link: https://patch.msgid.link/20251027104658.1668537-1-alok.a.tiwari@oracle.com
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/clients/drm_client_setup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/fuse/virtio_fs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/clients/drm_client_setup.c b/drivers/gpu/drm/clients/drm_client_setup.c
-index 72480db1f00d0..515aceac22b18 100644
---- a/drivers/gpu/drm/clients/drm_client_setup.c
-+++ b/drivers/gpu/drm/clients/drm_client_setup.c
-@@ -13,8 +13,8 @@
- static char drm_client_default[16] = CONFIG_DRM_CLIENT_DEFAULT;
- module_param_string(active, drm_client_default, sizeof(drm_client_default), 0444);
- MODULE_PARM_DESC(active,
--		 "Choose which drm client to start, default is"
--		 CONFIG_DRM_CLIENT_DEFAULT "]");
-+		 "Choose which drm client to start, default is "
-+		 CONFIG_DRM_CLIENT_DEFAULT);
+diff --git a/fs/fuse/virtio_fs.c b/fs/fuse/virtio_fs.c
+index 1751cd6e3d42b..38051e5fba19b 100644
+--- a/fs/fuse/virtio_fs.c
++++ b/fs/fuse/virtio_fs.c
+@@ -373,7 +373,7 @@ static int virtio_fs_add_queues_sysfs(struct virtio_fs *fs)
  
- /**
-  * drm_client_setup() - Setup in-kernel DRM clients
+ 		sprintf(buff, "%d", i);
+ 		fsvq->kobj = kobject_create_and_add(buff, fs->mqs_kobj);
+-		if (!fs->mqs_kobj) {
++		if (!fsvq->kobj) {
+ 			ret = -ENOMEM;
+ 			goto out_del;
+ 		}
 -- 
 2.51.0
 
