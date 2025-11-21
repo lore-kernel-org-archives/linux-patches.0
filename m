@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FDB34CFAF;
-	Fri, 21 Nov 2025 13:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6060E345750;
+	Fri, 21 Nov 2025 13:56:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733375; cv=none; b=eeQJFiqjnhUffUavCyrpawp8Jl4AzJn4YOPr7T27sSMIJaOawVBExOBQh0tsRerKiDxPj6hiSu/HgP5PEn8ExxLvK2cVUTTlzKdc2Kw+AWmBzYvhJmdoJc8bgdJI3/Jww9+hPF81cr/21IliUrJGGnyIWLxEXzGjt4sWcyxjOkc=
+	t=1763733378; cv=none; b=m5GNAw0UpwqdjlEsPv3xxakPdCvk0Ut+iSD5x8K9C41s6gM03ebzOu79XWNRXLvInwfDqtYmiINHiyNY+DMewL5384nZnrHrFvUnQrBwTJk576PrSqxRWy9QpgciOeoO2sNf8Sqve0qbuCuAFt2MSxYMPDW0OtW4xhFag7ibJdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733375; c=relaxed/simple;
-	bh=qTbcEVrq63/uKX3NY6lm1TC4O7g1mR10m4jdO3QbNjw=;
+	s=arc-20240116; t=1763733378; c=relaxed/simple;
+	bh=zk1lcMnradzRA2sC+9vz1TpWnzRGEjt4EEG9Q4kiWWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ixeOyEDg7JrVxVPkIUF+Oj16PVw2nLwGZp/a8V8H/NHCgdb5HhQFFRXBw2lNBFJDAapAgplgiAX2gMQpaQhPLbcK9ATBfOBCMzK9xyAB5lr8IRy0z/AVdWmsqq6UWo2UCeC4NmfjMafcGUw1JoIDrmUDQGN9GdcqLtLBLiSoWn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gN6MwnkJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ww2Uj6kGJ0nK11L6XPLxNmMcdQ9T/NguzXn7JDVN1lYPu5pZiONyEW8nj4UrKimd9ZsZNwGk6q6+IS39trJMuQzH7KR7L97N+z/a/GzeXwB/qc+5k0qS46J6qXxmu2WZpTOQonT3viBxnOfov/fXYd4rzNr9Ltt5f62BwQKM4g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VxNTfMK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gN6MwnkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CA5C4CEF1;
-	Fri, 21 Nov 2025 13:56:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VxNTfMK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF272C116D0;
+	Fri, 21 Nov 2025 13:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733375;
-	bh=qTbcEVrq63/uKX3NY6lm1TC4O7g1mR10m4jdO3QbNjw=;
+	s=korg; t=1763733378;
+	bh=zk1lcMnradzRA2sC+9vz1TpWnzRGEjt4EEG9Q4kiWWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gN6MwnkJTWzYnRHdVchewtTcmqB0C2BTzZwCi3VNNcZk9f+p61KgHKCueFUECDNR5
-	 Dq90ek8DijS450Ig4rsz8RXVYwkIF5ePUZQ6BMFGVae/FvUcQeA38SBn82R9vJT24I
-	 NDhvN8C42pfBSt/wWuc5efvCCb2fp8zZ6xGE2P/g=
+	b=1VxNTfMKDx8HUwR6gJ7QuTW99nz3GmhARNUWHJaMk4FPyWMAmLp0roKL/abKfH6lA
+	 hgcezinaqDw57ke0p12pWVYptCCgP0Lqk0Re8HLs5kDeIhIx2J7peAH1t9djN2csDg
+	 OyqZa7VsAEKmb3CtjIhCj31blQHbm2L2fW2zfK7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Nick Hu <nick.hu@sifive.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 447/529] bpf: account for current allocated stack depth in widen_imprecise_scalars()
-Date: Fri, 21 Nov 2025 14:12:26 +0100
-Message-ID: <20251121130246.916337971@linuxfoundation.org>
+Subject: [PATCH 6.6 448/529] irqchip/riscv-intc: Add missing free() callback in riscv_intc_domain_ops
+Date: Fri, 21 Nov 2025 14:12:27 +0100
+Message-ID: <20251121130246.951901153@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -52,68 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Nick Hu <nick.hu@sifive.com>
 
-[ Upstream commit b0c8e6d3d866b6a7f73877f71968dbffd27b7785 ]
+[ Upstream commit 14473a1f88596fd729e892782efc267c0097dd1d ]
 
-The usage pattern for widen_imprecise_scalars() looks as follows:
+The irq_domain_free_irqs() helper requires that the irq_domain_ops->free
+callback is implemented. Otherwise, the kernel reports the warning message
+"NULL pointer, cannot free irq" when irq_dispose_mapping() is invoked to
+release the per-HART local interrupts.
 
-    prev_st = find_prev_entry(env, ...);
-    queued_st = push_stack(...);
-    widen_imprecise_scalars(env, prev_st, queued_st);
+Set irq_domain_ops->free to irq_domain_free_irqs_top() to cure that.
 
-Where prev_st is an ancestor of the queued_st in the explored states
-tree. This ancestor is not guaranteed to have same allocated stack
-depth as queued_st. E.g. in the following case:
-
-    def main():
-      for i in 1..2:
-        foo(i)        // same callsite, differnt param
-
-    def foo(i):
-      if i == 1:
-        use 128 bytes of stack
-      iterator based loop
-
-Here, for a second 'foo' call prev_st->allocated_stack is 128,
-while queued_st->allocated_stack is much smaller.
-widen_imprecise_scalars() needs to take this into account and avoid
-accessing bpf_verifier_state->frame[*]->stack out of bounds.
-
-Fixes: 2793a8b015f7 ("bpf: exact states comparison for iterator convergence checks")
-Reported-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20251114025730.772723-1-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 832f15f42646 ("RISC-V: Treat IPIs as normal Linux IRQs")
+Signed-off-by: Nick Hu <nick.hu@sifive.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://patch.msgid.link/20251114-rv-intc-fix-v1-1-a3edd1c1a868@sifive.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-riscv-intc.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 5e644b1b12aaa..45b2f06de452c 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -7839,7 +7839,7 @@ static int widen_imprecise_scalars(struct bpf_verifier_env *env,
- 				   struct bpf_verifier_state *cur)
- {
- 	struct bpf_func_state *fold, *fcur;
--	int i, fr;
-+	int i, fr, num_slots;
+diff --git a/drivers/irqchip/irq-riscv-intc.c b/drivers/irqchip/irq-riscv-intc.c
+index 627beae9649a2..84cb9cda365ad 100644
+--- a/drivers/irqchip/irq-riscv-intc.c
++++ b/drivers/irqchip/irq-riscv-intc.c
+@@ -149,7 +149,8 @@ static int riscv_intc_domain_alloc(struct irq_domain *domain,
+ static const struct irq_domain_ops riscv_intc_domain_ops = {
+ 	.map	= riscv_intc_domain_map,
+ 	.xlate	= irq_domain_xlate_onecell,
+-	.alloc	= riscv_intc_domain_alloc
++	.alloc	= riscv_intc_domain_alloc,
++	.free	= irq_domain_free_irqs_top,
+ };
  
- 	reset_idmap_scratch(env);
- 	for (fr = old->curframe; fr >= 0; fr--) {
-@@ -7852,7 +7852,9 @@ static int widen_imprecise_scalars(struct bpf_verifier_env *env,
- 					&fcur->regs[i],
- 					&env->idmap_scratch);
- 
--		for (i = 0; i < fold->allocated_stack / BPF_REG_SIZE; i++) {
-+		num_slots = min(fold->allocated_stack / BPF_REG_SIZE,
-+				fcur->allocated_stack / BPF_REG_SIZE);
-+		for (i = 0; i < num_slots; i++) {
- 			if (!is_spilled_reg(&fold->stack[i]) ||
- 			    !is_spilled_reg(&fcur->stack[i]))
- 				continue;
+ static struct fwnode_handle *riscv_intc_hwnode(void)
 -- 
 2.51.0
 
