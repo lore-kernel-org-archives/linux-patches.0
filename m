@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565EA314D31;
-	Fri, 21 Nov 2025 13:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC9E2FA0EE;
+	Fri, 21 Nov 2025 13:55:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763733341; cv=none; b=LqcDAqScBXluOmMpWNkE40djdCXXJ65cgs2a5LgLcupkE74LsR/H8a6FSvT6Bxu3/PIIxeyWBMkwM34TaAq1+GAskajLZEpKJzMaAzSA6U3gp3YSkjW9ErqjuXtT/Bl4D0mgvluJc8BwBDZmcvbCzL/ZAXDR/uDYihXHxskZOsM=
+	t=1763733344; cv=none; b=VnXaf89ooNTnwnF3AeFw0kGJRP4UVzsNdRvKfmelGVCRPqcNdYl43DPhhoYkVvCVGWrdO8CHtx0aESJIc+AAVqjZwQCCn9DdS0CQmd+d52gMMWXoWWhuSEdL4l35N657QUaaD4RG4v8qMn+wG57buOAIjJInlFYCIAQB/gr6Zew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763733341; c=relaxed/simple;
-	bh=yE+GByP3/4uLMsqoad3wTNYRt+RtG/uk8bEMSQ3bEgI=;
+	s=arc-20240116; t=1763733344; c=relaxed/simple;
+	bh=afjx5O0RKFdS4EGHpx/IP0vkyYddMHOfJVqiMpDYDoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RalvL1F4RqVPe9acm/5r8h4fGuOpMA+wZ33oGCaZIT06+Kn1N5P5SvkgrD53ZGew6Os2hHVxpuNfpAcHEHRNbgEFWGqld21oM44OiEDPp5jLQQLPhY8z0V71Qkk46MMHINAfaQ4vsW5KKke41MrxDYXQNkPOlTY6tkW9LjGdqto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UdyDMx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5PDtyU4i2KYaPfItpL1tBo+H8/zpsvb4Cc/aX00em3M0je9JhlDNxh3BQYDiCroWWO1FwCq3xOPtIH5/hSQfxoO6uooBar+PfyG7v6B8qBo1VTsSPOP5ahr0efTrrHMkaRLn9b1nMGLSofDWxDP8+XbCqSSObxAq5mSSGQmTiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgJCpPYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UdyDMx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C342C4CEF1;
-	Fri, 21 Nov 2025 13:55:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgJCpPYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D89C4CEF1;
+	Fri, 21 Nov 2025 13:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763733341;
-	bh=yE+GByP3/4uLMsqoad3wTNYRt+RtG/uk8bEMSQ3bEgI=;
+	s=korg; t=1763733343;
+	bh=afjx5O0RKFdS4EGHpx/IP0vkyYddMHOfJVqiMpDYDoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UdyDMx0IrI0QE9CUwvoO0kPoV8//IsWlFqCDLrqOsoXoef3zs36uEr7eyv5n3Inp
-	 mWaCwx6GGiEKOX8p1U1OD9yX/mlY8j/UxFlcB9npOLWuRF6CDyLofwVDOMPnaKsp+K
-	 1I9sgM18i5DLV6th90VdOIBOh2/u8TfMdaIQ8LoY=
+	b=wgJCpPYoNQcL+dhnriJFE3E/xrPSo784o12BSOFYXFMBMsOU7U9o9aXGNa/BoHMtH
+	 wzfCYAQC+ympqWYplZndc7zZl7qX3lIDFivprJ2Jz0Sn//4py96niU5/HiLA8xnz4t
+	 X1/lu4pQj8a8sUfwX4he9ec6hshKinDfMWYEeaos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Huang, Ying" <ying.huang@intel.com>,
-	Bharata B Rao <bharata@amd.com>,
 	Alistair Popple <apopple@nvidia.com>,
+	Bharata B Rao <bharata@amd.com>,
 	Dave Jiang <dave.jiang@intel.com>,
 	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
 	Wei Xu <weixugc@google.com>,
@@ -43,9 +43,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rafael J Wysocki <rafael.j.wysocki@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 436/529] memory tiering: add abstract distance calculation algorithms management
-Date: Fri, 21 Nov 2025 14:12:15 +0100
-Message-ID: <20251121130246.526718859@linuxfoundation.org>
+Subject: [PATCH 6.6 437/529] acpi, hmat: refactor hmat_register_target_initiators()
+Date: Fri, 21 Nov 2025 14:12:16 +0100
+Message-ID: <20251121130246.562337529@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
 References: <20251121130230.985163914@linuxfoundation.org>
@@ -66,44 +66,24 @@ Content-Transfer-Encoding: 8bit
 
 From: Huang Ying <ying.huang@intel.com>
 
-[ Upstream commit 07a8bdd4120ced3490ef9adf51b8086af0aaa8e7 ]
+[ Upstream commit d0376aac59a166cd7bd9d1a9768e31e71002631b ]
 
-Patch series "memory tiering: calculate abstract distance based on ACPI
-HMAT", v4.
+Previously, in hmat_register_target_initiators(), the performance
+attributes are calculated and the corresponding sysfs links and files are
+created too.  Which is called during memory onlining.
 
-We have the explicit memory tiers framework to manage systems with
-multiple types of memory, e.g., DRAM in DIMM slots and CXL memory devices.
-Where, same kind of memory devices will be grouped into memory types,
-then put into memory tiers.  To describe the performance of a memory type,
-abstract distance is defined.  Which is in direct proportion to the memory
-latency and inversely proportional to the memory bandwidth.  To keep the
-code as simple as possible, fixed abstract distance is used in dax/kmem to
-describe slow memory such as Optane DCPMM.
+But now, to calculate the abstract distance of a memory target before
+memory onlining, we need to calculate the performance attributes for a
+memory target without creating sysfs links and files.
 
-To support more memory types, in this series, we added the abstract
-distance calculation algorithm management mechanism, provided a algorithm
-implementation based on ACPI HMAT, and used the general abstract distance
-calculation interface in dax/kmem driver.  So, dax/kmem can support HBM
-(high bandwidth memory) in addition to the original Optane DCPMM.
+To do that, hmat_register_target_initiators() is refactored to make it
+possible to calculate performance attributes separately.
 
-This patch (of 4):
-
-The abstract distance may be calculated by various drivers, such as ACPI
-HMAT, CXL CDAT, etc.  While it may be used by various code which hot-add
-memory node, such as dax/kmem etc.  To decouple the algorithm users and
-the providers, the abstract distance calculation algorithms management
-mechanism is implemented in this patch.  It provides interface for the
-providers to register the implementation, and interface for the users.
-
-Multiple algorithm implementations can cooperate via calculating abstract
-distance for different memory nodes.  The preference of algorithm
-implementations can be specified via priority (notifier_block.priority).
-
-Link: https://lkml.kernel.org/r/20230926060628.265989-1-ying.huang@intel.com
-Link: https://lkml.kernel.org/r/20230926060628.265989-2-ying.huang@intel.com
+Link: https://lkml.kernel.org/r/20230926060628.265989-3-ying.huang@intel.com
 Signed-off-by: "Huang, Ying" <ying.huang@intel.com>
-Tested-by: Bharata B Rao <bharata@amd.com>
 Reviewed-by: Alistair Popple <apopple@nvidia.com>
+Tested-by: Alistair Popple <apopple@nvidia.com>
+Tested-by: Bharata B Rao <bharata@amd.com>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
 Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
 Cc: Wei Xu <weixugc@google.com>
@@ -119,137 +99,143 @@ Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Stable-dep-of: 214291cbaace ("acpi/hmat: Fix lockdep warning for hmem_register_resource()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/memory-tiers.h | 19 ++++++++++++
- mm/memory-tiers.c            | 59 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 78 insertions(+)
+ drivers/acpi/numa/hmat.c | 81 +++++++++++++++-------------------------
+ 1 file changed, 30 insertions(+), 51 deletions(-)
 
-diff --git a/include/linux/memory-tiers.h b/include/linux/memory-tiers.h
-index 437441cdf78fb..c8382220cced9 100644
---- a/include/linux/memory-tiers.h
-+++ b/include/linux/memory-tiers.h
-@@ -6,6 +6,7 @@
- #include <linux/nodemask.h>
- #include <linux/kref.h>
- #include <linux/mmzone.h>
-+#include <linux/notifier.h>
- /*
-  * Each tier cover a abstrace distance chunk size of 128
-  */
-@@ -36,6 +37,9 @@ struct memory_dev_type *alloc_memory_type(int adistance);
- void put_memory_type(struct memory_dev_type *memtype);
- void init_node_memory_type(int node, struct memory_dev_type *default_type);
- void clear_node_memory_type(int node, struct memory_dev_type *memtype);
-+int register_mt_adistance_algorithm(struct notifier_block *nb);
-+int unregister_mt_adistance_algorithm(struct notifier_block *nb);
-+int mt_calc_adistance(int node, int *adist);
- #ifdef CONFIG_MIGRATION
- int next_demotion_node(int node);
- void node_get_allowed_targets(pg_data_t *pgdat, nodemask_t *targets);
-@@ -97,5 +101,20 @@ static inline bool node_is_toptier(int node)
- {
- 	return true;
+diff --git a/drivers/acpi/numa/hmat.c b/drivers/acpi/numa/hmat.c
+index bba268ecd802f..2dee0098f1a97 100644
+--- a/drivers/acpi/numa/hmat.c
++++ b/drivers/acpi/numa/hmat.c
+@@ -582,28 +582,25 @@ static int initiators_to_nodemask(unsigned long *p_nodes)
+ 	return 0;
  }
-+
-+static inline int register_mt_adistance_algorithm(struct notifier_block *nb)
-+{
-+	return 0;
-+}
-+
-+static inline int unregister_mt_adistance_algorithm(struct notifier_block *nb)
-+{
-+	return 0;
-+}
-+
-+static inline int mt_calc_adistance(int node, int *adist)
-+{
-+	return NOTIFY_DONE;
-+}
- #endif	/* CONFIG_NUMA */
- #endif  /* _LINUX_MEMORY_TIERS_H */
-diff --git a/mm/memory-tiers.c b/mm/memory-tiers.c
-index 37a4f59d9585b..76c0ad47a5ad3 100644
---- a/mm/memory-tiers.c
-+++ b/mm/memory-tiers.c
-@@ -5,6 +5,7 @@
- #include <linux/kobject.h>
- #include <linux/memory.h>
- #include <linux/memory-tiers.h>
-+#include <linux/notifier.h>
  
- #include "internal.h"
- 
-@@ -105,6 +106,8 @@ static int top_tier_adistance;
- static struct demotion_nodes *node_demotion __read_mostly;
- #endif /* CONFIG_MIGRATION */
- 
-+static BLOCKING_NOTIFIER_HEAD(mt_adistance_algorithms);
-+
- static inline struct memory_tier *to_memory_tier(struct device *device)
+-static void hmat_register_target_initiators(struct memory_target *target)
++static void hmat_update_target_attrs(struct memory_target *target,
++				     unsigned long *p_nodes, int access)
  {
- 	return container_of(device, struct memory_tier, dev);
-@@ -592,6 +595,62 @@ void clear_node_memory_type(int node, struct memory_dev_type *memtype)
+-	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
+ 	struct memory_initiator *initiator;
+-	unsigned int mem_nid, cpu_nid;
++	unsigned int cpu_nid;
+ 	struct memory_locality *loc = NULL;
+ 	u32 best = 0;
+-	bool access0done = false;
+ 	int i;
+ 
+-	mem_nid = pxm_to_node(target->memory_pxm);
++	bitmap_zero(p_nodes, MAX_NUMNODES);
+ 	/*
+-	 * If the Address Range Structure provides a local processor pxm, link
++	 * If the Address Range Structure provides a local processor pxm, set
+ 	 * only that one. Otherwise, find the best performance attributes and
+-	 * register all initiators that match.
++	 * collect all initiators that match.
+ 	 */
+ 	if (target->processor_pxm != PXM_INVAL) {
+ 		cpu_nid = pxm_to_node(target->processor_pxm);
+-		register_memory_node_under_compute_node(mem_nid, cpu_nid, 0);
+-		access0done = true;
+-		if (node_state(cpu_nid, N_CPU)) {
+-			register_memory_node_under_compute_node(mem_nid, cpu_nid, 1);
++		if (access == 0 || node_state(cpu_nid, N_CPU)) {
++			set_bit(target->processor_pxm, p_nodes);
+ 			return;
+ 		}
+ 	}
+@@ -617,47 +614,10 @@ static void hmat_register_target_initiators(struct memory_target *target)
+ 	 * We'll also use the sorting to prime the candidate nodes with known
+ 	 * initiators.
+ 	 */
+-	bitmap_zero(p_nodes, MAX_NUMNODES);
+ 	list_sort(NULL, &initiators, initiator_cmp);
+ 	if (initiators_to_nodemask(p_nodes) < 0)
+ 		return;
+ 
+-	if (!access0done) {
+-		for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
+-			loc = localities_types[i];
+-			if (!loc)
+-				continue;
+-
+-			best = 0;
+-			list_for_each_entry(initiator, &initiators, node) {
+-				u32 value;
+-
+-				if (!test_bit(initiator->processor_pxm, p_nodes))
+-					continue;
+-
+-				value = hmat_initiator_perf(target, initiator,
+-							    loc->hmat_loc);
+-				if (hmat_update_best(loc->hmat_loc->data_type, value, &best))
+-					bitmap_clear(p_nodes, 0, initiator->processor_pxm);
+-				if (value != best)
+-					clear_bit(initiator->processor_pxm, p_nodes);
+-			}
+-			if (best)
+-				hmat_update_target_access(target, loc->hmat_loc->data_type,
+-							  best, 0);
+-		}
+-
+-		for_each_set_bit(i, p_nodes, MAX_NUMNODES) {
+-			cpu_nid = pxm_to_node(i);
+-			register_memory_node_under_compute_node(mem_nid, cpu_nid, 0);
+-		}
+-	}
+-
+-	/* Access 1 ignores Generic Initiators */
+-	bitmap_zero(p_nodes, MAX_NUMNODES);
+-	if (initiators_to_nodemask(p_nodes) < 0)
+-		return;
+-
+ 	for (i = WRITE_LATENCY; i <= READ_BANDWIDTH; i++) {
+ 		loc = localities_types[i];
+ 		if (!loc)
+@@ -667,7 +627,7 @@ static void hmat_register_target_initiators(struct memory_target *target)
+ 		list_for_each_entry(initiator, &initiators, node) {
+ 			u32 value;
+ 
+-			if (!initiator->has_cpu) {
++			if (access == 1 && !initiator->has_cpu) {
+ 				clear_bit(initiator->processor_pxm, p_nodes);
+ 				continue;
+ 			}
+@@ -681,14 +641,33 @@ static void hmat_register_target_initiators(struct memory_target *target)
+ 				clear_bit(initiator->processor_pxm, p_nodes);
+ 		}
+ 		if (best)
+-			hmat_update_target_access(target, loc->hmat_loc->data_type, best, 1);
++			hmat_update_target_access(target, loc->hmat_loc->data_type, best, access);
+ 	}
++}
++
++static void __hmat_register_target_initiators(struct memory_target *target,
++					      unsigned long *p_nodes,
++					      int access)
++{
++	unsigned int mem_nid, cpu_nid;
++	int i;
++
++	mem_nid = pxm_to_node(target->memory_pxm);
++	hmat_update_target_attrs(target, p_nodes, access);
+ 	for_each_set_bit(i, p_nodes, MAX_NUMNODES) {
+ 		cpu_nid = pxm_to_node(i);
+-		register_memory_node_under_compute_node(mem_nid, cpu_nid, 1);
++		register_memory_node_under_compute_node(mem_nid, cpu_nid, access);
+ 	}
  }
- EXPORT_SYMBOL_GPL(clear_node_memory_type);
  
-+/**
-+ * register_mt_adistance_algorithm() - Register memory tiering abstract distance algorithm
-+ * @nb: The notifier block which describe the algorithm
-+ *
-+ * Return: 0 on success, errno on error.
-+ *
-+ * Every memory tiering abstract distance algorithm provider needs to
-+ * register the algorithm with register_mt_adistance_algorithm().  To
-+ * calculate the abstract distance for a specified memory node, the
-+ * notifier function will be called unless some high priority
-+ * algorithm has provided result.  The prototype of the notifier
-+ * function is as follows,
-+ *
-+ *   int (*algorithm_notifier)(struct notifier_block *nb,
-+ *                             unsigned long nid, void *data);
-+ *
-+ * Where "nid" specifies the memory node, "data" is the pointer to the
-+ * returned abstract distance (that is, "int *adist").  If the
-+ * algorithm provides the result, NOTIFY_STOP should be returned.
-+ * Otherwise, return_value & %NOTIFY_STOP_MASK == 0 to allow the next
-+ * algorithm in the chain to provide the result.
-+ */
-+int register_mt_adistance_algorithm(struct notifier_block *nb)
++static void hmat_register_target_initiators(struct memory_target *target)
 +{
-+	return blocking_notifier_chain_register(&mt_adistance_algorithms, nb);
-+}
-+EXPORT_SYMBOL_GPL(register_mt_adistance_algorithm);
++	static DECLARE_BITMAP(p_nodes, MAX_NUMNODES);
 +
-+/**
-+ * unregister_mt_adistance_algorithm() - Unregister memory tiering abstract distance algorithm
-+ * @nb: the notifier block which describe the algorithm
-+ *
-+ * Return: 0 on success, errno on error.
-+ */
-+int unregister_mt_adistance_algorithm(struct notifier_block *nb)
-+{
-+	return blocking_notifier_chain_unregister(&mt_adistance_algorithms, nb);
++	__hmat_register_target_initiators(target, p_nodes, 0);
++	__hmat_register_target_initiators(target, p_nodes, 1);
 +}
-+EXPORT_SYMBOL_GPL(unregister_mt_adistance_algorithm);
 +
-+/**
-+ * mt_calc_adistance() - Calculate abstract distance with registered algorithms
-+ * @node: the node to calculate abstract distance for
-+ * @adist: the returned abstract distance
-+ *
-+ * Return: if return_value & %NOTIFY_STOP_MASK != 0, then some
-+ * abstract distance algorithm provides the result, and return it via
-+ * @adist.  Otherwise, no algorithm can provide the result and @adist
-+ * will be kept as it is.
-+ */
-+int mt_calc_adistance(int node, int *adist)
-+{
-+	return blocking_notifier_call_chain(&mt_adistance_algorithms, node, adist);
-+}
-+EXPORT_SYMBOL_GPL(mt_calc_adistance);
-+
- static int __meminit memtier_hotplug_callback(struct notifier_block *self,
- 					      unsigned long action, void *_arg)
+ static void hmat_register_target_cache(struct memory_target *target)
  {
+ 	unsigned mem_nid = pxm_to_node(target->memory_pxm);
 -- 
 2.51.0
 
