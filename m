@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40C1190477;
-	Fri, 21 Nov 2025 13:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0A72750FB;
+	Fri, 21 Nov 2025 13:27:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731659; cv=none; b=idCG454NaBA/JgtjktgxlErdFDc/t+CeRbcdq2YZ/GO/ut+9ncBlwCP3n4p9TGS+gBinS5dbkLJLgBR1rTsdTJ8VzXWIvKGFBv/sl8pliIS5JoD2mPEvid8HBITc8TGOdcA+nbcQ/zmaRTd11XA0gr5wOm+zFS6lE42Sgc2F2mA=
+	t=1763731662; cv=none; b=b12ysx15YQijGQkvTVZgeDW15GNBzn584zvKLjOQtCHXzeCZ+hy0uVGM05lPo1trxNifHM+TLC0L7VzUR2QRXFhVpJrlqbQSnjQHP2L0oQvqRhoXDTLm5JzToXYSSHsBvnDJQxUPXfgaE097VaT0Pjew/2oeC6ObPf1sHVipV9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731659; c=relaxed/simple;
-	bh=nDCPDnYCA/6epzj4PEUdCEPLqhPeBHMaPKoCEHKOUCU=;
+	s=arc-20240116; t=1763731662; c=relaxed/simple;
+	bh=BZRcHfvn1khg/jCw56qUuap7cVsVnWJ+41toUrJqYow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4obXCekC+pCZYuzQoVDExnYNgn0p3JSNpwnA+fBDEWIB/NrUwhKkLaTZY1j9QQ15rTFwPW4jCQ3GOepB1qpymC7RDMxLfw3GT75s7fCNJDgELhyBquFf+8cgsMzChyaJZsktkllHohkFYUr/shP+CoEw93tSdXteCP9lah3w9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuQNZV3Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWgJoRTNEPNc8N4/WxmcVfy6QhNXKCetj1Uv1n1FWa5ELs8qDjPrjcjI8Wag59VXn0hmveQ7a8iKf3p+hEEn6IES8A4Xy/TPG3emj2nj0qENDyN/me8RHHu8h2SaPcY1Xzz13sXJpNy1lqc27i+UZH+N/jbeuV5O1TpHEEeSkj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzOBOwsx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuQNZV3Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02D8C4CEF1;
-	Fri, 21 Nov 2025 13:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzOBOwsx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9675FC4CEF1;
+	Fri, 21 Nov 2025 13:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731659;
-	bh=nDCPDnYCA/6epzj4PEUdCEPLqhPeBHMaPKoCEHKOUCU=;
+	s=korg; t=1763731662;
+	bh=BZRcHfvn1khg/jCw56qUuap7cVsVnWJ+41toUrJqYow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuQNZV3QpU97D19tkOG2cgatEEynwKlCQ6JAYDDS/HcAwj/ILQy59ruygDrxQ2tgA
-	 KcL/lFVxJ7pa5GDONsnpgllXWvhc+Br0HrhNCO+Cy2gCNyVOIk0sYWhYZ7MoGgTwIy
-	 JHUOcGzhIbqb0PcBn8DO+pDCJGELv52bouBQ0nlo=
+	b=YzOBOwsxKwhkXaq2kQhLw9qPjgqknVLarRnJcOxUjbPwgyN0y0e02SgCwpKdS8hLL
+	 E0JYbMNrOHsj/4bBtaq0QK4CU2JL1S9nzQzg/hayy1Q1FcQy5QLBbgdR+NKna4k4tZ
+	 kved2RjdVKKtp/AlWNnS60XhqJt+qBI2JF8UQvuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Divya Koppera <Divya.Koppera@microchip.com>
-Subject: [PATCH 6.12 036/185] net: phy: micrel: lan8814 fix reset of the QSGMII interface
-Date: Fri, 21 Nov 2025 14:11:03 +0100
-Message-ID: <20251121130145.179601233@linuxfoundation.org>
+	Miguel Ojeda <ojeda@kernel.org>,
+	Mingcong Bai <jeffbai@aosc.io>,
+	Xi Ruoyao <xry111@xry111.site>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 037/185] rust: Add -fno-isolate-erroneous-paths-dereference to bindgen_skip_c_flags
+Date: Fri, 21 Nov 2025 14:11:04 +0100
+Message-ID: <20251121130145.217081214@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,57 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Xi Ruoyao <xry111@xry111.site>
 
-[ Upstream commit 96a9178a29a6b84bb632ebeb4e84cf61191c73d5 ]
+[ Upstream commit fe4b3a34e9a9654d98d274218dac0270779db0ae ]
 
-The lan8814 is a quad-phy and it is using QSGMII towards the MAC.
-The problem is that everytime when one of the ports is configured then
-the PCS is reseted for all the PHYs. Meaning that the other ports can
-loose traffic until the link is establish again.
-To fix this, do the reset one time for the entire PHY package.
+It's used to work around an objtool issue since commit abb2a5572264
+("LoongArch: Add cflag -fno-isolate-erroneous-paths-dereference"), but
+it's then passed to bindgen and cause an error because Clang does not
+have this option.
 
-Fixes: ece19502834d ("net: phy: micrel: 1588 support for LAN8814 phy")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Divya Koppera <Divya.Koppera@microchip.com >
-Link: https://patch.msgid.link/20251106090637.2030625-1-horatiu.vultur@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: abb2a5572264 ("LoongArch: Add cflag -fno-isolate-erroneous-paths-dereference")
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Tested-by: Mingcong Bai <jeffbai@aosc.io>
+Signed-off-by: Xi Ruoyao <xry111@xry111.site>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ rust/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index e12040cf10eae..030e559a2cf15 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -4084,12 +4084,6 @@ static int lan8814_config_init(struct phy_device *phydev)
- {
- 	struct kszphy_priv *lan8814 = phydev->priv;
+diff --git a/rust/Makefile b/rust/Makefile
+index 07c13100000cd..c68c147205ed8 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -249,7 +249,7 @@ bindgen_skip_c_flags := -mno-fp-ret-in-387 -mpreferred-stack-boundary=% \
+ 	-fno-inline-functions-called-once -fsanitize=bounds-strict \
+ 	-fstrict-flex-arrays=% -fmin-function-alignment=% \
+ 	-fzero-init-padding-bits=% -mno-fdpic \
+-	--param=% --param asan-%
++	--param=% --param asan-% -fno-isolate-erroneous-paths-dereference
  
--	/* Reset the PHY */
--	lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
--			       LAN8814_QSGMII_SOFT_RESET,
--			       LAN8814_QSGMII_SOFT_RESET_BIT,
--			       LAN8814_QSGMII_SOFT_RESET_BIT);
--
- 	/* Disable ANEG with QSGMII PCS Host side */
- 	lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
- 			       LAN8814_QSGMII_PCS1G_ANEG_CONFIG,
-@@ -4175,6 +4169,12 @@ static int lan8814_probe(struct phy_device *phydev)
- 			      addr, sizeof(struct lan8814_shared_priv));
- 
- 	if (phy_package_init_once(phydev)) {
-+		/* Reset the PHY */
-+		lanphy_modify_page_reg(phydev, LAN8814_PAGE_COMMON_REGS,
-+				       LAN8814_QSGMII_SOFT_RESET,
-+				       LAN8814_QSGMII_SOFT_RESET_BIT,
-+				       LAN8814_QSGMII_SOFT_RESET_BIT);
-+
- 		err = lan8814_release_coma_mode(phydev);
- 		if (err)
- 			return err;
+ # Derived from `scripts/Makefile.clang`.
+ BINDGEN_TARGET_x86	:= x86_64-linux-gnu
 -- 
 2.51.0
 
