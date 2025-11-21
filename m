@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8582745E;
-	Fri, 21 Nov 2025 13:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558A01F03D7;
+	Fri, 21 Nov 2025 13:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763731869; cv=none; b=h7tufv3ZcorvLTDqJzm0GYe31dAdvuwtE4c6nOBdhcGST83C7we7RlN9+qjNE6HNI2y0nVL/BKiZs1ShtCdtBUuFWFOuMwdTsCgW36a2VFEYqld0oNe4coRX3ljvDGlL43ji6R7nQ0jlZZ9l55xtKP/Cp7brNWlh60/8eZYOm28=
+	t=1763731872; cv=none; b=rnxf1/bUPGY3foGJUjE9/C6brN/FIiED8IenejrDWk/7W5MLnEp0j6MTe3V+Rw/aPFu1xbq/sq1XSqmyHWOHdQcgtKCWsHdiFfPXrwgOg9/ti2upigNHGHQxZvFhRMnEPj/xK7V/hRGu6JRwB1kVxlSwo0yz6KtW19xMfUpAnIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763731869; c=relaxed/simple;
-	bh=26p0WgcmrHDeufg6/AM3pNe8iKdMrU6bSZ2Xwxoi7hY=;
+	s=arc-20240116; t=1763731872; c=relaxed/simple;
+	bh=nbxOrZ/26BUZTJK3yIuJeM+nrB1PsTUhL1bv/T20g7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXsjdKOa8FY53to6icioQPLgpeuNbjNJIaqU8efkiXQlb2OU2ySL2KqBombFZgKuMI5jjsK/0lsHoJ5FOGNvvvrlz/FzHC57feqI1DhyTUKmsV15/Uw/OGLZtLOXE3A2LG55h7SlDzqwo9pCHeWueHT3TVhBUf9ArL/GKAPbGQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a7T+4Hf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ggHTQfcI7wNQHK3ArqU3mdWsoxAJO/lY2qDDIQZyfL1TlWGsbig2VBth8pdXczN3TOCiLK6nUfP4zlD/ilM4z2dfYkL/Cy3O9yo2oLSykp0pwjnQ+7xDknjFZ1wkEoY2OaJ2VWKfls7qINWFItzFv/o26cwFgjUSl2iinEtXj7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGUpDjuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a7T+4Hf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12535C4CEF1;
-	Fri, 21 Nov 2025 13:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGUpDjuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB63AC4CEF1;
+	Fri, 21 Nov 2025 13:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1763731869;
-	bh=26p0WgcmrHDeufg6/AM3pNe8iKdMrU6bSZ2Xwxoi7hY=;
+	s=korg; t=1763731872;
+	bh=nbxOrZ/26BUZTJK3yIuJeM+nrB1PsTUhL1bv/T20g7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a7T+4Hf+1wKgB+i5ynlNKytUln6yMIPfi+dGUUhV3yLNJ5S/ygqo5jVeincI3Uk4f
-	 ZeG7jdS3jZK9VKCwbrOlMQHU66W1IvplqaUKebLP0cHuFByYE06mImcGEs6VV1MMZV
-	 psg/dAnC63nLH3aYwfZM0eNqASsVsKIuzrWm5+OQ=
+	b=LGUpDjuoEgEz8ZT9C0EWg8DKU0MX04ZQEPIVkozpF1uKn4qnOVfibWAYXup5aV9Ll
+	 s4pSjuj4z3PkgKBk+7pLOqRd31aGpMWPXW95jgUwJQPdfU/SPAqcV7nKw2s4lljXcs
+	 F+FeiQN5vVXtVSdTYBjGUEp1YsviX+DXEdpx/JHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Rizzo <matteorizzo@google.com>,
-	evn@google.com,
-	Jim Mattson <jmattson@google.com>,
-	Yosry Ahmed <yosry.ahmed@linux.dev>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 109/185] KVM: SVM: Mark VMCB_LBR dirty when MSR_IA32_DEBUGCTLMSR is updated
-Date: Fri, 21 Nov 2025 14:12:16 +0100
-Message-ID: <20251121130147.807480816@linuxfoundation.org>
+	NeilBrown <neil@brown.name>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	tianshuo han <hantianshuo233@gmail.com>
+Subject: [PATCH 6.12 110/185] nfsd: fix refcount leak in nfsd_set_fh_dentry()
+Date: Fri, 21 Nov 2025 14:12:17 +0100
+Message-ID: <20251121130147.844096582@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251121130143.857798067@linuxfoundation.org>
 References: <20251121130143.857798067@linuxfoundation.org>
@@ -53,47 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yosry Ahmed <yosry.ahmed@linux.dev>
+From: NeilBrown <neil@brown.name>
 
-commit dc55b3c3f61246e483e50c85d8d5366f9567e188 upstream.
+commit 8a7348a9ed70bda1c1f51d3f1815bcbdf9f3b38c upstream.
 
-The APM lists the DbgCtlMsr field as being tracked by the VMCB_LBR clean
-bit.  Always clear the bit when MSR_IA32_DEBUGCTLMSR is updated.
+nfsd exports a "pseudo root filesystem" which is used by NFSv4 to find
+the various exported filesystems using LOOKUP requests from a known root
+filehandle.  NFSv3 uses the MOUNT protocol to find those exported
+filesystems and so is not given access to the pseudo root filesystem.
 
-The history is complicated, it was correctly cleared for L1 before
-commit 1d5a1b5860ed ("KVM: x86: nSVM: correctly virtualize LBR msrs when
-L2 is running").  At that point svm_set_msr() started to rely on
-svm_update_lbrv() to clear the bit, but when nested virtualization
-is enabled the latter does not always clear it even if MSR_IA32_DEBUGCTLMSR
-changed. Go back to clearing it directly in svm_set_msr().
+If a v3 (or v2) client uses a filehandle from that filesystem,
+nfsd_set_fh_dentry() will report an error, but still stores the export
+in "struct svc_fh" even though it also drops the reference (exp_put()).
+This means that when fh_put() is called an extra reference will be dropped
+which can lead to use-after-free and possible denial of service.
 
-Fixes: 1d5a1b5860ed ("KVM: x86: nSVM: correctly virtualize LBR msrs when L2 is running")
-Reported-by: Matteo Rizzo <matteorizzo@google.com>
-Reported-by: evn@google.com
-Co-developed-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
-Link: https://patch.msgid.link/20251108004524.1600006-2-yosry.ahmed@linux.dev
+Normal NFS usage will not provide a pseudo-root filehandle to a v3
+client.  This bug can only be triggered by the client synthesising an
+incorrect filehandle.
+
+To fix this we move the assignments to the svc_fh later, after all
+possible error cases have been detected.
+
+Reported-and-tested-by: tianshuo han <hantianshuo233@gmail.com>
+Fixes: ef7f6c4904d0 ("nfsd: move V4ROOT version check to nfsd_set_fh_dentry()")
+Signed-off-by: NeilBrown <neil@brown.name>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/nfsd/nfsfh.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -3257,7 +3257,11 @@ static int svm_set_msr(struct kvm_vcpu *
- 		if (data & DEBUGCTL_RESERVED_BITS)
- 			return 1;
+--- a/fs/nfsd/nfsfh.c
++++ b/fs/nfsd/nfsfh.c
+@@ -268,9 +268,6 @@ static __be32 nfsd_set_fh_dentry(struct
+ 				dentry);
+ 	}
  
-+		if (svm_get_lbr_vmcb(svm)->save.dbgctl == data)
-+			break;
+-	fhp->fh_dentry = dentry;
+-	fhp->fh_export = exp;
+-
+ 	switch (fhp->fh_maxsize) {
+ 	case NFS4_FHSIZE:
+ 		if (dentry->d_sb->s_export_op->flags & EXPORT_OP_NOATOMIC_ATTR)
+@@ -292,6 +289,9 @@ static __be32 nfsd_set_fh_dentry(struct
+ 			goto out;
+ 	}
+ 
++	fhp->fh_dentry = dentry;
++	fhp->fh_export = exp;
 +
- 		svm_get_lbr_vmcb(svm)->save.dbgctl = data;
-+		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
- 		svm_update_lbrv(vcpu);
- 		break;
- 	case MSR_VM_HSAVE_PA:
+ 	return 0;
+ out:
+ 	exp_put(exp);
 
 
