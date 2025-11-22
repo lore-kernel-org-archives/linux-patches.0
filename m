@@ -1,61 +1,79 @@
-Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DC82E413;
-	Sat, 22 Nov 2025 06:19:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF80417E4;
+	Sat, 22 Nov 2025 06:47:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763792350; cv=none; b=SLCaN0novMWJdFfEpFCebX+myKsbDnKxMmcosoroDbzH6n/9qNUE0KalelG+heGHA1J7lcqDXJFVtJ2vhJ4e/D4UCjiLWPu2KkKUC+kLVMwkzLSVBP/DN7lKoXgPDGFvFXDb04h0Yx4f6Rre+JZG4COjXnk7CerTKG2bOCr6GOk=
+	t=1763794028; cv=none; b=XkO2I0asTep3szf/T0Vi1pAa50bJ2E/XACMrabUEAkEfRFlRwe4sAZAnagAAGg+jq51iGPZC6T+FmXmvKWTaPxht4ZvAzmGSgRwFEn4LVclaPVXI4PAdmACNjpApbAKQLy1C+ecDLLurD62zsVCm4RuX+GUt1bmr6zcoojBUMHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763792350; c=relaxed/simple;
-	bh=aaeaolahhiW/1JCLAbCM0dhlIL2QUgVOkzpVbKlR3II=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XaLuBGjh2BvoG4HB8Tbyayf8wWCqxo94fW42wShRS/Bf8N2SLQniq8DWrGEjyeIjCtizqqOdt/BSMIV97sLOjlPg8Jhgjh6DTLf/o5a2s6FGDlHYiAJC6jrp2Cnu48vzfwroun2qUdtbiOtDCdigE+2TRMzJCKK1mIls46K2MfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
-From: Brett A C Sheffield <bacs@librecast.net>
-To: gregkh@linuxfoundation.org
-Cc: stable@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Brett A C Sheffield <bacs@librecast.net>
-Subject: Re: [PATCH 6.6 000/529] 6.6.117-rc1 review
-Date: Sat, 22 Nov 2025 05:53:40 +0000
-Message-ID: <20251122055346.28771-1-bacs@librecast.net>
-X-Mailer: git-send-email 2.51.2
-In-Reply-To: <20251121130230.985163914@linuxfoundation.org>
-References: <20251121130230.985163914@linuxfoundation.org>
+	s=arc-20240116; t=1763794028; c=relaxed/simple;
+	bh=5go9l/9D1n9oWJDFXgXAk53nECOliW6QxvhpU8lqXnc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=A+hCFL/dG3/vQU2OF7ClLvW1yNyyDpxtYlei+p2/jilA/aZDq4IhN+vQGrpjQuTnLFGRtXsCEq2U1BrhLRUxoy9HFZ2echmqW4pWM+X9AlE+KBnbXyYW59geiOZm2HKuSZBlI5cwS5QcyzI2d/f7iTlDouiwNZxsF5tHkBQQ9aY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5vCQTLR; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5vCQTLR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E3BC4CEF5;
+	Sat, 22 Nov 2025 06:47:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1763794028;
+	bh=5go9l/9D1n9oWJDFXgXAk53nECOliW6QxvhpU8lqXnc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=j5vCQTLRW80QF9F/wW5gV4TiqOuPY+muMhy/mUp0lo0Ri/Gxc86RLhSOUisNz83zX
+	 mGUYSg8DeHDWMeL6uqgzMo3+kRF34wkgkFhWpxZEgnyPa8kPFVzK9Pg7CUxr+pEVYO
+	 WUQPuOt8vhfbf0NOcGynwU8FLC/bxnHkLlBERNE4=
+Date: Sat, 22 Nov 2025 07:47:04 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/185] 6.12.59-rc1 review
+Message-ID: <2025112248-sprout-chapped-149a@gregkh>
+References: <20251121130143.857798067@linuxfoundation.org>
+ <CA+G9fYvyiLxwGFN-3QuK4PR2nAmFSp8whe6yfTMXB+FoKHhjrw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYvyiLxwGFN-3QuK4PR2nAmFSp8whe6yfTMXB+FoKHhjrw@mail.gmail.com>
 
-# Librecast Test Results
+On Sat, Nov 22, 2025 at 10:16:09AM +0530, Naresh Kamboju wrote:
+> On Fri, 21 Nov 2025 at 18:56, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.12.59 release.
+> > There are 185 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Sun, 23 Nov 2025 13:01:08 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.59-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> The LTP syscalls listmount04 failures noticed across the 6.18.0-rc6,
 
-020/020 [ OK ] liblcrq
-010/010 [ OK ] libmld
-120/120 [ OK ] liblibrecast
+So this is upstream, has it been bisected and reported there?
 
-CPU/kernel: Linux auntie 6.6.117-rc1-g69eeb522a1e2 #132 SMP PREEMPT_DYNAMIC Sat Nov 22 05:50:19 -00 2025 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
+thanks,
 
-Tested-by: Brett A C Sheffield <bacs@librecast.net>
+greg k-h
