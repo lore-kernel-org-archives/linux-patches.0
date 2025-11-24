@@ -1,222 +1,201 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010067.outbound.protection.outlook.com [52.101.193.67])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E4931B136
-	for <patches@lists.linux.dev>; Mon, 24 Nov 2025 18:55:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764010517; cv=none; b=KszmCpWzwpPYcJ10Q2hIq+2obLjdEHbzKvmEtYl3KWILHGRO/DcUTdnvh4P/uWmJI0RXDkXv91BKOofBen16Dj53ZG/ZAEvREOhqLX4PdBlp1ZWzSxHzrEwwo3zl+CSBJTdu8cSYYGaU0MGXA8eqOkqOCJxWZoAuTRX1XufdrMg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764010517; c=relaxed/simple;
-	bh=cE+HGYLq3Yqm4nqyvtg00Zeqbcbxe1oYuxCiT0sDMGo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XayImj0j99aF7fHXTwXkZu4uaYq+5nz7deagGH1fZ97Ru8F3PbSdHaagW4Qc4Os447rIAXPKOlr4/efz3OZeswBw+KFSdhAzYDQoK3Jh/pe2VUBzbpvwqmWBOh6ECqST0x/CXb2Tt0MJtq6WGSc2uvkpJQu9i1gysvo8lmPM0fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QAKFIarX; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921952DF12A;
+	Mon, 24 Nov 2025 19:16:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.67
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764011815; cv=fail; b=OK7Goxc7MjIJbRD96d9kBNOGz3PnrHsX4paKDsCvd3tAgun3Z3ZyDbPeYk7+oAIldjUVHiqiSIO8pMJiEeDx50JFwwbJVTlVYbwxTFOHMsZqjNON3c5j5oCHTWrTQP925CRX6wOLaQwNu2mmqifkRavDTyrnfDRTCLEd5ofgcLQ=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764011815; c=relaxed/simple;
+	bh=akLlukVNOmMqTq6FjuDyjf4LpspU13r2IIaX6axiYUI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=jWSTD76ZTAvHxZVQFXjLvlHuO1+31gfVqwtf3fVPa8mE9lt2LChUE+1zl7xlDedboB+Dp72O/+QOalHgZZgVr/mBahjDEjFveEH6Kwexx8hw30lsA/rHJzQx3baIvtIjd4LDVeeDk7o2CVI7jrWeL8HTdKmGRYxlauuJvc79L2U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=QJPKD3rB; arc=fail smtp.client-ip=52.101.193.67
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QAKFIarX"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764010516; x=1795546516;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=cE+HGYLq3Yqm4nqyvtg00Zeqbcbxe1oYuxCiT0sDMGo=;
-  b=QAKFIarX+Aw6ODgQkKeh2I1NrkI1AL3ie1jrKBmvrrJ0BZkCO9fL2ePS
-   +ZCw5I82SYlvc5x0rIMRQJT/cG97S+aC9DfltQFZLVlG78I3RrjLxMuzp
-   GQs5fOcm+nJDougCEkloNsOqfMqUg3wEO0txg8wjo3bH3txxYChz8zO4G
-   iNMhHfIL65ruDcaU1t/zlQnazDO4AzruYSpXWtb6odiskx/2yREN5X/7c
-   1102a6P79hociQxwvucnBvfD0S6ZkcJTevnOoyoc1uO6k6q1J/2S80wx8
-   uL215k7C7nq9uKVcvZMj5jo6OsY5YIjT1N/QDPAOPUn6/UyO0YvMgycu+
-   w==;
-X-CSE-ConnectionGUID: MlQ9chNuS5qlfPdmiuIFxg==
-X-CSE-MsgGUID: 4m3w8InpSsCXmBm5m58lVA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11623"; a="76636978"
-X-IronPort-AV: E=Sophos;i="6.20,223,1758610800"; 
-   d="scan'208";a="76636978"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 10:54:33 -0800
-X-CSE-ConnectionGUID: EMqgfZCIRJW5zNFBgo2pCg==
-X-CSE-MsgGUID: 0P5NpPN5RqyvFCv3b2InOA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,223,1758610800"; 
-   d="scan'208";a="192225052"
-Received: from rfrazer-mobl3.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.153])
-  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 10:54:33 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghuay@nvidia.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>,
-	Babu Moger <babu.moger@amd.com>,
-	Drew Fustini <dfustini@baylibre.com>,
-	Dave Martin <Dave.Martin@arm.com>,
-	Chen Yu <yu.c.chen@intel.com>
-Cc: x86@kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v14 32/32] x86,fs/resctrl: Update documentation for telemetry events
-Date: Mon, 24 Nov 2025 10:54:09 -0800
-Message-ID: <20251124185412.24155-33-tony.luck@intel.com>
-X-Mailer: git-send-email 2.51.1
-In-Reply-To: <20251124185412.24155-1-tony.luck@intel.com>
-References: <20251124185412.24155-1-tony.luck@intel.com>
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="QJPKD3rB"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=xHNc2TM1e6LiJpJkPSRrvCCKgFujvGshbOX1bkHu77aTw37RSJjwL8WKmTopvY/0UBblmeXipp7nj0YLs5i7AGUOzEbV90q3tslO3MZBMNMYbGBf46/d5NqArwjFTVYTvm3/4C0M1qbScWwLfA6XA+UYEcRJVz7t15Q2al3IroGjydHOWwa3JH1g8C+J069bRhphNSaKj2RSb6iS9I3pOB410fxlHtj2ljbtaxsgg1y06EoxbvxrER8FHcx4ynSEEwFCo1cMLs2UnHsBUwW56lmM+Kg9xv3lXNoR/dCxtFATVY2OrMQu/4beTrFxEirHfLqfhBoFGcncWmPq9rhX3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CqIMSxLGCLAWVTpX82IpWtga1+1XTPQYuFHrDA+wc/I=;
+ b=MFSFnFylsOINuFtxySiCreA27GEoQtUPE6ie0oireiZeR9+f1hPSwIj3PttfYnEVOsADse/C6KGLYSGWkCWO1m8tipB8RJCeY4Ljlr3ZkXUGOCUwkKp/myUb7GtSWNYGuqaaJDCTvuzq/PobKZURm8xx20bkhPbo8oVMJXFMslWzVU7H8W0R/kokjP4ZEKPA2ht/YQi1OyAbwLZKpSKQir5o17AN/yZmDI26DGgSg7RB+VJe+sTnwv/JQoKgjmJPLpSyVGasnExJikJbfrFWNHOYMLmMQ7dKOhzp1i3eN5i7I2AwcXuO3hgNzzS1Ysd+ki5BlpSXlE5OOfzrO03Nzg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CqIMSxLGCLAWVTpX82IpWtga1+1XTPQYuFHrDA+wc/I=;
+ b=QJPKD3rBCUOAglX1zOlq9myHKi7oro2+QjXZ3ys6dMJ5f6Vl/MQd/Yqc3xO0ijPjeG4VU5HJ4SeZ+Ir/FVMsze5zRC3+vGNb1Dv2bx/1M6J8eDa+inphmMx8+w0auKhWQvhxv/YovS3LKbb3/mNW45OdjjvAgnOOWCHBYCqEF4p1ywAae+E8JtJR3Y0RSHQ5I3e14hNawRML5UWAencMiAYLWq16Y+9VdJhuiocj3/J5RsH9nXIBLmrOnYEank7Q8LqkWz2CY6UZqAzicddIXA17Ytoz+x9ND6u96wPxq1YUUO+SI4/vh526UzheLNX7fD33gY7hCVwYj86g2h1HNg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by SJ1PR12MB6340.namprd12.prod.outlook.com (2603:10b6:a03:453::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.17; Mon, 24 Nov
+ 2025 19:16:49 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9343.009; Mon, 24 Nov 2025
+ 19:16:49 +0000
+Date: Mon, 24 Nov 2025 15:16:48 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: Baolu Lu <baolu.lu@linux.intel.com>, joro@8bytes.org, afael@kernel.org,
+	bhelgaas@google.com, alex@shazbot.org, kevin.tian@intel.com,
+	will@kernel.org, robin.murphy@arm.com, lenb@kernel.org,
+	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org,
+	linux-pci@vger.kernel.org, kvm@vger.kernel.org,
+	patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
+	helgaas@kernel.org, etzhao1900@gmail.com
+Subject: Re: [PATCH v5 3/5] iommu: Add iommu_driver_get_domain_for_dev()
+ helper
+Message-ID: <20251124191648.GJ153257@nvidia.com>
+References: <cover.1762835355.git.nicolinc@nvidia.com>
+ <0303739735f3f49bcebc244804e9eeb82b1c41dc.1762835355.git.nicolinc@nvidia.com>
+ <d5445875-76bd-453d-b959-25989f5d3060@linux.intel.com>
+ <aRTGwJ2CABOIKtq6@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aRTGwJ2CABOIKtq6@Asurada-Nvidia>
+X-ClientProxiedBy: BN0PR02CA0022.namprd02.prod.outlook.com
+ (2603:10b6:408:e4::27) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|SJ1PR12MB6340:EE_
+X-MS-Office365-Filtering-Correlation-Id: 15c96b5b-99a4-4e6a-0a93-08de2b8e0442
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?OVCuPvg/ZpkHUYba+K2cioPoLRasuHpSJIV5w9TDAGRAbEDpVboFUQCX2X9r?=
+ =?us-ascii?Q?SVnlM42VQpK38QxwdI7JVzZMdBQ/GWuuGImghEFbpaJ5Pa9/qO4w+o+cZfKg?=
+ =?us-ascii?Q?Swxlqidy0xeb68b7wNIesgL+HJEdI5LUnGkwGtXFjU591urDZu8/wSiCsykl?=
+ =?us-ascii?Q?PUBjWq255HqHpHxzguslDtHvodJwWQ2p0eejNfJ6/huMZtDJ4w6IYj0Pbofh?=
+ =?us-ascii?Q?f7Sln7A9J47XrLTTb1e0nYz1ixaLkzuOYAbLFk/UOfRcRIIenFxSfiMtyWxA?=
+ =?us-ascii?Q?Caowx311rex+/Q+7VcH/FkQ8fzh4TUi1qrFfTyTD9HKa7g6WfAMlRgeUdtmq?=
+ =?us-ascii?Q?cPEKiaEww89+cdhoAhZ4g4haSjQ2sqqfgGXyJy1lpMDGE+9PdA1xWPqm8QSy?=
+ =?us-ascii?Q?9vOcQepYPsUNy0VYRa6sxFAsu2l9H7jwvOwXermGd/luyDN9cIpKKeLDoveE?=
+ =?us-ascii?Q?t6yf1rAyCKP/4d5mqYxnHiWlsJegcNYufWDTA3MWhxzgCu3BSStgs68slJTD?=
+ =?us-ascii?Q?6L6TFJZvMr06jIjIdHmouEnIhdvLoX38epIYbsVsM3xVik3ON0V1aDmawJgA?=
+ =?us-ascii?Q?2CszyNLvBroCTcXhrxIO17dEd3DgmgoG7h6/QofWC6M1imy0yixde3d14M1V?=
+ =?us-ascii?Q?4Wlm0+Whe+lvyCgO3R4BKcLtoPa9+FP9cQNX0xOPlZOM6JsIWKiD67ESERPs?=
+ =?us-ascii?Q?SrePQ0nyY3zLmwnQmU9C3UhgMuZpunBegoW2lWgZ34uF9Uhbi2wzALo3NXk3?=
+ =?us-ascii?Q?8YmxX97QVsW9DT7iO3PrzxYu/vbf3akENV8DNoofxkUlbM7J96pc3OJ6DyYa?=
+ =?us-ascii?Q?qA29lBrGfyst/axKbIOqwuPasoYU3WScWUHJfmKTYAmvw4M+iQrvcm56fvzW?=
+ =?us-ascii?Q?bX286Pu6BLEyHN/TlhrtRaGZvkrcbFXcmZhLct659pHOWU27Q7WD7RtAJ8W0?=
+ =?us-ascii?Q?JHny2nC7l680/StrHYCCxIiW8lvXY5XUP1b4mv3bfi2WD/237WNn5AmIPWgW?=
+ =?us-ascii?Q?FP5x3J/eggx43LJlykqpUfGN13WQTLwg+oPrQj5Crc1aaiflEGXgBQXnjJ3x?=
+ =?us-ascii?Q?EpEEwH/F7rM4mIaocC0NY76UzT7xfFKk7RZltJLTTG6TJNBNVpARLTzmD0ww?=
+ =?us-ascii?Q?7QCHShvxUC13QYrzDelHui65z0QD4zIeQbJQ+u2PN0TG6ZJumyQJXNBQaej2?=
+ =?us-ascii?Q?VkYEvUGlXh5zu5Wx3HC7Pvkv0duG0Jy0YqGFELceTuIprTyuDQv855+b9Xz7?=
+ =?us-ascii?Q?F9XVVQ/LxCHWALkYGuikczr73SVPdNbx3bRDb3xZjrkX8EO28N637BvChNQG?=
+ =?us-ascii?Q?W1evCScEqMlF1TIGN/92DOAmnkTqAz8r0BUzFDyOsuMC7/ZC00OiFz96c7A0?=
+ =?us-ascii?Q?Ib2wYhXXaT55xmMz0SxGTk+bK0v1jSxNcg7T2oOuwBP3LJeNSG/OejkGuTwg?=
+ =?us-ascii?Q?4Exio4eFXjwNOmUVEUl1PrdAtToibtCiq6IndPyBrzs+L78ek4S0aA=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?N+JXPEHKYikkpZWQMtliH3V1e/EEREOxEGiJCLloGfW/eXHQqcf2GXlrZ21l?=
+ =?us-ascii?Q?4RqU31VNglTKBx0zKOcIvcZ+tdH2trHAAZMlz//yDs2KBBr64Lx7T8f5mc7C?=
+ =?us-ascii?Q?ZjqJI6eRo1dfPNSiXaU/SDuBFV/UPHyxvtXi+/hCTroHgU44ivho4OJiIDIZ?=
+ =?us-ascii?Q?6rn1V2JztpHLv8fESJ4y9Mb2MuIYS6kiSiVMb2XGRjfjHCUGK+lkXQiC+PPi?=
+ =?us-ascii?Q?M9o8nEyO51DWujn2+Ds8t6AS2Bd2oRns1SFL8oBYj+uOSYuYgSzWRqNvJbXa?=
+ =?us-ascii?Q?ys5UbkTYS/J6sem5vbI4oYfaXPVGxbvKmya8xMKAU7PNh2gS6PtgHJSUOGL+?=
+ =?us-ascii?Q?VwvoEg4RYNrmQaKvy6XDej5db7zeDlPVB9SGyl95ODUJmsba9ADtv8OQE+d1?=
+ =?us-ascii?Q?ibgJhspb2vvY8lXyd+9eVHM06q8NhqobP/T/qaGwKb4NG1yQ6nHy3BSzyljh?=
+ =?us-ascii?Q?CJv37Arq+VQAtd2c/Mw3y63syTrqTffXNfdNJ+xH0qTi+mjjny6q1wv51pjm?=
+ =?us-ascii?Q?ybCcIirZ+lEM0lBW04oioIV1JS06nHgw+XzWctJZ71HSdgiGxAsUITq1RWzM?=
+ =?us-ascii?Q?VWYMByjPD6WfslRdCKW2kHJ0n0nXoeWUjRgetkEyMdiukQ7WU8IyaE5BMCEC?=
+ =?us-ascii?Q?zg7sRTqHzRmXQPssGhvGcTErnneLpk9i2zyoYQtYemmAI3OiREChGAeqgssI?=
+ =?us-ascii?Q?4JWC5Rf4v0WN+hA1ltJ4kArvjSUtWhZyNgXy0uz8aWazM68phhN6AC145Jw/?=
+ =?us-ascii?Q?w3dieS0VdGrAIsYH/GMzibAU4WtSGUGO8w4eiu6uLFTKT9hBM8apA2VHmH+S?=
+ =?us-ascii?Q?t6JmB9LxcXQ1TEELqcOJiPePwTVs8RP4U4kltykrVYb/7iCSeynISzUpn/ZD?=
+ =?us-ascii?Q?jhaJEZghHbRc0s1txqcIva20AtUwYci+UUYz2HTt1cx/ntCdOe+nU9BV+oqP?=
+ =?us-ascii?Q?1yyBh0GceD9L96EJ9i3WhomCMEKkhd2AWEvJVissAvnhgHp2LqPAt/b5t06v?=
+ =?us-ascii?Q?ulHcOAlKlSu3L60VWRVTMhRV40PThhlllsuEKaMbWesHF7t+pr1ABH7iL18T?=
+ =?us-ascii?Q?n5AgWEsSQlN6p876ZmrfFRSZcExvmvtOr8V9utrYyqPkc0e+9k6OBEHtRq7z?=
+ =?us-ascii?Q?Z5SN11PXQ2vR3aA6cmdpL6Me3IM8BOUb5ZlkG/ivSl3p52pI/O2RdRE3nU0V?=
+ =?us-ascii?Q?/FqzpiWRce+AI7iKN9WpNDq/218bwwZZMCI7MZ1F2lT4QfCr6/Wu9bGsoeQ2?=
+ =?us-ascii?Q?+2JXR5DqqVC54WluiyeoUOFHNd1ezBtyvGho6cYr5kDHBoxM7XzbaQV7pMwh?=
+ =?us-ascii?Q?5mEvXNmNCcEzw9wjJHbOrPIGffgjLaixLkDL8FJyuzvtbCX8XPndyU6FL748?=
+ =?us-ascii?Q?HgreLS8ohNT7Ou1MH8tnPZ49qJckVS9OtlvkY3tuLuJIG70t2RGtW77CgmwB?=
+ =?us-ascii?Q?/CKS0+0cgEyX4j65Lvahawdpd+g2X9rzXFTQdvWgdmqEjzEqC0VUdXfLWnZa?=
+ =?us-ascii?Q?kaq99r5kn2RgDdJaSX3zSNDC8eH6XojQ5hwyJUliDDBmBt8loRrvdO03TOWn?=
+ =?us-ascii?Q?sjw0snBkpVi+veELzAI=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15c96b5b-99a4-4e6a-0a93-08de2b8e0442
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Nov 2025 19:16:49.1744
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tgS9XQJA6uQ17BGNjPJJ4VLqe57gEOcGLHvdWM3Zs3dvfx8Epe+25BMPFzRukyBi
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ1PR12MB6340
 
-Update resctrl filesystem documentation with the details about the
-resctrl files that support telemetry events.
+On Wed, Nov 12, 2025 at 09:41:20AM -0800, Nicolin Chen wrote:
+> Hi Baolu,
+> 
+> On Wed, Nov 12, 2025 at 01:58:51PM +0800, Baolu Lu wrote:
+> > On 11/11/25 13:12, Nicolin Chen wrote:
+> > > +/**
+> > > + * iommu_get_domain_for_dev() - Return the DMA API domain pointer
+> > > + * @dev - Device to query
+> > > + *
+> > > + * This function can be called within a driver bound to dev. The returned
+> > > + * pointer is valid for the lifetime of the bound driver.
+> > > + *
+> > > + * It should not be called by drivers with driver_managed_dma = true.
+> > 
+> > "driver_managed_dma != true" means the driver will use the default
+> > domain allocated by the iommu core during iommu probe.
+> 
+> Hmm, I am not very sure. Jason's remarks pointed out that There
+> is an exception in host1x_client_iommu_detach():
+> https://lore.kernel.org/all/20250924191055.GJ2617119@nvidia.com/
+> 
+> Where the group->domain could be NULL, i.e. not attached to the
+> default domain?
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/filesystems/resctrl.rst | 102 +++++++++++++++++++++++---
- 1 file changed, 90 insertions(+), 12 deletions(-)
+That is impossible these days, the group->domain is always something.
 
-diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
-index 8c8ce678148a..138d2663b03d 100644
---- a/Documentation/filesystems/resctrl.rst
-+++ b/Documentation/filesystems/resctrl.rst
-@@ -252,13 +252,12 @@ with respect to allocation:
- 			bandwidth percentages are directly applied to
- 			the threads running on the core
- 
--If RDT monitoring is available there will be an "L3_MON" directory
-+If L3 monitoring is available there will be an "L3_MON" directory
- with the following files:
- 
- "num_rmids":
--		The number of RMIDs available. This is the
--		upper bound for how many "CTRL_MON" + "MON"
--		groups can be created.
-+		The number of RMIDs supported by hardware for
-+		L3 monitoring events.
- 
- "mon_features":
- 		Lists the monitoring events if
-@@ -484,6 +483,25 @@ with the following files:
- 		bytes) at which a previously used LLC_occupancy
- 		counter can be considered for re-use.
- 
-+If telemetry monitoring is available there will be a "PERF_PKG_MON" directory
-+with the following files:
-+
-+"num_rmids":
-+		The number of RMIDs for telemetry monitoring events. By default,
-+		resctrl will not enable telemetry events of a particular type
-+		("perf" or "energy") if the number of RMIDs that can be tracked
-+		concurrently for that type is lower than the total number of
-+		RMIDs supported by that type. The user can force-enable each
-+		type of telemetry events with the "rdt=" boot command line
-+		option, but this may reduce the number of monitoring groups that
-+		can be created.
-+
-+"mon_features":
-+		Lists the telemetry monitoring events that are enabled on this system.
-+
-+The upper bound for how many "CTRL_MON" + "MON" can be created
-+is the smaller of the L3_MON and PERF_PKG_MON "num_rmids" values.
-+
- Finally, in the top level of the "info" directory there is a file
- named "last_cmd_status". This is reset with every "command" issued
- via the file system (making new directories or writing to any of the
-@@ -589,15 +607,40 @@ When control is enabled all CTRL_MON groups will also contain:
- When monitoring is enabled all MON groups will also contain:
- 
- "mon_data":
--	This contains a set of files organized by L3 domain and by
--	RDT event. E.g. on a system with two L3 domains there will
--	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
--	directories have one file per event (e.g. "llc_occupancy",
--	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
--	files provide a read out of the current value of the event for
--	all tasks in the group. In CTRL_MON groups these files provide
--	the sum for all tasks in the CTRL_MON group and all tasks in
-+	This contains directories for each monitor domain.
-+
-+	If L3 monitoring is enabled, there will be a "mon_L3_XX" directory for
-+	each instance of an L3 cache. Each directory contains files for the enabled
-+	L3 events (e.g. "llc_occupancy", "mbm_total_bytes", and "mbm_local_bytes").
-+
-+	If telemetry monitoring is enabled, there will be a "mon_PERF_PKG_YY"
-+	directory for each physical processor package. Each directory contains
-+	files for the enabled telemetry events (e.g. "core_energy". "activity",
-+	"uops_retired", etc.)
-+
-+	The info/`*`/mon_features files provide the full list of enabled
-+	event/file names.
-+
-+	"core energy" reports a floating point number for the energy (in Joules)
-+	consumed by cores (registers, arithmetic units, TLB and L1/L2 caches)
-+	during execution of instructions summed across all logical CPUs on a
-+	package for the current monitoring group.
-+
-+	"activity" also reports a floating point value (in Farads).  This provides
-+	an estimate of work done independent of the frequency that the CPUs used
-+	for execution.
-+
-+	Note that "core energy" and "activity" only measure energy/activity in the
-+	"core" of the CPU (arithmetic units, TLB, L1 and L2 caches, etc.). They
-+	do not include L3 cache, memory, I/O devices etc.
-+
-+	All other events report decimal integer values.
-+
-+	In a MON group these files provide a read out of the current value of
-+	the event for all tasks in the group. In CTRL_MON groups these files
-+	provide the sum for all tasks in the CTRL_MON group and all tasks in
- 	MON groups. Please see example section for more details on usage.
-+
- 	On systems with Sub-NUMA Cluster (SNC) enabled there are extra
- 	directories for each node (located within the "mon_L3_XX" directory
- 	for the L3 cache they occupy). These are named "mon_sub_L3_YY"
-@@ -1590,6 +1633,41 @@ Example with C::
-     resctrl_release_lock(fd);
-   }
- 
-+Debugfs
-+=======
-+In addition to the use of debugfs for tracing of pseudo-locking performance,
-+architecture code may create debugfs directories associated with monitoring
-+features for a specific resource.
-+
-+The full pathname for these is in the form:
-+
-+    /sys/kernel/debug/resctrl/info/{resource_name}_MON/{arch}/
-+
-+The presence, names, and format of these files may vary between architectures
-+even if the same resource is present.
-+
-+PERF_PKG_MON/x86_64
-+-------------------
-+Three files are present per telemetry aggregator instance that show status.
-+The prefix of each file name describes the type ("energy" or "perf"), the
-+guid, which processor package it belongs to, and the instance number of the
-+aggregator.  For example: "energy_0x26696143_pkg1_agg2".
-+
-+The suffix describes which data is reported in the file and is one of:
-+
-+data_loss_count:
-+	This counts the number of times that this aggregator
-+	failed to accumulate a counter value supplied by a CPU.
-+
-+data_loss_timestamp:
-+	This is a "timestamp" from a free running 25MHz uncore
-+	timer indicating when the most recent data loss occurred.
-+
-+last_update_timestamp:
-+	Another 25MHz timestamp indicating when the
-+	most recent counter update was successfully applied.
-+
-+
- Examples for RDT Monitoring along with allocation usage
- =======================================================
- Reading monitored data
--- 
-2.51.1
+For host1x it changes the domain and ignores the driver_managed_dma
+safety mechanism to do it, so it is kind of broken.
 
+> > > + */
+> > >   struct iommu_domain *iommu_get_domain_for_dev(struct device *dev)
+> > >   {
+> > >   	/* Caller must be a probed driver on dev */
+> > > @@ -2225,10 +2234,29 @@ struct iommu_domain *iommu_get_domain_for_dev(struct device *dev)
+> > >   	if (!group)
+> > >   		return NULL;
+> > > +	lockdep_assert_not_held(&group->mutex);
+> > 
+> > ...
+> > 	if (WARN_ON(!dev->driver || !group->owner_cnt || group->owner))
+> > 		return NULL;
+> 
+> With that, could host1x_client_iommu_detach() trigger WARN_ON?
+
+I don't really know but I strongly suspect that host1x has a NULL
+dev->driver in some cases.
+
+I think the best you could do is detect that a driver is bound and
+that driver_managed_dma != true, host1x should still be OK with it,
+but in practice it only effects VFIO.
+
+Jason
