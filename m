@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BB32EB85E;
-	Mon, 24 Nov 2025 08:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6948C2E03E6;
+	Mon, 24 Nov 2025 08:06:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971611; cv=none; b=lpCIrcxVbFKctvolfnXjAVdVfw4nSTfp5yNnImNiUa7sC0ybJCgZonQGj3kEM+I0nIrrOi7SIKCNjTRbkVCpubGDoiZtUHScFigGD35c0WfiudUS1R8NIIR79SxS83WigYp++jbAgGZYRijTDgVR8k3v4lJZ23HCp4b2otpzFQs=
+	t=1763971612; cv=none; b=bYkQd++qXdZNTum8tYJAfDffIskH3KgfF/wz8lVkO7hVf2p6hrezm7XRzifKCc4L33qXLuB7+E2+Po04OQSA9I8+cK/wHINNOl7fB8a2Q4Ad+Ydw5Lqx8ZzNS2xpiBAmZcpoXZuzJDXP9MEVWZFp70f3rOgo3xtKzFM1INUXQRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971611; c=relaxed/simple;
-	bh=65ZP82TqVoivAN7YNFb6fzZ2c4nt0HIvTJUTmuQYeuA=;
+	s=arc-20240116; t=1763971612; c=relaxed/simple;
+	bh=gzvEwY+7yl/DfWGAPEPXICQXLYxhKHoothyRSDRKNMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r1f6ShVtRG5odgt9HpI19fDq2o5eMbTidxW+IKabOqa9deEA5WG3D1w56ajyObm66Rds3neRkv5c6pEKVU26QtGUx4OCdOHO6d/cByV4m8Ey0+WGr75HqvNAjG70MA0KE6HiDAxxtgHKZGFRya+lfLFcesU0BI/156IiugHjDl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkL7nvp+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GbmgZJJRm02AAs6PhaBW7tSfcVJPauMpgHTqRMnxJz4+AnO9r1dUmyouZVxu6OSFM+CtM/7u7ZeLOIBRkprZL/juoGBDXeEniU/SLBXPuqkOIdXF87nx1nYTuw1B0aj3LxOAurmLrITnEzD8KjbuODUoEjfx+ZHyHscN62eLDzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EOPlT9ec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkL7nvp+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF97FC116D0;
-	Mon, 24 Nov 2025 08:06:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EOPlT9ec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F88FC16AAE;
+	Mon, 24 Nov 2025 08:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971610;
-	bh=65ZP82TqVoivAN7YNFb6fzZ2c4nt0HIvTJUTmuQYeuA=;
+	s=k20201202; t=1763971612;
+	bh=gzvEwY+7yl/DfWGAPEPXICQXLYxhKHoothyRSDRKNMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KkL7nvp+s4UQcYr/IiLZ0vyVbicCRcdOEFWscDGhFlvK0CNAgnOm1X8UdSWoxjoG3
-	 dC3Lss6AroibgRsFnEG1VBzA2oq5vZAgP5MvzajYwROMphcjfO+YQyWDxVJZURQuEs
-	 D290Ti5zpkmw/+sBwScLMGnXDzpsbz0SwDN7JxtALkPTzAHN5ORHKdAocvgMic7UKv
-	 40kjB4DZeElm8OG0ulPaZMoHHdQ/GEX8f5rLsbeFy6wXZKgNURurPMbQyGN9dMsnc+
-	 wWUqectgwYuyI4BH9IeLhZ2EXfzfeHeHQJPCR7S3XzENwf0GCISXDPtZQU33+gnlIy
-	 H42t330nmDhAg==
+	b=EOPlT9eco4ZLX1oBy4IJlfxbM1OBDiNAcdVsmVpl6w4ZVR++saPt9qMHUM/Y/42eL
+	 qCwJ4n6Q2g46eNyVt5C+Uov8FkRfZlf25r13MCCILkd1oTmFio+aThmTrKRkGyql+b
+	 8bOKwjvxV02fahkbAbFYRdF3Cyt519DKTX2jPZMiis2Z9c2jkCau1BV+wx4uB1rOPI
+	 KoUnqo0XXcuRUC+kS/tA+nzlnNc063ilQ7Ke6X/aZAUgBjCgbL96wZsqtQ4wmHxs9t
+	 fvoG4/83iK4x+flmze3REMY4Oo5gkeSu/mnMEwHWKVB3/Xxyl+sw4NMiEGbZmnTD6b
+	 JsTmrPESsmVdg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+Cc: Antheas Kapenekakis <lkml@antheas.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	srinivas.pandruvada@linux.intel.com,
+	Shyam-sundar.S-k@amd.com,
 	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] platform/x86: intel-uncore-freq: Add additional client processors
-Date: Mon, 24 Nov 2025 03:06:18 -0500
-Message-ID: <20251124080644.3871678-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17-6.6] platform/x86/amd/pmc: Add spurious_8042 to Xbox Ally
+Date: Mon, 24 Nov 2025 03:06:19 -0500
+Message-ID: <20251124080644.3871678-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -52,15 +53,23 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit a229809c18926e79aeca232d5b502157beb0dec3 ]
+[ Upstream commit c0ddc54016636dd8dedfaf1a3b482a95058e1db2 ]
 
-Add Intel uncore frequency driver support for Pantherlake, Wildcatlake
-and Novalake processors.
+The Xbox Ally features a Van Gogh SoC that has spurious interrupts
+during resume. We get the following logs:
 
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Link: https://patch.msgid.link/20251022211733.3565526-1-sathyanarayanan.kuppuswamy@linux.intel.com
+atkbd_receive_byte: 20 callbacks suppressed
+atkbd serio0: Spurious ACK on isa0060/serio0. Some program might be trying to access hardware directly.
+
+So, add the spurious_8042 quirk for it. It does not have a keyboard, so
+this does not result in any functional loss.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20251024152152.3981721-3-lkml@antheas.dev
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -68,116 +77,102 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
 
 LLM Generated explanations, may be completely bogus:
 
-### 1. COMPREHENSIVE ANALYSIS
+## Analysis
 
-- **Commit Message Analysis:**
-    - **Subject:** "platform/x86: intel-uncore-freq: Add additional
-      client processors"
-    - **Intent:** The commit explicitly adds support for Intel
-      Pantherlake, Wildcatlake, and Novalake processors to the uncore
-      frequency driver.
-    - **Tags:** No "Fixes:" or "Cc: stable" tags are present. This is
-      common for device ID additions, which are often picked up by
-      stable maintainers automatically or upon request.
+### 1. Commit Message Analysis
+The commit addresses a specific hardware issue on the "Xbox Ally" (ASUS
+ROG Ally) equipped with the Van Gogh SoC.
+- **Problem:** The device experiences spurious interrupts from the 8042
+  controller (keyboard) during resume, causing log spam
+  ("atkbd_receive_byte: 20 callbacks suppressed", "Spurious ACK...").
+- **Solution:** Add the device to the `fwbug_list` with the
+  `quirk_spurious_8042` quirk.
+- **Context:** The device is a handheld gaming PC without a physical
+  keyboard, so disabling keyboard wakeup has no functional downside.
+- **Tags:** Includes "Closes:" linking to a bug report and "Reviewed-
+  by:". It lacks a "Cc: stable" tag, but this is likely an oversight
+  given the nature of the patch.
 
-- **Code Inspection:**
-    - **File:** `drivers/platform/x86/intel/uncore-frequency/uncore-
-      frequency.c`
-    - **Change:** Adds 4 entries to the `intel_uncore_cpu_ids[]` array
-      using the `X86_MATCH_VFM` macro.
-    - **Mechanism:** The driver uses this table to decide whether to
-      load. Currently, on these new processors, the driver returns
-      `-ENODEV`. This patch allows the driver to initialize
-      successfully.
-    - **Complexity:** Trivial. It is a data-only change with no logic
-      modification.
+### 2. Deep Code Research
+- **Code Change:** The patch adds a single `dmi_system_id` entry to
+  `drivers/platform/x86/amd/pmc/pmc-quirks.c`.
+- **Mechanism:**
+  - The new entry matches the DMI data for "ASUSTeK COMPUTER INC." /
+    "RC73YA".
+  - It assigns `driver_data = &quirk_spurious_8042`.
+  - In `amd_pmc_quirks_init()`, this quirk sets
+    `dev->disable_8042_wakeup = true`.
+  - During suspend, `amd_pmc_suspend_handler()` checks this flag and
+    calls `amd_pmc_wa_irq1()`, which disables the IRQ1 wakeup source.
+  - This prevents the firmware bug (spurious IRQ1 assertion) from
+    triggering during resume.
+- **Dependencies:** The quirk infrastructure (`quirk_spurious_8042`) was
+  introduced in late 2023 and is present in all currently supported
+  stable kernels (6.1.y and newer). The change is self-contained.
 
-- **Stable Rules & Exceptions:**
-    - **General Rule:** "No new features."
-    - **Exception:** "NEW DEVICE IDs (Very Common)". The rules
-      explicitly allow adding IDs (PCI, USB, ACPI, etc.) to existing
-      drivers to enable hardware support. In the context of x86 platform
-      drivers, CPU Vendor-Family-Model (VFM) IDs serve the exact same
-      purpose as PCI device IDs.
-    - **Applicability:** This commit fits squarely within the Device ID
-      exception. It enables an existing driver on new hardware variants
-      without changing the driver's core behavior.
+### 3. Historical Context & Precedent
+This file (`pmc-quirks.c`) serves as a central registry for AMD PMC
+firmware bugs. There is a strong established pattern of backporting new
+entries for this specific issue:
+- Commit `12a3dd4d2cd92` ("Add Stellaris Slim Gen6 AMD...")
+- Commit `8822e8be86d40` ("Add MECHREVO Yilong15Pro...")
+- Commit `c96f86217bb28` ("Add TUXEDO IB Pro Gen10...")
+All of these were backported to stable trees. This commit follows the
+exact same pattern.
 
-- **Risk Assessment:**
-    - **Regression Risk:** Negligible. The change is confined to the
-      device match table. It does not alter the code path for currently
-      supported processors.
-    - **Consequence of Failure:** If the IDs are incorrect, the driver
-      simply fails to load on the new hardware, preserving the status
-      quo.
-    - **Dependencies:** The patch uses `X86_MATCH_VFM` and constants
-      like `INTEL_NOVALAKE`.
-        - *Critical Technical Note:* The `X86_MATCH_VFM` infrastructure
-          was introduced to support CPU families beyond Family 6 (Nova
-          Lake is Family 18). Target stable trees must have this
-          infrastructure and the corresponding
-          `arch/x86/include/asm/intel-family.h` definitions. For very
-          old stable trees (pre-VFM infrastructure), backporting would
-          be complex; for modern stable trees (like 6.6.y or the
-          hypothetical 6.17.y), this is straightforward.
+### 4. Stable Kernel Rules Compliance
+This commit falls strictly under the **"QUIRKS and WORKAROUNDS"**
+exception in the stable kernel rules:
+- **Rule:** "Hardware-specific quirks for broken/buggy devices" are
+  allowed.
+- **Compliance:** The patch fixes broken behavior (spurious interrupts)
+  on specific hardware using an existing workaround mechanism.
+- **Constraint Check:** It introduces no new features, APIs, or
+  architectural changes. It is a data-only change (adding a struct
+  entry).
 
-### 2. DETAILED EXPLANATION
+### 5. Risk Assessment
+- **Severity:** Medium. The issue causes log spam and potential resume
+  quirks, which degrades the user experience on this specific device.
+- **Regression Risk:** **Extremely Low**.
+  - The change is guarded by a specific DMI match, ensuring it affects
+    *only* the ROG Ally RC73YA.
+  - The mitigation (disabling keyboard wakeup) is safe because the
+    device physically lacks a keyboard.
+  - The underlying logic is well-tested on other AMD platforms (Renoir,
+    Cezanne, etc.).
 
-This commit is a strong candidate for backporting based on the "New
-Device IDs" exception in the stable kernel rules.
-
-**Problem Solved:**
-Users running stable kernels on newer Intel hardware (Pantherlake,
-Wildcatlake, Novalake) currently have no access to uncore frequency
-controls because the driver does not recognize their CPUs. This limits
-power management and performance tuning capabilities that are standard
-on older platforms.
-
-**Stable Kernel Rules Compliance:**
-1. **Exception Category:** This falls under **Exception 1: NEW DEVICE
-   IDs**. While technically a "feature" (enablement), the stable rules
-   explicitly permit adding IDs to existing drivers to support new
-   hardware, provided the driver itself isn't being rewritten.
-2. **Obviously Correct:** The change adds four lines of data to a match
-   table. It is minimal and surgical.
-3. **Low Risk:** There is zero risk to existing users. The code path for
-   supported CPUs remains identical. The new entries only activate on
-   the specific new CPU models.
-
-**Caveats & Dependencies:**
-- **VFM Infrastructure:** The patch relies on the `X86_MATCH_VFM` macro.
-  Ensure the target stable tree supports this macro (introduced to
-  handle non-Family-6 CPUs like Nova Lake).
-- **Header Definitions:** The target tree must have the updated
-  `arch/x86/include/asm/intel-family.h` containing
-  `INTEL_PANTHERLAKE_L`, `INTEL_NOVALAKE`, etc. These are typically
-  backported, but verify their existence before applying this patch.
-
-**Conclusion:**
-This is a standard, low-risk hardware enablement patch that provides
-necessary functionality for users on new platforms without endangering
-existing setups.
+### Conclusion
+This is a textbook candidate for stable backporting. It is a surgical,
+hardware-specific fix that uses existing infrastructure to resolve a
+real-world issue (log spam/resume behavior) on a production device. It
+carries negligible risk and aligns perfectly with the "Device Quirks"
+exception of the stable kernel rules.
 
 **YES**
 
- .../platform/x86/intel/uncore-frequency/uncore-frequency.c    | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-index 2a6897035150c..0dfc552b28024 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-@@ -256,6 +256,10 @@ static const struct x86_cpu_id intel_uncore_cpu_ids[] = {
- 	X86_MATCH_VFM(INTEL_ARROWLAKE, NULL),
- 	X86_MATCH_VFM(INTEL_ARROWLAKE_H, NULL),
- 	X86_MATCH_VFM(INTEL_LUNARLAKE_M, NULL),
-+	X86_MATCH_VFM(INTEL_PANTHERLAKE_L, NULL),
-+	X86_MATCH_VFM(INTEL_WILDCATLAKE_L, NULL),
-+	X86_MATCH_VFM(INTEL_NOVALAKE, NULL),
-+	X86_MATCH_VFM(INTEL_NOVALAKE_L, NULL),
- 	{}
- };
- MODULE_DEVICE_TABLE(x86cpu, intel_uncore_cpu_ids);
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 0fadcf5f288ac..404e62ad293a9 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -122,6 +122,14 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "21A1"),
+ 		}
+ 	},
++	{
++		.ident = "ROG Xbox Ally RC73YA",
++		.driver_data = &quirk_spurious_8042,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "RC73YA"),
++		}
++	},
+ 	/* https://bugzilla.kernel.org/show_bug.cgi?id=218024 */
+ 	{
+ 		.ident = "V14 G4 AMN",
 -- 
 2.51.0
 
