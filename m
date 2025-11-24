@@ -1,194 +1,157 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B3B926E6F3;
-	Mon, 24 Nov 2025 02:45:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723B92E03E6;
+	Mon, 24 Nov 2025 08:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763952347; cv=none; b=iIT7p+k6/S0sRY1kg78jGYS8LJUcObfxydLyTLDA2GgG3P0kR6a+XYCcofz3P3MQiiW+boFfu/kxKmds1XJvUbLyXrhuJU4U8qWjqabNkwYBT4v4I2DrIMvopTdQE7uFrfpPJHhiT2HgE46/Lwy6KOIqtFDTOJQByAMoQBLRkNQ=
+	t=1763971606; cv=none; b=j38UTCo7Ja0tMKfVeRDctL/PpHQGrNzEBTNpLvLocUfcowNvzXbn5UmuP4/CR72OFc4S6FCGv3NKrldcZS70ERMvhMnj0dnZzLAxwd3jkDpJFCHA/L0NPWMx4XzEt5nrxZ/XPItf7YhUgBvEu1sCRgvBw4460+BhevVjw5/Y8sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763952347; c=relaxed/simple;
-	bh=NMPY872VM5up93G7h991nsyWCjRUvXvUGzf24Wma7xY=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m6/6zyw7KIxLHyiqdCGnXSQKyMvXkPSTNwJuXzgDEaBnQgxDoEj3lE+bXZoA2UUbtuMnqeFu5sfHcR+DzStZOUal/1W/jjggl0mwk1B7fflOIRi5KUtpW7ovlLHCyRkCt33OfxohthkA1rWtf5bdTjpKZq2mbVH14qQgcMfAomc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org; spf=pass smtp.mailfrom=shazbot.org; dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b=zmAcXhk3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ci4vpIsl; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=shazbot.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=shazbot.org
+	s=arc-20240116; t=1763971606; c=relaxed/simple;
+	bh=5Dv8Z4UwOIYFcIVYLZrN4/YQTXc0S+a5v/HYmlLv1PI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=chbejR2l+fID6WahO8U17wmY3FjNBV+uVkNu6yzHT/47Irm/Wi6L9WiohzQqwqIknd8LvSPLkrey8TV0bQ1Ph79JtxFlg1EB+5u1xpi9kFtd34qt/iOkr0KpHVWT0i3qGd88FDR/j+ARsxOiIVEz2wVnvt0E8D9LmxGYy8Z/rVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JEYdfKmW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=shazbot.org header.i=@shazbot.org header.b="zmAcXhk3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ci4vpIsl"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61B78EC018A;
-	Sun, 23 Nov 2025 21:45:42 -0500 (EST)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Sun, 23 Nov 2025 21:45:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1763952342;
-	 x=1764038742; bh=XyMJ67yTgXSbIAMvfOO91gl34Ad6fl7jZXmv2SkDhDc=; b=
-	zmAcXhk3oVHEdPVrfr3CfutuI/9PZOvt8mnPCgPha2JRajMARJjqZ5ebx4m+EaLV
-	xt3TKOMMXCJvsMfHKByq+AY40yR+EaAB1xGgrS4Fmw0BRNvChgyNjhXErpB9at+o
-	yZx0KxmwS0MnG88klQ5QM0fy4241S3HQK+QDMdnO0kR5x1tPmt5WJi4Ejw2wa9nb
-	x1q5JPCzHKWTKFHTNBxksJVhqEg0u96dBHmhYlaO6Ci/tnfRf31PlesqRMY2I+9k
-	CVRuhRpn7mdyUPo5fX9EaC27St2zYAMQhajAJrxb4wS3a71v8DnJEaZgxEVpk3aL
-	EUmp2HHVKwCzf96WDMhZOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1763952342; x=
-	1764038742; bh=XyMJ67yTgXSbIAMvfOO91gl34Ad6fl7jZXmv2SkDhDc=; b=c
-	i4vpIslcc8CxdLMdqKpwqtCpmqovW0GqgF/lfQ584iu5Ya2gqYNPeFhbXMBcjsQZ
-	z7EKedJEwzpGnjTQYg+0fB6AiaZsIyTXHeaoF75G+zTU7MRl+RmTr1aJeihre/GC
-	2RML34BuztPozz4Cqt6tpUtHzVy/vMPw3c9kXRVphWCiBhn3LrFg/HSylBK/MjJB
-	OyQOh2AfuN9rWyh9MH0QaTMEgF6hMWYbvdkdtwcmFDj658WFBhaei26ujgDRtDJy
-	npA791WPk4TWeG9JtPZkUiP6635UYA5VpydABylNpfGpyz8WTLmZKp7oJT9eKofg
-	aeIPya7/H1qTyzlWe7Yrg==
-X-ME-Sender: <xms:1MYjacmR6fyieSbZW6akzlZIw8JQHaVdepCES4zz2Q5Wq-YyWl_YIQ>
-    <xme:1MYjaVB-dm05pVFJoLLeBGro9i68wrfLKds_inSbYxm5z2UpzCiJ_n_vjg84mmWn1
-    2xWPUb--F_TeghWrwxIXG3W31B9tUVpCgjzDUGt_Q8h-J2g1tQT>
-X-ME-Received: <xmr:1MYjae7anH-9MmJeAxN1D67CT5UWONZXuqAvrECwbjm4HCpd9brz24QI2wA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdeggddvfeejgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepfffhvfevuffkjghfgggtgfesthejredttddtvdenucfhrhhomheptehlvgigucgh
-    ihhllhhirghmshhonhcuoegrlhgvgiesshhhrgiisghothdrohhrgheqnecuggftrfgrth
-    htvghrnhepteetudelgeekieegudegleeuvdffgeehleeivddtfeektdekkeehffehudet
-    hffhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
-    hlvgigsehshhgriigsohhtrdhorhhgpdhnsggprhgtphhtthhopeegtddpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheplhhiuhhlohhnghhfrghngheshhhurgifvghirdgtoh
-    hmpdhrtghpthhtohepjhhgghesnhhvihguihgrrdgtohhmpdhrtghpthhtoheprghgohhr
-    uggvvghvsehlihhnuhigrdhisghmrdgtohhmpdhrtghpthhtoheprghirhhlihgvugesgh
-    hmrghilhdrtghomhdprhgtphhtthhopegrlhgvgidrfihilhhlihgrmhhsohhnsehrvggu
-    hhgrthdrtghomhdprhgtphhtthhopegrnhhkihhtrgesnhhvihguihgrrdgtohhmpdhrtg
-    hpthhtohepsghorhhnthhrrggvghgvrheslhhinhhugidrihgsmhdrtghomhdprhgtphht
-    thhopegsrhgvthhtrdgtrhgvvghlvgihsegrmhgurdgtohhmpdhrtghpthhtohepughrih
-    dquggvvhgvlheslhhishhtshdrfhhrvggvuggvshhkthhophdrohhrgh
-X-ME-Proxy: <xmx:1MYjaeUNS4lrXry9iyO_ryBDOlh81zmjHrsOfAj_w3H3zqFKmYSfHQ>
-    <xmx:1MYjaWTfuxYbUJXB0x35K_JoeLfazWZR9EtFpNAYPCbdAKXmltcWhQ>
-    <xmx:1MYjaabpkZGFGCVJwi3DkE0cuOC02bsnNH5Kjhq-F2UwWcOtLLj1Hw>
-    <xmx:1MYjaTcvzrAdSa3rmZU-YXT07XSWx25MfPSrVPqMkNhAPpe2Bw8Ang>
-    <xmx:1sYjacXY17DkNMpk9yHucpdDnlmu50w7-pA9TDOIHv04Er3UrXzkAf36>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 23 Nov 2025 21:45:37 -0500 (EST)
-Date: Sun, 23 Nov 2025 19:45:35 -0700
-From: Alex Williamson <alex@shazbot.org>
-To: liulongfang <liulongfang@huawei.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>,
- Alexander Gordeev <agordeev@linux.ibm.com>,
- David Airlie <airlied@gmail.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Ankit Agrawal <ankita@nvidia.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Brett Creeley <brett.creeley@amd.com>, <dri-devel@lists.freedesktop.org>,
- Eric Auger <eric.auger@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
- Vasily Gorbik <gor@linux.ibm.com>, Heiko Carstens <hca@linux.ibm.com>,
- <intel-gfx@lists.freedesktop.org>,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>, <kvm@vger.kernel.org>,
- Kirti Wankhede <kwankhede@nvidia.com>, <linux-s390@vger.kernel.org>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- Nikhil Agarwal <nikhil.agarwal@amd.com>,
- Nipun Gupta <nipun.gupta@amd.com>,
- Peter Oberparleiter <oberpar@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, <qat-linux@intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>,
- Shameer Kolothum <skolothumtho@nvidia.com>,
- Sven Schnelle <svens@linux.ibm.com>,
- Tvrtko Ursulin <tursulin@ursulin.net>, <virtualization@lists.linux.dev>,
- Vineeth Vijayan <vneethv@linux.ibm.com>,
- Yishai Hadas <yishaih@nvidia.com>, Zhenyu Wang <zhenyuw.linux@gmail.com>,
- Zhi Wang <zhi.wang.linux@gmail.com>, Kevin Tian <kevin.tian@intel.com>,
- <patches@lists.linux.dev>, Pranjal Shrivastava <praan@google.com>,
- Mostafa Saleh <smostafa@google.com>
-Subject: Re: [PATCH v2 02/22] vfio/hisi: Convert to the get_region_info op
-Message-ID: <20251123194535.42acb382@shazbot.org>
-In-Reply-To: <b5ffda6e-d8e9-5f02-69b3-e9f1a0901f90@huawei.com>
-References: <2-v2-2a9e24d62f1b+e10a-vfio_get_region_info_op_jgg@nvidia.com>
-	<b5ffda6e-d8e9-5f02-69b3-e9f1a0901f90@huawei.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JEYdfKmW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AA8C4CEF1;
+	Mon, 24 Nov 2025 08:06:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1763971606;
+	bh=5Dv8Z4UwOIYFcIVYLZrN4/YQTXc0S+a5v/HYmlLv1PI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=JEYdfKmW6S88BUJ0eu2si/+AlyGXqzX1nvNAUE7xRGU69lOZQyryfSRiamFU/vyTj
+	 Q6aw1y8nSEPmH4tFwkkCuAZogjyfTCERt5pcXJbQu7Pp3X+mtVdmQ58YlDGUROEtJr
+	 i2nXYWX6zuAsRevqr06OE9VWvBgaQ9qU4q0RFaLqI6J0vLq0mz8XmVY1jBemSZfruL
+	 0kGYiX6JqxKZdOhkEDeHE653F3tkelxkCq7NbQQkheMcxM5DgPGLyuj0Bpel1NUMIy
+	 I+0+62QIkvjuDhQ7eCjYibPsqtWUPDSyyPq2FUlAo3s7yZ9XlbI/1H4md4DMGq1dXl
+	 MwZYhOfJpU7vQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Jia Ston <ston.jia@outlook.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-5.10] platform/x86: huawei-wmi: add keys for HONOR models
+Date: Mon, 24 Nov 2025 03:06:15 -0500
+Message-ID: <20251124080644.3871678-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.17.8
+Content-Transfer-Encoding: 8bit
 
-On Mon, 24 Nov 2025 09:39:58 +0800
-liulongfang <liulongfang@huawei.com> wrote:
+From: Jia Ston <ston.jia@outlook.com>
 
-> On 2025/11/8 1:41, Jason Gunthorpe wrote:
-> > Change the function signature of hisi_acc_vfio_pci_ioctl()
-> > and re-indent it.
-> > 
-> > Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> > Acked-by: Pranjal Shrivastava <praan@google.com>
-> > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > ---
-> >  .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 57 +++++++++----------
-> >  1 file changed, 27 insertions(+), 30 deletions(-)
-> > 
-> > diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> > index fde33f54e99ec5..899db4d742a010 100644
-> > --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> > +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
-> > @@ -1324,43 +1324,39 @@ static ssize_t hisi_acc_vfio_pci_read(struct vfio_device *core_vdev,
-> >  	return vfio_pci_core_read(core_vdev, buf, new_count, ppos);
-> >  }
-> >  
-> > -static long hisi_acc_vfio_pci_ioctl(struct vfio_device *core_vdev, unsigned int cmd,
-> > -				    unsigned long arg)
-> > +static int hisi_acc_vfio_ioctl_get_region(struct vfio_device *core_vdev,
-> > +					  struct vfio_region_info __user *arg)
-> >  {
-> > -	if (cmd == VFIO_DEVICE_GET_REGION_INFO) {
-> > -		struct vfio_pci_core_device *vdev =
-> > -			container_of(core_vdev, struct vfio_pci_core_device, vdev);
-> > -		struct pci_dev *pdev = vdev->pdev;
-> > -		struct vfio_region_info info;
-> > -		unsigned long minsz;
-> > +	struct vfio_pci_core_device *vdev =
-> > +		container_of(core_vdev, struct vfio_pci_core_device, vdev);
-> > +	struct pci_dev *pdev = vdev->pdev;
-> > +	struct vfio_region_info info;
-> > +	unsigned long minsz;
-> >  
-> > -		minsz = offsetofend(struct vfio_region_info, offset);
-> > +	minsz = offsetofend(struct vfio_region_info, offset);
-> >  
-> > -		if (copy_from_user(&info, (void __user *)arg, minsz))
-> > -			return -EFAULT;
-> > +	if (copy_from_user(&info, arg, minsz))
-> > +		return -EFAULT;
-> >  
-> > -		if (info.argsz < minsz)
-> > -			return -EINVAL;
-> > +	if (info.argsz < minsz)
-> > +		return -EINVAL;
-> >  
-> > -		if (info.index == VFIO_PCI_BAR2_REGION_INDEX) {
-> > -			info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
-> > +	if (info.index != VFIO_PCI_BAR2_REGION_INDEX)
-> > +		return vfio_pci_ioctl_get_region_info(core_vdev, arg);
-> >  
-> > -			/*
-> > -			 * ACC VF dev BAR2 region consists of both functional
-> > -			 * register space and migration control register space.
-> > -			 * Report only the functional region to Guest.
-> > -			 */
-> > -			info.size = pci_resource_len(pdev, info.index) / 2;
-> > +	info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
-> >  
-> 
-> Please adapt based on the latest code in the Next branch.
-> Code updates have already been made here.
+[ Upstream commit 5c72329716d0858621021193330594d5d26bf44d ]
 
-I resolved this on commit, please verify in the vfio next branch.
-Thanks,
+HONOR MagicBook X16/X14 models produced in 2025 cannot use the Print
+Screen and YOYO keys properly, with the system reporting them as
+unknown key presses (codes: 0x028b and 0x028e).
 
-Alex
+To resolve this, a key_entry is added for both the HONOR Print Screen
+key and the HONOR YOYO key, ensuring they function correctly on these
+models.
+
+Signed-off-by: Ston Jia <ston.jia@outlook.com>
+Link: https://patch.msgid.link/20251029051804.220111-1-ston.jia@outlook.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+### Comprehensive Analysis
+
+1. **Commit Message and Issue Analysis**
+  The commit addresses a functional hardware defect on HONOR MagicBook
+  X16/X14 laptops (2025 models). The "Print Screen" and "YOYO" keys do
+  not generate input events, instead triggering "Unknown key pressed"
+  warning logs with scancodes `0x028b` and `0x028e`. This means users
+  cannot use these hardware features, which constitutes a real-world bug
+  for owners of these devices.
+
+2. **Code Review and Mechanism**
+  The fix is a surgical addition to the `huawei_wmi_keymap` array in
+  `drivers/platform/x86/huawei-wmi.c`.
+    - **Mechanism:** The driver uses `sparse_keymap_entry_from_scancode`
+      to translate WMI events into input events. Without these entries,
+      the lookup fails, and the driver drops the event.
+    - **Change:** Two lines are added:
+      ```c
+      { KE_KEY,    0x28b, { KEY_NOTIFICATION_CENTER } },
+      { KE_KEY,    0x28e, { KEY_PRINT } },
+      ```
+    - **Dependencies:** `KEY_NOTIFICATION_CENTER` was introduced in
+      Linux 5.10. This patch is suitable for stable trees 5.10, 5.15,
+      6.1, and 6.6 without modification. Older LTS versions (4.19, 5.4)
+      would require a minor adjustment (using a different keycode or
+      backporting the definition), but the patch remains conceptually
+      valid for them.
+
+3. **Stable Kernel Rules Assessment**
+    - **Exception Category:** This commit falls squarely under the
+      **"QUIRKS and WORKAROUNDS"** and **"TRIVIAL SUBSYSTEM-SPECIFIC
+      ADDITIONS"** exceptions defined in stable kernel rules. Adding
+      keymap entries is functionally identical to adding PCI/USB IDs: it
+      enables hardware that is currently present but non-functional.
+    - **Feature vs. Fix:** While the commit says "add keys," it is
+      fixing broken hardware support. The keys physically exist but do
+      not work; enabling them is a fix, not a new software feature.
+    - **New Hardware on Stable:** While the hardware is from 2025, it is
+      common for users to run Long Term Support (LTS) kernels (e.g.,
+      Ubuntu LTS, RHEL, or community LTS kernels like 6.6.y) on new
+      hardware. Refusing to backport hardware enablement forces these
+      users to run bleeding-edge kernels or suffer broken functionality.
+
+4. **Risk vs. Benefit**
+    - **Regression Risk:** **Negligible.** The change adds data to a
+      static array. It only affects the handling of two specific
+      scancodes (`0x28b`, `0x28e`) which previously resulted in an error
+      log. It cannot affect existing key mappings or other hardware.
+    - **Benefit:** Restores functionality for the "Print Screen" key
+      (essential for workflows) and the specific "YOYO" key on supported
+      laptops.
+
+5. **Conclusion**
+  Although the commit lacks a "Cc: stable" tag, it meets all objective
+  criteria for a stable backport. It is an obviously correct, low-risk,
+  hardware-enabling fix that fits the "Quirks" exception. It should be
+  included to ensure this hardware works correctly on supported LTS
+  releases.
+
+### TODO Items
+- No further investigation required.
+
+**YES**
+
+ drivers/platform/x86/huawei-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
+index c3772df34679f..8a4c54089ace3 100644
+--- a/drivers/platform/x86/huawei-wmi.c
++++ b/drivers/platform/x86/huawei-wmi.c
+@@ -81,6 +81,10 @@ static const struct key_entry huawei_wmi_keymap[] = {
+ 	{ KE_KEY,    0x289, { KEY_WLAN } },
+ 	// Huawei |M| key
+ 	{ KE_KEY,    0x28a, { KEY_CONFIG } },
++	// HONOR YOYO key
++	{ KE_KEY,    0x28b, { KEY_NOTIFICATION_CENTER } },
++	// HONOR print screen
++	{ KE_KEY,    0x28e, { KEY_PRINT } },
+ 	// Keyboard backlit
+ 	{ KE_IGNORE, 0x293, { KEY_KBDILLUMTOGGLE } },
+ 	{ KE_IGNORE, 0x294, { KEY_KBDILLUMUP } },
+-- 
+2.51.0
+
