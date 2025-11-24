@@ -1,43 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2032EB866;
-	Mon, 24 Nov 2025 08:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978AB2ED846;
+	Mon, 24 Nov 2025 08:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971624; cv=none; b=WwtnmTG0S96GLF8KtR0OtGvOIqBceHj+TAi/iBkBP8LIMAs5CNB4+uYSQcoMZgHrAfqZOu2W33BCQO9MNPfzrN/WbML25F0ixIiqytIdm/7YOS1YiqNQo5Q84kOPnpRN989jTetl9umNG21eB0eeW7BY+Hn7+jb0ZC3viX/Rs+g=
+	t=1763971626; cv=none; b=VbyWnpQUuILWL8MHoumcDYuD4cqGTrgomVUUhe/skY+jSC1kqHXspFSgkvIcpVXmJmBJd1ZoPlV9QWXhdGVC+hdEWVsh3jwKX8DH0JXFZ/gQRXU7JVwQg6iAs45YFp/mXnMiznMBKBtUw/xqffCLWWdE3TKuHPgldqSJF3sIkUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971624; c=relaxed/simple;
-	bh=HrWN0JULeZEjRCglAGQf/IgDCXBz5Qpz3RTgJZgULwA=;
+	s=arc-20240116; t=1763971626; c=relaxed/simple;
+	bh=DSATK1uPZBocRZED2xN65djjVz1+Zb2O/in0y1YltZY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XU2cojqv+U/ZN69NbKmNcx4Exr2fUvIfKXYBhLbPuKlZWOiUSYPfcJEQe2Un+cCCOi6p076auWyiCaO8jsN7cLh5aiApGS1rIcMurlyrRC/DL+ZU4MwIRwPZ0NnG2RqZeGmUJzK/KOwrRSzb8MEa11ehkwQemQ+ulNV2SoabTes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LSaQ66Xl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+jB5LQQ0lOmGyrwlvjjXT1a4f6HZ9ASLFFUlwVpG8vFa6TadJqk0tH/7unrdIwrVrbzMpPgSPlck1oNoMlhi2z99ZgFdAoONmxH85T4jCpESDEHlWEwhD7wcqZfyxhBRHViVFDYD9I0ugbOgrOn/zvh5zAkeJjW9isLkpKL/dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dMVgSLoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LSaQ66Xl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CA0C16AAE;
-	Mon, 24 Nov 2025 08:07:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dMVgSLoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0024C116D0;
+	Mon, 24 Nov 2025 08:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971624;
-	bh=HrWN0JULeZEjRCglAGQf/IgDCXBz5Qpz3RTgJZgULwA=;
+	s=k20201202; t=1763971626;
+	bh=DSATK1uPZBocRZED2xN65djjVz1+Zb2O/in0y1YltZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSaQ66Xlxzt/ulwu3bBWKBFQ45LFEyO5HLl3vg4HVazXIt/wE8mmt2X96dwHPzu+I
-	 CDFU2zpAHvSK9s3mG1IJj1GqYCMiU2ukHo//pazlQxfugWOJaRHG5L4z4NczJrXqFz
-	 88LSREZuUQ29X7uI/G6bSilVfqybjqwKEIra6F9m93zKU0WEwa2lejxCbiqsaSoJ7g
-	 Pz/+TFXMCeE5v3DNFumSrdZN+8ThaOGu6cIF8W9jZv2po930hq1hdrVDtk3Ndh2X1z
-	 GgdNlE+m8vV1rTUQFT+62T+W1+W+0EDuS2KClgvV7jGDr2VnQs1AmW65mCFfzTmX05
-	 Z1QUGRjd7G4xQ==
+	b=dMVgSLoLE9c4uh20tjEDVBYmoGHPjWGBaASBcAsw3hp6V8jxYwlWWWdPM8yQE6ITN
+	 RduulTYv/NVM9tCKJMosgreJRKcVdj8N+sc9se/bPk4q+nV6f1lswM4DXHX1Z2RYLw
+	 Nxd8H/9r4fbLrUx96zYcvygobahxIc2frlQ16DF/vyhgQ89nADa5egaT3Bh12uIK+n
+	 RFDYoA7JixjK9PUA4KIMOMFwXV9PuDqBcc9/IfgEQrhKxzorXUOlC7itE3AAcTP3ob
+	 5wt8Cl//g6IGl54fSMJV1KfWSPFvMG6utSrFaCEsJHj/GaiGeZdbakZLlb5SvBr1tu
+	 5GMyIhoMjNtFQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Antheas Kapenekakis <lkml@antheas.dev>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Zqiang <qiang.zhang@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] platform/x86/amd/pmc: Add support for Van Gogh SoC
-Date: Mon, 24 Nov 2025 03:06:25 -0500
-Message-ID: <20251124080644.3871678-11-sashal@kernel.org>
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	bigeasy@linutronix.de,
+	clrkwllms@kernel.org,
+	rostedt@goodmis.org,
+	sched-ext@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	linux-rt-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.17] sched_ext: Use IRQ_WORK_INIT_HARD() to initialize rq->scx.kick_cpus_irq_work
+Date: Mon, 24 Nov 2025 03:06:26 -0500
+Message-ID: <20251124080644.3871678-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -47,140 +54,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit db4a3f0fbedb0398f77b9047e8b8bb2b49f355bb ]
+[ Upstream commit 36c6f3c03d104faf1aa90922f2310549c175420f ]
 
-The ROG Xbox Ally (non-X) SoC features a similar architecture to the
-Steam Deck. While the Steam Deck supports S3 (s2idle causes a crash),
-this support was dropped by the Xbox Ally which only S0ix suspend.
+For PREEMPT_RT kernels, the kick_cpus_irq_workfn() be invoked in
+the per-cpu irq_work/* task context and there is no rcu-read critical
+section to protect. this commit therefore use IRQ_WORK_INIT_HARD() to
+initialize the per-cpu rq->scx.kick_cpus_irq_work in the
+init_sched_ext_class().
 
-Since the handler is missing here, this causes the device to not suspend
-and the AMD GPU driver to crash while trying to resume afterwards due to
-a power hang.
-
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://patch.msgid.link/20251024152152.3981721-2-lkml@antheas.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Comprehensive Analysis
-
 1. **Commit Message Analysis**
-    - **Issue:** Devices using the AMD Van Gogh SoC (specifically
-      mentioned is the "ROG Xbox Ally") fail to suspend properly. The
-      system suffers a "power hang" and the AMD GPU driver crashes upon
-      resume attempts.
-    - **Cause:** The `amd_pmc` platform driver lacks the necessary
-      identifiers and handlers for this specific SoC model.
-    - **Context:** This is a bug fix for broken hardware functionality
-      (suspend/resume), despite the subject line saying "Add support".
-    - **External References:** Links to a specific bug report on GitLab
-      (#4659).
+    - **Problem:** On `PREEMPT_RT` kernels, `irq_work` initialized with
+      `init_irq_work()` executes in a threaded context where RCU read-
+      side critical sections are not implicit. The function
+      `kick_cpus_irq_workfn` accesses per-CPU request queues
+      (`rq->scx`), which requires RCU protection or preemption disabling
+      to be safe.
+    - **Solution:** The commit changes the initialization to
+      `IRQ_WORK_INIT_HARD()`. This macro sets the `IRQ_WORK_HARD_IRQ`
+      flag, forcing the work item to execute in hard interrupt context
+      even on `PREEMPT_RT` kernels.
+    - **Keywords:** "PREEMPT_RT", "RCU-read critical section",
+      "initialize".
+    - **Tags:** No explicit `Cc: stable` or `Fixes` tag in the provided
+      text, but the nature of the fix (correctness on RT) is a strong
+      candidate for stable.
 
-2. **Code Changes & Technical Deep Dive**
-    - **The Bug Mechanism:** The current stable driver is missing the
-      PCI Device ID `0x1645` (Van Gogh). Consequently, `pci_match_id()`
-      in `amd_pmc_probe` fails, and the driver never loads. Even if
-      forced, `amd_pmc_get_os_hint()` would return `-EINVAL`, causing
-      `amd_pmc_s2idle_prepare()` to fail or send incorrect messages to
-      the System Management Unit (SMU).
-    - **The Fix:**
-        - Adds `AMD_CPU_ID_VG` (0x1645) to `pmc.h`.
-        - Adds the ID to `pmc_pci_ids[]` table, allowing the driver to
-          bind.
-        - Adds cases to `amd_pmc_get_ip_info` and `amd_pmc_get_os_hint`
-          to treat Van Gogh identically to Renoir (RN) and Yellow Carp
-          (YC) SoCs.
-    - **Scope:** The changes are extremely localized (approx. 5 lines of
-      code added). It uses existing, proven code paths.
+2. **Deep Code Research**
+    - **Code Context:** The affected file `kernel/sched/ext.c` belongs
+      to the `sched_ext` (Extensible Scheduler Class) subsystem.
+    - **Technical Mechanism:** In standard kernels, `irq_work` usually
+      runs in contexts where RCU is safe. In `PREEMPT_RT`, the default
+      behavior changes to threaded IRQs to reduce latency, but this
+      removes the implicit RCU protection. Accessing scheduler runqueues
+      (`rq`) without this protection can lead to Use-After-Free (UAF)
+      bugs or data corruption if a CPU goes offline or the task
+      structure changes.
+    - **The Fix:** `IRQ_WORK_INIT_HARD` is the standard mechanism to
+      opt-out of threaded execution for specific work items that require
+      hard IRQ semantics (atomic execution, implicit RCU protection).
+      This is a well-understood pattern in the kernel.
+    - **Subsystem Status:** `sched_ext` was merged in v6.12. Therefore,
+      this fix is applicable to stable kernels v6.12 and newer.
 
-3. **Stable Kernel Rules Compliance**
-    - **Criterion:** "It must NOT introduce new features".
-    - **Exception:** **NEW DEVICE IDs**. The stable rules explicitly
-      allow "Adding PCI IDs... to existing drivers" to enable hardware
-      support. This commit falls squarely into this category.
-    - **Criterion:** "It must fix a real bug".
-    - **Met:** Yes, it fixes a system crash/hang on suspend.
-    - **Criterion:** "It must be obviously correct".
-    - **Met:** Yes, it simply maps a new ID to existing logic verified
-      on similar hardware.
+3. **Stable Kernel Rules Evaluation**
+    - **Fixes a real bug?** Yes. It fixes a race condition/correctness
+      issue on `PREEMPT_RT` kernels which could lead to crashes.
+    - **Obviously correct?** Yes. The fix uses standard kernel
+      primitives to enforce the required execution context.
+    - **Small and contained?** Yes. It is a one-line change to an
+      initialization function.
+    - **No new features?** Yes. It only corrects the behavior of
+      existing code.
+    - **Regression Risk:** Low. It forces hard IRQ context, which is
+      generally safe for `irq_work` provided the work function is fast
+      (which `kick_cpus` typically is).
 
-4. **Risk vs. Benefit**
-    - **Benefit:** High. Fixes a critical usability issue (unable to
-      suspend/resume) and prevents kernel crashes for users of popular
-      handheld gaming devices.
-    - **Risk:** Extremely Low. The change is guarded by the specific CPU
-      ID. It does not alter logic for any currently supported hardware.
-    - **Dependencies:** None. The driver structure and constants
-      (`soc15_ip_blk`, `MSG_OS_HINT_RN`) are already present in stable
-      trees (e.g., 6.1, 6.6).
-
-5. **Conclusion**
-  This is a textbook candidate for stable backporting. It addresses a
-  hardware-specific crash by adding a missing PCI ID and routing it
-  through existing driver logic, which is a permitted exception to the
-  "no new features" rule.
+4. **Conclusion**
+  This commit is a text-book example of a stable backport candidate. It
+  addresses a correctness issue in the interaction between a specific
+  subsystem (`sched_ext`) and the `PREEMPT_RT` configuration. The fix is
+  minimal, surgical, and necessary to prevent potential crashes. While
+  it applies only to kernels containing `sched_ext` (6.12+), it is
+  critical for users running that configuration.
 
 **YES**
 
- drivers/platform/x86/amd/pmc/pmc.c | 3 +++
- drivers/platform/x86/amd/pmc/pmc.h | 1 +
- 2 files changed, 4 insertions(+)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
-index bd318fd02ccf4..cae3fcafd4d7b 100644
---- a/drivers/platform/x86/amd/pmc/pmc.c
-+++ b/drivers/platform/x86/amd/pmc/pmc.c
-@@ -106,6 +106,7 @@ static void amd_pmc_get_ip_info(struct amd_pmc_dev *dev)
- 	switch (dev->cpu_id) {
- 	case AMD_CPU_ID_PCO:
- 	case AMD_CPU_ID_RN:
-+	case AMD_CPU_ID_VG:
- 	case AMD_CPU_ID_YC:
- 	case AMD_CPU_ID_CB:
- 		dev->num_ips = 12;
-@@ -517,6 +518,7 @@ static int amd_pmc_get_os_hint(struct amd_pmc_dev *dev)
- 	case AMD_CPU_ID_PCO:
- 		return MSG_OS_HINT_PCO;
- 	case AMD_CPU_ID_RN:
-+	case AMD_CPU_ID_VG:
- 	case AMD_CPU_ID_YC:
- 	case AMD_CPU_ID_CB:
- 	case AMD_CPU_ID_PS:
-@@ -717,6 +719,7 @@ static const struct pci_device_id pmc_pci_ids[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_RV) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SP) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SHP) },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_VG) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M20H_ROOT) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M60H_ROOT) },
- 	{ }
-diff --git a/drivers/platform/x86/amd/pmc/pmc.h b/drivers/platform/x86/amd/pmc/pmc.h
-index 62f3e51020fdf..fe3f53eb59558 100644
---- a/drivers/platform/x86/amd/pmc/pmc.h
-+++ b/drivers/platform/x86/amd/pmc/pmc.h
-@@ -156,6 +156,7 @@ void amd_mp2_stb_deinit(struct amd_pmc_dev *dev);
- #define AMD_CPU_ID_RN			0x1630
- #define AMD_CPU_ID_PCO			AMD_CPU_ID_RV
- #define AMD_CPU_ID_CZN			AMD_CPU_ID_RN
-+#define AMD_CPU_ID_VG			0x1645
- #define AMD_CPU_ID_YC			0x14B5
- #define AMD_CPU_ID_CB			0x14D8
- #define AMD_CPU_ID_PS			0x14E8
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index fa64fdb6e9796..6f8ef62c8216c 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5281,7 +5281,7 @@ void __init init_sched_ext_class(void)
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
+ 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
+-		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
++		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
+ 
+ 		if (cpu_online(cpu))
+ 			cpu_rq(cpu)->scx.flags |= SCX_RQ_ONLINE;
 -- 
 2.51.0
 
