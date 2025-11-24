@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D7D2E7624;
-	Mon, 24 Nov 2025 08:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2032EB866;
+	Mon, 24 Nov 2025 08:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971623; cv=none; b=tvWM6hzpxR6ZseTdRH1TfVKq8ykKz0wQC9vbvF93OF1IZnUhsItZkA+8tkLJ7+DJHUj3NWXx9MxyexDZmzD2rfq8jon+MsBxL9PbknKnajuGpCXlQPpjfx7QVHC1A5nRwJFlzGACYWT4e6jhXZFzk3dbrjQhChkbtXycfwK+fdA=
+	t=1763971624; cv=none; b=WwtnmTG0S96GLF8KtR0OtGvOIqBceHj+TAi/iBkBP8LIMAs5CNB4+uYSQcoMZgHrAfqZOu2W33BCQO9MNPfzrN/WbML25F0ixIiqytIdm/7YOS1YiqNQo5Q84kOPnpRN989jTetl9umNG21eB0eeW7BY+Hn7+jb0ZC3viX/Rs+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971623; c=relaxed/simple;
-	bh=YMXjYRBg/EjzkF26/CUMOvhplMkxp76NrPS+1LUuTo4=;
+	s=arc-20240116; t=1763971624; c=relaxed/simple;
+	bh=HrWN0JULeZEjRCglAGQf/IgDCXBz5Qpz3RTgJZgULwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ygnmqq9ElIuaE/YRkRUE6Y8di2GKUDpUl575Hy84vGNznBWfLXX6skk+onoRhTDaMsgObLaMXlXT+LXrdkt6XWKFG3L+fhBD70zifj2QXCSMxFbWPSnBe2I5LEx1mWDTyzl7hPWd1KngsVxwIVgRrjzNGTwiw4z+nY5zwtokDKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pIsJzjWE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XU2cojqv+U/ZN69NbKmNcx4Exr2fUvIfKXYBhLbPuKlZWOiUSYPfcJEQe2Un+cCCOi6p076auWyiCaO8jsN7cLh5aiApGS1rIcMurlyrRC/DL+ZU4MwIRwPZ0NnG2RqZeGmUJzK/KOwrRSzb8MEa11ehkwQemQ+ulNV2SoabTes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LSaQ66Xl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pIsJzjWE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFACC4CEF1;
-	Mon, 24 Nov 2025 08:07:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LSaQ66Xl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CA0C16AAE;
+	Mon, 24 Nov 2025 08:07:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971623;
-	bh=YMXjYRBg/EjzkF26/CUMOvhplMkxp76NrPS+1LUuTo4=;
+	s=k20201202; t=1763971624;
+	bh=HrWN0JULeZEjRCglAGQf/IgDCXBz5Qpz3RTgJZgULwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIsJzjWE36R8yaF1qCVJtWLWH0qxCr2ncDkdKiE+o5KFByti6AFSqL5M5/xdj9tQP
-	 V3Achzahuae8zgrJil82TCBXlXSH9PS/ibZEKFX6MDuFBvz/8MG9McoFCpqmy6XUJR
-	 XpEgQZDoWs2ulm0ccXTed3zV7vwVxetmKwzMj63sfcqRuo3mBatOL+YEKCWRsTPxqW
-	 PBcTTvlTk5RSftO6zHUlLmNfstQUK8wlPIqQaiDFuO612tYjJFJ16PdRrZQzv0t61h
-	 3qVIb5Kz3y/PIauBy/0/TAN4xg2JCpR3r+m3H0MW4EOZ86oNxvU4zYJsQeUKGGfwbb
-	 TCCk6O1JkABqA==
+	b=LSaQ66Xlxzt/ulwu3bBWKBFQ45LFEyO5HLl3vg4HVazXIt/wE8mmt2X96dwHPzu+I
+	 CDFU2zpAHvSK9s3mG1IJj1GqYCMiU2ukHo//pazlQxfugWOJaRHG5L4z4NczJrXqFz
+	 88LSREZuUQ29X7uI/G6bSilVfqybjqwKEIra6F9m93zKU0WEwa2lejxCbiqsaSoJ7g
+	 Pz/+TFXMCeE5v3DNFumSrdZN+8ThaOGu6cIF8W9jZv2po930hq1hdrVDtk3Ndh2X1z
+	 GgdNlE+m8vV1rTUQFT+62T+W1+W+0EDuS2KClgvV7jGDr2VnQs1AmW65mCFfzTmX05
+	 Z1QUGRjd7G4xQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lauri Tirkkonen <lauri@hacktheplanet.fi>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Antheas Kapenekakis <lkml@antheas.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17] HID: lenovo: fixup Lenovo Yoga Slim 7x Keyboard rdesc
-Date: Mon, 24 Nov 2025 03:06:24 -0500
-Message-ID: <20251124080644.3871678-10-sashal@kernel.org>
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] platform/x86/amd/pmc: Add support for Van Gogh SoC
+Date: Mon, 24 Nov 2025 03:06:25 -0500
+Message-ID: <20251124080644.3871678-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -47,167 +47,140 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Lauri Tirkkonen <lauri@hacktheplanet.fi>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit a45f15808fb753a14c6041fd1e5bef5d552bd2e3 ]
+[ Upstream commit db4a3f0fbedb0398f77b9047e8b8bb2b49f355bb ]
 
-The keyboard of this device has the following in its report description
-for Usage (Keyboard) in Collection (Application):
+The ROG Xbox Ally (non-X) SoC features a similar architecture to the
+Steam Deck. While the Steam Deck supports S3 (s2idle causes a crash),
+this support was dropped by the Xbox Ally which only S0ix suspend.
 
-	# 0x15, 0x00,                    //  Logical Minimum (0)                52
-	# 0x25, 0x65,                    //  Logical Maximum (101)              54
-	# 0x05, 0x07,                    //  Usage Page (Keyboard)              56
-	# 0x19, 0x00,                    //  Usage Minimum (0)                  58
-	# 0x29, 0xdd,                    //  Usage Maximum (221)                60
-	# 0x81, 0x00,                    //  Input (Data,Arr,Abs)               62
+Since the handler is missing here, this causes the device to not suspend
+and the AMD GPU driver to crash while trying to resume afterwards due to
+a power hang.
 
-Since the Usage Min/Max range exceeds the Logical Min/Max range,
-keypresses outside the Logical range are not recognized. This includes,
-for example, the Japanese language keyboard variant's keys for |, _ and
-\.
-
-Fixup the report description to make the Logical range match the Usage
-range, fixing the interpretation of keypresses above 101 on this device.
-
-Signed-off-by: Lauri Tirkkonen <lauri@hacktheplanet.fi>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://patch.msgid.link/20251024152152.3981721-2-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-HID: lenovo: fixup Lenovo Yoga Slim 7x Keyboard rdesc
+### Comprehensive Analysis
 
-**1. COMMIT MESSAGE ANALYSIS**
-- **Problem:** The commit addresses a firmware bug in the Lenovo Yoga
-  Slim 7x keyboard HID descriptor. The "Logical Maximum" (101) is
-  defined incorrectly as smaller than the "Usage Maximum" (221).
-- **User Impact:** This causes the OS to ignore keypresses with usage
-  codes above 101. This specifically breaks functionality for keys like
-  `|`, `_`, and `\` on Japanese keyboard layouts, rendering the device
-  partially unusable for those users.
-- **Fix:** The patch modifies the report descriptor at runtime to align
-  the Logical Maximum with the Usage Maximum.
-- **Stable Context:** This is a classic "quirk" or "workaround" for
-  broken hardware, which is a standard exception for stable backports.
+1. **Commit Message Analysis**
+    - **Issue:** Devices using the AMD Van Gogh SoC (specifically
+      mentioned is the "ROG Xbox Ally") fail to suspend properly. The
+      system suffers a "power hang" and the AMD GPU driver crashes upon
+      resume attempts.
+    - **Cause:** The `amd_pmc` platform driver lacks the necessary
+      identifiers and handlers for this specific SoC model.
+    - **Context:** This is a bug fix for broken hardware functionality
+      (suspend/resume), despite the subject line saying "Add support".
+    - **External References:** Links to a specific bug report on GitLab
+      (#4659).
 
-**2. DEEP CODE RESEARCH**
-- **Mechanism:** The commit implements a fixup that intercepts the
-  report descriptor before the HID core parses it.
-- **Specific Changes:**
-  1. Adds a new device ID
-     `I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_KEYBOARD` (0x8987).
-  2. Defines the specific byte sequence of the broken descriptor to
-     identify it uniquely:
-    ```151:157:drivers/hid/hid-lenovo.c
-    static const __u8 lenovo_yoga7x_kbd_need_fixup_collection[] = {
-    0x15, 0x00,     // Logical Minimum (0)
-    0x25, 0x65,     // Logical Maximum (101)
-    0x05, 0x07,     // Usage Page (Keyboard)
-    ```
-  3. Updates the `lenovo_report_fixup` function to apply the patch only
-     when the device ID matches *and* the descriptor content matches:
-    ```189:192:drivers/hid/hid-lenovo.c
-    case I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_KEYBOARD:
-    if (*rsize == 176 &&
-    memcmp(&rdesc[52], lenovo_yoga7x_kbd_need_fixup_collection,
-    sizeof(lenovo_yoga7x_kbd_need_fixup_collection)) == 0) {
-    ```
-- **Safety:** The fix is defensive. It requires an exact match of the
-  device product ID and the descriptor bytes. It uses established
-  patterns found elsewhere in the driver (e.g., for the ThinkPad Pro
-  Dock).
+2. **Code Changes & Technical Deep Dive**
+    - **The Bug Mechanism:** The current stable driver is missing the
+      PCI Device ID `0x1645` (Van Gogh). Consequently, `pci_match_id()`
+      in `amd_pmc_probe` fails, and the driver never loads. Even if
+      forced, `amd_pmc_get_os_hint()` would return `-EINVAL`, causing
+      `amd_pmc_s2idle_prepare()` to fail or send incorrect messages to
+      the System Management Unit (SMU).
+    - **The Fix:**
+        - Adds `AMD_CPU_ID_VG` (0x1645) to `pmc.h`.
+        - Adds the ID to `pmc_pci_ids[]` table, allowing the driver to
+          bind.
+        - Adds cases to `amd_pmc_get_ip_info` and `amd_pmc_get_os_hint`
+          to treat Van Gogh identically to Renoir (RN) and Yellow Carp
+          (YC) SoCs.
+    - **Scope:** The changes are extremely localized (approx. 5 lines of
+      code added). It uses existing, proven code paths.
 
-**3. STABLE KERNEL RULES ASSESSMENT**
-- **Obviously correct and tested:** The fix uses standard HID subsystem
-  mechanisms for correcting buggy hardware descriptors.
-- **Fixes real bug:** Without this patch, specific keys do not function
-  on this hardware.
-- **Small and contained:** The changes are surgical, affecting only
-  `drivers/hid/hid-lenovo.c` and `drivers/hid/hid-ids.h`.
-- **Exceptions Applied:**
-  - **NEW DEVICE IDs:** Adds support for the Yoga Slim 7x (allowed).
-  - **QUIRKS/WORKAROUNDS:** Fixes the broken report descriptor
-    (allowed).
+3. **Stable Kernel Rules Compliance**
+    - **Criterion:** "It must NOT introduce new features".
+    - **Exception:** **NEW DEVICE IDs**. The stable rules explicitly
+      allow "Adding PCI IDs... to existing drivers" to enable hardware
+      support. This commit falls squarely into this category.
+    - **Criterion:** "It must fix a real bug".
+    - **Met:** Yes, it fixes a system crash/hang on suspend.
+    - **Criterion:** "It must be obviously correct".
+    - **Met:** Yes, it simply maps a new ID to existing logic verified
+      on similar hardware.
 
-**4. RISK VS BENEFIT**
-- **Benefit:** High for affected users. It makes the keyboard fully
-  functional.
-- **Risk:** Very Low. The change is additive and guarded by a specific
-  device ID check. It cannot cause regressions for other Lenovo devices
-  because the code path is unreachable for them.
+4. **Risk vs. Benefit**
+    - **Benefit:** High. Fixes a critical usability issue (unable to
+      suspend/resume) and prevents kernel crashes for users of popular
+      handheld gaming devices.
+    - **Risk:** Extremely Low. The change is guarded by the specific CPU
+      ID. It does not alter logic for any currently supported hardware.
+    - **Dependencies:** None. The driver structure and constants
+      (`soc15_ip_blk`, `MSG_OS_HINT_RN`) are already present in stable
+      trees (e.g., 6.1, 6.6).
 
-**5. CONCLUSION**
-This commit is a textbook candidate for stable backporting. It supports
-new hardware (Device ID exception) and fixes a firmware bug that breaks
-functionality (Quirk exception). It is low-risk, contained, and provides
-a necessary fix for users of this specific laptop model.
+5. **Conclusion**
+  This is a textbook candidate for stable backporting. It addresses a
+  hardware-specific crash by adding a missing PCI ID and routing it
+  through existing driver logic, which is a permitted exception to the
+  "no new features" rule.
 
 **YES**
 
- drivers/hid/hid-ids.h    |  1 +
- drivers/hid/hid-lenovo.c | 17 +++++++++++++++++
- 2 files changed, 18 insertions(+)
+ drivers/platform/x86/amd/pmc/pmc.c | 3 +++
+ drivers/platform/x86/amd/pmc/pmc.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 5721b8414bbdf..4b1946eb4e7fc 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -715,6 +715,7 @@
- #define USB_DEVICE_ID_ITE_LENOVO_YOGA2  0x8350
- #define I2C_DEVICE_ID_ITE_LENOVO_LEGION_Y720	0x837a
- #define USB_DEVICE_ID_ITE_LENOVO_YOGA900	0x8396
-+#define I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_KEYBOARD	0x8987
- #define USB_DEVICE_ID_ITE8595		0x8595
- #define USB_DEVICE_ID_ITE_MEDION_E1239T	0xce50
- 
-diff --git a/drivers/hid/hid-lenovo.c b/drivers/hid/hid-lenovo.c
-index 654879814f97a..9cc3e029e9f61 100644
---- a/drivers/hid/hid-lenovo.c
-+++ b/drivers/hid/hid-lenovo.c
-@@ -148,6 +148,14 @@ static const __u8 lenovo_tpIIbtkbd_need_fixup_collection[] = {
- 	0x81, 0x01,		/*   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position) */
- };
- 
-+static const __u8 lenovo_yoga7x_kbd_need_fixup_collection[] = {
-+	0x15, 0x00,	// Logical Minimum (0)
-+	0x25, 0x65,	// Logical Maximum (101)
-+	0x05, 0x07,	// Usage Page (Keyboard)
-+	0x19, 0x00,	// Usage Minimum (0)
-+	0x29, 0xDD,	// Usage Maximum (221)
-+};
-+
- static const __u8 *lenovo_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		unsigned int *rsize)
- {
-@@ -177,6 +185,13 @@ static const __u8 *lenovo_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 			rdesc[260] = 0x01; /* report count (2) = 0x01 */
- 		}
- 		break;
-+	case I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_KEYBOARD:
-+		if (*rsize == 176 &&
-+		    memcmp(&rdesc[52], lenovo_yoga7x_kbd_need_fixup_collection,
-+			  sizeof(lenovo_yoga7x_kbd_need_fixup_collection)) == 0) {
-+			rdesc[55] = rdesc[61]; // logical maximum = usage maximum
-+		}
-+		break;
- 	}
- 	return rdesc;
- }
-@@ -1538,6 +1553,8 @@ static const struct hid_device_id lenovo_devices[] = {
- 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X12_TAB) },
- 	{ HID_DEVICE(BUS_USB, HID_GROUP_GENERIC,
- 		     USB_VENDOR_ID_LENOVO, USB_DEVICE_ID_LENOVO_X12_TAB2) },
-+	{ HID_DEVICE(BUS_I2C, HID_GROUP_GENERIC,
-+		     USB_VENDOR_ID_ITE, I2C_DEVICE_ID_ITE_LENOVO_YOGA_SLIM_7X_KEYBOARD) },
+diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
+index bd318fd02ccf4..cae3fcafd4d7b 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -106,6 +106,7 @@ static void amd_pmc_get_ip_info(struct amd_pmc_dev *dev)
+ 	switch (dev->cpu_id) {
+ 	case AMD_CPU_ID_PCO:
+ 	case AMD_CPU_ID_RN:
++	case AMD_CPU_ID_VG:
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 		dev->num_ips = 12;
+@@ -517,6 +518,7 @@ static int amd_pmc_get_os_hint(struct amd_pmc_dev *dev)
+ 	case AMD_CPU_ID_PCO:
+ 		return MSG_OS_HINT_PCO;
+ 	case AMD_CPU_ID_RN:
++	case AMD_CPU_ID_VG:
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 	case AMD_CPU_ID_PS:
+@@ -717,6 +719,7 @@ static const struct pci_device_id pmc_pci_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_RV) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SP) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SHP) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_VG) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M20H_ROOT) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M60H_ROOT) },
  	{ }
- };
- 
+diff --git a/drivers/platform/x86/amd/pmc/pmc.h b/drivers/platform/x86/amd/pmc/pmc.h
+index 62f3e51020fdf..fe3f53eb59558 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.h
++++ b/drivers/platform/x86/amd/pmc/pmc.h
+@@ -156,6 +156,7 @@ void amd_mp2_stb_deinit(struct amd_pmc_dev *dev);
+ #define AMD_CPU_ID_RN			0x1630
+ #define AMD_CPU_ID_PCO			AMD_CPU_ID_RV
+ #define AMD_CPU_ID_CZN			AMD_CPU_ID_RN
++#define AMD_CPU_ID_VG			0x1645
+ #define AMD_CPU_ID_YC			0x14B5
+ #define AMD_CPU_ID_CB			0x14D8
+ #define AMD_CPU_ID_PS			0x14E8
 -- 
 2.51.0
 
