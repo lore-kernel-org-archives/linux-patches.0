@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D99E22EB878;
-	Mon, 24 Nov 2025 08:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BB32EB85E;
+	Mon, 24 Nov 2025 08:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971610; cv=none; b=PCxIbacojLDwptcXt4F5NYvHUX98Lkucxam++EzxGoVehRt6dTCnzTV7/+s6FqyPiUrQ2vJOrGibQNNOeqOYo8WGWr+gKbrLB1ziF09REy01mY2xx5/SocaRQUndNWnQzgZ815TuTofPUbWDimSAi4JTCTu3BaaRUnwxgfVFtwE=
+	t=1763971611; cv=none; b=lpCIrcxVbFKctvolfnXjAVdVfw4nSTfp5yNnImNiUa7sC0ybJCgZonQGj3kEM+I0nIrrOi7SIKCNjTRbkVCpubGDoiZtUHScFigGD35c0WfiudUS1R8NIIR79SxS83WigYp++jbAgGZYRijTDgVR8k3v4lJZ23HCp4b2otpzFQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971610; c=relaxed/simple;
-	bh=AIgvi1JzDfZI+/CwZmd34mlay++TFi2lmM5+rhBARYc=;
+	s=arc-20240116; t=1763971611; c=relaxed/simple;
+	bh=65ZP82TqVoivAN7YNFb6fzZ2c4nt0HIvTJUTmuQYeuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nciOjILrs+U0Sfd0dvtFUHNxtGqdtxFlgEokVBSO7BS+OXepezzbbujYLEbi9zBiwG2KF57YAc94APf2SBgJYYtjaq2yoG1J/2wU5L2x5wOOCGoyw+E1AQCfAQLqoOJJB3bAbWljBExchBbWtSYpqBGaHlHGZg8ssS1FDuibjeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ufvJUlaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=r1f6ShVtRG5odgt9HpI19fDq2o5eMbTidxW+IKabOqa9deEA5WG3D1w56ajyObm66Rds3neRkv5c6pEKVU26QtGUx4OCdOHO6d/cByV4m8Ey0+WGr75HqvNAjG70MA0KE6HiDAxxtgHKZGFRya+lfLFcesU0BI/156IiugHjDl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KkL7nvp+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ufvJUlaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 817FAC4CEF1;
-	Mon, 24 Nov 2025 08:06:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KkL7nvp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF97FC116D0;
+	Mon, 24 Nov 2025 08:06:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971609;
-	bh=AIgvi1JzDfZI+/CwZmd34mlay++TFi2lmM5+rhBARYc=;
+	s=k20201202; t=1763971610;
+	bh=65ZP82TqVoivAN7YNFb6fzZ2c4nt0HIvTJUTmuQYeuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufvJUlaB4pwVacNp6qwJ93e+naen3cmQFLfPu0IIamQbhdxWsrl2Mm7tPZwRnBXRM
-	 u8TKKrvpYBia6V68zDL/XWi95nv9sFTzKPXzPhRN5OXeBJQSAz2luwTuWEW9525zco
-	 bkGj50PJKJl6JoEAOKjsXVYfDVRAzJ1BvK1PPYbBM8e74ZmSwcG8nifWT6UADRhYs9
-	 oT3gjRBkg3EOam2s+NcnPyjjnkPHrbct2R7Ad+eC3bTlIZVXjpd1ixtyIVIfNmmts7
-	 pNi9VISUW+zm13wvUI0g7EFu3cQeSHJVZQbnzw+jl1tn0yVgHBxnD8l6ojYyfA0Dik
-	 HpIvOHw5cbZmQ==
+	b=KkL7nvp+s4UQcYr/IiLZ0vyVbicCRcdOEFWscDGhFlvK0CNAgnOm1X8UdSWoxjoG3
+	 dC3Lss6AroibgRsFnEG1VBzA2oq5vZAgP5MvzajYwROMphcjfO+YQyWDxVJZURQuEs
+	 D290Ti5zpkmw/+sBwScLMGnXDzpsbz0SwDN7JxtALkPTzAHN5ORHKdAocvgMic7UKv
+	 40kjB4DZeElm8OG0ulPaZMoHHdQ/GEX8f5rLsbeFy6wXZKgNURurPMbQyGN9dMsnc+
+	 wWUqectgwYuyI4BH9IeLhZ2EXfzfeHeHQJPCR7S3XzENwf0GCISXDPtZQU33+gnlIy
+	 H42t330nmDhAg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Naoki Ueki <naoki25519@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.15] HID: elecom: Add support for ELECOM M-XT3URBK (018F)
-Date: Mon, 24 Nov 2025 03:06:17 -0500
-Message-ID: <20251124080644.3871678-3-sashal@kernel.org>
+	srinivas.pandruvada@linux.intel.com,
+	platform-driver-x86@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17] platform/x86: intel-uncore-freq: Add additional client processors
+Date: Mon, 24 Nov 2025 03:06:18 -0500
+Message-ID: <20251124080644.3871678-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -47,148 +46,138 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Naoki Ueki <naoki25519@gmail.com>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit cdcbb8e8d10f656642380ee13516290437b52b36 ]
+[ Upstream commit a229809c18926e79aeca232d5b502157beb0dec3 ]
 
-The ELECOM M-XT3URBK trackball has an additional device ID (0x018F), which
-shares the same report descriptor as the existing device (0x00FB). However,
-the driver does not currently recognize this new ID, resulting in only five
-buttons being functional.
+Add Intel uncore frequency driver support for Pantherlake, Wildcatlake
+and Novalake processors.
 
-This patch adds the new device ID so that all six buttons work properly.
-
-Signed-off-by: Naoki Ueki <naoki25519@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://patch.msgid.link/20251022211733.3565526-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Comprehensive Analysis
+### 1. COMPREHENSIVE ANALYSIS
 
-**1. Commit Message Analysis**
-The commit "HID: elecom: Add support for ELECOM M-XT3URBK (018F)"
-addresses a specific hardware deficiency where a new revision of the
-ELECOM M-XT3URBK trackball (ID 0x018F) is not recognized by the driver.
-This results in the device falling back to a default mode where only
-five buttons function, instead of the intended six. The commit aims to
-add the new ID to the existing driver to enable full functionality. The
-message clearly describes the problem (missing button support) and the
-solution (adding the ID).
+- **Commit Message Analysis:**
+    - **Subject:** "platform/x86: intel-uncore-freq: Add additional
+      client processors"
+    - **Intent:** The commit explicitly adds support for Intel
+      Pantherlake, Wildcatlake, and Novalake processors to the uncore
+      frequency driver.
+    - **Tags:** No "Fixes:" or "Cc: stable" tags are present. This is
+      common for device ID additions, which are often picked up by
+      stable maintainers automatically or upon request.
 
-**2. Deep Code Research**
-- **Code Change Scope:** The patch modifies three files:
-  `drivers/hid/hid-elecom.c`, `drivers/hid/hid-ids.h`, and
-  `drivers/hid/hid-quirks.c`.
-- **Mechanism:** The patch performs a rename of the existing macro
-  `USB_DEVICE_ID_ELECOM_M_XT3URBK` to
-  `USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB` to differentiate the old
-  revision (0x00FB) from the new one. It then defines the new ID
-  `USB_DEVICE_ID_ELECOM_M_XT3URBK_018F` (0x018F).
-- **Logic Update:** In `elecom_report_fixup`, the switch statement is
-  updated to apply the existing `mouse_button_fixup` logic to *both* the
-  old and new device IDs. This ensures the 6th button is correctly
-  mapped for the new hardware.
-- **Safety Verification:** A codebase search confirms that
-  `USB_DEVICE_ID_ELECOM_M_XT3URBK` was only used in the three files
-  modified by the patch. Therefore, the rename is safe and does not
-  break any external dependencies or out-of-tree modules that rely on
-  the standard kernel headers.
-- **Context:** This uses the existing `hid-elecom` infrastructure. It
-  does not introduce new logic, only new data (IDs).
+- **Code Inspection:**
+    - **File:** `drivers/platform/x86/intel/uncore-frequency/uncore-
+      frequency.c`
+    - **Change:** Adds 4 entries to the `intel_uncore_cpu_ids[]` array
+      using the `X86_MATCH_VFM` macro.
+    - **Mechanism:** The driver uses this table to decide whether to
+      load. Currently, on these new processors, the driver returns
+      `-ENODEV`. This patch allows the driver to initialize
+      successfully.
+    - **Complexity:** Trivial. It is a data-only change with no logic
+      modification.
 
-**3. Stable Kernel Rules Compliance**
-- **Rule Alignment:** The commit complies with the stable kernel rules
-  requiring fixes to be "obviously correct" and for "real bugs".
-- **Exception Category:** This falls squarely under the **"NEW DEVICE
-  IDs"** exception detailed in `Documentation/process/stable-kernel-
-  rules.rst`:
-  > "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers...
-  These are trivial one-line additions that enable hardware support...
-  Rule: The driver must already exist in stable; only the ID is new"
-- **Driver Existence:** The `hid-elecom` driver already exists in stable
-  trees.
+- **Stable Rules & Exceptions:**
+    - **General Rule:** "No new features."
+    - **Exception:** "NEW DEVICE IDs (Very Common)". The rules
+      explicitly allow adding IDs (PCI, USB, ACPI, etc.) to existing
+      drivers to enable hardware support. In the context of x86 platform
+      drivers, CPU Vendor-Family-Model (VFM) IDs serve the exact same
+      purpose as PCI device IDs.
+    - **Applicability:** This commit fits squarely within the Device ID
+      exception. It enables an existing driver on new hardware variants
+      without changing the driver's core behavior.
 
-**4. Risk Assessment**
-- **Regression Risk:** **Very Low**. The changes are declarative. The
-  existing hardware path remains effectively unchanged (just a renamed
-  macro constant with the same value). The new path reuses existing,
-  tested fixup logic.
-- **User Impact:** Users with the new revision of this trackball will
-  regain full functionality (the 6th button). Users with the old
-  revision are unaffected.
+- **Risk Assessment:**
+    - **Regression Risk:** Negligible. The change is confined to the
+      device match table. It does not alter the code path for currently
+      supported processors.
+    - **Consequence of Failure:** If the IDs are incorrect, the driver
+      simply fails to load on the new hardware, preserving the status
+      quo.
+    - **Dependencies:** The patch uses `X86_MATCH_VFM` and constants
+      like `INTEL_NOVALAKE`.
+        - *Critical Technical Note:* The `X86_MATCH_VFM` infrastructure
+          was introduced to support CPU families beyond Family 6 (Nova
+          Lake is Family 18). Target stable trees must have this
+          infrastructure and the corresponding
+          `arch/x86/include/asm/intel-family.h` definitions. For very
+          old stable trees (pre-VFM infrastructure), backporting would
+          be complex; for modern stable trees (like 6.6.y or the
+          hypothetical 6.17.y), this is straightforward.
 
-**5. Conclusion**
-This commit is a textbook candidate for stable backporting. It fixes a
-functional regression for users with newer hardware by adding a device
-ID to an existing driver, which is explicitly permitted and encouraged
-in stable kernels.
+### 2. DETAILED EXPLANATION
+
+This commit is a strong candidate for backporting based on the "New
+Device IDs" exception in the stable kernel rules.
+
+**Problem Solved:**
+Users running stable kernels on newer Intel hardware (Pantherlake,
+Wildcatlake, Novalake) currently have no access to uncore frequency
+controls because the driver does not recognize their CPUs. This limits
+power management and performance tuning capabilities that are standard
+on older platforms.
+
+**Stable Kernel Rules Compliance:**
+1. **Exception Category:** This falls under **Exception 1: NEW DEVICE
+   IDs**. While technically a "feature" (enablement), the stable rules
+   explicitly permit adding IDs to existing drivers to support new
+   hardware, provided the driver itself isn't being rewritten.
+2. **Obviously Correct:** The change adds four lines of data to a match
+   table. It is minimal and surgical.
+3. **Low Risk:** There is zero risk to existing users. The code path for
+   supported CPUs remains identical. The new entries only activate on
+   the specific new CPU models.
+
+**Caveats & Dependencies:**
+- **VFM Infrastructure:** The patch relies on the `X86_MATCH_VFM` macro.
+  Ensure the target stable tree supports this macro (introduced to
+  handle non-Family-6 CPUs like Nova Lake).
+- **Header Definitions:** The target tree must have the updated
+  `arch/x86/include/asm/intel-family.h` containing
+  `INTEL_PANTHERLAKE_L`, `INTEL_NOVALAKE`, etc. These are typically
+  backported, but verify their existence before applying this patch.
+
+**Conclusion:**
+This is a standard, low-risk hardware enablement patch that provides
+necessary functionality for users on new platforms without endangering
+existing setups.
 
 **YES**
 
- drivers/hid/hid-elecom.c | 6 ++++--
- drivers/hid/hid-ids.h    | 3 ++-
- drivers/hid/hid-quirks.c | 3 ++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ .../platform/x86/intel/uncore-frequency/uncore-frequency.c    | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-elecom.c b/drivers/hid/hid-elecom.c
-index 69771fd350060..981d1b6e96589 100644
---- a/drivers/hid/hid-elecom.c
-+++ b/drivers/hid/hid-elecom.c
-@@ -75,7 +75,8 @@ static const __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		mouse_button_fixup(hdev, rdesc, *rsize, 20, 28, 22, 14, 8);
- 		break;
--	case USB_DEVICE_ID_ELECOM_M_XT3URBK:
-+	case USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB:
-+	case USB_DEVICE_ID_ELECOM_M_XT3URBK_018F:
- 	case USB_DEVICE_ID_ELECOM_M_XT3DRBK:
- 	case USB_DEVICE_ID_ELECOM_M_XT4DRBK:
- 		/*
-@@ -119,7 +120,8 @@ static const __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- static const struct hid_device_id elecom_devices[] = {
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 4b1946eb4e7fc..fb96ded1b4428 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -446,7 +446,8 @@
- #define USB_VENDOR_ID_ELECOM		0x056e
- #define USB_DEVICE_ID_ELECOM_BM084	0x0061
- #define USB_DEVICE_ID_ELECOM_M_XGL20DLBK	0x00e6
--#define USB_DEVICE_ID_ELECOM_M_XT3URBK	0x00fb
-+#define USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB	0x00fb
-+#define USB_DEVICE_ID_ELECOM_M_XT3URBK_018F	0x018f
- #define USB_DEVICE_ID_ELECOM_M_XT3DRBK	0x00fc
- #define USB_DEVICE_ID_ELECOM_M_XT4DRBK	0x00fd
- #define USB_DEVICE_ID_ELECOM_M_DT1URBK	0x00fe
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index ffd034566e2e1..0bbb7425b935a 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -408,7 +408,8 @@ static const struct hid_device_id hid_have_special_driver[] = {
- #if IS_ENABLED(CONFIG_HID_ELECOM)
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
+diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
+index 2a6897035150c..0dfc552b28024 100644
+--- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
++++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
+@@ -256,6 +256,10 @@ static const struct x86_cpu_id intel_uncore_cpu_ids[] = {
+ 	X86_MATCH_VFM(INTEL_ARROWLAKE, NULL),
+ 	X86_MATCH_VFM(INTEL_ARROWLAKE_H, NULL),
+ 	X86_MATCH_VFM(INTEL_LUNARLAKE_M, NULL),
++	X86_MATCH_VFM(INTEL_PANTHERLAKE_L, NULL),
++	X86_MATCH_VFM(INTEL_WILDCATLAKE_L, NULL),
++	X86_MATCH_VFM(INTEL_NOVALAKE, NULL),
++	X86_MATCH_VFM(INTEL_NOVALAKE_L, NULL),
+ 	{}
+ };
+ MODULE_DEVICE_TABLE(x86cpu, intel_uncore_cpu_ids);
 -- 
 2.51.0
 
