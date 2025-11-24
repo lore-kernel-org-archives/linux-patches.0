@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7112EBDCB;
-	Mon, 24 Nov 2025 08:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373D62EC558;
+	Mon, 24 Nov 2025 08:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971620; cv=none; b=illedImsCbruPQtpyIsfwEDEH303o91VLNx7LVO8rqezUUdHAd8AE8xUjGx0DqCbQUs7gPpU4xYZyyZab0Me3n54vHGdGcLOJ7xyIU3L4S4mfHxwxpfTHtpB4EnscIjQGsyLEgkV8W8ByNuEV+Ilb88idC8IX7ttWwNoRqBwkK0=
+	t=1763971622; cv=none; b=unH/Xhn3THc320pmnDKHJ1Jm/PamS5mCZ/w8rdjHfds1zjXKy2j93wT1EH1ZjdPungmMD/KTirfQjIiKFcDZ/6w6b8LpvWHPjNHrDCF0nuaauhnAizxpMzuRHcwghJPzk5KnJl/IUjizwlqcZMTszBfRNpUlP4bmJJ4vqOghK/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971620; c=relaxed/simple;
-	bh=2DfJovqnBSCssy0NJz7G7Dmqx2CQZ/KxyDUq+b46ELE=;
+	s=arc-20240116; t=1763971622; c=relaxed/simple;
+	bh=wWn2fFkvfS2BW05C4j4Nqd4FyTvffI/Pm38CGFFsLg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIMvOl3i7IGwGGPPkaecFH5TtviWRTSlDhhd4sgjANKWFOuZXtlFRIj6VVcJ8f+OV2CWnX7bZd7darYaguMOP3IM4PiPGYzSnTwZwYKyY+cLQYXOitpjT7ajVI8Ldyok2QL9mB4uLWFOzE0NQLexe6h0eOuOOE3AG9pa6CGqhDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dE1RTFQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=juTT14UFwe74kSsc7EoLMwu/vAubgVohMW7/JeVARD0eGNqWVKKBtmKERnKwjxfJX66sgGLGuEnSiAqPLUZMQjUtKK0YULZgNiN7ySH/EjQgZxD7I1qfcetr8TlxHeaI5zHJeCk7Y2IUA2ZZSZScPoSNLrAeUtehJbAxOCDO0Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5TBwTgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dE1RTFQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857E3C4CEF1;
-	Mon, 24 Nov 2025 08:06:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5TBwTgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D00C16AAE;
+	Mon, 24 Nov 2025 08:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971620;
-	bh=2DfJovqnBSCssy0NJz7G7Dmqx2CQZ/KxyDUq+b46ELE=;
+	s=k20201202; t=1763971621;
+	bh=wWn2fFkvfS2BW05C4j4Nqd4FyTvffI/Pm38CGFFsLg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dE1RTFQW2AKN0OLU6X9CMvIps2wTT9FbdqO7l/kZN4zFKHVne7A6acxe0WfujwM1A
-	 7eiSdh3qvfyh8mmo1Bu8XEveqT/0S4v5mxI7svb/g0VJAYmQwHP85eCto66AdH//DJ
-	 o8QB0np0oTEIKsOcRv7YDOjUDabnQZOOPMYSnjS6N+ZuTZcRjQEQkEle1CIJYIssoi
-	 2W7qCF8iMOwmthGJwcob7bOghEDppUKMOegVMX13Db/pZzqtNeAYIzf8iXxv7a1A0B
-	 oqj0ahqaMBrSZhcm5qX5O9UffVM6JTyQY2UJ64ijOAE6WXSLV2mECL6BxzEB6IQ5bi
-	 YbiSMw1/DyVmg==
+	b=c5TBwTgt5XIHMsVjsjtNCk5d9DA5e16vUcFE3LKovjCElil6J+NoZSKNjAuAM8TZt
+	 452+79dc+EzJ3k28Wzt9DxBoqj0sX06t40KhQbxmD0XG0bVTDHlg0NAinqJqEMLIqJ
+	 4Bbd0QVKltP1B56ZTxosS+j1jZovbxzTwfh1GZDYqeO0CraHUXHsiTIqU5+tUDD+QS
+	 w5BeM/ID/ZHEShMVbimbtRpLTUP3OeUCM4ko/AL+UIAX0SZIO5UXaVHrQodDP8k6FJ
+	 t0UXndJQf5NjaieKt7YDG5eILXBH2+ihlFztizf/izP0xlMB7tw6ic4MMTihNDlKPt
+	 5A/25AsUmSK7Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Hans de Goede <hansg@kernel.org>,
+	=?UTF-8?q?Andr=C3=A9=20Barata?= <andretiagob@protonmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com
-Subject: [PATCH AUTOSEL 6.17-5.10] samples: work around glibc redefining some of our defines wrong
-Date: Mon, 24 Nov 2025 03:06:22 -0500
-Message-ID: <20251124080644.3871678-8-sashal@kernel.org>
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.17-6.6] HID: hid-input: Extend Elan ignore battery quirk to USB
+Date: Mon, 24 Nov 2025 03:06:23 -0500
+Message-ID: <20251124080644.3871678-9-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -45,199 +49,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: "Mario Limonciello (AMD)" <superm1@kernel.org>
 
-[ Upstream commit a48f822908982353c3256e35a089e9e7d0d61580 ]
+[ Upstream commit 534ca75e8e3b713514b3f2da85dab96831cf5b2a ]
 
-Apparently as of version 2.42, glibc headers define AT_RENAME_NOREPLACE
-and some of the other flags for renameat2() and friends in <stdio.h>.
+USB Elan devices have the same problem as the I2C ones with a fake
+battery device showing up.
 
-Which would all be fine, except for inexplicable reasons glibc decided
-to define them _differently_ from the kernel definitions, which then
-makes some of our sample code that includes both kernel headers and user
-space headers unhappy, because the compiler will (correctly) complain
-about redefining things.
-
-Now, mixing kernel headers and user space headers is always a somewhat
-iffy proposition due to namespacing issues, but it's kind of inevitable
-in our sample and selftest code.  And this is just glibc being stupid.
-
-Those defines come from the kernel, glibc is exposing the kernel
-interfaces, and glibc shouldn't make up some random new expressions for
-these values.
-
-It's not like glibc headers changed the actual result values, but they
-arbitrarily just decided to use a different expression to describe those
-values.  The kernel just does
-
-    #define AT_RENAME_NOREPLACE  0x0001
-
-while glibc does
-
-    # define RENAME_NOREPLACE (1 << 0)
-    # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-
-instead.  Same value in the end, but very different macro definition.
-
-For absolutely no reason.
-
-This has since been fixed in the glibc development tree, so eventually
-we'll end up with the canonical expressions and no clashes.  But in the
-meantime the broken headers are in the glibc-2.42 release and have made
-it out into distributions.
-
-Do a minimal work-around to make the samples build cleanly by just
-undefining the affected macros in between the user space header include
-and the kernel header includes.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reviewed-by: Hans de Goede <hansg@kernel.org>
+Reported-by: André Barata <andretiagob@protonmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220722
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## COMPREHENSIVE ANALYSIS
+## Comprehensive Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
-**Problem:** The commit addresses a build failure introduced by glibc
-version 2.42. The glibc headers (`<stdio.h>`) began defining
-`AT_RENAME_NOREPLACE`, `AT_RENAME_EXCHANGE`, and `AT_RENAME_WHITEOUT`
-using bitwise shift expressions (e.g., `1 << 0`). The Linux kernel
-headers (`<linux/stat.h>`, `<linux/fcntl.h>`) define these same
-constants using hexadecimal literals (e.g., `0x0001`). When sample
-programs include both sets of headers, the compiler detects a macro
-redefinition mismatch, causing the build to fail.
+### 1. Commit Message Analysis
+The commit "HID: hid-input: Extend Elan ignore battery quirk to USB"
+addresses a specific hardware compatibility issue where Elan USB
+touchscreens incorrectly report a battery device to the OS.
+- **Problem:** Users see a non-existent or "fake" battery in their
+  system tray/power settings, which can cause confusion and interfere
+  with power management logic.
+- **Context:** The message notes that "USB Elan devices have the same
+  problem as the I2C ones," referencing a known issue.
+- **References:** It links to a specific bug report (Bugzilla #220722)
+  and has a `Reviewed-by` tag from the subsystem maintainer (Hans de
+  Goede).
 
-**Solution:** The fix implements a workaround by explicitly `#undef`-ing
-the conflicting macros after including the glibc headers but before
-including the kernel headers. This ensures the kernel headers can define
-them without conflict.
-
-**Context:** The commit is signed off by Linus Torvalds, indicating
-high-level validation. While it lacks a "Cc: stable" tag, the nature of
-the change (fixing a build regression caused by external environment
-changes) is a standard candidate for backporting.
-
-### 2. DEEP CODE RESEARCH
-**Affected Files:**
-- `samples/vfs/test-statx.c` (Added in v4.20, present in 5.4+, 5.10+,
-  5.15+, 6.1+, 6.6+ stable trees)
-- `samples/watch_queue/watch_test.c` (Added in v5.8, present in 5.10+,
-  5.15+, 6.1+, 6.6+ stable trees)
-
-**Technical Mechanism:**
-The conflict arises from the preprocessor.
-- **Kernel Definition (`include/uapi/linux/fcntl.h`):**
+### 2. Deep Code Research
+- **Code Change:** The patch modifies `drivers/hid/hid-input.c` by
+  adding a single line to the `hid_battery_quirks` table:
   ```c
-  #define AT_RENAME_NOREPLACE     0x0001
+  { HID_USB_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID),
+  HID_BATTERY_QUIRK_IGNORE },
   ```
-- **New Glibc Definition:**
-  ```c
-  #define RENAME_NOREPLACE (1 << 0)
-  #define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-  ```
-Because `0x0001` is not textually identical to `(1 << 0)` (or the
-expansion thereof), the preprocessor flags this as a redefinition error.
+- **Historical Context:** This change mirrors commit `bcc31692a1d1e`
+  (August 2024), which applied the same `HID_ANY_ID` catch-all quirk for
+  **I2C** Elan devices. That previous commit was successfully backported
+  to stable trees.
+- **Mechanism:** The `hid-input` driver checks connected devices against
+  the `hid_battery_quirks` table. When a match is found with
+  `HID_BATTERY_QUIRK_IGNORE`, the function `hidinput_setup_battery()`
+  returns early, preventing the creation of the bogus power supply
+  device in `/sys/class/power_supply/`.
+- **Precedent:** The file already contains specific quirks for some Elan
+  USB devices (e.g., ASUS UX550). This commit generalizes the fix to all
+  Elan USB devices, cleaning up the approach.
 
-**The Fix:**
-The commit inserts:
-```c
-// Work around glibc header silliness
-#undef AT_RENAME_NOREPLACE
-#undef AT_RENAME_EXCHANGE
-#undef AT_RENAME_WHITEOUT
-```
-This effectively cleans the slate before the kernel headers are parsed,
-restoring the canonical kernel definitions for the remainder of the
-file.
+### 3. Stable Kernel Rules Assessment
+- **Fixes a Real Bug:** Yes. It prevents the kernel from exposing false
+  hardware information to userspace.
+- **Quirks and Workarounds Exception:** This falls strictly under the
+  "QUIRKS and WORKAROUNDS" exception category allowed in stable kernels
+  ("Hardware-specific quirks for broken/buggy devices").
+- **Small and Contained:** The change is surgical—one line of code added
+  to a static array. It has no logic complexity or dependencies.
+- **Regression Risk:** Extremely Low. It simply disables battery
+  reporting for a specific vendor's input devices. Since the battery
+  reporting is known to be broken (always 0% or 1%), ignoring it
+  restores correct behavior.
+- **Mainline Status:** Reviewed by maintainers and tested by the
+  reporter.
 
-### 3. STABLE KERNEL RULES ASSESSMENT
-**Classification:** **BUILD FIX**
-
-This falls strictly under the **EXCEPTIONS** list in the stable kernel
-rules:
-> "4. BUILD FIXES: Fixes for compilation errors or warnings... These are
-critical for users who need to build the kernel"
-
-**Compliance Check:**
-- **Obviously correct:** Yes. It is a standard preprocessor workaround
-  for header conflicts.
-- **Fixes a real bug:** Yes. Users with modern distributions (Fedora
-  Rawhide, Arch, etc.) cannot compile the kernel samples without this.
-- **Small and contained:** Yes. 12 lines of added code, strictly
-  preprocessor directives.
-- **No new features:** Yes. It preserves existing behavior.
-
-### 4. RISK ASSESSMENT
-**Risk:** **ZERO**
-- **Scope:** The changes are limited exclusively to the `samples/`
-  directory. These files are user-space example programs and tests; they
-  are not part of the kernel image (vmlinuz) or modules (.ko).
-- **Runtime Impact:** None. The macros resolve to the same numeric
-  values (`1` vs `0x0001`), so the compiled binary behavior is
-  identical.
-- **Regression Potential:** None. The `#undef` only affects the specific
-  translation units of the sample programs.
-
-### 5. USER IMPACT EVALUATION
-**Target Audience:** Developers, distribution maintainers, and CI
-systems building the full kernel tree (including `make samples`).
-**Severity:** Medium (Build Breakage). While it doesn't break the booted
-kernel, build failures are blocking issues that disrupt workflows and
-testing. As glibc 2.42 propagates to stable distributions (Debian,
-Ubuntu, RHEL), this issue will become widespread.
-
-### 6. CONCLUSION
-This commit is a textbook example of a stable backport candidate under
-the "Build Fix" exception. It fixes a tangible regression caused by
-toolchain/library updates, has zero risk to the kernel runtime, and
-ensures the kernel source tree remains buildable on modern systems.
+### 4. Conclusion
+This commit is an ideal candidate for backporting. It is a one-line
+hardware quirk that fixes a user-visible annoyance (fake battery
+devices). It follows a pattern already established and backported for
+I2C devices, ensuring consistency across different bus types for the
+same hardware vendor.
 
 **YES**
 
- samples/vfs/test-statx.c         | 6 ++++++
- samples/watch_queue/watch_test.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/hid/hid-input.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/samples/vfs/test-statx.c b/samples/vfs/test-statx.c
-index 49c7a46cee073..424a6fa15723c 100644
---- a/samples/vfs/test-statx.c
-+++ b/samples/vfs/test-statx.c
-@@ -19,6 +19,12 @@
- #include <time.h>
- #include <sys/syscall.h>
- #include <sys/types.h>
-+
-+// Work around glibc header silliness
-+#undef AT_RENAME_NOREPLACE
-+#undef AT_RENAME_EXCHANGE
-+#undef AT_RENAME_WHITEOUT
-+
- #include <linux/stat.h>
- #include <linux/fcntl.h>
- #define statx foo
-diff --git a/samples/watch_queue/watch_test.c b/samples/watch_queue/watch_test.c
-index 8c6cb57d5cfc5..24cf7d7a19725 100644
---- a/samples/watch_queue/watch_test.c
-+++ b/samples/watch_queue/watch_test.c
-@@ -16,6 +16,12 @@
- #include <errno.h>
- #include <sys/ioctl.h>
- #include <limits.h>
-+
-+// Work around glibc header silliness
-+#undef AT_RENAME_NOREPLACE
-+#undef AT_RENAME_EXCHANGE
-+#undef AT_RENAME_WHITEOUT
-+
- #include <linux/watch_queue.h>
- #include <linux/unistd.h>
- #include <linux/keyctl.h>
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 2c743e35c1d33..bc7de9ef45ecd 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -386,10 +386,11 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM),
+ 	  HID_BATTERY_QUIRK_AVOID_QUERY },
+ 	/*
+-	 * Elan I2C-HID touchscreens seem to all report a non present battery,
+-	 * set HID_BATTERY_QUIRK_IGNORE for all Elan I2C-HID devices.
++	 * Elan HID touchscreens seem to all report a non present battery,
++	 * set HID_BATTERY_QUIRK_IGNORE for all Elan I2C and USB HID devices.
+ 	 */
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_BATTERY_QUIRK_IGNORE },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_BATTERY_QUIRK_IGNORE },
+ 	{}
+ };
+ 
 -- 
 2.51.0
 
