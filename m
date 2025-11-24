@@ -1,103 +1,193 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC57313E3F
-	for <patches@lists.linux.dev>; Mon, 24 Nov 2025 16:23:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179A52D3A89
+	for <patches@lists.linux.dev>; Mon, 24 Nov 2025 18:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764001410; cv=none; b=cBKoqNGjsY8639L1VELLZr4+Banmnga6eCcLEPUBnO7oJNT5j5cw59ABG8UkA4rlH+T0Ybhzk0ybmOauZ0vIiSkrY5rGmZb/Ajly8mDzlTFb0lPNHwC7Rrn1SRmFUT4fEx9xFm1Vsf66Nc7GobV/HXT/FSM6Q+athztisgigxeQ=
+	t=1764010483; cv=none; b=mYBEA98RqTSN75fYCZ/Wc8h5tzBpevD/Jvuv970yBXziaF5YG7ZwTQJJ8dnpNoqkvCsyobePbc7WUNDM1975jLimMw04QPWELF9n7FDY46yVWu66gvZJE4ncIVDvzqAC/qhmsqBFAffNNFqV00qyk7bY0zVLZc3ld5xiHqwh+rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764001410; c=relaxed/simple;
-	bh=NzPDQKUXesN2tFTrxAWwSFcXk8odbWGEX8DQwzKHvdA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=io6L0z38mYZQl8nIZH5d/CZUeeMQg3W4P0Pw30f8c9YlDs9mTrfSkHVflgcm8M+Yb4MflyX4+85tNan3Az/s9EXAZWVZmM5cDe6MhRbx0B9VvO2R/rvuj4azeZgHoEvE7nXZRljZZLYTzzukLila/4P0UC1pTvYdZPzYcFdfPJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=htbkYYvu; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764010483; c=relaxed/simple;
+	bh=uG7+YqtEtzVlwaBgTbjM4zxMwbqEfXKjC407S1dGiWg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=BPPJ/Sfn4q2A9qlsN0dF11VJ7U2Lm4nSznB7QR6Bm4WuarmTXx5E64MuSZG18toJO4KXsTk+pg78sGJG91iAM2fUEfWM/vRtiicn8o1jrJiioA9dsHHa4i3SN6fih8AA1/pVuaIFjDoH5ah9g5N0j3oWTUl116vB3PrbEk8meyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Is0HFN2X; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="htbkYYvu"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b63e5da0fdeso372189a12.0
-        for <patches@lists.linux.dev>; Mon, 24 Nov 2025 08:23:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764001408; x=1764606208; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M2J0sne9dK3n8ebmX/80sgM1htWpoO6vvwfgujnWbIg=;
-        b=htbkYYvuBjTonmhlqGO0ZCd3wWhQL231cRtj6i/edd6XkCEqocoLA3FrlhbVjezH28
-         ZgB+q4OxFO8san5uAx1W1d2VIoodIzAEdqFYuf3lSwTWDScHe89+I+Gs3LQbY9hGvLwZ
-         j9zqwwkqHlmzZ3km9/UfCs1U0g8BArW61hIenuUJJACP8prVd5pOA43D+yNKayS25v3/
-         uuHCNU4esYGrE9C2piIjiPlK1IZvKwblxnolqSV45CZkX6j6nJgmt3ad+pLhP9bRQqyx
-         64jDg30+eQvva1nYkJ9d47TaHgvUZfy3YUVk+EwHxy328WkYFBDH/4bxl6uQowB/S4V4
-         n7aQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764001408; x=1764606208;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=M2J0sne9dK3n8ebmX/80sgM1htWpoO6vvwfgujnWbIg=;
-        b=Fc6N91ANfuc9xFSYBBu75kkvxDDa5jxYTw+kWja8fdYvGCVKk7MFMjtOZqXmvdDdrB
-         ckLgzZXKF+EVFxQakBOLmlWWzmXG2cgNBHBbWu4r5ugm4kOwOR1DQWpepOwSTvuq7crX
-         PffNNItwdHAMAkSfr51peKo4Ddi2RMS7mdjr3ybnOtSLAPI1q0nNhxa/HztJxqmaSOvA
-         xlOgbVroCI2/J7sm6dkRJFMubhEDp3iD0HOd3ImWPMdooKb1wxXH6VOT4Tmk5PbmuP/D
-         Ivz3g7b8cexApK/mYCAXkLk3YnlYYrCrvzweexwx7BN11Ww4GbAfPf3qokfH5tB3BZxM
-         3Hgw==
-X-Forwarded-Encrypted: i=1; AJvYcCW+MkqQx262rkrl4twISv8l7mt+o3Y4Tj8m2HBgwstIJa9fedKQ3DmcJjXY3RC9Ts2Y8rImfKh0@lists.linux.dev
-X-Gm-Message-State: AOJu0YxJZATQM8KADAWaxpzzTkR7hAWCyuaj/GF5liAcPu54VHECEWYY
-	wJtMIBmrkZNvEB+w2x4qaEoKXOnvIJHzkfSFa2kLJXLMswvBzyxoVlm4BmZ8zzkwRKQHeP8lZ7o
-	1raH+aiFnJEXfjPOLX9jSy/YPqwOB1i0=
-X-Gm-Gg: ASbGncsYDbdtiwPvcFFX3fXcmmWascdAy4RanKHtyNoIbSo+u7O+VxFekZfpDnBVljQ
-	FU/L/1qWQU+ksJUvHU8otAKNtwOtyb6XWAMbUVAEFQIQuYQ55py+bb6JX0ps1c2Cs7e1prWbm8z
-	lc5rMXlQRaIeDNVJiwTBHNO3dFMYKSNPIgq9wn+mCPpxvpnSSrYLKEM4pQjoR+9Pw9wnR6fUb39
-	Sb//vvu6FimW6+z9kwfJ9bRuSVqLy0zb/Fge4ju4gdGWQpuFoGnN0ZX8iV1cFTqmsQiuk+eAuTd
-	3KAEpHIyf0GY6T8RF5MMi7cnUMSqnmfqpj113bDX/MzjPgb1PDoBQ8Zihoj6hP8XCfGOeYjz9F1
-	0ZOk4uMDiYHS/xw==
-X-Google-Smtp-Source: AGHT+IGwXl0ZV6sCuJIMY3nmCYvEqmx2yNHsP6C5DZXOUJriOekXZR8ClIwnhdXq7nRGAKTyK7rmfByoSAzp7B5Pcj0=
-X-Received: by 2002:a05:7300:dc93:b0:2a6:9dbf:bbe1 with SMTP id
- 5a478bee46e88-2a719324a83mr7221018eec.3.1764001408335; Mon, 24 Nov 2025
- 08:23:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Is0HFN2X"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1764010482; x=1795546482;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=uG7+YqtEtzVlwaBgTbjM4zxMwbqEfXKjC407S1dGiWg=;
+  b=Is0HFN2XcoCReapNy+YISCgFL8xrw37bd2j58i9zyOlUCT/gCh9qoCmR
+   rQLOfxC8cu2B5wGBDY1KRFvrhhg3HM6eHxhmc//MVKg7HUKICu+IfaIXN
+   brlFNqcy19vStwpm3xjZkTYB4Po0ewTeDZ+G+q/wxcUNjYHoaAtAltT/y
+   o2TjoEWR3148jSKDGeQW1uNjbyuOYIYGKeJMRnQdqG8/mUOCZ0PvQgO4+
+   prWB1g6j+kEul+BF+cFmv2LcW+fvH8yH9m9mLxkPRGluvsC88RoiKaXCy
+   2hZFGs47WhaREhj1ldvVV09ly0+APY7Bb8C11h/ZvBuL1HCXdY4Uuu6yF
+   g==;
+X-CSE-ConnectionGUID: wUbIALbHR7u2HefVBMm5Fw==
+X-CSE-MsgGUID: S5/DXfXSQfGwV0prCqQTIQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11623"; a="76636439"
+X-IronPort-AV: E=Sophos;i="6.20,223,1758610800"; 
+   d="scan'208";a="76636439"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 10:54:21 -0800
+X-CSE-ConnectionGUID: XrFBZJLdQyuSxJrwXsGRrw==
+X-CSE-MsgGUID: 5HzuIdybQnqGWsYeZwU1XA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,223,1758610800"; 
+   d="scan'208";a="192224940"
+Received: from rfrazer-mobl3.amr.corp.intel.com (HELO agluck-desk3.home.arpa) ([10.124.222.153])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Nov 2025 10:54:21 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Fenghua Yu <fenghuay@nvidia.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
+	Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Drew Fustini <dfustini@baylibre.com>,
+	Dave Martin <Dave.Martin@arm.com>,
+	Chen Yu <yu.c.chen@intel.com>
+Cc: x86@kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH v14 01/32] x86,fs/resctrl: Improve domain type checking
+Date: Mon, 24 Nov 2025 10:53:38 -0800
+Message-ID: <20251124185412.24155-2-tony.luck@intel.com>
+X-Mailer: git-send-email 2.51.1
+In-Reply-To: <20251124185412.24155-1-tony.luck@intel.com>
+References: <20251124185412.24155-1-tony.luck@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251124151837.2184382-1-ojeda@kernel.org>
-In-Reply-To: <20251124151837.2184382-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 24 Nov 2025 17:23:14 +0100
-X-Gm-Features: AWmQ_bmjzzjuGyZbSwxV4iB0sa35jisCYH7BCVB9fd0FJ3BHVjVHicd2rDqz0Ns
-Message-ID: <CANiq72mLMHF35UaML0RqiTOkVORr25W3Ug06uttYL_H4XCW=4w@mail.gmail.com>
-Subject: Re: [PATCH v2 00/20] `syn` support
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Nicolas Schier <nicolas@fjasle.eu>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <lossin@kernel.org>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, 
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org, 
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 24, 2025 at 4:19=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> This patch series introduces support for `syn` (and its dependencies):
->
->     Syn is a parsing library for parsing a stream of Rust tokens into a
->     syntax tree of Rust source code.
->
->     Currently this library is geared toward use in Rust procedural
->     macros, but contains some APIs that may be useful more generally.
+Every resctrl resource has a list of domain structures. struct rdt_ctrl_domain
+and struct rdt_mon_domain both begin with struct rdt_domain_hdr with
+rdt_domain_hdr::type used in validity checks before accessing the domain of a
+particular type.
 
-Applied to `rust-next` -- thanks everyone!
+Add the resource id to struct rdt_domain_hdr in preparation for a new monitoring
+domain structure that will be associated with a new monitoring resource. Improve
+existing domain validity checks with a new helper domain_header_is_valid()
+that checks both domain type and resource id.  domain_header_is_valid() should
+be used before every call to container_of() that accesses a domain structure.
 
-I mostly sent this to show how it will look like and because I will
-use the expanded cover letter as a merge commit to keep it around,
-since it has now even more context, and it is a nice approach for a
-long series like this.
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ include/linux/resctrl.h            |  9 +++++++++
+ arch/x86/kernel/cpu/resctrl/core.c | 10 ++++++----
+ fs/resctrl/ctrlmondata.c           |  2 +-
+ 3 files changed, 16 insertions(+), 5 deletions(-)
 
-Cheers,
-Miguel
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 54701668b3df..e7c218f8d4f7 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -131,15 +131,24 @@ enum resctrl_domain_type {
+  * @list:		all instances of this resource
+  * @id:			unique id for this instance
+  * @type:		type of this instance
++ * @rid:		resource id for this instance
+  * @cpu_mask:		which CPUs share this resource
+  */
+ struct rdt_domain_hdr {
+ 	struct list_head		list;
+ 	int				id;
+ 	enum resctrl_domain_type	type;
++	enum resctrl_res_level		rid;
+ 	struct cpumask			cpu_mask;
+ };
+ 
++static inline bool domain_header_is_valid(struct rdt_domain_hdr *hdr,
++					  enum resctrl_domain_type type,
++					  enum resctrl_res_level rid)
++{
++	return !WARN_ON_ONCE(hdr->type != type || hdr->rid != rid);
++}
++
+ /**
+  * struct rdt_ctrl_domain - group of CPUs sharing a resctrl control resource
+  * @hdr:		common header for different domain types
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 3792ab4819dc..0b8b7b8697a7 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -464,7 +464,7 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
+ 
+ 	hdr = resctrl_find_domain(&r->ctrl_domains, id, &add_pos);
+ 	if (hdr) {
+-		if (WARN_ON_ONCE(hdr->type != RESCTRL_CTRL_DOMAIN))
++		if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
+ 			return;
+ 		d = container_of(hdr, struct rdt_ctrl_domain, hdr);
+ 
+@@ -481,6 +481,7 @@ static void domain_add_cpu_ctrl(int cpu, struct rdt_resource *r)
+ 	d = &hw_dom->d_resctrl;
+ 	d->hdr.id = id;
+ 	d->hdr.type = RESCTRL_CTRL_DOMAIN;
++	d->hdr.rid = r->rid;
+ 	cpumask_set_cpu(cpu, &d->hdr.cpu_mask);
+ 
+ 	rdt_domain_reconfigure_cdp(r);
+@@ -520,7 +521,7 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+ 
+ 	hdr = resctrl_find_domain(&r->mon_domains, id, &add_pos);
+ 	if (hdr) {
+-		if (WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN))
++		if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+ 			return;
+ 		d = container_of(hdr, struct rdt_mon_domain, hdr);
+ 
+@@ -538,6 +539,7 @@ static void domain_add_cpu_mon(int cpu, struct rdt_resource *r)
+ 	d = &hw_dom->d_resctrl;
+ 	d->hdr.id = id;
+ 	d->hdr.type = RESCTRL_MON_DOMAIN;
++	d->hdr.rid = r->rid;
+ 	ci = get_cpu_cacheinfo_level(cpu, RESCTRL_L3_CACHE);
+ 	if (!ci) {
+ 		pr_warn_once("Can't find L3 cache for CPU:%d resource %s\n", cpu, r->name);
+@@ -598,7 +600,7 @@ static void domain_remove_cpu_ctrl(int cpu, struct rdt_resource *r)
+ 		return;
+ 	}
+ 
+-	if (WARN_ON_ONCE(hdr->type != RESCTRL_CTRL_DOMAIN))
++	if (!domain_header_is_valid(hdr, RESCTRL_CTRL_DOMAIN, r->rid))
+ 		return;
+ 
+ 	d = container_of(hdr, struct rdt_ctrl_domain, hdr);
+@@ -644,7 +646,7 @@ static void domain_remove_cpu_mon(int cpu, struct rdt_resource *r)
+ 		return;
+ 	}
+ 
+-	if (WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN))
++	if (!domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, r->rid))
+ 		return;
+ 
+ 	d = container_of(hdr, struct rdt_mon_domain, hdr);
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index b2d178d3556e..905c310de573 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -653,7 +653,7 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
+ 		 * the resource to find the domain with "domid".
+ 		 */
+ 		hdr = resctrl_find_domain(&r->mon_domains, domid, NULL);
+-		if (!hdr || WARN_ON_ONCE(hdr->type != RESCTRL_MON_DOMAIN)) {
++		if (!hdr || !domain_header_is_valid(hdr, RESCTRL_MON_DOMAIN, resid)) {
+ 			ret = -ENOENT;
+ 			goto out;
+ 		}
+-- 
+2.51.1
+
