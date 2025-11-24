@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E50B2EB847;
-	Mon, 24 Nov 2025 08:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76782E03E6;
+	Mon, 24 Nov 2025 08:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971613; cv=none; b=mWlnvxgEAhUeXJJEDIy8rfg/HHyDKBC2upDMAV0bhN7N6T8NBpydwD4LUF/oYlXZFwkaJNLycgYO3K3LRLsQsGHNayEy/Ap8ymOlte6cah8TWPGRuPR45MR/m0kvuCUGchJFjdNNbEGe1fludy5crkc51z912BI2/y1uI7CQK3w=
+	t=1763971616; cv=none; b=sEF+xmcyXGBFN9NIT2oEUeTdArxjyGJqKWFBNpn2BgtRCNLj5JkT02PSElq68N/VM+RHQJHSH7yisN+GWz7NB/HOcWusgJ9ULZMI4pcmF21+zAp275FeZNny0qDvEoNwv/Xsc6vkDDbIqWuhMJAF95pubgAGgThWdxlbAVZ3AE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971613; c=relaxed/simple;
-	bh=17YbgJ4cjsUWhoPTxaQqkj19FzshHy7B0XLlDSidKHg=;
+	s=arc-20240116; t=1763971616; c=relaxed/simple;
+	bh=25K/SZ3uMvx1LjPKnyF10T/8NBDtY9DShcqCidGqSeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMnnDKNcxEsh0O0816iKwH/MVu71VDmi4ZEWe5iS+lDd4p5Xo/tCpvMd++XhQ4McAij7OlsdkAd3bV+tY+jTdCdAIyXpovNftcpQhuPBvxaXYbwG0pvY/piUAAiXgevgr6zvAX71EJ6G5yl1vCGxyyRhBh/UqZvBsrT+iPFl91U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HzRnuL+z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RsFaufxaFHwq9Xn+ss4Pz/g+vr2V4WnK1B7w+fQRzal7luO01zVpS/adU8zfnluveXwryFJtK0Dvq/Qon/1iRHmtM20Ecw9DbuONB7CIPfnzHd9hm2LfItuMIllfu0P/nKa6HMyimkupyXesGa/vBC9vz3UomG3UysYZ4VAjfaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uAe18yvl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HzRnuL+z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6A6C4CEF1;
-	Mon, 24 Nov 2025 08:06:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uAe18yvl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1235AC4CEF1;
+	Mon, 24 Nov 2025 08:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971613;
-	bh=17YbgJ4cjsUWhoPTxaQqkj19FzshHy7B0XLlDSidKHg=;
+	s=k20201202; t=1763971616;
+	bh=25K/SZ3uMvx1LjPKnyF10T/8NBDtY9DShcqCidGqSeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzRnuL+zGUWN7cjrs3XXhgilz3ZPfxnb8/eDhAtyFwELZ37ps9dKsSJSo4zwjHfGH
-	 ihxoysQljXAq15R3AAozbMhOiQZ6qIlisdWyQM5bRvjc+lWgOC6YXd6ZYALq5Babpx
-	 p2vWIFYVkFogHAd14/5Slc+DIGUcha3gDMgjGBZiTeQO6Z4YTJIcNoApNVyoAQ2LMm
-	 nxUPRjKEBuImTWjiioupdS824QhJb/wteSq69t3Tz4e6UsOG89bnLZ7Oou4fKz0KvW
-	 bXIOWYBJhB6Op2ENlkyDb9mzox5PhfBx1U0Xe8Kljsa14/A/uOHgB5Pg5Tz/2c2PR0
-	 htHS4LYLqueCA==
+	b=uAe18yvlZgM+XQ0ZEz82ygqX9cSQZIkEDM6zEkLIZ49Rgu17BjHKnoJID/B4ucK7z
+	 EeMY7zSgqGbgQsoUd74Mmf3IrSVtu5IBwrmrgClx8iYU1A77bkAnq6nGFlpObfohiV
+	 buanO8YdDYBMXeg0eOiSYuS5urzg97zEP7O+q5/BjfwbKNu4cnFjXK368zfg7Fti8+
+	 /xiSTQLUmcvz6eQDntWdawc9XQUSBAdN/lU9IohAqQs+ZXiBfcdamuQveNwE3zXgn/
+	 2Z837ixN6nKgbZ7ikkkP6TK338Wc5PDzhb/7C54f82aUhue8MrIkjAzqPydXOB3m7A
+	 qFa0Tr2l3YQEw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+Cc: Krishna Chomal <krishna.chomal108@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.17-5.10] pinctrl: qcom: msm: Fix deadlock in pinmux configuration
-Date: Mon, 24 Nov 2025 03:06:20 -0500
-Message-ID: <20251124080644.3871678-6-sashal@kernel.org>
+	mpearson-lenovo@squebb.ca,
+	mario.limonciello@amd.com,
+	kuurtb@gmail.com,
+	luzmaximilian@gmail.com,
+	edip@medip.dev,
+	julien.robin28@free.fr,
+	alexandre.f.demers@gmail.com
+Subject: [PATCH AUTOSEL 6.17] platform/x86: hp-wmi: Add Omen 16-wf1xxx fan support
+Date: Mon, 24 Nov 2025 03:06:21 -0500
+Message-ID: <20251124080644.3871678-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -47,137 +51,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-[ Upstream commit 1c2e70397b4125022dba80f6111271a37fb36bae ]
+[ Upstream commit fb146a38cb119c8d69633851c7a2ce2c8d34861a ]
 
-Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
-to prevent deadlock when wakeup IRQ is triggered on the same
-GPIO being reconfigured.
+The newer HP Omen laptops, such as Omen 16-wf1xxx, use the same
+WMI-based thermal profile interface as Victus 16-r1000 and 16-s1000
+models.
 
-The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
-handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
-msm_pinmux_set_mux() calls disable_irq() which waits for the currently
-running IRQ handler to complete, creating a circular dependency that
-results in deadlock.
+Add the DMI board name "8C78" to the victus_s_thermal_profile_boards
+list to enable proper fan and thermal mode control.
 
-Using disable_irq_nosync() avoids waiting for the IRQ handler to
-complete, preventing the deadlock condition while still properly
-disabling the interrupt during pinmux reconfiguration.
+Tested on: HP Omen 16-wf1xxx (board 8C78)
+Result:
+* Fan RPMs are readable
+* echo 0 | sudo tee /sys/devices/platform/hp-wmi/hwmon/*/pwm1_enable
+  allows the fans to run on max RPM.
 
-Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
+Link: https://patch.msgid.link/20251018111001.56625-1-krishna.chomal108@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## COMPREHENSIVE ANALYSIS
+1. **Commit Message Analysis**:
+   - **Subject**: "platform/x86: hp-wmi: Add Omen 16-wf1xxx fan support"
+   - **Problem**: HP Omen 16-wf1xxx laptops (board ID "8C78") lack fan
+     and thermal profile control.
+   - **Fix**: Adds the board ID to the driver's whitelist
+     (`victus_s_thermal_profile_boards`), enabling the existing WMI
+     thermal interface for this model.
+   - **Signals**: Tested on hardware (positive), Reviewed by maintainer
+     (positive). No "Fixes:" tag, but fixes a hardware support gap.
 
-### 1. COMMIT MESSAGE & CODE ANALYSIS
+2. **Deep Code Research**:
+   - **File**: `drivers/platform/x86/hp/hp-wmi.c`
+   - **Mechanism**: The driver uses
+     `dmi_get_system_info(DMI_BOARD_NAME)` to match against
+     `victus_s_thermal_profile_boards`. If matched,
+     `is_victus_s_thermal_profile()` returns true, enabling
+     `hp_wmi_hwmon_read`/`write` callbacks to handle fan speed and
+     thermal profiles via the EC.
+   - **Codebase Context**: The `victus_s` infrastructure was introduced
+     in commit `6e4ab59b8391a` (Jan 2025) and is present in the current
+     stable tree (linux-6.17.y).
+   - **Precedent**: Commit `748f897511446` (Jul 2025) previously added
+     board IDs "8C99" and "8C9C" to the same array and was
+     backported/present in the stable tree.
+   - **Backport Detail**: The patch context shows IDs ("8BBE", "8BD4")
+     that are missing from the current stable tree. This indicates the
+     patch will not apply cleanly (`git apply` will fail on context),
+     but the logic is independent. A trivial backport (manual context
+     adjustment) is required to insert "8C78" into the existing array.
 
-**Problem Identified:** A circular dependency deadlock occurs in the
-Qualcomm pin control driver (`pinctrl-msm.c`).
-**Mechanism:** The function `msm_pinmux_set_mux()` is responsible for
-changing a pin's function. When switching away from a GPIO that has an
-interrupt enabled, it calls `disable_irq()` to mask the interrupt.
-**The Deadlock:** `disable_irq()` synchronously waits for any running
-IRQ handlers to complete. If `msm_pinmux_set_mux()` is called *from
-within* the handler of the very interrupt being disabled (common in
-wakeup scenarios where a device wakes up and immediately reconfigures
-pins), the code waits for itself to finish, resulting in a hard system
-hang.
-**The Fix:** The commit replaces `disable_irq()` with
-`disable_irq_nosync()`. This variant masks the interrupt without waiting
-for pending handlers, effectively breaking the circular dependency while
-maintaining the required hardware state safety.
+3. **Stable Kernel Rules Compliance**:
+   - **Exception Category**: **New Device IDs** (Explicitly allowed).
+     The stable rules permit adding PCI/USB/ACPI IDs to existing drivers
+     to enable hardware support. Adding a DMI board string functions
+     identically to adding a Device ID.
+   - **User Impact**: High for owners of this hardware (fixes broken
+     thermal management). Low for everyone else.
+   - **Risk**: Negligible. The change is isolated to a specific hardware
+     signature.
+   - **Criteria**: obviously correct (adding string to array), fixes
+     real bug (missing functionality), small scope (1 line).
 
-### 2. DEEP CODE RESEARCH
-
-**History and Origin:**
-- The problematic `disable_irq()` call was introduced in commit
-  `cf9d052aa6005f` ("pinctrl: qcom: Don't clear pending interrupts when
-  enabling"), merged in January 2021 (Linux v5.11).
-- This means the bug has been present for approximately 4 years and
-  affects multiple Long Term Support (LTS) kernels, including 5.15.y,
-  6.1.y, and 6.6.y.
-
-**Code Correctness:**
-- `disable_irq_nosync()` is the specific API designed for this exact use
-  case (disabling an interrupt from within its own handler or call
-  chain).
-- The change is surgical (one line) and does not alter the logical flow
-  of the driver other than removing the synchronous wait.
-- The interrupt is properly re-enabled later in the function (if
-  switching back to GPIO), ensuring the logic remains consistent.
-
-### 3. BUG SEVERITY AND USER IMPACT
-
-**Severity:** **CRITICAL**. A deadlock causes a complete system freeze,
-requiring a hard reset.
-**Target Users:** This affects devices using Qualcomm SoCs (MSM/QCOM),
-which includes a vast ecosystem of:
-- Android smartphones and tablets
-- Embedded IoT devices
-- Chromebooks
-- Automotive IVI systems
-**Trigger:** The issue is triggered during wakeup events when a GPIO IRQ
-fires and the handler attempts to reconfigure the pinmux. This is a
-realistic scenario in power management flows (suspend/resume).
-
-### 4. STABLE KERNEL RULES COMPLIANCE
-
-This commit perfectly fits the criteria for stable backporting:
-- **Obviously Correct:** It uses the standard kernel API (`_nosync`) to
-  resolve a known deadlock pattern.
-- **Fixes a Real Bug:** It addresses a system hang/deadlock.
-- **Small Scope:** Only 1 line changed in 1 file.
-- **No New Features:** Pure bug fix.
-- **Low Risk:** The fix relaxes a synchronization constraint that was
-  incorrect for this context; it does not introduce complex new logic.
-
-### 5. BACKPORT FEASIBILITY
-
-Because the surrounding code has been stable since v5.11, this patch
-should apply cleanly (cherry-pick) to all active stable branches:
-- v6.12.y
-- v6.11.y
-- v6.6.y (LTS)
-- v6.1.y (LTS)
-- v5.15.y (LTS)
-
-### CONCLUSION
-
-This is a critical fix for a deadlock that affects widely deployed
-hardware. The solution is trivial, correct, and low-risk. Despite the
-lack of a "Cc: stable" tag, the nature of the bug (system hang) makes it
-a mandatory backport candidate.
+4. **Conclusion**:
+  The commit effectively acts as a Device ID / Quirk addition, which is
+  a standard exception for stable backports. It enables essential
+  hardware functionality using existing, tested driver paths. The
+  missing context in the stable tree is a minor logistical issue
+  (requires fuzz/manual merge) but does not invalidate the technical
+  correctness or safety of the fix.
 
 **YES**
 
- drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
+ drivers/platform/x86/hp/hp-wmi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-index 83eb075b6bfa1..3d6601dc6fcc5 100644
---- a/drivers/pinctrl/qcom/pinctrl-msm.c
-+++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-@@ -215,7 +215,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
- 	 */
- 	if (d && i != gpio_func &&
- 	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
--		disable_irq(irq);
-+		disable_irq_nosync(irq);
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 9a668e2587952..e10c75d91f248 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -95,7 +95,7 @@ static const char * const victus_thermal_profile_boards[] = {
+ /* DMI Board names of Victus 16-r and Victus 16-s laptops */
+ static const char * const victus_s_thermal_profile_boards[] = {
+ 	"8BBE", "8BD4", "8BD5",
+-	"8C99", "8C9C"
++	"8C78", "8C99", "8C9C",
+ };
  
- 	raw_spin_lock_irqsave(&pctrl->lock, flags);
- 
+ enum hp_wmi_radio {
 -- 
 2.51.0
 
