@@ -1,47 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76782E03E6;
-	Mon, 24 Nov 2025 08:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7112EBDCB;
+	Mon, 24 Nov 2025 08:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1763971616; cv=none; b=sEF+xmcyXGBFN9NIT2oEUeTdArxjyGJqKWFBNpn2BgtRCNLj5JkT02PSElq68N/VM+RHQJHSH7yisN+GWz7NB/HOcWusgJ9ULZMI4pcmF21+zAp275FeZNny0qDvEoNwv/Xsc6vkDDbIqWuhMJAF95pubgAGgThWdxlbAVZ3AE4=
+	t=1763971620; cv=none; b=illedImsCbruPQtpyIsfwEDEH303o91VLNx7LVO8rqezUUdHAd8AE8xUjGx0DqCbQUs7gPpU4xYZyyZab0Me3n54vHGdGcLOJ7xyIU3L4S4mfHxwxpfTHtpB4EnscIjQGsyLEgkV8W8ByNuEV+Ilb88idC8IX7ttWwNoRqBwkK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1763971616; c=relaxed/simple;
-	bh=25K/SZ3uMvx1LjPKnyF10T/8NBDtY9DShcqCidGqSeA=;
+	s=arc-20240116; t=1763971620; c=relaxed/simple;
+	bh=2DfJovqnBSCssy0NJz7G7Dmqx2CQZ/KxyDUq+b46ELE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RsFaufxaFHwq9Xn+ss4Pz/g+vr2V4WnK1B7w+fQRzal7luO01zVpS/adU8zfnluveXwryFJtK0Dvq/Qon/1iRHmtM20Ecw9DbuONB7CIPfnzHd9hm2LfItuMIllfu0P/nKa6HMyimkupyXesGa/vBC9vz3UomG3UysYZ4VAjfaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uAe18yvl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eIMvOl3i7IGwGGPPkaecFH5TtviWRTSlDhhd4sgjANKWFOuZXtlFRIj6VVcJ8f+OV2CWnX7bZd7darYaguMOP3IM4PiPGYzSnTwZwYKyY+cLQYXOitpjT7ajVI8Ldyok2QL9mB4uLWFOzE0NQLexe6h0eOuOOE3AG9pa6CGqhDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dE1RTFQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uAe18yvl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1235AC4CEF1;
-	Mon, 24 Nov 2025 08:06:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dE1RTFQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 857E3C4CEF1;
+	Mon, 24 Nov 2025 08:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1763971616;
-	bh=25K/SZ3uMvx1LjPKnyF10T/8NBDtY9DShcqCidGqSeA=;
+	s=k20201202; t=1763971620;
+	bh=2DfJovqnBSCssy0NJz7G7Dmqx2CQZ/KxyDUq+b46ELE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAe18yvlZgM+XQ0ZEz82ygqX9cSQZIkEDM6zEkLIZ49Rgu17BjHKnoJID/B4ucK7z
-	 EeMY7zSgqGbgQsoUd74Mmf3IrSVtu5IBwrmrgClx8iYU1A77bkAnq6nGFlpObfohiV
-	 buanO8YdDYBMXeg0eOiSYuS5urzg97zEP7O+q5/BjfwbKNu4cnFjXK368zfg7Fti8+
-	 /xiSTQLUmcvz6eQDntWdawc9XQUSBAdN/lU9IohAqQs+ZXiBfcdamuQveNwE3zXgn/
-	 2Z837ixN6nKgbZ7ikkkP6TK338Wc5PDzhb/7C54f82aUhue8MrIkjAzqPydXOB3m7A
-	 qFa0Tr2l3YQEw==
+	b=dE1RTFQW2AKN0OLU6X9CMvIps2wTT9FbdqO7l/kZN4zFKHVne7A6acxe0WfujwM1A
+	 7eiSdh3qvfyh8mmo1Bu8XEveqT/0S4v5mxI7svb/g0VJAYmQwHP85eCto66AdH//DJ
+	 o8QB0np0oTEIKsOcRv7YDOjUDabnQZOOPMYSnjS6N+ZuTZcRjQEQkEle1CIJYIssoi
+	 2W7qCF8iMOwmthGJwcob7bOghEDppUKMOegVMX13Db/pZzqtNeAYIzf8iXxv7a1A0B
+	 oqj0ahqaMBrSZhcm5qX5O9UffVM6JTyQY2UJ64ijOAE6WXSLV2mECL6BxzEB6IQ5bi
+	 YbiSMw1/DyVmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krishna Chomal <krishna.chomal108@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mpearson-lenovo@squebb.ca,
-	mario.limonciello@amd.com,
-	kuurtb@gmail.com,
-	luzmaximilian@gmail.com,
-	edip@medip.dev,
-	julien.robin28@free.fr,
-	alexandre.f.demers@gmail.com
-Subject: [PATCH AUTOSEL 6.17] platform/x86: hp-wmi: Add Omen 16-wf1xxx fan support
-Date: Mon, 24 Nov 2025 03:06:21 -0500
-Message-ID: <20251124080644.3871678-7-sashal@kernel.org>
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com
+Subject: [PATCH AUTOSEL 6.17-5.10] samples: work around glibc redefining some of our defines wrong
+Date: Mon, 24 Nov 2025 03:06:22 -0500
+Message-ID: <20251124080644.3871678-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251124080644.3871678-1-sashal@kernel.org>
 References: <20251124080644.3871678-1-sashal@kernel.org>
@@ -51,106 +45,199 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.17.8
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit fb146a38cb119c8d69633851c7a2ce2c8d34861a ]
+[ Upstream commit a48f822908982353c3256e35a089e9e7d0d61580 ]
 
-The newer HP Omen laptops, such as Omen 16-wf1xxx, use the same
-WMI-based thermal profile interface as Victus 16-r1000 and 16-s1000
-models.
+Apparently as of version 2.42, glibc headers define AT_RENAME_NOREPLACE
+and some of the other flags for renameat2() and friends in <stdio.h>.
 
-Add the DMI board name "8C78" to the victus_s_thermal_profile_boards
-list to enable proper fan and thermal mode control.
+Which would all be fine, except for inexplicable reasons glibc decided
+to define them _differently_ from the kernel definitions, which then
+makes some of our sample code that includes both kernel headers and user
+space headers unhappy, because the compiler will (correctly) complain
+about redefining things.
 
-Tested on: HP Omen 16-wf1xxx (board 8C78)
-Result:
-* Fan RPMs are readable
-* echo 0 | sudo tee /sys/devices/platform/hp-wmi/hwmon/*/pwm1_enable
-  allows the fans to run on max RPM.
+Now, mixing kernel headers and user space headers is always a somewhat
+iffy proposition due to namespacing issues, but it's kind of inevitable
+in our sample and selftest code.  And this is just glibc being stupid.
 
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20251018111001.56625-1-krishna.chomal108@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Those defines come from the kernel, glibc is exposing the kernel
+interfaces, and glibc shouldn't make up some random new expressions for
+these values.
+
+It's not like glibc headers changed the actual result values, but they
+arbitrarily just decided to use a different expression to describe those
+values.  The kernel just does
+
+    #define AT_RENAME_NOREPLACE  0x0001
+
+while glibc does
+
+    # define RENAME_NOREPLACE (1 << 0)
+    # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+
+instead.  Same value in the end, but very different macro definition.
+
+For absolutely no reason.
+
+This has since been fixed in the glibc development tree, so eventually
+we'll end up with the canonical expressions and no clashes.  But in the
+meantime the broken headers are in the glibc-2.42 release and have made
+it out into distributions.
+
+Do a minimal work-around to make the samples build cleanly by just
+undefining the affected macros in between the user space header include
+and the kernel header includes.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-1. **Commit Message Analysis**:
-   - **Subject**: "platform/x86: hp-wmi: Add Omen 16-wf1xxx fan support"
-   - **Problem**: HP Omen 16-wf1xxx laptops (board ID "8C78") lack fan
-     and thermal profile control.
-   - **Fix**: Adds the board ID to the driver's whitelist
-     (`victus_s_thermal_profile_boards`), enabling the existing WMI
-     thermal interface for this model.
-   - **Signals**: Tested on hardware (positive), Reviewed by maintainer
-     (positive). No "Fixes:" tag, but fixes a hardware support gap.
+## COMPREHENSIVE ANALYSIS
 
-2. **Deep Code Research**:
-   - **File**: `drivers/platform/x86/hp/hp-wmi.c`
-   - **Mechanism**: The driver uses
-     `dmi_get_system_info(DMI_BOARD_NAME)` to match against
-     `victus_s_thermal_profile_boards`. If matched,
-     `is_victus_s_thermal_profile()` returns true, enabling
-     `hp_wmi_hwmon_read`/`write` callbacks to handle fan speed and
-     thermal profiles via the EC.
-   - **Codebase Context**: The `victus_s` infrastructure was introduced
-     in commit `6e4ab59b8391a` (Jan 2025) and is present in the current
-     stable tree (linux-6.17.y).
-   - **Precedent**: Commit `748f897511446` (Jul 2025) previously added
-     board IDs "8C99" and "8C9C" to the same array and was
-     backported/present in the stable tree.
-   - **Backport Detail**: The patch context shows IDs ("8BBE", "8BD4")
-     that are missing from the current stable tree. This indicates the
-     patch will not apply cleanly (`git apply` will fail on context),
-     but the logic is independent. A trivial backport (manual context
-     adjustment) is required to insert "8C78" into the existing array.
+### 1. COMMIT MESSAGE ANALYSIS
+**Problem:** The commit addresses a build failure introduced by glibc
+version 2.42. The glibc headers (`<stdio.h>`) began defining
+`AT_RENAME_NOREPLACE`, `AT_RENAME_EXCHANGE`, and `AT_RENAME_WHITEOUT`
+using bitwise shift expressions (e.g., `1 << 0`). The Linux kernel
+headers (`<linux/stat.h>`, `<linux/fcntl.h>`) define these same
+constants using hexadecimal literals (e.g., `0x0001`). When sample
+programs include both sets of headers, the compiler detects a macro
+redefinition mismatch, causing the build to fail.
 
-3. **Stable Kernel Rules Compliance**:
-   - **Exception Category**: **New Device IDs** (Explicitly allowed).
-     The stable rules permit adding PCI/USB/ACPI IDs to existing drivers
-     to enable hardware support. Adding a DMI board string functions
-     identically to adding a Device ID.
-   - **User Impact**: High for owners of this hardware (fixes broken
-     thermal management). Low for everyone else.
-   - **Risk**: Negligible. The change is isolated to a specific hardware
-     signature.
-   - **Criteria**: obviously correct (adding string to array), fixes
-     real bug (missing functionality), small scope (1 line).
+**Solution:** The fix implements a workaround by explicitly `#undef`-ing
+the conflicting macros after including the glibc headers but before
+including the kernel headers. This ensures the kernel headers can define
+them without conflict.
 
-4. **Conclusion**:
-  The commit effectively acts as a Device ID / Quirk addition, which is
-  a standard exception for stable backports. It enables essential
-  hardware functionality using existing, tested driver paths. The
-  missing context in the stable tree is a minor logistical issue
-  (requires fuzz/manual merge) but does not invalidate the technical
-  correctness or safety of the fix.
+**Context:** The commit is signed off by Linus Torvalds, indicating
+high-level validation. While it lacks a "Cc: stable" tag, the nature of
+the change (fixing a build regression caused by external environment
+changes) is a standard candidate for backporting.
+
+### 2. DEEP CODE RESEARCH
+**Affected Files:**
+- `samples/vfs/test-statx.c` (Added in v4.20, present in 5.4+, 5.10+,
+  5.15+, 6.1+, 6.6+ stable trees)
+- `samples/watch_queue/watch_test.c` (Added in v5.8, present in 5.10+,
+  5.15+, 6.1+, 6.6+ stable trees)
+
+**Technical Mechanism:**
+The conflict arises from the preprocessor.
+- **Kernel Definition (`include/uapi/linux/fcntl.h`):**
+  ```c
+  #define AT_RENAME_NOREPLACE     0x0001
+  ```
+- **New Glibc Definition:**
+  ```c
+  #define RENAME_NOREPLACE (1 << 0)
+  #define AT_RENAME_NOREPLACE RENAME_NOREPLACE
+  ```
+Because `0x0001` is not textually identical to `(1 << 0)` (or the
+expansion thereof), the preprocessor flags this as a redefinition error.
+
+**The Fix:**
+The commit inserts:
+```c
+// Work around glibc header silliness
+#undef AT_RENAME_NOREPLACE
+#undef AT_RENAME_EXCHANGE
+#undef AT_RENAME_WHITEOUT
+```
+This effectively cleans the slate before the kernel headers are parsed,
+restoring the canonical kernel definitions for the remainder of the
+file.
+
+### 3. STABLE KERNEL RULES ASSESSMENT
+**Classification:** **BUILD FIX**
+
+This falls strictly under the **EXCEPTIONS** list in the stable kernel
+rules:
+> "4. BUILD FIXES: Fixes for compilation errors or warnings... These are
+critical for users who need to build the kernel"
+
+**Compliance Check:**
+- **Obviously correct:** Yes. It is a standard preprocessor workaround
+  for header conflicts.
+- **Fixes a real bug:** Yes. Users with modern distributions (Fedora
+  Rawhide, Arch, etc.) cannot compile the kernel samples without this.
+- **Small and contained:** Yes. 12 lines of added code, strictly
+  preprocessor directives.
+- **No new features:** Yes. It preserves existing behavior.
+
+### 4. RISK ASSESSMENT
+**Risk:** **ZERO**
+- **Scope:** The changes are limited exclusively to the `samples/`
+  directory. These files are user-space example programs and tests; they
+  are not part of the kernel image (vmlinuz) or modules (.ko).
+- **Runtime Impact:** None. The macros resolve to the same numeric
+  values (`1` vs `0x0001`), so the compiled binary behavior is
+  identical.
+- **Regression Potential:** None. The `#undef` only affects the specific
+  translation units of the sample programs.
+
+### 5. USER IMPACT EVALUATION
+**Target Audience:** Developers, distribution maintainers, and CI
+systems building the full kernel tree (including `make samples`).
+**Severity:** Medium (Build Breakage). While it doesn't break the booted
+kernel, build failures are blocking issues that disrupt workflows and
+testing. As glibc 2.42 propagates to stable distributions (Debian,
+Ubuntu, RHEL), this issue will become widespread.
+
+### 6. CONCLUSION
+This commit is a textbook example of a stable backport candidate under
+the "Build Fix" exception. It fixes a tangible regression caused by
+toolchain/library updates, has zero risk to the kernel runtime, and
+ensures the kernel source tree remains buildable on modern systems.
 
 **YES**
 
- drivers/platform/x86/hp/hp-wmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/vfs/test-statx.c         | 6 ++++++
+ samples/watch_queue/watch_test.c | 6 ++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 9a668e2587952..e10c75d91f248 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -95,7 +95,7 @@ static const char * const victus_thermal_profile_boards[] = {
- /* DMI Board names of Victus 16-r and Victus 16-s laptops */
- static const char * const victus_s_thermal_profile_boards[] = {
- 	"8BBE", "8BD4", "8BD5",
--	"8C99", "8C9C"
-+	"8C78", "8C99", "8C9C",
- };
- 
- enum hp_wmi_radio {
+diff --git a/samples/vfs/test-statx.c b/samples/vfs/test-statx.c
+index 49c7a46cee073..424a6fa15723c 100644
+--- a/samples/vfs/test-statx.c
++++ b/samples/vfs/test-statx.c
+@@ -19,6 +19,12 @@
+ #include <time.h>
+ #include <sys/syscall.h>
+ #include <sys/types.h>
++
++// Work around glibc header silliness
++#undef AT_RENAME_NOREPLACE
++#undef AT_RENAME_EXCHANGE
++#undef AT_RENAME_WHITEOUT
++
+ #include <linux/stat.h>
+ #include <linux/fcntl.h>
+ #define statx foo
+diff --git a/samples/watch_queue/watch_test.c b/samples/watch_queue/watch_test.c
+index 8c6cb57d5cfc5..24cf7d7a19725 100644
+--- a/samples/watch_queue/watch_test.c
++++ b/samples/watch_queue/watch_test.c
+@@ -16,6 +16,12 @@
+ #include <errno.h>
+ #include <sys/ioctl.h>
+ #include <limits.h>
++
++// Work around glibc header silliness
++#undef AT_RENAME_NOREPLACE
++#undef AT_RENAME_EXCHANGE
++#undef AT_RENAME_WHITEOUT
++
+ #include <linux/watch_queue.h>
+ #include <linux/unistd.h>
+ #include <linux/keyctl.h>
 -- 
 2.51.0
 
