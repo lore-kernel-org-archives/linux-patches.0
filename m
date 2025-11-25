@@ -1,97 +1,86 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C74C3148B4;
-	Tue, 25 Nov 2025 19:42:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D310D2264A9;
+	Tue, 25 Nov 2025 21:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764099771; cv=none; b=Wwto/tYa7AR1k9nZZ5B/KETcs0xTAyPc3F7ZU3MFslEJYDH1NF9p3Ip4LsPIWvFHEly6vR03ghHWWXBWJrTRyOuaz8KFLMKI4nuJeCYWcp4BxjnQS1h3CdZSqThYT1X4RlrEkRx/zbbXe/9crDSYd4ylCiBEgej3SC2k8sr2XRU=
+	t=1764105921; cv=none; b=Vm/iaQyZpjmf8MEC8MrJ5bFltya8dMbmurdmXpGQTJ1KyASl9CzTdAVDijH7Bc93k2z12WBBad8rXqob6gPTzdOOI7keMKlsU8fbVnfXja14THRNZktmFDWVj5l7jcdlcXRMizI0D79K3+iGtvNFzgjJTZYJu24cAsfcc63GHPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764099771; c=relaxed/simple;
-	bh=EH5HQVZ4pVflbpU68pvKHubZ0K2IYSrdTVT51BYzWEo=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tQAx3j94PeNDPIkfd5ZKrwuT2ZZ9W7NlJkwaj+sOkv9IgKAT5juDmsJRXFEnqUkuiSshfvfLdEIJGHzxjVG7aonKfctw53mYu+Pe0Gz4lRsPh+w55TdMnn5ElkyDN0eH5Tx+KlLqxHFe65qmF8vtbIDBHC4/B8aqQSCnpKqAb74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DsUY5hRY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764105921; c=relaxed/simple;
+	bh=/5/8CnucXexqxcmHU/UtJRHL8WYNxyE9z/az71jfwjE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GYqXJFPdQmSxHFcKG29Z/gKOq+dZFvVaOSn03Thr2DihexzPGHCn6/ME+sTF3VoZ9i4wLPV49p5HVDJILqrMqYY+QK6ODSG5Zb/mwmToV3WBjCYDzwXXC+NBf+D4w8QdMCTmf9+dPengGONSXvY/mAJVnTZ4uJWaP2GpZ7fwebY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pVvzVe4H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DsUY5hRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A79ADC4CEF1;
-	Tue, 25 Nov 2025 19:42:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pVvzVe4H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 392A0C4CEF1;
+	Tue, 25 Nov 2025 21:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764099770;
-	bh=EH5HQVZ4pVflbpU68pvKHubZ0K2IYSrdTVT51BYzWEo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=DsUY5hRYzfqkGz84KqeI8ykvjkXvHFogdOuTZISZ1HlQ3iWfar5088nRWuAbxCBZC
-	 ukjMV4DN9o4vTQ/aC6z63GOvNjJj3Yn+theY4+NI6hgat6JiFDYUq8GTVmZi8Av+ZU
-	 ODPDmyRqsSdNTIos2LyZKTNgplyfFYC6WeR5XJrTMPkHBun+WJf0IfHCAhmg8RDhTK
-	 bHX7HlbORW6yiJ0i2SI159BRkioCcSgt+UUuuL+UZzpYMwJuf5ggXt9IucyJhTa76y
-	 bckSyrokrdh5xBjk3r6PSizr7rk5mHZoZjc+QCYU3Bk8auyr+rurVx6r7WhoQP8IYi
-	 AEm8L4vFk38NA==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1vNyw4-00000008GHt-235b;
-	Tue, 25 Nov 2025 19:42:48 +0000
-Date: Tue, 25 Nov 2025 19:42:48 +0000
-Message-ID: <87ecplgapz.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Oliver Upton <oupton@kernel.org>,
-	Joey Gouly <joey.gouly@arm.com>,
+	s=k20201202; t=1764105921;
+	bh=/5/8CnucXexqxcmHU/UtJRHL8WYNxyE9z/az71jfwjE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=pVvzVe4HPqXuvwssOnpPmVG0irI/Jdi1mn5r2geRo5gtQEjRqzhW3TLBTQfOH6paK
+	 oZ+qjn2P84b03j1GMfiFz4EOqVcxA/zGHIA06BBPnMm72ZX1pmiDbjDn5HV8IHmsbx
+	 kAW5nInjZZFQfcGCA2o1ZiAvZpKT0F1lVj/MBVO3MSTi2rBnAv8mGnKWe9XFfvmKxx
+	 ybHh0EE3f2zM1/r4GXCnGbzt2LkbRnHch1Z1JS7zR+9+lALudMAUOAUX7XGiSJ8dEp
+	 zQpnB562Lj3o1muXZd/v3SRxOBToVjmC6oUAsqnmvc9+Jt9ldX67/kl7rR8vbuWB5O
+	 mrWviyyOjZwjw==
+Date: Tue, 25 Nov 2025 13:25:19 -0800
+From: Oliver Upton <oupton@kernel.org>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, Joey Gouly <joey.gouly@arm.com>,
 	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Zenghui Yu <yuzenghui@huawei.com>,
-	linux-arm-kernel@lists.infradead.org,
-	kvmarm@lists.linux.dev,
-	llvm@lists.linux.dev,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] KVM: arm64: Add break to default case in kvm_pgtable_stage2_pte_prot()
-In-Reply-To: <20251125-arm64-kvm-hyp-pgtable-fix-c23-ext-warn-v1-1-98b506ddefbf@kernel.org>
+	linux-arm-kernel@lists.infradead.org, kvmarm@lists.linux.dev,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH] KVM: arm64: Add break to default case in
+ kvm_pgtable_stage2_pte_prot()
+Message-ID: <aSYev0IqSATKAEau@kernel.org>
 References: <20251125-arm64-kvm-hyp-pgtable-fix-c23-ext-warn-v1-1-98b506ddefbf@kernel.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+ <87ecplgapz.wl-maz@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: nathan@kernel.org, oupton@kernel.org, joey.gouly@arm.com, suzuki.poulose@arm.com, yuzenghui@huawei.com, linux-arm-kernel@lists.infradead.org, kvmarm@lists.linux.dev, llvm@lists.linux.dev, patches@lists.linux.dev
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ecplgapz.wl-maz@kernel.org>
 
-On Tue, 25 Nov 2025 17:59:15 +0000,
-Nathan Chancellor <nathan@kernel.org> wrote:
+On Tue, Nov 25, 2025 at 07:42:48PM +0000, Marc Zyngier wrote:
+> On Tue, 25 Nov 2025 17:59:15 +0000,
+> Nathan Chancellor <nathan@kernel.org> wrote:
+> > 
+> > Clang warns (or errors with CONFIG_WERROR=y / W=e):
+> > 
+> >   arch/arm64/kvm/hyp/pgtable.c:757:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
+> >     757 |         }
+> >         |         ^
+> > 
+> > With older versions of clang (15 and older) and GCC (at least the minimum
+> > supported, 8.1), this is an unconditional hard error:
+> > 
+> >   arch/arm64/kvm/hyp/pgtable.c: In function 'kvm_pgtable_stage2_pte_prot':
+> >   arch/arm64/kvm/hyp/pgtable.c:756:2: error: label at end of compound statement
+> >     default:
+> >     ^~~~~~~
+> > 
+> >   arch/arm64/kvm/hyp/pgtable.c:756:10: error: label at end of compound statement: expected statement
+> >           default:
+> >                   ^
+> >                    ;
+> > 
+> > Add a break statement to this default case to clear up the error/warning.
+> > 
+> > Fixes: 2608563b466b ("KVM: arm64: Add support for FEAT_XNX stage-2 permissions")
+> > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > 
-> Clang warns (or errors with CONFIG_WERROR=y / W=e):
-> 
->   arch/arm64/kvm/hyp/pgtable.c:757:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
->     757 |         }
->         |         ^
-> 
-> With older versions of clang (15 and older) and GCC (at least the minimum
-> supported, 8.1), this is an unconditional hard error:
-> 
->   arch/arm64/kvm/hyp/pgtable.c: In function 'kvm_pgtable_stage2_pte_prot':
->   arch/arm64/kvm/hyp/pgtable.c:756:2: error: label at end of compound statement
->     default:
->     ^~~~~~~
-> 
->   arch/arm64/kvm/hyp/pgtable.c:756:10: error: label at end of compound statement: expected statement
->           default:
->                   ^
->                    ;
-> 
-> Add a break statement to this default case to clear up the error/warning.
-> 
-> Fixes: 2608563b466b ("KVM: arm64: Add support for FEAT_XNX stage-2 permissions")
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> Acked-by: Marc Zyngier <maz@kernel.org>
 
-Acked-by: Marc Zyngier <maz@kernel.org>
+Thank you both for addressing the pile-up of issues I managed to
+introduce :) Online now, will apply in just a moment.
 
-	M.
-
--- 
-Jazz isn't dead. It just smells funny.
+Thanks,
+Oliver
