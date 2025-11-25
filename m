@@ -1,108 +1,174 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012000.outbound.protection.outlook.com [40.107.200.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D0532BF5B;
-	Tue, 25 Nov 2025 17:59:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764093570; cv=none; b=UUwxMCfA3h6oc+4qBTX2sRf9uOgPDlVWuQ8V5kWaswWbkiFADsQNkWLOK4tM5OxCBWzAwpiANGm7ohYDJBpyhAhmVrMNXAdFIdkXJKd8EM05IlUtLIGRd5ORUIbYKd6r9ouFrukb/4zqJLSvXS/iN62KnlF7bA/liBZB2M7mXUM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764093570; c=relaxed/simple;
-	bh=h1qlIj8HN/bM1sBtCtKsuSxVMyqRjvY/Uk7aNakm8hM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Wmcv6vF0TUyMPch7Sw86u4Trok268qWmOv83lNNPiGkhuORhkTUe98bFv4rFcePxEUWQvi4nPyDQiyJP57EBRJ4qGUkx7ScMbIavmH8tygoghVMuAUMIsE0i/P9TZwZMYjlz8Ye3d/yXechx74BZxJX12nVY0dmghICxRRjn19c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QKhhfPUt; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE2432C95B;
+	Tue, 25 Nov 2025 18:30:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.0
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764095455; cv=fail; b=s8mpxvIQRnT6VMquN0kYGhnDhqAR54s0IuLMM1DD6XajZXTVZLEf84K+aWPymTN/bR6DHdVQWHHLxxycv6mYP2M6bMkZhZTd3zKwED6Rrcy3Wn9jQGCmBuEBJTzYM1g7A5coJ4G/e8n3CHIf3nYxCnme6PXYgC7KoGn8+dXx04w=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764095455; c=relaxed/simple;
+	bh=vk7FezfOV59XgAwjYPV6ep8xdPoRLvDBO0jQDlHQ7co=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Zg8Khm68d9mg6BG9jW9nA1kgZA095ivZIdo8AhqQvhnsA22n22NgIP+J+QIjqWmsFzUtS1rVM22i0guvTOacleJtrxz//Z77VE7dXTGLj2aOWpfVwhkUrfoxJGiBhUPZRtz9u3CDiXql2DwjWqbKF5UmCVFkwaGl/MCNCHIlxgE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=fail (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=SdGSAXwm reason="signature verification failed"; arc=fail smtp.client-ip=40.107.200.0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QKhhfPUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5943FC4CEF1;
-	Tue, 25 Nov 2025 17:59:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764093570;
-	bh=h1qlIj8HN/bM1sBtCtKsuSxVMyqRjvY/Uk7aNakm8hM=;
-	h=From:Date:Subject:To:Cc:From;
-	b=QKhhfPUtCMlfCcOICVoGwipUuNj2cmL2Y6m+rfxvgq59YzUjL89dgWluW2TkivAR2
-	 D/cCdGiOsioLMK8SQICulxOuoLJemRvfIH5oPwciSZXgSj1MxSxckd9YpLzn9aSC8I
-	 41Wruge3gwVkVcRkGRra1gg5o08KvassgXFMkgq7ORzsnpy0HlSW/5MqGUeHEiVLgA
-	 stIGrXR4d08526DVfI2lwvJaDJwFiHnPIln+uc16H19VnUljsu5iBQ8etehMigwzi0
-	 c2p3A/uGc/dPwMul9NhdN8Nq11jDDaxD8hLMhtTU/L44+UZwBqUPX92w43oJ2VqTCX
-	 nUiO5ngFp+3zQ==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Tue, 25 Nov 2025 10:59:15 -0700
-Subject: [PATCH] KVM: arm64: Add break to default case in
- kvm_pgtable_stage2_pte_prot()
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="SdGSAXwm"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PWgR/zn+7fH6BzoyLzq9OiFeygclw6xtlxnCrSlES7H+0HTJXszXIbk0+z21qQEJUdabCO+foBQqyRic4rz7gdjj71/sjew5nYheBPlgD056SHQYHntYdQ05/OcTUIOqCA8pXsjB46NRyPdYePUBk6y18nojZaG92SMtHzi8fSM4+EOBYySMqcI46NEqTJhbLBckqb+jsJp3GxFRoRfBceqYqnkFSPHsJ5X4O+xXrt4ZmN8YXYOkT4mXe8SCQuytZgnQ8nCheUmuK4E2C55pNvGHKvXCJ+FmPRLLUcRIEllIMD0gf/SwZY6ehWgfc2T/4RVgfIfNpZ4Qd6F2VSBjyg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oGQpHmrX+Ql0gSf/Koep+fCjnux36oPaj5d9D5MSh8Y=;
+ b=maWVfqE8l30owotF4WlF7TDXdlOBPCyQBOSvKX1vtvtqxXDrODD7nsd3H0normK0PmhQE0o/k1npZLT57iPAsd93sowVnnS6eAWGu1vFbhGZ4DCTI48ooAy0SrmdjUA3iNQ9a99Ry4zST4CLk5efFFZlOSsiVu7pC40cXS4WBCg7PlmU90bL2/fSUtliSnWVKeSbzVt26t90RrnuSd65F6Gr6e9+PHLVK7CYATah8UInRkT7scQmUvwFYuEnla3LLQRjvzo9XiBE8nT9XLlSPbbMt/SKmGSJSxBPebDcfn0O6IVC5BdlPJ4ApKfC3YVmbYxDv+0J+89sGlfx9jC6RQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=8bytes.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oGQpHmrX+Ql0gSf/Koep+fCjnux36oPaj5d9D5MSh8Y=;
+ b=SdGSAXwmxMYg/Nad6tATluSi5y2hOrRtDzbr8vJV+2+YKI/OCTitU+kNvGeNtTmnAsVx89igCWMPx6e4c591bjpIck5WEQf8NtbFJUJoVUXrIelwO8Dt+/E5PUV5WjUY7ndsuNFEj3+MARkVx3hIStI5GIQ8Qh4Qol3cVZi7ti+/jtnIRk6YLV2eU6rqt+Q6Y2+YrmcvOtH3wFWYLCWs83RXMpjG8mLlmPXrGIuzZ7J9TPhWnGvZi7kDAeV0aAiPsSsrdAaBvlSyvmzemb/zvpQKf5FxcvtFdvux6dTaXdYyLk5uv4ElCqWbCDMb65P3bYUr8ehfHgpd7SDfyNFE0g==
+Received: from PH0PR07CA0079.namprd07.prod.outlook.com (2603:10b6:510:f::24)
+ by PH8PR12MB6793.namprd12.prod.outlook.com (2603:10b6:510:1c4::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9343.17; Tue, 25 Nov
+ 2025 18:30:43 +0000
+Received: from CY4PEPF0000EDD3.namprd03.prod.outlook.com
+ (2603:10b6:510:f:cafe::eb) by PH0PR07CA0079.outlook.office365.com
+ (2603:10b6:510:f::24) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.18 via Frontend Transport; Tue,
+ 25 Nov 2025 18:30:04 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CY4PEPF0000EDD3.mail.protection.outlook.com (10.167.241.199) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9366.7 via Frontend Transport; Tue, 25 Nov 2025 18:30:43 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 25 Nov
+ 2025 10:30:15 -0800
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Tue, 25 Nov 2025 10:30:15 -0800
+Received: from Asurada-Nvidia (10.127.8.13) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Tue, 25 Nov 2025 10:30:12 -0800
+Date: Tue, 25 Nov 2025 10:30:10 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: =?iso-8859-1?Q?J=F6rg_R=F6del?= <joro@8bytes.org>, <helgaas@kernel.org>
+CC: <afael@kernel.org>, <bhelgaas@google.com>, <alex@shazbot.org>,
+	<jgg@nvidia.com>, <will@kernel.org>, <robin.murphy@arm.com>,
+	<lenb@kernel.org>, <kevin.tian@intel.com>, <baolu.lu@linux.intel.com>,
+	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
+	<linux-pci@vger.kernel.org>, <kvm@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<etzhao1900@gmail.com>
+Subject: Re: [PATCH v7 0/5] Disable ATS via iommu during PCI resets
+Message-ID: <aSX1srhPwWC0HXNw@Asurada-Nvidia>
+References: <cover.1763775108.git.nicolinc@nvidia.com>
+ <iovdqkgm7std6tpbfoolpkzksbc4hy3egfqgf6wbqmga2jlo7q@uolshjbvs3sm>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251125-arm64-kvm-hyp-pgtable-fix-c23-ext-warn-v1-1-98b506ddefbf@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAHLuJWkC/yXNQQ7CIBCF4as0s3YSQUHjVUwXgNN21CIZsNY0v
- buoyy95+d8CmYQpw6lZQGjizI9YoTYNhMHFnpAv1aC32iilDToZ7R5v04jDO2Hqi/N3wo5nDHq
- HNBd8OYl4NMpbb+hgO4IaS0J18zs6t3/np79SKN86rOsHSVH8dooAAAA=
-X-Change-ID: 20251125-arm64-kvm-hyp-pgtable-fix-c23-ext-warn-851b6b5e76fe
-To: Marc Zyngier <maz@kernel.org>, Oliver Upton <oupton@kernel.org>, 
- Joey Gouly <joey.gouly@arm.com>, Suzuki K Poulose <suzuki.poulose@arm.com>, 
- Zenghui Yu <yuzenghui@huawei.com>
-Cc: linux-arm-kernel@lists.infradead.org, kvmarm@lists.linux.dev, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1562; i=nathan@kernel.org;
- h=from:subject:message-id; bh=h1qlIj8HN/bM1sBtCtKsuSxVMyqRjvY/Uk7aNakm8hM=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJmq7+pLPp/MFlzXcIbv96LXBRKT7dmTlOaGZk/M1oyuO
- Gvr+vl3RykLgxgXg6yYIkv1Y9XjhoZzzjLeODUJZg4rE8gQBi5OAZjIxESG/4Wz/7ZMKWbImLRM
- verzz17TAN+Xs9pFZ0gXr7/+3X1DyF9GhpXl8v+1t4XcXyWf87h8s0GK1qNbpuWyRcflFpyN+pk
- sxQAA
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <iovdqkgm7std6tpbfoolpkzksbc4hy3egfqgf6wbqmga2jlo7q@uolshjbvs3sm>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD3:EE_|PH8PR12MB6793:EE_
+X-MS-Office365-Filtering-Correlation-Id: f410706c-8155-44d2-68bb-08de2c50be36
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|1800799024|376014|7416014|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?iso-8859-1?Q?wsrJ3lV4QXaRJ93BSV17eFEVDwudhOFDufBgnRWk5rcVXvb3p7sItAVrjS?=
+ =?iso-8859-1?Q?8cC28Mp16JdhVCC0GQUDHTNAX1qA5OgKFblKp9fJU2xubNuewi2cIQdVmp?=
+ =?iso-8859-1?Q?NMziAHdxUGjna3L7BBXDLg/qOJmyVAlYnuIUsdNpF13VfenOXyDv0QgW28?=
+ =?iso-8859-1?Q?CHmTdu1H1nLbaxXaTvzRF6bB5vDLD/KgdQk+HAJuRZzcQU1ObQXUDuUYx/?=
+ =?iso-8859-1?Q?A2qIZJOPeYyBkwarcRkz0MnXLxWwQqiDUeVn/c12XVTsL//zCLkMeD5Ulo?=
+ =?iso-8859-1?Q?aw/GYxuV458sG31Y8fcl8D88auQ+d3+kBRoJKQ8p3kpirBH9jngdtXpbQu?=
+ =?iso-8859-1?Q?0vQhwu5hdpld22LdCRqEkKwiocFiBTG8I+GvcPBqe6ZtCmJYWccpRRpkM1?=
+ =?iso-8859-1?Q?cP3l40aExdEZ33DjDD2crq5YQEacnVH+H1fBMEweSX8Pbs+/+sAq5o5qBN?=
+ =?iso-8859-1?Q?yUDBqD//AherkYsL/aIFCiR02dMe/Uo7lUlJ7LGuwEobNyRBzagiEZYr6h?=
+ =?iso-8859-1?Q?rr/sizV+brnmkNUZxs4H15JxkZJBAxRwEc3wGyXp+lR6ICqBxyKdmp89jK?=
+ =?iso-8859-1?Q?2ttvwHZX3ELuvbSt2mni4ILi9HfS0YaSnI1ossARGIrrBpc4DJygi0Xknl?=
+ =?iso-8859-1?Q?AeuVGCv9ZIdrRjrEHS5eBB/dAhrLkKTR6pV7qWlEhyoU5H5ovOpwnij1Fd?=
+ =?iso-8859-1?Q?VHoB3iSqB8FEvNRmDi3BvVwCwdKcpKUMtNGY26Q4xbuhP0urwI6kLG1JPu?=
+ =?iso-8859-1?Q?idrRBry7yuRwrYkl8lj3beT9IpQTZ0xWBqfwN8RGv1zK2gj40Z/4hD4iMF?=
+ =?iso-8859-1?Q?GhmmfGdsTRaSUWXCUxfk2qBe8iZyrWr8gh5JtJNpTUu9wCnEbUndq3YI56?=
+ =?iso-8859-1?Q?9rzLnKUUNx5U2ypY/q8XHzYOIdYF4IiAkIqMoRm1uQk19gtfjBksbVpmBW?=
+ =?iso-8859-1?Q?Rc7UR5b38AUZEFP8Soc470eTJv0OJdTmV6s4Rveci7QL0cdyyNU16YyyTD?=
+ =?iso-8859-1?Q?Q0pGbvKbQP6FrO58snIxhtdLpZK40c5zMsRamdcmFbYWsn8eW16ZJ4QS3Q?=
+ =?iso-8859-1?Q?wL/gfb6KvqCewzQWhpT6TaI7HIlPdlTz7PrCKKVt6mA2Oc/+yvb7kPO0gt?=
+ =?iso-8859-1?Q?bl4PXOwUDPF/iaMuJ/pygEgpsI62MOQfnCLJxgsO0oNREjmQAjsq3qC0/3?=
+ =?iso-8859-1?Q?ceZcYpPm5WL5Io6gCD1PtyTYDaQ2zznVgO6raQs2spb2yEY9r5YT0HF099?=
+ =?iso-8859-1?Q?jY8yvQLEwELt+SkT6TLX7Js4DiWEu++5uJY7So5tDRY+DnQlzzcpLGaOWv?=
+ =?iso-8859-1?Q?45ZrIbvnWm2ZnFev/HVKEKW626z+lvBWHYr/vb0ogeGzuVAV3CRpP2YMxD?=
+ =?iso-8859-1?Q?PmZu5BkW4h/CTRfGwKPU3hn6n2S0h8NG6pqADuVAnD5LaER0Wb3pjRT2Lr?=
+ =?iso-8859-1?Q?VSHxqj+JmRbwNR6/PCNtbjEKgoERqrBdqdo0nSwe8wK0HgLNwUquQgm7mZ?=
+ =?iso-8859-1?Q?M7/+sxkBrhhiFQ45IZCdYsdG/fbYXG9JS4EEwNgFI9Mftu8QYuM1vil5CN?=
+ =?iso-8859-1?Q?A7hmU5I7eiSS+AbsnIOX56cLPI7QAFLk96K8X/1y9rpbnOUx0fPYAg8iWs?=
+ =?iso-8859-1?Q?vUL4DIRkbHlK0=3D?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(376014)(7416014)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Nov 2025 18:30:43.2483
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f410706c-8155-44d2-68bb-08de2c50be36
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CY4PEPF0000EDD3.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6793
 
-Clang warns (or errors with CONFIG_WERROR=y / W=e):
+On Tue, Nov 25, 2025 at 03:22:03PM +0100, Jörg Rödel wrote:
+> On Fri, Nov 21, 2025 at 05:57:27PM -0800, Nicolin Chen wrote:
+> > Nicolin Chen (5):
+> >   iommu: Lock group->mutex in iommu_deferred_attach()
+> >   iommu: Tidy domain for iommu_setup_dma_ops()
+> >   iommu: Add iommu_driver_get_domain_for_dev() helper
+> >   iommu: Introduce pci_dev_reset_iommu_prepare/done()
+> >   PCI: Suspend iommu function prior to resetting a device
+> > 
+> >  drivers/iommu/dma-iommu.h                   |   5 +-
+> >  include/linux/iommu.h                       |  14 ++
+> >  include/uapi/linux/vfio.h                   |   4 +
+> >  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   5 +-
+> >  drivers/iommu/dma-iommu.c                   |   4 +-
+> >  drivers/iommu/iommu.c                       | 220 +++++++++++++++++++-
+> >  drivers/pci/pci-acpi.c                      |  13 +-
+> >  drivers/pci/pci.c                           |  65 +++++-
+> >  drivers/pci/quirks.c                        |  19 +-
+> >  9 files changed, 326 insertions(+), 23 deletions(-)
+> 
+> Looks good from an IOMMU perspective, but needs Ack from PCI side.
 
-  arch/arm64/kvm/hyp/pgtable.c:757:2: error: label at end of compound statement is a C23 extension [-Werror,-Wc23-extensions]
-    757 |         }
-        |         ^
+Thanks, Joerg.
 
-With older versions of clang (15 and older) and GCC (at least the minimum
-supported, 8.1), this is an unconditional hard error:
+@Bjorn,
 
-  arch/arm64/kvm/hyp/pgtable.c: In function 'kvm_pgtable_stage2_pte_prot':
-  arch/arm64/kvm/hyp/pgtable.c:756:2: error: label at end of compound statement
-    default:
-    ^~~~~~~
+I have addressed your remarks from v5. Would you mind giving a
+second look so that we might be able to make it to this cycle?
 
-  arch/arm64/kvm/hyp/pgtable.c:756:10: error: label at end of compound statement: expected statement
-          default:
-                  ^
-                   ;
-
-Add a break statement to this default case to clear up the error/warning.
-
-Fixes: 2608563b466b ("KVM: arm64: Add support for FEAT_XNX stage-2 permissions")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/arm64/kvm/hyp/pgtable.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index 57e13a5d0405..947ac1a951a5 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -754,6 +754,7 @@ enum kvm_pgtable_prot kvm_pgtable_stage2_pte_prot(kvm_pte_t pte)
- 		prot |= KVM_PGTABLE_PROT_PX;
- 		break;
- 	default:
-+		break;
- 	}
- 
- 	return prot;
-
----
-base-commit: b5e3afe91cfa420076851bbd833f11ecd3fab74d
-change-id: 20251125-arm64-kvm-hyp-pgtable-fix-c23-ext-warn-851b6b5e76fe
-
-Best regards,
---  
-Nathan Chancellor <nathan@kernel.org>
-
+Thank you!
+Nicolin
