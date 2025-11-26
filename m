@@ -1,69 +1,25 @@
-Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012018.outbound.protection.outlook.com [40.93.195.18])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BADC30504A;
-	Wed, 26 Nov 2025 16:21:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764174109; cv=fail; b=Ja974cAaKpbo49loE2tvHHYwzl9Oob3z9oO8Bd61GNpFUYQv0XCun80b2glpU/e8jUVL/AWAjLanhQzHQVpLMhHMrxES3UQwg1CqxHNGk5pl3OCX1bayeiVBbfcZhHWWbEJZKY76i3vGNNwB5Z6RJ1ldsnZOIFyQZwiZk4F7RB4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764174109; c=relaxed/simple;
-	bh=7BC+oe7DZ7G0PhQt12M41WMDxl1yiyAiRtpJbKa7uN4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Lbcw+gcwyBnVFBP/kEcI4givr5yPmf7TKMMBfgvv2A5ugqdwMi05v3cdopi9nqZikHgWI1sB3zZ720p2gFg+zSE1u4KmKp1N6UwC9jWUkl25vMcFrhzPnR3Lq5Ibnqgttya58GVX1J1gFEtut8mOUJRmjscO1NEsbLkpsKtOJsY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=nCib0NRf; arc=fail smtp.client-ip=40.93.195.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="nCib0NRf"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QiIZmaZgP4ZXJMkm+aFownd3zeVcVCaRxvklMhYVbVtSAOJDQyTh7gDlxF8xN9YkuHmJVTZRluVfANd11NhTITJb6jmhRFqmVgvStFwqbFh/LFYhWCWmIKbZTnPC4PjML3amqjriQ+RqAX6LTv/lG2L+eRwMw3C4xuZiH4Pe7dF87UlbWJZtowslVsrJjFxDjs5NlGxFqKDgM5LZ7Bk47FJ73mCl/TJpWX/ExlbYDL0ysd3IlPoDUTUbP4BVKeggSIoKMXKIJsYOXFn5EtU/QsvkjtV9DFtkhmF7GuANgdOh7jLEf5986CFXUHDV7Def2moCXof8ruGERP/0K4o91g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VhxJqQYq/+HznprhzMW/D9eNion+IyCnR+AjXxD7G1k=;
- b=X956n8zp4herF4zym0DlUlhyvHdTmL4qhNT6upm1M02/+QAOr/pVgXHyDdVN5vqt9lJl0jLUhgC+fQO+8Dui7w6T9Q3PBwekHl5icXMHe7QZpyFXwytSSGpoN/xnBeGTMTeSwAQ+kZBerYilwvUHK7XYes2Q8+y2q0TuU5x5MyNuemc+hT4jNSTGbGZOReTNviS0lHCa40Yv9yhW9bT1JEywggZfcAm3m6ktrgewTkFBq1Bsv7QfaBYgoqH7g6gKma6RHVn0FF0b6AGJI/aFn913Cg1pHJgXaaOIYO08AC+TAxLu00RA2VnId+QOh0xDCisqXAgBLHarGuycgs6nkQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nvidia.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VhxJqQYq/+HznprhzMW/D9eNion+IyCnR+AjXxD7G1k=;
- b=nCib0NRfKIbW4vn3YKSnzwvXNz61YFnl4kzkeaCCZzisPoASJ3vDL4g7zidBFePrFWyxPtEC6V+CxfZrgOUWtMGe+BtyNN72U8TTXwxJ5w7JAdifXu+6m4SwC4o9YqjFgp7btn8YaMJ6aUvJ/J9x8SVzEMK2twr7R5hA6LNGk+c=
-Received: from MN2PR01CA0055.prod.exchangelabs.com (2603:10b6:208:23f::24) by
- BL3PR12MB6450.namprd12.prod.outlook.com (2603:10b6:208:3b9::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.12; Wed, 26 Nov
- 2025 16:21:41 +0000
-Received: from BL6PEPF0001AB77.namprd02.prod.outlook.com
- (2603:10b6:208:23f:cafe::b) by MN2PR01CA0055.outlook.office365.com
- (2603:10b6:208:23f::24) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9343.18 via Frontend Transport; Wed,
- 26 Nov 2025 16:22:20 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- BL6PEPF0001AB77.mail.protection.outlook.com (10.167.242.170) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9366.7 via Frontend Transport; Wed, 26 Nov 2025 16:21:41 +0000
-Received: from Satlexmb09.amd.com (10.181.42.218) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 26 Nov
- 2025 10:21:40 -0600
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb09.amd.com
- (10.181.42.218) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Wed, 26 Nov
- 2025 08:21:40 -0800
-Received: from [10.252.200.251] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Wed, 26 Nov 2025 08:21:35 -0800
-Message-ID: <6d85514f-3d55-43ae-a00f-334f8a5f81fb@amd.com>
-Date: Wed, 26 Nov 2025 21:51:34 +0530
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 563FB33F397
+	for <patches@lists.linux.dev>; Wed, 26 Nov 2025 16:56:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764176180; cv=none; b=gA8+yJ4lbzM37xSwydhVS5xuFL5rjgMS/BiMwJVTDIqE7ANsZyfflUcl+6Gan/YPoZuHf9iQwWBZRStPYWvNzd7IQgGpUGpDQmoY2S6NJTWmVVMWqh1yzquAdalcYC0BUd1CFdPNYRV3PyyL/rQnYGueDOY8Mb5RsZSqryO0F78=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764176180; c=relaxed/simple;
+	bh=++ZtB/K1Mk/I0zej5vRfG6UaoC4ZKRQ/u7W0qsollWQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=R5gH9YWkX2KiVtkRE6Ruw2VkPbvLq7e48Y8wDFxV3iIzEMYvXaPvWyuQ8Cvn5hf4MNNjrhswRBWMSjRn6OigwYXPhOYnI3VRYvH/4IS6U8HcPiuC+hpessaDKC31RmuVNZlR/hNf2b/WkmAFNeCxu/nVohw42FW7Bs+hqsSEYzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5552F168F;
+	Wed, 26 Nov 2025 08:56:10 -0800 (PST)
+Received: from [10.57.42.217] (unknown [10.57.42.217])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 9ED9A3F66E;
+	Wed, 26 Nov 2025 08:56:16 -0800 (PST)
+Message-ID: <af62a882-1b14-4491-a456-5fd3040d02d6@arm.com>
+Date: Wed, 26 Nov 2025 16:57:04 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -71,194 +27,112 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/5] Disable ATS via iommu during PCI resets
-To: Nicolin Chen <nicolinc@nvidia.com>, <joro@8bytes.org>, <afael@kernel.org>,
-	<bhelgaas@google.com>, <alex@shazbot.org>, <jgg@nvidia.com>
-CC: <will@kernel.org>, <robin.murphy@arm.com>, <lenb@kernel.org>,
-	<kevin.tian@intel.com>, <baolu.lu@linux.intel.com>,
-	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-acpi@vger.kernel.org>,
-	<linux-pci@vger.kernel.org>, <kvm@vger.kernel.org>,
-	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
-	<helgaas@kernel.org>, <etzhao1900@gmail.com>
-References: <cover.1763775108.git.nicolinc@nvidia.com>
+Subject: Re: [PATCH 6.6 051/529] sched/pelt: Avoid underestimation of task
+ utilization
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+ Vincent Guittot <vincent.guittot@linaro.org>, Ingo Molnar
+ <mingo@kernel.org>, John Stultz <jstultz@google.com>
+References: <20251121130230.985163914@linuxfoundation.org>
+ <20251121130232.828187990@linuxfoundation.org>
 Content-Language: en-US
-From: "Srivastava, Dheeraj Kumar" <dhsrivas@amd.com>
-In-Reply-To: <cover.1763775108.git.nicolinc@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Lukasz Luba <lukasz.luba@arm.com>
+In-Reply-To: <20251121130232.828187990@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB77:EE_|BL3PR12MB6450:EE_
-X-MS-Office365-Filtering-Correlation-Id: 86831d91-484e-4759-8545-08de2d07e1e9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|1800799024|7416014|376014|36860700013|7053199007|13003099007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?WUJPV1lTOFJhMUNIU3liM2RLM0J3a1BqZUhlc1FyQ3lGdmVJVmNPTnozNHpn?=
- =?utf-8?B?dVJDYlhUc0oxb05PeCs1MERRb0FKR0lDWGp1Y3ZoWXhiaGpqbVJvMkw1RUNt?=
- =?utf-8?B?cVpNU200L3VoNi9MZms2YzArWTN1alVmck9tdEJmcDRtcHZiM3BwNUpPWEJR?=
- =?utf-8?B?RWpQc05Xc0ZCVW9JdURsSjdXck8vZm1kTXIrSk1HM29SOUlVSkFSdzBUYnM2?=
- =?utf-8?B?MDBFNDhwK0QvbTM0NHNBUzBaSll5YnVDSTFiYVQzbFRWbFpKY1l1dXRIaDJO?=
- =?utf-8?B?b0x1aUY1bnFBM2VPckR5TXErUlVFYXFjNVNwb0tPQ2pUTDRuZHRxNmtrZVR2?=
- =?utf-8?B?TXZ1eWhudk1IWU9IL05GVGxjVUoyWlRlLzVseHVzM1RHSHU1UWViQ2RVYWdo?=
- =?utf-8?B?ck5NMVRadGg5QU8yK1BDYlhSSTBYb0dMMUF6M1VaYk52ODRvM05qNFBmU0JZ?=
- =?utf-8?B?WmV2YjhMellWM0xKckZNWmx4U3h1RGwyZm9XUlN4WE91dytTajBVcXI5a2pi?=
- =?utf-8?B?dWZhbENQQmY2SDhLZEY0M2k3bjFXcEdPeEliZ24xVUpaTkQ4UFJDNHN0N2xq?=
- =?utf-8?B?Qk1rRlowSTlvbUZUeFJCNitGUHVVWWpKVkdjQzNtemYxVnhQUGM0N3ZNbUFH?=
- =?utf-8?B?bFJhUzl6N3VIeHZ3WnJ4TFpweDVKTmcrUDg3czMxdXZLWGlZYi9nT2NYek8r?=
- =?utf-8?B?Z3R6NXFtZ2Y1TGFybk44L0t1d1FGR0FtOCtiOC85aEw1QzBleGhtbzNZZnFQ?=
- =?utf-8?B?ZE81dUpMSk5vZDdmaDBGdk51cTJBNnVJc1YraDE0ZFgzczFFaUJvM1JEUUh0?=
- =?utf-8?B?UnRwTDdNTnN1cGk1ZEMrdjlFVURSK2dVVGs1N2NzK1c2cC9nSVR0N2UvS0FH?=
- =?utf-8?B?YVI2aldubzZYRElTbmtsdEROUGpWcXpRS2Jqa1ZRZUVYQ0k4ZjFXbkRGcFlR?=
- =?utf-8?B?anNuNTVZUmdNUGVsMnZQZFJzb1FBby9jSS9RQW0zcURLMG1PZEhvZ3FDVWQ2?=
- =?utf-8?B?WnVlNll5bWlGa2cyK2pNYUFUUDgwbGlvYWI0ZTNVeXlIV1U0bms1RERzUTZX?=
- =?utf-8?B?Wjc5dlY0VktjSGh0bFRDcXdRL3p2Zmg1eE4vUzdUblA4WjlHUnZLRlJCbUND?=
- =?utf-8?B?SEh2QkU0VU4zbVYyNjVicG1STEZuSlN6amJhcDQ4dFdmd1VlWTNaaFhPR3M4?=
- =?utf-8?B?YWhNakt4bDdHdGd0VHMzbkRjbm5jb21kRlB1SzQrZXZLa0l6MXFqajhwUjVJ?=
- =?utf-8?B?YWJXVkFJMWxGV01SdFZ5UjNNWkxKNmVNOEk4SmtCYy9hY3g5enUvUEl0dHY4?=
- =?utf-8?B?STE4TFQ4MW5maVdvaFljVFRocWlCWnNUdkVhbCs3Nkc2SkFuLzNWRWhicDBG?=
- =?utf-8?B?QUhuNjFmOE5rTkpXYkYxcmFXSWozekQrWTFiVUFlOGpnalJYcTl1dzFkcnRB?=
- =?utf-8?B?NVhHVG1VZUVKU3hYNzhEQUxkcHZHSXJHQk9BeUxiNzB1aVVWTFVpL05yckFY?=
- =?utf-8?B?aGVrSmN4aWU5cmVRMDNGL2FmbUlrU1N1ZkFzVFRlZTltMkw5eFZQMjU3cUQ2?=
- =?utf-8?B?TjdVMEwwVjJ6REZ0a3dCODU4MXBwOUIxOWE3cEczNW44dUdRZ25UNmhIcG9G?=
- =?utf-8?B?dnp1OHVYSnE2OXBRM1NJMWhZdk1QSy9CdnhvRDAwbTJvYzgwazhPQXZ6Qnps?=
- =?utf-8?B?Mk1aMi8vTEhrTkEwTEtUdVcrSEQrQzRMNkZCUDkrK0xWVXdQWWJwTkF5MXRy?=
- =?utf-8?B?aGR1blJIdnM1a3o5Ym54dmxzQWJuUjRYK1VqcjVERDczclpETlQzaytFMk40?=
- =?utf-8?B?VkUzWmw3TW1Tc0doY3NBUm1VV01jZkhYa1pJRGI1M0hjYXVSb2RIbGxQblk1?=
- =?utf-8?B?TDhLTmpkdHZ0OXE5RmtRZ3FGbmlCV0tZUlQ2Vm02WEdITW5HTmpleGNkN3FE?=
- =?utf-8?B?TlBFSEExYXhlN28ydUorbHVuRTRRL1ZFNU9HM01Ga1pSais5WDEycGVEanR1?=
- =?utf-8?B?K2xOVFZRdVBVb2hmT25WVWt1eVAxdWRIWjhYY0JqV2NxMHlXTUJOMWpSQjhp?=
- =?utf-8?B?akNLeVJOOU9BV1c1K2cwckQ2MXhFaE5VLzN4dDk3UHlVMWhnVm1tTEVvOGZ6?=
- =?utf-8?Q?Ysg9AuZwBYiwnhhaKoPiKHzA9?=
-X-Forefront-Antispam-Report:
-	CIP:165.204.84.17;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:satlexmb07.amd.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(82310400026)(1800799024)(7416014)(376014)(36860700013)(7053199007)(13003099007);DIR:OUT;SFP:1101;
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Nov 2025 16:21:41.0950
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86831d91-484e-4759-8545-08de2d07e1e9
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d;Ip=[165.204.84.17];Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL6PEPF0001AB77.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6450
 
-On 11/22/2025 7:27 AM, Nicolin Chen wrote:
-> Hi all,
+Hi Greg,
+
+On 11/21/25 13:05, Greg Kroah-Hartman wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+
+No objections, just for history linking...
+
+
 > 
-> PCIe permits a device to ignore ATS invalidation TLPs while processing a
-> reset. This creates a problem visible to the OS where an ATS invalidation
-> command will time out: e.g. an SVA domain will have no coordination with a
-> reset event and can racily issue ATS invalidations to a resetting device.
+> ------------------
 > 
-> The OS should do something to mitigate this as we do not want production
-> systems to be reporting critical ATS failures, especially in a hypervisor
-> environment. Broadly, OS could arrange to ignore the timeouts, block page
-> table mutations to prevent invalidations, or disable and block ATS.
+> From: Vincent Guittot <vincent.guittot@linaro.org>
 > 
-> The PCIe spec in sec 10.3.1 IMPLEMENTATION NOTE recommends to disable and
-> block ATS before initiating a Function Level Reset. It also mentions that
-> other reset methods could have the same vulnerability as well.
+> commit 50181c0cff31281b9f1071575ffba8a102375ece upstream.
 > 
-> Provide a callback from the PCI subsystem that will enclose the reset and
-> have the iommu core temporarily change domains to group->blocking_domain,
-> so IOMMU drivers would fence any incoming ATS queries, synchronously stop
-> issuing new ATS invalidations, and wait for existing ATS invalidations to
-> complete. Doing this can avoid any ATS invaliation timeouts.
+> Lukasz Luba reported that a thread's util_est can significantly decrease as
+> a result of sharing the CPU with other threads.
 > 
-> When a device is resetting, any new domain attachment has to be rejected,
-> until the reset is finished, to prevent ATS activity from being activated
-> between the two callback functions. Introduce a new resetting_domain, and
-> reject a concurrent __iommu_attach_device/set_group_pasid().
+> The use case can be easily reproduced with a periodic task TA that runs 1ms
+> and sleeps 100us. When the task is alone on the CPU, its max utilization and
+> its util_est is around 888. If another similar task starts to run on the
+> same CPU, TA will have to share the CPU runtime and its maximum utilization
+> will decrease around half the CPU capacity (512) then TA's util_est will
+> follow this new maximum trend which is only the result of sharing the CPU
+> with others tasks.
 > 
-> Finally, call these pci_dev_reset_iommu/done() functions in the PCI reset
-> functions.
+> Such situation can be detected with runnable_avg wich is close or
+> equal to util_avg when TA is alone, but increases above util_avg when TA
+> shares the CPU with other threads and wait on the runqueue.
 > 
-> This is on Github:
-> https://github.com/nicolinc/iommufd/commits/iommu_dev_reset-v7
+> [ We prefer an util_est that overestimate rather than under estimate
+>    because in 1st case we will not provide enough performance to the
+>    task which will remain under-provisioned, whereas in the other case we
+>    will create some idle time which will enable to reduce contention and
+>    as a result reduces the util_est so the overestimate will be transient
+>    whereas the underestimate will remain. ]
 > 
-> Changelog
-> v7
->   * Rebase on Joerg's next tree
->   * Add Reviewed-by from Kevin
->   * [iommu] Fix inline functions when !CONFIG_IOMMU_API
-> v6
->   https://lore.kernel.org/all/cover.1763512374.git.nicolinc@nvidia.com/
->   * Add Reviewed-by from Baolu and Kevin
->   * Revise inline comments, kdocs, commit messages, uAPI
->   * [iommu] s/iommu_dev_reset/pci_dev_reset_iommu/g for PCI exclusively
->   * [iommu] Disallow iommu group sibling devices to attach concurrently
->   * [pci] Drop unnecessary initializations to "ret" and "rc"
->   * [pci] Improve pci_err message unpon a prepare() failure
->   * [pci] Move pci_ats_supported() check inside the IOMMU callbacks
->   * [pci] Apply callbacks to pci_reset_bus_function() that was missed
-> v5
->   https://lore.kernel.org/all/cover.1762835355.git.nicolinc@nvidia.com/
->   * Rebase on Joerg's next tree
->   * [iommu] Skip in shared iommu_group cases
->   * [iommu] Pass in default_domain to iommu_setup_dma_ops
->   * [iommu] Add kdocs to iommu_get_domain_for_dev_locked()
->   * [iommu] s/get_domain_for_dev_locked/driver_get_domain_for_dev
->   * [iommu] Replace per-gdev pending_reset with per-group resetting_domain
-> v4
->   https://lore.kernel.org/all/cover.1756682135.git.nicolinc@nvidia.com/
->   * Add Reviewed-by from Baolu
->   * [iommu] Use guard(mutex)
->   * [iommu] Update kdocs for typos and revisings
->   * [iommu] Skip two corner cases (alias and SRIOV)
->   * [iommu] Rework attach_dev to pass in old domain pointer
->   * [iommu] Reject concurrent attach_dev/set_dev_pasid for compatibility
->             concern
->   * [smmuv3] Drop the old_domain depedency in its release_dev callback
->   * [pci] Add pci_reset_iommu_prepare/_done() wrappers checking ATS cap
-> v3
->   https://lore.kernel.org/all/cover.1754952762.git.nicolinc@nvidia.com/
->   * Add Reviewed-by from Jason
->   * [iommu] Add a fast return in iommu_deferred_attach()
->   * [iommu] Update kdocs, inline comments, and commit logs
->   * [iommu] Use group->blocking_domain v.s. ops->blocked_domain
->   * [iommu] Drop require_direct, iommu_group_get(), and xa_lock()
->   * [iommu] Set the pending_reset flag after RID/PASID domain setups
->   * [iommu] Do not bypass PASID domains when RID domain is already the
->             blocking_domain
->   * [iommu] Add iommu_get_domain_for_dev_locked to correctly return the
->             blocking_domain
-> v2
->   https://lore.kernel.org/all/cover.1751096303.git.nicolinc@nvidia.com/
->   * [iommu] Update kdocs, inline comments, and commit logs
->   * [iommu] Replace long-holding group->mutex with a pending_reset flag
->   * [pci] Abort reset routines if iommu_dev_reset_prepare() fails
->   * [pci] Apply the same vulnerability fix to other reset functions
-> v1
->   https://lore.kernel.org/all/cover.1749494161.git.nicolinc@nvidia.com/
+> [ mingo: Refined the changelog, added comments from the LKML discussion. ]
 > 
-> Thanks
-> Nicolin
+> Reported-by: Lukasz Luba <lukasz.luba@arm.com>
+> Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+> Signed-off-by: Ingo Molnar <mingo@kernel.org>
+> Link: https://lore.kernel.org/lkml/CAKfTPtDd-HhF-YiNTtL9i5k0PfJbF819Yxu4YquzfXgwi7voyw@mail.gmail.com/#t
+> Link: https://lore.kernel.org/r/20231122140119.472110-1-vincent.guittot@linaro.org
+> Cc: Hongyan Xia <hongyan.xia2@arm.com>
+> Cc: John Stultz <jstultz@google.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   kernel/sched/fair.c |   13 +++++++++++++
+>   1 file changed, 13 insertions(+)
 > 
-> Nicolin Chen (5):
->    iommu: Lock group->mutex in iommu_deferred_attach()
->    iommu: Tidy domain for iommu_setup_dma_ops()
->    iommu: Add iommu_driver_get_domain_for_dev() helper
->    iommu: Introduce pci_dev_reset_iommu_prepare/done()
->    PCI: Suspend iommu function prior to resetting a device
+> --- a/kernel/sched/fair.c
+> +++ b/kernel/sched/fair.c
+> @@ -4836,6 +4836,11 @@ static inline unsigned long task_util(st
+>   	return READ_ONCE(p->se.avg.util_avg);
+>   }
+>   
+> +static inline unsigned long task_runnable(struct task_struct *p)
+> +{
+> +	return READ_ONCE(p->se.avg.runnable_avg);
+> +}
+> +
+>   static inline unsigned long _task_util_est(struct task_struct *p)
+>   {
+>   	struct util_est ue = READ_ONCE(p->se.avg.util_est);
+> @@ -4955,6 +4960,14 @@ static inline void util_est_update(struc
+>   		return;
+>   
+>   	/*
+> +	 * To avoid underestimate of task utilization, skip updates of EWMA if
+> +	 * we cannot grant that thread got all CPU time it wanted.
+> +	 */
+> +	if ((ue.enqueued + UTIL_EST_MARGIN) < task_runnable(p))
+> +		goto done;
+> +
+> +
+> +	/*
+>   	 * Update Task's estimated utilization
+>   	 *
+>   	 * When *p completes an activation we can consolidate another sample
 > 
->   drivers/iommu/dma-iommu.h                   |   5 +-
->   include/linux/iommu.h                       |  14 ++
->   include/uapi/linux/vfio.h                   |   4 +
->   drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |   5 +-
->   drivers/iommu/dma-iommu.c                   |   4 +-
->   drivers/iommu/iommu.c                       | 220 +++++++++++++++++++-
->   drivers/pci/pci-acpi.c                      |  13 +-
->   drivers/pci/pci.c                           |  65 +++++-
->   drivers/pci/quirks.c                        |  19 +-
->   9 files changed, 326 insertions(+), 23 deletions(-)
 > 
 
-Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
 
-Thanks
-Dheeraj
+I've pointed ChromeOS folks to this patch backport. They have tested
+the patch in their 6.6 kernel and posted the results (speedometer 2.1)
+- which are really good [1].
 
+I thought it would be worth to link this here as well.
+
+Regards,
+Lukasz
+
+[1] 
+https://lore.kernel.org/lkml/CAKchOA31NGBWMdeSjky7MwOjU=dYmHVLbE7uUQHUXSZOzUHUeA@mail.gmail.com/
