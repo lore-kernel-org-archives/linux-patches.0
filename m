@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F973126C0;
-	Thu, 27 Nov 2025 14:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EA8334366;
+	Thu, 27 Nov 2025 14:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255497; cv=none; b=pSco4AjtsNtJVqZjhHRf9OiSV45LWKj+fisd2c3Vl7Wxat379VDkNq0U7fcduGw3ptJEoIrV+UntNI1/ygXBdm0X5nNqiDF9v1bM/GS14EQJaTW8TNBfijjj5FGUZ99i5Ro3rScHRisea6H0KCRKX664jPpxq5iIx9kLZX4GDzk=
+	t=1764255500; cv=none; b=dYt/yYyDjKiOEbAEgQ+YzRhXSlfXGXU5BUjqKwhtYg7gKwlQMRrB7RKxXUMtC0dCVS1kGzH5tjxOvx51DXKOinHJbvofqA6GPpAw+AqMC3uneuILnV2VwD9gyllekxIQQIVdcXr7lZBa0BFVcHh5F9sHHcxIvHySn0Nt6lm3MCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255497; c=relaxed/simple;
-	bh=iL9J7ssQC1e6Af6n00n9u40DbQCn+jWUyMRe1xpM4Bc=;
+	s=arc-20240116; t=1764255500; c=relaxed/simple;
+	bh=Vpq3DPvF1LG5rhiuMlcclu8PWkuHmX/ico/utn77G8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bxmrFYAdMBk1kn0kQMDJLxHODcIBPI8s7CnhLflHSyLzyI58+jzlvXoQ7FMauF+xLpDPhmkU06pjBPrH0IVmOAJs4BfdtrbdQKgGpI8oDorgFgOjokqpW2sopfDs34XL/AtLScXz4tQYxH1UQVHrCVfhipdNwiQVkaXTJwHbY6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2icKk8KB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g1iyP84BDSXvFCHngD5eq0RNUsydKIpidUaE1F5XN7rLQzH8LBQ018zPJh2l6zzBuaSg9LsKi1tAaWqTOMOTO1xccWQ5EcxjEM4xgkOcpX8t1DIgRrG/c3FIB+vk/wj+X0mOJAGBeybiAzFQmixgjr/3v0sr5U2djMxYfVKBYm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qRjr3nsf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2icKk8KB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC503C4CEF8;
-	Thu, 27 Nov 2025 14:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qRjr3nsf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94761C4CEF8;
+	Thu, 27 Nov 2025 14:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255497;
-	bh=iL9J7ssQC1e6Af6n00n9u40DbQCn+jWUyMRe1xpM4Bc=;
+	s=korg; t=1764255499;
+	bh=Vpq3DPvF1LG5rhiuMlcclu8PWkuHmX/ico/utn77G8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2icKk8KB/Tih5HOm9yZk4krKtpTi7Wb5prWFeBjgSbDts42Au3Vjqj7dOL+2Ne5AN
-	 AKBtwF/2uvGPDwa57Gp5faOTnP1GPfmmnTHXynuDXRf3wzkOcTexg+OYtrVK5CLBAb
-	 iIA6tHUU16PLJECOSVqC0P4vv9O4/y7vRZARDu5Y=
+	b=qRjr3nsf57K8l17XudqBWQrPuQQ/Pb8dXhuGmruHoG+AVF/Lu1IBPc703bYWRr51z
+	 Q2InqZCrpqsYawhdha18bQWVW2DFRvheOdulsEmxE5CxGCj5otxoF5rEfgww7z8Vnt
+	 bb18eMdvLQvGqDRYKBSXCDQB9phpboJcc/UHWtOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Ni <zhen.ni@easystack.cn>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.17 014/175] fs: Fix uninitialized offp in statmount_string()
-Date: Thu, 27 Nov 2025 15:44:27 +0100
-Message-ID: <20251127144043.477578199@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.17 015/175] mtdchar: fix integer overflow in read/write ioctls
+Date: Thu, 27 Nov 2025 15:44:28 +0100
+Message-ID: <20251127144043.513616289@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,46 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhen Ni <zhen.ni@easystack.cn>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 0778ac7df5137d5041783fadfc201f8fd55a1d9b upstream.
+commit e4185bed738da755b191aa3f2e16e8b48450e1b8 upstream.
 
-In statmount_string(), most flags assign an output offset pointer (offp)
-which is later updated with the string offset. However, the
-STATMOUNT_MNT_UIDMAP and STATMOUNT_MNT_GIDMAP cases directly set the
-struct fields instead of using offp. This leaves offp uninitialized,
-leading to a possible uninitialized dereference when *offp is updated.
+The "req.start" and "req.len" variables are u64 values that come from the
+user at the start of the function.  We mask away the high 32 bits of
+"req.len" so that's capped at U32_MAX but the "req.start" variable can go
+up to U64_MAX which means that the addition can still integer overflow.
 
-Fix it by assigning offp for UIDMAP and GIDMAP as well, keeping the code
-path consistent.
+Use check_add_overflow() to fix this bug.
 
-Fixes: 37c4a9590e1e ("statmount: allow to retrieve idmappings")
-Fixes: e52e97f09fb6 ("statmount: let unset strings be empty")
+Fixes: 095bb6e44eb1 ("mtdchar: add MEMREAD ioctl")
+Fixes: 6420ac0af95d ("mtdchar: prevent unbounded allocation in MEMWRITE ioctl")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
-Link: https://patch.msgid.link/20251013114151.664341-1-zhen.ni@easystack.cn
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mtd/mtdchar.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -5601,11 +5601,11 @@ static int statmount_string(struct kstat
- 		ret = statmount_sb_source(s, seq);
- 		break;
- 	case STATMOUNT_MNT_UIDMAP:
--		sm->mnt_uidmap = start;
-+		offp = &sm->mnt_uidmap;
- 		ret = statmount_mnt_uidmap(s, seq);
- 		break;
- 	case STATMOUNT_MNT_GIDMAP:
--		sm->mnt_gidmap = start;
-+		offp = &sm->mnt_gidmap;
- 		ret = statmount_mnt_gidmap(s, seq);
- 		break;
- 	default:
+--- a/drivers/mtd/mtdchar.c
++++ b/drivers/mtd/mtdchar.c
+@@ -599,6 +599,7 @@ mtdchar_write_ioctl(struct mtd_info *mtd
+ 	uint8_t *datbuf = NULL, *oobbuf = NULL;
+ 	size_t datbuf_len, oobbuf_len;
+ 	int ret = 0;
++	u64 end;
+ 
+ 	if (copy_from_user(&req, argp, sizeof(req)))
+ 		return -EFAULT;
+@@ -618,7 +619,7 @@ mtdchar_write_ioctl(struct mtd_info *mtd
+ 	req.len &= 0xffffffff;
+ 	req.ooblen &= 0xffffffff;
+ 
+-	if (req.start + req.len > mtd->size)
++	if (check_add_overflow(req.start, req.len, &end) || end > mtd->size)
+ 		return -EINVAL;
+ 
+ 	datbuf_len = min_t(size_t, req.len, mtd->erasesize);
+@@ -698,6 +699,7 @@ mtdchar_read_ioctl(struct mtd_info *mtd,
+ 	size_t datbuf_len, oobbuf_len;
+ 	size_t orig_len, orig_ooblen;
+ 	int ret = 0;
++	u64 end;
+ 
+ 	if (copy_from_user(&req, argp, sizeof(req)))
+ 		return -EFAULT;
+@@ -724,7 +726,7 @@ mtdchar_read_ioctl(struct mtd_info *mtd,
+ 	req.len &= 0xffffffff;
+ 	req.ooblen &= 0xffffffff;
+ 
+-	if (req.start + req.len > mtd->size) {
++	if (check_add_overflow(req.start, req.len, &end) || end > mtd->size) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
 
 
