@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DDA2882BB;
-	Thu, 27 Nov 2025 14:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4870E25BEE8;
+	Thu, 27 Nov 2025 14:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255100; cv=none; b=RSxps0EwVsNlQNgpg4AJG3gd70mLUXPkKMLt5duMlK9hM8rsFqA6bo0Ongenuuf4kxRTkxLhoTV1paWDhLLBkexyHwHU75HDCNTUyZIAS07jX8CEt5LbGCmI2PeEfzLgq0/ZlITaGSY3tlQcDgAE3J/WP/0v5AXRsNxKBpKUJzE=
+	t=1764255103; cv=none; b=dWVuGwXeMI0EPUv270f40lcu0cU12bdB/aM9ZvrgzpGQbP7M5kXokmxsHIBvIiXvcDWW10o2xOB3TCFUWDpOe6SFAFlMW2zmOBAJR6cp2BVzR8ExQQzx8ji4wU6v/rK5J56Otyq+qAQoAIDAExL00i8wjPNtaJwvbyw6K6VnDFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255100; c=relaxed/simple;
-	bh=IflB5oBPt7hsZngGPR3C4shGsvLeHz+KP7kZd+UXjVU=;
+	s=arc-20240116; t=1764255103; c=relaxed/simple;
+	bh=ZuGltzw6uJOuiwZaTL35h17XTFzLk28SEPNS6zHpmoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjft+uFjkOUpxQo6X5gW6QiYBBkHnMpNhvJCqmcLETTepkTShtuWs2pua6DzNf5O/lvHubuR31jIlWUop4GWbJmbe8l5U9TC3X7TjZo8CH6tRLveNB0pDTc+OkzOxKBinCzoXAXiPKJy9TjBPWKv67N4qtF5IQZ1vYtlTGDOcoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjW1+bDs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dTNY0lLee8oNx4KCGPaQBYVrKxdtUph2kUlEURL5O/4+LRF3BTlSeC2JIIYyqiEizKH5jL3TTXb5ZezxG3YhvVU3HcGG5B0Hh3+HsmA9qU1I3wkrF9f3fVpBnBLPcRq8wosxfCwwX7xyx5UW0f0CA60ngBbmmNt9+cTbajZjL0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQkz7OzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjW1+bDs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10D6EC4CEF8;
-	Thu, 27 Nov 2025 14:51:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQkz7OzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA0D8C4CEF8;
+	Thu, 27 Nov 2025 14:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255100;
-	bh=IflB5oBPt7hsZngGPR3C4shGsvLeHz+KP7kZd+UXjVU=;
+	s=korg; t=1764255103;
+	bh=ZuGltzw6uJOuiwZaTL35h17XTFzLk28SEPNS6zHpmoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YjW1+bDsadJcv/QrEJzDvQa27bZcBzIrS3vAzfB8P0RPvwACBiOmWmpjzyXC8Md3m
-	 KvKsYq/9+FO9NF+gHHvzJvKl8ILGK7PT8X5r7SenPUQo8JV4hWFer5XFeJDb8trXVC
-	 +cHSd7npvfxBA3T0ouaWyX4CzBasmcWbyp8nl668=
+	b=sQkz7OzChtSz8tBRoOB1v1+f+81QXy7lPFkqTTDsSp2tj9g/KN5hAbqGJ5YDQnU4g
+	 mgeS64hlxX/dEQw1bBLEIVkBDLhQMphk2bWlE4h2KLtn4dNokhdpwXgYCf/W46aAIO
+	 UOBWlBCctwE7c4fZQZB1rG05Z/h3Pp4gzBUz4n3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 57/86] vsock: Ignore signal/timeout on connect() if already established
-Date: Thu, 27 Nov 2025 15:46:13 +0100
-Message-ID: <20251127144029.915077567@linuxfoundation.org>
+	Sebastian Ene <sebastianene@google.com>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.12 001/112] KVM: arm64: Check the untrusted offset in FF-A memory share
+Date: Thu, 27 Nov 2025 15:45:03 +0100
+Message-ID: <20251127144032.763524853@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
-References: <20251127144027.800761504@linuxfoundation.org>
+In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
+References: <20251127144032.705323598@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,105 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Sebastian Ene <sebastianene@google.com>
 
-[ Upstream commit 002541ef650b742a198e4be363881439bb9d86b4 ]
+commit 103e17aac09cdd358133f9e00998b75d6c1f1518 upstream.
 
-During connect(), acting on a signal/timeout by disconnecting an already
-established socket leads to several issues:
+Verify the offset to prevent OOB access in the hypervisor
+FF-A buffer in case an untrusted large enough value
+[U32_MAX - sizeof(struct ffa_composite_mem_region) + 1, U32_MAX]
+is set from the host kernel.
 
-1. connect() invoking vsock_transport_cancel_pkt() ->
-   virtio_transport_purge_skbs() may race with sendmsg() invoking
-   virtio_transport_get_credit(). This results in a permanently elevated
-   `vvs->bytes_unsent`. Which, in turn, confuses the SOCK_LINGER handling.
-
-2. connect() resetting a connected socket's state may race with socket
-   being placed in a sockmap. A disconnected socket remaining in a sockmap
-   breaks sockmap's assumptions. And gives rise to WARNs.
-
-3. connect() transitioning SS_CONNECTED -> SS_UNCONNECTED allows for a
-   transport change/drop after TCP_ESTABLISHED. Which poses a problem for
-   any simultaneous sendmsg() or connect() and may result in a
-   use-after-free/null-ptr-deref.
-
-Do not disconnect socket on signal/timeout. Keep the logic for unconnected
-sockets: they don't linger, can't be placed in a sockmap, are rejected by
-sendmsg().
-
-[1]: https://lore.kernel.org/netdev/e07fd95c-9a38-4eea-9638-133e38c2ec9b@rbox.co/
-[2]: https://lore.kernel.org/netdev/20250317-vsock-trans-signal-race-v4-0-fc8837f3f1d4@rbox.co/
-[3]: https://lore.kernel.org/netdev/60f1b7db-3099-4f6a-875e-af9f6ef194f6@rbox.co/
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20251119-vsock-interrupted-connect-v2-1-70734cf1233f@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Sebastian Ene <sebastianene@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://patch.msgid.link/20251017075710.2605118-1-sebastianene@google.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/vmw_vsock/af_vsock.c | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/ffa.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 64790062cfa2e..ca1289e64bcc8 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1550,18 +1550,40 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
- 		timeout = schedule_timeout(timeout);
- 		lock_sock(sk);
+--- a/arch/arm64/kvm/hyp/nvhe/ffa.c
++++ b/arch/arm64/kvm/hyp/nvhe/ffa.c
+@@ -437,7 +437,7 @@ static void __do_ffa_mem_xfer(const u64
+ 	struct ffa_mem_region_attributes *ep_mem_access;
+ 	struct ffa_composite_mem_region *reg;
+ 	struct ffa_mem_region *buf;
+-	u32 offset, nr_ranges;
++	u32 offset, nr_ranges, checked_offset;
+ 	int ret = 0;
  
--		if (signal_pending(current)) {
--			err = sock_intr_errno(timeout);
--			sk->sk_state = sk->sk_state == TCP_ESTABLISHED ? TCP_CLOSING : TCP_CLOSE;
--			sock->state = SS_UNCONNECTED;
--			vsock_transport_cancel_pkt(vsk);
--			vsock_remove_connected(vsk);
--			goto out_wait;
--		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
--			err = -ETIMEDOUT;
-+		/* Connection established. Whatever happens to socket once we
-+		 * release it, that's not connect()'s concern. No need to go
-+		 * into signal and timeout handling. Call it a day.
-+		 *
-+		 * Note that allowing to "reset" an already established socket
-+		 * here is racy and insecure.
-+		 */
-+		if (sk->sk_state == TCP_ESTABLISHED)
-+			break;
-+
-+		/* If connection was _not_ established and a signal/timeout came
-+		 * to be, we want the socket's state reset. User space may want
-+		 * to retry.
-+		 *
-+		 * sk_state != TCP_ESTABLISHED implies that socket is not on
-+		 * vsock_connected_table. We keep the binding and the transport
-+		 * assigned.
-+		 */
-+		if (signal_pending(current) || timeout == 0) {
-+			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
-+
-+			/* Listener might have already responded with
-+			 * VIRTIO_VSOCK_OP_RESPONSE. Its handling expects our
-+			 * sk_state == TCP_SYN_SENT, which hereby we break.
-+			 * In such case VIRTIO_VSOCK_OP_RST will follow.
-+			 */
- 			sk->sk_state = TCP_CLOSE;
- 			sock->state = SS_UNCONNECTED;
-+
-+			/* Try to cancel VIRTIO_VSOCK_OP_REQUEST skb sent out by
-+			 * transport->connect().
-+			 */
- 			vsock_transport_cancel_pkt(vsk);
-+
- 			goto out_wait;
- 		}
+ 	if (addr_mbz || npages_mbz || fraglen > len ||
+@@ -474,7 +474,12 @@ static void __do_ffa_mem_xfer(const u64
+ 		goto out_unlock;
+ 	}
  
--- 
-2.51.0
-
+-	if (fraglen < offset + sizeof(struct ffa_composite_mem_region)) {
++	if (check_add_overflow(offset, sizeof(struct ffa_composite_mem_region), &checked_offset)) {
++		ret = FFA_RET_INVALID_PARAMETERS;
++		goto out_unlock;
++	}
++
++	if (fraglen < checked_offset) {
+ 		ret = FFA_RET_INVALID_PARAMETERS;
+ 		goto out_unlock;
+ 	}
 
 
