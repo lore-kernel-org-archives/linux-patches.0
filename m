@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E83627F18B;
-	Thu, 27 Nov 2025 14:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E542286416;
+	Thu, 27 Nov 2025 14:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255089; cv=none; b=gP1rdNk0NYFZIk/NRhESFNAEckKSdH4wJT1ufNg3ydwyzokhUciBZscp43U70NmpQvN1zt+XWHovBqTfJVVcF1srsf6FZU86lg0mhmRQTePZtuvHBXpyQTRjLxP9X37cTlZ+rtEsfQ5DNnN0WWAIKw1qJUV+M3JSs7Ww0eigGuE=
+	t=1764255092; cv=none; b=De76EiNvwDk3a0PEMTvAZqdzizGMFAwTKt7ZKV/zqJ3i0QDnaU04qeDo1LBqUaFTL91iz/2imXLTbG+c5HW/vvGaqdzxIyB/7ANCMIY3hxwPQ3uwBiQex3soufJsjbK3gRIeItIPpwk4eqN2V0UbQ+z+EILJH6eDRsdU0EmhjTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255089; c=relaxed/simple;
-	bh=TVoj4jZYxwrOzoY0waogAJXCPSM7keoGgbmaKlgRyfM=;
+	s=arc-20240116; t=1764255092; c=relaxed/simple;
+	bh=oq9hMvJYFoqMC0/5jd2bAWrmLN3QKz0U/GrZfAZ5sS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bYAXdR0Pf772xnN5izNbM0RQQFkLvZ/TXYU43nZjUwc9f7EEJnD0CWnu6WJEp2fKvCBYUAdx3q2DkCu3wiM39hfYU36SrhhNRUsiiQb2TkP68Avfhq7e1klMNWt92fSF3HXgMl/jjlTJLgv3i7dgFPY+/rgIyBsm8ptVP2kPoS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qGZFFFgy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XnZ6j1cMqzWmU9iqJI9C1dwldKi1CGwnF/L7WkJMfsOL6CULWV+eBy5RbBiWz9lArUrd7v/wEpaw30lTLBMLpp9yMjTKaXvpn0NV3MdIUcVQvtEi4Zoc6ADuFoBwBBaNk6Dpzxb258mVCYJ8SriupDio+FuFZ1e3lSdxkUsZ6Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjJXUoOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qGZFFFgy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFB7DC4CEF8;
-	Thu, 27 Nov 2025 14:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjJXUoOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2B3C113D0;
+	Thu, 27 Nov 2025 14:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255089;
-	bh=TVoj4jZYxwrOzoY0waogAJXCPSM7keoGgbmaKlgRyfM=;
+	s=korg; t=1764255092;
+	bh=oq9hMvJYFoqMC0/5jd2bAWrmLN3QKz0U/GrZfAZ5sS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qGZFFFgyjJfuLaCUwLVwfaqwMijK5vuXMB1k4FEATRpNyUyOXMcmbWdCi+S+OQnOB
-	 CqUrN/xc+zbAVtbE5n7R9LPZ1lNCZPuAOjUQH7pWwDo8mUSems3DPucMT+uPthvJWa
-	 ibliacvCuyLQ/E6zJcq3lPREiVPTmpy68pQ1rLuQ=
+	b=tjJXUoOKLXHw/BHYmQqr+7w6Ly9orjjkU3MVJWgMOl07uSUDT3owU1AgHXxF/aIW+
+	 gmwaGRLOAx5wQK/jSeejfOs3jlDsQHbIGXQ90DGE5ilNRbuoOB1IRCECb8vB2QrSTz
+	 uShcEE8VeN0w0V3mVX5VxfZmuOCGJ0wmwSrcgLdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Jakub=20Hork=C3=BD?= <jakub.git@horky.net>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 63/86] net: tls: Cancel RX async resync request on rcd_delta overflow
-Date: Thu, 27 Nov 2025 15:46:19 +0100
-Message-ID: <20251127144030.134105281@linuxfoundation.org>
+Subject: [PATCH 6.6 64/86] kconfig/mconf: Initialize the default locale at startup
+Date: Thu, 27 Nov 2025 15:46:20 +0100
+Message-ID: <20251127144030.170568399@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -47,81 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Jakub Horký <jakub.git@horky.net>
 
-[ Upstream commit c15d5c62ab313c19121f10e25d4fec852bd1c40c ]
+[ Upstream commit 3927c4a1084c48ef97f11281a0a43ecb2cb4d6f1 ]
 
-When a netdev issues a RX async resync request for a TLS connection,
-the TLS module handles it by logging record headers and attempting to
-match them to the tcp_sn provided by the device. If a match is found,
-the TLS module approves the tcp_sn for resynchronization.
+Fix bug where make menuconfig doesn't initialize the default locale, which
+causes ncurses menu borders to be displayed incorrectly (lqqqqk) in
+UTF-8 terminals that don't support VT100 ACS by default, such as PuTTY.
 
-While waiting for a device response, the TLS module also increments
-rcd_delta each time a new TLS record is received, tracking the distance
-from the original resync request.
-
-However, if the device response is delayed or fails (e.g due to
-unstable connection and device getting out of tracking, hardware
-errors, resource exhaustion etc.), the TLS module keeps logging and
-incrementing, which can lead to a WARN() when rcd_delta exceeds the
-threshold.
-
-To address this, introduce tls_offload_rx_resync_async_request_cancel()
-to explicitly cancel resync requests when a device response failure is
-detected. Call this helper also as a final safeguard when rcd_delta
-crosses its threshold, as reaching this point implies that earlier
-cancellation did not occur.
-
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1761508983-937977-3-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jakub Horký <jakub.git@horky.net>
+Link: https://patch.msgid.link/20251014154933.3990990-1-jakub.git@horky.net
+[nathan: Alphabetize locale.h include]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tls.h    | 6 ++++++
- net/tls/tls_device.c | 4 +++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ scripts/kconfig/mconf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/net/tls.h b/include/net/tls.h
-index 6c642ea180504..66527376ca973 100644
---- a/include/net/tls.h
-+++ b/include/net/tls.h
-@@ -474,6 +474,12 @@ tls_offload_rx_resync_async_request_end(struct sock *sk, __be32 seq)
- 		     ((u64)ntohl(seq) << 32) | RESYNC_REQ);
- }
+diff --git a/scripts/kconfig/mconf.c b/scripts/kconfig/mconf.c
+index 3795c36a9181a..2364140596c5d 100644
+--- a/scripts/kconfig/mconf.c
++++ b/scripts/kconfig/mconf.c
+@@ -12,6 +12,7 @@
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <limits.h>
++#include <locale.h>
+ #include <stdarg.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -1015,6 +1016,8 @@ int main(int ac, char **av)
  
-+static inline void
-+tls_offload_rx_resync_async_request_cancel(struct tls_offload_resync_async *resync_async)
-+{
-+	atomic64_set(&resync_async->req, 0);
-+}
+ 	signal(SIGINT, sig_handler);
+ 
++	setlocale(LC_ALL, "");
 +
- static inline void
- tls_offload_rx_resync_set_type(struct sock *sk, enum tls_offload_sync_type type)
- {
-diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
-index 8c94c926606ad..4f72fd26ab405 100644
---- a/net/tls/tls_device.c
-+++ b/net/tls/tls_device.c
-@@ -727,8 +727,10 @@ tls_device_rx_resync_async(struct tls_offload_resync_async *resync_async,
- 		/* shouldn't get to wraparound:
- 		 * too long in async stage, something bad happened
- 		 */
--		if (WARN_ON_ONCE(resync_async->rcd_delta == USHRT_MAX))
-+		if (WARN_ON_ONCE(resync_async->rcd_delta == USHRT_MAX)) {
-+			tls_offload_rx_resync_async_request_cancel(resync_async);
- 			return false;
-+		}
- 
- 		/* asynchronous stage: log all headers seq such that
- 		 * req_seq <= seq <= end_seq, and wait for real resync request
+ 	if (ac > 1 && strcmp(av[1], "-s") == 0) {
+ 		silent = 1;
+ 		/* Silence conf_read() until the real callback is set up */
 -- 
 2.51.0
 
