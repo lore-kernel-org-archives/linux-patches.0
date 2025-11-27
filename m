@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF0429BD89;
-	Thu, 27 Nov 2025 14:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF15332EC0;
+	Thu, 27 Nov 2025 14:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255250; cv=none; b=fRUmbDB9FBK30qZZ0pCvxqx1yVrMHyrLcfwV+94MoGgfiI2TmFP9bgLOEn3uoXXhvG81fSkPVs7wCRzy/O4GWVxGGFIMEUv6OGwGvjvzqoH6hh0sCghcBWeTqht+89YBTQItsOEsF9DV9hD0jRffeP5u9/0RqGiNeVfEM4Knhdw=
+	t=1764255253; cv=none; b=dqpN6H+vBNFp0Hs7yExoWmFdON8kfjBZBug7RKmjK/YXkahEb8oh9gOm9qBivMjO5AannuBoXw/t/t4VIWe7GdXeIkb+8s4Zs3uE18vv0onAqIGuLbf+BZ4yC44eAiJpMD9merGCVc7GZuUaeLIP852zoCx2oHuhIiebS/IbM6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255250; c=relaxed/simple;
-	bh=yCyaX/GH1iLXXayA517zFUz/vTd6GvBubOxenHkGCZA=;
+	s=arc-20240116; t=1764255253; c=relaxed/simple;
+	bh=boZZxREKREZHypXj1Vx0n3tC8w7HSMxGv2lEjA6n7xE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W+U2L5APJiSh0GG4GPO20kKQ5NqFxTSeMG1LLbureo3MTRZ2jGs49mynJx4FMbCFHxibY7GZlExaqzrBITA7VbvwOOFqPyC8RkQfKU6y4RfFu4cYfYDZi8kUyWisSixCWR+0uWkSbG7lvwWPYXtKRYNiH+Wbc1I6Ipr5tFjpA/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EiEuBAkZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DnoC4V2oCcMRVzVlfyK2owVhq2QS0A8ApNIojWowlg41NrzJDCOZ9TqZE7qpeaqio/kR2R6aR/asa0eOQIdS+WChGQa0EcyX9AF9npthZQfJVRU/sJrJaEsrGNcuVTfbzYFIBfNFLY7gODt7DKQMJJZmdiUv7Ok4mnFu+NtKa1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4cFRxEV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EiEuBAkZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F88BC4CEF8;
-	Thu, 27 Nov 2025 14:54:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4cFRxEV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D266C4CEF8;
+	Thu, 27 Nov 2025 14:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255249;
-	bh=yCyaX/GH1iLXXayA517zFUz/vTd6GvBubOxenHkGCZA=;
+	s=korg; t=1764255252;
+	bh=boZZxREKREZHypXj1Vx0n3tC8w7HSMxGv2lEjA6n7xE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EiEuBAkZH/r1LjEKjgA0mkubKOgbNF5wFUdTz3zzgiN6ldEmjuNf+Sygi4vuxRuBC
-	 Laux8Vcimygig3Z6JmOw1Koz3kXNcgscrLupUI4/VPQsZQhafqEZ4mwNfLmgBDBxat
-	 DqTtgLAaKF+1Ccs9KQSxh/H1+M6VMTODCOPtFGWo=
+	b=n4cFRxEVWw3Z8994Sz1bYxMDPUam9OY2vLUK2Q/nzPYFqNsHfHPXTD8l2zIid0KUM
+	 RXgDK6lMdIXB4fTL64aqa/KogOe3zD6RUsVbyU51WzuLolXnIMkvyhf2VJom+qeZAm
+	 d+uXJLmcIJOhk1g4Jr95QvLRtnWSHJX/GfdAO/Lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 058/112] pinctrl: cirrus: Fix fwnode leak in cs42l43_pin_probe()
-Date: Thu, 27 Nov 2025 15:46:00 +0100
-Message-ID: <20251127144034.964300144@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Vlastimil Babka <vbabka@suse.cz>
+Subject: [PATCH 6.12 027/112] mm/mempool: fix poisoning order>0 pages with HIGHMEM
+Date: Thu, 27 Nov 2025 15:45:29 +0100
+Message-ID: <20251127144033.833437873@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -52,68 +51,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 9b07cdf86a0b90556f5b68a6b20b35833b558df3 ]
+commit ec33b59542d96830e3c89845ff833cf7b25ef172 upstream.
 
-The driver calls fwnode_get_named_child_node() which takes a reference
-on the child node, but never releases it, which causes a reference leak.
+The kernel test has reported:
 
-Fix by using devm_add_action_or_reset() to automatically release the
-reference when the device is removed.
+  BUG: unable to handle page fault for address: fffba000
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  *pde = 03171067 *pte = 00000000
+  Oops: Oops: 0002 [#1]
+  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G                T   6.18.0-rc2-00031-gec7f31b2a2d3 #1 NONE  a1d066dfe789f54bc7645c7989957d2bdee593ca
+  Tainted: [T]=RANDSTRUCT
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+  EIP: memset (arch/x86/include/asm/string_32.h:168 arch/x86/lib/memcpy_32.c:17)
+  Code: a5 8b 4d f4 83 e1 03 74 02 f3 a4 83 c4 04 5e 5f 5d 2e e9 73 41 01 00 90 90 90 3e 8d 74 26 00 55 89 e5 57 56 89 c6 89 d0 89 f7 <f3> aa 89 f0 5e 5f 5d 2e e9 53 41 01 00 cc cc cc 55 89 e5 53 57 56
+  EAX: 0000006b EBX: 00000015 ECX: 001fefff EDX: 0000006b
+  ESI: fffb9000 EDI: fffba000 EBP: c611fbf0 ESP: c611fbe8
+  DS: 007b ES: 007b FS: 0000 GS: 0000 SS: 0068 EFLAGS: 00010287
+  CR0: 80050033 CR2: fffba000 CR3: 0316e000 CR4: 00040690
+  Call Trace:
+   poison_element (mm/mempool.c:83 mm/mempool.c:102)
+   mempool_init_node (mm/mempool.c:142 mm/mempool.c:226)
+   mempool_init_noprof (mm/mempool.c:250 (discriminator 1))
+   ? mempool_alloc_pages (mm/mempool.c:640)
+   bio_integrity_initfn (block/bio-integrity.c:483 (discriminator 8))
+   ? mempool_alloc_pages (mm/mempool.c:640)
+   do_one_initcall (init/main.c:1283)
 
-Fixes: d5282a539297 ("pinctrl: cs42l43: Add support for the cs42l43")
-Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Christoph found out this is due to the poisoning code not dealing
+properly with CONFIG_HIGHMEM because only the first page is mapped but
+then the whole potentially high-order page is accessed.
+
+We could give up on HIGHMEM here, but it's straightforward to fix this
+with a loop that's mapping, poisoning or checking and unmapping
+individual pages.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Closes: https://lore.kernel.org/oe-lkp/202511111411.9ebfa1ba-lkp@intel.com
+Analyzed-by: Christoph Hellwig <hch@lst.de>
+Fixes: bdfedb76f4f5 ("mm, mempool: poison elements backed by slab allocator")
+Cc: stable@vger.kernel.org
+Tested-by: kernel test robot <oliver.sang@intel.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20251113-mempool-poison-v1-1-233b3ef984c3@suse.cz
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/cirrus/pinctrl-cs42l43.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ mm/mempool.c |   32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
-index 628b60ccc2b07..8b3f3b945e206 100644
---- a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
-+++ b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
-@@ -527,6 +527,11 @@ static int cs42l43_gpio_add_pin_ranges(struct gpio_chip *chip)
- 	return ret;
+--- a/mm/mempool.c
++++ b/mm/mempool.c
+@@ -68,10 +68,20 @@ static void check_element(mempool_t *poo
+ 	} else if (pool->free == mempool_free_pages) {
+ 		/* Mempools backed by page allocator */
+ 		int order = (int)(long)pool->pool_data;
+-		void *addr = kmap_local_page((struct page *)element);
+ 
+-		__check_element(pool, addr, 1UL << (PAGE_SHIFT + order));
+-		kunmap_local(addr);
++#ifdef CONFIG_HIGHMEM
++		for (int i = 0; i < (1 << order); i++) {
++			struct page *page = (struct page *)element;
++			void *addr = kmap_local_page(page + i);
++
++			__check_element(pool, addr, PAGE_SIZE);
++			kunmap_local(addr);
++		}
++#else
++		void *addr = page_address((struct page *)element);
++
++		__check_element(pool, addr, PAGE_SIZE << order);
++#endif
+ 	}
  }
  
-+static void cs42l43_fwnode_put(void *data)
-+{
-+	fwnode_handle_put(data);
-+}
-+
- static int cs42l43_pin_probe(struct platform_device *pdev)
- {
- 	struct cs42l43 *cs42l43 = dev_get_drvdata(pdev->dev.parent);
-@@ -558,10 +563,20 @@ static int cs42l43_pin_probe(struct platform_device *pdev)
- 	priv->gpio_chip.ngpio = CS42L43_NUM_GPIOS;
+@@ -97,10 +107,20 @@ static void poison_element(mempool_t *po
+ 	} else if (pool->alloc == mempool_alloc_pages) {
+ 		/* Mempools backed by page allocator */
+ 		int order = (int)(long)pool->pool_data;
+-		void *addr = kmap_local_page((struct page *)element);
  
- 	if (is_of_node(fwnode)) {
--		fwnode = fwnode_get_named_child_node(fwnode, "pinctrl");
--
--		if (fwnode && !fwnode->dev)
--			fwnode->dev = priv->dev;
-+		struct fwnode_handle *child;
+-		__poison_element(addr, 1UL << (PAGE_SHIFT + order));
+-		kunmap_local(addr);
++#ifdef CONFIG_HIGHMEM
++		for (int i = 0; i < (1 << order); i++) {
++			struct page *page = (struct page *)element;
++			void *addr = kmap_local_page(page + i);
 +
-+		child = fwnode_get_named_child_node(fwnode, "pinctrl");
-+		if (child) {
-+			ret = devm_add_action_or_reset(&pdev->dev,
-+				cs42l43_fwnode_put, child);
-+			if (ret) {
-+				fwnode_handle_put(child);
-+				return ret;
-+			}
-+			if (!child->dev)
-+				child->dev = priv->dev;
-+			fwnode = child;
++			__poison_element(addr, PAGE_SIZE);
++			kunmap_local(addr);
 +		}
++#else
++		void *addr = page_address((struct page *)element);
++
++		__poison_element(addr, PAGE_SIZE << order);
++#endif
  	}
- 
- 	priv->gpio_chip.fwnode = fwnode;
--- 
-2.51.0
-
+ }
+ #else /* CONFIG_SLUB_DEBUG_ON */
 
 
