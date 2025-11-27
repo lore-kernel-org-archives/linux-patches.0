@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9C66312807;
-	Thu, 27 Nov 2025 14:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB1B288537;
+	Thu, 27 Nov 2025 14:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255140; cv=none; b=YFuDtCkRCov2v8DOFQFggM4u/DhEJn+iZrFzjsQqsl6Emv7WgWTGKeA00FIPe174hZwpC1/mXXV5nErF8j62PhPLFLlR0VUsRv74i4aQHA1r+S5tYP+J7IZq1A8QcDnJJS2qbox9EN0YxmUwncLcznJDQM63Dg9EWmS1vikH5XI=
+	t=1764255143; cv=none; b=FLR8WhNcTyqlfxUpfH9i09mJqA5neZiTI63M4Qc8CY3C98TDwpia9aX//43rnVxfGrTbYXQ6oLrR4jktTQzi58unb14PeMWV2dQv7szCjE5sh3LrAn7sKfi5VPotSBW/7LztxuUslzyG6I0fGdrqsQyokni9+hkk/hpatoYNuBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255140; c=relaxed/simple;
-	bh=2KBMhuDZKdF9wPzR/2uSIJ81rMeXVF66x0M89CKvdOY=;
+	s=arc-20240116; t=1764255143; c=relaxed/simple;
+	bh=fT5g5NYpllmkQyBuFmv2ek8yX3qxhwcvxUfWCg9M8pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FZijtL5HkibD+95GcTC3lowPSxpQz1waFVjoSOOj0paMEy20r0rkmETDc6PBPiGAFGT+p2qcBDrff6aQ9TpZJkGbPoIQ4xxFsk9s9r3tbHQABjWGg1puY7gboqLo4KDVlvD4YYmMUUNS/G9OldKN2wfygDKjlCRYJu40bxWk3Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pqdY7TQa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BF2d8GQv8Ti+DsTFNlYLFeHTercfkaQf8lvGo6R2NaF0UoSn0Awv6TjRDgDieiyqUUl/z5d012GN/zXr6FNFjjVURATAbI5SkkpZPcJxd6FYOTJMUn0jhVxehs9pM6WZqzSKm5X7Mys3hC134DwbgbRW5C0fNMWxDLLchMxiFJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLXQt+4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pqdY7TQa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE43C4CEF8;
-	Thu, 27 Nov 2025 14:52:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLXQt+4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AB6C4CEF8;
+	Thu, 27 Nov 2025 14:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255140;
-	bh=2KBMhuDZKdF9wPzR/2uSIJ81rMeXVF66x0M89CKvdOY=;
+	s=korg; t=1764255143;
+	bh=fT5g5NYpllmkQyBuFmv2ek8yX3qxhwcvxUfWCg9M8pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqdY7TQa9x/Y31+GaNx6R8kXIrReBl5XWna+TaX+IaWiWZhR2ZIcDj8PB5IL1nVJZ
-	 qPGQZtM6RiH4naY/7mKQ16fLtf2di3+d0t/VAL2M12IXjkBP1vePHULNiXlB5csd3R
-	 9mIVwARvNHHCEmq21PVPNJb4lwBYCSMoj0Ripxmo=
+	b=LLXQt+4gTA0xdW52KjcZBprPp6UNfqxWSWSSRF6Vi3VWftcL1V16ePti8f/NUkqZ+
+	 Gq+iVndqvpryfrUDkwwDkM/A3nDSFH/UCfH7h+PumYzUG07QgCv/kw4/NCpqWFNGpS
+	 668Nz+0mhlljhRsktTZdNK3qnVGGZ4PwMOL9a8Jw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.12 021/112] net: dsa: microchip: lan937x: Fix RGMII delay tuning
-Date: Thu, 27 Nov 2025 15:45:23 +0100
-Message-ID: <20251127144033.510522272@linuxfoundation.org>
+	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.12 022/112] Revert "drm/tegra: dsi: Clear enable register if powered by bootloader"
+Date: Thu, 27 Nov 2025 15:45:24 +0100
+Message-ID: <20251127144033.548082617@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -50,48 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
 
-commit 3ceb6ac2116ecda1c5d779bb73271479e70fccb4 upstream.
+commit 660b299bed2a2a55a1f9102d029549d0235f881c upstream.
 
-Correct RGMII delay application logic in lan937x_set_tune_adj().
+Commit b6bcbce33596 ("soc/tegra: pmc: Ensure power-domains are in a
+known state") was introduced so that all power domains get initialized
+to a known working state when booting and it does this by shutting them
+down (including asserting resets and disabling clocks) before registering
+each power domain with the genpd framework, leaving it to each driver to
+later on power its needed domains.
 
-The function was missing `data16 &= ~PORT_TUNE_ADJ` before setting the
-new delay value. This caused the new value to be bitwise-OR'd with the
-existing PORT_TUNE_ADJ field instead of replacing it.
+This caused the Google Pixel C to hang when booting due to a workaround
+in the DSI driver introduced in commit b22fd0b9639e ("drm/tegra: dsi:
+Clear enable register if powered by bootloader") meant to handle the case
+where the bootloader enabled the DSI hardware module. The workaround relies
+on reading a hardware register to determine the current status and after
+b6bcbce33596 that now happens in a powered down state thus leading to
+the boot hang.
 
-For example, when setting the RGMII 2 TX delay on port 4, the
-intended TUNE_ADJUST value of 0 (RGMII_2_TX_DELAY_2NS) was
-incorrectly OR'd with the default 0x1B (from register value 0xDA3),
-leaving the delay at the wrong setting.
+Fix this by reverting b22fd0b9639e since currently we are guaranteed
+that the hardware will be fully reset by the time we start enabling the
+DSI module.
 
-This patch adds the missing mask to clear the field, ensuring the
-correct delay value is written. Physical measurements on the RGMII TX
-lines confirm the fix, showing the delay changing from ~1ns (before
-change) to ~2ns.
-
-While testing on i.MX 8MP showed this was within the platform's timing
-tolerance, it did not match the intended hardware-characterized value.
-
-Fixes: b19ac41faa3f ("net: dsa: microchip: apply rgmii tx and rx delay in phylink mac config")
+Fixes: b6bcbce33596 ("soc/tegra: pmc: Ensure power-domains are in a known state")
 Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20251114090951.4057261-1-o.rempel@pengutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20251103-diogo-smaug_ec_typec-v1-1-be656ccda391@tecnico.ulisboa.pt
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/lan937x_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/tegra/dsi.c |    9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/drivers/net/dsa/microchip/lan937x_main.c
-+++ b/drivers/net/dsa/microchip/lan937x_main.c
-@@ -339,6 +339,7 @@ static void lan937x_set_tune_adj(struct
- 	ksz_pread16(dev, port, reg, &data16);
+--- a/drivers/gpu/drm/tegra/dsi.c
++++ b/drivers/gpu/drm/tegra/dsi.c
+@@ -913,15 +913,6 @@ static void tegra_dsi_encoder_enable(str
+ 	u32 value;
+ 	int err;
  
- 	/* Update tune Adjust */
-+	data16 &= ~PORT_TUNE_ADJ;
- 	data16 |= FIELD_PREP(PORT_TUNE_ADJ, val);
- 	ksz_pwrite16(dev, port, reg, data16);
- 
+-	/* If the bootloader enabled DSI it needs to be disabled
+-	 * in order for the panel initialization commands to be
+-	 * properly sent.
+-	 */
+-	value = tegra_dsi_readl(dsi, DSI_POWER_CONTROL);
+-
+-	if (value & DSI_POWER_CONTROL_ENABLE)
+-		tegra_dsi_disable(dsi);
+-
+ 	err = tegra_dsi_prepare(dsi);
+ 	if (err < 0) {
+ 		dev_err(dsi->dev, "failed to prepare: %d\n", err);
 
 
