@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228E727703C;
-	Thu, 27 Nov 2025 14:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C64728469B;
+	Thu, 27 Nov 2025 14:49:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254989; cv=none; b=FDHvBCU+nfMNXDN2YWL9NOgv7j4ffXpEHb0xOA4qRdkvFF7ljpFKrtwTPz5rRRhAI2zoJlE8QUZMy+TiBM+niYm2ETa76jbcDnmPxi9IUJqz/uskyn6lKZW/NlyRGVQnKCDEWCVz5eNDfPL5js1uLW82M5QlUULscwc/skTJR0U=
+	t=1764254992; cv=none; b=KEfVN1ZhyGa45ce1kdRECOXID39xW+E7WFIz33xdEIRYL+Scke+1ys+3dNZVRrSnLRBvq4DOVJSs9kGrDOv9IAybnPCW1dizzvGPA1XjBvOjtVy22R7tzg2PBnP0QWex+32i+Sibrz4EAhc6Xozrn2T94sp4pDlFs38NtwyCV+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254989; c=relaxed/simple;
-	bh=6iAUHgw1c2Ap4yPU/x+SlGHLcGpa5K6TOJs+aWqu/YI=;
+	s=arc-20240116; t=1764254992; c=relaxed/simple;
+	bh=ZD2nnTfGnEcQ33GlL4VcGSvzQ6iw+ioAdW9+D7bILBg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YeN2cifJqkxi54E6f0KDVxFP0YED5ljB6oJEMqU+O6Ke+Ur3Zwt90JZbM2zlVIbSkvPCMSPndYfohIqJuhYmHRAoh3f46uGQW3B9/gMwuq6S03aqxCNRbStposEyf/oxJ+HZ+BAwX51UkG3SPxoIGvAESz5eO/OB0lQNVJFpKlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C6DKexgg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NUo2jDkdL5b9uPFttUlGV43Y1Zhxdw3RX3ZLchAsmMVzjBvWX4Uysnzn1E4s+J7FiZ2oy1xgTwYmMUu+hLconBsnwTAjDOYykoQgz2Zbc9pu8OKVSUeY428snaO1HCcPPsxrNyKq+/oxC4rGMtx+GgiDDif/sSes/JUZ8rCjAjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ym3fiNCt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C6DKexgg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F511C4CEF8;
-	Thu, 27 Nov 2025 14:49:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ym3fiNCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9125FC4CEF8;
+	Thu, 27 Nov 2025 14:49:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254989;
-	bh=6iAUHgw1c2Ap4yPU/x+SlGHLcGpa5K6TOJs+aWqu/YI=;
+	s=korg; t=1764254992;
+	bh=ZD2nnTfGnEcQ33GlL4VcGSvzQ6iw+ioAdW9+D7bILBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6DKexggdzlEJhCSegmUrPW7rd7y7+jTMe4uSVOSnCBGu0WOukgXb081u9PoKKjHj
-	 OjRNEz4UiYQD5pJOLmFaREdxGxNr7M7sGhslVaOMeKK70ltcFUSx9G7uDtMPi/fopi
-	 aVcGKXBBfv0xo7uxYENIpBY4X3ZfT3Kz4n1+Fe/0=
+	b=ym3fiNCt4IJBeBUaHBJBexE6VNQ7AVKnsL0MUa4DazMGTRQ38m27SchSzupHagw3+
+	 LZnWZnI7e5TYUIRvjrk5f4TL1moePKBvngIXclWBMCHyYv7tQCrFiEEwI9YfHkqqUM
+	 X/cv/DszebGTsyG+MaUdo4ejkEGXnMfqnO3lUHxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohith Kumar Thummaluru <mohith.k.kumar.thummaluru@oracle.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Shay Drori <shayd@nvidia.com>,
-	Pradyumn Rahar <pradyumn.rahar@oracle.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 54/86] net/mlx5: Clean up only new IRQ glue on request_irq() failure
-Date: Thu, 27 Nov 2025 15:46:10 +0100
-Message-ID: <20251127144029.805581730@linuxfoundation.org>
+Subject: [PATCH 6.6 55/86] LoongArch: Use UAPI types in ptrace UAPI header
+Date: Thu, 27 Nov 2025 15:46:11 +0100
+Message-ID: <20251127144029.841516502@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,165 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pradyumn Rahar <pradyumn.rahar@oracle.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit d47515af6cccd7484d8b0870376858c9848a18ec ]
+[ Upstream commit 20d7338f2d3bcb570068dd6d39b16f1a909fe976 ]
 
-The mlx5_irq_alloc() function can inadvertently free the entire rmap
-and end up in a crash[1] when the other threads tries to access this,
-when request_irq() fails due to exhausted IRQ vectors. This commit
-modifies the cleanup to remove only the specific IRQ mapping that was
-just added.
+The kernel UAPI headers already contain fixed-width integer types, there
+is no need to rely on the libc types. There may not be a libc available
+or the libc may not provides the <stdint.h>, like for example on nolibc.
 
-This prevents removal of other valid mappings and ensures precise
-cleanup of the failed IRQ allocation's associated glue object.
+This also aligns the header with the rest of the LoongArch UAPI headers.
 
-Note: This error is observed when both fwctl and rds configs are enabled.
-
-[1]
-mlx5_core 0000:05:00.0: Successfully registered panic handler for port 1
-mlx5_core 0000:05:00.0: mlx5_irq_alloc:293:(pid 66740): Failed to
-request irq. err = -28
-infiniband mlx5_0: mlx5_ib_test_wc:290:(pid 66740): Error -28 while
-trying to test write-combining support
-mlx5_core 0000:05:00.0: Successfully unregistered panic handler for port 1
-mlx5_core 0000:06:00.0: Successfully registered panic handler for port 1
-mlx5_core 0000:06:00.0: mlx5_irq_alloc:293:(pid 66740): Failed to
-request irq. err = -28
-infiniband mlx5_0: mlx5_ib_test_wc:290:(pid 66740): Error -28 while
-trying to test write-combining support
-mlx5_core 0000:06:00.0: Successfully unregistered panic handler for port 1
-mlx5_core 0000:03:00.0: mlx5_irq_alloc:293:(pid 28895): Failed to
-request irq. err = -28
-mlx5_core 0000:05:00.0: mlx5_irq_alloc:293:(pid 28895): Failed to
-request irq. err = -28
-general protection fault, probably for non-canonical address
-0xe277a58fde16f291: 0000 [#1] SMP NOPTI
-
-RIP: 0010:free_irq_cpu_rmap+0x23/0x7d
-Call Trace:
-   <TASK>
-   ? show_trace_log_lvl+0x1d6/0x2f9
-   ? show_trace_log_lvl+0x1d6/0x2f9
-   ? mlx5_irq_alloc.cold+0x5d/0xf3 [mlx5_core]
-   ? __die_body.cold+0x8/0xa
-   ? die_addr+0x39/0x53
-   ? exc_general_protection+0x1c4/0x3e9
-   ? dev_vprintk_emit+0x5f/0x90
-   ? asm_exc_general_protection+0x22/0x27
-   ? free_irq_cpu_rmap+0x23/0x7d
-   mlx5_irq_alloc.cold+0x5d/0xf3 [mlx5_core]
-   irq_pool_request_vector+0x7d/0x90 [mlx5_core]
-   mlx5_irq_request+0x2e/0xe0 [mlx5_core]
-   mlx5_irq_request_vector+0xad/0xf7 [mlx5_core]
-   comp_irq_request_pci+0x64/0xf0 [mlx5_core]
-   create_comp_eq+0x71/0x385 [mlx5_core]
-   ? mlx5e_open_xdpsq+0x11c/0x230 [mlx5_core]
-   mlx5_comp_eqn_get+0x72/0x90 [mlx5_core]
-   ? xas_load+0x8/0x91
-   mlx5_comp_irqn_get+0x40/0x90 [mlx5_core]
-   mlx5e_open_channel+0x7d/0x3c7 [mlx5_core]
-   mlx5e_open_channels+0xad/0x250 [mlx5_core]
-   mlx5e_open_locked+0x3e/0x110 [mlx5_core]
-   mlx5e_open+0x23/0x70 [mlx5_core]
-   __dev_open+0xf1/0x1a5
-   __dev_change_flags+0x1e1/0x249
-   dev_change_flags+0x21/0x5c
-   do_setlink+0x28b/0xcc4
-   ? __nla_parse+0x22/0x3d
-   ? inet6_validate_link_af+0x6b/0x108
-   ? cpumask_next+0x1f/0x35
-   ? __snmp6_fill_stats64.constprop.0+0x66/0x107
-   ? __nla_validate_parse+0x48/0x1e6
-   __rtnl_newlink+0x5ff/0xa57
-   ? kmem_cache_alloc_trace+0x164/0x2ce
-   rtnl_newlink+0x44/0x6e
-   rtnetlink_rcv_msg+0x2bb/0x362
-   ? __netlink_sendskb+0x4c/0x6c
-   ? netlink_unicast+0x28f/0x2ce
-   ? rtnl_calcit.isra.0+0x150/0x146
-   netlink_rcv_skb+0x5f/0x112
-   netlink_unicast+0x213/0x2ce
-   netlink_sendmsg+0x24f/0x4d9
-   __sock_sendmsg+0x65/0x6a
-   ____sys_sendmsg+0x28f/0x2c9
-   ? import_iovec+0x17/0x2b
-   ___sys_sendmsg+0x97/0xe0
-   __sys_sendmsg+0x81/0xd8
-   do_syscall_64+0x35/0x87
-   entry_SYSCALL_64_after_hwframe+0x6e/0x0
-RIP: 0033:0x7fc328603727
-Code: c3 66 90 41 54 41 89 d4 55 48 89 f5 53 89 fb 48 83 ec 10 e8 0b ed
-ff ff 44 89 e2 48 89 ee 89 df 41 89 c0 b8 2e 00 00 00 0f 05 <48> 3d 00
-f0 ff ff 77 35 44 89 c7 48 89 44 24 08 e8 44 ed ff ff 48
-RSP: 002b:00007ffe8eb3f1a0 EFLAGS: 00000293 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 000000000000000d RCX: 00007fc328603727
-RDX: 0000000000000000 RSI: 00007ffe8eb3f1f0 RDI: 000000000000000d
-RBP: 00007ffe8eb3f1f0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000293 R12: 0000000000000000
-R13: 0000000000000000 R14: 00007ffe8eb3f3c8 R15: 00007ffe8eb3f3bc
-   </TASK>
----[ end trace f43ce73c3c2b13a2 ]---
-RIP: 0010:free_irq_cpu_rmap+0x23/0x7d
-Code: 0f 1f 80 00 00 00 00 48 85 ff 74 6b 55 48 89 fd 53 66 83 7f 06 00
-74 24 31 db 48 8b 55 08 0f b7 c3 48 8b 04 c2 48 85 c0 74 09 <8b> 38 31
-f6 e8 c4 0a b8 ff 83 c3 01 66 3b 5d 06 72 de b8 ff ff ff
-RSP: 0018:ff384881640eaca0 EFLAGS: 00010282
-RAX: e277a58fde16f291 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: ff2335e2e20b3600 RSI: 0000000000000000 RDI: ff2335e2e20b3400
-RBP: ff2335e2e20b3400 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 00000000ffffffe4 R12: ff384881640ead88
-R13: ff2335c3760751e0 R14: ff2335e2e1672200 R15: ff2335c3760751f8
-FS:  00007fc32ac22480(0000) GS:ff2335e2d6e00000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f651ab54000 CR3: 00000029f1206003 CR4: 0000000000771ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Kernel panic - not syncing: Fatal exception
-Kernel Offset: 0x1dc00000 from 0xffffffff81000000 (relocation range:
-0xffffffff80000000-0xffffffffbfffffff)
-kvm-guest: disable async PF for cpu 0
-
-Fixes: 3354822cde5a ("net/mlx5: Use dynamic msix vectors allocation")
-Signed-off-by: Mohith Kumar Thummaluru<mohith.k.kumar.thummaluru@oracle.com>
-Tested-by: Mohith Kumar Thummaluru<mohith.k.kumar.thummaluru@oracle.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Shay Drori <shayd@nvidia.com>
-Signed-off-by: Pradyumn Rahar <pradyumn.rahar@oracle.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1763381768-1234998-1-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 803b0fc5c3f2 ("LoongArch: Add process management")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/loongarch/include/uapi/asm/ptrace.h | 40 +++++++++++-------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-index a8d6fd18c0f55..487d8b413a41d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c
-@@ -323,10 +323,8 @@ struct mlx5_irq *mlx5_irq_alloc(struct mlx5_irq_pool *pool, int i,
- 	free_irq(irq->map.virq, &irq->nh);
- err_req_irq:
- #ifdef CONFIG_RFS_ACCEL
--	if (i && rmap && *rmap) {
--		free_irq_cpu_rmap(*rmap);
--		*rmap = NULL;
--	}
-+	if (i && rmap && *rmap)
-+		irq_cpu_rmap_remove(*rmap, irq->map.virq);
- err_irq_rmap:
- #endif
- 	if (i && pci_msix_can_alloc_dyn(dev->pdev))
+diff --git a/arch/loongarch/include/uapi/asm/ptrace.h b/arch/loongarch/include/uapi/asm/ptrace.h
+index aafb3cd9e943e..215e0f9e8aa32 100644
+--- a/arch/loongarch/include/uapi/asm/ptrace.h
++++ b/arch/loongarch/include/uapi/asm/ptrace.h
+@@ -10,10 +10,6 @@
+ 
+ #include <linux/types.h>
+ 
+-#ifndef __KERNEL__
+-#include <stdint.h>
+-#endif
+-
+ /*
+  * For PTRACE_{POKE,PEEK}USR. 0 - 31 are GPRs,
+  * 32 is syscall's original ARG0, 33 is PC, 34 is BADVADDR.
+@@ -41,44 +37,44 @@ struct user_pt_regs {
+ } __attribute__((aligned(8)));
+ 
+ struct user_fp_state {
+-	uint64_t fpr[32];
+-	uint64_t fcc;
+-	uint32_t fcsr;
++	__u64 fpr[32];
++	__u64 fcc;
++	__u32 fcsr;
+ };
+ 
+ struct user_lsx_state {
+ 	/* 32 registers, 128 bits width per register. */
+-	uint64_t vregs[32*2];
++	__u64 vregs[32*2];
+ };
+ 
+ struct user_lasx_state {
+ 	/* 32 registers, 256 bits width per register. */
+-	uint64_t vregs[32*4];
++	__u64 vregs[32*4];
+ };
+ 
+ struct user_lbt_state {
+-	uint64_t scr[4];
+-	uint32_t eflags;
+-	uint32_t ftop;
++	__u64 scr[4];
++	__u32 eflags;
++	__u32 ftop;
+ };
+ 
+ struct user_watch_state {
+-	uint64_t dbg_info;
++	__u64 dbg_info;
+ 	struct {
+-		uint64_t    addr;
+-		uint64_t    mask;
+-		uint32_t    ctrl;
+-		uint32_t    pad;
++		__u64    addr;
++		__u64    mask;
++		__u32    ctrl;
++		__u32    pad;
+ 	} dbg_regs[8];
+ };
+ 
+ struct user_watch_state_v2 {
+-	uint64_t dbg_info;
++	__u64 dbg_info;
+ 	struct {
+-		uint64_t    addr;
+-		uint64_t    mask;
+-		uint32_t    ctrl;
+-		uint32_t    pad;
++		__u64    addr;
++		__u64    mask;
++		__u32    ctrl;
++		__u32    pad;
+ 	} dbg_regs[14];
+ };
+ 
 -- 
 2.51.0
 
