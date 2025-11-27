@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA6F3280335;
-	Thu, 27 Nov 2025 14:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CF6280335;
+	Thu, 27 Nov 2025 14:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254981; cv=none; b=hHjJ9y/pjmNsGLTVF04UQroQ8gOciehDtcIlhRFGt3mirTI52ej3f9Cy6wAN0uPrdgs9ycIEWLLMu1b+RaPG4jxcRQXv220lgAjBDxyiZ0Kt8CJAWB6DKskDYFzv63zNLI423e3apMm21yNahiVsPSDrJ3XhrHOxCAVQDT+whTA=
+	t=1764254983; cv=none; b=jO2f2X3lkR0dHYg5PR0EUjbD+WVzYrS9oI2ZV/37KMj8HdIkVqffeSgtkb5mpeR39dnz16NfBPVlj9Tuf8UQntsVC089fs6QKet1r+MKPbE4KlebC71LTEam3dWCl8IiTalfRzlaxyDP1MZCN3zxdEEZM+DWMMeG0+ecKZ/mhPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254981; c=relaxed/simple;
-	bh=1igD4rKvSb7178EVuyueHlMiE3xntS72AOeX569svcg=;
+	s=arc-20240116; t=1764254983; c=relaxed/simple;
+	bh=HlMx9IIW+SKZUL+FQgQ8A4+GNCqcAMvYk37PaD1lkxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pPtJmwDZZYQ8GEgD7uiBe9Ms2C7QX0qdtlHILjrsV2Hl3GCQOG23ySbkVEzsN5LNdry181/TkskV+zzjdj5/cAbkiANMM9MCAQ6RJFk7JeBMF/hA4dLnCRlribW1N60Au4DXTJw9sJKHXAEYAd511U6ELhGkzWLfFA7Gxm1K2ng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHhrICPO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YY5U2x2BChnmcuLzTigk2o8pc4IdFpFymsKJe3FBZcpvyCkItXqc2dqfwgHifAiD8aTWJNnnqJ//SDEUMsLf4Y4L+0WBoEnSiO4rVj7Zplo7vPytrYmFmkXvgvNwHWTzyWgsCJYQFoCQg231aBHNguNE5gyrmYsSuKq7YXgesZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoutQlFC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHhrICPO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF873C4CEF8;
-	Thu, 27 Nov 2025 14:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoutQlFC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1671C4CEF8;
+	Thu, 27 Nov 2025 14:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254980;
-	bh=1igD4rKvSb7178EVuyueHlMiE3xntS72AOeX569svcg=;
+	s=korg; t=1764254983;
+	bh=HlMx9IIW+SKZUL+FQgQ8A4+GNCqcAMvYk37PaD1lkxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHhrICPOXP3kgSzirz3JGs5BNhKfEa3oD8b9Nv5icrrLiK6ViNGhfmypyluecxP8m
-	 OoMFrnegK0uahUsvIVmy9Dcs1VE4YOQLu5OiTKjtkrooh/fOVUt/CxBs45d91X0Yk5
-	 ssJjy9X3ROsGKzzpGJD4UGzRHJIiHxZY2YU63CGs=
+	b=EoutQlFC2TxQHuU+2Se+hVHny5nIPzZZ/IHVQr0EuoClW1+syQDKll3htAfARVSx3
+	 Rh0RiX28bFN59REJpOmQPJ2Efre7Z32vnhfZRuab/A+4SdE+zz6vxUKs/DyoEa4lM4
+	 IJtrCjhsuRYZpGRKy3d82aqaanPrB8s0mCOx0nr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jared Kangas <jkangas@redhat.com>,
-	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 51/86] pinctrl: s32cc: fix uninitialized memory in s32_pinctrl_desc
-Date: Thu, 27 Nov 2025 15:46:07 +0100
-Message-ID: <20251127144029.694443390@linuxfoundation.org>
+Subject: [PATCH 6.6 52/86] pinctrl: s32cc: initialize gpio_pin_config::list after kmalloc()
+Date: Thu, 27 Nov 2025 15:46:08 +0100
+Message-ID: <20251127144029.731269447@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -54,77 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Jared Kangas <jkangas@redhat.com>
 
-[ Upstream commit 97ea34defbb57bfaf71ce487b1b0865ffd186e81 ]
+[ Upstream commit 6010d4d8b55b5d3ae1efb5502c54312e15c14f21 ]
 
-s32_pinctrl_desc is allocated with devm_kmalloc(), but not all of its
-fields are initialized. Notably, num_custom_params is used in
-pinconf_generic_parse_dt_config(), resulting in intermittent allocation
-errors, such as the following splat when probing i2c-imx:
+s32_pmx_gpio_request_enable() does not initialize the newly-allocated
+gpio_pin_config::list before adding it to s32_pinctrl::gpio_configs.
+This could result in a linked list corruption.
 
-        WARNING: CPU: 0 PID: 176 at mm/page_alloc.c:4795 __alloc_pages_noprof+0x290/0x300
-        [...]
-        Hardware name: NXP S32G3 Reference Design Board 3 (S32G-VNP-RDB3) (DT)
-        [...]
-        Call trace:
-         __alloc_pages_noprof+0x290/0x300 (P)
-         ___kmalloc_large_node+0x84/0x168
-         __kmalloc_large_node_noprof+0x34/0x120
-         __kmalloc_noprof+0x2ac/0x378
-         pinconf_generic_parse_dt_config+0x68/0x1a0
-         s32_dt_node_to_map+0x104/0x248
-         dt_to_map_one_config+0x154/0x1d8
-         pinctrl_dt_to_map+0x12c/0x280
-         create_pinctrl+0x6c/0x270
-         pinctrl_get+0xc0/0x170
-         devm_pinctrl_get+0x50/0xa0
-         pinctrl_bind_pins+0x60/0x2a0
-         really_probe+0x60/0x3a0
-        [...]
-         __platform_driver_register+0x2c/0x40
-         i2c_adap_imx_init+0x28/0xff8 [i2c_imx]
-        [...]
-
-This results in later parse failures that can cause issues in dependent
-drivers:
-
-        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c0-pins/i2c0-grp0: could not parse node property
-        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c0-pins/i2c0-grp0: could not parse node property
-        [...]
-        pca953x 0-0022: failed writing register: -6
-        i2c i2c-0: IMX I2C adapter registered
-        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c2-pins/i2c2-grp0: could not parse node property
-        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c2-pins/i2c2-grp0: could not parse node property
-        i2c i2c-1: IMX I2C adapter registered
-        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c4-pins/i2c4-grp0: could not parse node property
-        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c4-pins/i2c4-grp0: could not parse node property
-        i2c i2c-2: IMX I2C adapter registered
-
-Fix this by initializing s32_pinctrl_desc with devm_kzalloc() instead of
-devm_kmalloc() in s32_pinctrl_probe(), which sets the previously
-uninitialized fields to zero.
+Initialize the new list_head with INIT_LIST_HEAD() to fix this.
 
 Fixes: fd84aaa8173d ("pinctrl: add NXP S32 SoC family support")
 Signed-off-by: Jared Kangas <jkangas@redhat.com>
-Tested-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/nxp/pinctrl-s32cc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/nxp/pinctrl-s32cc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/pinctrl/nxp/pinctrl-s32cc.c b/drivers/pinctrl/nxp/pinctrl-s32cc.c
-index 08d80fb935b3a..9e97968e25fcd 100644
+index 9e97968e25fcd..9c435e44abb4f 100644
 --- a/drivers/pinctrl/nxp/pinctrl-s32cc.c
 +++ b/drivers/pinctrl/nxp/pinctrl-s32cc.c
-@@ -943,7 +943,7 @@ int s32_pinctrl_probe(struct platform_device *pdev,
- 	spin_lock_init(&ipctl->gpio_configs_lock);
+@@ -392,6 +392,7 @@ static int s32_pmx_gpio_request_enable(struct pinctrl_dev *pctldev,
  
- 	s32_pinctrl_desc =
--		devm_kmalloc(&pdev->dev, sizeof(*s32_pinctrl_desc), GFP_KERNEL);
-+		devm_kzalloc(&pdev->dev, sizeof(*s32_pinctrl_desc), GFP_KERNEL);
- 	if (!s32_pinctrl_desc)
- 		return -ENOMEM;
+ 	gpio_pin->pin_id = offset;
+ 	gpio_pin->config = config;
++	INIT_LIST_HEAD(&gpio_pin->list);
  
+ 	spin_lock_irqsave(&ipctl->gpio_configs_lock, flags);
+ 	list_add(&gpio_pin->list, &ipctl->gpio_configs);
 -- 
 2.51.0
 
