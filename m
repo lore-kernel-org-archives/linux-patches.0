@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EB628135D;
-	Thu, 27 Nov 2025 15:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAE58334373;
+	Thu, 27 Nov 2025 15:02:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255748; cv=none; b=n/pxZzmvuYtC/rZJ62fSDMulwkG3qr2FMUmkp4HD6oNxifegEuABp6yzxoEfHdyDyRIxaKYuLsRLVdhXwfy3hZYH3cmMLLwVhFAFM5CC63q3TeUb41id+lCcfRAgV23kUIML0SI6C18BDqLaH7i36CwiSnbZEEu8trse9xnErpA=
+	t=1764255750; cv=none; b=c4oMwabtPD03p61Xrskzhaw05CdklmRAEYcs/dBNYSVVszHv8JEpmyRMyoAgRXXlXayGqxLmJtB7mKtR+K4PUIxXe1B/2zLYZdLUquQXfWHNpOuiSUaIbsP0AeveDhA6szeTvkKQkS33cuxZqYDUdE3acua683rpkUFC84BMXTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255748; c=relaxed/simple;
-	bh=1IF2XWPrp7XqJhRALUTRRRTJ3K84zi2HMXPzeqRr46c=;
+	s=arc-20240116; t=1764255750; c=relaxed/simple;
+	bh=Yd7v+vUmYdmq/4jwce9+esRu46NcpeSP7tNxMzU1ta8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kO29Q9Na1yEpk7WA3MgjrIqEeKPMWh0KYE67W8WbZHF3GN7Qkn1qbDWz30qwk9YHV5QXmfg4jei4okOZ5/pplVt6XYXbF0C+BkX4E/jApnmERxs8GbPnoi/oKGEOwR9Jo7BLHwwLFPFHe6ak97SZuu9ZyXRJ5Xz6alFv9UCuoBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H363d4XU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JXEQZvn7wUJTRXvn4xDowbQWDbk/2nAdvldzAXt4wM5iyAU9FhDKlqlBtppSMcWApGHmAGre6LWWh14Z5bDbRBXFwWEEjN8ZjmhX3sVR5reLoOmyyaWUGyEMArrwoBNtm2Efa44KdhN87Z4yA1U9ycOQtNVPZhGlZyW5F+elW64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y2Fz5xbs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H363d4XU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94EDAC4CEF8;
-	Thu, 27 Nov 2025 15:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y2Fz5xbs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AFFDC4CEF8;
+	Thu, 27 Nov 2025 15:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255748;
-	bh=1IF2XWPrp7XqJhRALUTRRRTJ3K84zi2HMXPzeqRr46c=;
+	s=korg; t=1764255750;
+	bh=Yd7v+vUmYdmq/4jwce9+esRu46NcpeSP7tNxMzU1ta8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H363d4XU32wPcHKz0yNHZ3YZOivG8pkxE8yVCRUgtc5PkPj6KaOgp9bcztqJZ7hVL
-	 HufPVjjfgzFZ6GaotQDhHTpLCYwER596LSJyPvznMywafHTmK8joGO6eFspajhUZOK
-	 scEb3Py8MlIwzIWY/Ear5111jajLGjYpyWuIaq0g=
+	b=Y2Fz5xbsHIPk0bmGnYAkNqpPkzGknIbltYsL+LYtTuy86/STLlGJwfyGey4I4rQtg
+	 umPPSc51E5tqNIwS4FXZ59V25A1Ni4T9s4GEGNmz+X8aYt2eMGEhYterkqDDacKEwH
+	 p7ry/vZb2/uPPsdjFksDGK/zNtqBuOqeGr4ykvhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 067/175] mptcp: do not fallback when OoO is present
-Date: Thu, 27 Nov 2025 15:45:20 +0100
-Message-ID: <20251127144045.414470862@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 6.17 068/175] drm/tegra: dc: Fix reference leak in tegra_dc_couple()
+Date: Thu, 27 Nov 2025 15:45:21 +0100
+Message-ID: <20251127144045.450887391@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 1bba3f219c5e8c29e63afa3c1fc24f875ebec119 upstream.
+commit 4c5376b4b143c4834ebd392aef2215847752b16a upstream.
 
-In case of DSS corruption, the MPTCP protocol tries to avoid the subflow
-reset if fallback is possible. Such corruptions happen in the receive
-path; to ensure fallback is possible the stack additionally needs to
-check for OoO data, otherwise the fallback will break the data stream.
+driver_find_device() calls get_device() to increment the reference
+count once a matching device is found, but there is no put_device() to
+balance the reference count. To avoid reference count leakage, add
+put_device() to decrease the reference count.
 
-Fixes: e32d262c89e2 ("mptcp: handle consistently DSS corruption")
+Found by code review.
+
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/598
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-4-806d3781c95f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a31500fe7055 ("drm/tegra: dc: Restore coupling of display controllers")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20251022114720.24937-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/tegra/dc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -77,6 +77,13 @@ bool __mptcp_try_fallback(struct mptcp_s
- 	if (__mptcp_check_fallback(msk))
- 		return true;
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -3148,6 +3148,7 @@ static int tegra_dc_couple(struct tegra_
+ 		dc->client.parent = &parent->client;
  
-+	/* The caller possibly is not holding the msk socket lock, but
-+	 * in the fallback case only the current subflow is touching
-+	 * the OoO queue.
-+	 */
-+	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue))
-+		return false;
-+
- 	spin_lock_bh(&msk->fallback_lock);
- 	if (!msk->allow_infinite_fallback) {
- 		spin_unlock_bh(&msk->fallback_lock);
+ 		dev_dbg(dc->dev, "coupled to %s\n", dev_name(companion));
++		put_device(companion);
+ 	}
+ 
+ 	return 0;
 
 
