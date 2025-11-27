@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2199F2797B5;
-	Thu, 27 Nov 2025 14:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DDC274B3C;
+	Thu, 27 Nov 2025 14:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254935; cv=none; b=rSNYxMUEo9MgJ8zXtNChQMK/Rq9kzMNlBKIXaKCK3GO1xxjSAQ1P38IYo7J8Pk8fas4UJQVnwMVq2IHTcjMIx8No3Bf81ivJE2/xWMHoPhuxcR6of/RR4fjCeKg4OqpbZLi5ywnT+GZy7vkvYv+bD+4YsT3hlVTumWQ2c4u+wTY=
+	t=1764254937; cv=none; b=kCv8xOv83N3VwXVBQ393E2pntHVG7VE8as2qDbj5RRc3IZL8/zcldWNfYga/VLCYqjksrR0qSRPkUWtTcHi+Q/pcNq1qTbMO4hvHM3NpZAsSqhG8EnSHHsF6hP4ylaDPuTNtqXddVtvaat+dSXZZq64EW8BnBcLIFRliPnhac9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254935; c=relaxed/simple;
-	bh=RU3Hurs/dW7S7jCa8K070tUVJYtZKInYBiEZtBTNyGk=;
+	s=arc-20240116; t=1764254937; c=relaxed/simple;
+	bh=2LVhxogPkB8UbuDKK6xTe+2g94AHZhWSz+mRGrOB9Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nW6BjkweKghHGFK/4XEyDRmbdr2qeVRbfJDo+1MzwGeGy7lGW3fxKJXGV01+w8G+OV9ELkRSgaAeogzktUSeU+NnecuroyH7cCOr1SPZMZj449JjduaLcIQpKxdUpvFMfGHjXr8tEpIFvSBiXwZLvaDbOo5krg6Oy74R1vOZ7qs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Chr36V3u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BLwq+AhY6Q/6Q447xNuH2HUXPf+RECmsR1NmOQVzI807pOwxqW88D45DY8QLnrZMneRPTskrlCoMZ52T7AWmzcM1B+ceI8f259jgsS/2wK016fnuQlJhq2J57x0Wm5CnWPOOPDemny5nGsWTi4XGjM1FxpzDxAk5/ILCSL3b56Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z/2t/b48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Chr36V3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53A1EC4CEF8;
-	Thu, 27 Nov 2025 14:48:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z/2t/b48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A2BCC4CEF8;
+	Thu, 27 Nov 2025 14:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254934;
-	bh=RU3Hurs/dW7S7jCa8K070tUVJYtZKInYBiEZtBTNyGk=;
+	s=korg; t=1764254937;
+	bh=2LVhxogPkB8UbuDKK6xTe+2g94AHZhWSz+mRGrOB9Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Chr36V3uSfCWwWxSmSlbm25MuqefGd7EnLv6Ib3K8t4CKi26RvBshSoWV3meyZwDT
-	 YmPty6dbvaMclpbGvM9eNnlST15JSCpcOW9xe9vGRd/wWuIB4A6dHfTnSmDFWnddkr
-	 mybwDrfsHyu93wNNZuoUTnDdtG5SkJjXxtV1dOEc=
+	b=z/2t/b48Eiw+Jb+ERbScn1v4wlwnUO43Qto3CrGU/IFqz8pS1jfrZI7dXKUGoGgIQ
+	 xaSL5YiKGc4KfLvnIDXV76O71YEx60IZt05DGP293xTfBQaZQgYCM6oJeDLp0aWbUR
+	 /SZPs20TV8S0yo7/0TvdF2KA+hj6dXCqVWiSeKxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Hung <alex.hung@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 37/86] drm/amd/display: Move sleep into each retry for retrieve_link_cap()
-Date: Thu, 27 Nov 2025 15:45:53 +0100
-Message-ID: <20251127144029.182078280@linuxfoundation.org>
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 38/86] xfrm: Determine inner GSO type from packet inner protocol
+Date: Thu, 27 Nov 2025 15:45:54 +0100
+Message-ID: <20251127144029.218393539@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -53,56 +53,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit 71ad9054c1f241be63f9d11df8cbd0aa0352fe16 upstream.
+[ Upstream commit 61fafbee6cfed283c02a320896089f658fa67e56 ]
 
-[Why]
-When a monitor is booting it's possible that it isn't ready to retrieve
-link caps and this can lead to an EDID read failure:
+The GSO segmentation functions for ESP tunnel mode
+(xfrm4_tunnel_gso_segment and xfrm6_tunnel_gso_segment) were
+determining the inner packet's L2 protocol type by checking the static
+x->inner_mode.family field from the xfrm state.
 
-```
-[drm:retrieve_link_cap [amdgpu]] *ERROR* retrieve_link_cap: Read receiver caps dpcd data failed.
-amdgpu 0000:c5:00.0: [drm] *ERROR* No EDID read.
-```
+This is unreliable. In tunnel mode, the state's actual inner family
+could be defined by x->inner_mode.family or by
+x->inner_mode_iaf.family. Checking only the former can lead to a
+mismatch with the actual packet being processed, causing GSO to create
+segments with the wrong L2 header type.
 
-[How]
-Rather than msleep once and try a few times, msleep each time.  Should
-be no changes for existing working monitors, but should correct reading
-caps on a monitor that is slow to boot.
+This patch fixes the bug by deriving the inner mode directly from the
+packet's inner protocol stored in XFRM_MODE_SKB_CB(skb)->protocol.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4672
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 669dca37b3348a447db04bbdcbb3def94d5997cc)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Instead of replicating the code, this patch modifies the
+xfrm_ip2inner_mode helper function. It now correctly returns
+&x->inner_mode if the selector family (x->sel.family) is already
+specified, thereby handling both specific and AF_UNSPEC cases
+appropriately.
+
+With this change, ESP GSO can use xfrm_ip2inner_mode to get the
+correct inner mode. It doesn't affect existing callers, as the updated
+logic now mirrors the checks they were already performing externally.
+
+Fixes: 26dbd66eab80 ("esp: choose the correct inner protocol for GSO on inter address family tunnels")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ include/net/xfrm.h      | 3 ++-
+ net/ipv4/esp4_offload.c | 6 ++++--
+ net/ipv6/esp6_offload.c | 6 ++++--
+ 3 files changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
-@@ -1598,12 +1598,13 @@ static bool retrieve_link_cap(struct dc_
- 	status = dpcd_get_tunneling_device_data(link);
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index fd550c0b56345..84a1c8c861d29 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -462,7 +462,8 @@ static inline int xfrm_af2proto(unsigned int family)
  
- 	dpcd_set_source_specific_data(link);
--	/* Sink may need to configure internals based on vendor, so allow some
--	 * time before proceeding with possibly vendor specific transactions
--	 */
--	msleep(post_oui_delay);
+ static inline const struct xfrm_mode *xfrm_ip2inner_mode(struct xfrm_state *x, int ipproto)
+ {
+-	if ((ipproto == IPPROTO_IPIP && x->props.family == AF_INET) ||
++	if ((x->sel.family != AF_UNSPEC) ||
++	    (ipproto == IPPROTO_IPIP && x->props.family == AF_INET) ||
+ 	    (ipproto == IPPROTO_IPV6 && x->props.family == AF_INET6))
+ 		return &x->inner_mode;
+ 	else
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index 10e96ed6c9e39..11e33a4312674 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -111,8 +111,10 @@ static struct sk_buff *xfrm4_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	__be16 type = x->inner_mode.family == AF_INET6 ? htons(ETH_P_IPV6)
+-						       : htons(ETH_P_IP);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
++					XFRM_MODE_SKB_CB(skb)->protocol);
++	__be16 type = inner_mode->family == AF_INET6 ? htons(ETH_P_IPV6)
++						     : htons(ETH_P_IP);
  
- 	for (i = 0; i < read_dpcd_retry_cnt; i++) {
-+		/*
-+		 * Sink may need to configure internals based on vendor, so allow some
-+		 * time before proceeding with possibly vendor specific transactions
-+		 */
-+		msleep(post_oui_delay);
- 		status = core_link_read_dpcd(
- 				link,
- 				DP_DPCD_REV,
+ 	return skb_eth_gso_segment(skb, features, type);
+ }
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index a189e08370a5e..438f9cbdca299 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -145,8 +145,10 @@ static struct sk_buff *xfrm6_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	__be16 type = x->inner_mode.family == AF_INET ? htons(ETH_P_IP)
+-						      : htons(ETH_P_IPV6);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
++					XFRM_MODE_SKB_CB(skb)->protocol);
++	__be16 type = inner_mode->family == AF_INET ? htons(ETH_P_IP)
++						    : htons(ETH_P_IPV6);
+ 
+ 	return skb_eth_gso_segment(skb, features, type);
+ }
+-- 
+2.51.0
+
 
 
