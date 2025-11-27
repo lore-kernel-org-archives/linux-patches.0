@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E7233436C;
-	Thu, 27 Nov 2025 14:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5948D31281E;
+	Thu, 27 Nov 2025 14:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255589; cv=none; b=m+E6YzFjhQn6XkwFNQ/147JjgxCUKEHdx5BQHSjksa5tnPPY7vqpvs+G5DPgcykGnYDc49Ws9Ygongo3XIBqiruQqGOallSB/BAwCFk9m7qRWTvqZhB7MO6eiqnxE6KXVxb6abv/rZhN2h5u+mCCDP3svUUZvqmcu0MD5yucS7w=
+	t=1764255592; cv=none; b=sOJY19Ks/GSjcZBihw/LWtxs69ijnn5JxhmsTXxtSMYJiFMWA2kcdxbGYraqAuWW5NSNFwx3IZLTnmGN+9NyZtmRUcnPxsbrM/nS2+oySDUXBgcG5bI70j3tdIHYH2kRAB36vpWfHkO1ThU4zzGOJsU7X32+woi/ER/1pxRWaXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255589; c=relaxed/simple;
-	bh=+dWC88R2xvwlcahslfoydyqfb0FGHYRnlFAixExTWnY=;
+	s=arc-20240116; t=1764255592; c=relaxed/simple;
+	bh=Dy7v9SUh4hMk9m1oMIxEJKpj42JeNG+6y7u2LvYMuPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cI++cYfYiN7wYqxwpvJJw8qZpnL7MqpCSfhNNAS2MECG7giLqthoWTaGoEhOyKEKNsuBqVw3eOwBHJzPiw5gLTXHE+H+fRAgQqg9lE9JFQbnxoniXZjiR3iujuG/8itswuWf/3TUqGHbyJgFZEB984+B6xnGjJqbcRQ+S9fLuIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMv7nmGB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EWQ3bvN4XOMyJoq+gTusR5mg5f6OnrEGpahRIyyx4qQnfj77iZFB5SkDBeQmhtlbZT+tEMLBHhqhntjUwo1/VYaZT89lpFaqrokyWlfQWtikx4dONZ2p6fhBOCXhIFq+cmYGtfV22k4QK67ZDdyKQLxy8QzTpXUWhAlm8mppivg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAeYnm8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMv7nmGB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 011BFC4CEF8;
-	Thu, 27 Nov 2025 14:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAeYnm8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D750EC4CEF8;
+	Thu, 27 Nov 2025 14:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255589;
-	bh=+dWC88R2xvwlcahslfoydyqfb0FGHYRnlFAixExTWnY=;
+	s=korg; t=1764255592;
+	bh=Dy7v9SUh4hMk9m1oMIxEJKpj42JeNG+6y7u2LvYMuPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMv7nmGBZUsvjkcGhXspBK94Ky+6pcT4hqo25LUJQ3p1X+VOZRTaokPspsYXnYN25
-	 JxICbOHWTXeoCiXdqOLGdfrPRG0DAn9D2l94Qg3150a0Kd3RWO4siqCMVurdu/CbxR
-	 6vy+8i/OaajzYVlsIlYFi8mCnpT3/gm9xK2D/MUU=
+	b=lAeYnm8Dzea8bwWOGOlOwrdc2ZL0ap8RD2rd7/qmS/OI2X2Vd2+O9wgjzbSJCFbwD
+	 t0MrDmUv84hDKw0coVF9+Oq9X9Pk/YwKv788SdwIDsyYnu5zB5Kopjwe1DfuiaQ/9z
+	 LRX2zRWSoOY8ZdyWhD1B/Bv70CxTYlN6DTJEN2zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saket Kumar Bhaskar <skb99@linux.ibm.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Vishal Chourasia <vishalc@linux.ibm.com>,
-	Tejun Heo <tj@kernel.org>,
-	Samir Mulani <samir@linux.ibm.com>
-Subject: [PATCH 6.17 045/175] sched_ext: Fix scx_enable() crash on helper kthread creation failure
-Date: Thu, 27 Nov 2025 15:44:58 +0100
-Message-ID: <20251127144044.610943535@linuxfoundation.org>
+	syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.17 046/175] scsi: sg: Do not sleep in atomic context
+Date: Thu, 27 Nov 2025 15:44:59 +0100
+Message-ID: <20251127144044.648583789@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -54,60 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saket Kumar Bhaskar <skb99@linux.ibm.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 7b6216baae751369195fa3c83d434d23bcda406a upstream.
+commit 90449f2d1e1f020835cba5417234636937dd657e upstream.
 
-A crash was observed when the sched_ext selftests runner was
-terminated with Ctrl+\ while test 15 was running:
+sg_finish_rem_req() calls blk_rq_unmap_user(). The latter function may
+sleep. Hence, call sg_finish_rem_req() with interrupts enabled instead
+of disabled.
 
-NIP [c00000000028fa58] scx_enable.constprop.0+0x358/0x12b0
-LR [c00000000028fa2c] scx_enable.constprop.0+0x32c/0x12b0
-Call Trace:
-scx_enable.constprop.0+0x32c/0x12b0 (unreliable)
-bpf_struct_ops_link_create+0x18c/0x22c
-__sys_bpf+0x23f8/0x3044
-sys_bpf+0x2c/0x6c
-system_call_exception+0x124/0x320
-system_call_vectored_common+0x15c/0x2ec
-
-kthread_run_worker() returns an ERR_PTR() on failure rather than NULL,
-but the current code in scx_alloc_and_add_sched() only checks for a NULL
-helper. Incase of failure on SIGQUIT, the error is not handled in
-scx_alloc_and_add_sched() and scx_enable() ends up dereferencing an
-error pointer.
-
-Error handling is fixed in scx_alloc_and_add_sched() to propagate
-PTR_ERR() into ret, so that scx_enable() jumps to the existing error
-path, avoiding random dereference on failure.
-
-Fixes: bff3b5aec1b7 ("sched_ext: Move disable machinery into scx_sched")
-Cc: stable@vger.kernel.org # v6.16+
-Reported-and-tested-by: Samir Mulani <samir@linux.ibm.com>
-Signed-off-by: Saket Kumar Bhaskar <skb99@linux.ibm.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: Vishal Chourasia <vishalc@linux.ibm.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-scsi/691560c4.a70a0220.3124cb.001a.GAE@google.com/
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 97d27b0dd015 ("scsi: sg: close race condition in sg_remove_sfp_usercontext()")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251113181643.1108973-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/sg.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4446,8 +4446,11 @@ static struct scx_sched *scx_alloc_and_a
- 		goto err_free_gdsqs;
- 
- 	sch->helper = kthread_run_worker(0, "sched_ext_helper");
--	if (!sch->helper)
-+	if (IS_ERR(sch->helper)) {
-+		ret = PTR_ERR(sch->helper);
- 		goto err_free_pcpu;
-+	}
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -2209,9 +2209,17 @@ sg_remove_sfp_usercontext(struct work_st
+ 	write_lock_irqsave(&sfp->rq_list_lock, iflags);
+ 	while (!list_empty(&sfp->rq_list)) {
+ 		srp = list_first_entry(&sfp->rq_list, Sg_request, entry);
+-		sg_finish_rem_req(srp);
+ 		list_del(&srp->entry);
++		write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
 +
- 	sched_set_fifo(sch->helper->task);
++		sg_finish_rem_req(srp);
++		/*
++		 * sg_rq_end_io() uses srp->parentfp. Hence, only clear
++		 * srp->parentfp after blk_mq_free_request() has been called.
++		 */
+ 		srp->parentfp = NULL;
++
++		write_lock_irqsave(&sfp->rq_list_lock, iflags);
+ 	}
+ 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
  
- 	atomic_set(&sch->exit_kind, SCX_EXIT_NONE);
 
 
