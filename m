@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E471A9B58;
-	Thu, 27 Nov 2025 14:48:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC82B273D6D;
+	Thu, 27 Nov 2025 14:48:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254882; cv=none; b=iRTn91VBuoNTGuY0rFTBfTEkmiFm9u+if+nP6zwYFS6EnWIwpz2JSgpY+zMC5AtknbPbpRQtoxe44Rshx2v/ZmvQpdwAbj5stEaqa2yQIcbiiaw+hhTgGoKRGkHJc+Is1D4AqfVo5yRsuloM7VGFArVG/+KenOsBJwpY8jVgP7o=
+	t=1764254885; cv=none; b=iAf4c2hqtoynVj2UQH3NPUf01Ar7XV0d+z0OOsmrurI8P2M7IKouxnn/kjRNtMjb9hFrWSuUeff4dJvttWs9ZfF0kr42NnlmdFl1kVm1b4LOAT2OD4iX3n6lD02fu6UFBXUr4qqa+d76oAMsqcOidv52Wjp3YT5I28RcwQDPTkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254882; c=relaxed/simple;
-	bh=NsiI5EexURH4K7OipxlVgbk+Ouv8+CmP61u0w2Rp+t4=;
+	s=arc-20240116; t=1764254885; c=relaxed/simple;
+	bh=+9BWl4I7TdD7YD/skTXL6qiY7xbOvviuY8yVdzYaUHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eS/nOgOLH0gSaYQSUKLKlQJqUE/63dLYZuIlh0CDQmkPLNYikHwrmMGN3u4ad2DqJTcUHOh/tm4h2CH0Heu/1MXMvbRvy3nimIpA0xqFnM3bHx2zOKtqGguz4L89gWu8IvSX3niaam4DHbdqh9i3SgkOpEsEK1cjxZU9oa9hk0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnxL6l2k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZIvVOsgE8YQyMoNLZ+LZMR4928k5HuLzGbUAhJ3wkUpDa61qyk+21XjoL+VW9bgJESCwjFZ72VufcDsYJYaNN7h2pFTaZKAnRW5ouq3TDjAVxFurOwwCXoNuZteI8Vk+aqFnXInzxsFc4q1EUTSLsoXp8ZdfiYy/ayerN7hzAnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DOKpO4vv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnxL6l2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC32EC4CEF8;
-	Thu, 27 Nov 2025 14:48:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DOKpO4vv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C98C4CEF8;
+	Thu, 27 Nov 2025 14:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254882;
-	bh=NsiI5EexURH4K7OipxlVgbk+Ouv8+CmP61u0w2Rp+t4=;
+	s=korg; t=1764254885;
+	bh=+9BWl4I7TdD7YD/skTXL6qiY7xbOvviuY8yVdzYaUHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnxL6l2kRslDiAHlEUoFAG6cd/XgGCI7NFPjVJabRSxrZAR4VTSiGHJCZdhVgobL3
-	 NzCfyLxk9taLEri+VDdWBiHLazn3UJXGKIBfpiRExMHLDcz9YT9qVBHgi12KawwRPd
-	 8Fi+C9lZTvyWMrWYOz/reLmjs49pOnpHDW1Eiflo=
+	b=DOKpO4vvFpzS7l6rMRGDDynhwoad7AyxFdL0tJ7JGG+q7WPFM3waUaEVPcCZQ9Sxq
+	 cd0gH2MkcDvwxzeWB7mnGRWLbJeEy1zTflQcweZ9FimDGmT9t2tj3Yl57ko6HMA04J
+	 ZcnuiH+6FNwPBt+CsWo154+1NTv8FlwrNCEWC/aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 19/86] Input: pegasus-notetaker - fix potential out-of-bounds access
-Date: Thu, 27 Nov 2025 15:45:35 +0100
-Message-ID: <20251127144028.520195655@linuxfoundation.org>
+	staffan.melin@oscillator.se,
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Jiri Kosina <jkosina@suse.com>
+Subject: [PATCH 6.6 02/86] HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
+Date: Thu, 27 Nov 2025 15:45:18 +0100
+Message-ID: <20251127144027.893675365@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,54 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit 69aeb507312306f73495598a055293fa749d454e upstream.
+commit beab067dbcff642243291fd528355d64c41dc3b2 upstream.
 
-In the pegasus_notetaker driver, the pegasus_probe() function allocates
-the URB transfer buffer using the wMaxPacketSize value from
-the endpoint descriptor. An attacker can use a malicious USB descriptor
-to force the allocation of a very small buffer.
+Based on available evidence, the USB ID 4c4a:4155 used by multiple
+devices has been attributed to Jieli. The commit 1a8953f4f774
+("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY") affected touchscreen
+functionality. Added checks for manufacturer and serial number to
+maintain microphone compatibility, enabling both devices to function
+properly.
 
-Subsequently, if the device sends an interrupt packet with a specific
-pattern (e.g., where the first byte is 0x80 or 0x42),
-the pegasus_parse_packet() function parses the packet without checking
-the allocated buffer size. This leads to an out-of-bounds memory access.
-
-Fixes: 1afca2b66aac ("Input: add Pegasus Notetaker tablet driver")
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Link: https://lore.kernel.org/r/20251007214131.3737115-2-eeodqql09@gmail.com
+[jkosina@suse.com: edit shortlog]
+Fixes: 1a8953f4f774 ("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Tested-by: staffan.melin@oscillator.se
+Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/tablet/pegasus_notetaker.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/hid/hid-ids.h    |    4 ++--
+ drivers/hid/hid-quirks.c |   13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/input/tablet/pegasus_notetaker.c
-+++ b/drivers/input/tablet/pegasus_notetaker.c
-@@ -63,6 +63,9 @@
- #define BUTTON_PRESSED			0xb5
- #define COMMAND_VERSION			0xa9
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1511,7 +1511,7 @@
+ #define USB_VENDOR_ID_SIGNOTEC			0x2133
+ #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
  
-+/* 1 Status + 1 Color + 2 X + 2 Y = 6 bytes */
-+#define NOTETAKER_PACKET_SIZE		6
-+
- /* in xy data packet */
- #define BATTERY_NO_REPORT		0x40
- #define BATTERY_LOW			0x41
-@@ -303,6 +306,12 @@ static int pegasus_probe(struct usb_inte
+-#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
+-#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
++#define USB_VENDOR_ID_JIELI_SDK_DEFAULT		0x4c4a
++#define USB_DEVICE_ID_JIELI_SDK_4155		0x4155
+ 
+ #endif
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -900,7 +900,6 @@ static const struct hid_device_id hid_ig
+ #endif
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
+ 	{ }
+ };
+ 
+@@ -1057,6 +1056,18 @@ bool hid_ignore(struct hid_device *hdev)
+ 					     strlen(elan_acpi_id[i].id)))
+ 					return true;
+ 		break;
++	case USB_VENDOR_ID_JIELI_SDK_DEFAULT:
++		/*
++		 * Multiple USB devices with identical IDs (mic & touchscreen).
++		 * The touch screen requires hid core processing, but the
++		 * microphone does not. They can be distinguished by manufacturer
++		 * and serial number.
++		 */
++		if (hdev->product == USB_DEVICE_ID_JIELI_SDK_4155 &&
++		    strncmp(hdev->name, "SmartlinkTechnology", 19) == 0 &&
++		    strncmp(hdev->uniq, "20201111000001", 14) == 0)
++			return true;
++		break;
  	}
  
- 	pegasus->data_len = usb_maxpacket(dev, pipe);
-+	if (pegasus->data_len < NOTETAKER_PACKET_SIZE) {
-+		dev_err(&intf->dev, "packet size is too small (%d)\n",
-+			pegasus->data_len);
-+		error = -EINVAL;
-+		goto err_free_mem;
-+	}
- 
- 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
- 					   &pegasus->data_dma);
+ 	if (hdev->type == HID_TYPE_USBMOUSE &&
 
 
