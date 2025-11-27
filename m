@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2732D2797B5;
-	Thu, 27 Nov 2025 14:48:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EC0C27F18B;
+	Thu, 27 Nov 2025 14:48:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254929; cv=none; b=a4C5zyIT0o3ar1QpRgOgNwtxsdSoT7bVh003ZKTNc6HQZzcNEiyqimu4Ujs0jqEmh4LNarlYXYmY+TLK5W9zZ+6OOXfzWE6z84Y7sQz+FSPdanVnQMVybji33YtxihD33DCC2CcAWjQFsslN9u/rHD+yI85fmI3CwbytkI6ppqQ=
+	t=1764254932; cv=none; b=srLxPa/pJ5tMspRL8hMoLbMhs7fTC9qzKopZKx1VQpFshgu9JIf2UVyP4BncYwftYWJVO+esb4ywl6+tjUzYzVs7iKFpbUDPH8PN+Dr61twkrsMm3dubc+KjxQlcxXY62wReaLAY7nwvcHnHMn9tKzNsVdBv+UAOBlrVNQEWSwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254929; c=relaxed/simple;
-	bh=59FC7jnlIjZp1yDBaB3aHI1YIKGSJMcj8BuUtYdgav0=;
+	s=arc-20240116; t=1764254932; c=relaxed/simple;
+	bh=Sd3ziFgB5jy8cYbmGsdoMVpYZKXeaiKUlxekLIiSOOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCSYJn/r3TikAiOb4899jQ9eS0CRxWVAOsviS7+fIdsnJmNfHUxUof25FIzXhYStnaPQH+8PNlqnRVhpJSW4UJDYjYkHy+aGCRpVNg4oE5lqwOcI15SBYWAT9L5jwzzpCbsitMB0vE8iVvBrNqbGm6YeT37CfC5NyZ0L5GmgTnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6m8XfEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EDrOqC8OHHMUoKwR2Xweeq83nGM3feeq0SgAO2MsJQ+kT8iX0RsEUM+SCqWU33I2yWSRbEeCEdvsg5oOK64mbq2+ab7CFAQHB27w3b48rMz1CjASepmZvDTQOTJZJ4N5JiY44oflNU5J++O3iB6qoty4z2PXnyifnbkcfZXSzXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lnNTwVTO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6m8XfEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1000C4CEF8;
-	Thu, 27 Nov 2025 14:48:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lnNTwVTO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA93C4CEF8;
+	Thu, 27 Nov 2025 14:48:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254929;
-	bh=59FC7jnlIjZp1yDBaB3aHI1YIKGSJMcj8BuUtYdgav0=;
+	s=korg; t=1764254931;
+	bh=Sd3ziFgB5jy8cYbmGsdoMVpYZKXeaiKUlxekLIiSOOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6m8XfEizd22msY70FSfIFHPVBNjv5qht72xuIH/pD/dUwCbEW7HP+H4+69G5XpCy
-	 khiT1W2TxYaz5eKCwim5H30wNOKTBuUkSb0zmDoErIIIfOaGAqSr+AYqKN26/+PKPN
-	 N9/Iol9hPFuHMl/HCag2DrWEjdHv022f2J1Vcr0o=
+	b=lnNTwVTOG3aVedF9+1eUbdq7E+rCkYR49ecAlIBTANjDXgMy8YjXdsGTQtZluUxfe
+	 9IvlfRNIwBaXzI6hNpuhv2Y5ml5ULK3LaUKHOhinEfYHEGRVFJmgzHIaxp+eDudLw5
+	 L8Oh09364zX4cQx2hYhNBjlziFQ3fvIQjAGV9QHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zha <Yifan.Zha@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Ivan Lipski <ivan.lipski@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 35/86] drm/amdgpu: Skip emit de meta data on gfx11 with rs64 enabled
-Date: Thu, 27 Nov 2025 15:45:51 +0100
-Message-ID: <20251127144029.108129745@linuxfoundation.org>
+Subject: [PATCH 6.6 36/86] drm/amd/display: Increase DPCD read retries
+Date: Thu, 27 Nov 2025 15:45:52 +0100
+Message-ID: <20251127144029.144830463@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,43 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yifan Zha <Yifan.Zha@amd.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-commit 80d8a9ad1587b64c545d515ab6cb7ecb9908e1b3 upstream.
+commit 8612badc331bcab2068baefa69e1458085ed89e3 upstream.
 
 [Why]
-Accoreding to CP updated to RS64 on gfx11,
-WRITE_DATA with PREEMPTION_META_MEMORY(dst_sel=8) is illegal for CP FW.
-That packet is used for MCBP on F32 based system.
-So it would lead to incorrect GRBM write and FW is not handling that
-extra case correctly.
+Empirical measurement of some monitors that fail to read EDID while
+booting shows that the number of retries with a 30ms delay between
+tries is as high as 16.
 
 [How]
-With gfx11 rs64 enabled, skip emit de meta data.
+Increase number of retries to 20.
 
-Signed-off-by: Yifan Zha <Yifan.Zha@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4672
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 8366cd442d226463e673bed5d199df916f4ecbcf)
+(cherry picked from commit ad1c59ad7cf74ec06e32fe2c330ac1e957222288)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -5296,9 +5296,9 @@ static void gfx_v11_0_ring_emit_ib_gfx(s
- 		if (flags & AMDGPU_IB_PREEMPTED)
- 			control |= INDIRECT_BUFFER_PRE_RESUME(1);
- 
--		if (vmid)
-+		if (vmid && !ring->adev->gfx.rs64_enable)
- 			gfx_v11_0_ring_emit_de_meta(ring,
--				    (!amdgpu_sriov_vf(ring->adev) && flags & AMDGPU_IB_PREEMPTED) ? true : false);
-+				!amdgpu_sriov_vf(ring->adev) && (flags & AMDGPU_IB_PREEMPTED));
- 	}
- 
- 	if (ring->is_mes_queue)
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_capability.c
+@@ -1552,7 +1552,7 @@ static bool retrieve_link_cap(struct dc_
+ 	union edp_configuration_cap edp_config_cap;
+ 	union dp_downstream_port_present ds_port = { 0 };
+ 	enum dc_status status = DC_ERROR_UNEXPECTED;
+-	uint32_t read_dpcd_retry_cnt = 3;
++	uint32_t read_dpcd_retry_cnt = 20;
+ 	int i;
+ 	struct dp_sink_hw_fw_revision dp_hw_fw_revision;
+ 	const uint32_t post_oui_delay = 30; // 30ms
 
 
