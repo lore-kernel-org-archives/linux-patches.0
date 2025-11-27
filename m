@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3F227877D;
-	Thu, 27 Nov 2025 14:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D642765EA;
+	Thu, 27 Nov 2025 14:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254854; cv=none; b=r3KSSmgYcRAyh3ZAqkvrFgDEJsLF0Pa9AKVDKVKjBVANSdsc65znnxkNyRaB2Vzf8lfoDqLUsIatAly5U9iQMqjdo3D8yoX2HVLmbWKjJgFVzMLRJu3EkGsfDDycB0a9/5U1xuUbSWsH0Y1pm3eMtd8YRbOZRnsHzXx2nIJDFis=
+	t=1764254857; cv=none; b=g0PI8z71F3xfXIWp7T6AEC1a5X21uw/8iYzcCruF52hKEix3TxV11guteLcVdb4rL+0bUvIq3CDYjqMAj6JIsveKjh8pEB1KNagJZQkdNbdHZmR/bdltErl7LkdUm+ygE8r2r9nZKhOxdSTsbVX2ef/KHzH8mOW1AtZacoq9INo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254854; c=relaxed/simple;
-	bh=fu5Fmp12AtIx0eytaoNRgTikbpvcTR1QAUJ9OiMUM8I=;
+	s=arc-20240116; t=1764254857; c=relaxed/simple;
+	bh=9dIlhuXmO59Zp+/jn3NnhNXQtVScprOdeP3DV2bw4b4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F5k7MTPIYZ3CjObO+CpVBAFNg2Gg0jM+VvlEdj/afv++frZuk//qmvOmqUCOXQQkwB+zf3AIrGXfyw60Ht3y6ExaJc/+HAA0ZfZzClUoMUnWxaXLqLlpuDAsRDM5Z8t9kxBhMOkTwDZtapQQgYM54BeQ5t4PwWSVSSY+NbKvgog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nb69tQc0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hmDXm02UXzhKhAXUIeM27jr1k0zDav1ptwHt5dGiolznBj1FtJASPqkCbQZA48Rhj1sG9D598vN8I6NSptnKv/DwPW0vtE4jVXh++kwXuIyh00Nfz6RtdUtDrQ9C6giX8NsVGqxhSPaYLi6gJldBP/CjfTAZi5EhOczMLQMBPOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpIiYLdR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nb69tQc0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D86D0C4CEF8;
-	Thu, 27 Nov 2025 14:47:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpIiYLdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D78C4CEF8;
+	Thu, 27 Nov 2025 14:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254853;
-	bh=fu5Fmp12AtIx0eytaoNRgTikbpvcTR1QAUJ9OiMUM8I=;
+	s=korg; t=1764254856;
+	bh=9dIlhuXmO59Zp+/jn3NnhNXQtVScprOdeP3DV2bw4b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nb69tQc0lRXsSlJ4ULpBrCEbfxtj/TjH+U4GBcGsOdfQ42Qm2zyfgNIV8ircy/6nf
-	 aop8jxNID5Iin5oJ2HflVzpJ0rCRVbkqX1fbm1ChNFEvjPWcgBBdJ4S8r33S7rhr8n
-	 /rzWVjhnkZUFHCT7BEa+GpFDIoAsZ4DCBbhth8Eo=
+	b=mpIiYLdRCC6k/2fo8p/InM4HJZIrtvdGOQtt6odm0bLBZquoWXEzQ86Td3GTicjtH
+	 O9wZAGSs0qW/ZZwLypvQwPZtliF9AUQfJqLvhDqHWILJ3lmtlLdFFGlhTfKM2BVQHv
+	 JHfEW2VCehf8llCSv5+QO8N2QdRetZJqNiIJhnL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 01/86] timers: Fix NULL function pointer race in timer_shutdown_sync()
-Date: Thu, 27 Nov 2025 15:45:17 +0100
-Message-ID: <20251127144027.857276716@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 10/86] MIPS: mm: Prevent a TLB shutdown on initial uniquification
+Date: Thu, 27 Nov 2025 15:45:26 +0100
+Message-ID: <20251127144028.191081287@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,88 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit 20739af07383e6eb1ec59dcd70b72ebfa9ac362c upstream.
+commit 9f048fa487409e364cf866c957cf0b0d782ca5a3 upstream.
 
-There is a race condition between timer_shutdown_sync() and timer
-expiration that can lead to hitting a WARN_ON in expire_timers().
+Depending on the particular CPU implementation a TLB shutdown may occur
+if multiple matching entries are detected upon the execution of a TLBP
+or the TLBWI/TLBWR instructions.  Given that we don't know what entries
+we have been handed we need to be very careful with the initial TLB
+setup and avoid all these instructions.
 
-The issue occurs when timer_shutdown_sync() clears the timer function
-to NULL while the timer is still running on another CPU. The race
-scenario looks like this:
+Therefore read all the TLB entries one by one with the TLBR instruction,
+bypassing the content addressing logic, and truncate any large pages in
+place so as to avoid a case in the second step where an incoming entry
+for a large page at a lower address overlaps with a replacement entry
+chosen at another index.  Then preinitialize the TLB using addresses
+outside our usual unique range and avoiding clashes with any entries
+received, before making the usual call to local_flush_tlb_all().
 
-CPU0					CPU1
-					<SOFTIRQ>
-					lock_timer_base()
-					expire_timers()
-					base->running_timer = timer;
-					unlock_timer_base()
-					[call_timer_fn enter]
-					mod_timer()
-					...
-timer_shutdown_sync()
-lock_timer_base()
-// For now, will not detach the timer but only clear its function to NULL
-if (base->running_timer != timer)
-	ret = detach_if_pending(timer, base, true);
-if (shutdown)
-	timer->function = NULL;
-unlock_timer_base()
-					[call_timer_fn exit]
-					lock_timer_base()
-					base->running_timer = NULL;
-					unlock_timer_base()
-					...
-					// Now timer is pending while its function set to NULL.
-					// next timer trigger
-					<SOFTIRQ>
-					expire_timers()
-					WARN_ON_ONCE(!fn) // hit
-					...
-lock_timer_base()
-// Now timer will detach
-if (base->running_timer != timer)
-	ret = detach_if_pending(timer, base, true);
-if (shutdown)
-	timer->function = NULL;
-unlock_timer_base()
+This fixes (at least) R4x00 cores if TLBP hits multiple matching TLB
+entries (SGI IP22 PROM for examples sets up all TLBs to the same virtual
+address).
 
-The problem is that timer_shutdown_sync() clears the timer function
-regardless of whether the timer is currently running. This can leave a
-pending timer with a NULL function pointer, which triggers the
-WARN_ON_ONCE(!fn) check in expire_timers().
-
-Fix this by only clearing the timer function when actually detaching the
-timer. If the timer is running, leave the function pointer intact, which is
-safe because the timer will be properly detached when it finishes running.
-
-Fixes: 0cc04e80458a ("timers: Add shutdown mechanism to the internal functions")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251122093942.301559-1-zouyipeng@huawei.com
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com> # Boston I6400, M5150 sim
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timer.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/mips/mm/tlb-r4k.c |  102 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 64 insertions(+), 38 deletions(-)
 
---- a/kernel/time/timer.c
-+++ b/kernel/time/timer.c
-@@ -1413,10 +1413,11 @@ static int __try_to_del_timer_sync(struc
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -15,6 +15,7 @@
+ #include <linux/mm.h>
+ #include <linux/hugetlb.h>
+ #include <linux/export.h>
++#include <linux/sort.h>
  
- 	base = lock_timer_base(timer, &flags);
+ #include <asm/cpu.h>
+ #include <asm/cpu-type.h>
+@@ -506,55 +507,79 @@ static int __init set_ntlb(char *str)
  
--	if (base->running_timer != timer)
-+	if (base->running_timer != timer) {
- 		ret = detach_if_pending(timer, base, true);
--	if (shutdown)
--		timer->function = NULL;
-+		if (shutdown)
-+			timer->function = NULL;
-+	}
+ __setup("ntlb=", set_ntlb);
  
- 	raw_spin_unlock_irqrestore(&base->lock, flags);
+-/* Initialise all TLB entries with unique values */
++
++/* Comparison function for EntryHi VPN fields.  */
++static int r4k_vpn_cmp(const void *a, const void *b)
++{
++	long v = *(unsigned long *)a - *(unsigned long *)b;
++	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
++	return s ? (v != 0) | v >> s : v;
++}
++
++/*
++ * Initialise all TLB entries with unique values that do not clash with
++ * what we have been handed over and what we'll be using ourselves.
++ */
+ static void r4k_tlb_uniquify(void)
+ {
+-	int entry = num_wired_entries();
++	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
++	int tlbsize = current_cpu_data.tlbsize;
++	int start = num_wired_entries();
++	unsigned long vpn_mask;
++	int cnt, ent, idx, i;
++
++	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
++	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
  
+ 	htw_stop();
+-	write_c0_entrylo0(0);
+-	write_c0_entrylo1(0);
+ 
+-	while (entry < current_cpu_data.tlbsize) {
+-		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
+-		unsigned long asid = 0;
+-		int idx;
++	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
++		unsigned long vpn;
+ 
+-		/* Skip wired MMID to make ginvt_mmid work */
+-		if (cpu_has_mmid)
+-			asid = MMID_KERNEL_WIRED + 1;
++		write_c0_index(i);
++		mtc0_tlbr_hazard();
++		tlb_read();
++		tlb_read_hazard();
++		vpn = read_c0_entryhi();
++		vpn &= vpn_mask & PAGE_MASK;
++		tlb_vpns[cnt] = vpn;
+ 
+-		/* Check for match before using UNIQUE_ENTRYHI */
+-		do {
+-			if (cpu_has_mmid) {
+-				write_c0_memorymapid(asid);
+-				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
+-			} else {
+-				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
+-			}
+-			mtc0_tlbw_hazard();
+-			tlb_probe();
+-			tlb_probe_hazard();
+-			idx = read_c0_index();
+-			/* No match or match is on current entry */
+-			if (idx < 0 || idx == entry)
+-				break;
+-			/*
+-			 * If we hit a match, we need to try again with
+-			 * a different ASID.
+-			 */
+-			asid++;
+-		} while (asid < asid_mask);
+-
+-		if (idx >= 0 && idx != entry)
+-			panic("Unable to uniquify TLB entry %d", idx);
+-
+-		write_c0_index(entry);
++		/* Prevent any large pages from overlapping regular ones.  */
++		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
+ 		mtc0_tlbw_hazard();
+ 		tlb_write_indexed();
+-		entry++;
++		tlbw_use_hazard();
+ 	}
+ 
++	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
++
++	write_c0_pagemask(PM_DEFAULT_MASK);
++	write_c0_entrylo0(0);
++	write_c0_entrylo1(0);
++
++	idx = 0;
++	ent = tlbsize;
++	for (i = start; i < tlbsize; i++)
++		while (1) {
++			unsigned long entryhi, vpn;
++
++			entryhi = UNIQUE_ENTRYHI(ent);
++			vpn = entryhi & vpn_mask & PAGE_MASK;
++
++			if (idx >= cnt || vpn < tlb_vpns[idx]) {
++				write_c0_entryhi(entryhi);
++				write_c0_index(i);
++				mtc0_tlbw_hazard();
++				tlb_write_indexed();
++				ent++;
++				break;
++			} else if (vpn == tlb_vpns[idx]) {
++				ent++;
++			} else {
++				idx++;
++			}
++		}
++
+ 	tlbw_use_hazard();
+ 	htw_start();
+ 	flush_micro_tlb();
+@@ -600,6 +625,7 @@ static void r4k_tlb_configure(void)
+ 
+ 	/* From this point on the ARC firmware is dead.	 */
+ 	r4k_tlb_uniquify();
++	local_flush_tlb_all();
+ 
+ 	/* Did I tell you that ARC SUCKS?  */
+ }
 
 
