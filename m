@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D03288537;
-	Thu, 27 Nov 2025 14:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C956E320CD1;
+	Thu, 27 Nov 2025 14:53:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255228; cv=none; b=oITDYCia/Ohr1EdrhyanZHUmZVAAhj842yREi6UWOHV9w1pVL6t3zzsvqNlZQtZRMLpAIl+v+SagUByq5mHKMkDFGfZ47SEoW4LIJudT3b1tqEqe6DnpUScYSVPKFGq/NPIvGu3f/RVhPhnn6iVWqJfP6CyTQPx49bb3LM9wehs=
+	t=1764255229; cv=none; b=Zj+KHW4zEgVa1Kt+zQLhkRxD/xTs1MDL6Gj07Gm14JU9k59o4XziyO/Fg4r9WLsCuVGzCUcmmfKhMay2GEx7id5h5sLBK1yCyMieCanxW7uIMjBcDVS+nmLBCHr/0QDIRQl6XEkf9HPrthJDMa2Ha5u3ZB/wJ3O8P5IMfRvP0gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255228; c=relaxed/simple;
-	bh=hfO+VEVVFfCq1zrxg9DqwVnZALBQ0totWcWYEE9pK1U=;
+	s=arc-20240116; t=1764255229; c=relaxed/simple;
+	bh=YGyqfcacFT9/d7el7J3IcK94SD5t/mLt4CjSPX+Pww4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nTWYs0eqSrukKBJo1w0bLPA46r3+Sk7n0K14OTvv2yV7l6ZdDMdGaJcnFKO6qt/vf+ol7KkQPdGdnVXaEdzqza7+z6lG6+BIt1FmsiPyn9ACIsLjbW9J9as7MZyN6Ld3MsCM03tMC0watSj8cQ21hH/bGfvHOyMGeEvV//7fTm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lUMP3pSX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lorS0NyBnyPsSSvnt+1Rt2+ge7+JxVQw6HUYZqthL6M/RvZ99OktKZt7colbfRNreByUozLPQrwa8z+AJm4Vd0BIDCUxAAgK5w/HDRYAXtFsSwKSh1UNJdaVvAGnPLZRVYSBqb3qZKdA/ODIyt4EyT19b53qMHYZ1xtVbYlzhJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JP4zSq11; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lUMP3pSX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42E43C4CEF8;
-	Thu, 27 Nov 2025 14:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JP4zSq11"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA45C4CEF8;
+	Thu, 27 Nov 2025 14:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255226;
-	bh=hfO+VEVVFfCq1zrxg9DqwVnZALBQ0totWcWYEE9pK1U=;
+	s=korg; t=1764255229;
+	bh=YGyqfcacFT9/d7el7J3IcK94SD5t/mLt4CjSPX+Pww4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lUMP3pSXFh9Zbq5wQ2MpgP6bPkCKNmas28Bc2NaousFfHMl/086ajThepF1yprFno
-	 YXvxbf6f4m/bk9W+hic+7NcIQQd4sm7wS4lP7i1/8NjC417UYpYzSYxQImGZhiIHaf
-	 BVby0neTI8NNMmIBJ42J3x4Cqh5y9DIpC5HxEI3s=
+	b=JP4zSq11GGEWhqOa7PzxGGhqVMw7QlbeLGCjPEV7BaRA+Vqo/f3H7GEUxgUFjFNgR
+	 ClZYUprjetqOtHEPcIj+l4n2SwBNIJ4wmHE8dgiNwtgXgAM6KpAdWUPttwKnbGm8YJ
+	 xGolj3vRclKUCBUujF4VnNn9U+2U2+Lm39/qLUog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Aric Cyr <aric.cyr@amd.com>,
 	Ivan Lipski <ivan.lipski@amd.com>,
 	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.12 051/112] drm/amd/display: Fix pbn to kbps Conversion
-Date: Thu, 27 Nov 2025 15:45:53 +0100
-Message-ID: <20251127144034.710146029@linuxfoundation.org>
+Subject: [PATCH 6.12 052/112] drm/amd/display: Clear the CUR_ENABLE register on DCN20 on DPP5
+Date: Thu, 27 Nov 2025 15:45:54 +0100
+Message-ID: <20251127144034.746658497@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -53,193 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fangzhi Zuo <Jerry.Zuo@amd.com>
+From: Ivan Lipski <ivan.lipski@amd.com>
 
-commit 1788ef30725da53face7e311cdf62ad65fababcd upstream.
+commit 5bab4c89390f32b2f491f49a151948cd226dd909 upstream.
 
 [Why]
-Existing routine has two conversion sequence,
-pbn_to_kbps and kbps_to_pbn with margin.
-Non of those has without-margin calculation.
-
-kbps_to_pbn with margin conversion includes
-fec overhead which has already been included in
-pbn_div calculation with 0.994 factor considered.
-It is a double counted fec overhead factor that causes
-potential bw loss.
+On DCN20 & DCN30, the 6th DPP's & HUBP's are powered on permanently and
+cannot be power gated. Thus, when dpp_reset() is invoked for the DPP5,
+while it's still powered on, the cached cursor_state
+(dpp_base->pos.cur0_ctl.bits.cur0_enable)
+and the actual state (CUR0_ENABLE) bit are unsycned. This can cause a
+double cursor in full screen with non-native scaling.
 
 [How]
-Add without-margin calculation.
-Fix fec overhead double counted issue.
+Force disable cursor on DPP5 on plane powerdown for ASICs w/ 6 DPPs/HUBPs.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/3735
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4673
+Reviewed-by: Aric Cyr <aric.cyr@amd.com>
 Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
 Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e0dec00f3d05e8c0eceaaebfdca217f8d10d380c)
+(cherry picked from commit 79b3c037f972dcb13e325a8eabfb8da835764e15)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   59 ++++--------
- 1 file changed, 23 insertions(+), 36 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -846,26 +846,28 @@ struct dsc_mst_fairness_params {
- };
- 
- #if defined(CONFIG_DRM_AMD_DC_FP)
--static uint16_t get_fec_overhead_multiplier(struct dc_link *dc_link)
-+static uint64_t kbps_to_pbn(int kbps, bool is_peak_pbn)
- {
--	u8 link_coding_cap;
--	uint16_t fec_overhead_multiplier_x1000 = PBN_FEC_OVERHEAD_MULTIPLIER_8B_10B;
-+	uint64_t effective_kbps = (uint64_t)kbps;
- 
--	link_coding_cap = dc_link_dp_mst_decide_link_encoding_format(dc_link);
--	if (link_coding_cap == DP_128b_132b_ENCODING)
--		fec_overhead_multiplier_x1000 = PBN_FEC_OVERHEAD_MULTIPLIER_128B_132B;
-+	if (is_peak_pbn) {	// add 0.6% (1006/1000) overhead into effective kbps
-+		effective_kbps *= 1006;
-+		effective_kbps = div_u64(effective_kbps, 1000);
-+	}
- 
--	return fec_overhead_multiplier_x1000;
-+	return (uint64_t) DIV64_U64_ROUND_UP(effective_kbps * 64, (54 * 8 * 1000));
- }
- 
--static int kbps_to_peak_pbn(int kbps, uint16_t fec_overhead_multiplier_x1000)
-+static uint32_t pbn_to_kbps(unsigned int pbn, bool with_margin)
- {
--	u64 peak_kbps = kbps;
-+	uint64_t pbn_effective = (uint64_t)pbn;
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
+@@ -604,6 +604,14 @@ void dcn20_dpp_pg_control(
+ 		 *		DOMAIN11_PGFSM_PWR_STATUS, pwr_status,
+ 		 * 		1, 1000);
+ 		 */
 +
-+	if (with_margin)	// deduct 0.6% (994/1000) overhead from effective pbn
-+		pbn_effective *= (1000000 / PEAK_FACTOR_X1000);
-+	else
-+		pbn_effective *= 1000;
- 
--	peak_kbps *= 1006;
--	peak_kbps *= fec_overhead_multiplier_x1000;
--	peak_kbps = div_u64(peak_kbps, 1000 * 1000);
--	return (int) DIV64_U64_ROUND_UP(peak_kbps * 64, (54 * 8 * 1000));
-+	return DIV_U64_ROUND_UP(pbn_effective * 8 * 54, 64);
- }
- 
- static void set_dsc_configs_from_fairness_vars(struct dsc_mst_fairness_params *params,
-@@ -936,7 +938,7 @@ static int bpp_x16_from_pbn(struct dsc_m
- 	dc_dsc_get_default_config_option(param.sink->ctx->dc, &dsc_options);
- 	dsc_options.max_target_bpp_limit_override_x16 = drm_connector->display_info.max_dsc_bpp * 16;
- 
--	kbps = div_u64((u64)pbn * 994 * 8 * 54, 64);
-+	kbps = pbn_to_kbps(pbn, false);
- 	dc_dsc_compute_config(
- 			param.sink->ctx->dc->res_pool->dscs[0],
- 			&param.sink->dsc_caps.dsc_dec_caps,
-@@ -965,12 +967,11 @@ static int increase_dsc_bpp(struct drm_a
- 	int link_timeslots_used;
- 	int fair_pbn_alloc;
- 	int ret = 0;
--	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
- 
- 	for (i = 0; i < count; i++) {
- 		if (vars[i + k].dsc_enabled) {
- 			initial_slack[i] =
--			kbps_to_peak_pbn(params[i].bw_range.max_kbps, fec_overhead_multiplier_x1000) - vars[i + k].pbn;
-+			kbps_to_pbn(params[i].bw_range.max_kbps, false) - vars[i + k].pbn;
- 			bpp_increased[i] = false;
- 			remaining_to_increase += 1;
- 		} else {
-@@ -1066,7 +1067,6 @@ static int try_disable_dsc(struct drm_at
- 	int next_index;
- 	int remaining_to_try = 0;
- 	int ret;
--	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
- 	int var_pbn;
- 
- 	for (i = 0; i < count; i++) {
-@@ -1099,7 +1099,7 @@ static int try_disable_dsc(struct drm_at
- 
- 		DRM_DEBUG_DRIVER("MST_DSC index #%d, try no compression\n", next_index);
- 		var_pbn = vars[next_index].pbn;
--		vars[next_index].pbn = kbps_to_peak_pbn(params[next_index].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
-+		vars[next_index].pbn = kbps_to_pbn(params[next_index].bw_range.stream_kbps, true);
- 		ret = drm_dp_atomic_find_time_slots(state,
- 						    params[next_index].port->mgr,
- 						    params[next_index].port,
-@@ -1159,7 +1159,6 @@ static int compute_mst_dsc_configs_for_l
- 	int count = 0;
- 	int i, k, ret;
- 	bool debugfs_overwrite = false;
--	uint16_t fec_overhead_multiplier_x1000 = get_fec_overhead_multiplier(dc_link);
- 	struct drm_connector_state *new_conn_state;
- 
- 	memset(params, 0, sizeof(params));
-@@ -1240,7 +1239,7 @@ static int compute_mst_dsc_configs_for_l
- 	DRM_DEBUG_DRIVER("MST_DSC Try no compression\n");
- 	for (i = 0; i < count; i++) {
- 		vars[i + k].aconnector = params[i].aconnector;
--		vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
-+		vars[i + k].pbn = kbps_to_pbn(params[i].bw_range.stream_kbps, false);
- 		vars[i + k].dsc_enabled = false;
- 		vars[i + k].bpp_x16 = 0;
- 		ret = drm_dp_atomic_find_time_slots(state, params[i].port->mgr, params[i].port,
-@@ -1262,7 +1261,7 @@ static int compute_mst_dsc_configs_for_l
- 	DRM_DEBUG_DRIVER("MST_DSC Try max compression\n");
- 	for (i = 0; i < count; i++) {
- 		if (params[i].compression_possible && params[i].clock_force_enable != DSC_CLK_FORCE_DISABLE) {
--			vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.min_kbps, fec_overhead_multiplier_x1000);
-+			vars[i + k].pbn = kbps_to_pbn(params[i].bw_range.min_kbps, false);
- 			vars[i + k].dsc_enabled = true;
- 			vars[i + k].bpp_x16 = params[i].bw_range.min_target_bpp_x16;
- 			ret = drm_dp_atomic_find_time_slots(state, params[i].port->mgr,
-@@ -1270,7 +1269,7 @@ static int compute_mst_dsc_configs_for_l
- 			if (ret < 0)
- 				return ret;
- 		} else {
--			vars[i + k].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps, fec_overhead_multiplier_x1000);
-+			vars[i + k].pbn = kbps_to_pbn(params[i].bw_range.stream_kbps, false);
- 			vars[i + k].dsc_enabled = false;
- 			vars[i + k].bpp_x16 = 0;
- 			ret = drm_dp_atomic_find_time_slots(state, params[i].port->mgr,
-@@ -1722,18 +1721,6 @@ clean_exit:
- 	return ret;
- }
- 
--static uint32_t kbps_from_pbn(unsigned int pbn)
--{
--	uint64_t kbps = (uint64_t)pbn;
--
--	kbps *= (1000000 / PEAK_FACTOR_X1000);
--	kbps *= 8;
--	kbps *= 54;
--	kbps /= 64;
--
--	return (uint32_t)kbps;
--}
--
- static bool is_dsc_common_config_possible(struct dc_stream_state *stream,
- 					  struct dc_dsc_bw_range *bw_range)
- {
-@@ -1825,7 +1812,7 @@ enum dc_status dm_dp_mst_is_port_support
- 			dc_link_get_highest_encoding_format(stream->link));
- 	cur_link_settings = stream->link->verified_link_cap;
- 	root_link_bw_in_kbps = dc_link_bandwidth_kbps(aconnector->dc_link, &cur_link_settings);
--	virtual_channel_bw_in_kbps = kbps_from_pbn(aconnector->mst_output_port->full_pbn);
-+	virtual_channel_bw_in_kbps = pbn_to_kbps(aconnector->mst_output_port->full_pbn, true);
- 
- 	/* pick the end to end bw bottleneck */
- 	end_to_end_bw_in_kbps = min(root_link_bw_in_kbps, virtual_channel_bw_in_kbps);
-@@ -1876,7 +1863,7 @@ enum dc_status dm_dp_mst_is_port_support
- 				immediate_upstream_port = aconnector->mst_output_port->parent->port_parent;
- 
- 			if (immediate_upstream_port) {
--				virtual_channel_bw_in_kbps = kbps_from_pbn(immediate_upstream_port->full_pbn);
-+				virtual_channel_bw_in_kbps = pbn_to_kbps(immediate_upstream_port->full_pbn, true);
- 				virtual_channel_bw_in_kbps = min(root_link_bw_in_kbps, virtual_channel_bw_in_kbps);
- 			} else {
- 				/* For topology LCT 1 case - only one mstb*/
++		/* Force disable cursor on plane powerdown on DPP 5 using dpp_force_disable_cursor */
++		if (!power_on) {
++			struct dpp *dpp5 = hws->ctx->dc->res_pool->dpps[dpp_inst];
++			if (dpp5 && dpp5->funcs->dpp_force_disable_cursor)
++				dpp5->funcs->dpp_force_disable_cursor(dpp5);
++		}
++
+ 		break;
+ 	default:
+ 		BREAK_TO_DEBUGGER();
 
 
