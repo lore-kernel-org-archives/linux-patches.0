@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616AE21770B;
-	Thu, 27 Nov 2025 14:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2C6273816;
+	Thu, 27 Nov 2025 14:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254894; cv=none; b=qvKOrbNtlu0kyUWWExMg2N32vvhEGzCm+Q+uPmTqUbd0OCh9Ua4n0MkT7umrx5E0ruCHaC0I2x/cL6XJA/7iqoA/RekixzMvsvlI1sfkJE7bNK5msYeMIqa5xD3OCfurogpV7EpBLxoN6ovmEQ9KJUKQH7Y8K6t9SWttfy8hTj4=
+	t=1764254897; cv=none; b=QY9XDn66y25w2ZTFNqxXCRvv5DTsnYa48+Z2LCPGOBnpSopMYP1eGBxXHn+BYwtwgea8HDTeaaXbF/9t544xfbaxvOeMcWLKDbQCtBTMwM+VNnqmZEE4adpkEu5DVWhTKxuq3O2sjh5AAxRrJVPs/j5DDWd4B59wGAMhjs8Ct8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254894; c=relaxed/simple;
-	bh=yDkvk9uH6ulMTjtejMXNh45GqvEQnsdMF5hN2I5oVc0=;
+	s=arc-20240116; t=1764254897; c=relaxed/simple;
+	bh=HwjMhvTvi3Pia68tpB2Lm3mTfXzThD/5BLiYXq2szg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V+pSGtXVLISHOnIUy3J6HFRc4+Tmq5ErnUYVX7U2lTxnfd4o2yBfalAW5UDPYLW+e5xyTna6M52iBfvgpw2cnWNG1fDJDsh7bY0J1gSootyEE7f7v88F0rF3EGWcX3L3AIBDBBdv2LCYilU2nuvSbi7fCdkCZ1TrAFXBr4GrVoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VSwi1Uc9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gOcv5aaz2oThorhqJ2WhVovJwzEHqQS98LA0emrQ+8BXBQsnArT2evUK+1xyJCQ3y44Yyrx2CKB2L3i2xpa9FXdYSfIurK90mdelvMmDkd8CdeDB8ww5m5Nu37mgnXvnkaU4y3nXeJygTNi9Z7PdwvnjpxQy8/ESJSEAXaIJgfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mmWPIMpk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VSwi1Uc9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EC9C4CEF8;
-	Thu, 27 Nov 2025 14:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mmWPIMpk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A93C4CEF8;
+	Thu, 27 Nov 2025 14:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254894;
-	bh=yDkvk9uH6ulMTjtejMXNh45GqvEQnsdMF5hN2I5oVc0=;
+	s=korg; t=1764254896;
+	bh=HwjMhvTvi3Pia68tpB2Lm3mTfXzThD/5BLiYXq2szg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSwi1Uc9wlFlor4Jc/MoRrinRKhCSIyKEstSlP/usvqEHTMbDshOXVcaH8/7b1wl8
-	 /Zc8Icj5B9oymEx6wc2cAAYC2qAQxkUa1pf+sgosv5dhQ9Vo0uqLnxwGQFZeCawlJ3
-	 A+o9XAV5pBwCmVrmq6QvEZoYDS4YLFB5DFqerXSY=
+	b=mmWPIMpk2FeEX5V1xrW2llJZ/BQqqWuXymieA6gW+qqFuLYCxXmFpcdlA3mXsiwV+
+	 aCYt6jU5W3RqVgpJAH8QT9n0Z07g8Dlz8ApVZR1u8FMUiY7B1iflySYJBh+0lcXB8A
+	 NPFbwtqDJCxx0vhGUZX+81jmNMWdN9wUMr8nAUps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.6 04/86] mtdchar: fix integer overflow in read/write ioctls
-Date: Thu, 27 Nov 2025 15:45:20 +0100
-Message-ID: <20251127144027.967570870@linuxfoundation.org>
+	Mike Yuan <me@yhndnzj.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Hugh Dickins <hughd@google.com>
+Subject: [PATCH 6.6 05/86] shmem: fix tmpfs reconfiguration (remount) when noswap is set
+Date: Thu, 27 Nov 2025 15:45:21 +0100
+Message-ID: <20251127144028.004026969@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,62 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Mike Yuan <me@yhndnzj.com>
 
-commit e4185bed738da755b191aa3f2e16e8b48450e1b8 upstream.
+commit 3cd1548a278c7d6a9bdef1f1866e7cf66bfd3518 upstream.
 
-The "req.start" and "req.len" variables are u64 values that come from the
-user at the start of the function.  We mask away the high 32 bits of
-"req.len" so that's capped at U32_MAX but the "req.start" variable can go
-up to U64_MAX which means that the addition can still integer overflow.
+In systemd we're trying to switch the internal credentials setup logic
+to new mount API [1], and I noticed fsconfig(FSCONFIG_CMD_RECONFIGURE)
+consistently fails on tmpfs with noswap option. This can be trivially
+reproduced with the following:
 
-Use check_add_overflow() to fix this bug.
+```
+int fs_fd = fsopen("tmpfs", 0);
+fsconfig(fs_fd, FSCONFIG_SET_FLAG, "noswap", NULL, 0);
+fsconfig(fs_fd, FSCONFIG_CMD_CREATE, NULL, NULL, 0);
+fsmount(fs_fd, 0, 0);
+fsconfig(fs_fd, FSCONFIG_CMD_RECONFIGURE, NULL, NULL, 0);  <------ EINVAL
+```
 
-Fixes: 095bb6e44eb1 ("mtdchar: add MEMREAD ioctl")
-Fixes: 6420ac0af95d ("mtdchar: prevent unbounded allocation in MEMWRITE ioctl")
+After some digging the culprit is shmem_reconfigure() rejecting
+!(ctx->seen & SHMEM_SEEN_NOSWAP) && sbinfo->noswap, which is bogus
+as ctx->seen serves as a mask for whether certain options are touched
+at all. On top of that, noswap option doesn't use fsparam_flag_no,
+hence it's not really possible to "reenable" swap to begin with.
+Drop the check and redundant SHMEM_SEEN_NOSWAP flag.
+
+[1] https://github.com/systemd/systemd/pull/39637
+
+Fixes: 2c6efe9cf2d7 ("shmem: add support to ignore swap")
+Signed-off-by: Mike Yuan <me@yhndnzj.com>
+Link: https://patch.msgid.link/20251108190930.440685-1-me@yhndnzj.com
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Hugh Dickins <hughd@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdchar.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ mm/shmem.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/mtd/mtdchar.c
-+++ b/drivers/mtd/mtdchar.c
-@@ -599,6 +599,7 @@ mtdchar_write_ioctl(struct mtd_info *mtd
- 	uint8_t *datbuf = NULL, *oobbuf = NULL;
- 	size_t datbuf_len, oobbuf_len;
- 	int ret = 0;
-+	u64 end;
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -126,8 +126,7 @@ struct shmem_options {
+ #define SHMEM_SEEN_INODES 2
+ #define SHMEM_SEEN_HUGE 4
+ #define SHMEM_SEEN_INUMS 8
+-#define SHMEM_SEEN_NOSWAP 16
+-#define SHMEM_SEEN_QUOTA 32
++#define SHMEM_SEEN_QUOTA 16
+ };
  
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -618,7 +619,7 @@ mtdchar_write_ioctl(struct mtd_info *mtd
- 	req.len &= 0xffffffff;
- 	req.ooblen &= 0xffffffff;
- 
--	if (req.start + req.len > mtd->size)
-+	if (check_add_overflow(req.start, req.len, &end) || end > mtd->size)
- 		return -EINVAL;
- 
- 	datbuf_len = min_t(size_t, req.len, mtd->erasesize);
-@@ -698,6 +699,7 @@ mtdchar_read_ioctl(struct mtd_info *mtd,
- 	size_t datbuf_len, oobbuf_len;
- 	size_t orig_len, orig_ooblen;
- 	int ret = 0;
-+	u64 end;
- 
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -724,7 +726,7 @@ mtdchar_read_ioctl(struct mtd_info *mtd,
- 	req.len &= 0xffffffff;
- 	req.ooblen &= 0xffffffff;
- 
--	if (req.start + req.len > mtd->size) {
-+	if (check_add_overflow(req.start, req.len, &end) || end > mtd->size) {
- 		ret = -EINVAL;
+ #ifdef CONFIG_TMPFS
+@@ -4004,7 +4003,6 @@ static int shmem_parse_one(struct fs_con
+ 				       "Turning off swap in unprivileged tmpfs mounts unsupported");
+ 		}
+ 		ctx->noswap = true;
+-		ctx->seen |= SHMEM_SEEN_NOSWAP;
+ 		break;
+ 	case Opt_quota:
+ 		if (fc->user_ns != &init_user_ns)
+@@ -4154,14 +4152,15 @@ static int shmem_reconfigure(struct fs_c
+ 		err = "Current inum too high to switch to 32-bit inums";
  		goto out;
  	}
+-	if ((ctx->seen & SHMEM_SEEN_NOSWAP) && ctx->noswap && !sbinfo->noswap) {
++
++	/*
++	 * "noswap" doesn't use fsparam_flag_no, i.e. there's no "swap"
++	 * counterpart for (re-)enabling swap.
++	 */
++	if (ctx->noswap && !sbinfo->noswap) {
+ 		err = "Cannot disable swap on remount";
+ 		goto out;
+ 	}
+-	if (!(ctx->seen & SHMEM_SEEN_NOSWAP) && !ctx->noswap && sbinfo->noswap) {
+-		err = "Cannot enable swap on remount if it was disabled on first mount";
+-		goto out;
+-	}
+ 
+ 	if (ctx->seen & SHMEM_SEEN_QUOTA &&
+ 	    !sb_any_quota_loaded(fc->root->d_sb)) {
 
 
