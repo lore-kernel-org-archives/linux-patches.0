@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C6528D8E8;
-	Thu, 27 Nov 2025 14:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CAA828D8E8;
+	Thu, 27 Nov 2025 14:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255584; cv=none; b=F+BJzjc0jGx7IhoqvaPBQXCdEvnyHf9Y9STyYzRefWs7Gp9t9gnm5GcX5eoZ/VoM55a/aUSFjU6yzXhjKScu13Nvr14cdVif4GdNPZrC5WCxqlK6JQBUAq0ZXIfe0DEgqd1JcAF7rKFXziJC+EMYlaBxMQnYL9E9/Ja1foZ9Yug=
+	t=1764255587; cv=none; b=rmvjK39czjNU0lP1NZ05w2X2rw0SplrpcjdDAkNnL0w5V1Rft/fEwoxC9PczqlGAVdI/AiSi2wDmo+emnJnzeAx1+GSkcXGYfjAXMo3PjuRrT1qUHXlg0+boXh/AvlH0yC0bKKZmn/Dr8iE6IrKfxJz5L6hA55niE0FoHOwj+Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255584; c=relaxed/simple;
-	bh=ga+d34LiqF4XQULrvaHPjlssNkew6mFKTYS14yixh/4=;
+	s=arc-20240116; t=1764255587; c=relaxed/simple;
+	bh=8cwsD3loTqZqcwqr+38GuZPsh0BjNaeZZO4x2jb20wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3R34p0X8i6a+tkSz1RUejKFRfgHv4QnEDR8BVzLy874150dAGV79Vu0ULQk82m8IAN3IJkpC1/dNm9XT1Fs0lO8tQ8lmxxKFiVQPCgv7JYc2YtuU/U2mXG/lRhY2ZTn0Zu9RPGCUCxcso4piNLR3Vh8dpA2VYJ9sxEBLSX66/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRKWZ4Zj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ut/MzD3u0ahZ2gI7SSX1/A5PUswi6hpc1BQV1Er5pFxdQKpujd/XX4Z9r4VhrmBOrMl3YwCTjj9CWip5amkm1STywKckaffZLfFhLE9sPOzUjP1TAa5SHim7sfpE8C4cELQnQF7WKBS4nLz5pnEMIbNlHxEDxL6dXEuXYee9/es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FX5CSB3R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRKWZ4Zj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7501CC4CEF8;
-	Thu, 27 Nov 2025 14:59:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FX5CSB3R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D47BC4CEF8;
+	Thu, 27 Nov 2025 14:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255583;
-	bh=ga+d34LiqF4XQULrvaHPjlssNkew6mFKTYS14yixh/4=;
+	s=korg; t=1764255586;
+	bh=8cwsD3loTqZqcwqr+38GuZPsh0BjNaeZZO4x2jb20wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRKWZ4ZjCIE8BWpRRGfShgs/dFdloFVp47MgTgvCqm82qipVg1wXU7ostPrTNQ5JE
-	 47Ugvo2gLeGBc0PVR1RHFZcL1ntDJs1TCaytl2nbzcD2YTxsSNOEl34hUCwb6jqI+7
-	 /4kyIvDgwLM/uEJYdzs62aTIMp8NjSnTNcqj0V+c=
+	b=FX5CSB3RMqIQgthfy0GvZnsNqXP8AaWI/9ArB81RrrV44GSKil9pTIifPCRFN0pqm
+	 tutWaxcl+mehmMJbHmGtMGJQwHhXDZLVChy92TCA1Fjbu54NZWfJbdw39NDeWKzAAi
+	 g0s2OX2efHJaV6DBUs5pa6ZoOLPswAb5vBDmszHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.17 026/175] MIPS: mm: Prevent a TLB shutdown on initial uniquification
-Date: Thu, 27 Nov 2025 15:44:39 +0100
-Message-ID: <20251127144043.919172913@linuxfoundation.org>
+	Rose Wu <ya-jou.wu@mediatek.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.17 044/175] PM: sleep: core: Fix runtime PM enabling in device_resume_early()
+Date: Thu, 27 Nov 2025 15:44:57 +0100
+Message-ID: <20251127144044.573365561@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,174 +51,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 9f048fa487409e364cf866c957cf0b0d782ca5a3 upstream.
+commit f384497a76ed9539f70f6e8fe81a193441c943d2 upstream.
 
-Depending on the particular CPU implementation a TLB shutdown may occur
-if multiple matching entries are detected upon the execution of a TLBP
-or the TLBWI/TLBWR instructions.  Given that we don't know what entries
-we have been handed we need to be very careful with the initial TLB
-setup and avoid all these instructions.
+Runtime PM should only be enabled in device_resume_early() if it has
+been disabled for the given device by device_suspend_late().  Otherwise,
+it may cause runtime PM callbacks to run prematurely in some cases
+which leads to further functional issues.
 
-Therefore read all the TLB entries one by one with the TLBR instruction,
-bypassing the content addressing logic, and truncate any large pages in
-place so as to avoid a case in the second step where an incoming entry
-for a large page at a lower address overlaps with a replacement entry
-chosen at another index.  Then preinitialize the TLB using addresses
-outside our usual unique range and avoiding clashes with any entries
-received, before making the usual call to local_flush_tlb_all().
+Make two changes to address this problem.
 
-This fixes (at least) R4x00 cores if TLBP hits multiple matching TLB
-entries (SGI IP22 PROM for examples sets up all TLBs to the same virtual
-address).
+First, reorder device_suspend_late() to only disable runtime PM for a
+device when it is going to look for the device's callback or if the
+device is a "syscore" one.  In all of the other cases, disabling runtime
+PM for the device is not in fact necessary.  However, if the device's
+callback returns an error and the power.is_late_suspended flag is not
+going to be set, enable runtime PM so it only remains disabled when
+power.is_late_suspended is set.
 
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com> # Boston I6400, M5150 sim
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Second, make device_resume_early() only enable runtime PM for the
+devices with the power.is_late_suspended flag set.
+
+Fixes: 443046d1ad66 ("PM: sleep: Make suspend of devices more asynchronous")
+Reported-by: Rose Wu <ya-jou.wu@mediatek.com>
+Closes: https://lore.kernel.org/linux-pm/70b25dca6f8c2756d78f076f4a7dee7edaaffc33.camel@mediatek.com/
+Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/12784270.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |  102 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 64 insertions(+), 38 deletions(-)
+ drivers/base/power/main.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -15,6 +15,7 @@
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-+#include <linux/sort.h>
+diff --git a/drivers/base/power/main.c b/drivers/base/power/main.c
+index e83503bdc1fd..1de1cd72b616 100644
+--- a/drivers/base/power/main.c
++++ b/drivers/base/power/main.c
+@@ -888,12 +888,15 @@ static void device_resume_early(struct device *dev, pm_message_t state, bool asy
+ 	TRACE_DEVICE(dev);
+ 	TRACE_RESUME(0);
  
- #include <asm/cpu.h>
- #include <asm/cpu-type.h>
-@@ -508,55 +509,79 @@ static int __init set_ntlb(char *str)
+-	if (dev->power.syscore || dev->power.direct_complete)
++	if (dev->power.direct_complete)
+ 		goto Out;
  
- __setup("ntlb=", set_ntlb);
+ 	if (!dev->power.is_late_suspended)
+ 		goto Out;
  
--/* Initialise all TLB entries with unique values */
++	if (dev->power.syscore)
++		goto Skip;
 +
-+/* Comparison function for EntryHi VPN fields.  */
-+static int r4k_vpn_cmp(const void *a, const void *b)
-+{
-+	long v = *(unsigned long *)a - *(unsigned long *)b;
-+	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
-+	return s ? (v != 0) | v >> s : v;
-+}
-+
-+/*
-+ * Initialise all TLB entries with unique values that do not clash with
-+ * what we have been handed over and what we'll be using ourselves.
-+ */
- static void r4k_tlb_uniquify(void)
- {
--	int entry = num_wired_entries();
-+	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
-+	int tlbsize = current_cpu_data.tlbsize;
-+	int start = num_wired_entries();
-+	unsigned long vpn_mask;
-+	int cnt, ent, idx, i;
-+
-+	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
-+	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
+ 	if (!dpm_wait_for_superior(dev, async))
+ 		goto Out;
  
- 	htw_stop();
--	write_c0_entrylo0(0);
--	write_c0_entrylo1(0);
+@@ -926,11 +929,11 @@ static void device_resume_early(struct device *dev, pm_message_t state, bool asy
  
--	while (entry < current_cpu_data.tlbsize) {
--		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
--		unsigned long asid = 0;
--		int idx;
-+	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
-+		unsigned long vpn;
+ Skip:
+ 	dev->power.is_late_suspended = false;
++	pm_runtime_enable(dev);
  
--		/* Skip wired MMID to make ginvt_mmid work */
--		if (cpu_has_mmid)
--			asid = MMID_KERNEL_WIRED + 1;
-+		write_c0_index(i);
-+		mtc0_tlbr_hazard();
-+		tlb_read();
-+		tlb_read_hazard();
-+		vpn = read_c0_entryhi();
-+		vpn &= vpn_mask & PAGE_MASK;
-+		tlb_vpns[cnt] = vpn;
+ Out:
+ 	TRACE_RESUME(error);
  
--		/* Check for match before using UNIQUE_ENTRYHI */
--		do {
--			if (cpu_has_mmid) {
--				write_c0_memorymapid(asid);
--				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
--			} else {
--				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
--			}
--			mtc0_tlbw_hazard();
--			tlb_probe();
--			tlb_probe_hazard();
--			idx = read_c0_index();
--			/* No match or match is on current entry */
--			if (idx < 0 || idx == entry)
--				break;
--			/*
--			 * If we hit a match, we need to try again with
--			 * a different ASID.
--			 */
--			asid++;
--		} while (asid < asid_mask);
+-	pm_runtime_enable(dev);
+ 	complete_all(&dev->power.completion);
+ 
+ 	if (error) {
+@@ -1615,12 +1618,6 @@ static void device_suspend_late(struct device *dev, pm_message_t state, bool asy
+ 	TRACE_DEVICE(dev);
+ 	TRACE_SUSPEND(0);
+ 
+-	/*
+-	 * Disable runtime PM for the device without checking if there is a
+-	 * pending resume request for it.
+-	 */
+-	__pm_runtime_disable(dev, false);
 -
--		if (idx >= 0 && idx != entry)
--			panic("Unable to uniquify TLB entry %d", idx);
--
--		write_c0_index(entry);
-+		/* Prevent any large pages from overlapping regular ones.  */
-+		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
- 		mtc0_tlbw_hazard();
- 		tlb_write_indexed();
--		entry++;
-+		tlbw_use_hazard();
+ 	dpm_wait_for_subordinate(dev, async);
+ 
+ 	if (READ_ONCE(async_error))
+@@ -1631,9 +1628,18 @@ static void device_suspend_late(struct device *dev, pm_message_t state, bool asy
+ 		goto Complete;
  	}
  
-+	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
-+
-+	write_c0_pagemask(PM_DEFAULT_MASK);
-+	write_c0_entrylo0(0);
-+	write_c0_entrylo1(0);
-+
-+	idx = 0;
-+	ent = tlbsize;
-+	for (i = start; i < tlbsize; i++)
-+		while (1) {
-+			unsigned long entryhi, vpn;
-+
-+			entryhi = UNIQUE_ENTRYHI(ent);
-+			vpn = entryhi & vpn_mask & PAGE_MASK;
-+
-+			if (idx >= cnt || vpn < tlb_vpns[idx]) {
-+				write_c0_entryhi(entryhi);
-+				write_c0_index(i);
-+				mtc0_tlbw_hazard();
-+				tlb_write_indexed();
-+				ent++;
-+				break;
-+			} else if (vpn == tlb_vpns[idx]) {
-+				ent++;
-+			} else {
-+				idx++;
-+			}
-+		}
-+
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
-@@ -602,6 +627,7 @@ static void r4k_tlb_configure(void)
+-	if (dev->power.syscore || dev->power.direct_complete)
++	if (dev->power.direct_complete)
+ 		goto Complete;
  
- 	/* From this point on the ARC firmware is dead.	 */
- 	r4k_tlb_uniquify();
-+	local_flush_tlb_all();
- 
- 	/* Did I tell you that ARC SUCKS?  */
- }
++	/*
++	 * Disable runtime PM for the device without checking if there is a
++	 * pending resume request for it.
++	 */
++	__pm_runtime_disable(dev, false);
++
++	if (dev->power.syscore)
++		goto Skip;
++
+ 	if (dev->pm_domain) {
+ 		info = "late power domain ";
+ 		callback = pm_late_early_op(&dev->pm_domain->ops, state);
+@@ -1664,6 +1670,7 @@ static void device_suspend_late(struct device *dev, pm_message_t state, bool asy
+ 		WRITE_ONCE(async_error, error);
+ 		dpm_save_failed_dev(dev_name(dev));
+ 		pm_dev_err(dev, state, async ? " async late" : " late", error);
++		pm_runtime_enable(dev);
+ 		goto Complete;
+ 	}
+ 	dpm_propagate_wakeup_to_parent(dev);
+-- 
+2.52.0
+
 
 
