@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA1B28D8E8;
-	Thu, 27 Nov 2025 14:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1E229BD89;
+	Thu, 27 Nov 2025 14:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255462; cv=none; b=cfC/FS1R6/xUtRE+lkna+A12e0Jb472wz08DXuShMlE06cUB1m1vSh0vjN/VNphRublITUmhuQp+ZeS/AywEjvrmN3kYpPSJV4XmAKqWnujr4W/Bmbgvl7WpqNXV+4Pw6ROwCcn5FW6CGT1p19UpPhhwPLnqN/j4G/F5zFAlTqI=
+	t=1764255465; cv=none; b=ORViVmSs2VVMaxC3Yjr39xSRd6BJ1W36MsAzbSubbeuqPGEzKhs1KDE3JdxiePTPHlVyvIO/Uyk2fqipoxj4LWqwfwBGy/S9EDgVc1LhmxJTQDQsHE0cOZHUcnYOCYS3VLZ25NOjgX/5Ikm3fZ+x9sYHNr5H2JEZWW4UBNlElFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255462; c=relaxed/simple;
-	bh=dmgu0S/J6K4AhsOSoOHfUsl1kvTYizcn8Uyv1gYyjmg=;
+	s=arc-20240116; t=1764255465; c=relaxed/simple;
+	bh=Eb8cj0U9NkTTY+Em3iwz3fJbyyGfiT6IFW5xPnmNDzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e300qV9YEuPaPXvrREL2aQe+SWs9F31tSyeh2Ilhqn3gSeF6VEWqrbakcDK51BieEqK3NNEfZoTUfZsiz5IQvRYKdnA7tGz2sjU91NuE3l2qoP2LKC32gZPFmwqN02uu2/pSY0kUV/bUYpYVEr6tcsrfvoqb6AIU2cPjKCp9jV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLpOR8BE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4MBpks86SVEkFFEq1A2MNiN5xD0qGAXQXBuIufaxHoSPQBAhlT4dfSXMQ+lAQu9gy4sKUyTjriUIWcy2B6mw7wLUaqiZpeafJHto9LxaF96gnCfyqUMB+7uH4ssNh+dkOZWDc1AvbQ9U2uLZs3waMlVXfAjZZSCcRGgTFBGJ00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSIlZtL/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLpOR8BE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB861C4CEF8;
-	Thu, 27 Nov 2025 14:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSIlZtL/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5D0AC4CEF8;
+	Thu, 27 Nov 2025 14:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255462;
-	bh=dmgu0S/J6K4AhsOSoOHfUsl1kvTYizcn8Uyv1gYyjmg=;
+	s=korg; t=1764255465;
+	bh=Eb8cj0U9NkTTY+Em3iwz3fJbyyGfiT6IFW5xPnmNDzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLpOR8BEb5QBfck42wf50zP+K+CV75zR2iHjwwg6BzTVLAqp9ThYWo18Cfz4D8EZT
-	 cIsi4qVXuAH4GOBtCBk6Mrcmk/UOmqcdovwlpUbkgmThm/OdRZm40uWwiDFoAuwPFm
-	 BauKWTGth9OkPB1v+hNW9Gw+dmxrrQ/0wfoQhGUQ=
+	b=KSIlZtL/SDfbyO9kEdllRpHqkO7jKQhFUaz7QqjwoxBSZuuHAcpyqNn3VzcaQ6xMa
+	 1QvPgbqV4bv7ItioTkW6b8aHnUghGkd0zyHArJRZg9X0t9NcOynFCvqkXB9pXyIL/e
+	 c+rwKAP97V3ByUqIWF2dAlyZR4u8pH5XpnG0TmL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Nishanth Menon <nm@ti.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhang Chujun <zhangchujun@cmss.chinamobile.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/112] net: ethernet: ti: netcp: Standardize knav_dma_open_channel to return NULL on error
-Date: Thu, 27 Nov 2025 15:46:41 +0100
-Message-ID: <20251127144036.465067633@linuxfoundation.org>
+Subject: [PATCH 6.12 100/112] tracing/tools: Fix incorrcet short option in usage text for --threads
+Date: Thu, 27 Nov 2025 15:46:42 +0100
+Message-ID: <20251127144036.501926839@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -53,165 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nishanth Menon <nm@ti.com>
+From: Zhang Chujun <zhangchujun@cmss.chinamobile.com>
 
-[ Upstream commit 90a88306eb874fe4bbdd860e6c9787f5bbc588b5 ]
+[ Upstream commit 53afec2c8fb2a562222948cb1c2aac48598578c9 ]
 
-Make knav_dma_open_channel consistently return NULL on error instead
-of ERR_PTR. Currently the header include/linux/soc/ti/knav_dma.h
-returns NULL when the driver is disabled, but the driver
-implementation does not even return NULL or ERR_PTR on failure,
-causing inconsistency in the users. This results in a crash in
-netcp_free_navigator_resources as followed (trimmed):
+The help message incorrectly listed '-t' as the short option for
+--threads, but the actual getopt_long configuration uses '-e'.
+This mismatch can confuse users and lead to incorrect command-line
+usage. This patch updates the usage string to correctly show:
+	"-e, --threads NRTHR"
+to match the implementation.
 
-Unhandled fault: alignment exception (0x221) at 0xfffffff2
-[fffffff2] *pgd=80000800207003, *pmd=82ffda003, *pte=00000000
-Internal error: : 221 [#1] SMP ARM
-Modules linked in:
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.17.0-rc7 #1 NONE
-Hardware name: Keystone
-PC is at knav_dma_close_channel+0x30/0x19c
-LR is at netcp_free_navigator_resources+0x2c/0x28c
+Note: checkpatch.pl reports a false-positive spelling warning on
+'Run', which is intentional.
 
-[... TRIM...]
-
-Call trace:
- knav_dma_close_channel from netcp_free_navigator_resources+0x2c/0x28c
- netcp_free_navigator_resources from netcp_ndo_open+0x430/0x46c
- netcp_ndo_open from __dev_open+0x114/0x29c
- __dev_open from __dev_change_flags+0x190/0x208
- __dev_change_flags from netif_change_flags+0x1c/0x58
- netif_change_flags from dev_change_flags+0x38/0xa0
- dev_change_flags from ip_auto_config+0x2c4/0x11f0
- ip_auto_config from do_one_initcall+0x58/0x200
- do_one_initcall from kernel_init_freeable+0x1cc/0x238
- kernel_init_freeable from kernel_init+0x1c/0x12c
- kernel_init from ret_from_fork+0x14/0x38
-[... TRIM...]
-
-Standardize the error handling by making the function return NULL on
-all error conditions. The API is used in just the netcp_core.c so the
-impact is limited.
-
-Note, this change, in effect reverts commit 5b6cb43b4d62 ("net:
-ethernet: ti: netcp_core: return error while dma channel open issue"),
-but provides a less error prone implementation.
-
-Suggested-by: Simon Horman <horms@kernel.org>
-Suggested-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://patch.msgid.link/20251103162811.3730055-1-nm@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20251106031040.1869-1-zhangchujun@cmss.chinamobile.com
+Signed-off-by: Zhang Chujun <zhangchujun@cmss.chinamobile.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 10 +++++-----
- drivers/soc/ti/knav_dma.c            | 14 +++++++-------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ tools/tracing/latency/latency-collector.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index 11b90e1da0c63..d07dcffc2517e 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1338,10 +1338,10 @@ int netcp_txpipe_open(struct netcp_tx_pipe *tx_pipe)
+diff --git a/tools/tracing/latency/latency-collector.c b/tools/tracing/latency/latency-collector.c
+index cf263fe9deaf4..ef97916e3873a 100644
+--- a/tools/tracing/latency/latency-collector.c
++++ b/tools/tracing/latency/latency-collector.c
+@@ -1725,7 +1725,7 @@ static void show_usage(void)
+ "-n, --notrace\t\tIf latency is detected, do not print out the content of\n"
+ "\t\t\tthe trace file to standard output\n\n"
  
- 	tx_pipe->dma_channel = knav_dma_open_channel(dev,
- 				tx_pipe->dma_chan_name, &config);
--	if (IS_ERR(tx_pipe->dma_channel)) {
-+	if (!tx_pipe->dma_channel) {
- 		dev_err(dev, "failed opening tx chan(%s)\n",
- 			tx_pipe->dma_chan_name);
--		ret = PTR_ERR(tx_pipe->dma_channel);
-+		ret = -EINVAL;
- 		goto err;
- 	}
+-"-t, --threads NRTHR\tRun NRTHR threads for printing. Default is %d.\n\n"
++"-e, --threads NRTHR\tRun NRTHR threads for printing. Default is %d.\n\n"
  
-@@ -1359,7 +1359,7 @@ int netcp_txpipe_open(struct netcp_tx_pipe *tx_pipe)
- 	return 0;
- 
- err:
--	if (!IS_ERR_OR_NULL(tx_pipe->dma_channel))
-+	if (tx_pipe->dma_channel)
- 		knav_dma_close_channel(tx_pipe->dma_channel);
- 	tx_pipe->dma_channel = NULL;
- 	return ret;
-@@ -1678,10 +1678,10 @@ static int netcp_setup_navigator_resources(struct net_device *ndev)
- 
- 	netcp->rx_channel = knav_dma_open_channel(netcp->netcp_device->device,
- 					netcp->dma_chan_name, &config);
--	if (IS_ERR(netcp->rx_channel)) {
-+	if (!netcp->rx_channel) {
- 		dev_err(netcp->ndev_dev, "failed opening rx chan(%s\n",
- 			netcp->dma_chan_name);
--		ret = PTR_ERR(netcp->rx_channel);
-+		ret = -EINVAL;
- 		goto fail;
- 	}
- 
-diff --git a/drivers/soc/ti/knav_dma.c b/drivers/soc/ti/knav_dma.c
-index fb0746d8caad4..c9cf8a90c6d49 100644
---- a/drivers/soc/ti/knav_dma.c
-+++ b/drivers/soc/ti/knav_dma.c
-@@ -402,7 +402,7 @@ static int of_channel_match_helper(struct device_node *np, const char *name,
-  * @name:	slave channel name
-  * @config:	dma configuration parameters
-  *
-- * Returns pointer to appropriate DMA channel on success or error.
-+ * Return: Pointer to appropriate DMA channel on success or NULL on error.
-  */
- void *knav_dma_open_channel(struct device *dev, const char *name,
- 					struct knav_dma_cfg *config)
-@@ -414,13 +414,13 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 
- 	if (!kdev) {
- 		pr_err("keystone-navigator-dma driver not registered\n");
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	chan_num = of_channel_match_helper(dev->of_node, name, &instance);
- 	if (chan_num < 0) {
- 		dev_err(kdev->dev, "No DMA instance with name %s\n", name);
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	dev_dbg(kdev->dev, "initializing %s channel %d from DMA %s\n",
-@@ -431,7 +431,7 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 	if (config->direction != DMA_MEM_TO_DEV &&
- 	    config->direction != DMA_DEV_TO_MEM) {
- 		dev_err(kdev->dev, "bad direction\n");
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	/* Look for correct dma instance */
-@@ -443,7 +443,7 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 	}
- 	if (!dma) {
- 		dev_err(kdev->dev, "No DMA instance with name %s\n", instance);
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	/* Look for correct dma channel from dma instance */
-@@ -463,14 +463,14 @@ void *knav_dma_open_channel(struct device *dev, const char *name,
- 	if (!chan) {
- 		dev_err(kdev->dev, "channel %d is not in DMA %s\n",
- 				chan_num, instance);
--		return (void *)-EINVAL;
-+		return NULL;
- 	}
- 
- 	if (atomic_read(&chan->ref_count) >= 1) {
- 		if (!check_config(chan, config)) {
- 			dev_err(kdev->dev, "channel %d config miss-match\n",
- 				chan_num);
--			return (void *)-EINVAL;
-+			return NULL;
- 		}
- 	}
- 
+ "-r, --random\t\tArbitrarily sleep a certain amount of time, default\n"
+ "\t\t\t%ld ms, before reading the trace file. The\n"
 -- 
 2.51.0
 
