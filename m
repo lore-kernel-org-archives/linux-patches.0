@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C703126C0;
-	Thu, 27 Nov 2025 14:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9904F28D8E8;
+	Thu, 27 Nov 2025 15:00:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255598; cv=none; b=ZrNm4K0M4xZ6+gUqRCGqgPzpM1o0/exuUwuh5HMtU1UxUovVGV4mfRBahflyITodHoLvIhAnslrZZGA8hRFJ7aYN/63jqY7t0lfxYxpBGp4n8Z5MxNTKxwfXuIeSHgr6boD1l39Aavaf2qImSPM016zljqC+sbBi/k8HYTP8RZQ=
+	t=1764255601; cv=none; b=Pzkz3YaoZjVX5QVZQV8Nhxb5jIPfFkJFTlRCjU3b9REhzqD/xpMHs00G1YLD4cGQkj1v+kHL/bQjDE7DyBKmEqz3EAxL9vzYMuuaGz3c3P2s9DYm/vJZfA6R6yy0VmfuQIkNDc/gc/LX+TU25INBKpwLw34T+nNPMDPQEU7yYyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255598; c=relaxed/simple;
-	bh=Lr+92PBsdECmvztQYEKHo9iEPwqRcGGnXhZ9/OC82AA=;
+	s=arc-20240116; t=1764255601; c=relaxed/simple;
+	bh=nhNtqsMPwwJt1J1PvAzhjtc0dLfS/SyDvQYDXrECWMY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dk1RqdR6T3B7/2NooHgBbywhJCLpq5+G4VV8130HKR/FsRCyL9rsy8ck1QrbG0IcCE0y1xF9eNX9BVq56mPHBVJu+MQHCmkYrqfOxTPilxkCyOcS/NNVy8GX/CbNGiSdmkIOmCoSY2ZRUz8atG37FzScF77u1Zys/kRQMPASfxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHc7p9TW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZB3m0/sZAEutlgfbEzwHlJFghv77FYhC+0LZjjzYEApfEltgAD5whBSMdomZI/ZN9m/ud+b2WRgZwOrHimzDrgSXORNjxlLx0eGs4jeT3sgTMnt6R8qsxv7/QXZ2ugGB8TsfMv8Dr1fikb+b+4SlqiH4S5OU68nskCd9u3gVzj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrmJhCw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHc7p9TW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C063C4CEF8;
-	Thu, 27 Nov 2025 14:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrmJhCw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25762C4CEF8;
+	Thu, 27 Nov 2025 15:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255598;
-	bh=Lr+92PBsdECmvztQYEKHo9iEPwqRcGGnXhZ9/OC82AA=;
+	s=korg; t=1764255601;
+	bh=nhNtqsMPwwJt1J1PvAzhjtc0dLfS/SyDvQYDXrECWMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHc7p9TWVv8jy/aV2NAeZvQSgTD3qdpk61CcU0xLcgdI5hyZVxJDJy/5QB73TUYZ9
-	 Z3bEFkTNwW5hs4q2RehQdMavhxDKq5H/inc7CxpwAXgN7+uqcvz5Inv4rZvrFWtVWG
-	 Xe8zuQGaVorKxVBtnEXLp/J8viJPMF/lOxVxoF2w=
+	b=DrmJhCw2710uOZbBfitLOe+e+HjI4XLJaiuejj68MNtjf8G4JRfWPoAtKpkKURNse
+	 iOlNlIpdggbLg0gBA5kQVymKE5ttTWkkeFAvMcDbsnhqBmgeZ5tH1V2fw4Djk09Pcq
+	 sFNmL41sZhZMh+5xzb7iWeD9iNAFN0XTRrhKNyKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.17 048/175] MIPS: Malta: Fix !EVA SOC-it PCI MMIO
-Date: Thu, 27 Nov 2025 15:45:01 +0100
-Message-ID: <20251127144044.720241261@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 6.17 049/175] dt-bindings: pinctrl: toshiba,visconti: Fix number of items in groups
+Date: Thu, 27 Nov 2025 15:45:02 +0100
+Message-ID: <20251127144044.758230653@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -50,100 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit ebd729fef31620e0bf74cbf8a4c7fda73a2a4e7e upstream.
+commit 316e361b5d2cdeb8d778983794a1c6eadcb26814 upstream.
 
-Fix a regression that has caused accesses to the PCI MMIO window to
-complete unclaimed in non-EVA configurations with the SOC-it family of
-system controllers, preventing PCI devices from working that use MMIO.
+The "groups" property can hold multiple entries (e.g.
+toshiba/tmpv7708-rm-mbrc.dts file), so allow that by dropping incorrect
+type (pinmux-node.yaml schema already defines that as string-array) and
+adding constraints for items.  This fixes dtbs_check warnings like:
 
-In the non-EVA case PHYS_OFFSET is set to 0, meaning that PCI_BAR0 is
-set with an empty mask (and PCI_HEAD4 matches addresses starting from 0
-accordingly).  Consequently all addresses are matched for incoming DMA
-accesses from PCI.  This seems to confuse the system controller's logic
-and outgoing bus cycles targeting the PCI MMIO window seem not to make
-it to the intended devices.
+  toshiba/tmpv7708-rm-mbrc.dtb: pinctrl@24190000 (toshiba,tmpv7708-pinctrl):
+    pwm-pins:groups: ['pwm0_gpio16_grp', 'pwm1_gpio17_grp', 'pwm2_gpio18_grp', 'pwm3_gpio19_grp'] is too long
 
-This happens as well when a wider mask is used with PCI_BAR0, such as
-0x80000000 or 0xe0000000, that makes addresses match that overlap with
-the PCI MMIO window, which starts at 0x10000000 in our configuration.
-
-Set the mask in PCI_BAR0 to 0xf0000000 for non-EVA then, covering the
-non-EVA maximum 256 MiB of RAM, which is what YAMON does and which used
-to work correctly up to the offending commit.  Set PCI_P2SCMSKL to match
-PCI_BAR0 as required by the system controller's specification, and match
-PCI_P2SCMAPL to PCI_HEAD4 for identity mapping.
-
-Verified with:
-
-Core board type/revision =      0x0d (Core74K) / 0x01
-System controller/revision =    MIPS SOC-it 101 OCP / 1.3   SDR-FW-4:1
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x1c
-Processor ID/revision =         0x97 (MIPS 74Kf) / 0x4c
-
-for non-EVA and with:
-
-Core board type/revision =      0x0c (CoreFPGA-5) / 0x00
-System controller/revision =    MIPS ROC-it2 / 0.0   FW-1:1 (CLK_unknown) GIC
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x00
-Processor ID/revision =         0xa0 (MIPS interAptiv UP) / 0x20
-
-for EVA/non-EVA, fixing:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: Could not read adapter factory MAC address!
-
-vs:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: DEFPA at MMIO addr = 0x10142000, IRQ = 10, Hardware addr = 00-00-f8-xx-xx-xx
-0000:00:12.0: registered as fddi0
-
-for non-EVA and causing no change for EVA.
-
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 422dd256642b ("MIPS: Malta: Allow PCI devices DMA to lower 2GB physical")
-Cc: stable@vger.kernel.org # v4.9+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 1825c1fe0057 ("pinctrl: Add DT bindings for Toshiba Visconti TMPV7700 SoC")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mti-malta/malta-init.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml |   26 +++++-----
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
---- a/arch/mips/mti-malta/malta-init.c
-+++ b/arch/mips/mti-malta/malta-init.c
-@@ -241,16 +241,22 @@ mips_pci_controller:
- #endif
+--- a/Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml
+@@ -50,18 +50,20 @@ patternProperties:
+       groups:
+         description:
+           Name of the pin group to use for the functions.
+-        $ref: /schemas/types.yaml#/definitions/string
+-        enum: [i2c0_grp, i2c1_grp, i2c2_grp, i2c3_grp, i2c4_grp,
+-               i2c5_grp, i2c6_grp, i2c7_grp, i2c8_grp,
+-               spi0_grp, spi0_cs0_grp, spi0_cs1_grp, spi0_cs2_grp,
+-               spi1_grp, spi2_grp, spi3_grp, spi4_grp, spi5_grp, spi6_grp,
+-               uart0_grp, uart1_grp, uart2_grp, uart3_grp,
+-               pwm0_gpio4_grp, pwm0_gpio8_grp, pwm0_gpio12_grp,
+-               pwm0_gpio16_grp, pwm1_gpio5_grp, pwm1_gpio9_grp,
+-               pwm1_gpio13_grp, pwm1_gpio17_grp, pwm2_gpio6_grp,
+-               pwm2_gpio10_grp, pwm2_gpio14_grp, pwm2_gpio18_grp,
+-               pwm3_gpio7_grp, pwm3_gpio11_grp, pwm3_gpio15_grp,
+-               pwm3_gpio19_grp, pcmif_out_grp, pcmif_in_grp]
++        items:
++          enum: [i2c0_grp, i2c1_grp, i2c2_grp, i2c3_grp, i2c4_grp,
++                 i2c5_grp, i2c6_grp, i2c7_grp, i2c8_grp,
++                 spi0_grp, spi0_cs0_grp, spi0_cs1_grp, spi0_cs2_grp,
++                 spi1_grp, spi2_grp, spi3_grp, spi4_grp, spi5_grp, spi6_grp,
++                 uart0_grp, uart1_grp, uart2_grp, uart3_grp,
++                 pwm0_gpio4_grp, pwm0_gpio8_grp, pwm0_gpio12_grp,
++                 pwm0_gpio16_grp, pwm1_gpio5_grp, pwm1_gpio9_grp,
++                 pwm1_gpio13_grp, pwm1_gpio17_grp, pwm2_gpio6_grp,
++                 pwm2_gpio10_grp, pwm2_gpio14_grp, pwm2_gpio18_grp,
++                 pwm3_gpio7_grp, pwm3_gpio11_grp, pwm3_gpio15_grp,
++                 pwm3_gpio19_grp, pcmif_out_grp, pcmif_in_grp]
++        minItems: 1
++        maxItems: 8
  
- 		/*
--		 * Setup the Malta max (2GB) memory for PCI DMA in host bridge
--		 * in transparent addressing mode.
-+		 * Set up memory mapping in host bridge for PCI DMA masters,
-+		 * in transparent addressing mode.  For EVA use the Malta
-+		 * maximum of 2 GiB memory in the alias space at 0x80000000
-+		 * as per PHYS_OFFSET.  Otherwise use 256 MiB of memory in
-+		 * the regular space, avoiding mapping the PCI MMIO window
-+		 * for DMA as it seems to confuse the system controller's
-+		 * logic, causing PCI MMIO to stop working.
- 		 */
--		mask = PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH;
--		MSC_WRITE(MSC01_PCI_BAR0, mask);
--		MSC_WRITE(MSC01_PCI_HEAD4, mask);
-+		mask = PHYS_OFFSET ? PHYS_OFFSET : 0xf0000000;
-+		MSC_WRITE(MSC01_PCI_BAR0,
-+			  mask | PCI_BASE_ADDRESS_MEM_PREFETCH);
-+		MSC_WRITE(MSC01_PCI_HEAD4,
-+			  PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH);
- 
--		mask &= MSC01_PCI_BAR0_SIZE_MSK;
- 		MSC_WRITE(MSC01_PCI_P2SCMSKL, mask);
--		MSC_WRITE(MSC01_PCI_P2SCMAPL, mask);
-+		MSC_WRITE(MSC01_PCI_P2SCMAPL, PHYS_OFFSET);
- 
- 		/* Don't handle target retries indefinitely.  */
- 		if ((data & MSC01_PCI_CFG_MAXRTRY_MSK) ==
+       drive-strength:
+         enum: [2, 4, 6, 8, 16, 24, 32]
 
 
