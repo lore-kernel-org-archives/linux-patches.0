@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B61D32AAC4;
-	Thu, 27 Nov 2025 15:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA00624E4A8;
+	Thu, 27 Nov 2025 15:05:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255955; cv=none; b=bGf5WvY3nLiwLj1AQfyzIOn62uJqjaslB7A+Ht2Wqp8+aJSTTLnZDpVgqTqE8V98SQBiFXKXwa1cxQUQ/tX9Q25CaBLqbjZQ2VIc94INQCidN+qiASEO25epnGnSFPPChjiN3WAf/sbEClXx1TM/Mi/xRMsP1fmhZjWKA1l2zNQ=
+	t=1764255957; cv=none; b=A0PRaYh5/j4CuyxCI/db1EMs+Dk0VvVr6I5MpcmicJJYu6OObM5ex2VzNpg6SMuUd3I+7NFRq+QUgcvJ4JtWYndD1atIX5OuZ8Y1tA1FKY0aQp6dqng7SCsfK9gMptCdIcn4krD/GeXf70gMbRLhEgcna2/KhaEzwLnhA8Iw8gI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255955; c=relaxed/simple;
-	bh=SG2gcscdZlMa7K4swXKzSqKnCuZOckmnLmf+j71fdmg=;
+	s=arc-20240116; t=1764255957; c=relaxed/simple;
+	bh=48sIomVFUQPPuXBQuXp6DAtX2H3jyqpqJR6USRouRoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jcr9GjKGWo6rV38ccOlupn27KVk9EUymmvonVdlAb9Vux0ol7FScE/GfhyUabWFYjxnh30J1arJvqkpbTOTMJFzGWD/9hIOPTW6AQXf5/uu4q1IQRm3sUob02ldfrdFqbBZH0A+Upse62vddDmjOv+pDX4AYsXVz5W/qaI/jx7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxQRvvJ0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ai9/a9UNvvdhMLSSeuuoje8Oy9JLpkyO1ma/2FxMb307crtJKRx3/eWxE8JPLyWti1Mk/IvecCpAD+39ucFV1DvthioMbLfgCLb+wkBgf586IdwcToHI6pd49TJRRVRH+u263OmOUcGFk4LzViSd9ELBacSfL1mje/qRXEJCLz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QXcrtgOE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxQRvvJ0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF17C4CEF8;
-	Thu, 27 Nov 2025 15:05:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QXcrtgOE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32236C4CEF8;
+	Thu, 27 Nov 2025 15:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255954;
-	bh=SG2gcscdZlMa7K4swXKzSqKnCuZOckmnLmf+j71fdmg=;
+	s=korg; t=1764255957;
+	bh=48sIomVFUQPPuXBQuXp6DAtX2H3jyqpqJR6USRouRoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxQRvvJ0gCSXH51hOB6Y2h+h1LaepqWpCSJ/x6paV6uJlS35YzrKusiZZ6wL21xtj
-	 mcx8zjJgz89FUcd71fVK7U+CPQ5kYZKSrT+8NaDjiwjFjePyeZbGKKSP2ePJ9ibHrr
-	 nqCRDDaXZbCQr2g7VXkM0gNO5cKlVKQO2VuxJfcM=
+	b=QXcrtgOEpwSSnNyE2JTfI5u6/ziN3gfs21fpn/0lLjNr/Gl9+R5R4xKXzf96lxTqp
+	 LDPfYo0XZp+d3m5w+53+q0f8aNZxpIYPlaY5E4Jwsg7pNgUtPd4e0SnSERgE018BzH
+	 Ti+6iaBV+yXaByYx7kzBFSgdDqw3RDP/4qk/fGwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	Thomas Spear <speeddymon@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 139/175] ASoC: rt721: fix prepare clock stop failed
-Date: Thu, 27 Nov 2025 15:46:32 +0100
-Message-ID: <20251127144048.035034751@linuxfoundation.org>
+Subject: [PATCH 6.17 140/175] cifs: fix typo in enable_gcm_256 module parameter
+Date: Thu, 27 Nov 2025 15:46:33 +0100
+Message-ID: <20251127144048.071359400@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,48 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit d914ec6f07548f7c13a231a4f526e043e736e82e ]
+[ Upstream commit f765fdfcd8b5bce92c6aa1a517ff549529ddf590 ]
 
-This patch adds settings to prevent the 'prepare clock stop failed' error.
+Fix typo in description of enable_gcm_256 module parameter
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20251027103333.38353-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Thomas Spear <speeddymon@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt721-sdca.c | 4 ++++
- sound/soc/codecs/rt721-sdca.h | 1 +
- 2 files changed, 5 insertions(+)
+ fs/smb/client/cifsfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt721-sdca.c b/sound/soc/codecs/rt721-sdca.c
-index a4bd29d7220b8..5f7b505d54147 100644
---- a/sound/soc/codecs/rt721-sdca.c
-+++ b/sound/soc/codecs/rt721-sdca.c
-@@ -281,6 +281,10 @@ static void rt721_sdca_jack_preset(struct rt721_sdca_priv *rt721)
- 	rt_sdca_index_write(rt721->mbq_regmap, RT721_BOOST_CTRL,
- 		RT721_BST_4CH_TOP_GATING_CTRL1, 0x002a);
- 	regmap_write(rt721->regmap, 0x2f58, 0x07);
-+
-+	regmap_write(rt721->regmap, 0x2f51, 0x00);
-+	rt_sdca_index_write(rt721->mbq_regmap, RT721_HDA_SDCA_FLOAT,
-+		RT721_MISC_CTL, 0x0004);
- }
+diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
+index e1848276bab41..984545cfe30b7 100644
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -133,7 +133,7 @@ module_param(enable_oplocks, bool, 0644);
+ MODULE_PARM_DESC(enable_oplocks, "Enable or disable oplocks. Default: y/Y/1");
  
- static void rt721_sdca_jack_init(struct rt721_sdca_priv *rt721)
-diff --git a/sound/soc/codecs/rt721-sdca.h b/sound/soc/codecs/rt721-sdca.h
-index 71fac9cd87394..24ce188562baf 100644
---- a/sound/soc/codecs/rt721-sdca.h
-+++ b/sound/soc/codecs/rt721-sdca.h
-@@ -137,6 +137,7 @@ struct rt721_sdca_dmic_kctrl_priv {
- #define RT721_HDA_LEGACY_UAJ_CTL		0x02
- #define RT721_HDA_LEGACY_CTL1			0x05
- #define RT721_HDA_LEGACY_RESET_CTL		0x06
-+#define RT721_MISC_CTL				0x07
- #define RT721_XU_REL_CTRL			0x0c
- #define RT721_GE_REL_CTRL1			0x0d
- #define RT721_HDA_LEGACY_GPIO_WAKE_EN_CTL	0x0e
+ module_param(enable_gcm_256, bool, 0644);
+-MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/0");
++MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/1");
+ 
+ module_param(require_gcm_256, bool, 0644);
+ MODULE_PARM_DESC(require_gcm_256, "Require strongest (256 bit) GCM encryption. Default: n/N/0");
 -- 
 2.51.0
 
