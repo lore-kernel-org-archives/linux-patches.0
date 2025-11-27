@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128C528D850;
-	Thu, 27 Nov 2025 14:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34ED2882BB;
+	Thu, 27 Nov 2025 14:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255021; cv=none; b=VisbxeTH8Z6dVCh4JTlopWZovgHYelEnkrqi4z9JXK5SjttvjTDDWM77oy5/VYy5QWDw1bQMqJe+UQ2sJEHP4Iza/6BzoVqIdgn9H3VtWDiFfP5Hy7t//OZVyrT2xFb4iEAU5hWDWGEw1pRJ2XpjB4OZ/2fMnfUqS7ETwkjfP4Q=
+	t=1764255023; cv=none; b=Zwu3/d2P9N3jVIVKuhrvEcAszRTnsonblYyyxv/uW/CCDrSCByiP700P6OtRFmOzS7vhGb3Fxck6s9t6pHxu+Zo61GEutyFb9h5E6H8Qsb7sM9osE4zKD8ARwEQFMUaJMLiAV9MKzkToQUV+yjmW8gRGYtZe0woGsYo1Hqaoh2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255021; c=relaxed/simple;
-	bh=NL083HLjM+AlG332QKV3nPyfOFS7AqID58IHVgHBEek=;
+	s=arc-20240116; t=1764255023; c=relaxed/simple;
+	bh=hK/qYLmUTPVWgbNdvegebY9Ezrq+KHz4QrUDjSxpKYk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElvZywBRPzyp+w/JSgwpFexEryFfNl01SD8SuXZN7lBeyrIwZw7WboPHuvhtCTbQknJ6vxNRIaA1abON3r8ZObQBdd1NPZOCjYEEPLntgThFcpGqG695yKRUa/kcTMxP4rNwf03SAKl3PJ+7/GV2/CGqJD2rhgruGBweCZmGqTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBdFFhYu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZYTTskxddCGOAmKYgf5c3XvnuFROFZV7U/LvzqpQ9VmVbnyanvxFhZIDzBWsyzYCaBnz8chD/hxCvDO1DUsACUjP7LpxySAkO85ydQGAeZkQksluhkFCoTC+LJEIP4EI1YDhHqKbzIQ6CE4LshCglf7DOeHtXMfe7J2gCRWstpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3BYQgRa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBdFFhYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 633ACC4CEF8;
-	Thu, 27 Nov 2025 14:50:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3BYQgRa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4BBC4CEF8;
+	Thu, 27 Nov 2025 14:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255020;
-	bh=NL083HLjM+AlG332QKV3nPyfOFS7AqID58IHVgHBEek=;
+	s=korg; t=1764255023;
+	bh=hK/qYLmUTPVWgbNdvegebY9Ezrq+KHz4QrUDjSxpKYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBdFFhYuICFV8XD27rC8SyLzZ/vZbvvCH0clj+Aq25Dsfncp0FAgUq3LT6y7vZFgz
-	 WgF3Q1+nTFSOHzn2ASa0MClPG4bOB7C3rfuNRButadxNJZi3ozxOb3DjHWQmKh2ivA
-	 iPXcdTZw7Tf2zqEWKmfd9OEFRKUtSXm9mOYCTMyc=
+	b=Z3BYQgRadt1eUaOTbUs0egGgQG92b86/UBmWP8NAeW2fc+DZeEF2OgRIoMU0EI2Gm
+	 jSsxLQna6YM+B/G45IQz/BFISnP49b215P/et0K+xNHuqTrivA42WqfavZiEnPgpYO
+	 uQ/R2QCwb0ltQviPqi84C4oVvOnpBcuX4uLH9Pco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Baocong Liu <baocong.liu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bin Lan <lanbincn@139.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 67/86] s390/mm: Fix __ptep_rdp() inline assembly
-Date: Thu, 27 Nov 2025 15:46:23 +0100
-Message-ID: <20251127144030.281178622@linuxfoundation.org>
+Subject: [PATCH 6.6 68/86] f2fs: compress: fix UAF of f2fs_inode_info in f2fs_free_dic
+Date: Thu, 27 Nov 2025 15:46:24 +0100
+Message-ID: <20251127144030.317555881@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -51,85 +55,220 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 31475b88110c4725b4f9a79c3a0d9bbf97e69e1c ]
+[ Upstream commit 39868685c2a94a70762bc6d77dc81d781d05bff5 ]
 
-When a zero ASCE is passed to the __ptep_rdp() inline assembly, the
-generated instruction should have the R3 field of the instruction set to
-zero. However the inline assembly is written incorrectly: for such cases a
-zero is loaded into a register allocated by the compiler and this register
-is then used by the instruction.
+The decompress_io_ctx may be released asynchronously after
+I/O completion. If this file is deleted immediately after read,
+and the kworker of processing post_read_wq has not been executed yet
+due to high workloads, It is possible that the inode(f2fs_inode_info)
+is evicted and freed before it is used f2fs_free_dic.
 
-This means that selected TLB entries may not be flushed since the specified
-ASCE does not match the one which was used when the selected TLB entries
-were created.
+    The UAF case as below:
+    Thread A                                      Thread B
+    - f2fs_decompress_end_io
+     - f2fs_put_dic
+      - queue_work
+        add free_dic work to post_read_wq
+                                                   - do_unlink
+                                                    - iput
+                                                     - evict
+                                                      - call_rcu
+    This file is deleted after read.
 
-Fix this by removing the asce and opt parameters of __ptep_rdp(), since
-all callers always pass zero, and use a hard-coded register zero for
-the R3 field.
+    Thread C                                 kworker to process post_read_wq
+    - rcu_do_batch
+     - f2fs_free_inode
+      - kmem_cache_free
+     inode is freed by rcu
+                                             - process_scheduled_works
+                                              - f2fs_late_free_dic
+                                               - f2fs_free_dic
+                                                - f2fs_release_decomp_mem
+                                      read (dic->inode)->i_compress_algorithm
 
-Fixes: 0807b856521f ("s390/mm: add support for RDP (Reset DAT-Protection)")
-Cc: stable@vger.kernel.org
-Reviewed-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+This patch store compress_algorithm and sbi in dic to avoid inode UAF.
+
+In addition, the previous solution is deprecated in [1] may cause system hang.
+[1] https://lore.kernel.org/all/c36ab955-c8db-4a8b-a9d0-f07b5f426c3f@kernel.org
+
+Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Baocong Liu <baocong.liu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ In Linux 6.6.y, the f2fs_vmalloc() function parameters are not
+  related to the f2fs_sb_info structure, the code changes for
+  f2fs_vmalloc() have not been backported. ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/pgtable.h | 12 +++++-------
- arch/s390/mm/pgtable.c          |  4 ++--
- 2 files changed, 7 insertions(+), 9 deletions(-)
+ fs/f2fs/compress.c | 38 +++++++++++++++++++-------------------
+ fs/f2fs/f2fs.h     |  2 ++
+ 2 files changed, 21 insertions(+), 19 deletions(-)
 
-diff --git a/arch/s390/include/asm/pgtable.h b/arch/s390/include/asm/pgtable.h
-index da2e91b5b1925..2cc9d7bb1b2ac 100644
---- a/arch/s390/include/asm/pgtable.h
-+++ b/arch/s390/include/asm/pgtable.h
-@@ -1065,17 +1065,15 @@ static inline pte_t pte_mkhuge(pte_t pte)
- #define IPTE_NODAT	0x400
- #define IPTE_GUEST_ASCE	0x800
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 3bf7a6b40cbed..df7404214f34e 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -209,13 +209,13 @@ static int lzo_decompress_pages(struct decompress_io_ctx *dic)
+ 	ret = lzo1x_decompress_safe(dic->cbuf->cdata, dic->clen,
+ 						dic->rbuf, &dic->rlen);
+ 	if (ret != LZO_E_OK) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lzo decompress failed, ret:%d", ret);
+ 		return -EIO;
+ 	}
  
--static __always_inline void __ptep_rdp(unsigned long addr, pte_t *ptep,
--				       unsigned long opt, unsigned long asce,
--				       int local)
-+static __always_inline void __ptep_rdp(unsigned long addr, pte_t *ptep, int local)
+ 	if (dic->rlen != PAGE_SIZE << dic->log_cluster_size) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lzo invalid rlen:%zu, expected:%lu",
+ 				dic->rlen, PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+@@ -289,13 +289,13 @@ static int lz4_decompress_pages(struct decompress_io_ctx *dic)
+ 	ret = LZ4_decompress_safe(dic->cbuf->cdata, dic->rbuf,
+ 						dic->clen, dic->rlen);
+ 	if (ret < 0) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lz4 decompress failed, ret:%d", ret);
+ 		return -EIO;
+ 	}
+ 
+ 	if (ret != PAGE_SIZE << dic->log_cluster_size) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lz4 invalid ret:%d, expected:%lu",
+ 				ret, PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+@@ -423,7 +423,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
+ 
+ 	stream = zstd_init_dstream(max_window_size, workspace, workspace_size);
+ 	if (!stream) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"%s zstd_init_dstream failed", __func__);
+ 		vfree(workspace);
+ 		return -EIO;
+@@ -459,14 +459,14 @@ static int zstd_decompress_pages(struct decompress_io_ctx *dic)
+ 
+ 	ret = zstd_decompress_stream(stream, &outbuf, &inbuf);
+ 	if (zstd_is_error(ret)) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"%s zstd_decompress_stream failed, ret: %d",
+ 				__func__, zstd_get_error_code(ret));
+ 		return -EIO;
+ 	}
+ 
+ 	if (dic->rlen != outbuf.pos) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"%s ZSTD invalid rlen:%zu, expected:%lu",
+ 				__func__, dic->rlen,
+ 				PAGE_SIZE << dic->log_cluster_size);
+@@ -726,7 +726,7 @@ static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
+ 
+ void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
  {
- 	unsigned long pto;
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	struct f2fs_sb_info *sbi = dic->sbi;
+ 	struct f2fs_inode_info *fi = F2FS_I(dic->inode);
+ 	const struct f2fs_compress_ops *cops =
+ 			f2fs_cops[fi->i_compress_algorithm];
+@@ -799,7 +799,7 @@ void f2fs_end_read_compressed_page(struct page *page, bool failed,
+ {
+ 	struct decompress_io_ctx *dic =
+ 			(struct decompress_io_ctx *)page_private(page);
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	struct f2fs_sb_info *sbi = dic->sbi;
  
- 	pto = __pa(ptep) & ~(PTRS_PER_PTE * sizeof(pte_t) - 1);
--	asm volatile(".insn rrf,0xb98b0000,%[r1],%[r2],%[asce],%[m4]"
-+	asm volatile(".insn	rrf,0xb98b0000,%[r1],%[r2],%%r0,%[m4]"
- 		     : "+m" (*ptep)
--		     : [r1] "a" (pto), [r2] "a" ((addr & PAGE_MASK) | opt),
--		       [asce] "a" (asce), [m4] "i" (local));
-+		     : [r1] "a" (pto), [r2] "a" (addr & PAGE_MASK),
-+		       [m4] "i" (local));
+ 	dec_page_count(sbi, F2FS_RD_DATA);
+ 
+@@ -1579,14 +1579,13 @@ static inline bool allow_memalloc_for_decomp(struct f2fs_sb_info *sbi,
+ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
+ 		bool pre_alloc)
+ {
+-	const struct f2fs_compress_ops *cops =
+-		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
++	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
+ 	int i;
+ 
+-	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
++	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
+ 		return 0;
+ 
+-	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
++	dic->tpages = page_array_alloc(dic->sbi, dic->cluster_size);
+ 	if (!dic->tpages)
+ 		return -ENOMEM;
+ 
+@@ -1616,10 +1615,9 @@ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
+ static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
+ 		bool bypass_destroy_callback, bool pre_alloc)
+ {
+-	const struct f2fs_compress_ops *cops =
+-		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
++	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
+ 
+-	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
++	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
+ 		return;
+ 
+ 	if (!bypass_destroy_callback && cops->destroy_decompress_ctx)
+@@ -1654,6 +1652,8 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
+ 
+ 	dic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
+ 	dic->inode = cc->inode;
++	dic->sbi = sbi;
++	dic->compress_algorithm = F2FS_I(cc->inode)->i_compress_algorithm;
+ 	atomic_set(&dic->remaining_pages, cc->nr_cpages);
+ 	dic->cluster_idx = cc->cluster_idx;
+ 	dic->cluster_size = cc->cluster_size;
+@@ -1697,7 +1697,8 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
+ 		bool bypass_destroy_callback)
+ {
+ 	int i;
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	/* use sbi in dic to avoid UFA of dic->inode*/
++	struct f2fs_sb_info *sbi = dic->sbi;
+ 
+ 	f2fs_release_decomp_mem(dic, bypass_destroy_callback, true);
+ 
+@@ -1740,8 +1741,7 @@ static void f2fs_put_dic(struct decompress_io_ctx *dic, bool in_task)
+ 			f2fs_free_dic(dic, false);
+ 		} else {
+ 			INIT_WORK(&dic->free_work, f2fs_late_free_dic);
+-			queue_work(F2FS_I_SB(dic->inode)->post_read_wq,
+-					&dic->free_work);
++			queue_work(dic->sbi->post_read_wq, &dic->free_work);
+ 		}
+ 	}
  }
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index ab2ddd09d8131..406243395b943 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1493,6 +1493,7 @@ struct compress_io_ctx {
+ struct decompress_io_ctx {
+ 	u32 magic;			/* magic number to indicate page is compressed */
+ 	struct inode *inode;		/* inode the context belong to */
++	struct f2fs_sb_info *sbi;	/* f2fs_sb_info pointer */
+ 	pgoff_t cluster_idx;		/* cluster index number */
+ 	unsigned int cluster_size;	/* page count in cluster */
+ 	unsigned int log_cluster_size;	/* log of cluster size */
+@@ -1533,6 +1534,7 @@ struct decompress_io_ctx {
  
- static __always_inline void __ptep_ipte(unsigned long address, pte_t *ptep,
-@@ -1259,7 +1257,7 @@ static inline void flush_tlb_fix_spurious_fault(struct vm_area_struct *vma,
- 	 * A local RDP can be used to do the flush.
- 	 */
- 	if (MACHINE_HAS_RDP && !(pte_val(*ptep) & _PAGE_PROTECT))
--		__ptep_rdp(address, ptep, 0, 0, 1);
-+		__ptep_rdp(address, ptep, 1);
- }
- #define flush_tlb_fix_spurious_fault flush_tlb_fix_spurious_fault
- 
-diff --git a/arch/s390/mm/pgtable.c b/arch/s390/mm/pgtable.c
-index 5e349869590a8..1fb435b3913cd 100644
---- a/arch/s390/mm/pgtable.c
-+++ b/arch/s390/mm/pgtable.c
-@@ -312,9 +312,9 @@ void ptep_reset_dat_prot(struct mm_struct *mm, unsigned long addr, pte_t *ptep,
- 	preempt_disable();
- 	atomic_inc(&mm->context.flush_count);
- 	if (cpumask_equal(mm_cpumask(mm), cpumask_of(smp_processor_id())))
--		__ptep_rdp(addr, ptep, 0, 0, 1);
-+		__ptep_rdp(addr, ptep, 1);
- 	else
--		__ptep_rdp(addr, ptep, 0, 0, 0);
-+		__ptep_rdp(addr, ptep, 0);
- 	/*
- 	 * PTE is not invalidated by RDP, only _PAGE_PROTECT is cleared. That
- 	 * means it is still valid and active, and must not be changed according
+ 	bool failed;			/* IO error occurred before decompression? */
+ 	bool need_verity;		/* need fs-verity verification after decompression? */
++	unsigned char compress_algorithm;	/* backup algorithm type */
+ 	void *private;			/* payload buffer for specified decompression algorithm */
+ 	void *private2;			/* extra payload buffer */
+ 	struct work_struct verity_work;	/* work to verify the decompressed pages */
 -- 
 2.51.0
 
