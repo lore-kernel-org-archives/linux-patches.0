@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63430334C19;
-	Thu, 27 Nov 2025 15:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0F032AAC4;
+	Thu, 27 Nov 2025 15:05:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255923; cv=none; b=ggxkkpExkx9qgZG/hMup/YtgUebMJo+WVoAmK0R94rHbx/a3lRv4QutMIqcRpedYceGHF89GJ/AWOCuTZR8eo+dm3rgacJ5hqu2XbEDQa3XyQJ9+K6HLMGVFMBbcsmHs2U8ttTQT4jLeIYrtxtrDvCX6LpB6og3qlROKUP2W9/E=
+	t=1764255926; cv=none; b=j4wYm9GjoXxuK5BZqqtgUabU3rhtK/JRDVuSVqBhaLB+Ln5x44jaxq3pRhvjh+oGzL2UAwW+ns7dXnerl8Ku7DmPL59R8lWm/BGF0Fj8agzPVsyIJIjzyeR6bLFEb1Y0fsrdzuua1MGC0c70Kr4P89WXxx+iQqfqLYjemicW+QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255923; c=relaxed/simple;
-	bh=cWlDp1xmTl7bvskxalOM+wS75AzpskVGeiqU03/MQiU=;
+	s=arc-20240116; t=1764255926; c=relaxed/simple;
+	bh=ajL2En2mdEXVC0wkRMy36ocF/RTI9ay0rrTROMvQrwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cuBP+Q4iW4RQrKg7syNdJEsIhLK+jJGXDhEXLkOuDGCwQj4XcwLbQT4tzJLw+4YlEy9+zHHmGhXEIGprfAqnxC4B5qx0EPWvnHVxuDxNvp/h5NxAEeBYvBDZ7v+aWa0UMNn/eWWSoqcR2L/H+8ktMrFyFoFtB+Ed4/2YTNrkGac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVVMyxG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FK+6k6V5IfDjeNyRCP12Z/vrv4ux8+EF+snbT0A8FDTs3YEEk2+SsIQaoVQkDIrZ88tFvnPvSgoBJI41nyTIvxKJXQqZTy1cDyq0dg+lAySfnhRhmpIrpUu3E5lmqPsDGU/1Zk/sFqGxjT8A04oBvsmBAwzL8knSwTdXlXXFkWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHtt7ndx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVVMyxG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46BFC116D0;
-	Thu, 27 Nov 2025 15:05:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHtt7ndx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E04C4CEF8;
+	Thu, 27 Nov 2025 15:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255923;
-	bh=cWlDp1xmTl7bvskxalOM+wS75AzpskVGeiqU03/MQiU=;
+	s=korg; t=1764255926;
+	bh=ajL2En2mdEXVC0wkRMy36ocF/RTI9ay0rrTROMvQrwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HVVMyxG8HxjVSa7Zkmt8NFjre7GQDq2oF/+okSjpD9ODROatOkoRLY5AAvzA745Hf
-	 agXbWmI0K4E02v1yUaCqczVnQQZsqYuL9iLAcTD8mCJp20zG7J+FmrYCkI1YdxbaxO
-	 XhH8jmQ3l50ISHtH9afVN2OiGilk4aKTxdb7JYIo=
+	b=BHtt7ndx+/HK79fkc2vXnVc6vIBBbg/g1ABC6KJQzKK1dClz74X5qhkBHzCnl9AcI
+	 qcomv8GATgr4qU9xHdGEIu0h0JPD1g/vSu8A/LzHgx0g/fQpdo11dsRxnMFwnXd55j
+	 8dHc5ZQAHhlUD67Qe+lbHJa4+5kGwygHXMwjIwuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>
-Subject: [PATCH 6.17 161/175] smb: client: fix incomplete backport in cfids_invalidation_worker()
-Date: Thu, 27 Nov 2025 15:46:54 +0100
-Message-ID: <20251127144048.831710601@linuxfoundation.org>
+	Phil Auld <pauld@redhat.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Tejun Heo <tj@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 135/175] sched_ext: Allocate scx_kick_cpus_pnt_seqs lazily using kvzalloc()
+Date: Thu, 27 Nov 2025 15:46:28 +0100
+Message-ID: <20251127144047.889145929@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -49,30 +53,202 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Tejun Heo <tj@kernel.org>
 
-The previous commit bdb596ceb4b7 ("smb: client: fix potential UAF in
-smb2_close_cached_fid()") was an incomplete backport and missed one
-kref_put() call in cfids_invalidation_worker() that should have been
-converted to close_cached_dir().
+[ Upstream commit 14c1da3895a116f4e32c20487046655f26d3999b ]
 
-Fixes: bdb596ceb4b7 ("smb: client: fix potential UAF in smb2_close_cached_fid()")"
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+On systems with >4096 CPUs, scx_kick_cpus_pnt_seqs allocation fails during
+boot because it exceeds the 32,768 byte percpu allocator limit.
+
+Restructure to use DEFINE_PER_CPU() for the per-CPU pointers, with each CPU
+pointing to its own kvzalloc'd array. Move allocation from boot time to
+scx_enable() and free in scx_disable(), so the O(nr_cpu_ids^2) memory is only
+consumed when sched_ext is active.
+
+Use RCU to guard against racing with free. Arrays are freed via call_rcu()
+and kick_cpus_irq_workfn() uses rcu_dereference_bh() with a NULL check.
+
+While at it, rename to scx_kick_pseqs for brevity and update comments to
+clarify these are pick_task sequence numbers.
+
+v2: RCU protect scx_kick_seqs to manage kick_cpus_irq_workfn() racing
+    against disable as per Andrea.
+
+v3: Fix bugs notcied by Andrea.
+
+Reported-by: Phil Auld <pauld@redhat.com>
+Link: http://lkml.kernel.org/r/20251007133523.GA93086@pauld.westford.csb
+Cc: Andrea Righi <arighi@nvidia.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Reviewed-by: Phil Auld <pauld@redhat.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cached_dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/ext.c | 89 ++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 79 insertions(+), 10 deletions(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -755,7 +755,7 @@ static void cfids_invalidation_worker(st
- 	list_for_each_entry_safe(cfid, q, &entry, entry) {
- 		list_del(&cfid->entry);
- 		/* Drop the ref-count acquired in invalidate_all_cached_dirs */
--		kref_put(&cfid->refcount, smb2_close_cached_fid);
-+		close_cached_dir(cfid);
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 77eec6f16a5ed..b454206100ce5 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -67,8 +67,19 @@ static unsigned long scx_watchdog_timestamp = INITIAL_JIFFIES;
+ 
+ static struct delayed_work scx_watchdog_work;
+ 
+-/* for %SCX_KICK_WAIT */
+-static unsigned long __percpu *scx_kick_cpus_pnt_seqs;
++/*
++ * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of pick_task sequence
++ * numbers. The arrays are allocated with kvzalloc() as size can exceed percpu
++ * allocator limits on large machines. O(nr_cpu_ids^2) allocation, allocated
++ * lazily when enabling and freed when disabling to avoid waste when sched_ext
++ * isn't active.
++ */
++struct scx_kick_pseqs {
++	struct rcu_head		rcu;
++	unsigned long		seqs[];
++};
++
++static DEFINE_PER_CPU(struct scx_kick_pseqs __rcu *, scx_kick_pseqs);
+ 
+ /*
+  * Direct dispatch marker.
+@@ -3905,6 +3916,27 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
  	}
  }
  
++static void free_kick_pseqs_rcu(struct rcu_head *rcu)
++{
++	struct scx_kick_pseqs *pseqs = container_of(rcu, struct scx_kick_pseqs, rcu);
++
++	kvfree(pseqs);
++}
++
++static void free_kick_pseqs(void)
++{
++	int cpu;
++
++	for_each_possible_cpu(cpu) {
++		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
++		struct scx_kick_pseqs *to_free;
++
++		to_free = rcu_replace_pointer(*pseqs, NULL, true);
++		if (to_free)
++			call_rcu(&to_free->rcu, free_kick_pseqs_rcu);
++	}
++}
++
+ static void scx_disable_workfn(struct kthread_work *work)
+ {
+ 	struct scx_sched *sch = container_of(work, struct scx_sched, disable_work);
+@@ -4041,6 +4073,7 @@ static void scx_disable_workfn(struct kthread_work *work)
+ 	free_percpu(scx_dsp_ctx);
+ 	scx_dsp_ctx = NULL;
+ 	scx_dsp_max_batch = 0;
++	free_kick_pseqs();
+ 
+ 	mutex_unlock(&scx_enable_mutex);
+ 
+@@ -4402,6 +4435,33 @@ static void scx_vexit(struct scx_sched *sch,
+ 	irq_work_queue(&sch->error_irq_work);
+ }
+ 
++static int alloc_kick_pseqs(void)
++{
++	int cpu;
++
++	/*
++	 * Allocate per-CPU arrays sized by nr_cpu_ids. Use kvzalloc as size
++	 * can exceed percpu allocator limits on large machines.
++	 */
++	for_each_possible_cpu(cpu) {
++		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
++		struct scx_kick_pseqs *new_pseqs;
++
++		WARN_ON_ONCE(rcu_access_pointer(*pseqs));
++
++		new_pseqs = kvzalloc_node(struct_size(new_pseqs, seqs, nr_cpu_ids),
++					  GFP_KERNEL, cpu_to_node(cpu));
++		if (!new_pseqs) {
++			free_kick_pseqs();
++			return -ENOMEM;
++		}
++
++		rcu_assign_pointer(*pseqs, new_pseqs);
++	}
++
++	return 0;
++}
++
+ static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops)
+ {
+ 	struct scx_sched *sch;
+@@ -4547,15 +4607,19 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 
+ 	mutex_lock(&scx_enable_mutex);
+ 
++	ret = alloc_kick_pseqs();
++	if (ret)
++		goto err_unlock;
++
+ 	if (scx_enable_state() != SCX_DISABLED) {
+ 		ret = -EBUSY;
+-		goto err_unlock;
++		goto err_free_pseqs;
+ 	}
+ 
+ 	sch = scx_alloc_and_add_sched(ops);
+ 	if (IS_ERR(sch)) {
+ 		ret = PTR_ERR(sch);
+-		goto err_unlock;
++		goto err_free_pseqs;
+ 	}
+ 
+ 	/*
+@@ -4759,6 +4823,8 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
+ 
+ 	return 0;
+ 
++err_free_pseqs:
++	free_kick_pseqs();
+ err_unlock:
+ 	mutex_unlock(&scx_enable_mutex);
+ 	return ret;
+@@ -5140,10 +5206,18 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
+ {
+ 	struct rq *this_rq = this_rq();
+ 	struct scx_rq *this_scx = &this_rq->scx;
+-	unsigned long *pseqs = this_cpu_ptr(scx_kick_cpus_pnt_seqs);
++	struct scx_kick_pseqs __rcu *pseqs_pcpu = __this_cpu_read(scx_kick_pseqs);
+ 	bool should_wait = false;
++	unsigned long *pseqs;
+ 	s32 cpu;
+ 
++	if (unlikely(!pseqs_pcpu)) {
++		pr_warn_once("kick_cpus_irq_workfn() called with NULL scx_kick_pseqs");
++		return;
++	}
++
++	pseqs = rcu_dereference_bh(pseqs_pcpu)->seqs;
++
+ 	for_each_cpu(cpu, this_scx->cpus_to_kick) {
+ 		should_wait |= kick_one_cpu(cpu, this_rq, pseqs);
+ 		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
+@@ -5266,11 +5340,6 @@ void __init init_sched_ext_class(void)
+ 
+ 	scx_idle_init_masks();
+ 
+-	scx_kick_cpus_pnt_seqs =
+-		__alloc_percpu(sizeof(scx_kick_cpus_pnt_seqs[0]) * nr_cpu_ids,
+-			       __alignof__(scx_kick_cpus_pnt_seqs[0]));
+-	BUG_ON(!scx_kick_cpus_pnt_seqs);
+-
+ 	for_each_possible_cpu(cpu) {
+ 		struct rq *rq = cpu_rq(cpu);
+ 		int  n = cpu_to_node(cpu);
+-- 
+2.51.0
+
 
 
