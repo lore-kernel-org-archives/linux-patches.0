@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C951A9B58;
-	Thu, 27 Nov 2025 14:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A1B21770B;
+	Thu, 27 Nov 2025 14:47:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254873; cv=none; b=rinobzdL67trGcJvUwRUiqDCYBBKdziPOXvWocmzjcqsv0rrAvIElMQqlkeyA4YPR+vE67z9cXYqW0nrhPN3RB/NQ8JydGgCCk7zXbRmWQ2fMDUro56jbOsVIxd6yKHL+nqsQgCM98Cub/ud9OBHOUpb5FQWTk0m6h5fNxJfynA=
+	t=1764254877; cv=none; b=cWHdfVU9nIy+7P2t6kQlJtR9PDkKmVIbqpPBaOhKi3vGPgokBoE0lCH/xOaeKSw3iyuJ8OWv+3bs4C65mCbJcHXYOECmn+KVs2pHi7SmQ0vugD65I9S+NcFi6Fk0/dTFLjk2bE8BKxVIQrBpwMILMr+1KG/9DsMpXYYLZevvWSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254873; c=relaxed/simple;
-	bh=8ZZjcpdBrh1xE2e6Z0D+c8jm1uYr4z6w/2pROhbWz4E=;
+	s=arc-20240116; t=1764254877; c=relaxed/simple;
+	bh=L20LJ+TQoMJrHv/sQPWtcsESKgAOl7MiVwiG6YluCFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jQriZsCIWvXHWfxoVxiMqHIRyFKUJjGYdO43YU2VltDMj7gjzrHb7K/x5qTpOJP7CPkxHXuKn3WxQfQiV939i8FUnRdx2vyDabLnzkZO1I0daGl2L4HAKuTUmhvRsDy4s1JLbTLtjoRq0ag/2O8FZ4/JlUF75bDerikZ6s8+170=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOyAK8lh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/pzUt7o2Y4aK30q913MnVZI9+naca/1Bp2vKZ6qNT8C49X+XU53ABT5xFrvdboBv++s/VI/bsdnrgMRDq4FFZJRfVz3OnWAFu0B3hMA4ljgfCZyFXEXRAVrqvPbqtRMLq8Xn6qVdHXlvurncOM/JGDs6GddN71gg9VXIqrHiic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCK56HYE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOyAK8lh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D84C116C6;
-	Thu, 27 Nov 2025 14:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCK56HYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BB48C4CEF8;
+	Thu, 27 Nov 2025 14:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254873;
-	bh=8ZZjcpdBrh1xE2e6Z0D+c8jm1uYr4z6w/2pROhbWz4E=;
+	s=korg; t=1764254876;
+	bh=L20LJ+TQoMJrHv/sQPWtcsESKgAOl7MiVwiG6YluCFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOyAK8lhDG4SGt3Th9nrtDEoDe2ADnmM4iHE7RBDuxFwRg6Uuq5ahhZIht/L24aos
-	 Wwv2J5VioM2LSuNCBjk9ut/2CsN+lon/EoxziRDjk7NZr5YJ3JZ4S0uZZ0FOVj3cIX
-	 AR0JAz/oTRad8z4EhAdVBrB8U4DdZB4Q8Uiz/YzM=
+	b=sCK56HYEXgap5mK9h1UwaSseeZZs9LxdGrBP4xP1mMyD731/O/PIUHrLrby1XGKRk
+	 s4gihbVyYFjepf6TQRAXXdVz644GmcyJwOacOLiksqzkHp29lgr22aH/GEuMAEyxXt
+	 EtxikweJ985aSG3ywgJtVa3ONIFRyXlrmhoJi7sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Weikang Guo <guoweikang.kernel@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.6 16/86] Input: cros_ec_keyb - fix an invalid memory access
-Date: Thu, 27 Nov 2025 15:45:32 +0100
-Message-ID: <20251127144028.409651883@linuxfoundation.org>
+Subject: [PATCH 6.6 17/86] Input: goodix - add support for ACPI ID GDIX1003
+Date: Thu, 27 Nov 2025 15:45:33 +0100
+Message-ID: <20251127144028.445205015@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,53 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit e08969c4d65ac31297fcb4d31d4808c789152f68 upstream.
+commit c6d99e488117201c63efd747ce17b80687c3f5a9 upstream.
 
-If cros_ec_keyb_register_matrix() isn't called (due to
-`buttons_switches_only`) in cros_ec_keyb_probe(), `ckdev->idev` remains
-NULL.  An invalid memory access is observed in cros_ec_keyb_process()
-when receiving an EC_MKBP_EVENT_KEY_MATRIX event in cros_ec_keyb_work()
-in such case.
+Some newer devices use an ACPI hardware ID of GDIX1003 for their Goodix
+touchscreen controller, instead of GDIX1001 / GDIX1002. Add GDIX1003
+to the goodix_acpi_match[] table.
 
-  Unable to handle kernel read from unreadable memory at virtual address 0000000000000028
-  ...
-  x3 : 0000000000000000 x2 : 0000000000000000
-  x1 : 0000000000000000 x0 : 0000000000000000
-  Call trace:
-  input_event
-  cros_ec_keyb_work
-  blocking_notifier_call_chain
-  ec_irq_thread
-
-It's still unknown about why the kernel receives such malformed event,
-in any cases, the kernel shouldn't access `ckdev->idev` and friends if
-the driver doesn't intend to initialize them.
-
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20251104070310.3212712-1-tzungbi@kernel.org
+Reported-by: Weikang Guo <guoweikang.kernel@gmail.com>
+Closes: https://lore.kernel.org/linux-input/20250225024409.1467040-1-guoweikang.kernel@gmail.com/
+Tested-by: Weikang Guo <guoweikang.kernel@gmail.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20251013121022.44333-1-hansg@kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/cros_ec_keyb.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/input/touchscreen/goodix.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/input/keyboard/cros_ec_keyb.c
-+++ b/drivers/input/keyboard/cros_ec_keyb.c
-@@ -263,6 +263,12 @@ static int cros_ec_keyb_work(struct noti
- 	case EC_MKBP_EVENT_KEY_MATRIX:
- 		pm_wakeup_event(ckdev->dev, 0);
- 
-+		if (!ckdev->idev) {
-+			dev_warn_once(ckdev->dev,
-+				      "Unexpected key matrix event\n");
-+			return NOTIFY_OK;
-+		}
-+
- 		if (ckdev->ec->event_size != ckdev->cols) {
- 			dev_err(ckdev->dev,
- 				"Discarded incomplete key matrix event.\n");
+--- a/drivers/input/touchscreen/goodix.c
++++ b/drivers/input/touchscreen/goodix.c
+@@ -1519,6 +1519,7 @@ MODULE_DEVICE_TABLE(i2c, goodix_ts_id);
+ static const struct acpi_device_id goodix_acpi_match[] = {
+ 	{ "GDIX1001", 0 },
+ 	{ "GDIX1002", 0 },
++	{ "GDIX1003", 0 },
+ 	{ "GDX9110", 0 },
+ 	{ }
+ };
 
 
