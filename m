@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D55330B1F;
-	Thu, 27 Nov 2025 14:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF28330B1F;
+	Thu, 27 Nov 2025 14:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255281; cv=none; b=OfaQI+KRnoxJLxEMBAgW+42S7qx8bS0YmvCj2qSRegM38N1AA/SWgi1gzeVB5fYza5LZqMCMRDdK0SbkC6PAAahfD9oTucIpefdahLcuc6dd7Z10H68ca1weA6tjXrbj8qMNcXXt7horIk/Blz3IL8xdVyJbNEO/rPkLJFQzhF4=
+	t=1764255284; cv=none; b=qi+dHI+xEMT9mQd4vqysrona6QvwzYNIV2WpZkGqMJ1ebRqbReCz2f16vqqLr/Ow5jhKQzRuFLcuXz30mOZFATgO2SmVQWmHkjzTypVJ+IqMO/ZFLCFjMaz70Fh29X9dy8E5B6aVC8/seRCgaB1XU76cFvW+nJ5OcfkS3klzL+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255281; c=relaxed/simple;
-	bh=79kGmcv7C6HOM3P5EWJzLh81187A77+7IBFagM2MQMw=;
+	s=arc-20240116; t=1764255284; c=relaxed/simple;
+	bh=uTcDtxkdck1ej0qoWtCRt2E/EzHIlTuTYXwV0SmmFP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3NSHsPtAnIpYWcDDpr1O8AKa7C0HJaBZQJ+danh9bLiK0QhLSJctoK0EHrXmx0du17lGzaJi7Ta/cR51Eu+zJbSV3lXSdrPfulcXK6ghrJOibDgNl5tHA/eTcgWBPl+Wy+pqaQA84o2Sx78ze8fnmTf6xSBe0HxfZLuf4Ob5H8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWSACMPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKZ+RJuQiHiVqj3LqftZAnnkZkFHGYqDAF80h93NYpeoxoZU5c6ABgaP4NBszqL9UKS1o6f5kXqtaHPzlU9451Ny28+f2T9dtgc7d+96OD9WlhrZY8U2EcEtr9BXYzuN3esdKVd1A0nCmCtQxu9Oi9f3WF7MS7K8Q0yLC85Djaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubN69VXr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWSACMPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88FFC4CEF8;
-	Thu, 27 Nov 2025 14:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubN69VXr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3243C116D0;
+	Thu, 27 Nov 2025 14:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255281;
-	bh=79kGmcv7C6HOM3P5EWJzLh81187A77+7IBFagM2MQMw=;
+	s=korg; t=1764255284;
+	bh=uTcDtxkdck1ej0qoWtCRt2E/EzHIlTuTYXwV0SmmFP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWSACMPpLp+MhHU15hLTe8YcRJwP/wSRvCpR7WEJnKySW4r4uKKEes6SpHSedXVX8
-	 w8ZhMD0nb1o1myguQVamOA2eJJggNO0tzz+LFWeXIeqy4PdwOa7ik55uWMz35MI+jl
-	 BrMTrcKgFFo1vhKI4DPL0b9Nzl3o9vLFuXzEbCOA=
+	b=ubN69VXrQtxL35rFdChn7aNZG66kdaCmNzenT7AXnt/QpFKzx0+O/ZnyQCpdHSilp
+	 rzcgGSrA+MS+cxomUsvpnG/9aVtENlTTUFetBkj0o1mR+ZA0AyuZNVI8cuGRRoq84h
+	 5d5FZfsFO17Gh7BhoZ/tzAl8OAIqkeu1f/dfTOmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Emil Tantilov <emil.s.tantilov@intel.com>,
+	Chittim Madhu <madhu.chittim@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Samuel Salin <Samuel.salin@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/112] net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()
-Date: Thu, 27 Nov 2025 15:46:13 +0100
-Message-ID: <20251127144035.439870743@linuxfoundation.org>
+Subject: [PATCH 6.12 072/112] idpf: fix possible vport_config NULL pointer deref in remove
+Date: Thu, 27 Nov 2025 15:46:14 +0100
+Message-ID: <20251127144035.475843975@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,59 +55,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+From: Emil Tantilov <emil.s.tantilov@intel.com>
 
-[ Upstream commit 896f1a2493b59beb2b5ccdf990503dbb16cb2256 ]
+[ Upstream commit 118082368c2b6ddefe6cb607efc312285148f044 ]
 
-The loops in 'qede_tpa_cont()' and 'qede_tpa_end()', iterate
-over 'cqe->len_list[]' using only a zero-length terminator as
-the stopping condition. If the terminator was missing or
-malformed, the loop could run past the end of the fixed-size array.
+Attempting to remove the driver will cause a crash in cases where
+the vport failed to initialize. Following trace is from an instance where
+the driver failed during an attempt to create a VF:
+[ 1661.543624] idpf 0000:84:00.7: Device HW Reset initiated
+[ 1722.923726] idpf 0000:84:00.7: Transaction timed-out (op:1 cookie:2900 vc_op:1 salt:29 timeout:60000ms)
+[ 1723.353263] BUG: kernel NULL pointer dereference, address: 0000000000000028
+...
+[ 1723.358472] RIP: 0010:idpf_remove+0x11c/0x200 [idpf]
+...
+[ 1723.364973] Call Trace:
+[ 1723.365475]  <TASK>
+[ 1723.365972]  pci_device_remove+0x42/0xb0
+[ 1723.366481]  device_release_driver_internal+0x1a9/0x210
+[ 1723.366987]  pci_stop_bus_device+0x6d/0x90
+[ 1723.367488]  pci_stop_and_remove_bus_device+0x12/0x20
+[ 1723.367971]  pci_iov_remove_virtfn+0xbd/0x120
+[ 1723.368309]  sriov_disable+0x34/0xe0
+[ 1723.368643]  idpf_sriov_configure+0x58/0x140 [idpf]
+[ 1723.368982]  sriov_numvfs_store+0xda/0x1c0
 
-Add an explicit bound check using ARRAY_SIZE() in both loops to prevent
-a potential out-of-bounds access.
+Avoid the NULL pointer dereference by adding NULL pointer check for
+vport_config[i], before freeing user_config.q_coalesce.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 55482edc25f0 ("qede: Add slowpath/fastpath support and enable hardware GRO")
-Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-Link: https://patch.msgid.link/20251113112757.4166625-1-Pavel.Zhigulin@kaspersky.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e1e3fec3e34b ("idpf: preserve coalescing settings across resets")
+Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
+Reviewed-by: Chittim Madhu <madhu.chittim@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_fp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index 847fa62c80df8..e338bfc8b7b2f 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2019-2020 Marvell International Ltd.
-  */
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_main.c b/drivers/net/ethernet/intel/idpf/idpf_main.c
+index 4c48a1a6aab0d..d7a7b0c5f1b8d 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_main.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_main.c
+@@ -62,6 +62,8 @@ static void idpf_remove(struct pci_dev *pdev)
+ 	destroy_workqueue(adapter->vc_event_wq);
  
-+#include <linux/array_size.h>
- #include <linux/netdevice.h>
- #include <linux/etherdevice.h>
- #include <linux/skbuff.h>
-@@ -960,7 +961,7 @@ static inline void qede_tpa_cont(struct qede_dev *edev,
- {
- 	int i;
- 
--	for (i = 0; cqe->len_list[i]; i++)
-+	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
- 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
- 				   le16_to_cpu(cqe->len_list[i]));
- 
-@@ -985,7 +986,7 @@ static int qede_tpa_end(struct qede_dev *edev,
- 		dma_unmap_page(rxq->dev, tpa_info->buffer.mapping,
- 			       PAGE_SIZE, rxq->data_direction);
- 
--	for (i = 0; cqe->len_list[i]; i++)
-+	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
- 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
- 				   le16_to_cpu(cqe->len_list[i]));
- 	if (unlikely(i > 1))
+ 	for (i = 0; i < adapter->max_vports; i++) {
++		if (!adapter->vport_config[i])
++			continue;
+ 		kfree(adapter->vport_config[i]->user_config.q_coalesce);
+ 		kfree(adapter->vport_config[i]);
+ 		adapter->vport_config[i] = NULL;
 -- 
 2.51.0
 
