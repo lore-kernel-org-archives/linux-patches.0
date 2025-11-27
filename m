@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72720264F81;
-	Thu, 27 Nov 2025 15:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17400334690;
+	Thu, 27 Nov 2025 15:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255633; cv=none; b=JmrmqGbgsc5P8BVFuecePvJT4VblQp5SOZ1LkKA7QI6jL/YPf82ZKvPDRhdsXohsbTRaeF5ehV9nce+j4/5NBGl+P86WuFJ3JNoYLxuS5fhvTVpIv+flzfjM16BKLAEYuxb0NZLHlYxDrBfL4D/mwarR5UZa3tDyT/UnEd7kA/8=
+	t=1764255636; cv=none; b=g5F4LsshgkUAjLKrJOGBdcrnLQ9K+dW197Er0jI/xc5t3SXpSLB0fNm2YwAs7Hi/2blcvwj4O5LhugDkjK2FsmSXtx8PxdlA4tFsWZc/ldo5W/c8s6nqpVRhCFnt5suQua4/uNcqXwt4SFY3kpYsPiVGRCBWxNC5fVICS8lRRVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255633; c=relaxed/simple;
-	bh=oBzgrvScVqlBgjtVyWWRJei/lDlzpCTsOUxLgHlu5UM=;
+	s=arc-20240116; t=1764255636; c=relaxed/simple;
+	bh=J8ZgwcKOdkUtc9HGu4agGwWtQy4i1mtVdke+zoVmJD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NXqWdEMh0HLI+BCTX9uviWXlWbso3P6Cq5MFRUVZFaEU+TSShfF3y11e/rGI5lgIVL3Ui7SKojtoe+LwuyA7tXq9JVdDHNCKZdLhljGay4/k/U3fLckLHbx1JgGHcURKTAiksK4cB+6eSHlg7VsZxbH3JhG3uAq4OgwFESULe9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B9hPGjfb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1ABgr4xc8P5BGvBbKPEbIaVWQ1oZyOR8+kvfI74Ah0x8a9kmDFhDSbQkpDzaHHSUtQRlRkhZ4JKzLbGvyDw4TCXA29B9N55DMNjFx7z2zW94Huq6rNqCtWSAHJWy/sLfzmrDd8Awzt4jcM2ufJe/dWlW+oV+8zp+mWCM+BJY/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I9gX7cpy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B9hPGjfb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DE9C4CEF8;
-	Thu, 27 Nov 2025 15:00:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I9gX7cpy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968BEC113D0;
+	Thu, 27 Nov 2025 15:00:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255633;
-	bh=oBzgrvScVqlBgjtVyWWRJei/lDlzpCTsOUxLgHlu5UM=;
+	s=korg; t=1764255636;
+	bh=J8ZgwcKOdkUtc9HGu4agGwWtQy4i1mtVdke+zoVmJD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B9hPGjfbdR+dSW/McGbJVr5HTsWvDCg4b1V4zf5l+Jrx358KeSyqH6Oev39/WWxzJ
-	 id6zzSqBF6wGchoXZ6Y8hvYY7IO8ViclmjgbjKZqaRjAo+VIsziHwbcRzYj4gsv/37
-	 YDOYGHbDzd1Ik4VN6Em07tGIOhZjMKfu3t3FGidI=
+	b=I9gX7cpydKrfvSiJrwYFNnkMFGF75Mr3+EW7rf+1H1UFHq3ru5GWegUaCk94ma8Vr
+	 uJy4teXOcy7oRvjlyHTyArrrfj4ofl4z+1j9QoajxhenRHPo8/iyVX6Xe4eY+aGBPf
+	 kpffnevf7W9VAlbdvJU7S73nY3Iu/86czGp+/YBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2a6fbf0f0530375968df@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 059/175] mptcp: fix a race in mptcp_pm_del_add_timer()
-Date: Thu, 27 Nov 2025 15:45:12 +0100
-Message-ID: <20251127144045.121608041@linuxfoundation.org>
+	Stephen Smalley <stephen.smalley.work@gmail.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.17 028/175] selinux: move avdcache to per-task security struct
+Date: Thu, 27 Nov 2025 15:44:41 +0100
+Message-ID: <20251127144043.993581894@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -53,194 +50,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Stephen Smalley <stephen.smalley.work@gmail.com>
 
-commit 426358d9be7ce3518966422f87b96f1bad27295f upstream.
+commit dde3a5d0f4dce1d1a6095e6b8eeb59b75d28fb3b upstream.
 
-mptcp_pm_del_add_timer() can call sk_stop_timer_sync(sk, &entry->add_timer)
-while another might have free entry already, as reported by syzbot.
-
-Add RCU protection to fix this issue.
-
-Also change confusing add_timer variable with stop_timer boolean.
-
-syzbot report:
-
-BUG: KASAN: slab-use-after-free in __timer_delete_sync+0x372/0x3f0 kernel/time/timer.c:1616
-Read of size 4 at addr ffff8880311e4150 by task kworker/1:1/44
-
-CPU: 1 UID: 0 PID: 44 Comm: kworker/1:1 Not tainted syzkaller #0 PREEMPT_{RT,(full)}
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-Workqueue: events mptcp_worker
-Call Trace:
- <TASK>
-  dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
-  print_address_description mm/kasan/report.c:378 [inline]
-  print_report+0xca/0x240 mm/kasan/report.c:482
-  kasan_report+0x118/0x150 mm/kasan/report.c:595
-  __timer_delete_sync+0x372/0x3f0 kernel/time/timer.c:1616
-  sk_stop_timer_sync+0x1b/0x90 net/core/sock.c:3631
-  mptcp_pm_del_add_timer+0x283/0x310 net/mptcp/pm.c:362
-  mptcp_incoming_options+0x1357/0x1f60 net/mptcp/options.c:1174
-  tcp_data_queue+0xca/0x6450 net/ipv4/tcp_input.c:5361
-  tcp_rcv_established+0x1335/0x2670 net/ipv4/tcp_input.c:6441
-  tcp_v4_do_rcv+0x98b/0xbf0 net/ipv4/tcp_ipv4.c:1931
-  tcp_v4_rcv+0x252a/0x2dc0 net/ipv4/tcp_ipv4.c:2374
-  ip_protocol_deliver_rcu+0x221/0x440 net/ipv4/ip_input.c:205
-  ip_local_deliver_finish+0x3bb/0x6f0 net/ipv4/ip_input.c:239
-  NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
-  NF_HOOK+0x30c/0x3a0 include/linux/netfilter.h:318
-  __netif_receive_skb_one_core net/core/dev.c:6079 [inline]
-  __netif_receive_skb+0x143/0x380 net/core/dev.c:6192
-  process_backlog+0x31e/0x900 net/core/dev.c:6544
-  __napi_poll+0xb6/0x540 net/core/dev.c:7594
-  napi_poll net/core/dev.c:7657 [inline]
-  net_rx_action+0x5f7/0xda0 net/core/dev.c:7784
-  handle_softirqs+0x22f/0x710 kernel/softirq.c:622
-  __do_softirq kernel/softirq.c:656 [inline]
-  __local_bh_enable_ip+0x1a0/0x2e0 kernel/softirq.c:302
-  mptcp_pm_send_ack net/mptcp/pm.c:210 [inline]
- mptcp_pm_addr_send_ack+0x41f/0x500 net/mptcp/pm.c:-1
-  mptcp_pm_worker+0x174/0x320 net/mptcp/pm.c:1002
-  mptcp_worker+0xd5/0x1170 net/mptcp/protocol.c:2762
-  process_one_work kernel/workqueue.c:3263 [inline]
-  process_scheduled_works+0xae1/0x17b0 kernel/workqueue.c:3346
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3427
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
- </TASK>
-
-Allocated by task 44:
-  kasan_save_stack mm/kasan/common.c:56 [inline]
-  kasan_save_track+0x3e/0x80 mm/kasan/common.c:77
-  poison_kmalloc_redzone mm/kasan/common.c:400 [inline]
-  __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:417
-  kasan_kmalloc include/linux/kasan.h:262 [inline]
-  __kmalloc_cache_noprof+0x1ef/0x6c0 mm/slub.c:5748
-  kmalloc_noprof include/linux/slab.h:957 [inline]
-  mptcp_pm_alloc_anno_list+0x104/0x460 net/mptcp/pm.c:385
-  mptcp_pm_create_subflow_or_signal_addr+0xf9d/0x1360 net/mptcp/pm_kernel.c:355
-  mptcp_pm_nl_fully_established net/mptcp/pm_kernel.c:409 [inline]
-  __mptcp_pm_kernel_worker+0x417/0x1ef0 net/mptcp/pm_kernel.c:1529
-  mptcp_pm_worker+0x1ee/0x320 net/mptcp/pm.c:1008
-  mptcp_worker+0xd5/0x1170 net/mptcp/protocol.c:2762
-  process_one_work kernel/workqueue.c:3263 [inline]
-  process_scheduled_works+0xae1/0x17b0 kernel/workqueue.c:3346
-  worker_thread+0x8a0/0xda0 kernel/workqueue.c:3427
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
-Freed by task 6630:
-  kasan_save_stack mm/kasan/common.c:56 [inline]
-  kasan_save_track+0x3e/0x80 mm/kasan/common.c:77
-  __kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:587
-  kasan_save_free_info mm/kasan/kasan.h:406 [inline]
-  poison_slab_object mm/kasan/common.c:252 [inline]
-  __kasan_slab_free+0x5c/0x80 mm/kasan/common.c:284
-  kasan_slab_free include/linux/kasan.h:234 [inline]
-  slab_free_hook mm/slub.c:2523 [inline]
-  slab_free mm/slub.c:6611 [inline]
-  kfree+0x197/0x950 mm/slub.c:6818
-  mptcp_remove_anno_list_by_saddr+0x2d/0x40 net/mptcp/pm.c:158
-  mptcp_pm_flush_addrs_and_subflows net/mptcp/pm_kernel.c:1209 [inline]
-  mptcp_nl_flush_addrs_list net/mptcp/pm_kernel.c:1240 [inline]
-  mptcp_pm_nl_flush_addrs_doit+0x593/0xbb0 net/mptcp/pm_kernel.c:1281
-  genl_family_rcv_msg_doit+0x215/0x300 net/netlink/genetlink.c:1115
-  genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
-  genl_rcv_msg+0x60e/0x790 net/netlink/genetlink.c:1210
-  netlink_rcv_skb+0x208/0x470 net/netlink/af_netlink.c:2552
-  genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
-  netlink_unicast_kernel net/netlink/af_netlink.c:1320 [inline]
-  netlink_unicast+0x846/0xa10 net/netlink/af_netlink.c:1346
-  netlink_sendmsg+0x805/0xb30 net/netlink/af_netlink.c:1896
-  sock_sendmsg_nosec net/socket.c:727 [inline]
-  __sock_sendmsg+0x21c/0x270 net/socket.c:742
-  ____sys_sendmsg+0x508/0x820 net/socket.c:2630
-  ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2684
-  __sys_sendmsg net/socket.c:2716 [inline]
-  __do_sys_sendmsg net/socket.c:2721 [inline]
-  __se_sys_sendmsg net/socket.c:2719 [inline]
-  __x64_sys_sendmsg+0x1a1/0x260 net/socket.c:2719
-  do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
-  do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The avdcache is meant to be per-task; move it to a new
+task_security_struct that is duplicated per-task.
 
 Cc: stable@vger.kernel.org
-Fixes: 00cfd77b9063 ("mptcp: retransmit ADD_ADDR when timeout")
-Reported-by: syzbot+2a6fbf0f0530375968df@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/691ad3c3.a70a0220.f6df1.0004.GAE@google.com
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251117100745.1913963-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 5d7ddc59b3d89b724a5aa8f30d0db94ff8d2d93f ("selinux: reduce path walk overhead")
+Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
+[PM: line length fixes]
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ security/selinux/hooks.c          |   31 ++++++++++++++++++-------------
+ security/selinux/include/objsec.h |   14 ++++++++++++--
+ 2 files changed, 30 insertions(+), 15 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -18,6 +18,7 @@ struct mptcp_pm_add_entry {
- 	u8			retrans_times;
- 	struct timer_list	add_timer;
- 	struct mptcp_sock	*sock;
-+	struct rcu_head		rcu;
- };
+--- a/security/selinux/hooks.c
++++ b/security/selinux/hooks.c
+@@ -215,7 +215,7 @@ static void cred_init_security(void)
+ 	/* NOTE: the lsm framework zeros out the buffer on allocation */
  
- static DEFINE_SPINLOCK(mptcp_pm_list_lock);
-@@ -155,7 +156,7 @@ bool mptcp_remove_anno_list_by_saddr(str
- 
- 	entry = mptcp_pm_del_add_timer(msk, addr, false);
- 	ret = entry;
--	kfree(entry);
-+	kfree_rcu(entry, rcu);
- 
- 	return ret;
+ 	tsec = selinux_cred(unrcu_pointer(current->real_cred));
+-	tsec->osid = tsec->sid = tsec->avdcache.sid = SECINITSID_KERNEL;
++	tsec->osid = tsec->sid = SECINITSID_KERNEL;
  }
-@@ -324,22 +325,27 @@ mptcp_pm_del_add_timer(struct mptcp_sock
+ 
+ /*
+@@ -3106,10 +3106,10 @@ static noinline int audit_inode_permissi
+  * Clear the task's AVD cache in @tsec and reset it to the current policy's
+  * and task's info.
+  */
+-static inline void task_avdcache_reset(struct cred_security_struct *tsec)
++static inline void task_avdcache_reset(struct task_security_struct *tsec)
  {
- 	struct mptcp_pm_add_entry *entry;
- 	struct sock *sk = (struct sock *)msk;
--	struct timer_list *add_timer = NULL;
-+	bool stop_timer = false;
+ 	memset(&tsec->avdcache.dir, 0, sizeof(tsec->avdcache.dir));
+-	tsec->avdcache.sid = tsec->sid;
++	tsec->avdcache.sid = current_sid();
+ 	tsec->avdcache.seqno = avc_policy_seqno();
+ 	tsec->avdcache.dir_spot = TSEC_AVDC_DIR_SIZE - 1;
+ }
+@@ -3123,7 +3123,7 @@ static inline void task_avdcache_reset(s
+  * Search @tsec for a AVD cache entry that matches @isec and return it to the
+  * caller via @avdc.  Returns 0 if a match is found, negative values otherwise.
+  */
+-static inline int task_avdcache_search(struct cred_security_struct *tsec,
++static inline int task_avdcache_search(struct task_security_struct *tsec,
+ 				       struct inode_security_struct *isec,
+ 				       struct avdc_entry **avdc)
+ {
+@@ -3133,7 +3133,7 @@ static inline int task_avdcache_search(s
+ 	if (isec->sclass != SECCLASS_DIR)
+ 		return -ENOENT;
+ 
+-	if (unlikely(tsec->sid != tsec->avdcache.sid ||
++	if (unlikely(current_sid() != tsec->avdcache.sid ||
+ 		     tsec->avdcache.seqno != avc_policy_seqno())) {
+ 		task_avdcache_reset(tsec);
+ 		return -ENOENT;
+@@ -3163,7 +3163,7 @@ static inline int task_avdcache_search(s
+  * Update the AVD cache in @tsec with the @avdc and @audited info associated
+  * with @isec.
+  */
+-static inline void task_avdcache_update(struct cred_security_struct *tsec,
++static inline void task_avdcache_update(struct task_security_struct *tsec,
+ 					struct inode_security_struct *isec,
+ 					struct av_decision *avd,
+ 					u32 audited)
+@@ -3197,7 +3197,8 @@ static int selinux_inode_permission(stru
+ {
+ 	int mask;
+ 	u32 perms;
+-	struct cred_security_struct *tsec;
++	u32 sid = current_sid();
++	struct task_security_struct *tsec;
+ 	struct inode_security_struct *isec;
+ 	struct avdc_entry *avdc;
+ 	int rc, rc2;
+@@ -3209,8 +3210,8 @@ static int selinux_inode_permission(stru
+ 	if (!mask)
+ 		return 0;
+ 
+-	tsec = selinux_cred(current_cred());
+-	if (task_avdcache_permnoaudit(tsec))
++	tsec = selinux_task(current);
++	if (task_avdcache_permnoaudit(tsec, sid))
+ 		return 0;
+ 
+ 	isec = inode_security_rcu(inode, requested & MAY_NOT_BLOCK);
+@@ -3230,7 +3231,7 @@ static int selinux_inode_permission(stru
+ 		struct av_decision avd;
+ 
+ 		/* Cache miss. */
+-		rc = avc_has_perm_noaudit(tsec->sid, isec->sid, isec->sclass,
++		rc = avc_has_perm_noaudit(sid, isec->sid, isec->sclass,
+ 					  perms, 0, &avd);
+ 		audited = avc_audit_required(perms, &avd, rc,
+ 			(requested & MAY_ACCESS) ? FILE__AUDIT_ACCESS : 0,
+@@ -3279,11 +3280,11 @@ static int selinux_inode_setattr(struct
+ 
+ static int selinux_inode_getattr(const struct path *path)
+ {
+-	struct cred_security_struct *tsec;
++	struct task_security_struct *tsec;
+ 
+-	tsec = selinux_cred(current_cred());
++	tsec = selinux_task(current);
+ 
+-	if (task_avdcache_permnoaudit(tsec))
++	if (task_avdcache_permnoaudit(tsec, current_sid()))
+ 		return 0;
+ 
+ 	return path_has_perm(current_cred(), path, FILE__GETATTR);
+@@ -4147,7 +4148,10 @@ static int selinux_task_alloc(struct tas
+ 			      unsigned long clone_flags)
+ {
+ 	u32 sid = current_sid();
++	struct task_security_struct *old_tsec = selinux_task(current);
++	struct task_security_struct *new_tsec = selinux_task(task);
+ 
++	*new_tsec = *old_tsec;
+ 	return avc_has_perm(sid, sid, SECCLASS_PROCESS, PROCESS__FORK, NULL);
+ }
+ 
+@@ -7170,6 +7174,7 @@ static void selinux_bpf_token_free(struc
+ 
+ struct lsm_blob_sizes selinux_blob_sizes __ro_after_init = {
+ 	.lbs_cred = sizeof(struct cred_security_struct),
++	.lbs_task = sizeof(struct task_security_struct),
+ 	.lbs_file = sizeof(struct file_security_struct),
+ 	.lbs_inode = sizeof(struct inode_security_struct),
+ 	.lbs_ipc = sizeof(struct ipc_security_struct),
+--- a/security/selinux/include/objsec.h
++++ b/security/selinux/include/objsec.h
+@@ -43,6 +43,9 @@ struct cred_security_struct {
+ 	u32 create_sid; /* fscreate SID */
+ 	u32 keycreate_sid; /* keycreate SID */
+ 	u32 sockcreate_sid; /* fscreate SID */
++} __randomize_layout;
 +
-+	rcu_read_lock();
++struct task_security_struct {
+ #define TSEC_AVDC_DIR_SIZE (1 << 2)
+ 	struct {
+ 		u32 sid; /* current SID for cached entries */
+@@ -53,10 +56,11 @@ struct cred_security_struct {
+ 	} avdcache;
+ } __randomize_layout;
  
- 	spin_lock_bh(&msk->pm.lock);
- 	entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
- 	if (entry && (!check_id || entry->addr.id == addr->id)) {
- 		entry->retrans_times = ADD_ADDR_RETRANS_MAX;
--		add_timer = &entry->add_timer;
-+		stop_timer = true;
- 	}
- 	if (!check_id && entry)
- 		list_del(&entry->list);
- 	spin_unlock_bh(&msk->pm.lock);
- 
--	/* no lock, because sk_stop_timer_sync() is calling timer_delete_sync() */
--	if (add_timer)
--		sk_stop_timer_sync(sk, add_timer);
-+	/* Note: entry might have been removed by another thread.
-+	 * We hold rcu_read_lock() to ensure it is not freed under us.
-+	 */
-+	if (stop_timer)
-+		sk_stop_timer_sync(sk, &entry->add_timer);
- 
-+	rcu_read_unlock();
- 	return entry;
+-static inline bool task_avdcache_permnoaudit(struct cred_security_struct *tsec)
++static inline bool task_avdcache_permnoaudit(struct task_security_struct *tsec,
++					     u32 sid)
+ {
+ 	return (tsec->avdcache.permissive_neveraudit &&
+-		tsec->sid == tsec->avdcache.sid &&
++		sid == tsec->avdcache.sid &&
+ 		tsec->avdcache.seqno == avc_policy_seqno());
  }
  
-@@ -395,7 +401,7 @@ static void mptcp_pm_free_anno_list(stru
- 
- 	list_for_each_entry_safe(entry, tmp, &free_list, list) {
- 		sk_stop_timer_sync(sk, &entry->add_timer);
--		kfree(entry);
-+		kfree_rcu(entry, rcu);
- 	}
+@@ -176,6 +180,12 @@ static inline struct cred_security_struc
+ 	return cred->security + selinux_blob_sizes.lbs_cred;
  }
  
++static inline struct task_security_struct *
++selinux_task(const struct task_struct *task)
++{
++	return task->security + selinux_blob_sizes.lbs_task;
++}
++
+ static inline struct file_security_struct *selinux_file(const struct file *file)
+ {
+ 	return file->f_security + selinux_blob_sizes.lbs_file;
 
 
