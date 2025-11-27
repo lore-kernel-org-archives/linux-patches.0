@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896D323F439;
-	Thu, 27 Nov 2025 15:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8B3284B58;
+	Thu, 27 Nov 2025 15:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255653; cv=none; b=unFO1XtZLBbw1GJkVJtU5WPPfQKmXlAGskCgF3kYSrfn1Y8o3q/myAasAdrRayqfloZKn5gN3etPZx4MMNd4vlQMms+/IZ/efRqHncTUMzpJDhDcfjBj52/eoXCO4IfbT0Xv5znQEhnJipX++BIx166M7Z7hzkzeVI3LqEY6nAo=
+	t=1764255656; cv=none; b=K3wG50KuefRpKylf8eMWpqZD2FsG20ncoVhMtd4Wyf+mIg0zychkJb2BILxfnByAcJmKHJOh4F16IfG6B+6AknkIJ38vphBMI8RDexGYu0zwecZviCybpbvXzqJL26VsvgRv4XPoLJ6cD1yhbvPGvhEAoKNbTwcV9JD/galC6z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255653; c=relaxed/simple;
-	bh=YFg4t1mObEuCRCpY/kYDbO7ebwt2m+f0yR0zBw0sEz0=;
+	s=arc-20240116; t=1764255656; c=relaxed/simple;
+	bh=DPwxhn1PPeuUBWxVJRSc4RVzOlIcabqLiErh7ndWNso=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZiMQWo/HFoTZg3ccHuZuDR63543T1BPX5v59kWQ/YiTtfQShG8h6PnWP4B2IduBGhREP1EK1NBC2+RcAbk8DJnP39K+XJ4DleW4UIzI33MSAgrBasYMdX4eUlT1yuwEwJGkI8snRdcDlgh3Zg2WQoE7tZYtPuORCYdGzKC0hyPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BV+ZZHvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AjE65VzdFJihYdiTnlVXuxtsDaEv9Z9r2kd1fMgs8V4/xLwAhvr6v08kZAZ4hixqum5ZFVJHZARRN/AdJFtQZCmMPaB0L5Rir/bBQQob1TbEisbeAh3Rdq1HEGC0o6ikTbD7T3IgDDQvrwtWdNHxZJ/+SY5Gogo2cTApQSIYhFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2QJ1VT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BV+ZZHvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB23C113D0;
-	Thu, 27 Nov 2025 15:00:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2QJ1VT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3B6C4CEF8;
+	Thu, 27 Nov 2025 15:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255653;
-	bh=YFg4t1mObEuCRCpY/kYDbO7ebwt2m+f0yR0zBw0sEz0=;
+	s=korg; t=1764255656;
+	bh=DPwxhn1PPeuUBWxVJRSc4RVzOlIcabqLiErh7ndWNso=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BV+ZZHvqQyHiVOcqTtuwykhXuC4v6iq+orS4Trg6sCSV05Ev9m/qitgYxOVeeYIUI
-	 8YSuu76AoxvrWtYD5ha9IIXeNC4wHHAV/URUkmqkzWp0jTeGLe4oZrnUKt1Bg+8K1V
-	 hOAdDXbdypmaUqw28b06kvDfAE5v7dFzUS1Leq0s=
+	b=W2QJ1VT8tYKpMLjhdz/mojXe6PPMlursdLdf1Uf+cgCxYnN5a8tdRFydIpo8vQvk0
+	 GnzYYuhciAHFExRDJxTfrYmh+3UobdChGr5wXWGm+Dw20HhoaDfpd1XRlSiwhHOl77
+	 xZ2tDBg2kQcNdQ7BMuOy3FGmWkH0LFa8IFS6GH/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.17 024/175] ACPI: APEI: EINJ: Fix EINJV2 initialization and injection
-Date: Thu, 27 Nov 2025 15:44:37 +0100
-Message-ID: <20251127144043.847191193@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 061/175] mptcp: fix duplicate reset on fastclose
+Date: Thu, 27 Nov 2025 15:45:14 +0100
+Message-ID: <20251127144045.194382118@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -50,158 +52,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit d2932a59c2d4fb364396f21df58431c44918dd47 upstream.
+commit ae155060247be8dcae3802a95bd1bdf93ab3215d upstream.
 
-ACPI 6.6 specification for EINJV2 appends an extra structure to
-the end of the existing struct set_error_type_with_address.
+The CI reports sporadic failures of the fastclose self-tests. The root
+cause is a duplicate reset, not carrying the relevant MPTCP option.
+In the failing scenario the bad reset is received by the peer before
+the fastclose one, preventing the reception of the latter.
 
-Several issues showed up in testing.
+Indeed there is window of opportunity at fastclose time for the
+following race:
 
- 1) Initialization was broken by an earlier fix [1] since is_v2 is only
-    set while performing an injection, not during initialization.
+  mptcp_do_fastclose
+    __mptcp_close_ssk
+      __tcp_close()
+        tcp_set_state() [1]
+        tcp_send_active_reset() [2]
 
- 2) A buggy BIOS provided invalid "revision" and "length" for the
-    extension structure. Add several sanity checks.
+After [1] the stack will send reset to in-flight data reaching the now
+closed port. Such reset may race with [2].
 
- 3) When injecting legacy error types on an EINJV2 capable system,
-    don't copy the component arrays.
+Address the issue explicitly sending a single reset on fastclose before
+explicitly moving the subflow to close status.
 
-Fixes: 6c7058514991 ("ACPI: APEI: EINJ: Check if user asked for EINJV2 injection") # [1]
-Fixes: b47610296d17 ("ACPI: APEI: EINJ: Enable EINJv2 error injections")
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-[ rjw: Changelog edits ]
-Cc: 6.17+ <stable@vger.kernel.org> # 6.17+
-Link: https://patch.msgid.link/20251119012712.178715-1-tony.luck@intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/596
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-6-806d3781c95f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/apei/einj-core.c |   64 ++++++++++++++++++++++++++----------------
- 1 file changed, 41 insertions(+), 23 deletions(-)
+ net/mptcp/protocol.c |   36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
---- a/drivers/acpi/apei/einj-core.c
-+++ b/drivers/acpi/apei/einj-core.c
-@@ -182,6 +182,7 @@ bool einj_initialized __ro_after_init;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2377,7 +2377,6 @@ bool __mptcp_retransmit_pending_data(str
  
- static void __iomem *einj_param;
- static u32 v5param_size;
-+static u32 v66param_size;
- static bool is_v2;
+ /* flags for __mptcp_close_ssk() */
+ #define MPTCP_CF_PUSH		BIT(1)
+-#define MPTCP_CF_FASTCLOSE	BIT(2)
  
- static void einj_exec_ctx_init(struct apei_exec_context *ctx)
-@@ -283,6 +284,24 @@ static void check_vendor_extension(u64 p
- 	acpi_os_unmap_iomem(p, sizeof(v));
+ /* be sure to send a reset only if the caller asked for it, also
+  * clean completely the subflow status when the subflow reaches
+@@ -2388,7 +2387,7 @@ static void __mptcp_subflow_disconnect(s
+ 				       unsigned int flags)
+ {
+ 	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
+-	    (flags & MPTCP_CF_FASTCLOSE)) {
++	    subflow->send_fastclose) {
+ 		/* The MPTCP code never wait on the subflow sockets, TCP-level
+ 		 * disconnect should never fail
+ 		 */
+@@ -2435,14 +2434,8 @@ static void __mptcp_close_ssk(struct soc
+ 
+ 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
+ 
+-	if ((flags & MPTCP_CF_FASTCLOSE) && !__mptcp_check_fallback(msk)) {
+-		/* be sure to force the tcp_close path
+-		 * to generate the egress reset
+-		 */
+-		ssk->sk_lingertime = 0;
+-		sock_set_flag(ssk, SOCK_LINGER);
+-		subflow->send_fastclose = 1;
+-	}
++	if (subflow->send_fastclose && ssk->sk_state != TCP_CLOSE)
++		tcp_set_state(ssk, TCP_CLOSE);
+ 
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+@@ -2745,9 +2738,26 @@ static void mptcp_do_fastclose(struct so
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+ 	mptcp_set_state(sk, TCP_CLOSE);
+-	mptcp_for_each_subflow_safe(msk, subflow, tmp)
+-		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow),
+-				  subflow, MPTCP_CF_FASTCLOSE);
++
++	/* Explicitly send the fastclose reset as need */
++	if (__mptcp_check_fallback(msk))
++		return;
++
++	mptcp_for_each_subflow_safe(msk, subflow, tmp) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++
++		lock_sock(ssk);
++
++		/* Some subflow socket states don't allow/need a reset.*/
++		if ((1 << ssk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE))
++			goto unlock;
++
++		subflow->send_fastclose = 1;
++		tcp_send_active_reset(ssk, ssk->sk_allocation,
++				      SK_RST_REASON_TCP_ABORT_ON_CLOSE);
++unlock:
++		release_sock(ssk);
++	}
  }
  
-+static u32 einjv2_init(struct einjv2_extension_struct *e)
-+{
-+	if (e->revision != 1) {
-+		pr_info("Unknown v2 extension revision %u\n", e->revision);
-+		return 0;
-+	}
-+	if (e->length < sizeof(*e) || e->length > PAGE_SIZE) {
-+		pr_info(FW_BUG "Bad1 v2 extension length %u\n", e->length);
-+		return 0;
-+	}
-+	if ((e->length - sizeof(*e)) % sizeof(e->component_arr[0])) {
-+		pr_info(FW_BUG "Bad2 v2 extension length %u\n", e->length);
-+		return 0;
-+	}
-+
-+	return (e->length - sizeof(*e)) / sizeof(e->component_arr[0]);
-+}
-+
- static void __iomem *einj_get_parameter_address(void)
- {
- 	int i;
-@@ -310,28 +329,21 @@ static void __iomem *einj_get_parameter_
- 		v5param_size = sizeof(v5param);
- 		p = acpi_os_map_iomem(pa_v5, sizeof(*p));
- 		if (p) {
--			int offset, len;
--
- 			memcpy_fromio(&v5param, p, v5param_size);
- 			acpi5 = 1;
- 			check_vendor_extension(pa_v5, &v5param);
--			if (is_v2 && available_error_type & ACPI65_EINJV2_SUPP) {
--				len = v5param.einjv2_struct.length;
--				offset = offsetof(struct einjv2_extension_struct, component_arr);
--				max_nr_components = (len - offset) /
--						sizeof(v5param.einjv2_struct.component_arr[0]);
--				/*
--				 * The first call to acpi_os_map_iomem above does not include the
--				 * component array, instead it is used to read and calculate maximum
--				 * number of components supported by the system. Below, the mapping
--				 * is expanded to include the component array.
--				 */
-+			if (available_error_type & ACPI65_EINJV2_SUPP) {
-+				struct einjv2_extension_struct *e;
-+
-+				e = &v5param.einjv2_struct;
-+				max_nr_components = einjv2_init(e);
-+
-+				/* remap including einjv2_extension_struct */
- 				acpi_os_unmap_iomem(p, v5param_size);
--				offset = offsetof(struct set_error_type_with_address, einjv2_struct);
--				v5param_size = offset + struct_size(&v5param.einjv2_struct,
--					component_arr, max_nr_components);
--				p = acpi_os_map_iomem(pa_v5, v5param_size);
-+				v66param_size = v5param_size - sizeof(*e) + e->length;
-+				p = acpi_os_map_iomem(pa_v5, v66param_size);
- 			}
-+
- 			return p;
- 		}
- 	}
-@@ -527,6 +539,7 @@ static int __einj_error_inject(u32 type,
- 			       u64 param3, u64 param4)
- {
- 	struct apei_exec_context ctx;
-+	u32 param_size = is_v2 ? v66param_size : v5param_size;
- 	u64 val, trigger_paddr, timeout = FIRMWARE_TIMEOUT;
- 	int i, rc;
- 
-@@ -539,11 +552,11 @@ static int __einj_error_inject(u32 type,
- 	if (acpi5) {
- 		struct set_error_type_with_address *v5param;
- 
--		v5param = kmalloc(v5param_size, GFP_KERNEL);
-+		v5param = kmalloc(param_size, GFP_KERNEL);
- 		if (!v5param)
- 			return -ENOMEM;
- 
--		memcpy_fromio(v5param, einj_param, v5param_size);
-+		memcpy_fromio(v5param, einj_param, param_size);
- 		v5param->type = type;
- 		if (type & ACPI5_VENDOR_BIT) {
- 			switch (vendor_flags) {
-@@ -601,7 +614,7 @@ static int __einj_error_inject(u32 type,
- 				break;
- 			}
- 		}
--		memcpy_toio(einj_param, v5param, v5param_size);
-+		memcpy_toio(einj_param, v5param, param_size);
- 		kfree(v5param);
- 	} else {
- 		rc = apei_exec_run(&ctx, ACPI_EINJ_SET_ERROR_TYPE);
-@@ -1099,9 +1112,14 @@ static void einj_remove(struct faux_devi
- 	struct apei_exec_context ctx;
- 
- 	if (einj_param) {
--		acpi_size size = (acpi5) ?
--			v5param_size :
--			sizeof(struct einj_parameter);
-+		acpi_size size;
-+
-+		if (v66param_size)
-+			size = v66param_size;
-+		else if (acpi5)
-+			size = v5param_size;
-+		else
-+			size = sizeof(struct einj_parameter);
- 
- 		acpi_os_unmap_iomem(einj_param, size);
- 		if (vendor_errors.size)
+ static void mptcp_worker(struct work_struct *work)
 
 
