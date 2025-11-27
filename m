@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147D828D8E8;
-	Thu, 27 Nov 2025 14:49:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350FB3128D0;
+	Thu, 27 Nov 2025 14:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254995; cv=none; b=G5zDYP17AnINy637pKjqKgGtbokU3dA1msHPOlDeHfhf7utJmoxehivkyZ//rnXFlaE5YRcU/ZIGURqVvXJsoFQ93OAgCOhNYf8GI2OrHWvSrFwzlz+Z+nUBPStusiIvSng2TUF91i4wmuvzZiSOpCuG5beFQDP2fpZT+W5Rr5U=
+	t=1764254999; cv=none; b=Dg0HmyyGAGiZne2lGCHT+55jy4C/StoEuxY3tCY5PYsQLkjHflmy80Cay6pUgLS37AefvAAjoY1P2NOon2U6xG7eutKNOJar5VzEocDcVfBungfJoWO3FCFfdPW29tphgcA312JPyWz9bsBwMK34AFXfms235daBbYGBhQ77b+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254995; c=relaxed/simple;
-	bh=UhzXs1XAn0rYVveesrCNV955Xw+Z4ULE63E9nONai+E=;
+	s=arc-20240116; t=1764254999; c=relaxed/simple;
+	bh=sX4JdTQKo8yosdp5XJtgE2GI7PGzAr/nA7v8KnOpeBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cB2P8mFcNBH52iK4UVee05xunwT3eMSs7MzBK5TiqNfNjvBoRciPG7/RqiOXfn+APFlIOWtqjMWbKkG2Tc/DyQYxpgOziw3PKJ+RFLPO84NtEEfFu4eLlHC+xgkEQu7AJceGXwkgdp4cdrwNLeVF9r1miAI1VpaSroAMTsMu+os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEvLEeNB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DW893mmiTEqCyxMeJMWE+KBbONf+IGbuxpkJHOiwxGer8QQNhYWkYsifRzm4MG1e9dc8CMDx7wkd2p25evDmDnCCnfYPjP5ohpZBFyRrzdKoKLwWBiS8MPtdom1w5GzvfT+Irb01C74M9/VxBRzPa0vHvuAkkS5veqdCjteCR5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGivUXTl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEvLEeNB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9449EC4CEF8;
-	Thu, 27 Nov 2025 14:49:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGivUXTl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 629A6C4CEF8;
+	Thu, 27 Nov 2025 14:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254995;
-	bh=UhzXs1XAn0rYVveesrCNV955Xw+Z4ULE63E9nONai+E=;
+	s=korg; t=1764254997;
+	bh=sX4JdTQKo8yosdp5XJtgE2GI7PGzAr/nA7v8KnOpeBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hEvLEeNBfPd5SJQsi7A/OktqfYtJhjtDJKRUzrMdpH/8TgnyO8m0MSndXAUOGI7v9
-	 khKazMLn6FPf4QFulWmnwSAJKA54SB8DlQVzzWYv2mQwjrhomGKzwuoSm59V2nQfeS
-	 0nF4te+be/oanUgkaGoFMuN16PLDjvTW+TZu9OMY=
+	b=eGivUXTl3AhVyKfaHKa7z5lfZhLmzMoOn7ZVErWPvyV6NaZQVTNwq+UwD+RO+JOew
+	 OkgYvR4OpBAlq4P6W4yhNZu9FqueDoksy8r+JZz6+DSC1aiiSrhYkE3/YPk6XBoU0D
+	 kZOPQxVgM6T6CL7NPrch/7SH/n3rsfa9eymKx7Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+87be6809ed9bf6d718e3@syzkaller.appspotmail.com,
-	David Howells <dhowells@redhat.com>,
-	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 56/86] cifs: fix memory leak in smb3_fs_context_parse_param error path
-Date: Thu, 27 Nov 2025 15:46:12 +0100
-Message-ID: <20251127144029.878119860@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 25/86] MIPS: Malta: Fix !EVA SOC-it PCI MMIO
+Date: Thu, 27 Nov 2025 15:45:41 +0100
+Message-ID: <20251127144028.741061553@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -53,64 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 7e4d9120cfa413dd34f4f434befc5dbe6c38b2e5 ]
+commit ebd729fef31620e0bf74cbf8a4c7fda73a2a4e7e upstream.
 
-Add proper cleanup of ctx->source and fc->source to the
-cifs_parse_mount_err error handler. This ensures that memory allocated
-for the source strings is correctly freed on all error paths, matching
-the cleanup already performed in the success path by
-smb3_cleanup_fs_context_contents().
-Pointers are also set to NULL after freeing to prevent potential
-double-free issues.
+Fix a regression that has caused accesses to the PCI MMIO window to
+complete unclaimed in non-EVA configurations with the SOC-it family of
+system controllers, preventing PCI devices from working that use MMIO.
 
-This change fixes a memory leak originally detected by syzbot. The
-leak occurred when processing Opt_source mount options if an error
-happened after ctx->source and fc->source were successfully
-allocated but before the function completed.
+In the non-EVA case PHYS_OFFSET is set to 0, meaning that PCI_BAR0 is
+set with an empty mask (and PCI_HEAD4 matches addresses starting from 0
+accordingly).  Consequently all addresses are matched for incoming DMA
+accesses from PCI.  This seems to confuse the system controller's logic
+and outgoing bus cycles targeting the PCI MMIO window seem not to make
+it to the intended devices.
 
-The specific leak sequence was:
-1. ctx->source = smb3_fs_context_fullpath(ctx, '/') allocates memory
-2. fc->source = kstrdup(ctx->source, GFP_KERNEL) allocates more memory
-3. A subsequent error jumps to cifs_parse_mount_err
-4. The old error handler freed passwords but not the source strings,
-causing the memory to leak.
+This happens as well when a wider mask is used with PCI_BAR0, such as
+0x80000000 or 0xe0000000, that makes addresses match that overlap with
+the PCI MMIO window, which starts at 0x10000000 in our configuration.
 
-This issue was not addressed by commit e8c73eb7db0a ("cifs: client:
-fix memory leak in smb3_fs_context_parse_param"), which only fixed
-leaks from repeated fsconfig() calls but not this error path.
+Set the mask in PCI_BAR0 to 0xf0000000 for non-EVA then, covering the
+non-EVA maximum 256 MiB of RAM, which is what YAMON does and which used
+to work correctly up to the offending commit.  Set PCI_P2SCMSKL to match
+PCI_BAR0 as required by the system controller's specification, and match
+PCI_P2SCMAPL to PCI_HEAD4 for identity mapping.
 
-Patch updated with minor change suggested by kernel test robot
+Verified with:
 
-Reported-by: syzbot+87be6809ed9bf6d718e3@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=87be6809ed9bf6d718e3
-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Core board type/revision =      0x0d (Core74K) / 0x01
+System controller/revision =    MIPS SOC-it 101 OCP / 1.3   SDR-FW-4:1
+Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x1c
+Processor ID/revision =         0x97 (MIPS 74Kf) / 0x4c
+
+for non-EVA and with:
+
+Core board type/revision =      0x0c (CoreFPGA-5) / 0x00
+System controller/revision =    MIPS ROC-it2 / 0.0   FW-1:1 (CLK_unknown) GIC
+Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x00
+Processor ID/revision =         0xa0 (MIPS interAptiv UP) / 0x20
+
+for EVA/non-EVA, fixing:
+
+defxx 0000:00:12.0: assign IRQ: got 10
+defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
+0000:00:12.0: Could not read adapter factory MAC address!
+
+vs:
+
+defxx 0000:00:12.0: assign IRQ: got 10
+defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
+0000:00:12.0: DEFPA at MMIO addr = 0x10142000, IRQ = 10, Hardware addr = 00-00-f8-xx-xx-xx
+0000:00:12.0: registered as fddi0
+
+for non-EVA and causing no change for EVA.
+
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 422dd256642b ("MIPS: Malta: Allow PCI devices DMA to lower 2GB physical")
+Cc: stable@vger.kernel.org # v4.9+
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/mips/mti-malta/malta-init.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
-index cf233cb9c1943..a64c0b0dbec78 100644
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -1726,6 +1726,10 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
- 	ctx->password = NULL;
- 	kfree_sensitive(ctx->password2);
- 	ctx->password2 = NULL;
-+	kfree(ctx->source);
-+	ctx->source = NULL;
-+	kfree(fc->source);
-+	fc->source = NULL;
- 	return -EINVAL;
- }
+--- a/arch/mips/mti-malta/malta-init.c
++++ b/arch/mips/mti-malta/malta-init.c
+@@ -241,16 +241,22 @@ mips_pci_controller:
+ #endif
  
--- 
-2.51.0
-
+ 		/*
+-		 * Setup the Malta max (2GB) memory for PCI DMA in host bridge
+-		 * in transparent addressing mode.
++		 * Set up memory mapping in host bridge for PCI DMA masters,
++		 * in transparent addressing mode.  For EVA use the Malta
++		 * maximum of 2 GiB memory in the alias space at 0x80000000
++		 * as per PHYS_OFFSET.  Otherwise use 256 MiB of memory in
++		 * the regular space, avoiding mapping the PCI MMIO window
++		 * for DMA as it seems to confuse the system controller's
++		 * logic, causing PCI MMIO to stop working.
+ 		 */
+-		mask = PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH;
+-		MSC_WRITE(MSC01_PCI_BAR0, mask);
+-		MSC_WRITE(MSC01_PCI_HEAD4, mask);
++		mask = PHYS_OFFSET ? PHYS_OFFSET : 0xf0000000;
++		MSC_WRITE(MSC01_PCI_BAR0,
++			  mask | PCI_BASE_ADDRESS_MEM_PREFETCH);
++		MSC_WRITE(MSC01_PCI_HEAD4,
++			  PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH);
+ 
+-		mask &= MSC01_PCI_BAR0_SIZE_MSK;
+ 		MSC_WRITE(MSC01_PCI_P2SCMSKL, mask);
+-		MSC_WRITE(MSC01_PCI_P2SCMAPL, mask);
++		MSC_WRITE(MSC01_PCI_P2SCMAPL, PHYS_OFFSET);
+ 
+ 		/* Don't handle target retries indefinitely.  */
+ 		if ((data & MSC01_PCI_CFG_MAXRTRY_MSK) ==
 
 
