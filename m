@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D642765EA;
-	Thu, 27 Nov 2025 14:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786C026F2A7;
+	Thu, 27 Nov 2025 14:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254857; cv=none; b=g0PI8z71F3xfXIWp7T6AEC1a5X21uw/8iYzcCruF52hKEix3TxV11guteLcVdb4rL+0bUvIq3CDYjqMAj6JIsveKjh8pEB1KNagJZQkdNbdHZmR/bdltErl7LkdUm+ygE8r2r9nZKhOxdSTsbVX2ef/KHzH8mOW1AtZacoq9INo=
+	t=1764254859; cv=none; b=fDlUxnD2fG9bCLow2xxa7/RgDcdaK33l210tv1iYP56gIFKt5KAFIn2Me8e6ULvhB/SkbGb4nwPakRsbQ3AIF06aGxfoDGmUPOkPvsKMUWwR4r7QEJYin3qZ66QC6YUm4ecfZEwzVhbIdEmeuiUh4Y1qcqt4BVfnpZDkKQV3AU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254857; c=relaxed/simple;
-	bh=9dIlhuXmO59Zp+/jn3NnhNXQtVScprOdeP3DV2bw4b4=;
+	s=arc-20240116; t=1764254859; c=relaxed/simple;
+	bh=OdBKVo/P4Ugp242yJpDa+nfmMSMHBRD8wyhvqbHV/c8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmDXm02UXzhKhAXUIeM27jr1k0zDav1ptwHt5dGiolznBj1FtJASPqkCbQZA48Rhj1sG9D598vN8I6NSptnKv/DwPW0vtE4jVXh++kwXuIyh00Nfz6RtdUtDrQ9C6giX8NsVGqxhSPaYLi6gJldBP/CjfTAZi5EhOczMLQMBPOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpIiYLdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kl2LH475/lPOWrqV/9lGbVpBz0AHRX6WRZJxgayogP5biF3XK5/ZaOvly+Al50jjficzEXlpdMBi3HpaCPpsk0XVGId7aU+lOkxeLEWZDfEJ0p2QeCyH1lTBTFAOv4zNK8BcE+Cw3f50xM8det+5ZIPsAqtKWO4NHEpRkaythm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/upgOr+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpIiYLdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D78C4CEF8;
-	Thu, 27 Nov 2025 14:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/upgOr+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDA6C4CEF8;
+	Thu, 27 Nov 2025 14:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254856;
-	bh=9dIlhuXmO59Zp+/jn3NnhNXQtVScprOdeP3DV2bw4b4=;
+	s=korg; t=1764254859;
+	bh=OdBKVo/P4Ugp242yJpDa+nfmMSMHBRD8wyhvqbHV/c8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpIiYLdRCC6k/2fo8p/InM4HJZIrtvdGOQtt6odm0bLBZquoWXEzQ86Td3GTicjtH
-	 O9wZAGSs0qW/ZZwLypvQwPZtliF9AUQfJqLvhDqHWILJ3lmtlLdFFGlhTfKM2BVQHv
-	 JHfEW2VCehf8llCSv5+QO8N2QdRetZJqNiIJhnL0=
+	b=O/upgOr+hvbNQD+AubGJE/bS5/viX7YtDy5aV2Zl5gsnRmd/vecVBxRDwo8L5d/Sb
+	 UDLHqo6zK3OmPzvCZuIeqEhedse8rtTa24aP1D+0K3GIi+ZFSRREZUce7lXRjBOy7K
+	 gUb0NFj1K6rMjZvB6gmzhBlu6RDDXnxbrkcSeRNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.6 10/86] MIPS: mm: Prevent a TLB shutdown on initial uniquification
-Date: Thu, 27 Nov 2025 15:45:26 +0100
-Message-ID: <20251127144028.191081287@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 11/86] smb: client: introduce close_cached_dir_locked()
+Date: Thu, 27 Nov 2025 15:45:27 +0100
+Message-ID: <20251127144028.229212120@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -51,174 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit 9f048fa487409e364cf866c957cf0b0d782ca5a3 upstream.
+commit a9d1f38df7ecd0e21233447c9cc6fa1799eddaf3 upstream.
 
-Depending on the particular CPU implementation a TLB shutdown may occur
-if multiple matching entries are detected upon the execution of a TLBP
-or the TLBWI/TLBWR instructions.  Given that we don't know what entries
-we have been handed we need to be very careful with the initial TLB
-setup and avoid all these instructions.
+Replace close_cached_dir() calls under cfid_list_lock with a new
+close_cached_dir_locked() variant that uses kref_put() instead of
+kref_put_lock() to avoid recursive locking when dropping references.
 
-Therefore read all the TLB entries one by one with the TLBR instruction,
-bypassing the content addressing logic, and truncate any large pages in
-place so as to avoid a case in the second step where an incoming entry
-for a large page at a lower address overlaps with a replacement entry
-chosen at another index.  Then preinitialize the TLB using addresses
-outside our usual unique range and avoiding clashes with any entries
-received, before making the usual call to local_flush_tlb_all().
+While the existing code works if the refcount >= 2 invariant holds,
+this area has proven error-prone. Make deadlocks impossible and WARN
+on invariant violations.
 
-This fixes (at least) R4x00 cores if TLBP hits multiple matching TLB
-entries (SGI IP22 PROM for examples sets up all TLBs to the same virtual
-address).
-
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com> # Boston I6400, M5150 sim
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |  102 ++++++++++++++++++++++++++++++-------------------
- 1 file changed, 64 insertions(+), 38 deletions(-)
+ fs/smb/client/cached_dir.c |   41 ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 38 insertions(+), 3 deletions(-)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -15,6 +15,7 @@
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-+#include <linux/sort.h>
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -16,6 +16,7 @@ static struct cached_fid *init_cached_di
+ static void free_cached_dir(struct cached_fid *cfid);
+ static void smb2_close_cached_fid(struct kref *ref);
+ static void cfids_laundromat_worker(struct work_struct *work);
++static void close_cached_dir_locked(struct cached_fid *cfid);
  
- #include <asm/cpu.h>
- #include <asm/cpu-type.h>
-@@ -506,55 +507,79 @@ static int __init set_ntlb(char *str)
+ struct cached_dir_dentry {
+ 	struct list_head entry;
+@@ -362,7 +363,7 @@ out:
+ 			 * lease. Release one here, and the second below.
+ 			 */
+ 			cfid->has_lease = false;
+-			close_cached_dir(cfid);
++			close_cached_dir_locked(cfid);
+ 		}
+ 		spin_unlock(&cfids->cfid_list_lock);
  
- __setup("ntlb=", set_ntlb);
+@@ -448,18 +449,52 @@ void drop_cached_dir_by_name(const unsig
+ 	spin_lock(&cfid->cfids->cfid_list_lock);
+ 	if (cfid->has_lease) {
+ 		cfid->has_lease = false;
+-		close_cached_dir(cfid);
++		close_cached_dir_locked(cfid);
+ 	}
+ 	spin_unlock(&cfid->cfids->cfid_list_lock);
+ 	close_cached_dir(cfid);
+ }
  
--/* Initialise all TLB entries with unique values */
-+
-+/* Comparison function for EntryHi VPN fields.  */
-+static int r4k_vpn_cmp(const void *a, const void *b)
+-
++/**
++ * close_cached_dir - drop a reference of a cached dir
++ *
++ * The release function will be called with cfid_list_lock held to remove the
++ * cached dirs from the list before any other thread can take another @cfid
++ * ref. Must not be called with cfid_list_lock held; use
++ * close_cached_dir_locked() called instead.
++ *
++ * @cfid: cached dir
++ */
+ void close_cached_dir(struct cached_fid *cfid)
+ {
++	lockdep_assert_not_held(&cfid->cfids->cfid_list_lock);
+ 	kref_put_lock(&cfid->refcount, smb2_close_cached_fid, &cfid->cfids->cfid_list_lock);
+ }
+ 
++/**
++ * close_cached_dir_locked - put a reference of a cached dir with
++ * cfid_list_lock held
++ *
++ * Calling close_cached_dir() with cfid_list_lock held has the potential effect
++ * of causing a deadlock if the invariant of refcount >= 2 is false.
++ *
++ * This function is used in paths that hold cfid_list_lock and expect at least
++ * two references. If that invariant is violated, WARNs and returns without
++ * dropping a reference; the final put must still go through
++ * close_cached_dir().
++ *
++ * @cfid: cached dir
++ */
++static void close_cached_dir_locked(struct cached_fid *cfid)
 +{
-+	long v = *(unsigned long *)a - *(unsigned long *)b;
-+	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
-+	return s ? (v != 0) | v >> s : v;
++	lockdep_assert_held(&cfid->cfids->cfid_list_lock);
++
++	if (WARN_ON(kref_read(&cfid->refcount) < 2))
++		return;
++
++	kref_put(&cfid->refcount, smb2_close_cached_fid);
 +}
 +
-+/*
-+ * Initialise all TLB entries with unique values that do not clash with
-+ * what we have been handed over and what we'll be using ourselves.
-+ */
- static void r4k_tlb_uniquify(void)
- {
--	int entry = num_wired_entries();
-+	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
-+	int tlbsize = current_cpu_data.tlbsize;
-+	int start = num_wired_entries();
-+	unsigned long vpn_mask;
-+	int cnt, ent, idx, i;
-+
-+	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
-+	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
- 
- 	htw_stop();
--	write_c0_entrylo0(0);
--	write_c0_entrylo1(0);
- 
--	while (entry < current_cpu_data.tlbsize) {
--		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
--		unsigned long asid = 0;
--		int idx;
-+	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
-+		unsigned long vpn;
- 
--		/* Skip wired MMID to make ginvt_mmid work */
--		if (cpu_has_mmid)
--			asid = MMID_KERNEL_WIRED + 1;
-+		write_c0_index(i);
-+		mtc0_tlbr_hazard();
-+		tlb_read();
-+		tlb_read_hazard();
-+		vpn = read_c0_entryhi();
-+		vpn &= vpn_mask & PAGE_MASK;
-+		tlb_vpns[cnt] = vpn;
- 
--		/* Check for match before using UNIQUE_ENTRYHI */
--		do {
--			if (cpu_has_mmid) {
--				write_c0_memorymapid(asid);
--				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
--			} else {
--				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
--			}
--			mtc0_tlbw_hazard();
--			tlb_probe();
--			tlb_probe_hazard();
--			idx = read_c0_index();
--			/* No match or match is on current entry */
--			if (idx < 0 || idx == entry)
--				break;
--			/*
--			 * If we hit a match, we need to try again with
--			 * a different ASID.
--			 */
--			asid++;
--		} while (asid < asid_mask);
--
--		if (idx >= 0 && idx != entry)
--			panic("Unable to uniquify TLB entry %d", idx);
--
--		write_c0_index(entry);
-+		/* Prevent any large pages from overlapping regular ones.  */
-+		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
- 		mtc0_tlbw_hazard();
- 		tlb_write_indexed();
--		entry++;
-+		tlbw_use_hazard();
- 	}
- 
-+	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
-+
-+	write_c0_pagemask(PM_DEFAULT_MASK);
-+	write_c0_entrylo0(0);
-+	write_c0_entrylo1(0);
-+
-+	idx = 0;
-+	ent = tlbsize;
-+	for (i = start; i < tlbsize; i++)
-+		while (1) {
-+			unsigned long entryhi, vpn;
-+
-+			entryhi = UNIQUE_ENTRYHI(ent);
-+			vpn = entryhi & vpn_mask & PAGE_MASK;
-+
-+			if (idx >= cnt || vpn < tlb_vpns[idx]) {
-+				write_c0_entryhi(entryhi);
-+				write_c0_index(i);
-+				mtc0_tlbw_hazard();
-+				tlb_write_indexed();
-+				ent++;
-+				break;
-+			} else if (vpn == tlb_vpns[idx]) {
-+				ent++;
-+			} else {
-+				idx++;
-+			}
-+		}
-+
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
-@@ -600,6 +625,7 @@ static void r4k_tlb_configure(void)
- 
- 	/* From this point on the ARC firmware is dead.	 */
- 	r4k_tlb_uniquify();
-+	local_flush_tlb_all();
- 
- 	/* Did I tell you that ARC SUCKS?  */
- }
+ /*
+  * Called from cifs_kill_sb when we unmount a share
+  */
 
 
