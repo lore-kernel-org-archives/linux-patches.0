@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7833115A6;
-	Thu, 27 Nov 2025 15:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6486F3115A6;
+	Thu, 27 Nov 2025 15:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255871; cv=none; b=T/5JsFuPeUalPQPNdPsPYMnGRnAxIrl+X99H4JTeOgiJ0kQa71Tk+A3EAmc7dkKqT9FyJ3rahLd12K7suZ1xzTbEAQ241wOIXuc/8SKnDpn51WaKopdDH+5JwDQjnJDPmDWzXDopErMeWP89U1gWweZYVM/i88kwDo7Qhzeouek=
+	t=1764255874; cv=none; b=e9uBOWeBK1qrFKSiizF0PR6UGsCX4tk0iqzGRVpWW8cZBqXx936OWzEKj57Vb8DEa6ZwlEsECcceqCSGq2An1S2JbqrqAosAdIaDAS3TvQqNrazBtiLEoDdC1ABI3tF6WOsPeXjOyaoYESIx0LJ8VYn9S4vz+rETEXCRB2g4yB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255871; c=relaxed/simple;
-	bh=Zlhx6Zr58a3PkDtOZoVLjzwbX44Md/oJM1nqJaMd3Kk=;
+	s=arc-20240116; t=1764255874; c=relaxed/simple;
+	bh=5X93YG0TRr5mwvDlfAPKksWBUuWKQc1FOPsuQ/Kv8ac=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1tCafx915zDyFdUI80geKVQgCi2Z4Q6GwYc2KKDU5cu7odppmvxEW9sl9jXrpRUFMAGkSHKXrcmbV+lX+14YA69jvGV1cj9l7SGwSp4K/5NY1c+vi1je9xJ81tf6CiloFu/xRh7hDdbxA2aFG33UK3rGs5hKYPjLc0IPLtFPls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EoBi01PT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hTmXHgWhHDYr+fYevOc6tE82f/UOrB3AR4gBH+nyP32SLhBIOMXf6jVoLHoFM2bnLfTCbKp6rcZUOGi7xdy8RDJHmVxsx2zlg3JcbS4zk6rRSd3CTXdjaKeYzZRzLKqOkXT/7vjTfK2m10JSppZcar2gIMzG8TVcOR/I2hUv/eU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0o+EEVHD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EoBi01PT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDA0EC4CEF8;
-	Thu, 27 Nov 2025 15:04:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0o+EEVHD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD33C4CEF8;
+	Thu, 27 Nov 2025 15:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255871;
-	bh=Zlhx6Zr58a3PkDtOZoVLjzwbX44Md/oJM1nqJaMd3Kk=;
+	s=korg; t=1764255874;
+	bh=5X93YG0TRr5mwvDlfAPKksWBUuWKQc1FOPsuQ/Kv8ac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EoBi01PTRYcGskg56JS0S3/sf2mZuHBdn7C225zobJ9qwWOjZppI/Elm8Ajt8vhaJ
-	 H3fAcK/IRfLfVynE0zXJ5NuVKJ08H1Cnq73E1qTcTFe+6FnatamEthPPnGO5g6g+xf
-	 KwNWItn4G/LmbHIY3gt0NTnR3gFULHhXktGsPY6Y=
+	b=0o+EEVHDi+UKT40Lf3jqOU3X9ZgYVoHtk4Xuqp+zACKGPYCLDzJ9E7xgxMHMj8tmX
+	 I0/T1O9aJcPhdrCqsHI4MdzSuOmyhGEakk1q41/42h4rfJVCcfjkhs9LWTJBaQB0rS
+	 b5lip/gFU3BRtcqXCaZMJzLXQImC0xIhYvLath4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sidharth Seela <sidharthseela@gmail.com>,
+	SeongJae Park <sj@kernel.org>,
+	wang lian <lianux.mm@gmail.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 144/175] x86/microcode/AMD: Limit Entrysign signature checking to known generations
-Date: Thu, 27 Nov 2025 15:46:37 +0100
-Message-ID: <20251127144048.215615738@linuxfoundation.org>
+Subject: [PATCH 6.17 145/175] selftests: cachestat: Fix warning on declaration under label
+Date: Thu, 27 Nov 2025 15:46:38 +0100
+Message-ID: <20251127144048.251299660@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -50,59 +55,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Sidharth Seela <sidharthseela@gmail.com>
 
-[ Upstream commit 8a9fb5129e8e64d24543ebc70de941a2d77a9e77 ]
+[ Upstream commit 920aa3a7705a061cb3004572d8b7932b54463dbf ]
 
-Limit Entrysign sha256 signature checking to CPUs in the range Zen1-Zen5.
+Fix warning caused from declaration under a case label. The proper way
+is to declare variable at the beginning of the function. The warning
+came from running clang using LLVM=1; and is as follows:
 
-X86_BUG cannot be used here because the loading on the BSP happens way
-too early, before the cpufeatures machinery has been set up.
+-test_cachestat.c:260:3: warning: label followed by a declaration is a C23 extension [-Wc23-extensions]
+  260 |                 char *map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,
+      |
 
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/all/20251023124629.5385-1-bp@kernel.org
+Link: https://lore.kernel.org/r/20250929115405.25695-2-sidharthseela@gmail.com
+Signed-off-by: Sidharth Seela <sidharthseela@gmail.com>
+Reviewed-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: wang lian <lianux.mm@gmail.com>
+Reviewed-by: Dev Jain <dev.jain@arm.com>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Acked-by: Nhat Pham <nphamcs@gmail.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/microcode/amd.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ tools/testing/selftests/cachestat/test_cachestat.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
-index c5363e6563798..ff40fe7ef58eb 100644
---- a/arch/x86/kernel/cpu/microcode/amd.c
-+++ b/arch/x86/kernel/cpu/microcode/amd.c
-@@ -236,13 +236,31 @@ static bool need_sha_check(u32 cur_rev)
- 	return true;
- }
+diff --git a/tools/testing/selftests/cachestat/test_cachestat.c b/tools/testing/selftests/cachestat/test_cachestat.c
+index c952640f163b5..ab838bcb9ec55 100644
+--- a/tools/testing/selftests/cachestat/test_cachestat.c
++++ b/tools/testing/selftests/cachestat/test_cachestat.c
+@@ -226,7 +226,7 @@ bool run_cachestat_test(enum file_type type)
+ 	int syscall_ret;
+ 	size_t compute_len = PS * 512;
+ 	struct cachestat_range cs_range = { PS, compute_len };
+-	char *filename = "tmpshmcstat";
++	char *filename = "tmpshmcstat", *map;
+ 	struct cachestat cs;
+ 	bool ret = true;
+ 	int fd;
+@@ -257,7 +257,7 @@ bool run_cachestat_test(enum file_type type)
+ 		}
+ 		break;
+ 	case FILE_MMAP:
+-		char *map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,
++		map = mmap(NULL, filesize, PROT_READ | PROT_WRITE,
+ 				 MAP_SHARED, fd, 0);
  
-+static bool cpu_has_entrysign(void)
-+{
-+	unsigned int fam   = x86_family(bsp_cpuid_1_eax);
-+	unsigned int model = x86_model(bsp_cpuid_1_eax);
-+
-+	if (fam == 0x17 || fam == 0x19)
-+		return true;
-+
-+	if (fam == 0x1a) {
-+		if (model <= 0x2f ||
-+		    (0x40 <= model && model <= 0x4f) ||
-+		    (0x60 <= model && model <= 0x6f))
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
- static bool verify_sha256_digest(u32 patch_id, u32 cur_rev, const u8 *data, unsigned int len)
- {
- 	struct patch_digest *pd = NULL;
- 	u8 digest[SHA256_DIGEST_SIZE];
- 	int i;
- 
--	if (x86_family(bsp_cpuid_1_eax) < 0x17)
-+	if (!cpu_has_entrysign())
- 		return true;
- 
- 	if (!need_sha_check(cur_rev))
+ 		if (map == MAP_FAILED) {
 -- 
 2.51.0
 
