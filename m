@@ -1,46 +1,47 @@
 Received: from SA9PR02CU001.outbound.protection.outlook.com (mail-southcentralusazon11013005.outbound.protection.outlook.com [40.93.196.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D2223ABA7;
-	Thu, 27 Nov 2025 23:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A8A3246F4;
+	Thu, 27 Nov 2025 23:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.196.5
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764287655; cv=fail; b=m6mq0ynCiy2VEnXZ6MeK6xI5hmveocNv5aSEXTXx4AKjxjNx1LlIvceXheNw9WlcFlHxHk+7lqmfU6gGTl5HwrJvWg4JjDO+gSEPkL8mHSpZBS6EzixXLXnWiMQOlObIHlgNb51W4ctzhTGQ82GVKqDKUAlGTPDDzj6JA6hWhkc=
+	t=1764287657; cv=fail; b=av4athfFPYDI+W5poCEvKLYCiBGf0yzYC/uFlcDSxtnb6mzhdKomi37fuvmJJmfPcpWsAoTea40P6sJ53BpG5dVP8Q9u8ovOYw5Vm6oNx8wFl6R6t4M5VoDCm0N8/TTpblnJazvQO6oQDuWr4nUJZ3vZWaaJhDhwYWdQ8hPePZ0=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764287655; c=relaxed/simple;
-	bh=1S68Ds5UXfxJg4L7M+AnxW42TfyL0iIrp9+R5B53e68=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=Eip1cwnPnetIPZOBejwa3fD+j78XOWICyeoccPVj8B/tn0YDUV0iZxK31chNy3aId/YqQu8ebu/gluEiyY5KHneoshDNO/B0GTHO4Z3SCbuprviQtYVm6pTJexae1XTgr3OSkMzcR2xo2C9haUcBqiXJy8tRUhsYuCtuQqKst0Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=nMTNegTO; arc=fail smtp.client-ip=40.93.196.5
+	s=arc-20240116; t=1764287657; c=relaxed/simple;
+	bh=c4afCnkJnZHypHWynTAjWuvsedifq7oe5lF2Rt3GmU0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=AI/bRMUuXr7w9BS/iv5DrhlaFDoU1+F4f7kDnDhq20s9XGrzQcUy7AtXFgjQcw7y0g7xvjJApchR0BPj/fK2LcyenUq7YpmTZ+IQqp77guaABSwwddOQPGOML5Z1YLVm4hOYEGJEw+jrprxNH7x1Jp4ZhnrNUqqKBJN6Rlnq7GM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=kMsW4XBo; arc=fail smtp.client-ip=40.93.196.5
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="nMTNegTO"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="kMsW4XBo"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mbmzXhoEc3lQvZbdNUrcmjPE2QjhiF/dHcKVtJEurXAI+3ex2wSX8QSpMt9VJN3mET+fSywNHESGZ2jlphlamAvN2xYUSqvgwI19ISavuz7YsgjtyQC35cxjU1knebNGYyO8DMObdNyzbisGskJPbJMBRrthen/WUrDdyehNlti+bPyTGNcmJjLd6WilssXntqXwG9XGoHERzO86Pj3D+a6NgzKmL9j1SFqltv/RrHjIPZWmKnoWacoqnUtHmTUjeN74QjF8KYQbPxnLFJrZcRvWgh1CAa/cxwrVar5W5Nfn6/ndxJmsS23r2Ty106joLO/+NMaDz3grwj/9BGCgvw==
+ b=L+SptHEoUJe4K5RCwF4tAlz6VnuUcno72CQJ82S6uCzSi9qsS51EoILc5k0Z4scSl/fxRNJAoNNDyulC5BG0/T8dPM9ofcpzWcjK9vEYqn4OazrZibfFK3hlG1YSKrYHBMZsiKgJ5lpFEV5PspaeLde6x4j/GZkoAviPNxj35y8eXloLHkni7A2jtvbZOSzcwRHvo/1VLsZltoAlaUiQ2xLYjXEpVP2e10ZRfx714OZtKCo6AUl79mqM6dr3dEdSwkwnoBErAlB3J8GRpLyExZuRTxMyykbUj4eJ0acN97eqeQ+gjKy3z+zd21h9SErzkcKMyM0sgd8QnoN2dB4OEw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zOb1KWOXRLOAr3w+EkRijcE0F7jl0a6PGFE/Y0enrLI=;
- b=h1zJ7PjQfT24z2jgszCl0uFnJrTSkiVUBE6ngzuKq7femcPXXIbwxjWXrsRi+w3SiKVN/hiMEuGwMj1gAD54Zs9eF4Pyv2OWEipRQvcw6TwyyOQ+3tnEbQTCQUvsmAPAbVeJzAhrfxaoB4LiE06QFLGLY57dbwZNvVUvpuOZBkNd7gbfYN9VNtCkMCClfayWI9XheJ3q7Go1sKyGg6k08+pCf8+bUd9P+eIGMxz9LaW8nVJqAbyUTFOjiUtDmVZTo0uTvyx5p2dU/a/dTdev/+s0DIKXMvXf8rIgTFU3RJHAwxwXS7gJwshJg7sNgCO+zE3kkW+V414v10w/SgKHFg==
+ bh=+mMureuZnPL65iUkMtXhBjsHWoxOZmK7u7wqy9h5KdA=;
+ b=XJqxU3hQrbUj0bW3f8rhZ0KIJ4jedk6YLWgVYzZ1Ft/q7oFj41/DO5+fWHrf5Jqsg3+8MCgtEW6u2y0jpAN8h6pASs6WoWf7rqvpxZhJ3IFFI0b9QwnWN4ZvG9rlqLxeVJnG9aQ0E2UGWiCrLNwGqWGT2nF4W3jN7Ekm5G/no7c25wVRSzXtQsWBpXfyjp0s5mU/ENVAQ8TcBkcTn1yFrf7Xu1C6Lq+qWRLCJeWyM2Wvzuel6eWHHPkUE8lS/WWyZGADGVW4zSOTkZ0aR1vPkUMU2DJqRHTJRnEKSsvEmf74uYiuRT6tFk8QxmgkeS0u+FERZiclzsmUjaZDXrr+HA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zOb1KWOXRLOAr3w+EkRijcE0F7jl0a6PGFE/Y0enrLI=;
- b=nMTNegTOFFTtWhk7/YeDXVzwZR846CUPAl+C57jq43IOWx6DT05u68RO3AYn2W8Ej5EvTLHA84tMg0YU5oQ8xXpt9Loa/pIrkrSioZgA+Kn6Lznz5S1Ru7InL5qcxFukiQDA/F24uWPmN02J/v4iPDUK/KvdxcyABpah2bGNOVw6859uKMkRI8oRMdQzGQHK9ofKAgp1zqhdDNFHlqhGWhPISVRV3ANxHBzYxkni+qmAB6ClUNlFsqYzDEJ+Sib55kmbqe7P45T4T1ZmCLQUURdGhtgECaYggYIr6Ddere3PVrVL9UNax+Bj6xNWizL+zybTeZm6z1Jo4ZrGeYq1cw==
+ bh=+mMureuZnPL65iUkMtXhBjsHWoxOZmK7u7wqy9h5KdA=;
+ b=kMsW4XBoA4zuktSQdwhV2hjSS/+3+Zn8xfhfkXxCBC7Ro93sjscy0iNp5PoopFiDegGAuJ5H7ueKU5VCHe3+K9WdI9TW2GiYA6kA1x5Y5F1wxeLj51AKvc1pSAH4UAsjCcD1GH27H7TFrqebxD6c8yWxNC1LMixRVwq1vM+X94iN5X5IqhdkFGZH3YInjWhmb652DjRAK3poyx/d9kR9MdE51E5c2uj97n40rJ+udf2301B6M1m2q6yG8fLhU9jwRKQ9ajinDjNWyym1OphKf+77rRN/oOoga6LaYADT3bkNO2gQQ2r++LnM/wSNAQESaYQ1IQY394+UoPpqkiYgLA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
  by SJ0PR12MB6926.namprd12.prod.outlook.com (2603:10b6:a03:485::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.15; Thu, 27 Nov
- 2025 23:54:09 +0000
+ 2025 23:54:10 +0000
 Received: from MN2PR12MB3613.namprd12.prod.outlook.com
  ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
  ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9366.012; Thu, 27 Nov 2025
- 23:54:09 +0000
+ 23:54:10 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: David Woodhouse <dwmw2@infradead.org>,
 	iommu@lists.linux.dev,
@@ -55,13 +56,15 @@ Cc: Lu Baolu <baolu.lu@linux.intel.com>,
 	Kevin Tian <kevin.tian@intel.com>,
 	patches@lists.linux.dev,
 	Tina Zhang <tina.zhang@intel.com>
-Subject: [PATCH 0/2] Fix VT-d when the IOVA limit is small
-Date: Thu, 27 Nov 2025 19:54:06 -0400
-Message-ID: <0-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
+Subject: [PATCH 1/2] iommupt/vtd: Allow VT-d to have a larger table top than the vasz requires
+Date: Thu, 27 Nov 2025 19:54:07 -0400
+Message-ID: <1-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
+In-Reply-To: <0-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
+References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MN2PR16CA0061.namprd16.prod.outlook.com
- (2603:10b6:208:234::30) To MN2PR12MB3613.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1P222CA0027.NAMP222.PROD.OUTLOOK.COM
+ (2603:10b6:208:2c7::32) To MN2PR12MB3613.namprd12.prod.outlook.com
  (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -71,171 +74,229 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|SJ0PR12MB6926:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5a7b3136-46d1-4680-c447-08de2e1041fe
+X-MS-Office365-Filtering-Correlation-Id: 458c278d-b43c-46e6-8c4a-08de2e104208
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?eEuuySspRg/7HHQxCZY9jbEz6twNtuTk5Y3bAkky2Nrhjq0MGICQkbEQJ/Fk?=
- =?us-ascii?Q?zcdMroHENvgeHBFb717Tc9kRGQ4sEds8OC8CA+zVDUBpYUV3rcktoEKAN6/n?=
- =?us-ascii?Q?H1pPEAPNtxQ6rHEPVps6dZjIzh9fMOx9XNHKPzSbZYrmhfVr4NUnl4WwzvY9?=
- =?us-ascii?Q?vxW8v388GfslI++S121LP0CV0cVZhPpahUcm7DprGfnq1DRuqI1eXefIUZyN?=
- =?us-ascii?Q?jUIDg4zUTQYvf3n/A91VwHqfb3SL2tv2gy0kzxBbbu1aoNBeVA5EN3U0N6Vt?=
- =?us-ascii?Q?UcrDCJtipRy5QbOcxtGhZukwljdFrFSe3jR3MbjpTAIGuUVF1T5P5zJBMnib?=
- =?us-ascii?Q?Nf476aR0MAH6alV1DLzOigLOzn66jT19KRDO9FsSmnPnzwKCUeMAV9Mfqdg9?=
- =?us-ascii?Q?wm+e13WDKex8rf8/eoSmVm2MB5MRpjVOj/HQ+eXw6oGJ9BoImsbViXs7+KDP?=
- =?us-ascii?Q?WtOG4KuGygCKNXOYIVBGnY/VfFNSMJhT/WFNXeia1u42V3kgnOxyyAIvmYWj?=
- =?us-ascii?Q?4L6xFBMpeyzJJMbgcBJy28JK2Ue7UwLgLm8sM+xHs/a3pUQMJcfRNa2xii+B?=
- =?us-ascii?Q?Nc56UxoKIFYckXbGiGEcVvn/HYgHO754e7x6W60ZpR7EbxvI6cNJ1WwCf7N4?=
- =?us-ascii?Q?xnEG43WrkbTGwzjpRWZWZ9nwKGWW6TuzQwwpePXzvWGmLNq5sNitUBUZVsdG?=
- =?us-ascii?Q?cQOgaNRL3UFFKSpQIAkC91V7VDYsizUBwdAVjCf5/hVpEAFTO7yYXvqK5E3J?=
- =?us-ascii?Q?bgZORf7jvTGH/+o2db1M43Ck4bpooT4P+ootcY/w2NGL0wkwMlxR+u7XTyGu?=
- =?us-ascii?Q?/+Lhx0XJjYCc6z1jMNFtxj9C26P07MnSY4rBvNPWtZayByZU7OTQMmE6n3Jf?=
- =?us-ascii?Q?02l/hlGFqPd3fbult3O7sunmBn7Zba6ywqbx44mEyx5QZop6/iWhuMiiBadq?=
- =?us-ascii?Q?EImYRgFaqRJaJ87FfZbuxqKlIleMAO6CY9U/kvrdclGwvN2X8LeEIgarAZlx?=
- =?us-ascii?Q?KASjl40oAQMJAxS0x2+Xuc9xlPDhPTBUQD0Bz4Ros/KY2OM0Pj1pV0whSj1P?=
- =?us-ascii?Q?bHox9iMYODJq9Fsxefq+NzJsS+ZSEmWBc36vQwpibtd9m/cqc+hbTxpBMak7?=
- =?us-ascii?Q?ZLBq7ASiAIO/eH9X9jjwEHINJu99CcuTl0RtnvEvaB4HMXPM58I45rlZv2jb?=
- =?us-ascii?Q?e9dsuYaSQetOmgthHikOOh9JIHSE3z6FaVnCqNNiHoLuwxOPvD7nUrisc651?=
- =?us-ascii?Q?evC1Uuxnvkm8TCFTnKVbXU/jD4DmwHhnNYCF4nAa7A0gBYHxTsEr4OklULuS?=
- =?us-ascii?Q?i51hw3PVsnUw64OIB3hJ77OH8l9jJwvDU4K3Ne2KkMyFuBMZahT1JUUfOD8W?=
- =?us-ascii?Q?dni1U84Ig0ELIyShOTBFXvBY21ikIML9oOGkafHe20PwELn0IK5gZ/ryha5T?=
- =?us-ascii?Q?kPew/Lz2ZK70ruPUH7rp5WyxvuxlH1E2?=
+	=?us-ascii?Q?E36dz1GWYoAogsMDv8eaJ4ng8QmlPNncl3omEZ3r9+4/yESzgx6WsMqKv5Ml?=
+ =?us-ascii?Q?pv0qmY7m40SOabuk0tT4RbNZ/qbQECYHtydKOi5cEHxCvi75mC8wT1YlxIK7?=
+ =?us-ascii?Q?zSTs8+XSOOZJbLrzdusVhVuG45bgHF+OEk0CtxSf/YFaINYBnNZZlGC/Kge9?=
+ =?us-ascii?Q?dhAWYuqRtbF02Wy3+O/3cTIP4q6rizNdMepIf7aE7VBQqG40nqqHm14yRYz2?=
+ =?us-ascii?Q?c2R3gqrX4o5MfnmpaGMLl4RxY3prnRRRjBPBwfCaygj/yW1mSde/O2HqLeMG?=
+ =?us-ascii?Q?wsUk5IHbw+hWMB/tvznLf7H3A7vN8F6dslbGQgy/aVB+FCqTDWAO4npKey1S?=
+ =?us-ascii?Q?zX/ABRj4lFoOegsf8bJX3tf4FmFUlx/G+hugfzwIpekiKDiTp6hex6PbQJMQ?=
+ =?us-ascii?Q?mJjsOHWTxPrkvP2ChVwR5daHa25JewNTH5ZWD/KwEaari/tlc2QtcyauuJEV?=
+ =?us-ascii?Q?qGHYZ66o23Rb0ve+xHNFipVlCKbAzGyBnRlGh2A0d2EB2OghQ88t0MXrQTEm?=
+ =?us-ascii?Q?w67PoUfQcTx+40zpLAQXFbDd1XB01+x0buV+EzfsMEYRCsnbV8TrnZpA30rt?=
+ =?us-ascii?Q?0EZfwNRrIU8qJ6gHBtbqtrIf0jtaMFBtZ9yBZGHwHUPVmC0x4kJ80fkROTZx?=
+ =?us-ascii?Q?7mDUbayakffUjyQEh1BFkzxyVTli+VvEVPu6oKTZgIy1n9XfY3PaCnkFyTqx?=
+ =?us-ascii?Q?wTpY1CuGYzLkOcmVz32/QBi6QouCJ+Gbd+XHTMQiDa3NjjozAO+ZLqtN0AR9?=
+ =?us-ascii?Q?c35U1qEkH+ELCNEseOHsZjRMriALdYl9tl54R6QXulCmLaOSXcbBcb/jQ3Hm?=
+ =?us-ascii?Q?GJwlfRhlpYkabUUu3R7AE84SIbVQqo/djVN5ssGiN0XvFb5Km+4rc17ZKHAT?=
+ =?us-ascii?Q?VV7iXPpVWy100SSesxtQ0Sqr+3A8nRzFEQ6yBAzQpmRiDRkDi2je2za1A/Tp?=
+ =?us-ascii?Q?BQrpzJGrIcSAsMlY+549JWrLiQjK7MiwwylMOgA8CFcsM7eismExfmaxpBfZ?=
+ =?us-ascii?Q?Or87UrCvggHfA7K2scB8aF8/JLMc7ClRUpcWKTnsZQ7FhdfynlAokZtQhInM?=
+ =?us-ascii?Q?9ZeTXgzl8d+FpBYNDdWo0nOAHt+Wc+b+qbqQSTgnIHoQKdfV2XTAGJYN5vcj?=
+ =?us-ascii?Q?kn1ppKRDGh8bETt026KVH27brMXAqWKIUpkp/SJzRdz9PcZwCPBPLOrI2lRu?=
+ =?us-ascii?Q?aMFOuPw/qmEHiOuG4fgqqQRW2OCiTMUuMbCyAoZWAQ/giOQmZiVk5RNQWHmc?=
+ =?us-ascii?Q?MvZTj7P+IvsQe0jxeBrRM5HHO4UJFQ0qQTJVxYriZ/dlF1AK5hYasI+GH/NY?=
+ =?us-ascii?Q?veKagXEA8Iqp3w2YmO0kzMQTDzLF01PiRvKWGdaZps46nyf1g7WIXdwmJsMg?=
+ =?us-ascii?Q?4jTnpbyZMYs0I2nr+nbJeqJYnUpLDZKA+0nOfA833RL9CvDkyk+HqMDCEZpF?=
+ =?us-ascii?Q?EBOOIZP+aQ0UEdISfTvEHOgcAtwQ5KKSNf/siZuRMu5Oje503B/R9Q=3D=3D?=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Frz/F8jeOrU3EFGPjv1IlpNU5nlqP1b+vYfCC3iJB9aVHlFG6z9Vn1ZXulzU?=
- =?us-ascii?Q?FPQndpc0wfEtFRvZQxAgPq3u+dK5C4ohdb9dm6uthkmr2W4IonHdb+y/odww?=
- =?us-ascii?Q?LSSvweYxHBVKqTZV/IuPykcOMDCDpJmxVQie6DURYGv6IsQnk3Rlcd8ABtvb?=
- =?us-ascii?Q?31PbHPgVpxuWbeJfoTY7rpJfECyEBQpZ/ZO0mrp6iP/zBRdtwLvzls2QIvVG?=
- =?us-ascii?Q?VYZ0io5JCB1DzCZ8MpXEMh2LZXW0hTOQvoHtWAT5wfre1NvOtBuFnZrNQ+nI?=
- =?us-ascii?Q?7JPUUxppV7cPcsjzjMc0Vif44k/ru0wdidqTedawlvmo58JKGkg0Q9RUxwdt?=
- =?us-ascii?Q?q0Uk+hfSI/C4yJlFppADEFo6vBEO208vavWDkAe0S+Ss/eAXsc/IWl9wBJd8?=
- =?us-ascii?Q?80RRoiDoHunUukIbgJOjcVSu0nHGo2DiKj5ZM5Z4Pz6Ivnbj9H1Mc1NnZcXP?=
- =?us-ascii?Q?ehUU3SmMlBJTaFLVrrkBjjSPU1qjLo3IdTWsGKggei6Z5lg58nXdzIhiTx5T?=
- =?us-ascii?Q?wj5Sju8gXlCsal1rMNMiqRrg/cEBLCHPb5MM+2cDB3eedyqXeBUS16npvod0?=
- =?us-ascii?Q?J7HZ1eXf9yoDWDRT89HE/F4QMZJap4zqWrelDBzoUDpKM06F3EGSS7f/PPWd?=
- =?us-ascii?Q?8r9ZXPX4Z66ghvGh7biGdzjLrcuLlCufY/QQ03NZnhNGsFE6U+9gHUE2Rr19?=
- =?us-ascii?Q?K0rSAuzbksQV1STrAXGyEUktsy3B4zsGLTeK1F9EsnGfNpMDSxvbLqGorogs?=
- =?us-ascii?Q?HkI2WtwopGGwK5k1qxXhf2BYTxwWDB5eqtkyKXb316g+5sLfa3y6RRyZZD1b?=
- =?us-ascii?Q?1O8+OhVoGZFDT2lacFTcBn1NcztbcMTbVOZGQsYekG6d7+CWDmUwlvPMCV/l?=
- =?us-ascii?Q?URuLAL+sB/+KMxYeppIpGe0EsK0xaejCof0HaZUX5xr0Ytm2RfjQBq7Vf/mR?=
- =?us-ascii?Q?aPL8szZGPS5PD1b+Or7ZmdnvLnT1NLHzCk3g+vBH3CqSVE0jSWUtPq5VfXRs?=
- =?us-ascii?Q?mb4HPFOk9ho/cXsUQiQ0+NZQattx3Tu+Y4QIJan4SKhkA8UlqlVke/4HQSEx?=
- =?us-ascii?Q?fcs2o03c/hHE+o78V1GniZzUKAhmN8EpaNITIFilgNvz+o/JrntibOD1aw+M?=
- =?us-ascii?Q?j2+Jh5zxxuEM+MrMp57NgR0BzvOrx0Bi/FfTtKAwRzMSCYKHSn1aXlv5zD7Y?=
- =?us-ascii?Q?quIZ6sYW5DI1rcOIEmk7ZMYTfUfjO7EujVH7cs+SkdctRNBTH3hh/DD2Smq9?=
- =?us-ascii?Q?Ztf63PGmLHNcgFpqet1UgwePFxLQ0TxVXOBrjCjU45C8HydKn0z4kzW0n91F?=
- =?us-ascii?Q?r65lXOx27FLzi5nUtVhovUNWiecGMOw2+L2FBdc5dagDw2pn4BKvfOxnwWGn?=
- =?us-ascii?Q?PuD+dDXO7TkKJ3cVSM0Yz0dBJufy688GBA2U/5nG7TW2iEszb0lVdkZBxoTR?=
- =?us-ascii?Q?p1zdhbWJSucVNDv1UtdfqIdFSVsLU6IWHDhjoi/6xrk3h9WVIIpKmQ+Rln9U?=
- =?us-ascii?Q?KEDBzoaUkGNXc4up9FfwKNjRJJJUyXPnuBt/t2foWt7o6FDBm3tM769NJoiY?=
- =?us-ascii?Q?wpkM5Zs6P8eaXtWVjpA=3D?=
+	=?us-ascii?Q?A8iQPLegq2O9boNA7wOKMozKrdxdHqXB1sQAPE+fEDy1tJqRfoPS0wf5GyGX?=
+ =?us-ascii?Q?4YXDhXVnxUBv3sHDnazNFi//zilUhyqQ9Xt+cvxygb+SSI1hyk7E8pf/TArQ?=
+ =?us-ascii?Q?rdoR8Y7L9riefr9KoYpU94Zbxok8lzV8AYv5kl8X3LDGcJrsQhjeWwMf7pHL?=
+ =?us-ascii?Q?8lxSE3Dm1oezZL4QcpDZaqmvkAlFzU7yC6eOVjLOU8CKD7jaQ5BP0Fdvg7iU?=
+ =?us-ascii?Q?/eTGmbrS95xbzLQlM+7CJQyccnqKtKUKluwSngMyLTpcr3zZPCeaFiyAZtv/?=
+ =?us-ascii?Q?opwibEkhEQZYVRh4h5KoM2PXgrBUEzYzwPKq3hAivRh8E+e8jHbm7FU3NIEA?=
+ =?us-ascii?Q?MEzmvR4+aGW4sldguZ34qUs2vWQBG5lLzsKi7B6N03Wp7gxHO6t6Z3FY6V8A?=
+ =?us-ascii?Q?ub3pJ9GDN6wGBbVJxmu3MyMjr+Zsw+VQIm56j3GevqzOizZODcwn9PbO0RTN?=
+ =?us-ascii?Q?y8x0tYP5RoFs9apwEG9GWYbJf3utCpcQCbHutObW53wFgAeigxh4oJqVX9GC?=
+ =?us-ascii?Q?BsC2GX9jeQP4Y1f1S3gzbMw+oH7EmpXr6UXv0mSFGNq2L9ZLJQxs4G4eU1x5?=
+ =?us-ascii?Q?A3iuvavz4OON7Qpu8K82x/qoM+sUvlRopP1cC2jsnS2Zww4HpJc3uk26bBpb?=
+ =?us-ascii?Q?0gK86dV0LG2kFQXXDCtd1G+aajlbIelVg5Ztb5ajrrpfuGGwvNdw+zD+56Ff?=
+ =?us-ascii?Q?fWScYpFYeNdECrLn7EjhktQQWfbYhcZ5qHIikxHysT0ScRsRVIV1E7Qep0ei?=
+ =?us-ascii?Q?FG5VDPmIIrotwCvPTIbR/hz9YxEoNKZyt1/UAnSVfm6Ld9QWCfrZ9JxRk6EQ?=
+ =?us-ascii?Q?hIy991mFjqBgh/0SSIcx7d1JMjwcp6QZoTttSybx6m1EYrIGftC4AEbp/D0D?=
+ =?us-ascii?Q?OjRtQQ/4pnEglRzQrAjURpvilXMFgvzwQUbLaBGpqMYcDAMDrbwMAf9Mn2AV?=
+ =?us-ascii?Q?kPqY9iQnGRgEnFmfNY7XvnntMpTlwy494gv5P1CSuOas8jXi6lFowMvPsHtM?=
+ =?us-ascii?Q?ogE4Nd/aHtyvkVLQJc4+H6ZmAu4Qs4QfZ0YFuyMvCK0+ZRYuaZRB1uki8t87?=
+ =?us-ascii?Q?zrKS/gVLqjcxNxDlqOqa+lDv66Wmop45e3EVqMs06G5r67ZfQXAIOQCrmOaZ?=
+ =?us-ascii?Q?B7oO3q6do/uaMv8Y6wPeSBbc+Tees7Ro+5jV+sG/Jr+GST+UPgnr5KL0hrkF?=
+ =?us-ascii?Q?c0pRJQScXbDRA+L04Ct6kxkii9I/lpFZ9isCqHHcwqpvmDeIIfzGUh7Dwctm?=
+ =?us-ascii?Q?IKPs54Nc0brK9oGOjFzHYMOfMsVmXUdYPPFCfX8NXvKqzXMGP0MCNLiCc5vV?=
+ =?us-ascii?Q?jI1pBppNxUY55XvcKT0+1jiPEOZoePYdMLE+QbzKFHRLol8Dxl4HrjGzAXZP?=
+ =?us-ascii?Q?GnNXdT9yeHo34JEYMZHI9Fl7Gd25M7gFKDKT8QDVwbIBU36/R0SMw+opxnzk?=
+ =?us-ascii?Q?QTUzY0SRFPaPv7BRNLxMCD2LG6POZWVLvkOzzfhzdhHkZnIXVo6wXjAAIbX7?=
+ =?us-ascii?Q?FgJYTpV7il87hdTTZKM8acCOhOp02Gdbn80RGcEpNw0Wqi6g8QsXYR6nxrZQ?=
+ =?us-ascii?Q?nkED065CaU3qIgzaNSw=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5a7b3136-46d1-4680-c447-08de2e1041fe
+X-MS-Exchange-CrossTenant-Network-Message-Id: 458c278d-b43c-46e6-8c4a-08de2e104208
 X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2025 23:54:09.5936
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Nov 2025 23:54:09.6807
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Qk5iCsIJHjzkNu4T9/hZIOdfXZM5j570YcxK8mXsFSXgaQJMQXq4Ori8Fsa38o9s
+X-MS-Exchange-CrossTenant-UserPrincipalName: I4fy0o6Rnf6ihhV0VOqpvfWew2VXuUh5Eq8EQbpfUQSUr9In00wPt5euOgPv9RLG
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB6926
 
-Calvin notes:
+VT-d second stage HW specifies both the maximum IOVA and the supported
+table walk starting points. Weirdly there is HW that only supports a 4
+level walk but has a maximum IOVA that only needs 3.
 
-=======================
-A Skylake machine has problems with strict translation on next-20251124:
+The current code miscalculates this and creates a wrongly sized page table
+which ultimately fails the compatability check for number of levels.
 
-    pci 0000:06:00.0: Adding to iommu group 18
-    ------------[ cut here ]------------
-    WARNING: drivers/iommu/iommu.c:3055 at iommu_setup_default_domain+0x268/0x2f0, CPU#2: swapper/0/1
-    CPU: 2 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc6-next-20251124 #1 PREEMPTLAZY
-    Hardware name: ASUSTeK COMPUTER INC. WS C246M PRO Series/WS C246M PRO Series, BIOS 6101 06/26/2024
-    RIP: 0010:iommu_setup_default_domain+0x268/0x2f0
-    <snip>
-    Call Trace:
-     <TASK>
-     iommu_device_register+0x126/0x200
-     intel_iommu_init+0x2bf/0x580
-     pci_iommu_init+0xb/0x30
-     do_one_initcall+0xad/0x1c0
-     kernel_init_freeable+0x238/0x290
-     kernel_init+0x16/0x120
-     ret_from_fork+0x1ba/0x1f0
-     ret_from_fork_asm+0x11/0x20
-     </TASK>
-    Kernel panic - not syncing: kernel: panic_on_warn set ...
-    <snip>
-    Dumping ftrace buffer:
-    ---------------------------------
-     2)               |    __iommu_group_set_domain_internal() { /* <-iommu_setup_default_domain+0x25e/0x2f0 */
-     2)               |      __iommu_device_set_domain() { /* <-__iommu_group_set_domain_internal+0x6d/0x140 */
-     2)               |        __iommu_attach_device() { /* <-__iommu_device_set_domain+0x6d/0xb0 */
-     2)               |          intel_iommu_attach_device() { /* <-__iommu_attach_device+0x1f/0xe0 */
-     2)   0.140 us    |            device_block_translation(); /* <-intel_iommu_attach_device+0x19/0x80 ret=0xffffffff81b5e980 */
-     2)               |            paging_domain_compatible() { /* <-intel_iommu_attach_device+0x24/0x80 */
-     2)               |              paging_domain_compatible_second_stage() { /* <-paging_domain_compatible+0x47/0x170 */
-     2)   0.137 us    |                pt_iommu_vtdss_hw_info(); /* <-paging_domain_compatible_second_stage+0x29/0x1a0 ret=0x1 */
-     2)   0.530 us    |              } /* paging_domain_compatible_second_stage ret=-22 */
-     2)   0.907 us    |            } /* paging_domain_compatible ret=-22 */
-     2)   1.653 us    |          } /* intel_iommu_attach_device ret=-22 */
-     2)   2.157 us    |        } /* __iommu_attach_device ret=-22 */
-     2)   2.528 us    |      } /* __iommu_device_set_domain ret=-22 */
-     2)   2.954 us    |    } /* __iommu_group_set_domain_internal ret=-22 */
-    ---------------------------------
-    Rebooting in 10 seconds..
+This is fixed by allowing the page table to be created with both a vasz
+and top_level input. The vasz will set the aperture for the domain while
+the top_level will set the page table geometry.
 
-The failing condition in paging_domain_compatible_second_stage() is:
+Add top_level to vtdss and correct the logic in VT-d to generate the right
+top_level and vasz from mgaw and sagaw.
 
-    /* Page table level is supported. */
-    if (!(cap_sagaw(iommu->cap) & BIT(pt_info.aw)))
-        return -EINVAL;
+Fixes: d373449d8e97 ("iommu/vt-d: Use the generic iommu page table")
+Reported-by: Calvin Owens <calvin@wbinvd.org>
+Closes: https://lore.kernel.org/r/8f257d2651eb8a4358fcbd47b0145002e5f1d638.1764237717.git.calvin@wbinvd.org
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/generic_pt/fmt/vtdss.h | 19 ++++++-------------
+ drivers/iommu/generic_pt/iommu_pt.h  | 14 ++++++++++++++
+ drivers/iommu/intel/iommu.c          | 20 +++++++++++++-------
+ include/linux/generic_pt/iommu.h     |  2 ++
+ 4 files changed, 35 insertions(+), 20 deletions(-)
 
-This happens because, for many domains on this machine, MGAW=39 but
-SAGAW=0x04: that claims a 39-bit maximum address width, but also claims
-to only support 48-bit/4-level paging, which seems odd.
-
-Before the GENERIC_PT rewrite, the kernel only looked at SAGAW, so this
-machine has been happily running for years using 4-level paging.
-
-Now, the kernel refuses to use 4-level paging because MGAW=39. But SAGAW
-claims not to support anything else, so we hit the -EINVAL case above
-and fail to initialize.
-
-If I force 4-level paging, everything works. If I force 39-bit/3-level
-paging, nothing works (lots of bad context faults). So it seems like the
-machine really only supports 4-level paging despite the 3-level MGAW.
-=======================
-
-Which is not a possible condition that was considered when this was
-made. Allow VT-d to pass in the top level of the page table as well as the
-max vasz as seperate things. This lets it setup something compatible with
-the HW.
-
-This is happening because VT-d doesn't quite fit into the architecture we
-expect on Linux where the IOMMU driver should be reporting its full page
-table capability as an aperture and bus width or addressing limitations
-should be attached to the end point devices as a DMA mask. Instead VT-d is
-putting the device limitations in the iommu as well.
-
-Jason Gunthorpe (2):
-  iommupt/vtd: Allow VT-d to have a larger table top than the vasz
-    requires
-  iommupt/vtd: Support mgaw's less than a 4 level walk for first stage
-
- drivers/iommu/amd/iommu.c             |  7 +++-
- drivers/iommu/generic_pt/fmt/vtdss.h  | 19 +++------
- drivers/iommu/generic_pt/fmt/x86_64.h | 17 ++++----
- drivers/iommu/generic_pt/iommu_pt.h   | 14 +++++++
- drivers/iommu/intel/iommu.c           | 58 +++++++++++++++++----------
- include/linux/generic_pt/iommu.h      |  4 ++
- 6 files changed, 73 insertions(+), 46 deletions(-)
-
-
-base-commit: 6b99b135be1b79230acb88865abef6fb0fba35bb
+diff --git a/drivers/iommu/generic_pt/fmt/vtdss.h b/drivers/iommu/generic_pt/fmt/vtdss.h
+index 50ffed9d0e508f..f5f8981edde72e 100644
+--- a/drivers/iommu/generic_pt/fmt/vtdss.h
++++ b/drivers/iommu/generic_pt/fmt/vtdss.h
+@@ -248,18 +248,11 @@ static inline int vtdss_pt_iommu_fmt_init(struct pt_iommu_vtdss *iommu_table,
+ 					  const struct pt_iommu_vtdss_cfg *cfg)
+ {
+ 	struct pt_vtdss *table = &iommu_table->vtdss_pt;
+-	unsigned int vasz_lg2 = cfg->common.hw_max_vasz_lg2;
+ 
+-	if (vasz_lg2 > PT_MAX_VA_ADDRESS_LG2)
+-		return -EOPNOTSUPP;
+-	else if (vasz_lg2 > 48)
+-		pt_top_set_level(&table->common, 4);
+-	else if (vasz_lg2 > 39)
+-		pt_top_set_level(&table->common, 3);
+-	else if (vasz_lg2 > 30)
+-		pt_top_set_level(&table->common, 2);
+-	else
++	if (cfg->top_level > 4 || cfg->top_level < 2)
+ 		return -EOPNOTSUPP;
++
++	pt_top_set_level(&table->common, cfg->top_level);
+ 	return 0;
+ }
+ #define pt_iommu_fmt_init vtdss_pt_iommu_fmt_init
+@@ -282,9 +275,9 @@ vtdss_pt_iommu_fmt_hw_info(struct pt_iommu_vtdss *table,
+ 
+ #if defined(GENERIC_PT_KUNIT)
+ static const struct pt_iommu_vtdss_cfg vtdss_kunit_fmt_cfgs[] = {
+-	[0] = { .common.hw_max_vasz_lg2 = 39 },
+-	[1] = { .common.hw_max_vasz_lg2 = 48 },
+-	[2] = { .common.hw_max_vasz_lg2 = 57 },
++	[0] = { .common.hw_max_vasz_lg2 = 39, .top_level = 2},
++	[1] = { .common.hw_max_vasz_lg2 = 48, .top_level = 3},
++	[2] = { .common.hw_max_vasz_lg2 = 57, .top_level = 4},
+ };
+ #define kunit_fmt_cfgs vtdss_kunit_fmt_cfgs
+ enum { KUNIT_FMT_FEATURES = BIT(PT_FEAT_VTDSS_FORCE_WRITEABLE) };
+diff --git a/drivers/iommu/generic_pt/iommu_pt.h b/drivers/iommu/generic_pt/iommu_pt.h
+index 032d04ec7b568d..97aeda1ad01cca 100644
+--- a/drivers/iommu/generic_pt/iommu_pt.h
++++ b/drivers/iommu/generic_pt/iommu_pt.h
+@@ -1128,6 +1128,20 @@ static int pt_init_common(struct pt_common *common)
+ 		     PT_FORCE_ENABLED_FEATURES))
+ 		return -EOPNOTSUPP;
+ 
++	/*
++	 * Check if the top level of the page table is too small to hold the
++	 * specified maxvasz.
++	 */
++	if (!pt_feature(common, PT_FEAT_DYNAMIC_TOP) &&
++	    top_range.top_level != PT_MAX_TOP_LEVEL) {
++		struct pt_state pts = { .range = &top_range,
++					.level = top_range.top_level };
++
++		if (common->max_vasz_lg2 >
++		    pt_num_items_lg2(&pts) + pt_table_item_lg2sz(&pts))
++			return -EOPNOTSUPP;
++	}
++
+ 	if (common->max_oasz_lg2 == 0)
+ 		common->max_oasz_lg2 = pt_max_oa_lg2(common);
+ 	else
+diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
+index 7b3016491ca586..f117349d67dbf8 100644
+--- a/drivers/iommu/intel/iommu.c
++++ b/drivers/iommu/intel/iommu.c
+@@ -2858,22 +2858,28 @@ intel_iommu_domain_alloc_first_stage(struct device *dev,
+ 	return &dmar_domain->domain;
+ }
+ 
+-static int compute_vasz_lg2_ss(struct intel_iommu *iommu)
++static unsigned int compute_vasz_lg2_ss(struct intel_iommu *iommu,
++					unsigned int *top_level)
+ {
+ 	unsigned int sagaw = cap_sagaw(iommu->cap);
+ 	unsigned int mgaw = cap_mgaw(iommu->cap);
+ 
+ 	/*
+ 	 * Find the largest table size that both the mgaw and sagaw support.
+-	 * This sets both the number of table levels and the valid range of
+-	 * IOVA.
++	 * This sets the valid range of IOVA and the top starting level.
++	 * Some HW may only support a 4 or 5 level walk but must limit IOVA to
++	 * 3 levels.
+ 	 */
+-	if (mgaw >= 48 && (sagaw & BIT(3)))
++	if (mgaw > 48 && sagaw >= BIT(3)) {
++		*top_level = 4;
+ 		return min(57, mgaw);
+-	else if (mgaw >= 39 && (sagaw & BIT(2)))
++	} else if (mgaw > 39 && sagaw >= BIT(2)) {
++		*top_level = 3 + ffs(sagaw >> 3);
+ 		return min(48, mgaw);
+-	else if (mgaw >= 30 && (sagaw & BIT(1)))
++	} else if (mgaw > 30 && sagaw >= BIT(1)) {
++		*top_level = 2 + ffs(sagaw >> 2);
+ 		return min(39, mgaw);
++	}
+ 	return 0;
+ }
+ 
+@@ -2910,7 +2916,7 @@ intel_iommu_domain_alloc_second_stage(struct device *dev,
+ 	if (IS_ERR(dmar_domain))
+ 		return ERR_CAST(dmar_domain);
+ 
+-	cfg.common.hw_max_vasz_lg2 = compute_vasz_lg2_ss(iommu);
++	cfg.common.hw_max_vasz_lg2 = compute_vasz_lg2_ss(iommu, &cfg.top_level);
+ 	cfg.common.hw_max_oasz_lg2 = 52;
+ 	cfg.common.features = BIT(PT_FEAT_FLUSH_RANGE);
+ 
+diff --git a/include/linux/generic_pt/iommu.h b/include/linux/generic_pt/iommu.h
+index cfe05a77f86b05..c134132ed10f89 100644
+--- a/include/linux/generic_pt/iommu.h
++++ b/include/linux/generic_pt/iommu.h
+@@ -264,6 +264,8 @@ IOMMU_PROTOTYPES(amdv1_mock);
+ 
+ struct pt_iommu_vtdss_cfg {
+ 	struct pt_iommu_cfg common;
++	/* 4 is a 57 bit 5 level table */
++	unsigned int top_level;
+ };
+ 
+ struct pt_iommu_vtdss_hw_info {
 -- 
 2.43.0
 
