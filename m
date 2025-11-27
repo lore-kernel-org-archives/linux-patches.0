@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2AA28135D;
-	Thu, 27 Nov 2025 15:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB432882A7;
+	Thu, 27 Nov 2025 15:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255863; cv=none; b=eikwizXRgUTLCeT9EFMZcLNwAdKkNKrwSTeEbbIBtGmmLkp5ymqf36aV8MeOsqq546XT8t4hdX/REwaZOkBBrYDXME5mLZ669HcmGR52idgLwRu7fNeq7l0h29+eZ8uiiB6NVngBZ+kA6vLeRQIjkZwqhQyhKi7gO7lRgdQZ7Bw=
+	t=1764255866; cv=none; b=OYl54XdgxnEIB2P71HY8PxrOd1byVMLrW9yivZhVXwihMAw4y22R8kfBTbZg5mD9+6Ix7ppZultynnMjeud7VjoHzvqYJqMD5FEn2UMugSeZ92fcEoyMMCcx44kBoLIZGdycqylBG3la1LRzCMalTauDaoMu8uD0Pzv1jAwMhnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255863; c=relaxed/simple;
-	bh=pLf7rwIyCXjCPmkehp5tK+vm78DPmgAUea281SicIdM=;
+	s=arc-20240116; t=1764255866; c=relaxed/simple;
+	bh=R0/meJ9xwPI75SeFybDK1JUgAN3wTI5PiBZnB+L/ps4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eIumU+9LP9R9tz7VfHmTkaJfqeaZlSn4K2Wls4iSV7jvOzkn65hUcTISOdmp8NvSb/WK7Ai0WTc94IW1HHvOuImlfOVs5ZR3JXQ8PglTTOQ1gWJg2gkw+rNuoxjy2kbMNOiYLD0qgysBk2HWm0sDjzlQHvlK0Hi8cLu+kVkWf0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=08LbbNRQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OqPM+hP20mFtES7PiTLHV6izxYtFf6EOKziGpCgVFiwn/z9v7gaQmVzkgNP/GkLK9vi1SCor2wxXcOP7NaS0pFKCenbAhsII3b4BuJ+ddUO+sMN4ornLUqn+4xmu6bIkXcLZLTUHZ4U5KYChVsF5LUPCH4sHzgwdGM2nM5E4rfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqqq4vJs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="08LbbNRQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B36C3C4CEF8;
-	Thu, 27 Nov 2025 15:04:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqqq4vJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77601C4CEF8;
+	Thu, 27 Nov 2025 15:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255863;
-	bh=pLf7rwIyCXjCPmkehp5tK+vm78DPmgAUea281SicIdM=;
+	s=korg; t=1764255865;
+	bh=R0/meJ9xwPI75SeFybDK1JUgAN3wTI5PiBZnB+L/ps4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08LbbNRQjnNNHz7u5bew8Fwc6dLQhSOqsEnx4f1Cg1uU+03yXQkuT9oAHk4UxPg8S
-	 66AD2u75uc1T3qPsUKgvU3Meddr7+V+rfkAuxn1EdIAktqDRwRGUmWqtoJwqho7ehE
-	 p2zaLEzv/rS9MqBTmHVZMnn2rG4p6/QxC9moR0lA=
+	b=Wqqq4vJsp+ID/aUXyktLiYnEd5MQwREgLcavIiF0I44O+D4FjGwVc41pLlmAHadbm
+	 aWpIzn/WJz9slw23EOurs569xPe8HP48XsEuTpZ0dkEH4Dd5DVaMJT0BIlUbdQ7rNI
+	 aDVKUycdTEJ6jz05M9PayP+NjFpstAcwDma4Rr2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Eren Demir <eren.demir2479090@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 133/175] MIPS: kernel: Fix random segmentation faults
-Date: Thu, 27 Nov 2025 15:46:26 +0100
-Message-ID: <20251127144047.816234013@linuxfoundation.org>
+Subject: [PATCH 6.17 142/175] ALSA: hda/realtek: Fix mute led for HP Victus 15-fa1xxx (MB 8C2D)
+Date: Thu, 27 Nov 2025 15:46:35 +0100
+Message-ID: <20251127144048.144141557@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -47,47 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Eren Demir <eren.demir2479090@gmail.com>
 
-[ Upstream commit 14b46ba92bf547508b4a49370c99aba76cb53b53 ]
+[ Upstream commit 28935ee5e4789ad86c08ba9f2426edd6203d13fa ]
 
-Commit 69896119dc9d ("MIPS: vdso: Switch to generic storage
-implementation") switches to a generic vdso storage, which increases
-the number of data pages from 1 to 4. But there is only one page
-reserved, which causes segementation faults depending where the VDSO
-area is randomized to. To fix this use the same size of reservation
-and allocation of the VDSO data pages.
+The quirk for Victus 15-fa1xxx wasn't working on Victus 15-fa1031nt due to a different board id. This patch enables the existing quirk for the board id 8BC8.
 
-Fixes: 69896119dc9d ("MIPS: vdso: Switch to generic storage implementation")
-Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Tested on HP Victus 15-fa1031nt (MB 8C2D). The LED behaviour works as intended.
+
+Signed-off-by: Eren Demir <eren.demir2479090@gmail.com>
+Link: https://patch.msgid.link/20251027110208.6481-1-eren.demir2479090@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/process.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/kernel/process.c b/arch/mips/kernel/process.c
-index 29191fa1801e2..a3101f2268c6c 100644
---- a/arch/mips/kernel/process.c
-+++ b/arch/mips/kernel/process.c
-@@ -692,7 +692,7 @@ unsigned long mips_stack_top(void)
- 	/* Space for the VDSO, data page & GIC user page */
- 	if (current->thread.abi) {
- 		top -= PAGE_ALIGN(current->thread.abi->vdso->size);
--		top -= PAGE_SIZE;
-+		top -= VDSO_NR_PAGES * PAGE_SIZE;
- 		top -= mips_gic_present() ? PAGE_SIZE : 0;
- 
- 		/* Space to randomize the VDSO base */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 20f0ad43953f4..796f555dd381d 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6580,6 +6580,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
+ 	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
++	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8c46, "HP EliteBook 830 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8c47, "HP EliteBook 840 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
 -- 
 2.51.0
 
