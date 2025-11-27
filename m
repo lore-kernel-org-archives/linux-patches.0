@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED02299943;
-	Thu, 27 Nov 2025 14:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B3A288537;
+	Thu, 27 Nov 2025 14:53:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255189; cv=none; b=dMdDtyffMC1VlDEVqoN1WpUQKRht2sodAHTBX787rvsf37Z2YSFY7TiirdaadAF83gYUBcGpqL8oY+eLx6sc1dL7EdST3b2zOijmqhT4WOTIZ9CTSgW7KdQi7DgOrFV6ocV7DCcC/mJ4aSjYPjHsOth4rKzD5J/rpXmeW+JoOFo=
+	t=1764255192; cv=none; b=TOhF5DdwDoBNg9s2b6nwvSf4hyOGVhxsNW1w9MHOlFZ79v4sMnX7pQiyajV2pdSBmNUktjwJSPCQ9HkGSvYMZw//vC09aMBEyLM11bo6c3YypXtcsMTBOFWtDsQJ391DFSu2XyXZBy6kXRtdXf4TkhlU0zp/HwUZbo2srVflL5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255189; c=relaxed/simple;
-	bh=qd2SHDIVnvCLxxasESOtKR7rsRqJH+G3lp+TtsxeeM0=;
+	s=arc-20240116; t=1764255192; c=relaxed/simple;
+	bh=K1mqtr4YQflebsE6wYHZWrH73gZDuMMvOAXORjU2eqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r//C4wPveicPbSrRCtWIKQLR4fxzTzCFqLTZyILW1iYHi3Fcgz3nXBWMDfv4ZQLGyrxSWbZw6526Y25qcnOWTLy7IS9vmiKnC6QyJfMtGmLBKo5fn+CNXK2EE+FWA87xPnp6a3XJsxbkKcxzVb297N0In5StkAq3g1I6vgq7BoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPunQAKt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=joJtsymITpghCejYbyoZbNU+UFF7NkDsLcnGwRYpbvs8t2/fHxJRs/WKbEV0/2zDug8i1MeWLf91TP82yLgDDhpaMTW/rUqOCvr5OmuZ2XqSuucRaN+qZgymsE8HUIlPuHiOILM756tYdZWhCOpCPyPjEnICOx510LTZ8cvhvno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXQ91cZu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPunQAKt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AED65C4CEF8;
-	Thu, 27 Nov 2025 14:53:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXQ91cZu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71329C4CEF8;
+	Thu, 27 Nov 2025 14:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255189;
-	bh=qd2SHDIVnvCLxxasESOtKR7rsRqJH+G3lp+TtsxeeM0=;
+	s=korg; t=1764255191;
+	bh=K1mqtr4YQflebsE6wYHZWrH73gZDuMMvOAXORjU2eqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rPunQAKtVLKV3peYKtTHqSxIEIw37UN7Q+CoIPlE0jhNWGnVxo0Wx0UkUey2TzWDm
-	 T6J7ZS9v2HeffzEvpJHcJBduLPGnTt8kRmPW05Pyhk2p0w0rmVSxItl1Mb5kuSAHck
-	 hzCpjsnsyJUxJEgDGHdv+7aRK0VWodABNi3M5Dxw=
+	b=yXQ91cZubfbPQCIyksNqTKHgx76KvjMUVhjYPXcGyABj4kf8FgABmypYNqe6shLbF
+	 AQ+GP7P/NH1L6BjOKOjfVAAaA4NkFIaUH4ZNu6QOeyhnx7b6LvyoYchi70q8kKbYu1
+	 wwNfCYJJ8A2CJxpHv4tsaqQzZIgpeUeqOdue2Eoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Geliang Tang <geliang@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 039/112] mptcp: fix premature close in case of fallback
-Date: Thu, 27 Nov 2025 15:45:41 +0100
-Message-ID: <20251127144034.271955906@linuxfoundation.org>
+Subject: [PATCH 6.12 040/112] selftests: mptcp: join: endpoints: longer timeout
+Date: Thu, 27 Nov 2025 15:45:42 +0100
+Message-ID: <20251127144034.308311164@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,60 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 17393fa7b7086664be519e7230cb6ed7ec7d9462 upstream.
+commit fb13c6bb810ca871964e062cf91882d1c83db509 upstream.
 
-I'm observing very frequent self-tests failures in case of fallback when
-running on a CONFIG_PREEMPT kernel.
+In rare cases, when the test environment is very slow, some endpoints
+tests can fail because some expected events have not been seen.
 
-The root cause is that subflow_sched_work_if_closed() closes any subflow
-as soon as it is half-closed and has no incoming data pending.
+Because the tests are expecting a long on-going connection, and they are
+not waiting for the end of the transfer, it is fine to have a longer
+timeout, and even go over the default one. This connection will be
+killed at the end, after the verifications: increasing the timeout
+doesn't change anything, apart from avoiding it to end before the end of
+the verifications.
 
-That works well for regular subflows - MPTCP needs bi-directional
-connectivity to operate on a given subflow - but for fallback socket is
-race prone.
+To play it safe, all endpoints tests not waiting for the end of the
+transfer are now having a longer timeout: 2 minutes.
 
-When TCP peer closes the connection before the MPTCP one,
-subflow_sched_work_if_closed() will schedule the MPTCP worker to
-gracefully close the subflow, and shortly after will do another schedule
-to inject and process a dummy incoming DATA_FIN.
+The Fixes commit was making the connection longer, but still, the
+default timeout would have stopped it after 1 minute, which might not be
+enough in very slow environments.
 
-On CONFIG_PREEMPT kernel, the MPTCP worker can kick-in and close the
-fallback subflow before subflow_sched_work_if_closed() is able to create
-the dummy DATA_FIN, unexpectedly interrupting the transfer.
-
-Address the issue explicitly avoiding closing fallback subflows on when
-the peer is only half-closed.
-
-Note that, when the subflow is able to create the DATA_FIN before the
-worker invocation, the worker will change the msk state before trying to
-close the subflow and will skip the latter operation as the msk will not
-match anymore the precondition in __mptcp_close_subflow().
-
-Fixes: f09b0ad55a11 ("mptcp: close subflow when receiving TCP+FIN")
+Fixes: 6457595db987 ("selftests: mptcp: join: endpoints: longer transfer")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-3-806d3781c95f@kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-8-806d3781c95f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2615,7 +2615,8 @@ static void __mptcp_close_subflow(struct
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -3728,7 +3728,7 @@ endpoint_tests()
+ 		pm_nl_set_limits $ns1 2 2
+ 		pm_nl_set_limits $ns2 2 2
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
+-		{ test_linkfail=128 speed=slow \
++		{ timeout_test=120 test_linkfail=128 speed=slow \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
  
- 		if (ssk_state != TCP_CLOSE &&
- 		    (ssk_state != TCP_CLOSE_WAIT ||
--		     inet_sk_state_load(sk) != TCP_ESTABLISHED))
-+		     inet_sk_state_load(sk) != TCP_ESTABLISHED ||
-+		     __mptcp_check_fallback(msk)))
- 			continue;
+@@ -3755,7 +3755,7 @@ endpoint_tests()
+ 		pm_nl_set_limits $ns2 0 3
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
+ 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
+-		{ test_linkfail=128 speed=5 \
++		{ timeout_test=120 test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
  
- 		/* 'subflow_data_ready' will re-sched once rx queue is empty */
+@@ -3833,7 +3833,7 @@ endpoint_tests()
+ 		# broadcast IP: no packet for this address will be received on ns1
+ 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
+ 		pm_nl_add_endpoint $ns1 10.0.1.1 id 42 flags signal
+-		{ test_linkfail=128 speed=5 \
++		{ timeout_test=120 test_linkfail=128 speed=5 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 
+@@ -3906,7 +3906,7 @@ endpoint_tests()
+ 		# broadcast IP: no packet for this address will be received on ns1
+ 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
+ 		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
+-		{ test_linkfail=128 speed=20 \
++		{ timeout_test=120 test_linkfail=128 speed=20 \
+ 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
+ 		local tests_pid=$!
+ 
 
 
