@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B435E299943;
-	Thu, 27 Nov 2025 14:53:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5603126C0;
+	Thu, 27 Nov 2025 14:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255235; cv=none; b=KUWclSCkD3wN/W7iwW5szlblHeEukIMN8TKA8DrNs2T1fsADbJhfFh9cj7rpWmNOQ9ReAoeqiL7WWOhuzhqk+bQ91zwxqJM9E3V0itbOnVctNj59POG9jrAjqp63ptf3yBsD2P78LToFxxz7NPtLTlGgyhF/r/GGUspPSNDEi0I=
+	t=1764255238; cv=none; b=f7HYDqKSbwI76Qk4nVxdSR5gd+2AD1DQKB/RJW/4wPWwnxqwmyojPDWznKps21nXKhGJwJ2kjT2/Nd707lV7fM1vldrZhd7cthsyaVCZYQQ60IBcMPocHWU+FkSKFjGEyyP/z4iWbFs9FKIBzX0iXDaWI3zHeGDmaeZVFNnf69I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255235; c=relaxed/simple;
-	bh=4740ZerBnfUc4Yd6rQRhxg5Yv+0GPv2A10jWKTDlJoE=;
+	s=arc-20240116; t=1764255238; c=relaxed/simple;
+	bh=b3zVerin3E+gmKgcto8U+7G7rjRcxSXGfpANryebFlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pybTqIStv8EteIuBBVVXHkL6cA/VcVRe6qJbt2gaBzdsYt/H10KO5THXPDaaoGrRDSqriO+JxeAEy/tP6YsR/V4bxfXMJJtKjGBBIrb8rByTlaQnM0DZLPlkBg3EbTVVnp049IOmwXlVWOfTuqOH0aanxXJ/6clRbVCKf9xXIi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjOdyJmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nss7tsSFXhU66U0jG+1F6m+ISmMEHSYpxUac0qS0IYdjR6qmp5co+azTHsqP6jMiXtnbX3rL6mlyQ/OfGaHGiUgMKyEh6KwhrtyHn7abYsZSd0x1qTGzi8TemcuZKah8A/h1HJi9sRI+NVGiqVKGdJNB8MBRRZrF4wxz3kMUXKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m87HKWwV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjOdyJmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0214EC4CEF8;
-	Thu, 27 Nov 2025 14:53:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m87HKWwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD842C4CEF8;
+	Thu, 27 Nov 2025 14:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255235;
-	bh=4740ZerBnfUc4Yd6rQRhxg5Yv+0GPv2A10jWKTDlJoE=;
+	s=korg; t=1764255238;
+	bh=b3zVerin3E+gmKgcto8U+7G7rjRcxSXGfpANryebFlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjOdyJmW4YgRBcOcyGs3SLvvpmSve+vWhT9gJJbmwWTSdcd/dtlOyq4r35NFfAizt
-	 JMEHXLR2Y3BJhLKZFr/AKUFsgnHMiw8i9DpUEH+ZssjhCbGuP+9tJafSZ+fwl/b411
-	 fbd0qdNCZR/RRXYT3LJBoMtPLq9fhxMgP7/0uDzA=
+	b=m87HKWwVetZyQi39PzqbmjEv+4m29pk5eMYcddEU5F6qpkeZkcL5ZmmkgaRm9CZuv
+	 8Wsy910wERrerAgn8YvLiZ64v1HwJ+fVuJth4UimwELG5dO1Tj3CPNN9MzwM0Tf8Ba
+	 22JBFSIBHC1hwZTtuwhGhUA6UQAfmIl+FlMv+IyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sabrina Dubroca <sd@queasysnail.net>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/112] xfrm: drop SA reference in xfrm_state_update if dir doesnt match
-Date: Thu, 27 Nov 2025 15:45:55 +0100
-Message-ID: <20251127144034.783357615@linuxfoundation.org>
+Subject: [PATCH 6.12 054/112] xfrm: set err and extack on failure to create pcpu SA
+Date: Thu, 27 Nov 2025 15:45:56 +0100
+Message-ID: <20251127144034.819527806@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -53,43 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Sabrina Dubroca <sd@queasysnail.net>
 
-[ Upstream commit 8d2a2a49c30f67a480fa9ed25e08436a446f057e ]
+[ Upstream commit 1dcf617bec5cb85f68ca19969e7537ef6f6931d3 ]
 
-We're not updating x1, but we still need to put() it.
+xfrm_state_construct can fail without setting an error if the
+requested pcpu_num value is too big. Set err and add an extack message
+to avoid confusing userspace.
 
-Fixes: a4a87fa4e96c ("xfrm: Add Direction to the SA in or out")
+Fixes: 1ddf9916ac09 ("xfrm: Add support for per cpu xfrm state handling.")
 Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_state.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/xfrm/xfrm_user.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
-index 1e2f5ecd63248..f8cb033f102ed 100644
---- a/net/xfrm/xfrm_state.c
-+++ b/net/xfrm/xfrm_state.c
-@@ -2117,14 +2117,18 @@ int xfrm_state_update(struct xfrm_state *x)
- 	}
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index d41e5642625e3..3d0fdeebaf3c8 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -893,8 +893,11 @@ static struct xfrm_state *xfrm_state_construct(struct net *net,
  
- 	if (x1->km.state == XFRM_STATE_ACQ) {
--		if (x->dir && x1->dir != x->dir)
-+		if (x->dir && x1->dir != x->dir) {
-+			to_put = x1;
- 			goto out;
-+		}
- 
- 		__xfrm_state_insert(x);
- 		x = NULL;
- 	} else {
--		if (x1->dir != x->dir)
-+		if (x1->dir != x->dir) {
-+			to_put = x1;
- 			goto out;
+ 	if (attrs[XFRMA_SA_PCPU]) {
+ 		x->pcpu_num = nla_get_u32(attrs[XFRMA_SA_PCPU]);
+-		if (x->pcpu_num >= num_possible_cpus())
++		if (x->pcpu_num >= num_possible_cpus()) {
++			err = -ERANGE;
++			NL_SET_ERR_MSG(extack, "pCPU number too big");
+ 			goto error;
 +		}
  	}
- 	err = 0;
  
+ 	err = __xfrm_init_state(x, false, attrs[XFRMA_OFFLOAD_DEV], extack);
 -- 
 2.51.0
 
