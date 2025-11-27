@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D67260585;
-	Thu, 27 Nov 2025 15:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EA62882A7;
+	Thu, 27 Nov 2025 15:02:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255719; cv=none; b=pJUAOJNqJ7qLJuXQO2iON4oFB8gH5pL22LqVVJovKTKXv0NjEK35Th2VkGGcJSHYo939u6zC9Fh+RprPvCL7Lo4pZ/QwwK7HG97NnRiFdT7FWR4WUxOei3myQb5eMkLajwYYBaJmknOIyVqu6mFsITFOr8T3NqU7eUk2d4WZL/I=
+	t=1764255722; cv=none; b=ZfV6P5/WaXeXahkjx1EHeOWBh3I6LKL2Dvl8ulf7x8v7p0CXVQqGWWQgZ+K/7BLoq+paXENmWju/Gmks3jxsEspo/FzEcPhTrmctv9ztUTSLrOe09PlVrW6Q0bTYHztAnQ7JVLQaWfvHSr61NEeVerqKAEbKiwHCAogMj6MC51E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255719; c=relaxed/simple;
-	bh=/KshH6ZuAoCLFHePeUV2LRV9+6euJHGygq2Z+VtXtrc=;
+	s=arc-20240116; t=1764255722; c=relaxed/simple;
+	bh=f04QJZ0UlL69kKVZyifNQ3mKql89jIr4MUU/p0f+H+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KyVQaMfy3ssC+3ZGao6Xci9TW0UzgfSM+pIW8rT79iONRLXe0TDMP3pRUG3fZHgmZ0IGyneToRjvIokbeVFnVNRwpDGIEE1Lwdlir4NpwS5OWENtDQLOdNdUq7mfGLa2EupHZZJTUbV7JajgRmlwdgd2RWvCY//cnNvS7vNB7Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=igsK2cIH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ub4Pjhy4tqGIy4cGjFJJRKosNHmc0Ioh+IBfCADR79GIp7N0K5i9LsrbrvneI03mpVidgr4jqNN3Yumbu8s6OLCOXYWjzhcNzHDRcFc0n0i06DThqmOVaW6sZVjleAsTdTic4vgCdfr5MsyNRCagov51Ck7Cd0Ih2nAE/rryJdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmgFojFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="igsK2cIH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ED45C4CEF8;
-	Thu, 27 Nov 2025 15:01:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmgFojFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08013C4CEF8;
+	Thu, 27 Nov 2025 15:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255719;
-	bh=/KshH6ZuAoCLFHePeUV2LRV9+6euJHGygq2Z+VtXtrc=;
+	s=korg; t=1764255722;
+	bh=f04QJZ0UlL69kKVZyifNQ3mKql89jIr4MUU/p0f+H+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igsK2cIHHCnYEeA855wBHzSpA27f48dec4t8xNEcszitpi58E2uCnHq/XLQmq25+L
-	 lAhnTdElRDROsbiF2aSdFhvIMy2LTQ4JtrEk4F9FYgEs/GZeQZu85r4EXriBwChfOz
-	 0yDMVo9d6kC2B4wGJvtymEvoJN1YZgzWN+oodgjU=
+	b=hmgFojFQeaDV34j+0hoVZPVKmWTamB3ydafGcvhcSCbj2Qi03vPbsVPEVFUgsxGsN
+	 lyKqJl5diEXTDB9cQDCSJ6gqt45jM15S2PUw7uspITVKTjmXTvhrHqMdPD2bGZvI0V
+	 01t0+z2/sRTUgOAK+M0CZc5UQxeZNXTrDGEiWpIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Geliang Tang <geliang@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 063/175] selftests: mptcp: join: endpoints: longer timeout
-Date: Thu, 27 Nov 2025 15:45:16 +0100
-Message-ID: <20251127144045.268957448@linuxfoundation.org>
+	Jianbo Liu <jianbol@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 090/175] xfrm: Prevent locally generated packets from direct output in tunnel mode
+Date: Thu, 27 Nov 2025 15:45:43 +0100
+Message-ID: <20251127144046.249801895@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,75 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-commit fb13c6bb810ca871964e062cf91882d1c83db509 upstream.
+[ Upstream commit 59630e2ccd728703cc826e3a3515d70f8c7a766c ]
 
-In rare cases, when the test environment is very slow, some endpoints
-tests can fail because some expected events have not been seen.
+Add a check to ensure locally generated packets (skb->sk != NULL) do
+not use direct output in tunnel mode, as these packets require proper
+L2 header setup that is handled by the normal XFRM processing path.
 
-Because the tests are expecting a long on-going connection, and they are
-not waiting for the end of the transfer, it is fine to have a longer
-timeout, and even go over the default one. This connection will be
-killed at the end, after the verifications: increasing the timeout
-doesn't change anything, apart from avoiding it to end before the end of
-the verifications.
-
-To play it safe, all endpoints tests not waiting for the end of the
-transfer are now having a longer timeout: 2 minutes.
-
-The Fixes commit was making the connection longer, but still, the
-default timeout would have stopped it after 1 minute, which might not be
-enough in very slow environments.
-
-Fixes: 6457595db987 ("selftests: mptcp: join: endpoints: longer transfer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-8-806d3781c95f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5eddd76ec2fd ("xfrm: fix tunnel mode TX datapath in packet offload mode")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/xfrm/xfrm_output.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3757,7 +3757,7 @@ endpoint_tests()
- 		pm_nl_set_limits $ns1 2 2
- 		pm_nl_set_limits $ns2 2 2
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
--		{ test_linkfail=128 speed=slow \
-+		{ timeout_test=120 test_linkfail=128 speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
- 		local tests_pid=$!
+diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
+index a98b5bf55ac31..54222fcbd7fd8 100644
+--- a/net/xfrm/xfrm_output.c
++++ b/net/xfrm/xfrm_output.c
+@@ -772,8 +772,12 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
+ 		/* Exclusive direct xmit for tunnel mode, as
+ 		 * some filtering or matching rules may apply
+ 		 * in transport mode.
++		 * Locally generated packets also require
++		 * the normal XFRM path for L2 header setup,
++		 * as the hardware needs the L2 header to match
++		 * for encryption, so skip direct output as well.
+ 		 */
+-		if (x->props.mode == XFRM_MODE_TUNNEL)
++		if (x->props.mode == XFRM_MODE_TUNNEL && !skb->sk)
+ 			return xfrm_dev_direct_output(sk, x, skb);
  
-@@ -3784,7 +3784,7 @@ endpoint_tests()
- 		pm_nl_set_limits $ns2 0 3
- 		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
- 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
--		{ test_linkfail=128 speed=5 \
-+		{ timeout_test=120 test_linkfail=128 speed=5 \
- 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
- 		local tests_pid=$!
- 
-@@ -3862,7 +3862,7 @@ endpoint_tests()
- 		# broadcast IP: no packet for this address will be received on ns1
- 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
- 		pm_nl_add_endpoint $ns1 10.0.1.1 id 42 flags signal
--		{ test_linkfail=128 speed=5 \
-+		{ timeout_test=120 test_linkfail=128 speed=5 \
- 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
- 		local tests_pid=$!
- 
-@@ -3935,7 +3935,7 @@ endpoint_tests()
- 		# broadcast IP: no packet for this address will be received on ns1
- 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
- 		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
--		{ test_linkfail=128 speed=20 \
-+		{ timeout_test=120 test_linkfail=128 speed=20 \
- 			run_tests $ns1 $ns2 10.0.1.1 & } 2>/dev/null
- 		local tests_pid=$!
- 
+ 		return xfrm_output_resume(sk, skb, 0);
+-- 
+2.51.0
+
 
 
