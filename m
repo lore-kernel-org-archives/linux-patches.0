@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C437728D830;
-	Thu, 27 Nov 2025 14:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960B33126C0;
+	Thu, 27 Nov 2025 14:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255450; cv=none; b=XNN5KS2rN3qmkuBsqg3DKj5xjTHCU3go5nYddUxeeeJ6FANzsv5tfAMNK4TYplse3JfdCJVIAz70XDHKv9nH03WGKew/NvaPKDOoPWCkrAWxTSBT3FK7m0Dh740nafR0pxbUHnowB4KeLI7n2lskdjjqC5+U0yRlvB0JXE+guls=
+	t=1764255453; cv=none; b=MQzFkrqeT1Yb/RfaUlFurmIs0ttHHKf8hqEk2OZ4sPBO1FSd98drRWdb7fYB8VHFZrGMWtxksLfjX8U2+AKQc3z8ye+4gOvnRys0nm+RtL3nBzxzXIy2RI/jSKF28PhlYuHApNe+EGa5aBkKpwSIX6eXbXD5E6tdsSxEUs9bbq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255450; c=relaxed/simple;
-	bh=AbqfYN6Rt3IGI270iy95H4A3wsxJcaYDAjFwp9EyL2E=;
+	s=arc-20240116; t=1764255453; c=relaxed/simple;
+	bh=QJQ0+VAL7NY8nwOzIHM1B2ZWNx62nb44XrQQ7apjjC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iESEHE+iJ9JkQMcmL6J6gHuGHzbYaPP2RM6BmqBWVcqMEA2rpraHQgZi0AlLl89/eIL3Rm5DV0xYVKybzADr4q2W8cx08D3AUgaTf43UkLGDcQpvgmxSIRlrOAR0nA9huQF7FLVY6tghbNFwMaKuoV1g7LfYSLDVIGaiwSDbagY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LI87mBF9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lWDWhLKS9jcJbRz0ts5pxKtbLa97Cwvh/URdt/L5WnecZwpH3mqh4cXJl9pbG628h4OWAJENep/i8JZDfYSVPvqHQr5QXoaMVN23pVwYxXMkav27NzMkvrzjvOipOiz43wdrPhPt/gJ6pJ8vwHhsCOuAYqZSe6uUjhsLYzHV/6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5v3orNu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LI87mBF9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F30C4CEF8;
-	Thu, 27 Nov 2025 14:57:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5v3orNu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232EDC4CEF8;
+	Thu, 27 Nov 2025 14:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255450;
-	bh=AbqfYN6Rt3IGI270iy95H4A3wsxJcaYDAjFwp9EyL2E=;
+	s=korg; t=1764255453;
+	bh=QJQ0+VAL7NY8nwOzIHM1B2ZWNx62nb44XrQQ7apjjC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LI87mBF9RNfGo+6qRXwbP/4JWKl9DOst3t7Kl2WVIoSzs7Ms9E5B0ptyqeb3Sq2dr
-	 Ul/6no41gZVr16qHggGMItEvircaKn9FxLoZ9UWMIsYbrbWIZihWUNWokRB3+wTPUj
-	 8FQMw5ma4VuuusQF7YMco+IA1L1RTGNS/jzQK7PU=
+	b=s5v3orNujJ4nhyBVB2GamX+P/JfFBJCCN7DiQ1kcBp1tDFJmq6xrMUAev8+oGlmFH
+	 r8nvGo0eIfvM9pfpTiKpoSl7JlM92lTTKM+NUiZUsI5GuHaoiqTqPTnxE0cjojb2Rl
+	 dtQXlUqzuPgUrLqywGKxKy+btmocoOdUCjvO8Y30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ovidiu (Ovi) Bunea" <ovidiu.bunea@amd.com>,
-	Yihan Zhu <yihan.zhu@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
+	Charlene Liu <charlene.liu@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Roman Li <roman.li@amd.com>,
 	Dan Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 111/112] drm/amd/display: Insert dccg log for easy debug
-Date: Thu, 27 Nov 2025 15:46:53 +0100
-Message-ID: <20251127144036.915492047@linuxfoundation.org>
+Subject: [PATCH 6.12 112/112] drm/amd/display: Prevent Gating DTBCLK before It Is Properly Latched
+Date: Thu, 27 Nov 2025 15:46:54 +0100
+Message-ID: <20251127144036.953396701@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -55,142 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charlene Liu <Charlene.Liu@amd.com>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-[ Upstream commit 35bcc9168f3ce6416cbf3f776758be0937f84cb3 ]
+[ Upstream commit cfa0904a35fd0231f4d05da0190f0a22ed881cce ]
 
 [why]
-Log for sequence tracking
+1. With allow_0_dtb_clk enabled, the time required to latch DTBCLK to 600 MHz
+depends on the SMU. If DTBCLK is not latched to 600 MHz before set_mode completes,
+gating DTBCLK causes the DP2 sink to lose its clock source.
 
-Reviewed-by: Ovidiu (Ovi) Bunea <ovidiu.bunea@amd.com>
-Reviewed-by: Yihan Zhu <yihan.zhu@amd.com>
-Signed-off-by: Charlene Liu <Charlene.Liu@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
+2. The existing DTBCLK gating sequence ungates DTBCLK based on both pix_clk and ref_dtbclk,
+but gates DTBCLK when either pix_clk or ref_dtbclk is zero.
+pix_clk can be zero outside the set_mode sequence before DTBCLK is properly latched,
+which can lead to DTBCLK being gated by mistake.
+
+[how]
+Consider both pixel_clk and ref_dtbclk when determining when it is safe to gate DTBCLK;
+this is more accurate.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4701
+Fixes: 5949e7c4890c ("drm/amd/display: Enable Dynamic DTBCLK Switch")
+Reviewed-by: Charlene Liu <charlene.liu@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Roman Li <roman.li@amd.com>
 Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: cfa0904a35fd ("drm/amd/display: Prevent Gating DTBCLK before It Is Properly Latched")
+(cherry picked from commit d04eb0c402780ca037b62a6aecf23b863545ebca)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c |   24 ++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c |    4 +++-
+ drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c       |    2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c
+@@ -377,6 +377,8 @@ void dcn35_update_clocks(struct clk_mgr
+ 	display_count = dcn35_get_active_display_cnt_wa(dc, context, &all_active_disps);
+ 	if (new_clocks->dtbclk_en && !new_clocks->ref_dtbclk_khz)
+ 		new_clocks->ref_dtbclk_khz = 600000;
++	else if (!new_clocks->dtbclk_en && new_clocks->ref_dtbclk_khz > 590000)
++		new_clocks->ref_dtbclk_khz = 0;
+ 
+ 	/*
+ 	 * if it is safe to lower, but we are already in the lower state, we don't have to do anything
+@@ -418,7 +420,7 @@ void dcn35_update_clocks(struct clk_mgr
+ 
+ 			actual_dtbclk = REG_READ(CLK1_CLK4_CURRENT_CNT);
+ 
+-			if (actual_dtbclk) {
++			if (actual_dtbclk > 590000) {
+ 				clk_mgr_base->clks.ref_dtbclk_khz = new_clocks->ref_dtbclk_khz;
+ 				clk_mgr_base->clks.dtbclk_en = new_clocks->dtbclk_en;
+ 			}
 --- a/drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c
 +++ b/drivers/gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c
-@@ -39,6 +39,7 @@
+@@ -1405,7 +1405,7 @@ static void dccg35_set_dtbclk_dto(
+ 				__func__, params->otg_inst, params->pixclk_khz,
+ 				params->ref_dtbclk_khz, req_dtbclk_khz, phase, modulo);
  
- #define CTX \
- 	dccg_dcn->base.ctx
-+#include "logger_types.h"
- #define DC_LOGGER \
- 	dccg->ctx->logger
- 
-@@ -1132,7 +1133,7 @@ static void dcn35_set_dppclk_enable(stru
- 	default:
- 		break;
- 	}
--	//DC_LOG_DEBUG("%s: dpp_inst(%d) DPPCLK_EN = %d\n", __func__, dpp_inst, enable);
-+	DC_LOG_DEBUG("%s: dpp_inst(%d) DPPCLK_EN = %d\n", __func__, dpp_inst, enable);
- 
- }
- 
-@@ -1400,6 +1401,10 @@ static void dccg35_set_dtbclk_dto(
- 		 * PIPEx_DTO_SRC_SEL should not be programmed during DTBCLK update since OTG may still be on, and the
- 		 * programming is handled in program_pix_clk() regardless, so it can be removed from here.
- 		 */
-+		DC_LOG_DEBUG("%s: OTG%d DTBCLK DTO enabled: pixclk_khz=%d, ref_dtbclk_khz=%d, req_dtbclk_khz=%d, phase=%d, modulo=%d\n",
-+				__func__, params->otg_inst, params->pixclk_khz,
-+				params->ref_dtbclk_khz, req_dtbclk_khz, phase, modulo);
-+
- 	} else {
+-	} else {
++	} else if (!params->ref_dtbclk_khz && !req_dtbclk_khz) {
  		switch (params->otg_inst) {
  		case 0:
-@@ -1425,6 +1430,8 @@ static void dccg35_set_dtbclk_dto(
- 
- 		REG_WRITE(DTBCLK_DTO_MODULO[params->otg_inst], 0);
- 		REG_WRITE(DTBCLK_DTO_PHASE[params->otg_inst], 0);
-+
-+		DC_LOG_DEBUG("%s: OTG%d DTBCLK DTO disabled\n", __func__, params->otg_inst);
- 	}
- }
- 
-@@ -1469,6 +1476,8 @@ static void dccg35_set_dpstreamclk(
- 		BREAK_TO_DEBUGGER();
- 		return;
- 	}
-+	DC_LOG_DEBUG("%s: dp_hpo_inst(%d) DPSTREAMCLK_EN = %d, DPSTREAMCLK_SRC_SEL = %d\n",
-+			__func__, dp_hpo_inst, (src == REFCLK) ? 0 : 1, otg_inst);
- }
- 
- 
-@@ -1508,6 +1517,8 @@ static void dccg35_set_dpstreamclk_root_
- 		BREAK_TO_DEBUGGER();
- 		return;
- 	}
-+	DC_LOG_DEBUG("%s: dp_hpo_inst(%d) DPSTREAMCLK_ROOT_GATE_DISABLE = %d\n",
-+			__func__, dp_hpo_inst, enable ? 1 : 0);
- }
- 
- 
-@@ -1547,7 +1558,7 @@ static void dccg35_set_physymclk_root_cl
- 		BREAK_TO_DEBUGGER();
- 		return;
- 	}
--	//DC_LOG_DEBUG("%s: dpp_inst(%d) PHYESYMCLK_ROOT_GATE_DISABLE:\n", __func__, phy_inst, enable ? 0 : 1);
-+	DC_LOG_DEBUG("%s: dpp_inst(%d) PHYESYMCLK_ROOT_GATE_DISABLE: %d\n", __func__, phy_inst, enable ? 0 : 1);
- 
- }
- 
-@@ -1620,6 +1631,8 @@ static void dccg35_set_physymclk(
- 		BREAK_TO_DEBUGGER();
- 		return;
- 	}
-+	DC_LOG_DEBUG("%s: phy_inst(%d) PHYxSYMCLK_EN = %d, PHYxSYMCLK_SRC_SEL = %d\n",
-+			__func__, phy_inst, force_enable ? 1 : 0, clk_src);
- }
- 
- static void dccg35_set_valid_pixel_rate(
-@@ -1667,6 +1680,7 @@ static void dccg35_dpp_root_clock_contro
- 	}
- 
- 	dccg->dpp_clock_gated[dpp_inst] = !clock_on;
-+	DC_LOG_DEBUG("%s: dpp_inst(%d) clock_on = %d\n", __func__, dpp_inst, clock_on);
- }
- 
- static void dccg35_disable_symclk32_se(
-@@ -1725,6 +1739,7 @@ static void dccg35_disable_symclk32_se(
- 		BREAK_TO_DEBUGGER();
- 		return;
- 	}
-+
- }
- 
- static void dccg35_init_cb(struct dccg *dccg)
-@@ -1732,7 +1747,6 @@ static void dccg35_init_cb(struct dccg *
- 	(void)dccg;
- 	/* Any RCG should be done when driver enter low power mode*/
- }
--
- void dccg35_init(struct dccg *dccg)
- {
- 	int otg_inst;
-@@ -1747,6 +1761,8 @@ void dccg35_init(struct dccg *dccg)
- 		for (otg_inst = 0; otg_inst < 2; otg_inst++) {
- 			dccg31_disable_symclk32_le(dccg, otg_inst);
- 			dccg31_set_symclk32_le_root_clock_gating(dccg, otg_inst, false);
-+			DC_LOG_DEBUG("%s: OTG%d SYMCLK32_LE disabled and root clock gating disabled\n",
-+					__func__, otg_inst);
- 		}
- 
- //	if (dccg->ctx->dc->debug.root_clock_optimization.bits.symclk32_se)
-@@ -1759,6 +1775,8 @@ void dccg35_init(struct dccg *dccg)
- 			dccg35_set_dpstreamclk(dccg, REFCLK, otg_inst,
- 						otg_inst);
- 			dccg35_set_dpstreamclk_root_clock_gating(dccg, otg_inst, false);
-+			DC_LOG_DEBUG("%s: OTG%d DPSTREAMCLK disabled and root clock gating disabled\n",
-+					__func__, otg_inst);
- 		}
- 
- /*
+ 			REG_UPDATE(DCCG_GATE_DISABLE_CNTL5, DTBCLK_P0_GATE_DISABLE, 0);
 
 
