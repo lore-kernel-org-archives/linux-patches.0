@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9949130DED3;
-	Thu, 27 Nov 2025 14:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33572299943;
+	Thu, 27 Nov 2025 14:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255242; cv=none; b=AMaxhlc9sMJ4lDYPX8faedrLkpksqgiS8qQBb/IaDqbxq9ah5mjQ4tm04t54DJciEuAhbV73Enc71FjRp48rkwLQvPAQtIvIPwcxs/CX8zRMaRzuYlV2D1jFqS2CBO/Mv/jAZYVhLGBxJ1ChTp9yZjqF5Q2Fw+G00eK9CVpOENU=
+	t=1764255244; cv=none; b=svXeihoWZLqWuSQrq0dQLFyF06WG7WGmhrN0XkH8W6S9jT7WlDccoULSZuO9/SxqjeatNKW5B02BJc0wLbVOQLvPoCRaeHSbSjapLYrLzpCrvyy8NIUIW9kuDmsbc6p+TXNI5JPJQkq7pyJLS9ID1rMXoPk5uFV2eyS2l8Vm5TI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255242; c=relaxed/simple;
-	bh=z03SE3HVYA9dA3pzRp9Qj0u19RyFZajJ/RkkgDWuUZA=;
+	s=arc-20240116; t=1764255244; c=relaxed/simple;
+	bh=viDplz5WBWczqhYLNsmYsxA0ZlTl1nP+T6IEozBSxCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ems1OozCY4AVeJUmrLhgOlXAVhQ3b8TuWFpeeqFYbYEemjwtJ8ni/YiMXckThqZUpNpPWPfVIXE9NETR2aMou6OzIMbdtFU/VDxgTXKm63dASWT5bm2JaK+Gs7m5Ae0n4oT4huB3Wgy1vYClo9mhbECy6QEVXZVp98973e090n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+lktcwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GTJdytNCvXykzlKZ8G/d95e3JBwHgK2JJse7qxbGP/XKTPynlpfDiO3kyHySL4bbIX+TU4Cn0l97DQG+XcmKVAtxcJtXrUsRsBcOcTMhXn0x2O9bQmO8FP7qtjeBX2bLXLrxYVN088vHYMX4H7+o7E2Kxslly2WLuBMEWGNIObY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K55bxF0P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+lktcwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC3EC4CEF8;
-	Thu, 27 Nov 2025 14:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K55bxF0P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B11C4CEF8;
+	Thu, 27 Nov 2025 14:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255241;
-	bh=z03SE3HVYA9dA3pzRp9Qj0u19RyFZajJ/RkkgDWuUZA=;
+	s=korg; t=1764255244;
+	bh=viDplz5WBWczqhYLNsmYsxA0ZlTl1nP+T6IEozBSxCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+lktcwYI8CbEy3PU5q1gG3placFvUV9yqBFUCl5qFh9aKqj/H41+5qk4LqDZe9Uv
-	 JZj64gwXRjJueH53yyv0tFMe3FhHNIHXxQTHjy1kqVxz4etViyxUJSFakDaflDT0sz
-	 Deju8aTz9XrQmk+TBv58nefY5RnRR4NebkpWWcSc=
+	b=K55bxF0PncpQWVbEZDbLN0urulXnUfZlHdMzU61brBXRgZU6kJERN39+aX+azUo1R
+	 f2OiPPmDJLa2RrK3QAhHoSJibSRYhF4vA0q+nNS6zUi/aQimLkJsQiPNeWvZPGoAwQ
+	 PSp2EYKpg+pvWQTNj38RMeJhBBw+pwMSluCZlla8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu-Chun Lin <eleanor.lin@realtek.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 055/112] pinctrl: realtek: Select REGMAP_MMIO for RTD driver
-Date: Thu, 27 Nov 2025 15:45:57 +0100
-Message-ID: <20251127144034.855799775@linuxfoundation.org>
+Subject: [PATCH 6.12 056/112] xfrm: Determine inner GSO type from packet inner protocol
+Date: Thu, 27 Nov 2025 15:45:58 +0100
+Message-ID: <20251127144034.891942355@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,40 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu-Chun Lin <eleanor.lin@realtek.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 369f772299821f93f872bf1b4d7d7ed2fc50243b ]
+[ Upstream commit 61fafbee6cfed283c02a320896089f658fa67e56 ]
 
-The pinctrl-rtd driver uses 'devm_regmap_init_mmio', which requires
-'REGMAP_MMIO' to be enabled.
+The GSO segmentation functions for ESP tunnel mode
+(xfrm4_tunnel_gso_segment and xfrm6_tunnel_gso_segment) were
+determining the inner packet's L2 protocol type by checking the static
+x->inner_mode.family field from the xfrm state.
 
-Without this selection, the build fails with an undefined reference:
-aarch64-none-linux-gnu-ld: drivers/pinctrl/realtek/pinctrl-rtd.o: in
-function rtd_pinctrl_probe': pinctrl-rtd.c:(.text+0x5a0): undefined
-reference to __devm_regmap_init_mmio_clk'
+This is unreliable. In tunnel mode, the state's actual inner family
+could be defined by x->inner_mode.family or by
+x->inner_mode_iaf.family. Checking only the former can lead to a
+mismatch with the actual packet being processed, causing GSO to create
+segments with the wrong L2 header type.
 
-Fix this by selecting 'REGMAP_MMIO' in the Kconfig.
+This patch fixes the bug by deriving the inner mode directly from the
+packet's inner protocol stored in XFRM_MODE_SKB_CB(skb)->protocol.
 
-Fixes: e99ce78030db ("pinctrl: realtek: Add common pinctrl driver for Realtek DHC RTD SoCs")
-Signed-off-by: Yu-Chun Lin <eleanor.lin@realtek.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Instead of replicating the code, this patch modifies the
+xfrm_ip2inner_mode helper function. It now correctly returns
+&x->inner_mode if the selector family (x->sel.family) is already
+specified, thereby handling both specific and AF_UNSPEC cases
+appropriately.
+
+With this change, ESP GSO can use xfrm_ip2inner_mode to get the
+correct inner mode. It doesn't affect existing callers, as the updated
+logic now mirrors the checks they were already performing externally.
+
+Fixes: 26dbd66eab80 ("esp: choose the correct inner protocol for GSO on inter address family tunnels")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/realtek/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/xfrm.h      | 3 ++-
+ net/ipv4/esp4_offload.c | 6 ++++--
+ net/ipv6/esp6_offload.c | 6 ++++--
+ 3 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/realtek/Kconfig b/drivers/pinctrl/realtek/Kconfig
-index 0fc6bd4fcb7ec..400c9e5b16ada 100644
---- a/drivers/pinctrl/realtek/Kconfig
-+++ b/drivers/pinctrl/realtek/Kconfig
-@@ -6,6 +6,7 @@ config PINCTRL_RTD
- 	default y
- 	select PINMUX
- 	select GENERIC_PINCONF
-+	select REGMAP_MMIO
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 1484dd15a3694..caaff61601a07 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -472,7 +472,8 @@ static inline int xfrm_af2proto(unsigned int family)
  
- config PINCTRL_RTD1619B
- 	tristate "Realtek DHC 1619B pin controller driver"
+ static inline const struct xfrm_mode *xfrm_ip2inner_mode(struct xfrm_state *x, int ipproto)
+ {
+-	if ((ipproto == IPPROTO_IPIP && x->props.family == AF_INET) ||
++	if ((x->sel.family != AF_UNSPEC) ||
++	    (ipproto == IPPROTO_IPIP && x->props.family == AF_INET) ||
+ 	    (ipproto == IPPROTO_IPV6 && x->props.family == AF_INET6))
+ 		return &x->inner_mode;
+ 	else
+diff --git a/net/ipv4/esp4_offload.c b/net/ipv4/esp4_offload.c
+index e0d94270da28a..05828d4cb6cdb 100644
+--- a/net/ipv4/esp4_offload.c
++++ b/net/ipv4/esp4_offload.c
+@@ -122,8 +122,10 @@ static struct sk_buff *xfrm4_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	__be16 type = x->inner_mode.family == AF_INET6 ? htons(ETH_P_IPV6)
+-						       : htons(ETH_P_IP);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
++					XFRM_MODE_SKB_CB(skb)->protocol);
++	__be16 type = inner_mode->family == AF_INET6 ? htons(ETH_P_IPV6)
++						     : htons(ETH_P_IP);
+ 
+ 	return skb_eth_gso_segment(skb, features, type);
+ }
+diff --git a/net/ipv6/esp6_offload.c b/net/ipv6/esp6_offload.c
+index 7b41fb4f00b58..22410243ebe88 100644
+--- a/net/ipv6/esp6_offload.c
++++ b/net/ipv6/esp6_offload.c
+@@ -158,8 +158,10 @@ static struct sk_buff *xfrm6_tunnel_gso_segment(struct xfrm_state *x,
+ 						struct sk_buff *skb,
+ 						netdev_features_t features)
+ {
+-	__be16 type = x->inner_mode.family == AF_INET ? htons(ETH_P_IP)
+-						      : htons(ETH_P_IPV6);
++	const struct xfrm_mode *inner_mode = xfrm_ip2inner_mode(x,
++					XFRM_MODE_SKB_CB(skb)->protocol);
++	__be16 type = inner_mode->family == AF_INET ? htons(ETH_P_IP)
++						    : htons(ETH_P_IPV6);
+ 
+ 	return skb_eth_gso_segment(skb, features, type);
+ }
 -- 
 2.51.0
 
