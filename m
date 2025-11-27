@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9E527F18B;
-	Thu, 27 Nov 2025 14:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC95D28CF42;
+	Thu, 27 Nov 2025 14:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255037; cv=none; b=m5YJX3u4aknwAX/pu2zfiMpEu7ieW+NJJvy9weDvHkDh/YoqeZbC7e6EkcvaS7JuoeL1TH1H+Q9ggY9Jf+ZmSvfW4l//x86bVKj81OnAlQMWDE618j0F6zWDKAZ6bP9D09Y+wnaejLlqyzbPzDyNJ8nlb5BpKtdsls/0i3P+dOg=
+	t=1764255040; cv=none; b=uo9SpJrgKDMA/2NZ2jAOAlTlyL+Eapxh0cW5rHc5W2QpoaYurE/eTTYiCB1dnrNQZv88R4WPkdHl1pPMJepCZb/ZX4ZIm0LiGJAVqJh2KmcsGWkpmt4vl9gZTgHItnkfgnR4izuwG8mqE6WH44M8p2Xx33/ZuRGgfS8FOXHPCig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255037; c=relaxed/simple;
-	bh=a9Z2se+k0vOpiF1aQlr98wjW2oPIRkOw+1reRfiDsxM=;
+	s=arc-20240116; t=1764255040; c=relaxed/simple;
+	bh=MemAtqEcw5pZzPzzXPmkfldHoHDrk85nWw1Jzm3bdhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=noNNPvfsglr5KP0P+yA2bJY/MOkVoYCOhWNld99HTLQ/00zjqE8Rcg9lRrJx18f1xUaCInYxVW0DDxgsPaR5mst/0VR0BaUqtEy68lfqi8dxdw1yzUuja5SqcsdWs6beXwZWiITDO859hulBh/nLgX6wtGQ0IH6xXgYzvzm+AAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KiWLJM9b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=THHOYQXkMCM57QXfMCUlt9HMGzUByQXDU4nVm/Eu+wDOhWPLMBcCbgPQsyh5WACbjI3XN/lWgeW0DH916ppjgUav8+ljmsCOXGri60XEeuPa7u1xaWk0XOreMykZR6BvdKf3PvU9V58ASlz/jY4SAkZ3ye20EeWWAJy/gxSUDa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hjg7imkB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KiWLJM9b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6921EC4CEF8;
-	Thu, 27 Nov 2025 14:50:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hjg7imkB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FFAC4CEF8;
+	Thu, 27 Nov 2025 14:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255037;
-	bh=a9Z2se+k0vOpiF1aQlr98wjW2oPIRkOw+1reRfiDsxM=;
+	s=korg; t=1764255040;
+	bh=MemAtqEcw5pZzPzzXPmkfldHoHDrk85nWw1Jzm3bdhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiWLJM9b1Xz8yqk/A7U0F5M46sEhWsGAsdq3Ujkyw3UJL0+bNCB06dQ1onjm4AeEC
-	 MdzRZYyJMgx68BO4UQOJKJFJxIbk0SrGEz/NFtRdpgYuXQq4I38TEy6H7vM5Jyda8P
-	 9jsNyPHBulPX6HXls/krwEywK9y3XdNiK+5Jc41A=
+	b=hjg7imkBmlHmwOLXDcylmbSYmmUHszRjF7C8cLMWmrfjVIXawE3BzeSLyox8Rp7cM
+	 dGfbiHn0gI5FE0X4UWfXN5M12JLVpXvz/lQcSs2ZT17pL0Hi7DIT2uyXlw5Ioa85/Q
+	 uakZLDWAps5Qd5guHLE38NgxbwiNKxCuiV//QU0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ene <sebastianene@google.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.6 73/86] KVM: arm64: Check the untrusted offset in FF-A memory share
-Date: Thu, 27 Nov 2025 15:46:29 +0100
-Message-ID: <20251127144030.497315157@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>
+Subject: [PATCH 6.6 74/86] uio_hv_generic: Set event for all channels on the device
+Date: Thu, 27 Nov 2025 15:46:30 +0100
+Message-ID: <20251127144030.533475877@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -51,48 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ene <sebastianene@google.com>
+From: Long Li <longli@microsoft.com>
 
-commit 103e17aac09cdd358133f9e00998b75d6c1f1518 upstream.
+commit d062463edf1770427dc2d637df4088df4835aa47 upstream.
 
-Verify the offset to prevent OOB access in the hypervisor
-FF-A buffer in case an untrusted large enough value
-[U32_MAX - sizeof(struct ffa_composite_mem_region) + 1, U32_MAX]
-is set from the host kernel.
+Hyper-V may offer a non latency sensitive device with subchannels without
+monitor bit enabled. The decision is entirely on the Hyper-V host not
+configurable within guest.
 
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://patch.msgid.link/20251017075710.2605118-1-sebastianene@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+When a device has subchannels, also signal events for the subchannel
+if its monitor bit is disabled.
+
+This patch also removes the memory barrier when monitor bit is enabled
+as it is not necessary. The memory barrier is only needed between
+setting up interrupt mask and calling vmbus_set_event() when monitor
+bit is disabled.
+
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/1741644721-20389-1-git-send-email-longli@linuxonhyperv.com
+Fixes: b15b7d2a1b09 ("uio_hv_generic: Let userspace take care of interrupt mask")
+Closes: https://bugs.debian.org/1120602
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/ffa.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/uio/uio_hv_generic.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
---- a/arch/arm64/kvm/hyp/nvhe/ffa.c
-+++ b/arch/arm64/kvm/hyp/nvhe/ffa.c
-@@ -425,7 +425,7 @@ static void __do_ffa_mem_xfer(const u64
- 	DECLARE_REG(u32, npages_mbz, ctxt, 4);
- 	struct ffa_composite_mem_region *reg;
- 	struct ffa_mem_region *buf;
--	u32 offset, nr_ranges;
-+	u32 offset, nr_ranges, checked_offset;
- 	int ret = 0;
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -80,9 +80,15 @@ hv_uio_irqcontrol(struct uio_info *info,
+ {
+ 	struct hv_uio_private_data *pdata = info->priv;
+ 	struct hv_device *dev = pdata->device;
++	struct vmbus_channel *primary, *sc;
  
- 	if (addr_mbz || npages_mbz || fraglen > len ||
-@@ -460,7 +460,12 @@ static void __do_ffa_mem_xfer(const u64
- 		goto out_unlock;
- 	}
- 
--	if (fraglen < offset + sizeof(struct ffa_composite_mem_region)) {
-+	if (check_add_overflow(offset, sizeof(struct ffa_composite_mem_region), &checked_offset)) {
-+		ret = FFA_RET_INVALID_PARAMETERS;
-+		goto out_unlock;
-+	}
+-	dev->channel->inbound.ring_buffer->interrupt_mask = !irq_state;
+-	virt_mb();
++	primary = dev->channel;
++	primary->inbound.ring_buffer->interrupt_mask = !irq_state;
 +
-+	if (fraglen < checked_offset) {
- 		ret = FFA_RET_INVALID_PARAMETERS;
- 		goto out_unlock;
- 	}
++	mutex_lock(&vmbus_connection.channel_mutex);
++	list_for_each_entry(sc, &primary->sc_list, sc_list)
++		sc->inbound.ring_buffer->interrupt_mask = !irq_state;
++	mutex_unlock(&vmbus_connection.channel_mutex);
+ 
+ 	return 0;
+ }
+@@ -93,11 +99,18 @@ hv_uio_irqcontrol(struct uio_info *info,
+ static void hv_uio_channel_cb(void *context)
+ {
+ 	struct vmbus_channel *chan = context;
+-	struct hv_device *hv_dev = chan->device_obj;
+-	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
++	struct hv_device *hv_dev;
++	struct hv_uio_private_data *pdata;
+ 
+ 	virt_mb();
+ 
++	/*
++	 * The callback may come from a subchannel, in which case look
++	 * for the hv device in the primary channel
++	 */
++	hv_dev = chan->primary_channel ?
++		 chan->primary_channel->device_obj : chan->device_obj;
++	pdata = hv_get_drvdata(hv_dev);
+ 	uio_event_notify(&pdata->info);
+ }
+ 
 
 
