@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413AC332EA0;
-	Thu, 27 Nov 2025 15:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7322332AAC4;
+	Thu, 27 Nov 2025 15:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255799; cv=none; b=olt2liydplsbpmnIzdDo60+mCymPOodwtd6KZbSu1PQqQ9T9Xpreh/bEILql+wGIHNbchaCxPVcH1bJbnJ88qxWH2cSfJvzzkqD43jdUWzDLfDwUmJCmkzNIeMajTZqv+DzjqGN1Vs1M3ZaJFLcqEZA+2Qve9IWlETzQem21iy8=
+	t=1764255803; cv=none; b=HYWYpaqbITjPUnoWMYsKRHg8GY56B+oMP9U0EriVM1BaKJPvEPwcQPkHmZRfr2MozGb+a9T9GFO9laIrM7BMUgy9BshaoXwySPC8Z9DocgrqkfiRo/t60HdONqUn4JQbZNc8o8KHDmrcVBXZJEY93X2DX46e6cVUcG0Nlay8pZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255799; c=relaxed/simple;
-	bh=LOqvnwOXnH2B7GM6SZPcf8yN1FHfDWBOVq4JctB+uJY=;
+	s=arc-20240116; t=1764255803; c=relaxed/simple;
+	bh=A/WLlw1IgprEHWBQ/6ubNZFVYQIWzFDdWdtDBhFc7QE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UTONNRZLxMQ9cWyIlgEdPc36xcqT58q6NyWH0J634zqi/4mQ0fZ3itbzui/0kgMzMb11CNkhxTaBn/8ji2PHNtZ6V95oUAeeecE1T2YA5e+W/sKuQt7fQV0+Ohk1cAIvm0YsqGoDmS40st6Fy+5+b3q17/q3eijJ/NiFm7OMNGg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xx9XHzCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nOE1AmIMe3o+SReTbcSpDbGwdWg8ZKbqtwCNDyIyeGAIERa2iB+UUayUuoUMQgBRYBh2By/df51IzvDUMl6099/ngiFlw9y250A30Lbn3MX5CtsY6EeYmfnPTsFMRFyaTZ2RRcmou2azKa3TFa3qRUZy0nD1hE5A8NvUaSMDxQI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vKN18PJT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xx9XHzCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0543C4CEF8;
-	Thu, 27 Nov 2025 15:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vKN18PJT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D43BC4CEF8;
+	Thu, 27 Nov 2025 15:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255799;
-	bh=LOqvnwOXnH2B7GM6SZPcf8yN1FHfDWBOVq4JctB+uJY=;
+	s=korg; t=1764255802;
+	bh=A/WLlw1IgprEHWBQ/6ubNZFVYQIWzFDdWdtDBhFc7QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xx9XHzCkBur7Vr4/sB1LhiqfntPigTw1JgWs80GPkcoOgHIHekPcXZI/nz42QbBoN
-	 8WLKQngSZ5z0wOLXFmy4Qh1UnV4ezh1KMaHCN9Y6yC0iToTFifgzKRCvcS+vhSbbDG
-	 7Tw0QcM6tsxMupIzQsoR/odkHXOctLM7+D5nbl1M=
+	b=vKN18PJTXCDPKriL+U4ji2dPD3cobHQHM9vFqAXByscbBZNufkI3kNMpD+aOu39nr
+	 imHdiYp3ysKesVD2lYITEgCuR2r4V5uQ+kNxreahPPZFNwvetUWFii7CmdgTvqV4yO
+	 KCtJb31atCWAHL1kunYxnLDhLBF7jD47nOn3sInA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tantilov <emil.s.tantilov@intel.com>,
-	Chittim Madhu <madhu.chittim@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Samuel Salin <Samuel.salin@intel.com>,
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 118/175] idpf: fix possible vport_config NULL pointer deref in remove
-Date: Thu, 27 Nov 2025 15:46:11 +0100
-Message-ID: <20251127144047.269081531@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.17 119/175] ice: fix PTP cleanup on driver removal in error path
+Date: Thu, 27 Nov 2025 15:46:12 +0100
+Message-ID: <20251127144047.305663818@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -55,58 +54,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tantilov <emil.s.tantilov@intel.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 118082368c2b6ddefe6cb607efc312285148f044 ]
+[ Upstream commit 23a5b9b12de9dcd15ebae4f1abc8814ec1c51ab0 ]
 
-Attempting to remove the driver will cause a crash in cases where
-the vport failed to initialize. Following trace is from an instance where
-the driver failed during an attempt to create a VF:
-[ 1661.543624] idpf 0000:84:00.7: Device HW Reset initiated
-[ 1722.923726] idpf 0000:84:00.7: Transaction timed-out (op:1 cookie:2900 vc_op:1 salt:29 timeout:60000ms)
-[ 1723.353263] BUG: kernel NULL pointer dereference, address: 0000000000000028
+Improve the cleanup on releasing PTP resources in error path.
+The error case might happen either at the driver probe and PTP
+feature initialization or on PTP restart (errors in reset handling, NVM
+update etc). In both cases, calls to PF PTP cleanup (ice_ptp_cleanup_pf
+function) and 'ps_lock' mutex deinitialization were missed.
+Additionally, ptp clock was not unregistered in the latter case.
+
+Keep PTP state as 'uninitialized' on init to distinguish between error
+scenarios and to avoid resource release duplication at driver removal.
+
+The consequence of missing ice_ptp_cleanup_pf call is the following call
+trace dumped when ice_adapter object is freed (port list is not empty,
+as it is required at this stage):
+
+[  T93022] ------------[ cut here ]------------
+[  T93022] WARNING: CPU: 10 PID: 93022 at
+ice/ice_adapter.c:67 ice_adapter_put+0xef/0x100 [ice]
 ...
-[ 1723.358472] RIP: 0010:idpf_remove+0x11c/0x200 [idpf]
+[  T93022] RIP: 0010:ice_adapter_put+0xef/0x100 [ice]
 ...
-[ 1723.364973] Call Trace:
-[ 1723.365475]  <TASK>
-[ 1723.365972]  pci_device_remove+0x42/0xb0
-[ 1723.366481]  device_release_driver_internal+0x1a9/0x210
-[ 1723.366987]  pci_stop_bus_device+0x6d/0x90
-[ 1723.367488]  pci_stop_and_remove_bus_device+0x12/0x20
-[ 1723.367971]  pci_iov_remove_virtfn+0xbd/0x120
-[ 1723.368309]  sriov_disable+0x34/0xe0
-[ 1723.368643]  idpf_sriov_configure+0x58/0x140 [idpf]
-[ 1723.368982]  sriov_numvfs_store+0xda/0x1c0
+[  T93022] Call Trace:
+[  T93022]  <TASK>
+[  T93022]  ? ice_adapter_put+0xef/0x100 [ice
+33d2647ad4f6d866d41eefff1806df37c68aef0c]
+[  T93022]  ? __warn.cold+0xb0/0x10e
+[  T93022]  ? ice_adapter_put+0xef/0x100 [ice
+33d2647ad4f6d866d41eefff1806df37c68aef0c]
+[  T93022]  ? report_bug+0xd8/0x150
+[  T93022]  ? handle_bug+0xe9/0x110
+[  T93022]  ? exc_invalid_op+0x17/0x70
+[  T93022]  ? asm_exc_invalid_op+0x1a/0x20
+[  T93022]  ? ice_adapter_put+0xef/0x100 [ice
+33d2647ad4f6d866d41eefff1806df37c68aef0c]
+[  T93022]  pci_device_remove+0x42/0xb0
+[  T93022]  device_release_driver_internal+0x19f/0x200
+[  T93022]  driver_detach+0x48/0x90
+[  T93022]  bus_remove_driver+0x70/0xf0
+[  T93022]  pci_unregister_driver+0x42/0xb0
+[  T93022]  ice_module_exit+0x10/0xdb0 [ice
+33d2647ad4f6d866d41eefff1806df37c68aef0c]
+...
+[  T93022] ---[ end trace 0000000000000000 ]---
+[  T93022] ice: module unloaded
 
-Avoid the NULL pointer dereference by adding NULL pointer check for
-vport_config[i], before freeing user_config.q_coalesce.
-
-Fixes: e1e3fec3e34b ("idpf: preserve coalescing settings across resets")
-Signed-off-by: Emil Tantilov <emil.s.tantilov@intel.com>
-Reviewed-by: Chittim Madhu <madhu.chittim@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
+Fixes: e800654e85b5 ("ice: Use ice_adapter for PTP shared data instead of auxdev")
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_ptp.c | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_main.c b/drivers/net/ethernet/intel/idpf/idpf_main.c
-index dfe9126f1f4ab..1088cbbcf9487 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_main.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_main.c
-@@ -62,6 +62,8 @@ static void idpf_remove(struct pci_dev *pdev)
- 	destroy_workqueue(adapter->vc_event_wq);
+diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
+index fb0f6365a6d6f..8ec0f7d0fcebd 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ptp.c
++++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
+@@ -3246,7 +3246,7 @@ void ice_ptp_init(struct ice_pf *pf)
  
- 	for (i = 0; i < adapter->max_vports; i++) {
-+		if (!adapter->vport_config[i])
-+			continue;
- 		kfree(adapter->vport_config[i]->user_config.q_coalesce);
- 		kfree(adapter->vport_config[i]);
- 		adapter->vport_config[i] = NULL;
+ 	err = ice_ptp_init_port(pf, &ptp->port);
+ 	if (err)
+-		goto err_exit;
++		goto err_clean_pf;
+ 
+ 	/* Start the PHY timestamping block */
+ 	ice_ptp_reset_phy_timestamping(pf);
+@@ -3263,13 +3263,19 @@ void ice_ptp_init(struct ice_pf *pf)
+ 	dev_info(ice_pf_to_dev(pf), "PTP init successful\n");
+ 	return;
+ 
++err_clean_pf:
++	mutex_destroy(&ptp->port.ps_lock);
++	ice_ptp_cleanup_pf(pf);
+ err_exit:
+ 	/* If we registered a PTP clock, release it */
+ 	if (pf->ptp.clock) {
+ 		ptp_clock_unregister(ptp->clock);
+ 		pf->ptp.clock = NULL;
+ 	}
+-	ptp->state = ICE_PTP_ERROR;
++	/* Keep ICE_PTP_UNINIT state to avoid ambiguity at driver unload
++	 * and to avoid duplicated resources release.
++	 */
++	ptp->state = ICE_PTP_UNINIT;
+ 	dev_err(ice_pf_to_dev(pf), "PTP failed %d\n", err);
+ }
+ 
+@@ -3282,9 +3288,19 @@ void ice_ptp_init(struct ice_pf *pf)
+  */
+ void ice_ptp_release(struct ice_pf *pf)
+ {
+-	if (pf->ptp.state != ICE_PTP_READY)
++	if (pf->ptp.state == ICE_PTP_UNINIT)
+ 		return;
+ 
++	if (pf->ptp.state != ICE_PTP_READY) {
++		mutex_destroy(&pf->ptp.port.ps_lock);
++		ice_ptp_cleanup_pf(pf);
++		if (pf->ptp.clock) {
++			ptp_clock_unregister(pf->ptp.clock);
++			pf->ptp.clock = NULL;
++		}
++		return;
++	}
++
+ 	pf->ptp.state = ICE_PTP_UNINIT;
+ 
+ 	/* Disable timestamping for both Tx and Rx */
 -- 
 2.51.0
 
