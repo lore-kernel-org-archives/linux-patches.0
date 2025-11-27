@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF15332EC0;
-	Thu, 27 Nov 2025 14:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB62432B988;
+	Thu, 27 Nov 2025 14:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255253; cv=none; b=dqpN6H+vBNFp0Hs7yExoWmFdON8kfjBZBug7RKmjK/YXkahEb8oh9gOm9qBivMjO5AannuBoXw/t/t4VIWe7GdXeIkb+8s4Zs3uE18vv0onAqIGuLbf+BZ4yC44eAiJpMD9merGCVc7GZuUaeLIP852zoCx2oHuhIiebS/IbM6I=
+	t=1764255255; cv=none; b=QyNU82q26e+0NnLestFGV/GGLA6Ph8g+l3D5JvqNf9t2AXd6oQr5z5N0tK9A9D9nLlJieuZTGryTun/uXDiwoBOERF1xAdMvN0Dq82Ig+D0JB6mr/STBfGgT8BIdWDyCyV5B5GydotFC3uT/lKiqhFm2F4UAAwxYtE7OEgxaHIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255253; c=relaxed/simple;
-	bh=boZZxREKREZHypXj1Vx0n3tC8w7HSMxGv2lEjA6n7xE=;
+	s=arc-20240116; t=1764255255; c=relaxed/simple;
+	bh=waWsMW/hgUynWetibOLOI7vw1OdbFKmFjBo5LUn5Vtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DnoC4V2oCcMRVzVlfyK2owVhq2QS0A8ApNIojWowlg41NrzJDCOZ9TqZE7qpeaqio/kR2R6aR/asa0eOQIdS+WChGQa0EcyX9AF9npthZQfJVRU/sJrJaEsrGNcuVTfbzYFIBfNFLY7gODt7DKQMJJZmdiUv7Ok4mnFu+NtKa1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4cFRxEV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y31OoR2J/zW/2WaqQgOvElwk74l49t3urHXkN24QBT1xynMU9381BjbGXgn/lIRDioSYpHQDLrSVELSIe2NlbNR/yhnKcEmv2okaYPSiHCOgUEJCnM60iuZtex7KZgjFCjjnnZe7gGGQR89atqHZKz74bPrItRJetFiVz2N273c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOnpZDXR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4cFRxEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D266C4CEF8;
-	Thu, 27 Nov 2025 14:54:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOnpZDXR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF44BC4CEF8;
+	Thu, 27 Nov 2025 14:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255252;
-	bh=boZZxREKREZHypXj1Vx0n3tC8w7HSMxGv2lEjA6n7xE=;
+	s=korg; t=1764255255;
+	bh=waWsMW/hgUynWetibOLOI7vw1OdbFKmFjBo5LUn5Vtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4cFRxEVWw3Z8994Sz1bYxMDPUam9OY2vLUK2Q/nzPYFqNsHfHPXTD8l2zIid0KUM
-	 RXgDK6lMdIXB4fTL64aqa/KogOe3zD6RUsVbyU51WzuLolXnIMkvyhf2VJom+qeZAm
-	 d+uXJLmcIJOhk1g4Jr95QvLRtnWSHJX/GfdAO/Lk=
+	b=OOnpZDXR7TBjXcoEiXTDYTXOSQVgdMrwNfB+ZelShW2Fa5a51DlTm0lkxmS7+a9KH
+	 uOBcGBJygfu+UJ/oGwnpjiGzX6PMUPXqD2cxavjmrzJ+lC3kEP6srxdAKpMae34VAC
+	 VH3WmHOg1cQ3YnxGkijPkVK1CN+AYmknW2aVdbFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.12 027/112] mm/mempool: fix poisoning order>0 pages with HIGHMEM
-Date: Thu, 27 Nov 2025 15:45:29 +0100
-Message-ID: <20251127144033.833437873@linuxfoundation.org>
+	Nam Cao <namcao@linutronix.de>,
+	Lyude Paul <lyude@redhat.com>
+Subject: [PATCH 6.12 028/112] nouveau/firmware: Add missing kfree() of nvkm_falcon_fw::boot
+Date: Thu, 27 Nov 2025 15:45:30 +0100
+Message-ID: <20251127144033.869807192@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,106 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Nam Cao <namcao@linutronix.de>
 
-commit ec33b59542d96830e3c89845ff833cf7b25ef172 upstream.
+commit 949f1fd2225baefbea2995afa807dba5cbdb6bd3 upstream.
 
-The kernel test has reported:
+nvkm_falcon_fw::boot is allocated, but no one frees it. This causes a
+kmemleak warning.
 
-  BUG: unable to handle page fault for address: fffba000
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  *pde = 03171067 *pte = 00000000
-  Oops: Oops: 0002 [#1]
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G                T   6.18.0-rc2-00031-gec7f31b2a2d3 #1 NONE  a1d066dfe789f54bc7645c7989957d2bdee593ca
-  Tainted: [T]=RANDSTRUCT
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-  EIP: memset (arch/x86/include/asm/string_32.h:168 arch/x86/lib/memcpy_32.c:17)
-  Code: a5 8b 4d f4 83 e1 03 74 02 f3 a4 83 c4 04 5e 5f 5d 2e e9 73 41 01 00 90 90 90 3e 8d 74 26 00 55 89 e5 57 56 89 c6 89 d0 89 f7 <f3> aa 89 f0 5e 5f 5d 2e e9 53 41 01 00 cc cc cc 55 89 e5 53 57 56
-  EAX: 0000006b EBX: 00000015 ECX: 001fefff EDX: 0000006b
-  ESI: fffb9000 EDI: fffba000 EBP: c611fbf0 ESP: c611fbe8
-  DS: 007b ES: 007b FS: 0000 GS: 0000 SS: 0068 EFLAGS: 00010287
-  CR0: 80050033 CR2: fffba000 CR3: 0316e000 CR4: 00040690
-  Call Trace:
-   poison_element (mm/mempool.c:83 mm/mempool.c:102)
-   mempool_init_node (mm/mempool.c:142 mm/mempool.c:226)
-   mempool_init_noprof (mm/mempool.c:250 (discriminator 1))
-   ? mempool_alloc_pages (mm/mempool.c:640)
-   bio_integrity_initfn (block/bio-integrity.c:483 (discriminator 8))
-   ? mempool_alloc_pages (mm/mempool.c:640)
-   do_one_initcall (init/main.c:1283)
+Make sure this data is deallocated.
 
-Christoph found out this is due to the poisoning code not dealing
-properly with CONFIG_HIGHMEM because only the first page is mapped but
-then the whole potentially high-order page is accessed.
-
-We could give up on HIGHMEM here, but it's straightforward to fix this
-with a loop that's mapping, poisoning or checking and unmapping
-individual pages.
-
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202511111411.9ebfa1ba-lkp@intel.com
-Analyzed-by: Christoph Hellwig <hch@lst.de>
-Fixes: bdfedb76f4f5 ("mm, mempool: poison elements backed by slab allocator")
+Fixes: 2541626cfb79 ("drm/nouveau/acr: use common falcon HS FW code for ACR FWs")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
 Cc: stable@vger.kernel.org
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20251113-mempool-poison-v1-1-233b3ef984c3@suse.cz
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251117084231.2910561-1-namcao@linutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempool.c |   32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/falcon/fw.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/mempool.c
-+++ b/mm/mempool.c
-@@ -68,10 +68,20 @@ static void check_element(mempool_t *poo
- 	} else if (pool->free == mempool_free_pages) {
- 		/* Mempools backed by page allocator */
- 		int order = (int)(long)pool->pool_data;
--		void *addr = kmap_local_page((struct page *)element);
- 
--		__check_element(pool, addr, 1UL << (PAGE_SHIFT + order));
--		kunmap_local(addr);
-+#ifdef CONFIG_HIGHMEM
-+		for (int i = 0; i < (1 << order); i++) {
-+			struct page *page = (struct page *)element;
-+			void *addr = kmap_local_page(page + i);
-+
-+			__check_element(pool, addr, PAGE_SIZE);
-+			kunmap_local(addr);
-+		}
-+#else
-+		void *addr = page_address((struct page *)element);
-+
-+		__check_element(pool, addr, PAGE_SIZE << order);
-+#endif
- 	}
+--- a/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
++++ b/drivers/gpu/drm/nouveau/nvkm/falcon/fw.c
+@@ -159,6 +159,8 @@ nvkm_falcon_fw_dtor(struct nvkm_falcon_f
+ 	nvkm_memory_unref(&fw->inst);
+ 	nvkm_falcon_fw_dtor_sigs(fw);
+ 	nvkm_firmware_dtor(&fw->fw);
++	kfree(fw->boot);
++	fw->boot = NULL;
  }
  
-@@ -97,10 +107,20 @@ static void poison_element(mempool_t *po
- 	} else if (pool->alloc == mempool_alloc_pages) {
- 		/* Mempools backed by page allocator */
- 		int order = (int)(long)pool->pool_data;
--		void *addr = kmap_local_page((struct page *)element);
- 
--		__poison_element(addr, 1UL << (PAGE_SHIFT + order));
--		kunmap_local(addr);
-+#ifdef CONFIG_HIGHMEM
-+		for (int i = 0; i < (1 << order); i++) {
-+			struct page *page = (struct page *)element;
-+			void *addr = kmap_local_page(page + i);
-+
-+			__poison_element(addr, PAGE_SIZE);
-+			kunmap_local(addr);
-+		}
-+#else
-+		void *addr = page_address((struct page *)element);
-+
-+		__poison_element(addr, PAGE_SIZE << order);
-+#endif
- 	}
- }
- #else /* CONFIG_SLUB_DEBUG_ON */
+ static const struct nvkm_firmware_func
 
 
