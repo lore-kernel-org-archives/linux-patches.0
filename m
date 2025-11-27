@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D895F334385;
-	Thu, 27 Nov 2025 15:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A023321D0;
+	Thu, 27 Nov 2025 15:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255638; cv=none; b=ptZpGRN4LbInfKcyX3OlvGJ9XfcChssqT9x9YtYM7ZDJQpHO+GRw+H1AJt3sOGJe18VCh8VNSlFz4Zy97UnvXgMYrFHRoBmNG4wpJyGw9kbUG8AqUZWv/yZjzcuCYLmZWzj8Up6ryHKI7c2rZHJskcKjyax+htpz5e8Gedbi62s=
+	t=1764255642; cv=none; b=TFkMRoSMuYhaIYcQITZXi9snTXrbQU0sMkCqz9quuMWXoUILWHPltl/iGjPOWvt307vSTkqXjlWH1OK0UhM/rcoMpQt6YGvk7zXWsTG0HjThJ2nxNreYd8x55s5A6PBxU8in9u6RP7Wnj5ukjWyn3ebFbWsuZyuVzRKRa56nHKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255638; c=relaxed/simple;
-	bh=o6FeNryzR7sz9zqG5O+12YAqAcabG7z5pvbTFBLnIM8=;
+	s=arc-20240116; t=1764255642; c=relaxed/simple;
+	bh=wfMjTRoSaKSHLM5HbQGgEOn5yGi5CGrzq6FpZIRB87w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLvYHm30d+OsSyJllUttkSwE9iKc5hw2Xem7QEWloRN/HkOXb/itviGcnkOQVEfalhr3NpqgF2hyBupTV7Q5UMnNS4aaFcujXcvEBnLY5hSR5TFzhwluRzkBOsK7fzjnqBZ7qN9BG9K2kZRldyI4gh83DG6DJrs6c/rfzj9olM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BUzFTngZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hzubEcOGMBoJLtp5OsE0riJOM+1sMw9fp1maR0vaq9ynCbC7LC4e3CLtuBtnPmeF77o4uVrwHkK+L9qwqGr7oHGUoLHeQzYVBYGbSGSt7fuitJQh2ylF0JS4pkG8idS/rcp2K5tuIY0J90TZAnm3kMXMxtsbQa2G3D6c1JHU+nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=On385OGM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BUzFTngZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591FAC4CEF8;
-	Thu, 27 Nov 2025 15:00:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="On385OGM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35856C4CEF8;
+	Thu, 27 Nov 2025 15:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255638;
-	bh=o6FeNryzR7sz9zqG5O+12YAqAcabG7z5pvbTFBLnIM8=;
+	s=korg; t=1764255641;
+	bh=wfMjTRoSaKSHLM5HbQGgEOn5yGi5CGrzq6FpZIRB87w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUzFTngZCgoKvHvzZH1RlROY3CX2BicKWGGP5hoLcn75BomgPL7KoaJ9UwUfllNV4
-	 BmjfeQughAFhQn5lBqq40JDUIY4POiCHbDL1PX4uF+gIJQWpQSWg9q7c8SV6xArsCf
-	 K3zy4CeEDf+E+h4sqKQwxgFVQIgPt8ezPXlWMNLI=
+	b=On385OGMmAW94KLl+YUmIAtulo3dIcFyeZUv4CDQCR5l4rtzBrX7OCgq4hrp4Wyi2
+	 zCJmB/97jt/x9NB6juYGE2IotEBTaGIQWSCkYG2DE1Z/XGlga6Cj+y3lAN8Pqqgw9e
+	 XXDDfPOB21dwcTNhgij2dntCbsLzVNMi9TymYjG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.17 029/175] smb: client: introduce close_cached_dir_locked()
-Date: Thu, 27 Nov 2025 15:44:42 +0100
-Message-ID: <20251127144044.030202602@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.17 030/175] wifi: rtw89: hw_scan: Dont let the operating channel be last
+Date: Thu, 27 Nov 2025 15:44:43 +0100
+Message-ID: <20251127144044.066135873@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,100 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit a9d1f38df7ecd0e21233447c9cc6fa1799eddaf3 upstream.
+commit e837b9091b277ae6f309d7e9fc93cb0308cf461f upstream.
 
-Replace close_cached_dir() calls under cfid_list_lock with a new
-close_cached_dir_locked() variant that uses kref_put() instead of
-kref_put_lock() to avoid recursive locking when dropping references.
+Scanning can be offloaded to the firmware. To that end, the driver
+prepares a list of channels to scan, including periodic visits back to
+the operating channel, and sends the list to the firmware.
 
-While the existing code works if the refcount >= 2 invariant holds,
-this area has proven error-prone. Make deadlocks impossible and WARN
-on invariant violations.
+When the channel list is too long to fit in a single H2C message, the
+driver splits the list, sends the first part, and tells the firmware to
+scan. When the scan is complete, the driver sends the next part of the
+list and tells the firmware to scan.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: David Howells <dhowells@redhat.com>
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+When the last channel that fit in the H2C message is the operating
+channel something seems to go wrong in the firmware. It will
+acknowledge receiving the list of channels but apparently it will not
+do anything more. The AP can't be pinged anymore. The driver still
+receives beacons, though.
+
+One way to avoid this is to split the list of channels before the
+operating channel.
+
+Affected devices:
+
+* RTL8851BU with firmware 0.29.41.3
+* RTL8832BU with firmware 0.29.29.8
+* RTL8852BE with firmware 0.29.29.8
+
+The commit 57a5fbe39a18 ("wifi: rtw89: refactor flow that hw scan handles channel list")
+is found by git blame, but it is actually to refine the scan flow, but not
+a culprit, so skip Fixes tag.
+
+Reported-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Closes: https://lore.kernel.org/linux-wireless/0abbda91-c5c2-4007-84c8-215679e652e1@gmail.com/
+Cc: stable@vger.kernel.org # 6.16+
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/c1e61744-8db4-4646-867f-241b47d30386@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cached_dir.c |   41 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 38 insertions(+), 3 deletions(-)
+ drivers/net/wireless/realtek/rtw89/fw.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -16,6 +16,7 @@ static struct cached_fid *init_cached_di
- static void free_cached_dir(struct cached_fid *cfid);
- static void smb2_close_cached_fid(struct kref *ref);
- static void cfids_laundromat_worker(struct work_struct *work);
-+static void close_cached_dir_locked(struct cached_fid *cfid);
+--- a/drivers/net/wireless/realtek/rtw89/fw.c
++++ b/drivers/net/wireless/realtek/rtw89/fw.c
+@@ -7705,6 +7705,13 @@ int rtw89_hw_scan_add_chan_list_be(struc
+ 	INIT_LIST_HEAD(&list);
  
- struct cached_dir_dentry {
- 	struct list_head entry;
-@@ -389,7 +390,7 @@ out:
- 			 * lease. Release one here, and the second below.
- 			 */
- 			cfid->has_lease = false;
--			close_cached_dir(cfid);
-+			close_cached_dir_locked(cfid);
- 		}
- 		spin_unlock(&cfids->cfid_list_lock);
- 
-@@ -476,18 +477,52 @@ void drop_cached_dir_by_name(const unsig
- 	spin_lock(&cfid->cfids->cfid_list_lock);
- 	if (cfid->has_lease) {
- 		cfid->has_lease = false;
--		close_cached_dir(cfid);
-+		close_cached_dir_locked(cfid);
- 	}
- 	spin_unlock(&cfid->cfids->cfid_list_lock);
- 	close_cached_dir(cfid);
- }
- 
--
-+/**
-+ * close_cached_dir - drop a reference of a cached dir
-+ *
-+ * The release function will be called with cfid_list_lock held to remove the
-+ * cached dirs from the list before any other thread can take another @cfid
-+ * ref. Must not be called with cfid_list_lock held; use
-+ * close_cached_dir_locked() called instead.
-+ *
-+ * @cfid: cached dir
-+ */
- void close_cached_dir(struct cached_fid *cfid)
- {
-+	lockdep_assert_not_held(&cfid->cfids->cfid_list_lock);
- 	kref_put_lock(&cfid->refcount, smb2_close_cached_fid, &cfid->cfids->cfid_list_lock);
- }
- 
-+/**
-+ * close_cached_dir_locked - put a reference of a cached dir with
-+ * cfid_list_lock held
-+ *
-+ * Calling close_cached_dir() with cfid_list_lock held has the potential effect
-+ * of causing a deadlock if the invariant of refcount >= 2 is false.
-+ *
-+ * This function is used in paths that hold cfid_list_lock and expect at least
-+ * two references. If that invariant is violated, WARNs and returns without
-+ * dropping a reference; the final put must still go through
-+ * close_cached_dir().
-+ *
-+ * @cfid: cached dir
-+ */
-+static void close_cached_dir_locked(struct cached_fid *cfid)
-+{
-+	lockdep_assert_held(&cfid->cfids->cfid_list_lock);
+ 	list_for_each_entry_safe(ch_info, tmp, &scan_info->chan_list, list) {
++		/* The operating channel (tx_null == true) should
++		 * not be last in the list, to avoid breaking
++		 * RTL8851BU and RTL8832BU.
++		 */
++		if (list_len + 1 == RTW89_SCAN_LIST_LIMIT_AX && ch_info->tx_null)
++			break;
 +
-+	if (WARN_ON(kref_read(&cfid->refcount) < 2))
-+		return;
-+
-+	kref_put(&cfid->refcount, smb2_close_cached_fid);
-+}
-+
- /*
-  * Called from cifs_kill_sb when we unmount a share
-  */
+ 		list_move_tail(&ch_info->list, &list);
+ 
+ 		list_len++;
 
 
