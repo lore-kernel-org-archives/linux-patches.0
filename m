@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21786334C03;
-	Thu, 27 Nov 2025 15:05:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D33928135D;
+	Thu, 27 Nov 2025 15:05:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255935; cv=none; b=luL1ZYUfxK20qELOGhAIt7q6HtjBd7ovFMGTv26JacPuTM7G/tMzlYS36fUMt62MpwTsw8odwHj8Ak5MPdwk/OtCjT1lla8XN4wBtPM75vA3KgasR70amCcuv1cs/H/N4lxV5bJTKuszSp1cOv/aBzZ0Zr7iTBeEkRnjPTvqF8g=
+	t=1764255938; cv=none; b=i61z9BYbo4TnqihtGfpgUkU3v2DUvCzzuumfQbwtY6chouO+U8ZS8x9AY2K8i7X9ivWI0DAg16dYPRs79nItLfEC6/CB6lGv0p3FtrOwNd2oTNwPBNr+IWRb7NBnPQLGL9/Me8Hnc8fWgNqISdpwvP4hH5DDJO7PWTNQlPXX1vQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255935; c=relaxed/simple;
-	bh=DIkp+ZO4gds6i7oqkrLEC+1Wtbqj/f5Qdvww70b1EzY=;
+	s=arc-20240116; t=1764255938; c=relaxed/simple;
+	bh=7btulC+4GEdBFsduRL955z3eqoTckNENdRnh0b+5u2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dFGNDrLNYTUdDCuGxJvTocigoUWD57gGc/PsKauUDxoHlSUiPOug7UXIf8ur98DZ6JE9zHuMYnw8oLz6zpy7sHhuetf+Tr4mvpzXXQ1BsmfNRTCN/Pot+Yt7bUpwsr42zN/VrA9MfuGaXSd1tSMa/lY4hN7F1xJeP4Ccf23OL0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwQoEWNX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kF/k7R1HsEI4jP10oIQB1TFQgTsm4fEMYGkWVs3Alj42kSiTnt16vW7TPK1iEX405dTOlsZHpXUXn/NlGptPYFHeDiHKQaJRXm8CN2ObwxIJcVRC6LB1xZhG2AuQwWWqYR6wNBfAT1XmAlB7tIXRBpEDcJ9yvxm09M1o1xO7EbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0ac3GT3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwQoEWNX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD8FC4CEF8;
-	Thu, 27 Nov 2025 15:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0ac3GT3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 343BEC4CEF8;
+	Thu, 27 Nov 2025 15:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255934;
-	bh=DIkp+ZO4gds6i7oqkrLEC+1Wtbqj/f5Qdvww70b1EzY=;
+	s=korg; t=1764255937;
+	bh=7btulC+4GEdBFsduRL955z3eqoTckNENdRnh0b+5u2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwQoEWNXzhNeFgCmcOcVyWPVQ5HMefoHju55ac8CXso972i/Q/dwzOb3whnLwk/7G
-	 PzTEfO7fRFcsSLzylltIKN6M+ryzMTT+FvLWSAgcuxGdZJf5LFc4OqqhXw/77N/Xab
-	 W9pu4T5mq527sxvc3pK0eXH9XbpWxfAKxsWtiUD8=
+	b=o0ac3GT3XrjKhhB85jxarau10QxP7YSN1MACSdewOzaYFuCJTExW2qdpFon8WC3HS
+	 p2wW72DnYdSKFC6c1d3Wxp9Jav1d0B1kZgG2Ps0Ewe+BRoyBgjrR9LcdebuXvoRc7l
+	 CVXiFX8vyjVqrjXvRy10D4QeJcWI/QGOrxSioMiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leo Liu <leo.liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 164/175] drm/amdgpu/jpeg: Move parse_cs to amdgpu_jpeg.c
-Date: Thu, 27 Nov 2025 15:46:57 +0100
-Message-ID: <20251127144048.941132805@linuxfoundation.org>
+Subject: [PATCH 6.17 165/175] drm/amdgpu/jpeg: Add parse_cs for JPEG5_0_1
+Date: Thu, 27 Nov 2025 15:46:58 +0100
+Message-ID: <20251127144048.978312240@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -54,302 +54,27 @@ Content-Transfer-Encoding: 8bit
 
 From: Sathishkumar S <sathishkumar.sundararaju@amd.com>
 
-[ Upstream commit 28f75f9bcc7da7da12e5dae2ae8d8629a2b2e42e ]
+[ Upstream commit bbe3c115030da431c9ec843c18d5583e59482dd2 ]
 
-Rename jpeg_v2_dec_ring_parse_cs to amdgpu_jpeg_dec_parse_cs
-and move it to amdgpu_jpeg.c as it is shared among jpeg versions.
+enable parse_cs callback for JPEG5_0_1.
 
 Signed-off-by: Sathishkumar S <sathishkumar.sundararaju@amd.com>
 Reviewed-by: Leo Liu <leo.liu@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: bbe3c115030d ("drm/amdgpu/jpeg: Add parse_cs for JPEG5_0_1")
+(cherry picked from commit 547985579932c1de13f57f8bcf62cd9361b9d3d3)
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c |   65 +++++++++++++++++++++++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.h |   10 ++++
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c   |   58 ---------------------------
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.h   |    6 --
- drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c   |    4 -
- drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c   |    2 
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c   |    2 
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c |    2 
- drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c |    2 
- drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c |    2 
- 10 files changed, 83 insertions(+), 70 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.c
-@@ -539,3 +539,68 @@ void amdgpu_jpeg_print_ip_state(struct a
- 			drm_printf(p, "\nInactive Instance:JPEG%d\n", i);
- 	}
- }
-+
-+static inline bool amdgpu_jpeg_reg_valid(u32 reg)
-+{
-+	if (reg < JPEG_REG_RANGE_START || reg > JPEG_REG_RANGE_END ||
-+	    (reg >= JPEG_ATOMIC_RANGE_START && reg <= JPEG_ATOMIC_RANGE_END))
-+		return false;
-+	else
-+		return true;
-+}
-+
-+/**
-+ * amdgpu_jpeg_dec_parse_cs - command submission parser
-+ *
-+ * @parser: Command submission parser context
-+ * @job: the job to parse
-+ * @ib: the IB to parse
-+ *
-+ * Parse the command stream, return -EINVAL for invalid packet,
-+ * 0 otherwise
-+ */
-+
-+int amdgpu_jpeg_dec_parse_cs(struct amdgpu_cs_parser *parser,
-+			      struct amdgpu_job *job,
-+			      struct amdgpu_ib *ib)
-+{
-+	u32 i, reg, res, cond, type;
-+	struct amdgpu_device *adev = parser->adev;
-+
-+	for (i = 0; i < ib->length_dw ; i += 2) {
-+		reg  = CP_PACKETJ_GET_REG(ib->ptr[i]);
-+		res  = CP_PACKETJ_GET_RES(ib->ptr[i]);
-+		cond = CP_PACKETJ_GET_COND(ib->ptr[i]);
-+		type = CP_PACKETJ_GET_TYPE(ib->ptr[i]);
-+
-+		if (res) /* only support 0 at the moment */
-+			return -EINVAL;
-+
-+		switch (type) {
-+		case PACKETJ_TYPE0:
-+			if (cond != PACKETJ_CONDITION_CHECK0 ||
-+			    !amdgpu_jpeg_reg_valid(reg)) {
-+				dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
-+				return -EINVAL;
-+			}
-+			break;
-+		case PACKETJ_TYPE3:
-+			if (cond != PACKETJ_CONDITION_CHECK3 ||
-+			    !amdgpu_jpeg_reg_valid(reg)) {
-+				dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
-+				return -EINVAL;
-+			}
-+			break;
-+		case PACKETJ_TYPE6:
-+			if (ib->ptr[i] == CP_PACKETJ_NOP)
-+				continue;
-+			dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
-+			return -EINVAL;
-+		default:
-+			dev_err(adev->dev, "Unknown packet type %d !\n", type);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	return 0;
-+}
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_jpeg.h
-@@ -25,11 +25,18 @@
- #define __AMDGPU_JPEG_H__
- 
- #include "amdgpu_ras.h"
-+#include "amdgpu_cs.h"
- 
- #define AMDGPU_MAX_JPEG_INSTANCES	4
- #define AMDGPU_MAX_JPEG_RINGS           10
- #define AMDGPU_MAX_JPEG_RINGS_4_0_3     8
- 
-+#define JPEG_REG_RANGE_START            0x4000
-+#define JPEG_REG_RANGE_END              0x41c2
-+#define JPEG_ATOMIC_RANGE_START         0x4120
-+#define JPEG_ATOMIC_RANGE_END           0x412A
-+
-+
- #define AMDGPU_JPEG_HARVEST_JPEG0 (1 << 0)
- #define AMDGPU_JPEG_HARVEST_JPEG1 (1 << 1)
- 
-@@ -170,5 +177,8 @@ int amdgpu_jpeg_reg_dump_init(struct amd
- 			       const struct amdgpu_hwip_reg_entry *reg, u32 count);
- void amdgpu_jpeg_dump_ip_state(struct amdgpu_ip_block *ip_block);
- void amdgpu_jpeg_print_ip_state(struct amdgpu_ip_block *ip_block, struct drm_printer *p);
-+int amdgpu_jpeg_dec_parse_cs(struct amdgpu_cs_parser *parser,
-+			     struct amdgpu_job *job,
-+			     struct amdgpu_ib *ib);
- 
- #endif /*__AMDGPU_JPEG_H__*/
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.c
-@@ -23,7 +23,6 @@
- 
- #include "amdgpu.h"
- #include "amdgpu_jpeg.h"
--#include "amdgpu_cs.h"
- #include "amdgpu_pm.h"
- #include "soc15.h"
- #include "soc15d.h"
-@@ -806,7 +805,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v2_0_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v2_0_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v2_0_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
-@@ -854,58 +853,3 @@ const struct amdgpu_ip_block_version jpe
- 		.rev = 0,
- 		.funcs = &jpeg_v2_0_ip_funcs,
- };
--
--/**
-- * jpeg_v2_dec_ring_parse_cs - command submission parser
-- *
-- * @parser: Command submission parser context
-- * @job: the job to parse
-- * @ib: the IB to parse
-- *
-- * Parse the command stream, return -EINVAL for invalid packet,
-- * 0 otherwise
-- */
--int jpeg_v2_dec_ring_parse_cs(struct amdgpu_cs_parser *parser,
--			      struct amdgpu_job *job,
--			      struct amdgpu_ib *ib)
--{
--	u32 i, reg, res, cond, type;
--	struct amdgpu_device *adev = parser->adev;
--
--	for (i = 0; i < ib->length_dw ; i += 2) {
--		reg  = CP_PACKETJ_GET_REG(ib->ptr[i]);
--		res  = CP_PACKETJ_GET_RES(ib->ptr[i]);
--		cond = CP_PACKETJ_GET_COND(ib->ptr[i]);
--		type = CP_PACKETJ_GET_TYPE(ib->ptr[i]);
--
--		if (res) /* only support 0 at the moment */
--			return -EINVAL;
--
--		switch (type) {
--		case PACKETJ_TYPE0:
--			if (cond != PACKETJ_CONDITION_CHECK0 || reg < JPEG_REG_RANGE_START ||
--			    reg > JPEG_REG_RANGE_END) {
--				dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
--				return -EINVAL;
--			}
--			break;
--		case PACKETJ_TYPE3:
--			if (cond != PACKETJ_CONDITION_CHECK3 || reg < JPEG_REG_RANGE_START ||
--			    reg > JPEG_REG_RANGE_END) {
--				dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
--				return -EINVAL;
--			}
--			break;
--		case PACKETJ_TYPE6:
--			if (ib->ptr[i] == CP_PACKETJ_NOP)
--				continue;
--			dev_err(adev->dev, "Invalid packet [0x%08x]!\n", ib->ptr[i]);
--			return -EINVAL;
--		default:
--			dev_err(adev->dev, "Unknown packet type %d !\n", type);
--			return -EINVAL;
--		}
--	}
--
--	return 0;
--}
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.h
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_0.h
-@@ -45,9 +45,6 @@
- 
- #define JRBC_DEC_EXTERNAL_REG_WRITE_ADDR				0x18000
- 
--#define JPEG_REG_RANGE_START						0x4000
--#define JPEG_REG_RANGE_END						0x41c2
--
- void jpeg_v2_0_dec_ring_insert_start(struct amdgpu_ring *ring);
- void jpeg_v2_0_dec_ring_insert_end(struct amdgpu_ring *ring);
- void jpeg_v2_0_dec_ring_emit_fence(struct amdgpu_ring *ring, u64 addr, u64 seq,
-@@ -60,9 +57,6 @@ void jpeg_v2_0_dec_ring_emit_vm_flush(st
- 				unsigned vmid, uint64_t pd_addr);
- void jpeg_v2_0_dec_ring_emit_wreg(struct amdgpu_ring *ring, uint32_t reg, uint32_t val);
- void jpeg_v2_0_dec_ring_nop(struct amdgpu_ring *ring, uint32_t count);
--int jpeg_v2_dec_ring_parse_cs(struct amdgpu_cs_parser *parser,
--			      struct amdgpu_job *job,
--			      struct amdgpu_ib *ib);
- 
- extern const struct amdgpu_ip_block_version jpeg_v2_0_ip_block;
- 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v2_5.c
-@@ -696,7 +696,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v2_5_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v2_5_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v2_5_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
-@@ -727,7 +727,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v2_5_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v2_5_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v2_5_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-@@ -597,7 +597,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v3_0_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v3_0_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v3_0_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0.c
-@@ -762,7 +762,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v4_0_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v4_0_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v4_0_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_3.c
-@@ -1177,7 +1177,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v4_0_3_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v4_0_3_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v4_0_3_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v4_0_5.c
-@@ -807,7 +807,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v4_0_5_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v4_0_5_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v4_0_5_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
-+	.parse_cs = amdgpu_jpeg_dec_parse_cs,
- 	.emit_frame_size =
- 		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
- 		SOC15_FLUSH_GPU_TLB_NUM_REG_WAIT * 8 +
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_0.c
-@@ -683,7 +683,7 @@ static const struct amdgpu_ring_funcs jp
- 	.get_rptr = jpeg_v5_0_0_dec_ring_get_rptr,
- 	.get_wptr = jpeg_v5_0_0_dec_ring_get_wptr,
- 	.set_wptr = jpeg_v5_0_0_dec_ring_set_wptr,
--	.parse_cs = jpeg_v2_dec_ring_parse_cs,
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v5_0_1.c
+@@ -878,6 +878,7 @@ static const struct amdgpu_ring_funcs jp
+ 	.get_rptr = jpeg_v5_0_1_dec_ring_get_rptr,
+ 	.get_wptr = jpeg_v5_0_1_dec_ring_get_wptr,
+ 	.set_wptr = jpeg_v5_0_1_dec_ring_set_wptr,
 +	.parse_cs = amdgpu_jpeg_dec_parse_cs,
  	.emit_frame_size =
  		SOC15_FLUSH_GPU_TLB_NUM_WREG * 6 +
