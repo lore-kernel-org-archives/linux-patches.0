@@ -1,102 +1,112 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A39130F7ED;
-	Thu, 27 Nov 2025 21:33:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E1F31B83B
+	for <patches@lists.linux.dev>; Thu, 27 Nov 2025 21:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764279231; cv=none; b=G1KmEFf4MX8ozs84QBVK9Rb0p94kBHXLPAmRKaT0ONf9PgBf0djo8ZqhyVAIJB+5APbzFLu0PR3tIN/prjAF3Duj1Tw2BzYgHFJ33TyqdGQ0gSPJZq8sy73LAq2Jwri6uXLAZ9o1vKUFpGbGYBOF4pO0kjzcbh1nPUIT4lpmGaY=
+	t=1764279885; cv=none; b=S+sIX7q0GIrA6B6oH+8dvKcOIknNNLvPd5KcGeZqzz0ztN7MvkSOqlWR/gt+g7UXPXh5u0oYyVqwqGAiu7ecok7CE1AcD65LsrQ43lrwsE+m8ZeJoKmn1RfY6YS0hF8D6pO3FwGjImM2y4iRxQzkUuoZvyTAduyAV7jO8rm8oqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764279231; c=relaxed/simple;
-	bh=ziNNElqASz+QcTFfw2S5kiqwjMGYBn1OZi8SCEwPylA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=r5hRcd7G8ArSPJvLbmmLvtsF/+zKYy/WcN5a+CGXZES2dj/HCGkdS8G6GHphGcd4YJV/xOwuWv7ha7th594FVNNXBl1C2I8B1ihxmuRr3IGq0I/gmTodxUvAmQLeOoGjpFz7T/2hy2gKD13udMtcrO+E9ptp1xHF6MtRrZJBbQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TEbhok1n; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764279885; c=relaxed/simple;
+	bh=kYqUyk8HCuKIoNyqva/RjocXWD2CbFLtw8L7BkLoWBk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PicYaLqSDvsNxSUWf28NJVXXjAJpLQ+oIC8kc/Pt0sgpahNeOgfwUiPphe8qqBcHfluS9MI1tio/UO8ZsbZC1CFyTQuTlyMRVZ+iIR99ifxUM4xIsD9X0c2QfWqSQAWX8tmotSkomMAlPOvsYaPjaIp+dndN8ZcSkWTYpJ8EyKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=ALR5JlIn; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TEbhok1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57939C4CEF8;
-	Thu, 27 Nov 2025 21:33:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764279229;
-	bh=ziNNElqASz+QcTFfw2S5kiqwjMGYBn1OZi8SCEwPylA=;
-	h=From:To:Cc:Subject:Date:From;
-	b=TEbhok1nY8C0vK8gSovQ9vGyrWtBRMX7opp03IoxHWb9wxoo8cHGrVn5lTq9AFqwz
-	 3RgMUs0kMZxdBEpXRio2wULm7Xa/iFc/mdkNB7RBj/+WeT40PujhLRmroG6nCsy0rb
-	 tMcMBU+VV/iJKJvxlPZF1NNC+y6nabz4nnm4LV/0RuH+Q27F8OR0+v/0aokcGfadkw
-	 zB2R7CQUfhUEi9E29/xkQtafvsQCQMM7Duee+YlXfN5kgPgW9hAFzhfA+mW7Tt2kal
-	 WXahjj3PJISurcxdMzQTZ+7JdecoHlDsD1M1R8mr2ACcjT08NKrD1ovX5BIPNW0hM7
-	 q7v6d2Wt/H0qA==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: Alice Ryhl <aliceryhl@google.com>,
-	Burak Emir <bqe@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Yury Norov <yury.norov@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Gary Guo <gary@garyguo.net>,
-	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH] rust: id_pool: fix broken intra-doc link
-Date: Thu, 27 Nov 2025 22:33:40 +0100
-Message-ID: <20251127213340.180090-1-ojeda@kernel.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="ALR5JlIn"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-477563e28a3so8885425e9.1
+        for <patches@lists.linux.dev>; Thu, 27 Nov 2025 13:44:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1764279882; x=1764884682; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=X3vMxogTvz5764QssziL6YxPWQCVFIuzqxor/ZKDnR0=;
+        b=ALR5JlIn9cD8tn2yvVAIO7PISPbdW7DRzf6AWS0iKBhKOXwG9nWcr5apf97udYhmMU
+         OjXrTpw2qrf3H/8qU//zJEhj8s3ni2S6ncGOFakQ36LTsXl6wtFeEjF1078UMYzYEwgW
+         ABotldSa03VOsk/M3P7lk1nS1uYjGRlNS/NJJOy9LEvpeJpr5feCRP8sWFjBShO+CHei
+         2sVt75VgJLzrjmdZ8wpHH5Y44nUKg50IilM/u2pV1/7VWFRBRyToqymXYA4za9sm7MU/
+         z8Ja+WMYetNmnDVp9BzlFnwvlzMz7bzRBlXcLASsoRGFtaRKeR7p6/sPQ1e5apj/Fnt/
+         O3Ug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764279882; x=1764884682;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=X3vMxogTvz5764QssziL6YxPWQCVFIuzqxor/ZKDnR0=;
+        b=e4Mon/5ECqlKgyjWqm/lesurovZsI+5LrGxYS2Pb2EaTrBSC7S7TkCgv39SEuHHOWu
+         3dwTTR0QcFIkyDgdyuQfZxK+OBuFz4FY1iwftgg1vYm84B3FxcLvFOPAUNOynJ0+lE2n
+         T/u7raRB8Dhz647Xe03L1F54rIJ5ywpJD6EKqtkSB5Qg2yRsZu8Jsj3DB1PBBNflDeRj
+         wGmcoLlPb2d5i2DD60q4G4srQMSlcCuGTa7OIqxf4/i7268KM0OVRnQ4/GgoRZSzqNTL
+         ZwvLKxhf0Q+MmFHvOpdJQpbLyQXk88+SPI8lkDxtsh5vn+G82cgDBGE9pKIGMEDcJl0x
+         Lr0A==
+X-Gm-Message-State: AOJu0YxxVFU9sfVpxkPl0RPqEwec6W2sOOCXGovfbW3VoZiv5fGdw7Wv
+	ZdBh8cvevoBExNR2BhEwVbejlPoCgfkIIoR9DkFVAvWtC1jqGv6fNrE=
+X-Gm-Gg: ASbGncu3bSA78jcTqwvLV+V2pXd231X2v65WHnheRoUOXGsslWs9sXHXGJHmDOVuNlL
+	c6+Fb9LNsCGQ0xyUT3siFqlRhjrOuDzAA0du02327SZuLFImu73YYewYVB+2/be126aQWBLOHXk
+	oApfVuOywKuGjKZRhFzDlhHIQEHkdpgEfdsehxynI8llC+Wyiu/yVhlY2KQDTDIwQfSxZfeU1UI
+	s7nIp0YEwfebVbwahA0MqgtQoxZOXzgg/7quUZtIah8TnysQGC3QTwUSN0x6PNlgJh/97VTFLBk
+	rWhvBlDJDp8rLUSwDyuc8O2bH0IdjJ93V0bYIXDoYrrt0z44lx3OHijXAb609MZGhFs/7VNxlEo
+	wxXOucwWgj+fme0dBZSQyGc1q4WwbZ2g3JgpCNfnZby7uRffCxlsf2XFsfhlnHFQrCH4QfbJ5mM
+	MstALIrE/dW04w7rUjoAIaSVv6/IoDFv5hlOyd0h1YEbf1sU9QmjCaHnqUF1AFSdQ=
+X-Google-Smtp-Source: AGHT+IESv4h68YmFtRIIfRfpstRuuWLD9RkeIBwvQ4RpD8DKrcbS4Olp/eGP7hkYslFJjLJtIU79mw==
+X-Received: by 2002:a05:600c:3044:b0:477:5639:ff66 with SMTP id 5b1f17b1804b1-477b9ef4949mr192214545e9.13.1764279881955;
+        Thu, 27 Nov 2025 13:44:41 -0800 (PST)
+Received: from [192.168.1.3] (p5b057472.dip0.t-ipconnect.de. [91.5.116.114])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-479052def4bsm73779255e9.13.2025.11.27.13.44.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 27 Nov 2025 13:44:41 -0800 (PST)
+Message-ID: <9d2d34dd-1147-40ae-8859-9ef2cd4b7dcd@googlemail.com>
+Date: Thu, 27 Nov 2025 22:44:41 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.17 000/176] 6.17.10-rc2 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20251127150348.216197881@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251127150348.216197881@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-`rustdoc` detects a broken intra-doc link:
+Am 27.11.2025 um 16:04 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.17.10 release.
+> There are 176 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 29 Nov 2025 15:03:13 +0000.
+> Anything received after that time might be too late.
 
-    error: unresolved link to `BitmapVec::NO_ALLOC_MAX_LEN`
-       --> rust/kernel/id_pool.rs:100:31
-        |
-    100 |     /// [`NO_ALLOC_MAX_LEN`]: BitmapVec::NO_ALLOC_MAX_LEN
-        |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the struct `BitmapVec` has no field or associated item named `NO_ALLOC_MAX_LEN`
-        |
-        = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
-        = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
 
-Thus fix it.
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
-It was a missed rename in v5 of the patch series adding this [1].
 
-Fixes: feb3fdf1239a ("rust: id_pool: do not supply starting capacity")
-Link: https://lore.kernel.org/all/20251112-binder-bitmap-v5-0-8b9d7c7eca82@google.com/ [1]
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
-I saw this in next-20251127.
+Beste Grüße,
+Peter Schneider
 
-I think using [`BitmapVec::MAX_INLINE_LEN`] is clearer in general,
-especially for things in other modules, but I kept the same style as
-other links in the file.
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
- rust/kernel/id_pool.rs | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/rust/kernel/id_pool.rs b/rust/kernel/id_pool.rs
-index a4c37d6a0971..73a952d7dd83 100644
---- a/rust/kernel/id_pool.rs
-+++ b/rust/kernel/id_pool.rs
-@@ -95,9 +95,9 @@ pub fn realloc(&self, flags: Flags) -> Result<PoolResizer, AllocError> {
- impl IdPool {
-     /// Constructs a new [`IdPool`].
-     ///
--    /// The pool will have a capacity of [`NO_ALLOC_MAX_LEN`].
-+    /// The pool will have a capacity of [`MAX_INLINE_LEN`].
-     ///
--    /// [`NO_ALLOC_MAX_LEN`]: BitmapVec::NO_ALLOC_MAX_LEN
-+    /// [`MAX_INLINE_LEN`]: BitmapVec::MAX_INLINE_LEN
-     #[inline]
-     pub fn new() -> Self {
-         Self {
-
-base-commit: a322638c15a678168aeb8dc11c8760f8a053124d
---
-2.52.0
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
