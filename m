@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7453928135D;
-	Thu, 27 Nov 2025 15:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DFDB3115A6;
+	Thu, 27 Nov 2025 15:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255946; cv=none; b=rdP3rxVPghVvsNPIZcRrk0fGvLAdlHLG/BJ6RzSyZChda4eZEgCZ0uOSGwq8JW4wKidOE54WFiQ1PetnpCZNQJuYnUvXfj6cpk7TrNBZs8oY/lSeLfjX/qSRagyOZOrhphpsBEzLdsLi3sHb9FNvwP1ftCE366NyRPAaOwTFuww=
+	t=1764255950; cv=none; b=BUctn8TMWj8dEZV7Rb2qBwwfz1IQnccn6es2yFdxcT8tfWfE6GyhMoNbBi1n0YsGna/OU73TX4nNF+DA356bdEBu8xwKLp5CjJV5PpnO9gk35C7k1odh4yetyRqbB1N2q+/O5vkKXLwZTo5iAjbqjbQBhzzh77Nfjd2E5ODQ+4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255946; c=relaxed/simple;
-	bh=zSW6i8GQvJVec330s4nrHUvtKnf52843w3UR/tYFKhs=;
+	s=arc-20240116; t=1764255950; c=relaxed/simple;
+	bh=H2mAlA+TcapDRs9LoB5Ja3gABEey4Jm2ji/THu2oUG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jngKYC6LmQhtGn3ABu1z1o2nC8vT+dKrYeG1SdiFiFmN9XtsCreJZPjTq5Huy5gT03zQjgEjtQ7/MR/jEzqy5xyHSsVwqKC5FbsmLyE6u13yQPdrfAfDGLiObhwWOL9vtX1z/onaD6MzY816xmENq3AibxF0mYS7WfwucysI4mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u57MX+BY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AYYxIpkG2N2DVuh1lScqRSPCps6SUN21+g9gspwF3a+wUEkbiJgQQvxpSYK3E/ji+myKeybYA6hn9g1qNcRHTey37CDjX8sXGUl4mSY8heA/AOrvyz1DkuZjHFc4+MyudVVAjWXyZ0a6G1ZXDR1fBeUolggqOnUiQPnZdQiGVt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8NsqUKF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u57MX+BY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED357C4CEF8;
-	Thu, 27 Nov 2025 15:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8NsqUKF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D411CC4CEF8;
+	Thu, 27 Nov 2025 15:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255946;
-	bh=zSW6i8GQvJVec330s4nrHUvtKnf52843w3UR/tYFKhs=;
+	s=korg; t=1764255949;
+	bh=H2mAlA+TcapDRs9LoB5Ja3gABEey4Jm2ji/THu2oUG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u57MX+BYE9dl8wsDQ60/4O426K0rnYY5rVXgh+OwpgJcZggTKdlPI5YZTZKknU3cg
-	 ePHchDgpBvfO0yLxQm3fneTZ+jwWZtMCrpfQ76FsT6mfMwwsN/7Hv7+7mzBkkLz6bp
-	 Y4toYD4/eOARfWC41nhjDaT3kXQOtscOnmvx2XVs=
+	b=Y8NsqUKFAh+AraQl9v621I6a3KABiTA9Gb7Kf0/VkD+SV4wv1r4rx4r1S8MOWLhbo
+	 aZXtkUl6ESktoAk0WScBZQAszUyb1VsPscY755lxNQlK9+xVSpZNOYTJ2QkdETvQB1
+	 aWrxC4cB5JN6rH/Mng7fpo4cbi4/LqIcSTJwTl/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Emil Tsalapatis (Meta)" <emil@etsalapatis.com>,
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 136/175] bcma: dont register devices disabled in OF
-Date: Thu, 27 Nov 2025 15:46:29 +0100
-Message-ID: <20251127144047.925670756@linuxfoundation.org>
+Subject: [PATCH 6.17 137/175] sched_ext: defer queue_balance_callback() until after ops.dispatch
+Date: Thu, 27 Nov 2025 15:46:30 +0100
+Message-ID: <20251127144047.962265514@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -46,53 +47,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Emil Tsalapatis <etsal@meta.com>
 
-[ Upstream commit a2a69add80411dd295c9088c1bcf925b1f4e53d7 ]
+[ Upstream commit a8ad873113d3fe01f9b5d737d4b0570fa36826b0 ]
 
-Some bus devices can be marked as disabled for specific SoCs or models.
-Those should not be registered to avoid probing them.
+The sched_ext code calls queue_balance_callback() during enqueue_task()
+to defer operations that drop multiple locks until we can unpin them.
+The call assumes that the rq lock is held until the callbacks are
+invoked, and the pending callbacks will not be visible to any other
+threads. This is enforced by a WARN_ON_ONCE() in rq_pin_lock().
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251003125126.27950-1-zajec5@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+However, balance_one() may actually drop the lock during a BPF dispatch
+call. Another thread may win the race to get the rq lock and see the
+pending callback. To avoid this, sched_ext must only queue the callback
+after the dispatch calls have completed.
+
+CPU 0                   CPU 1           CPU 2
+
+scx_balance()
+  rq_unpin_lock()
+  scx_balance_one()
+    |= IN_BALANCE	scx_enqueue()
+    ops.dispatch()
+      rq_unlock()
+                        rq_lock()
+                        queue_balance_callback()
+                        rq_unlock()
+                                        [WARN] rq_pin_lock()
+      rq_lock()
+    &= ~IN_BALANCE
+rq_repin_lock()
+
+Changelog
+
+v2-> v1 (https://lore.kernel.org/sched-ext/aOgOxtHCeyRT_7jn@gpd4)
+
+- Fixed explanation in patch description (Andrea)
+- Fixed scx_rq mask state updates (Andrea)
+- Added Reviewed-by tag from Andrea
+
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Emil Tsalapatis (Meta) <emil@etsalapatis.com>
+Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bcma/main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/sched/ext.c   | 29 +++++++++++++++++++++++++++--
+ kernel/sched/sched.h |  1 +
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bcma/main.c b/drivers/bcma/main.c
-index 6ecfc821cf833..72f045e6ed513 100644
---- a/drivers/bcma/main.c
-+++ b/drivers/bcma/main.c
-@@ -294,6 +294,8 @@ static int bcma_register_devices(struct bcma_bus *bus)
- 	int err;
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index b454206100ce5..d6d2eea9d1483 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -820,13 +820,23 @@ static void schedule_deferred(struct rq *rq)
+ 	if (rq->scx.flags & SCX_RQ_IN_WAKEUP)
+ 		return;
  
- 	list_for_each_entry(core, &bus->cores, list) {
-+		struct device_node *np;
++	/* Don't do anything if there already is a deferred operation. */
++	if (rq->scx.flags & SCX_RQ_BAL_PENDING)
++		return;
 +
- 		/* We support that core ourselves */
- 		switch (core->id.id) {
- 		case BCMA_CORE_4706_CHIPCOMMON:
-@@ -311,6 +313,10 @@ static int bcma_register_devices(struct bcma_bus *bus)
- 		if (bcma_is_core_needed_early(core->id.id))
- 			continue;
+ 	/*
+ 	 * If in balance, the balance callbacks will be called before rq lock is
+ 	 * released. Schedule one.
++	 *
++	 *
++	 * We can't directly insert the callback into the
++	 * rq's list: The call can drop its lock and make the pending balance
++	 * callback visible to unrelated code paths that call rq_pin_lock().
++	 *
++	 * Just let balance_one() know that it must do it itself.
+ 	 */
+ 	if (rq->scx.flags & SCX_RQ_IN_BALANCE) {
+-		queue_balance_callback(rq, &rq->scx.deferred_bal_cb,
+-				       deferred_bal_cb_workfn);
++		rq->scx.flags |= SCX_RQ_BAL_CB_PENDING;
+ 		return;
+ 	}
  
-+		np = core->dev.of_node;
-+		if (np && !of_device_is_available(np))
-+			continue;
+@@ -2043,6 +2053,19 @@ static void flush_dispatch_buf(struct scx_sched *sch, struct rq *rq)
+ 	dspc->cursor = 0;
+ }
+ 
++static inline void maybe_queue_balance_callback(struct rq *rq)
++{
++	lockdep_assert_rq_held(rq);
 +
- 		/* Only first GMAC core on BCM4706 is connected and working */
- 		if (core->id.id == BCMA_CORE_4706_MAC_GBIT &&
- 		    core->core_unit > 0)
++	if (!(rq->scx.flags & SCX_RQ_BAL_CB_PENDING))
++		return;
++
++	queue_balance_callback(rq, &rq->scx.deferred_bal_cb,
++				deferred_bal_cb_workfn);
++
++	rq->scx.flags &= ~SCX_RQ_BAL_CB_PENDING;
++}
++
+ static int balance_one(struct rq *rq, struct task_struct *prev)
+ {
+ 	struct scx_sched *sch = scx_root;
+@@ -2190,6 +2213,8 @@ static int balance_scx(struct rq *rq, struct task_struct *prev,
+ #endif
+ 	rq_repin_lock(rq, rf);
+ 
++	maybe_queue_balance_callback(rq);
++
+ 	return ret;
+ }
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 72fb9129afb6a..c7f67f54d4e3e 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -782,6 +782,7 @@ enum scx_rq_flags {
+ 	SCX_RQ_BAL_KEEP		= 1 << 3, /* balance decided to keep current */
+ 	SCX_RQ_BYPASSING	= 1 << 4,
+ 	SCX_RQ_CLK_VALID	= 1 << 5, /* RQ clock is fresh and valid */
++	SCX_RQ_BAL_CB_PENDING	= 1 << 6, /* must queue a cb after dispatching */
+ 
+ 	SCX_RQ_IN_WAKEUP	= 1 << 16,
+ 	SCX_RQ_IN_BALANCE	= 1 << 17,
 -- 
 2.51.0
 
