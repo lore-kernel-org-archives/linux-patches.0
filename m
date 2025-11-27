@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FF9322DCB;
-	Thu, 27 Nov 2025 14:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569F528C84D;
+	Thu, 27 Nov 2025 14:52:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255152; cv=none; b=kQCbuMwVq/AZMINC06r1g4wD2wNRok1ISr5koFIxSJZ44QBRl2PN849Eu0d4hjedQQTQxl+EukU5JZMLaHss7GPLJyHmFO1IorSPc2jGTwrPgmCcSopelBX2yyCVf25oAyuvaB1zeo3qDenDKuZPiXpjxIWenul3tHQyFN/tDs4=
+	t=1764255155; cv=none; b=JhUZdvjPkAz+9twKuGJg7h0kMFkYNXvxPjl6zWTDQRUvNnXkzR3GX5SwMPTYRsg7/Wv32bjJ7aJDQUpsv5L6rNtEklXttZt9UOOMLia+CFpD1U2tNuUPdrKO5FHswhRFYjt3GM+xkKY77cEToDJcyRZBESoaMu29uhTtZz+Qa/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255152; c=relaxed/simple;
-	bh=vk6mSw50bEZXnJKWPJu8TQWM/lxO0nCZcadBgouPu2s=;
+	s=arc-20240116; t=1764255155; c=relaxed/simple;
+	bh=dLTtjFAAtg2oeaK6fIVsmM19OTQEmqvN6m3QeUku7Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jt8czzziIfEGC6r7rdiYsOLCRS3hhNnT6WOxvOvBuHswrCbKbi6/4yQBBf++3V7heKVEG02wxGcqeMNQV5p5W5Q/sxqPEJ0hTlMlO0Vc60BGtRpZU2cG0d9tEylk0TKnmRU420uDIjm+yzlqNMSG9R7uBvM+yZVaBUvnSvoptZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19CNFH3C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ex0DH9tafirn/ACbMLCzrdF2qk5O1sCQEu8uQxbr9HCP96iUBNUJhEzFwV4RBxQXd9rCokQqZuQGQPFa/GsndEDxbJLI9AYzJyEZGy67TBR2P3MwvUb4vxJwtf3Xwe/6NxhTNq7ApJrvRXjWsYry2/cLXKt+uTR4caUFDmGocD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBlaKb43; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19CNFH3C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA683C4CEF8;
-	Thu, 27 Nov 2025 14:52:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBlaKb43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E3CC4CEF8;
+	Thu, 27 Nov 2025 14:52:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255152;
-	bh=vk6mSw50bEZXnJKWPJu8TQWM/lxO0nCZcadBgouPu2s=;
+	s=korg; t=1764255155;
+	bh=dLTtjFAAtg2oeaK6fIVsmM19OTQEmqvN6m3QeUku7Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19CNFH3CsVU7omZzLVuLyPcGpd6vSeEBTKN0QNOACPqoMccAJ7WcdLXziSEK8467O
-	 6ah52+5Oa8wgpuD3kZHc5F/BxMSwf67FGE/XcHt6W5Gb6ZteWsNLKHKN4lz773/N99
-	 4eHwjiMrRjLIoiZhM7bwQxjOUc6eGUTGItycVLO8=
+	b=zBlaKb43QVXyOjHjk4pOL906FLQ4LC9P3g7/jiewooziK2a4obUNyvUVV69GHWWM0
+	 KdB9OlnjoKYrwlY4niPWVqdeLGEGn/W+0JTII/USyFfPJAEIJW48ZZnPEiDsIQUO58
+	 NGpWUmKmiA0eLaTQreR0TNnz2LUy/wFe7tS4iXpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragan Simic <dsimic@manjaro.org>,
-	Diederik de Haas <diederik@cknow-tech.com>,
+	Mykola Kvach <xakep.amatop@gmail.com>,
+	Michael Riesch <michael.riesch@collabora.com>,
 	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.12 005/112] arm64: dts: rockchip: Fix vccio4-supply on rk3566-pinetab2
-Date: Thu, 27 Nov 2025 15:45:07 +0100
-Message-ID: <20251127144032.910174745@linuxfoundation.org>
+Subject: [PATCH 6.12 006/112] arm64: dts: rockchip: fix PCIe 3.3V regulator voltage on orangepi-5
+Date: Thu, 27 Nov 2025 15:45:08 +0100
+Message-ID: <20251127144032.948457947@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,35 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diederik de Haas <diederik@cknow-tech.com>
+From: Mykola Kvach <xakep.amatop@gmail.com>
 
-commit 03c7e964a02e388ee168c804add7404eda23908c upstream.
+commit b5414520793e68d266fdd97a84989d9831156aad upstream.
 
-Page 13 of the PineTab2 v2 schematic dd 20230417 shows VCCIO4's power
-source is VCCIO_WL. Page 19 shows that VCCIO_WL is connected to
-VCCA1V8_PMU, so fix the PineTab2 dtsi to reflect that.
+The vcc3v3_pcie20 fixed regulator powers the PCIe device-side 3.3V rail
+for pcie2x1l2 via vpcie3v3-supply. The DTS mistakenly set its
+regulator-min/max-microvolt to 1800000 (1.8 V). Correct both to 3300000
+(3.3 V) to match the rail name, the PCIe/M.2 power requirement, and the
+actual hardware wiring on Orange Pi 5.
 
-Fixes: 1b7e19448f8f ("arm64: dts: rockchip: Add devicetree for Pine64 PineTab2")
+Fixes: b6bc755d806e ("arm64: dts: rockchip: Add Orange Pi 5")
 Cc: stable@vger.kernel.org
-Reviewed-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Diederik de Haas <diederik@cknow-tech.com>
-Link: https://patch.msgid.link/20251027155724.138096-1-diederik@cknow-tech.com
+Signed-off-by: Mykola Kvach <xakep.amatop@gmail.com>
+Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
+Link: https://patch.msgid.link/cf6e08dfdfbf1c540685d12388baab1326f95d2c.1762165324.git.xakep.amatop@gmail.com
 Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
-@@ -789,7 +789,7 @@
- 	vccio1-supply = <&vccio_acodec>;
- 	vccio2-supply = <&vcc_1v8>;
- 	vccio3-supply = <&vccio_sd>;
--	vccio4-supply = <&vcc_1v8>;
-+	vccio4-supply = <&vcca1v8_pmu>;
- 	vccio5-supply = <&vcc_1v8>;
- 	vccio6-supply = <&vcc1v8_dvp>;
- 	vccio7-supply = <&vcc_3v3>;
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
+@@ -85,8 +85,8 @@
+ 		gpios = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
+ 		regulator-name = "vcc3v3_pcie20";
+ 		regulator-boot-on;
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <1800000>;
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
+ 		startup-delay-us = <50000>;
+ 		vin-supply = <&vcc5v0_sys>;
+ 	};
 
 
