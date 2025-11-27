@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9AB334369;
-	Thu, 27 Nov 2025 14:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F21334697;
+	Thu, 27 Nov 2025 14:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255287; cv=none; b=WLXbC3qENvRTl7PpWARMi6EFByv+jNbsnoDkA1wjh/v2okYanDoZ6cJyo6bW3LLrv4hPfYoWjT5Bpzycfvy/WWs0RrIcvcvu+ZqQzsRb0iZA7ydURgA9XAqt6mkLgAcIvb4QkJucIvdbw/ylayWBD87TCg7rfymjGTSr5b4xeRU=
+	t=1764255291; cv=none; b=r87tFhQMuWIT+RmZ1FOYgjYWU+1zIwlbPhRVnvfnK7b7cFsSSdDTBEYOfv9Kvsr6xtQqR6kRqtDe3QdV4HNn/BuxvmD/gF5GhuEwwBTdyvcnpKEwyOGuRyt4JCheBe4mNikiNfqWnWwxqiAE6XDt9AV0rLIGOHptbFRGFm0SGrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255287; c=relaxed/simple;
-	bh=yqD9T75hEqDpyVZ2VKJu3UO+hyUyJp3gBOHHHj0vhcs=;
+	s=arc-20240116; t=1764255291; c=relaxed/simple;
+	bh=yJbSNaa5aE3VVuhWilq542InJseenOYhIoh8sNQTZcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tBPkmpvJtOSmVPUDlQZztUOXBKUCL0Sddul983Sdw/4Tr6srSXy+QzqOcoUcDNJIlZBoLhgclGYy2fRjFqAH+rwZxZ0+wOql+GKalPTE1Fcoc+kG+XNppWdxXAMy65k8ba3h5aXGTtnLWvM8BlRgcPjiF3hI/x+JZ9hv8d7uZtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrYXQM4m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/75ppfZmHBv1S7afPXCzeBbshEDC6ok3c8NiTvQPH7Yf9hM2shzxmtWrbEl2nm0IGtQ3iUU0aEaJZvPhkQ/Vwo8wgAZ9URnEBg5ayup/FKeFbRNtOxJje8VzYtgRrDp99g5bgbrC9igqIeTkbNVKUd7O2wVSzgZAbBtfGg6dlc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TWb8faMs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrYXQM4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B36C4CEF8;
-	Thu, 27 Nov 2025 14:54:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TWb8faMs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0E7C4CEF8;
+	Thu, 27 Nov 2025 14:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255286;
-	bh=yqD9T75hEqDpyVZ2VKJu3UO+hyUyJp3gBOHHHj0vhcs=;
+	s=korg; t=1764255289;
+	bh=yJbSNaa5aE3VVuhWilq542InJseenOYhIoh8sNQTZcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrYXQM4mMT1Em1y9KMsgq5NO6v1tL3kzkaamm6I7bIEct2IcvJWmBqlKqtL9c9iRr
-	 ETNFLfBNzVtqgt7CCOXJQSL3yu/3O/TPnKBGaMWXmGVIhw1mC+wwHx8khYdeJSHDcW
-	 +2D0o8KIDIm+NmlJub5fcT/fVsCJFlZvYzucTcc0=
+	b=TWb8faMsgSMBqvif321ebVHKMpr9t1HetV09BH1Oq+ShN4fbnxksUgodjPg7Jaaya
+	 MuPTVBiWjM/h2w/maI+hHhnezuE/I3P7Rd5W8D9EZH3aEplHtoux5Cu/dPJElX97og
+	 YhPvR+VXSKFye5hChsYsxFYOq/Y54kZa24ZqQ3cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.12 073/112] ice: fix PTP cleanup on driver removal in error path
-Date: Thu, 27 Nov 2025 15:46:15 +0100
-Message-ID: <20251127144035.512776721@linuxfoundation.org>
+	Jared Kangas <jkangas@redhat.com>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 074/112] pinctrl: s32cc: fix uninitialized memory in s32_pinctrl_desc
+Date: Thu, 27 Nov 2025 15:46:16 +0100
+Message-ID: <20251127144035.550547955@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -54,120 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Jared Kangas <jkangas@redhat.com>
 
-[ Upstream commit 23a5b9b12de9dcd15ebae4f1abc8814ec1c51ab0 ]
+[ Upstream commit 97ea34defbb57bfaf71ce487b1b0865ffd186e81 ]
 
-Improve the cleanup on releasing PTP resources in error path.
-The error case might happen either at the driver probe and PTP
-feature initialization or on PTP restart (errors in reset handling, NVM
-update etc). In both cases, calls to PF PTP cleanup (ice_ptp_cleanup_pf
-function) and 'ps_lock' mutex deinitialization were missed.
-Additionally, ptp clock was not unregistered in the latter case.
+s32_pinctrl_desc is allocated with devm_kmalloc(), but not all of its
+fields are initialized. Notably, num_custom_params is used in
+pinconf_generic_parse_dt_config(), resulting in intermittent allocation
+errors, such as the following splat when probing i2c-imx:
 
-Keep PTP state as 'uninitialized' on init to distinguish between error
-scenarios and to avoid resource release duplication at driver removal.
+        WARNING: CPU: 0 PID: 176 at mm/page_alloc.c:4795 __alloc_pages_noprof+0x290/0x300
+        [...]
+        Hardware name: NXP S32G3 Reference Design Board 3 (S32G-VNP-RDB3) (DT)
+        [...]
+        Call trace:
+         __alloc_pages_noprof+0x290/0x300 (P)
+         ___kmalloc_large_node+0x84/0x168
+         __kmalloc_large_node_noprof+0x34/0x120
+         __kmalloc_noprof+0x2ac/0x378
+         pinconf_generic_parse_dt_config+0x68/0x1a0
+         s32_dt_node_to_map+0x104/0x248
+         dt_to_map_one_config+0x154/0x1d8
+         pinctrl_dt_to_map+0x12c/0x280
+         create_pinctrl+0x6c/0x270
+         pinctrl_get+0xc0/0x170
+         devm_pinctrl_get+0x50/0xa0
+         pinctrl_bind_pins+0x60/0x2a0
+         really_probe+0x60/0x3a0
+        [...]
+         __platform_driver_register+0x2c/0x40
+         i2c_adap_imx_init+0x28/0xff8 [i2c_imx]
+        [...]
 
-The consequence of missing ice_ptp_cleanup_pf call is the following call
-trace dumped when ice_adapter object is freed (port list is not empty,
-as it is required at this stage):
+This results in later parse failures that can cause issues in dependent
+drivers:
 
-[  T93022] ------------[ cut here ]------------
-[  T93022] WARNING: CPU: 10 PID: 93022 at
-ice/ice_adapter.c:67 ice_adapter_put+0xef/0x100 [ice]
-...
-[  T93022] RIP: 0010:ice_adapter_put+0xef/0x100 [ice]
-...
-[  T93022] Call Trace:
-[  T93022]  <TASK>
-[  T93022]  ? ice_adapter_put+0xef/0x100 [ice
-33d2647ad4f6d866d41eefff1806df37c68aef0c]
-[  T93022]  ? __warn.cold+0xb0/0x10e
-[  T93022]  ? ice_adapter_put+0xef/0x100 [ice
-33d2647ad4f6d866d41eefff1806df37c68aef0c]
-[  T93022]  ? report_bug+0xd8/0x150
-[  T93022]  ? handle_bug+0xe9/0x110
-[  T93022]  ? exc_invalid_op+0x17/0x70
-[  T93022]  ? asm_exc_invalid_op+0x1a/0x20
-[  T93022]  ? ice_adapter_put+0xef/0x100 [ice
-33d2647ad4f6d866d41eefff1806df37c68aef0c]
-[  T93022]  pci_device_remove+0x42/0xb0
-[  T93022]  device_release_driver_internal+0x19f/0x200
-[  T93022]  driver_detach+0x48/0x90
-[  T93022]  bus_remove_driver+0x70/0xf0
-[  T93022]  pci_unregister_driver+0x42/0xb0
-[  T93022]  ice_module_exit+0x10/0xdb0 [ice
-33d2647ad4f6d866d41eefff1806df37c68aef0c]
-...
-[  T93022] ---[ end trace 0000000000000000 ]---
-[  T93022] ice: module unloaded
+        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c0-pins/i2c0-grp0: could not parse node property
+        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c0-pins/i2c0-grp0: could not parse node property
+        [...]
+        pca953x 0-0022: failed writing register: -6
+        i2c i2c-0: IMX I2C adapter registered
+        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c2-pins/i2c2-grp0: could not parse node property
+        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c2-pins/i2c2-grp0: could not parse node property
+        i2c i2c-1: IMX I2C adapter registered
+        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c4-pins/i2c4-grp0: could not parse node property
+        s32g-siul2-pinctrl 4009c240.pinctrl: /soc@0/pinctrl@4009c240/i2c4-pins/i2c4-grp0: could not parse node property
+        i2c i2c-2: IMX I2C adapter registered
 
-Fixes: e800654e85b5 ("ice: Use ice_adapter for PTP shared data instead of auxdev")
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fix this by initializing s32_pinctrl_desc with devm_kzalloc() instead of
+devm_kmalloc() in s32_pinctrl_probe(), which sets the previously
+uninitialized fields to zero.
+
+Fixes: fd84aaa8173d ("pinctrl: add NXP S32 SoC family support")
+Signed-off-by: Jared Kangas <jkangas@redhat.com>
+Tested-by: Jan Petrous (OSS) <jan.petrous@oss.nxp.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ptp.c | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ drivers/pinctrl/nxp/pinctrl-s32cc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_ptp.c b/drivers/net/ethernet/intel/ice/ice_ptp.c
-index 369c968a0117d..4e6006991e8fd 100644
---- a/drivers/net/ethernet/intel/ice/ice_ptp.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ptp.c
-@@ -3409,7 +3409,7 @@ void ice_ptp_init(struct ice_pf *pf)
+diff --git a/drivers/pinctrl/nxp/pinctrl-s32cc.c b/drivers/pinctrl/nxp/pinctrl-s32cc.c
+index 501eb296c7605..51ecb8d0fb7e8 100644
+--- a/drivers/pinctrl/nxp/pinctrl-s32cc.c
++++ b/drivers/pinctrl/nxp/pinctrl-s32cc.c
+@@ -951,7 +951,7 @@ int s32_pinctrl_probe(struct platform_device *pdev,
+ 	spin_lock_init(&ipctl->gpio_configs_lock);
  
- 	err = ice_ptp_init_port(pf, &ptp->port);
- 	if (err)
--		goto err_exit;
-+		goto err_clean_pf;
+ 	s32_pinctrl_desc =
+-		devm_kmalloc(&pdev->dev, sizeof(*s32_pinctrl_desc), GFP_KERNEL);
++		devm_kzalloc(&pdev->dev, sizeof(*s32_pinctrl_desc), GFP_KERNEL);
+ 	if (!s32_pinctrl_desc)
+ 		return -ENOMEM;
  
- 	/* Start the PHY timestamping block */
- 	ice_ptp_reset_phy_timestamping(pf);
-@@ -3426,13 +3426,19 @@ void ice_ptp_init(struct ice_pf *pf)
- 	dev_info(ice_pf_to_dev(pf), "PTP init successful\n");
- 	return;
- 
-+err_clean_pf:
-+	mutex_destroy(&ptp->port.ps_lock);
-+	ice_ptp_cleanup_pf(pf);
- err_exit:
- 	/* If we registered a PTP clock, release it */
- 	if (pf->ptp.clock) {
- 		ptp_clock_unregister(ptp->clock);
- 		pf->ptp.clock = NULL;
- 	}
--	ptp->state = ICE_PTP_ERROR;
-+	/* Keep ICE_PTP_UNINIT state to avoid ambiguity at driver unload
-+	 * and to avoid duplicated resources release.
-+	 */
-+	ptp->state = ICE_PTP_UNINIT;
- 	dev_err(ice_pf_to_dev(pf), "PTP failed %d\n", err);
- }
- 
-@@ -3445,9 +3451,19 @@ void ice_ptp_init(struct ice_pf *pf)
-  */
- void ice_ptp_release(struct ice_pf *pf)
- {
--	if (pf->ptp.state != ICE_PTP_READY)
-+	if (pf->ptp.state == ICE_PTP_UNINIT)
- 		return;
- 
-+	if (pf->ptp.state != ICE_PTP_READY) {
-+		mutex_destroy(&pf->ptp.port.ps_lock);
-+		ice_ptp_cleanup_pf(pf);
-+		if (pf->ptp.clock) {
-+			ptp_clock_unregister(pf->ptp.clock);
-+			pf->ptp.clock = NULL;
-+		}
-+		return;
-+	}
-+
- 	pf->ptp.state = ICE_PTP_UNINIT;
- 
- 	/* Disable timestamping for both Tx and Rx */
 -- 
 2.51.0
 
