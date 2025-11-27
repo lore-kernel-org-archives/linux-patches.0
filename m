@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18AD28D8E8;
-	Thu, 27 Nov 2025 14:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF3A28D8E8;
+	Thu, 27 Nov 2025 14:59:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255567; cv=none; b=EueYg7pz/Q2NQiPPsWabiLfzebDUk5OhBP6t+kDoC8zKAX5QQBEt4TbH5svQnm+oMtr/jiKRAQalnAgesO1v+oUr+h+y+xKDl7jvINkmkMbY8fuSLu9JnXkAa2jPDpP/XEJG0OBExcuruMrgdG0fubhfFJHCEWO2g5VilJibGG4=
+	t=1764255570; cv=none; b=nSe+DtOLb/HHui5G4LEzj0fvmYB7rGTPLuFp9SOeZy+T6lkM2FxM08QPCKrVKJcgY05yX5dfsm1TeZJ2vS5ucqZx0rhPOnG1mB/0vF/U9XLAmb5Kn6Oz1NLSsG0fWClhBROCBISgN5oZLAFctX4wGq0da2pB4GoCyn8nnK395g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255567; c=relaxed/simple;
-	bh=cJYr8aDihlR4doW1cmnjhaqW5SI2dh9qC5zOc602Fpk=;
+	s=arc-20240116; t=1764255570; c=relaxed/simple;
+	bh=KAQWOPJXR0JadCGF1JqtHubqwYqsuyEoE5/p4Z94e2Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiPYaKdtB/f2SEpYuF/SSV+SCOD3Wt4b5T4C9wm1IW6RJYla4wtgGK3VGuYtiryoKA5PsxGbgddER7iT6xDBt43IHmfkYaScuK0ipiUBY1OU37a3PPB3qciKkxYCSdslTF0liN4T2t02AAhVSxR8tvPKxC6QHLflGFl4Ci+1ROo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGC+O7As; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bd/0L0knkfsc56BN+I2/uvDU9hwGUhcLSxPiwKdAblSd47/j5ZzDkNXa8vQEOyDtd+L+khpilg2Sz3YQhknGS1dIC9zuNjy/hoQnhB9JfrShG4v9+Ob1S2arMul91t70r3j9cia+RvPxmSpHWKNh7K+ccf6/qPPMRtP8YNhu5SU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoZTi2Dy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGC+O7As"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638D2C4CEF8;
-	Thu, 27 Nov 2025 14:59:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoZTi2Dy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30828C4CEF8;
+	Thu, 27 Nov 2025 14:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255566;
-	bh=cJYr8aDihlR4doW1cmnjhaqW5SI2dh9qC5zOc602Fpk=;
+	s=korg; t=1764255569;
+	bh=KAQWOPJXR0JadCGF1JqtHubqwYqsuyEoE5/p4Z94e2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IGC+O7Ascig+p3ScBgHg3xDMFO3u6Ks8NOurYAh2cfaBLAVFoIzSX7QU3uZA4y/TE
-	 n+yQX+0l/F8cPd2y6xRg5HwOJHHoEjIeXte3HO/F1Nh2SwjBXFjIKUau/d4omS4hTH
-	 VPZ5ablEjcSlsZwRdvR034IYn+lPyjquePWoOhqM=
+	b=CoZTi2DyCjNlb4oKjRAlCxGDmyzdPiBua+wSAM8gEVwv3CGoqcrPkLqgAwmo1+j3q
+	 gBdOAzb+MNAcK4sUk9nnFt4CJKYvN2JudNj5nTyURe4njzUORB3eWQFhCRNblLD9UD
+	 lNQrvV4va8BSfQ3G0zMqUX+Vy9SEKAPhwEDDEVIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
+	Seungjin Bae <eeodqql09@gmail.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.17 038/175] Input: imx_sc_key - fix memory corruption on unload
-Date: Thu, 27 Nov 2025 15:44:51 +0100
-Message-ID: <20251127144044.356582874@linuxfoundation.org>
+Subject: [PATCH 6.17 039/175] Input: pegasus-notetaker - fix potential out-of-bounds access
+Date: Thu, 27 Nov 2025 15:44:52 +0100
+Message-ID: <20251127144044.392325905@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,36 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-commit d83f1512758f4ef6fc5e83219fe7eeeb6b428ea4 upstream.
+commit 69aeb507312306f73495598a055293fa749d454e upstream.
 
-This is supposed to be "priv" but we accidentally pass "&priv" which is
-an address in the stack and so it will lead to memory corruption when
-the imx_sc_key_action() function is called.  Remove the &.
+In the pegasus_notetaker driver, the pegasus_probe() function allocates
+the URB transfer buffer using the wMaxPacketSize value from
+the endpoint descriptor. An attacker can use a malicious USB descriptor
+to force the allocation of a very small buffer.
 
-Fixes: 768062fd1284 ("Input: imx_sc_key - use devm_add_action_or_reset() to handle all cleanups")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/aQYKR75r2VMFJutT@stanley.mountain
+Subsequently, if the device sends an interrupt packet with a specific
+pattern (e.g., where the first byte is 0x80 or 0x42),
+the pegasus_parse_packet() function parses the packet without checking
+the allocated buffer size. This leads to an out-of-bounds memory access.
+
+Fixes: 1afca2b66aac ("Input: add Pegasus Notetaker tablet driver")
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://lore.kernel.org/r/20251007214131.3737115-2-eeodqql09@gmail.com
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/imx_sc_key.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/tablet/pegasus_notetaker.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/input/keyboard/imx_sc_key.c
-+++ b/drivers/input/keyboard/imx_sc_key.c
-@@ -158,7 +158,7 @@ static int imx_sc_key_probe(struct platf
- 		return error;
+--- a/drivers/input/tablet/pegasus_notetaker.c
++++ b/drivers/input/tablet/pegasus_notetaker.c
+@@ -63,6 +63,9 @@
+ #define BUTTON_PRESSED			0xb5
+ #define COMMAND_VERSION			0xa9
+ 
++/* 1 Status + 1 Color + 2 X + 2 Y = 6 bytes */
++#define NOTETAKER_PACKET_SIZE		6
++
+ /* in xy data packet */
+ #define BATTERY_NO_REPORT		0x40
+ #define BATTERY_LOW			0x41
+@@ -311,6 +314,12 @@ static int pegasus_probe(struct usb_inte
  	}
  
--	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, &priv);
-+	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, priv);
- 	if (error)
- 		return error;
+ 	pegasus->data_len = usb_maxpacket(dev, pipe);
++	if (pegasus->data_len < NOTETAKER_PACKET_SIZE) {
++		dev_err(&intf->dev, "packet size is too small (%d)\n",
++			pegasus->data_len);
++		error = -EINVAL;
++		goto err_free_mem;
++	}
  
+ 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
+ 					   &pegasus->data_dma);
 
 
