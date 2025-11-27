@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E4E273816;
-	Thu, 27 Nov 2025 14:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1003E27F18B;
+	Thu, 27 Nov 2025 14:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254946; cv=none; b=eWrPReyxSsvo1m/p529j3TDYrlr2xgaVfavpMpp92NfxFuZML6PTosS8cr/ku6ZrLHMmTERuGi6UZoOXG/Gwf0SBTH0vpQYFpWDem2WlBqByUmkWQpGPbjk3K5J3pZQpaGJuRMJylGrDjTa5AwKw3XMMDuZynsx7aBL+TG8ZPmM=
+	t=1764254949; cv=none; b=EnL2CeSfDLTt+/6tNyH0cWyxQQmlDNF2v2d8Yeev4HexPS9cktlkNeDio0zgu1I/eAHfmW16Hsd6u311fBlP/0hb4ET5OCmq2EqGXHrm/3AdUpaKV9UPNjX9GU/8N1R+BWKA/uQcZQFFUCaGyooq5CN2FQ+ZD0mnchpAEmAA0RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254946; c=relaxed/simple;
-	bh=CdHRKALhr8crO4nX9R1I5QyQQPMk9emGjTOywbtuBEI=;
+	s=arc-20240116; t=1764254949; c=relaxed/simple;
+	bh=fmC3U9LGnWn+uMCAT+/NEDdpngdoksLFKXgCTX2usx8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CwaKC+2rKhy89g6pidYQqb+lzfJ5AimzKGnH/X6Iy7mQuogLozphZ2SdsMeYTVYeShDepXJcQ57qMF5mqv5zMavm65AlqvcIyeemFGDty/gUpGnMJRVkwpomWn6aop43p/S9gZIBb37cLS671Ki7C0LSt7PFDKzCalP6LqyJaDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9UuqHgu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XpSsgJ0FNtW4T88VZvVWnw/A++2AZypBRCxLqsMxirArRk6By1kSmi51javE9TajmlSgjAuX51M8wpfubd78iA9zShCHSoss1KeMKdj8d4F0jLDbvhaHn/uECq22294s1HdZfnRn/UjJFTcETH+7IBOsCRWVGYUqiJ1awmwWFg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3DXYDa2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9UuqHgu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC8DC4CEF8;
-	Thu, 27 Nov 2025 14:49:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3DXYDa2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9231EC116C6;
+	Thu, 27 Nov 2025 14:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254946;
-	bh=CdHRKALhr8crO4nX9R1I5QyQQPMk9emGjTOywbtuBEI=;
+	s=korg; t=1764254948;
+	bh=fmC3U9LGnWn+uMCAT+/NEDdpngdoksLFKXgCTX2usx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9UuqHguJ/KkaRCsLqWJcr9d59iXX48y7Z9B+joWkRloikmCtthRLFY5wBnIc59+c
-	 w6ubnQiV24fex+R8MKw6q+nJy5/T4w6xnARDfOCH2JDLgv1trOJUxK6mSQKvoDb43e
-	 Avt3//EaklS4t8uFSSdB5JbrrDD5GTPz1l+tltAw=
+	b=q3DXYDa2rh5nhO0X9KsxOzgx73SEP3RsXsHWF/OgFtgwwAGniIxEKCF6PV2/zJV0a
+	 wG392qhBJerFurYr6VK81Vig4VRiuBVfW5JMq/rENGVsL0527p90SRqMf5LOiiGCv7
+	 MhZzzGwMm3f9gGv7mBM1i788+qUCo5Aps4NqeZp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com,
-	Hannes Reinecke <hare@suse.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 23/86] scsi: sg: Do not sleep in atomic context
-Date: Thu, 27 Nov 2025 15:45:39 +0100
-Message-ID: <20251127144028.667557107@linuxfoundation.org>
+	Zilin Guan <zilin@seu.edu.cn>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 41/86] mlxsw: spectrum: Fix memory leak in mlxsw_sp_flower_stats()
+Date: Thu, 27 Nov 2025 15:45:57 +0100
+Message-ID: <20251127144029.330185627@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -52,47 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-commit 90449f2d1e1f020835cba5417234636937dd657e upstream.
+[ Upstream commit 407a06507c2358554958e8164dc97176feddcafc ]
 
-sg_finish_rem_req() calls blk_rq_unmap_user(). The latter function may
-sleep. Hence, call sg_finish_rem_req() with interrupts enabled instead
-of disabled.
+The function mlxsw_sp_flower_stats() calls mlxsw_sp_acl_ruleset_get() to
+obtain a ruleset reference. If the subsequent call to
+mlxsw_sp_acl_rule_lookup() fails to find a rule, the function returns
+an error without releasing the ruleset reference, causing a memory leak.
 
-Reported-by: syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-scsi/691560c4.a70a0220.3124cb.001a.GAE@google.com/
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: stable@vger.kernel.org
-Fixes: 97d27b0dd015 ("scsi: sg: close race condition in sg_remove_sfp_usercontext()")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251113181643.1108973-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by using a goto to the existing error handling label, which
+calls mlxsw_sp_acl_ruleset_put() to properly release the reference.
+
+Fixes: 7c1b8eb175b69 ("mlxsw: spectrum: Add support for TC flower offload statistics")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251112052114.1591695-1-zilin@seu.edu.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sg.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -2212,9 +2212,17 @@ sg_remove_sfp_usercontext(struct work_st
- 	write_lock_irqsave(&sfp->rq_list_lock, iflags);
- 	while (!list_empty(&sfp->rq_list)) {
- 		srp = list_first_entry(&sfp->rq_list, Sg_request, entry);
--		sg_finish_rem_req(srp);
- 		list_del(&srp->entry);
-+		write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
-+
-+		sg_finish_rem_req(srp);
-+		/*
-+		 * sg_rq_end_io() uses srp->parentfp. Hence, only clear
-+		 * srp->parentfp after blk_mq_free_request() has been called.
-+		 */
- 		srp->parentfp = NULL;
-+
-+		write_lock_irqsave(&sfp->rq_list_lock, iflags);
- 	}
- 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
+diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
+index 9fd1ca0792584..fba545938fd7d 100644
+--- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
++++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
+@@ -816,8 +816,10 @@ int mlxsw_sp_flower_stats(struct mlxsw_sp *mlxsw_sp,
+ 		return -EINVAL;
  
+ 	rule = mlxsw_sp_acl_rule_lookup(mlxsw_sp, ruleset, f->cookie);
+-	if (!rule)
+-		return -EINVAL;
++	if (!rule) {
++		err = -EINVAL;
++		goto err_rule_get_stats;
++	}
+ 
+ 	err = mlxsw_sp_acl_rule_get_stats(mlxsw_sp, rule, &packets, &bytes,
+ 					  &drops, &lastuse, &used_hw_stats);
+-- 
+2.51.0
+
 
 
