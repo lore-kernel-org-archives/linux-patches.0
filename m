@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AA8286416;
-	Thu, 27 Nov 2025 14:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2756225BEE8;
+	Thu, 27 Nov 2025 14:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255032; cv=none; b=kDT2vI+ZFvVhxXyIvjpOIZVCYAZBWFHUMhGJhdj+52jrnERLKwRTryJ0huxzDG+t5xsjv2iSqJCQRdj/MC8V6kghUT3fvlhTai/qEzaH4eXi4S4RbQFBtKMNl7/ZM5kklySV9F3HDpmYImJ4z4g8m9+hU8iJ+E4u/lR8FNrl/Vk=
+	t=1764255035; cv=none; b=pG3X7xDctOaOXNRUFyDRgfzz10UAYqUB276040RCSlaaG58ypCPmWJS0r5+DfUqh1ehHkoXsqVUfUVLUGmAFVfghOJB595efgjJ6F1f/HNGy2nqjG8oEoRNfzywEeEX18rdxLgDjnBHHgUUBY8u3WI4P3QPa5+Pb2Cr/Fd09zdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255032; c=relaxed/simple;
-	bh=F2uz2sFOpEWvmxWZJfkwVCuaHbogIKoEh8YAjxhRDS0=;
+	s=arc-20240116; t=1764255035; c=relaxed/simple;
+	bh=rRC94YvnbNkWgTzkmsJIiZKRaTHPVsFE2bc48W4lpyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jgEmhdHNcpFGMn0XYFasTQwxqweNtbPjf7mlX2Ly5XiP8psIccxw4nOPXk5Yf/Ei/jjcrWhVy4xPWXucnvlnsDz3dwTakjOGj4YiUgsj9kF8umpNm9C6QOyXFeO9zEuRuCzH2T4BbVcHJlLyRlgCT0U33SQyIgjNbDh5cSbbacM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSNifKZF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=srZN0aI3bWRTBDif8bWVzycoHarFEm/9NVIQ/hE8LM1VBJxTM5ruqXhnwyuiTEigh2gDir7GGgb9RvOWDPAn6JI2L+JcjZPVEGHaDSAw6YCvyF+xUk/xpaUyvHK88PG1oArJm6XCOI3b5rj4cgOQ+RXQiisb8dJZ3hNb38zAJ7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p079ySaT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSNifKZF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F1CC4CEF8;
-	Thu, 27 Nov 2025 14:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p079ySaT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4CFFC4CEF8;
+	Thu, 27 Nov 2025 14:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255032;
-	bh=F2uz2sFOpEWvmxWZJfkwVCuaHbogIKoEh8YAjxhRDS0=;
+	s=korg; t=1764255035;
+	bh=rRC94YvnbNkWgTzkmsJIiZKRaTHPVsFE2bc48W4lpyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSNifKZF0LSedAdO7TKl7R5sMhSCEUkh0mNMwVg1IAS9nALPqUTGzrpslFr9/98yV
-	 AZk4ZYtdmdocT5s/FP2XQr62MllijvjvS7L89dMb4UVUE5JRjQUPNlAE++mO43UYLY
-	 toe4F+1E3rmz2H47UlybnTrdqOLNRU1Rk39T00f8=
+	b=p079ySaTgd+hWfRrQMdcj+VLxZY3xsLeUQefL1tGRAPQnBEWlCH/3cv2OaWyyN8Ct
+	 hv27FVNFll/XUCQSeVn8SKxqDNbGrnohr1pRbAVc+5gyVuzVjqdKRT5iuacBpTAS9G
+	 ynIVtEjBGovb33wnn+t5CVyepAyr60x5vkFS+798=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Chujun <zhangchujun@cmss.chinamobile.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 71/86] tracing/tools: Fix incorrcet short option in usage text for --threads
-Date: Thu, 27 Nov 2025 15:46:27 +0100
-Message-ID: <20251127144030.425773243@linuxfoundation.org>
+	Henrique Carvalho <henrique.carvalho@suse.com>
+Subject: [PATCH 6.6 72/86] smb: client: fix incomplete backport in cfids_invalidation_worker()
+Date: Thu, 27 Nov 2025 15:46:28 +0100
+Message-ID: <20251127144030.461877904@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -51,43 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Chujun <zhangchujun@cmss.chinamobile.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-[ Upstream commit 53afec2c8fb2a562222948cb1c2aac48598578c9 ]
+The previous commit bdb596ceb4b7 ("smb: client: fix potential UAF in
+smb2_close_cached_fid()") was an incomplete backport and missed one
+kref_put() call in cfids_invalidation_worker() that should have been
+converted to close_cached_dir().
 
-The help message incorrectly listed '-t' as the short option for
---threads, but the actual getopt_long configuration uses '-e'.
-This mismatch can confuse users and lead to incorrect command-line
-usage. This patch updates the usage string to correctly show:
-	"-e, --threads NRTHR"
-to match the implementation.
-
-Note: checkpatch.pl reports a false-positive spelling warning on
-'Run', which is intentional.
-
-Link: https://patch.msgid.link/20251106031040.1869-1-zhangchujun@cmss.chinamobile.com
-Signed-off-by: Zhang Chujun <zhangchujun@cmss.chinamobile.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cb52d9c86d70 ("smb: client: fix potential UAF in smb2_close_cached_fid()")"
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/latency/latency-collector.c | 2 +-
+ fs/smb/client/cached_dir.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/tracing/latency/latency-collector.c b/tools/tracing/latency/latency-collector.c
-index cf263fe9deaf4..ef97916e3873a 100644
---- a/tools/tracing/latency/latency-collector.c
-+++ b/tools/tracing/latency/latency-collector.c
-@@ -1725,7 +1725,7 @@ static void show_usage(void)
- "-n, --notrace\t\tIf latency is detected, do not print out the content of\n"
- "\t\t\tthe trace file to standard output\n\n"
+--- a/fs/smb/client/cached_dir.c
++++ b/fs/smb/client/cached_dir.c
+@@ -727,7 +727,7 @@ static void cfids_invalidation_worker(st
+ 	list_for_each_entry_safe(cfid, q, &entry, entry) {
+ 		list_del(&cfid->entry);
+ 		/* Drop the ref-count acquired in invalidate_all_cached_dirs */
+-		kref_put(&cfid->refcount, smb2_close_cached_fid);
++		close_cached_dir(cfid);
+ 	}
+ }
  
--"-t, --threads NRTHR\tRun NRTHR threads for printing. Default is %d.\n\n"
-+"-e, --threads NRTHR\tRun NRTHR threads for printing. Default is %d.\n\n"
- 
- "-r, --random\t\tArbitrarily sleep a certain amount of time, default\n"
- "\t\t\t%ld ms, before reading the trace file. The\n"
--- 
-2.51.0
-
 
 
