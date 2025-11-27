@@ -1,618 +1,146 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5103532AADC;
-	Thu, 27 Nov 2025 15:06:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B78033468C
+	for <patches@lists.linux.dev>; Thu, 27 Nov 2025 15:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764256007; cv=none; b=kkVQCPZA1rVPRpYzBy13v0HwyXahWLutgBA8Qc5fNyX7UNJQJ7p0VSUrj9HiuiZFCB1sWiVWhPnKACg80ndhSVoLsEBoO+Wet5fqrozikicVg/K34rrgo2nzjAhLbgTz1u/JKlCD8UVSY1Gyun1ti0Rb21wdE6IedeBBfVjsQ54=
+	t=1764257568; cv=none; b=K+L6Sclqhu6jt/F5aQufCsir8zoPJs5vVAG+Go+6qG5zllxL8CHqKIZsuM7OxUfkHaInd1M1kozIXs7p2v9ZrwnITsBph11sOGsetkqb1W8q6Mmyy/uRYd4+c/KDojIkgm0dT75U2PTrkbOz/WVcAVFN8+mF4pLdtdQRzTRaaDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764256007; c=relaxed/simple;
-	bh=Txza3EUHnOad6yZN/WGc6H1WAx0UKjH52iI1FfOZOTk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ida2CX0s93IjuP7jTyyxiJWk1vtxb8BKhfhctr0gIkzfacPwbyoVo8RqCN8HoBVK99h8DdIMTfs/RXU3f0MHXk7sW/zqcOsfpu5sg8VY64fS8hsDEgvg/pGFG+0L5wttHv4zVbPlEj52DKuo519RMw7+Miw+atecgBsR1rH7YxY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSmvh90o; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764257568; c=relaxed/simple;
+	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=L4M8el5Z5aYLf9tiCFtZeX3L9jmfLIBswUL2d95EhHknwhKeaXe8pGG/brfCE4tLSAGs/nEZQzsxshzbE1x+mCgh8fbK1QOS+7GmQOLQqOhlt7O/Suezm3e4H7CAYkDo1QDMVJC7Z5zzf7KcruoG7jebTa/J9PNBId1XJY0D8uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=J+hG2QMW; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSmvh90o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0309C113D0;
-	Thu, 27 Nov 2025 15:06:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764256007;
-	bh=Txza3EUHnOad6yZN/WGc6H1WAx0UKjH52iI1FfOZOTk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=HSmvh90oYJvZz1Vt+7IW8vhBWV8om8unmt53ewW/vVz6fSD6tgUTIiMtBYTeg/2M4
-	 x+S2EeniLLbK3vpF3beY8a14f3wkKIQdxdGPTbUrHvEegD/ag3Tmu1YhhmN40yKTRe
-	 nFbUNzu5EL1sRadEo3JNuACV52iB7iSJ2t24KoG0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com,
-	Sebastian Ene <sebastianene@google.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.12 000/113] 6.12.60-rc2 review
-Date: Thu, 27 Nov 2025 16:04:22 +0100
-Message-ID: <20251127150346.125775439@linuxfoundation.org>
-X-Mailer: git-send-email 2.52.0
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="J+hG2QMW"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1764257527; x=1764862327; i=rwarsow@gmx.de;
+	bh=W5ID3OY7yfWGGgbtnZevjVWj3uINdDq2sxdewYF9kdo=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=J+hG2QMW9dvufikGnktNDp2eHR5Ity55i/73g/dSRLN1zpW525qZfGnbWZ9ixL93
+	 Lj2i+oyg8WUhZhN1kIZkGxvCQsvafYhqZbKU46TcWyTzXcIqdaw46y+glj/3Q7r39
+	 iDaK73ijuZyzkfAmcDYaV7uSAgkbNneJbFORYNHtim6IudsNiPjjP4Z2z7z5jo7tY
+	 KEC0gDy+84FTVWTztO1Ru9iaQZFpnYPF2wSleTKxTim6DLIzSDNQNiPiHQg4Y/Kku
+	 ciRhczz9QAm3hi6hL+V4v8FCh8g5c/pr+00gRHHwsJpi0isNmkJHJHlxjrknJwgQ9
+	 uNrQpCRXymW2NiDwFg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.200.20] ([46.142.33.252]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mj8qd-1w3lcA2N1B-00hnj8; Thu, 27
+ Nov 2025 16:32:07 +0100
+Message-ID: <f1c70622-5aab-413b-8e98-ad527d62aad7@gmx.de>
+Date: Thu, 27 Nov 2025 16:32:03 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.60-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.12.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.12.60-rc2
-X-KernelTest-Deadline: 2025-11-29T15:03+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-This is the start of the stable review cycle for the 6.12.60 release.
-There are 113 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Sat, 29 Nov 2025 15:03:21 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.60-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.12.60-rc2
-
-Charles Keepax <ckeepax@opensource.cirrus.com>
-    Revert "gpio: swnode: don't use the swnode's name as the key for GPIO lookup"
-
-Fangzhi Zuo <Jerry.Zuo@amd.com>
-    drm/amd/display: Prevent Gating DTBCLK before It Is Properly Latched
-
-Charlene Liu <Charlene.Liu@amd.com>
-    drm/amd/display: Insert dccg log for easy debug
-
-Charlene Liu <Charlene.Liu@amd.com>
-    drm/amd/display: disable DPP RCG before DPP CLK enable
-
-Charlene Liu <Charlene.Liu@amd.com>
-    drm/amd/display: avoid reset DTBCLK at clock init
-
-Darrick J. Wong <djwong@kernel.org>
-    xfs: fix out of bounds memory read error in symlink repair
-
-Marcelo Moreira <marcelomoreira1905@gmail.com>
-    xfs: Replace strncpy with memcpy
-
-Eric Dumazet <edumazet@google.com>
-    mptcp: fix a race in mptcp_pm_del_add_timer()
-
-Imre Deak <imre.deak@intel.com>
-    drm/i915/dp_mst: Disable Panel Replay
-
-Martin Kaiser <martin@kaiser.cx>
-    maple_tree: fix tracepoint string pointers
-
-Jari Ruusu <jariruusu@protonmail.com>
-    tty/vt: fix up incorrect backport to stable releases
-
-Henrique Carvalho <henrique.carvalho@suse.com>
-    smb: client: fix incomplete backport in cfids_invalidation_worker()
-
-Samuel Zhang <guoqing.zhang@amd.com>
-    drm/amdgpu: fix gpu page fault after hibernation on PF passthrough
-
-Zhang Chujun <zhangchujun@cmss.chinamobile.com>
-    tracing/tools: Fix incorrcet short option in usage text for --threads
-
-Nishanth Menon <nm@ti.com>
-    net: ethernet: ti: netcp: Standardize knav_dma_open_channel to return NULL on error
-
-René Rebe <rene@exactco.de>
-    ALSA: usb-audio: fix uac2 clock source at terminal parser
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/mm: Fix __ptep_rdp() inline assembly
-
-Shuicheng Lin <shuicheng.lin@intel.com>
-    drm/xe: Prevent BIT() overflow when handling invalid prefetch region
-
-Wentao Guan <guanwentao@uniontech.com>
-    Revert "RDMA/irdma: Update Kconfig"
-
-Marc Zyngier <maz@kernel.org>
-    KVM: arm64: Make all 32bit ID registers fully writable
-
-Takashi Iwai <tiwai@suse.de>
-    ALSA: usb-audio: Fix missing unlock at error path of maxpacksize check
-
-Jakub Horký <jakub.git@horky.net>
-    kconfig/nconf: Initialize the default locale at startup
-
-Jakub Horký <jakub.git@horky.net>
-    kconfig/mconf: Initialize the default locale at startup
-
-Shahar Shitrit <shshitrit@nvidia.com>
-    net: tls: Cancel RX async resync request on rcd_delta overflow
-
-Carlos Llamas <cmllamas@google.com>
-    blk-crypto: use BLK_STS_INVAL for alignment errors
-
-Shahar Shitrit <shshitrit@nvidia.com>
-    net: tls: Change async resync helpers argument
-
-Po-Hsu Lin <po-hsu.lin@canonical.com>
-    selftests: net: use BASH for bareudp testing
-
-Borislav Petkov (AMD) <bp@alien8.de>
-    x86/microcode/AMD: Limit Entrysign signature checking to known generations
-
-Bart Van Assche <bvanassche@acm.org>
-    scsi: core: Fix a regression triggered by scsi_host_busy()
-
-Steve French <stfrench@microsoft.com>
-    cifs: fix typo in enable_gcm_256 module parameter
-
-Rafał Miłecki <rafal@milecki.pl>
-    bcma: don't register devices disabled in OF
-
-Michal Luczaj <mhal@rbox.co>
-    vsock: Ignore signal/timeout on connect() if already established
-
-Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-    cifs: fix memory leak in smb3_fs_context_parse_param error path
-
-Thomas Weißschuh <linux@weissschuh.net>
-    LoongArch: Use UAPI types in ptrace UAPI header
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    af_unix: Read sk_peek_offset() again after sleeping in unix_stream_read_generic().
-
-Kuniyuki Iwashima <kuniyu@google.com>
-    af_unix: Cache state->msg in unix_stream_read_generic().
-
-Pradyumn Rahar <pradyumn.rahar@oracle.com>
-    net/mlx5: Clean up only new IRQ glue on request_irq() failure
-
-Shay Drory <shayd@nvidia.com>
-    devlink: rate: Unset parent pointer in devl_rate_nodes_destroy
-
-Jared Kangas <jkangas@redhat.com>
-    pinctrl: s32cc: initialize gpio_pin_config::list after kmalloc()
-
-Jared Kangas <jkangas@redhat.com>
-    pinctrl: s32cc: fix uninitialized memory in s32_pinctrl_desc
-
-Grzegorz Nitka <grzegorz.nitka@intel.com>
-    ice: fix PTP cleanup on driver removal in error path
-
-Emil Tantilov <emil.s.tantilov@intel.com>
-    idpf: fix possible vport_config NULL pointer deref in remove
-
-Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-    net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()
-
-Haotian Zhang <vulab@iscas.ac.cn>
-    platform/x86/intel/speed_select_if: Convert PCIBIOS_* return codes to errnos
-
-Ido Schimmel <idosch@nvidia.com>
-    selftests: net: lib: Do not overwrite error messages
-
-Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
-    s390/ctcm: Fix double-kfree
-
-Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-    nvme-multipath: fix lockdep WARN due to partition scan work
-
-Chen Pei <cp0613@linux.alibaba.com>
-    tools: riscv: Fixed misalignment of CSR related definitions
-
-Ilya Maximets <i.maximets@ovn.org>
-    net: openvswitch: remove never-working support for setting nsh fields
-
-Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-    net: mlxsw: linecards: fix missing error check in mlxsw_linecard_devlink_info_get()
-
-Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
-    net: dsa: hellcreek: fix missing error handling in LED registration
-
-Prateek Agarwal <praagarwal@nvidia.com>
-    drm/tegra: Add call to put_pid()
-
-Zilin Guan <zilin@seu.edu.cn>
-    mlxsw: spectrum: Fix memory leak in mlxsw_sp_flower_stats()
-
-Armin Wolf <W_Armin@gmx.de>
-    platform/x86: msi-wmi-platform: Fix typo in WMI GUID
-
-Armin Wolf <W_Armin@gmx.de>
-    platform/x86: msi-wmi-platform: Only load on MSI devices
-
-Haotian Zhang <vulab@iscas.ac.cn>
-    pinctrl: cirrus: Fix fwnode leak in cs42l43_pin_probe()
-
-Jianbo Liu <jianbol@nvidia.com>
-    xfrm: Prevent locally generated packets from direct output in tunnel mode
-
-Jianbo Liu <jianbol@nvidia.com>
-    xfrm: Determine inner GSO type from packet inner protocol
-
-Yu-Chun Lin <eleanor.lin@realtek.com>
-    pinctrl: realtek: Select REGMAP_MMIO for RTD driver
-
-Sabrina Dubroca <sd@queasysnail.net>
-    xfrm: set err and extack on failure to create pcpu SA
-
-Sabrina Dubroca <sd@queasysnail.net>
-    xfrm: drop SA reference in xfrm_state_update if dir doesn't match
-
-Ivan Lipski <ivan.lipski@amd.com>
-    drm/amd/display: Clear the CUR_ENABLE register on DCN20 on DPP5
-
-Fangzhi Zuo <Jerry.Zuo@amd.com>
-    drm/amd/display: Fix pbn to kbps Conversion
-
-Mario Limonciello (AMD) <superm1@kernel.org>
-    drm/amd/display: Move sleep into each retry for retrieve_link_cap()
-
-Mario Limonciello (AMD) <superm1@kernel.org>
-    drm/amd/display: Increase DPCD read retries
-
-Yifan Zha <Yifan.Zha@amd.com>
-    drm/amdgpu: Skip emit de meta data on gfx11 with rs64 enabled
-
-Mario Limonciello <mario.limonciello@amd.com>
-    drm/amd: Skip power ungate during suspend for VPE
-
-Robert McClinton <rbmccav@gmail.com>
-    drm/radeon: delete radeon_fence_process in is_signaled, no deadlock
-
-Ma Ke <make24@iscas.ac.cn>
-    drm/tegra: dc: Fix reference leak in tegra_dc_couple()
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: do not fallback when OoO is present
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: decouple mptcp fastclose from tcp close
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: avoid unneeded subflow-level drops
-
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
-    selftests: mptcp: join: userspace: longer timeout
-
-Matthieu Baerts (NGI0) <matttbe@kernel.org>
-    selftests: mptcp: join: endpoints: longer timeout
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix premature close in case of fallback
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix duplicate reset on fastclose
-
-Paolo Abeni <pabeni@redhat.com>
-    mptcp: fix ack generation for fallback msk
-
-Eric Dumazet <edumazet@google.com>
-    mptcp: fix race condition in mptcp_schedule_work()
-
-Huacai Chen <chenhuacai@kernel.org>
-    LoongArch: Don't panic if no valid cache info for PCI
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    dt-bindings: pinctrl: toshiba,visconti: Fix number of items in groups
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: Malta: Fix !EVA SOC-it PCI MMIO
-
-Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-    scsi: target: tcm_loop: Fix segfault in tcm_loop_tpg_address_show()
-
-Bart Van Assche <bvanassche@acm.org>
-    scsi: sg: Do not sleep in atomic context
-
-Ewan D. Milne <emilne@redhat.com>
-    nvme: nvme-fc: Ensure ->ioerr_work is cancelled in nvme_fc_delete_ctrl()
-
-Ewan D. Milne <emilne@redhat.com>
-    nvme: nvme-fc: move tagset removal to nvme_fc_delete_ctrl()
-
-Nam Cao <namcao@linutronix.de>
-    nouveau/firmware: Add missing kfree() of nvkm_falcon_fw::boot
-
-Vlastimil Babka <vbabka@suse.cz>
-    mm/mempool: fix poisoning order>0 pages with HIGHMEM
-
-Seungjin Bae <eeodqql09@gmail.com>
-    Input: pegasus-notetaker - fix potential out-of-bounds access
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    Input: imx_sc_key - fix memory corruption on unload
-
-Hans de Goede <hdegoede@redhat.com>
-    Input: goodix - add support for ACPI ID GDIX1003
-
-Tzung-Bi Shih <tzungbi@kernel.org>
-    Input: cros_ec_keyb - fix an invalid memory access
-
-Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-    Revert "drm/tegra: dsi: Clear enable register if powered by bootloader"
-
-Oleksij Rempel <o.rempel@pengutronix.de>
-    net: dsa: microchip: lan937x: Fix RGMII delay tuning
-
-Andrey Vatoropin <a.vatoropin@crpt.ru>
-    be2net: pass wrb_params in case of OS2BMC
-
-Yihang Li <liyihang9@h-partners.com>
-    ata: libata-scsi: Add missing scsi_device_put() in ata_scsi_dev_rescan()
-
-Henrique Carvalho <henrique.carvalho@suse.com>
-    smb: client: introduce close_cached_dir_locked()
-
-Maciej W. Rozycki <macro@orcam.me.uk>
-    MIPS: mm: Prevent a TLB shutdown on initial uniquification
-
-Niklas Cassel <cassel@kernel.org>
-    ata: libata-scsi: Fix system suspend for a security locked drive
-
-Jiayuan Chen <jiayuan.chen@linux.dev>
-    mptcp: Fix proto fallback detection with BPF
-
-Jiayuan Chen <jiayuan.chen@linux.dev>
-    mptcp: Disallow MPTCP subflows from sockmap
-
-Yongpeng Yang <yangyongpeng@xiaomi.com>
-    exfat: check return value of sb_min_blocksize in exfat_read_boot_sector
-
-Mike Yuan <me@yhndnzj.com>
-    shmem: fix tmpfs reconfiguration (remount) when noswap is set
-
-Yongpeng Yang <yangyongpeng@xiaomi.com>
-    isofs: check the return value of sb_min_blocksize() in isofs_fill_super
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    mtdchar: fix integer overflow in read/write ioctls
-
-Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
-    mtd: rawnand: cadence: fix DMA device NULL pointer dereference
-
-Quentin Schulz <quentin.schulz@cherry.de>
-    arm64: dts: rockchip: disable HS400 on RK3588 Tiger
-
-Quentin Schulz <quentin.schulz@cherry.de>
-    arm64: dts: rockchip: include rk3399-base instead of rk3399 in rk3399-op1
-
-Mykola Kvach <xakep.amatop@gmail.com>
-    arm64: dts: rockchip: fix PCIe 3.3V regulator voltage on orangepi-5
-
-Diederik de Haas <diederik@cknow-tech.com>
-    arm64: dts: rockchip: Fix vccio4-supply on rk3566-pinetab2
-
-Zhang Heng <zhangheng@kylinos.cn>
-    HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
-
-Mario Limonciello (AMD) <superm1@kernel.org>
-    HID: amd_sfh: Stop sensor before starting
-
-Yipeng Zou <zouyipeng@huawei.com>
-    timers: Fix NULL function pointer race in timer_shutdown_sync()
-
-Sebastian Ene <sebastianene@google.com>
-    KVM: arm64: Check the untrusted offset in FF-A memory share
-
-
--------------
-
-Diffstat:
-
- .../bindings/pinctrl/toshiba,visconti-pinctrl.yaml |  26 +++---
- Documentation/wmi/driver-development-guide.rst     |   1 +
- Makefile                                           |   4 +-
- arch/arm64/boot/dts/rockchip/rk3399-op1.dtsi       |   2 +-
- arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi  |   2 +-
- arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi     |   4 +-
- .../arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts |   4 +-
- arch/arm64/kvm/hyp/nvhe/ffa.c                      |   9 +-
- arch/arm64/kvm/sys_regs.c                          |  63 +++++++------
- arch/loongarch/include/uapi/asm/ptrace.h           |  40 ++++----
- arch/loongarch/pci/pci.c                           |   8 +-
- arch/mips/mm/tlb-r4k.c                             | 102 +++++++++++++--------
- arch/mips/mti-malta/malta-init.c                   |  20 ++--
- arch/s390/include/asm/pgtable.h                    |  12 +--
- arch/s390/mm/pgtable.c                             |   4 +-
- arch/x86/kernel/cpu/microcode/amd.c                |  20 +++-
- block/blk-crypto.c                                 |   2 +-
- drivers/ata/libata-scsi.c                          |  11 ++-
- drivers/bcma/main.c                                |   6 ++
- drivers/gpio/gpiolib-swnode.c                      |   2 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c         |   3 +-
- drivers/gpu/drm/amd/amdgpu/aqua_vanjaram.c         |   3 +-
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c             |   4 +-
- drivers/gpu/drm/amd/amdgpu/gfx_v9_4_3.c            |   4 +-
- .../amd/display/amdgpu_dm/amdgpu_dm_mst_types.c    |  59 +++++-------
- .../amd/display/dc/clk_mgr/dcn35/dcn35_clk_mgr.c   |  20 ++--
- .../gpu/drm/amd/display/dc/dccg/dcn35/dcn35_dccg.c |  60 ++++++++----
- .../drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c    |   8 ++
- .../drm/amd/display/dc/hwss/dcn35/dcn35_hwseq.c    |  21 +++--
- .../display/dc/link/protocols/link_dp_capability.c |  11 ++-
- drivers/gpu/drm/i915/display/intel_psr.c           |   4 +
- drivers/gpu/drm/nouveau/nvkm/falcon/fw.c           |   2 +
- drivers/gpu/drm/radeon/radeon_fence.c              |   7 --
- drivers/gpu/drm/tegra/dc.c                         |   1 +
- drivers/gpu/drm/tegra/dsi.c                        |   9 --
- drivers/gpu/drm/tegra/uapi.c                       |   7 +-
- drivers/gpu/drm/xe/xe_vm.c                         |   4 +-
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c      |   2 +
- drivers/hid/hid-ids.h                              |   4 +-
- drivers/hid/hid-quirks.c                           |  13 ++-
- drivers/infiniband/hw/irdma/Kconfig                |   7 +-
- drivers/input/keyboard/cros_ec_keyb.c              |   6 ++
- drivers/input/keyboard/imx_sc_key.c                |   2 +-
- drivers/input/tablet/pegasus_notetaker.c           |   9 ++
- drivers/input/touchscreen/goodix.c                 |   1 +
- drivers/mtd/mtdchar.c                              |   6 +-
- drivers/mtd/nand/raw/cadence-nand-controller.c     |   3 +-
- drivers/net/dsa/hirschmann/hellcreek_ptp.c         |  14 ++-
- drivers/net/dsa/microchip/lan937x_main.c           |   1 +
- drivers/net/ethernet/emulex/benet/be_main.c        |   7 +-
- drivers/net/ethernet/intel/ice/ice_ptp.c           |  22 ++++-
- drivers/net/ethernet/intel/idpf/idpf_main.c        |   2 +
- .../ethernet/mellanox/mlx5/core/en_accel/ktls_rx.c |   9 +-
- drivers/net/ethernet/mellanox/mlx5/core/pci_irq.c  |   6 +-
- .../net/ethernet/mellanox/mlxsw/core_linecards.c   |   2 +
- .../net/ethernet/mellanox/mlxsw/spectrum_flower.c  |   6 +-
- drivers/net/ethernet/qlogic/qede/qede_fp.c         |   5 +-
- drivers/net/ethernet/ti/netcp_core.c               |  10 +-
- drivers/nvme/host/fc.c                             |  15 +--
- drivers/nvme/host/multipath.c                      |   2 +-
- drivers/perf/riscv_pmu_sbi.c                       |   2 +-
- drivers/pinctrl/cirrus/pinctrl-cs42l43.c           |  21 ++++-
- drivers/pinctrl/nxp/pinctrl-s32cc.c                |   3 +-
- drivers/pinctrl/realtek/Kconfig                    |   1 +
- drivers/platform/x86/Kconfig                       |   1 +
- .../x86/intel/speed_select_if/isst_if_mmio.c       |   4 +-
- drivers/platform/x86/msi-wmi-platform.c            |  43 ++++++++-
- drivers/s390/net/ctcm_mpc.c                        |   1 -
- drivers/scsi/hosts.c                               |   5 +-
- drivers/scsi/sg.c                                  |  10 +-
- drivers/soc/ti/knav_dma.c                          |  14 +--
- drivers/target/loopback/tcm_loop.c                 |   3 +
- drivers/tty/vt/vt_ioctl.c                          |   4 +-
- fs/exfat/super.c                                   |   5 +-
- fs/isofs/inode.c                                   |   5 +
- fs/smb/client/cached_dir.c                         |  43 ++++++++-
- fs/smb/client/cifsfs.c                             |   2 +-
- fs/smb/client/fs_context.c                         |   4 +
- fs/xfs/scrub/symlink_repair.c                      |   4 +-
- include/linux/ata.h                                |   1 +
- include/net/tls.h                                  |  25 ++---
- include/net/xfrm.h                                 |   3 +-
- kernel/time/timer.c                                |   7 +-
- lib/maple_tree.c                                   |  30 +++---
- mm/mempool.c                                       |  32 +++++--
- mm/shmem.c                                         |  15 ++-
- net/devlink/rate.c                                 |   4 +-
- net/ipv4/esp4_offload.c                            |   6 +-
- net/ipv6/esp6_offload.c                            |   6 +-
- net/mptcp/options.c                                |  54 ++++++++++-
- net/mptcp/pm_netlink.c                             |  20 ++--
- net/mptcp/protocol.c                               |  84 +++++++++++------
- net/mptcp/protocol.h                               |   3 +-
- net/mptcp/subflow.c                                |   8 ++
- net/openvswitch/actions.c                          |  68 +-------------
- net/openvswitch/flow_netlink.c                     |  64 ++-----------
- net/openvswitch/flow_netlink.h                     |   2 -
- net/tls/tls_device.c                               |   4 +-
- net/unix/af_unix.c                                 |  36 ++++----
- net/vmw_vsock/af_vsock.c                           |  40 ++++++--
- net/xfrm/xfrm_output.c                             |   6 +-
- net/xfrm/xfrm_state.c                              |   8 +-
- net/xfrm/xfrm_user.c                               |   5 +-
- scripts/kconfig/mconf.c                            |   3 +
- scripts/kconfig/nconf.c                            |   3 +
- sound/usb/endpoint.c                               |   3 +-
- sound/usb/mixer.c                                  |   2 +-
- tools/arch/riscv/include/asm/csr.h                 |   5 +-
- tools/testing/selftests/net/bareudp.sh             |   2 +-
- .../selftests/net/forwarding/lib_sh_test.sh        |   7 ++
- tools/testing/selftests/net/lib.sh                 |   2 +-
- tools/testing/selftests/net/mptcp/mptcp_join.sh    |  18 ++--
- tools/tracing/latency/latency-collector.c          |   2 +-
- 113 files changed, 915 insertions(+), 561 deletions(-)
-
-
-From gregkh@linuxfoundation.org Thu Nov 27 16:03:46 2025
-Message-ID: <20251127150346.182929229@linuxfoundation.org>
-User-Agent: quilt/0.69
-Date: Thu, 27 Nov 2025 16:03:47 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, sr@sladewatkins.com,
- Sebastian Ene <sebastianene@google.com>,
- Will Deacon <will@kernel.org>,
- Marc Zyngier <maz@kernel.org>
-X-stable: review
-X-Patchwork-Hint: ignore
-Subject: [PATCH 6.12 001/113] KVM: arm64: Check the untrusted offset in FF-A memory share
-MIME-Version: 1.0
-
-6.12-stable review patch.  If anyone has any objections, please let me know.
-
-------------------
-
-From: Sebastian Ene <sebastianene@google.com>
-
-commit 103e17aac09cdd358133f9e00998b75d6c1f1518 upstream.
-
-Verify the offset to prevent OOB access in the hypervisor
-FF-A buffer in case an untrusted large enough value
-[U32_MAX - sizeof(struct ffa_composite_mem_region) + 1, U32_MAX]
-is set from the host kernel.
-
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://patch.msgid.link/20251017075710.2605118-1-sebastianene@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/arm64/kvm/hyp/nvhe/ffa.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
-
---- a/arch/arm64/kvm/hyp/nvhe/ffa.c
-+++ b/arch/arm64/kvm/hyp/nvhe/ffa.c
-@@ -437,7 +437,7 @@ static void __do_ffa_mem_xfer(const u64
- 	struct ffa_mem_region_attributes *ep_mem_access;
- 	struct ffa_composite_mem_region *reg;
- 	struct ffa_mem_region *buf;
--	u32 offset, nr_ranges;
-+	u32 offset, nr_ranges, checked_offset;
- 	int ret = 0;
- 
- 	if (addr_mbz || npages_mbz || fraglen > len ||
-@@ -474,7 +474,12 @@ static void __do_ffa_mem_xfer(const u64
- 		goto out_unlock;
- 	}
- 
--	if (fraglen < offset + sizeof(struct ffa_composite_mem_region)) {
-+	if (check_add_overflow(offset, sizeof(struct ffa_composite_mem_region), &checked_offset)) {
-+		ret = FFA_RET_INVALID_PARAMETERS;
-+		goto out_unlock;
-+	}
-+
-+	if (fraglen < checked_offset) {
- 		ret = FFA_RET_INVALID_PARAMETERS;
- 		goto out_unlock;
- 	}
-
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.17 000/176] 6.17.10-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20251127150348.216197881@linuxfoundation.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <20251127150348.216197881@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:sUT9lJb8rfgjxdmcXzQqtcF+436AIWc8+x64BFuUsDM5ohLeal5
+ /igAFQgYzdOFbrfpkqU8Jwh7CZWvQpad9Q+At9ZAcPG4TpioR7iuXTAp7p8CAu+HHd6T7GD
+ Wp8loeEre2mwPUjir2EI2NdJGKwIQ5cPcwM8zP1+cNjlE99VzidYJwg/0aTp0ivDMBBlzRD
+ vKTPyWUAFODSjXakp2fKg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:KaGADOwD7fk=;02FW2eEt9yc13B+4L0NjKikoETM
+ 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
+ mn3BUDvwYxT89GU6JQea5Z7SBA=
+
+Hi
+
+no regressions here on x86_64 (RKL, Intel 11th Gen. CPU)
+
+Thanks
+
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
 
