@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A4D28D8E8;
-	Thu, 27 Nov 2025 14:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4FF9322DCB;
+	Thu, 27 Nov 2025 14:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255149; cv=none; b=kVsjII0b8EyfBW3tc5S2aLNXuIJZePx5NhueYKqts5b6GgOpeAxG857gTKD2WcvalbmaoyIQ0dYKmJpOnANFlkiCUWBCX/hhMh7NNk95jI5d6N5ablX9zAJWeFNTmOMun9vqkHzUP0q5uSNO8whisVGLjBEv4UxRPMd8dEmtPp0=
+	t=1764255152; cv=none; b=kQCbuMwVq/AZMINC06r1g4wD2wNRok1ISr5koFIxSJZ44QBRl2PN849Eu0d4hjedQQTQxl+EukU5JZMLaHss7GPLJyHmFO1IorSPc2jGTwrPgmCcSopelBX2yyCVf25oAyuvaB1zeo3qDenDKuZPiXpjxIWenul3tHQyFN/tDs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255149; c=relaxed/simple;
-	bh=fXSqA5HAGSr1fZC3+JfoBPZpWPl3Un7nOtj6fxnGyKw=;
+	s=arc-20240116; t=1764255152; c=relaxed/simple;
+	bh=vk6mSw50bEZXnJKWPJu8TQWM/lxO0nCZcadBgouPu2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M2npgUl/r9o0gzlwj8RGKVGFBYNKMIVvjWk+FOvfvfrV3E+MANpbHRyXMJKlk4cdi6PvwoOJz+hrsDdGgriXDFUrbTMinvR/LVFf/PHgh4ud/XrneWBPmFG0CLcEigH2H/HXHRGO9PKVxhHd8QVNP6PXDWlFjgiPd/5UoKCEdNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HK68nN3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jt8czzziIfEGC6r7rdiYsOLCRS3hhNnT6WOxvOvBuHswrCbKbi6/4yQBBf++3V7heKVEG02wxGcqeMNQV5p5W5Q/sxqPEJ0hTlMlO0Vc60BGtRpZU2cG0d9tEylk0TKnmRU420uDIjm+yzlqNMSG9R7uBvM+yZVaBUvnSvoptZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19CNFH3C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HK68nN3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CB4C113D0;
-	Thu, 27 Nov 2025 14:52:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19CNFH3C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA683C4CEF8;
+	Thu, 27 Nov 2025 14:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255149;
-	bh=fXSqA5HAGSr1fZC3+JfoBPZpWPl3Un7nOtj6fxnGyKw=;
+	s=korg; t=1764255152;
+	bh=vk6mSw50bEZXnJKWPJu8TQWM/lxO0nCZcadBgouPu2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HK68nN3YSN8UTndC+yx0m4PQdYLCqcjH1MlpHU4qRGyreS7hR4c6NBsCsjSXz9Rxk
-	 Qitds4zeySbobYPrOjUZJ7lbBBRRWv9SODGrPRo3wtVIsiHCbMdYNmVJ2lzE5/jV7m
-	 sYfdzobErBB5GiBKIudtpy2Qhgg39fpAwqN29pNM=
+	b=19CNFH3CsVU7omZzLVuLyPcGpd6vSeEBTKN0QNOACPqoMccAJ7WcdLXziSEK8467O
+	 6ah52+5Oa8wgpuD3kZHc5F/BxMSwf67FGE/XcHt6W5Gb6ZteWsNLKHKN4lz773/N99
+	 4eHwjiMrRjLIoiZhM7bwQxjOUc6eGUTGItycVLO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	staffan.melin@oscillator.se,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 004/112] HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
-Date: Thu, 27 Nov 2025 15:45:06 +0100
-Message-ID: <20251127144032.873589827@linuxfoundation.org>
+	Dragan Simic <dsimic@manjaro.org>,
+	Diederik de Haas <diederik@cknow-tech.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.12 005/112] arm64: dts: rockchip: Fix vccio4-supply on rk3566-pinetab2
+Date: Thu, 27 Nov 2025 15:45:07 +0100
+Message-ID: <20251127144032.910174745@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -52,70 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Diederik de Haas <diederik@cknow-tech.com>
 
-commit beab067dbcff642243291fd528355d64c41dc3b2 upstream.
+commit 03c7e964a02e388ee168c804add7404eda23908c upstream.
 
-Based on available evidence, the USB ID 4c4a:4155 used by multiple
-devices has been attributed to Jieli. The commit 1a8953f4f774
-("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY") affected touchscreen
-functionality. Added checks for manufacturer and serial number to
-maintain microphone compatibility, enabling both devices to function
-properly.
+Page 13 of the PineTab2 v2 schematic dd 20230417 shows VCCIO4's power
+source is VCCIO_WL. Page 19 shows that VCCIO_WL is connected to
+VCCA1V8_PMU, so fix the PineTab2 dtsi to reflect that.
 
-[jkosina@suse.com: edit shortlog]
-Fixes: 1a8953f4f774 ("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY")
+Fixes: 1b7e19448f8f ("arm64: dts: rockchip: Add devicetree for Pine64 PineTab2")
 Cc: stable@vger.kernel.org
-Tested-by: staffan.melin@oscillator.se
-Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Diederik de Haas <diederik@cknow-tech.com>
+Link: https://patch.msgid.link/20251027155724.138096-1-diederik@cknow-tech.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    4 ++--
- drivers/hid/hid-quirks.c |   13 ++++++++++++-
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1528,7 +1528,7 @@
- #define USB_VENDOR_ID_SIGNOTEC			0x2133
- #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
- 
--#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
--#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
-+#define USB_VENDOR_ID_JIELI_SDK_DEFAULT		0x4c4a
-+#define USB_DEVICE_ID_JIELI_SDK_4155		0x4155
- 
- #endif
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -900,7 +900,6 @@ static const struct hid_device_id hid_ig
- #endif
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
- 	{ }
- };
- 
-@@ -1057,6 +1056,18 @@ bool hid_ignore(struct hid_device *hdev)
- 					     strlen(elan_acpi_id[i].id)))
- 					return true;
- 		break;
-+	case USB_VENDOR_ID_JIELI_SDK_DEFAULT:
-+		/*
-+		 * Multiple USB devices with identical IDs (mic & touchscreen).
-+		 * The touch screen requires hid core processing, but the
-+		 * microphone does not. They can be distinguished by manufacturer
-+		 * and serial number.
-+		 */
-+		if (hdev->product == USB_DEVICE_ID_JIELI_SDK_4155 &&
-+		    strncmp(hdev->name, "SmartlinkTechnology", 19) == 0 &&
-+		    strncmp(hdev->uniq, "20201111000001", 14) == 0)
-+			return true;
-+		break;
- 	}
- 
- 	if (hdev->type == HID_TYPE_USBMOUSE &&
+--- a/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3566-pinetab2.dtsi
+@@ -789,7 +789,7 @@
+ 	vccio1-supply = <&vccio_acodec>;
+ 	vccio2-supply = <&vcc_1v8>;
+ 	vccio3-supply = <&vccio_sd>;
+-	vccio4-supply = <&vcc_1v8>;
++	vccio4-supply = <&vcca1v8_pmu>;
+ 	vccio5-supply = <&vcc_1v8>;
+ 	vccio6-supply = <&vcc1v8_dvp>;
+ 	vccio7-supply = <&vcc_3v3>;
 
 
