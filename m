@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E542286416;
-	Thu, 27 Nov 2025 14:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66D232E130;
+	Thu, 27 Nov 2025 14:51:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255092; cv=none; b=De76EiNvwDk3a0PEMTvAZqdzizGMFAwTKt7ZKV/zqJ3i0QDnaU04qeDo1LBqUaFTL91iz/2imXLTbG+c5HW/vvGaqdzxIyB/7ANCMIY3hxwPQ3uwBiQex3soufJsjbK3gRIeItIPpwk4eqN2V0UbQ+z+EILJH6eDRsdU0EmhjTY=
+	t=1764255095; cv=none; b=sF/0GxRy8UeKFqYkgJFQW7sW5G7uGF4tz+AVuM0jUieTh9ZgH65P5K5mZIuJt2GYylrOxpmbQ4U7IZFFdGRZZprV588Q5pYpgCZtRmJzJXOXafOeMJO8l8EwX4fvj2shI8n6AxUdz1IzQHQD5IlVz4xwb6QLN6OpUeLUnO8ID48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255092; c=relaxed/simple;
-	bh=oq9hMvJYFoqMC0/5jd2bAWrmLN3QKz0U/GrZfAZ5sS8=;
+	s=arc-20240116; t=1764255095; c=relaxed/simple;
+	bh=/nC5nkTNmDGiQ5+FdGdE54TD7ql+hETFuOE+TkHyzQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=XnZ6j1cMqzWmU9iqJI9C1dwldKi1CGwnF/L7WkJMfsOL6CULWV+eBy5RbBiWz9lArUrd7v/wEpaw30lTLBMLpp9yMjTKaXvpn0NV3MdIUcVQvtEi4Zoc6ADuFoBwBBaNk6Dpzxb258mVCYJ8SriupDio+FuFZ1e3lSdxkUsZ6Z4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjJXUoOK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LgJcqrBwBVGuIuuuBH5Tef5JxBlnql1t4B5FTYIb0LBDgnVYpEjm6goDdoBqFR4sVrR+mN5Gp24usKbzLvqibS3NNvD7eNuyR/xA+bSA8t76hMYRWYeWl6wrrmtDfLsJDgMHJZWoK2yVl4thCP19LFqFOFMmzaJnyMJlhZvj7c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YReW2CS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjJXUoOK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D2B3C113D0;
-	Thu, 27 Nov 2025 14:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YReW2CS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3DCC16AAE;
+	Thu, 27 Nov 2025 14:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255092;
-	bh=oq9hMvJYFoqMC0/5jd2bAWrmLN3QKz0U/GrZfAZ5sS8=;
+	s=korg; t=1764255094;
+	bh=/nC5nkTNmDGiQ5+FdGdE54TD7ql+hETFuOE+TkHyzQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjJXUoOKLXHw/BHYmQqr+7w6Ly9orjjkU3MVJWgMOl07uSUDT3owU1AgHXxF/aIW+
-	 gmwaGRLOAx5wQK/jSeejfOs3jlDsQHbIGXQ90DGE5ilNRbuoOB1IRCECb8vB2QrSTz
-	 uShcEE8VeN0w0V3mVX5VxfZmuOCGJ0wmwSrcgLdM=
+	b=YReW2CS43yGkBjaVvUUogNx1K5FNoGPro2dOjX5+FLQPBaEVl+GUUMPHiFFXKrmMK
+	 6h9YRDv86+YTGee3GeJoYLE9BJ2evossnZd+hc7+roe/Qq4+Py+W+2GSP20R4/4YY5
+	 o9sP3Dv/Nru6spiedkh5h9fqSkUchDSZDwQngzTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Jakub=20Hork=C3=BD?= <jakub.git@horky.net>,
 	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 64/86] kconfig/mconf: Initialize the default locale at startup
-Date: Thu, 27 Nov 2025 15:46:20 +0100
-Message-ID: <20251127144030.170568399@linuxfoundation.org>
+Subject: [PATCH 6.6 65/86] kconfig/nconf: Initialize the default locale at startup
+Date: Thu, 27 Nov 2025 15:46:21 +0100
+Message-ID: <20251127144030.207799985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -54,42 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Horký <jakub.git@horky.net>
 
-[ Upstream commit 3927c4a1084c48ef97f11281a0a43ecb2cb4d6f1 ]
+[ Upstream commit 43c2931a95e6b295bfe9e3b90dbe0f7596933e91 ]
 
-Fix bug where make menuconfig doesn't initialize the default locale, which
+Fix bug where make nconfig doesn't initialize the default locale, which
 causes ncurses menu borders to be displayed incorrectly (lqqqqk) in
 UTF-8 terminals that don't support VT100 ACS by default, such as PuTTY.
 
 Signed-off-by: Jakub Horký <jakub.git@horky.net>
-Link: https://patch.msgid.link/20251014154933.3990990-1-jakub.git@horky.net
+Link: https://patch.msgid.link/20251014144405.3975275-2-jakub.git@horky.net
 [nathan: Alphabetize locale.h include]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/mconf.c | 3 +++
+ scripts/kconfig/nconf.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/scripts/kconfig/mconf.c b/scripts/kconfig/mconf.c
-index 3795c36a9181a..2364140596c5d 100644
---- a/scripts/kconfig/mconf.c
-+++ b/scripts/kconfig/mconf.c
-@@ -12,6 +12,7 @@
- #include <errno.h>
- #include <fcntl.h>
- #include <limits.h>
+diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
+index 7a17c94a15941..a7cfa6813c63f 100644
+--- a/scripts/kconfig/nconf.c
++++ b/scripts/kconfig/nconf.c
+@@ -7,6 +7,7 @@
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE
+ #endif
 +#include <locale.h>
- #include <stdarg.h>
- #include <stdlib.h>
  #include <string.h>
-@@ -1015,6 +1016,8 @@ int main(int ac, char **av)
- 
- 	signal(SIGINT, sig_handler);
+ #include <strings.h>
+ #include <stdlib.h>
+@@ -1569,6 +1570,8 @@ int main(int ac, char **av)
+ 	int lines, columns;
+ 	char *mode;
  
 +	setlocale(LC_ALL, "");
 +
  	if (ac > 1 && strcmp(av[1], "-s") == 0) {
- 		silent = 1;
  		/* Silence conf_read() until the real callback is set up */
+ 		conf_set_message_callback(NULL);
 -- 
 2.51.0
 
