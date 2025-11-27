@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A6A028D8E8;
-	Thu, 27 Nov 2025 14:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18AD28D8E8;
+	Thu, 27 Nov 2025 14:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255564; cv=none; b=TNcMr2fqDT4xbKYzs+XnvH3Yi4ePxbxifd8MKRa1TGV+51yH0kBmV9TZGaM3e6ogiTAU5WctwUv/ABv/U/h1mC1WiGJIyElkyB6YDY0/cdV8fy6zUTIlBYMrKAs46CuoYaQI2dugUAcs8Z2piRdAZaQIJKJ0bCWFRsxYkDHl1x0=
+	t=1764255567; cv=none; b=EueYg7pz/Q2NQiPPsWabiLfzebDUk5OhBP6t+kDoC8zKAX5QQBEt4TbH5svQnm+oMtr/jiKRAQalnAgesO1v+oUr+h+y+xKDl7jvINkmkMbY8fuSLu9JnXkAa2jPDpP/XEJG0OBExcuruMrgdG0fubhfFJHCEWO2g5VilJibGG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255564; c=relaxed/simple;
-	bh=MCeXiwiuUxobnp32jtEFsi0qaTBF3ky/xmvUygULTYM=;
+	s=arc-20240116; t=1764255567; c=relaxed/simple;
+	bh=cJYr8aDihlR4doW1cmnjhaqW5SI2dh9qC5zOc602Fpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nh2o4fJhkImuXO2IlCrvYFCaoVyIwLyqX28AkKiuHQrmlIL11VVUKQRaqgS1OfFY4lFLbYEDcnuo+dgMwYf6s9vDom7hrtCZa6M/yUBTv4/FKokgt+JTZLAGxVR46Fzdd3jEG5xdLOXFpqLGy/B/CQU/m8+rog0bPfABcyEjWAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InDXWF7Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiPYaKdtB/f2SEpYuF/SSV+SCOD3Wt4b5T4C9wm1IW6RJYla4wtgGK3VGuYtiryoKA5PsxGbgddER7iT6xDBt43IHmfkYaScuK0ipiUBY1OU37a3PPB3qciKkxYCSdslTF0liN4T2t02AAhVSxR8tvPKxC6QHLflGFl4Ci+1ROo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IGC+O7As; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InDXWF7Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83148C4CEF8;
-	Thu, 27 Nov 2025 14:59:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IGC+O7As"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 638D2C4CEF8;
+	Thu, 27 Nov 2025 14:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255563;
-	bh=MCeXiwiuUxobnp32jtEFsi0qaTBF3ky/xmvUygULTYM=;
+	s=korg; t=1764255566;
+	bh=cJYr8aDihlR4doW1cmnjhaqW5SI2dh9qC5zOc602Fpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=InDXWF7Q1afJlkCb85KXWBGZTwmJKaY0vF6MAXTaOHoHRyUjcxV03vI6Y8BHS03kd
-	 KZZfxnxnTbNDYru5qD3rMX+9gp7s42WMgyggYer/zGyzdL9HncIRHi+yoa3yavEBZj
-	 +Ca8g9QEQZSYom9rUoBPcDB1byRs22D6wJ0NWnTY=
+	b=IGC+O7Ascig+p3ScBgHg3xDMFO3u6Ks8NOurYAh2cfaBLAVFoIzSX7QU3uZA4y/TE
+	 n+yQX+0l/F8cPd2y6xRg5HwOJHHoEjIeXte3HO/F1Nh2SwjBXFjIKUau/d4omS4hTH
+	 VPZ5ablEjcSlsZwRdvR034IYn+lPyjquePWoOhqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weikang Guo <guoweikang.kernel@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.17 037/175] Input: goodix - add support for ACPI ID GDIX1003
-Date: Thu, 27 Nov 2025 15:44:50 +0100
-Message-ID: <20251127144044.320021826@linuxfoundation.org>
+Subject: [PATCH 6.17 038/175] Input: imx_sc_key - fix memory corruption on unload
+Date: Thu, 27 Nov 2025 15:44:51 +0100
+Message-ID: <20251127144044.356582874@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,35 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit c6d99e488117201c63efd747ce17b80687c3f5a9 upstream.
+commit d83f1512758f4ef6fc5e83219fe7eeeb6b428ea4 upstream.
 
-Some newer devices use an ACPI hardware ID of GDIX1003 for their Goodix
-touchscreen controller, instead of GDIX1001 / GDIX1002. Add GDIX1003
-to the goodix_acpi_match[] table.
+This is supposed to be "priv" but we accidentally pass "&priv" which is
+an address in the stack and so it will lead to memory corruption when
+the imx_sc_key_action() function is called.  Remove the &.
 
-Reported-by: Weikang Guo <guoweikang.kernel@gmail.com>
-Closes: https://lore.kernel.org/linux-input/20250225024409.1467040-1-guoweikang.kernel@gmail.com/
-Tested-by: Weikang Guo <guoweikang.kernel@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20251013121022.44333-1-hansg@kernel.org
+Fixes: 768062fd1284 ("Input: imx_sc_key - use devm_add_action_or_reset() to handle all cleanups")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/aQYKR75r2VMFJutT@stanley.mountain
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/touchscreen/goodix.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/keyboard/imx_sc_key.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/touchscreen/goodix.c
-+++ b/drivers/input/touchscreen/goodix.c
-@@ -1557,6 +1557,7 @@ MODULE_DEVICE_TABLE(i2c, goodix_ts_id);
- static const struct acpi_device_id goodix_acpi_match[] = {
- 	{ "GDIX1001", 0 },
- 	{ "GDIX1002", 0 },
-+	{ "GDIX1003", 0 },
- 	{ "GDX9110", 0 },
- 	{ }
- };
+--- a/drivers/input/keyboard/imx_sc_key.c
++++ b/drivers/input/keyboard/imx_sc_key.c
+@@ -158,7 +158,7 @@ static int imx_sc_key_probe(struct platf
+ 		return error;
+ 	}
+ 
+-	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, &priv);
++	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, priv);
+ 	if (error)
+ 		return error;
+ 
 
 
