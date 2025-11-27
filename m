@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB432882A7;
-	Thu, 27 Nov 2025 15:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5A632AAC4;
+	Thu, 27 Nov 2025 15:04:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255866; cv=none; b=OYl54XdgxnEIB2P71HY8PxrOd1byVMLrW9yivZhVXwihMAw4y22R8kfBTbZg5mD9+6Ix7ppZultynnMjeud7VjoHzvqYJqMD5FEn2UMugSeZ92fcEoyMMCcx44kBoLIZGdycqylBG3la1LRzCMalTauDaoMu8uD0Pzv1jAwMhnY=
+	t=1764255868; cv=none; b=j8SDGg62q1MpVvKS3gIsF0uIkSa4evgR1fUPmqt4/6CoKJ0XJSTZQgb+mfSkF+5H4DFoefOt2CtIsTExw8IwPutoN+X3TJGlFpQ1Czk7S95+bS+dGMFLLgJKcsF6PKkJ49b/deGyVQxVSghZJTrPHUoXvhHGHcb0nwwmtAN8fyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255866; c=relaxed/simple;
-	bh=R0/meJ9xwPI75SeFybDK1JUgAN3wTI5PiBZnB+L/ps4=;
+	s=arc-20240116; t=1764255868; c=relaxed/simple;
+	bh=JXSsWR+3xK5LkIEQllucEzZBK7Dut9MO9SHdqOk1Hb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OqPM+hP20mFtES7PiTLHV6izxYtFf6EOKziGpCgVFiwn/z9v7gaQmVzkgNP/GkLK9vi1SCor2wxXcOP7NaS0pFKCenbAhsII3b4BuJ+ddUO+sMN4ornLUqn+4xmu6bIkXcLZLTUHZ4U5KYChVsF5LUPCH4sHzgwdGM2nM5E4rfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wqqq4vJs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y4wCXgJir4MyUJY5RehmhcD6X8ZOpIXOGAnStIMS4I3SHPtkSPuprzPBnaWn48wiZUq6RC8daynKmZ0pdJMXYjH5OrEqnUhc/XO/hLgvHK/N8nApldnX8w885yL4FxdsW23Vw6DiTqlwQ4RtySuhyaekap/r+sg9TxvLtNbrlXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fg7ZpHtR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wqqq4vJs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77601C4CEF8;
-	Thu, 27 Nov 2025 15:04:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fg7ZpHtR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380F0C4CEF8;
+	Thu, 27 Nov 2025 15:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255865;
-	bh=R0/meJ9xwPI75SeFybDK1JUgAN3wTI5PiBZnB+L/ps4=;
+	s=korg; t=1764255868;
+	bh=JXSsWR+3xK5LkIEQllucEzZBK7Dut9MO9SHdqOk1Hb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wqqq4vJsp+ID/aUXyktLiYnEd5MQwREgLcavIiF0I44O+D4FjGwVc41pLlmAHadbm
-	 aWpIzn/WJz9slw23EOurs569xPe8HP48XsEuTpZ0dkEH4Dd5DVaMJT0BIlUbdQ7rNI
-	 aDVKUycdTEJ6jz05M9PayP+NjFpstAcwDma4Rr2g=
+	b=fg7ZpHtRRCXUyRiMOUHrFOlbmdRadPwFfjnK7GUvXqi8Iy8nN2N+kO7ZKF3boOGqd
+	 D6tovF40x+PBx35a2FEd6f5uGHTUUgOSavdh2xrsbotZS1+ERcjimbJ/vPQoAnlF/G
+	 3Np2j4Irge9z2Nd3YgPkzCFKhiEmnfSDS4PIJU98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eren Demir <eren.demir2479090@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	dongsheng <dongsheng.x.zhang@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 142/175] ALSA: hda/realtek: Fix mute led for HP Victus 15-fa1xxx (MB 8C2D)
-Date: Thu, 27 Nov 2025 15:46:35 +0100
-Message-ID: <20251127144048.144141557@linuxfoundation.org>
+Subject: [PATCH 6.17 143/175] perf/x86/intel/uncore: Add uncore PMU support for Wildcat Lake
+Date: Thu, 27 Nov 2025 15:46:36 +0100
+Message-ID: <20251127144048.180327706@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,34 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eren Demir <eren.demir2479090@gmail.com>
+From: dongsheng <dongsheng.x.zhang@intel.com>
 
-[ Upstream commit 28935ee5e4789ad86c08ba9f2426edd6203d13fa ]
+[ Upstream commit f4c12e5cefc8ec2eda93bc17ea734407228449ab ]
 
-The quirk for Victus 15-fa1xxx wasn't working on Victus 15-fa1031nt due to a different board id. This patch enables the existing quirk for the board id 8BC8.
+WildcatLake (WCL) is a variant of PantherLake (PTL) and shares the same
+uncore PMU features with PTL. Therefore, directly reuse Pantherlake's
+uncore PMU enabling code for WildcatLake.
 
-Tested on HP Victus 15-fa1031nt (MB 8C2D). The LED behaviour works as intended.
-
-Signed-off-by: Eren Demir <eren.demir2479090@gmail.com>
-Link: https://patch.msgid.link/20251027110208.6481-1-eren.demir2479090@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: dongsheng <dongsheng.x.zhang@intel.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20250908061639.938105-2-dapeng1.mi@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
+ arch/x86/events/intel/uncore.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 20f0ad43953f4..796f555dd381d 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6580,6 +6580,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8c16, "HP Spectre x360 2-in-1 Laptop 16-aa0xxx", ALC245_FIXUP_HP_SPECTRE_X360_16_AA0XXX),
- 	SND_PCI_QUIRK(0x103c, 0x8c17, "HP Spectre 16", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8c21, "HP Pavilion Plus Laptop 14-ey0XXX", ALC245_FIXUP_HP_X360_MUTE_LEDS),
-+	SND_PCI_QUIRK(0x103c, 0x8c2d, "HP Victus 15-fa1xxx (MB 8C2D)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8c30, "HP Victus 15-fb1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8c46, "HP EliteBook 830 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8c47, "HP EliteBook 840 G11", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+diff --git a/arch/x86/events/intel/uncore.c b/arch/x86/events/intel/uncore.c
+index a762f7f5b1616..d6c945cc5d07c 100644
+--- a/arch/x86/events/intel/uncore.c
++++ b/arch/x86/events/intel/uncore.c
+@@ -1895,6 +1895,7 @@ static const struct x86_cpu_id intel_uncore_match[] __initconst = {
+ 	X86_MATCH_VFM(INTEL_ARROWLAKE_H,	&mtl_uncore_init),
+ 	X86_MATCH_VFM(INTEL_LUNARLAKE_M,	&lnl_uncore_init),
+ 	X86_MATCH_VFM(INTEL_PANTHERLAKE_L,	&ptl_uncore_init),
++	X86_MATCH_VFM(INTEL_WILDCATLAKE_L,	&ptl_uncore_init),
+ 	X86_MATCH_VFM(INTEL_SAPPHIRERAPIDS_X,	&spr_uncore_init),
+ 	X86_MATCH_VFM(INTEL_EMERALDRAPIDS_X,	&spr_uncore_init),
+ 	X86_MATCH_VFM(INTEL_GRANITERAPIDS_X,	&gnr_uncore_init),
 -- 
 2.51.0
 
