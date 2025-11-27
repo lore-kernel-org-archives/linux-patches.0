@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0F032AAC4;
-	Thu, 27 Nov 2025 15:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE8832AAC4;
+	Thu, 27 Nov 2025 15:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255926; cv=none; b=j4wYm9GjoXxuK5BZqqtgUabU3rhtK/JRDVuSVqBhaLB+Ln5x44jaxq3pRhvjh+oGzL2UAwW+ns7dXnerl8Ku7DmPL59R8lWm/BGF0Fj8agzPVsyIJIjzyeR6bLFEb1Y0fsrdzuua1MGC0c70Kr4P89WXxx+iQqfqLYjemicW+QY=
+	t=1764255929; cv=none; b=tDhYsuaq9e8Nnv5Tf3+COFvGix0XqhsnTiUqcg79GOrwQWflf8WUMHXwgjFoetcnbWfP7ejL8h9zI5xTQGnaziRhLlNDMyseeD3a7QBb1MapO4bcvxLmFJ/fFMEiqYjmv8oqt1xJjdjXrXEfKcwOSGZSrBZyI5wdxdLAnsGIn34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255926; c=relaxed/simple;
-	bh=ajL2En2mdEXVC0wkRMy36ocF/RTI9ay0rrTROMvQrwY=;
+	s=arc-20240116; t=1764255929; c=relaxed/simple;
+	bh=DGHk1PtIax2fgR9Rz3oFPcd/Ykf+ktkz4Hjk9+GWDxA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FK+6k6V5IfDjeNyRCP12Z/vrv4ux8+EF+snbT0A8FDTs3YEEk2+SsIQaoVQkDIrZ88tFvnPvSgoBJI41nyTIvxKJXQqZTy1cDyq0dg+lAySfnhRhmpIrpUu3E5lmqPsDGU/1Zk/sFqGxjT8A04oBvsmBAwzL8knSwTdXlXXFkWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BHtt7ndx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ccmrPOyEGxQ2p/hzrtUG32VHqMQZYCX/CZtrC3OgnIcfyP5o8dXsk8ypGct97TnowyJ3ofq4dEEWHfjIoH0OKiKRGYVACNnyevn2RBEYplI4T310mKLCdWWsp+lJa+H05kADGRPOTscgebwCouxEI4N+4kw0cNS9Vcf8v/tvBHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1D6KCCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BHtt7ndx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E04C4CEF8;
-	Thu, 27 Nov 2025 15:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1D6KCCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E690C4CEF8;
+	Thu, 27 Nov 2025 15:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255926;
-	bh=ajL2En2mdEXVC0wkRMy36ocF/RTI9ay0rrTROMvQrwY=;
+	s=korg; t=1764255928;
+	bh=DGHk1PtIax2fgR9Rz3oFPcd/Ykf+ktkz4Hjk9+GWDxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHtt7ndx+/HK79fkc2vXnVc6vIBBbg/g1ABC6KJQzKK1dClz74X5qhkBHzCnl9AcI
-	 qcomv8GATgr4qU9xHdGEIu0h0JPD1g/vSu8A/LzHgx0g/fQpdo11dsRxnMFwnXd55j
-	 8dHc5ZQAHhlUD67Qe+lbHJa4+5kGwygHXMwjIwuo=
+	b=r1D6KCCVhdhHcNqw+kWv+mPbq3dZOLTK5EZJS/+tJy1PPDjYVyQEi47cY5UPP5zhA
+	 7aBvQqgDCJCON84cVPnGwe0NWGA8MKJMILvqw156+Hd/LtXUerPDjBxEIYJk0lkjSv
+	 hLOXUWTbRtVGTalTjkyyFPwsomWe/RJXpCDqEmSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phil Auld <pauld@redhat.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Tejun Heo <tj@kernel.org>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 135/175] sched_ext: Allocate scx_kick_cpus_pnt_seqs lazily using kvzalloc()
-Date: Thu, 27 Nov 2025 15:46:28 +0100
-Message-ID: <20251127144047.889145929@linuxfoundation.org>
+Subject: [PATCH 6.17 162/175] drm/i915/psr: Check drm_dp_dpcd_read return value on PSR dpcd init
+Date: Thu, 27 Nov 2025 15:46:55 +0100
+Message-ID: <20251127144048.867836090@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -47,208 +45,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit 14c1da3895a116f4e32c20487046655f26d3999b ]
+[ Upstream commit 9cc10041e9fe7f32c4817e3cdd806ff1986d266c ]
 
-On systems with >4096 CPUs, scx_kick_cpus_pnt_seqs allocation fails during
-boot because it exceeds the 32,768 byte percpu allocator limit.
+Currently we are ignoriong drm_dp_dpcd_read return values when reading PSR
+and Panel Replay capability DPCD register. Rework intel_psr_dpcd a bit to
+take care of checking the return value.
 
-Restructure to use DEFINE_PER_CPU() for the per-CPU pointers, with each CPU
-pointing to its own kvzalloc'd array. Move allocation from boot time to
-scx_enable() and free in scx_disable(), so the O(nr_cpu_ids^2) memory is only
-consumed when sched_ext is active.
+v2: use drm_dp_dpcd_read_data
 
-Use RCU to guard against racing with free. Arrays are freed via call_rcu()
-and kick_cpus_irq_workfn() uses rcu_dereference_bh() with a NULL check.
-
-While at it, rename to scx_kick_pseqs for brevity and update comments to
-clarify these are pick_task sequence numbers.
-
-v2: RCU protect scx_kick_seqs to manage kick_cpus_irq_workfn() racing
-    against disable as per Andrea.
-
-v3: Fix bugs notcied by Andrea.
-
-Reported-by: Phil Auld <pauld@redhat.com>
-Link: http://lkml.kernel.org/r/20251007133523.GA93086@pauld.westford.csb
-Cc: Andrea Righi <arighi@nvidia.com>
-Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
-Reviewed-by: Phil Auld <pauld@redhat.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://lore.kernel.org/r/20250821045918.17757-1-jouni.hogander@intel.com
+Stable-dep-of: f2687d3cc9f9 ("drm/i915/dp_mst: Disable Panel Replay")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c | 89 ++++++++++++++++++++++++++++++++++++++++------
- 1 file changed, 79 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   32 ++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 77eec6f16a5ed..b454206100ce5 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -67,8 +67,19 @@ static unsigned long scx_watchdog_timestamp = INITIAL_JIFFIES;
- 
- static struct delayed_work scx_watchdog_work;
- 
--/* for %SCX_KICK_WAIT */
--static unsigned long __percpu *scx_kick_cpus_pnt_seqs;
-+/*
-+ * For %SCX_KICK_WAIT: Each CPU has a pointer to an array of pick_task sequence
-+ * numbers. The arrays are allocated with kvzalloc() as size can exceed percpu
-+ * allocator limits on large machines. O(nr_cpu_ids^2) allocation, allocated
-+ * lazily when enabling and freed when disabling to avoid waste when sched_ext
-+ * isn't active.
-+ */
-+struct scx_kick_pseqs {
-+	struct rcu_head		rcu;
-+	unsigned long		seqs[];
-+};
-+
-+static DEFINE_PER_CPU(struct scx_kick_pseqs __rcu *, scx_kick_pseqs);
- 
- /*
-  * Direct dispatch marker.
-@@ -3905,6 +3916,27 @@ static const char *scx_exit_reason(enum scx_exit_kind kind)
- 	}
- }
- 
-+static void free_kick_pseqs_rcu(struct rcu_head *rcu)
-+{
-+	struct scx_kick_pseqs *pseqs = container_of(rcu, struct scx_kick_pseqs, rcu);
-+
-+	kvfree(pseqs);
-+}
-+
-+static void free_kick_pseqs(void)
-+{
-+	int cpu;
-+
-+	for_each_possible_cpu(cpu) {
-+		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
-+		struct scx_kick_pseqs *to_free;
-+
-+		to_free = rcu_replace_pointer(*pseqs, NULL, true);
-+		if (to_free)
-+			call_rcu(&to_free->rcu, free_kick_pseqs_rcu);
-+	}
-+}
-+
- static void scx_disable_workfn(struct kthread_work *work)
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -600,6 +600,16 @@ exit:
+ static void _panel_replay_init_dpcd(struct intel_dp *intel_dp)
  {
- 	struct scx_sched *sch = container_of(work, struct scx_sched, disable_work);
-@@ -4041,6 +4073,7 @@ static void scx_disable_workfn(struct kthread_work *work)
- 	free_percpu(scx_dsp_ctx);
- 	scx_dsp_ctx = NULL;
- 	scx_dsp_max_batch = 0;
-+	free_kick_pseqs();
- 
- 	mutex_unlock(&scx_enable_mutex);
- 
-@@ -4402,6 +4435,33 @@ static void scx_vexit(struct scx_sched *sch,
- 	irq_work_queue(&sch->error_irq_work);
- }
- 
-+static int alloc_kick_pseqs(void)
-+{
-+	int cpu;
+ 	struct intel_display *display = to_intel_display(intel_dp);
++	int ret;
 +
-+	/*
-+	 * Allocate per-CPU arrays sized by nr_cpu_ids. Use kvzalloc as size
-+	 * can exceed percpu allocator limits on large machines.
-+	 */
-+	for_each_possible_cpu(cpu) {
-+		struct scx_kick_pseqs **pseqs = per_cpu_ptr(&scx_kick_pseqs, cpu);
-+		struct scx_kick_pseqs *new_pseqs;
-+
-+		WARN_ON_ONCE(rcu_access_pointer(*pseqs));
-+
-+		new_pseqs = kvzalloc_node(struct_size(new_pseqs, seqs, nr_cpu_ids),
-+					  GFP_KERNEL, cpu_to_node(cpu));
-+		if (!new_pseqs) {
-+			free_kick_pseqs();
-+			return -ENOMEM;
-+		}
-+
-+		rcu_assign_pointer(*pseqs, new_pseqs);
-+	}
-+
-+	return 0;
-+}
-+
- static struct scx_sched *scx_alloc_and_add_sched(struct sched_ext_ops *ops)
- {
- 	struct scx_sched *sch;
-@@ -4547,15 +4607,19 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
- 
- 	mutex_lock(&scx_enable_mutex);
- 
-+	ret = alloc_kick_pseqs();
-+	if (ret)
-+		goto err_unlock;
-+
- 	if (scx_enable_state() != SCX_DISABLED) {
- 		ret = -EBUSY;
--		goto err_unlock;
-+		goto err_free_pseqs;
- 	}
- 
- 	sch = scx_alloc_and_add_sched(ops);
- 	if (IS_ERR(sch)) {
- 		ret = PTR_ERR(sch);
--		goto err_unlock;
-+		goto err_free_pseqs;
- 	}
- 
- 	/*
-@@ -4759,6 +4823,8 @@ static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
- 
- 	return 0;
- 
-+err_free_pseqs:
-+	free_kick_pseqs();
- err_unlock:
- 	mutex_unlock(&scx_enable_mutex);
- 	return ret;
-@@ -5140,10 +5206,18 @@ static void kick_cpus_irq_workfn(struct irq_work *irq_work)
- {
- 	struct rq *this_rq = this_rq();
- 	struct scx_rq *this_scx = &this_rq->scx;
--	unsigned long *pseqs = this_cpu_ptr(scx_kick_cpus_pnt_seqs);
-+	struct scx_kick_pseqs __rcu *pseqs_pcpu = __this_cpu_read(scx_kick_pseqs);
- 	bool should_wait = false;
-+	unsigned long *pseqs;
- 	s32 cpu;
- 
-+	if (unlikely(!pseqs_pcpu)) {
-+		pr_warn_once("kick_cpus_irq_workfn() called with NULL scx_kick_pseqs");
++	ret = drm_dp_dpcd_read_data(&intel_dp->aux, DP_PANEL_REPLAY_CAP_SUPPORT,
++				    &intel_dp->pr_dpcd, sizeof(intel_dp->pr_dpcd));
++	if (ret < 0)
 +		return;
-+	}
 +
-+	pseqs = rcu_dereference_bh(pseqs_pcpu)->seqs;
++	if (!(intel_dp->pr_dpcd[INTEL_PR_DPCD_INDEX(DP_PANEL_REPLAY_CAP_SUPPORT)] &
++	      DP_PANEL_REPLAY_SUPPORT))
++		return;
+ 
+ 	if (intel_dp_is_edp(intel_dp)) {
+ 		if (!intel_alpm_aux_less_wake_supported(intel_dp)) {
+@@ -631,6 +641,15 @@ static void _panel_replay_init_dpcd(stru
+ static void _psr_init_dpcd(struct intel_dp *intel_dp)
+ {
+ 	struct intel_display *display = to_intel_display(intel_dp);
++	int ret;
 +
- 	for_each_cpu(cpu, this_scx->cpus_to_kick) {
- 		should_wait |= kick_one_cpu(cpu, this_rq, pseqs);
- 		cpumask_clear_cpu(cpu, this_scx->cpus_to_kick);
-@@ -5266,11 +5340,6 @@ void __init init_sched_ext_class(void)
++	ret = drm_dp_dpcd_read_data(&intel_dp->aux, DP_PSR_SUPPORT, intel_dp->psr_dpcd,
++				    sizeof(intel_dp->psr_dpcd));
++	if (ret < 0)
++		return;
++
++	if (!intel_dp->psr_dpcd[0])
++		return;
  
- 	scx_idle_init_masks();
+ 	drm_dbg_kms(display->drm, "eDP panel supports PSR version %x\n",
+ 		    intel_dp->psr_dpcd[0]);
+@@ -676,18 +695,9 @@ static void _psr_init_dpcd(struct intel_
  
--	scx_kick_cpus_pnt_seqs =
--		__alloc_percpu(sizeof(scx_kick_cpus_pnt_seqs[0]) * nr_cpu_ids,
--			       __alignof__(scx_kick_cpus_pnt_seqs[0]));
--	BUG_ON(!scx_kick_cpus_pnt_seqs);
+ void intel_psr_init_dpcd(struct intel_dp *intel_dp)
+ {
+-	drm_dp_dpcd_read(&intel_dp->aux, DP_PSR_SUPPORT, intel_dp->psr_dpcd,
+-			 sizeof(intel_dp->psr_dpcd));
 -
- 	for_each_possible_cpu(cpu) {
- 		struct rq *rq = cpu_rq(cpu);
- 		int  n = cpu_to_node(cpu);
--- 
-2.51.0
-
+-	drm_dp_dpcd_read(&intel_dp->aux, DP_PANEL_REPLAY_CAP_SUPPORT,
+-			 &intel_dp->pr_dpcd, sizeof(intel_dp->pr_dpcd));
+-
+-	if (intel_dp->pr_dpcd[INTEL_PR_DPCD_INDEX(DP_PANEL_REPLAY_CAP_SUPPORT)] &
+-	    DP_PANEL_REPLAY_SUPPORT)
+-		_panel_replay_init_dpcd(intel_dp);
++	_psr_init_dpcd(intel_dp);
+ 
+-	if (intel_dp->psr_dpcd[0])
+-		_psr_init_dpcd(intel_dp);
++	_panel_replay_init_dpcd(intel_dp);
+ 
+ 	if (intel_dp->psr.sink_psr2_support ||
+ 	    intel_dp->psr.sink_panel_replay_su_support)
 
 
