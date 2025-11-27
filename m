@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1293335BBE;
-	Thu, 27 Nov 2025 14:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C0A333756;
+	Thu, 27 Nov 2025 14:55:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255306; cv=none; b=eLoApLfAcwFD+syN2mp/8W8oAfz6jd8S38UKBaKR1oAapvR4JMbKBhzgjKy3ByGOE6nO9vqk/aR+XcF+HZQtzoJc2iTJeBN+wZNT9YoSOy/dTW5fKYxiBo7lPLe6g80O4WappcMITtR1T/rWm8RqzARzEvqRZp4AhwHI2L+ZLWU=
+	t=1764255309; cv=none; b=dFOpd6839KEFPK/M0pk53mQ6lVcruaFvobHCqVKbhrL4WJBYNl18hLfyVfuGJqtKFnyXpXkDkh+xOn1uesuJo9e3Phd39vSPQI8ARJUYLlwg3DvyTMp/4lKaVck19itBd0a6xNVBr4zXq+jY6gPXIbdC2h6fPiILxp4/TaTzV2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255306; c=relaxed/simple;
-	bh=e7WUrwZZBTnmHRvQnd79V/UNd55JyIirUzdz1Q+Ut9Q=;
+	s=arc-20240116; t=1764255309; c=relaxed/simple;
+	bh=+JjwfbIMm0LgvN6Ni/Bi7eh1RYLkU3pQ+mdToKKCoyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XgvN/gUq37aAc5GpR8m0tX7jzTg3XeR2Pm0Oum+EFGMEs5a4YaiB72GqYgGy2vgp5zpJbPRa5Uj2lAENADRY6bEDR1S9Eun2z2NMwHbrcHQXU3UnQwD6gyR9c530R3/GYXgRsVDEQ9+Yz5H8w3A6bM6iP/vmPLK/5uitR+Rtta8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ex2R71Rq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Gsz58cpejIEjq5GaGrqlSektOnqsiZ1Eh9/jjT61ydzod1apJra9WhPSrAb/Ax644GQ+DKPFIf5mCc9QMbhrKjtRuuCKApO6Xl1NjtQDyxcZiD3Bk1sHh2UZqzyqBBTAT1xVTyZCaGQG7TXAxthL0G9Ygdk8qvrBk5IFbpMaDBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LcIu4jX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ex2R71Rq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF5BC4CEF8;
-	Thu, 27 Nov 2025 14:55:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LcIu4jX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 158CFC4CEF8;
+	Thu, 27 Nov 2025 14:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255306;
-	bh=e7WUrwZZBTnmHRvQnd79V/UNd55JyIirUzdz1Q+Ut9Q=;
+	s=korg; t=1764255309;
+	bh=+JjwfbIMm0LgvN6Ni/Bi7eh1RYLkU3pQ+mdToKKCoyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ex2R71RqhJItK6W/f50w7guVfXp9TGlqlr9Krs0xIptdp4OPg+qf8i9a5crferKUT
-	 D4dJwXcU5nUDOn7/BS8WYwKaqbhWK5+RtOrY5z+gW5YG2szFrtwYzysrUvjuKVnk7l
-	 JZfJSeH7PTyZ05ST8gfDjwp4vfv+4E9BTxFoDh+s=
+	b=2LcIu4jXRv6vKOB/hooLnckvUOqVOnIc8yrDOFZ44/kztWbvgNNz3BXR6L1qkoknn
+	 eGkonHcfHfWE4YUQXV0H4H5dh6LemZET218KyJZdcKd0mC43+COb7eQixuBY6Ya7ct
+	 AxenYtpzMfYmFesmWdeQhiwZMVCh6FHQwJ6DacNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Wang <shankerwangmiao@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 079/112] af_unix: Read sk_peek_offset() again after sleeping in unix_stream_read_generic().
-Date: Thu, 27 Nov 2025 15:46:21 +0100
-Message-ID: <20251127144035.733189967@linuxfoundation.org>
+Subject: [PATCH 6.12 080/112] LoongArch: Use UAPI types in ptrace UAPI header
+Date: Thu, 27 Nov 2025 15:46:22 +0100
+Message-ID: <20251127144035.769624147@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -46,112 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 7bf3a476ce43833c49fceddbe94ff3472e04e9bc ]
+[ Upstream commit 20d7338f2d3bcb570068dd6d39b16f1a909fe976 ]
 
-Miao Wang reported a bug of SO_PEEK_OFF on AF_UNIX SOCK_STREAM
-socket.
+The kernel UAPI headers already contain fixed-width integer types, there
+is no need to rely on the libc types. There may not be a libc available
+or the libc may not provides the <stdint.h>, like for example on nolibc.
 
-The unexpected behaviour is triggered when the peek offset is
-larger than the recv queue and the thread is unblocked by new
-data.
+This also aligns the header with the rest of the LoongArch UAPI headers.
 
-Let's assume a socket which has "aaaa" in the recv queue and
-the peek offset is 4.
-
-First, unix_stream_read_generic() reads the offset 4 and skips
-the skb(s) of "aaaa" with the code below:
-
-	skip = max(sk_peek_offset(sk, flags), 0);	/* @skip is 4. */
-
-	do {
-	...
-		while (skip >= unix_skb_len(skb)) {
-			skip -= unix_skb_len(skb);
-		...
-			skb = skb_peek_next(skb, &sk->sk_receive_queue);
-			if (!skb)
-				goto again;		/* @skip is 0. */
-		}
-
-The thread jumps to the 'again' label and goes to sleep since
-new data has not arrived yet.
-
-Later, new data "bbbb" unblocks the thread, and the thread jumps
-to the 'redo:' label to restart the entire process from the first
-skb in the recv queue.
-
-	do {
-		...
-redo:
-		...
-		last = skb = skb_peek(&sk->sk_receive_queue);
-		...
-again:
-		if (skb == NULL) {
-			...
-			timeo = unix_stream_data_wait(sk, timeo, last,
-						      last_len, freezable);
-			...
-			goto redo;			/* @skip is 0 !! */
-
-However, the peek offset is not reset in the path.
-
-If the buffer size is 8, recv() will return "aaaabbbb" without
-skipping any data, and the final offset will be 12 (the original
-offset 4 + peeked skbs' length 8).
-
-After sleeping in unix_stream_read_generic(), we have to fetch the
-peek offset again.
-
-Let's move the redo label before mutex_lock(&u->iolock).
-
-Fixes: 9f389e35674f ("af_unix: return data from multiple SKBs on recv() with MSG_PEEK flag")
-Reported-by: Miao Wang <shankerwangmiao@gmail.com>
-Closes: https://lore.kernel.org/netdev/3B969F90-F51F-4B9D-AB1A-994D9A54D460@gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251117174740.3684604-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 803b0fc5c3f2 ("LoongArch: Add process management")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/loongarch/include/uapi/asm/ptrace.h | 40 +++++++++++-------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 26d37a90b755d..59911ac719b19 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2805,6 +2805,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+diff --git a/arch/loongarch/include/uapi/asm/ptrace.h b/arch/loongarch/include/uapi/asm/ptrace.h
+index aafb3cd9e943e..215e0f9e8aa32 100644
+--- a/arch/loongarch/include/uapi/asm/ptrace.h
++++ b/arch/loongarch/include/uapi/asm/ptrace.h
+@@ -10,10 +10,6 @@
  
- 	u = unix_sk(sk);
+ #include <linux/types.h>
  
-+redo:
- 	/* Lock the socket to prevent queue disordering
- 	 * while sleeps in memcpy_tomsg
- 	 */
-@@ -2816,7 +2817,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 		struct sk_buff *skb, *last;
- 		int chunk;
+-#ifndef __KERNEL__
+-#include <stdint.h>
+-#endif
+-
+ /*
+  * For PTRACE_{POKE,PEEK}USR. 0 - 31 are GPRs,
+  * 32 is syscall's original ARG0, 33 is PC, 34 is BADVADDR.
+@@ -41,44 +37,44 @@ struct user_pt_regs {
+ } __attribute__((aligned(8)));
  
--redo:
- 		unix_state_lock(sk);
- 		if (sock_flag(sk, SOCK_DEAD)) {
- 			err = -ECONNRESET;
-@@ -2866,7 +2866,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 				goto out;
- 			}
+ struct user_fp_state {
+-	uint64_t fpr[32];
+-	uint64_t fcc;
+-	uint32_t fcsr;
++	__u64 fpr[32];
++	__u64 fcc;
++	__u32 fcsr;
+ };
  
--			mutex_lock(&u->iolock);
- 			goto redo;
- unlock:
- 			unix_state_unlock(sk);
+ struct user_lsx_state {
+ 	/* 32 registers, 128 bits width per register. */
+-	uint64_t vregs[32*2];
++	__u64 vregs[32*2];
+ };
+ 
+ struct user_lasx_state {
+ 	/* 32 registers, 256 bits width per register. */
+-	uint64_t vregs[32*4];
++	__u64 vregs[32*4];
+ };
+ 
+ struct user_lbt_state {
+-	uint64_t scr[4];
+-	uint32_t eflags;
+-	uint32_t ftop;
++	__u64 scr[4];
++	__u32 eflags;
++	__u32 ftop;
+ };
+ 
+ struct user_watch_state {
+-	uint64_t dbg_info;
++	__u64 dbg_info;
+ 	struct {
+-		uint64_t    addr;
+-		uint64_t    mask;
+-		uint32_t    ctrl;
+-		uint32_t    pad;
++		__u64    addr;
++		__u64    mask;
++		__u32    ctrl;
++		__u32    pad;
+ 	} dbg_regs[8];
+ };
+ 
+ struct user_watch_state_v2 {
+-	uint64_t dbg_info;
++	__u64 dbg_info;
+ 	struct {
+-		uint64_t    addr;
+-		uint64_t    mask;
+-		uint32_t    ctrl;
+-		uint32_t    pad;
++		__u64    addr;
++		__u64    mask;
++		__u32    ctrl;
++		__u32    pad;
+ 	} dbg_regs[14];
+ };
+ 
 -- 
 2.51.0
 
