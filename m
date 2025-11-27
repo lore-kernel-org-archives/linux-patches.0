@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E5831281E;
-	Thu, 27 Nov 2025 14:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043F3334363;
+	Thu, 27 Nov 2025 14:59:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255541; cv=none; b=GvRSzBVfGP4jrNj+mrzD/yPDOfxtdM4FTZixtGph+l/+OlzNkVyOd4vLoHZ+dKOI+SXODriZ4QgRRvAuT9xR/XMj1AogOQEOqqUnFNtVC6SdrGgijmGD171GXzM/feMnXmAAVknhAUfHyeI6++VWboOlG/MItUOcG4+i0UHCtsE=
+	t=1764255544; cv=none; b=R60a5vfPQFwgKmJCB+Hs9r3L7nq8jexXyMmggS+KpBcHIZBp4SOlsB162cuTea3Rq/yA+VrTQExPUeZgPBYjFRT3zGAUZt4+//k9G6ilaMMTFfg8FqTXNRFmurtIL8nO6hxN0/5w2U9teXTqBQ2QzL1U4IDd1/UlH+j/lGQqXlY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255541; c=relaxed/simple;
-	bh=O+L0zsi03mCgAYxY0XoGlM8PXPzZiemNBgUu+IjUdsM=;
+	s=arc-20240116; t=1764255544; c=relaxed/simple;
+	bh=iwSSfd6taaiAkVLl6Q4zJsiaywsQo2Pr2T3OrYyDYX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3jQh2MRGmOWlJZxa1gbk0HbY6YLZkyERw1+KOow9Vg6OPh7SAOlV2gjv+Efu03G/V/vMpSLV1MoP1pSSJFzeGXGGX/l/JIhItZUnVwRlXumRg8YhaTn0OCyroB6azAQYoZ9F/+O7QtKJ7YtXf7Qq6KhRqTokkRUyM7cOb71KnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/9mXM4I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z2vTgqORcPtcAl2x/qtu7c8Ho9NojT2y2an6CgSipfAbCtJ91tzhcDKZjgsNCNiSg4YbnZ9EVSFcxGTDyQF0DUzEw+JPdoLtj8Ru1G5Oi/0F4/y2RVIlnDkK8ldYaAVHkGDaIXGkjWZW8Cxn9EUzfBVoL8ypbPHs/PpqMvtBUr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DItABDy3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/9mXM4I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741B9C4CEF8;
-	Thu, 27 Nov 2025 14:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DItABDy3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC7AC4CEF8;
+	Thu, 27 Nov 2025 14:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255540;
-	bh=O+L0zsi03mCgAYxY0XoGlM8PXPzZiemNBgUu+IjUdsM=;
+	s=korg; t=1764255543;
+	bh=iwSSfd6taaiAkVLl6Q4zJsiaywsQo2Pr2T3OrYyDYX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/9mXM4IPsvecmGCyHDQ1pThQXXDVDCXSZEuzWwD4p9SER1oZRokC70JovAw76lnU
-	 fdhtRGlZGssZMI9h4p1f5sghD+HFdCJjlR4KliNuA3JHASvh9mXRc2VAWrDHFlssNZ
-	 EEF/lrXiZiuzXe2DIIrmS9DSDTyoDYdVgUpYPvts=
+	b=DItABDy3H6e14n95wc8/mbkwfiKTfyayw7/SlAJWTlq4rkHWm32trXNR81SzwR3wB
+	 JOsqTygHjM6xq597B3CeSMEUqYmNpCOdzWz59Atcyov74fy4s5YYoyAhBbgA+ITr9R
+	 xmebFT/6nFce+R3vjay2MF6MGmHbAxiUYiGe5+IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mykola Kvach <xakep.amatop@gmail.com>,
-	Michael Riesch <michael.riesch@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.17 007/175] arm64: dts: rockchip: fix PCIe 3.3V regulator voltage on orangepi-5
-Date: Thu, 27 Nov 2025 15:44:20 +0100
-Message-ID: <20251127144043.224834681@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Daniel Baluta <daniel.baluta@nxp.com>,
+	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
+	Philipp Zabel <p.zabel@pengutronix.de>
+Subject: [PATCH 6.17 008/175] reset: imx8mp-audiomix: Fix bad mask values
+Date: Thu, 27 Nov 2025 15:44:21 +0100
+Message-ID: <20251127144043.261349129@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,39 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mykola Kvach <xakep.amatop@gmail.com>
+From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
 
-commit b5414520793e68d266fdd97a84989d9831156aad upstream.
+commit 997c06330fd5c2e220b692f2a358986c6c8fd5a2 upstream.
 
-The vcc3v3_pcie20 fixed regulator powers the PCIe device-side 3.3V rail
-for pcie2x1l2 via vpcie3v3-supply. The DTS mistakenly set its
-regulator-min/max-microvolt to 1800000 (1.8 V). Correct both to 3300000
-(3.3 V) to match the rail name, the PCIe/M.2 power requirement, and the
-actual hardware wiring on Orange Pi 5.
+As per the i.MX8MP TRM, section 14.2 "AUDIO_BLK_CTRL", table 14.2.3.1.1
+"memory map", the definition of the EARC control register shows that the
+EARC controller software reset is controlled via bit 0, while the EARC PHY
+software reset is controlled via bit 1.
 
-Fixes: b6bc755d806e ("arm64: dts: rockchip: Add Orange Pi 5")
+This means that the current definitions of IMX8MP_AUDIOMIX_EARC_RESET_MASK
+and IMX8MP_AUDIOMIX_EARC_PHY_RESET_MASK are wrong since their values would
+imply that the EARC controller software reset is controlled via bit 1 and
+the EARC PHY software reset is controlled via bit 2. Fix them.
+
+Fixes: a83bc87cd30a ("reset: imx8mp-audiomix: Prepare the code for more reset bits")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mykola Kvach <xakep.amatop@gmail.com>
-Reviewed-by: Michael Riesch <michael.riesch@collabora.com>
-Link: https://patch.msgid.link/cf6e08dfdfbf1c540685d12388baab1326f95d2c.1762165324.git.xakep.amatop@gmail.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
+Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts |    4 ++--
+ drivers/reset/reset-imx8mp-audiomix.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s-orangepi-5.dts
+diff --git a/drivers/reset/reset-imx8mp-audiomix.c b/drivers/reset/reset-imx8mp-audiomix.c
+index 6b357adfe646..eceb37ff5dc5 100644
+--- a/drivers/reset/reset-imx8mp-audiomix.c
++++ b/drivers/reset/reset-imx8mp-audiomix.c
 @@ -14,8 +14,8 @@
- 		gpios = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
- 		regulator-name = "vcc3v3_pcie20";
- 		regulator-boot-on;
--		regulator-min-microvolt = <1800000>;
--		regulator-max-microvolt = <1800000>;
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
- 		startup-delay-us = <50000>;
- 		vin-supply = <&vcc5v0_sys>;
- 	};
+ #include <linux/reset-controller.h>
+ 
+ #define IMX8MP_AUDIOMIX_EARC_RESET_OFFSET	0x200
+-#define IMX8MP_AUDIOMIX_EARC_RESET_MASK		BIT(1)
+-#define IMX8MP_AUDIOMIX_EARC_PHY_RESET_MASK	BIT(2)
++#define IMX8MP_AUDIOMIX_EARC_RESET_MASK		BIT(0)
++#define IMX8MP_AUDIOMIX_EARC_PHY_RESET_MASK	BIT(1)
+ 
+ #define IMX8MP_AUDIOMIX_DSP_RUNSTALL_OFFSET	0x108
+ #define IMX8MP_AUDIOMIX_DSP_RUNSTALL_MASK	BIT(5)
+-- 
+2.52.0
+
 
 
