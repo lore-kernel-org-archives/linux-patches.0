@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41CD33436D;
-	Thu, 27 Nov 2025 15:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98141334C1E;
+	Thu, 27 Nov 2025 15:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255983; cv=none; b=BzQR2IFnh+HBv9XGV7b8Ni163s1yfZmhX3ImPq2/EiBwZ3pBbpK69HEFVLAi5qTF8kMlvJwzOPAwCdleBV50IAIKvkdOiIf2DzFm+DDp+IE3/quYfH+jWrPaoW41KzHdTlqU7TcwdY/OTaBb5VKIu5crDfMm5pd3Jm//3wHMVsY=
+	t=1764255986; cv=none; b=mWb06ATusn00lPy3iocA7zHv3ozh9C+5uRNduVun1BPhhEG+kFjlYzbdtq5pi7eSsuH+dGWYmUjGrJh6rzLhar9RPyokE0RDnUPG4Nim8CHPDtzmEO8d400vAx8ZvkeKa6RXL4kDf1MGa0KHfXZejfAkm5QAGTiDR9LhHXy4Oj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255983; c=relaxed/simple;
-	bh=ONjKIrwCOszJAmJkIm+Q9jwbSTZuW5fIrxnZAgdyGbQ=;
+	s=arc-20240116; t=1764255986; c=relaxed/simple;
+	bh=OIB/tNOlfDzmzKtYwVWArpaWy4yyI2Co3EcN32jyRrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VilGglPMHH/Lj+SHxToF+LObzQjNexGXnXBggErH6U9liFdvST/rYx4M8tVcnUiXZvu7JRuRbnL5S+JUV1iGiEsd0V7cJa7TDEpLZEAbsLfEJsrUPICJl7+s3iscOfO4nxxbZR0bJpz40MggXxXEtjSF1ZgLYgFoq3GJ+K5Fs9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rg0G7IG5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dSaHtJlUE9fnSw4Chfr8TiheXdwvLeQ/9FGd/0PsQg/acOCIWrLfgFlMqhN5Yg/+UGuuXp/MA1AgAMTGYj6lja8Xc4ZKo/9GwG+jxsI7zjVOQ5MJLwDGjU1gCIGHz0hKYdcFUrRz6tvSfG+iRX+lJCgCquMOTcM7rGOWiqv+bqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Htqj+pn7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rg0G7IG5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFEEC4CEF8;
-	Thu, 27 Nov 2025 15:06:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Htqj+pn7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20794C113D0;
+	Thu, 27 Nov 2025 15:06:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255983;
-	bh=ONjKIrwCOszJAmJkIm+Q9jwbSTZuW5fIrxnZAgdyGbQ=;
+	s=korg; t=1764255986;
+	bh=OIB/tNOlfDzmzKtYwVWArpaWy4yyI2Co3EcN32jyRrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rg0G7IG5b9Ot6sejiNIj3YECXEHvhzhHuz6bCPDSyAi1rIPtTahu0dsd9peBnbl+1
-	 OKfQO4hyBodeuG4qDt6xWIT8PDigxHHnMKncaOe1kwk/FOSERrMyQB8DWIuBi1zrSl
-	 OUa4PO5tDzPbb7AwbJP5LPsfGLMIc3q49QXstQ5Q=
+	b=Htqj+pn7+PCybs17FVbpFGkY77PJnBvVuyD4nhqLks8IwI087cfSRoS5WJCvJiDir
+	 UZtxDiYjm7UH0it6LizlNC208RUxt0FN7kbSSUyTZDd5XMxu0ZWCRYZ/eqjQMnvPii
+	 x0237ipmHMn3ALztnTDbzlgMzZrj6wu5gYCGZO6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emil Tsalapatis <emil@etsalapatis.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.17 175/175] sched_ext: fix flag check for deferred callbacks
-Date: Thu, 27 Nov 2025 15:47:08 +0100
-Message-ID: <20251127144049.349038297@linuxfoundation.org>
+	Gang Yan <yangang@kylinos.cn>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 168/175] mptcp: fix address removal logic in mptcp_pm_nl_rm_addr
+Date: Thu, 27 Nov 2025 15:47:01 +0100
+Message-ID: <20251127144049.090690213@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -50,33 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emil Tsalapatis <etsal@meta.com>
+From: Gang Yan <yangang@kylinos.cn>
 
-commit a3c4a0a42e61aad1056a3d33fd603c1ae66d4288 upstream.
+[ Upstream commit 92e239e36d600002559074994a545fcfac9afd2d ]
 
-When scheduling the deferred balance callbacks, check SCX_RQ_BAL_CB_PENDING
-instead of SCX_RQ_BAL_PENDING. This way schedule_deferred() properly tests
-whether there is already a pending request for queue_balance_callback() to
-be invoked at the end of .balance().
+Fix inverted WARN_ON_ONCE condition that prevented normal address
+removal counter updates. The current code only executes decrement
+logic when the counter is already 0 (abnormal state), while
+normal removals (counter > 0) are ignored.
 
-Fixes: a8ad873113d3 ("sched_ext: defer queue_balance_callback() until after ops.dispatch")
-Signed-off-by: Emil Tsalapatis <emil@etsalapatis.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Gang Yan <yangang@kylinos.cn>
+Fixes: 636113918508 ("mptcp: pm: remove '_nl' from mptcp_pm_nl_rm_addr_received")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-10-806d3781c95f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    2 +-
+ net/mptcp/pm_kernel.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -821,7 +821,7 @@ static void schedule_deferred(struct rq
- 		return;
+--- a/net/mptcp/pm_kernel.c
++++ b/net/mptcp/pm_kernel.c
+@@ -548,7 +548,7 @@ static void mptcp_pm_nl_add_addr_receive
  
- 	/* Don't do anything if there already is a deferred operation. */
--	if (rq->scx.flags & SCX_RQ_BAL_PENDING)
-+	if (rq->scx.flags & SCX_RQ_BAL_CB_PENDING)
- 		return;
- 
- 	/*
+ void mptcp_pm_nl_rm_addr(struct mptcp_sock *msk, u8 rm_id)
+ {
+-	if (rm_id && WARN_ON_ONCE(msk->pm.add_addr_accepted == 0)) {
++	if (rm_id && !WARN_ON_ONCE(msk->pm.add_addr_accepted == 0)) {
+ 		/* Note: if the subflow has been closed before, this
+ 		 * add_addr_accepted counter will not be decremented.
+ 		 */
 
 
