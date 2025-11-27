@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8ACE299943;
-	Thu, 27 Nov 2025 14:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD3F29BD89;
+	Thu, 27 Nov 2025 14:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255272; cv=none; b=QfGXgGIIQhoYwTj77+T/VkYjow7dIq3frfPmhw3HYHagxb+b1bxaxoqcLHDio8UlbbBsr5hPKNK27LwnqxKsOxmkY00/pg/xhYOZW7RjBSulneUcX8/8OFnJur2ZLrvfTkicWPmZiBQ7Pl62cjkgmk8QdS0TjGASmJp3fG/twMc=
+	t=1764255275; cv=none; b=Wy3xYs5sZ0rsChHcUwDeO5hm+6x8Jrx8y7RmItNgLqvXSTaL0WXn/KNBpoW1LjiDI12yHrfNHGi3oTDXErlvn1s/Ul6QZhJAItrV9Fu92GaHOavJCWFd2nYchoZqwPTacn+o11r5f3gtdJ4/4hxLxkpqV3WDgO0CqOdi5OrZyQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255272; c=relaxed/simple;
-	bh=6dqLq0aMl7iV8qUB0SfsNuhAazKfUZU9OzhLQ9c+QqY=;
+	s=arc-20240116; t=1764255275; c=relaxed/simple;
+	bh=hUdCD70F6GEE14GTcHqqvqsCcOmyW2jMKCfIn6ceNGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aIkWOjlqeGJUuv+gZBYX8xPgkGypo2+Gw1Ubc5/O6ZW8hDtUSTM+02XCZHl/ZxmlJKuCwiyJxpU34R8u1hCcKBO+NQuoQt1zGtX4dpJ4YIy4ynzqh/b06ZpW3lNq/wchDYuvhRAfuYSxGdYBW6t/AcTDfjDxF9ieJOPpOG0Hma8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/0rZxkL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D7Luu9MgJJWxRvQaYE2zekFN+/FqDvykRJl2Pdm0J6zWt4asd89abX84xTV6pyFdb4tg+olV6ktEXyR8aNSzvjpFeCS9Nv2MCLd5okoHsqJUWTdBPezIUSEKS2kn2xMsdSS075tJ6EVXa+VlwCYX5UKjJkFNFCMhVQZsNrsHE34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n2m3VCpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/0rZxkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFE4C4CEF8;
-	Thu, 27 Nov 2025 14:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n2m3VCpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2455AC4CEF8;
+	Thu, 27 Nov 2025 14:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255272;
-	bh=6dqLq0aMl7iV8qUB0SfsNuhAazKfUZU9OzhLQ9c+QqY=;
+	s=korg; t=1764255275;
+	bh=hUdCD70F6GEE14GTcHqqvqsCcOmyW2jMKCfIn6ceNGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/0rZxkLqy9GNTiFvS5e7hTD0XN7sz9g/miT4lSTF1tQRvT6mdv+Yduwp4xLJEUZF
-	 FUahPKXXeLPg4IjS3W2OjeL0mVvFpKNWuYn7OWv6sZElgFb80xV4mDIrXxwC9hkzF6
-	 ktu5VoodNGr/XyXuLmjCHqx7BkU8MNsB9ymjL26Y=
+	b=n2m3VCpXjbVYDO2bUtk54Uti0tP5vUfavqCM7b4jHgwpTeuo49JRf4fy1vnZ/J4Mc
+	 g838tZ7cH3Jq34zHGbzwke6kJq+sV7TydH0L1vbHEXVLXWQebNbS2IMhvshNSwk832
+	 G8Flmv1h846NbxPmSLXS3szOiHTRVO/Kx8MTRKI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Armin Wolf <W_Armin@gmx.de>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 060/112] platform/x86: msi-wmi-platform: Fix typo in WMI GUID
-Date: Thu, 27 Nov 2025 15:46:02 +0100
-Message-ID: <20251127144035.036782444@linuxfoundation.org>
+Subject: [PATCH 6.12 069/112] selftests: net: lib: Do not overwrite error messages
+Date: Thu, 27 Nov 2025 15:46:11 +0100
+Message-ID: <20251127144035.367286075@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -46,65 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 97b726eb1dc2b4a2532544eb3da72bb6acbd39a3 ]
+[ Upstream commit bed22c7b90af732978715a1789bca1c3cfa245a6 ]
 
-The WMI driver core only supports GUID strings containing only
-uppercase characters, however the GUID string used by the
-msi-wmi-platform driver contains a single lowercase character.
-This prevents the WMI driver core from matching said driver to
-its WMI device.
+ret_set_ksft_status() calls ksft_status_merge() with the current return
+status and the last one. It treats a non-zero return code from
+ksft_status_merge() as an indication that the return status was
+overwritten by the last one and therefore overwrites the return message
+with the last one.
 
-Fix this by turning the lowercase character into a uppercase
-character. Also update the WMI driver development guide to warn
-about this.
+Currently, ksft_status_merge() returns a non-zero return code even if
+the current return status and the last one are equal. This results in
+return messages being overwritten which is counter-productive since we
+are more interested in the first failure message and not the last one.
 
-Reported-by: Antheas Kapenekakis <lkml@antheas.dev>
-Fixes: 9c0beb6b29e7 ("platform/x86: wmi: Add MSI WMI Platform driver")
-Tested-by: Antheas Kapenekakis <lkml@antheas.dev>
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20251110111253.16204-3-W_Armin@gmx.de
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix by changing ksft_status_merge() to only return a non-zero return
+code if the current return status was actually changed.
+
+Add a test case which checks that the first error message is not
+overwritten.
+
+Before:
+
+ # ./lib_sh_test.sh
+ [...]
+ TEST: RET tfail2 tfail -> fail                                      [FAIL]
+        retmsg=tfail expected tfail2
+ [...]
+ # echo $?
+ 1
+
+After:
+
+ # ./lib_sh_test.sh
+ [...]
+ TEST: RET tfail2 tfail -> fail                                      [ OK ]
+ [...]
+ # echo $?
+ 0
+
+Fixes: 596c8819cb78 ("selftests: forwarding: Have RET track kselftest framework constants")
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251116081029.69112-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/wmi/driver-development-guide.rst | 1 +
- drivers/platform/x86/msi-wmi-platform.c        | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/lib_sh_test.sh | 7 +++++++
+ tools/testing/selftests/net/lib.sh                    | 2 +-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/wmi/driver-development-guide.rst b/Documentation/wmi/driver-development-guide.rst
-index 429137b2f6323..4c10159d5f6cd 100644
---- a/Documentation/wmi/driver-development-guide.rst
-+++ b/Documentation/wmi/driver-development-guide.rst
-@@ -50,6 +50,7 @@ to matching WMI devices using a struct wmi_device_id table:
- ::
+diff --git a/tools/testing/selftests/net/forwarding/lib_sh_test.sh b/tools/testing/selftests/net/forwarding/lib_sh_test.sh
+index ff2accccaf4d4..b4eda6c6199ed 100755
+--- a/tools/testing/selftests/net/forwarding/lib_sh_test.sh
++++ b/tools/testing/selftests/net/forwarding/lib_sh_test.sh
+@@ -30,6 +30,11 @@ tfail()
+ 	do_test "tfail" false
+ }
  
-   static const struct wmi_device_id foo_id_table[] = {
-+         /* Only use uppercase letters! */
-          { "936DA01F-9ABD-4D9D-80C7-02AF85C822A8", NULL },
-          { }
-   };
-diff --git a/drivers/platform/x86/msi-wmi-platform.c b/drivers/platform/x86/msi-wmi-platform.c
-index bd2687828a2e6..e912fcc12d124 100644
---- a/drivers/platform/x86/msi-wmi-platform.c
-+++ b/drivers/platform/x86/msi-wmi-platform.c
-@@ -29,7 +29,7 @@
++tfail2()
++{
++	do_test "tfail2" false
++}
++
+ txfail()
+ {
+ 	FAIL_TO_XFAIL=yes do_test "txfail" false
+@@ -132,6 +137,8 @@ test_ret()
+ 	ret_subtest $ksft_fail "tfail" txfail tfail
  
- #define DRIVER_NAME	"msi-wmi-platform"
+ 	ret_subtest $ksft_xfail "txfail" txfail txfail
++
++	ret_subtest $ksft_fail "tfail2" tfail2 tfail
+ }
  
--#define MSI_PLATFORM_GUID	"ABBC0F6E-8EA1-11d1-00A0-C90629100000"
-+#define MSI_PLATFORM_GUID	"ABBC0F6E-8EA1-11D1-00A0-C90629100000"
+ exit_status_tests_run()
+diff --git a/tools/testing/selftests/net/lib.sh b/tools/testing/selftests/net/lib.sh
+index bb4d2f8d50d67..501615d285300 100644
+--- a/tools/testing/selftests/net/lib.sh
++++ b/tools/testing/selftests/net/lib.sh
+@@ -40,7 +40,7 @@ __ksft_status_merge()
+ 		weights[$i]=$((weight++))
+ 	done
  
- #define MSI_WMI_PLATFORM_INTERFACE_VERSION	2
- 
+-	if [[ ${weights[$a]} > ${weights[$b]} ]]; then
++	if [[ ${weights[$a]} -ge ${weights[$b]} ]]; then
+ 		echo "$a"
+ 		return 0
+ 	else
 -- 
 2.51.0
 
