@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54801333743;
-	Thu, 27 Nov 2025 14:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F973126C0;
+	Thu, 27 Nov 2025 14:58:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255494; cv=none; b=EiKmw1ycAodj521xfVaYIAIFy5YURQ0MDQ2bjZFuPEMG9CN8Z5pNuTmRF8p1J0usSq0OwW2aRJ35Dkk6Cf6/LN5jt+eSMtgfZ3DNhqPZf9zqEpGAMEcmQMNMlCMIDNxPuONVBi7A05Q7uaRq5o2zOvEa/snYmwJfNtWs0bP/c24=
+	t=1764255497; cv=none; b=pSco4AjtsNtJVqZjhHRf9OiSV45LWKj+fisd2c3Vl7Wxat379VDkNq0U7fcduGw3ptJEoIrV+UntNI1/ygXBdm0X5nNqiDF9v1bM/GS14EQJaTW8TNBfijjj5FGUZ99i5Ro3rScHRisea6H0KCRKX664jPpxq5iIx9kLZX4GDzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255494; c=relaxed/simple;
-	bh=mpRPUnbGVv/1cYoHO7YiVJMN4b+UL+SfHZE24tcYyGk=;
+	s=arc-20240116; t=1764255497; c=relaxed/simple;
+	bh=iL9J7ssQC1e6Af6n00n9u40DbQCn+jWUyMRe1xpM4Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=adE7NMvQNembsImrTRmV07Yhl1kprAGXckp3MMte7rIBGk+MrvmDXUKSIfjwP0eRnPLi30A5yRcU1Mea45XsoU/Y1LdJjvQQTUD18LgzwTDi56Ln3m+kWgynfb7e2YN0Azo88YuW6n7gbBhaTcT4fCemUE4GvXkPcTdJPRwmJHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtYs9IuY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bxmrFYAdMBk1kn0kQMDJLxHODcIBPI8s7CnhLflHSyLzyI58+jzlvXoQ7FMauF+xLpDPhmkU06pjBPrH0IVmOAJs4BfdtrbdQKgGpI8oDorgFgOjokqpW2sopfDs34XL/AtLScXz4tQYxH1UQVHrCVfhipdNwiQVkaXTJwHbY6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2icKk8KB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtYs9IuY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0165C4CEF8;
-	Thu, 27 Nov 2025 14:58:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2icKk8KB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC503C4CEF8;
+	Thu, 27 Nov 2025 14:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255494;
-	bh=mpRPUnbGVv/1cYoHO7YiVJMN4b+UL+SfHZE24tcYyGk=;
+	s=korg; t=1764255497;
+	bh=iL9J7ssQC1e6Af6n00n9u40DbQCn+jWUyMRe1xpM4Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtYs9IuYbh2C/93rhxGjc3u/nzW4fHHEWg/Z7znfLtzOAt76hRRqZV7fLdt+VZ+l4
-	 AZLUjVY81su17FnvLm/M9vUZ8dTPpCK6T8FdRopwkDafgy0Owey1DUUx99FJwjrkLk
-	 /F/zsdhgeMcVJiovkGG+adE6Slv3q1qhtwjl9wnA=
+	b=2icKk8KB/Tih5HOm9yZk4krKtpTi7Wb5prWFeBjgSbDts42Au3Vjqj7dOL+2Ne5AN
+	 AKBtwF/2uvGPDwa57Gp5faOTnP1GPfmmnTHXynuDXRf3wzkOcTexg+OYtrVK5CLBAb
+	 iIA6tHUU16PLJECOSVqC0P4vv9O4/y7vRZARDu5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.17 013/175] mtd: rawnand: cadence: fix DMA device NULL pointer dereference
-Date: Thu, 27 Nov 2025 15:44:26 +0100
-Message-ID: <20251127144043.441819878@linuxfoundation.org>
+	Zhen Ni <zhen.ni@easystack.cn>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.17 014/175] fs: Fix uninitialized offp in statmount_string()
+Date: Thu, 27 Nov 2025 15:44:27 +0100
+Message-ID: <20251127144043.477578199@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -50,43 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+From: Zhen Ni <zhen.ni@easystack.cn>
 
-commit 5c56bf214af85ca042bf97f8584aab2151035840 upstream.
+commit 0778ac7df5137d5041783fadfc201f8fd55a1d9b upstream.
 
-The DMA device pointer `dma_dev` was being dereferenced before ensuring
-that `cdns_ctrl->dmac` is properly initialized.
+In statmount_string(), most flags assign an output offset pointer (offp)
+which is later updated with the string offset. However, the
+STATMOUNT_MNT_UIDMAP and STATMOUNT_MNT_GIDMAP cases directly set the
+struct fields instead of using offp. This leaves offp uninitialized,
+leading to a possible uninitialized dereference when *offp is updated.
 
-Move the assignment of `dma_dev` after successfully acquiring the DMA
-channel to ensure the pointer is valid before use.
+Fix it by assigning offp for UIDMAP and GIDMAP as well, keeping the code
+path consistent.
 
-Fixes: d76d22b5096c ("mtd: rawnand: cadence: use dma_map_resource for sdma address")
+Fixes: 37c4a9590e1e ("statmount: allow to retrieve idmappings")
+Fixes: e52e97f09fb6 ("statmount: let unset strings be empty")
 Cc: stable@vger.kernel.org
-Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Zhen Ni <zhen.ni@easystack.cn>
+Link: https://patch.msgid.link/20251013114151.664341-1-zhen.ni@easystack.cn
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/namespace.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mtd/nand/raw/cadence-nand-controller.c
-+++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -2871,7 +2871,7 @@ cadence_nand_irq_cleanup(int irqnum, str
- static int cadence_nand_init(struct cdns_nand_ctrl *cdns_ctrl)
- {
- 	dma_cap_mask_t mask;
--	struct dma_device *dma_dev = cdns_ctrl->dmac->device;
-+	struct dma_device *dma_dev;
- 	int ret;
- 
- 	cdns_ctrl->cdma_desc = dma_alloc_coherent(cdns_ctrl->dev,
-@@ -2915,6 +2915,7 @@ static int cadence_nand_init(struct cdns
- 		}
- 	}
- 
-+	dma_dev = cdns_ctrl->dmac->device;
- 	cdns_ctrl->io.iova_dma = dma_map_resource(dma_dev->dev, cdns_ctrl->io.dma,
- 						  cdns_ctrl->io.size,
- 						  DMA_BIDIRECTIONAL, 0);
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -5601,11 +5601,11 @@ static int statmount_string(struct kstat
+ 		ret = statmount_sb_source(s, seq);
+ 		break;
+ 	case STATMOUNT_MNT_UIDMAP:
+-		sm->mnt_uidmap = start;
++		offp = &sm->mnt_uidmap;
+ 		ret = statmount_mnt_uidmap(s, seq);
+ 		break;
+ 	case STATMOUNT_MNT_GIDMAP:
+-		sm->mnt_gidmap = start;
++		offp = &sm->mnt_gidmap;
+ 		ret = statmount_mnt_gidmap(s, seq);
+ 		break;
+ 	default:
 
 
