@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E941C26F2A7;
-	Thu, 27 Nov 2025 14:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3980027587C;
+	Thu, 27 Nov 2025 14:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254900; cv=none; b=eXE1ILTrH5mTo+02BfC7dWj9CNdllk4O22AH6KqSaH6O6q+Dcn6v5z0kbAKaNnQPjxmBg3GxYbWm7szDjAlgF7rpcFgdf6pvrcR3fukWXGRgxl7FhDmUoTNqupRTuyKtsbObiqwXzwhZ4pG0BHz8XXcioBUYF21wQH9hJ1MP0dY=
+	t=1764254903; cv=none; b=bUkjZUidy24RRCoesEho4nef/lIk8GQmzpzjTMP8/eEdhvKtYI4vcgEF/4/Iown0JcmWHz3gh3rP0V1a8jJNWCgt0YPPF+Myz7vu5SiPuxe2yCvJtbgAWHbWxGVKtlvumICbGq4/eMDuRkSR8Bbjh6MdKQUAMXjmui5ICJ70NNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254900; c=relaxed/simple;
-	bh=n0GVNggKO8Wrj0eFhXirnOa7Zi8oNfYj5mzRqqCK3jo=;
+	s=arc-20240116; t=1764254903; c=relaxed/simple;
+	bh=JpmWrk2Wzjoo6sb5zMEyhOfci3Vwxm9CBqDguBGFfgU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GeFkdpinZNcmRiHZjvxL1n2x4BxrRm3rzs2LLLkWKRR0Oo3socm45sQxMkGqVdKnbpQg8xssIoWjPyS+6yTuJOyS1+qteaop3Ur0zS6N3cc6b4Lw5taoegpYQftXqzI18ct98cSObnPvW0HY8ABiBL8AW9xSKD/xV+821r5SoCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IK9IP5Dk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G/IQtbfZx0LWekZkOBWDKIgw3PLUcY7CyCZV/2qDEE4OnAW/Jte8lS4x02Y9HGGNSw/BaIgnTU2+lK+NTh4ENdDS6J8+OUpVvvT4R+/CAKg5y/LuJs4YPsNfVYh/w2W14C718qwqBlzpbFkn1k90SH3eCdmfgLGv/m3WLlYXQI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bZ0HEC+f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IK9IP5Dk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76922C4CEF8;
-	Thu, 27 Nov 2025 14:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bZ0HEC+f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 997ADC4CEF8;
+	Thu, 27 Nov 2025 14:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254899;
-	bh=n0GVNggKO8Wrj0eFhXirnOa7Zi8oNfYj5mzRqqCK3jo=;
+	s=korg; t=1764254903;
+	bh=JpmWrk2Wzjoo6sb5zMEyhOfci3Vwxm9CBqDguBGFfgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IK9IP5Dkpjvaglj5KVKICvB2lpXGUd1MoIzE8oDSqyoGDUKM1qe/KhbBtK5v420uS
-	 GvCKvG3VTO6G09xnQ9hhX6GpcKczCXuVI95pq+zwSbfvTCNz9BlAF54EziTIbgKHUR
-	 bXYV5/IT+xpNrxVq3CjMhD4iG39QPodjR4yDDINU=
+	b=bZ0HEC+fm95p4w5wtG4i5G+SxM8+8gPFrtZNymiRrBl9lbBFa9Lp8nrPo9PdWY/Vx
+	 0Rvjv/VnuA/YUQmG7JWxvhoay3q3TUUshhn1fpxZDewluyJNf8zcWssvXto3lBv/Li
+	 mWoN7GsCbLk1m1mX5eMFBc9D9Yj/pGs0PGDzKNEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yongpeng Yang <yangyongpeng@xiaomi.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.6 06/86] exfat: check return value of sb_min_blocksize in exfat_read_boot_sector
-Date: Thu, 27 Nov 2025 15:45:22 +0100
-Message-ID: <20251127144028.040814717@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.6 07/86] mptcp: Disallow MPTCP subflows from sockmap
+Date: Thu, 27 Nov 2025 15:45:23 +0100
+Message-ID: <20251127144028.077969934@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -51,37 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongpeng Yang <yangyongpeng@xiaomi.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit f2c1f631630e01821fe4c3fdf6077bc7a8284f82 upstream.
+commit fbade4bd08ba52cbc74a71c4e86e736f059f99f7 upstream.
 
-sb_min_blocksize() may return 0. Check its return value to avoid
-accessing the filesystem super block when sb->s_blocksize is 0.
+The sockmap feature allows bpf syscall from userspace, or based on bpf
+sockops, replacing the sk_prot of sockets during protocol stack processing
+with sockmap's custom read/write interfaces.
+'''
+tcp_rcv_state_process()
+  subflow_syn_recv_sock()
+    tcp_init_transfer(BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB)
+      bpf_skops_established       <== sockops
+        bpf_sock_map_update(sk)   <== call bpf helper
+          tcp_bpf_update_proto()  <== update sk_prot
+'''
+Consider two scenarios:
 
-Cc: stable@vger.kernel.org # v6.15
-Fixes: 719c1e1829166d ("exfat: add super block operations")
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
-Link: https://patch.msgid.link/20251104125009.2111925-3-yangyongpeng.storage@gmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+1. When the server has MPTCP enabled and the client also requests MPTCP,
+   the sk passed to the BPF program is a subflow sk. Since subflows only
+   handle partial data, replacing their sk_prot is meaningless and will
+   cause traffic disruption.
+
+2. When the server has MPTCP enabled but the client sends a TCP SYN
+   without MPTCP, subflow_syn_recv_sock() performs a fallback on the
+   subflow, replacing the subflow sk's sk_prot with the native sk_prot.
+   '''
+   subflow_ulp_fallback()
+    subflow_drop_ctx()
+      mptcp_subflow_ops_undo_override()
+   '''
+   Subsequently, accept::mptcp_stream_accept::mptcp_fallback_tcp_ops()
+   converts the subflow to plain TCP.
+
+For the first case, we should prevent it from being combined with sockmap
+by setting sk_prot->psock_update_sk_prot to NULL, which will be blocked by
+sockmap's own flow.
+
+For the second case, since subflow_syn_recv_sock() has already restored
+sk_prot to native tcp_prot/tcpv6_prot, no further action is needed.
+
+Fixes: cec37a6e41aa ("mptcp: Handle MP_CAPABLE options for outgoing connections")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251111060307.194196-2-jiayuan.chen@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/exfat/super.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mptcp/subflow.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/exfat/super.c
-+++ b/fs/exfat/super.c
-@@ -411,7 +411,10 @@ static int exfat_read_boot_sector(struct
- 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -2095,6 +2095,10 @@ void __init mptcp_subflow_init(void)
+ 	tcp_prot_override = tcp_prot;
+ 	tcp_prot_override.release_cb = tcp_release_cb_override;
+ 	tcp_prot_override.diag_destroy = tcp_abort_override;
++#ifdef CONFIG_BPF_SYSCALL
++	/* Disable sockmap processing for subflows */
++	tcp_prot_override.psock_update_sk_prot = NULL;
++#endif
  
- 	/* set block size to read super block */
--	sb_min_blocksize(sb, 512);
-+	if (!sb_min_blocksize(sb, 512)) {
-+		exfat_err(sb, "unable to set blocksize");
-+		return -EINVAL;
-+	}
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+ 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
+@@ -2132,6 +2136,10 @@ void __init mptcp_subflow_init(void)
+ 	tcpv6_prot_override = tcpv6_prot;
+ 	tcpv6_prot_override.release_cb = tcp_release_cb_override;
+ 	tcpv6_prot_override.diag_destroy = tcp_abort_override;
++#ifdef CONFIG_BPF_SYSCALL
++	/* Disable sockmap processing for subflows */
++	tcpv6_prot_override.psock_update_sk_prot = NULL;
++#endif
+ #endif
  
- 	/* read boot sector */
- 	sbi->boot_bh = sb_bread(sb, 0);
+ 	mptcp_diag_subflow_init(&subflow_ulp_ops);
 
 
