@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDBF333456;
-	Thu, 27 Nov 2025 15:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6A82882A7;
+	Thu, 27 Nov 2025 15:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255846; cv=none; b=uKiJHEZmCW0aR6GLWBwFCIQGUlO7BKSCFiwrWHJ+urYULcftVaeiobhXbin2GfCu28eaHa8TC1MLoIN765+kaayrlC9M/c3OUj8ugGfhnGvZGg/XYc6+WPyEeOiAyn5r7prbyE28Bdm89gcMMn7gA+y8ro2jxq3xhBXo4qr5ajc=
+	t=1764255848; cv=none; b=hY6qUkWgadwnfxY2VMN38kRSIBaC7tk2G/+q4jAz2zV2TtkYoM7MvMEWJbImk1S6C+CTsoWKHVMqDzBE67DmNJ6F+h6luhpAi7fbDqeLPs4+rhTtFNGpmnE+DldvUuKMCI/ACNhWC5OsefcV0QgXSTd9VFyYnnMhhpJ54iSuCnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255846; c=relaxed/simple;
-	bh=f/woZQc9FmeTOsmbxutSiTHlmC4/92yz7XdnBzKgCgg=;
+	s=arc-20240116; t=1764255848; c=relaxed/simple;
+	bh=IJewKVXisSPRLVMVGUqWlQFUqn7WyShfKJkmiRzqBvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DYnTZUCZtQ/Uwr3cYIBYq89S+zX+JpPftxgw+ExGT3BdT1FMH1WkGeMRpBP0Kf0OuHVWUqculmt4w6JGo5mMP15t0cdofbkCqyFMVN84Td5pFcUUmhZJeZVRTf+5Nds8mXlcNQTY6gaD6HrlMdwrB3TAnyx8PnAzyUXjmJYRBXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQ54JMC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LQgP2EUxS0zrpx8dW9M+uD++L35nc/BZH3fDX1RnaYf3+24JphoYQqv1FdGFeMdL6f7xU8BPsaqNI7kHUbNz95gWMV/LpmyIjY+qmklbNWBr9CfborCEVO8GD61iMbA2dGuSQ8C/Jn0Hn6JS4MwwlfUqpg+lK2+wYkiNATlkgGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HZV+sxI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQ54JMC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773D9C4CEF8;
-	Thu, 27 Nov 2025 15:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HZV+sxI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A192C4CEF8;
+	Thu, 27 Nov 2025 15:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255845;
-	bh=f/woZQc9FmeTOsmbxutSiTHlmC4/92yz7XdnBzKgCgg=;
+	s=korg; t=1764255848;
+	bh=IJewKVXisSPRLVMVGUqWlQFUqn7WyShfKJkmiRzqBvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YQ54JMC8ERlA1L1HdgmyvmGPnoJzbVvXtod4s+vyaYu01tBO3xBBWvK0//jUTjmaZ
-	 9od6PYt75ChmpN70i9kGsvJFIE6zh42oNwjJbuONcWpY/L5C03xrf2r/dXtodetqxK
-	 ES3b2u2DpvvQGpnU1rd35Y6hiY+aBI5ZC55kra4I=
+	b=2HZV+sxIWMk6JHWnnnOJjsAPBc8MUcXiohTJR4LQFgqaQjN34hERvqONfY9XJQyn8
+	 YhyY8GNw5NLIxHnC8Q3GlSSUBCSrXzVOwI0qN/KRO8DK6CUqdMitGNoGX3Y84rcVGP
+	 BBSSzT+4sOU6yrBEosGiM2HXl5JPnNg4ocqbK7lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Toshiaki Makita <toshiaki.makita1@gmail.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Pei <cp0613@linux.alibaba.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 101/175] veth: more robust handing of race to avoid txq getting stuck
-Date: Thu, 27 Nov 2025 15:45:54 +0100
-Message-ID: <20251127144046.648079336@linuxfoundation.org>
+Subject: [PATCH 6.17 102/175] tools: riscv: Fixed misalignment of CSR related definitions
+Date: Thu, 27 Nov 2025 15:45:55 +0100
+Message-ID: <20251127144046.684790693@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,149 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesper Dangaard Brouer <hawk@kernel.org>
+From: Chen Pei <cp0613@linux.alibaba.com>
 
-[ Upstream commit 5442a9da69789741bfda39f34ee7f69552bf0c56 ]
+[ Upstream commit e2cb69263e797c0aa6676bcef23e9e27e44c83b0 ]
 
-Commit dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to
-reduce TX drops") introduced a race condition that can lead to a permanently
-stalled TXQ. This was observed in production on ARM64 systems (Ampere Altra
-Max).
+The file tools/arch/riscv/include/asm/csr.h borrows from
+arch/riscv/include/asm/csr.h, and subsequent modifications
+related to CSR should maintain consistency.
 
-The race occurs in veth_xmit(). The producer observes a full ptr_ring and
-stops the queue (netif_tx_stop_queue()). The subsequent conditional logic,
-intended to re-wake the queue if the consumer had just emptied it (if
-(__ptr_ring_empty(...)) netif_tx_wake_queue()), can fail. This leads to a
-"lost wakeup" where the TXQ remains stopped (QUEUE_STATE_DRV_XOFF) and
-traffic halts.
-
-This failure is caused by an incorrect use of the __ptr_ring_empty() API
-from the producer side. As noted in kernel comments, this check is not
-guaranteed to be correct if a consumer is operating on another CPU. The
-empty test is based on ptr_ring->consumer_head, making it reliable only for
-the consumer. Using this check from the producer side is fundamentally racy.
-
-This patch fixes the race by adopting the more robust logic from an earlier
-version V4 of the patchset, which always flushed the peer:
-
-(1) In veth_xmit(), the racy conditional wake-up logic and its memory barrier
-are removed. Instead, after stopping the queue, we unconditionally call
-__veth_xdp_flush(rq). This guarantees that the NAPI consumer is scheduled,
-making it solely responsible for re-waking the TXQ.
-  This handles the race where veth_poll() consumes all packets and completes
-NAPI *before* veth_xmit() on the producer side has called netif_tx_stop_queue.
-The __veth_xdp_flush(rq) will observe rx_notify_masked is false and schedule
-NAPI.
-
-(2) On the consumer side, the logic for waking the peer TXQ is moved out of
-veth_xdp_rcv() and placed at the end of the veth_poll() function. This
-placement is part of fixing the race, as the netif_tx_queue_stopped() check
-must occur after rx_notify_masked is potentially set to false during NAPI
-completion.
-  This handles the race where veth_poll() consumes all packets, but haven't
-finished (rx_notify_masked is still true). The producer veth_xmit() stops the
-TXQ and __veth_xdp_flush(rq) will observe rx_notify_masked is true, meaning
-not starting NAPI.  Then veth_poll() change rx_notify_masked to false and
-stops NAPI.  Before exiting veth_poll() will observe TXQ is stopped and wake
-it up.
-
-Fixes: dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops")
-Reviewed-by: Toshiaki Makita <toshiaki.makita1@gmail.com>
-Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/176295323282.307447.14790015927673763094.stgit@firesoul
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chen Pei <cp0613@linux.alibaba.com>
+Link: https://patch.msgid.link/20251114071215.816-1-cp0613@linux.alibaba.com
+[pjw@kernel.org: dropped Fixes: lines for patches that weren't broken; removed superfluous blank line]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 38 ++++++++++++++++++++------------------
- 1 file changed, 20 insertions(+), 18 deletions(-)
+ drivers/perf/riscv_pmu_sbi.c       | 2 +-
+ tools/arch/riscv/include/asm/csr.h | 5 +++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index a3046142cb8e2..35dd89aff4a94 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -392,14 +392,12 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
- 		}
- 		/* Restore Eth hdr pulled by dev_forward_skb/eth_type_trans */
- 		__skb_push(skb, ETH_HLEN);
--		/* Depend on prior success packets started NAPI consumer via
--		 * __veth_xdp_flush(). Cancel TXQ stop if consumer stopped,
--		 * paired with empty check in veth_poll().
--		 */
- 		netif_tx_stop_queue(txq);
--		smp_mb__after_atomic();
--		if (unlikely(__ptr_ring_empty(&rq->xdp_ring)))
--			netif_tx_wake_queue(txq);
-+		/* Makes sure NAPI peer consumer runs. Consumer is responsible
-+		 * for starting txq again, until then ndo_start_xmit (this
-+		 * function) will not be invoked by the netstack again.
-+		 */
-+		__veth_xdp_flush(rq);
- 		break;
- 	case NET_RX_DROP: /* same as NET_XMIT_DROP */
- drop:
-@@ -900,17 +898,9 @@ static int veth_xdp_rcv(struct veth_rq *rq, int budget,
- 			struct veth_xdp_tx_bq *bq,
- 			struct veth_stats *stats)
- {
--	struct veth_priv *priv = netdev_priv(rq->dev);
--	int queue_idx = rq->xdp_rxq.queue_index;
--	struct netdev_queue *peer_txq;
--	struct net_device *peer_dev;
- 	int i, done = 0, n_xdpf = 0;
- 	void *xdpf[VETH_XDP_BATCH];
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index 698de8ddf895b..824209f0a3641 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -1019,7 +1019,7 @@ static irqreturn_t pmu_sbi_ovf_handler(int irq, void *dev)
+ 			/* compute hardware counter index */
+ 			hidx = info->csr - CSR_CYCLE;
  
--	/* NAPI functions as RCU section */
--	peer_dev = rcu_dereference_check(priv->peer, rcu_read_lock_bh_held());
--	peer_txq = peer_dev ? netdev_get_tx_queue(peer_dev, queue_idx) : NULL;
--
- 	for (i = 0; i < budget; i++) {
- 		void *ptr = __ptr_ring_consume(&rq->xdp_ring);
+-		/* check if the corresponding bit is set in sscountovf or overflow mask in shmem */
++		/* check if the corresponding bit is set in scountovf or overflow mask in shmem */
+ 		if (!(overflow & BIT(hidx)))
+ 			continue;
  
-@@ -959,9 +949,6 @@ static int veth_xdp_rcv(struct veth_rq *rq, int budget,
- 	rq->stats.vs.xdp_packets += done;
- 	u64_stats_update_end(&rq->stats.syncp);
+diff --git a/tools/arch/riscv/include/asm/csr.h b/tools/arch/riscv/include/asm/csr.h
+index 0dfc09254f99a..1cd824aaa3ba2 100644
+--- a/tools/arch/riscv/include/asm/csr.h
++++ b/tools/arch/riscv/include/asm/csr.h
+@@ -167,7 +167,8 @@
+ #define VSIP_TO_HVIP_SHIFT	(IRQ_VS_SOFT - IRQ_S_SOFT)
+ #define VSIP_VALID_MASK		((_AC(1, UL) << IRQ_S_SOFT) | \
+ 				 (_AC(1, UL) << IRQ_S_TIMER) | \
+-				 (_AC(1, UL) << IRQ_S_EXT))
++				 (_AC(1, UL) << IRQ_S_EXT) | \
++				 (_AC(1, UL) << IRQ_PMU_OVF))
  
--	if (peer_txq && unlikely(netif_tx_queue_stopped(peer_txq)))
--		netif_tx_wake_queue(peer_txq);
--
- 	return done;
- }
+ /* AIA CSR bits */
+ #define TOPI_IID_SHIFT		16
+@@ -280,7 +281,7 @@
+ #define CSR_HPMCOUNTER30H	0xc9e
+ #define CSR_HPMCOUNTER31H	0xc9f
  
-@@ -969,12 +956,20 @@ static int veth_poll(struct napi_struct *napi, int budget)
- {
- 	struct veth_rq *rq =
- 		container_of(napi, struct veth_rq, xdp_napi);
-+	struct veth_priv *priv = netdev_priv(rq->dev);
-+	int queue_idx = rq->xdp_rxq.queue_index;
-+	struct netdev_queue *peer_txq;
- 	struct veth_stats stats = {};
-+	struct net_device *peer_dev;
- 	struct veth_xdp_tx_bq bq;
- 	int done;
+-#define CSR_SSCOUNTOVF		0xda0
++#define CSR_SCOUNTOVF		0xda0
  
- 	bq.count = 0;
- 
-+	/* NAPI functions as RCU section */
-+	peer_dev = rcu_dereference_check(priv->peer, rcu_read_lock_bh_held());
-+	peer_txq = peer_dev ? netdev_get_tx_queue(peer_dev, queue_idx) : NULL;
-+
- 	xdp_set_return_frame_no_direct();
- 	done = veth_xdp_rcv(rq, budget, &bq, &stats);
- 
-@@ -996,6 +991,13 @@ static int veth_poll(struct napi_struct *napi, int budget)
- 		veth_xdp_flush(rq, &bq);
- 	xdp_clear_return_frame_no_direct();
- 
-+	/* Release backpressure per NAPI poll */
-+	smp_rmb(); /* Paired with netif_tx_stop_queue set_bit */
-+	if (peer_txq && netif_tx_queue_stopped(peer_txq)) {
-+		txq_trans_cond_update(peer_txq);
-+		netif_tx_wake_queue(peer_txq);
-+	}
-+
- 	return done;
- }
- 
+ #define CSR_SSTATUS		0x100
+ #define CSR_SIE			0x104
 -- 
 2.51.0
 
