@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DD02882C9;
-	Thu, 27 Nov 2025 14:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA672882C9;
+	Thu, 27 Nov 2025 14:53:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255183; cv=none; b=n5+OfhtvwX4IYFQA+kpiBjaJ3H7Km0jLTHvp2TUwy5ejhpbhtC+GTgf9KVMKNIhK4mHiM5h7XnaBRYOCcRzWevaFEC7ce5A5QJ5qrCArSVnNgV6AJUrVhyeBjqz9I5GRxYTBJtlvhVLi7c81nTSFLSHPAI/SUPFhfnZdYifa1Dk=
+	t=1764255186; cv=none; b=soYsF1s+sL/ea2gsiCwGovFpHrFJOphZIzu1eqraIU+6cB89ZViG/Ofw8hzmhiwI0Wg7hv/TD2VNqUy7reHtjHJW7g44//eP8S90CzX1R5tM38zWPG+3baKF3uMOz4QkwAVxX1+LeC6sUtGnUWZivztncoXzNcm20MNSIYYi3C4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255183; c=relaxed/simple;
-	bh=IxgFrzW7t6O0doFMBb3gWQ2Vci29qYmY2dcxwFTVXsg=;
+	s=arc-20240116; t=1764255186; c=relaxed/simple;
+	bh=8JYn7KNcga02Q336UyqUnsZIKLRDKed/6CWnLYRIR0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYrqlaqBuci0kSMoglIoigAsZr/xydhuXsIk2IZnQAcS7OQ535dishVAogF7858rgwObvUtUFq89N6kGJoySVA+KFSlw0fOZHEhCuorgxh3zha1Jkg5C0gRDUSiYEKuX8gd/Dv5zLq+XIFT0swDXM7Gm3gJuMVZVd7V5MZKxmMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYclitTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErjSlFo1I+RegZ/0xOxR34wS4x1AvbvbuPgpHNVxvKB/29d+McyZM5BP/xufHHn/jvDhP7DLWIfbm2nb/SVyMFjkl/pEMzAffuF/sTssvsAyZwJENFmJkS9bWVLc+W17XAicgJ5WxGr9VSXEOacjgOSB/7PdPMvYG96XYQrlhLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XsfiEsLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYclitTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F84AC4CEF8;
-	Thu, 27 Nov 2025 14:53:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XsfiEsLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E466AC4CEF8;
+	Thu, 27 Nov 2025 14:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255183;
-	bh=IxgFrzW7t6O0doFMBb3gWQ2Vci29qYmY2dcxwFTVXsg=;
+	s=korg; t=1764255186;
+	bh=8JYn7KNcga02Q336UyqUnsZIKLRDKed/6CWnLYRIR0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yYclitTMyw+FQW56OtANibO/O5fpMP+Y4GoAVxk8LZSSA0MsfCPtUFe0EOy9kZtIf
-	 vRG9xt/ZZL/eKtOoaVbmzvdA3DaS4ylw1GMOOBg/tutOLfrAIkVOUcbP+7QCI20bF5
-	 eeGnImQ3TXwevUbZhek/Bu9kq0fEStz8X4cvRH7E=
+	b=XsfiEsLw3OKD+qyQ6aYMcxdKwzuoU6yVWtkENwWl84Y1h+/E1kXlEgl5u1uTn8z2s
+	 /Xj/m/QCq9ijdt8IxNTarvJS77VU4HPeu9vjAc0jKWAuRvZqHW9GOi6qvcSeNZeZ2H
+	 xgcWFEJLu/9HuwICr8wVw72nWWe+ru+zhUg/6tCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 037/112] mptcp: fix ack generation for fallback msk
-Date: Thu, 27 Nov 2025 15:45:39 +0100
-Message-ID: <20251127144034.198734129@linuxfoundation.org>
+Subject: [PATCH 6.12 038/112] mptcp: fix duplicate reset on fastclose
+Date: Thu, 27 Nov 2025 15:45:40 +0100
+Message-ID: <20251127144034.235543706@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -54,83 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit 5e15395f6d9ec07395866c5511f4b4ac566c0c9b upstream.
+commit ae155060247be8dcae3802a95bd1bdf93ab3215d upstream.
 
-mptcp_cleanup_rbuf() needs to know the last most recent, mptcp-level
-rcv_wnd sent, and such information is tracked into the msk->old_wspace
-field, updated at ack transmission time by mptcp_write_options().
+The CI reports sporadic failures of the fastclose self-tests. The root
+cause is a duplicate reset, not carrying the relevant MPTCP option.
+In the failing scenario the bad reset is received by the peer before
+the fastclose one, preventing the reception of the latter.
 
-Fallback socket do not add any mptcp options, such helper is never
-invoked, and msk->old_wspace value remain stale. That in turn makes
-ack generation at recvmsg() time quite random.
+Indeed there is window of opportunity at fastclose time for the
+following race:
 
-Address the issue ensuring mptcp_write_options() is invoked even for
-fallback sockets, and just update the needed info in such a case.
+  mptcp_do_fastclose
+    __mptcp_close_ssk
+      __tcp_close()
+        tcp_set_state() [1]
+        tcp_send_active_reset() [2]
 
-The issue went unnoticed for a long time, as mptcp currently overshots
-the fallback socket receive buffer autotune significantly. It is going
-to change in the near future.
+After [1] the stack will send reset to in-flight data reaching the now
+closed port. Such reset may race with [2].
 
-Fixes: e3859603ba13 ("mptcp: better msk receive window updates")
+Address the issue explicitly sending a single reset on fastclose before
+explicitly moving the subflow to close status.
+
+Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/594
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/596
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Geliang Tang <geliang@kernel.org>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-1-806d3781c95f@kernel.org
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-6-806d3781c95f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |   36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -839,8 +839,11 @@ bool mptcp_established_options(struct so
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2461,7 +2461,6 @@ bool __mptcp_retransmit_pending_data(str
  
- 	opts->suboptions = 0;
+ /* flags for __mptcp_close_ssk() */
+ #define MPTCP_CF_PUSH		BIT(1)
+-#define MPTCP_CF_FASTCLOSE	BIT(2)
  
-+	/* Force later mptcp_write_options(), but do not use any actual
-+	 * option space.
-+	 */
- 	if (unlikely(__mptcp_check_fallback(msk) && !mptcp_check_infinite_map(skb)))
--		return false;
-+		return true;
+ /* be sure to send a reset only if the caller asked for it, also
+  * clean completely the subflow status when the subflow reaches
+@@ -2472,7 +2471,7 @@ static void __mptcp_subflow_disconnect(s
+ 				       unsigned int flags)
+ {
+ 	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
+-	    (flags & MPTCP_CF_FASTCLOSE)) {
++	    subflow->send_fastclose) {
+ 		/* The MPTCP code never wait on the subflow sockets, TCP-level
+ 		 * disconnect should never fail
+ 		 */
+@@ -2519,14 +2518,8 @@ static void __mptcp_close_ssk(struct soc
  
- 	if (unlikely(skb && TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST)) {
- 		if (mptcp_established_options_fastclose(sk, &opt_size, remaining, opts) ||
-@@ -1319,6 +1322,20 @@ update_wspace:
- 	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
+ 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
+ 
+-	if ((flags & MPTCP_CF_FASTCLOSE) && !__mptcp_check_fallback(msk)) {
+-		/* be sure to force the tcp_close path
+-		 * to generate the egress reset
+-		 */
+-		ssk->sk_lingertime = 0;
+-		sock_set_flag(ssk, SOCK_LINGER);
+-		subflow->send_fastclose = 1;
+-	}
++	if (subflow->send_fastclose && ssk->sk_state != TCP_CLOSE)
++		tcp_set_state(ssk, TCP_CLOSE);
+ 
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+@@ -2829,9 +2822,26 @@ static void mptcp_do_fastclose(struct so
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+ 	mptcp_set_state(sk, TCP_CLOSE);
+-	mptcp_for_each_subflow_safe(msk, subflow, tmp)
+-		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow),
+-				  subflow, MPTCP_CF_FASTCLOSE);
++
++	/* Explicitly send the fastclose reset as need */
++	if (__mptcp_check_fallback(msk))
++		return;
++
++	mptcp_for_each_subflow_safe(msk, subflow, tmp) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++
++		lock_sock(ssk);
++
++		/* Some subflow socket states don't allow/need a reset.*/
++		if ((1 << ssk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE))
++			goto unlock;
++
++		subflow->send_fastclose = 1;
++		tcp_send_active_reset(ssk, ssk->sk_allocation,
++				      SK_RST_REASON_TCP_ABORT_ON_CLOSE);
++unlock:
++		release_sock(ssk);
++	}
  }
  
-+static void mptcp_track_rwin(struct tcp_sock *tp)
-+{
-+	const struct sock *ssk = (const struct sock *)tp;
-+	struct mptcp_subflow_context *subflow;
-+	struct mptcp_sock *msk;
-+
-+	if (!ssk)
-+		return;
-+
-+	subflow = mptcp_subflow_ctx(ssk);
-+	msk = mptcp_sk(subflow->conn);
-+	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
-+}
-+
- __sum16 __mptcp_make_csum(u64 data_seq, u32 subflow_seq, u16 data_len, __wsum sum)
- {
- 	struct csum_pseudo_header header;
-@@ -1611,6 +1628,10 @@ mp_rst:
- 				      opts->reset_transient,
- 				      opts->reset_reason);
- 		return;
-+	} else if (unlikely(!opts->suboptions)) {
-+		/* Fallback to TCP */
-+		mptcp_track_rwin(tp);
-+		return;
- 	}
- 
- 	if (OPTION_MPTCP_PRIO & opts->suboptions) {
+ static void mptcp_worker(struct work_struct *work)
 
 
