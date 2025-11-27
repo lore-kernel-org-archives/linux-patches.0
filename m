@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34ED2882BB;
-	Thu, 27 Nov 2025 14:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C970925BEE8;
+	Thu, 27 Nov 2025 14:50:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255023; cv=none; b=Zwu3/d2P9N3jVIVKuhrvEcAszRTnsonblYyyxv/uW/CCDrSCByiP700P6OtRFmOzS7vhGb3Fxck6s9t6pHxu+Zo61GEutyFb9h5E6H8Qsb7sM9osE4zKD8ARwEQFMUaJMLiAV9MKzkToQUV+yjmW8gRGYtZe0woGsYo1Hqaoh2s=
+	t=1764255026; cv=none; b=pxujvMo15MJCzdS91b1q58C6S/GCHc2pzDHOpevaDSb+IR8SbjnwBX0shriNz34/RKV7nLOvc9bvh+hV2aywA2UerhPhlqjV8B7IVt3O3McIvj2wTolf8cjdcy7YYl9x2VcImwj60dFOjhyQPWfbNqXO/eoukGg2UuRsQiSlHXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255023; c=relaxed/simple;
-	bh=hK/qYLmUTPVWgbNdvegebY9Ezrq+KHz4QrUDjSxpKYk=;
+	s=arc-20240116; t=1764255026; c=relaxed/simple;
+	bh=Wke53vn3U5yfYhFHMXOYRPEozYi4Er+yuBvUNaJ0yDQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZYTTskxddCGOAmKYgf5c3XvnuFROFZV7U/LvzqpQ9VmVbnyanvxFhZIDzBWsyzYCaBnz8chD/hxCvDO1DUsACUjP7LpxySAkO85ydQGAeZkQksluhkFCoTC+LJEIP4EI1YDhHqKbzIQ6CE4LshCglf7DOeHtXMfe7J2gCRWstpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z3BYQgRa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kSetD8YcSKeMZifqY9kpxsJVZ7qGtfyLZmih/kYusUOOhmq+Zjg9Yxo6Ms8hb3P4UOvU/sPE+RTRnbS72D3ViaNHe6shBBdIK7oirqFG1HSNV2Ev7cATKebObXsDEvaQeIcdRjl5s8lkc4mKjpD98VfDjwvOYZqBpJ1+mdQh1QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iS4pqBxh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z3BYQgRa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4BBC4CEF8;
-	Thu, 27 Nov 2025 14:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iS4pqBxh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9B8C4CEF8;
+	Thu, 27 Nov 2025 14:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255023;
-	bh=hK/qYLmUTPVWgbNdvegebY9Ezrq+KHz4QrUDjSxpKYk=;
+	s=korg; t=1764255026;
+	bh=Wke53vn3U5yfYhFHMXOYRPEozYi4Er+yuBvUNaJ0yDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3BYQgRadt1eUaOTbUs0egGgQG92b86/UBmWP8NAeW2fc+DZeEF2OgRIoMU0EI2Gm
-	 jSsxLQna6YM+B/G45IQz/BFISnP49b215P/et0K+xNHuqTrivA42WqfavZiEnPgpYO
-	 uQ/R2QCwb0ltQviPqi84C4oVvOnpBcuX4uLH9Pco=
+	b=iS4pqBxhNI3whiGpnC2o18+bBTUPLjdB8DZZQ6EtnBsKjmwsWP53CyQJCXzB+ZoWM
+	 eg8AFJ1LbUNxEoNSqR79Px/DSpjAcROeOwfPHxZjfhujZsT5gjSNqScJrcjz5j639f
+	 SHpZwaQhB3BJMrP3OKSJajWMFA7xSVTmpakObtYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Baocong Liu <baocong.liu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Bin Lan <lanbincn@139.com>,
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 68/86] f2fs: compress: fix UAF of f2fs_inode_info in f2fs_free_dic
-Date: Thu, 27 Nov 2025 15:46:24 +0100
-Message-ID: <20251127144030.317555881@linuxfoundation.org>
+Subject: [PATCH 6.6 69/86] ALSA: usb-audio: fix uac2 clock source at terminal parser
+Date: Thu, 27 Nov 2025 15:46:25 +0100
+Message-ID: <20251127144030.353402803@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -49,226 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: René Rebe <rene@exactco.de>
 
-[ Upstream commit 39868685c2a94a70762bc6d77dc81d781d05bff5 ]
+[ Upstream commit d26e9f669cc0a6a85cf17180c09a6686db9f4002 ]
 
-The decompress_io_ctx may be released asynchronously after
-I/O completion. If this file is deleted immediately after read,
-and the kworker of processing post_read_wq has not been executed yet
-due to high workloads, It is possible that the inode(f2fs_inode_info)
-is evicted and freed before it is used f2fs_free_dic.
+Since 8b3a087f7f65 ("ALSA: usb-audio: Unify virtual type units type to
+UAC3 values") usb-audio is using UAC3_CLOCK_SOURCE instead of
+bDescriptorSubtype, later refactored with e0ccdef9265 ("ALSA: usb-audio:
+Clean up check_input_term()") into parse_term_uac2_clock_source().
 
-    The UAF case as below:
-    Thread A                                      Thread B
-    - f2fs_decompress_end_io
-     - f2fs_put_dic
-      - queue_work
-        add free_dic work to post_read_wq
-                                                   - do_unlink
-                                                    - iput
-                                                     - evict
-                                                      - call_rcu
-    This file is deleted after read.
+This breaks the clock source selection for at least my
+1397:0003 BEHRINGER International GmbH FCA610 Pro.
 
-    Thread C                                 kworker to process post_read_wq
-    - rcu_do_batch
-     - f2fs_free_inode
-      - kmem_cache_free
-     inode is freed by rcu
-                                             - process_scheduled_works
-                                              - f2fs_late_free_dic
-                                               - f2fs_free_dic
-                                                - f2fs_release_decomp_mem
-                                      read (dic->inode)->i_compress_algorithm
+Fix by using UAC2_CLOCK_SOURCE in parse_term_uac2_clock_source().
 
-This patch store compress_algorithm and sbi in dic to avoid inode UAF.
-
-In addition, the previous solution is deprecated in [1] may cause system hang.
-[1] https://lore.kernel.org/all/c36ab955-c8db-4a8b-a9d0-f07b5f426c3f@kernel.org
-
-Cc: Daeho Jeong <daehojeong@google.com>
-Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Baocong Liu <baocong.liu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ In Linux 6.6.y, the f2fs_vmalloc() function parameters are not
-  related to the f2fs_sb_info structure, the code changes for
-  f2fs_vmalloc() have not been backported. ]
-Signed-off-by: Bin Lan <lanbincn@139.com>
+Fixes: 8b3a087f7f65 ("ALSA: usb-audio: Unify virtual type units type to UAC3 values")
+Signed-off-by: René Rebe <rene@exactco.de>
+Link: https://patch.msgid.link/20251125.154149.1121389544970412061.rene@exactco.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 38 +++++++++++++++++++-------------------
- fs/f2fs/f2fs.h     |  2 ++
- 2 files changed, 21 insertions(+), 19 deletions(-)
+ sound/usb/mixer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 3bf7a6b40cbed..df7404214f34e 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -209,13 +209,13 @@ static int lzo_decompress_pages(struct decompress_io_ctx *dic)
- 	ret = lzo1x_decompress_safe(dic->cbuf->cdata, dic->clen,
- 						dic->rbuf, &dic->rlen);
- 	if (ret != LZO_E_OK) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"lzo decompress failed, ret:%d", ret);
- 		return -EIO;
- 	}
- 
- 	if (dic->rlen != PAGE_SIZE << dic->log_cluster_size) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"lzo invalid rlen:%zu, expected:%lu",
- 				dic->rlen, PAGE_SIZE << dic->log_cluster_size);
- 		return -EIO;
-@@ -289,13 +289,13 @@ static int lz4_decompress_pages(struct decompress_io_ctx *dic)
- 	ret = LZ4_decompress_safe(dic->cbuf->cdata, dic->rbuf,
- 						dic->clen, dic->rlen);
- 	if (ret < 0) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"lz4 decompress failed, ret:%d", ret);
- 		return -EIO;
- 	}
- 
- 	if (ret != PAGE_SIZE << dic->log_cluster_size) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"lz4 invalid ret:%d, expected:%lu",
- 				ret, PAGE_SIZE << dic->log_cluster_size);
- 		return -EIO;
-@@ -423,7 +423,7 @@ static int zstd_init_decompress_ctx(struct decompress_io_ctx *dic)
- 
- 	stream = zstd_init_dstream(max_window_size, workspace, workspace_size);
- 	if (!stream) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"%s zstd_init_dstream failed", __func__);
- 		vfree(workspace);
- 		return -EIO;
-@@ -459,14 +459,14 @@ static int zstd_decompress_pages(struct decompress_io_ctx *dic)
- 
- 	ret = zstd_decompress_stream(stream, &outbuf, &inbuf);
- 	if (zstd_is_error(ret)) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"%s zstd_decompress_stream failed, ret: %d",
- 				__func__, zstd_get_error_code(ret));
- 		return -EIO;
- 	}
- 
- 	if (dic->rlen != outbuf.pos) {
--		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
-+		f2fs_err_ratelimited(dic->sbi,
- 				"%s ZSTD invalid rlen:%zu, expected:%lu",
- 				__func__, dic->rlen,
- 				PAGE_SIZE << dic->log_cluster_size);
-@@ -726,7 +726,7 @@ static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
- 
- void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 787cdeddbdf44..e19d962fab870 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -930,7 +930,7 @@ static int parse_term_uac2_clock_source(struct mixer_build *state,
  {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
-+	struct f2fs_sb_info *sbi = dic->sbi;
- 	struct f2fs_inode_info *fi = F2FS_I(dic->inode);
- 	const struct f2fs_compress_ops *cops =
- 			f2fs_cops[fi->i_compress_algorithm];
-@@ -799,7 +799,7 @@ void f2fs_end_read_compressed_page(struct page *page, bool failed,
- {
- 	struct decompress_io_ctx *dic =
- 			(struct decompress_io_ctx *)page_private(page);
--	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
-+	struct f2fs_sb_info *sbi = dic->sbi;
+ 	struct uac_clock_source_descriptor *d = p1;
  
- 	dec_page_count(sbi, F2FS_RD_DATA);
- 
-@@ -1579,14 +1579,13 @@ static inline bool allow_memalloc_for_decomp(struct f2fs_sb_info *sbi,
- static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
- 		bool pre_alloc)
- {
--	const struct f2fs_compress_ops *cops =
--		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
-+	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
- 	int i;
- 
--	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
-+	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
- 		return 0;
- 
--	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
-+	dic->tpages = page_array_alloc(dic->sbi, dic->cluster_size);
- 	if (!dic->tpages)
- 		return -ENOMEM;
- 
-@@ -1616,10 +1615,9 @@ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
- static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
- 		bool bypass_destroy_callback, bool pre_alloc)
- {
--	const struct f2fs_compress_ops *cops =
--		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
-+	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
- 
--	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
-+	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
- 		return;
- 
- 	if (!bypass_destroy_callback && cops->destroy_decompress_ctx)
-@@ -1654,6 +1652,8 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
- 
- 	dic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
- 	dic->inode = cc->inode;
-+	dic->sbi = sbi;
-+	dic->compress_algorithm = F2FS_I(cc->inode)->i_compress_algorithm;
- 	atomic_set(&dic->remaining_pages, cc->nr_cpages);
- 	dic->cluster_idx = cc->cluster_idx;
- 	dic->cluster_size = cc->cluster_size;
-@@ -1697,7 +1697,8 @@ static void f2fs_free_dic(struct decompress_io_ctx *dic,
- 		bool bypass_destroy_callback)
- {
- 	int i;
--	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
-+	/* use sbi in dic to avoid UFA of dic->inode*/
-+	struct f2fs_sb_info *sbi = dic->sbi;
- 
- 	f2fs_release_decomp_mem(dic, bypass_destroy_callback, true);
- 
-@@ -1740,8 +1741,7 @@ static void f2fs_put_dic(struct decompress_io_ctx *dic, bool in_task)
- 			f2fs_free_dic(dic, false);
- 		} else {
- 			INIT_WORK(&dic->free_work, f2fs_late_free_dic);
--			queue_work(F2FS_I_SB(dic->inode)->post_read_wq,
--					&dic->free_work);
-+			queue_work(dic->sbi->post_read_wq, &dic->free_work);
- 		}
- 	}
- }
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index ab2ddd09d8131..406243395b943 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1493,6 +1493,7 @@ struct compress_io_ctx {
- struct decompress_io_ctx {
- 	u32 magic;			/* magic number to indicate page is compressed */
- 	struct inode *inode;		/* inode the context belong to */
-+	struct f2fs_sb_info *sbi;	/* f2fs_sb_info pointer */
- 	pgoff_t cluster_idx;		/* cluster index number */
- 	unsigned int cluster_size;	/* page count in cluster */
- 	unsigned int log_cluster_size;	/* log of cluster size */
-@@ -1533,6 +1534,7 @@ struct decompress_io_ctx {
- 
- 	bool failed;			/* IO error occurred before decompression? */
- 	bool need_verity;		/* need fs-verity verification after decompression? */
-+	unsigned char compress_algorithm;	/* backup algorithm type */
- 	void *private;			/* payload buffer for specified decompression algorithm */
- 	void *private2;			/* extra payload buffer */
- 	struct work_struct verity_work;	/* work to verify the decompressed pages */
+-	term->type = UAC3_CLOCK_SOURCE << 16; /* virtual type */
++	term->type = UAC2_CLOCK_SOURCE << 16; /* virtual type */
+ 	term->id = id;
+ 	term->name = d->iClockSource;
+ 	return 0;
 -- 
 2.51.0
 
