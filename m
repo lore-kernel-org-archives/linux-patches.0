@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043F3334363;
-	Thu, 27 Nov 2025 14:59:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD27531281E;
+	Thu, 27 Nov 2025 14:59:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255544; cv=none; b=R60a5vfPQFwgKmJCB+Hs9r3L7nq8jexXyMmggS+KpBcHIZBp4SOlsB162cuTea3Rq/yA+VrTQExPUeZgPBYjFRT3zGAUZt4+//k9G6ilaMMTFfg8FqTXNRFmurtIL8nO6hxN0/5w2U9teXTqBQ2QzL1U4IDd1/UlH+j/lGQqXlY=
+	t=1764255546; cv=none; b=AhmJfg8FmGecJ6w360LdcfLeeAuJhSEBEVdieZz9HQAICSA2sDig/d6omROnqkUCXn52VQz5/gbZ0sMM+U+fPkwPH/SQ4yfk+IjZZijd7Khc5JFaxHBmG2sq6wqzLQniQddLk5ezMEmLiSdoRb2pW4xM0vBPVv1zKdyunEmvPSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255544; c=relaxed/simple;
-	bh=iwSSfd6taaiAkVLl6Q4zJsiaywsQo2Pr2T3OrYyDYX4=;
+	s=arc-20240116; t=1764255546; c=relaxed/simple;
+	bh=+x7qne16A5nBEZjpxToRS9iv+lMywp5UT6pxxzoc0Ew=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z2vTgqORcPtcAl2x/qtu7c8Ho9NojT2y2an6CgSipfAbCtJ91tzhcDKZjgsNCNiSg4YbnZ9EVSFcxGTDyQF0DUzEw+JPdoLtj8Ru1G5Oi/0F4/y2RVIlnDkK8ldYaAVHkGDaIXGkjWZW8Cxn9EUzfBVoL8ypbPHs/PpqMvtBUr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DItABDy3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eS2zu/VINBFC7EmGbOvGH5eSNawqHmk4kfmhktnGFgt6QGntzzgfDrglQmTwrqEgCqwodAEt+pbhSKLlBaK4ppj8m+KEpqUYgbGXZ4+u0YC+YoHkPOQVkQxLZTyuSY3yUpScgWgdanCjFpNDc2xy/mdVdfGqIxScweI9bYpuvI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/tWOI4g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DItABDy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC7AC4CEF8;
-	Thu, 27 Nov 2025 14:59:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/tWOI4g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E0DC4CEF8;
+	Thu, 27 Nov 2025 14:59:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255543;
-	bh=iwSSfd6taaiAkVLl6Q4zJsiaywsQo2Pr2T3OrYyDYX4=;
+	s=korg; t=1764255546;
+	bh=+x7qne16A5nBEZjpxToRS9iv+lMywp5UT6pxxzoc0Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DItABDy3H6e14n95wc8/mbkwfiKTfyayw7/SlAJWTlq4rkHWm32trXNR81SzwR3wB
-	 JOsqTygHjM6xq597B3CeSMEUqYmNpCOdzWz59Atcyov74fy4s5YYoyAhBbgA+ITr9R
-	 xmebFT/6nFce+R3vjay2MF6MGmHbAxiUYiGe5+IE=
+	b=q/tWOI4gjblig1jzHydsopHtznqO+T1b36SVFQGdhmcNOzKw8aJP3VaFKE7qDgil1
+	 b2uwTv3NkStDKDFvGd+8lf7Ssj0IUlLEThSXqp4r4Ks/ji1KUZd5Rs+8mbCv30JZte
+	 ubliK7cVuPBLGPLA3FXAUby57CY/VKtGA87TUNHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>
-Subject: [PATCH 6.17 008/175] reset: imx8mp-audiomix: Fix bad mask values
-Date: Thu, 27 Nov 2025 15:44:21 +0100
-Message-ID: <20251127144043.261349129@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.17 009/175] arm64: dts: rockchip: include rk3399-base instead of rk3399 in rk3399-op1
+Date: Thu, 27 Nov 2025 15:44:22 +0100
+Message-ID: <20251127144043.297326799@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -53,49 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-commit 997c06330fd5c2e220b692f2a358986c6c8fd5a2 upstream.
+commit 08d70143e3033d267507deb98a5fd187df3e6640 upstream.
 
-As per the i.MX8MP TRM, section 14.2 "AUDIO_BLK_CTRL", table 14.2.3.1.1
-"memory map", the definition of the EARC control register shows that the
-EARC controller software reset is controlled via bit 0, while the EARC PHY
-software reset is controlled via bit 1.
+In commit 296602b8e5f7 ("arm64: dts: rockchip: Move RK3399 OPPs to dtsi
+files for SoC variants"), everything shared between variants of RK3399
+was put into rk3399-base.dtsi and the rest in variant-specific DTSI,
+such as rk3399-t, rk3399-op1, rk3399, etc.
+Therefore, the variant-specific DTSI should include rk3399-base.dtsi and
+not another variant's DTSI.
 
-This means that the current definitions of IMX8MP_AUDIOMIX_EARC_RESET_MASK
-and IMX8MP_AUDIOMIX_EARC_PHY_RESET_MASK are wrong since their values would
-imply that the EARC controller software reset is controlled via bit 1 and
-the EARC PHY software reset is controlled via bit 2. Fix them.
+rk3399-op1 wrongly includes rk3399 (a variant) DTSI instead of
+rk3399-base DTSI, let's fix this oversight by including the intended
+DTSI.
 
-Fixes: a83bc87cd30a ("reset: imx8mp-audiomix: Prepare the code for more reset bits")
+Fortunately, this had no impact on the resulting DTB since all nodes
+were named the same and all node properties were overridden in
+rk3399-op1.dtsi. This was checked by doing a checksum of rk3399-op1 DTBs
+before and after this commit.
+
+No intended change in behavior.
+
+Fixes: 296602b8e5f7 ("arm64: dts: rockchip: Move RK3399 OPPs to dtsi files for SoC variants")
 Cc: stable@vger.kernel.org
-Reviewed-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Signed-off-by: Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>
-Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Reviewed-by: Dragan Simic <dsimic@manjaro.org>
+Link: https://patch.msgid.link/20251029-rk3399-op1-include-v1-1-2472ee60e7f8@cherry.de
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/reset/reset-imx8mp-audiomix.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3399-op1.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/reset/reset-imx8mp-audiomix.c b/drivers/reset/reset-imx8mp-audiomix.c
-index 6b357adfe646..eceb37ff5dc5 100644
---- a/drivers/reset/reset-imx8mp-audiomix.c
-+++ b/drivers/reset/reset-imx8mp-audiomix.c
-@@ -14,8 +14,8 @@
- #include <linux/reset-controller.h>
+--- a/arch/arm64/boot/dts/rockchip/rk3399-op1.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3399-op1.dtsi
+@@ -3,7 +3,7 @@
+  * Copyright (c) 2016-2017 Fuzhou Rockchip Electronics Co., Ltd
+  */
  
- #define IMX8MP_AUDIOMIX_EARC_RESET_OFFSET	0x200
--#define IMX8MP_AUDIOMIX_EARC_RESET_MASK		BIT(1)
--#define IMX8MP_AUDIOMIX_EARC_PHY_RESET_MASK	BIT(2)
-+#define IMX8MP_AUDIOMIX_EARC_RESET_MASK		BIT(0)
-+#define IMX8MP_AUDIOMIX_EARC_PHY_RESET_MASK	BIT(1)
+-#include "rk3399.dtsi"
++#include "rk3399-base.dtsi"
  
- #define IMX8MP_AUDIOMIX_DSP_RUNSTALL_OFFSET	0x108
- #define IMX8MP_AUDIOMIX_DSP_RUNSTALL_MASK	BIT(5)
--- 
-2.52.0
-
+ / {
+ 	cluster0_opp: opp-table-0 {
 
 
