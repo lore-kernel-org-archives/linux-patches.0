@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8087D274B3C;
-	Thu, 27 Nov 2025 14:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E4E273816;
+	Thu, 27 Nov 2025 14:49:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254943; cv=none; b=Zmpa+QAPDk9JwVzsYL9R+r0s07j5W84lh3tgKVwyNeVmQhHAdAFeNAFuJatic1ivaARLJEJfHrUOlR6JXGP8H7i4khcwwloItiwDQYTywv+zngwiM/YPZp/ARtBIIpaTBWqNbOLgcJxQCqzvdBTZfkMoggItUAF5TTP/KdNVNgA=
+	t=1764254946; cv=none; b=eWrPReyxSsvo1m/p529j3TDYrlr2xgaVfavpMpp92NfxFuZML6PTosS8cr/ku6ZrLHMmTERuGi6UZoOXG/Gwf0SBTH0vpQYFpWDem2WlBqByUmkWQpGPbjk3K5J3pZQpaGJuRMJylGrDjTa5AwKw3XMMDuZynsx7aBL+TG8ZPmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254943; c=relaxed/simple;
-	bh=/2Fk9yQpjHRenTt8pTRlDTITM9bW9R6LtnEJWAabv+c=;
+	s=arc-20240116; t=1764254946; c=relaxed/simple;
+	bh=CdHRKALhr8crO4nX9R1I5QyQQPMk9emGjTOywbtuBEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJgqwkHNRc9U/6UnBtSs5jPnm3arkaYiwcXeKWvAVwH6as90bNLnRogjrY+zFAcrlxv23tjPFuhb6o3wIdPKPrK1bsp6WEe2ovJy5yhM/24PTXKTvqUQpOYtxHrfLc7FXQgH6ZwRY4HLxx5a5sMC3GIgMpdufd7bnREOpuUv/ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyJhcx75; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CwaKC+2rKhy89g6pidYQqb+lzfJ5AimzKGnH/X6Iy7mQuogLozphZ2SdsMeYTVYeShDepXJcQ57qMF5mqv5zMavm65AlqvcIyeemFGDty/gUpGnMJRVkwpomWn6aop43p/S9gZIBb37cLS671Ki7C0LSt7PFDKzCalP6LqyJaDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9UuqHgu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyJhcx75"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6A8C4CEF8;
-	Thu, 27 Nov 2025 14:49:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9UuqHgu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC8DC4CEF8;
+	Thu, 27 Nov 2025 14:49:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254943;
-	bh=/2Fk9yQpjHRenTt8pTRlDTITM9bW9R6LtnEJWAabv+c=;
+	s=korg; t=1764254946;
+	bh=CdHRKALhr8crO4nX9R1I5QyQQPMk9emGjTOywbtuBEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyJhcx75SfziI1yq2f+tbc5wldUCpLzuSxeFJpRL36V2E4xTcKitgfDrrveqy7pA8
-	 rGoltVuxSmm5h+OvzqiTKCqgmLoExgB3t7kVybUW3rh5oKVJ4px3zPF7k1ueVueL/8
-	 ZwMGwAe72tCdF4hlfUVacKZ+SZcrdc5g1fjXM4pM=
+	b=l9UuqHguJ/KkaRCsLqWJcr9d59iXX48y7Z9B+joWkRloikmCtthRLFY5wBnIc59+c
+	 w6ubnQiV24fex+R8MKw6q+nJy5/T4w6xnARDfOCH2JDLgv1trOJUxK6mSQKvoDb43e
+	 Avt3//EaklS4t8uFSSdB5JbrrDD5GTPz1l+tltAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 40/86] pinctrl: cirrus: Fix fwnode leak in cs42l43_pin_probe()
-Date: Thu, 27 Nov 2025 15:45:56 +0100
-Message-ID: <20251127144029.293245190@linuxfoundation.org>
+	syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 23/86] scsi: sg: Do not sleep in atomic context
+Date: Thu, 27 Nov 2025 15:45:39 +0100
+Message-ID: <20251127144028.667557107@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -52,68 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 9b07cdf86a0b90556f5b68a6b20b35833b558df3 ]
+commit 90449f2d1e1f020835cba5417234636937dd657e upstream.
 
-The driver calls fwnode_get_named_child_node() which takes a reference
-on the child node, but never releases it, which causes a reference leak.
+sg_finish_rem_req() calls blk_rq_unmap_user(). The latter function may
+sleep. Hence, call sg_finish_rem_req() with interrupts enabled instead
+of disabled.
 
-Fix by using devm_add_action_or_reset() to automatically release the
-reference when the device is removed.
-
-Fixes: d5282a539297 ("pinctrl: cs42l43: Add support for the cs42l43")
-Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-scsi/691560c4.a70a0220.3124cb.001a.GAE@google.com/
+Cc: Hannes Reinecke <hare@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 97d27b0dd015 ("scsi: sg: close race condition in sg_remove_sfp_usercontext()")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251113181643.1108973-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/cirrus/pinctrl-cs42l43.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/scsi/sg.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
-index c096463184195..e1ac89be7c847 100644
---- a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
-+++ b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
-@@ -532,6 +532,11 @@ static int cs42l43_gpio_add_pin_ranges(struct gpio_chip *chip)
- 	return ret;
- }
- 
-+static void cs42l43_fwnode_put(void *data)
-+{
-+	fwnode_handle_put(data);
-+}
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -2212,9 +2212,17 @@ sg_remove_sfp_usercontext(struct work_st
+ 	write_lock_irqsave(&sfp->rq_list_lock, iflags);
+ 	while (!list_empty(&sfp->rq_list)) {
+ 		srp = list_first_entry(&sfp->rq_list, Sg_request, entry);
+-		sg_finish_rem_req(srp);
+ 		list_del(&srp->entry);
++		write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
 +
- static int cs42l43_pin_probe(struct platform_device *pdev)
- {
- 	struct cs42l43 *cs42l43 = dev_get_drvdata(pdev->dev.parent);
-@@ -563,10 +568,20 @@ static int cs42l43_pin_probe(struct platform_device *pdev)
- 	priv->gpio_chip.ngpio = CS42L43_NUM_GPIOS;
- 
- 	if (is_of_node(fwnode)) {
--		fwnode = fwnode_get_named_child_node(fwnode, "pinctrl");
--
--		if (fwnode && !fwnode->dev)
--			fwnode->dev = priv->dev;
-+		struct fwnode_handle *child;
++		sg_finish_rem_req(srp);
++		/*
++		 * sg_rq_end_io() uses srp->parentfp. Hence, only clear
++		 * srp->parentfp after blk_mq_free_request() has been called.
++		 */
+ 		srp->parentfp = NULL;
 +
-+		child = fwnode_get_named_child_node(fwnode, "pinctrl");
-+		if (child) {
-+			ret = devm_add_action_or_reset(&pdev->dev,
-+				cs42l43_fwnode_put, child);
-+			if (ret) {
-+				fwnode_handle_put(child);
-+				return ret;
-+			}
-+			if (!child->dev)
-+				child->dev = priv->dev;
-+			fwnode = child;
-+		}
++		write_lock_irqsave(&sfp->rq_list_lock, iflags);
  	}
+ 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
  
- 	priv->gpio_chip.fwnode = fwnode;
--- 
-2.51.0
-
 
 
