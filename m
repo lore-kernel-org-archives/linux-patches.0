@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE36E31281E;
-	Thu, 27 Nov 2025 15:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A697A332EA0;
+	Thu, 27 Nov 2025 15:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255615; cv=none; b=m7WAixo/3kOOZOz/aWZU6DRxvk1BeiALbfLKDCTFKAT5AenhQCe9ATPCg1eVixMFsIaFmI7tyg+qaK8vLL0F90XorMZz7/v7TixgKnqJiykKZefWc5t1dtpbtRfSROkWHsORZZMtlZis+c41xD/DabOs+7ZSk1Br6tJVeLRYkT4=
+	t=1764255618; cv=none; b=WLr5Y3w4m8zvk4no0gYqpAbVfcjwtMF+XUAsRnHpyCE+S2NKoZofFev9o+t9fiYpVM1ZsEZ6FouKkE7gBs21FNwGj3dVLl7TxJLz9MdFrKEtEc/ZvvDovFCnOTHUJw8QBiIZUaLUF0PD2tHYUsUkcyPh1+U/vMaRcnL1/pgy4BA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255615; c=relaxed/simple;
-	bh=JSgpKclhGrMxkKe/K8QFjjMmqvyfIvAh/+c150+tr1c=;
+	s=arc-20240116; t=1764255618; c=relaxed/simple;
+	bh=HAnmJjy3CBZNtiApNbPcDGRKw7WiCGEg0j3ig2o50pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LlY+PSbnoOyt/QQ2aw7Ih7H0CHMT0tApwN2gTQQpG4XyE6PE6pqWpHHRwuvp3GdcRIBGf+Vku/9wIKyhcTfJWMSWhyY3jEPTuTZCcbgQTDkxziRbN7U+TITMNc397FrQAKD2IpJk5uQCu4XEWUvPVZb+gT+BzkQqzbkhbfFZFD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8UpkaUg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I3iuDQRUz6viBqSIzN/gswlqiTXm+g7/X1MubmacF58Rv7M9nC5+8UnjBuH3TZS8um4dbInRUh8gCkyVOB4qhVZcUVUGbMmZir5GCN+lhIFtu4GR471y1b7emRK1BwWp26alQ2UhH3HJi/9rk882Bug4sHnSAZTf2z9swtXHlf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Au739uWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8UpkaUg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE2DC4CEF8;
-	Thu, 27 Nov 2025 15:00:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Au739uWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317B6C4CEF8;
+	Thu, 27 Nov 2025 15:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255615;
-	bh=JSgpKclhGrMxkKe/K8QFjjMmqvyfIvAh/+c150+tr1c=;
+	s=korg; t=1764255618;
+	bh=HAnmJjy3CBZNtiApNbPcDGRKw7WiCGEg0j3ig2o50pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w8UpkaUgyeKsb/A+1iI/L6Q6r7dTVMXazFpEZE2OU4jFS4Puho2DMigMTa42OVnTt
-	 PrkBjNTUPy/4x21cEQ5CRY+BoXoYeP59xfQhW7LbX1A31ei1d+2G3FJ+g1c+XHsoNb
-	 bLU7htU0nODFkpmmQJo5w29K6un8blx57aiHYUVo=
+	b=Au739uWs8ZiY7NfwdaXeRWp+bXIppV8ivpqREONytyaIlxKa+nifFsLGkREypT4k6
+	 6vRhLr6T/ny6A+f35XQPDQfJRNR8ACf2PTAa1k8bl5clp8twGbRJspRvzGDIomZB1t
+	 hAFXbMMyFqkDZK9IAbHhX4BJhrqCD5n/rpZXsRpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.17 027/175] selinux: rename task_security_struct to cred_security_struct
-Date: Thu, 27 Nov 2025 15:44:40 +0100
-Message-ID: <20251127144043.956779127@linuxfoundation.org>
+	Kurt Borja <kuurtb@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.17 054/175] platform/x86: alienware-wmi-wmax: Add support for the whole "M" family
+Date: Thu, 27 Nov 2025 15:45:07 +0100
+Message-ID: <20251127144044.938427463@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -44,349 +44,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Smalley <stephen.smalley.work@gmail.com>
+From: Kurt Borja <kuurtb@gmail.com>
 
-commit 75f72fe289a7f76204a728668edcf20e4a2a6097 upstream.
+commit e8c3c875e1017c04c594f0e6127ba82095b1cb87 upstream.
 
-Before Linux had cred structures, the SELinux task_security_struct was
-per-task and although the structure was switched to being per-cred
-long ago, the name was never updated. This change renames it to
-cred_security_struct to avoid confusion and pave the way for the
-introduction of an actual per-task security structure for SELinux. No
-functional change.
+Add support for the whole "Alienware M" laptop family.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Kurt Borja <kuurtb@gmail.com>
+Link: https://patch.msgid.link/20251103-family-supp-v1-3-a241075d1787@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/hooks.c          |   68 +++++++++++++++++++-------------------
- security/selinux/include/objsec.h |    8 ++--
- 2 files changed, 38 insertions(+), 38 deletions(-)
+ drivers/platform/x86/dell/alienware-wmi-wmax.c |   20 ++++++--------------
+ 1 file changed, 6 insertions(+), 14 deletions(-)
 
---- a/security/selinux/hooks.c
-+++ b/security/selinux/hooks.c
-@@ -210,7 +210,7 @@ static int selinux_lsm_notifier_avc_call
-  */
- static void cred_init_security(void)
- {
--	struct task_security_struct *tsec;
-+	struct cred_security_struct *tsec;
- 
- 	/* NOTE: the lsm framework zeros out the buffer on allocation */
- 
-@@ -223,7 +223,7 @@ static void cred_init_security(void)
-  */
- static inline u32 cred_sid(const struct cred *cred)
- {
--	const struct task_security_struct *tsec;
-+	const struct cred_security_struct *tsec;
- 
- 	tsec = selinux_cred(cred);
- 	return tsec->sid;
-@@ -437,7 +437,7 @@ static int may_context_mount_sb_relabel(
- 			struct superblock_security_struct *sbsec,
- 			const struct cred *cred)
- {
--	const struct task_security_struct *tsec = selinux_cred(cred);
-+	const struct cred_security_struct *tsec = selinux_cred(cred);
- 	int rc;
- 
- 	rc = avc_has_perm(tsec->sid, sbsec->sid, SECCLASS_FILESYSTEM,
-@@ -454,7 +454,7 @@ static int may_context_mount_inode_relab
- 			struct superblock_security_struct *sbsec,
- 			const struct cred *cred)
- {
--	const struct task_security_struct *tsec = selinux_cred(cred);
-+	const struct cred_security_struct *tsec = selinux_cred(cred);
- 	int rc;
- 	rc = avc_has_perm(tsec->sid, sbsec->sid, SECCLASS_FILESYSTEM,
- 			  FILESYSTEM__RELABELFROM, NULL);
-@@ -1784,7 +1784,7 @@ out:
-  * Determine the label for an inode that might be unioned.
-  */
- static int
--selinux_determine_inode_label(const struct task_security_struct *tsec,
-+selinux_determine_inode_label(const struct cred_security_struct *tsec,
- 				 struct inode *dir,
- 				 const struct qstr *name, u16 tclass,
- 				 u32 *_new_isid)
-@@ -1813,7 +1813,7 @@ static int may_create(struct inode *dir,
- 		      struct dentry *dentry,
- 		      u16 tclass)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 	struct inode_security_struct *dsec;
- 	struct superblock_security_struct *sbsec;
- 	u32 sid, newsid;
-@@ -2247,8 +2247,8 @@ static u32 ptrace_parent_sid(void)
- }
- 
- static int check_nnp_nosuid(const struct linux_binprm *bprm,
--			    const struct task_security_struct *old_tsec,
--			    const struct task_security_struct *new_tsec)
-+			    const struct cred_security_struct *old_tsec,
-+			    const struct cred_security_struct *new_tsec)
- {
- 	int nnp = (bprm->unsafe & LSM_UNSAFE_NO_NEW_PRIVS);
- 	int nosuid = !mnt_may_suid(bprm->file->f_path.mnt);
-@@ -2301,8 +2301,8 @@ static int check_nnp_nosuid(const struct
- 
- static int selinux_bprm_creds_for_exec(struct linux_binprm *bprm)
- {
--	const struct task_security_struct *old_tsec;
--	struct task_security_struct *new_tsec;
-+	const struct cred_security_struct *old_tsec;
-+	struct cred_security_struct *new_tsec;
- 	struct inode_security_struct *isec;
- 	struct common_audit_data ad;
- 	struct inode *inode = file_inode(bprm->file);
-@@ -2479,7 +2479,7 @@ static inline void flush_unauthorized_fi
-  */
- static void selinux_bprm_committing_creds(const struct linux_binprm *bprm)
- {
--	struct task_security_struct *new_tsec;
-+	struct cred_security_struct *new_tsec;
- 	struct rlimit *rlim, *initrlim;
- 	int rc, i;
- 
-@@ -2525,7 +2525,7 @@ static void selinux_bprm_committing_cred
-  */
- static void selinux_bprm_committed_creds(const struct linux_binprm *bprm)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 	u32 osid, sid;
- 	int rc;
- 
-@@ -2907,7 +2907,7 @@ static int selinux_dentry_create_files_a
- {
- 	u32 newsid;
- 	int rc;
--	struct task_security_struct *tsec;
-+	struct cred_security_struct *tsec;
- 
- 	rc = selinux_determine_inode_label(selinux_cred(old),
- 					   d_inode(dentry->d_parent), name,
-@@ -2925,7 +2925,7 @@ static int selinux_inode_init_security(s
- 				       const struct qstr *qstr,
- 				       struct xattr *xattrs, int *xattr_count)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 	struct superblock_security_struct *sbsec;
- 	struct xattr *xattr = lsm_get_xattr_slot(xattrs, xattr_count);
- 	u32 newsid, clen;
-@@ -3106,7 +3106,7 @@ static noinline int audit_inode_permissi
-  * Clear the task's AVD cache in @tsec and reset it to the current policy's
-  * and task's info.
-  */
--static inline void task_avdcache_reset(struct task_security_struct *tsec)
-+static inline void task_avdcache_reset(struct cred_security_struct *tsec)
- {
- 	memset(&tsec->avdcache.dir, 0, sizeof(tsec->avdcache.dir));
- 	tsec->avdcache.sid = tsec->sid;
-@@ -3123,7 +3123,7 @@ static inline void task_avdcache_reset(s
-  * Search @tsec for a AVD cache entry that matches @isec and return it to the
-  * caller via @avdc.  Returns 0 if a match is found, negative values otherwise.
-  */
--static inline int task_avdcache_search(struct task_security_struct *tsec,
-+static inline int task_avdcache_search(struct cred_security_struct *tsec,
- 				       struct inode_security_struct *isec,
- 				       struct avdc_entry **avdc)
- {
-@@ -3163,7 +3163,7 @@ static inline int task_avdcache_search(s
-  * Update the AVD cache in @tsec with the @avdc and @audited info associated
-  * with @isec.
-  */
--static inline void task_avdcache_update(struct task_security_struct *tsec,
-+static inline void task_avdcache_update(struct cred_security_struct *tsec,
- 					struct inode_security_struct *isec,
- 					struct av_decision *avd,
- 					u32 audited)
-@@ -3197,7 +3197,7 @@ static int selinux_inode_permission(stru
- {
- 	int mask;
- 	u32 perms;
--	struct task_security_struct *tsec;
-+	struct cred_security_struct *tsec;
- 	struct inode_security_struct *isec;
- 	struct avdc_entry *avdc;
- 	int rc, rc2;
-@@ -3279,7 +3279,7 @@ static int selinux_inode_setattr(struct
- 
- static int selinux_inode_getattr(const struct path *path)
- {
--	struct task_security_struct *tsec;
-+	struct cred_security_struct *tsec;
- 
- 	tsec = selinux_cred(current_cred());
- 
-@@ -3655,7 +3655,7 @@ static void selinux_inode_getlsmprop(str
- static int selinux_inode_copy_up(struct dentry *src, struct cred **new)
- {
- 	struct lsm_prop prop;
--	struct task_security_struct *tsec;
-+	struct cred_security_struct *tsec;
- 	struct cred *new_creds = *new;
- 
- 	if (new_creds == NULL) {
-@@ -3693,7 +3693,7 @@ static int selinux_inode_copy_up_xattr(s
- static int selinux_kernfs_init_security(struct kernfs_node *kn_dir,
- 					struct kernfs_node *kn)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 	u32 parent_sid, newsid, clen;
- 	int rc;
- 	char *context;
-@@ -4157,8 +4157,8 @@ static int selinux_task_alloc(struct tas
- static int selinux_cred_prepare(struct cred *new, const struct cred *old,
- 				gfp_t gfp)
- {
--	const struct task_security_struct *old_tsec = selinux_cred(old);
--	struct task_security_struct *tsec = selinux_cred(new);
-+	const struct cred_security_struct *old_tsec = selinux_cred(old);
-+	struct cred_security_struct *tsec = selinux_cred(new);
- 
- 	*tsec = *old_tsec;
- 	return 0;
-@@ -4169,8 +4169,8 @@ static int selinux_cred_prepare(struct c
-  */
- static void selinux_cred_transfer(struct cred *new, const struct cred *old)
- {
--	const struct task_security_struct *old_tsec = selinux_cred(old);
--	struct task_security_struct *tsec = selinux_cred(new);
-+	const struct cred_security_struct *old_tsec = selinux_cred(old);
-+	struct cred_security_struct *tsec = selinux_cred(new);
- 
- 	*tsec = *old_tsec;
- }
-@@ -4191,7 +4191,7 @@ static void selinux_cred_getlsmprop(cons
-  */
- static int selinux_kernel_act_as(struct cred *new, u32 secid)
- {
--	struct task_security_struct *tsec = selinux_cred(new);
-+	struct cred_security_struct *tsec = selinux_cred(new);
- 	u32 sid = current_sid();
- 	int ret;
- 
-@@ -4215,7 +4215,7 @@ static int selinux_kernel_act_as(struct
- static int selinux_kernel_create_files_as(struct cred *new, struct inode *inode)
- {
- 	struct inode_security_struct *isec = inode_security(inode);
--	struct task_security_struct *tsec = selinux_cred(new);
-+	struct cred_security_struct *tsec = selinux_cred(new);
- 	u32 sid = current_sid();
- 	int ret;
- 
-@@ -4740,7 +4740,7 @@ static int selinux_conn_sid(u32 sk_sid,
- 
- /* socket security operations */
- 
--static int socket_sockcreate_sid(const struct task_security_struct *tsec,
-+static int socket_sockcreate_sid(const struct cred_security_struct *tsec,
- 				 u16 secclass, u32 *socksid)
- {
- 	if (tsec->sockcreate_sid > SECSID_NULL) {
-@@ -4793,7 +4793,7 @@ static int sock_has_perm(struct sock *sk
- static int selinux_socket_create(int family, int type,
- 				 int protocol, int kern)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 	u32 newsid;
- 	u16 secclass;
- 	int rc;
-@@ -4812,7 +4812,7 @@ static int selinux_socket_create(int fam
- static int selinux_socket_post_create(struct socket *sock, int family,
- 				      int type, int protocol, int kern)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 	struct inode_security_struct *isec = inode_security_novalidate(SOCK_INODE(sock));
- 	struct sk_security_struct *sksec;
- 	u16 sclass = socket_type_to_security_class(family, type, protocol);
-@@ -6522,7 +6522,7 @@ static void selinux_d_instantiate(struct
- static int selinux_lsm_getattr(unsigned int attr, struct task_struct *p,
- 			       char **value)
- {
--	const struct task_security_struct *tsec;
-+	const struct cred_security_struct *tsec;
- 	int error;
- 	u32 sid;
- 	u32 len;
-@@ -6577,7 +6577,7 @@ err_unlock:
- 
- static int selinux_lsm_setattr(u64 attr, void *value, size_t size)
- {
--	struct task_security_struct *tsec;
-+	struct cred_security_struct *tsec;
- 	struct cred *new;
- 	u32 mysid = current_sid(), sid = 0, ptsid;
- 	int error;
-@@ -6872,7 +6872,7 @@ static int selinux_inode_getsecctx(struc
- static int selinux_key_alloc(struct key *k, const struct cred *cred,
- 			     unsigned long flags)
- {
--	const struct task_security_struct *tsec;
-+	const struct cred_security_struct *tsec;
- 	struct key_security_struct *ksec = selinux_key(k);
- 
- 	tsec = selinux_cred(cred);
-@@ -7169,7 +7169,7 @@ static void selinux_bpf_token_free(struc
- #endif
- 
- struct lsm_blob_sizes selinux_blob_sizes __ro_after_init = {
--	.lbs_cred = sizeof(struct task_security_struct),
-+	.lbs_cred = sizeof(struct cred_security_struct),
- 	.lbs_file = sizeof(struct file_security_struct),
- 	.lbs_inode = sizeof(struct inode_security_struct),
- 	.lbs_ipc = sizeof(struct ipc_security_struct),
---- a/security/selinux/include/objsec.h
-+++ b/security/selinux/include/objsec.h
-@@ -36,7 +36,7 @@ struct avdc_entry {
- 	bool permissive; /* AVC permissive flag */
- };
- 
--struct task_security_struct {
-+struct cred_security_struct {
- 	u32 osid; /* SID prior to last execve */
- 	u32 sid; /* current SID */
- 	u32 exec_sid; /* exec SID */
-@@ -53,7 +53,7 @@ struct task_security_struct {
- 	} avdcache;
- } __randomize_layout;
- 
--static inline bool task_avdcache_permnoaudit(struct task_security_struct *tsec)
-+static inline bool task_avdcache_permnoaudit(struct cred_security_struct *tsec)
- {
- 	return (tsec->avdcache.permissive_neveraudit &&
- 		tsec->sid == tsec->avdcache.sid &&
-@@ -171,7 +171,7 @@ struct perf_event_security_struct {
- };
- 
- extern struct lsm_blob_sizes selinux_blob_sizes;
--static inline struct task_security_struct *selinux_cred(const struct cred *cred)
-+static inline struct cred_security_struct *selinux_cred(const struct cred *cred)
- {
- 	return cred->security + selinux_blob_sizes.lbs_cred;
- }
-@@ -206,7 +206,7 @@ selinux_ipc(const struct kern_ipc_perm *
-  */
- static inline u32 current_sid(void)
- {
--	const struct task_security_struct *tsec = selinux_cred(current_cred());
-+	const struct cred_security_struct *tsec = selinux_cred(current_cred());
- 
- 	return tsec->sid;
- }
+--- a/drivers/platform/x86/dell/alienware-wmi-wmax.c
++++ b/drivers/platform/x86/dell/alienware-wmi-wmax.c
+@@ -106,18 +106,10 @@ static const struct dmi_system_id awcc_d
+ 		.driver_data = &generic_quirks,
+ 	},
+ 	{
+-		.ident = "Alienware m15 R5",
++		.ident = "Alienware m15",
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m15 R5"),
+-		},
+-		.driver_data = &generic_quirks,
+-	},
+-	{
+-		.ident = "Alienware m15 R7",
+-		.matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m15 R7"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m15"),
+ 		},
+ 		.driver_data = &generic_quirks,
+ 	},
+@@ -146,18 +138,18 @@ static const struct dmi_system_id awcc_d
+ 		.driver_data = &generic_quirks,
+ 	},
+ 	{
+-		.ident = "Alienware m17 R5",
++		.ident = "Alienware m17",
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17"),
+ 		},
+ 		.driver_data = &generic_quirks,
+ 	},
+ 	{
+-		.ident = "Alienware m18 R2",
++		.ident = "Alienware m18",
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m18 R2"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m18"),
+ 		},
+ 		.driver_data = &generic_quirks,
+ 	},
 
 
