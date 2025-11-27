@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7FF24E4A8;
-	Thu, 27 Nov 2025 15:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98F328135D;
+	Thu, 27 Nov 2025 15:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255895; cv=none; b=ksDXXuOsFuk3poUKe9FiYBOH7tXFcY/+awaCyOJ06YCSr8gRPgvRroqigPzLQvqKCKyVFyRatGJGAatmPyK9u64fUZu+kE9RlGtulHPEmoZeWW46G7GegyV314DFDvtKZNQ/2YIZp8qAhm5onn11AiUx4VdPoksF3V9FS9xfK+c=
+	t=1764255897; cv=none; b=pfQcqXuDjHBELEpqA6gXtS97FcDhRCBf8r+VYgSZWZ5b0SYz4TvJ2n4sNB22ihXlSr08ZfKaqJkXIzFLE5xhKeyAcDozn4VlyEAialErUinXI1qh7O5WA4wDGPeiQNm1nV2DEttbj5SnQR0vOXY7SwyD7V0UpLhrhYOjiGrEiDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255895; c=relaxed/simple;
-	bh=JgmGiiSX1t2F1II0BDwe8Igo3RCIz9dQDeBsZrBaJRY=;
+	s=arc-20240116; t=1764255897; c=relaxed/simple;
+	bh=aGdT0x7sq2JZMZNiWlXgbPpfE/0vbfo/p6yDXTSu60o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bFF1rb1XvWvKtxJRRkvlpiP4B/B18qy3DQR496T9WuCEfoxv8H42QMy6ryi3qLSgsaviGbrOkaPQqAA6t5Hfkp5REEGooI7XdtQDXvc/O1zt7d3RvNgayk1btgA24nFYodFJp9sgxGc5aWyAN5tMPfQCqVeWsj1F0iD719w4y2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNiRnRvY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ffljsqB/C6U/9fWEmzP8fL2oOMtMNSjiUYjXRTrbHYkOqWCUNUjSqfSD8/BRtHSW3wfAu5NxV/KSAr6NzlGLpm821JN/fGbfFjlqOQ+IGrl5cw16D3LwxBCentdVJQZKNPxFBe4LPOm2WoNa8TIa3xQ5hmHEe2eqr+lq5IYpCVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JYnBEf2z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNiRnRvY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0CDC4CEF8;
-	Thu, 27 Nov 2025 15:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JYnBEf2z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63989C4CEF8;
+	Thu, 27 Nov 2025 15:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255895;
-	bh=JgmGiiSX1t2F1II0BDwe8Igo3RCIz9dQDeBsZrBaJRY=;
+	s=korg; t=1764255897;
+	bh=aGdT0x7sq2JZMZNiWlXgbPpfE/0vbfo/p6yDXTSu60o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNiRnRvYnOuLLPsYMTq2l9Zr3YWl7XHdx1wzXka9Rc5VL4iS5XCNY+zI2hz69n3wt
-	 v+VSZWuP9tvWiIXSTT84CwfXHAFW+0ga/xAzxvL1v6mf9E4vvDWaBHsA73B43cR7We
-	 K24byDbFeOAa0idm/zVeVnkgRfrsvVw6j098QadQ=
+	b=JYnBEf2zOoLY7Uqu3t9mIYDMUNMuqHYzMi7APQMDbWStokOCjqysOFCdxxBpNRl75
+	 FVNIGd3HxEMOdFcQPPb0/4gWpgIOb0NZK3JBmXgHMHXImq3IsUEvbbwa28WXV4UR9A
+	 4WHRcE/Oy51wF7ZJmyqpfRdvjfrNoDbRO1aSkO0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	J-Donald Tournier <jdtournier@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Jakub=20Hork=C3=BD?= <jakub.git@horky.net>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 134/175] ALSA: hda/realtek: Add quirk for Lenovo Yoga 7 2-in-1 14AKP10
-Date: Thu, 27 Nov 2025 15:46:27 +0100
-Message-ID: <20251127144047.851935224@linuxfoundation.org>
+Subject: [PATCH 6.17 152/175] kconfig/mconf: Initialize the default locale at startup
+Date: Thu, 27 Nov 2025 15:46:45 +0100
+Message-ID: <20251127144048.504344445@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -45,42 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: J-Donald Tournier <jdtournier@gmail.com>
+From: Jakub Horký <jakub.git@horky.net>
 
-[ Upstream commit 1386d16761c0b569efedb998f56c1ae048a086e2 ]
+[ Upstream commit 3927c4a1084c48ef97f11281a0a43ecb2cb4d6f1 ]
 
-This laptop requires the same quirk as Lenovo Yoga9 14IAP7 for
-fixing the bass speaker problems.
+Fix bug where make menuconfig doesn't initialize the default locale, which
+causes ncurses menu borders to be displayed incorrectly (lqqqqk) in
+UTF-8 terminals that don't support VT100 ACS by default, such as PuTTY.
 
-Use HDA_CODEC_QUIRK to match on the codec SSID to avoid conflict with
-the Lenovo Legion Slim 7 16IRH8, which has the same PCI SSID.
-
-Signed-off-by: J-Donald Tournier <jdtournier@gmail.com>
-Link: https://patch.msgid.link/20251018145322.39119-1-jdournier@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Jakub Horký <jakub.git@horky.net>
+Link: https://patch.msgid.link/20251014154933.3990990-1-jakub.git@horky.net
+[nathan: Alphabetize locale.h include]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ scripts/kconfig/mconf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 19604352317dd..20f0ad43953f4 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7082,6 +7082,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x17aa, 0x38a9, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38ab, "Thinkbook 16P", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x38b4, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
-+	HDA_CODEC_QUIRK(0x17aa, 0x391c, "Lenovo Yoga 7 2-in-1 14AKP10", ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x38b5, "Legion Slim 7 16IRH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b6, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x17aa, 0x38b7, "Legion Slim 7 16APH8", ALC287_FIXUP_CS35L41_I2C_2),
+diff --git a/scripts/kconfig/mconf.c b/scripts/kconfig/mconf.c
+index 84ea9215c0a7e..b8b7bba84a651 100644
+--- a/scripts/kconfig/mconf.c
++++ b/scripts/kconfig/mconf.c
+@@ -12,6 +12,7 @@
+ #include <errno.h>
+ #include <fcntl.h>
+ #include <limits.h>
++#include <locale.h>
+ #include <stdarg.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -931,6 +932,8 @@ int main(int ac, char **av)
+ 
+ 	signal(SIGINT, sig_handler);
+ 
++	setlocale(LC_ALL, "");
++
+ 	if (ac > 1 && strcmp(av[1], "-s") == 0) {
+ 		silent = 1;
+ 		/* Silence conf_read() until the real callback is set up */
 -- 
 2.51.0
 
