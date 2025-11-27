@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03336288537;
-	Thu, 27 Nov 2025 14:50:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B121D33030A;
+	Thu, 27 Nov 2025 14:50:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255004; cv=none; b=V+/FwZ75cqXvaiskxWyRLE3NeGecDWROUiCSfMYQpXK4wmADlyFTNuuuBK2KvwUy9BFEWS3S2boAo8Wel3bXXufYhILCnizVbmFIxAAVCojRE/u/jU7JjW/a2LdzjVsEqsN1vnrokscPIIDlxBt6xKe3LTBC1VOLNtEvKe86jHA=
+	t=1764255006; cv=none; b=FnuoP7upvGttXVdlyzn+FsmyZ84QcKQpqH44dcK9dyyqgBbgxKTgy86F0/aHOY2j+mURG3O0c7O/8GEhRHgCxUzEznAPV4EPff9O7lBns1Jt/6ltu3Jj1aSkU33rhbFxXBAo/c+twLUgrbb/H9pEv41oNibpm6iKRRsMVoHBzFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255004; c=relaxed/simple;
-	bh=la1R1IXlkTt99oF0OEUel++6VYzQALvCNJaKUd8r7h0=;
+	s=arc-20240116; t=1764255006; c=relaxed/simple;
+	bh=s2CPfsrnQvfyM7LA2o90XskKzXz20UktVl04QRtWlKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VYzyAK8pzlJNrMHHK1DrnVM4Z8N0MsykLtQqqDjTIAuunib6TVWhZXXfagFe1U6NxHAhluDrxU6OuIFmb+YpLQlcaKqMiNesVS3P6NGbBxdQrNGjfGCxg0WBAxYQYNm8BgGRxySaF1MyYHPYde9Re8Ia1zGX3azDzuxKEqUEpNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dRKIc1IS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FbPqiIew6FyKNjTC2i9mpKNLrhRTbeZpgPlgIX2N4Ge625jU2WaOsh5LIUiz+ytRD3YBB6SNtAvjMLltZq/F5GDfROPSRaClQWO+CPDDLfe8F7m3kCmS9sIsgY785uytdKgiffvpltAkuOJXZ1HvU0iq5QfGTw9arVvpwH7Gnpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLaio3+5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dRKIc1IS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC3CC4CEF8;
-	Thu, 27 Nov 2025 14:50:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLaio3+5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F1DC4CEF8;
+	Thu, 27 Nov 2025 14:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255003;
-	bh=la1R1IXlkTt99oF0OEUel++6VYzQALvCNJaKUd8r7h0=;
+	s=korg; t=1764255006;
+	bh=s2CPfsrnQvfyM7LA2o90XskKzXz20UktVl04QRtWlKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRKIc1ISkIIfMgBcmiNuurSNgbVWhED1ehv1ZfiHgUyNWW73OE3Wbmtjo78/AiFuD
-	 Gz4VeeuRkmDri7EnCrdscbvmMDUeXjRRMg2914vszJtueTL3bdSTP5UwfUznSbhaq6
-	 QrkOrPClGygA3uKggpiP5GFgTwa49zWbmjIEYY0s=
+	b=LLaio3+5TUbB+R3Gisbd28pFVV5rKY4usq2XjZCuCtdweqKVb1BQXQ9U7i8MDZ2N+
+	 ZfXH0T4JclFKwRgu2a3xTIu/tCFhBJOcA9k4P0t7Dvx4UdQ8aRswzyWBkmhIwH10jd
+	 PYrtn+f2iSPxVBq4HkEvWRIZYYBBHLHrGMcs/JNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 27/86] LoongArch: Dont panic if no valid cache info for PCI
-Date: Thu, 27 Nov 2025 15:45:43 +0100
-Message-ID: <20251127144028.814333420@linuxfoundation.org>
+	syzbot+355158e7e301548a1424@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 28/86] mptcp: fix race condition in mptcp_schedule_work()
+Date: Thu, 27 Nov 2025 15:45:44 +0100
+Message-ID: <20251127144028.851198407@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,39 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-commit a6b533adfc05ba15360631e019d3e18275080275 upstream.
+commit 035bca3f017ee9dea3a5a756e77a6f7138cc6eea upstream.
 
-If there is no valid cache info detected (may happen in virtual machine)
-for pci_dfl_cache_line_size, kernel shouldn't panic. Because in the PCI
-core it will be evaluated to (L1_CACHE_BYTES >> 2).
+syzbot reported use-after-free in mptcp_schedule_work() [1]
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Issue here is that mptcp_schedule_work() schedules a work,
+then gets a refcount on sk->sk_refcnt if the work was scheduled.
+This refcount will be released by mptcp_worker().
+
+[A] if (schedule_work(...)) {
+[B]     sock_hold(sk);
+        return true;
+    }
+
+Problem is that mptcp_worker() can run immediately and complete before [B]
+
+We need instead :
+
+    sock_hold(sk);
+    if (schedule_work(...))
+        return true;
+    sock_put(sk);
+
+[1]
+refcount_t: addition on 0; use-after-free.
+ WARNING: CPU: 1 PID: 29 at lib/refcount.c:25 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:25
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:-1 [inline]
+  __refcount_inc include/linux/refcount.h:366 [inline]
+  refcount_inc include/linux/refcount.h:383 [inline]
+  sock_hold include/net/sock.h:816 [inline]
+  mptcp_schedule_work+0x164/0x1a0 net/mptcp/protocol.c:943
+  mptcp_tout_timer+0x21/0xa0 net/mptcp/protocol.c:2316
+  call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
+  expire_timers kernel/time/timer.c:1798 [inline]
+  __run_timers kernel/time/timer.c:2372 [inline]
+  __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
+  run_timer_base kernel/time/timer.c:2393 [inline]
+  run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
+  handle_softirqs+0x22f/0x710 kernel/softirq.c:622
+  __do_softirq kernel/softirq.c:656 [inline]
+  run_ktimerd+0xcf/0x190 kernel/softirq.c:1138
+  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+
+Cc: stable@vger.kernel.org
+Fixes: 3b1d6210a957 ("mptcp: implement and use MPTCP-level retransmission")
+Reported-by: syzbot+355158e7e301548a1424@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6915b46f.050a0220.3565dc.0028.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251113103924.3737425-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/pci/pci.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/arch/loongarch/pci/pci.c
-+++ b/arch/loongarch/pci/pci.c
-@@ -51,11 +51,11 @@ static int __init pcibios_init(void)
- 	 */
- 	lsize = cpu_last_level_cache_line_size();
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -961,14 +961,19 @@ static void mptcp_reset_rtx_timer(struct
  
--	BUG_ON(!lsize);
-+	if (lsize) {
-+		pci_dfl_cache_line_size = lsize >> 2;
- 
--	pci_dfl_cache_line_size = lsize >> 2;
--
--	pr_debug("PCI: pci_cache_line_size set to %d bytes\n", lsize);
-+		pr_debug("PCI: pci_cache_line_size set to %d bytes\n", lsize);
-+	}
- 
- 	return 0;
+ bool mptcp_schedule_work(struct sock *sk)
+ {
+-	if (inet_sk_state_load(sk) != TCP_CLOSE &&
+-	    schedule_work(&mptcp_sk(sk)->work)) {
+-		/* each subflow already holds a reference to the sk, and the
+-		 * workqueue is invoked by a subflow, so sk can't go away here.
+-		 */
+-		sock_hold(sk);
++	if (inet_sk_state_load(sk) == TCP_CLOSE)
++		return false;
++
++	/* Get a reference on this socket, mptcp_worker() will release it.
++	 * As mptcp_worker() might complete before us, we can not avoid
++	 * a sock_hold()/sock_put() if schedule_work() returns false.
++	 */
++	sock_hold(sk);
++
++	if (schedule_work(&mptcp_sk(sk)->work))
+ 		return true;
+-	}
++
++	sock_put(sk);
+ 	return false;
  }
+ 
 
 
