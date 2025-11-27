@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45183289E06;
-	Thu, 27 Nov 2025 14:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C70296BBC;
+	Thu, 27 Nov 2025 14:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255407; cv=none; b=n/7PZ5KudXFM6qFdr1HZtlHSg6jo0Ys3FFMU7O/MIPxeIWWts8DVQQVPSVGaeyC8AdZ7+5Byd90LyDU47NneXJAc6kBF+/h01dZU8B7KgWKNoraWJTHLp6m26gCLjTkRU0khnHT/DwU0Rj3+zEuKy3gcsGqU3JWYw9W2lOMImpM=
+	t=1764255410; cv=none; b=W8VPrFcW0zsrREcW2Yz2nEXPqqGxl3zcN3C9z/OI4go7oems0A0J4odz05qvM2JGL1TRfkdgJ1xMdu5zLDumi265xiS5deL2nh8HnSqBfO66Inly+TpNRonKx3jih/TwdiouyhVwHaWItDmEiXE4OOlolc5e5g+/rCImRdjxmd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255407; c=relaxed/simple;
-	bh=hG9AmPVJGewKC9dIFmRo21WcksmsyqI+2uqsZ7lf6AU=;
+	s=arc-20240116; t=1764255410; c=relaxed/simple;
+	bh=0TnkGjPiCqNXhz4wqyluCregbHRE13L2dNvLK4c5jRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5+GvhBUz2xSFP3bcCICQ4rC/1/VWWF3i2rGkh9sYfM/JYEGA+Zr602tZEr3Blhi18kKP9gKfkxOu8achROQdKLQIDAsFd1ccVdusBcF8zfmaubPYW0U09yGtG69QM/emwBEs3+soXE0fwEoY8PrGI4Q9yBTse8CuUjIBGmm9KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e7Hm96XH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rXcazwoN7AKjHmvDVBWTcEL36fBWpUYEp41Dzoseo3LwBzbhjNREeI7WVKNu6unSUic4iSReif7H4bmJ6AponLBo+dpB80Tc9qDTML2242Rz9CpmWIVAdRwcCLBUYX9IbTQ4SyKB4EWK2UkR7IQTyJZR3hiLWYKapIJadTCWYa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIq5C+zR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e7Hm96XH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1131C4CEF8;
-	Thu, 27 Nov 2025 14:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIq5C+zR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89697C4CEF8;
+	Thu, 27 Nov 2025 14:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255407;
-	bh=hG9AmPVJGewKC9dIFmRo21WcksmsyqI+2uqsZ7lf6AU=;
+	s=korg; t=1764255409;
+	bh=0TnkGjPiCqNXhz4wqyluCregbHRE13L2dNvLK4c5jRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7Hm96XH6NV+e8yxO+jYnxCfjVfBY/8fA6EILjOyPr6NkBKjRVU7m+mCOfCNysBCG
-	 J1zdc9uRy2rSnmu30hXSddYltXGw4tFSuHTWu7tRETZ0fD2axprIyh9itpzx6Zz0uY
-	 escc9cKa5FFhusN6Um30N53Y3lScgGeiXKptiUfA=
+	b=gIq5C+zR9lhM0bx8YA2pwDSMP/A+avFm0xvklA6vcMGQgvjd4NmAM1PwwgqWr2kUc
+	 RbToII8HYXKif8JKaSzZpA8yIlyozGK1yaqArP+02bOVx8yeSjYOEbH+mxnCvHK5im
+	 7UdEZuAckpW1WMjBILVrkc7TcLE6PjmnlWk9AiGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Maydell <peter.maydell@linaro.org>,
-	Oliver Upton <oupton@kernel.org>,
-	Marc Zyngier <maz@kernel.org>,
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/112] KVM: arm64: Make all 32bit ID registers fully writable
-Date: Thu, 27 Nov 2025 15:46:36 +0100
-Message-ID: <20251127144036.280838576@linuxfoundation.org>
+Subject: [PATCH 6.12 063/112] net: dsa: hellcreek: fix missing error handling in LED registration
+Date: Thu, 27 Nov 2025 15:46:05 +0100
+Message-ID: <20251127144035.145746282@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -52,130 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 
-commit 3f9eacf4f0705876a5d6526d7d320ca91d7d7a16 upstream.
+[ Upstream commit e6751b0b19a6baab219a62e1e302b8aa6b5a55b2 ]
 
-32bit ID registers aren't getting much love these days, and are
-often missed in updates. One of these updates broke restoring
-a GICv2 guest on a GICv3 machine.
+The LED setup routine registered both led_sync_good
+and led_is_gm devices without checking the return
+values of led_classdev_register(). If either registration
+failed, the function continued silently, leaving the
+driver in a partially-initialized state and leaking
+a registered LED classdev.
 
-Instead of performing a piecemeal fix, just bite the bullet
-and make all 32bit ID regs fully writable. KVM itself never
-relies on them for anything, and if the VMM wants to mess up
-the guest, so be it.
+Add proper error handling
 
-Fixes: 5cb57a1aff755 ("KVM: arm64: Zero ID_AA64PFR0_EL1.GIC when no GICv3 is presented to the guest")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: Oliver Upton <oupton@kernel.org>
-Link: https://patch.msgid.link/20251030122707.2033690-2-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Fixes: 7d9ee2e8ff15 ("net: dsa: hellcreek: Add PTP status LEDs")
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Kurt Kanzenbach <kurt@linutronix.de>
+Link: https://patch.msgid.link/20251113135745.92375-1-Pavel.Zhigulin@kaspersky.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kvm/sys_regs.c | 61 ++++++++++++++++++++-------------------
- 1 file changed, 32 insertions(+), 29 deletions(-)
+ drivers/net/dsa/hirschmann/hellcreek_ptp.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-index 42791971f7588..5c09c788aaa61 100644
---- a/arch/arm64/kvm/sys_regs.c
-+++ b/arch/arm64/kvm/sys_regs.c
-@@ -2176,22 +2176,26 @@ static bool bad_redir_trap(struct kvm_vcpu *vcpu,
- 	.val = 0,				\
- }
+diff --git a/drivers/net/dsa/hirschmann/hellcreek_ptp.c b/drivers/net/dsa/hirschmann/hellcreek_ptp.c
+index bfe21f9f7dcd3..cb23bea9c21b8 100644
+--- a/drivers/net/dsa/hirschmann/hellcreek_ptp.c
++++ b/drivers/net/dsa/hirschmann/hellcreek_ptp.c
+@@ -376,8 +376,18 @@ static int hellcreek_led_setup(struct hellcreek *hellcreek)
+ 		hellcreek_set_brightness(hellcreek, STATUS_OUT_IS_GM, 1);
  
--/* sys_reg_desc initialiser for known cpufeature ID registers */
--#define AA32_ID_SANITISED(name) {		\
-+/* sys_reg_desc initialiser for writable ID registers */
-+#define ID_WRITABLE(name, mask) {		\
- 	ID_DESC(name),				\
- 	.set_user = set_id_reg,			\
--	.visibility = aa32_id_visibility,	\
-+	.visibility = id_visibility,		\
- 	.reset = kvm_read_sanitised_id_reg,	\
--	.val = 0,				\
-+	.val = mask,				\
- }
+ 	/* Register both leds */
+-	led_classdev_register(hellcreek->dev, &hellcreek->led_sync_good);
+-	led_classdev_register(hellcreek->dev, &hellcreek->led_is_gm);
++	ret = led_classdev_register(hellcreek->dev, &hellcreek->led_sync_good);
++	if (ret) {
++		dev_err(hellcreek->dev, "Failed to register sync_good LED\n");
++		goto out;
++	}
++
++	ret = led_classdev_register(hellcreek->dev, &hellcreek->led_is_gm);
++	if (ret) {
++		dev_err(hellcreek->dev, "Failed to register is_gm LED\n");
++		led_classdev_unregister(&hellcreek->led_sync_good);
++		goto out;
++	}
  
--/* sys_reg_desc initialiser for writable ID registers */
--#define ID_WRITABLE(name, mask) {		\
-+/*
-+ * 32bit ID regs are fully writable when the guest is 32bit
-+ * capable. Nothing in the KVM code should rely on 32bit features
-+ * anyway, only 64bit, so let the VMM do its worse.
-+ */
-+#define AA32_ID_WRITABLE(name) {		\
- 	ID_DESC(name),				\
- 	.set_user = set_id_reg,			\
--	.visibility = id_visibility,		\
-+	.visibility = aa32_id_visibility,	\
- 	.reset = kvm_read_sanitised_id_reg,	\
--	.val = mask,				\
-+	.val = GENMASK(31, 0),			\
- }
+ 	ret = 0;
  
- /*
-@@ -2380,40 +2384,39 @@ static const struct sys_reg_desc sys_reg_descs[] = {
- 
- 	/* AArch64 mappings of the AArch32 ID registers */
- 	/* CRm=1 */
--	AA32_ID_SANITISED(ID_PFR0_EL1),
--	AA32_ID_SANITISED(ID_PFR1_EL1),
-+	AA32_ID_WRITABLE(ID_PFR0_EL1),
-+	AA32_ID_WRITABLE(ID_PFR1_EL1),
- 	{ SYS_DESC(SYS_ID_DFR0_EL1),
- 	  .access = access_id_reg,
- 	  .get_user = get_id_reg,
- 	  .set_user = set_id_dfr0_el1,
- 	  .visibility = aa32_id_visibility,
- 	  .reset = read_sanitised_id_dfr0_el1,
--	  .val = ID_DFR0_EL1_PerfMon_MASK |
--		 ID_DFR0_EL1_CopDbg_MASK, },
-+	  .val = GENMASK(31, 0), },
- 	ID_HIDDEN(ID_AFR0_EL1),
--	AA32_ID_SANITISED(ID_MMFR0_EL1),
--	AA32_ID_SANITISED(ID_MMFR1_EL1),
--	AA32_ID_SANITISED(ID_MMFR2_EL1),
--	AA32_ID_SANITISED(ID_MMFR3_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR0_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR1_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR2_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR3_EL1),
- 
- 	/* CRm=2 */
--	AA32_ID_SANITISED(ID_ISAR0_EL1),
--	AA32_ID_SANITISED(ID_ISAR1_EL1),
--	AA32_ID_SANITISED(ID_ISAR2_EL1),
--	AA32_ID_SANITISED(ID_ISAR3_EL1),
--	AA32_ID_SANITISED(ID_ISAR4_EL1),
--	AA32_ID_SANITISED(ID_ISAR5_EL1),
--	AA32_ID_SANITISED(ID_MMFR4_EL1),
--	AA32_ID_SANITISED(ID_ISAR6_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR0_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR1_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR2_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR3_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR4_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR5_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR4_EL1),
-+	AA32_ID_WRITABLE(ID_ISAR6_EL1),
- 
- 	/* CRm=3 */
--	AA32_ID_SANITISED(MVFR0_EL1),
--	AA32_ID_SANITISED(MVFR1_EL1),
--	AA32_ID_SANITISED(MVFR2_EL1),
-+	AA32_ID_WRITABLE(MVFR0_EL1),
-+	AA32_ID_WRITABLE(MVFR1_EL1),
-+	AA32_ID_WRITABLE(MVFR2_EL1),
- 	ID_UNALLOCATED(3,3),
--	AA32_ID_SANITISED(ID_PFR2_EL1),
-+	AA32_ID_WRITABLE(ID_PFR2_EL1),
- 	ID_HIDDEN(ID_DFR1_EL1),
--	AA32_ID_SANITISED(ID_MMFR5_EL1),
-+	AA32_ID_WRITABLE(ID_MMFR5_EL1),
- 	ID_UNALLOCATED(3,7),
- 
- 	/* AArch64 ID registers */
 -- 
 2.51.0
 
