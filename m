@@ -1,39 +1,54 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9ED20FAAB;
-	Thu, 27 Nov 2025 15:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2A6333456;
+	Thu, 27 Nov 2025 15:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255676; cv=none; b=XEs4k7cP0Dqx0yLWgDHHGX5Y2U6JATud2yElBqPeSuDLqlE+bX21Yxdj71DVjb8HJ5scQiKx8UKDY2SXMFgyZ3eTn8uouu+lD49DZdkdXisr5URnxshu3BIBmnDw9PDhUbRmog0W2mXnRh4JayTEs/2tn3udVJDWeKXYWwRwQtc=
+	t=1764255678; cv=none; b=AbEt6ySh+nY30mRoggxi27UDB+jLWwsuGsD5NoJoKN5MAc+lewxK33FG+CjQfKx9RMjq7w+TFV/0j/Nd/B5jspH0awaVv6q9O1Zip6Eald49A+xAK5VbtzkcsCoEK6rhQILXL8SHchGKpTCOWuK4sSUp5ouFSS8txY1Q+U7EXcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255676; c=relaxed/simple;
-	bh=QugguSdakp2L3182dzT4Sx+epFRt5FE4on6BB2KBTP0=;
+	s=arc-20240116; t=1764255678; c=relaxed/simple;
+	bh=9dega0Ce2RGehyrWfGSgAFH3kf1xhB+5cHm8p0+/FDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRPfva1vYdoqp7BuM0X8Foy8XqQgluD9rVdO0nJrxvBtQKlpHSkP95JDMGg0lQLBslOfkx+GE1xnrNfXOx6YIeOGpNy/9zjjwU1tq5WJG5meOkxs6pH0fwYqdYkADRNVAXYG4WempJ7gLThbnuUNUnAUFYh/rFezEcP/nhO/lHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U0rIW41z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H+eoqbDWND1sh3AJ/QKmC5vhGELCmTQ85ghGMMypOfGS3Tt3rLnnZyOLuRTuf9EH33HMNNNwXx67vSpgUhYjww7vVAn4/O1t0ThX2dyP6CKVpBtaRjrGXUP8TWUTlcganNyHzMO1G6scBBIGSYHAac+WQGj4onxCRNacHIcBok0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTEWjEn1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U0rIW41z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F815C4CEF8;
-	Thu, 27 Nov 2025 15:01:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTEWjEn1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31073C4CEF8;
+	Thu, 27 Nov 2025 15:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255675;
-	bh=QugguSdakp2L3182dzT4Sx+epFRt5FE4on6BB2KBTP0=;
+	s=korg; t=1764255678;
+	bh=9dega0Ce2RGehyrWfGSgAFH3kf1xhB+5cHm8p0+/FDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U0rIW41zSgPdA5eck75KN/dDgFEd38JV9nW1mKIamB8sHke4dvgiRdzvMLUzWJijF
-	 taIEHmmlAjgqiv3KSjbvtGDM0UJ2wHwxhPLx+hByFrz1FBN9cv8bZbnfD0DQI47rM9
-	 0U/9hHACT8J1E+MunNoU1k/xZgZ5aDD6aG/ig1zk=
+	b=vTEWjEn17lur1KJgHvjstmnZ97S1dtFt91hCDXT60KLCpg28/Wc36hKRsSp4GQLzK
+	 F66BkX80yXRDIBuMed9I5BJVkcsqxH+RhSJ9vfi8mgJwTNiyMjQNtt8pCXCXQCTluI
+	 mzwWrf623a6kVEBExa92YSuOoyxRGWNUKOW67Kos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aric Cyr <aric.cyr@amd.com>,
-	Ivan Lipski <ivan.lipski@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.17 076/175] drm/amd/display: Clear the CUR_ENABLE register on DCN20 on DPP5
-Date: Thu, 27 Nov 2025 15:45:29 +0100
-Message-ID: <20251127144045.742307249@linuxfoundation.org>
+	Kiryl Shutsemau <kas@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Christian Brauner <brauner@kernel.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>,
+	David Hildenbrand <david@redhat.com>,
+	Hugh Dickins <hughd@google.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Rik van Riel <riel@surriel.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.17 077/175] mm/truncate: unmap large folio on split failure
+Date: Thu, 27 Nov 2025 15:45:30 +0100
+Message-ID: <20251127144045.778843047@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,49 +67,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Lipski <ivan.lipski@amd.com>
+From: Kiryl Shutsemau <kas@kernel.org>
 
-commit 5bab4c89390f32b2f491f49a151948cd226dd909 upstream.
+commit fa04f5b60fda62c98a53a60de3a1e763f11feb41 upstream.
 
-[Why]
-On DCN20 & DCN30, the 6th DPP's & HUBP's are powered on permanently and
-cannot be power gated. Thus, when dpp_reset() is invoked for the DPP5,
-while it's still powered on, the cached cursor_state
-(dpp_base->pos.cur0_ctl.bits.cur0_enable)
-and the actual state (CUR0_ENABLE) bit are unsycned. This can cause a
-double cursor in full screen with non-native scaling.
+Accesses within VMA, but beyond i_size rounded up to PAGE_SIZE are
+supposed to generate SIGBUS.
 
-[How]
-Force disable cursor on DPP5 on plane powerdown for ASICs w/ 6 DPPs/HUBPs.
+This behavior might not be respected on truncation.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4673
-Reviewed-by: Aric Cyr <aric.cyr@amd.com>
-Signed-off-by: Ivan Lipski <ivan.lipski@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 79b3c037f972dcb13e325a8eabfb8da835764e15)
-Cc: stable@vger.kernel.org
+During truncation, the kernel splits a large folio in order to reclaim
+memory.  As a side effect, it unmaps the folio and destroys PMD mappings
+of the folio.  The folio will be refaulted as PTEs and SIGBUS semantics
+are preserved.
+
+However, if the split fails, PMD mappings are preserved and the user will
+not receive SIGBUS on any accesses within the PMD.
+
+Unmap the folio on split failure.  It will lead to refault as PTEs and
+preserve SIGBUS semantics.
+
+Make an exception for shmem/tmpfs that for long time intentionally mapped
+with PMDs across i_size.
+
+Link: https://lkml.kernel.org/r/20251027115636.82382-3-kirill@shutemov.name
+Fixes: b9a8a4195c7d ("truncate,shmem: Handle truncates that split large folios")
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: "Darrick J. Wong" <djwong@kernel.org>
+Cc: Dave Chinner <david@fromorbit.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Shakeel Butt <shakeel.butt@linux.dev>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ mm/truncate.c |   35 +++++++++++++++++++++++++++++------
+ 1 file changed, 29 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -614,6 +614,14 @@ void dcn20_dpp_pg_control(
- 		 *		DOMAIN11_PGFSM_PWR_STATUS, pwr_status,
- 		 * 		1, 1000);
- 		 */
+--- a/mm/truncate.c
++++ b/mm/truncate.c
+@@ -177,6 +177,32 @@ int truncate_inode_folio(struct address_
+ 	return 0;
+ }
+ 
++static int try_folio_split_or_unmap(struct folio *folio, struct page *split_at,
++				    unsigned long min_order)
++{
++	enum ttu_flags ttu_flags =
++		TTU_SYNC |
++		TTU_SPLIT_HUGE_PMD |
++		TTU_IGNORE_MLOCK;
++	int ret;
 +
-+		/* Force disable cursor on plane powerdown on DPP 5 using dpp_force_disable_cursor */
-+		if (!power_on) {
-+			struct dpp *dpp5 = hws->ctx->dc->res_pool->dpps[dpp_inst];
-+			if (dpp5 && dpp5->funcs->dpp_force_disable_cursor)
-+				dpp5->funcs->dpp_force_disable_cursor(dpp5);
-+		}
++	ret = try_folio_split_to_order(folio, split_at, min_order);
 +
- 		break;
- 	default:
- 		BREAK_TO_DEBUGGER();
++	/*
++	 * If the split fails, unmap the folio, so it will be refaulted
++	 * with PTEs to respect SIGBUS semantics.
++	 *
++	 * Make an exception for shmem/tmpfs that for long time
++	 * intentionally mapped with PMDs across i_size.
++	 */
++	if (ret && !shmem_mapping(folio->mapping)) {
++		try_to_unmap(folio, ttu_flags);
++		WARN_ON(folio_mapped(folio));
++	}
++
++	return ret;
++}
++
+ /*
+  * Handle partial folios.  The folio may be entirely within the
+  * range if a split has raced with us.  If not, we zero the part of the
+@@ -226,7 +252,7 @@ bool truncate_inode_partial_folio(struct
+ 
+ 	min_order = mapping_min_folio_order(folio->mapping);
+ 	split_at = folio_page(folio, PAGE_ALIGN_DOWN(offset) / PAGE_SIZE);
+-	if (!try_folio_split_to_order(folio, split_at, min_order)) {
++	if (!try_folio_split_or_unmap(folio, split_at, min_order)) {
+ 		/*
+ 		 * try to split at offset + length to make sure folios within
+ 		 * the range can be dropped, especially to avoid memory waste
+@@ -250,13 +276,10 @@ bool truncate_inode_partial_folio(struct
+ 		if (!folio_trylock(folio2))
+ 			goto out;
+ 
+-		/*
+-		 * make sure folio2 is large and does not change its mapping.
+-		 * Its split result does not matter here.
+-		 */
++		/* make sure folio2 is large and does not change its mapping */
+ 		if (folio_test_large(folio2) &&
+ 		    folio2->mapping == folio->mapping)
+-			try_folio_split_to_order(folio2, split_at2, min_order);
++			try_folio_split_or_unmap(folio2, split_at2, min_order);
+ 
+ 		folio_unlock(folio2);
+ out:
 
 
