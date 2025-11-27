@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7720312807;
-	Thu, 27 Nov 2025 14:52:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A4D28D8E8;
+	Thu, 27 Nov 2025 14:52:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255146; cv=none; b=oREYLljtiQhp7hGC1Sbnq7lvF4hw0qj7ILSWt9HIbrj9QJwgMyAVL0i4rZQPOWcH3weB6lYrePz3d7ca2l19UwLBfffAIHBg2pc9B6CE/lPHWXKxJSXm7OEl0ZdBCnOXlNcyLqrv2yGGP/H0fIhVnJDBnsljrd4UNeUhawzR2cE=
+	t=1764255149; cv=none; b=kVsjII0b8EyfBW3tc5S2aLNXuIJZePx5NhueYKqts5b6GgOpeAxG857gTKD2WcvalbmaoyIQ0dYKmJpOnANFlkiCUWBCX/hhMh7NNk95jI5d6N5ablX9zAJWeFNTmOMun9vqkHzUP0q5uSNO8whisVGLjBEv4UxRPMd8dEmtPp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255146; c=relaxed/simple;
-	bh=2fLNih6JhnpcV1568ZAgITrXeXH7533SZVMUhFiENAQ=;
+	s=arc-20240116; t=1764255149; c=relaxed/simple;
+	bh=fXSqA5HAGSr1fZC3+JfoBPZpWPl3Un7nOtj6fxnGyKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKcFYY8Y3nzqfccaoXkEJJwKEOzgX3+Zbq43VlmYLIkXyX1x0022gllf4GBzdyfWhn5MRKlbOePPTIoCtkDjxhRdY52hDqTGbkt9ntYL9xOoQgS51686M+CI08KZWme8lyS6nd/pf5jy1mxyVCwnwhffjzCgOwCOtgVLagj7/S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bc/I9Yxc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2npgUl/r9o0gzlwj8RGKVGFBYNKMIVvjWk+FOvfvfrV3E+MANpbHRyXMJKlk4cdi6PvwoOJz+hrsDdGgriXDFUrbTMinvR/LVFf/PHgh4ud/XrneWBPmFG0CLcEigH2H/HXHRGO9PKVxhHd8QVNP6PXDWlFjgiPd/5UoKCEdNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HK68nN3Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bc/I9Yxc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29101C16AAE;
-	Thu, 27 Nov 2025 14:52:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HK68nN3Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CB4C113D0;
+	Thu, 27 Nov 2025 14:52:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255146;
-	bh=2fLNih6JhnpcV1568ZAgITrXeXH7533SZVMUhFiENAQ=;
+	s=korg; t=1764255149;
+	bh=fXSqA5HAGSr1fZC3+JfoBPZpWPl3Un7nOtj6fxnGyKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc/I9Yxc0m2oKcxgxarEYTQJ/ymakphF2pjF7iGrceY1tdZHN4x8X0//CamgVXtbc
-	 MuTd9UcRzV43DUgsVjTkW7u7uM4yS975GqPYmkttWhoykkVy2gVp+j7F2tIpi6LaSR
-	 E+vKaexvP4PXKXgDTYytvjbukHNcrMPYBft/HUs4=
+	b=HK68nN3YSN8UTndC+yx0m4PQdYLCqcjH1MlpHU4qRGyreS7hR4c6NBsCsjSXz9Rxk
+	 Qitds4zeySbobYPrOjUZJ7lbBBRRWv9SODGrPRo3wtVIsiHCbMdYNmVJ2lzE5/jV7m
+	 sYfdzobErBB5GiBKIudtpy2Qhgg39fpAwqN29pNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Titas <novatitas366@gmail.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	staffan.melin@oscillator.se,
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Zhang Heng <zhangheng@kylinos.cn>,
 	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.12 003/112] HID: amd_sfh: Stop sensor before starting
-Date: Thu, 27 Nov 2025 15:45:05 +0100
-Message-ID: <20251127144032.836752330@linuxfoundation.org>
+Subject: [PATCH 6.12 004/112] HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
+Date: Thu, 27 Nov 2025 15:45:06 +0100
+Message-ID: <20251127144032.873589827@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,39 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit 4d3a13afa8b64dc49293b3eab3e7beac11072c12 upstream.
+commit beab067dbcff642243291fd528355d64c41dc3b2 upstream.
 
-Titas reports that the accelerometer sensor on their laptop only
-works after a warm boot or unloading/reloading the amd-sfh kernel
-module.
+Based on available evidence, the USB ID 4c4a:4155 used by multiple
+devices has been attributed to Jieli. The commit 1a8953f4f774
+("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY") affected touchscreen
+functionality. Added checks for manufacturer and serial number to
+maintain microphone compatibility, enabling both devices to function
+properly.
 
-Presumably the sensor is in a bad state on cold boot and failing to
-start, so explicitly stop it before starting.
-
+[jkosina@suse.com: edit shortlog]
+Fixes: 1a8953f4f774 ("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY")
 Cc: stable@vger.kernel.org
-Fixes: 93ce5e0231d79 ("HID: amd_sfh: Implement SFH1.1 functionality")
-Reported-by: Titas <novatitas366@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220670
-Tested-by: Titas <novatitas366@gmail.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Tested-by: staffan.melin@oscillator.se
+Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
 Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-ids.h    |    4 ++--
+ drivers/hid/hid-quirks.c |   13 ++++++++++++-
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-@@ -172,6 +172,8 @@ static int amd_sfh1_1_hid_client_init(st
- 		if (rc)
- 			goto cleanup;
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1528,7 +1528,7 @@
+ #define USB_VENDOR_ID_SIGNOTEC			0x2133
+ #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
  
-+		mp2_ops->stop(privdata, cl_data->sensor_idx[i]);
-+		amd_sfh_wait_for_response(privdata, cl_data->sensor_idx[i], DISABLE_SENSOR);
- 		writel(0, privdata->mmio + amd_get_p2c_val(privdata, 0));
- 		mp2_ops->start(privdata, info);
- 		status = amd_sfh_wait_for_response
+-#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
+-#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
++#define USB_VENDOR_ID_JIELI_SDK_DEFAULT		0x4c4a
++#define USB_DEVICE_ID_JIELI_SDK_4155		0x4155
+ 
+ #endif
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -900,7 +900,6 @@ static const struct hid_device_id hid_ig
+ #endif
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
+ 	{ }
+ };
+ 
+@@ -1057,6 +1056,18 @@ bool hid_ignore(struct hid_device *hdev)
+ 					     strlen(elan_acpi_id[i].id)))
+ 					return true;
+ 		break;
++	case USB_VENDOR_ID_JIELI_SDK_DEFAULT:
++		/*
++		 * Multiple USB devices with identical IDs (mic & touchscreen).
++		 * The touch screen requires hid core processing, but the
++		 * microphone does not. They can be distinguished by manufacturer
++		 * and serial number.
++		 */
++		if (hdev->product == USB_DEVICE_ID_JIELI_SDK_4155 &&
++		    strncmp(hdev->name, "SmartlinkTechnology", 19) == 0 &&
++		    strncmp(hdev->uniq, "20201111000001", 14) == 0)
++			return true;
++		break;
+ 	}
+ 
+ 	if (hdev->type == HID_TYPE_USBMOUSE &&
 
 
