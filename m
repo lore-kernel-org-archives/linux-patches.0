@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA90228135D;
-	Thu, 27 Nov 2025 15:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79E928135D;
+	Thu, 27 Nov 2025 15:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255816; cv=none; b=EvNnfs6msykMUai/M5g2A3K43NspZlem+1wBltMQ/WBZ8THyCnN89eOnEYEDRq/i3jpUSYSllRbBsBgrz0VUF7Z7uKBacnzVUNJHwzM1voI5qzYf3BXZFM83WS7+C3WksxVFO9YezCGjVdc9t50IeRu2l6mq0aBthklHXGseelA=
+	t=1764255819; cv=none; b=Ho9QSbdZj4IlfmL25h7WH1OSdWFq0h6vH1FvYOX38G3OzYqwTk56yzJu54Qkh4F0rTPzSi54p1Xyez9LiV4Oud9cTAnYNMrSrK2n8zQm/IbbGSCEIURfhDUfxSXx6bWl6StDj1ovydvERHBOQvNZekjwFnqTG7k3xXxw7a7j+S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255816; c=relaxed/simple;
-	bh=rkmp1dhQJGGR8jWtdL3vS8dezmcF7v+RIfilvy2kTK4=;
+	s=arc-20240116; t=1764255819; c=relaxed/simple;
+	bh=4nWTGwLSGIdyEJveC/1LyNq6uxRZ5pFQHfCrF5wvSo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HdrrYTQ3MPwMv/NLPpUh4Ysl3O0C6RkfHg4bhFXMYOtBx14QdhmL1ps7Ena8QIPDdqchZEoh1rrD2gJT6cUDwmImIErq6rOwjnLAxZH3TCqII9nZUbngy3BH5Jz5UfI3wImOCoAHWWgPn2f83Sjrqf5ZJ62oTlpvT30ApiuwcfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWz3c2fk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kIlUc4HASWHbR8rXLk2FlUF20WzowU2YkdnS8dWosEjjqK7WQYBppIkWbh/Vnv3CE+kVmgXldyC6sPykW2ZtRYwxRIwL9dIKHIXcjndMH49oX8afvSYuCMIo2rhr7j8ckqSojVMxFMkQeMYXoUFRAQgQHg5amuR+gBbH7wPhasU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DTqineFY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWz3c2fk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21C4FC4CEF8;
-	Thu, 27 Nov 2025 15:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DTqineFY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F98EC4CEF8;
+	Thu, 27 Nov 2025 15:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255816;
-	bh=rkmp1dhQJGGR8jWtdL3vS8dezmcF7v+RIfilvy2kTK4=;
+	s=korg; t=1764255819;
+	bh=4nWTGwLSGIdyEJveC/1LyNq6uxRZ5pFQHfCrF5wvSo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QWz3c2fkreMmJDgSeYNbOJiXsY0d3kGx8J58x+TbFyELAtnICyDoHMNECkJkeUTKF
-	 n7Quj/G2f6ERI0J97NpqNV76h1D8Ps6ZnZ0q06CJubU3rdm6vxi3Sq81VSfcKy3pti
-	 PxCmGYDYBVCNwfLo1XuZAW4hRpjk+81NVJb/LiQE=
+	b=DTqineFYaAX+FGRdU+eoARz+QG2k7WyGNA7rYky19dyCOskRxBe7T6Gj5PhhWWPFI
+	 THTPdg7RLiBnvO3KJKY4r3p4lc24OgNmyQK3YSlVHIe/1Qds58hubMjpCe51Qfk31h
+	 KqkY8Azd4aoQ3bE/9lDbNfgppBz3PSxOTpoLclQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Wang <shankerwangmiao@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 124/175] af_unix: Read sk_peek_offset() again after sleeping in unix_stream_read_generic().
-Date: Thu, 27 Nov 2025 15:46:17 +0100
-Message-ID: <20251127144047.488583287@linuxfoundation.org>
+Subject: [PATCH 6.17 125/175] gpio: cdev: make sure the cdev fd is still active before emitting events
+Date: Thu, 27 Nov 2025 15:46:18 +0100
+Message-ID: <20251127144047.524330658@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,106 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 7bf3a476ce43833c49fceddbe94ff3472e04e9bc ]
+[ Upstream commit d4cd0902c156b2ca60fdda8cd8b5bcb4b0e9ed64 ]
 
-Miao Wang reported a bug of SO_PEEK_OFF on AF_UNIX SOCK_STREAM
-socket.
+With the final call to fput() on a file descriptor, the release action
+may be deferred and scheduled on a work queue. The reference count of
+that descriptor is still zero and it must not be used. It's possible
+that a GPIO change, we want to notify the user-space about, happens
+AFTER the reference count on the file descriptor associated with the
+character device went down to zero but BEFORE the .release() callback
+was called from the workqueue and so BEFORE we unregistered from the
+notifier.
 
-The unexpected behaviour is triggered when the peek offset is
-larger than the recv queue and the thread is unblocked by new
-data.
+Using the regular get_file() routine in this situation triggers the
+following warning:
 
-Let's assume a socket which has "aaaa" in the recv queue and
-the peek offset is 4.
+  struct file::f_count incremented from zero; use-after-free condition present!
 
-First, unix_stream_read_generic() reads the offset 4 and skips
-the skb(s) of "aaaa" with the code below:
+So use the get_file_active() variant that will return NULL on file
+descriptors that have been or are being released.
 
-	skip = max(sk_peek_offset(sk, flags), 0);	/* @skip is 4. */
-
-	do {
-	...
-		while (skip >= unix_skb_len(skb)) {
-			skip -= unix_skb_len(skb);
-		...
-			skb = skb_peek_next(skb, &sk->sk_receive_queue);
-			if (!skb)
-				goto again;		/* @skip is 0. */
-		}
-
-The thread jumps to the 'again' label and goes to sleep since
-new data has not arrived yet.
-
-Later, new data "bbbb" unblocks the thread, and the thread jumps
-to the 'redo:' label to restart the entire process from the first
-skb in the recv queue.
-
-	do {
-		...
-redo:
-		...
-		last = skb = skb_peek(&sk->sk_receive_queue);
-		...
-again:
-		if (skb == NULL) {
-			...
-			timeo = unix_stream_data_wait(sk, timeo, last,
-						      last_len, freezable);
-			...
-			goto redo;			/* @skip is 0 !! */
-
-However, the peek offset is not reset in the path.
-
-If the buffer size is 8, recv() will return "aaaabbbb" without
-skipping any data, and the final offset will be 12 (the original
-offset 4 + peeked skbs' length 8).
-
-After sleeping in unix_stream_read_generic(), we have to fetch the
-peek offset again.
-
-Let's move the redo label before mutex_lock(&u->iolock).
-
-Fixes: 9f389e35674f ("af_unix: return data from multiple SKBs on recv() with MSG_PEEK flag")
-Reported-by: Miao Wang <shankerwangmiao@gmail.com>
-Closes: https://lore.kernel.org/netdev/3B969F90-F51F-4B9D-AB1A-994D9A54D460@gmail.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251117174740.3684604-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 40b7c49950bd ("gpio: cdev: put emitting the line state events on a workqueue")
+Reported-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Closes: https://lore.kernel.org/all/5d605f7fc99456804911403102a4fe999a14cc85.camel@siemens.com/
+Tested-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20251117-gpio-cdev-get-file-v1-1-28a16b5985b8@linaro.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpio/gpiolib-cdev.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 6d7c110814ffa..0f288a80e0acd 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2954,6 +2954,7 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index e6a289fa0f8fd..6a52d812e4e7c 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -2548,10 +2548,17 @@ static int lineinfo_changed_notify(struct notifier_block *nb,
+ 		container_of(nb, struct gpio_chardev_data, lineinfo_changed_nb);
+ 	struct lineinfo_changed_ctx *ctx;
+ 	struct gpio_desc *desc = data;
++	struct file *fp;
  
- 	u = unix_sk(sk);
+ 	if (!test_bit(gpio_chip_hwgpio(desc), cdev->watched_lines))
+ 		return NOTIFY_DONE;
  
-+redo:
- 	/* Lock the socket to prevent queue disordering
- 	 * while sleeps in memcpy_tomsg
- 	 */
-@@ -2965,7 +2966,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 		struct sk_buff *skb, *last;
- 		int chunk;
++	/* Keep the file descriptor alive for the duration of the notification. */
++	fp = get_file_active(&cdev->fp);
++	if (!fp)
++		/* Chardev file descriptor was or is being released. */
++		return NOTIFY_DONE;
++
+ 	/*
+ 	 * If this is called from atomic context (for instance: with a spinlock
+ 	 * taken by the atomic notifier chain), any sleeping calls must be done
+@@ -2575,8 +2582,6 @@ static int lineinfo_changed_notify(struct notifier_block *nb,
+ 	/* Keep the GPIO device alive until we emit the event. */
+ 	ctx->gdev = gpio_device_get(desc->gdev);
+ 	ctx->cdev = cdev;
+-	/* Keep the file descriptor alive too. */
+-	get_file(ctx->cdev->fp);
  
--redo:
- 		unix_state_lock(sk);
- 		if (sock_flag(sk, SOCK_DEAD)) {
- 			err = -ECONNRESET;
-@@ -3015,7 +3015,6 @@ static int unix_stream_read_generic(struct unix_stream_read_state *state,
- 				goto out;
- 			}
- 
--			mutex_lock(&u->iolock);
- 			goto redo;
- unlock:
- 			unix_state_unlock(sk);
+ 	INIT_WORK(&ctx->work, lineinfo_changed_func);
+ 	queue_work(ctx->gdev->line_state_wq, &ctx->work);
 -- 
 2.51.0
 
