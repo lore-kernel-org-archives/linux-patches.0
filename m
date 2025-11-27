@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9904F28D8E8;
-	Thu, 27 Nov 2025 15:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D193D334684;
+	Thu, 27 Nov 2025 15:00:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255601; cv=none; b=Pzkz3YaoZjVX5QVZQV8Nhxb5jIPfFkJFTlRCjU3b9REhzqD/xpMHs00G1YLD4cGQkj1v+kHL/bQjDE7DyBKmEqz3EAxL9vzYMuuaGz3c3P2s9DYm/vJZfA6R6yy0VmfuQIkNDc/gc/LX+TU25INBKpwLw34T+nNPMDPQEU7yYyI=
+	t=1764255604; cv=none; b=IyFL2+bn45AV3MpO8sh8Hr5ruCv6urHLmBIl+CB8cqD9yxx/H7UCMJy0ZueFJ8eo+LtlYPRHjeJ0zBZRDg2D6v1n8A7gVxdmt12RPJ/yolqmtrWJiNL66lOBDd+5NdyV6cutRAaRBWfElCPFmG5Ea8wlAYi9SE11Dvim+/bshVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255601; c=relaxed/simple;
-	bh=nhNtqsMPwwJt1J1PvAzhjtc0dLfS/SyDvQYDXrECWMY=;
+	s=arc-20240116; t=1764255604; c=relaxed/simple;
+	bh=3/jwRldgeiwyd4H5vnRdc1Nw+QIzBYaKWHyrQHjbce4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZB3m0/sZAEutlgfbEzwHlJFghv77FYhC+0LZjjzYEApfEltgAD5whBSMdomZI/ZN9m/ud+b2WRgZwOrHimzDrgSXORNjxlLx0eGs4jeT3sgTMnt6R8qsxv7/QXZ2ugGB8TsfMv8Dr1fikb+b+4SlqiH4S5OU68nskCd9u3gVzj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DrmJhCw2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVhqctLxwbTPxpolHmxxT0iglA5Y9wmm4tLYii3+zbxrrJ4Xo+0MmxWrofh8witTDgFYf+lXcblnJTI1TtNSQij9xyDDi9GecwYGVR7axkmwEXOb8CnvdxIxQhQ6+WEJOer7pakb6Gz84gVnoOedudbDZubr+cjdy3+FT+M3RE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uhG8QH0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DrmJhCw2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25762C4CEF8;
-	Thu, 27 Nov 2025 15:00:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uhG8QH0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06511C4CEF8;
+	Thu, 27 Nov 2025 15:00:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255601;
-	bh=nhNtqsMPwwJt1J1PvAzhjtc0dLfS/SyDvQYDXrECWMY=;
+	s=korg; t=1764255604;
+	bh=3/jwRldgeiwyd4H5vnRdc1Nw+QIzBYaKWHyrQHjbce4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrmJhCw2710uOZbBfitLOe+e+HjI4XLJaiuejj68MNtjf8G4JRfWPoAtKpkKURNse
-	 iOlNlIpdggbLg0gBA5kQVymKE5ttTWkkeFAvMcDbsnhqBmgeZ5tH1V2fw4Djk09Pcq
-	 sFNmL41sZhZMh+5xzb7iWeD9iNAFN0XTRrhKNyKg=
+	b=0uhG8QH0igJmCMrNIjt1vdiXz9E0eHacudO8PcPQ94ZvpUtAHykssL7hPkNz6w6Jp
+	 AkQIN81CBcyJSx2jGIC3FmU7j1Z84zOdsQjGMiktYh12ntg5LI1il8cgx5oW31uAdO
+	 1v2Klm23IS2YfA3nyJRcunmG2JaFqZnxS9z1LWGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.17 049/175] dt-bindings: pinctrl: toshiba,visconti: Fix number of items in groups
-Date: Thu, 27 Nov 2025 15:45:02 +0100
-Message-ID: <20251127144044.758230653@linuxfoundation.org>
+	Hengqi Chen <hengqi.chen@gmail.com>,
+	Vincent Li <vincent.mc.li@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.17 050/175] LoongArch: BPF: Disable trampoline for kernel module function trace
+Date: Thu, 27 Nov 2025 15:45:03 +0100
+Message-ID: <20251127144044.793710655@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,62 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Vincent Li <vincent.mc.li@gmail.com>
 
-commit 316e361b5d2cdeb8d778983794a1c6eadcb26814 upstream.
+commit 677e6123e3d24adaa252697dc89740f2ac07664e upstream.
 
-The "groups" property can hold multiple entries (e.g.
-toshiba/tmpv7708-rm-mbrc.dts file), so allow that by dropping incorrect
-type (pinmux-node.yaml schema already defines that as string-array) and
-adding constraints for items.  This fixes dtbs_check warnings like:
+The current LoongArch BPF trampoline implementation is incompatible
+with tracing functions in kernel modules. This causes several severe
+and user-visible problems:
 
-  toshiba/tmpv7708-rm-mbrc.dtb: pinctrl@24190000 (toshiba,tmpv7708-pinctrl):
-    pwm-pins:groups: ['pwm0_gpio16_grp', 'pwm1_gpio17_grp', 'pwm2_gpio18_grp', 'pwm3_gpio19_grp'] is too long
+* The `bpf_selftests/module_attach` test fails consistently.
+* Kernel lockup when a BPF program is attached to a module function [1].
+* Critical kernel modules like WireGuard experience traffic disruption
+  when their functions are traced with fentry [2].
 
-Fixes: 1825c1fe0057 ("pinctrl: Add DT bindings for Toshiba Visconti TMPV7700 SoC")
+Given the severity and the potential for other unknown side-effects, it
+is safest to disable the feature entirely for now. This patch prevents
+the BPF subsystem from allowing trampoline attachments to kernel module
+functions on LoongArch.
+
+This is a temporary mitigation until the core issues in the trampoline
+code for kernel module handling can be identified and fixed.
+
+[root@fedora bpf]# ./test_progs -a module_attach -v
+bpf_testmod.ko is already unloaded.
+Loading bpf_testmod.ko...
+Successfully loaded bpf_testmod.ko.
+test_module_attach:PASS:skel_open 0 nsec
+test_module_attach:PASS:set_attach_target 0 nsec
+test_module_attach:PASS:set_attach_target_explicit 0 nsec
+test_module_attach:PASS:skel_load 0 nsec
+libbpf: prog 'handle_fentry': failed to attach: -ENOTSUPP
+libbpf: prog 'handle_fentry': failed to auto-attach: -ENOTSUPP
+test_module_attach:FAIL:skel_attach skeleton attach failed: -524
+Summary: 0/0 PASSED, 0 SKIPPED, 1 FAILED
+Successfully unloaded bpf_testmod.ko.
+
+[1]: https://lore.kernel.org/loongarch/CAK3+h2wDmpC-hP4u4pJY8T-yfKyk4yRzpu2LMO+C13FMT58oqQ@mail.gmail.com/
+[2]: https://lore.kernel.org/loongarch/CAK3+h2wYcpc+OwdLDUBvg2rF9rvvyc5amfHT-KcFaK93uoELPg@mail.gmail.com/
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: f9b6b41f0cf3 ("LoongArch: BPF: Add basic bpf trampoline support")
+Acked-by: Hengqi Chen <hengqi.chen@gmail.com>
+Signed-off-by: Vincent Li <vincent.mc.li@gmail.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml |   26 +++++-----
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ arch/loongarch/net/bpf_jit.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml
-@@ -50,18 +50,20 @@ patternProperties:
-       groups:
-         description:
-           Name of the pin group to use for the functions.
--        $ref: /schemas/types.yaml#/definitions/string
--        enum: [i2c0_grp, i2c1_grp, i2c2_grp, i2c3_grp, i2c4_grp,
--               i2c5_grp, i2c6_grp, i2c7_grp, i2c8_grp,
--               spi0_grp, spi0_cs0_grp, spi0_cs1_grp, spi0_cs2_grp,
--               spi1_grp, spi2_grp, spi3_grp, spi4_grp, spi5_grp, spi6_grp,
--               uart0_grp, uart1_grp, uart2_grp, uart3_grp,
--               pwm0_gpio4_grp, pwm0_gpio8_grp, pwm0_gpio12_grp,
--               pwm0_gpio16_grp, pwm1_gpio5_grp, pwm1_gpio9_grp,
--               pwm1_gpio13_grp, pwm1_gpio17_grp, pwm2_gpio6_grp,
--               pwm2_gpio10_grp, pwm2_gpio14_grp, pwm2_gpio18_grp,
--               pwm3_gpio7_grp, pwm3_gpio11_grp, pwm3_gpio15_grp,
--               pwm3_gpio19_grp, pcmif_out_grp, pcmif_in_grp]
-+        items:
-+          enum: [i2c0_grp, i2c1_grp, i2c2_grp, i2c3_grp, i2c4_grp,
-+                 i2c5_grp, i2c6_grp, i2c7_grp, i2c8_grp,
-+                 spi0_grp, spi0_cs0_grp, spi0_cs1_grp, spi0_cs2_grp,
-+                 spi1_grp, spi2_grp, spi3_grp, spi4_grp, spi5_grp, spi6_grp,
-+                 uart0_grp, uart1_grp, uart2_grp, uart3_grp,
-+                 pwm0_gpio4_grp, pwm0_gpio8_grp, pwm0_gpio12_grp,
-+                 pwm0_gpio16_grp, pwm1_gpio5_grp, pwm1_gpio9_grp,
-+                 pwm1_gpio13_grp, pwm1_gpio17_grp, pwm2_gpio6_grp,
-+                 pwm2_gpio10_grp, pwm2_gpio14_grp, pwm2_gpio18_grp,
-+                 pwm3_gpio7_grp, pwm3_gpio11_grp, pwm3_gpio15_grp,
-+                 pwm3_gpio19_grp, pcmif_out_grp, pcmif_in_grp]
-+        minItems: 1
-+        maxItems: 8
+--- a/arch/loongarch/net/bpf_jit.c
++++ b/arch/loongarch/net/bpf_jit.c
+@@ -1626,6 +1626,9 @@ static int __arch_prepare_bpf_trampoline
+ 	/* Direct jump skips 5 NOP instructions */
+ 	else if (is_bpf_text_address((unsigned long)orig_call))
+ 		orig_call += LOONGARCH_BPF_FENTRY_NBYTES;
++	/* Module tracing not supported - cause kernel lockups */
++	else if (is_module_text_address((unsigned long)orig_call))
++		return -ENOTSUPP;
  
-       drive-strength:
-         enum: [2, 4, 6, 8, 16, 24, 32]
+ 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
+ 		move_addr(ctx, LOONGARCH_GPR_A0, (const u64)im);
 
 
