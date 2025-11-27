@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE8832AAC4;
-	Thu, 27 Nov 2025 15:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343E73346B6;
+	Thu, 27 Nov 2025 15:05:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255929; cv=none; b=tDhYsuaq9e8Nnv5Tf3+COFvGix0XqhsnTiUqcg79GOrwQWflf8WUMHXwgjFoetcnbWfP7ejL8h9zI5xTQGnaziRhLlNDMyseeD3a7QBb1MapO4bcvxLmFJ/fFMEiqYjmv8oqt1xJjdjXrXEfKcwOSGZSrBZyI5wdxdLAnsGIn34=
+	t=1764255932; cv=none; b=GFVsnHxMlrP4MI5rqH4xUzyl3v5IWZIA0E6aUhr8Pgz1CQY9nwl0X3r7d8liKphyMvIyuxnPQ1VLq6cgKxxhD1Ztrck4L9MTge4VTFQZ4k8lU01Fzpnyle5TLvuB09Rd6Ovsw4xVxmgyb/vvHxpJmzcsRDdjB4B/JR7iQu1wAs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255929; c=relaxed/simple;
-	bh=DGHk1PtIax2fgR9Rz3oFPcd/Ykf+ktkz4Hjk9+GWDxA=;
+	s=arc-20240116; t=1764255932; c=relaxed/simple;
+	bh=IE5FwuaDmVjNOWi1OVa3wo/707CcKF0iI0Q1Dc4OoCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ccmrPOyEGxQ2p/hzrtUG32VHqMQZYCX/CZtrC3OgnIcfyP5o8dXsk8ypGct97TnowyJ3ofq4dEEWHfjIoH0OKiKRGYVACNnyevn2RBEYplI4T310mKLCdWWsp+lJa+H05kADGRPOTscgebwCouxEI4N+4kw0cNS9Vcf8v/tvBHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1D6KCCV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jy5OSWsD2SIH33mrbkkG8HAx75gPvekaBe37sLkt0Uhpg4t+vW+gt9MVTUjnNC+zAzsrCswfZQrmo9UvEdL72Kkl41P76N1cUlxnUv61DNdaufvMHPs1tX1/LSB5cpx6XJjwJGe5IR+8QBhtTJo2ybed0o25Ow8kanLxOo/zLDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezwuV+Yx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1D6KCCV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E690C4CEF8;
-	Thu, 27 Nov 2025 15:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezwuV+Yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 634B4C4CEF8;
+	Thu, 27 Nov 2025 15:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255928;
-	bh=DGHk1PtIax2fgR9Rz3oFPcd/Ykf+ktkz4Hjk9+GWDxA=;
+	s=korg; t=1764255931;
+	bh=IE5FwuaDmVjNOWi1OVa3wo/707CcKF0iI0Q1Dc4OoCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r1D6KCCVhdhHcNqw+kWv+mPbq3dZOLTK5EZJS/+tJy1PPDjYVyQEi47cY5UPP5zhA
-	 7aBvQqgDCJCON84cVPnGwe0NWGA8MKJMILvqw156+Hd/LtXUerPDjBxEIYJk0lkjSv
-	 hLOXUWTbRtVGTalTjkyyFPwsomWe/RJXpCDqEmSI=
+	b=ezwuV+YxUcfj/xvU4JoV5/YenRbEiT79gDdFE1bgSp/SfoNFnvPiEXpu9st+uN/0f
+	 nnV4Nd7Hule7du2/GJKAJ6dAq2hIuICebrzl1XJPwKF4UtcrmP3LB1SNX6Di9WexQP
+	 aJHcnF6oSFkE8Q3pyRkLh9/OBHevW9Kycc01t6O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 162/175] drm/i915/psr: Check drm_dp_dpcd_read return value on PSR dpcd init
-Date: Thu, 27 Nov 2025 15:46:55 +0100
-Message-ID: <20251127144048.867836090@linuxfoundation.org>
+Subject: [PATCH 6.17 163/175] drm/i915/dp_mst: Disable Panel Replay
+Date: Thu, 27 Nov 2025 15:46:56 +0100
+Message-ID: <20251127144048.904550247@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,81 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 9cc10041e9fe7f32c4817e3cdd806ff1986d266c ]
+[ Upstream commit f2687d3cc9f905505d7b510c50970176115066a2 ]
 
-Currently we are ignoriong drm_dp_dpcd_read return values when reading PSR
-and Panel Replay capability DPCD register. Rework intel_psr_dpcd a bit to
-take care of checking the return value.
+Disable Panel Replay on MST links until it's properly implemented. For
+instance the required VSC SDP is not programmed on MST and FEC is not
+enabled if Panel Replay is enabled.
 
-v2: use drm_dp_dpcd_read_data
-
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://lore.kernel.org/r/20250821045918.17757-1-jouni.hogander@intel.com
-Stable-dep-of: f2687d3cc9f9 ("drm/i915/dp_mst: Disable Panel Replay")
+Fixes: 3257e55d3ea7 ("drm/i915/panelreplay: enable/disable panel replay")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15174
+Cc: Jouni Högander <jouni.hogander@intel.com>
+Cc: Animesh Manna <animesh.manna@intel.com>
+Cc: stable@vger.kernel.org # v6.8+
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20251107124141.911895-1-imre.deak@intel.com
+(cherry picked from commit e109f644b871df8440c886a69cdce971ed533088)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c |   32 ++++++++++++++++++++-----------
- 1 file changed, 21 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/gpu/drm/i915/display/intel_psr.c
 +++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -600,6 +600,16 @@ exit:
- static void _panel_replay_init_dpcd(struct intel_dp *intel_dp)
- {
+@@ -602,6 +602,10 @@ static void _panel_replay_init_dpcd(stru
  	struct intel_display *display = to_intel_display(intel_dp);
-+	int ret;
-+
-+	ret = drm_dp_dpcd_read_data(&intel_dp->aux, DP_PANEL_REPLAY_CAP_SUPPORT,
-+				    &intel_dp->pr_dpcd, sizeof(intel_dp->pr_dpcd));
-+	if (ret < 0)
+ 	int ret;
+ 
++	/* TODO: Enable Panel Replay on MST once it's properly implemented. */
++	if (intel_dp->mst_detect == DRM_DP_MST)
 +		return;
 +
-+	if (!(intel_dp->pr_dpcd[INTEL_PR_DPCD_INDEX(DP_PANEL_REPLAY_CAP_SUPPORT)] &
-+	      DP_PANEL_REPLAY_SUPPORT))
-+		return;
- 
- 	if (intel_dp_is_edp(intel_dp)) {
- 		if (!intel_alpm_aux_less_wake_supported(intel_dp)) {
-@@ -631,6 +641,15 @@ static void _panel_replay_init_dpcd(stru
- static void _psr_init_dpcd(struct intel_dp *intel_dp)
- {
- 	struct intel_display *display = to_intel_display(intel_dp);
-+	int ret;
-+
-+	ret = drm_dp_dpcd_read_data(&intel_dp->aux, DP_PSR_SUPPORT, intel_dp->psr_dpcd,
-+				    sizeof(intel_dp->psr_dpcd));
-+	if (ret < 0)
-+		return;
-+
-+	if (!intel_dp->psr_dpcd[0])
-+		return;
- 
- 	drm_dbg_kms(display->drm, "eDP panel supports PSR version %x\n",
- 		    intel_dp->psr_dpcd[0]);
-@@ -676,18 +695,9 @@ static void _psr_init_dpcd(struct intel_
- 
- void intel_psr_init_dpcd(struct intel_dp *intel_dp)
- {
--	drm_dp_dpcd_read(&intel_dp->aux, DP_PSR_SUPPORT, intel_dp->psr_dpcd,
--			 sizeof(intel_dp->psr_dpcd));
--
--	drm_dp_dpcd_read(&intel_dp->aux, DP_PANEL_REPLAY_CAP_SUPPORT,
--			 &intel_dp->pr_dpcd, sizeof(intel_dp->pr_dpcd));
--
--	if (intel_dp->pr_dpcd[INTEL_PR_DPCD_INDEX(DP_PANEL_REPLAY_CAP_SUPPORT)] &
--	    DP_PANEL_REPLAY_SUPPORT)
--		_panel_replay_init_dpcd(intel_dp);
-+	_psr_init_dpcd(intel_dp);
- 
--	if (intel_dp->psr_dpcd[0])
--		_psr_init_dpcd(intel_dp);
-+	_panel_replay_init_dpcd(intel_dp);
- 
- 	if (intel_dp->psr.sink_psr2_support ||
- 	    intel_dp->psr.sink_panel_replay_su_support)
+ 	ret = drm_dp_dpcd_read_data(&intel_dp->aux, DP_PANEL_REPLAY_CAP_SUPPORT,
+ 				    &intel_dp->pr_dpcd, sizeof(intel_dp->pr_dpcd));
+ 	if (ret < 0)
 
 
