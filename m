@@ -1,45 +1,53 @@
-Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0EE01459FA;
-	Thu, 27 Nov 2025 13:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764249419; cv=none; b=qcBbdrUja8tCQ52cyTxIW3BIAuFGvSTceByn1R0YiGdN9aSt2Tkxxb7IiRt6uv5rIGuhhpnbtzAwLz+i+Iiq7jQUU57xOMLJqCyT+q6NLsthj5iZZbE5lgX4/A7JF/thXaoXZJtVCoWV4hRfhd279Dxi3p47buXLxf73b7W5z5Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764249419; c=relaxed/simple;
-	bh=SxHzLScJ5aY8sylg3dQDijDUacHVBWCDtkYDLxWaFQM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ll7rTe3Jpdr7te6J5Cya+4gIJRpyxAukPK1fPVVDOgLelbHrgWK1ftcK8qhu3MZZ+OMMSbVX7GEhMcSPVrviYt4s0uokhmEWQ3PB70RMleG2UwHdqfdZPPWosM3cmBOrCHYc0zJJflMSqm6CmCGatDdE8V5qAN4tlConIQSYyjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=UPuEDOVJ; arc=none smtp.client-ip=85.214.250.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="UPuEDOVJ"
-Received: from 8bytes.org (p549214ac.dip0.t-ipconnect.de [84.146.20.172])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id 68FF35C709;
-	Thu, 27 Nov 2025 14:16:55 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1764249415;
-	bh=SxHzLScJ5aY8sylg3dQDijDUacHVBWCDtkYDLxWaFQM=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2D702417DE;
+	Thu, 27 Nov 2025 13:46:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764251211; cv=none; b=Hpu3KT2CoS1EjghbZKkJ1WPMZDw39zXsTj2q15uCFhbr/fjBcfxaShw71a7/NmMgfcNLcjV3QNLuKZ2/DbyA6lLmCM6qsMSyQOslW9BRsusd51e22PJG8FtqALNH31WlLAQ9NLPtp3n+mo5V1FmL9rfD3eLzvShz1HHWOrNpues=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764251211; c=relaxed/simple;
+	bh=nYUsJMeosQDz50qHJWQC4uIRjpDpFDnsaUPdl3/yWrg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kzxyFZB19oyYLMF14JzR9n3/NHYP4SE17E3EulxuBoHLcrOxd1VJPhzmYUinruWUfRIEWw6w8MXCDIG11bcIsPHSvNHX+CmhIIRmVeO86LU9w0YuOmyVCSGoBfDxp2v0seRIVtF9INpUNXJ6CuxEPogWVMUNJLz3p0+VSzIBfZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxMyScOx; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxMyScOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274FDC4CEF8;
+	Thu, 27 Nov 2025 13:46:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1764251210;
+	bh=nYUsJMeosQDz50qHJWQC4uIRjpDpFDnsaUPdl3/yWrg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UPuEDOVJBGyMyIg6NVdpmbs9Ir+6vCEXK4HmBLLnkIXzu/7G7rFY5ccqwrPoI3SEj
-	 yooOHeUWRdj5kVlwUiUwZN06QZ04WEUq2H3whCSqrV2n3cExLnzY77KPfg0hIxhTig
-	 jaUJZb1Fbr67Efp0w6LQ+EjJ3tALemenZIsSk8MUW8i1kC13elqr+MJzBlJw58E6GV
-	 +0ZPEZMlhe2eXDKOWuVM+XbFZzkyoE+o77nCgm3vsGBUhg4g8rZNU/77qcW3BbJMhR
-	 k0W3y3xHr5uaRclfeN1uRR3Mc/VP0bmLbpbKQ9boId59RUhY5FX2sATMFYvlIsgX80
-	 FlGO7l3Xct1ag==
-Date: Thu, 27 Nov 2025 14:16:53 +0100
-From: Joerg Roedel <joro@8bytes.org>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>, 
-	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>, 
-	Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>, 
-	kernel test robot <lkp@intel.com>, patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>
-Subject: Re: [PATCH] iommupt: Avoid a compiler bug with sw_bit
-Message-ID: <xaq53umm2oacl244dqi6fn67hwz2y3oose44dxrwsjjsmx43nj@5qcbdawihp6m>
-References: <0-v1-2e3b97d2d9b3+13c-iommupt_swbit_bugon_jgg@nvidia.com>
+	b=RxMyScOxNS1/6+i9B9j0juRfxj8G+sovOyfDngj85F2ghu4dmgL20u9vlhpCT7OTs
+	 t9P8k3p8JyLiD8OcTaB7eXQTVMSk6gyKh2x3baTa6DMZiifgt41ay0x5+C9rwhMJh2
+	 LCFpbOgNDjSXXMso3zV3RqAAypcdikhxp0bhtpFw=
+Date: Thu, 27 Nov 2025 14:46:47 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Kees Cook <kees@kernel.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org,
+	Russell King - ARM Linux <linux@armlinux.org.uk>,
+	"James E.J. Bottomley" <jejb@linux.ibm.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Valdis =?utf-8?Q?Kl=C4=93tnieks?= <valdis.kletnieks@vt.edu>
+Subject: Re: [PATCH 5.15 000/411] 5.15.186-rc1 review
+Message-ID: <2025112721-elective-delusion-7eb1@gregkh>
+References: <20250623130632.993849527@linuxfoundation.org>
+ <CA+G9fYuU5uSG1MKdYPoaC6O=-w5z6BtLtwd=+QBzrtZ1uQ8VXg@mail.gmail.com>
+ <2025062439-tamer-diner-68e9@gregkh>
+ <CA+G9fYvUG9=yGCp1W9-9+dhA6xLRo7mrL=7x9kBNJmzg7TCn7w@mail.gmail.com>
+ <2025062517-lucrative-justness-83fe@gregkh>
+ <202511061127.52ECA4AB40@keescook>
+ <2025112157-renewable-batboy-7b5c@gregkh>
+ <202511210951.39AA2F97@keescook>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,21 +56,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0-v1-2e3b97d2d9b3+13c-iommupt_swbit_bugon_jgg@nvidia.com>
+In-Reply-To: <202511210951.39AA2F97@keescook>
 
-On Wed, Nov 26, 2025 at 03:21:27PM -0400, Jason Gunthorpe wrote:
-> gcc 13, in some cases, gets confused if the __builtin_constant_p() is
-> inside the switch. It thinks that bitnr can have the value max+1 and
-> fails. Lift the check outside the switch to avoid it.
+On Fri, Nov 21, 2025 at 10:00:53AM -0800, Kees Cook wrote:
+> On Fri, Nov 21, 2025 at 10:36:22AM +0100, Greg Kroah-Hartman wrote:
+> > On Thu, Nov 06, 2025 at 11:32:18AM -0800, Kees Cook wrote:
+> > > This thread got pointed out to me. You can put this back in if you want;
+> > > you just need the other associated fix (which had a bit of an obscure
+> > > Fixes tag):
+> > 
+> > What exactly is "this" commit?
+> > 
+> > > d8720235d5b5 ("scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops")
+> > 
+> > Can you give a list of git ids asked for here?  This thread is confusing
+> > :)
 > 
-> Fixes: ef7bfe5bbffd ("iommupt/x86: Support SW bits and permit PT_FEAT_DMA_INCOHERENT")
-> Fixes: 5448c1558f60 ("iommupt: Add the Intel VT-d second stage page table format")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/oe-kbuild-all/202511242012.I7g504Ab-lkp@intel.com/
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/generic_pt/fmt/vtdss.h  | 8 ++++----
->  drivers/iommu/generic_pt/fmt/x86_64.h | 8 ++++----
->  2 files changed, 8 insertions(+), 8 deletions(-)
+> Sorry! For stable, you want these, if they're not already present:
+> 
+> 960013ec5b5e ("net: qede: Initialize qede_ll_ops with designated initializer")
+> d8720235d5b5 ("scsi: qedf: Use designated initializer for struct qed_fcoe_cb_ops")
+> e136a4062174 ("randstruct: gcc-plugin: Remove bogus void member")
+> f39f18f3c353 ("randstruct: gcc-plugin: Fix attribute addition")
+> 
+> 
+> An additional bit of confusion is that the fix in 960013ec5b5e landed
+> twice via 2 trees:
+> 6b3ab7f2cbfa ("net: qede: Initialize qede_ll_ops with designated initializer")
+> 960013ec5b5e ("net: qede: Initialize qede_ll_ops with designated initializer")
 
-Applied, thanks.
+Ugh, that's why we got confused.  This only backported to 6.1.y, but not
+earlier.  I'll go queue it up to the older ones as well.  All of the
+other commits listed above are already in stable releases.
+
+thanks,
+
+greg k-h
