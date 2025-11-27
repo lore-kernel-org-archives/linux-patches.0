@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060BA1DEFE8;
-	Thu, 27 Nov 2025 14:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C951A9B58;
+	Thu, 27 Nov 2025 14:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254871; cv=none; b=n7WS3VXbIJsR5aZmhyd50/hryROahRd7cnxiFyZ44fMQlDDieFh8ZInbJxrxUOb0NHNqY8ld7Xck2yj5E0Lj0JKmodONcuj+Us9MkBeoDvtoxvYtVBZIto5NSHzqT/H8nrjr1ynX0RjeE/zGoVBQGZtpnFerhzi7tLsRRFwz7Qk=
+	t=1764254873; cv=none; b=rinobzdL67trGcJvUwRUiqDCYBBKdziPOXvWocmzjcqsv0rrAvIElMQqlkeyA4YPR+vE67z9cXYqW0nrhPN3RB/NQ8JydGgCCk7zXbRmWQ2fMDUro56jbOsVIxd6yKHL+nqsQgCM98Cub/ud9OBHOUpb5FQWTk0m6h5fNxJfynA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254871; c=relaxed/simple;
-	bh=l0OE53kvPCAxryiRmqfXxlpaUWj4LouVOPamzihiLbA=;
+	s=arc-20240116; t=1764254873; c=relaxed/simple;
+	bh=8ZZjcpdBrh1xE2e6Z0D+c8jm1uYr4z6w/2pROhbWz4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xdf3ud7aePOgZ4Fcb6wt+JXgr8Cf7JgM0tIxQ+ncLcjOALxEzP3HB783UZ1Y3ri0ylzTRPd+GMuJKviZRVbie8xd8rbNiQKCqT6CEOo7ObBQ9zxTpaXmBIN9h5b3ny7uDOyQdqTyLvG1JzaPXpnF0fLFd1wp3jGW7SiYJJgMtos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wh8LCjrb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQriZsCIWvXHWfxoVxiMqHIRyFKUJjGYdO43YU2VltDMj7gjzrHb7K/x5qTpOJP7CPkxHXuKn3WxQfQiV939i8FUnRdx2vyDabLnzkZO1I0daGl2L4HAKuTUmhvRsDy4s1JLbTLtjoRq0ag/2O8FZ4/JlUF75bDerikZ6s8+170=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOyAK8lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wh8LCjrb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416F2C4CEF8;
-	Thu, 27 Nov 2025 14:47:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOyAK8lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D84C116C6;
+	Thu, 27 Nov 2025 14:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254870;
-	bh=l0OE53kvPCAxryiRmqfXxlpaUWj4LouVOPamzihiLbA=;
+	s=korg; t=1764254873;
+	bh=8ZZjcpdBrh1xE2e6Z0D+c8jm1uYr4z6w/2pROhbWz4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wh8LCjrbIOrDTgDiSLuwKsnrWh2vrZjCUnXxIhtZ6X9Y4Mg41V5LM8aSyxqfU/s1s
-	 LwhD+K08DTFWcZ8Cn8KA4Y3LGW0WPmXf0AMbi6r5Qd/4uVFXqhQk7PnSyXE9a2J5UP
-	 xZTDzvKKKP2Ne/jjBok2zF309JNaU2Xm8iY9KWFA=
+	b=VOyAK8lhDG4SGt3Th9nrtDEoDe2ADnmM4iHE7RBDuxFwRg6Uuq5ahhZIht/L24aos
+	 Wwv2J5VioM2LSuNCBjk9ut/2CsN+lon/EoxziRDjk7NZr5YJ3JZ4S0uZZ0FOVj3cIX
+	 AR0JAz/oTRad8z4EhAdVBrB8U4DdZB4Q8Uiz/YzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.6 15/86] Revert "drm/tegra: dsi: Clear enable register if powered by bootloader"
-Date: Thu, 27 Nov 2025 15:45:31 +0100
-Message-ID: <20251127144028.374404899@linuxfoundation.org>
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.6 16/86] Input: cros_ec_keyb - fix an invalid memory access
+Date: Thu, 27 Nov 2025 15:45:32 +0100
+Message-ID: <20251127144028.409651883@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -50,56 +50,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-commit 660b299bed2a2a55a1f9102d029549d0235f881c upstream.
+commit e08969c4d65ac31297fcb4d31d4808c789152f68 upstream.
 
-Commit b6bcbce33596 ("soc/tegra: pmc: Ensure power-domains are in a
-known state") was introduced so that all power domains get initialized
-to a known working state when booting and it does this by shutting them
-down (including asserting resets and disabling clocks) before registering
-each power domain with the genpd framework, leaving it to each driver to
-later on power its needed domains.
+If cros_ec_keyb_register_matrix() isn't called (due to
+`buttons_switches_only`) in cros_ec_keyb_probe(), `ckdev->idev` remains
+NULL.  An invalid memory access is observed in cros_ec_keyb_process()
+when receiving an EC_MKBP_EVENT_KEY_MATRIX event in cros_ec_keyb_work()
+in such case.
 
-This caused the Google Pixel C to hang when booting due to a workaround
-in the DSI driver introduced in commit b22fd0b9639e ("drm/tegra: dsi:
-Clear enable register if powered by bootloader") meant to handle the case
-where the bootloader enabled the DSI hardware module. The workaround relies
-on reading a hardware register to determine the current status and after
-b6bcbce33596 that now happens in a powered down state thus leading to
-the boot hang.
+  Unable to handle kernel read from unreadable memory at virtual address 0000000000000028
+  ...
+  x3 : 0000000000000000 x2 : 0000000000000000
+  x1 : 0000000000000000 x0 : 0000000000000000
+  Call trace:
+  input_event
+  cros_ec_keyb_work
+  blocking_notifier_call_chain
+  ec_irq_thread
 
-Fix this by reverting b22fd0b9639e since currently we are guaranteed
-that the hardware will be fully reset by the time we start enabling the
-DSI module.
+It's still unknown about why the kernel receives such malformed event,
+in any cases, the kernel shouldn't access `ckdev->idev` and friends if
+the driver doesn't intend to initialize them.
 
-Fixes: b6bcbce33596 ("soc/tegra: pmc: Ensure power-domains are in a known state")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Link: https://patch.msgid.link/20251104070310.3212712-1-tzungbi@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Diogo Ivo <diogo.ivo@tecnico.ulisboa.pt>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20251103-diogo-smaug_ec_typec-v1-1-be656ccda391@tecnico.ulisboa.pt
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tegra/dsi.c |    9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/input/keyboard/cros_ec_keyb.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/tegra/dsi.c
-+++ b/drivers/gpu/drm/tegra/dsi.c
-@@ -912,15 +912,6 @@ static void tegra_dsi_encoder_enable(str
- 	u32 value;
- 	int err;
+--- a/drivers/input/keyboard/cros_ec_keyb.c
++++ b/drivers/input/keyboard/cros_ec_keyb.c
+@@ -263,6 +263,12 @@ static int cros_ec_keyb_work(struct noti
+ 	case EC_MKBP_EVENT_KEY_MATRIX:
+ 		pm_wakeup_event(ckdev->dev, 0);
  
--	/* If the bootloader enabled DSI it needs to be disabled
--	 * in order for the panel initialization commands to be
--	 * properly sent.
--	 */
--	value = tegra_dsi_readl(dsi, DSI_POWER_CONTROL);
--
--	if (value & DSI_POWER_CONTROL_ENABLE)
--		tegra_dsi_disable(dsi);
--
- 	err = tegra_dsi_prepare(dsi);
- 	if (err < 0) {
- 		dev_err(dsi->dev, "failed to prepare: %d\n", err);
++		if (!ckdev->idev) {
++			dev_warn_once(ckdev->dev,
++				      "Unexpected key matrix event\n");
++			return NOTIFY_OK;
++		}
++
+ 		if (ckdev->ec->event_size != ckdev->cols) {
+ 			dev_err(ckdev->dev,
+ 				"Discarded incomplete key matrix event.\n");
 
 
