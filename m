@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157FC288537;
-	Thu, 27 Nov 2025 14:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180FB2882C9;
+	Thu, 27 Nov 2025 14:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255203; cv=none; b=sQy6F+JcoPzqoqjB69twvo7qmtUFEzOx5e6MKSFtWVTI4wcC3WULlgl6doPeqGamZW5w4uqsICuCS5rUtKCjEdRBEU5od07wHSt8Cex0DcIR5Em8B38UDnEb1O4AmXl8OxZ31mH/UK2NV3Lkysj1BnZzWjmF5flLxIM8cvE1keY=
+	t=1764255206; cv=none; b=XVvhxihS5DasaRHUvP/9TCgzUu/0WntEAUCmLApweuVpvfLiVu5rxWCfJUSw8+G0tYirgXlrQZloLShk5Q6NMSjIaBCU9PBKRXcq3z3QvPVjSGcjdu1/85HCz65YOaLK6QKvR/B0LAAd1oUz67tLYpXpwIKr9bTo5fCS3srtH28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255203; c=relaxed/simple;
-	bh=8nBO3TgO4D6jcilZtjakw8WAIyF8VzDDl3A6kIzTLzs=;
+	s=arc-20240116; t=1764255206; c=relaxed/simple;
+	bh=Ta1xi6669fNTigz6L8qQavLt0YU/PUqu/E2gSdwp47g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBbTBjhsTT0PGWdGsIIYJ//30Ly4/4BMp/J0VYbh6+J4Bftwom5kHosR66H2B8IeTa4keIIoz6qRZ8W+su3Kiwd9ArhAjHkNL6U52pJvIVoGmXkwLWPkLGE3JTCpsvDyueQ3xnpIxmtqFommGsMG5o1XglolrgOLnAxG6n/fR4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjQqfGQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvCeWcy4UTGFyUrU5+O+HyW642/GlCdp18jswLBoShgpupbmcdnEPgISGtLJGdIGaCZu6qbTw/C+yq6nkRjo/XRmu6LOvQq83B4klcJbXm3fdiYgCMR6i8DXqlMcmrsgEO9jsvbKtyMuJeTA6tmTs2I7exBGaHVA2J51f359pcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9mufY/b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjQqfGQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B0EC4CEF8;
-	Thu, 27 Nov 2025 14:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9mufY/b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8821BC4CEF8;
+	Thu, 27 Nov 2025 14:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255203;
-	bh=8nBO3TgO4D6jcilZtjakw8WAIyF8VzDDl3A6kIzTLzs=;
+	s=korg; t=1764255205;
+	bh=Ta1xi6669fNTigz6L8qQavLt0YU/PUqu/E2gSdwp47g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WjQqfGQWwoYSrbYoplVy+VA4qM0Q/jkFH2FcyjsMBiUF6HhlDppx3PcoMGfx7T/eB
-	 HPWBqfObgEpKXv/0NjnUwWNEg2V+rUZpVSqp7namUNJPIz12OV2Zfrjqt1SX9XTcQ/
-	 /vnmfcHlsBSb2ly2OOeM0p5Q4hQPKx/p+NIjQG/Y=
+	b=S9mufY/bO10ojAGH87VSPJRsbivaNL2m4CpFksCcGe7BFiq7XLFtlTKBM8ZJSBGa5
+	 G6KF9nxKhlrS8M4OauhuMvwZsIwvp2/7w5pTMi8UVMn5FOAWFOOn3k4/Rf96rATyLk
+	 50ZVzMyVz1W+7LvLQGZM0/96o+sZsyWgJK9lFcTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 043/112] mptcp: decouple mptcp fastclose from tcp close
-Date: Thu, 27 Nov 2025 15:45:45 +0100
-Message-ID: <20251127144034.416791864@linuxfoundation.org>
+Subject: [PATCH 6.12 044/112] mptcp: do not fallback when OoO is present
+Date: Thu, 27 Nov 2025 15:45:46 +0100
+Message-ID: <20251127144034.453818002@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -54,94 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit fff0c87996672816a84c3386797a5e69751c5888 upstream.
+commit 1bba3f219c5e8c29e63afa3c1fc24f875ebec119 upstream.
 
-With the current fastclose implementation, the mptcp_do_fastclose()
-helper is in charge of two distinct actions: send the fastclose reset
-and cleanup the subflows.
+In case of DSS corruption, the MPTCP protocol tries to avoid the subflow
+reset if fallback is possible. Such corruptions happen in the receive
+path; to ensure fallback is possible the stack additionally needs to
+check for OoO data, otherwise the fallback will break the data stream.
 
-Formally decouple the two steps, ensuring that mptcp explicitly closes
-all the subflows after the mentioned helper.
-
-This will make the upcoming fix simpler, and allows dropping the 2nd
-argument from mptcp_destroy_common(). The Fixes tag is then the same as
-in the next commit to help with the backports.
-
-Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios")
+Fixes: e32d262c89e2 ("mptcp: handle consistently DSS corruption")
 Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/598
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-5-806d3781c95f@kernel.org
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-4-806d3781c95f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   13 +++++++++----
- net/mptcp/protocol.h |    2 +-
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ net/mptcp/protocol.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -2869,7 +2869,11 @@ static void mptcp_worker(struct work_str
- 		__mptcp_close_subflow(sk);
+@@ -906,6 +906,13 @@ static bool __mptcp_finish_join(struct m
+ 	if (sk->sk_state != TCP_ESTABLISHED)
+ 		return false;
  
- 	if (mptcp_close_tout_expired(sk)) {
-+		struct mptcp_subflow_context *subflow, *tmp;
++	/* The caller possibly is not holding the msk socket lock, but
++	 * in the fallback case only the current subflow is touching
++	 * the OoO queue.
++	 */
++	if (!RB_EMPTY_ROOT(&msk->out_of_order_queue))
++		return false;
 +
- 		mptcp_do_fastclose(sk);
-+		mptcp_for_each_subflow_safe(msk, subflow, tmp)
-+			__mptcp_close_ssk(sk, subflow->tcp_sock, subflow, 0);
- 		mptcp_close_wake_up(sk);
- 	}
- 
-@@ -3301,7 +3305,8 @@ static int mptcp_disconnect(struct sock
- 	/* msk->subflow is still intact, the following will not free the first
- 	 * subflow
- 	 */
--	mptcp_destroy_common(msk, MPTCP_CF_FASTCLOSE);
-+	mptcp_do_fastclose(sk);
-+	mptcp_destroy_common(msk);
- 
- 	/* The first subflow is already in TCP_CLOSE status, the following
- 	 * can't overlap with a fallback anymore
-@@ -3483,7 +3488,7 @@ void mptcp_rcv_space_init(struct mptcp_s
- 		msk->rcvq_space.space = TCP_INIT_CWND * TCP_MSS_DEFAULT;
- }
- 
--void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags)
-+void mptcp_destroy_common(struct mptcp_sock *msk)
- {
- 	struct mptcp_subflow_context *subflow, *tmp;
- 	struct sock *sk = (struct sock *)msk;
-@@ -3492,7 +3497,7 @@ void mptcp_destroy_common(struct mptcp_s
- 
- 	/* join list will be eventually flushed (with rst) at sock lock release time */
- 	mptcp_for_each_subflow_safe(msk, subflow, tmp)
--		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow), subflow, flags);
-+		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow), subflow, 0);
- 
- 	/* move to sk_receive_queue, sk_stream_kill_queues will purge it */
- 	mptcp_data_lock(sk);
-@@ -3517,7 +3522,7 @@ static void mptcp_destroy(struct sock *s
- 
- 	/* allow the following to close even the initial subflow */
- 	msk->free_first = 1;
--	mptcp_destroy_common(msk, 0);
-+	mptcp_destroy_common(msk);
- 	sk_sockets_allocated_dec(sk);
- }
- 
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -968,7 +968,7 @@ static inline void mptcp_propagate_sndbu
- 	local_bh_enable();
- }
- 
--void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags);
-+void mptcp_destroy_common(struct mptcp_sock *msk);
- 
- #define MPTCP_TOKEN_MAX_RETRIES	4
- 
+ 	spin_lock_bh(&msk->fallback_lock);
+ 	if (!msk->allow_subflows) {
+ 		spin_unlock_bh(&msk->fallback_lock);
 
 
