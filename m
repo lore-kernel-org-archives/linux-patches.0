@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CF832AAC4;
-	Thu, 27 Nov 2025 15:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC9828CF42;
+	Thu, 27 Nov 2025 15:04:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255854; cv=none; b=megqB/Cx60JCsVkkir6bD/V08l8poavFBYuexBJwEHKey5F+UhKG5ogoigQII2f2JPLwOip2DLNQ21tpCBhjf7mU4V7p2GfCHLrhPgrdqfOUhav/c1ZZO37li0DhWdYCrA5GFBqueN/+nNS+ijvz3gWhydes+I/4rzPKCPUkABA=
+	t=1764255857; cv=none; b=UYMyII9ZqOwj933JLTJNQ0kfGLqyaeslQveg4hE/G7i0IxRF4aTt55qely/Q7uLfWqj9cLMItahh03HFsdEASk0XnQyZ3E1kmyICK13qHDDKD1z7u5aRxhXxWyYo6H5E9tvMTBrzGEH8wHrLPHc7x4KvP8R5HOT3HUffve5KnAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255854; c=relaxed/simple;
-	bh=ORJAD0e4asMRe8oxtcMO/1vauoA+5tPmU+Les8NXzUA=;
+	s=arc-20240116; t=1764255857; c=relaxed/simple;
+	bh=rjXiduA133FZ5YC7Qs2HPI5joPfa5uy0y2EnaoV3xoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZnnFv8AYYZ2Lt9LZbBjPs2qR9BcwfGFhDnT6LUGHHD9qAtYgmfuI1g/Lgal6Xb0ba5Bt425K74ZXGvvqzfl+HPeL4nYAl8l1CnU2daAZ5H9nfVO8sWtDtd46daYD2gUZ+1qfMYGsnwET4tcTQgL+370HFZj8AP7Ov07EPt7njVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fgpa/Hc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQX1q3Z9C6ebpQO8xgKPi65ky9OkJifAu4rzOghMpqRAJz5s3AEwt1xVRRMeRrrggSdlXT8CA8PTQnB+6EQDGu4rj787wwXjGrfNlVU6LUn0MCoZ1HrzqAjV5vMFYxVv2+IHR1CjRGWKGlQU1ohRPe8mutAN1QZc05vBPRezNdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnN22JJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fgpa/Hc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B07C4CEF8;
-	Thu, 27 Nov 2025 15:04:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnN22JJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B7B6C4CEF8;
+	Thu, 27 Nov 2025 15:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255854;
-	bh=ORJAD0e4asMRe8oxtcMO/1vauoA+5tPmU+Les8NXzUA=;
+	s=korg; t=1764255857;
+	bh=rjXiduA133FZ5YC7Qs2HPI5joPfa5uy0y2EnaoV3xoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fgpa/Hc3sYcliHfT61F6IVGSlBIa3KGVkcb4Eb2SxnhjSSKJ88esLAnQnPdEe+CNr
-	 2xCsY/887naEURD1GER4TQBA1IziSn7MWPRK7mUTi7USf8fl0ceO9HqPrZrUwaQg0h
-	 8/g35iWtkB2XHnMHJff6uY2euE+4S6YsbUYKV3N0=
+	b=FnN22JJAGvIPm5EKND+Y/ImfTC+dNF+/oboTq0P6KxLaGgFXtHweNTQU094XaEcrN
+	 3+331FILpxxHsMlOl1yY6eovf1GchFZBUYCi8Nn01UUcsK7KiwW1IJKkmNvg68jh7i
+	 l9AJaDpVd7rm/bdqwbTlzYSCaFUkj0hx6N2YRLJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 104/175] nvme-multipath: fix lockdep WARN due to partition scan work
-Date: Thu, 27 Nov 2025 15:45:57 +0100
-Message-ID: <20251127144046.757734260@linuxfoundation.org>
+Subject: [PATCH 6.17 105/175] drm/i915/xe3lpd: Load DMC for Xe3_LPD version 30.02
+Date: Thu, 27 Nov 2025 15:45:58 +0100
+Message-ID: <20251127144046.794204758@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -54,45 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
 
-[ Upstream commit 6d87cd5335784351280f82c47cc8a657271929c3 ]
+[ Upstream commit fa766e759ff7b128ab77323d9d9c232434621bb6 ]
 
-Blktests test cases nvme/014, 057 and 058 fail occasionally due to a
-lockdep WARN. As reported in the Closes tag URL, the WARN indicates that
-a deadlock can happen due to the dependency among disk->open_mutex,
-kblockd workqueue completion and partition_scan_work completion.
+Load the DMC for Xe3_LPD version 30.02.
 
-To avoid the lockdep WARN and the potential deadlock, cut the dependency
-by running the partition_scan_work not by kblockd workqueue but by
-nvme_wq.
-
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/linux-block/CAHj4cs8mJ+R_GmQm9R8ebResKAWUE8kF5+_WVg0v8zndmqd6BQ@mail.gmail.com/
-Link: https://lore.kernel.org/linux-block/oeyzci6ffshpukpfqgztsdeke5ost5hzsuz4rrsjfmvpqcevax@5nhnwbkzbrpa/
-Fixes: 1f021341eef4 ("nvme-multipath: defer partition scanning")
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3c0f211bc8fc ("drm/xe: Add Wildcat Lake device IDs to PTL list")
+Signed-off-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Link: https://lore.kernel.org/r/20251016131517.2032684-1-dnyaneshwar.bhadane@intel.com
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+(cherry picked from commit a63db39a578b543f5e5719b9f14dd82d3b8648d1)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+[Rodrigo added the Fixes tag while cherry-picking to fixes]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_dmc.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 543e17aead12b..e35eccacee8c8 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -793,7 +793,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
- 			return;
- 		}
- 		nvme_add_ns_head_cdev(head);
--		kblockd_schedule_work(&head->partition_scan_work);
-+		queue_work(nvme_wq, &head->partition_scan_work);
- 	}
+diff --git a/drivers/gpu/drm/i915/display/intel_dmc.c b/drivers/gpu/drm/i915/display/intel_dmc.c
+index 4aa2aa6379787..8ec06a734d8e3 100644
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -127,6 +127,9 @@ static bool dmc_firmware_param_disabled(struct intel_display *display)
+ #define DISPLAY_VER13_DMC_MAX_FW_SIZE	0x20000
+ #define DISPLAY_VER12_DMC_MAX_FW_SIZE	ICL_DMC_MAX_FW_SIZE
  
- 	nvme_mpath_add_sysfs_link(ns->head);
++#define XE3LPD_3002_DMC_PATH		DMC_PATH(xe3lpd_3002)
++MODULE_FIRMWARE(XE3LPD_3002_DMC_PATH);
++
+ #define XE3LPD_DMC_PATH			DMC_PATH(xe3lpd)
+ MODULE_FIRMWARE(XE3LPD_DMC_PATH);
+ 
+@@ -183,9 +186,10 @@ static const char *dmc_firmware_default(struct intel_display *display, u32 *size
+ {
+ 	const char *fw_path = NULL;
+ 	u32 max_fw_size = 0;
+-
+-	if (DISPLAY_VERx100(display) == 3002 ||
+-	    DISPLAY_VERx100(display) == 3000) {
++	if (DISPLAY_VERx100(display) == 3002) {
++		fw_path = XE3LPD_3002_DMC_PATH;
++		max_fw_size = XE2LPD_DMC_MAX_FW_SIZE;
++	} else if (DISPLAY_VERx100(display) == 3000) {
+ 		fw_path = XE3LPD_DMC_PATH;
+ 		max_fw_size = XE2LPD_DMC_MAX_FW_SIZE;
+ 	} else if (DISPLAY_VERx100(display) == 2000) {
 -- 
 2.51.0
 
