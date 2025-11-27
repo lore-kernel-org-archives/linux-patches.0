@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331A528CF42;
-	Thu, 27 Nov 2025 15:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDBF333456;
+	Thu, 27 Nov 2025 15:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255843; cv=none; b=YEZtWWSwzf6AXDpP477/0goWxogQM6/ksteiDJ4Q7jnIx9PWe8T6icbyATDx1S8aNW51cTWQt0e5mwGWVQCbI4Z4eIRpAOgeSRfHd3+zD9jfa/DlCrHuRbPe281237kZD4FzFimPcN6Okf93vSNtr20zXWR6wszgZnm1l6zId7g=
+	t=1764255846; cv=none; b=uKiJHEZmCW0aR6GLWBwFCIQGUlO7BKSCFiwrWHJ+urYULcftVaeiobhXbin2GfCu28eaHa8TC1MLoIN765+kaayrlC9M/c3OUj8ugGfhnGvZGg/XYc6+WPyEeOiAyn5r7prbyE28Bdm89gcMMn7gA+y8ro2jxq3xhBXo4qr5ajc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255843; c=relaxed/simple;
-	bh=C6SXdzPgChjcMJFhU+kxBkCb8/H17be+/fMGL7nUSdw=;
+	s=arc-20240116; t=1764255846; c=relaxed/simple;
+	bh=f/woZQc9FmeTOsmbxutSiTHlmC4/92yz7XdnBzKgCgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AMkqq7LQXNd0UVbAchLnCCmD1r9Xz/QIPJStk3R2LyQBsW2WLvkGHcly5zprq0z6Q32uIcwYf261fCTk5f4YnhB4X4bRtlS5IVkhO03UvILCyKcZ9vB0ezlzugV86WMCfIpMCP8ANhYBtTYVISzVR8LNnJeHStcNTDDSe5A2zms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzvKDlEr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DYnTZUCZtQ/Uwr3cYIBYq89S+zX+JpPftxgw+ExGT3BdT1FMH1WkGeMRpBP0Kf0OuHVWUqculmt4w6JGo5mMP15t0cdofbkCqyFMVN84Td5pFcUUmhZJeZVRTf+5Nds8mXlcNQTY6gaD6HrlMdwrB3TAnyx8PnAzyUXjmJYRBXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YQ54JMC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzvKDlEr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A756CC4CEF8;
-	Thu, 27 Nov 2025 15:04:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YQ54JMC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 773D9C4CEF8;
+	Thu, 27 Nov 2025 15:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255843;
-	bh=C6SXdzPgChjcMJFhU+kxBkCb8/H17be+/fMGL7nUSdw=;
+	s=korg; t=1764255845;
+	bh=f/woZQc9FmeTOsmbxutSiTHlmC4/92yz7XdnBzKgCgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TzvKDlEr5hGw5xuwTiZc2UY6xHpvC6N96YCpWVcaGVG0wNe1a9C6lsAgE3E8WEFbZ
-	 zAQNEorDor1p0FMgIY9SglqD00dhgyorAB/9vezdcTGWXJPmegBtC19PaNqZwmmAxd
-	 qvxdDwrquhzguKJYULVQPPIRm9RiSm4j6VPZTJgU=
+	b=YQ54JMC8ERlA1L1HdgmyvmGPnoJzbVvXtod4s+vyaYu01tBO3xBBWvK0//jUTjmaZ
+	 9od6PYt75ChmpN70i9kGsvJFIE6zh42oNwjJbuONcWpY/L5C03xrf2r/dXtodetqxK
+	 ES3b2u2DpvvQGpnU1rd35Y6hiY+aBI5ZC55kra4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junvy Yang <zhuque@tencent.com>,
-	Ilya Maximets <i.maximets@ovn.org>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Aaron Conole <aconole@redhat.com>,
+	Toshiaki Makita <toshiaki.makita1@gmail.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 100/175] net: openvswitch: remove never-working support for setting nsh fields
-Date: Thu, 27 Nov 2025 15:45:53 +0100
-Message-ID: <20251127144046.611545739@linuxfoundation.org>
+Subject: [PATCH 6.17 101/175] veth: more robust handing of race to avoid txq getting stuck
+Date: Thu, 27 Nov 2025 15:45:54 +0100
+Message-ID: <20251127144046.648079336@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -54,307 +52,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Maximets <i.maximets@ovn.org>
+From: Jesper Dangaard Brouer <hawk@kernel.org>
 
-[ Upstream commit dfe28c4167a9259fc0c372d9f9473e1ac95cff67 ]
+[ Upstream commit 5442a9da69789741bfda39f34ee7f69552bf0c56 ]
 
-The validation of the set(nsh(...)) action is completely wrong.
-It runs through the nsh_key_put_from_nlattr() function that is the
-same function that validates NSH keys for the flow match and the
-push_nsh() action.  However, the set(nsh(...)) has a very different
-memory layout.  Nested attributes in there are doubled in size in
-case of the masked set().  That makes proper validation impossible.
+Commit dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to
+reduce TX drops") introduced a race condition that can lead to a permanently
+stalled TXQ. This was observed in production on ARM64 systems (Ampere Altra
+Max).
 
-There is also confusion in the code between the 'masked' flag, that
-says that the nested attributes are doubled in size containing both
-the value and the mask, and the 'is_mask' that says that the value
-we're parsing is the mask.  This is causing kernel crash on trying to
-write into mask part of the match with SW_FLOW_KEY_PUT() during
-validation, while validate_nsh() doesn't allocate any memory for it:
+The race occurs in veth_xmit(). The producer observes a full ptr_ring and
+stops the queue (netif_tx_stop_queue()). The subsequent conditional logic,
+intended to re-wake the queue if the consumer had just emptied it (if
+(__ptr_ring_empty(...)) netif_tx_wake_queue()), can fail. This leads to a
+"lost wakeup" where the TXQ remains stopped (QUEUE_STATE_DRV_XOFF) and
+traffic halts.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 1c2383067 P4D 1c2383067 PUD 20b703067 PMD 0
-  Oops: Oops: 0000 [#1] SMP NOPTI
-  CPU: 8 UID: 0 Kdump: loaded Not tainted 6.17.0-rc4+ #107 PREEMPT(voluntary)
-  RIP: 0010:nsh_key_put_from_nlattr+0x19d/0x610 [openvswitch]
-  Call Trace:
-   <TASK>
-   validate_nsh+0x60/0x90 [openvswitch]
-   validate_set.constprop.0+0x270/0x3c0 [openvswitch]
-   __ovs_nla_copy_actions+0x477/0x860 [openvswitch]
-   ovs_nla_copy_actions+0x8d/0x100 [openvswitch]
-   ovs_packet_cmd_execute+0x1cc/0x310 [openvswitch]
-   genl_family_rcv_msg_doit+0xdb/0x130
-   genl_family_rcv_msg+0x14b/0x220
-   genl_rcv_msg+0x47/0xa0
-   netlink_rcv_skb+0x53/0x100
-   genl_rcv+0x24/0x40
-   netlink_unicast+0x280/0x3b0
-   netlink_sendmsg+0x1f7/0x430
-   ____sys_sendmsg+0x36b/0x3a0
-   ___sys_sendmsg+0x87/0xd0
-   __sys_sendmsg+0x6d/0xd0
-   do_syscall_64+0x7b/0x2c0
-   entry_SYSCALL_64_after_hwframe+0x76/0x7e
+This failure is caused by an incorrect use of the __ptr_ring_empty() API
+from the producer side. As noted in kernel comments, this check is not
+guaranteed to be correct if a consumer is operating on another CPU. The
+empty test is based on ptr_ring->consumer_head, making it reliable only for
+the consumer. Using this check from the producer side is fundamentally racy.
 
-The third issue with this process is that while trying to convert
-the non-masked set into masked one, validate_set() copies and doubles
-the size of the OVS_KEY_ATTR_NSH as if it didn't have any nested
-attributes.  It should be copying each nested attribute and doubling
-them in size independently.  And the process must be properly reversed
-during the conversion back from masked to a non-masked variant during
-the flow dump.
+This patch fixes the race by adopting the more robust logic from an earlier
+version V4 of the patchset, which always flushed the peer:
 
-In the end, the only two outcomes of trying to use this action are
-either validation failure or a kernel crash.  And if somehow someone
-manages to install a flow with such an action, it will most definitely
-not do what it is supposed to, since all the keys and the masks are
-mixed up.
+(1) In veth_xmit(), the racy conditional wake-up logic and its memory barrier
+are removed. Instead, after stopping the queue, we unconditionally call
+__veth_xdp_flush(rq). This guarantees that the NAPI consumer is scheduled,
+making it solely responsible for re-waking the TXQ.
+  This handles the race where veth_poll() consumes all packets and completes
+NAPI *before* veth_xmit() on the producer side has called netif_tx_stop_queue.
+The __veth_xdp_flush(rq) will observe rx_notify_masked is false and schedule
+NAPI.
 
-Fixing all the issues is a complex task as it requires re-writing
-most of the validation code.
+(2) On the consumer side, the logic for waking the peer TXQ is moved out of
+veth_xdp_rcv() and placed at the end of the veth_poll() function. This
+placement is part of fixing the race, as the netif_tx_queue_stopped() check
+must occur after rx_notify_masked is potentially set to false during NAPI
+completion.
+  This handles the race where veth_poll() consumes all packets, but haven't
+finished (rx_notify_masked is still true). The producer veth_xmit() stops the
+TXQ and __veth_xdp_flush(rq) will observe rx_notify_masked is true, meaning
+not starting NAPI.  Then veth_poll() change rx_notify_masked to false and
+stops NAPI.  Before exiting veth_poll() will observe TXQ is stopped and wake
+it up.
 
-Given that and the fact that this functionality never worked since
-introduction, let's just remove it altogether.  It's better to
-re-introduce it later with a proper implementation instead of trying
-to fix it in stable releases.
-
-Fixes: b2d0f5d5dc53 ("openvswitch: enable NSH support")
-Reported-by: Junvy Yang <zhuque@tencent.com>
-Signed-off-by: Ilya Maximets <i.maximets@ovn.org>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Aaron Conole <aconole@redhat.com>
-Link: https://patch.msgid.link/20251112112246.95064-1-i.maximets@ovn.org
+Fixes: dc82a33297fc ("veth: apply qdisc backpressure on full ptr_ring to reduce TX drops")
+Reviewed-by: Toshiaki Makita <toshiaki.makita1@gmail.com>
+Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/176295323282.307447.14790015927673763094.stgit@firesoul
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/actions.c      | 68 +---------------------------------
- net/openvswitch/flow_netlink.c | 64 ++++----------------------------
- net/openvswitch/flow_netlink.h |  2 -
- 3 files changed, 9 insertions(+), 125 deletions(-)
+ drivers/net/veth.c | 38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
-diff --git a/net/openvswitch/actions.c b/net/openvswitch/actions.c
-index 2832e07941971..792ca44a461da 100644
---- a/net/openvswitch/actions.c
-+++ b/net/openvswitch/actions.c
-@@ -572,69 +572,6 @@ static int set_ipv6(struct sk_buff *skb, struct sw_flow_key *flow_key,
- 	return 0;
- }
- 
--static int set_nsh(struct sk_buff *skb, struct sw_flow_key *flow_key,
--		   const struct nlattr *a)
--{
--	struct nshhdr *nh;
--	size_t length;
--	int err;
--	u8 flags;
--	u8 ttl;
--	int i;
--
--	struct ovs_key_nsh key;
--	struct ovs_key_nsh mask;
--
--	err = nsh_key_from_nlattr(a, &key, &mask);
--	if (err)
--		return err;
--
--	/* Make sure the NSH base header is there */
--	if (!pskb_may_pull(skb, skb_network_offset(skb) + NSH_BASE_HDR_LEN))
--		return -ENOMEM;
--
--	nh = nsh_hdr(skb);
--	length = nsh_hdr_len(nh);
--
--	/* Make sure the whole NSH header is there */
--	err = skb_ensure_writable(skb, skb_network_offset(skb) +
--				       length);
--	if (unlikely(err))
--		return err;
--
--	nh = nsh_hdr(skb);
--	skb_postpull_rcsum(skb, nh, length);
--	flags = nsh_get_flags(nh);
--	flags = OVS_MASKED(flags, key.base.flags, mask.base.flags);
--	flow_key->nsh.base.flags = flags;
--	ttl = nsh_get_ttl(nh);
--	ttl = OVS_MASKED(ttl, key.base.ttl, mask.base.ttl);
--	flow_key->nsh.base.ttl = ttl;
--	nsh_set_flags_and_ttl(nh, flags, ttl);
--	nh->path_hdr = OVS_MASKED(nh->path_hdr, key.base.path_hdr,
--				  mask.base.path_hdr);
--	flow_key->nsh.base.path_hdr = nh->path_hdr;
--	switch (nh->mdtype) {
--	case NSH_M_TYPE1:
--		for (i = 0; i < NSH_MD1_CONTEXT_SIZE; i++) {
--			nh->md1.context[i] =
--			    OVS_MASKED(nh->md1.context[i], key.context[i],
--				       mask.context[i]);
--		}
--		memcpy(flow_key->nsh.context, nh->md1.context,
--		       sizeof(nh->md1.context));
--		break;
--	case NSH_M_TYPE2:
--		memset(flow_key->nsh.context, 0,
--		       sizeof(flow_key->nsh.context));
--		break;
--	default:
--		return -EINVAL;
--	}
--	skb_postpush_rcsum(skb, nh, length);
--	return 0;
--}
--
- /* Must follow skb_ensure_writable() since that can move the skb data. */
- static void set_tp_port(struct sk_buff *skb, __be16 *port,
- 			__be16 new_port, __sum16 *check)
-@@ -1130,10 +1067,6 @@ static int execute_masked_set_action(struct sk_buff *skb,
- 				   get_mask(a, struct ovs_key_ethernet *));
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index a3046142cb8e2..35dd89aff4a94 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -392,14 +392,12 @@ static netdev_tx_t veth_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		}
+ 		/* Restore Eth hdr pulled by dev_forward_skb/eth_type_trans */
+ 		__skb_push(skb, ETH_HLEN);
+-		/* Depend on prior success packets started NAPI consumer via
+-		 * __veth_xdp_flush(). Cancel TXQ stop if consumer stopped,
+-		 * paired with empty check in veth_poll().
+-		 */
+ 		netif_tx_stop_queue(txq);
+-		smp_mb__after_atomic();
+-		if (unlikely(__ptr_ring_empty(&rq->xdp_ring)))
+-			netif_tx_wake_queue(txq);
++		/* Makes sure NAPI peer consumer runs. Consumer is responsible
++		 * for starting txq again, until then ndo_start_xmit (this
++		 * function) will not be invoked by the netstack again.
++		 */
++		__veth_xdp_flush(rq);
  		break;
- 
--	case OVS_KEY_ATTR_NSH:
--		err = set_nsh(skb, flow_key, a);
--		break;
--
- 	case OVS_KEY_ATTR_IPV4:
- 		err = set_ipv4(skb, flow_key, nla_data(a),
- 			       get_mask(a, struct ovs_key_ipv4 *));
-@@ -1170,6 +1103,7 @@ static int execute_masked_set_action(struct sk_buff *skb,
- 	case OVS_KEY_ATTR_CT_LABELS:
- 	case OVS_KEY_ATTR_CT_ORIG_TUPLE_IPV4:
- 	case OVS_KEY_ATTR_CT_ORIG_TUPLE_IPV6:
-+	case OVS_KEY_ATTR_NSH:
- 		err = -EINVAL;
- 		break;
- 	}
-diff --git a/net/openvswitch/flow_netlink.c b/net/openvswitch/flow_netlink.c
-index ad64bb9ab5e25..1cb4f97335d87 100644
---- a/net/openvswitch/flow_netlink.c
-+++ b/net/openvswitch/flow_netlink.c
-@@ -1305,6 +1305,11 @@ static int metadata_from_nlattrs(struct net *net, struct sw_flow_match *match,
- 	return 0;
- }
- 
-+/*
-+ * Constructs NSH header 'nh' from attributes of OVS_ACTION_ATTR_PUSH_NSH,
-+ * where 'nh' points to a memory block of 'size' bytes.  It's assumed that
-+ * attributes were previously validated with validate_push_nsh().
-+ */
- int nsh_hdr_from_nlattr(const struct nlattr *attr,
- 			struct nshhdr *nh, size_t size)
+ 	case NET_RX_DROP: /* same as NET_XMIT_DROP */
+ drop:
+@@ -900,17 +898,9 @@ static int veth_xdp_rcv(struct veth_rq *rq, int budget,
+ 			struct veth_xdp_tx_bq *bq,
+ 			struct veth_stats *stats)
  {
-@@ -1314,8 +1319,6 @@ int nsh_hdr_from_nlattr(const struct nlattr *attr,
- 	u8 ttl = 0;
- 	int mdlen = 0;
+-	struct veth_priv *priv = netdev_priv(rq->dev);
+-	int queue_idx = rq->xdp_rxq.queue_index;
+-	struct netdev_queue *peer_txq;
+-	struct net_device *peer_dev;
+ 	int i, done = 0, n_xdpf = 0;
+ 	void *xdpf[VETH_XDP_BATCH];
  
--	/* validate_nsh has check this, so we needn't do duplicate check here
--	 */
- 	if (size < NSH_BASE_HDR_LEN)
- 		return -ENOBUFS;
+-	/* NAPI functions as RCU section */
+-	peer_dev = rcu_dereference_check(priv->peer, rcu_read_lock_bh_held());
+-	peer_txq = peer_dev ? netdev_get_tx_queue(peer_dev, queue_idx) : NULL;
+-
+ 	for (i = 0; i < budget; i++) {
+ 		void *ptr = __ptr_ring_consume(&rq->xdp_ring);
  
-@@ -1359,46 +1362,6 @@ int nsh_hdr_from_nlattr(const struct nlattr *attr,
- 	return 0;
+@@ -959,9 +949,6 @@ static int veth_xdp_rcv(struct veth_rq *rq, int budget,
+ 	rq->stats.vs.xdp_packets += done;
+ 	u64_stats_update_end(&rq->stats.syncp);
+ 
+-	if (peer_txq && unlikely(netif_tx_queue_stopped(peer_txq)))
+-		netif_tx_wake_queue(peer_txq);
+-
+ 	return done;
  }
  
--int nsh_key_from_nlattr(const struct nlattr *attr,
--			struct ovs_key_nsh *nsh, struct ovs_key_nsh *nsh_mask)
--{
--	struct nlattr *a;
--	int rem;
--
--	/* validate_nsh has check this, so we needn't do duplicate check here
--	 */
--	nla_for_each_nested(a, attr, rem) {
--		int type = nla_type(a);
--
--		switch (type) {
--		case OVS_NSH_KEY_ATTR_BASE: {
--			const struct ovs_nsh_key_base *base = nla_data(a);
--			const struct ovs_nsh_key_base *base_mask = base + 1;
--
--			nsh->base = *base;
--			nsh_mask->base = *base_mask;
--			break;
--		}
--		case OVS_NSH_KEY_ATTR_MD1: {
--			const struct ovs_nsh_key_md1 *md1 = nla_data(a);
--			const struct ovs_nsh_key_md1 *md1_mask = md1 + 1;
--
--			memcpy(nsh->context, md1->context, sizeof(*md1));
--			memcpy(nsh_mask->context, md1_mask->context,
--			       sizeof(*md1_mask));
--			break;
--		}
--		case OVS_NSH_KEY_ATTR_MD2:
--			/* Not supported yet */
--			return -ENOTSUPP;
--		default:
--			return -EINVAL;
--		}
--	}
--
--	return 0;
--}
--
- static int nsh_key_put_from_nlattr(const struct nlattr *attr,
- 				   struct sw_flow_match *match, bool is_mask,
- 				   bool is_push_nsh, bool log)
-@@ -2839,17 +2802,13 @@ static int validate_and_copy_set_tun(const struct nlattr *attr,
- 	return err;
- }
- 
--static bool validate_nsh(const struct nlattr *attr, bool is_mask,
--			 bool is_push_nsh, bool log)
-+static bool validate_push_nsh(const struct nlattr *attr, bool log)
+@@ -969,12 +956,20 @@ static int veth_poll(struct napi_struct *napi, int budget)
  {
- 	struct sw_flow_match match;
- 	struct sw_flow_key key;
--	int ret = 0;
+ 	struct veth_rq *rq =
+ 		container_of(napi, struct veth_rq, xdp_napi);
++	struct veth_priv *priv = netdev_priv(rq->dev);
++	int queue_idx = rq->xdp_rxq.queue_index;
++	struct netdev_queue *peer_txq;
+ 	struct veth_stats stats = {};
++	struct net_device *peer_dev;
+ 	struct veth_xdp_tx_bq bq;
+ 	int done;
  
- 	ovs_match_init(&match, &key, true, NULL);
--	ret = nsh_key_put_from_nlattr(attr, &match, is_mask,
--				      is_push_nsh, log);
--	return !ret;
-+	return !nsh_key_put_from_nlattr(attr, &match, false, true, log);
+ 	bq.count = 0;
+ 
++	/* NAPI functions as RCU section */
++	peer_dev = rcu_dereference_check(priv->peer, rcu_read_lock_bh_held());
++	peer_txq = peer_dev ? netdev_get_tx_queue(peer_dev, queue_idx) : NULL;
++
+ 	xdp_set_return_frame_no_direct();
+ 	done = veth_xdp_rcv(rq, budget, &bq, &stats);
+ 
+@@ -996,6 +991,13 @@ static int veth_poll(struct napi_struct *napi, int budget)
+ 		veth_xdp_flush(rq, &bq);
+ 	xdp_clear_return_frame_no_direct();
+ 
++	/* Release backpressure per NAPI poll */
++	smp_rmb(); /* Paired with netif_tx_stop_queue set_bit */
++	if (peer_txq && netif_tx_queue_stopped(peer_txq)) {
++		txq_trans_cond_update(peer_txq);
++		netif_tx_wake_queue(peer_txq);
++	}
++
+ 	return done;
  }
- 
- /* Return false if there are any non-masked bits set.
-@@ -2997,13 +2956,6 @@ static int validate_set(const struct nlattr *a,
- 
- 		break;
- 
--	case OVS_KEY_ATTR_NSH:
--		if (eth_type != htons(ETH_P_NSH))
--			return -EINVAL;
--		if (!validate_nsh(nla_data(a), masked, false, log))
--			return -EINVAL;
--		break;
--
- 	default:
- 		return -EINVAL;
- 	}
-@@ -3437,7 +3389,7 @@ static int __ovs_nla_copy_actions(struct net *net, const struct nlattr *attr,
- 					return -EINVAL;
- 			}
- 			mac_proto = MAC_PROTO_NONE;
--			if (!validate_nsh(nla_data(a), false, true, true))
-+			if (!validate_push_nsh(nla_data(a), log))
- 				return -EINVAL;
- 			break;
- 
-diff --git a/net/openvswitch/flow_netlink.h b/net/openvswitch/flow_netlink.h
-index fe7f77fc5f189..ff8cdecbe3465 100644
---- a/net/openvswitch/flow_netlink.h
-+++ b/net/openvswitch/flow_netlink.h
-@@ -65,8 +65,6 @@ int ovs_nla_put_actions(const struct nlattr *attr,
- void ovs_nla_free_flow_actions(struct sw_flow_actions *);
- void ovs_nla_free_flow_actions_rcu(struct sw_flow_actions *);
- 
--int nsh_key_from_nlattr(const struct nlattr *attr, struct ovs_key_nsh *nsh,
--			struct ovs_key_nsh *nsh_mask);
- int nsh_hdr_from_nlattr(const struct nlattr *attr, struct nshhdr *nh,
- 			size_t size);
  
 -- 
 2.51.0
