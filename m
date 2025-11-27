@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81EA62882A7;
-	Thu, 27 Nov 2025 15:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AC54213254;
+	Thu, 27 Nov 2025 15:02:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255722; cv=none; b=ZfV6P5/WaXeXahkjx1EHeOWBh3I6LKL2Dvl8ulf7x8v7p0CXVQqGWWQgZ+K/7BLoq+paXENmWju/Gmks3jxsEspo/FzEcPhTrmctv9ztUTSLrOe09PlVrW6Q0bTYHztAnQ7JVLQaWfvHSr61NEeVerqKAEbKiwHCAogMj6MC51E=
+	t=1764255725; cv=none; b=XTKfNeyOKtmIvf3OKsZpN5yuDE/Uv9Qs9sxAWkm092A9VaXktizG4UaVxymof8UEmIyOeGGuZyI3Jw2dBEd46y9SjP09v62R9x4dALRL101El6WHOvC02JWBsUvuPNXPQL3UaqJFHkXQFQUGSVtLtb7A4olpbzOIAU8ymZwDQL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255722; c=relaxed/simple;
-	bh=f04QJZ0UlL69kKVZyifNQ3mKql89jIr4MUU/p0f+H+4=;
+	s=arc-20240116; t=1764255725; c=relaxed/simple;
+	bh=bCRGyg2CifTtlB6VGDcTDQEkfwXcVHMzzR9q/RBKtoc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ub4Pjhy4tqGIy4cGjFJJRKosNHmc0Ioh+IBfCADR79GIp7N0K5i9LsrbrvneI03mpVidgr4jqNN3Yumbu8s6OLCOXYWjzhcNzHDRcFc0n0i06DThqmOVaW6sZVjleAsTdTic4vgCdfr5MsyNRCagov51Ck7Cd0Ih2nAE/rryJdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hmgFojFQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7fpCMHDMZzt/L03seGUywD0QkdvcAN8gHdXsnlAlmb6AFiEs/YojUKXUws93w3tGtUrNcVEsmyYRTc/M59STItXnK/KiZhjhOLGGCBk5g7xDG0dyqT8GCtpQGpUpRFfnUTGUt7aFzMMGkniorW1XWxyOHJMiEQQ4NrOAfB4EeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rk0Lrhe+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hmgFojFQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08013C4CEF8;
-	Thu, 27 Nov 2025 15:02:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rk0Lrhe+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1B6C113D0;
+	Thu, 27 Nov 2025 15:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255722;
-	bh=f04QJZ0UlL69kKVZyifNQ3mKql89jIr4MUU/p0f+H+4=;
+	s=korg; t=1764255725;
+	bh=bCRGyg2CifTtlB6VGDcTDQEkfwXcVHMzzR9q/RBKtoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hmgFojFQeaDV34j+0hoVZPVKmWTamB3ydafGcvhcSCbj2Qi03vPbsVPEVFUgsxGsN
-	 lyKqJl5diEXTDB9cQDCSJ6gqt45jM15S2PUw7uspITVKTjmXTvhrHqMdPD2bGZvI0V
-	 01t0+z2/sRTUgOAK+M0CZc5UQxeZNXTrDGEiWpIU=
+	b=rk0Lrhe+d+gvZs+cy0QTWBQuVki52Ai3budB71LtDElGu20l1oy25dTnaXLbed4JE
+	 g5W6EhVR85cisQ+Y6JFXv6sudhah+pHAHm5D2HDBI9cSHK8yImqrnX3M8bkmPNcywS
+	 bSzE4bbhfbdDQFOwmZxVdj6MRozEaCkR3+jsvsKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 090/175] xfrm: Prevent locally generated packets from direct output in tunnel mode
-Date: Thu, 27 Nov 2025 15:45:43 +0100
-Message-ID: <20251127144046.249801895@linuxfoundation.org>
+Subject: [PATCH 6.17 091/175] pinctrl: cirrus: Fix fwnode leak in cs42l43_pin_probe()
+Date: Thu, 27 Nov 2025 15:45:44 +0100
+Message-ID: <20251127144046.285860985@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,41 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 59630e2ccd728703cc826e3a3515d70f8c7a766c ]
+[ Upstream commit 9b07cdf86a0b90556f5b68a6b20b35833b558df3 ]
 
-Add a check to ensure locally generated packets (skb->sk != NULL) do
-not use direct output in tunnel mode, as these packets require proper
-L2 header setup that is handled by the normal XFRM processing path.
+The driver calls fwnode_get_named_child_node() which takes a reference
+on the child node, but never releases it, which causes a reference leak.
 
-Fixes: 5eddd76ec2fd ("xfrm: fix tunnel mode TX datapath in packet offload mode")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fix by using devm_add_action_or_reset() to automatically release the
+reference when the device is removed.
+
+Fixes: d5282a539297 ("pinctrl: cs42l43: Add support for the cs42l43")
+Suggested-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_output.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pinctrl/cirrus/pinctrl-cs42l43.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/net/xfrm/xfrm_output.c b/net/xfrm/xfrm_output.c
-index a98b5bf55ac31..54222fcbd7fd8 100644
---- a/net/xfrm/xfrm_output.c
-+++ b/net/xfrm/xfrm_output.c
-@@ -772,8 +772,12 @@ int xfrm_output(struct sock *sk, struct sk_buff *skb)
- 		/* Exclusive direct xmit for tunnel mode, as
- 		 * some filtering or matching rules may apply
- 		 * in transport mode.
-+		 * Locally generated packets also require
-+		 * the normal XFRM path for L2 header setup,
-+		 * as the hardware needs the L2 header to match
-+		 * for encryption, so skip direct output as well.
- 		 */
--		if (x->props.mode == XFRM_MODE_TUNNEL)
-+		if (x->props.mode == XFRM_MODE_TUNNEL && !skb->sk)
- 			return xfrm_dev_direct_output(sk, x, skb);
+diff --git a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
+index 68abb6d6cecd8..a8f82104a3842 100644
+--- a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
++++ b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
+@@ -532,6 +532,11 @@ static int cs42l43_gpio_add_pin_ranges(struct gpio_chip *chip)
+ 	return ret;
+ }
  
- 		return xfrm_output_resume(sk, skb, 0);
++static void cs42l43_fwnode_put(void *data)
++{
++	fwnode_handle_put(data);
++}
++
+ static int cs42l43_pin_probe(struct platform_device *pdev)
+ {
+ 	struct cs42l43 *cs42l43 = dev_get_drvdata(pdev->dev.parent);
+@@ -563,10 +568,20 @@ static int cs42l43_pin_probe(struct platform_device *pdev)
+ 	priv->gpio_chip.ngpio = CS42L43_NUM_GPIOS;
+ 
+ 	if (is_of_node(fwnode)) {
+-		fwnode = fwnode_get_named_child_node(fwnode, "pinctrl");
+-
+-		if (fwnode && !fwnode->dev)
+-			fwnode->dev = priv->dev;
++		struct fwnode_handle *child;
++
++		child = fwnode_get_named_child_node(fwnode, "pinctrl");
++		if (child) {
++			ret = devm_add_action_or_reset(&pdev->dev,
++				cs42l43_fwnode_put, child);
++			if (ret) {
++				fwnode_handle_put(child);
++				return ret;
++			}
++			if (!child->dev)
++				child->dev = priv->dev;
++			fwnode = child;
++		}
+ 	}
+ 
+ 	priv->gpio_chip.fwnode = fwnode;
 -- 
 2.51.0
 
