@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C465F334C08;
-	Thu, 27 Nov 2025 15:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3D43328F0;
+	Thu, 27 Nov 2025 15:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255753; cv=none; b=PIS8bk4Oi0BRIvd/nT2X9IIZ2LjGhQJ6B5uyaJ7a8DjkA7NjB5uOj/L2xmSEumVlQaee1bQki5DSiJE+ObwdfUK9GBGG6B+c8n1EK464YNk9Os08xFelIBKCJHmi5dUFHJMe1ihkVIEdqSvHJw1bLYvUeJ2c0pTl3tBb9YwzJPQ=
+	t=1764255756; cv=none; b=Ls+zzyeJGMmkEoBqMaJgfReDEhB4gvsMbIX9ajyUKC9eF2QnFm74C/pWqgRY1BkR14/27JYEyFFukiekpQmN0XCQY9z2SdKAu6Eo0vdx+fg7BuzllnsInr2TNz0p6WGYlPdSESrsLBflyR3oaQi/UjG/jE07KRLl/il3Zw+JVUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255753; c=relaxed/simple;
-	bh=betEqxCN4DySOSSV5a2xR/3Ad709mg7qj4hQNlagkiU=;
+	s=arc-20240116; t=1764255756; c=relaxed/simple;
+	bh=ShonL97NGNgWyLVlJeKjxaxkJw0XyWAimb/CypfxM/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDrOuPU3o7MX52iRyGkouOsyE6GKJLJXHUjyhKwDcY16Unk1S9t5OP4tTGVGbObsYC0331wdvxCYmYNKL/hYNePNu/9VMqADGQprp7LG2kqUlubTKilNba8t+repyMH/EBUPS4lGbV57lKcDcKo7+AxuOUU8+4KBK6y7CRQ9bCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWmxRZk8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FP2x/29TSPPQC10atLx54c1sBTq7G6qSJXV/vOfYqfg11x9xUy0xdBZxEQJV63UsN2kVZoZQFpGkC6H52GtIv3s3rtchIxSRvj/gSA2m4MkSQt6iIMOnfZKKLl15DJogQZaf9PauahFfvwUS7p8QX+s036JmMpG8EjBTtG4wIYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XyV4mzYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWmxRZk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D29C4CEF8;
-	Thu, 27 Nov 2025 15:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XyV4mzYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27988C4CEF8;
+	Thu, 27 Nov 2025 15:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255753;
-	bh=betEqxCN4DySOSSV5a2xR/3Ad709mg7qj4hQNlagkiU=;
+	s=korg; t=1764255756;
+	bh=ShonL97NGNgWyLVlJeKjxaxkJw0XyWAimb/CypfxM/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWmxRZk8fqxxZBSWSjh7okO6dsEPh5eSI0SQ4YQtqU6bYkWOzU+ZaA7WhzfC9O1Cq
-	 VufsBsK3S5pVd+jIsC9yguCWwbJuZYdNwhKHdximHWlQdretPdZcxmO6vHVFpm/NPQ
-	 NwWBwm3FXeLhhnBxhU/kLzk/aEku5mJ0GIa0ALrs=
+	b=XyV4mzYkEzfke1xfhwWHJTvtCsUAz4kpbfIXZE4mu303nPazfICuMeLfmWmE2rLXw
+	 VlXqrjzoD4MCReA/cUeXaOWWgrAh2NnSttAyIXaUXFVUw8DiBn9stEGlme0pNgcwdF
+	 wOaxo/7uEi00WJTtGW9JRP8Tb83Fsa4wb2tba2tQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Robert McClinton <rbmccav@gmail.com>
-Subject: [PATCH 6.17 069/175] drm/radeon: delete radeon_fence_process in is_signaled, no deadlock
-Date: Thu, 27 Nov 2025 15:45:22 +0100
-Message-ID: <20251127144045.487076130@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.17 060/175] mptcp: fix ack generation for fallback msk
+Date: Thu, 27 Nov 2025 15:45:13 +0100
+Message-ID: <20251127144045.157576942@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -50,46 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robert McClinton <rbmccav@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 9eb00b5f5697bd56baa3222c7a1426fa15bacfb5 upstream.
+commit 5e15395f6d9ec07395866c5511f4b4ac566c0c9b upstream.
 
-Delete the attempt to progress the queue when checking if fence is
-signaled. This avoids deadlock.
+mptcp_cleanup_rbuf() needs to know the last most recent, mptcp-level
+rcv_wnd sent, and such information is tracked into the msk->old_wspace
+field, updated at ack transmission time by mptcp_write_options().
 
-dma-fence_ops::signaled can be called with the fence lock in unknown
-state. For radeon, the fence lock is also the wait queue lock. This can
-cause a self deadlock when signaled() tries to make forward progress on
-the wait queue. But advancing the queue is unneeded because incorrectly
-returning false from signaled() is perfectly acceptable.
+Fallback socket do not add any mptcp options, such helper is never
+invoked, and msk->old_wspace value remain stale. That in turn makes
+ack generation at recvmsg() time quite random.
 
-Link: https://github.com/brave/brave-browser/issues/49182
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4641
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Robert McClinton <rbmccav@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 527ba26e50ec2ca2be9c7c82f3ad42998a75d0db)
+Address the issue ensuring mptcp_write_options() is invoked even for
+fallback sockets, and just update the needed info in such a case.
+
+The issue went unnoticed for a long time, as mptcp currently overshots
+the fallback socket receive buffer autotune significantly. It is going
+to change in the near future.
+
+Fixes: e3859603ba13 ("mptcp: better msk receive window updates")
 Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/594
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-1-806d3781c95f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/radeon_fence.c |    7 -------
- 1 file changed, 7 deletions(-)
+ net/mptcp/options.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/radeon/radeon_fence.c
-+++ b/drivers/gpu/drm/radeon/radeon_fence.c
-@@ -360,13 +360,6 @@ static bool radeon_fence_is_signaled(str
- 	if (atomic64_read(&rdev->fence_drv[ring].last_seq) >= seq)
- 		return true;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -838,8 +838,11 @@ bool mptcp_established_options(struct so
  
--	if (down_read_trylock(&rdev->exclusive_lock)) {
--		radeon_fence_process(rdev, ring);
--		up_read(&rdev->exclusive_lock);
--
--		if (atomic64_read(&rdev->fence_drv[ring].last_seq) >= seq)
--			return true;
--	}
- 	return false;
+ 	opts->suboptions = 0;
+ 
++	/* Force later mptcp_write_options(), but do not use any actual
++	 * option space.
++	 */
+ 	if (unlikely(__mptcp_check_fallback(msk) && !mptcp_check_infinite_map(skb)))
+-		return false;
++		return true;
+ 
+ 	if (unlikely(skb && TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST)) {
+ 		if (mptcp_established_options_fastclose(sk, &opt_size, remaining, opts) ||
+@@ -1319,6 +1322,20 @@ update_wspace:
+ 	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
  }
  
++static void mptcp_track_rwin(struct tcp_sock *tp)
++{
++	const struct sock *ssk = (const struct sock *)tp;
++	struct mptcp_subflow_context *subflow;
++	struct mptcp_sock *msk;
++
++	if (!ssk)
++		return;
++
++	subflow = mptcp_subflow_ctx(ssk);
++	msk = mptcp_sk(subflow->conn);
++	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
++}
++
+ __sum16 __mptcp_make_csum(u64 data_seq, u32 subflow_seq, u16 data_len, __wsum sum)
+ {
+ 	struct csum_pseudo_header header;
+@@ -1611,6 +1628,10 @@ mp_rst:
+ 				      opts->reset_transient,
+ 				      opts->reset_reason);
+ 		return;
++	} else if (unlikely(!opts->suboptions)) {
++		/* Fallback to TCP */
++		mptcp_track_rwin(tp);
++		return;
+ 	}
+ 
+ 	if (OPTION_MPTCP_PRIO & opts->suboptions) {
 
 
