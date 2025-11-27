@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4DB20FAAB;
-	Thu, 27 Nov 2025 15:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9F828135D;
+	Thu, 27 Nov 2025 15:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255699; cv=none; b=aqcuZI4fQxA6IC6H7rWl7whPSstnkDegnALuHe0FltGV7F6RMPZW2PUfTWJD1CF00cC27q8W4FoHbteXmdqOjdsDC09t/uldrVxkvhT1Oa08DsgEyXPhhzjpKRLTKYd5E42NTWI6kiKRYK80xYquqpuw5/X8caq5DKnUbfnAg2s=
+	t=1764255702; cv=none; b=umVpm8vahV7lOZYdLQysEtVJ4qD4GiBPPOL+4632uOwFoXqkEB6WDbgzVPuxX+T6wpxxeGSE/871iCVK20K+BpDwPWJpiLKeKjII2AFK/7HuVb1Xu0JtM15UZk5IPl7GVWN1wzqNBax3OBlxksTkGsPnA9/VY396ixW8yR9+Hdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255699; c=relaxed/simple;
-	bh=6A21bHkri4tYu26U3R/duX10obNh2/2DFrFAYkG61Ho=;
+	s=arc-20240116; t=1764255702; c=relaxed/simple;
+	bh=8lzBBpdqN+JbJlg3lqlMyx3QRHHbttl1Du9MGIuHEh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GG88lTvJ99wEpVJFs9P3gGc4bpgypu+DnBGRdnuxe3GX0TCw6GXRyo3nYmopJfArDlkGK7NS3T3W9V+SRA3QDQHnNWgurmDsvWvaK0B3WEsGkQkU0mcQDkqQSmhoclB0njuc2r4xFMa4cFxO8ToR7xXM1agB0zwcNjWZ6cowlr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYaKPwnC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NFlxbAoILKtVRZ7W52qbQLhVi3NmSwibgqZ5Ymjohw9SvooAc9UI8NfWfHytSAbMY4XzCbWtYMx8A15FPRqfhBML7RJzEfRg/sWASgF4dEkqxdScawd31DAfAfghNnnUPAsOIVHq5keC2/tqQUXKJS6d1J3eHKVsKLzkzmTDqJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1rboFXib; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYaKPwnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD5FC4CEF8;
-	Thu, 27 Nov 2025 15:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1rboFXib"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EF3C4CEF8;
+	Thu, 27 Nov 2025 15:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255698;
-	bh=6A21bHkri4tYu26U3R/duX10obNh2/2DFrFAYkG61Ho=;
+	s=korg; t=1764255701;
+	bh=8lzBBpdqN+JbJlg3lqlMyx3QRHHbttl1Du9MGIuHEh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYaKPwnC4fRBzK48gX2mbx3GwecY4uTikMIom8JpBOvKZrErRzeRX6ERe+aaFK0NH
-	 XCN79Y2mTld0HrfR8rN2akg0YAK1FawxdQ1AFIGmG81h86lNv1h2Ctij72OdpvVI9u
-	 294guk2q5NhoQEck7zB0aYTI5iAlzMc/NT9S3z+8=
+	b=1rboFXib0aef68QMCZsr3uNpbJugC9UUtY1Zh7Ina9lsAQTrr2NgL8SqwHs4bl6r9
+	 9lT1mPcsySNZSmFuRyPTx0Kcc5DyWkYnEFzDYEARhzfDiG1lAbWO/eTIkw5xdQVYB0
+	 bltQbCeLv6ZxGvIAkrbbRG6WEG1eOWIIKIaCtpmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 083/175] xfrm: set err and extack on failure to create pcpu SA
-Date: Thu, 27 Nov 2025 15:45:36 +0100
-Message-ID: <20251127144045.996337881@linuxfoundation.org>
+Subject: [PATCH 6.17 084/175] clk: sunxi-ng: Mark A523 bus-r-cpucfg clock as critical
+Date: Thu, 27 Nov 2025 15:45:37 +0100
+Message-ID: <20251127144046.033402336@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,39 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 1dcf617bec5cb85f68ca19969e7537ef6f6931d3 ]
+[ Upstream commit 1dba74abf3e2fa4484b924d8ba6e54e64ebb8c82 ]
 
-xfrm_state_construct can fail without setting an error if the
-requested pcpu_num value is too big. Set err and add an extack message
-to avoid confusing userspace.
+bus-r-cpucfg clock is important for peripheral which takes care of
+powering CPU cores on and off. Since this operation is done by firmware
+(TF-A), mark it as critical. That way Linux won't interfere with that
+clock.
 
-Fixes: 1ddf9916ac09 ("xfrm: Add support for per cpu xfrm state handling.")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 8cea339cfb81 ("clk: sunxi-ng: add support for the A523/T527 PRCM CCU")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Tested-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://patch.msgid.link/20251020152704.4804-1-jernej.skrabec@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 684239018bec4..977a03291f6a5 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -947,8 +947,11 @@ static struct xfrm_state *xfrm_state_construct(struct net *net,
+diff --git a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
+index 70ce0ca0cb7db..c5b0d4a2e397e 100644
+--- a/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
++++ b/drivers/clk/sunxi-ng/ccu-sun55i-a523-r.c
+@@ -125,7 +125,7 @@ static SUNXI_CCU_GATE_HW(bus_r_dma_clk, "bus-r-dma",
+ static SUNXI_CCU_GATE_HW(bus_r_rtc_clk, "bus-r-rtc",
+ 			 &r_apb0_clk.common.hw, 0x20c, BIT(0), 0);
+ static SUNXI_CCU_GATE_HW(bus_r_cpucfg_clk, "bus-r-cpucfg",
+-			 &r_apb0_clk.common.hw, 0x22c, BIT(0), 0);
++			 &r_apb0_clk.common.hw, 0x22c, BIT(0), CLK_IS_CRITICAL);
  
- 	if (attrs[XFRMA_SA_PCPU]) {
- 		x->pcpu_num = nla_get_u32(attrs[XFRMA_SA_PCPU]);
--		if (x->pcpu_num >= num_possible_cpus())
-+		if (x->pcpu_num >= num_possible_cpus()) {
-+			err = -ERANGE;
-+			NL_SET_ERR_MSG(extack, "pCPU number too big");
- 			goto error;
-+		}
- 	}
- 
- 	err = __xfrm_init_state(x, extack);
+ static struct ccu_common *sun55i_a523_r_ccu_clks[] = {
+ 	&r_ahb_clk.common,
 -- 
 2.51.0
 
