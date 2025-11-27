@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ECEB296BBC;
-	Thu, 27 Nov 2025 14:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C703126C0;
+	Thu, 27 Nov 2025 14:59:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255595; cv=none; b=PZvxrk81kpX8knhGhoeMx4GBnB+o/9SRA2EpD27l4w7yGZOWTacBH+6ox89cqhK2JWmhpQFcnA3S7N9sueYmDUGB8gL7KR3bI37535wCssMMtfwFJeUCHUYQOOGNAUOh0uoK6zqZZvSYtv7zJfOkataazvR5K/xHGUqddU5+El8=
+	t=1764255598; cv=none; b=ZrNm4K0M4xZ6+gUqRCGqgPzpM1o0/exuUwuh5HMtU1UxUovVGV4mfRBahflyITodHoLvIhAnslrZZGA8hRFJ7aYN/63jqY7t0lfxYxpBGp4n8Z5MxNTKxwfXuIeSHgr6boD1l39Aavaf2qImSPM016zljqC+sbBi/k8HYTP8RZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255595; c=relaxed/simple;
-	bh=NkInSwz9HsFDv+6GzOCufS1QQS/S/5VKsh1AFIdAAYo=;
+	s=arc-20240116; t=1764255598; c=relaxed/simple;
+	bh=Lr+92PBsdECmvztQYEKHo9iEPwqRcGGnXhZ9/OC82AA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbjNGNdPHuBXZviYdud+Ef4389EbFBZleWFtlRik/7vQ30v1gFjehL++Q4yMhxrtmsYKAiirqXmYTZ/J+z7e5m97b7jQh9E+JMrN7AB74MeDNS1yqVbSG9N1YnFvNPBYljtmejfyBbYbNiOFApLNT+qjK/KwV9rrO3mk+UeymR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qD8aYasY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dk1RqdR6T3B7/2NooHgBbywhJCLpq5+G4VV8130HKR/FsRCyL9rsy8ck1QrbG0IcCE0y1xF9eNX9BVq56mPHBVJu+MQHCmkYrqfOxTPilxkCyOcS/NNVy8GX/CbNGiSdmkIOmCoSY2ZRUz8atG37FzScF77u1Zys/kRQMPASfxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cHc7p9TW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qD8aYasY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EEF0C4CEF8;
-	Thu, 27 Nov 2025 14:59:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cHc7p9TW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C063C4CEF8;
+	Thu, 27 Nov 2025 14:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255595;
-	bh=NkInSwz9HsFDv+6GzOCufS1QQS/S/5VKsh1AFIdAAYo=;
+	s=korg; t=1764255598;
+	bh=Lr+92PBsdECmvztQYEKHo9iEPwqRcGGnXhZ9/OC82AA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qD8aYasY8QCSbzBiVJab3r9OHaz6MsshmEJgkDFSgp3uObgIe57CS9QTv3solQRjw
-	 HqZm1/zXUk6zyvGYSuoRpE99ARuL4Vr3PYjxlt5iTim3/Xr7RRBo9/ydLeggv8Aqeu
-	 BnN3u7OmMS3+t5OgfHMGxxmAYkNXvBG9Q5js2QAg=
+	b=cHc7p9TWVv8jy/aV2NAeZvQSgTD3qdpk61CcU0xLcgdI5hyZVxJDJy/5QB73TUYZ9
+	 Z3bEFkTNwW5hs4q2RehQdMavhxDKq5H/inc7CxpwAXgN7+uqcvz5Inv4rZvrFWtVWG
+	 Xe8zuQGaVorKxVBtnEXLp/J8viJPMF/lOxVxoF2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Allen Pais <apais@linux.microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.17 047/175] scsi: target: tcm_loop: Fix segfault in tcm_loop_tpg_address_show()
-Date: Thu, 27 Nov 2025 15:45:00 +0100
-Message-ID: <20251127144044.684439640@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.17 048/175] MIPS: Malta: Fix !EVA SOC-it PCI MMIO
+Date: Thu, 27 Nov 2025 15:45:01 +0100
+Message-ID: <20251127144044.720241261@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -52,55 +50,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit e6965188f84a7883e6a0d3448e86b0cf29b24dfc upstream.
+commit ebd729fef31620e0bf74cbf8a4c7fda73a2a4e7e upstream.
 
-If the allocation of tl_hba->sh fails in tcm_loop_driver_probe() and we
-attempt to dereference it in tcm_loop_tpg_address_show() we will get a
-segfault, see below for an example. So, check tl_hba->sh before
-dereferencing it.
+Fix a regression that has caused accesses to the PCI MMIO window to
+complete unclaimed in non-EVA configurations with the SOC-it family of
+system controllers, preventing PCI devices from working that use MMIO.
 
-  Unable to allocate struct scsi_host
-  BUG: kernel NULL pointer dereference, address: 0000000000000194
-  #PF: supervisor read access in kernel mode
-  #PF: error_code(0x0000) - not-present page
-  PGD 0 P4D 0
-  Oops: 0000 [#1] PREEMPT SMP NOPTI
-  CPU: 1 PID: 8356 Comm: tokio-runtime-w Not tainted 6.6.104.2-4.azl3 #1
-  Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/28/2024
-  RIP: 0010:tcm_loop_tpg_address_show+0x2e/0x50 [tcm_loop]
-...
-  Call Trace:
-   <TASK>
-   configfs_read_iter+0x12d/0x1d0 [configfs]
-   vfs_read+0x1b5/0x300
-   ksys_read+0x6f/0xf0
-...
+In the non-EVA case PHYS_OFFSET is set to 0, meaning that PCI_BAR0 is
+set with an empty mask (and PCI_HEAD4 matches addresses starting from 0
+accordingly).  Consequently all addresses are matched for incoming DMA
+accesses from PCI.  This seems to confuse the system controller's logic
+and outgoing bus cycles targeting the PCI MMIO window seem not to make
+it to the intended devices.
 
-Cc: stable@vger.kernel.org
-Fixes: 2628b352c3d4 ("tcm_loop: Show address of tpg in configfs")
-Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Allen Pais <apais@linux.microsoft.com>
-Link: https://patch.msgid.link/1762370746-6304-1-git-send-email-hamzamahfooz@linux.microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This happens as well when a wider mask is used with PCI_BAR0, such as
+0x80000000 or 0xe0000000, that makes addresses match that overlap with
+the PCI MMIO window, which starts at 0x10000000 in our configuration.
+
+Set the mask in PCI_BAR0 to 0xf0000000 for non-EVA then, covering the
+non-EVA maximum 256 MiB of RAM, which is what YAMON does and which used
+to work correctly up to the offending commit.  Set PCI_P2SCMSKL to match
+PCI_BAR0 as required by the system controller's specification, and match
+PCI_P2SCMAPL to PCI_HEAD4 for identity mapping.
+
+Verified with:
+
+Core board type/revision =      0x0d (Core74K) / 0x01
+System controller/revision =    MIPS SOC-it 101 OCP / 1.3   SDR-FW-4:1
+Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x1c
+Processor ID/revision =         0x97 (MIPS 74Kf) / 0x4c
+
+for non-EVA and with:
+
+Core board type/revision =      0x0c (CoreFPGA-5) / 0x00
+System controller/revision =    MIPS ROC-it2 / 0.0   FW-1:1 (CLK_unknown) GIC
+Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x00
+Processor ID/revision =         0xa0 (MIPS interAptiv UP) / 0x20
+
+for EVA/non-EVA, fixing:
+
+defxx 0000:00:12.0: assign IRQ: got 10
+defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
+0000:00:12.0: Could not read adapter factory MAC address!
+
+vs:
+
+defxx 0000:00:12.0: assign IRQ: got 10
+defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
+0000:00:12.0: DEFPA at MMIO addr = 0x10142000, IRQ = 10, Hardware addr = 00-00-f8-xx-xx-xx
+0000:00:12.0: registered as fddi0
+
+for non-EVA and causing no change for EVA.
+
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 422dd256642b ("MIPS: Malta: Allow PCI devices DMA to lower 2GB physical")
+Cc: stable@vger.kernel.org # v4.9+
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/loopback/tcm_loop.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/mips/mti-malta/malta-init.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/target/loopback/tcm_loop.c
-+++ b/drivers/target/loopback/tcm_loop.c
-@@ -894,6 +894,9 @@ static ssize_t tcm_loop_tpg_address_show
- 			struct tcm_loop_tpg, tl_se_tpg);
- 	struct tcm_loop_hba *tl_hba = tl_tpg->tl_hba;
+--- a/arch/mips/mti-malta/malta-init.c
++++ b/arch/mips/mti-malta/malta-init.c
+@@ -241,16 +241,22 @@ mips_pci_controller:
+ #endif
  
-+	if (!tl_hba->sh)
-+		return -ENODEV;
-+
- 	return snprintf(page, PAGE_SIZE, "%d:0:%d\n",
- 			tl_hba->sh->host_no, tl_tpg->tl_tpgt);
- }
+ 		/*
+-		 * Setup the Malta max (2GB) memory for PCI DMA in host bridge
+-		 * in transparent addressing mode.
++		 * Set up memory mapping in host bridge for PCI DMA masters,
++		 * in transparent addressing mode.  For EVA use the Malta
++		 * maximum of 2 GiB memory in the alias space at 0x80000000
++		 * as per PHYS_OFFSET.  Otherwise use 256 MiB of memory in
++		 * the regular space, avoiding mapping the PCI MMIO window
++		 * for DMA as it seems to confuse the system controller's
++		 * logic, causing PCI MMIO to stop working.
+ 		 */
+-		mask = PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH;
+-		MSC_WRITE(MSC01_PCI_BAR0, mask);
+-		MSC_WRITE(MSC01_PCI_HEAD4, mask);
++		mask = PHYS_OFFSET ? PHYS_OFFSET : 0xf0000000;
++		MSC_WRITE(MSC01_PCI_BAR0,
++			  mask | PCI_BASE_ADDRESS_MEM_PREFETCH);
++		MSC_WRITE(MSC01_PCI_HEAD4,
++			  PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH);
+ 
+-		mask &= MSC01_PCI_BAR0_SIZE_MSK;
+ 		MSC_WRITE(MSC01_PCI_P2SCMSKL, mask);
+-		MSC_WRITE(MSC01_PCI_P2SCMAPL, mask);
++		MSC_WRITE(MSC01_PCI_P2SCMAPL, PHYS_OFFSET);
+ 
+ 		/* Don't handle target retries indefinitely.  */
+ 		if ((data & MSC01_PCI_CFG_MAXRTRY_MSK) ==
 
 
