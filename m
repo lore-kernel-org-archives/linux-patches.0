@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DB430DED3;
-	Thu, 27 Nov 2025 14:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FD331281E;
+	Thu, 27 Nov 2025 14:55:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255321; cv=none; b=i0yo/g2w4HXYZ6E5t/IB96hXFPFUGPrRRfwjnwHzRSRfiP8yyflQfAgfwE+56SNQqwm6Xq1dx32SxfU2Voj8e1VJJBDiLCvgcX+HGNsmyTaSP/RnqJHyLAqcoERCk50RU51OwHR9sshrZt3ajAoJGJIEPQo5eyy544Xr0TGr5cs=
+	t=1764255323; cv=none; b=UuaJFXPeLkkxFrEVMUuMbJ7SN0yAP5VNg6V1fMOMwi+P3JSBD3iuBYv5MIeHuQ7ibiAKKffW8ZwCUsYxA6A+yjp9sqOVVo6LdRwcmIatTTtZA8W9oKW5aNWnFU2JRF8AtLTMam1/yIKF0JCKbfzhkhB5xK+2lxymD1VCLIK0yBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255321; c=relaxed/simple;
-	bh=IrMjpjnriwEZF1xQQnjvaTcEJ95uvStyvmlukuIgI+4=;
+	s=arc-20240116; t=1764255323; c=relaxed/simple;
+	bh=pnan15gYfvdJAXW8BARFaD0C6p8C/AYp3wSXkDeH0Eg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S855t4vHPpOHQQoW67OUfBd5bxEUA8OWMLNN552GzFVwKJznuuxiXqz4//OakaC1OoQfPqcHVcjNjjHW6QUpVh9Gd3BnBRBHE0/ayxQY7gSb3l2VCK0SVjpncBi4K8KmqMwe8nX6ta71MO/ISRNUkeKGh9vHOovZZJi2DQnwPAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJSIDR/E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fol6VoDpHS/1AuF9QuL72Ax0QKCYZoL3wiYyPXhMwp6QYJcK1fnRLtnKtcgvGSVM12MrMIeik5JrnKqeS5YAATiNlUdHYpDYM7eaVfsDkwQjl/mNae0mpfJ5v5oaYCsdxkNoWoxcPcFADUQ04YAPfls5X+OK54kS+u12bMHF0FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q/vjgz9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJSIDR/E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF5BC4CEF8;
-	Thu, 27 Nov 2025 14:55:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q/vjgz9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BEEC4CEF8;
+	Thu, 27 Nov 2025 14:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255320;
-	bh=IrMjpjnriwEZF1xQQnjvaTcEJ95uvStyvmlukuIgI+4=;
+	s=korg; t=1764255323;
+	bh=pnan15gYfvdJAXW8BARFaD0C6p8C/AYp3wSXkDeH0Eg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cJSIDR/EaoAFy2AlbmotWhjra0IgHc4JQPQWkAJmaXGuyNgQzWvnD1c/QvX/TXCk1
-	 6nZgdLu8HXCQZZwyIx5d42VUAf5XM9Q9NEJxpY972nCm5RGZAvbzra05cvObSFEY/v
-	 GZgs1XWTyaGvppUfaU7+2XJH18fRMnghwsExrnz0=
+	b=q/vjgz9rDAmezrK41w4eMVN7/RXOSBIGrdLRSS4RKVTlDHVgboLffCPSzhG+fJDpD
+	 P8USlaP4DgFQLXqTbBF43OJeN1bNo+DYQ4MY16Z26FA6+vixL00N/l8w+0i8NecIdL
+	 GRWhX3eDhMiWlI0T5SRF/IBoAWnRRbO4535PoVc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Spear <speeddymon@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/112] cifs: fix typo in enable_gcm_256 module parameter
-Date: Thu, 27 Nov 2025 15:46:26 +0100
-Message-ID: <20251127144035.916351138@linuxfoundation.org>
+Subject: [PATCH 6.12 085/112] scsi: core: Fix a regression triggered by scsi_host_busy()
+Date: Thu, 27 Nov 2025 15:46:27 +0100
+Message-ID: <20251127144035.953667953@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -51,32 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit f765fdfcd8b5bce92c6aa1a517ff549529ddf590 ]
+[ Upstream commit a0b7780602b1b196f47e527fec82166a7e67c4d0 ]
 
-Fix typo in description of enable_gcm_256 module parameter
+Commit 995412e23bb2 ("blk-mq: Replace tags->lock with SRCU for tag
+iterators") introduced the following regression:
 
-Suggested-by: Thomas Spear <speeddymon@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Call trace:
+ __srcu_read_lock+0x30/0x80 (P)
+ blk_mq_tagset_busy_iter+0x44/0x300
+ scsi_host_busy+0x38/0x70
+ ufshcd_print_host_state+0x34/0x1bc
+ ufshcd_link_startup.constprop.0+0xe4/0x2e0
+ ufshcd_init+0x944/0xf80
+ ufshcd_pltfrm_init+0x504/0x820
+ ufs_rockchip_probe+0x2c/0x88
+ platform_probe+0x5c/0xa4
+ really_probe+0xc0/0x38c
+ __driver_probe_device+0x7c/0x150
+ driver_probe_device+0x40/0x120
+ __driver_attach+0xc8/0x1e0
+ bus_for_each_dev+0x7c/0xdc
+ driver_attach+0x24/0x30
+ bus_add_driver+0x110/0x230
+ driver_register+0x68/0x130
+ __platform_driver_register+0x20/0x2c
+ ufs_rockchip_pltform_init+0x1c/0x28
+ do_one_initcall+0x60/0x1e0
+ kernel_init_freeable+0x248/0x2c4
+ kernel_init+0x20/0x140
+ ret_from_fork+0x10/0x20
+
+Fix this regression by making scsi_host_busy() check whether the SCSI
+host tag set has already been initialized. tag_set->ops is set by
+scsi_mq_setup_tags() just before blk_mq_alloc_tag_set() is called. This
+fix is based on the assumption that scsi_host_busy() and
+scsi_mq_setup_tags() calls are serialized. This is the case in the UFS
+driver.
+
+Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Closes: https://lore.kernel.org/linux-block/pnezafputodmqlpumwfbn644ohjybouveehcjhz2hmhtcf2rka@sdhoiivync4y/
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20251007214800.1678255-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hosts.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/client/cifsfs.c b/fs/smb/client/cifsfs.c
-index 64dc7ec045d87..1187b0240a444 100644
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -134,7 +134,7 @@ module_param(enable_oplocks, bool, 0644);
- MODULE_PARM_DESC(enable_oplocks, "Enable or disable oplocks. Default: y/Y/1");
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index e021f1106beab..5cf13d019a15e 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -607,8 +607,9 @@ int scsi_host_busy(struct Scsi_Host *shost)
+ {
+ 	int cnt = 0;
  
- module_param(enable_gcm_256, bool, 0644);
--MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/0");
-+MODULE_PARM_DESC(enable_gcm_256, "Enable requesting strongest (256 bit) GCM encryption. Default: y/Y/1");
- 
- module_param(require_gcm_256, bool, 0644);
- MODULE_PARM_DESC(require_gcm_256, "Require strongest (256 bit) GCM encryption. Default: n/N/0");
+-	blk_mq_tagset_busy_iter(&shost->tag_set,
+-				scsi_host_check_in_flight, &cnt);
++	if (shost->tag_set.ops)
++		blk_mq_tagset_busy_iter(&shost->tag_set,
++					scsi_host_check_in_flight, &cnt);
+ 	return cnt;
+ }
+ EXPORT_SYMBOL(scsi_host_busy);
 -- 
 2.51.0
 
