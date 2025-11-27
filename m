@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299E9289367;
-	Thu, 27 Nov 2025 14:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0F02F8BC9;
+	Thu, 27 Nov 2025 14:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255012; cv=none; b=BRYmpDLF1yej6kLnf9LvZF8sPJSzGwT2yzGav0GJTDnEd5Gb7rXGVze0eP/S8K8AxWpZgDLk9iapMt7rCUWP5zkYxYdqtXA15pPgaOQA68AWlV3nQPGoQ2JDX4FqNJY6eCWi/2j7fLLLUwGx/UoNnFuS1OraLRLPGq5y36ntm7o=
+	t=1764255015; cv=none; b=fvRP2fvlbTzLPTEq53bM8TTc6tX32cKl+Q66GSOCMlVW7pPJz6AMOdgZU1LJ+PyPxfQpZHltSU7ey6Tc77AFiYiEUJWI9onl3JuGTdS0ksO4XIGvPsOpT6LXQJjoAT6teR39teQKWTyFJovGf2iXAO6IATwxakJeGmaYmMxMCIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255012; c=relaxed/simple;
-	bh=KsxrLZr5vkcy4BQot/x+mDmxGEwRqSs0XZ+OfMIpKZU=;
+	s=arc-20240116; t=1764255015; c=relaxed/simple;
+	bh=jVk3RTPIIm+mm5zrncPJ08eTCkPQCwJiMAaDonwIUi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3CIXkMHwyWaOw8mLLlQ78yQDWC1JkAW3Op05C3VJlRNIA6t5w/vjFDhN6PTt8ihEnzUtW9MeUCIpuNmU1tDzIzJBLx+VcI5twPCZ/3PjwzcXXlyz+bkUgIqOt7SaH6vuyOtGLGtmuONmGIKSvWmpeGukKYR0W+TVN/cA5bF0jM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJived74; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RDhKuBnS4/inffxgPYU9yhRqRF6/9rwECCYit1wG4uhBWVfE6I8oaq7NviDqK7NqmNyRY+jlCTbjdgOkU/14fwl/bmongtH+8WlWfxR+ltJEF6TeIoFeidRgb7up39VIasgAJR+5C0NAbIkk9RHYdfme4t2eJ8dz2G04UJWXrPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QJh8/4Ow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJived74"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D86C4CEF8;
-	Thu, 27 Nov 2025 14:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QJh8/4Ow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0D65C4CEF8;
+	Thu, 27 Nov 2025 14:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255012;
-	bh=KsxrLZr5vkcy4BQot/x+mDmxGEwRqSs0XZ+OfMIpKZU=;
+	s=korg; t=1764255015;
+	bh=jVk3RTPIIm+mm5zrncPJ08eTCkPQCwJiMAaDonwIUi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJived7475tvvu/3ABoHm0yoCSDGpD/l1OioWlfMoxwe6voE18Q0vegQ8Mmy/6llr
-	 jFmvmJQ2ATWdLeviy7oL20KQ3tD1T+ig8kkTTllJAFVgC5VEPCFa/gy6WBp09xQfgp
-	 igVq5nQx/xyzwSFj6OIrikrlc1/xTuFEE8ys8pPc=
+	b=QJh8/4OwhaIoU9ibbwtB5+C0s6clSsL/sjp4RHOMDeDp8z5F/yPupuFJmu2XLKo78
+	 hPveBFjWVUx14k0+H407fKnFfnch1Y+wW6LlleDTmeuxb/MUy/w+IeA8XS+ygYWsHC
+	 bmwQJfLrrxrGqMiOQXL5lBd3kJhQu/hd8c3QAir0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 30/86] mptcp: fix premature close in case of fallback
-Date: Thu, 27 Nov 2025 15:45:46 +0100
-Message-ID: <20251127144028.924358785@linuxfoundation.org>
+	Marco Patalano <mpatalan@redhat.com>,
+	Ewan Milne <emilne@redhat.com>,
+	James Smart <james.smart@broadcom.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Ming Lei <ming.lei@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 6.6 21/86] nvme: nvme-fc: move tagset removal to nvme_fc_delete_ctrl()
+Date: Thu, 27 Nov 2025 15:45:37 +0100
+Message-ID: <20251127144028.593463762@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -51,60 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit 17393fa7b7086664be519e7230cb6ed7ec7d9462 upstream.
+commit ea3442efabd0aa3930c5bab73c3901ef38ef6ac3 upstream.
 
-I'm observing very frequent self-tests failures in case of fallback when
-running on a CONFIG_PREEMPT kernel.
+Now target is removed from nvme_fc_ctrl_free() which is the ctrl->ref
+release handler. And even admin queue is unquiesced there, this way
+is definitely wrong because the ctr->ref is grabbed when submitting
+command.
 
-The root cause is that subflow_sched_work_if_closed() closes any subflow
-as soon as it is half-closed and has no incoming data pending.
+And Marco observed that nvme_fc_ctrl_free() can be called from request
+completion code path, and trigger kernel warning since request completes
+from softirq context.
 
-That works well for regular subflows - MPTCP needs bi-directional
-connectivity to operate on a given subflow - but for fallback socket is
-race prone.
+Fix the issue by moveing target removal into nvme_fc_delete_ctrl(),
+which is also aligned with nvme-tcp and nvme-rdma.
 
-When TCP peer closes the connection before the MPTCP one,
-subflow_sched_work_if_closed() will schedule the MPTCP worker to
-gracefully close the subflow, and shortly after will do another schedule
-to inject and process a dummy incoming DATA_FIN.
+Patch originally proposed by Ming Lei, then modified to move the tagset
+removal down to after nvme_fc_delete_association() after further testing.
 
-On CONFIG_PREEMPT kernel, the MPTCP worker can kick-in and close the
-fallback subflow before subflow_sched_work_if_closed() is able to create
-the dummy DATA_FIN, unexpectedly interrupting the transfer.
-
-Address the issue explicitly avoiding closing fallback subflows on when
-the peer is only half-closed.
-
-Note that, when the subflow is able to create the DATA_FIN before the
-worker invocation, the worker will change the msk state before trying to
-close the subflow and will skip the latter operation as the msk will not
-match anymore the precondition in __mptcp_close_subflow().
-
-Fixes: f09b0ad55a11 ("mptcp: close subflow when receiving TCP+FIN")
+Cc: Marco Patalano <mpatalan@redhat.com>
+Cc: Ewan Milne <emilne@redhat.com>
+Cc: James Smart <james.smart@broadcom.com>
+Cc: Sagi Grimberg <sagi@grimberg.me>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-3-806d3781c95f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Marco Patalano <mpatalan@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/nvme/host/fc.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2585,7 +2585,8 @@ static void __mptcp_close_subflow(struct
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -2349,17 +2349,11 @@ nvme_fc_ctrl_free(struct kref *ref)
+ 		container_of(ref, struct nvme_fc_ctrl, ref);
+ 	unsigned long flags;
  
- 		if (ssk_state != TCP_CLOSE &&
- 		    (ssk_state != TCP_CLOSE_WAIT ||
--		     inet_sk_state_load(sk) != TCP_ESTABLISHED))
-+		     inet_sk_state_load(sk) != TCP_ESTABLISHED ||
-+		     __mptcp_check_fallback(msk)))
- 			continue;
+-	if (ctrl->ctrl.tagset)
+-		nvme_remove_io_tag_set(&ctrl->ctrl);
+-
+ 	/* remove from rport list */
+ 	spin_lock_irqsave(&ctrl->rport->lock, flags);
+ 	list_del(&ctrl->ctrl_list);
+ 	spin_unlock_irqrestore(&ctrl->rport->lock, flags);
  
- 		/* 'subflow_data_ready' will re-sched once rx queue is empty */
+-	nvme_unquiesce_admin_queue(&ctrl->ctrl);
+-	nvme_remove_admin_tag_set(&ctrl->ctrl);
+-
+ 	kfree(ctrl->queues);
+ 
+ 	put_device(ctrl->dev);
+@@ -3250,11 +3244,18 @@ nvme_fc_delete_ctrl(struct nvme_ctrl *nc
+ 
+ 	cancel_work_sync(&ctrl->ioerr_work);
+ 	cancel_delayed_work_sync(&ctrl->connect_work);
++
+ 	/*
+ 	 * kill the association on the link side.  this will block
+ 	 * waiting for io to terminate
+ 	 */
+ 	nvme_fc_delete_association(ctrl);
++
++	if (ctrl->ctrl.tagset)
++		nvme_remove_io_tag_set(&ctrl->ctrl);
++
++	nvme_unquiesce_admin_queue(&ctrl->ctrl);
++	nvme_remove_admin_tag_set(&ctrl->ctrl);
+ }
+ 
+ static void
 
 
