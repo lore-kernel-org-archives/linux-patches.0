@@ -1,42 +1,45 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFBB21A425;
-	Thu, 27 Nov 2025 12:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0EE01459FA;
+	Thu, 27 Nov 2025 13:16:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764247935; cv=none; b=jzkar/0gsY+jMhhsKPF8/MYZEcsI2abicKpLEc6WzSySO+7Fe7hd7cwcmYu2WGA7z+Ab+TSLsme1e0k50uunkH7HWlioG9EIatKVfjg/I7SLBUwojlOeZMjxhYfJT4hbn6BvQilBRFVqfViYTK9fqB7RQD5kaGHxFUnwo1nFjOk=
+	t=1764249419; cv=none; b=qcBbdrUja8tCQ52cyTxIW3BIAuFGvSTceByn1R0YiGdN9aSt2Tkxxb7IiRt6uv5rIGuhhpnbtzAwLz+i+Iiq7jQUU57xOMLJqCyT+q6NLsthj5iZZbE5lgX4/A7JF/thXaoXZJtVCoWV4hRfhd279Dxi3p47buXLxf73b7W5z5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764247935; c=relaxed/simple;
-	bh=7mI+R1BGydSJzPjv/tZ3DYJPk36lOhgPS1Ewmy4H4g4=;
+	s=arc-20240116; t=1764249419; c=relaxed/simple;
+	bh=SxHzLScJ5aY8sylg3dQDijDUacHVBWCDtkYDLxWaFQM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BLt2HrQDf3qZkOvOcPJ9PCdi8cFCpAw6U9SoqW8NPmmxp7OC7Ibj2mb7xJizbripQ3IoxFXnUcEJESceKZ4CF6nRxzpqzOuDfYGpwx+nz5nWbduQpHjtJW1/Uc07H4EgD6B3RlT9qMVyMrFLhyyYd8PDXeo6C+jV8V46C0fwWKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jdIXX3Fm; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ll7rTe3Jpdr7te6J5Cya+4gIJRpyxAukPK1fPVVDOgLelbHrgWK1ftcK8qhu3MZZ+OMMSbVX7GEhMcSPVrviYt4s0uokhmEWQ3PB70RMleG2UwHdqfdZPPWosM3cmBOrCHYc0zJJflMSqm6CmCGatDdE8V5qAN4tlConIQSYyjk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=UPuEDOVJ; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jdIXX3Fm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 705DEC4CEF8;
-	Thu, 27 Nov 2025 12:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764247934;
-	bh=7mI+R1BGydSJzPjv/tZ3DYJPk36lOhgPS1Ewmy4H4g4=;
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="UPuEDOVJ"
+Received: from 8bytes.org (p549214ac.dip0.t-ipconnect.de [84.146.20.172])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 68FF35C709;
+	Thu, 27 Nov 2025 14:16:55 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1764249415;
+	bh=SxHzLScJ5aY8sylg3dQDijDUacHVBWCDtkYDLxWaFQM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jdIXX3FmfgW9rrMSrt6YCBuAMDKmmxw/CGeVgZ44QF/LGIfLXjH7Mg/KrAh6iX508
-	 5JHZd4jjHhTWoDHH3gcoJIKrSS2jPM+KoVkFNxTa52hnVjsJiwxKtudrbg5OQORp5G
-	 4AaWI5xJs4XElSRhgb5lVAFfMTCoYo+2Sbfv1JuQ=
-Date: Thu, 27 Nov 2025 13:52:12 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Henrique Carvalho <henrique.carvalho@suse.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, Jay Shin <jaeshin@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: Re: [PATCH 6.17 817/849] smb: client: fix potential UAF in
- smb2_close_cached_fid()
-Message-ID: <2025112701-renewed-mooing-f822@gregkh>
-References: <20251111004536.460310036@linuxfoundation.org>
- <20251111004556.178148239@linuxfoundation.org>
- <ed7d962e-b350-4986-ae92-14509306ea65@kernel.org>
- <2f9985eb-e180-44f4-9185-b863826245f9@suse.com>
+	b=UPuEDOVJBGyMyIg6NVdpmbs9Ir+6vCEXK4HmBLLnkIXzu/7G7rFY5ccqwrPoI3SEj
+	 yooOHeUWRdj5kVlwUiUwZN06QZ04WEUq2H3whCSqrV2n3cExLnzY77KPfg0hIxhTig
+	 jaUJZb1Fbr67Efp0w6LQ+EjJ3tALemenZIsSk8MUW8i1kC13elqr+MJzBlJw58E6GV
+	 +0ZPEZMlhe2eXDKOWuVM+XbFZzkyoE+o77nCgm3vsGBUhg4g8rZNU/77qcW3BbJMhR
+	 k0W3y3xHr5uaRclfeN1uRR3Mc/VP0bmLbpbKQ9boId59RUhY5FX2sATMFYvlIsgX80
+	 FlGO7l3Xct1ag==
+Date: Thu, 27 Nov 2025 14:16:53 +0100
+From: Joerg Roedel <joro@8bytes.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>, 
+	Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>, 
+	kernel test robot <lkp@intel.com>, patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>
+Subject: Re: [PATCH] iommupt: Avoid a compiler bug with sw_bit
+Message-ID: <xaq53umm2oacl244dqi6fn67hwz2y3oose44dxrwsjjsmx43nj@5qcbdawihp6m>
+References: <0-v1-2e3b97d2d9b3+13c-iommupt_swbit_bugon_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,51 +48,21 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2f9985eb-e180-44f4-9185-b863826245f9@suse.com>
+In-Reply-To: <0-v1-2e3b97d2d9b3+13c-iommupt_swbit_bugon_jgg@nvidia.com>
 
-On Wed, Nov 26, 2025 at 11:11:30AM -0300, Henrique Carvalho wrote:
+On Wed, Nov 26, 2025 at 03:21:27PM -0400, Jason Gunthorpe wrote:
+> gcc 13, in some cases, gets confused if the __builtin_constant_p() is
+> inside the switch. It thinks that bitnr can have the value max+1 and
+> fails. Lift the check outside the switch to avoid it.
 > 
-> 
-> On 11/26/25 3:47 AM, Jiri Slaby wrote:
-> > On 11. 11. 25, 1:46, Greg Kroah-Hartman wrote:
-> >> 6.17-stable review patch.  If anyone has any objections, please let me
-> >> know.
-> >>
-> >> ------------------
-> >>
-> >> From: Henrique Carvalho <henrique.carvalho@suse.com>
-> >>
-> >> commit 734e99623c5b65bf2c03e35978a0b980ebc3c2f8 upstream.
-> ...
-> > 
-> > This _backport_ (of a 6.18-rc5 commit) omits to change
-> > cfids_invalidation_worker() which was removed in 6.18-rc1 by:
-> > 7ae6152b7831 smb: client: remove cfids_invalidation_worker
-> > 
-> > This likely causes:
-> > https://bugzilla.suse.com/show_bug.cgi?id=1254096
-> > BUG: workqueue leaked atomic, lock or RCU
-> > 
-> > Because cfids_invalidation_worker() still does:
-> >                 kref_put(&cfid->refcount, smb2_close_cached_fid);
-> > instead of now required kref_put_lock() aka:
-> >                 close_cached_dir(cfid);
-> > 
-> > thanks,
-> 
-> Thanks, Jiri.
-> 
-> I'm sending the updated patch attached.
-> 
-> This new version should also replace the patch backported to stable
-> versions:
-> 
-> - 6.12.y (065bd62412271a2d734810dd50336cae88c54427)
-> - 6.6.y (cb52d9c86d70298de0ab7c7953653898cbc0efd6)
-> 
-> Alternatively, I'm sending just the fix ("smb: client: fix incomplete
-> backport in cfids_invalidation_worker()").
+> Fixes: ef7bfe5bbffd ("iommupt/x86: Support SW bits and permit PT_FEAT_DMA_INCOHERENT")
+> Fixes: 5448c1558f60 ("iommupt: Add the Intel VT-d second stage page table format")
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202511242012.I7g504Ab-lkp@intel.com/
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/generic_pt/fmt/vtdss.h  | 8 ++++----
+>  drivers/iommu/generic_pt/fmt/x86_64.h | 8 ++++----
+>  2 files changed, 8 insertions(+), 8 deletions(-)
 
-Thanks, I've taken the "fixup" now.
-
-greg k-h
+Applied, thanks.
