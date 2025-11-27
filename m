@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A042882C9;
-	Thu, 27 Nov 2025 14:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157FC288537;
+	Thu, 27 Nov 2025 14:53:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255200; cv=none; b=HKN7L8jV4dBOLelYTpGNF7YaF5sNuZpqgrbH8SoFKlgXpIUU3nb2Pmg1FkXchkOVKIj9LeVDfI7dFwGP0cl1ejDGRptU8KOIxw6/8M3tNN8DML8YsXV4nWrSS2acwTAtWsZTyjIQEYG86VbMxIFM/tlXzw1atGcZw4jhPIom/4k=
+	t=1764255203; cv=none; b=sQy6F+JcoPzqoqjB69twvo7qmtUFEzOx5e6MKSFtWVTI4wcC3WULlgl6doPeqGamZW5w4uqsICuCS5rUtKCjEdRBEU5od07wHSt8Cex0DcIR5Em8B38UDnEb1O4AmXl8OxZ31mH/UK2NV3Lkysj1BnZzWjmF5flLxIM8cvE1keY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255200; c=relaxed/simple;
-	bh=O1YA3zk2Ry9cdskEn+kMjeM313H22u6w2Wszb1MpXEo=;
+	s=arc-20240116; t=1764255203; c=relaxed/simple;
+	bh=8nBO3TgO4D6jcilZtjakw8WAIyF8VzDDl3A6kIzTLzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4KjEWVO2DTHg13t7K14ikLaoISPlBCjXZO4LSlrbwsPaPscpT4WExUJX3uCx1Kcu7qP8dSa7TVqVCgCfwpXsXbxd0kxUhSuszhfRm2l75a5yxy4qcrM9p08iyCw6rp7Li+az4qclB0jlSMc7MiBH0YIO2mFqNy5bNjyzZXo1W8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7zld9PK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TBbTBjhsTT0PGWdGsIIYJ//30Ly4/4BMp/J0VYbh6+J4Bftwom5kHosR66H2B8IeTa4keIIoz6qRZ8W+su3Kiwd9ArhAjHkNL6U52pJvIVoGmXkwLWPkLGE3JTCpsvDyueQ3xnpIxmtqFommGsMG5o1XglolrgOLnAxG6n/fR4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjQqfGQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7zld9PK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C52DCC4CEF8;
-	Thu, 27 Nov 2025 14:53:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjQqfGQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B0EC4CEF8;
+	Thu, 27 Nov 2025 14:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255200;
-	bh=O1YA3zk2Ry9cdskEn+kMjeM313H22u6w2Wszb1MpXEo=;
+	s=korg; t=1764255203;
+	bh=8nBO3TgO4D6jcilZtjakw8WAIyF8VzDDl3A6kIzTLzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7zld9PKqEefCYWX7C7fZiFjNVoaPqRIUFgxo3fddArZzdhVp+2ozm9gNlpimLhS/
-	 4YzIqQm+gbO562HHtUKkalezub2dMBdTvnBRuq2ZEVzJb8weOV6uaS93Q/w/MVIN3Z
-	 X38c31/cw/vZHWnwKOKCfvedyBA5eUTsP4EQB+Gw=
+	b=WjQqfGQWwoYSrbYoplVy+VA4qM0Q/jkFH2FcyjsMBiUF6HhlDppx3PcoMGfx7T/eB
+	 HPWBqfObgEpKXv/0NjnUwWNEg2V+rUZpVSqp7namUNJPIz12OV2Zfrjqt1SX9XTcQ/
+	 /vnmfcHlsBSb2ly2OOeM0p5Q4hQPKx/p+NIjQG/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.12 025/112] Input: imx_sc_key - fix memory corruption on unload
-Date: Thu, 27 Nov 2025 15:45:27 +0100
-Message-ID: <20251127144033.760335705@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 043/112] mptcp: decouple mptcp fastclose from tcp close
+Date: Thu, 27 Nov 2025 15:45:45 +0100
+Message-ID: <20251127144034.416791864@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -52,36 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit d83f1512758f4ef6fc5e83219fe7eeeb6b428ea4 upstream.
+commit fff0c87996672816a84c3386797a5e69751c5888 upstream.
 
-This is supposed to be "priv" but we accidentally pass "&priv" which is
-an address in the stack and so it will lead to memory corruption when
-the imx_sc_key_action() function is called.  Remove the &.
+With the current fastclose implementation, the mptcp_do_fastclose()
+helper is in charge of two distinct actions: send the fastclose reset
+and cleanup the subflows.
 
-Fixes: 768062fd1284 ("Input: imx_sc_key - use devm_add_action_or_reset() to handle all cleanups")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/aQYKR75r2VMFJutT@stanley.mountain
+Formally decouple the two steps, ensuring that mptcp explicitly closes
+all the subflows after the mentioned helper.
+
+This will make the upcoming fix simpler, and allows dropping the 2nd
+argument from mptcp_destroy_common(). The Fixes tag is then the same as
+in the next commit to help with the backports.
+
+Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-5-806d3781c95f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/imx_sc_key.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/protocol.c |   13 +++++++++----
+ net/mptcp/protocol.h |    2 +-
+ 2 files changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/input/keyboard/imx_sc_key.c
-+++ b/drivers/input/keyboard/imx_sc_key.c
-@@ -158,7 +158,7 @@ static int imx_sc_key_probe(struct platf
- 		return error;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2869,7 +2869,11 @@ static void mptcp_worker(struct work_str
+ 		__mptcp_close_subflow(sk);
+ 
+ 	if (mptcp_close_tout_expired(sk)) {
++		struct mptcp_subflow_context *subflow, *tmp;
++
+ 		mptcp_do_fastclose(sk);
++		mptcp_for_each_subflow_safe(msk, subflow, tmp)
++			__mptcp_close_ssk(sk, subflow->tcp_sock, subflow, 0);
+ 		mptcp_close_wake_up(sk);
  	}
  
--	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, &priv);
-+	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, priv);
- 	if (error)
- 		return error;
+@@ -3301,7 +3305,8 @@ static int mptcp_disconnect(struct sock
+ 	/* msk->subflow is still intact, the following will not free the first
+ 	 * subflow
+ 	 */
+-	mptcp_destroy_common(msk, MPTCP_CF_FASTCLOSE);
++	mptcp_do_fastclose(sk);
++	mptcp_destroy_common(msk);
+ 
+ 	/* The first subflow is already in TCP_CLOSE status, the following
+ 	 * can't overlap with a fallback anymore
+@@ -3483,7 +3488,7 @@ void mptcp_rcv_space_init(struct mptcp_s
+ 		msk->rcvq_space.space = TCP_INIT_CWND * TCP_MSS_DEFAULT;
+ }
+ 
+-void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags)
++void mptcp_destroy_common(struct mptcp_sock *msk)
+ {
+ 	struct mptcp_subflow_context *subflow, *tmp;
+ 	struct sock *sk = (struct sock *)msk;
+@@ -3492,7 +3497,7 @@ void mptcp_destroy_common(struct mptcp_s
+ 
+ 	/* join list will be eventually flushed (with rst) at sock lock release time */
+ 	mptcp_for_each_subflow_safe(msk, subflow, tmp)
+-		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow), subflow, flags);
++		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow), subflow, 0);
+ 
+ 	/* move to sk_receive_queue, sk_stream_kill_queues will purge it */
+ 	mptcp_data_lock(sk);
+@@ -3517,7 +3522,7 @@ static void mptcp_destroy(struct sock *s
+ 
+ 	/* allow the following to close even the initial subflow */
+ 	msk->free_first = 1;
+-	mptcp_destroy_common(msk, 0);
++	mptcp_destroy_common(msk);
+ 	sk_sockets_allocated_dec(sk);
+ }
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -968,7 +968,7 @@ static inline void mptcp_propagate_sndbu
+ 	local_bh_enable();
+ }
+ 
+-void mptcp_destroy_common(struct mptcp_sock *msk, unsigned int flags);
++void mptcp_destroy_common(struct mptcp_sock *msk);
+ 
+ #define MPTCP_TOKEN_MAX_RETRIES	4
  
 
 
