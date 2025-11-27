@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1003E27F18B;
-	Thu, 27 Nov 2025 14:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA53A280335;
+	Thu, 27 Nov 2025 14:49:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764254949; cv=none; b=EnL2CeSfDLTt+/6tNyH0cWyxQQmlDNF2v2d8Yeev4HexPS9cktlkNeDio0zgu1I/eAHfmW16Hsd6u311fBlP/0hb4ET5OCmq2EqGXHrm/3AdUpaKV9UPNjX9GU/8N1R+BWKA/uQcZQFFUCaGyooq5CN2FQ+ZD0mnchpAEmAA0RQ=
+	t=1764254951; cv=none; b=r33a2gLx8faTZalNqbRxtiVlzZ4ocxeyhWBnuDe5iiE2UHnwsWNiTq/lNoF64Pf779WNtjNWBy5NW9WOAjOpF1NXuEj5OPZ0pVfJ4GvNToAwqxm6iwNDi0JMRqrJoWOMNJB8wgiRRjtzu/LGCO3FWpmR8DBKaX0u2LZupRZ03so=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764254949; c=relaxed/simple;
-	bh=fmC3U9LGnWn+uMCAT+/NEDdpngdoksLFKXgCTX2usx8=;
+	s=arc-20240116; t=1764254951; c=relaxed/simple;
+	bh=vGMDXHQrJJTnCr0AIxH+UDdXSQt6xVXUMUITYmhkcwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XpSsgJ0FNtW4T88VZvVWnw/A++2AZypBRCxLqsMxirArRk6By1kSmi51javE9TajmlSgjAuX51M8wpfubd78iA9zShCHSoss1KeMKdj8d4F0jLDbvhaHn/uECq22294s1HdZfnRn/UjJFTcETH+7IBOsCRWVGYUqiJ1awmwWFg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3DXYDa2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PLlaYFw5gPXC8H90cXzdUsJ0BccpU61GsP2ESDXaCXIpNL9pp/5b7bjWyr1/+Q0iTTQySA5bxiZhxIFxkz2hhrKm0Nxz5kWsyDEA1V3yQ6kQvNXY0o3bjqJIjKpI9/iAnEcP7MV8rokCmUl6NifP5ZKC1IU9OYgv47NsMaYz9iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJSmWfi7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3DXYDa2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9231EC116C6;
-	Thu, 27 Nov 2025 14:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJSmWfi7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B90C4CEF8;
+	Thu, 27 Nov 2025 14:49:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764254948;
-	bh=fmC3U9LGnWn+uMCAT+/NEDdpngdoksLFKXgCTX2usx8=;
+	s=korg; t=1764254951;
+	bh=vGMDXHQrJJTnCr0AIxH+UDdXSQt6xVXUMUITYmhkcwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3DXYDa2rh5nhO0X9KsxOzgx73SEP3RsXsHWF/OgFtgwwAGniIxEKCF6PV2/zJV0a
-	 wG392qhBJerFurYr6VK81Vig4VRiuBVfW5JMq/rENGVsL0527p90SRqMf5LOiiGCv7
-	 MhZzzGwMm3f9gGv7mBM1i788+qUCo5Aps4NqeZp0=
+	b=nJSmWfi7hvdFlp6I5L282oAQ2So4TYwFsXdw/Kitcr8Jcs9r18vbrkbtHsp91SyH6
+	 0l7jHIEx7DavIQLgaN6TSP++cGstM+s8BSyUu8lySFQfusFyzR0XANDZy2Vtvwfo3W
+	 JAI1EEbKnSZJwt7kj8X7AlsBlSK2qucoQYa0DF/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Prateek Agarwal <praagarwal@nvidia.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 41/86] mlxsw: spectrum: Fix memory leak in mlxsw_sp_flower_stats()
-Date: Thu, 27 Nov 2025 15:45:57 +0100
-Message-ID: <20251127144029.330185627@linuxfoundation.org>
+Subject: [PATCH 6.6 42/86] drm/tegra: Add call to put_pid()
+Date: Thu, 27 Nov 2025 15:45:58 +0100
+Message-ID: <20251127144029.366396997@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -52,45 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Prateek Agarwal <praagarwal@nvidia.com>
 
-[ Upstream commit 407a06507c2358554958e8164dc97176feddcafc ]
+[ Upstream commit 6cbab9f0da72b4dc3c3f9161197aa3b9daa1fa3a ]
 
-The function mlxsw_sp_flower_stats() calls mlxsw_sp_acl_ruleset_get() to
-obtain a ruleset reference. If the subsequent call to
-mlxsw_sp_acl_rule_lookup() fails to find a rule, the function returns
-an error without releasing the ruleset reference, causing a memory leak.
+Add a call to put_pid() corresponding to get_task_pid().
+host1x_memory_context_alloc() does not take ownership of the PID so we
+need to free it here to avoid leaking.
 
-Fix this by using a goto to the existing error handling label, which
-calls mlxsw_sp_acl_ruleset_put() to properly release the reference.
-
-Fixes: 7c1b8eb175b69 ("mlxsw: spectrum: Add support for TC flower offload statistics")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251112052114.1591695-1-zilin@seu.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Prateek Agarwal <praagarwal@nvidia.com>
+Fixes: e09db97889ec ("drm/tegra: Support context isolation")
+[mperttunen@nvidia.com: reword commit message]
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20250919-host1x-put-pid-v1-1-19c2163dfa87@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/tegra/uapi.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-index 9fd1ca0792584..fba545938fd7d 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-@@ -816,8 +816,10 @@ int mlxsw_sp_flower_stats(struct mlxsw_sp *mlxsw_sp,
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/tegra/uapi.c b/drivers/gpu/drm/tegra/uapi.c
+index 5adab6b229164..d0b6a1fa6efad 100644
+--- a/drivers/gpu/drm/tegra/uapi.c
++++ b/drivers/gpu/drm/tegra/uapi.c
+@@ -114,9 +114,12 @@ int tegra_drm_ioctl_channel_open(struct drm_device *drm, void *data, struct drm_
+ 		if (err)
+ 			goto put_channel;
  
- 	rule = mlxsw_sp_acl_rule_lookup(mlxsw_sp, ruleset, f->cookie);
--	if (!rule)
--		return -EINVAL;
-+	if (!rule) {
-+		err = -EINVAL;
-+		goto err_rule_get_stats;
-+	}
+-		if (supported)
++		if (supported) {
++			struct pid *pid = get_task_pid(current, PIDTYPE_TGID);
+ 			context->memory_context = host1x_memory_context_alloc(
+-				host, client->base.dev, get_task_pid(current, PIDTYPE_TGID));
++				host, client->base.dev, pid);
++			put_pid(pid);
++		}
  
- 	err = mlxsw_sp_acl_rule_get_stats(mlxsw_sp, rule, &packets, &bytes,
- 					  &drops, &lastuse, &used_hw_stats);
+ 		if (IS_ERR(context->memory_context)) {
+ 			if (PTR_ERR(context->memory_context) != -EOPNOTSUPP) {
 -- 
 2.51.0
 
