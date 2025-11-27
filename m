@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C938E25BEE8;
-	Thu, 27 Nov 2025 14:51:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A9725BEE8;
+	Thu, 27 Nov 2025 14:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255080; cv=none; b=AYibtrG3AcW6Buh06IJjpSTcGl6RJxbzeGfZv8epfYVzcqcG5rtjQeiv74RIPeMEK7YSWawrGHVhjJIkbjoPoAunLtbGDoR3QrO36JjbyFCCa4I6Hz1mPr+3e65DdCBSV7SQY66UcQG0k9eqXUeqVxTDUgxTcmf/ouu1qiGryjE=
+	t=1764255083; cv=none; b=Sv+suqMwBdqqjTfoXGTAJBSPlJNTFLDihpmORHQMirl/2njKfnN42PFwWuCNHcYwpkmBNo7MEc0TQWvuhgIW6S/upK5AXW5BHW55+Ao82xanwu5YmL0TUzPUXufME9TQldxulY/bd8bCwxn4bubdmUEaB346urS+jxKV4XOMFc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255080; c=relaxed/simple;
-	bh=jH3GGk9XtQErJ/YJY2K52hIEJZ55IedV0zpYW9CQAvU=;
+	s=arc-20240116; t=1764255083; c=relaxed/simple;
+	bh=Q/66rYVRk0/IBh9u1u5I2XBRhigjlyVB5XMbS6hmUDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SX1E9doiEPXUjbgXAs0r/tNxKnuL51KJM2ovz/W4x+b2yxB060TPIFKr/hDWJpzJV6jicNZ23M+aLI6aB+jwmnu/otpBCq0JkrCgLGnEURzgA2SBGl/dN9SDbLusvLRPuaGFNytRp9szNI+y96ow+0gWILCsYL8tmV7EttIdyFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LXC68Bg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WeIf5f6IbvSlGC6rC+LIdhVLDBZca9H6xFP0QsXUegMrGlTPCz1laP8zIbTi4XXNYDubeNgoI9nygaBCKAHmIlElNG0wx23jzUVMELrssDrk/CREIgXtBD60xsDQZERVWx4I4+FqBC62vd/G0f3arLd/igmFljkZ4HuslYBa+2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZ7geTa/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LXC68Bg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54377C4CEF8;
-	Thu, 27 Nov 2025 14:51:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZ7geTa/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4194FC4CEF8;
+	Thu, 27 Nov 2025 14:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255080;
-	bh=jH3GGk9XtQErJ/YJY2K52hIEJZ55IedV0zpYW9CQAvU=;
+	s=korg; t=1764255083;
+	bh=Q/66rYVRk0/IBh9u1u5I2XBRhigjlyVB5XMbS6hmUDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0LXC68BgH3amzPB4yAgIOaiz85Yyohs0emAXI26feMWIKcn57Rx9p2SS2fteaeFoy
-	 8mOopLL3/Nb7JviNota0dA6vQHWY3wkUvYigMcVtsU0v9epyjzgkbXxQuX+rE+Dlqj
-	 W7ujSXM+f0AVvw2RNe1k5Tra++ZCIz+hOKbGbsts=
+	b=MZ7geTa/FCeXtA9M63vEUVOQ/Nj9FCcMwOBdeHX6oxssIuOX5k8QtEC05vpu5nDiY
+	 mTNh/8TqOGosSVDEn0/lLSfgm+ub5c84SlMfzpoXC9ocOYGigy3IY9NgiTqMQArMfP
+	 chGTQBqWx+L9Ein/EyR6cQRTjg/jLB1z2RZemFWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 60/86] scsi: core: Fix a regression triggered by scsi_host_busy()
-Date: Thu, 27 Nov 2025 15:46:16 +0100
-Message-ID: <20251127144030.023893987@linuxfoundation.org>
+Subject: [PATCH 6.6 61/86] x86/microcode/AMD: Limit Entrysign signature checking to known generations
+Date: Thu, 27 Nov 2025 15:46:17 +0100
+Message-ID: <20251127144030.061038593@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -54,75 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Borislav Petkov (AMD) <bp@alien8.de>
 
-[ Upstream commit a0b7780602b1b196f47e527fec82166a7e67c4d0 ]
+[ Upstream commit 8a9fb5129e8e64d24543ebc70de941a2d77a9e77 ]
 
-Commit 995412e23bb2 ("blk-mq: Replace tags->lock with SRCU for tag
-iterators") introduced the following regression:
+Limit Entrysign sha256 signature checking to CPUs in the range Zen1-Zen5.
 
-Call trace:
- __srcu_read_lock+0x30/0x80 (P)
- blk_mq_tagset_busy_iter+0x44/0x300
- scsi_host_busy+0x38/0x70
- ufshcd_print_host_state+0x34/0x1bc
- ufshcd_link_startup.constprop.0+0xe4/0x2e0
- ufshcd_init+0x944/0xf80
- ufshcd_pltfrm_init+0x504/0x820
- ufs_rockchip_probe+0x2c/0x88
- platform_probe+0x5c/0xa4
- really_probe+0xc0/0x38c
- __driver_probe_device+0x7c/0x150
- driver_probe_device+0x40/0x120
- __driver_attach+0xc8/0x1e0
- bus_for_each_dev+0x7c/0xdc
- driver_attach+0x24/0x30
- bus_add_driver+0x110/0x230
- driver_register+0x68/0x130
- __platform_driver_register+0x20/0x2c
- ufs_rockchip_pltform_init+0x1c/0x28
- do_one_initcall+0x60/0x1e0
- kernel_init_freeable+0x248/0x2c4
- kernel_init+0x20/0x140
- ret_from_fork+0x10/0x20
+X86_BUG cannot be used here because the loading on the BSP happens way
+too early, before the cpufeatures machinery has been set up.
 
-Fix this regression by making scsi_host_busy() check whether the SCSI
-host tag set has already been initialized. tag_set->ops is set by
-scsi_mq_setup_tags() just before blk_mq_alloc_tag_set() is called. This
-fix is based on the assumption that scsi_host_busy() and
-scsi_mq_setup_tags() calls are serialized. This is the case in the UFS
-driver.
-
-Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Closes: https://lore.kernel.org/linux-block/pnezafputodmqlpumwfbn644ohjybouveehcjhz2hmhtcf2rka@sdhoiivync4y/
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://patch.msgid.link/20251007214800.1678255-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://patch.msgid.link/all/20251023124629.5385-1-bp@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/microcode/amd.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index 445f4a220df3e..f274812aee1e8 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -602,8 +602,9 @@ int scsi_host_busy(struct Scsi_Host *shost)
- {
- 	int cnt = 0;
- 
--	blk_mq_tagset_busy_iter(&shost->tag_set,
--				scsi_host_check_in_flight, &cnt);
-+	if (shost->tag_set.ops)
-+		blk_mq_tagset_busy_iter(&shost->tag_set,
-+					scsi_host_check_in_flight, &cnt);
- 	return cnt;
+diff --git a/arch/x86/kernel/cpu/microcode/amd.c b/arch/x86/kernel/cpu/microcode/amd.c
+index f9b6e2043e6b2..9952c774eaa69 100644
+--- a/arch/x86/kernel/cpu/microcode/amd.c
++++ b/arch/x86/kernel/cpu/microcode/amd.c
+@@ -226,6 +226,24 @@ static bool need_sha_check(u32 cur_rev)
+ 	return true;
  }
- EXPORT_SYMBOL(scsi_host_busy);
+ 
++static bool cpu_has_entrysign(void)
++{
++	unsigned int fam   = x86_family(bsp_cpuid_1_eax);
++	unsigned int model = x86_model(bsp_cpuid_1_eax);
++
++	if (fam == 0x17 || fam == 0x19)
++		return true;
++
++	if (fam == 0x1a) {
++		if (model <= 0x2f ||
++		    (0x40 <= model && model <= 0x4f) ||
++		    (0x60 <= model && model <= 0x6f))
++			return true;
++	}
++
++	return false;
++}
++
+ static bool verify_sha256_digest(u32 patch_id, u32 cur_rev, const u8 *data, unsigned int len)
+ {
+ 	struct patch_digest *pd = NULL;
+@@ -233,7 +251,7 @@ static bool verify_sha256_digest(u32 patch_id, u32 cur_rev, const u8 *data, unsi
+ 	struct sha256_state s;
+ 	int i;
+ 
+-	if (x86_family(bsp_cpuid_1_eax) < 0x17)
++	if (!cpu_has_entrysign())
+ 		return true;
+ 
+ 	if (!need_sha_check(cur_rev))
 -- 
 2.51.0
 
