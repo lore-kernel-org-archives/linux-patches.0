@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC58032C301;
-	Thu, 27 Nov 2025 14:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0AC28D8E8;
+	Thu, 27 Nov 2025 14:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255470; cv=none; b=EU89IMBsbYaE8qkp3/GubOZDo3xL8e/AqscMbVuhNRK5OueQ+omqILBCZbOsAlGs3yF5VHe0lLmkyfJ8qHnqotDgIyNts7z9u7GCJ6Qo/FaeGDz4TJS+6Ul8QXBUQS4pP2sF6plXeif7Je79l6Emwg0KrffLZS6ucv9U0/XPQJE=
+	t=1764255473; cv=none; b=d4xyWopgACgIklNbiGDwJcOYg+/7avpYQhDqNRzoGEXEKYAYF6qR2aL6hq2SbZnHdUaf9VKWJWHdZ9BVvF1lsqRrnhsgYRD1MdRlKHj+n/Ir0/kTWzkOWIMEt19usHbttj6HWX5limZ1TITUFyHjAoDSFiN92sf8UQUX3wZg3y8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255470; c=relaxed/simple;
-	bh=2s4frs8t3SID9FYWLOFF74BgnIc72SaTy/7VZ1yFWmo=;
+	s=arc-20240116; t=1764255473; c=relaxed/simple;
+	bh=9VIOsWuh/4wdEDdI0q1pjT5ab6BRb56ifB1OppQJNL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MxFdc8/oUvr7EzFeggsMhvePPFxq9OhFG3+7yUe0JkItBPj97ZjoN2Ez9PsLZv06zmqMiINCPpsgqMUBmvCuhuSKY0FixRmNx0bviKlUo0oNKQb+yF682yBShmSnhu//xN2ffKaxVxg1AhsHaIy9nuIfFS8XoVEIQIexhKgyhgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDM88QA5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IRFdLNl7tQwg3amxfpXpPu4HiSpxkl/rzHMBPboPUwqjjhJxGahKYsGwmABcPqmvgjprgUawxgX7TNmqqNI5gmjBJ0ou9ClmTc4SKejEHMreKNZIdde6/sQ4x0DtdH/A0OMApjjs5PIFnmGFlrL1ZWVFWz/3VeJ7c6slsGhiuE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idWv/UWQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDM88QA5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F467C4CEF8;
-	Thu, 27 Nov 2025 14:57:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idWv/UWQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F871C4CEF8;
+	Thu, 27 Nov 2025 14:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255470;
-	bh=2s4frs8t3SID9FYWLOFF74BgnIc72SaTy/7VZ1yFWmo=;
+	s=korg; t=1764255473;
+	bh=9VIOsWuh/4wdEDdI0q1pjT5ab6BRb56ifB1OppQJNL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDM88QA5Za7aJUEZe7aHNCxsfUV912GDmDYWfD01UNkSHyb6MADUgIb+c/+LBi4k0
-	 hazwlZzZrXsgW5m//JpxYdZYHauR4b8UEJhno5pHx0ZOrjD26XlRJ2ePRvX+v5bbpO
-	 ypVsL8noFIfb28H8bqDhwiqc7CS5PoulMnzLZ294=
+	b=idWv/UWQBaRx+f4KBmK07lNlDMm3oahM0haDbBPv+XsOHFWhDsxPP1uX+MPI4lrHr
+	 xHpwIs7cs8sRVIjnqL0ReK4yDC3E0YzU80BMzLXDAl3cOgKuLJFQLU30JjLKdHOr++
+	 org8xKjyp/KeSI0QnRaT9otljkpyxL5bsztb4rBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Henrique Carvalho <henrique.carvalho@suse.com>
-Subject: [PATCH 6.12 102/112] smb: client: fix incomplete backport in cfids_invalidation_worker()
-Date: Thu, 27 Nov 2025 15:46:44 +0100
-Message-ID: <20251127144036.574953666@linuxfoundation.org>
+	Jari Ruusu <jariruusu@protonmail.com>
+Subject: [PATCH 6.12 103/112] tty/vt: fix up incorrect backport to stable releases
+Date: Thu, 27 Nov 2025 15:46:45 +0100
+Message-ID: <20251127144036.611553005@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -49,30 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-The previous commit bdb596ceb4b7 ("smb: client: fix potential UAF in
-smb2_close_cached_fid()") was an incomplete backport and missed one
-kref_put() call in cfids_invalidation_worker() that should have been
-converted to close_cached_dir().
+Below is a patch for 6.12.58+ and 6.17.8+ stable branches only.
+Upstream does not need this.
 
-Fixes: 065bd6241227 ("smb: client: fix potential UAF in smb2_close_cached_fid()")"
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Signed-off-by: Jari Ruusu <jariruusu@protonmail.com>
+Fixes: da7e8b382396 ("tty/vt: Add missing return value for VT_RESIZE in vt_ioctl()")
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/smb/client/cached_dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/cached_dir.c
-+++ b/fs/smb/client/cached_dir.c
-@@ -727,7 +727,7 @@ static void cfids_invalidation_worker(st
- 	list_for_each_entry_safe(cfid, q, &entry, entry) {
- 		list_del(&cfid->entry);
- 		/* Drop the ref-count acquired in invalidate_all_cached_dirs */
--		kref_put(&cfid->refcount, smb2_close_cached_fid);
-+		close_cached_dir(cfid);
- 	}
- }
- 
+---
+ drivers/tty/vt/vt_ioctl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+--- a/drivers/tty/vt/vt_ioctl.c
++++ b/drivers/tty/vt/vt_ioctl.c
+@@ -924,8 +924,10 @@ int vt_ioctl(struct tty_struct *tty,
+ 			if (vc) {
+ 				/* FIXME: review v tty lock */
+ 				ret = __vc_resize(vc_cons[i].d, cc, ll, true);
+-				if (ret)
++				if (ret) {
++					console_unlock();
+ 					return ret;
++				}
+ 			}
+ 		}
+ 		console_unlock();
 
 
