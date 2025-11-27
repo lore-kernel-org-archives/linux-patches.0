@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02DD333755;
-	Thu, 27 Nov 2025 14:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D55330B1F;
+	Thu, 27 Nov 2025 14:54:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255278; cv=none; b=o2KYFYkxFitsRaJI0cRoo5z4Msp05ScA/QGS1JbTH2HPa4mIPX5MaNAZKybpTg/D4/wC93hOPWsC4XKvPwMHBps/Hg+Sf8bEKTQ6MOFEBKZFuHEerO860DMUjZd4Dz3BBgsQeZM20pv5IVEdFQBUKKKAxjaspyDqwbh3pSfrvEE=
+	t=1764255281; cv=none; b=OfaQI+KRnoxJLxEMBAgW+42S7qx8bS0YmvCj2qSRegM38N1AA/SWgi1gzeVB5fYza5LZqMCMRDdK0SbkC6PAAahfD9oTucIpefdahLcuc6dd7Z10H68ca1weA6tjXrbj8qMNcXXt7horIk/Blz3IL8xdVyJbNEO/rPkLJFQzhF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255278; c=relaxed/simple;
-	bh=C4xecJ3F+n2xr6bFOX3oOFRDDSL5GpYXmsLtdOshKEs=;
+	s=arc-20240116; t=1764255281; c=relaxed/simple;
+	bh=79kGmcv7C6HOM3P5EWJzLh81187A77+7IBFagM2MQMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LJzVJpNg0fcj9eAZsXCK3Js65rfqQdn6ZRPWzSAJ1h3RZp4FzmHIKp6p3KmNWAqrvzhOgUcIXGYAaxXa6dxA+w1f6pS9JEI/9dbFXNesWlBU12PHAnYppuey6uoIXxSxGJlakn2MIEWrnqWf3o8F0M4g0W4dzYuYk+BnYe8YMkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lEn/bIpb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U3NSHsPtAnIpYWcDDpr1O8AKa7C0HJaBZQJ+danh9bLiK0QhLSJctoK0EHrXmx0du17lGzaJi7Ta/cR51Eu+zJbSV3lXSdrPfulcXK6ghrJOibDgNl5tHA/eTcgWBPl+Wy+pqaQA84o2Sx78ze8fnmTf6xSBe0HxfZLuf4Ob5H8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWSACMPp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lEn/bIpb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AEADC113D0;
-	Thu, 27 Nov 2025 14:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWSACMPp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88FFC4CEF8;
+	Thu, 27 Nov 2025 14:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255278;
-	bh=C4xecJ3F+n2xr6bFOX3oOFRDDSL5GpYXmsLtdOshKEs=;
+	s=korg; t=1764255281;
+	bh=79kGmcv7C6HOM3P5EWJzLh81187A77+7IBFagM2MQMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lEn/bIpbuSzuwBvSqTYbkzlJuoZO6iltXC5bz/mUfb+PJZFWRVfW4avA0ttLDIwE0
-	 hH5HAH4pGhZP3wvYyQ9fQURZfto40rJTDoSYqA7QMY5xPYNKohgRfx/75P7zzDTcof
-	 Hy7D2uAzHoVVLLIvta8w+Mid/WmT40rNEVfLUzmA=
+	b=sWSACMPpLp+MhHU15hLTe8YcRJwP/wSRvCpR7WEJnKySW4r4uKKEes6SpHSedXVX8
+	 w8ZhMD0nb1o1myguQVamOA2eJJggNO0tzz+LFWeXIeqy4PdwOa7ik55uWMz35MI+jl
+	 BrMTrcKgFFo1vhKI4DPL0b9Nzl3o9vLFuXzEbCOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 070/112] platform/x86/intel/speed_select_if: Convert PCIBIOS_* return codes to errnos
-Date: Thu, 27 Nov 2025 15:46:12 +0100
-Message-ID: <20251127144035.403740013@linuxfoundation.org>
+Subject: [PATCH 6.12 071/112] net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()
+Date: Thu, 27 Nov 2025 15:46:13 +0100
+Message-ID: <20251127144035.439870743@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144032.705323598@linuxfoundation.org>
 References: <20251127144032.705323598@linuxfoundation.org>
@@ -46,54 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 
-[ Upstream commit d8bb447efc5622577994287dc77c684fa8840b30 ]
+[ Upstream commit 896f1a2493b59beb2b5ccdf990503dbb16cb2256 ]
 
-isst_if_probe() uses pci_read_config_dword() that returns PCIBIOS_*
-codes. The return code is returned from the probe function as is but
-probe functions should return normal errnos. A proper implementation
-can be found in drivers/leds/leds-ss4200.c.
+The loops in 'qede_tpa_cont()' and 'qede_tpa_end()', iterate
+over 'cqe->len_list[]' using only a zero-length terminator as
+the stopping condition. If the terminator was missing or
+malformed, the loop could run past the end of the fixed-size array.
 
-Convert PCIBIOS_* return codes using pcibios_err_to_errno() into
-normal errno before returning.
+Add an explicit bound check using ARRAY_SIZE() in both loops to prevent
+a potential out-of-bounds access.
 
-Fixes: d3a23584294c ("platform/x86: ISST: Add Intel Speed Select mmio interface")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Link: https://patch.msgid.link/20251117033354.132-1-vulab@iscas.ac.cn
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 55482edc25f0 ("qede: Add slowpath/fastpath support and enable hardware GRO")
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+Link: https://patch.msgid.link/20251113112757.4166625-1-Pavel.Zhigulin@kaspersky.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/speed_select_if/isst_if_mmio.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_fp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/speed_select_if/isst_if_mmio.c b/drivers/platform/x86/intel/speed_select_if/isst_if_mmio.c
-index 3f4343147dadb..950ede5eab769 100644
---- a/drivers/platform/x86/intel/speed_select_if/isst_if_mmio.c
-+++ b/drivers/platform/x86/intel/speed_select_if/isst_if_mmio.c
-@@ -108,11 +108,11 @@ static int isst_if_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+index 847fa62c80df8..e338bfc8b7b2f 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+@@ -4,6 +4,7 @@
+  * Copyright (c) 2019-2020 Marvell International Ltd.
+  */
  
- 	ret = pci_read_config_dword(pdev, 0xD0, &mmio_base);
- 	if (ret)
--		return ret;
-+		return pcibios_err_to_errno(ret);
++#include <linux/array_size.h>
+ #include <linux/netdevice.h>
+ #include <linux/etherdevice.h>
+ #include <linux/skbuff.h>
+@@ -960,7 +961,7 @@ static inline void qede_tpa_cont(struct qede_dev *edev,
+ {
+ 	int i;
  
- 	ret = pci_read_config_dword(pdev, 0xFC, &pcu_base);
- 	if (ret)
--		return ret;
-+		return pcibios_err_to_errno(ret);
+-	for (i = 0; cqe->len_list[i]; i++)
++	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
+ 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
+ 				   le16_to_cpu(cqe->len_list[i]));
  
- 	pcu_base &= GENMASK(10, 0);
- 	base_addr = (u64)mmio_base << 23 | (u64) pcu_base << 12;
+@@ -985,7 +986,7 @@ static int qede_tpa_end(struct qede_dev *edev,
+ 		dma_unmap_page(rxq->dev, tpa_info->buffer.mapping,
+ 			       PAGE_SIZE, rxq->data_direction);
+ 
+-	for (i = 0; cqe->len_list[i]; i++)
++	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
+ 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
+ 				   le16_to_cpu(cqe->len_list[i]));
+ 	if (unlikely(i > 1))
 -- 
 2.51.0
 
