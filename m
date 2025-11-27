@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B121D33030A;
-	Thu, 27 Nov 2025 14:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96F73064B9;
+	Thu, 27 Nov 2025 14:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255006; cv=none; b=FnuoP7upvGttXVdlyzn+FsmyZ84QcKQpqH44dcK9dyyqgBbgxKTgy86F0/aHOY2j+mURG3O0c7O/8GEhRHgCxUzEznAPV4EPff9O7lBns1Jt/6ltu3Jj1aSkU33rhbFxXBAo/c+twLUgrbb/H9pEv41oNibpm6iKRRsMVoHBzFs=
+	t=1764255009; cv=none; b=GAdn2mLouq7aryqHOw/R0Dx3xaFlg/GEXwaTVHKiiOeFxcycLgDl+gXGyuMZfNM5TrPDKTjGYD7rd7yTDrMGsMBeve43eu5nFI0Je7fUNadby3NVX9WJyMLWQ5NKQHQNMdE8dnT5loxCScEGOXlvoB4y8fy3x/DjiRHXrvUu26g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255006; c=relaxed/simple;
-	bh=s2CPfsrnQvfyM7LA2o90XskKzXz20UktVl04QRtWlKE=;
+	s=arc-20240116; t=1764255009; c=relaxed/simple;
+	bh=te55fCbauSbnUeulmccmjvHLgmgpn5H2SF18Sr3XGYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FbPqiIew6FyKNjTC2i9mpKNLrhRTbeZpgPlgIX2N4Ge625jU2WaOsh5LIUiz+ytRD3YBB6SNtAvjMLltZq/F5GDfROPSRaClQWO+CPDDLfe8F7m3kCmS9sIsgY785uytdKgiffvpltAkuOJXZ1HvU0iq5QfGTw9arVvpwH7Gnpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LLaio3+5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDxwPIzCtxi5eRG3h+ysL5Ju+y5tiOQJ/Hva2FxqImX6k2uYuTSwcVWw1lkW4d9lq0t40riHGHJVZfKjRS3WAPpYrSjri4oToku8iqMH9XPn5m3+xZeDcFR4JRhuW3hiv9mhRHv+zNhscJb1W91soLele1egDVvnCbQZiX2GxVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09hMv8oj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LLaio3+5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F1DC4CEF8;
-	Thu, 27 Nov 2025 14:50:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09hMv8oj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6424C4CEF8;
+	Thu, 27 Nov 2025 14:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255006;
-	bh=s2CPfsrnQvfyM7LA2o90XskKzXz20UktVl04QRtWlKE=;
+	s=korg; t=1764255009;
+	bh=te55fCbauSbnUeulmccmjvHLgmgpn5H2SF18Sr3XGYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLaio3+5TUbB+R3Gisbd28pFVV5rKY4usq2XjZCuCtdweqKVb1BQXQ9U7i8MDZ2N+
-	 ZfXH0T4JclFKwRgu2a3xTIu/tCFhBJOcA9k4P0t7Dvx4UdQ8aRswzyWBkmhIwH10jd
-	 PYrtn+f2iSPxVBq4HkEvWRIZYYBBHLHrGMcs/JNM=
+	b=09hMv8ojgXSVnLuVBoKirlzTvmAmPxCGk9gLdcjP3IVykeGfMB3R7nGO1N6cUfUk5
+	 mCFYVXlKAfcizWDi3aoWbKANPujO4XqUJJ5i6AIBizoYdLbxFTcLk2+D7QNMZH62OH
+	 guXsyz6Rljr3fhyG+cCrWciO5mqyggp4VzQr1CeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+355158e7e301548a1424@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 28/86] mptcp: fix race condition in mptcp_schedule_work()
-Date: Thu, 27 Nov 2025 15:45:44 +0100
-Message-ID: <20251127144028.851198407@linuxfoundation.org>
+Subject: [PATCH 6.6 29/86] mptcp: fix ack generation for fallback msk
+Date: Thu, 27 Nov 2025 15:45:45 +0100
+Message-ID: <20251127144028.887934395@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
 References: <20251127144027.800761504@linuxfoundation.org>
@@ -52,96 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 035bca3f017ee9dea3a5a756e77a6f7138cc6eea upstream.
+commit 5e15395f6d9ec07395866c5511f4b4ac566c0c9b upstream.
 
-syzbot reported use-after-free in mptcp_schedule_work() [1]
+mptcp_cleanup_rbuf() needs to know the last most recent, mptcp-level
+rcv_wnd sent, and such information is tracked into the msk->old_wspace
+field, updated at ack transmission time by mptcp_write_options().
 
-Issue here is that mptcp_schedule_work() schedules a work,
-then gets a refcount on sk->sk_refcnt if the work was scheduled.
-This refcount will be released by mptcp_worker().
+Fallback socket do not add any mptcp options, such helper is never
+invoked, and msk->old_wspace value remain stale. That in turn makes
+ack generation at recvmsg() time quite random.
 
-[A] if (schedule_work(...)) {
-[B]     sock_hold(sk);
-        return true;
-    }
+Address the issue ensuring mptcp_write_options() is invoked even for
+fallback sockets, and just update the needed info in such a case.
 
-Problem is that mptcp_worker() can run immediately and complete before [B]
+The issue went unnoticed for a long time, as mptcp currently overshots
+the fallback socket receive buffer autotune significantly. It is going
+to change in the near future.
 
-We need instead :
-
-    sock_hold(sk);
-    if (schedule_work(...))
-        return true;
-    sock_put(sk);
-
-[1]
-refcount_t: addition on 0; use-after-free.
- WARNING: CPU: 1 PID: 29 at lib/refcount.c:25 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:25
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:-1 [inline]
-  __refcount_inc include/linux/refcount.h:366 [inline]
-  refcount_inc include/linux/refcount.h:383 [inline]
-  sock_hold include/net/sock.h:816 [inline]
-  mptcp_schedule_work+0x164/0x1a0 net/mptcp/protocol.c:943
-  mptcp_tout_timer+0x21/0xa0 net/mptcp/protocol.c:2316
-  call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
-  expire_timers kernel/time/timer.c:1798 [inline]
-  __run_timers kernel/time/timer.c:2372 [inline]
-  __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
-  run_timer_base kernel/time/timer.c:2393 [inline]
-  run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
-  handle_softirqs+0x22f/0x710 kernel/softirq.c:622
-  __do_softirq kernel/softirq.c:656 [inline]
-  run_ktimerd+0xcf/0x190 kernel/softirq.c:1138
-  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
+Fixes: e3859603ba13 ("mptcp: better msk receive window updates")
 Cc: stable@vger.kernel.org
-Fixes: 3b1d6210a957 ("mptcp: implement and use MPTCP-level retransmission")
-Reported-by: syzbot+355158e7e301548a1424@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6915b46f.050a0220.3565dc.0028.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/594
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251113103924.3737425-1-edumazet@google.com
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-1-806d3781c95f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ net/mptcp/options.c |   23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -961,14 +961,19 @@ static void mptcp_reset_rtx_timer(struct
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -839,8 +839,11 @@ bool mptcp_established_options(struct so
  
- bool mptcp_schedule_work(struct sock *sk)
- {
--	if (inet_sk_state_load(sk) != TCP_CLOSE &&
--	    schedule_work(&mptcp_sk(sk)->work)) {
--		/* each subflow already holds a reference to the sk, and the
--		 * workqueue is invoked by a subflow, so sk can't go away here.
--		 */
--		sock_hold(sk);
-+	if (inet_sk_state_load(sk) == TCP_CLOSE)
-+		return false;
-+
-+	/* Get a reference on this socket, mptcp_worker() will release it.
-+	 * As mptcp_worker() might complete before us, we can not avoid
-+	 * a sock_hold()/sock_put() if schedule_work() returns false.
+ 	opts->suboptions = 0;
+ 
++	/* Force later mptcp_write_options(), but do not use any actual
++	 * option space.
 +	 */
-+	sock_hold(sk);
-+
-+	if (schedule_work(&mptcp_sk(sk)->work))
- 		return true;
--	}
-+
-+	sock_put(sk);
- 	return false;
+ 	if (unlikely(__mptcp_check_fallback(msk) && !mptcp_check_infinite_map(skb)))
+-		return false;
++		return true;
+ 
+ 	if (unlikely(skb && TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST)) {
+ 		if (mptcp_established_options_fastclose(sk, &opt_size, remaining, opts) ||
+@@ -1318,6 +1321,20 @@ update_wspace:
+ 	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
  }
  
++static void mptcp_track_rwin(struct tcp_sock *tp)
++{
++	const struct sock *ssk = (const struct sock *)tp;
++	struct mptcp_subflow_context *subflow;
++	struct mptcp_sock *msk;
++
++	if (!ssk)
++		return;
++
++	subflow = mptcp_subflow_ctx(ssk);
++	msk = mptcp_sk(subflow->conn);
++	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
++}
++
+ __sum16 __mptcp_make_csum(u64 data_seq, u32 subflow_seq, u16 data_len, __wsum sum)
+ {
+ 	struct csum_pseudo_header header;
+@@ -1610,6 +1627,10 @@ mp_rst:
+ 				      opts->reset_transient,
+ 				      opts->reset_reason);
+ 		return;
++	} else if (unlikely(!opts->suboptions)) {
++		/* Fallback to TCP */
++		mptcp_track_rwin(tp);
++		return;
+ 	}
+ 
+ 	if (OPTION_MPTCP_PRIO & opts->suboptions) {
 
 
