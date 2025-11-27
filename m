@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7754E334C3F;
-	Thu, 27 Nov 2025 15:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424FB334373;
+	Thu, 27 Nov 2025 15:03:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255828; cv=none; b=V8QcVt9zKUFL7EdZNXMKeTSnwg4FSPiC7bDRuIB3P4iymVH9eLCyR9aPMmb4oEYxfSuTp3VOGkbLLqVPAf+8tfRuH9KIR0E2dQqv3QWTYLmOVVS+bCVRuUOnIdlxRMSrr/mxleygFMetvT4dKOgLxno2AF57LIt2WC1etRZ/FRw=
+	t=1764255831; cv=none; b=N3o0dHvQDMaKTkOlZM2X5w4YyUvrlXSHiasE334sHVXKDchH8RVD5RLDZ2eie21ZByCDj+PNuskaFx2atKBXL8Frfvyq078eyJPkpWic/5pMF9+vFcKUtw5mYv4uEJpKmreVw5Ngg3VHUFRe3v+2zjsVPSQLjTOf9F8hOMGidtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255828; c=relaxed/simple;
-	bh=PEiEzzzfL/CzM0X/dwgU0sqf8hlbN8kKVggTMAMzla8=;
+	s=arc-20240116; t=1764255831; c=relaxed/simple;
+	bh=ubFin7g+yBdblMMLzh6F8fzKzADErJe8DvRb3ap80A4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A2wV+rSXGRtWK25XzAVr2KbSIW/y4ZUUpMgp05ZP5swTbLIDMd5lJiZRpLqq0jJlEU2COZQW/aAfxbf/tFtU6lvVGrodkmJA3xciLURyQmj9zWjJa67Ue1wprh9UQ5xy+wVENom+GzX14F+Gy9B8zk42uXrcf8aHucbPeMkTbbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNTWHiJ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=p+Kspi9lA3g+AXqU/BbETVyvjfpYWkxcKdPu4XuC28lbsplcujSFhu5u4BQ6IiTkoRI0refGyFr44px+shUopY26GQKyZes5l0SjaWg6ik/UAMDm4K7miDnz215CpcbMGoAN2ixyjNcILQ36ER3LpWSAbaHkU+I9fo9DksqFm0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ryw0UhJP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNTWHiJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34C0C4CEF8;
-	Thu, 27 Nov 2025 15:03:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ryw0UhJP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A20C116D0;
+	Thu, 27 Nov 2025 15:03:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255828;
-	bh=PEiEzzzfL/CzM0X/dwgU0sqf8hlbN8kKVggTMAMzla8=;
+	s=korg; t=1764255831;
+	bh=ubFin7g+yBdblMMLzh6F8fzKzADErJe8DvRb3ap80A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNTWHiJ7MhoCouy1ZTil3lcflC128GZ6nffya59mCMGSGllDnc7B91qCWX2oX5G40
-	 E+UOpxhAc02oMMF0smgqnUGhErHJFXoP0TN+Y3mahO8oKQT0DttMmV1QoDB+j7CWmP
-	 0dVlRTyyG4VngdEN5qvQ/QNk7/hJPKao/poca5Kg=
+	b=Ryw0UhJPSfDjlQ0Budf8g7/0FZG6QzN0rjGLEY68eyoiqkOGrrWqYaGrdmzXJgqZH
+	 RFp165EacVT1KkXEmkkkUbDx8IT2iSPKvJojfZq0x0895+FSHEMPqHhMPa2ccfbnEK
+	 bB+YDlcuswFXZMbwLACaE6/uJPtoRSEBC1bXmO4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Yang <wen.yang@linux.dev>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 127/175] tick/sched: Fix bogus condition in report_idle_softirq()
-Date: Thu, 27 Nov 2025 15:46:20 +0100
-Message-ID: <20251127144047.596210809@linuxfoundation.org>
+Subject: [PATCH 6.17 128/175] LoongArch: Use UAPI types in ptrace UAPI header
+Date: Thu, 27 Nov 2025 15:46:21 +0100
+Message-ID: <20251127144047.632691337@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -45,103 +45,109 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wen Yang <wen.yang@linux.dev>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 807e0d187da4c0b22036b5e34000f7a8c52f6e50 ]
+[ Upstream commit 20d7338f2d3bcb570068dd6d39b16f1a909fe976 ]
 
-In commit 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle") the
-new function report_idle_softirq() was created by breaking code out of the
-existing can_stop_idle_tick() for kernels v5.18 and newer.
+The kernel UAPI headers already contain fixed-width integer types, there
+is no need to rely on the libc types. There may not be a libc available
+or the libc may not provides the <stdint.h>, like for example on nolibc.
 
-In doing so, the code essentially went from this form:
+This also aligns the header with the rest of the LoongArch UAPI headers.
 
-	if (A) {
-		static int ratelimit;
-		if (ratelimit < 10 && !C && A&D) {
-                       pr_warn("NOHZ tick-stop error: ...");
-		       ratelimit++;
-		}
-		return false;
-	}
-
-to a new function:
-
-static bool report_idle_softirq(void)
-{
-       static int ratelimit;
-
-       if (likely(!A))
-               return false;
-
-       if (ratelimit < 10)
-               return false;
-...
-       pr_warn("NOHZ tick-stop error: local softirq work is pending, handler #%02x!!!\n",
-               pending);
-       ratelimit++;
-
-       return true;
-}
-
-commit a7e282c77785 ("tick/rcu: Fix bogus ratelimit condition") realized
-ratelimit was essentially set to zero instead of ten, and hence *no*
-softirq pending messages would ever be issued, but "fixed" it as:
-
--       if (ratelimit < 10)
-+       if (ratelimit >= 10)
-                return false;
-
-However, this fix introduced another issue:
-
-When ratelimit is greater than or equal 10, even if A is true, it will
-directly return false. While ratelimit in the original code was only used
-to control printing and will not affect the return value.
-
-Restore the original logic and restrict ratelimit to control the printk and
-not the return value.
-
-Fixes: 0345691b24c0 ("tick/rcu: Stop allowing RCU_SOFTIRQ in idle")
-Fixes: a7e282c77785 ("tick/rcu: Fix bogus ratelimit condition")
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20251119174525.29470-1-wen.yang@linux.dev
+Fixes: 803b0fc5c3f2 ("LoongArch: Add process management")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ arch/loongarch/include/uapi/asm/ptrace.h | 40 +++++++++++-------------
+ 1 file changed, 18 insertions(+), 22 deletions(-)
 
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index c527b421c8652..466e083c82721 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -1152,16 +1152,15 @@ static bool report_idle_softirq(void)
- 			return false;
- 	}
+diff --git a/arch/loongarch/include/uapi/asm/ptrace.h b/arch/loongarch/include/uapi/asm/ptrace.h
+index aafb3cd9e943e..215e0f9e8aa32 100644
+--- a/arch/loongarch/include/uapi/asm/ptrace.h
++++ b/arch/loongarch/include/uapi/asm/ptrace.h
+@@ -10,10 +10,6 @@
  
--	if (ratelimit >= 10)
--		return false;
+ #include <linux/types.h>
+ 
+-#ifndef __KERNEL__
+-#include <stdint.h>
+-#endif
 -
- 	/* On RT, softirq handling may be waiting on some lock */
- 	if (local_bh_blocked())
- 		return false;
+ /*
+  * For PTRACE_{POKE,PEEK}USR. 0 - 31 are GPRs,
+  * 32 is syscall's original ARG0, 33 is PC, 34 is BADVADDR.
+@@ -41,44 +37,44 @@ struct user_pt_regs {
+ } __attribute__((aligned(8)));
  
--	pr_warn("NOHZ tick-stop error: local softirq work is pending, handler #%02x!!!\n",
--		pending);
--	ratelimit++;
-+	if (ratelimit < 10) {
-+		pr_warn("NOHZ tick-stop error: local softirq work is pending, handler #%02x!!!\n",
-+			pending);
-+		ratelimit++;
-+	}
+ struct user_fp_state {
+-	uint64_t fpr[32];
+-	uint64_t fcc;
+-	uint32_t fcsr;
++	__u64 fpr[32];
++	__u64 fcc;
++	__u32 fcsr;
+ };
  
- 	return true;
- }
+ struct user_lsx_state {
+ 	/* 32 registers, 128 bits width per register. */
+-	uint64_t vregs[32*2];
++	__u64 vregs[32*2];
+ };
+ 
+ struct user_lasx_state {
+ 	/* 32 registers, 256 bits width per register. */
+-	uint64_t vregs[32*4];
++	__u64 vregs[32*4];
+ };
+ 
+ struct user_lbt_state {
+-	uint64_t scr[4];
+-	uint32_t eflags;
+-	uint32_t ftop;
++	__u64 scr[4];
++	__u32 eflags;
++	__u32 ftop;
+ };
+ 
+ struct user_watch_state {
+-	uint64_t dbg_info;
++	__u64 dbg_info;
+ 	struct {
+-		uint64_t    addr;
+-		uint64_t    mask;
+-		uint32_t    ctrl;
+-		uint32_t    pad;
++		__u64    addr;
++		__u64    mask;
++		__u32    ctrl;
++		__u32    pad;
+ 	} dbg_regs[8];
+ };
+ 
+ struct user_watch_state_v2 {
+-	uint64_t dbg_info;
++	__u64 dbg_info;
+ 	struct {
+-		uint64_t    addr;
+-		uint64_t    mask;
+-		uint32_t    ctrl;
+-		uint32_t    pad;
++		__u64    addr;
++		__u64    mask;
++		__u32    ctrl;
++		__u32    pad;
+ 	} dbg_regs[14];
+ };
+ 
 -- 
 2.51.0
 
