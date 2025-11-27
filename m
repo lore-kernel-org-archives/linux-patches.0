@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDAF928CF42;
-	Thu, 27 Nov 2025 15:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98972882A7;
+	Thu, 27 Nov 2025 15:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255777; cv=none; b=JR3PhS7JxXhdeAQHiIPgCF7KYyzlGt3EjZKa/aZXh96WeUaC0cl5+VFRw3iHPGMxGMoEB9YhEp22wEnlfG7yI6Ej5td4Scb9U8po/m8yTwUKsMmB5fHtLfu1zSCvvRlqiZl+6JBT3PgBQPtLVGYGvYClTBfW6IeacqLdgwzqTpw=
+	t=1764255779; cv=none; b=CRlfFpUT2ejY/tfO88dsJejP3lo3d5o6J+VBwB7PUcz/NlAag6/O8qmEhhjizQoP1YoOj1JSq1BEtV2vpDXIeNbLCdqEiph7Nq5U857s6RcVh5UKEvTrcc8W+B0u4TNmH0sUwDuoS3baG+xXoUhvoSCik8FvlSmJugCHaeSx4J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255777; c=relaxed/simple;
-	bh=exdR06JmgNPUP9hYw2sVNAizqblQsGDP03UMrv3PIk0=;
+	s=arc-20240116; t=1764255779; c=relaxed/simple;
+	bh=37KV0j7aGOwco2m4bEsFO2inW0f7osP5PyfncTzZtd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hC8PW9J1R/hlCIUZNuRHZZ3nndufF7CW0maenjaJCgY2+zfiMOemJ0opZCbeMnA45zlem0n8+dVIH3hLqOH8vM4J4/QVdMIS3ForlYsnIK7xUWzJjkEAI9m79oRzQr/ZeSYbDrg9O23kgbY2MlmbmhTs1PkXdTB1/hI60VMPy5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glN9Ss1V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=reG0WG/Ccutj11GbKRTMQwJ7r+plwuiFFF9DjhA9tVDR6je603tYRuBGSqC9TEKcWkkcCQW0vx0/fuzp8+o1BI92vuUi0KG4LQESuAKc6yqdK2RQVKvEUfXyVdUwG2G5Rb/DwgJAxGbqaRZ4KNqVaxLvs4OQtSDS6UPTC9UncBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=weikM2Hu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glN9Ss1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68B85C4CEF8;
-	Thu, 27 Nov 2025 15:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="weikM2Hu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35268C113D0;
+	Thu, 27 Nov 2025 15:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255776;
-	bh=exdR06JmgNPUP9hYw2sVNAizqblQsGDP03UMrv3PIk0=;
+	s=korg; t=1764255779;
+	bh=37KV0j7aGOwco2m4bEsFO2inW0f7osP5PyfncTzZtd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glN9Ss1VUyy0rSt+U/5uW9IdJABQBb7g8AfCGy5SCMUiXHzEaPxmedIFJWVEF6TDV
-	 I0vpz+eA5V+ueLV01d8S2REqryA3YPA3M81/Xm758wMq87CevnXW8QRParXpILXkBS
-	 oueP1YnxAGhahLU0IvnBytvTr9nHFl/+5pMWAGlo=
+	b=weikM2HuyK8UWXtaEilcP3qFxsVXISoFd17PtkCvdxUekgI0gaf8zl8k7WyWHEOFL
+	 NYaNDhldIJZjGk02WqITkls49eSRebX5jlMpgH9Irudba9dK6HnEwLGugJItsMbDVA
+	 8HWTWMJBlPGK91caoQCP3AWIqGAEvHRRUzedQ3nk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 111/175] platform/x86: intel-uncore-freq: fix all header kernel-doc warnings
-Date: Thu, 27 Nov 2025 15:46:04 +0100
-Message-ID: <20251127144047.012431720@linuxfoundation.org>
+Subject: [PATCH 6.17 112/175] net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()
+Date: Thu, 27 Nov 2025 15:46:05 +0100
+Message-ID: <20251127144047.048444470@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -45,75 +45,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 
-[ Upstream commit db30233361f94e1a84450c607989bdb671100fb6 ]
+[ Upstream commit 896f1a2493b59beb2b5ccdf990503dbb16cb2256 ]
 
-In file uncore-frequency/uncore-frequency-common.h,
-correct all kernel-doc warnings by adding missing leading " *" to some
-lines, adding a missing kernel-doc entry, and fixing a name typo.
+The loops in 'qede_tpa_cont()' and 'qede_tpa_end()', iterate
+over 'cqe->len_list[]' using only a zero-length terminator as
+the stopping condition. If the terminator was missing or
+malformed, the loop could run past the end of the fixed-size array.
 
-Warning: uncore-frequency-common.h:50 bad line:
-   Storage for kobject attribute elc_low_threshold_percent
-Warning: uncore-frequency-common.h:52 bad line:
-   Storage for kobject attribute elc_high_threshold_percent
-Warning: uncore-frequency-common.h:54 bad line:
-   Storage for kobject attribute elc_high_threshold_enable
-Warning: uncore-frequency-common.h:92 struct member
- 'min_freq_khz_kobj_attr' not described in 'uncore_data'
-Warning: uncore-frequency-common.h:92 struct member
- 'die_id_kobj_attr' not described in 'uncore_data'
+Add an explicit bound check using ARRAY_SIZE() in both loops to prevent
+a potential out-of-bounds access.
 
-Fixes: 24b6616355f7 ("platform/x86/intel-uncore-freq: Add efficiency latency control to sysfs interface")
-Fixes: 416de0246f35 ("platform/x86: intel-uncore-freq: Fix types in sysfs callbacks")
-Fixes: 247b43fcd872 ("platform/x86/intel-uncore-freq: Add attributes to show die_id")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://patch.msgid.link/20251111060938.1998542-1-rdunlap@infradead.org
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 55482edc25f0 ("qede: Add slowpath/fastpath support and enable hardware GRO")
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+Link: https://patch.msgid.link/20251113112757.4166625-1-Pavel.Zhigulin@kaspersky.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86/intel/uncore-frequency/uncore-frequency-common.h | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_fp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
-index 70ae11519837e..0abe850ef54ea 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.h
-@@ -40,7 +40,7 @@
-  * @agent_type_mask:	Bit mask of all hardware agents for this domain
-  * @uncore_attr_group:	Attribute group storage
-  * @max_freq_khz_kobj_attr: Storage for kobject attribute max_freq_khz
-- * @mix_freq_khz_kobj_attr: Storage for kobject attribute min_freq_khz
-+ * @min_freq_khz_kobj_attr: Storage for kobject attribute min_freq_khz
-  * @initial_max_freq_khz_kobj_attr: Storage for kobject attribute initial_max_freq_khz
-  * @initial_min_freq_khz_kobj_attr: Storage for kobject attribute initial_min_freq_khz
-  * @current_freq_khz_kobj_attr: Storage for kobject attribute current_freq_khz
-@@ -48,13 +48,14 @@
-  * @fabric_cluster_id_kobj_attr: Storage for kobject attribute fabric_cluster_id
-  * @package_id_kobj_attr: Storage for kobject attribute package_id
-  * @elc_low_threshold_percent_kobj_attr:
--		Storage for kobject attribute elc_low_threshold_percent
-+ *		Storage for kobject attribute elc_low_threshold_percent
-  * @elc_high_threshold_percent_kobj_attr:
--		Storage for kobject attribute elc_high_threshold_percent
-+ *		Storage for kobject attribute elc_high_threshold_percent
-  * @elc_high_threshold_enable_kobj_attr:
--		Storage for kobject attribute elc_high_threshold_enable
-+ *		Storage for kobject attribute elc_high_threshold_enable
-  * @elc_floor_freq_khz_kobj_attr: Storage for kobject attribute elc_floor_freq_khz
-  * @agent_types_kobj_attr: Storage for kobject attribute agent_type
-+ * @die_id_kobj_attr:	Attribute storage for die_id information
-  * @uncore_attrs:	Attribute storage for group creation
-  *
-  * This structure is used to encapsulate all data related to uncore sysfs
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+index 847fa62c80df8..e338bfc8b7b2f 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+@@ -4,6 +4,7 @@
+  * Copyright (c) 2019-2020 Marvell International Ltd.
+  */
+ 
++#include <linux/array_size.h>
+ #include <linux/netdevice.h>
+ #include <linux/etherdevice.h>
+ #include <linux/skbuff.h>
+@@ -960,7 +961,7 @@ static inline void qede_tpa_cont(struct qede_dev *edev,
+ {
+ 	int i;
+ 
+-	for (i = 0; cqe->len_list[i]; i++)
++	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
+ 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
+ 				   le16_to_cpu(cqe->len_list[i]));
+ 
+@@ -985,7 +986,7 @@ static int qede_tpa_end(struct qede_dev *edev,
+ 		dma_unmap_page(rxq->dev, tpa_info->buffer.mapping,
+ 			       PAGE_SIZE, rxq->data_direction);
+ 
+-	for (i = 0; cqe->len_list[i]; i++)
++	for (i = 0; cqe->len_list[i] && i < ARRAY_SIZE(cqe->len_list); i++)
+ 		qede_fill_frag_skb(edev, rxq, cqe->tpa_agg_index,
+ 				   le16_to_cpu(cqe->len_list[i]));
+ 	if (unlikely(i > 1))
 -- 
 2.51.0
 
