@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC9231281E;
-	Thu, 27 Nov 2025 14:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA65F28D8E8;
+	Thu, 27 Nov 2025 14:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764255483; cv=none; b=Cp34WD85IiUmLj5oiZqyqAlN0gvMFW2OxV/Um00yV2tZODKXx8yBjIlG/mf1ErWdaH16fweXANadJBwtrITUGCzFhg7l2rrdApcuCjBu1VdwkAUl6m6DXs3ZFl9gAjm/aJmfvgZL+CZ7tQgJxZh0y8mCyUXzmtw8IpTr2kxCgW8=
+	t=1764255485; cv=none; b=GiHYdP2BdvhSuRU3Bz/Qmld+ZgyYptyTTFi1n6pdEptvD5LExqTya9+H9pwqcbEBBLfPOArXIUhP1EEOTdwwOTVsCQNGoPqZRWbhWYEPrbbXLxh4mbzsGrtcsdYMMhIr1Si+Xs0NsYmZPz7gHoxlvPjaEHPieI3rYUL78TBkTRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764255483; c=relaxed/simple;
-	bh=+6acFEMppyFaYD70vhZvY59hWBancP2gOFWsfZfhy08=;
+	s=arc-20240116; t=1764255485; c=relaxed/simple;
+	bh=sr+9PST12/JLU0Fa5wb1L3qfkHJzk1LqrdOXMROlxuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JaNiuRQ8WPG+kGBlkdGCP/ihizwHKuGczNH/Qiq61vI2/BpYUWUjtoXeFwjiwTTbZYvRAex8nfrgYRg5i+zRJX9sRyJC3Lkrmo5MkEsNOaYKiPkn1yWwHpLSZbx8SuOnFUSPb14bLHp4+hFXDKqgsmEJkG6E3qxCGoZMqBN3n/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEC5esPI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JxvGm/ieNKBS4L58ppyVLLk3d+XE4iNc2ph2gakkLnTj/G6hFpc5nt3IZuFYo2/mDkIhcYrUrCQrgpsHnTTEyD44KMOElqTvHMPyAcAELku6/CxBVHX8ztiIxsHjrRi5c0I0AlCjhzdyBsxuAbgGsYtNG0WqghlGQHjBWqNtHcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJCz41ZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEC5esPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB6DC4CEF8;
-	Thu, 27 Nov 2025 14:58:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJCz41ZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35191C4CEF8;
+	Thu, 27 Nov 2025 14:58:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764255482;
-	bh=+6acFEMppyFaYD70vhZvY59hWBancP2gOFWsfZfhy08=;
+	s=korg; t=1764255485;
+	bh=sr+9PST12/JLU0Fa5wb1L3qfkHJzk1LqrdOXMROlxuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEC5esPI1Ogf+oOATcHhzo9dCzeqL+MatfnBGX9NlLm3I7/W7QW1qYm0px4Oiab9J
-	 kUzz5cgoGYyeQ1MTVS27DvaGyQ7yaBcFBp2PZxPpMYaPYYoOIC6Yq1oSl+aPR1XOrb
-	 e+AZKc3NFn5hxJROmx2h7VwbD6Eo6aTfXHJoLyXc=
+	b=DJCz41ZVzuzCt2tImJm7W5h8aJS//Vy8qSgrWM6IdaQcJ912T5sw7nBKnAIHAPSlW
+	 QPrSKoFWMPE9OM4FFoimK7f5hQD+dcdTjeHYbf2ueHPkF9PIVXusWIq2qmEnaShD5H
+	 2uFamhJBgm9dlZ+NaN+OhaFDRYlvuQ24FqlwHr58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Ene <sebastianene@google.com>,
-	Will Deacon <will@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.17 001/175] KVM: arm64: Check the untrusted offset in FF-A memory share
-Date: Thu, 27 Nov 2025 15:44:14 +0100
-Message-ID: <20251127144043.003509470@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@cherry.de>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.17 010/175] arm64: dts: rockchip: disable HS400 on RK3588 Tiger
+Date: Thu, 27 Nov 2025 15:44:23 +0100
+Message-ID: <20251127144043.333267719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251127144042.945669935@linuxfoundation.org>
 References: <20251127144042.945669935@linuxfoundation.org>
@@ -51,48 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Ene <sebastianene@google.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-commit 103e17aac09cdd358133f9e00998b75d6c1f1518 upstream.
+commit baa18d577cd445145039e731d3de0fa49ca57204 upstream.
 
-Verify the offset to prevent OOB access in the hypervisor
-FF-A buffer in case an untrusted large enough value
-[U32_MAX - sizeof(struct ffa_composite_mem_region) + 1, U32_MAX]
-is set from the host kernel.
+We've had reports from the field that some RK3588 Tiger have random
+issues with eMMC errors.
 
-Signed-off-by: Sebastian Ene <sebastianene@google.com>
-Acked-by: Will Deacon <will@kernel.org>
-Link: https://patch.msgid.link/20251017075710.2605118-1-sebastianene@google.com
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Applying commit a28352cf2d2f ("mmc: sdhci-of-dwcmshc: Change
+DLL_STRBIN_TAPNUM_DEFAULT to 0x4") didn't help and seemed to have made
+things worse for our board.
+
+Our HW department checked the eMMC lines and reported that they are too
+long and don't look great so signal integrity is probably not the best.
+
+Note that not all Tigers with the same eMMC chip have errors, so the
+suspicion is that we're really on the edge in terms of signal integrity
+and only a handful devices are failing. Additionally, we have RK3588
+Jaguars with the same eMMC chip but the layout is different and we also
+haven't received reports about those so far.
+
+Lowering the max-frequency to 150MHz from 200MHz instead of simply
+disabling HS400 was briefly tested and seem to work as well. We've
+disabled HS400 downstream and haven't received reports since so we'll go
+with that instead of lowering the max-frequency.
+
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Fixes: 6173ef24b35b ("arm64: dts: rockchip: add RK3588-Q7 (Tiger) SoM")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251112-tiger-hs200-v1-1-b50adac107c0@cherry.de
+[added Fixes tag and stable-cc from 2nd mail]
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/ffa.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/arch/arm64/kvm/hyp/nvhe/ffa.c
-+++ b/arch/arm64/kvm/hyp/nvhe/ffa.c
-@@ -437,7 +437,7 @@ static void __do_ffa_mem_xfer(const u64
- 	struct ffa_mem_region_attributes *ep_mem_access;
- 	struct ffa_composite_mem_region *reg;
- 	struct ffa_mem_region *buf;
--	u32 offset, nr_ranges;
-+	u32 offset, nr_ranges, checked_offset;
- 	int ret = 0;
- 
- 	if (addr_mbz || npages_mbz || fraglen > len ||
-@@ -474,7 +474,12 @@ static void __do_ffa_mem_xfer(const u64
- 		goto out_unlock;
- 	}
- 
--	if (fraglen < offset + sizeof(struct ffa_composite_mem_region)) {
-+	if (check_add_overflow(offset, sizeof(struct ffa_composite_mem_region), &checked_offset)) {
-+		ret = FFA_RET_INVALID_PARAMETERS;
-+		goto out_unlock;
-+	}
-+
-+	if (fraglen < checked_offset) {
- 		ret = FFA_RET_INVALID_PARAMETERS;
- 		goto out_unlock;
- 	}
+--- a/arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3588-tiger.dtsi
+@@ -382,14 +382,12 @@
+ 	cap-mmc-highspeed;
+ 	mmc-ddr-1_8v;
+ 	mmc-hs200-1_8v;
+-	mmc-hs400-1_8v;
+-	mmc-hs400-enhanced-strobe;
+ 	mmc-pwrseq = <&emmc_pwrseq>;
+ 	no-sdio;
+ 	no-sd;
+ 	non-removable;
+ 	pinctrl-names = "default";
+-	pinctrl-0 = <&emmc_bus8 &emmc_cmd &emmc_clk &emmc_data_strobe>;
++	pinctrl-0 = <&emmc_bus8 &emmc_cmd &emmc_clk>;
+ 	vmmc-supply = <&vcc_3v3_s3>;
+ 	vqmmc-supply = <&vcc_1v8_s3>;
+ 	status = "okay";
 
 
