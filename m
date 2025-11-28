@@ -1,136 +1,112 @@
-Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105171C1F02
-	for <patches@lists.linux.dev>; Fri, 28 Nov 2025 02:15:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9B5126ED5A
+	for <patches@lists.linux.dev>; Fri, 28 Nov 2025 02:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764296134; cv=none; b=L0KqYUAtNwaIqBLY5AhpTnwO0mGT0qHRhVpgctNAy3hIXMI7VchDe5p82DnD6wEE1umvc4k0SeiMijprgIow8JrN9bh/SkukKzhjI+4RHuAEyLTb2+FeI2w15d8Z7YxmZG+8oKIyEqxGARdpaD37B+aMcyZohymFNsdt1goMLJY=
+	t=1764297021; cv=none; b=OxUbG8cBF7Ie+mI1PCrVtBr9cqBebtpbdDy8OjDCbv8/b+TQKJsCYkP0YuQ9ZGKczAgl2DtsOwJ5wGYli59Na3arVASWatVKi9Bk08qlAzhriFAydSmBCE9z4OFm8fy8bN/eFPjDdflkiGDvzeZeeODvzPQeyyiFKNo73lboU48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764296134; c=relaxed/simple;
-	bh=P0GotVY454jdlemJ9Mif9MFDl5LNzfmtxmyVX17ZbmE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NzntNuqWm4wajMAPyMWozplhHmpulp3igBDlTIo7MvfODUAL7/1sf0Sv+vKG+wZL/oBY3upfLHaTG5w8hKAABVJXbbTGbhKr+/x1ES37gsIV4CBUraHon+5pZZTBeKgfN6GtiOso6S+9N4Ck99Nl0mbJGeqrCIN1OLHagWG2Tv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMuBDl9W; arc=none smtp.client-ip=74.125.224.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMuBDl9W"
-Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-640e065991dso1083077d50.3
-        for <patches@lists.linux.dev>; Thu, 27 Nov 2025 18:15:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764296132; x=1764900932; darn=lists.linux.dev;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=t2CHLdpUp4Ssl7HkxIQWteLCgVD8+JnAniR+pC5eUNQ=;
-        b=XMuBDl9W8qv/Et1elD/+t8/CnoI5JRK/1r409Gnzy4/USv3OO/Y+9jJVXaL9tFR334
-         7ky7bXDB/mcKLidDWtrv1wieytgJFnrA6J0iSebNLO2oCzpymw84KgelvdtpICnqqynz
-         urIQ4jruBToKVTAsTsq2oZ8IXJOdsRel8wWWrj5ne0OSZPDpR5VtSM89WRrlSvZsVdvj
-         IFCaFRgs6In5+lfPITN3lJ6QUlWyvVzua03Beuz+l6EyYhnaQJ/+VL8J8xoUOE8CyuZ4
-         YRVmG+NMx/uqfJMzEEtCHTguVhwXET7QUQ7U7vU74Z22COYBgVi8siiyLmauOwb5rozK
-         4QCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764296132; x=1764900932;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=t2CHLdpUp4Ssl7HkxIQWteLCgVD8+JnAniR+pC5eUNQ=;
-        b=MlKKHSJAKOmQmDzoUTxW7rwDcHWa0klZonaDAYJlydj2daA5ofZ4OQuRYiu7+aqMiJ
-         nMrfC+JVGG3XOgHb2vHfZyoyvlY5+T3FKdfBZPzJ8dn7jx4THfXm9sRIfV9v6VbpiO4s
-         PDn9nc0KbZB5k0QU74PGfKG+KqXapRUmNVK18H3N+HmuXP/l4kYJ7jRRvPYuPMo+Q0iE
-         uNmDzrjdqhy7H6KeL7Yu6654oXtUZM6wDIhuJaOcbFP/OMWPteiaxrWs8w+OPgQ+gLsX
-         Ze3ySm7JgEwFuzv0RxRfxxxC+AxKwClmSEkNtp91oBd5PharTeOuridxADJ2+wMkoLCv
-         aOoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWobw5Elt/qMd9dY87z4Sd6MDP87XrqiGzgEkjtH9LjO9oJ6ZI4idLkVzoWjWi6J10+J9ULD4Q5@lists.linux.dev
-X-Gm-Message-State: AOJu0Yygeypx6jZPLZLDBtvLXieAmhcnF/aPhA2I5i3RKaDTp3UPQZeg
-	t9nifXK7ZgSnE8lYgmmBvvdfdbJfWk+hPdswTKD88tLtvSFrESsH6H8r
-X-Gm-Gg: ASbGnct1e6WRNHgMlE1DR77tyBnRf9Hymok2GOqtKWSBdvBeBhQQM/fCQHMphbbdl8h
-	8YoGTgotm5YINF4GiUq1GqucBayr/2FCy7UPxoXeDeoq5iRq84fJ6BcHRroYGhbwiydzZDiOLk1
-	z2BTV+d+/msFwnpKn4iwXui3sgocQ7WKUeQPJXhDHiOixaYZCXO/htsrAcpJAoWEUX/eUN8pq+P
-	EZ1qgHId56RIVeQmYbU/abYBc9px86+d1fSmBGEl2pD96D+zPGkCto7CjtvHm3c7EJlMsjg0bXj
-	hRXDrJNa3ozooUELSRJKttND831zJDxVJN6devdWCW59b7BLUOWWKlhgUcDR+/dtyZEXUYJRvUP
-	zAV9OqwVB726imvrCyBtiGvCQcJg4li7CdMEMFev6oeimm15WBkFa2WWkkzfWJmG9Sp9RlOQf2N
-	c5Vx5tdhg=
-X-Google-Smtp-Source: AGHT+IHnP7VicG6waOOzhu6TiR+B+K/9sG+saFcAMNFcFN/ea7k1BLVt9YbC7IMgWMjWFguUL7v5Qw==
-X-Received: by 2002:a53:d68d:0:b0:641:f5bc:6980 with SMTP id 956f58d0204a3-64302ae4ef2mr14870221d50.76.1764296131954;
-        Thu, 27 Nov 2025 18:15:31 -0800 (PST)
-Received: from localhost ([2601:346:0:79bd:59d3:fad0:b7e5:396a])
-        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6433c050814sm1065368d50.5.2025.11.27.18.15.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Nov 2025 18:15:31 -0800 (PST)
-Date: Thu, 27 Nov 2025 21:15:30 -0500
-From: Yury Norov <yury.norov@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alice Ryhl <aliceryhl@google.com>, Burak Emir <bqe@google.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: id_pool: fix broken intra-doc link
-Message-ID: <aSkFwsx-6Gu5Eu2a@yury>
-References: <20251127213340.180090-1-ojeda@kernel.org>
+	s=arc-20240116; t=1764297021; c=relaxed/simple;
+	bh=9MHeqYV9VOzRs27YXeCTC7voglS6naWACMdRGY2vIIA=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=QninnnabYNBYVXgq3V8RBTXHkXHF5flZINYcN9PxRk46wrcjA+lBvyP2+zjj3yzXNFuXO0+B3R7HxyVoznqBPUhnE7R77Xn3hzhJEvUq7lW5hBoKP79J9+SGoIsrXfKcPZq/83SkTazYsIVkWDrovwTvWNHlP0FAxU4ByKR5bXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.219])
+	by gateway (Coremail) with SMTP id _____8CxK9I1CSlp5_QoAA--.20106S3;
+	Fri, 28 Nov 2025 10:30:14 +0800 (CST)
+Received: from chenhuacai$loongson.cn ( [223.64.68.219] ) by
+ ajax-webmail-front1 (Coremail) ; Fri, 28 Nov 2025 10:30:12 +0800
+ (GMT+08:00)
+Date: Fri, 28 Nov 2025 10:30:12 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6ZmI5Y2O5omN?= <chenhuacai@loongson.cn>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	"Jiaxun Yang" <jiaxun.yang@flygoat.com>
+Subject: Re: [PATCH 6.17 051/175] LoongArch: Dont panic if no valid cache
+ info for PCI
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
+ 20250609(354f7833) Copyright (c) 2002-2025 www.mailtech.cn loongson
+In-Reply-To: <20251127144044.829793395@linuxfoundation.org>
+References: <20251127144042.945669935@linuxfoundation.org>
+ <20251127144044.829793395@linuxfoundation.org>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: B2Pk7mZvb3Rlcl90eHQ9MTY4MDo2MTg=
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251127213340.180090-1-ojeda@kernel.org>
+Message-ID: <7d60571e.2cac5.19ac84bf531.Coremail.chenhuacai@loongson.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:qMiowJCx78M0CSlpg51BAQ--.25804W
+X-CM-SenderInfo: hfkh0x5xdftxo6or00hjvr0hdfq/1tbiAQETBmkn6DAKrwABsn
+X-Coremail-Antispam: 1Uk129KBj93XoW7ZFWkXw1kGrykKw4kJF48Xwc_yoW8Cr4Dpr
+	ZxC3WfWr4rAr1xCw1DA3409r1rWrWkGFnFvayYk348C3yDZw18tFyfX34rZFyUZ34rGr4x
+	uFsxKwn2kF45JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUBFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+	8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+	xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IYc2Ij64vIr41lFcxC0VAYjxAxZF
+	0Ew4CEw7xC0wACY4xI67k04243AVC20s07MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCj
+	c4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4
+	CE17CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1x
+	MIIF0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF
+	4lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JwCE64xv
+	F2IEb7IF0Fy7YxBIdaVFxhVjvjDU0xZFpf9x07UiF4iUUUUU=
 
-On Thu, Nov 27, 2025 at 10:33:40PM +0100, Miguel Ojeda wrote:
-> `rustdoc` detects a broken intra-doc link:
-> 
->     error: unresolved link to `BitmapVec::NO_ALLOC_MAX_LEN`
->        --> rust/kernel/id_pool.rs:100:31
->         |
->     100 |     /// [`NO_ALLOC_MAX_LEN`]: BitmapVec::NO_ALLOC_MAX_LEN
->         |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the struct `BitmapVec` has no field or associated item named `NO_ALLOC_MAX_LEN`
->         |
->         = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
->         = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
-> 
-> Thus fix it.
-> 
-> It was a missed rename in v5 of the patch series adding this [1].
-> 
-> Fixes: feb3fdf1239a ("rust: id_pool: do not supply starting capacity")
-> Link: https://lore.kernel.org/all/20251112-binder-bitmap-v5-0-8b9d7c7eca82@google.com/ [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
-> I saw this in next-20251127.
-> 
-> I think using [`BitmapVec::MAX_INLINE_LEN`] is clearer in general,
-> especially for things in other modules, but I kept the same style as
-> other links in the file.
- 
-Thanks, added it on top of Alice's series. 
+SGksR3JlZywKCgo+IC0tLS0t5Y6f5aeL6YKu5Lu2LS0tLS0KPiDlj5Hku7bkuro6ICJHcmVnIEty
+b2FoLUhhcnRtYW4iIDxncmVna2hAbGludXhmb3VuZGF0aW9uLm9yZz4KPiDlj5HpgIHml7bpl7Q6
+MjAyNS0xMS0yNyAyMjo0NTowNCAo5pif5pyf5ZubKQo+IOaUtuS7tuS6ujogc3RhYmxlQHZnZXIu
+a2VybmVsLm9yZwo+IOaKhOmAgTogIkdyZWcgS3JvYWgtSGFydG1hbiIgPGdyZWdraEBsaW51eGZv
+dW5kYXRpb24ub3JnPiwgcGF0Y2hlc0BsaXN0cy5saW51eC5kZXYsICJKaWF4dW4gWWFuZyIgPGpp
+YXh1bi55YW5nQGZseWdvYXQuY29tPiwgIkh1YWNhaSBDaGVuIiA8Y2hlbmh1YWNhaUBsb29uZ3Nv
+bi5jbj4KPiDkuLvpopg6IFtQQVRDSCA2LjE3IDA1MS8xNzVdIExvb25nQXJjaDogRG9udCBwYW5p
+YyBpZiBubyB2YWxpZCBjYWNoZSBpbmZvIGZvciBQQ0kKV2h5IERvbid0IGJlY2FtZSBEb250IHdo
+ZW4gYmFja3BvcnQgdGhpcyBwYXRjaCB0byBzdGFibGUgYnJhbmNocz8KCkh1YWNhaQoKPiAKPiA2
+LjE3LXN0YWJsZSByZXZpZXcgcGF0Y2guICBJZiBhbnlvbmUgaGFzIGFueSBvYmplY3Rpb25zLCBw
+bGVhc2UgbGV0IG1lIGtub3cuCj4gCj4gLS0tLS0tLS0tLS0tLS0tLS0tCj4gCj4gRnJvbTogSHVh
+Y2FpIENoZW4gPGNoZW5odWFjYWlAbG9vbmdzb24uY24+Cj4gCj4gY29tbWl0IGE2YjUzM2FkZmMw
+NWJhMTUzNjA2MzFlMDE5ZDNlMTgyNzUwODAyNzUgdXBzdHJlYW0uCj4gCj4gSWYgdGhlcmUgaXMg
+bm8gdmFsaWQgY2FjaGUgaW5mbyBkZXRlY3RlZCAobWF5IGhhcHBlbiBpbiB2aXJ0dWFsIG1hY2hp
+bmUpCj4gZm9yIHBjaV9kZmxfY2FjaGVfbGluZV9zaXplLCBrZXJuZWwgc2hvdWxkbid0IHBhbmlj
+LiBCZWNhdXNlIGluIHRoZSBQQ0kKPiBjb3JlIGl0IHdpbGwgYmUgZXZhbHVhdGVkIHRvIChMMV9D
+QUNIRV9CWVRFUyA+PiAyKS4KPiAKPiBDYzogPHN0YWJsZUB2Z2VyLmtlcm5lbC5vcmc+Cj4gU2ln
+bmVkLW9mZi1ieTogSmlheHVuIFlhbmcgPGppYXh1bi55YW5nQGZseWdvYXQuY29tPgo+IFNpZ25l
+ZC1vZmYtYnk6IEh1YWNhaSBDaGVuIDxjaGVuaHVhY2FpQGxvb25nc29uLmNuPgo+IFNpZ25lZC1v
+ZmYtYnk6IEdyZWcgS3JvYWgtSGFydG1hbiA8Z3JlZ2toQGxpbnV4Zm91bmRhdGlvbi5vcmc+Cj4g
+LS0tCj4gIGFyY2gvbG9vbmdhcmNoL3BjaS9wY2kuYyB8ICAgIDggKysrKy0tLS0KPiAgMSBmaWxl
+IGNoYW5nZWQsIDQgaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkKPiAKPiAtLS0gYS9hcmNo
+L2xvb25nYXJjaC9wY2kvcGNpLmMKPiArKysgYi9hcmNoL2xvb25nYXJjaC9wY2kvcGNpLmMKPiBA
+QCAtNTAsMTEgKzUwLDExIEBAIHN0YXRpYyBpbnQgX19pbml0IHBjaWJpb3NfaW5pdCh2b2lkKQo+
+ICAJICovCj4gIAlsc2l6ZSA9IGNwdV9sYXN0X2xldmVsX2NhY2hlX2xpbmVfc2l6ZSgpOwo+ICAK
+PiAtCUJVR19PTighbHNpemUpOwo+ICsJaWYgKGxzaXplKSB7Cj4gKwkJcGNpX2RmbF9jYWNoZV9s
+aW5lX3NpemUgPSBsc2l6ZSA+PiAyOwo+ICAKPiAtCXBjaV9kZmxfY2FjaGVfbGluZV9zaXplID0g
+bHNpemUgPj4gMjsKPiAtCj4gLQlwcl9kZWJ1ZygiUENJOiBwY2lfY2FjaGVfbGluZV9zaXplIHNl
+dCB0byAlZCBieXRlc1xuIiwgbHNpemUpOwo+ICsJCXByX2RlYnVnKCJQQ0k6IHBjaV9jYWNoZV9s
+aW5lX3NpemUgc2V0IHRvICVkIGJ5dGVzXG4iLCBsc2l6ZSk7Cj4gKwl9Cj4gIAo+ICAJcmV0dXJu
+IDA7Cj4gIH0KPiAKDQoNCuacrOmCruS7tuWPiuWFtumZhOS7tuWQq+aciem+meiKr+S4reenkeea
+hOWVhuS4muenmOWvhuS/oeaBr++8jOS7hemZkOS6juWPkemAgee7meS4iumdouWcsOWdgOS4reWI
+l+WHuueahOS4quS6uuaIlue+pOe7hOOAguemgeatouS7u+S9leWFtuS7luS6uuS7peS7u+S9leW9
+ouW8j+S9v+eUqO+8iOWMheaLrOS9huS4jemZkOS6juWFqOmDqOaIlumDqOWIhuWcsOazhOmcsuOA
+geWkjeWItuaIluaVo+WPke+8ieacrOmCruS7tuWPiuWFtumZhOS7tuS4reeahOS/oeaBr+OAguWm
+guaenOaCqOmUmeaUtuacrOmCruS7tu+8jOivt+aCqOeri+WNs+eUteivneaIlumCruS7tumAmuef
+peWPkeS7tuS6uuW5tuWIoOmZpOacrOmCruS7tuOAgiANClRoaXMgZW1haWwgYW5kIGl0cyBhdHRh
+Y2htZW50cyBjb250YWluIGNvbmZpZGVudGlhbCBpbmZvcm1hdGlvbiBmcm9tIExvb25nc29uIFRl
+Y2hub2xvZ3kgLCB3aGljaCBpcyBpbnRlbmRlZCBvbmx5IGZvciB0aGUgcGVyc29uIG9yIGVudGl0
+eSB3aG9zZSBhZGRyZXNzIGlzIGxpc3RlZCBhYm92ZS4gQW55IHVzZSBvZiB0aGUgaW5mb3JtYXRp
+b24gY29udGFpbmVkIGhlcmVpbiBpbiBhbnkgd2F5IChpbmNsdWRpbmcsIGJ1dCBub3QgbGltaXRl
+ZCB0bywgdG90YWwgb3IgcGFydGlhbCBkaXNjbG9zdXJlLCByZXByb2R1Y3Rpb24gb3IgZGlzc2Vt
+aW5hdGlvbikgYnkgcGVyc29ucyBvdGhlciB0aGFuIHRoZSBpbnRlbmRlZCByZWNpcGllbnQocykg
+aXMgcHJvaGliaXRlZC4gSWYgeW91IHJlY2VpdmUgdGhpcyBlbWFpbCBpbiBlcnJvciwgcGxlYXNl
+IG5vdGlmeSB0aGUgc2VuZGVyIGJ5IHBob25lIG9yIGVtYWlsIGltbWVkaWF0ZWx5IGFuZCBkZWxl
+dGUgaXQuIA0KDQoNCg==
 
->  rust/kernel/id_pool.rs | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/rust/kernel/id_pool.rs b/rust/kernel/id_pool.rs
-> index a4c37d6a0971..73a952d7dd83 100644
-> --- a/rust/kernel/id_pool.rs
-> +++ b/rust/kernel/id_pool.rs
-> @@ -95,9 +95,9 @@ pub fn realloc(&self, flags: Flags) -> Result<PoolResizer, AllocError> {
->  impl IdPool {
->      /// Constructs a new [`IdPool`].
->      ///
-> -    /// The pool will have a capacity of [`NO_ALLOC_MAX_LEN`].
-> +    /// The pool will have a capacity of [`MAX_INLINE_LEN`].
->      ///
-> -    /// [`NO_ALLOC_MAX_LEN`]: BitmapVec::NO_ALLOC_MAX_LEN
-> +    /// [`MAX_INLINE_LEN`]: BitmapVec::MAX_INLINE_LEN
->      #[inline]
->      pub fn new() -> Self {
->          Self {
-> 
-> base-commit: a322638c15a678168aeb8dc11c8760f8a053124d
-> --
-> 2.52.0
