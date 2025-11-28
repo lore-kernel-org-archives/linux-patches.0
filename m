@@ -1,50 +1,50 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9282D5436;
-	Fri, 28 Nov 2025 06:58:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304EF1C861A;
+	Fri, 28 Nov 2025 07:08:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764313108; cv=none; b=fMDXttPLVmGtUa3cT0g5QxMVP/sv9sVS/+ZYs4kBCKOkv+CZiTVR+SbAGJUr5rNVHyUVp/OXjaARAPuTeXloJVN5PoE2HRVn7vCzhRca30K69GrP+sW3U+jFllVquB0MRIeXbUjB3zcdlRhCZLmoghhxxxaZVmYhAiynjDFekhg=
+	t=1764313684; cv=none; b=tJUrN2t9SjuGS88e+wJ/+8rTlfG0fP8AAdZGeUzXeKbFmH2mctneBSzjXrcOci3TCU8sqdxXLRlpinbET+cFWT6EEAFV37nbEx1z/csuwqvE39xsSR7payqd7mqwAzNJbMFZeaJf6Nsw7GBXhfTzsfGs35IKFIPACwwsyuLMceA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764313108; c=relaxed/simple;
-	bh=sOuAjBvEgm/R9Etp027UJr6YaJe4Wv2+KJf3XpIHqGQ=;
+	s=arc-20240116; t=1764313684; c=relaxed/simple;
+	bh=T++g3m6cPjDTLLJerjU2fxFPb0a86ksGFOPVw8xZ8X4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LJtPruSyW7ef81gCZmstDWU7XUijmnqwDyRmK1pbAhmlqA1HXiwMwNYH9VXBFOPhC+dSlFKaFxnopJzGhFNni41qztgi6ADUIdkIaghvzCi/jet3NrNvUBfXmpmvRAgYwCiLXtXMR8pdPWx6R23ityDXAr7oyb5enS1y0U8CNhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SlDEIyPq; arc=none smtp.client-ip=192.198.163.13
+	 In-Reply-To:Content-Type; b=QGiCIDsnEy1XtoDN80v9mEyOiSrpDWJGSjPUqx21qngwnYvuQcWUwQ8fLpeq5syohQFSZf9ADKSF3KKJoXz2wI0ukd3WdAkbSElRq3uzZyFjIykwOxKEIVpFuz6SdfjODTZ54o2LfFu7EC5gGRXG4HxV6r/NySaUnZPED+zZM2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hO8mmT7N; arc=none smtp.client-ip=192.198.163.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SlDEIyPq"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hO8mmT7N"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764313106; x=1795849106;
+  t=1764313682; x=1795849682;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=sOuAjBvEgm/R9Etp027UJr6YaJe4Wv2+KJf3XpIHqGQ=;
-  b=SlDEIyPqM1bRK53WsORZk/v4yqQpgR0jc7xxVgEQGmyD0lgZMkQaMRaq
-   NXU9iaZee1hffENeVSxnbdjtmG0c46IAVdYVOSTleQOb8Y453hW3UyHCw
-   hcc8mjLUk3jpjGTbYHYWhLJH5ys8kV8lC4eWHHfLU85ZBexbuYsXmSBg/
-   3bvY4Sv1GHxAZZ/pRJqzm291BzbuO/yTZkKaKLEqbSey62DgL6ZGDP6aq
-   qzroNGSj7VBx97aLab27zP6JfmvmjwhZCOwloUw8wh4GvULLRtTIVjWvY
-   C4qLMpkAgQvrbuFNDb1a6UYdT90o6jkZrYZgxxj1KG18R5TvalKmVJyYX
-   w==;
-X-CSE-ConnectionGUID: jH4quBIOSLGW5ml8NQyZTw==
-X-CSE-MsgGUID: sy44GNHuTvGjHQF8rgx7yA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="68939094"
+  bh=T++g3m6cPjDTLLJerjU2fxFPb0a86ksGFOPVw8xZ8X4=;
+  b=hO8mmT7N/oqANEd0JEqMYdvLf0nZqDcXPLvZdV6urQxiSPR65MxEc0ny
+   +39FzTLixBP/OhnW5b+Qq/sWpPTU/dLE5hIiwgwTu7wMg1g/IkR/2K/rs
+   6h7+q9CXhbhgVX71Yq3Zt4nlQ7Cfo/iYwrx/lxiCzLk6PASoaBn1TnC50
+   lXiFsIRxREqyUIby3bjDUvhaNlpNfsnwZzygthjVjv0o6xKLlvLcEztjs
+   2JpPdi8NuTS4dxG4DoXfqoT7GH4mbK42w+ZirpxCXkJwvVQ1PTk8HhZth
+   LUGfa6pPCJ4sjpI+xEreC86ZDJspcy2UZV9Fn9n3mr+CQ/tnU2W6k7aVr
+   g==;
+X-CSE-ConnectionGUID: edB094FRRpaIJiRB9B4HyA==
+X-CSE-MsgGUID: dmDVq5CjTI2VFXTnA6r2nA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11626"; a="66244270"
 X-IronPort-AV: E=Sophos;i="6.20,232,1758610800"; 
-   d="scan'208";a="68939094"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 22:58:25 -0800
-X-CSE-ConnectionGUID: PXe3CtMMR5CngCGRc0aSyw==
-X-CSE-MsgGUID: 5VWY8tG7Q8et75D76qXCdw==
+   d="scan'208";a="66244270"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 23:08:01 -0800
+X-CSE-ConnectionGUID: X18cSd4xRdCZENDubEt2Aw==
+X-CSE-MsgGUID: mxiQin66QQasQJgfm0lNkw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,232,1758610800"; 
-   d="scan'208";a="193839300"
+   d="scan'208";a="230676120"
 Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 22:58:23 -0800
-Message-ID: <c583ed29-34a0-4ab2-bd2c-2fa94ea1a647@linux.intel.com>
-Date: Fri, 28 Nov 2025 14:54:04 +0800
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Nov 2025 23:07:57 -0800
+Message-ID: <d225d060-c9e5-4e65-a695-b565802dd76f@linux.intel.com>
+Date: Fri, 28 Nov 2025 15:03:35 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,8 +52,8 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] iommupt/vtd: Allow VT-d to have a larger table top
- than the vasz requires
+Subject: Re: [PATCH 2/2] iommupt/vtd: Support mgaw's less than a 4 level walk
+ for first stage
 To: Jason Gunthorpe <jgg@nvidia.com>, David Woodhouse <dwmw2@infradead.org>,
  iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
  Robin Murphy <robin.murphy@arm.com>,
@@ -63,32 +63,22 @@ Cc: Calvin Owens <calvin@wbinvd.org>,
  Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
  Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>,
  patches@lists.linux.dev, Tina Zhang <tina.zhang@intel.com>
-References: <1-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
+References: <2-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
 Content-Language: en-US
 From: Baolu Lu <baolu.lu@linux.intel.com>
-In-Reply-To: <1-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
+In-Reply-To: <2-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 11/28/25 07:54, Jason Gunthorpe wrote:
-> VT-d second stage HW specifies both the maximum IOVA and the supported
-> table walk starting points. Weirdly there is HW that only supports a 4
-> level walk but has a maximum IOVA that only needs 3.
+> If the IOVA is limited to less than 48 the page table will be constructed
+> with a 3 level configuration which is unsupported by hardware.
 > 
-> The current code miscalculates this and creates a wrongly sized page table
-> which ultimately fails the compatability check for number of levels.
-
-s/compatability/compatibility/
-
+> Like the second stage the caller needs to pass in both the top_level an
+> the vasz to specify a table that has more levels than required to hold the
+> IOVA range.
 > 
-> This is fixed by allowing the page table to be created with both a vasz
-> and top_level input. The vasz will set the aperture for the domain while
-> the top_level will set the page table geometry.
-> 
-> Add top_level to vtdss and correct the logic in VT-d to generate the right
-> top_level and vasz from mgaw and sagaw.
-> 
-> Fixes: d373449d8e97 ("iommu/vt-d: Use the generic iommu page table")
+> Fixes: 6cbc09b7719e ("iommu/vt-d: Restore previousdomain::aperture_end calculation")
 > Reported-by: Calvin Owens<calvin@wbinvd.org>
 > Closes:https://lore.kernel.org/ 
 > r/8f257d2651eb8a4358fcbd47b0145002e5f1d638.1764237717.git.calvin@wbinvd.org
