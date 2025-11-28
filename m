@@ -1,115 +1,160 @@
-Received: from omta033.useast.a.cloudfilter.net (omta033.useast.a.cloudfilter.net [44.202.169.32])
+Received: from canpmsgout12.his.huawei.com (canpmsgout12.his.huawei.com [113.46.200.227])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6AF2F066B
-	for <patches@lists.linux.dev>; Fri, 28 Nov 2025 08:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9E2F1FD3;
+	Fri, 28 Nov 2025 08:52:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764319515; cv=none; b=ou0WuAapf4c4srv2r8AvF5rUyzbQ8NvrRViMkz2W8X8LBG6u+IrInX8zsuI29WOATtodC1aalUhTiJ3WGIMcfyF+nJfYBrwbUxh3qjZ8Z69ulr8wwLPeAntAxio8HFny6JCV39QbfPXEm/MhipUaJyKSv5O9xL7H+XhrvcI2Vjo=
+	t=1764319980; cv=none; b=CKWRs5MS1qOYqx4fD71BZPU8HkliiSsHKtJRxkWHqhQzEIae9TmCCbJ7N12zYuC6KbZOv4Ml4p8HUK1S3lrGwY76NlMkO4ae52O5dB+kjWZbu+xtIna+P4ebAm74g81RIikLzF2cpNTbY7zC9D3EGMlO9SRVUyIdReRn79Gp0TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764319515; c=relaxed/simple;
-	bh=+j0e/WCBshMYmQSKu4O199173Z3gNv3q9J2QmF7yevU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bbZqoG5cUTT3NZYi7EAwn9ddnfr/f1emRAadGfxLG24m3P+eOieew4758Yns76G6JgFUpy0/BoIm5ApOdMzPqqoXenubIXvVSzvVpTt7cmwLGFXvvf36URidifALc46tKScw/utt9tgT58/G7kRhCpMw5xbXuhGe4vwnQgMDK+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=KGGtJBco; arc=none smtp.client-ip=44.202.169.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	s=arc-20240116; t=1764319980; c=relaxed/simple;
+	bh=tcJnmG/0N41wLsikN8n+boY/xzfoXWe6sikUsFin6M8=;
+	h=Subject:To:CC:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=Bz8xEGWMjFc39w4LF4u40kvH4jAfIS95w7ugBJhUbdxoEFIyE04fm66xsnwcOo7GHpLkRp9UZUZ206jzvkRsYbCDmSWNyRrF7ob/K77wuCqpLoGM0BS+qYngtbsSoOKOh5T4GAVARNJFaRM0TIw9wC0hq8AjlMRGaiDuBXNRCkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=SCrmvzLM; arc=none smtp.client-ip=113.46.200.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="KGGtJBco"
-Received: from eig-obgw-5002b.ext.cloudfilter.net ([10.0.29.226])
-	by cmsmtp with ESMTPS
-	id OsRyvxip2qgL9Ou4lvdG5P; Fri, 28 Nov 2025 08:43:35 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id Ou4kvpWNjw44vOu4kvpma3; Fri, 28 Nov 2025 08:43:34 +0000
-X-Authority-Analysis: v=2.4 cv=ePITjGp1 c=1 sm=1 tr=0 ts=692960b6
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=6UeiqGixMTsA:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=XxOI6gUC3NoPyDhgGR0A:9 a=QEXdDO2ut3YA:10
- a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=/TBLF27EBlg4t0LaJnz/wHexiCU7d06ZKH84BgkFnCQ=; b=KGGtJBcoiX020mSMSiIZDMa89Q
-	xGTsiGBBw/l4uk1dMJm5O54ksUeeVYj5fUqXyTpkwcuhAOiYqOJ9t1pXpLqo7szl3JopgTXtOSlm/
-	ZFfTvRvOjW5sYb8GAl+mxfVdpkTa5JAUd++pNeWuB2WVB6LOQb8nBLN+6bUeEYZkxE6c+BwVEmYTj
-	K8jN40Vxlla43FqhXpWPSn80jsCPlUrLlABnlssZETLm0gwj3H98NR0wM3k+0FaPo87+KFFwHsPbx
-	YBe9EVS5lOM1Now39rEtYuzTcUfc5mNAhpDrWvHc1OFEICg7+m9ibel1vIdnY3RNSy6SMB46zyOD3
-	KaWzYzQQ==;
-Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:51158 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1vOu4j-00000001lKd-3pdF;
-	Fri, 28 Nov 2025 01:43:33 -0700
-Message-ID: <43e84023-7736-4d2b-ba69-65df77175168@w6rz.net>
-Date: Fri, 28 Nov 2025 00:43:32 -0800
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="SCrmvzLM"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=ayeORpzjOdSu5Dq1+NuiLmYPQmPfa5NTJ2zt1jOYWc0=;
+	b=SCrmvzLMmh6Hd3DbJ/bqPri2/8mw7SfJDmO30i3bxLYDUfybVvkPFlzScb2MrwDTA6IWJSRe0
+	BjeVqsKYP1cC+EJXe43rfWBYkvZkMo7W3WUoLgDNT2q7hJ/JmNpgA0fH/VdXxsex6QKEJjVTrgJ
+	3qtEaJqxro70/djqoli5NKU=
+Received: from mail.maildlp.com (unknown [172.19.163.44])
+	by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4dHn7T5BYYznTY7;
+	Fri, 28 Nov 2025 16:50:29 +0800 (CST)
+Received: from dggpemf500015.china.huawei.com (unknown [7.185.36.143])
+	by mail.maildlp.com (Postfix) with ESMTPS id 0AB451401F4;
+	Fri, 28 Nov 2025 16:52:54 +0800 (CST)
+Received: from [10.67.121.110] (10.67.121.110) by
+ dggpemf500015.china.huawei.com (7.185.36.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 28 Nov 2025 16:52:51 +0800
+Subject: Re: [PATCH v2 02/22] vfio/hisi: Convert to the get_region_info op
+To: Alex Williamson <alex@shazbot.org>
+CC: Jason Gunthorpe <jgg@nvidia.com>, Alexander Gordeev
+	<agordeev@linux.ibm.com>, David Airlie <airlied@gmail.com>, Alex Williamson
+	<alex.williamson@redhat.com>, Ankit Agrawal <ankita@nvidia.com>, Christian
+ Borntraeger <borntraeger@linux.ibm.com>, Brett Creeley
+	<brett.creeley@amd.com>, <dri-devel@lists.freedesktop.org>, Eric Auger
+	<eric.auger@redhat.com>, Eric Farman <farman@linux.ibm.com>, Giovanni Cabiddu
+	<giovanni.cabiddu@intel.com>, Vasily Gorbik <gor@linux.ibm.com>, Heiko
+ Carstens <hca@linux.ibm.com>, <intel-gfx@lists.freedesktop.org>, Jani Nikula
+	<jani.nikula@linux.intel.com>, Joonas Lahtinen
+	<joonas.lahtinen@linux.intel.com>, <kvm@vger.kernel.org>, Kirti Wankhede
+	<kwankhede@nvidia.com>, <linux-s390@vger.kernel.org>, Matthew Rosato
+	<mjrosato@linux.ibm.com>, Nikhil Agarwal <nikhil.agarwal@amd.com>, Nipun
+ Gupta <nipun.gupta@amd.com>, Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Halil Pasic <pasic@linux.ibm.com>, <qat-linux@intel.com>, Rodrigo Vivi
+	<rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>, Shameer Kolothum
+	<skolothumtho@nvidia.com>, Sven Schnelle <svens@linux.ibm.com>, Tvrtko
+ Ursulin <tursulin@ursulin.net>, <virtualization@lists.linux.dev>, Vineeth
+ Vijayan <vneethv@linux.ibm.com>, Yishai Hadas <yishaih@nvidia.com>, Zhenyu
+ Wang <zhenyuw.linux@gmail.com>, Zhi Wang <zhi.wang.linux@gmail.com>, Kevin
+ Tian <kevin.tian@intel.com>, <patches@lists.linux.dev>, Pranjal Shrivastava
+	<praan@google.com>, Mostafa Saleh <smostafa@google.com>
+References: <2-v2-2a9e24d62f1b+e10a-vfio_get_region_info_op_jgg@nvidia.com>
+ <b5ffda6e-d8e9-5f02-69b3-e9f1a0901f90@huawei.com>
+ <20251123194535.42acb382@shazbot.org>
+From: liulongfang <liulongfang@huawei.com>
+Message-ID: <9cdadb2d-579f-f86a-ac4e-a15c792506aa@huawei.com>
+Date: Fri, 28 Nov 2025 16:52:35 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.8.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 00/86] 6.6.118-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20251127144027.800761504@linuxfoundation.org>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20251127144027.800761504@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20251123194535.42acb382@shazbot.org>
+Content-Type: text/plain; charset="gbk"
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.92.56.26
-X-Source-L: No
-X-Exim-ID: 1vOu4j-00000001lKd-3pdF
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.180]) [73.92.56.26]:51158
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 61
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfFbimHcLj7Fc2ymbOxFN6VdkD5Jl6ZQHcCQJzXTOxj4TndWa08+hyii9SNHRIckD0rOc0xlw05Krp4CqCU3CL5qIp6KEvh5UpxQKDvfUOkHg721jIMDc
- GK0wGACHFPtlwPHrO2Rh4qH7TZnjXLHilItrhJ5Zwbt9F0AL5hcxlf9smP/Wfkw9z3my4nS1fKee2A==
+X-ClientProxiedBy: kwepems100001.china.huawei.com (7.221.188.238) To
+ dggpemf500015.china.huawei.com (7.185.36.143)
 
-On 11/27/25 06:45, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.118 release.
-> There are 86 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 2025/11/24 10:45, Alex Williamson wrote:
+> On Mon, 24 Nov 2025 09:39:58 +0800
+> liulongfang <liulongfang@huawei.com> wrote:
+> 
+>> On 2025/11/8 1:41, Jason Gunthorpe wrote:
+>>> Change the function signature of hisi_acc_vfio_pci_ioctl()
+>>> and re-indent it.
+>>>
+>>> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
+>>> Acked-by: Pranjal Shrivastava <praan@google.com>
+>>> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+>>> ---
+>>>  .../vfio/pci/hisilicon/hisi_acc_vfio_pci.c    | 57 +++++++++----------
+>>>  1 file changed, 27 insertions(+), 30 deletions(-)
+>>>
+>>> diff --git a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>>> index fde33f54e99ec5..899db4d742a010 100644
+>>> --- a/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>>> +++ b/drivers/vfio/pci/hisilicon/hisi_acc_vfio_pci.c
+>>> @@ -1324,43 +1324,39 @@ static ssize_t hisi_acc_vfio_pci_read(struct vfio_device *core_vdev,
+>>>  	return vfio_pci_core_read(core_vdev, buf, new_count, ppos);
+>>>  }
+>>>  
+>>> -static long hisi_acc_vfio_pci_ioctl(struct vfio_device *core_vdev, unsigned int cmd,
+>>> -				    unsigned long arg)
+>>> +static int hisi_acc_vfio_ioctl_get_region(struct vfio_device *core_vdev,
+>>> +					  struct vfio_region_info __user *arg)
+>>>  {
+>>> -	if (cmd == VFIO_DEVICE_GET_REGION_INFO) {
+>>> -		struct vfio_pci_core_device *vdev =
+>>> -			container_of(core_vdev, struct vfio_pci_core_device, vdev);
+>>> -		struct pci_dev *pdev = vdev->pdev;
+>>> -		struct vfio_region_info info;
+>>> -		unsigned long minsz;
+>>> +	struct vfio_pci_core_device *vdev =
+>>> +		container_of(core_vdev, struct vfio_pci_core_device, vdev);
+>>> +	struct pci_dev *pdev = vdev->pdev;
+>>> +	struct vfio_region_info info;
+>>> +	unsigned long minsz;
+>>>  
+>>> -		minsz = offsetofend(struct vfio_region_info, offset);
+>>> +	minsz = offsetofend(struct vfio_region_info, offset);
+>>>  
+>>> -		if (copy_from_user(&info, (void __user *)arg, minsz))
+>>> -			return -EFAULT;
+>>> +	if (copy_from_user(&info, arg, minsz))
+>>> +		return -EFAULT;
+>>>  
+>>> -		if (info.argsz < minsz)
+>>> -			return -EINVAL;
+>>> +	if (info.argsz < minsz)
+>>> +		return -EINVAL;
+>>>  
+>>> -		if (info.index == VFIO_PCI_BAR2_REGION_INDEX) {
+>>> -			info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
+>>> +	if (info.index != VFIO_PCI_BAR2_REGION_INDEX)
+>>> +		return vfio_pci_ioctl_get_region_info(core_vdev, arg);
+>>>  
+>>> -			/*
+>>> -			 * ACC VF dev BAR2 region consists of both functional
+>>> -			 * register space and migration control register space.
+>>> -			 * Report only the functional region to Guest.
+>>> -			 */
+>>> -			info.size = pci_resource_len(pdev, info.index) / 2;
+>>> +	info.offset = VFIO_PCI_INDEX_TO_OFFSET(info.index);
+>>>  
+>>
+>> Please adapt based on the latest code in the Next branch.
+>> Code updates have already been made here.
+> 
+> I resolved this on commit, please verify in the vfio next branch.
+> Thanks,
 >
-> Responses should be made by Sat, 29 Nov 2025 14:40:08 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.118-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+On the next branch, the code after your adaptation modifications is correct.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Thanks.
+Longfang!
 
+> Alex
+> .
+> 
