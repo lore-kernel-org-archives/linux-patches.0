@@ -1,33 +1,33 @@
 Received: from angie.orcam.me.uk (angie.orcam.me.uk [78.133.224.34])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD14E12B94
-	for <patches@lists.linux.dev>; Fri, 28 Nov 2025 06:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC2491EA7CE
+	for <patches@lists.linux.dev>; Fri, 28 Nov 2025 06:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.133.224.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764309699; cv=none; b=bvPLBtP7YRQjqlvAQJ4605lpzrJ2O/N2OwMLlm5l6CdlDB03MJzSQkZz5fellyrtD2UiLMjtrhxnfsIEjxQ7FTGYmEE1BsR3udV7GtzhSCj2w6g4JKyDVa9Rgjb+tj9A5/eREJ6qNRoT2VccTXWjiXuiz6mLafkKw52N7pnMDTk=
+	t=1764310177; cv=none; b=PGkZ4/0oI3W5+3c7cGFuvar7qgcUGBFQAofAsCbCphbGYh63rVSBhnH+Ve1ltAvJo+VTDmESTM4rGwaN1spp4bC6LMvE5EnQ1BcWAu8n7N3CayoSsPfg4tTS0Qba0pOB3kZKJwY0+QnHV4KprY7azkXc0TyG3sYPTza22v6Jf0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764309699; c=relaxed/simple;
-	bh=K6RSpQzF4uF/QtlTPVP9+JsM196wIrAYRo7LWxQ867U=;
+	s=arc-20240116; t=1764310177; c=relaxed/simple;
+	bh=AMp14WINIiXz4lFUnpjkw+AIMlDjBzt2f1/SWLh6Zs0=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=lODMQUwBwU4yCf5TvccZzG2Y6Szkof58idlqL5ac5ZdjuFcip9lRd9holslx419dF6bsf1xiw84iC6k62uGCnk6ixDHTmhr/RuzyhyInKDIXrW6OTYE3E/sZQtu0HWHGcP4BnvDA4j4c7z6z2PXduSmNeUdtiPKA9IRgHLx+IEc=
+	 MIME-Version:Content-Type; b=Jpz/rRUS1ZvfL0L04s1cWkOxNI6D5xKhs++kLNXB5huuV7GP/gA9iJM+n/gvoipgBsQHcwD50NsbYpUN4c6PSJhvZ+WZYLD4fXdmak1xHnoGgMxKoGiOMu70hxxT8Y+GFf6zFGKNfGKF+Zy73QTDGFdhV/Dk/0BnMNGMqD/O+8Y=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk; spf=none smtp.mailfrom=orcam.me.uk; arc=none smtp.client-ip=78.133.224.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=orcam.me.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=orcam.me.uk
 Received: by angie.orcam.me.uk (Postfix, from userid 500)
-	id 96F4A92009C; Fri, 28 Nov 2025 07:01:36 +0100 (CET)
+	id 6F8E092009C; Fri, 28 Nov 2025 07:09:34 +0100 (CET)
 Received: from localhost (localhost [127.0.0.1])
-	by angie.orcam.me.uk (Postfix) with ESMTP id 8FB2A92009B;
-	Fri, 28 Nov 2025 06:01:36 +0000 (GMT)
-Date: Fri, 28 Nov 2025 06:01:36 +0000 (GMT)
+	by angie.orcam.me.uk (Postfix) with ESMTP id 6D8F092009B;
+	Fri, 28 Nov 2025 06:09:34 +0000 (GMT)
+Date: Fri, 28 Nov 2025 06:09:34 +0000 (GMT)
 From: "Maciej W. Rozycki" <macro@orcam.me.uk>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 cc: stable@vger.kernel.org, patches@lists.linux.dev, 
     Jiaxun Yang <jiaxun.yang@flygoat.com>, 
     Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: Re: [PATCH 6.17 026/175] MIPS: mm: Prevent a TLB shutdown on initial
+Subject: Re: [PATCH 6.6 10/86] MIPS: mm: Prevent a TLB shutdown on initial
  uniquification
-In-Reply-To: <20251127144043.919172913@linuxfoundation.org>
-Message-ID: <alpine.DEB.2.21.2511280601110.36486@angie.orcam.me.uk>
-References: <20251127144042.945669935@linuxfoundation.org> <20251127144043.919172913@linuxfoundation.org>
+In-Reply-To: <20251127144028.191081287@linuxfoundation.org>
+Message-ID: <alpine.DEB.2.21.2511280609070.36486@angie.orcam.me.uk>
+References: <20251127144027.800761504@linuxfoundation.org> <20251127144028.191081287@linuxfoundation.org>
 User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,7 +39,7 @@ Content-Type: text/plain; charset=US-ASCII
 
 On Thu, 27 Nov 2025, Greg Kroah-Hartman wrote:
 
-> 6.17-stable review patch.  If anyone has any objections, please let me know.
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
 > 
 > ------------------
 > 
