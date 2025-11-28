@@ -1,241 +1,136 @@
-Received: from BN1PR04CU002.outbound.protection.outlook.com (mail-eastus2azon11010020.outbound.protection.outlook.com [52.101.56.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yx1-f49.google.com (mail-yx1-f49.google.com [74.125.224.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37823A1DB;
-	Fri, 28 Nov 2025 00:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.56.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764288284; cv=fail; b=oiUUZ1fBiOXZLvgfUAPOAaRGKf6mRqValoOGEYBIOHB0W94cj00Z+D6367oVgXBdEAcPm7Ebqdg9ZWnBr/c/oxIp+ZjDo7oYKwt2Nt9hZVc443+XNd9LvSWRH1NzDo3SEVE7fzok57GQkLTCyE09OwjiTALScVvT6F2GvTEL7Us=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764288284; c=relaxed/simple;
-	bh=kFAGk4i+6Bj+3Uj2WbSD2ScZPOhh2glGNaXWCkE8d/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=mPd84M3EsCB8v3kajXtV27cbW+gVlpSOkjbXJLwVZXY2yzus7dCq4+SnRcymVsQ/013D0x4YEgmN2XEaeTVOEwPesr5xlvCycTRxTg5WOLWGvwQFCS2nSr7crWKa02eDN3dZQnSuzvRJf2n2WuAQWOnzzgzgvO/ip3A7XltOejY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=l+jldegY; arc=fail smtp.client-ip=52.101.56.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 105171C1F02
+	for <patches@lists.linux.dev>; Fri, 28 Nov 2025 02:15:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.49
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764296134; cv=none; b=L0KqYUAtNwaIqBLY5AhpTnwO0mGT0qHRhVpgctNAy3hIXMI7VchDe5p82DnD6wEE1umvc4k0SeiMijprgIow8JrN9bh/SkukKzhjI+4RHuAEyLTb2+FeI2w15d8Z7YxmZG+8oKIyEqxGARdpaD37B+aMcyZohymFNsdt1goMLJY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764296134; c=relaxed/simple;
+	bh=P0GotVY454jdlemJ9Mif9MFDl5LNzfmtxmyVX17ZbmE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NzntNuqWm4wajMAPyMWozplhHmpulp3igBDlTIo7MvfODUAL7/1sf0Sv+vKG+wZL/oBY3upfLHaTG5w8hKAABVJXbbTGbhKr+/x1ES37gsIV4CBUraHon+5pZZTBeKgfN6GtiOso6S+9N4Ck99Nl0mbJGeqrCIN1OLHagWG2Tv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XMuBDl9W; arc=none smtp.client-ip=74.125.224.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="l+jldegY"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=f2uVZTpxAXljS+8pYldE4Nf7vlhZsN32YmU2xQYBLL4T5yfn7WUZfGvQu1X5FOvvzUxRcm/QtzoyjZ/3XbH+lAe3jVy/Ydb1c/pyQ0e6QKtbjXCOjWZTjiwbhANm1pGW98L3aHXu9UwitkelWLoYa9J/nTQhKYjwyT9igoWAyVXyC6qU4JrJLlML/X0BmS0v1Ai47W/nC7Zf1yrEI9bW2AOU1GQt8U76KsoHgimnPQO9cHVUuejQYFZIuMsSXFX/Isrpyzigo6QH0a6l91Al0RsAfSxIFG6aScyLABrZUGGKZMeaQiOzD3RP9QMRowNJ1toy78bkFRQU67Uf+3sXzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1hVDk3dtuX4weiimIw52gDgRUu/ujlHAA9Fr3VknQPU=;
- b=vmBFgbHvNN3HnhD8ylaMKhip3bEtQI8WC0OnaBD3JCFuqueOhedgLbz8VFPaYsSdl4Fp8ZkbjHsJJMcV8pE6Xv3JDoXJo4DZp3SqHPMo+Y1loMx9uuFpkYC3PNnxkv7KHk+sBIeCtDe5qSpius3YbPH7dtq2qEhzNdzvaA64fbT2qXuxMrH+XgfJvuqVEbWzW6KBqVTQTzBvxdQjRRc0k7CirU6XpQvJt4gHw6gDc6KdOjrk4DPLvz5OGAHqzzYukEBrZ7oL7cYrU5uDTygjusgoE4Oe9RF7ObcpEfaT3YqTbx1GuZVA4GgYg+22o2MtIXIzNgZijn13P1kZqlPHjQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1hVDk3dtuX4weiimIw52gDgRUu/ujlHAA9Fr3VknQPU=;
- b=l+jldegYIYUC5YIDQuKB/JsJPkiegUKMrploe6LImdQ/69LfUIqWtWubWPgDP42aczWRBMt7qXYGEc+doyO4u+1zCOa5OsDJ+Q9mxHL52CkyEzvu3k/9OvbJkP4rfs9aIwe0b1toO/LAKdZMNcTtZPzNpmZbvnd5B7sM5nyqS7akeXNWyD1cipoSP0lHLZQfnZgyxSHB1wl8GXMAnv3GxYT2U409eYDs28HkgtDgbr1R8x1j11hoq+YJRL8Bs/335jaCkufkJkrAguC38oDIzz859l+/BSNDeNpe+GhTA1c73w5TGNFDvPvAgGe55Y4/551N/HFQjZnUjAHLcAs3bA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
- by SA1PR12MB6797.namprd12.prod.outlook.com (2603:10b6:806:259::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.11; Fri, 28 Nov
- 2025 00:04:39 +0000
-Received: from MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
- ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9366.012; Fri, 28 Nov 2025
- 00:04:39 +0000
-Date: Thu, 27 Nov 2025 20:04:38 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: David Woodhouse <dwmw2@infradead.org>, iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>, Calvin Owens <calvin@wbinvd.org>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
-	Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev,
-	Tina Zhang <tina.zhang@intel.com>
-Subject: Re: [PATCH 0/2] Fix VT-d when the IOVA limit is small
-Message-ID: <20251128000438.GA787428@nvidia.com>
-References: <0-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v1-ae5d7f0f2620+13b-vtd_mgaw_jgg@nvidia.com>
-X-ClientProxiedBy: MN2PR05CA0038.namprd05.prod.outlook.com
- (2603:10b6:208:236::7) To MN2PR12MB3613.namprd12.prod.outlook.com
- (2603:10b6:208:c1::17)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XMuBDl9W"
+Received: by mail-yx1-f49.google.com with SMTP id 956f58d0204a3-640e065991dso1083077d50.3
+        for <patches@lists.linux.dev>; Thu, 27 Nov 2025 18:15:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764296132; x=1764900932; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=t2CHLdpUp4Ssl7HkxIQWteLCgVD8+JnAniR+pC5eUNQ=;
+        b=XMuBDl9W8qv/Et1elD/+t8/CnoI5JRK/1r409Gnzy4/USv3OO/Y+9jJVXaL9tFR334
+         7ky7bXDB/mcKLidDWtrv1wieytgJFnrA6J0iSebNLO2oCzpymw84KgelvdtpICnqqynz
+         urIQ4jruBToKVTAsTsq2oZ8IXJOdsRel8wWWrj5ne0OSZPDpR5VtSM89WRrlSvZsVdvj
+         IFCaFRgs6In5+lfPITN3lJ6QUlWyvVzua03Beuz+l6EyYhnaQJ/+VL8J8xoUOE8CyuZ4
+         YRVmG+NMx/uqfJMzEEtCHTguVhwXET7QUQ7U7vU74Z22COYBgVi8siiyLmauOwb5rozK
+         4QCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764296132; x=1764900932;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t2CHLdpUp4Ssl7HkxIQWteLCgVD8+JnAniR+pC5eUNQ=;
+        b=MlKKHSJAKOmQmDzoUTxW7rwDcHWa0klZonaDAYJlydj2daA5ofZ4OQuRYiu7+aqMiJ
+         nMrfC+JVGG3XOgHb2vHfZyoyvlY5+T3FKdfBZPzJ8dn7jx4THfXm9sRIfV9v6VbpiO4s
+         PDn9nc0KbZB5k0QU74PGfKG+KqXapRUmNVK18H3N+HmuXP/l4kYJ7jRRvPYuPMo+Q0iE
+         uNmDzrjdqhy7H6KeL7Yu6654oXtUZM6wDIhuJaOcbFP/OMWPteiaxrWs8w+OPgQ+gLsX
+         Ze3ySm7JgEwFuzv0RxRfxxxC+AxKwClmSEkNtp91oBd5PharTeOuridxADJ2+wMkoLCv
+         aOoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWobw5Elt/qMd9dY87z4Sd6MDP87XrqiGzgEkjtH9LjO9oJ6ZI4idLkVzoWjWi6J10+J9ULD4Q5@lists.linux.dev
+X-Gm-Message-State: AOJu0Yygeypx6jZPLZLDBtvLXieAmhcnF/aPhA2I5i3RKaDTp3UPQZeg
+	t9nifXK7ZgSnE8lYgmmBvvdfdbJfWk+hPdswTKD88tLtvSFrESsH6H8r
+X-Gm-Gg: ASbGnct1e6WRNHgMlE1DR77tyBnRf9Hymok2GOqtKWSBdvBeBhQQM/fCQHMphbbdl8h
+	8YoGTgotm5YINF4GiUq1GqucBayr/2FCy7UPxoXeDeoq5iRq84fJ6BcHRroYGhbwiydzZDiOLk1
+	z2BTV+d+/msFwnpKn4iwXui3sgocQ7WKUeQPJXhDHiOixaYZCXO/htsrAcpJAoWEUX/eUN8pq+P
+	EZ1qgHId56RIVeQmYbU/abYBc9px86+d1fSmBGEl2pD96D+zPGkCto7CjtvHm3c7EJlMsjg0bXj
+	hRXDrJNa3ozooUELSRJKttND831zJDxVJN6devdWCW59b7BLUOWWKlhgUcDR+/dtyZEXUYJRvUP
+	zAV9OqwVB726imvrCyBtiGvCQcJg4li7CdMEMFev6oeimm15WBkFa2WWkkzfWJmG9Sp9RlOQf2N
+	c5Vx5tdhg=
+X-Google-Smtp-Source: AGHT+IHnP7VicG6waOOzhu6TiR+B+K/9sG+saFcAMNFcFN/ea7k1BLVt9YbC7IMgWMjWFguUL7v5Qw==
+X-Received: by 2002:a53:d68d:0:b0:641:f5bc:6980 with SMTP id 956f58d0204a3-64302ae4ef2mr14870221d50.76.1764296131954;
+        Thu, 27 Nov 2025 18:15:31 -0800 (PST)
+Received: from localhost ([2601:346:0:79bd:59d3:fad0:b7e5:396a])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6433c050814sm1065368d50.5.2025.11.27.18.15.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Nov 2025 18:15:31 -0800 (PST)
+Date: Thu, 27 Nov 2025 21:15:30 -0500
+From: Yury Norov <yury.norov@gmail.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alice Ryhl <aliceryhl@google.com>, Burak Emir <bqe@google.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] rust: id_pool: fix broken intra-doc link
+Message-ID: <aSkFwsx-6Gu5Eu2a@yury>
+References: <20251127213340.180090-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|SA1PR12MB6797:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1f43da6d-b5a4-4075-2749-08de2e11b947
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?fFgvMRbU7kS7i6/0QzoMaRmPbdrl+Q+RLCBv2KuK5wg+IxwJoSdQjY7/zS4F?=
- =?us-ascii?Q?XEYKEmK1qyvrOvddPHhuryb2pC4uFW0c+hWqHOlyv8Z79NGFiyf8WbMOME0V?=
- =?us-ascii?Q?DbNp/CyWeke6IjhX5MpMdR1B3YuL573LRLIJ2vnioL3dENAvK3qmkUOnx61M?=
- =?us-ascii?Q?u/GYb4Izbb9ECF7G/cX6EnTK8aqt9t38WE7FAm2yZtx1nruj3xyuCVsiRqby?=
- =?us-ascii?Q?PcdxpiJ/qPLOeO3RICl1RLf/bucyE7Ez0Q1VTh3gRWkQe+pvlMZsxl7DvATo?=
- =?us-ascii?Q?/Ez5SN0wqDuj2keffhNJXL7CBOfCbtyAiYJ1PIBovXmQKmPfub68QRD067BX?=
- =?us-ascii?Q?oIIrQVTDoRWxtYyTkBsbOWCi7FB4CIVsJwbxmePernfLmXKOZ2St3ya3S1ky?=
- =?us-ascii?Q?TcsWXcbl46yV4DCE3v5lKc3MOaoJzXD0Nu9AvhKGV+oTSLHnuIwR5dxZDK2j?=
- =?us-ascii?Q?/H2UIRJbMWC7Uvo2EMHlfpX7vPkOdtVUpi1OXx3tlPU9vEcvn0930qzgteIm?=
- =?us-ascii?Q?33znaKFhgqT0GIqliU7crvgoSz8YLYciYV0JGo1Zc1UQrqYxijll+s7XFK1q?=
- =?us-ascii?Q?mGcS+C+EYVaetKUHTFmKYbP+6x2xCFsMCf8RHGXcdTzIgESu/5MJsCWvIs9E?=
- =?us-ascii?Q?Xp7Y+TSbKmlz5eAKIhaz2AO5E7wcZlxiarY94IgTcY41hZf6gI0loBdjdTE4?=
- =?us-ascii?Q?ttNaXUS6hyt2ucopFDMxDjxTbnKFGrBwJobptX5Ch55XiogeoSUlBOCBURFp?=
- =?us-ascii?Q?QYs/KzrcdwkfSDMMk+EIlaKGZ0aQ9jTthXidtLV+rO+1FB/N7FXvA+m0OV+J?=
- =?us-ascii?Q?us8pNFLKOny526fAMz/ixxdIZSk3Fwui5iGglDJOPwMTK/3K8JW0V44RKDEX?=
- =?us-ascii?Q?JffUFbUm7gQKxasi/YknvEjhDbuZ3NaEedXJ9+Sid/3Tb5b3tRtCJxBOznil?=
- =?us-ascii?Q?jZ72M6F/8HbBi+vDpOPDpBJ9Ehj0yox8I6ZIEMyHhc41YejxUXc75JBTMRNt?=
- =?us-ascii?Q?WXnDEM7RajeAly3i9h/qpW4Y81MqSgxahhxtqUdcGYAw/28noiQo9KNQafhA?=
- =?us-ascii?Q?0giERpH75GpIkwG6HxYyu8wNBE2xsYUs/UsGJgs7DevTHFLpYJZzI8Uy6IHq?=
- =?us-ascii?Q?GygR4q3H+RvmX864JqYzgs88t2oeUuNBvlJbyRPPQC/CJoIrrnMkJRW7sNdY?=
- =?us-ascii?Q?BF9UMZqi/4QFxQ78+dBnBTB7ZWap8t12t+WvnXKJjk5/ZDfLfD8h96phKGos?=
- =?us-ascii?Q?rvxO1Wx5aWZpHupNfYze7Y+3Pts7Q9OcsdGxim745EteRh3sjy3nltnJw1Sr?=
- =?us-ascii?Q?FGEW+nB0xct0OeA5G/FSuy3hLnAxMHg4iFQZOQEnmGZQ92JywPUM6FVprpJJ?=
- =?us-ascii?Q?jJ4E7d+9HZu2ahvjU6aOpmnNRR8LcTNqhLSAF6CkeLDJpzFzPbnarxmZ1Ss/?=
- =?us-ascii?Q?SFpGqZijY+p41uWVOxpCE9SQ+bWUxKSx?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(7416014)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3+CoWkr1hWrnQv7Bz9BBrEOqnpovb7m0B66ezY1pCqTqlWqlfZDOmS4xjQw1?=
- =?us-ascii?Q?0yt3cwcCmda4FSjQeRsr7vgOfJceDAzt+jyxAGQ0zIEqH75iBeXYYX7XyOUJ?=
- =?us-ascii?Q?bSobquqWjQxQmheNExg2Tzw+kdOkQv2vHhVQMaLwZHtM/4jRZBCIlHHyXICc?=
- =?us-ascii?Q?2oOzg7K3W5w9DFIxFe3hkxEld3bMwdfkXg13/+CkBIfTxv4z1CJ+b4EsELoT?=
- =?us-ascii?Q?GqGULAcjYKVEIX7JpxUW2/dsZ9dZ/5wXYzdpf85OiAPfIHzpwtpyeozCf43q?=
- =?us-ascii?Q?YTrDwQBMeokEEdvaB+yBpgy+7KFnk2fp/12C3B186cfGKIjBH4Rkwx1fMrdp?=
- =?us-ascii?Q?+Gj5X4FPLZx78mPlhfttgcCcnTPibQd3dB7jgl6tJwZiYkMGsuaseVoUydMO?=
- =?us-ascii?Q?lshD+D38N8/7OJx0j8NS22di/JV+A36fGLHv/qTqFAASygL2Rvlnpo/rFeo+?=
- =?us-ascii?Q?dYqHlknu0o5O9lEm1VEQIjHo4IMhtI7WnzLVQGYPksnQWqRKER/oMeyWYOaJ?=
- =?us-ascii?Q?KYtHDU9hyIfNQKvTVFuXkxzttkKLGWzZXIPmNEqalIJmwp4HUerfJGtNAwA5?=
- =?us-ascii?Q?N8O6bBS06Wn1n5jsIp/R1iOAYRHhejsCMzOhYGLV4kHRmYLLVZiKs1JlHogP?=
- =?us-ascii?Q?4xLXdZSDTr4l57YFR/7PgdAYTSlUp8oTASvzznzT9HWSTpEvbKLHJhgc+EJX?=
- =?us-ascii?Q?W40fGqwGDRewqxH9I5/QRyPH/2hDDOeSStVhlezRnUDZAG2j34Ho/cJgGqdV?=
- =?us-ascii?Q?IVfaqx93U6Lxi8uc9xQcHllHtDt13iy/XNhXFXI+aPv8mtZ6kbFFDYzH3MOL?=
- =?us-ascii?Q?i0XA9L21MqgaiEgUPu8uMqAkJM7yfl0DG8CNP/ss7ID+SCxDnhbYE88t/hix?=
- =?us-ascii?Q?QIoCxcmzcnW8/4HUCfMi378wsQapb/+93/dHWiftrmM1a3klcyxCjBqEeZLF?=
- =?us-ascii?Q?82c/ofxP8tenCFd5CFBttMYmteIcfPy8dnlL1tfZTP0Xk/+dEvsCX4Z+R2qu?=
- =?us-ascii?Q?Rve4iaTF0wcPstQowrjYfK3+7uOhZYBuFI/tC2QKvqmH5gjKx7PE+L77O1lb?=
- =?us-ascii?Q?E7J7OF06uKkc0PEX9k/na50NtHCorV9nUUuBmapF4JpR6HPJZ+YDYauG89XE?=
- =?us-ascii?Q?0uB6vx4DN+ykK+m80ifdApyryqERpbO/FTqCLwv7HsqOXAjfLajR4Im0Q2SZ?=
- =?us-ascii?Q?G8xRARNlECa1iAuoL45NZHfa7vFN9XcyCnjUkeNTjb3lxQeLmhvTJqA+PsjJ?=
- =?us-ascii?Q?gX48BGq1dKtuW1Aiy+xpyHoYko8VYyUHxOq2RGUJc+4HTAUHbXeUnKRUDKUy?=
- =?us-ascii?Q?6MrZKBRIQQqnTKAyBaoFVXSOUr60EKFxzSEJwzjLpXzBz/oU/kKvueKb/Kcf?=
- =?us-ascii?Q?4ZUw0X2mqtvxTDSu6tOUH/uE3tt+SGzCtmZ623xKOw4iUyiYR4+1DzkNjf5h?=
- =?us-ascii?Q?M0KxF7rNb6G5+TlMknb1Vlj4521dn7/qi2PB7MrvraPfeu450NUuzsz571rA?=
- =?us-ascii?Q?JJgF5rUE/6MPR4zVnx7G8s2Xy6Xxy+pgQgkYURiyRCBqgWCTJa6b+2tZo+Ld?=
- =?us-ascii?Q?zS5ju8URf1k0XfpUadA=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1f43da6d-b5a4-4075-2749-08de2e11b947
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Nov 2025 00:04:39.2193
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: onHJzgqSRjI1z44+0JOkIvhuycBXttlAGpevaknHqvyeOekrgIEsdx5207/ZIU1e
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6797
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20251127213340.180090-1-ojeda@kernel.org>
 
-On Thu, Nov 27, 2025 at 07:54:06PM -0400, Jason Gunthorpe wrote:
-> Calvin notes:
+On Thu, Nov 27, 2025 at 10:33:40PM +0100, Miguel Ojeda wrote:
+> `rustdoc` detects a broken intra-doc link:
 > 
-> =======================
-> A Skylake machine has problems with strict translation on next-20251124:
+>     error: unresolved link to `BitmapVec::NO_ALLOC_MAX_LEN`
+>        --> rust/kernel/id_pool.rs:100:31
+>         |
+>     100 |     /// [`NO_ALLOC_MAX_LEN`]: BitmapVec::NO_ALLOC_MAX_LEN
+>         |                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^ the struct `BitmapVec` has no field or associated item named `NO_ALLOC_MAX_LEN`
+>         |
+>         = note: `-D rustdoc::broken-intra-doc-links` implied by `-D warnings`
+>         = help: to override `-D warnings` add `#[allow(rustdoc::broken_intra_doc_links)]`
 > 
->     pci 0000:06:00.0: Adding to iommu group 18
->     ------------[ cut here ]------------
->     WARNING: drivers/iommu/iommu.c:3055 at iommu_setup_default_domain+0x268/0x2f0, CPU#2: swapper/0/1
->     CPU: 2 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc6-next-20251124 #1 PREEMPTLAZY
->     Hardware name: ASUSTeK COMPUTER INC. WS C246M PRO Series/WS C246M PRO Series, BIOS 6101 06/26/2024
->     RIP: 0010:iommu_setup_default_domain+0x268/0x2f0
->     <snip>
->     Call Trace:
->      <TASK>
->      iommu_device_register+0x126/0x200
->      intel_iommu_init+0x2bf/0x580
->      pci_iommu_init+0xb/0x30
->      do_one_initcall+0xad/0x1c0
->      kernel_init_freeable+0x238/0x290
->      kernel_init+0x16/0x120
->      ret_from_fork+0x1ba/0x1f0
->      ret_from_fork_asm+0x11/0x20
->      </TASK>
->     Kernel panic - not syncing: kernel: panic_on_warn set ...
->     <snip>
->     Dumping ftrace buffer:
->     ---------------------------------
->      2)               |    __iommu_group_set_domain_internal() { /* <-iommu_setup_default_domain+0x25e/0x2f0 */
->      2)               |      __iommu_device_set_domain() { /* <-__iommu_group_set_domain_internal+0x6d/0x140 */
->      2)               |        __iommu_attach_device() { /* <-__iommu_device_set_domain+0x6d/0xb0 */
->      2)               |          intel_iommu_attach_device() { /* <-__iommu_attach_device+0x1f/0xe0 */
->      2)   0.140 us    |            device_block_translation(); /* <-intel_iommu_attach_device+0x19/0x80 ret=0xffffffff81b5e980 */
->      2)               |            paging_domain_compatible() { /* <-intel_iommu_attach_device+0x24/0x80 */
->      2)               |              paging_domain_compatible_second_stage() { /* <-paging_domain_compatible+0x47/0x170 */
->      2)   0.137 us    |                pt_iommu_vtdss_hw_info(); /* <-paging_domain_compatible_second_stage+0x29/0x1a0 ret=0x1 */
->      2)   0.530 us    |              } /* paging_domain_compatible_second_stage ret=-22 */
->      2)   0.907 us    |            } /* paging_domain_compatible ret=-22 */
->      2)   1.653 us    |          } /* intel_iommu_attach_device ret=-22 */
->      2)   2.157 us    |        } /* __iommu_attach_device ret=-22 */
->      2)   2.528 us    |      } /* __iommu_device_set_domain ret=-22 */
->      2)   2.954 us    |    } /* __iommu_group_set_domain_internal ret=-22 */
->     ---------------------------------
->     Rebooting in 10 seconds..
+> Thus fix it.
 > 
-> The failing condition in paging_domain_compatible_second_stage() is:
+> It was a missed rename in v5 of the patch series adding this [1].
 > 
->     /* Page table level is supported. */
->     if (!(cap_sagaw(iommu->cap) & BIT(pt_info.aw)))
->         return -EINVAL;
+> Fixes: feb3fdf1239a ("rust: id_pool: do not supply starting capacity")
+> Link: https://lore.kernel.org/all/20251112-binder-bitmap-v5-0-8b9d7c7eca82@google.com/ [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+> I saw this in next-20251127.
 > 
-> This happens because, for many domains on this machine, MGAW=39 but
-> SAGAW=0x04: that claims a 39-bit maximum address width, but also claims
-> to only support 48-bit/4-level paging, which seems odd.
-> 
-> Before the GENERIC_PT rewrite, the kernel only looked at SAGAW, so this
-> machine has been happily running for years using 4-level paging.
-> 
-> Now, the kernel refuses to use 4-level paging because MGAW=39. But SAGAW
-> claims not to support anything else, so we hit the -EINVAL case above
-> and fail to initialize.
-> 
-> If I force 4-level paging, everything works. If I force 39-bit/3-level
-> paging, nothing works (lots of bad context faults). So it seems like the
-> machine really only supports 4-level paging despite the 3-level MGAW.
-> =======================
-> 
-> Which is not a possible condition that was considered when this was
-> made. Allow VT-d to pass in the top level of the page table as well as the
-> max vasz as seperate things. This lets it setup something compatible with
-> the HW.
-> 
-> This is happening because VT-d doesn't quite fit into the architecture we
-> expect on Linux where the IOMMU driver should be reporting its full page
-> table capability as an aperture and bus width or addressing limitations
-> should be attached to the end point devices as a DMA mask. Instead VT-d is
-> putting the device limitations in the iommu as well.
-> 
-> Jason Gunthorpe (2):
->   iommupt/vtd: Allow VT-d to have a larger table top than the vasz
->     requires
->   iommupt/vtd: Support mgaw's less than a 4 level walk for first stage
-> 
->  drivers/iommu/amd/iommu.c             |  7 +++-
->  drivers/iommu/generic_pt/fmt/vtdss.h  | 19 +++------
->  drivers/iommu/generic_pt/fmt/x86_64.h | 17 ++++----
->  drivers/iommu/generic_pt/iommu_pt.h   | 14 +++++++
->  drivers/iommu/intel/iommu.c           | 58 +++++++++++++++++----------
->  include/linux/generic_pt/iommu.h      |  4 ++
->  6 files changed, 73 insertions(+), 46 deletions(-)
+> I think using [`BitmapVec::MAX_INLINE_LEN`] is clearer in general,
+> especially for things in other modules, but I kept the same style as
+> other links in the file.
+ 
+Thanks, added it on top of Alice's series. 
 
-I forgot:
-
-Tested-by: Calvin Owens <calvin@wbinvd.org>
-
-Jason
+>  rust/kernel/id_pool.rs | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/rust/kernel/id_pool.rs b/rust/kernel/id_pool.rs
+> index a4c37d6a0971..73a952d7dd83 100644
+> --- a/rust/kernel/id_pool.rs
+> +++ b/rust/kernel/id_pool.rs
+> @@ -95,9 +95,9 @@ pub fn realloc(&self, flags: Flags) -> Result<PoolResizer, AllocError> {
+>  impl IdPool {
+>      /// Constructs a new [`IdPool`].
+>      ///
+> -    /// The pool will have a capacity of [`NO_ALLOC_MAX_LEN`].
+> +    /// The pool will have a capacity of [`MAX_INLINE_LEN`].
+>      ///
+> -    /// [`NO_ALLOC_MAX_LEN`]: BitmapVec::NO_ALLOC_MAX_LEN
+> +    /// [`MAX_INLINE_LEN`]: BitmapVec::MAX_INLINE_LEN
+>      #[inline]
+>      pub fn new() -> Self {
+>          Self {
+> 
+> base-commit: a322638c15a678168aeb8dc11c8760f8a053124d
+> --
+> 2.52.0
