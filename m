@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBA2260588;
-	Mon,  1 Dec 2025 11:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C54258EF0;
+	Mon,  1 Dec 2025 11:30:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588648; cv=none; b=kq4blzIpCrebBUHd7Jji0UAaH501N0ct1GcfOb9G7ONss24rj312cSXMUbxPGF1q7E4kjSUWkpBIq7x+/Ig4/6dawOtppegqcKXgLECKeuO/fYRo42VGDuy5L6T3FoXvjFZ2OX1Wojc5ApH5WLbg1JiLfyF5RjFrec8f5HL1mJg=
+	t=1764588650; cv=none; b=TFucTupeYseifAiA5zxY58O7SQbXjEk08D1uvfgb84wm/2YDbB+4u70b/42TFbaQo7bDn2hvNfdkfOGi2asC6WFQhUZPKFLiIxPhCuidOdvt232l/0V//SFupZTJJ+IeP9byLX9NOini6kFd7gQdm228I4I0UE4pPwecGO529Q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588648; c=relaxed/simple;
-	bh=Tdp66HRPr35lHWXmCaLkXmKcRxYPuNXzsFmst8hKOew=;
+	s=arc-20240116; t=1764588650; c=relaxed/simple;
+	bh=O7rnBXFfBVm0q7QzIPLUZKdL83/gDrtxCPtxwWPhTPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zo/uThabTAApGXoQ0pmDeKiyYSYpBuhjjmHhxwyofNqPV3kVJOT+6k1E+w6L29ZILp+pF/LRperc02+2d9hdtsQsb45tRt7PpVPQj+dr3CIEOQ5utdh1c5fTgbLKsW1Ji33wM2ZbCUImJ0pHDT2QxdJtC41sCy0XGqVMjbJPI54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M2lwpN8Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uVG6sz97b/DpX2OUVnblUTDOabZZGgM7qV3AQFl8Z3a4+lZOi5W9Cu+v6WgY9MrOKPk8QTaF5kmlZyv0zYHWP6RdlmwV+CNwkxj2l67YZ4H2gILd4mrltA00oeCl5Pv5QSEQ0KAYpEGpX52FdMislgJs7ItoLtmX/cvzkChd8i8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfkwYC4v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M2lwpN8Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D47DEC116D0;
-	Mon,  1 Dec 2025 11:30:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfkwYC4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B456C4CEF1;
+	Mon,  1 Dec 2025 11:30:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588647;
-	bh=Tdp66HRPr35lHWXmCaLkXmKcRxYPuNXzsFmst8hKOew=;
+	s=korg; t=1764588650;
+	bh=O7rnBXFfBVm0q7QzIPLUZKdL83/gDrtxCPtxwWPhTPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M2lwpN8ZjfyArNxht26rozpp3ty1QgVweMoiKDQuZWA2sRLKvIbdho+VnPs0ERjrr
-	 OX1T1/bp6rFg8ZVGAzG1jQtHRsB9AT8QlqU3ClxbwYvmudVaXZL+LDi0mZ8CAklfAS
-	 t97DQnplXWU754H0+VfCkvWVgt1lvi/0FZv6HeDM=
+	b=vfkwYC4vWPJlRwLlspEu5I6aZUOqKtTImOPp6nrKUe++hN8uiUlYI/7sraPk2BFRo
+	 GTYGV0TZU+NMkulZDRmzNZo2ZFsrYC8AOJzELpP9tENtSn9pTg3yOYWO5Tmgb+Kk14
+	 ZB8e9ibinO4qn3Uv88WIUHdZRoaeY0RGeMmsXY3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	NeilBrown <neil@brown.name>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/187] scsi: lpfc: Define size of debugfs entry for xri rebalancing
-Date: Mon,  1 Dec 2025 12:23:16 +0100
-Message-ID: <20251201112244.411667034@linuxfoundation.org>
+Subject: [PATCH 5.4 089/187] allow finish_no_open(file, ERR_PTR(-E...))
+Date: Mon,  1 Dec 2025 12:23:17 +0100
+Message-ID: <20251201112244.458018097@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,38 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 5de09770b1c0e229d2cec93e7f634fcdc87c9bc8 ]
+[ Upstream commit fe91e078b60d1beabf5cef4a37c848457a6d2dfb ]
 
-To assist in debugging lpfc_xri_rebalancing driver parameter, a debugfs
-entry is used.  The debugfs file operations for xri rebalancing have
-been previously implemented, but lack definition for its information
-buffer size.  Similar to other pre-existing debugfs entry buffers,
-define LPFC_HDWQINFO_SIZE as 8192 bytes.
+... allowing any ->lookup() return value to be passed to it.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Message-ID: <20250915180811.137530-9-justintee8345@gmail.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_debugfs.h | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/open.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_debugfs.h b/drivers/scsi/lpfc/lpfc_debugfs.h
-index 20f2537af511c..6cd5605ad00ba 100644
---- a/drivers/scsi/lpfc/lpfc_debugfs.h
-+++ b/drivers/scsi/lpfc/lpfc_debugfs.h
-@@ -44,6 +44,9 @@
- /* hbqinfo output buffer size */
- #define LPFC_HBQINFO_SIZE 8192
- 
-+/* hdwqinfo output buffer size */
-+#define LPFC_HDWQINFO_SIZE 8192
-+
- /* nvmestat output buffer size */
- #define LPFC_NVMESTAT_SIZE 8192
- #define LPFC_NVMEKTIME_SIZE 8192
+diff --git a/fs/open.c b/fs/open.c
+index f1c2ec6790bb3..2da364e942741 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -886,18 +886,20 @@ EXPORT_SYMBOL(finish_open);
+  * finish_no_open - finish ->atomic_open() without opening the file
+  *
+  * @file: file pointer
+- * @dentry: dentry or NULL (as returned from ->lookup())
++ * @dentry: dentry, ERR_PTR(-E...) or NULL (as returned from ->lookup())
+  *
+- * This can be used to set the result of a successful lookup in ->atomic_open().
++ * This can be used to set the result of a lookup in ->atomic_open().
+  *
+  * NB: unlike finish_open() this function does consume the dentry reference and
+  * the caller need not dput() it.
+  *
+- * Returns "0" which must be the return value of ->atomic_open() after having
+- * called this function.
++ * Returns 0 or -E..., which must be the return value of ->atomic_open() after
++ * having called this function.
+  */
+ int finish_no_open(struct file *file, struct dentry *dentry)
+ {
++	if (IS_ERR(dentry))
++		return PTR_ERR(dentry);
+ 	file->f_path.dentry = dentry;
+ 	return 0;
+ }
 -- 
 2.51.0
 
