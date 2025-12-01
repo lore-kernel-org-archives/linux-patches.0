@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C5225A33A;
-	Mon,  1 Dec 2025 11:33:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862BB258EFB;
+	Mon,  1 Dec 2025 11:33:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588805; cv=none; b=pW8D0wrdDyASH1bKhBHj0aPhgjiCpMiIItIF3cNNPeBRZhSeU8KUo2ZganygiK2jbRzIWPckFaSGp8F8yE78uOn1+8Hr4JlAZWwgrX3YNaJtl42FOmb/V7RekPlExRbNO6poKREe8sJWxOQkH5UX4FEIyg1tFTOMEnuLQCi3mto=
+	t=1764588808; cv=none; b=htq5Cx59dLoUAE1w2JQjdCXVk+ho4s9//XUVh0R0gBgwpE4/EqzL9ofAOR8ZqQyiaEQB0v+TwwBwAqkCp/HDMkSR48p4evBxQ3u/mMgNySy307ULf+tgPCuI3rxmeMxytRb7xMNqfZ1DSSoYQ5zr7+Nv5eHQaZkjZrK2Bva+Dow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588805; c=relaxed/simple;
-	bh=fudX2oBMaGsNt5tSj9euEMi7WjbKLMAox2rv+7tCD/s=;
+	s=arc-20240116; t=1764588808; c=relaxed/simple;
+	bh=P29kUKX/gURmwt7qgVyPgnikAmNrP1c/RFlckkcsqfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q20I7yrdzXaxx9pFS5iv+zn/yHtGJvZbGUyWW82XJBF5FOAgRBsGJrh4aHq6/Kr34mjyIRkRRSncbdIsrhuvDWjIZw3iYTjYS6QvG3PojVgYcv0kwOM4utfvz/O0kWL06GqPN0vLxYtog1zckEiUBkau88w32iBxCXWeK+2TfzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPHiZsNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0mgTJrn/mary9iGgY+E9jb4lTMkmQHOJosul/Gd9kXCD45g5PT8pVJXsRAdf72hoNC+Wt3YxL6u8+HN4VxlzIZmHpfK/IVJ6ttnCMDDUQd59n9udHWJ3DVyqEf6w8LDTBIzMHpGtkDpt8mNSjexUFSBvpYJLO2rfhfpY6ChpuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lRki2UKf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPHiZsNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15010C4CEF1;
-	Mon,  1 Dec 2025 11:33:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lRki2UKf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09152C116D0;
+	Mon,  1 Dec 2025 11:33:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588805;
-	bh=fudX2oBMaGsNt5tSj9euEMi7WjbKLMAox2rv+7tCD/s=;
+	s=korg; t=1764588808;
+	bh=P29kUKX/gURmwt7qgVyPgnikAmNrP1c/RFlckkcsqfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPHiZsNnWZjo6C+avmokBK6TpflYiSjNZw1tl5Yk8PeE4vWz3eL1e+Ym2ViMxEdrN
-	 3Ue3s/YCga+cPwtJ2mmTv/ymZ3h10ccGd0xjZGCn92YP3Du1yJkeF5gyTmDUgmj0Il
-	 O5Fslt+IMdQnYpajwzVJkuLu/K63zTs5D3XksYFk=
+	b=lRki2UKfteEfO4t2ob11ECQaEwNvn0iYeDmtHIh3SN+xsI7MTmbH7hHzpd3Adzbr1
+	 J3BdxEDnS4nKCxckssXTu39+Qmv5BsL9/LYvojBPpTXiBojRtuYzcDUnXsJ2NZ7fu9
+	 Q0oEfpIg4ar+3b0f+lWUS6iN5UiWPlpEXGlfrnrs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Peng Fan <peng.fan@nxp.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 177/187] pmdomain: arm: scmi: Fix genpd leak on provider registration failure
-Date: Mon,  1 Dec 2025 12:24:45 +0100
-Message-ID: <20251201112247.603135811@linuxfoundation.org>
+Subject: [PATCH 5.4 178/187] pmdomain: imx: Fix reference count leak in imx_gpc_remove
+Date: Mon,  1 Dec 2025 12:24:46 +0100
+Message-ID: <20251201112247.639961908@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,79 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 7458f72cc28f9eb0de811effcb5376d0ec19094a ]
+[ Upstream commit bbde14682eba21d86f5f3d6fe2d371b1f97f1e61 ]
 
-If of_genpd_add_provider_onecell() fails during probe, the previously
-created generic power domains are not removed, leading to a memory leak
-and potential kernel crash later in genpd_debug_add().
+of_get_child_by_name() returns a node pointer with refcount incremented, we
+should use of_node_put() on it when not needed anymore. Add the missing
+of_node_put() to avoid refcount leak.
 
-Add proper error handling to unwind the initialized domains before
-returning from probe to ensure all resources are correctly released on
-failure.
-
-Example crash trace observed without this fix:
-
-  | Unable to handle kernel paging request at virtual address fffffffffffffc70
-  | CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc1 #405 PREEMPT
-  | Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno Development Platform
-  | pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  | pc : genpd_debug_add+0x2c/0x160
-  | lr : genpd_debug_init+0x74/0x98
-  | Call trace:
-  |  genpd_debug_add+0x2c/0x160 (P)
-  |  genpd_debug_init+0x74/0x98
-  |  do_one_initcall+0xd0/0x2d8
-  |  do_initcall_level+0xa0/0x140
-  |  do_initcalls+0x60/0xa8
-  |  do_basic_setup+0x28/0x40
-  |  kernel_init_freeable+0xe8/0x170
-  |  kernel_init+0x2c/0x140
-  |  ret_from_fork+0x10/0x20
-
-Fixes: 898216c97ed2 ("firmware: arm_scmi: add device power domain support using genpd")
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Fixes: 721cabf6c660 ("soc: imx: move PGC handling to a new GPC driver")
 Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-[ drivers/pmdomain/arm/scmi_pm_domain.c -> drivers/firmware/arm_scmi/scmi_pm_domain.c ]
+[ drivers/pmdomain/imx/gpc.c -> drivers/soc/imx/gpc.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/scmi_pm_domain.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/soc/imx/gpc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/firmware/arm_scmi/scmi_pm_domain.c
-+++ b/drivers/firmware/arm_scmi/scmi_pm_domain.c
-@@ -53,7 +53,7 @@ static int scmi_pd_power_off(struct gene
+--- a/drivers/soc/imx/gpc.c
++++ b/drivers/soc/imx/gpc.c
+@@ -540,6 +540,8 @@ static int imx_gpc_remove(struct platfor
+ 			return ret;
+ 	}
  
- static int scmi_pm_domain_probe(struct scmi_device *sdev)
- {
--	int num_domains, i;
-+	int num_domains, i, ret;
- 	struct device *dev = &sdev->dev;
- 	struct device_node *np = dev->of_node;
- 	struct scmi_pm_domain *scmi_pd;
-@@ -106,9 +106,18 @@ static int scmi_pm_domain_probe(struct s
- 	scmi_pd_data->domains = domains;
- 	scmi_pd_data->num_domains = num_domains;
- 
-+	ret = of_genpd_add_provider_onecell(np, scmi_pd_data);
-+	if (ret)
-+		goto err_rm_genpds;
++	of_node_put(pgc_node);
 +
- 	dev_set_drvdata(dev, scmi_pd_data);
- 
--	return of_genpd_add_provider_onecell(np, scmi_pd_data);
-+	return 0;
-+err_rm_genpds:
-+	for (i = num_domains - 1; i >= 0; i--)
-+		pm_genpd_remove(domains[i]);
-+
-+	return ret;
+ 	return 0;
  }
  
- static void scmi_pm_domain_remove(struct scmi_device *sdev)
 
 
