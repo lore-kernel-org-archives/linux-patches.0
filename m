@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C002571A1;
-	Mon,  1 Dec 2025 11:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACA323081AD;
+	Mon,  1 Dec 2025 11:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588346; cv=none; b=ZzXljg66Z24R+8dMSxcZ/ws0ji098CWms1JkfchTT5mG6CEP0v5MdZpBmBSIiH1y3Z3Ldxw2U+QUITuSzgj9bhlh/+sHcwRM84dcYDbkG/wEBL34gytKt+9vKAiHRMuGxKDFSSAaQChFXTAO+8OPfK1FzdcB9CoFmq4oY+fBmjc=
+	t=1764588349; cv=none; b=faeNI7i8IFHu2X9bbPDm77yNaRp+TfbAS4Og3wRpkUjq3j6mTBt/desaINpxOGWZH5Rk80Ue70E0udTwYHpq4IitkFKXEVbVQ6Lao3plTHVJwd6HS42s8WyTfEeUJxsDLmdRDVSJwW8VWRUuOz+QBj0s9ihqM+UYZJ7Wp61lW+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588346; c=relaxed/simple;
-	bh=FUYFt2higJKMdy4foeRHKWWI0IkmrI6TQm6oQ694+G8=;
+	s=arc-20240116; t=1764588349; c=relaxed/simple;
+	bh=t40FUZZwQkGh5+UrTRTSxUXHMLadFGV0ikpdKA4jqGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UzOrNyb6KRjfweje8FWQEzKM9LFGSONVOfwATwIg87zfyaLgpm024++FzmxstPnlau04PiFXntfy1ReLR2FyOuvXSv+G5f2PfL6T+GahNIwkyy2PlCdulDrzm05BSTwvHlHBjwZpozwt3U+RRWgX5/UCQtb4VnRGMy9CLSuzu2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpmJHmuA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NWBRucmVOyN+s4JzFLfFpH+dyIpi06WFHpW4ZKIRnX6FTf17Z4Qv+uwO217h/mCFzAEFOB52KvuGCH1RkOdBLMRO9AxWc7RktzhjEEk3MsNNFz5zTmVAaQZuiYBa64dm9TnPMyU9lMXsLhO8jNTiRZf7oo8Vj0xnjVoEr9pYV6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y27uV857; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpmJHmuA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8579C4CEF1;
-	Mon,  1 Dec 2025 11:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y27uV857"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE3ECC116D0;
+	Mon,  1 Dec 2025 11:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588346;
-	bh=FUYFt2higJKMdy4foeRHKWWI0IkmrI6TQm6oQ694+G8=;
+	s=korg; t=1764588349;
+	bh=t40FUZZwQkGh5+UrTRTSxUXHMLadFGV0ikpdKA4jqGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpmJHmuAeMeCUt8pjab/o3jO1rBj3ELo4nyYaX1U8E1cZNWO2SKRkDyJtLUhTlSFz
-	 vT5gRZ0za312MgD65HHrrrxan4TyGq3lkzn6Ppy7n+it3+s9ourMzVgDGuo30fJo5h
-	 17eKO/0bWpKwI53y2SC4cIg1IAFH4k/UvelrWheQ=
+	b=Y27uV857H5eQfSPmzOAvf3FvWbqDK9qTi+ycc0JWSbT0ZM0mTV0YksGQTqQWvCCje
+	 Thlyx3giTqzNUr8P4DBA1LCeqjMHkL37WScR6WAixFgXI31VARX66YbkAA0TgJXKS8
+	 lcWnMTx3tFPClIotObxVUn5V9TbE9l24mEAe/N0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 003/187] btrfs: use smp_mb__after_atomic() when forcing COW in create_pending_snapshot()
-Date: Mon,  1 Dec 2025 12:21:51 +0100
-Message-ID: <20251201112241.372208620@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 010/187] ASoC: qdsp6: q6asm: do not sleep while atomic
+Date: Mon,  1 Dec 2025 12:21:58 +0100
+Message-ID: <20251201112241.622197927@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,57 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit 45c222468d33202c07c41c113301a4b9c8451b8f ]
+commit fdbb53d318aa94a094434e5f226617f0eb1e8f22 upstream.
 
-After setting the BTRFS_ROOT_FORCE_COW flag on the root we are doing a
-full write barrier, smp_wmb(), but we don't need to, all we need is a
-smp_mb__after_atomic().  The use of the smp_wmb() is from the old days
-when we didn't use a bit and used instead an int field in the root to
-signal if cow is forced. After the int field was changed to a bit in
-the root's state (flags field), we forgot to update the memory barrier
-in create_pending_snapshot() to smp_mb__after_atomic(), but we did the
-change in commit_fs_roots() after clearing BTRFS_ROOT_FORCE_COW. That
-happened in commit 27cdeb7096b8 ("Btrfs: use bitfield instead of integer
-data type for the some variants in btrfs_root"). On the reader side, in
-should_cow_block(), we also use the counterpart smp_mb__before_atomic()
-which generates further confusion.
+For some reason we ended up kfree between spinlock lock and unlock,
+which can sleep.
 
-So change the smp_wmb() to smp_mb__after_atomic(). In fact we don't
-even need any barrier at all since create_pending_snapshot() is called
-in the critical section of a transaction commit and therefore no one
-can concurrently join/attach the transaction, or start a new one, until
-the transaction is unblocked. By the time someone starts a new transaction
-and enters should_cow_block(), a lot of implicit memory barriers already
-took place by having acquired several locks such as fs_info->trans_lock
-and extent buffer locks on the root node at least. Nevertlheless, for
-consistency use smp_mb__after_atomic() after setting the force cow bit
-in create_pending_snapshot().
+move the kfree out of spinlock section.
 
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: a2a5d30218fd ("ASoC: qdsp6: q6asm: Add support to memory map and unmap")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017085307.4325-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c | 2 +-
+ sound/soc/qcom/qdsp6/q6asm.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index 094b024bbf0cf..6618b42defed7 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1546,7 +1546,7 @@ static noinline int create_pending_snapshot(struct btrfs_trans_handle *trans,
- 	}
- 	/* see comments in should_cow_block() */
- 	set_bit(BTRFS_ROOT_FORCE_COW, &root->state);
--	smp_wmb();
-+	smp_mb__after_atomic();
+--- a/sound/soc/qcom/qdsp6/q6asm.c
++++ b/sound/soc/qcom/qdsp6/q6asm.c
+@@ -299,9 +299,9 @@ static void q6asm_audio_client_free_buf(
  
- 	btrfs_set_root_node(new_root_item, tmp);
- 	/* record when the snapshot was created in key.offset */
--- 
-2.51.0
-
+ 	spin_lock_irqsave(&ac->lock, flags);
+ 	port->num_periods = 0;
++	spin_unlock_irqrestore(&ac->lock, flags);
+ 	kfree(port->buf);
+ 	port->buf = NULL;
+-	spin_unlock_irqrestore(&ac->lock, flags);
+ }
+ 
+ /**
 
 
