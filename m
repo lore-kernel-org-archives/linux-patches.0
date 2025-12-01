@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906682BE655;
-	Mon,  1 Dec 2025 11:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835DD2BE655;
+	Mon,  1 Dec 2025 11:28:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588518; cv=none; b=jdcVquCWZ9pjrDK6teIEckUQsTNhC+W5/Im9tbnTggqtqh8vf5LN/pIhjMvxUAKtfU7kq2QUvwXxudrFuWpNDVCCUbnBma7NdMkRLm+/4Dw2sa+YkR1C1njm2yyZYzv9OSrOfRYQVTCR+v2X6zJyPV+YVc9+Hpsl1ub/FLtuUL4=
+	t=1764588521; cv=none; b=lf8qh1ymxZmMeqbWzvgeAdy66V7cqO8QoLK6IIs3SkUNgvK00n1ZATcAo4x5z9mQblp+W4Pfd0NIpfTWIf5ebryhN3xxJiittQQcRAjUnRC+DPk7wnq15ubWMkA/qpDq7DoLLLRq9a5VrHNGN8XSil4WuSuWMyPTwlhrRbuD5uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588518; c=relaxed/simple;
-	bh=xD0q7ZIziffp9tYPIwEPxr0/QWIjqdpUdryFZJKo1S0=;
+	s=arc-20240116; t=1764588521; c=relaxed/simple;
+	bh=2VNSAWMX5oj4PTo1uT3ZTfuBOHBO2GyUKK9fU+WkTzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SbRz6ZFZzwKmXOAsyF7408HhELNTx4QIB5UoRY8jYqEVaQ5xVYsGCNd4+FFR9U6jmp43LZ4SRVje3U+aaR9fUiL70ctTG8TXKZDqtKqivsmhXNGzI0lz/j56UgvbMn152h/xt7eO4C+1dCbwnS+fZ3rrG0rKHAlbQKLn4+fE/Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFKjWC2+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hv4jCz81NLZlzVgHSBDaSYxzFepcQuW5AL/1FZtaetpobbJ/N6kwqIi8xnlmzVv0AElNLn/cRMSXzsHUdPB6McEpWEO7BqM3oJIzc7ESuDKGpYmq9DEbqWgg5LXFMBYImDM0leOP9mS0Vq/pklcdn+L9CMkylBrwSPjqAO0/DEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4q8Rmwt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFKjWC2+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F357FC4CEF1;
-	Mon,  1 Dec 2025 11:28:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4q8Rmwt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB3EC4CEF1;
+	Mon,  1 Dec 2025 11:28:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588518;
-	bh=xD0q7ZIziffp9tYPIwEPxr0/QWIjqdpUdryFZJKo1S0=;
+	s=korg; t=1764588521;
+	bh=2VNSAWMX5oj4PTo1uT3ZTfuBOHBO2GyUKK9fU+WkTzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFKjWC2+mi9Zx/McFQaJ+JGqs97CzoAcbBzxNaqWB/CvD1ArGURWL2jQDdQ9U9xMB
-	 5X5V8IxRAJJ0OcRW66L7CBM+RSQUn3ayDXNuGRBYNAu7+GH2eI85qyuIc7qykF8hWD
-	 0fpvGtsBZ+xzaMTcDf8ZAea3i/4m0W60ZEXkaKVU=
+	b=o4q8RmwtVRGCdvmEgnUawcvEhL0c7T7/ltUBQRdFV9nZmMU84W1qa1v951rFdjJUb
+	 b5axVypr6KYYZbpAgDhRjp08//6f8ZqxlfB7NVWPAnCKpAgUrCCZkWCQGuyIR2/NRm
+	 MXZEtI9beVKDakI9Bx1IPv55OBejImAkiMFrjQy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devendra K Verma <devverma@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Juraj=20=C5=A0arinay?= <juraj@sarinay.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 075/187] dmaengine: dw-edma: Set status for callback_result
-Date: Mon,  1 Dec 2025 12:23:03 +0100
-Message-ID: <20251201112243.944239676@linuxfoundation.org>
+Subject: [PATCH 5.4 076/187] net: nfc: nci: Increase NCI_DATA_TIMEOUT to 3000 ms
+Date: Mon,  1 Dec 2025 12:23:04 +0100
+Message-ID: <20251201112243.979160335@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -45,78 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Devendra K Verma <devverma@amd.com>
+From: Juraj Šarinay <juraj@sarinay.com>
 
-[ Upstream commit 5e742de97c806a4048418237ef1283e7d71eaf4b ]
+[ Upstream commit 21f82062d0f241e55dd59eb630e8710862cc90b4 ]
 
-DMA Engine has support for the callback_result which provides
-the status of the request and the residue. This helps in
-determining the correct status of the request and in
-efficient resource management of the request.
-The 'callback_result' method is preferred over the deprecated
-'callback' method.
+An exchange with a NFC target must complete within NCI_DATA_TIMEOUT.
+A delay of 700 ms is not sufficient for cryptographic operations on smart
+cards. CardOS 6.0 may need up to 1.3 seconds to perform 256-bit ECDH
+or 3072-bit RSA. To prevent brute-force attacks, passports and similar
+documents introduce even longer delays into access control protocols
+(BAC/PACE).
 
-Signed-off-by: Devendra K Verma <devverma@amd.com>
-Link: https://lore.kernel.org/r/20250821121505.318179-1-devverma@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The timeout should be higher, but not too much. The expiration allows
+us to detect that a NFC target has disappeared.
+
+Signed-off-by: Juraj Šarinay <juraj@sarinay.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20250902113630.62393-1-juraj@sarinay.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ include/net/nfc/nci_core.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 25d65f64cd507..6cbb018c215ad 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -474,6 +474,25 @@ dw_edma_device_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t paddr,
- 	return dw_edma_device_transfer(&xfer);
- }
+diff --git a/include/net/nfc/nci_core.h b/include/net/nfc/nci_core.h
+index 004e49f748419..beea7e014b157 100644
+--- a/include/net/nfc/nci_core.h
++++ b/include/net/nfc/nci_core.h
+@@ -52,7 +52,7 @@ enum nci_state {
+ #define NCI_RF_DISC_SELECT_TIMEOUT		5000
+ #define NCI_RF_DEACTIVATE_TIMEOUT		30000
+ #define NCI_CMD_TIMEOUT				5000
+-#define NCI_DATA_TIMEOUT			700
++#define NCI_DATA_TIMEOUT			3000
  
-+static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
-+					enum dmaengine_tx_result result)
-+{
-+	u32 residue = 0;
-+	struct dw_edma_desc *desc;
-+	struct dmaengine_result *res;
-+
-+	if (!vd->tx.callback_result)
-+		return;
-+
-+	desc = vd2dw_edma_desc(vd);
-+	if (desc)
-+		residue = desc->alloc_sz - desc->xfer_sz;
-+
-+	res = &vd->tx_result;
-+	res->result = result;
-+	res->residue = residue;
-+}
-+
- static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- {
- 	struct dw_edma_desc *desc;
-@@ -489,6 +508,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- 		case EDMA_REQ_NONE:
- 			desc = vd2dw_edma_desc(vd);
- 			if (!desc->chunks_alloc) {
-+				dw_hdma_set_callback_result(vd,
-+							    DMA_TRANS_NOERROR);
- 				list_del(&vd->node);
- 				vchan_cookie_complete(vd);
- 			}
-@@ -527,6 +548,7 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 	vd = vchan_next_desc(&chan->vc);
- 	if (vd) {
-+		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
- 	}
+ struct nci_dev;
+ 
 -- 
 2.51.0
 
