@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8811F2E62A2;
-	Mon,  1 Dec 2025 11:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CC83081C6;
+	Mon,  1 Dec 2025 11:28:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588478; cv=none; b=O3VY6bG8EgIGOypEHtQG+VzvNrH3HIVtkHODQKihub+fI3x2HySDn3oM2AGoG4rGfZ5Yn9D5XDxiJbU2V9c/8+AwnHH4SY+iCtMSyV+CUC1gPaKP31bltAYo4AE74jZt+zJjAVr9qrV9fXuWT0WJBacrs3QIKM/yKp57UkhztZM=
+	t=1764588481; cv=none; b=mYxUAbOaULjNzQ0dQDQQIwtSt53mg26t6Ay/eC1jfG2gTf8iSDDjIljkZQ0ornVNCHIhoUrTFytGv60j2XbVM3BuVLzZiEWC7ByLB2TvOwpAyH6dlPCzmjZKO/98ZEdLQiuvfz++nSX9vrtZdOqp3vTjvbMYBPaY9V50jEx2Fd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588478; c=relaxed/simple;
-	bh=w9InlKm2tbGExTYA9Y3295+Pdc687QZCOPL4T8MDvd0=;
+	s=arc-20240116; t=1764588481; c=relaxed/simple;
+	bh=bAdCD7G3Ui46TMqiDZZy0qZg20J2ciEtUX8fV9bShrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F3LkQrJZV6Cv6t3mYKI+Dvp/VWQQlN9y/onuiBcwyDR+Rydm4mwm3PWlk5h6Gadujb1bYM741KK2B57N3+dOh95eqU55rYphfBUV9rX4BCm1SZxtPWPhW5Nn5b0kX+eI+ZIuPeetfM3b0jUZVQWI3WEkpqF+pTLWS0sZV+S1Ik8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqZgQBuo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O9dONRMYgfKVy6JKkL8qK7kX4DrioE72jMkHfneBxLUE3+ZYm3Ltahu52PxJ0nNfC9S+X3zsBmIlKsMd1017Ud+x8eQKzaikgG3DjRahC65x84jhyNQ2A7UX2b86PAx238u5ATtLiHfuNMB8F+7nZqBUpH8CWwxeNZSfQ/D5Ag0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iQT708JH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqZgQBuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159B1C4CEF1;
-	Mon,  1 Dec 2025 11:27:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iQT708JH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4A2C4CEF1;
+	Mon,  1 Dec 2025 11:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588478;
-	bh=w9InlKm2tbGExTYA9Y3295+Pdc687QZCOPL4T8MDvd0=;
+	s=korg; t=1764588481;
+	bh=bAdCD7G3Ui46TMqiDZZy0qZg20J2ciEtUX8fV9bShrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqZgQBuoq7+aJV8chZpIFg7u5RUbn9mwtLZshQ3PVpFFKb0bk3zAfY61903ep+vob
-	 Bi9ez2osO6AwJqpcaGxmgcTuNq0O+BdiibfqmNOzXFF8qSPm5H01EAFATFwF5GLCIE
-	 JMf/sEvgrFsaCRtDH1An+iO577jS7uNXa9SKcGuI=
+	b=iQT708JHpIJMyd3AiWn0jywPinRp1ku8POcf7lU2QgivY6nlSnAcG0RxQ4WU72RWL
+	 RJhTYX73DapGzDvVxdngjUYa13wp7ogHz3TC7hk9QnoLEvFgoYP/90zxlyZqKKgHe8
+	 ZrblLgngcgZnj3hdS905M4B0L4fY6yT93xjYKAA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 063/187] net: Call trace_sock_exceed_buf_limit() for memcg failure with SK_MEM_RECV.
-Date: Mon,  1 Dec 2025 12:22:51 +0100
-Message-ID: <20251201112243.518243890@linuxfoundation.org>
+Subject: [PATCH 5.4 046/187] mfd: stmpe-i2c: Add missing MODULE_LICENSE
+Date: Mon,  1 Dec 2025 12:22:34 +0100
+Message-ID: <20251201112242.911873589@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -53,45 +51,29 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 9d85c565a7b7c78b732393c02bcaa4d5c275fe58 ]
+[ Upstream commit 00ea54f058cd4cb082302fe598cfe148e0aadf94 ]
 
-Initially, trace_sock_exceed_buf_limit() was invoked when
-__sk_mem_raise_allocated() failed due to the memcg limit or the
-global limit.
+This driver is licensed GPL-2.0-only, so add the corresponding module flag.
 
-However, commit d6f19938eb031 ("net: expose sk wmem in
-sock_exceed_buf_limit tracepoint") somehow suppressed the event
-only when memcg failed to charge for SK_MEM_RECV, although the
-memcg failure for SK_MEM_SEND still triggers the event.
-
-Let's restore the event for SK_MEM_RECV.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
-Link: https://patch.msgid.link/20250815201712.1745332-5-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250725071153.338912-3-alexander.stein@ew.tq-group.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/mfd/stmpe-i2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 54f9ad391f895..a737cea1835f3 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2590,8 +2590,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
- 			return 1;
- 	}
- 
--	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
--		trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
-+	trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
- 
- 	sk_memory_allocated_sub(sk, amt);
- 
+diff --git a/drivers/mfd/stmpe-i2c.c b/drivers/mfd/stmpe-i2c.c
+index cd2f45257dc16..d52bb3ea7fb6f 100644
+--- a/drivers/mfd/stmpe-i2c.c
++++ b/drivers/mfd/stmpe-i2c.c
+@@ -139,3 +139,4 @@ module_exit(stmpe_exit);
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("STMPE MFD I2C Interface Driver");
+ MODULE_AUTHOR("Rabin Vincent <rabin.vincent@stericsson.com>");
++MODULE_LICENSE("GPL");
 -- 
 2.51.0
 
