@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 568FC25783C;
-	Mon,  1 Dec 2025 11:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BFD260585;
+	Mon,  1 Dec 2025 11:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588811; cv=none; b=ioHPipx0FHythibi4TfBs0o5B3ravaSOHm2As0brIBoURC6nPxWOcHEDL8VbXVZe7plWVmXC0hALa91cWCP+U944DFJJiB9FNfKpibIUdBfgdoJpbzR2CVoYoGSg0y0auOS6dx0bBOyESzD2mZbvdgefp9gG2tQYqu+o1w8InRk=
+	t=1764588814; cv=none; b=Lal25L1hy5hHG+2eMNZ2k8J89s0tAOXkP6a2Uh8eKHyHI4+hwtq0bSB+0JK9OVUQoa/wixUqKe+nCHYAjvWVqvDXvoyfaXPW6dY98Wdoonaf/W7qN+vgQW4T2eTqih9Yc/DFdMvFgCNmdRInJHKy0MVptJpIiT10iL4qDSCuPxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588811; c=relaxed/simple;
-	bh=DZlKxBYfyEbJdWK8DE1uhYFLq9zBpURvVSTBuWIKfRo=;
+	s=arc-20240116; t=1764588814; c=relaxed/simple;
+	bh=UDzXyqroIgLbebcyuvXZt8SAL9OiLrhP98/XDZjHEyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IAS969UDOGgjRmTYRELHXwAtrm6ufpzn2cipxPT1CqYv8nfWEzSYZZtaX+kPb5Xc011To+tBSQAK+mC9je8DcjX7QFgO0ufGg8OppFE1FkSCoxrBDSLdNUEN9xSIOs77/sAZzX5qcMw25L8Cr17czUMkP14My4i9ztblrLQWlfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4pHvEm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a7ODTrD8dZ/g18H3Gz019lXaUJ6ms1r32OIDexRePYEkr/wRNlDp8xBlP/rjqPpBxG4pGf8t7vLPZPcAF95quuZH4kUTVcCQZNmeA4ZLVTRKfQ4YRR0hnzT1LTRdAsDnTrDFwH01oktOpQq3FbcxcrliEQAA99VdFi7b4ETg9iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uAzp5w46; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4pHvEm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC1A1C4CEF1;
-	Mon,  1 Dec 2025 11:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uAzp5w46"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E80C4CEF1;
+	Mon,  1 Dec 2025 11:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588811;
-	bh=DZlKxBYfyEbJdWK8DE1uhYFLq9zBpURvVSTBuWIKfRo=;
+	s=korg; t=1764588813;
+	bh=UDzXyqroIgLbebcyuvXZt8SAL9OiLrhP98/XDZjHEyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4pHvEm0Nlsh988pCIf8f1kzfOQkz7xPoa/6MjmwBwKRLbigkcVukUw3bOReTR/A2
-	 PCFBMj38Ry5rlBTpSoq7Z3ZglmzEZbJQR5k8/svtFmyI0I5Dv6Xoi5txv3DfFTHSWL
-	 Z5kMZRpcIxBoUACs8gvYXtNiV430hqekoeMfJbeA=
+	b=uAzp5w46bJLsuPRMMQ2B+guxnApdbREhMeAJOIVX1oq6pbPE2RzVIjM1OAe3PfYHL
+	 rNTw9UUEIlsNfHgej5zcFbq8+teADERbkhXAHlEWiEPu8qlXV+OezT44GcsfE+6JWA
+	 tvDZ1sNqAlSfsNXuKx7RP16m1C164APJsWOVNjVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <albinwyang@tencent.com>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Christian Brauner <brauner@kernel.org>,
-	wangzijie <wangzijie1@honor.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ilia Baryshnikov <qwelias@gmail.com>,
+	Hannes Reinecke <hare@suse.de>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 179/187] fs/proc: fix uaf in proc_readdir_de()
-Date: Mon,  1 Dec 2025 12:24:47 +0100
-Message-ID: <20251201112247.676386830@linuxfoundation.org>
+Subject: [PATCH 5.4 180/187] ata: libata-scsi: Fix system suspend for a security locked drive
+Date: Mon,  1 Dec 2025 12:24:48 +0100
+Message-ID: <20251201112247.712913480@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -55,104 +54,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <albinwyang@tencent.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 895b4c0c79b092d732544011c3cecaf7322c36a1 ]
+[ Upstream commit b11890683380a36b8488229f818d5e76e8204587 ]
 
-Pde is erased from subdir rbtree through rb_erase(), but not set the node
-to EMPTY, which may result in uaf access.  We should use RB_CLEAR_NODE()
-set the erased node to EMPTY, then pde_subdir_next() will return NULL to
-avoid uaf access.
+Commit cf3fc037623c ("ata: libata-scsi: Fix ata_to_sense_error() status
+handling") fixed ata_to_sense_error() to properly generate sense key
+ABORTED COMMAND (without any additional sense code), instead of the
+previous bogus sense key ILLEGAL REQUEST with the additional sense code
+UNALIGNED WRITE COMMAND, for a failed command.
 
-We found an uaf issue while using stress-ng testing, need to run testcase
-getdent and tun in the same time.  The steps of the issue is as follows:
+However, this broke suspend for Security locked drives (drives that have
+Security enabled, and have not been Security unlocked by boot firmware).
 
-1) use getdent to traverse dir /proc/pid/net/dev_snmp6/, and current
-   pde is tun3;
+The reason for this is that the SCSI disk driver, for the Synchronize
+Cache command only, treats any sense data with sense key ILLEGAL REQUEST
+as a successful command (regardless of ASC / ASCQ).
 
-2) in the [time windows] unregister netdevice tun3 and tun2, and erase
-   them from rbtree.  erase tun3 first, and then erase tun2.  the
-   pde(tun2) will be released to slab;
+After commit cf3fc037623c ("ata: libata-scsi: Fix ata_to_sense_error()
+status handling") the code that treats any sense data with sense key
+ILLEGAL REQUEST as a successful command is no longer applicable, so the
+command fails, which causes the system suspend to be aborted:
 
-3) continue to getdent process, then pde_subdir_next() will return
-   pde(tun2) which is released, it will case uaf access.
+  sd 1:0:0:0: PM: dpm_run_callback(): scsi_bus_suspend returns -5
+  sd 1:0:0:0: PM: failed to suspend async: error -5
+  PM: Some devices failed to suspend, or early wake event detected
 
-CPU 0                                      |    CPU 1
--------------------------------------------------------------------------
-traverse dir /proc/pid/net/dev_snmp6/      |   unregister_netdevice(tun->dev)   //tun3 tun2
-sys_getdents64()                           |
-  iterate_dir()                            |
-    proc_readdir()                         |
-      proc_readdir_de()                    |     snmp6_unregister_dev()
-        pde_get(de);                       |       proc_remove()
-        read_unlock(&proc_subdir_lock);    |         remove_proc_subtree()
-                                           |           write_lock(&proc_subdir_lock);
-        [time window]                      |           rb_erase(&root->subdir_node, &parent->subdir);
-                                           |           write_unlock(&proc_subdir_lock);
-        read_lock(&proc_subdir_lock);      |
-        next = pde_subdir_next(de);        |
-        pde_put(de);                       |
-        de = next;    //UAF                |
+To make suspend work once again, for a Security locked device only,
+return sense data LOGICAL UNIT ACCESS NOT AUTHORIZED, the actual sense
+data which a real SCSI device would have returned if locked.
+The SCSI disk driver treats this sense data as a successful command.
 
-rbtree of dev_snmp6
-                        |
-                    pde(tun3)
-                     /    \
-                  NULL  pde(tun2)
-
-Link: https://lkml.kernel.org/r/20251025024233.158363-1-albin_yang@163.com
-Signed-off-by: Wei Yang <albinwyang@tencent.com>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: wangzijie <wangzijie1@honor.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: Ilia Baryshnikov <qwelias@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220704
+Fixes: cf3fc037623c ("ata: libata-scsi: Fix ata_to_sense_error() status handling")
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/generic.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/ata/libata-scsi.c |    8 ++++++++
+ include/linux/ata.h       |    1 +
+ 2 files changed, 9 insertions(+)
 
---- a/fs/proc/generic.c
-+++ b/fs/proc/generic.c
-@@ -671,6 +671,12 @@ void pde_put(struct proc_dir_entry *pde)
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -1179,6 +1179,14 @@ static void ata_gen_ata_sense(struct ata
+ 		ata_scsi_set_sense(dev, cmd, NOT_READY, 0x04, 0x21);
+ 		return;
  	}
- }
- 
-+static void pde_erase(struct proc_dir_entry *pde, struct proc_dir_entry *parent)
-+{
-+	rb_erase(&pde->subdir_node, &parent->subdir);
-+	RB_CLEAR_NODE(&pde->subdir_node);
-+}
 +
- /*
-  * Remove a /proc entry and free it if it's not currently in use.
-  */
-@@ -689,7 +695,7 @@ void remove_proc_entry(const char *name,
- 
- 	de = pde_subdir_find(parent, fn, len);
- 	if (de) {
--		rb_erase(&de->subdir_node, &parent->subdir);
-+		pde_erase(de, parent);
- 		if (S_ISDIR(de->mode)) {
- 			parent->nlink--;
- 		}
-@@ -727,13 +733,13 @@ int remove_proc_subtree(const char *name
- 		write_unlock(&proc_subdir_lock);
- 		return -ENOENT;
- 	}
--	rb_erase(&root->subdir_node, &parent->subdir);
-+	pde_erase(root, parent);
- 
- 	de = root;
- 	while (1) {
- 		next = pde_subdir_first(de);
- 		if (next) {
--			rb_erase(&next->subdir_node, &de->subdir);
-+			pde_erase(next, de);
- 			de = next;
- 			continue;
- 		}
++	if (ata_id_is_locked(dev->id)) {
++		/* Security locked */
++		/* LOGICAL UNIT ACCESS NOT AUTHORIZED */
++		ata_scsi_set_sense(dev, cmd, DATA_PROTECT, 0x74, 0x71);
++		return;
++	}
++
+ 	/* Use ata_to_sense_error() to map status register bits
+ 	 * onto sense key, asc & ascq.
+ 	 */
+--- a/include/linux/ata.h
++++ b/include/linux/ata.h
+@@ -557,6 +557,7 @@ struct ata_bmdma_prd {
+ #define ata_id_has_ncq(id)	((id)[ATA_ID_SATA_CAPABILITY] & (1 << 8))
+ #define ata_id_queue_depth(id)	(((id)[ATA_ID_QUEUE_DEPTH] & 0x1f) + 1)
+ #define ata_id_removable(id)	((id)[ATA_ID_CONFIG] & (1 << 7))
++#define ata_id_is_locked(id)	(((id)[ATA_ID_DLF] & 0x7) == 0x7)
+ #define ata_id_has_atapi_AN(id)	\
+ 	((((id)[ATA_ID_SATA_CAPABILITY] != 0x0000) && \
+ 	  ((id)[ATA_ID_SATA_CAPABILITY] != 0xffff)) && \
 
 
