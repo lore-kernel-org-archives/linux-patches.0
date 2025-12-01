@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5903081D4;
-	Mon,  1 Dec 2025 11:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E171430AACF;
+	Mon,  1 Dec 2025 11:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588367; cv=none; b=AVDJRn9GfcVkQA0GayVuTSLjic3k5Ow7ZIuQDPRhiDffN1EZptmJF8eESIqU6t0ew1ecKk4yX99Kfpmbpbej5z69O0X8suU8dmGH2w9yFPs81Un3rdm/lKVDp+TdMOWKUWIwa0bBelBCkPEYuA4Dk3wsHv4p8ejWFcJRFWzJB4k=
+	t=1764588370; cv=none; b=Zg0vjoyq77LIU+UImexyCgxZQrKRp1N9wfFiHzcdigK4i9Ep6MYlx8kYAdKy1aFUT6re+8fXVcOjs0DHdQUB/XdTb1CcTaYdI33oa5DFV2DQrCgs6F6ISC56F3hEuyVG2yeQMUgny3iSZgc/z4cAYj6DvecSfxwJ50E2kQhEq5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588367; c=relaxed/simple;
-	bh=RD5Y4DJ+0EmTu2lFz3W5yxKvhI2VpK9hUuiJ6KBqT2Y=;
+	s=arc-20240116; t=1764588370; c=relaxed/simple;
+	bh=oo84+Die5erF60CRDIzLauDU0l1emw7HpCJFPw1VJa4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xjs6dbWoQA1lnoqC+6fzgtP4JsswHAlaKBg5/yGYS5tma0avs84TlOhs1vZAeM8waI59bx67qEFdkKd8ee7c1YKH6XvOSVxELHaeTC54X3Ggw7MsUjuKDQ37yjp+8xJJ5L8hmvFg9RP6p78ZhPeqzhR4czlLuzEvoUhTKXIj2KM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gTXSHbSa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S+gTEFyXxcVL9XajMbaJYTCxTEi7ZsNQNUubbDS2gZYRKAFP6kdmNX4NhlFZzw1qmRLx85MsBdgv7xsR5ZXEMBu07fs6oztHvWtNoGMhxEQaswK10fiqZudi+Z5Fv4DUomxvCIqgpYF/CaM+t8em2wtjaiQRmoeGkitAKITLAzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LWl7tIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gTXSHbSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8C9C4CEF1;
-	Mon,  1 Dec 2025 11:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LWl7tIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE6DC4CEF1;
+	Mon,  1 Dec 2025 11:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588366;
-	bh=RD5Y4DJ+0EmTu2lFz3W5yxKvhI2VpK9hUuiJ6KBqT2Y=;
+	s=korg; t=1764588369;
+	bh=oo84+Die5erF60CRDIzLauDU0l1emw7HpCJFPw1VJa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTXSHbSaQhFlKtbPAOfbSV0XtCxoTtv1QTtXFhZwP9QSINg4eFw2eEpN52ossVKut
-	 HfefjeBnqDhAxsTmjDM9Bi+QCBmouS2ZCQngO6mye8mbx67zP0XFGvZowaLPyvo5/V
-	 nHhantnRJbfkxgrdx1U7gsDZP2GDW93yAx2BG3ZY=
+	b=1LWl7tIRlZKSGbo9qnjroqA8J7hLKvbq++/KH0zYmzsd5QVPbDrxT3D9syc1mlW0P
+	 UEAmLpXHGJHeeKIPVD6vgnaFZB8lMkQLXg1faLbzXXjj33BJkLHa54a6sVFx914NOy
+	 qBgqcUkG+K5WcMXvtyTaeWc8LylB/XmeRPU1UjZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Owen Gu <guhuinan@xiaomi.com>
-Subject: [PATCH 5.4 024/187] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
-Date: Mon,  1 Dec 2025 12:22:12 +0100
-Message-ID: <20251201112242.128969340@linuxfoundation.org>
+	Jens Reidel <adrian@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 025/187] soc: qcom: smem: Fix endian-unaware access of num_entries
+Date: Mon,  1 Dec 2025 12:22:13 +0100
+Message-ID: <20251201112242.164759525@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -49,54 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Jens Reidel <adrian@mainlining.org>
 
-commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
+[ Upstream commit 19e7aa0e9e46d0ad111a4af55b3d681b6ad945e0 ]
 
-A race condition occurs when ffs_func_eps_enable() runs concurrently
-with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
-sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
-to a NULL pointer dereference when accessing epfile->ep in
-ffs_func_eps_enable() after successful usb_ep_enable().
+Add a missing le32_to_cpu when accessing num_entries, which is always a
+little endian integer.
 
-The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
-ffs_data_close() functions, and its modification is protected by the
-spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
-is also protected by ffs->eps_lock.
+Fixes booting on Xiaomi Mi 9T (xiaomi-davinci) in big endian.
 
-Thus, add NULL pointer handling for ffs->epfiles in the
-ffs_func_eps_enable() function to fix issues
-
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jens Reidel <adrian@mainlining.org>
+Link: https://lore.kernel.org/r/20250726235646.254730-1-adrian@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2012,7 +2012,12 @@ static int ffs_func_eps_enable(struct ff
- 	ep = func->eps;
- 	epfile = ffs->epfiles;
- 	count = ffs->eps_count;
--	while(count--) {
-+	if (!epfile) {
-+		ret = -ENOMEM;
-+		goto done;
-+	}
-+
-+	while (count--) {
- 		ep->ep->driver_data = ep;
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index 28c19bcb2f205..d2d62d2b378b4 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -709,7 +709,7 @@ static u32 qcom_smem_get_item_count(struct qcom_smem *smem)
+ 	if (IS_ERR_OR_NULL(ptable))
+ 		return SMEM_ITEM_COUNT;
  
- 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
-@@ -2036,6 +2041,7 @@ static int ffs_func_eps_enable(struct ff
- 	}
+-	info = (struct smem_info *)&ptable->entry[ptable->num_entries];
++	info = (struct smem_info *)&ptable->entry[le32_to_cpu(ptable->num_entries)];
+ 	if (memcmp(info->magic, SMEM_INFO_MAGIC, sizeof(info->magic)))
+ 		return SMEM_ITEM_COUNT;
  
- 	wake_up_interruptible(&ffs->wait);
-+done:
- 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
- 
- 	return ret;
+-- 
+2.51.0
+
 
 
