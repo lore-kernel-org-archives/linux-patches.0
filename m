@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FFB2550DD;
-	Mon,  1 Dec 2025 11:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEF42550DD;
+	Mon,  1 Dec 2025 11:31:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588695; cv=none; b=SgPGAviX0buA2dtcGJFIE/cROO/uQS79WBk5S8jW/K0OzT5aOh6fJLV1fRFRm4J+raoBjPL6tOeUvL+JGuTZXTpcCx6e9r+wNdzUWYokpImOFbKyqztX4+Q8g8yTlomJ+nC1d/yLuKMwbk+48+YD2KqlfyCEfsEGoHcb6yMa28g=
+	t=1764588698; cv=none; b=Pe6Qe7fbKtWJFyLqIaG8G/z3PxQfckjpI4VT/0pfW7O1NAkjSDOfeC9a/b8HbwiCm4ohHffG+/iIxNOrQBqvTdznHvQ6eBlpn/lbYx/WBRppKBmXC5kl29pcb6DRBngkuMMtn7n1+AIhDa5P2feP6bayOSe1pqydgOT1TCOXkn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588695; c=relaxed/simple;
-	bh=7d/JbfFcwZpUQNTLbrcMABwE8Ge4XTv3wQXicOpBI9I=;
+	s=arc-20240116; t=1764588698; c=relaxed/simple;
+	bh=+WFptOIa5EplUhY7WMffhl+RdQU4wOQHPMbtNIeSKpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nn+C4/p0OGqawitT3QWbfkAelTjNvY3gKQrog6nizdymuAr9r5YkvHXY4byrBOTAvKjBRC4IP1TgV5f4vW8AENeycPsp6yb69W2hj0BXCU+J/cnqGWZRtuhdWQ/e0r54D8uoYqYWR2HTzOXlyvtZGW1NmU0hw6CDLv2+0fVMSTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lv+LIZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nrJivwBVeX+fEo/c9q2qMm+QWMhS2c+vUuMFfZmPnySgOsstssietYr2G2+RiHrGNbb4ILxQTLDethW4vstZvznc+7bT6Gkuvb8H4s2y7on+cYkMF5luqGh1rZUzS4rv775IluvOVguJgw6suGNvelxSg8qRRRt/9UdOpVqnL4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l59cvJe6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lv+LIZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04AB8C19421;
-	Mon,  1 Dec 2025 11:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l59cvJe6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FF2C4CEF1;
+	Mon,  1 Dec 2025 11:31:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588695;
-	bh=7d/JbfFcwZpUQNTLbrcMABwE8Ge4XTv3wQXicOpBI9I=;
+	s=korg; t=1764588698;
+	bh=+WFptOIa5EplUhY7WMffhl+RdQU4wOQHPMbtNIeSKpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0lv+LIZkKh/5Ga1kY5wR3Abr34b1Kr6bmV9qjWn94Dxu1/xPmvdGvOTFfPjqPXbau
-	 ySnZ5lswPiLkQEMcT1LMuIGdyNRHrjEa0les6al3I9DiD3EeyLrQmL7uIoxeU2vgPL
-	 RyTP2sdAHmdlp5ZruEm9qASw0QxdkbL+RBirkyek=
+	b=l59cvJe6WMjFUCLTOoLSQ2/GveW1QnljGGiRHBd7zuMA/X749D3Ef1UGZabXrKlUY
+	 waxGrL3xdTTWSYah1aI+n3KloIoxqrz7Kk8Zd/i5syNvTGAc9Nf8OaYi53avGX2O7V
+	 /cPCS0IbfffwiYnvynZBonTPxHWPPE0h51TCObjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Buday Csaba <buday.csaba@prolan.hu>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 138/187] net: mdio: fix resource leak in mdiobus_register_device()
-Date: Mon,  1 Dec 2025 12:24:06 +0100
-Message-ID: <20251201112246.209350878@linuxfoundation.org>
+Subject: [PATCH 5.4 139/187] wifi: mac80211: skip rate verification for not captured PSDUs
+Date: Mon,  1 Dec 2025 12:24:07 +0100
+Message-ID: <20251201112246.244447688@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,43 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Buday Csaba <buday.csaba@prolan.hu>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit e6ca8f533ed41129fcf052297718f417f021cc7d ]
+[ Upstream commit 7fe0d21f5633af8c3fab9f0ef0706c6156623484 ]
 
-Fix a possible leak in mdiobus_register_device() when both a
-reset-gpio and a reset-controller are present.
-Clean up the already claimed reset-gpio, when the registration of
-the reset-controller fails, so when an error code is returned, the
-device retains its state before the registration attempt.
+If for example the sniffer did not follow any AIDs in an MU frame, then
+some of the information may not be filled in or is even expected to be
+invalid. As an example, in that case it is expected that Nss is zero.
 
-Link: https://lore.kernel.org/all/20251106144603.39053c81@kernel.org/
-Fixes: 71dd6c0dff51 ("net: phy: add support for reset-controller")
-Signed-off-by: Buday Csaba <buday.csaba@prolan.hu>
-Link: https://patch.msgid.link/4b419377f8dd7d2f63f919d0f74a336c734f8fff.1762584481.git.buday.csaba@prolan.hu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2ff5e52e7836 ("radiotap: add 0-length PSDU "not captured" type")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110142554.83a2858ee15b.I9f78ce7984872f474722f9278691ae16378f0a3e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mdio_bus.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/mac80211/rx.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
-index 931b9a6c5dc50..bdce184759eff 100644
---- a/drivers/net/phy/mdio_bus.c
-+++ b/drivers/net/phy/mdio_bus.c
-@@ -89,8 +89,11 @@ int mdiobus_register_device(struct mdio_device *mdiodev)
- 			return err;
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 4c805530edfb6..e8e72271fbb8f 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -4669,10 +4669,14 @@ void ieee80211_rx_napi(struct ieee80211_hw *hw, struct ieee80211_sta *pubsta,
+ 	if (WARN_ON(!local->started))
+ 		goto drop;
  
- 		err = mdiobus_register_reset(mdiodev);
--		if (err)
-+		if (err) {
-+			gpiod_put(mdiodev->reset_gpio);
-+			mdiodev->reset_gpio = NULL;
- 			return err;
-+		}
+-	if (likely(!(status->flag & RX_FLAG_FAILED_PLCP_CRC))) {
++	if (likely(!(status->flag & RX_FLAG_FAILED_PLCP_CRC) &&
++		   !(status->flag & RX_FLAG_NO_PSDU &&
++		     status->zero_length_psdu_type ==
++		     IEEE80211_RADIOTAP_ZERO_LEN_PSDU_NOT_CAPTURED))) {
+ 		/*
+-		 * Validate the rate, unless a PLCP error means that
+-		 * we probably can't have a valid rate here anyway.
++		 * Validate the rate, unless there was a PLCP error which may
++		 * have an invalid rate or the PSDU was not capture and may be
++		 * missing rate information.
+ 		 */
  
- 		/* Assert the reset signal */
- 		mdio_device_reset(mdiodev, 1);
+ 		switch (status->encoding) {
 -- 
 2.51.0
 
