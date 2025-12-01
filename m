@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4CB926158B;
-	Mon,  1 Dec 2025 11:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A410C26E71E;
+	Mon,  1 Dec 2025 11:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588639; cv=none; b=ftYeevsq8IGhSBWuTyYip5OLrjgaoOlRJXrX6by55C/RHRrW/KznwU4F+hLS8pN1JQ1v3QmzozZYMIVJlrHUTiiThVXWd/bWUJ/gwJIJScvSvtSoqiwHDDjCouSvYVsX43D4oUpw55rrs/VtqAM1WF/ZNzKewcPnJu5gy5OxC7M=
+	t=1764588641; cv=none; b=GJ71WskblMgVxsXUPsG9Q83AvkZZVhQMXW+LrK/96i9VVKCa1HELlmxLYjd48+9JyBrxmkBLTD7nWAGcW0nbuMqzDYm4968Z8flKaSoTEalBRBVc68QRvnGn6aeXilC+lR14+CGDbJ/6hOqzT2EFMwtHNeMGVtMlUru536YK/tI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588639; c=relaxed/simple;
-	bh=8GhfNk89FOkKluop+/JJW6aB6DH7L/colW5+yM/bdZ8=;
+	s=arc-20240116; t=1764588641; c=relaxed/simple;
+	bh=BeezEBK1r6ibcS8aCoDPZuwWLWANZXYhoOwExGF3Tlw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qI7NOwPnH6tLbDseI5gY1zvD7MxNwuHCmAfwc/HY6M1p9Q0QXvuTT+rOikQNGadaKrBsfwQizPAbPgL5pK/e21e7HWub9xurJX+S392I4LDHMkyFJ+ho7jsk/UpOgbnZExLdHTlOWp6mT/EwOQDmk1TxQ7QVjhVpqo1onI87dEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X4uF5wvg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BkFhr2z4/kBetDo36gq5YGabWhybMRHNcMJxkfzv3g8avMkZAOW1TpohX+xBvASdKOJo0E+w8KU4PkTeSxx00cUlyimb1YeX4LZ7m/j9qnECSy3/VcWvQmvs1uz6MTsSzxbdZyxTXq4OBMywqfYcpu9F45Hw1kX70LwYaczMo0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k0vymtC7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X4uF5wvg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3BBC113D0;
-	Mon,  1 Dec 2025 11:30:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k0vymtC7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C235C113D0;
+	Mon,  1 Dec 2025 11:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588638;
-	bh=8GhfNk89FOkKluop+/JJW6aB6DH7L/colW5+yM/bdZ8=;
+	s=korg; t=1764588641;
+	bh=BeezEBK1r6ibcS8aCoDPZuwWLWANZXYhoOwExGF3Tlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4uF5wvgl54mjONMcWV4UhQCw5BrHqFuAkCuLCwYl3lwl+t2ps6IzNpEBpzYrTfTI
-	 kAOauoL373dXlMoNIJ0Pd65UO0Au3qQYsygrE4WtMUOf1S4MO72PYKR7DHgUp+u7rP
-	 yoWNLlWezc32XmC0cDjeKHo2LKAtaD5mRs1pRiKU=
+	b=k0vymtC7ifNZnvvP22CNJgbNqISxnHwhPjbBawXxQusLBPHOC5R/P3tHmqFJaDp5K
+	 kk0nXOKVQVIJ1POrg4E+w7MFJJhQT8MxKm+4Edcq1LReeAtX2VjexHwC0ZU38rw5zl
+	 qF5dj/29HQs6ZmMf4CA6tt5fIVZU2VomCHlDGOow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Thomas Graf <tgraf@suug.ch>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Nai-Chen Cheng <bleach1827@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 085/187] net/cls_cgroup: Fix task_get_classid() during qdisc run
-Date: Mon,  1 Dec 2025 12:23:13 +0100
-Message-ID: <20251201112244.301821834@linuxfoundation.org>
+Subject: [PATCH 5.4 086/187] selftests/Makefile: include $(INSTALL_DEP_TARGETS) in clean target to clean net/lib dependency
+Date: Mon,  1 Dec 2025 12:23:14 +0100
+Message-ID: <20251201112244.337571559@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -55,105 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Nai-Chen Cheng <bleach1827@gmail.com>
 
-[ Upstream commit 66048f8b3cc7e462953c04285183cdee43a1cb89 ]
+[ Upstream commit d3f7457da7b9527a06dbcbfaf666aa51ac2eeb53 ]
 
-During recent testing with the netem qdisc to inject delays into TCP
-traffic, we observed that our CLS BPF program failed to function correctly
-due to incorrect classid retrieval from task_get_classid(). The issue
-manifests in the following call stack:
+The selftests 'make clean' does not clean the net/lib because it only
+processes $(TARGETS) and ignores $(INSTALL_DEP_TARGETS). This leaves
+compiled objects in net/lib after cleaning, requiring manual cleanup.
 
-        bpf_get_cgroup_classid+5
-        cls_bpf_classify+507
-        __tcf_classify+90
-        tcf_classify+217
-        __dev_queue_xmit+798
-        bond_dev_queue_xmit+43
-        __bond_start_xmit+211
-        bond_start_xmit+70
-        dev_hard_start_xmit+142
-        sch_direct_xmit+161
-        __qdisc_run+102             <<<<< Issue location
-        __dev_xmit_skb+1015
-        __dev_queue_xmit+637
-        neigh_hh_output+159
-        ip_finish_output2+461
-        __ip_finish_output+183
-        ip_finish_output+41
-        ip_output+120
-        ip_local_out+94
-        __ip_queue_xmit+394
-        ip_queue_xmit+21
-        __tcp_transmit_skb+2169
-        tcp_write_xmit+959
-        __tcp_push_pending_frames+55
-        tcp_push+264
-        tcp_sendmsg_locked+661
-        tcp_sendmsg+45
-        inet_sendmsg+67
-        sock_sendmsg+98
-        sock_write_iter+147
-        vfs_write+786
-        ksys_write+181
-        __x64_sys_write+25
-        do_syscall_64+56
-        entry_SYSCALL_64_after_hwframe+100
+Include $(INSTALL_DEP_TARGETS) in clean target to ensure net/lib
+dependency is properly cleaned.
 
-The problem occurs when multiple tasks share a single qdisc. In such cases,
-__qdisc_run() may transmit skbs created by different tasks. Consequently,
-task_get_classid() retrieves an incorrect classid since it references the
-current task's context rather than the skb's originating task.
-
-Given that dev_queue_xmit() always executes with bh disabled, we can use
-softirq_count() instead to obtain the correct classid.
-
-The simple steps to reproduce this issue:
-1. Add network delay to the network interface:
-  such as: tc qdisc add dev bond0 root netem delay 1.5ms
-2. Build two distinct net_cls cgroups, each with a network-intensive task
-3. Initiate parallel TCP streams from both tasks to external servers.
-
-Under this specific condition, the issue reliably occurs. The kernel
-eventually dequeues an SKB that originated from Task-A while executing in
-the context of Task-B.
-
-It is worth noting that it will change the established behavior for a
-slightly different scenario:
-
-  <sock S is created by task A>
-  <class ID for task A is changed>
-  <skb is created by sock S xmit and classified>
-
-prior to this patch the skb will be classified with the 'new' task A
-classid, now with the old/original one. The bpf_get_cgroup_classid_curr()
-function is a more appropriate choice for this case.
-
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Thomas Graf <tgraf@suug.ch>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250902062933.30087-1-laoar.shao@gmail.com
+Signed-off-by: Nai-Chen Cheng <bleach1827@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Simon Horman <horms@kernel.org> # build-tested
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://patch.msgid.link/20250910-selftests-makefile-clean-v1-1-29e7f496cd87@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cls_cgroup.h | 2 +-
+ tools/testing/selftests/Makefile | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/cls_cgroup.h b/include/net/cls_cgroup.h
-index 4295de3e6a4ba..7c2ead6cdc538 100644
---- a/include/net/cls_cgroup.h
-+++ b/include/net/cls_cgroup.h
-@@ -58,7 +58,7 @@ static inline u32 task_get_classid(const struct sk_buff *skb)
- 	 * calls by looking at the number of nested bh disable calls because
- 	 * softirqs always disables bh.
- 	 */
--	if (in_serving_softirq()) {
-+	if (softirq_count()) {
- 		struct sock *sk = skb_to_full_sk(skb);
+diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
+index 40ee6f57af78a..9514f6dbe46b6 100644
+--- a/tools/testing/selftests/Makefile
++++ b/tools/testing/selftests/Makefile
+@@ -237,7 +237,7 @@ else
+ endif
  
- 		/* If there is an sock_cgroup_classid we'll use that. */
+ clean:
+-	@for TARGET in $(TARGETS); do \
++	@for TARGET in $(TARGETS) $(INSTALL_DEP_TARGETS); do \
+ 		BUILD_TARGET=$$BUILD/$$TARGET;	\
+ 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean;\
+ 	done;
 -- 
 2.51.0
 
