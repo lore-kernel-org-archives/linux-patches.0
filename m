@@ -1,125 +1,98 @@
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com [209.85.166.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2434B30170C
-	for <patches@lists.linux.dev>; Mon,  1 Dec 2025 11:29:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9DB2522B6;
+	Mon,  1 Dec 2025 11:29:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588569; cv=none; b=f5rNoK1DSeEp7gc0VvERtV26adISzwHL68xP9r/1j7pmu+49oePUdWZHCM0BVLG7qthyr4XLcOy70ufdGfYjFCeYdUkBbwAjuerojtouKI8a0BdD76x3iaDnuASTFdTt35sLup65upU769Rin7TQTCdxAenDg6HCRT5UIdVmK8M=
+	t=1764588572; cv=none; b=ZD5zXAmVWFtDWaX6yrrpMtlOy3Yxvlrc0p4nEmdn0jkT21tubPzIRq3LlEkzc7GpLeOYLJi74a64XcMHZk3SIeJXU7MnKp5xlwG+NbvA+hRTdPUppy54iv/MFLxOrg4g+BdD4ux6qMCY96GTZtUCJisaMudNtZQ3CKNJRR0w2q4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588569; c=relaxed/simple;
-	bh=1e3xXhcPNHWgicbIPtgAm1Z3M8jEizauH6ZfvImQYHc=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=QwRlho1b/1DQOo0Bc6IN92BDdR+SoWRGT6tQFBvQah+yzmC/qZvxjZJsl62EjS8gykccfDFgtRAOQziFuN8pZGQ0x/hVroLP+1ruIPiospGwvHkTtvv0tyMDZB6F2GCWTqq8K/L2xYD+ANhtumMlYQVHu5MS9Qbh8f4erePGmkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.166.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-io1-f72.google.com with SMTP id ca18e2360f4ac-9490559deffso245509539f.3
-        for <patches@lists.linux.dev>; Mon, 01 Dec 2025 03:29:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764588567; x=1765193367;
-        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EfHZ+dazpAoEJkFZ0dyA7E//xH/NuSxVKK2DI5VlixI=;
-        b=LH1vKBOuY4iTkfe+M6NqEKiRJbp2DI4qAZOx3q/RgmX4Iu+LHCkAqDKVOPAmRo6Bee
-         RIC7IMckvkL3tBhhBhT10g2guK1CRy0XLu4UmMw35tBCZ0KSAs9zgei6XWNMq71XMHxA
-         Q5vrUIGSEwyBVO1M5CxX6klknglU2cjkb5LcJYzy9QvJXznYtOfd7vzRZzhZKI9faljy
-         QtITF6bR/Olmmru02KjJwEJ0Bx1U5H4aPQU3RcTvox7K3+6tG4QKGtBCsct6WpuEqUVo
-         tOusRTSh+dhiVjr+f5bfkPmdBe+LCVLT0OJoFGwJcINsbOX60CNXcQTy9wruBVNNPu4P
-         wbDg==
-X-Forwarded-Encrypted: i=1; AJvYcCWpkv8TlCmBZiHQdemaFlCLxh3Ga7Su+VLr3FozKE5gAyxMyNGcjfkb9tmYSKMcjT4kdJ8Tdi6u@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy4o9sUDHRdldYrqq25GopAAQkyGgJnlKq63sNaDj9y+0xQBcGm
-	4mj1iuo6C/ptwrR03k1bxAixPI/twRJoiKXb9j4N7px+FRxU/Kc7PP+AWFV/UcOOe8zRF68bQpJ
-	NqmKgRn4NbZ8tQ9Gi2Ab9rjc6QcDbTHLAGpJr32TKBEnrjB3kaj0fk566SUk=
-X-Google-Smtp-Source: AGHT+IGnOvmSMJiHTilz4QuvC4k33TNb6q929ZN9GMb5ns1D6ua+GNTnzx+AdRtKSiWT2jPRvhmUSNF7ofcblWO29+0vvE0jiKUA
+	s=arc-20240116; t=1764588572; c=relaxed/simple;
+	bh=hzEawvccUP3sKZeZs/BIIqoljmSmaiNgJs+oeX5k/Vg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=DPl5kMy9OtWuQeY6yNubBB4hJiBArQr9sHZOYVd8tfNwDyFhNHTOksomxLiruuWcytVxR6LX0YInsrur6efZARWTvJJO6UUC2rrWhL/WXQKh+B+HEVl8Lu4o0O6LUP8fHyamo/jFkcywcLZvHDozmn0CaqFDJovPe01fCE296+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ass1c0hQ; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ass1c0hQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DC4C4CEF1;
+	Mon,  1 Dec 2025 11:29:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1764588572;
+	bh=hzEawvccUP3sKZeZs/BIIqoljmSmaiNgJs+oeX5k/Vg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Ass1c0hQ/i5zzGaAIq1V6qbFAJkg8JoE34bZdJizWVv7FTMzzV3N+OfkW70LSYxhR
+	 CsMJjjaYJ6hG5FFu+QRkYKk2Zh4pzd1yJ2iVn1a07M+K8U6ltkyUtVYEqSdoB1fMuA
+	 mhvb0pgIZsBppbv2JXvnMoiYQNHL2YomiMNDZrqQ=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Koakuma <koachan@protonmail.com>,
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 096/187] sparc/module: Add R_SPARC_UA64 relocation handling
+Date: Mon,  1 Dec 2025 12:23:24 +0100
+Message-ID: <20251201112244.709149627@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
+References: <20251201112241.242614045@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6602:1589:b0:948:89f2:ea34 with SMTP id
- ca18e2360f4ac-949488ffe08mr3497024139f.5.1764588567171; Mon, 01 Dec 2025
- 03:29:27 -0800 (PST)
-Date: Mon, 01 Dec 2025 03:29:27 -0800
-In-Reply-To: <20251201112244.638235384@linuxfoundation.org>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <692d7c17.a70a0220.d98e3.0185.GAE@google.com>
-Subject: Re: [PATCH 5.4 094/187] jfs: fix uninitialized waitqueue in
- transaction manager
-From: syzbot <syzbot@syzkaller.appspotmail.com>
-To: gregkh@linuxfoundation.org
-Cc: dave.kleikamp@oracle.com, gregkh@linuxfoundation.org, 
-	patches@lists.linux.dev, sashal@kernel.org, ssrane_b23@ee.vjti.ac.in, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> 5.4-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
->
-> [ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
->
-> The transaction manager initialization in txInit() was not properly
-> initializing TxBlock[0].waitor waitqueue, causing a crash when
-> txEnd(0) is called on read-only filesystems.
->
-> When a filesystem is mounted read-only, txBegin() returns tid=0 to
-> indicate no transaction. However, txEnd(0) still gets called and
-> tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
-> waitqueue was never initialized because the initialization loop
-> started at index 1 instead of 0.
->
-> This causes a 'non-static key' lockdep warning and system crash:
->   INFO: trying to register non-static key in txEnd
->
-> Fix by ensuring all transaction blocks including TxBlock[0] have
-> their waitqueues properly initialized during txInit().
->
-> Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
->
-> Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-> Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/jfs/jfs_txnmgr.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-> index 6f6a5b9203d3f..97a2eb0f0b75d 100644
-> --- a/fs/jfs/jfs_txnmgr.c
-> +++ b/fs/jfs/jfs_txnmgr.c
-> @@ -272,14 +272,15 @@ int txInit(void)
->  	if (TxBlock == NULL)
->  		return -ENOMEM;
->  
-> -	for (k = 1; k < nTxBlock - 1; k++) {
-> -		TxBlock[k].next = k + 1;
-> +	for (k = 0; k < nTxBlock; k++) {
->  		init_waitqueue_head(&TxBlock[k].gcwait);
->  		init_waitqueue_head(&TxBlock[k].waitor);
->  	}
-> +
-> +	for (k = 1; k < nTxBlock - 1; k++) {
-> +		TxBlock[k].next = k + 1;
-> +	}
->  	TxBlock[k].next = 0;
-> -	init_waitqueue_head(&TxBlock[k].gcwait);
-> -	init_waitqueue_head(&TxBlock[k].waitor);
->  
->  	TxAnchor.freetid = 1;
->  	init_waitqueue_head(&TxAnchor.freewait);
-> -- 
-> 2.51.0
->
->
->
+5.4-stable review patch.  If anyone has any objections, please let me know.
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
+------------------
+
+From: Koakuma <koachan@protonmail.com>
+
+[ Upstream commit 05457d96175d25c976ab6241c332ae2eb5e07833 ]
+
+This is needed so that the kernel can handle R_SPARC_UA64 relocations,
+which is emitted by LLVM's IAS.
+
+Signed-off-by: Koakuma <koachan@protonmail.com>
+Reviewed-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/sparc/include/asm/elf_64.h | 1 +
+ arch/sparc/kernel/module.c      | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/arch/sparc/include/asm/elf_64.h b/arch/sparc/include/asm/elf_64.h
+index 7e078bc73ef56..d3dda47d0bc5a 100644
+--- a/arch/sparc/include/asm/elf_64.h
++++ b/arch/sparc/include/asm/elf_64.h
+@@ -59,6 +59,7 @@
+ #define R_SPARC_7		43
+ #define R_SPARC_5		44
+ #define R_SPARC_6		45
++#define R_SPARC_UA64		54
+ 
+ /* Bits present in AT_HWCAP, primarily for Sparc32.  */
+ #define HWCAP_SPARC_FLUSH       0x00000001
+diff --git a/arch/sparc/kernel/module.c b/arch/sparc/kernel/module.c
+index df39580f398d3..737f7a5c28359 100644
+--- a/arch/sparc/kernel/module.c
++++ b/arch/sparc/kernel/module.c
+@@ -117,6 +117,7 @@ int apply_relocate_add(Elf_Shdr *sechdrs,
+ 			break;
+ #ifdef CONFIG_SPARC64
+ 		case R_SPARC_64:
++		case R_SPARC_UA64:
+ 			location[0] = v >> 56;
+ 			location[1] = v >> 48;
+ 			location[2] = v >> 40;
+-- 
+2.51.0
+
+
 
