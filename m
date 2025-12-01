@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132E425EFB6;
-	Mon,  1 Dec 2025 11:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CF68635C;
+	Mon,  1 Dec 2025 11:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588718; cv=none; b=WcJAlqabC+LPuTj/JOSFjnXENeb28LxDyMIrAmOjJtyseoQ3bLdieBDiT+5U9+knteE+rs7cC3UNNdsZ1zd6D6ZUn2RJA8WQyLeNo2rkt5xZg9RT7hTwFEnqVIi5CcOMD9DbXHGZoJ4X3ZUFEJfRir+vsyNDHpjn30jrhZTiP34=
+	t=1764588721; cv=none; b=L6l1jZGTOsfrL7RUxPxsPDjIUr2A74n48HUTWN2FPxVup3+RRLbdeOOqHHa0joWQTYV2a3rkCHhpcqNeH5t8eqCNln2F83BksqDQByH9uAubdOFtuY3GYNAX0trixdcD90zCUZbIQgvo9Bcrsq8G5Wdo7ScTbXE+scrff8h8wEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588718; c=relaxed/simple;
-	bh=xJjUfudNPR5oSwWXhGPywnCsHmOQXH4xacSJ8/iqNvQ=;
+	s=arc-20240116; t=1764588721; c=relaxed/simple;
+	bh=zWYjA1v4JFSeZgD8C/rXAzZael8yFM/UP4/mU7K+5aM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SkNkmvBIhnECoTXuIU/HcGZRbvGr6S8e9SMvJMwZghxCHdRqGxmsl3SR9ezO93bxZqukrGbqLJxQqnE4By/SL6Mku4zZVjtQIvbdQGFTPxj04OHEwhkuWh7kJiliVuuBo5C6CPdeNuBfPbrP5G3jSu38CNOxGs+I3D4Sa05axK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+D9soVU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=udbs++P0Lr85INRL7g0natUmlv5rIyuiYwZSl0DDWDM0nUoeZumLDO30EW9BImXfkCPoC3antPcg5pdanukCyhn9xzwbSL7ddla+Yp6j8DJw6xiW8O+fRiijfo9MPN2egX5zY6Ty5DXgy3Hqyv+Spk8HgmY00JASZjyfENBlcBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAC82sLE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+D9soVU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947EBC113D0;
-	Mon,  1 Dec 2025 11:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAC82sLE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A935C4CEF1;
+	Mon,  1 Dec 2025 11:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588718;
-	bh=xJjUfudNPR5oSwWXhGPywnCsHmOQXH4xacSJ8/iqNvQ=;
+	s=korg; t=1764588721;
+	bh=zWYjA1v4JFSeZgD8C/rXAzZael8yFM/UP4/mU7K+5aM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+D9soVUH9UZz362NZSsE28G+3AMjQ6cQtydZ8soyEJTA0NoWOhg6f6ntLnsVaP+A
-	 MVcLcSO5tASJSRRDwFeikjvmijXV0MIh2PL5S0yRylGARJR+nypHOC2P1bNDE8auiB
-	 zwLJFHcX2JDVKQAjucw0Wa810H4fIoZWDS3dozr0=
+	b=RAC82sLEAH8Rx6vOyJd6pEm8HQINLGwVbwVUxJv3hdfbmfBj1luaN3mEECzp9R8G+
+	 Q1krudnvC0831ssRGL/sE5PZmLu1hCd9SZaCgwUsdLA1fgsVVVJOFDhI6RwUh8IzTU
+	 z9WUCzuJtPulDc0/CcI4zRy8us9zjI1Kj4etlhX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chris Morgan <macromorgan@hotmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 119/187] net: dsa: b53: stop reading ARL entries if search is done
-Date: Mon,  1 Dec 2025 12:23:47 +0100
-Message-ID: <20251201112245.528622674@linuxfoundation.org>
+Subject: [PATCH 5.4 146/187] regulator: fixed: use dev_err_probe for register
+Date: Mon,  1 Dec 2025 12:24:14 +0100
+Message-ID: <20251201112246.494004045@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,49 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Chris Morgan <macromorgan@hotmail.com>
 
-[ Upstream commit 0be04b5fa62a82a9929ca261f6c9f64a3d0a28da ]
+[ Upstream commit d0f95e6496a974a890df5eda65ffaee66ab0dc73 ]
 
-The switch clears the ARL_SRCH_STDN bit when the search is done, i.e. it
-finished traversing the ARL table.
+Instead of returning error directly, use dev_err_probe. This avoids
+messages in the dmesg log for devices which will be probed again later.
 
-This means that there will be no valid result, so we should not attempt
-to read and process any further entries.
-
-We only ever check the validity of the entries for 4 ARL bin chips, and
-only after having passed the first entry to the b53_fdb_copy().
-
-This means that we always pass an invalid entry at the end to the
-b53_fdb_copy(). b53_fdb_copy() does check the validity though before
-passing on the entry, so it never gets passed on.
-
-On < 4 ARL bin chips, we will even continue reading invalid entries
-until we reach the result limit.
-
-Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251102100758.28352-3-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Link: https://lore.kernel.org/r/20210721165716.19915-1-macroalpha82@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 636f4618b1cd ("regulator: fixed: fix GPIO descriptor leak on register failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/fixed.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index bc303b3e1c966..6a583e220bf84 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1643,7 +1643,7 @@ static int b53_arl_search_wait(struct b53_device *dev)
- 	do {
- 		b53_read8(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_CTL, &reg);
- 		if (!(reg & ARL_SRCH_STDN))
--			return 0;
-+			return -ENOENT;
+diff --git a/drivers/regulator/fixed.c b/drivers/regulator/fixed.c
+index 2f0bed86467f9..529f401243245 100644
+--- a/drivers/regulator/fixed.c
++++ b/drivers/regulator/fixed.c
+@@ -244,8 +244,9 @@ static int reg_fixed_voltage_probe(struct platform_device *pdev)
+ 	drvdata->dev = devm_regulator_register(&pdev->dev, &drvdata->desc,
+ 					       &cfg);
+ 	if (IS_ERR(drvdata->dev)) {
+-		ret = PTR_ERR(drvdata->dev);
+-		dev_err(&pdev->dev, "Failed to register regulator: %d\n", ret);
++		ret = dev_err_probe(&pdev->dev, PTR_ERR(drvdata->dev),
++				    "Failed to register regulator: %ld\n",
++				    PTR_ERR(drvdata->dev));
+ 		return ret;
+ 	}
  
- 		if (reg & ARL_SRCH_VLID)
- 			return 0;
 -- 
 2.51.0
 
