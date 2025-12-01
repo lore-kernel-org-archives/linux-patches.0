@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE94F26AC3;
-	Mon,  1 Dec 2025 01:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E77626AC3;
+	Mon,  1 Dec 2025 01:42:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764553370; cv=none; b=AhlFhMCOD3tg4QdSeaO7qyHW/Eb3YrL5d+t0md599KTqcq9dGwZV+/eYf5REpnAKmRhGf3DS0UPmMVCzFhvSLm8lBsu09eNoq6p93QSG9qgexCLCrawOaKtaA2uYNwqog09nUH4ABIlO1FymUBz6fynlqPbWKtNh2i+8fs16XQM=
+	t=1764553375; cv=none; b=CgCLUt5xGzhxsl6A0DkZZI9rJaxsYFrrzLk00Zts32zV0xB4cKUv7t+UK4wNccGxtKosC2kfcQHG7yVCCq+Cs6cgApW0dcWvrB14P0TxPV1n1AYlhCEpvgvEyJKUU7EP594DMhozkulkI0jJ3s1DczItXpGeVNh78HUkPVOzCf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764553370; c=relaxed/simple;
-	bh=ef5gqF6QGxkGqr/dl/A0bQymlW596I+z9Ph3YDi4l3A=;
+	s=arc-20240116; t=1764553375; c=relaxed/simple;
+	bh=ATDrXlJ0VyDe0fE9l6dxnABfnxefY8VPojlREwtZWoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=oibJ6ksIXs29iAA1Jmrthw1ZTUgvl1f75iFnFvxPQvssXvQnXNyhZVCAdv4QclROMdKjoRxT+UoPoKZxsWfxjBtAY9JlxhnhUTTjrAzaGNINpKLHD8Bj9xf7C0lQ7NqBI6NEkPXFM689asi2soQTwq716tz33/p8wRaLqi1CFh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JfEdMtWY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RInX1eNUAQg7sFuevRJpgQCWYmbL0b6puIUxoYnvw97kditZaOCqYr3XQwPFyAOgrFO4SV6yjSwxoLP4pd1Mcbc1ZbMXrNx3c9+6JBXM2fZozEmiCDkAdXAQRuxW7l0iLYmZYtKXsF5I5Y4gtF82PorkXiKP0lp4L50m6rcXCd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OjoiEi6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JfEdMtWY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20552C4CEFB;
-	Mon,  1 Dec 2025 01:42:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OjoiEi6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CD8C19421;
+	Mon,  1 Dec 2025 01:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764553368;
-	bh=ef5gqF6QGxkGqr/dl/A0bQymlW596I+z9Ph3YDi4l3A=;
+	s=k20201202; t=1764553375;
+	bh=ATDrXlJ0VyDe0fE9l6dxnABfnxefY8VPojlREwtZWoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JfEdMtWYp7nrxX4yvTrcW+jRH3g91F61/R9qsTSjo1IwHVDQu+jO77rsz7LkXMVlh
-	 MsYGaHLHvTf3Kp9OK/4dTfrR1/sGkWg0zZeIQ01MsFLUncpKIA7MW+igSgI02f7ve6
-	 QPGJ/Vsd9u9bT3RsZxKeIX+MpnfEja6kYL+Y+8zvgzwVC2VKaUDEgmJDQ2Kt5DHYwL
-	 5WpBxP3hZDkNcHKDs88dnABIMEtfapHsnRRWuCO1LgU3rD9Wl8AayJ6EKRjW9sHCw7
-	 eFNYNfHhHxh2H+K+G0OGNYHaRUestfiv0z9iM1dvHOG56pVpVLuk+xw0sIR/ofrqNa
-	 kCdSCFaDzlI3A==
+	b=OjoiEi6vNnNhEB4/B23FqKdS9tuREv3nqd2eHSZ3bi9vjkk/sFIg5ImVTbduvXuEK
+	 0QYNjD3z/iAxWg+vBPqdd4lowlkmsa2oB4nAzgrLMYhXqZaEqDQkmcPwvzknnNgccB
+	 UjRv0rmnBMBeypLZBsz5UzaygBpZD2piiellZfsSebesLQRqQwYmE994/Oh2G95eYd
+	 5gAgekk6cvDYGJPhw77oOhPBYGvw/SUo50MZKlcjihwb/Tj3o1u3jMRreMus22294j
+	 ioWeQfXVQGhCPficzLCXcju23jcrgPaA3TJCy8ZZGYtzrpg4xJq0yR1AqbuTniv/An
+	 tcXaiVHEuLpRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ilyas Gasanov <public@gsnoff.com>,
+Cc: Jacob Zhong <cmpute@qq.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
 	sbinding@opensource.cirrus.com,
 	kailang@realtek.com,
 	chris.chiu@canonical.com,
 	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.17] ALSA: hda/realtek: Add quirk for HP ProBook 450 G8
-Date: Sun, 30 Nov 2025 20:42:05 -0500
-Message-ID: <20251201014235.104853-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.17] ALSA: hda/realtek: add quirk for HP pavilion aero laptop 13z-be200
+Date: Sun, 30 Nov 2025 20:42:06 -0500
+Message-ID: <20251201014235.104853-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251201014235.104853-1-sashal@kernel.org>
 References: <20251201014235.104853-1-sashal@kernel.org>
@@ -54,90 +54,135 @@ X-stable-base: Linux 6.17.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilyas Gasanov <public@gsnoff.com>
+From: Jacob Zhong <cmpute@qq.com>
 
-[ Upstream commit d041e5e748f926398ad96436a86667dea8b591e0 ]
+[ Upstream commit be4c9abdf04b86bb33f4a2ce59fd7cb64a739c51 ]
 
-My laptop, HP ProBook 450 G8 (32M40EA), has Realtek ALC236 codec on its
-integrated sound card, and uses GPIO pins 0x2 and 0x1 for speaker mute
-and mic mute LEDs correspondingly, as found out by me through hda-verb
-invocations. This matches the GPIO masks used by the
-alc236_fixup_hp_gpio_led() function.
+The laptop uses ALC287 chip (as shown in /proc/asound/card1/codec#0).
+It seems that every HP pavilion laptop in the table uses the same quirk,
+so I just copied them. I have verified that the mute LED on my laptop
+works with this patch.
 
-PCI subsystem vendor and device IDs happen to be 0x103c and 0x8a75,
-which has not been covered in the ALC2xx driver code yet.
+For reference, here's the alsa-info of my laptop:
+https://alsa-project.org/db/?f=2d5f297087708610bc01816ab12052abdd4a17c0
 
-Signed-off-by: Ilyas Gasanov <public@gsnoff.com>
-Link: https://patch.msgid.link/20251125235441.53629-1-public@gsnoff.com
+Signed-off-by: Jacob Zhong <cmpute@qq.com>
+Link: https://patch.msgid.link/tencent_E2DFA33EFDF39E0517A94FA8FF06C05C0709@qq.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Summary of Investigation
+## Analysis of Commit: ALSA: hda/realtek: add quirk for HP pavilion aero
+laptop 13z-be200
 
-**Type of Change:** Hardware quirk/device ID addition - a single line
-adding PCI subsystem ID 0x103c:0x8a75 to the quirk table.
+### 1. Commit Message Analysis
 
-**Technical Details:**
-- The `alc236_fixup_hp_gpio_led()` function (lines 1320-1324) is a
-  simple wrapper that sets GPIO masks 0x02 and 0x01 for mute/mic-mute
-  LEDs
-- This fixup is **already used by 40+ other HP laptop entries** in the
-  same table
-- HP ProBook 450 G8 already has one entry at device ID 0x87e7 using the
-  same fixup - this adds another variant (0x8a75) of the same laptop
-- The adjacent device ID 0x8a74 ("HP ProBook 440 G8") also uses this
-  same fixup
+**Problem:** The mute LED does not function on the HP Pavilion Aero
+Laptop 13z-be200 with ALC287 audio codec.
 
-**Stable Kernel Rules Compliance:**
+**Solution:** Adds a PCI quirk entry to enable the mute LED using an
+existing fixup mechanism.
 
-1. **Obviously correct:** ✓ Single line addition follows a well-
-   established pattern used by dozens of other entries
-2. **Fixes real bug:** ✓ Enables mute/mic-mute LED functionality on
-   user's actual hardware (verified via `hda-verb`)
-3. **Small and contained:** ✓ One line, one file
-4. **No new features:** ✓ Uses existing fixup infrastructure
-5. **Exception category:** ✓ **Explicitly allowed** - Device ID/quirk
-   additions are called out as permitted exceptions in stable rules
+**Tags:**
+- No "Cc: stable@vger.kernel.org" tag
+- No "Fixes:" tag
+- Signed-off by Takashi Iwai (ALSA/Sound subsystem maintainer at SUSE)
+- Author verified the fix works on the actual hardware
+- Includes alsa-info diagnostic link for validation
 
-**User Impact:**
-- Without this quirk, HP ProBook 450 G8 (0x8a75 variant) users have non-
-  functional mute indicator LEDs
-- Affects a real user who tested and verified the fix on actual hardware
-- Common business laptop used in enterprise environments
+### 2. Code Change Analysis
 
-**Risk Assessment:**
-- **Regression risk: Negligible** - Only affects devices with exactly
-  the subsystem ID 0x103c:0x8a75
-- The fixup function is mature, well-tested across many devices
-- Cannot affect any other hardware
-- No logic changes, no API changes
+The change adds a single line to the `alc269_fixup_tbl[]` quirk table:
 
-**Dependencies:**
-- `ALC236_FIXUP_HP_GPIO_LED` and the underlying
-  `alc_fixup_hp_gpio_led()` function already exist in all maintained
-  stable kernels
-- No other patches required
-- Should apply cleanly to stable trees
+```c
+SND_PCI_QUIRK(0x103c, 0x8bd6, "HP Pavilion Aero Laptop 13z-be200",
+ALC287_FIXUP_HP_GPIO_LED),
+```
+
+**Scope:**
+- 1 line added
+- 1 file changed (sound/hda/codecs/realtek/alc269.c)
+- Uses existing `ALC287_FIXUP_HP_GPIO_LED` fixup mechanism
+- No new code introduced - only a table entry
+
+**Technical Mechanism:**
+The `ALC287_FIXUP_HP_GPIO_LED` fixup maps to `alc287_fixup_hp_gpio_led`
+which calls `alc_fixup_hp_gpio_led(codec, action, 0x10, 0)` to configure
+GPIO for proper mute LED behavior. This is a well-established,
+thoroughly tested code path used by many HP laptops.
+
+**Code Context:**
+Looking at the diff, the table currently jumps from 0x8bd4 to 0x8bdd,
+leaving 0x8bd6 unsupported. The new entry fills this gap. The
+surrounding entries show this is a standard pattern - there are hundreds
+of similar HP quirk entries (vendor ID 0x103c) in this table, including
+other HP Pavilion Aero models like "HP Pavilion Aero Laptop 13-be0xxx"
+that use the same fixup.
+
+### 3. Stable Kernel Rules Compliance
+
+This commit falls under **two explicit exception categories** documented
+in stable kernel rules:
+
+1. **NEW DEVICE IDs:** Adding PCI IDs to existing drivers - trivial one-
+   line additions that enable hardware support
+2. **QUIRKS and WORKAROUNDS:** Hardware-specific quirks for broken/buggy
+   devices
+
+**Checklist:**
+- ✅ Obviously correct: Trivial table entry using existing, proven
+  infrastructure
+- ✅ Fixes real bug: Mute LED doesn't work without this quirk
+- ✅ Small and contained: Single line change
+- ✅ No new features: Reuses existing fixup mechanism
+- ✅ No new APIs: Data-only change
+- ✅ Applies cleanly: Simple table entry addition
+
+### 4. Risk Assessment
+
+**Regression Risk:** Essentially zero
+- The quirk is scoped to a specific PCI subsystem vendor/device ID
+  (0x103c:0x8bd6)
+- Only affects this exact hardware model
+- Cannot impact any other systems
+
+**Benefit:** Direct hardware functionality fix
+- Users with this laptop get a working mute LED
+- Without the fix, the mute LED is non-functional
+
+### 5. User Impact
+
+**Affected Users:** Owners of HP Pavilion Aero 13z-be200 laptops
+**Severity:** Medium - broken hardware functionality
+**Real-world Impact:** The mute LED provides important user feedback,
+particularly for video conferencing scenarios where knowing microphone
+state is critical
+
+### 6. Historical Context
+
+This follows an extremely well-established pattern:
+- The Realtek HDA driver contains hundreds of similar quirk entries
+- Similar HP Pavilion Aero quirk additions have been made for other
+  model variants
+- This type of quirk addition is routinely accepted for stable trees
 
 ### Conclusion
 
-This commit is a **textbook example** of a hardware quirk addition that
-stable kernel rules explicitly permit. It:
-- Adds a single PCI device ID to enable hardware support on a specific
-  laptop variant
-- Uses existing, well-tested driver infrastructure (40+ other HP laptops
-  use the same fixup)
-- Has been verified by the reporter on actual hardware
-- Has zero regression risk for anyone not using this specific laptop
-  model
-- Has been reviewed and accepted by the sound maintainer (Takashi Iwai)
+This is a textbook example of a hardware quirk addition that is
+explicitly allowed by stable kernel rules. It:
+- Fixes real, user-facing hardware functionality (mute LED)
+- Is trivial (one line)
+- Uses existing, well-tested infrastructure
+- Has zero risk of affecting other hardware
+- Has been verified by the hardware owner
+- Was accepted by the sound subsystem maintainer
 
-This matches the stable rules documentation: "NEW DEVICE IDs (Very
-Common): Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers.
-These are trivial one-line additions that enable hardware support."
+Even without an explicit "Cc: stable@vger.kernel.org" tag, device ID and
+quirk additions are routinely backported because they fix real user-
+facing hardware issues with essentially zero regression risk. The
+risk/benefit ratio overwhelmingly favors inclusion in stable trees.
 
 **YES**
 
@@ -145,17 +190,17 @@ These are trivial one-line additions that enable hardware support."
  1 file changed, 1 insertion(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 19604352317d..2126e022848e 100644
+index 2126e022848e..b651290ca8b4 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6516,6 +6516,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8a6e, "HP EDNA 360", ALC287_FIXUP_CS35L41_I2C_4),
- 	SND_PCI_QUIRK(0x103c, 0x8a74, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8a75, "HP ProBook 450 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9 (MB 8A9E)", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9 (MB 8AA1)", ALC236_FIXUP_HP_GPIO_LED),
+@@ -6564,6 +6564,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8bc8, "HP Victus 15-fa1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8bcd, "HP Omen 16-xd0xxx", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8bd4, "HP Victus 16-s0xxx (MB 8BD4)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
++	SND_PCI_QUIRK(0x103c, 0x8bd6, "HP Pavilion Aero Laptop 13z-be200", ALC287_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8bdd, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8bde, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8bdf, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
 -- 
 2.51.0
 
