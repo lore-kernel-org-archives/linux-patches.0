@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C54258EF0;
-	Mon,  1 Dec 2025 11:30:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDEA184E;
+	Mon,  1 Dec 2025 11:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588650; cv=none; b=TFucTupeYseifAiA5zxY58O7SQbXjEk08D1uvfgb84wm/2YDbB+4u70b/42TFbaQo7bDn2hvNfdkfOGi2asC6WFQhUZPKFLiIxPhCuidOdvt232l/0V//SFupZTJJ+IeP9byLX9NOini6kFd7gQdm228I4I0UE4pPwecGO529Q4=
+	t=1764588652; cv=none; b=cre38CsfHrg8zy9TvKv18DZzoWWvFC+lLK62PGpzPo65GTy12OfzwJfxsDHrqOhVh9LntRW3fux59bJP10zFTI6zuYAF2e9JtWAiRXfOHKqB0LJnICl3ksQwHnJaPUIGIyBnWQmrNS44Q5tF4Kdf7uDuguhEt6EUDhYXGGAykHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588650; c=relaxed/simple;
-	bh=O7rnBXFfBVm0q7QzIPLUZKdL83/gDrtxCPtxwWPhTPs=;
+	s=arc-20240116; t=1764588652; c=relaxed/simple;
+	bh=JQ2dm1O7FUEgbRxjAEuOB3P0QEJwrn8oZIlJfxbEF2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVG6sz97b/DpX2OUVnblUTDOabZZGgM7qV3AQFl8Z3a4+lZOi5W9Cu+v6WgY9MrOKPk8QTaF5kmlZyv0zYHWP6RdlmwV+CNwkxj2l67YZ4H2gILd4mrltA00oeCl5Pv5QSEQ0KAYpEGpX52FdMislgJs7ItoLtmX/cvzkChd8i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfkwYC4v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uDYsu9ayv6jb7r8P8sY8BRh4X/IufpuQjhIX9DjIFzoBgUkdKNKOqG3PEJAnW3Cps1gO5y9LbDdQE+vyeTRHJ5Yvm8x5GI8XVVa0ChnIK8UVhuLVHi8E+5dL8Aw3uL2guOZrRcG1q6bth46X5LzBMLh6ixAw6mwbwraj3mGH2Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yPIf8J5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfkwYC4v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B456C4CEF1;
-	Mon,  1 Dec 2025 11:30:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yPIf8J5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5514DC4CEF1;
+	Mon,  1 Dec 2025 11:30:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588650;
-	bh=O7rnBXFfBVm0q7QzIPLUZKdL83/gDrtxCPtxwWPhTPs=;
+	s=korg; t=1764588652;
+	bh=JQ2dm1O7FUEgbRxjAEuOB3P0QEJwrn8oZIlJfxbEF2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfkwYC4vWPJlRwLlspEu5I6aZUOqKtTImOPp6nrKUe++hN8uiUlYI/7sraPk2BFRo
-	 GTYGV0TZU+NMkulZDRmzNZo2ZFsrYC8AOJzELpP9tENtSn9pTg3yOYWO5Tmgb+Kk14
-	 ZB8e9ibinO4qn3Uv88WIUHdZRoaeY0RGeMmsXY3c=
+	b=yPIf8J5wwqURaffDrjtziX9gc9jn8agixQL+ggCRFpX3YPu4wiullzVvmEtkc5scX
+	 4fRogDJxyOVsVbpLVYwvkCr6XDXQQT67Vz0T21PyZApSOa1qH6oXW+GH2z7ZOXIdib
+	 SoS2lWoPJSIiN6vu8jytn17I4EaU6s6Q6VgJb+TA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Harikrishna Shenoy <h-shenoy@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/187] allow finish_no_open(file, ERR_PTR(-E...))
-Date: Mon,  1 Dec 2025 12:23:17 +0100
-Message-ID: <20251201112244.458018097@linuxfoundation.org>
+Subject: [PATCH 5.4 080/187] phy: cadence: cdns-dphy: Enable lower resolutions in dphy
+Date: Mon,  1 Dec 2025 12:23:08 +0100
+Message-ID: <20251201112244.121241660@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,48 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Harikrishna Shenoy <h-shenoy@ti.com>
 
-[ Upstream commit fe91e078b60d1beabf5cef4a37c848457a6d2dfb ]
+[ Upstream commit 43bd2c44515f8ee5c019ce6e6583f5640387a41b ]
 
-... allowing any ->lookup() return value to be passed to it.
+Enable support for data lane rates between 80-160 Mbps cdns dphy
+as mentioned in TRM [0] by setting the pll_opdiv field to 16.
+This change enables lower resolutions like 640x480 at 60Hz.
 
-Reviewed-by: NeilBrown <neil@brown.name>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+[0]: https://www.ti.com/lit/zip/spruil1
+(Table 12-552. DPHY_TX_PLL_CTRL Register Field Descriptions)
+
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
+Link: https://lore.kernel.org/r/20250807052002.717807-1-h-shenoy@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/open.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/phy/cadence/cdns-dphy.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/open.c b/fs/open.c
-index f1c2ec6790bb3..2da364e942741 100644
---- a/fs/open.c
-+++ b/fs/open.c
-@@ -886,18 +886,20 @@ EXPORT_SYMBOL(finish_open);
-  * finish_no_open - finish ->atomic_open() without opening the file
-  *
-  * @file: file pointer
-- * @dentry: dentry or NULL (as returned from ->lookup())
-+ * @dentry: dentry, ERR_PTR(-E...) or NULL (as returned from ->lookup())
-  *
-- * This can be used to set the result of a successful lookup in ->atomic_open().
-+ * This can be used to set the result of a lookup in ->atomic_open().
-  *
-  * NB: unlike finish_open() this function does consume the dentry reference and
-  * the caller need not dput() it.
-  *
-- * Returns "0" which must be the return value of ->atomic_open() after having
-- * called this function.
-+ * Returns 0 or -E..., which must be the return value of ->atomic_open() after
-+ * having called this function.
-  */
- int finish_no_open(struct file *file, struct dentry *dentry)
- {
-+	if (IS_ERR(dentry))
-+		return PTR_ERR(dentry);
- 	file->f_path.dentry = dentry;
- 	return 0;
- }
+diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
+index 90c4e9b5aac83..04cee5a00a5b4 100644
+--- a/drivers/phy/cadence/cdns-dphy.c
++++ b/drivers/phy/cadence/cdns-dphy.c
+@@ -115,7 +115,7 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+ 
+ 	dlane_bps = opts->hs_clk_rate;
+ 
+-	if (dlane_bps > 2500000000UL || dlane_bps < 160000000UL)
++	if (dlane_bps > 2500000000UL || dlane_bps < 80000000UL)
+ 		return -EINVAL;
+ 	else if (dlane_bps >= 1250000000)
+ 		cfg->pll_opdiv = 1;
+@@ -125,6 +125,8 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+ 		cfg->pll_opdiv = 4;
+ 	else if (dlane_bps >= 160000000)
+ 		cfg->pll_opdiv = 8;
++	else if (dlane_bps >= 80000000)
++		cfg->pll_opdiv = 16;
+ 
+ 	cfg->pll_fbdiv = DIV_ROUND_UP_ULL(dlane_bps * 2 * cfg->pll_opdiv *
+ 					  cfg->pll_ipdiv,
 -- 
 2.51.0
 
