@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1F4308F0B;
-	Mon,  1 Dec 2025 11:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6831253958;
+	Mon,  1 Dec 2025 11:27:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588456; cv=none; b=igK/tX7c6/Q4+juC4WhyroGt/AroBYoXQax9iAHgZOzZa9byFn0UlS+J8NYJlMskGJgIZM5bo6pGWzJrSfiZLhjPAGr54BXHPyGZxMgVbHpa3HBVhrDIQTaufvY8U8sOK8R+qQfHSisQxlMd8FdrKKotWjxlsILrvZu5C+84cno=
+	t=1764588458; cv=none; b=l1OQ6qSTyxDhkEtM1ZtSyyGpfMVjlgVrYBSpuMmstKkFussEvrdOwTIKJFG3dAgLEjfrLvRDqqudpZSfpK64BUl/Uc5pamZWkZJ09H2sgUDAStMp5L0wUui1/27n69Jym9nSS3dpqQfpjL9SBuoxzP3yBfTXdmMV/uv4xt37Mn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588456; c=relaxed/simple;
-	bh=CMcKgTb2GWTdqFVJ3Q+6vjSkFsAiJY9Wl2xDiKIokBM=;
+	s=arc-20240116; t=1764588458; c=relaxed/simple;
+	bh=+LGkQMrrrZ3zrFmYvGHwF0ITUHgGApLbDyC4go7wtbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XxEAG5t66HLu6m5TKiCSbOITnTiaWB6LjML2jlMC4Ocj4bekarUJQLRZN+Hiqh1ATWT2eS3NIYnUDU0zn2823krarbFmJ7MxRfVSyJJ4RUx65H7PPu5d7FsET4A/iA+ZCQDpIeHDIFH5dTBGU1dt/j4slsReH8TS0aPtzhsl5L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7256FVx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mPIequegDZf1wcLZpvoa5ktiNicMMcEzWE2Bhd5J2O5jQfgE4GBcg419xySIYCGrWakooWozPYVyxNfNPWJSpRsfxKkwDFNxRfWCUQvNSJ+cQ+SHK9XUp2ewaxf9ID7qiHMX+2X4jprxB1zM2H1Xt7Qv+AHUEhv9g5AAGh5YzGc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gH4HygyQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7256FVx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7270DC4CEF1;
-	Mon,  1 Dec 2025 11:27:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gH4HygyQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4297BC4CEF1;
+	Mon,  1 Dec 2025 11:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588455;
-	bh=CMcKgTb2GWTdqFVJ3Q+6vjSkFsAiJY9Wl2xDiKIokBM=;
+	s=korg; t=1764588458;
+	bh=+LGkQMrrrZ3zrFmYvGHwF0ITUHgGApLbDyC4go7wtbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7256FVxNm8U9QklDXCmcHivzvCEjWgumsZwd1lPIqKuPcpMbswkZT5SFpnc88I9a
-	 ILUFnklJGG0EWKq4EDKRMi/ND2ryeHHQxIzFaeKYXK7wOA+4vEv+AGUDBOUrcwiJCI
-	 ofT1I4LRuTwC6CDnTXxyTaMuycsbr7XobDdIPz/M=
+	b=gH4HygyQxs40UmMKRafmsISpIjYZBa+HkadKhXwCqJzbqfcuh6fpTrWQsMvmbYk5n
+	 nR7BYlef7aNpsHRvVT0XCcXQwyDAwU925ejHM10Kzs+jd4P8DbNrszPqD3KUHtiI6h
+	 TQUEIJ3N6cGFOo2A7ZtImnCO172fqnhIJY8hxC7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/187] powerpc/eeh: Use result of error_detected() in uevent
-Date: Mon,  1 Dec 2025 12:22:43 +0100
-Message-ID: <20251201112243.230300052@linuxfoundation.org>
+Subject: [PATCH 5.4 056/187] bridge: Redirect to backup port when port is administratively down
+Date: Mon,  1 Dec 2025 12:22:44 +0100
+Message-ID: <20251201112243.267102880@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -54,46 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 704e5dd1c02371dfc7d22e1520102b197a3b628b ]
+[ Upstream commit 3d05b24429e1de7a17c8fdccb04a04dbc8ad297b ]
 
-Ever since uevent support was added for AER and EEH with commit
-856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume"), it
-reported PCI_ERS_RESULT_NONE as uevent when recovery begins.
+If a backup port is configured for a bridge port, the bridge will
+redirect known unicast traffic towards the backup port when the primary
+port is administratively up but without a carrier. This is useful, for
+example, in MLAG configurations where a system is connected to two
+switches and there is a peer link between both switches. The peer link
+serves as the backup port in case one of the switches loses its
+connection to the multi-homed system.
 
-Commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for
-udev") subsequently amended AER to report the actual return value of
-error_detected().
+In order to avoid flooding when the primary port loses its carrier, the
+bridge does not flush dynamic FDB entries pointing to the port upon STP
+disablement, if the port has a backup port.
 
-Make the same change to EEH to align it with AER and s390.
+The above means that known unicast traffic destined to the primary port
+will be blackholed when the port is put administratively down, until the
+FDB entries pointing to it are aged-out.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Link: https://lore.kernel.org/linux-pci/aIp6LiKJor9KLVpv@wunner.de/
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-3-adf85b0620b0@linux.ibm.com
+Given that the current behavior is quite weird and unlikely to be
+depended on by anyone, amend the bridge to redirect to the backup port
+also when the primary port is administratively down and not only when it
+does not have a carrier.
+
+The change is motivated by a report from a user who expected traffic to
+be redirected to the backup port when the primary port was put
+administratively down while debugging a network issue.
+
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20250812080213.325298-2-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_forward.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index 68decc2bf42bc..7ce80ad5e9d35 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -351,7 +351,7 @@ static enum pci_ers_result eeh_report_error(struct eeh_dev *edev,
- 	rc = driver->err_handler->error_detected(pdev, pci_channel_io_frozen);
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index 460d578fae4df..66dcb4734ff25 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -142,7 +142,8 @@ void br_forward(const struct net_bridge_port *to,
+ 		goto out;
  
- 	edev->in_error = true;
--	pci_uevent_ers(pdev, PCI_ERS_RESULT_NONE);
-+	pci_uevent_ers(pdev, rc);
- 	return rc;
- }
+ 	/* redirect to backup link if the destination port is down */
+-	if (rcu_access_pointer(to->backup_port) && !netif_carrier_ok(to->dev)) {
++	if (rcu_access_pointer(to->backup_port) &&
++	    (!netif_carrier_ok(to->dev) || !netif_running(to->dev))) {
+ 		struct net_bridge_port *backup_port;
  
+ 		backup_port = rcu_dereference(to->backup_port);
 -- 
 2.51.0
 
