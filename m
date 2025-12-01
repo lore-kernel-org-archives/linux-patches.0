@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E9C30BB98;
-	Mon,  1 Dec 2025 11:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E583081DB;
+	Mon,  1 Dec 2025 11:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588375; cv=none; b=vEeAz+D92f9qQ6aQQEcvIcoNi50fwSYgKlwD7fHc8xkjp3XpUyjYKiV1syFMdqU4xS5J3WPgZ+Qb3Pm5UYVCu26jvGjQ0ELYDDJWaqu9oxEgLdqLqgRWaiSxJkFQ5DobeXEq4s0EMFf65AMY0JozXOcvaoHxhL/gAMwRseRLVL8=
+	t=1764588378; cv=none; b=YIKIq0PkGw9HfX5vMTINVmsRdGd/wWFBMitQzJgwgmyOLhCoLyf4egDBFggMHGPNfcAnIdVUwPGncsIHuPNs+RxweEs0xuzU7VTu+wYa0GHm+vvnM9rpy377NXMO+a4iVLMn5QS4qq5/LE0L5OS/owMy323Ki9DGWLf5j4uPgQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588375; c=relaxed/simple;
-	bh=C5CQ8stVSPXsJHd6S7VFQJT6pg7eYlcrw9JICnzlLsw=;
+	s=arc-20240116; t=1764588378; c=relaxed/simple;
+	bh=xUxJPi3ywmIjceBYS4LDOOmIuFlBK+ouhOtU8ya/vdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d7tTGOu39dsWipXnACVToxlV9ds6tvAGzUtATh278WifuX+pt9QfmeY7+/MuNv71ikxKuDBX1lx3hIbv8p7bEZFgkUjFzqXKmmwHh0WwD8ZKgh45OXlKA1Q3W68CS918aXZJLRGVNv+m1EAg94akfZKKWYBTn7jL5CGScF50hA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTvPg4sn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fjI0uaGFiZaKEoACodEaCOyksHeL5hMMMQZBEK9+vfy0XoY1bVhdOuz28faiYDMvhsPR2qzA/9E5xMTRukcM7vLHlvamPJcuCsJrcVGUzrdRIHenEC7Tm0mvMl2x/Q63j4WMnJrC1b3wCyalFjZT8ouINVfPIUmqtnQ9R8Cw5zQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lq9QvXB7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTvPg4sn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA803C4CEF1;
-	Mon,  1 Dec 2025 11:26:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lq9QvXB7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B755BC116D0;
+	Mon,  1 Dec 2025 11:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588375;
-	bh=C5CQ8stVSPXsJHd6S7VFQJT6pg7eYlcrw9JICnzlLsw=;
+	s=korg; t=1764588378;
+	bh=xUxJPi3ywmIjceBYS4LDOOmIuFlBK+ouhOtU8ya/vdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTvPg4snI9/LLrd5vV/+IODLd6zEJ5qy/q21sgLOfvbRk2QTINvv1NJX64wGuE0z4
-	 5PutLyf49U9JVn1glKCrB4GUg82kCbbONfJm0zVrX3pbfwC9WgoOudowFril+ql31J
-	 HmPqyyH8EEkaTmNMdD6xx6cOlmMWe5uHE77mKfow=
+	b=lq9QvXB7s0oIrI5YAcYZ185mYBfu2CZRDFj3KvV3cLShCFBUPdW6TTpAIk5sZq99t
+	 G72GgC1lYITUbeQB0XE5C3VsH9JtLF28hTmfWSZ+D9oGJjdAJ+uK4flp2dKreThmrT
+	 1zpBuNFvADNLb5hBRU7WHNdappZ7iQohJGM1OIS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 027/187] bpf: Dont use %pK through printk
-Date: Mon,  1 Dec 2025 12:22:15 +0100
-Message-ID: <20251201112242.236219935@linuxfoundation.org>
+Subject: [PATCH 5.4 028/187] mmc: host: renesas_sdhi: Fix the actual clock
+Date: Mon,  1 Dec 2025 12:22:16 +0100
+Message-ID: <20251201112242.271800351@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -45,49 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 2caa6b88e0ba0231fb4ff0ba8e73cedd5fb81fc8 ]
+[ Upstream commit 9c174e4dacee9fb2014a4ffc953d79a5707b77e4 ]
 
-In the past %pK was preferable to %p as it would not leak raw pointer
-values into the kernel log.
-Since commit ad67b74d2469 ("printk: hash addresses printed with %p")
-the regular %p has been improved to avoid this issue.
-Furthermore, restricted pointers ("%pK") were never meant to be used
-through printk(). They can still unintentionally leak raw pointers or
-acquire sleeping locks in atomic contexts.
+Wrong actual clock reported, if the SD clock division ratio is other
+than 1:1(bits DIV[7:0] in SD_CLK_CTRL are set to 11111111).
 
-Switch to the regular pointer formatting which is safer and
-easier to reason about.
+On high speed mode, cat /sys/kernel/debug/mmc1/ios
+Without the patch:
+clock:          50000000 Hz
+actual clock:   200000000 Hz
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250811-restricted-pointers-bpf-v1-1-a1d7cc3cb9e7@linutronix.de
+After the fix:
+clock:          50000000 Hz
+actual clock:   50000000 Hz
+
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250629203859.170850-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/renesas_sdhi_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index 0bec300b2e516..41ec70a74b2e0 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -980,7 +980,7 @@ void bpf_jit_prog_release_other(struct bpf_prog *fp, struct bpf_prog *fp_other);
- static inline void bpf_jit_dump(unsigned int flen, unsigned int proglen,
- 				u32 pass, void *image)
- {
--	pr_err("flen=%u proglen=%u pass=%u image=%pK from=%s pid=%d\n", flen,
-+	pr_err("flen=%u proglen=%u pass=%u image=%p from=%s pid=%d\n", flen,
- 	       proglen, pass, image, current->comm, task_pid_nr(current));
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index 23fd93407eced..0a79b718cf17c 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -185,7 +185,11 @@ static void renesas_sdhi_set_clock(struct tmio_mmc_host *host,
+ 			clk &= ~0xff;
+ 	}
  
- 	if (image)
+-	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clk & CLK_CTL_DIV_MASK);
++	clock = clk & CLK_CTL_DIV_MASK;
++	if (clock != 0xff)
++		host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
++
++	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clock);
+ 	if (!(host->pdata->flags & TMIO_MMC_MIN_RCAR2))
+ 		usleep_range(10000, 11000);
+ 
 -- 
 2.51.0
 
