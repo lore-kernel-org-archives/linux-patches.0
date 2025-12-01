@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047DB253958;
-	Mon,  1 Dec 2025 11:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1F4308F0B;
+	Mon,  1 Dec 2025 11:27:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588453; cv=none; b=kS+Fv5/HCQNmAO6Qq+thzZZof6b1uYP9CDJy5EViCfI/i5zOBomWgoePxC6Snhmt6lMSiEdMqUcZNw65dQmN5WqFHPRLagD3+lruO8zCkhUUMKVOXuzXseNVAYM1Dmke8dUQItPyZO2+Mzd4uWv2zjC/zm6819mNIfg/Fb2EKDg=
+	t=1764588456; cv=none; b=igK/tX7c6/Q4+juC4WhyroGt/AroBYoXQax9iAHgZOzZa9byFn0UlS+J8NYJlMskGJgIZM5bo6pGWzJrSfiZLhjPAGr54BXHPyGZxMgVbHpa3HBVhrDIQTaufvY8U8sOK8R+qQfHSisQxlMd8FdrKKotWjxlsILrvZu5C+84cno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588453; c=relaxed/simple;
-	bh=PSPGYVzwXcB3ubuvi/dhMlfS8pHWmBTody3EeqQM6Wg=;
+	s=arc-20240116; t=1764588456; c=relaxed/simple;
+	bh=CMcKgTb2GWTdqFVJ3Q+6vjSkFsAiJY9Wl2xDiKIokBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tI7sIksKXY2rcLcv6UOS8FqflnmAdLCD0Vg5q/WAZaIlFydDW/yucaDZaCvw9s797rYOQoVSRyRYY3KF7ZybRLxSb6Y+0PJidDX7ve3gYQtc+t4nO8wLKUAvXL8Hzc9iECUsSuHvMe2wr3Gg3csYXGGGvGm55VijEKuPkA6Cr7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBoCHS/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XxEAG5t66HLu6m5TKiCSbOITnTiaWB6LjML2jlMC4Ocj4bekarUJQLRZN+Hiqh1ATWT2eS3NIYnUDU0zn2823krarbFmJ7MxRfVSyJJ4RUx65H7PPu5d7FsET4A/iA+ZCQDpIeHDIFH5dTBGU1dt/j4slsReH8TS0aPtzhsl5L8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7256FVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBoCHS/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85150C4CEF1;
-	Mon,  1 Dec 2025 11:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7256FVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7270DC4CEF1;
+	Mon,  1 Dec 2025 11:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588452;
-	bh=PSPGYVzwXcB3ubuvi/dhMlfS8pHWmBTody3EeqQM6Wg=;
+	s=korg; t=1764588455;
+	bh=CMcKgTb2GWTdqFVJ3Q+6vjSkFsAiJY9Wl2xDiKIokBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBoCHS/plm/Wn6/KgVCrRMYAPFBAqbFaKVNV/3LG8A8/mrFTyqg/teOlK4I9FMqSY
-	 napZv9vj2NMGMR4AYC4XCEgOoxmKhmHxDET/+NGngdZ4bMS8UdXR6GpByteXeLacRr
-	 F4JYm6ZCd51ln1xRILUJ54Dh3ZkLld3XRXDtVk38=
+	b=i7256FVxNm8U9QklDXCmcHivzvCEjWgumsZwd1lPIqKuPcpMbswkZT5SFpnc88I9a
+	 ILUFnklJGG0EWKq4EDKRMi/ND2ryeHHQxIzFaeKYXK7wOA+4vEv+AGUDBOUrcwiJCI
+	 ofT1I4LRuTwC6CDnTXxyTaMuycsbr7XobDdIPz/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Dave Hansen <dave.hansen@intel.com>
-Subject: [PATCH 5.4 054/187] x86/vsyscall: Do not require X86_PF_INSTR to emulate vsyscall
-Date: Mon,  1 Dec 2025 12:22:42 +0100
-Message-ID: <20251201112243.195379722@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 055/187] powerpc/eeh: Use result of error_detected() in uevent
+Date: Mon,  1 Dec 2025 12:22:43 +0100
+Message-ID: <20251201112243.230300052@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -53,77 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 8ba38a7a9a699905b84fa97578a8291010dec273 ]
+[ Upstream commit 704e5dd1c02371dfc7d22e1520102b197a3b628b ]
 
-emulate_vsyscall() expects to see X86_PF_INSTR in PFEC on a vsyscall
-page fault, but the CPU does not report X86_PF_INSTR if neither
-X86_FEATURE_NX nor X86_FEATURE_SMEP are enabled.
+Ever since uevent support was added for AER and EEH with commit
+856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume"), it
+reported PCI_ERS_RESULT_NONE as uevent when recovery begins.
 
-X86_FEATURE_NX should be enabled on nearly all 64-bit CPUs, except for
-early P4 processors that did not support this feature.
+Commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for
+udev") subsequently amended AER to report the actual return value of
+error_detected().
 
-Instead of explicitly checking for X86_PF_INSTR, compare the fault
-address to RIP.
+Make the same change to EEH to align it with AER and s390.
 
-On machines with X86_FEATURE_NX enabled, issue a warning if RIP is equal
-to fault address but X86_PF_INSTR is absent.
-
-[ dhansen: flesh out code comments ]
-
-Originally-by: Dave Hansen <dave.hansen@intel.com>
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Link: https://lore.kernel.org/all/bd81a98b-f8d4-4304-ac55-d4151a1a77ab@intel.com
-Link: https://lore.kernel.org/all/20250624145918.2720487-1-kirill.shutemov%40linux.intel.com
+Suggested-by: Lukas Wunner <lukas@wunner.de>
+Link: https://lore.kernel.org/linux-pci/aIp6LiKJor9KLVpv@wunner.de/
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+Link: https://patch.msgid.link/20250807-add_err_uevents-v5-3-adf85b0620b0@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/vsyscall/vsyscall_64.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ arch/powerpc/kernel/eeh_driver.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/entry/vsyscall/vsyscall_64.c b/arch/x86/entry/vsyscall/vsyscall_64.c
-index 86e5a1c1055ff..85e80f0a8b15e 100644
---- a/arch/x86/entry/vsyscall/vsyscall_64.c
-+++ b/arch/x86/entry/vsyscall/vsyscall_64.c
-@@ -124,7 +124,12 @@ bool emulate_vsyscall(unsigned long error_code,
- 	if ((error_code & (X86_PF_WRITE | X86_PF_USER)) != X86_PF_USER)
- 		return false;
+diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
+index 68decc2bf42bc..7ce80ad5e9d35 100644
+--- a/arch/powerpc/kernel/eeh_driver.c
++++ b/arch/powerpc/kernel/eeh_driver.c
+@@ -351,7 +351,7 @@ static enum pci_ers_result eeh_report_error(struct eeh_dev *edev,
+ 	rc = driver->err_handler->error_detected(pdev, pci_channel_io_frozen);
  
--	if (!(error_code & X86_PF_INSTR)) {
-+	/*
-+	 * Assume that faults at regs->ip are because of an
-+	 * instruction fetch. Return early and avoid
-+	 * emulation for faults during data accesses:
-+	 */
-+	if (address != regs->ip) {
- 		/* Failed vsyscall read */
- 		if (vsyscall_mode == EMULATE)
- 			return false;
-@@ -136,13 +141,19 @@ bool emulate_vsyscall(unsigned long error_code,
- 		return false;
- 	}
+ 	edev->in_error = true;
+-	pci_uevent_ers(pdev, PCI_ERS_RESULT_NONE);
++	pci_uevent_ers(pdev, rc);
+ 	return rc;
+ }
  
-+	/*
-+	 * X86_PF_INSTR is only set when NX is supported.  When
-+	 * available, use it to double-check that the emulation code
-+	 * is only being used for instruction fetches:
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_NX))
-+		WARN_ON_ONCE(!(error_code & X86_PF_INSTR));
-+
- 	/*
- 	 * No point in checking CS -- the only way to get here is a user mode
- 	 * trap to a high address, which means that we're in 64-bit user code.
- 	 */
- 
--	WARN_ON_ONCE(address != regs->ip);
--
- 	if (vsyscall_mode == NONE) {
- 		warn_bad_vsyscall(KERN_INFO, regs,
- 				  "vsyscall attempted with vsyscall=none");
 -- 
 2.51.0
 
