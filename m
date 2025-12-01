@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A53D262FED;
-	Mon,  1 Dec 2025 11:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A4D184E;
+	Mon,  1 Dec 2025 11:32:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588741; cv=none; b=WDB28UTZoXjtmFWGHoOA11VS3iqsUlE8cyCn/3f5GuqB3cQCPkrVAyl1IzO9KywRXzRLzrH4ZDuLGz6tzl0u6OcZ4ELPL5jmiE9gS4Pf5mujatNvuZ3WWIoslYNZlHoZHfeiJ+1dcciO7jqaJZCYgNU5A8LPBHFL8L0MkmsE+8I=
+	t=1764588745; cv=none; b=GZbB4rYPXQg7zH74aybCB4u1SsjZcdq8Fjnn/e7ehLOjPjSGUF6tljZ4LRVZln1mbm/QZbVJVvDXxrO0KLnIlDz/3XzpvZRLVvFR38Q50XqSRch+yTlk/jRfYLcD0jTOmTlL1jhZ1ckqPwQcSzZ/k8Hv/b5j5uwEuqLWzlQz30o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588741; c=relaxed/simple;
-	bh=DrGItrBCBDxps0mqxG46buUAXjUbL5HsFz3KrxNnFwY=;
+	s=arc-20240116; t=1764588745; c=relaxed/simple;
+	bh=16tinmFKmwf+5vyleat45iS3iw3gbUvy/RXoBYaxapo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fZ/PdLRkcjBa2q08/NWZAGcjY2RZWKKkRo7zE0POZv+NBB4TbuIFcLE4HOexmAdkmmJq11NFNmLVl2fZb/ZtBbAd89R+DEKh2ydtSqKD4tnJZau4k07K941bQukOVuvixXInopDrVdxkhk/X/96r6AH3/zag+xsn31y9r5v1xM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R39frHDY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JfDmlXzwZANNCl3csH3JApOi6uQiu2k+Lmr/Fr/UPt4I1B7qEEx6LvTjZpz3tLamhb4+zPK3Admt8rlEmamqzc4hJIewbkjXSEtfxsoTt2dgvq+Xk7lyeJd8KWnTLm92g/L09ye8Rl/3CODdmqyTbrT9GW3Op5Xbke/bqeqF2gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HplZ41zg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R39frHDY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF5BC113D0;
-	Mon,  1 Dec 2025 11:32:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HplZ41zg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48964C4CEF1;
+	Mon,  1 Dec 2025 11:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588740;
-	bh=DrGItrBCBDxps0mqxG46buUAXjUbL5HsFz3KrxNnFwY=;
+	s=korg; t=1764588743;
+	bh=16tinmFKmwf+5vyleat45iS3iw3gbUvy/RXoBYaxapo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R39frHDYXotRi6iax9DxkVu3chasnkdZmUj0BnmHwfUdcx4m/PxntvvDeZqM5wg8J
-	 xLrLSZBxlkQWVlN/aF7baJFjQj71EeshKDCnWdwPZLuvwvYGd9nd4A1EaylVfOQvhr
-	 PDU1N3pT4DTk3BMdMomFvnmoJA28VZExol1aUZ5M=
+	b=HplZ41zgh202YH4rVIsHBHnfhs8NxcxtNVjGkMBzDHSPsGF83UDdGCZqhikx2/UKF
+	 CiArovqkN9ko3mT/60oJ+3stcwVuB//NbxWNxCj6EWW2ywRXKf4sHp+/q72f0B0Rlu
+	 rQmamSAsEQ9XPHtFGgzVLXegS1VyuxH01Wa8aK1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Qendrim Maxhuni <qendrim.maxhuni@garderos.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 121/187] sctp: Prevent TOCTOU out-of-bounds write
-Date: Mon,  1 Dec 2025 12:23:49 +0100
-Message-ID: <20251201112245.601074459@linuxfoundation.org>
+Subject: [PATCH 5.4 122/187] net: usb: qmi_wwan: initialize MAC header offset in qmimux_rx_fixup
+Date: Mon,  1 Dec 2025 12:23:50 +0100
+Message-ID: <20251201112245.636407236@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -53,43 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
 
-[ Upstream commit 95aef86ab231f047bb8085c70666059b58f53c09 ]
+[ Upstream commit e120f46768d98151ece8756ebd688b0e43dc8b29 ]
 
-For the following path not holding the sock lock,
+Raw IP packets have no MAC header, leaving skb->mac_header uninitialized.
+This can trigger kernel panics on ARM64 when xfrm or other subsystems
+access the offset due to strict alignment checks.
 
-  sctp_diag_dump() -> sctp_for_each_endpoint() -> sctp_ep_dump()
+Initialize the MAC header to prevent such crashes.
 
-make sure not to exceed bounds in case the address list has grown
-between buffer allocation (time-of-check) and write (time-of-use).
+This can trigger kernel panics on ARM when running IPsec over the
+qmimux0 interface.
 
-Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
-Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251028161506.3294376-3-stefan.wiehler@nokia.com
+Example trace:
+
+    Internal error: Oops: 000000009600004f [#1] SMP
+    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.34-gbe78e49cb433 #1
+    Hardware name: LS1028A RDB Board (DT)
+    pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+    pc : xfrm_input+0xde8/0x1318
+    lr : xfrm_input+0x61c/0x1318
+    sp : ffff800080003b20
+    Call trace:
+     xfrm_input+0xde8/0x1318
+     xfrm6_rcv+0x38/0x44
+     xfrm6_esp_rcv+0x48/0xa8
+     ip6_protocol_deliver_rcu+0x94/0x4b0
+     ip6_input_finish+0x44/0x70
+     ip6_input+0x44/0xc0
+     ipv6_rcv+0x6c/0x114
+     __netif_receive_skb_one_core+0x5c/0x8c
+     __netif_receive_skb+0x18/0x60
+     process_backlog+0x78/0x17c
+     __napi_poll+0x38/0x180
+     net_rx_action+0x168/0x2f0
+
+Fixes: c6adf77953bc ("net: usb: qmi_wwan: add qmap mux protocol support")
+Signed-off-by: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
+Link: https://patch.msgid.link/20251029075744.105113-1-qendrim.maxhuni@garderos.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/diag.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/usb/qmi_wwan.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sctp/diag.c b/net/sctp/diag.c
-index fd7a55b3049db..641e52b9099dc 100644
---- a/net/sctp/diag.c
-+++ b/net/sctp/diag.c
-@@ -88,6 +88,9 @@ static int inet_diag_msg_sctpladdrs_fill(struct sk_buff *skb,
- 		memcpy(info, &laddr->a, sizeof(laddr->a));
- 		memset(info + sizeof(laddr->a), 0, addrlen - sizeof(laddr->a));
- 		info += addrlen;
-+
-+		if (!--addrcnt)
-+			break;
- 	}
- 	rcu_read_unlock();
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index acf1321657ec9..274b15d2a2cc1 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -229,6 +229,12 @@ static int qmimux_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			return 0;
+ 		skbn->dev = net;
  
++	       /* Raw IP packets don't have a MAC header, but other subsystems
++		* (like xfrm) may still access MAC header offsets, so they must
++		* be initialized.
++		*/
++		skb_reset_mac_header(skbn);
++
+ 		switch (skb->data[offset + qmimux_hdr_sz] & 0xf0) {
+ 		case 0x40:
+ 			skbn->protocol = htons(ETH_P_IP);
 -- 
 2.51.0
 
