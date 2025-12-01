@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDE625A633;
-	Mon,  1 Dec 2025 11:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D0826B76A;
+	Mon,  1 Dec 2025 11:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588684; cv=none; b=nZXN3iZc5H8virngvlBMxWFUHAV5jBNajxyfo0Al3tWCpB/Wx6PAEHGTVxvJPG3MjkoekKuiTn64utBdKrw7gsh9ZoNbcV4a2Do1zac6gmM9MuglBaUgSjQJYv/dlS4dgEXnZ0kXkN482rHh+kzHV69MRQD/Y5qMOB8GxqEpU/s=
+	t=1764588687; cv=none; b=kZqX05IZnVX4ANRkSlg/8onp1lM0fI3fIOQfK80qhDp+KQHACfACQo2A71B6efyuxPRJSkMXbeHzT6feznM8uTAEe+6rwdDCl5SbMO1/bDuheXzSTadO1jIBnhNoBKiLZi0K+CVaSUrbw/owLx12jWz08ScHgZ26lwENToMZV/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588684; c=relaxed/simple;
-	bh=Zpt6P8L5gjtxA/gZoMo+FMfMvMrMxvYEoOIKnNHfjTg=;
+	s=arc-20240116; t=1764588687; c=relaxed/simple;
+	bh=uo25JQegJdj7AdvfKgrYHOape1b7GV0uPmfAy8GHUWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o3eK0ttcFM8SFFWaC3lVvw+90Lhv3y5JndlhmQmc13X3iAF3d4KZBh53qM3nydNeAp2nVWp+OlOc6wrQQxH/O4TlWVeXKwkAYPsW3cjDhOmX4CR0rsXDnWKpOblCVAtevAFCB6MNi1tphXa5+UM4315OxtfLCxQpWdMjnMU8u5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwjjDuyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gdcSNBfIOIQ3lyACMC/JeBLYIpyHN891n/PNRXJVUBzh8I18yZLh22LblltR/M1cXTZtQVVgSoc8AGmddV+s2HeC84lHxILvoqfXGx+AR48OkNYIntTszpaQyXeq5bhAYxpx9obh6qA/nsRrx/rtc4xFPNIRaw6mYHQ4xJhmVew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzhicuXh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwjjDuyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73887C4CEF1;
-	Mon,  1 Dec 2025 11:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzhicuXh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F31EC4CEF1;
+	Mon,  1 Dec 2025 11:31:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588683;
-	bh=Zpt6P8L5gjtxA/gZoMo+FMfMvMrMxvYEoOIKnNHfjTg=;
+	s=korg; t=1764588686;
+	bh=uo25JQegJdj7AdvfKgrYHOape1b7GV0uPmfAy8GHUWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YwjjDuywcFtpRLzljNLpOotjpTbFv7jkRXl1puTESARpVhZ9DK6Dtjrg3NWokH9Gr
-	 in3Yq1gWKXHXVLvsAWaqyrghGAsgItsuyweD6WrjFtMbKcqNCBfKbT8QoEHgQ3vTkm
-	 RblaRT7XfAmaGXFAL4/j0ht1LxhdZT+Z0Dqd5Mpw=
+	b=QzhicuXhe0UfYaJpYD7tZYi2394DGwsNHs2Uku7dVsz9MqbOqdJNb4z09b7BXcwG7
+	 xRp8Ak4GAX6m9bDdqLAz/13/vuCLXmCPAHu4YUnuk/Eo2hQuRp5sucndEDVM3yZBMG
+	 LoZR0X8/yt20e6sPa+aVHkxpR6vBbvKsBju6tn68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Xin Long <lucien.xin@gmail.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/187] sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto
-Date: Mon,  1 Dec 2025 12:24:03 +0100
-Message-ID: <20251201112246.103549216@linuxfoundation.org>
+Subject: [PATCH 5.4 118/187] net: dsa: b53: fix enabling ip multicast
+Date: Mon,  1 Dec 2025 12:23:46 +0100
+Message-ID: <20251201112245.492944400@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -54,83 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 1534ff77757e44bcc4b98d0196bc5c0052fce5fa ]
+[ Upstream commit c264294624e956a967a9e2e5fa41e3273340b089 ]
 
-syzbot reported a possible shift-out-of-bounds [1]
+In the New Control register bit 1 is either reserved, or has a different
+function:
 
-Blamed commit added rto_alpha_max and rto_beta_max set to 1000.
+    Out of Range Error Discard
 
-It is unclear if some sctp users are setting very large rto_alpha
-and/or rto_beta.
+    When enabled, the ingress port discards any frames
+    if the Length field is between 1500 and 1536
+    (excluding 1500 and 1536) and with good CRC.
 
-In order to prevent user regression, perform the test at run time.
+The actual bit for enabling IP multicast is bit 0, which was only
+explicitly enabled for BCM5325 so far.
 
-Also add READ_ONCE() annotations as sysctl values can change under us.
+For older switch chips, this bit defaults to 0, so we want to enable it
+as well, while newer switch chips default to 1, and their documentation
+says "It is illegal to set this bit to zero."
 
-[1]
+So drop the wrong B53_IPMC_FWD_EN define, enable the IP multicast bit
+also for other switch chips. While at it, rename it to (B53_)IP_MC as
+that is how it is called in Broadcom code.
 
-UBSAN: shift-out-of-bounds in net/sctp/transport.c:509:41
-shift exponent 64 is too large for 32-bit type 'unsigned int'
-CPU: 0 UID: 0 PID: 16704 Comm: syz.2.2320 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:94 [inline]
-  dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
-  ubsan_epilogue lib/ubsan.c:233 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x27f/0x420 lib/ubsan.c:494
-  sctp_transport_update_rto.cold+0x1c/0x34b net/sctp/transport.c:509
-  sctp_check_transmitted+0x11c4/0x1c30 net/sctp/outqueue.c:1502
-  sctp_outq_sack+0x4ef/0x1b20 net/sctp/outqueue.c:1338
-  sctp_cmd_process_sack net/sctp/sm_sideeffect.c:840 [inline]
-  sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1372 [inline]
-
-Fixes: b58537a1f562 ("net: sctp: fix permissions for rto_alpha and rto_beta knobs")
-Reported-by: syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/690c81ae.050a0220.3d0d33.014e.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251106111054.3288127-1-edumazet@google.com
+Fixes: 63cc54a6f073 ("net: dsa: b53: Fix egress flooding settings")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251102100758.28352-2-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/transport.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 4 ++--
+ drivers/net/dsa/b53/b53_regs.h   | 3 +--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/transport.c b/net/sctp/transport.c
-index 9c721d70df9c6..9921041079781 100644
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -337,6 +337,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 
- 	if (tp->rttvar || tp->srtt) {
- 		struct net *net = tp->asoc->base.net;
-+		unsigned int rto_beta, rto_alpha;
- 		/* 6.3.1 C3) When a new RTT measurement R' is made, set
- 		 * RTTVAR <- (1 - RTO.Beta) * RTTVAR + RTO.Beta * |SRTT - R'|
- 		 * SRTT <- (1 - RTO.Alpha) * SRTT + RTO.Alpha * R'
-@@ -348,10 +349,14 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 		 * For example, assuming the default value of RTO.Alpha of
- 		 * 1/8, rto_alpha would be expressed as 3.
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 234ef7771ceef..bc303b3e1c966 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -347,11 +347,11 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
+ 		 * frames should be flooded or not.
  		 */
--		tp->rttvar = tp->rttvar - (tp->rttvar >> net->sctp.rto_beta)
--			+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> net->sctp.rto_beta);
--		tp->srtt = tp->srtt - (tp->srtt >> net->sctp.rto_alpha)
--			+ (rtt >> net->sctp.rto_alpha);
-+		rto_beta = READ_ONCE(net->sctp.rto_beta);
-+		if (rto_beta < 32)
-+			tp->rttvar = tp->rttvar - (tp->rttvar >> rto_beta)
-+				+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> rto_beta);
-+		rto_alpha = READ_ONCE(net->sctp.rto_alpha);
-+		if (rto_alpha < 32)
-+			tp->srtt = tp->srtt - (tp->srtt >> rto_alpha)
-+				+ (rtt >> rto_alpha);
+ 		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
+-		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
++		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IP_MC;
+ 		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
  	} else {
- 		/* 6.3.1 C2) When the first RTT measurement R is made, set
- 		 * SRTT <- R, RTTVAR <- R/2.
+ 		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
+-		mgmt |= B53_IP_MCAST_25;
++		mgmt |= B53_IP_MC;
+ 		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
+ 	}
+ }
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index 77fb7ae660b8c..95f70248c194d 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -104,8 +104,7 @@
+ 
+ /* IP Multicast control (8 bit) */
+ #define B53_IP_MULTICAST_CTRL		0x21
+-#define  B53_IP_MCAST_25		BIT(0)
+-#define  B53_IPMC_FWD_EN		BIT(1)
++#define  B53_IP_MC			BIT(0)
+ #define  B53_UC_FWD_EN			BIT(6)
+ #define  B53_MC_FWD_EN			BIT(7)
+ 
 -- 
 2.51.0
 
