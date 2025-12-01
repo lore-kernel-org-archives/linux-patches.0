@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39C94258EDB;
-	Mon,  1 Dec 2025 11:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0D7B255F2D;
+	Mon,  1 Dec 2025 11:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588786; cv=none; b=bvbf7fzkWz7GZ22goww6AoibSZ1F9JDSnr+7blxvetbuTArJ/n+TV3RLZ0QETBfPddYxmkl8ikIt30XfBcAt1RkwUjtivEacAcJC507hcClGmPqfenH92Z76xUGpE97hrIkeBCRc9DTkDbCZMUuPdLvNgh51iuqpT+O6jqJ9VkQ=
+	t=1764588789; cv=none; b=HnWA66YO7bYP+xBQUmb0I5xTVTfeJ1tlZXSNhw0qyacLCMASz/DMvXlwsjcxQx/Ls0rgr97ebZ4X+biBmAlOg3qi9owMq1w/ZkCbF9rkJqm42ozDxunmDsJq9w3hYvehvo0ObuomMCItNOgra1X8qyb2zKO1Y0USvxyjPlywPlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588786; c=relaxed/simple;
-	bh=Kk+3QPCEc3KZIlf+exloAKoqxSPwmojAWsgGyiDbz9I=;
+	s=arc-20240116; t=1764588789; c=relaxed/simple;
+	bh=vgsQPrAkAbks5QkTMlegVk166uJzvZjTpYJPARZ+GpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXN+sZ1FUouUWxiiZS3U3Y7OPRfvBfh4KcxBYlD3Ol+XGtlr6QAyWFkbSih8twgax4smL1wXj1At8iqhW6GmJH+YV/O0D8edOEP4HC9aRQD4GxN6cHc6j5uxiKPuj/hX5ZBzcO/pk0pk1P1UXcfxkCIGxE6EewrzHekcFQZFHQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fq+LRwTw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9jeuZMBBBtDMKLODgDFUY2bux+JPhTzmtWJj4ESxAkDU9HWY3bQjCEQF9DdaZuGK7Yu6TccsLVwDWbPdzbczn/8qSdnRMPQNJ3fYODOUZVVpnJcDoBsWYp6l35q+Z2xFr+sAUdjQKD649FuBQ/Xqd2LPKAPRx5FomJUfvudG8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4y6LvF3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fq+LRwTw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B39AEC113D0;
-	Mon,  1 Dec 2025 11:33:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4y6LvF3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFB6C116D0;
+	Mon,  1 Dec 2025 11:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588786;
-	bh=Kk+3QPCEc3KZIlf+exloAKoqxSPwmojAWsgGyiDbz9I=;
+	s=korg; t=1764588788;
+	bh=vgsQPrAkAbks5QkTMlegVk166uJzvZjTpYJPARZ+GpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fq+LRwTw6f0MSwr46L7gVEj3SjvpwuFioXskpYAUTHSSY8tysX9LvYinW5CUp0ZTj
-	 m0pfLNiiZY0AUnOLRtc3SK+lr8wUY0BG3fQ6POzQdT2GQw6dCBpWbzqo06VNm0XsSA
-	 n5XAUlrWOZ8DFBtOcsmW+alidKnVi6HJfgLJQuVM=
+	b=F4y6LvF34DDd8Je7AopqQOJJGObZPbAJnC5XH/YU5kPa697Be4u4uzzzavpxu4+8l
+	 4nx6tawseuqSJMpZ8Zhv2QyMYeefAnzA61kUSs3ZAB7MYtlmWA/GrzjdzPH4kxI2nJ
+	 Nu7kx5C6Y3WMDulgcOK72PCVeII9NrrDmDaeJonU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 171/187] mm/page_alloc: fix hash table order logging in alloc_large_system_hash()
-Date: Mon,  1 Dec 2025 12:24:39 +0100
-Message-ID: <20251201112247.387317659@linuxfoundation.org>
+	Chuang Wang <nashuiliang@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 154/187] ipv4: route: Prevent rt_bind_exception() from rebinding stale fnhe
+Date: Mon,  1 Dec 2025 12:24:22 +0100
+Message-ID: <20251201112246.780497662@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -53,55 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Chuang Wang <nashuiliang@gmail.com>
 
-[ Upstream commit 0d6c356dd6547adac2b06b461528e3573f52d953 ]
+commit ac1499fcd40fe06479e9b933347b837ccabc2a40 upstream.
 
-When emitting the order of the allocation for a hash table,
-alloc_large_system_hash() unconditionally subtracts PAGE_SHIFT from log
-base 2 of the allocation size.  This is not correct if the allocation size
-is smaller than a page, and yields a negative value for the order as seen
-below:
+The sit driver's packet transmission path calls: sit_tunnel_xmit() ->
+update_or_create_fnhe(), which lead to fnhe_remove_oldest() being called
+to delete entries exceeding FNHE_RECLAIM_DEPTH+random.
 
-TCP established hash table entries: 32 (order: -4, 256 bytes, linear) TCP
-bind hash table entries: 32 (order: -2, 1024 bytes, linear)
+The race window is between fnhe_remove_oldest() selecting fnheX for
+deletion and the subsequent kfree_rcu(). During this time, the
+concurrent path's __mkroute_output() -> find_exception() can fetch the
+soon-to-be-deleted fnheX, and rt_bind_exception() then binds it with a
+new dst using a dst_hold(). When the original fnheX is freed via RCU,
+the dst reference remains permanently leaked.
 
-Use get_order() to compute the order when emitting the hash table
-information to correctly handle cases where the allocation size is smaller
-than a page:
+CPU 0                             CPU 1
+__mkroute_output()
+  find_exception() [fnheX]
+                                  update_or_create_fnhe()
+                                    fnhe_remove_oldest() [fnheX]
+  rt_bind_exception() [bind dst]
+                                  RCU callback [fnheX freed, dst leak]
 
-TCP established hash table entries: 32 (order: 0, 256 bytes, linear) TCP
-bind hash table entries: 32 (order: 0, 1024 bytes, linear)
+This issue manifests as a device reference count leak and a warning in
+dmesg when unregistering the net device:
 
-Link: https://lkml.kernel.org/r/20251028191020.413002-1-isaacmanjarres@google.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 0d6c356dd6547adac2b06b461528e3573f52d953)
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  unregister_netdevice: waiting for sitX to become free. Usage count = N
+
+Ido Schimmel provided the simple test validation method [1].
+
+The fix clears 'oldest->fnhe_daddr' before calling fnhe_flush_routes().
+Since rt_bind_exception() checks this field, setting it to zero prevents
+the stale fnhe from being reused and bound to a new dst just before it
+is freed.
+
+[1]
+ip netns add ns1
+ip -n ns1 link set dev lo up
+ip -n ns1 address add 192.0.2.1/32 dev lo
+ip -n ns1 link add name dummy1 up type dummy
+ip -n ns1 route add 192.0.2.2/32 dev dummy1
+ip -n ns1 link add name gretap1 up arp off type gretap \
+    local 192.0.2.1 remote 192.0.2.2
+ip -n ns1 route add 198.51.0.0/16 dev gretap1
+taskset -c 0 ip netns exec ns1 mausezahn gretap1 \
+    -A 198.51.100.1 -B 198.51.0.0/16 -t udp -p 1000 -c 0 -q &
+taskset -c 2 ip netns exec ns1 mausezahn gretap1 \
+    -A 198.51.100.1 -B 198.51.0.0/16 -t udp -p 1000 -c 0 -q &
+sleep 10
+ip netns pids ns1 | xargs kill
+ip netns del ns1
+
+Cc: stable@vger.kernel.org
+Fixes: 67d6d681e15b ("ipv4: make exception cache less predictible")
+Signed-off-by: Chuang Wang <nashuiliang@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251111064328.24440-1-nashuiliang@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 66e4b78786a97..111f50054fc18 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -8275,7 +8275,7 @@ void *__init alloc_large_system_hash(const char *tablename,
- 		panic("Failed to allocate %s hash table\n", tablename);
- 
- 	pr_info("%s hash table entries: %ld (order: %d, %lu bytes, %s)\n",
--		tablename, 1UL << log2qty, ilog2(size) - PAGE_SHIFT, size,
-+		tablename, 1UL << log2qty, get_order(size), size,
- 		virt ? "vmalloc" : "linear");
- 
- 	if (_hash_shift)
--- 
-2.51.0
-
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -637,6 +637,11 @@ static void fnhe_remove_oldest(struct fn
+ 			oldest_p = fnhe_p;
+ 		}
+ 	}
++
++	/* Clear oldest->fnhe_daddr to prevent this fnhe from being
++	 * rebound with new dsts in rt_bind_exception().
++	 */
++	oldest->fnhe_daddr = 0;
+ 	fnhe_flush_routes(oldest);
+ 	*oldest_p = oldest->fnhe_next;
+ 	kfree_rcu(oldest, rcu);
 
 
