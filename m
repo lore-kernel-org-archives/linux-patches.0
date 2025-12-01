@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC0F24EA90;
-	Mon,  1 Dec 2025 11:30:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78382550DD;
+	Mon,  1 Dec 2025 11:30:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588624; cv=none; b=I+0GCbfgK1uhDeSrzMYsOsNb+W+kBLjbditZ78jM4B3zHFxjefPDdhp0SXjbHUBNU/wocAKgPQeoGreQJqIkD9wgWlnU+ewPobHKbyHVc3yYG83nCEy0Mla1v4dZdynnrahJoTlYSyo93VCFBDtaTW23dSajkNCWbB/SkEdBNTk=
+	t=1764588627; cv=none; b=gTMd2xajxkpV1+CPfS5boOKAmjp0kcoLs3Gv0b5Ym5E81vdkoEuvvDx/8yNtukVUliOKUiM0M/moukBsawGDIbh1hriykxdXzm42zi22ogPJYW3hJY0KkeQC9MAFiqaSIdT9KoPqbwyP7RES6QnBQ3yYWHSY6bTLOgCGSaQzduE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588624; c=relaxed/simple;
-	bh=0k6lTdUIyXiDnEAtRDSvZaCtYOc/nhi+S3cQoSPhMrI=;
+	s=arc-20240116; t=1764588627; c=relaxed/simple;
+	bh=8opLn6BQRTW/r9SpOzRLXS/reisZh/Tqy23rf2ipH/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NsHZOPlvnnSSkLYi+xZbdmQNU/Xv1vEmVz2kc4rtthY8WWNx0yZXZIkJtkw+SfaBOCcwdHUMdGNpQUmmRhGu72kGfYiwg/51ADq8BiosS18K8P3NcldMCrvXEIxXN23c9hkfVN2mPEtZgWVOG2nBncxvyU+3If/KAPl+Lt2nVuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9JwCwdo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Luae86zM8hIyYCifZSSenQbVXNMmk8u4LCJ91LcICEU0pWJp3uitr1uyOatU6ej4/2U0kx12wWyqIcrcQ+N26iTZNZCcuiAnH5ScBGV2CsmD15g2KhyCHuTLcOZORf6M5Up8wdh0wDKp6z5Xb2WPwlkgQCT41GhOWYVfpbmJ65o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OB1ZHPiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9JwCwdo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3664BC4CEF1;
-	Mon,  1 Dec 2025 11:30:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OB1ZHPiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E34C4CEF1;
+	Mon,  1 Dec 2025 11:30:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588624;
-	bh=0k6lTdUIyXiDnEAtRDSvZaCtYOc/nhi+S3cQoSPhMrI=;
+	s=korg; t=1764588627;
+	bh=8opLn6BQRTW/r9SpOzRLXS/reisZh/Tqy23rf2ipH/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9JwCwdoPw0yZOUfFJKYEbhFPqGu+icegKgaFGUULI+Ab+l6HNHve+UAC6yVi7EPX
-	 nh6HJLyVUwOL0QuNTbgrknVWiEp3lzLIyVjyqQrvtHFgSY5Dtw0B+gN81CcXErvAo0
-	 NFdvNEpfepiAm6mm5SoszNXviRC546fD/UGAr4ik=
+	b=OB1ZHPiLqPVf9awv8ICOID/dObrnH7lkp4lQYEOMnpRILYA/FTCzVQ86sODzgzvp0
+	 O7cB3odpND48ZWy6s4pjSIeGveOnxtSMk1PKyl6+CSKzSI+sm2CrqerkG03tCY6tx7
+	 b7pwZgnmnB6qwQ/rLrUMIyrea82m9YnhRX8Euxdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+48b0652a95834717f190@syzkaller.appspotmail.com,
-	Helge Deller <deller@gmx.de>,
-	Albin Babu Varghese <albinbabuvarghese20@gmail.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 112/187] fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds
-Date: Mon,  1 Dec 2025 12:23:40 +0100
-Message-ID: <20251201112245.278694839@linuxfoundation.org>
+Subject: [PATCH 5.4 113/187] ceph: add checking of wait_for_completion_killable() return value
+Date: Mon,  1 Dec 2025 12:23:41 +0100
+Message-ID: <20251201112245.314357664@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,67 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 3637d34b35b287ab830e66048841ace404382b67 ]
+[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
 
-Add bounds checking to prevent writes past framebuffer boundaries when
-rendering text near screen edges. Return early if the Y position is off-screen
-and clip image height to screen boundary. Break from the rendering loop if the
-X position is off-screen. When clipping image width to fit the screen, update
-the character count to match the clipped width to prevent buffer size
-mismatches.
+The Coverity Scan service has detected the calling of
+wait_for_completion_killable() without checking the return
+value in ceph_lock_wait_for_completion() [1]. The CID 1636232
+defect contains explanation: "If the function returns an error
+value, the error value may be mistaken for a normal value.
+In ceph_lock_wait_for_completion(): Value returned from
+a function is not checked for errors before being used. (CWE-252)".
 
-Without the character count update, bit_putcs_aligned and bit_putcs_unaligned
-receive mismatched parameters where the buffer is allocated for the clipped
-width but cnt reflects the original larger count, causing out-of-bounds writes.
+The patch adds the checking of wait_for_completion_killable()
+return value and return the error code from
+ceph_lock_wait_for_completion().
 
-Reported-by: syzbot+48b0652a95834717f190@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=48b0652a95834717f190
-Suggested-by: Helge Deller <deller@gmx.de>
-Tested-by: syzbot+48b0652a95834717f190@syzkaller.appspotmail.com
-Signed-off-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
+
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/bitblit.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/ceph/locks.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index 99a4f048b96ac..75c20f8e58e33 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -169,6 +169,11 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 	image.height = vc->vc_font.height;
- 	image.depth = 1;
+diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
+index 544e9e85b1202..d93515c2fa56f 100644
+--- a/fs/ceph/locks.c
++++ b/fs/ceph/locks.c
+@@ -206,7 +206,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
+ 	if (err && err != -ERESTARTSYS)
+ 		return err;
  
-+	if (image.dy >= info->var.yres)
-+		return;
+-	wait_for_completion_killable(&req->r_safe_completion);
++	err = wait_for_completion_killable(&req->r_safe_completion);
++	if (err)
++		return err;
 +
-+	image.height = min(image.height, info->var.yres - image.dy);
-+
- 	if (attribute) {
- 		buf = kmalloc(cellsize, GFP_ATOMIC);
- 		if (!buf)
-@@ -182,6 +187,18 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 			cnt = count;
+ 	return 0;
+ }
  
- 		image.width = vc->vc_font.width * cnt;
-+
-+		if (image.dx >= info->var.xres)
-+			break;
-+
-+		if (image.dx + image.width > info->var.xres) {
-+			image.width = info->var.xres - image.dx;
-+			cnt = image.width / vc->vc_font.width;
-+			if (cnt == 0)
-+				break;
-+			image.width = cnt * vc->vc_font.width;
-+		}
-+
- 		pitch = DIV_ROUND_UP(image.width, 8) + scan_align;
- 		pitch &= ~scan_align;
- 		size = pitch * image.height + buf_align;
 -- 
 2.51.0
 
