@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7222561AB;
-	Mon,  1 Dec 2025 11:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF90302CD6;
+	Mon,  1 Dec 2025 11:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588529; cv=none; b=C7RmpeNTMNQ6K0Bw3FDr+yv5SlcpNQaxPpwBB1G1WJsKQRlxj3CvCUaRVsCaxJl2Il/SyVtLAkjmJIs6OJthVxc0B560ESLdhtoHqM7W2jGOzW5RBUvcBJd6UOjoOulAyY1jx2cIglQxHFzrOLtEKY3HwfBINHbYI0hS7zAsElM=
+	t=1764588532; cv=none; b=QOWCtF4tWYwJ8y0DyxxZ65O3kc5I6IxKQUqOs5AVjlWIMuX32txgOgg63NEBrvABUsjBZa/fsRIr6Q+2B2d8Zb7Wd/4MZ/MwNcs6SpQv2UDOBq0KTOmpY5H1plGE93VBElIlrenY5xKtUZMySbe/Aw3Z7+yItYFxeawyoHxD8vc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588529; c=relaxed/simple;
-	bh=XUKLFntLzf93Wbe4uRRmLjo+EZPGEsZXMM2hmjlPGKc=;
+	s=arc-20240116; t=1764588532; c=relaxed/simple;
+	bh=vDG12SdH8nIWQFCM46LIPxvycUHwa9GORqMlFLjv6mQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H2Aofw+VXsKJzF3mESfOYk7YlSljGaPVKCrbyax/ll8v88geX7ECtVs/LCya2jWMFs1w3ee2GfUKrTN+5mupve5YISz0qDQV5jSDDwHzyPUi5jdYevlsph/GYUY6OEOENNXBEwkmUyAE3dDM1cQcqUXva4pf11lculllrU30tr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txJLK9i+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=keZOxX2mYPIZNzbfqVN9umi/TgOUI4zvXeKAhk66qZBTUjps4A5p40npKcrpUElCJQ7M2WKQOtYDPSHXjm6uqUsqoMiBkl+UaAxe3yJFZsqU/n8wyIrw8u09Y06qXbo3DKu9gBABr82FlwpOYRTGzS+25YWm4/3ADEb+Ujz4Eb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMPvQoMr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txJLK9i+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC73C4CEF1;
-	Mon,  1 Dec 2025 11:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMPvQoMr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC73C4CEF1;
+	Mon,  1 Dec 2025 11:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588529;
-	bh=XUKLFntLzf93Wbe4uRRmLjo+EZPGEsZXMM2hmjlPGKc=;
+	s=korg; t=1764588532;
+	bh=vDG12SdH8nIWQFCM46LIPxvycUHwa9GORqMlFLjv6mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txJLK9i+5r0l6wk5LvYGH8n5WhhuhLAvoa45z0wf0bHAAVj8cYR5MIbM97yJJXbei
-	 y43xoZUdprMY3MXrN+P5P1fpo94T6WEK3rON0CfetoRVooesKs0AZFCifBd+9egTGk
-	 C9otF2a9+qH2iOUaFMFbPRXD9MItFN+q2yX6ca5g=
+	b=eMPvQoMru5ZDFMrzvvNE2OcC63zMv96ae6n880WByJ4hPm0vGhErbTdwWO7nlfH8E
+	 4YZFlWKvf/5mRUPpJDOmUJCxnB3Nln6wZcdk/tPuZS7snywiEKwNSgY8ZSxM2XyKEH
+	 0cZCS5efU5mjsdfwHCDd692yfUMHgs+gIvuwSVRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Wu <william.wu@rock-chips.com>,
+	Seyediman Seyedarab <ImanDevel@gmail.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/187] usb: gadget: f_hid: Fix zero length packet transfer
-Date: Mon,  1 Dec 2025 12:23:07 +0100
-Message-ID: <20251201112244.084806789@linuxfoundation.org>
+Subject: [PATCH 5.4 048/187] drm/nouveau: replace snprintf() with scnprintf() in nvkm_snprintbf()
+Date: Mon,  1 Dec 2025 12:22:36 +0100
+Message-ID: <20251201112242.983093790@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -50,45 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Wu <william.wu@rock-chips.com>
+From: Seyediman Seyedarab <imandevel@gmail.com>
 
-[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
+[ Upstream commit 6510b62fe9303aaf48ff136ff69186bcfc32172d ]
 
-Set the hid req->zero flag of ep0/in_ep to true by default,
-then the UDC drivers can transfer a zero length packet at
-the end if the hid transfer with size divisible to EPs max
-packet size according to the USB 2.0 spec.
+snprintf() returns the number of characters that *would* have been
+written, which can overestimate how much you actually wrote to the
+buffer in case of truncation. That leads to 'data += this' advancing
+the pointer past the end of the buffer and size going negative.
 
-Signed-off-by: William Wu <william.wu@rock-chips.com>
-Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Switching to scnprintf() prevents potential buffer overflows and ensures
+consistent behavior when building the output string.
+
+Signed-off-by: Seyediman Seyedarab <ImanDevel@gmail.com>
+Link: https://lore.kernel.org/r/20250724195913.60742-1-ImanDevel@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nvkm/core/enum.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 77354626252cd..cea9157ea2b42 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -496,7 +496,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
- 	}
- 
- 	req->status   = 0;
--	req->zero     = 0;
-+	req->zero     = 1;
- 	req->length   = count;
- 	req->complete = f_hidg_req_complete;
- 	req->context  = hidg;
-@@ -767,7 +767,7 @@ static int hidg_setup(struct usb_function *f,
- 	return -EOPNOTSUPP;
- 
- respond:
--	req->zero = 0;
-+	req->zero = 1;
- 	req->length = length;
- 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
- 	if (status < 0)
+diff --git a/drivers/gpu/drm/nouveau/nvkm/core/enum.c b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+index b9581feb24ccb..a23b40b27b81b 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/core/enum.c
++++ b/drivers/gpu/drm/nouveau/nvkm/core/enum.c
+@@ -44,7 +44,7 @@ nvkm_snprintbf(char *data, int size, const struct nvkm_bitfield *bf, u32 value)
+ 	bool space = false;
+ 	while (size >= 1 && bf->name) {
+ 		if (value & bf->mask) {
+-			int this = snprintf(data, size, "%s%s",
++			int this = scnprintf(data, size, "%s%s",
+ 					    space ? " " : "", bf->name);
+ 			size -= this;
+ 			data += this;
 -- 
 2.51.0
 
