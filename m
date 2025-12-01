@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8868D257855;
-	Mon,  1 Dec 2025 11:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B0752652AC;
+	Mon,  1 Dec 2025 11:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588845; cv=none; b=revc75y8tf+JaUnT+xaEWZT5GFE9fLrDsjZoC57YRBVj4unJef35L15A6RIrAtztUkUkHt39nDLWhA+s+3sLWQ4YfVhhl9NSwFuQx8scByWaFZelmL1GHrK6jxAy3nRRYtau7zeeSnAmu6Fm8gW/gO+kY/eTVL8BBx1ntlpOOu4=
+	t=1764588848; cv=none; b=AlqZVfd0mrWZoNO6Tc07GXkqHQ/HilzhxXh1ZV38bi6Y6fkf/wLSH8OGPtKkqbFj9FrLHU4BPc8LkWWkhZx6ftPsmhIXxWBQY7aK8q27U9s5lCocoOyPB7gexz5uPhGPr99dOHDxxtNTEkwAjeJRBzouN8DeMMgcJsT3z/AjrkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588845; c=relaxed/simple;
-	bh=VcxRw78XDiTUaOjx754TuM/693JVYIg4VJ7sWoiFySY=;
+	s=arc-20240116; t=1764588848; c=relaxed/simple;
+	bh=cv/JR5ZtGNF8z9Qtxab9KYkWMLsPdWpTl5cLdQHwVlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CpywBN2F6YA5dhyx8p7KeEMxaCEM7miq+TGqBIRiFO/FDLUE65weoQ/uEUcIq4TQk61QlqmCudWfRSWsNZWittLuiybjBwM3L8A3oRh0/huvcPZ+FTfTo1jxEPYJ65pJRvVRQWCdYJNaSdTGn3RFKN2+n8/PCEmV2G8fw9m53ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lePPdTtl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VxUqsFWygBJSKQzFeA75OpWty8sk2ZUsrwiJhf0I+jiC3g10URwuMW1jFdgBGdNTMt/dpCBnfFKP2PCz6M/FFkIQZNi8rzgVvR4N4ClzmG32l9VsQ851bDuyKWWwDeJ6M7mp3Vyw/CGLn17XBYH45AXZicCYjlJoeMpIfEXa7Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEy4Dp4v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lePPdTtl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF74C4CEF1;
-	Mon,  1 Dec 2025 11:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEy4Dp4v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A6DC113D0;
+	Mon,  1 Dec 2025 11:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588845;
-	bh=VcxRw78XDiTUaOjx754TuM/693JVYIg4VJ7sWoiFySY=;
+	s=korg; t=1764588848;
+	bh=cv/JR5ZtGNF8z9Qtxab9KYkWMLsPdWpTl5cLdQHwVlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lePPdTtlVM5xmguLePiCz7AtlL3+Lu9zeZW21xwvs7LmGkDduf517kDeXbSxU00Kt
-	 wAZCP0dgCaxcLQ+vuKlbOeDeziCtPzdGwbqgKwrk1FOLS43zt4RWt9YdoLsFop2P7h
-	 YMio9qyM98Tl+nBrW5q29ZLUD6+qdbxVi5HFi4Gw=
+	b=zEy4Dp4vP8sV3FauHjC02QzKZwju+/R3WWT9LOR8jnxp1t0S5SwlUCODcL8NdJe4H
+	 o1NsVtlAgEFttSP4lILe6SOHvH5nlGSl7sc56MKX6PpVVQIFJc6/gIF1z8wsjbA/+U
+	 ZMokfKRD9RwswJI85lwwkdyTT678r/4V8FjdNgYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	staffan.melin@oscillator.se,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.4 159/187] HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
-Date: Mon,  1 Dec 2025 12:24:27 +0100
-Message-ID: <20251201112246.959877112@linuxfoundation.org>
+	Andrey Vatoropin <a.vatoropin@crpt.ru>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 160/187] be2net: pass wrb_params in case of OS2BMC
+Date: Mon,  1 Dec 2025 12:24:28 +0100
+Message-ID: <20251201112246.995274749@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -46,76 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Andrey Vatoropin <a.vatoropin@crpt.ru>
 
-commit beab067dbcff642243291fd528355d64c41dc3b2 upstream.
+commit 7d277a7a58578dd62fd546ddaef459ec24ccae36 upstream.
 
-Based on available evidence, the USB ID 4c4a:4155 used by multiple
-devices has been attributed to Jieli. The commit 1a8953f4f774
-("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY") affected touchscreen
-functionality. Added checks for manufacturer and serial number to
-maintain microphone compatibility, enabling both devices to function
-properly.
+be_insert_vlan_in_pkt() is called with the wrb_params argument being NULL
+at be_send_pkt_to_bmc() call site.  This may lead to dereferencing a NULL
+pointer when processing a workaround for specific packet, as commit
+bc0c3405abbb ("be2net: fix a Tx stall bug caused by a specific ipv6
+packet") states.
 
-[jkosina@suse.com: edit shortlog]
-Fixes: 1a8953f4f774 ("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY")
+The correct way would be to pass the wrb_params from be_xmit().
+
+Fixes: 760c295e0e8d ("be2net: Support for OS2BMC.")
 Cc: stable@vger.kernel.org
-Tested-by: staffan.melin@oscillator.se
-Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Andrey Vatoropin <a.vatoropin@crpt.ru>
+Link: https://patch.msgid.link/20251119105015.194501-1-a.vatoropin@crpt.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    4 ++--
- drivers/hid/hid-quirks.c |   13 ++++++++++++-
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/emulex/benet/be_main.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1352,7 +1352,7 @@
- #define USB_VENDOR_ID_SIGNOTEC			0x2133
- #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
+--- a/drivers/net/ethernet/emulex/benet/be_main.c
++++ b/drivers/net/ethernet/emulex/benet/be_main.c
+@@ -1298,7 +1298,8 @@ static void be_xmit_flush(struct be_adap
+ 		(adapter->bmc_filt_mask & BMC_FILT_MULTICAST)
  
--#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
--#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
-+#define USB_VENDOR_ID_JIELI_SDK_DEFAULT		0x4c4a
-+#define USB_DEVICE_ID_JIELI_SDK_4155		0x4155
+ static bool be_send_pkt_to_bmc(struct be_adapter *adapter,
+-			       struct sk_buff **skb)
++			       struct sk_buff **skb,
++			       struct be_wrb_params *wrb_params)
+ {
+ 	struct ethhdr *eh = (struct ethhdr *)(*skb)->data;
+ 	bool os2bmc = false;
+@@ -1362,7 +1363,7 @@ done:
+ 	 * to BMC, asic expects the vlan to be inline in the packet.
+ 	 */
+ 	if (os2bmc)
+-		*skb = be_insert_vlan_in_pkt(adapter, *skb, NULL);
++		*skb = be_insert_vlan_in_pkt(adapter, *skb, wrb_params);
  
- #endif
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -882,7 +882,6 @@ static const struct hid_device_id hid_ig
- #endif
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
- 	{ }
- };
- 
-@@ -1031,6 +1030,18 @@ bool hid_ignore(struct hid_device *hdev)
- 					     strlen(elan_acpi_id[i].id)))
- 					return true;
- 		break;
-+	case USB_VENDOR_ID_JIELI_SDK_DEFAULT:
-+		/*
-+		 * Multiple USB devices with identical IDs (mic & touchscreen).
-+		 * The touch screen requires hid core processing, but the
-+		 * microphone does not. They can be distinguished by manufacturer
-+		 * and serial number.
-+		 */
-+		if (hdev->product == USB_DEVICE_ID_JIELI_SDK_4155 &&
-+		    strncmp(hdev->name, "SmartlinkTechnology", 19) == 0 &&
-+		    strncmp(hdev->uniq, "20201111000001", 14) == 0)
-+			return true;
-+		break;
- 	}
- 
- 	if (hdev->type == HID_TYPE_USBMOUSE &&
+ 	return os2bmc;
+ }
+@@ -1389,7 +1390,7 @@ static netdev_tx_t be_xmit(struct sk_buf
+ 	/* if os2bmc is enabled and if the pkt is destined to bmc,
+ 	 * enqueue the pkt a 2nd time with mgmt bit set.
+ 	 */
+-	if (be_send_pkt_to_bmc(adapter, &skb)) {
++	if (be_send_pkt_to_bmc(adapter, &skb, &wrb_params)) {
+ 		BE_WRB_F_SET(wrb_params.features, OS2BMC, 1);
+ 		wrb_cnt = be_xmit_enqueue(adapter, txo, skb, &wrb_params);
+ 		if (unlikely(!wrb_cnt))
 
 
