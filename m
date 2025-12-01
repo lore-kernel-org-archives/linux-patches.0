@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268A3265CA7;
-	Mon,  1 Dec 2025 11:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBDE625A633;
+	Mon,  1 Dec 2025 11:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588681; cv=none; b=is3dzkCcltO+/dIGNWDHhFk8Xlk4YCW6ku2L8y6t49qcyUqVh2mamJa5vLwMv1edFwnicCttAVZgjmwz+/EP0usbUabPxftInhsAwma2/pFLkozhHt1LhaIAtOUA3VYNLBlRNtSduS5A+VsihsfFSZ2u5sG2TEVyA2BTF2XXQiY=
+	t=1764588684; cv=none; b=nZXN3iZc5H8virngvlBMxWFUHAV5jBNajxyfo0Al3tWCpB/Wx6PAEHGTVxvJPG3MjkoekKuiTn64utBdKrw7gsh9ZoNbcV4a2Do1zac6gmM9MuglBaUgSjQJYv/dlS4dgEXnZ0kXkN482rHh+kzHV69MRQD/Y5qMOB8GxqEpU/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588681; c=relaxed/simple;
-	bh=ESCCxbJ4jxGonjCadpPBegXkJUb+V6jDRSYCL/5pZdY=;
+	s=arc-20240116; t=1764588684; c=relaxed/simple;
+	bh=Zpt6P8L5gjtxA/gZoMo+FMfMvMrMxvYEoOIKnNHfjTg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aa4tHs6rwJ0BQuppFMEHDz6zK9b4QxzeGsM3VlH6D8S0dip0UjQZX6JIxVqyrDRXOgmE1h8asJYVMZp0BCxslDNvEVMdHfMXZCmus4OJMPRMebNHOHtncJ3hq2LjXz/HGqhyCGOvzq3RK6TFPlGM/du34vLZJ1dn7C0wOTKopUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roEP9sCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o3eK0ttcFM8SFFWaC3lVvw+90Lhv3y5JndlhmQmc13X3iAF3d4KZBh53qM3nydNeAp2nVWp+OlOc6wrQQxH/O4TlWVeXKwkAYPsW3cjDhOmX4CR0rsXDnWKpOblCVAtevAFCB6MNi1tphXa5+UM4315OxtfLCxQpWdMjnMU8u5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YwjjDuyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roEP9sCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99BCEC4CEF1;
-	Mon,  1 Dec 2025 11:31:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YwjjDuyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73887C4CEF1;
+	Mon,  1 Dec 2025 11:31:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588681;
-	bh=ESCCxbJ4jxGonjCadpPBegXkJUb+V6jDRSYCL/5pZdY=;
+	s=korg; t=1764588683;
+	bh=Zpt6P8L5gjtxA/gZoMo+FMfMvMrMxvYEoOIKnNHfjTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roEP9sCMbCQdq52z3gv6uHMbKUp37sMJrFbekzfBBbZTF/i04UcbDdxAPGFthGJSX
-	 QIMdNtizyTagMvf8vA3KZv394bHBPU/b1F5GwX/2ifT52vOlceJMvJaXi2eEr7cZ1n
-	 upAEftbyieGh+L2x4Sjp6pecRB12N38sKU+jgPVE=
+	b=YwjjDuywcFtpRLzljNLpOotjpTbFv7jkRXl1puTESARpVhZ9DK6Dtjrg3NWokH9Gr
+	 in3Yq1gWKXHXVLvsAWaqyrghGAsgItsuyweD6WrjFtMbKcqNCBfKbT8QoEHgQ3vTkm
+	 RblaRT7XfAmaGXFAL4/j0ht1LxhdZT+Z0Dqd5Mpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Xin Long <lucien.xin@gmail.com>,
-	Neil Horman <nhorman@tuxdriver.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 134/187] sctp: get netns from asoc and ep base
-Date: Mon,  1 Dec 2025 12:24:02 +0100
-Message-ID: <20251201112246.068077600@linuxfoundation.org>
+Subject: [PATCH 5.4 135/187] sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto
+Date: Mon,  1 Dec 2025 12:24:03 +0100
+Message-ID: <20251201112246.103549216@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -53,515 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4e7696d90b51a1a73ce0e8174f3aff58b914619c ]
+[ Upstream commit 1534ff77757e44bcc4b98d0196bc5c0052fce5fa ]
 
-Commit 312434617cb1 ("sctp: cache netns in sctp_ep_common") set netns
-in asoc and ep base since they're created, and it will never change.
-It's a better way to get netns from asoc and ep base, comparing to
-calling sock_net().
+syzbot reported a possible shift-out-of-bounds [1]
 
-This patch is to replace them.
+Blamed commit added rto_alpha_max and rto_beta_max set to 1000.
 
-v1->v2:
-  - no change.
+It is unclear if some sctp users are setting very large rto_alpha
+and/or rto_beta.
 
-Suggested-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Neil Horman <nhorman@tuxdriver.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 1534ff77757e ("sctp: prevent possible shift-out-of-bounds in sctp_transport_update_rto")
+In order to prevent user regression, perform the test at run time.
+
+Also add READ_ONCE() annotations as sysctl values can change under us.
+
+[1]
+
+UBSAN: shift-out-of-bounds in net/sctp/transport.c:509:41
+shift exponent 64 is too large for 32-bit type 'unsigned int'
+CPU: 0 UID: 0 PID: 16704 Comm: syz.2.2320 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
+Call Trace:
+ <TASK>
+  __dump_stack lib/dump_stack.c:94 [inline]
+  dump_stack_lvl+0x16c/0x1f0 lib/dump_stack.c:120
+  ubsan_epilogue lib/ubsan.c:233 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x27f/0x420 lib/ubsan.c:494
+  sctp_transport_update_rto.cold+0x1c/0x34b net/sctp/transport.c:509
+  sctp_check_transmitted+0x11c4/0x1c30 net/sctp/outqueue.c:1502
+  sctp_outq_sack+0x4ef/0x1b20 net/sctp/outqueue.c:1338
+  sctp_cmd_process_sack net/sctp/sm_sideeffect.c:840 [inline]
+  sctp_cmd_interpreter net/sctp/sm_sideeffect.c:1372 [inline]
+
+Fixes: b58537a1f562 ("net: sctp: fix permissions for rto_alpha and rto_beta knobs")
+Reported-by: syzbot+f8c46c8b2b7f6e076e99@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/690c81ae.050a0220.3d0d33.014e.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251106111054.3288127-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/associola.c         | 10 +++++-----
- net/sctp/chunk.c             |  2 +-
- net/sctp/endpointola.c       |  6 +++---
- net/sctp/input.c             |  5 ++---
- net/sctp/output.c            |  2 +-
- net/sctp/outqueue.c          |  6 +++---
- net/sctp/sm_make_chunk.c     |  7 +++----
- net/sctp/sm_sideeffect.c     | 16 ++++++----------
- net/sctp/sm_statefuns.c      |  2 +-
- net/sctp/socket.c            | 12 +++++-------
- net/sctp/stream.c            |  3 +--
- net/sctp/stream_interleave.c | 23 ++++++++++-------------
- net/sctp/transport.c         |  2 +-
- net/sctp/ulpqueue.c          | 15 +++++++--------
- 14 files changed, 49 insertions(+), 62 deletions(-)
+ net/sctp/transport.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/sctp/associola.c b/net/sctp/associola.c
-index bc9a62744feca..253ab788cffca 100644
---- a/net/sctp/associola.c
-+++ b/net/sctp/associola.c
-@@ -579,7 +579,6 @@ struct sctp_transport *sctp_assoc_add_peer(struct sctp_association *asoc,
- 					   const gfp_t gfp,
- 					   const int peer_state)
- {
--	struct net *net = sock_net(asoc->base.sk);
- 	struct sctp_transport *peer;
- 	struct sctp_sock *sp;
- 	unsigned short port;
-@@ -609,7 +608,7 @@ struct sctp_transport *sctp_assoc_add_peer(struct sctp_association *asoc,
- 		return peer;
- 	}
- 
--	peer = sctp_transport_new(net, addr, gfp);
-+	peer = sctp_transport_new(asoc->base.net, addr, gfp);
- 	if (!peer)
- 		return NULL;
- 
-@@ -978,7 +977,7 @@ static void sctp_assoc_bh_rcv(struct work_struct *work)
- 	struct sctp_association *asoc =
- 		container_of(work, struct sctp_association,
- 			     base.inqueue.immediate);
--	struct net *net = sock_net(asoc->base.sk);
-+	struct net *net = asoc->base.net;
- 	union sctp_subtype subtype;
- 	struct sctp_endpoint *ep;
- 	struct sctp_chunk *chunk;
-@@ -1445,7 +1444,8 @@ void sctp_assoc_sync_pmtu(struct sctp_association *asoc)
- /* Should we send a SACK to update our peer? */
- static inline bool sctp_peer_needs_update(struct sctp_association *asoc)
- {
--	struct net *net = sock_net(asoc->base.sk);
-+	struct net *net = asoc->base.net;
-+
- 	switch (asoc->state) {
- 	case SCTP_STATE_ESTABLISHED:
- 	case SCTP_STATE_SHUTDOWN_PENDING:
-@@ -1582,7 +1582,7 @@ int sctp_assoc_set_bind_addr_from_ep(struct sctp_association *asoc,
- 	if (asoc->peer.ipv6_address)
- 		flags |= SCTP_ADDR6_PEERSUPP;
- 
--	return sctp_bind_addr_copy(sock_net(asoc->base.sk),
-+	return sctp_bind_addr_copy(asoc->base.net,
- 				   &asoc->base.bind_addr,
- 				   &asoc->ep->base.bind_addr,
- 				   scope, gfp, flags);
-diff --git a/net/sctp/chunk.c b/net/sctp/chunk.c
-index cc0405c79dfc0..064675bc7b54c 100644
---- a/net/sctp/chunk.c
-+++ b/net/sctp/chunk.c
-@@ -227,7 +227,7 @@ struct sctp_datamsg *sctp_datamsg_from_user(struct sctp_association *asoc,
- 	if (msg_len >= first_len) {
- 		msg->can_delay = 0;
- 		if (msg_len > first_len)
--			SCTP_INC_STATS(sock_net(asoc->base.sk),
-+			SCTP_INC_STATS(asoc->base.net,
- 				       SCTP_MIB_FRAGUSRMSGS);
- 	} else {
- 		/* Which may be the only one... */
-diff --git a/net/sctp/endpointola.c b/net/sctp/endpointola.c
-index 665a22d5c725b..208b121d5a783 100644
---- a/net/sctp/endpointola.c
-+++ b/net/sctp/endpointola.c
-@@ -251,7 +251,7 @@ struct sctp_endpoint *sctp_endpoint_is_match(struct sctp_endpoint *ep,
- 	struct sctp_endpoint *retval = NULL;
- 
- 	if ((htons(ep->base.bind_addr.port) == laddr->v4.sin_port) &&
--	    net_eq(sock_net(ep->base.sk), net)) {
-+	    net_eq(ep->base.net, net)) {
- 		if (sctp_bind_addr_match(&ep->base.bind_addr, laddr,
- 					 sctp_sk(ep->base.sk)))
- 			retval = ep;
-@@ -299,8 +299,8 @@ bool sctp_endpoint_is_peeled_off(struct sctp_endpoint *ep,
- 				 const union sctp_addr *paddr)
- {
- 	struct sctp_sockaddr_entry *addr;
-+	struct net *net = ep->base.net;
- 	struct sctp_bind_addr *bp;
--	struct net *net = sock_net(ep->base.sk);
- 
- 	bp = &ep->base.bind_addr;
- 	/* This function is called with the socket lock held,
-@@ -391,7 +391,7 @@ static void sctp_endpoint_bh_rcv(struct work_struct *work)
- 		if (asoc && sctp_chunk_is_data(chunk))
- 			asoc->peer.last_data_from = chunk->transport;
- 		else {
--			SCTP_INC_STATS(sock_net(ep->base.sk), SCTP_MIB_INCTRLCHUNKS);
-+			SCTP_INC_STATS(ep->base.net, SCTP_MIB_INCTRLCHUNKS);
- 			if (asoc)
- 				asoc->stats.ictrlchunks++;
- 		}
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 9013257cf3df3..28e0e110804ad 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -935,7 +935,7 @@ int sctp_hash_transport(struct sctp_transport *t)
- 	if (t->asoc->temp)
- 		return 0;
- 
--	arg.net   = sock_net(t->asoc->base.sk);
-+	arg.net   = t->asoc->base.net;
- 	arg.paddr = &t->ipaddr;
- 	arg.lport = htons(t->asoc->base.bind_addr.port);
- 
-@@ -1002,12 +1002,11 @@ struct sctp_transport *sctp_epaddr_lookup_transport(
- 				const struct sctp_endpoint *ep,
- 				const union sctp_addr *paddr)
- {
--	struct net *net = sock_net(ep->base.sk);
- 	struct rhlist_head *tmp, *list;
- 	struct sctp_transport *t;
- 	struct sctp_hash_cmp_arg arg = {
- 		.paddr = paddr,
--		.net   = net,
-+		.net   = ep->base.net,
- 		.lport = htons(ep->base.bind_addr.port),
- 	};
- 
-diff --git a/net/sctp/output.c b/net/sctp/output.c
-index dbda7e7927fd9..1441eaf460bb3 100644
---- a/net/sctp/output.c
-+++ b/net/sctp/output.c
-@@ -282,7 +282,7 @@ static enum sctp_xmit sctp_packet_bundle_sack(struct sctp_packet *pkt,
- 					sctp_chunk_free(sack);
- 					goto out;
- 				}
--				SCTP_INC_STATS(sock_net(asoc->base.sk),
-+				SCTP_INC_STATS(asoc->base.net,
- 					       SCTP_MIB_OUTCTRLCHUNKS);
- 				asoc->stats.octrlchunks++;
- 				asoc->peer.sack_needed = 0;
-diff --git a/net/sctp/outqueue.c b/net/sctp/outqueue.c
-index adceb226ffab3..6b0b3bad4daa6 100644
---- a/net/sctp/outqueue.c
-+++ b/net/sctp/outqueue.c
-@@ -280,7 +280,7 @@ void sctp_outq_free(struct sctp_outq *q)
- /* Put a new chunk in an sctp_outq.  */
- void sctp_outq_tail(struct sctp_outq *q, struct sctp_chunk *chunk, gfp_t gfp)
- {
--	struct net *net = sock_net(q->asoc->base.sk);
-+	struct net *net = q->asoc->base.net;
- 
- 	pr_debug("%s: outq:%p, chunk:%p[%s]\n", __func__, q, chunk,
- 		 chunk && chunk->chunk_hdr ?
-@@ -534,7 +534,7 @@ void sctp_retransmit_mark(struct sctp_outq *q,
- void sctp_retransmit(struct sctp_outq *q, struct sctp_transport *transport,
- 		     enum sctp_retransmit_reason reason)
- {
--	struct net *net = sock_net(q->asoc->base.sk);
-+	struct net *net = q->asoc->base.net;
- 
- 	switch (reason) {
- 	case SCTP_RTXR_T3_RTX:
-@@ -1890,6 +1890,6 @@ void sctp_generate_fwdtsn(struct sctp_outq *q, __u32 ctsn)
- 
- 	if (ftsn_chunk) {
- 		list_add_tail(&ftsn_chunk->list, &q->control_chunk_list);
--		SCTP_INC_STATS(sock_net(asoc->base.sk), SCTP_MIB_OUTCTRLCHUNKS);
-+		SCTP_INC_STATS(asoc->base.net, SCTP_MIB_OUTCTRLCHUNKS);
- 	}
- }
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index 0c112134d9e32..d3cc5a59b0fec 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -2319,7 +2319,6 @@ int sctp_process_init(struct sctp_association *asoc, struct sctp_chunk *chunk,
- 		      const union sctp_addr *peer_addr,
- 		      struct sctp_init_chunk *peer_init, gfp_t gfp)
- {
--	struct net *net = sock_net(asoc->base.sk);
- 	struct sctp_transport *transport;
- 	struct list_head *pos, *temp;
- 	union sctp_params param;
-@@ -2377,8 +2376,8 @@ int sctp_process_init(struct sctp_association *asoc, struct sctp_chunk *chunk,
- 	 * also give us an option to silently ignore the packet, which
- 	 * is what we'll do here.
- 	 */
--	if (!net->sctp.addip_noauth &&
--	     (asoc->peer.asconf_capable && !asoc->peer.auth_capable)) {
-+	if (!asoc->base.net->sctp.addip_noauth &&
-+	    (asoc->peer.asconf_capable && !asoc->peer.auth_capable)) {
- 		asoc->peer.addip_disabled_mask |= (SCTP_PARAM_ADD_IP |
- 						  SCTP_PARAM_DEL_IP |
- 						  SCTP_PARAM_SET_PRIMARY);
-@@ -2505,9 +2504,9 @@ static int sctp_process_param(struct sctp_association *asoc,
- 			      const union sctp_addr *peer_addr,
- 			      gfp_t gfp)
- {
--	struct net *net = sock_net(asoc->base.sk);
- 	struct sctp_endpoint *ep = asoc->ep;
- 	union sctp_addr_param *addr_param;
-+	struct net *net = asoc->base.net;
- 	struct sctp_transport *t;
- 	enum sctp_scope scope;
- 	union sctp_addr addr;
-diff --git a/net/sctp/sm_sideeffect.c b/net/sctp/sm_sideeffect.c
-index c964e7ca6f7e5..3ecd246feb76a 100644
---- a/net/sctp/sm_sideeffect.c
-+++ b/net/sctp/sm_sideeffect.c
-@@ -520,8 +520,6 @@ static void sctp_do_8_2_transport_strike(struct sctp_cmd_seq *commands,
- 					 struct sctp_transport *transport,
- 					 int is_hb)
- {
--	struct net *net = sock_net(asoc->base.sk);
--
- 	/* The check for association's overall error counter exceeding the
- 	 * threshold is done in the state function.
- 	 */
-@@ -548,10 +546,10 @@ static void sctp_do_8_2_transport_strike(struct sctp_cmd_seq *commands,
- 	 * is SCTP_ACTIVE, then mark this transport as Partially Failed,
- 	 * see SCTP Quick Failover Draft, section 5.1
- 	 */
--	if (net->sctp.pf_enable &&
--	   (transport->state == SCTP_ACTIVE) &&
--	   (transport->error_count < transport->pathmaxrxt) &&
--	   (transport->error_count > transport->pf_retrans)) {
-+	if (asoc->base.net->sctp.pf_enable &&
-+	    transport->state == SCTP_ACTIVE &&
-+	    transport->error_count < transport->pathmaxrxt &&
-+	    transport->error_count > transport->pf_retrans) {
- 
- 		sctp_assoc_control_transport(asoc, transport,
- 					     SCTP_TRANSPORT_PF,
-@@ -797,10 +795,8 @@ static int sctp_cmd_process_sack(struct sctp_cmd_seq *cmds,
- 	int err = 0;
- 
- 	if (sctp_outq_sack(&asoc->outqueue, chunk)) {
--		struct net *net = sock_net(asoc->base.sk);
--
- 		/* There are no more TSNs awaiting SACK.  */
--		err = sctp_do_sm(net, SCTP_EVENT_T_OTHER,
-+		err = sctp_do_sm(asoc->base.net, SCTP_EVENT_T_OTHER,
- 				 SCTP_ST_OTHER(SCTP_EVENT_NO_PENDING_TSN),
- 				 asoc->state, asoc->ep, asoc, NULL,
- 				 GFP_ATOMIC);
-@@ -833,7 +829,7 @@ static void sctp_cmd_assoc_update(struct sctp_cmd_seq *cmds,
- 				  struct sctp_association *asoc,
- 				  struct sctp_association *new)
- {
--	struct net *net = sock_net(asoc->base.sk);
-+	struct net *net = asoc->base.net;
- 	struct sctp_chunk *abort;
- 
- 	if (!sctp_assoc_update(asoc, new))
-diff --git a/net/sctp/sm_statefuns.c b/net/sctp/sm_statefuns.c
-index 876c18f70df89..7808dd812a72a 100644
---- a/net/sctp/sm_statefuns.c
-+++ b/net/sctp/sm_statefuns.c
-@@ -1342,7 +1342,7 @@ static int sctp_sf_check_restart_addrs(const struct sctp_association *new_asoc,
- 				       struct sctp_chunk *init,
- 				       struct sctp_cmd_seq *commands)
- {
--	struct net *net = sock_net(new_asoc->base.sk);
-+	struct net *net = new_asoc->base.net;
- 	struct sctp_transport *new_addr;
- 	int ret = 1;
- 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 1ac05147dc304..722f8a940c2df 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -466,8 +466,7 @@ static int sctp_do_bind(struct sock *sk, union sctp_addr *addr, int len)
- static int sctp_send_asconf(struct sctp_association *asoc,
- 			    struct sctp_chunk *chunk)
- {
--	struct net 	*net = sock_net(asoc->base.sk);
--	int		retval = 0;
-+	int retval = 0;
- 
- 	/* If there is an outstanding ASCONF chunk, queue it for later
- 	 * transmission.
-@@ -479,7 +478,7 @@ static int sctp_send_asconf(struct sctp_association *asoc,
- 
- 	/* Hold the chunk until an ASCONF_ACK is received. */
- 	sctp_chunk_hold(chunk);
--	retval = sctp_primitive_ASCONF(net, asoc, chunk);
-+	retval = sctp_primitive_ASCONF(asoc->base.net, asoc, chunk);
- 	if (retval)
- 		sctp_chunk_free(chunk);
- 	else
-@@ -2462,9 +2461,8 @@ static int sctp_apply_peer_addr_params(struct sctp_paddrparams *params,
- 	int error;
- 
- 	if (params->spp_flags & SPP_HB_DEMAND && trans) {
--		struct net *net = sock_net(trans->asoc->base.sk);
--
--		error = sctp_primitive_REQUESTHEARTBEAT(net, trans->asoc, trans);
-+		error = sctp_primitive_REQUESTHEARTBEAT(trans->asoc->base.net,
-+							trans->asoc, trans);
- 		if (error)
- 			return error;
- 	}
-@@ -5334,7 +5332,7 @@ struct sctp_transport *sctp_transport_get_next(struct net *net,
- 		if (!sctp_transport_hold(t))
- 			continue;
- 
--		if (net_eq(sock_net(t->asoc->base.sk), net) &&
-+		if (net_eq(t->asoc->base.net, net) &&
- 		    t->asoc->peer.primary_path == t)
- 			break;
- 
-diff --git a/net/sctp/stream.c b/net/sctp/stream.c
-index 08cd06078fab1..0527728aee986 100644
---- a/net/sctp/stream.c
-+++ b/net/sctp/stream.c
-@@ -229,10 +229,9 @@ void sctp_stream_update(struct sctp_stream *stream, struct sctp_stream *new)
- static int sctp_send_reconf(struct sctp_association *asoc,
- 			    struct sctp_chunk *chunk)
- {
--	struct net *net = sock_net(asoc->base.sk);
- 	int retval = 0;
- 
--	retval = sctp_primitive_RECONF(net, asoc, chunk);
-+	retval = sctp_primitive_RECONF(asoc->base.net, asoc, chunk);
- 	if (retval)
- 		sctp_chunk_free(chunk);
- 
-diff --git a/net/sctp/stream_interleave.c b/net/sctp/stream_interleave.c
-index c982f99099dec..e3aad75cb11d9 100644
---- a/net/sctp/stream_interleave.c
-+++ b/net/sctp/stream_interleave.c
-@@ -241,9 +241,8 @@ static struct sctp_ulpevent *sctp_intl_retrieve_partial(
- 	if (!first_frag)
- 		return NULL;
- 
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
--					     &ulpq->reasm, first_frag,
--					     last_frag);
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net, &ulpq->reasm,
-+					     first_frag, last_frag);
- 	if (retval) {
- 		sin->fsn = next_fsn;
- 		if (is_last) {
-@@ -326,7 +325,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_reassembled(
- 
- 	pd_point = sctp_sk(asoc->base.sk)->pd_point;
- 	if (pd_point && pd_point <= pd_len) {
--		retval = sctp_make_reassembled_event(sock_net(asoc->base.sk),
-+		retval = sctp_make_reassembled_event(asoc->base.net,
- 						     &ulpq->reasm,
- 						     pd_first, pd_last);
- 		if (retval) {
-@@ -337,8 +336,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_reassembled(
- 	goto out;
- 
- found:
--	retval = sctp_make_reassembled_event(sock_net(asoc->base.sk),
--					     &ulpq->reasm,
-+	retval = sctp_make_reassembled_event(asoc->base.net, &ulpq->reasm,
- 					     first_frag, pos);
- 	if (retval)
- 		retval->msg_flags |= MSG_EOR;
-@@ -630,7 +628,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_partial_uo(
- 	if (!first_frag)
- 		return NULL;
- 
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net,
- 					     &ulpq->reasm_uo, first_frag,
- 					     last_frag);
- 	if (retval) {
-@@ -716,7 +714,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_reassembled_uo(
- 
- 	pd_point = sctp_sk(asoc->base.sk)->pd_point;
- 	if (pd_point && pd_point <= pd_len) {
--		retval = sctp_make_reassembled_event(sock_net(asoc->base.sk),
-+		retval = sctp_make_reassembled_event(asoc->base.net,
- 						     &ulpq->reasm_uo,
- 						     pd_first, pd_last);
- 		if (retval) {
-@@ -727,8 +725,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_reassembled_uo(
- 	goto out;
- 
- found:
--	retval = sctp_make_reassembled_event(sock_net(asoc->base.sk),
--					     &ulpq->reasm_uo,
-+	retval = sctp_make_reassembled_event(asoc->base.net, &ulpq->reasm_uo,
- 					     first_frag, pos);
- 	if (retval)
- 		retval->msg_flags |= MSG_EOR;
-@@ -814,7 +811,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_first_uo(struct sctp_ulpq *ulpq)
- 		return NULL;
- 
- out:
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net,
- 					     &ulpq->reasm_uo, first_frag,
- 					     last_frag);
- 	if (retval) {
-@@ -921,7 +918,7 @@ static struct sctp_ulpevent *sctp_intl_retrieve_first(struct sctp_ulpq *ulpq)
- 		return NULL;
- 
- out:
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net,
- 					     &ulpq->reasm, first_frag,
- 					     last_frag);
- 	if (retval) {
-@@ -1159,7 +1156,7 @@ static void sctp_generate_iftsn(struct sctp_outq *q, __u32 ctsn)
- 
- 	if (ftsn_chunk) {
- 		list_add_tail(&ftsn_chunk->list, &q->control_chunk_list);
--		SCTP_INC_STATS(sock_net(asoc->base.sk), SCTP_MIB_OUTCTRLCHUNKS);
-+		SCTP_INC_STATS(asoc->base.net, SCTP_MIB_OUTCTRLCHUNKS);
- 	}
- }
- 
 diff --git a/net/sctp/transport.c b/net/sctp/transport.c
-index 80251c8d2225f..9c721d70df9c6 100644
+index 9c721d70df9c6..9921041079781 100644
 --- a/net/sctp/transport.c
 +++ b/net/sctp/transport.c
-@@ -336,7 +336,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
- 		pr_debug("%s: rto_pending not set on transport %p!\n", __func__, tp);
+@@ -337,6 +337,7 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
  
  	if (tp->rttvar || tp->srtt) {
--		struct net *net = sock_net(tp->asoc->base.sk);
-+		struct net *net = tp->asoc->base.net;
+ 		struct net *net = tp->asoc->base.net;
++		unsigned int rto_beta, rto_alpha;
  		/* 6.3.1 C3) When a new RTT measurement R' is made, set
  		 * RTTVAR <- (1 - RTO.Beta) * RTTVAR + RTO.Beta * |SRTT - R'|
  		 * SRTT <- (1 - RTO.Alpha) * SRTT + RTO.Alpha * R'
-diff --git a/net/sctp/ulpqueue.c b/net/sctp/ulpqueue.c
-index b6536b7f14c0d..1c6c640607c5c 100644
---- a/net/sctp/ulpqueue.c
-+++ b/net/sctp/ulpqueue.c
-@@ -486,10 +486,9 @@ static struct sctp_ulpevent *sctp_ulpq_retrieve_reassembled(struct sctp_ulpq *ul
- 		cevent = sctp_skb2event(pd_first);
- 		pd_point = sctp_sk(asoc->base.sk)->pd_point;
- 		if (pd_point && pd_point <= pd_len) {
--			retval = sctp_make_reassembled_event(sock_net(asoc->base.sk),
-+			retval = sctp_make_reassembled_event(asoc->base.net,
- 							     &ulpq->reasm,
--							     pd_first,
--							     pd_last);
-+							     pd_first, pd_last);
- 			if (retval)
- 				sctp_ulpq_set_pd(ulpq);
- 		}
-@@ -497,7 +496,7 @@ static struct sctp_ulpevent *sctp_ulpq_retrieve_reassembled(struct sctp_ulpq *ul
- done:
- 	return retval;
- found:
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net,
- 					     &ulpq->reasm, first_frag, pos);
- 	if (retval)
- 		retval->msg_flags |= MSG_EOR;
-@@ -563,8 +562,8 @@ static struct sctp_ulpevent *sctp_ulpq_retrieve_partial(struct sctp_ulpq *ulpq)
- 	 * further.
- 	 */
- done:
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
--					&ulpq->reasm, first_frag, last_frag);
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net, &ulpq->reasm,
-+					     first_frag, last_frag);
- 	if (retval && is_last)
- 		retval->msg_flags |= MSG_EOR;
- 
-@@ -664,8 +663,8 @@ static struct sctp_ulpevent *sctp_ulpq_retrieve_first(struct sctp_ulpq *ulpq)
- 	 * further.
- 	 */
- done:
--	retval = sctp_make_reassembled_event(sock_net(ulpq->asoc->base.sk),
--					&ulpq->reasm, first_frag, last_frag);
-+	retval = sctp_make_reassembled_event(ulpq->asoc->base.net, &ulpq->reasm,
-+					     first_frag, last_frag);
- 	return retval;
- }
- 
+@@ -348,10 +349,14 @@ void sctp_transport_update_rto(struct sctp_transport *tp, __u32 rtt)
+ 		 * For example, assuming the default value of RTO.Alpha of
+ 		 * 1/8, rto_alpha would be expressed as 3.
+ 		 */
+-		tp->rttvar = tp->rttvar - (tp->rttvar >> net->sctp.rto_beta)
+-			+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> net->sctp.rto_beta);
+-		tp->srtt = tp->srtt - (tp->srtt >> net->sctp.rto_alpha)
+-			+ (rtt >> net->sctp.rto_alpha);
++		rto_beta = READ_ONCE(net->sctp.rto_beta);
++		if (rto_beta < 32)
++			tp->rttvar = tp->rttvar - (tp->rttvar >> rto_beta)
++				+ (((__u32)abs((__s64)tp->srtt - (__s64)rtt)) >> rto_beta);
++		rto_alpha = READ_ONCE(net->sctp.rto_alpha);
++		if (rto_alpha < 32)
++			tp->srtt = tp->srtt - (tp->srtt >> rto_alpha)
++				+ (rtt >> rto_alpha);
+ 	} else {
+ 		/* 6.3.1 C2) When the first RTT measurement R is made, set
+ 		 * SRTT <- R, RTTVAR <- R/2.
 -- 
 2.51.0
 
