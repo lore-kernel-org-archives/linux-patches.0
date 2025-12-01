@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7BC257855;
-	Mon,  1 Dec 2025 11:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 516F58635C;
+	Mon,  1 Dec 2025 11:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588712; cv=none; b=IKp7dT4ksj0lZBVf+sg5u5hjXJQMgklBUBGnM4mvDhVCzzSSbZGyUv/KwPnyyPMjWKRYfLqU8ZDuMoeqWaVGr8GFrOoiDLUoy2EDWpUTaKL3qYue2GItIg4VyPElwNcu8PJVFDJOGjWI4Yh2oiNsqm/U+5MqMTH3Pk+RzsXlFwg=
+	t=1764588715; cv=none; b=sL1cLuoXt9gu6H8s3AysaKgEnkow5EztgMtisGxRqTDjKA+ytmXnLLdf5fWKNDSb/OyLWMW2QcmFS4nPfjP6/nXvNU+UctK4+GvoD0Zy33v/73A92gWIE7OLVEgHXdQafdz4UPB0ZSw4zbrEqrpeBX0BCgPORsIeXss/adSvKIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588712; c=relaxed/simple;
-	bh=sKQXUaeoBraWNZYXOTJnTIs3IU4zJpL9JJgz44BOvNI=;
+	s=arc-20240116; t=1764588715; c=relaxed/simple;
+	bh=5twT6OKywLsNdQTc0Uco+qcAUZxWDk+xfcMOtpP9CTo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RRRIwJqQMsmnGn0qvYJ5lgYbbUzXKWsCbK47q/guiY7GBW86YkHLu3E+YVOjRfBYXZGcagYyHs+1GCnnfXA/EE/P00pU+6xVMbMyYwKU9ndBXTVlgUYTrvMljL26AQzEEBUAWKU9URCL1O+iOMDHjeYxtAyikr1CVL3LNzzw4gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHjfxdLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QzKzsaraPDYY8+SwqSaMJUIFuwVSIAmr3UJwKzynRi8wv4XvoovS0CpOBDeSz2SUpYurRUgjmiswdPEIbyPQNAKPH1gkbQIFaw4V40LFzQ4bCpWs64zcHrZJXrZJ8duLJhH6TzY+2en9FRHMashkY0H8oL9nZGmb/39XRxUMf3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zb+IPdv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHjfxdLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A46FC4CEF1;
-	Mon,  1 Dec 2025 11:31:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zb+IPdv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBC7C4CEF1;
+	Mon,  1 Dec 2025 11:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588712;
-	bh=sKQXUaeoBraWNZYXOTJnTIs3IU4zJpL9JJgz44BOvNI=;
+	s=korg; t=1764588715;
+	bh=5twT6OKywLsNdQTc0Uco+qcAUZxWDk+xfcMOtpP9CTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHjfxdLyd0sB8UXwlgs82zyFQqkVD22rDnHCR1kxZGWiQYfk6pP6VtRaK0NNlxJRD
-	 upd714IS/n4b8aV8uusdpVhnYjhekziZwIjNQUJ6u1lx1hhKuC9EMKsHDQ1d2lmBQ/
-	 CdIKKXvkcRNwxgQJFT6PMX6xXmBI3RT8L3enZjgs=
+	b=zb+IPdv8glJi1fevQk6ScULlJGbBLJdqJhq8OcN0tOL4D0NqBLhBPcQ1aU5YTgtQg
+	 8moewQbJm7cDq7CcMOCSjQq3lnzmGuGtML06VNvp0rBK5U7iXgB+y0cKH+xrPENGgY
+	 6+UiHNqzfQ8ua4dQwiJxvVTDVBiit37W+Wcnn+0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Pauli Virtanen <pav@iki.fi>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 144/187] net_sched: limit try_bulk_dequeue_skb() batches
-Date: Mon,  1 Dec 2025 12:24:12 +0100
-Message-ID: <20251201112246.423697448@linuxfoundation.org>
+Subject: [PATCH 5.4 145/187] Bluetooth: L2CAP: export l2cap_chan_hold for modules
+Date: Mon,  1 Dec 2025 12:24:13 +0100
+Message-ID: <20251201112246.458959316@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -47,145 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 0345552a653ce5542affeb69ac5aa52177a5199b ]
+[ Upstream commit e060088db0bdf7932e0e3c2d24b7371c4c5b867c ]
 
-After commit 100dfa74cad9 ("inet: dev_queue_xmit() llist adoption")
-I started seeing many qdisc requeues on IDPF under high TX workload.
+l2cap_chan_put() is exported, so export also l2cap_chan_hold() for
+modules.
 
-$ tc -s qd sh dev eth1 handle 1: ; sleep 1; tc -s qd sh dev eth1 handle 1:
-qdisc mq 1: root
- Sent 43534617319319 bytes 268186451819 pkt (dropped 0, overlimits 0 requeues 3532840114)
- backlog 1056Kb 6675p requeues 3532840114
-qdisc mq 1: root
- Sent 43554665866695 bytes 268309964788 pkt (dropped 0, overlimits 0 requeues 3537737653)
- backlog 781164b 4822p requeues 3537737653
+l2cap_chan_hold() has use case in net/bluetooth/6lowpan.c
 
-This is caused by try_bulk_dequeue_skb() being only limited by BQL budget.
-
-perf record -C120-239 -e qdisc:qdisc_dequeue sleep 1 ; perf script
-...
- netperf 75332 [146]  2711.138269: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1292 skbaddr=0xff378005a1e9f200
- netperf 75332 [146]  2711.138953: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1213 skbaddr=0xff378004d607a500
- netperf 75330 [144]  2711.139631: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1233 skbaddr=0xff3780046be20100
- netperf 75333 [147]  2711.140356: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1093 skbaddr=0xff37800514845b00
- netperf 75337 [151]  2711.141037: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1353 skbaddr=0xff37800460753300
- netperf 75337 [151]  2711.141877: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1367 skbaddr=0xff378004e72c7b00
- netperf 75330 [144]  2711.142643: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1202 skbaddr=0xff3780045bd60000
-...
-
-This is bad because :
-
-1) Large batches hold one victim cpu for a very long time.
-
-2) Driver often hit their own TX ring limit (all slots are used).
-
-3) We call dev_requeue_skb()
-
-4) Requeues are using a FIFO (q->gso_skb), breaking qdisc ability to
-   implement FQ or priority scheduling.
-
-5) dequeue_skb() gets packets from q->gso_skb one skb at a time
-   with no xmit_more support. This is causing many spinlock games
-   between the qdisc and the device driver.
-
-Requeues were supposed to be very rare, lets keep them this way.
-
-Limit batch sizes to /proc/sys/net/core/dev_weight (default 64) as
-__qdisc_run() was designed to use.
-
-Fixes: 5772e9a3463b ("qdisc: bulk dequeue support for qdiscs with TCQ_F_ONETXQUEUE")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/20251109161215.2574081-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 19fe5078a8d13..d52001d958cbc 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -172,9 +172,10 @@ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
- static void try_bulk_dequeue_skb(struct Qdisc *q,
- 				 struct sk_buff *skb,
- 				 const struct netdev_queue *txq,
--				 int *packets)
-+				 int *packets, int budget)
- {
- 	int bytelimit = qdisc_avail_bulklimit(txq) - skb->len;
-+	int cnt = 0;
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 1272ad73e4011..4c82770173aad 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -517,6 +517,7 @@ void l2cap_chan_hold(struct l2cap_chan *c)
  
- 	while (bytelimit > 0) {
- 		struct sk_buff *nskb = q->dequeue(q);
-@@ -185,8 +186,10 @@ static void try_bulk_dequeue_skb(struct Qdisc *q,
- 		bytelimit -= nskb->len; /* covers GSO len */
- 		skb->next = nskb;
- 		skb = nskb;
--		(*packets)++; /* GSO counts as one pkt */
-+		if (++cnt >= budget)
-+			break;
- 	}
-+	(*packets) += cnt;
- 	skb_mark_not_on_list(skb);
+ 	kref_get(&c->kref);
  }
++EXPORT_SYMBOL_GPL(l2cap_chan_hold);
  
-@@ -220,7 +223,7 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
-  * A requeued skb (via q->gso_skb) can also be a SKB list.
-  */
- static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
--				   int *packets)
-+				   int *packets, int budget)
+ struct l2cap_chan *l2cap_chan_hold_unless_zero(struct l2cap_chan *c)
  {
- 	const struct netdev_queue *txq = q->dev_queue;
- 	struct sk_buff *skb = NULL;
-@@ -287,7 +290,7 @@ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
- 	if (skb) {
- bulk:
- 		if (qdisc_may_bulk(q))
--			try_bulk_dequeue_skb(q, skb, txq, packets);
-+			try_bulk_dequeue_skb(q, skb, txq, packets, budget);
- 		else
- 			try_bulk_dequeue_skb_slow(q, skb, packets);
- 	}
-@@ -379,7 +382,7 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
-  *				>0 - queue is not empty.
-  *
-  */
--static inline bool qdisc_restart(struct Qdisc *q, int *packets)
-+static inline bool qdisc_restart(struct Qdisc *q, int *packets, int budget)
- {
- 	spinlock_t *root_lock = NULL;
- 	struct netdev_queue *txq;
-@@ -388,7 +391,7 @@ static inline bool qdisc_restart(struct Qdisc *q, int *packets)
- 	bool validate;
- 
- 	/* Dequeue packet */
--	skb = dequeue_skb(q, &validate, packets);
-+	skb = dequeue_skb(q, &validate, packets, budget);
- 	if (unlikely(!skb))
- 		return false;
- 
-@@ -406,7 +409,7 @@ void __qdisc_run(struct Qdisc *q)
- 	int quota = READ_ONCE(dev_tx_weight);
- 	int packets;
- 
--	while (qdisc_restart(q, &packets)) {
-+	while (qdisc_restart(q, &packets, quota)) {
- 		quota -= packets;
- 		if (quota <= 0) {
- 			__netif_schedule(q);
 -- 
 2.51.0
 
