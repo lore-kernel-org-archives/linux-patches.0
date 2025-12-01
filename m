@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18C724DFF9;
-	Mon,  1 Dec 2025 11:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EEB6257842;
+	Mon,  1 Dec 2025 11:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588566; cv=none; b=uSwj01WaRsAlEsL0cBhR9bhkqlO3nJ4kWwQ7ufKsuxMD/gfgV+x0rAgx7n2lbA67gNTSzkFEV85k0GLdYi1aYXbhDoN1LYyZJbUt/CEpElzbf1HglJzNdrNg+rljjJQ6+Q9CQuHpeh3y4UNdigIl/BQxBZgwGV4AG1hW5iC0hqc=
+	t=1764588569; cv=none; b=Rl58OxKF2ok/vsYUdBjHbB7sAA7notk+oeN3AnpGw3jHNt1kk9oqnRJKlF7yeuB52BVDq/Z3srEv5RYIvmEm6lZAie0+ZiRGb0XOYfxI+3YnqMZtZEsaNHkozcEURgVILc63dHxRepQ8y/MEMflFNVU/PQkJMBsJjgfV1jv5Qvs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588566; c=relaxed/simple;
-	bh=9v5LbQCIhblWsN+q5g3LBEQuQNUNfDlU7q4wM8XR4EM=;
+	s=arc-20240116; t=1764588569; c=relaxed/simple;
+	bh=Hkf9a206IFMbfDf8jdFC/JvXfQS3C4SF9rnrDgcqweM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YAViZenmiGnnS7KdRHHftr/ps82XMUm5WxhiACT21kRwsDyDI6i9zuzTgbIMXzM5Kb4WJbl5FgK+ZP6Lh6di6/5pIAgQuZF+f6JpDm4PRAca9vc1AqUZtLDdLUL/hHCTcX/8L836/Ko4d7C38aW9n4vIys/DhMpHV2J9KTND6Ik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oE5Ke+Yx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lo2vWvv/FUfJlldb/AP/XpPZJFU8bVpXWJ4aXP/E7zGMPJybKxb92iefKr3RSHTsEG/Sh2zSLeXR2Bm6z6B3YkgEuizSXaW7tpz1bPi1s1AJCLh3NZD5Gp6Hj15z67Py1mfUO9uO5Z7m87K44iHMMK64XGt11ZgZrcOLk0dsM/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QzNxNQB8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oE5Ke+Yx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BB3C4CEF1;
-	Mon,  1 Dec 2025 11:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QzNxNQB8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A1ECC113D0;
+	Mon,  1 Dec 2025 11:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588566;
-	bh=9v5LbQCIhblWsN+q5g3LBEQuQNUNfDlU7q4wM8XR4EM=;
+	s=korg; t=1764588569;
+	bh=Hkf9a206IFMbfDf8jdFC/JvXfQS3C4SF9rnrDgcqweM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oE5Ke+YxPKimVqWnKL+nct2tJHGHB+ppro8JtGDx1LIKp1QMhwh5dubSOXU48yrX1
-	 vqpQ1+k/Z3V3umMwsSHqnWXzj6qrsTVjMy17IfVZkWRzSI7ji4RwbsAg4qHDo0QO8r
-	 4NiRodM4xDpLTYFUWYVi7I35s7voAUhgBnR2CpY4=
+	b=QzNxNQB8s3g3Ql4BuACCRmdbUMuqSHZNKkMkTMrMc3HRrBdPDLI/Hcq67lz8/0RAw
+	 A2R5Sy09vpYzaW1CLGXKSm59v37dWA53KPsNyPVzGGa4g5MYCeyHaAuhRb6/EG1j3F
+	 TVXBpBDU5qJb4sQb+PRPuyl/yMF5V6/3C1f/0nDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com,
-	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Brahmajit Das <listout@listout.xyz>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 094/187] jfs: fix uninitialized waitqueue in transaction manager
-Date: Mon,  1 Dec 2025 12:23:22 +0100
-Message-ID: <20251201112244.638235384@linuxfoundation.org>
+Subject: [PATCH 5.4 095/187] net: intel: fm10k: Fix parameter idx set but not used
+Date: Mon,  1 Dec 2025 12:23:23 +0100
+Message-ID: <20251201112244.673536231@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,59 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
+[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
 
-The transaction manager initialization in txInit() was not properly
-initializing TxBlock[0].waitor waitqueue, causing a crash when
-txEnd(0) is called on read-only filesystems.
+Variable idx is set in the loop, but is never used resulting in dead
+code. Building with GCC 16, which enables
+-Werror=unused-but-set-parameter= by default results in build error.
+This patch removes the idx parameter, since all the callers of the
+fm10k_unbind_hw_stats_q as 0 as idx anyways.
 
-When a filesystem is mounted read-only, txBegin() returns tid=0 to
-indicate no transaction. However, txEnd(0) still gets called and
-tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
-waitqueue was never initialized because the initialization loop
-started at index 1 instead of 0.
-
-This causes a 'non-static key' lockdep warning and system crash:
-  INFO: trying to register non-static key in txEnd
-
-Fix by ensuring all transaction blocks including TxBlock[0] have
-their waitqueues properly initialized during txInit().
-
-Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
-
-Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_txnmgr.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
+ drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-index 6f6a5b9203d3f..97a2eb0f0b75d 100644
---- a/fs/jfs/jfs_txnmgr.c
-+++ b/fs/jfs/jfs_txnmgr.c
-@@ -272,14 +272,15 @@ int txInit(void)
- 	if (TxBlock == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+index f51a63fca513e..1f919a50c7653 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ /**
+  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
+  *  @q: pointer to the ring of hardware statistics queue
+- *  @idx: index pointing to the start of the ring iteration
+  *  @count: number of queues to iterate over
+  *
+  *  Function invalidates the index values for the queues so any updates that
+  *  may have happened are ignored and the base for the queue stats is reset.
+  **/
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
+ {
+ 	u32 i;
  
--	for (k = 1; k < nTxBlock - 1; k++) {
--		TxBlock[k].next = k + 1;
-+	for (k = 0; k < nTxBlock; k++) {
- 		init_waitqueue_head(&TxBlock[k].gcwait);
- 		init_waitqueue_head(&TxBlock[k].waitor);
+-	for (i = 0; i < count; i++, idx++, q++) {
++	for (i = 0; i < count; i++, q++) {
+ 		q->rx_stats_idx = 0;
+ 		q->tx_stats_idx = 0;
  	}
-+
-+	for (k = 1; k < nTxBlock - 1; k++) {
-+		TxBlock[k].next = k + 1;
-+	}
- 	TxBlock[k].next = 0;
--	init_waitqueue_head(&TxBlock[k].gcwait);
--	init_waitqueue_head(&TxBlock[k].waitor);
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+index 4c48fb73b3e78..13fca6a91a01b 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
+ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ 			     u32 idx, u32 count);
+ #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
+ s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
+ #endif /* _FM10K_COMMON_H_ */
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+index be07bfdb0bb4a..40c5bdb3ac2c1 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+@@ -1509,7 +1509,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
+ 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
  
- 	TxAnchor.freetid = 1;
- 	init_waitqueue_head(&TxAnchor.freewait);
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
+ 
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_pf(hw, stats);
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+index dc8ccd378ec92..6a3aebd56e6c4 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
+ 				     struct fm10k_hw_stats *stats)
+ {
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
+ 
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_vf(hw, stats);
 -- 
 2.51.0
 
