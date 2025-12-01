@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F061B2E62A2;
-	Mon,  1 Dec 2025 11:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC6E32571A1;
+	Mon,  1 Dec 2025 11:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588439; cv=none; b=OmW6tsDQM2iW87r6MSMXKVFV66fVLIGajO2A+y7PYDnTo8fRQAAl3RbJMBQ1d5G4eqyYfKcsUfoaHiimw1MQeHmksakIqAf4HyMPk0krIPsncr4IGMn2+TqPVfurBK9NZ3gk5VoS3Q8AtDLcQBttp4iZNxsqBwCglWX3UgMRRPI=
+	t=1764588442; cv=none; b=eXlK1JOXAKvIfyL0b8C5QrkG5zrmjVHVVAOz0G9Qy/fVuQ4Qo3JBjrwDiaLqbD8es6AIr39tC2RG2KMeognwlxgD/kcaU7APVQmFzxKlrLq4aCqKE1DOf9igzQXBAwOtr9emCgVnX3ooRMvaEHayPi0lOHcKhl+3ebXa7SI/wDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588439; c=relaxed/simple;
-	bh=LClibqfnsfOSVS43nzrM043SBciMydEtTYDG0tMRIz8=;
+	s=arc-20240116; t=1764588442; c=relaxed/simple;
+	bh=nnblHDtSdK13cVC5KNMZLxZV8odkoraIAunI3fehOyY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kgiN9BU3UOqFAAG6NRhTxDCwHvvCQiu7hdKALt5/gp6GUzAI9dnqyobPKOaIrOHH+I2squk4guUhUao64ILyEM/X/8ZcrNJSsAjwjTdjPtt+6b7ny2+rbiImtZobGKgKxlK4lSZL9HxZiHftV+t4DXnFbyZ8jybzGJLdnu1rhJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfcNkbuK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FcHpvs7B/K0+/FgUxhE28LK3eM8yi/Aqlot35YmG93Csqrw8fxJH4NYDIAcUmhwryxSsJBVH2EmnUdG4uGOPi9FhF0nv1jtLMPQpDIXpTnb2aXbb8BZ1L0biyMFL4xtrRhAJRbiJO1YfwfhmSZ8GFd1XOVO8Au3VBAC0U9s3yXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bIxV60G5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfcNkbuK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E619C4CEF1;
-	Mon,  1 Dec 2025 11:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bIxV60G5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC9EC4CEF1;
+	Mon,  1 Dec 2025 11:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588438;
-	bh=LClibqfnsfOSVS43nzrM043SBciMydEtTYDG0tMRIz8=;
+	s=korg; t=1764588441;
+	bh=nnblHDtSdK13cVC5KNMZLxZV8odkoraIAunI3fehOyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfcNkbuK0NUIzJjntysfrujfRP/t4zSbT7X7WhyNPp8CRY3X9OyzyUEUrFUW1V9fW
-	 FbDLmh0olzodIeObkx/3qb4TlgwqV0AlwaQKp260ozXIi6eONU/GVgg/p54kOcIdwF
-	 AzcFs0HBPg9nnXggLJqE6t5S8mVaamIRL8CswHHs=
+	b=bIxV60G5XcPevjvd1osdheeAJ9/4p4PxLX3r/cAlnxJslfAhN7TQY2CTfOP9KcRj1
+	 Uurn4+6hAz+UwjR3cYC032YQTHzaCA1D6F3DA+UpQucF027mCPNAHBRIDqVbiUbeZo
+	 sY3QrrIAKllkdvYsjr5mJ8qHliJrDeOGAS3jV8Pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 016/187] wifi: brcmfmac: fix crash while sending Action Frames in standalone AP Mode
-Date: Mon,  1 Dec 2025 12:22:04 +0100
-Message-ID: <20251201112241.837874320@linuxfoundation.org>
+	Babu Moger <babu.moger@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 5.4 017/187] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
+Date: Mon,  1 Dec 2025 12:22:05 +0100
+Message-ID: <20251201112241.874449040@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,186 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+From: Babu Moger <babu.moger@amd.com>
 
-[ Upstream commit 3776c685ebe5f43e9060af06872661de55e80b9a ]
+[ Upstream commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 ]
 
-Currently, whenever there is a need to transmit an Action frame,
-the brcmfmac driver always uses the P2P vif to send the "actframe" IOVAR to
-firmware. The P2P interfaces were available when wpa_supplicant is managing
-the wlan interface.
+Users can create as many monitoring groups as the number of RMIDs supported
+by the hardware. However, on AMD systems, only a limited number of RMIDs
+are guaranteed to be actively tracked by the hardware. RMIDs that exceed
+this limit are placed in an "Unavailable" state.
 
-However, the P2P interfaces are not created/initialized when only hostapd
-is managing the wlan interface. And if hostapd receives an ANQP Query REQ
-Action frame even from an un-associated STA, the brcmfmac driver tries
-to use an uninitialized P2P vif pointer for sending the IOVAR to firmware.
-This NULL pointer dereferencing triggers a driver crash.
+When a bandwidth counter is read for such an RMID, the hardware sets
+MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
+again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
+remains set on first read after tracking re-starts and is clear on all
+subsequent reads as long as the RMID is tracked.
 
- [ 1417.074538] Unable to handle kernel NULL pointer dereference at virtual
- address 0000000000000000
- [...]
- [ 1417.075188] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
- [...]
- [ 1417.075653] Call trace:
- [ 1417.075662]  brcmf_p2p_send_action_frame+0x23c/0xc58 [brcmfmac]
- [ 1417.075738]  brcmf_cfg80211_mgmt_tx+0x304/0x5c0 [brcmfmac]
- [ 1417.075810]  cfg80211_mlme_mgmt_tx+0x1b0/0x428 [cfg80211]
- [ 1417.076067]  nl80211_tx_mgmt+0x238/0x388 [cfg80211]
- [ 1417.076281]  genl_family_rcv_msg_doit+0xe0/0x158
- [ 1417.076302]  genl_rcv_msg+0x220/0x2a0
- [ 1417.076317]  netlink_rcv_skb+0x68/0x140
- [ 1417.076330]  genl_rcv+0x40/0x60
- [ 1417.076343]  netlink_unicast+0x330/0x3b8
- [ 1417.076357]  netlink_sendmsg+0x19c/0x3f8
- [ 1417.076370]  __sock_sendmsg+0x64/0xc0
- [ 1417.076391]  ____sys_sendmsg+0x268/0x2a0
- [ 1417.076408]  ___sys_sendmsg+0xb8/0x118
- [ 1417.076427]  __sys_sendmsg+0x90/0xf8
- [ 1417.076445]  __arm64_sys_sendmsg+0x2c/0x40
- [ 1417.076465]  invoke_syscall+0x50/0x120
- [ 1417.076486]  el0_svc_common.constprop.0+0x48/0xf0
- [ 1417.076506]  do_el0_svc+0x24/0x38
- [ 1417.076525]  el0_svc+0x30/0x100
- [ 1417.076548]  el0t_64_sync_handler+0x100/0x130
- [ 1417.076569]  el0t_64_sync+0x190/0x198
- [ 1417.076589] Code: f9401e80 aa1603e2 f9403be1 5280e483 (f9400000)
+resctrl miscounts the bandwidth events after an RMID transitions from the
+"Unavailable" state back to being tracked. This happens because when the
+hardware starts counting again after resetting the counter to zero, resctrl
+in turn compares the new count against the counter value stored from the
+previous time the RMID was tracked.
 
-Fix this, by always using the vif corresponding to the wdev on which the
-Action frame Transmission request was initiated by the userspace. This way,
-even if P2P vif is not available, the IOVAR is sent to firmware on AP vif
-and the ANQP Query RESP Action frame is transmitted without crashing the
-driver.
+This results in resctrl computing an event value that is either undercounting
+(when new counter is more than stored counter) or a mistaken overflow (when
+new counter is less than stored counter).
 
-Move init_completion() for "send_af_done" from brcmf_p2p_create_p2pdev()
-to brcmf_p2p_attach(). Because the former function would not get executed
-when only hostapd is managing wlan interface, and it is not safe to do
-reinit_completion() later in brcmf_p2p_tx_action_frame(), without any prior
-init_completion().
+Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
+zero whenever the RMID is in the "Unavailable" state to ensure accurate
+counting after the RMID resets to zero when it starts to be tracked again.
 
-And in the brcmf_p2p_tx_action_frame() function, the condition check for
-P2P Presence response frame is not needed, since the wpa_supplicant is
-properly sending the P2P Presense Response frame on the P2P-GO vif instead
-of the P2P-Device vif.
+Example scenario that results in mistaken overflow
+==================================================
+1. The resctrl filesystem is mounted, and a task is assigned to a
+   monitoring group.
 
-Cc: stable@vger.kernel.org
-Fixes: 18e2f61db3b7 ("brcmfmac: P2P action frame tx")
-Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Link: https://patch.msgid.link/20251013102819.9727-1-gokulkumar.sivakumar@infineon.com
-[Cc stable]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ removed hunks for P2P presence response check and dwell_overflow logic ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+   $mount -t resctrl resctrl /sys/fs/resctrl
+   $mkdir /sys/fs/resctrl/mon_groups/test1/
+   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   21323            <- Total bytes on domain 0
+   "Unavailable"    <- Total bytes on domain 1
+
+   Task is running on domain 0. Counter on domain 1 is "Unavailable".
+
+2. The task runs on domain 0 for a while and then moves to domain 1. The
+   counter starts incrementing on domain 1.
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   7345357          <- Total bytes on domain 0
+   4545             <- Total bytes on domain 1
+
+3. At some point, the RMID in domain 0 transitions to the "Unavailable"
+   state because the task is no longer executing in that domain.
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   "Unavailable"    <- Total bytes on domain 0
+   434341           <- Total bytes on domain 1
+
+4.  Since the task continues to migrate between domains, it may eventually
+    return to domain 0.
+
+    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+    17592178699059  <- Overflow on domain 0
+    3232332         <- Total bytes on domain 1
+
+In this case, the RMID on domain 0 transitions from "Unavailable" state to
+active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
+the counter is read and begins tracking the RMID counting from 0.
+
+Subsequent reads succeed but return a value smaller than the previously
+saved MSR value (7345357). Consequently, the resctrl's overflow logic is
+triggered, it compares the previous value (7345357) with the new, smaller
+value and incorrectly interprets this as a counter overflow, adding a large
+delta.
+
+In reality, this is a false positive: the counter did not overflow but was
+simply reset when the RMID transitioned from "Unavailable" back to active
+state.
+
+Here is the text from APM [1] available from [2].
+
+"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
+first QM_CTR read when it begins tracking an RMID that it was not
+previously tracking. The U bit will be zero for all subsequent reads from
+that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
+read with the U bit set when that RMID is in use by a processor can be
+considered 0 when calculating the difference with a subsequent read."
+
+[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
+    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
+    Bandwidth (MBM).
+
+  [ bp: Split commit message into smaller paragraph chunks for better
+    consumption. ]
+
+Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
+(cherry picked from commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92)
+[babu.moger@amd.com: Backport for v5.4 stable]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |    3 -
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      |   21 +++++-------
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h      |    3 -
- 3 files changed, 12 insertions(+), 15 deletions(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -4963,8 +4963,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wip
- 		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
- 			  *cookie, le16_to_cpu(action_frame->len), freq);
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -225,11 +225,19 @@ static u64 mbm_overflow_count(u64 prev_m
  
--		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
--						  af_params);
-+		ack = brcmf_p2p_send_action_frame(vif->ifp, af_params);
- 
- 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
- 					GFP_KERNEL);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
-@@ -1477,6 +1477,7 @@ int brcmf_p2p_notify_action_tx_complete(
- /**
-  * brcmf_p2p_tx_action_frame() - send action frame over fil.
-  *
-+ * @ifp: interface to transmit on.
-  * @p2p: p2p info struct for vif.
-  * @af_params: action frame data/info.
-  *
-@@ -1486,11 +1487,11 @@ int brcmf_p2p_notify_action_tx_complete(
-  * The WLC_E_ACTION_FRAME_COMPLETE event will be received when the action
-  * frame is transmitted.
-  */
--static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
-+static s32 brcmf_p2p_tx_action_frame(struct brcmf_if *ifp,
-+				     struct brcmf_p2p_info *p2p,
- 				     struct brcmf_fil_af_params_le *af_params)
+ static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
  {
- 	struct brcmf_pub *drvr = p2p->cfg->pub;
--	struct brcmf_cfg80211_vif *vif;
- 	s32 err = 0;
- 	s32 timeout = 0;
+-	struct mbm_state *m;
++	struct mbm_state *m = NULL;
+ 	u64 chunks, tval;
  
-@@ -1500,8 +1501,7 @@ static s32 brcmf_p2p_tx_action_frame(str
- 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_COMPLETED, &p2p->status);
- 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_NOACK, &p2p->status);
- 
--	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
--	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe", af_params,
-+	err = brcmf_fil_bsscfg_data_set(ifp, "actframe", af_params,
- 					sizeof(*af_params));
- 	if (err) {
- 		bphy_err(drvr, " sending action frame has failed\n");
-@@ -1643,16 +1643,14 @@ static s32 brcmf_p2p_pub_af_tx(struct br
- /**
-  * brcmf_p2p_send_action_frame() - send action frame .
-  *
-- * @cfg: driver private data for cfg80211 interface.
-- * @ndev: net device to transmit on.
-+ * @ifp: interface to transmit on.
-  * @af_params: configuration data for action frame.
-  */
--bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
--				 struct net_device *ndev,
-+bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
- 				 struct brcmf_fil_af_params_le *af_params)
- {
-+	struct brcmf_cfg80211_info *cfg = ifp->drvr->config;
- 	struct brcmf_p2p_info *p2p = &cfg->p2p;
--	struct brcmf_if *ifp = netdev_priv(ndev);
- 	struct brcmf_fil_action_frame_le *action_frame;
- 	struct brcmf_config_af_params config_af_params;
- 	struct afx_hdl *afx_hdl = &p2p->afx_hdl;
-@@ -1779,7 +1777,7 @@ bool brcmf_p2p_send_action_frame(struct
- 	tx_retry = 0;
- 	while (!p2p->block_gon_req_tx &&
- 	       (ack == false) && (tx_retry < P2P_AF_TX_MAX_RETRY)) {
--		ack = !brcmf_p2p_tx_action_frame(p2p, af_params);
-+		ack = !brcmf_p2p_tx_action_frame(ifp, p2p, af_params);
- 		tx_retry++;
+ 	tval = __rmid_read(rmid, rr->evtid);
+ 	if (tval & (RMID_VAL_ERROR | RMID_VAL_UNAVAIL)) {
++		if (tval & RMID_VAL_UNAVAIL) {
++			if (rr->evtid == QOS_L3_MBM_TOTAL_EVENT_ID)
++				m = &rr->d->mbm_total[rmid];
++			else if (rr->evtid == QOS_L3_MBM_LOCAL_EVENT_ID)
++				m = &rr->d->mbm_local[rmid];
++			if (m)
++				m->prev_msr = 0;
++		}
+ 		return tval;
  	}
- 	if (ack == false) {
-@@ -2137,7 +2135,6 @@ static struct wireless_dev *brcmf_p2p_cr
- 
- 	WARN_ON(p2p_ifp->bsscfgidx != bsscfgidx);
- 
--	init_completion(&p2p->send_af_done);
- 	INIT_WORK(&p2p->afx_hdl.afx_work, brcmf_p2p_afx_handler);
- 	init_completion(&p2p->afx_hdl.act_frm_scan);
- 	init_completion(&p2p->wait_next_af);
-@@ -2390,6 +2387,8 @@ s32 brcmf_p2p_attach(struct brcmf_cfg802
- 	pri_ifp = brcmf_get_ifp(cfg->pub, 0);
- 	p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif = pri_ifp->vif;
- 
-+	init_completion(&p2p->send_af_done);
-+
- 	if (p2pdev_forced) {
- 		err_ptr = brcmf_p2p_create_p2pdev(p2p, NULL, NULL);
- 		if (IS_ERR(err_ptr)) {
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
-@@ -165,8 +165,7 @@ int brcmf_p2p_notify_action_frame_rx(str
- int brcmf_p2p_notify_action_tx_complete(struct brcmf_if *ifp,
- 					const struct brcmf_event_msg *e,
- 					void *data);
--bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
--				 struct net_device *ndev,
-+bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
- 				 struct brcmf_fil_af_params_le *af_params);
- bool brcmf_p2p_scan_finding_common_channel(struct brcmf_cfg80211_info *cfg,
- 					   struct brcmf_bss_info_le *bi);
+ 	switch (rr->evtid) {
 
 
