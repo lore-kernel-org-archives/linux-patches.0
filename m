@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A4D184E;
-	Mon,  1 Dec 2025 11:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD3E258ED1;
+	Mon,  1 Dec 2025 11:32:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588745; cv=none; b=GZbB4rYPXQg7zH74aybCB4u1SsjZcdq8Fjnn/e7ehLOjPjSGUF6tljZ4LRVZln1mbm/QZbVJVvDXxrO0KLnIlDz/3XzpvZRLVvFR38Q50XqSRch+yTlk/jRfYLcD0jTOmTlL1jhZ1ckqPwQcSzZ/k8Hv/b5j5uwEuqLWzlQz30o=
+	t=1764588746; cv=none; b=dEos2dUffTk44iPd06MxRewxGNc4e0UD74+t4OT6qcdk+els3zoTLVkIuD4oUy7wEhJgxDpG0YCJenkr/dAOzNiXH1oIS0LyiTpv0a5gd8i0TbKWgDZDWvbqcPgRcmY70uVgkNRPWLVHfzC6ecwd64v+AbCQ96RFcWi0iZBWj1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588745; c=relaxed/simple;
-	bh=16tinmFKmwf+5vyleat45iS3iw3gbUvy/RXoBYaxapo=;
+	s=arc-20240116; t=1764588746; c=relaxed/simple;
+	bh=AwMoywOqO4X71zuUt/qwOd36Ss3OrvIcpYJPmF9R1K4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JfDmlXzwZANNCl3csH3JApOi6uQiu2k+Lmr/Fr/UPt4I1B7qEEx6LvTjZpz3tLamhb4+zPK3Admt8rlEmamqzc4hJIewbkjXSEtfxsoTt2dgvq+Xk7lyeJd8KWnTLm92g/L09ye8Rl/3CODdmqyTbrT9GW3Op5Xbke/bqeqF2gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HplZ41zg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lMqBzmQxfTDzaIiMBnFK2XaxSfuddsHjou6pNbKEfkmmNTS9Y9bbNh4tAoHy+v3bb0DTawdJUEgKN+YyiHxwqXBAwS/G7DMHWU64sABL2RvdKbex8u+X5wrZj12wxHggzB7tRTsVZEgR8oGSU46TzVqnh4/8fjuill4MO8jkFW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOl6MDaX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HplZ41zg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48964C4CEF1;
-	Mon,  1 Dec 2025 11:32:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOl6MDaX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12279C4CEF1;
+	Mon,  1 Dec 2025 11:32:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588743;
-	bh=16tinmFKmwf+5vyleat45iS3iw3gbUvy/RXoBYaxapo=;
+	s=korg; t=1764588746;
+	bh=AwMoywOqO4X71zuUt/qwOd36Ss3OrvIcpYJPmF9R1K4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HplZ41zgh202YH4rVIsHBHnfhs8NxcxtNVjGkMBzDHSPsGF83UDdGCZqhikx2/UKF
-	 CiArovqkN9ko3mT/60oJ+3stcwVuB//NbxWNxCj6EWW2ywRXKf4sHp+/q72f0B0Rlu
-	 rQmamSAsEQ9XPHtFGgzVLXegS1VyuxH01Wa8aK1E=
+	b=cOl6MDaX+9RFci3gF9Bv61mv1Y8Br8A64yYlDF8JwMaF8btYDfSgKNPR2vEwFElDa
+	 ECwVYbSQvBgekNt+R/O7jGG1mtSApcUDN9tgItNokiG1fAs3RYimDJI5PVpzW+4mtV
+	 1pHuCwDIQdJZab6gn4STDESy1a1ICg9H5fjUditU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qendrim Maxhuni <qendrim.maxhuni@garderos.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 122/187] net: usb: qmi_wwan: initialize MAC header offset in qmimux_rx_fixup
-Date: Mon,  1 Dec 2025 12:23:50 +0100
-Message-ID: <20251201112245.636407236@linuxfoundation.org>
+Subject: [PATCH 5.4 123/187] tracing: Fix memory leaks in create_field_var()
+Date: Mon,  1 Dec 2025 12:23:51 +0100
+Message-ID: <20251201112245.672231051@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,68 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit e120f46768d98151ece8756ebd688b0e43dc8b29 ]
+[ Upstream commit 80f0d631dcc76ee1b7755bfca1d8417d91d71414 ]
 
-Raw IP packets have no MAC header, leaving skb->mac_header uninitialized.
-This can trigger kernel panics on ARM64 when xfrm or other subsystems
-access the offset due to strict alignment checks.
+The function create_field_var() allocates memory for 'val' through
+create_hist_field() inside parse_atom(), and for 'var' through
+create_var(), which in turn allocates var->type and var->var.name
+internally. Simply calling kfree() to release these structures will
+result in memory leaks.
 
-Initialize the MAC header to prevent such crashes.
+Use destroy_hist_field() to properly free 'val', and explicitly release
+the memory of var->type and var->var.name before freeing 'var' itself.
 
-This can trigger kernel panics on ARM when running IPsec over the
-qmimux0 interface.
-
-Example trace:
-
-    Internal error: Oops: 000000009600004f [#1] SMP
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.12.34-gbe78e49cb433 #1
-    Hardware name: LS1028A RDB Board (DT)
-    pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    pc : xfrm_input+0xde8/0x1318
-    lr : xfrm_input+0x61c/0x1318
-    sp : ffff800080003b20
-    Call trace:
-     xfrm_input+0xde8/0x1318
-     xfrm6_rcv+0x38/0x44
-     xfrm6_esp_rcv+0x48/0xa8
-     ip6_protocol_deliver_rcu+0x94/0x4b0
-     ip6_input_finish+0x44/0x70
-     ip6_input+0x44/0xc0
-     ipv6_rcv+0x6c/0x114
-     __netif_receive_skb_one_core+0x5c/0x8c
-     __netif_receive_skb+0x18/0x60
-     process_backlog+0x78/0x17c
-     __napi_poll+0x38/0x180
-     net_rx_action+0x168/0x2f0
-
-Fixes: c6adf77953bc ("net: usb: qmi_wwan: add qmap mux protocol support")
-Signed-off-by: Qendrim Maxhuni <qendrim.maxhuni@garderos.com>
-Link: https://patch.msgid.link/20251029075744.105113-1-qendrim.maxhuni@garderos.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20251106120132.3639920-1-zilin@seu.edu.cn
+Fixes: 02205a6752f22 ("tracing: Add support for 'field variables'")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/trace/trace_events_hist.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index acf1321657ec9..274b15d2a2cc1 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -229,6 +229,12 @@ static int qmimux_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			return 0;
- 		skbn->dev = net;
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 1ede6d41ab8da..21d0731874448 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -3634,14 +3634,16 @@ static struct field_var *create_field_var(struct hist_trigger_data *hist_data,
+ 	var = create_var(hist_data, file, field_name, val->size, val->type);
+ 	if (IS_ERR(var)) {
+ 		hist_err(tr, HIST_ERR_VAR_CREATE_FIND_FAIL, errpos(field_name));
+-		kfree(val);
++		destroy_hist_field(val, 0);
+ 		ret = PTR_ERR(var);
+ 		goto err;
+ 	}
  
-+	       /* Raw IP packets don't have a MAC header, but other subsystems
-+		* (like xfrm) may still access MAC header offsets, so they must
-+		* be initialized.
-+		*/
-+		skb_reset_mac_header(skbn);
-+
- 		switch (skb->data[offset + qmimux_hdr_sz] & 0xf0) {
- 		case 0x40:
- 			skbn->protocol = htons(ETH_P_IP);
+ 	field_var = kzalloc(sizeof(struct field_var), GFP_KERNEL);
+ 	if (!field_var) {
+-		kfree(val);
++		destroy_hist_field(val, 0);
++		kfree_const(var->type);
++		kfree(var->var.name);
+ 		kfree(var);
+ 		ret =  -ENOMEM;
+ 		goto err;
 -- 
 2.51.0
 
