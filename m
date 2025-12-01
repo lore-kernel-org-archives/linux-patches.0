@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476B8264A76;
-	Mon,  1 Dec 2025 11:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EB526A1AB;
+	Mon,  1 Dec 2025 11:34:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588851; cv=none; b=ihlYWrKE5nCmqhcV0Vw8AVtHkbf8OoK8XEH5zdSOXugXGVXPCw0IuSPamkll05OHmz/rN/7nVPxG3O+6g66N+i8aUd8DLprhuXFbKX/z2InfJr5m2M3ohDfDMlzXgG6i6zKMaicGP7wIENaTZJorP5zuWZdbrCF7hbRKo0TCboM=
+	t=1764588854; cv=none; b=CXo5RN4qxDnXaEqD9Opka16E8pGUMfIuCp5yX2YEnGVPbiSpvKfTZndagplGTTcqDRyGLqoHz9yxjM5lkZSsDWqOZHzGDZqUENvfQ2L54UU+uP+BNGp6YCHSnV0HqxqJjy9O2MGpJvoXGm5boFgcbechV3+ULr9TJlTeNGzlFsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588851; c=relaxed/simple;
-	bh=mvjS9HA5wiqhBrbpRlkoClUwlt7079SCKRx8y2BggBE=;
+	s=arc-20240116; t=1764588854; c=relaxed/simple;
+	bh=T+XR65yKaM/A3oqOlnHCXGECvKTpkTbtzRPnY1ehJUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AFM9dHgWdKUFyNcS1HlNA52m2WFQjU411YT5ohvLdaigWYdmCMzRtlerYwt8P8t2klB0D2Vk0SP05dWrHtKQqtkQdbIOplXmuN3ZxaCmdv1klnrI579Aj09zEqijozyzyozL07yGUZEAL/WgiddXuWNYzoz2dVqtpHmjMdyDZBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lF+lv+0q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EPEvMeym2+ZqQGTKK1cc/P1rO74bG46WSfJkp1LdoD0rMzW3L9lzfUx0nHmUsLsff54uLvcL0JDNfwj3TgHWIpKFaHn6Zxuxqt7ryMACcIczltHOtUio2SR37fImT/dKubEqIzpEZwi3BT4JaKwfNkNax1MqRyxQsRH1zzMz8Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D+OQdsji; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lF+lv+0q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56F2C4CEF1;
-	Mon,  1 Dec 2025 11:34:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D+OQdsji"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A2FC116D0;
+	Mon,  1 Dec 2025 11:34:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588851;
-	bh=mvjS9HA5wiqhBrbpRlkoClUwlt7079SCKRx8y2BggBE=;
+	s=korg; t=1764588854;
+	bh=T+XR65yKaM/A3oqOlnHCXGECvKTpkTbtzRPnY1ehJUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lF+lv+0q5UTKBP4nKEjX8eUoRfN/+tUs6TX8vUmwd2MReAmsxIeLjb41fFXrAidf3
-	 V1HD5aFVyWM3jIdil3Wjq6epq006ka47fXGd7kY3i08stOdtxC+PaHzX4/BOi/9Vph
-	 0VBRMP2/LoCm+CX0HOCiWPlg8kYRsz/terhaCqMI=
+	b=D+OQdsjiPQ4Ws2DciPtrfYX03cbtnJjX+x/EMdj2ouCT0H2+K71GjjtWGP9tmK+pH
+	 AC/pand4K3m36HkXHUeTf2eM970rW407aCIO7zRGAgoAw1m6dVCd8i+5PXQaxmAVuL
+	 HX7mKpm5+9fKjJtNPONkxH6u56O53XzFud5VyZTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.4 161/187] Input: cros_ec_keyb - fix an invalid memory access
-Date: Mon,  1 Dec 2025 12:24:29 +0100
-Message-ID: <20251201112247.030610666@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 152/187] gcov: add support for GCC 15
+Date: Mon,  1 Dec 2025 12:24:20 +0100
+Message-ID: <20251201112246.709246359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -50,53 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit e08969c4d65ac31297fcb4d31d4808c789152f68 upstream.
+commit ec4d11fc4b2dd4a2fa8c9d801ee9753b74623554 upstream.
 
-If cros_ec_keyb_register_matrix() isn't called (due to
-`buttons_switches_only`) in cros_ec_keyb_probe(), `ckdev->idev` remains
-NULL.  An invalid memory access is observed in cros_ec_keyb_process()
-when receiving an EC_MKBP_EVENT_KEY_MATRIX event in cros_ec_keyb_work()
-in such case.
+Using gcov on kernels compiled with GCC 15 results in truncated 16-byte
+long .gcda files with no usable data.  To fix this, update GCOV_COUNTERS
+to match the value defined by GCC 15.
 
-  Unable to handle kernel read from unreadable memory at virtual address 0000000000000028
-  ...
-  x3 : 0000000000000000 x2 : 0000000000000000
-  x1 : 0000000000000000 x0 : 0000000000000000
-  Call trace:
-  input_event
-  cros_ec_keyb_work
-  blocking_notifier_call_chain
-  ec_irq_thread
+Tested with GCC 14.3.0 and GCC 15.2.0.
 
-It's still unknown about why the kernel receives such malformed event,
-in any cases, the kernel shouldn't access `ckdev->idev` and friends if
-the driver doesn't intend to initialize them.
-
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20251104070310.3212712-1-tzungbi@kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lkml.kernel.org/r/20251028115125.1319410-1-oberpar@linux.ibm.com
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reported-by: Matthieu Baerts <matttbe@kernel.org>
+Closes: https://github.com/linux-test-project/lcov/issues/445
+Tested-by: Matthieu Baerts <matttbe@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/cros_ec_keyb.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/gcov/gcc_4_7.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/cros_ec_keyb.c
-+++ b/drivers/input/keyboard/cros_ec_keyb.c
-@@ -244,6 +244,12 @@ static int cros_ec_keyb_work(struct noti
- 	case EC_MKBP_EVENT_KEY_MATRIX:
- 		pm_wakeup_event(ckdev->dev, 0);
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -19,7 +19,9 @@
+ #include <linux/vmalloc.h>
+ #include "gcov.h"
  
-+		if (!ckdev->idev) {
-+			dev_warn_once(ckdev->dev,
-+				      "Unexpected key matrix event\n");
-+			return NOTIFY_OK;
-+		}
-+
- 		if (ckdev->ec->event_size != ckdev->cols) {
- 			dev_err(ckdev->dev,
- 				"Discarded incomplete key matrix event.\n");
+-#if (__GNUC__ >= 14)
++#if (__GNUC__ >= 15)
++#define GCOV_COUNTERS			10
++#elif (__GNUC__ >= 14)
+ #define GCOV_COUNTERS			9
+ #elif (__GNUC__ >= 10)
+ #define GCOV_COUNTERS			8
 
 
