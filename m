@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB2625A33A;
-	Mon,  1 Dec 2025 11:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C5225A33A;
+	Mon,  1 Dec 2025 11:33:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588803; cv=none; b=jNm9EywNpYaXpoDhvbHdWSPzS2Z3U5s8ra/zu502nFeaNOyQprjbMEt5FDFI6sDMbmX0L0OZ8RD+ORkBxqi7SzRg3xOS4ZXwoYnZIztIw4kXr4ed6wYQ20noXpUf5IyYo+eDnIBnpqRi6LinLmI0BXvPFPtjB4BH0fKFf06eUxw=
+	t=1764588805; cv=none; b=pW8D0wrdDyASH1bKhBHj0aPhgjiCpMiIItIF3cNNPeBRZhSeU8KUo2ZganygiK2jbRzIWPckFaSGp8F8yE78uOn1+8Hr4JlAZWwgrX3YNaJtl42FOmb/V7RekPlExRbNO6poKREe8sJWxOQkH5UX4FEIyg1tFTOMEnuLQCi3mto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588803; c=relaxed/simple;
-	bh=boSPu/Kq1uytmidNmBQBZ4eqSzAy40KYofzKXRLDFpw=;
+	s=arc-20240116; t=1764588805; c=relaxed/simple;
+	bh=fudX2oBMaGsNt5tSj9euEMi7WjbKLMAox2rv+7tCD/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XADOPViuJswGXgFzzYSvrsSFKF1ud/Rss72nmNNyED2lgQdekbU5WR2cBcrB3uAUaN55b4ny0/s/+B1XL5Jmj+dRnxz/Zx/CF5C5HlFO077iNWt2OcNpIZx1nzc++jF/fWpPiWiQsBUcsIsUlHOvJzHjx273qVWJMgANCMcEXHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wns6SF4O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q20I7yrdzXaxx9pFS5iv+zn/yHtGJvZbGUyWW82XJBF5FOAgRBsGJrh4aHq6/Kr34mjyIRkRRSncbdIsrhuvDWjIZw3iYTjYS6QvG3PojVgYcv0kwOM4utfvz/O0kWL06GqPN0vLxYtog1zckEiUBkau88w32iBxCXWeK+2TfzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPHiZsNn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wns6SF4O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47EF8C4CEF1;
-	Mon,  1 Dec 2025 11:33:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPHiZsNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15010C4CEF1;
+	Mon,  1 Dec 2025 11:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588802;
-	bh=boSPu/Kq1uytmidNmBQBZ4eqSzAy40KYofzKXRLDFpw=;
+	s=korg; t=1764588805;
+	bh=fudX2oBMaGsNt5tSj9euEMi7WjbKLMAox2rv+7tCD/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wns6SF4OCV8NmgYxTKOxWwpHSEjO2RFQisldw40G46BfkVeryxcrKdPDtKs/Bzx6i
-	 TFH3xKDQFVwhiSpRYIHqooPvkbzZOOPg0fahsbvGnzxhFA6OvGoiYyjhceg+yC517m
-	 uAUNBax3wvj47za/MnLculVNqFnHen6VQdpQkC+g=
+	b=YPHiZsNnWZjo6C+avmokBK6TpflYiSjNZw1tl5Yk8PeE4vWz3eL1e+Ym2ViMxEdrN
+	 3Ue3s/YCga+cPwtJ2mmTv/ymZ3h10ccGd0xjZGCn92YP3Du1yJkeF5gyTmDUgmj0Il
+	 O5Fslt+IMdQnYpajwzVJkuLu/K63zTs5D3XksYFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Breno Leitao <leitao@debian.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 176/187] net: netpoll: fix incorrect refcount handling causing incorrect cleanup
-Date: Mon,  1 Dec 2025 12:24:44 +0100
-Message-ID: <20251201112247.565140318@linuxfoundation.org>
+Subject: [PATCH 5.4 177/187] pmdomain: arm: scmi: Fix genpd leak on provider registration failure
+Date: Mon,  1 Dec 2025 12:24:45 +0100
+Message-ID: <20251201112247.603135811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -53,82 +52,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Sudeep Holla <sudeep.holla@arm.com>
 
-[ Upstream commit 49c8d2c1f94cc2f4d1a108530d7ba52614b874c2 ]
+[ Upstream commit 7458f72cc28f9eb0de811effcb5376d0ec19094a ]
 
-commit efa95b01da18 ("netpoll: fix use after free") incorrectly
-ignored the refcount and prematurely set dev->npinfo to NULL during
-netpoll cleanup, leading to improper behavior and memory leaks.
+If of_genpd_add_provider_onecell() fails during probe, the previously
+created generic power domains are not removed, leading to a memory leak
+and potential kernel crash later in genpd_debug_add().
 
-Scenario causing lack of proper cleanup:
+Add proper error handling to unwind the initialized domains before
+returning from probe to ensure all resources are correctly released on
+failure.
 
-1) A netpoll is associated with a NIC (e.g., eth0) and netdev->npinfo is
-   allocated, and refcnt = 1
-   - Keep in mind that npinfo is shared among all netpoll instances. In
-     this case, there is just one.
+Example crash trace observed without this fix:
 
-2) Another netpoll is also associated with the same NIC and
-   npinfo->refcnt += 1.
-   - Now dev->npinfo->refcnt = 2;
-   - There is just one npinfo associated to the netdev.
+  | Unable to handle kernel paging request at virtual address fffffffffffffc70
+  | CPU: 1 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc1 #405 PREEMPT
+  | Hardware name: ARM LTD ARM Juno Development Platform/ARM Juno Development Platform
+  | pstate: 00000005 (nzcv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  | pc : genpd_debug_add+0x2c/0x160
+  | lr : genpd_debug_init+0x74/0x98
+  | Call trace:
+  |  genpd_debug_add+0x2c/0x160 (P)
+  |  genpd_debug_init+0x74/0x98
+  |  do_one_initcall+0xd0/0x2d8
+  |  do_initcall_level+0xa0/0x140
+  |  do_initcalls+0x60/0xa8
+  |  do_basic_setup+0x28/0x40
+  |  kernel_init_freeable+0xe8/0x170
+  |  kernel_init+0x2c/0x140
+  |  ret_from_fork+0x10/0x20
 
-3) When the first netpolls goes to clean up:
-   - The first cleanup succeeds and clears np->dev->npinfo, ignoring
-     refcnt.
-     - It basically calls `RCU_INIT_POINTER(np->dev->npinfo, NULL);`
-   - Set dev->npinfo = NULL, without proper cleanup
-   - No ->ndo_netpoll_cleanup() is either called
-
-4) Now the second target tries to clean up
-   - The second cleanup fails because np->dev->npinfo is already NULL.
-     * In this case, ops->ndo_netpoll_cleanup() was never called, and
-       the skb pool is not cleaned as well (for the second netpoll
-       instance)
-  - This leaks npinfo and skbpool skbs, which is clearly reported by
-    kmemleak.
-
-Revert commit efa95b01da18 ("netpoll: fix use after free") and adds
-clarifying comments emphasizing that npinfo cleanup should only happen
-once the refcount reaches zero, ensuring stable and correct netpoll
-behavior.
-
-Cc: <stable@vger.kernel.org> # 3.17.x
-Cc: Jay Vosburgh <jv@jvosburgh.net>
-Fixes: efa95b01da18 ("netpoll: fix use after free")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251107-netconsole_torture-v10-1-749227b55f63@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Adjust context ]
+Fixes: 898216c97ed2 ("firmware: arm_scmi: add device power domain support using genpd")
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+[ drivers/pmdomain/arm/scmi_pm_domain.c -> drivers/firmware/arm_scmi/scmi_pm_domain.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/netpoll.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/scmi_pm_domain.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -858,6 +858,10 @@ void __netpoll_cleanup(struct netpoll *n
+--- a/drivers/firmware/arm_scmi/scmi_pm_domain.c
++++ b/drivers/firmware/arm_scmi/scmi_pm_domain.c
+@@ -53,7 +53,7 @@ static int scmi_pd_power_off(struct gene
  
- 	synchronize_srcu(&netpoll_srcu);
+ static int scmi_pm_domain_probe(struct scmi_device *sdev)
+ {
+-	int num_domains, i;
++	int num_domains, i, ret;
+ 	struct device *dev = &sdev->dev;
+ 	struct device_node *np = dev->of_node;
+ 	struct scmi_pm_domain *scmi_pd;
+@@ -106,9 +106,18 @@ static int scmi_pm_domain_probe(struct s
+ 	scmi_pd_data->domains = domains;
+ 	scmi_pd_data->num_domains = num_domains;
  
-+	/* At this point, there is a single npinfo instance per netdevice, and
-+	 * its refcnt tracks how many netpoll structures are linked to it. We
-+	 * only perform npinfo cleanup when the refcnt decrements to zero.
-+	 */
- 	if (refcount_dec_and_test(&npinfo->refcnt)) {
- 		const struct net_device_ops *ops;
++	ret = of_genpd_add_provider_onecell(np, scmi_pd_data);
++	if (ret)
++		goto err_rm_genpds;
++
+ 	dev_set_drvdata(dev, scmi_pd_data);
  
-@@ -867,8 +871,7 @@ void __netpoll_cleanup(struct netpoll *n
- 
- 		RCU_INIT_POINTER(np->dev->npinfo, NULL);
- 		call_rcu(&npinfo->rcu, rcu_cleanup_netpoll_info);
--	} else
--		RCU_INIT_POINTER(np->dev->npinfo, NULL);
-+	}
+-	return of_genpd_add_provider_onecell(np, scmi_pd_data);
++	return 0;
++err_rm_genpds:
++	for (i = num_domains - 1; i >= 0; i--)
++		pm_genpd_remove(domains[i]);
++
++	return ret;
  }
- EXPORT_SYMBOL_GPL(__netpoll_cleanup);
  
+ static void scmi_pm_domain_remove(struct scmi_device *sdev)
 
 
