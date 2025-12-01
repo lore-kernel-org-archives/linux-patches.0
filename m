@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B508184E;
-	Mon,  1 Dec 2025 11:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18670265621;
+	Mon,  1 Dec 2025 11:31:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588664; cv=none; b=jykWvBSLeQDWXJiLA9e+1/PP2V5h6b7VnF91/DH+128FkHySYm4Ck0Fhv2IOnpHpCsUMJF2NkYJ1+xueQGRHmqJrryu/FSz4xZhbVfVOeSMjTsVIBgXz468hPrx4l9Y0bw0R7HWEXD2+tYuFAyK6dfJFNZ/57SMOwYm00OKzHBQ=
+	t=1764588667; cv=none; b=hfEyxfMpmh/HPJ24YXNpYtKWBJ39rOmfbUQRfG2OCSggST+DzaPtc1KS65xYPPsQm+5bn8GqMNitg9ZTzPshX2V/9l0UMUTcgx26+ZlsbLWKiuA5IXAnAqLIo6UmimBDsKGPba1egOaYEsygOSAs/YVHNhiq17g8+/dbsuUf7s4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588664; c=relaxed/simple;
-	bh=wok4qGq/e6Ehp3ou5Iq6TV0UqCwel0oz9Skbag+qycw=;
+	s=arc-20240116; t=1764588667; c=relaxed/simple;
+	bh=tB0O6qBfGrwyn6O7gLKQL9klDDqTllPXekaQ6nM4YiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADia11I9KXs7IoCWhgLrkx3ti/bsp0ppyCLJH9x0Ex8QzovU4YsJYcKH6ZPG7Nvneeh9GKgvigbz9JlFTC0csXHsITFsu25jq/ITU/vmJiW/PWsT+vV0zIKVhJHfKkhG8iif9JgKpWbsqditqO+TSxoFBqAxwKCHYe9RUFPhDUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qq+cAK7l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P81cjB5NjnIM+58mQBGZvnojO+WJz5kRl0j9MGHS8pLuzH11YbyACsDAOorQunJ85qsbrT+OlitoC88uHfjyCpCMiEycYmBZDimS+dK+YXoY5FHKBlFDtvy5k0I16lC/m74g+KXKRb9t1ChTKb8O6HRq6OxcAeLRL0/k3a/+tAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOnSwv/T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qq+cAK7l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC174C4CEF1;
-	Mon,  1 Dec 2025 11:31:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOnSwv/T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F2CC19421;
+	Mon,  1 Dec 2025 11:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588664;
-	bh=wok4qGq/e6Ehp3ou5Iq6TV0UqCwel0oz9Skbag+qycw=;
+	s=korg; t=1764588666;
+	bh=tB0O6qBfGrwyn6O7gLKQL9klDDqTllPXekaQ6nM4YiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qq+cAK7lGEF6x+ue451c/SfQ732B5OcDvGmISe9gxvFvL71CKmB2F0B4WVLyg39z9
-	 bkOuLwQUqYeYWY4CDUqeK2hS/pKKpWGhAZo1x8h82Go5cewsOsLwpkkJA380WmBwSN
-	 ZyTHm3HpCxkjSvqFNIw1Ss/9FERTMWziQ+k1HdWo=
+	b=ZOnSwv/TLSkPg49QOkMJhFNvqA8cDgA3dtGpQGJBOpI5XHnjhOIxi8Fl3DvCpTvGe
+	 8VcN/emA3xz9IrCQafyoMzrNlGRupV0dPrQv0H074KcYPQl5k3noDvHvs7etDpnkpP
+	 hzXArH1Pkat2TMQS1T4zY2LjC74K+bAmHPsJ4P4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sharique Mohammad <sharq0406@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/187] ASoC: max98090/91: fixed max98091 ALSA widget powering up/down
-Date: Mon,  1 Dec 2025 12:23:56 +0100
-Message-ID: <20251201112245.851250554@linuxfoundation.org>
+Subject: [PATCH 5.4 129/187] net: fec: correct rx_bytes statistic for the case SHIFT16 is set
+Date: Mon,  1 Dec 2025 12:23:57 +0100
+Message-ID: <20251201112245.887395546@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,41 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sharique Mohammad <sharq0406@gmail.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit 7a37291ed40a33a5f6c3d370fdde5ee0d8f7d0e4 ]
+[ Upstream commit ad17e7e92a7c52ce70bb764813fcf99464f96903 ]
 
-The widgets DMIC3_ENA and DMIC4_ENA must be defined in the DAPM
-suppy widget, just like DMICL_ENA and DMICR_ENA. Whenever they
-are turned on or off, the required startup or shutdown sequences
-must be taken care by the max98090_shdn_event.
+Two additional bytes in front of each frame received into the RX FIFO if
+SHIFT16 is set, so we need to subtract the extra two bytes from pkt_len
+to correct the statistic of rx_bytes.
 
-Signed-off-by: Sharique Mohammad <sharq0406@gmail.com>
-Link: https://patch.msgid.link/20251015134215.750001-1-sharq0406@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3ac72b7b63d5 ("net: fec: align IP header in hardware")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251106021421.2096585-1-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98090.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
-index ce9f99dd3e87d..7955ba75255f1 100644
---- a/sound/soc/codecs/max98090.c
-+++ b/sound/soc/codecs/max98090.c
-@@ -1231,9 +1231,11 @@ static const struct snd_soc_dapm_widget max98091_dapm_widgets[] = {
- 	SND_SOC_DAPM_INPUT("DMIC4"),
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 7b2ab0cc562cc..cd2fd2926f2f5 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1530,6 +1530,8 @@ fec_enet_rx_queue(struct net_device *ndev, int budget, u16 queue_id)
+ 		ndev->stats.rx_packets++;
+ 		pkt_len = fec16_to_cpu(bdp->cbd_datlen);
+ 		ndev->stats.rx_bytes += pkt_len;
++		if (fep->quirks & FEC_QUIRK_HAS_RACC)
++			ndev->stats.rx_bytes -= 2;
  
- 	SND_SOC_DAPM_SUPPLY("DMIC3_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
--		 M98090_DIGMIC3_SHIFT, 0, NULL, 0),
-+		 M98090_DIGMIC3_SHIFT, 0, max98090_shdn_event,
-+			SND_SOC_DAPM_POST_PMU),
- 	SND_SOC_DAPM_SUPPLY("DMIC4_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
--		 M98090_DIGMIC4_SHIFT, 0, NULL, 0),
-+		 M98090_DIGMIC4_SHIFT, 0, max98090_shdn_event,
-+			 SND_SOC_DAPM_POST_PMU),
- };
- 
- static const struct snd_soc_dapm_route max98090_dapm_routes[] = {
+ 		index = fec_enet_get_bd_index(bdp, &rxq->bd);
+ 		skb = rxq->rx_skbuff[index];
 -- 
 2.51.0
 
