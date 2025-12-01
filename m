@@ -1,78 +1,77 @@
-Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0A01B87C0
-	for <patches@lists.linux.dev>; Mon,  1 Dec 2025 19:28:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0206D27E7EC
+	for <patches@lists.linux.dev>; Mon,  1 Dec 2025 22:06:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764617341; cv=none; b=Dik10dORpzLlUy4BeYN1hPEuczvWxm+xbRMbHiujj50adQE2O0W7iiCeXPutp1QBGpFCaM93Yn/igDh8gVOUJU51l4XFbWwAx0a5E7umRmdWNLYeF4b0H0UfS76dXxnwAEU4PnfD2PUD23joEJJGpkEzpywBhlUylW2RJXx+sBE=
+	t=1764626769; cv=none; b=XuM8ZhFOaD81yDDZJCWfTl996FNRksyQQNEo9tlz/LkXMNc9I9mSEzntwFxjN+3jmi8yKcD1EPsh04aUYAfGUP0uCdfc4VQ0DcS4OG5XpKjU/YPpDSBVbyYa8QZpOILz6q4hU2EEocjYPGXGs3OCKmG/Jsv/Pd9qLz2esF+yruI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764617341; c=relaxed/simple;
-	bh=zfeMB2LmDcZWaYDjv7dMc5Q8/0QMwZt5kUiecWTGvyY=;
+	s=arc-20240116; t=1764626769; c=relaxed/simple;
+	bh=PhlOhLyfjRLagW4BXKVTnsDRNJQb6Rj2gXsVklMw9R0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NZa6wnqZi2lEVLkBkypqnyHiGVqOa3prMlx243yYW6679PbKDBP6q/gJJDe5nucIw7HGTmqPqGaT9P4WidoZ2k9smFRPFJ4dwbJDJ4l5Nf5LQkz8ENMH642pKJxxRa8x98I1a3nKszkY0wrElHH5XKejlGW6KcYw+3viT0xgp+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5OfWLWY; arc=none smtp.client-ip=209.85.128.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vw4dhHFymQ2JnuZCTnzDvsRzf6MAV/p4IFLlI8h+1E/V03azoUZGh6VAzl4U09iD7MoF/6m5pX0wa2W5+Q34C7wfCsBbjFiHJA8hf2nUKGpYXsfgZXSJm8mzwlmtmeZrDHcg0Oz9oSp1USpdsDry6gI7xPU4MQMMcTOsmRTLo7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sladewatkins.com; spf=pass smtp.mailfrom=sladewatkins.com; dkim=pass (2048-bit key) header.d=sladewatkins.com header.i=@sladewatkins.com header.b=mpftyQ8N; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=sladewatkins.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sladewatkins.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5OfWLWY"
-Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-787df0d729dso44091157b3.3
-        for <patches@lists.linux.dev>; Mon, 01 Dec 2025 11:28:59 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=sladewatkins.com header.i=@sladewatkins.com header.b="mpftyQ8N"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8b2a4b6876fso649992685a.3
+        for <patches@lists.linux.dev>; Mon, 01 Dec 2025 14:06:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764617339; x=1765222139; darn=lists.linux.dev;
+        d=sladewatkins.com; s=google; t=1764626767; x=1765231567; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=APljFRXaMCw5fST76I/JdjoAg3NunNjrMcBFSHPBuyM=;
-        b=e5OfWLWY4pkozz8V66McsrMvLIf6LACI34jTRTqEVBqn2EhEOJydNNH29JQ10KBVKC
-         9xVEMp5mFkUG3AHbLDirP8w0aMRLHLbfzDFbvcZcBnrefKOFk208PA3Ydm8a7nLbKYi0
-         pIbyvHuZljIPWm+rqmQnouZHQjNQigHpJjntycSo7ZUC7pa8orxZm6uJTjZVxNP2SN8L
-         MYO4pDvEN9yFkLL69ZL/L+BSDyEtyOOJpVQ1ATqfvbuck+5437HZ3SWNYJxBvNnEvKyb
-         +BSe0YOB4j85Q1ruLzXf0c8SyGcN1HNhx4nFEbGg6RmGZLvYzxswqHdRdYQV3sYkStY1
-         ivjw==
+        bh=Tq+3DtRJU8JZNsuocRWKSJHQAwFBLxgASdFB4JZhVQ0=;
+        b=mpftyQ8Nj8AGRCFOQdOLuwFNYlsWS+9v68c/L9ri2IxN5n5MXv+bFrDjOTuUhjoHFO
+         Mu5XsA4r3TmhsWPhcdLgGDg30SIE0ObhQvNE4wGnpwam2U0vv6Yvw9XtvLf9wMKye846
+         VKS7LebNfla1q28icdPcQ+u0DTFumTkANk+Bbf/pF6kA+cIWhtuDOAkUsrtrSNcNtJMn
+         zbWhlEefNQUqp4DsQKhEi5AjYnryRF4BMgWC391u/l6patUFnDZ/1713UBpwMNCfyDgW
+         h/K0YkyVZS4V158l2vgxwpcjs39wmMw4MkSD+zqkIwNAVfUir3PZ4evvBmIQRuacZlgd
+         pFuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764617339; x=1765222139;
+        d=1e100.net; s=20230601; t=1764626767; x=1765231567;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=APljFRXaMCw5fST76I/JdjoAg3NunNjrMcBFSHPBuyM=;
-        b=Eko0DBuxiCfP1ytGSbIpPxgi5TnLOi1BKyij2kToFhUni4r+0YBFdN55hYxHsiSjlU
-         opqzErHgw1gIt4ibmeCfu/Td/BA5kO5L52HNm5kJBa6ufU1d1pue0DMFo7bpCnQkkhUi
-         CX7im8sLGy5/5vYl6ixm+F55keg/PN3QyelPQjsY8IJZH5viLegOKP3e2H5LQGeYZnkN
-         by6tUGzSNpkOOdCTdKnImlyNVLlysNIJ+6rlJuP0VBiuLPIt/Mz3c3Ltwq827iCJl3Lx
-         C2aLrrywWTyhIgk7hErzBej4HhkpXwFgJlHBbn63efya5tNxiSsGRmUwxosnBsanXJF+
-         x6Pg==
-X-Forwarded-Encrypted: i=1; AJvYcCUQAhaH9qfCP1ZgNQ+O2v4AC06MAf1XOjWotDnbNgAgGb4xrmgZSgV87tpsEeINR8Uy8p4G8dnq@lists.linux.dev
-X-Gm-Message-State: AOJu0YzPAyz+SdkmvoIkQxcTlEoYZ5L/jDcEF0hksQ20paYiqOQLWgKS
-	wiQJrl/btjIKjbSP4VNT50xb6yrjsp8ae55776dgwmxI7EOI/zJFcOsQ
-X-Gm-Gg: ASbGncuEOxpNmRuVk4g1ZQlROalfvYbrP/RdrK+xenf5DANRAHDQV8CECAerctHf5UL
-	gwjYEAPtccrtx8n6mGvo9ejE2w4EuNh6CHC401wxjSTjMEqoJ3ZZTrbHCIiKQSarf5cVLLr7jCD
-	+ZbKUpyYzWyaM1dudcJ3j5zaBr6N+9fKOzJNFBNwdVZmoOHfgLPifaI0qIkXydIaZ6WGL+GXLgh
-	1hFRvM+VlzIDayTwCj00K/F6Umly+KcH2DmMAMZt3SLYML6TcZ9Eil1+Tmg5em8G7rj18zrtb6+
-	5ylJ4LbxIJsH087zisP+EwQ3Py4FIBFmJG1jaUVueDvH/uQQLF+mQLKt5BXx5aVwdLj6wxGiCx+
-	h3uHRyJOWviKG/sqLgHhPB6m2JIJjGYecI0HdkY+X8x+kHDE3+vSAy1jbH7i9kBlFiQCv0Y49QC
-	7NNvHSvnc=
-X-Google-Smtp-Source: AGHT+IEttKn+//7++pOLi55YpQ9X7GejnUD2spd1fxC6Tw+xPr7mkrw42iQi7Zwskp5SI1O4LeCa3g==
-X-Received: by 2002:a05:690c:4483:b0:784:8647:4958 with SMTP id 00721157ae682-78a8b56803bmr355020387b3.67.1764617338630;
-        Mon, 01 Dec 2025 11:28:58 -0800 (PST)
-Received: from localhost ([2601:346:0:79bd:affb:cf6e:b908:f700])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-78ad102d25csm53088337b3.44.2025.12.01.11.28.58
+        bh=Tq+3DtRJU8JZNsuocRWKSJHQAwFBLxgASdFB4JZhVQ0=;
+        b=jgTlbCAOMdWWHZu5SUcq3q6xcbfoYgxngl+NsHPFrRrcMRyd8IEBm/lwhYIb09QNvd
+         c8iEvmVm3stMXXf29vkD2qgcYwIKd1Zp13CZAXWYNzCHsX4AGE4VkBBleJGg6q1qdyPe
+         sIxomNcXPZfMcDsBwSaadFazgXEpuCrMWVc+nF5AwJ7dnUimns0hGwLFvFmjETMPe7+A
+         Ft4Q0a6fcMNFIPAdjUp3mL7EUSqOikGZs6mBbSsBnLkd6QInW9Y0oPN9ddkJZ4xm+Fcj
+         s9IueRoSnjFRbbBLih3M2V/rvqDKSZshACc+7DmaUGKEYISjwY4KXc9b9xY0t8X5jL6X
+         yLKw==
+X-Forwarded-Encrypted: i=1; AJvYcCXSP2WwIOv3yxUKPSIODV4cxv5PYXwqllM/+Cs11bd6iJiZjB9cNaQISscGWSaG0m0C/wDGS2Wr@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxq1tmKG1SLw14/Q0AwrlRnZQUM0APy0za52oYVrd5czqtEBTnL
+	COVzX02LLmdV726XemZh5PeFwNLq16bgBFSjZgWOadLslVqThdgUbF5uUgiN5S6kw/rVkYGDvUz
+	+v6y2t0cBgUvSqLuGYf0ztXLN2/3EN2NCgKpfQe6I6Uirl8WlK4P5iw==
+X-Gm-Gg: ASbGnct7Ys+tzapXP0gOj2wYzU2IqeiAlw9W4zJcXZJwlY2p6uX4KGb0yeTl2ZHuJ0o
+	yCh3cGmXYmeDuXR1mxAMAHQSilMePskM6I8mmdymInmE2W2DrSYwgolYkawyf7ebtKqDNSqIX8Z
+	718hNrl4K7tBd4VPdojIz5LmGknPnBPzqOdFJmLvpJS7Vk/MKcsyuASjTFP0ClIKjjqnrokk323
+	pO+GzsfGwYHDuUIqXf8vLa0uudPvp2XBJ8gKShDvd/iBzf15nC6fduNutZW/MKw2chnfX+dnd4P
+	/NNtiCLQIzjnU7andnlGxTX8xzT0JZhKa3sdH/SJnvsMKv+jqblpyC5CviuCRU2vWpnJKoOfivV
+	B2ch4MBkCLU6QhEPOaMMYxc4WzVzqHRZauACpc7zCKkQj5z60EJZqJBcAdGeBtKFYEZU6KDAkDC
+	PPcWdLm6faoMcNcYRuM+fCVUdZqcUfdg==
+X-Google-Smtp-Source: AGHT+IH73AqnKniaCHTQwgGUaYfB3pi27DJFpyvJ7J2eAiS3iZy3BhYYAdbLduoOOICwt61XH1VPLw==
+X-Received: by 2002:a05:620a:3194:b0:8b2:ef2d:f74b with SMTP id af79cd13be357-8b33d22acb9mr5049545485a.29.1764626766477;
+        Mon, 01 Dec 2025 14:06:06 -0800 (PST)
+Received: from sladewatkins.com ([174.97.1.113])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-8b529994c8fsm949986385a.6.2025.12.01.14.06.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Dec 2025 11:28:58 -0800 (PST)
-Date: Mon, 1 Dec 2025 14:28:57 -0500
-From: Yury Norov <yury.norov@gmail.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alice Ryhl <aliceryhl@google.com>, Burak Emir <bqe@google.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <lossin@kernel.org>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Trevor Gross <tmgross@umich.edu>,
-	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH] rust: id_pool: fix example
-Message-ID: <aS3seTNRum3ZXMom@yury>
-References: <20251201000949.1626363-1-ojeda@kernel.org>
+        Mon, 01 Dec 2025 14:06:05 -0800 (PST)
+Date: Mon, 1 Dec 2025 17:06:02 -0500
+From: Slade Watkins <sr@sladewatkins.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org
+Subject: Re: [PATCH 5.4 000/187] 5.4.302-rc1 review
+Message-ID: <aS4RSgGIv-136I51@sladewatkins.com>
+References: <20251201112241.242614045@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -81,54 +80,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251201000949.1626363-1-ojeda@kernel.org>
+In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
+X-SW-RGPM-AntispamServ: glowwhale.rogueportmedia.com
+X-SW-RGPM-AntispamVer: Reporting (SpamAssassin 4.0.1-sladew)
 
-On Mon, Dec 01, 2025 at 01:09:49AM +0100, Miguel Ojeda wrote:
-> When building with KUnit doctests enabled, `rustc` reports:
+On Mon, Dec 01, 2025 at 12:21:48PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.302 release.
+> There are 187 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->     error[E0599]: no method named `acquire_next_id` found for struct `IdPool` in the current scope
->         --> rust/doctests_kernel_generated.rs:6722:24
->          |
->     6722 |     assert_eq!(i, pool.acquire_next_id(i).ok_or(ENOSPC)?);
->          |                        ^^^^^^^^^^^^^^^ method not found in `IdPool`
-> 
-> Thus fix it.
-> 
-> Fixes: a5726454470c ("rust: id_pool: do not immediately acquire new ids")
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> Responses should be made by Wed, 03 Dec 2025 11:22:11 +0000.
+> Anything received after that time might be too late.
 
-Thanks Miguel,
+5.4.302-rc1 built and run on x86_64 test system. No errors or regressions.
 
-I applied this, but the fact that you've sent a second fix to
-documentation that actually is a build fix, raises the questions.
-
-Because Rust documentation bears compilable chunks of code, I think
-we need to enable rustdoc tests target by default, so that developers
-will not send broken tests.
+Tested-by: Slade Watkins <sr@sladewatkins.com>
 
 Thanks,
-Yury
+Slade
 
-> ---
-> I saw this in -next.
-> 
->  rust/kernel/id_pool.rs | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/rust/kernel/id_pool.rs b/rust/kernel/id_pool.rs
-> index 73a952d7dd83..384753fe0e44 100644
-> --- a/rust/kernel/id_pool.rs
-> +++ b/rust/kernel/id_pool.rs
-> @@ -28,7 +28,7 @@
->  ///
->  /// let mut pool = IdPool::with_capacity(64, GFP_KERNEL)?;
->  /// for i in 0..64 {
-> -///     assert_eq!(i, pool.acquire_next_id(i).ok_or(ENOSPC)?);
-> +///     assert_eq!(i, pool.find_unused_id(i).ok_or(ENOSPC)?.acquire());
->  /// }
->  ///
->  /// pool.release_id(23);
-> 
-> base-commit: 00c5ce039598e692e1dd4bf2b3ad5bc08bdf3270
-> --
-> 2.52.0
