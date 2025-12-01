@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7226F3081C7;
-	Mon,  1 Dec 2025 11:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047DB253958;
+	Mon,  1 Dec 2025 11:27:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588450; cv=none; b=TDvFc6VAD5GDOi989U8PdrrDKCwEpoxGcIHTl+Y0RJNeQm2SaR+UKORv0SnLWjN9lk/qaY5kMGf18Gw4/Nn68c46qECExuKm/5ZDqNlv1MgGAAp1ujy1rqcAZSPH44yjivPgLShRaohbnQtI9dpKoF56FqcmTQum3qI/jNbDThQ=
+	t=1764588453; cv=none; b=kS+Fv5/HCQNmAO6Qq+thzZZof6b1uYP9CDJy5EViCfI/i5zOBomWgoePxC6Snhmt6lMSiEdMqUcZNw65dQmN5WqFHPRLagD3+lruO8zCkhUUMKVOXuzXseNVAYM1Dmke8dUQItPyZO2+Mzd4uWv2zjC/zm6819mNIfg/Fb2EKDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588450; c=relaxed/simple;
-	bh=SHbk2BtyCQ8dCHUTkvWC5t5uUqkPmlT7DEmCbcC8474=;
+	s=arc-20240116; t=1764588453; c=relaxed/simple;
+	bh=PSPGYVzwXcB3ubuvi/dhMlfS8pHWmBTody3EeqQM6Wg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DM0LpMreORKqR6OlKMk1WTreGOOn5oEkq0WCsqV03dTb56wvXeTS4w6qqy4TOKpxGhiQWs4F51tqIhlifRIKPaZlBCmmXwVb5VcMBMYhOXxIoJABHb33bsParr40L0G2nhvaHSHcGYQnBC+igEzM82cEzQJ/yOD++8s0Xvl0Nlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFqIdp+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tI7sIksKXY2rcLcv6UOS8FqflnmAdLCD0Vg5q/WAZaIlFydDW/yucaDZaCvw9s797rYOQoVSRyRYY3KF7ZybRLxSb6Y+0PJidDX7ve3gYQtc+t4nO8wLKUAvXL8Hzc9iECUsSuHvMe2wr3Gg3csYXGGGvGm55VijEKuPkA6Cr7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBoCHS/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFqIdp+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00B9C113D0;
-	Mon,  1 Dec 2025 11:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBoCHS/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85150C4CEF1;
+	Mon,  1 Dec 2025 11:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588450;
-	bh=SHbk2BtyCQ8dCHUTkvWC5t5uUqkPmlT7DEmCbcC8474=;
+	s=korg; t=1764588452;
+	bh=PSPGYVzwXcB3ubuvi/dhMlfS8pHWmBTody3EeqQM6Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFqIdp+dhePHUrdxRQBlF+XraKGTz2GqpPBo6cIlerJDSDxZnFpeANUxPVfR5R4LS
-	 18SRoutrK2tPcXaNPJwvlIdDWCkpx1B/r2t/QT31pX9ark1j6IecV0MEt9XxkNOAwf
-	 +yFmjp0ulwR+Jf2wWR4fv8HqPlShriZiDZBYzSAw=
+	b=iBoCHS/plm/Wn6/KgVCrRMYAPFBAqbFaKVNV/3LG8A8/mrFTyqg/teOlK4I9FMqSY
+	 napZv9vj2NMGMR4AYC4XCEgOoxmKhmHxDET/+NGngdZ4bMS8UdXR6GpByteXeLacRr
+	 F4JYm6ZCd51ln1xRILUJ54Dh3ZkLld3XRXDtVk38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 045/187] mfd: stmpe: Remove IRQ domain upon removal
-Date: Mon,  1 Dec 2025 12:22:33 +0100
-Message-ID: <20251201112242.876427862@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Dave Hansen <dave.hansen@intel.com>
+Subject: [PATCH 5.4 054/187] x86/vsyscall: Do not require X86_PF_INSTR to emulate vsyscall
+Date: Mon,  1 Dec 2025 12:22:42 +0100
+Message-ID: <20251201112243.195379722@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,35 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit 57bf2a312ab2d0bc8ee0f4e8a447fa94a2fc877d ]
+[ Upstream commit 8ba38a7a9a699905b84fa97578a8291010dec273 ]
 
-The IRQ domain is (optionally) added during stmpe_probe, but never removed.
-Add the call to stmpe_remove.
+emulate_vsyscall() expects to see X86_PF_INSTR in PFEC on a vsyscall
+page fault, but the CPU does not report X86_PF_INSTR if neither
+X86_FEATURE_NX nor X86_FEATURE_SMEP are enabled.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20250725070752.338376-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+X86_FEATURE_NX should be enabled on nearly all 64-bit CPUs, except for
+early P4 processors that did not support this feature.
+
+Instead of explicitly checking for X86_PF_INSTR, compare the fault
+address to RIP.
+
+On machines with X86_FEATURE_NX enabled, issue a warning if RIP is equal
+to fault address but X86_PF_INSTR is absent.
+
+[ dhansen: flesh out code comments ]
+
+Originally-by: Dave Hansen <dave.hansen@intel.com>
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Link: https://lore.kernel.org/all/bd81a98b-f8d4-4304-ac55-d4151a1a77ab@intel.com
+Link: https://lore.kernel.org/all/20250624145918.2720487-1-kirill.shutemov%40linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmpe.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/entry/vsyscall/vsyscall_64.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
-index 7f758fb60c1fa..70ca3fe4e99ee 100644
---- a/drivers/mfd/stmpe.c
-+++ b/drivers/mfd/stmpe.c
-@@ -1494,6 +1494,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+diff --git a/arch/x86/entry/vsyscall/vsyscall_64.c b/arch/x86/entry/vsyscall/vsyscall_64.c
+index 86e5a1c1055ff..85e80f0a8b15e 100644
+--- a/arch/x86/entry/vsyscall/vsyscall_64.c
++++ b/arch/x86/entry/vsyscall/vsyscall_64.c
+@@ -124,7 +124,12 @@ bool emulate_vsyscall(unsigned long error_code,
+ 	if ((error_code & (X86_PF_WRITE | X86_PF_USER)) != X86_PF_USER)
+ 		return false;
  
- int stmpe_remove(struct stmpe *stmpe)
- {
-+	if (stmpe->domain)
-+		irq_domain_remove(stmpe->domain);
+-	if (!(error_code & X86_PF_INSTR)) {
++	/*
++	 * Assume that faults at regs->ip are because of an
++	 * instruction fetch. Return early and avoid
++	 * emulation for faults during data accesses:
++	 */
++	if (address != regs->ip) {
+ 		/* Failed vsyscall read */
+ 		if (vsyscall_mode == EMULATE)
+ 			return false;
+@@ -136,13 +141,19 @@ bool emulate_vsyscall(unsigned long error_code,
+ 		return false;
+ 	}
+ 
++	/*
++	 * X86_PF_INSTR is only set when NX is supported.  When
++	 * available, use it to double-check that the emulation code
++	 * is only being used for instruction fetches:
++	 */
++	if (cpu_feature_enabled(X86_FEATURE_NX))
++		WARN_ON_ONCE(!(error_code & X86_PF_INSTR));
 +
- 	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
- 		regulator_disable(stmpe->vio);
- 	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
+ 	/*
+ 	 * No point in checking CS -- the only way to get here is a user mode
+ 	 * trap to a high address, which means that we're in 64-bit user code.
+ 	 */
+ 
+-	WARN_ON_ONCE(address != regs->ip);
+-
+ 	if (vsyscall_mode == NONE) {
+ 		warn_bad_vsyscall(KERN_INFO, regs,
+ 				  "vsyscall attempted with vsyscall=none");
 -- 
 2.51.0
 
