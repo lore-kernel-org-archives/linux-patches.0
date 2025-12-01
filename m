@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E4E3184E;
-	Mon,  1 Dec 2025 11:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CF6262FED;
+	Mon,  1 Dec 2025 11:32:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588735; cv=none; b=sv33feSPh/rAABnXvs1K9t3uLy0j0LU2ke59195wItS5e0SQlEzhXekQQBPUdxMpS/wCVUozRsJ1pUpJ7YSx6lKarYZGJwMQnZVbjYGDMN+9qRzURJVMWV7bx9tUMSS0E4/hjK5j/oBM6wAPJ77frlHGUp7zKMS4zwWPJRgUpk4=
+	t=1764588738; cv=none; b=jx0HUemtlBQoRQ04YsqHLmQd9Tgovlz3VkIv313Hpb6fnxBKIxkui68g4wXwd5nwUmg370NpVMWCsXWXb2nMTM0Mi8qXo1Oj+o8VNGKv+2+XEpPVAfrzcjD7T2j65A4GN3fvhUG8eg5pNkqsGy7c/VfrZu212/qW98s1vfZ1tZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588735; c=relaxed/simple;
-	bh=bCX9wKFU33vmk/Ffwa/0pWJBiUh9q1BA++PlZy3YwGg=;
+	s=arc-20240116; t=1764588738; c=relaxed/simple;
+	bh=xvc+wgScfdFkVbDC29Iv8blnt8CFvVhbG2rJ7VxnEig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMR3zC4iaFb2a7/U/GkH4f4xv2OhCYkI6XAOhYtk6pp7s1FY9c67gW5dzFVnV62ypD8w7xgmwS3uD7robH6hyGLt9Xg50iQFqxhSlvf+t4evAD0IvaqrkhZdyY2u+VH9s1aSQPQsJqYxR0Ppny0yBp7GLXjy2Uy5e7xHTAStzNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpySA18l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pijYfsXOinobu08BgEiyIu3e1Xj3jj8Pm0rvU8UsIVL6isOxhNhd+s6dYa3aHVmdzqdGzBLWcPsGp2fufV8jx0IwjoNCX1Xac6/X64IfSrU8qsbf/aulUTtek7ZBpWdLNaZXVKdwyV9wmy5ZeoOYyNv3Dp/uV0aFyHnfJSCW8NI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=saCU9p7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpySA18l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966E9C4CEF1;
-	Mon,  1 Dec 2025 11:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="saCU9p7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35FCC113D0;
+	Mon,  1 Dec 2025 11:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588735;
-	bh=bCX9wKFU33vmk/Ffwa/0pWJBiUh9q1BA++PlZy3YwGg=;
+	s=korg; t=1764588738;
+	bh=xvc+wgScfdFkVbDC29Iv8blnt8CFvVhbG2rJ7VxnEig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpySA18l/fy7ygjhurEWVoyhPj1NhCSts/3xXRpYvxTEBg6a471Drf4haMmqQZS+v
-	 uj1o8qgXzW4WpEVA2IbWWmuSIlhz5/UHThzU0tzLwHn6Q0E4sFWheTxDRXaPfBIDPH
-	 lajoh1nQneu4LpGk0bx7GZU6ZGeWGQy7xZh/9DGc=
+	b=saCU9p7eR/PQelPcWcTvrxYBrA9cMlGiA3cjwE6XGLMA/URJ31kugvnmNPCxTkjDD
+	 HavXQeHtoFONKUnW///wMq1hmg+DaOVS13EHHlxIdf/T1J5POeJMxTFECVqS/kWlIT
+	 t5vwawW5iU+8h0QmsDGe282n1CuckoudlrLyc3D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Acs <acsjakub@amazon.de>,
-	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	SeongJae Park <sj@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Xu Xin <xu.xin16@zte.com.cn>,
-	Chengming Zhou <chengming.zhou@linux.dev>,
-	Peter Xu <peterx@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Stefan Wiehler <stefan.wiehler@nokia.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 151/187] mm/ksm: fix flag-dropping behavior in ksm_madvise
-Date: Mon,  1 Dec 2025 12:24:19 +0100
-Message-ID: <20251201112246.673191817@linuxfoundation.org>
+Subject: [PATCH 5.4 120/187] sctp: Hold RCU read lock while iterating over address list
+Date: Mon,  1 Dec 2025 12:23:48 +0100
+Message-ID: <20251201112245.565269554@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -59,105 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Acs <acsjakub@amazon.de>
+From: Stefan Wiehler <stefan.wiehler@nokia.com>
 
-[ Upstream commit f04aad36a07cc17b7a5d5b9a2d386ce6fae63e93 ]
+[ Upstream commit 38f50242bf0f237cdc262308d624d333286ec3c5 ]
 
-syzkaller discovered the following crash: (kernel BUG)
+With CONFIG_PROVE_RCU_LIST=y and by executing
 
-[   44.607039] ------------[ cut here ]------------
-[   44.607422] kernel BUG at mm/userfaultfd.c:2067!
-[   44.608148] Oops: invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
-[   44.608814] CPU: 1 UID: 0 PID: 2475 Comm: reproducer Not tainted 6.16.0-rc6 #1 PREEMPT(none)
-[   44.609635] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[   44.610695] RIP: 0010:userfaultfd_release_all+0x3a8/0x460
+  $ netcat -l --sctp &
+  $ netcat --sctp localhost &
+  $ ss --sctp
 
-<snip other registers, drop unreliable trace>
+one can trigger the following Lockdep-RCU splat(s):
 
-[   44.617726] Call Trace:
-[   44.617926]  <TASK>
-[   44.619284]  userfaultfd_release+0xef/0x1b0
-[   44.620976]  __fput+0x3f9/0xb60
-[   44.621240]  fput_close_sync+0x110/0x210
-[   44.622222]  __x64_sys_close+0x8f/0x120
-[   44.622530]  do_syscall_64+0x5b/0x2f0
-[   44.622840]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   44.623244] RIP: 0033:0x7f365bb3f227
+  WARNING: suspicious RCU usage
+  6.18.0-rc1-00093-g7f864458e9a6 #5 Not tainted
+  -----------------------------
+  net/sctp/diag.c:76 RCU-list traversed in non-reader section!!
 
-Kernel panics because it detects UFFD inconsistency during
-userfaultfd_release_all().  Specifically, a VMA which has a valid pointer
-to vma->vm_userfaultfd_ctx, but no UFFD flags in vma->vm_flags.
+  other info that might help us debug this:
 
-The inconsistency is caused in ksm_madvise(): when user calls madvise()
-with MADV_UNMEARGEABLE on a VMA that is registered for UFFD in MINOR mode,
-it accidentally clears all flags stored in the upper 32 bits of
-vma->vm_flags.
+  rcu_scheduler_active = 2, debug_locks = 1
+  2 locks held by ss/215:
+   #0: ffff9c740828bec0 (nlk_cb_mutex-SOCK_DIAG){+.+.}-{4:4}, at: __netlink_dump_start+0x84/0x2b0
+   #1: ffff9c7401d72cd0 (sk_lock-AF_INET6){+.+.}-{0:0}, at: sctp_sock_dump+0x38/0x200
 
-Assuming x86_64 kernel build, unsigned long is 64-bit and unsigned int and
-int are 32-bit wide.  This setup causes the following mishap during the &=
-~VM_MERGEABLE assignment.
+  stack backtrace:
+  CPU: 0 UID: 0 PID: 215 Comm: ss Not tainted 6.18.0-rc1-00093-g7f864458e9a6 #5 PREEMPT(voluntary)
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x90
+   lockdep_rcu_suspicious.cold+0x4e/0xa3
+   inet_sctp_diag_fill.isra.0+0x4b1/0x5d0
+   sctp_sock_dump+0x131/0x200
+   sctp_transport_traverse_process+0x170/0x1b0
+   ? __pfx_sctp_sock_filter+0x10/0x10
+   ? __pfx_sctp_sock_dump+0x10/0x10
+   sctp_diag_dump+0x103/0x140
+   __inet_diag_dump+0x70/0xb0
+   netlink_dump+0x148/0x490
+   __netlink_dump_start+0x1f3/0x2b0
+   inet_diag_handler_cmd+0xcd/0x100
+   ? __pfx_inet_diag_dump_start+0x10/0x10
+   ? __pfx_inet_diag_dump+0x10/0x10
+   ? __pfx_inet_diag_dump_done+0x10/0x10
+   sock_diag_rcv_msg+0x18e/0x320
+   ? __pfx_sock_diag_rcv_msg+0x10/0x10
+   netlink_rcv_skb+0x4d/0x100
+   netlink_unicast+0x1d7/0x2b0
+   netlink_sendmsg+0x203/0x450
+   ____sys_sendmsg+0x30c/0x340
+   ___sys_sendmsg+0x94/0xf0
+   __sys_sendmsg+0x83/0xf0
+   do_syscall_64+0xbb/0x390
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+   ...
+   </TASK>
 
-VM_MERGEABLE is a 32-bit constant of type unsigned int, 0x8000'0000.
-After ~ is applied, it becomes 0x7fff'ffff unsigned int, which is then
-promoted to unsigned long before the & operation.  This promotion fills
-upper 32 bits with leading 0s, as we're doing unsigned conversion (and
-even for a signed conversion, this wouldn't help as the leading bit is 0).
-& operation thus ends up AND-ing vm_flags with 0x0000'0000'7fff'ffff
-instead of intended 0xffff'ffff'7fff'ffff and hence accidentally clears
-the upper 32-bits of its value.
-
-Fix it by changing `VM_MERGEABLE` constant to unsigned long, using the
-BIT() macro.
-
-Note: other VM_* flags are not affected: This only happens to the
-VM_MERGEABLE flag, as the other VM_* flags are all constants of type int
-and after ~ operation, they end up with leading 1 and are thus converted
-to unsigned long with leading 1s.
-
-Note 2:
-After commit 31defc3b01d9 ("userfaultfd: remove (VM_)BUG_ON()s"), this is
-no longer a kernel BUG, but a WARNING at the same place:
-
-[   45.595973] WARNING: CPU: 1 PID: 2474 at mm/userfaultfd.c:2067
-
-but the root-cause (flag-drop) remains the same.
-
-[akpm@linux-foundation.org: rust bindgen wasn't able to handle BIT(), from Miguel]
-  Link: https://lore.kernel.org/oe-kbuild-all/202510030449.VfSaAjvd-lkp@intel.com/
-Link: https://lkml.kernel.org/r/20251001090353.57523-2-acsjakub@amazon.de
-Fixes: 7677f7fd8be7 ("userfaultfd: add minor fault registration mode")
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
-Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: SeongJae Park <sj@kernel.org>
-Tested-by: Alice Ryhl <aliceryhl@google.com>
-Tested-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Xu Xin <xu.xin16@zte.com.cn>
-Cc: Chengming Zhou <chengming.zhou@linux.dev>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ acsjakub: drop rust-compatibility change (no rust in 5.4) ]
-Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251028161506.3294376-2-stefan.wiehler@nokia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mm.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sctp/diag.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/mm.h b/include/linux/mm.h
-index 57cba6e4fdcd7..be8c793233d39 100644
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -293,7 +293,7 @@ extern unsigned int kobjsize(const void *objp);
- #define VM_MIXEDMAP	0x10000000	/* Can contain "struct page" and pure PFN pages */
- #define VM_HUGEPAGE	0x20000000	/* MADV_HUGEPAGE marked this vma */
- #define VM_NOHUGEPAGE	0x40000000	/* MADV_NOHUGEPAGE marked this vma */
--#define VM_MERGEABLE	0x80000000	/* KSM may merge identical pages */
-+#define VM_MERGEABLE	BIT(31)		/* KSM may merge identical pages */
+diff --git a/net/sctp/diag.c b/net/sctp/diag.c
+index 2fcfb8cc8bd12..fd7a55b3049db 100644
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -73,19 +73,23 @@ static int inet_diag_msg_sctpladdrs_fill(struct sk_buff *skb,
+ 	struct nlattr *attr;
+ 	void *info = NULL;
  
- #ifdef CONFIG_ARCH_USES_HIGH_VMA_FLAGS
- #define VM_HIGH_ARCH_BIT_0	32	/* bit only usable on 64-bit architectures */
++	rcu_read_lock();
+ 	list_for_each_entry_rcu(laddr, address_list, list)
+ 		addrcnt++;
++	rcu_read_unlock();
+ 
+ 	attr = nla_reserve(skb, INET_DIAG_LOCALS, addrlen * addrcnt);
+ 	if (!attr)
+ 		return -EMSGSIZE;
+ 
+ 	info = nla_data(attr);
++	rcu_read_lock();
+ 	list_for_each_entry_rcu(laddr, address_list, list) {
+ 		memcpy(info, &laddr->a, sizeof(laddr->a));
+ 		memset(info + sizeof(laddr->a), 0, addrlen - sizeof(laddr->a));
+ 		info += addrlen;
+ 	}
++	rcu_read_unlock();
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
