@@ -1,206 +1,234 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E77626AC3;
-	Mon,  1 Dec 2025 01:42:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1551F146D53;
+	Mon,  1 Dec 2025 02:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764553375; cv=none; b=CgCLUt5xGzhxsl6A0DkZZI9rJaxsYFrrzLk00Zts32zV0xB4cKUv7t+UK4wNccGxtKosC2kfcQHG7yVCCq+Cs6cgApW0dcWvrB14P0TxPV1n1AYlhCEpvgvEyJKUU7EP594DMhozkulkI0jJ3s1DczItXpGeVNh78HUkPVOzCf8=
+	t=1764555474; cv=none; b=i8OU3Q84H0c3+Cv6KvuAF3g/WKDL26N0olY8qLB2N86IKc6NYk5TfGN3V0LhmtohDJWZxYb0tXh9voj6CUTKGToF2WoBhMqc1anvugeuSL6Nc7SxaYLFOa3tlNoKOMlhePnMtxzbX7V7q9db1r6rN+OqZbsl9+ZlxlBPLK3F6ZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764553375; c=relaxed/simple;
-	bh=ATDrXlJ0VyDe0fE9l6dxnABfnxefY8VPojlREwtZWoI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RInX1eNUAQg7sFuevRJpgQCWYmbL0b6puIUxoYnvw97kditZaOCqYr3XQwPFyAOgrFO4SV6yjSwxoLP4pd1Mcbc1ZbMXrNx3c9+6JBXM2fZozEmiCDkAdXAQRuxW7l0iLYmZYtKXsF5I5Y4gtF82PorkXiKP0lp4L50m6rcXCd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OjoiEi6v; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764555474; c=relaxed/simple;
+	bh=QPcB6NV9WphWByyTSrRRobitP73Z6jrcq8qO99pRXQI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=h/8R2rN7B7grjf1ow+UWBvWwlGW+QtvBtL3Gg1UcAZ7sr6diAyFJkLSMlRspy6mU3skXVIY35pKBSsj5I74VKhZxDKya8X1DOnkhY7xIQJ6L7aEHJWbCXbYQsfN+QsOcphxUJ2jiysHCr8weIjV6jwE1e9BllmKY703+2XOtcZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggTpk1m2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OjoiEi6v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CD8C19421;
-	Mon,  1 Dec 2025 01:42:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggTpk1m2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE88C4CEFB;
+	Mon,  1 Dec 2025 02:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764553375;
-	bh=ATDrXlJ0VyDe0fE9l6dxnABfnxefY8VPojlREwtZWoI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjoiEi6vNnNhEB4/B23FqKdS9tuREv3nqd2eHSZ3bi9vjkk/sFIg5ImVTbduvXuEK
-	 0QYNjD3z/iAxWg+vBPqdd4lowlkmsa2oB4nAzgrLMYhXqZaEqDQkmcPwvzknnNgccB
-	 UjRv0rmnBMBeypLZBsz5UzaygBpZD2piiellZfsSebesLQRqQwYmE994/Oh2G95eYd
-	 5gAgekk6cvDYGJPhw77oOhPBYGvw/SUo50MZKlcjihwb/Tj3o1u3jMRreMus22294j
-	 ioWeQfXVQGhCPficzLCXcju23jcrgPaA3TJCy8ZZGYtzrpg4xJq0yR1AqbuTniv/An
-	 tcXaiVHEuLpRA==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Jacob Zhong <cmpute@qq.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>,
-	sbinding@opensource.cirrus.com,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.17] ALSA: hda/realtek: add quirk for HP pavilion aero laptop 13z-be200
-Date: Sun, 30 Nov 2025 20:42:06 -0500
-Message-ID: <20251201014235.104853-3-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251201014235.104853-1-sashal@kernel.org>
-References: <20251201014235.104853-1-sashal@kernel.org>
+	s=k20201202; t=1764555472;
+	bh=QPcB6NV9WphWByyTSrRRobitP73Z6jrcq8qO99pRXQI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ggTpk1m2Nje0+iGbz6w+KoJDZBdoB7V5hd1eq8aPY/Eyac5UOqK/rreG2Zz0GfX3R
+	 KwXhYBIpjndhE61mXOcy2Zibx4GSHlo1RSczoxtU6WkDb5KL6h9y022r0xI6jxbXJc
+	 vtHsLvBl7EPdQllPhjcZriLn6+2GPC5t5cvU11eoXZfCXZmJFGrO20ljpCjZ8qjXo4
+	 HbWxug7ON06LpOEjwNWjjW3u147ju0zQH0uvhqI9CdLBRSQSztD2jXoGlDeBLTXXgJ
+	 sDggZVQ32duHuqgj4eMM52vVVqPRImNnBO8qASN/w0P4xknRsuBOJ5WmDoACkA79RE
+	 KmCrKuv6LNctg==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Miguel Ojeda <ojeda@kernel.org>
+Cc: linux-kbuild@vger.kernel.org,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: `KSYM_NAME_LEN` strikes again
+Date: Mon,  1 Dec 2025 03:16:59 +0100
+Message-ID: <20251201021659.1729308-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.17.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Zhong <cmpute@qq.com>
+Hi all,
 
-[ Upstream commit be4c9abdf04b86bb33f4a2ce59fd7cb64a739c51 ]
+In some Rust configs with -Os and doctests enabled, we are hitting
+KSYM_NAME_LEN again:
 
-The laptop uses ALC287 chip (as shown in /proc/asound/card1/codec#0).
-It seems that every HP pavilion laptop in the table uses the same quirk,
-so I just copied them. I have verified that the mute LED on my laptop
-works with this patch.
+    Symbol _RINvMs3_NvNtNtCs1ewLyjEZ7Le_6kernel4sync4lock1__INtB6_12___ThePinData
+    NtNvNvNvCs1RN9EnoqSlC_25doctests_kernel_generated43rust_doctest_kernel_sync_lock_spinlock_rs_0
+    4main52__doctest_main_rust_kernel_sync_lock_spinlock_rs_34_05InnerNtNtB8_8spinlock
+    15SpinLockBackendE5stateNtNtCsb7ts3l0a5c3_4core7convert10InfallibleINtNtCs5hDniGXnib3_
+    8pin_init10___internal11InitClosureNCINvMs5_NtBc_5typesINtB61_6OpaqueNtNtCse4H1uDrGHP9_
+    8bindings12bindings_raw8spinlockE8ffi_initNCNCNvMs0_B8_INtB8_4LockB15_B3F_E3new0s_0E0B6c_B4j_EEB1d_
+    too long for kallsyms (518 >= 512).
+    Please increase KSYM_NAME_LEN both in kernel and kallsyms.c
 
-For reference, here's the alsa-info of my laptop:
-https://alsa-project.org/db/?f=2d5f297087708610bc01816ab12052abdd4a17c0
+Which expands to e.g.
 
-Signed-off-by: Jacob Zhong <cmpute@qq.com>
-Link: https://patch.msgid.link/tencent_E2DFA33EFDF39E0517A94FA8FF06C05C0709@qq.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    <kernel::sync::lock::_::__ThePinData<doctests_kernel_generated::rust_doctest_kernel_sync_lock_spinlock_rs_0::main::_doctest_main_rust_kernel_sync_lock_spinlock_rs_34_0::Inner,
+    kernel::sync::lock::spinlock::SpinLockBackend>>::state::<core::convert::Infallible,
+    pin_init::__internal::InitClosure<<kernel::types::Opaque<bindings::bindings_raw::spinlock>>::ffi_init
+    <<kernel::sync::lock::Lock<doctests_kernel_generated::rust_doctest_kernel_sync_lock_spinlock_rs_0::main::_doctest_main_rust_kernel_sync_lock_spinlock_rs_34_0::Inner,
+    kernel::sync::lock::spinlock::SpinLockBackend>>::new::{closure#0}::{closure#1}>::{closure#0},
+    kernel::types::Opaque<bindings::bindings_raw::spinlock>, core::convert::Infallible>>
+
+If we decide to increase KSYM_NAME_LEN again, we need to use a number
+that is a multiple of 64:
+
+    BUILD_BUG_ON(KSYM_NAME_LEN % sizeof(u64));
+
+I first tried with 512+128, but I still saw things symbols slightly over
+that:
+
+    too long for kallsyms (645 >= 640).
+
+So I picked 512+256 and it builds clean with a patch like the one below.
+Hopefully nobody relies on it being a power of 2.
+
+Other options:
+
+  - Conditionally doing it only for those builds that need it, to avoid
+    penalizing other builds (including normal Rust builds).
+
+  - Building the Rust side with -O2 for now, or at least tweaking some
+    of the inlining behavior under -Os.
+
+  - Not supporting Rust for `CC_OPTIMIZE_FOR_SIZE` for now (e.g. under
+    `BROKEN`).
+
+  - Stop all this and go with a hashing approach like Willy/Linus
+    discussed back then:
+
+        https://lore.kernel.org/rust-for-linux/CAHk-=whzXv=Fu7dQshSTyd9H1-JS5=gyKwW-GMNGccAKs4Mwpg@mail.gmail.com/
+
+Cheers,
+Miguel
+
+From: Miguel Ojeda <ojeda@kernel.org>
+Date: Sun, 30 Nov 2025 17:46:29 +0100
+Subject: [PATCH] kallsyms: increase KSYM_NAME_LEN to 768 (512+256)
+
+Untested!
 ---
+ include/linux/kallsyms.h            | 2 +-
+ kernel/livepatch/core.c             | 4 ++--
+ lib/tests/longest_symbol_kunit.c    | 7 +++++--
+ scripts/kallsyms.c                  | 2 +-
+ tools/include/linux/kallsyms.h      | 2 +-
+ tools/lib/perf/include/perf/event.h | 2 +-
+ tools/lib/symbol/kallsyms.h         | 2 +-
+ 7 files changed, 12 insertions(+), 9 deletions(-)
 
-LLM Generated explanations, may be completely bogus:
+diff --git a/include/linux/kallsyms.h b/include/linux/kallsyms.h
+index d5dd54c53ace..f17d335f36b2 100644
+--- a/include/linux/kallsyms.h
++++ b/include/linux/kallsyms.h
+@@ -15,7 +15,7 @@
 
-## Analysis of Commit: ALSA: hda/realtek: add quirk for HP pavilion aero
-laptop 13z-be200
+ #include <asm/sections.h>
 
-### 1. Commit Message Analysis
+-#define KSYM_NAME_LEN 512
++#define KSYM_NAME_LEN 768
+ #define KSYM_SYMBOL_LEN (sizeof("%s+%#lx/%#lx [%s %s]") + \
+ 			(KSYM_NAME_LEN - 1) + \
+ 			2*(BITS_PER_LONG*3/10) + (MODULE_NAME_LEN - 1) + \
+diff --git a/kernel/livepatch/core.c b/kernel/livepatch/core.c
+index 0e73fac55f8e..cf7f2d561386 100644
+--- a/kernel/livepatch/core.c
++++ b/kernel/livepatch/core.c
+@@ -210,7 +210,7 @@ static int klp_resolve_symbols(Elf_Shdr *sechdrs, const char *strtab,
+ 	 * we use the smallest/strictest upper bound possible (56, based on
+ 	 * the current definition of MODULE_NAME_LEN) to prevent overflows.
+ 	 */
+-	BUILD_BUG_ON(MODULE_NAME_LEN < 56 || KSYM_NAME_LEN != 512);
++	BUILD_BUG_ON(MODULE_NAME_LEN < 56 || KSYM_NAME_LEN != 768);
 
-**Problem:** The mute LED does not function on the HP Pavilion Aero
-Laptop 13z-be200 with ALC287 audio codec.
+ 	relas = (Elf_Rela *) relasec->sh_addr;
+ 	/* For each rela in this klp relocation section */
+@@ -224,7 +224,7 @@ static int klp_resolve_symbols(Elf_Shdr *sechdrs, const char *strtab,
 
-**Solution:** Adds a PCI quirk entry to enable the mute LED using an
-existing fixup mechanism.
+ 		/* Format: .klp.sym.sym_objname.sym_name,sympos */
+ 		cnt = sscanf(strtab + sym->st_name,
+-			     ".klp.sym.%55[^.].%511[^,],%lu",
++			     ".klp.sym.%55[^.].%767[^,],%lu",
+ 			     sym_objname, sym_name, &sympos);
+ 		if (cnt != 3) {
+ 			pr_err("symbol %s has an incorrectly formatted name\n",
+diff --git a/lib/tests/longest_symbol_kunit.c b/lib/tests/longest_symbol_kunit.c
+index 9b4de3050ba7..ff8eed2cb4bd 100644
+--- a/lib/tests/longest_symbol_kunit.c
++++ b/lib/tests/longest_symbol_kunit.c
+@@ -19,8 +19,11 @@
+ #define DDDDI(name) DDDI(n##name##name)
+ #define DDDDDI(name) DDDDI(n##name##name)
 
-**Tags:**
-- No "Cc: stable@vger.kernel.org" tag
-- No "Fixes:" tag
-- Signed-off by Takashi Iwai (ALSA/Sound subsystem maintainer at SUSE)
-- Author verified the fix works on the actual hardware
-- Includes alsa-info diagnostic link for validation
+-/*Generate a symbol whose name length is 511 */
+-#define LONGEST_SYM_NAME  DDDDDI(g1h2i3j4k5l6m7n)
++#define __SUM(A, B) s##A##B
++#define SUM(A, B) __SUM(A, B)
++
++/* Generate a symbol whose name length is KSYM_NAME_LEN (including null) */
++#define LONGEST_SYM_NAME SUM(DDDDDI(g1h2i3j4k5l6m7n),DDDDI(g1h2i3j4k5l6m7n))
 
-### 2. Code Change Analysis
+ #define RETURN_LONGEST_SYM 0xAAAAA
 
-The change adds a single line to the `alc269_fixup_tbl[]` quirk table:
+diff --git a/scripts/kallsyms.c b/scripts/kallsyms.c
+index 4b0234e4b12f..c90bb90c874e 100644
+--- a/scripts/kallsyms.c
++++ b/scripts/kallsyms.c
+@@ -31,7 +31,7 @@
 
-```c
-SND_PCI_QUIRK(0x103c, 0x8bd6, "HP Pavilion Aero Laptop 13z-be200",
-ALC287_FIXUP_HP_GPIO_LED),
-```
+ #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof(arr[0]))
 
-**Scope:**
-- 1 line added
-- 1 file changed (sound/hda/codecs/realtek/alc269.c)
-- Uses existing `ALC287_FIXUP_HP_GPIO_LED` fixup mechanism
-- No new code introduced - only a table entry
+-#define KSYM_NAME_LEN		512
++#define KSYM_NAME_LEN		768
 
-**Technical Mechanism:**
-The `ALC287_FIXUP_HP_GPIO_LED` fixup maps to `alc287_fixup_hp_gpio_led`
-which calls `alc_fixup_hp_gpio_led(codec, action, 0x10, 0)` to configure
-GPIO for proper mute LED behavior. This is a well-established,
-thoroughly tested code path used by many HP laptops.
+ struct sym_entry {
+ 	unsigned long long addr;
+diff --git a/tools/include/linux/kallsyms.h b/tools/include/linux/kallsyms.h
+index f61a01dd7eb7..089b59906641 100644
+--- a/tools/include/linux/kallsyms.h
++++ b/tools/include/linux/kallsyms.h
+@@ -6,7 +6,7 @@
+ #include <stdio.h>
+ #include <unistd.h>
 
-**Code Context:**
-Looking at the diff, the table currently jumps from 0x8bd4 to 0x8bdd,
-leaving 0x8bd6 unsupported. The new entry fills this gap. The
-surrounding entries show this is a standard pattern - there are hundreds
-of similar HP quirk entries (vendor ID 0x103c) in this table, including
-other HP Pavilion Aero models like "HP Pavilion Aero Laptop 13-be0xxx"
-that use the same fixup.
+-#define KSYM_NAME_LEN 512
++#define KSYM_NAME_LEN 768
 
-### 3. Stable Kernel Rules Compliance
+ struct module;
 
-This commit falls under **two explicit exception categories** documented
-in stable kernel rules:
+diff --git a/tools/lib/perf/include/perf/event.h b/tools/lib/perf/include/perf/event.h
+index aa1e91c97a22..ea3debf97db9 100644
+--- a/tools/lib/perf/include/perf/event.h
++++ b/tools/lib/perf/include/perf/event.h
+@@ -104,7 +104,7 @@ struct perf_record_throttle {
+ };
 
-1. **NEW DEVICE IDs:** Adding PCI IDs to existing drivers - trivial one-
-   line additions that enable hardware support
-2. **QUIRKS and WORKAROUNDS:** Hardware-specific quirks for broken/buggy
-   devices
+ #ifndef KSYM_NAME_LEN
+-#define KSYM_NAME_LEN 512
++#define KSYM_NAME_LEN 768
+ #endif
 
-**Checklist:**
-- ✅ Obviously correct: Trivial table entry using existing, proven
-  infrastructure
-- ✅ Fixes real bug: Mute LED doesn't work without this quirk
-- ✅ Small and contained: Single line change
-- ✅ No new features: Reuses existing fixup mechanism
-- ✅ No new APIs: Data-only change
-- ✅ Applies cleanly: Simple table entry addition
+ struct perf_record_ksymbol {
+diff --git a/tools/lib/symbol/kallsyms.h b/tools/lib/symbol/kallsyms.h
+index 542f9b059c3b..435f626c92d1 100644
+--- a/tools/lib/symbol/kallsyms.h
++++ b/tools/lib/symbol/kallsyms.h
+@@ -7,7 +7,7 @@
+ #include <linux/types.h>
 
-### 4. Risk Assessment
+ #ifndef KSYM_NAME_LEN
+-#define KSYM_NAME_LEN 512
++#define KSYM_NAME_LEN 768
+ #endif
 
-**Regression Risk:** Essentially zero
-- The quirk is scoped to a specific PCI subsystem vendor/device ID
-  (0x103c:0x8bd6)
-- Only affects this exact hardware model
-- Cannot impact any other systems
+ static inline u8 kallsyms2elf_binding(char type)
 
-**Benefit:** Direct hardware functionality fix
-- Users with this laptop get a working mute LED
-- Without the fix, the mute LED is non-functional
-
-### 5. User Impact
-
-**Affected Users:** Owners of HP Pavilion Aero 13z-be200 laptops
-**Severity:** Medium - broken hardware functionality
-**Real-world Impact:** The mute LED provides important user feedback,
-particularly for video conferencing scenarios where knowing microphone
-state is critical
-
-### 6. Historical Context
-
-This follows an extremely well-established pattern:
-- The Realtek HDA driver contains hundreds of similar quirk entries
-- Similar HP Pavilion Aero quirk additions have been made for other
-  model variants
-- This type of quirk addition is routinely accepted for stable trees
-
-### Conclusion
-
-This is a textbook example of a hardware quirk addition that is
-explicitly allowed by stable kernel rules. It:
-- Fixes real, user-facing hardware functionality (mute LED)
-- Is trivial (one line)
-- Uses existing, well-tested infrastructure
-- Has zero risk of affecting other hardware
-- Has been verified by the hardware owner
-- Was accepted by the sound subsystem maintainer
-
-Even without an explicit "Cc: stable@vger.kernel.org" tag, device ID and
-quirk additions are routinely backported because they fix real user-
-facing hardware issues with essentially zero regression risk. The
-risk/benefit ratio overwhelmingly favors inclusion in stable trees.
-
-**YES**
-
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 2126e022848e..b651290ca8b4 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6564,6 +6564,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8bc8, "HP Victus 15-fa1xxx", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8bcd, "HP Omen 16-xd0xxx", ALC245_FIXUP_HP_MUTE_LED_V1_COEFBIT),
- 	SND_PCI_QUIRK(0x103c, 0x8bd4, "HP Victus 16-s0xxx (MB 8BD4)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
-+	SND_PCI_QUIRK(0x103c, 0x8bd6, "HP Pavilion Aero Laptop 13z-be200", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8bdd, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8bde, "HP Envy 17", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8bdf, "HP Envy 15", ALC287_FIXUP_CS35L41_I2C_2),
--- 
-2.51.0
-
+base-commit: 7d0a66e4bb9081d75c82ec4957c50034cb0ea449
+--
+2.52.0
