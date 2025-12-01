@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11696264A92;
-	Mon,  1 Dec 2025 11:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F98264A92;
+	Mon,  1 Dec 2025 11:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588752; cv=none; b=F2VahqCxbIQc62ZRVLi+WpJ0aMBjVPQGgYURwmgAaT8Ym6kd09Rc8tNH/O0I4huN5bx593xxKVs56q1YtRhlUPMd1UdtbFXt0ALIgyMtdM/U5KkaO13zcWxUkCYjfp4owuGJACPt8TMnG5Psb3jnhB+yNobSFCsNyBugFoOa8dc=
+	t=1764588755; cv=none; b=U80O8gXuAmD1PdpnDB5IjuzK99l6WVZqC9EeVe/jLUtNFm58CXZE+c15ClF/6LMcHD+v6l1ocA1Hie2NeGvKUjUtv80EEbkQixhHVnh7y154EjxDs/lSpmzDUI8BHORIiuYLB3sVZYUNP+i6j9r2isyOszU+jzvyaa1su9oZnOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588752; c=relaxed/simple;
-	bh=gv3vIlTydVZ5sSjw6cNOK5c6quYUaP4k4lgPouDC3jE=;
+	s=arc-20240116; t=1764588755; c=relaxed/simple;
+	bh=V7q9v3JAlOyLYXKxL077BZkaqlajfyNKumir4zAtG7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r1BSnp7hwBcbqICnn5gklkfYKkUx76KVFjsybWo2/fskBmpiLBxnAH52VfTZtbJSCNu5Np9aiNqQ4KChyejMrLqFOt9Iv/izmDfWvtaofeJYlGbxLUKhPJ2xOIfqiQkCI00TQbSjatlVQ+ZVqZJaEsWbLUFEQMB+ZtTkFjsj/Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S/EN1uGF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f6dqt6LGfWjtm0jV0A8IsxPFtI+xise2wxOQbbdB2CllUOkHC4wMunE/OMo59R04liBLbBTFnFIeJzndla+8OCCBiGfJ22fRKqiFAue3W34b108dtGa7Ina4+rmUkducI5OrjgKfAWim5CW3Vv0quM8xdMVrvUGPSZG0utzxwCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TySYqNZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S/EN1uGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9049DC4CEF1;
-	Mon,  1 Dec 2025 11:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TySYqNZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43BCC4CEF1;
+	Mon,  1 Dec 2025 11:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588751;
-	bh=gv3vIlTydVZ5sSjw6cNOK5c6quYUaP4k4lgPouDC3jE=;
+	s=korg; t=1764588755;
+	bh=V7q9v3JAlOyLYXKxL077BZkaqlajfyNKumir4zAtG7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S/EN1uGFbEyU4A6YrLMThjLaw5yhohbtKJE114k7x/OyLlmkTMJPPxjcEG08zgIxv
-	 Yi9teiGbJjb0Co616YTJl7vgXso4zS7EX5CpQEzZ1vyNFmdq71/CYYR/HtQT5lnZLO
-	 0OwvCFqEOda6T1gmg+g/B2uyaOAxiUJH3+eF6m/Q=
+	b=TySYqNZVxSjaS4YDXl++hnz0ChBH1EbCvos23NaMspqV/Lnb+eWw9Fwqk0fEaK/BZ
+	 JrZYMwWgqabDqYnEy4yiR3a0psckdKiHOmZXb2cSV8gx84/mcIUBxdgVDEcGNhLdXR
+	 3l+5WZlYnU+yFfu+NGhpfiEp979hWJ9A2ZuO9GAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 125/187] compiler_types: Move unused static inline functions warning to W=2
-Date: Mon,  1 Dec 2025 12:23:53 +0100
-Message-ID: <20251201112245.745208882@linuxfoundation.org>
+Subject: [PATCH 5.4 116/187] net: dsa: b53: prevent GMII_PORT_OVERRIDE_CTRL access on BCM5325
+Date: Mon,  1 Dec 2025 12:23:44 +0100
+Message-ID: <20251201112245.421320820@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -46,61 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 9818af18db4bfefd320d0fef41390a616365e6f7 ]
+[ Upstream commit 37883bbc45a8555d6eca88d3a9730504d2dac86c ]
 
-Per Nathan, clang catches unused "static inline" functions in C files
-since commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
+BCM5325 doesn't implement GMII_PORT_OVERRIDE_CTRL register so we should
+avoid reading or writing it.
+PORT_OVERRIDE_RX_FLOW and PORT_OVERRIDE_TX_FLOW aren't defined on BCM5325
+and we should use PORT_OVERRIDE_LP_FLOW_25 instead.
 
-Linus said:
-
-> So I entirely ignore W=1 issues, because I think so many of the extra
-> warnings are bogus.
->
-> But if this one in particular is causing more problems than most -
-> some teams do seem to use W=1 as part of their test builds - it's fine
-> to send me a patch that just moves bad warnings to W=2.
->
-> And if anybody uses W=2 for their test builds, that's THEIR problem..
-
-Here is the change to bump the warning from W=1 to W=2.
-
-Fixes: 6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251106105000.2103276-1-andriy.shevchenko@linux.intel.com
-[nathan: Adjust comment as well]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Link: https://patch.msgid.link/20250614080000.1884236-12-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: b6a8a5477fe9 ("net: dsa: b53: fix resetting speed and pause on forced link")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler_types.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 21 +++++++++++++++++----
+ drivers/net/dsa/b53/b53_regs.h   |  1 +
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-index b94d08d055ff5..a428104c5e777 100644
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -165,10 +165,9 @@ struct ftrace_likely_data {
- /*
-  * GCC does not warn about unused static inline functions for -Wunused-function.
-  * Suppress the warning in clang as well by using __maybe_unused, but enable it
-- * for W=1 build. This will allow clang to find unused functions. Remove the
-- * __inline_maybe_unused entirely after fixing most of -Wunused-function warnings.
-+ * for W=2 build. This will allow clang to find unused functions.
-  */
--#ifdef KBUILD_EXTRA_WARN1
-+#ifdef KBUILD_EXTRA_WARN2
- #define __inline_maybe_unused
- #else
- #define __inline_maybe_unused __maybe_unused
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 4de302f20e4f3..dca23e0edb9a8 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1026,6 +1026,8 @@ static void b53_force_link(struct b53_device *dev, int port, int link)
+ 	if (port == dev->cpu_port) {
+ 		off = B53_PORT_OVERRIDE_CTRL;
+ 		val = PORT_OVERRIDE_EN;
++	} else if (is5325(dev)) {
++		return;
+ 	} else {
+ 		off = B53_GMII_PORT_OVERRIDE_CTRL(port);
+ 		val = GMII_PO_EN;
+@@ -1050,6 +1052,8 @@ static void b53_force_port_config(struct b53_device *dev, int port,
+ 	if (port == dev->cpu_port) {
+ 		off = B53_PORT_OVERRIDE_CTRL;
+ 		val = PORT_OVERRIDE_EN;
++	} else if (is5325(dev)) {
++		return;
+ 	} else {
+ 		off = B53_GMII_PORT_OVERRIDE_CTRL(port);
+ 		val = GMII_PO_EN;
+@@ -1080,10 +1084,19 @@ static void b53_force_port_config(struct b53_device *dev, int port,
+ 		return;
+ 	}
+ 
+-	if (rx_pause)
+-		reg |= PORT_OVERRIDE_RX_FLOW;
+-	if (tx_pause)
+-		reg |= PORT_OVERRIDE_TX_FLOW;
++	if (rx_pause) {
++		if (is5325(dev))
++			reg |= PORT_OVERRIDE_LP_FLOW_25;
++		else
++			reg |= PORT_OVERRIDE_RX_FLOW;
++	}
++
++	if (tx_pause) {
++		if (is5325(dev))
++			reg |= PORT_OVERRIDE_LP_FLOW_25;
++		else
++			reg |= PORT_OVERRIDE_TX_FLOW;
++	}
+ 
+ 	b53_write8(dev, B53_CTRL_PAGE, off, reg);
+ }
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index ea6897c3f6f76..77fb7ae660b8c 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -92,6 +92,7 @@
+ #define   PORT_OVERRIDE_SPEED_10M	(0 << PORT_OVERRIDE_SPEED_S)
+ #define   PORT_OVERRIDE_SPEED_100M	(1 << PORT_OVERRIDE_SPEED_S)
+ #define   PORT_OVERRIDE_SPEED_1000M	(2 << PORT_OVERRIDE_SPEED_S)
++#define   PORT_OVERRIDE_LP_FLOW_25	BIT(3) /* BCM5325 only */
+ #define   PORT_OVERRIDE_RV_MII_25	BIT(4) /* BCM5325 only */
+ #define   PORT_OVERRIDE_RX_FLOW		BIT(4)
+ #define   PORT_OVERRIDE_TX_FLOW		BIT(5)
 -- 
 2.51.0
 
