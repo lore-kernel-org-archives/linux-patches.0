@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6CD262FF6;
-	Mon,  1 Dec 2025 11:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A475262FE4;
+	Mon,  1 Dec 2025 11:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588797; cv=none; b=ZGTtcHfudE27F8yeIxdaF7DwhW4WGOzQ233FfoP/5U2WDjJP+V+gt09CASJH9zDfX1DC4P1fg/mbK0UM/GBMURaNep8Kimva1lrH3qoXv/ucA3orOOhDihuyv4cOiuSBQeg47uUu6tXaDIt/mXm+oNST62TfPrUqNEjALt9QJ2c=
+	t=1764588800; cv=none; b=OLo1spqnAjqADLOxY0gUxMWv1SgXbfy+Zzk8blwDN35Dy/vNZjfC9BwufXDbTri2izFFrxxYWVS1gbzEHHV0fNYgTmtiiEYnE2iWCUf1iQbim01Cwel+azrCMh46Xm1st7lBuIzoYUuabIqJ0fltFL4OmX9peY0FjQsWZnMuypI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588797; c=relaxed/simple;
-	bh=nNz8jVucCL3Hdr7cjy4+hTNwNLNGRw/42NuH/gwBp6w=;
+	s=arc-20240116; t=1764588800; c=relaxed/simple;
+	bh=Hm1vZPmLcJ2L097Bhbb012oN+o/IuyjszyWa8lVgAHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvpvcPX2Ec4jaL78fQ9BQ31wT6u54ocjHaoGw6RIZTUzfhOCSi4yp0EJVvSURRr6cOWiKSbwq/XlMx5dPgx0LtjV5byRf9koG3hk21UHC2LZwtGcfs7yPNM/7SKmznW86q3muxt6Bc13dy5kvMUuuiHowgxBaDqDz1Q6DLEtG0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=To0RPFH9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=paTfBcIlWlgrK0fHJAQzk4+732wFq93QDf5l9HxQSuhA2yD/t5uyAl2auXMWFtKWAPTHDOhIlsJIeAKHi4MgtIvPs4OWBZqZRU2IZY0qOMy7qmknJT+yR3VrqfqP1ljX9Wt7cM0RiAy786+WS7pUts2fAdbMsSGaocORfTRBa1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY6mQMN3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="To0RPFH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF9FC4CEF1;
-	Mon,  1 Dec 2025 11:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY6mQMN3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8760EC113D0;
+	Mon,  1 Dec 2025 11:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588797;
-	bh=nNz8jVucCL3Hdr7cjy4+hTNwNLNGRw/42NuH/gwBp6w=;
+	s=korg; t=1764588799;
+	bh=Hm1vZPmLcJ2L097Bhbb012oN+o/IuyjszyWa8lVgAHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=To0RPFH9M2msm+08VLRl3FCos24pvkDr4gKNiWuLnNP52k7zMGtMoBOKYL6P9I+re
-	 pjDd2GzDFxyXWSyiJPycZe5+ZAXTH/YuEEUG6u18V9fgdbPocE2RgVrXWyYYmi3lLk
-	 Q32NJmQzMIWn4gJuhEEqrCP1l5GM29WAP4Wi/s9w=
+	b=mY6mQMN3h/Bo4bj8whBYMDTkGHHtshra/jCLua8JYCN+n9CncqdqCIyvl33veM+f9
+	 lVDpEPI+tw5tM9Kdf5snEU/i/wd+Q9ZctyDeSFcHLzJharJYYanT9ZuZgIdffa9xhK
+	 mbU2guM6zCaBjJpICProLUYHaAWSO1OghYETSVyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>
-Subject: [PATCH 5.4 174/187] uio_hv_generic: Set event for all channels on the device
-Date: Mon,  1 Dec 2025 12:24:42 +0100
-Message-ID: <20251201112247.493563549@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 175/187] net: qede: Initialize qede_ll_ops with designated initializer
+Date: Mon,  1 Dec 2025 12:24:43 +0100
+Message-ID: <20251201112247.529074585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,74 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit d062463edf1770427dc2d637df4088df4835aa47 upstream.
+commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
 
-Hyper-V may offer a non latency sensitive device with subchannels without
-monitor bit enabled. The decision is entirely on the Hyper-V host not
-configurable within guest.
+After a recent change [1] in clang's randstruct implementation to
+randomize structures that only contain function pointers, there is an
+error because qede_ll_ops get randomized but does not use a designated
+initializer for the first member:
 
-When a device has subchannels, also signal events for the subchannel
-if its monitor bit is disabled.
+  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
+    206 |         {
+        |         ^
 
-This patch also removes the memory barrier when monitor bit is enabled
-as it is not necessary. The memory barrier is only needed between
-setting up interrupt mask and calling vmbus_set_event() when monitor
-bit is disabled.
+Explicitly initialize the common member using a designated initializer
+to fix the build.
 
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1741644721-20389-1-git-send-email-longli@linuxonhyperv.com
-Fixes: b15b7d2a1b09 ("uio_hv_generic: Let userspace take care of interrupt mask")
-Closes: https://bugs.debian.org/1120602
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Cc: stable@vger.kernel.org
+Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
+Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/uio/uio_hv_generic.c |   21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -80,9 +80,15 @@ hv_uio_irqcontrol(struct uio_info *info,
- {
- 	struct hv_uio_private_data *pdata = info->priv;
- 	struct hv_device *dev = pdata->device;
-+	struct vmbus_channel *primary, *sc;
+--- a/drivers/net/ethernet/qlogic/qede/qede_main.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
+@@ -216,7 +216,7 @@ static struct pci_driver qede_pci_driver
+ };
  
--	dev->channel->inbound.ring_buffer->interrupt_mask = !irq_state;
--	virt_mb();
-+	primary = dev->channel;
-+	primary->inbound.ring_buffer->interrupt_mask = !irq_state;
-+
-+	mutex_lock(&vmbus_connection.channel_mutex);
-+	list_for_each_entry(sc, &primary->sc_list, sc_list)
-+		sc->inbound.ring_buffer->interrupt_mask = !irq_state;
-+	mutex_unlock(&vmbus_connection.channel_mutex);
- 
- 	return 0;
- }
-@@ -93,11 +99,18 @@ hv_uio_irqcontrol(struct uio_info *info,
- static void hv_uio_channel_cb(void *context)
- {
- 	struct vmbus_channel *chan = context;
--	struct hv_device *hv_dev = chan->device_obj;
--	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
-+	struct hv_device *hv_dev;
-+	struct hv_uio_private_data *pdata;
- 
- 	virt_mb();
- 
-+	/*
-+	 * The callback may come from a subchannel, in which case look
-+	 * for the hv device in the primary channel
-+	 */
-+	hv_dev = chan->primary_channel ?
-+		 chan->primary_channel->device_obj : chan->device_obj;
-+	pdata = hv_get_drvdata(hv_dev);
- 	uio_event_notify(&pdata->info);
- }
- 
+ static struct qed_eth_cb_ops qede_ll_ops = {
+-	{
++	.common = {
+ #ifdef CONFIG_RFS_ACCEL
+ 		.arfs_filter_op = qede_arfs_filter_op,
+ #endif
 
 
