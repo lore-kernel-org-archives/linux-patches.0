@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 069C93064BF;
-	Mon,  1 Dec 2025 11:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97C0253958;
+	Mon,  1 Dec 2025 11:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588422; cv=none; b=UzS4BNV0VK2QioEdQqF2Ef5U1Rz07X29yKJFiESKaJz81CLlQgle8pg1edlyckK41drQOOUdtoAVlLUtmzRvllsHYz0G55O3bi/DIfWlDwIvRZorkafzdZIuoSqvPj3HYubxOSWRMSLEGHhx4TNOg+ZcDN9RfS+L7A7pN7e7D9I=
+	t=1764588425; cv=none; b=qOzXvwuXwvNxVW2NbcICuGeRuZHeULnN6MM0GnWaFvVnv+uOrnjJAfS/5k///qTfiCBOOLFuWVxHL314GhJ4737Dmwwhpyyfv4wW88iqbZ7abfgSNFYtVCg2UVsrBKaK84su8PsJ2X0SBxK8M0QtP16SJa7lwYeW9s5nb+Fnro4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588422; c=relaxed/simple;
-	bh=J/JEqss56gMaHSh/K0+GY3PV4vovEFTsqx15ifeUKNQ=;
+	s=arc-20240116; t=1764588425; c=relaxed/simple;
+	bh=wQPhro2GLEYMjOHrC/KCtxb5Q/R4Tku+KxrJZsgeFSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poi9PflYaWLNJKY4wlpXg2LawZFF1Nq/Q0CjQFH87GzZ2kA+KunqPKmJWLITzKxd1DEtaof4rqQIa44Qkk+cOSGAZd0xqMjF37OLGM2aAqz9ccllpX8usANMjB4CRIqtwrXGJloRb93NCJld6hLgJhAoHjqcAWd/cuunOjQeQ2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uF4uHUEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K5XllLv/kPJUT79de7yfmX3yLwQ3VsC4G0USuDVpHjy4/mUcYQddMaqK9g5oPq6uiYG8KNg01ODCGEU5P1iL24RaAsrNhpom9K7FrSTfGPBBJRNqdJN1uIuVXEGKpMriKkK2xFV0lmdLxvz/i3EX9EWLuCKPjZUGXxj5NCflHvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fO1bSSPV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uF4uHUEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F1E2C4CEF1;
-	Mon,  1 Dec 2025 11:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fO1bSSPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701CDC4CEF1;
+	Mon,  1 Dec 2025 11:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588421;
-	bh=J/JEqss56gMaHSh/K0+GY3PV4vovEFTsqx15ifeUKNQ=;
+	s=korg; t=1764588424;
+	bh=wQPhro2GLEYMjOHrC/KCtxb5Q/R4Tku+KxrJZsgeFSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uF4uHUEFMwuxEZkHJfRArLrm5tKSVd/vzpZAyeHGK/Xi7ASF7heo/nNCRq0/TubJL
-	 Uonn1zDf2a7qP/p43JAS2GqZA5QE5z08YCc2BqxBxfztaW0fGQhVgJ5br9rGauf3ed
-	 6z6WwiCsQK21LZqZ3k7dICzFFudQKSMRHkuQVy14=
+	b=fO1bSSPVgaVa6x49rWQ1UdCmdf6FHSj/bXjhC6TL+z5hyf/TAMhjQZ8yQJYiTyv0v
+	 H3yWozhLp4ofJdqLO+oEXLzx2tuGqRYKN0EI+8IcEkKBokXv2yo3nnLZ+NXp7j+Qjh
+	 3Bd8LBN8tudLnuzTNkUrAeP2oFjGM/vJDsaPPV3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 041/187] hwmon: (dell-smm) Add support for Dell OptiPlex 7040
-Date: Mon,  1 Dec 2025 12:22:29 +0100
-Message-ID: <20251201112242.732915575@linuxfoundation.org>
+Subject: [PATCH 5.4 042/187] tools/cpupower: Fix incorrect size in cpuidle_state_disable()
+Date: Mon,  1 Dec 2025 12:22:30 +0100
+Message-ID: <20251201112242.768760639@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,41 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 53d3bd48ef6ff1567a75ca77728968f5ab493cb4 ]
+[ Upstream commit 23199d2aa6dcaf6dd2da772f93d2c94317d71459 ]
 
-The Dell OptiPlex 7040 supports the legacy SMM interface for reading
-sensors and performing fan control. Whitelist this machine so that
-this driver loads automatically.
+Fix incorrect size parameter passed to cpuidle_state_write_file() in
+cpuidle_state_disable().
 
-Closes: https://github.com/Wer-Wolf/i8kutils/issues/15
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://lore.kernel.org/r/20250917181036.10972-5-W_Armin@gmx.de
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+The function was incorrectly using sizeof(disable) which returns the
+size of the unsigned int variable (4 bytes) instead of the actual
+length of the string stored in the 'value' buffer.
+
+Since 'value' is populated with snprintf() to contain the string
+representation of the disable value, we should use the length
+returned by snprintf() to get the correct string length for
+writing to the sysfs file.
+
+This ensures the correct number of bytes is written to the cpuidle
+state disable file in sysfs.
+
+Link: https://lore.kernel.org/r/20250917050820.1785377-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ tools/power/cpupower/lib/cpuidle.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
-index 785e7a07bb291..51d0f5e88ebcf 100644
---- a/drivers/hwmon/dell-smm-hwmon.c
-+++ b/drivers/hwmon/dell-smm-hwmon.c
-@@ -1016,6 +1016,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
- 		},
- 		.driver_data = (void *)&i8k_config_data[DELL_PRECISION_490],
- 	},
-+	{
-+		.ident = "Dell OptiPlex 7040",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7040"),
-+		},
-+	},
- 	{
- 		.ident = "Dell Precision",
- 		.matches = {
+diff --git a/tools/power/cpupower/lib/cpuidle.c b/tools/power/cpupower/lib/cpuidle.c
+index 479c5971aa6da..c15d0de12357f 100644
+--- a/tools/power/cpupower/lib/cpuidle.c
++++ b/tools/power/cpupower/lib/cpuidle.c
+@@ -231,6 +231,7 @@ int cpuidle_state_disable(unsigned int cpu,
+ {
+ 	char value[SYSFS_PATH_MAX];
+ 	int bytes_written;
++	int len;
+ 
+ 	if (cpuidle_state_count(cpu) <= idlestate)
+ 		return -1;
+@@ -239,10 +240,10 @@ int cpuidle_state_disable(unsigned int cpu,
+ 				 idlestate_value_files[IDLESTATE_DISABLE]))
+ 		return -2;
+ 
+-	snprintf(value, SYSFS_PATH_MAX, "%u", disable);
++	len = snprintf(value, SYSFS_PATH_MAX, "%u", disable);
+ 
+ 	bytes_written = cpuidle_state_write_file(cpu, idlestate, "disable",
+-						   value, sizeof(disable));
++						   value, len);
+ 	if (bytes_written)
+ 		return 0;
+ 	return -3;
 -- 
 2.51.0
 
