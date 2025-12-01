@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AEF42550DD;
-	Mon,  1 Dec 2025 11:31:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6D12550DD;
+	Mon,  1 Dec 2025 11:31:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588698; cv=none; b=Pe6Qe7fbKtWJFyLqIaG8G/z3PxQfckjpI4VT/0pfW7O1NAkjSDOfeC9a/b8HbwiCm4ohHffG+/iIxNOrQBqvTdznHvQ6eBlpn/lbYx/WBRppKBmXC5kl29pcb6DRBngkuMMtn7n1+AIhDa5P2feP6bayOSe1pqydgOT1TCOXkn4=
+	t=1764588701; cv=none; b=cs+GqQk8t7xrnhhgDm3lhKO3XB0Qhifmx7TCR/ifO0Xprs5SnxTaizcF/4+Ki6AOvLcu/r+Ytv6DLIdHN+DIBahpFNm3+escJ7Z0gV33gY+N4pegHHdkVSNKsJQAA0P1KWREx1fOsezqlcx9hkdzSDo5puzB1O2o6t3OMwcdeB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588698; c=relaxed/simple;
-	bh=+WFptOIa5EplUhY7WMffhl+RdQU4wOQHPMbtNIeSKpI=;
+	s=arc-20240116; t=1764588701; c=relaxed/simple;
+	bh=TBGjJBZ57AzQtbf2znI0jXm7gkrzxqocntHfefkamYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nrJivwBVeX+fEo/c9q2qMm+QWMhS2c+vUuMFfZmPnySgOsstssietYr2G2+RiHrGNbb4ILxQTLDethW4vstZvznc+7bT6Gkuvb8H4s2y7on+cYkMF5luqGh1rZUzS4rv775IluvOVguJgw6suGNvelxSg8qRRRt/9UdOpVqnL4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l59cvJe6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CttK4Goj6+697iwiikM+0wX5wo/5YyTwsHfN6VVDWLVeDPBAfM3sEhbs7Hvst9tU1CGkcSR5KqQEhVDmvG5QfQEMUKeZQf6il6B1sKoMJ0BEHbUPmjfp6+zICPXzWDz++qqv3FG5h7L6PaKgY205LcgW6Z7Bf48WSypFnd9MpPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fTbKxwhO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l59cvJe6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FF2C4CEF1;
-	Mon,  1 Dec 2025 11:31:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fTbKxwhO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C394BC4CEF1;
+	Mon,  1 Dec 2025 11:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588698;
-	bh=+WFptOIa5EplUhY7WMffhl+RdQU4wOQHPMbtNIeSKpI=;
+	s=korg; t=1764588701;
+	bh=TBGjJBZ57AzQtbf2znI0jXm7gkrzxqocntHfefkamYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l59cvJe6WMjFUCLTOoLSQ2/GveW1QnljGGiRHBd7zuMA/X749D3Ef1UGZabXrKlUY
-	 waxGrL3xdTTWSYah1aI+n3KloIoxqrz7Kk8Zd/i5syNvTGAc9Nf8OaYi53avGX2O7V
-	 /cPCS0IbfffwiYnvynZBonTPxHWPPE0h51TCObjk=
+	b=fTbKxwhOg7Vt3767LiI6IBehrlRt2PqFNk1pYtoFJlUqNUlGVn3ieM7yLb+KxKcXq
+	 uMreYkhBxxpYOqaeBV/kQ3+ntEAuhuERtorkiD5mn0IjXxwooyAX955uObZifv8WzV
+	 UsVYmfgyag4qGtRkC1iiuOIbTCa8RTSDlkiKjG2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com,
+	Ranganath V N <vnranganath.20@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 139/187] wifi: mac80211: skip rate verification for not captured PSDUs
-Date: Mon,  1 Dec 2025 12:24:07 +0100
-Message-ID: <20251201112246.244447688@linuxfoundation.org>
+Subject: [PATCH 5.4 140/187] net: sched: act_ife: initialize struct tc_ife to fix KMSAN kernel-infoleak
+Date: Mon,  1 Dec 2025 12:24:08 +0100
+Message-ID: <20251201112246.280889418@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,46 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Ranganath V N <vnranganath.20@gmail.com>
 
-[ Upstream commit 7fe0d21f5633af8c3fab9f0ef0706c6156623484 ]
+[ Upstream commit ce50039be49eea9b4cd8873ca6eccded1b4a130a ]
 
-If for example the sniffer did not follow any AIDs in an MU frame, then
-some of the information may not be filled in or is even expected to be
-invalid. As an example, in that case it is expected that Nss is zero.
+Fix a KMSAN kernel-infoleak detected  by the syzbot .
 
-Fixes: 2ff5e52e7836 ("radiotap: add 0-length PSDU "not captured" type")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251110142554.83a2858ee15b.I9f78ce7984872f474722f9278691ae16378f0a3e@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[net?] KMSAN: kernel-infoleak in __skb_datagram_iter
+
+In tcf_ife_dump(), the variable 'opt' was partially initialized using a
+designatied initializer. While the padding bytes are reamined
+uninitialized. nla_put() copies the entire structure into a
+netlink message, these uninitialized bytes leaked to userspace.
+
+Initialize the structure with memset before assigning its fields
+to ensure all members and padding are cleared prior to beign copied.
+
+This change silences the KMSAN report and prevents potential information
+leaks from the kernel memory.
+
+This fix has been tested and validated by syzbot. This patch closes the
+bug reported at the following syzkaller link and ensures no infoleak.
+
+Reported-by: syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=0c85cae3350b7d486aee
+Tested-by: syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com
+Fixes: ef6980b6becb ("introduce IFE action")
+Signed-off-by: Ranganath V N <vnranganath.20@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251109091336.9277-3-vnranganath.20@gmail.com
+Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/rx.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/sched/act_ife.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 4c805530edfb6..e8e72271fbb8f 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4669,10 +4669,14 @@ void ieee80211_rx_napi(struct ieee80211_hw *hw, struct ieee80211_sta *pubsta,
- 	if (WARN_ON(!local->started))
- 		goto drop;
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index 488d10476e850..8f82842ad8cb5 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -642,13 +642,15 @@ static int tcf_ife_dump(struct sk_buff *skb, struct tc_action *a, int bind,
+ 	unsigned char *b = skb_tail_pointer(skb);
+ 	struct tcf_ife_info *ife = to_ife(a);
+ 	struct tcf_ife_params *p;
+-	struct tc_ife opt = {
+-		.index = ife->tcf_index,
+-		.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
+-		.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
+-	};
++	struct tc_ife opt;
+ 	struct tcf_t t;
  
--	if (likely(!(status->flag & RX_FLAG_FAILED_PLCP_CRC))) {
-+	if (likely(!(status->flag & RX_FLAG_FAILED_PLCP_CRC) &&
-+		   !(status->flag & RX_FLAG_NO_PSDU &&
-+		     status->zero_length_psdu_type ==
-+		     IEEE80211_RADIOTAP_ZERO_LEN_PSDU_NOT_CAPTURED))) {
- 		/*
--		 * Validate the rate, unless a PLCP error means that
--		 * we probably can't have a valid rate here anyway.
-+		 * Validate the rate, unless there was a PLCP error which may
-+		 * have an invalid rate or the PSDU was not capture and may be
-+		 * missing rate information.
- 		 */
- 
- 		switch (status->encoding) {
++	memset(&opt, 0, sizeof(opt));
++
++	opt.index = ife->tcf_index,
++	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
++	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
++
+ 	spin_lock_bh(&ife->tcf_lock);
+ 	opt.action = ife->tcf_action;
+ 	p = rcu_dereference_protected(ife->params,
 -- 
 2.51.0
 
