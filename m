@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9DB2522B6;
-	Mon,  1 Dec 2025 11:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CAF2E54BB;
+	Mon,  1 Dec 2025 11:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588572; cv=none; b=ZD5zXAmVWFtDWaX6yrrpMtlOy3Yxvlrc0p4nEmdn0jkT21tubPzIRq3LlEkzc7GpLeOYLJi74a64XcMHZk3SIeJXU7MnKp5xlwG+NbvA+hRTdPUppy54iv/MFLxOrg4g+BdD4ux6qMCY96GTZtUCJisaMudNtZQ3CKNJRR0w2q4=
+	t=1764588575; cv=none; b=gBnljzPrk73POAEbthYDCDTufKKSMF+9lunzMKhiUm8SJGEXJ19mGS40txKHIePlZEtSYAlHNx9Di1ufrVcYPsLmRHVlWOhz37fE8Sgp+vJkqIxqhWrJ1S9yUNimG9THROAaxJTIWxehYPDjVDaiM41cEHcEjmz4PEmxdz4Srn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588572; c=relaxed/simple;
-	bh=hzEawvccUP3sKZeZs/BIIqoljmSmaiNgJs+oeX5k/Vg=;
+	s=arc-20240116; t=1764588575; c=relaxed/simple;
+	bh=kRUDjBFO9EjlJzYonkU37OpZyuJL1sWOadfnTo3RWgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPl5kMy9OtWuQeY6yNubBB4hJiBArQr9sHZOYVd8tfNwDyFhNHTOksomxLiruuWcytVxR6LX0YInsrur6efZARWTvJJO6UUC2rrWhL/WXQKh+B+HEVl8Lu4o0O6LUP8fHyamo/jFkcywcLZvHDozmn0CaqFDJovPe01fCE296+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ass1c0hQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XYC7e0Jxe9n81aErQSk6T1fXiLe5t7ZMusQQJBTnJ6ewf4VsXI2cHamoYsRdSIxiv6iPeJe/vBa0AKakNLzX8XawSaK0ssm4WrufqBvf/lNtTz5y5m0AytSEPOOopFJtxmtwiFrSPUrXzcLjPd5pqB+OsXTJ9BPXio1vJP71QC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GXDT/z37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ass1c0hQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DC4C4CEF1;
-	Mon,  1 Dec 2025 11:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GXDT/z37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF522C4CEF1;
+	Mon,  1 Dec 2025 11:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588572;
-	bh=hzEawvccUP3sKZeZs/BIIqoljmSmaiNgJs+oeX5k/Vg=;
+	s=korg; t=1764588575;
+	bh=kRUDjBFO9EjlJzYonkU37OpZyuJL1sWOadfnTo3RWgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ass1c0hQ/i5zzGaAIq1V6qbFAJkg8JoE34bZdJizWVv7FTMzzV3N+OfkW70LSYxhR
-	 CsMJjjaYJ6hG5FFu+QRkYKk2Zh4pzd1yJ2iVn1a07M+K8U6ltkyUtVYEqSdoB1fMuA
-	 mhvb0pgIZsBppbv2JXvnMoiYQNHL2YomiMNDZrqQ=
+	b=GXDT/z37N1Jy3yT9CRMyw7sgLvSQFvW4OwMoyl1xMpiPO/3rvaEGu88oJxiaVS0zq
+	 1qGKnEXc/T5jAyT6oHGU3Hd3zPuyBBJyGm3FgzoI/M126mBT3e1u+B0NrWqAh/RRF2
+	 zsJguJSyQGkAlN3lW2eXSPiaNSos/uDfK9mQC/r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koakuma <koachan@protonmail.com>,
-	Andreas Larsson <andreas@gaisler.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 096/187] sparc/module: Add R_SPARC_UA64 relocation handling
-Date: Mon,  1 Dec 2025 12:23:24 +0100
-Message-ID: <20251201112244.709149627@linuxfoundation.org>
+Subject: [PATCH 5.4 097/187] remoteproc: qcom: q6v5: Avoid handling handover twice
+Date: Mon,  1 Dec 2025 12:23:25 +0100
+Message-ID: <20251201112244.744668903@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,46 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Koakuma <koachan@protonmail.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 05457d96175d25c976ab6241c332ae2eb5e07833 ]
+[ Upstream commit 54898664e1eb6b5b3e6cdd9343c6eb15da776153 ]
 
-This is needed so that the kernel can handle R_SPARC_UA64 relocations,
-which is emitted by LLVM's IAS.
+A remoteproc could theoretically signal handover twice. This is unexpected
+and would break the reference counting for the handover resources (power
+domains, clocks, regulators, etc), so add a check to prevent that from
+happening.
 
-Signed-off-by: Koakuma <koachan@protonmail.com>
-Reviewed-by: Andreas Larsson <andreas@gaisler.com>
-Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20250820-rproc-qcom-q6v5-fixes-v2-2-910b1a3aff71@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sparc/include/asm/elf_64.h | 1 +
- arch/sparc/kernel/module.c      | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/remoteproc/qcom_q6v5.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/sparc/include/asm/elf_64.h b/arch/sparc/include/asm/elf_64.h
-index 7e078bc73ef56..d3dda47d0bc5a 100644
---- a/arch/sparc/include/asm/elf_64.h
-+++ b/arch/sparc/include/asm/elf_64.h
-@@ -59,6 +59,7 @@
- #define R_SPARC_7		43
- #define R_SPARC_5		44
- #define R_SPARC_6		45
-+#define R_SPARC_UA64		54
+diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+index 9c9beeb3bcd74..a6ddb58330eb5 100644
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -121,6 +121,11 @@ static irqreturn_t q6v5_handover_interrupt(int irq, void *data)
+ {
+ 	struct qcom_q6v5 *q6v5 = data;
  
- /* Bits present in AT_HWCAP, primarily for Sparc32.  */
- #define HWCAP_SPARC_FLUSH       0x00000001
-diff --git a/arch/sparc/kernel/module.c b/arch/sparc/kernel/module.c
-index df39580f398d3..737f7a5c28359 100644
---- a/arch/sparc/kernel/module.c
-+++ b/arch/sparc/kernel/module.c
-@@ -117,6 +117,7 @@ int apply_relocate_add(Elf_Shdr *sechdrs,
- 			break;
- #ifdef CONFIG_SPARC64
- 		case R_SPARC_64:
-+		case R_SPARC_UA64:
- 			location[0] = v >> 56;
- 			location[1] = v >> 48;
- 			location[2] = v >> 40;
++	if (q6v5->handover_issued) {
++		dev_err(q6v5->dev, "Handover signaled, but it already happened\n");
++		return IRQ_HANDLED;
++	}
++
+ 	if (q6v5->handover)
+ 		q6v5->handover(q6v5);
+ 
 -- 
 2.51.0
 
