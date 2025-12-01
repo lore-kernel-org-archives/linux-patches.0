@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1973256C87;
-	Mon,  1 Dec 2025 11:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4624255F2D;
+	Mon,  1 Dec 2025 11:33:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588817; cv=none; b=MGN7B/j6c8ccUZGhePOWIoZk+DWTmYQJuoyC/fVasDFeQ3lrorqw3T6dWLYsGGTJK/o7Feqx/2raOyfS9O3NUm1Plqiw5vtwJrcvlJQ5y63X1I3ohlCeMZbAFmKyG+FsgcksbYVYDFf0RybNUJ5OBWBsW3aJS74ZUyLWsxeLLnw=
+	t=1764588819; cv=none; b=XTD+sFhtE/9RsgwVPM/lj9ibmfRN7aC9izLTLWpPAPCWkYnLGyvXBBjpsBrAirDxgzggYbU5AZqO4Nq5dSvpnbQqqJI7gFL0hVmFwHryH3F2SQEsR+KNYimMDfuRhZPd+VVdMiesti/akbfdjhOwfnMZp0tFLn7fpWq5OjATyqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588817; c=relaxed/simple;
-	bh=mA7AOGFRuZuiI3ijh+RZQTTPGhM1D9Xif30cPSiiObE=;
+	s=arc-20240116; t=1764588819; c=relaxed/simple;
+	bh=YsEFsF09qHiTUuyYZ59G/u4uEGAAPTHVp6s8BtYAQH4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8mQLbrHydaNrOunTQEuqf6j3X6o5K5CWHulQsSnTCMGVXNvpYTFxZNbwrBiLaPBoRYfwZXtYhcpClO+tvULhsv+NyLpqRaDfcoV33y20jPb9rcYqdK0eCVQVWxmfM9PtB96BjQwiZfV41NHZ8p1+Lh25zTqDixpBpTaLoSZV1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zhitg9KH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a3y2WC1zamkmc69ZVCYG4dsQ+ktu/I7vt5HO9jwb65mYBckirnm+ftd79DGOZbZrEY7M05Mfx/c5OWQTxUkOLk7O3VJHt45oc3wOrxEXigJf1axxVJkpwL+MGS9uQs/wraEtcHiPOZInKwXQlO8byMco1ChhjXA22LCpk4XWPD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9zIinDF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zhitg9KH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 738BCC4CEF1;
-	Mon,  1 Dec 2025 11:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9zIinDF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F761C4CEF1;
+	Mon,  1 Dec 2025 11:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588816;
-	bh=mA7AOGFRuZuiI3ijh+RZQTTPGhM1D9Xif30cPSiiObE=;
+	s=korg; t=1764588819;
+	bh=YsEFsF09qHiTUuyYZ59G/u4uEGAAPTHVp6s8BtYAQH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zhitg9KHW9JACVJnPg9uxNmFpGL69H4PZ1UNwoSzeM8pkt3ls0sNy3YJGdrD4Z/0u
-	 HEkDAn4XR0D2S+XaNokH12XuU6Yw62gmA/PhIoFDMRtWGOMy2ZdbY5Ln0xnFrCsREh
-	 4xeRCZymFp+C75G9skx2npHoFXb+eQ3zFGWXpxDU=
+	b=g9zIinDFVcJG3IeIBXO48WHyKRjr6EqVEi/S2pgZP9oREkyAffEAkfALYMW2dwkiB
+	 zhb0HddfTDIeXmBONfTkVWUVwx521sgz6vkz4/96Qpp1nMCUKws3MPELbQQISfTCwa
+	 Tw0txP7+/5fANOpxnYsFCkXMio68uzJrYo3clpFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 181/187] usb: deprecate the third argument of usb_maxpacket()
-Date: Mon,  1 Dec 2025 12:24:49 +0100
-Message-ID: <20251201112247.750173177@linuxfoundation.org>
+	Hans de Goede <hansg@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.4 155/187] spi: Try to get ACPI GPIO IRQ earlier
+Date: Mon,  1 Dec 2025 12:24:23 +0100
+Message-ID: <20251201112246.816640183@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -50,82 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 0f08c2e7458e25c967d844170f8ad1aac3b57a02 ]
+commit 3cd2018e15b3d66d2187d92867e265f45ad79e6f upstream.
 
-This is a transitional patch with the ultimate goal of changing the
-prototype of usb_maxpacket() from:
-| static inline __u16
-| usb_maxpacket(struct usb_device *udev, int pipe, int is_out)
+Since commit d24cfee7f63d ("spi: Fix acpi deferred irq probe"), the
+acpi_dev_gpio_irq_get() call gets delayed till spi_probe() is called
+on the SPI device.
 
-into:
-| static inline u16 usb_maxpacket(struct usb_device *udev, int pipe)
+If there is no driver for the SPI device then the move to spi_probe()
+results in acpi_dev_gpio_irq_get() never getting called. This may
+cause problems by leaving the GPIO pin floating because this call is
+responsible for setting up the GPIO pin direction and/or bias according
+to the values from the ACPI tables.
 
-The third argument of usb_maxpacket(): is_out gets removed because it
-can be derived from its second argument: pipe using
-usb_pipeout(pipe). Furthermore, in the current version,
-ubs_pipeout(pipe) is called regardless in order to sanitize the is_out
-parameter.
+Re-add the removed acpi_dev_gpio_irq_get() in acpi_register_spi_device()
+to ensure the GPIO pin is always correctly setup, while keeping the
+acpi_dev_gpio_irq_get() call added to spi_probe() to deal with
+-EPROBE_DEFER returns caused by the GPIO controller not having a driver
+yet.
 
-In order to make a smooth change, we first deprecate the is_out
-parameter by simply ignoring it (using a variadic function) and will
-remove it later, once all the callers get updated.
-
-The body of the function is reworked accordingly and is_out is
-replaced by usb_pipeout(pipe). The WARN_ON() calls become unnecessary
-and get removed.
-
-Finally, the return type is changed from __u16 to u16 because this is
-not a UAPI function.
-
-Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://lore.kernel.org/r/20220317035514.6378-2-mailhol.vincent@wanadoo.fr
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 69aeb5073123 ("Input: pegasus-notetaker - fix potential out-of-bounds access")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bbs.archlinux.org/viewtopic.php?id=302348
+Fixes: d24cfee7f63d ("spi: Fix acpi deferred irq probe")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20251102190921.30068-1-hansg@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/usb.h |   16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/spi/spi.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1964,21 +1964,17 @@ usb_pipe_endpoint(struct usb_device *dev
- 	return eps[usb_pipeendpoint(pipe)];
- }
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2055,6 +2055,16 @@ static acpi_status acpi_register_spi_dev
+ 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
+ 			  sizeof(spi->modalias));
  
--/*-------------------------------------------------------------------------*/
--
--static inline __u16
--usb_maxpacket(struct usb_device *udev, int pipe, int is_out)
-+static inline u16 usb_maxpacket(struct usb_device *udev, int pipe,
-+				/* int is_out deprecated */ ...)
- {
- 	struct usb_host_endpoint	*ep;
- 	unsigned			epnum = usb_pipeendpoint(pipe);
- 
--	if (is_out) {
--		WARN_ON(usb_pipein(pipe));
-+	if (usb_pipeout(pipe))
- 		ep = udev->ep_out[epnum];
--	} else {
--		WARN_ON(usb_pipeout(pipe));
-+	else
- 		ep = udev->ep_in[epnum];
--	}
++	/*
++	 * This gets re-tried in spi_probe() for -EPROBE_DEFER handling in case
++	 * the GPIO controller does not have a driver yet. This needs to be done
++	 * here too, because this call sets the GPIO direction and/or bias.
++	 * Setting these needs to be done even if there is no driver, in which
++	 * case spi_probe() will never get called.
++	 */
++	if (spi->irq < 0)
++		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
 +
- 	if (!ep)
- 		return 0;
+ 	acpi_device_set_enumerated(adev);
  
-@@ -1986,8 +1982,6 @@ usb_maxpacket(struct usb_device *udev, i
- 	return usb_endpoint_maxp(&ep->desc);
- }
- 
--/* ----------------------------------------------------------------------- */
--
- /* translate USB error codes to codes user space understands */
- static inline int usb_translate_errors(int error_code)
- {
+ 	adev->power.flags.ignore_parent = true;
 
 
