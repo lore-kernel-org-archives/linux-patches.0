@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC389184E;
-	Mon,  1 Dec 2025 11:30:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA91A264617;
+	Mon,  1 Dec 2025 11:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588633; cv=none; b=sSb3bTTJTxKpiWOn/ktu6wa8GCe+7igLdmrVpuGJK7z2g6jNnn54kisRzoE9UTzbB8VRCQZMOyjjW3mgX6DhtEOeIAM6O8kzrQiPv49WG1SMGyEGV8K4PAbPjyA/VxVwWW36PweRMmvESMPeBQvKBQaANaD1HbnOywhZsFrDPKI=
+	t=1764588636; cv=none; b=WWbIV2KEmKQLcocKeki8mpqitvQMPyYBq8scLP+bF21+y4/Fx3efCm5n+J1Nwizrb52+eHMgouU6l7TCa0w5ECaDnGwo83xa28rsJFVM6fgkO+/xszIyg+KYRN71jgyaWvz0mb69yLnJz0sM1qEB53GPuyZqYcYWhDR8chQsS4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588633; c=relaxed/simple;
-	bh=kxLFJIt/m3Zq9bUF4/s0vzHH3OsE7cI/RyQUEbrfNnM=;
+	s=arc-20240116; t=1764588636; c=relaxed/simple;
+	bh=EEUE0RgXseOeycU54lK3m1R1SQKsMhCckXSYiC2GeZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3cVzSCnUp05MTZNhhSE4HvBhJ2qarGGa0y7ngj88RcLL1QylWiQmGweg6CvMFdbUKvxSXZQvG1+eWvkJ/FYpGwrXkYd7hDBX48fQ8eASxN9y68hnt+93XK6PbU6/6qA+x6leYN8foRjYzMnqlrZVSPFvR7FbqwaWOK7HS+lrW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv0Q+Epd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mcy0PBQrAF5YzQcr0Zzz6EULWF5hrRX4q/wmM03hrSAi99qNohl5M7vj83oSOSyfJqW9x3c1+AivGRLsSMdd23jyLonLBYvAn3N02OtsF6nA1EAapn5o8QX7TMyZdaIOSyIlb1/ZWkdWXYJe0jmNAlybXKaYK3+1OKwwiwZlrJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4U2MaSW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv0Q+Epd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74115C116D0;
-	Mon,  1 Dec 2025 11:30:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4U2MaSW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D36EC4CEF1;
+	Mon,  1 Dec 2025 11:30:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588632;
-	bh=kxLFJIt/m3Zq9bUF4/s0vzHH3OsE7cI/RyQUEbrfNnM=;
+	s=korg; t=1764588635;
+	bh=EEUE0RgXseOeycU54lK3m1R1SQKsMhCckXSYiC2GeZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zv0Q+EpdFBjHiZWFQxA9LLYb1oo1vpM7D7epdxZgdC0qTbaQhYZL3O2tVJqzRD8YS
-	 tSZkHZu/4RRjEfGFBoguwGEoV5JNIY+LtWbVz7SqU2BpKZdVzJ6N7dbrYfpeZXke6E
-	 qQpdl3OMVTz68sTNa2NgNckOawYhIWiK49+e6vdc=
+	b=A4U2MaSWjioHyhFlgq3DHMd6XGge/pMSJtFEOXUjZNGV4dN1t+2KYQYZn7+v/rbhH
+	 yqzIwERkp7XlSSbsfJIuvwFLRA/INWvZf9ZZdOcKX0v/G340b2xiwQTkTx5Ke0PP/R
+	 xDTC1j4x+FAns38MXQrJuCNv9HzfWAVTKkvTRr00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Russell King <rmk+kernel@armlinux.org.uk>,
-	"David S. Miller" <davem@davemloft.net>,
+	David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/187] net: dsa/b53: change b53_force_port_config() pause argument
-Date: Mon,  1 Dec 2025 12:23:43 +0100
-Message-ID: <20251201112245.385782505@linuxfoundation.org>
+Subject: [PATCH 5.4 084/187] selftests: Replace sleep with slowwait
+Date: Mon,  1 Dec 2025 12:23:12 +0100
+Message-ID: <20251201112244.266042170@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,100 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King <rmk+kernel@armlinux.org.uk>
+From: David Ahern <dsahern@kernel.org>
 
-[ Upstream commit 3cad1c8b49e93c62f27f4eb34e0ccfde92f4cdc0 ]
+[ Upstream commit 2f186dd5585c3afb415df80e52f71af16c9d3655 ]
 
-Replace the b53_force_port_config() pause argument, which is based on
-phylink's MLO_PAUSE_* definitions, to use a pair of booleans.  This
-will allow us to move b53_force_port_config() from
-b53_phylink_mac_config() to b53_phylink_mac_link_up().
+Replace the sleep in kill_procs with slowwait.
 
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Russell King <rmk+kernel@armlinux.org.uk>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: b6a8a5477fe9 ("net: dsa: b53: fix resetting speed and pause on forced link")
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250910025828.38900-2-dsahern@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ tools/testing/selftests/net/fcnal-test.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index fea28b24a1a0b..4de302f20e4f3 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1041,7 +1041,8 @@ static void b53_force_link(struct b53_device *dev, int port, int link)
+diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
+index e3657454816b9..354c766e7c24a 100755
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -164,7 +164,7 @@ show_hint()
+ kill_procs()
+ {
+ 	killall nettest ping ping6 >/dev/null 2>&1
+-	sleep 1
++	slowwait 2 sh -c 'test -z "$(pgrep '"'^(nettest|ping|ping6)$'"')"'
  }
  
- static void b53_force_port_config(struct b53_device *dev, int port,
--				  int speed, int duplex, int pause)
-+				  int speed, int duplex,
-+				  bool tx_pause, bool rx_pause)
- {
- 	u8 reg, val, off;
- 
-@@ -1079,9 +1080,9 @@ static void b53_force_port_config(struct b53_device *dev, int port,
- 		return;
- 	}
- 
--	if (pause & MLO_PAUSE_RX)
-+	if (rx_pause)
- 		reg |= PORT_OVERRIDE_RX_FLOW;
--	if (pause & MLO_PAUSE_TX)
-+	if (tx_pause)
- 		reg |= PORT_OVERRIDE_TX_FLOW;
- 
- 	b53_write8(dev, B53_CTRL_PAGE, off, reg);
-@@ -1093,22 +1094,24 @@ static void b53_adjust_link(struct dsa_switch *ds, int port,
- 	struct b53_device *dev = ds->priv;
- 	struct ethtool_eee *p = &dev->ports[port].eee;
- 	u8 rgmii_ctrl = 0, reg = 0, off;
--	int pause = 0;
-+	bool tx_pause = false;
-+	bool rx_pause = false;
- 
- 	if (!phy_is_pseudo_fixed_link(phydev))
- 		return;
- 
- 	/* Enable flow control on BCM5301x's CPU port */
- 	if (is5301x(dev) && port == dev->cpu_port)
--		pause = MLO_PAUSE_TXRX_MASK;
-+		tx_pause = rx_pause = true;
- 
- 	if (phydev->pause) {
- 		if (phydev->asym_pause)
--			pause |= MLO_PAUSE_TX;
--		pause |= MLO_PAUSE_RX;
-+			tx_pause = true;
-+		rx_pause = true;
- 	}
- 
--	b53_force_port_config(dev, port, phydev->speed, phydev->duplex, pause);
-+	b53_force_port_config(dev, port, phydev->speed, phydev->duplex,
-+			      tx_pause, rx_pause);
- 	b53_force_link(dev, port, phydev->link);
- 
- 	if (is531x5(dev) && phy_interface_is_rgmii(phydev)) {
-@@ -1170,7 +1173,7 @@ static void b53_adjust_link(struct dsa_switch *ds, int port,
- 	} else if (is5301x(dev)) {
- 		if (port != dev->cpu_port) {
- 			b53_force_port_config(dev, dev->cpu_port, 2000,
--					      DUPLEX_FULL, MLO_PAUSE_TXRX_MASK);
-+					      DUPLEX_FULL, true, true);
- 			b53_force_link(dev, dev->cpu_port, 1);
- 		}
- 	}
-@@ -1260,7 +1263,9 @@ void b53_phylink_mac_config(struct dsa_switch *ds, int port,
- 
- 	if (mode == MLO_AN_FIXED) {
- 		b53_force_port_config(dev, port, state->speed,
--				      state->duplex, state->pause);
-+				      state->duplex,
-+				      !!(state->pause & MLO_PAUSE_TX),
-+				      !!(state->pause & MLO_PAUSE_RX));
- 		return;
- 	}
- 
+ do_run_cmd()
 -- 
 2.51.0
 
