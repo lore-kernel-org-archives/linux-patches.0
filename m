@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2C63090F7;
-	Mon,  1 Dec 2025 11:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C002571A1;
+	Mon,  1 Dec 2025 11:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588343; cv=none; b=hhMvli465w7+BHUcJAJPwLR6ALXJPwqn2xmH+f0Jjgsa9xJB6JTND00yy9yCjXJi4fY3dWIj3hZArTOpuScnaoOQ82DxdhUlvqx/490wJQrM9E1ILHAucvo2xaloA5tBL1dGIjOwxmq+OpTXcuQu7IB17UeShtjuWJeUoADyH3M=
+	t=1764588346; cv=none; b=ZzXljg66Z24R+8dMSxcZ/ws0ji098CWms1JkfchTT5mG6CEP0v5MdZpBmBSIiH1y3Z3Ldxw2U+QUITuSzgj9bhlh/+sHcwRM84dcYDbkG/wEBL34gytKt+9vKAiHRMuGxKDFSSAaQChFXTAO+8OPfK1FzdcB9CoFmq4oY+fBmjc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588343; c=relaxed/simple;
-	bh=1U98qpJMI54RXA3s7xDcAZHayPaOwVMdA8cDWtVubIQ=;
+	s=arc-20240116; t=1764588346; c=relaxed/simple;
+	bh=FUYFt2higJKMdy4foeRHKWWI0IkmrI6TQm6oQ694+G8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlmTLOsPkq/BfjlGwu5aIKrDh6vNfW+q8oVu3dCYz2JpAiv42LWhtJsPKM1ApyGKDhlMQYPtP/Lzko9pkePGMNuzT/o9O4agV2Kn0QOCa3xC611Y6ezT2MoyR95ach5pn6D6O2YAbof44XQtowIk0cwlhH0de6HAApXdrvjn7po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hgJC2xEd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UzOrNyb6KRjfweje8FWQEzKM9LFGSONVOfwATwIg87zfyaLgpm024++FzmxstPnlau04PiFXntfy1ReLR2FyOuvXSv+G5f2PfL6T+GahNIwkyy2PlCdulDrzm05BSTwvHlHBjwZpozwt3U+RRWgX5/UCQtb4VnRGMy9CLSuzu2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpmJHmuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hgJC2xEd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E51C3C4CEF1;
-	Mon,  1 Dec 2025 11:25:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpmJHmuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8579C4CEF1;
+	Mon,  1 Dec 2025 11:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588343;
-	bh=1U98qpJMI54RXA3s7xDcAZHayPaOwVMdA8cDWtVubIQ=;
+	s=korg; t=1764588346;
+	bh=FUYFt2higJKMdy4foeRHKWWI0IkmrI6TQm6oQ694+G8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgJC2xEdw1jXLl8+aJdKsmUKIPyJcQXTl1gGxv00os0elGY3o5ilwySKr+FDZXni4
-	 h7srmBueLGoSz0mYrlpHWAxk7bwzzj/zdAIIUMZogDy8OCsreV8SavSQHwwD+eJUBu
-	 xForNvuOp4EceAZ7IeVsq2yHBPCz+WsuR+t5Gqz0=
+	b=rpmJHmuAeMeCUt8pjab/o3jO1rBj3ELo4nyYaX1U8E1cZNWO2SKRkDyJtLUhTlSFz
+	 vT5gRZ0za312MgD65HHrrrxan4TyGq3lkzn6Ppy7n+it3+s9ourMzVgDGuo30fJo5h
+	 17eKO/0bWpKwI53y2SC4cIg1IAFH4k/UvelrWheQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fuchs <fuchsfl@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 008/187] fbdev: pvr2fb: Fix leftover reference to ONCHIP_NR_DMA_CHANNELS
-Date: Mon,  1 Dec 2025 12:21:56 +0100
-Message-ID: <20251201112241.550527318@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 003/187] btrfs: use smp_mb__after_atomic() when forcing COW in create_pending_snapshot()
+Date: Mon,  1 Dec 2025 12:21:51 +0100
+Message-ID: <20251201112241.372208620@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,34 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Fuchs <fuchsfl@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 5f566c0ac51cd2474e47da68dbe719d3acf7d999 upstream.
+[ Upstream commit 45c222468d33202c07c41c113301a4b9c8451b8f ]
 
-Commit e24cca19babe ("sh: Kill off MAX_DMA_ADDRESS leftovers.") removed
-the define ONCHIP_NR_DMA_CHANNELS. So that the leftover reference needs
-to be replaced by CONFIG_NR_ONCHIP_DMA_CHANNELS to compile successfully
-with CONFIG_PVR2_DMA enabled.
+After setting the BTRFS_ROOT_FORCE_COW flag on the root we are doing a
+full write barrier, smp_wmb(), but we don't need to, all we need is a
+smp_mb__after_atomic().  The use of the smp_wmb() is from the old days
+when we didn't use a bit and used instead an int field in the root to
+signal if cow is forced. After the int field was changed to a bit in
+the root's state (flags field), we forgot to update the memory barrier
+in create_pending_snapshot() to smp_mb__after_atomic(), but we did the
+change in commit_fs_roots() after clearing BTRFS_ROOT_FORCE_COW. That
+happened in commit 27cdeb7096b8 ("Btrfs: use bitfield instead of integer
+data type for the some variants in btrfs_root"). On the reader side, in
+should_cow_block(), we also use the counterpart smp_mb__before_atomic()
+which generates further confusion.
 
-Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So change the smp_wmb() to smp_mb__after_atomic(). In fact we don't
+even need any barrier at all since create_pending_snapshot() is called
+in the critical section of a transaction commit and therefore no one
+can concurrently join/attach the transaction, or start a new one, until
+the transaction is unblocked. By the time someone starts a new transaction
+and enters should_cow_block(), a lot of implicit memory barriers already
+took place by having acquired several locks such as fs_info->trans_lock
+and extent buffer locks on the root node at least. Nevertlheless, for
+consistency use smp_mb__after_atomic() after setting the force cow bit
+in create_pending_snapshot().
+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/pvr2fb.c |    2 +-
+ fs/btrfs/transaction.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/pvr2fb.c
-+++ b/drivers/video/fbdev/pvr2fb.c
-@@ -191,7 +191,7 @@ static unsigned long pvr2fb_map;
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 094b024bbf0cf..6618b42defed7 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1546,7 +1546,7 @@ static noinline int create_pending_snapshot(struct btrfs_trans_handle *trans,
+ 	}
+ 	/* see comments in should_cow_block() */
+ 	set_bit(BTRFS_ROOT_FORCE_COW, &root->state);
+-	smp_wmb();
++	smp_mb__after_atomic();
  
- #ifdef CONFIG_PVR2_DMA
- static unsigned int shdma = PVR2_CASCADE_CHAN;
--static unsigned int pvr2dma = ONCHIP_NR_DMA_CHANNELS;
-+static unsigned int pvr2dma = CONFIG_NR_ONCHIP_DMA_CHANNELS;
- #endif
- 
- static struct fb_videomode pvr2_modedb[] = {
+ 	btrfs_set_root_node(new_root_item, tmp);
+ 	/* record when the snapshot was created in key.offset */
+-- 
+2.51.0
+
 
 
