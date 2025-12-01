@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8FAD25A640;
-	Mon,  1 Dec 2025 11:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7BC257855;
+	Mon,  1 Dec 2025 11:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588709; cv=none; b=vEKBc15Y74mPKZypVcCQUFXBQ2314hBv4RdDfy8DFy5RrIorsv9rHiZzYHHClhmuD5S1PUpipC6f2slfBipbp5KDrzn5eKNcMCElPFGw1uTbnxFshst/z7wdVYevKKhiUhtKoUsXpWwM6Q60JzYZ33VLmbR0Kmm4h/FEsrZ6SSA=
+	t=1764588712; cv=none; b=IKp7dT4ksj0lZBVf+sg5u5hjXJQMgklBUBGnM4mvDhVCzzSSbZGyUv/KwPnyyPMjWKRYfLqU8ZDuMoeqWaVGr8GFrOoiDLUoy2EDWpUTaKL3qYue2GItIg4VyPElwNcu8PJVFDJOGjWI4Yh2oiNsqm/U+5MqMTH3Pk+RzsXlFwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588709; c=relaxed/simple;
-	bh=cJSq5lKJbERL8KVgoaSAcwxDPco3txxtpOlgtOliqlI=;
+	s=arc-20240116; t=1764588712; c=relaxed/simple;
+	bh=sKQXUaeoBraWNZYXOTJnTIs3IU4zJpL9JJgz44BOvNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuD7iChYdhEuVZfkQ2oPiOKZ5WMiIKGdmywtezIeaP3Ez/TQkeFSq0XSDqXsXBKbG2SLmiKrrE7A8FNCs20eAL52D6eaZPNXl9n0ph1wLFZTtQw/tos9kuPKx2ZProvdmqlGFjieJSjBqhhONmBDmg8IRNy5T1iMkYCNQ8fbOzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbCxx9QJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RRRIwJqQMsmnGn0qvYJ5lgYbbUzXKWsCbK47q/guiY7GBW86YkHLu3E+YVOjRfBYXZGcagYyHs+1GCnnfXA/EE/P00pU+6xVMbMyYwKU9ndBXTVlgUYTrvMljL26AQzEEBUAWKU9URCL1O+iOMDHjeYxtAyikr1CVL3LNzzw4gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHjfxdLy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbCxx9QJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46599C4CEF1;
-	Mon,  1 Dec 2025 11:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHjfxdLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A46FC4CEF1;
+	Mon,  1 Dec 2025 11:31:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588709;
-	bh=cJSq5lKJbERL8KVgoaSAcwxDPco3txxtpOlgtOliqlI=;
+	s=korg; t=1764588712;
+	bh=sKQXUaeoBraWNZYXOTJnTIs3IU4zJpL9JJgz44BOvNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mbCxx9QJTfWU1qtwe5u1S50128M7xMi5rRCvU/lZKhFxUiKiJuwfP0a+HlZYW9kJy
-	 AvsXNgL4IJON3ZVp37st62pnlA9O+trVE1uzB0YKpPp8fqOlffyHbtuEGjYctztrUv
-	 PnHGmftdN0vmVQPcYaRTXwNWxiNA0u5H6iV9JstI=
+	b=hHjfxdLyd0sB8UXwlgs82zyFQqkVD22rDnHCR1kxZGWiQYfk6pP6VtRaK0NNlxJRD
+	 upd714IS/n4b8aV8uusdpVhnYjhekziZwIjNQUJ6u1lx1hhKuC9EMKsHDQ1d2lmBQ/
+	 CdIKKXvkcRNwxgQJFT6PMX6xXmBI3RT8L3enZjgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 143/187] net_sched: remove need_resched() from qdisc_run()
-Date: Mon,  1 Dec 2025 12:24:11 +0100
-Message-ID: <20251201112246.388373542@linuxfoundation.org>
+Subject: [PATCH 5.4 144/187] net_sched: limit try_bulk_dequeue_skb() batches
+Date: Mon,  1 Dec 2025 12:24:12 +0100
+Message-ID: <20251201112246.423697448@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -45,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
@@ -53,85 +56,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b60fa1c5d01a10e358c509b904d4bead6114d593 ]
+[ Upstream commit 0345552a653ce5542affeb69ac5aa52177a5199b ]
 
-The introduction of this schedule point was done in commit
-2ba2506ca7ca ("[NET]: Add preemption point in qdisc_run")
-at a time the loop was not bounded.
+After commit 100dfa74cad9 ("inet: dev_queue_xmit() llist adoption")
+I started seeing many qdisc requeues on IDPF under high TX workload.
 
-Then later in commit d5b8aa1d246f ("net_sched: fix dequeuer fairness")
-we added a limit on the number of packets.
+$ tc -s qd sh dev eth1 handle 1: ; sleep 1; tc -s qd sh dev eth1 handle 1:
+qdisc mq 1: root
+ Sent 43534617319319 bytes 268186451819 pkt (dropped 0, overlimits 0 requeues 3532840114)
+ backlog 1056Kb 6675p requeues 3532840114
+qdisc mq 1: root
+ Sent 43554665866695 bytes 268309964788 pkt (dropped 0, overlimits 0 requeues 3537737653)
+ backlog 781164b 4822p requeues 3537737653
 
-Now is the time to remove the schedule point, since the default
-limit of 64 packets matches the number of packets a typical NAPI
-poll can process in a row.
+This is caused by try_bulk_dequeue_skb() being only limited by BQL budget.
 
-This solves a latency problem for most TCP receivers under moderate load :
+perf record -C120-239 -e qdisc:qdisc_dequeue sleep 1 ; perf script
+...
+ netperf 75332 [146]  2711.138269: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1292 skbaddr=0xff378005a1e9f200
+ netperf 75332 [146]  2711.138953: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1213 skbaddr=0xff378004d607a500
+ netperf 75330 [144]  2711.139631: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1233 skbaddr=0xff3780046be20100
+ netperf 75333 [147]  2711.140356: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1093 skbaddr=0xff37800514845b00
+ netperf 75337 [151]  2711.141037: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1353 skbaddr=0xff37800460753300
+ netperf 75337 [151]  2711.141877: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1367 skbaddr=0xff378004e72c7b00
+ netperf 75330 [144]  2711.142643: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1202 skbaddr=0xff3780045bd60000
+...
 
-1) host receives a packet.
-   NET_RX_SOFTIRQ is raised by NIC hard IRQ handler
+This is bad because :
 
-2) __do_softirq() does its first loop, handling NET_RX_SOFTIRQ
-   and calling the driver napi->loop() function
+1) Large batches hold one victim cpu for a very long time.
 
-3) TCP stores the skb in socket receive queue:
+2) Driver often hit their own TX ring limit (all slots are used).
 
-4) TCP calls sk->sk_data_ready() and wakeups a user thread
-   waiting for EPOLLIN (as a result, need_resched() might now be true)
+3) We call dev_requeue_skb()
 
-5) TCP cooks an ACK and sends it.
+4) Requeues are using a FIFO (q->gso_skb), breaking qdisc ability to
+   implement FQ or priority scheduling.
 
-6) qdisc_run() processes one packet from qdisc, and sees need_resched(),
-   this raises NET_TX_SOFTIRQ (even if there are no more packets in
-   the qdisc)
+5) dequeue_skb() gets packets from q->gso_skb one skb at a time
+   with no xmit_more support. This is causing many spinlock games
+   between the qdisc and the device driver.
 
-Then we go back to the __do_softirq() in 2), and we see that new
-softirqs were raised. Since need_resched() is true, we end up waking
-ksoftirqd in this path :
+Requeues were supposed to be very rare, lets keep them this way.
 
-    if (pending) {
-            if (time_before(jiffies, end) && !need_resched() &&
-                --max_restart)
-                    goto restart;
+Limit batch sizes to /proc/sys/net/core/dev_weight (default 64) as
+__qdisc_run() was designed to use.
 
-            wakeup_softirqd();
-    }
-
-So we have many wakeups of ksoftirqd kernel threads,
-and more calls to qdisc_run() with associated lock overhead.
-
-Note that another way to solve the issue would be to change TCP
-to first send the ACK packet, then signal the EPOLLIN,
-but this changes P99 latencies, as sending the ACK packet
-can add a long delay.
-
+Fixes: 5772e9a3463b ("qdisc: bulk dequeue support for qdiscs with TCQ_F_ONETXQUEUE")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 0345552a653c ("net_sched: limit try_bulk_dequeue_skb() batches")
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20251109161215.2574081-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ net/sched/sch_generic.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
 diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 4250f3cf30e72..19fe5078a8d13 100644
+index 19fe5078a8d13..d52001d958cbc 100644
 --- a/net/sched/sch_generic.c
 +++ b/net/sched/sch_generic.c
-@@ -407,13 +407,8 @@ void __qdisc_run(struct Qdisc *q)
+@@ -172,9 +172,10 @@ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+ static void try_bulk_dequeue_skb(struct Qdisc *q,
+ 				 struct sk_buff *skb,
+ 				 const struct netdev_queue *txq,
+-				 int *packets)
++				 int *packets, int budget)
+ {
+ 	int bytelimit = qdisc_avail_bulklimit(txq) - skb->len;
++	int cnt = 0;
+ 
+ 	while (bytelimit > 0) {
+ 		struct sk_buff *nskb = q->dequeue(q);
+@@ -185,8 +186,10 @@ static void try_bulk_dequeue_skb(struct Qdisc *q,
+ 		bytelimit -= nskb->len; /* covers GSO len */
+ 		skb->next = nskb;
+ 		skb = nskb;
+-		(*packets)++; /* GSO counts as one pkt */
++		if (++cnt >= budget)
++			break;
+ 	}
++	(*packets) += cnt;
+ 	skb_mark_not_on_list(skb);
+ }
+ 
+@@ -220,7 +223,7 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
+  * A requeued skb (via q->gso_skb) can also be a SKB list.
+  */
+ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
+-				   int *packets)
++				   int *packets, int budget)
+ {
+ 	const struct netdev_queue *txq = q->dev_queue;
+ 	struct sk_buff *skb = NULL;
+@@ -287,7 +290,7 @@ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
+ 	if (skb) {
+ bulk:
+ 		if (qdisc_may_bulk(q))
+-			try_bulk_dequeue_skb(q, skb, txq, packets);
++			try_bulk_dequeue_skb(q, skb, txq, packets, budget);
+ 		else
+ 			try_bulk_dequeue_skb_slow(q, skb, packets);
+ 	}
+@@ -379,7 +382,7 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
+  *				>0 - queue is not empty.
+  *
+  */
+-static inline bool qdisc_restart(struct Qdisc *q, int *packets)
++static inline bool qdisc_restart(struct Qdisc *q, int *packets, int budget)
+ {
+ 	spinlock_t *root_lock = NULL;
+ 	struct netdev_queue *txq;
+@@ -388,7 +391,7 @@ static inline bool qdisc_restart(struct Qdisc *q, int *packets)
+ 	bool validate;
+ 
+ 	/* Dequeue packet */
+-	skb = dequeue_skb(q, &validate, packets);
++	skb = dequeue_skb(q, &validate, packets, budget);
+ 	if (unlikely(!skb))
+ 		return false;
+ 
+@@ -406,7 +409,7 @@ void __qdisc_run(struct Qdisc *q)
+ 	int quota = READ_ONCE(dev_tx_weight);
  	int packets;
  
- 	while (qdisc_restart(q, &packets)) {
--		/*
--		 * Ordered by possible occurrence: Postpone processing if
--		 * 1. we've exceeded packet quota
--		 * 2. another process needs the CPU;
--		 */
+-	while (qdisc_restart(q, &packets)) {
++	while (qdisc_restart(q, &packets, quota)) {
  		quota -= packets;
--		if (quota <= 0 || need_resched()) {
-+		if (quota <= 0) {
+ 		if (quota <= 0) {
  			__netif_schedule(q);
- 			break;
- 		}
 -- 
 2.51.0
 
