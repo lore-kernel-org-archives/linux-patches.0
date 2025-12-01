@@ -1,66 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BE526AC3;
-	Mon,  1 Dec 2025 01:42:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE94F26AC3;
+	Mon,  1 Dec 2025 01:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764553362; cv=none; b=uTLbbPaJzEqww2en6DshfWCfMsqqkEJI9NmUrH2kfG1uFa0GudGJoHERAyJpQS4bTuNZQpUtXQ/xGxXzUjQR8fIN6cIl4MZjDX1ctzceh4pPEYCrn4+IlzKhzvDjLJRGzwg1bz6SpP61LGsl2SokhAg1Luz9t+RF5FppaHAdyxA=
+	t=1764553370; cv=none; b=AhlFhMCOD3tg4QdSeaO7qyHW/Eb3YrL5d+t0md599KTqcq9dGwZV+/eYf5REpnAKmRhGf3DS0UPmMVCzFhvSLm8lBsu09eNoq6p93QSG9qgexCLCrawOaKtaA2uYNwqog09nUH4ABIlO1FymUBz6fynlqPbWKtNh2i+8fs16XQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764553362; c=relaxed/simple;
-	bh=6GhE0h3jBNqVlUs/4FdeCAiXx35z2Qnh3LnryCSDNz0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=d/I2Kg7EMiV3SVOIFdguvph9dj3PHf6+yByqoFYzrLyxYYt3NuLLnEvDW5NY+16GaEaRt2VtghP2f9p2Fsvu5JFGGcy8lsBUtdBehL0oE0z7V++ojQiqG6aXD8xeM/wKFNFiNNkg3kDawzSLFgXKkHyyGjQHLi1RgamO/AoyQfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WXC4EYdq; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764553370; c=relaxed/simple;
+	bh=ef5gqF6QGxkGqr/dl/A0bQymlW596I+z9Ph3YDi4l3A=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oibJ6ksIXs29iAA1Jmrthw1ZTUgvl1f75iFnFvxPQvssXvQnXNyhZVCAdv4QclROMdKjoRxT+UoPoKZxsWfxjBtAY9JlxhnhUTTjrAzaGNINpKLHD8Bj9xf7C0lQ7NqBI6NEkPXFM689asi2soQTwq716tz33/p8wRaLqi1CFh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JfEdMtWY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WXC4EYdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E6EC4CEFB;
-	Mon,  1 Dec 2025 01:42:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JfEdMtWY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20552C4CEFB;
+	Mon,  1 Dec 2025 01:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764553362;
-	bh=6GhE0h3jBNqVlUs/4FdeCAiXx35z2Qnh3LnryCSDNz0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WXC4EYdqucGsSB+rkkfbddPseGqWSU0W67Ze2LleoDP2SzaymsYec2b/iYMCTXWZ5
-	 BQdrUXVsHP0lJqyY7ka3tY6tB621lNogoTyCTWJKNsD8IM9uSGcvOlnkXdztj90wpv
-	 v+5Va3iEZaLE4VMk/o3mR78NtHvF+/WH5/91JgPRXoVDOunf5RmQwPNekhgOMwmUQW
-	 ocnvs0ya2vglMz0lGfCkCIaJqQplR+0Lk5+k800jyI+vzHdVCDbddSIsOw2cPHygPA
-	 KcufF9F8PxVRQ85LfVl49uFqOTcYqOd5jgIBuqe4qx+PAKFb7dBDwB5oqHNBJRIvcR
-	 tVd3opq6qUOSQ==
+	s=k20201202; t=1764553368;
+	bh=ef5gqF6QGxkGqr/dl/A0bQymlW596I+z9Ph3YDi4l3A=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=JfEdMtWYp7nrxX4yvTrcW+jRH3g91F61/R9qsTSjo1IwHVDQu+jO77rsz7LkXMVlh
+	 MsYGaHLHvTf3Kp9OK/4dTfrR1/sGkWg0zZeIQ01MsFLUncpKIA7MW+igSgI02f7ve6
+	 QPGJ/Vsd9u9bT3RsZxKeIX+MpnfEja6kYL+Y+8zvgzwVC2VKaUDEgmJDQ2Kt5DHYwL
+	 5WpBxP3hZDkNcHKDs88dnABIMEtfapHsnRRWuCO1LgU3rD9Wl8AayJ6EKRjW9sHCw7
+	 eFNYNfHhHxh2H+K+G0OGNYHaRUestfiv0z9iM1dvHOG56pVpVLuk+xw0sIR/ofrqNa
+	 kCdSCFaDzlI3A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Alex Deucher <alexander.deucher@amd.com>,
-	Sunpeng.Li@amd.com,
-	ivan.lipski@amd.com,
+Cc: Ilyas Gasanov <public@gsnoff.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	Charlene.Liu@amd.com,
-	alex.hung@amd.com,
-	alvin.lee2@amd.com,
-	aurabindo.pillai@amd.com,
-	Ausef.Yousof@amd.com,
-	michael.strauss@amd.com,
-	Zhongwei.Zhang@amd.com,
-	alexandre.f.demers@gmail.com,
-	srinivasan.shanmugam@amd.com,
-	Martin.Leung@amd.com,
-	Brandon.Syu@amd.com,
-	Dillon.Varone@amd.com,
-	ray.wu@amd.com,
-	mwen@igalia.com,
-	rostrows@amd.com,
-	yihan.zhu@amd.com,
-	karthi.kandasamy@amd.com,
-	peterson.guo@amd.com,
-	wenjing.liu@amd.com,
-	meenakshikumar.somasundaram@amd.com,
-	Cruise.Hung@amd.com,
-	PeiChen.Huang@amd.com,
-	george.shen@amd.com,
-	chris.park@amd.com,
-	Ovidiu.Bunea@amd.com
-Subject: [PATCH AUTOSEL 6.17-6.12] Revert "drm/amd/display: Move setup_stream_attribute"
-Date: Sun, 30 Nov 2025 20:42:04 -0500
-Message-ID: <20251201014235.104853-1-sashal@kernel.org>
+	sbinding@opensource.cirrus.com,
+	kailang@realtek.com,
+	chris.chiu@canonical.com,
+	edip@medip.dev
+Subject: [PATCH AUTOSEL 6.17] ALSA: hda/realtek: Add quirk for HP ProBook 450 G8
+Date: Sun, 30 Nov 2025 20:42:05 -0500
+Message-ID: <20251201014235.104853-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251201014235.104853-1-sashal@kernel.org>
+References: <20251201014235.104853-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -73,218 +54,108 @@ X-stable-base: Linux 6.17.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Ilyas Gasanov <public@gsnoff.com>
 
-[ Upstream commit 3126c9ccb4373d8758733c6699ba5ab93dbe5c9d ]
+[ Upstream commit d041e5e748f926398ad96436a86667dea8b591e0 ]
 
-This reverts commit 2681bf4ae8d24df950138b8c9ea9c271cd62e414.
+My laptop, HP ProBook 450 G8 (32M40EA), has Realtek ALC236 codec on its
+integrated sound card, and uses GPIO pins 0x2 and 0x1 for speaker mute
+and mic mute LEDs correspondingly, as found out by me through hda-verb
+invocations. This matches the GPIO masks used by the
+alc236_fixup_hp_gpio_led() function.
 
-This results in a blank screen on the HDMI port on some systems.
-Revert for now so as not to regress 6.18, can be addressed
-in 6.19 once the issue is root caused.
+PCI subsystem vendor and device IDs happen to be 0x103c and 0x8a75,
+which has not been covered in the ALC2xx driver code yet.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4652
-Cc: Sunpeng.Li@amd.com
-Cc: ivan.lipski@amd.com
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit d0e9de7a81503cdde37fb2d37f1d102f9e0f38fb)
+Signed-off-by: Ilyas Gasanov <public@gsnoff.com>
+Link: https://patch.msgid.link/20251125235441.53629-1-public@gsnoff.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding of the issue. Let me summarize my
-analysis:
+### Summary of Investigation
 
-## Comprehensive Analysis
+**Type of Change:** Hardware quirk/device ID addition - a single line
+adding PCI subsystem ID 0x103c:0x8a75 to the quirk table.
 
-### 1. Commit Message Analysis
+**Technical Details:**
+- The `alc236_fixup_hp_gpio_led()` function (lines 1320-1324) is a
+  simple wrapper that sets GPIO masks 0x02 and 0x01 for mute/mic-mute
+  LEDs
+- This fixup is **already used by 40+ other HP laptop entries** in the
+  same table
+- HP ProBook 450 G8 already has one entry at device ID 0x87e7 using the
+  same fixup - this adds another variant (0x8a75) of the same laptop
+- The adjacent device ID 0x8a74 ("HP ProBook 440 G8") also uses this
+  same fixup
 
-This is a **revert** of commit
-`2681bf4ae8d24df950138b8c9ea9c271cd62e414` that moved
-`setup_stream_attribute()` from `link_set_dpms_on()` to individual
-`enable_stream()` functions. The commit clearly states:
-- The change "results in a blank screen on the HDMI port on some
-  systems"
-- Includes a bug report link:
-  https://gitlab.freedesktop.org/drm/amd/-/issues/4652
-- Explicitly intended to "not regress 6.18"
-- Cherry-picked from upstream with maintainer sign-off
+**Stable Kernel Rules Compliance:**
 
-### 2. Critical Finding: Buggy Commit Already Backported
+1. **Obviously correct:** ✓ Single line addition follows a well-
+   established pattern used by dozens of other entries
+2. **Fixes real bug:** ✓ Enables mute/mic-mute LED functionality on
+   user's actual hardware (verified via `hda-verb`)
+3. **Small and contained:** ✓ One line, one file
+4. **No new features:** ✓ Uses existing fixup infrastructure
+5. **Exception category:** ✓ **Explicitly allowed** - Device ID/quirk
+   additions are called out as permitted exceptions in stable rules
 
-**The original problematic commit (`7965cb360655`) was already
-backported to stable trees** (as shown by `[ Upstream commit ... ]` and
-Sasha Levin's signature). This means **stable users are currently
-affected by this regression** and need the fix.
+**User Impact:**
+- Without this quirk, HP ProBook 450 G8 (0x8a75 variant) users have non-
+  functional mute indicator LEDs
+- Affects a real user who tested and verified the fix on actual hardware
+- Common business laptop used in enterprise environments
 
-### 3. Technical Root Cause
+**Risk Assessment:**
+- **Regression risk: Negligible** - Only affects devices with exactly
+  the subsystem ID 0x103c:0x8a75
+- The fixup function is mature, well-tested across many devices
+- Cannot affect any other hardware
+- No logic changes, no API changes
 
-The original commit attempted to fix a symclk RCO clock gating issue by
-moving `setup_stream_attribute()` later in the sequence, after clock
-ungating in `enable_stream()`. However:
-
-- **For DP (DisplayPort)**: This ordering works because DP needs symclk
-  ungated first
-- **For HDMI/TMDS**: The stream attributes must be set earlier,
-  specifically before VPG power-on and infoframe construction in
-  `link_set_dpms_on()`
-
-The code at line 3055 in `dcn20_hwseq.c` shows where the call was moved:
-```c
-link_hwss->setup_stream_attribute(pipe_ctx);
-```
-
-This call happens too late for HDMI paths, causing blank screens because
-the HDMI signal initialization sequence depends on attributes being
-programmed before the display pipe is fully enabled.
-
-### 4. Code Change Assessment
-
-The revert is small and surgical:
-- **5 files changed**
-- Removes `link_hwss->setup_stream_attribute()` from 3 hwseq files
-  (dce110, dcn20, dcn401)
-- Restores the call in `link_dpms.c` at the correct position (after
-  `set_out_mux()`, before VPG power-on)
-- Removes unused LVDS stub from virtual_stream_encoder.c
-
-### 5. Stable Kernel Rules Compliance
-
-| Criteria | Assessment |
-|----------|------------|
-| Fixes a real bug affecting users | ✅ Blank HDMI screen - severe user-
-visible regression |
-| Obviously correct | ✅ Simple revert to known-working code |
-| Small and contained | ✅ ~20 lines removed, ~5 lines added |
-| No new features | ✅ Pure regression fix |
-| Bug exists in stable | ✅ Original buggy commit was backported |
-
-### 6. Risk Assessment
-
-- **Regression risk: LOW** - This reverts to previously known-working
-  behavior that was stable for years
-- **Trade-off**: The original symclk RCO issue will remain unfixed, but:
-  - RCO issue affects a narrow DP corner case
-  - Blank HDMI affects common consumer hardware
-  - A blank screen is a far worse failure than the clock gating issue
-- **Testing**: Upstream maintainer sign-off (Alex Deucher) and cherry-
-  picked from mainline
-
-### 7. User Impact
-
-- **Severity: CRITICAL** - Complete display failure on HDMI
-- **Scope: HIGH** - HDMI is ubiquitous; affects multiple hardware
-  generations (dce110, dcn20, dcn401)
-- **Real users affected**: Bug report confirms actual user impact
+**Dependencies:**
+- `ALC236_FIXUP_HP_GPIO_LED` and the underlying
+  `alc_fixup_hp_gpio_led()` function already exist in all maintained
+  stable kernels
+- No other patches required
+- Should apply cleanly to stable trees
 
 ### Conclusion
 
-This commit is an **ideal stable backport candidate**:
-1. The regression-causing commit was already backported to stable trees,
-   so stable users are currently broken
-2. It fixes a critical user-visible bug (blank HDMI displays)
-3. The fix is a simple, safe revert to known-good code
-4. It has proper upstream maintainer approval
-5. The risk of the revert causing problems is minimal (returning to
-   proven behavior)
+This commit is a **textbook example** of a hardware quirk addition that
+stable kernel rules explicitly permit. It:
+- Adds a single PCI device ID to enable hardware support on a specific
+  laptop variant
+- Uses existing, well-tested driver infrastructure (40+ other HP laptops
+  use the same fixup)
+- Has been verified by the reporter on actual hardware
+- Has zero regression risk for anyone not using this specific laptop
+  model
+- Has been reviewed and accepted by the sound maintainer (Takashi Iwai)
 
-The revert is **mandatory** for any stable tree that includes commit
-`7965cb360655` to restore working HDMI functionality.
+This matches the stable rules documentation: "NEW DEVICE IDs (Very
+Common): Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers.
+These are trivial one-line additions that enable hardware support."
 
 **YES**
 
- drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c  | 1 -
- drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c    | 2 --
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c  | 2 --
- drivers/gpu/drm/amd/display/dc/link/link_dpms.c            | 3 +++
- .../drm/amd/display/dc/virtual/virtual_stream_encoder.c    | 7 -------
- 5 files changed, 3 insertions(+), 12 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index 537f53811460..39de51cbbde9 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -671,7 +671,6 @@ void dce110_enable_stream(struct pipe_ctx *pipe_ctx)
- 	uint32_t early_control = 0;
- 	struct timing_generator *tg = pipe_ctx->stream_res.tg;
- 
--	link_hwss->setup_stream_attribute(pipe_ctx);
- 	link_hwss->setup_stream_encoder(pipe_ctx);
- 
- 	dc->hwss.update_info_frame(pipe_ctx);
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-index f7b72b24b750..921023500bec 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn20/dcn20_hwseq.c
-@@ -3052,8 +3052,6 @@ void dcn20_enable_stream(struct pipe_ctx *pipe_ctx)
- 						      link_enc->transmitter - TRANSMITTER_UNIPHY_A);
- 	}
- 
--	link_hwss->setup_stream_attribute(pipe_ctx);
--
- 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div)
- 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
- 			dc->res_pool->dccg,
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-index 0fe763704945..b95b98cc2553 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -968,8 +968,6 @@ void dcn401_enable_stream(struct pipe_ctx *pipe_ctx)
- 		}
- 	}
- 
--	link_hwss->setup_stream_attribute(pipe_ctx);
--
- 	if (dc->res_pool->dccg->funcs->set_pixel_rate_div) {
- 		dc->res_pool->dccg->funcs->set_pixel_rate_div(
- 			dc->res_pool->dccg,
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-index cb80b4599936..8c8682f743d6 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_dpms.c
-@@ -2458,6 +2458,7 @@ void link_set_dpms_on(
- 	struct link_encoder *link_enc = pipe_ctx->link_res.dio_link_enc;
- 	enum otg_out_mux_dest otg_out_dest = OUT_MUX_DIO;
- 	struct vpg *vpg = pipe_ctx->stream_res.stream_enc->vpg;
-+	const struct link_hwss *link_hwss = get_link_hwss(link, &pipe_ctx->link_res);
- 	bool apply_edp_fast_boot_optimization =
- 		pipe_ctx->stream->apply_edp_fast_boot_optimization;
- 
-@@ -2501,6 +2502,8 @@ void link_set_dpms_on(
- 		pipe_ctx->stream_res.tg->funcs->set_out_mux(pipe_ctx->stream_res.tg, otg_out_dest);
- 	}
- 
-+	link_hwss->setup_stream_attribute(pipe_ctx);
-+
- 	pipe_ctx->stream->apply_edp_fast_boot_optimization = false;
- 
- 	// Enable VPG before building infoframe
-diff --git a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
-index 6ffc74fc9dcd..ad088d70e189 100644
---- a/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
-+++ b/drivers/gpu/drm/amd/display/dc/virtual/virtual_stream_encoder.c
-@@ -44,11 +44,6 @@ static void virtual_stream_encoder_dvi_set_stream_attribute(
- 	struct dc_crtc_timing *crtc_timing,
- 	bool is_dual_link) {}
- 
--static void virtual_stream_encoder_lvds_set_stream_attribute(
--	struct stream_encoder *enc,
--	struct dc_crtc_timing *crtc_timing)
--{}
--
- static void virtual_stream_encoder_set_throttled_vcp_size(
- 	struct stream_encoder *enc,
- 	struct fixed31_32 avg_time_slots_per_mtp)
-@@ -120,8 +115,6 @@ static const struct stream_encoder_funcs virtual_str_enc_funcs = {
- 		virtual_stream_encoder_hdmi_set_stream_attribute,
- 	.dvi_set_stream_attribute =
- 		virtual_stream_encoder_dvi_set_stream_attribute,
--	.lvds_set_stream_attribute =
--		virtual_stream_encoder_lvds_set_stream_attribute,
- 	.set_throttled_vcp_size =
- 		virtual_stream_encoder_set_throttled_vcp_size,
- 	.update_hdmi_info_packets =
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 19604352317d..2126e022848e 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6516,6 +6516,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8a4f, "HP Victus 15-fa0xxx (MB 8A4F)", ALC245_FIXUP_HP_MUTE_LED_COEFBIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8a6e, "HP EDNA 360", ALC287_FIXUP_CS35L41_I2C_4),
+ 	SND_PCI_QUIRK(0x103c, 0x8a74, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8a75, "HP ProBook 450 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9 (MB 8A9E)", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9 (MB 8AA1)", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.51.0
 
