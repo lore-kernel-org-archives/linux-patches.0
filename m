@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8773081C6;
-	Mon,  1 Dec 2025 11:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3100826AC3;
+	Mon,  1 Dec 2025 11:27:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588471; cv=none; b=tl0c0McbWo2NtfFu3po740I24aDPKlEIBbSkZZ+i4m1N3XYsvNSBRU7Mc2PafYAb6p/lFRmtF4PbERjD1sEaMR+O35UqMJc5JFVR4Va3romBfQOS1qVbo0zChJ2eHJ6HamNdS9epUPEcsfRWHNxVghdI6owMfa8kZb3VsBpN7jo=
+	t=1764588473; cv=none; b=PcK8oIM6vaMgLcrZun7ChR6rh+WQv7hzpZpzCmb3zOeNz+1mY6yFFjdj2dmYUmuicZ58jfM2n7FeAg8eMmLSpbgoQYfMmRcs0CwxCn1EdnDjEqkbd4BBDoOHc1KlYEoE3DDwrTbKbwcg/uRcRTzUQ4bZ0fP9iUG/dKbTMdL+wws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588471; c=relaxed/simple;
-	bh=ZWNL/CkZt1hN6wwCLr4Dx1LypMH7sys0tUHi0F8MxfU=;
+	s=arc-20240116; t=1764588473; c=relaxed/simple;
+	bh=q3K6gQVe9/YXWIhDu23LNrcUZc5Y/wjKJLkRekiQPLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lt8G9YMuG5nnjX7OduI9q9Ythysqikx+UkmTeqVbGTTwz2+ZLHSidI3d+WIX7pdHqs6HPyLQagim8lpsoPwgUqvVNtY+MKUunF2JLcvHQPzdMjUGzuZ26CddnTTCgug5SFoKIriBBgscnoQ13Sa4CScCj21v/kEwwl7q8ujPhmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGHtM9Qi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ugZs7eeCrpE9ooKtuSLTqNmCypAKtdGCKQVUf2UZgaawKw6ar5EIL/2vFa+LnnK6YAowyhNJjF5HkBsx+18NrMq0b9oxMj5h1XMAnkSv+0aUvmehLAXh2t3oy3atAl92BN4xTyhqyMuy83LWGs17uZgMyTAvB5IuHwXwuo7Gp1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nVup4oJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGHtM9Qi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94BBEC4CEF1;
-	Mon,  1 Dec 2025 11:27:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nVup4oJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9C4C113D0;
+	Mon,  1 Dec 2025 11:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588470;
-	bh=ZWNL/CkZt1hN6wwCLr4Dx1LypMH7sys0tUHi0F8MxfU=;
+	s=korg; t=1764588472;
+	bh=q3K6gQVe9/YXWIhDu23LNrcUZc5Y/wjKJLkRekiQPLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGHtM9QiXWTAYFW9cGXD2tJszCJ+BvqwjuDk6oVhok5ya/J1ZPbD6NJe43YrRyl9W
-	 qQl03s4om09nM/y6674DAT+kc+5kMVchryndiuWiv79TUUTHcF+bczIdbWiWJ+IDlB
-	 i+m4pjGcwpTNv6ACx6V2X6QlATrZjYn0KYKmtoes=
+	b=nVup4oJFKs9lm/r/mJOrl6tNzdGusxTqTwiN2OAzJknN9xTK8EDm29zvt8mL43jlm
+	 d1zWZY8qHRd5kla9O0yNo4AzHs8OMqRop2t4r3/9m2RCS9vX35vDILH0t7OFoSXwit
+	 Z3BKNq8zKVg5YeJf2Q4Kg1NY0FDi0QZTpTYTUdJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	raub camaioni <raubcameo@gmail.com>,
+	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
+	Zijun Hu <zijun.hu@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 060/187] usb: gadget: f_ncm: Fix MAC assignment NCM ethernet
-Date: Mon,  1 Dec 2025 12:22:48 +0100
-Message-ID: <20251201112243.410369608@linuxfoundation.org>
+Subject: [PATCH 5.4 061/187] char: misc: Does not request module for miscdevice with dynamic minor
+Date: Mon,  1 Dec 2025 12:22:49 +0100
+Message-ID: <20251201112243.446144803@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -50,54 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: raub camaioni <raubcameo@gmail.com>
+From: Zijun Hu <zijun.hu@oss.qualcomm.com>
 
-[ Upstream commit 956606bafb5fc6e5968aadcda86fc0037e1d7548 ]
+[ Upstream commit 1ba0fb42aa6a5f072b1b8c0b0520b32ad4ef4b45 ]
 
-This fix is already present in f_ecm.c and was never
-propagated to f_ncm.c
+misc_open() may request module for miscdevice with dynamic minor, which
+is meaningless since:
 
-When creating multiple NCM ethernet devices
-on a composite usb gadget device
-each MAC address on the HOST side will be identical.
-Having the same MAC on different network interfaces is bad.
+- The dynamic minor allocated is unknown in advance without registering
+  miscdevice firstly.
+- Macro MODULE_ALIAS_MISCDEV() is not applicable for dynamic minor.
 
-This fix updates the MAC address inside the
-ncm_strings_defs global during the ncm_bind call.
-This ensures each device has a unique MAC.
-In f_ecm.c ecm_string_defs is updated in the same way.
+Fix by only requesting module for miscdevice with fixed minor.
 
-The defunct MAC assignment in ncm_alloc has been removed.
-
-Signed-off-by: raub camaioni <raubcameo@gmail.com>
-Link: https://lore.kernel.org/r/20250815131358.1047525-1-raubcameo@gmail.com
+Acked-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
+Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-6-2ed949665bde@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/misc.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
-index ca50257b95384..b1e5693373820 100644
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1472,6 +1472,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 
- 	ncm_opts->bound = true;
- 
-+	ncm_string_defs[1].s = ncm->ethaddr;
-+
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
- 	if (IS_ERR(us)) {
-@@ -1735,7 +1737,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
- 		mutex_unlock(&opts->lock);
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/char/misc.c b/drivers/char/misc.c
+index f6a147427029a..cbe86a1f2244b 100644
+--- a/drivers/char/misc.c
++++ b/drivers/char/misc.c
+@@ -113,7 +113,8 @@ static int misc_open(struct inode *inode, struct file *file)
+ 		}
  	}
--	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
  
- 	spin_lock_init(&ncm->lock);
- 	ncm_reset_values(ncm);
+-	if (!new_fops) {
++	/* Only request module for fixed minor code */
++	if (!new_fops && minor < MISC_DYNAMIC_MINOR) {
+ 		mutex_unlock(&misc_mtx);
+ 		request_module("char-major-%d-%d", MISC_MAJOR, minor);
+ 		mutex_lock(&misc_mtx);
+@@ -124,10 +125,11 @@ static int misc_open(struct inode *inode, struct file *file)
+ 				break;
+ 			}
+ 		}
+-		if (!new_fops)
+-			goto fail;
+ 	}
+ 
++	if (!new_fops)
++		goto fail;
++
+ 	/*
+ 	 * Place the miscdevice in the file's
+ 	 * private_data so it can be used by the
 -- 
 2.51.0
 
