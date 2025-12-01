@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CE0253958;
-	Mon,  1 Dec 2025 11:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F061B2E62A2;
+	Mon,  1 Dec 2025 11:27:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588436; cv=none; b=cFfT+TubjQPvqanzsI4v5tFmdpLU+eWLaDxZJ9fJvpAMb6HkHC8exYYqv99DEFHO0cIFwWAj8a6qoOsyWJOr5in8fOrbvPvMUpFSF48DJAD7oKHviTvO0ZLO8dtYv36NB9MuMC0I18WVyK7WSfOfpU0Bw9yBgTID7OEo/LBVHa8=
+	t=1764588439; cv=none; b=OmW6tsDQM2iW87r6MSMXKVFV66fVLIGajO2A+y7PYDnTo8fRQAAl3RbJMBQ1d5G4eqyYfKcsUfoaHiimw1MQeHmksakIqAf4HyMPk0krIPsncr4IGMn2+TqPVfurBK9NZ3gk5VoS3Q8AtDLcQBttp4iZNxsqBwCglWX3UgMRRPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588436; c=relaxed/simple;
-	bh=Xy3ArBO5FRc0O2NLfu4jv63o3z8D9RapLCrc7rGBCPQ=;
+	s=arc-20240116; t=1764588439; c=relaxed/simple;
+	bh=LClibqfnsfOSVS43nzrM043SBciMydEtTYDG0tMRIz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S0Hp/wTwRR26uyGLFluAWFuZf+OBBzJFMppLW/MlmVukiXnkRe570XBxaekQzxgfkNVeOUoPG9kuAR8/KydMevD3X7TqDVkOs6FCFPn9G1awkq1WdFjBcGjc6akpVOIn7JL5QOYCFgsqyuGEmfVLxaahozsg/HcBxd1D0l9+x8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RimAtBHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kgiN9BU3UOqFAAG6NRhTxDCwHvvCQiu7hdKALt5/gp6GUzAI9dnqyobPKOaIrOHH+I2squk4guUhUao64ILyEM/X/8ZcrNJSsAjwjTdjPtt+6b7ny2+rbiImtZobGKgKxlK4lSZL9HxZiHftV+t4DXnFbyZ8jybzGJLdnu1rhJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nfcNkbuK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RimAtBHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B653BC4CEF1;
-	Mon,  1 Dec 2025 11:27:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nfcNkbuK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E619C4CEF1;
+	Mon,  1 Dec 2025 11:27:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588436;
-	bh=Xy3ArBO5FRc0O2NLfu4jv63o3z8D9RapLCrc7rGBCPQ=;
+	s=korg; t=1764588438;
+	bh=LClibqfnsfOSVS43nzrM043SBciMydEtTYDG0tMRIz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RimAtBHeo5Dq86nfv67pmWYAOOsN/o4RWMNPnCsVCVihCAp/TQQj4Pl6P2v/geBS5
-	 qlT5Dvcw5sdZeQndr2+ZEc8ILrr2XyjneAhhVvOtHsKaNGYxpmCPJSn66GJauX1zRs
-	 egzwP3QzcMQlrqixD4CHnnuR3448lE99UEnL1FPA=
+	b=nfcNkbuK0NUIzJjntysfrujfRP/t4zSbT7X7WhyNPp8CRY3X9OyzyUEUrFUW1V9fW
+	 FbDLmh0olzodIeObkx/3qb4TlgwqV0AlwaQKp260ozXIi6eONU/GVgg/p54kOcIdwF
+	 AzcFs0HBPg9nnXggLJqE6t5S8mVaamIRL8CswHHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 015/187] net: phy: dp83867: Disable EEE support as not implemented
-Date: Mon,  1 Dec 2025 12:22:03 +0100
-Message-ID: <20251201112241.801238120@linuxfoundation.org>
+Subject: [PATCH 5.4 016/187] wifi: brcmfmac: fix crash while sending Action Frames in standalone AP Mode
+Date: Mon,  1 Dec 2025 12:22:04 +0100
+Message-ID: <20251201112241.837874320@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,52 +52,186 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-[ Upstream commit 84a905290cb4c3d9a71a9e3b2f2e02e031e7512f ]
+[ Upstream commit 3776c685ebe5f43e9060af06872661de55e80b9a ]
 
-While the DP83867 PHYs report EEE capability through their feature
-registers, the actual hardware does not support EEE (see Links).
-When the connected MAC enables EEE, it causes link instability and
-communication failures.
+Currently, whenever there is a need to transmit an Action frame,
+the brcmfmac driver always uses the P2P vif to send the "actframe" IOVAR to
+firmware. The P2P interfaces were available when wpa_supplicant is managing
+the wlan interface.
 
-The issue is reproducible with a iMX8MP and relevant stmmac ethernet port.
-Since the introduction of phylink-managed EEE support in the stmmac driver,
-EEE is now enabled by default, leading to issues on systems using the
-DP83867 PHY.
+However, the P2P interfaces are not created/initialized when only hostapd
+is managing the wlan interface. And if hostapd receives an ANQP Query REQ
+Action frame even from an un-associated STA, the brcmfmac driver tries
+to use an uninitialized P2P vif pointer for sending the IOVAR to firmware.
+This NULL pointer dereferencing triggers a driver crash.
 
-Call phy_disable_eee during phy initialization to prevent EEE from being
-enabled on DP83867 PHYs.
+ [ 1417.074538] Unable to handle kernel NULL pointer dereference at virtual
+ address 0000000000000000
+ [...]
+ [ 1417.075188] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
+ [...]
+ [ 1417.075653] Call trace:
+ [ 1417.075662]  brcmf_p2p_send_action_frame+0x23c/0xc58 [brcmfmac]
+ [ 1417.075738]  brcmf_cfg80211_mgmt_tx+0x304/0x5c0 [brcmfmac]
+ [ 1417.075810]  cfg80211_mlme_mgmt_tx+0x1b0/0x428 [cfg80211]
+ [ 1417.076067]  nl80211_tx_mgmt+0x238/0x388 [cfg80211]
+ [ 1417.076281]  genl_family_rcv_msg_doit+0xe0/0x158
+ [ 1417.076302]  genl_rcv_msg+0x220/0x2a0
+ [ 1417.076317]  netlink_rcv_skb+0x68/0x140
+ [ 1417.076330]  genl_rcv+0x40/0x60
+ [ 1417.076343]  netlink_unicast+0x330/0x3b8
+ [ 1417.076357]  netlink_sendmsg+0x19c/0x3f8
+ [ 1417.076370]  __sock_sendmsg+0x64/0xc0
+ [ 1417.076391]  ____sys_sendmsg+0x268/0x2a0
+ [ 1417.076408]  ___sys_sendmsg+0xb8/0x118
+ [ 1417.076427]  __sys_sendmsg+0x90/0xf8
+ [ 1417.076445]  __arm64_sys_sendmsg+0x2c/0x40
+ [ 1417.076465]  invoke_syscall+0x50/0x120
+ [ 1417.076486]  el0_svc_common.constprop.0+0x48/0xf0
+ [ 1417.076506]  do_el0_svc+0x24/0x38
+ [ 1417.076525]  el0_svc+0x30/0x100
+ [ 1417.076548]  el0t_64_sync_handler+0x100/0x130
+ [ 1417.076569]  el0t_64_sync+0x190/0x198
+ [ 1417.076589] Code: f9401e80 aa1603e2 f9403be1 5280e483 (f9400000)
 
-Link: https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1445244/dp83867ir-dp83867-disable-eee-lpi
-Link: https://e2e.ti.com/support/interface-group/interface/f/interface-forum/658638/dp83867ir-eee-energy-efficient-ethernet
-Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
+Fix this, by always using the vif corresponding to the wdev on which the
+Action frame Transmission request was initiated by the userspace. This way,
+even if P2P vif is not available, the IOVAR is sent to firmware on AP vif
+and the ANQP Query RESP Action frame is transmitted without crashing the
+driver.
+
+Move init_completion() for "send_af_done" from brcmf_p2p_create_p2pdev()
+to brcmf_p2p_attach(). Because the former function would not get executed
+when only hostapd is managing wlan interface, and it is not safe to do
+reinit_completion() later in brcmf_p2p_tx_action_frame(), without any prior
+init_completion().
+
+And in the brcmf_p2p_tx_action_frame() function, the condition check for
+P2P Presence response frame is not needed, since the wpa_supplicant is
+properly sending the P2P Presense Response frame on the P2P-GO vif instead
+of the P2P-Device vif.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251023144857.529566-1-ghidoliemanuele@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ replaced phy_disable_eee() call with direct eee_broken_modes assignment ]
+Fixes: 18e2f61db3b7 ("brcmfmac: P2P action frame tx")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20251013102819.9727-1-gokulkumar.sivakumar@infineon.com
+[Cc stable]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ removed hunks for P2P presence response check and dwell_overflow logic ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/dp83867.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |    3 -
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      |   21 +++++-------
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h      |    3 -
+ 3 files changed, 12 insertions(+), 15 deletions(-)
 
---- a/drivers/net/phy/dp83867.c
-+++ b/drivers/net/phy/dp83867.c
-@@ -337,6 +337,12 @@ static int dp83867_config_init(struct ph
- 			return ret;
- 	}
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -4963,8 +4963,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wip
+ 		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
+ 			  *cookie, le16_to_cpu(action_frame->len), freq);
  
-+	/* Although the DP83867 reports EEE capability through the
-+	 * MDIO_PCS_EEE_ABLE and MDIO_AN_EEE_ADV registers, the feature
-+	 * is not actually implemented in hardware.
-+	 */
-+	phydev->eee_broken_modes = MDIO_EEE_100TX | MDIO_EEE_1000T;
+-		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+-						  af_params);
++		ack = brcmf_p2p_send_action_frame(vif->ifp, af_params);
+ 
+ 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 					GFP_KERNEL);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -1477,6 +1477,7 @@ int brcmf_p2p_notify_action_tx_complete(
+ /**
+  * brcmf_p2p_tx_action_frame() - send action frame over fil.
+  *
++ * @ifp: interface to transmit on.
+  * @p2p: p2p info struct for vif.
+  * @af_params: action frame data/info.
+  *
+@@ -1486,11 +1487,11 @@ int brcmf_p2p_notify_action_tx_complete(
+  * The WLC_E_ACTION_FRAME_COMPLETE event will be received when the action
+  * frame is transmitted.
+  */
+-static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
++static s32 brcmf_p2p_tx_action_frame(struct brcmf_if *ifp,
++				     struct brcmf_p2p_info *p2p,
+ 				     struct brcmf_fil_af_params_le *af_params)
+ {
+ 	struct brcmf_pub *drvr = p2p->cfg->pub;
+-	struct brcmf_cfg80211_vif *vif;
+ 	s32 err = 0;
+ 	s32 timeout = 0;
+ 
+@@ -1500,8 +1501,7 @@ static s32 brcmf_p2p_tx_action_frame(str
+ 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_COMPLETED, &p2p->status);
+ 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_NOACK, &p2p->status);
+ 
+-	vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
+-	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe", af_params,
++	err = brcmf_fil_bsscfg_data_set(ifp, "actframe", af_params,
+ 					sizeof(*af_params));
+ 	if (err) {
+ 		bphy_err(drvr, " sending action frame has failed\n");
+@@ -1643,16 +1643,14 @@ static s32 brcmf_p2p_pub_af_tx(struct br
+ /**
+  * brcmf_p2p_send_action_frame() - send action frame .
+  *
+- * @cfg: driver private data for cfg80211 interface.
+- * @ndev: net device to transmit on.
++ * @ifp: interface to transmit on.
+  * @af_params: configuration data for action frame.
+  */
+-bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+-				 struct net_device *ndev,
++bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 				 struct brcmf_fil_af_params_le *af_params)
+ {
++	struct brcmf_cfg80211_info *cfg = ifp->drvr->config;
+ 	struct brcmf_p2p_info *p2p = &cfg->p2p;
+-	struct brcmf_if *ifp = netdev_priv(ndev);
+ 	struct brcmf_fil_action_frame_le *action_frame;
+ 	struct brcmf_config_af_params config_af_params;
+ 	struct afx_hdl *afx_hdl = &p2p->afx_hdl;
+@@ -1779,7 +1777,7 @@ bool brcmf_p2p_send_action_frame(struct
+ 	tx_retry = 0;
+ 	while (!p2p->block_gon_req_tx &&
+ 	       (ack == false) && (tx_retry < P2P_AF_TX_MAX_RETRY)) {
+-		ack = !brcmf_p2p_tx_action_frame(p2p, af_params);
++		ack = !brcmf_p2p_tx_action_frame(ifp, p2p, af_params);
+ 		tx_retry++;
+ 	}
+ 	if (ack == false) {
+@@ -2137,7 +2135,6 @@ static struct wireless_dev *brcmf_p2p_cr
+ 
+ 	WARN_ON(p2p_ifp->bsscfgidx != bsscfgidx);
+ 
+-	init_completion(&p2p->send_af_done);
+ 	INIT_WORK(&p2p->afx_hdl.afx_work, brcmf_p2p_afx_handler);
+ 	init_completion(&p2p->afx_hdl.act_frm_scan);
+ 	init_completion(&p2p->wait_next_af);
+@@ -2390,6 +2387,8 @@ s32 brcmf_p2p_attach(struct brcmf_cfg802
+ 	pri_ifp = brcmf_get_ifp(cfg->pub, 0);
+ 	p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif = pri_ifp->vif;
+ 
++	init_completion(&p2p->send_af_done);
 +
- 	if (phy_interface_is_rgmii(phydev)) {
- 		val = phy_read(phydev, MII_DP83867_PHYCTRL);
- 		if (val < 0)
+ 	if (p2pdev_forced) {
+ 		err_ptr = brcmf_p2p_create_p2pdev(p2p, NULL, NULL);
+ 		if (IS_ERR(err_ptr)) {
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
+@@ -165,8 +165,7 @@ int brcmf_p2p_notify_action_frame_rx(str
+ int brcmf_p2p_notify_action_tx_complete(struct brcmf_if *ifp,
+ 					const struct brcmf_event_msg *e,
+ 					void *data);
+-bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+-				 struct net_device *ndev,
++bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 				 struct brcmf_fil_af_params_le *af_params);
+ bool brcmf_p2p_scan_finding_common_channel(struct brcmf_cfg80211_info *cfg,
+ 					   struct brcmf_bss_info_le *bi);
 
 
