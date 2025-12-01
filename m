@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4624255F2D;
-	Mon,  1 Dec 2025 11:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5A1263C91;
+	Mon,  1 Dec 2025 11:33:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588819; cv=none; b=XTD+sFhtE/9RsgwVPM/lj9ibmfRN7aC9izLTLWpPAPCWkYnLGyvXBBjpsBrAirDxgzggYbU5AZqO4Nq5dSvpnbQqqJI7gFL0hVmFwHryH3F2SQEsR+KNYimMDfuRhZPd+VVdMiesti/akbfdjhOwfnMZp0tFLn7fpWq5OjATyqs=
+	t=1764588823; cv=none; b=Q7L+v3XeiOZcFrStAe4Waj5ilBq/QmCoGTLFtnwiVLcbFbASwz4/rkccTJmrDn34LWJXidiAfgMcOidB3LU8E2biXylYyUFYyfexRNBvApG+WbEOXgR9QahrAxGL3/9GT45y2AGsWPII77riCbrqJMzfEnBoR20CjUueH2fgfmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588819; c=relaxed/simple;
-	bh=YsEFsF09qHiTUuyYZ59G/u4uEGAAPTHVp6s8BtYAQH4=;
+	s=arc-20240116; t=1764588823; c=relaxed/simple;
+	bh=AnLtmN+pOKBj69H3SC1TfFIfE6FqnYnxOXijtvVKcwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a3y2WC1zamkmc69ZVCYG4dsQ+ktu/I7vt5HO9jwb65mYBckirnm+ftd79DGOZbZrEY7M05Mfx/c5OWQTxUkOLk7O3VJHt45oc3wOrxEXigJf1axxVJkpwL+MGS9uQs/wraEtcHiPOZInKwXQlO8byMco1ChhjXA22LCpk4XWPD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9zIinDF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cauadM5knR8X1A0812NRQ55V/F4PtPX0G6zB0sF225fj4wtj/0hH6CATnBIHW6c7+jr2O45+JZkyFDj/0vVlUCuo2YBjPkXbDfC0214pQ1LpBgij3rS03DvNGltXXtTLeO+Vi15jYwoc0MvEJxTtXBLh87P0vhrEl7KHVgyj7lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D7lxNx1z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9zIinDF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F761C4CEF1;
-	Mon,  1 Dec 2025 11:33:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D7lxNx1z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF8CC4CEF1;
+	Mon,  1 Dec 2025 11:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588819;
-	bh=YsEFsF09qHiTUuyYZ59G/u4uEGAAPTHVp6s8BtYAQH4=;
+	s=korg; t=1764588822;
+	bh=AnLtmN+pOKBj69H3SC1TfFIfE6FqnYnxOXijtvVKcwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9zIinDFVcJG3IeIBXO48WHyKRjr6EqVEi/S2pgZP9oREkyAffEAkfALYMW2dwkiB
-	 zhb0HddfTDIeXmBONfTkVWUVwx521sgz6vkz4/96Qpp1nMCUKws3MPELbQQISfTCwa
-	 Tw0txP7+/5fANOpxnYsFCkXMio68uzJrYo3clpFg=
+	b=D7lxNx1zw5Tkrgbqc/aTKnx0JMK+VEhOj4m1aUSz/KaI2hH5mzQv1Fw2XlGs853FP
+	 dOOLIcLzbuCKSMCyOzB6Ya4DQZO2JGQNmSJTjWoWBngolZEWMYnSaJk35E+M7gs75X
+	 WwebP95YrZbVksY3Kh/lxuJUTzrdUsVJ2acH9/WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.4 155/187] spi: Try to get ACPI GPIO IRQ earlier
-Date: Mon,  1 Dec 2025 12:24:23 +0100
-Message-ID: <20251201112246.816640183@linuxfoundation.org>
+	Ville Syrjala <syrjala@sci.fi>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Henk Vergonet <Henk.Vergonet@gmail.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 182/187] Input: remove third argument of usb_maxpacket()
+Date: Mon,  1 Dec 2025 12:24:50 +0100
+Message-ID: <20251201112247.785557523@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -50,55 +53,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-commit 3cd2018e15b3d66d2187d92867e265f45ad79e6f upstream.
+[ Upstream commit 948bf187694fc1f4c20cf972fa18b1a6fb3d7603 ]
 
-Since commit d24cfee7f63d ("spi: Fix acpi deferred irq probe"), the
-acpi_dev_gpio_irq_get() call gets delayed till spi_probe() is called
-on the SPI device.
+The third argument of usb_maxpacket(): in_out has been deprecated
+because it could be derived from the second argument (e.g. using
+usb_pipeout(pipe)).
 
-If there is no driver for the SPI device then the move to spi_probe()
-results in acpi_dev_gpio_irq_get() never getting called. This may
-cause problems by leaving the GPIO pin floating because this call is
-responsible for setting up the GPIO pin direction and/or bias according
-to the values from the ACPI tables.
+N.B. function usb_maxpacket() was made variadic to accommodate the
+transition from the old prototype with three arguments to the new one
+with only two arguments (so that no renaming is needed). The variadic
+argument is to be removed once all users of usb_maxpacket() get
+migrated.
 
-Re-add the removed acpi_dev_gpio_irq_get() in acpi_register_spi_device()
-to ensure the GPIO pin is always correctly setup, while keeping the
-acpi_dev_gpio_irq_get() call added to spi_probe() to deal with
--EPROBE_DEFER returns caused by the GPIO controller not having a driver
-yet.
-
-Link: https://bbs.archlinux.org/viewtopic.php?id=302348
-Fixes: d24cfee7f63d ("spi: Fix acpi deferred irq probe")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251102190921.30068-1-hansg@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+CC: Ville Syrjala <syrjala@sci.fi>
+CC: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+CC: Henk Vergonet <Henk.Vergonet@gmail.com>
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/r/20220317035514.6378-4-mailhol.vincent@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 69aeb5073123 ("Input: pegasus-notetaker - fix potential out-of-bounds access")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/input/misc/ati_remote2.c         |    2 +-
+ drivers/input/misc/cm109.c               |    2 +-
+ drivers/input/misc/powermate.c           |    2 +-
+ drivers/input/misc/yealink.c             |    2 +-
+ drivers/input/tablet/acecad.c            |    2 +-
+ drivers/input/tablet/pegasus_notetaker.c |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2055,6 +2055,16 @@ static acpi_status acpi_register_spi_dev
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
+--- a/drivers/input/misc/ati_remote2.c
++++ b/drivers/input/misc/ati_remote2.c
+@@ -639,7 +639,7 @@ static int ati_remote2_urb_init(struct a
+ 			return -ENOMEM;
  
-+	/*
-+	 * This gets re-tried in spi_probe() for -EPROBE_DEFER handling in case
-+	 * the GPIO controller does not have a driver yet. This needs to be done
-+	 * here too, because this call sets the GPIO direction and/or bias.
-+	 * Setting these needs to be done even if there is no driver, in which
-+	 * case spi_probe() will never get called.
-+	 */
-+	if (spi->irq < 0)
-+		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-+
- 	acpi_device_set_enumerated(adev);
+ 		pipe = usb_rcvintpipe(udev, ar2->ep[i]->bEndpointAddress);
+-		maxp = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++		maxp = usb_maxpacket(udev, pipe);
+ 		maxp = maxp > 4 ? 4 : maxp;
  
- 	adev->power.flags.ignore_parent = true;
+ 		usb_fill_int_urb(ar2->urb[i], udev, pipe, ar2->buf[i], maxp,
+--- a/drivers/input/misc/cm109.c
++++ b/drivers/input/misc/cm109.c
+@@ -749,7 +749,7 @@ static int cm109_usb_probe(struct usb_in
+ 
+ 	/* get a handle to the interrupt data pipe */
+ 	pipe = usb_rcvintpipe(udev, endpoint->bEndpointAddress);
+-	ret = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++	ret = usb_maxpacket(udev, pipe);
+ 	if (ret != USB_PKT_LEN)
+ 		dev_err(&intf->dev, "invalid payload size %d, expected %d\n",
+ 			ret, USB_PKT_LEN);
+--- a/drivers/input/misc/powermate.c
++++ b/drivers/input/misc/powermate.c
+@@ -374,7 +374,7 @@ static int powermate_probe(struct usb_in
+ 
+ 	/* get a handle to the interrupt data pipe */
+ 	pipe = usb_rcvintpipe(udev, endpoint->bEndpointAddress);
+-	maxp = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++	maxp = usb_maxpacket(udev, pipe);
+ 
+ 	if (maxp < POWERMATE_PAYLOAD_SIZE_MIN || maxp > POWERMATE_PAYLOAD_SIZE_MAX) {
+ 		printk(KERN_WARNING "powermate: Expected payload of %d--%d bytes, found %d bytes!\n",
+--- a/drivers/input/misc/yealink.c
++++ b/drivers/input/misc/yealink.c
+@@ -905,7 +905,7 @@ static int usb_probe(struct usb_interfac
+ 
+ 	/* get a handle to the interrupt data pipe */
+ 	pipe = usb_rcvintpipe(udev, endpoint->bEndpointAddress);
+-	ret = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++	ret = usb_maxpacket(udev, pipe);
+ 	if (ret != USB_PKT_LEN)
+ 		dev_err(&intf->dev, "invalid payload size %d, expected %zd\n",
+ 			ret, USB_PKT_LEN);
+--- a/drivers/input/tablet/acecad.c
++++ b/drivers/input/tablet/acecad.c
+@@ -130,7 +130,7 @@ static int usb_acecad_probe(struct usb_i
+ 		return -ENODEV;
+ 
+ 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
+-	maxp = usb_maxpacket(dev, pipe, usb_pipeout(pipe));
++	maxp = usb_maxpacket(dev, pipe);
+ 
+ 	acecad = kzalloc(sizeof(struct usb_acecad), GFP_KERNEL);
+ 	input_dev = input_allocate_device();
+--- a/drivers/input/tablet/pegasus_notetaker.c
++++ b/drivers/input/tablet/pegasus_notetaker.c
+@@ -296,7 +296,7 @@ static int pegasus_probe(struct usb_inte
+ 	pegasus->intf = intf;
+ 
+ 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
+-	pegasus->data_len = usb_maxpacket(dev, pipe, usb_pipeout(pipe));
++	pegasus->data_len = usb_maxpacket(dev, pipe);
+ 
+ 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
+ 					   &pegasus->data_dma);
 
 
