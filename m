@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FB72E5B36;
-	Mon,  1 Dec 2025 11:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB893064A5;
+	Mon,  1 Dec 2025 11:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588604; cv=none; b=REKOGh0DsjZ6rKrEdQx2f0i8xyBcvNsSqMAOQrASqEHE1j91eF3Mqxe5PYXrSC21pJ+2PcfluU7GAYIn87bXHh4Ms46HVio5QEtvhKrdKnyfUeQ+0LS+3aMMAyUfNojZDq6UjXqQuvswwm1D7IJUNWbT8PhoE96iA8PWr9xAJnE=
+	t=1764588607; cv=none; b=qjbAaUppNABgpm0AZZOznqMfWvklUVD7A12jhfA7iPFGfH/IHC2IxNFKNyLTpgO+W6rxSI867bRdEHugretCZmYemH/rXLaFgEhGAkzvAqsmeeCBkUHVGMdcL2ZC9X5tXSZ6VDsNr7XOayiaBszYyVPA71MleVxY5l4sHy/fnb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588604; c=relaxed/simple;
-	bh=GqCGTzqZgRNndW2wOQXMBMmPfC+hRlFswAxm6t/Qa4c=;
+	s=arc-20240116; t=1764588607; c=relaxed/simple;
+	bh=5B/m+GiHA30OtP82Ft/L2zuviOAt6oI2BBYCLsZBWys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mv5O6jQqipDp7sPqYu3sYWsGPHqzcHwopXYj0rfT4LG7t8HWxqowae8eAYNjlzQNPFmUCCu7FPiRY0anXnjhrZdy+k5r8QGnZls8CCcponePDr1N4yWm6DPFbNymA6Y/m5CM8Gm39IQH02wVW5ZTUhZ57SwVeT09hXw9L8/yhR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Exe9f4mu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y7JwskX2qWd0ZmsfqysZUpZ5rIRPsU6vxOttPXgFPFO5NS/NNHOFh0OIElqcP8eg2/Lx9PA6WpRjQ6k8TTzlP4Yga3jleiYbDwJYnvSnvCWinmK1b1zcSH/vpk0HmkuFMTuAkzVp8bkolzbmCcqWBCymhG4hpFJenx+4Fr/4CBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWbh1eFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Exe9f4mu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7C08C4CEF1;
-	Mon,  1 Dec 2025 11:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWbh1eFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6D3C4CEF1;
+	Mon,  1 Dec 2025 11:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588604;
-	bh=GqCGTzqZgRNndW2wOQXMBMmPfC+hRlFswAxm6t/Qa4c=;
+	s=korg; t=1764588607;
+	bh=5B/m+GiHA30OtP82Ft/L2zuviOAt6oI2BBYCLsZBWys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Exe9f4mu7ISPXMWy12hDvUejArhbQuRghQgYEbEvWxSgM+AwtyUGzn1CEd1HKE43y
-	 z2dOJjFyRxP/0ys5G0Sa+jrJcEAy5EnEcuhQ3tfgUmnJI8GQaQOQqqWVf+UVxCLOLK
-	 pmREsFP//aOtdPjaXNs77eEZ3GSCgjFI8H9XgPY8=
+	b=NWbh1eFvsxGuAxm40SFTfjzXThl8QoD6n78bdu/N5a7FlQ/7I4+to4INqdDciiR1B
+	 CdDEmR/iAownICiXZb96DumtRD2rXRLiLTT73jZ2LML2rWjTbSy6TDabVpfMzE0LEN
+	 G3Vgv/jk6n7YqO3Ks/5AVquDLqikFSm7+kesh+/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saket Dumbre <saket.dumbre@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yikang Yue <yikangy2@illinois.edu>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 106/187] ACPICA: Update dsmethod.c to get rid of unused variable warning
-Date: Mon,  1 Dec 2025 12:23:34 +0100
-Message-ID: <20251201112245.066131649@linuxfoundation.org>
+Subject: [PATCH 5.4 107/187] fs/hpfs: Fix error code for new_inode() failure in mkdir/create/mknod/symlink
+Date: Mon,  1 Dec 2025 12:23:35 +0100
+Message-ID: <20251201112245.101459426@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -51,34 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saket Dumbre <saket.dumbre@intel.com>
+From: Yikang Yue <yikangy2@illinois.edu>
 
-[ Upstream commit 761dc71c6020d6aa68666e96373342d49a7e9d0a ]
+[ Upstream commit 32058c38d3b79a28963a59ac0353644dc24775cd ]
 
-All the 3 major C compilers (MSVC, GCC, LLVM/Clang) warn about
-the unused variable i after the removal of its usage by PR #1031
-addressing Issue #1027
+The function call new_inode() is a primitive for allocating an inode in memory,
+rather than planning disk space for it. Therefore, -ENOMEM should be returned
+as the error code rather than -ENOSPC.
 
-Link: https://github.com/acpica/acpica/commit/6d235320
-Signed-off-by: Saket Dumbre <saket.dumbre@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+To be specific, new_inode()'s call path looks like this:
+new_inode
+  new_inode_pseudo
+    alloc_inode
+      ops->alloc_inode (hpfs_alloc_inode)
+        alloc_inode_sb
+          kmem_cache_alloc_lru
+
+Therefore, the failure of new_inode() indicates a memory presure issue (-ENOMEM),
+not a lack of disk space. However, the current implementation of
+hpfs_mkdir/create/mknod/symlink incorrectly returns -ENOSPC when new_inode() fails.
+This patch fix this by set err to -ENOMEM before the goto statement.
+
+BTW, we also noticed that other nested calls within these four functions,
+like hpfs_alloc_f/dnode and hpfs_add_dirent, might also fail due to memory presure.
+But similarly, only -ENOSPC is returned. Addressing these will involve code
+modifications in other functions, and we plan to submit dedicated patches for these
+issues in the future. For this patch, we focus on new_inode().
+
+Signed-off-by: Yikang Yue <yikangy2@illinois.edu>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/hpfs/namei.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index 998bed6e54066..9f52d301e977b 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -462,7 +462,6 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 	struct acpi_walk_state *next_walk_state = NULL;
- 	union acpi_operand_object *obj_desc;
- 	struct acpi_evaluate_info *info;
--	u32 i;
+diff --git a/fs/hpfs/namei.c b/fs/hpfs/namei.c
+index 1aee39160ac5b..bc1309ef4cfa5 100644
+--- a/fs/hpfs/namei.c
++++ b/fs/hpfs/namei.c
+@@ -52,8 +52,10 @@ static int hpfs_mkdir(struct inode *dir, struct dentry *dentry, umode_t mode)
+ 	dee.fnode = cpu_to_le32(fno);
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail2;
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -154,9 +156,10 @@ static int hpfs_create(struct inode *dir, struct dentry *dentry, umode_t mode, b
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
- 	ACPI_FUNCTION_TRACE_PTR(ds_call_control_method, this_walk_state);
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-	
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	result->i_mode |= S_IFREG;
+@@ -241,9 +244,10 @@ static int hpfs_mknod(struct inode *dir, struct dentry *dentry, umode_t mode, de
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -317,8 +321,10 @@ static int hpfs_symlink(struct inode *dir, struct dentry *dentry, const char *sy
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
++	}
+ 	result->i_ino = fno;
+ 	hpfs_init_inode(result);
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
 -- 
 2.51.0
 
