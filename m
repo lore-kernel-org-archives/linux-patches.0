@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687263081C6;
-	Mon,  1 Dec 2025 11:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B268E302CD6;
+	Mon,  1 Dec 2025 11:28:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764588488; cv=none; b=hTBUlyzc57CfN77EdGztXW6YXLcfTIUp9JyVd1gyimrt6baKa39CSplkNtvLpCXNqZc5dTLnS0TTSzJVuPyVk7zGqKYpVffx5ZqsoLy1vwP8GA//6FKPmHA/pby9/91xeQn78ZhbI+wDETU6vOyvj2RoXA9c6LVe2RXWc58HoDo=
+	t=1764588489; cv=none; b=FcU3vakOd0pJXiubs+9srO4KRLyym7P5WkqBQ0yKjZ2a6rdehTlHTrVWsdkUBMHOJOioYqQ2wIqvVVytuE98ByLZn7zk2xtFZ83kti0vwbZpmroPoIN/vv71J+ZE+QbbKccUckZJWDkVMNVCGFLNZWHi2qTx90NuUTWxVpH32bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764588488; c=relaxed/simple;
-	bh=W5MfhvDj8WGmWDeFXJZamlenOvjtRYt6MKLY9FWY+Gc=;
+	s=arc-20240116; t=1764588489; c=relaxed/simple;
+	bh=4KlpuS7RMKQAPkdCK8X0SAi6ijyn2NTdyfCDBhOYwjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sx7qG5+pANwRyYSxDa3JKCk4fmYT8LslfC9oyUoZpDQv6OZsXufXCLKYjTPzykcwZmDTqOn/Io09uJNlM5qp8ktTwDWBn151K8LdyDqvbW69eG6/IoHVLpjl9r0+MloOKF0q+H7xC3aa+FCKrh1s19miQqUW3KgIxGhpKA3LvHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DObgAqp3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ew/O3ELIf5fiaicDZcNFqqQEvRK0F5oUL8TlAvDzwV73OKvZXNn+VhRGWeYJv5jnxUd83VzscZt1YN4MPHmbyJ8CP7LOO41aRBtJprY7TIjfgQT6hRJfYjnpiEWnicGMa/zwOFsyMlBcNNQpw+9nT4UhOHEuBexKnUuaB+tv6C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iSqhgXsw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DObgAqp3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C5CC113D0;
-	Mon,  1 Dec 2025 11:28:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iSqhgXsw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4272AC4CEF1;
+	Mon,  1 Dec 2025 11:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764588486;
-	bh=W5MfhvDj8WGmWDeFXJZamlenOvjtRYt6MKLY9FWY+Gc=;
+	s=korg; t=1764588489;
+	bh=4KlpuS7RMKQAPkdCK8X0SAi6ijyn2NTdyfCDBhOYwjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DObgAqp31DlxPzmijbQNjPul4L8Ok1004TrZ5gYhKJ6qGuRQ/zNVW4Gga0Im3FsaB
-	 TpJCLMi0Du/oMq1JQfHnBKHKBMn7GEEyckEXyw+CChGZiCX2MQgPE0wQFhOh9mr6Wj
-	 k9xSdbf0vcEV7LVaiwNy8UtNge6u9ejqvyFoRExY=
+	b=iSqhgXswFH6TQclsRJvYjQ61uX5VMxlv/0OBgnbPoAFHkopReMY1s7n0AElMt8xES
+	 iChZFtZF4lv0VZxUBF0BK1tyuBibYJniwglt5EArSPbN0uKqajz67D30POpmEPt5ok
+	 PnCkPxd7n/rwWzJSg4QXXuCz9VW70PzX0Zc5K7bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ujwal Kundur <ujwal.kundur@gmail.com>,
-	Allison Henderson <allison.henderson@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 065/187] rds: Fix endianness annotation for RDS_MPATH_HASH
-Date: Mon,  1 Dec 2025 12:22:53 +0100
-Message-ID: <20251201112243.589053833@linuxfoundation.org>
+Subject: [PATCH 5.4 066/187] extcon: adc-jack: Fix wakeup source leaks on device unbind
+Date: Mon,  1 Dec 2025 12:22:54 +0100
+Message-ID: <20251201112243.624613599@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251201112241.242614045@linuxfoundation.org>
 References: <20251201112241.242614045@linuxfoundation.org>
@@ -52,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ujwal Kundur <ujwal.kundur@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 77907a068717fbefb25faf01fecca553aca6ccaa ]
+[ Upstream commit 78b6a991eb6c6f19ed7d0ac91cda3b3b117fda8f ]
 
-jhash_1word accepts host endian inputs while rs_bound_port is a be16
-value (sockaddr_in6.sin6_port). Use ntohs() for consistency.
+Device can be unbound, so driver must also release memory for the wakeup
+source.  Do not use devm interface, because it would change the order of
+cleanup.
 
-Flagged by Sparse.
-
-Signed-off-by: Ujwal Kundur <ujwal.kundur@gmail.com>
-Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
-Link: https://patch.msgid.link/20250820175550.498-4-ujwal.kundur@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/lkml/20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org/
+Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/rds.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/extcon/extcon-adc-jack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rds/rds.h b/net/rds/rds.h
-index 2ac5b5e559012..a8ad1e4185eb7 100644
---- a/net/rds/rds.h
-+++ b/net/rds/rds.h
-@@ -94,7 +94,7 @@ enum {
+diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
+index 0317b614b6805..ea06cd4340525 100644
+--- a/drivers/extcon/extcon-adc-jack.c
++++ b/drivers/extcon/extcon-adc-jack.c
+@@ -162,6 +162,7 @@ static int adc_jack_remove(struct platform_device *pdev)
+ {
+ 	struct adc_jack_data *data = platform_get_drvdata(pdev);
  
- /* Max number of multipaths per RDS connection. Must be a power of 2 */
- #define	RDS_MPATH_WORKERS	8
--#define	RDS_MPATH_HASH(rs, n) (jhash_1word((rs)->rs_bound_port, \
-+#define	RDS_MPATH_HASH(rs, n) (jhash_1word(ntohs((rs)->rs_bound_port), \
- 			       (rs)->rs_hash_initval) & ((n) - 1))
++	device_init_wakeup(&pdev->dev, false);
+ 	free_irq(data->irq, data);
+ 	cancel_work_sync(&data->handler.work);
  
- #define IS_CANONICAL(laddr, faddr) (htonl(laddr) < htonl(faddr))
 -- 
 2.51.0
 
