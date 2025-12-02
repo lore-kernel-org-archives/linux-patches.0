@@ -1,216 +1,299 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0648C2D1F4E;
-	Tue,  2 Dec 2025 22:19:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764713958; cv=none; b=UB5oKqulyJbWlFIzIWCkJtwGirficvkqpNpOidzAFBkP3Pbevn9efWSORK6Y1PlGvuA6zsqOSzvul8EDsagUj3FscLRceLuMVXeUapDRmXTcasd7uX6U0dDoTmzS/6IyDYkP5xDDgC9dosQA/6QBD8nlkBhQ8kseVHNmusysdts=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764713958; c=relaxed/simple;
-	bh=s67ObscIC5Fdz0gW2PfFJdDD71/iFYepTk0lKClwfAo=;
-	h=Date:From:To:Cc:Subject:Message-Id:In-Reply-To:References:
-	 Mime-Version:Content-Type; b=eA0IHNlTU+EKzsvJnM5r0s4LfEynAOad09cKVE3aDtTXi8MWGwWjo85q/Y2FZfHIJLKNFlLa95eLTmk+0Zpn6dUV2PdCk1X2nqPYONHlZMqewahVe2HfbjIt2+0260xBCFJZsbM+mz2r+82i8x/yEzpbdU7gQsV13Mu/s+sMM9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SU8OuIvR; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4442F25F8
+	for <patches@lists.linux.dev>; Tue,  2 Dec 2025 22:24:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764714296; cv=fail; b=pwjzMbr3H7mlBnsuZlzmqLW5ke9YYVcxQokEXccZu2jGKkhvHYQ3rqjHwmxKC1Tl7jRIjliHJz85o5QjbPpVQrtmgVxzEiitOeeyyVk5e4E9ZLc69KIfb/gkXW+BLwpCXMVpqnGgFXWweJD4wqBGaUhOWrfo3r3sJRUqVX0wS3Y=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764714296; c=relaxed/simple;
+	bh=wMQUHXfNeUqKik2csdsfwo4m4mBnffCOl6wrM+i+x5o=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=XPZvqPERZkkxOspLnNgBqb5TfPaSN9VBrG0OWytGMI3I9a57u0hl0QV9ffp5VaeCyd9q8Y9t4yMd/zfBlnmXdVBvWawH0SQ5KoT53jcTGhtfnAGvr8tIjVs5R9W3qBV66ppsl7IIGqBHh/rjXEasld6u/PWi4HT18lzbKZrigns=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VFiRPkx3; arc=fail smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SU8OuIvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78C6C4CEF1;
-	Tue,  2 Dec 2025 22:19:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764713957;
-	bh=s67ObscIC5Fdz0gW2PfFJdDD71/iFYepTk0lKClwfAo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=SU8OuIvRkG5HX9GerzrGCwAD0hZrRjnWxVwHryreN9/1b6sx9XJuSfjg3maCMHpSU
-	 GI9c4Z3clmN8OvxPjZdKy61dPS7hc+YkJ9ont2J4xa+Nr2jfoWnOlzOVgnWQxYKJ2F
-	 RMmsEyTMNQk9RvqWvBDaPR1NdMjQlmI/k2o77nQ4iBgZvorYlKr/ZggvdSm+ofos5z
-	 cfTo89wWUP383IeC/Df0G6hDgvQKlXA/WuEaaEcawvDbdNU5Xri0+4COnl/aM+QoUI
-	 xIJpBB5pHoTpyFNxYGd4iLvD8e9maEm89GiBzc0PAO+T5z4Ax8/F7ZR1BwPgMi43tX
-	 whNdULGGAXXbQ==
-Date: Wed, 3 Dec 2025 07:19:13 +0900
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-To: Khannanov Lenar <Lenar.Khannanov@infotecs.ru>
-Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- "mhiramat@kernel.org" <mhiramat@kernel.org>, "patches@lists.linux.dev"
- <patches@lists.linux.dev>, "sashal@kernel.org" <sashal@kernel.org>,
- "stable@vger.kernel.org" <stable@vger.kernel.org>, Ilia Gavrilov
- <Ilia.Gavrilov@infotecs.ru>
-Subject: Re: [PATCH 6.12 034/116] tracing: tprobe-events: Fix to clean up
- tprobe correctly when module unload
-Message-Id: <20251203071913.ced4edee107af8154c1e3ccd@kernel.org>
-In-Reply-To: <4e6535a0-1da9-4a74-9bf0-c551b2b183e7@infotecs.ru>
-References: <20250325122150.084780669@linuxfoundation.org>
-	<4e6535a0-1da9-4a74-9bf0-c551b2b183e7@infotecs.ru>
-X-Mailer: Sylpheed 3.8.0beta1 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VFiRPkx3"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1764714295; x=1796250295;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=wMQUHXfNeUqKik2csdsfwo4m4mBnffCOl6wrM+i+x5o=;
+  b=VFiRPkx3MQh7zpz/COx2clSOPi6FSYHuAC+3xGIlK+UPRQuiAcdTPdsJ
+   qyp+3R08b3KLCLep39dzkj7uMRwjDwEGnBPTNk30jYdWmJeAqC0fagWfv
+   aluhv532LG1yepuYWEZrUbNOPFqGYRyi/l7uVT5mnKiJt8Jy341P7bIq8
+   QFFmsBH6IMCDgMcyEp2VhfG/Q6PULZKPiSflDw1t9y5FrSVr92Iy0XLXs
+   /bLemsreHco8GQD2r9e28Vk+PIFgJlntNst48aniOtITAANeDO7xAtyOz
+   uCq3GwjbWQUB8+0/dE7g7mCqMQ5aphmOC2ocHiwZlmdIinY3/uO7zuFOi
+   A==;
+X-CSE-ConnectionGUID: V27KmwB+QK+Nu3XQeTpFoQ==
+X-CSE-MsgGUID: bziUTPpXRc2flpZ73yV2sw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11631"; a="66418971"
+X-IronPort-AV: E=Sophos;i="6.20,244,1758610800"; 
+   d="scan'208";a="66418971"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2025 14:24:52 -0800
+X-CSE-ConnectionGUID: XuS+feOhQCeAugFvXhOIGg==
+X-CSE-MsgGUID: KwNEA9JERmidvQEgVZn9LA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.20,244,1758610800"; 
+   d="scan'208";a="231837026"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2025 14:24:52 -0800
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Tue, 2 Dec 2025 14:24:51 -0800
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29 via Frontend Transport; Tue, 2 Dec 2025 14:24:51 -0800
+Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.2) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.29; Tue, 2 Dec 2025 14:24:51 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=O+tIWPNjQZt6N5UmPksfCoBFhp8xI1sWyrlqXIAGfyXh+nzNu+FCjGsOStOTHkuHdAlgILZ9VHOf+wpSloySRZeYYfVpBvPoP9gzTJQmreVKR0zXf933eGc66mzGqPMj3I9BdmUspqYt2FxWPa/XyH2jzHZ535hGAG+ritH3KPw/0PPFn7WXQs4nxRBeLafoXfqU86wkb1Vl7kQQLlodp5ej1cr9TepZoNQx7e64E9cVqxeJpQLHnuNjhrTSRtjPVOa/6Bb5i8/mQeUvCYabUhXVlJS+1GyvRbwGBwCIcfH0OA1WYBamCTbTJhQaeBr1WB/6+8PP/cyF0PSt3p5HGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QdAG4xT4jqbteI66vWX8CvPecCLieY0itGQa/mPZ2y0=;
+ b=dzwiF8gjD8jGas4w2jE7Rckp+X0+ARAdKnKzsOqWoa07GV2sEezgpxXp8XvEUakgp6gcrOAQN84+2wCjTNfbVBiANENen7uO8kO0x+rp5qerHWe1ZfFuVl7fwHV8SNY3dotMwfVLswXXlJOSOBi9vbiPjmIcnojNvf8Bt8aEYLpI4ijNPtPyivA4cPXfskXegF+hRJu7Q7Y9ZvULRXWl8Dc5KfzvgyCM1FdV58dLJoLg3DQGVdRdrrc5mm0c5TI6P4O0GadvvnQBpFic1Mrh7Dqt9rFixafmWux0HmTYRvuZGyfTR57GVqKihndXS9z07Pzdi28I4oZej6jNcbz4sg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
+ by IA4PR11MB8944.namprd11.prod.outlook.com (2603:10b6:208:563::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Tue, 2 Dec
+ 2025 22:24:49 +0000
+Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
+ ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.9366.012; Tue, 2 Dec 2025
+ 22:24:48 +0000
+Message-ID: <ee83f3aa-9d89-4520-98bf-78f371d214b0@intel.com>
+Date: Tue, 2 Dec 2025 14:24:46 -0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v14 07/32] x86,fs/resctrl: Use struct rdt_domain_hdr when
+ reading counters
+To: "Luck, Tony" <tony.luck@intel.com>
+CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
+	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
+	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
+ Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
+	<yu.c.chen@intel.com>, <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>
+References: <20251124185412.24155-1-tony.luck@intel.com>
+ <20251124185412.24155-8-tony.luck@intel.com>
+ <895cee86-ac6e-43e7-aece-e283200384ef@intel.com>
+ <aS9NEJAnx0MWoyaT@agluck-desk3>
+From: Reinette Chatre <reinette.chatre@intel.com>
+Content-Language: en-US
+In-Reply-To: <aS9NEJAnx0MWoyaT@agluck-desk3>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW3PR05CA0024.namprd05.prod.outlook.com
+ (2603:10b6:303:2b::29) To SJ2PR11MB7573.namprd11.prod.outlook.com
+ (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|IA4PR11MB8944:EE_
+X-MS-Office365-Filtering-Correlation-Id: b0489b0e-3cb9-4a34-a741-08de31f19ac5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NHB2NmlySlgxVGhySUJvMHBJdzg5RzU3MDFqQXNJM25zdFloM3hVT0l1bUlz?=
+ =?utf-8?B?SXZMWm9GWno4b1JRL2ZmV2F5OXZORG53NlBsSDBxVkJoam9QUlV3eGlBODVq?=
+ =?utf-8?B?YWFOQm9EYm1jWitqWTJOa3liZFBKRU9yL05Uc0hXZE5sVUpxTjdmL01rRzIy?=
+ =?utf-8?B?STAvZ0pGZ2lTUUUweWk0SXhISzdZZVRaQUFXbHVqM1RyU2xORFd5czdSRDZo?=
+ =?utf-8?B?WVA3b1krT0FTenhFb2RLU0lzMHNxc1BSd0M3bXg1OEE4SCtJTUEzeHVCSis5?=
+ =?utf-8?B?c2dLUlVzYkhZTFZlK08yWTQvS2MrTTIydURNQTZETG5UMmJQVEZzNWZMaDJs?=
+ =?utf-8?B?c3FmWkI4MWhMTkM5bC9aMzFCamp6bjc2VTVWZ3FtMHdWbklLMTZ5cG5ZSnJ1?=
+ =?utf-8?B?SjBnMkFNdWFsQ0FlUmZiV1BOOE9ENS9HSVdSYThhR2lFZmVURGdyMHZHVkgw?=
+ =?utf-8?B?WTZWSnljYmRGK29wN0YvTTNOZ1RHdlhZVVlLbm1lakhCaEdSR1BHazFrTmky?=
+ =?utf-8?B?NE1uczNZSDdkSSs2RmhmSWVnTVU2RHVuUjhDSVZJM2N0aUIrbHFsTlNYUzFS?=
+ =?utf-8?B?a0lZQ3BXSjR4c0M5QldLZmZDU3h2b3p4T2NwbnV6dkE5YW5wRlQwR2hRYWVo?=
+ =?utf-8?B?ckxKbTRIUmpmbjlWMm9VZk4xQk82NlFDNjBSdzNZWm92UzFyN09MM3hTY2Nu?=
+ =?utf-8?B?UjZMNWFFNzdUOG5LWEZ5Y0ZCa1RKbWhFUlBPWUFzdUcvYjhmREZHdnRNaTVY?=
+ =?utf-8?B?Vnc4U1pEZG1uNkZpM3B3ZWFMa3JWYXNkaU1oanBaNUF5cjdZbi8vb3VmOEpl?=
+ =?utf-8?B?T09rVGFmMEZoNXdXQVFRVUxZZzQ2SFQvYndDMDk0eS9ZUnNOdUtKVWlIZXVH?=
+ =?utf-8?B?MEhoRGNqeXYzTFBLTU5JWFRLa0tiSVltN0QwbjY3UGNIeHdpeXNlRnBVTHhF?=
+ =?utf-8?B?VnVPS2FMM3ZxMGsyY3FaQ29NbkRIRGsrdmpySXorNmFWK2hNVDJuRWVhM0Ni?=
+ =?utf-8?B?SWhENUt6R0lWZnd6ZkdJaEErc1RYUmtmRFJRZER0a1JYRjc5cklPUFVzY2Nt?=
+ =?utf-8?B?M2wrQVA0czN4SmQvY3RtZk5pclcvSmVpMHRQMFdrbVBnb3RlNVc1SDZSY0pr?=
+ =?utf-8?B?UHphcmk4c2ovamV3dGZwUkZzNE9BOEEwdnBlbnp3U0FHQk1wb3AwcjY0Wlh3?=
+ =?utf-8?B?ZHJBa3VZYndQWWQ1QlFTNmgvdzdrdWY4ajRGUFE0ajY2QUh0a3NRbFpuNVlU?=
+ =?utf-8?B?YTMwRXMyUWJTbnh0UXVtZVRLZTZ4MkoyR2lWYVdyRG9zem1XaXpJdDZCODcr?=
+ =?utf-8?B?S3U3RjVrR2xjeExEdldQclc5TjZQVXlhTmgrSWNaVjBiZ1dXOTZiNUdRZW5R?=
+ =?utf-8?B?d0JXRktlMzJsT21jbjB0TzJTTzVtcEZUT0N3V01NRkowTkFpMGFJMmFoQ2c2?=
+ =?utf-8?B?cjdCTkgveXNXNU9qZWNLMWZlVmYzMmlwRFJqZENIVmk5UU1udy95UFBHSWhw?=
+ =?utf-8?B?S1BjaUtKTkNVNzJTdTFETVh3bG8zdTBFYzY2MDVqY0JnNGZWN1lGbTlYWCtx?=
+ =?utf-8?B?ZTRIaDJVend6UDBjYkRCdThzd01yd2Rud0hkUGtIRmdaVFZlYllOMFFnekpD?=
+ =?utf-8?B?YnVFdUFKMDlWRTNjdG5lWGdzcVY1dXdSWEhmYzhLWFMxRjliVER3VEZsRXpO?=
+ =?utf-8?B?d0g4NTNkRFQ2cmNSV2dxSkRWY1RsQ2RLQ2daa3QwdVZUcVZGMkVmd3hrSXNO?=
+ =?utf-8?B?dlhsSHU1M0xuSzJMS1hYTFQ1RS9XOE16M0JxeDV3Q25SNjk0bWp3NmVxb09Z?=
+ =?utf-8?B?d1NiLzNsUzN5b2lhZjdTemFwNnc4RjlUT0d6WVh5a2lNb2N5TkRGVksvSVJH?=
+ =?utf-8?B?Z1VKaDFRRFRYTk5GWUVFemtIalVNb3B1dEJlVDJZaVFBTFJJL240N2s5K1Uw?=
+ =?utf-8?Q?a2b0DedGRTzUAop04YEnpc92y9SwFTz5?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NEd0M1loQzIwdjUxZUwyVWxwM0hoUFQxOG1oWXowQXdwdG5lWFlWZWEzWVFj?=
+ =?utf-8?B?MnJ5eWNEV0tKelNSMzVYbmEyTWFtM0FCMGRBRHlMb3lzWjI4UDArWnB6VlRC?=
+ =?utf-8?B?U0RZRjRISUkzVGZVeWUwbEVsS3hrWGhLYnNaYmtLS1dTUkJrL2l0dkkydkJB?=
+ =?utf-8?B?aXpDTzE3NXhQeVIvaFVPSFFSV3FycDFDUEQ0cEc0bEV3anFoRDdJUXpYNHJp?=
+ =?utf-8?B?WjhabVRxYmRDYVdPd1FlYmxQaDNNWXRqRlBVNXoxb1NZTkR1SlRwUVFRSDl0?=
+ =?utf-8?B?MTBqQk5DNzlucUUxYXJvNWp6OXJYYnQrTWlwaHUxb2pCN1JVdUtQeTMvUTJP?=
+ =?utf-8?B?bmRMaHVmTHBka2JxOU9lUzBzbnlxV0lQUGhRRVQzOS9JSi9CRzRQd1NoaWdp?=
+ =?utf-8?B?NHNGZzBCKyswMjcrekZ3WUUrRU04U0k1Qlc1enV6SjVqRzNqMkZVMU5xUjRu?=
+ =?utf-8?B?dVVrY1kreHg3MzZTdUVhRnJML0JadnFSQWlBYURUdUJFUWZtUko3TUw0UmFD?=
+ =?utf-8?B?aFM1L0JUTVVaRXNLcHUrbmJFNTFEWmZmSU9TNU4ybE13aU9ONVVPYjBDd09n?=
+ =?utf-8?B?Z2hYMlIySEpyVFU4TDl4a01QOER0eVRhd3ZicS91STRGVU53anRvRUl2KzVz?=
+ =?utf-8?B?ZWk0TEdUZVRuZVZrMlZ1WXNsYmdoSVpYcjhFTXJPMEZLVGpaUVVtUjNTNXov?=
+ =?utf-8?B?dEJiZVFOZXplZVVNaGtIRHVXTzZJb1NGVFV0cWZVaU84RkRHbHhvTlNXUEhY?=
+ =?utf-8?B?bTArQ1IzRzY2ai9ES3RhTm1LV1ZjbzNSOTU5ejM2ekk4YVlNTkJYVWtUS2xm?=
+ =?utf-8?B?OVVheU1SdytJOTBndU5lNjlxcVAzZmZZTmQyVUpzK2NmNmpnM1oyWDMyOVo4?=
+ =?utf-8?B?R3MyTS9ZSVQyUG5MNStnbnJhMlJYb2xnM0pmazhVeXdkTDFvV2xOY2pVWlpo?=
+ =?utf-8?B?enlZMnM1bS92YzZqNk16ZElhTU1kWHNHZmdldlFsUWdqbG9BZW52d0xadXdP?=
+ =?utf-8?B?YW9Kdkc4bnVIUFNOYlZjclVuOUhDSmN6UGZIWk5xc09jM1ZoMW4ycS9rWi90?=
+ =?utf-8?B?anU3STByUW5KMFZoanN5S3Y5Q0dBNlZackhzTlBvUEZxQ20vYnlyR0NySWVQ?=
+ =?utf-8?B?NWp4SXlKQXpEenF1Q0hsR042K01zZ3gwWnBTTldLd2RwczFzV1dISUlVZ0pY?=
+ =?utf-8?B?a0NtMlh6a1RhbVM2T1N1WmY5OUQ3dC9uRHEvd3RtdmkwbjFNMG1uSThYZkhG?=
+ =?utf-8?B?Ti81T3lCWlN4d250eWMrT0hRaU1zRHhnQzFjUnBQdGJRaWhweEQwbVpPalJu?=
+ =?utf-8?B?bzBnbnZEZkVONEREVWJUTHJzeDAyUzVzWUZnc1ZWVXVqNTRCTFFTVktaWGRU?=
+ =?utf-8?B?U25KUzZIK0ZpVkhPR2hJSVVtQU41NWZ3U3pmcXR6NGg5eWFPUGEyanI0bmVI?=
+ =?utf-8?B?YkdzTlRrd1hOTllaYVp5dkFvU0p4cmlFUmNuT0FDMTVlWHlvRDVLQTJKZ2R3?=
+ =?utf-8?B?emR0ald0dVFCOUE3aHdlMldDZHhMMmRXYnFRR0RycWJURWxWNGdRVEEwbVRJ?=
+ =?utf-8?B?TmgvMVBrZE55L2doODBuMzlFUjA5cVZyaWlTb1VCaWJmZUV5ZFFmSUk1VDN0?=
+ =?utf-8?B?S2Q1d1dIM3dnWmNHbzYvTy9VSlBJY2cxTUZLVWt3MUREQm5pU1M1TTJwK2NU?=
+ =?utf-8?B?WExUeWpPOVF2SnRZZWhnZkNCNGthZWJxRjR5dFVjQWNRbXJTN2paQkFGVXh0?=
+ =?utf-8?B?SG4yczAyOVppZTdHSHNBMkpLMkNzenpYcUhNY0R2QW10cG5tNWxUZG93Ulh2?=
+ =?utf-8?B?MVhCMjQ2WElHUGJHcG9FOENCZGhZUTkxdFhXakh0S2t0R3hlV3N1ZHBiZlE5?=
+ =?utf-8?B?VnJqUzA2ZEJvbmFnN2hwaWxKS3I4Um9STkhQd05oQUNYVzB1MElOc3hiR05Y?=
+ =?utf-8?B?bWVoZkkzSlluSDRHUTVzUDVHZmFRUW9PUWlnZVFCNFZFRGZ6ZzNTSDVsVEt4?=
+ =?utf-8?B?VlhRZElQN0QwZVM1TmcyRUJzMnJxUDFWZVpUMEJobStVc3F6eDJUVzFOZVV3?=
+ =?utf-8?B?SEI0M1NjMUhHRTU2Q0I4U1hvNDFMMm95TktPYmV6WFZ6VDZrYXNKTkFhWGV3?=
+ =?utf-8?B?QmhWM29IZnJSRiszb1BvV24ySzhSVW9QeGd0Vkx1aCtiSVF0S3VCSEFWa0xr?=
+ =?utf-8?B?VHc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0489b0e-3cb9-4a34-a741-08de31f19ac5
+X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2025 22:24:48.8508
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: EWZmU4KrIf6uf4B7lI5VfOYdp+7ERAs7gwywPkOjJa2tD6I2RmbLuvjwgjYYn2A15SZ5kG5w1q8Xe6EawnHoRbmyP1ntOylbL+lSUodzB7M=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB8944
+X-OriginatorOrg: intel.com
 
-On Mon, 24 Nov 2025 11:06:41 +0000
-Khannanov Lenar <Lenar.Khannanov@infotecs.ru> wrote:
+Hi Tony,
 
-> We found the kernel crashed when running kselftest (ftrace:ftracetest-ktap) in kernel 6.12.52 with the next trace:
+On 12/2/25 12:33 PM, Luck, Tony wrote:
+> On Tue, Dec 02, 2025 at 08:06:47AM -0800, Reinette Chatre wrote:
+>> Hi Tony,
+>>> +static int __l3_mon_event_count_sum(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+>>> +{
+>>> +	int cpu = smp_processor_id();
+>>> +	u32 closid = rdtgrp->closid;
+>>> +	u32 rmid = rdtgrp->mon.rmid;
+>>> +	struct rdt_mon_domain *d;
+>>> +	int cntr_id = -ENOENT;
+>>> +	u64 tval = 0;
+>>> +	int err, ret;
+>>>  
+>>>  	/* Summing domains that share a cache, must be on a CPU for that cache. */
+>>>  	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
+>>> @@ -480,7 +494,7 @@ static int __l3_mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+>>>  			err = resctrl_arch_cntr_read(rr->r, d, closid, rmid, cntr_id,
+>>>  						     rr->evtid, &tval);
+>>
+>> This is not safe. The current __mon_event_count() implementation being refactored by this series
+>> ensures that if rr->is_mbm_cntr is true then cntr_id is valid. This patch places the code doing so
+>> in __l3_mon_event_count() without an equivalent in the new __l3_mon_event_count_sum(). From what I
+>> can tell, since __l3_mon_event_count_sum() sets cntr_id to -ENOENT and never initializes it correctly, 
+>> resctrl_arch_cntr_read() will be called with an invalid cntr_id that it is not able to handle.
+>>
+>> There is no overlap in support for SNC and assignable counters. Do you expect that this is something that
+>> should be supported? Even if it is, SNC is model specific so it may be reasonable to expect that when/if
+>> a system supporting both features arrives it would need enabling anyway. I thus propose for simplicity
+>> that the handling of assignable counters by __l3_mon_event_count_sum() be dropped, albeit with a loud
+>> complaint if it is ever called with rr->is_mbm_cntr set.
+>>
+> 
+> Reinette,
+> 
+> Agreed. I see little liklihood that SNC and assignable counters will
+> meet on a system.
+> 
+> How does this look for the "loud complaint":
 > 
 > 
-> [  321.365532] ------------[ cut here ]------------
-> [  321.368124] WARNING: CPU: 0 PID: 1132 at kernel/trace/ftrace.c:378 __unregister_ftrace_function+0x12a/0x1c0
-> [  321.373445] Modules linked in: intel_rapl_msr(E) intel_rapl_common(E) crct10dif_pclmul(E) ghash_clmulni_intel(E) sha512_ssse3(E) sha256_ssse3(E) sha1_ssse3(E) aesni_intel(E) crypto_simd(E) cryptd(E) rapl(E) snd_pcm(E) snd_timer(E) vmw_balloon(E) snd(E) vmwgfx(E) soundcore(E) drm_ttm_helper(E) vga16fb(E) ttm(E) vgastate(E) pcspkr(E) drm_kms_helper(E) vmw_vmci(E) ac(E) button(E) joydev(E) serio_raw(E) sg(E) openvswitch(E) nsh(E) nf_conncount(E) drm(E) dm_mod(E) fuse(E) autofs4(E) sd_mod(E) ata_generic(E) hid_generic(E) mptspi(E) ata_piix(E) mptscsih(E) mptbase(E) i2c_piix4(E) scsi_transport_spi(E) crc32_pclmul(E) libata(E) crc32c_intel(E) psmouse(E) ehci_pci(E) uhci_hcd(E) i2c_smbus(E) e1000(E) scsi_mod(E) ehci_hcd(E) scsi_common(E) [last unloaded: trace_events_sample(E)]
-> [  321.404373] CPU: 0 UID: 0 PID: 1132 Comm: ftracetest Tainted: G            E      6.12.52 #4
-> [  321.408625] Tainted: [E]=UNSIGNED_MODULE
-> [  321.410729] Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-> [  321.416039] RIP: 0010:__unregister_ftrace_function+0x12a/0x1c0
-> [  321.419046] Code: 00 48 8b 1d 48 7e ac 02 48 81 fb e0 09 df bd 0f 84 90 00 00 00 48 39 dd 0f 85 1d ff ff ff 48 c7 c0 b0 09 df bd e9 36 ff ff ff <0f> 0b b8 f0 ff ff ff e9 8a 03 ea 00 be ff ff ff ff 48 c7 c7 68 23
-> [  321.429097] RSP: 0018:ffffa0ba8106fb90 EFLAGS: 00010246
-> [  321.431997] RAX: 0000000000000000 RBX: ffff92a988808418 RCX: 0000000000000000
-> [  321.435654] RDX: 0000000000000000 RSI: ffffffffbc1be80c RDI: ffff92a988808418
-> [  321.439480] RBP: 00000000ffffffea R08: 0000000000000001 R09: 0000000000000000
-> [  321.443158] R10: ffffa0ba8106fb98 R11: 0000000080000000 R12: ffff92a988808620
-> [  321.446896] R13: ffffffffbb3905b0 R14: ffff92a985c012c0 R15: 00000000000041ed
-> [  321.450646] FS:  00007efce9408740(0000) GS:ffff92a9b9600000(0000) knlGS:0000000000000000
-> [  321.454781] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [  321.457970] CR2: 00007fdc3c2d64c0 CR3: 000000010c79a000 CR4: 0000000000752ef0
-> [  321.462499] PKRU: 55555554
-> [  321.464322] Call Trace:
-> [  321.466060]  <TASK>
-> [  321.467592]  unregister_ftrace_function+0x35/0x170
-> [  321.470541]  ? __pfx_dyn_event_open+0x10/0x10
-> [  321.473070]  unregister_fprobe+0x4e/0x90
-> [  321.475486]  trace_fprobe_release+0x118/0x160
-> [  321.478052]  dyn_events_release_all+0xba/0xe0
-> [  321.480961]  dyn_event_open+0x46/0x50
-> [  321.483330]  do_dentry_open+0x160/0x460
-> [  321.485611]  vfs_open+0x30/0xf0
-> [  321.487524]  path_openat+0x66d/0xc60
-> [  321.489674]  do_filp_open+0xac/0x150
-> [  321.491860]  ? rcu_is_watching+0xd/0x50
-> [  321.494179]  ? _raw_spin_unlock+0x29/0x50
-> [  321.496489]  ? trace_preempt_on+0x80/0xc0
-> [  321.498966]  ? preempt_count_sub+0x92/0xd0
-> [  321.501451]  ? _raw_spin_unlock+0x29/0x50
-> [  321.503836]  do_sys_openat2+0x91/0xc0
-> [  321.505932]  __x64_sys_openat+0x6a/0xa0
-> [  321.508307]  do_syscall_64+0x87/0x140
-> [  321.510619]  ? do_syscall_64+0x93/0x140
-> [  321.512889]  ? do_syscall_64+0x93/0x140
-> [  321.515095]  ? trace_hardirqs_on_prepare+0x38/0xd0
-> [  321.517782]  ? syscall_exit_to_user_mode+0x80/0x170
-> [  321.520563]  ? do_syscall_64+0x93/0x140
-> [  321.522916]  ? do_syscall_64+0x93/0x140
-> [  321.525047]  ? clear_bhb_loop+0x60/0xb0
-> [  321.527358]  ? clear_bhb_loop+0x60/0xb0
-> [  321.529568]  ? clear_bhb_loop+0x60/0xb0
-> [  321.531867]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-> [  321.534549] RIP: 0033:0x7efce9502f01
-> [  321.536647] Code: 75 57 89 f0 25 00 00 41 00 3d 00 00 41 00 74 49 80 3d ea 26 0e 00 00 74 6d 89 da 48 89 ee bf 9c ff ff ff b8 01 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 93 00 00 00 48 8b 54 24 28 64 48 2b 14 25
-> [  321.545776] RSP: 002b:00007ffee609e920 EFLAGS: 00000202 ORIG_RAX: 0000000000000101
-> [  321.549681] RAX: ffffffffffffffda RBX: 0000000000000241 RCX: 00007efce9502f01
-> [  321.553486] RDX: 0000000000000241 RSI: 000056032f3378e8 RDI: 00000000ffffff9c
-> [  321.557137] RBP: 000056032f3378e8 R08: 000000000000000f R09: 0000000000000001
-> [  321.561025] R10: 00000000000001b6 R11: 0000000000000202 R12: 0000000000000000
-> [  321.564879] R13: 0000000000000003 R14: 000056032f337898 R15: 000056032f3378c0
-> [  321.568737]  </TASK>
-> [  321.570407] irq event stamp: 0
-> [  321.572420] hardirqs last  enabled at (0): [<0000000000000000>] 0x0
-> [  321.575750] hardirqs last disabled at (0): [<ffffffffbb18ad04>] copy_process+0xad4/0x2bf0
-> [  321.579887] softirqs last  enabled at (0): [<ffffffffbb18ad04>] copy_process+0xad4/0x2bf0
-> [  321.584131] softirqs last disabled at (0): [<0000000000000000>] 0x0
-> [  321.587407] ---[ end trace 0000000000000000 ]---
-> [  321.590005] BUG: kernel NULL pointer dereference, address: 000000000000002e
-> [  321.594462] #PF: supervisor read access in kernel mode
-> [  321.597485] #PF: error_code(0x0000) - not-present page
-> [  321.600377] PGD 0 P4D 0
-> [  321.602138] Oops: Oops: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC NOPTI
-> [  321.605966] CPU: 2 UID: 0 PID: 1132 Comm: ftracetest Tainted: G        W   E      6.12.52 #4
-> [  321.610759] Tainted: [W]=WARN, [E]=UNSIGNED_MODULE
-> [  321.613608] Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 11/12/2020
-> [  321.625523] RIP: 0010:trace_fprobe_release+0x135/0x160
-> [  321.628287] Code: e9 5a ff ff ff 48 89 ef e8 78 e9 ff ff 31 c0 b9 3e 00 00 00 48 89 ef f3 48 ab 48 8b bb 10 02 00 00 48 85 ff 0f 84 27 ff ff ff <48> 8b 77 30 31 d2 e8 c0 a6 f8 ff 48 c7 83 10 02 00 00 00 00 00 00
-> [  321.638446] RSP: 0018:ffffa0ba8106fbf0 EFLAGS: 00010282
-> [  321.641267] RAX: 0000000000000000 RBX: ffff92a988808400 RCX: 0000000000000000
-> [  321.644913] RDX: 0000000000000000 RSI: ffffffffbcabc8e0 RDI: fffffffffffffffe
-> [  321.648727] RBP: ffff92a988808418 R08: 0000000000000001 R09: 0000000000000000
-> [  321.652390] R10: 0000000000000000 R11: 0000000080000000 R12: ffff92a988808620
-> [  321.656067] R13: ffffffffbb3905b0 R14: ffff92a985c012c0 R15: 00000000000041ed
-> [  321.659841] FS:  00007efce9408740(0000) GS:ffff92a9b9680000(0000) knlGS:0000000000000000
-> [  321.663892] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [  321.666927] CR2: 000000000000002e CR3: 000000010c79a000 CR4: 0000000000752ef0
-> [  321.671048] PKRU: 55555554
-> [  321.672617] Call Trace:
-> [  321.674080]  <TASK>
-> [  321.675439]  dyn_events_release_all+0xba/0xe0
-> [  321.677796]  dyn_event_open+0x46/0x50
-> [  321.679875]  do_dentry_open+0x160/0x460
-> [  321.681973]  vfs_open+0x30/0xf0
-> [  321.683816]  path_openat+0x66d/0xc60
-> [  321.685805]  do_filp_open+0xac/0x150
-> [  321.687823]  ? rcu_is_watching+0xd/0x50
-> [  321.689933]  ? _raw_spin_unlock+0x29/0x50
-> [  321.692269]  ? trace_preempt_on+0x80/0xc0
-> [  321.694623]  ? preempt_count_sub+0x92/0xd0
-> [  321.696919]  ? _raw_spin_unlock+0x29/0x50
-> [  321.699104]  do_sys_openat2+0x91/0xc0
-> [  321.701098]  __x64_sys_openat+0x6a/0xa0
-> [  321.703233]  do_syscall_64+0x87/0x140
-> [  321.705229]  ? do_syscall_64+0x93/0x140
-> [  321.707314]  ? do_syscall_64+0x93/0x140
-> [  321.709748]  ? trace_hardirqs_on_prepare+0x38/0xd0
-> [  321.712646]  ? syscall_exit_to_user_mode+0x80/0x170
-> [  321.715242]  ? do_syscall_64+0x93/0x140
-> [  321.717292]  ? do_syscall_64+0x93/0x140
-> [  321.719373]  ? clear_bhb_loop+0x60/0xb0
-> [  321.721412]  ? clear_bhb_loop+0x60/0xb0
-> [  321.723602]  ? clear_bhb_loop+0x60/0xb0
-> [  321.725925]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-> [  321.728644] RIP: 0033:0x7efce9502f01
-> [  321.730619] Code: 75 57 89 f0 25 00 00 41 00 3d 00 00 41 00 74 49 80 3d ea 26 0e 00 00 74 6d 89 da 48 89 ee bf 9c ff ff ff b8 01 01 00 00 0f 05 <48> 3d 00 f0 ff ff 0f 87 93 00 00 00 48 8b 54 24 28 64 48 2b 14 25
-> [  321.739534] RSP: 002b:00007ffee609e920 EFLAGS: 00000202 ORIG_RAX: 0000000000000101
-> [  321.743467] RAX: ffffffffffffffda RBX: 0000000000000241 RCX: 00007efce9502f01
-> [  321.747137] RDX: 0000000000000241 RSI: 000056032f3378e8 RDI: 00000000ffffff9c
-> [  321.750552] RBP: 000056032f3378e8 R08: 000000000000000f R09: 0000000000000001
-> [  321.753932] R10: 00000000000001b6 R11: 0000000000000202 R12: 0000000000000000
-> [  321.757373] R13: 0000000000000003 R14: 000056032f337898 R15: 000056032f3378c0
-> [  321.761149]  </TASK>
-> [  321.762475] Modules linked in: intel_rapl_msr(E) intel_rapl_common(E) crct10dif_pclmul(E) ghash_clmulni_intel(E) sha512_ssse3(E) sha256_ssse3(E) sha1_ssse3(E) aesni_intel(E) crypto_simd(E) cryptd(E) rapl(E) snd_pcm(E) snd_timer(E) vmw_balloon(E) snd(E) vmwgfx(E) soundcore(E) drm_ttm_helper(E) vga16fb(E) ttm(E) vgastate(E) pcspkr(E) drm_kms_helper(E) vmw_vmci(E) ac(E) button(E) joydev(E) serio_raw(E) sg(E) openvswitch(E) nsh(E) nf_conncount(E) drm(E) dm_mod(E) fuse(E) autofs4(E) sd_mod(E) ata_generic(E) hid_generic(E) mptspi(E) ata_piix(E) mptscsih(E) mptbase(E) i2c_piix4(E) scsi_transport_spi(E) crc32_pclmul(E) libata(E) crc32c_intel(E) psmouse(E) ehci_pci(E) uhci_hcd(E) i2c_smbus(E) e1000(E) scsi_mod(E) ehci_hcd(E) scsi_common(E) [last unloaded: trace_events_sample(E)]
-> [  321.793650] CR2: 000000000000002e
-> [  321.795444] ---[ end trace 0000000000000000 ]---
-> [  321.797783] RIP: 0010:trace_fprobe_release+0x135/0x160
-> [  321.800487] Code: e9 5a ff ff ff 48 89 ef e8 78 e9 ff ff 31 c0 b9 3e 00 00 00 48 89 ef f3 48 ab 48 8b bb 10 02 00 00 48 85 ff 0f 84 27 ff ff ff <48> 8b 77 30 31 d2 e8 c0 a6 f8 ff 48 c7 83 10 02 00 00 00 00 00 00
-> [  321.809544] RSP: 0018:ffffa0ba8106fbf0 EFLAGS: 00010282
-> [  321.812136] RAX: 0000000000000000 RBX: ffff92a988808400 RCX: 0000000000000000
-> [  321.815574] RDX: 0000000000000000 RSI: ffffffffbcabc8e0 RDI: fffffffffffffffe
-> [  321.819020] RBP: ffff92a988808418 R08: 0000000000000001 R09: 0000000000000000
-> [  321.822463] R10: 0000000000000000 R11: 0000000080000000 R12: ffff92a988808620
-> [  321.825928] R13: ffffffffbb3905b0 R14: ffff92a985c012c0 R15: 00000000000041ed
-> [  321.829385] FS:  00007efce9408740(0000) GS:ffff92a9b9680000(0000) knlGS:0000000000000000
-> [  321.833218] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [  321.836153] CR2: 000000000000002e CR3: 000000010c79a000 CR4: 0000000000752ef0
-> [  321.839711] PKRU: 55555554
-> [  321.841241] Kernel panic - not syncing: Fatal exception
-> [  321.844568] Kernel Offset: 0x3a000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
-> [  331.783046] ---[ end Kernel panic - not syncing: Fatal exception ]---
+> static int __l3_mon_event_count_sum(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+> {
+> 	int cpu = smp_processor_id();
+> 	u32 closid = rdtgrp->closid;
+> 	u32 rmid = rdtgrp->mon.rmid;
+> 	struct rdt_mon_domain *d;
+> 	u64 tval = 0;
+> 	int err, ret;
 > 
-> 
-> This panic was bisected to this particular commit and can be reproduced by running this specific subtest:
-> 
-> 
-> ./ftracetest test.d/dynevent/add_remove_tprobe_module.tc
+> 	/*
+> 	 * Summing across domains is only done for systems that implement
+> 	 * Sub-NUMA Cluster. There is no overlap with systems that support
+> 	 * assignable counters.
+> 	 */
+> 	if (rr->is_mbm_cntr) {
+> 		pr_warn_once("Assignable counter on SNC system!\n");
+> 		rr->err = -EINVAL;
+> 		return -EINVAL;
+> 	}
 
-This might be fixed by the series of:
-
-https://lore.kernel.org/all/176244792552.155515.3285089581362758469.stgit@devnote2/
-
-Thanks,
+Thank you. On a high level this looks good to me. I am concerned about the architecture
+"SNC" term creeping deeper into fs code when it (the fs) aims to generalize it as
+"summing domains". Mentioning SNC in the comment may be useful though since it
+helps to understand what is going on by being specific.
+As a nit could the user space message not refer to SNC though? How about something like:
+"Summing domains using assignable counters is not supported."
 
 > 
+> 	/* Summing domains that share a cache, must be on a CPU for that cache. */
+> 	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
+> 		return -EINVAL;
 > 
-> Regards,
+> 	/*
+> 	 * Legacy files must report the sum of an event across all
+> 	 * domains that share the same L3 cache instance.
+> 	 * Report success if a read from any domain succeeds, -EINVAL
+> 	 * (translated to "Unavailable" for user space) if reading from
+> 	 * all domains fail for any reason.
+> 	 */
+> 	ret = -EINVAL;
+> 	list_for_each_entry(d, &rr->r->mon_domains, hdr.list) {
+> 		if (d->ci_id != rr->ci->id)
+> 			continue;
+> 		err = resctrl_arch_rmid_read(rr->r, &d->hdr, closid, rmid,
+> 					     rr->evtid, &tval, rr->arch_mon_ctx);
+> 		if (!err) {
+> 			rr->val += tval;
+> 			ret = 0;
+> 		}
+> 	}
 > 
-> Lenar Khannanov
+> 	if (ret)
+> 		rr->err = ret;
+> 
+> 	return ret;
+> }
 
 
--- 
-Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reinette
