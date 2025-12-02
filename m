@@ -1,86 +1,86 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3992428468B
-	for <patches@lists.linux.dev>; Tue,  2 Dec 2025 16:29:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE1354774
+	for <patches@lists.linux.dev>; Tue,  2 Dec 2025 16:32:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.19
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764692944; cv=fail; b=TP0NUnl8kQpGZ34bVLrm9QbA5Z9QxRWNjexed9Bcdb18x+Hle0uzEgzxSKgUc3p8RqzlfmlkN8ihofmW9B+rR/GIjt09jaHu6IPhSt3DuMcvnGkhwp1AxSulHw1PGlZ6yEeAbqNnJ72FRLrPNxPf35U6HburfuBklOsdeLBfB+M=
+	t=1764693150; cv=fail; b=cpZHEoEP1yB4qeWJq0o91qS/5gYI+8/v4KQ3HVMPsUhSNcrm16+sghcS3a793AaQ7Zu+2bcmjTSeNQe8G59N6FLZik0d9OVnuj9GoE2G6uBiit1eCVoGazG6mrsp36rPTBKYaiX77qITluEw5Ki2lg7JaSNKVT+SB/t2t7sPL6A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764692944; c=relaxed/simple;
-	bh=2DY3lGhdC8rPjACaAZhp6s6tl5gMsojj+bJ+owowFMg=;
+	s=arc-20240116; t=1764693150; c=relaxed/simple;
+	bh=hrjvpKCJ1n2TJ4E6GklPY2lsVE2MjYdaNNDzfewNfRw=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=ApxfwL9/f2/Lyg1cSjx1s8tDrAmtgYl8xIXwrBC0Kn2EfwIvHMSSDcyA6fQNeAa+1qXCXZAXV1fPS+ae0cH1R+0VCESKYEwfAqCuwwI2PZGB9p6FJYnsqtfK2DrKngkUXuKh+hWSMwrMDAPw+batGVuWOIsQuhTcBRP4LaPGT9g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HTeJXuHv; arc=fail smtp.client-ip=198.175.65.20
+	 Content-Type:MIME-Version; b=P2Wq08i1REI6MMK24Z8Gtt4mvUJMddXKbsFbzlJtHf70lzex6lTswMPa/20tzmeYZM/9crpiXH8nPnuZzFKZ3zHXDD5iAXMNiR2kKPXMi91KOXSJoEmZc564MiXeFRiifQcqHflRHA5vMBYSElcLmAZW+u9lyx3wlUqGF6W7Jzo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CjWOFAnP; arc=fail smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HTeJXuHv"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CjWOFAnP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764692942; x=1796228942;
+  t=1764693149; x=1796229149;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=2DY3lGhdC8rPjACaAZhp6s6tl5gMsojj+bJ+owowFMg=;
-  b=HTeJXuHvh3L0lpx25OR+bafShREz+nU25uis9Kj2S3J0Xusc8BXQoTGF
-   e9H57XPBKocJbiIeja1sZtDwpcqAYaNozLbLFV8Mljxd2OGtUqps6zE/u
-   DAqOE+IXaAOIlUEWTxg+UWTLRDcSbLkHUnkhbTe4gvSbqKlq9uvQKeOi5
-   YpzE7rbeM/64XTO4ycEBWYFBBJBPJSkR5QiAwrEXXi+gMsRlRPeSDrsvE
-   JPsPjpXfdeGI6000bNXFo7ldU83wtY0FNoUQg4Z+QZzjMWq8YaQ3XtzKs
-   /2JgTHFX0PwK43aGNloiakrneX1ZRuYQIx2xgvyF9BBK7v6LeZRV/f0Ti
-   g==;
-X-CSE-ConnectionGUID: YbIxiAQ6R8OidIixFncECA==
-X-CSE-MsgGUID: iq9OMWW5SpaZ7iYXOEKKRg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66384432"
+  bh=hrjvpKCJ1n2TJ4E6GklPY2lsVE2MjYdaNNDzfewNfRw=;
+  b=CjWOFAnP0pjKxrzoJgQayzircBso81j00hR1giUbeuNEa7vJ9qhIgnYM
+   qlATprhK78jCHedfYf2a+l7NmxBQjlBFOX8X+ucriA9/kBw8WGXpa8751
+   tOPhZ/RAONNEi4qTTp6VTJUx2rT79nZdxu65Pm9WlY4oLeug+UjWIsn6T
+   f9mUoryxRSRxodthVsMbY39ocKLb9Gh+fRL6UNDZopp3ND9M57ch+Gi3C
+   dka3t0cce0aF9Ny97lC7EraQyPuVtaeCS9jIMTx9YTXDqh++lFZdhcABb
+   lxnWRTA18DxoOXp0p2k3vpyY4iLcQf1oPLwFDp6MK5b3JEibnzEdveNo6
+   A==;
+X-CSE-ConnectionGUID: YkxbthfbSHig7IAGFnaLSA==
+X-CSE-MsgGUID: z49Yr+pyR9eU4dUkA24fQg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11630"; a="66559279"
 X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; 
-   d="scan'208";a="66384432"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2025 08:29:01 -0800
-X-CSE-ConnectionGUID: gM1w+cApQMqZPXztTyKmfw==
-X-CSE-MsgGUID: ps6w5T2dQVi0CKZYkSp/Sg==
+   d="scan'208";a="66559279"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2025 08:31:50 -0800
+X-CSE-ConnectionGUID: nwWwuIqTR268QSasYLRv1g==
+X-CSE-MsgGUID: iWwFjkM2Qx6S3LhS0t00UA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,243,1758610800"; 
-   d="scan'208";a="198888856"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2025 08:29:02 -0800
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+   d="scan'208";a="225112003"
+Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
+  by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2025 08:31:51 -0800
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Tue, 2 Dec 2025 08:29:01 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ 15.2.2562.29; Tue, 2 Dec 2025 08:31:49 -0800
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29 via Frontend Transport; Tue, 2 Dec 2025 08:29:01 -0800
-Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.24) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ 15.2.2562.29 via Frontend Transport; Tue, 2 Dec 2025 08:31:49 -0800
+Received: from BL0PR03CU003.outbound.protection.outlook.com (52.101.53.26) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Tue, 2 Dec 2025 08:29:01 -0800
+ 15.2.2562.29; Tue, 2 Dec 2025 08:31:49 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=npqrNoeIPRkFbk5qMbqdY8v28Cisc7mZ1VX9ra1CPbIcMBL0oYu8B5qcq4L09iWqoYvep27kXYY2/KyqOWVdOpmDmGhp56p0gX81yD1piUSGOHuM2ietkz3GHfbcglBXGAW1+dH5c6CvzDj0iHqNGWiZMuop56KuQx740Igl8ucMWkwApX8WdrLSPvJc3ZuloFhaXa6iOiS88qGZsy9AWD85KeYyRSV3DqmiFyAxJOJtRQA1wzrJBKfrf9IDoJJRCbjVQCUVNtiuNBUTqVp5o+CQNMenMauWjw4xczTYbNFPhDKx6HlkkCT/aYn2toRG5msMu5eo8T4Rtao6tV8qTw==
+ b=f+nxX4cX3RRuU/GUcjc52yiroeQZ0gfcuHVFOsxEzN8UaRA75xMqC5a1Wc4MPo2iSPIscl2EUIJEeK9Igzdw+2/xAeJZJQF78jMYffe8r6eB5xfueXD4rMBvvEhduzKMh04XZDbRGUsjbeOhhbWcwvnzQWQjg+MeQnIFKyEzpIfcYGQRZ7uDnyLNZHy8a+BZ8Zvgnn7jmcD67ZG4wWlAeS63dfuWpfELGQG39KwGhFKnV5wK7tlCtjf/HfUhVeuyXYD+vjTjz15caeViQAEumo+EyA1pUnTaQRg+37nOQpHaHZU9FugJ/q9K2XA07b4t4J8r8MozT0pcIP3TyRQPCA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VrvH7mulxZ1l6pEqp8a28vesC9fg/P+YKueFywszYpA=;
- b=yI5Y0yuI00k7qTrOed14N3URYbDbLYf4X5vdoex5oHksUNfF1ZkfBKSKa430i/6ly1aew7aLC1ahp5GQUMHiOU2Ey/66pgbJHCk67E3eiNslH+UI8yvJBatx1qUaqrqKcMBZEidPb3Mx7cuDfQS/Tabx0awBp+BSI+71B91d71oiuj3GRHze/7LCyQXcfPyjfNfHjNeVKNtdzzyCRUtfcwLHRoeAElx6/J9yMke7oShnmb1pVNnaxLGg8fKAh9PO2oo1SNbpt6EvHLnHDFJ2RVUMqt261s1D4OhnVMqPsXI2o3IWFc+dBd1mUPLcV4qWsO66CT8PmNN7V3SaWrU23g==
+ bh=7637dIqV/BXmMm43ry+igPVWF+y1mJ5DBBHR25XToC0=;
+ b=UAON9tpBd3JePI/T8o/r5iAjfzDQCH8mclZT/Q1cPB0fWqMAMPkSOczQ8rspL8mgx+YUptIBAT+qa4Tju2XOmij9+zYszws2Gmgr347K774KR3WOAQPzyTxqxiURLW6egmLbarUpcH31Rq3pCK5tK/hmRi4nqFzOJ9l5hreQkwR5OALvSNjFUlmN9878GPFf6i3u91fwk1ru/Nf0hKKrTm37Wi1ka7tJDjkHWxh/Wwkz42UJGzV1fqfygeEWcg+CqIZG/1lCsR4y1CMmtzWHhB8mo8ru/NjecmGe4gkmkntL7buOZgb46MPbG31gF0rCLP0X66P9brepVd7af/Ql7g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by SA0PR11MB4541.namprd11.prod.outlook.com (2603:10b6:806:94::7) with
+ by PH3PPF2B89F77E0.namprd11.prod.outlook.com (2603:10b6:518:1::d11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Tue, 2 Dec
- 2025 16:28:59 +0000
+ 2025 16:31:47 +0000
 Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
  ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.9366.012; Tue, 2 Dec 2025
- 16:28:59 +0000
-Message-ID: <ce70e96d-7960-4e00-bf26-8f61424e3171@intel.com>
-Date: Tue, 2 Dec 2025 08:28:56 -0800
+ 16:31:47 +0000
+Message-ID: <0480a4a6-4b85-408f-8248-c7d28500b13e@intel.com>
+Date: Tue, 2 Dec 2025 08:31:44 -0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 24/32] x86/resctrl: Add energy/perf choices to rdt
- boot option
+Subject: Re: [PATCH v14 25/32] x86/resctrl: Handle number of RMIDs supported
+ by RDT_RESOURCE_PERF_PKG
 To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
  Wieczor-Retman" <maciej.wieczor-retman@intel.com>, Peter Newman
 	<peternewman@google.com>, James Morse <james.morse@arm.com>, Babu Moger
@@ -89,14 +89,14 @@ To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghuay@nvidia.com>, "Maciej
 CC: <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
 	<patches@lists.linux.dev>
 References: <20251124185412.24155-1-tony.luck@intel.com>
- <20251124185412.24155-25-tony.luck@intel.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
+ <20251124185412.24155-26-tony.luck@intel.com>
 Content-Language: en-US
-In-Reply-To: <20251124185412.24155-25-tony.luck@intel.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
+In-Reply-To: <20251124185412.24155-26-tony.luck@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0197.namprd04.prod.outlook.com
- (2603:10b6:303:86::22) To SJ2PR11MB7573.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR04CA0200.namprd04.prod.outlook.com
+ (2603:10b6:303:86::25) To SJ2PR11MB7573.namprd11.prod.outlook.com
  (2603:10b6:a03:4d2::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -105,301 +105,315 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|SA0PR11MB4541:EE_
-X-MS-Office365-Filtering-Correlation-Id: d6d82ff4-5cd8-4501-f2e3-08de31bfe54d
+X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|PH3PPF2B89F77E0:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0572105f-6c6f-458e-8c75-08de31c04976
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NXZ1b0FPRXRVaHFJYzBod2h5MmFheFZiVTRlWU0vZ0d1NlBpbjRGYWxPdUQ4?=
- =?utf-8?B?TDZ6MnhVcHYvL2FEQVgvMFZqWklQT2JFQWVUY0lFZHJobUhZTlN3R0UyYmlr?=
- =?utf-8?B?Y0FRRVZJUW1GQmx4WmNGbHZUdHNBVHlvN0YrTmhCWnZsYndqWnJrZGV6cmdy?=
- =?utf-8?B?TDVvSkFlMm0wVUp1ZVBWelNsckpUcDNJN3lTSkEwQ3NiUkdhSlVrNms2UmxZ?=
- =?utf-8?B?Q1Q1L25XNDl2MENSWlcwVzVRbHMrQXIxUXh6M0JiVnNyN29EdmtuK0Y1Szdt?=
- =?utf-8?B?VFZjZk11Y2FjM3NOVlFkd0drbm1lQ2dFS3pveTBOTVc5RjY3TFNBMFhvRElk?=
- =?utf-8?B?TGhLNk5pZTJlL1NpN016RitQUUxjZURwV1J6WjNPM0wydDE4MDdaRzlzN1I3?=
- =?utf-8?B?bG95VVFUN2todGRnQXF3MVIybm9IRW5VWFlSR0VIQWpDdU5SMENHVGg1RmZw?=
- =?utf-8?B?cXZtV3JadUFFSnhCeW94UWx0K0V4dWdqbS9jYVN6eDFmUzJLYTdTWmVyaHNn?=
- =?utf-8?B?ZHQwazBFaXdqL21YTk5qNmp5Q3JnR2lycG4zdzJ5K3FkQWF5c2lmMzdueVpu?=
- =?utf-8?B?MlJlaGxGeEl3SEx0OTZKKzlPYjFXT0JmWTJWcERibWZoUDVIRmNFMVdVelMx?=
- =?utf-8?B?ODZJN3pWbWRJKzhvUGcvT1BwWmVYRlZvRmlZeFVBYldUVXdySVMvSlJ0OFRF?=
- =?utf-8?B?NDFWUVhiUTVicWJ4dkRLVU9LN3JvQnNaSjdRbGYrRnB3TXQ1dERTWDFpMjZz?=
- =?utf-8?B?ZWtJUkkrUzcxZU1sanczQlVacjFSMVpaR3g1TEFiQ2d0RzZNTU82UGF5VDJh?=
- =?utf-8?B?Y1dkVEpMZ0crWS9zUUt0NStPS3B3YzJaZlRUTFlLUzQ0YzR1bmdvN0NTSi9o?=
- =?utf-8?B?QXBtZG9sUUpCcjhoUldHVGlxbDA4aXdRd0dNSy9ZT0hIZDRzZUQ3L21Rd2Uv?=
- =?utf-8?B?bmFVc3B4VzlndWNqakU3RmdIUUQxK3FqeDBncVVOekVUVFVNMGg2UWVJSDAw?=
- =?utf-8?B?NjBIYm9DaVE4UFZNL0RMVVQzY2lHMnNIU09GdGZRcEUxNENRVndGYUMrTG5p?=
- =?utf-8?B?UnZEcGc3Q0VpWjduTEo5MXFtZ2NOdUROY3lzUE84aStlaXVSSHVsNmxybkZR?=
- =?utf-8?B?Z3NOM0NKcjNBVE1YdmhwOWVkQTZMdWh0aU5YTEF4Y2paa082NWpsbnMwUVJ0?=
- =?utf-8?B?MkVHSExPUlJrS2lpT2ZOdHdmck9UaWNwSW9NQWdtTGY1dThxa0NMemcrcGhU?=
- =?utf-8?B?MVI2QTN1dWdFNnpUSWh0aGtEbGFZOW40WHBjUzcyK3UwNjY3bXRMRjBJQnhN?=
- =?utf-8?B?K0xucG1PYUVzc3BXVDFHaU9XZk1HeWl3Rk11K1RlTHlVUFJKTGUzanIxN3c0?=
- =?utf-8?B?ZWN2dzRDclZNT3hTY1JNMG9xYWtJVGZUYVZqNmNoUStSdDVleGppc1dYZnJP?=
- =?utf-8?B?SHdpVUJTbW1mODg3REZlU08zdy9tdmFhSEpNcGM3MjR1Mmpkb0hXejZtZW9T?=
- =?utf-8?B?RXI0K2d5VE9LSThQMzdLUUxvQ2FReTRIM01WaFl1WTBSUkw2YmFwVUlZUW53?=
- =?utf-8?B?ZWNtbHRLODlmYUdFUlZIUHZodURyRXJVZm45TDZsSzRXQUdmRE4rV0ZNUW5y?=
- =?utf-8?B?Wmh4WS9wWlpxYkJJN2d5UXcxQ0xyakJabGVVUUYyMisrbnZKOFRvbDExSHVE?=
- =?utf-8?B?cWJ0blBPcXhmRE5ubWRSODBKclI1SFhFQnJxaXFueGVQOTVUSXprYlV3L0k1?=
- =?utf-8?B?OHBrbHVZVkFxZSt0dEFwMExGb2dMZHFyUjkwU0hrKy9RVWV5VnZoblZVbjJj?=
- =?utf-8?B?SFg0cEVBNnNKczhpaHJ2Y01QaUthdSt6dGJEYTMwVVU3NHBidHBaMEZrRVZ5?=
- =?utf-8?B?UGErZWpSMyt6Z1NZYVBUcDVJSE03TzZoUG9CVnh4bVdjYUlqLytjVlM4RlVo?=
- =?utf-8?Q?sJRm6F3jZbjaTC8TMGk8q/KnU/KVIwrJ?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YnlKOUh6RFNBRGtsNnVTM21LNjEzQlJOR0JEQVdsaVlGZU5xTmdDSzJrazBV?=
+ =?utf-8?B?cUJVZW1Bb1FDYWgydXZIM2NOVWlEZTFtSDZCQTNTeEluY2picEg1V1VBVFFG?=
+ =?utf-8?B?Ym1TR0M0YXlMVndSZHFsNklpRlI3QlhndFVaTzVqZXVJYkpZMVFsc01iU0xh?=
+ =?utf-8?B?clNVWWN2MTVaeExqYXd1VVh0NHc1SXdSRUQrRVhWK1M4dEpqRmdQM0paS0Nh?=
+ =?utf-8?B?WmptMElmK1NMUDJrWUJlL1pseTJBT2EyYjRBNS9KYnRoN1BNR2l3Z3Y2T0tV?=
+ =?utf-8?B?b0pVUFhrYzJxQndDNE5odTA3dkNFWEU1M3dRWmpBVU1BSzFja3YxK3kyTmdw?=
+ =?utf-8?B?SXhnQi9TSjJ1eU5rM1ZEcHg5YlVwNldMdERHY2JqT0Qzcm5wREU4MVFNOW45?=
+ =?utf-8?B?dHprNW9rMnhLbXRGeE92alM0ZzdvUEgxOG15U1E5R2JZQlN4akJKdTNsVmlk?=
+ =?utf-8?B?dGtpVkpHd3huWmxwZTdmZDdVNjJpcFVObDVCWnpGSnZFd1JVaTRoamtLeHV4?=
+ =?utf-8?B?MkZNMGZZdzZubUFZaVVUOHlFbFNDSWtJUXFTOHZDeVQ0Z0s3UWJ4QklxY1Bv?=
+ =?utf-8?B?WGlGY0FPQlo3SGcxaTJIUVVFeldUWEdNblI4dk5wV2V5SmNxT0NheFYxUTZW?=
+ =?utf-8?B?bVpYVlJoeFV6VHRJSTRXN29TSmRxdFFpMTN1ODhTalZISWR4SUpoZlV5UUli?=
+ =?utf-8?B?NjZtV1VGeVBETDBWbExZeEdzZXFPUE5QU09OQUVKNHU2ZU5hdU5CVUViTWIz?=
+ =?utf-8?B?UVhVK3Vvdjl6dCthMHlkM1VCTkVkNUtQR1ZUZVp1VmJkNzl0cG9xQkVUYXA2?=
+ =?utf-8?B?dU5iV1pDVEpkMW55NFlOalp1azFQZ2RQbjdGSDRhOThFVzExS3pFRUl3MUVr?=
+ =?utf-8?B?SW8vNUI0aFdSZldjUG9oTEhuRGpPdm51MTBleENqS2lsbzJRbktBSFQyYzFT?=
+ =?utf-8?B?RkE3ZkNNb0g2NzkyUFRYV1I1NmREbHdQNXZ0MXBZNnJMd3lrTW4waDlONzB5?=
+ =?utf-8?B?dFBQdThjR3RZVTM5a3ZXekdHdkJwY0h2WUxxbTdkc01nckNNZWcvWjlUTUtT?=
+ =?utf-8?B?YmpTaC9lU2c1T3h4L0MwZmJCRVlWd1IzeDBTS1l2S2V3YXhmV1dmb1pUOFly?=
+ =?utf-8?B?VVJ4dnlPNlh6Zk1YV2lwbEtKUHJtb1BwcElhT3ZxS2xpYzk3Tnk0V1Fod09K?=
+ =?utf-8?B?N1Vodmx5dFFvZUhZbGdLZ0RTeGRqZkliSHZIM1hBcThQeE1YdFBBcmFWM0V5?=
+ =?utf-8?B?dURYVmxjWUQxUlI1b0o3WjVsVFV5YXBGUHh2K0JnRnJrQTdkYmVyOUFyUnFL?=
+ =?utf-8?B?Nk9IYlJ3NHV3Y0RNclhQVGJERGwxbXR2QWJ5VjU5NlVKdWkvbHZmTnpMOUVv?=
+ =?utf-8?B?bE52VkkxUHVhU1RvVEJiSHpZcXpJRjlvSDZ2VjU5UEd6VG5HbVBpeGJBQzE1?=
+ =?utf-8?B?ckthNmJ3SnUzMFF3YTRtWmNZS3R6aGI2K1VrNURVVE5ySzYwMGNRRElaQUto?=
+ =?utf-8?B?RlF4bnFZSlRmOHc0UVZMZVBnV00yRHZMRmJIdWRPM1lZSWNjejhVR0FMNnFu?=
+ =?utf-8?B?Vy9aRW5DMjBnMThQT2VOSGtwL1NMUnlKZkZVSFljVGRQbHZ5TC9qQ0lQY01M?=
+ =?utf-8?B?Tm5sMnVkcldTNjVJOGg5M3ZOanRpakVWYVlSSGlMVE1nc0EzU0QwWXQ2U2JH?=
+ =?utf-8?B?cU16VlJQMW9WRTJkUGtkTHZrc2puZjZlVzE2KzRyaGxuYWxGelVlQjNVemM3?=
+ =?utf-8?B?cmJxa2FENnBJQzUzVDVDODhFUzFvL1ZCTERlbWJ6K3Mydi9ZRnoya1FmQnVR?=
+ =?utf-8?B?eE5aTW11dlR4bFdLTU53aVhrNlFrNmsreTFmTVhNaDVXOVN0Q2NuNUlhNHps?=
+ =?utf-8?B?S3Q2cVRydFBLcUlCR0lUNlgyVXVZR3F6ZkUyblJyRFRUR3haWlFCVmRXdTgz?=
+ =?utf-8?Q?iRosVhFcYKodk7+iQ4wrjHFJB4w7SE6z?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NVVibDZQZjRKRitoRTV5S2x6aUN3bHo0TC9wSXNOb3NLbWVvbWlCNy90UHF2?=
- =?utf-8?B?Q0dpN2FqaUZRb00zaHJGRjk5UVphQVVLSUJqWExSZFRTd25pWUM0L0x5MXRC?=
- =?utf-8?B?R1ZLSDJtMlpCczcvQ3NZSHdnbXFmSEdld3FnLzBvM2NNZHlsTUpwcFRRQU9h?=
- =?utf-8?B?dUloWDFQZG9Qc0c1ZTd1ZTZ6YVNTRGRZWHl4QW5yNnNIWndmVWM2d2NkM3NH?=
- =?utf-8?B?Y1ZqQ1YxUk1hSVpXZEFwYVdHQ0g4aU0zazNMbCtBYlkzR3hNeUdFbW5LV2Mz?=
- =?utf-8?B?NXYzbVJ2djBleERneUI4bDVmN3JJbXVLc3RzWWdyL2RRdlFLcnVsbkJ5cnpt?=
- =?utf-8?B?VXpENkpVbG1IUkt5cDYyMHllTDZyNVYwbmF5TlNVRnh3a09kK0tMU2FuV0o4?=
- =?utf-8?B?UnVIQ29MM2hSbjBMRzQ3eVg2V0dZWUhCdjhJay9MS2NpSEVkb0c3NWtmWno1?=
- =?utf-8?B?T3B4ZnBSQ2xWSThHeTVqNEFrV0c1UDhuZ204c3NNMGhCdXVQRzUyVzA2aTMv?=
- =?utf-8?B?NjMvQkpzZE51M01wTDc1NUs2T3NubllYRXRoRXdsMkc5YlNQS1BicmExOWl6?=
- =?utf-8?B?SlZRMjBoUGNYYWlKZzVURXo4WjZKMEZ0NGh6MHJXeWJ3bjhUdEY4R1hrRkUw?=
- =?utf-8?B?THFQNTJ5UGo3U2pMcWlkajUzUWZIeXc2RGs3ZVpOUnVTcTEzY1dod0NRNWF6?=
- =?utf-8?B?VlZEc3paaFFycVYwelpzeXduSzBFSGRHK1Y2dnhmYkgvbkg5amh3cVUxTGxU?=
- =?utf-8?B?UG5kemF1MkNWMEJVL3pLOUtkUmVndGlhMmtERUtiaUlMZTZ0YU1xOEh3WWxt?=
- =?utf-8?B?RjZaT1lQUE1BTy9wbytZakllWmNTM1lsWWs4MmxRZmE4N0ZyZ3pPRno1ajU0?=
- =?utf-8?B?QTd0L0lqR2cwNXZIVEcxU3BpNXh0WWNEenVqTG5YVW5kWDFsbUFBaDBWNXp0?=
- =?utf-8?B?aktBUElDSDZXZlJWclo3Z0g2ZG5iTFVCTFJzR0dKVkFsVmpvUldnVXlteWI4?=
- =?utf-8?B?dWtONHJRSmZaZWwzUDF5YlIwZHlDUnpoUkpFZVZLL2cyM2RLdE02MWRRMEJo?=
- =?utf-8?B?cDF6SW1SNldLSTlQd1JVNjRkb1hjMVgzTGMwR1lpdDZrbGJNQS9ER2FadzZa?=
- =?utf-8?B?dFlmTUNJc1EvK2J1R3I4dTdHQ29KYVUycEJhZGZGNFJOUG1DQklFbFJBMXI2?=
- =?utf-8?B?U1dOaERoc2U2TVBnMWhnMXZ3TTJOMUUyOWt2L1kvaWhEUlBkWUUrdXMxNjJX?=
- =?utf-8?B?Zk1lUWU1RDhUUWpFdDhRRjE1emd2TUcyOUI0L0VYZ0VRdXhXRTJPTHBVMGtC?=
- =?utf-8?B?T1BuOFg2ZTAxNzFraEs4ekNiRWRxVVNwS1N0eDRYYmFaMzJiazgvSStTa2NV?=
- =?utf-8?B?WjRwYzNybXFTT3BzTS9xdktSenJsMHRCWllNNzhqZ045c1lROHIwa054Ulgz?=
- =?utf-8?B?bFhPYXl6N1ZPZUUwRlluT1RUT2JaZjBuc0RIUXFTV0pkNEY3Y2ZmbllWMWdV?=
- =?utf-8?B?emZLM0JhS05XdS84MzJ5SUFUU2gwUVR4T20wZmk4d2lGUVdZc2xpNHZLQnFy?=
- =?utf-8?B?dDk4RUVLYWw1cEx3aDB5ZTlGdGNEck9hLzM2cHlJbE9rMTZoWFdsWFc0Sm5Q?=
- =?utf-8?B?UkpvMi8xUDBib1BLbkpZd2RYNmI2RklXUFNnVGI2dXlGMDZnQ2RDckpXUlJ4?=
- =?utf-8?B?cTR0UktyZS9FM2xEQzMzLzRBTUsvdXo5SjdrV090MTlLZ2tSUHlzQll2akRU?=
- =?utf-8?B?bUNEUU1XQmRtK2JBTEhWK3l4TUVTNURuM1daZTJPSzA4ZmN4aXhYMFZ2eElM?=
- =?utf-8?B?TWZ5ZzlGRHRJNExod041SnRXek0xS2VDUnNCQVdXSnpybVZYQXdrd21TUUFv?=
- =?utf-8?B?ajJyRUticGM4bi9lQm5iMnJsaEVaRHRCVVJvd2JVWnRtcXdUTkROS25DTSs5?=
- =?utf-8?B?ZUIzQWZGbkRWT002T0tzbFU4N1V3QldaN0x1Z0tXdDhmWHNkSEhwR1BBSExx?=
- =?utf-8?B?TzlldFl2eExkRklobndIRGl5M0ozWUlsb2E5eDRDaUdoUGRGMVEraVA0UWNp?=
- =?utf-8?B?Qk5SQjc3QlJSQmwwT0tGWFpBbE9UL2o4bGZDOW13eWZGc2VacTNxNUN5bFdk?=
- =?utf-8?B?ZE9PcGdaYk9teGRscXFRMWVPeW9uK2JieUNNallYYzdXRy9XZDZSVWMxM1BB?=
- =?utf-8?B?Y3c9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6d82ff4-5cd8-4501-f2e3-08de31bfe54d
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QVZnUnpORk10eStCbFhzdCswZVk5K2RiYkV3WnpVamxFWUQ3L1E2VVFrYTZH?=
+ =?utf-8?B?czNGQWJrM0V4RUVYUDdZM1BPaDQ0Vm1YdDYxVEpHZ0krcmFMd1R0SHZub1ox?=
+ =?utf-8?B?VUtBcG5rZEswU3c5OEJSUTY4QWNmZXVKR2FNSFFrcElrOTFsbU5KQkRQWjFm?=
+ =?utf-8?B?TlpHMHcwWEtPb3dZT1FRME8raHBYMTdqNCtmSEpjMWdvQW90cVlwTFREdXNk?=
+ =?utf-8?B?NVpIdmRyM0F1OTJQa0dqRzFhUm9iWC9vVnExZ0FTa0xVWVAzeVdsWDhraHJ5?=
+ =?utf-8?B?QjdRd2IvRG5SbG1VRVJGa3BDVldQYWlXVFM5Z0I5eFJCVkVvTUVRcDRjUllJ?=
+ =?utf-8?B?UFl3QURzRHhSTjBMTjJMVzZyeUI5UG95T0lUUk9FM3JIdy93VURUdGxNZzZx?=
+ =?utf-8?B?OEl3ZVRoUDhrYUVJVENZU1I1NGVJblZFblFsT3ZQREJKUDBQQzlKWGpvRWsr?=
+ =?utf-8?B?Zi8xQ2YxV1lrY1YvckRXaDBheDdsT2Z5R21qbVRkcmhCdFBXdUJSL3NtZXR4?=
+ =?utf-8?B?T0hyMjJVQVVvZ21FUnpkZm10ckpVRkVWMG9KWWVNaVc5bjBDMVp3d20xUjgx?=
+ =?utf-8?B?ajI5aVFCSUFCSzhSME9kTU5UOFBoSzZobDNwckZaNU1TK0cxSEVCUGVKSFhR?=
+ =?utf-8?B?QktYKzJYVUpkbmFNTDY5WklPekM2RmtGT1N5UnlYYXBKbGpYSWdKamRFa1hR?=
+ =?utf-8?B?WVhXcXVteUpFOFh4TGFoYlZ4MUVZY3RxNFcyVXFsdUJTSXpPWHdybFF0bVpU?=
+ =?utf-8?B?My91RWtlUHloV0k1ZzRDT2tOT0QzMXE4SkkyZloxd2pBMTVSam52Tkl5YWJs?=
+ =?utf-8?B?U0R5L3N3ZDRGVURwWUNraWdPOUFKZlRwMCsrdGVUWnluSTdZTHI1RzRUZU1F?=
+ =?utf-8?B?RUdxc1hxUTcxQ3BQRlpkMFRBM0tJOFNIVUltcnc5TUNqY2UvZjR5emRuNHFi?=
+ =?utf-8?B?Q042dVZLUVNvZFJ1NzZxZTlJYzRzVC93cVltV3htclFPS3BZNk16NUw2YWs3?=
+ =?utf-8?B?ZVlzd21LVXRhTFdTWXRGMzRZMFVxU2JUbVpHakIzUlFkdDRkRkVLVUFxUzFk?=
+ =?utf-8?B?V2pDY3BRTjBHSk9UMldvN3pWbjRnQ3JiOUpYdms2TS9uVC83cE80M25IeDRW?=
+ =?utf-8?B?dWh2YVFoOHhLSmJlem44RC9VM29EYTFWaFZzZGEvWE5sY3BsZS9uR2JZNm4v?=
+ =?utf-8?B?NWdoejArOVpFS21lSWNKN2Nic1NVWWlTa1JOdzJZSXVPakJxRVRncnppaEda?=
+ =?utf-8?B?VExHMHNvazYyVkltNm1nL1BwZzUxMkpCQ0hQbjdGc2JYSVl6TkJuNzMySlNk?=
+ =?utf-8?B?bXpGTnBMeSsvRkQ0b25OYU9UNldsenlZeHRkUkVHVTZ0VW16OW5ZQjVWN3Y1?=
+ =?utf-8?B?ekJWOEU4TnpSYWtaM1ZkbDhpVW9wQ1dJcklzQjdtMU9hdG45N0NicGhRTzI3?=
+ =?utf-8?B?cE1ERnU5V0ZrMDJMOERYLytSbmhaZTI3cUNjM1hHMmVGR0szS3JDMkRGYWJR?=
+ =?utf-8?B?YlMxU01iRUQ2MnBqMC9MZUIvOWlUSXVLZlo4SnlHVEtUMUkyN3pMMStueURH?=
+ =?utf-8?B?SFhTeE54Ni9FVDBFNktKN1Uva2F6RWEzNzRmMFBPWi9uc3lMSXFKMkdKcmVh?=
+ =?utf-8?B?QzNXN2RtUTYxRFFMbmwrdUNHWWdZNjFiZDU0bEtSbkRGUHpOZ0RMekphQ2c4?=
+ =?utf-8?B?VWppU1QzUzRQdzNmSUxSTENzS2Jmc2Uycmc2Q2s4ZklFWGIyVmtmWXlvYW5M?=
+ =?utf-8?B?MnA5TEJ3KythZFFleUd0MEpJZFRGS0xycWF0R00ra2g4V1R2YjR5RHJCOWtS?=
+ =?utf-8?B?Njdva2R1VnBmVyt0cUhkZXJxTTVITXBUYTlVOG9TejVSM2dZM0N1YW1saVcw?=
+ =?utf-8?B?WkdWSG93cmF4TWM1OGpsTW1XeGhWVVVtdnA0Y09kRnMvVUJKc002MXFJQksw?=
+ =?utf-8?B?WWRBN1F2cDRIUjJGcEFPNm9yQkRkcWlwZDczdTdyOUlJNDFyRStNRFoxNHNo?=
+ =?utf-8?B?WVN5MnVJYWx2YzRQR3J4RjM1YTJtK25uUkJvYk5URDkvTGlBQjRsbVJTQk5B?=
+ =?utf-8?B?K0h6SE9VODBWZzM5LzhNVHBkeGdQd0RJZmcxcmlySndnUjFwVTN1WDRTRSti?=
+ =?utf-8?B?cE4wU3lQL0ZiVndUaHgvajFXNEVlSktoa1B4ZHltWkhPMjBjU0FUQ0xGVU1Q?=
+ =?utf-8?B?ZlE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0572105f-6c6f-458e-8c75-08de31c04976
 X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2025 16:28:58.9896
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Dec 2025 16:31:47.0445
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KutjKkits19S8qpMCAVBu+Rf0DryiDZgGT2CxphFvHkQ+274AmE319ZsY62uTsZiz0z4anMsqaiIhQ37jiznoSPVJY9h0JvYBIaJlaPgD7M=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR11MB4541
+X-MS-Exchange-CrossTenant-UserPrincipalName: 8PtTzSw8iX1jbOCAEsQFQVxnOU3FqavVSMtquzNW6XN/SmVczx6/oMMDNuhkQLwzEnjvkdiEZu5Tyz6FFIM6YjZ70YRfTfYdTtK+BsRWBEI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPF2B89F77E0
 X-OriginatorOrg: intel.com
 
 Hi Tony,
 
 On 11/24/25 10:54 AM, Tony Luck wrote:
-> Legacy resctrl features are enumerated by X86_FEATURE_* flags. These may be
-> overridden by quirks to disable features in the case of errata.  Users can
-> use kernel command line options to either disable a feature, or to force
-> enable a feature that was disabled by a quirk.
+> There are now three meanings for "number of RMIDs":
 > 
-> Provide similar functionality for hardware features that do not have an
-> X86_FEATURE_* flag.  Unlike other features that are tied to X86_FEATURE_*
-> flags, these are defined by the feature name.
+> 1) The number for legacy features enumerated by CPUID leaf 0xF. This
+> is the maximum number of distinct values that can be loaded into
+> MSR_IA32_PQR_ASSOC. Note that systems with Sub-NUMA Cluster mode enabled
+> will force scaling down the CPUID enumerated value by the number of SNC
+> nodes per L3-cache.
 
-This needs an update. Above describes previous implementation that was a generic
-"for hardware features ...." while the new implementation is specific to telemetry.
-(also needs imperative)
+Please check line lengths.
 
 > 
-> Users may force a feature to be disabled. E.g. "rdt=!perf" will ensure that
-> none of the perf telemetry events are enabled.
+> 2) The number of registers in MMIO space for each event. This is enumerated
+> in the XML files and is the value initialized into event_group::num_rmid.
 > 
-> Resctrl architecture code may disable a feature that does not provide full
+> 3) The number of "hardware counters" (this isn't a strictly accurate
+> description of how things work, but serves as a useful analogy that
+> does describe the limitations) feeding to those MMIO registers. This
+> is enumerated in telemetry_region::num_rmids returned from the call to
 
-The changelog needs to be clear on what it means by "a feature". Above implies
-that "a feature" is all event groups with the same feature type ... but the final
-paragraph implies that a feature is a specific event group.
+"from the call to" -> "by" ?
 
-> functionality. Users may override that decision.  E.g. "rdt=energy" will
-> enable any available energy telemetry events even if they do not provide
-> full functionality.
+
+> intel_pmt_get_regions_by_feature()
 > 
-> An optional guid can be included for more granular control of features sharing
+> Event groups with insufficient "hardware counters" to track all RMIDs are
+> difficult for users to use, since the system may reassign "hardware counters"
+> at any time. This means that users cannot reliably collect two consecutive
+> event counts to compute the rate at which events are occurring.
 
-"User can specify an optional guid ..."
+Please ensure changelogs remain coherent. Dropping the paragraph that describes
+how under-resourced event groups are disabled may reflect new implementation but it
+makes the changelog difficult to understand since the part that mentions how
+a user can request to enable a disabled event group remains.
 
-> a name. E.g. rdt=energy:0x12345 will only override disabling of the energy
-> feature with guid = 0x12345.
+Even so, can the arch not still be expected to disable an under-resourced event group?
+(more below)
 
-New implementation information just slapped onto the end of changelog.
-
+> 
+> Limit an under-resourced event group's number of possible monitor resource
+> groups to the lowest number of "hardware counters" if the user explicitly
+> requests to enable it.
+> 
+> Scan all enabled event groups and assign the RDT_RESOURCE_PERF_PKG resource
+> "num_rmid" value to the smallest of these values as this value will be used
+> later to compare against the number of RMIDs supported by other resources
+> to determine how many monitoring resource groups are supported.
+> 
+> N.B. Change type of resctrl_mon::num_rmid to u32 to match its usage and
+> the type of event_group::num_rmid so that min(r->num_rmid, e->num_rmid)
+> won't complain about mixing signed and unsigned types.
 > 
 > Signed-off-by: Tony Luck <tony.luck@intel.com>
 > ---
->  .../admin-guide/kernel-parameters.txt         |  6 ++-
->  arch/x86/kernel/cpu/resctrl/internal.h        |  2 +
->  arch/x86/kernel/cpu/resctrl/core.c            |  2 +
->  arch/x86/kernel/cpu/resctrl/intel_aet.c       | 37 +++++++++++++++++++
->  4 files changed, 46 insertions(+), 1 deletion(-)
+>  include/linux/resctrl.h                 |  2 +-
+>  arch/x86/kernel/cpu/resctrl/intel_aet.c | 58 ++++++++++++++++++++++++-
+>  fs/resctrl/rdtgroup.c                   |  2 +-
+>  3 files changed, 59 insertions(+), 3 deletions(-)
 > 
-> diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-> index 8c5636a120ee..e47def4a3dd8 100644
-> --- a/Documentation/admin-guide/kernel-parameters.txt
-> +++ b/Documentation/admin-guide/kernel-parameters.txt
-> @@ -6207,9 +6207,13 @@
->  	rdt=		[HW,X86,RDT]
->  			Turn on/off individual RDT features. List is:
->  			cmt, mbmtotal, mbmlocal, l3cat, l3cdp, l2cat, l2cdp,
-> -			mba, smba, bmec, abmc, sdciae.
-> +			mba, smba, bmec, abmc, sdciae, energy[:guid],
-> +			perf[:guid].
->  			E.g. to turn on cmt and turn off mba use:
->  				rdt=cmt,!mba
-> +			To turn off all energy features and ensure that
-> +			the 0x12345 perf feature is enabled use:
-> +				rdt=!energy,perf:0x12345
-
-The short "energy" and "perf" is reasonable to use as parameters but for help
-text I think it will be better to use "energy telemetry" and "perf telemetry". How should
-user interpret "energy features"? While "features" may be ok as a general
-term the example is not required to use it since it is specific to telemetry monitoring. 
-How about something like "all energy telemetry monitoring" and "perf telemetry monitoring
-associated with guid 0x12345"
-
->  
->  	reboot=		[KNL]
->  			Format (x86 or x86_64):
-> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-> index 0b7f8317be14..304e6e341905 100644
-> --- a/arch/x86/kernel/cpu/resctrl/internal.h
-> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
-> @@ -236,6 +236,7 @@ void __exit intel_aet_exit(void);
->  int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
->  void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
->  				struct list_head *add_pos);
-> +bool intel_aet_option(bool force_off, char *tok);
->  #else
->  static inline bool intel_aet_get_events(void) { return false; }
->  static inline void __exit intel_aet_exit(void) { }
-> @@ -246,6 +247,7 @@ static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64
->  
->  static inline void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
->  					      struct list_head *add_pos) { }
-> +static inline bool intel_aet_option(bool force_off, char *tok) { return false; }
->  #endif
->  
->  #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-> diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-> index 283d653002a2..960974ffa866 100644
-> --- a/arch/x86/kernel/cpu/resctrl/core.c
-> +++ b/arch/x86/kernel/cpu/resctrl/core.c
-> @@ -820,6 +820,8 @@ static int __init set_rdt_options(char *str)
->  		force_off = *tok == '!';
->  		if (force_off)
->  			tok++;
-> +		if (intel_aet_option(force_off, tok))
-> +			continue;
->  		for (o = rdt_options; o < &rdt_options[NUM_RDT_OPTIONS]; o++) {
->  			if (strcmp(tok, o->name) == 0) {
->  				if (force_off)
+> diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+> index 14126d228e61..8623e450619a 100644
+> --- a/include/linux/resctrl.h
+> +++ b/include/linux/resctrl.h
+> @@ -295,7 +295,7 @@ enum resctrl_schema_fmt {
+>   *			events of monitor groups created via mkdir.
+>   */
+>  struct resctrl_mon {
+> -	int			num_rmid;
+> +	u32			num_rmid;
+>  	unsigned int		mbm_cfg_mask;
+>  	int			num_mbm_cntrs;
+>  	bool			mbm_cntr_assignable;
 > diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> index 46c64419ec10..50c8b4c50790 100644
+> index 50c8b4c50790..6eff606541ad 100644
 > --- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
 > +++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-> @@ -57,12 +57,16 @@ struct pmt_event {
->   * struct event_group - Events with the same feature type ("energy" or "perf") and guid.
->   * @feature:		Type of events, for example FEATURE_PER_RMID_PERF_TELEM or
->   *			FEATURE_PER_RMID_ENERGY_TELEM, in this group.
-> + * @name:		Name for this group (used by boot rdt= option)
-
-This needs a new definition since multiple groups can have the same name now.
-
->   * @pfg:		Points to the aggregated telemetry space information
->   *			returned by the intel_pmt_get_regions_by_feature()
->   *			call to the INTEL_PMT_TELEMETRY driver that contains
->   *			data for all telemetry regions type @feature.
->   *			Valid if the system supports the event group.
->   *			NULL otherwise.
-> + * @force_off:		True when "rdt" command line disables this @guid.
-
-Per changelog the architecture can also disable a feature.
-
-> + * @force_on:		True when "rdt" command line overrides disable of
-> + *			this @guid due to insufficient @num_rmid.
-
-The idea of "insufficient RMID" does not exist at this point.
-
+> @@ -25,6 +25,7 @@
+>  #include <linux/intel_pmt_features.h>
+>  #include <linux/intel_vsec.h>
+>  #include <linux/io.h>
+> +#include <linux/minmax.h>
+>  #include <linux/overflow.h>
+>  #include <linux/printk.h>
+>  #include <linux/rculist.h>
+> @@ -68,6 +69,10 @@ struct pmt_event {
+>   * @force_on:		True when "rdt" command line overrides disable of
+>   *			this @guid due to insufficient @num_rmid.
 >   * @guid:		Unique number per XML description file.
+> + * @num_rmid:		Number of RMIDs supported by this group. May be
+> + *			adjusted downwards if enumeration from
+> + *			intel_pmt_get_regions_by_feature() indicates fewer
+> + *			RMIDs can be tracked simultaneously.
 >   * @mmio_size:		Number of bytes of MMIO registers for this group.
 >   * @num_events:		Number of events in this group.
-> @@ -71,7 +75,9 @@ struct pmt_event {
->  struct event_group {
->  	/* Data fields for additional structures to manage this group. */
->  	enum pmt_feature_id		feature;
-> +	char				*name;
->  	struct pmt_feature_group	*pfg;
-> +	bool				force_off, force_on;
+>   * @evts:		Array of event descriptors.
+> @@ -81,6 +86,7 @@ struct event_group {
 >  
 >  	/* Remaining fields initialized from XML file. */
 >  	u32				guid;
-> @@ -89,6 +95,7 @@ struct event_group {
->   */
->  static struct event_group energy_0x26696143 = {
+> +	u32				num_rmid;
+>  	size_t				mmio_size;
+>  	unsigned int			num_events;
+>  	struct pmt_event		evts[] __counted_by(num_events);
+> @@ -97,6 +103,7 @@ static struct event_group energy_0x26696143 = {
 >  	.feature	= FEATURE_PER_RMID_ENERGY_TELEM,
-> +	.name		= "energy",
+>  	.name		= "energy",
 >  	.guid		= 0x26696143,
+> +	.num_rmid	= 576,
 >  	.mmio_size	= XML_MMIO_SIZE(576, 2, 3),
 >  	.num_events	= 2,
-> @@ -104,6 +111,7 @@ static struct event_group energy_0x26696143 = {
->   */
->  static struct event_group perf_0x26557651 = {
+>  	.evts		= {
+> @@ -113,6 +120,7 @@ static struct event_group perf_0x26557651 = {
 >  	.feature	= FEATURE_PER_RMID_PERF_TELEM,
-> +	.name		= "perf",
+>  	.name		= "perf",
 >  	.guid		= 0x26557651,
+> +	.num_rmid	= 576,
 >  	.mmio_size	= XML_MMIO_SIZE(576, 7, 3),
 >  	.num_events	= 7,
-> @@ -128,6 +136,32 @@ static struct event_group *known_event_groups[] = {
->  	     _peg < &known_event_groups[ARRAY_SIZE(known_event_groups)];	\
->  	     _peg++)
+>  	.evts		= {
+> @@ -208,8 +216,25 @@ static bool group_has_usable_regions(struct event_group *e, struct pmt_feature_g
+>  	return usable_regions;
+>  }
 >  
-> +bool intel_aet_option(bool force_off, char *tok)
+> +static bool all_regions_have_sufficient_rmid(struct event_group *e, struct pmt_feature_group *p)
 > +{
-> +	struct event_group **peg;
-> +	bool ret = false;
-> +	u32 guid = 0;
-> +	char *name;
+> +	struct telemetry_region *tr;
+> +	bool ret = true;
 > +
-> +	name = strsep(&tok, ":");
-> +	if (tok && kstrtou32(tok, 16, &guid))
-> +		return false;
-> +
-> +	for_each_event_group(peg) {
-> +		if (strcmp(name, (*peg)->name))
+> +	for (int i = 0; i < p->count; i++) {
+> +		if (!p->regions[i].addr)
 > +			continue;
-> +		if (guid && (*peg)->guid != guid)
-> +			continue;
-> +		if (force_off)
-> +			(*peg)->force_off = true;
-> +		else
-> +			(*peg)->force_on = true;
-> +		ret = true;
+> +		tr = &p->regions[i];
+> +		if (tr->num_rmids < e->num_rmid)
+> +			ret = false;
+
+e->force_off can be set here to ensure that the event group's state accurately reflects that
+it is force disabled.
+
 > +	}
 > +
 > +	return ret;
 > +}
 > +
->  /*
->   * Clear the address field of regions that did not pass the checks in
->   * skip_telem_region() so they will not be used by intel_aet_read_event().
-> @@ -178,6 +212,9 @@ static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
+>  static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
 >  {
+> +	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
 >  	int skipped_events = 0;
 >  
-> +	if (e->force_off)
-> +		return false;
-> +
+>  	if (e->force_off)
+> @@ -218,13 +243,44 @@ static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
 >  	if (!group_has_usable_regions(e, p))
 >  		return false;
 >  
+> +	/*
+> +	 * Only enable feature with insufficient RMIDs if the user
+> +	 * requested it from the kernel command line.
+
+(line length)
+
+> +	 */
+> +	if (!all_regions_have_sufficient_rmid(e, p) && !e->force_on) {
+> +		pr_info("Feature %s:0x%x not enabled due to insufficient RMIDs\n",
+
+The generic kernel parameter terminology of "feature" does not seem appropriate here. This can be
+made specific with, for example, "%s %s:0x%x monitoring not enabled ...", (added %s for the resource
+name) that matches the terms used in "detected" messages added in patch #29. Open to ideas.
+
+> +			e->name, e->guid);
+> +		return false;
+> +	}
+> +
+> +	for (int i = 0; i < p->count; i++) {
+> +		if (!p->regions[i].addr)
+> +			continue;
+> +		/*
+> +		 * e->num_rmid only adjusted lower if user (via rdt= kernel
+> +		 * parameter) forces an event group with insufficient RMID
+> +		 * to be enabled.
+> +		 */
+> +		e->num_rmid = min(e->num_rmid, p->regions[i].num_rmids);
+> +	}
+> +
+>  	for (int j = 0; j < e->num_events; j++) {
+>  		if (!resctrl_enable_mon_event(e->evts[j].id, true,
+>  					      e->evts[j].bin_bits, &e->evts[j]))
+>  			skipped_events++;
+>  	}
+>  
+> -	return skipped_events < e->num_events;
+> +	if (e->num_events == skipped_events) {
+> +		pr_info("No events enabled in %s %s:0x%x\n", r->name, e->name, e->guid);
+> +		return false;
+> +	}
+
+Unrelated change.
+
+> +
+> +	if (r->mon.num_rmid)
+> +		r->mon.num_rmid = min(r->mon.num_rmid, e->num_rmid);
+> +	else
+> +		r->mon.num_rmid = e->num_rmid;
+> +
+> +	return true;
+>  }
+>  
+>  /*
+> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+> index ac3c6e44b7c5..60ce2390723e 100644
+> --- a/fs/resctrl/rdtgroup.c
+> +++ b/fs/resctrl/rdtgroup.c
+> @@ -1157,7 +1157,7 @@ static int rdt_num_rmids_show(struct kernfs_open_file *of,
+>  {
+>  	struct rdt_resource *r = rdt_kn_parent_priv(of->kn);
+>  
+> -	seq_printf(seq, "%d\n", r->mon.num_rmid);
+> +	seq_printf(seq, "%u\n", r->mon.num_rmid);
+>  
+>  	return 0;
+>  }
 
 Reinette
