@@ -1,111 +1,191 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-yx1-f42.google.com (mail-yx1-f42.google.com [74.125.224.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FCB2D0C9D
-	for <patches@lists.linux.dev>; Tue,  2 Dec 2025 18:14:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3B72D23A6
+	for <patches@lists.linux.dev>; Tue,  2 Dec 2025 18:33:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.224.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764699294; cv=none; b=rzzDufj8/8aLx/UlJV/NO2N007SDJzGbrQytJtMOkyFvn3RwVusMkyt5Ih9Gt4TFnwxcfv7MeOleI5HaDY08cBXHeaXMKs9Ny5ttQXrftY8wXET5ndlEKppxbSS7ooqEa34O1x4oun6OFT+/hZyk8sCjmGXr+yVbvxbyUniTV+A=
+	t=1764700388; cv=none; b=Zgrh9LFcx/LubmP3WUh9Jmbe6HHW3/3/CNi7TC/ftdR8bSpET+EnyMtV/s7K+LzkAFwDmny3XeOjwr/WP2BwBve1cYeRwiWqZjOyqvmlKsTv86CkhwZI/xyVJK9oCy5tAuFbBHB1cBbor1qlJNoqm2UMBWr8G5By0xlirvNuf5o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764699294; c=relaxed/simple;
-	bh=Zadw4f8Rb9R9ongw9fXvygXWeldIJXphoIWzHsB5tXo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qdl5yCjm4QmTzfBcV/VMvQS5hFqz1Yia0oMZnjZXJrxBpQZ5TW02otnK7N5Uyd6dz68/vj86d6y7ww0oQkAoyyXEmBuMr/AyqsUvXxvGFvdNShyQ0mLRH0XCEfsmjA4B00ZTMtjKB/SDyB8jYGCE8O4m904uZ9LRgiDKtQDdzNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ElJW7Fyy; arc=none smtp.client-ip=209.85.214.173
+	s=arc-20240116; t=1764700388; c=relaxed/simple;
+	bh=12EEgsoRMtf9F51vxy2vNepd5KjbBuzaWngoebihpEw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Fhtg5VAujDV4HlfRn4+9f7FnEKYZodz+vVbF4Fs9Jq8IfEddnn8/VLalVym0a2Wr6BJ8a8+SPAdXYAxquCb8h2hzmr3JHtkvgF6PQbQxA9yON0gnZpdbqThagnTpFEvGc8jBVtDN2VH2p9oW/roJjYgxtDL2dlKcHLV5KbaRPqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RYKFlv/m; arc=none smtp.client-ip=74.125.224.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ElJW7Fyy"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-297dd95ffe4so51463845ad.3
-        for <patches@lists.linux.dev>; Tue, 02 Dec 2025 10:14:52 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RYKFlv/m"
+Received: by mail-yx1-f42.google.com with SMTP id 956f58d0204a3-641e942242cso5460098d50.1
+        for <patches@lists.linux.dev>; Tue, 02 Dec 2025 10:33:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764699292; x=1765304092; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CNcow+v6Zimw2i/FJx4QwkUgA7xtuYBe8HXCgELidKM=;
-        b=ElJW7FyyjttscTc5pZOrfblKJETbJdXvd3xFRCkfC3Z1iaBu67UY3H8mrZcZlN4dMU
-         1nup5Bzj1/ZU5rzT1lIOzVQkgZ2kvdq43K5XEoYuhLZ0r+EIjNZwaXVWhC52nUwsO1T9
-         Vy3NVyyxO3b8N8pPG4zXeSIvVEdocJxfbylrdAkRyXtXbod8czS1Wyo4686AsqdL5bdv
-         gDaToQyc/DnlvOhQkzvkQBc3P0yNMFa5PLaCai9wtKxZXdHEFhiOoaqhsN/gZ/Akgnm+
-         JmYS/eyIOjHvxUiZKhdmH8avKjO1T8JcQI6gw2L9DtzN3pm/qg3wuQSv9nD1kDuRBp4E
-         Rmcg==
+        d=gmail.com; s=20230601; t=1764700385; x=1765305185; darn=lists.linux.dev;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Fx+vgxKEjmAmRBcQWngjnzb3HH/aeEsWQh1ReHY2Pk8=;
+        b=RYKFlv/m4hSdOCcvMDlMNwN+lcXBTEzWcM3kpN8TN4yeosRUa++tOxrBwtDysZail9
+         fDAVJDknctiWEQO67gIt/xBI7z9BYILckCTlca2rtyWfRgDUT0Hopwj8T2nxl43j6LR5
+         ywm5VhIuukafUXJLWOfpyIKfQuSsQOrLFj9eMvvdNoJ10+BrxeVAiKfCMGYFz2MPReXF
+         6wXTKwX2XIK7OsYYB+EnP7dWafftQFTzwUGx6ek17NGhmDza6bHPWOq2CD462gQCZUY/
+         FKt20NJPd1ZulSqKATlpvqqBRYzLfUZflwVvNAO0F+QKeseufcId0TBPVCZgdgXdjwlM
+         PL1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764699292; x=1765304092;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CNcow+v6Zimw2i/FJx4QwkUgA7xtuYBe8HXCgELidKM=;
-        b=bSc4uFxfS08+VMJdQzJn/Vz8b+/y+OlZ5dPFjRz+WH/l35nvTAL4fithULvvIxGl69
-         KmJhSbk0Xim5M4YZxix5/g22Dt8cjDGj+qg1A6OitGO4tZDzzr14QesrFGEbz/oD53Hb
-         F/TA4ScqhoJ3je61uDR1pN/4+NqB0EFXwO3bY/Uq2NWDO+fI8fzQD3sNKchaxN/59shu
-         5cijFYi6IeyAxV8tB2tPRJUh3IZXWx3zZoNQFCrx5RuuOS7Wsp73V5SY9evTfIZHSJu/
-         mPBjllOfZqvThTB4QCSyDLd8G6XhW92BOcndj8lIjWcL58quRsld35hA7loHYy0dg6KB
-         VkwQ==
-X-Gm-Message-State: AOJu0YxZtHXNC99r6H6BDxMGkIj6FBtek3bH0uXdkV1iQ2RD7t88SkFE
-	/9BYhGECnJFtdT0w+1hFfNJRDNUlw9D+pSUJagWbyOyn8N16NRmLKIH8
-X-Gm-Gg: ASbGncuZZyvJeKnemXHInheLvdJrNr/neMJRr30g+Zn8XlcNPax3F473n/iH1U5RZpM
-	AiKFZeEVdeUjn0cGcjlNlK4eMRop4haUFvn7vOPMaStP6qBq1PchegwmvM5yYHpRK6DWYj7xnxN
-	6vW6bpmc5VvJ+4qEQyhAQtoLNkOTcHXlkR5g2RNvApzFpaxZMHiUCSHu+5UgBfkpIun+0AZHvaP
-	6XCWkseTLO5Zehb0Q+q0uvK72cEwpuTaQM7an12zP5YHUkh9SFY5uS2wpDp1AhUu2WW1L6guhoj
-	opXs2JUEPiKtaRVpi8vBi6fbHhAmlBAR/6asr2m8sWnrEtI3PkHpobU44he2xQSWO0HOw9BwPl0
-	qnKAZi9hlEJJm5hLdtCGATAibJiLduXaeXMjCEjJPNXXscJQTPGGFDINzMW2h+f44rToLBdrBhi
-	XvZQGkDD2d3dOFyE5U0JSS/FUWyY7XsjZYfkFd/g==
-X-Google-Smtp-Source: AGHT+IHIsTw3gXnMmKVOvzDDcZQGs3jHRBbAwWl9PHSMB/MnRWehAbvLjOjpCgewlPbVBIfe2VtAAg==
-X-Received: by 2002:a17:903:4b4b:b0:298:35c:c313 with SMTP id d9443c01a7336-29bab30b2c3mr346606255ad.61.1764699291725;
-        Tue, 02 Dec 2025 10:14:51 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29bce44389bsm162812255ad.32.2025.12.02.10.14.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Dec 2025 10:14:50 -0800 (PST)
-Message-ID: <d771b28c-bd03-433c-b1f9-695e1333756c@gmail.com>
-Date: Tue, 2 Dec 2025 10:14:48 -0800
+        d=1e100.net; s=20230601; t=1764700385; x=1765305185;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fx+vgxKEjmAmRBcQWngjnzb3HH/aeEsWQh1ReHY2Pk8=;
+        b=RPh1vu4f41VmYQY8HiHuIEm420ZqGkgJtE/Lmt6j2tuQD871fFYPwoBsfGnXwLGDte
+         pdv7+KgfLSqx4F8/S3lwbuaeiTC0cTz1XtHFv9GIr6gxe/Rec9Y/6viQ4ruMlc2FwzXR
+         /qSTzLUSCf2poFPsqomJMfqySeISXtkI8+MokN9sml78antAeUoqIf00Oiybimrve9oh
+         XEpn4lx/Lt1p461cgCb7++W5G/sZPJU0x39HUOPWComTqvMXSaeQiDsyjqAKwKZcjnzL
+         D3apdUOYyRT/WXDq2UsEqUkV1Z1PERNnbjRs9hMi0YarfGJ1KaeGXgKgc/0vvWcIzk7f
+         3WqA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfVNadFkHdq4c2uEeTjvJE6V9MEuaJdiJu+qfxhWjP0+pm/kwzjmO+kJl6sdGgnXzI7YTSrwMG@lists.linux.dev
+X-Gm-Message-State: AOJu0YzHb/G9S/KrN0DaxMSDqzTYBOBRn7V+eVmQaMM5na8ZmQTBCq3D
+	1PRNp64RFfOh38rMQtrj0BLyrRaKd7czR3Qa9COkMCbPsPr7jBhCx7a0
+X-Gm-Gg: ASbGncvscflgaussIqD4kuSLcXWDc8nFXWODTvcVeCpmL8IgGIyD/nqkG65zG/zr2Ge
+	n/eyPtlHpEqquGEZdT4XNE0eMzKE0j9n9D77mfTbwN9K2FnCZ9L1Zldvb8SxnfCVHYxSeIWkMvD
+	vqkfnkg7KCcpIT/Z/Z4f9clWAhPtnHzcMantMVYsB3fpOdhkYytza7yZ02/2dJrG8v7i2KRhoul
+	3xmWYOKX1WdRTschafu8atrEy8EXkCss02kUjv+z4BHyScxq5hNQhCBmsxyjZKfv+OPePY+B3m+
+	Ttk+qQ+CnO95UoeiDONWco69gFMYs0TxpovnWCfROo+/cslhXGZM2sNnmOz1FNEZMl6UzRGQ7bW
+	aImu5fJrIuU4pIKCmK/Yc7tUfBjCepwNfSraELYwJxw45Ubc3bLwAoTCTs51Mm5dKhjA3wocgLH
+	2JrmZM2fufi/j0YJTE
+X-Google-Smtp-Source: AGHT+IGOp5HU/6nmu601KlnOIw05JZHAueFK3GC0mnlmpUg0as6msbGwNFG0svNv0+Ued/h6vQr5CA==
+X-Received: by 2002:a05:690e:12cb:b0:640:d009:e998 with SMTP id 956f58d0204a3-64435281c1emr281829d50.12.1764700385322;
+        Tue, 02 Dec 2025 10:33:05 -0800 (PST)
+Received: from localhost ([2601:346:0:79bd:2e1:7f9a:ed50:e29e])
+        by smtp.gmail.com with ESMTPSA id 956f58d0204a3-6433c497707sm6415723d50.24.2025.12.02.10.33.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Dec 2025 10:33:05 -0800 (PST)
+Date: Tue, 2 Dec 2025 13:33:04 -0500
+From: Yury Norov <yury.norov@gmail.com>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>, Burak Emir <bqe@google.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <lossin@kernel.org>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Trevor Gross <tmgross@umich.edu>,
+	Danilo Krummrich <dakr@kernel.org>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH] rust: id_pool: fix example
+Message-ID: <aS8w4FHhIVQUFTEY@yury>
+References: <20251201000949.1626363-1-ojeda@kernel.org>
+ <aS3seTNRum3ZXMom@yury>
+ <CANiq72=1ipov2pV9pSQwGh9WMA4NvQRV_cBCO0hhChVg=c-Njw@mail.gmail.com>
+ <aS7aHIJbi3DlaUcc@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/182] 5.4.302-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20251202152903.637577865@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20251202152903.637577865@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aS7aHIJbi3DlaUcc@google.com>
 
-On 12/2/25 07:29, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.302 release.
-> There are 182 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 04 Dec 2025 15:28:35 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.302-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Dec 02, 2025 at 12:22:52PM +0000, Alice Ryhl wrote:
+> On Tue, Dec 02, 2025 at 12:13:33AM +0100, Miguel Ojeda wrote:
+> > On Mon, Dec 1, 2025 at 8:29 PM Yury Norov <yury.norov@gmail.com> wrote:
+> > >
+> > > Thanks Miguel,
+> > >
+> > > I applied this, but the fact that you've sent a second fix to
+> > > documentation that actually is a build fix, raises the questions.
+> > >
+> > > Because Rust documentation bears compilable chunks of code, I think
+> > > we need to enable rustdoc tests target by default, so that developers
+> > > will not send broken tests.
+> > 
+> > You're welcome!
+> > 
+> > This one is a Kconfig in the normal build, i.e.
+> > `CONFIG_RUST_KERNEL_DOCTESTS` (it is true that the other patch was for
+> > a different target).
+> > 
+> > If you mean enabling that by Kconfig default, then I don't think we
+> > can do that -- KUnit on its own (which this uses) is not meant for
+> > normal builds. Perhaps we could have something that just checks the
+> > build, but people should really run the doctests anyway, since they
+> > typically contain `assert!`s and so on that can be wrong.
+> > 
+> > If you mean enabling it in Intel's kernel test robot, then I think
+> > they do it (or at least I told them about it long ago). But maybe
+> > something is missing.
+> > 
+> > In our P entry in `MAINTAINERS` ("Subsystem Profile document") we ask
+> > people to run them among other things, so I would perhaps suggest
+> > having something like that too (or linking to ours if you prefer):
+> > 
+> >     https://rust-for-linux.com/contributing#submit-checklist-addendum
+> > 
+> > Of course new contributors will miss that initially, but actually
+> > people find the doctests quite useful, so generally people get to run
+> > them. At the end of the day, maintainers should test these too before
+> > applying and otherwise someone will notice sooner or later.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+No. Maintainers are not handy testers at your convenience.
+ 
+> Yeah sorry I forgot to check the docs this time. I usually do run them,
+> but there are so many targets to check that sometimes I forget some of
+> them.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Don't be sorry, it's not your fault. The problem is that bearing
+tests smeared among comments is a terrible idea, and now you reap
+the benefits of someone else's bad design.
+
+(Did I warn about it? Yes I did.)
+
+The other problem is that Miguel replied in great details about how
+well rust process is designed, and even attached an external link,
+but didn't answer my question: how to enable rustdoc by default?
+
+I followed this link by the way. It doesn't mention that rustdoc step
+is mandatory. It doesn't provide steps for careful testing. It only
+says:
+
+        When submitting changes to Rust code documentation, please
+        render them using the rustdoc target and ensure the result
+        looks as expected. The Rust code documentation gets rendered
+        at https://rust.docs.kernel.org.
+
+Does it sound like:
+
+        Rustdoc is a MANDATORY step! You MUST run rustdoc every single
+        time, otherwise the build will get BROKEN. Even if you don't
+        touch comments!
+
+No, it does not. So, I wasted an hour just to find nothing. But there
+are some good news: during that hour, I received an LKP email about
+your error:
+
+https://lore.kernel.org/oe-kbuild-all/202512020552.NejH5iaK-lkp@intel.com/
+
+It's good that I started receiving such a traffic at all. But it's
+especially good because I was on my way to submit a PR to Linus, and
+that hour saved me a broken request. Andrew Morton on the previous
+cycle wasn't that lucky, didn't he?
+
+So, what's next. 
+
+1. I will merge-fold Miguel's fixes into your patches and send my
+   PR by the end of this week, not early the week as I usually do.
+   Hopefully, no objections.
+
+2. I will stop taking any rust patches unless the author explicitly
+   mentions that he ran rustdoc on them.
+
+3. I encourage rust community to spend this cycle on reviewing the
+   development and submitting process. You guys decided to sprinkle
+   compilable code across the comments, and you advocate it. Now
+   please find a way for everyone to compile your comments (huh)
+   during a routine development. And please make that knowledge
+   very sound.
+
+Thanks,
+Yury
