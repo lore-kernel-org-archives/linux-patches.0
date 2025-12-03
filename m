@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19925346783;
-	Wed,  3 Dec 2025 16:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C93469EF;
+	Wed,  3 Dec 2025 16:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778299; cv=none; b=cLFQQjQxcXuLYd0jDMJilJqJ4morr1aZjKtKQiT+ijyiPu/aOBMp1LiQcCY+F2Fp3Qe5Kp+f60ZjBwBiYHGH4B2x2A2CCeI9UpBsQZUyMUTsFE742pK39C0n/Lidun6+HdaIjJkf3f//z9sS4MyyAY6+cyAlOMETUNYMcRg2z+g=
+	t=1764778302; cv=none; b=TdfoXfgqV2hxwaTzny+41xT56YUE+j/TYtC8qHxRKtvJxPurXEQfsiI8hbPwKrk7ZnPwQQ74xfjhTmgHb6gtyfA/4Qjl3VLlQhAzJXqhbpGX323FXVVFl8okxZ7XqD3fQ4a6dTQ6YzWa8R6pAmbxCJWwZf9Pi/P1HHr5600i/Gw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778299; c=relaxed/simple;
-	bh=a4Arv5fMN6nZflqbpmiiPWkG9ArvlCFC3N7t1NcXYmk=;
+	s=arc-20240116; t=1764778302; c=relaxed/simple;
+	bh=K/rQe8sZgQDRZgTfz4gdyBhsRnCRiemLV8W1oPnUNCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAlgnEwFq22N6n8JlH5dsixhlSfNuybmTVMqsGX6l8VEkwbVATj17RkslIZzpywzsInIb0fTX1kpTnoM5ol/GhmHaG5IazaWDIJYEFzWAO9hgBQyxJDljNw6l6gch591a5RVH0WzPBGd48nUeq0cI1NRMKfATevMeAQgtPJoseg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZ4pFGeK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I0g6hjLgs3/Y/pOZJwuqIwLH1/0gr+hkL/e/oSNgXYIgeCesHan6UvKSV+HortHRzQKWibIoQUouIHj6N8qEjbwvEjTy9SLj1jXUGg+JGcnRz7oz4IF9w6S3tGyHUPtZz71dXMFTOM0j+lELYzauhQwbLQoAOnJodcejcXVIArU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1GK2hGEZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZ4pFGeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91254C4CEF5;
-	Wed,  3 Dec 2025 16:11:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1GK2hGEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC135C4CEF5;
+	Wed,  3 Dec 2025 16:11:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778299;
-	bh=a4Arv5fMN6nZflqbpmiiPWkG9ArvlCFC3N7t1NcXYmk=;
+	s=korg; t=1764778302;
+	bh=K/rQe8sZgQDRZgTfz4gdyBhsRnCRiemLV8W1oPnUNCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EZ4pFGeKnPE1RRKWm7UEHwP8R4iwVZxkt70F+l+JXOr68bJ9/DHg++dbnYOVayfEn
-	 WxXcSNSyIWsCu2womjcIgPi4z7tnOHhEBf+fNrIUYgidWudrljXK2DLrVNDBa+4fb1
-	 Mki1xs6flx2jny8rxQZoTwt/RMqoITWk1uQcmr0E=
+	b=1GK2hGEZpkWsLBRc0oxDZ3rVE0HNqVCOyhYstxYcTELEFbb8m6FrHEB9KuRYZ8dIS
+	 hKZXE/3VJH7ktIolQWl+bPrgd9XdHD41QTunvWPkIZW1M9uBwIr6pfOmz4pRNDj0as
+	 uUSN7WxWbG3bvlkPEGW9dwCtVDMQwBZ2J63zx+20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 276/392] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
-Date: Wed,  3 Dec 2025 16:27:06 +0100
-Message-ID: <20251203152424.319007924@linuxfoundation.org>
+	Edoardo Canepa <edoardo.canepa@canonical.com>,
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 303/392] selftests: net: use BASH for bareudp testing
+Date: Wed,  3 Dec 2025 16:27:33 +0100
+Message-ID: <20251203152425.315943367@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,53 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf upstream.
+[ Upstream commit 9311e9540a8b406d9f028aa87fb072a3819d4c82 ]
 
-The PCM stream data in USB-audio driver is transferred over USB URB
-packet buffers, and each packet size is determined dynamically.  The
-packet sizes are limited by some factors such as wMaxPacketSize USB
-descriptor.  OTOH, in the current code, the actually used packet sizes
-are determined only by the rate and the PPS, which may be bigger than
-the size limit above.  This results in a buffer overflow, as reported
-by syzbot.
+In bareudp.sh, this script uses /bin/sh and it will load another lib.sh
+BASH script at the very beginning.
 
-Basically when the limit is smaller than the calculated packet size,
-it implies that something is wrong, most likely a weird USB
-descriptor.  So the best option would be just to return an error at
-the parameter setup time before doing any further operations.
+But on some operating systems like Ubuntu, /bin/sh is actually pointed to
+DASH, thus it will try to run BASH commands with DASH and consequently
+leads to syntax issues:
+  # ./bareudp.sh: 4: ./lib.sh: Bad substitution
+  # ./bareudp.sh: 5: ./lib.sh: source: not found
+  # ./bareudp.sh: 24: ./lib.sh: Syntax error: "(" unexpected
 
-This patch introduces such a sanity check, and returns -EINVAL when
-the packet size is greater than maxpacksize.  The comparison with
-ep->packsize[1] alone should suffice since it's always equal or
-greater than ep->packsize[0].
+Fix this by explicitly using BASH for bareudp.sh. This fixes test
+execution failures on systems where /bin/sh is not BASH.
 
-Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
-Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Edoardo Canepa <edoardo.canepa@canonical.com>
+Link: https://bugs.launchpad.net/bugs/2129812
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20251027095710.2036108-2-po-hsu.lin@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/endpoint.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ tools/testing/selftests/net/bareudp.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1374,6 +1374,11 @@ int snd_usb_endpoint_set_params(struct s
- 	ep->sample_rem = ep->cur_rate % ep->pps;
- 	ep->packsize[0] = ep->cur_rate / ep->pps;
- 	ep->packsize[1] = (ep->cur_rate + (ep->pps - 1)) / ep->pps;
-+	if (ep->packsize[1] > ep->maxpacksize) {
-+		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
-+			      ep->maxpacksize, ep->cur_rate, ep->pps);
-+		return -EINVAL;
-+	}
+diff --git a/tools/testing/selftests/net/bareudp.sh b/tools/testing/selftests/net/bareudp.sh
+index f366cadbc5e86..ff4308b48e65d 100755
+--- a/tools/testing/selftests/net/bareudp.sh
++++ b/tools/testing/selftests/net/bareudp.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
  
- 	/* calculate the frequency in 16.16 format */
- 	ep->freqm = ep->freqn;
+ # Test various bareudp tunnel configurations.
+-- 
+2.51.0
+
 
 
