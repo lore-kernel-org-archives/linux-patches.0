@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B76335C1BA;
-	Wed,  3 Dec 2025 16:25:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0546335CB63;
+	Wed,  3 Dec 2025 16:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779155; cv=none; b=iVRxUxx46JKLcoQpyUZzNiLzDRLmcPzaDtVY774Sgy9pHot7zcCqDL6R7Hycgm4lsXmSermsmvnIIRetewnU4/qapBGspq6ySIFDCVWmynFV7g0mV0hL1cDCcQhGnpAu0GJk8d4isABhjDhESGNqSei2SHzuLp9DNiMaMK1n4s8=
+	t=1764779159; cv=none; b=tDMmHh6zyXUv+q5c1b65GDAUSkFT7lf1zRhK2hdHFhOZGcFq2I4K1XRDMRotSTuP4ADq6CK4gky+dCsbE1upXTLoWjO3xXpWukc/RNJ+/GNA5468fn67NXL9Pb6fIWGgBn9yhe9o6C9JXAao4eTXMwDyWukkoKNxYxIktLKQlF4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779155; c=relaxed/simple;
-	bh=dd0REasp3gXENDGQ9cImuFpCVrYZynemOrbbQyUcK9Q=;
+	s=arc-20240116; t=1764779159; c=relaxed/simple;
+	bh=vhN8Bhrh3+qZXDturpRfEGpsAy+W7X13l+tZknG1qMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S73SIGQtXv4cezQVmtiXE7fOB1OPi+U4OszmBaLNbK9YMlZi9K7EOmailgcQT6By1UxkrPG9YK8Rs124Ee6eWUd7CD1CQWmfe2boBaDktH621jSY9mIqy+rxAnHL0Eq3Pi5zKhhncehOW7UCTwPmLqkLKlUkfbutlnEWetumI5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Am50wC4q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jp/ejVnoHPBkbrsHugNoZnABnDNLY3Cw1SfkzCbK5FhTKcCCsz61XCJVxb6A9ynEEP8gBrg1Cl8SUACwqg7c0XoBNmBlVNt5ohgeN/7CoqXcTkKFuwZeJY9H9gJnWwlHDgdrSkMRjBdGTqgLQ3j2jdySdhSKbRi5SwPybd10acQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgWJuPMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Am50wC4q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2198DC4CEF5;
-	Wed,  3 Dec 2025 16:25:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgWJuPMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69096C4CEF5;
+	Wed,  3 Dec 2025 16:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779155;
-	bh=dd0REasp3gXENDGQ9cImuFpCVrYZynemOrbbQyUcK9Q=;
+	s=korg; t=1764779158;
+	bh=vhN8Bhrh3+qZXDturpRfEGpsAy+W7X13l+tZknG1qMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Am50wC4q6A+wVtzRiluNszUGloOV2ylu0xmlbR9i/QqYpNo0zA+YvM/S/STkxsAZQ
-	 HlIpQOT891IizDlM4avEh6ztmevV4SEQ3uLb6q8lTJndgqsbRlWrwOTaF3MnjCQV7a
-	 cznjG9F6gzIGAlUyc1jAY0xnRz8iusmU5KYP2OCk=
+	b=jgWJuPMpZR8NQUUEhjN+5QUHCAoe06vQpCIBx8+ylInB4ymL6SrjztrmJ8bT27S3O
+	 OgluKPSOSBOIdAzAz9ORbdCTmqJKOIFXvARRUFEQiJjp21YUY784uTJHtqLCEAFKil
+	 dKYzfM50J64OD7gI3FyxwFPs/lIjgaXabSQC5LwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/568] extcon: adc-jack: Fix wakeup source leaks on device unbind
-Date: Wed,  3 Dec 2025 16:22:52 +0100
-Message-ID: <20251203152446.950314371@linuxfoundation.org>
+Subject: [PATCH 6.1 171/568] net: phy: fixed_phy: let fixed_phy_unregister free the phy_device
+Date: Wed,  3 Dec 2025 16:22:53 +0100
+Message-ID: <20251203152446.987137585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,34 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 78b6a991eb6c6f19ed7d0ac91cda3b3b117fda8f ]
+[ Upstream commit a0f849c1cc6df0db9083b4c81c05a5456b1ed0fb ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.  Do not use devm interface, because it would change the order of
-cleanup.
+fixed_phy_register() creates and registers the phy_device. To be
+symmetric, we should not only unregister, but also free the phy_device
+in fixed_phy_unregister(). This allows to simplify code in users.
 
-Link: https://lore.kernel.org/lkml/20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org/
-Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Note wrt of_phy_deregister_fixed_link():
+put_device(&phydev->mdio.dev) and phy_device_free(phydev) are identical.
+
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/ad8dda9a-10ed-4060-916b-3f13bdbb899d@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon-adc-jack.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/dsa/dsa_loop.c  | 9 +++------
+ drivers/net/mdio/of_mdio.c  | 1 -
+ drivers/net/phy/fixed_phy.c | 1 +
+ 3 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
-index 0317b614b6805..ea06cd4340525 100644
---- a/drivers/extcon/extcon-adc-jack.c
-+++ b/drivers/extcon/extcon-adc-jack.c
-@@ -162,6 +162,7 @@ static int adc_jack_remove(struct platform_device *pdev)
- {
- 	struct adc_jack_data *data = platform_get_drvdata(pdev);
+diff --git a/drivers/net/dsa/dsa_loop.c b/drivers/net/dsa/dsa_loop.c
+index 5b139f2206b6e..48cf9d300bbf5 100644
+--- a/drivers/net/dsa/dsa_loop.c
++++ b/drivers/net/dsa/dsa_loop.c
+@@ -378,13 +378,10 @@ static struct mdio_driver dsa_loop_drv = {
  
-+	device_init_wakeup(&pdev->dev, false);
- 	free_irq(data->irq, data);
- 	cancel_work_sync(&data->handler.work);
+ static void dsa_loop_phydevs_unregister(void)
+ {
+-	unsigned int i;
+-
+-	for (i = 0; i < NUM_FIXED_PHYS; i++)
+-		if (!IS_ERR(phydevs[i])) {
++	for (int i = 0; i < NUM_FIXED_PHYS; i++) {
++		if (!IS_ERR(phydevs[i]))
+ 			fixed_phy_unregister(phydevs[i]);
+-			phy_device_free(phydevs[i]);
+-		}
++	}
+ }
+ 
+ static int __init dsa_loop_init(void)
+diff --git a/drivers/net/mdio/of_mdio.c b/drivers/net/mdio/of_mdio.c
+index 1e46e39f5f46a..6444f77931708 100644
+--- a/drivers/net/mdio/of_mdio.c
++++ b/drivers/net/mdio/of_mdio.c
+@@ -440,6 +440,5 @@ void of_phy_deregister_fixed_link(struct device_node *np)
+ 	fixed_phy_unregister(phydev);
+ 
+ 	put_device(&phydev->mdio.dev);	/* of_phy_find_device() */
+-	phy_device_free(phydev);	/* fixed_phy_register() */
+ }
+ EXPORT_SYMBOL(of_phy_deregister_fixed_link);
+diff --git a/drivers/net/phy/fixed_phy.c b/drivers/net/phy/fixed_phy.c
+index aef739c20ac4d..4694fb3eaa2ff 100644
+--- a/drivers/net/phy/fixed_phy.c
++++ b/drivers/net/phy/fixed_phy.c
+@@ -329,6 +329,7 @@ void fixed_phy_unregister(struct phy_device *phy)
+ 	phy_device_remove(phy);
+ 	of_node_put(phy->mdio.dev.of_node);
+ 	fixed_phy_del(phy->mdio.addr);
++	phy_device_free(phy);
+ }
+ EXPORT_SYMBOL_GPL(fixed_phy_unregister);
  
 -- 
 2.51.0
