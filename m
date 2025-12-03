@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E04930FF3B;
-	Wed,  3 Dec 2025 15:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6C7306D49;
+	Wed,  3 Dec 2025 15:35:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776097; cv=none; b=FCdLAP0P0byXCNx7STNHFrTJGsYYxJezzfAZA3E/ANi+ZJ8qMb2GNS8TTwk/XtnobMo5mgXhFtZXZdcLxJm9Pc1DdZ695F0wkSN/lDdJCdPm+ERQA5EROsVH8PNuVCtds9QQlKObtmvC9G52nH+JPw+VQQMx5vK3+F7FNaWX+kE=
+	t=1764776100; cv=none; b=tzzTn84kTuyXhHF+7zfPxIYFKYV3JkObrsoo59nNEdx/to7uCMpLjec3DSBhRHDN9hhDGXFqcc/E0gDqJZLNNyJdBK1bL3qifGgpBjPAvG6eOm0ns8r/QbsgAl7WQHmsmnfNPQdQ1s0VCs41r9xpJe4gfYNbVHytsDwXH4Q7WeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776097; c=relaxed/simple;
-	bh=hLDbOS5c5L1W9cRSSia9nw5bwnC1VXbMWyFNvWOWyr0=;
+	s=arc-20240116; t=1764776100; c=relaxed/simple;
+	bh=r4t3bFpHEJQlkj0tZDU8+rciJFa83vGurEQX34xRrpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3u9O2DN584iSiSEvLiWGIVEoI6fwUyZEMgt4SxrKpWwdTFTHWyF6AS39Y9iu1UQDYfkaBxpF8PICY0MHn6KX+ls50RJ8/ASi5+mx9rQpncDGG4dLEKgH9XvyaFw4dqIn/9KvZfHqkp2ZotpXsWuCyaKshvggeK5Pz0JXVdFPV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdxBr4DF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MFiG0UQxCX9cqzZ0aNfR98z/Nf8urC53Bq+/ll4jOxK58DzskUOUNabeLJI27tNyAeFKejShwnmRSfxtpH5YErSg7GsuFFPJqD6sTiBUOuN7qezAzFcxPev6NsaxdszhIfd7mb1uCH0qIGirP+brCtxY6sp74/Ec06WH2zr1fIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7jeHgH9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdxBr4DF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6367FC4CEF5;
-	Wed,  3 Dec 2025 15:34:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7jeHgH9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE1EC4CEF5;
+	Wed,  3 Dec 2025 15:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776096;
-	bh=hLDbOS5c5L1W9cRSSia9nw5bwnC1VXbMWyFNvWOWyr0=;
+	s=korg; t=1764776100;
+	bh=r4t3bFpHEJQlkj0tZDU8+rciJFa83vGurEQX34xRrpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NdxBr4DFDxjlr8IJeVB89PuBc3e+r2ogOiO0nmwvwiS67Gkm4G5YUx0oA412dFrJR
-	 AI0wmPhXcvuGDo8dPeW/JafGXsP2jzwazNzBmGBn+ojnvTgwa9k7fIC0WaD3SBtNwD
-	 B5KBMMkAhJszxf2OLSuLOssTM/5R5JTONrRWOosc=
+	b=J7jeHgH9IvqapiI6ueVvlLO5l0EptPdssuZTgnVF22UD9GeUDrfdHK+H5IE/BWplP
+	 sY/LYoaWuqZKNgTLoj44IMotrnkopv6I1C8iX2Cn/S6cZPDfqmh9mFSuSv53meu9Cq
+	 fDtAzhrZlFY55TwHJFAVxN6tStYrh26HwCzoivtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Len Brown <len.brown@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/300] bridge: Redirect to backup port when port is administratively down
-Date: Wed,  3 Dec 2025 16:24:44 +0100
-Message-ID: <20251203152403.589398118@linuxfoundation.org>
+Subject: [PATCH 5.10 063/300] tools/power x86_energy_perf_policy: Prefer driver HWP limits
+Date: Wed,  3 Dec 2025 16:24:27 +0100
+Message-ID: <20251203152402.956046435@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,59 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Len Brown <len.brown@intel.com>
 
-[ Upstream commit 3d05b24429e1de7a17c8fdccb04a04dbc8ad297b ]
+[ Upstream commit 2734fdbc9bb8a3aeb309ba0d62212d7f53f30bc7 ]
 
-If a backup port is configured for a bridge port, the bridge will
-redirect known unicast traffic towards the backup port when the primary
-port is administratively up but without a carrier. This is useful, for
-example, in MLAG configurations where a system is connected to two
-switches and there is a peer link between both switches. The peer link
-serves as the backup port in case one of the switches loses its
-connection to the multi-homed system.
+When we are successful in using cpufreq min/max limits,
+skip setting the raw MSR limits entirely.
 
-In order to avoid flooding when the primary port loses its carrier, the
-bridge does not flush dynamic FDB entries pointing to the port upon STP
-disablement, if the port has a backup port.
+This is necessary to avoid undoing any modification that
+the cpufreq driver makes to our sysfs request.
 
-The above means that known unicast traffic destined to the primary port
-will be blackholed when the port is put administratively down, until the
-FDB entries pointing to it are aged-out.
+eg. intel_pstate may take our request for a limit
+that is valid according to HWP.CAP.MIN/MAX and clip
+it to be within the range available in PLATFORM_INFO.
 
-Given that the current behavior is quite weird and unlikely to be
-depended on by anyone, amend the bridge to redirect to the backup port
-also when the primary port is administratively down and not only when it
-does not have a carrier.
-
-The change is motivated by a report from a user who expected traffic to
-be redirected to the backup port when the primary port was put
-administratively down while debugging a network issue.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250812080213.325298-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Len Brown <len.brown@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_forward.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../x86_energy_perf_policy/x86_energy_perf_policy.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index ada03d49e7c1a..4db9a51438790 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -142,7 +142,8 @@ void br_forward(const struct net_bridge_port *to,
- 		goto out;
+diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+index 5c93546fc689b..702b5882cfce4 100644
+--- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
++++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
+@@ -62,6 +62,7 @@ unsigned char turbo_update_value;
+ unsigned char update_hwp_epp;
+ unsigned char update_hwp_min;
+ unsigned char update_hwp_max;
++unsigned char hwp_limits_done_via_sysfs;
+ unsigned char update_hwp_desired;
+ unsigned char update_hwp_window;
+ unsigned char update_hwp_use_pkg;
+@@ -862,8 +863,10 @@ int ratio_2_sysfs_khz(int ratio)
+ }
+ /*
+  * If HWP is enabled and cpufreq sysfs attribtes are present,
+- * then update sysfs, so that it will not become
+- * stale when we write to MSRs.
++ * then update via sysfs. The intel_pstate driver may modify (clip)
++ * this request, say, when HWP_CAP is outside of PLATFORM_INFO limits,
++ * and the driver-chosen value takes precidence.
++ *
+  * (intel_pstate's max_perf_pct and min_perf_pct will follow cpufreq,
+  *  so we don't have to touch that.)
+  */
+@@ -918,6 +921,8 @@ int update_sysfs(int cpu)
+ 	if (update_hwp_max)
+ 		update_cpufreq_scaling_freq(1, cpu, req_update.hwp_max);
  
- 	/* redirect to backup link if the destination port is down */
--	if (rcu_access_pointer(to->backup_port) && !netif_carrier_ok(to->dev)) {
-+	if (rcu_access_pointer(to->backup_port) &&
-+	    (!netif_carrier_ok(to->dev) || !netif_running(to->dev))) {
- 		struct net_bridge_port *backup_port;
++	hwp_limits_done_via_sysfs = 1;
++
+ 	return 0;
+ }
  
- 		backup_port = rcu_dereference(to->backup_port);
+@@ -996,10 +1001,10 @@ int update_hwp_request(int cpu)
+ 	if (debug)
+ 		print_hwp_request(cpu, &req, "old: ");
+ 
+-	if (update_hwp_min)
++	if (update_hwp_min && !hwp_limits_done_via_sysfs)
+ 		req.hwp_min = req_update.hwp_min;
+ 
+-	if (update_hwp_max)
++	if (update_hwp_max && !hwp_limits_done_via_sysfs)
+ 		req.hwp_max = req_update.hwp_max;
+ 
+ 	if (update_hwp_desired)
 -- 
 2.51.0
 
