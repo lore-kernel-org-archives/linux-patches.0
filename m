@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB7F3168FB;
-	Wed,  3 Dec 2025 15:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA93F3164D0;
+	Wed,  3 Dec 2025 15:42:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776577; cv=none; b=l+oaUt1jY8154l32vDycmokjnXMlezbnGf60DCcriCFY9fmDo2kyu2w3nqvPcS74P2M8pVQOJ3zL6Sm7Cq80ETDnCMjIi4BouYZgLexL90ymMhaLnwvegP3imkTjimjLx4G+6QBdtHiIFyPEF70sZBCPTsC9F3kv8gtOEGM4Ys8=
+	t=1764776579; cv=none; b=CzlYvJE+phqWx7KcZ46Mzav87i84RtzWxM5e+gKPjS61+krPFSG9/srYxhlH525RK+SB2TajTA4lmh2Ej3dkDnWYpea10yG80g9upEj68wSRhoTkhtgv/0y9i8N7J+1jOeXURXhQfS7Bb1ozuvlQohAbV+Xv5wQhNkA7GJB78hI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776577; c=relaxed/simple;
-	bh=7T+yOAgo6ndVjbuBAOTzWi1U7iO2jx72FTnBQQiCa4A=;
+	s=arc-20240116; t=1764776579; c=relaxed/simple;
+	bh=uW6pD6sfuiy5eIlGsW1cdDm21JbyKKUPgRRdOlNVOIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hR9U56/fBev0lVTZaEafZ64zf3tHwXnjErxT/XaP6+Htmt/4x6kZIBRUdEgyvL8WA/+5Egkw/pWUDAP7ttV8FOSx9hLTCA9QIKWbp6531yGbA/bF4X1EwYXdYoVzZ3NYzhpZUPA4Gb8UgbzkdhzYQPmX56Kk0LxCDQIx7Gd8Y38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n96TnffO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9fv8WZ+++puCI5k1XdGO/3ko4X9PlSN3PzBiSXn5wZkI1yZCAYHa8CmKiUjbm3eF3KJbLLUkJTrUcYNqSn+91lJrVarCyaM8oBszbK4ueFE/8iFcQQXA8v71sMBY6HbqKN4+kqONGWWwf6EDKJ9+nKY+21DweeseapTKA3lL2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KdZNmmxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n96TnffO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E718C4CEF5;
-	Wed,  3 Dec 2025 15:42:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KdZNmmxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0F9C4CEF5;
+	Wed,  3 Dec 2025 15:42:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776576;
-	bh=7T+yOAgo6ndVjbuBAOTzWi1U7iO2jx72FTnBQQiCa4A=;
+	s=korg; t=1764776579;
+	bh=uW6pD6sfuiy5eIlGsW1cdDm21JbyKKUPgRRdOlNVOIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n96TnffOzynNY0687H18ttjQvUMuVjEZnNRGQq5EIUF9R7RgM4gbafIR0nzBs+vWc
-	 2F1ZgSLSkARH8ELajFXsb5eMdhjFhB+SBoA3hPD9P3iRsp8qOu++XPbolrImHyTiQ1
-	 tNJ4tA/1QiUwFrwZRFaiNDo/V9UgTE5wgamBX/G0=
+	b=KdZNmmxGOHum2NNixf8K5v9O70pqzLPj/i/EIM3h70HE0TNfJBGzjg/qKWo2Rul6R
+	 JkFN89CF3rEUODG3QudxRFo8KsioQqm64BHM1AJmgrCGQA6tXjfiFyeyLwsMUDRgnZ
+	 2cdYDadD+dw+FduW9VwIkHbk7EiAnr/c4Z1LEk+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 224/300] MIPS: Malta: Fix !EVA SOC-it PCI MMIO
-Date: Wed,  3 Dec 2025 16:27:08 +0100
-Message-ID: <20251203152408.923387086@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>
+Subject: [PATCH 5.10 225/300] drm/tegra: dc: Fix reference leak in tegra_dc_couple()
+Date: Wed,  3 Dec 2025 16:27:09 +0100
+Message-ID: <20251203152408.961220512@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,100 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit ebd729fef31620e0bf74cbf8a4c7fda73a2a4e7e upstream.
+commit 4c5376b4b143c4834ebd392aef2215847752b16a upstream.
 
-Fix a regression that has caused accesses to the PCI MMIO window to
-complete unclaimed in non-EVA configurations with the SOC-it family of
-system controllers, preventing PCI devices from working that use MMIO.
+driver_find_device() calls get_device() to increment the reference
+count once a matching device is found, but there is no put_device() to
+balance the reference count. To avoid reference count leakage, add
+put_device() to decrease the reference count.
 
-In the non-EVA case PHYS_OFFSET is set to 0, meaning that PCI_BAR0 is
-set with an empty mask (and PCI_HEAD4 matches addresses starting from 0
-accordingly).  Consequently all addresses are matched for incoming DMA
-accesses from PCI.  This seems to confuse the system controller's logic
-and outgoing bus cycles targeting the PCI MMIO window seem not to make
-it to the intended devices.
+Found by code review.
 
-This happens as well when a wider mask is used with PCI_BAR0, such as
-0x80000000 or 0xe0000000, that makes addresses match that overlap with
-the PCI MMIO window, which starts at 0x10000000 in our configuration.
-
-Set the mask in PCI_BAR0 to 0xf0000000 for non-EVA then, covering the
-non-EVA maximum 256 MiB of RAM, which is what YAMON does and which used
-to work correctly up to the offending commit.  Set PCI_P2SCMSKL to match
-PCI_BAR0 as required by the system controller's specification, and match
-PCI_P2SCMAPL to PCI_HEAD4 for identity mapping.
-
-Verified with:
-
-Core board type/revision =      0x0d (Core74K) / 0x01
-System controller/revision =    MIPS SOC-it 101 OCP / 1.3   SDR-FW-4:1
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x1c
-Processor ID/revision =         0x97 (MIPS 74Kf) / 0x4c
-
-for non-EVA and with:
-
-Core board type/revision =      0x0c (CoreFPGA-5) / 0x00
-System controller/revision =    MIPS ROC-it2 / 0.0   FW-1:1 (CLK_unknown) GIC
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x00
-Processor ID/revision =         0xa0 (MIPS interAptiv UP) / 0x20
-
-for EVA/non-EVA, fixing:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: Could not read adapter factory MAC address!
-
-vs:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: DEFPA at MMIO addr = 0x10142000, IRQ = 10, Hardware addr = 00-00-f8-xx-xx-xx
-0000:00:12.0: registered as fddi0
-
-for non-EVA and causing no change for EVA.
-
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 422dd256642b ("MIPS: Malta: Allow PCI devices DMA to lower 2GB physical")
-Cc: stable@vger.kernel.org # v4.9+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: stable@vger.kernel.org
+Fixes: a31500fe7055 ("drm/tegra: dc: Restore coupling of display controllers")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20251022114720.24937-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mti-malta/malta-init.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/tegra/dc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/mips/mti-malta/malta-init.c
-+++ b/arch/mips/mti-malta/malta-init.c
-@@ -242,16 +242,22 @@ mips_pci_controller:
- #endif
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -2524,6 +2524,7 @@ static int tegra_dc_couple(struct tegra_
+ 		dc->client.parent = &parent->client;
  
- 		/*
--		 * Setup the Malta max (2GB) memory for PCI DMA in host bridge
--		 * in transparent addressing mode.
-+		 * Set up memory mapping in host bridge for PCI DMA masters,
-+		 * in transparent addressing mode.  For EVA use the Malta
-+		 * maximum of 2 GiB memory in the alias space at 0x80000000
-+		 * as per PHYS_OFFSET.  Otherwise use 256 MiB of memory in
-+		 * the regular space, avoiding mapping the PCI MMIO window
-+		 * for DMA as it seems to confuse the system controller's
-+		 * logic, causing PCI MMIO to stop working.
- 		 */
--		mask = PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH;
--		MSC_WRITE(MSC01_PCI_BAR0, mask);
--		MSC_WRITE(MSC01_PCI_HEAD4, mask);
-+		mask = PHYS_OFFSET ? PHYS_OFFSET : 0xf0000000;
-+		MSC_WRITE(MSC01_PCI_BAR0,
-+			  mask | PCI_BASE_ADDRESS_MEM_PREFETCH);
-+		MSC_WRITE(MSC01_PCI_HEAD4,
-+			  PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH);
+ 		dev_dbg(dc->dev, "coupled to %s\n", dev_name(companion));
++		put_device(companion);
+ 	}
  
--		mask &= MSC01_PCI_BAR0_SIZE_MSK;
- 		MSC_WRITE(MSC01_PCI_P2SCMSKL, mask);
--		MSC_WRITE(MSC01_PCI_P2SCMAPL, mask);
-+		MSC_WRITE(MSC01_PCI_P2SCMAPL, PHYS_OFFSET);
- 
- 		/* Don't handle target retries indefinitely.  */
- 		if ((data & MSC01_PCI_CFG_MAXRTRY_MSK) ==
+ 	return 0;
 
 
