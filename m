@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E807B35C185;
-	Wed,  3 Dec 2025 16:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD0835BDDB;
+	Wed,  3 Dec 2025 16:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779786; cv=none; b=shWomNP41GsDYQtf9/BsWEITqVMODaFXD7IN/9DQDPZYdgpfDv3nTmKtsRLhfQx1qORmlXLsONpMIVypEd9w3/JM6miVrTVroM938CO1p1XP2/pu9zkS+YR7dVfCRT+YZ2Y2KA0MOsABfSUxEdDJIFqh+4SxUXtNXJAHSpl9GAY=
+	t=1764779789; cv=none; b=oVlivN2Ab13zJ3ZEEzrk0R7AC9Ufk0c28agQldrNeM2EL95cyt8xsbS/jYqMSXC3Ptr5fQE2ofv6QEWTZD+eS81QS5qbTqOwbZtj7zpvIPjHFE8Pzj5kSM9c4tJzx7cu7felEsSU602bepBidWWY7kkV3bhnBvl6Q20f/GzUQdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779786; c=relaxed/simple;
-	bh=pzy4ngyhsZnf+fTbptz6JI8FvOEtOCOc4U5Jj8p5iXM=;
+	s=arc-20240116; t=1764779789; c=relaxed/simple;
+	bh=fdXrAGYXAL102LShEElXWEg2mUnxiOp4cyDBmxFlEL0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R4uIVW0cGVERbP6EujprhN5GaCE7vyhlI2vJVp47vKcd4DMqbfurNswLxzRaokXDpeEPYGXSGfTa+Pq1iI3Q9JvEQZKlpS0gWBRKBdocGK4TQU2AY0efjJBQzeFGKb5iiOVetBMtr/mjkn0IJG6jjOf3gaBZ/JKWZtgJi4Vcws8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVSEvP+X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nga30fO6HqOKgMt8xKuy6lZtg5yI7+VcG4VDBXwy6zNAiuFICZJFZR28MB+CvYDW+0AqOd+xBT0KkI1znepJi7L8bJRGqIbjhvMzXcpfbEJBOfNz2q9GLN3swYVVjdXfAASgiLXYz82R2+bth50lDnKl6CiActujl1r+jsyPcdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SvfrbTOG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVSEvP+X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CDF9C4CEF5;
-	Wed,  3 Dec 2025 16:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SvfrbTOG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD765C4CEF5;
+	Wed,  3 Dec 2025 16:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779785;
-	bh=pzy4ngyhsZnf+fTbptz6JI8FvOEtOCOc4U5Jj8p5iXM=;
+	s=korg; t=1764779789;
+	bh=fdXrAGYXAL102LShEElXWEg2mUnxiOp4cyDBmxFlEL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVSEvP+XMxrvg2MC3vYT0n1hzt6kA+kkYd4RK/jpNaxYWk0ycMzjTsZ5urFL15cif
-	 owevNYhyWrAm/Ae2RoQGwasfgxeylQidhB/5Ot4cakGg2At9SJHBf0/i7d7w5+r50v
-	 t8g36vKXM28XQgIYSxgjybzhyCvcR+Jc/AoRGfm8=
+	b=SvfrbTOGlGQ48VjuX8o82Tri0bQyN8zYspNF7ZVtVMfRbCzurE/XHwc/o00yGYdF7
+	 Xc9PSGUxqmmvlkMbm4qLQDRyxABv7uYClmH7FjUYZ6Ogoon+4Y/P+TkhqJJg+BGEv0
+	 ddoo9FE+Nx+rthGHzZTmcV/D0gYwSE2GlFKlFYIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quang Le <quanglex97@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 361/568] af_unix: Initialise scc_index in unix_add_edge().
-Date: Wed,  3 Dec 2025 16:26:03 +0100
-Message-ID: <20251203152453.923836073@linuxfoundation.org>
+Subject: [PATCH 6.1 362/568] net/sched: act_connmark: transition to percpu stats and rcu
+Date: Wed,  3 Dec 2025 16:26:04 +0100
+Message-ID: <20251203152453.959720194@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,137 +52,275 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 60e6489f8e3b086bd1130ad4450a2c112e863791 ]
+[ Upstream commit 288864effe33885988d53faf7830b35cb9a84c7a ]
 
-Quang Le reported that the AF_UNIX GC could garbage-collect a
-receive queue of an alive in-flight socket, with a nice repro.
+The tc action act_connmark was using shared stats and taking the per
+action lock in the datapath. Improve it by using percpu stats and rcu.
 
-The repro consists of three stages.
+perf before:
+- 13.55% tcf_connmark_act
+   - 81.18% _raw_spin_lock
+       80.46% native_queued_spin_lock_slowpath
 
-  1)
-    1-a. Create a single cyclic reference with many sockets
-    1-b. close() all sockets
-    1-c. Trigger GC
+perf after:
+- 2.85% tcf_connmark_act
 
-  2)
-    2-a. Pass sk-A to an embryo sk-B
-    2-b. Pass sk-X to sk-X
-    2-c. Trigger GC
+tdc results:
+1..15
+ok 1 2002 - Add valid connmark action with defaults
+ok 2 56a5 - Add valid connmark action with control pass
+ok 3 7c66 - Add valid connmark action with control drop
+ok 4 a913 - Add valid connmark action with control pipe
+ok 5 bdd8 - Add valid connmark action with control reclassify
+ok 6 b8be - Add valid connmark action with control continue
+ok 7 d8a6 - Add valid connmark action with control jump
+ok 8 aae8 - Add valid connmark action with zone argument
+ok 9 2f0b - Add valid connmark action with invalid zone argument
+ok 10 9305 - Add connmark action with unsupported argument
+ok 11 71ca - Add valid connmark action and replace it
+ok 12 5f8f - Add valid connmark action with cookie
+ok 13 c506 - Replace connmark with invalid goto chain control
+ok 14 6571 - Delete connmark action with valid index
+ok 15 3426 - Delete connmark action with invalid index
 
-  3)
-    3-a. accept() the embryo sk-B
-    3-b. Pass sk-B to sk-C
-    3-c. close() the in-flight sk-A
-    3-d. Trigger GC
-
-As of 2-c, sk-A and sk-X are linked to unix_unvisited_vertices,
-and unix_walk_scc() groups them into two different SCCs:
-
-  unix_sk(sk-A)->vertex->scc_index = 2 (UNIX_VERTEX_INDEX_START)
-  unix_sk(sk-X)->vertex->scc_index = 3
-
-Once GC completes, unix_graph_grouped is set to true.
-Also, unix_graph_maybe_cyclic is set to true due to sk-X's
-cyclic self-reference, which makes close() trigger GC.
-
-At 3-b, unix_add_edge() allocates unix_sk(sk-B)->vertex and
-links it to unix_unvisited_vertices.
-
-unix_update_graph() is called at 3-a. and 3-b., but neither
-unix_graph_grouped nor unix_graph_maybe_cyclic is changed
-because both sk-B's listener and sk-C are not in-flight.
-
-3-c decrements sk-A's file refcnt to 1.
-
-Since unix_graph_grouped is true at 3-d, unix_walk_scc_fast()
-is finally called and iterates 3 sockets sk-A, sk-B, and sk-X:
-
-  sk-A -> sk-B (-> sk-C)
-  sk-X -> sk-X
-
-This is totally fine.  All of them are not yet close()d and
-should be grouped into different SCCs.
-
-However, unix_vertex_dead() misjudges that sk-A and sk-B are
-in the same SCC and sk-A is dead.
-
-  unix_sk(sk-A)->scc_index == unix_sk(sk-B)->scc_index <-- Wrong!
-  &&
-  sk-A's file refcnt == unix_sk(sk-A)->vertex->out_degree
-                                       ^-- 1 in-flight count for sk-B
-  -> sk-A is dead !?
-
-The problem is that unix_add_edge() does not initialise scc_index.
-
-Stage 1) is used for heap spraying, making a newly allocated
-vertex have vertex->scc_index == 2 (UNIX_VERTEX_INDEX_START)
-set by unix_walk_scc() at 1-c.
-
-Let's track the max SCC index from the previous unix_walk_scc()
-call and assign the max + 1 to a new vertex's scc_index.
-
-This way, we can continue to avoid Tarjan's algorithm while
-preventing misjudgments.
-
-Fixes: ad081928a8b0 ("af_unix: Avoid Tarjan's algorithm if unnecessary.")
-Reported-by: Quang Le <quanglex97@gmail.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20251109025233.3659187-1-kuniyu@google.com
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 62b656e43eae ("net: sched: act_connmark: initialize struct tc_ife to fix kernel leak")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/garbage.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ include/net/tc_act/tc_connmark.h |   9 ++-
+ net/sched/act_connmark.c         | 107 ++++++++++++++++++++-----------
+ 2 files changed, 75 insertions(+), 41 deletions(-)
 
-diff --git a/net/unix/garbage.c b/net/unix/garbage.c
-index 0068e758be4dd..66fd606c43f45 100644
---- a/net/unix/garbage.c
-+++ b/net/unix/garbage.c
-@@ -136,6 +136,7 @@ enum unix_vertex_index {
+diff --git a/include/net/tc_act/tc_connmark.h b/include/net/tc_act/tc_connmark.h
+index 1f4cb477bb5d6..e8dd77a967480 100644
+--- a/include/net/tc_act/tc_connmark.h
++++ b/include/net/tc_act/tc_connmark.h
+@@ -4,10 +4,15 @@
+ 
+ #include <net/act_api.h>
+ 
+-struct tcf_connmark_info {
+-	struct tc_action common;
++struct tcf_connmark_parms {
+ 	struct net *net;
+ 	u16 zone;
++	struct rcu_head rcu;
++};
++
++struct tcf_connmark_info {
++	struct tc_action common;
++	struct tcf_connmark_parms __rcu *parms;
  };
  
- static unsigned long unix_vertex_unvisited_index = UNIX_VERTEX_INDEX_MARK1;
-+static unsigned long unix_vertex_max_scc_index = UNIX_VERTEX_INDEX_START;
+ #define to_connmark(a) ((struct tcf_connmark_info *)a)
+diff --git a/net/sched/act_connmark.c b/net/sched/act_connmark.c
+index d41002e4613ff..418d60435b9d4 100644
+--- a/net/sched/act_connmark.c
++++ b/net/sched/act_connmark.c
+@@ -34,13 +34,15 @@ static int tcf_connmark_act(struct sk_buff *skb, const struct tc_action *a,
+ 	struct nf_conntrack_tuple tuple;
+ 	enum ip_conntrack_info ctinfo;
+ 	struct tcf_connmark_info *ca = to_connmark(a);
++	struct tcf_connmark_parms *parms;
+ 	struct nf_conntrack_zone zone;
+ 	struct nf_conn *c;
+ 	int proto;
  
- static void unix_add_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
+-	spin_lock(&ca->tcf_lock);
+ 	tcf_lastuse_update(&ca->tcf_tm);
+-	bstats_update(&ca->tcf_bstats, skb);
++	tcf_action_update_bstats(&ca->common, skb);
++
++	parms = rcu_dereference_bh(ca->parms);
+ 
+ 	switch (skb_protocol(skb, true)) {
+ 	case htons(ETH_P_IP):
+@@ -62,31 +64,29 @@ static int tcf_connmark_act(struct sk_buff *skb, const struct tc_action *a,
+ 	c = nf_ct_get(skb, &ctinfo);
+ 	if (c) {
+ 		skb->mark = READ_ONCE(c->mark);
+-		/* using overlimits stats to count how many packets marked */
+-		ca->tcf_qstats.overlimits++;
+-		goto out;
++		goto count;
+ 	}
+ 
+-	if (!nf_ct_get_tuplepr(skb, skb_network_offset(skb),
+-			       proto, ca->net, &tuple))
++	if (!nf_ct_get_tuplepr(skb, skb_network_offset(skb), proto, parms->net,
++			       &tuple))
+ 		goto out;
+ 
+-	zone.id = ca->zone;
++	zone.id = parms->zone;
+ 	zone.dir = NF_CT_DEFAULT_ZONE_DIR;
+ 
+-	thash = nf_conntrack_find_get(ca->net, &zone, &tuple);
++	thash = nf_conntrack_find_get(parms->net, &zone, &tuple);
+ 	if (!thash)
+ 		goto out;
+ 
+ 	c = nf_ct_tuplehash_to_ctrack(thash);
+-	/* using overlimits stats to count how many packets marked */
+-	ca->tcf_qstats.overlimits++;
+ 	skb->mark = READ_ONCE(c->mark);
+ 	nf_ct_put(c);
+ 
++count:
++	/* using overlimits stats to count how many packets marked */
++	tcf_action_inc_overlimit_qstats(&ca->common);
+ out:
+-	spin_unlock(&ca->tcf_lock);
+-	return ca->tcf_action;
++	return READ_ONCE(ca->tcf_action);
+ }
+ 
+ static const struct nla_policy connmark_policy[TCA_CONNMARK_MAX + 1] = {
+@@ -99,6 +99,7 @@ static int tcf_connmark_init(struct net *net, struct nlattr *nla,
+ 			     struct netlink_ext_ack *extack)
  {
-@@ -144,6 +145,7 @@ static void unix_add_edge(struct scm_fp_list *fpl, struct unix_edge *edge)
- 	if (!vertex) {
- 		vertex = list_first_entry(&fpl->vertices, typeof(*vertex), entry);
- 		vertex->index = unix_vertex_unvisited_index;
-+		vertex->scc_index = ++unix_vertex_max_scc_index;
- 		vertex->out_degree = 0;
- 		INIT_LIST_HEAD(&vertex->edges);
- 		INIT_LIST_HEAD(&vertex->scc_entry);
-@@ -480,10 +482,15 @@ static void __unix_walk_scc(struct unix_vertex *vertex, unsigned long *last_inde
- 				scc_dead = unix_vertex_dead(v);
+ 	struct tc_action_net *tn = net_generic(net, act_connmark_ops.net_id);
++	struct tcf_connmark_parms *nparms, *oparms;
+ 	struct nlattr *tb[TCA_CONNMARK_MAX + 1];
+ 	bool bind = flags & TCA_ACT_FLAGS_BIND;
+ 	struct tcf_chain *goto_ch = NULL;
+@@ -118,52 +119,66 @@ static int tcf_connmark_init(struct net *net, struct nlattr *nla,
+ 	if (!tb[TCA_CONNMARK_PARMS])
+ 		return -EINVAL;
+ 
++	nparms = kzalloc(sizeof(*nparms), GFP_KERNEL);
++	if (!nparms)
++		return -ENOMEM;
++
+ 	parm = nla_data(tb[TCA_CONNMARK_PARMS]);
+ 	index = parm->index;
+ 	ret = tcf_idr_check_alloc(tn, &index, a, bind);
+ 	if (!ret) {
+-		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_connmark_ops, bind, false, flags);
++		ret = tcf_idr_create_from_flags(tn, index, est, a,
++						&act_connmark_ops, bind, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+-			return ret;
++			err = ret;
++			goto out_free;
  		}
  
--		if (scc_dead)
-+		if (scc_dead) {
- 			unix_collect_skb(&scc, hitlist);
--		else if (!unix_graph_maybe_cyclic)
--			unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
-+		} else {
-+			if (unix_vertex_max_scc_index < vertex->scc_index)
-+				unix_vertex_max_scc_index = vertex->scc_index;
+ 		ci = to_connmark(*a);
+-		err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch,
+-					       extack);
+-		if (err < 0)
+-			goto release_idr;
+-		tcf_action_set_ctrlact(*a, parm->action, goto_ch);
+-		ci->net = net;
+-		ci->zone = parm->zone;
 +
-+			if (!unix_graph_maybe_cyclic)
-+				unix_graph_maybe_cyclic = unix_scc_cyclic(&scc);
++		nparms->net = net;
++		nparms->zone = parm->zone;
+ 
+ 		ret = ACT_P_CREATED;
+ 	} else if (ret > 0) {
+ 		ci = to_connmark(*a);
+-		if (bind)
+-			return 0;
+-		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+-			tcf_idr_release(*a, bind);
+-			return -EEXIST;
++		if (bind) {
++			err = 0;
++			goto out_free;
+ 		}
+-		err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch,
+-					       extack);
+-		if (err < 0)
++		if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
++			err = -EEXIST;
+ 			goto release_idr;
+-		/* replacing action and zone */
+-		spin_lock_bh(&ci->tcf_lock);
+-		goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
+-		ci->zone = parm->zone;
+-		spin_unlock_bh(&ci->tcf_lock);
+-		if (goto_ch)
+-			tcf_chain_put_by_act(goto_ch);
 +		}
- 
- 		list_del(&scc);
++
++		nparms->net = rtnl_dereference(ci->parms)->net;
++		nparms->zone = parm->zone;
++
+ 		ret = 0;
  	}
-@@ -498,6 +505,7 @@ static void unix_walk_scc(struct sk_buff_head *hitlist)
- 	unsigned long last_index = UNIX_VERTEX_INDEX_START;
  
- 	unix_graph_maybe_cyclic = false;
-+	unix_vertex_max_scc_index = UNIX_VERTEX_INDEX_START;
++	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
++	if (err < 0)
++		goto release_idr;
++
++	spin_lock_bh(&ci->tcf_lock);
++	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
++	oparms = rcu_replace_pointer(ci->parms, nparms, lockdep_is_held(&ci->tcf_lock));
++	spin_unlock_bh(&ci->tcf_lock);
++
++	if (goto_ch)
++		tcf_chain_put_by_act(goto_ch);
++
++	if (oparms)
++		kfree_rcu(oparms, rcu);
++
+ 	return ret;
++
+ release_idr:
+ 	tcf_idr_release(*a, bind);
++out_free:
++	kfree(nparms);
+ 	return err;
+ }
  
- 	/* Visit every vertex exactly once.
- 	 * __unix_walk_scc() moves visited vertices to unix_visited_vertices.
+@@ -177,11 +192,14 @@ static inline int tcf_connmark_dump(struct sk_buff *skb, struct tc_action *a,
+ 		.refcnt  = refcount_read(&ci->tcf_refcnt) - ref,
+ 		.bindcnt = atomic_read(&ci->tcf_bindcnt) - bind,
+ 	};
++	struct tcf_connmark_parms *parms;
+ 	struct tcf_t t;
+ 
+ 	spin_lock_bh(&ci->tcf_lock);
++	parms = rcu_dereference_protected(ci->parms, lockdep_is_held(&ci->tcf_lock));
++
+ 	opt.action = ci->tcf_action;
+-	opt.zone = ci->zone;
++	opt.zone = parms->zone;
+ 	if (nla_put(skb, TCA_CONNMARK_PARMS, sizeof(opt), &opt))
+ 		goto nla_put_failure;
+ 
+@@ -199,6 +217,16 @@ static inline int tcf_connmark_dump(struct sk_buff *skb, struct tc_action *a,
+ 	return -1;
+ }
+ 
++static void tcf_connmark_cleanup(struct tc_action *a)
++{
++	struct tcf_connmark_info *ci = to_connmark(a);
++	struct tcf_connmark_parms *parms;
++
++	parms = rcu_dereference_protected(ci->parms, 1);
++	if (parms)
++		kfree_rcu(parms, rcu);
++}
++
+ static struct tc_action_ops act_connmark_ops = {
+ 	.kind		=	"connmark",
+ 	.id		=	TCA_ID_CONNMARK,
+@@ -206,6 +234,7 @@ static struct tc_action_ops act_connmark_ops = {
+ 	.act		=	tcf_connmark_act,
+ 	.dump		=	tcf_connmark_dump,
+ 	.init		=	tcf_connmark_init,
++	.cleanup	=	tcf_connmark_cleanup,
+ 	.size		=	sizeof(struct tcf_connmark_info),
+ };
+ 
 -- 
 2.51.0
 
