@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E129F34B193;
-	Wed,  3 Dec 2025 16:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A3F34B1B0;
+	Wed,  3 Dec 2025 16:01:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777684; cv=none; b=BKNZKoUDCs8pW5wxanMTPAuqLZlcI0wABBTpfs6iSd4RwcPCWitLBYkHBEXuQFQnijnjs3ncLmZKRxLfkCspZdW2OvY0dJHnqR7cbfc/uHpAVayNQT0WDXWQiBlhfRfFSxx7Bgkhp8dI5fCT8ilqgdbd2QcEqwKmsC7QW+FVpSE=
+	t=1764777687; cv=none; b=FmNMswfoNsLa/yRghlxB2UpF7JKVULfGRo+9u2+918j3IB7zbDY4rOhfuUaYT41TDiH1Wx1+n4X3GphMT4EYawgPRIiKR1y9JbrPoR9vGxCEGDCNsxriCGY1BwHdv7YeHHRidvEV2MV87VD5VsYLf0jaXrLYDn8rJvK0Mlc6aFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777684; c=relaxed/simple;
-	bh=mH5AYjGNzZxFTLs5ObaIB1MJg+ZpODBaW1O+p65yO+g=;
+	s=arc-20240116; t=1764777687; c=relaxed/simple;
+	bh=k21pjHh+SZOom5ij6K1L7WC8NrdUm5i+ZswtDIQq4d4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ckxuRkguZ7Bxc7OuuBDBqxy2D2r4zZ5kkADQW9mhtNIohR6mv3QeqK03zWHQXntQHExM61+HDscs3SRW/ETDW8Q+gejl1HAb1odu52sRWIhraRtgyfXoaEHJNob2kzIKSgwW3hieayXfn/5FDZrjtDX2vPq5/w5Iswe4rx8aS4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8ISNlYc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hpk1YSNHGVYimy6MYAZG379i3QRggV/X8UmIMGMaXubM1vG1sTAhMupgXbAfim7m0LIa4hRJnapRbvH/wh2QpiR8tpfRW1IlfnFNKmjQBRGaRz6rvi2UgmpfTi+FRevdZIwrdZYvbmcGdFoYjF5rwRGGKc8y5y3N8sx+P6e0TJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX9M5gUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8ISNlYc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52AA5C4CEF5;
-	Wed,  3 Dec 2025 16:01:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX9M5gUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706D8C4CEF5;
+	Wed,  3 Dec 2025 16:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777683;
-	bh=mH5AYjGNzZxFTLs5ObaIB1MJg+ZpODBaW1O+p65yO+g=;
+	s=korg; t=1764777686;
+	bh=k21pjHh+SZOom5ij6K1L7WC8NrdUm5i+ZswtDIQq4d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r8ISNlYcZuYf9GfJKQswylMbzf85AZBrWhh/5+YH+pzD4UniBV5Za68lRz02dEfRo
-	 2UAVliGBU+Wyf4cp/cQrNSoCqrygLS5/wbRiT+u8U5yrchwb1wgbwclYHu7zbH4xyO
-	 T4h7MOwyMCO4fGCU7PhoVSqG1sa13bpj/iypbMYs=
+	b=vX9M5gUuGfDxbo3tFlQGLSPv/w7xuRkw8J1JcGqA5nQxFEf1WH56YLSfOqF0Y3k+L
+	 cWcZOLgSPiKpC40BPu6EuZD+1qou9bR7x0pxYpvRpEWGbH0pfQq6EllLp136eAeZx7
+	 BrvCD3ncnZAsOGDGn1lPYca4jls0YqKW/p4GVy5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungho Kim <sungho.kim@furiosa.ai>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Logan Gunthorpe <logang@deltatee.com>,
+	Geoffrey McRae <geoffrey.mcrae@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/392] PCI/P2PDMA: Fix incorrect pointer usage in devm_kfree() call
-Date: Wed,  3 Dec 2025 16:24:24 +0100
-Message-ID: <20251203152418.293252004@linuxfoundation.org>
+Subject: [PATCH 5.15 097/392] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
+Date: Wed,  3 Dec 2025 16:24:07 +0100
+Message-ID: <20251203152417.670279437@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,43 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungho Kim <sungho.kim@furiosa.ai>
+From: Geoffrey McRae <geoffrey.mcrae@amd.com>
 
-[ Upstream commit 6238784e502b6a9fbeb3a6b77284b29baa4135cc ]
+[ Upstream commit 57af162bfc8c05332a28c4d458d246cc46d2746d ]
 
-The error handling path in pci_p2pdma_add_resource() contains a bug in its
-`pgmap_free` label.
+Some kfd ioctls may not be available depending on the kernel version the
+user is running, as such we need to report -ENOTTY so userland can
+determine the cause of the ioctl failure.
 
-Memory is allocated for the `p2p_pgmap` struct, and the pointer is stored
-in `p2p_pgmap`. However, the error path calls devm_kfree() with `pgmap`,
-which is a pointer to a member field within the `p2p_pgmap` struct, not the
-base pointer of the allocation.
-
-Correct the bug by passing the correct base pointer, `p2p_pgmap`, to
-devm_kfree().
-
-Signed-off-by: Sungho Kim <sungho.kim@furiosa.ai>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Link: https://patch.msgid.link/20250820105714.2939896-1-sungho.kim@furiosa.ai
+Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/p2pdma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/p2pdma.c b/drivers/pci/p2pdma.c
-index 57654c82b08e8..e70993730728b 100644
---- a/drivers/pci/p2pdma.c
-+++ b/drivers/pci/p2pdma.c
-@@ -231,7 +231,7 @@ int pci_p2pdma_add_resource(struct pci_dev *pdev, int bar, size_t size,
- pages_free:
- 	devm_memunmap_pages(&pdev->dev, pgmap);
- pgmap_free:
--	devm_kfree(&pdev->dev, pgmap);
-+	devm_kfree(&pdev->dev, p2p_pgmap);
- 	return error;
- }
- EXPORT_SYMBOL_GPL(pci_p2pdma_add_resource);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 7b2111be3019a..4f60ba2db1811 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1947,8 +1947,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 	unsigned int usize, asize;
+ 	int retcode = -EINVAL;
+ 
+-	if (nr >= AMDKFD_CORE_IOCTL_COUNT)
++	if (nr >= AMDKFD_CORE_IOCTL_COUNT) {
++		retcode = -ENOTTY;
+ 		goto err_i1;
++	}
+ 
+ 	if ((nr >= AMDKFD_COMMAND_START) && (nr < AMDKFD_COMMAND_END)) {
+ 		u32 amdkfd_size;
+@@ -1961,8 +1963,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 			asize = amdkfd_size;
+ 
+ 		cmd = ioctl->cmd;
+-	} else
++	} else {
++		retcode = -ENOTTY;
+ 		goto err_i1;
++	}
+ 
+ 	dev_dbg(kfd_device, "ioctl cmd 0x%x (#0x%x), arg 0x%lx\n", cmd, nr, arg);
+ 
 -- 
 2.51.0
 
