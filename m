@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BAE35CB7B;
-	Wed,  3 Dec 2025 16:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524E535CB78;
+	Wed,  3 Dec 2025 16:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779185; cv=none; b=IkIdu+ukCkWEbXVrFL+ngrNesIV5Kj2bvhtDIj+BXYKp4stA/k//55+/iYF8s++MHxw0wGZayJSVl6jVOWnfPhvYXS0ib7tIxGi0olemGmLzJCeq+JyMsh7/KHfe2vevsAHqgjf79SfHRESbD6zEWw1E++BzRBiXhQ80dYPcEvQ=
+	t=1764779189; cv=none; b=t0+P+ItLioqP963YMmhM9InP91Knq5m1L/Fb8llbDbRZMYGPOgrM/AFkpOotYiTXizjVl3+XEc2Ur1IY2Cw3eyH1xZXbkEwfW0IKjijbzc0Wf/RGTJJ4rB1ITPFiW1VhZFU6BxlE8Ys8n5HL+FhOS/r2kXAMUV1jOfMLicVxmF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779185; c=relaxed/simple;
-	bh=hzMQjUgDTuR+S9mPa3ywKhiKGB1o8L7Xb1NyF7g7vHQ=;
+	s=arc-20240116; t=1764779189; c=relaxed/simple;
+	bh=cj5Ll5Cb4+mJPGZXqfEBXbuGqo2wKB7rECwJL/31E2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E8cq0a5wGYYGtcDGZqydb+j4Ax5/sUbxD+HsLADYk0HwDFMSzgzsmI7T3nKVJw2eLWXpgqcOZHv5fLRXM6IuhHCJroD5FiLCDHnJEX3tY95xVPlL+oeRFxep69TZg+yV2aSO7UqLH2vQvigTkQ1mTDdIg0Htts5A72AKeYZVMD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D44tXBu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JW4MmqlN1rtFH2OSxR2n8IqrpNqE4vjaxy6mSDE05TONmLFzkSYD7mR/dF4mXpS0PKSu9Oa2ewCE9q/be7pz5om/4/2ZgXoYqRl+REKsUhY87YevwxpDeRFwGWBLSjhC2eGE6CE9H4Q1jfdwnV/RcrsH90SD0aWa0EH5eSPEkgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slixEjkg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D44tXBu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4841C4CEF5;
-	Wed,  3 Dec 2025 16:26:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slixEjkg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC0FC4CEF5;
+	Wed,  3 Dec 2025 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779185;
-	bh=hzMQjUgDTuR+S9mPa3ywKhiKGB1o8L7Xb1NyF7g7vHQ=;
+	s=korg; t=1764779188;
+	bh=cj5Ll5Cb4+mJPGZXqfEBXbuGqo2wKB7rECwJL/31E2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D44tXBu9lD939zCJC+fiuzmfsISCdQrtRruaFEtL4cHepj7vqdcZA9Ih5D33odRbT
-	 0hkUxUTHkBg6m9hlohy0Gv+rUyXcd4vSztPPpP9Mg3Kspj7UMROltFCevqzufwBtcp
-	 MX56rjrX/lOT4Fb+K2FAdyHAg7l2E3/L/HsI+WeI=
+	b=slixEjkgIsRgpw5JjgMiBEecjXtvPEIpWrRC7BvnrYHx62XYr+c2VCbATzjTYonSR
+	 3mX8ojR9kj52rIcKcuNRoeiKHG02u6DZvfA61C3TQx59g7d9h/R2PMRz2b7d7LCsA6
+	 QrCYK7QJcSPG8EfuW0AvEmr9luj5IStNs4bnHYrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amber Lin <Amber.Lin@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Miroslav Lichvar <mlichvar@redhat.com>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 173/568] drm/amdkfd: Tie UNMAP_LATENCY to queue_preemption
-Date: Wed,  3 Dec 2025 16:22:55 +0100
-Message-ID: <20251203152447.068715407@linuxfoundation.org>
+Subject: [PATCH 6.1 182/568] ptp: Limit time setting of PTP clocks
+Date: Wed,  3 Dec 2025 16:23:04 +0100
+Message-ID: <20251203152447.394275677@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,46 +56,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amber Lin <Amber.Lin@amd.com>
+From: Miroslav Lichvar <mlichvar@redhat.com>
 
-[ Upstream commit f3820e9d356132e18405cd7606e22dc87ccfa6d1 ]
+[ Upstream commit 5a8c02a6bf52b1cf9cfb7868a8330f7c3c6aebe9 ]
 
-When KFD asks CP to preempt queues, other than preempt CP queues, CP
-also requests SDMA to preempt SDMA queues with UNMAP_LATENCY timeout.
-Currently queue_preemption_timeout_ms is 9000 ms by default but can be
-configured via module parameter. KFD_UNMAP_LATENCY_MS is hard coded as
-4000 ms though. This patch ties KFD_UNMAP_LATENCY_MS to
-queue_preemption_timeout_ms so in a slow system such as emulator, both
-CP and SDMA slowness are taken into account.
+Networking drivers implementing PTP clocks and kernel socket code
+handling hardware timestamps use the 64-bit signed ktime_t type counting
+nanoseconds. When a PTP clock reaches the maximum value in year 2262,
+the timestamps returned to applications will overflow into year 1667.
+The same thing happens when injecting a large offset with
+clock_adjtime(ADJ_SETOFFSET).
 
-Signed-off-by: Amber Lin <Amber.Lin@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The commit 7a8e61f84786 ("timekeeping: Force upper bound for setting
+CLOCK_REALTIME") limited the maximum accepted value setting the system
+clock to 30 years before the maximum representable value (i.e. year
+2232) to avoid the overflow, assuming the system will not run for more
+than 30 years.
+
+Enforce the same limit for PTP clocks. Don't allow negative values and
+values closer than 30 years to the maximum value. Drivers may implement
+an even lower limit if the hardware registers cannot represent the whole
+interval between years 1970 and 2262 in the required resolution.
+
+Signed-off-by: Miroslav Lichvar <mlichvar@redhat.com>
+Cc: Richard Cochran <richardcochran@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: John Stultz <jstultz@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Link: https://patch.msgid.link/20250828103300.1387025-1-mlichvar@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_priv.h | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/ptp/ptp_clock.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-index 3c7d267f2a07b..d1ebae9519d6c 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
-@@ -111,7 +111,14 @@
+diff --git a/drivers/ptp/ptp_clock.c b/drivers/ptp/ptp_clock.c
+index e6bcccf87cd6a..850ae55596850 100644
+--- a/drivers/ptp/ptp_clock.c
++++ b/drivers/ptp/ptp_clock.c
+@@ -83,6 +83,9 @@ static int ptp_clock_settime(struct posix_clock *pc, const struct timespec64 *tp
+ 		return -EBUSY;
+ 	}
  
- #define KFD_KERNEL_QUEUE_SIZE 2048
++	if (!timespec64_valid_settod(tp))
++		return -EINVAL;
++
+ 	return  ptp->info->settime64(ptp->info, tp);
+ }
  
--#define KFD_UNMAP_LATENCY_MS	(4000)
-+/*  KFD_UNMAP_LATENCY_MS is the timeout CP waiting for SDMA preemption. One XCC
-+ *  can be associated to 2 SDMA engines. queue_preemption_timeout_ms is the time
-+ *  driver waiting for CP returning the UNMAP_QUEUE fence. Thus the math is
-+ *  queue_preemption_timeout_ms = sdma_preemption_time * 2 + cp workload
-+ *  The format here makes CP workload 10% of total timeout
-+ */
-+#define KFD_UNMAP_LATENCY_MS	\
-+	((queue_preemption_timeout_ms - queue_preemption_timeout_ms / 10) >> 1)
+@@ -113,7 +116,7 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 	ops = ptp->info;
  
- /*
-  * 512 = 0x200
+ 	if (tx->modes & ADJ_SETOFFSET) {
+-		struct timespec64 ts;
++		struct timespec64 ts, ts2;
+ 		ktime_t kt;
+ 		s64 delta;
+ 
+@@ -126,6 +129,14 @@ static int ptp_clock_adjtime(struct posix_clock *pc, struct __kernel_timex *tx)
+ 		if ((unsigned long) ts.tv_nsec >= NSEC_PER_SEC)
+ 			return -EINVAL;
+ 
++		/* Make sure the offset is valid */
++		err = ptp_clock_gettime(pc, &ts2);
++		if (err)
++			return err;
++		ts2 = timespec64_add(ts2, ts);
++		if (!timespec64_valid_settod(&ts2))
++			return -EINVAL;
++
+ 		kt = timespec64_to_ktime(ts);
+ 		delta = ktime_to_ns(kt);
+ 		err = ops->adjtime(ops, delta);
 -- 
 2.51.0
 
