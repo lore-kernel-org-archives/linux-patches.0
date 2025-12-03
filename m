@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4670634C13B;
-	Wed,  3 Dec 2025 16:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C58834C83A;
+	Wed,  3 Dec 2025 16:12:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778361; cv=none; b=IbEHhMVG0OvogtyR/7oP2iiUm/udsFcn9HQakNlAjxjD4lvjUpS5xE1n9BvaZiJFuU/qOvV3lJq0hdvTGdyeyaHhs7Zu+AHRhl1V51e5hyWWhvxEitFEKdixqymlSRVmvBxLuoBf9bL0ZooElMFK9NqFAj0MG+DJ0Pmjkr+LSg0=
+	t=1764778364; cv=none; b=E628kjklJKDKJ62pX7Inc1c0GCNuPc9Dkvj9kRZFGYlssy0RFQLDPM0QqaTP0CKaUtbHqTAtBIfZCEp7r1c0XTc8zBGZnjR/lx+5NfV2khd2BHFCQ2Agot/wCmY94Aa5UvHY/LXn7cpcWFzrOA9KDesRo1RjzT3aWulWGoAvUEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778361; c=relaxed/simple;
-	bh=49rUCxYcMKihUVbzTIIRptv0bEWOmWuWcizGjQGGpgs=;
+	s=arc-20240116; t=1764778364; c=relaxed/simple;
+	bh=hoclxPDgydsNeHq40g4aJGdcjxSNh59wMkw+729IdvY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tho93mRYamV+ATJPJVpm3fPn5fYBGhjl7QEX9bgoWU3vtSMZqFPHdRuBJvtoCUpnRx1InH2UA1qb5/NRqFNwpF46oZS7giDalzlExr4BP/tFKF++NSpJLEPb1vWNtPmjn7W/nGrtJCmM3D/m7FzbmWGIuGfoMveVFUOZ18vXnkc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdlbLRNV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N8crG9YkvjFkz/gH3NbhW0nJsKFodnif8lOM7lSHDT5ANBCef/fK+dvVs4BVkj8j+lbEmNvI0Af3tJjCoD7U/nsPupFy0TexXFVpi293xuTgXAAwe9WELOtftUI9ZcLtDKEQuyVoW2v4oD2YGuXYrF9doiU39xYl0sPAFlBX5jU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkXea4YG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdlbLRNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6465C4CEF5;
-	Wed,  3 Dec 2025 16:12:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkXea4YG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6DDAC4CEF5;
+	Wed,  3 Dec 2025 16:12:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778361;
-	bh=49rUCxYcMKihUVbzTIIRptv0bEWOmWuWcizGjQGGpgs=;
+	s=korg; t=1764778364;
+	bh=hoclxPDgydsNeHq40g4aJGdcjxSNh59wMkw+729IdvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdlbLRNVgFJE0FosbIhVewZFcTKwWCjzA/0tl0jsthqyExeD16KM6LsdSLlW/yvaq
-	 5jfU3jfVpB+macgv+94rc9U7pr4kbIrWCyi6NtTg/7CZ7xGxD2whDYaxxzgNn8JQ95
-	 3BycA/7s8CESBp1HBQg8irYPnqqgXjqMJwvQa+LI=
+	b=xkXea4YGmL/Xi09kBPgGXTy1Vn+LDMwY44Fxz+nE65sRFGPqfzFDu758K33yPadRj
+	 W+B41Q3n1Ci5q3mVfFRYUJBh2Zfl9rLHw13YFhq2l10ClRnDwWfeFac5xd6kDIDzM3
+	 e++3P8veP+aqrpQcriDsKN6bXab3pDitmgMkRx8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 323/392] mptcp: Disallow MPTCP subflows from sockmap
-Date: Wed,  3 Dec 2025 16:27:53 +0100
-Message-ID: <20251203152426.048347442@linuxfoundation.org>
+Subject: [PATCH 5.15 324/392] usb: deprecate the third argument of usb_maxpacket()
+Date: Wed,  3 Dec 2025 16:27:54 +0100
+Message-ID: <20251203152426.085894160@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,82 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit fbade4bd08ba52cbc74a71c4e86e736f059f99f7 ]
+[ Upstream commit 0f08c2e7458e25c967d844170f8ad1aac3b57a02 ]
 
-The sockmap feature allows bpf syscall from userspace, or based on bpf
-sockops, replacing the sk_prot of sockets during protocol stack processing
-with sockmap's custom read/write interfaces.
-'''
-tcp_rcv_state_process()
-  subflow_syn_recv_sock()
-    tcp_init_transfer(BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB)
-      bpf_skops_established       <== sockops
-        bpf_sock_map_update(sk)   <== call bpf helper
-          tcp_bpf_update_proto()  <== update sk_prot
-'''
-Consider two scenarios:
+This is a transitional patch with the ultimate goal of changing the
+prototype of usb_maxpacket() from:
+| static inline __u16
+| usb_maxpacket(struct usb_device *udev, int pipe, int is_out)
 
-1. When the server has MPTCP enabled and the client also requests MPTCP,
-   the sk passed to the BPF program is a subflow sk. Since subflows only
-   handle partial data, replacing their sk_prot is meaningless and will
-   cause traffic disruption.
+into:
+| static inline u16 usb_maxpacket(struct usb_device *udev, int pipe)
 
-2. When the server has MPTCP enabled but the client sends a TCP SYN
-   without MPTCP, subflow_syn_recv_sock() performs a fallback on the
-   subflow, replacing the subflow sk's sk_prot with the native sk_prot.
-   '''
-   subflow_ulp_fallback()
-    subflow_drop_ctx()
-      mptcp_subflow_ops_undo_override()
-   '''
-   Subsequently, accept::mptcp_stream_accept::mptcp_fallback_tcp_ops()
-   converts the subflow to plain TCP.
+The third argument of usb_maxpacket(): is_out gets removed because it
+can be derived from its second argument: pipe using
+usb_pipeout(pipe). Furthermore, in the current version,
+ubs_pipeout(pipe) is called regardless in order to sanitize the is_out
+parameter.
 
-For the first case, we should prevent it from being combined with sockmap
-by setting sk_prot->psock_update_sk_prot to NULL, which will be blocked by
-sockmap's own flow.
+In order to make a smooth change, we first deprecate the is_out
+parameter by simply ignoring it (using a variadic function) and will
+remove it later, once all the callers get updated.
 
-For the second case, since subflow_syn_recv_sock() has already restored
-sk_prot to native tcp_prot/tcpv6_prot, no further action is needed.
+The body of the function is reworked accordingly and is_out is
+replaced by usb_pipeout(pipe). The WARN_ON() calls become unnecessary
+and get removed.
 
-Fixes: cec37a6e41aa ("mptcp: Handle MP_CAPABLE options for outgoing connections")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251111060307.194196-2-jiayuan.chen@linux.dev
-[ Adjust context ]
+Finally, the return type is changed from __u16 to u16 because this is
+not a UAPI function.
+
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Link: https://lore.kernel.org/r/20220317035514.6378-2-mailhol.vincent@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 69aeb5073123 ("Input: pegasus-notetaker - fix potential out-of-bounds access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/usb.h |   16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1854,6 +1854,10 @@ void __init mptcp_subflow_init(void)
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1987,21 +1987,17 @@ usb_pipe_endpoint(struct usb_device *dev
+ 	return eps[usb_pipeendpoint(pipe)];
+ }
  
- 	tcp_prot_override = tcp_prot;
- 	tcp_prot_override.release_cb = tcp_release_cb_override;
-+#ifdef CONFIG_BPF_SYSCALL
-+	/* Disable sockmap processing for subflows */
-+	tcp_prot_override.psock_update_sk_prot = NULL;
-+#endif
+-/*-------------------------------------------------------------------------*/
+-
+-static inline __u16
+-usb_maxpacket(struct usb_device *udev, int pipe, int is_out)
++static inline u16 usb_maxpacket(struct usb_device *udev, int pipe,
++				/* int is_out deprecated */ ...)
+ {
+ 	struct usb_host_endpoint	*ep;
+ 	unsigned			epnum = usb_pipeendpoint(pipe);
  
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
- 	/* In struct mptcp_subflow_request_sock, we assume the TCP request sock
-@@ -1887,6 +1891,10 @@ void __init mptcp_subflow_init(void)
+-	if (is_out) {
+-		WARN_ON(usb_pipein(pipe));
++	if (usb_pipeout(pipe))
+ 		ep = udev->ep_out[epnum];
+-	} else {
+-		WARN_ON(usb_pipeout(pipe));
++	else
+ 		ep = udev->ep_in[epnum];
+-	}
++
+ 	if (!ep)
+ 		return 0;
  
- 	tcpv6_prot_override = tcpv6_prot;
- 	tcpv6_prot_override.release_cb = tcp_release_cb_override;
-+#ifdef CONFIG_BPF_SYSCALL
-+	/* Disable sockmap processing for subflows */
-+	tcpv6_prot_override.psock_update_sk_prot = NULL;
-+#endif
- #endif
+@@ -2009,8 +2005,6 @@ usb_maxpacket(struct usb_device *udev, i
+ 	return usb_endpoint_maxp(&ep->desc);
+ }
  
- 	mptcp_diag_subflow_init(&subflow_ulp_ops);
+-/* ----------------------------------------------------------------------- */
+-
+ /* translate USB error codes to codes user space understands */
+ static inline int usb_translate_errors(int error_code)
+ {
 
 
