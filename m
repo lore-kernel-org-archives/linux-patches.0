@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F86130F95E;
-	Wed,  3 Dec 2025 15:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A607D30DECE;
+	Wed,  3 Dec 2025 15:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775942; cv=none; b=ql9zQg6DZpYfkpSxTKR4asOf4xUY+JDoBXMnfMH4d+WsOCTYhuGeUuk/0FrWIBVaCbMfbo+BJXLLt/mj8a9ONfNRE31CZwQrum3GOOf3MkP36I42yBAFuIGoYcDr3WkVmDjuauipYSUd3Fin8xbDVUPSoTskTdMXI3ucMEu41SA=
+	t=1764775945; cv=none; b=Ke9fgC0yUhaVvxWdOtZ481sXPFgRTXnrC8hn/siBxmZA0V383QsqQn8XM6P6p3s/DTRVyjaMLLT9tPWymXIpKUGYjhjb1KzO1UGvSh32E+a/icUa7mGMunzpTqv1eIIsolMxcnyB7zwdY139Dz8DR1SHDKSQYA2QWL0FmxB2bnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775942; c=relaxed/simple;
-	bh=cz7Ol9Yzc9ZhJuNNQAHc7AWmia0Ar6S+TcMQLrIui7k=;
+	s=arc-20240116; t=1764775945; c=relaxed/simple;
+	bh=ot+zeokK+4kUPY+8JFJF4kZ2q0GcENesYgnWCIQa3qM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EKC2iPgaNucf3mbQ8n+zgfaix9iT86pOVVHG/bSLp0E/F1k+5b0/3Fydjab6yzI6skEJvcVuCjkf1bWV3bCZ6HFT/rOhZcGBTDPWwK8WKYdEdQ6CTCJQ9yQgbuJmP47B9+GkItwpMAzjVRvjPb++2de5rl76N1jN3wispAjodQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wJkqQ2o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VUwCohbB/NKqvOQq8n1ahZSvGXdkqLP5XSCl911tCT0EWtLpiKQkru2oXd4ZZiisWMrcDQWghEGzIfITXMUcjEYrQBU4PJ34wfEf5uaQDUiV0cpt48vsyytrMrqJ+7aegv4ZOq5aO6EGBGgiVsvD21vZN1NtR4WckS5vIXJF3kw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nixY3Rb/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wJkqQ2o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746E4C4CEF5;
-	Wed,  3 Dec 2025 15:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nixY3Rb/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6C3C4CEF5;
+	Wed,  3 Dec 2025 15:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775941;
-	bh=cz7Ol9Yzc9ZhJuNNQAHc7AWmia0Ar6S+TcMQLrIui7k=;
+	s=korg; t=1764775945;
+	bh=ot+zeokK+4kUPY+8JFJF4kZ2q0GcENesYgnWCIQa3qM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wJkqQ2oEAJ2sj5bYdtVh2SvCOzjCkUFYJFfutWGNGutZSM8FIur45t9MjuBRac11
-	 4gxT2u5qBTQ2W/aYdhpJxzEGjuG5HTRTP9sTvm/vwFb9oK3p+RmATqbG14aggK4nWu
-	 6YMmDn/1cHU9rOgsl0oIpXL83MZlQlvWetrE/ecQ=
+	b=nixY3Rb/VOAl1Squ16lY0VjfajcuEAxlacxVrNsWMxTwLvgIwsa5+zdArKkmorInS
+	 bcZK34zBtuDwP/s9LuNHcvHAQ1EPD9UVyKnrNAge4s+jBhtEe95JXYzVX9+EJ6KurO
+	 u/uwZP7wKYBfYGPAdMu2vz6XxyqgyoTwXx+X2qFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 026/300] net: ravb: Enforce descriptor type ordering
-Date: Wed,  3 Dec 2025 16:23:50 +0100
-Message-ID: <20251203152401.427885202@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Douglas Raillard <douglas.raillard@arm.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Subject: [PATCH 5.10 035/300] tracing: fix declaration-after-statement warning
+Date: Wed,  3 Dec 2025 16:23:59 +0100
+Message-ID: <20251203152401.763604981@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -47,79 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 5370c31e84b0e0999c7b5ff949f4e104def35584 ]
+When building this kernel version this warning is visible:
 
-Ensure the TX descriptor type fields are published in a safe order so the
-DMA engine never begins processing a descriptor chain before all descriptor
-fields are fully initialised.
+  kernel/trace/trace_events_synth.c: In function 'synth_event_reg':
+  kernel/trace/trace_events_synth.c:847:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+    847 |         int ret = trace_event_reg(call, type, data);
+        |         ^~~
 
-For multi-descriptor transmits the driver writes DT_FEND into the last
-descriptor and DT_FSTART into the first. The DMA engine begins processing
-when it observes DT_FSTART. Move the dma_wmb() barrier so it executes
-immediately after DT_FEND and immediately before writing DT_FSTART
-(and before DT_FSINGLE in the single-descriptor case). This guarantees
-that all prior CPU writes to the descriptor memory are visible to the
-device before DT_FSTART is seen.
+This can be easily fixed by declaring 'ret' earlier.
 
-This avoids a situation where compiler/CPU reordering could publish
-DT_FSTART ahead of DT_FEND or other descriptor fields, allowing the DMA to
-start on a partially initialised chain and causing corrupted transmissions
-or TX timeouts. Such a failure was observed on RZ/G2L with an RT kernel as
-transmit queue timeouts and device resets.
+This issue is visible in < v5.18, because -std=gnu89 is used by default,
+see commit e8c07082a810 ("Kbuild: move to -std=gnu11").
 
-Fixes: 2f45d1902acf ("ravb: minimize TX data copying")
-Cc: stable@vger.kernel.org
-Co-developed-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://patch.msgid.link/20251017151830.171062-4-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ kept unconditional skb_tx_timestamp() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Please note that in v5.15.y, the 'Fixes' commit has been modified during
+the backport, not to have this warning. See commit 72848b81b3dd
+("tracing: Ensure module defining synth event cannot be unloaded while
+tracing") from v5.15.y.
+
+Fixes: 21581dd4e7ff ("tracing: Ensure module defining synth event cannot be unloaded while tracing")
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Cc: Douglas Raillard <douglas.raillard@arm.com>
+Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |   16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_synth.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1596,13 +1596,25 @@ static netdev_tx_t ravb_start_xmit(struc
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -831,6 +831,7 @@ static int synth_event_reg(struct trace_
+ 		    enum trace_reg type, void *data)
+ {
+ 	struct synth_event *event = container_of(call, struct synth_event, call);
++	int ret;
+ 
+ 	switch (type) {
+ #ifdef CONFIG_PERF_EVENTS
+@@ -844,7 +845,7 @@ static int synth_event_reg(struct trace_
+ 		break;
  	}
  
- 	skb_tx_timestamp(skb);
--	/* Descriptor type must be set after all the above writes */
--	dma_wmb();
-+
- 	if (num_tx_desc > 1) {
- 		desc->die_dt = DT_FEND;
- 		desc--;
-+		/* When using multi-descriptors, DT_FEND needs to get written
-+		 * before DT_FSTART, but the compiler may reorder the memory
-+		 * writes in an attempt to optimize the code.
-+		 * Use a dma_wmb() barrier to make sure DT_FEND and DT_FSTART
-+		 * are written exactly in the order shown in the code.
-+		 * This is particularly important for cases where the DMA engine
-+		 * is already running when we are running this code. If the DMA
-+		 * sees DT_FSTART without the corresponding DT_FEND it will enter
-+		 * an error condition.
-+		 */
-+		dma_wmb();
- 		desc->die_dt = DT_FSTART;
- 	} else {
-+		/* Descriptor type must be set after all the above writes */
-+		dma_wmb();
- 		desc->die_dt = DT_FSINGLE;
- 	}
+-	int ret = trace_event_reg(call, type, data);
++	ret = trace_event_reg(call, type, data);
  
+ 	switch (type) {
+ #ifdef CONFIG_PERF_EVENTS
 
 
