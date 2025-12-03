@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9718B32E75C;
-	Wed,  3 Dec 2025 15:51:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1718132E75C;
+	Wed,  3 Dec 2025 15:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777064; cv=none; b=dXdY8KlmSzzxRHYmFpzZ7oV6DE8a9wwGB1gTzIE1DddnxIcgGi3lCX/5cNtROKA656zCRt2R4t9+sDfuPYYUMHGBjn7HLo2F/X7QBW4n+Yedl2F9kyrJutMtjkWc9uAW+1OXZqZqdOPQHv7zrQo07xwqIX0MUlg5Jt8VU2ySI1Y=
+	t=1764777068; cv=none; b=k8S9fjHBItDe2RfLUAqvuG/NdmPtv+re4dugcv8ZzAvKqBF02mJ9opgTxnA15fM35iEkCABDckvMMTB0G26sxhBZqyw47uzTRrWndNZopVF6rh3RIrmb6aB3EqJvoX5FB8muz9QfUUzkAOUy6K/NeOffA0jP4oFADzBx+vDP8YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777064; c=relaxed/simple;
-	bh=tSRQB9EEMpXUmM2E+LP2FU+fVWZSZjxEEq+KAHsUqVE=;
+	s=arc-20240116; t=1764777068; c=relaxed/simple;
+	bh=lnEHmpXO5SDSMPNBWRsparEmAb7f4EE4oRIcUJOIOUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L41q4V+/QGHm4reVMuhFyVgJAkZKPDb3152zL+ke9sJPygmU77sSFvzW+MaLwynpUDvpJeqOwYADYLTbPa46wItm74vk60ODNFl76vXdmWCZfiDlzbj8Pk/T98oj/mPrhUuOVwIV7zUm19ICUo6fRl/pLnebaBQ5fQurYCqm9lw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ly5rrSrJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DI3AsdarIIe3+tmjDv/CitYIhkZGj8o/2Bh5XKYzbX0Z1Zlyzz7AuXsZuNPsM7Px9x5DmOeG1uqssYwNEkkdz/j2f3qyrcNeWkQn0OOihPpyJt3ipIM5Vmq6bcWHW7LP1OXBTtZN2mXCQ3A2vXkNgs6inBQ5PfVFmuhgDrqrNzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHjQEY+K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ly5rrSrJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA74C4CEF5;
-	Wed,  3 Dec 2025 15:51:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHjQEY+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795ACC4CEF5;
+	Wed,  3 Dec 2025 15:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777064;
-	bh=tSRQB9EEMpXUmM2E+LP2FU+fVWZSZjxEEq+KAHsUqVE=;
+	s=korg; t=1764777068;
+	bh=lnEHmpXO5SDSMPNBWRsparEmAb7f4EE4oRIcUJOIOUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ly5rrSrJwnKmmAMIeerc9RoUvYnO9EcT698nUBCTUFaDBpTujcaKmrr9RLInqZzym
-	 hUc5QpywoxaIlSfSk8WxhD7UTRA06bzdMmNaeJRqchqcIyf+t8iQJkqT2/YxSZw6SM
-	 Ci0QMMTqRZ8ISHencUJiEJ9Wxc1O3h79A4LwFhdo=
+	b=mHjQEY+KLzgocixmuz1qGpVP2YiKFHmp1EKsQXzaqkq/c5sqKCmOSXtHW9YszjkxO
+	 4v8ADYahgjVxlJTPD4kiwe1LyzfK1dWqKs9wBpxridjkOOA/nCslhZgFhez+IiSPqX
+	 BZ+6tQK3ydPAOQjXNiPxRNLCunwjjcM62tRHeLUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Iles <jamie.iles@oss.qualcomm.com>,
-	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Anurag Dutta <a-dutta@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 038/146] mailbox: pcc: dont zero error register
-Date: Wed,  3 Dec 2025 16:26:56 +0100
-Message-ID: <20251203152347.868560220@linuxfoundation.org>
+Subject: [PATCH 6.17 039/146] spi: spi-cadence-quadspi: Remove duplicate pm_runtime_put_autosuspend() call
+Date: Wed,  3 Dec 2025 16:26:57 +0100
+Message-ID: <20251203152347.905738310@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,55 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Iles <jamie.iles@oss.qualcomm.com>
+From: Anurag Dutta <a-dutta@ti.com>
 
-[ Upstream commit ff0e4d4c97c94af34cc9cad37b5a5cdbe597a3b0 ]
+[ Upstream commit 10eaa4c4a257944e9b30d13fda7d09164a70866d ]
 
-The error status mask for a type 3/4 subspace is used for reading the
-error status, and the bitwise inverse is used for clearing the error
-with the intent being to preserve any of the non-error bits.  However,
-we were previously applying the mask to extract the status and then
-applying the inverse to the result which ended up clearing all bits.
+Fix runtime PM usage count underflow caused by calling
+pm_runtime_put_autosuspend() twice with only one corresponding
+pm_runtime_get_noresume() call. This triggers the warning:
+"Runtime PM usage count underflow!"
 
-Instead, store the inverse mask in the preserve mask and then use that
-on the original value read from the error status so that only the error
-is cleared.
+Remove the duplicate put call to balance the runtime PM reference
+counting.
 
-Fixes: c45ded7e1135 ("mailbox: pcc: Add support for PCCT extended PCC subspaces(type 3/4)")
-Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
-Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 30dbc1c8d50f ("spi: cadence-qspi: defer runtime support on socfpga if reset bit is enabled")
+Signed-off-by: Anurag Dutta <a-dutta@ti.com>
+Link: https://patch.msgid.link/20251105161146.2019090-3-a-dutta@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 0a00719b24827..ff292b9e0be9e 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -276,9 +276,8 @@ static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
- 	if (ret)
- 		return ret;
- 
--	val &= pchan->error.status_mask;
--	if (val) {
--		val &= ~pchan->error.status_mask;
-+	if (val & pchan->error.status_mask) {
-+		val &= pchan->error.preserve_mask;
- 		pcc_chan_reg_write(&pchan->error, val);
- 		return -EIO;
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index ce0f605ab688b..d7720931403c2 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -2012,7 +2012,6 @@ static int cqspi_probe(struct platform_device *pdev)
  	}
-@@ -745,7 +744,8 @@ static int pcc_parse_subspace_db_reg(struct pcc_chan_info *pchan,
  
- 		ret = pcc_chan_reg_init(&pchan->error,
- 					&pcct_ext->error_status_register,
--					0, 0, pcct_ext->error_status_mask,
-+					~pcct_ext->error_status_mask, 0,
-+					pcct_ext->error_status_mask,
- 					"Error Status");
+ 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM))) {
+-		pm_runtime_put_autosuspend(dev);
+ 		pm_runtime_mark_last_busy(dev);
+ 		pm_runtime_put_autosuspend(dev);
  	}
- 	return ret;
 -- 
 2.51.0
 
