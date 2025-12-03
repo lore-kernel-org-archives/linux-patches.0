@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775963002B6;
-	Wed,  3 Dec 2025 15:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0710930ACEA;
+	Wed,  3 Dec 2025 15:31:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775858; cv=none; b=Vsa6oZs4caCkz20fXmYM07DD9UfKE2ReIjZPrEUa8Xp3cqbc2GDdeIPjrV1vVqg78dQkigpM2sL1laG7ROJUV1iAWyuxWEXiXwF8hunwoX9dCcRFIvk/06sO292YPk9sE1U8OQYCHm1tessgk+Cb/r7uOzLnwUzctx3U5ED7LVg=
+	t=1764775863; cv=none; b=gFkTkjjLRVpUatzQvPNCyKdT0XTk6eUOOloOpmgXzJ5GRzFg8cew3VWZ9CAHXyAddYXysPfqh4e1BMMUWEfJ5C7Gp3GH5Inl6Ht/bXUyvqO9aB76qf2YMVYclf9dkSBQNUHM5T+xILxTzVjL+0I3oIp0hv1O8f9oP4vpgk1XNdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775858; c=relaxed/simple;
-	bh=xtY1PryIlibNqyK3Wtd2Ac362e2aLzCenUw0qbhF4W0=;
+	s=arc-20240116; t=1764775863; c=relaxed/simple;
+	bh=MZA4mvNzgNpBdhVQEI6HOB4qvWgqLJEl+fELiu4Iw58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UcxloM28Jrb7ZcWc0ufMdZqVhIbKyqONK9CLXJSiviij5vS3pRV6XswPYLiZhC9RWqT9aWa2yhXpAkDFhbMRz72K3YqCgPeqx0qvupQLXRIvsj5pJ3nuAQ370QZQOli49Pd3DKuw7RMlTSpeUHgCrrhJNtWMVKeYcay8jL9ybvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCJoyE7K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DM8bJcTqMPM/8DUpeZbjJULUk9gCKQxMO+21gx1xrhFB5vcLDZcvC4MctRSZRt1jdsMp7doJy2oqjUCiGRUMN96XvOsHwAO/qMqYpPWI5f/XS6RZMti4GBfiL+K3RYoo9AtAI4pr0bTwh9QsKJB022YvduskwxzYr8gqXT0QENE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHSqBq1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCJoyE7K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7A9C4CEF5;
-	Wed,  3 Dec 2025 15:30:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHSqBq1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6B5C4CEF5;
+	Wed,  3 Dec 2025 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775857;
-	bh=xtY1PryIlibNqyK3Wtd2Ac362e2aLzCenUw0qbhF4W0=;
+	s=korg; t=1764775861;
+	bh=MZA4mvNzgNpBdhVQEI6HOB4qvWgqLJEl+fELiu4Iw58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCJoyE7KhDr6zeVUz0ykHCGn/Ib0gZrJAkg2sr7JCG1IizI8ez7Ockbih9JmwwhUk
-	 1nhwrnALYjlZHi3VsAsNpZo8j7qum14D/j87oAaDqRAokqvIzptuvlLP55bHi+DUG5
-	 wWXMHhAYksaj2dzMXmeHYpMAuMlZ+HLGgQJc9p0o=
+	b=PHSqBq1A1+lsve0u2ZHsaSzlaDXjSsAyH+2OwsvuemZJVpk/yN+552t9XORG+YKOm
+	 /HTlRvJG+3HPnvaRlLnwxrNJAXQPKmg4NEJssq96t68Zx72UcmK54crAYYGrgXd3eH
+	 LY2kEmsv0WsQc8s8CBmCaBsmRjUUGbUrX7NGfRpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 001/300] net/sched: sch_qfq: Fix null-deref in agg_dequeue
-Date: Wed,  3 Dec 2025 16:23:25 +0100
-Message-ID: <20251203152400.507656899@linuxfoundation.org>
+	Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.10 010/300] wifi: brcmfmac: fix crash while sending Action Frames in standalone AP Mode
+Date: Wed,  3 Dec 2025 16:23:34 +0100
+Message-ID: <20251203152400.841336692@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,129 +51,191 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
 
-commit dd831ac8221e691e9e918585b1003c7071df0379 upstream.
+commit 3776c685ebe5f43e9060af06872661de55e80b9a upstream.
 
-To prevent a potential crash in agg_dequeue (net/sched/sch_qfq.c)
-when cl->qdisc->ops->peek(cl->qdisc) returns NULL, we check the return
-value before using it, similar to the existing approach in sch_hfsc.c.
+Currently, whenever there is a need to transmit an Action frame,
+the brcmfmac driver always uses the P2P vif to send the "actframe" IOVAR to
+firmware. The P2P interfaces were available when wpa_supplicant is managing
+the wlan interface.
 
-To avoid code duplication, the following changes are made:
+However, the P2P interfaces are not created/initialized when only hostapd
+is managing the wlan interface. And if hostapd receives an ANQP Query REQ
+Action frame even from an un-associated STA, the brcmfmac driver tries
+to use an uninitialized P2P vif pointer for sending the IOVAR to firmware.
+This NULL pointer dereferencing triggers a driver crash.
 
-1. Changed qdisc_warn_nonwc(include/net/pkt_sched.h) into a static
-inline function.
+ [ 1417.074538] Unable to handle kernel NULL pointer dereference at virtual
+ address 0000000000000000
+ [...]
+ [ 1417.075188] Hardware name: Raspberry Pi 4 Model B Rev 1.5 (DT)
+ [...]
+ [ 1417.075653] Call trace:
+ [ 1417.075662]  brcmf_p2p_send_action_frame+0x23c/0xc58 [brcmfmac]
+ [ 1417.075738]  brcmf_cfg80211_mgmt_tx+0x304/0x5c0 [brcmfmac]
+ [ 1417.075810]  cfg80211_mlme_mgmt_tx+0x1b0/0x428 [cfg80211]
+ [ 1417.076067]  nl80211_tx_mgmt+0x238/0x388 [cfg80211]
+ [ 1417.076281]  genl_family_rcv_msg_doit+0xe0/0x158
+ [ 1417.076302]  genl_rcv_msg+0x220/0x2a0
+ [ 1417.076317]  netlink_rcv_skb+0x68/0x140
+ [ 1417.076330]  genl_rcv+0x40/0x60
+ [ 1417.076343]  netlink_unicast+0x330/0x3b8
+ [ 1417.076357]  netlink_sendmsg+0x19c/0x3f8
+ [ 1417.076370]  __sock_sendmsg+0x64/0xc0
+ [ 1417.076391]  ____sys_sendmsg+0x268/0x2a0
+ [ 1417.076408]  ___sys_sendmsg+0xb8/0x118
+ [ 1417.076427]  __sys_sendmsg+0x90/0xf8
+ [ 1417.076445]  __arm64_sys_sendmsg+0x2c/0x40
+ [ 1417.076465]  invoke_syscall+0x50/0x120
+ [ 1417.076486]  el0_svc_common.constprop.0+0x48/0xf0
+ [ 1417.076506]  do_el0_svc+0x24/0x38
+ [ 1417.076525]  el0_svc+0x30/0x100
+ [ 1417.076548]  el0t_64_sync_handler+0x100/0x130
+ [ 1417.076569]  el0t_64_sync+0x190/0x198
+ [ 1417.076589] Code: f9401e80 aa1603e2 f9403be1 5280e483 (f9400000)
 
-2. Moved qdisc_peek_len from net/sched/sch_hfsc.c to
-include/net/pkt_sched.h so that sch_qfq can reuse it.
+Fix this, by always using the vif corresponding to the wdev on which the
+Action frame Transmission request was initiated by the userspace. This way,
+even if P2P vif is not available, the IOVAR is sent to firmware on AP vif
+and the ANQP Query RESP Action frame is transmitted without crashing the
+driver.
 
-3. Applied qdisc_peek_len in agg_dequeue to avoid crashing.
+Move init_completion() for "send_af_done" from brcmf_p2p_create_p2pdev()
+to brcmf_p2p_attach(). Because the former function would not get executed
+when only hostapd is managing wlan interface, and it is not safe to do
+reinit_completion() later in brcmf_p2p_tx_action_frame(), without any prior
+init_completion().
 
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250705212143.3982664-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+And in the brcmf_p2p_tx_action_frame() function, the condition check for
+P2P Presence response frame is not needed, since the wpa_supplicant is
+properly sending the P2P Presense Response frame on the P2P-GO vif instead
+of the P2P-Device vif.
+
+Cc: stable@vger.kernel.org
+Fixes: 18e2f61db3b7 ("brcmfmac: P2P action frame tx")
+Signed-off-by: Gokul Sivakumar <gokulkumar.sivakumar@infineon.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Link: https://patch.msgid.link/20251013102819.9727-1-gokulkumar.sivakumar@infineon.com
+[Cc stable]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/pkt_sched.h |   25 ++++++++++++++++++++++++-
- net/sched/sch_api.c     |   10 ----------
- net/sched/sch_hfsc.c    |   16 ----------------
- net/sched/sch_qfq.c     |    2 +-
- 4 files changed, 25 insertions(+), 28 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |    3 -
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c      |   28 ++++--------
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h      |    3 -
+ 3 files changed, 12 insertions(+), 22 deletions(-)
 
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -114,7 +114,6 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 					struct netlink_ext_ack *extack);
- void qdisc_put_rtab(struct qdisc_rate_table *tab);
- void qdisc_put_stab(struct qdisc_size_table *tab);
--void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc);
- bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
- 		     struct net_device *dev, struct netdev_queue *txq,
- 		     spinlock_t *root_lock, bool validate);
-@@ -190,4 +189,28 @@ static inline void skb_txtime_consumed(s
- 	skb->tstamp = ktime_set(0, 0);
- }
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -5187,8 +5187,7 @@ brcmf_cfg80211_mgmt_tx(struct wiphy *wip
+ 		brcmf_dbg(TRACE, "Action frame, cookie=%lld, len=%d, freq=%d\n",
+ 			  *cookie, le16_to_cpu(action_frame->len), freq);
  
-+static inline void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
-+{
-+	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
-+		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
-+			txt, qdisc->ops->id, qdisc->handle >> 16);
-+		qdisc->flags |= TCQ_F_WARN_NONWC;
-+	}
-+}
-+
-+static inline unsigned int qdisc_peek_len(struct Qdisc *sch)
-+{
-+	struct sk_buff *skb;
-+	unsigned int len;
-+
-+	skb = sch->ops->peek(sch);
-+	if (unlikely(skb == NULL)) {
-+		qdisc_warn_nonwc("qdisc_peek_len", sch);
-+		return 0;
-+	}
-+	len = qdisc_pkt_len(skb);
-+
-+	return len;
-+}
-+
- #endif
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -595,16 +595,6 @@ out:
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
- }
+-		ack = brcmf_p2p_send_action_frame(cfg, cfg_to_ndev(cfg),
+-						  af_params);
++		ack = brcmf_p2p_send_action_frame(vif->ifp, af_params);
  
--void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
--{
--	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
--		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
--			txt, qdisc->ops->id, qdisc->handle >> 16);
--		qdisc->flags |= TCQ_F_WARN_NONWC;
--	}
--}
--EXPORT_SYMBOL(qdisc_warn_nonwc);
--
- static enum hrtimer_restart qdisc_watchdog(struct hrtimer *timer)
+ 		cfg80211_mgmt_tx_status(wdev, *cookie, buf, len, ack,
+ 					GFP_KERNEL);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.c
+@@ -1529,6 +1529,7 @@ int brcmf_p2p_notify_action_tx_complete(
+ /**
+  * brcmf_p2p_tx_action_frame() - send action frame over fil.
+  *
++ * @ifp: interface to transmit on.
+  * @p2p: p2p info struct for vif.
+  * @af_params: action frame data/info.
+  *
+@@ -1538,12 +1539,11 @@ int brcmf_p2p_notify_action_tx_complete(
+  * The WLC_E_ACTION_FRAME_COMPLETE event will be received when the action
+  * frame is transmitted.
+  */
+-static s32 brcmf_p2p_tx_action_frame(struct brcmf_p2p_info *p2p,
++static s32 brcmf_p2p_tx_action_frame(struct brcmf_if *ifp,
++				     struct brcmf_p2p_info *p2p,
+ 				     struct brcmf_fil_af_params_le *af_params)
  {
- 	struct qdisc_watchdog *wd = container_of(timer, struct qdisc_watchdog,
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -836,22 +836,6 @@ update_vf(struct hfsc_class *cl, unsigne
- 	}
- }
+ 	struct brcmf_pub *drvr = p2p->cfg->pub;
+-	struct brcmf_cfg80211_vif *vif;
+-	struct brcmf_p2p_action_frame *p2p_af;
+ 	s32 err = 0;
  
--static unsigned int
--qdisc_peek_len(struct Qdisc *sch)
--{
--	struct sk_buff *skb;
--	unsigned int len;
+ 	brcmf_dbg(TRACE, "Enter\n");
+@@ -1552,14 +1552,7 @@ static s32 brcmf_p2p_tx_action_frame(str
+ 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_COMPLETED, &p2p->status);
+ 	clear_bit(BRCMF_P2P_STATUS_ACTION_TX_NOACK, &p2p->status);
+ 
+-	/* check if it is a p2p_presence response */
+-	p2p_af = (struct brcmf_p2p_action_frame *)af_params->action_frame.data;
+-	if (p2p_af->subtype == P2P_AF_PRESENCE_RSP)
+-		vif = p2p->bss_idx[P2PAPI_BSSCFG_CONNECTION].vif;
+-	else
+-		vif = p2p->bss_idx[P2PAPI_BSSCFG_DEVICE].vif;
 -
--	skb = sch->ops->peek(sch);
--	if (unlikely(skb == NULL)) {
--		qdisc_warn_nonwc("qdisc_peek_len", sch);
--		return 0;
--	}
--	len = qdisc_pkt_len(skb);
--
--	return len;
--}
--
- static void
- hfsc_adjust_levels(struct hfsc_class *cl)
+-	err = brcmf_fil_bsscfg_data_set(vif->ifp, "actframe", af_params,
++	err = brcmf_fil_bsscfg_data_set(ifp, "actframe", af_params,
+ 					sizeof(*af_params));
+ 	if (err) {
+ 		bphy_err(drvr, " sending action frame has failed\n");
+@@ -1711,16 +1704,14 @@ static bool brcmf_p2p_check_dwell_overfl
+ /**
+  * brcmf_p2p_send_action_frame() - send action frame .
+  *
+- * @cfg: driver private data for cfg80211 interface.
+- * @ndev: net device to transmit on.
++ * @ifp: interface to transmit on.
+  * @af_params: configuration data for action frame.
+  */
+-bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+-				 struct net_device *ndev,
++bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 				 struct brcmf_fil_af_params_le *af_params)
  {
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -1007,7 +1007,7 @@ static struct sk_buff *agg_dequeue(struc
++	struct brcmf_cfg80211_info *cfg = ifp->drvr->config;
+ 	struct brcmf_p2p_info *p2p = &cfg->p2p;
+-	struct brcmf_if *ifp = netdev_priv(ndev);
+ 	struct brcmf_fil_action_frame_le *action_frame;
+ 	struct brcmf_config_af_params config_af_params;
+ 	struct afx_hdl *afx_hdl = &p2p->afx_hdl;
+@@ -1857,7 +1848,7 @@ bool brcmf_p2p_send_action_frame(struct
+ 		if (af_params->channel)
+ 			msleep(P2P_AF_RETRY_DELAY_TIME);
  
- 	if (cl->qdisc->q.qlen == 0) /* no more packets, remove from list */
- 		list_del_init(&cl->alist);
--	else if (cl->deficit < qdisc_pkt_len(cl->qdisc->ops->peek(cl->qdisc))) {
-+	else if (cl->deficit < qdisc_peek_len(cl->qdisc)) {
- 		cl->deficit += agg->lmax;
- 		list_move_tail(&cl->alist, &agg->active);
- 	}
+-		ack = !brcmf_p2p_tx_action_frame(p2p, af_params);
++		ack = !brcmf_p2p_tx_action_frame(ifp, p2p, af_params);
+ 		tx_retry++;
+ 		dwell_overflow = brcmf_p2p_check_dwell_overflow(requested_dwell,
+ 								dwell_jiffies);
+@@ -2217,7 +2208,6 @@ static struct wireless_dev *brcmf_p2p_cr
+ 
+ 	WARN_ON(p2p_ifp->bsscfgidx != bsscfgidx);
+ 
+-	init_completion(&p2p->send_af_done);
+ 	INIT_WORK(&p2p->afx_hdl.afx_work, brcmf_p2p_afx_handler);
+ 	init_completion(&p2p->afx_hdl.act_frm_scan);
+ 	init_completion(&p2p->wait_next_af);
+@@ -2505,6 +2495,8 @@ s32 brcmf_p2p_attach(struct brcmf_cfg802
+ 	pri_ifp = brcmf_get_ifp(cfg->pub, 0);
+ 	p2p->bss_idx[P2PAPI_BSSCFG_PRIMARY].vif = pri_ifp->vif;
+ 
++	init_completion(&p2p->send_af_done);
++
+ 	if (p2pdev_forced) {
+ 		err_ptr = brcmf_p2p_create_p2pdev(p2p, NULL, NULL);
+ 		if (IS_ERR(err_ptr)) {
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/p2p.h
+@@ -168,8 +168,7 @@ int brcmf_p2p_notify_action_frame_rx(str
+ int brcmf_p2p_notify_action_tx_complete(struct brcmf_if *ifp,
+ 					const struct brcmf_event_msg *e,
+ 					void *data);
+-bool brcmf_p2p_send_action_frame(struct brcmf_cfg80211_info *cfg,
+-				 struct net_device *ndev,
++bool brcmf_p2p_send_action_frame(struct brcmf_if *ifp,
+ 				 struct brcmf_fil_af_params_le *af_params);
+ bool brcmf_p2p_scan_finding_common_channel(struct brcmf_cfg80211_info *cfg,
+ 					   struct brcmf_bss_info_le *bi);
 
 
