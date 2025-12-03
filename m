@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AA234CFC2;
-	Wed,  3 Dec 2025 16:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE38F3AA1BA;
+	Wed,  3 Dec 2025 16:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780779; cv=none; b=V4Cq96QpW2/fcR6nwoOkBfwRVxrXDkPoyxSwkQtedTlSVz/5Z1Q++Jt/ZYvDWz98rfzXAgXeZh/bSdMLT/CpTiuOVH+ptncK1tYTG4tTup8Ua6pBbqed0vxgvWpgaou2nyElADmxO2DHQwirKg5T7g+5Oo4hsJ3OLeJKnT5Mxsw=
+	t=1764780783; cv=none; b=rI84VloNW/Yj397uMpfFEhlpcQYC9ha4WxBFNLF4Mvn/L2o/loWLh5EhWQv8sa1FMs/xSkruQdUwX9ETO50Mbn9TEATCnCtZT9yLcX8Pdc0gHmXQIL+k771RzFvC/x4BVOJLqQ6cwfmlOjumSeGFxtvTISjs9Qnz6LGBIWz8xnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780779; c=relaxed/simple;
-	bh=F/NplFP2+BUPKhiyrN7BOrayz41zJFL3kt9nyU4Zm3g=;
+	s=arc-20240116; t=1764780783; c=relaxed/simple;
+	bh=w7V9YtJ6QgLMoytHOouy/cBpZNBLugNYVG8G1MhsUJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDpXuFIlcRSGGN6WEmgBqkELuRV0XELLnjjbAm5xta0ofhBlrEbJLt+mZo3Qnt9E8ID8c7g+6c8Z+BWma79nP9Y3dSxelOZFRZdECtJCzK/Jtzpdf8Z/KaWF0qJvPahURNZLq/Dweg/79ol9qPv3gGhhsL/VLnX5A34VO9fZYEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjLYb4Xc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iZkGA3oudHIP6MVyJ86APyMhut7wjUaE2xBQPUuE7EJXfdadQ2LdHTz/tlwJwjNRLGqvUUikvcJzd3PdpKtamNhq06Y/Npmc+Lo1vb2SSYg8wR2IRaJH6xi0XnPXP5oaLvT+VyZdowLFRGvTM7TiKVFhjhoViKQ9KSwAD1Bnfyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehhEG1Ft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjLYb4Xc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B5D7C4CEF5;
-	Wed,  3 Dec 2025 16:52:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehhEG1Ft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1E4C116B1;
+	Wed,  3 Dec 2025 16:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780779;
-	bh=F/NplFP2+BUPKhiyrN7BOrayz41zJFL3kt9nyU4Zm3g=;
+	s=korg; t=1764780782;
+	bh=w7V9YtJ6QgLMoytHOouy/cBpZNBLugNYVG8G1MhsUJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WjLYb4XcnZAn/wCNbpigGVA7Z22m9q5wxNRMv2dc6dC4G88myxUK0T0W3WMMMTaGE
-	 rF9Wl+dBkkK2FOna1GXCivEngSg/1Y22bPhPL7TUHt6p60WcmZktiHgiUQP39aPY6w
-	 s8LRhXqNSIeM2mymZ7ydf8BeiOVw/7F182wiKYt8=
+	b=ehhEG1Ft2hQbYF9Tfosd/hKL1/L4B1IwXZtiXBKTON2oaOrZ6EKxJ+dagAk8RCfhi
+	 qyfWxvg121jGVkrze06cM5ZN9PCAS+Jjto6DHUkeRWlX5Lyb3mWK91YNmsYz5EaU/C
+	 9JGT+Euoxi2tHeEQdY6OlctTLpAAJkHIegfN8h/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Gromm <christian.gromm@microchip.com>,
-	Victoria Votokina <Victoria.Votokina@kaspersky.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 087/132] most: usb: fix double free on late probe failure
-Date: Wed,  3 Dec 2025 16:29:26 +0100
-Message-ID: <20251203152346.515168742@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Peter Chen <peter.chen@kernel.org>
+Subject: [PATCH 6.12 088/132] usb: cdns3: Fix double resource release in cdns3_pci_probe
+Date: Wed,  3 Dec 2025 16:29:27 +0100
+Message-ID: <20251203152346.551261571@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,73 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit baadf2a5c26e802a46573eaad331b427b49aaa36 upstream.
+commit 1ec39d2cd88dac2e7cdbac248762f1f057971c5d upstream.
 
-The MOST subsystem has a non-standard registration function which frees
-the interface on registration failures and on deregistration.
+The driver uses pcim_enable_device() to enable the PCI device,
+the device will be automatically disabled on driver detach through
+the managed device framework. The manual pci_disable_device() calls
+in the error paths are therefore redundant and should be removed.
 
-This unsurprisingly leads to bugs in the MOST drivers, and a couple of
-recent changes turned a reference underflow and use-after-free in the
-USB driver into several double free and a use-after-free on late probe
-failures.
+Found via static anlaysis and this is similar to commit 99ca0b57e49f
+("thermal: intel: int340x: processor: Fix warning during module unload").
 
-Fixes: 723de0f9171e ("staging: most: remove device from interface structure")
-Fixes: 4b1270902609 ("most: usb: Fix use-after-free in hdm_disconnect")
-Fixes: a8cc9e5fcb0e ("most: usb: hdm_probe: Fix calling put_device() before device initialization")
-Cc: stable@vger.kernel.org
-Cc: Christian Gromm <christian.gromm@microchip.com>
-Cc: Victoria Votokina <Victoria.Votokina@kaspersky.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251029093029.28922-1-johan@kernel.org
+Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Link: https://patch.msgid.link/20251026090859.33107-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/most/most_usb.c |   14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/most/most_usb.c
-+++ b/drivers/most/most_usb.c
-@@ -1058,7 +1058,7 @@ hdm_probe(struct usb_interface *interfac
- 
- 	ret = most_register_interface(&mdev->iface);
- 	if (ret)
--		goto err_free_busy_urbs;
-+		return ret;
- 
- 	mutex_lock(&mdev->io_mutex);
- 	if (le16_to_cpu(usb_dev->descriptor.idProduct) == USB_DEV_ID_OS81118 ||
-@@ -1068,8 +1068,7 @@ hdm_probe(struct usb_interface *interfac
- 		if (!mdev->dci) {
- 			mutex_unlock(&mdev->io_mutex);
- 			most_deregister_interface(&mdev->iface);
--			ret = -ENOMEM;
--			goto err_free_busy_urbs;
-+			return -ENOMEM;
- 		}
- 
- 		mdev->dci->dev.init_name = "dci";
-@@ -1078,18 +1077,15 @@ hdm_probe(struct usb_interface *interfac
- 		mdev->dci->dev.release = release_dci;
- 		if (device_register(&mdev->dci->dev)) {
- 			mutex_unlock(&mdev->io_mutex);
-+			put_device(&mdev->dci->dev);
- 			most_deregister_interface(&mdev->iface);
--			ret = -ENOMEM;
--			goto err_free_dci;
-+			return -ENOMEM;
- 		}
- 		mdev->dci->usb_device = mdev->usb_device;
+--- a/drivers/usb/cdns3/cdns3-pci-wrap.c
++++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
+@@ -100,10 +100,8 @@ static int cdns3_pci_probe(struct pci_de
+ 		wrap = pci_get_drvdata(func);
+ 	} else {
+ 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
+-		if (!wrap) {
+-			pci_disable_device(pdev);
++		if (!wrap)
+ 			return -ENOMEM;
+-		}
  	}
- 	mutex_unlock(&mdev->io_mutex);
- 	return 0;
--err_free_dci:
--	put_device(&mdev->dci->dev);
--err_free_busy_urbs:
--	kfree(mdev->busy_urbs);
-+
- err_free_ep_address:
- 	kfree(mdev->ep_address);
- err_free_cap:
+ 
+ 	res = wrap->dev_res;
+@@ -162,7 +160,6 @@ static int cdns3_pci_probe(struct pci_de
+ 		/* register platform device */
+ 		wrap->plat_dev = platform_device_register_full(&plat_info);
+ 		if (IS_ERR(wrap->plat_dev)) {
+-			pci_disable_device(pdev);
+ 			err = PTR_ERR(wrap->plat_dev);
+ 			kfree(wrap);
+ 			return err;
 
 
