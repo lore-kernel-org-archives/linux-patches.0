@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882DC35FF60;
-	Wed,  3 Dec 2025 16:57:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8444B3557F5;
+	Wed,  3 Dec 2025 16:57:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781033; cv=none; b=nqtuBKq3FuQXlDoRt7VjRtP0C6mfN5yvLxjF/Gs1ErxsB1aY71A94FDhBQgVR9OvIy9pnqM8DSVoChYukw7z/19e7MgNUSn1MYKQwCUJJll8c/QahUX/q6fPzCmNf7RE/lamTFtjRDb33TuFeulK4/FXRpaUus9S9lozuIDKJPc=
+	t=1764781036; cv=none; b=asr7H3DcD0hpBL5SsDtdvHeNjAV/taSgaaDkqpN5HGtuyT81oWNGRxuQUXUK/m/yJlPwBH5bKOtMgpabVuhveC68vBpdwMqrOR/XkyxqdqALPMgbMIos3bKH2cQsXRRFCeFCL4DEkPinEgyvVEPfeLF+yioBMMxGF4OOthfAnw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781033; c=relaxed/simple;
-	bh=kHdf5ZTaxVzBBSt3WM22uJWy+2IqSNGAJEPnPgyQ8oo=;
+	s=arc-20240116; t=1764781036; c=relaxed/simple;
+	bh=9eg8OXx5k/eNTU2hf74JMDzBntQGgRsqAs1d/4IDNhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mb84ka8gPEPeUHKuqd4ggH+i4jUU3G/lLvVS8x1++8ViJ1H75d+Dxur3BhPrK8JTJ8cknwvDqKJC75KiEUy1xC4HvUwUWD3plbrh+a8rk71PC2BU6gKZ/kwPMx6tL5b9MsN3Rl4nsROkopby5JzaR5z2GieKY0gRHO99VaNw9Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyprnDl0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WdZy6jIj1s/mG60W2vbwio8aKszwnRkR4ScYpcoQw5aGHsWdHmgGVH7Z7bHeRmr+brUE9NXyYBiaSUOa7FlM5drVFw5vXesmAD10lDbEG/jUkuADYE3RnQL9kZBDF6ozePIbelEKC9HnpRTZcVyLXIz/Cd6IiaD7RjLrIEJ69dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sN38wBhR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyprnDl0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E74C4CEF5;
-	Wed,  3 Dec 2025 16:57:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sN38wBhR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A93C4CEF5;
+	Wed,  3 Dec 2025 16:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781033;
-	bh=kHdf5ZTaxVzBBSt3WM22uJWy+2IqSNGAJEPnPgyQ8oo=;
+	s=korg; t=1764781036;
+	bh=9eg8OXx5k/eNTU2hf74JMDzBntQGgRsqAs1d/4IDNhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xyprnDl0T4FfliyHcsxaiCewKkGpV7W2Xd3PUE89/F2ANsm7QmWiIxwke7d4XGLUH
-	 Q0V6R8mXskM6/rr7N/w2g2tTFJZRdmaD8g266dV5CV3JUTQ2Gy2rjTpFD1QyJ+E4rP
-	 hNa5RzdFatl6nsH6vNwl2rrEw0JLiyZ9EJa93D8I=
+	b=sN38wBhRnQbC7AQkU4vWxGRmoxW/iuOpQ0ekBfad3Hc1e1zDlxz9N5GlAXjaYlyVN
+	 nb2ueu6qN9pGXsyRk1xbaAqbVUX47/y21xfK0plthiNXVYP26fzwAwVkFOKgggIOgH
+	 LrXgxSqRsGwAC0uJJ3GRUuQFA3nueLSYJzq6SrPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <pratyush@kernel.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 29/93] spi: spi-mem: Extend spi-mem operations with a per-operation maximum frequency
-Date: Wed,  3 Dec 2025 16:29:22 +0100
-Message-ID: <20251203152337.593957710@linuxfoundation.org>
+Subject: [PATCH 6.6 30/93] spi: spi-mem: Add a new controller capability
+Date: Wed,  3 Dec 2025 16:29:23 +0100
+Message-ID: <20251203152337.630454626@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -54,216 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 0fefeade90e74bc8f40ab0e460f483565c492e28 ]
+[ Upstream commit 1248c9b8d54120950fda10fbeb98fb8932b4d45c ]
 
-In the spi subsystem, the bus frequency is derived as follows:
-- the controller may expose a minimum and maximum operating frequency
-- the hardware description, through the spi peripheral properties,
-  advise what is the maximum acceptable frequency from a device/wiring
-  point of view.
-Transfers must be observed at a frequency which fits both (so in
-practice, the lowest maximum).
+There are spi devices with multiple frequency limitations depending on
+the invoked command. We probably do not want to afford running at the
+lowest supported frequency all the time, so if we want to get the most
+of our hardware, we need to allow per-operation frequency limitations.
 
-Actually, this second point mixes two information and already takes the
-lowest frequency among:
-- what the spi device is capable of (what is written in the component
-  datasheet)
-- what the wiring allows (electromagnetic sensibility, crossovers,
-  terminations, antenna effect, etc).
+Among all the SPI memory controllers, I believe all are capable of
+changing the spi frequency on the fly. Some of the drivers do not make
+any frequency setup though. And some others will derive a per chip
+prescaler value which will be used forever.
 
-This logic works until spi devices are no longer capable of sustaining
-their highest frequency regardless of the operation. Spi memories are
-typically subject to such variation. Some devices are capable of
-spitting their internally stored data (essentially in read mode) at a
-very fast rate, typically up to 166MHz on Winbond SPI-NAND chips, using
-"fast" commands. However, some of the low-end operations, such as
-regular page read-from-cache commands, are more limited and can only be
-executed at 54MHz at most. This is currently a problem in the SPI-NAND
-subsystem. Another situation, even if not yet supported, will be with
-DTR commands, when the data is latched on both edges of the clock. The
-same chips as mentioned previously are in this case limited to
-80MHz. Yet another example might be continuous reads, which, under
-certain circumstances, can also run at most at 104 or 120MHz.
+Actually changing the frequency on the fly is something new in Linux, so
+we need to carefully flag the drivers which do and do not support it. A
+controller capability is created for that, and the presence for this
+capability will always be checked before accepting such pattern.
 
-As a matter of fact, the "one frequency per chip" policy is outdated and
-more fine grain configuration is needed: we need to allow per-operation
-frequency limitations. So far, all datasheets I encountered advertise a
-maximum default frequency, which need to be lowered for certain specific
-operations. So based on the current infrastructure, we can still expect
-firmware (device trees in general) to continued advertising the same
-maximum speed which is a mix between the PCB limitations and the chip
-maximum capability, and expect per-operation lower frequencies when this
-is relevant.
-
-Add a `struct spi_mem_op` member to carry this information. Not
-providing this field explicitly from upper layers means that there is no
-further constraint and the default spi device maximum speed will be
-carried instead. The SPI_MEM_OP() macro is also expanded with an
-optional frequency argument, because virtually all operations can be
-subject to such a limitation, and this will allow for a smooth and
-discrete transition.
-
-For controller drivers which do not implement the spi-mem interface, the
-per-transfer speed is also set acordingly to a lower (than the maximum
-default) speed when relevant.
-
-Acked-by: Pratyush Yadav <pratyush@kernel.org>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20241224-winbond-6-11-rc1-quad-support-v2-1-ad218dbc406f@bootlin.com
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://patch.msgid.link/20241224-winbond-6-11-rc1-quad-support-v2-2-ad218dbc406f@bootlin.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 40ad64ac25bb ("spi: nxp-fspi: Propagate fwnode in ACPI case as well")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/spi/core.c |  2 ++
- drivers/spi/spi-mem.c       | 28 ++++++++++++++++++++++++++++
- include/linux/spi/spi-mem.h | 12 +++++++++++-
- 3 files changed, 41 insertions(+), 1 deletion(-)
+ drivers/spi/spi-mem.c       | 6 ++++++
+ include/linux/spi/spi-mem.h | 2 ++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
-index ee61b2d882320..4c2776f52fee5 100644
---- a/drivers/mtd/nand/spi/core.c
-+++ b/drivers/mtd/nand/spi/core.c
-@@ -1044,6 +1044,8 @@ spinand_select_op_variant(struct spinand_device *spinand,
- 			if (ret)
- 				break;
- 
-+			spi_mem_adjust_op_freq(spinand->spimem, &op);
-+
- 			if (!spi_mem_supports_op(spinand->spimem, &op))
- 				break;
- 
 diff --git a/drivers/spi/spi-mem.c b/drivers/spi/spi-mem.c
-index 84b250703e138..b73a659e268d6 100644
+index b73a659e268d6..c581aa5fbf7cf 100644
 --- a/drivers/spi/spi-mem.c
 +++ b/drivers/spi/spi-mem.c
-@@ -187,6 +187,10 @@ bool spi_mem_default_supports_op(struct spi_mem *mem,
- 			return false;
- 	}
+@@ -191,6 +191,12 @@ bool spi_mem_default_supports_op(struct spi_mem *mem,
+ 	    op->max_freq < mem->spi->controller->min_speed_hz)
+ 		return false;
  
-+	if (op->max_freq && mem->spi->controller->min_speed_hz &&
-+	    op->max_freq < mem->spi->controller->min_speed_hz)
-+		return false;
++	if (op->max_freq &&
++	    op->max_freq < mem->spi->max_speed_hz) {
++		if (!spi_mem_controller_is_capable(ctlr, per_op_freq))
++			return false;
++	}
 +
  	return spi_mem_check_buswidth(mem, op);
  }
  EXPORT_SYMBOL_GPL(spi_mem_default_supports_op);
-@@ -321,6 +325,9 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- 	u8 *tmpbuf;
- 	int ret;
- 
-+	/* Make sure the operation frequency is correct before going futher */
-+	spi_mem_adjust_op_freq(mem, (struct spi_mem_op *)op);
-+
- 	ret = spi_mem_check_op(op);
- 	if (ret)
- 		return ret;
-@@ -363,6 +370,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- 	xfers[xferpos].tx_buf = tmpbuf;
- 	xfers[xferpos].len = op->cmd.nbytes;
- 	xfers[xferpos].tx_nbits = op->cmd.buswidth;
-+	xfers[xferpos].speed_hz = op->max_freq;
- 	spi_message_add_tail(&xfers[xferpos], &msg);
- 	xferpos++;
- 	totalxferlen++;
-@@ -377,6 +385,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- 		xfers[xferpos].tx_buf = tmpbuf + 1;
- 		xfers[xferpos].len = op->addr.nbytes;
- 		xfers[xferpos].tx_nbits = op->addr.buswidth;
-+		xfers[xferpos].speed_hz = op->max_freq;
- 		spi_message_add_tail(&xfers[xferpos], &msg);
- 		xferpos++;
- 		totalxferlen += op->addr.nbytes;
-@@ -388,6 +397,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- 		xfers[xferpos].len = op->dummy.nbytes;
- 		xfers[xferpos].tx_nbits = op->dummy.buswidth;
- 		xfers[xferpos].dummy_data = 1;
-+		xfers[xferpos].speed_hz = op->max_freq;
- 		spi_message_add_tail(&xfers[xferpos], &msg);
- 		xferpos++;
- 		totalxferlen += op->dummy.nbytes;
-@@ -403,6 +413,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
- 		}
- 
- 		xfers[xferpos].len = op->data.nbytes;
-+		xfers[xferpos].speed_hz = op->max_freq;
- 		spi_message_add_tail(&xfers[xferpos], &msg);
- 		xferpos++;
- 		totalxferlen += op->data.nbytes;
-@@ -481,6 +492,23 @@ int spi_mem_adjust_op_size(struct spi_mem *mem, struct spi_mem_op *op)
- }
- EXPORT_SYMBOL_GPL(spi_mem_adjust_op_size);
- 
-+/**
-+ * spi_mem_adjust_op_freq() - Adjust the frequency of a SPI mem operation to
-+ *			      match controller, PCB and chip limitations
-+ * @mem: the SPI memory
-+ * @op: the operation to adjust
-+ *
-+ * Some chips have per-op frequency limitations and must adapt the maximum
-+ * speed. This function allows SPI mem drivers to set @op->max_freq to the
-+ * maximum supported value.
-+ */
-+void spi_mem_adjust_op_freq(struct spi_mem *mem, struct spi_mem_op *op)
-+{
-+	if (!op->max_freq || op->max_freq > mem->spi->max_speed_hz)
-+		op->max_freq = mem->spi->max_speed_hz;
-+}
-+EXPORT_SYMBOL_GPL(spi_mem_adjust_op_freq);
-+
- static ssize_t spi_mem_no_dirmap_read(struct spi_mem_dirmap_desc *desc,
- 				      u64 offs, size_t len, void *buf)
- {
 diff --git a/include/linux/spi/spi-mem.h b/include/linux/spi/spi-mem.h
-index eed6e016d69cc..cceebf8c78ba9 100644
+index cceebf8c78ba9..6bd0b548bd1e9 100644
 --- a/include/linux/spi/spi-mem.h
 +++ b/include/linux/spi/spi-mem.h
-@@ -68,6 +68,9 @@ enum spi_mem_data_dir {
- 	SPI_MEM_DATA_OUT,
- };
- 
-+#define SPI_MEM_OP_MAX_FREQ(__freq)				\
-+	.max_freq = __freq
-+
- /**
-  * struct spi_mem_op - describes a SPI memory operation
-  * @cmd.nbytes: number of opcode bytes (only 1 or 2 are valid). The opcode is
-@@ -97,6 +100,9 @@ enum spi_mem_data_dir {
-  *		 operation does not involve transferring data
-  * @data.buf.in: input buffer (must be DMA-able)
-  * @data.buf.out: output buffer (must be DMA-able)
-+ * @max_freq: frequency limitation wrt this operation. 0 means there is no
-+ *	      specific constraint and the highest achievable frequency can be
-+ *	      attempted.
+@@ -309,11 +309,13 @@ struct spi_controller_mem_ops {
+  * @ecc: Supports operations with error correction
+  * @swap16: Supports swapping bytes on a 16 bit boundary when configured in
+  *	    Octal DTR
++ * @per_op_freq: Supports per operation frequency switching
   */
- struct spi_mem_op {
- 	struct {
-@@ -135,14 +141,17 @@ struct spi_mem_op {
- 			const void *out;
- 		} buf;
- 	} data;
-+
-+	unsigned int max_freq;
+ struct spi_controller_mem_caps {
+ 	bool dtr;
+ 	bool ecc;
+ 	bool swap16;
++	bool per_op_freq;
  };
  
--#define SPI_MEM_OP(__cmd, __addr, __dummy, __data)		\
-+#define SPI_MEM_OP(__cmd, __addr, __dummy, __data, ...)		\
- 	{							\
- 		.cmd = __cmd,					\
- 		.addr = __addr,					\
- 		.dummy = __dummy,				\
- 		.data = __data,					\
-+		__VA_ARGS__					\
- 	}
- 
- /**
-@@ -369,6 +378,7 @@ bool spi_mem_default_supports_op(struct spi_mem *mem,
- #endif /* CONFIG_SPI_MEM */
- 
- int spi_mem_adjust_op_size(struct spi_mem *mem, struct spi_mem_op *op);
-+void spi_mem_adjust_op_freq(struct spi_mem *mem, struct spi_mem_op *op);
- 
- bool spi_mem_supports_op(struct spi_mem *mem,
- 			 const struct spi_mem_op *op);
+ #define spi_mem_controller_is_capable(ctlr, cap)	\
 -- 
 2.51.0
 
