@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB0826B756;
-	Wed,  3 Dec 2025 16:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F4330FC3A;
+	Wed,  3 Dec 2025 16:09:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778169; cv=none; b=uEXsiVnF2aZWvu0/i0dY3u1Pftm6N8Fyoxs4YprFYpolyIFrmr1pXu3iJWoQHwFUOc/frJ8eTUPtBdiFVUOgo6K7nXGFzihFpsuFYVxxJIgDyCpSiMJvtWEL+ERfEVAcvEhn9qNXl2AZaSCzruK1+27zPN81oFc+qVygsqCsLo8=
+	t=1764778173; cv=none; b=gy6FNRdHsnd8nXQEWnQzG/U297HDdr46enrtPYoCJsMsFrV6FpJSd7c/ZajNThhKcrBHKnH4jAFB8zu3N9XUEWdv8hgs9iXmvJNwiEGflnMO9MR7+EcCjcE12BXLsnYO2vavSam7eECgz8jAt95ZaP+JBUdrPNANrGyctWu1DDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778169; c=relaxed/simple;
-	bh=TvXYRFO9nJXm+nuN4bSBxclUnzOUp5gmlzMA5LB+QvE=;
+	s=arc-20240116; t=1764778173; c=relaxed/simple;
+	bh=JFsFLL3YTRY9RQOuJuMcDKua8V8fBERUoQJ6+lyMerc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KKIXNFFnt5Jt52KjZ6jpQGQU7uFsCIjXPN13RoWF3nOIJjh/OpPMC1z1/sWoPptE2F1r24WQQIhrnjpOZYtNHgJbN0sYkJhyvtBaToCOtksmfo4Z680EQkemr6GZ3quW1gBpTx52oBHYXPU2ZGxH6EmngZ7Bqry1Q71yUCDZtXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBHtaKF6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GkxfAP5210tqT6cApQACtYFWX2yIvTJGiuAo7Y7S47UrFaznzRdtlOqAe3EjpTX2/eB73bDJ7Ns50p6iR5NdzUGKMkfCVj1wDrG+Qh/ZROUBONzo4iO+890PsEBKTRPr+TNta4Il3IgX88hut6Jc3zOYeMM4XO72EsyZMVDvVZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vJozB/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBHtaKF6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AD9C4CEF5;
-	Wed,  3 Dec 2025 16:09:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vJozB/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8DEC4CEF5;
+	Wed,  3 Dec 2025 16:09:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778169;
-	bh=TvXYRFO9nJXm+nuN4bSBxclUnzOUp5gmlzMA5LB+QvE=;
+	s=korg; t=1764778172;
+	bh=JFsFLL3YTRY9RQOuJuMcDKua8V8fBERUoQJ6+lyMerc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBHtaKF6TZ6ac8lEgLU25UeC2Bc+slnnW/BNSXhUOi9Z5ESTjfqj9Cn914JzptTxB
-	 bV58iUvLixLZwQIRaa8Vz+Te+SOsaJMa+XnwkRuCcsEKq/LYo79lynxGxhowK7mKay
-	 1ttHqGxnLAamUkZfT7XTzHWCH+tv6RAcddd4Pduk=
+	b=1vJozB/DOUdMIphHzrs4bHIhKE44egSQBviStAHKlBNTmEYztzNNaMN2wj3KgBqQu
+	 tNUawYwBFA6O/E3mRJIYgMC25MCoHZpojhzrYBo4qjGbHFbi+DVsOnqcJezZ48sXgf
+	 PaKzVTsh8h+wSgJ1Xp1CFUEOC5zKYq1hThErDdT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/392] bpf: Add bpf_prog_run_data_pointers()
-Date: Wed,  3 Dec 2025 16:26:54 +0100
-Message-ID: <20251203152423.880607280@linuxfoundation.org>
+Subject: [PATCH 5.15 265/392] mptcp: pm: in-kernel: C-flag: handle late ADD_ADDR
+Date: Wed,  3 Dec 2025 16:26:55 +0100
+Message-ID: <20251203152423.917173415@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -54,110 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 4ef92743625818932b9c320152b58274c05e5053 ]
+[ Upstream commit e84cb860ac3ce67ec6ecc364433fd5b412c448bc ]
 
-syzbot found that cls_bpf_classify() is able to change
-tc_skb_cb(skb)->drop_reason triggering a warning in sk_skb_reason_drop().
+The special C-flag case expects the ADD_ADDR to be received when
+switching to 'fully-established'. But for various reasons, the ADD_ADDR
+could be sent after the "4th ACK", and the special case doesn't work.
 
-WARNING: CPU: 0 PID: 5965 at net/core/skbuff.c:1192 __sk_skb_reason_drop net/core/skbuff.c:1189 [inline]
-WARNING: CPU: 0 PID: 5965 at net/core/skbuff.c:1192 sk_skb_reason_drop+0x76/0x170 net/core/skbuff.c:1214
+On NIPA, the new test validating this special case for the C-flag failed
+a few times, e.g.
 
-struct tc_skb_cb has been added in commit ec624fe740b4 ("net/sched:
-Extend qdisc control block with tc control block"), which added a wrong
-interaction with db58ba459202 ("bpf: wire in data and data_end for
-cls_act_bpf").
+  102 default limits, server deny join id 0
+        syn rx                 [FAIL] got 0 JOIN[s] syn rx expected 2
 
-drop_reason was added later.
+  Server ns stats
+  (...)
+  MPTcpExtAddAddrTx  1
+  MPTcpExtEchoAdd    1
 
-Add bpf_prog_run_data_pointers() helper to save/restore the net_sched
-storage colliding with BPF data_meta/data_end.
+  Client ns stats
+  (...)
+  MPTcpExtAddAddr    1
+  MPTcpExtEchoAddTx  1
 
-Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Closes: https://lore.kernel.org/netdev/6913437c.a70a0220.22f260.013b.GAE@google.com/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20251112125516.1563021-1-edumazet@google.com
+        synack rx              [FAIL] got 0 JOIN[s] synack rx expected 2
+        ack rx                 [FAIL] got 0 JOIN[s] ack rx expected 2
+        join Rx                [FAIL] see above
+        syn tx                 [FAIL] got 0 JOIN[s] syn tx expected 2
+        join Tx                [FAIL] see above
+
+I had a suspicion about what the issue could be: the ADD_ADDR might have
+been received after the switch to the 'fully-established' state. The
+issue was not easy to reproduce. The packet capture shown that the
+ADD_ADDR can indeed be sent with a delay, and the client would not try
+to establish subflows to it as expected.
+
+A simple fix is not to mark the endpoints as 'used' in the C-flag case,
+when looking at creating subflows to the remote initial IP address and
+port. In this case, there is no need to try.
+
+Note: newly added fullmesh endpoints will still continue to be used as
+expected, thanks to the conditions behind mptcp_pm_add_addr_c_flag_case.
+
+Fixes: 4b1ff850e0c1 ("mptcp: pm: in-kernel: usable client side with C-flag")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-1-8207030cb0e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied to pm_netlink.c instead of pm_kernel.c ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+[ I took the version from Sasha from v6.1, and fixed an additional
+  conflict in pm_netlink.c, because commit a88c9e496937 ("mptcp: do not
+  block subflows creation on errors") is not in this version and changed
+  the code around: check_work_pending() is now called directly, followed
+  by a return instead of a goto. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/filter.h | 20 ++++++++++++++++++++
- net/sched/act_bpf.c    |  6 ++----
- net/sched/cls_bpf.c    |  6 ++----
- 3 files changed, 24 insertions(+), 8 deletions(-)
+ net/mptcp/pm_netlink.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/include/linux/filter.h b/include/linux/filter.h
-index dc49c8eb00fd6..e8d52cf2883a6 100644
---- a/include/linux/filter.h
-+++ b/include/linux/filter.h
-@@ -701,6 +701,26 @@ static inline void bpf_compute_data_pointers(struct sk_buff *skb)
- 	cb->data_end  = skb->data + skb_headlen(skb);
- }
- 
-+static inline int bpf_prog_run_data_pointers(
-+	const struct bpf_prog *prog,
-+	struct sk_buff *skb)
-+{
-+	struct bpf_skb_data_end *cb = (struct bpf_skb_data_end *)skb->cb;
-+	void *save_data_meta, *save_data_end;
-+	int res;
-+
-+	save_data_meta = cb->data_meta;
-+	save_data_end = cb->data_end;
-+
-+	bpf_compute_data_pointers(skb);
-+	res = bpf_prog_run(prog, skb);
-+
-+	cb->data_meta = save_data_meta;
-+	cb->data_end = save_data_end;
-+
-+	return res;
-+}
-+
- /* Similar to bpf_compute_data_pointers(), except that save orginal
-  * data in cb->data and cb->meta_data for restore.
-  */
-diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
-index 5576eb97d39e0..e1b6e88feaf51 100644
---- a/net/sched/act_bpf.c
-+++ b/net/sched/act_bpf.c
-@@ -45,12 +45,10 @@ static int tcf_bpf_act(struct sk_buff *skb, const struct tc_action *act,
- 	filter = rcu_dereference(prog->filter);
- 	if (at_ingress) {
- 		__skb_push(skb, skb->mac_len);
--		bpf_compute_data_pointers(skb);
--		filter_res = bpf_prog_run(filter, skb);
-+		filter_res = bpf_prog_run_data_pointers(filter, skb);
- 		__skb_pull(skb, skb->mac_len);
- 	} else {
--		bpf_compute_data_pointers(skb);
--		filter_res = bpf_prog_run(filter, skb);
-+		filter_res = bpf_prog_run_data_pointers(filter, skb);
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index df46ca14ce234..e94b78a8b0ef1 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -532,6 +532,12 @@ static void mptcp_pm_create_subflow_or_signal_addr(struct mptcp_sock *msk)
+ 		check_work_pending(msk);
  	}
- 	if (skb_sk_is_prefetched(skb) && filter_res != TC_ACT_OK)
- 		skb_orphan(skb);
-diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
-index b7c46a93a4121..63fb61a290cd6 100644
---- a/net/sched/cls_bpf.c
-+++ b/net/sched/cls_bpf.c
-@@ -95,12 +95,10 @@ static int cls_bpf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
- 		} else if (at_ingress) {
- 			/* It is safe to push/pull even if skb_shared() */
- 			__skb_push(skb, skb->mac_len);
--			bpf_compute_data_pointers(skb);
--			filter_res = bpf_prog_run(prog->filter, skb);
-+			filter_res = bpf_prog_run_data_pointers(prog->filter, skb);
- 			__skb_pull(skb, skb->mac_len);
- 		} else {
--			bpf_compute_data_pointers(skb);
--			filter_res = bpf_prog_run(prog->filter, skb);
-+			filter_res = bpf_prog_run_data_pointers(prog->filter, skb);
- 		}
  
- 		if (prog->exts_integrated) {
++	/* No need to try establishing subflows to remote id0 if not allowed */
++	if (mptcp_pm_add_addr_c_flag_case(msk)) {
++		check_work_pending(msk);
++		return;
++	}
++
+ 	/* check if should create a new subflow */
+ 	if (msk->pm.local_addr_used < local_addr_max &&
+ 	    msk->pm.subflows < subflows_max &&
 -- 
 2.51.0
 
