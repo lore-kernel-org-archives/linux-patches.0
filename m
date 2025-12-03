@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D1134C98C;
-	Wed,  3 Dec 2025 16:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE6F34CFAB;
+	Wed,  3 Dec 2025 16:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778752; cv=none; b=kyWAoLZXyNZyvoKn/6SLbkXgRQmdgg/P7LUc7EdanJmz/FLaz7LFfqOBtX2IPOYZ4KIYKr5WWoXhRvcF7N4ggs89weLhuYSftwGjxv1a8L6BKKyDRaxM/xllNMKN4SM2RvhNaM5t/S6yAlEbsaQv4KmtwF9TRnmsGUWgbl1DhBg=
+	t=1764778756; cv=none; b=OsigCJRRjU+hGBF81E7hnJcBsl3Z0P4Yq6gthIGgSnI8YSiqXcJbp3aOBRe9shCdlPCBrpHuj6z++xv9oYEFHLOpK/jLP78h+TKH6oIDpwKmtvfiQu8lLcVI3fM6rE62JbI22KafHWXPXVZBdgQCRetZsFcNt5z97JU34045BNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778752; c=relaxed/simple;
-	bh=erdCZpDEStRbglVQqnrePC6uUHnA0SdlSO/jnbwwGB4=;
+	s=arc-20240116; t=1764778756; c=relaxed/simple;
+	bh=sAb63ZfE01PW/IxPAlnwTBiaY4jDoyEH4rb9DfCHtpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AphgclkD3QH7Lz7irgfdJ5EH8CRrzRZPe1qvlOwEvdCSODtDHhdXdCMw6GB77m5RAI+Y7r3AbrkO0AzS2EJEqjhTNwJUxNnjdE2Hw19GDSYYJy3LNrQRg2r+Cd0qFolc+W1fIAXlVsyLGpAcaO9b2AMcsJU8IC7eEpCVfzlePz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+8TbF90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsXyr6IEmXGbisZBoI2uFsJY0u4z4fyWk6Dpl/4FGv69896oV2jmrkk1hemVgBdYtvgf4wXjzNM/LSQxX6v3ly5kSfLHaVzNtAc2XfXuGpH1mFrrcsoAwWhmiTPg14NuoJIp6AA0j6w+hRI+/h/t9hu2O16BaSHEpJKvvTaaLTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r5lQEFnM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+8TbF90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15571C4CEF5;
-	Wed,  3 Dec 2025 16:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r5lQEFnM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7473AC4CEF5;
+	Wed,  3 Dec 2025 16:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778752;
-	bh=erdCZpDEStRbglVQqnrePC6uUHnA0SdlSO/jnbwwGB4=;
+	s=korg; t=1764778755;
+	bh=sAb63ZfE01PW/IxPAlnwTBiaY4jDoyEH4rb9DfCHtpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C+8TbF90EENvbR/1BhpYz/9lfShy0bNCSsf8jsEnUlwRJALutQ1AQTUCtsd/mG2vd
-	 zlYffvPbdgzti/7LxAUPbk0X6x8k3DZ/lX6hn4y5fwrJjlAdRf63A6MMQuFbK6eZse
-	 DNAheP4+a+di2ox84bySnn5L/jVX4zA9Zxu8Um2c=
+	b=r5lQEFnMsJSdn1W4ukcyCkdKMNzbo5DC/NAPh59nVqIcFqREiJLfRQKPXwCFukwGg
+	 oVN7wbC56ih/ubTVnvpqkSxsRDFQWCuuwyoXoH6kSX/+fE6Z+06b2dDCM4D5Tfx1F1
+	 zas/JcQMGzQ0yV1RjXwPYmMy9rTIRGZ98P8XegMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudia Draghicescu <claudia.rosu@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/568] Bluetooth: ISO: Add support for periodic adv reports processing
-Date: Wed,  3 Dec 2025 16:20:51 +0100
-Message-ID: <20251203152442.487101350@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 032/568] fbdev: valkyriefb: Fix reference count leak in valkyriefb_init
+Date: Wed,  3 Dec 2025 16:20:34 +0100
+Message-ID: <20251203152441.847933534@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,164 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudia Draghicescu <claudia.rosu@nxp.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 9c0826310bfb784c9bac7d1d9454e304185446c5 ]
+commit eb53368f8d6e2dfba84c8a94d245719bcf9ae270 upstream.
 
-In the case of a Periodic Synchronized Receiver,
-the PA report received from a Broadcaster contains the BASE,
-which has information about codec and other parameters of a BIG.
-This isnformation is stored and the application can retrieve it
-using getsockopt(BT_ISO_BASE).
+The of_find_node_by_name() function returns a device tree node with its
+reference count incremented. The caller is responsible for calling
+of_node_put() to release this reference when done.
 
-Signed-off-by: Claudia Draghicescu <claudia.rosu@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: c403da5e98b0 ("Bluetooth: ISO: Fix another instance of dst_type handling")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found via static analysis.
+
+Fixes: cc5d0189b9ba ("[PATCH] powerpc: Remove device_node addrs/n_addr")
+Cc: stable@vger.kernel.org
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/bluetooth/hci.h | 11 +++++++++++
- net/bluetooth/hci_event.c   | 23 +++++++++++++++++++++++
- net/bluetooth/iso.c         | 28 +++++++++++++++++++++++++++-
- 3 files changed, 61 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/valkyriefb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 1a20fb1fa157b..018fc64329fc6 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -2768,6 +2768,17 @@ struct hci_ev_le_enh_conn_complete {
- 	__u8      clk_accurancy;
- } __packed;
+--- a/drivers/video/fbdev/valkyriefb.c
++++ b/drivers/video/fbdev/valkyriefb.c
+@@ -331,11 +331,13 @@ static int __init valkyriefb_init(void)
  
-+#define HCI_EV_LE_PER_ADV_REPORT    0x0f
-+struct hci_ev_le_per_adv_report {
-+	__le16	 sync_handle;
-+	__u8	 tx_power;
-+	__u8	 rssi;
-+	__u8	 cte_type;
-+	__u8	 data_status;
-+	__u8     length;
-+	__u8     data[];
-+} __packed;
-+
- #define HCI_EV_LE_EXT_ADV_SET_TERM	0x12
- struct hci_evt_le_ext_adv_set_term {
- 	__u8	status;
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index e1f1be4dfe97a..e516b169b12fb 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6469,6 +6469,24 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
- 	hci_dev_unlock(hdev);
- }
- 
-+static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
-+				      struct sk_buff *skb)
-+{
-+	struct hci_ev_le_per_adv_report *ev = data;
-+	int mask = hdev->link_mode;
-+	__u8 flags = 0;
-+
-+	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
-+
-+	hci_dev_lock(hdev);
-+
-+	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, ISO_LINK, &flags);
-+	if (!(mask & HCI_LM_ACCEPT))
-+		hci_le_pa_term_sync(hdev, ev->sync_handle);
-+
-+	hci_dev_unlock(hdev);
-+}
-+
- static void hci_le_remote_feat_complete_evt(struct hci_dev *hdev, void *data,
- 					    struct sk_buff *skb)
- {
-@@ -7002,6 +7020,11 @@ static const struct hci_le_ev {
- 	HCI_LE_EV(HCI_EV_LE_PA_SYNC_ESTABLISHED,
- 		  hci_le_pa_sync_estabilished_evt,
- 		  sizeof(struct hci_ev_le_pa_sync_established)),
-+	/* [0x0f = HCI_EV_LE_PER_ADV_REPORT] */
-+	HCI_LE_EV_VL(HCI_EV_LE_PER_ADV_REPORT,
-+				 hci_le_per_adv_report_evt,
-+				 sizeof(struct hci_ev_le_per_adv_report),
-+				 HCI_MAX_EVENT_SIZE),
- 	/* [0x12 = HCI_EV_LE_EXT_ADV_SET_TERM] */
- 	HCI_LE_EV(HCI_EV_LE_EXT_ADV_SET_TERM, hci_le_ext_adv_term_evt,
- 		  sizeof(struct hci_evt_le_ext_adv_set_term)),
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index c542497f040cc..bf7692e15deef 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -1314,7 +1314,8 @@ static int iso_sock_getsockopt(struct socket *sock, int level, int optname,
- 		break;
- 
- 	case BT_ISO_BASE:
--		if (sk->sk_state == BT_CONNECTED) {
-+		if (sk->sk_state == BT_CONNECTED &&
-+		    !bacmp(&iso_pi(sk)->dst, BDADDR_ANY)) {
- 			base_len = iso_pi(sk)->conn->hcon->le_per_adv_data_len;
- 			base = iso_pi(sk)->conn->hcon->le_per_adv_data;
- 		} else {
-@@ -1487,6 +1488,9 @@ static void iso_conn_ready(struct iso_conn *conn)
- 
- 		bacpy(&iso_pi(sk)->dst, &hcon->dst);
- 		iso_pi(sk)->dst_type = hcon->dst_type;
-+		iso_pi(sk)->sync_handle = iso_pi(parent)->sync_handle;
-+		memcpy(iso_pi(sk)->base, iso_pi(parent)->base, iso_pi(parent)->base_len);
-+		iso_pi(sk)->base_len = iso_pi(parent)->base_len;
- 
- 		hci_conn_hold(hcon);
- 		iso_chan_add(conn, sk, parent);
-@@ -1517,12 +1521,20 @@ static bool iso_match_sync_handle(struct sock *sk, void *data)
- 	return le16_to_cpu(ev->sync_handle) == iso_pi(sk)->sync_handle;
- }
- 
-+static bool iso_match_sync_handle_pa_report(struct sock *sk, void *data)
-+{
-+	struct hci_ev_le_per_adv_report *ev = data;
-+
-+	return le16_to_cpu(ev->sync_handle) == iso_pi(sk)->sync_handle;
-+}
-+
- /* ----- ISO interface with lower layer (HCI) ----- */
- 
- int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- {
- 	struct hci_ev_le_pa_sync_established *ev1;
- 	struct hci_evt_le_big_info_adv_report *ev2;
-+	struct hci_ev_le_per_adv_report *ev3;
- 	struct sock *sk;
- 	int lm = 0;
- 
-@@ -1538,6 +1550,9 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 	 * 2. HCI_EVT_LE_BIG_INFO_ADV_REPORT: When connect_ind is triggered by a
- 	 * a BIG Info it attempts to check if there any listening socket with
- 	 * the same sync_handle and if it does then attempt to create a sync.
-+	 * 3. HCI_EV_LE_PER_ADV_REPORT: When a PA report is received, it is stored
-+	 * in iso_pi(sk)->base so it can be passed up to user, in the case of a
-+	 * broadcast sink.
- 	 */
- 	ev1 = hci_recv_event_data(hdev, HCI_EV_LE_PA_SYNC_ESTABLISHED);
- 	if (ev1) {
-@@ -1570,6 +1585,17 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
- 				sk = NULL;
- 			}
+ 		if (of_address_to_resource(dp, 0, &r)) {
+ 			printk(KERN_ERR "can't find address for valkyrie\n");
++			of_node_put(dp);
+ 			return 0;
  		}
-+	}
-+
-+	ev3 = hci_recv_event_data(hdev, HCI_EV_LE_PER_ADV_REPORT);
-+	if (ev3) {
-+		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
-+					 iso_match_sync_handle_pa_report, ev3);
-+
-+		if (sk) {
-+			memcpy(iso_pi(sk)->base, ev3->data, ev3->length);
-+			iso_pi(sk)->base_len = ev3->length;
-+		}
- 	} else {
- 		sk = iso_get_sock_listen(&hdev->bdaddr, BDADDR_ANY, NULL, NULL);
+ 
+ 		frame_buffer_phys = r.start;
+ 		cmap_regs_phys = r.start + 0x304000;
++		of_node_put(dp);
  	}
--- 
-2.51.0
-
+ #endif /* ppc (!CONFIG_MAC) */
+ 
 
 
