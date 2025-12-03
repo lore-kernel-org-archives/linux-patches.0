@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CB035BDC5;
-	Wed,  3 Dec 2025 16:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD5523B60A;
+	Wed,  3 Dec 2025 16:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778979; cv=none; b=Wtrn+l7xKOa2UuasTUPhxQJg806I+G4VD/8FgQFf+NzG3KqZwsbUfzEyXiz/Pbc871HD/ts5mu3EyCDFbDur5afCsmLnsEPYvCy8tbRZC/zU08iy5hqUUVZICbgNJQta/NYxWX7RVjJQDIdNw5sNFJnjTIu63ZTkCYdb8LBJ/As=
+	t=1764778982; cv=none; b=WkjLV8JsTjIItlkMv62I7vsVws1Pw54sp7GXSGz997lqwEv1aTlf7qyT5VRBc/rSz5/YmwicJRDPZisBd48/d19QnKRtu+m5AnX4HD6OofLrzaKTdAxqL+OsDyrlB7Knw/7qTMxbtcq974McBoPYteQmiL7ZNfvwt8DyhsTiaxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778979; c=relaxed/simple;
-	bh=VKxE1+O+DCo9C6Pgpo6ZvGfaPuTOJzjTSdjaY9ojYec=;
+	s=arc-20240116; t=1764778982; c=relaxed/simple;
+	bh=s+IGvbUf21K3SmxTFWccRof3Zyn2HOTbdl8EVtflyk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LTtNERnt99dUoCYeqtrC/puD4wf3Xf0Ap97vIM393kXF9gMENxRyd4lSQfj4w9VvwYdZkb6GMH+BPzk+AD+LQ8R+z18ENmltcNoT8r041ZAepjORsD23ADSIP1OHH+n1TQac03EFSyOIVsuOdxTRdDeqDmO7K5cvms46l9b6Tm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eY8OslH0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L+CcMJt7Cp1s1f/wyu6An6oYh/yGaq5Wb8WuVuMGY4TpV4HiYhUJdtX3AYvr+Bjcqz/JCVMsQLW9P/CE7d3MYUQHaVO4wkjBA/8o3d6FiDO+gQmDfEdTr5cRXB9yYotledWIVL+zb3CO0wCoEXnHVe/rOsGaWPP1yRInd0F36tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvgO9+xD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eY8OslH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBE4C4CEF5;
-	Wed,  3 Dec 2025 16:22:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvgO9+xD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84814C4CEF5;
+	Wed,  3 Dec 2025 16:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778979;
-	bh=VKxE1+O+DCo9C6Pgpo6ZvGfaPuTOJzjTSdjaY9ojYec=;
+	s=korg; t=1764778982;
+	bh=s+IGvbUf21K3SmxTFWccRof3Zyn2HOTbdl8EVtflyk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eY8OslH0nBWB8gpdhzagJwxIvtXQbJXsMsmy8+xvpgMVZmCsqoohxd/v+BhtYj9/V
-	 YcHDCaLro9M8kQ7EGdLVbQfrtqwlDbR4qr1pney68LVHwZUjuZtHUJkoMvL61SmLwH
-	 2dy/coITf5bUho19NILMBFjULt1yOBAOVcU9OTJU=
+	b=rvgO9+xD9hyNRtfTSHwTXwQ87s5wONj2O9wqnBGPYAbVymLopk6D/V1mBqaHdolON
+	 gOeplWBULVYdbYY54sNrseanBm1NRVwaEEDGYDJXD+wjScHHdtzRdzat/0n7Tg50sC
+	 WR4qPlQ/miA4NOMUkAksHbTvhFlM8LOnOo9oo/NU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Amery Hung <ameryhung@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/568] clocksource/drivers/vf-pit: Replace raw_readl/writel to readl/writel
-Date: Wed,  3 Dec 2025 16:22:01 +0100
-Message-ID: <20251203152445.092605374@linuxfoundation.org>
+Subject: [PATCH 6.1 120/568] bpf: Clear pfmemalloc flag when freeing all fragments
+Date: Wed,  3 Dec 2025 16:22:02 +0100
+Message-ID: <20251203152445.128402615@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,95 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Lezcano <daniel.lezcano@linaro.org>
+From: Amery Hung <ameryhung@gmail.com>
 
-[ Upstream commit 0b781f527d6f99e68e5b3780ae03cd69a7cb5c0c ]
+[ Upstream commit 8f12d1137c2382c80aada8e05d7cc650cd4e403c ]
 
-The driver uses the raw_readl() and raw_writel() functions. Those are
-not for MMIO devices. Replace them with readl() and writel()
+It is possible for bpf_xdp_adjust_tail() to free all fragments. The
+kfunc currently clears the XDP_FLAGS_HAS_FRAGS bit, but not
+XDP_FLAGS_FRAGS_PF_MEMALLOC. So far, this has not caused a issue when
+building sk_buff from xdp_buff since all readers of xdp_buff->flags
+use the flag only when there are fragments. Clear the
+XDP_FLAGS_FRAGS_PF_MEMALLOC bit as well to make the flags correct.
 
-[ dlezcano: Fixed typo in the subject s/reald/readl/ ]
-
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Arnd Bergmann <arnd@arndb.de>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20250804152344.1109310-2-daniel.lezcano@linaro.org
+Signed-off-by: Amery Hung <ameryhung@gmail.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Link: https://patch.msgid.link/20250922233356.3356453-2-ameryhung@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-vf-pit.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ include/net/xdp.h | 5 +++++
+ net/core/filter.c | 1 +
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/clocksource/timer-vf-pit.c b/drivers/clocksource/timer-vf-pit.c
-index 911c92146eca6..8041a8f62d1fa 100644
---- a/drivers/clocksource/timer-vf-pit.c
-+++ b/drivers/clocksource/timer-vf-pit.c
-@@ -35,30 +35,30 @@ static unsigned long cycle_per_jiffy;
- 
- static inline void pit_timer_enable(void)
- {
--	__raw_writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
-+	writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
+diff --git a/include/net/xdp.h b/include/net/xdp.h
+index 55dbc68bfffce..8a0a69f691595 100644
+--- a/include/net/xdp.h
++++ b/include/net/xdp.h
+@@ -110,6 +110,11 @@ static __always_inline void xdp_buff_set_frag_pfmemalloc(struct xdp_buff *xdp)
+ 	xdp->flags |= XDP_FLAGS_FRAGS_PF_MEMALLOC;
  }
  
- static inline void pit_timer_disable(void)
++static __always_inline void xdp_buff_clear_frag_pfmemalloc(struct xdp_buff *xdp)
++{
++	xdp->flags &= ~XDP_FLAGS_FRAGS_PF_MEMALLOC;
++}
++
+ static __always_inline void
+ xdp_init_buff(struct xdp_buff *xdp, u32 frame_sz, struct xdp_rxq_info *rxq)
  {
--	__raw_writel(0, clkevt_base + PITTCTRL);
-+	writel(0, clkevt_base + PITTCTRL);
- }
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 9b4254feefccd..786064ac889a1 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4118,6 +4118,7 @@ static int bpf_xdp_frags_shrink_tail(struct xdp_buff *xdp, int offset)
  
- static inline void pit_irq_acknowledge(void)
- {
--	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
-+	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
- }
+ 	if (unlikely(!sinfo->nr_frags)) {
+ 		xdp_buff_clear_frags_flag(xdp);
++		xdp_buff_clear_frag_pfmemalloc(xdp);
+ 		xdp->data_end -= offset;
+ 	}
  
- static u64 notrace pit_read_sched_clock(void)
- {
--	return ~__raw_readl(clksrc_base + PITCVAL);
-+	return ~readl(clksrc_base + PITCVAL);
- }
- 
- static int __init pit_clocksource_init(unsigned long rate)
- {
- 	/* set the max load value and start the clock source counter */
--	__raw_writel(0, clksrc_base + PITTCTRL);
--	__raw_writel(~0UL, clksrc_base + PITLDVAL);
--	__raw_writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
-+	writel(0, clksrc_base + PITTCTRL);
-+	writel(~0UL, clksrc_base + PITLDVAL);
-+	writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
- 
- 	sched_clock_register(pit_read_sched_clock, 32, rate);
- 	return clocksource_mmio_init(clksrc_base + PITCVAL, "vf-pit", rate,
-@@ -76,7 +76,7 @@ static int pit_set_next_event(unsigned long delta,
- 	 * hardware requirement.
- 	 */
- 	pit_timer_disable();
--	__raw_writel(delta - 1, clkevt_base + PITLDVAL);
-+	writel(delta - 1, clkevt_base + PITLDVAL);
- 	pit_timer_enable();
- 
- 	return 0;
-@@ -125,8 +125,8 @@ static struct clock_event_device clockevent_pit = {
- 
- static int __init pit_clockevent_init(unsigned long rate, int irq)
- {
--	__raw_writel(0, clkevt_base + PITTCTRL);
--	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
-+	writel(0, clkevt_base + PITTCTRL);
-+	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
- 
- 	BUG_ON(request_irq(irq, pit_timer_interrupt, IRQF_TIMER | IRQF_IRQPOLL,
- 			   "VF pit timer", &clockevent_pit));
-@@ -183,7 +183,7 @@ static int __init pit_timer_init(struct device_node *np)
- 	cycle_per_jiffy = clk_rate / (HZ);
- 
- 	/* enable the pit module */
--	__raw_writel(~PITMCR_MDIS, timer_base + PITMCR);
-+	writel(~PITMCR_MDIS, timer_base + PITMCR);
- 
- 	ret = pit_clocksource_init(clk_rate);
- 	if (ret)
 -- 
 2.51.0
 
