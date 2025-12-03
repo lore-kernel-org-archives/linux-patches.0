@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52C1F3570DC;
-	Wed,  3 Dec 2025 16:35:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E6C3587C4;
+	Wed,  3 Dec 2025 16:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779752; cv=none; b=FV1WIWtyOzX1yCES9WllEGsuPEygthXfJqRbPza8QGu5jLcXmouW3gSgRMQtPjNT++n2qSQp//QnvZuDfK9fpyiwD1wjA83wi0PdgSpl95G5IZew98ZFzXXlYc9lQTQTdLP/eyfGHiVWKOx/Bn4qaSbY7BMrfH2vFJvVG/kZolA=
+	t=1764779755; cv=none; b=h7+ISvq6y3cM5yyNHEWc3jOTfJ5YKDsihUh4OT/IOficMdXEis9ahRIEipyWwkuMZOa8ARndgWfyf1rRoNPKAFc33meV4DZmHua5NjJ9cysb/7u1ZM2sZLylzCtfblgowqRoZmvbua/RJoK/yhp+GUkxAlt52eISxzuXVYo+I6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779752; c=relaxed/simple;
-	bh=lPFgs6eLo6bTO4Sq1WeeS+TQjV2nAOoGb5MiYLrzR38=;
+	s=arc-20240116; t=1764779755; c=relaxed/simple;
+	bh=px9P812iShy2WmLvUIQT4P66xhvagNakAIA2eriCT4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3osM4bR0qf6QDmDppWveuyzxmwozu4Ukd4N8/bUlpw0BTDWpy+v02EYBsY4z8BYq+2YtGWEjxYbUVjhq3LMrWD1ynqrM4apV39tzbcfgGL2muN6McrkDkoL/qMAhhyElxGLLHlkNepf8X64BaEPLLwgXheHfjBZbq5Gzw8ipr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7knAPUt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GrV5uGs2N9/nrvrg/ipoTd8HTCPYFnQIJwMzeEMIXgkkQxuFF984ijchOnb+IPa7KAn5eOYoY/vzkaawLySA1s0QlLgxWA4nQLNHsnGxJjTKR0L2/pRdOvM5vvJIMDZMa6nvUsfCXXyq38wgYUo1Rp0VfV62lJ63SEF6vWUgPP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygmg2ZKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7knAPUt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8733C4CEF5;
-	Wed,  3 Dec 2025 16:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygmg2ZKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0712DC4CEF5;
+	Wed,  3 Dec 2025 16:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779752;
-	bh=lPFgs6eLo6bTO4Sq1WeeS+TQjV2nAOoGb5MiYLrzR38=;
+	s=korg; t=1764779755;
+	bh=px9P812iShy2WmLvUIQT4P66xhvagNakAIA2eriCT4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7knAPUtzk4a2jVJ88tWGccWdIwgFyd7+zRf//QBasiyKqRzdF6os6HNghLTF36Jo
-	 UPppj3TYVbmOh/lR1gHgX9h5A2dfsLX5huBWi4e4pIXuWiD8n2TkxSUzPI6gp6+oyW
-	 3As18vji7GGfsLIvr4yMpY3dEKAwkHipx3akpelk=
+	b=ygmg2ZKA47LYuN3RRf9oQ2i5rY/1U6rzPNud/rsv3VVHoPEWYf5ozCNSuEX//ePBL
+	 JayoRoMAbPJH4Aa+OHO/eW+LhncOdmjAPRKJfJOb6JMBlc6gg8/hrb+ge0WB3qXaFs
+	 oLLagcDfuoeYuySeybtvoyttCt6zNpIwjWQ2mQyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/568] selftests: net: local_termination: Wait for interfaces to come up
-Date: Wed,  3 Dec 2025 16:25:51 +0100
-Message-ID: <20251203152453.487194056@linuxfoundation.org>
+Subject: [PATCH 6.1 319/568] bnxt_en: Fix a possible memory leak in bnxt_ptp_init
+Date: Wed,  3 Dec 2025 16:25:21 +0100
+Message-ID: <20251203152452.395723816@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,46 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
 
-[ Upstream commit 57531b3416448d1ced36a2a974a4085ec43d57b0 ]
+[ Upstream commit deb8eb39164382f1f67ef8e8af9176baf5e10f2d ]
 
-It seems that most of the tests prepare the interfaces once before the test
-run (setup_prepare()), rely on setup_wait() to wait for link and only then
-run the test(s).
+In bnxt_ptp_init(), when ptp_clock_register() fails, the driver is
+not freeing the memory allocated for ptp_info->pin_config.  Fix it
+to unconditionally free ptp_info->pin_config in bnxt_ptp_free().
 
-local_termination brings the physical interfaces down and up during test
-run but never wait for them to come up. If the auto-negotiation takes
-some seconds, first test packets are being lost, which leads to
-false-negative test results.
-
-Use setup_wait() in run_test() to make sure auto-negotiation has been
-completed after all simple_if_init() calls on physical interfaces and test
-packets will not be lost because of the race against link establishment.
-
-Fixes: 90b9566aa5cd3f ("selftests: forwarding: add a test for local_termination.sh")
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://patch.msgid.link/20251106161213.459501-1-alexander.sverdlin@siemens.com
+Fixes: caf3eedbcd8d ("bnxt_en: 1PPS support for 5750X family chips")
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20251104005700.542174-3-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/local_termination.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/local_termination.sh b/tools/testing/selftests/net/forwarding/local_termination.sh
-index 9b5a63519b949..6cde61f10fd0e 100755
---- a/tools/testing/selftests/net/forwarding/local_termination.sh
-+++ b/tools/testing/selftests/net/forwarding/local_termination.sh
-@@ -108,6 +108,8 @@ run_test()
- 	local smac=$(mac_get $h1)
- 	local rcv_dmac=$(mac_get $rcv_if_name)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+index ae734314f8de5..1c888d6c3aee8 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ptp.c
+@@ -895,9 +895,9 @@ static void bnxt_ptp_free(struct bnxt *bp)
+ 	if (ptp->ptp_clock) {
+ 		ptp_clock_unregister(ptp->ptp_clock);
+ 		ptp->ptp_clock = NULL;
+-		kfree(ptp->ptp_info.pin_config);
+-		ptp->ptp_info.pin_config = NULL;
+ 	}
++	kfree(ptp->ptp_info.pin_config);
++	ptp->ptp_info.pin_config = NULL;
+ }
  
-+	setup_wait
-+
- 	tcpdump_start $rcv_if_name
- 
- 	mc_route_prepare $h1
+ int bnxt_ptp_init(struct bnxt *bp, bool phc_cfg)
 -- 
 2.51.0
 
