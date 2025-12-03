@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF16A393DF8;
-	Wed,  3 Dec 2025 16:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48722393DF3;
+	Wed,  3 Dec 2025 16:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780705; cv=none; b=st2h7TJjQjvI95XA8NAVMEiJWDZLRy6+0TjDHRvZRxS+8p0kW9rqALo5mptwtgDZH2qJSubVGvys+gwoH8uMe4QupIJo2F8YY3CKMQciCEdEBTrqVLOR/fLSx/mVir+n7yoCAtrptvWGz3kb/QdxYWwwqZif9d2662y4OtUrZq0=
+	t=1764780709; cv=none; b=ZZqg6N26l77W407SxX6+W+qyiDkqJY6Fd0USenhBWv/xOcaAqZ1wLyuclhpvzV0zi84W3uZFitfR86IqeN44QkYAPNY4gHb0oP8svT3cflx/GiUZxIfCFkx3ZMnLxuANzh0TEv6EahpHU9EWGOq0J+SJaq6woT5DO2c/ObINKnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780705; c=relaxed/simple;
-	bh=BDLYrGdMt4iSy0b2tzU82CyuzOle/quiUHFsvY1VNUo=;
+	s=arc-20240116; t=1764780709; c=relaxed/simple;
+	bh=8scz4mH918d3q539Jm8a78LzLjmSoC44lJJtE9MOSJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDCIW2PvNONPU02+rNcbHm0zq3j4b2wBG+1WNMZRLu28cdxA/K9Fcea2QXnBuJeNkOM52yz9zo4ANEWDWkJ5SgYTzPom2lmp9Gl/Nuok09HPttJ+2s5/iS7nhLGKF6ZXGP6Sv+qGXKIm5MqJJDDDYGV1OI6H6O+ZDU8alvg8ddk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T+aVGAhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMTGpzUOefU7NnELW9PIKQVloCC66mWztAfPg1Twe0JfpTlx2wJ/Dk3Pd+d92dv+TGISEob+GAPmPhXQkV6k5Du0BiBlfWOPAqOYyDrvu7pBAvKLvhMbGNJ88V8x50Jp4yASTKvKUUMXbwXo/JKnzXdOnLj0wBXWKPWc6Z0m35k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VhyXI8Z1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T+aVGAhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C4BC4CEF5;
-	Wed,  3 Dec 2025 16:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VhyXI8Z1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38D6C4CEF5;
+	Wed,  3 Dec 2025 16:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780705;
-	bh=BDLYrGdMt4iSy0b2tzU82CyuzOle/quiUHFsvY1VNUo=;
+	s=korg; t=1764780709;
+	bh=8scz4mH918d3q539Jm8a78LzLjmSoC44lJJtE9MOSJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+aVGAhQr78SR3kLNdZUFJG+k4B9Obduwou230l2zo2QSdHIvDmqSSf7ySc8etZ0f
-	 ALE7Y/grsnB0FYGzspuuGQow9J4h3OzdsKVaAhvio1M9BVwHID1lTuAFvIHXE1E/13
-	 YqqtnNoeDT1xXjRCTRNs3X1Y/8bI4WEig7vzLFBA=
+	b=VhyXI8Z1tIjQn/iHy9vEQACf5poclLxc+ZEYbMP1tj4o0zGpF+UFGVP4aEMizkPhS
+	 NTm1EQfNxnj2Mf7ivV5hhrsZeTZz0uIrFBw05Q7amnJSgIHHjoy1jBQDjputgcMTPp
+	 WG1yz7FBaFbb0JxoVbio/WTkG8Pcm7riTdqrUlJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haotian Zhang <vulab@iscas.ac.cn>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/132] usb: gadget: renesas_usbf: Handle devm_pm_runtime_enable() errors
-Date: Wed,  3 Dec 2025 16:28:32 +0100
-Message-ID: <20251203152344.525444324@linuxfoundation.org>
+Subject: [PATCH 6.12 034/132] mailbox: mailbox-test: Fix debugfs_create_dir error checking
+Date: Wed,  3 Dec 2025 16:28:33 +0100
+Message-ID: <20251203152344.561478193@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -54,41 +53,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 74851fbb6d647304f8a7dc491434d3a335ef4b8d ]
+[ Upstream commit 3acf1028f5003731977f750a7070f3321a9cb740 ]
 
-devm_pm_runtime_enable() can fail due to memory allocation.
-The current code ignores its return value, potentially causing
-pm_runtime_resume_and_get() to operate on uninitialized runtime
-PM state.
+The debugfs_create_dir() function returns ERR_PTR() on error, not NULL.
+The current null-check fails to catch errors.
 
-Check the return value of devm_pm_runtime_enable() and return on failure.
+Use IS_ERR() to correctly check for errors.
 
-Fixes: 3e6e14ffdea4 ("usb: gadget: udc: add Renesas RZ/N1 USBF controller support")
+Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Acked-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251124022215.1619-1-vulab@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/renesas_usbf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mailbox/mailbox-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/renesas_usbf.c b/drivers/usb/gadget/udc/renesas_usbf.c
-index 657f265ac7cc5..8463f681ae673 100644
---- a/drivers/usb/gadget/udc/renesas_usbf.c
-+++ b/drivers/usb/gadget/udc/renesas_usbf.c
-@@ -3262,7 +3262,9 @@ static int usbf_probe(struct platform_device *pdev)
- 	if (IS_ERR(udc->regs))
- 		return PTR_ERR(udc->regs);
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index 3386b4e72551c..e416ce9e2d674 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -268,7 +268,7 @@ static int mbox_test_add_debugfs(struct platform_device *pdev,
+ 		return 0;
  
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0)
- 		return ret;
+ 	tdev->root_debugfs_dir = debugfs_create_dir(dev_name(&pdev->dev), NULL);
+-	if (!tdev->root_debugfs_dir) {
++	if (IS_ERR(tdev->root_debugfs_dir)) {
+ 		dev_err(&pdev->dev, "Failed to create Mailbox debugfs\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.51.0
 
