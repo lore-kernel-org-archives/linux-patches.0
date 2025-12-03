@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C734B301700;
-	Wed,  3 Dec 2025 15:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B592DA769;
+	Wed,  3 Dec 2025 15:35:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776133; cv=none; b=VBYsDM4G3riA5buR2muQ1FOSeTAU/lkNiBX7uUfsm3C0tpYP8dg3f76BCnFDY/5/fc+nHvph6ypCy2KT9Yv7YLXO2AXpWPMxusu45EHqnEtNOHHd8NS8RmomyLvqu1ZsKXfYncI0foGwWU/6BmJFJzy8PosHSiYyFEM9NWz5L+8=
+	t=1764776136; cv=none; b=DI6eJFObggd+2hD5z8j+VU6fH3fTbU+eCRv0VjfySjHQUmj+pJ4TZp3Nuzwx0lJbwsrig6fafXinQ7OoAtmkpl538wPrmX2DLoideVEo7RWzxjAH1lo6dSOoUkgd7bAIblysgCA5AZ2DRXMdgDJGeQwzVqNwCDwW2e9SQG9oTIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776133; c=relaxed/simple;
-	bh=RICmmYjKuybs419OkruZgfVryTPeH6nCqi+8zy5x+W4=;
+	s=arc-20240116; t=1764776136; c=relaxed/simple;
+	bh=iVyKqYvYZQTw4ijQK9MzlcdMVJeJUlSdMKeAK92CgIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSmk8zUJg0FR92L61T/pCsHYVvJy1tp2Evx60F1Lc629Qw9HXoEaGsEfSj+Am3M12r3ltl+IfF4bQTfZcyJuNAOiK8KtMQyOQ5sVVY/UsvDv55hfpn4IXGLsaK2JdTRWe+/5Z4bxsJRDmjjZK3hNU8KjWb73ySB+1HsoBANDDZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RYFBBOE8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebkCYChydDRsTdVRcoSE8FjPC/bdk/xh2cy76f2tSZFUzlAZJ1K/q3qONTTuiC8qUHq4Jb+dpiR7m2gZYW7o/TVGDlX3TLBD8eQvBXSRzxLorGtzs5QpGcHAc/QO7fua7I3ufvuLZiiEYItH1WAspbPtqWHNRz9rohp/3IX+P9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I34bCVQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RYFBBOE8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CD8C4CEF5;
-	Wed,  3 Dec 2025 15:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I34bCVQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23823C4CEF5;
+	Wed,  3 Dec 2025 15:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776133;
-	bh=RICmmYjKuybs419OkruZgfVryTPeH6nCqi+8zy5x+W4=;
+	s=korg; t=1764776136;
+	bh=iVyKqYvYZQTw4ijQK9MzlcdMVJeJUlSdMKeAK92CgIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RYFBBOE8UwGS0G8vgo3E87Hk7ciGgNjvMIe1IQ7evYC7H7A8CQ7pf3wZ9TvqSMwGy
-	 lvif/eSzfkBS+QGgCPB3JuO1l07q8wKSZJgrxP+ZiWebR3xbRq6zsSTsMqGLsq+qP8
-	 1BXmfFfrL45sffqgCgWhwHUjKCXetR29hR555BlE=
+	b=I34bCVQLcsHV0YogdnV1ExDaVVVS0BsZeRK+o5FvxBe4BGHYjmt+hIJn8b30daURa
+	 KYiHsx/gb8040gV5negziPmJp6ddgtgWyijbQq/dethfky9tMpRxVb29YT+OrER5Kp
+	 T9wNDdiZHoQee2Ig1M14x1+8OpXd1dbhJmWbCjK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/300] ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
-Date: Wed,  3 Dec 2025 16:24:54 +0100
-Message-ID: <20251203152403.957531231@linuxfoundation.org>
+Subject: [PATCH 5.10 064/300] mfd: stmpe: Remove IRQ domain upon removal
+Date: Wed,  3 Dec 2025 16:24:28 +0100
+Message-ID: <20251203152402.992766759@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,50 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 2aec0b6a6b5395bca7d6fde9c7e9dc391d329698 ]
+[ Upstream commit 57bf2a312ab2d0bc8ee0f4e8a447fa94a2fc877d ]
 
-Just add fixed struct size validations for UAC2 and UAC3 effect
-units.  The descriptor has a variable-length array, so it should be
-validated with a proper function later once when the unit is really
-parsed and used by the driver (currently only referred partially for
-the input terminal parsing).
+The IRQ domain is (optionally) added during stmpe_probe, but never removed.
+Add the call to stmpe_remove.
 
-Link: https://patch.msgid.link/20250821151751.12100-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250725070752.338376-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/validate.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/mfd/stmpe.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/usb/validate.c b/sound/usb/validate.c
-index a0d55b77c9941..4bb4893f6e74f 100644
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -266,7 +266,11 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_2, UAC_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_2, UAC_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_2, UAC_FEATURE_UNIT, validate_uac2_feature_unit),
--	/* UAC_VERSION_2, UAC2_EFFECT_UNIT: not implemented yet */
-+	/* just a stop-gap, it should be a proper function for the array
-+	 * once if the unit is really parsed/used
-+	 */
-+	FIXED(UAC_VERSION_2, UAC2_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor),
- 	FUNC(UAC_VERSION_2, UAC2_PROCESSING_UNIT_V2, validate_processing_unit),
- 	FUNC(UAC_VERSION_2, UAC2_EXTENSION_UNIT_V2, validate_processing_unit),
- 	FIXED(UAC_VERSION_2, UAC2_CLOCK_SOURCE,
-@@ -286,7 +290,8 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
--	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
-+	FIXED(UAC_VERSION_3, UAC3_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor), /* sharing the same struct */
- 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
- 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
- 	FIXED(UAC_VERSION_3, UAC3_CLOCK_SOURCE,
+diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
+index 7f758fb60c1fa..70ca3fe4e99ee 100644
+--- a/drivers/mfd/stmpe.c
++++ b/drivers/mfd/stmpe.c
+@@ -1494,6 +1494,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+ 
+ int stmpe_remove(struct stmpe *stmpe)
+ {
++	if (stmpe->domain)
++		irq_domain_remove(stmpe->domain);
++
+ 	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
+ 		regulator_disable(stmpe->vio);
+ 	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
 -- 
 2.51.0
 
