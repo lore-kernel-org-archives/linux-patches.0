@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3047330BB9B;
-	Wed,  3 Dec 2025 15:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43D30FC3A;
+	Wed,  3 Dec 2025 15:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776701; cv=none; b=DMbPr22+Zh/Hx1bgGmj29e0jp1muFDg3z+7/R2NQ1tz07Pvp4csv6Aym8AfMTo03Tc6ci7zra4Q2sYx3Y51vQfjyEPA5UrTP1KOqawUKtYdyTS5EQrU+G5xSmOjIV6MOcH9rWZ4/H5MHwmmVqOUenAbhu3XVG8Uc/7y48XrWh3Q=
+	t=1764776704; cv=none; b=TltIdx7J1ItM+2DVAt1Z+fe9qvfBtzHtvuq3ibcYkVI7ctsdWmOgwJv3rgzyMfWevfSovn/DD5P71Rj7NRj2lVonrlgZ6c24ZlDdbmjSldo0lRmCsSLRBP0dvn45ZKo5hxqUx/hGbpMX6C6IGz3hATOo+Um8FD/6rgENd+eVsH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776701; c=relaxed/simple;
-	bh=OvDW097t92DQ8FU+P3tFn4j19bP5aTck3+JZMD8EL2o=;
+	s=arc-20240116; t=1764776704; c=relaxed/simple;
+	bh=VYgisZ3wB4EZJ20LJtOAwzljpGhYCjhmKTHA4piY34s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lFTNtwQ2Kaq4KuuQ2WhosE+bxdRGKZtdIZBf0DbGH64N9zvhiFstgsYm359L9g2zfR4ZaO1rTdGf1tkuoT1bO0C7mHarJdbchP8H5k6uVE0mDJJ3FG1vYIgMY727Pe6txjL3xsrdF/n0uXCGs1kxT3yxY1ViTYyR5pW25/IfsmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWp6NckA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPFzLk4gFDNy9V/kYoWJeDdEZg/LBNQfEfPBfiA5hJEGXowJTb8orPnd7C/XQdm7ZgbiIA22i3+Xw1YETVOxDd6hIALO3fMwIdsgK64QgfNNNIw87I/3k0zckh1bxvg5XAeyv2kSoVXnVCmVxRpB72sgbhW08KN84Wu2pUdTOuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtYzCl1n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWp6NckA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA07C116B1;
-	Wed,  3 Dec 2025 15:44:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtYzCl1n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B7BC4CEF5;
+	Wed,  3 Dec 2025 15:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776701;
-	bh=OvDW097t92DQ8FU+P3tFn4j19bP5aTck3+JZMD8EL2o=;
+	s=korg; t=1764776704;
+	bh=VYgisZ3wB4EZJ20LJtOAwzljpGhYCjhmKTHA4piY34s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWp6NckAoLqmTV6ZZxM7SmtrMxYxtbj0aCLVui7F9pqWbmq3BVChtwSt5v8WLe9ao
-	 5bbpreMXf4jo3J8dLV1Ifc+ruSyfO6A4Q6vDkVEM5uFgEFW+15D2h94dpaaXYyic7e
-	 8QZGYDji9YetcNwkR0yjjRv0vi/ZtjOGsctpnwdE=
+	b=wtYzCl1nx5xO0MeIEYJo7NRaZF/oiu3nzwYFAFeWZ891N62fCDe8td91JY2b6cmtZ
+	 03qXD1UaCxNmbSvHVKFJGlv5jP8CPWFgsjjFyHR+7iKI+nhhdtXvGHhVqrI5Ij6zf1
+	 IZT2uwa2diKGZLbdIye+bayok8RMQ5690Hh8uuJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiefeng Zhang <jiefeng.z.zhang@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 261/300] net: atlantic: fix fragment overflow handling in RX path
-Date: Wed,  3 Dec 2025 16:27:45 +0100
-Message-ID: <20251203152410.306960598@linuxfoundation.org>
+Subject: [PATCH 5.10 262/300] mailbox: mailbox-test: Fix debugfs_create_dir error checking
+Date: Wed,  3 Dec 2025 16:27:46 +0100
+Message-ID: <20251203152410.343939781@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,91 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiefeng Zhang <jiefeng.z.zhang@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 5ffcb7b890f61541201461580bb6622ace405aec ]
+[ Upstream commit 3acf1028f5003731977f750a7070f3321a9cb740 ]
 
-The atlantic driver can receive packets with more than MAX_SKB_FRAGS (17)
-fragments when handling large multi-descriptor packets. This causes an
-out-of-bounds write in skb_add_rx_frag_netmem() leading to kernel panic.
+The debugfs_create_dir() function returns ERR_PTR() on error, not NULL.
+The current null-check fails to catch errors.
 
-The issue occurs because the driver doesn't check the total number of
-fragments before calling skb_add_rx_frag(). When a packet requires more
-than MAX_SKB_FRAGS fragments, the fragment index exceeds the array bounds.
+Use IS_ERR() to correctly check for errors.
 
-Fix by assuming there will be an extra frag if buff->len > AQ_CFG_RX_HDR_SIZE,
-then all fragments are accounted for. And reusing the existing check to
-prevent the overflow earlier in the code path.
-
-This crash occurred in production with an Aquantia AQC113 10G NIC.
-
-Stack trace from production environment:
-```
-RIP: 0010:skb_add_rx_frag_netmem+0x29/0xd0
-Code: 90 f3 0f 1e fa 0f 1f 44 00 00 48 89 f8 41 89
-ca 48 89 d7 48 63 ce 8b 90 c0 00 00 00 48 c1 e1 04 48 01 ca 48 03 90
-c8 00 00 00 <48> 89 7a 30 44 89 52 3c 44 89 42 38 40 f6 c7 01 75 74 48
-89 fa 83
-RSP: 0018:ffffa9bec02a8d50 EFLAGS: 00010287
-RAX: ffff925b22e80a00 RBX: ffff925ad38d2700 RCX:
-fffffffe0a0c8000
-RDX: ffff9258ea95bac0 RSI: ffff925ae0a0c800 RDI:
-0000000000037a40
-RBP: 0000000000000024 R08: 0000000000000000 R09:
-0000000000000021
-R10: 0000000000000848 R11: 0000000000000000 R12:
-ffffa9bec02a8e24
-R13: ffff925ad8615570 R14: 0000000000000000 R15:
-ffff925b22e80a00
-FS: 0000000000000000(0000)
-GS:ffff925e47880000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff9258ea95baf0 CR3: 0000000166022004 CR4:
-0000000000f72ef0
-PKRU: 55555554
-Call Trace:
-<IRQ>
-aq_ring_rx_clean+0x175/0xe60 [atlantic]
-? aq_ring_rx_clean+0x14d/0xe60 [atlantic]
-? aq_ring_tx_clean+0xdf/0x190 [atlantic]
-? kmem_cache_free+0x348/0x450
-? aq_vec_poll+0x81/0x1d0 [atlantic]
-? __napi_poll+0x28/0x1c0
-? net_rx_action+0x337/0x420
-```
-
-Fixes: 6aecbba12b5c ("net: atlantic: add check for MAX_SKB_FRAGS")
-Changes in v4:
-- Add Fixes: tag to satisfy patch validation requirements.
-
-Changes in v3:
-- Fix by assuming there will be an extra frag if buff->len > AQ_CFG_RX_HDR_SIZE,
-  then all fragments are accounted for.
-
-Signed-off-by: Jiefeng Zhang <jiefeng.z.zhang@gmail.com>
-Link: https://patch.msgid.link/20251126032249.69358-1-jiefeng.z.zhang@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mailbox/mailbox-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-index 98e8997f80366..5a85999987b51 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -363,6 +363,11 @@ int aq_ring_rx_clean(struct aq_ring_s *self,
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index abcee58e851c2..29c04157b5e88 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -267,7 +267,7 @@ static int mbox_test_add_debugfs(struct platform_device *pdev,
+ 		return 0;
  
- 		if (!buff->is_eop) {
- 			unsigned int frag_cnt = 0U;
-+
-+			/* There will be an extra fragment */
-+			if (buff->len > AQ_CFG_RX_HDR_SIZE)
-+				frag_cnt++;
-+
- 			buff_ = buff;
- 			do {
- 				bool is_rsc_completed = true;
+ 	tdev->root_debugfs_dir = debugfs_create_dir(dev_name(&pdev->dev), NULL);
+-	if (!tdev->root_debugfs_dir) {
++	if (IS_ERR(tdev->root_debugfs_dir)) {
+ 		dev_err(&pdev->dev, "Failed to create Mailbox debugfs\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.51.0
 
