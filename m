@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B7430DD1A;
-	Wed,  3 Dec 2025 15:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2013030DEA9;
+	Wed,  3 Dec 2025 15:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775892; cv=none; b=cWyEUfkhz2dKrwEqt0W8i74CeniBqrQY3RVnOjTj3080JY/dbD1O3a3u/VsDJ9ZVU6j9Je9aeHW9r3eesaCbR8cUw/gokn1RU6Mdu9lSHC2wR7XR7/K6uLc6er2VIQLldCVCO2Tyy6yiKdHDsItGXwRx1rE8C6EV8j6UTIsvae0=
+	t=1764775896; cv=none; b=sj54nMLE4j5WCuaU2KitRjzMDQ0JdPcpog89N/BiXc/J6W7eDCV4hnaeKYz2bDqqZA/IFVIWCoL/wNxIKnmif/8Ra/6XwPsZSObWW6KQBuviK44aun4mmAO90FwBdmA1Njkk8GvObb+Fwaa9UWqQXsNd4mYfa7m/cpwxPv5ZdYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775892; c=relaxed/simple;
-	bh=kpYJKbOGDw/3fZBJWvWtlwUaCmiKzNURU/Dm21o7P14=;
+	s=arc-20240116; t=1764775896; c=relaxed/simple;
+	bh=4E5QnOOtwJLYn+0riezjBQgvtHRauGGVc+Pu8MP9wsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GP8pReyugdtCDKxAC5HFCtIb12CH9NAzdD4TyffX3vSYUtD0loVarUHpiHgh28/bR7Q/PEN9RJaQTnh0nNtAMxZp27T8XJhS6l6YTxmRQIozs+3XdZP3Y68nK8LJWTM66aI98tTebmGilihHfmSGpMF09PnyId2ofEt2j02tNDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+ZadINM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UjiDKEDxSMIunfb6UNVPMdKb9HezdFUyY8vyILu0llZ/2TuIo7Kt+Y1eSVVIjhFz8r6ZtZUJR2709UklAs17wHuRovYp1yQZcI2nheR+Rsw5yg3SXNMdS1yTOosqIQAZ0xJgxi+27gV+ZkFFDnSyKRZ7wOLxrMBB5Za5l2tuTjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7Q1ZI2F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+ZadINM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AE2C4CEF5;
-	Wed,  3 Dec 2025 15:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7Q1ZI2F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187CDC4CEF5;
+	Wed,  3 Dec 2025 15:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775892;
-	bh=kpYJKbOGDw/3fZBJWvWtlwUaCmiKzNURU/Dm21o7P14=;
+	s=korg; t=1764775895;
+	bh=4E5QnOOtwJLYn+0riezjBQgvtHRauGGVc+Pu8MP9wsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c+ZadINMErJI+qWz+7jQPFpUH1QibbXufgqJv5DHFoOeZciwwxgSszLw6Oql2zoyR
-	 2yzOhtsTu6QJNhx04GpZL3cPTdH4IEMLsKU1iskPw32jIbp8Kxow+55lVTxLSntO2D
-	 m09i+q69z+TRBQIyUy4FhZcMQSzz6Gz1u65799YU=
+	b=V7Q1ZI2FImtaqowhgT/Z3RY7VhMLonvXMs2v3GzxViszI9RuVBHJUJmtMpy2mf+KZ
+	 anEcwREtoJcYdatwz+n3J+Zdrf2edpVb9HCn+ZnaYQARBhHUwy2gj5E/jbvc+xOb+B
+	 /Pmnaz0FemeaclbvnqOpbV/wT+VfiuqRrmGHL5RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+	David Kaplan <david.kaplan@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/300] drm/etnaviv: fix flush sequence logic
-Date: Wed,  3 Dec 2025 16:23:43 +0100
-Message-ID: <20251203152401.169744933@linuxfoundation.org>
+Subject: [PATCH 5.10 002/300] x86/bugs: Fix reporting of LFENCE retpoline
+Date: Wed,  3 Dec 2025 16:23:26 +0100
+Message-ID: <20251203152400.546012062@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,44 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+From: David Kaplan <david.kaplan@amd.com>
 
-[ Upstream commit a042beac6e6f8ac1e923784cfff98b47cbabb185 ]
+[ Upstream commit d1cc1baef67ac6c09b74629ca053bf3fb812f7dc ]
 
-The current logic uses the flush sequence from the current address
-space. This is harmless when deducing the flush requirements for the
-current submit, as either the incoming address space is the same one
-as the currently active one or we switch context, in which case the
-flush is unconditional.
+The LFENCE retpoline mitigation is not secure but the kernel prints
+inconsistent messages about this fact.  The dmesg log says 'Mitigation:
+LFENCE', implying the system is mitigated.  But sysfs reports 'Vulnerable:
+LFENCE' implying the system (correctly) is not mitigated.
 
-However, this sequence is also stored as the current flush sequence
-of the GPU. If we switch context the stored flush sequence will no
-longer belong to the currently active address space. This incoherency
-can then cause missed flushes, resulting in translation errors.
+Fix this by printing a consistent 'Vulnerable: LFENCE' string everywhere
+when this mitigation is selected.
 
-Fixes: 27b67278e007 ("drm/etnaviv: rework MMU handling")
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://lore.kernel.org/r/20251021093723.3887980-1-l.stach@pengutronix.de
+Signed-off-by: David Kaplan <david.kaplan@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/20250915134706.3201818-1-david.kaplan@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/bugs.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-index 982174af74b1e..7d897aafb2a6a 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-@@ -346,7 +346,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
- 	u32 link_target, link_dwords;
- 	bool switch_context = gpu->exec_state != exec_state;
- 	bool switch_mmu_context = gpu->mmu_context != mmu_context;
--	unsigned int new_flush_seq = READ_ONCE(gpu->mmu_context->flush_seq);
-+	unsigned int new_flush_seq = READ_ONCE(mmu_context->flush_seq);
- 	bool need_flush = switch_mmu_context || gpu->flush_seq != new_flush_seq;
- 	bool has_blt = !!(gpu->identity.minor_features5 &
- 			  chipMinorFeatures5_BLT_ENGINE);
+diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
+index 8794e3f4974b3..57ba697e29180 100644
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1508,7 +1508,7 @@ spectre_v2_user_select_mitigation(void)
+ static const char * const spectre_v2_strings[] = {
+ 	[SPECTRE_V2_NONE]			= "Vulnerable",
+ 	[SPECTRE_V2_RETPOLINE]			= "Mitigation: Retpolines",
+-	[SPECTRE_V2_LFENCE]			= "Mitigation: LFENCE",
++	[SPECTRE_V2_LFENCE]			= "Vulnerable: LFENCE",
+ 	[SPECTRE_V2_EIBRS]			= "Mitigation: Enhanced / Automatic IBRS",
+ 	[SPECTRE_V2_EIBRS_LFENCE]		= "Mitigation: Enhanced / Automatic IBRS + LFENCE",
+ 	[SPECTRE_V2_EIBRS_RETPOLINE]		= "Mitigation: Enhanced / Automatic IBRS + Retpolines",
+@@ -3011,9 +3011,6 @@ static char *pbrsb_eibrs_state(void)
+ 
+ static ssize_t spectre_v2_show_state(char *buf)
+ {
+-	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
+-		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
+-
+ 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
+ 		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
+ 
 -- 
 2.51.0
 
