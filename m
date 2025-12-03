@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E635936A00B;
-	Wed,  3 Dec 2025 16:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE87B36A010;
+	Wed,  3 Dec 2025 16:45:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780337; cv=none; b=Bs3WtU4WXkYpIqgaOzAXurCqjODnsfARAIFvDXBQRPSW7GrdmTQWl/dadZHqmNn4W6OVlNtMohEXRu4/FQi/mw0eFhXbYq6Mgce9goiNENGeNJyOAS9feLmeD+wKJuBEl/BpdLhohlnsv9h2LnJTH4wXzq++xcFQdoj3kJAgq3w=
+	t=1764780340; cv=none; b=UaZ8H9Ca5TrJgS9aosFoJBXroDEML1eSQ1RRsUaK2x0xS1qt6RZzELUgWXZzcsrWD2WwFxDHN+lyQqP02+8pve3WDzUkwFsCemuDn9hDW8B10JpMmVAIiTSaulYuAdgg4hN7QXdT/Dh/8AD7QrqVsXDZoEk6y4tTBxiJP6L0i0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780337; c=relaxed/simple;
-	bh=lIeA/RyiwzPU1wMyTelhWt5LzqrDc3AoU4SzBwX3E1A=;
+	s=arc-20240116; t=1764780340; c=relaxed/simple;
+	bh=OL8EDirukIohWwkRh8NQSIpqJcYLtpOSyYl/eQHIzos=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IsZDrSAh/aCPwsoLILYNZlnenI4+kV2xA0pTChdSNk3ujfkrqLDGsYLv9xwxYi++Spg2b3iFjppblkR0hlrrSmcy0/cn64VtirKceJdAZflWX1WlrV76+zDGDt3VTP2wUevx7ncYlZ6fHmWaQ+UXcwQ5xcOelrn7yvxnD1pfTl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC+XGrNv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lTbXKLsUa9u2EwKlu0u1suduQ+MB3vNebjqIQrAWnUcng2qeGdgw5PufWFqRrh5ftQxiBYZnOxA0yEKwuqZpW4VzCv4pQkPeSpgBhLrGstBvJ+TAn80SSTwa6Kya6tujepj/+OlwAXEESvepXcpAnsWd0LGpuagKo7nUD2KEYPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OuBQfpcj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC+XGrNv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF3AC4CEF5;
-	Wed,  3 Dec 2025 16:45:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OuBQfpcj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFB4C4CEF5;
+	Wed,  3 Dec 2025 16:45:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780336;
-	bh=lIeA/RyiwzPU1wMyTelhWt5LzqrDc3AoU4SzBwX3E1A=;
+	s=korg; t=1764780340;
+	bh=OL8EDirukIohWwkRh8NQSIpqJcYLtpOSyYl/eQHIzos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GC+XGrNvnS/iwPv853HovH/rJn3HoVfNQPSmbK2j9z41imwtFV53dmFc/mH6Nyrhp
-	 O8Ex2i8Ol0d2V6Hg3LkY26bKuJX6j+hwSoXUVdRmsAXNKwRqwWGMb/KmyVmmE+RArw
-	 azKwWheJ6HPvqYkuxpF8HrxWFl4ERMB3quBp0nOc=
+	b=OuBQfpcj0bRuo9eBhEo6Qfm5B59NWmVc6T9QKIeTqP/AjiXNPwXCC5Vr5bZ5Jx+ON
+	 6/syfCH6vKIR7iT9XhFdAEo5ufQV+leZY4oXM0wuto5dJ8ogfDIcPrU/dK44EPq+X/
+	 WbOp+tdgnKyGNZNAICnli0/F16YM1py2auB9Ltz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 525/568] atm/fore200e: Fix possible data race in fore200e_open()
-Date: Wed,  3 Dec 2025 16:28:47 +0100
-Message-ID: <20251203152459.942765757@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20M=C3=BChlbacher?= <tmuehlbacher@posteo.net>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 526/568] can: sja1000: fix max irq loop handling
+Date: Wed,  3 Dec 2025 16:28:48 +0100
+Message-ID: <20251203152459.979368193@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,63 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Thomas Mühlbacher <tmuehlbacher@posteo.net>
 
-commit 82fca3d8a4a34667f01ec2351a607135249c9cff upstream.
+commit 30db4451c7f6aabcada029b15859a76962ec0cf8 upstream.
 
-Protect access to fore200e->available_cell_rate with rate_mtx lock in the
-error handling path of fore200e_open() to prevent a data race.
+Reading the interrupt register `SJA1000_IR` causes all of its bits to be
+reset. If we ever reach the condition of handling more than
+`SJA1000_MAX_IRQ` IRQs, we will have read the register and reset all its
+bits but without actually handling the interrupt inside of the loop
+body.
 
-The field fore200e->available_cell_rate is a shared resource used to track
-available bandwidth. It is concurrently accessed by fore200e_open(),
-fore200e_close(), and fore200e_change_qos().
+This may, among other issues, cause us to never `netif_wake_queue()`
+again after a transmission interrupt.
 
-In fore200e_open(), the lock rate_mtx is correctly held when subtracting
-vcc->qos.txtp.max_pcr from available_cell_rate to reserve bandwidth.
-However, if the subsequent call to fore200e_activate_vcin() fails, the
-function restores the reserved bandwidth by adding back to
-available_cell_rate without holding the lock.
-
-This introduces a race condition because available_cell_rate is a global
-device resource shared across all VCCs. If the error path in
-fore200e_open() executes concurrently with operations like
-fore200e_close() or fore200e_change_qos() on other VCCs, a
-read-modify-write race occurs.
-
-Specifically, the error path reads the rate without the lock. If another
-CPU acquires the lock and modifies the rate (e.g., releasing bandwidth in
-fore200e_close()) between this read and the subsequent write, the error
-path will overwrite the concurrent update with a stale value. This results
-in incorrect bandwidth accounting.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 429da1cc841b ("can: Driver for the SJA1000 CAN controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251120120657.2462194-1-hanguidong02@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Thomas Mühlbacher <tmuehlbacher@posteo.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20251115153437.11419-1-tmuehlbacher@posteo.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/atm/fore200e.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/can/sja1000/sja1000.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/atm/fore200e.c
-+++ b/drivers/atm/fore200e.c
-@@ -1377,7 +1377,9 @@ fore200e_open(struct atm_vcc *vcc)
+--- a/drivers/net/can/sja1000/sja1000.c
++++ b/drivers/net/can/sja1000/sja1000.c
+@@ -521,8 +521,8 @@ irqreturn_t sja1000_interrupt(int irq, v
+ 	if (priv->read_reg(priv, SJA1000_IER) == IRQ_OFF)
+ 		goto out;
  
- 	vcc->dev_data = NULL;
+-	while ((isrc = priv->read_reg(priv, SJA1000_IR)) &&
+-	       (n < SJA1000_MAX_IRQ)) {
++	while ((n < SJA1000_MAX_IRQ) &&
++	       (isrc = priv->read_reg(priv, SJA1000_IR))) {
  
-+	mutex_lock(&fore200e->rate_mtx);
- 	fore200e->available_cell_rate += vcc->qos.txtp.max_pcr;
-+	mutex_unlock(&fore200e->rate_mtx);
- 
- 	kfree(fore200e_vcc);
- 	return -EINVAL;
+ 		status = priv->read_reg(priv, SJA1000_SR);
+ 		/* check for absent controller due to hw unplug */
 
 
