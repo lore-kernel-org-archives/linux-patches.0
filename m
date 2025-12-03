@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF1A352949;
-	Wed,  3 Dec 2025 17:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70FC43563C4;
+	Wed,  3 Dec 2025 17:00:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781223; cv=none; b=gBrkb6h6fiW43K9kcUT9Vkrgz4S8UlSTFfb/XAGCSLv9d5E8zFYctRt7MXr59zqzlMd7oklnwFzgaBGQ8NcXu1yBZ/MJPVnIp27uJWDPm0li6zeK4I/i7yDmT1fQ6/b1u0hc4t2dJKwXeSZ2YCMhXnWIBQAcAhUJuFz2zy60AkU=
+	t=1764781226; cv=none; b=KY9Z+A1vVFoEjrUhA7uIdDzcv3Hcds8RdSkhDEhq0PMt2bRRNk4HN3pan9lnaFQs+v85GCUC3V/mxZkhwH4tEdpjDGYWYNP38xgC7VIj1xYmdvg0GhGa1vEfjsoQ82OT1k4HnZ2qE7zP5DUJQFHDHEumMJvcGNGv0DI/3MxPsGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781223; c=relaxed/simple;
-	bh=bPOrODEfWt4gTvS9j6WTsEg/zouEaU6G4L8Y1F1ejeI=;
+	s=arc-20240116; t=1764781226; c=relaxed/simple;
+	bh=K2Sh5mnnHenTUm+MkCjdarBtCqtr9KNFqne6CQ0nFi8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LiNIPSGaBsC3OWlzT2BgPtfnku7JZvBFWzFihWc46RxivLOpVle9/uj3+MnwQnL18mOLiAXnE2LJmIq8PcckifncC5fClwXzRfhIgFX1urad3fxIFv6KfV9TSHne/GzrCgQ5GuH4XULSurPVHwp6AsTPcJFPpsUoOZe8akAEnto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QoQ/KmPW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qe6sFd+tWQ2FvYqztGoncgOwYpnyib2p79nVRf0ivWapDtiAFpt9vYpXW1tmAEMXjsyj3W3KCtZHO2aX0jlBkXOybtbUclCqQCr7JiaVwsfgb8GgL4cPzU/qoGMiIuVFJwoLZ6OyiIsht4trJPqrs1g1UMGXacJj7eTb7BtO4jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2xhb2Ck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QoQ/KmPW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A66C4CEF5;
-	Wed,  3 Dec 2025 17:00:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2xhb2Ck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D1BC4CEF5;
+	Wed,  3 Dec 2025 17:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781223;
-	bh=bPOrODEfWt4gTvS9j6WTsEg/zouEaU6G4L8Y1F1ejeI=;
+	s=korg; t=1764781226;
+	bh=K2Sh5mnnHenTUm+MkCjdarBtCqtr9KNFqne6CQ0nFi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QoQ/KmPWpR9CqyjperXPeqTe2KCV/awHxEGRrztiwJZb3PEhLFswCGmTTzhPAKgLQ
-	 YEYcy/FvfAwU6t3q4nvZe3pJtNBW6bhdh8t8lllxIWwA9GdKfR5ykZgeJT0yxHzqX5
-	 NcCrD03mtOhuk2Wc56Q+6pd7MhXUeb4ucqYh3oQk=
+	b=N2xhb2CkkQkejpjV66Z8FiEYiLAwhoSkXsmeweMZHYUKcfsZv2HdXx2OJ5ifYnqlv
+	 e8TuIdt3HQEWWceYFPv5WnEwtWqFU8x9iFoG8HF2VhLVSe7eWu4uxdEAFnRf0QC1/S
+	 hUgCphbBHW8CR8YMimIySdN6WqiP59rL3gcapBtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Peter Chen <peter.chen@kernel.org>
-Subject: [PATCH 6.6 57/93] usb: cdns3: Fix double resource release in cdns3_pci_probe
-Date: Wed,  3 Dec 2025 16:29:50 +0100
-Message-ID: <20251203152338.631274542@linuxfoundation.org>
+	stable@kernel.org,
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.6 58/93] usb: gadget: f_eem: Fix memory leak in eem_unwrap
+Date: Wed,  3 Dec 2025 16:29:51 +0100
+Message-ID: <20251203152338.668552332@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,49 +50,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-commit 1ec39d2cd88dac2e7cdbac248762f1f057971c5d upstream.
+commit e4f5ce990818d37930cd9fb0be29eee0553c59d9 upstream.
 
-The driver uses pcim_enable_device() to enable the PCI device,
-the device will be automatically disabled on driver detach through
-the managed device framework. The manual pci_disable_device() calls
-in the error paths are therefore redundant and should be removed.
+The existing code did not handle the failure case of usb_ep_queue in the
+command path, potentially leading to memory leaks.
 
-Found via static anlaysis and this is similar to commit 99ca0b57e49f
-("thermal: intel: int340x: processor: Fix warning during module unload").
+Improve error handling to free all allocated resources on usb_ep_queue
+failure. This patch continues to use goto logic for error handling, as the
+existing error handling is complex and not easily adaptable to auto-cleanup
+helpers.
 
-Fixes: 7733f6c32e36 ("usb: cdns3: Add Cadence USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20251026090859.33107-1-linmq006@gmail.com
+kmemleak results:
+  unreferenced object 0xffffff895a512300 (size 240):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      kmem_cache_alloc+0x1b4/0x358
+      skb_clone+0x90/0xd8
+      eem_unwrap+0x1cc/0x36c
+  unreferenced object 0xffffff8a157f4000 (size 256):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      __kmem_cache_alloc_node+0x1b4/0x2dc
+      kmalloc_trace+0x48/0x140
+      dwc3_gadget_ep_alloc_request+0x58/0x11c
+      usb_ep_alloc_request+0x40/0xe4
+      eem_unwrap+0x204/0x36c
+  unreferenced object 0xffffff8aadbaac00 (size 128):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      __kmem_cache_alloc_node+0x1b4/0x2dc
+      __kmalloc+0x64/0x1a8
+      eem_unwrap+0x218/0x36c
+  unreferenced object 0xffffff89ccef3500 (size 64):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      __kmem_cache_alloc_node+0x1b4/0x2dc
+      kmalloc_trace+0x48/0x140
+      eem_unwrap+0x238/0x36c
+
+Fixes: 4249d6fbc10f ("usb: gadget: eem: fix echo command packet response issue")
+Cc: stable@kernel.org
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20251103121814.1559719-1-khtsai@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/cdns3/cdns3-pci-wrap.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_eem.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdns3-pci-wrap.c
-+++ b/drivers/usb/cdns3/cdns3-pci-wrap.c
-@@ -101,10 +101,8 @@ static int cdns3_pci_probe(struct pci_de
- 		wrap = pci_get_drvdata(func);
- 	} else {
- 		wrap = kzalloc(sizeof(*wrap), GFP_KERNEL);
--		if (!wrap) {
--			pci_disable_device(pdev);
-+		if (!wrap)
- 			return -ENOMEM;
--		}
- 	}
+--- a/drivers/usb/gadget/function/f_eem.c
++++ b/drivers/usb/gadget/function/f_eem.c
+@@ -477,8 +477,13 @@ static int eem_unwrap(struct gether *por
+ 				req->complete = eem_cmd_complete;
+ 				req->zero = 1;
+ 				req->context = ctx;
+-				if (usb_ep_queue(port->in_ep, req, GFP_ATOMIC))
++				if (usb_ep_queue(port->in_ep, req, GFP_ATOMIC)) {
+ 					DBG(cdev, "echo response queue fail\n");
++					kfree(ctx);
++					kfree(req->buf);
++					usb_ep_free_request(ep, req);
++					dev_kfree_skb_any(skb2);
++				}
+ 				break;
  
- 	res = wrap->dev_res;
-@@ -163,7 +161,6 @@ static int cdns3_pci_probe(struct pci_de
- 		/* register platform device */
- 		wrap->plat_dev = platform_device_register_full(&plat_info);
- 		if (IS_ERR(wrap->plat_dev)) {
--			pci_disable_device(pdev);
- 			err = PTR_ERR(wrap->plat_dev);
- 			kfree(wrap);
- 			return err;
+ 			case 1:  /* echo response */
 
 
