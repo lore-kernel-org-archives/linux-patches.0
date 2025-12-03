@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCFAD313E1E;
-	Wed,  3 Dec 2025 15:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5771313E27;
+	Wed,  3 Dec 2025 15:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776176; cv=none; b=UVNjdKeeWG+eDuMZ1ScTT7ZIJ+GyzmXjqPfXab8oB1dUS+wtuPZyavb6tNskvKPLVKDQHjHwzUILefH+Y6aHRf3FcdjrAkQn/dXHnjOedPmqDIb9TNP5lw0/Z93l9ttog8wxiOfk5Sgmxvea3k1Z87OK9TFaPkfwnrn1tnunces=
+	t=1764776179; cv=none; b=GtuHZzJzmblqcBbe37NM2l6XHX/csKggWU/Fsr/xsne/pGvmFN8C3U6NmHbCARRg5PHlv2gAwsXDeaLtKdlFF9BuFdaa2CeMg1Q+hj9DG5IByAtzdb70pX0mfde2kvjUOnHrYDGs+jEohFL9cJjG1/2spKYUPrxT2BZ321WKb3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776176; c=relaxed/simple;
-	bh=Pc2HE2sTKb8JuLHtMAZ2OnnBlz/dNYKQlunuUd9bqUY=;
+	s=arc-20240116; t=1764776179; c=relaxed/simple;
+	bh=iAI3SD3TJfgIdDLancSUxQa5pPoEc8+moahMVNepOZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNJ6O9Wshnzf2opznTaJD02xjx0uIULYDaWsBE9ABejquTe7kFqBElovdx9JiFLGVbYlWlYAHWZveyZpnKCBgvVwV2afhg86jrBLnpNfdykY0t/ORnjReHG8km8f1p4Bd02D2zLs1INSOtMcEGWN1VEPTrBd2h10F17x3WKwagI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oROt8LTI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ghWrPqddZodm0MEtg1QwiyNESW9vIPKeT+FWSBKwlJp4T4VMojH1wA9dOqmTjn0C4Kq1XmNBftN5/n1uLvYpObu9XUSWYtY+Mic3uHQ09yc6WuNRpTGS8HjL50YU3LKb0Mdn+K9sOLqm4x5lDheDnxE0NJ0DTBMaHmciYR/6U08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18X3pGju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oROt8LTI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325A1C4CEF5;
-	Wed,  3 Dec 2025 15:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18X3pGju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3507EC116C6;
+	Wed,  3 Dec 2025 15:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776176;
-	bh=Pc2HE2sTKb8JuLHtMAZ2OnnBlz/dNYKQlunuUd9bqUY=;
+	s=korg; t=1764776179;
+	bh=iAI3SD3TJfgIdDLancSUxQa5pPoEc8+moahMVNepOZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oROt8LTIl1mNauMlmQRKzHi9FShhppTZ/AmHM/EEQRyxXq3Q7wyGljwXBJxfpEVFe
-	 3CKXrs2zUgWOhXTiMUUrKr7XGClnp+8QtT2ftZ1NeBqsWC89GVZCFnC42g85q6UrP4
-	 icT7QWzpAGMCKoUxGtE8xBjeFEo8S2yRqtoMxrjA=
+	b=18X3pGjuxe3akLgWM1vYrAkKCGMc9IT6Le7XrI5ipScxd5z2ASE28BqIrEmO9SWsN
+	 HQyyjt+qMLUrTlphwHgOLF9omgB0PCpoN+Ew5tkn83PHfPRJY7VRVu1a1gLkmY2ojy
+	 teXtUL/7+iSyfBwaVOD8hd+LlAmjTHS6M/273PpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Aleksander Jan Bajkowski <olek2@wp.pl>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/300] tools/power x86_energy_perf_policy: Fix incorrect fopen mode usage
-Date: Wed,  3 Dec 2025 16:24:25 +0100
-Message-ID: <20251203152402.880928179@linuxfoundation.org>
+Subject: [PATCH 5.10 097/300] mips: lantiq: danube: add missing device_type in pci node
+Date: Wed,  3 Dec 2025 16:25:01 +0100
+Message-ID: <20251203152404.217018422@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,50 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit 62127655b7ab7b8c2997041aca48a81bf5c6da0c ]
+[ Upstream commit d66949a1875352d2ddd52b144333288952a9e36f ]
 
-The fopen_or_die() function was previously hardcoded
-to open files in read-only mode ("r"), ignoring the
-mode parameter passed to it. This patch corrects
-fopen_or_die() to use the provided mode argument,
-allowing for flexible file access as intended.
+This fixes the following warning:
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: pci@e105400 (lantiq,pci-xway): 'device_type' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml#
 
-Additionally, the call to fopen_or_die() in
-err_on_hypervisor() incorrectly used the mode
-"ro", which is not a valid fopen mode. This is
-fixed to use the correct "r" mode.
-
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/boot/dts/lantiq/danube.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 1c80aa498d543..60917e32ec853 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -627,7 +627,7 @@ void cmdline(int argc, char **argv)
-  */
- FILE *fopen_or_die(const char *path, const char *mode)
- {
--	FILE *filep = fopen(path, "r");
-+	FILE *filep = fopen(path, mode);
- 
- 	if (!filep)
- 		err(1, "%s: open failed", path);
-@@ -641,7 +641,7 @@ void err_on_hypervisor(void)
- 	char *buffer;
- 
- 	/* On VMs /proc/cpuinfo contains a "flags" entry for hypervisor */
--	cpuinfo = fopen_or_die("/proc/cpuinfo", "ro");
-+	cpuinfo = fopen_or_die("/proc/cpuinfo", "r");
- 
- 	buffer = malloc(4096);
- 	if (!buffer) {
+diff --git a/arch/mips/boot/dts/lantiq/danube.dtsi b/arch/mips/boot/dts/lantiq/danube.dtsi
+index ff6ff9568e1bc..1a5f4faa0831f 100644
+--- a/arch/mips/boot/dts/lantiq/danube.dtsi
++++ b/arch/mips/boot/dts/lantiq/danube.dtsi
+@@ -105,6 +105,8 @@
+ 				  0x1000000 0 0x00000000 0xae00000 0 0x200000>; /* io space */
+ 			reg = <0x7000000 0x8000		/* config space */
+ 				0xe105400 0x400>;	/* pci bridge */
++
++			device_type = "pci";
+ 		};
+ 	};
+ };
 -- 
 2.51.0
 
