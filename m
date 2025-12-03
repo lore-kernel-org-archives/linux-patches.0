@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DF6933F39F;
-	Wed,  3 Dec 2025 15:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F94933FE27;
+	Wed,  3 Dec 2025 15:55:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777316; cv=none; b=kyLQIwr0b43aLmnScSK9/2aT7P2ukF0+s/xZsQyX4fymKCPE5q8ALJMb52gi+9KbcDZqY08ApfD0LQtKvWIvU49/gLSOl3DlQg7sGZJT/53wUBzhLRnxF5FUT9HOUFVRkHlfxYmWMI4ot8DzjzqFMJoQB7u2QxfQ9nlhE8kzpFU=
+	t=1764777319; cv=none; b=IbPIvQgnzttmUBCkaBnc45pGMd47rKObCs0jHCFUOR8nU8SYA+ulpJlX1c1CLRxlhEcgzNIFTE6fQUm/tItcwke8WrqUSkzdJwN9oPK/0VnbFpuVbQ7am+6PdD6ZhQ5xRPczMdtiCJnGhek033eE+6uM0BolU6g2M95zPXanAnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777316; c=relaxed/simple;
-	bh=XeWmtJe//x9cK8CHj9FBcZzOZMzc+Lt6clQQEUZDJ6o=;
+	s=arc-20240116; t=1764777319; c=relaxed/simple;
+	bh=xJTP6zkJDvF+Lx4u+iVesrAvCoVQffyTlIj3LScdApk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WP8JxXE2cCEo6czzKiY1TGDhJMi3bUtWY5KO5vZ29NLZZrtSIkUDloFJaa40u+Qq/bZfYSPGIzaHkc9qN3hBL+KWYYm8m0PwU0Uq+JE5v1anzpiKfwzYxEhWYPPn84oxJ9DZuiBmVaMvvqU1at/0aow5gsalNYLqfT5nuOUK1oQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pFkmHoIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s9QsBnVdtD3ZmRc1KUelVvIYPmycs1ERtQl88FKnlhWYkuqYHEFmSi6LgOu6rnyzUN0Eqr3P1w5Km6+W99wXshIBOSjwstpS+BVsXQMoqxTIyAFKdb+lugy1f+jwA3bKqf3kpbHDmJsSMdv1G1XcJPFt57/vD58cc045p5U/hO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdFpk70v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pFkmHoIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4D12C4CEF5;
-	Wed,  3 Dec 2025 15:55:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdFpk70v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0666C19423;
+	Wed,  3 Dec 2025 15:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777316;
-	bh=XeWmtJe//x9cK8CHj9FBcZzOZMzc+Lt6clQQEUZDJ6o=;
+	s=korg; t=1764777319;
+	bh=xJTP6zkJDvF+Lx4u+iVesrAvCoVQffyTlIj3LScdApk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFkmHoIlbiFoI7oYG0NBpekEBcHjqbCCPKDxMMImiskaECnogvwNZs3yVrhywvAgV
-	 VCXTK9Y7Xm2RNrRlsoUk74NvORlOB3foXfeSKdhhTNLLF+EiyiMrJSdoEsneckLkfC
-	 QcfvFo4Y2LWiZmK+xZmEls0UzInS+UIFPY/G57mE=
+	b=fdFpk70vygjZN869bzgg/gXUuTO4Koh0svWFbZsgVSAdw86tXN4tZesmwaXTbRLJX
+	 xqttFsT7GQ3c8PlGMRFxl4wVmkWiDzqvgAB8O1ZKP7sFbwh6BAUgdENgkTe62Teo4o
+	 gP4lbdfO7LmkObwUIEyGvYjN+hPN9AR3RJLTaQcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stealth <oleg.smirnov.1988@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Tianchu Chen <flynnnchen@tencent.com>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.17 114/146] USB: storage: Remove subclass and protocol overrides from Novatek quirk
-Date: Wed,  3 Dec 2025 16:28:12 +0100
-Message-ID: <20251203152350.636914167@linuxfoundation.org>
+Subject: [PATCH 6.17 115/146] usb: storage: sddr55: Reject out-of-bound new_pba
+Date: Wed,  3 Dec 2025 16:28:13 +0100
+Message-ID: <20251203152350.673719391@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,50 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Tianchu Chen <flynnnchen@tencent.com>
 
-commit df5fde297e617041449f603ed5f646861c80000b upstream.
+commit b59d4fda7e7d0aff1043a7f742487cb829f5aac1 upstream.
 
-A report from Oleg Smirnov indicates that the unusual_devs quirks
-entry for the Novatek camera does not need to override the subclass
-and protocol parameters:
+Discovered by Atuin - Automated Vulnerability Discovery Engine.
 
-[3266355.209532] usb 1-3: new high-speed USB device number 10 using xhci_hcd
-[3266355.333031] usb 1-3: New USB device found, idVendor=0603, idProduct=8611, bcdDevice= 1.00
-[3266355.333040] usb 1-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[3266355.333043] usb 1-3: Product: YICARCAM
-[3266355.333045] usb 1-3: Manufacturer: XIAO-YI
-[3266355.333047] usb 1-3: SerialNumber: 966110000000100
-[3266355.338621] usb-storage 1-3:1.0: USB Mass Storage device detected
-[3266355.338817] usb-storage 1-3:1.0: Quirks match for vid 0603 pid 8611: 4000
-[3266355.338821] usb-storage 1-3:1.0: This device (0603,8611,0100 S 06 P 50) has unneeded SubClass and Protocol entries in unusual_devs.h (kernel 6.16.10-arch1-1)
-                    Please send a copy of this message to
-<linux-usb@vger.kernel.org> and <usb-storage@lists.one-eyed-alien.net>
+new_pba comes from the status packet returned after each write.
+A bogus device could report values beyond the block count derived
+from info->capacity, letting the driver walk off the end of
+pba_to_lba[] and corrupt heap memory.
 
-The overrides are harmless but they do provoke the driver into logging
-this annoying message.  Update the entry to remove the unneeded entries.
+Reject PBAs that exceed the computed block count and fail the
+transfer so we avoid touching out-of-range mapping entries.
 
-Reported-by: stealth <oleg.smirnov.1988@gmail.com>
-Closes: https://lore.kernel.org/CAKxjRRxhC0s19iEWoN=pEMqXJ_z8w_moC0GCXSqSKCcOddnWjQ@mail.gmail.com/
-Fixes: 6ca8af3c8fb5 ("USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera")
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/b440f177-f0b8-4d5a-8f7b-10855d4424ee@rowland.harvard.edu
+Link: https://patch.msgid.link/B2DC73A3EE1E3A1D+202511161322001664687@tencent.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/storage/sddr55.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -938,7 +938,7 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
- UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
- 		"Novatek",
- 		"NTK96550-based camera",
--		USB_SC_SCSI, USB_PR_BULK, NULL,
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_BULK_IGNORE_TAG ),
+--- a/drivers/usb/storage/sddr55.c
++++ b/drivers/usb/storage/sddr55.c
+@@ -469,6 +469,12 @@ static int sddr55_write_data(struct us_d
+ 		new_pba = (status[3] + (status[4] << 8) + (status[5] << 16))
+ 						  >> info->blockshift;
  
- /*
++		/* check if device-reported new_pba is out of range */
++		if (new_pba >= (info->capacity >> (info->blockshift + info->pageshift))) {
++			result = USB_STOR_TRANSPORT_FAILED;
++			goto leave;
++		}
++
+ 		/* check status for error */
+ 		if (status[0] == 0xff && status[1] == 0x4) {
+ 			info->pba_to_lba[new_pba] = BAD_BLOCK;
 
 
