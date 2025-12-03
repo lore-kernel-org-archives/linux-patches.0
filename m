@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C4A30BF6F;
-	Wed,  3 Dec 2025 15:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C10630ACF4;
+	Wed,  3 Dec 2025 15:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775868; cv=none; b=lnkr223XpPGTuvhG2uz39rAyeV9sH2FDochyQvomhiUDC1TJKuyww8HodQoOzUswoaidOxcUS8CJ34KTw6vSlwxs57jJwi1rgwFSQGDv2OLrO/c+sgk84XDB3YP5h1ZzGmuh72aSmChapl7RxXpB/3Xogp56xd4WiquRoIXfGcA=
+	t=1764775872; cv=none; b=bFJInVRFU9+tZ/00Yb2XKjbefFe/227rz3gc3jQ75o39JDOs7j+jZUzq61bBZjgVF5E5maI/1DPTd7WCQcMD11BaseVqsAfwLOn1+Jn2DWS+FtrIQ99LFHber9U67sxI5WuJI7SOeSu3ZW0Axw0g4BY+8/DEONPWXzkYs/O54CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775868; c=relaxed/simple;
-	bh=NmQHDuLchgQlO00wh/iECx/eLc5OI0q38FMO6x6tIg8=;
+	s=arc-20240116; t=1764775872; c=relaxed/simple;
+	bh=nw6FMW4+qZvESZ/pCcNnkqNsfw2SfwDgCIUby3R/IOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CoJDx0gY+G2lOJgGB4AgZSkRnwozx/zZTGeccRMDnSxG8OEJ9kp0bwpamu63rKqDklfec7fevdmvMAILQoH7ovJkTH9oWfCoP8bTWpF5AYC+2bKI6uoliS3nqrHGCh+GbKC46atMfSG0js1vKafA5ygbrf7RlHKMHzsYQPg6i80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8obn1ce; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=as5nZZQgWYXGI+1K3QQ+o29IzZDa1c7XH4YTn4dlo2Qy/X5sojRpH4Zkm6xOdIxFmsuZR/zBxt1WCU4QiqshpFxoGuAeohridBuWM5A0d3tUyzbck0kcqvmuW9Fewj2CdmoHnoFhRvAQRmeJSOqxHRtI5uv12OnkZdS37wE/N8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEI4Dud1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8obn1ce"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1732C4CEF5;
-	Wed,  3 Dec 2025 15:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEI4Dud1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C78C4CEF5;
+	Wed,  3 Dec 2025 15:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775868;
-	bh=NmQHDuLchgQlO00wh/iECx/eLc5OI0q38FMO6x6tIg8=;
+	s=korg; t=1764775872;
+	bh=nw6FMW4+qZvESZ/pCcNnkqNsfw2SfwDgCIUby3R/IOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8obn1ceqiQgVJcIOfiyiZuNn/bgnX0z/2PKWAqIRF+CznoEukTa0J9Zlq/5skMuV
-	 eIa0HybWfC1EzAKN4R3Y1DZzVm+00K/y3Nmwa1Kbxg1kLTz7GGC+AZV8Kji707OKwB
-	 vg/xZOE91mIERwGg4rN4HYAE6C2QpjrX62VseZtI=
+	b=GEI4Dud14Okf6oeVIi9DwyRE/dqQdVu/FJzgMGRaD+GDaaY0B+b/VELmQAWDzKj91
+	 XBgzojsLpOM4DpvY9JKNoQKqiMRmb8eEMa0X65JW1HPUxwkvM0n9/7QIW9R3x+lqNw
+	 PZ6Fan2MlQK8wRJ5ip7BD7f7+C67G8ieocG1v/88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 012/300] fbdev: valkyriefb: Fix reference count leak in valkyriefb_init
-Date: Wed,  3 Dec 2025 16:23:36 +0100
-Message-ID: <20251203152400.913498729@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 013/300] ASoC: qdsp6: q6asm: do not sleep while atomic
+Date: Wed,  3 Dec 2025 16:23:37 +0100
+Message-ID: <20251203152400.949724126@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,40 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit eb53368f8d6e2dfba84c8a94d245719bcf9ae270 upstream.
+commit fdbb53d318aa94a094434e5f226617f0eb1e8f22 upstream.
 
-The of_find_node_by_name() function returns a device tree node with its
-reference count incremented. The caller is responsible for calling
-of_node_put() to release this reference when done.
+For some reason we ended up kfree between spinlock lock and unlock,
+which can sleep.
 
-Found via static analysis.
+move the kfree out of spinlock section.
 
-Fixes: cc5d0189b9ba ("[PATCH] powerpc: Remove device_node addrs/n_addr")
-Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: a2a5d30218fd ("ASoC: qdsp6: q6asm: Add support to memory map and unmap")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017085307.4325-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/valkyriefb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/qcom/qdsp6/q6asm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/valkyriefb.c
-+++ b/drivers/video/fbdev/valkyriefb.c
-@@ -336,11 +336,13 @@ int __init valkyriefb_init(void)
+--- a/sound/soc/qcom/qdsp6/q6asm.c
++++ b/sound/soc/qcom/qdsp6/q6asm.c
+@@ -376,9 +376,9 @@ static void q6asm_audio_client_free_buf(
  
- 		if (of_address_to_resource(dp, 0, &r)) {
- 			printk(KERN_ERR "can't find address for valkyrie\n");
-+			of_node_put(dp);
- 			return 0;
- 		}
+ 	spin_lock_irqsave(&ac->lock, flags);
+ 	port->num_periods = 0;
++	spin_unlock_irqrestore(&ac->lock, flags);
+ 	kfree(port->buf);
+ 	port->buf = NULL;
+-	spin_unlock_irqrestore(&ac->lock, flags);
+ }
  
- 		frame_buffer_phys = r.start;
- 		cmap_regs_phys = r.start + 0x304000;
-+		of_node_put(dp);
- 	}
- #endif /* ppc (!CONFIG_MAC) */
- 
+ /**
 
 
