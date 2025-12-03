@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417A530F925;
-	Wed,  3 Dec 2025 15:44:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3047330BB9B;
+	Wed,  3 Dec 2025 15:45:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776697; cv=none; b=QzA1kAQk8V2WQm0VKiy4b1gl/lDVJPqPAFfXmSm26u/XBEJq9HKBWLJn4jhHrWbFFzkAdJ6SVy8HWFXmHOficJHJ7+H5SZBA56aXBV8uUG2w3YSCx0ORDYm8p0cq0FABhw1wzuaiyfZ5ZELUbWzDeWHcejbpdfmFdRN0rLzjR3I=
+	t=1764776701; cv=none; b=DMbPr22+Zh/Hx1bgGmj29e0jp1muFDg3z+7/R2NQ1tz07Pvp4csv6Aym8AfMTo03Tc6ci7zra4Q2sYx3Y51vQfjyEPA5UrTP1KOqawUKtYdyTS5EQrU+G5xSmOjIV6MOcH9rWZ4/H5MHwmmVqOUenAbhu3XVG8Uc/7y48XrWh3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776697; c=relaxed/simple;
-	bh=xm1RsrV5yGIWhYMexIc1/mef/biGtuCEOrDslIIW7ws=;
+	s=arc-20240116; t=1764776701; c=relaxed/simple;
+	bh=OvDW097t92DQ8FU+P3tFn4j19bP5aTck3+JZMD8EL2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p18p9mHl9m3lsOCMedPy08yoFEx3T/YG8euOxiR4Z6dOCMnOdSXXGqBZUdh8RX5ODv8hspIuRS13/k53AdCo7dcr1G10wv8UsMoL0eR0yql1709/unuqnKyl5lV5fczV3wKpBXREosbZUjAP7/at0U2LBGtZhO7cBT0SMCOEm2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XSBDW/fi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lFTNtwQ2Kaq4KuuQ2WhosE+bxdRGKZtdIZBf0DbGH64N9zvhiFstgsYm359L9g2zfR4ZaO1rTdGf1tkuoT1bO0C7mHarJdbchP8H5k6uVE0mDJJ3FG1vYIgMY727Pe6txjL3xsrdF/n0uXCGs1kxT3yxY1ViTYyR5pW25/IfsmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWp6NckA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XSBDW/fi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D30C4CEF5;
-	Wed,  3 Dec 2025 15:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWp6NckA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA07C116B1;
+	Wed,  3 Dec 2025 15:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776697;
-	bh=xm1RsrV5yGIWhYMexIc1/mef/biGtuCEOrDslIIW7ws=;
+	s=korg; t=1764776701;
+	bh=OvDW097t92DQ8FU+P3tFn4j19bP5aTck3+JZMD8EL2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XSBDW/fiAgxZAEQcnBt0F9oAKJqMrvYaF/Qag9Y4G2Z9yjcytD4zUWNLxvhHVNXFz
-	 XWUkVdAoaWrAs/Jyt4jHsHcLT8uICqInC2H4OVFEz3EWaUGMk4Goa1x1syDezvqfyo
-	 +CGnglqJCozcMvqqFoPGZMd4ejw+lJfXnkzBUnI4=
+	b=LWp6NckAoLqmTV6ZZxM7SmtrMxYxtbj0aCLVui7F9pqWbmq3BVChtwSt5v8WLe9ao
+	 5bbpreMXf4jo3J8dLV1Ifc+ruSyfO6A4Q6vDkVEM5uFgEFW+15D2h94dpaaXYyic7e
+	 8QZGYDji9YetcNwkR0yjjRv0vi/ZtjOGsctpnwdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Simon Horman <horms@kernel.org>,
+	Jiefeng Zhang <jiefeng.z.zhang@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 260/300] net: sxgbe: fix potential NULL dereference in sxgbe_rx()
-Date: Wed,  3 Dec 2025 16:27:44 +0100
-Message-ID: <20251203152410.270571402@linuxfoundation.org>
+Subject: [PATCH 5.10 261/300] net: atlantic: fix fragment overflow handling in RX path
+Date: Wed,  3 Dec 2025 16:27:45 +0100
+Message-ID: <20251203152410.306960598@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,45 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Jiefeng Zhang <jiefeng.z.zhang@gmail.com>
 
-[ Upstream commit f5bce28f6b9125502abec4a67d68eabcd24b3b17 ]
+[ Upstream commit 5ffcb7b890f61541201461580bb6622ace405aec ]
 
-Currently, when skb is null, the driver prints an error and then
-dereferences skb on the next line.
+The atlantic driver can receive packets with more than MAX_SKB_FRAGS (17)
+fragments when handling large multi-descriptor packets. This causes an
+out-of-bounds write in skb_add_rx_frag_netmem() leading to kernel panic.
 
-To fix this, let's add a 'break' after the error message to switch
-to sxgbe_rx_refill(), which is similar to the approach taken by the
-other drivers in this particular case, e.g. calxeda with xgmac_rx().
+The issue occurs because the driver doesn't check the total number of
+fragments before calling skb_add_rx_frag(). When a packet requires more
+than MAX_SKB_FRAGS fragments, the fragment index exceeds the array bounds.
 
-Found during a code review.
+Fix by assuming there will be an extra frag if buff->len > AQ_CFG_RX_HDR_SIZE,
+then all fragments are accounted for. And reusing the existing check to
+prevent the overflow earlier in the code path.
 
-Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251121123834.97748-1-aleksei.kodanev@bell-sw.com
+This crash occurred in production with an Aquantia AQC113 10G NIC.
+
+Stack trace from production environment:
+```
+RIP: 0010:skb_add_rx_frag_netmem+0x29/0xd0
+Code: 90 f3 0f 1e fa 0f 1f 44 00 00 48 89 f8 41 89
+ca 48 89 d7 48 63 ce 8b 90 c0 00 00 00 48 c1 e1 04 48 01 ca 48 03 90
+c8 00 00 00 <48> 89 7a 30 44 89 52 3c 44 89 42 38 40 f6 c7 01 75 74 48
+89 fa 83
+RSP: 0018:ffffa9bec02a8d50 EFLAGS: 00010287
+RAX: ffff925b22e80a00 RBX: ffff925ad38d2700 RCX:
+fffffffe0a0c8000
+RDX: ffff9258ea95bac0 RSI: ffff925ae0a0c800 RDI:
+0000000000037a40
+RBP: 0000000000000024 R08: 0000000000000000 R09:
+0000000000000021
+R10: 0000000000000848 R11: 0000000000000000 R12:
+ffffa9bec02a8e24
+R13: ffff925ad8615570 R14: 0000000000000000 R15:
+ffff925b22e80a00
+FS: 0000000000000000(0000)
+GS:ffff925e47880000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: ffff9258ea95baf0 CR3: 0000000166022004 CR4:
+0000000000f72ef0
+PKRU: 55555554
+Call Trace:
+<IRQ>
+aq_ring_rx_clean+0x175/0xe60 [atlantic]
+? aq_ring_rx_clean+0x14d/0xe60 [atlantic]
+? aq_ring_tx_clean+0xdf/0x190 [atlantic]
+? kmem_cache_free+0x348/0x450
+? aq_vec_poll+0x81/0x1d0 [atlantic]
+? __napi_poll+0x28/0x1c0
+? net_rx_action+0x337/0x420
+```
+
+Fixes: 6aecbba12b5c ("net: atlantic: add check for MAX_SKB_FRAGS")
+Changes in v4:
+- Add Fixes: tag to satisfy patch validation requirements.
+
+Changes in v3:
+- Fix by assuming there will be an extra frag if buff->len > AQ_CFG_RX_HDR_SIZE,
+  then all fragments are accounted for.
+
+Signed-off-by: Jiefeng Zhang <jiefeng.z.zhang@gmail.com>
+Link: https://patch.msgid.link/20251126032249.69358-1-jiefeng.z.zhang@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-index b1dd6189638b3..9c745d48f54b0 100644
---- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-+++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-@@ -1518,8 +1518,10 @@ static int sxgbe_rx(struct sxgbe_priv_data *priv, int limit)
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+index 98e8997f80366..5a85999987b51 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
+@@ -363,6 +363,11 @@ int aq_ring_rx_clean(struct aq_ring_s *self,
  
- 		skb = priv->rxq[qnum]->rx_skbuff[entry];
- 
--		if (unlikely(!skb))
-+		if (unlikely(!skb)) {
- 			netdev_err(priv->dev, "rx descriptor is not consistent\n");
-+			break;
-+		}
- 
- 		prefetch(skb->data - NET_IP_ALIGN);
- 		priv->rxq[qnum]->rx_skbuff[entry] = NULL;
+ 		if (!buff->is_eop) {
+ 			unsigned int frag_cnt = 0U;
++
++			/* There will be an extra fragment */
++			if (buff->len > AQ_CFG_RX_HDR_SIZE)
++				frag_cnt++;
++
+ 			buff_ = buff;
+ 			do {
+ 				bool is_rsc_completed = true;
 -- 
 2.51.0
 
