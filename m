@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE90376BEA;
-	Wed,  3 Dec 2025 16:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA396376BD0;
+	Wed,  3 Dec 2025 16:51:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780675; cv=none; b=HgVZGqQivStH7rJLiQdfSKpN3mMq89uQFKNH8xNZwT7UJkFr/ZUy1hhUNV69wbbr6xTlIN3VSQVMJvYQrcO+j0uP/k8tLaBsN1TRy3D/qXKuPxNy8B0EWwqOsTl9FlUS90KcwdarTojWxwN0/QNFiqvZFcVGsJ77e+1hRcenZmM=
+	t=1764780678; cv=none; b=D5QbEr7SdY3T3gC2GRTFMBeWJDQcmibZlz4hAMtCRrwPSQCRoMb/5TgJmgjji/L9kVCJAxRoM2Y1INCvVpNqQf11RS0y8Nxljs++/bb8AAUulpL/fFgiqH7GukcXb5bO1nyhSDiZTWxCMvHlpt/Yd/4bDn3aqKPSPOFinilSMb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780675; c=relaxed/simple;
-	bh=DLukDX9DBU7sIEl7TaryLfe17jmZA6kqNae7KM4UCKc=;
+	s=arc-20240116; t=1764780678; c=relaxed/simple;
+	bh=7kglwBD3O/SBuE8jUiKLRNxQdsXmXpi/sQmAcc6/i5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VG+NRgLs22AeiXWvZ5XYT4LVv7KdyPa0vkDQ4XiNng+pc22jTUW4d1bIFzouxm9AGbQMKCR7SOqPsM8H5htBoWSrZpFC5gCGEr1wBG9lR626C6zi7UQXQo43d4cdFkGTyScx2WB3tDc+mXKU2i1DXCYuLHK6XjwZd0ZRC4gglkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7YyTFoo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X3KOmgEyQHdWOvI5omskQJMtH/rYOzovXNkBXxDNgoYHVEUtuZme+4x5gMIfYZoHNeaCOVWt1hX6cFTIy1U2iwMsFHNAw2p3T4czq+Uz3U/WOZH2oZGA7yAO32W8QVv39I2KpWDprACHGX/bkwGjKgFq4PrSb2EYvaNF6yzBjGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rsfO+/IY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7YyTFoo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF959C4CEF5;
-	Wed,  3 Dec 2025 16:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rsfO+/IY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26A0DC4CEF5;
+	Wed,  3 Dec 2025 16:51:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780675;
-	bh=DLukDX9DBU7sIEl7TaryLfe17jmZA6kqNae7KM4UCKc=;
+	s=korg; t=1764780678;
+	bh=7kglwBD3O/SBuE8jUiKLRNxQdsXmXpi/sQmAcc6/i5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7YyTFoo/BcWOzhJ/JFdZtMWgJa2hm1o3r1/HJQrexzw3qi6f67NwnpH1Zcard/ye
-	 nt721fdE0UzSHnFWazxJsE8a7J+rr5d/5mCEEzfvsussyCkMqGGJ7NqCkroQbVvqvd
-	 mPPotRSu2S/29HrEldoSluZ3N1+iS4xXVp5FxzAU=
+	b=rsfO+/IYuH7Y8Fg72kvoTMm5P6imkdZ6uF/Vl3MrbUgV42s1FDMMx4XK8sD3uy13g
+	 QzauhW/7NPv7XAQ1ah8nFaN5AUcV3CwumRP1qix72HJjcbpz11Sf7gvR+w1840WzeI
+	 n1Tmp3lnnL8wCAschbv0gd4uY8uE4EGf1NnH7+uE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 056/132] iio: imu: st_lsm6dsx: fix array size for st_lsm6dsx_settings fields
-Date: Wed,  3 Dec 2025 16:28:55 +0100
-Message-ID: <20251203152345.372790472@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 030/132] net: fec: do not allow enabling PPS and PEROUT simultaneously
+Date: Wed,  3 Dec 2025 16:28:29 +0100
+Message-ID: <20251203152344.416717433@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -52,73 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 3af0c1fb1cdc351b64ff1a4bc06d491490c1f10a upstream.
+[ Upstream commit c0a1f3d7e128e8d1b6c0fe09c68eac5ebcf677c8 ]
 
-The `decimator` and `batch` fields of struct st_lsm6dsx_settings
-are arrays indexed by sensor type, not by sensor hardware
-identifier; moreover, the `batch` field is only used for the
-accelerometer and gyroscope.
-Change the array size for `decimator` from ST_LSM6DSX_MAX_ID to
-ST_LSM6DSX_ID_MAX, and change the array size for `batch` from
-ST_LSM6DSX_MAX_ID to 2; move the enum st_lsm6dsx_sensor_id
-definition so that the ST_LSM6DSX_ID_MAX value is usable within
-the struct st_lsm6dsx_settings definition.
+In the current driver, PPS and PEROUT use the same channel to generate
+the events, so they cannot be enabled at the same time. Otherwise, the
+later configuration will overwrite the earlier configuration. Therefore,
+when configuring PPS, the driver will check whether PEROUT is enabled.
+Similarly, when configuring PEROUT, the driver will check whether PPS
+is enabled.
 
-Fixes: 801a6e0af0c6c ("iio: imu: st_lsm6dsx: add support to LSM6DSO")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 350749b909bf ("net: fec: Add support for periodic output signal of PPS")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20251125085210.1094306-4-wei.fang@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/freescale/fec_ptp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-@@ -270,6 +270,15 @@ struct st_lsm6dsx_event_settings {
- 	u8 wakeup_src_x_mask;
- };
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index a3853fccdc7b6..beb1d98fa741a 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -129,6 +129,12 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
  
-+enum st_lsm6dsx_sensor_id {
-+	ST_LSM6DSX_ID_GYRO,
-+	ST_LSM6DSX_ID_ACC,
-+	ST_LSM6DSX_ID_EXT0,
-+	ST_LSM6DSX_ID_EXT1,
-+	ST_LSM6DSX_ID_EXT2,
-+	ST_LSM6DSX_ID_MAX
-+};
+ 	spin_lock_irqsave(&fep->tmreg_lock, flags);
+ 
++	if (fep->perout_enable) {
++		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
++		dev_err(&fep->pdev->dev, "PEROUT is running");
++		return -EBUSY;
++	}
 +
- enum st_lsm6dsx_ext_sensor_id {
- 	ST_LSM6DSX_ID_MAGN,
- };
-@@ -355,23 +364,14 @@ struct st_lsm6dsx_settings {
- 	struct st_lsm6dsx_odr_table_entry odr_table[2];
- 	struct st_lsm6dsx_samples_to_discard samples_to_discard[2];
- 	struct st_lsm6dsx_fs_table_entry fs_table[2];
--	struct st_lsm6dsx_reg decimator[ST_LSM6DSX_MAX_ID];
--	struct st_lsm6dsx_reg batch[ST_LSM6DSX_MAX_ID];
-+	struct st_lsm6dsx_reg decimator[ST_LSM6DSX_ID_MAX];
-+	struct st_lsm6dsx_reg batch[2];
- 	struct st_lsm6dsx_fifo_ops fifo_ops;
- 	struct st_lsm6dsx_hw_ts_settings ts_settings;
- 	struct st_lsm6dsx_shub_settings shub_settings;
- 	struct st_lsm6dsx_event_settings event_settings;
- };
+ 	if (fep->pps_enable == enable) {
+ 		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
+ 		return 0;
+@@ -572,6 +578,12 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
+ 			}
+ 			spin_lock_irqsave(&fep->tmreg_lock, flags);
  
--enum st_lsm6dsx_sensor_id {
--	ST_LSM6DSX_ID_GYRO,
--	ST_LSM6DSX_ID_ACC,
--	ST_LSM6DSX_ID_EXT0,
--	ST_LSM6DSX_ID_EXT1,
--	ST_LSM6DSX_ID_EXT2,
--	ST_LSM6DSX_ID_MAX,
--};
--
- enum st_lsm6dsx_fifo_mode {
- 	ST_LSM6DSX_FIFO_BYPASS = 0x0,
- 	ST_LSM6DSX_FIFO_CONT = 0x6,
++			if (fep->pps_enable) {
++				dev_err(&fep->pdev->dev, "PPS is running");
++				ret = -EBUSY;
++				goto unlock;
++			}
++
+ 			if (fep->perout_enable) {
+ 				dev_err(&fep->pdev->dev,
+ 					"PEROUT has been enabled\n");
+-- 
+2.51.0
+
 
 
