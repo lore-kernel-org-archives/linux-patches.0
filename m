@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC43D30FC3A;
-	Wed,  3 Dec 2025 15:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55DE30F800;
+	Wed,  3 Dec 2025 15:45:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776704; cv=none; b=TltIdx7J1ItM+2DVAt1Z+fe9qvfBtzHtvuq3ibcYkVI7ctsdWmOgwJv3rgzyMfWevfSovn/DD5P71Rj7NRj2lVonrlgZ6c24ZlDdbmjSldo0lRmCsSLRBP0dvn45ZKo5hxqUx/hGbpMX6C6IGz3hATOo+Um8FD/6rgENd+eVsH0=
+	t=1764776708; cv=none; b=d9Ap88P2Ybv2SH7DnDOuEhmKrox0W+Nmwvz6owV1GCja2X+nylUXv7kiXl3byLqLF2axps9FpWy9XCwhMy2tnamffNxtXHAqT9paRe9mEQdzY9bEHkv15wYARME9BCv6X30SBgL57P0XgbvUdYSlkYrawQ6q2ehWJpc+i2zWLus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776704; c=relaxed/simple;
-	bh=VYgisZ3wB4EZJ20LJtOAwzljpGhYCjhmKTHA4piY34s=;
+	s=arc-20240116; t=1764776708; c=relaxed/simple;
+	bh=PK07SurysZSNZ41YBp5hJC7lkfYNzBiqGmRlPdMPyMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RPFzLk4gFDNy9V/kYoWJeDdEZg/LBNQfEfPBfiA5hJEGXowJTb8orPnd7C/XQdm7ZgbiIA22i3+Xw1YETVOxDd6hIALO3fMwIdsgK64QgfNNNIw87I/3k0zckh1bxvg5XAeyv2kSoVXnVCmVxRpB72sgbhW08KN84Wu2pUdTOuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wtYzCl1n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDN8BLYcLLZ0/XETxCM0sUw6HkiFim+NWXd+x/CGgV2Uf3hxW2d1DwFvj256G33TJkJuTnQyyEgeKYmU4O0MxB3o0IKnBbt3rPJUMRvukhZe3ACuIY8QIfYwYHCIoSrsSN8EzkCX6edUf3U31jWsfIIfeqJ1p+pICb/ztxZxxZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcAcNoCC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wtYzCl1n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B7BC4CEF5;
-	Wed,  3 Dec 2025 15:45:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcAcNoCC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B7DC4CEF5;
+	Wed,  3 Dec 2025 15:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776704;
-	bh=VYgisZ3wB4EZJ20LJtOAwzljpGhYCjhmKTHA4piY34s=;
+	s=korg; t=1764776707;
+	bh=PK07SurysZSNZ41YBp5hJC7lkfYNzBiqGmRlPdMPyMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wtYzCl1nx5xO0MeIEYJo7NRaZF/oiu3nzwYFAFeWZ891N62fCDe8td91JY2b6cmtZ
-	 03qXD1UaCxNmbSvHVKFJGlv5jP8CPWFgsjjFyHR+7iKI+nhhdtXvGHhVqrI5Ij6zf1
-	 IZT2uwa2diKGZLbdIye+bayok8RMQ5690Hh8uuJo=
+	b=FcAcNoCCFPhoLoEUhLhhUsoyZOqh8N8qgic1pYmz6u0UBGvpTKi9GFyaOhCDeJFZO
+	 dnUPh9dyt1n/Y9dNOWRc0Tq+Yj8cL5vZZQt8OnUPwHykadzdKEb8WpSI5zGMHO2Qs3
+	 Os0wJJtXKv3nIfjkYzNa7sPW33FWjXiS6+1mZmOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Hang Zhou <929513338@qq.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 262/300] mailbox: mailbox-test: Fix debugfs_create_dir error checking
-Date: Wed,  3 Dec 2025 16:27:46 +0100
-Message-ID: <20251203152410.343939781@linuxfoundation.org>
+Subject: [PATCH 5.10 263/300] spi: bcm63xx: fix premature CS deassertion on RX-only transactions
+Date: Wed,  3 Dec 2025 16:27:47 +0100
+Message-ID: <20251203152410.379766411@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,36 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Hang Zhou <929513338@qq.com>
 
-[ Upstream commit 3acf1028f5003731977f750a7070f3321a9cb740 ]
+[ Upstream commit fd9862f726aedbc2f29a29916cabed7bcf5cadb6 ]
 
-The debugfs_create_dir() function returns ERR_PTR() on error, not NULL.
-The current null-check fails to catch errors.
+On BCM6358 (and also observed on BCM6368) the controller appears to
+only generate as many SPI clocks as bytes that have been written into
+the TX FIFO. For RX-only transfers the driver programs the transfer
+length in SPI_MSG_CTL but does not write anything into the FIFO, so
+chip select is deasserted early and the RX transfer segment is never
+fully clocked in.
 
-Use IS_ERR() to correctly check for errors.
+A concrete failing case is a three-transfer MAC address read from
+SPI-NOR:
+  - TX 0x03 (read command)
+  - TX 3-byte address
+  - RX 6 bytes (MAC)
 
-Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+In contrast, a two-transfer JEDEC-ID read (0x9f + 6-byte RX) works
+because the driver uses prepend_len and writes dummy bytes into the
+TX FIFO for the RX part.
+
+Fix this by writing 0xff dummy bytes into the TX FIFO for RX-only
+segments so that the number of bytes written to the FIFO matches the
+total message length seen by the controller.
+
+Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
+
+Signed-off-by: Hang Zhou <929513338@qq.com>
+Link: https://patch.msgid.link/tencent_7AC88FCB3076489A4A7E6C2163DF1ACF8D06@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-bcm63xx.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
-index abcee58e851c2..29c04157b5e88 100644
---- a/drivers/mailbox/mailbox-test.c
-+++ b/drivers/mailbox/mailbox-test.c
-@@ -267,7 +267,7 @@ static int mbox_test_add_debugfs(struct platform_device *pdev,
- 		return 0;
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index da559b86f6b17..e05f8913ccda9 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -257,6 +257,20 @@ static int bcm63xx_txrx_bufs(struct spi_device *spi, struct spi_transfer *first,
  
- 	tdev->root_debugfs_dir = debugfs_create_dir(dev_name(&pdev->dev), NULL);
--	if (!tdev->root_debugfs_dir) {
-+	if (IS_ERR(tdev->root_debugfs_dir)) {
- 		dev_err(&pdev->dev, "Failed to create Mailbox debugfs\n");
- 		return -EINVAL;
- 	}
+ 		if (t->rx_buf) {
+ 			do_rx = true;
++
++			/*
++			 * In certain hardware implementations, there appears to be a
++			 * hidden accumulator that tracks the number of bytes written into
++			 * the hardware FIFO, and this accumulator overrides the length in
++			 * the SPI_MSG_CTL register.
++			 *
++			 * Therefore, for read-only transfers, we need to write some dummy
++			 * value into the FIFO to keep the accumulator tracking the correct
++			 * length.
++			 */
++			if (!t->tx_buf)
++				memset_io(bs->tx_io + len, 0xFF, t->len);
++
+ 			/* prepend is half-duplex write only */
+ 			if (t == first)
+ 				prepend_len = 0;
 -- 
 2.51.0
 
