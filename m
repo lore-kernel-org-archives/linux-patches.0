@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2013030DEA9;
-	Wed,  3 Dec 2025 15:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0E030C606;
+	Wed,  3 Dec 2025 15:31:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775896; cv=none; b=sj54nMLE4j5WCuaU2KitRjzMDQ0JdPcpog89N/BiXc/J6W7eDCV4hnaeKYz2bDqqZA/IFVIWCoL/wNxIKnmif/8Ra/6XwPsZSObWW6KQBuviK44aun4mmAO90FwBdmA1Njkk8GvObb+Fwaa9UWqQXsNd4mYfa7m/cpwxPv5ZdYs=
+	t=1764775899; cv=none; b=IgLe5mZWDwuu4Joe7p7iWt8oJicrbcTlY41W8mq/r2udy370RAR47T3TP4cOAEpluW5AFu+Wj2w/SQcVDyDyTMhY/RNhrjD52IwCyYKXv9ITdJRZ+69OpzdnIaOwZISwYioWAnpjv77BJcYhUM6k5sw8aVWJ7iUC4Z3NG9BMwFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775896; c=relaxed/simple;
-	bh=4E5QnOOtwJLYn+0riezjBQgvtHRauGGVc+Pu8MP9wsE=;
+	s=arc-20240116; t=1764775899; c=relaxed/simple;
+	bh=Hy5a7dFtAQjcVIpFz9xEjzS2q0vHRBWXdLG7LyeTE7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UjiDKEDxSMIunfb6UNVPMdKb9HezdFUyY8vyILu0llZ/2TuIo7Kt+Y1eSVVIjhFz8r6ZtZUJR2709UklAs17wHuRovYp1yQZcI2nheR+Rsw5yg3SXNMdS1yTOosqIQAZ0xJgxi+27gV+ZkFFDnSyKRZ7wOLxrMBB5Za5l2tuTjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V7Q1ZI2F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9Ib7On5KGrlYcOAs+NdQKi4Hp4moH0ndFG/2OZokpTZ0xJNEeOaHcEe0EElMruylwif8cqUtbB9Isb0QZ0+rjULNzl6JaMsTLv38mDsNelVBgPVukH6+3/VPCsw4IHdpGqbOIbPC68yRCa5fBZQRRmUH/vJd4YdDf827O58cEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLQY6dvd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V7Q1ZI2F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 187CDC4CEF5;
-	Wed,  3 Dec 2025 15:31:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLQY6dvd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86506C4CEF5;
+	Wed,  3 Dec 2025 15:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775895;
-	bh=4E5QnOOtwJLYn+0riezjBQgvtHRauGGVc+Pu8MP9wsE=;
+	s=korg; t=1764775898;
+	bh=Hy5a7dFtAQjcVIpFz9xEjzS2q0vHRBWXdLG7LyeTE7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V7Q1ZI2FImtaqowhgT/Z3RY7VhMLonvXMs2v3GzxViszI9RuVBHJUJmtMpy2mf+KZ
-	 anEcwREtoJcYdatwz+n3J+Zdrf2edpVb9HCn+ZnaYQARBhHUwy2gj5E/jbvc+xOb+B
-	 /Pmnaz0FemeaclbvnqOpbV/wT+VfiuqRrmGHL5RA=
+	b=eLQY6dvd7F13Eg9o6na+xG9y/a42JTv3FTzJpwwtVecU2N+wPoxkECGwjZsiP7mnC
+	 KZaoufW542HBnFyrvnllK38umBZTKbfTz9SG/zTd4+DXgDU8bXQJdznl32sMXTdg1w
+	 25KHjS9JVfJhdlNHMkzbWBld0TpRIfhllSk4vP2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Kaplan <david.kaplan@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/300] x86/bugs: Fix reporting of LFENCE retpoline
-Date: Wed,  3 Dec 2025 16:23:26 +0100
-Message-ID: <20251203152400.546012062@linuxfoundation.org>
+Subject: [PATCH 5.10 020/300] drm/amd/pm: fix smu table id bound check issue in smu_cmn_update_table()
+Date: Wed,  3 Dec 2025 16:23:44 +0100
+Message-ID: <20251203152401.206743524@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,49 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Kaplan <david.kaplan@amd.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit d1cc1baef67ac6c09b74629ca053bf3fb812f7dc ]
+[ Upstream commit 238d468d3ed18a324bb9d8c99f18c665dbac0511 ]
 
-The LFENCE retpoline mitigation is not secure but the kernel prints
-inconsistent messages about this fact.  The dmesg log says 'Mitigation:
-LFENCE', implying the system is mitigated.  But sysfs reports 'Vulnerable:
-LFENCE' implying the system (correctly) is not mitigated.
+'table_index' is a variable defined by the smu driver (kmd)
+'table_id' is a variable defined by the hw smu (pmfw)
 
-Fix this by printing a consistent 'Vulnerable: LFENCE' string everywhere
-when this mitigation is selected.
+This code should use table_index as a bounds check.
 
-Signed-off-by: David Kaplan <david.kaplan@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250915134706.3201818-1-david.kaplan@amd.com
+Fixes: caad2613dc4bd ("drm/amd/powerplay: move table setting common code to smu_cmn.c")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fca0c66b22303de0d1d6313059baf4dc960a4753)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/bugs.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/bugs.c b/arch/x86/kernel/cpu/bugs.c
-index 8794e3f4974b3..57ba697e29180 100644
---- a/arch/x86/kernel/cpu/bugs.c
-+++ b/arch/x86/kernel/cpu/bugs.c
-@@ -1508,7 +1508,7 @@ spectre_v2_user_select_mitigation(void)
- static const char * const spectre_v2_strings[] = {
- 	[SPECTRE_V2_NONE]			= "Vulnerable",
- 	[SPECTRE_V2_RETPOLINE]			= "Mitigation: Retpolines",
--	[SPECTRE_V2_LFENCE]			= "Mitigation: LFENCE",
-+	[SPECTRE_V2_LFENCE]			= "Vulnerable: LFENCE",
- 	[SPECTRE_V2_EIBRS]			= "Mitigation: Enhanced / Automatic IBRS",
- 	[SPECTRE_V2_EIBRS_LFENCE]		= "Mitigation: Enhanced / Automatic IBRS + LFENCE",
- 	[SPECTRE_V2_EIBRS_RETPOLINE]		= "Mitigation: Enhanced / Automatic IBRS + Retpolines",
-@@ -3011,9 +3011,6 @@ static char *pbrsb_eibrs_state(void)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+index 92b2ea4c197b8..5219eb685c88e 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+@@ -587,7 +587,7 @@ int smu_cmn_update_table(struct smu_context *smu,
+ 						      table_index);
+ 	uint32_t table_size;
+ 	int ret = 0;
+-	if (!table_data || table_id >= SMU_TABLE_COUNT || table_id < 0)
++	if (!table_data || table_index >= SMU_TABLE_COUNT || table_id < 0)
+ 		return -EINVAL;
  
- static ssize_t spectre_v2_show_state(char *buf)
- {
--	if (spectre_v2_enabled == SPECTRE_V2_LFENCE)
--		return sysfs_emit(buf, "Vulnerable: LFENCE\n");
--
- 	if (spectre_v2_enabled == SPECTRE_V2_EIBRS && unprivileged_ebpf_enabled())
- 		return sysfs_emit(buf, "Vulnerable: eIBRS with unprivileged eBPF\n");
- 
+ 	table_size = smu_table->tables[table_index].size;
 -- 
 2.51.0
 
