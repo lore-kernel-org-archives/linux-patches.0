@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B773346BF;
-	Wed,  3 Dec 2025 15:53:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9C9334C2A;
+	Wed,  3 Dec 2025 15:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777185; cv=none; b=Z82UtmLSm/WhPUd8RW5Da9eiIH4aQhT+jMuCk9sB+j7I9NpYH7IU7vnzoO6PPwaolWHKbesR6SHwYh3Pa0+vBLi/GU6o1Ul+r1xXjRYGGRSKKp404YwrWfHVZZjMWEJrpIo7EoYqyJTn/eQiTdbvS3r6VMg2lzoEc68u7MWTsdA=
+	t=1764777188; cv=none; b=Wm5XJ5SYIKp0pkXdKeVWFpLpn/xULAJfSsli4cVNZs99Yq+aqwqK8jS43LPOvRhYk1ZSuYIx2yMiQKDaYFXfrLXNLGV2QqeWA0pQmXju5r8HzGKW2oObZXL/+UNnJlLbAEHWswdzSJQp/ZMIutX6+/0IfM13R85mjf1jksSfzzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777185; c=relaxed/simple;
-	bh=IUIWCAkgasHRunhCFdFK+M+9uterBT/Nb4bQo9BJPdI=;
+	s=arc-20240116; t=1764777188; c=relaxed/simple;
+	bh=nNAXRvyP8aeMQIUjwLdhkk++z7DRWvGkMZqBNGdVipw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=e4SDk1ACq84JeLGfOiHUCiMc9GsvhO0ptaX6PwuJgBmZh1Rh/RxVZ2s21ESDW739R6oyWAPealN13ugB15Q/ax8bAA5C2G4o43V35Le4N8IIZcmpJrH8fFYoJcN60fWVKMg0TGrAmICAAwn7+sxr0KB+Jw+R3JXp02LPUoWnsmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wa49rrW1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4EHaSnXr/si8gKQKmU45Ga9/UXcDjXNJFviCDPT7r5rm1PObWZuUssvYurozVpRWmmSGMfsWdFSsvZA+QCi4JIsNkwtoIJqOZlUTfYILwXwjVrbysCjOxA9z2Ye8oJoud9csp3TqUgcctS5zGujR7oV8y53P1loFA2Jd2axnOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9g/PQy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wa49rrW1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A665C4CEF5;
-	Wed,  3 Dec 2025 15:53:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9g/PQy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3216C4CEF5;
+	Wed,  3 Dec 2025 15:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777185;
-	bh=IUIWCAkgasHRunhCFdFK+M+9uterBT/Nb4bQo9BJPdI=;
+	s=korg; t=1764777188;
+	bh=nNAXRvyP8aeMQIUjwLdhkk++z7DRWvGkMZqBNGdVipw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wa49rrW1rJnsdPEpg9v98bXWLe9+kB6vLpZgnEVMjnRfLQW7akqPbFvJE8zDkLEWg
-	 K99teDRtwVB4SOK9d5zaKYZYapMeemv9yvAXhgG8+jgdLM7GWXp0pYAhoiDQzjVY7y
-	 PM/Lry6/phUCHLTO/Qb2tRu0p9TtcPsGggA1Gsgo=
+	b=Y9g/PQy8hsuEc+b0N+gBeuVAtURd8Vtxrqu72Dhcp/NOSHv7PDbvLb1VKT8AYUw+l
+	 FZAVZd2XyyYpRw8UaqczoHkocq5dTXX5zX4rxb5tcwOz7ke4+2uF+xOQEZ3r7Gwx3A
+	 brkfQIeA3egDdZXcsX2j8JC78jO4GjihI0tsakfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	sstable@vger.kernel.org,
+	Ivan Zhaldak <i.v.zhaldak@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.17 075/146] ALSA: hda/cirrus fix cs420x MacPro 6,1 inverted jack detection
-Date: Wed,  3 Dec 2025 16:27:33 +0100
-Message-ID: <20251203152349.210283280@linuxfoundation.org>
+Subject: [PATCH 6.17 076/146] ALSA: usb-audio: Add DSD quirk for LEAK Stereo 230
+Date: Wed,  3 Dec 2025 16:27:34 +0100
+Message-ID: <20251203152349.247202922@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -45,38 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Ivan Zhaldak <i.v.zhaldak@gmail.com>
 
-commit 5719a189c9345977c16f10874fd5102f70094d8f upstream.
+commit c83fc13960643c4429cd9dfef1321e6430a81b47 upstream.
 
-Turns out the Apple MacPro 6,1 trashcan also needs the inverted jack
-detection like Mac mini patched, too.
+Integrated amplifier LEAK Stereo 230 by IAG Limited has built-in
+ESS9038Q2M DAC served by XMOS controller. It supports both DSD Native
+and DSD-over-PCM (DoP) operational modes. But it doesn't work properly
+by default and tries DSD-to-PCM conversion. USB quirks below allow it
+to operate as designed.
 
-Signed-off-by: René Rebe <rene@exactco.de>
-Cc: <sstable@vger.kernel.org>
-Link: https://patch.msgid.link/20251117.182351.1595411649664739497.rene@exactco.de
+Add DSD_RAW quirk flag for IAG Limited devices (vendor ID 0x2622)
+Add DSD format quirk for LEAK Stereo 230 (USB ID 0x2622:0x0061)
+
+Signed-off-by: Ivan Zhaldak <i.v.zhaldak@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251117125848.30769-1-i.v.zhaldak@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/cirrus/cs420x.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/sound/hda/codecs/cirrus/cs420x.c
-+++ b/sound/hda/codecs/cirrus/cs420x.c
-@@ -585,6 +585,7 @@ static const struct hda_quirk cs4208_mac
- 	SND_PCI_QUIRK(0x106b, 0x6c00, "MacMini 7,1", CS4208_MACMINI),
- 	SND_PCI_QUIRK(0x106b, 0x7100, "MacBookAir 6,1", CS4208_MBA6),
- 	SND_PCI_QUIRK(0x106b, 0x7200, "MacBookAir 6,2", CS4208_MBA6),
-+	SND_PCI_QUIRK(0x106b, 0x7800, "MacPro 6,1", CS4208_MACMINI),
- 	SND_PCI_QUIRK(0x106b, 0x7b00, "MacBookPro 12,1", CS4208_MBP11),
- 	{} /* terminator */
- };
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2028,6 +2028,7 @@ u64 snd_usb_interface_dsd_format_quirks(
+ 	case USB_ID(0x249c, 0x9326): /* M2Tech Young MkIII */
+ 	case USB_ID(0x2616, 0x0106): /* PS Audio NuWave DAC */
+ 	case USB_ID(0x2622, 0x0041): /* Audiolab M-DAC+ */
++	case USB_ID(0x2622, 0x0061): /* LEAK Stereo 230 */
+ 	case USB_ID(0x278b, 0x5100): /* Rotel RC-1590 */
+ 	case USB_ID(0x27f7, 0x3002): /* W4S DAC-2v2SE */
+ 	case USB_ID(0x29a2, 0x0086): /* Mutec MC3+ USB */
+@@ -2411,6 +2412,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x25ce, /* Mytek devices */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2622, /* IAG Limited devices */
++		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x278b, /* Rotel? */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
 
 
