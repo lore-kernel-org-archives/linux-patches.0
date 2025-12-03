@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE08732860F;
-	Wed,  3 Dec 2025 15:49:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB1632863A;
+	Wed,  3 Dec 2025 15:49:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776970; cv=none; b=Noj6xNx0GljfcTLub6ok3VTeIlCjm/pFlgmNMZ099itAh4MW0B+nq163EUDCeM+hxEM6Y8IbWCIzFxTwO+0DMYl8lUspK5Eu9phYNcx2sWBJUSsEVJtAIMxN6t1DOTn+fZWexugSvQV/3lgOQtUvN3aO9g5jooHjsKihmM0pV9c=
+	t=1764776973; cv=none; b=BZxt6SDNEwdzBZuNZV9oYjpcRzdSEpxWC3MGSuJcGzrsZz+ZTciQP5xayu89cYxg69d8HHa8b+vIl4irg6RUcqFy6mqFooUfgBZ2EeOp4Gj+1vSoMVUln/L9jeU7oAHDnHUsN+ZBOv/aFMr5EnwYM2Up6utEpwjUvJfUHbfmP4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776970; c=relaxed/simple;
-	bh=/MZCrQOKtsxcaHgFpulF7tRZ6gGOJewo+QuJS7DMNDY=;
+	s=arc-20240116; t=1764776973; c=relaxed/simple;
+	bh=IhGNfjYli1iaZRfh2YuuTaBUYMiVAdSYJDgc+1rg5hY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pE6gjVIjIWgW3/iiWLU1+nEBvYYXFQuXLjifzam0KRT0tN09wOEN7ZpEmdISwwTy9LO2VVWc7q9p7LmYEBlFvhEg2+hjUQRT/SRfzgc1ldYfIJwvXoB9cSS7t+veJoLKLj0r8VefJZR6oDG9sts4AaYwZ1nHwRbICGHBpe2w0+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRN4Yz9I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqftW84mze33kB9Aqf4anyihFJOuFngxZU3sP9LYJyx73OiBGOFUnW2aqw3lpHbykIuyiNgl6Jj1TUqQ9hAZmJ2XMHNl6x2ohGrQh0PWJLjGcmxZqmpEY+FVfaO6yTeIlPLnOrVtolxE0STdyMdRU+FwUTwNQlVQuwXCfBE0YC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsy5Mqb4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRN4Yz9I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C09C116B1;
-	Wed,  3 Dec 2025 15:49:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsy5Mqb4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E78C116C6;
+	Wed,  3 Dec 2025 15:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776970;
-	bh=/MZCrQOKtsxcaHgFpulF7tRZ6gGOJewo+QuJS7DMNDY=;
+	s=korg; t=1764776973;
+	bh=IhGNfjYli1iaZRfh2YuuTaBUYMiVAdSYJDgc+1rg5hY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRN4Yz9I/qgiQSBIYh2JWEvEO73suQWoEQPYSgk5wuIfT440t05XGDSxtvmE34PgB
-	 LfZYenitaNSGTimDeQezyWfDwlRcOyzK0fGN4N/OLCj+CkcE9qq86awUzOWL7RRWsH
-	 ssYca1MG7gjstF+ulDqsmINd7Bd/29PYWsVC7GpE=
+	b=nsy5Mqb400+jHrUsl70ZPaOZtdMJXUf5TpkO6KnhX2lx5dp1S6kHmXK14IFY+pDhV
+	 YIqAnCRLCnjbpL/uHnjAAi14zF8r2EOqDBx1wSpAGY8/R5xNo0HAry/Om8wkJKS+lS
+	 EP5dK29kX8t2tab6eT+PvvoSQAhOV6lW+kmYPOoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sergey Matyukevich <geomatsi@gmail.com>,
+	Chen-Yu Tsai <wens@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 035/146] usb: gadget: renesas_usbf: Handle devm_pm_runtime_enable() errors
-Date: Wed,  3 Dec 2025 16:26:53 +0100
-Message-ID: <20251203152347.758211700@linuxfoundation.org>
+Subject: [PATCH 6.17 044/146] riscv: dts: allwinner: d1: fix vlenb property
+Date: Wed,  3 Dec 2025 16:27:02 +0100
+Message-ID: <20251203152348.087521723@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Sergey Matyukevich <geomatsi@gmail.com>
 
-[ Upstream commit 74851fbb6d647304f8a7dc491434d3a335ef4b8d ]
+[ Upstream commit 9f393d8e757f79060baf4b2e703bd6b2d0d8d323 ]
 
-devm_pm_runtime_enable() can fail due to memory allocation.
-The current code ignores its return value, potentially causing
-pm_runtime_resume_and_get() to operate on uninitialized runtime
-PM state.
+According to [1], the C906 vector registers are 128 bits wide.
+The 'thead,vlenb' property specifies the vector register length
+in bytes, so its value must be set to 16.
 
-Check the return value of devm_pm_runtime_enable() and return on failure.
+[1] https://dl.linux-sunxi.org/D1/Xuantie_C906_R1S0_User_Manual.pdf
 
-Fixes: 3e6e14ffdea4 ("usb: gadget: udc: add Renesas RZ/N1 USBF controller support")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Acked-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251124022215.1619-1-vulab@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ce1daeeba600 ("riscv: dts: allwinner: Add xtheadvector to the D1/D1s devicetree")
+Signed-off-by: Sergey Matyukevich <geomatsi@gmail.com>
+Link: https://patch.msgid.link/20251119203508.1032716-1-geomatsi@gmail.com
+Signed-off-by: Chen-Yu Tsai <wens@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/renesas_usbf.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/boot/dts/allwinner/sun20i-d1s.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/renesas_usbf.c b/drivers/usb/gadget/udc/renesas_usbf.c
-index 14f4b2cf05a48..4c201574a0af8 100644
---- a/drivers/usb/gadget/udc/renesas_usbf.c
-+++ b/drivers/usb/gadget/udc/renesas_usbf.c
-@@ -3262,7 +3262,9 @@ static int usbf_probe(struct platform_device *pdev)
- 	if (IS_ERR(udc->regs))
- 		return PTR_ERR(udc->regs);
+diff --git a/arch/riscv/boot/dts/allwinner/sun20i-d1s.dtsi b/arch/riscv/boot/dts/allwinner/sun20i-d1s.dtsi
+index 6367112e614a1..a7442a508433d 100644
+--- a/arch/riscv/boot/dts/allwinner/sun20i-d1s.dtsi
++++ b/arch/riscv/boot/dts/allwinner/sun20i-d1s.dtsi
+@@ -28,7 +28,7 @@
+ 			riscv,isa-base = "rv64i";
+ 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "zicntr", "zicsr",
+ 					       "zifencei", "zihpm", "xtheadvector";
+-			thead,vlenb = <128>;
++			thead,vlenb = <16>;
+ 			#cooling-cells = <2>;
  
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0)
- 		return ret;
+ 			cpu0_intc: interrupt-controller {
 -- 
 2.51.0
 
