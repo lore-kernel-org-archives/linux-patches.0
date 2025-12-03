@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8723385BC;
-	Wed,  3 Dec 2025 15:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54728337BA1;
+	Wed,  3 Dec 2025 15:55:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777330; cv=none; b=sReV+jlK7s616KLi+2EL/OoJrmLlZhoru/CjkBCkErE+y9MH3PL9VGpJfRWu7hnNTD98rQ/a52XL7e48vOlUrwj8EJXTTxpBL3ElWmHNvPUDIW8glPCc4iIgKbFygm1TP51g9jeS83+thDnXFOSSGn6f/52ZQ/RGrd+GT4M/fsI=
+	t=1764777333; cv=none; b=jT5GgDkXe3hzfIaQ6LB7CDFPh8OPdjqL24o+wWkpGtZv2OMT2+qXWLMuw7jvZS+qQWZixMTk/ZuPRpRyJSe1gpHBF4b83119fWx2jjfpMeNBzKinAUtrSKZoNG2LE/tSUltbwFMVNOeYbdnnGR3ELdk4ymHYKXvIFZto5pjllDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777330; c=relaxed/simple;
-	bh=FA1hRlmo8CCbPLSrhUo9U050PhZrJx5XyQIOWlDuOIY=;
+	s=arc-20240116; t=1764777333; c=relaxed/simple;
+	bh=/ar478P2ru2WrAhSK2IUygj5nWNAHio/+pMXCED51TQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T/JGQVfyEgzalU/hdaEGEpCBO32ttcg3pe0ZWv605FKkE2TctzXrxoTWDLJb4e9Z3Tw2z70qTSEpAfsmWpEIn5ntJydjm/zEob0WA7MgVDXxcci7hGcXXXQBGcOPUGodOYNRBdz8+phzhQUOO8nr99Dm648N9EBntLW4K9Vxxg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SJrnDfd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TMymo2SVZrUBdw5ib8fQJmaCYmeF/cY2ybdLF4qlvIeBmIjfaOUqF0WbNsGZKE7LupdCByjrUze2potk5PJ+MFw10VTKMM1CFn9anF2Wmu1X8WHc5HZCyohhWtyFbvYTIweTOhwhubKWGMvn7zdt8U4kJEZIakHVU79A5hwolOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uE6qh/vP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SJrnDfd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC9FC4CEF5;
-	Wed,  3 Dec 2025 15:55:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uE6qh/vP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71616C4CEF5;
+	Wed,  3 Dec 2025 15:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777329;
-	bh=FA1hRlmo8CCbPLSrhUo9U050PhZrJx5XyQIOWlDuOIY=;
+	s=korg; t=1764777332;
+	bh=/ar478P2ru2WrAhSK2IUygj5nWNAHio/+pMXCED51TQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SJrnDfdDlYddxGeQ3o6foNz7NTRsB+qucyGjPpNVVsRhZ3rNgG5BbSXQ+s4x8UnA
-	 lgAkpx1LPG1jXQsCcIdGqAmio21hw7SJkUcYpq96/KcwNCQJFwWLBswX4xQjyPVaVH
-	 +nUFjWtb4PtuZI7B+2U2NyD0fUUwq93RG5su8QJc=
+	b=uE6qh/vP6XJpOT4vOubNRdLTVR5S4kJfscjqKuiKnUz/uczyRHGS7sknaplgKuzd1
+	 DL60tXR583P9ZFGpMZNWgap1pCkNIB5zka+bULR93cBoknmG8jbPNTmIlBSHBQ8QQE
+	 hmHWu0KSCLapNpBRBYHmm5acoEWNO556wj6bM+AM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jimmy Hu <hhhuuu@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 144/146] usb: gadget: udc: fix use-after-free in usb_gadget_state_work
-Date: Wed,  3 Dec 2025 16:28:42 +0100
-Message-ID: <20251203152351.745214496@linuxfoundation.org>
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.17 145/146] Revert "ACPI: Suppress misleading SPCR console message when SPCR table is absent"
+Date: Wed,  3 Dec 2025 16:28:43 +0100
+Message-ID: <20251203152351.781479463@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,113 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
 
-[ Upstream commit baeb66fbd4201d1c4325074e78b1f557dff89b5b ]
+commit eeb8c19896952e18fb538ec76e603884070a6c6a upstream.
 
-A race condition during gadget teardown can lead to a use-after-free
-in usb_gadget_state_work(), as reported by KASAN:
+This reverts commit bad3fa2fb9206f4dcec6ddef094ec2fbf6e8dcb2.
 
-  BUG: KASAN: invalid-access in sysfs_notify+0x2c/0xd0
-  Workqueue: events usb_gadget_state_work
+Commit bad3fa2fb920 ("ACPI: Suppress misleading SPCR console message
+when SPCR table is absent") mistakenly assumes acpi_parse_spcr()
+returning 0 to indicate a failure to parse SPCR. While addressing the
+resultant incorrect logging it was deemed that dropping the message is
+a better approach as it is not particularly useful.
 
-The fundamental race occurs because a concurrent event (e.g., an
-interrupt) can call usb_gadget_set_state() and schedule gadget->work
-at any time during the cleanup process in usb_del_gadget().
+Roll back the commit introducing the bug as a step towards dropping
+the log message.
 
-Commit 399a45e5237c ("usb: gadget: core: flush gadget workqueue after
-device removal") attempted to fix this by moving flush_work() to after
-device_del(). However, this does not fully solve the race, as a new
-work item can still be scheduled *after* flush_work() completes but
-before the gadget's memory is freed, leading to the same use-after-free.
-
-This patch fixes the race condition robustly by introducing a 'teardown'
-flag and a 'state_lock' spinlock to the usb_gadget struct. The flag is
-set during cleanup in usb_del_gadget() *before* calling flush_work() to
-prevent any new work from being scheduled once cleanup has commenced.
-The scheduling site, usb_gadget_set_state(), now checks this flag under
-the lock before queueing the work, thus safely closing the race window.
-
-Fixes: 5702f75375aa9 ("usb: gadget: udc-core: move sysfs_notify() to a workqueue")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Link: https://patch.msgid.link/20251023054945.233861-1-hhhuuu@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/aQN0YWUYaPYWpgJM@willie-the-truck/
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |   17 ++++++++++++++++-
- include/linux/usb/gadget.h    |    5 +++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ arch/arm64/kernel/acpi.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1126,8 +1126,13 @@ static void usb_gadget_state_work(struct
- void usb_gadget_set_state(struct usb_gadget *gadget,
- 		enum usb_device_state state)
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -197,8 +197,6 @@ out:
+  */
+ void __init acpi_boot_table_init(void)
  {
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&gadget->state_lock, flags);
- 	gadget->state = state;
--	schedule_work(&gadget->work);
-+	if (!gadget->teardown)
-+		schedule_work(&gadget->work);
-+	spin_unlock_irqrestore(&gadget->state_lock, flags);
- 	trace_usb_gadget_set_state(gadget, 0);
- }
- EXPORT_SYMBOL_GPL(usb_gadget_set_state);
-@@ -1361,6 +1366,8 @@ static void usb_udc_nop_release(struct d
- void usb_initialize_gadget(struct device *parent, struct usb_gadget *gadget,
- 		void (*release)(struct device *dev))
- {
-+	spin_lock_init(&gadget->state_lock);
-+	gadget->teardown = false;
- 	INIT_WORK(&gadget->work, usb_gadget_state_work);
- 	gadget->dev.parent = parent;
+-	int ret;
+-
+ 	/*
+ 	 * Enable ACPI instead of device tree unless
+ 	 * - ACPI has been disabled explicitly (acpi=off), or
+@@ -252,12 +250,10 @@ done:
+ 		 * behaviour, use acpi=nospcr to disable console in ACPI SPCR
+ 		 * table as default serial console.
+ 		 */
+-		ret = acpi_parse_spcr(earlycon_acpi_spcr_enable,
++		acpi_parse_spcr(earlycon_acpi_spcr_enable,
+ 			!param_acpi_nospcr);
+-		if (!ret || param_acpi_nospcr || !IS_ENABLED(CONFIG_ACPI_SPCR_TABLE))
+-			pr_info("Use ACPI SPCR as default console: No\n");
+-		else
+-			pr_info("Use ACPI SPCR as default console: Yes\n");
++		pr_info("Use ACPI SPCR as default console: %s\n",
++				param_acpi_nospcr ? "No" : "Yes");
  
-@@ -1535,6 +1542,7 @@ EXPORT_SYMBOL_GPL(usb_add_gadget_udc);
- void usb_del_gadget(struct usb_gadget *gadget)
- {
- 	struct usb_udc *udc = gadget->udc;
-+	unsigned long flags;
- 
- 	if (!udc)
- 		return;
-@@ -1548,6 +1556,13 @@ void usb_del_gadget(struct usb_gadget *g
- 	kobject_uevent(&udc->dev.kobj, KOBJ_REMOVE);
- 	sysfs_remove_link(&udc->dev.kobj, "gadget");
- 	device_del(&gadget->dev);
-+	/*
-+	 * Set the teardown flag before flushing the work to prevent new work
-+	 * from being scheduled while we are cleaning up.
-+	 */
-+	spin_lock_irqsave(&gadget->state_lock, flags);
-+	gadget->teardown = true;
-+	spin_unlock_irqrestore(&gadget->state_lock, flags);
- 	flush_work(&gadget->work);
- 	ida_free(&gadget_id_numbers, gadget->id_number);
- 	cancel_work_sync(&udc->vbus_work);
---- a/include/linux/usb/gadget.h
-+++ b/include/linux/usb/gadget.h
-@@ -376,6 +376,9 @@ struct usb_gadget_ops {
-  *	can handle. The UDC must support this and all slower speeds and lower
-  *	number of lanes.
-  * @state: the state we are now (attached, suspended, configured, etc)
-+ * @state_lock: Spinlock protecting the `state` and `teardown` members.
-+ * @teardown: True if the device is undergoing teardown, used to prevent
-+ *	new work from being scheduled during cleanup.
-  * @name: Identifies the controller hardware type.  Used in diagnostics
-  *	and sometimes configuration.
-  * @dev: Driver model state for this abstract device.
-@@ -451,6 +454,8 @@ struct usb_gadget {
- 	enum usb_ssp_rate		max_ssp_rate;
- 
- 	enum usb_device_state		state;
-+	spinlock_t			state_lock;
-+	bool				teardown;
- 	const char			*name;
- 	struct device			dev;
- 	unsigned			isoch_delay;
+ 		if (IS_ENABLED(CONFIG_ACPI_BGRT))
+ 			acpi_table_parse(ACPI_SIG_BGRT, acpi_parse_bgrt);
 
 
