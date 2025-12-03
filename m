@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329E515ADB4;
-	Wed,  3 Dec 2025 15:47:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8B515ADB4;
+	Wed,  3 Dec 2025 15:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776825; cv=none; b=tL864vu1BtGEMtRFd/rAOwakTH7c+phUqkkhWeYF7JkkBok9q2hWJTM+cQlBl0IX4WQ1SKT0ZkZYuwqqhq7In/MnZAGh2ncl6Ko7ERiZH4KSzo7Xx1GsiE34RE5LboaU5xyJ1wHSSMMnH/ZnPiPRTeUnDmnGh7OV157ItSQ2NAw=
+	t=1764776828; cv=none; b=AXwbgcICh1vAOyzuxotFUlRVSgLQQZvLd4QFGMSJAYS3Y8XOaDB/MJghr8EnvKZKLvYacAx14No58+K43TDghmYEDYinXpfdIKEr5KCR0PEd51nGmvE6z+NulEwPITMIdrV5VV2Rn2GWoR6LkRAnSdFGgCBT+2is8BArcales3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776825; c=relaxed/simple;
-	bh=6udfINIVTAUx9sbLisajiNBNad4mkDxN0onYR7XVFGQ=;
+	s=arc-20240116; t=1764776828; c=relaxed/simple;
+	bh=qZG6BCo/YC/kJWQhtoFWRu7sBzu5k20Zt9IfAlcyFaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHQ8YGpOArfB7IJ1TTFY5A2qd+7B8VpRWdlKmKZj8GCNfwXanrXC7AoclwdkMJ13BeNMKd4nedTTWhZKYwpD4XwNZ44qwPoefrxJnioWJZK89ndqQGrPmpsWPrbDD3wXfhQ1/xCbCE1ZRRDbo/mh1hXTnlZRiFheccTQY0mkAYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9tWH4hV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkYYvnqW0v5N7MfhQqwz0goFnDQhQSrnRVhe7x2G8jnW/5cWmDbFxCqRA1EMW48FoIq+rfjFr7HLp2og9bsAStrC+VwWtR0SrTAw6k1TWV0F6nft/zKQ1l1llXf95QwZcyCihEnZ1nqp3KtqC/BP9D9qpNq+UJPK/Llk6Rzsvm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bgLnW6Bg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9tWH4hV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA03C4CEF5;
-	Wed,  3 Dec 2025 15:47:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bgLnW6Bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2AE1C4CEF5;
+	Wed,  3 Dec 2025 15:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776825;
-	bh=6udfINIVTAUx9sbLisajiNBNad4mkDxN0onYR7XVFGQ=;
+	s=korg; t=1764776828;
+	bh=qZG6BCo/YC/kJWQhtoFWRu7sBzu5k20Zt9IfAlcyFaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9tWH4hVmWTMwdzClnOSxRiywMdmnBBfP1o4VDloTCEmta03mYSRds+K2pS6gEIZu
-	 aWBgWuATWL0SapUrIHxQtkd7/T2FkM0tJVyxZkGSGaTQq8e971jXOJ3HPOgbNMODOk
-	 3JzKyKN0L0d3jDkYbGlm0NlyfXi4jAYADPokxQ24=
+	b=bgLnW6BgBjeCapgdwAcBTLlR9V5qBERbMIE9RytF9WRslWXOXAim8KyzJcLbfn5LP
+	 A4eFPhQHV9D/Tb6E5x9JqtMSQUzC4K+/craLikRRz7d5iQnghL/v57zlJYo8hHqQLZ
+	 gu3PrLK4WiNszNrd0538fiGg3m2zctoqOYF2QkWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Yu Chen <chenyu45@xiaomi.com>,
-	Owen Gu <guhuinan@xiaomi.com>,
-	Oliver Neukum <oneukum@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 298/300] usb: uas: fix urb unmapping issue when the uas device is remove during ongoing data transfer
-Date: Wed,  3 Dec 2025 16:28:22 +0100
-Message-ID: <20251203152411.662476099@linuxfoundation.org>
+	syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com,
+	Vasiliy Kovalev <kovalev@altlinux.org>,
+	Amir Goldstein <amir73il@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Bin Lan <lanbincn@qq.com>
+Subject: [PATCH 5.10 299/300] ovl: fix UAF in ovl_dentry_update_reval by moving dput() in ovl_link_up
+Date: Wed,  3 Dec 2025 16:28:23 +0100
+Message-ID: <20251203152411.698835585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,83 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Vasiliy Kovalev <kovalev@altlinux.org>
 
-[ Upstream commit 26d56a9fcb2014b99e654127960aa0a48a391e3c ]
+[ Upstream commit c84e125fff2615b4d9c259e762596134eddd2f27 ]
 
-When a UAS device is unplugged during data transfer, there is
-a probability of a system panic occurring. The root cause is
-an access to an invalid memory address during URB callback handling.
-Specifically, this happens when the dma_direct_unmap_sg() function
-is called within the usb_hcd_unmap_urb_for_dma() interface, but the
-sg->dma_address field is 0 and the sg data structure has already been
-freed.
+The issue was caused by dput(upper) being called before
+ovl_dentry_update_reval(), while upper->d_flags was still
+accessed in ovl_dentry_remote().
 
-The SCSI driver sends transfer commands by invoking uas_queuecommand_lck()
-in uas.c, using the uas_submit_urbs() function to submit requests to USB.
-Within the uas_submit_urbs() implementation, three URBs (sense_urb,
-data_urb, and cmd_urb) are sequentially submitted. Device removal may
-occur at any point during uas_submit_urbs execution, which may result
-in URB submission failure. However, some URBs might have been successfully
-submitted before the failure, and uas_submit_urbs will return the -ENODEV
-error code in this case. The current error handling directly calls
-scsi_done(). In the SCSI driver, this eventually triggers scsi_complete()
-to invoke scsi_end_request() for releasing the sgtable. The successfully
-submitted URBs, when being unlinked to giveback, call
-usb_hcd_unmap_urb_for_dma() in hcd.c, leading to exceptions during sg
-unmapping operations since the sg data structure has already been freed.
+Move dput(upper) after its last use to prevent use-after-free.
 
-This patch modifies the error condition check in the uas_submit_urbs()
-function. When a UAS device is removed but one or more URBs have already
-been successfully submitted to USB, it avoids immediately invoking
-scsi_done() and save the cmnd to devinfo->cmnd array. If the successfully
-submitted URBs is completed before devinfo->resetting being set, then
-the scsi_done() function will be called within uas_try_complete() after
-all pending URB operations are finalized. Otherwise, the scsi_done()
-function will be called within uas_zap_pending(), which is executed after
-usb_kill_anchored_urbs().
+BUG: KASAN: slab-use-after-free in ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
+BUG: KASAN: slab-use-after-free in ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
 
-The error handling only takes effect when uas_queuecommand_lck() calls
-uas_submit_urbs() and returns the error value -ENODEV . In this case,
-the device is disconnected, and the flow proceeds to uas_disconnect(),
-where uas_zap_pending() is invoked to call uas_try_complete().
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:114
+ print_address_description mm/kasan/report.c:377 [inline]
+ print_report+0xc3/0x620 mm/kasan/report.c:488
+ kasan_report+0xd9/0x110 mm/kasan/report.c:601
+ ovl_dentry_remote fs/overlayfs/util.c:162 [inline]
+ ovl_dentry_update_reval+0xd2/0xf0 fs/overlayfs/util.c:167
+ ovl_link_up fs/overlayfs/copy_up.c:610 [inline]
+ ovl_copy_up_one+0x2105/0x3490 fs/overlayfs/copy_up.c:1170
+ ovl_copy_up_flags+0x18d/0x200 fs/overlayfs/copy_up.c:1223
+ ovl_rename+0x39e/0x18c0 fs/overlayfs/dir.c:1136
+ vfs_rename+0xf84/0x20a0 fs/namei.c:4893
+...
+ </TASK>
 
-Fixes: eb2a86ae8c54 ("USB: UAS: fix disconnect by unplugging a hub")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Yu Chen <chenyu45@xiaomi.com>
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20251120123336.3328-1-guhuinan@xiaomi.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ adapted scsi_done(cmnd) helper to older cmnd->scsi_done(cmnd) callback API ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b07d5cc93e1b ("ovl: update of dentry revalidate flags after copy up")
+Reported-by: syzbot+316db8a1191938280eb6@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=316db8a1191938280eb6
+Signed-off-by: Vasiliy Kovalev <kovalev@altlinux.org>
+Link: https://lore.kernel.org/r/20250214215148.761147-1-kovalev@altlinux.org
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ Minor context change fixed. ]
+Signed-off-by: Bin Lan <lanbincn@qq.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/uas.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/overlayfs/copy_up.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -705,7 +705,11 @@ static int uas_queuecommand_lck(struct s
- 	 * of queueing, no matter how fatal the error
- 	 */
- 	if (err == -ENODEV) {
--		set_host_byte(cmnd, DID_ERROR);
-+		if (cmdinfo->state & (COMMAND_INFLIGHT | DATA_IN_URB_INFLIGHT |
-+				DATA_OUT_URB_INFLIGHT))
-+			goto out;
-+
-+		set_host_byte(cmnd, DID_NO_CONNECT);
- 		cmnd->scsi_done(cmnd);
- 		goto zombie;
- 	}
-@@ -718,6 +722,7 @@ static int uas_queuecommand_lck(struct s
- 		uas_add_work(cmdinfo);
- 	}
+--- a/fs/overlayfs/copy_up.c
++++ b/fs/overlayfs/copy_up.c
+@@ -469,7 +469,6 @@ static int ovl_link_up(struct ovl_copy_u
+ 	err = PTR_ERR(upper);
+ 	if (!IS_ERR(upper)) {
+ 		err = ovl_do_link(ovl_dentry_upper(c->dentry), udir, upper);
+-		dput(upper);
  
-+out:
- 	devinfo->cmnd[idx] = cmnd;
- zombie:
- 	spin_unlock_irqrestore(&devinfo->lock, flags);
+ 		if (!err) {
+ 			/* Restore timestamps on parent (best effort) */
+@@ -477,6 +476,7 @@ static int ovl_link_up(struct ovl_copy_u
+ 			ovl_dentry_set_upper_alias(c->dentry);
+ 			ovl_dentry_update_reval(c->dentry, upper);
+ 		}
++		dput(upper);
+ 	}
+ 	inode_unlock(udir);
+ 	if (err)
 
 
