@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB9432E692;
-	Wed,  3 Dec 2025 15:50:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4749832E73E;
+	Wed,  3 Dec 2025 15:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777052; cv=none; b=QOsuSLhBE76w0SL0lT3UtJ2lCQ/g1xxzjDRJ0n9fRKcsHtcfQ1X2G8/PgukMGI+K1PuqSv0OKHDZ+swCXGdt0nDfAvfX/dJhTD+S/qlYEfUENM/pLJipJbwECN8p5mYwTFE0+Ee6Q0jItQXRrrJssehCV8V0Roig5K/j4R1W+d8=
+	t=1764777055; cv=none; b=p7BhNHSAYgui3AkC3Skz/z0dKNW/g1mOYvH6ic6mAEV85Ls2BoXZSLVq4Fi+VrRvCCPgQXD59aD54rKzssTYnGNCOx8q2zqAXRrKbksd82rrWOCh+Uw5AIOdupZEoFORBaPb8HgWia/A1rdz5ZM8/2phfUS58Yz5WQF5voFk1uE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777052; c=relaxed/simple;
-	bh=hyGgJ+8kTwEsuHBwCPoUyjZnjvRg8fdxUk3hPSdrYPM=;
+	s=arc-20240116; t=1764777055; c=relaxed/simple;
+	bh=/87He4ZMfudSoISOk00TaIv+lOsHtcMO/+mlidK5ubg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pd4yZBa2LivtLAGN3decS4HC0ROipfUPo/T80eePqz77s8SFqMiq0W+ZzC+rDafJJaf2hK5Kt2WT4E6glrHgiyKuN9Mnl7h9Am0B83b7lsVDM57NIZt7IcAcosS9QaT1cZQeDnILgZa8ujBOhtZhk3MkBXdSSR+n3+SPIyD5Y2g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMFQLieR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pMgX7EGMyxJVLkkFcwNPa6VBixphrJdiSj7J9PF22VfpyMGnxkiGI3xKolR+I0Em+gtMKwRBM3IgjFhkc2ctBbXfbXHBHxcckOBAKw87yvVJ1X/+3vEDybmPkUYxD91lH39H2dkFzR0D1iIcA9F5dq6Z+eKAamVV0d93D5F8aUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cfy8R9j/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMFQLieR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DAAC4CEF5;
-	Wed,  3 Dec 2025 15:50:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cfy8R9j/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1981C4CEF5;
+	Wed,  3 Dec 2025 15:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777052;
-	bh=hyGgJ+8kTwEsuHBwCPoUyjZnjvRg8fdxUk3hPSdrYPM=;
+	s=korg; t=1764777055;
+	bh=/87He4ZMfudSoISOk00TaIv+lOsHtcMO/+mlidK5ubg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMFQLieRHqOyTT/Sn0B8T/25Uh589s1Wc5g/XpqQD4RAJYp81Gt1RjQNnINEgH6tE
-	 RRx+m4bx9AHb3HW1TOAU5nXgEMNq8ExFd9LysRbd0FPFr32hinRwD2rc2UoBmV4Akf
-	 KlL1Uo49KnkcKdlO1D8Kwce4mnmy4nH9EDGFuamw=
+	b=Cfy8R9j/U2HpMyFVSA1f6PPeQF6+oAZblkdUWw1OYeyunDhEFqcxVgZtsp0/neGkU
+	 HeRofasgTna1+YcVyFVIf2h0ucKJx5nQl6gnCxqyNa975xt/bVDZ6b4VYQcOZJ1eNG
+	 Qk96jhej5A289CR4gVDKx/phv6Ph3by5UFjB94Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Schmitt <marcelo.schmitt@analog.com>,
 	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.17 066/146] iio: adc: ad7124: fix temperature channel
-Date: Wed,  3 Dec 2025 16:27:24 +0100
-Message-ID: <20251203152348.882862864@linuxfoundation.org>
+Subject: [PATCH 6.17 067/146] iio: adc: ad7280a: fix ad7280_store_balance_timer()
+Date: Wed,  3 Dec 2025 16:27:25 +0100
+Message-ID: <20251203152348.919009812@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -56,60 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: David Lechner <dlechner@baylibre.com>
 
-commit e2cc390a6629c76924a2740c54b144b9b28fca59 upstream.
+commit bd886cdcbf9e746f61c74035a3acd42e9108e115 upstream.
 
-Fix temperature channel not working due to gain and offset not being
-initialized.  For channels other than the voltage ones calibration is
-skipped (which is OK).  However that results in the calibration register
-values tracked in st->channels[i].cfg all being zero.  These zeros are
-later written to hardware before a measurement is made which caused the
-raw temperature readings to be always 8388608 (0x800000).
+Use correct argument to iio_str_to_fixpoint() to parse 3 decimal places.
 
-To fix it, we just make sure the gain and offset values are set to the
-default values and still return early without doing an internal
-calibration.
+iio_str_to_fixpoint() has a bit of an unintuitive API where the
+fract_mult parameter is the multiplier of the first decimal place as if
+it was already an integer.  So to get 3 decimal places, fract_mult must
+be 100 rather than 1000.
 
-While here, add a comment explaining why we don't bother calibrating
-the temperature channel.
-
-Fixes: 47036a03a303 ("iio: adc: ad7124: Implement internal calibration at probe time")
-Reviewed-by: Marcelo Schmitt <marcelo.schmitt@analog.com>
+Fixes: 96ccdbc07a74 ("staging:iio:adc:ad7280a: Standardize extended ABI naming")
 Signed-off-by: David Lechner <dlechner@baylibre.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad7124.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/iio/adc/ad7280a.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad7124.c
-+++ b/drivers/iio/adc/ad7124.c
-@@ -1196,10 +1196,6 @@ static int __ad7124_calibrate_all(struct
- 	int ret, i;
+--- a/drivers/iio/adc/ad7280a.c
++++ b/drivers/iio/adc/ad7280a.c
+@@ -541,7 +541,7 @@ static ssize_t ad7280_store_balance_time
+ 	int val, val2;
+ 	int ret;
  
- 	for (i = 0; i < st->num_channels; i++) {
--
--		if (indio_dev->channels[i].type != IIO_VOLTAGE)
--			continue;
--
- 		/*
- 		 * For calibration the OFFSET register should hold its reset default
- 		 * value. For the GAIN register there is no such requirement but
-@@ -1210,6 +1206,14 @@ static int __ad7124_calibrate_all(struct
- 		st->channels[i].cfg.calibration_gain = st->gain_default;
+-	ret = iio_str_to_fixpoint(buf, 1000, &val, &val2);
++	ret = iio_str_to_fixpoint(buf, 100, &val, &val2);
+ 	if (ret)
+ 		return ret;
  
- 		/*
-+		 * Only the main voltage input channels are important enough
-+		 * to be automatically calibrated here. For everything else,
-+		 * just use the default values set above.
-+		 */
-+		if (indio_dev->channels[i].type != IIO_VOLTAGE)
-+			continue;
-+
-+		/*
- 		 * Full-scale calibration isn't supported at gain 1, so skip in
- 		 * that case. Note that untypically full-scale calibration has
- 		 * to happen before zero-scale calibration. This only applies to
 
 
