@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17573148AF;
-	Wed,  3 Dec 2025 15:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4757631AF37;
+	Wed,  3 Dec 2025 15:46:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776810; cv=none; b=AQHYuPLCYYEjB8Y5lx2R2MOKbqpbTdsoNflfXo25i9EF1aLYZP0oMledZo/JkEQI1MrILYmBR52jKBzFzGEPQweeCtWQa8mxcvEuvSRLxUbkmzXnhszlHPb2b2PeCuHw/oBURp5SKI1SgFQ0yBgFmhuleg/XyJ3uW3V9NrE0Tas=
+	t=1764776815; cv=none; b=YptgXBOEr14idAAhAftpE+vqaxXyXPW2oJsz37kZ93BaXpWAFwZn/9euO+Pf8suJAHc8nOIR1494SgmSKZ9hfAgoTG2ybXTilGywu9XIoQG6YL5Y9HhjioQZpqONmJtPuV4Y4lBPSGQ7zggUZ9sV1GwIn7vnYFFl326D/YM8tw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776810; c=relaxed/simple;
-	bh=5VA79EA1upzJTys9movM1EJDJQEGoUdp+xk+8p4D/VY=;
+	s=arc-20240116; t=1764776815; c=relaxed/simple;
+	bh=h78f4/1wWurx3KWWUGu1zdJGGNEcGQ78WqqD2ZVn6Ko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVN5XYJJ3YeuzvN8fA6zkxhYwetKfy8xeHeZfWg6xRo6CwnpOh/Xythmp5P267Z3zAIsaZRNWfQxOAEVkWZAdnTjLujYpkso/NaFXJK4NFWmGRCXnjfgTOtUvDkGwqPlN39WAWyFtAHR2c1zn76dRQFLXz+2ODEg5WKeddFKH5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l7qMo71M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rv3PcDSmJlmOs5i5cxq4TexGaM0OZk9GLoszynWuBDJo3SxlJha9FBX+N/BYY/jeyFoqt1vV640fP8arEpSLB5cd0Fx5PFVwQhZ4S/GM1Pe05PxJHM4hnkxt75Gg5luoWUFOBzhKGNYWYsFA7CYUPztefNF8He2x0wAIVFUF9Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQ91VnxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l7qMo71M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53730C4CEF5;
-	Wed,  3 Dec 2025 15:46:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQ91VnxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C356C4CEF5;
+	Wed,  3 Dec 2025 15:46:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776810;
-	bh=5VA79EA1upzJTys9movM1EJDJQEGoUdp+xk+8p4D/VY=;
+	s=korg; t=1764776815;
+	bh=h78f4/1wWurx3KWWUGu1zdJGGNEcGQ78WqqD2ZVn6Ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7qMo71MX+MCCcz/faW9oE9swrEKW47pehqQMkXRN6rSLrVNtt0zyT1htXVl3R0o4
-	 uxWNGqAPDDk7jO2vRWOzLobuCQuDKEAALxDVQkNudDp+keFETThtkpM/W8FQjSqRDP
-	 QQLX54AU1w0IAGlxjraaVYFb1wbOHII3mpedzIi0=
+	b=IQ91VnxPWcOFxCGnPMYB/2zecLHylAzokq2Fc7h9PkubFsUidayj3WwpKKSiZQnr2
+	 44rbM/sV+FX/2a1gyv2tGNNW1t6jSXALasZJsEaqk/rCS0PpG38/+HLAfN798aIz1h
+	 eph5c8J1Fdefz8aNDkYkjEHUDkzlrI/LXhWQUse4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 5.10 294/300] mptcp: Fix proto fallback detection with BPF
-Date: Wed,  3 Dec 2025 16:28:18 +0100
-Message-ID: <20251203152411.514223462@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Jay Shin <jaeshin@redhat.com>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 295/300] smb: client: fix memory leak in cifs_construct_tcon()
+Date: Wed,  3 Dec 2025 16:28:19 +0100
+Message-ID: <20251203152411.551744751@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,107 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@linux.dev>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit c77b3b79a92e3345aa1ee296180d1af4e7031f8f upstream.
+[ Upstream commit 3184b6a5a24ec9ee74087b2a550476f386df7dc2 ]
 
-The sockmap feature allows bpf syscall from userspace, or based
-on bpf sockops, replacing the sk_prot of sockets during protocol stack
-processing with sockmap's custom read/write interfaces.
-'''
-tcp_rcv_state_process()
-  syn_recv_sock()/subflow_syn_recv_sock()
-    tcp_init_transfer(BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB)
-      bpf_skops_established       <== sockops
-        bpf_sock_map_update(sk)   <== call bpf helper
-          tcp_bpf_update_proto()  <== update sk_prot
-'''
+When having a multiuser mount with domain= specified and using
+cifscreds, cifs_set_cifscreds() will end up setting @ctx->domainname,
+so it needs to be freed before leaving cifs_construct_tcon().
 
-When the server has MPTCP enabled but the client sends a TCP SYN
-without MPTCP, subflow_syn_recv_sock() performs a fallback on the
-subflow, replacing the subflow sk's sk_prot with the native sk_prot.
-'''
-subflow_syn_recv_sock()
-  subflow_ulp_fallback()
-    subflow_drop_ctx()
-      mptcp_subflow_ops_undo_override()
-'''
+This fixes the following memory leak reported by kmemleak:
 
-Then, this subflow can be normally used by sockmap, which replaces the
-native sk_prot with sockmap's custom sk_prot. The issue occurs when the
-user executes accept::mptcp_stream_accept::mptcp_fallback_tcp_ops().
-Here, it uses sk->sk_prot to compare with the native sk_prot, but this
-is incorrect when sockmap is used, as we may incorrectly set
-sk->sk_socket->ops.
+  mount.cifs //srv/share /mnt -o domain=ZELDA,multiuser,...
+  su - testuser
+  cifscreds add -d ZELDA -u testuser
+  ...
+  ls /mnt/1
+  ...
+  umount /mnt
+  echo scan > /sys/kernel/debug/kmemleak
+  cat /sys/kernel/debug/kmemleak
+  unreferenced object 0xffff8881203c3f08 (size 8):
+    comm "ls", pid 5060, jiffies 4307222943
+    hex dump (first 8 bytes):
+      5a 45 4c 44 41 00 cc cc                          ZELDA...
+    backtrace (crc d109a8cf):
+      __kmalloc_node_track_caller_noprof+0x572/0x710
+      kstrdup+0x3a/0x70
+      cifs_sb_tlink+0x1209/0x1770 [cifs]
+      cifs_get_fattr+0xe1/0xf50 [cifs]
+      cifs_get_inode_info+0xb5/0x240 [cifs]
+      cifs_revalidate_dentry_attr+0x2d1/0x470 [cifs]
+      cifs_getattr+0x28e/0x450 [cifs]
+      vfs_getattr_nosec+0x126/0x180
+      vfs_statx+0xf6/0x220
+      do_statx+0xab/0x110
+      __x64_sys_statx+0xd5/0x130
+      do_syscall_64+0xbb/0x380
+      entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-This fix uses the more generic sk_family for the comparison instead.
-
-Additionally, this also prevents a WARNING from occurring:
-
-result from ./scripts/decode_stacktrace.sh:
-------------[ cut here ]------------
-WARNING: CPU: 0 PID: 337 at net/mptcp/protocol.c:68 mptcp_stream_accept \
-(net/mptcp/protocol.c:4005)
-Modules linked in:
-...
-
-PKRU: 55555554
-Call Trace:
-<TASK>
-do_accept (net/socket.c:1989)
-__sys_accept4 (net/socket.c:2028 net/socket.c:2057)
-__x64_sys_accept (net/socket.c:2067)
-x64_sys_call (arch/x86/entry/syscall_64.c:41)
-do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-RIP: 0033:0x7f87ac92b83d
-
----[ end trace 0000000000000000 ]---
-
-Fixes: 0b4f33def7bb ("mptcp: fix tcp fallback crash")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251111060307.194196-3-jiayuan.chen@linux.dev
-[ Conflicts in protocol.c, because commit 8e2b8a9fa512 ("mptcp: don't
-  overwrite sock_ops in mptcp_is_tcpsk()") is not in this version. It
-  changes the logic on how and where the sock_ops is overridden in case
-  of passive fallback. To fix this, mptcp_is_tcpsk() is modified to use
-  the family, but first, a check of the protocol is required to continue
-  returning 'false' in case of MPTCP socket. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: f2aee329a68f ("cifs: set domainName when a domain-key is used in multiuser")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: Jay Shin <jaeshin@redhat.com>
+Cc: stable@vger.kernel.org
+Cc: linux-cifs@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Different path + ctx -> vol_info ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/cifs/connect.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -56,8 +56,13 @@ static struct socket *__mptcp_nmpc_socke
- static bool mptcp_is_tcpsk(struct sock *sk)
- {
- 	struct socket *sock = sk->sk_socket;
-+	unsigned short family;
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -5162,6 +5162,7 @@ cifs_construct_tcon(struct cifs_sb_info
  
--	if (unlikely(sk->sk_prot == &tcp_prot)) {
-+	if (likely(sk->sk_protocol == IPPROTO_MPTCP))
-+		return false;
-+
-+	family = READ_ONCE(sk->sk_family);
-+	if (unlikely(family == AF_INET)) {
- 		/* we are being invoked after mptcp_accept() has
- 		 * accepted a non-mp-capable flow: sk is a tcp_sk,
- 		 * not an mptcp one.
-@@ -68,7 +73,7 @@ static bool mptcp_is_tcpsk(struct sock *
- 		sock->ops = &inet_stream_ops;
- 		return true;
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
--	} else if (unlikely(sk->sk_prot == &tcpv6_prot)) {
-+	} else if (unlikely(family == AF_INET6)) {
- 		sock->ops = &inet6_stream_ops;
- 		return true;
- #endif
+ out:
+ 	kfree(vol_info->username);
++	kfree(vol_info->domainname);
+ 	kfree_sensitive(vol_info->password);
+ 	kfree(vol_info);
+ 
 
 
