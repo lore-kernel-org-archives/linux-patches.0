@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BD1346FAE;
-	Wed,  3 Dec 2025 16:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CD6346FCA;
+	Wed,  3 Dec 2025 16:11:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778311; cv=none; b=BJKtywHOTCJ+1KqKpXPFopn8spOcP9SIkNj/hfFegR+y14D63dXpAnmDlqgtjxwoAQff/wf0AXw7+aeUNzAL9ucaSSygnPaNbzbVcwiCZym2UCHfSv66AWW1+x/pNl/+m4ZdEKLMKbj4jhfE7IAsFpVp7x1oKcTXwwSzJeD0Nqo=
+	t=1764778315; cv=none; b=b5DcoTerddmSUmzlBKH+4cSk3SeB+dlZgcCP8kOS/CpYrmCFSbkFXzOsEm3pLqDQX0wO+Iwy19eC7mWxPQPEk7/7//A5MqPx6Cmcxy1OBNpewcz5qwKbGBv0QtlzQgQEUW8rAz/frQ1EA0njeek6teCQXG7hV4fcTxBMcQtNPO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778311; c=relaxed/simple;
-	bh=yN3vbxw31puUTRlk8TXRuEBxNUTw38WikPXUMXAsGUs=;
+	s=arc-20240116; t=1764778315; c=relaxed/simple;
+	bh=tooxfup+oLTa6KBNjnIosh0o7Q8hlHhONYwEIc/nQQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TOo0WBSvsizLzieA+2cec40Tm7J5wYMS0DHLu/tILNM53AAeXyKulvC0s30yrbp2AuDdX7lBP2rKp1AW5Zx7rVV5F4BFkjtbcoFgkgTWihJgZcdCdg7TW2gVLO2fGV8yXVBg0fgk17VGsBfe1BUiTMTdCYDBnVuzIQmsCkVKAsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jBOcdLOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I94XyW6u2Kp3zcls9oa+pG09RpG9TueOMyLpsdmK0SROSr/tfcCeRgkOUWRC0CEc2s65YzKTzSL/THO4jK0Fwk852GfGLyDQbwyCx7OzZazjnThvAe33gGgY1jIBVxs6mLTJgHFCQWoDYgGWD7gN0RY7sS4bpKegputvkwfucL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJhjIftu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jBOcdLOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2DBC4CEF5;
-	Wed,  3 Dec 2025 16:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJhjIftu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B24C6C4CEF5;
+	Wed,  3 Dec 2025 16:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778311;
-	bh=yN3vbxw31puUTRlk8TXRuEBxNUTw38WikPXUMXAsGUs=;
+	s=korg; t=1764778315;
+	bh=tooxfup+oLTa6KBNjnIosh0o7Q8hlHhONYwEIc/nQQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBOcdLORXIpgclr4zMvEpO0TCCelM/qSQCLVflZWsfNCDHDV+mpRcMmH40k9psFM3
-	 mhjneAVE4C+NncGbBKmhHJpl7j+qlrAPUrtS+PDd4BjJO6IXQ5mVxqNh1ngGRRC/MG
-	 7X+FosvmKpZIljO4K4Ki6mn63VdhXV3CbL80wLUw=
+	b=BJhjIftuo/jN2+hwDtXpC7dkcTjIZ7U3IXsDV6zBs+iT+lj5Jn/TLf/oVBdYqywhn
+	 HwXq6Ip2eyR7ayrgaNR4VlBs5Fy99DL35ji+cZuSL26mS6Ipi819QYT4ot1MO5Kvzr
+	 Gkd+H2w+P/1iVwIT0dn9vnaGUg1Ggd6JH89ouDUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jakub=20Hork=C3=BD?= <jakub.git@horky.net>,
-	Nathan Chancellor <nathan@kernel.org>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 306/392] kconfig/nconf: Initialize the default locale at startup
-Date: Wed,  3 Dec 2025 16:27:36 +0100
-Message-ID: <20251203152425.422917801@linuxfoundation.org>
+Subject: [PATCH 5.15 307/392] mm/mm_init: fix hash table order logging in alloc_large_system_hash()
+Date: Wed,  3 Dec 2025 16:27:37 +0100
+Message-ID: <20251203152425.458369764@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -45,51 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jakub Horký <jakub.git@horky.net>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-[ Upstream commit 43c2931a95e6b295bfe9e3b90dbe0f7596933e91 ]
+[ Upstream commit 0d6c356dd6547adac2b06b461528e3573f52d953 ]
 
-Fix bug where make nconfig doesn't initialize the default locale, which
-causes ncurses menu borders to be displayed incorrectly (lqqqqk) in
-UTF-8 terminals that don't support VT100 ACS by default, such as PuTTY.
+When emitting the order of the allocation for a hash table,
+alloc_large_system_hash() unconditionally subtracts PAGE_SHIFT from log
+base 2 of the allocation size.  This is not correct if the allocation size
+is smaller than a page, and yields a negative value for the order as seen
+below:
 
-Signed-off-by: Jakub Horký <jakub.git@horky.net>
-Link: https://patch.msgid.link/20251014144405.3975275-2-jakub.git@horky.net
-[nathan: Alphabetize locale.h include]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+TCP established hash table entries: 32 (order: -4, 256 bytes, linear) TCP
+bind hash table entries: 32 (order: -2, 1024 bytes, linear)
+
+Use get_order() to compute the order when emitting the hash table
+information to correctly handle cases where the allocation size is smaller
+than a page:
+
+TCP established hash table entries: 32 (order: 0, 256 bytes, linear) TCP
+bind hash table entries: 32 (order: 0, 1024 bytes, linear)
+
+Link: https://lkml.kernel.org/r/20251028191020.413002-1-isaacmanjarres@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 0d6c356dd6547adac2b06b461528e3573f52d953)
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/nconf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/page_alloc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
-index 8b166ccb0447f..d1d928b20ecfd 100644
---- a/scripts/kconfig/nconf.c
-+++ b/scripts/kconfig/nconf.c
-@@ -7,6 +7,7 @@
- #ifndef _GNU_SOURCE
- #define _GNU_SOURCE
- #endif
-+#include <locale.h>
- #include <string.h>
- #include <strings.h>
- #include <stdlib.h>
-@@ -1472,6 +1473,8 @@ int main(int ac, char **av)
- 	int lines, columns;
- 	char *mode;
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 63e131dc2b43e..0a5e9a4b923cb 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -8921,7 +8921,7 @@ void *__init alloc_large_system_hash(const char *tablename,
+ 		panic("Failed to allocate %s hash table\n", tablename);
  
-+	setlocale(LC_ALL, "");
-+
- 	if (ac > 1 && strcmp(av[1], "-s") == 0) {
- 		/* Silence conf_read() until the real callback is set up */
- 		conf_set_message_callback(NULL);
+ 	pr_info("%s hash table entries: %ld (order: %d, %lu bytes, %s)\n",
+-		tablename, 1UL << log2qty, ilog2(size) - PAGE_SHIFT, size,
++		tablename, 1UL << log2qty, get_order(size), size,
+ 		virt ? (huge ? "vmalloc hugepage" : "vmalloc") : "linear");
+ 
+ 	if (_hash_shift)
 -- 
 2.51.0
 
