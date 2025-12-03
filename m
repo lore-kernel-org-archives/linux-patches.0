@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8ED398FBF;
-	Wed,  3 Dec 2025 16:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E4F346E59;
+	Wed,  3 Dec 2025 17:00:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781197; cv=none; b=Q5dJUdtG7eqnXqZZjv9faeamhzsyCGoeB3I2E2Vp4Fx0vr6OYGJm7JB3+q0erUmnOE09xv82J+jEpgLXsqZ9nzPf7RfI1HHDNRmr69J7Kj79/MYyuO4WNCtVRTTh2l5fxnpp8kTZXNFfH/1E6FDVv9JGCGV0E8Ajy9C6SuO9OeY=
+	t=1764781200; cv=none; b=NRCpLNNDPSOWwucRj2lnkrNHzw81x5H/aN8hJNkYc/O2f8UJmxtHTnzReMwfk7iCk+6+xq73Q5Zu4Z9wj2arOUpus6KbwJXpSzG6NMufcae+hAg/nfLcYPS+aM48Teov1D5nFVvSroo960wXLBpN4kXWia30JknomzwMolSMDic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781197; c=relaxed/simple;
-	bh=wE/X5OQsDETPcZzsCX+MFihld6/uLOA3rSMu4zu0QuI=;
+	s=arc-20240116; t=1764781200; c=relaxed/simple;
+	bh=VWV+k6Hadp6/9xj2YV/412xjzdBmyMoQNrqIYUZaDmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WtYOx/a32fSW1ezX1amChDSxDO0S/2pylcyzEkjGPAG6Guaczla7gfOO3U63g0Pwp5I0eMMPECbYBXrzMuMCLuG3QKCKLMOMk08V3NeGzPoWyFiHSTF56tKLNRirOxxwgpn+YMmCbZzo6kUTWoXoJa3ZWxZl5gWkFQ1jvWqaE0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJx/7+PR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DL/qk7dEsy9bgYkZOWnk7Y85LZh83Zhy0o3WoUL+0Fs9cYn4piVarcKB9Jac8gklFlRw43pX3FyIZE+MPiqhGn130iGzZawf8C2g/64qMkPw9BCVT5AhQyLI+VMnAabAmFIEPazmbQ13jZv9PEeiRnbBY3AaK9y5KXBi7MtTNu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxDgxOJp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJx/7+PR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B74BC116C6;
-	Wed,  3 Dec 2025 16:59:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxDgxOJp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB14C4CEF5;
+	Wed,  3 Dec 2025 16:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781196;
-	bh=wE/X5OQsDETPcZzsCX+MFihld6/uLOA3rSMu4zu0QuI=;
+	s=korg; t=1764781199;
+	bh=VWV+k6Hadp6/9xj2YV/412xjzdBmyMoQNrqIYUZaDmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJx/7+PRJej04lRSUgcWVWp/sUC9er53TEZTO29NTRtTnHBfnJg5weUc4IXko5S9s
-	 I20nzB9qGAn/7PhCSv//MmU8KOscwjyzwPKq83IS+yOFwjfDckzxLCx8e4Cc2PibrP
-	 eCWSLrAXviKDXkaoPCZ4DoX4ciUY5/3wxneAmP7Y=
+	b=DxDgxOJpqs6dIWoTbceywJHbGdU5+24LkHT+g9GSoW8x9RgDlplp5IlTytcx+Yq9G
+	 iGIT+X3MorfiQXPAg0oV4WAZWi6R5GE/0NR8bXeFYy7pmGSo49TaVxlQ8udcSnfgUG
+	 qOP3OULtKC/muUWE43cxlvcSsypPmOtb3E2Uuue8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neil@brown.name>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 80/93] nfsd: Replace clamp_t in nfsd4_get_drc_mem()
-Date: Wed,  3 Dec 2025 16:30:13 +0100
-Message-ID: <20251203152339.481450029@linuxfoundation.org>
+	Kuen-Han Tsai <khtsai@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 81/93] usb: udc: Add trace event for usb_gadget_set_state
+Date: Wed,  3 Dec 2025 16:30:14 +0100
+Message-ID: <20251203152339.517850145@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -50,63 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neil@brown.name>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-A recent change to clamp_t() in 6.1.y caused fs/nfsd/nfs4state.c to fail
-to compile with gcc-9. The code in nfsd4_get_drc_mem() was written with
-the assumption that when "max < min",
+[ Upstream commit 7bf1158514e410310aec975e630cec99d4e4092f ]
 
-   clamp(val, min, max)
+While the userspace program can be notified of gadget state changes,
+timing issue can lead to missed transitions when reading the state
+value.
 
-would return max.  This assumption is not documented as an API promise
-and the change caused a compile failure if it could be statically
-determined that "max < min".
+Introduce a trace event for usb_gadget_set_state to reliably track state
+transitions.
 
-The relevant code was no longer present upstream when commit 1519fbc8832b
-("minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()")
-landed there, so there is no upstream change to nfsd4_get_drc_mem() to
-backport.
-
-There is no clear case that the existing code in nfsd4_get_drc_mem()
-is functioning incorrectly. The goal of this patch is to permit the clean
-application of commit 1519fbc8832b ("minmax.h: use BUILD_BUG_ON_MSG() for
-the lo < hi test in clamp()"), and any commits that depend on it, to LTS
-kernels without affecting the ability to compile those kernels. This is
-done by open-coding the __clamp() macro sans the built-in type checking.
-
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220745#c0
-Signed-off-by: NeilBrown <neil@brown.name>
-Stable-dep-of: 1519fbc8832b ("minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Reviewed_by: David Laight <david.laight.linux@gmail.com>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://lore.kernel.org/r/20250818082722.2952867-1-khtsai@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: baeb66fbd420 ("usb: gadget: udc: fix use-after-free in usb_gadget_state_work")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4state.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/core.c  |    1 +
+ drivers/usb/gadget/udc/trace.h |    5 +++++
+ 2 files changed, 6 insertions(+)
 
-Changes since Neil's post:
-* Editorial changes to the commit message
-* Attempt to address David's review comments
-* Applied to linux-6.12.y, passed NFSD upstream CI suite
-
-This patch is intended to be applied to linux-6.12.y, and should
-apply cleanly to other LTS kernels since nfsd4_get_drc_mem hasn't
-changed since v5.4.
-
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1820,8 +1820,10 @@ static u32 nfsd4_get_drc_mem(struct nfsd
- 	 */
- 	scale_factor = max_t(unsigned int, 8, nn->nfsd_serv->sv_nrthreads);
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -1123,6 +1123,7 @@ void usb_gadget_set_state(struct usb_gad
+ {
+ 	gadget->state = state;
+ 	schedule_work(&gadget->work);
++	trace_usb_gadget_set_state(gadget, 0);
+ }
+ EXPORT_SYMBOL_GPL(usb_gadget_set_state);
  
--	avail = clamp_t(unsigned long, avail, slotsize,
--			total_avail/scale_factor);
-+	if (avail > total_avail / scale_factor)
-+		avail = total_avail / scale_factor;
-+	else if (avail < slotsize)
-+		avail = slotsize;
- 	num = min_t(int, num, avail / slotsize);
- 	num = max_t(int, num, 1);
- 	nfsd_drc_mem_used += num * slotsize;
+--- a/drivers/usb/gadget/udc/trace.h
++++ b/drivers/usb/gadget/udc/trace.h
+@@ -81,6 +81,11 @@ DECLARE_EVENT_CLASS(udc_log_gadget,
+ 		__entry->ret)
+ );
+ 
++DEFINE_EVENT(udc_log_gadget, usb_gadget_set_state,
++	TP_PROTO(struct usb_gadget *g, int ret),
++	TP_ARGS(g, ret)
++);
++
+ DEFINE_EVENT(udc_log_gadget, usb_gadget_frame_number,
+ 	TP_PROTO(struct usb_gadget *g, int ret),
+ 	TP_ARGS(g, ret)
 
 
