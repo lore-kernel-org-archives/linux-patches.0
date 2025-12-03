@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C54A345CB5;
-	Wed,  3 Dec 2025 16:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C8E345CDF;
+	Wed,  3 Dec 2025 16:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779352; cv=none; b=uEG/gFcHkOwZWGYwBpRWTVUTaa12Xf3BLsj6mMO6KE3Zs5zfJixi+fvybSBYEaU4c5nErZZT4sve9Nmqds8H2g3OGfPKADF/R1OY41s+ZkQxqRVPyxQwVQZZDNqa/fKhinpFTod1k75YRf30iDC5yOCqBOXUpdIg3rOhJDHhifM=
+	t=1764779356; cv=none; b=CkDP9Tm7NijegAt+o8wUC5+dYUEgtBM9wyHmP76rVswjOo5Pck2ZuHivyeylRw8f5mpvXULMtfDYnspZvl7/SeOrzkoWNHAiGYJ2JZH9C2aQsK899XrUaZuudra4qDLNMj9NSrQ7+Fet05PEBkXyFHIaJLHbNRn06Q9ck6dNtns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779352; c=relaxed/simple;
-	bh=W1UnaT3rHPX2XBd0lqeRtRpHO4o2nKZb2yOl6ply6Gw=;
+	s=arc-20240116; t=1764779356; c=relaxed/simple;
+	bh=0ogQjYhWPovczQaVByrQ+wqGRLrT79a8R6CdA8WsxPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNDXqn+Sf0rJr+ph7QhILSbCwRMB5oRkOWqEbQTuqS/yGzop2bmQwAlRyRYb/tKZmhr4f40k4gYWnuT6ghbsSGAf36SgM1XhL1MFcCzCQnWWSUyRkqZkUt4Gs+YksdgjfrFSKVkfKhSC5j0CCSiOLiii7wKNEqncgCaLfAMwGq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HZrKyK9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ULYAsBWdsNALKi7zMhMCO3p1vs0pvKPfS3qZyeQ7tO6fVVnLzCu/TdD+F7eqERMyTMl0Ra9u6u2Pu2Az+qzSWIkutsjE6cpPQZZHOfq1yUkq9IFIFLYnMWnmTlqfMpjjWa0OoOkymwFwwFH+uJLs9Fsx2cDn6e6rQqIeuzcb5gk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrF7saDB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HZrKyK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC94C116C6;
-	Wed,  3 Dec 2025 16:29:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrF7saDB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D6BC4CEF5;
+	Wed,  3 Dec 2025 16:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779352;
-	bh=W1UnaT3rHPX2XBd0lqeRtRpHO4o2nKZb2yOl6ply6Gw=;
+	s=korg; t=1764779355;
+	bh=0ogQjYhWPovczQaVByrQ+wqGRLrT79a8R6CdA8WsxPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0HZrKyK9Li8ividpFyUU/PVdHaZyGNyMdCJdjWuRZMO3rKsQWPKvOPUmcLfhwESNP
-	 8Xq9vN/DX3wirA1rW2CqeywvPtE4NylWfIgeSuaBVrvX4LaNmoi2BNhD9mkm4NEVxh
-	 jLApCd6zlaFj6Q68/cAi0HW1MR3nZDF4iqOIr0NY=
+	b=LrF7saDBLrL4Wd54C5PUupA7yMAp7yUa0IyNqezw8YwY+I/WXJcKdKGGmiefWWwMR
+	 xWiKG6SkmCSV3loN01B4D4eXno++CWcv4WJJ84lsZ3Rz9kjsU3T8BV3oDA8yWOCqr2
+	 QfsDMfNAhxEcTp4gs7a3pqHvbWSF4xeg7ecLh/E4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Justin Tee <justin.tee@broadcom.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 232/568] scsi: lpfc: Check return status of lpfc_reset_flush_io_context during TGT_RESET
-Date: Wed,  3 Dec 2025 16:23:54 +0100
-Message-ID: <20251203152449.219971824@linuxfoundation.org>
+Subject: [PATCH 6.1 233/568] scsi: lpfc: Remove ndlp kref decrement clause for F_Port_Ctrl in lpfc_cleanup
+Date: Wed,  3 Dec 2025 16:23:55 +0100
+Message-ID: <20251203152449.256274742@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,61 +53,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit f408dde2468b3957e92b25e7438f74c8e9fb9e73 ]
+[ Upstream commit a4809b98eb004fcbf7c4d45eb5a624d1c682bb73 ]
 
-If lpfc_reset_flush_io_context fails to execute, then the wrong return
-status code may be passed back to upper layers when issuing a target
-reset TMF command.  Fix by checking the return status from
-lpfc_reset_flush_io_context() first in order to properly return FAILED
-or FAST_IO_FAIL.
+In lpfc_cleanup, there is an extraneous nlp_put for NPIV ports on the
+F_Port_Ctrl ndlp object.  In cases when an ABTS is issued, the
+outstanding kref is needed for when a second XRI_ABORTED CQE is
+received.  The final kref for the ndlp is designed to be decremented in
+lpfc_sli4_els_xri_aborted instead.  Also, add a new log message to allow
+for future diagnostics when debugging related issues.
 
 Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Message-ID: <20250915180811.137530-7-justintee8345@gmail.com>
+Message-ID: <20250915180811.137530-5-justintee8345@gmail.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_scsi.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/scsi/lpfc/lpfc_els.c  | 6 +++++-
+ drivers/scsi/lpfc/lpfc_init.c | 7 -------
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
-index 6d4777a5f3d42..d09a8d583ba3c 100644
---- a/drivers/scsi/lpfc/lpfc_scsi.c
-+++ b/drivers/scsi/lpfc/lpfc_scsi.c
-@@ -5928,7 +5928,7 @@ lpfc_chk_tgt_mapped(struct lpfc_vport *vport, struct fc_rport *rport)
- /**
-  * lpfc_reset_flush_io_context -
-  * @vport: The virtual port (scsi_host) for the flush context
-- * @tgt_id: If aborting by Target contect - specifies the target id
-+ * @tgt_id: If aborting by Target context - specifies the target id
-  * @lun_id: If aborting by Lun context - specifies the lun id
-  * @context: specifies the context level to flush at.
-  *
-@@ -6102,8 +6102,14 @@ lpfc_target_reset_handler(struct scsi_cmnd *cmnd)
- 			pnode->nlp_fcp_info &= ~NLP_FCP_2_DEVICE;
- 			spin_unlock_irqrestore(&pnode->lock, flags);
- 		}
--		lpfc_reset_flush_io_context(vport, tgt_id, lun_id,
--					  LPFC_CTX_TGT);
-+		status = lpfc_reset_flush_io_context(vport, tgt_id, lun_id,
-+						     LPFC_CTX_TGT);
-+		if (status != SUCCESS) {
-+			lpfc_printf_vlog(vport, KERN_ERR, LOG_FCP,
-+					 "0726 Target Reset flush status x%x\n",
-+					 status);
-+			return status;
-+		}
- 		return FAST_IO_FAIL;
- 	}
+diff --git a/drivers/scsi/lpfc/lpfc_els.c b/drivers/scsi/lpfc/lpfc_els.c
+index b4afaed5e4879..3b7e17ef9c2ec 100644
+--- a/drivers/scsi/lpfc/lpfc_els.c
++++ b/drivers/scsi/lpfc/lpfc_els.c
+@@ -11892,7 +11892,11 @@ lpfc_sli4_els_xri_aborted(struct lpfc_hba *phba,
+ 			sglq_entry->state = SGL_FREED;
+ 			spin_unlock_irqrestore(&phba->sli4_hba.sgl_list_lock,
+ 					       iflag);
+-
++			lpfc_printf_log(phba, KERN_INFO, LOG_ELS | LOG_SLI |
++					LOG_DISCOVERY | LOG_NODE,
++					"0732 ELS XRI ABORT on Node: ndlp=x%px "
++					"xri=x%x\n",
++					ndlp, xri);
+ 			if (ndlp) {
+ 				lpfc_set_rrq_active(phba, ndlp,
+ 					sglq_entry->sli4_lxritag,
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 97f3c5240d572..6535474fe8a7f 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -3045,13 +3045,6 @@ lpfc_cleanup(struct lpfc_vport *vport)
+ 		lpfc_vmid_vport_cleanup(vport);
  
-@@ -6199,7 +6205,7 @@ lpfc_host_reset_handler(struct scsi_cmnd *cmnd)
- 	int rc, ret = SUCCESS;
- 
- 	lpfc_printf_vlog(vport, KERN_ERR, LOG_FCP,
--			 "3172 SCSI layer issued Host Reset Data:\n");
-+			 "3172 SCSI layer issued Host Reset\n");
- 
- 	lpfc_offline_prep(phba, LPFC_MBX_WAIT);
- 	lpfc_offline(phba);
+ 	list_for_each_entry_safe(ndlp, next_ndlp, &vport->fc_nodes, nlp_listp) {
+-		if (vport->port_type != LPFC_PHYSICAL_PORT &&
+-		    ndlp->nlp_DID == Fabric_DID) {
+-			/* Just free up ndlp with Fabric_DID for vports */
+-			lpfc_nlp_put(ndlp);
+-			continue;
+-		}
+-
+ 		if (ndlp->nlp_DID == Fabric_Cntl_DID &&
+ 		    ndlp->nlp_state == NLP_STE_UNUSED_NODE) {
+ 			lpfc_nlp_put(ndlp);
 -- 
 2.51.0
 
