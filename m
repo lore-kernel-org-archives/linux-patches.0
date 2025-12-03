@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34492FB62A;
-	Wed,  3 Dec 2025 15:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63122FB62A;
+	Wed,  3 Dec 2025 15:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776241; cv=none; b=dxkF2N7cQo9q8UehoLQl0kT5AitOrkbJ8Hz8TmRum6+aG+LgNdB2iQyUh6ne9GPo0KOq22yjit26IUoKzAJ35xi9Q3szl1O9oBV6sUnbJypJ0ECxYesTrmI0Da5TJPE5KHIYNcJTFYIQVtATcC2Dg34d2d7cFMgvxzItn57qwjk=
+	t=1764776244; cv=none; b=WUX8jY82K4j0n3ef5lAGEfNyZsLKOBp5PLssoY8aF+i4CiP5mdisbY/Wkd/ZeMo/Hj9IeoyKBCOzOL+il0dM2VtKS0p6rUY01nkpRAHbqUKRzDdhAMgOTi5LIo9DLviTVI0OW50LkWDK/q7SKGfDZpeGz+9j3YVX2pUJawxxwNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776241; c=relaxed/simple;
-	bh=WnZu1c8yuWV+hmimlYHAr6jbySfJcWoeY9Wuy99h+jM=;
+	s=arc-20240116; t=1764776244; c=relaxed/simple;
+	bh=9ijtoy9qnF2bhvjnxiWIHSvqdq9TQcFJOX3eDa58L2c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i4dkZqaFJw01QQeKwm5f2HMdL9AUKdLVaQwNm5yRPdS4LCztPX4Dqjq2CVArXsBF1Le+nxBzpQRQuNTta1FMVSr/5Otgk9VPXkPGMVA9H+sIzd9v8RW0+x4kHc8OT1OP6Paq2k/h7meRgimOis6yQRq3T1e/beLTejj6r0ITFek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwqseXeD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GjIDyj0SyVRRj57EZQWrYjrFGdm7JAHej84ws2k9g6pZGf8MiEiW+GusqxLoodAkaPsiGTcR0KhZDWi7s6iOsogEpEGG0msy3lUgNzTjM6VW3FHKAT+0Uwk7fWuVoTsLcMMt35nf9GW4XLz1tpzHmgrweLMDvABwjl/ieLeMgac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8p5eSUA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwqseXeD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13475C4CEF5;
-	Wed,  3 Dec 2025 15:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8p5eSUA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B9C1C4CEF5;
+	Wed,  3 Dec 2025 15:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776241;
-	bh=WnZu1c8yuWV+hmimlYHAr6jbySfJcWoeY9Wuy99h+jM=;
+	s=korg; t=1764776244;
+	bh=9ijtoy9qnF2bhvjnxiWIHSvqdq9TQcFJOX3eDa58L2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JwqseXeDGbFSABhKLe+ARIJDARRzMsoy6aYJQva/6xJkuE1tC7uVT77+cxTvx4Z+8
-	 ly8PV/YKFYEK++fCG3aLHEKe0oqQRNb86gF0EZiALo2OX34R1cP0b3Q2TES0RD5b1f
-	 ZI6cGFESN4At5xGp6jt32rXlcxVLEWw9/a6IlcFI=
+	b=O8p5eSUAbXHHSSasYv4pCWcqgala8O8L28kHq1VPYVuLaJMTDPokXzlwB1QP3KpIA
+	 nYbf45rpZP8Sgz7QLFw1AZVKNO3Xdaid0CSaTQQWY5OwGZfcg0iTKmq4HG+jbo6rNX
+	 qs20/CsLFBHABaWNFcVRS97h/jmce3gttxvyKmIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Forest Crossman <cyrozap@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/300] usb: mon: Increase BUFF_MAX to 64 MiB to support multi-MB URBs
-Date: Wed,  3 Dec 2025 16:25:27 +0100
-Message-ID: <20251203152405.173233734@linuxfoundation.org>
+Subject: [PATCH 5.10 124/300] usb: xhci: plat: Facilitate using autosuspend for xhci plat devices
+Date: Wed,  3 Dec 2025 16:25:28 +0100
+Message-ID: <20251203152405.209480791@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -45,87 +44,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Forest Crossman <cyrozap@gmail.com>
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-[ Upstream commit 368ed48a5ef52e384f54d5809f0a0b79ac567479 ]
+[ Upstream commit 41cf11946b9076383a2222bbf1ef57d64d033f66 ]
 
-The usbmon binary interface currently truncates captures of large
-transfers from higher-speed USB devices. Because a single event capture
-is limited to one-fifth of the total buffer size, the current maximum
-size of a captured URB is around 240 KiB. This is insufficient when
-capturing traffic from modern devices that use transfers of several
-hundred kilobytes or more, as truncated URBs can make it impossible for
-user-space USB analysis tools like Wireshark to properly defragment and
-reassemble higher-level protocol packets in the captured data.
+Allow autosuspend to be used by xhci plat device. For Qualcomm SoCs,
+when in host mode, it is intended that the controller goes to suspend
+state to save power and wait for interrupts from connected peripheral
+to wake it up. This is particularly used in cases where a HID or Audio
+device is connected. In such scenarios, the usb controller can enter
+auto suspend and resume action after getting interrupts from the
+connected device.
 
-The root cause of this issue is the 1200 KiB BUFF_MAX limit, which has
-not been changed since the binary interface was introduced in 2006.
-
-To resolve this issue, this patch increases BUFF_MAX to 64 MiB. The
-original comment for BUFF_MAX based the limit's calculation on a
-saturated 480 Mbit/s bus. Applying the same logic to a modern USB 3.2
-Gen 2×2 20 Gbit/s bus (~2500 MB/s over a 20ms window) indicates the
-buffer should be at least 50 MB. The new limit of 64 MiB covers that,
-plus a little extra for any overhead.
-
-With this change, both users and developers should now be able to debug
-and reverse engineer modern USB devices even when running unmodified
-distro kernels.
-
-Please note that this change does not affect the default buffer size. A
-larger buffer is only allocated when a user explicitly requests it via
-the MON_IOCT_RING_SIZE ioctl, so the change to the maximum buffer size
-should not unduly increase memory usage for users that don't
-deliberately request a larger buffer.
-
-Link: https://lore.kernel.org/CAO3ALPzdUkmMr0YMrODLeDSLZqNCkWcAP8NumuPHLjNJ8wC1kQ@mail.gmail.com
-Signed-off-by: Forest Crossman <cyrozap@gmail.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/CAO3ALPxU5RzcoueC454L=WZ1qGMfAcnxm+T+p+9D8O9mcrUbCQ@mail.gmail.com
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250916120436.3617598-1-krishna.kurapati@oss.qualcomm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mon/mon_bin.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/usb/host/xhci-plat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/mon/mon_bin.c b/drivers/usb/mon/mon_bin.c
-index 35483217b1f6c..93998d328d9aa 100644
---- a/drivers/usb/mon/mon_bin.c
-+++ b/drivers/usb/mon/mon_bin.c
-@@ -68,18 +68,20 @@
-  * The magic limit was calculated so that it allows the monitoring
-  * application to pick data once in two ticks. This way, another application,
-  * which presumably drives the bus, gets to hog CPU, yet we collect our data.
-- * If HZ is 100, a 480 mbit/s bus drives 614 KB every jiffy. USB has an
-- * enormous overhead built into the bus protocol, so we need about 1000 KB.
-+ *
-+ * Originally, for a 480 Mbit/s bus this required a buffer of about 1 MB. For
-+ * modern 20 Gbps buses, this value increases to over 50 MB. The maximum
-+ * buffer size is set to 64 MiB to accommodate this.
-  *
-  * This is still too much for most cases, where we just snoop a few
-  * descriptor fetches for enumeration. So, the default is a "reasonable"
-- * amount for systems with HZ=250 and incomplete bus saturation.
-+ * amount for typical, low-throughput use cases.
-  *
-  * XXX What about multi-megabyte URBs which take minutes to transfer?
-  */
--#define BUFF_MAX  CHUNK_ALIGN(1200*1024)
--#define BUFF_DFL   CHUNK_ALIGN(300*1024)
--#define BUFF_MIN     CHUNK_ALIGN(8*1024)
-+#define BUFF_MAX  CHUNK_ALIGN(64*1024*1024)
-+#define BUFF_DFL      CHUNK_ALIGN(300*1024)
-+#define BUFF_MIN        CHUNK_ALIGN(8*1024)
+diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+index daf93bee7669b..c6ef7863c3e97 100644
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -242,6 +242,7 @@ static int xhci_plat_probe(struct platform_device *pdev)
+ 	}
  
- /*
-  * The per-event API header (2 per URB).
+ 	pm_runtime_set_active(&pdev->dev);
++	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
+ 	pm_runtime_get_noresume(&pdev->dev);
+ 
 -- 
 2.51.0
 
