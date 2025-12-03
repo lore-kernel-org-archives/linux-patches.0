@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC2A347BD9;
-	Wed,  3 Dec 2025 16:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74F9354AEF;
+	Wed,  3 Dec 2025 16:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778524; cv=none; b=UiPze7pJpvyYmbG9HqCGLGyatvLp1XEZm+W3GSazQjyvA7uJB6pOYKVHngwAg3P167JpX9b44FcQ1fjuqbbrwbAowWrsEhHJi60k/8CsEoQvuym85cY5QWSKI3ouPTn3Z4uAcoEj9rHTXtQ5LSu5J6tL2qXDJGYDMmgwi9FqoTg=
+	t=1764778527; cv=none; b=EA8yAo/6dQiVzE5AHbtS6Cx7fXBjA0m9HwG75fFpJBuBff/ZdDWIat6ZIIX1ltybnWMCE/ucPaJoj9sh7apOBdKdwBAmkM7c1WrHJh8T3omu/VV3WK1I3On5+xCO5l9cp680CTKmTYH4LXHCF3Bb39/mK8ugqhfojAXjk86/1XA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778524; c=relaxed/simple;
-	bh=Ke7G48pcPMFmzxvNM/zfFLJPUBCn26VMfJ3dYAHLGOY=;
+	s=arc-20240116; t=1764778527; c=relaxed/simple;
+	bh=es237Gk+93k8FEDy+4QIUxw46I7EMLshaRqkfpFmYAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cOczKLaMuKhkNl5ZljGyjxdOnp9udEY0F0JDxgscpEFoPnAJraR21ms4RfSl8ueYZ9Ip2AvTUEJYW6JaiUX44Z5PpmZUx3X0n76e3WZ298g/amCHMTGNlRdaXLVL8sGfx06ahw9mmhNdAQKR3p9TpIzJVolGIrld+u1Vx/QujbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dw6vJyVX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=El0YEzJBCS4V/ryTu8wal1SpIl9aGNgGbH/zfrhFFz+XgMZAQt30LgCGwSJ3W77HaabqVkFJkDzDzXmMyB+RJLzopEnyE9HSImH2AQFnZL+aAaHzIEyMv8AKd6jVst06+FdqnRfXsioHqo9NAUztY8Ek+RqQimC98yy+jn0qDj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnY4KLIS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dw6vJyVX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B26C4CEF5;
-	Wed,  3 Dec 2025 16:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnY4KLIS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F493C4CEF5;
+	Wed,  3 Dec 2025 16:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778523;
-	bh=Ke7G48pcPMFmzxvNM/zfFLJPUBCn26VMfJ3dYAHLGOY=;
+	s=korg; t=1764778526;
+	bh=es237Gk+93k8FEDy+4QIUxw46I7EMLshaRqkfpFmYAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dw6vJyVXhM+HFQREfQ01qMFeI7Zae2yG6T48PlxlXDc7bdBU6BdRwNxcNsiLHrem9
-	 ubAvFwXze8QwAt+Yoqk0vgd3Yb7pN/QY/AlerSfqvveZqGuXYMLnGT5fYLbZFvtVJN
-	 iygi/bsbuMC1NXLj2weLqcfwi5psS4yHNPjHx7Yk=
+	b=xnY4KLISkXL/7qPxjn1ka0Gpf/yBQxssadUrGsGUzUpnRGRCQ3p2kjp+l0pBGfbWy
+	 1ybhPCwI3gSt4EN27wjyeMopIgi9jjorDOOoz2dAN8su1RwmkExc3S4bZqLaSRE2yf
+	 UHbZOQdwJsxsWo1vHQunAauAKSEuC6S1bcoN8gAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Manish Nagar <manish.nagar@oss.qualcomm.com>
-Subject: [PATCH 5.15 371/392] usb: dwc3: Fix race condition between concurrent dwc3_remove_requests() call paths
-Date: Wed,  3 Dec 2025 16:28:41 +0100
-Message-ID: <20251203152427.810121204@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 372/392] xhci: dbgtty: Fix data corruption when transmitting data form DbC to host
+Date: Wed,  3 Dec 2025 16:28:42 +0100
+Message-ID: <20251203152427.846451302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -45,90 +44,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manish Nagar <manish.nagar@oss.qualcomm.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit e4037689a366743c4233966f0e74bc455820d316 upstream.
+commit f6bb3b67be9af0cfb90075c60850b6af5338a508 upstream.
 
-This patch addresses a race condition caused by unsynchronized
-execution of multiple call paths invoking `dwc3_remove_requests()`,
-leading to premature freeing of USB requests and subsequent crashes.
+Data read from a DbC device may be corrupted due to a race between
+ongoing write and write request completion handler both queuing new
+transfer blocks (TRBs) if there are remining data in the kfifo.
 
-Three distinct execution paths interact with `dwc3_remove_requests()`:
-Path 1:
-Triggered via `dwc3_gadget_reset_interrupt()` during USB reset
-handling. The call stack includes:
-- `dwc3_ep0_reset_state()`
-- `dwc3_ep0_stall_and_restart()`
-- `dwc3_ep0_out_start()`
-- `dwc3_remove_requests()`
-- `dwc3_gadget_del_and_unmap_request()`
+TRBs may be in incorrct order compared to the data in the kfifo.
 
-Path 2:
-Also initiated from `dwc3_gadget_reset_interrupt()`, but through
-`dwc3_stop_active_transfers()`. The call stack includes:
-- `dwc3_stop_active_transfers()`
-- `dwc3_remove_requests()`
-- `dwc3_gadget_del_and_unmap_request()`
+Driver fails to keep lock between reading data from kfifo into a
+dbc request buffer, and queuing the request to the transfer ring.
 
-Path 3:
-Occurs independently during `adb root` execution, which triggers
-USB function unbind and bind operations. The sequence includes:
-- `gserial_disconnect()`
-- `usb_ep_disable()`
-- `dwc3_gadget_ep_disable()`
-- `dwc3_remove_requests()` with `-ESHUTDOWN` status
+This allows completed request to re-queue itself in the middle of
+an ongoing transfer loop, forcing itself between a kfifo read and
+request TRB write of another request
 
-Path 3 operates asynchronously and lacks synchronization with Paths
-1 and 2. When Path 3 completes, it disables endpoints and frees 'out'
-requests. If Paths 1 or 2 are still processing these requests,
-accessing freed memory leads to a crash due to use-after-free conditions.
+cpu0					cpu1 (re-queue completed req2)
 
-To fix this added check for request completion and skip processing
-if already completed and added the request status for ep0 while queue.
+lock(port_lock)
+dbc_start_tx()
+kfifo_out(fifo, req1->buffer)
+unlock(port_lock)
+					lock(port_lock)
+					dbc_write_complete(req2)
+					dbc_start_tx()
+      					kfifo_out(fifo, req2->buffer)
+					unlock(port_lock)
+					lock(port_lock)
+					req2->trb = ring->enqueue;
+					ring->enqueue++
+					unlock(port_lock)
+lock(port_lock)
+req1->trb = ring->enqueue;
+ring->enqueue++
+unlock(port_lock)
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Manish Nagar <manish.nagar@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251120074435.1983091-1-manish.nagar@oss.qualcomm.com
+In the above scenario a kfifo containing "12345678" would read "1234" to
+req1 and "5678" to req2, but req2 is queued before req1 leading to
+data being transmitted as "56781234"
+
+Solve this by adding a flag that prevents starting a new tx if we
+are already mid dbc_start_tx() during the unlocked part.
+
+The already running dbc_do_start_tx() will make sure the newly completed
+request gets re-queued as it is added to the request write_pool while
+holding the lock.
+
+Cc: stable@vger.kernel.org
+Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
+Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20251107162819.1362579-3-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c    |    1 +
- drivers/usb/dwc3/gadget.c |    7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/usb/host/xhci-dbgcap.h |    1 +
+ drivers/usb/host/xhci-dbgtty.c |   17 ++++++++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -92,6 +92,7 @@ static int __dwc3_gadget_ep0_queue(struc
- 	req->request.actual	= 0;
- 	req->request.status	= -EINPROGRESS;
- 	req->epnum		= dep->number;
-+	req->status		= DWC3_REQUEST_STATUS_QUEUED;
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -112,6 +112,7 @@ struct dbc_port {
+ 	struct kfifo			write_fifo;
  
- 	list_add_tail(&req->list, &dep->pending_list);
+ 	bool				registered;
++	bool				tx_running;
+ };
  
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -229,6 +229,13 @@ void dwc3_gadget_giveback(struct dwc3_ep
+ struct dbc_driver {
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -37,7 +37,7 @@ dbc_send_packet(struct dbc_port *port, c
+ 	return size;
+ }
+ 
+-static int dbc_start_tx(struct dbc_port *port)
++static int dbc_do_start_tx(struct dbc_port *port)
+ 	__releases(&port->port_lock)
+ 	__acquires(&port->port_lock)
  {
- 	struct dwc3			*dwc = dep->dwc;
+@@ -47,6 +47,8 @@ static int dbc_start_tx(struct dbc_port
+ 	bool			do_tty_wake = false;
+ 	struct list_head	*pool = &port->write_pool;
  
-+	/*
-+	 * The request might have been processed and completed while the
-+	 * spinlock was released. Skip processing if already completed.
-+	 */
-+	if (req->status == DWC3_REQUEST_STATUS_COMPLETED)
-+		return;
++	port->tx_running = true;
 +
- 	dwc3_gadget_del_and_unmap_request(dep, req, status);
- 	req->status = DWC3_REQUEST_STATUS_COMPLETED;
+ 	while (!list_empty(pool)) {
+ 		req = list_entry(pool->next, struct dbc_request, list_pool);
+ 		len = dbc_send_packet(port, req->buf, DBC_MAX_PACKET);
+@@ -67,12 +69,25 @@ static int dbc_start_tx(struct dbc_port
+ 		}
+ 	}
  
++	port->tx_running = false;
++
+ 	if (do_tty_wake && port->port.tty)
+ 		tty_wakeup(port->port.tty);
+ 
+ 	return status;
+ }
+ 
++/* must be called with port->port_lock held */
++static int dbc_start_tx(struct dbc_port *port)
++{
++	lockdep_assert_held(&port->port_lock);
++
++	if (port->tx_running)
++		return -EBUSY;
++
++	return dbc_do_start_tx(port);
++}
++
+ static void dbc_start_rx(struct dbc_port *port)
+ 	__releases(&port->port_lock)
+ 	__acquires(&port->port_lock)
 
 
