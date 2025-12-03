@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4240B31E0F2;
-	Wed,  3 Dec 2025 16:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1068222579E;
+	Wed,  3 Dec 2025 16:24:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779086; cv=none; b=gfODwh9zTc+1iAjE9TiifpZlJBEJ+ZwYt1ie5Ii+G/VFGt+UPB28ibhB9xtJXs0/x77AdZGa2iPRBDNekRRzb/4VakTQ7T+lnovg2c5OSLWyh+HTZxXcgQYNZKuwA+XtbqJqz6oFjN2ulhH6V9az1gHjK50dTY7FiKQyqCCbQBU=
+	t=1764779089; cv=none; b=Yl6gtUl44CwCWSCAKJNinAQ6YKJh3Z3V74rXB603vBmTBpGgMEBwZuYFiNOinG5xf0npo/t3nB4CA5/BBfRJmAHNLY18fmUKvx03yCOlvzDy15MHqzDdFokUarxM6AtJoV4B5GGNvnO9SJPwWUtmd1FGHkCjsl5f8cAcPXtGG14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779086; c=relaxed/simple;
-	bh=y9geqqRDQz1NuYUcKDh3005EnxCsEnSQBniDvdA0jP0=;
+	s=arc-20240116; t=1764779089; c=relaxed/simple;
+	bh=F/chLMgYdHGulz5efL7LpLOHK/t/MxmjyG2ZWvsFngk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmTGthRp5Qpj/byyJpEZnklHYo/bzaCvpKSVJoG/ynuDoJAVIqhneIlTohsD3yVc7Wf//pEMCvdaaOgaEbIF6OuJU3WYQ27F1EH0azfGpQLf3oJYH3gmShqKEjuN4Ltxpd4FsQk94UCTL1X4klA5OglGOGx67ZyabgJOjfPZfls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2SPUuXAQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJV+dEmQR2bnRM0tV6lfcPv6iRXVlC/DvjenDbI094jfe6KzOA7xjPmuXwMlMPdd651unDVkUy1PumCSqgSL8UPSambLMbMyQfvQOg/IeXgyzkgtwFGE2V5zIaTbt1m060Vxm9qWyxOuccPj01cl3d5fYAK9vKsTNli/FIGU9hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7hMQh6I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2SPUuXAQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E3EC4CEF5;
-	Wed,  3 Dec 2025 16:24:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7hMQh6I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 727A9C4CEF5;
+	Wed,  3 Dec 2025 16:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779085;
-	bh=y9geqqRDQz1NuYUcKDh3005EnxCsEnSQBniDvdA0jP0=;
+	s=korg; t=1764779088;
+	bh=F/chLMgYdHGulz5efL7LpLOHK/t/MxmjyG2ZWvsFngk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SPUuXAQ1IOfF1na1Ft+EELWsH7wGCrYZoUGCDLiypzAbrT+0aySSaRWpnGUZHVlj
-	 hCcErK89RxNbUVcLH7fqCbHuQtPRpCkuFw5G1QnGVd8dYjmbMvP4V8uZK4Q/8x/p8B
-	 Ue2AjMmwCvHiRewh26W3CxMZ2TAdaADjOW+1oABw=
+	b=z7hMQh6IKIFJXuVC/w6g5Rff6zbdvEwD3YVW16ZvlqBj7bV0XAZoiQAFzyiPDHzYS
+	 cPLlPCPTGgbxro9vwpNkE5nr6fO5TPvXjRhvahlAdn69LIl/6064MkMOyp6NfvuRSA
+	 QTMDDwv7bPn7tQpDjBzIaqlG4HQA8lXL5ZShj8PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 151/568] powerpc/eeh: Use result of error_detected() in uevent
-Date: Wed,  3 Dec 2025 16:22:33 +0100
-Message-ID: <20251203152446.258036342@linuxfoundation.org>
+Subject: [PATCH 6.1 152/568] s390/pci: Use pci_uevent_ers() in PCI recovery
+Date: Wed,  3 Dec 2025 16:22:34 +0100
+Message-ID: <20251203152446.293861123@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -56,46 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit 704e5dd1c02371dfc7d22e1520102b197a3b628b ]
+[ Upstream commit dab32f2576a39d5f54f3dbbbc718d92fa5109ce9 ]
 
-Ever since uevent support was added for AER and EEH with commit
-856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume"), it
-reported PCI_ERS_RESULT_NONE as uevent when recovery begins.
+Issue uevents on s390 during PCI recovery using pci_uevent_ers() as done by
+EEH and AER PCIe recovery routines.
 
-Commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for
-udev") subsequently amended AER to report the actual return value of
-error_detected().
-
-Make the same change to EEH to align it with AER and s390.
-
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Link: https://lore.kernel.org/linux-pci/aIp6LiKJor9KLVpv@wunner.de/
 Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-3-adf85b0620b0@linux.ibm.com
+Link: https://patch.msgid.link/20250807-add_err_uevents-v5-2-adf85b0620b0@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/pci/pci_event.c |    3 +++
+ drivers/pci/pci-driver.c  |    2 +-
+ include/linux/pci.h       |    2 +-
+ 3 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index 429abaecad416..9a761f46c7b23 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -334,7 +334,7 @@ static enum pci_ers_result eeh_report_error(struct eeh_dev *edev,
- 	rc = driver->err_handler->error_detected(pdev, pci_channel_io_frozen);
+--- a/arch/s390/pci/pci_event.c
++++ b/arch/s390/pci/pci_event.c
+@@ -83,6 +83,7 @@ static pci_ers_result_t zpci_event_notif
+ 	pci_ers_result_t ers_res = PCI_ERS_RESULT_DISCONNECT;
  
- 	edev->in_error = true;
--	pci_uevent_ers(pdev, PCI_ERS_RESULT_NONE);
-+	pci_uevent_ers(pdev, rc);
- 	return rc;
+ 	ers_res = driver->err_handler->error_detected(pdev,  pdev->error_state);
++	pci_uevent_ers(pdev, ers_res);
+ 	if (ers_result_indicates_abort(ers_res))
+ 		pr_info("%s: Automatic recovery failed after initial reporting\n", pci_name(pdev));
+ 	else if (ers_res == PCI_ERS_RESULT_NEED_RESET)
+@@ -212,6 +213,7 @@ static pci_ers_result_t zpci_event_attem
+ 		ers_res = zpci_event_do_reset(pdev, driver);
+ 
+ 	if (ers_res != PCI_ERS_RESULT_RECOVERED) {
++		pci_uevent_ers(pdev, PCI_ERS_RESULT_DISCONNECT);
+ 		pr_err("%s: Automatic recovery failed; operator intervention is required\n",
+ 		       pci_name(pdev));
+ 		goto out_unlock;
+@@ -220,6 +222,7 @@ static pci_ers_result_t zpci_event_attem
+ 	pr_info("%s: The device is ready to resume operations\n", pci_name(pdev));
+ 	if (driver->err_handler->resume)
+ 		driver->err_handler->resume(pdev);
++	pci_uevent_ers(pdev, PCI_ERS_RESULT_RECOVERED);
+ out_unlock:
+ 	device_unlock(&pdev->dev);
+ 
+--- a/drivers/pci/pci-driver.c
++++ b/drivers/pci/pci-driver.c
+@@ -1597,7 +1597,7 @@ static int pci_uevent(struct device *dev
+ 	return 0;
  }
  
--- 
-2.51.0
-
+-#if defined(CONFIG_PCIEAER) || defined(CONFIG_EEH)
++#if defined(CONFIG_PCIEAER) || defined(CONFIG_EEH) || defined(CONFIG_S390)
+ /**
+  * pci_uevent_ers - emit a uevent during recovery path of PCI device
+  * @pdev: PCI device undergoing error recovery
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -2561,7 +2561,7 @@ static inline bool pci_is_thunderbolt_at
+ 	return false;
+ }
+ 
+-#if defined(CONFIG_PCIEPORTBUS) || defined(CONFIG_EEH)
++#if defined(CONFIG_PCIEPORTBUS) || defined(CONFIG_EEH) || defined(CONFIG_S390)
+ void pci_uevent_ers(struct pci_dev *pdev, enum  pci_ers_result err_type);
+ #endif
+ 
 
 
