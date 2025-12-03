@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B33235E55F;
-	Wed,  3 Dec 2025 16:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168AB35E551;
+	Wed,  3 Dec 2025 16:27:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779243; cv=none; b=V1CwGC8T21hu7lI+u7Km/z9P7m3greWgvtthOFpKd//Eg5WCdHOMmj2yGekfMr9jn47ejJ1keK4dIq0NllEagBIZhLvs+BIJsH9ICQ5yRMtIA7snBS6CqyhvKEL2wmR0eaRM/r3Zw0MlV04+FfUr6oOPsH5DQswhihWPhUs9Y/c=
+	t=1764779246; cv=none; b=QPgw8AZNp6aOBq32jgA6zZ6zM0QF60Epq3TZSI+mqyn5+D5krcGytes+61Hyz7nMsr312YZN4RcmezmhXv5UrdX0/MrUYGEiZhYHeROg+NjsxSMfQt8TKY42I3uCz4Nt9eQWZDKpFTCU/ic7xvBFiPLWlvUQy2VUnajQiELNAWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779243; c=relaxed/simple;
-	bh=B4yZeH4/8uV239twcDjK+ttRRX4G4dAu7KaIf09/reI=;
+	s=arc-20240116; t=1764779246; c=relaxed/simple;
+	bh=ylmRP7zRMEqIXr6IQavN99fF5+J0QccluS1Gua+wnKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GK5KhvHu0/pqr5ONnTsmoIMPPqR8UZPQ4Qg9+vfNXxG4n1YumGVSq/o10hXH+sckCY90eZzjipHxcHInq/Ckef9ylzEooegVikfzac9FIlIhFfvp0h2n/9L6n+MyuUadQfUOakg7vwCBY83AJTtqAJBwyhZL9iBDVzL562DFYEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oH9kLxU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uBcLB9Zq/9Hn7VQssoo3xqJiKdx8kC/hjXKdPPQeTfQPmcoCvUeW4tA1JevYjPz0+5uxj1DbBRqPG7ZeVZpza9FiTFb+uZvuAOGy1zHuYBBq447A0U7nMHJOA3ymoZ4PUrK55vtz0es989Y4xMslichGuPP2PmfvACwDiaaf/g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v6wCv5+N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oH9kLxU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61457C4CEF5;
-	Wed,  3 Dec 2025 16:27:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v6wCv5+N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C0F8C4CEF5;
+	Wed,  3 Dec 2025 16:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779242;
-	bh=B4yZeH4/8uV239twcDjK+ttRRX4G4dAu7KaIf09/reI=;
+	s=korg; t=1764779245;
+	bh=ylmRP7zRMEqIXr6IQavN99fF5+J0QccluS1Gua+wnKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oH9kLxU5eRstB8WT7Rl1t36VuOvMl32JJYeAcOqSyMdMOQ2/+p3Hm5UKvmSANdcfB
-	 FU6C4Jn3N5DZyXb61QuxfTHj8BXjfDkKMl34ywJ+f7Y2wC5UtaaduZ5t3ByDHR5ilk
-	 GhxeM4DwwVZK5tAkpKS+u5sgz7o2I4uY9oIuz6So=
+	b=v6wCv5+Npl9mevcw2HQ8Rng7SwhCtHt1iZSeN7pUhF4TV8vnS94CRDbba/Ujvmami
+	 U7eBzE3oht3i+QKB9cBx9nAQA7bTe+dFNTB/3gnWYQmtgdqUA2rAKc1ofeJ+JCZFHW
+	 XnZKmW04VAh1PMwKnpZ2Kv2ZYwyKL0/Vr+YS18r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Sairaj Kodilkar <sarunkod@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 198/568] iommu/amd: Skip enabling command/event buffers for kdump
-Date: Wed,  3 Dec 2025 16:23:20 +0100
-Message-ID: <20251203152447.978016598@linuxfoundation.org>
+Subject: [PATCH 6.1 199/568] drm/amd: add more cyan skillfish PCI ids
+Date: Wed,  3 Dec 2025 16:23:21 +0100
+Message-ID: <20251203152448.014236596@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,77 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb ]
+[ Upstream commit 1e18746381793bef7c715fc5ec5611a422a75c4c ]
 
-After a panic if SNP is enabled in the previous kernel then the kdump
-kernel boots with IOMMU SNP enforcement still enabled.
+Add additional PCI IDs to the cyan skillfish family.
 
-IOMMU command buffers and event buffer registers remain locked and
-exclusive to the previous kernel. Attempts to enable command and event
-buffers in the kdump kernel will fail, as hardware ignores writes to
-the locked MMIO registers as per AMD IOMMU spec Section 2.12.2.1.
-
-Skip enabling command buffers and event buffers for kdump boot as they
-are already enabled in the previous kernel.
-
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Link: https://lore.kernel.org/r/576445eb4f168b467b0fc789079b650ca7c5b037.1756157913.git.ashish.kalra@amd.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 23804270eda19..12bc854fd177f 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -805,11 +805,16 @@ static void iommu_enable_command_buffer(struct amd_iommu *iommu)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+index 1fbb73b2691d5..6104353e4c2f4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -1997,6 +1997,11 @@ static const struct pci_device_id pciidlist[] = {
+ 	{0x1002, 0x7410, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_ALDEBARAN},
  
- 	BUG_ON(iommu->cmd_buf == NULL);
+ 	/* CYAN_SKILLFISH */
++	{0x1002, 0x13DB, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13F9, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13FA, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13FB, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
++	{0x1002, 0x13FC, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
+ 	{0x1002, 0x13FE, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
+ 	{0x1002, 0x143F, PCI_ANY_ID, PCI_ANY_ID, 0, 0, CHIP_CYAN_SKILLFISH|AMD_IS_APU},
  
--	entry = iommu_virt_to_phys(iommu->cmd_buf);
--	entry |= MMIO_CMD_SIZE_512;
--
--	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+	if (!is_kdump_kernel()) {
-+		/*
-+		 * Command buffer is re-used for kdump kernel and setting
-+		 * of MMIO register is not required.
-+		 */
-+		entry = iommu_virt_to_phys(iommu->cmd_buf);
-+		entry |= MMIO_CMD_SIZE_512;
-+		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
-+			    &entry, sizeof(entry));
-+	}
- 
- 	amd_iommu_reset_cmd_buffer(iommu);
- }
-@@ -858,10 +863,15 @@ static void iommu_enable_event_buffer(struct amd_iommu *iommu)
- 
- 	BUG_ON(iommu->evt_buf == NULL);
- 
--	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
--
--	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+	if (!is_kdump_kernel()) {
-+		/*
-+		 * Event buffer is re-used for kdump kernel and setting
-+		 * of MMIO register is not required.
-+		 */
-+		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
-+		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
-+			    &entry, sizeof(entry));
-+	}
- 
- 	/* set head and tail to zero manually */
- 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
 -- 
 2.51.0
 
