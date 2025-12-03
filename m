@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACBD3502A2;
-	Wed,  3 Dec 2025 16:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D921D3502B9;
+	Wed,  3 Dec 2025 16:13:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778408; cv=none; b=pa2tnR5f18i/Ax54HwNIXqPtTOWM2xWCIqYzcFS87wl1A6yo8poMRW+sNDjgHudTRkm38C8TAUPPNvoEy2aN9FObGjU8j+xzdDn1qOaY2t8CA5CoLNMXjvX7U92WL99vbycF9nUi/6kyjyCNYukRikVx7uu/UArq/QUoSjo/ObY=
+	t=1764778412; cv=none; b=ikh4sSBWBSy4aWpDoSycwy1b/qY25ObI5yVI7Z1kUTNwHmcElYaoo+xrTsnGPMyrspZV41XvGdwhHvZVRzAiklivX5QqWNhcykSVBgtVR9YQljutIpWTiy/88WmJaU+T0Ygi7jAuuZYOe/NnQKDL7RDC8U6xXJMjEQMJ0JS6nXU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778408; c=relaxed/simple;
-	bh=O/mySWCqsQDsHwTNugyFMSDwFdUrqNTv4W2u5c42WwU=;
+	s=arc-20240116; t=1764778412; c=relaxed/simple;
+	bh=zxlpV9eeU5+l0jSQwuWlGDColVyTPcgNhi9c2jDEfPs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tAAjaOHcktR0ThsBE7emD/ZgJhmdc1kNeimI5E5hkrdGFPlk5fIqvDiC1hMFeo4BYOEAZMYMECPiMB5BGgmcuhARQ8f2GhiWWBwv7u2rd3JTwWflrDi+IGRy+LKuGdwdnr333+4PZLHFiyGHTSRtAWw4LG6tuQ+FhjhpFGoZ63Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3oWF+fJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MNO3zWibEL9Sh/4FPKnfhN78lV4eWvpRCyXrWYIl4sETel9N1qqHo/5ClRP31WTnLvdrAnkznUCTNXf6+zoyc6LmXsRf4YQWXjePERois2Fdmz43xBMlXBis9eJLuAmq/ZmNES73Zxb8GpdAfOI0J12baFQUSqpWipNYhoj0juY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MnrD0Jr9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3oWF+fJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6552EC4CEF5;
-	Wed,  3 Dec 2025 16:13:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MnrD0Jr9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D987DC4CEF5;
+	Wed,  3 Dec 2025 16:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778407;
-	bh=O/mySWCqsQDsHwTNugyFMSDwFdUrqNTv4W2u5c42WwU=;
+	s=korg; t=1764778411;
+	bh=zxlpV9eeU5+l0jSQwuWlGDColVyTPcgNhi9c2jDEfPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B3oWF+fJC3BhKfA873gHFDXgYu0z+YhcF4NHR7Apn3H3PRy+DBgB15DF2JQyXww1Y
-	 X0u1aiOfCr8AhuCMLsTPtN/j7nAFxexgWyKA3ijHheFwVvunzn/OIUkcM5a2m1wleg
-	 MBaN45TG08UOwBECWGsiDxGqJv+J3bf+e+bsod0M=
+	b=MnrD0Jr9/BmQF8MjjuRLOes/fZPcUmlrJjmxDsXVxDetCZ9xOlV9Wq+YCzoKYQR78
+	 fIAvMBUaGQz7QnfYgBsGtE+l2KmjrpFMxVBKUaLMkwS9NaEsF/TRjB0MD3IEwg5sg5
+	 FvZdRNCXY9pDKOxEzM2oW0/FSKZJe0g7YIY1czuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gulam Mohamed <gulam.mohamed@oracle.com>
-Subject: [PATCH 5.15 336/392] Revert "block: dont add or resize partition on the disk with GENHD_FL_NO_PART"
-Date: Wed,  3 Dec 2025 16:28:06 +0100
-Message-ID: <20251203152426.535356428@linuxfoundation.org>
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 337/392] can: kvaser_usb: leaf: Fix potential infinite loop in command parsers
+Date: Wed,  3 Dec 2025 16:28:07 +0100
+Message-ID: <20251203152426.572780297@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -49,66 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gulam Mohamed <gulam.mohamed@oracle.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-This reverts commit 1a721de8489fa559ff4471f73c58bb74ac5580d3.
+[ Upstream commit 0c73772cd2b8cc108d5f5334de89ad648d89b9ec ]
 
-The commit 1a721de8489f ("block: don't add or resize partition on the disk
-with GENHD_FL_NO_PART") and the commit 7777f47f2ea6 ("block: Move checking
-GENHD_FL_NO_PART to bdev_add_partition()") used the flag GENHD_FL_NO_PART
-to prevent the add or resize of partitions in 5.15 stable kernels.But in
-these 5.15 kernels, this is giving an issue with the following error
-where the loop driver wants to create a partition when the partscan is
-disabled on the loop device:
+The `kvaser_usb_leaf_wait_cmd()` and `kvaser_usb_leaf_read_bulk_callback`
+functions contain logic to zero-length commands. These commands are used
+to align data to the USB endpoint's wMaxPacketSize boundary.
 
-dd if=/dev/zero of=loopDisk.dsk bs=1M count=1 seek=10240;
-losetup -f loopDisk.dsk;parted -s /dev/loop0 -- mklabel gpt mkpart primary
-           2048s 4096s
-1+0 records in
-1+0 records out
-1048576 bytes (1.0 MB, 1.0 MiB) copied, 0.0016293 s, 644 MB/s
-""
-Error: Partition(s) 1 on /dev/loop0 have been written, but we have been
-unable to inform the kernel of the change, probably because it/they are
-in use.  As a result, the old partition(s) will remain in use.  You should
-reboot now before making further changes.
-""
-If the partition scan is not enabled on the loop device, this flag
-GENHD_FL_NO_PART is getting set and when partition creation is tried,
-it returns an error EINVAL thereby preventing the creation of partitions.
-So, there is no such distinction between disabling of partition scan and
-partition creation.
+The driver attempts to skip these placeholders by aligning the buffer
+position `pos` to the next packet boundary using `round_up()` function.
 
-Later in 6.xxx kernels, the commit b9684a71fca7 ("block, loop: support
-partitions without scanning") a new flag GD_SUPPRESS_PART_SCAN was
-introduced that just disables the partition scan and uses GENHD_FL_NO_PART
-only to prevent creating partition scan. So, the partition creationg can
-proceed with even if partition scan is disabled.
+However, if zero-length command is found exactly on a packet boundary
+(i.e., `pos` is a multiple of wMaxPacketSize, including 0), `round_up`
+function will return the unchanged value of `pos`. This prevents `pos`
+to be increased, causing an infinite loop in the parsing logic.
 
-As the commit b9684a71fca7 ("block, loop: support partitions without
-scanning") is not available in 5.15 stable kernel, and since there is no
-distinction between disabling of "partition scan" and "partition
-creation", we need to revert the commits 1a721de8489f and 7777f47f2ea6
-from 5.15 stable kernel to allow partition creation when partscan is
-disabled.
+This patch fixes this in the function by using `pos + 1` instead.
+This ensures that even if `pos` is on a boundary, the calculation is
+based on `pos + 1`, forcing `round_up()` to always return the next
+aligned boundary.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Gulam Mohamed <gulam.mohamed@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7259124eac7d ("can: kvaser_usb: Split driver into kvaser_usb_core.c and kvaser_usb_leaf.c")
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Jimmy Assarsson <extja@kvaser.com>
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://patch.msgid.link/20251023162709.348240-1-eeodqql09@gmail.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/ioctl.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -20,8 +20,6 @@ static int blkpg_do_ioctl(struct block_d
- 	struct blkpg_partition p;
- 	sector_t start, length;
- 
--	if (disk->flags & GENHD_FL_NO_PART)
--		return -EINVAL;
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EACCES;
- 	if (copy_from_user(&p, upart, sizeof(struct blkpg_partition)))
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 43ec056646661..b6cef22a53e77 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -610,7 +610,7 @@ static int kvaser_usb_leaf_wait_cmd(const struct kvaser_usb *dev, u8 id,
+ 			 * for further details.
+ 			 */
+ 			if (tmp->len == 0) {
+-				pos = round_up(pos,
++				pos = round_up(pos + 1,
+ 					       le16_to_cpu
+ 						(dev->bulk_in->wMaxPacketSize));
+ 				continue;
+@@ -1568,7 +1568,7 @@ static void kvaser_usb_leaf_read_bulk_callback(struct kvaser_usb *dev,
+ 		 * number of events in case of a heavy rx load on the bus.
+ 		 */
+ 		if (cmd->len == 0) {
+-			pos = round_up(pos, le16_to_cpu
++			pos = round_up(pos + 1, le16_to_cpu
+ 						(dev->bulk_in->wMaxPacketSize));
+ 			continue;
+ 		}
+-- 
+2.51.0
+
 
 
