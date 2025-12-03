@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4085034845C;
-	Wed,  3 Dec 2025 16:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D54348468;
+	Wed,  3 Dec 2025 16:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778338; cv=none; b=quS/zfWzlsP0A2PXz0iCQcDqyBwPtNdp4cBEeD5POzNPzWXnpt3EwNNZzJaA27eh4ynMXyUUgRTMJ/Kcqwe+PH6YO+JuhpvFber04TZxQMUcJ+YQkKkB+AWBNYCjOOf8eX9RDGOj9ukzDHWL2pg1Tb438fIjjasYkpW+G1yG6EQ=
+	t=1764778341; cv=none; b=myse+z3MEVw9RJT3Wl0SqnYv4+SJIGKvIQsyOI5xvXFSQoJ0oHhMR4DjIDUCQbN+9vcE5rV/3MTDVLcdpVlhmnndREWBd8HE9ox5ipq2ruVQkmQagohr0lThN/QQP1AMH4hPM7LN5AFrccFqVueGaRahfS8ity3AmTpw7FuEOj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778338; c=relaxed/simple;
-	bh=B1wAi9YHQhEkIm8PNGNeHjZTE+CJ93PT2cZ6oWyEjqM=;
+	s=arc-20240116; t=1764778341; c=relaxed/simple;
+	bh=B1q1wyURr1iebxvroPKCo8lJvSsBVtDGUfnZsx52GtY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3K8i77IKycGDtjXQ12tzoTCA3MoJVCp+o2GKXyfHkWSuKv+vJfOsI9VamTShSG63rWmQOvbamNGwFhpSRgh6beXbyTPpTUgkztCmBls6mbj7tG92pNXs3G4xEHJ+jvULdw8NdsgWRyLRIqlZh311re9C8AOORg7XFerdM08OIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qeTNIUH7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SbrWqhJ9PLyAQeQcuulERg4kWn4zV/MbiNVTLKET4IgnLS8P/Ebwkro+Q5CdKL+wDSBN1Jbhk/DaImgvZZUX8wkyN/4c0/DatLczRD7GjWWnJNoo30MwHU9vW6PkghsldoGRlQm0mHwpjfyIH3nHaM0KpOa58p67oyvbAqx0IrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Z0ughp5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qeTNIUH7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C234C4CEF5;
-	Wed,  3 Dec 2025 16:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Z0ughp5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B22C4CEF5;
+	Wed,  3 Dec 2025 16:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778338;
-	bh=B1wAi9YHQhEkIm8PNGNeHjZTE+CJ93PT2cZ6oWyEjqM=;
+	s=korg; t=1764778341;
+	bh=B1q1wyURr1iebxvroPKCo8lJvSsBVtDGUfnZsx52GtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qeTNIUH757W62G0bmuwfYJa118vOC+wX38uyrylEsAtK+Ham4X/n4R1GWFBRJ+A1X
-	 Q9DtN1vJb4nTSlQSIGybb/vyBQY6FZ362JHeThThEKMDZH4whQCj09ZQjbsMmLkndF
-	 A0oyNO37teFx5gV3eJ7LcY2XMzr9pOmI+pYROhf4=
+	b=1Z0ughp5BxrBBwf8FTVlwj0MXodGW1D4FdHnRKDqU87/a4zQ3Q1Pxu+cVAWjsyXEr
+	 txXAvvwd0FhVKCkeuZ12ufhtPziO1kVmHgJcys7Mke8dh9xIhAPksg5P5XgFmRBgcN
+	 k5vvhbymnvsqs00uAYMxo8e1y+EdnBaW0b71OOk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	staffan.melin@oscillator.se,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 5.15 282/392] HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
-Date: Wed,  3 Dec 2025 16:27:12 +0100
-Message-ID: <20251203152424.535895273@linuxfoundation.org>
+	Nate Karstens <nate.karstens@garmin.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 273/392] strparser: Fix signed/unsigned mismatch bug
+Date: Wed,  3 Dec 2025 16:27:03 +0100
+Message-ID: <20251203152424.210660610@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,70 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Nate Karstens <nate.karstens@garmin.com>
 
-commit beab067dbcff642243291fd528355d64c41dc3b2 upstream.
+commit 4da4e4bde1c453ac5cc2dce5def81d504ae257ee upstream.
 
-Based on available evidence, the USB ID 4c4a:4155 used by multiple
-devices has been attributed to Jieli. The commit 1a8953f4f774
-("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY") affected touchscreen
-functionality. Added checks for manufacturer and serial number to
-maintain microphone compatibility, enabling both devices to function
-properly.
+The `len` member of the sk_buff is an unsigned int. This is cast to
+`ssize_t` (a signed type) for the first sk_buff in the comparison,
+but not the second sk_buff. On 32-bit systems, this can result in
+an integer underflow for certain values because unsigned arithmetic
+is being used.
 
-[jkosina@suse.com: edit shortlog]
-Fixes: 1a8953f4f774 ("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY")
+This appears to be an oversight: if the intention was to use unsigned
+arithmetic, then the first cast would have been omitted. The change
+ensures both len values are cast to `ssize_t`.
+
+The underflow causes an issue with ktls when multiple TLS PDUs are
+included in a single TCP segment. The mainline kernel does not use
+strparser for ktls anymore, but this is still useful for other
+features that still use strparser, and for backporting.
+
+Signed-off-by: Nate Karstens <nate.karstens@garmin.com>
 Cc: stable@vger.kernel.org
-Tested-by: staffan.melin@oscillator.se
-Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Fixes: 43a0c6751a32 ("strparser: Stream parser for messages")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20251106222835.1871628-1-nate.karstens@garmin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    4 ++--
- drivers/hid/hid-quirks.c |   13 ++++++++++++-
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ net/strparser/strparser.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1406,7 +1406,7 @@
- #define USB_VENDOR_ID_SIGNOTEC			0x2133
- #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
- 
--#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
--#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
-+#define USB_VENDOR_ID_JIELI_SDK_DEFAULT		0x4c4a
-+#define USB_DEVICE_ID_JIELI_SDK_4155		0x4155
- 
- #endif
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -877,7 +877,6 @@ static const struct hid_device_id hid_ig
- #endif
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
- 	{ }
- };
- 
-@@ -1026,6 +1025,18 @@ bool hid_ignore(struct hid_device *hdev)
- 					     strlen(elan_acpi_id[i].id)))
- 					return true;
- 		break;
-+	case USB_VENDOR_ID_JIELI_SDK_DEFAULT:
-+		/*
-+		 * Multiple USB devices with identical IDs (mic & touchscreen).
-+		 * The touch screen requires hid core processing, but the
-+		 * microphone does not. They can be distinguished by manufacturer
-+		 * and serial number.
-+		 */
-+		if (hdev->product == USB_DEVICE_ID_JIELI_SDK_4155 &&
-+		    strncmp(hdev->name, "SmartlinkTechnology", 19) == 0 &&
-+		    strncmp(hdev->uniq, "20201111000001", 14) == 0)
-+			return true;
-+		break;
- 	}
- 
- 	if (hdev->type == HID_TYPE_USBMOUSE &&
+--- a/net/strparser/strparser.c
++++ b/net/strparser/strparser.c
+@@ -238,7 +238,7 @@ static int __strp_recv(read_descriptor_t
+ 				strp_parser_err(strp, -EMSGSIZE, desc);
+ 				break;
+ 			} else if (len <= (ssize_t)head->len -
+-					  skb->len - stm->strp.offset) {
++					  (ssize_t)skb->len - stm->strp.offset) {
+ 				/* Length must be into new skb (and also
+ 				 * greater than zero)
+ 				 */
 
 
