@@ -1,40 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C90331A75;
-	Wed,  3 Dec 2025 15:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0921331A75;
+	Wed,  3 Dec 2025 15:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777169; cv=none; b=L66/Wo8X0CEZuhNXenuQXLq2rfGKOW6GHn4cQ/nBzxv4d8BAb3DxFlhLsVejDlVqrYJHdV98yjx3Rvua7B9f+3lXuxg8eOQWqQk6DjkJEZb/yn/6ZC8+HCns4W+tRs/YaWcT9mDAuHpDhUWnXRdcVxfPETgIDCH+3r65BXOCACQ=
+	t=1764777171; cv=none; b=ETfWyJMo1UOv0zLplNR2ED6aeVtbRqOi/FbU371gx6Dnp/VPlPBj3zSwKIcLfp930n0cQTz32YxUz3elTTKNd3psBRSiGycoEmWP73Kd3cwBCQYDxv8WgjLEX0W9KhTmpOIEZc80BxphR38ghGyU3KaYugyEo/GQhI/PinYd++Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777169; c=relaxed/simple;
-	bh=Ju8E948+/9IMus4le2ww/Bvjy61OqHSK9/Ahh/Gty/g=;
+	s=arc-20240116; t=1764777171; c=relaxed/simple;
+	bh=lfetsaWgFhcNeGt1Ms8W2Ie4lSVmig2ELXZPzhrVgg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e8mR8RphvIVWxbKN9Swvtzq5X8bPCbJAEXKWoMdcq09UPVcSWpkiip+lKY970zAFyuY7tn+CtqSMsdnnpUdaEiNd7pB9aovSvqsn6QQcZxDhQvmXMH8ng9i7rgLMAchP4JdE2sMhmsve5mE7a1/crj7Vgg56clb11DhNkeEA1iM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UayClvui; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pRZcQzUlqEsMamMueJdmlRvw+wbs4mY3p2aICkUDXVbjAoyIC02gz0VN1J5yr1ITyFqrKp5HWaSx8+f+z8BGAGGGib95O1KmvLCf1A4qahd9/et83IzFnxKF0sK1TmHoeHpFUQWr87/o7zAD38GkaaUINb5lNqK/r9hlbPmZI1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JwogGWjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UayClvui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7514EC116B1;
-	Wed,  3 Dec 2025 15:52:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JwogGWjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F24EC4CEF5;
+	Wed,  3 Dec 2025 15:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777168;
-	bh=Ju8E948+/9IMus4le2ww/Bvjy61OqHSK9/Ahh/Gty/g=;
+	s=korg; t=1764777171;
+	bh=lfetsaWgFhcNeGt1Ms8W2Ie4lSVmig2ELXZPzhrVgg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UayClvuilpowZISRnAUrxwDwmZ5Z6ffw6xeKZqq/dPC7o/yNxXVso/eWm+4cooZOt
-	 C5omgpIjwu8dit50PF0R6Yo2FtCxiLO+h4DHMRLF1URCDRSzUG/DCO6iF+I+Jf+YYS
-	 jRak5AUVFKNpJANRy1LodYVZuUqB/aP6SZMoLaXU=
+	b=JwogGWjf9JxdK+hbdf/RQVj+IA7N+hBF7f8KVivfKHdl0yTLCuFIZ3TvQECMHQcJd
+	 hiP2TkDN17zWj0840xyGo9mSFFOdrfdbxxS9Xhf3/xyPS0w2u7ZaNMqyamTvvkEzqY
+	 b4WCPEYb7qwBF7bhiSedhQ67VkClpmNCrzwhLm04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+f64019ba229e3a5c411b@syzkaller.appspotmail.com,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
 	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.17 102/146] mm/huge_memory: fix NULL pointer deference when splitting folio
-Date: Wed,  3 Dec 2025 16:28:00 +0100
-Message-ID: <20251203152350.192985024@linuxfoundation.org>
+	Hugh Dickins <hughd@google.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.17 103/146] mm/memfd: fix information leak in hugetlb folios
+Date: Wed,  3 Dec 2025 16:28:01 +0100
+Message-ID: <20251203152350.234730002@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -53,71 +60,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit cff47b9e39a6abf03dde5f4f156f841b0c54bba0 upstream.
+commit de8798965fd0d9a6c47fc2ac57767ec32de12b49 upstream.
 
-Commit c010d47f107f ("mm: thp: split huge page to any lower order pages")
-introduced an early check on the folio's order via mapping->flags before
-proceeding with the split work.
+When allocating hugetlb folios for memfd, three initialization steps are
+missing:
 
-This check introduced a bug: for shmem folios in the swap cache and
-truncated folios, the mapping pointer can be NULL.  Accessing
-mapping->flags in this state leads directly to a NULL pointer dereference.
+1. Folios are not zeroed, leading to kernel memory disclosure to userspace
+2. Folios are not marked uptodate before adding to page cache
+3. hugetlb_fault_mutex is not taken before hugetlb_add_to_page_cache()
 
-This commit fixes the issue by moving the check for mapping != NULL before
-any attempt to access mapping->flags.
+The memfd allocation path bypasses the normal page fault handler
+(hugetlb_no_page) which would handle all of these initialization steps.
+This is problematic especially for udmabuf use cases where folios are
+pinned and directly accessed by userspace via DMA.
 
-Link: https://lkml.kernel.org/r/20251119235302.24773-1-richard.weiyang@gmail.com
-Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
+Fix by matching the initialization pattern used in hugetlb_no_page():
+- Zero the folio using folio_zero_user() which is optimized for huge pages
+- Mark it uptodate with folio_mark_uptodate()
+- Take hugetlb_fault_mutex before adding to page cache to prevent races
+
+The folio_zero_user() change also fixes a potential security issue where
+uninitialized kernel memory could be disclosed to userspace through read()
+or mmap() operations on the memfd.
+
+Link: https://lkml.kernel.org/r/20251112145034.2320452-1-kartikey406@gmail.com
+Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reported-by: syzbot+f64019ba229e3a5c411b@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/20251112031631.2315651-1-kartikey406@gmail.com/ [v1]
+Closes: https://syzkaller.appspot.com/bug?extid=f64019ba229e3a5c411b
+Suggested-by: Oscar Salvador <osalvador@suse.de>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Tested-by: syzbot+f64019ba229e3a5c411b@syzkaller.appspotmail.com
+Acked-by: Oscar Salvador <osalvador@suse.de>
 Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com> (v2)
+Cc: Christoph Hellwig <hch@lst.de> (v6)
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ mm/memfd.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3626,6 +3626,16 @@ static int __folio_split(struct folio *f
- 	if (folio != page_folio(split_at) || folio != page_folio(lock_at))
- 		return -EINVAL;
- 
-+	/*
-+	 * Folios that just got truncated cannot get split. Signal to the
-+	 * caller that there was a race.
-+	 *
-+	 * TODO: this will also currently refuse shmem folios that are in the
-+	 * swapcache.
-+	 */
-+	if (!is_anon && !folio->mapping)
-+		return -EBUSY;
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -96,9 +96,36 @@ struct folio *memfd_alloc_folio(struct f
+ 						    NULL,
+ 						    gfp_mask);
+ 		if (folio) {
++			u32 hash;
 +
- 	if (new_order >= folio_order(folio))
- 		return -EINVAL;
- 
-@@ -3666,18 +3676,6 @@ static int __folio_split(struct folio *f
- 		gfp_t gfp;
- 
- 		mapping = folio->mapping;
--
--		/* Truncated ? */
--		/*
--		 * TODO: add support for large shmem folio in swap cache.
--		 * When shmem is in swap cache, mapping is NULL and
--		 * folio_test_swapcache() is true.
--		 */
--		if (!mapping) {
--			ret = -EBUSY;
--			goto out;
--		}
--
- 		min_order = mapping_min_folio_order(folio->mapping);
- 		if (new_order < min_order) {
- 			ret = -EINVAL;
++			/*
++			 * Zero the folio to prevent information leaks to userspace.
++			 * Use folio_zero_user() which is optimized for huge/gigantic
++			 * pages. Pass 0 as addr_hint since this is not a faulting path
++			 *  and we don't have a user virtual address yet.
++			 */
++			folio_zero_user(folio, 0);
++
++			/*
++			 * Mark the folio uptodate before adding to page cache,
++			 * as required by filemap.c and other hugetlb paths.
++			 */
++			__folio_mark_uptodate(folio);
++
++			/*
++			 * Serialize hugepage allocation and instantiation to prevent
++			 * races with concurrent allocations, as required by all other
++			 * callers of hugetlb_add_to_page_cache().
++			 */
++			hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
++			mutex_lock(&hugetlb_fault_mutex_table[hash]);
++
+ 			err = hugetlb_add_to_page_cache(folio,
+ 							memfd->f_mapping,
+ 							idx);
++
++			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
++
+ 			if (err) {
+ 				folio_put(folio);
+ 				goto err_unresv;
 
 
