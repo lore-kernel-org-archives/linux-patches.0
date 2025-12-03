@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DDBC314A64;
-	Wed,  3 Dec 2025 15:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE1B3148A3;
+	Wed,  3 Dec 2025 15:37:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776270; cv=none; b=bhYDs1cXgI1rtd4PB4s675iAx2pghjkcsJ6hXNBFe/Qs5eTMwlhigN+hIsEBCcyfmniGxF8I3zfp84/VKhMFwyJmDHspykEpoSkNU2SfoLb3UGrN2J93uJ/Xauom2Ccx1nRmme8nnDB094ZXz4ReVvz6kX3Z9B4RuZgbn67B+uo=
+	t=1764776273; cv=none; b=SvLBhwPX/vIfrfqbszcCeIUCTZHDKmdI0K3zshwqnh4/yX+5PtIZGJrFrB2QOJ0gpPa8wEXayjlI0fQkn6/S4pjnxVeOhjnNrUUvqk1Xy6L8Vjt3b3lRPbpVs9y4yekXkwAOVXhtl3Vmu5iE1zrUxVxki6tdTxzdDp1sr3RGMFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776270; c=relaxed/simple;
-	bh=g2r0VXFmH8F5z39gZXZ3e1/XERIBkEXvOXLvo9SpFMk=;
+	s=arc-20240116; t=1764776273; c=relaxed/simple;
+	bh=tgsqtQTPf8KjIWs7usKt5c/nVUx8FaGYCJu5Pe6mjF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X7hjpwu3DACT+rx4Cr6CXHYw4VaJNU+g3IQ5J1jIh1Sgpy+cVjiOI5bYX797q5oB5tfc2O0TEkaLbdLkpvBdpY80G9JBwpmCeuRsL9IPNLSC1Nm6Zj+qda4CuNa4YzXdlvsQbskxQGMHDLsHxm6g3vduiCOmH24lF/tKv8P/ofQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbq9cEpg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VXRJUfI0SS0LcLEhtfmj9CcUrbqksTG5mav0uyb9WGFtcSJHahxGpmz9EqrJcMz7GduBXvEDUurNlL2q+QIJwniMqLxQCcurkahqPdfkA9+R5sBbeZBgg08uptjbJjk8+zA79m/y1bfqS940OILBdsjLdfKZyzxoyySPZTgxoX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4EQI3jZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbq9cEpg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD39C4CEF5;
-	Wed,  3 Dec 2025 15:37:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4EQI3jZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4105C4CEF5;
+	Wed,  3 Dec 2025 15:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776270;
-	bh=g2r0VXFmH8F5z39gZXZ3e1/XERIBkEXvOXLvo9SpFMk=;
+	s=korg; t=1764776273;
+	bh=tgsqtQTPf8KjIWs7usKt5c/nVUx8FaGYCJu5Pe6mjF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cbq9cEpgc+GXMHfqxu3QIA0E5pVfmFL7p8FMOGm5hIUuWJcW9fzdGLKrSH4mhTdcr
-	 T2OOTq3ZjyxPx9ktVsx44SFdWnsmsGyaSkMZJtYrS/edm51H2r+yQPIVWRQ05cuqa5
-	 guyshPk/h3FNPkW+u2CcwC2K+NQSa2pHBpczw+ZU=
+	b=W4EQI3jZoTfw1BZKSv0CfSq9A84LCfeHd25e7UoStMui310f0mRPkAZTa3Dnf6nIo
+	 bx1JgiOZgX6oQuvGO/EHY4dMxa18w0I3OFXBvAI22xYSA+MqQuHOVDBwH0IJIt81nI
+	 gnZCpdVnaYkYCeD+bShdHwreTBymqrfkM+jsqbBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Thomas Andreatta <thomas.andreatta2000@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 131/300] PCI: cadence: Check for the existence of cdns_pcie::ops before using it
-Date: Wed,  3 Dec 2025 16:25:35 +0100
-Message-ID: <20251203152405.464861821@linuxfoundation.org>
+Subject: [PATCH 5.10 100/300] dmaengine: sh: setup_xref error handling
+Date: Wed,  3 Dec 2025 16:25:04 +0100
+Message-ID: <20251203152404.329361249@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,91 +51,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Wang <unicorn_wang@outlook.com>
+From: Thomas Andreatta <thomasandreatta2000@gmail.com>
 
-[ Upstream commit 49a6c160ad4812476f8ae1a8f4ed6d15adfa6c09 ]
+[ Upstream commit d9a3e9929452780df16f3414f0d59b5f69d058cf ]
 
-cdns_pcie::ops might not be populated by all the Cadence glue drivers. This
-is going to be true for the upcoming Sophgo platform which doesn't set the
-ops.
+This patch modifies the type of setup_xref from void to int and handles
+errors since the function can fail.
 
-Hence, add a check to prevent NULL pointer dereference.
+`setup_xref` now returns the (eventual) error from
+`dmae_set_dmars`|`dmae_set_chcr`, while `shdma_tx_submit` handles the
+result, removing the chunks from the queue and marking PM as idle in
+case of an error.
 
-Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
-[mani: reworded subject and description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/35182ee1d972dfcd093a964e11205efcebbdc044.1757643388.git.unicorn_wang@outlook.com
+Signed-off-by: Thomas Andreatta <thomas.andreatta2000@gmail.com>
+Link: https://lore.kernel.org/r/20250827152442.90962-1-thomas.andreatta2000@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence-host.c | 2 +-
- drivers/pci/controller/cadence/pcie-cadence.c      | 4 ++--
- drivers/pci/controller/cadence/pcie-cadence.h      | 6 +++---
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/dma/sh/shdma-base.c | 25 +++++++++++++++++++------
+ drivers/dma/sh/shdmac.c     | 17 +++++++++++++----
+ include/linux/shdma-base.h  |  2 +-
+ 3 files changed, 33 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
-index c29176bdecd19..28e1497a4fc40 100644
---- a/drivers/pci/controller/cadence/pcie-cadence-host.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
-@@ -444,7 +444,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_PCI_ADDR1(0), addr1);
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(0), desc1);
+diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
+index 7f72b3f4cd1ae..e1b8808f2a984 100644
+--- a/drivers/dma/sh/shdma-base.c
++++ b/drivers/dma/sh/shdma-base.c
+@@ -129,12 +129,25 @@ static dma_cookie_t shdma_tx_submit(struct dma_async_tx_descriptor *tx)
+ 			const struct shdma_ops *ops = sdev->ops;
+ 			dev_dbg(schan->dev, "Bring up channel %d\n",
+ 				schan->id);
+-			/*
+-			 * TODO: .xfer_setup() might fail on some platforms.
+-			 * Make it int then, on error remove chunks from the
+-			 * queue again
+-			 */
+-			ops->setup_xfer(schan, schan->slave_id);
++
++			ret = ops->setup_xfer(schan, schan->slave_id);
++			if (ret < 0) {
++				dev_err(schan->dev, "setup_xfer failed: %d\n", ret);
++
++				/* Remove chunks from the queue and mark them as idle */
++				list_for_each_entry_safe(chunk, c, &schan->ld_queue, node) {
++					if (chunk->cookie == cookie) {
++						chunk->mark = DESC_IDLE;
++						list_move(&chunk->node, &schan->ld_free);
++					}
++				}
++
++				schan->pm_state = SHDMA_PM_ESTABLISHED;
++				ret = pm_runtime_put(schan->dev);
++
++				spin_unlock_irq(&schan->chan_lock);
++				return ret;
++			}
  
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(12) |
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
-index 52767f26048fd..7b4d403569ecd 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence.c
-@@ -89,7 +89,7 @@ void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
- 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(r), desc1);
- 
- 	/* Set the CPU address */
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(nbits) |
-@@ -119,7 +119,7 @@ void cdns_pcie_set_outbound_region_for_normal_msg(struct cdns_pcie *pcie,
- 	}
- 
- 	/* Set the CPU address */
--	if (pcie->ops->cpu_addr_fixup)
-+	if (pcie->ops && pcie->ops->cpu_addr_fixup)
- 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
- 
- 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(17) |
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
-index 3139ea9f02c89..f01f683d1cb95 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.h
-+++ b/drivers/pci/controller/cadence/pcie-cadence.h
-@@ -471,7 +471,7 @@ static inline u32 cdns_pcie_ep_fn_readl(struct cdns_pcie *pcie, u8 fn, u32 reg)
- 
- static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->start_link)
-+	if (pcie->ops && pcie->ops->start_link)
- 		return pcie->ops->start_link(pcie);
- 
- 	return 0;
-@@ -479,13 +479,13 @@ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
- 
- static inline void cdns_pcie_stop_link(struct cdns_pcie *pcie)
- {
--	if (pcie->ops->stop_link)
-+	if (pcie->ops && pcie->ops->stop_link)
- 		pcie->ops->stop_link(pcie);
+ 			if (schan->pm_state == SHDMA_PM_PENDING)
+ 				shdma_chan_xfer_ld_queue(schan);
+diff --git a/drivers/dma/sh/shdmac.c b/drivers/dma/sh/shdmac.c
+index 5aafe548ca5f3..2b9774ae7fd32 100644
+--- a/drivers/dma/sh/shdmac.c
++++ b/drivers/dma/sh/shdmac.c
+@@ -301,21 +301,30 @@ static bool sh_dmae_channel_busy(struct shdma_chan *schan)
+ 	return dmae_is_busy(sh_chan);
  }
  
- static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
+-static void sh_dmae_setup_xfer(struct shdma_chan *schan,
+-			       int slave_id)
++static int sh_dmae_setup_xfer(struct shdma_chan *schan, int slave_id)
  {
--	if (pcie->ops->link_up)
-+	if (pcie->ops && pcie->ops->link_up)
- 		return pcie->ops->link_up(pcie);
+ 	struct sh_dmae_chan *sh_chan = container_of(schan, struct sh_dmae_chan,
+ 						    shdma_chan);
  
- 	return true;
++	int ret = 0;
+ 	if (slave_id >= 0) {
+ 		const struct sh_dmae_slave_config *cfg =
+ 			sh_chan->config;
+ 
+-		dmae_set_dmars(sh_chan, cfg->mid_rid);
+-		dmae_set_chcr(sh_chan, cfg->chcr);
++		ret = dmae_set_dmars(sh_chan, cfg->mid_rid);
++		if (ret < 0)
++			goto END;
++
++		ret = dmae_set_chcr(sh_chan, cfg->chcr);
++		if (ret < 0)
++			goto END;
++
+ 	} else {
+ 		dmae_init(sh_chan);
+ 	}
++
++END:
++	return ret;
+ }
+ 
+ /*
+diff --git a/include/linux/shdma-base.h b/include/linux/shdma-base.h
+index 6dfd05ef5c2d9..03ba4dab2ef73 100644
+--- a/include/linux/shdma-base.h
++++ b/include/linux/shdma-base.h
+@@ -96,7 +96,7 @@ struct shdma_ops {
+ 	int (*desc_setup)(struct shdma_chan *, struct shdma_desc *,
+ 			  dma_addr_t, dma_addr_t, size_t *);
+ 	int (*set_slave)(struct shdma_chan *, int, dma_addr_t, bool);
+-	void (*setup_xfer)(struct shdma_chan *, int);
++	int (*setup_xfer)(struct shdma_chan *, int);
+ 	void (*start_xfer)(struct shdma_chan *, struct shdma_desc *);
+ 	struct shdma_desc *(*embedded_desc)(void *, int);
+ 	bool (*chan_irq)(struct shdma_chan *, int);
 -- 
 2.51.0
 
