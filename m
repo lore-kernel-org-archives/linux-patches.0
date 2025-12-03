@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F9D350D64;
-	Wed,  3 Dec 2025 16:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12C6350A39;
+	Wed,  3 Dec 2025 16:55:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780942; cv=none; b=g8t/06/gE7EcM/slEQA7DJ7M+cpzwRTr6fKz22CWKYUAtDOoQcgrDVhS7MC+zKRJAGIK0BUj+sNdj3AYPJsJjVOuqAYJBXUoiUmOllPfvzF09gNA0y9Bswx7UqpPmFSL9C0lWrDSNDe0Gf8/ywlcS5eAZ2GUfv4pcfQ7wiK7i+E=
+	t=1764780946; cv=none; b=UmbapeLyoZw6E5NGXmM8Ubp7i/cYeIOuDE5BXraoW8hNHeubaudA0sSYRNqVLG3HAjioU2ql1dFw5TvOcR2h14y9BR9PoC5z8eRtkOuMFix/xxXvXki/gM0n08r30WfjM0pmZaUCVfeMD8lJcX5ioZr6ASIvW6/CVnXQXxl/dN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780942; c=relaxed/simple;
-	bh=AM/LryI3A8h4nyd8qw1LyxvW3xYw0e78l8zimXeLtu0=;
+	s=arc-20240116; t=1764780946; c=relaxed/simple;
+	bh=wFWBb11kyNsBQFdu+8Dza6o0t4TDGBfrk+/sZDEOkQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTo3tOU2e5nHeTYS8NUqAlkfJRU63vLTDK1Fhhx+cfD6mSefJ/IF8rW4SsFc8C8/tDBBJhpUxkNG41W9Xiy3wi8Bh2GQCmE3SG0I7Q/HUaJXPkx+zUsIzgfq80Cudyt9tJFp7jRR+WdT3qsRYjbHOG+9FeTpbowi583o6bWwtq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFw6S0La; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XIWUx2kwDa9Xq3uqHiKPqxznFjIPh2sHxX1svoDpDtXRBKpguv5jXxtKqXLHPNMHOSkoqyEPlCCJvNqy3beJ0ggs+o9kRQ2uLx4BMEjj+XkZfNHRrXcGRdlwJik0iYOtJp0MB+xEyf5/bio2JUFrKl/9voajjWm7Tb89/FkBmUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HC92vjs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFw6S0La"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FF5C4CEF5;
-	Wed,  3 Dec 2025 16:55:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HC92vjs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3BFC116C6;
+	Wed,  3 Dec 2025 16:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780941;
-	bh=AM/LryI3A8h4nyd8qw1LyxvW3xYw0e78l8zimXeLtu0=;
+	s=korg; t=1764780945;
+	bh=wFWBb11kyNsBQFdu+8Dza6o0t4TDGBfrk+/sZDEOkQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFw6S0LakIrS7soOg8/3b7eGxFJLJObgab7ZAIXLngRBQSS3DvYKkX7QfZCftwUAf
-	 QkvEzfdl44hz3rdmrG0WUfWCYzvunTj1kLHuKCqa04rzr92tx6+5j7XjEcTMZCiQHL
-	 2SIn52o6q3d3Kl+N+zPhVeGZxu+sLDoChWQuNx7g=
+	b=2HC92vjsjvApJirA/hbXne4Jk9Pgg50kLY4X/Hd9f5/z/ptA5fakGczwuUa1mSwhY
+	 ILyJn4x7wkSLVW864Go/ld0pRPUydj41/X03Q3OUoCTgAS3pdcOeNUAJoPqUUJWEpv
+	 LyTAp1w6nhRJV8g3iQnfUVwO4M9W7sg4pPgjux/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Chen <michael.chen@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Shaoyun liu <Shaoyun.liu@amd.com>
-Subject: [PATCH 6.12 105/132] drm/amd/amdgpu: reserve vm invalidation engine for uni_mes
-Date: Wed,  3 Dec 2025 16:29:44 +0100
-Message-ID: <20251203152347.176274270@linuxfoundation.org>
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Hung <alex.hung@amd.com>
+Subject: [PATCH 6.12 106/132] drm/amd/display: Check NULL before accessing
+Date: Wed,  3 Dec 2025 16:29:45 +0100
+Message-ID: <20251203152347.213086723@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,35 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Chen <michael.chen@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-commit 971fb57429df5aa4e6efc796f7841e0d10b1e83c upstream.
+commit 3ce62c189693e8ed7b3abe551802bbc67f3ace54 upstream.
 
-Reserve vm invalidation engine 6 when uni_mes enabled. It
-is used in processing tlb flush request from host.
+[WHAT]
+IGT kms_cursor_legacy's long-nonblocking-modeset-vs-cursor-atomic
+fails with NULL pointer dereference. This can be reproduced with
+both an eDP panel and a DP monitors connected.
 
-Signed-off-by: Michael Chen <michael.chen@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Shaoyun liu <Shaoyun.liu@amd.com>
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP NOPTI
+ CPU: 13 UID: 0 PID: 2960 Comm: kms_cursor_lega Not tainted
+6.16.0-99-custom #8 PREEMPT(voluntary)
+ Hardware name: AMD ........
+ RIP: 0010:dc_stream_get_scanoutpos+0x34/0x130 [amdgpu]
+ Code: 57 4d 89 c7 41 56 49 89 ce 41 55 49 89 d5 41 54 49
+ 89 fc 53 48 83 ec 18 48 8b 87 a0 64 00 00 48 89 75 d0 48 c7 c6 e0 41 30
+ c2 <48> 8b 38 48 8b 9f 68 06 00 00 e8 8d d7 fd ff 31 c0 48 81 c3 e0 02
+ RSP: 0018:ffffd0f3c2bd7608 EFLAGS: 00010292
+ RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffd0f3c2bd7668
+ RDX: ffffd0f3c2bd7664 RSI: ffffffffc23041e0 RDI: ffff8b32494b8000
+ RBP: ffffd0f3c2bd7648 R08: ffffd0f3c2bd766c R09: ffffd0f3c2bd7760
+ R10: ffffd0f3c2bd7820 R11: 0000000000000000 R12: ffff8b32494b8000
+ R13: ffffd0f3c2bd7664 R14: ffffd0f3c2bd7668 R15: ffffd0f3c2bd766c
+ FS:  000071f631b68700(0000) GS:ffff8b399f114000(0000)
+knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 00000001b8105000 CR4: 0000000000f50ef0
+ PKRU: 55555554
+ Call Trace:
+ <TASK>
+ dm_crtc_get_scanoutpos+0xd7/0x180 [amdgpu]
+ amdgpu_display_get_crtc_scanoutpos+0x86/0x1c0 [amdgpu]
+ ? __pfx_amdgpu_crtc_get_scanout_position+0x10/0x10[amdgpu]
+ amdgpu_crtc_get_scanout_position+0x27/0x50 [amdgpu]
+ drm_crtc_vblank_helper_get_vblank_timestamp_internal+0xf7/0x400
+ drm_crtc_vblank_helper_get_vblank_timestamp+0x1c/0x30
+ drm_crtc_get_last_vbltimestamp+0x55/0x90
+ drm_crtc_next_vblank_start+0x45/0xa0
+ drm_atomic_helper_wait_for_fences+0x81/0x1f0
+ ...
+
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 873373739b9b150720ea2c5390b4e904a4d21505)
+(cherry picked from commit 621e55f1919640acab25383362b96e65f2baea3c)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_stream.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -580,6 +580,9 @@ int amdgpu_gmc_allocate_vm_inv_eng(struc
- 		/* reserve engine 5 for firmware */
- 		if (adev->enable_mes)
- 			vm_inv_engs[i] &= ~(1 << 5);
-+		/* reserve engine 6 for uni mes */
-+		if (adev->enable_uni_mes)
-+			vm_inv_engs[i] &= ~(1 << 6);
- 		/* reserve mmhub engine 3 for firmware */
- 		if (adev->enable_umsch_mm)
- 			vm_inv_engs[i] &= ~(1 << 3);
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
+@@ -689,9 +689,14 @@ bool dc_stream_get_scanoutpos(const stru
+ {
+ 	uint8_t i;
+ 	bool ret = false;
+-	struct dc  *dc = stream->ctx->dc;
+-	struct resource_context *res_ctx =
+-		&dc->current_state->res_ctx;
++	struct dc  *dc;
++	struct resource_context *res_ctx;
++
++	if (!stream->ctx)
++		return false;
++
++	dc = stream->ctx->dc;
++	res_ctx = &dc->current_state->res_ctx;
+ 
+ 	dc_exit_ips_for_hw_access(dc);
+ 
 
 
