@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3E2346789;
-	Wed,  3 Dec 2025 16:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B43B346FCF;
+	Wed,  3 Dec 2025 16:49:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780574; cv=none; b=Q+QE/oMktmGcnoQZsUmQ1pqVJOosqf4kYVWYzc3gZdGvHTRlWnSLX2uwCE4vbAMvsrpvXYHJ5B7TEUQdjHLhhkndyG2qq4JH4tA8noXJFzziL87VlbwfxO0Aer/i7TRy/cyPBNDLMo66k4ltRjJ1Dhb4NEDpll5lJrZxBBoBsyc=
+	t=1764780577; cv=none; b=tmeR9JJnuFZU9p1fZU1oWXR5BpFSELVipEW5zHjSB+rY9BN2nx8rFvZEYYw50fGvucI2f1Qod2QfRWJhUU54rYe+sJ+B8vaBvbffhfLvZGXVXjM5WtLFmVC4KPvpmkgoocQ2UJ4KDQfV3DipvrpvUkhZ+cJ0ywXXkVbXOFlZ67k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780574; c=relaxed/simple;
-	bh=s1fHEdWEfPpReqhg/0li7FvNv2htbCprznAWinZs1Gs=;
+	s=arc-20240116; t=1764780577; c=relaxed/simple;
+	bh=5+7IyrZHEq/z8jKs0PITyETANeHQtwC9q4YhP/F/dks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m6kyZEtCwAgTk5RDkTd+aUAjdMCjblb+Qzea1NGT6VgNoQl6RJGp3k34Mn3dmRaQ5o2lfaFzjb7Crtw4dG0txvGidiFC6m2i/bCNLL82ngFPDxcYE+LemYuHtvIzGQm9BaiYglBuyulc7sF+592TUVu8GUQ5YaowwL+9tXPJGj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWvS8ML8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnysjStGdW6pxOezHqVfj6po3w9c0GFNVoG8tNv99zDwNa8zAtiVf9HHcN32ENparW4B70wdrqLvk3An6TI+HVTGroZ4tjqy4Myaz7/OAtr50LKIeKx57LLfhKop00irgIwx14VeqWgKoU5y+EMi+Xlp1zRFx1tExbFCn3XjQoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBG3/WEA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWvS8ML8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE0BDC4CEF5;
-	Wed,  3 Dec 2025 16:49:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBG3/WEA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5259C4CEF5;
+	Wed,  3 Dec 2025 16:49:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780574;
-	bh=s1fHEdWEfPpReqhg/0li7FvNv2htbCprznAWinZs1Gs=;
+	s=korg; t=1764780577;
+	bh=5+7IyrZHEq/z8jKs0PITyETANeHQtwC9q4YhP/F/dks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWvS8ML8uGv5sDa1KnxdIAua/xMg+mDlSMJ2g8hSMotPCODLlCmBM0P8w/GJtwsQV
-	 gxVAEHOSjzKE2TAHGSsL/6jtcIZppsYZvrjmS2KQoZy+j/qtXbt/80dpbMlVCvxI2c
-	 Z5y5088JvkFO8tN9NK9SqhDDcacsgVjgZs2BhmKI=
+	b=mBG3/WEAD60uZTiC4WvmG4guNQIwQkLgmJ6uFou8JApFzlnL5i6fjbWHb+HqJ9vsj
+	 hcW4/7+rPunVnRSLgqgKYUcrgIVFBLYl/syb7cghITFr721TeaM6gcv8p1NM+gvh/e
+	 AoH79xQBaPNU/l4nbk/apDGDr448MemylJG8VhpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohsin Bashir <mohsin.bashr@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 026/132] eth: fbnic: Fix counter roll-over issue
-Date: Wed,  3 Dec 2025 16:28:25 +0100
-Message-ID: <20251203152344.270416114@linuxfoundation.org>
+Subject: [PATCH 6.12 003/132] can: gs_usb: gs_usb_receive_bulk_callback(): check actual_length before accessing header
+Date: Wed,  3 Dec 2025 16:28:02 +0100
+Message-ID: <20251203152343.418632096@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,41 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohsin Bashir <mohsin.bashr@gmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 6d66e093e0740d39a36ef742c60eec247df26f41 ]
+[ Upstream commit 6fe9f3279f7d2518439a7962c5870c6e9ecbadcf ]
 
-Fix a potential counter roll-over issue in fbnic_mbx_alloc_rx_msgs()
-when calculating descriptor slots. The issue occurs when head - tail
-results in a large positive value (unsigned) and the compiler interprets
-head - tail - 1 as a signed value.
+The driver expects to receive a struct gs_host_frame in
+gs_usb_receive_bulk_callback().
 
-Since FBNIC_IPC_MBX_DESC_LEN is a power of two, use a masking operation,
-which is a common way of avoiding this problem when dealing with these
-sort of ring space calculations.
+Use struct_group to describe the header of the struct gs_host_frame and
+check that we have at least received the header before accessing any
+members of it.
 
-Fixes: da3cde08209e ("eth: fbnic: Add FW communication mechanism")
-Signed-off-by: Mohsin Bashir <mohsin.bashr@gmail.com>
-Link: https://patch.msgid.link/20251125211704.3222413-1-mohsin.bashr@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To resubmit the URB, do not dereference the pointer chain
+"dev->parent->hf_size_rx" but use "parent->hf_size_rx" instead. Since
+"urb->context" contains "parent", it is always defined, while "dev" is not
+defined if the URB it too short.
+
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-2-a29b42eacada@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/meta/fbnic/fbnic_fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/gs_usb.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-index d6cf97ecf3276..6f606bdfd2296 100644
---- a/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-+++ b/drivers/net/ethernet/meta/fbnic/fbnic_fw.c
-@@ -198,7 +198,7 @@ static int fbnic_mbx_alloc_rx_msgs(struct fbnic_dev *fbd)
- 		return -ENODEV;
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index fd34945d831e9..b2cfdc3558a5a 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -259,13 +259,15 @@ struct canfd_quirk {
+ } __packed;
  
- 	/* Fill all but 1 unused descriptors in the Rx queue. */
--	count = (head - tail - 1) % FBNIC_IPC_MBX_DESC_LEN;
-+	count = (head - tail - 1) & (FBNIC_IPC_MBX_DESC_LEN - 1);
- 	while (!err && count--) {
- 		struct fbnic_tlv_msg *msg;
+ struct gs_host_frame {
+-	u32 echo_id;
+-	__le32 can_id;
++	struct_group(header,
++		u32 echo_id;
++		__le32 can_id;
  
+-	u8 can_dlc;
+-	u8 channel;
+-	u8 flags;
+-	u8 reserved;
++		u8 can_dlc;
++		u8 channel;
++		u8 flags;
++		u8 reserved;
++	);
+ 
+ 	union {
+ 		DECLARE_FLEX_ARRAY(struct classic_can, classic_can);
+@@ -573,6 +575,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 	int rc;
+ 	struct net_device_stats *stats;
+ 	struct gs_host_frame *hf = urb->transfer_buffer;
++	unsigned int minimum_length;
+ 	struct gs_tx_context *txc;
+ 	struct can_frame *cf;
+ 	struct canfd_frame *cfd;
+@@ -591,6 +594,15 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ 		return;
+ 	}
+ 
++	minimum_length = sizeof(hf->header);
++	if (urb->actual_length < minimum_length) {
++		dev_err_ratelimited(&parent->udev->dev,
++				    "short read (actual_length=%u, minimum_length=%u)\n",
++				    urb->actual_length, minimum_length);
++
++		goto resubmit_urb;
++	}
++
+ 	/* device reports out of range channel id */
+ 	if (hf->channel >= parent->channel_cnt)
+ 		goto device_detach;
+@@ -684,7 +696,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
+ resubmit_urb:
+ 	usb_fill_bulk_urb(urb, parent->udev,
+ 			  parent->pipe_in,
+-			  hf, dev->parent->hf_size_rx,
++			  hf, parent->hf_size_rx,
+ 			  gs_usb_receive_bulk_callback, parent);
+ 
+ 	rc = usb_submit_urb(urb, GFP_ATOMIC);
 -- 
 2.51.0
 
