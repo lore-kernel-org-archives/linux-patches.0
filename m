@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFA03559EC;
-	Wed,  3 Dec 2025 16:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68B53570D3;
+	Wed,  3 Dec 2025 16:56:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780979; cv=none; b=LxZXW0y84b6xZ6FiivTKsvXwRGyxEnjVP2gN40iveCvSWV+dKCWSCp2Ie5yvqdwB+H74zEJCWo9QrEp6KbobYtxrMOAjNvmuhDSlMtkWKqD8OA8VEk/cJpHcoULlcDeWkxVvZT03KBtRZ/ghbJ9OsFhY6xjwik3hXxQia42oTX0=
+	t=1764780982; cv=none; b=Sd+FRrssqpIlu+ZgMrDYz3CeDeCQPPnIGjzbKlCPdtbAkx/HFgYu9QjFzmVMkLO8gAQrt9a7yzXgzY6ORx/K7RfJLIlKIqQkG5LS1RpvefxbTj5BeadsPkCRnglj1MinRcPhL/UD6Tmg80TtKnIsqdMeXg8BTe65thomZhb/r2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780979; c=relaxed/simple;
-	bh=GXUOi+ixZmJQyhow9zxRenGYvdShpdh9+C9DRPmIRYk=;
+	s=arc-20240116; t=1764780982; c=relaxed/simple;
+	bh=RY1ol0copboKfGW5jBt3TQvXiz1mkv3gcnUpUziNCvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVyayWaHxkJRpr65vcfjDS0QtTJQzkAe2AHWu1Mnmp9S1jtKVUOLtzvvvL1v4+EWn++bRUlEbiB4T9QZJy8OvXSrSoPY3peUhWPqn/AU5kzt1GdzMo2HROKRnSj/cK5/t2us/c0B7VAgg6WR74OTJV9wTofefB8GB3Vgic1Bgrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGfkdMwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W7bqekxKBLHfl3+c4h91LnmoispZ2roqI4vLDyFKgGtDV0ykysPDCz4+k+f2XY+pVg6yf17OiUYU0EkUNISioxwIeQFQOWtV9WZ2k6v0DHZFzw9cWenpZdzrYcbdcr664FhcX+I2N4kfbUq1k+fvPjGCOsqTzU7JSNf2vgbVMmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cln1hDSg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGfkdMwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6105FC16AAE;
-	Wed,  3 Dec 2025 16:56:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cln1hDSg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5171C4CEF5;
+	Wed,  3 Dec 2025 16:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780978;
-	bh=GXUOi+ixZmJQyhow9zxRenGYvdShpdh9+C9DRPmIRYk=;
+	s=korg; t=1764780982;
+	bh=RY1ol0copboKfGW5jBt3TQvXiz1mkv3gcnUpUziNCvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGfkdMwuKDgawsfVtwyWtQfRgBFOgG7hS8kFlac7qk8hIeLfCZJukCDy4avfZDycV
-	 jjy/OScuegQsvW/XUQ0qyWTiHpwcBrucAP4MfmPvDEFz7syP5wx+UImUgiILkIFDO1
-	 k3m7idYISM15J+c6KIT9OxFgeXPGAX9zOH3MEExI=
+	b=Cln1hDSg/MqqYlKajQ827Hc0UZnrCA32VUhyn2y7QtQrQOqioHumH2NPGsm0lmyE3
+	 O+br9DCocUFxVEZYnWuc/JIs7LcymFdd3kXLLxqmBaghROEk6gZdoUcELzPMGG/gnr
+	 wu5GSKR5VrTUkDVd2yHy7eEd1kfESdSRTJGNiE44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 14/93] net: dsa: sja1105: simplify static configuration reload
-Date: Wed,  3 Dec 2025 16:29:07 +0100
-Message-ID: <20251203152337.037302285@linuxfoundation.org>
+Subject: [PATCH 6.6 15/93] net: dsa: sja1105: fix SGMII linking at 10M or 100M but not passing traffic
+Date: Wed,  3 Dec 2025 16:29:08 +0100
+Message-ID: <20251203152337.074582286@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,157 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a18891b55703a45b700618ef40edd5e9aaecc345 ]
+[ Upstream commit da62abaaa268357b1aa66b372ace562189a05df1 ]
 
-The static configuration reload saves the port speed in the static
-configuration tables by first converting it from the internal
-respresentation to the SPEED_xxx ethtool representation, and then
-converts it back to restore the setting. This is because
-sja1105_adjust_port_config() takes the speed as SPEED_xxx.
+When using the SGMII PCS as a fixed-link chip-to-chip connection, it is
+easy to miss the fact that traffic passes only at 1G, since that's what
+any normal such connection would use.
 
-However, this is unnecessarily complex. If we split
-sja1105_adjust_port_config() up, we can simply save and restore the
-mac[port].speed member in the static configuration tables.
+When using the SGMII PCS connected towards an on-board PHY or an SFP
+module, it is immediately noticeable that when the link resolves to a
+speed other than 1G, traffic from the MAC fails to pass: TX counters
+increase, but nothing gets decoded by the other end, and no local RX
+counters increase either.
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1svfMa-005ZIX-If@rmk-PC.armlinux.org.uk
+Artificially lowering a fixed-link rate to speed = <100> makes us able
+to see the same issue as in the case of having an SGMII PHY.
+
+Some debugging shows that the XPCS configuration is A-OK, but that the
+MAC Configuration Table entry for the port has the SPEED bits still set
+to 1000Mbps, due to a special condition in the driver. Deleting that
+condition, and letting the resolved link speed be programmed directly
+into the MAC speed field, results in a functional link at all 3 speeds.
+
+This piece of evidence, based on testing on both generations with SGMII
+support (SJA1105S and SJA1110A) directly contradicts the statement from
+the blamed commit that "the MAC is fixed at 1 Gbps and we need to
+configure the PCS only (if even that)". Worse, that statement is not
+backed by any documentation, and no one from NXP knows what it might
+refer to.
+
+I am unable to recall sufficient context regarding my testing from March
+2020 to understand what led me to draw such a braindead and factually
+incorrect conclusion. Yet, there is nothing of value regarding forcing
+the MAC speed, either for SGMII or 2500Base-X (introduced at a later
+stage), so remove all such logic.
+
+Fixes: ffe10e679cec ("net: dsa: sja1105: Add support for the SGMII port")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20251122111324.136761-1-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: da62abaaa268 ("net: dsa: sja1105: fix SGMII linking at 10M or 100M but not passing traffic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/sja1105/sja1105_main.c | 65 ++++++++++++++------------
- 1 file changed, 34 insertions(+), 31 deletions(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
-index 843e50b5a0ec5..0de73a6257f9a 100644
+index 0de73a6257f9a..1acc5d912d161 100644
 --- a/drivers/net/dsa/sja1105/sja1105_main.c
 +++ b/drivers/net/dsa/sja1105/sja1105_main.c
-@@ -1261,29 +1261,11 @@ static int sja1105_parse_dt(struct sja1105_private *priv)
- 	return rc;
- }
- 
--/* Convert link speed from SJA1105 to ethtool encoding */
--static int sja1105_port_speed_to_ethtool(struct sja1105_private *priv,
--					 u64 speed)
--{
--	if (speed == priv->info->port_speed[SJA1105_SPEED_10MBPS])
--		return SPEED_10;
--	if (speed == priv->info->port_speed[SJA1105_SPEED_100MBPS])
--		return SPEED_100;
--	if (speed == priv->info->port_speed[SJA1105_SPEED_1000MBPS])
--		return SPEED_1000;
--	if (speed == priv->info->port_speed[SJA1105_SPEED_2500MBPS])
--		return SPEED_2500;
--	return SPEED_UNKNOWN;
--}
+@@ -1307,14 +1307,7 @@ static int sja1105_set_port_speed(struct sja1105_private *priv, int port,
+ 	 * table, since this will be used for the clocking setup, and we no
+ 	 * longer need to store it in the static config (already told hardware
+ 	 * we want auto during upload phase).
+-	 * Actually for the SGMII port, the MAC is fixed at 1 Gbps and
+-	 * we need to configure the PCS only (if even that).
+ 	 */
+-	if (priv->phy_mode[port] == PHY_INTERFACE_MODE_SGMII)
+-		speed = priv->info->port_speed[SJA1105_SPEED_1000MBPS];
+-	else if (priv->phy_mode[port] == PHY_INTERFACE_MODE_2500BASEX)
+-		speed = priv->info->port_speed[SJA1105_SPEED_2500MBPS];
 -
--/* Set link speed in the MAC configuration for a specific port. */
--static int sja1105_adjust_port_config(struct sja1105_private *priv, int port,
--				      int speed_mbps)
-+static int sja1105_set_port_speed(struct sja1105_private *priv, int port,
-+				  int speed_mbps)
- {
- 	struct sja1105_mac_config_entry *mac;
--	struct device *dev = priv->ds->dev;
- 	u64 speed;
--	int rc;
+ 	mac[port].speed = speed;
  
- 	/* On P/Q/R/S, one can read from the device via the MAC reconfiguration
- 	 * tables. On E/T, MAC reconfig tables are not readable, only writable.
-@@ -1317,7 +1299,7 @@ static int sja1105_adjust_port_config(struct sja1105_private *priv, int port,
- 		speed = priv->info->port_speed[SJA1105_SPEED_2500MBPS];
- 		break;
- 	default:
--		dev_err(dev, "Invalid speed %iMbps\n", speed_mbps);
-+		dev_err(priv->ds->dev, "Invalid speed %iMbps\n", speed_mbps);
- 		return -EINVAL;
- 	}
- 
-@@ -1329,11 +1311,31 @@ static int sja1105_adjust_port_config(struct sja1105_private *priv, int port,
- 	 * we need to configure the PCS only (if even that).
- 	 */
- 	if (priv->phy_mode[port] == PHY_INTERFACE_MODE_SGMII)
--		mac[port].speed = priv->info->port_speed[SJA1105_SPEED_1000MBPS];
-+		speed = priv->info->port_speed[SJA1105_SPEED_1000MBPS];
- 	else if (priv->phy_mode[port] == PHY_INTERFACE_MODE_2500BASEX)
--		mac[port].speed = priv->info->port_speed[SJA1105_SPEED_2500MBPS];
--	else
--		mac[port].speed = speed;
-+		speed = priv->info->port_speed[SJA1105_SPEED_2500MBPS];
-+
-+	mac[port].speed = speed;
-+
-+	return 0;
-+}
-+
-+/* Write the MAC Configuration Table entry and, if necessary, the CGU settings,
-+ * after a link speedchange for this port.
-+ */
-+static int sja1105_set_port_config(struct sja1105_private *priv, int port)
-+{
-+	struct sja1105_mac_config_entry *mac;
-+	struct device *dev = priv->ds->dev;
-+	int rc;
-+
-+	/* On P/Q/R/S, one can read from the device via the MAC reconfiguration
-+	 * tables. On E/T, MAC reconfig tables are not readable, only writable.
-+	 * We have to *know* what the MAC looks like.  For the sake of keeping
-+	 * the code common, we'll use the static configuration tables as a
-+	 * reasonable approximation for both E/T and P/Q/R/S.
-+	 */
-+	mac = priv->static_config.tables[BLK_IDX_MAC_CONFIG].entries;
- 
- 	/* Write to the dynamic reconfiguration tables */
- 	rc = sja1105_dynamic_config_write(priv, BLK_IDX_MAC_CONFIG, port,
-@@ -1383,7 +1385,8 @@ static void sja1105_mac_link_up(struct dsa_switch *ds, int port,
- {
- 	struct sja1105_private *priv = ds->priv;
- 
--	sja1105_adjust_port_config(priv, port, speed);
-+	if (!sja1105_set_port_speed(priv, port, speed))
-+		sja1105_set_port_config(priv, port);
- 
- 	sja1105_inhibit_tx(priv, BIT(port), false);
- }
-@@ -2284,8 +2287,8 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- {
- 	struct ptp_system_timestamp ptp_sts_before;
- 	struct ptp_system_timestamp ptp_sts_after;
--	int speed_mbps[SJA1105_MAX_NUM_PORTS];
- 	u16 bmcr[SJA1105_MAX_NUM_PORTS] = {0};
-+	u64 mac_speed[SJA1105_MAX_NUM_PORTS];
- 	struct sja1105_mac_config_entry *mac;
- 	struct dsa_switch *ds = priv->ds;
- 	s64 t1, t2, t3, t4;
-@@ -2298,14 +2301,13 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- 
- 	mac = priv->static_config.tables[BLK_IDX_MAC_CONFIG].entries;
- 
--	/* Back up the dynamic link speed changed by sja1105_adjust_port_config
-+	/* Back up the dynamic link speed changed by sja1105_set_port_speed()
- 	 * in order to temporarily restore it to SJA1105_SPEED_AUTO - which the
- 	 * switch wants to see in the static config in order to allow us to
- 	 * change it through the dynamic interface later.
- 	 */
- 	for (i = 0; i < ds->num_ports; i++) {
--		speed_mbps[i] = sja1105_port_speed_to_ethtool(priv,
--							      mac[i].speed);
-+		mac_speed[i] = mac[i].speed;
- 		mac[i].speed = priv->info->port_speed[SJA1105_SPEED_AUTO];
- 
- 		if (priv->xpcs[i])
-@@ -2368,7 +2370,8 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
- 		struct dw_xpcs *xpcs = priv->xpcs[i];
- 		unsigned int neg_mode;
- 
--		rc = sja1105_adjust_port_config(priv, i, speed_mbps[i]);
-+		mac[i].speed = mac_speed[i];
-+		rc = sja1105_set_port_config(priv, i);
- 		if (rc < 0)
- 			goto out;
- 
+ 	return 0;
 -- 
 2.51.0
 
