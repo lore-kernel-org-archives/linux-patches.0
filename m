@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4542E336ED5;
-	Wed,  3 Dec 2025 16:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5170233B97E;
+	Wed,  3 Dec 2025 16:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778269; cv=none; b=N4+F65VMWgmVe14gSLfelCYawmdG5K9mK+LxAOhyf9c1t45i06PG2IPbK0xntkBYpVjJ84rauVoCBl0D3fa8hnTyGA6sBUtKXkQhbkrjGXiBTH1229i3grUeiqva89pxVtv9Cl9w86a4tjrBEgcWsU8b8vR/GH64cFrTMJQXpMw=
+	t=1764778272; cv=none; b=JbfdppCA9k3GTzFlDskaDo+vqhi4KfJNSSk0aeGdRGr621y65+OEX6u4KhQ6fBR8Po1+QBd24AzPlLdhJpnVGyT7lPb3Sg4bf6Jg7SCb0MJkimeS6RIudFgiZ62Z3lsbV5BFNqrz4n/paE4nEWIuGYnFYerkJqEBwPOgikXLCeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778269; c=relaxed/simple;
-	bh=/t3EKKrXamdnKBx0xtAuaTnX3i8viqJPhmwXOxjNPmY=;
+	s=arc-20240116; t=1764778272; c=relaxed/simple;
+	bh=/nHm66zBgfvpvgP41co/S+d9Y1fuXrUEokffL6MSGKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZz0JePq8Ui/BbQZrEa+WflZOEt4U0IhMphHNq0JUuoHt/CKU1UyLsp4rHQBhPd6dUdX0KFvm1zWwYpsHwKvpRvjIddivGxHMHEJ4JdPZzVMQGpVPBS+YvJ5wdCf7rAODzSv2ngLUBBDtTwvhUV+aJm+bQdtdUuK3fE6SV6Sibs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8YDcXC5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/AOijryA2bghXlf2zcQyx3kpiedfPc4mz5zrLw73E0M1pmlbrhLXgrYXBTlKQpHqg5tbblwwQywFEi5S/nEiu7iyR7+uA8SZtiqyD25wmjGgt86oTmcACwrqJ8YeQR037bW65uTZwrB0miKFTRnfDz8a/AaLYl/XO/vBtn8zT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyJRcKtA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8YDcXC5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CCFC4CEF5;
-	Wed,  3 Dec 2025 16:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyJRcKtA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFFBEC4CEF5;
+	Wed,  3 Dec 2025 16:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778268;
-	bh=/t3EKKrXamdnKBx0xtAuaTnX3i8viqJPhmwXOxjNPmY=;
+	s=korg; t=1764778272;
+	bh=/nHm66zBgfvpvgP41co/S+d9Y1fuXrUEokffL6MSGKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8YDcXC58/WomvIyczNdzwRr6g9N4/2irg9Jveh3vGwINl+YLOU9fnLE4+uzpfLGe
-	 z6XGpNtHpMvDDtMZxsaTfe5mNAU6zNXKuTbkSz6scDZVOfuVWS/pjatJvWPy+qf7KC
-	 ADaS4JmDoY3kvjHK3289nW0fR/PiDbNPiWbuawyg=
+	b=xyJRcKtA6ioaTzTmud4q1hnlxA1jb/KDM0o99OkJJWu+m96GGb92klXqTD91Yeby4
+	 hlGXzhG819bu7ilOYVLfKhIlkiuBupujBGNZ2Jv9hR0MhXbd5/OGVIuqb6UopJOSfU
+	 Y38/46J2nsRGrIZEMoMJwmutkLv5esP32OdpDoug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Ido Schimmel <idosch@nvidia.com>,
+	Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 294/392] mlxsw: spectrum: Fix memory leak in mlxsw_sp_flower_stats()
-Date: Wed,  3 Dec 2025 16:27:24 +0100
-Message-ID: <20251203152424.974694285@linuxfoundation.org>
+Subject: [PATCH 5.15 295/392] net: dsa: hellcreek: fix missing error handling in LED registration
+Date: Wed,  3 Dec 2025 16:27:25 +0100
+Message-ID: <20251203152425.011115351@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,45 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
 
-[ Upstream commit 407a06507c2358554958e8164dc97176feddcafc ]
+[ Upstream commit e6751b0b19a6baab219a62e1e302b8aa6b5a55b2 ]
 
-The function mlxsw_sp_flower_stats() calls mlxsw_sp_acl_ruleset_get() to
-obtain a ruleset reference. If the subsequent call to
-mlxsw_sp_acl_rule_lookup() fails to find a rule, the function returns
-an error without releasing the ruleset reference, causing a memory leak.
+The LED setup routine registered both led_sync_good
+and led_is_gm devices without checking the return
+values of led_classdev_register(). If either registration
+failed, the function continued silently, leaving the
+driver in a partially-initialized state and leaking
+a registered LED classdev.
 
-Fix this by using a goto to the existing error handling label, which
-calls mlxsw_sp_acl_ruleset_put() to properly release the reference.
+Add proper error handling
 
-Fixes: 7c1b8eb175b69 ("mlxsw: spectrum: Add support for TC flower offload statistics")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20251112052114.1591695-1-zilin@seu.edu.cn
+Fixes: 7d9ee2e8ff15 ("net: dsa: hellcreek: Add PTP status LEDs")
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Acked-by: Kurt Kanzenbach <kurt@linutronix.de>
+Link: https://patch.msgid.link/20251113135745.92375-1-Pavel.Zhigulin@kaspersky.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/dsa/hirschmann/hellcreek_ptp.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-index be3791ca6069d..c327b11265773 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_flower.c
-@@ -673,8 +673,10 @@ int mlxsw_sp_flower_stats(struct mlxsw_sp *mlxsw_sp,
- 		return -EINVAL;
+diff --git a/drivers/net/dsa/hirschmann/hellcreek_ptp.c b/drivers/net/dsa/hirschmann/hellcreek_ptp.c
+index b28baab6d56a1..763666480a8a8 100644
+--- a/drivers/net/dsa/hirschmann/hellcreek_ptp.c
++++ b/drivers/net/dsa/hirschmann/hellcreek_ptp.c
+@@ -367,8 +367,18 @@ static int hellcreek_led_setup(struct hellcreek *hellcreek)
+ 		hellcreek_set_brightness(hellcreek, STATUS_OUT_IS_GM, 1);
  
- 	rule = mlxsw_sp_acl_rule_lookup(mlxsw_sp, ruleset, f->cookie);
--	if (!rule)
--		return -EINVAL;
-+	if (!rule) {
-+		err = -EINVAL;
-+		goto err_rule_get_stats;
+ 	/* Register both leds */
+-	led_classdev_register(hellcreek->dev, &hellcreek->led_sync_good);
+-	led_classdev_register(hellcreek->dev, &hellcreek->led_is_gm);
++	ret = led_classdev_register(hellcreek->dev, &hellcreek->led_sync_good);
++	if (ret) {
++		dev_err(hellcreek->dev, "Failed to register sync_good LED\n");
++		goto out;
++	}
++
++	ret = led_classdev_register(hellcreek->dev, &hellcreek->led_is_gm);
++	if (ret) {
++		dev_err(hellcreek->dev, "Failed to register is_gm LED\n");
++		led_classdev_unregister(&hellcreek->led_sync_good);
++		goto out;
 +	}
  
- 	err = mlxsw_sp_acl_rule_get_stats(mlxsw_sp, rule, &packets, &bytes,
- 					  &drops, &lastuse, &used_hw_stats);
+ 	ret = 0;
+ 
 -- 
 2.51.0
 
