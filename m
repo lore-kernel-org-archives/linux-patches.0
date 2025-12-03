@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5E434CFA6;
-	Wed,  3 Dec 2025 16:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4058334C9AE;
+	Wed,  3 Dec 2025 16:19:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778766; cv=none; b=ffJseD70nzIQBEQbCzmntgIKLmO4JEHIffbIRvjqN+sMelF38J6xeA6+fGekcVVZ6XR6nd1GZ6TMUYfz/4kEmrkTfkV3XmWmlinHDgfi28q1ocmaVqO0b7y+4MB132pr04SPgQTIdclbiXemwP6CtyRDA8YYOYo93ixSzl1TlHU=
+	t=1764778769; cv=none; b=HyJFcH8B/vE1q7CH4de32NZM4d4g1c+juVQ3/iNPif013J8W5vy4BknnnnM2AktkH7piPSTXlaXx2KWpggBgcws5gamMWvz/9fWEarktDBAK8Wgpvhlkje//o6t63xjFxU561Z+IbG0kY4+hzpMCah/sdBf52flDXV0a44KcczM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778766; c=relaxed/simple;
-	bh=v+F0GTGcQFtN6+51zWtJdLFECHF/FwXrbC//H9f6s8w=;
+	s=arc-20240116; t=1764778769; c=relaxed/simple;
+	bh=+J8rRiv5S/1ZaCmMYd32BHaQvNajDA3WLl8XkGpO5Z4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDmIs5zy/fn60hXEvk1RclomGKhzT0AvmO5VBvy8cs1CucKJmZi18ALm/GQSvOagAcDkI8hiYLkPBzuZEK4iILh8UFnBxJn77myC8a++GWXtjt1Aneg4XHdIwjhe5rRPk/V6ThQpewtJXpQysfd+E+fsopPl3UMwUcyIFSde3mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nu96vrL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oams3OMs9Ui7Blv5IhS+j/zVc4Tg5gAXhKD9TJxwGwDaTPG7GqnpnkqieYvP9n5JFjkPTcEpXOGa5rZkPllem/3fTtA9BLEg3LX/PzwhEjiuS0mUkD56Ff3jVvQ4H0u8MltF9pFma2tx31NSjKl0/jeNLCylwZ/rm8bDUKIuo9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rPc1YC5w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nu96vrL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33680C4CEF5;
-	Wed,  3 Dec 2025 16:19:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rPc1YC5w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EBFC4CEF5;
+	Wed,  3 Dec 2025 16:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778765;
-	bh=v+F0GTGcQFtN6+51zWtJdLFECHF/FwXrbC//H9f6s8w=;
+	s=korg; t=1764778769;
+	bh=+J8rRiv5S/1ZaCmMYd32BHaQvNajDA3WLl8XkGpO5Z4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nu96vrL1x7NhOxWAnY7s9n47kh/JIVet3e4ueDnGoePNPr6sUJzmoNqCD0XiZtINl
-	 q9g9Vwbbv0LuJjnd+s3eDOCJUHXiWU8vaWBPsdo5GBmfPTbDLM8WoZIuYQXftP6R1b
-	 wlp0CEEo9jdYmT8xM4bvWRCSdp39B/OuC8UYzdAE=
+	b=rPc1YC5wR97Y+w9azyUU6mgPOFBnowp7tbyc0AeEKvVX3Nk6EWQkN6z+yMlgu0Bgi
+	 btjHxbG2jsS+xEvVomKxdpe/73bmhyTzGGmJhzDLJU7U9/Y0MqDhXXyFYWRqQgl3fs
+	 NBNjVh3M7r9o3tCqh9hluE0Ptua1f2fTEmEVtJgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/568] net: hns3: return error code when function fails
-Date: Wed,  3 Dec 2025 16:20:54 +0100
-Message-ID: <20251203152442.602489925@linuxfoundation.org>
+Subject: [PATCH 6.1 053/568] drm/amd/pm: fix smu table id bound check issue in smu_cmn_update_table()
+Date: Wed,  3 Dec 2025 16:20:55 +0100
+Message-ID: <20251203152442.639247371@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,85 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 03ca7c8c42be913529eb9f188278114430c6abbd ]
+[ Upstream commit 238d468d3ed18a324bb9d8c99f18c665dbac0511 ]
 
-Currently, in hclge_mii_ioctl(), the operation to
-read the PHY register (SIOCGMIIREG) always returns 0.
+'table_index' is a variable defined by the smu driver (kmd)
+'table_id' is a variable defined by the hw smu (pmfw)
 
-This patch changes the return type of hclge_read_phy_reg(),
-returning an error code when the function fails.
+This code should use table_index as a bounds check.
 
-Fixes: 024712f51e57 ("net: hns3: add ioctl support for imp-controlled PHYs")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Link: https://patch.msgid.link/20251023131338.2642520-2-shaojijie@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: caad2613dc4bd ("drm/amd/powerplay: move table setting common code to smu_cmn.c")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fca0c66b22303de0d1d6313059baf4dc960a4753)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +--
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c | 9 ++++++---
- drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h | 2 +-
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index c509c1e12109f..c45340f26ee49 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -9452,8 +9452,7 @@ static int hclge_mii_ioctl(struct hclge_dev *hdev, struct ifreq *ifr, int cmd)
- 		/* this command reads phy id and register at the same time */
- 		fallthrough;
- 	case SIOCGMIIREG:
--		data->val_out = hclge_read_phy_reg(hdev, data->reg_num);
--		return 0;
-+		return hclge_read_phy_reg(hdev, data->reg_num, &data->val_out);
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+index fd1faa840ec09..24b39a80481a8 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+@@ -862,7 +862,7 @@ int smu_cmn_update_table(struct smu_context *smu,
+ 						      table_index);
+ 	uint32_t table_size;
+ 	int ret = 0;
+-	if (!table_data || table_id >= SMU_TABLE_COUNT || table_id < 0)
++	if (!table_data || table_index >= SMU_TABLE_COUNT || table_id < 0)
+ 		return -EINVAL;
  
- 	case SIOCSMIIREG:
- 		return hclge_write_phy_reg(hdev, data->reg_num, data->val_in);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
-index 80079657afebe..b8dbf932caf94 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
-@@ -274,7 +274,7 @@ void hclge_mac_stop_phy(struct hclge_dev *hdev)
- 	phy_stop(phydev);
- }
- 
--u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr)
-+int hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 *val)
- {
- 	struct hclge_phy_reg_cmd *req;
- 	struct hclge_desc desc;
-@@ -286,11 +286,14 @@ u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr)
- 	req->reg_addr = cpu_to_le16(reg_addr);
- 
- 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
--	if (ret)
-+	if (ret) {
- 		dev_err(&hdev->pdev->dev,
- 			"failed to read phy reg, ret = %d.\n", ret);
-+		return ret;
-+	}
- 
--	return le16_to_cpu(req->reg_val);
-+	*val = le16_to_cpu(req->reg_val);
-+	return 0;
- }
- 
- int hclge_write_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 val)
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
-index 4200d0b6d9317..21d434c82475b 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
-@@ -13,7 +13,7 @@ int hclge_mac_connect_phy(struct hnae3_handle *handle);
- void hclge_mac_disconnect_phy(struct hnae3_handle *handle);
- void hclge_mac_start_phy(struct hclge_dev *hdev);
- void hclge_mac_stop_phy(struct hclge_dev *hdev);
--u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr);
-+int hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 *val);
- int hclge_write_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 val);
- 
- #endif
+ 	table_size = smu_table->tables[table_index].size;
 -- 
 2.51.0
 
