@@ -1,127 +1,120 @@
-Received: from mx.denx.de (mx.denx.de [89.58.32.78])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DAA3AA1B9
-	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 16:53:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.32.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9097E39A25A;
+	Wed,  3 Dec 2025 16:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780784; cv=none; b=HeCtNC09z9CbahNU13dO/5d1CaI6xjDGr/pWHnRukc2C62FyYA3T6BwxBhmN5c9MEhomDf2KXMoI8iC39Tm9+VObWWuBKcRUNX/Ss4+8mbKFX2kSrU+S+QmrCuNT1yGztPOYo2Z04dz1rOjzm38KS5Ih0YKOgUxsug2so+O8XEg=
+	t=1764780787; cv=none; b=ZKoi4DvcKO/iSm60T/jH5P+I7iuykDSDRssM6DD9cpywA5NIWHdD0m+AbV9r+BSBro9esGFpan9N/MKuSE4ublfgnxvbNBA1DYz+AJEjPpa3k44bJz2qSwIc6Wz/U/1wTna5DLGnB5oyXCu2oaJH0XO0CvHyo5AFTMp21QSPevA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780784; c=relaxed/simple;
-	bh=FIFbqvMB7ef1KEgrb9JAMcMLZXdvb9ba5w8PnnDmQSA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nklaT81UG+WJB8NliTIaE2qRXQNPi9vU0Ey+MWfuAO4r6NnjI5WbQXe6E5x0jFPP4kwDL6ABvTiUbyiUPM5j3eiIo0mrWcp9tBz6hM5ZP8QunQr59mZPaBLnvtsewShPrDF0JkRF4ybjoE2E5/EDt1sTIGVjSHntR6Af54bm7Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de; spf=pass smtp.mailfrom=denx.de; dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b=gBsPK19W; arc=none smtp.client-ip=89.58.32.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=denx.de
+	s=arc-20240116; t=1764780787; c=relaxed/simple;
+	bh=iyKdZZt6CzZjWdhnI+lODwmbioOKLY44J51PmYMu1z0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=P+ZhBZGPhC0UOhyHDMrmDwy+V/3vLrBWhtCXXzt+0Cc9oyJZvAPJsEZcL/rb1tgVXCSvZzsscBM+i3qqN4NcwLaSkrqLnmiVp4RJv+qbOhW2Cr0zJAVtEXBLHebjRNaz/t9YITJ1wb1787ZXbVYe3YgmKUHHAGvj44uw8H4GEII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHLyMZRq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=denx.de header.i=@denx.de header.b="gBsPK19W"
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 61389103ABB61;
-	Wed,  3 Dec 2025 17:52:56 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de; s=mx-20241105;
-	t=1764780778; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 in-reply-to:references; bh=bup90Alh7SdqXckKvIL+2t0OH+vX20/yZvBw1FTUgbE=;
-	b=gBsPK19WdKuDhjJ0rsjMmq8/jVyBSr7CZUxxqAZGOQqd11r05gmN74zd3uRi914BIAXjch
-	FQyMScHEdUM1twCbQ2yaMekGHf0i7+gP+pOmBahvLQeOB4RTquIG0Y2LQg1KnY0A0hWbHK
-	or8ui06so1BAKBiCbnky0v6H0DS35IWWRQdPJT+CKGhB30B5IzGPVqYUDGiZ/x+v1izK7Q
-	6Pvg4kQ3pSp34OmcU9M2OnDF+c7hZmvASzmkDIhOu0jAUk85M3L66Ti6FtnFy/jPQK2NSM
-	OS8jzIQ2tjJJ0/uEB+zK67NhOPXC37DKix7JskhG3m7ESDKf3/mXkQK6su+G5Q==
-Date: Wed, 3 Dec 2025 17:52:51 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.1 000/568] 6.1.159-rc1 review
-Message-ID: <aTBq47Q45543E6j2@duo.ucw.cz>
-References: <20251203152440.645416925@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHLyMZRq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 925B6C4CEF5;
+	Wed,  3 Dec 2025 16:53:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1764780786;
+	bh=iyKdZZt6CzZjWdhnI+lODwmbioOKLY44J51PmYMu1z0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=qHLyMZRqYeYgjRRsXR1iVo9NuCUyCjOYWwbdqNZgeaSHDw+UP/k9AX2CYh+/Vf6MM
+	 dki+QCXsNie2M/b5PDX6T+UAvR9F8rTXNIqcRE3v3Jwwd8koH0UyWWyn1v2Up3/k22
+	 PBdeIMNpya28HGbMEn6aogLHzOG5gh03+R+KjWas=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	stable@kernel.org,
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.12 089/132] usb: gadget: f_eem: Fix memory leak in eem_unwrap
+Date: Wed,  3 Dec 2025 16:29:28 +0100
+Message-ID: <20251203152346.588375552@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
+References: <20251203152343.285859633@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="I81sU3lDOpubUmQf"
-Content-Disposition: inline
-In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+
+6.12-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Kuen-Han Tsai <khtsai@google.com>
+
+commit e4f5ce990818d37930cd9fb0be29eee0553c59d9 upstream.
+
+The existing code did not handle the failure case of usb_ep_queue in the
+command path, potentially leading to memory leaks.
+
+Improve error handling to free all allocated resources on usb_ep_queue
+failure. This patch continues to use goto logic for error handling, as the
+existing error handling is complex and not easily adaptable to auto-cleanup
+helpers.
+
+kmemleak results:
+  unreferenced object 0xffffff895a512300 (size 240):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      kmem_cache_alloc+0x1b4/0x358
+      skb_clone+0x90/0xd8
+      eem_unwrap+0x1cc/0x36c
+  unreferenced object 0xffffff8a157f4000 (size 256):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      __kmem_cache_alloc_node+0x1b4/0x2dc
+      kmalloc_trace+0x48/0x140
+      dwc3_gadget_ep_alloc_request+0x58/0x11c
+      usb_ep_alloc_request+0x40/0xe4
+      eem_unwrap+0x204/0x36c
+  unreferenced object 0xffffff8aadbaac00 (size 128):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      __kmem_cache_alloc_node+0x1b4/0x2dc
+      __kmalloc+0x64/0x1a8
+      eem_unwrap+0x218/0x36c
+  unreferenced object 0xffffff89ccef3500 (size 64):
+    backtrace:
+      slab_post_alloc_hook+0xbc/0x3a4
+      __kmem_cache_alloc_node+0x1b4/0x2dc
+      kmalloc_trace+0x48/0x140
+      eem_unwrap+0x238/0x36c
+
+Fixes: 4249d6fbc10f ("usb: gadget: eem: fix echo command packet response issue")
+Cc: stable@kernel.org
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20251103121814.1559719-1-khtsai@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/gadget/function/f_eem.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+--- a/drivers/usb/gadget/function/f_eem.c
++++ b/drivers/usb/gadget/function/f_eem.c
+@@ -477,8 +477,13 @@ static int eem_unwrap(struct gether *por
+ 				req->complete = eem_cmd_complete;
+ 				req->zero = 1;
+ 				req->context = ctx;
+-				if (usb_ep_queue(port->in_ep, req, GFP_ATOMIC))
++				if (usb_ep_queue(port->in_ep, req, GFP_ATOMIC)) {
+ 					DBG(cdev, "echo response queue fail\n");
++					kfree(ctx);
++					kfree(req->buf);
++					usb_ep_free_request(ep, req);
++					dev_kfree_skb_any(skb2);
++				}
+ 				break;
+ 
+ 			case 1:  /* echo response */
 
 
---I81sU3lDOpubUmQf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi!
-
-> This is the start of the stable review cycle for the 6.1.159 release.
-> There are 568 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-We have similar situation to 5.10 here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/jobs/123097=
-17631
-
-drivers/soc/tegra/fuse/fuse-tegra30.c:250:10: error: 'const struct tegra_fu=
-se_soc' has no member named 'cells'
-2898
-  250 |         .cells =3D tegra114_fuse_cells,
-2899
-      |          ^~~~~
-2900
-drivers/soc/tegra/fuse/fuse-tegra30.c:250:18: error: initialization of 'con=
-st struct attribute_group *' from incompatible pointer type 'const struct n=
-vmem_cell_info *' [-Werror=3Dincompatible-pointer-types]
-2901
-  250 |         .cells =3D tegra114_fuse_cells,
-2902
-      |                  ^~~~~~~~~~~~~~~~~~~
-2903
-drivers/soc/tegra/fuse/fuse-tegra30.c:250:18: note: (near initialization fo=
-r 'tegra114_fuse_soc.soc_attr_group')
-2904
-drivers/soc/tegra/fuse/fuse-tegra30.c:251:10: error: 'const struct tegra_fu=
-se_soc' has no member named 'num_cells'
-2905
-  251 |         .num_cells =3D ARRAY_SIZE(tegra114_fuse_cells),
-2906
-      |          ^~~~~~~~~
-2907
-cc1: some warnings being treated as errors
-2908
-make[5]: *** [scripts/Makefile.build:250: drivers/soc/tegra/fuse/fuse-tegra=
-30.o] Error 1
-2909
-make[4]: *** [scripts/Makefile.build:503: drivers/soc/tegra/fuse] Error 2
-2910
-make[3]: *** [scripts/Makefile.build:503: drivers/soc/tegra] Error 2
-2911
-make[2]: *** [scripts/Makefile.build:503: drivers/soc] Error 2
-2912
-make[2]: *** Waiting for unfinished jobs....
-
-Best regards,
-									Pavel
---=20
-In cooperation with DENX Software Engineering GmbH, HRB 165235 Munich,
-Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---I81sU3lDOpubUmQf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaTBq4wAKCRAw5/Bqldv6
-8gPtAKCqxU0vnhDgWBM6eazxhwR89d9bPACgoqnEX9g7tIKJx6moiJlu5AbR5mc=
-=A29j
------END PGP SIGNATURE-----
-
---I81sU3lDOpubUmQf--
