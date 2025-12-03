@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E2135F8A1;
-	Wed,  3 Dec 2025 16:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1725835E551;
+	Wed,  3 Dec 2025 16:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779249; cv=none; b=ezelMsEgADLlIdoZnGe/tKZ07Tui+js+rRNtkrXURz+N5+QU3uOgK3hQHM5d2IwqyekeXM9Bed87TMxO4KZn0TwKBzdcliuPY+xhLH+bE/z1hDqVXGU9fw5BcXbdChufLtGpWw3ejDDAzxd//1qiQ08tZ8gMkmHrDXBW8q/8Wd8=
+	t=1764779252; cv=none; b=Oea6txO6ggNtWERi4vFxbutg1RqAG/a6B0JOR9qgw2iliQrLQ9k97vSb3Sx6DPX0MQZeHhYoEpIQjifJZLkQQBGGR3CuCWN6wnkIMgwbrzFl8U6RtoFXZhkMvjuL1xKUvCpg4veGNtb7kL5EQLIw28eecfv8zAoNOQFwuyY6NMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779249; c=relaxed/simple;
-	bh=2xJ4ILaSoDH6ETW06QTDNmUcjO7zmvgCT+6SXyFwHzY=;
+	s=arc-20240116; t=1764779252; c=relaxed/simple;
+	bh=VaOvl0FX7Q8psqgT7yrc6l/WtzR7YksncLULWD3BPvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L12G4K9HStjxNFxlzUmdn/oWssSJhv8wKIJnHPhMiQpEsUV2RiD2O6FKa0MbklqfuN5lD/1znl/N2I0f7EOJjMDHDFz0m23H+2bXodNh/0tcX7FQIA4wjjTPDUgd+YNVEtfivTsdBLsu5W+bGyxvbn74Pvr/kHiNXXQJK7eStMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rqVEJK3V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QMfFe+pQYhus5VbuZ4Qf0CJyYvo/0GfuLFeeycz7SmhjQB4imdj1L/BOXaBuQhR0CIIWsSLWGtErUMYZK389CRDHFKMHs4+uMB13FGgCJKCHWSzSejeDg59Np6jIh+rZz2ihgykxKsh5QzskxYOvzXeGeNudz+IPhuagdDmjpaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UH4z5ybW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rqVEJK3V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B40CC4CEF5;
-	Wed,  3 Dec 2025 16:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH4z5ybW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD45C4CEF5;
+	Wed,  3 Dec 2025 16:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779248;
-	bh=2xJ4ILaSoDH6ETW06QTDNmUcjO7zmvgCT+6SXyFwHzY=;
+	s=korg; t=1764779252;
+	bh=VaOvl0FX7Q8psqgT7yrc6l/WtzR7YksncLULWD3BPvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rqVEJK3VhshDkTZc9wEala1SLTQFndFSqjsjRCgAIuOSEsPQ8423HbPJDZKUlvMvt
-	 Sa9YXDMZ5Ch67f+gr8hGbr3s5NtjssOkWtuTWOsPVPHhPoF3VFlpg/5MDv52COj0+Y
-	 B5ItjNLsiFvS/Xu8HjP1V+PxUOcg5nnuxdXLgCRw=
+	b=UH4z5ybWFfs1m8s+E/bCYZDNLTmCKMMv0vmq3I6Jfe/P+8A3X8LuR3zbNVdfnjn+G
+	 xlAhW8vn7ZEmFNHLmpQShsOyCHJOXtHKY8VZjwKl6zqiFcozY2F3h0ejurBbHJ2ezV
+	 MIsMOCEjGVx7LzbZSVhEKXVP0oeDD7Ik+66aMHXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 200/568] drm/amdgpu: dont enable SMU on cyan skillfish
-Date: Wed,  3 Dec 2025 16:23:22 +0100
-Message-ID: <20251203152448.051005532@linuxfoundation.org>
+Subject: [PATCH 6.1 201/568] drm/amdgpu: add support for cyan skillfish gpu_info
+Date: Wed,  3 Dec 2025 16:23:23 +0100
+Message-ID: <20251203152448.087511469@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,38 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 94bd7bf2c920998b4c756bc8a54fd3dbdf7e4360 ]
+[ Upstream commit fa819e3a7c1ee994ce014cc5a991c7fd91bc00f1 ]
 
-Cyan skillfish uses different SMU firmware.
+Some SOCs which are part of the cyan skillfish family
+rely on an explicit firmware for IP discovery.  Add support
+for the gpu_info firmware.
 
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-index d8441e273cb5d..9b1c4d5be61f8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -1669,13 +1669,16 @@ static int amdgpu_discovery_set_smu_ip_blocks(struct amdgpu_device *adev)
- 	case IP_VERSION(11, 0, 5):
- 	case IP_VERSION(11, 0, 9):
- 	case IP_VERSION(11, 0, 7):
--	case IP_VERSION(11, 0, 8):
- 	case IP_VERSION(11, 0, 11):
- 	case IP_VERSION(11, 0, 12):
- 	case IP_VERSION(11, 0, 13):
- 	case IP_VERSION(11, 5, 0):
- 		amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 079cf3292f632..18a0802cb74dc 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -91,6 +91,7 @@ MODULE_FIRMWARE("amdgpu/picasso_gpu_info.bin");
+ MODULE_FIRMWARE("amdgpu/raven2_gpu_info.bin");
+ MODULE_FIRMWARE("amdgpu/arcturus_gpu_info.bin");
+ MODULE_FIRMWARE("amdgpu/navi12_gpu_info.bin");
++MODULE_FIRMWARE("amdgpu/cyan_skillfish_gpu_info.bin");
+ 
+ #define AMDGPU_RESUME_MS		2000
+ #define AMDGPU_MAX_RETRY_LIMIT		2
+@@ -2019,6 +2020,9 @@ static int amdgpu_device_parse_gpu_info_fw(struct amdgpu_device *adev)
+ 	case CHIP_NAVI12:
+ 		chip_name = "navi12";
  		break;
-+	case IP_VERSION(11, 0, 8):
-+		if (adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2)
-+			amdgpu_device_ip_block_add(adev, &smu_v11_0_ip_block);
++	case CHIP_CYAN_SKILLFISH:
++		chip_name = "cyan_skillfish";
 +		break;
- 	case IP_VERSION(12, 0, 0):
- 	case IP_VERSION(12, 0, 1):
- 		amdgpu_device_ip_block_add(adev, &smu_v12_0_ip_block);
+ 	}
+ 
+ 	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_gpu_info.bin", chip_name);
 -- 
 2.51.0
 
