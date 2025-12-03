@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C164630EF76;
-	Wed,  3 Dec 2025 15:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DAA30C358;
+	Wed,  3 Dec 2025 15:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775918; cv=none; b=AAy7zBlNtaAX+XKkTFDU87UJVM5EqbsinBPtpOLJowTdYjce/FdAgh9DZ/A2dwx+KsfVDLkNW6UpcWlOXq3HDIhwIsEm/OVytplA2yXSpz7Ikt+xg0gHrZYc0CGGI3GrpjKRnJeHZVCk0hE09EFLCzNg3IfaBe4WAyL0czx/mk0=
+	t=1764775921; cv=none; b=qCX4L4wT9J7oD9Y+C8gZ/cv0tMmmt0bxVSPz1yaVnrzVmDmoHVrYJ4yshvOJVkYo0nkhlrNL2CuDkYo6mJhepEHrTMk+h6FkPIW9rTf0y9giQmi81OoFUnF1RbnW7+hg1Ah9wFv10cow/6XHJJ665jLV6RHdvpiZ5uha45sf/Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775918; c=relaxed/simple;
-	bh=uh9f0c1TyYWMEjoe7qpoVs4LwHp98qtZWLFZl86ylRs=;
+	s=arc-20240116; t=1764775921; c=relaxed/simple;
+	bh=QsSPnD3dw5KHWzTJZXyoqBTIzxLZNHMjCV1M1vEiXrc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s9a8JFibah0b25qvHft2XYx8w4IQHpBsuIQvVIfzPINhEY2WWEIe1OhO64l0jgi68q3Zra79WLRHaZeKMCjoD20/1xtNNya7gZD1foqCsDm45cughSgehI4q6365vk7KhEg1kNzyBH+1AUtYDRLKmuED5dss9JfNaRBdHRHoMUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCL+x3bS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XKpf5c0Bppp98uXKsJ1HueLPH6QsOYnQVygsL5djUAWPbYU7XoX7AdiVdWzG1hSYSmnOSMY2JcDFKnKTXEcWEvnoEpoxjD3AztVEnTAzuICMCZrWEGQ+EoT3Ff/BeJxjcOxx5FhFi/7ZCox07oVSTndPUfeaPpBMsIi+j+e+VS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fe8m7Tnf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCL+x3bS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A44C4CEF5;
-	Wed,  3 Dec 2025 15:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fe8m7Tnf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBC8C116B1;
+	Wed,  3 Dec 2025 15:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775917;
-	bh=uh9f0c1TyYWMEjoe7qpoVs4LwHp98qtZWLFZl86ylRs=;
+	s=korg; t=1764775921;
+	bh=QsSPnD3dw5KHWzTJZXyoqBTIzxLZNHMjCV1M1vEiXrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HCL+x3bSQloUy49RuCof+/ydBvpWViv9+Clx0CETcGbUnhp39/Qp6ziispmZoFd52
-	 lIg/AbOq4rCwqiWcjJejcGJl3flPXlRTpe6hYY2MYsZzvFCYW39MM9ObBeN1wc/RPk
-	 MtgpFYSJNcw09OvMP1I6fwAwl88g7aRZfcM1qPlU=
+	b=Fe8m7TnfGh9eVtAWIt5kkzzZeEduYzkA8FtHwLe73arhdVP/Mbfh+opy3P0tniD7t
+	 TDT30HtnorahIktk3AAHSM6WJNF7Bi6UwU9QexnlVnKPmFHJlqmvjjejGQaUz1MNvR
+	 w18Zm9v3BW6/Tx9O/I43C/GGgZs4EWr4V5PCaX40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/300] btrfs: use smp_mb__after_atomic() when forcing COW in create_pending_snapshot()
-Date: Wed,  3 Dec 2025 16:23:28 +0100
-Message-ID: <20251203152400.621967942@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 005/300] NFSD: Fix crash in nfsd4_read_release()
+Date: Wed,  3 Dec 2025 16:23:29 +0100
+Message-ID: <20251203152400.658146520@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,57 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 45c222468d33202c07c41c113301a4b9c8451b8f ]
+commit abb1f08a2121dd270193746e43b2a9373db9ad84 upstream.
 
-After setting the BTRFS_ROOT_FORCE_COW flag on the root we are doing a
-full write barrier, smp_wmb(), but we don't need to, all we need is a
-smp_mb__after_atomic().  The use of the smp_wmb() is from the old days
-when we didn't use a bit and used instead an int field in the root to
-signal if cow is forced. After the int field was changed to a bit in
-the root's state (flags field), we forgot to update the memory barrier
-in create_pending_snapshot() to smp_mb__after_atomic(), but we did the
-change in commit_fs_roots() after clearing BTRFS_ROOT_FORCE_COW. That
-happened in commit 27cdeb7096b8 ("Btrfs: use bitfield instead of integer
-data type for the some variants in btrfs_root"). On the reader side, in
-should_cow_block(), we also use the counterpart smp_mb__before_atomic()
-which generates further confusion.
+When tracing is enabled, the trace_nfsd_read_done trace point
+crashes during the pynfs read.testNoFh test.
 
-So change the smp_wmb() to smp_mb__after_atomic(). In fact we don't
-even need any barrier at all since create_pending_snapshot() is called
-in the critical section of a transaction commit and therefore no one
-can concurrently join/attach the transaction, or start a new one, until
-the transaction is unblocked. By the time someone starts a new transaction
-and enters should_cow_block(), a lot of implicit memory barriers already
-took place by having acquired several locks such as fs_info->trans_lock
-and extent buffer locks on the root node at least. Nevertlheless, for
-consistency use smp_mb__after_atomic() after setting the force cow bit
-in create_pending_snapshot().
-
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 15a8b55dbb1b ("nfsd: call op_release, even when op_func returns an error")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4proc.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
-index f68cfcc1f8300..d558f354b8b82 100644
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1660,7 +1660,7 @@ static noinline int create_pending_snapshot(struct btrfs_trans_handle *trans,
- 	}
- 	/* see comments in should_cow_block() */
- 	set_bit(BTRFS_ROOT_FORCE_COW, &root->state);
--	smp_wmb();
-+	smp_mb__after_atomic();
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -945,10 +945,11 @@ nfsd4_read(struct svc_rqst *rqstp, struc
+ static void
+ nfsd4_read_release(union nfsd4_op_u *u)
+ {
+-	if (u->read.rd_nf)
++	if (u->read.rd_nf) {
++		trace_nfsd_read_done(u->read.rd_rqstp, u->read.rd_fhp,
++				     u->read.rd_offset, u->read.rd_length);
+ 		nfsd_file_put(u->read.rd_nf);
+-	trace_nfsd_read_done(u->read.rd_rqstp, u->read.rd_fhp,
+-			     u->read.rd_offset, u->read.rd_length);
++	}
+ }
  
- 	btrfs_set_root_node(new_root_item, tmp);
- 	/* record when the snapshot was created in key.offset */
--- 
-2.51.0
-
+ static __be32
 
 
