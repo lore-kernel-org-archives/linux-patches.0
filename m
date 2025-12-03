@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2098834D4E3;
-	Wed,  3 Dec 2025 16:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB7834D4F6;
+	Wed,  3 Dec 2025 16:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777764; cv=none; b=Vw20Tydcshb3xO4YqtUOm9GRzplAhslImtN93mFPXBccfkeeFa/30YCdetNyMrc7vb0nJBerjbKSUvgtbFDzA5gYV3ZDUvter6muo2zovv1XIQgnKLSOzGEHpz8iWbkeebYDgUGbTVpMwi7jF7rIby2SCNUn7ZhTnvXkmELoEdA=
+	t=1764777767; cv=none; b=sP+qDqsF13uArKEEyEW7/WmN3oN1jv0+/a925sjrWBTG6/KUJB5Nkj0932wlBeoLGv9TKJP/uVUQwBxjWQZyOlgjPNPUkDVWqqul8l8OB6XKeSWfanV5kQHnatsNWJwmbQFMys2XIq13BoIfrOUC9JB49xNbjm5AyQYjn4/UpRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777764; c=relaxed/simple;
-	bh=9drf+E/vm6ahuOmmdM4JZh9JSZwmbgwBfTxDL4dbImU=;
+	s=arc-20240116; t=1764777767; c=relaxed/simple;
+	bh=4XU8k8w7sXR8PkNUdNUh/KigMnWc5pekInK4IR9aKTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNI38faSz6tqW+aKJ+74mhfvlpvIQf29fmMyvp8TDQpbBi9vhbI4cwmdK4b+qILhlw2s/ylR5YSRZteOrMh2S7Krr9JOGGVyhCfbDkwq01JdCpcdtUmzjJBZpyxI51kTx2VnDlqztS1D9Wf4SAvdSrQlkC9rDHQNEEYH0ZNDzJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNugA+ZW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=piZCxIvAYUnMapJGTgC17guKcHD5NFH73Iqx6Du1kEIgS2n7FK7S+Jl2f4GPio+LxAVM4w13S11tK830PmZUwr76IlV+m5CeSf3XEp1bapZwjFhAp58FgMrUTItV7gNZqXvqPeN1nSKLXJtOF35ZoAJGLBC61xNURQnouYbX8r8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlLmAWCs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNugA+ZW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98021C4CEF5;
-	Wed,  3 Dec 2025 16:02:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlLmAWCs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DC3C4CEF5;
+	Wed,  3 Dec 2025 16:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777764;
-	bh=9drf+E/vm6ahuOmmdM4JZh9JSZwmbgwBfTxDL4dbImU=;
+	s=korg; t=1764777767;
+	bh=4XU8k8w7sXR8PkNUdNUh/KigMnWc5pekInK4IR9aKTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNugA+ZWZHHwfna8YBq0uvRj4kNlvKAAzcLu0/IEf0cPGm0ZdwPyb27LrhDe+UKrH
-	 qam4ZIoq2KSyscBLJ8zJJgYM4Yk7uUjC962fzRLAMJadnoxEVydXBkY7EsLqO/fKAa
-	 Db8MnqahQ6PMN5kjKZOiY7MJEAiQ4bVUJkiKZppA=
+	b=JlLmAWCsdBL3CmuYgSuQdxtZnijqtNuixAK/7C2WBc4YvCMcswZ9I7w3yXt07jJut
+	 Tt/gsBBVy1+3WHGlgRPS/osXd/OSkBSRXIkc1en+zbknNO3ROZpR5GWF097KG6HC9C
+	 cMiBm8BSThTzm+JbbZhtucAEBgm7/otw4hKjUO5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/392] net: phy: marvell: Fix 88e1510 downshift counter errata
-Date: Wed,  3 Dec 2025 16:24:50 +0100
-Message-ID: <20251203152419.240334893@linuxfoundation.org>
+Subject: [PATCH 5.15 141/392] ntfs3: pretend $Extend records as regular files
+Date: Wed,  3 Dec 2025 16:24:51 +0100
+Message-ID: <20251203152419.276001394@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,87 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rohan G Thomas <rohan.g.thomas@altera.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit deb105f49879dd50d595f7f55207d6e74dec34e6 ]
+[ Upstream commit 4e8011ffec79717e5fdac43a7e79faf811a384b7 ]
 
-The 88e1510 PHY has an erratum where the phy downshift counter is not
-cleared after phy being suspended(BMCR_PDOWN set) and then later
-resumed(BMCR_PDOWN cleared). This can cause the gigabit link to
-intermittently downshift to a lower speed.
+Since commit af153bb63a33 ("vfs: catch invalid modes in may_open()")
+requires any inode be one of S_IFDIR/S_IFLNK/S_IFREG/S_IFCHR/S_IFBLK/
+S_IFIFO/S_IFSOCK type, use S_IFREG for $Extend records.
 
-Disabling and re-enabling the downshift feature clears the counter,
-allowing the PHY to retry gigabit link negotiation up to the programmed
-retry count times before downshifting. This behavior has been observed
-on copper links.
-
-Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
-Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20250906-marvell_fix-v2-1-f6efb286937f@altera.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/marvell.c | 39 ++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 38 insertions(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
-index 87975b843d276..4557bb2f68219 100644
---- a/drivers/net/phy/marvell.c
-+++ b/drivers/net/phy/marvell.c
-@@ -1753,6 +1753,43 @@ static int marvell_resume(struct phy_device *phydev)
- 	return err;
- }
- 
-+/* m88e1510_resume
-+ *
-+ * The 88e1510 PHY has an erratum where the phy downshift counter is not cleared
-+ * after phy being suspended(BMCR_PDOWN set) and then later resumed(BMCR_PDOWN
-+ * cleared). This can cause the link to intermittently downshift to a lower speed.
-+ *
-+ * Disabling and re-enabling the downshift feature clears the counter, allowing
-+ * the PHY to retry gigabit link negotiation up to the programmed retry count
-+ * before downshifting. This behavior has been observed on copper links.
-+ */
-+static int m88e1510_resume(struct phy_device *phydev)
-+{
-+	int err;
-+	u8 cnt = 0;
-+
-+	err = marvell_resume(phydev);
-+	if (err < 0)
-+		return err;
-+
-+	/* read downshift counter value */
-+	err = m88e1011_get_downshift(phydev, &cnt);
-+	if (err < 0)
-+		return err;
-+
-+	if (cnt) {
-+		/* downshift disabled */
-+		err = m88e1011_set_downshift(phydev, 0);
-+		if (err < 0)
-+			return err;
-+
-+		/* downshift enabled, with previous counter value */
-+		err = m88e1011_set_downshift(phydev, cnt);
-+	}
-+
-+	return err;
-+}
-+
- static int marvell_aneg_done(struct phy_device *phydev)
- {
- 	int retval = phy_read(phydev, MII_M1011_PHY_STATUS);
-@@ -3134,7 +3171,7 @@ static struct phy_driver marvell_drivers[] = {
- 		.handle_interrupt = marvell_handle_interrupt,
- 		.get_wol = m88e1318_get_wol,
- 		.set_wol = m88e1318_set_wol,
--		.resume = marvell_resume,
-+		.resume = m88e1510_resume,
- 		.suspend = marvell_suspend,
- 		.read_page = marvell_read_page,
- 		.write_page = marvell_write_page,
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index edd7c89ba1a11..019a98e300dcf 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -456,6 +456,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		   fname->home.seq == cpu_to_le16(MFT_REC_EXTEND)) {
+ 		/* Records in $Extend are not a files or general directories. */
+ 		inode->i_op = &ntfs_file_inode_operations;
++		mode = S_IFREG;
+ 	} else {
+ 		err = -EINVAL;
+ 		goto out;
 -- 
 2.51.0
 
