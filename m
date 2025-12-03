@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA780357720;
-	Wed,  3 Dec 2025 16:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7741C35BDDB;
+	Wed,  3 Dec 2025 16:37:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779859; cv=none; b=LRj3Th03NgV/OukjF/91f6a1FNz5s0n19OTpjmNXEKeisZ9H5SFp/WbiBOMnUJUcWOlclWqOuDou34kZuWXddFdF9tuX7P4mL+VfkDcGSiDdmickxhD4ngmzZHt0ukdwZCqBhGeWHMJpDO2oLlQ/e48W+dMmvoyzwsC3yctVfEU=
+	t=1764779862; cv=none; b=T9vygariALHvN8cFAqKddfAZh1YpwDn89uSyhgRANc1f3dTN8S8NxRwQHFbUOwefeEujMkg0/TBift1IbrJRx1gXWvkHx42W5jGS9QZigQQgTYKmXw0mZ/GxAlcH7AZ0SMuHVTkJwyuptFeo7ZylwyL8cFwvrSHu9RopJM4mj90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779859; c=relaxed/simple;
-	bh=y/JirUQ/lT668CX5M4LBJVkVVxzjiLVDcjI58zy2kBw=;
+	s=arc-20240116; t=1764779862; c=relaxed/simple;
+	bh=q2q76y3OcMEVPtyLSE9a/eTMfJL6z06jiWIyhpktGnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jarzPrH5ySBprIYgyfc10DsD8Sq9QShoA/FtRDDQ0J0pm8q6eiQPOErd+F8OkUbGWaA5lgAHd/XwR6uYMXp/LLQzC0JuAiSMCh9w4Vh/R8ksk1RK7DKcpO8pnHlGSyaHMkX2tzXvIEOmKxiWIDoi0f7zoKhg2+v9VcDXwNqJHqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRlTK6IS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSZAJMo+jAbAJLSoyq0obVcNBrhkWugijrI/cA+1Q8EowpbiDYsVdQga7MdeWk8snquvAcse4gz941L07e77+/aU3f+fnzcDMAZG/NdY7i20Yvru75myB2Gt4kRTcjAUdxRIjWFs9s8fjA3gOZ2f7UTCGt5HStt7fWQnE+Naw4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFEvJ+b6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRlTK6IS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B898C4CEF5;
-	Wed,  3 Dec 2025 16:37:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFEvJ+b6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2644C4CEF5;
+	Wed,  3 Dec 2025 16:37:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779859;
-	bh=y/JirUQ/lT668CX5M4LBJVkVVxzjiLVDcjI58zy2kBw=;
+	s=korg; t=1764779862;
+	bh=q2q76y3OcMEVPtyLSE9a/eTMfJL6z06jiWIyhpktGnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRlTK6ISY71iYKlnukkyMVMZHUh1gfYcuC23p0PI/IYy16PkOjJatbjES1UUZayqc
-	 hO3tHK21ZstOkSNpGVSGUD283nNBvQ1CyP2iypHF6RvEwnZVhaYFbyisM1JPG11AyQ
-	 4PimTAvcB9XIPZdqgxP2plLru7NiEEqMpHlVOLdo=
+	b=LFEvJ+b6wVFDTXnwUxflDS6wdH/VkC/Xo4pzCIhyWHVmic5PzkFjG6gAzFVPVu55Q
+	 scb7m5RmtCuiWv/zrIQlUPmlvPYEoW8fLoudJkfvru0CJLzrqCN9Ia+pW8d6KZ4Feh
+	 MoUEia+ZPqSag5DMFkkm32cGVOSJCrxrvC94GcDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Haotian Zhang <vulab@iscas.ac.cn>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 382/568] ASoC: cs4271: Fix regulator leak on probe failure
-Date: Wed,  3 Dec 2025 16:26:24 +0100
-Message-ID: <20251203152454.687172211@linuxfoundation.org>
+Subject: [PATCH 6.1 383/568] ASoC: codecs: va-macro: fix resource leak in probe error path
+Date: Wed,  3 Dec 2025 16:26:25 +0100
+Message-ID: <20251203152454.722921362@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,63 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 6b6eddc63ce871897d3a5bc4f8f593e698aef104 ]
+[ Upstream commit 3dc8c73365d3ca25c99e7e1a0f493039d7291df5 ]
 
-The probe function enables regulators at the beginning
-but fails to disable them in its error handling path.
-If any operation after enabling the regulators fails,
-the probe will exit with an error, leaving the regulators
-permanently enabled, which could lead to a resource leak.
+In the commit referenced by the Fixes tag, clk_hw_get_clk()
+was added in va_macro_probe() to get the fsgen clock,
+but forgot to add the corresponding clk_put() in va_macro_remove().
+This leads to a clock reference leak when the driver is unloaded.
 
-Add a proper error handling path to call regulator_bulk_disable()
-before returning an error.
+Switch to devm_clk_hw_get_clk() to automatically manage the
+clock resource.
 
-Fixes: 9a397f473657 ("ASoC: cs4271: add regulator consumer support")
+Fixes: 30097967e056 ("ASoC: codecs: va-macro: use fsgen as clock")
+Suggested-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251105062246.1955-1-vulab@iscas.ac.cn
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251106143114.729-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs4271.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ sound/soc/codecs/lpass-va-macro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/cs4271.c b/sound/soc/codecs/cs4271.c
-index 2021cf4426061..f6c9430612f53 100644
---- a/sound/soc/codecs/cs4271.c
-+++ b/sound/soc/codecs/cs4271.c
-@@ -594,17 +594,17 @@ static int cs4271_component_probe(struct snd_soc_component *component)
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 1623ba78ddb3d..1f6e27d6a2276 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -1554,7 +1554,7 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_clkout;
  
- 	ret = regcache_sync(cs4271->regmap);
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_regulator;
- 
- 	ret = regmap_update_bits(cs4271->regmap, CS4271_MODE2,
- 				 CS4271_MODE2_PDN | CS4271_MODE2_CPEN,
- 				 CS4271_MODE2_PDN | CS4271_MODE2_CPEN);
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_regulator;
- 	ret = regmap_update_bits(cs4271->regmap, CS4271_MODE2,
- 				 CS4271_MODE2_PDN, 0);
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_regulator;
- 	/* Power-up sequence requires 85 uS */
- 	udelay(85);
- 
-@@ -614,6 +614,10 @@ static int cs4271_component_probe(struct snd_soc_component *component)
- 				   CS4271_MODE2_MUTECAEQUB);
- 
- 	return 0;
-+
-+err_disable_regulator:
-+	regulator_bulk_disable(ARRAY_SIZE(cs4271->supplies), cs4271->supplies);
-+	return ret;
- }
- 
- static void cs4271_component_remove(struct snd_soc_component *component)
+-	va->fsgen = clk_hw_get_clk(&va->hw, "fsgen");
++	va->fsgen = devm_clk_hw_get_clk(dev, &va->hw, "fsgen");
+ 	if (IS_ERR(va->fsgen)) {
+ 		ret = PTR_ERR(va->fsgen);
+ 		goto err_clkout;
 -- 
 2.51.0
 
