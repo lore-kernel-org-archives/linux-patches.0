@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E9635028D;
-	Wed,  3 Dec 2025 16:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D17531329E;
+	Wed,  3 Dec 2025 16:13:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778414; cv=none; b=k2IQ2A81LEbC70UrLJIIy83SdZxhWu0+e0TjdE4e3npWc7jBT1iDmNzTnAdaUfkDiQFwJ+PqUMZEpsJYpjBmTUpKaG+xHdlqzbKHKp29VeCcUQ9D+I7MJcV76EBIBG8uPICDYzqyU78IXmHQc8myMW8DdpuSPrfgR12jAMfuonA=
+	t=1764778418; cv=none; b=bDUjHCt17XNhIwtqtzFEuhELuv+sqyh9SZmdwGdhcnuBjNMKhU+yb2SdyZTCWUMUbntJSitXYNtdjE6JjcZ6Vb8U2x5RwznfEUACIh4S0qNKaH0y8T4C+O9XkVsRj+7B55rbjNLn5nmsfWgBrMf7pEoeaW+ZwnmuPiAbH4a2e0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778414; c=relaxed/simple;
-	bh=Ya3sabE6I1yvo++zgVEJ/UeZlyN0bRfq5OAQza5KnCw=;
+	s=arc-20240116; t=1764778418; c=relaxed/simple;
+	bh=WhG/tf0BhPkdhlq9abE/XsvScMN51/fNufBfjGVG+xw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lN1fp0KRAeChyPlLc5Az9HVNLiXNVHhdN/lBqZhrOFo65HbEbCJqBzfFIce/0fjjVkhdRksd45cnIroaSOtLked4fTb4uy200VnCE/SZ3oRDQ0Uy9yhP++WLtxQJe1RtHy4y0Y+AZSL5BjWOks2FbSvD8kb4pEIyCrQUfWpNzp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dApJ0S99; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGCUIR3WZMGI499NYwn90HA8Iyye86i4tG1nqqqlG12HIGbx7YY0fv9BebY6NMkymce2qDAd+UY9dORdu0EraBFjYKdMgXQ5xipbDazfBFWeSqmEiL4Ox4oNIRvE+qyCL+GisVqaQBG9SZr2ZMuNY7Nl+2C9zL3g2E8c01zOyUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jopHt+XZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dApJ0S99"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B4FC4CEF5;
-	Wed,  3 Dec 2025 16:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jopHt+XZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FFCAC4CEF5;
+	Wed,  3 Dec 2025 16:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778414;
-	bh=Ya3sabE6I1yvo++zgVEJ/UeZlyN0bRfq5OAQza5KnCw=;
+	s=korg; t=1764778417;
+	bh=WhG/tf0BhPkdhlq9abE/XsvScMN51/fNufBfjGVG+xw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dApJ0S99B0ElY180lRmetCEJ/7VBoOAwTZ3xiAe2r9rdhDyy4bh9q0GuyeMKVwDVP
-	 4+Ym2RgcyJLOU3zLkfkBj9yK0IoZFylgeqtG/D2aMrOGxrvKE45LVZgNr3ZOsifnRe
-	 YBoB1iqpqEsfCo6cMhSa86WlhbFEtz/DtEa25u0s=
+	b=jopHt+XZpl4RAUWZHS0CTM38aqFuUUqXM7alC20t4/DuNh16tv8ckZCoV/1uoL9bm
+	 JZnBjOoKM4i/FPGG58Ug7hEhdMyHmJF0TF/gJ9M6/ZxE0yf5MAZLAPRCvjQp9LRs0W
+	 C8Hj+Vrw6lZYtgBNV8ZjXvCAOnoZtcw7baksdbHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 338/392] Bluetooth: SMP: Fix not generating mackey and ltk when repairing
-Date: Wed,  3 Dec 2025 16:28:08 +0100
-Message-ID: <20251203152426.609576451@linuxfoundation.org>
+	Long Li <longli@microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Naman Jain <namjain@linux.microsoft.com>
+Subject: [PATCH 5.15 312/392] uio_hv_generic: Set event for all channels on the device
+Date: Wed,  3 Dec 2025 16:27:42 +0100
+Message-ID: <20251203152425.641968255@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,87 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 545d7827b2cd5de5eb85580cebeda6b35b3ff443 ]
+commit d062463edf1770427dc2d637df4088df4835aa47 upstream.
 
-The change eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-introduced a goto that bypasses the creation of temporary mackey and ltk
-which are later used by the likes of DHKey Check step.
+Hyper-V may offer a non latency sensitive device with subchannels without
+monitor bit enabled. The decision is entirely on the Hyper-V host not
+configurable within guest.
 
-Later ffee202a78c2 ("Bluetooth: Always request for user confirmation for
-Just Works (LE SC)") which means confirm_hint is always set in case
-JUST_WORKS so the branch checking for an existing LTK becomes pointless
-as confirm_hint will always be set, so this just merge both cases of
-malicious or legitimate devices to be confirmed before continuing with the
-pairing procedure.
+When a device has subchannels, also signal events for the subchannel
+if its monitor bit is disabled.
 
-Link: https://github.com/bluez/bluez/issues/1622
-Fixes: eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This patch also removes the memory barrier when monitor bit is enabled
+as it is not necessary. The memory barrier is only needed between
+setting up interrupt mask and calling vmbus_set_event() when monitor
+bit is disabled.
+
+Signed-off-by: Long Li <longli@microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Link: https://lore.kernel.org/r/1741644721-20389-1-git-send-email-longli@linuxonhyperv.com
+Fixes: b15b7d2a1b09 ("uio_hv_generic: Let userspace take care of interrupt mask")
+Closes: https://bugs.debian.org/1120602
+Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/smp.c | 31 +++++++------------------------
- 1 file changed, 7 insertions(+), 24 deletions(-)
+ drivers/uio/uio_hv_generic.c |   21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index 697ec98b07982..d1ba41153b66a 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2130,7 +2130,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	struct smp_chan *smp = chan->data;
- 	struct hci_conn *hcon = conn->hcon;
- 	u8 *pkax, *pkbx, *na, *nb, confirm_hint;
--	u32 passkey;
-+	u32 passkey = 0;
- 	int err;
+--- a/drivers/uio/uio_hv_generic.c
++++ b/drivers/uio/uio_hv_generic.c
+@@ -80,9 +80,15 @@ hv_uio_irqcontrol(struct uio_info *info,
+ {
+ 	struct hv_uio_private_data *pdata = info->priv;
+ 	struct hv_device *dev = pdata->device;
++	struct vmbus_channel *primary, *sc;
  
- 	bt_dev_dbg(hcon->hdev, "conn %p", conn);
-@@ -2182,24 +2182,6 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
- 			     smp->prnd);
- 		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
--
--		/* Only Just-Works pairing requires extra checks */
--		if (smp->method != JUST_WORKS)
--			goto mackey_and_ltk;
--
--		/* If there already exists long term key in local host, leave
--		 * the decision to user space since the remote device could
--		 * be legitimate or malicious.
--		 */
--		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
--				 hcon->role)) {
--			/* Set passkey to 0. The value can be any number since
--			 * it'll be ignored anyway.
--			 */
--			passkey = 0;
--			confirm_hint = 1;
--			goto confirm;
--		}
- 	}
+-	dev->channel->inbound.ring_buffer->interrupt_mask = !irq_state;
+-	virt_mb();
++	primary = dev->channel;
++	primary->inbound.ring_buffer->interrupt_mask = !irq_state;
++
++	mutex_lock(&vmbus_connection.channel_mutex);
++	list_for_each_entry(sc, &primary->sc_list, sc_list)
++		sc->inbound.ring_buffer->interrupt_mask = !irq_state;
++	mutex_unlock(&vmbus_connection.channel_mutex);
  
- mackey_and_ltk:
-@@ -2220,11 +2202,12 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	if (err)
- 		return SMP_UNSPECIFIED;
+ 	return 0;
+ }
+@@ -93,11 +99,18 @@ hv_uio_irqcontrol(struct uio_info *info,
+ static void hv_uio_channel_cb(void *context)
+ {
+ 	struct vmbus_channel *chan = context;
+-	struct hv_device *hv_dev = chan->device_obj;
+-	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
++	struct hv_device *hv_dev;
++	struct hv_uio_private_data *pdata;
  
--	confirm_hint = 0;
--
--confirm:
--	if (smp->method == JUST_WORKS)
--		confirm_hint = 1;
-+	/* Always require user confirmation for Just-Works pairing to prevent
-+	 * impersonation attacks, or in case of a legitimate device that is
-+	 * repairing use the confirmation as acknowledgment to proceed with the
-+	 * creation of new keys.
+ 	virt_mb();
+ 
++	/*
++	 * The callback may come from a subchannel, in which case look
++	 * for the hv device in the primary channel
 +	 */
-+	confirm_hint = smp->method == JUST_WORKS ? 1 : 0;
++	hv_dev = chan->primary_channel ?
++		 chan->primary_channel->device_obj : chan->device_obj;
++	pdata = hv_get_drvdata(hv_dev);
+ 	uio_event_notify(&pdata->info);
+ }
  
- 	err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
- 					hcon->dst_type, passkey, confirm_hint);
--- 
-2.51.0
-
 
 
