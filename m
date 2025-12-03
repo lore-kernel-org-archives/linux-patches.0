@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513B836A038;
-	Wed,  3 Dec 2025 16:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD3336B055;
+	Wed,  3 Dec 2025 16:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779483; cv=none; b=RCrQ5RzU3a2/K8MSuZ/HqmZ98PBkl1kDh5EMky0wcjNa8XUzJSAHpmFwLwtLxejUuj/Wr9ZAmKXz9F3VyTSGYVd2c1TVYg1RdKvpVZ0jf4RQLzwJb+3zoFXZrtLDjPgmrElv9ac8yzgjvQsxtXS9fcRAMWfdM5QuwkUqGAnPUG4=
+	t=1764779486; cv=none; b=auiSABhF5hCx0GnNmWgCfD3DCxwIFgRW76rKyKzQ8Jbu1yL47W+wZwPjRXceTV9OkqxfSiHf3JQXf/eUDV9vjZM7UdEyVyZgEp6eE0bx+7j499n1zns95NX/TUATqB5Qkfq+ZNIhGI3drHLduA8GynaI8wnuWc6YSSrkULT4/HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779483; c=relaxed/simple;
-	bh=eTfRkl6qKUh/rZcwuccFe7PtYuaMReUrdtWai3KeOxc=;
+	s=arc-20240116; t=1764779486; c=relaxed/simple;
+	bh=41qAnP7CPhwXwcOEqoG4PnhGFsp1y9XiX1XPgA+4o48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ttu/DHVrXrzfUBBZIlRsIaE+A3qegcQo5h33XCUDboEGPBcyp96Ja7M4C1rL1Y5pZaHuW1uCjDa+7jEJQBTFxNjqpEKxmOv7nXA5B2wrpKn83KY387Txur25KHRyjV6iDuaxoRaUv5ULzAfuTt44Jv5YiKFxeMqN9bHMpJnzZXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ny95TE+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ub1o5jA2ipte5jdXwisr1eJw2bcHZWhIZk+bAgKa5/199Mxka1sd+Uqq5vdzjQvgNSaCszr7geM3PeAIG3xjwGX0dXYRRSjelgVQRuIZ3Aa4PgKrhvgc8uTFc6AxdYXqTDo6tHpzj83W2EfQdkO/oXRZmwtez3FR6oycDNP8yDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=naoxgZNp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ny95TE+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2963C4CEF5;
-	Wed,  3 Dec 2025 16:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="naoxgZNp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185DCC4CEF5;
+	Wed,  3 Dec 2025 16:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779483;
-	bh=eTfRkl6qKUh/rZcwuccFe7PtYuaMReUrdtWai3KeOxc=;
+	s=korg; t=1764779486;
+	bh=41qAnP7CPhwXwcOEqoG4PnhGFsp1y9XiX1XPgA+4o48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ny95TE+J0LpjcZHUq33QNKoaE/U4N7wv+IpNZtP+bpzW7K0mJgA+xtbO/UvdvNm7l
-	 fVFLiG8BzOkKtqBeqbjA3+fz6StikycQjizMDfwk6UXEqfNy4ZA3B7ZBdjOLwxIfOv
-	 kyVC1ZnEqQEDOOHgmoZEM0xGEUTr8QEPjToC4Qd8=
+	b=naoxgZNpajcSqQ8hT585eGPC8p0sTRPOqyk9hLScFm8yUD84Hsp8rKSe/GgC4x86V
+	 FMJLBpOkjbr2bLxu7IuKhkrYVcKv7Z0MNMLl8QmYLRtNuAJtNXqcXEV94ygi73qFpb
+	 HUCDrZEvLwdFywUWki9rRhSwxEFn9vOYx4vzogkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marshall <hubcap@omnibond.com>,
-	Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>,
+	Vladimir Riabchun <ferr.lambarginio@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 270/568] orangefs: fix xattr related buffer overflow...
-Date: Wed,  3 Dec 2025 16:24:32 +0100
-Message-ID: <20251203152450.602500847@linuxfoundation.org>
+Subject: [PATCH 6.1 271/568] ftrace: Fix softlockup in ftrace_module_enable
+Date: Wed,  3 Dec 2025 16:24:33 +0100
+Message-ID: <20251203152450.638283269@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,84 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Vladimir Riabchun <ferr.lambarginio@gmail.com>
 
-[ Upstream commit 025e880759c279ec64d0f754fe65bf45961da864 ]
+[ Upstream commit 4099b98203d6b33d990586542fa5beee408032a3 ]
 
-Willy Tarreau <w@1wt.eu> forwarded me a message from
-Disclosure <disclosure@aisle.com> with the following
-warning:
+A soft lockup was observed when loading amdgpu module.
+If a module has a lot of tracable functions, multiple calls
+to kallsyms_lookup can spend too much time in RCU critical
+section and with disabled preemption, causing kernel panic.
+This is the same issue that was fixed in
+commit d0b24b4e91fc ("ftrace: Prevent RCU stall on PREEMPT_VOLUNTARY
+kernels") and commit 42ea22e754ba ("ftrace: Add cond_resched() to
+ftrace_graph_set_hash()").
 
-> The helper `xattr_key()` uses the pointer variable in the loop condition
-> rather than dereferencing it. As `key` is incremented, it remains non-NULL
-> (until it runs into unmapped memory), so the loop does not terminate on
-> valid C strings and will walk memory indefinitely, consuming CPU or hanging
-> the thread.
+Fix it the same way by adding cond_resched() in ftrace_module_enable.
 
-I easily reproduced this with setfattr and getfattr, causing a kernel
-oops, hung user processes and corrupted orangefs files. Disclosure
-sent along a diff (not a patch) with a suggested fix, which I based
-this patch on.
-
-After xattr_key started working right, xfstest generic/069 exposed an
-xattr related memory leak that lead to OOM. xattr_key returns
-a hashed key.  When adding xattrs to the orangefs xattr cache, orangefs
-used hash_add, a kernel hashing macro. hash_add also hashes the key using
-hash_log which resulted in additions to the xattr cache going to the wrong
-hash bucket. generic/069 tortures a single file and orangefs does a
-getattr for the xattr "security.capability" every time. Orangefs
-negative caches on xattrs which includes a kmalloc. Since adds to the
-xattr cache were going to the wrong bucket, every getattr for
-"security.capability" resulted in another kmalloc, none of which were
-ever freed.
-
-I changed the two uses of hash_add to hlist_add_head instead
-and the memory leak ceased and generic/069 quit throwing furniture.
-
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
-Reported-by: Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>
+Link: https://lore.kernel.org/aMQD9_lxYmphT-up@vova-pc
+Signed-off-by: Vladimir Riabchun <ferr.lambarginio@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/xattr.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ kernel/trace/ftrace.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
-index 9a5b757fbd2f6..2d2d16caf9190 100644
---- a/fs/orangefs/xattr.c
-+++ b/fs/orangefs/xattr.c
-@@ -54,7 +54,9 @@ static inline int convert_to_internal_xattr_flags(int setxattr_flags)
- static unsigned int xattr_key(const char *key)
- {
- 	unsigned int i = 0;
--	while (key)
-+	if (!key)
-+		return 0;
-+	while (*key)
- 		i += *key++;
- 	return i % 16;
- }
-@@ -175,8 +177,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 				cx->length = -1;
- 				cx->timeout = jiffies +
- 				    orangefs_getattr_timeout_msecs*HZ/1000;
--				hash_add(orangefs_inode->xattr_cache, &cx->node,
--				    xattr_key(cx->key));
-+				hlist_add_head( &cx->node,
-+                                   &orangefs_inode->xattr_cache[xattr_key(cx->key)]);
- 			}
- 		}
- 		goto out_release_op;
-@@ -229,8 +231,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 			memcpy(cx->val, buffer, length);
- 			cx->length = length;
- 			cx->timeout = jiffies + HZ;
--			hash_add(orangefs_inode->xattr_cache, &cx->node,
--			    xattr_key(cx->key));
-+			hlist_add_head(&cx->node,
-+				&orangefs_inode->xattr_cache[xattr_key(cx->key)]);
- 		}
- 	}
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index cebed90b2e16f..a46e2f32ee5fc 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -7065,6 +7065,8 @@ void ftrace_module_enable(struct module *mod)
+ 		    !within_module_init(rec->ip, mod))
+ 			break;
  
++		cond_resched();
++
+ 		/* Weak functions should still be ignored */
+ 		if (!test_for_valid_rec(rec)) {
+ 			/* Clear all other flags. Should not be enabled anyway */
 -- 
 2.51.0
 
