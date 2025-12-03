@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B77F35CB63;
-	Wed,  3 Dec 2025 16:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727CA354AF5;
+	Wed,  3 Dec 2025 16:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779149; cv=none; b=iEbOzHvOkGtgTDevwNkBR+F2WTCRGdBPPAcafBiDk0pZpYYt1sVaMbAYC4H+xRJ1bPeF0k/OTg2DOOQzmQ0Ps4JowKS87ZhymGt4edM8rEWnOW26Pe9V8Bj+OgXadmoXj5UtUxAunY+13JQ3RKspEPC1n4mXI2/xE3lbEQkWTD4=
+	t=1764779152; cv=none; b=TP4ej3XuY37TGtO0/G37ncW2zVadtVoPNT5VoyhKF0F6Y9bLxl3U7/UQQqGnCqalNKxo6G99sjBm8oenNhlZCuv9BinKnuZJ4bIeHjcquWWr2dZzEmPz8sRwIieKHkfOe395TLPq4KAv27wF+6RTBz/b/cBtLItViOE2x8qyV3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779149; c=relaxed/simple;
-	bh=4QbuwMrg2Fl7cfdOzpNMzx7qLtiP9+pK93QdADpVEbE=;
+	s=arc-20240116; t=1764779152; c=relaxed/simple;
+	bh=Nz/WOcCaAjJiv1xx6b7Wvg8/hpminILHBC8U9ShSDwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O881Y6dkkUA8BTk/WQyPEUhaKUxRwEo91V51pyglIA9AhYKkI9WSO5txfMOPEJ8z1Ij/vGsUen0WCHtHKXyXOv3pAnTVm/ZcRd0wcv20dBbVqE3V6fsREJIxXryQQZ6NhbTn7XGxVEMqGrKOauhoH1Bidt/6+nWFz6n0CLyGyuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EG2HihpB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECV/SNQRSlt7uK/Bz2bUW5ixXCK4xEYZkkasKBWZaDXYYs+nnLw5Fl77SavoN0+Q5DFOQTM4wJA8Rtvd19ew5ZiF9n+pwsX+GcR9VLKW5ywGXwStRoDLBTm84qHJK6UXZ5Qf+D4SqQrC1fMMao/ryhV3KifzQGwUnSIsnRH5CAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ge4k26LF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EG2HihpB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784B8C4CEF5;
-	Wed,  3 Dec 2025 16:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ge4k26LF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50B6C4CEF5;
+	Wed,  3 Dec 2025 16:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779149;
-	bh=4QbuwMrg2Fl7cfdOzpNMzx7qLtiP9+pK93QdADpVEbE=;
+	s=korg; t=1764779152;
+	bh=Nz/WOcCaAjJiv1xx6b7Wvg8/hpminILHBC8U9ShSDwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EG2HihpBPEYKbwRzjJLQZdlke8XaAyrAftIN3Xr0wkz6MiAbGufMRjxrWKbwb/rgN
-	 jbq1jx6S1FdiXd8tbRv0XRYcvOt2T+B36Rrb42OyMDx5TcnYuvyNhoTSPKoqPmkAb0
-	 4bq3H9TBEJ2G+Qx0+DtaFegJWlN6pZwp7MTjzIxo=
+	b=ge4k26LFd1G/kmtnJyiFfT2jK2mb2ry2Q1ucK+tjDwyWMFt8VdVR05X0Kodch2Ny2
+	 ux/BH6i7RQLC3wbsnDbP+lcC5BuDVaucU7YMiwErUxvrlezujH7bGnqKZyS1oUvs0q
+	 zJOWI7L4ZjhYwwIKmicUY/tFI++pwgaF3f7pHOH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chandrakanth Patil <chandrakanth.patil@broadcom.com>,
+	Francisco Gutierrez <frankramirez@google.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/568] scsi: mpi3mr: Fix controller init failure on fault during queue creation
-Date: Wed,  3 Dec 2025 16:22:50 +0100
-Message-ID: <20251203152446.877329827@linuxfoundation.org>
+Subject: [PATCH 6.1 169/568] scsi: pm80xx: Fix race condition caused by static variables
+Date: Wed,  3 Dec 2025 16:22:51 +0100
+Message-ID: <20251203152446.913905783@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,53 +51,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
+From: Francisco Gutierrez <frankramirez@google.com>
 
-[ Upstream commit 829fa1582b6ff607b0e2fe41ba1c45c77f686618 ]
+[ Upstream commit d6477ee38ccfbeaed885733c13f41d9076e2f94a ]
 
-Firmware can enter a transient fault while creating operational queues.
-The driver fails the load immediately.
+Eliminate the use of static variables within the log pull implementation
+to resolve a race condition and prevent data gaps when pulling logs from
+multiple controllers in parallel, ensuring each operation is properly
+isolated.
 
-Add a retry loop that checks controller status and history bit after
-queue creation. If either indicates a fault, retry init up to a set
-limit before failing.
-
-Signed-off-by: Chandrakanth Patil <chandrakanth.patil@broadcom.com>
-Link: https://lore.kernel.org/r/20250820084138.228471-3-chandrakanth.patil@broadcom.com
+Signed-off-by: Francisco Gutierrez <frankramirez@google.com>
+Link: https://lore.kernel.org/r/20250723183543.1443301-1-frankramirez@google.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/scsi/pm8001/pm8001_ctl.c  | 22 ++++++++++++----------
+ drivers/scsi/pm8001/pm8001_init.c |  1 +
+ drivers/scsi/pm8001/pm8001_sas.h  |  4 ++++
+ 3 files changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index d50bc67061563..9d8f5a4794666 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -2111,6 +2111,8 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
- {
- 	int retval = 0;
- 	u16 num_queues = 0, i = 0, msix_count_op_q = 1;
-+	u32 ioc_status;
-+	enum mpi3mr_iocstate ioc_state;
+diff --git a/drivers/scsi/pm8001/pm8001_ctl.c b/drivers/scsi/pm8001/pm8001_ctl.c
+index 73f036bed1281..2f67f51785e64 100644
+--- a/drivers/scsi/pm8001/pm8001_ctl.c
++++ b/drivers/scsi/pm8001/pm8001_ctl.c
+@@ -538,23 +538,25 @@ static ssize_t pm8001_ctl_iop_log_show(struct device *cdev,
+ 	char *str = buf;
+ 	u32 read_size =
+ 		pm8001_ha->main_cfg_tbl.pm80xx_tbl.event_log_size / 1024;
+-	static u32 start, end, count;
+ 	u32 max_read_times = 32;
+ 	u32 max_count = (read_size * 1024) / (max_read_times * 4);
+ 	u32 *temp = (u32 *)pm8001_ha->memoryMap.region[IOP].virt_ptr;
  
- 	num_queues = min_t(int, mrioc->facts.max_op_reply_q,
- 	    mrioc->facts.max_op_req_q);
-@@ -2166,6 +2168,14 @@ static int mpi3mr_create_op_queues(struct mpi3mr_ioc *mrioc)
- 		retval = -1;
- 		goto out_failed;
+-	if ((count % max_count) == 0) {
+-		start = 0;
+-		end = max_read_times;
+-		count = 0;
++	mutex_lock(&pm8001_ha->iop_log_lock);
++
++	if ((pm8001_ha->iop_log_count % max_count) == 0) {
++		pm8001_ha->iop_log_start = 0;
++		pm8001_ha->iop_log_end = max_read_times;
++		pm8001_ha->iop_log_count = 0;
+ 	} else {
+-		start = end;
+-		end = end + max_read_times;
++		pm8001_ha->iop_log_start = pm8001_ha->iop_log_end;
++		pm8001_ha->iop_log_end = pm8001_ha->iop_log_end + max_read_times;
  	}
-+	ioc_status = readl(&mrioc->sysif_regs->ioc_status);
-+	ioc_state = mpi3mr_get_iocstate(mrioc);
-+	if ((ioc_status & MPI3_SYSIF_IOC_STATUS_RESET_HISTORY) ||
-+	    ioc_state != MRIOC_STATE_READY) {
-+		mpi3mr_print_fault_info(mrioc);
-+		retval = -1;
-+		goto out_failed;
-+	}
- 	mrioc->num_op_reply_q = mrioc->num_op_req_q = i;
- 	ioc_info(mrioc,
- 	    "successfully created %d operational queue pairs(default/polled) queue = (%d/%d)\n",
+ 
+-	for (; start < end; start++)
+-		str += sprintf(str, "%08x ", *(temp+start));
+-	count++;
++	for (; pm8001_ha->iop_log_start < pm8001_ha->iop_log_end; pm8001_ha->iop_log_start++)
++		str += sprintf(str, "%08x ", *(temp+pm8001_ha->iop_log_start));
++	pm8001_ha->iop_log_count++;
++	mutex_unlock(&pm8001_ha->iop_log_lock);
+ 	return str - buf;
+ }
+ static DEVICE_ATTR(iop_log, S_IRUGO, pm8001_ctl_iop_log_show, NULL);
+diff --git a/drivers/scsi/pm8001/pm8001_init.c b/drivers/scsi/pm8001/pm8001_init.c
+index 18b150f27c868..60b477e65a66a 100644
+--- a/drivers/scsi/pm8001/pm8001_init.c
++++ b/drivers/scsi/pm8001/pm8001_init.c
+@@ -532,6 +532,7 @@ static struct pm8001_hba_info *pm8001_pci_alloc(struct pci_dev *pdev,
+ 	pm8001_ha->id = pm8001_id++;
+ 	pm8001_ha->logging_level = logging_level;
+ 	pm8001_ha->non_fatal_count = 0;
++	mutex_init(&pm8001_ha->iop_log_lock);
+ 	if (link_rate >= 1 && link_rate <= 15)
+ 		pm8001_ha->link_rate = (link_rate << 8);
+ 	else {
+diff --git a/drivers/scsi/pm8001/pm8001_sas.h b/drivers/scsi/pm8001/pm8001_sas.h
+index b08f52673889c..9306f05674d18 100644
+--- a/drivers/scsi/pm8001/pm8001_sas.h
++++ b/drivers/scsi/pm8001/pm8001_sas.h
+@@ -544,6 +544,10 @@ struct pm8001_hba_info {
+ 	u32 ci_offset;
+ 	u32 pi_offset;
+ 	u32 max_memcnt;
++	u32 iop_log_start;
++	u32 iop_log_end;
++	u32 iop_log_count;
++	struct mutex iop_log_lock;
+ };
+ 
+ struct pm8001_work {
 -- 
 2.51.0
 
