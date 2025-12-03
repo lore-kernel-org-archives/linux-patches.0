@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D351314D07;
-	Wed,  3 Dec 2025 15:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBED830FF2F;
+	Wed,  3 Dec 2025 15:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776524; cv=none; b=JTCyxa2e1cV9y5z3UbXMQy2kqgSAbnvhx9NNvwU/U1mma1fFXUaAzVBLbKTUhVk/PN1KZzS9lRENkj8K7TDJ+yHwZ2KgzOJNtrT0QMimuX0SejFpJDywi6r9SShBUdlJcZHyBkV0SGDGQLHIMl70p3OPjuuYHRLEuDhQ35BDGOM=
+	t=1764776528; cv=none; b=B4MVJvhynQvcrsdBN8HG+D8BcXAzsow/WMl+W3jajwHNZMiMPyPEZxp9V9nqZ8dMAmZ/8svNXNB7yTDj5fSVd+nK3GFYiMB83JLv/bZdSQHPtCuJhX9WaLDVHx+huEBv9WdBkLz9xSltkGF10L2Jgl8/jBi0ZRP1yjcYzIq6N0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776524; c=relaxed/simple;
-	bh=RBWXA1jLu1TVFufsGibaY1DuP2xULPT0+YH2bWQxYP0=;
+	s=arc-20240116; t=1764776528; c=relaxed/simple;
+	bh=cnxo4lEi2C5pNcgqHug/XHhX0QQzpbH5DEbgujR2XPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UoQ4naOm8UlvcpaLqVi5c4mRDIVVA6VYi8v8Gb+hZs9IPYQUSexm0Vqj4v7OcQceglBvVMH5bNJ9I4Wl3EZ4OTcDDPb0a2QwkMxXo8wQAObv1whdTAmD8pT4rm5NZ1IGnYS8DqXe1QTM5Fn56gRfvE1RzqtIXhKLmw5zpWaKkiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aERIidKD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NItMC5FIINOzkz5vDLisWSoCt429RL7Wf6aoSnouSjuciNx0zDOzeYwE/aIbyRUX0XL4MaaNLwFRQYOTt8Ud5JJ7Z4ap1BX1cvnYNDZ6H40xbaat6tDPl9GqYNx5cUC2VhpLjcsaESlEuFwb5QVY0fvm8Gm/tOptQvaJ/P2ZNBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=012n6Bza; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aERIidKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B8EC116C6;
-	Wed,  3 Dec 2025 15:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="012n6Bza"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A84FC4CEF5;
+	Wed,  3 Dec 2025 15:42:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776524;
-	bh=RBWXA1jLu1TVFufsGibaY1DuP2xULPT0+YH2bWQxYP0=;
+	s=korg; t=1764776527;
+	bh=cnxo4lEi2C5pNcgqHug/XHhX0QQzpbH5DEbgujR2XPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aERIidKDkgjulYRdHPaKyr7oEYknTv/29csgM0FBPQ8n/61HnKeEO6X7y44RdytVf
-	 k2BdRtXt6D4JYsVKsibE26J3Er5h/enji6v91iyxZiR9/cR9HhgZlSOiajcmhQ2Khs
-	 VC+dEym+CKuZlMummdmqXMKpmnC/yl24rUR0jOGc=
+	b=012n6BzaU07wrfkj06zf3pCNorrmZwyxUy9vUYTOBQRuKp5P2AemjzR8y13DLJy4z
+	 J/RDucVn8rFI0169RQNxscedaUP/M4QbdGhEXpmC21Qx22sllf9RdjNKi92UT9VbOS
+	 ITqSvI+0rRAm1s8Z+NWfWlu6/YTOAhAJ4heS3GBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristan Lobb <tristan.lobb@it-lobb.de>,
-	Jiri Kosina <jkosina@suse.com>,
+	Sharique Mohammad <sharq0406@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 176/300] HID: quirks: avoid Cooler Master MM712 dongle wakeup bug
-Date: Wed,  3 Dec 2025 16:26:20 +0100
-Message-ID: <20251203152407.147811096@linuxfoundation.org>
+Subject: [PATCH 5.10 177/300] ASoC: max98090/91: fixed max98091 ALSA widget powering up/down
+Date: Wed,  3 Dec 2025 16:26:21 +0100
+Message-ID: <20251203152407.184339441@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,52 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tristan Lobb <tristan.lobb@it-lobb.de>
+From: Sharique Mohammad <sharq0406@gmail.com>
 
-[ Upstream commit 0be4253bf878d9aaa2b96031ac8683fceeb81480 ]
+[ Upstream commit 7a37291ed40a33a5f6c3d370fdde5ee0d8f7d0e4 ]
 
-The Cooler Master Mice Dongle includes a vendor defined HID interface
-alongside its mouse interface. Not polling it will cause the mouse to
-stop responding to polls on any interface once woken up again after
-going into power saving mode.
+The widgets DMIC3_ENA and DMIC4_ENA must be defined in the DAPM
+suppy widget, just like DMICL_ENA and DMICR_ENA. Whenever they
+are turned on or off, the required startup or shutdown sequences
+must be taken care by the max98090_shdn_event.
 
-Add the HID_QUIRK_ALWAYS_POLL quirk alongside the Cooler Master VID and
-the Dongle's PID.
-
-Signed-off-by: Tristan Lobb <tristan.lobb@it-lobb.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sharique Mohammad <sharq0406@gmail.com>
+Link: https://patch.msgid.link/20251015134215.750001-1-sharq0406@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h    | 3 +++
- drivers/hid/hid-quirks.c | 1 +
- 2 files changed, 4 insertions(+)
+ sound/soc/codecs/max98090.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 8bfa90e37ea17..c213f1cc8aebc 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -298,6 +298,9 @@
- #define USB_DEVICE_ID_CODEMERCS_IOW_FIRST	0x1500
- #define USB_DEVICE_ID_CODEMERCS_IOW_LAST	0x15ff
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index 0c73979cad4a4..c7df685be4ea5 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -1233,9 +1233,11 @@ static const struct snd_soc_dapm_widget max98091_dapm_widgets[] = {
+ 	SND_SOC_DAPM_INPUT("DMIC4"),
  
-+#define USB_VENDOR_ID_COOLER_MASTER	0x2516
-+#define USB_DEVICE_ID_COOLER_MASTER_MICE_DONGLE	0x01b7
-+
- #define USB_VENDOR_ID_CORSAIR		0x1b1c
- #define USB_DEVICE_ID_CORSAIR_K90	0x1b02
+ 	SND_SOC_DAPM_SUPPLY("DMIC3_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
+-		 M98090_DIGMIC3_SHIFT, 0, NULL, 0),
++		 M98090_DIGMIC3_SHIFT, 0, max98090_shdn_event,
++			SND_SOC_DAPM_POST_PMU),
+ 	SND_SOC_DAPM_SUPPLY("DMIC4_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
+-		 M98090_DIGMIC4_SHIFT, 0, NULL, 0),
++		 M98090_DIGMIC4_SHIFT, 0, max98090_shdn_event,
++			 SND_SOC_DAPM_POST_PMU),
+ };
  
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 9c1c65612adb7..5fcd6f7b5f787 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -57,6 +57,7 @@ static const struct hid_device_id hid_quirks[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_FLIGHT_SIM_YOKE), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_PEDALS), HID_QUIRK_NOGET },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_THROTTLE), HID_QUIRK_NOGET },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_COOLER_MASTER, USB_DEVICE_ID_COOLER_MASTER_MICE_DONGLE), HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB), HID_QUIRK_NO_INIT_REPORTS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB_RAPIDFIRE), HID_QUIRK_NO_INIT_REPORTS | HID_QUIRK_ALWAYS_POLL },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K70RGB), HID_QUIRK_NO_INIT_REPORTS },
+ static const struct snd_soc_dapm_route max98090_dapm_routes[] = {
 -- 
 2.51.0
 
