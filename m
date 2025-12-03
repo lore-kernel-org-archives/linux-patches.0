@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6230E35B158;
-	Wed,  3 Dec 2025 16:41:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53F635BDA7;
+	Wed,  3 Dec 2025 16:41:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780067; cv=none; b=KrFLrKCTWOZkeI6Mljkd7CQMK9qlIZuF/0VEpaMqin0db5qzj2AY1ID4oX+baC+dGTb3Owb2QocpfpdJMDGtWK2a4m0NssFd9sF0/d6jyyFpMNN9xxMMjw/23M8u+mcHfQMm0CulUn8YlbyPtmt8V+YLXXlyukPc0mDs8/pdMtE=
+	t=1764780070; cv=none; b=eXAtq++IuplLywRbYtI7dHCyZyQf2JWeCBMUKXskOMMl3XwnpvRqV12eZdADhkcC7KdqfI0bcM7He1UnGYj/u8gSVtNXEq6LCMs0vJERSBh6kvl82I/FEo2mR8CNiay8uSO2OeigAAignZKied64ea6TbIMyFiB8Nxel7hLCFKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780067; c=relaxed/simple;
-	bh=JlRmjDYmg3tYgIi2Fsb+WPv6VLJtzZ7AZvfr3uSO+UY=;
+	s=arc-20240116; t=1764780070; c=relaxed/simple;
+	bh=UEeU+rr3w2fjrz1F0cjDrEboZPRw/clA7iPyjuh3TNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iK3L4AJ2hAvsc7IMy4+AtM05ENcvqqVMPHQU5GXw3+zA0SPrJMahAfZLI6w6n5xvQX+7I3MVMHpuW8vYmut+iaOat875rCEDYZOj5HWfGLAEjjwiuKvK+KBU4R2NrSUtcZScgwqyPoGJGCYwXQoBEifyk6aBSzSOfEMF9UHOBH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=te5K11Pq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kFw5x+7sXvnBQ8iHVfw/V+N0NyIYruf6lUPXNmo0lW8osuQcVGSjPuFU6fWNOre2qkqzM4EcN2JCofNiZVNnO8jNZfdQQnGwkIco5vmJZ6cwSPBAnxIxAtLdm5rsQLEy3gHFTt+rVDz/f/Z8yBYRWGVe4oeqThE/Z4TX0xkypGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cbf7SvJW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="te5K11Pq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DABC4CEF5;
-	Wed,  3 Dec 2025 16:41:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cbf7SvJW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F030C4CEF5;
+	Wed,  3 Dec 2025 16:41:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780067;
-	bh=JlRmjDYmg3tYgIi2Fsb+WPv6VLJtzZ7AZvfr3uSO+UY=;
+	s=korg; t=1764780070;
+	bh=UEeU+rr3w2fjrz1F0cjDrEboZPRw/clA7iPyjuh3TNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=te5K11PqEGjq0qQQxxtnyc+3F/9aO4h9QaDCwnGutD8IhcIzOEhAFV4AN7BHuMXcl
-	 jpehUorpYclkhYhSBlUvPwQeBG+G4jDQNS4k/MjFgtbrdbWokNZcg7ZhLHIrPXrXHv
-	 W7Q47laG7068Xqnj1hb7GpH3Auw/diJoZv+pkvp0=
+	b=Cbf7SvJWEVFxeMXXb/wiGq5Com9MVrBGN9J/rBLTDcWXAZnSeVYVOzpTe8bv+hyIY
+	 JqVlfiFY6KQXzMiAhYwsAkq7bpsfCQl956FC5SzPsVx9HqGBaVadMURIJwS+nf+n54
+	 1yyluubQ/1DHIDrNzYdEclrJhmJpevg646WNJ86Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 445/568] mptcp: fix ack generation for fallback msk
-Date: Wed,  3 Dec 2025 16:27:27 +0100
-Message-ID: <20251203152456.999109733@linuxfoundation.org>
+Subject: [PATCH 6.1 446/568] mptcp: fix premature close in case of fallback
+Date: Wed,  3 Dec 2025 16:27:28 +0100
+Message-ID: <20251203152457.043466871@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,83 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit 5e15395f6d9ec07395866c5511f4b4ac566c0c9b upstream.
+commit 17393fa7b7086664be519e7230cb6ed7ec7d9462 upstream.
 
-mptcp_cleanup_rbuf() needs to know the last most recent, mptcp-level
-rcv_wnd sent, and such information is tracked into the msk->old_wspace
-field, updated at ack transmission time by mptcp_write_options().
+I'm observing very frequent self-tests failures in case of fallback when
+running on a CONFIG_PREEMPT kernel.
 
-Fallback socket do not add any mptcp options, such helper is never
-invoked, and msk->old_wspace value remain stale. That in turn makes
-ack generation at recvmsg() time quite random.
+The root cause is that subflow_sched_work_if_closed() closes any subflow
+as soon as it is half-closed and has no incoming data pending.
 
-Address the issue ensuring mptcp_write_options() is invoked even for
-fallback sockets, and just update the needed info in such a case.
+That works well for regular subflows - MPTCP needs bi-directional
+connectivity to operate on a given subflow - but for fallback socket is
+race prone.
 
-The issue went unnoticed for a long time, as mptcp currently overshots
-the fallback socket receive buffer autotune significantly. It is going
-to change in the near future.
+When TCP peer closes the connection before the MPTCP one,
+subflow_sched_work_if_closed() will schedule the MPTCP worker to
+gracefully close the subflow, and shortly after will do another schedule
+to inject and process a dummy incoming DATA_FIN.
 
-Fixes: e3859603ba13 ("mptcp: better msk receive window updates")
+On CONFIG_PREEMPT kernel, the MPTCP worker can kick-in and close the
+fallback subflow before subflow_sched_work_if_closed() is able to create
+the dummy DATA_FIN, unexpectedly interrupting the transfer.
+
+Address the issue explicitly avoiding closing fallback subflows on when
+the peer is only half-closed.
+
+Note that, when the subflow is able to create the DATA_FIN before the
+worker invocation, the worker will change the msk state before trying to
+close the subflow and will skip the latter operation as the msk will not
+match anymore the precondition in __mptcp_close_subflow().
+
+Fixes: f09b0ad55a11 ("mptcp: close subflow when receiving TCP+FIN")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/594
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-1-806d3781c95f@kernel.org
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-3-806d3781c95f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |   23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ net/mptcp/protocol.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -834,8 +834,11 @@ bool mptcp_established_options(struct so
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2598,7 +2598,8 @@ static void __mptcp_close_subflow(struct
  
- 	opts->suboptions = 0;
+ 		if (ssk_state != TCP_CLOSE &&
+ 		    (ssk_state != TCP_CLOSE_WAIT ||
+-		     inet_sk_state_load(sk) != TCP_ESTABLISHED))
++		     inet_sk_state_load(sk) != TCP_ESTABLISHED ||
++		     __mptcp_check_fallback(msk)))
+ 			continue;
  
-+	/* Force later mptcp_write_options(), but do not use any actual
-+	 * option space.
-+	 */
- 	if (unlikely(__mptcp_check_fallback(msk) && !mptcp_check_infinite_map(skb)))
--		return false;
-+		return true;
- 
- 	if (unlikely(skb && TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST)) {
- 		if (mptcp_established_options_fastclose(sk, &opt_size, remaining, opts) ||
-@@ -1296,6 +1299,20 @@ update_wspace:
- 	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
- }
- 
-+static void mptcp_track_rwin(struct tcp_sock *tp)
-+{
-+	const struct sock *ssk = (const struct sock *)tp;
-+	struct mptcp_subflow_context *subflow;
-+	struct mptcp_sock *msk;
-+
-+	if (!ssk)
-+		return;
-+
-+	subflow = mptcp_subflow_ctx(ssk);
-+	msk = mptcp_sk(subflow->conn);
-+	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
-+}
-+
- __sum16 __mptcp_make_csum(u64 data_seq, u32 subflow_seq, u16 data_len, __wsum sum)
- {
- 	struct csum_pseudo_header header;
-@@ -1588,6 +1605,10 @@ mp_rst:
- 				      opts->reset_transient,
- 				      opts->reset_reason);
- 		return;
-+	} else if (unlikely(!opts->suboptions)) {
-+		/* Fallback to TCP */
-+		mptcp_track_rwin(tp);
-+		return;
- 	}
- 
- 	if (OPTION_MPTCP_PRIO & opts->suboptions) {
+ 		/* 'subflow_data_ready' will re-sched once rx queue is empty */
 
 
