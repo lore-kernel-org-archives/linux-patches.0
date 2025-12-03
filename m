@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D787316184;
-	Wed,  3 Dec 2025 15:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E050316184;
+	Wed,  3 Dec 2025 15:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776595; cv=none; b=m5O2llb12GruDTlJomaG1EepPEEB23luXHoBK9kLSPoUFiiT/DUxEtnPHucmxbUM+Z4V5ta7HJN/8pvgPr+zpE2lybUo8psAywgVg3m3EiDiBt5H3ZATlplkj1aKmTrUKYr9ges2v1eBTCJAikwJkqxCEhLaiD0KsBqeTHqZrd0=
+	t=1764776597; cv=none; b=cHu6NWaaZQwbPM7XJ5FsV1KHj8AULekzgZvUk+K2H+au97RYXXA9mMX5dL1bNmFMaS3qVL4z95y/ma+uSprEU9fA2iFLPJc9pgcu3q02YhJjJOfA1QnMqkOpyx6k166EnaHmYPCz1QsmZBAevKUSX9fDURkEqmssyQOlSx7Cfm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776595; c=relaxed/simple;
-	bh=dxCWmoMB6nGeiomXSqntiJQBLAJfrMEHTvce0imwoac=;
+	s=arc-20240116; t=1764776597; c=relaxed/simple;
+	bh=Ql5RI2a77XkYBLFH6KKx4wa2xKacQouAuirBZyHFdHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXNIfKlSfM5Vf3mueY6vJC3sJ/odZ6nlmfA3A9hRJblYFVItsy+Wlnuo2ExakeAIf+ox9ixJeqWH7auT6ck35CP6AKwnYKeYZOot/RlAGb8AzuiJHlWvvV4jjwzzSK9Xy2Um5rg/yr70Xn+GN+3xKnYFVUzJ0Os79y6d3J+CmG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQAYhsih; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iaxK4WDxYhzsTXyXKALhMM1P+TLiOCvm+s/TolbHQUUCeWev76iCNRdZ2ROZxC+/vwa5Fy3DvenJi5gLqpTqtSTkIfwIoRWWHBIC7enx1Gqa1/vjmfJuTIRLwOwPVs/460e97e5ofRJ8ZKs/V76Q0MJjs+KOIFmFFucW/zNktLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Obcb1K08; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQAYhsih"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11102C4CEF5;
-	Wed,  3 Dec 2025 15:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Obcb1K08"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A98C4CEF5;
+	Wed,  3 Dec 2025 15:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776593;
-	bh=dxCWmoMB6nGeiomXSqntiJQBLAJfrMEHTvce0imwoac=;
+	s=korg; t=1764776596;
+	bh=Ql5RI2a77XkYBLFH6KKx4wa2xKacQouAuirBZyHFdHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQAYhsih4NTUG5aqRB1GNj8LLfTvHJtbvKXXWFMMoMof+589PHqP5bNOAI5HHU1mz
-	 74JIdi4M7q8Yxf1IDxYdTPjXEhZhz6M+UkfeF3LRxdAjeKWwgafNjX33DaNhed1C7A
-	 Y1nTeacIX9k0zBzG2NuLATZOlAK+pO+oAnfWUO70=
+	b=Obcb1K081lKRU8mrnRjS5vvlqKXAt6800Bu4mg7ype37AI83r6wYWrIYDABksiOzK
+	 zTjseo+BQghJ3vGOW+UWPE1bGEOUw86dH1IUiTtOfESsdNE0mvxiephP2pm85jbPpa
+	 nFsGnZ89PsXvVsmmmYa5wqqWRwHTUAF5WVvXlYvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 229/300] vsock: Ignore signal/timeout on connect() if already established
-Date: Wed,  3 Dec 2025 16:27:13 +0100
-Message-ID: <20251203152409.110309612@linuxfoundation.org>
+Subject: [PATCH 5.10 230/300] scsi: core: Fix a regression triggered by scsi_host_busy()
+Date: Wed,  3 Dec 2025 16:27:14 +0100
+Message-ID: <20251203152409.147484703@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,99 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 002541ef650b742a198e4be363881439bb9d86b4 ]
+[ Upstream commit a0b7780602b1b196f47e527fec82166a7e67c4d0 ]
 
-During connect(), acting on a signal/timeout by disconnecting an already
-established socket leads to several issues:
+Commit 995412e23bb2 ("blk-mq: Replace tags->lock with SRCU for tag
+iterators") introduced the following regression:
 
-1. connect() invoking vsock_transport_cancel_pkt() ->
-   virtio_transport_purge_skbs() may race with sendmsg() invoking
-   virtio_transport_get_credit(). This results in a permanently elevated
-   `vvs->bytes_unsent`. Which, in turn, confuses the SOCK_LINGER handling.
+Call trace:
+ __srcu_read_lock+0x30/0x80 (P)
+ blk_mq_tagset_busy_iter+0x44/0x300
+ scsi_host_busy+0x38/0x70
+ ufshcd_print_host_state+0x34/0x1bc
+ ufshcd_link_startup.constprop.0+0xe4/0x2e0
+ ufshcd_init+0x944/0xf80
+ ufshcd_pltfrm_init+0x504/0x820
+ ufs_rockchip_probe+0x2c/0x88
+ platform_probe+0x5c/0xa4
+ really_probe+0xc0/0x38c
+ __driver_probe_device+0x7c/0x150
+ driver_probe_device+0x40/0x120
+ __driver_attach+0xc8/0x1e0
+ bus_for_each_dev+0x7c/0xdc
+ driver_attach+0x24/0x30
+ bus_add_driver+0x110/0x230
+ driver_register+0x68/0x130
+ __platform_driver_register+0x20/0x2c
+ ufs_rockchip_pltform_init+0x1c/0x28
+ do_one_initcall+0x60/0x1e0
+ kernel_init_freeable+0x248/0x2c4
+ kernel_init+0x20/0x140
+ ret_from_fork+0x10/0x20
 
-2. connect() resetting a connected socket's state may race with socket
-   being placed in a sockmap. A disconnected socket remaining in a sockmap
-   breaks sockmap's assumptions. And gives rise to WARNs.
+Fix this regression by making scsi_host_busy() check whether the SCSI
+host tag set has already been initialized. tag_set->ops is set by
+scsi_mq_setup_tags() just before blk_mq_alloc_tag_set() is called. This
+fix is based on the assumption that scsi_host_busy() and
+scsi_mq_setup_tags() calls are serialized. This is the case in the UFS
+driver.
 
-3. connect() transitioning SS_CONNECTED -> SS_UNCONNECTED allows for a
-   transport change/drop after TCP_ESTABLISHED. Which poses a problem for
-   any simultaneous sendmsg() or connect() and may result in a
-   use-after-free/null-ptr-deref.
-
-Do not disconnect socket on signal/timeout. Keep the logic for unconnected
-sockets: they don't linger, can't be placed in a sockmap, are rejected by
-sendmsg().
-
-[1]: https://lore.kernel.org/netdev/e07fd95c-9a38-4eea-9638-133e38c2ec9b@rbox.co/
-[2]: https://lore.kernel.org/netdev/20250317-vsock-trans-signal-race-v4-0-fc8837f3f1d4@rbox.co/
-[3]: https://lore.kernel.org/netdev/60f1b7db-3099-4f6a-875e-af9f6ef194f6@rbox.co/
-
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://patch.msgid.link/20251119-vsock-interrupted-connect-v2-1-70734cf1233f@rbox.co
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Closes: https://lore.kernel.org/linux-block/pnezafputodmqlpumwfbn644ohjybouveehcjhz2hmhtcf2rka@sdhoiivync4y/
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Tested-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Link: https://patch.msgid.link/20251007214800.1678255-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 40 +++++++++++++++++++++++++++++++---------
- 1 file changed, 31 insertions(+), 9 deletions(-)
+ drivers/scsi/hosts.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 36b65b45c5c7a..3a5cde1a026ed 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1464,18 +1464,40 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
- 		timeout = schedule_timeout(timeout);
- 		lock_sock(sk);
+diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
+index 17fa1cd91da61..97cbe22d7fee2 100644
+--- a/drivers/scsi/hosts.c
++++ b/drivers/scsi/hosts.c
+@@ -598,8 +598,9 @@ int scsi_host_busy(struct Scsi_Host *shost)
+ {
+ 	int cnt = 0;
  
--		if (signal_pending(current)) {
--			err = sock_intr_errno(timeout);
--			sk->sk_state = sk->sk_state == TCP_ESTABLISHED ? TCP_CLOSING : TCP_CLOSE;
--			sock->state = SS_UNCONNECTED;
--			vsock_transport_cancel_pkt(vsk);
--			vsock_remove_connected(vsk);
--			goto out_wait;
--		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
--			err = -ETIMEDOUT;
-+		/* Connection established. Whatever happens to socket once we
-+		 * release it, that's not connect()'s concern. No need to go
-+		 * into signal and timeout handling. Call it a day.
-+		 *
-+		 * Note that allowing to "reset" an already established socket
-+		 * here is racy and insecure.
-+		 */
-+		if (sk->sk_state == TCP_ESTABLISHED)
-+			break;
-+
-+		/* If connection was _not_ established and a signal/timeout came
-+		 * to be, we want the socket's state reset. User space may want
-+		 * to retry.
-+		 *
-+		 * sk_state != TCP_ESTABLISHED implies that socket is not on
-+		 * vsock_connected_table. We keep the binding and the transport
-+		 * assigned.
-+		 */
-+		if (signal_pending(current) || timeout == 0) {
-+			err = timeout == 0 ? -ETIMEDOUT : sock_intr_errno(timeout);
-+
-+			/* Listener might have already responded with
-+			 * VIRTIO_VSOCK_OP_RESPONSE. Its handling expects our
-+			 * sk_state == TCP_SYN_SENT, which hereby we break.
-+			 * In such case VIRTIO_VSOCK_OP_RST will follow.
-+			 */
- 			sk->sk_state = TCP_CLOSE;
- 			sock->state = SS_UNCONNECTED;
-+
-+			/* Try to cancel VIRTIO_VSOCK_OP_REQUEST skb sent out by
-+			 * transport->connect().
-+			 */
- 			vsock_transport_cancel_pkt(vsk);
-+
- 			goto out_wait;
- 		}
- 
+-	blk_mq_tagset_busy_iter(&shost->tag_set,
+-				scsi_host_check_in_flight, &cnt);
++	if (shost->tag_set.ops)
++		blk_mq_tagset_busy_iter(&shost->tag_set,
++					scsi_host_check_in_flight, &cnt);
+ 	return cnt;
+ }
+ EXPORT_SYMBOL(scsi_host_busy);
 -- 
 2.51.0
 
