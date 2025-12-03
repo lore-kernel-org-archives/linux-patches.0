@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A269309EF1;
-	Wed,  3 Dec 2025 16:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51151352F89;
+	Wed,  3 Dec 2025 16:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778611; cv=none; b=CsurItQr5BZSaKuMI9ArIocPicNqS/tUzhWL6APiCIMoTQfGCmYxF7bPkTf+e87Gs3zJOgqVGXVCMwmJP1Lkzsua1SNCMSAjL4o87OVD6vsu53dXD5q1eO+54366ueu/LWEPsUHiD0msIHT7BgqPMGxpIp15RmBe/rM07m8e63g=
+	t=1764778614; cv=none; b=NR4m3cSp0Wji4My5MjaIG1DYsgznTJSkkYH7pWADJsBNduZO1D4lUMytnYs7WEYC/ZcdjO0BTrWptmuZJwO5MyA+z+RCurDWuz4myAxIcalI2w8+Djey4CpeSa+FHR942TvrziZRIRROyBoVsaOS/QGsN1V9LJrVuD7dL4sUAT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778611; c=relaxed/simple;
-	bh=zdCjY0rMo3r4w0x9Ix85JRNKUf+R04ZTdODUFuHZAhA=;
+	s=arc-20240116; t=1764778614; c=relaxed/simple;
+	bh=OzgfyWYCmIwJCCqfHN1QNjQGzNmT9OSSCy6wL7rERSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXQmquEgKWBm/x6NgaCV+U3PK5ip04r2hOv/Pyjih7pviXXGYEIasdItkNBzpjXLr5qr9PsaSCH+pqqa48TYbRN49N1Cj9iyNjQWwONXsxmYPRU6GTCNeYnnPmo5b9AhlCVGpf1iqZ5Xvu6p76+j439Wv1lWlJrYxfL34mCW4S8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpARif03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AMc9fSIMGGNTajJ/YIFsyT6NeQ3+HqRw6KmVxusXop5RnIUGOtWJdTu+8PrP4vOb7hpr3K5LuSqCBG/B+JYFpBjGGAsIeHEribz+fpiwG0ZZt07Vn/+LIO0yA3ERU0u95Ou/ebqq3B6C3AlZgDnglePGb5eGar8QX0LsZ0QlreM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/zSbUyV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpARif03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3727C4CEF5;
-	Wed,  3 Dec 2025 16:16:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/zSbUyV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB60CC4CEF5;
+	Wed,  3 Dec 2025 16:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778611;
-	bh=zdCjY0rMo3r4w0x9Ix85JRNKUf+R04ZTdODUFuHZAhA=;
+	s=korg; t=1764778614;
+	bh=OzgfyWYCmIwJCCqfHN1QNjQGzNmT9OSSCy6wL7rERSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rpARif03jt1d5y1swHB0LFFP2McSnvlx1Co0ktcmC/VdyMR1n+J4FRPdV12EGSJNG
-	 WYOt1Zx1YFoIpIOONzn2MbbjE/Bj13SUEGb3zoTdKKYQ9bOYBru8lnWttk1V8+JIp3
-	 a+x4pYH8ZFhqlIV1pVFw3EHckEPQmrzNCbOq9D5U=
+	b=J/zSbUyVNz2i2Jfvc8iHu6EqlL4ISVrlG56uH2fZjNYX/mggFckpMm1zFQgcLGkis
+	 POxyZTdOiPiJRO8MVgHWWIXk9/alUWcz40lJaJQov8p8J7sZqYR5nSsOd7UbMZf+ZK
+	 PUpDMtnaHChuC/5AqyecRgRna9kGC7I4NkH5sX7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Lu <alex_lu@realsil.com.cn>,
-	Max Chou <max.chou@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Terrence Adams <tadamsjr@google.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Nazar Kalashnikov <sivartiwe@gmail.com>
-Subject: [PATCH 5.15 387/392] Bluetooth: Add more enc key size check
-Date: Wed,  3 Dec 2025 16:28:57 +0100
-Message-ID: <20251203152428.434741791@linuxfoundation.org>
+Subject: [PATCH 5.15 388/392] scsi: pm80xx: Set phy->enable_completion only when we
+Date: Wed,  3 Dec 2025 16:28:58 +0100
+Message-ID: <20251203152428.471729674@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,143 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Lu <alex_lu@realsil.com.cn>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 04a342cc49a8522e99c9b3346371c329d841dcd2 ]
+[ Upstream commit e4f949ef1516c0d74745ee54a0f4882c1f6c7aea ]
 
-When we are slave role and receives l2cap conn req when encryption has
-started, we should check the enc key size to avoid KNOB attack or BLUFFS
-attack.
->From SIG recommendation, implementations are advised to reject
-service-level connections on an encrypted baseband link with key
-strengths below 7 octets.
-A simple and clear way to achieve this is to place the enc key size
-check in hci_cc_read_enc_key_size()
+pm8001_phy_control() populates the enable_completion pointer with a stack
+address, sends a PHY_LINK_RESET / PHY_HARD_RESET, waits 300 ms, and
+returns. The problem arises when a phy control response comes late.  After
+300 ms the pm8001_phy_control() function returns and the passed
+enable_completion stack address is no longer valid. Late phy control
+response invokes complete() on a dangling enable_completion pointer which
+leads to a kernel crash.
 
-The btmon log below shows the case that lacks enc key size check.
-
-> HCI Event: Connect Request (0x04) plen 10
-        Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Class: 0x480104
-          Major class: Computer (desktop, notebook, PDA, organizers)
-          Minor class: Desktop workstation
-          Capturing (Scanner, Microphone)
-          Telephony (Cordless telephony, Modem, Headset)
-        Link type: ACL (0x01)
-< HCI Command: Accept Connection Request (0x01|0x0009) plen 7
-        Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Role: Peripheral (0x01)
-> HCI Event: Command Status (0x0f) plen 4
-      Accept Connection Request (0x01|0x0009) ncmd 2
-        Status: Success (0x00)
-> HCI Event: Connect Complete (0x03) plen 11
-        Status: Success (0x00)
-        Handle: 1
-        Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Link type: ACL (0x01)
-        Encryption: Disabled (0x00)
-...
-
-> HCI Event: Encryption Change (0x08) plen 4
-        Status: Success (0x00)
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Encryption: Enabled with E0 (0x01)
-< HCI Command: Read Encryption Key Size (0x05|0x0008) plen 2
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-> HCI Event: Command Complete (0x0e) plen 7
-      Read Encryption Key Size (0x05|0x0008) ncmd 2
-        Status: Success (0x00)
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Key size: 6
-// We should check the enc key size
-...
-
-> ACL Data RX: Handle 1 flags 0x02 dlen 12
-      L2CAP: Connection Request (0x02) ident 3 len 4
-        PSM: 25 (0x0019)
-        Source CID: 64
-< ACL Data TX: Handle 1 flags 0x00 dlen 16
-      L2CAP: Connection Response (0x03) ident 3 len 8
-        Destination CID: 64
-        Source CID: 64
-        Result: Connection pending (0x0001)
-        Status: Authorization pending (0x0002)
-> HCI Event: Number of Completed Packets (0x13) plen 5
-        Num handles: 1
-        Handle: 1 Address: BB:22:33:44:55:99 (OUI BB-22-33)
-        Count: 1
-        #35: len 16 (25 Kb/s)
-        Latency: 5 msec (2-7 msec ~4 msec)
-< ACL Data TX: Handle 1 flags 0x00 dlen 16
-      L2CAP: Connection Response (0x03) ident 3 len 8
-        Destination CID: 64
-        Source CID: 64
-        Result: Connection successful (0x0000)
-        Status: No further information available (0x0000)
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Alex Lu <alex_lu@realsil.com.cn>
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ Nazar Kalashnikov: change status to 
-rp_status due to function parameter conflict ]
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Link: https://lore.kernel.org/r/20240627155924.2361370-2-tadamsjr@google.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Nazar Kalashnikov <sivartiwe@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Backport fix for CVE-2023-24023
- net/bluetooth/hci_event.c |   21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+Backport fix for CVE-2024-47666
+ drivers/scsi/pm8001/pm8001_sas.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -3136,6 +3136,7 @@ static void read_enc_key_size_complete(s
- 	const struct hci_rp_read_enc_key_size *rp;
- 	struct hci_conn *conn;
- 	u16 handle;
-+	u8 rp_status;
- 
- 	BT_DBG("%s status 0x%02x", hdev->name, status);
- 
-@@ -3145,6 +3146,7 @@ static void read_enc_key_size_complete(s
- 	}
- 
- 	rp = (void *)skb->data;
-+	rp_status = rp->status;
- 	handle = le16_to_cpu(rp->handle);
- 
- 	hci_dev_lock(hdev);
-@@ -3157,15 +3159,30 @@ static void read_enc_key_size_complete(s
- 	 * secure approach is to then assume the key size is 0 to force a
- 	 * disconnection.
- 	 */
--	if (rp->status) {
-+	if (rp_status) {
- 		bt_dev_err(hdev, "failed to read key size for handle %u",
- 			   handle);
- 		conn->enc_key_size = 0;
- 	} else {
- 		conn->enc_key_size = rp->key_size;
-+		rp_status = 0;
-+
-+		if (conn->enc_key_size < hdev->min_enc_key_size) {
-+			/* As slave role, the conn->state has been set to
-+			 * BT_CONNECTED and l2cap conn req might not be received
-+			 * yet, at this moment the l2cap layer almost does
-+			 * nothing with the non-zero status.
-+			 * So we also clear encrypt related bits, and then the
-+			 * handler of l2cap conn req will get the right secure
-+			 * state at a later time.
-+			 */
-+			rp_status = HCI_ERROR_AUTH_FAILURE;
-+			clear_bit(HCI_CONN_ENCRYPT, &conn->flags);
-+			clear_bit(HCI_CONN_AES_CCM, &conn->flags);
-+		}
- 	}
- 
--	hci_encrypt_cfm(conn, 0);
-+	hci_encrypt_cfm(conn, rp_status);
- 
- unlock:
- 	hci_dev_unlock(hdev);
+--- a/drivers/scsi/pm8001/pm8001_sas.c
++++ b/drivers/scsi/pm8001/pm8001_sas.c
+@@ -163,7 +163,6 @@ int pm8001_phy_control(struct asd_sas_ph
+ 	unsigned long flags;
+ 	pm8001_ha = sas_phy->ha->lldd_ha;
+ 	phy = &pm8001_ha->phy[phy_id];
+-	pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 	switch (func) {
+ 	case PHY_FUNC_SET_LINK_RATE:
+ 		rates = funcdata;
+@@ -176,6 +175,7 @@ int pm8001_phy_control(struct asd_sas_ph
+ 				rates->maximum_linkrate;
+ 		}
+ 		if (pm8001_ha->phy[phy_id].phy_state ==  PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
+@@ -184,6 +184,7 @@ int pm8001_phy_control(struct asd_sas_ph
+ 		break;
+ 	case PHY_FUNC_HARD_RESET:
+ 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
+@@ -192,6 +193,7 @@ int pm8001_phy_control(struct asd_sas_ph
+ 		break;
+ 	case PHY_FUNC_LINK_RESET:
+ 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
 
 
