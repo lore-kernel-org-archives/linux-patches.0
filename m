@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F404B32ED5F;
-	Wed,  3 Dec 2025 15:51:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F68632ED59;
+	Wed,  3 Dec 2025 15:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777089; cv=none; b=dRsiSm77csvRK9UcEB75A9ufCuB+ntQcWvWccBpfDgrc5wNXEyFx2wwtdmTfW/7CzFgmbzisqwEAi00PQTkS9aYI4JGhqnqB484ngNNCQ7QKfpfDQ22v0cdZOe9HIK8FTMYq7o04ASFQZlW988l+okpSn36d3Z6IweK8WHh8wUg=
+	t=1764777092; cv=none; b=GnhUiZ5YfDbyyGR93mBvm7kkuLwXMTSfUoZH8QLIbf9ZyJMc1jm3PRx16V0Dva+3KqqGF7iS3L3hzlKCoego4vdUQUdlt2auPepDEK2Pt2IvrQDf+PmQcc7Z3Qx0Y+qRwPcpR18+1asY4E/OsJN3Nf2YsOWvWojzlxJL4noWTws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777089; c=relaxed/simple;
-	bh=hLqg8Wne/kJHo+4gdBJs6M0q4yUE09eShUW7PxXxn8g=;
+	s=arc-20240116; t=1764777092; c=relaxed/simple;
+	bh=Q5L58/OoCqMsuekIGRul2N93B5hT8dAUdRijkLAJjrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=doeXIzminx17eL8IWBPU+g5xT2mPCa50Eahr55bqLAWm1K+Gg7SBFnZFV7Mx0zuuuOGD8eaHnWUn4Ip58uqGPXi8Sa88zFkoeJ2TkaZyeHlOoktQN42CxqJmqvPVeK+7XgMcpjABhfZFzBMBmYvdwEq8bH9roqJfoAP90ACmtfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNtELZRo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bVpA9S5Q//cwAPnsxGrAGX5BogEME1DgG86U1eO1qMcYsc5hYWzOeSGIIoyyZcA9G0Bl8wDlvPwvKCxDXZ4aPaFT/28f0wKpgIMbZB5aqDqFjONqsVGQGpHAC2zQclkSlRPFidTMFBRxTpysVGh3w6uLT0BQ24SZMbbD663JaI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lfxds+U4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNtELZRo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF56C4CEF5;
-	Wed,  3 Dec 2025 15:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lfxds+U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C801C4CEF5;
+	Wed,  3 Dec 2025 15:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777088;
-	bh=hLqg8Wne/kJHo+4gdBJs6M0q4yUE09eShUW7PxXxn8g=;
+	s=korg; t=1764777092;
+	bh=Q5L58/OoCqMsuekIGRul2N93B5hT8dAUdRijkLAJjrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNtELZRoGtRoHYRiGtb9+qR4dbAET6seFi2jgWjJFts3UAdS0PwDnxstCP8hbAPc0
-	 Hkns57nLxQiOXK39pLPSrNMhPKyLEjUlEQ7cMTHwItYe9fguEi13nBtwjmIc7sPC6p
-	 DHsUCz9HhrRIqDLSVNUuMC3693ZObHlXYOgG7edg=
+	b=Lfxds+U4yA42SrrLRYszIYRzuFUe0BrEFjL8KNmIds/VI5nkhJWtjQG6ETCRrJzyJ
+	 eKhSABPjmD59sE+T8CxEs5U6lSKBFreVLre2G7VzBgeoqmVy7O/C6CIHSmFLDuJZTP
+	 35YMoU91KhnBTAvAohCFtjRAp+RiA6DAyZQtY34o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Klara Modin <klarasmodin@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.17 071/146] MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow
-Date: Wed,  3 Dec 2025 16:27:29 +0100
-Message-ID: <20251203152349.065219062@linuxfoundation.org>
+	Maarten Zanders <maarten@zanders.be>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.17 080/146] ARM: dts: nxp: imx6ul: correct SAI3 interrupt line
+Date: Wed,  3 Dec 2025 16:27:38 +0100
+Message-ID: <20251203152349.392495539@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,76 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Maarten Zanders <maarten@zanders.be>
 
-commit 841ecc979b18d3227fad5e2d6a1e6f92688776b5 upstream.
+commit 1b03346314b791ad966d3c6d59253328226a2b2d upstream.
 
-Owing to Config4.MMUSizeExt and VTLB/FTLB MMU features later MIPSr2+
-cores can have more than 64 TLB entries.  Therefore allocate an array
-for uniquification instead of placing too an small array on the stack.
+The i.MX6UL reference manual lists two possible interrupt lines for
+SAI3 (56 and 57, offset +32). The current device tree entry uses
+the first one (24), which prevents IRQs from being handled properly.
 
-Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
-Co-developed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.17+: 9f048fa48740: MIPS: mm: Prevent a TLB shutdown on initial uniquification
-Cc: stable@vger.kernel.org # v6.17+
-Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Tested-by: Klara Modin <klarasmodin@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Use the second interrupt line (25), which does allow interrupts
+to work as expected.
+
+Fixes: 36e2edf6ac07 ("ARM: dts: imx6ul: add sai support")
+Signed-off-by: Maarten Zanders <maarten@zanders.be>
+Cc: stable@vger.kernel.org
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/nxp/imx/imx6ul.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -12,6 +12,7 @@
- #include <linux/init.h>
- #include <linux/sched.h>
- #include <linux/smp.h>
-+#include <linux/memblock.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -522,17 +523,26 @@ static int r4k_vpn_cmp(const void *a, co
-  * Initialise all TLB entries with unique values that do not clash with
-  * what we have been handed over and what we'll be using ourselves.
-  */
--static void r4k_tlb_uniquify(void)
-+static void __ref r4k_tlb_uniquify(void)
- {
--	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
- 	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
- 	int start = num_wired_entries();
-+	phys_addr_t tlb_vpn_size;
-+	unsigned long *tlb_vpns;
- 	unsigned long vpn_mask;
- 	int cnt, ent, idx, i;
- 
- 	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
- 	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
- 
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
-+
- 	htw_stop();
- 
- 	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
-@@ -585,6 +595,10 @@ static void r4k_tlb_uniquify(void)
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
-+	if (use_slab)
-+		kfree(tlb_vpns);
-+	else
-+		memblock_free(tlb_vpns, tlb_vpn_size);
- }
- 
- /*
+--- a/arch/arm/boot/dts/nxp/imx/imx6ul.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6ul.dtsi
+@@ -339,7 +339,7 @@
+ 					#sound-dai-cells = <0>;
+ 					compatible = "fsl,imx6ul-sai", "fsl,imx6sx-sai";
+ 					reg = <0x02030000 0x4000>;
+-					interrupts = <GIC_SPI 24 IRQ_TYPE_LEVEL_HIGH>;
++					interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
+ 					clocks = <&clks IMX6UL_CLK_SAI3_IPG>,
+ 						 <&clks IMX6UL_CLK_SAI3>,
+ 						 <&clks IMX6UL_CLK_DUMMY>, <&clks IMX6UL_CLK_DUMMY>;
 
 
