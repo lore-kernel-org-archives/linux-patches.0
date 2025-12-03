@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C70342537;
-	Wed,  3 Dec 2025 15:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D4233B6EF;
+	Wed,  3 Dec 2025 15:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777454; cv=none; b=SO51D98B/+VAwAMoxWADWpSBxTRD9n5Q8gAb6oSzDct9K2IGM+uwoiJ3YvYAt0zDyIW5uyK3vHAqCIefNFdIJha1SJJ0/P60r40p1+CNgjU1v+z10HcDF/XqVRB4BAfI4LKLds+eYnhTD5Zr8vTwKjL37voMl/UDciQCN19BEq8=
+	t=1764777457; cv=none; b=fF3mNIeEfQdYDmuAcRnqElfeHsMS/58TTeD63wh5HcdBBmCifYu+DNWK+gVpXHV9/nLBal+exZUgpjUflUOIRKOf93LBgtAXy5/rO5ODFWDvfxxSWZkUlKGFKEoshlB3IsYb3ar9mu0x35Ke2lyLCvFg4YCQxavRxcAYQ9hEnNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777454; c=relaxed/simple;
-	bh=s1SUotEdHhSAlFRxLIhoGDzJy6iNH9ZSQM78/wF8F9o=;
+	s=arc-20240116; t=1764777457; c=relaxed/simple;
+	bh=X4YxxkWp4ylpCIsmtmPOzGBluxcCSwpdwqKIPeqY9LQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I4jUxF0vhx9Y0dJtJUH0cvXIw7gsFUkdqGtt71cWpu5fZWAMWS1hBMB8xWDfUZF0iurkfAGF/gyu4jHLtB11ceCGm93cYqXwADu5VAX3Xh0SdPmT3kHgr88ZXKt9rc4LQTK2PBIEmroFMd3VdouGDzJApVeFH5QXxq2NT2WINWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BfGK626R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VSbRpeDmp8EY+R2vWLZ5QacEvJ6BuP05vLLmDjlN0Cy1A1NLap9KeQ3A4QSo7ExAKw7HJDCfbgowB2+X0kw98REllvVoCx05xws81tUmuIssBYx2O3BkH1mki9yGF6H/kLAPj4Wb4ISBkJBavqOtoTRP3Q8WQZbXJ7eXkc9/3do=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CydvwGOj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BfGK626R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5181DC4CEF5;
-	Wed,  3 Dec 2025 15:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CydvwGOj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A1AC4CEF5;
+	Wed,  3 Dec 2025 15:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777454;
-	bh=s1SUotEdHhSAlFRxLIhoGDzJy6iNH9ZSQM78/wF8F9o=;
+	s=korg; t=1764777457;
+	bh=X4YxxkWp4ylpCIsmtmPOzGBluxcCSwpdwqKIPeqY9LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BfGK626R3LSCWuB7S1ikczysZejfL7IQsX9q3uIJp00LOdLenUczS0kbSp6/vn/K3
-	 1Qlscew/NX/Pwf+7mBlQVg1/xdptESnCffYz5k0wwr2ZPnbd8c3W1z3wkdtV4kHIaA
-	 YyqT8DrUAXMC59li8frqelIsZ2r2MMDvD5QlJZjQ=
+	b=CydvwGOjtUk3bm85XmQwsgIFyNSaeBuallnn55hlzN5YNJeoDAflW02L09BZlYRdl
+	 TrT/cwrvW9RfjVm5dh0TloeVmR+Bl9Mw78p1vl7LKfJzBSP1yCyQVSSptksCxPTaBF
+	 /yoIGBn6Xa2zDrpcNsQJpWDXQil6Qn40bW1AoiX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/392] drm/etnaviv: fix flush sequence logic
-Date: Wed,  3 Dec 2025 16:22:55 +0100
-Message-ID: <20251203152415.028250424@linuxfoundation.org>
+Subject: [PATCH 5.15 043/392] xhci: dbc: Improve performance by removing delay in transfer event polling.
+Date: Wed,  3 Dec 2025 16:23:13 +0100
+Message-ID: <20251203152415.695017816@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -46,52 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit a042beac6e6f8ac1e923784cfff98b47cbabb185 ]
+[ Upstream commit 03e3d9c2bd85cda941b3cf78e895c1498ac05c5f ]
 
-The current logic uses the flush sequence from the current address
-space. This is harmless when deducing the flush requirements for the
-current submit, as either the incoming address space is the same one
-as the currently active one or we switch context, in which case the
-flush is unconditional.
+Queue event polling work with 0 delay in case there are pending transfers
+queued up. This is part 2 of a 3 part series that roughly triples dbc
+performace when using adb push and pull over dbc.
 
-However, this sequence is also stored as the current flush sequence
-of the GPU. If we switch context the stored flush sequence will no
-longer belong to the currently active address space. This incoherency
-can then cause missed flushes, resulting in translation errors.
+Max/min push rate after patches is 210/118 MB/s, pull rate 171/133 MB/s,
+tested with large files (300MB-9GB) by Łukasz Bartosik
 
-Fixes: 27b67278e007 ("drm/etnaviv: rework MMU handling")
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Link: https://lore.kernel.org/r/20251021093723.3887980-1-l.stach@pengutronix.de
+First performance improvement patch was commit 31128e7492dc
+("xhci: dbc: add dbgtty request to end of list once it completes")
+
+Cc: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20241227120142.1035206-2-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f3d12ec847b9 ("xhci: dbc: fix bogus 1024 byte prefix if ttyDBC read races with stall event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_buffer.c | 2 +-
+ drivers/usb/host/xhci-dbgcap.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-index 982174af74b1e..7d897aafb2a6a 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_buffer.c
-@@ -346,7 +346,7 @@ void etnaviv_buffer_queue(struct etnaviv_gpu *gpu, u32 exec_state,
- 	u32 link_target, link_dwords;
- 	bool switch_context = gpu->exec_state != exec_state;
- 	bool switch_mmu_context = gpu->mmu_context != mmu_context;
--	unsigned int new_flush_seq = READ_ONCE(gpu->mmu_context->flush_seq);
-+	unsigned int new_flush_seq = READ_ONCE(mmu_context->flush_seq);
- 	bool need_flush = switch_mmu_context || gpu->flush_seq != new_flush_seq;
- 	bool has_blt = !!(gpu->identity.minor_features5 &
- 			  chipMinorFeatures5_BLT_ENGINE);
--- 
-2.51.0
-
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -987,7 +987,7 @@ static void xhci_dbc_handle_events(struc
+ 		/* set fast poll rate if there are pending data transfers */
+ 		if (!list_empty(&dbc->eps[BULK_OUT].list_pending) ||
+ 		    !list_empty(&dbc->eps[BULK_IN].list_pending))
+-			poll_interval = 1;
++			poll_interval = 0;
+ 		break;
+ 	default:
+ 		dev_info(dbc->dev, "stop handling dbc events\n");
 
 
