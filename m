@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD044331A46;
-	Wed,  3 Dec 2025 16:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE85331A46;
+	Wed,  3 Dec 2025 16:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778255; cv=none; b=CMnJ12WQV9UwU5jA0NryTj0z+sfPRpTkghgEEDJ6vKL0UXlwusmnQ+Q/zvjfn2e+9QHnqjq9dWROYb8CJG9tcTePUqFy+NEER4KIAVuYwqauYS/SqK0wq7l4k+BurKOGbRsV3inW6p9H+uEyeJdqOJdMZ0BztGnbBTM7rWkCqYE=
+	t=1764778259; cv=none; b=pvv6eMpFpkpSxLlKRfK0+HbgmxmNNLxQ1VFhqrOnluoldd7XHZP0drwFErUhwsNUV8oAhnE/S9ZgMDgsM52VeFP+Uqa3+pgL72z/oHkQjbbQFddRhjeoRilfBDyVkbKFI/igz3M5JEigJQv6tXb9c85fFUxRPhizjGXRGjvij+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778255; c=relaxed/simple;
-	bh=ahLUm/9QJDlZj16zGuKss1ZTjNDWdoocGAwgq34Pdz4=;
+	s=arc-20240116; t=1764778259; c=relaxed/simple;
+	bh=bvTzGH4AI6l0dqh8v9bV5XO4MiO2ieE56mEssa621bA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C7j+/pvStluTcyDb35i2dXuMNRzRqJ5OhxIIb4lHvqldJo2bwelFvHbFZXXAaXG7UXjMSSZeng50AMfEeKq7u9/8tXS8u9O4B4cgb7D9wIksBjI1jRJicVkLko0ZrP21F7VElyC9lAPh69SBAUg+jQSw3UrIjTsEqmGnPB7E5jQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9LV2mKl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fC4+jTJWDfeGyQw0WEykesuY0dLmiiUuYi/SPk9cNBblTWuc7+RZlsmwhdvospKMV2VNR60uYIoUNFpCz9+Ng3JNOcBegHl58cpFpGSDrcni8iTyMGi8HyWAHDqUcwhwF/rfxmE5ZuyCsCRrQEuJzdhkmHEONvJvwsMH7N2tCNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXzHr0o5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9LV2mKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AD63C4CEF5;
-	Wed,  3 Dec 2025 16:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXzHr0o5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD67C4CEF5;
+	Wed,  3 Dec 2025 16:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778255;
-	bh=ahLUm/9QJDlZj16zGuKss1ZTjNDWdoocGAwgq34Pdz4=;
+	s=korg; t=1764778259;
+	bh=bvTzGH4AI6l0dqh8v9bV5XO4MiO2ieE56mEssa621bA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9LV2mKlA8SBICFmmTxb8yYJ/oBV0T4TEt8javKvW2WYEFGY7VXx3Bd3Uh9p0qVp+
-	 fXln0xMu32EQB/MpN3kOc0q746ksewlIEeCcAILMeXGv3QIHv1Bkri9hgJ/DJHAC46
-	 e9bZej2vVrNUMvIV/8FHgAcNAmkAaNIunZMbduyE=
+	b=qXzHr0o5VFsEQ34BxKWZxOtbhrrj2LQfv0n//NhA3fR3HixkqiKsA8fiTxdoa5sa3
+	 fGPLtgYWsVBafuUPl+mMnXclJphvNs91shcd9ySwst2mHsmV/vJIqWwQSNL7du+tG+
+	 Fftc9izNN4rBFoW8zchf6jGsIWa1E8cjNqg6J4xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.15 291/392] MIPS: Malta: Fix !EVA SOC-it PCI MMIO
-Date: Wed,  3 Dec 2025 16:27:21 +0100
-Message-ID: <20251203152424.865648485@linuxfoundation.org>
+	syzbot+355158e7e301548a1424@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 292/392] mptcp: fix race condition in mptcp_schedule_work()
+Date: Wed,  3 Dec 2025 16:27:22 +0100
+Message-ID: <20251203152424.902339429@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,100 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Eric Dumazet <edumazet@google.com>
 
-commit ebd729fef31620e0bf74cbf8a4c7fda73a2a4e7e upstream.
+commit 035bca3f017ee9dea3a5a756e77a6f7138cc6eea upstream.
 
-Fix a regression that has caused accesses to the PCI MMIO window to
-complete unclaimed in non-EVA configurations with the SOC-it family of
-system controllers, preventing PCI devices from working that use MMIO.
+syzbot reported use-after-free in mptcp_schedule_work() [1]
 
-In the non-EVA case PHYS_OFFSET is set to 0, meaning that PCI_BAR0 is
-set with an empty mask (and PCI_HEAD4 matches addresses starting from 0
-accordingly).  Consequently all addresses are matched for incoming DMA
-accesses from PCI.  This seems to confuse the system controller's logic
-and outgoing bus cycles targeting the PCI MMIO window seem not to make
-it to the intended devices.
+Issue here is that mptcp_schedule_work() schedules a work,
+then gets a refcount on sk->sk_refcnt if the work was scheduled.
+This refcount will be released by mptcp_worker().
 
-This happens as well when a wider mask is used with PCI_BAR0, such as
-0x80000000 or 0xe0000000, that makes addresses match that overlap with
-the PCI MMIO window, which starts at 0x10000000 in our configuration.
+[A] if (schedule_work(...)) {
+[B]     sock_hold(sk);
+        return true;
+    }
 
-Set the mask in PCI_BAR0 to 0xf0000000 for non-EVA then, covering the
-non-EVA maximum 256 MiB of RAM, which is what YAMON does and which used
-to work correctly up to the offending commit.  Set PCI_P2SCMSKL to match
-PCI_BAR0 as required by the system controller's specification, and match
-PCI_P2SCMAPL to PCI_HEAD4 for identity mapping.
+Problem is that mptcp_worker() can run immediately and complete before [B]
 
-Verified with:
+We need instead :
 
-Core board type/revision =      0x0d (Core74K) / 0x01
-System controller/revision =    MIPS SOC-it 101 OCP / 1.3   SDR-FW-4:1
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x1c
-Processor ID/revision =         0x97 (MIPS 74Kf) / 0x4c
+    sock_hold(sk);
+    if (schedule_work(...))
+        return true;
+    sock_put(sk);
 
-for non-EVA and with:
+[1]
+refcount_t: addition on 0; use-after-free.
+ WARNING: CPU: 1 PID: 29 at lib/refcount.c:25 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:25
+Call Trace:
+ <TASK>
+ __refcount_add include/linux/refcount.h:-1 [inline]
+  __refcount_inc include/linux/refcount.h:366 [inline]
+  refcount_inc include/linux/refcount.h:383 [inline]
+  sock_hold include/net/sock.h:816 [inline]
+  mptcp_schedule_work+0x164/0x1a0 net/mptcp/protocol.c:943
+  mptcp_tout_timer+0x21/0xa0 net/mptcp/protocol.c:2316
+  call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
+  expire_timers kernel/time/timer.c:1798 [inline]
+  __run_timers kernel/time/timer.c:2372 [inline]
+  __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
+  run_timer_base kernel/time/timer.c:2393 [inline]
+  run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
+  handle_softirqs+0x22f/0x710 kernel/softirq.c:622
+  __do_softirq kernel/softirq.c:656 [inline]
+  run_ktimerd+0xcf/0x190 kernel/softirq.c:1138
+  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
+  kthread+0x711/0x8a0 kernel/kthread.c:463
+  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
+  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
 
-Core board type/revision =      0x0c (CoreFPGA-5) / 0x00
-System controller/revision =    MIPS ROC-it2 / 0.0   FW-1:1 (CLK_unknown) GIC
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x00
-Processor ID/revision =         0xa0 (MIPS interAptiv UP) / 0x20
-
-for EVA/non-EVA, fixing:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: Could not read adapter factory MAC address!
-
-vs:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: DEFPA at MMIO addr = 0x10142000, IRQ = 10, Hardware addr = 00-00-f8-xx-xx-xx
-0000:00:12.0: registered as fddi0
-
-for non-EVA and causing no change for EVA.
-
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 422dd256642b ("MIPS: Malta: Allow PCI devices DMA to lower 2GB physical")
-Cc: stable@vger.kernel.org # v4.9+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: stable@vger.kernel.org
+Fixes: 3b1d6210a957 ("mptcp: implement and use MPTCP-level retransmission")
+Reported-by: syzbot+355158e7e301548a1424@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/6915b46f.050a0220.3565dc.0028.GAE@google.com/T/#u
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251113103924.3737425-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mti-malta/malta-init.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/mptcp/protocol.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
---- a/arch/mips/mti-malta/malta-init.c
-+++ b/arch/mips/mti-malta/malta-init.c
-@@ -241,16 +241,22 @@ mips_pci_controller:
- #endif
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -880,14 +880,19 @@ static void mptcp_reset_rtx_timer(struct
  
- 		/*
--		 * Setup the Malta max (2GB) memory for PCI DMA in host bridge
--		 * in transparent addressing mode.
-+		 * Set up memory mapping in host bridge for PCI DMA masters,
-+		 * in transparent addressing mode.  For EVA use the Malta
-+		 * maximum of 2 GiB memory in the alias space at 0x80000000
-+		 * as per PHYS_OFFSET.  Otherwise use 256 MiB of memory in
-+		 * the regular space, avoiding mapping the PCI MMIO window
-+		 * for DMA as it seems to confuse the system controller's
-+		 * logic, causing PCI MMIO to stop working.
- 		 */
--		mask = PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH;
--		MSC_WRITE(MSC01_PCI_BAR0, mask);
--		MSC_WRITE(MSC01_PCI_HEAD4, mask);
-+		mask = PHYS_OFFSET ? PHYS_OFFSET : 0xf0000000;
-+		MSC_WRITE(MSC01_PCI_BAR0,
-+			  mask | PCI_BASE_ADDRESS_MEM_PREFETCH);
-+		MSC_WRITE(MSC01_PCI_HEAD4,
-+			  PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH);
+ bool mptcp_schedule_work(struct sock *sk)
+ {
+-	if (inet_sk_state_load(sk) != TCP_CLOSE &&
+-	    schedule_work(&mptcp_sk(sk)->work)) {
+-		/* each subflow already holds a reference to the sk, and the
+-		 * workqueue is invoked by a subflow, so sk can't go away here.
+-		 */
+-		sock_hold(sk);
++	if (inet_sk_state_load(sk) == TCP_CLOSE)
++		return false;
++
++	/* Get a reference on this socket, mptcp_worker() will release it.
++	 * As mptcp_worker() might complete before us, we can not avoid
++	 * a sock_hold()/sock_put() if schedule_work() returns false.
++	 */
++	sock_hold(sk);
++
++	if (schedule_work(&mptcp_sk(sk)->work))
+ 		return true;
+-	}
++
++	sock_put(sk);
+ 	return false;
+ }
  
--		mask &= MSC01_PCI_BAR0_SIZE_MSK;
- 		MSC_WRITE(MSC01_PCI_P2SCMSKL, mask);
--		MSC_WRITE(MSC01_PCI_P2SCMAPL, mask);
-+		MSC_WRITE(MSC01_PCI_P2SCMAPL, PHYS_OFFSET);
- 
- 		/* Don't handle target retries indefinitely.  */
- 		if ((data & MSC01_PCI_CFG_MAXRTRY_MSK) ==
 
 
