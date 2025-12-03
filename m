@@ -1,120 +1,95 @@
-Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A4C13254B9
-	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 23:07:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D49432FBDEC
+	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 23:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=13.77.154.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764803246; cv=none; b=m3B3gq0k8Oy+VAITPDNU4Ttd17RO8NGjeOErGYMy0zfsKS4XxH7pHQIrEiGKppfDP/8LvXVxrTrIR5U0X+P0MJdpk4qckCuy5/UXEfL+RuHX/dIRwTQSbEkY12s+qVWHQhBiwOpARcPWH9HFFnz/3pun6fIbUr1ky8h5qKzFWEE=
+	t=1764803280; cv=none; b=HvgXRChvbIEth/5F25LlHCpE+rWrJrSH1T2C9DVTiIGAOIdOGyYIalyLP5WCyIOlkH/8HLi9ToFx21nE5M4SDZJpXMR3pAdGx1AFbHNCig14oo+cbqA3GrAiwcMYy82uuEuf154lr371LjykinyzbkQcXhIKQ5ML5IgLht8LIMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764803246; c=relaxed/simple;
-	bh=ARjBU24hBcskgb7NtDM1BJQCy1LB2oT4dOF6omBJasE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LCEpe6aSAtPMZg5QV5bX7d01vicw6MCyzL+G1rwjV6Dl2a9DuXdDpXAU8zsFxr6YGWrH2gLuDtVgoUKwvdSlkFlSInWzwoz5Vqq5eGPCwjw7bd2UtfPxZbpakwZb6h8U2FLiO+QQaFWs52W0MvJ1+AW6mt9QjTUijjnf8CCsq6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMzqghwY; arc=none smtp.client-ip=209.85.160.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1764803280; c=relaxed/simple;
+	bh=Eoet59v9NDM9yExmyw7/HLdX9sL//OyFUJBCjmIUPVQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=DTzxRBI7s+2xbOxA3kxB6bjnzdoCyxDKowW/O7vVFKD5PyUZWkpBzD3zMOeXUITweYsM31OKr0W7XyPLwv/Vy8ZRCBBSItByCayN86imSyXuMrzpVZCjf9vn1FgnTI3YyWS2tq1GWqD9p0JdaiIZ91aiQQNPaJIEBI4e1lQEIME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com; spf=pass smtp.mailfrom=linux.microsoft.com; dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b=d1vjTj3l; arc=none smtp.client-ip=13.77.154.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMzqghwY"
-Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4edb6e678ddso4505461cf.2
-        for <patches@lists.linux.dev>; Wed, 03 Dec 2025 15:07:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764803244; x=1765408044; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ARjBU24hBcskgb7NtDM1BJQCy1LB2oT4dOF6omBJasE=;
-        b=eMzqghwY7rT5LpsTjc/rTrHho3RCmIy68pLMyHTUjNsbz13A8VaBp7nC4uOOWsa/7R
-         i2MF4ap+9Nw4Zky6+Usf93Z18U4D6UgyZi5kUiUZ8WdJwsWUD0kDqW5nH371Hmuu9GyE
-         lN5y4JbhYZHBUv7AwZUSgwXG+xsQFQ9M6DTRGhoXypPqUm2SPBbQayg0AhChKEwHCbPY
-         51cS8r7OMFsNHbH97nQowptRqo51UoglEzpZtcMdFNEIBJuITDjRJg+TCCEE/Jff+ndC
-         FHh8NPzgRS5IncjV2HsWK8JhTFwgld6XcErEbDBT2saQmMjb40xnEsSy1PIsVVV2fRUk
-         9L4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764803244; x=1765408044;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ARjBU24hBcskgb7NtDM1BJQCy1LB2oT4dOF6omBJasE=;
-        b=TWHbqDvmeXmbl9MEjhzuct24d0arS1pZS74YfC+kiGvFbdNmxTnkcITsuehdZ7+0pA
-         VEoLvdm33sbh4vfZ73xOgeqJdCXXI7bvnMGjmzNq5Z4C3hMBSO0De9HP2d0hv+mL3UmH
-         4wL+tuVs3CiwqwQmiZRWwZBo93rji9tNUDnR9v6CTmrjUWY5jb50uPJ7ejATK1a53YZt
-         nDDhBXgZKZk3l7nkjXupisQNpX+iDp83x4qCdB3mmTTt4C1mOtvMpuZCBStIIUljkEaU
-         7YmJJY5W41u1loWLm4tBIrEOJwzCi5b473J/bBd/YUg5zwsvzOyWGoXsBBV/BDS/sGUB
-         b/8A==
-X-Gm-Message-State: AOJu0YxV8SSMk3+wwxupGZB/rpfJUV2Ye3jlPdVytCfu5I3x5xVcum+N
-	5OB/EZ/qtUdanjM4UQ5PiUnswKumhzn4+L6przNrtZeOFcI9jGiufn2psF0dPHPk1PDnuuApq0b
-	z4grQFElc80dls6hbWtmid/S6j+gct7k=
-X-Gm-Gg: ASbGncuxrBxCPcn1sqi1xMeMgjwpkfhtSVTlrIhqCq8QuVyPnCgOHOw7YKZEnMu+aGt
-	bfOrmWYWVC3TU6H3K8OaBhfDHpyZmnsXGqoTDYyjYdE5VxS4CL2gTPKRa6XFLbvmVvN3t8xJX5u
-	nXOHhipduGiDZRt5zzsL6U6I0KfFflPpsqAu/6wv6vAD02bBXkH6PsC5TXhtFObSWM7ENOKa2BM
-	WERHnVeGuO0oKk3wV6umWSqOsJFrMGp3Asxbd1X6cehEl7QejitYWcdi5Ug1y2fCl2aM+w=
-X-Google-Smtp-Source: AGHT+IHeXlWltuajJrx5d5zaBmOs+3Uu+5HXat5Ce2MX4X5ZPI8oXVau0JJuFiDWUeYCCz9yKCjgfAUsfswBi07X5PE=
-X-Received: by 2002:a05:622a:3cc:b0:4ee:1b0e:861a with SMTP id
- d75a77b69052e-4f017592726mr59846181cf.13.1764803243439; Wed, 03 Dec 2025
- 15:07:23 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.b="d1vjTj3l"
+Received: by linux.microsoft.com (Postfix, from userid 1158)
+	id 7B4442120E8B; Wed,  3 Dec 2025 15:07:58 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 7B4442120E8B
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1764803278;
+	bh=FufHA6vatTicfZXYwuk8Js4jZIlb8UU96Vkg54BVm/E=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=d1vjTj3lAHATAjXojlKgrsc3D+b0oviFCf196aJamPh3YQqULDHcEYIEAGryI9gUS
+	 e5JaU7gWFKkfdFV1XyZ/IhK0yUGrBuWJXbxOcd67bFzkOVsgz9RLrZhkup70xMkCqY
+	 neDBGxqsYqG+stByS327KKh/grtdmH29a2Cw6Dqk=
+From: Hardik Garg <hargar@linux.microsoft.com>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org
+Subject: Re: [PATCH 5.15 000/392] 5.15.197-rc1 review
+Date: Wed,  3 Dec 2025 15:07:58 -0800
+Message-Id: <1764803278-18393-1-git-send-email-hargar@linux.microsoft.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
+References: <20251203152414.082328008@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20251203202839.819850-1-sashal@kernel.org>
-In-Reply-To: <20251203202839.819850-1-sashal@kernel.org>
-From: Joanne Koong <joannelkoong@gmail.com>
-Date: Wed, 3 Dec 2025 15:07:12 -0800
-X-Gm-Features: AWmQ_bmqhNk5StWxxmTMDLwKPZbVHBIiLQfZnv8DcnlEQfJufs1LWeozSv_ldNk
-Message-ID: <CAJnrk1aSf+bTiRE40BSM72y8p_0CZjeJ4AHF78QbxxPicmPMXw@mail.gmail.com>
-Subject: Re: [PATCH AUTOSEL 6.18-6.6] iomap: adjust read range correctly for
- non-block-aligned positions
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org, 
-	syzbot@syzkaller.appspotmail.com, Brian Foster <bfoster@redhat.com>, 
-	Christoph Hellwig <hch@lst.de>, Christian Brauner <brauner@kernel.org>, linux-xfs@vger.kernel.org, 
-	linux-fsdevel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 3, 2025 at 12:28=E2=80=AFPM Sasha Levin <sashal@kernel.org> wro=
-te:
->
-> From: Joanne Koong <joannelkoong@gmail.com>
->
-> [ Upstream commit 7aa6bc3e8766990824f66ca76c19596ce10daf3e ]
->
-> iomap_adjust_read_range() assumes that the position and length passed in
-> are block-aligned. This is not always the case however, as shown in the
-> syzbot generated case for erofs. This causes too many bytes to be
-> skipped for uptodate blocks, which results in returning the incorrect
-> position and length to read in. If all the blocks are uptodate, this
-> underflows length and returns a position beyond the folio.
->
-> Fix the calculation to also take into account the block offset when
-> calculating how many bytes can be skipped for uptodate blocks.
->
-> Signed-off-by: Joanne Koong <joannelkoong@gmail.com>
-> Tested-by: syzbot@syzkaller.appspotmail.com
-> Reviewed-by: Brian Foster <bfoster@redhat.com>
-> Reviewed-by: Christoph Hellwig <hch@lst.de>
-> Signed-off-by: Christian Brauner <brauner@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->
-> LLM Generated explanations, may be completely bogus:
->
-> Now I have all the information needed for a comprehensive analysis. Let
-> me compile my findings.
->
-> ---
+Build error on arm64 Azure VM:
 
-I don't think any filesystems had repercussions from this. afaik only
-inlined mappings are non-block-aligned and the underflow of length and
-the overflow of position when added together offset each other when
-determining how much to advance the iter for the next iteration. But I
-have no objection to this being backported to stable. I think if this
-gets backported, then we should also backport this one as well
-(https://lore.kernel.org/linux-fsdevel/20251111193658.3495942-3-joannelkoon=
-g@gmail.com/).
+In file included from /__w/1/s/rpmbuild/BUILD/kernel-source/tools/include/linux/bitmap.h:6,
+                 from ../lib/bitmap.c:6:
+/__w/1/s/rpmbuild/BUILD/kernel-source/tools/include/asm-generic/bitsperlong.h:14:2: error: #error Inconsistent word size. Check asm/bitsperlong.h
+   14 | #error Inconsistent word size. Check asm/bitsperlong.h
+      |  ^~~~~
+  CC      util/smt.o
+make[4]: *** [util/Build:299: util/bitmap.o] Error 1
+make[4]: *** Waiting for unfinished jobs....
+In file included from tests/bpf.c:5:
+/usr/include/sys/epoll.h:134:12: note: in a call to function 'epoll_pwait' declared 'nonnull'
+  134 | extern int epoll_pwait (int __epfd, struct epoll_event *__events,
+      |            ^~~~~~~~~~~
+make[3]: *** [/__w/1/s/rpmbuild/BUILD/kernel-source/tools/build/Makefile.build:143: util] Error 2
+make[2]: *** [Makefile.perf:658: perf-in.o] Error 2
+make[1]: *** [Makefile.perf:238: sub-make] Error 2
+make: *** [Makefile:70: all] Error 2
+
+Build error on x86 Azure VM:
+
+In file included from /__w/1/s/rpmbuild/BUILD/kernel-source/tools/include/linux/bitmap.h:6,
+                 from ../lib/bitmap.c:6:
+/__w/1/s/rpmbuild/BUILD/kernel-source/tools/include/asm-generic/bitsperlong.h:14:2: error: #error Inconsistent word size. Check asm/bitsperlong.h
+   14 | #error Inconsistent word size. Check asm/bitsperlong.h
+      |  ^~~~~
+  CC      util/hweight.o
+  CC      util/smt.o
+make[4]: *** [util/Build:299: util/bitmap.o] Error 1
+make[4]: *** Waiting for unfinished jobs....
+make[3]: *** [/__w/1/s/rpmbuild/BUILD/kernel-source/tools/build/Makefile.build:143: util] Error 2
+
+Tested-by: Hardik Garg <hargar@linux.microsoft.com>
+
 
 Thanks,
-Joanne
+Hardik
