@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D55C354AFA;
-	Wed,  3 Dec 2025 17:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE7A280329;
+	Wed,  3 Dec 2025 17:00:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781218; cv=none; b=fF3gST3TfG7AgjuwrpENl2jOFeKKnI2DASVj2oV0ii1191JYdBYh13wwJbNPNIaH/7Ru9u87PmMo2oCaxFeiUA3jgSkFIM4TWcN+7u2lbKDcv/rSWqX25TlIe5r9zaiUcL61PJWYSnlxQUZOy7aBxUqVRzecz8N5smIuKXHD3Ac=
+	t=1764781221; cv=none; b=JAhjwD8l020Utyx3jaVH7aRQh+thq45uC01OQFNxG05sDePgJEnIHDxc/XUtDpvCeyqGuzCTwIj8a+XM7RhDxSzSYWAHrf1uiXQb067dICugdJQXumLb3pX2XTZIRm81XyixONPhrLVlBdD4XEd91MIfoigFSM4R2a6nhNfKpzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781218; c=relaxed/simple;
-	bh=Uem9KKCDTSsWIafV+PPEN04Qj8OXqqr7ILJKORFrE1s=;
+	s=arc-20240116; t=1764781221; c=relaxed/simple;
+	bh=DlA4q3ehwOWa9VedkKp0+wjN6BoxpYlP0iVWMBdVLw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUkUhiMURyo73LiCp9/JZfOg6lzPmtpA7iTKVzswGolhFJGMQn26z0W2072+wvJuznm7bfHIkL4mfb313D5CBsBLXmHknQU6v4Swi2FDzkRTv6kN25LKDj9AygiVfKb7UUvjseJJFx/k6EU7Afvw6HyquDNDC5LXhZrNMj0xUCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1ma0YYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PsMoJfQAPw0W1u/7V83CXTc6IFtWkI9i4JRdki81hf9pc1V1U4mGqUguG9MBBHtuSD/rl6AYqGmDIBUydoMWqehWA9RrosG8qZBJomt2OSNQiNhgpsJQDb2Y9ELjJCf9Wt6CYCnZw8m2DXPar88u6xPkZUVUT/Kxviid0KYjTxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M8D7mBuz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1ma0YYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4F6C4CEF5;
-	Wed,  3 Dec 2025 17:00:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M8D7mBuz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D8CC4CEF5;
+	Wed,  3 Dec 2025 17:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781218;
-	bh=Uem9KKCDTSsWIafV+PPEN04Qj8OXqqr7ILJKORFrE1s=;
+	s=korg; t=1764781220;
+	bh=DlA4q3ehwOWa9VedkKp0+wjN6BoxpYlP0iVWMBdVLw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1ma0YYqirTgO90phfUJCN0rxfL6i7t8Xa396pvx1p0k0CrXX1hSF/HMjKH2cdZsw
-	 2KyDvva9GQQeV+FFqcHfraK2sofCnJndw4AF4wyPdmmf0MRzcOw/natyfFtf/ymzzY
-	 FYvHbevlPZM7iXKBCAeMegrFWG2p+vMOu3FlGm8A=
+	b=M8D7mBuzC0yxueb9mW6rXIZ0XGjbgeF/UzK5eabFVLDQWtiEoiuNsbgMToHIgbcFZ
+	 S11veVvRgzTcJIJd9eg8Yxb/H/JbhxTF4P7KJ/WnaErN5PKzUwFuVleq0Qs5ghSvXq
+	 QmAGARKBmIComUI3u5AcYJ5Xdk5PlSh6SkNKLbCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	luoguangfei <15388634752@163.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.6 86/93] net: macb: fix unregister_netdev call order in macb_remove()
-Date: Wed,  3 Dec 2025 16:30:19 +0100
-Message-ID: <20251203152339.704306564@linuxfoundation.org>
+	Christian Gromm <christian.gromm@microchip.com>,
+	Victoria Votokina <Victoria.Votokina@kaspersky.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 56/93] most: usb: fix double free on late probe failure
+Date: Wed,  3 Dec 2025 16:29:49 +0100
+Message-ID: <20251203152338.594423929@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,60 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: luoguangfei <15388634752@163.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 01b9128c5db1b470575d07b05b67ffa3cb02ebf1 ]
+commit baadf2a5c26e802a46573eaad331b427b49aaa36 upstream.
 
-When removing a macb device, the driver calls phy_exit() before
-unregister_netdev(). This leads to a WARN from kernfs:
+The MOST subsystem has a non-standard registration function which frees
+the interface on registration failures and on deregistration.
 
-  ------------[ cut here ]------------
-  kernfs: can not remove 'attached_dev', no directory
-  WARNING: CPU: 1 PID: 27146 at fs/kernfs/dir.c:1683
-  Call trace:
-    kernfs_remove_by_name_ns+0xd8/0xf0
-    sysfs_remove_link+0x24/0x58
-    phy_detach+0x5c/0x168
-    phy_disconnect+0x4c/0x70
-    phylink_disconnect_phy+0x6c/0xc0 [phylink]
-    macb_close+0x6c/0x170 [macb]
-    ...
-    macb_remove+0x60/0x168 [macb]
-    platform_remove+0x5c/0x80
-    ...
+This unsurprisingly leads to bugs in the MOST drivers, and a couple of
+recent changes turned a reference underflow and use-after-free in the
+USB driver into several double free and a use-after-free on late probe
+failures.
 
-The warning happens because the PHY is being exited while the netdev
-is still registered. The correct order is to unregister the netdev
-before shutting down the PHY and cleaning up the MDIO bus.
-
-Fix this by moving unregister_netdev() ahead of phy_exit() in
-macb_remove().
-
-Fixes: 8b73fa3ae02b ("net: macb: Added ZynqMP-specific initialization")
-Signed-off-by: luoguangfei <15388634752@163.com>
-Link: https://patch.msgid.link/20250818232527.1316-1-15388634752@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Minor context change fixed. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Fixes: 723de0f9171e ("staging: most: remove device from interface structure")
+Fixes: 4b1270902609 ("most: usb: Fix use-after-free in hdm_disconnect")
+Fixes: a8cc9e5fcb0e ("most: usb: hdm_probe: Fix calling put_device() before device initialization")
+Cc: stable@vger.kernel.org
+Cc: Christian Gromm <christian.gromm@microchip.com>
+Cc: Victoria Votokina <Victoria.Votokina@kaspersky.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251029093029.28922-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/most/most_usb.c |   14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5182,11 +5182,11 @@ static int macb_remove(struct platform_d
+--- a/drivers/most/most_usb.c
++++ b/drivers/most/most_usb.c
+@@ -1058,7 +1058,7 @@ hdm_probe(struct usb_interface *interfac
  
- 	if (dev) {
- 		bp = netdev_priv(dev);
-+		unregister_netdev(dev);
- 		phy_exit(bp->sgmii_phy);
- 		mdiobus_unregister(bp->mii_bus);
- 		mdiobus_free(bp->mii_bus);
+ 	ret = most_register_interface(&mdev->iface);
+ 	if (ret)
+-		goto err_free_busy_urbs;
++		return ret;
  
--		unregister_netdev(dev);
- 		tasklet_kill(&bp->hresp_err_tasklet);
- 		pm_runtime_disable(&pdev->dev);
- 		pm_runtime_dont_use_autosuspend(&pdev->dev);
+ 	mutex_lock(&mdev->io_mutex);
+ 	if (le16_to_cpu(usb_dev->descriptor.idProduct) == USB_DEV_ID_OS81118 ||
+@@ -1068,8 +1068,7 @@ hdm_probe(struct usb_interface *interfac
+ 		if (!mdev->dci) {
+ 			mutex_unlock(&mdev->io_mutex);
+ 			most_deregister_interface(&mdev->iface);
+-			ret = -ENOMEM;
+-			goto err_free_busy_urbs;
++			return -ENOMEM;
+ 		}
+ 
+ 		mdev->dci->dev.init_name = "dci";
+@@ -1078,18 +1077,15 @@ hdm_probe(struct usb_interface *interfac
+ 		mdev->dci->dev.release = release_dci;
+ 		if (device_register(&mdev->dci->dev)) {
+ 			mutex_unlock(&mdev->io_mutex);
++			put_device(&mdev->dci->dev);
+ 			most_deregister_interface(&mdev->iface);
+-			ret = -ENOMEM;
+-			goto err_free_dci;
++			return -ENOMEM;
+ 		}
+ 		mdev->dci->usb_device = mdev->usb_device;
+ 	}
+ 	mutex_unlock(&mdev->io_mutex);
+ 	return 0;
+-err_free_dci:
+-	put_device(&mdev->dci->dev);
+-err_free_busy_urbs:
+-	kfree(mdev->busy_urbs);
++
+ err_free_ep_address:
+ 	kfree(mdev->ep_address);
+ err_free_cap:
 
 
