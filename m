@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C10630ACF4;
-	Wed,  3 Dec 2025 15:31:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E5530C358;
+	Wed,  3 Dec 2025 15:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775872; cv=none; b=bFJInVRFU9+tZ/00Yb2XKjbefFe/227rz3gc3jQ75o39JDOs7j+jZUzq61bBZjgVF5E5maI/1DPTd7WCQcMD11BaseVqsAfwLOn1+Jn2DWS+FtrIQ99LFHber9U67sxI5WuJI7SOeSu3ZW0Axw0g4BY+8/DEONPWXzkYs/O54CI=
+	t=1764775875; cv=none; b=rlVWNNt7NNX/U21biG2bwz+A4Kh6rsT1wuZA45W/lnsc2JrK0OnkzTfOOGje2Vef7o28uOzFoxu2sUoREd5tFoSiesWt3Efg6ySM0MJjDCverRon8RPyJwExHY7RV5TRVsZSXZQU0ccXPBYUFyzGH05a6Sl38SW+8Yi7wbQ8clM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775872; c=relaxed/simple;
-	bh=nw6FMW4+qZvESZ/pCcNnkqNsfw2SfwDgCIUby3R/IOw=;
+	s=arc-20240116; t=1764775875; c=relaxed/simple;
+	bh=N05xtMzIr49yucFi/zAppDKOGsVFOwceRTTK6mr7G+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=as5nZZQgWYXGI+1K3QQ+o29IzZDa1c7XH4YTn4dlo2Qy/X5sojRpH4Zkm6xOdIxFmsuZR/zBxt1WCU4QiqshpFxoGuAeohridBuWM5A0d3tUyzbck0kcqvmuW9Fewj2CdmoHnoFhRvAQRmeJSOqxHRtI5uv12OnkZdS37wE/N8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GEI4Dud1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbvqqEsOAY75DONJ3/EetfkVf1kN7LCjK54v4de9GXXUevM328N2QQGLi6OOGdkFF1/feRfFJaCswBznDoBJv7FK3HgxcCpaIzhCboZSJRHd+6oxfc3DPAzk+PhpUnCm+uNJk9EdD3ykMz6M1xGuurVzb8uvJR5gg6OVYDwejm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u6r4gBx6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GEI4Dud1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C78C4CEF5;
-	Wed,  3 Dec 2025 15:31:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u6r4gBx6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B962DC116C6;
+	Wed,  3 Dec 2025 15:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775872;
-	bh=nw6FMW4+qZvESZ/pCcNnkqNsfw2SfwDgCIUby3R/IOw=;
+	s=korg; t=1764775875;
+	bh=N05xtMzIr49yucFi/zAppDKOGsVFOwceRTTK6mr7G+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GEI4Dud14Okf6oeVIi9DwyRE/dqQdVu/FJzgMGRaD+GDaaY0B+b/VELmQAWDzKj91
-	 XBgzojsLpOM4DpvY9JKNoQKqiMRmb8eEMa0X65JW1HPUxwkvM0n9/7QIW9R3x+lqNw
-	 PZ6Fan2MlQK8wRJ5ip7BD7f7+C67G8ieocG1v/88=
+	b=u6r4gBx68xORxwGfuUNWsqckUZaeGl/QHwKKqR0JGRKMix9lHPODY/payfLqk9iUm
+	 0Td1dfAfetUHi3sLbpRlyi8L3oTL8S6ldpvUkY0ye+dN8+bRbGSNYVQ+hFVXy3W0+K
+	 pBoj9pGeNZVyNwTRPaZYWMhcfSyOg9nOESz2bu0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 013/300] ASoC: qdsp6: q6asm: do not sleep while atomic
-Date: Wed,  3 Dec 2025 16:23:37 +0100
-Message-ID: <20251203152400.949724126@linuxfoundation.org>
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 014/300] wifi: ath10k: Fix memory leak on unsupported WMI command
+Date: Wed,  3 Dec 2025 16:23:38 +0100
+Message-ID: <20251203152400.986109663@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,37 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-commit fdbb53d318aa94a094434e5f226617f0eb1e8f22 upstream.
+[ Upstream commit 2e9c1da4ee9d0acfca2e0a3d78f3d8cb5802da1b ]
 
-For some reason we ended up kfree between spinlock lock and unlock,
-which can sleep.
+ath10k_wmi_cmd_send takes ownership of the passed buffer (skb) and has the
+responsibility to release it in case of error. This patch fixes missing
+free in case of early error due to unhandled WMI command ID.
 
-move the kfree out of spinlock section.
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
 
-Fixes: a2a5d30218fd ("ASoC: qdsp6: q6asm: Add support to memory map and unmap")
-Cc: Stable@vger.kernel.org
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251017085307.4325-2-srinivas.kandagatla@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 553215592f14 ("ath10k: warn if give WMI command is not supported")
+Suggested-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250926195656.187970-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/qdsp6/q6asm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/soc/qcom/qdsp6/q6asm.c
-+++ b/sound/soc/qcom/qdsp6/q6asm.c
-@@ -376,9 +376,9 @@ static void q6asm_audio_client_free_buf(
+diff --git a/drivers/net/wireless/ath/ath10k/wmi.c b/drivers/net/wireless/ath/ath10k/wmi.c
+index c9a74f3e2e601..6293dbc32bde4 100644
+--- a/drivers/net/wireless/ath/ath10k/wmi.c
++++ b/drivers/net/wireless/ath/ath10k/wmi.c
+@@ -1936,6 +1936,7 @@ int ath10k_wmi_cmd_send(struct ath10k *ar, struct sk_buff *skb, u32 cmd_id)
+ 	if (cmd_id == WMI_CMD_UNSUPPORTED) {
+ 		ath10k_warn(ar, "wmi command %d is not supported by firmware\n",
+ 			    cmd_id);
++		dev_kfree_skb_any(skb);
+ 		return ret;
+ 	}
  
- 	spin_lock_irqsave(&ac->lock, flags);
- 	port->num_periods = 0;
-+	spin_unlock_irqrestore(&ac->lock, flags);
- 	kfree(port->buf);
- 	port->buf = NULL;
--	spin_unlock_irqrestore(&ac->lock, flags);
- }
- 
- /**
+-- 
+2.51.0
+
 
 
