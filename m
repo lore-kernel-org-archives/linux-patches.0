@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD58834DB67;
-	Wed,  3 Dec 2025 16:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D307D34C9AD;
+	Wed,  3 Dec 2025 16:55:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780918; cv=none; b=iLltf5hPUoim2nGoXKqkzSqk5RaxxdheHwElPDC6/W7NONEmoMTv/rX8q2+YaE8xBqWmerzBFia4MDUkDF25So0ES433Z4RpJr5LpgSCQftXcsgX6FSAPkMTBqRB8oohzkAOfYtelNyGhFxBY358UIURfSUUL9J8h9LWLnUDAfE=
+	t=1764780921; cv=none; b=kqeYRB8hQQ6OIpG4GS798is/NWgtMyjI9S7GxXPZAnM9ACVqwSi3JuDNS338FKrcGczi0qvSmroptOH95M2IUoXY0y/cRMrxEJMFgFrh2Xs4FlaSxoUw6kvyG5+6k5VDMe81KUDpB3UwDChLxsvXO86tANd3PcmS+5Phn/KJa80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780918; c=relaxed/simple;
-	bh=hBWAgzI8pWOsAip4xrtbrINqoHcM7qhnU2nH6c5Yl5g=;
+	s=arc-20240116; t=1764780921; c=relaxed/simple;
+	bh=2E4+h0nY3G3LWrUGVNp3QsNfmslWGiavG0a83tGyzls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nE1OdkXMnhEarZvXgf+Eo1dBCxSEKAxdvsMAFt+0ZMU4STMpwh3I+bV/WBQHX+uBWMVdqLXij93ZfOy4DlcHVQIlIx2vwt6HREjTbvbdJn2NXw3ceGZV2v4ryNk4MHcIhJihtR2npUhl/TBiovot4d5aqJGes//gyh82oSap+FU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6ydeJ82; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CF0aE7BRhajCPvI0aACQ932LBi3D7rbWqn/IW/S2bCH49u7V1KHkPK2fM5YshYkx0sk76PYZXKwxjbGsMByhid8M2h3Ozvg05B+qUKIUISiDBjEwxjOQW4ueHb4xHL/dBD5uHQs6FgR6Y9kqnCoN7+/ex4besHJysJWk18dP17Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dH6jWVzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6ydeJ82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155ADC116C6;
-	Wed,  3 Dec 2025 16:55:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dH6jWVzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D7A7C4CEF5;
+	Wed,  3 Dec 2025 16:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780918;
-	bh=hBWAgzI8pWOsAip4xrtbrINqoHcM7qhnU2nH6c5Yl5g=;
+	s=korg; t=1764780921;
+	bh=2E4+h0nY3G3LWrUGVNp3QsNfmslWGiavG0a83tGyzls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6ydeJ82R/Wo9b9pLjBcYcH33ZaPZM5SARRuTtX8LxTabNlXGGgV5+XqfQNzq5Scw
-	 3+QxzXuV3Z/R+k4eDRpYswCij5hQzBEFZCbU8hJ1yHtc1WibblUymlVDbGEo8kJ4Uq
-	 LlMhLmMgaFU4J8rHfdPOK41MBLlRtyu2dBqFU0ag=
+	b=dH6jWVzkZVRJ8L+5VsPxZODscI1TeBguVjl1cpoC3hOzHpCPJ8hvxQO6xvBbOEIRb
+	 yI2xqjq//rFBZhmjI2EVco8JiIQUPrMG6kJzt9H5QtA89EGnZEUzjlRqcfUeCjKkra
+	 qATazDcHRSsapw+f9b+Hjc6uImraSzgS10A2d0JU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Suvorov <cryosay@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 101/132] USB: serial: ftdi_sio: add support for u-blox EVK-M101
-Date: Wed,  3 Dec 2025 16:29:40 +0100
-Message-ID: <20251203152347.027462918@linuxfoundation.org>
+	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 128/132] net: dsa: microchip: Free previously initialized ports on init failures
+Date: Wed,  3 Dec 2025 16:30:07 +0100
+Message-ID: <20251203152348.057576051@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -50,58 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Suvorov <cryosay@gmail.com>
+From: "Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>
 
-commit 2d8ab771d5316de64f3bb920b82575c58eb00b1b upstream.
+[ Upstream commit 0f80e21bf6229637e193248fbd284c0ec44bc0fd ]
 
-The U-Blox EVK-M101 enumerates as 1546:0506 [1] with four FTDI interfaces:
-- EVK-M101 current sensors
-- EVK-M101 I2C
-- EVK-M101 UART
-- EVK-M101 port D
+If a port interrupt setup fails after at least one port has already been
+successfully initialized, the gotos miss some resource releasing:
+- the already initialized PTP IRQs aren't released
+- the already initialized port IRQs aren't released if the failure
+occurs in ksz_pirq_setup().
 
-Only the third USB interface is a UART. This change lets ftdi_sio probe
-the VID/PID and registers only interface #3 as a TTY, leaving the rest
-available for other drivers.
+Merge 'out_girq' and 'out_ptpirq' into a single 'port_release' label.
+Behind this label, use the reverse loop to release all IRQ resources
+for all initialized ports.
+Jump in the middle of the reverse loop if an error occurs in
+ksz_ptp_irq_setup() to only release the port IRQ of the current
+iteration.
 
-[1]
-usb 5-1.3: new high-speed USB device number 11 using xhci_hcd
-usb 5-1.3: New USB device found, idVendor=1546, idProduct=0506, bcdDevice= 8.00
-usb 5-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-usb 5-1.3: Product: EVK-M101
-usb 5-1.3: Manufacturer: u-blox AG
-
-Datasheet: https://content.u-blox.com/sites/default/files/documents/EVK-M10_UserGuide_UBX-21003949.pdf
-
-Signed-off-by: Oleksandr Suvorov <cryosay@gmail.com>
-Link: https://lore.kernel.org/20250926060235.3442748-1-cryosay@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: c9cd961c0d43 ("net: dsa: microchip: lan937x: add interrupt support for port phy link")
+Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+Link: https://patch.msgid.link/20251120-ksz-fix-v6-4-891f80ae7f8f@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/ftdi_sio.c     |    1 +
- drivers/usb/serial/ftdi_sio_ids.h |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/dsa/microchip/ksz_common.c |   23 +++++++++++------------
+ 1 file changed, 11 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -1074,6 +1074,7 @@ static const struct usb_device_id id_tab
- 	/* U-Blox devices */
- 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ZED_PID) },
- 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ODIN_PID) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(UBLOX_VID, UBLOX_EVK_M101_PID, 2) },
- 	/* FreeCalypso USB adapters */
- 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_BUF_PID),
- 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -1614,6 +1614,7 @@
- #define UBLOX_VID			0x1546
- #define UBLOX_C099F9P_ZED_PID		0x0502
- #define UBLOX_C099F9P_ODIN_PID		0x0503
-+#define UBLOX_EVK_M101_PID		0x0506
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -2564,12 +2564,12 @@ static int ksz_setup(struct dsa_switch *
+ 		dsa_switch_for_each_user_port(dp, dev->ds) {
+ 			ret = ksz_pirq_setup(dev, dp->index);
+ 			if (ret)
+-				goto out_girq;
++				goto port_release;
  
- /*
-  * GMC devices
+ 			if (dev->info->ptp_capable) {
+ 				ret = ksz_ptp_irq_setup(ds, dp->index);
+ 				if (ret)
+-					goto out_pirq;
++					goto pirq_release;
+ 			}
+ 		}
+ 	}
+@@ -2579,7 +2579,7 @@ static int ksz_setup(struct dsa_switch *
+ 		if (ret) {
+ 			dev_err(dev->dev, "Failed to register PTP clock: %d\n",
+ 				ret);
+-			goto out_ptpirq;
++			goto port_release;
+ 		}
+ 	}
+ 
+@@ -2602,17 +2602,16 @@ static int ksz_setup(struct dsa_switch *
+ out_ptp_clock_unregister:
+ 	if (dev->info->ptp_capable)
+ 		ksz_ptp_clock_unregister(ds);
+-out_ptpirq:
+-	if (dev->irq > 0 && dev->info->ptp_capable)
+-		dsa_switch_for_each_user_port(dp, dev->ds)
+-			ksz_ptp_irq_free(ds, dp->index);
+-out_pirq:
+-	if (dev->irq > 0)
+-		dsa_switch_for_each_user_port_continue_reverse(dp, dev->ds)
++port_release:
++	if (dev->irq > 0) {
++		dsa_switch_for_each_user_port_continue_reverse(dp, dev->ds) {
++			if (dev->info->ptp_capable)
++				ksz_ptp_irq_free(ds, dp->index);
++pirq_release:
+ 			ksz_irq_free(&dev->ports[dp->index].pirq);
+-out_girq:
+-	if (dev->irq > 0)
++		}
+ 		ksz_irq_free(&dev->girq);
++	}
+ 
+ 	return ret;
+ }
 
 
