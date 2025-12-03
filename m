@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114653093DF;
-	Wed,  3 Dec 2025 15:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF4BA312810;
+	Wed,  3 Dec 2025 15:36:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776206; cv=none; b=kOUwXkGrK3Ln9/XAQ2ynJzN/klA6JN+nns0vLusqYgsF9DyNEBpKt6mztQvTFioKpHcUwr+YE44FbRK3pjwM/3CWPEwH4gB1rLIDozduAA/pJEiS87V2MAaf26zUPz+a4FnLlImZBRSK/CBT36cyyVqRvZ+0GhCS3od3gwdw38Y=
+	t=1764776210; cv=none; b=trdtIpSQNxhdTk03lIQmVeOCUhRiL1nkrmMX8elL7l48DQQQZHW39YgDxKIJezOwj0qaA+UXHm+LkjIMhv4QwpKAStLv3mjGel7L3oyvai1Iqjf9FoJxr3MKQR5eAk5t12bdP6EQOzIZoKeSbfXtIx4VcLRDhBctgYsCjuTNKbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776206; c=relaxed/simple;
-	bh=DxJAxVoG9c11FCqunaY1OqBT98JPbn18sJdTc3t0aZI=;
+	s=arc-20240116; t=1764776210; c=relaxed/simple;
+	bh=CGbuOZaVa/D2I78xTLje7HoM+gAlZWcnIlYREnfm2ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7quT5jFF1GIByuhjChDkiPEPPd8Wo9joRzAAqwbqARyK/sZWo8qgK0etL8n8sj03OMQpKyhbbK1fZSiOQPBwZZ+csbYsAzYbd/JHnsf9bDNdV3OSs0AUAyBSzP/VojTJgFwq/4Uv8RL4C1egk1gehqYVyDRcoy7FUHR0SzXq0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wy4XaQND; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I73+/iB3YxFYJa6bG1SaxOqXXnHvsNrk53k5g8kKXtu2YVDcSU97GN2TobBrYimFLZBOstXLVURuNOTwSYgX4kR7sj9r94NutN+doxQDOE9sUPoBqqFou18I6/LYC4OCi9r+lSC83IpbP5D3fiHW4FrGKRr+0X5HDfn9xmfncVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GJvNiHbx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wy4XaQND"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74258C4CEF5;
-	Wed,  3 Dec 2025 15:36:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GJvNiHbx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DFCC4CEF5;
+	Wed,  3 Dec 2025 15:36:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776205;
-	bh=DxJAxVoG9c11FCqunaY1OqBT98JPbn18sJdTc3t0aZI=;
+	s=korg; t=1764776209;
+	bh=CGbuOZaVa/D2I78xTLje7HoM+gAlZWcnIlYREnfm2ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wy4XaQNDTfW+ajmoFkkLpRcq5Z28Ucio1KBWUXQlHM6CZPHkzFa8TagEmodtru5Il
-	 3z8QFI/E4XvUayZ6yX+CikPsJWm7TMLu40wjDNolsyg2k5BXUSGSwKueYld4ptOs7f
-	 72bDWnvQCavgyCBe4H4dBqb0GYmdwV1thcgX1y7Q=
+	b=GJvNiHbxro65XSuViRn0JUXeiSalDbKgxh7PUSHoUI5KqhhEi0Az3rRY+nhUeFSRz
+	 d4wc9xTq/pFr0YYY+XTEt25HqeUaN6DyK8rf1Tak407v5oIkGl4cHUDwUdLmHupVWb
+	 KtiYIRumIqkLlfYuNQOkuj2kcqCyCmDin+pYntWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Wangyang Guo <wangyang.guo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/300] selftests: traceroute: Use require_command()
-Date: Wed,  3 Dec 2025 16:25:17 +0100
-Message-ID: <20251203152404.807048007@linuxfoundation.org>
+Subject: [PATCH 5.10 114/300] x86/kvm: Prefer native qspinlock for dedicated vCPUs irrespective of PV_UNHALT
+Date: Wed,  3 Dec 2025 16:25:18 +0100
+Message-ID: <20251203152404.843911850@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,76 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 47efbac9b768553331b9459743a29861e0acd797 ]
+[ Upstream commit 960550503965094b0babd7e8c83ec66c8a763b0b ]
 
-Use require_command() so that the test will return SKIP (4) when a
-required command is not present.
+The commit b2798ba0b876 ("KVM: X86: Choose qspinlock when dedicated
+physical CPUs are available") states that when PV_DEDICATED=1
+(vCPU has dedicated pCPU), qspinlock should be preferred regardless of
+PV_UNHALT.  However, the current implementation doesn't reflect this: when
+PV_UNHALT=0, we still use virt_spin_lock() even with dedicated pCPUs.
 
-Before:
+This is suboptimal because:
+1. Native qspinlocks should outperform virt_spin_lock() for dedicated
+   vCPUs irrespective of HALT exiting
+2. virt_spin_lock() should only be preferred when vCPUs may be preempted
+   (non-dedicated case)
 
- # ./traceroute.sh
- SKIP: Could not run IPV6 test without traceroute6
- SKIP: Could not run IPV4 test without traceroute
- $ echo $?
- 0
+So reorder the PV spinlock checks to:
+1. First handle dedicated pCPU case (disable virt_spin_lock_key)
+2. Second check single CPU, and nopvspin configuration
+3. Only then check PV_UNHALT support
 
-After:
+This ensures we always use native qspinlock for dedicated vCPUs, delivering
+pretty performance gains at high contention levels.
 
- # ./traceroute.sh
- TEST: traceroute6 not installed                                    [SKIP]
- $ echo $?
- 4
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20250908073238.119240-6-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Tested-by: Wangyang Guo <wangyang.guo@intel.com>
+Link: https://lore.kernel.org/r/20250722110005.4988-1-lirongqing@baidu.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/traceroute.sh | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ arch/x86/kernel/kvm.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/net/traceroute.sh b/tools/testing/selftests/net/traceroute.sh
-index de9ca97abc306..9cb5e96e64333 100755
---- a/tools/testing/selftests/net/traceroute.sh
-+++ b/tools/testing/selftests/net/traceroute.sh
-@@ -209,11 +209,6 @@ setup_traceroute6()
- 
- run_traceroute6()
+diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+index fe9babe94861f..d7d2eb79120d6 100644
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -964,16 +964,6 @@ ASM_RET
+  */
+ void __init kvm_spinlock_init(void)
  {
--	if [ ! -x "$(command -v traceroute6)" ]; then
--		echo "SKIP: Could not run IPV6 test without traceroute6"
--		return
--	fi
+-	/*
+-	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
+-	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
+-	 * preferred over native qspinlock when vCPU is preempted.
+-	 */
+-	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
+-		pr_info("PV spinlocks disabled, no host support\n");
+-		return;
+-	}
 -
- 	setup_traceroute6
+ 	/*
+ 	 * Disable PV spinlocks and use native qspinlock when dedicated pCPUs
+ 	 * are available.
+@@ -993,6 +983,16 @@ void __init kvm_spinlock_init(void)
+ 		goto out;
+ 	}
  
- 	# traceroute6 host-2 from host-1 (expects 2000:102::2)
-@@ -278,11 +273,6 @@ setup_traceroute()
- 
- run_traceroute()
- {
--	if [ ! -x "$(command -v traceroute)" ]; then
--		echo "SKIP: Could not run IPV4 test without traceroute"
--		return
--	fi
--
- 	setup_traceroute
- 
- 	# traceroute host-2 from host-1 (expects 1.0.1.1). Takes a while.
-@@ -316,6 +306,9 @@ do
- 	esac
- done
- 
-+require_command traceroute6
-+require_command traceroute
++	/*
++	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
++	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
++	 * preferred over native qspinlock when vCPU is preempted.
++	 */
++	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
++		pr_info("PV spinlocks disabled, no host support\n");
++		return;
++	}
 +
- run_tests
+ 	pr_info("PV spinlocks enabled\n");
  
- printf "\nTests passed: %3d\n" ${nsuccess}
+ 	__pv_init_lock_hash();
 -- 
 2.51.0
 
