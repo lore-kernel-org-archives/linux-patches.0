@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309F53128C5;
-	Wed,  3 Dec 2025 15:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E7F03128C6;
+	Wed,  3 Dec 2025 15:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776147; cv=none; b=TjKTvYg4RPRWj5lD4GzdLjRVqbEsV7QWrH/ufD+hdLUb9Pk1zBDoiH70N8KyrFPvui4/RRnrOdocJwpkuW6UFw3SiJwrygdIbsJH9MS1A+LYb4wkBZt5nYmFrUwqP22Ytrz55l5VL23fTVX85yjXKkSASl9I8CfdzpBIKrHLatA=
+	t=1764776150; cv=none; b=lSaeUSlFlc06GrS3gY9Ls8eYcICCqgp5auKrkUJ0zOZ4CWT4+rx4HOxLJKGFTBYu3iQl/n6nPMBJROOfeYkdrWTU5oWP60TpbdOiTqdXJzkwW9vfX5MibfTBTsy3cuRrjVkbGerh8d5NDfsp0YrtXtva8dVktRh1Ll28H59cn4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776147; c=relaxed/simple;
-	bh=EXRyUFwGptQcXyrp5h7wBz6A9eNIQv7g2/mp2c83uu0=;
+	s=arc-20240116; t=1764776150; c=relaxed/simple;
+	bh=1nhWlwFyAepKpzPthr9M4rE/fKXJPKY35J+UE2I0YOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8vHhvUSHd4VhghfNRSB1pa0qxeb1SD0714ytFms8QFjw5QYpdZ90WpcRcm7scbg/IGgD3gY6gEt0pbTaFNQb8bMmi+zQffagA/oGv+9smIJBra6mBdDGRMEi7EgeBMOdKo2NgaXAtKMl3EhI9qRf90OABymHSIJ2iw5eQZQ2m4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YXpWPiNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LoCB/xC2lH8hrk2qvsjhNY0DZh5VMiHzLmk8FEVbHb4fqz/cl+DQ6WqaNSDHu4ymzCW8YqT58uhwCpKuRcyxXw/ZojTN+1jyz+MBChlozXGXX2BOXFX1vpZAb8WQNv2Y0wjk4MHR37qj3vvSobrXs0PZ5rL1j59gnWAWifsmwmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njoN6o3k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YXpWPiNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F57C4CEF5;
-	Wed,  3 Dec 2025 15:35:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njoN6o3k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69F1C116C6;
+	Wed,  3 Dec 2025 15:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776146;
-	bh=EXRyUFwGptQcXyrp5h7wBz6A9eNIQv7g2/mp2c83uu0=;
+	s=korg; t=1764776150;
+	bh=1nhWlwFyAepKpzPthr9M4rE/fKXJPKY35J+UE2I0YOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YXpWPiNERwKbO6/km70gJ3tdlc8xqXvzPbB5sOyjtA//qO9d8V8ubSMganpd7Mfb9
-	 8FW/tm1SJa5v2T2/dYOqSTKgTp8jHnttDSwzVWpAKi/fBEDlkPSOzjytJgZ6/0HyTv
-	 YXVMzRaARQy8VRD9lXXq2r5/wI9RLttQIsJxupvI=
+	b=njoN6o3kbXKEtf+d3E6Gpwc6L5ncW7KClQ0zlltpU9MX1oEDkA61ETDOqS6aq0oEB
+	 1R060FRU6YHxuzk99bB9cRAkP31DvaFega1LeZAJZFJaSL8Faao9TO35FWIixuxGfF
+	 CeswJRKlQQvY71mcu3RjAV6DyT/r/szMXM+1mCgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
+	Amber Lin <Amber.Lin@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 093/300] extcon: adc-jack: Fix wakeup source leaks on device unbind
-Date: Wed,  3 Dec 2025 16:24:57 +0100
-Message-ID: <20251203152404.070199345@linuxfoundation.org>
+Subject: [PATCH 5.10 094/300] drm/amdkfd: Tie UNMAP_LATENCY to queue_preemption
+Date: Wed,  3 Dec 2025 16:24:58 +0100
+Message-ID: <20251203152404.106811920@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,35 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Amber Lin <Amber.Lin@amd.com>
 
-[ Upstream commit 78b6a991eb6c6f19ed7d0ac91cda3b3b117fda8f ]
+[ Upstream commit f3820e9d356132e18405cd7606e22dc87ccfa6d1 ]
 
-Device can be unbound, so driver must also release memory for the wakeup
-source.  Do not use devm interface, because it would change the order of
-cleanup.
+When KFD asks CP to preempt queues, other than preempt CP queues, CP
+also requests SDMA to preempt SDMA queues with UNMAP_LATENCY timeout.
+Currently queue_preemption_timeout_ms is 9000 ms by default but can be
+configured via module parameter. KFD_UNMAP_LATENCY_MS is hard coded as
+4000 ms though. This patch ties KFD_UNMAP_LATENCY_MS to
+queue_preemption_timeout_ms so in a slow system such as emulator, both
+CP and SDMA slowness are taken into account.
 
-Link: https://lore.kernel.org/lkml/20250501-device-wakeup-leak-extcon-v2-1-7af77802cbea@linaro.org/
-Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Amber Lin <Amber.Lin@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon-adc-jack.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_priv.h | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/extcon/extcon-adc-jack.c b/drivers/extcon/extcon-adc-jack.c
-index 0317b614b6805..ea06cd4340525 100644
---- a/drivers/extcon/extcon-adc-jack.c
-+++ b/drivers/extcon/extcon-adc-jack.c
-@@ -162,6 +162,7 @@ static int adc_jack_remove(struct platform_device *pdev)
- {
- 	struct adc_jack_data *data = platform_get_drvdata(pdev);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+index 057c48a9b53a7..af2ea008340cc 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_priv.h
+@@ -108,7 +108,14 @@
  
-+	device_init_wakeup(&pdev->dev, false);
- 	free_irq(data->irq, data);
- 	cancel_work_sync(&data->handler.work);
+ #define KFD_KERNEL_QUEUE_SIZE 2048
  
+-#define KFD_UNMAP_LATENCY_MS	(4000)
++/*  KFD_UNMAP_LATENCY_MS is the timeout CP waiting for SDMA preemption. One XCC
++ *  can be associated to 2 SDMA engines. queue_preemption_timeout_ms is the time
++ *  driver waiting for CP returning the UNMAP_QUEUE fence. Thus the math is
++ *  queue_preemption_timeout_ms = sdma_preemption_time * 2 + cp workload
++ *  The format here makes CP workload 10% of total timeout
++ */
++#define KFD_UNMAP_LATENCY_MS	\
++	((queue_preemption_timeout_ms - queue_preemption_timeout_ms / 10) >> 1)
+ 
+ /*
+  * 512 = 0x200
 -- 
 2.51.0
 
