@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FCB36BCFE;
-	Wed,  3 Dec 2025 16:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6674236C0D9;
+	Wed,  3 Dec 2025 16:31:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779507; cv=none; b=llJLzoQjj6+Q69uuqdNvEdtrFn/Ro7yE4RtTwnr8Ax9tiGdbXZlGIXI5Qzv0BZR0Fx4hUoFgNM1nFTPq+Lh/1qpC6bEZ94pBZWQpo33oW64q1yf3RX2/nJKio3SBBVM5F6HNwpHqvhN4nltUK+Nv4KA8OYuY8mrUNOa0wqGOHjY=
+	t=1764779510; cv=none; b=SOxzpBOy/BG3AFGSZCs8QkByrufA0FT1TXOHCoR/k+XhILwC9i6mCl9OfH3yTBjpyb37i/r5wvI9+rxVwj+gw1fHV+78CoHwNbMcoFUvEXGlJbp25R+CqQf/BYm+GJsslTFHqKb+UCw4I0r2mY/SrB51kwsmc5oVRHyq0DFHB5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779507; c=relaxed/simple;
-	bh=vpQLAHA0yrRNa84lEdJzd2mX0vvGhxrIBNNYLNqKS9Y=;
+	s=arc-20240116; t=1764779510; c=relaxed/simple;
+	bh=uIR+ZsvJMG9ues0ptz+GKpP8YE38YAseydcxnFZFs2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KT9KZk4CKEuhuY14SCN+SkyWdjDH9zcUtOI1dBxY3bqqkJA3pPL8Ld5TBJ1PHv6x1IlMxnqy1uvrsW1P77QP97RKGYVGbKm2KNP+ZtdcNKlD/WectwNThQkWhYnGb4v5beYB1AGSv7wxawUWNUK7AN0mbQDimUrruZbzyHddTSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjZhXlOR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cobkSf1c7UgUNuFQgGLKMq4zhd9qgBDYcHflexwHr9teZ3RSqeN5TwD+KqZ+FHySwBsbDtAs0rIVOqBfM2FhWiCDOrvc1wvfDo++MDQvRSZRKS844vZSEReRp56QRuW7cbSrHDld3jE1tPwblEE/1ywdN1JNQdnzLBq/9VL2En4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4HQdtxL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjZhXlOR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D746DC116B1;
-	Wed,  3 Dec 2025 16:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4HQdtxL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D8CC4CEF5;
+	Wed,  3 Dec 2025 16:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779507;
-	bh=vpQLAHA0yrRNa84lEdJzd2mX0vvGhxrIBNNYLNqKS9Y=;
+	s=korg; t=1764779510;
+	bh=uIR+ZsvJMG9ues0ptz+GKpP8YE38YAseydcxnFZFs2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjZhXlORXGE9GDmB0wWXMBZaUcka4q6WaQqZdxUx3kEANCepUT3/rSRxh0+Ba+gnu
-	 oehavk8OxgOhV6A0kbjqtOll8Asp+N93T0WAL12pDrcy7eWS414BOOXQRrm5BIkM9P
-	 QvwuF4i7UhIOKxV2xKIZvABWqHVCmbLHJD+hyxSA=
+	b=f4HQdtxLQXGC953X/mhgGFeJJyG30fbt0SjWhxSvRfrTExX0v4p7OQpnv25FuPciB
+	 AbWgOK60ZuRDBH10UD1oOIzoOgyvbUH5ItUoC+UBVbnwcuYxRdkdoODIsRMRaMOTCV
+	 YT+SjYLYM/MfSRny4FEHwR6OqTEXyzMWJ7e6Sfy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jacob Moroni <jmoroni@google.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 276/568] RDMA/irdma: Remove unused struct irdma_cq fields
-Date: Wed,  3 Dec 2025 16:24:38 +0100
-Message-ID: <20251203152450.818462757@linuxfoundation.org>
+Subject: [PATCH 6.1 277/568] RDMA/irdma: Set irdma_cq cq_num field during CQ create
+Date: Wed,  3 Dec 2025 16:24:39 +0100
+Message-ID: <20251203152450.854959373@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,65 +54,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit 880245fd029a8f8ee8fd557c2681d077c1b1a959 ]
+[ Upstream commit 5575b7646b94c0afb0f4c0d86e00e13cf3397a62 ]
 
-These fields were set but not used anywhere, so remove them.
+The driver maintains a CQ table that is used to ensure that a CQ is
+still valid when processing CQ related AEs. When a CQ is destroyed,
+the table entry is cleared, using irdma_cq.cq_num as the index. This
+field was never being set, so it was just always clearing out entry
+0.
 
-Link: https://patch.msgid.link/r/20250923142128.943240-1-jmoroni@google.com
+Additionally, the cq_num field size was increased to accommodate HW
+supporting more than 64K CQs.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
 Signed-off-by: Jacob Moroni <jmoroni@google.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: 5575b7646b94 ("RDMA/irdma: Set irdma_cq cq_num field during CQ create")
+Link: https://patch.msgid.link/20250923142439.943930-1-jmoroni@google.com
+Acked-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 3 ---
- drivers/infiniband/hw/irdma/verbs.h | 6 ------
- 2 files changed, 9 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 1 +
+ drivers/infiniband/hw/irdma/verbs.h | 2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index baa3dff6faab1..fb02017a1aa63 100644
+index fb02017a1aa63..6fc622e3eb07a 100644
 --- a/drivers/infiniband/hw/irdma/verbs.c
 +++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -2088,8 +2088,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 			goto cq_free_rsrc;
- 		}
- 
--		iwcq->iwpbl = iwpbl;
--		iwcq->cq_mem_size = 0;
- 		cqmr = &iwpbl->cq_mr;
- 
- 		if (rf->sc_dev.hw_attrs.uk_attrs.feature_flags &
-@@ -2104,7 +2102,6 @@ static int irdma_create_cq(struct ib_cq *ibcq,
- 				err_code = -EPROTO;
- 				goto cq_free_rsrc;
- 			}
--			iwcq->iwpbl_shadow = iwpbl_shadow;
- 			cqmr_shadow = &iwpbl_shadow->cq_mr;
- 			info.shadow_area_pa = cqmr_shadow->cq_pbl.addr;
- 			cqmr->split = true;
+@@ -2050,6 +2050,7 @@ static int irdma_create_cq(struct ib_cq *ibcq,
+ 	spin_lock_init(&iwcq->lock);
+ 	INIT_LIST_HEAD(&iwcq->resize_list);
+ 	INIT_LIST_HEAD(&iwcq->cmpl_generated);
++	iwcq->cq_num = cq_num;
+ 	info.dev = dev;
+ 	ukinfo->cq_size = max(entries, 4);
+ 	ukinfo->cq_id = cq_num;
 diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index 0bc0d0faa0868..b55d30df96261 100644
+index b55d30df96261..8809465020e13 100644
 --- a/drivers/infiniband/hw/irdma/verbs.h
 +++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -113,19 +113,13 @@ struct irdma_mr {
+@@ -113,7 +113,7 @@ struct irdma_mr {
  struct irdma_cq {
  	struct ib_cq ibcq;
  	struct irdma_sc_cq sc_cq;
--	u16 cq_head;
--	u16 cq_size;
- 	u16 cq_num;
+-	u16 cq_num;
++	u32 cq_num;
  	bool user_mode;
  	atomic_t armed;
  	enum irdma_cmpl_notify last_notify;
--	u32 polled_cmpls;
--	u32 cq_mem_size;
- 	struct irdma_dma_mem kmem;
- 	struct irdma_dma_mem kmem_shadow;
- 	spinlock_t lock; /* for poll cq */
--	struct irdma_pbl *iwpbl;
--	struct irdma_pbl *iwpbl_shadow;
- 	struct list_head resize_list;
- 	struct irdma_cq_poll_info cur_cqe;
- 	struct list_head cmpl_generated;
 -- 
 2.51.0
 
