@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F0F34F494;
-	Wed,  3 Dec 2025 16:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF2634F484;
+	Wed,  3 Dec 2025 16:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777910; cv=none; b=EpJ1yahzRwziesQPz5qGT9hZV0zeTZ5TLOZZehFOelbmb0kjIkXfWcaeptxMvKTyBnBZaiWbGifFAsgXTrECFK6dEHy6EqUEQJqH4B9twgQ7uRe8AZOPWpt7MeqkNUzqHpU7lmBP7CHIRT2p+py5boABj5ka1idQI0k15iPlMT0=
+	t=1764777914; cv=none; b=QsHRsJ+2OZxDjECsyE6H8EEIYM6u1KXMJ6d06YG3gnymhnwqvpIyZvW4xpvsMGu0Lj3tjjES5F/KOm18P1R28xFU4Nkc4JKBcLxynalYTrWhNunJsACryl4UywEawMhVdgW3ZU0O25r+ddA6HQhA6ZqgSF3Y9Ek/pw569gtdPpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777910; c=relaxed/simple;
-	bh=RD1L+1qjiHajI4J2ehKhB8uJmiwTpEcX9Gzdkqayu+0=;
+	s=arc-20240116; t=1764777914; c=relaxed/simple;
+	bh=JoQlZpxEWTe+TkkVxtmej/I+zBlWHBi4Cf5sbcrB4Mg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QpoSm3Mr7XxEI7mYox6JTTUjwlrY5toTct0IOsvUbC5+b4GnTd33entF3Yt5IEI5Wf4otcMTjCbYg3EMZOGzB21sl92YYfdDTBsIA4svwhT/sn0P6ATFaz7Y3aNN35SGlngVpFEf65gGNw8XD0QC2twAlyCtiB6gB/aGFfAV4CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEvZwKMn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cfSNSZMDSpawkisdf/2vKgxkDErPMPaBwZgzFwRQdL3og81WueyL2jk5LyXQ2iEXTEXRfUd21META5pFOFTTPpYxU4F6n9mPGngBv7jj85CyFPqgZ2LvXQbpehzqm2pTsaGc51K6dmsqKtDol4f7z+WplyGgtOJOtpmNhDtjcik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYR9UpqQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEvZwKMn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B177C4CEF5;
-	Wed,  3 Dec 2025 16:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYR9UpqQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654BEC4CEF5;
+	Wed,  3 Dec 2025 16:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777910;
-	bh=RD1L+1qjiHajI4J2ehKhB8uJmiwTpEcX9Gzdkqayu+0=;
+	s=korg; t=1764777913;
+	bh=JoQlZpxEWTe+TkkVxtmej/I+zBlWHBi4Cf5sbcrB4Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEvZwKMnQulj20zyU0+lCG8KZbzUkGrhqK0F1TgLWK6UGl/nydr/txXLZfYRDXNwN
-	 gHy7s2HdcT8rAI3PFDYcyC7DgM5D8xRe6VLnBkhCuzpOWmYngA77npsgynqRiHD2j1
-	 lZhkInPaaMTMrOOwUc3SNiBXV6Wx5QCiRgdcSW/E=
+	b=KYR9UpqQIrwwjiZOrBoIfGnwxJ/FzjRiSRRd47QH6ZTHsgew9udLEln/hhfVJURfZ
+	 peyzcgnaxwUYRGPeOr6t7XlDHaiPKAaDf6ESFbP/HewAfBD1EYr83JZPOl9i8TxjKA
+	 Lqm3F+z0LV5WI+FfG3NKqOHMiAgaZre5FEoHE7K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Saket Dumbre <saket.dumbre@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 168/392] wifi: ath10k: Fix connection after GTK rekeying
-Date: Wed,  3 Dec 2025 16:25:18 +0100
-Message-ID: <20251203152420.260160044@linuxfoundation.org>
+Subject: [PATCH 5.15 186/392] ACPICA: Update dsmethod.c to get rid of unused variable warning
+Date: Wed,  3 Dec 2025 16:25:36 +0100
+Message-ID: <20251203152420.924409424@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -54,64 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Saket Dumbre <saket.dumbre@intel.com>
 
-[ Upstream commit 487e8a8c3421df0af3707e54c7e069f1d89cbda7 ]
+[ Upstream commit 761dc71c6020d6aa68666e96373342d49a7e9d0a ]
 
-It appears that not all hardware/firmware implementations support
-group key deletion correctly, which can lead to connection hangs
-and deauthentication following GTK rekeying (delete and install).
+All the 3 major C compilers (MSVC, GCC, LLVM/Clang) warn about
+the unused variable i after the removal of its usage by PR #1031
+addressing Issue #1027
 
-To avoid this issue, instead of attempting to delete the key using
-the special WMI_CIPHER_NONE value, we now replace the key with an
-invalid (random) value.
-
-This behavior has been observed with WCN39xx chipsets.
-
-Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
-Closes: https://lore.kernel.org/all/DAWJQ2NIKY28.1XOG35E4A682G@linaro.org
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # QRB2210 RB1
-Link: https://patch.msgid.link/20250902143225.837487-1-loic.poulain@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://github.com/acpica/acpica/commit/6d235320
+Signed-off-by: Saket Dumbre <saket.dumbre@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/mac.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/dsmethod.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 2b4c694b0fbbe..d90909ffa6780 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -13,6 +13,7 @@
- #include <linux/acpi.h>
- #include <linux/of.h>
- #include <linux/bitfield.h>
-+#include <linux/random.h>
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index 9aa7a24777e95..f97286c6cb176 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -462,7 +462,6 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 	struct acpi_walk_state *next_walk_state = NULL;
+ 	union acpi_operand_object *obj_desc;
+ 	struct acpi_evaluate_info *info;
+-	u32 i;
  
- #include "hif.h"
- #include "core.h"
-@@ -286,8 +287,15 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV;
+ 	ACPI_FUNCTION_TRACE_PTR(ds_call_control_method, this_walk_state);
  
- 	if (cmd == DISABLE_KEY) {
--		arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
--		arg.key_data = NULL;
-+		if (flags & WMI_KEY_GROUP) {
-+			/* Not all hardware handles group-key deletion operation
-+			 * correctly. Replace the key with a junk value to invalidate it.
-+			 */
-+			get_random_bytes(key->key, key->keylen);
-+		} else {
-+			arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
-+			arg.key_data = NULL;
-+		}
- 	}
- 
- 	return ath10k_wmi_vdev_install_key(arvif->ar, &arg);
 -- 
 2.51.0
 
