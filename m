@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7125D332EBC;
-	Wed,  3 Dec 2025 15:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE583346BF;
+	Wed,  3 Dec 2025 15:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777178; cv=none; b=aPDL0tEcbmnBh3la5/8xy8uB481ku7AYavYu0MEwS774j/gQzd4EsOFZ1lGwmrt+99tmtYffPdxEeoka19uY8u8BUpfeHID6NYTRGD4tPlMOZno/x0/cshBcFa2uyuosUlOUqsaWXxL6IW5ADSxCYGFskTrut/3qiQayN1paqNQ=
+	t=1764777182; cv=none; b=IQN5i3bU5a93me192g+cbdMSvQcggPQ7CZBXeylY1U0ABLt51vlVt+JQP9Ybep1BlonpesO0UknbDQhs4WqZg+SpK67z1EpIyQkqQq2r7u6Qd9DvkS4UrGBcHqc+V5Plu/6woWDGsumSCINKI7GqwAssZF/PdnR+zAS+idnN+Y0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777178; c=relaxed/simple;
-	bh=F2d8My0xbL47StaaeXtRwoFPxzpoze6lJVbRhTv4zTI=;
+	s=arc-20240116; t=1764777182; c=relaxed/simple;
+	bh=xYC+6AspqE/xLAWuA57+Xcobb2/yVr9N985gGQg8EQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgyJYv+w0j574eEX45GjDSbjxLkHmZTeVKv66lkvB5f4twq70duVT93KbwGapqiV1/HP4lupYBoyOacS6VknDHSD7bniZzkzjugyRMf2Kj58YPDcEU+5aUgPpQKHVBpwjMfZZ0Zplh8DjbNubUXzaNhfztTDe2g8DA73OPrtF1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eUYbJcQb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTGJVaw3Y5q1oSxJjcRn/hEmAtwdCo4maTvQeow9XJ8VrPsIAZvIPWJeX5942qAOAGYU/4VEAHGTe2ztEDQN+IX0G4UGom67j18xweOcLpU4v40yxsiTqTi1WJy8NodPSrHFpw4U4h0DNNCT2Bl+QYfaIVA74teJob+hSTDv7hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzbexxdp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eUYbJcQb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D578DC2BCB1;
-	Wed,  3 Dec 2025 15:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzbexxdp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23743C4CEF5;
+	Wed,  3 Dec 2025 15:53:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777178;
-	bh=F2d8My0xbL47StaaeXtRwoFPxzpoze6lJVbRhTv4zTI=;
+	s=korg; t=1764777181;
+	bh=xYC+6AspqE/xLAWuA57+Xcobb2/yVr9N985gGQg8EQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUYbJcQb+n1Gml5/J5WsS2APrcI+Se68ZlJZIruuy6ueZUDh3gCJYlE98FDHshAVH
-	 D0GnaA8WpsXuCPutsBNxF1YG75J7rwdr7mXCyppwsjzqp6V0eLTuWSNA02/GhqEYyi
-	 uZgQIBd5sUlH1pGW06McAUIudrYeIcz/HapFoGI8=
+	b=pzbexxdpn8K3DH07bH1xsIWUmXRldn14g/NEvJrQmS6qmdgXBTULR2QLXoGrvlJtf
+	 TUHJfw0VuFdAapb3oQ5+IpY6wzty7i/dmsEvGlTllRly5gpzuV+PQc+MtmPlrkRfVU
+	 TVKu373illlvjwOrg4szF/hohJhJsx8msgooYyAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filip Pokryvka <fpokryvk@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.17 105/146] mptcp: clear scheduled subflows on retransmit
-Date: Wed,  3 Dec 2025 16:28:03 +0100
-Message-ID: <20251203152350.308854846@linuxfoundation.org>
+	syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com,
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.17 074/146] tracing: Fix WARN_ON in tracing_buffers_mmap_close for split VMAs
+Date: Wed,  3 Dec 2025 16:27:32 +0100
+Message-ID: <20251203152349.174529159@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,68 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 27fd02860164bfa78cec2640dfad630d832e302c upstream.
+commit b042fdf18e89a347177a49e795d8e5184778b5b6 upstream.
 
-When __mptcp_retrans() kicks-in, it schedules one or more subflows for
-retransmission, but such subflows could be actually left alone if there
-is no more data to retransmit and/or in case of concurrent fallback.
+When a VMA is split (e.g., by partial munmap or MAP_FIXED), the kernel
+calls vm_ops->close on each portion. For trace buffer mappings, this
+results in ring_buffer_unmap() being called multiple times while
+ring_buffer_map() was only called once.
 
-Scheduled subflows could be processed much later in time, i.e. when new
-data will be transmitted, leading to bad subflow selection.
+This causes ring_buffer_unmap() to return -ENODEV on subsequent calls
+because user_mapped is already 0, triggering a WARN_ON.
 
-Explicitly clear all scheduled subflows before leaving the
-retransmission function.
+Trace buffer mappings cannot support partial mappings because the ring
+buffer structure requires the complete buffer including the meta page.
 
-Fixes: ee2708aedad0 ("mptcp: use get_retrans wrapper")
+Fix this by adding a may_split callback that returns -EINVAL to prevent
+VMA splits entirely.
+
 Cc: stable@vger.kernel.org
-Reported-by: Filip Pokryvka <fpokryvk@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251125-net-mptcp-clear-sched-rtx-v1-1-1cea4ad2165f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cf9f0f7c4c5bb ("tracing: Allow user-space mapping of the ring-buffer")
+Link: https://patch.msgid.link/20251119064019.25904-1-kartikey406@gmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a72c325b042aae6403c7
+Tested-by: syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com
+Reported-by: syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2637,7 +2637,7 @@ static void __mptcp_retrans(struct sock
- 		}
- 
- 		if (!mptcp_send_head(sk))
--			return;
-+			goto clear_scheduled;
- 
- 		goto reset_timer;
- 	}
-@@ -2668,7 +2668,7 @@ static void __mptcp_retrans(struct sock
- 			if (__mptcp_check_fallback(msk)) {
- 				spin_unlock_bh(&msk->fallback_lock);
- 				release_sock(ssk);
--				return;
-+				goto clear_scheduled;
- 			}
- 
- 			while (info.sent < info.limit) {
-@@ -2700,6 +2700,15 @@ reset_timer:
- 
- 	if (!mptcp_rtx_timer_pending(sk))
- 		mptcp_reset_rtx_timer(sk);
-+
-+clear_scheduled:
-+	/* If no rtx data was available or in case of fallback, there
-+	 * could be left-over scheduled subflows; clear them all
-+	 * or later xmit could use bad ones
-+	 */
-+	mptcp_for_each_subflow(msk, subflow)
-+		if (READ_ONCE(subflow->scheduled))
-+			mptcp_subflow_set_scheduled(subflow, false);
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8781,8 +8781,18 @@ static void tracing_buffers_mmap_close(s
+ 	put_snapshot_map(iter->tr);
  }
  
- /* schedule the timeout timer for the relevant event: either close timeout
++static int tracing_buffers_may_split(struct vm_area_struct *vma, unsigned long addr)
++{
++	/*
++	 * Trace buffer mappings require the complete buffer including
++	 * the meta page. Partial mappings are not supported.
++	 */
++	return -EINVAL;
++}
++
+ static const struct vm_operations_struct tracing_buffers_vmops = {
+ 	.close		= tracing_buffers_mmap_close,
++	.may_split      = tracing_buffers_may_split,
+ };
+ 
+ static int tracing_buffers_mmap(struct file *filp, struct vm_area_struct *vma)
 
 
