@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38703A1D14;
-	Wed,  3 Dec 2025 16:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0CA3AA197;
+	Wed,  3 Dec 2025 16:58:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781109; cv=none; b=PY1vJYuZjS82/5qpScINJsRdxedCkDrUxZi+GMkLNAnx5biJrlHmd0AIvjxKDb2CTGf4F2ZU1RYK+aK3btjtE2sma+g1FYHwNS4q8tcXbzGd9d1nM+PrqeuyP3cBqKqzcQf7N87iFCArpMuuWVpdu0i1aS8ucxRh3TwH8asAEpA=
+	t=1764781112; cv=none; b=W4ktttttjSCr1i9TZFn2NoWziU1DyarnK0NORs+yPFZbMfrXPB7SaK7Nx0odLI0wRba+P6JnMtaG6C7Hxwywkwjp6bonVlFty5O95/fQDK4XhEmCcC84LKTHsYT7lKMURfa1qdl491uhJN5Uco/fe6vWOjPT/OXEA8hVsGPR13g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781109; c=relaxed/simple;
-	bh=mIxKv1CYT7oySN2uIJ2wmeG9vV+lve9zLA2xymm3+rk=;
+	s=arc-20240116; t=1764781112; c=relaxed/simple;
+	bh=+vkSzC2J+ZITU89o7PQPd6A0cHO+aEuGyP69rmi7/9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gximJYUbPyLqh+g2zVf+LCVMpkHGdrdzzJprD1x9mWH3IjYdYl7SDIeAKdEFTr3ZjeKR3UYC4243oZCVLdY8o/R3HfJsN1pjwKYYfn79XuOXnYHAki6ZpoBGFhdoMHq3jkfb8TaFVDeXfIHjAV/VMI7ngAoY1fQHoy1+Qpug0Gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvmf3lAN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pfRs6/7MJ3AV5tAWA64sl45GogNoi+3PHB1O2f/0ZFZiVd0UEQNFXO06DIj8kV5OJwIFbEg4t3pkbcuJR/R9UqpXgrFUiJh0OijS8ONHctGUZrloHgUv/C5wPQGuJpHZvTI+fhWVeTynNLnGN2GcDZ2b5/PbhUVFZCE3X4KMYsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPep03YT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvmf3lAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD02C4CEF5;
-	Wed,  3 Dec 2025 16:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPep03YT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D237FC116C6;
+	Wed,  3 Dec 2025 16:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781109;
-	bh=mIxKv1CYT7oySN2uIJ2wmeG9vV+lve9zLA2xymm3+rk=;
+	s=korg; t=1764781112;
+	bh=+vkSzC2J+ZITU89o7PQPd6A0cHO+aEuGyP69rmi7/9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvmf3lAN5WWIg2ECPhE7DvfIMEuzySvyuUgJGSoOrGjlleguPiK1gg8CckKyuZ8Ld
-	 IKtOQQlDicArFufhuiGsePJ2JV+zLxIf30+Wz9jiEMomBhTe7Po/DOvlDyFj5mtcOc
-	 Ogy4gZeM5ErWyI6rFMG7m1tFww1anhBPBlNQcKI0=
+	b=hPep03YT/DyOrP4dIwYHTGP50/3nbqY2ksBnlEt1QJFP7pCl96C745/+nIW6p0TIF
+	 BYQzSaQzeaGoyQ7WnyueM7gEekVrJ/ztzrAQrtLVq6ut2aQw/AmgWOR7767AX3eRzD
+	 SgM/mAhbeAbC5jGciOtFKLG2S91YlXUBNfz0s+ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Jay Shin <jaeshin@redhat.com>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 50/93] smb: client: fix memory leak in cifs_construct_tcon()
-Date: Wed,  3 Dec 2025 16:29:43 +0100
-Message-ID: <20251203152338.371156577@linuxfoundation.org>
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.6 51/93] thunderbolt: Add support for Intel Wildcat Lake
+Date: Wed,  3 Dec 2025 16:29:44 +0100
+Message-ID: <20251203152338.407724552@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -53,65 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-commit 3184b6a5a24ec9ee74087b2a550476f386df7dc2 upstream.
+commit 3575254546a27210a4b661ea37fbbfb836c0815d upstream.
 
-When having a multiuser mount with domain= specified and using
-cifscreds, cifs_set_cifscreds() will end up setting @ctx->domainname,
-so it needs to be freed before leaving cifs_construct_tcon().
+Intel Wildcat Lake derives its Thunderbolt/USB4 controller from Lunar
+Lake platform. Add Wildcat Lake PCI ID to the driver list of supported
+devices.
 
-This fixes the following memory leak reported by kmemleak:
-
-  mount.cifs //srv/share /mnt -o domain=ZELDA,multiuser,...
-  su - testuser
-  cifscreds add -d ZELDA -u testuser
-  ...
-  ls /mnt/1
-  ...
-  umount /mnt
-  echo scan > /sys/kernel/debug/kmemleak
-  cat /sys/kernel/debug/kmemleak
-  unreferenced object 0xffff8881203c3f08 (size 8):
-    comm "ls", pid 5060, jiffies 4307222943
-    hex dump (first 8 bytes):
-      5a 45 4c 44 41 00 cc cc                          ZELDA...
-    backtrace (crc d109a8cf):
-      __kmalloc_node_track_caller_noprof+0x572/0x710
-      kstrdup+0x3a/0x70
-      cifs_sb_tlink+0x1209/0x1770 [cifs]
-      cifs_get_fattr+0xe1/0xf50 [cifs]
-      cifs_get_inode_info+0xb5/0x240 [cifs]
-      cifs_revalidate_dentry_attr+0x2d1/0x470 [cifs]
-      cifs_getattr+0x28e/0x450 [cifs]
-      vfs_getattr_nosec+0x126/0x180
-      vfs_statx+0xf6/0x220
-      do_statx+0xab/0x110
-      __x64_sys_statx+0xd5/0x130
-      do_syscall_64+0xbb/0x380
-      entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: f2aee329a68f ("cifs: set domainName when a domain-key is used in multiuser")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Jay Shin <jaeshin@redhat.com>
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 Cc: stable@vger.kernel.org
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/thunderbolt/nhi.c |    2 ++
+ drivers/thunderbolt/nhi.h |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -4224,6 +4224,7 @@ cifs_construct_tcon(struct cifs_sb_info
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1536,6 +1536,8 @@ static struct pci_device_id nhi_ids[] =
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_P_NHI1),
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_WCL_NHI0),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
  
- out:
- 	kfree(ctx->username);
-+	kfree(ctx->domainname);
- 	kfree_sensitive(ctx->password);
- 	kfree(origin_fullpath);
- 	kfree(ctx);
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -75,6 +75,7 @@ extern const struct tb_nhi_ops icl_nhi_o
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE	0x15ef
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI0			0x463e
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
++#define PCI_DEVICE_ID_INTEL_WCL_NHI0			0x4d33
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE 0x5786
 
 
