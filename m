@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F558320CD1;
-	Wed,  3 Dec 2025 15:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159B3314B76;
+	Wed,  3 Dec 2025 15:58:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777528; cv=none; b=GYc/7pmFEhHhcpAODaJL/Tra6LXGfCP4o65jGtdiyWt81Avv2qES+9y9TOxeNALL24+iOW0EUcwsP1zvRcS/Z+QI1KzhhyjQNerDlTiT/T3SZkgBUp3Db1LCd6EO77mB/X3QOFibx1l6x4INrDPtqip3y5NjoOnCCFozIqiSfyw=
+	t=1764777531; cv=none; b=GTywd/7GTBKMi8C1CN4eYTTzbDrVdGQbkT+iK8A3r6LW0e6k6uQ2J63Nl6nTdeNriZunUNVovuqv2AIBrKp3DHTWBUKSZ3Q4AdJRfTCxjj1MC9cb+b9C08bRkRgb9+x/Jctm2WXpO1U0MnGhax+ndpfmOJBx9RdGlTA2SkrTKa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777528; c=relaxed/simple;
-	bh=u3Txwa+/4NEgdnj6SzozzhxkEmxUaPibI8OQeTuFqZk=;
+	s=arc-20240116; t=1764777531; c=relaxed/simple;
+	bh=ATvA/oZ0E3WDUs8LcyBPdWWNrFNqJMtgpMs23jU4E4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F0Ypb8INMZ24+/VzjVVnHnuFRn/CwddeUc11FgoHi5pIcgEtVIE0gFOZsIbfoI8ndvKQSvnqTI9N2sA4WPBTLZsrg3GcjXwEpuOVGFq5qVWKK8fVinq/CO3tjhYS2W82Sm3/twb96y70GGuXlIBcFwDdmW6VWrB2nbYnXkX5P9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umwyN2EX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zq95E+7sU+bksBuAb8fXsxMeyev8/b1cxqoCC6MBMy3ZI+1M3wZ7/mYQwL7O6RvW0kY3HvklkFVtJrNuBmM7i5ChTAlMih4mxxv4VdBIlgJmGEeCllmBwXlW4yHvQw4GaCiOacI5KTjWO4q7dMDnqM/q7HtGMUXsH2IJwueDzaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rx9ZmUmu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umwyN2EX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E923BC4CEF5;
-	Wed,  3 Dec 2025 15:58:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rx9ZmUmu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D0FC4CEF5;
+	Wed,  3 Dec 2025 15:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777527;
-	bh=u3Txwa+/4NEgdnj6SzozzhxkEmxUaPibI8OQeTuFqZk=;
+	s=korg; t=1764777530;
+	bh=ATvA/oZ0E3WDUs8LcyBPdWWNrFNqJMtgpMs23jU4E4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umwyN2EX6yOXr1uilTuSqZAcueLJNvhPodA9TT0PpsNr24xkK05Bw0ikdqry+STTX
-	 qYT/dbL2Ah+MX0EXjs49gSmE9pDT5KlPlrCjS58hvij58C0kigkEX3Rq0cskBZNjMV
-	 A4jUi6AQxOMB7S4Kboa/Z0NoTdSjLMwG/sMI5YBg=
+	b=Rx9ZmUmu7VSvewmE4T/bOIFUowzC6ffCakBYAPkJpddtuiaVgQxFYJDga/WCP/SYE
+	 5BhV3zWrZKG9eeUcA5wTl/B9c8FrmMtmuTKg110goeCEpRna8DVNpoUO6WYC280vsX
+	 Rppm5qNVg0+VNK1J2YKhQjzhmcOfVZtr0l4PzB24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jiayi Li <lijiayi@kylinos.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/392] libbpf: Fix powerpcs stack register definition in bpf_tracing.h
-Date: Wed,  3 Dec 2025 16:22:53 +0100
-Message-ID: <20251203152414.956510794@linuxfoundation.org>
+Subject: [PATCH 5.15 060/392] memstick: Add timeout to prevent indefinite waiting
+Date: Wed,  3 Dec 2025 16:23:30 +0100
+Message-ID: <20251203152416.321029562@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,42 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Jiayi Li <lijiayi@kylinos.cn>
 
-[ Upstream commit 7221b9caf84b3294688228a19273d74ea19a2ee4 ]
+[ Upstream commit b65e630a55a490a0269ab1e4a282af975848064c ]
 
-retsnoop's build on powerpc (ppc64le) architecture ([0]) failed due to
-wrong definition of PT_REGS_SP() macro. Looking at powerpc's
-implementation of stack unwinding in perf_callchain_user_64() clearly
-shows that stack pointer register is gpr[1].
+Add timeout handling to wait_for_completion calls in memstick_set_rw_addr()
+and memstick_alloc_card() to prevent indefinite blocking in case of
+hardware or communication failures.
 
-Fix libbpf's definition of __PT_SP_REG for powerpc to fix all this.
-
-  [0] https://kojipkgs.fedoraproject.org/work/tasks/1544/137921544/build.log
-
-Fixes: 138d6153a139 ("samples/bpf: Enable powerpc support")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/20251020203643.989467-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
+Link: https://lore.kernel.org/r/20250804024825.1565078-1-lijiayi@kylinos.cn
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf_tracing.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memstick/core/memstick.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
-index 20fe06d0acd98..950ce502d655c 100644
---- a/tools/lib/bpf/bpf_tracing.h
-+++ b/tools/lib/bpf/bpf_tracing.h
-@@ -176,7 +176,7 @@
- #define __PT_RET_REG regs[31]
- #define __PT_FP_REG __unsupported__
- #define __PT_RC_REG gpr[3]
--#define __PT_SP_REG sp
-+#define __PT_SP_REG gpr[1]
- #define __PT_IP_REG nip
+diff --git a/drivers/memstick/core/memstick.c b/drivers/memstick/core/memstick.c
+index 9a2acf5c40143..fc9e6db3bb72b 100644
+--- a/drivers/memstick/core/memstick.c
++++ b/drivers/memstick/core/memstick.c
+@@ -367,7 +367,9 @@ int memstick_set_rw_addr(struct memstick_dev *card)
+ {
+ 	card->next_request = h_memstick_set_rw_addr;
+ 	memstick_new_req(card->host);
+-	wait_for_completion(&card->mrq_complete);
++	if (!wait_for_completion_timeout(&card->mrq_complete,
++			msecs_to_jiffies(500)))
++		card->current_mrq.error = -ETIMEDOUT;
  
- #elif defined(bpf_target_sparc)
+ 	return card->current_mrq.error;
+ }
+@@ -401,7 +403,9 @@ static struct memstick_dev *memstick_alloc_card(struct memstick_host *host)
+ 
+ 		card->next_request = h_memstick_read_dev_id;
+ 		memstick_new_req(host);
+-		wait_for_completion(&card->mrq_complete);
++		if (!wait_for_completion_timeout(&card->mrq_complete,
++				msecs_to_jiffies(500)))
++			card->current_mrq.error = -ETIMEDOUT;
+ 
+ 		if (card->current_mrq.error)
+ 			goto err_out;
 -- 
 2.51.0
 
