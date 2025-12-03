@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CB2346A1C;
-	Wed,  3 Dec 2025 16:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BBE346E71;
+	Wed,  3 Dec 2025 16:40:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780033; cv=none; b=dDvwZPjjtHntKFP4LjzpaJ+CnWb5Aq0SIcARwDCIPMPkt55xdNHzTirhnBbKWf0TMmM1dP7XGFvIuzIW9t+WrR27BRxwSfxIXRnSUlfRaL80Ej291muafflZJs66yZk7HU9OacRRs/9a5M9pqCGjT5oJG4CjUi+v0v3T4ZBKgHk=
+	t=1764780036; cv=none; b=OgMtATp1BcVhR1R1f5ngJYyvwTz1uQCqsYlm2mS5i4lfPGBjRmdDe30fgWynWbNxZfM3KTKZwgDv/ziheuwEyMQVIi9Bt6OvoFw4fckaJ1u4ctg8USy8/YTgm989hIs5/jvVxuBFbh1noie2PHL2gj1Bbqpo/DPVqqcw1p/zoKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780033; c=relaxed/simple;
-	bh=CnH8X+3GeTjS6p9I5n8GWFFy4Nk+uYgCZA8Kc3tMtzM=;
+	s=arc-20240116; t=1764780036; c=relaxed/simple;
+	bh=5DZbBv6PqaoeiSRm9+xtKo+JLHTe2mRUs1O9Yd8T3U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxDlboBr1YR4OEu05pBC3LndHjoUuIZYGWMqsI4+9bAtnT60nkCcGVrPTxmUI9QKfVYSewJEKcYSm/ozV2DDxbVngvDIx35p5MnOTSVUplmt05xdq5TFfnC63Y2Gv97EP4tLceKAYwyHEWgID+4XAQEJz3aXg2f+VYaCMsMxIog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d++XoC4m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lC3CoDFlnezUZRAYWZCNIB6ewiRz9m30EqYt6uO4tVjvvb1Zy4u7k7pWUD0h+pkYnVB+bDvuXNlqKKS/XK99T63kqZ79iJEhF6nsRHiXBFh/074IOME/wPj96Aj7WyBYZhaOljKAjcOPrur/YO9vLPaSgrhnwP3EWUUZTqrfjic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oiZOUe6b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d++XoC4m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFC18C4CEF5;
-	Wed,  3 Dec 2025 16:40:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oiZOUe6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E278C4CEF5;
+	Wed,  3 Dec 2025 16:40:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780033;
-	bh=CnH8X+3GeTjS6p9I5n8GWFFy4Nk+uYgCZA8Kc3tMtzM=;
+	s=korg; t=1764780036;
+	bh=5DZbBv6PqaoeiSRm9+xtKo+JLHTe2mRUs1O9Yd8T3U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d++XoC4msk9qrL3hOFFIUHldb+bg+oD/PzPKi2r0sa15JGGG8p74ZNdGGmkCDd21y
-	 Qi2P4vDS5bqhGEZytag3Ijn1wrMIx6yt76JmcSxeja6wiYn6/lDaeT2K80eI65q0Bc
-	 Y5Gc60TOpMTBDKUg9XUh67awfv6Uu8bqY6d9LQCw=
+	b=oiZOUe6b1Y5YuXUwAeivzc8/e8togaLoVUnXLE1CajciHSVKqyPXwQmyi9r9TOHcS
+	 wn5z0n2jqX8PAljogA1G0BU817VElTrQZV2HNph4AQKbkIhz8eGIq/GsJDaEMPe/2d
+	 Ab4nmfeyGXFPUjdRE0/wASTII2waE8P0jYyT4DkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Peng Fan <peng.fan@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 6.1 436/568] Input: cros_ec_keyb - fix an invalid memory access
-Date: Wed,  3 Dec 2025 16:27:18 +0100
-Message-ID: <20251203152456.665475117@linuxfoundation.org>
+Subject: [PATCH 6.1 437/568] Input: imx_sc_key - fix memory corruption on unload
+Date: Wed,  3 Dec 2025 16:27:19 +0100
+Message-ID: <20251203152456.701000349@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,53 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit e08969c4d65ac31297fcb4d31d4808c789152f68 upstream.
+commit d83f1512758f4ef6fc5e83219fe7eeeb6b428ea4 upstream.
 
-If cros_ec_keyb_register_matrix() isn't called (due to
-`buttons_switches_only`) in cros_ec_keyb_probe(), `ckdev->idev` remains
-NULL.  An invalid memory access is observed in cros_ec_keyb_process()
-when receiving an EC_MKBP_EVENT_KEY_MATRIX event in cros_ec_keyb_work()
-in such case.
+This is supposed to be "priv" but we accidentally pass "&priv" which is
+an address in the stack and so it will lead to memory corruption when
+the imx_sc_key_action() function is called.  Remove the &.
 
-  Unable to handle kernel read from unreadable memory at virtual address 0000000000000028
-  ...
-  x3 : 0000000000000000 x2 : 0000000000000000
-  x1 : 0000000000000000 x0 : 0000000000000000
-  Call trace:
-  input_event
-  cros_ec_keyb_work
-  blocking_notifier_call_chain
-  ec_irq_thread
-
-It's still unknown about why the kernel receives such malformed event,
-in any cases, the kernel shouldn't access `ckdev->idev` and friends if
-the driver doesn't intend to initialize them.
-
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://patch.msgid.link/20251104070310.3212712-1-tzungbi@kernel.org
+Fixes: 768062fd1284 ("Input: imx_sc_key - use devm_add_action_or_reset() to handle all cleanups")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/aQYKR75r2VMFJutT@stanley.mountain
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/cros_ec_keyb.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/input/keyboard/imx_sc_key.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/cros_ec_keyb.c
-+++ b/drivers/input/keyboard/cros_ec_keyb.c
-@@ -248,6 +248,12 @@ static int cros_ec_keyb_work(struct noti
- 	case EC_MKBP_EVENT_KEY_MATRIX:
- 		pm_wakeup_event(ckdev->dev, 0);
+--- a/drivers/input/keyboard/imx_sc_key.c
++++ b/drivers/input/keyboard/imx_sc_key.c
+@@ -158,7 +158,7 @@ static int imx_sc_key_probe(struct platf
+ 		return error;
+ 	}
  
-+		if (!ckdev->idev) {
-+			dev_warn_once(ckdev->dev,
-+				      "Unexpected key matrix event\n");
-+			return NOTIFY_OK;
-+		}
-+
- 		if (ckdev->ec->event_size != ckdev->cols) {
- 			dev_err(ckdev->dev,
- 				"Discarded incomplete key matrix event.\n");
+-	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, &priv);
++	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, priv);
+ 	if (error)
+ 		return error;
+ 
 
 
