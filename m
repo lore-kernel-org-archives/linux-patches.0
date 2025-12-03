@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C46BD34F489;
-	Wed,  3 Dec 2025 16:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F0F34F494;
+	Wed,  3 Dec 2025 16:05:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777907; cv=none; b=d3XQTJ3UA0cLSzn5tzH2fh/LLFnrdSKpzj8BDb2sEyM5FSv7wenr1Zdaaa3HOb6ese4lR/dgjjOS+irwOEqPTp3xX/JXkRZWQ/dEGGH7UqJhG6H3e48ejECLc0jjY26rEqYxNYPTRtkAWWXhumoKrqnuN3YzBkHYTq9rYMpm5hA=
+	t=1764777910; cv=none; b=EpJ1yahzRwziesQPz5qGT9hZV0zeTZ5TLOZZehFOelbmb0kjIkXfWcaeptxMvKTyBnBZaiWbGifFAsgXTrECFK6dEHy6EqUEQJqH4B9twgQ7uRe8AZOPWpt7MeqkNUzqHpU7lmBP7CHIRT2p+py5boABj5ka1idQI0k15iPlMT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777907; c=relaxed/simple;
-	bh=8yN1dEloPiX2awuDjA0r/zVpsENF4MzM2UhwFn2ObpQ=;
+	s=arc-20240116; t=1764777910; c=relaxed/simple;
+	bh=RD1L+1qjiHajI4J2ehKhB8uJmiwTpEcX9Gzdkqayu+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YNOV+wg4ttONAehKogLjYKRJPqVQC9LnaFUm1D16nUueQejbl/nywKGMpwJ2bX6W3YT5y6eo9MG4OQsfvWCfkU6be4hRGPaUA0Bv2UMF3adaZsnlWFD/fGazScRQQrf076G9/yBZA3sp9OB+XvAZdx5LTllLvzXZYNO6vGvaxa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSDF7QWO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QpoSm3Mr7XxEI7mYox6JTTUjwlrY5toTct0IOsvUbC5+b4GnTd33entF3Yt5IEI5Wf4otcMTjCbYg3EMZOGzB21sl92YYfdDTBsIA4svwhT/sn0P6ATFaz7Y3aNN35SGlngVpFEf65gGNw8XD0QC2twAlyCtiB6gB/aGFfAV4CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEvZwKMn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSDF7QWO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46797C4CEF5;
-	Wed,  3 Dec 2025 16:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEvZwKMn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B177C4CEF5;
+	Wed,  3 Dec 2025 16:05:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777907;
-	bh=8yN1dEloPiX2awuDjA0r/zVpsENF4MzM2UhwFn2ObpQ=;
+	s=korg; t=1764777910;
+	bh=RD1L+1qjiHajI4J2ehKhB8uJmiwTpEcX9Gzdkqayu+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JSDF7QWOJCWTaKty4PqCneb/k/qS+eH3pDrpIcrtVqbCcTM/9IU5UOknx2KDv8pVK
-	 SnJfQXfb7d7+3msuz6cS3fR65cZghm8dk1WRG07KoeiAFAtPkQPK9jdIWpUY5aE9mC
-	 o0G69RHkIz5dcfBdXV9TsE5ME9tgvM5j18BcreVE=
+	b=EEvZwKMnQulj20zyU0+lCG8KZbzUkGrhqK0F1TgLWK6UGl/nydr/txXLZfYRDXNwN
+	 gHy7s2HdcT8rAI3PFDYcyC7DgM5D8xRe6VLnBkhCuzpOWmYngA77npsgynqRiHD2j1
+	 lZhkInPaaMTMrOOwUc3SNiBXV6Wx5QCiRgdcSW/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Marshall <hubcap@omnibond.com>,
-	Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 185/392] orangefs: fix xattr related buffer overflow...
-Date: Wed,  3 Dec 2025 16:25:35 +0100
-Message-ID: <20251203152420.887969528@linuxfoundation.org>
+Subject: [PATCH 5.15 168/392] wifi: ath10k: Fix connection after GTK rekeying
+Date: Wed,  3 Dec 2025 16:25:18 +0100
+Message-ID: <20251203152420.260160044@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,84 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Marshall <hubcap@omnibond.com>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 025e880759c279ec64d0f754fe65bf45961da864 ]
+[ Upstream commit 487e8a8c3421df0af3707e54c7e069f1d89cbda7 ]
 
-Willy Tarreau <w@1wt.eu> forwarded me a message from
-Disclosure <disclosure@aisle.com> with the following
-warning:
+It appears that not all hardware/firmware implementations support
+group key deletion correctly, which can lead to connection hangs
+and deauthentication following GTK rekeying (delete and install).
 
-> The helper `xattr_key()` uses the pointer variable in the loop condition
-> rather than dereferencing it. As `key` is incremented, it remains non-NULL
-> (until it runs into unmapped memory), so the loop does not terminate on
-> valid C strings and will walk memory indefinitely, consuming CPU or hanging
-> the thread.
+To avoid this issue, instead of attempting to delete the key using
+the special WMI_CIPHER_NONE value, we now replace the key with an
+invalid (random) value.
 
-I easily reproduced this with setfattr and getfattr, causing a kernel
-oops, hung user processes and corrupted orangefs files. Disclosure
-sent along a diff (not a patch) with a suggested fix, which I based
-this patch on.
+This behavior has been observed with WCN39xx chipsets.
 
-After xattr_key started working right, xfstest generic/069 exposed an
-xattr related memory leak that lead to OOM. xattr_key returns
-a hashed key.  When adding xattrs to the orangefs xattr cache, orangefs
-used hash_add, a kernel hashing macro. hash_add also hashes the key using
-hash_log which resulted in additions to the xattr cache going to the wrong
-hash bucket. generic/069 tortures a single file and orangefs does a
-getattr for the xattr "security.capability" every time. Orangefs
-negative caches on xattrs which includes a kmalloc. Since adds to the
-xattr cache were going to the wrong bucket, every getattr for
-"security.capability" resulted in another kmalloc, none of which were
-ever freed.
-
-I changed the two uses of hash_add to hlist_add_head instead
-and the memory leak ceased and generic/069 quit throwing furniture.
-
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
-Reported-by: Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Closes: https://lore.kernel.org/all/DAWJQ2NIKY28.1XOG35E4A682G@linaro.org
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # QRB2210 RB1
+Link: https://patch.msgid.link/20250902143225.837487-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/xattr.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath10k/mac.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
-index 9a5b757fbd2f6..2d2d16caf9190 100644
---- a/fs/orangefs/xattr.c
-+++ b/fs/orangefs/xattr.c
-@@ -54,7 +54,9 @@ static inline int convert_to_internal_xattr_flags(int setxattr_flags)
- static unsigned int xattr_key(const char *key)
- {
- 	unsigned int i = 0;
--	while (key)
-+	if (!key)
-+		return 0;
-+	while (*key)
- 		i += *key++;
- 	return i % 16;
- }
-@@ -175,8 +177,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 				cx->length = -1;
- 				cx->timeout = jiffies +
- 				    orangefs_getattr_timeout_msecs*HZ/1000;
--				hash_add(orangefs_inode->xattr_cache, &cx->node,
--				    xattr_key(cx->key));
-+				hlist_add_head( &cx->node,
-+                                   &orangefs_inode->xattr_cache[xattr_key(cx->key)]);
- 			}
- 		}
- 		goto out_release_op;
-@@ -229,8 +231,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
- 			memcpy(cx->val, buffer, length);
- 			cx->length = length;
- 			cx->timeout = jiffies + HZ;
--			hash_add(orangefs_inode->xattr_cache, &cx->node,
--			    xattr_key(cx->key));
-+			hlist_add_head(&cx->node,
-+				&orangefs_inode->xattr_cache[xattr_key(cx->key)]);
- 		}
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index 2b4c694b0fbbe..d90909ffa6780 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -13,6 +13,7 @@
+ #include <linux/acpi.h>
+ #include <linux/of.h>
+ #include <linux/bitfield.h>
++#include <linux/random.h>
+ 
+ #include "hif.h"
+ #include "core.h"
+@@ -286,8 +287,15 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
+ 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV;
+ 
+ 	if (cmd == DISABLE_KEY) {
+-		arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
+-		arg.key_data = NULL;
++		if (flags & WMI_KEY_GROUP) {
++			/* Not all hardware handles group-key deletion operation
++			 * correctly. Replace the key with a junk value to invalidate it.
++			 */
++			get_random_bytes(key->key, key->keylen);
++		} else {
++			arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
++			arg.key_data = NULL;
++		}
  	}
  
+ 	return ath10k_wmi_vdev_install_key(arvif->ar, &arg);
 -- 
 2.51.0
 
