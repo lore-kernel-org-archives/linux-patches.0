@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BBAC3559D4;
-	Wed,  3 Dec 2025 16:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7BF3570DC;
+	Wed,  3 Dec 2025 16:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779739; cv=none; b=Lx0Mlt+0Tb8TujwM1XcKLjysyjmp8kSlFJMj+e8kPxgCFPTg+oSDY9AYJGCHQxFbPK2oD31Cu2qZGLpVjdtGFY++ihYsWOYcVah0f/I+DoNaobsIzUumB8Ov2pBGqflPURECeT+HzU/r6uWW8Ljo4y0MCposfvsTAKWSnazQ5U4=
+	t=1764779742; cv=none; b=sxXCxwMu9QdSs1OwHtkrH62a1qzSeSq1zDYYTaI08N/lYXwsUG1jukC5iqS+Pg2aa9nka6Yh7gR/C69XPu5Eau/lFEt67DgXdF0OAxOvWkP0k8BVCH1FqPLSfeGxn5KKNqcbI7J542fsnJnifCzv/bB3GGycNaPiuiPA71Wut/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779739; c=relaxed/simple;
-	bh=IWkp5zhPGdyFt4pA06q/yjVSGTYwFQiqlOweqmPX96U=;
+	s=arc-20240116; t=1764779742; c=relaxed/simple;
+	bh=YFxltP81R4SABtb9im/Uyl0x7sfHWJLpg/HRbFh1PNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mcMeSqAU3w3o5P9dr2BFEuUTRGmOWpvAlXVOGHNJjt00M4hgcNS7Bd4N0V8sDtp2yEbc19/rmBmuOW7GAr+QgnZlHPU3W0vOYACsLi4f7gPG9ua4LrZFd730f7R+Ewb2YIvw5XdNALAhKWOdj98bmczKUbDAXerDt6jgpLYSQM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PprgLXGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QNXN2WlIJwXGykAcJTQLzKo6AwaLly9IHZMca84HbrccL5aFansHhqhnu56IA++2FZWr/yp0KxZ2WK8izwD/f98k4apd760DAoIiZQAQiVmxAM+vVW0q8FqhPd9m4jLu3EyULgm/6I4OGTEFXS/D1IBeaoL4ESf6dbW3uyWS4B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DdxDzP0w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PprgLXGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD91C4CEF5;
-	Wed,  3 Dec 2025 16:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DdxDzP0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEB6C4CEF5;
+	Wed,  3 Dec 2025 16:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779739;
-	bh=IWkp5zhPGdyFt4pA06q/yjVSGTYwFQiqlOweqmPX96U=;
+	s=korg; t=1764779742;
+	bh=YFxltP81R4SABtb9im/Uyl0x7sfHWJLpg/HRbFh1PNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PprgLXGq78Ka9Shb1NI0hJIAjgnppjTgSQXkjc7fGqZElF5YDCTRLpM0ibq9pgiH1
-	 DjsNCA52rcdqYuFJc+NFC07prbzMApK9Obx2yDO9+zjabiof32X5z2Tp28b0gE4qAZ
-	 XNzmXZH1JUOyZB6gHn+mi7E7bC91ALL4XVsHltwY=
+	b=DdxDzP0w7OPaY/ARxLGc+EioMGu7w8oKPrCTo7mkcGwKPkrEOHQGEE30uJfZc9fm/
+	 5rEOqmHBCFp2dB1/lfiZnGIlJSThStMzF6O6v/PvDTL/TTVC5YHyocTutmv5oUyJaz
+	 /ArdaIJNX5JrWz79Ufhgx0wZatfiwk1elGyiu9h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Sharique Mohammad <sharq0406@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 345/568] smb/server: fix possible refcount leak in smb2_sess_setup()
-Date: Wed,  3 Dec 2025 16:25:47 +0100
-Message-ID: <20251203152453.340364925@linuxfoundation.org>
+Subject: [PATCH 6.1 346/568] ASoC: max98090/91: fixed max98091 ALSA widget powering up/down
+Date: Wed,  3 Dec 2025 16:25:48 +0100
+Message-ID: <20251203152453.376699872@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,35 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Sharique Mohammad <sharq0406@gmail.com>
 
-[ Upstream commit 379510a815cb2e64eb0a379cb62295d6ade65df0 ]
+[ Upstream commit 7a37291ed40a33a5f6c3d370fdde5ee0d8f7d0e4 ]
 
-Reference count of ksmbd_session will leak when session need reconnect.
-Fix this by adding the missing ksmbd_user_session_put().
+The widgets DMIC3_ENA and DMIC4_ENA must be defined in the DAPM
+suppy widget, just like DMICL_ENA and DMICR_ENA. Whenever they
+are turned on or off, the required startup or shutdown sequences
+must be taken care by the max98090_shdn_event.
 
-Co-developed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sharique Mohammad <sharq0406@gmail.com>
+Link: https://patch.msgid.link/20251015134215.750001-1-sharq0406@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/max98090.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 173135f6f7dbf..e3ea06aab8c1b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -1796,6 +1796,7 @@ int smb2_sess_setup(struct ksmbd_work *work)
+diff --git a/sound/soc/codecs/max98090.c b/sound/soc/codecs/max98090.c
+index 06ed2a938108e..f5acf84ee20cc 100644
+--- a/sound/soc/codecs/max98090.c
++++ b/sound/soc/codecs/max98090.c
+@@ -1235,9 +1235,11 @@ static const struct snd_soc_dapm_widget max98091_dapm_widgets[] = {
+ 	SND_SOC_DAPM_INPUT("DMIC4"),
  
- 		if (ksmbd_conn_need_reconnect(conn)) {
- 			rc = -EFAULT;
-+			ksmbd_user_session_put(sess);
- 			sess = NULL;
- 			goto out_err;
- 		}
+ 	SND_SOC_DAPM_SUPPLY("DMIC3_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
+-		 M98090_DIGMIC3_SHIFT, 0, NULL, 0),
++		 M98090_DIGMIC3_SHIFT, 0, max98090_shdn_event,
++			SND_SOC_DAPM_POST_PMU),
+ 	SND_SOC_DAPM_SUPPLY("DMIC4_ENA", M98090_REG_DIGITAL_MIC_ENABLE,
+-		 M98090_DIGMIC4_SHIFT, 0, NULL, 0),
++		 M98090_DIGMIC4_SHIFT, 0, max98090_shdn_event,
++			 SND_SOC_DAPM_POST_PMU),
+ };
+ 
+ static const struct snd_soc_dapm_route max98090_dapm_routes[] = {
 -- 
 2.51.0
 
