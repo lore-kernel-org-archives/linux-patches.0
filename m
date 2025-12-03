@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A518134F486;
-	Wed,  3 Dec 2025 16:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA9E34F482;
+	Wed,  3 Dec 2025 16:05:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777901; cv=none; b=MDcYj5lqREKick4wNuC/dZNkFjJnzlmTgpIA7Ly/bUGNxWSldog3YOjwjJQrBWF1AzG91ISd7aztvd6eYz6bIaEDS6tIuZ1SfUcFjB/ttSN1iVpDAcJLmgmRsvQuAHb+2vLd70LdhkLAOl1BbdnkD8HV7JguMxUoPMpBEwqvim8=
+	t=1764777904; cv=none; b=gV392k825Lm/jrOMdMC580JXRFDl9pyjZlaSHGLm0xOv93X/+dlRhCEiYQIs3iRshrvbUc+i6q0insV/XpI8JFQsXsu4nnkz/kREyfuW8bhnkxVNCDMBe8u2o9rQNp4lDmCZxyqYmUB5Qg922zN3fkJQUuTzn8uSXEVs+cprL78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777901; c=relaxed/simple;
-	bh=3EhMsXNX5GphyP6YhhHWbsH+ISK6dNZtgDUuOnqs214=;
+	s=arc-20240116; t=1764777904; c=relaxed/simple;
+	bh=AR6YRxMlHOCvEp7FuERWs3G2R7Vsolppzv/5PUu7mas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eX5Vr+HmFM3w90g0OwOEQl8ulMBJB0wJNtqvb2ipeqci1CscjHKV9EoecupJFSt95c5BEGBTAOMSyFEXhGpufBk2zIduVDJxP5grNOVpXAjIqiN0/Bbz4qugM8ySaWQVNJ0ieGdg+hCFXWa2HKmUJfEMUahlf0/KF9HDl0ropiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7FkLnqW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Td8OLRlVDThbCW8ylATPpVrVG34BpQHNmc36r+rZsLS5/3QOtBYgSbjl3MMcUzBePD3kJuO21a6RQlMOgyRl4DBQEHCumMTktRmAnq6tLwH3Lubf1jdmRPH+hk+2oC8sB8n3vy40dBchN+pfPlOxPQ88L2qjOGBtp06QP3hXHQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uDjwJ5qY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7FkLnqW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB59C4CEF5;
-	Wed,  3 Dec 2025 16:05:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uDjwJ5qY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E0FC4CEF5;
+	Wed,  3 Dec 2025 16:05:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777901;
-	bh=3EhMsXNX5GphyP6YhhHWbsH+ISK6dNZtgDUuOnqs214=;
+	s=korg; t=1764777904;
+	bh=AR6YRxMlHOCvEp7FuERWs3G2R7Vsolppzv/5PUu7mas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7FkLnqWkSMUz9EWRjmdqsNwzipViGOO4vE+ddYPbiWX5IUTTB+oExuzaJMtWTI3c
-	 th7FiZ/LWmp1RrvCZrpcvy4J8KaU5+1aBkkcqUmRVMFtDl2iGo9UtsM86NQ4kgeTAa
-	 BWvvdTXcb5w8ZmPMBhYmH3UzTeQvk9o78YHGvVrI=
+	b=uDjwJ5qYA7umtuwAcebdt9DTXqxpW45hUCAMzKdIu772Rh1abdgAO+M69FRCzEvSN
+	 Oi0eKa+ALG2pb89qNr9kDqPp9Uq7iuvW/sLtuE5PuNpX5KVDryunmWUMtn/4CeKXND
+	 HBYLfiErXJGhuT113xszGBfat2M64JHylWxx9EvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhiling <chizhiling@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/392] exfat: limit log print for IO error
-Date: Wed,  3 Dec 2025 16:25:33 +0100
-Message-ID: <20251203152420.815953520@linuxfoundation.org>
+Subject: [PATCH 5.15 184/392] page_pool: Clamp pool size to max 16K pages
+Date: Wed,  3 Dec 2025 16:25:34 +0100
+Message-ID: <20251203152420.851863740@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,83 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chi Zhiling <chizhiling@kylinos.cn>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 6dfba108387bf4e71411b3da90b2d5cce48ba054 ]
+[ Upstream commit a1b501a8c6a87c9265fd03bd004035199e2e8128 ]
 
-For exFAT filesystems with 4MB read_ahead_size, removing the storage device
-when the read operation is in progress, which cause the last read syscall
-spent 150s [1]. The main reason is that exFAT generates excessive log
-messages [2].
+page_pool_init() returns E2BIG when the page_pool size goes above 32K
+pages. As some drivers are configuring the page_pool size according to
+the MTU and ring size, there are cases where this limit is exceeded and
+the queue creation fails.
 
-After applying this patch, approximately 300,000 lines of log messages
-were suppressed, and the delay of the last read() syscall was reduced
-to about 4 seconds.
+The page_pool size doesn't have to cover a full queue, especially for
+larger ring size. So clamp the size instead of returning an error. Do
+this in the core to avoid having each driver do the clamping.
 
-[1]:
-write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000120>
-read(4, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000032>
-write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000119>
-read(4, 0x7fccf28ae000, 131072)         = -1 EIO (Input/output error) <150.186215>
+The current limit was deemed to high [1] so it was reduced to 16K to avoid
+page waste.
 
-[2]:
-[  333.696603] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-[  333.697378] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
-[  333.698156] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
+[1] https://lore.kernel.org/all/1758532715-820422-3-git-send-email-tariqt@nvidia.com/
 
-Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20250926131605.2276734-2-dtatulea@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/fatent.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ net/core/page_pool.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
-index c5f6015a947ce..4a6af08410a3d 100644
---- a/fs/exfat/fatent.c
-+++ b/fs/exfat/fatent.c
-@@ -88,35 +88,36 @@ int exfat_ent_get(struct super_block *sb, unsigned int loc,
- 	int err;
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 813d15a5593c6..4ec7e6229f697 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -61,11 +61,7 @@ static int page_pool_init(struct page_pool *pool,
+ 		return -EINVAL;
  
- 	if (!is_valid_cluster(sbi, loc)) {
--		exfat_fs_error(sb, "invalid access to FAT (entry 0x%08x)",
-+		exfat_fs_error_ratelimit(sb,
-+			"invalid access to FAT (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
+ 	if (pool->p.pool_size)
+-		ring_qsize = pool->p.pool_size;
+-
+-	/* Sanity limit mem that can be pinned down */
+-	if (ring_qsize > 32768)
+-		return -E2BIG;
++		ring_qsize = min(pool->p.pool_size, 16384);
  
- 	err = __exfat_ent_get(sb, loc, content);
- 	if (err) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"failed to access to FAT (entry 0x%08x, err:%d)",
- 			loc, err);
- 		return err;
- 	}
- 
- 	if (*content == EXFAT_FREE_CLUSTER) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT free cluster (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	if (*content == EXFAT_BAD_CLUSTER) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT bad cluster (entry 0x%08x)",
- 			loc);
- 		return -EIO;
- 	}
- 
- 	if (*content != EXFAT_EOF_CLUSTER && !is_valid_cluster(sbi, *content)) {
--		exfat_fs_error(sb,
-+		exfat_fs_error_ratelimit(sb,
- 			"invalid access to FAT (entry 0x%08x) bogus content (0x%08x)",
- 			loc, *content);
- 		return -EIO;
+ 	/* DMA direction is either DMA_FROM_DEVICE or DMA_BIDIRECTIONAL.
+ 	 * DMA_BIDIRECTIONAL is for allowing page used for DMA sending,
 -- 
 2.51.0
 
