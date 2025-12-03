@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC332FBDFF;
-	Wed,  3 Dec 2025 16:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C08306D2A;
+	Wed,  3 Dec 2025 16:48:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780530; cv=none; b=dzNC30ZTvvBDae4+pZKi/0ZtTl93QxDAf48wA1sYJxdMUm6z4cFjJBZywkETCYfAY2M1Z3dhPoMN0xRzf7Y9VoVfciJ+DDsQS6QNk5gvNhJRUa4axfbHYjndHdojspu/FeUwlBUgUPr1olU/LN3EAqVeXNDVikSFdvK1Wo/E+PI=
+	t=1764780533; cv=none; b=YqNHY6+yRBf8uY2BQIychop1eluy2MTh6+dltCWE3p47EuTgG29RIf1kbj/x/RajUyClSNeXzyu9SwpzFh38x3dLaZHy6ZH1qqld9g8Hyxjolr6sqy9kOx7IXq/3asq3Cra1TjbctjPoT1zGZbA6V+FTnQUG6Hiz5CIh7gOKCkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780530; c=relaxed/simple;
-	bh=0p0555iggDIPjiG2dWSOYvIqIW/vp74YYZY04gtsPtc=;
+	s=arc-20240116; t=1764780533; c=relaxed/simple;
+	bh=ikPK/AMR10G2F0l2Vm7KVGor4NnHedVsdH5vtP/U1vQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7zwbgtXz1dvae8iF6XWzuMV8W0WvddgRdSfapJ4o5V97wgsXZUVoDxIM3GJwCjL0cw72Pb03dBYdNDVMsMsW80JQwl1IsoUJZsL+u1CKwrCK+Bnk673hto3Bt+jn2GN5p1FbxdJtX0IxjcPNamrRqfNBXK5MnDcey5wMe4cI1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKirUMa0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pad/uqi/9LHREU4mKFILlBaVr6cRll63M4q85RmDNEqG+vBhc/5rLGib2JtahIbNsxTkgMWjkjGNDBypBSi3zCigXBEHmsSNeHXqJ0RGRY6EVjBC2o1q4QEGS02/i3kVmkZvkToAtopfzFGmCDPicfg9Try7jnUCIzGVHw9sZv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oGYOyMV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKirUMa0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38EDC116B1;
-	Wed,  3 Dec 2025 16:48:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oGYOyMV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1027AC4CEF5;
+	Wed,  3 Dec 2025 16:48:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780530;
-	bh=0p0555iggDIPjiG2dWSOYvIqIW/vp74YYZY04gtsPtc=;
+	s=korg; t=1764780533;
+	bh=ikPK/AMR10G2F0l2Vm7KVGor4NnHedVsdH5vtP/U1vQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKirUMa0DWau10vJHkTsc4pL+FNwYANd14Y0E/YcAE40SEONkeUDoN1rVxWsBiEEZ
-	 W5qaIN35ajwKhkqj3ZkHfFHlbV5FBy8qzkfxhOGignOiHrv/XGLo/hTKEWNuGovaMO
-	 guEjOPZxqrfxfR/btIbl/8ANmHJLXW+kasZ2m988=
+	b=1oGYOyMVOugXhdEimv44OCbZjhVEtRVyBhOhiBO+C50Nl1cWhbsrFQWvvTC1UERvz
+	 rBhjqMXNMLmgIh4sNOylBrPqmRWlFKgcNYIUHFBh3Pn2vUc82zYiFRJrk/hZ3Cw1dj
+	 ZKXQsBUU7K4Y12IkR4BzMfqQr6RRUpumes9tBpy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/132] net: phy: mxl-gpy: fix bogus error on USXGMII and integrated PHY
-Date: Wed,  3 Dec 2025 16:28:13 +0100
-Message-ID: <20251203152343.824393925@linuxfoundation.org>
+Subject: [PATCH 6.12 015/132] platform/x86: intel: punit_ipc: fix memory corruption
+Date: Wed,  3 Dec 2025 16:28:14 +0100
+Message-ID: <20251203152343.860638823@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -47,46 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ec3803b5917b6ff2f86ea965d0985c95d8a85119 ]
+[ Upstream commit 9b9c0adbc3f8a524d291baccc9d0c04097fb4869 ]
 
-As the interface mode doesn't need to be updated on PHYs connected with
-USXGMII and integrated PHYs, gpy_update_interface() should just return 0
-in these cases rather than -EINVAL which has wrongly been introduced by
-commit 7a495dde27ebc ("net: phy: mxl-gpy: Change gpy_update_interface()
-function return type"), as this breaks support for those PHYs.
+This passes the address of the pointer "&punit_ipcdev" when the intent
+was to pass the pointer itself "punit_ipcdev" (without the ampersand).
+This means that the:
 
-Fixes: 7a495dde27ebc ("net: phy: mxl-gpy: Change gpy_update_interface() function return type")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/f744f721a1fcc5e2e936428c62ff2c7d94d2a293.1763648168.git.daniel@makrotopia.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	complete(&ipcdev->cmd_complete);
+
+in intel_punit_ioc() will write to a wrong memory address corrupting it.
+
+Fixes: fdca4f16f57d ("platform:x86: add Intel P-Unit mailbox IPC driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/aSCmoBipSQ_tlD-D@stanley.mountain
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mxl-gpy.c | 2 +-
+ drivers/platform/x86/intel/punit_ipc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/mxl-gpy.c b/drivers/net/phy/mxl-gpy.c
-index e5f8ac4b4604b..17b0654644de5 100644
---- a/drivers/net/phy/mxl-gpy.c
-+++ b/drivers/net/phy/mxl-gpy.c
-@@ -523,7 +523,7 @@ static int gpy_update_interface(struct phy_device *phydev)
- 	/* Interface mode is fixed for USXGMII and integrated PHY */
- 	if (phydev->interface == PHY_INTERFACE_MODE_USXGMII ||
- 	    phydev->interface == PHY_INTERFACE_MODE_INTERNAL)
--		return -EINVAL;
-+		return 0;
- 
- 	/* Automatically switch SERDES interface between SGMII and 2500-BaseX
- 	 * according to speed. Disable ANEG in 2500-BaseX mode.
+diff --git a/drivers/platform/x86/intel/punit_ipc.c b/drivers/platform/x86/intel/punit_ipc.c
+index cd0ba84cc8e4a..9e48229538a5e 100644
+--- a/drivers/platform/x86/intel/punit_ipc.c
++++ b/drivers/platform/x86/intel/punit_ipc.c
+@@ -283,7 +283,7 @@ static int intel_punit_ipc_probe(struct platform_device *pdev)
+ 	} else {
+ 		ret = devm_request_irq(&pdev->dev, irq, intel_punit_ioc,
+ 				       IRQF_NO_SUSPEND, "intel_punit_ipc",
+-				       &punit_ipcdev);
++				       punit_ipcdev);
+ 		if (ret) {
+ 			dev_err(&pdev->dev, "Failed to request irq: %d\n", irq);
+ 			return ret;
 -- 
 2.51.0
 
