@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05AB731ED8D;
-	Wed,  3 Dec 2025 15:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2D63370F2;
+	Wed,  3 Dec 2025 15:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777227; cv=none; b=nVFsMRaR7CTxvDRmrM9MmA1uo6kPc8u3asqOc9HpeSaigIfzNNe5ecicFt3YFjSyjGreSal2oTe4CK9f/ybIFhPwp3M9zAZr5SFi43982g4U0PQXF/1IbQeOFpod3VSGS0kQ6/JDfkGDtL5heteqs9CHuFlI9qCDE2QEYySjm9M=
+	t=1764777231; cv=none; b=h/0vnePoy2jaVxUNdPWycK7YWKrFnRXb1TiOIsDC13hDy2B95qN5eTbD70mOx2gej/ci+1J/QQO7lLSg5Q+I4e78YcJUZWSDhzfQ9GqxWagCwjpvpoC3zX8Q6uekcxK9YbvMMfPUUGZRrXHNA/49OMzVbAm2po/M6NGj+bjjd4k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777227; c=relaxed/simple;
-	bh=NTBFiX+b0wwtJef3NmAO5PTu6XK1Ta/+Vv8V8o7KDDM=;
+	s=arc-20240116; t=1764777231; c=relaxed/simple;
+	bh=PAylfpklgSLNbsVJ5blf0/Dx6VtMn6LTnmNR0mCUa94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lr9gTvHhlKS3bUjB60dfmRperj4U023uA9RjCBJ669jVD4D60P5j+8Cd6zAOvldXGN6+dHYt2HyT7nEVYQchZi1McLBgjKU6nXbWZGl3BakxR6J16oeGv8dapp5YFucSzwSI9N2UUZOiDQ/PfPDc5bxTE7uOa3TYEO4gfZZ5kmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xixi9QcQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZPRDHMcifFM8Eehoj7EKs/gvLYrgJI6cALa2jA+4I+ARqeBztRVqJG1iWuWntqfxoQv9xPd2+X+++WH/zl8EaG0QN7ibdv+hYFaI4fW89IQRFlOhHjHcRVme/dsbPgVjHJBZF+WooIqi9UUe+bTPRwemji80AliIABuE26GrAes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nW9+uOec; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xixi9QcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAB5C4CEF5;
-	Wed,  3 Dec 2025 15:53:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nW9+uOec"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 939B6C2BCF4;
+	Wed,  3 Dec 2025 15:53:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777226;
-	bh=NTBFiX+b0wwtJef3NmAO5PTu6XK1Ta/+Vv8V8o7KDDM=;
+	s=korg; t=1764777230;
+	bh=PAylfpklgSLNbsVJ5blf0/Dx6VtMn6LTnmNR0mCUa94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xixi9QcQccg97fNAubUTHEGE8LBdTUMTk+Ser3jcmHxo00xfhjjP6mGSGAJR9+YeZ
-	 HM/MQTVCO4AVExNLjHHQp/8sq2oB2nGK2jsf8YoBQTg+/5xmYNScPhaiKNguxWvPAm
-	 /1dWCQ6lZhuwpWwyOAaL3h+YY6Rj42AL1F2kJols=
+	b=nW9+uOecfFkgS++fez1Ut23aQWJittmjR8wnDufNZ616iMn5CFtdyb1SSyskGiov5
+	 vtmVKFNo6c0i9fgdyjDs22FWcgsMHT1b87gOY0ZBYqXOQZUJs8nsLjmIPMOk7+1QMD
+	 oTCD+AZ/LXuUwtKNnTe2z44eZncvWjE1gd1YkOzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.17 122/146] xhci: dbgtty: Fix data corruption when transmitting data form DbC to host
-Date: Wed,  3 Dec 2025 16:28:20 +0100
-Message-ID: <20251203152350.927102333@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>
+Subject: [PATCH 6.17 123/146] xhci: dbgtty: fix device unregister
+Date: Wed,  3 Dec 2025 16:28:21 +0100
+Message-ID: <20251203152350.963382060@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,121 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Łukasz Bartosik <ukaszb@chromium.org>
 
-commit f6bb3b67be9af0cfb90075c60850b6af5338a508 upstream.
+commit 1f73b8b56cf35de29a433aee7bfff26cea98be3f upstream.
 
-Data read from a DbC device may be corrupted due to a race between
-ongoing write and write request completion handler both queuing new
-transfer blocks (TRBs) if there are remining data in the kfifo.
+When DbC is disconnected then xhci_dbc_tty_unregister_device()
+is called. However if there is any user space process blocked
+on write to DbC terminal device then it will never be signalled
+and thus stay blocked indifinitely.
 
-TRBs may be in incorrct order compared to the data in the kfifo.
+This fix adds a tty_vhangup() call in xhci_dbc_tty_unregister_device().
+The tty_vhangup() wakes up any blocked writers and causes subsequent
+write attempts to DbC terminal device to fail.
 
-Driver fails to keep lock between reading data from kfifo into a
-dbc request buffer, and queuing the request to the transfer ring.
-
-This allows completed request to re-queue itself in the middle of
-an ongoing transfer loop, forcing itself between a kfifo read and
-request TRB write of another request
-
-cpu0					cpu1 (re-queue completed req2)
-
-lock(port_lock)
-dbc_start_tx()
-kfifo_out(fifo, req1->buffer)
-unlock(port_lock)
-					lock(port_lock)
-					dbc_write_complete(req2)
-					dbc_start_tx()
-      					kfifo_out(fifo, req2->buffer)
-					unlock(port_lock)
-					lock(port_lock)
-					req2->trb = ring->enqueue;
-					ring->enqueue++
-					unlock(port_lock)
-lock(port_lock)
-req1->trb = ring->enqueue;
-ring->enqueue++
-unlock(port_lock)
-
-In the above scenario a kfifo containing "12345678" would read "1234" to
-req1 and "5678" to req2, but req2 is queued before req1 leading to
-data being transmitted as "56781234"
-
-Solve this by adding a flag that prevents starting a new tx if we
-are already mid dbc_start_tx() during the unlocked part.
-
-The already running dbc_do_start_tx() will make sure the newly completed
-request gets re-queued as it is added to the request write_pool while
-holding the lock.
-
-Cc: stable@vger.kernel.org
+Cc: stable <stable@kernel.org>
 Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
-Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251107162819.1362579-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Łukasz Bartosik <ukaszb@chromium.org>
+Link: https://patch.msgid.link/20251119212910.1245694-1-ukaszb@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgcap.h |    1 +
- drivers/usb/host/xhci-dbgtty.c |   17 ++++++++++++++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-dbgtty.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/host/xhci-dbgcap.h
-+++ b/drivers/usb/host/xhci-dbgcap.h
-@@ -114,6 +114,7 @@ struct dbc_port {
- 	unsigned int			tx_boundary;
- 
- 	bool				registered;
-+	bool				tx_running;
- };
- 
- struct dbc_driver {
 --- a/drivers/usb/host/xhci-dbgtty.c
 +++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -47,7 +47,7 @@ dbc_kfifo_to_req(struct dbc_port *port,
- 	return len;
- }
+@@ -550,6 +550,12 @@ static void xhci_dbc_tty_unregister_devi
  
--static int dbc_start_tx(struct dbc_port *port)
-+static int dbc_do_start_tx(struct dbc_port *port)
- 	__releases(&port->port_lock)
- 	__acquires(&port->port_lock)
- {
-@@ -57,6 +57,8 @@ static int dbc_start_tx(struct dbc_port
- 	bool			do_tty_wake = false;
- 	struct list_head	*pool = &port->write_pool;
- 
-+	port->tx_running = true;
+ 	if (!port->registered)
+ 		return;
++	/*
++	 * Hang up the TTY. This wakes up any blocked
++	 * writers and causes subsequent writes to fail.
++	 */
++	tty_vhangup(port->port.tty);
 +
- 	while (!list_empty(pool)) {
- 		req = list_entry(pool->next, struct dbc_request, list_pool);
- 		len = dbc_kfifo_to_req(port, req->buf);
-@@ -77,12 +79,25 @@ static int dbc_start_tx(struct dbc_port
- 		}
- 	}
- 
-+	port->tx_running = false;
-+
- 	if (do_tty_wake && port->port.tty)
- 		tty_wakeup(port->port.tty);
- 
- 	return status;
- }
- 
-+/* must be called with port->port_lock held */
-+static int dbc_start_tx(struct dbc_port *port)
-+{
-+	lockdep_assert_held(&port->port_lock);
-+
-+	if (port->tx_running)
-+		return -EBUSY;
-+
-+	return dbc_do_start_tx(port);
-+}
-+
- static void dbc_start_rx(struct dbc_port *port)
- 	__releases(&port->port_lock)
- 	__acquires(&port->port_lock)
+ 	tty_unregister_device(dbc_tty_driver, port->minor);
+ 	xhci_dbc_tty_exit_port(port);
+ 	port->registered = false;
 
 
