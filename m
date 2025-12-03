@@ -1,39 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3F4330FC3A;
-	Wed,  3 Dec 2025 16:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D133308F2C;
+	Wed,  3 Dec 2025 16:09:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778173; cv=none; b=gy6FNRdHsnd8nXQEWnQzG/U297HDdr46enrtPYoCJsMsFrV6FpJSd7c/ZajNThhKcrBHKnH4jAFB8zu3N9XUEWdv8hgs9iXmvJNwiEGflnMO9MR7+EcCjcE12BXLsnYO2vavSam7eECgz8jAt95ZaP+JBUdrPNANrGyctWu1DDM=
+	t=1764778176; cv=none; b=JYsi8o4ekqmu4ipuAmB+8R7NV2NOfnuvL7qghza+M3qwJFjBSUjrHW7WDE2cvNHMdYw6kJCzSEj9S5XB6tdx3FAXvucMOuDJqREGXp7sMBwzgYK2yMygn3Y/siQ4tVvo/8QalE64w7ZE34sYRsoEAe/W4EBv3oVEWZs5N5POX3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778173; c=relaxed/simple;
-	bh=JFsFLL3YTRY9RQOuJuMcDKua8V8fBERUoQJ6+lyMerc=;
+	s=arc-20240116; t=1764778176; c=relaxed/simple;
+	bh=kcK72EwrhcAtzAexC0TWreAVbfpPizEVHmIVsXLAZCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkxfAP5210tqT6cApQACtYFWX2yIvTJGiuAo7Y7S47UrFaznzRdtlOqAe3EjpTX2/eB73bDJ7Ns50p6iR5NdzUGKMkfCVj1wDrG+Qh/ZROUBONzo4iO+890PsEBKTRPr+TNta4Il3IgX88hut6Jc3zOYeMM4XO72EsyZMVDvVZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1vJozB/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lYTUpW54CQKsKAbelZMn/r4C88cB0+A+tul/hCfog6AC3HTFwpThPols1Ofzgfwsh/boe24CF1r/Hrqg15+BkmFhvGgooBELLy8m7tMZxlxce33y+u9uLE6vip2kQxzIRDTLsmNqcG3KVxhkkEQVPABU+y3IvOSfwK98m0qHjwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O9rqqBxO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1vJozB/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8DEC4CEF5;
-	Wed,  3 Dec 2025 16:09:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O9rqqBxO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5BFC4CEF5;
+	Wed,  3 Dec 2025 16:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778172;
-	bh=JFsFLL3YTRY9RQOuJuMcDKua8V8fBERUoQJ6+lyMerc=;
+	s=korg; t=1764778176;
+	bh=kcK72EwrhcAtzAexC0TWreAVbfpPizEVHmIVsXLAZCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vJozB/DOUdMIphHzrs4bHIhKE44egSQBviStAHKlBNTmEYztzNNaMN2wj3KgBqQu
-	 tNUawYwBFA6O/E3mRJIYgMC25MCoHZpojhzrYBo4qjGbHFbi+DVsOnqcJezZ48sXgf
-	 PaKzVTsh8h+wSgJ1Xp1CFUEOC5zKYq1hThErDdT0=
+	b=O9rqqBxOI0Qt/8FWCaFP25M9vBdrmPR6OOT+56lfPQXSGnbwYc6/MWOldA7LPQv9x
+	 zxJePEVYwoqCrLMMUMjtU5sUXbEGbPx37PVpw5nJ1atBYeCI5/K3E9zbmNBHG9FMCn
+	 Cy+3YphDAZa2WPD0ON6v/rWxHzOOEG9eAdkEi958=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jakub Acs <acsjakub@amazon.de>,
+	Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>,
+	David Hildenbrand <david@redhat.com>,
+	SeongJae Park <sj@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Xu Xin <xu.xin16@zte.com.cn>,
+	Chengming Zhou <chengming.zhou@linux.dev>,
+	Peter Xu <peterx@redhat.com>,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 265/392] mptcp: pm: in-kernel: C-flag: handle late ADD_ADDR
-Date: Wed,  3 Dec 2025 16:26:55 +0100
-Message-ID: <20251203152423.917173415@linuxfoundation.org>
+Subject: [PATCH 5.15 266/392] mm/ksm: fix flag-dropping behavior in ksm_madvise
+Date: Wed,  3 Dec 2025 16:26:56 +0100
+Message-ID: <20251203152423.953873499@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,85 +59,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jakub Acs <acsjakub@amazon.de>
 
-[ Upstream commit e84cb860ac3ce67ec6ecc364433fd5b412c448bc ]
+[ Upstream commit f04aad36a07cc17b7a5d5b9a2d386ce6fae63e93 ]
 
-The special C-flag case expects the ADD_ADDR to be received when
-switching to 'fully-established'. But for various reasons, the ADD_ADDR
-could be sent after the "4th ACK", and the special case doesn't work.
+syzkaller discovered the following crash: (kernel BUG)
 
-On NIPA, the new test validating this special case for the C-flag failed
-a few times, e.g.
+[   44.607039] ------------[ cut here ]------------
+[   44.607422] kernel BUG at mm/userfaultfd.c:2067!
+[   44.608148] Oops: invalid opcode: 0000 [#1] SMP DEBUG_PAGEALLOC KASAN NOPTI
+[   44.608814] CPU: 1 UID: 0 PID: 2475 Comm: reproducer Not tainted 6.16.0-rc6 #1 PREEMPT(none)
+[   44.609635] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[   44.610695] RIP: 0010:userfaultfd_release_all+0x3a8/0x460
 
-  102 default limits, server deny join id 0
-        syn rx                 [FAIL] got 0 JOIN[s] syn rx expected 2
+<snip other registers, drop unreliable trace>
 
-  Server ns stats
-  (...)
-  MPTcpExtAddAddrTx  1
-  MPTcpExtEchoAdd    1
+[   44.617726] Call Trace:
+[   44.617926]  <TASK>
+[   44.619284]  userfaultfd_release+0xef/0x1b0
+[   44.620976]  __fput+0x3f9/0xb60
+[   44.621240]  fput_close_sync+0x110/0x210
+[   44.622222]  __x64_sys_close+0x8f/0x120
+[   44.622530]  do_syscall_64+0x5b/0x2f0
+[   44.622840]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   44.623244] RIP: 0033:0x7f365bb3f227
 
-  Client ns stats
-  (...)
-  MPTcpExtAddAddr    1
-  MPTcpExtEchoAddTx  1
+Kernel panics because it detects UFFD inconsistency during
+userfaultfd_release_all().  Specifically, a VMA which has a valid pointer
+to vma->vm_userfaultfd_ctx, but no UFFD flags in vma->vm_flags.
 
-        synack rx              [FAIL] got 0 JOIN[s] synack rx expected 2
-        ack rx                 [FAIL] got 0 JOIN[s] ack rx expected 2
-        join Rx                [FAIL] see above
-        syn tx                 [FAIL] got 0 JOIN[s] syn tx expected 2
-        join Tx                [FAIL] see above
+The inconsistency is caused in ksm_madvise(): when user calls madvise()
+with MADV_UNMEARGEABLE on a VMA that is registered for UFFD in MINOR mode,
+it accidentally clears all flags stored in the upper 32 bits of
+vma->vm_flags.
 
-I had a suspicion about what the issue could be: the ADD_ADDR might have
-been received after the switch to the 'fully-established' state. The
-issue was not easy to reproduce. The packet capture shown that the
-ADD_ADDR can indeed be sent with a delay, and the client would not try
-to establish subflows to it as expected.
+Assuming x86_64 kernel build, unsigned long is 64-bit and unsigned int and
+int are 32-bit wide.  This setup causes the following mishap during the &=
+~VM_MERGEABLE assignment.
 
-A simple fix is not to mark the endpoints as 'used' in the C-flag case,
-when looking at creating subflows to the remote initial IP address and
-port. In this case, there is no need to try.
+VM_MERGEABLE is a 32-bit constant of type unsigned int, 0x8000'0000.
+After ~ is applied, it becomes 0x7fff'ffff unsigned int, which is then
+promoted to unsigned long before the & operation.  This promotion fills
+upper 32 bits with leading 0s, as we're doing unsigned conversion (and
+even for a signed conversion, this wouldn't help as the leading bit is 0).
+& operation thus ends up AND-ing vm_flags with 0x0000'0000'7fff'ffff
+instead of intended 0xffff'ffff'7fff'ffff and hence accidentally clears
+the upper 32-bits of its value.
 
-Note: newly added fullmesh endpoints will still continue to be used as
-expected, thanks to the conditions behind mptcp_pm_add_addr_c_flag_case.
+Fix it by changing `VM_MERGEABLE` constant to unsigned long, using the
+BIT() macro.
 
-Fixes: 4b1ff850e0c1 ("mptcp: pm: in-kernel: usable client side with C-flag")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-1-8207030cb0e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ applied to pm_netlink.c instead of pm_kernel.c ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ I took the version from Sasha from v6.1, and fixed an additional
-  conflict in pm_netlink.c, because commit a88c9e496937 ("mptcp: do not
-  block subflows creation on errors") is not in this version and changed
-  the code around: check_work_pending() is now called directly, followed
-  by a return instead of a goto. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Note: other VM_* flags are not affected: This only happens to the
+VM_MERGEABLE flag, as the other VM_* flags are all constants of type int
+and after ~ operation, they end up with leading 1 and are thus converted
+to unsigned long with leading 1s.
+
+Note 2:
+After commit 31defc3b01d9 ("userfaultfd: remove (VM_)BUG_ON()s"), this is
+no longer a kernel BUG, but a WARNING at the same place:
+
+[   45.595973] WARNING: CPU: 1 PID: 2474 at mm/userfaultfd.c:2067
+
+but the root-cause (flag-drop) remains the same.
+
+[akpm@linux-foundation.org: rust bindgen wasn't able to handle BIT(), from Miguel]
+  Link: https://lore.kernel.org/oe-kbuild-all/202510030449.VfSaAjvd-lkp@intel.com/
+Link: https://lkml.kernel.org/r/20251001090353.57523-2-acsjakub@amazon.de
+Fixes: 7677f7fd8be7 ("userfaultfd: add minor fault registration mode")
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
+Signed-off-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: SeongJae Park <sj@kernel.org>
+Tested-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Xu Xin <xu.xin16@zte.com.cn>
+Cc: Chengming Zhou <chengming.zhou@linux.dev>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: Axel Rasmussen <axelrasmussen@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ acsjakub: drop rust-compatibility change (no rust in 5.15) ]
+Signed-off-by: Jakub Acs <acsjakub@amazon.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/linux/mm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index df46ca14ce234..e94b78a8b0ef1 100644
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -532,6 +532,12 @@ static void mptcp_pm_create_subflow_or_signal_addr(struct mptcp_sock *msk)
- 		check_work_pending(msk);
- 	}
+diff --git a/include/linux/mm.h b/include/linux/mm.h
+index 3598925561b13..071dd864a7b2b 100644
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -310,7 +310,7 @@ extern unsigned int kobjsize(const void *objp);
+ #define VM_MIXEDMAP	0x10000000	/* Can contain "struct page" and pure PFN pages */
+ #define VM_HUGEPAGE	0x20000000	/* MADV_HUGEPAGE marked this vma */
+ #define VM_NOHUGEPAGE	0x40000000	/* MADV_NOHUGEPAGE marked this vma */
+-#define VM_MERGEABLE	0x80000000	/* KSM may merge identical pages */
++#define VM_MERGEABLE	BIT(31)		/* KSM may merge identical pages */
  
-+	/* No need to try establishing subflows to remote id0 if not allowed */
-+	if (mptcp_pm_add_addr_c_flag_case(msk)) {
-+		check_work_pending(msk);
-+		return;
-+	}
-+
- 	/* check if should create a new subflow */
- 	if (msk->pm.local_addr_used < local_addr_max &&
- 	    msk->pm.subflows < subflows_max &&
+ #ifdef CONFIG_ARCH_USES_HIGH_VMA_FLAGS
+ #define VM_HIGH_ARCH_BIT_0	32	/* bit only usable on 64-bit architectures */
 -- 
 2.51.0
 
