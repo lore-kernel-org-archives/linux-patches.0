@@ -1,125 +1,144 @@
-Received: from mail-ot1-f72.google.com (mail-ot1-f72.google.com [209.85.210.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120713148D6
-	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 15:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7923314A6D;
+	Wed,  3 Dec 2025 15:37:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776260; cv=none; b=iuTDy7PkFO4Beq3WoAApkjApRfpVsYm5QAsUkocAHYdDiIuAitnIvQ/HVzbvLwi4P22kS/64Wptlk0spd1FdBu+BoYAQ3CG5TdDG/WwHsLGczkw3qEVHYYH2oQt/1Xo/MlVpGHThP+awJWonfjAgUOa1Igi0uVsvBApv+1lFJsI=
+	t=1764776264; cv=none; b=dslcnzlMbppEoXjGTKPaWkjuE470b99OT6TfICMNk/0HUGagyHvt+7rdahatsL78hqQpqRflshCtKy3EMTQl0EvCqyeKlbJZ4UUAYRlCwHloFenEfTKnvSZHbbYeuXEI7OyDCEbpl/JRiC1ud6f+N3+/ntBf8hLalgpIOst9a74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776260; c=relaxed/simple;
-	bh=URwIkXoJGIhaf6h4erzozKo5YdtNlIml7iZ5wYMoZNY=;
-	h=MIME-Version:Date:In-Reply-To:Message-ID:Subject:From:To:Cc:
-	 Content-Type; b=nTR+t1Glv5iYi77jv0u98s0dv2sE4LwNtHHu/wzqYiLD8pDJ5341eLGko7B5z3t1pec1x3pwAI8Kvw82Plp771H/w1Sa+Yik4tXwCSr+EE0vBRWyxboEaeUw3vwOdWGHizmGgpIFgCMHCLaMhLRQ619Wro5/+kngllUzlwkJpXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com; arc=none smtp.client-ip=209.85.210.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=syzkaller.appspotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=M3KW2WVRGUFZ5GODRSRYTGD7.apphosting.bounces.google.com
-Received: by mail-ot1-f72.google.com with SMTP id 46e09a7af769-7c7611165b3so5258417a34.2
-        for <patches@lists.linux.dev>; Wed, 03 Dec 2025 07:37:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764776258; x=1765381058;
-        h=cc:to:from:subject:message-id:in-reply-to:date:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/elcimwPgXstgKnTlIN9KfZhixTnvPoLHjpdzZzVoOY=;
-        b=Mf0Hy6vaS6Q+619dfXPFIpuH+O2A8/YQnalypbdMe9SeX2iwaATT8m7AnBjbOl9PHd
-         Cq7M1It/S5yprzHN5MQ7f8nHykp3de2NXOzhuqSCh2Aubw5vU8o4ayznoCXCBzMB5a/y
-         yv8SsFYuANPbq+5yxduhs8lsdyp6XENGuifA5K72Fruvz01meK/AGkPx1qJy6xTz6sgo
-         AxnCpXoX6F94aqRDE+SRDi+iQfaHxE2nBbvuMzoRCNE8oldUIh2WxwwcbQwpGynEBMC4
-         tSoPrKsTnrd5lzws5VKWV4q6/7hSB2YPpVKYy0q1Oox0HXfsSceU98q0sXXWTZBiR2Un
-         xDXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUQtxFWW1AhCji7WcnJKsmnH+JbW+Dal4cARFcdNp9EXDKoKHrGzgryCT+BbpkcDcWB/26eP7lZ@lists.linux.dev
-X-Gm-Message-State: AOJu0YxoFPIP+aIdHGdByaCaG2J4WWBmGb1nf16Pgoh9ccQDK/VwPnK0
-	y1G4RIYmiS7FCe7Ww4eZgTK/qlQRGVaxZGmFcrs4WgG5HdqaO3F4OAqgiNKjJUUcl8yk7GnVuta
-	cfM95lAToIhyZsYBjGUzvaz++sFnCehHkInyAvSTrFlcgSERJxx2tN7D5p4E=
-X-Google-Smtp-Source: AGHT+IF/HJsWGbBN8Hj0XK2wsI5QnGAyQ231nFm6XhVliXXmKL+EBsLT0hjyi+becUo9ruJxPN0hqSM6G8/bFhVyeFdh1xNyhduY
+	s=arc-20240116; t=1764776264; c=relaxed/simple;
+	bh=MqDiofzIgV1usQqE5CSQFvTJSsnUzR/lCWhhIzeSPM0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TC86JVMoW1R6Z0bOblvEjbe2Ld92sRQcaATE6YspguN/mWuHs7jgBY0rkE7yIwtYu7VZd/3GSMioXBfxbjSL4R8SCBJyTRoUSjf5ckCyGpdZbklOuk+jngY0oEanRBzTxquHcsQySI93d7vBW5a0Zym0b/+roAsPb2m29YKkaCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/Vhy2LI; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/Vhy2LI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9DCC4CEF5;
+	Wed,  3 Dec 2025 15:37:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1764776263;
+	bh=MqDiofzIgV1usQqE5CSQFvTJSsnUzR/lCWhhIzeSPM0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=e/Vhy2LIeWbQlPfCi3YACIscyQhvxe/C3xgS1W45HwLKIqUsEx9TQycfQ4aLK+hlf
+	 6Z/dv6sd6fqwCPsdK9GDLd5GgMISafjuKn9Op+mf0el13Bk9aZVXemz9OpDCqDAatJ
+	 zO1IwLeCMVDUyev/hlLj0QWwTh3TChdquKBvwgqw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Brahmajit Das <listout@listout.xyz>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 129/300] net: intel: fm10k: Fix parameter idx set but not used
+Date: Wed,  3 Dec 2025 16:25:33 +0100
+Message-ID: <20251203152405.391560632@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
+References: <20251203152400.447697997@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:6808:2209:b0:451:4d82:b6e1 with SMTP id
- 5614622812f47-4536e3ae6a6mr1322895b6e.13.1764776258114; Wed, 03 Dec 2025
- 07:37:38 -0800 (PST)
-Date: Wed, 03 Dec 2025 07:37:38 -0800
-In-Reply-To: <20251203152405.317330579@linuxfoundation.org>
-X-Google-Appengine-App-Id: s~syzkaller
-X-Google-Appengine-App-Id-Alias: syzkaller
-Message-ID: <69305942.a70a0220.2ea503.00d1.GAE@google.com>
-Subject: Re: [PATCH 5.10 127/300] jfs: fix uninitialized waitqueue in
- transaction manager
-From: syzbot <syzbot@syzkaller.appspotmail.com>
-To: gregkh@linuxfoundation.org
-Cc: dave.kleikamp@oracle.com, gregkh@linuxfoundation.org, 
-	patches@lists.linux.dev, sashal@kernel.org, ssrane_b23@ee.vjti.ac.in, 
-	stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
->
-> [ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
->
-> The transaction manager initialization in txInit() was not properly
-> initializing TxBlock[0].waitor waitqueue, causing a crash when
-> txEnd(0) is called on read-only filesystems.
->
-> When a filesystem is mounted read-only, txBegin() returns tid=0 to
-> indicate no transaction. However, txEnd(0) still gets called and
-> tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
-> waitqueue was never initialized because the initialization loop
-> started at index 1 instead of 0.
->
-> This causes a 'non-static key' lockdep warning and system crash:
->   INFO: trying to register non-static key in txEnd
->
-> Fix by ensuring all transaction blocks including TxBlock[0] have
-> their waitqueues properly initialized during txInit().
->
-> Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
->
-> Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-> Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/jfs/jfs_txnmgr.c | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
->
-> diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-> index 6f6a5b9203d3f..97a2eb0f0b75d 100644
-> --- a/fs/jfs/jfs_txnmgr.c
-> +++ b/fs/jfs/jfs_txnmgr.c
-> @@ -272,14 +272,15 @@ int txInit(void)
->  	if (TxBlock == NULL)
->  		return -ENOMEM;
->  
-> -	for (k = 1; k < nTxBlock - 1; k++) {
-> -		TxBlock[k].next = k + 1;
-> +	for (k = 0; k < nTxBlock; k++) {
->  		init_waitqueue_head(&TxBlock[k].gcwait);
->  		init_waitqueue_head(&TxBlock[k].waitor);
->  	}
-> +
-> +	for (k = 1; k < nTxBlock - 1; k++) {
-> +		TxBlock[k].next = k + 1;
-> +	}
->  	TxBlock[k].next = 0;
-> -	init_waitqueue_head(&TxBlock[k].gcwait);
-> -	init_waitqueue_head(&TxBlock[k].waitor);
->  
->  	TxAnchor.freetid = 1;
->  	init_waitqueue_head(&TxAnchor.freewait);
-> -- 
-> 2.51.0
->
->
->
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-I see the command but can't find the corresponding bug.
-The email is sent to  syzbot+HASH@syzkaller.appspotmail.com address
-but the HASH does not correspond to any known bug.
-Please double check the address.
+------------------
+
+From: Brahmajit Das <listout@listout.xyz>
+
+[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
+
+Variable idx is set in the loop, but is never used resulting in dead
+code. Building with GCC 16, which enables
+-Werror=unused-but-set-parameter= by default results in build error.
+This patch removes the idx parameter, since all the callers of the
+fm10k_unbind_hw_stats_q as 0 as idx anyways.
+
+Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
+ drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+index f51a63fca513e..1f919a50c7653 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ /**
+  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
+  *  @q: pointer to the ring of hardware statistics queue
+- *  @idx: index pointing to the start of the ring iteration
+  *  @count: number of queues to iterate over
+  *
+  *  Function invalidates the index values for the queues so any updates that
+  *  may have happened are ignored and the base for the queue stats is reset.
+  **/
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
+ {
+ 	u32 i;
+ 
+-	for (i = 0; i < count; i++, idx++, q++) {
++	for (i = 0; i < count; i++, q++) {
+ 		q->rx_stats_idx = 0;
+ 		q->tx_stats_idx = 0;
+ 	}
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+index 4c48fb73b3e78..13fca6a91a01b 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
+ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ 			     u32 idx, u32 count);
+ #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
+ s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
+ #endif /* _FM10K_COMMON_H_ */
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+index c0780c3624c82..7e0e790f38b70 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+@@ -1509,7 +1509,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
+ 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
+ 
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
+ 
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_pf(hw, stats);
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+index dc8ccd378ec92..6a3aebd56e6c4 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
+ 				     struct fm10k_hw_stats *stats)
+ {
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
+ 
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_vf(hw, stats);
+-- 
+2.51.0
+
+
 
