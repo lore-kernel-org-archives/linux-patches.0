@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6405C3081AF;
-	Wed,  3 Dec 2025 15:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C251025BEE5;
+	Wed,  3 Dec 2025 15:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776383; cv=none; b=dnbMKeygwkM4megpgMsmmPv6xc/7xbDarrNRJNz9cIrv4jFrcNd04xtZrqyKz56dcNsHGyzAxPEWtQGqt55ItAxjswpQQD5CfOCJ0VhhVVKEx2MHiE2V9ZrtSsw4gqZqlgqEwExXysZrR2pbBD29jmG1m1s0Yr5N9B8dbt9OQbI=
+	t=1764776386; cv=none; b=CmnF6EC8CjurxDarAeMeQfFcot4Ciz6gPUrPvmBH6Zun+S00cgIXVC8S7fnDyZE0Hh4stvSFZdxik9Wwg9jlW9D93GG3kKuW0Oeql36Jr6lYPzIsxkuzto2ZN8CYSIVe0j9ij7zSpDkUvymkOsbIahTKcWcji5uwfzrWNmkxgmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776383; c=relaxed/simple;
-	bh=EjcrfcPC/PQGt2Gf2535vus+xB5xSVz/FpUhsaybg/I=;
+	s=arc-20240116; t=1764776386; c=relaxed/simple;
+	bh=vyeJTlh4dPlIPI6Ret//IOE+Dv3hmMgTOIuJcvM2rQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlF5GllrArNEgq709TJijVGOrGKGFMR9zfEk4VwQmY8LSRuIo07IArrGSiZJbejTPP6n//5yTj9YeW1NZFrOhnYa1VHK9VG5i+HZNhxsBmAKEpGCBavDIOHlvOAGGrwhwR4YqaJvcRX8yAGWbLiIDTHl6IdUWaCHTj5p3YtQjHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3jed2Ic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kDm6NqkAA/FOgdfKEUOTNXWBikYdqa7JY03o8+AfrHypban7qwLp9UErn8hJzsExej3ry5kcJhe5WuPLcQDEm1HXZzWjPX2FbzNxUPNCem26ycSGfy93KjmboDYE8NTlCbQwwb2j6HOSQOVLSlO0AOH0V0abXdaOpwPnqRSutl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oJDajl6g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3jed2Ic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A67C4CEF5;
-	Wed,  3 Dec 2025 15:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oJDajl6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3055EC4CEF5;
+	Wed,  3 Dec 2025 15:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776383;
-	bh=EjcrfcPC/PQGt2Gf2535vus+xB5xSVz/FpUhsaybg/I=;
+	s=korg; t=1764776386;
+	bh=vyeJTlh4dPlIPI6Ret//IOE+Dv3hmMgTOIuJcvM2rQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3jed2IcPQQEjgem2x4gSUq7v06NOMICqA/iSe0ENAmvreTf29IdBUCIqwwP+q9ez
-	 fBSpOXtn8KE/22qoq3yZgOz8wEJbOBUFuNL13Ou6uJJyrcoazlH9PW9nygpr0iMBSR
-	 fn8tmPDdNgjuS2TovDaZk+W7arq/6XAngNTcOL1I=
+	b=oJDajl6gkzWO6yMuTFsEsqA0S6Z3/FnXiDzHyN+2pKgzVD0f+zF5pPMGyhnE3XLgQ
+	 o35AUhir2MjWS4Hmv9oHiy32hujAUePFereRm45lkF+F8gaTZU4OwphOBb6TVgHV2G
+	 aTnMGDKqIEbweM8QjH8KB2AAssHDCgyAwrAQ9TIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hulk Robot <hulkci@huawei.com>,
-	Lu Wei <luwei32@huawei.com>,
+	Yajun Deng <yajun.deng@linux.dev>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 165/300] net: sctp: Fix some typos
-Date: Wed,  3 Dec 2025 16:26:09 +0100
-Message-ID: <20251203152406.731804816@linuxfoundation.org>
+Subject: [PATCH 5.10 166/300] net: Use nlmsg_unicast() instead of netlink_unicast()
+Date: Wed,  3 Dec 2025 16:26:10 +0100
+Message-ID: <20251203152406.768990877@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,49 +52,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lu Wei <luwei32@huawei.com>
+From: Yajun Deng <yajun.deng@linux.dev>
 
-[ Upstream commit 21c00a186fac6e035eef5e6751f1e2d2609f969c ]
+[ Upstream commit 01757f536ac825e3614d583fee9acb48c64ed084 ]
 
-Modify "unkown" to "unknown" in net/sctp/sm_make_chunk.c and
-Modify "orginal" to "original" in net/sctp/socket.c.
+It has 'if (err >0 )' statement in nlmsg_unicast(), so use nlmsg_unicast()
+instead of netlink_unicast(), this looks more concise.
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Lu Wei <luwei32@huawei.com>
+v2: remove the change in netfilter.
+
+Signed-off-by: Yajun Deng <yajun.deng@linux.dev>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: f1fc201148c7 ("sctp: Hold sock lock while iterating over address list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sm_make_chunk.c | 2 +-
- net/sctp/socket.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/fib_frontend.c  | 2 +-
+ net/ipv4/inet_diag.c     | 5 +----
+ net/ipv4/raw_diag.c      | 7 ++-----
+ net/ipv4/udp_diag.c      | 6 ++----
+ net/mptcp/mptcp_diag.c   | 6 ++----
+ net/netlink/af_netlink.c | 2 +-
+ net/sctp/diag.c          | 6 ++----
+ net/unix/diag.c          | 6 ++----
+ 8 files changed, 13 insertions(+), 27 deletions(-)
 
-diff --git a/net/sctp/sm_make_chunk.c b/net/sctp/sm_make_chunk.c
-index cf77c4693b91d..85cc11a85b383 100644
---- a/net/sctp/sm_make_chunk.c
-+++ b/net/sctp/sm_make_chunk.c
-@@ -3206,7 +3206,7 @@ bool sctp_verify_asconf(const struct sctp_association *asoc,
- 				return false;
- 			break;
- 		default:
--			/* This is unkown to us, reject! */
-+			/* This is unknown to us, reject! */
- 			return false;
- 		}
- 	}
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index 196196ebe81a9..8fe09f962957f 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -9266,7 +9266,7 @@ void sctp_copy_sock(struct sock *newsk, struct sock *sk,
- 	if (newsk->sk_flags & SK_FLAGS_TIMESTAMP)
- 		net_enable_timestamp();
+diff --git a/net/ipv4/fib_frontend.c b/net/ipv4/fib_frontend.c
+index f902cd8cb852b..e35e7793c0e47 100644
+--- a/net/ipv4/fib_frontend.c
++++ b/net/ipv4/fib_frontend.c
+@@ -1400,7 +1400,7 @@ static void nl_fib_input(struct sk_buff *skb)
+ 	portid = NETLINK_CB(skb).portid;      /* netlink portid */
+ 	NETLINK_CB(skb).portid = 0;        /* from kernel */
+ 	NETLINK_CB(skb).dst_group = 0;  /* unicast */
+-	netlink_unicast(net->ipv4.fibnl, skb, portid, MSG_DONTWAIT);
++	nlmsg_unicast(net->ipv4.fibnl, skb, portid);
+ }
  
--	/* Set newsk security attributes from orginal sk and connection
-+	/* Set newsk security attributes from original sk and connection
- 	 * security attribute from ep.
- 	 */
- 	security_sctp_sk_clone(ep, sk, newsk);
+ static int __net_init nl_fib_lookup_init(struct net *net)
+diff --git a/net/ipv4/inet_diag.c b/net/ipv4/inet_diag.c
+index b9df76f6571cd..611f45da24f82 100644
+--- a/net/ipv4/inet_diag.c
++++ b/net/ipv4/inet_diag.c
+@@ -572,10 +572,7 @@ int inet_diag_dump_one_icsk(struct inet_hashinfo *hashinfo,
+ 		nlmsg_free(rep);
+ 		goto out;
+ 	}
+-	err = netlink_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid,
+-			      MSG_DONTWAIT);
+-	if (err > 0)
+-		err = 0;
++	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
+ 
+ out:
+ 	if (sk)
+diff --git a/net/ipv4/raw_diag.c b/net/ipv4/raw_diag.c
+index 1b5b8af27aafa..ccacbde30a2c5 100644
+--- a/net/ipv4/raw_diag.c
++++ b/net/ipv4/raw_diag.c
+@@ -119,11 +119,8 @@ static int raw_diag_dump_one(struct netlink_callback *cb,
+ 		return err;
+ 	}
+ 
+-	err = netlink_unicast(net->diag_nlsk, rep,
+-			      NETLINK_CB(in_skb).portid,
+-			      MSG_DONTWAIT);
+-	if (err > 0)
+-		err = 0;
++	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
++
+ 	return err;
+ }
+ 
+diff --git a/net/ipv4/udp_diag.c b/net/ipv4/udp_diag.c
+index 1dbece34496e5..ed69d1edfd099 100644
+--- a/net/ipv4/udp_diag.c
++++ b/net/ipv4/udp_diag.c
+@@ -77,10 +77,8 @@ static int udp_dump_one(struct udp_table *tbl,
+ 		kfree_skb(rep);
+ 		goto out;
+ 	}
+-	err = netlink_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid,
+-			      MSG_DONTWAIT);
+-	if (err > 0)
+-		err = 0;
++	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
++
+ out:
+ 	if (sk)
+ 		sock_put(sk);
+diff --git a/net/mptcp/mptcp_diag.c b/net/mptcp/mptcp_diag.c
+index f1af3f44875ed..7f900b58c71da 100644
+--- a/net/mptcp/mptcp_diag.c
++++ b/net/mptcp/mptcp_diag.c
+@@ -57,10 +57,8 @@ static int mptcp_diag_dump_one(struct netlink_callback *cb,
+ 		kfree_skb(rep);
+ 		goto out;
+ 	}
+-	err = netlink_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid,
+-			      MSG_DONTWAIT);
+-	if (err > 0)
+-		err = 0;
++	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
++
+ out:
+ 	sock_put(sk);
+ 
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 552682a5ff243..42b7b8574f099 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -2470,7 +2470,7 @@ void netlink_ack(struct sk_buff *in_skb, struct nlmsghdr *nlh, int err,
+ 
+ 	nlmsg_end(skb, rep);
+ 
+-	netlink_unicast(in_skb->sk, skb, NETLINK_CB(in_skb).portid, MSG_DONTWAIT);
++	nlmsg_unicast(in_skb->sk, skb, NETLINK_CB(in_skb).portid);
+ }
+ EXPORT_SYMBOL(netlink_ack);
+ 
+diff --git a/net/sctp/diag.c b/net/sctp/diag.c
+index da00a31e167d7..b1e672227924a 100644
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -288,10 +288,8 @@ static int sctp_tsp_dump_one(struct sctp_transport *tsp, void *p)
+ 		goto out;
+ 	}
+ 
+-	err = netlink_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid,
+-			      MSG_DONTWAIT);
+-	if (err > 0)
+-		err = 0;
++	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
++
+ out:
+ 	return err;
+ }
+diff --git a/net/unix/diag.c b/net/unix/diag.c
+index 7066a36234106..486276a1782ed 100644
+--- a/net/unix/diag.c
++++ b/net/unix/diag.c
+@@ -299,10 +299,8 @@ static int unix_diag_get_exact(struct sk_buff *in_skb,
+ 
+ 		goto again;
+ 	}
+-	err = netlink_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid,
+-			      MSG_DONTWAIT);
+-	if (err > 0)
+-		err = 0;
++	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
++
+ out:
+ 	if (sk)
+ 		sock_put(sk);
 -- 
 2.51.0
 
