@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB0F35BDA5;
-	Wed,  3 Dec 2025 16:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F2335BDAD;
+	Wed,  3 Dec 2025 16:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778937; cv=none; b=hA9Dr8e13QEBu9X7DSYNTuW6qolFW0twUx8HVE04PqnfBIzK5/LSTetFkU8ZgHe6litbczwSYtfl1FOQ2K3t2djID07yL4QufUpvv8vAGFNz5xkmrUxw77WIXPM/ih0uofc1NKlUaA2PKeDPyWxIz7p/vKiJJG+kzZ1wje7Pqbw=
+	t=1764778940; cv=none; b=mW5Y6aHKroFH4Wx6Mu9NwrrprCw5X7YCDn7L6k+6K4XotKP3ZwfOkbBPFIXgVqnSASl6TbA8D7zx/vrBWqS5EU8URnDka++ZT1uA5l7vV0BJyR8WO1Nc5Q0M765q4B4N8veP+8hP5jcdeljNpK6K0PEwnGFNsdpR2ompkMUY9Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778937; c=relaxed/simple;
-	bh=jJW2Yk7nhIQp+KQ0oeoeHadXEhYnQejtPdiKY08SWek=;
+	s=arc-20240116; t=1764778940; c=relaxed/simple;
+	bh=DRhMATHWb0+k14E+DlFa4bEBrTHbH/RkVO518XFjhwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaEYmkpOjF4n3k6iYc7nvMTxutMlbW0ZMK+CFEu6gXnuKgGVjLq7HZ7umuU81PcTxE2jDPkpziC58s0+ZoIIUWqJvHxbdPmGql7cbjHy7xsWi8BguOz6f+9EI2FOHM4vXbPDjE7fwDvJSe8px2DUbdcjnHoTe90WuEgZL2ffzVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jUjxKK25; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qAI4woWzBG9bBKmEQIdSGueHts/IG6+Ahd6dmx4QDxN1apjQV8X+Al+qg5Goog+M3eGMjeUujOlrm8XgthVXkor+NXMBMd8o8sQMrccg5nGCbZmTQDvhU/5L9yGkEPtVjPKbRAlTykU4vD0ttph0+1LJ2WDb605niWOrYrbZLdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWhNEDFt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jUjxKK25"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA26C4CEF5;
-	Wed,  3 Dec 2025 16:22:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWhNEDFt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F6C4CEF5;
+	Wed,  3 Dec 2025 16:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778937;
-	bh=jJW2Yk7nhIQp+KQ0oeoeHadXEhYnQejtPdiKY08SWek=;
+	s=korg; t=1764778939;
+	bh=DRhMATHWb0+k14E+DlFa4bEBrTHbH/RkVO518XFjhwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUjxKK25CFaYtk/1E1X3XNrjw2bmK1eagx39/pEXtu60tpjQVxnCllNTWyp3SkerN
-	 27qKNiVeGcyYT8yDP5NtVHbhBRUKMNmtYCy7ab2KvTI3R+dwiJuiOj6DrygfurGJkO
-	 Zy+g1vnyB5ONPffughY0qzorllBLjZmiQwdIuGQ4=
+	b=sWhNEDFt9JAsp0hzp5jZEkr7zRcUCqgZpbdCQ47qvaK1a7NliqpM9JWbTXJANosBK
+	 J6b0MOV2m3W2orB4rvPGtQ/ZrvymwWt3LtG7Dfqz1oLWM04E/VDL96/8pyGlm/iA3d
+	 PED39xiH612EMV3w/lz5u6xt5yPYGu9Yk3QaLNfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Wen Yang <wen.yang@linux.dev>
-Subject: [PATCH 6.1 073/568] drivers: base: cacheinfo: Update cpu_map_populated during CPU Hotplug
-Date: Wed,  3 Dec 2025 16:21:15 +0100
-Message-ID: <20251203152443.390105345@linuxfoundation.org>
+Subject: [PATCH 6.1 074/568] arm64: tegra: Update cache properties
+Date: Wed,  3 Dec 2025 16:21:16 +0100
+Message-ID: <20251203152443.427346457@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,113 +51,244 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: K Prateek Nayak <kprateek.nayak@amd.com>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit c26fabe73330d983c7ce822c6b6ec0879b4da61f ]
+[ Upstream commit 27f1568b1d5fe35014074f92717b250afbe67031 ]
 
-Until commit 5c2712387d48 ("cacheinfo: Fix LLC is not exported through
-sysfs"), cacheinfo called populate_cache_leaves() for CPU coming online
-which let the arch specific functions handle (at least on x86)
-populating the shared_cpu_map. However, with the changes in the
-aforementioned commit, populate_cache_leaves() is not called when a CPU
-comes online as a result of hotplug since last_level_cache_is_valid()
-returns true as the cacheinfo data is not discarded. The CPU coming
-online is not present in shared_cpu_map, however, it will not be added
-since the cpu_cacheinfo->cpu_map_populated flag is set (it is set in
-populate_cache_leaves() when cacheinfo is first populated for x86)
+The DeviceTree Specification v0.3 specifies that the cache node
+'compatible' and 'cache-level' properties are 'required'. Cf.
+s3.8 Multi-level and Shared Cache Nodes
+The 'cache-unified' property should be present if one of the
+properties for unified cache is present ('cache-size', ...).
 
-This can lead to inconsistencies in the shared_cpu_map when an offlined
-CPU comes online again. Example below depicts the inconsistency in the
-shared_cpu_list in cacheinfo when CPU8 is offlined and onlined again on
-a 3rd Generation EPYC processor:
+Update the Device Trees accordingly.
 
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
-
-  # echo 0 > /sys/devices/system/cpu/cpu8/online
-  # echo 1 > /sys/devices/system/cpu/cpu8/online
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index0/shared_cpu_list
-    136
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index3/shared_cpu_list
-    9-15,136-143
-
-Clear the flag when the CPU is removed from shared_cpu_map when
-cache_shared_cpu_map_remove() is called during CPU hotplug. This will
-allow cache_shared_cpu_map_setup() to add the CPU coming back online in
-the shared_cpu_map. Set the flag again when the shared_cpu_map is setup.
-Following are results of performing the same test as described above with
-the changes:
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
-
-  # echo 0 > /sys/devices/system/cpu/cpu8/online
-  # echo 1 > /sys/devices/system/cpu/cpu8/online
-
-  # for i in /sys/devices/system/cpu/cpu8/cache/index*/shared_cpu_list; do echo -n "$i: "; cat $i; done
-    /sys/devices/system/cpu/cpu8/cache/index0/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index1/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index2/shared_cpu_list: 8,136
-    /sys/devices/system/cpu/cpu8/cache/index3/shared_cpu_list: 8-15,136-143
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index0/shared_cpu_list
-    8,136
-
-  # cat /sys/devices/system/cpu/cpu136/cache/index3/shared_cpu_list
-    8-15,136-143
-
-Fixes: 5c2712387d48 ("cacheinfo: Fix LLC is not exported through sysfs")
-Signed-off-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Link: https://lore.kernel.org/r/20230508084115.1157-3-kprateek.nayak@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Wen Yang <wen.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/cacheinfo.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/nvidia/tegra194.dtsi |   15 ++++++++++++++
+ arch/arm64/boot/dts/nvidia/tegra210.dtsi |    1 
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi |   33 +++++++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+)
 
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -365,11 +365,14 @@ static int cache_shared_cpu_map_setup(un
- 			coherency_max_size = this_leaf->coherency_line_size;
- 	}
+--- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
+@@ -3029,36 +3029,51 @@
+ 		};
  
-+	/* shared_cpu_map is now populated for the cpu */
-+	this_cpu_ci->cpu_map_populated = true;
- 	return 0;
- }
+ 		l2c_0: l2-cache0 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c>;
+ 		};
  
- static void cache_shared_cpu_map_remove(unsigned int cpu)
- {
-+	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
- 	struct cacheinfo *this_leaf, *sib_leaf;
- 	unsigned int sibling, index, sib_index;
+ 		l2c_1: l2-cache1 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c>;
+ 		};
  
-@@ -404,6 +407,9 @@ static void cache_shared_cpu_map_remove(
- 		if (of_have_populated_dt())
- 			of_node_put(this_leaf->fw_token);
- 	}
-+
-+	/* cpu is no longer populated in the shared map */
-+	this_cpu_ci->cpu_map_populated = false;
- }
+ 		l2c_2: l2-cache2 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c>;
+ 		};
  
- static void free_cache_attributes(unsigned int cpu)
+ 		l2c_3: l2-cache3 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c>;
+ 		};
+ 
+ 		l3c: l3-cache {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <4194304>;
+ 			cache-line-size = <64>;
++			cache-level = <3>;
+ 			cache-sets = <4096>;
+ 		};
+ 	};
+--- a/arch/arm64/boot/dts/nvidia/tegra210.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra210.dtsi
+@@ -2005,6 +2005,7 @@
+ 
+ 		L2: l2-cache {
+ 			compatible = "cache";
++			cache-level = <2>;
+ 		};
+ 	};
+ 
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -2907,117 +2907,150 @@
+ 		};
+ 
+ 		l2c0_0: l2-cache00 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c0>;
+ 		};
+ 
+ 		l2c0_1: l2-cache01 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c0>;
+ 		};
+ 
+ 		l2c0_2: l2-cache02 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c0>;
+ 		};
+ 
+ 		l2c0_3: l2-cache03 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c0>;
+ 		};
+ 
+ 		l2c1_0: l2-cache10 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c1>;
+ 		};
+ 
+ 		l2c1_1: l2-cache11 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c1>;
+ 		};
+ 
+ 		l2c1_2: l2-cache12 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c1>;
+ 		};
+ 
+ 		l2c1_3: l2-cache13 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c1>;
+ 		};
+ 
+ 		l2c2_0: l2-cache20 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c2>;
+ 		};
+ 
+ 		l2c2_1: l2-cache21 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c2>;
+ 		};
+ 
+ 		l2c2_2: l2-cache22 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c2>;
+ 		};
+ 
+ 		l2c2_3: l2-cache23 {
++			compatible = "cache";
+ 			cache-size = <262144>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <512>;
+ 			cache-unified;
++			cache-level = <2>;
+ 			next-level-cache = <&l3c2>;
+ 		};
+ 
+ 		l3c0: l3-cache0 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <3>;
+ 		};
+ 
+ 		l3c1: l3-cache1 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <3>;
+ 		};
+ 
+ 		l3c2: l3-cache2 {
++			compatible = "cache";
++			cache-unified;
+ 			cache-size = <2097152>;
+ 			cache-line-size = <64>;
+ 			cache-sets = <2048>;
++			cache-level = <3>;
+ 		};
+ 	};
+ 
 
 
