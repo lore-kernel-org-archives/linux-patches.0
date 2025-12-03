@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C7E349B16;
-	Wed,  3 Dec 2025 16:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC81349B14;
+	Wed,  3 Dec 2025 16:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777653; cv=none; b=DwcuKq0u2WyoQMC4GfRQ2U6XAZrdsdl0wLCSLucdd3vF4qFbo87XcJFDmQRjcwPQo0/Y7QKuF1C51K0dyNUyMs2MeFSdODGSvHcDJpDgntd5Mw2tT61MZwJwhkgcqt/uGQhyM0HzukpOOgLl+zEc0HPS7B860+xYwAndUiXp2vk=
+	t=1764777657; cv=none; b=N21Zlbg7s3o9asLO+3kV/aVit1xg3In4+vPQdWuUOc6Gyyjko7liktoP8niJe78RvaCu+7bWbrPGNPr5PcySkrAU2LM6m7TlGHzCWaj5ix3+jEVQCZYak62H38yvmyYDajNL1q54LHJrmuFN1KCKyLPltKb8TRAUCIs72KvP/8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777653; c=relaxed/simple;
-	bh=g4ZwT9Whjkm3YzGbPapMq14gA85aQBSp8UaqBQSZ/sg=;
+	s=arc-20240116; t=1764777657; c=relaxed/simple;
+	bh=LtmO0lJ5BbqXzbuI7ylNgi8ZP6AaK0A35sl/AqY2tUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XFBI+vICmVKXCtgptl6UINrmvTd6nOrPSuHj/stV87nWAk9eV3kAOX41X8i6QtpLv5IEAG9sfqVFpJIm6V6fjT3GJpMXWxKHfYclSCelgK83/cELrpqLFSt7bIiAWtR0/e6KFkmDUs9l4gCXjf/qSaOrKXfKkQJQGo1YsLCMlcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EEqrI7rt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gncra26pVmsMckpEZz6NhvCTSbRymSb9WaDPDKZzcVdL01fTUQdqxvsgLNlCLnwLp67VSWB6a1b9ySUGLKg64LpRfUGjBZnsX2ypLDKMFmV8s77xOC0CWlU6RglVBRXFzLlXIFiiwS3+RtN0OcnC0IuT6p3Aq/1vB3D/iUPUKKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAYmJohd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EEqrI7rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393D0C4CEF5;
-	Wed,  3 Dec 2025 16:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAYmJohd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F08BC116C6;
+	Wed,  3 Dec 2025 16:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777653;
-	bh=g4ZwT9Whjkm3YzGbPapMq14gA85aQBSp8UaqBQSZ/sg=;
+	s=korg; t=1764777656;
+	bh=LtmO0lJ5BbqXzbuI7ylNgi8ZP6AaK0A35sl/AqY2tUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEqrI7rt9Sa3gQrNyhBXZ91/w2TaAO5RN/Cu+quz2JonPUIIWDfO+EatqKX8iTscj
-	 j10gclBfAGYIEjLU6XojyUI6OxMpswrxYVFvauycpWnfGUt82rgqvQuHN+p5EuFCZ1
-	 5hB6muXdIKL5J8dv6OggFA3IfRerEL/gAu3olacM=
+	b=jAYmJohd+NdmpRr8ZChHic8r3lX4m3Nd0W5YaD4Qa1pxKHty0e50YptWT3qBr1+EP
+	 dGmSVjqRy2Hvo6bQ1mOYWnWWyEwTdPLQ6RFixW8o1gv0kUHgZgd05EP2uOz0x4yCmO
+	 hxsPCuQPY6XVoXov7p3EhaSGv+H3ioEAHw2bFxg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/392] bridge: Redirect to backup port when port is administratively down
-Date: Wed,  3 Dec 2025 16:24:15 +0100
-Message-ID: <20251203152417.963554452@linuxfoundation.org>
+Subject: [PATCH 5.15 106/392] net: ipv6: fix field-spanning memcpy warning in AH output
+Date: Wed,  3 Dec 2025 16:24:16 +0100
+Message-ID: <20251203152417.999813239@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,59 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-[ Upstream commit 3d05b24429e1de7a17c8fdccb04a04dbc8ad297b ]
+[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
 
-If a backup port is configured for a bridge port, the bridge will
-redirect known unicast traffic towards the backup port when the primary
-port is administratively up but without a carrier. This is useful, for
-example, in MLAG configurations where a system is connected to two
-switches and there is a peer link between both switches. The peer link
-serves as the backup port in case one of the switches loses its
-connection to the multi-homed system.
+Fix field-spanning memcpy warnings in ah6_output() and
+ah6_output_done() where extension headers are copied to/from IPv6
+address fields, triggering fortify-string warnings about writes beyond
+the 16-byte address fields.
 
-In order to avoid flooding when the primary port loses its carrier, the
-bridge does not flush dynamic FDB entries pointing to the port upon STP
-disablement, if the port has a backup port.
+  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
+  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
 
-The above means that known unicast traffic destined to the primary port
-will be blackholed when the port is put administratively down, until the
-FDB entries pointing to it are aged-out.
+The warnings are false positives as the extension headers are
+intentionally placed after the IPv6 header in memory. Fix by properly
+copying addresses and extension headers separately, and introduce
+helper functions to avoid code duplication.
 
-Given that the current behavior is quite weird and unlikely to be
-depended on by anyone, amend the bridge to redirect to the backup port
-also when the primary port is administratively down and not only when it
-does not have a carrier.
-
-The change is motivated by a report from a user who expected traffic to
-be redirected to the backup port when the primary port was put
-administratively down while debugging a network issue.
-
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250812080213.325298-2-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_forward.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index 1b66c276118a3..aec5ab772a69d 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -148,7 +148,8 @@ void br_forward(const struct net_bridge_port *to,
- 		goto out;
+diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
+index 828e62514260a..589f008dcee9c 100644
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -46,6 +46,34 @@ struct ah_skb_cb {
  
- 	/* redirect to backup link if the destination port is down */
--	if (rcu_access_pointer(to->backup_port) && !netif_carrier_ok(to->dev)) {
-+	if (rcu_access_pointer(to->backup_port) &&
-+	    (!netif_carrier_ok(to->dev) || !netif_running(to->dev))) {
- 		struct net_bridge_port *backup_port;
+ #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
  
- 		backup_port = rcu_dereference(to->backup_port);
++/* Helper to save IPv6 addresses and extension headers to temporary storage */
++static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
++				 struct ipv6hdr *top_iph, int extlen)
++{
++	if (!extlen)
++		return;
++
++#if IS_ENABLED(CONFIG_IPV6_MIP6)
++	iph_ext->saddr = top_iph->saddr;
++#endif
++	iph_ext->daddr = top_iph->daddr;
++	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
++}
++
++/* Helper to restore IPv6 addresses and extension headers from temporary storage */
++static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
++				    struct tmp_ext *iph_ext, int extlen)
++{
++	if (!extlen)
++		return;
++
++#if IS_ENABLED(CONFIG_IPV6_MIP6)
++	top_iph->saddr = iph_ext->saddr;
++#endif
++	top_iph->daddr = iph_ext->daddr;
++	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
++}
++
+ static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
+ 			  unsigned int size)
+ {
+@@ -307,13 +335,7 @@ static void ah6_output_done(struct crypto_async_request *base, int err)
+ 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+ 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
+ 
+-	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(&top_iph->saddr, iph_ext, extlen);
+-#else
+-		memcpy(&top_iph->daddr, iph_ext, extlen);
+-#endif
+-	}
++	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+ 
+ 	kfree(AH_SKB_CB(skb)->tmp);
+ 	xfrm_output_resume(skb->sk, skb, err);
+@@ -384,12 +406,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
+ 	 */
+ 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
+ 
++	ah6_save_hdrs(iph_ext, top_iph, extlen);
+ 	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(iph_ext, &top_iph->saddr, extlen);
+-#else
+-		memcpy(iph_ext, &top_iph->daddr, extlen);
+-#endif
+ 		err = ipv6_clear_mutable_options(top_iph,
+ 						 extlen - sizeof(*iph_ext) +
+ 						 sizeof(*top_iph),
+@@ -440,13 +458,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
+ 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+ 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
+ 
+-	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(&top_iph->saddr, iph_ext, extlen);
+-#else
+-		memcpy(&top_iph->daddr, iph_ext, extlen);
+-#endif
+-	}
++	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+ 
+ out_free:
+ 	kfree(iph_base);
 -- 
 2.51.0
 
