@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8C0376BCD;
-	Wed,  3 Dec 2025 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0A2393DF1;
+	Wed,  3 Dec 2025 16:52:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780718; cv=none; b=DCabsQly6nOw7T8pyxPKJOV20K3TZvxNso8hBbL0DbeSs7N6uRkUw6aC/UgbPK2baNlDZpxbQLQiwUACkiOz4xGHo2jw7BKIv4x/m+gDjf4eQNSvYTvwu2erM/pLim03A7XgV13jKmwMwWJ54FPWKTp8oySPqnlIkRjj2a+6ers=
+	t=1764780722; cv=none; b=TVhCC8mHkOLiLAL3e2QshiXYuQoQB7x17h41KFvS+oM2WSQoSLqe15mlc+FEMVbWQEGM0x0tAA7zz0aVRQb5eXPM1KdZT5h9UF/wTRdYRrPr4E1amJZH1xY9CrGPb84SAb20YHOek19ZwqIGk1vj+mCOY40oOIy8eZhP0klBbnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780718; c=relaxed/simple;
-	bh=Yo9Zq3GDGMPstnt+VTGEbBLWOzO3SpIr8WDO3zv1L+Y=;
+	s=arc-20240116; t=1764780722; c=relaxed/simple;
+	bh=muMTH/jxj53rJAlJD3ni+zu156tCUuEUlg+AGuPxSrI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KU/aMgb+Oc756mtEOXcmcKzimEpP5dn15tsPMIWaAetOIv5VLRKH62hKZubs9EG0oTqtLHrNBGj51MlgZ+jdEutgCY8RsT7U6XLyNQDDPJETVsi2QJ+fRaG2eHDTuwPnKrJMwl9wKoklIWOMQzrzM+Yqxcuy4jYl2JjAtvPzVqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZO+1MBe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tdQmnSH1qZbtWls5Yh8W1sXF53ixF6t7vXM0hO1z4ofKR8cRRC+vWO2+IPcTIrSzdT4K5NGYIUsudeqqczvKX8VH7ElNrH0LFKnWnVDg0dCg1StqiwWc6363tDY/6qHnhUkSLoLcvxoQ+f14q/xLT75ScDdI8DpBE/6rp/ag4A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkuH9bsj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZO+1MBe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3033DC116B1;
-	Wed,  3 Dec 2025 16:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkuH9bsj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF289C4CEF5;
+	Wed,  3 Dec 2025 16:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780718;
-	bh=Yo9Zq3GDGMPstnt+VTGEbBLWOzO3SpIr8WDO3zv1L+Y=;
+	s=korg; t=1764780722;
+	bh=muMTH/jxj53rJAlJD3ni+zu156tCUuEUlg+AGuPxSrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZZO+1MBeuj0vxZoEvTVE9snLdWnRd1EYox0mq3L0sVMFy2tvEbqkcu4K0QsNgAZ78
-	 6LL3KS5GmGE45CwakXA3AM+9flnAws/cwzLZzNYi40oeoHplOZZSF1qLj8MrQs5Nmt
-	 Fo9j1qzIewx8uk/iboUX0dMDmZNKSotTWr/OE2uE=
+	b=tkuH9bsj5w56YsjoO9dTDf4XxkCfUdMzfLTuyYG4ZRK0/HAob48laMTaPrhsdnS6x
+	 Y9Taa6iBj6hj9kYwZnDngfFs7acp+xDcv8rtfIY6uNfR8vv3zOFrV97lgP+WjKffFQ
+	 ImFTFqgu+sSg27gGoBGvrWcyMNaLihrNg9OiMylY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiefeng Zhang <jiefeng.z.zhang@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 027/132] net: atlantic: fix fragment overflow handling in RX path
-Date: Wed,  3 Dec 2025 16:28:26 +0100
-Message-ID: <20251203152344.306821600@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.12 063/132] MIPS: mm: Prevent a TLB shutdown on initial uniquification
+Date: Wed,  3 Dec 2025 16:29:02 +0100
+Message-ID: <20251203152345.630536624@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,93 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiefeng Zhang <jiefeng.z.zhang@gmail.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-[ Upstream commit 5ffcb7b890f61541201461580bb6622ace405aec ]
+commit 9f048fa487409e364cf866c957cf0b0d782ca5a3 upstream.
 
-The atlantic driver can receive packets with more than MAX_SKB_FRAGS (17)
-fragments when handling large multi-descriptor packets. This causes an
-out-of-bounds write in skb_add_rx_frag_netmem() leading to kernel panic.
+Depending on the particular CPU implementation a TLB shutdown may occur
+if multiple matching entries are detected upon the execution of a TLBP
+or the TLBWI/TLBWR instructions.  Given that we don't know what entries
+we have been handed we need to be very careful with the initial TLB
+setup and avoid all these instructions.
 
-The issue occurs because the driver doesn't check the total number of
-fragments before calling skb_add_rx_frag(). When a packet requires more
-than MAX_SKB_FRAGS fragments, the fragment index exceeds the array bounds.
+Therefore read all the TLB entries one by one with the TLBR instruction,
+bypassing the content addressing logic, and truncate any large pages in
+place so as to avoid a case in the second step where an incoming entry
+for a large page at a lower address overlaps with a replacement entry
+chosen at another index.  Then preinitialize the TLB using addresses
+outside our usual unique range and avoiding clashes with any entries
+received, before making the usual call to local_flush_tlb_all().
 
-Fix by assuming there will be an extra frag if buff->len > AQ_CFG_RX_HDR_SIZE,
-then all fragments are accounted for. And reusing the existing check to
-prevent the overflow earlier in the code path.
+This fixes (at least) R4x00 cores if TLBP hits multiple matching TLB
+entries (SGI IP22 PROM for examples sets up all TLBs to the same virtual
+address).
 
-This crash occurred in production with an Aquantia AQC113 10G NIC.
-
-Stack trace from production environment:
-```
-RIP: 0010:skb_add_rx_frag_netmem+0x29/0xd0
-Code: 90 f3 0f 1e fa 0f 1f 44 00 00 48 89 f8 41 89
-ca 48 89 d7 48 63 ce 8b 90 c0 00 00 00 48 c1 e1 04 48 01 ca 48 03 90
-c8 00 00 00 <48> 89 7a 30 44 89 52 3c 44 89 42 38 40 f6 c7 01 75 74 48
-89 fa 83
-RSP: 0018:ffffa9bec02a8d50 EFLAGS: 00010287
-RAX: ffff925b22e80a00 RBX: ffff925ad38d2700 RCX:
-fffffffe0a0c8000
-RDX: ffff9258ea95bac0 RSI: ffff925ae0a0c800 RDI:
-0000000000037a40
-RBP: 0000000000000024 R08: 0000000000000000 R09:
-0000000000000021
-R10: 0000000000000848 R11: 0000000000000000 R12:
-ffffa9bec02a8e24
-R13: ffff925ad8615570 R14: 0000000000000000 R15:
-ffff925b22e80a00
-FS: 0000000000000000(0000)
-GS:ffff925e47880000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff9258ea95baf0 CR3: 0000000166022004 CR4:
-0000000000f72ef0
-PKRU: 55555554
-Call Trace:
-<IRQ>
-aq_ring_rx_clean+0x175/0xe60 [atlantic]
-? aq_ring_rx_clean+0x14d/0xe60 [atlantic]
-? aq_ring_tx_clean+0xdf/0x190 [atlantic]
-? kmem_cache_free+0x348/0x450
-? aq_vec_poll+0x81/0x1d0 [atlantic]
-? __napi_poll+0x28/0x1c0
-? net_rx_action+0x337/0x420
-```
-
-Fixes: 6aecbba12b5c ("net: atlantic: add check for MAX_SKB_FRAGS")
-Changes in v4:
-- Add Fixes: tag to satisfy patch validation requirements.
-
-Changes in v3:
-- Fix by assuming there will be an extra frag if buff->len > AQ_CFG_RX_HDR_SIZE,
-  then all fragments are accounted for.
-
-Signed-off-by: Jiefeng Zhang <jiefeng.z.zhang@gmail.com>
-Link: https://patch.msgid.link/20251126032249.69358-1-jiefeng.z.zhang@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com> # Boston I6400, M5150 sim
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/aquantia/atlantic/aq_ring.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/mips/mm/tlb-r4k.c |  102 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 64 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-index f21de0c21e524..d23d23bed39fe 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_ring.c
-@@ -547,6 +547,11 @@ static int __aq_ring_rx_clean(struct aq_ring_s *self, struct napi_struct *napi,
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -15,6 +15,7 @@
+ #include <linux/mm.h>
+ #include <linux/hugetlb.h>
+ #include <linux/export.h>
++#include <linux/sort.h>
  
- 		if (!buff->is_eop) {
- 			unsigned int frag_cnt = 0U;
+ #include <asm/cpu.h>
+ #include <asm/cpu-type.h>
+@@ -508,55 +509,79 @@ static int __init set_ntlb(char *str)
+ 
+ __setup("ntlb=", set_ntlb);
+ 
+-/* Initialise all TLB entries with unique values */
 +
-+			/* There will be an extra fragment */
-+			if (buff->len > AQ_CFG_RX_HDR_SIZE)
-+				frag_cnt++;
++/* Comparison function for EntryHi VPN fields.  */
++static int r4k_vpn_cmp(const void *a, const void *b)
++{
++	long v = *(unsigned long *)a - *(unsigned long *)b;
++	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
++	return s ? (v != 0) | v >> s : v;
++}
 +
- 			buff_ = buff;
- 			do {
- 				bool is_rsc_completed = true;
--- 
-2.51.0
-
++/*
++ * Initialise all TLB entries with unique values that do not clash with
++ * what we have been handed over and what we'll be using ourselves.
++ */
+ static void r4k_tlb_uniquify(void)
+ {
+-	int entry = num_wired_entries();
++	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
++	int tlbsize = current_cpu_data.tlbsize;
++	int start = num_wired_entries();
++	unsigned long vpn_mask;
++	int cnt, ent, idx, i;
++
++	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
++	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
+ 
+ 	htw_stop();
+-	write_c0_entrylo0(0);
+-	write_c0_entrylo1(0);
+ 
+-	while (entry < current_cpu_data.tlbsize) {
+-		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
+-		unsigned long asid = 0;
+-		int idx;
++	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
++		unsigned long vpn;
+ 
+-		/* Skip wired MMID to make ginvt_mmid work */
+-		if (cpu_has_mmid)
+-			asid = MMID_KERNEL_WIRED + 1;
++		write_c0_index(i);
++		mtc0_tlbr_hazard();
++		tlb_read();
++		tlb_read_hazard();
++		vpn = read_c0_entryhi();
++		vpn &= vpn_mask & PAGE_MASK;
++		tlb_vpns[cnt] = vpn;
+ 
+-		/* Check for match before using UNIQUE_ENTRYHI */
+-		do {
+-			if (cpu_has_mmid) {
+-				write_c0_memorymapid(asid);
+-				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
+-			} else {
+-				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
+-			}
+-			mtc0_tlbw_hazard();
+-			tlb_probe();
+-			tlb_probe_hazard();
+-			idx = read_c0_index();
+-			/* No match or match is on current entry */
+-			if (idx < 0 || idx == entry)
+-				break;
+-			/*
+-			 * If we hit a match, we need to try again with
+-			 * a different ASID.
+-			 */
+-			asid++;
+-		} while (asid < asid_mask);
+-
+-		if (idx >= 0 && idx != entry)
+-			panic("Unable to uniquify TLB entry %d", idx);
+-
+-		write_c0_index(entry);
++		/* Prevent any large pages from overlapping regular ones.  */
++		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
+ 		mtc0_tlbw_hazard();
+ 		tlb_write_indexed();
+-		entry++;
++		tlbw_use_hazard();
+ 	}
+ 
++	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
++
++	write_c0_pagemask(PM_DEFAULT_MASK);
++	write_c0_entrylo0(0);
++	write_c0_entrylo1(0);
++
++	idx = 0;
++	ent = tlbsize;
++	for (i = start; i < tlbsize; i++)
++		while (1) {
++			unsigned long entryhi, vpn;
++
++			entryhi = UNIQUE_ENTRYHI(ent);
++			vpn = entryhi & vpn_mask & PAGE_MASK;
++
++			if (idx >= cnt || vpn < tlb_vpns[idx]) {
++				write_c0_entryhi(entryhi);
++				write_c0_index(i);
++				mtc0_tlbw_hazard();
++				tlb_write_indexed();
++				ent++;
++				break;
++			} else if (vpn == tlb_vpns[idx]) {
++				ent++;
++			} else {
++				idx++;
++			}
++		}
++
+ 	tlbw_use_hazard();
+ 	htw_start();
+ 	flush_micro_tlb();
+@@ -602,6 +627,7 @@ static void r4k_tlb_configure(void)
+ 
+ 	/* From this point on the ARC firmware is dead.	 */
+ 	r4k_tlb_uniquify();
++	local_flush_tlb_all();
+ 
+ 	/* Did I tell you that ARC SUCKS?  */
+ }
 
 
