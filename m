@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB1239A26E;
-	Wed,  3 Dec 2025 16:53:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97F539A26E;
+	Wed,  3 Dec 2025 16:53:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780816; cv=none; b=fTXcrpyZEFxIpYtqBihpX9CrWAYhu/s5i/ZSMEWruMKS6wYQ+mGvjJLb8YBJvAmzRL/pqJbNyDEDVXKo9h765Mg97TX9wN/RhtTJ1/PGxeCukJN1HvWGWlST/sE+zfSKNbztVyWwZLVVdqlSjDjI7Xwfiqan5v/TABp7WePC9b0=
+	t=1764780819; cv=none; b=QuZXsPvMagySfuZ6vswFnmPO5ucAYgUtWwcq8Iml1l0zwR6asfirhdDrRCcORcg5niUUeC09pNp/dX/rgjgk/MN+IM2VQnV6rQqemkQ5pcyVPfDftAwKWdXMyer7s1h4RKOZVO2BBXEVSZM+wGP113kaK5vB8tWp8S3vKlKMvo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780816; c=relaxed/simple;
-	bh=mkz3cgVIL6nNiSH0rqmeR945qgwE3V865wWiSmpLKMU=;
+	s=arc-20240116; t=1764780819; c=relaxed/simple;
+	bh=v/rhyZXIZbfggC/A9vFCA/AMDVI6hVY2+A7RB/Kl0tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GaM+h1lCcXDlmWp9ZSE2rP8rk3XhEPAKqxGaU9Q3I3BjztItTzW8b2eScsLKohztDB0BD5FBSmQ5cksuk1Yf0G8yBrBv2SHGUJXgE8TnDpyUxSbhPmap/G8Nxf2TvpmlkeEi+qvN3Ous87GweE6Omv13Cv/NQuidUW3CMEP+BOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U6tdYeGW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4BdWAjHaVAi5p3HaOFzfHAfeZvJPwq0Z6w2p91pchfMIWJqYTygfEIxpO7rZY4VMgMHRaAUexqU3wAA8CXuiAdnysp4QT7UejatGuh35GV06EySfX3CeaP1O18r/Eq82WnmKsaI/gyrJ5vTJ4YeYmJoel2Fgd166BnF5W/SS9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3x/bjU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U6tdYeGW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0F4C4CEF5;
-	Wed,  3 Dec 2025 16:53:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3x/bjU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C47EC4CEF5;
+	Wed,  3 Dec 2025 16:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780816;
-	bh=mkz3cgVIL6nNiSH0rqmeR945qgwE3V865wWiSmpLKMU=;
+	s=korg; t=1764780819;
+	bh=v/rhyZXIZbfggC/A9vFCA/AMDVI6hVY2+A7RB/Kl0tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U6tdYeGWFNvAWjt+48yo1+u/nj3RXnxCgwXJRJwjZZkNvaz8iQwQ7ny/UUtA65um5
-	 s/oRLbPd997IjeaK+j+MsVNc/lAPOGqqCqoI/xHReAc/1Na0Ctv5s/stG1RB3EdwgG
-	 3n4cJBvWli3H6dbYjORvxKYHAP1e5SnlDnZWRXUw=
+	b=a3x/bjU0AtH8AyHI4KlIzshi2jsctzpa9d+5vyfp3+y0Qjk0zbNRUjmoNVLUcSG/h
+	 i1lkP+adKDxmVwBqFgJxIeIg/ZEtIqelr09w85mHErVMs3ZDO9I228IjIZV8iicRZu
+	 gZcaTbKI3uXeJTxvRtqx1+m15s5Agt+2p08W/5Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Manish Nagar <manish.nagar@oss.qualcomm.com>
-Subject: [PATCH 6.12 097/132] usb: dwc3: Fix race condition between concurrent dwc3_remove_requests() call paths
-Date: Wed,  3 Dec 2025 16:29:36 +0100
-Message-ID: <20251203152346.881562745@linuxfoundation.org>
+	Ivan Zhaldak <i.v.zhaldak@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.12 066/132] ALSA: usb-audio: Add DSD quirk for LEAK Stereo 230
+Date: Wed,  3 Dec 2025 16:29:05 +0100
+Message-ID: <20251203152345.742599822@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,84 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Nagar <manish.nagar@oss.qualcomm.com>
+From: Ivan Zhaldak <i.v.zhaldak@gmail.com>
 
-commit e4037689a366743c4233966f0e74bc455820d316 upstream.
+commit c83fc13960643c4429cd9dfef1321e6430a81b47 upstream.
 
-This patch addresses a race condition caused by unsynchronized
-execution of multiple call paths invoking `dwc3_remove_requests()`,
-leading to premature freeing of USB requests and subsequent crashes.
+Integrated amplifier LEAK Stereo 230 by IAG Limited has built-in
+ESS9038Q2M DAC served by XMOS controller. It supports both DSD Native
+and DSD-over-PCM (DoP) operational modes. But it doesn't work properly
+by default and tries DSD-to-PCM conversion. USB quirks below allow it
+to operate as designed.
 
-Three distinct execution paths interact with `dwc3_remove_requests()`:
-Path 1:
-Triggered via `dwc3_gadget_reset_interrupt()` during USB reset
-handling. The call stack includes:
-- `dwc3_ep0_reset_state()`
-- `dwc3_ep0_stall_and_restart()`
-- `dwc3_ep0_out_start()`
-- `dwc3_remove_requests()`
-- `dwc3_gadget_del_and_unmap_request()`
+Add DSD_RAW quirk flag for IAG Limited devices (vendor ID 0x2622)
+Add DSD format quirk for LEAK Stereo 230 (USB ID 0x2622:0x0061)
 
-Path 2:
-Also initiated from `dwc3_gadget_reset_interrupt()`, but through
-`dwc3_stop_active_transfers()`. The call stack includes:
-- `dwc3_stop_active_transfers()`
-- `dwc3_remove_requests()`
-- `dwc3_gadget_del_and_unmap_request()`
-
-Path 3:
-Occurs independently during `adb root` execution, which triggers
-USB function unbind and bind operations. The sequence includes:
-- `gserial_disconnect()`
-- `usb_ep_disable()`
-- `dwc3_gadget_ep_disable()`
-- `dwc3_remove_requests()` with `-ESHUTDOWN` status
-
-Path 3 operates asynchronously and lacks synchronization with Paths
-1 and 2. When Path 3 completes, it disables endpoints and frees 'out'
-requests. If Paths 1 or 2 are still processing these requests,
-accessing freed memory leads to a crash due to use-after-free conditions.
-
-To fix this added check for request completion and skip processing
-if already completed and added the request status for ep0 while queue.
-
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Manish Nagar <manish.nagar@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251120074435.1983091-1-manish.nagar@oss.qualcomm.com
+Signed-off-by: Ivan Zhaldak <i.v.zhaldak@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251117125848.30769-1-i.v.zhaldak@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c    |    1 +
- drivers/usb/dwc3/gadget.c |    7 +++++++
- 2 files changed, 8 insertions(+)
+ sound/usb/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -94,6 +94,7 @@ static int __dwc3_gadget_ep0_queue(struc
- 	req->request.actual	= 0;
- 	req->request.status	= -EINPROGRESS;
- 	req->epnum		= dep->number;
-+	req->status		= DWC3_REQUEST_STATUS_QUEUED;
- 
- 	list_add_tail(&req->list, &dep->pending_list);
- 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -229,6 +229,13 @@ void dwc3_gadget_giveback(struct dwc3_ep
- {
- 	struct dwc3			*dwc = dep->dwc;
- 
-+	/*
-+	 * The request might have been processed and completed while the
-+	 * spinlock was released. Skip processing if already completed.
-+	 */
-+	if (req->status == DWC3_REQUEST_STATUS_COMPLETED)
-+		return;
-+
- 	dwc3_gadget_del_and_unmap_request(dep, req, status);
- 	req->status = DWC3_REQUEST_STATUS_COMPLETED;
- 
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2028,6 +2028,7 @@ u64 snd_usb_interface_dsd_format_quirks(
+ 	case USB_ID(0x249c, 0x9326): /* M2Tech Young MkIII */
+ 	case USB_ID(0x2616, 0x0106): /* PS Audio NuWave DAC */
+ 	case USB_ID(0x2622, 0x0041): /* Audiolab M-DAC+ */
++	case USB_ID(0x2622, 0x0061): /* LEAK Stereo 230 */
+ 	case USB_ID(0x278b, 0x5100): /* Rotel RC-1590 */
+ 	case USB_ID(0x27f7, 0x3002): /* W4S DAC-2v2SE */
+ 	case USB_ID(0x29a2, 0x0086): /* Mutec MC3+ USB */
+@@ -2411,6 +2412,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x25ce, /* Mytek devices */
+ 		   QUIRK_FLAG_DSD_RAW),
++	VENDOR_FLG(0x2622, /* IAG Limited devices */
++		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x278b, /* Rotel? */
+ 		   QUIRK_FLAG_DSD_RAW),
+ 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
 
 
