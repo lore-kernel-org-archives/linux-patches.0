@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC06305067;
-	Wed,  3 Dec 2025 16:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BB030DEC4;
+	Wed,  3 Dec 2025 16:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779623; cv=none; b=U/Bxwg7D2Km8riOHv+KYOZumuOe94Bn7JaFABYR8UP0rftT2HHHIWC0cGCxcvUFsViQbEfjjwPLCqS0XoLcNIcBx1BlkLd5TuFZDAK3ODGzXG9y+eyRrD1RP+pfjVFo3Q/oJw3dyakhg/VbZqWEtdJ3V3Vlh+B/94GgorSILE8M=
+	t=1764779626; cv=none; b=JLbAFjfXdlZNDvfl2M1vcE4O9YNtLHoS6yUeyBhkLLRSB7WbwlIVVrp85k7Zj14ZmW4NJstK4R1bG6wh5GhpAUAMmTLr8Eo8fJM7LIPBY9at0z5MkniMU+9DpwZv+yLP0MEDLjR8HyQW7wcc3ZXF3mONP85TyIySD8vDI9Tssqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779623; c=relaxed/simple;
-	bh=pJdbAzIucR1rJvAlDkw+AqIc2jDZssvOqDObs0DnM2c=;
+	s=arc-20240116; t=1764779626; c=relaxed/simple;
+	bh=XxVmpzUlB5fuGervVhGyhoYF35grvSpY0Jx68Z/cfFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thAsJJTgxaeVAC55l72D5GZTjPQy+VDT8TO8uplbp6FkVYDYraAf0YPHb+NjWpdn0lAIvfNaOAuk67VoC5QE4OmKCJDOPCBm+eZK2KczY3s7GScM2MYOk9Hs2BqRs57NOfmkXGdQHnfFitY40q7mE1QoQhjSnl/r0pWl5xNr4/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OohpW8rw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mTyEsk7KCletexZrNPCtWTigd+abz3eEJyC9ulpiDc/qAe7IOMgUBFnva00AHJyKxLpKjn4pYNcxTaosCXpNJsPBgl8btfWukv0aobyJc0HiwDLGKYeDEF1nAFC4XWnKEyaKh6iLW/ujMwUU6JGKD6td9rbc7RMoI2cFTqz42vQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpTtQg05; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OohpW8rw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6370BC4CEF5;
-	Wed,  3 Dec 2025 16:33:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpTtQg05"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58C7C116B1;
+	Wed,  3 Dec 2025 16:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779622;
-	bh=pJdbAzIucR1rJvAlDkw+AqIc2jDZssvOqDObs0DnM2c=;
+	s=korg; t=1764779626;
+	bh=XxVmpzUlB5fuGervVhGyhoYF35grvSpY0Jx68Z/cfFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OohpW8rwvhd5kuJkY+d7RWuroFz84uApmlP8s3Z02YzffHabA07O/h2yIomesRIIS
-	 cQlCVCb06zFKdIOR+wsATP4Swdy8QSdNC2ZWZvCdTZA4vP4OFuzbt9uSRIIWiAYC1o
-	 FnVm+wFjHjO4TXwnPw5+R+Vy3zm6mask1Fi1lwkM=
+	b=NpTtQg05jEzhhvmVfXokV6IHmQpRcpkEFb4ddQNXmBTsSbDHgKFq24e5XJQzH/fR8
+	 Th15FPGqeQbb2RLOKn5Grhp+yFSeBL/rg79+lPF7JGjVg1uv9sUqwjHbD2ED0kKbJM
+	 8WMZD1r3y+xUpClV4ITiAVr5k4z3HsQ9USWHF6ks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 311/568] net: vlan: sync VLAN features with lower device
-Date: Wed,  3 Dec 2025 16:25:13 +0100
-Message-ID: <20251203152452.105274753@linuxfoundation.org>
+Subject: [PATCH 6.1 312/568] net: dsa: b53: fix resetting speed and pause on forced link
+Date: Wed,  3 Dec 2025 16:25:14 +0100
+Message-ID: <20251203152452.140905775@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,42 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit c211f5d7cbd5cb34489d526648bb9c8ecc907dee ]
+[ Upstream commit b6a8a5477fe9bd6be2b594a88f82f8bba41e6d54 ]
 
-After registering a VLAN device and setting its feature flags, we need to
-synchronize the VLAN features with the lower device. For example, the VLAN
-device does not have the NETIF_F_LRO flag, it should be synchronized with
-the lower device based on the NETIF_F_UPPER_DISABLES definition.
+There is no guarantee that the port state override registers have their
+default values, as not all switches support being reset via register or
+have a reset GPIO.
 
-As the dev->vlan_features has changed, we need to call
-netdev_update_features(). The caller must run after netdev_upper_dev_link()
-links the lower devices, so this patch adds the netdev_update_features()
-call in register_vlan_dev().
+So when forcing port config, we need to make sure to clear all fields,
+which we currently do not do for the speed and flow control
+configuration. This can cause flow control stay enabled, or in the case
+of speed becoming an illegal value, e.g. configured for 1G (0x2), then
+setting 100M (0x1), results in 0x3 which is invalid.
 
-Fixes: fd867d51f889 ("net/core: generic support for disabling netdev features down stack")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20251030073539.133779-1-liuhangbin@gmail.com
+For PORT_OVERRIDE_SPEED_2000M we need to make sure to only clear it on
+supported chips, as the bit can have different meanings on other chips,
+e.g. for BCM5389 this controls scanning PHYs for link/speed
+configuration.
+
+Fixes: 5e004460f874 ("net: dsa: b53: Add helper to set link parameters")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251101132807.50419-2-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/dsa/b53/b53_common.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/net/8021q/vlan.c b/net/8021q/vlan.c
-index 422f726346ea5..7c77482f31594 100644
---- a/net/8021q/vlan.c
-+++ b/net/8021q/vlan.c
-@@ -194,6 +194,8 @@ int register_vlan_dev(struct net_device *dev, struct netlink_ext_ack *extack)
- 	vlan_group_set_device(grp, vlan->vlan_proto, vlan_id, dev);
- 	grp->nr_vlan_devs++;
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index b0e283bc3efbc..d5a1d26e8e3de 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1215,6 +1215,10 @@ static void b53_force_port_config(struct b53_device *dev, int port,
+ 	else
+ 		reg &= ~PORT_OVERRIDE_FULL_DUPLEX;
  
-+	netdev_update_features(dev);
++	reg &= ~(0x3 << GMII_PO_SPEED_S);
++	if (is5301x(dev) || is58xx(dev))
++		reg &= ~PORT_OVERRIDE_SPEED_2000M;
 +
- 	return 0;
+ 	switch (speed) {
+ 	case 2000:
+ 		reg |= PORT_OVERRIDE_SPEED_2000M;
+@@ -1233,6 +1237,11 @@ static void b53_force_port_config(struct b53_device *dev, int port,
+ 		return;
+ 	}
  
- out_unregister_netdev:
++	if (is5325(dev))
++		reg &= ~PORT_OVERRIDE_LP_FLOW_25;
++	else
++		reg &= ~(PORT_OVERRIDE_RX_FLOW | PORT_OVERRIDE_TX_FLOW);
++
+ 	if (rx_pause) {
+ 		if (is5325(dev))
+ 			reg |= PORT_OVERRIDE_LP_FLOW_25;
 -- 
 2.51.0
 
