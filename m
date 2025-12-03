@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17AEC3587A2;
-	Wed,  3 Dec 2025 16:36:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6908358D28;
+	Wed,  3 Dec 2025 16:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779762; cv=none; b=VftBnLE6Gk5BwXwhCo2zXjnGseMoC3BcfOR9phrABQwi2KmI3CS/Tvyn36eJumCvB8NncDltHraAaBAevGXVxNuOn2RIOd/o9NGKfTBIdPDoDYPVChEzkusKXsnAmPEg+yzfDl//h6k0wxgkmcEIG4E21MhAzoiz/cyDtLv1QxU=
+	t=1764779767; cv=none; b=jO88qWf4kb18kbDR9iJJR3144Se2DqX9CjKzh0nLo8KBpE5D4SqzR3glbe9IQikPV1TPcIBJINXniYBVyWZMEx3J2ii066Bb6XAq3Ao0W91dQUdH3rzk6GNXdCLuWhzNZRxb3zpWefjkjigVluVeTRKukMvY03P5OM6/FJsyQ2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779762; c=relaxed/simple;
-	bh=/E8OzR0h7fL9hZ+0nBlAIRF/zjgf1P2RtHQOG/jC0dM=;
+	s=arc-20240116; t=1764779767; c=relaxed/simple;
+	bh=QK3zbrewV6goQJ/5nr5s0Lt9EZPLTn1xXJqybqceBls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N+FOfPI1Z/OiWofjxHuuwVkm0u9M69gwSrAUQlzqi/ZDsWj7/UsU2OMwsWRT/GFYtu7fr+FU9VDecAYyMCAPXAKVq9ixZ+aqzWUnjUOIFBX0sPMUwoB7OtMZiCRWnft0nBNXWA2L2hmMTaZloZQtX+FUMFhAoIubO3W1ETeeUsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcrPBIod; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F1XXs1Hb3jrJYhOnh6E+j2ZgShD2R7Dr58W+E7DFSeVfz5BpA0WhxIC5La/DEjVtkuEk24tt+KZ0wY1XEhXMDelCuQZ1MkqgqlI6Ry0EUnSQPn3B27pIAYflsHp4Gz53XnAP10qtkm1BvrTy26zaqJOHA+83GUyapApz0J+kmbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2hj2A8g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcrPBIod"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5599CC116B1;
-	Wed,  3 Dec 2025 16:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2hj2A8g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E67C4C4CEF5;
+	Wed,  3 Dec 2025 16:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779762;
-	bh=/E8OzR0h7fL9hZ+0nBlAIRF/zjgf1P2RtHQOG/jC0dM=;
+	s=korg; t=1764779765;
+	bh=QK3zbrewV6goQJ/5nr5s0Lt9EZPLTn1xXJqybqceBls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcrPBIodE4zqZFrRX6W21orBsp+Uaq34b9tPQws09Z6rz2IwBu6xNWFgh4lDiljrj
-	 k53d+O+WTw1QQlmQ0iKx1PZBBPR/qIflqmzOlRjC7kz7wxoYpz0tOSpGHAL2rdr3Wr
-	 jjg+/BtTFc3v/kXoGXHkcjMOL4jZqO3045/jd4+A=
+	b=a2hj2A8gBoZ6vzoB/KB6lltr9aE6YDlFIqJ7soRL2Bh3VMjTUUMGPjDyf3sXzONEK
+	 hC9gqc6F24rJ75M/bAy8PAQFMcotoOWbxndgpeTbGaOrVOvdxaEWoyLI81oWQr4f4X
+	 aqs+vjiDt6oSoPdKda+lrr8TlpunrJP/BHil/BKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tristram Ha <tristram.ha@microchip.com>,
-	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
+	syzbot+dd280197f0f7ab3917be@syzkaller.appspotmail.com,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 321/568] net: dsa: microchip: Fix reserved multicast address table programming
-Date: Wed,  3 Dec 2025 16:25:23 +0100
-Message-ID: <20251203152452.469121927@linuxfoundation.org>
+Subject: [PATCH 6.1 322/568] net: bridge: fix use-after-free due to MST port state bypass
+Date: Wed,  3 Dec 2025 16:25:24 +0100
+Message-ID: <20251203152452.506500538@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -46,220 +47,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tristram Ha <tristram.ha@microchip.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 96baf482ca1f69f0da9d10a5bd8422c87ea9039e ]
+[ Upstream commit 8dca36978aa80bab9d4da130c211db75c9e00048 ]
 
-KSZ9477/KSZ9897 and LAN937X families of switches use a reserved multicast
-address table for some specific forwarding with some multicast addresses,
-like the one used in STP.  The hardware assumes the host port is the last
-port in KSZ9897 family and port 5 in LAN937X family.  Most of the time
-this assumption is correct but not in other cases like KSZ9477.
-Originally the function just setups the first entry, but the others still
-need update, especially for one common multicast address that is used by
-PTP operation.
+syzbot reported[1] a use-after-free when deleting an expired fdb. It is
+due to a race condition between learning still happening and a port being
+deleted, after all its fdbs have been flushed. The port's state has been
+toggled to disabled so no learning should happen at that time, but if we
+have MST enabled, it will bypass the port's state, that together with VLAN
+filtering disabled can lead to fdb learning at a time when it shouldn't
+happen while the port is being deleted. VLAN filtering must be disabled
+because we flush the port VLANs when it's being deleted which will stop
+learning. This fix adds a check for the port's vlan group which is
+initialized to NULL when the port is getting deleted, that avoids the port
+state bypass. When MST is enabled there would be a minimal new overhead
+in the fast-path because the port's vlan group pointer is cache-hot.
 
-LAN937x also uses different register bits when accessing the reserved
-table.
+[1] https://syzkaller.appspot.com/bug?extid=dd280197f0f7ab3917be
 
-Fixes: 457c182af597 ("net: dsa: microchip: generic access to ksz9477 static and reserved table")
-Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
-Tested-by: Łukasz Majewski <lukma@nabladev.com>
-Link: https://patch.msgid.link/20251105033741.6455-1-Tristram.Ha@microchip.com
+Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
+Reported-by: syzbot+dd280197f0f7ab3917be@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/netdev/69088ffa.050a0220.29fc44.003d.GAE@google.com/
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251105111919.1499702-2-razor@blackwall.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c     | 98 +++++++++++++++++++++----
- drivers/net/dsa/microchip/ksz9477_reg.h |  3 +-
- drivers/net/dsa/microchip/ksz_common.c  |  4 +
- drivers/net/dsa/microchip/ksz_common.h  |  2 +
- 4 files changed, 91 insertions(+), 16 deletions(-)
+ net/bridge/br_forward.c | 2 +-
+ net/bridge/br_input.c   | 4 ++--
+ net/bridge/br_private.h | 8 +++++---
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
-index b854ee425fcdd..d6e459fd7a00a 100644
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -1127,9 +1127,15 @@ void ksz9477_config_cpu_port(struct dsa_switch *ds)
- 	}
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index d3257c9bfa920..9a6a6c1c4ced3 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -25,7 +25,7 @@ static inline int should_deliver(const struct net_bridge_port *p,
+ 
+ 	vg = nbp_vlan_group_rcu(p);
+ 	return ((p->flags & BR_HAIRPIN_MODE) || skb->dev != p->dev) &&
+-		(br_mst_is_enabled(p->br) || p->state == BR_STATE_FORWARDING) &&
++		(br_mst_is_enabled(p) || p->state == BR_STATE_FORWARDING) &&
+ 		br_allowed_egress(vg, skb) && nbp_switchdev_allowed_egress(p, skb) &&
+ 		!br_skb_isolated(p, skb);
+ }
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index b94a1783902ea..f11345720c275 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -93,7 +93,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 
+ 	br = p->br;
+ 
+-	if (br_mst_is_enabled(br)) {
++	if (br_mst_is_enabled(p)) {
+ 		state = BR_STATE_FORWARDING;
+ 	} else {
+ 		if (p->state == BR_STATE_DISABLED)
+@@ -393,7 +393,7 @@ static rx_handler_result_t br_handle_frame(struct sk_buff **pskb)
+ 		return RX_HANDLER_PASS;
+ 
+ forward:
+-	if (br_mst_is_enabled(p->br))
++	if (br_mst_is_enabled(p))
+ 		goto defer_stp_filtering;
+ 
+ 	switch (p->state) {
+diff --git a/net/bridge/br_private.h b/net/bridge/br_private.h
+index 20c96cb406d5a..372e9664b2cb8 100644
+--- a/net/bridge/br_private.h
++++ b/net/bridge/br_private.h
+@@ -1802,10 +1802,12 @@ static inline bool br_vlan_state_allowed(u8 state, bool learn_allow)
+ /* br_mst.c */
+ #ifdef CONFIG_BRIDGE_VLAN_FILTERING
+ DECLARE_STATIC_KEY_FALSE(br_mst_used);
+-static inline bool br_mst_is_enabled(struct net_bridge *br)
++static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
+ {
++	/* check the port's vlan group to avoid racing with port deletion */
+ 	return static_branch_unlikely(&br_mst_used) &&
+-		br_opt_get(br, BROPT_MST_ENABLED);
++	       br_opt_get(p->br, BROPT_MST_ENABLED) &&
++	       rcu_access_pointer(p->vlgrp);
  }
  
-+#define RESV_MCAST_CNT	8
-+
-+static u8 reserved_mcast_map[RESV_MCAST_CNT] = { 0, 1, 3, 16, 32, 33, 2, 17 };
-+
- int ksz9477_enable_stp_addr(struct ksz_device *dev)
+ int br_mst_set_state(struct net_bridge_port *p, u16 msti, u8 state,
+@@ -1820,7 +1822,7 @@ int br_mst_fill_info(struct sk_buff *skb,
+ int br_mst_process(struct net_bridge_port *p, const struct nlattr *mst_attr,
+ 		   struct netlink_ext_ack *extack);
+ #else
+-static inline bool br_mst_is_enabled(struct net_bridge *br)
++static inline bool br_mst_is_enabled(const struct net_bridge_port *p)
  {
-+	u8 i, ports, update;
- 	const u32 *masks;
-+	bool override;
- 	u32 data;
- 	int ret;
- 
-@@ -1138,23 +1144,87 @@ int ksz9477_enable_stp_addr(struct ksz_device *dev)
- 	/* Enable Reserved multicast table */
- 	ksz_cfg(dev, REG_SW_LUE_CTRL_0, SW_RESV_MCAST_ENABLE, true);
- 
--	/* Set the Override bit for forwarding BPDU packet to CPU */
--	ret = ksz_write32(dev, REG_SW_ALU_VAL_B,
--			  ALU_V_OVERRIDE | BIT(dev->cpu_port));
--	if (ret < 0)
--		return ret;
-+	/* The reserved multicast address table has 8 entries.  Each entry has
-+	 * a default value of which port to forward.  It is assumed the host
-+	 * port is the last port in most of the switches, but that is not the
-+	 * case for KSZ9477 or maybe KSZ9897.  For LAN937X family the default
-+	 * port is port 5, the first RGMII port.  It is okay for LAN9370, a
-+	 * 5-port switch, but may not be correct for the other 8-port
-+	 * versions.  It is necessary to update the whole table to forward to
-+	 * the right ports.
-+	 * Furthermore PTP messages can use a reserved multicast address and
-+	 * the host will not receive them if this table is not correct.
-+	 */
-+	for (i = 0; i < RESV_MCAST_CNT; i++) {
-+		data = reserved_mcast_map[i] <<
-+			dev->info->shifts[ALU_STAT_INDEX];
-+		data |= ALU_STAT_START |
-+			masks[ALU_STAT_DIRECT] |
-+			masks[ALU_RESV_MCAST_ADDR] |
-+			masks[ALU_STAT_READ];
-+		ret = ksz_write32(dev, REG_SW_ALU_STAT_CTRL__4, data);
-+		if (ret < 0)
-+			return ret;
- 
--	data = ALU_STAT_START | ALU_RESV_MCAST_ADDR | masks[ALU_STAT_WRITE];
-+		/* wait to be finished */
-+		ret = ksz9477_wait_alu_sta_ready(dev);
-+		if (ret < 0)
-+			return ret;
- 
--	ret = ksz_write32(dev, REG_SW_ALU_STAT_CTRL__4, data);
--	if (ret < 0)
--		return ret;
-+		ret = ksz_read32(dev, REG_SW_ALU_VAL_B, &data);
-+		if (ret < 0)
-+			return ret;
- 
--	/* wait to be finished */
--	ret = ksz9477_wait_alu_sta_ready(dev);
--	if (ret < 0) {
--		dev_err(dev->dev, "Failed to update Reserved Multicast table\n");
--		return ret;
-+		override = false;
-+		ports = data & dev->port_mask;
-+		switch (i) {
-+		case 0:
-+		case 6:
-+			/* Change the host port. */
-+			update = BIT(dev->cpu_port);
-+			override = true;
-+			break;
-+		case 2:
-+			/* Change the host port. */
-+			update = BIT(dev->cpu_port);
-+			break;
-+		case 4:
-+		case 5:
-+		case 7:
-+			/* Skip the host port. */
-+			update = dev->port_mask & ~BIT(dev->cpu_port);
-+			break;
-+		default:
-+			update = ports;
-+			break;
-+		}
-+		if (update != ports || override) {
-+			data &= ~dev->port_mask;
-+			data |= update;
-+			/* Set Override bit to receive frame even when port is
-+			 * closed.
-+			 */
-+			if (override)
-+				data |= ALU_V_OVERRIDE;
-+			ret = ksz_write32(dev, REG_SW_ALU_VAL_B, data);
-+			if (ret < 0)
-+				return ret;
-+
-+			data = reserved_mcast_map[i] <<
-+			       dev->info->shifts[ALU_STAT_INDEX];
-+			data |= ALU_STAT_START |
-+				masks[ALU_STAT_DIRECT] |
-+				masks[ALU_RESV_MCAST_ADDR] |
-+				masks[ALU_STAT_WRITE];
-+			ret = ksz_write32(dev, REG_SW_ALU_STAT_CTRL__4, data);
-+			if (ret < 0)
-+				return ret;
-+
-+			/* wait to be finished */
-+			ret = ksz9477_wait_alu_sta_ready(dev);
-+			if (ret < 0)
-+				return ret;
-+		}
- 	}
- 
- 	return 0;
-diff --git a/drivers/net/dsa/microchip/ksz9477_reg.h b/drivers/net/dsa/microchip/ksz9477_reg.h
-index ffb9484018ed5..600dbf2ba4b1f 100644
---- a/drivers/net/dsa/microchip/ksz9477_reg.h
-+++ b/drivers/net/dsa/microchip/ksz9477_reg.h
-@@ -2,7 +2,7 @@
- /*
-  * Microchip KSZ9477 register definitions
-  *
-- * Copyright (C) 2017-2024 Microchip Technology Inc.
-+ * Copyright (C) 2017-2025 Microchip Technology Inc.
-  */
- 
- #ifndef __KSZ9477_REGS_H
-@@ -422,7 +422,6 @@
- 
- #define ALU_RESV_MCAST_INDEX_M		(BIT(6) - 1)
- #define ALU_STAT_START			BIT(7)
--#define ALU_RESV_MCAST_ADDR		BIT(1)
- 
- #define REG_SW_ALU_VAL_A		0x0420
- 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index 9dbe188f09c3c..aa10131f80f95 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -392,6 +392,8 @@ static const u16 ksz9477_regs[] = {
- static const u32 ksz9477_masks[] = {
- 	[ALU_STAT_WRITE]		= 0,
- 	[ALU_STAT_READ]			= 1,
-+	[ALU_STAT_DIRECT]		= 0,
-+	[ALU_RESV_MCAST_ADDR]		= BIT(1),
- 	[P_MII_TX_FLOW_CTRL]		= BIT(5),
- 	[P_MII_RX_FLOW_CTRL]		= BIT(3),
- };
-@@ -419,6 +421,8 @@ static const u8 ksz9477_xmii_ctrl1[] = {
- static const u32 lan937x_masks[] = {
- 	[ALU_STAT_WRITE]		= 1,
- 	[ALU_STAT_READ]			= 2,
-+	[ALU_STAT_DIRECT]		= BIT(3),
-+	[ALU_RESV_MCAST_ADDR]		= BIT(2),
- 	[P_MII_TX_FLOW_CTRL]		= BIT(5),
- 	[P_MII_RX_FLOW_CTRL]		= BIT(3),
- };
-diff --git a/drivers/net/dsa/microchip/ksz_common.h b/drivers/net/dsa/microchip/ksz_common.h
-index a3a7a90dad967..b35c98adbfcbd 100644
---- a/drivers/net/dsa/microchip/ksz_common.h
-+++ b/drivers/net/dsa/microchip/ksz_common.h
-@@ -225,6 +225,8 @@ enum ksz_masks {
- 	DYNAMIC_MAC_TABLE_TIMESTAMP,
- 	ALU_STAT_WRITE,
- 	ALU_STAT_READ,
-+	ALU_STAT_DIRECT,
-+	ALU_RESV_MCAST_ADDR,
- 	P_MII_TX_FLOW_CTRL,
- 	P_MII_RX_FLOW_CTRL,
- };
+ 	return false;
+ }
 -- 
 2.51.0
 
