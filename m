@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98BEE30ACE6;
-	Wed,  3 Dec 2025 15:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9FE3074BA;
+	Wed,  3 Dec 2025 15:44:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776677; cv=none; b=MbDRcbUOr4xMb1Xkn0Nt2oUOkIqGmTDuPC4xhOKnrfXKwOkqPaTRJuvEmUn/piI12l3JRg6RCuEke5rn5s77PA9GO+5sijCpnfje4/Eg9sSQzaBPHyJ9mkxeOKh4cGXJZSeqzXUqm2FyKTNsOt8xbMrjAfDaoZ8RiKKRVYK5J+c=
+	t=1764776681; cv=none; b=NQQAmBxsEuGpDLXgwLLZPb/X/q3AmkF/S10Sq6C6SW8NG5WdCamwQdDmwBMZk7YaFNlTYliMFTqLmIzLuxXKvChIoqxvJUNdJ9/O40XQi04uxZby4mOvgcgvrBpY3NwWi2Pyiuwk6OlMiogHdFHIbCMqOkIEqsNpnlyM246HeJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776677; c=relaxed/simple;
-	bh=e0/3rlBwI70/j/eZSA4cxCsM3BlA2WDB1ZxCX0EcGp4=;
+	s=arc-20240116; t=1764776681; c=relaxed/simple;
+	bh=l2XLaSRyVVuZGjuNfyYU+YGUn0Gx+u5b/gHHWxaKhQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PoK+FoCjLOvQQk1innQ5Gm2dO3IY4X3EoHQRSvcGUMN0Qn3T20UD1g8dunrUlODfvh5mXh3NouOaAgmii6aVhKu4xQx3EzrsUbwqCPDvpHzDKXe6L9J1fNvGPiHS9Y8ZuftcGwRrgV9b8ndzgqpV5W0eQUG8UvzCdikBD2RIqYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WpR33rxR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aUjU7XdRYOEmK6hp+yuKi6BqN0T0epBIASbY5eOIULnEHuX6gZDtcYZZvChCK1qZYD9xrNUGlCdpwZqdDDxOcBliAXr3DIHv4zL5obi9D7rS8MNAzn9EwvYMI487C5HqJ1AxQoAgZjKwTR/pWF1+Y9/FIce4Tx2mooZlj79Lt2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Khm806ku; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WpR33rxR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04801C4CEF5;
-	Wed,  3 Dec 2025 15:44:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Khm806ku"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441A7C4CEF5;
+	Wed,  3 Dec 2025 15:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776677;
-	bh=e0/3rlBwI70/j/eZSA4cxCsM3BlA2WDB1ZxCX0EcGp4=;
+	s=korg; t=1764776680;
+	bh=l2XLaSRyVVuZGjuNfyYU+YGUn0Gx+u5b/gHHWxaKhQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WpR33rxRMgitUCUDsit0Wzczy+8SEII5aYMQ3qhnVlUcqMA0ZGIN04pUV0p4zPmmu
-	 vLEA7SEeZxWf+5VY7nA3OH5jY1JvDBxP9PN+Xv8oY5bVqgGfl4oJ4KtJKVpKh5SkYt
-	 LSNtumGcXG7FyhcAAlNmH8wPanMbokEI8DF78xOE=
+	b=Khm806kuYlL1fdXLDC9okTa709kLTUNZRfsO/u6ezMP2V1+Vd9UsYIAOjYIUl05Y0
+	 qsUXCvD0jnEEdE3VYhnaz8nopHFJWVDIEa0I+syv60tUf/Ak+7pJJ90XY5RZq99CV8
+	 ciCRd5Wx5zxGGAmoNTgkHt6vTelhPV2fxXGGQU1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Seungjin Bae <eeodqql09@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 255/300] Input: pegasus-notetaker - fix potential out-of-bounds access
-Date: Wed,  3 Dec 2025 16:27:39 +0100
-Message-ID: <20251203152410.083561046@linuxfoundation.org>
+Subject: [PATCH 5.10 256/300] can: kvaser_usb: leaf: Fix potential infinite loop in command parsers
+Date: Wed,  3 Dec 2025 16:27:40 +0100
+Message-ID: <20251203152410.122306806@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,53 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 69aeb507312306f73495598a055293fa749d454e ]
+[ Upstream commit 0c73772cd2b8cc108d5f5334de89ad648d89b9ec ]
 
-In the pegasus_notetaker driver, the pegasus_probe() function allocates
-the URB transfer buffer using the wMaxPacketSize value from
-the endpoint descriptor. An attacker can use a malicious USB descriptor
-to force the allocation of a very small buffer.
+The `kvaser_usb_leaf_wait_cmd()` and `kvaser_usb_leaf_read_bulk_callback`
+functions contain logic to zero-length commands. These commands are used
+to align data to the USB endpoint's wMaxPacketSize boundary.
 
-Subsequently, if the device sends an interrupt packet with a specific
-pattern (e.g., where the first byte is 0x80 or 0x42),
-the pegasus_parse_packet() function parses the packet without checking
-the allocated buffer size. This leads to an out-of-bounds memory access.
+The driver attempts to skip these placeholders by aligning the buffer
+position `pos` to the next packet boundary using `round_up()` function.
 
-Fixes: 1afca2b66aac ("Input: add Pegasus Notetaker tablet driver")
+However, if zero-length command is found exactly on a packet boundary
+(i.e., `pos` is a multiple of wMaxPacketSize, including 0), `round_up`
+function will return the unchanged value of `pos`. This prevents `pos`
+to be increased, causing an infinite loop in the parsing logic.
+
+This patch fixes this in the function by using `pos + 1` instead.
+This ensures that even if `pos` is on a boundary, the calculation is
+based on `pos + 1`, forcing `round_up()` to always return the next
+aligned boundary.
+
+Fixes: 7259124eac7d ("can: kvaser_usb: Split driver into kvaser_usb_core.c and kvaser_usb_leaf.c")
 Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Link: https://lore.kernel.org/r/20251007214131.3737115-2-eeodqql09@gmail.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Reviewed-by: Jimmy Assarsson <extja@kvaser.com>
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://patch.msgid.link/20251023162709.348240-1-eeodqql09@gmail.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/tablet/pegasus_notetaker.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/input/tablet/pegasus_notetaker.c
-+++ b/drivers/input/tablet/pegasus_notetaker.c
-@@ -63,6 +63,9 @@
- #define BUTTON_PRESSED			0xb5
- #define COMMAND_VERSION			0xa9
- 
-+/* 1 Status + 1 Color + 2 X + 2 Y = 6 bytes */
-+#define NOTETAKER_PACKET_SIZE		6
-+
- /* in xy data packet */
- #define BATTERY_NO_REPORT		0x40
- #define BATTERY_LOW			0x41
-@@ -297,6 +300,12 @@ static int pegasus_probe(struct usb_inte
- 
- 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
- 	pegasus->data_len = usb_maxpacket(dev, pipe);
-+	if (pegasus->data_len < NOTETAKER_PACKET_SIZE) {
-+		dev_err(&intf->dev, "packet size is too small (%d)\n",
-+			pegasus->data_len);
-+		error = -EINVAL;
-+		goto err_free_mem;
-+	}
- 
- 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
- 					   &pegasus->data_dma);
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index f06d63db9077b..df0460e3633c5 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -609,7 +609,7 @@ static int kvaser_usb_leaf_wait_cmd(const struct kvaser_usb *dev, u8 id,
+ 			 * for further details.
+ 			 */
+ 			if (tmp->len == 0) {
+-				pos = round_up(pos,
++				pos = round_up(pos + 1,
+ 					       le16_to_cpu
+ 						(dev->bulk_in->wMaxPacketSize));
+ 				continue;
+@@ -1571,7 +1571,7 @@ static void kvaser_usb_leaf_read_bulk_callback(struct kvaser_usb *dev,
+ 		 * number of events in case of a heavy rx load on the bus.
+ 		 */
+ 		if (cmd->len == 0) {
+-			pos = round_up(pos, le16_to_cpu
++			pos = round_up(pos + 1, le16_to_cpu
+ 						(dev->bulk_in->wMaxPacketSize));
+ 			continue;
+ 		}
+-- 
+2.51.0
+
 
 
