@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44250313546;
-	Wed,  3 Dec 2025 16:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23480313546;
+	Wed,  3 Dec 2025 16:07:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778061; cv=none; b=Ry3ycZBPGtMmxbASAE+XrYqpJeT3xEQC++hToh+T4Bv5U44ElO71vKxzQlCTtjwRjrL7qhRYHA//xxj+Awd2RsAAs0LJlaxBaOcpkRk8Gw61+Z59jcOyQHMQmzCQJNGQmCI9HwTv/zw3YV+yrglyMI+z0L2TgGAxl3Jb/0P3TTE=
+	t=1764778064; cv=none; b=GB9YDFRhcx4ry2P9meE9TIMDwjdAg4s2ghMW4W3139ORo99ydCSCUFUPvdA6Vps2097rrg5CxAqd1ZMTbCvW7jGxgQywy1cx0OpL0OyP92iplnrx9Sci95KQH3qJIivinGsDpXMMz81UwkFBiKsZgzEsO2Phw8WU70fVT9WQT3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778061; c=relaxed/simple;
-	bh=yDYFpFBXqYsvNeuLdKVSBksMNmUVkfz6y3sRLSf9VrE=;
+	s=arc-20240116; t=1764778064; c=relaxed/simple;
+	bh=md7O2iDK5uqo0/EMO+bRcghytxMk01PGg8LU27gsBJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g4wI4/KqJfqiKXMfjCHobAp8/jA5YME8kJEX/CDel1yTuixJOL2XVh4zmxzxaPy/BxpmXpfvi+BP94BrjhjGS0nQGg9Blkf6+ZOM8Tb4+Elh3SS02nPThiaEpZpliSIeWf2zsA5QPYMNwN7VUyXaeI/R79mOi5wzL16QMAQCITo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzDm2Sde; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5kuFnKtFt3ebMRM+EGPIWHqryYOH5a0kgww3E8MVLIiD+es1AIL+E9aday0KId0IvjsSg9PTpKojT+iya81JcKk6FHtmDYpMJRrWnnrRLK+l2KAd0zY39CciFAoUan4G5klseCkV2eFyQuISxapGtVzg3xXX52+b3FMgV8byuQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv0ouKRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzDm2Sde"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A773FC116C6;
-	Wed,  3 Dec 2025 16:07:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv0ouKRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C878C4CEF5;
+	Wed,  3 Dec 2025 16:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778061;
-	bh=yDYFpFBXqYsvNeuLdKVSBksMNmUVkfz6y3sRLSf9VrE=;
+	s=korg; t=1764778064;
+	bh=md7O2iDK5uqo0/EMO+bRcghytxMk01PGg8LU27gsBJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zzDm2SdeEcb3iOdBV3Q6+MgdQVGOP5MefUmALKvt5tBlUdrYH8YTeWGOQAxWGKUWi
-	 4Qc4zz9l/LU6WEG9J57h72BfCyexcYk1Nmp3jYLmzgwBpoW7TOeQ6OEH6AWlazFbm9
-	 swtG9G5GHm6MHNWSCw/0pAaAw9IlaIyqhvYJbyO8=
+	b=Vv0ouKRs9vgtN4zhfB4TExWr3T8BbhhXMjckhklHy89xQiym+DD/++UetFJ5Agefl
+	 Z1NJsd4UD8ACuX4qayUR7NrrPgPoYFi0z2XotuQCWv4WARPwKASIJyryUBOcYrhnQC
+	 jvKG13z+zMOwTxHFmRiE5zbupKuZ+VrwCgGrNXwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 231/392] compiler_types: Move unused static inline functions warning to W=2
-Date: Wed,  3 Dec 2025 16:26:21 +0100
-Message-ID: <20251203152422.682527290@linuxfoundation.org>
+Subject: [PATCH 5.15 205/392] ceph: add checking of wait_for_completion_killable() return value
+Date: Wed,  3 Dec 2025 16:25:55 +0100
+Message-ID: <20251203152421.617954270@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,55 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 
-[ Upstream commit 9818af18db4bfefd320d0fef41390a616365e6f7 ]
+[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
 
-Per Nathan, clang catches unused "static inline" functions in C files
-since commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
+The Coverity Scan service has detected the calling of
+wait_for_completion_killable() without checking the return
+value in ceph_lock_wait_for_completion() [1]. The CID 1636232
+defect contains explanation: "If the function returns an error
+value, the error value may be mistaken for a normal value.
+In ceph_lock_wait_for_completion(): Value returned from
+a function is not checked for errors before being used. (CWE-252)".
 
-Linus said:
+The patch adds the checking of wait_for_completion_killable()
+return value and return the error code from
+ceph_lock_wait_for_completion().
 
-> So I entirely ignore W=1 issues, because I think so many of the extra
-> warnings are bogus.
->
-> But if this one in particular is causing more problems than most -
-> some teams do seem to use W=1 as part of their test builds - it's fine
-> to send me a patch that just moves bad warnings to W=2.
->
-> And if anybody uses W=2 for their test builds, that's THEIR problem..
+[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
 
-Here is the change to bump the warning from W=1 to W=2.
-
-Fixes: 6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251106105000.2103276-1-andriy.shevchenko@linux.intel.com
-[nathan: Adjust comment as well]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler_types.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/ceph/locks.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-index 4f2203c4a2574..ca9345e2934d3 100644
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -163,10 +163,9 @@ struct ftrace_likely_data {
- /*
-  * GCC does not warn about unused static inline functions for -Wunused-function.
-  * Suppress the warning in clang as well by using __maybe_unused, but enable it
-- * for W=1 build. This will allow clang to find unused functions. Remove the
-- * __inline_maybe_unused entirely after fixing most of -Wunused-function warnings.
-+ * for W=2 build. This will allow clang to find unused functions.
-  */
--#ifdef KBUILD_EXTRA_WARN1
-+#ifdef KBUILD_EXTRA_WARN2
- #define __inline_maybe_unused
- #else
- #define __inline_maybe_unused __maybe_unused
+diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
+index 3e3b8be76b21e..38974c54240d6 100644
+--- a/fs/ceph/locks.c
++++ b/fs/ceph/locks.c
+@@ -202,7 +202,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
+ 	if (err && err != -ERESTARTSYS)
+ 		return err;
+ 
+-	wait_for_completion_killable(&req->r_safe_completion);
++	err = wait_for_completion_killable(&req->r_safe_completion);
++	if (err)
++		return err;
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
