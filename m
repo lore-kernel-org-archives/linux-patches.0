@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BFA7313538;
-	Wed,  3 Dec 2025 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89AE1309EFF;
+	Wed,  3 Dec 2025 15:37:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776232; cv=none; b=nsAGVK4Im7+NItXif3qJ2t0f4FzfSjtZGNtu0zPU8b23fl5//M26FNNZmiU8awftLXRPvmaxKAe3xux7ataPpeAfcRWTM4XfXdytdeObnb5txwPOGstqu7RTAvAKyZXrnQEDJwZso6hLH75ji7YF9p7JVxvY2XEJMqdVK9R8mOk=
+	t=1764776235; cv=none; b=UamvVZDbh0C6QG0YQgUU/4R5cTPgJt1cVcXDdVHhY2gUqtVLkD2K5jtECaafms7ApGsdX8syrz8XIOyWrkF9VW178vau0d9tgc9wSp7qTTkvFtFesNIpWaRV0POnw2bWlZxtep4VFXAJdFCsjHugMm5RY8RPig85QNza+hQOHpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776232; c=relaxed/simple;
-	bh=K/pnlAbI45SqbXM8YUVdLiMw6bj+RhLxaAviVyHsl98=;
+	s=arc-20240116; t=1764776235; c=relaxed/simple;
+	bh=K1GnGJvPDMeh6wpJUrkwaXFPlJwMYTznr7NaND67InU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmBsZQqwTB5EOznFZObHoOPvNW4jYoREgzaDLf92LJnmLc9s7fBoAu60N0FUpl2BQ65aJdJJSW5crdTUVqtCCeOt8i7sLOi9E3Nq1O1L674gWOe0PkMjMSqSnnT/J5HPd8r0dOhrS8CPXJK68cmgc5vB/MfYHX840VwPbLOAfz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JGxIjJRZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ppOn7dv/63x19h/51mm1RzBAyP2tOhXb9iovvmgZWQf8nL7XFqyOebuMPQtNmD1Ck1wGxVe4sO/CcCEVHT1iLbwMvElNzqqauJk7x5ir2Z6CMa/agDB0rwRepSgWjp/cRQCmmwe/IAKZU4pTPh2kDbtxz7oXLB1wIW3ambfuQ9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wrFvniCA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JGxIjJRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30A3C4CEF5;
-	Wed,  3 Dec 2025 15:37:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wrFvniCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FEFBC4CEF5;
+	Wed,  3 Dec 2025 15:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776232;
-	bh=K/pnlAbI45SqbXM8YUVdLiMw6bj+RhLxaAviVyHsl98=;
+	s=korg; t=1764776235;
+	bh=K1GnGJvPDMeh6wpJUrkwaXFPlJwMYTznr7NaND67InU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JGxIjJRZltVqWNY08q94cayDgMaZDqPaj2VHs/YebIemPf9Trv4FCfEqHPCBa7TDd
-	 p0Z+sUmXUwYdZkMAHTeBGq4iLEgdIzaS4bsVLKR5T78hwu/WHU6Tm8c/hpDvNSibaM
-	 Gnuz47DcvJLn41tGO0atCrMGsuaybtIzpXhhrdzc=
+	b=wrFvniCAfpCq5DcXrptGlBZmvGMMGWMkDFGgcCFGw4mdpJXh3hHe/2Gy6rOgiEAP4
+	 jT83B9VVI0IrZgt+09GB+6RLt3WtJdMXfMtaHQpqAHhKiDi+ZuVJO/69RUmglOBl0a
+	 IaBEWOvOtx5VHdYMbSik13Wdgg0+hzoL4UmWv920=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nai-Chen Cheng <bleach1827@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/300] selftests/Makefile: include $(INSTALL_DEP_TARGETS) in clean target to clean net/lib dependency
-Date: Wed,  3 Dec 2025 16:25:24 +0100
-Message-ID: <20251203152405.062951873@linuxfoundation.org>
+Subject: [PATCH 5.10 121/300] scsi: lpfc: Define size of debugfs entry for xri rebalancing
+Date: Wed,  3 Dec 2025 16:25:25 +0100
+Message-ID: <20251203152405.100618831@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,41 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nai-Chen Cheng <bleach1827@gmail.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit d3f7457da7b9527a06dbcbfaf666aa51ac2eeb53 ]
+[ Upstream commit 5de09770b1c0e229d2cec93e7f634fcdc87c9bc8 ]
 
-The selftests 'make clean' does not clean the net/lib because it only
-processes $(TARGETS) and ignores $(INSTALL_DEP_TARGETS). This leaves
-compiled objects in net/lib after cleaning, requiring manual cleanup.
+To assist in debugging lpfc_xri_rebalancing driver parameter, a debugfs
+entry is used.  The debugfs file operations for xri rebalancing have
+been previously implemented, but lack definition for its information
+buffer size.  Similar to other pre-existing debugfs entry buffers,
+define LPFC_HDWQINFO_SIZE as 8192 bytes.
 
-Include $(INSTALL_DEP_TARGETS) in clean target to ensure net/lib
-dependency is properly cleaned.
-
-Signed-off-by: Nai-Chen Cheng <bleach1827@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20250910-selftests-makefile-clean-v1-1-29e7f496cd87@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Message-ID: <20250915180811.137530-9-justintee8345@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_debugfs.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
-index db1e24d7155fa..1d33d2d298dfc 100644
---- a/tools/testing/selftests/Makefile
-+++ b/tools/testing/selftests/Makefile
-@@ -257,7 +257,7 @@ gen_tar: install
- 	@echo "Created ${TAR_PATH}"
+diff --git a/drivers/scsi/lpfc/lpfc_debugfs.h b/drivers/scsi/lpfc/lpfc_debugfs.h
+index 7ab6d3b086982..cb14a62bffb28 100644
+--- a/drivers/scsi/lpfc/lpfc_debugfs.h
++++ b/drivers/scsi/lpfc/lpfc_debugfs.h
+@@ -44,6 +44,9 @@
+ /* hbqinfo output buffer size */
+ #define LPFC_HBQINFO_SIZE 8192
  
- clean:
--	@for TARGET in $(TARGETS); do \
-+	@for TARGET in $(TARGETS) $(INSTALL_DEP_TARGETS); do \
- 		BUILD_TARGET=$$BUILD/$$TARGET;	\
- 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean;\
- 	done;
++/* hdwqinfo output buffer size */
++#define LPFC_HDWQINFO_SIZE 8192
++
+ /* nvmestat output buffer size */
+ #define LPFC_NVMESTAT_SIZE 8192
+ #define LPFC_IOKTIME_SIZE 8192
 -- 
 2.51.0
 
