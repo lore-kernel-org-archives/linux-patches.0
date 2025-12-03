@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74F9354AEF;
-	Wed,  3 Dec 2025 16:15:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFA8354AEF;
+	Wed,  3 Dec 2025 16:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778527; cv=none; b=EA8yAo/6dQiVzE5AHbtS6Cx7fXBjA0m9HwG75fFpJBuBff/ZdDWIat6ZIIX1ltybnWMCE/ucPaJoj9sh7apOBdKdwBAmkM7c1WrHJh8T3omu/VV3WK1I3On5+xCO5l9cp680CTKmTYH4LXHCF3Bb39/mK8ugqhfojAXjk86/1XA=
+	t=1764778530; cv=none; b=NxcFFfhWNOLn62mE38sYJ8vtBOCex0wDCS+0DrlWI8MOnPs5NK8PIcEtcl5x+oyIjPKu4XXMvq1Tl+kM3a9yn9N+Zba8QPyC++VBxiXNbLQzsDoZlZ9YoYYI56MRCwDxXQpBodXt5vPZLaJuXJGU83QADwiz4OiU2zvOp6tI+qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778527; c=relaxed/simple;
-	bh=es237Gk+93k8FEDy+4QIUxw46I7EMLshaRqkfpFmYAg=;
+	s=arc-20240116; t=1764778530; c=relaxed/simple;
+	bh=GqWshF/IbVX0OwEl1sOt23Mog7BKLLbdfBTFK+pf1y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=El0YEzJBCS4V/ryTu8wal1SpIl9aGNgGbH/zfrhFFz+XgMZAQt30LgCGwSJ3W77HaabqVkFJkDzDzXmMyB+RJLzopEnyE9HSImH2AQFnZL+aAaHzIEyMv8AKd6jVst06+FdqnRfXsioHqo9NAUztY8Ek+RqQimC98yy+jn0qDj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xnY4KLIS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3UHpZZPu7XapemFqmAu/ITXkyOGt6zRCeuxlWnlnvXKG2OPRttVFzpwkhHZ1BJBoxn81+tsfkqkHrVAKjX+3uDmFEm9WSU0mU1PnIi05FDyiTDhfUeynmRtU9XPl4LID2ZBxYXXXPMcNZqfmTkzAsBM90GdQxkLCx4H76q6p1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqFrdKYt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xnY4KLIS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F493C4CEF5;
-	Wed,  3 Dec 2025 16:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqFrdKYt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E22C4CEF5;
+	Wed,  3 Dec 2025 16:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778526;
-	bh=es237Gk+93k8FEDy+4QIUxw46I7EMLshaRqkfpFmYAg=;
+	s=korg; t=1764778530;
+	bh=GqWshF/IbVX0OwEl1sOt23Mog7BKLLbdfBTFK+pf1y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xnY4KLISkXL/7qPxjn1ka0Gpf/yBQxssadUrGsGUzUpnRGRCQ3p2kjp+l0pBGfbWy
-	 1ybhPCwI3gSt4EN27wjyeMopIgi9jjorDOOoz2dAN8su1RwmkExc3S4bZqLaSRE2yf
-	 UHbZOQdwJsxsWo1vHQunAauAKSEuC6S1bcoN8gAw=
+	b=lqFrdKYtApCyUr4RkCHRxYGGjT5KU9W4qlqA4U1AG3+8egKbUIe4gsqRQiKwjxXM3
+	 E+Gty0iKP3RrkK66u4REe8OXvplR3nGTldCRgjDHWrPbIThrh4ZQnF5vIqiHJ+bv9D
+	 yeiMZroL6nqAXV40piYYB3fSYj3jFyrXXahXBwLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 372/392] xhci: dbgtty: Fix data corruption when transmitting data form DbC to host
-Date: Wed,  3 Dec 2025 16:28:42 +0100
-Message-ID: <20251203152427.846451302@linuxfoundation.org>
+	Oleksandr Suvorov <cryosay@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 373/392] USB: serial: ftdi_sio: add support for u-blox EVK-M101
+Date: Wed,  3 Dec 2025 16:28:43 +0100
+Message-ID: <20251203152427.883124456@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -44,128 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Oleksandr Suvorov <cryosay@gmail.com>
 
-commit f6bb3b67be9af0cfb90075c60850b6af5338a508 upstream.
+commit 2d8ab771d5316de64f3bb920b82575c58eb00b1b upstream.
 
-Data read from a DbC device may be corrupted due to a race between
-ongoing write and write request completion handler both queuing new
-transfer blocks (TRBs) if there are remining data in the kfifo.
+The U-Blox EVK-M101 enumerates as 1546:0506 [1] with four FTDI interfaces:
+- EVK-M101 current sensors
+- EVK-M101 I2C
+- EVK-M101 UART
+- EVK-M101 port D
 
-TRBs may be in incorrct order compared to the data in the kfifo.
+Only the third USB interface is a UART. This change lets ftdi_sio probe
+the VID/PID and registers only interface #3 as a TTY, leaving the rest
+available for other drivers.
 
-Driver fails to keep lock between reading data from kfifo into a
-dbc request buffer, and queuing the request to the transfer ring.
+[1]
+usb 5-1.3: new high-speed USB device number 11 using xhci_hcd
+usb 5-1.3: New USB device found, idVendor=1546, idProduct=0506, bcdDevice= 8.00
+usb 5-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+usb 5-1.3: Product: EVK-M101
+usb 5-1.3: Manufacturer: u-blox AG
 
-This allows completed request to re-queue itself in the middle of
-an ongoing transfer loop, forcing itself between a kfifo read and
-request TRB write of another request
+Datasheet: https://content.u-blox.com/sites/default/files/documents/EVK-M10_UserGuide_UBX-21003949.pdf
 
-cpu0					cpu1 (re-queue completed req2)
-
-lock(port_lock)
-dbc_start_tx()
-kfifo_out(fifo, req1->buffer)
-unlock(port_lock)
-					lock(port_lock)
-					dbc_write_complete(req2)
-					dbc_start_tx()
-      					kfifo_out(fifo, req2->buffer)
-					unlock(port_lock)
-					lock(port_lock)
-					req2->trb = ring->enqueue;
-					ring->enqueue++
-					unlock(port_lock)
-lock(port_lock)
-req1->trb = ring->enqueue;
-ring->enqueue++
-unlock(port_lock)
-
-In the above scenario a kfifo containing "12345678" would read "1234" to
-req1 and "5678" to req2, but req2 is queued before req1 leading to
-data being transmitted as "56781234"
-
-Solve this by adding a flag that prevents starting a new tx if we
-are already mid dbc_start_tx() during the unlocked part.
-
-The already running dbc_do_start_tx() will make sure the newly completed
-request gets re-queued as it is added to the request write_pool while
-holding the lock.
-
+Signed-off-by: Oleksandr Suvorov <cryosay@gmail.com>
+Link: https://lore.kernel.org/20250926060235.3442748-1-cryosay@gmail.com/
 Cc: stable@vger.kernel.org
-Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
-Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251107162819.1362579-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgcap.h |    1 +
- drivers/usb/host/xhci-dbgtty.c |   17 ++++++++++++++++-
- 2 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/usb/serial/ftdi_sio.c     |    1 +
+ drivers/usb/serial/ftdi_sio_ids.h |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-dbgcap.h
-+++ b/drivers/usb/host/xhci-dbgcap.h
-@@ -112,6 +112,7 @@ struct dbc_port {
- 	struct kfifo			write_fifo;
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1052,6 +1052,7 @@ static const struct usb_device_id id_tab
+ 	/* U-Blox devices */
+ 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ZED_PID) },
+ 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ODIN_PID) },
++	{ USB_DEVICE_INTERFACE_NUMBER(UBLOX_VID, UBLOX_EVK_M101_PID, 2) },
+ 	/* FreeCalypso USB adapters */
+ 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_BUF_PID),
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -1607,6 +1607,7 @@
+ #define UBLOX_VID			0x1546
+ #define UBLOX_C099F9P_ZED_PID		0x0502
+ #define UBLOX_C099F9P_ODIN_PID		0x0503
++#define UBLOX_EVK_M101_PID		0x0506
  
- 	bool				registered;
-+	bool				tx_running;
- };
- 
- struct dbc_driver {
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -37,7 +37,7 @@ dbc_send_packet(struct dbc_port *port, c
- 	return size;
- }
- 
--static int dbc_start_tx(struct dbc_port *port)
-+static int dbc_do_start_tx(struct dbc_port *port)
- 	__releases(&port->port_lock)
- 	__acquires(&port->port_lock)
- {
-@@ -47,6 +47,8 @@ static int dbc_start_tx(struct dbc_port
- 	bool			do_tty_wake = false;
- 	struct list_head	*pool = &port->write_pool;
- 
-+	port->tx_running = true;
-+
- 	while (!list_empty(pool)) {
- 		req = list_entry(pool->next, struct dbc_request, list_pool);
- 		len = dbc_send_packet(port, req->buf, DBC_MAX_PACKET);
-@@ -67,12 +69,25 @@ static int dbc_start_tx(struct dbc_port
- 		}
- 	}
- 
-+	port->tx_running = false;
-+
- 	if (do_tty_wake && port->port.tty)
- 		tty_wakeup(port->port.tty);
- 
- 	return status;
- }
- 
-+/* must be called with port->port_lock held */
-+static int dbc_start_tx(struct dbc_port *port)
-+{
-+	lockdep_assert_held(&port->port_lock);
-+
-+	if (port->tx_running)
-+		return -EBUSY;
-+
-+	return dbc_do_start_tx(port);
-+}
-+
- static void dbc_start_rx(struct dbc_port *port)
- 	__releases(&port->port_lock)
- 	__acquires(&port->port_lock)
+ /*
+  * GMC devices
 
 
