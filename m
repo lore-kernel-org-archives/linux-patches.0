@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2102D3A1CEE;
-	Wed,  3 Dec 2025 16:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525A03A1CE2;
+	Wed,  3 Dec 2025 16:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781092; cv=none; b=o+L3rVO5h1S3BICwtxQNzW+owXNcc5k14lC8IaMyuRbi2intpmzKQA+qF55ujTUlrWhSJMxgv+1z4h7pLDM5OYsX8HtK3trpfxHQi6/atzH5cYad6kG+32JaI9K4f0BFv577iVY3Q/abjJSRWUi6X+6cZ3VezPCsoI+cRnHlfog=
+	t=1764781095; cv=none; b=FwOPnE+3DbALm+d4pK6UaeldZC+h2ViXOXY36nu29f/Fc8KIeupCSRVjqCo1DTBxj3qu8yQEUMYRGSy6GZ829PqFNZGBWxOpPB/TAeUnpqpVXiqN0QzYDy4/N3LTw+W2PGpQCqcof1D4BA7pZZ8p7EOyBULWXkl03a8HL8dJT0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781092; c=relaxed/simple;
-	bh=EbUegxFOvTcUfX0d+JPl0u8PZjxkwxVFrPij8yBB+gw=;
+	s=arc-20240116; t=1764781095; c=relaxed/simple;
+	bh=QnadCWP0xw/9iILmHkE6eYbIRn4DL7/4ExjtyrqtLSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tE4rnGE9pB8v4Bj78RhNmtcN9rSwKaAHB8J8ksJNHB37VJdzHDhYgKLkieSVNckhZNpMY45Mx1e1TWfAENeMFVZYKNUKaIbAkLLU8ir01VNd76UaP13fqg0hxMv8TvlymWETxdxbMZcn2UuKoyanBXZ3GW2QM7xUfvt2xwx7DTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlRmV4ju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZPHF8wS02FL/ER43z1rNJdzjuXyzRS74rVLp7A6mljZAcYck4ZVZCkeWS0ry+zdUKS/enAudsYFaydPv2M9avU5R/NvqrwEmcfVg5Bq4ilznHSSganUB3MdQ3qo+biaYQlfxLfyUDsp7ER1w2P6rCpVYxMN8wg2MJyKR/Pgj7U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kgo0eBZk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlRmV4ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3ACC4CEF5;
-	Wed,  3 Dec 2025 16:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kgo0eBZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49D7C4CEF5;
+	Wed,  3 Dec 2025 16:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781091;
-	bh=EbUegxFOvTcUfX0d+JPl0u8PZjxkwxVFrPij8yBB+gw=;
+	s=korg; t=1764781095;
+	bh=QnadCWP0xw/9iILmHkE6eYbIRn4DL7/4ExjtyrqtLSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rlRmV4juV4nSlZcPAv3wE1Ds+lmsniwqXNReRfJ5dppp69zpdYehNtHVPtRgOkib4
-	 SJOOHhrzART6sKIsN+YeVQA+FocFsiaWFsdhzkvrarBSM4y1kxOgtMTVMTpf9phd1b
-	 TPcYRALRWIyPNBXJ5uhGcBzZO+dQBI61hrbwJF3c=
+	b=Kgo0eBZkwSDJmaIWAG4/pRIPNtoWMsJyUgYhoV3UVc/Oyt1PqAo4Gi5sTdHl+Wljt
+	 n4HkRwy1xvWLz8QZnS860QYbBlFw9uTmRCr4bdMwcPv76OVv03UZQzw63inZks0se1
+	 YkSRvWWaBdARf+OiDRPiVAwWdji0pjmtVA1utVNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20M=C3=BChlbacher?= <tmuehlbacher@posteo.net>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.6 46/93] can: sun4i_can: sun4i_can_interrupt(): fix max irq loop handling
-Date: Wed,  3 Dec 2025 16:29:39 +0100
-Message-ID: <20251203152338.223601186@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 20/93] net: fec: do not register PPS event for PEROUT
+Date: Wed,  3 Dec 2025 16:29:13 +0100
+Message-ID: <20251203152337.258927319@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -45,49 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 76544beea7cfe5bcce6d60f53811657b88ec8be1 upstream.
+[ Upstream commit 9a060d0fac9e75524f72864adec6d8cdb70a5bca ]
 
-Reading the interrupt register `SUN4I_REG_INT_ADDR` causes all of its bits
-to be reset. If we ever reach the condition of handling more than
-`SUN4I_CAN_MAX_IRQ` IRQs, we will have read the register and reset all its
-bits but without actually handling the interrupt inside of the loop body.
+There are currently two situations that can trigger the PTP interrupt,
+one is the PPS event, the other is the PEROUT event. However, the irq
+handler fec_pps_interrupt() does not check the irq event type and
+directly registers a PPS event into the system, but the event may be
+a PEROUT event. This is incorrect because PEROUT is an output signal,
+while PPS is the input of the kernel PPS system. Therefore, add a check
+for the event type, if pps_enable is true, it means that the current
+event is a PPS event, and then the PPS event is registered.
 
-This may, among other issues, cause us to never `netif_wake_queue()` again
-after a transmission interrupt.
-
-Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
-Cc: stable@vger.kernel.org
-Co-developed-by: Thomas Mühlbacher <tmuehlbacher@posteo.net>
-Signed-off-by: Thomas Mühlbacher <tmuehlbacher@posteo.net>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20251116-sun4i-fix-loop-v1-1-3d76d3f81950@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 350749b909bf ("net: fec: Add support for periodic output signal of PPS")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20251125085210.1094306-5-wei.fang@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/sun4i_can.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/fec_ptp.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/sun4i_can.c
-+++ b/drivers/net/can/sun4i_can.c
-@@ -657,8 +657,8 @@ static irqreturn_t sun4i_can_interrupt(i
- 	u8 isrc, status;
- 	int n = 0;
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index beb1d98fa741a..4bb894b5afcb9 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -719,8 +719,11 @@ static irqreturn_t fec_pps_interrupt(int irq, void *dev_id)
+ 		fep->next_counter = (fep->next_counter + fep->reload_period) &
+ 				fep->cc.mask;
  
--	while ((isrc = readl(priv->base + SUN4I_REG_INT_ADDR)) &&
--	       (n < SUN4I_CAN_MAX_IRQ)) {
-+	while ((n < SUN4I_CAN_MAX_IRQ) &&
-+	       (isrc = readl(priv->base + SUN4I_REG_INT_ADDR))) {
- 		n++;
- 		status = readl(priv->base + SUN4I_REG_STA_ADDR);
+-		event.type = PTP_CLOCK_PPS;
+-		ptp_clock_event(fep->ptp_clock, &event);
++		if (fep->pps_enable) {
++			event.type = PTP_CLOCK_PPS;
++			ptp_clock_event(fep->ptp_clock, &event);
++		}
++
+ 		return IRQ_HANDLED;
+ 	}
  
+-- 
+2.51.0
+
 
 
