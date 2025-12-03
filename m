@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87295313546;
-	Wed,  3 Dec 2025 16:46:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9841313546;
+	Wed,  3 Dec 2025 16:46:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780410; cv=none; b=sTev5EZGbMBfPn6G5F1a1CN4kgpoxArbi1L+8tDQvOhZGBIsbCT2vSvzjGflnxjKtld+kVXRpBs5MKLvot8uCFPXKApJ0ZJh93QYvzSnMnmlctyxWoYJJ+1w4sjtF+xnl4faqjxpZJgfreb1gUjbJnTYnABouJWhVRA5Ab6YVOM=
+	t=1764780413; cv=none; b=WmDZWX1AiR1mNAm8FKGzx/WQuGE1zRv33yTmjHfeElaDgizZjXhC1nHwTf1v7YhUZr8DsHxXfsrint3o8S5uUX7hBNSDcOn//6UiNFLZ3UGIYzOp9c9N65eKuyWcT6eQNZiHcC9dh8rzqjtvlLSaRQU9jM3GVRKGfHDfrxZhh54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780410; c=relaxed/simple;
-	bh=YT9BDyOk7Y2GhgUs2Sh7Cnn3Lv4+XDW9ema7VmAP+Pg=;
+	s=arc-20240116; t=1764780413; c=relaxed/simple;
+	bh=1MadmcqgUG9qFvnPUNdkGkL3xAweHOJlLi2NBbve3tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSnPTEVLLRLIeb2JuumWFFjV8v8zfE6p68+4M8it6ET3S4mYua+bUL24NpQP9hckvS8p1cHRq1Ve/w0A51+t5FZvTChR4v1I7YKRBiZ46waqaMsgcNf80FU+vVk3jVN/1KHlYDKODSCQgfLPoiFSb9t9ilkwnT7Fw7C1KY/T8Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaLLhp2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJ0BlxeGdQQvS5wZTkfgH/tSYYP7cjYLIB67PgneRhoG8/WOFBhn6A9xVwnrdlgSmVmAxWzLow5gb3E2zsHIQWs5Jc6cIdSPbGBQBIjPt2aS4XXfEndY8MgYR+o+IzcJfCaHmEiOqU9F2t//55ZKflwQC8yVDcaG3YZwB34eI6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBKIQ286; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaLLhp2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC10BC4CEF5;
-	Wed,  3 Dec 2025 16:46:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBKIQ286"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2518BC4CEF5;
+	Wed,  3 Dec 2025 16:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780410;
-	bh=YT9BDyOk7Y2GhgUs2Sh7Cnn3Lv4+XDW9ema7VmAP+Pg=;
+	s=korg; t=1764780413;
+	bh=1MadmcqgUG9qFvnPUNdkGkL3xAweHOJlLi2NBbve3tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vaLLhp2tP0AfxbbZMoII0W01hTjws4p9bC9onZPyu3rjO7RGVVkXk554wKiCfeSkI
-	 kANkngeZo/RX5sW9l7G0fAuT8rK3FVLMRFKF94NX6/+jwHr1TQYtImcrFhBzQNLWI3
-	 7Jk/2KNp1G2Ml3Nd3WtUAusstH1jfXWGP4xbGEKc=
+	b=NBKIQ286854PNlAdZGUV6AHDZLpRZSMIEhlS0hNlJYN0WHTviFdpxCVcJSCX75LDy
+	 aUFeziVNhmZLjbAdcv4LwU1cGC2LTJTkw1bQNkxtBVsVVA4++szJ4uB/EOISkwj8be
+	 x20QeySkmoUheYo985RB6qUbH5ogXR14B+SHwlvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Hung <alex.hung@amd.com>
-Subject: [PATCH 6.1 548/568] drm/amd/display: Check NULL before accessing
-Date: Wed,  3 Dec 2025 16:29:10 +0100
-Message-ID: <20251203152500.781817835@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 549/568] net: dsa: microchip: common: Fix checks on irq_find_mapping()
+Date: Wed,  3 Dec 2025 16:29:11 +0100
+Message-ID: <20251203152500.818807528@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,82 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Hung <alex.hung@amd.com>
+From: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
 
-commit 3ce62c189693e8ed7b3abe551802bbc67f3ace54 upstream.
+commit 7b3c09e1667977edee11de94a85e2593a7c15e87 upstream.
 
-[WHAT]
-IGT kms_cursor_legacy's long-nonblocking-modeset-vs-cursor-atomic
-fails with NULL pointer dereference. This can be reproduced with
-both an eDP panel and a DP monitors connected.
+irq_find_mapping() returns a positive IRQ number or 0 if no IRQ is found
+but it never returns a negative value. However, on each
+irq_find_mapping() call, we verify that the returned value isn't
+negative.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP NOPTI
- CPU: 13 UID: 0 PID: 2960 Comm: kms_cursor_lega Not tainted
-6.16.0-99-custom #8 PREEMPT(voluntary)
- Hardware name: AMD ........
- RIP: 0010:dc_stream_get_scanoutpos+0x34/0x130 [amdgpu]
- Code: 57 4d 89 c7 41 56 49 89 ce 41 55 49 89 d5 41 54 49
- 89 fc 53 48 83 ec 18 48 8b 87 a0 64 00 00 48 89 75 d0 48 c7 c6 e0 41 30
- c2 <48> 8b 38 48 8b 9f 68 06 00 00 e8 8d d7 fd ff 31 c0 48 81 c3 e0 02
- RSP: 0018:ffffd0f3c2bd7608 EFLAGS: 00010292
- RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffd0f3c2bd7668
- RDX: ffffd0f3c2bd7664 RSI: ffffffffc23041e0 RDI: ffff8b32494b8000
- RBP: ffffd0f3c2bd7648 R08: ffffd0f3c2bd766c R09: ffffd0f3c2bd7760
- R10: ffffd0f3c2bd7820 R11: 0000000000000000 R12: ffff8b32494b8000
- R13: ffffd0f3c2bd7664 R14: ffffd0f3c2bd7668 R15: ffffd0f3c2bd766c
- FS:  000071f631b68700(0000) GS:ffff8b399f114000(0000)
-knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 00000001b8105000 CR4: 0000000000f50ef0
- PKRU: 55555554
- Call Trace:
- <TASK>
- dm_crtc_get_scanoutpos+0xd7/0x180 [amdgpu]
- amdgpu_display_get_crtc_scanoutpos+0x86/0x1c0 [amdgpu]
- ? __pfx_amdgpu_crtc_get_scanout_position+0x10/0x10[amdgpu]
- amdgpu_crtc_get_scanout_position+0x27/0x50 [amdgpu]
- drm_crtc_vblank_helper_get_vblank_timestamp_internal+0xf7/0x400
- drm_crtc_vblank_helper_get_vblank_timestamp+0x1c/0x30
- drm_crtc_get_last_vbltimestamp+0x55/0x90
- drm_crtc_next_vblank_start+0x45/0xa0
- drm_atomic_helper_wait_for_fences+0x81/0x1f0
- ...
+Fix the irq_find_mapping() checks to enter error paths when 0 is
+returned. Return -EINVAL in such cases.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 621e55f1919640acab25383362b96e65f2baea3c)
-Cc: stable@vger.kernel.org
+CC: stable@vger.kernel.org
+Fixes: c9cd961c0d43 ("net: dsa: microchip: lan937x: add interrupt support for port phy link")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+Link: https://patch.msgid.link/20251120-ksz-fix-v6-1-891f80ae7f8f@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_stream.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-@@ -619,9 +619,14 @@ bool dc_stream_get_scanoutpos(const stru
- {
- 	uint8_t i;
- 	bool ret = false;
--	struct dc  *dc = stream->ctx->dc;
--	struct resource_context *res_ctx =
--		&dc->current_state->res_ctx;
-+	struct dc  *dc;
-+	struct resource_context *res_ctx;
-+
-+	if (!stream->ctx)
-+		return false;
-+
-+	dc = stream->ctx->dc;
-+	res_ctx = &dc->current_state->res_ctx;
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -1693,8 +1693,8 @@ static int ksz_irq_phy_setup(struct ksz_
+ 		if (BIT(phy) & ds->phys_mii_mask) {
+ 			irq = irq_find_mapping(dev->ports[phy].pirq.domain,
+ 					       PORT_SRC_PHY_INT);
+-			if (irq < 0) {
+-				ret = irq;
++			if (!irq) {
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			ds->slave_mii_bus->irq[phy] = irq;
+@@ -1918,8 +1918,8 @@ static int ksz_pirq_setup(struct ksz_dev
+ 	snprintf(pirq->name, sizeof(pirq->name), "port_irq-%d", p);
  
- 	for (i = 0; i < MAX_PIPES; i++) {
- 		struct timing_generator *tg = res_ctx->pipe_ctx[i].stream_res.tg;
+ 	pirq->irq_num = irq_find_mapping(dev->girq.domain, p);
+-	if (pirq->irq_num < 0)
+-		return pirq->irq_num;
++	if (!pirq->irq_num)
++		return -EINVAL;
+ 
+ 	return ksz_irq_common_setup(dev, pirq);
+ }
 
 
