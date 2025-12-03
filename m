@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADDA334C36;
-	Wed,  3 Dec 2025 15:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B51E6334C36;
+	Wed,  3 Dec 2025 15:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777191; cv=none; b=IjKnkHM0ipobpFBw13j9mGntcykMFuJZ8AQ0RT15WRUTSq2p4TfOJNUeRQl48DuATvovltqTQ2r+X1uCBsoQNYG25muWaqnAhFp4x6Uq5Ga+KtjYG5J9fN4JzpaciVXEHJ/p05/Y5slpiruXtJ44Cr/KakebCWHXRFKgU2yKJ0k=
+	t=1764777194; cv=none; b=hm7LaCq2+C9Yz/q9jITDSTqStoGQVU6fajVRSL1w32TORG+Tl5lL//eDkfIfKQvfWzfDE/GEPv7RRnsDQDIpdeeD8/fJ6KpNWDyz6GjpgNHjEJJ5+yerLJJyDpcORbau1XaA7YdamcN7R4WINeC0msD429CHIaQv95RFchIONv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777191; c=relaxed/simple;
-	bh=ZOjV6r4enQjzoQYzQ6DR9rd28t68pdBuelotWstgNMo=;
+	s=arc-20240116; t=1764777194; c=relaxed/simple;
+	bh=IaCOAt3isRXwvGDlscJFu1osfagcG2hnXzdwTdBehwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuizZtjG2Yv5MXobZSpCgRX85KdBbCQA/HXrraYGEAI7kR4c/tl80Pk5FGg3MM8+BBbeeSIoGYIBjPhHvbVY3DUDmX+GNsDHsEtj6VIWqum0Fn0sPPOuxO6TZgXC8frMVrkU/zYJc60QOZ62QISwJf77aQzbkYgK2SNJZ/sKqHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hc2RhYIM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LpYwvOGPXah7OXRWM3Kjc7z3m3mt/IVDq27+11MPegCRv3ebrY3kkaon37CGP3vW2AGorL3pxj4o7g3BhFjnkAsGC80r/vYbvvgiRXwImFkZhsBwXH7t1VR0svQGLVzdPNYYsbzOFk9PGmkVDEnRRB8QToWIcpqxTonjQk9JWnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dd9N9RSC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hc2RhYIM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA25AC4CEF5;
-	Wed,  3 Dec 2025 15:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dd9N9RSC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21401C4CEF5;
+	Wed,  3 Dec 2025 15:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777191;
-	bh=ZOjV6r4enQjzoQYzQ6DR9rd28t68pdBuelotWstgNMo=;
+	s=korg; t=1764777194;
+	bh=IaCOAt3isRXwvGDlscJFu1osfagcG2hnXzdwTdBehwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hc2RhYIMYC7bAS8lw06XrNHD2jSJ4fgrEUhbwlJw7YAAIFMpS7oEUbxdZKvC0q4RA
-	 SUl2Yb9U36s3UJEgy+kytLAzzxj5ZyVWIdAsUW2INeLblltcjOEjNYf/+eiL7XFDH0
-	 Kv5eEpIlSfmszNWHEj5dXntpbHShW5iOWs22nwfM=
+	b=dd9N9RSCDBvCnkAHL+mGxRGj6+PGgkLYhQEvFjBgj6P9Yicc/YSwFILtryJ69u1Oz
+	 de86rfiaLQaPCvMgsWyZ73lEXRHbfX5z2k3JcsecOKa6OnHaZStV9o9JmlNEGFMZc7
+	 7yauKDN2TK0nqY5qFN5j2Az+BeS3Gjz7tI3AF0yA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Frank Li <Frank.Li@nxp.com>,
-	Alexander Dahl <ada@thorsis.com>,
 	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.17 077/146] arm64: dts: imx8dxl-ss-conn: swap interrupts number of eqos
-Date: Wed,  3 Dec 2025 16:27:35 +0100
-Message-ID: <20251203152349.282937353@linuxfoundation.org>
+Subject: [PATCH 6.17 078/146] arm64: dts: imx8dxl: Correct pcie-ep interrupt number
+Date: Wed,  3 Dec 2025 16:27:36 +0100
+Message-ID: <20251203152349.318699823@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -53,36 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Frank Li <Frank.Li@nxp.com>
 
-commit 5b6677d6451bbbac3b6ab93fae6506b59e2c19bd upstream.
+commit f10a788e4b6a0ebe8629177894ca779b2dc6203d upstream.
 
-Swap interrupt numbers of eqos because the below commit just swap
-interrupt-names and missed swap interrupts also.
+Correct i.MX8DXL's pcie-ep interrupt number.
 
-The driver (drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c) use
-interrupt-names to get irq numbers.
-
-Fixes: f29c19a6e488 ("arm64: dts: imx8dxl-ss-conn: Fix Ethernet interrupt-names order")
+Fixes: d03743c5659a9 ("arm64: dts: imx8q: add PCIe EP for i.MX8QM and i.MX8QXP")
 Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Tested-by: Alexander Dahl <ada@thorsis.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8dxl-ss-hsio.dtsi | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi
-@@ -27,8 +27,8 @@
- 		compatible = "nxp,imx8dxl-dwmac-eqos", "snps,dwmac-5.10a";
- 		reg = <0x5b050000 0x10000>;
- 		interrupt-parent = <&gic>;
--		interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-names = "macirq", "eth_wake_irq";
- 		clocks = <&eqos_lpcg IMX_LPCG_CLK_4>,
- 			 <&eqos_lpcg IMX_LPCG_CLK_6>,
+diff --git a/arch/arm64/boot/dts/freescale/imx8dxl-ss-hsio.dtsi b/arch/arm64/boot/dts/freescale/imx8dxl-ss-hsio.dtsi
+index ec466e4d7df5..5c0d09c5c086 100644
+--- a/arch/arm64/boot/dts/freescale/imx8dxl-ss-hsio.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8dxl-ss-hsio.dtsi
+@@ -54,3 +54,8 @@ pcie0_ep: pcie-ep@5f010000 {
+ 		interrupt-names = "dma";
+ 	};
+ };
++
++&pcieb_ep {
++	interrupts = <GIC_SPI 46 IRQ_TYPE_LEVEL_HIGH>;
++	interrupt-names = "dma";
++};
+-- 
+2.52.0
+
 
 
