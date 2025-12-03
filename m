@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66BF30C61A;
-	Wed,  3 Dec 2025 15:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCBF336ECA;
+	Wed,  3 Dec 2025 15:53:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777211; cv=none; b=kgjYi4TaI3QkP3BJ9aUyqsQBswpSHz6rX9PrtyAMj0SzZt4H79if+tSVfeUfkJUxKXTF540GXUWta3YmtwNrq76ZDACE/lZoHPM78aoscQg/JgsbPo2EfWtSJOCqKDo9K0l5bSsLci5q59kccUrTEEtF8Ss3WpgE2IAkjFvUn10=
+	t=1764777214; cv=none; b=Wfw7+SGH/chxby2E4MR40V54qMEjgtcC366mxN54BhrVEVwpZqSMwKZrhai07wBWIF/6Ysd0aQuxn96eFZ2Rn+J51SYplKgMGUvevLWuRNgt3CTYck6fcJGGgmI9KBhAj/yeO2rV33yUhGwYf3J4gbwNjeE3mkpjyjvzX9ZHhBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777211; c=relaxed/simple;
-	bh=+xbR/qckgbJjh+kzkLdwEVjipOvCvsSOIP3Qb7UHgco=;
+	s=arc-20240116; t=1764777214; c=relaxed/simple;
+	bh=vYybLirJY3WMjvRnKNz6Y703LuP0YysJD2b7p7jODP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ielHC6Mby+HguZpBy6JEok9NpkGqLzlXD3cnCLHq/BIvE8ARmgBrd8pYFHgfac8RZdmmWRq7VM6RemT8yZVBSnJs/AIzLL2Yfs0ZLh2xZTTBCBRa5isx4Sen2DJOzMl8xCp6DXW5cWubb7QwAn5K83O6K89wYssfxPX2nJMx97k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1OddW2T8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BWIMsdgIAGvjXbxQhUfjjly4CFbN6+6dTKUcHPE3uCf3JqXAhvOucBUJzzO/75N2xa8YXihfcdzQxHHj0dZP6vILD2bcXRy3ejBu6/5LaRi7D3jPt74DBxx524NKJriKGrrM7QXxxTDMjolDVbsvo56JdO8+r67jNTEIYIHI7pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WW89LbSc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1OddW2T8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F86BC4CEF5;
-	Wed,  3 Dec 2025 15:53:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WW89LbSc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0EEC4CEF5;
+	Wed,  3 Dec 2025 15:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777210;
-	bh=+xbR/qckgbJjh+kzkLdwEVjipOvCvsSOIP3Qb7UHgco=;
+	s=korg; t=1764777213;
+	bh=vYybLirJY3WMjvRnKNz6Y703LuP0YysJD2b7p7jODP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1OddW2T8fbPpEwpJIDy9lPQNBhK/XI9r3QBI07YqV6hJzfNxEeGAlofRu6uT8CGPs
-	 IbHOzMtro9U7/ygR9Gs//J5Ry6QyrD3JfgxNq4jBjSP4ooBUS0mVOgsw7VQUFTcS8x
-	 oG6lJ0vsRFIKWAZEhODjVQkXtFgJxdayjShd6mGY=
+	b=WW89LbScfne8Bh6beg7mwbG3c3ApVTHqFa8tdlzjLhqy222SzAHQZVs4Dib+mhVnF
+	 NYqm7zwBZZguDcZZUja2/VDDtYZUmtNHVyb3f5+5L5bvAxuHymUqRdlqqz6uW9vVkj
+	 tg70hjJMZGRor4py7VW95poyb4P//xca75ZDNgDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	stable <stable@kernel.org>,
-	Yu Chen <chenyu45@xiaomi.com>,
-	Owen Gu <guhuinan@xiaomi.com>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.17 117/146] usb: uas: fix urb unmapping issue when the uas device is remove during ongoing data transfer
-Date: Wed,  3 Dec 2025 16:28:15 +0100
-Message-ID: <20251203152350.745543059@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.17 118/146] usb: dwc3: pci: add support for the Intel Nova Lake -S
+Date: Wed,  3 Dec 2025 16:28:16 +0100
+Message-ID: <20251203152350.782048555@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,78 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 
-commit 26d56a9fcb2014b99e654127960aa0a48a391e3c upstream.
+commit c57ce99ec6cb55b53910b6b3d7437f80159ff9d8 upstream.
 
-When a UAS device is unplugged during data transfer, there is
-a probability of a system panic occurring. The root cause is
-an access to an invalid memory address during URB callback handling.
-Specifically, this happens when the dma_direct_unmap_sg() function
-is called within the usb_hcd_unmap_urb_for_dma() interface, but the
-sg->dma_address field is 0 and the sg data structure has already been
-freed.
+This patch adds the necessary PCI ID for Intel Nova Lake -S
+devices.
 
-The SCSI driver sends transfer commands by invoking uas_queuecommand_lck()
-in uas.c, using the uas_submit_urbs() function to submit requests to USB.
-Within the uas_submit_urbs() implementation, three URBs (sense_urb,
-data_urb, and cmd_urb) are sequentially submitted. Device removal may
-occur at any point during uas_submit_urbs execution, which may result
-in URB submission failure. However, some URBs might have been successfully
-submitted before the failure, and uas_submit_urbs will return the -ENODEV
-error code in this case. The current error handling directly calls
-scsi_done(). In the SCSI driver, this eventually triggers scsi_complete()
-to invoke scsi_end_request() for releasing the sgtable. The successfully
-submitted URBs, when being unlinked to giveback, call
-usb_hcd_unmap_urb_for_dma() in hcd.c, leading to exceptions during sg
-unmapping operations since the sg data structure has already been freed.
-
-This patch modifies the error condition check in the uas_submit_urbs()
-function. When a UAS device is removed but one or more URBs have already
-been successfully submitted to USB, it avoids immediately invoking
-scsi_done() and save the cmnd to devinfo->cmnd array. If the successfully
-submitted URBs is completed before devinfo->resetting being set, then
-the scsi_done() function will be called within uas_try_complete() after
-all pending URB operations are finalized. Otherwise, the scsi_done()
-function will be called within uas_zap_pending(), which is executed after
-usb_kill_anchored_urbs().
-
-The error handling only takes effect when uas_queuecommand_lck() calls
-uas_submit_urbs() and returns the error value -ENODEV . In this case,
-the device is disconnected, and the flow proceeds to uas_disconnect(),
-where uas_zap_pending() is invoked to call uas_try_complete().
-
-Fixes: eb2a86ae8c54 ("USB: UAS: fix disconnect by unplugging a hub")
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Yu Chen <chenyu45@xiaomi.com>
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20251120123336.3328-1-guhuinan@xiaomi.com
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251106115926.2317877-1-heikki.krogerus@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/uas.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/dwc3/dwc3-pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/storage/uas.c
-+++ b/drivers/usb/storage/uas.c
-@@ -698,6 +698,10 @@ static int uas_queuecommand_lck(struct s
- 	 * of queueing, no matter how fatal the error
- 	 */
- 	if (err == -ENODEV) {
-+		if (cmdinfo->state & (COMMAND_INFLIGHT | DATA_IN_URB_INFLIGHT |
-+				DATA_OUT_URB_INFLIGHT))
-+			goto out;
-+
- 		set_host_byte(cmnd, DID_NO_CONNECT);
- 		scsi_done(cmnd);
- 		goto zombie;
-@@ -711,6 +715,7 @@ static int uas_queuecommand_lck(struct s
- 		uas_add_work(cmnd);
- 	}
- 
-+out:
- 	devinfo->cmnd[idx] = cmnd;
- zombie:
- 	spin_unlock_irqrestore(&devinfo->lock, flags);
+--- a/drivers/usb/dwc3/dwc3-pci.c
++++ b/drivers/usb/dwc3/dwc3-pci.c
+@@ -53,6 +53,7 @@
+ #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
+ #define PCI_DEVICE_ID_INTEL_MTLS		0x7f6f
+ #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
++#define PCI_DEVICE_ID_INTEL_NVLS_PCH		0x6e6f
+ #define PCI_DEVICE_ID_INTEL_ARLH_PCH		0x777e
+ #define PCI_DEVICE_ID_INTEL_TGL			0x9a15
+ #define PCI_DEVICE_ID_INTEL_PTLH		0xe332
+@@ -443,6 +444,7 @@ static const struct pci_device_id dwc3_p
+ 	{ PCI_DEVICE_DATA(INTEL, MTLM, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTLP, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTL, &dwc3_pci_intel_swnode) },
++	{ PCI_DEVICE_DATA(INTEL, NVLS_PCH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, MTLS, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, ARLH_PCH, &dwc3_pci_intel_swnode) },
+ 	{ PCI_DEVICE_DATA(INTEL, TGL, &dwc3_pci_intel_swnode) },
 
 
