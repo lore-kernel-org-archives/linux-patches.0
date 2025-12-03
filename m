@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91F143ABC;
-	Wed,  3 Dec 2025 15:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD2F320CA7;
+	Wed,  3 Dec 2025 15:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777534; cv=none; b=mv8igPUpgBZA1k48grwioUcbWf3zkRzyfM8JISX58e9hUb33cl608keIWTJKmt0p/bxwYqxfkqdDHpN3VzW/LXXNLedXQi4AiF/zfDaFbANHhS2ZmxLIuZM251dpazX19xHql7LSgZNVPNuJHP4luDmLz7/l6SRDC3DaVOfGdZc=
+	t=1764777537; cv=none; b=eeLUC+w3ZDcS7qBwFTYXLvXsqzu/IsCZTwl1WcfvBPEYxdxi9otW2zkqGUNJT8va0i249EOIgQ3NSMYYpqpdjSn5QNCXttvMmXZWeyWZ9zY73YwapP2/QJh7VXdBLfpcT6250eXgAmSHxwf6fuwvBygKkVvVuioxiuWWgfpuUIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777534; c=relaxed/simple;
-	bh=nOwRTAHR6hvJBncaRKx05sINHekEXBFyQvQD8yEbhvA=;
+	s=arc-20240116; t=1764777537; c=relaxed/simple;
+	bh=hZbVfbzHLcvTkMBluuSWhyQb+XiVG9RVH2058vP7i8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOPqoy4JPsmnyts0deAnJpcQ7+gRKTbXcUT0QzJP34XedA1EbWBMPKa2GlMJy5K+yy97yx+4e/4Km2+H4MEX/he8kDWnjyltlyiOot+tvXfk2N9/nwBLtaZG45tzTYqOCdXqJFae8xL5ARHxoEM0LV8daFqIy3BdHgbKO5/hqYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZM8fxJZh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kI3BJ31WO0a+11wswLTJUDwGv53oH77V9ROybVFDT1dh6rHDu3hPunVuh4Pdpphkcvnba0YsQgwqT1XKsnAMd1xBjkEAJliNIX22XK9JhMK2swfbq1w95878GHU6usw3RqAz1UFv4cGjOwsSmo3BkL0ehFbeOwrhG14vKckwNG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FFwoI5+B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZM8fxJZh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1B2C4CEF5;
-	Wed,  3 Dec 2025 15:58:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FFwoI5+B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD66C4CEF5;
+	Wed,  3 Dec 2025 15:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777533;
-	bh=nOwRTAHR6hvJBncaRKx05sINHekEXBFyQvQD8yEbhvA=;
+	s=korg; t=1764777536;
+	bh=hZbVfbzHLcvTkMBluuSWhyQb+XiVG9RVH2058vP7i8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZM8fxJZhaf5tXHUkApyhDASWod+0wkr2TAVBTlmRrBywbvYrRBs40aHe3re4Clfn4
-	 if+L64HagluFP/jcYkAcdddjVjg+GOZYygcVsUPljqi7NZIEPR6h0K91ulqSKC+GUv
-	 jRSxu1npXDfHIMdZwpRpv4Y253rfht5tyB6GpMoU=
+	b=FFwoI5+BIUllOZcONuH14zFgVUg784f5P4KV8rT12Qu3OjsIjme8A629mkjwgXysd
+	 17F0Q4dvwhru3cSd1kWKbFsvkAh5peMDVI6U3CG/hq4ZlMV57JmFarPUEdLQ/K/JHY
+	 5xkskGj8njgEMCjURl/hiMla2bvxsI4R8PJ+MkuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabien Proriol <fabien.proriol@viavisolutions.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/392] power: supply: sbs-charger: Support multiple devices
-Date: Wed,  3 Dec 2025 16:23:39 +0100
-Message-ID: <20251203152416.647171489@linuxfoundation.org>
+Subject: [PATCH 5.15 070/392] soc/tegra: fuse: Add Tegra114 nvmem cells and fuse lookups
+Date: Wed,  3 Dec 2025 16:23:40 +0100
+Message-ID: <20251203152416.683316197@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,112 +52,161 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fabien Proriol <fabien.proriol@viavisolutions.com>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 3ec600210849cf122606e24caab85f0b936cf63c ]
+[ Upstream commit b9c01adedf38c69abb725a60a05305ef70dbce03 ]
 
-If we have 2 instances of sbs-charger in the DTS, the driver probe for the second instance will fail:
+Add missing Tegra114 nvmem cells and fuse lookups which were added for
+Tegra124+ but omitted for Tegra114.
 
-[    8.012874] sbs-battery 18-000b: sbs-battery: battery gas gauge device registered
-[    8.039094] sbs-charger 18-0009: ltc4100: smart charger device registered
-[    8.112911] sbs-battery 20-000b: sbs-battery: battery gas gauge device registered
-[    8.134533] sysfs: cannot create duplicate filename '/class/power_supply/sbs-charger'
-[    8.143871] CPU: 3 PID: 295 Comm: systemd-udevd Tainted: G           O      5.10.147 #22
-[    8.151974] Hardware name: ALE AMB (DT)
-[    8.155828] Call trace:
-[    8.158292]  dump_backtrace+0x0/0x1d4
-[    8.161960]  show_stack+0x18/0x6c
-[    8.165280]  dump_stack+0xcc/0x128
-[    8.168687]  sysfs_warn_dup+0x60/0x7c
-[    8.172353]  sysfs_do_create_link_sd+0xf0/0x100
-[    8.176886]  sysfs_create_link+0x20/0x40
-[    8.180816]  device_add+0x270/0x7a4
-[    8.184311]  __power_supply_register+0x304/0x560
-[    8.188930]  devm_power_supply_register+0x54/0xa0
-[    8.193644]  sbs_probe+0xc0/0x214 [sbs_charger]
-[    8.198183]  i2c_device_probe+0x2dc/0x2f4
-[    8.202196]  really_probe+0xf0/0x510
-[    8.205774]  driver_probe_device+0xfc/0x160
-[    8.209960]  device_driver_attach+0xc0/0xcc
-[    8.214146]  __driver_attach+0xc0/0x170
-[    8.218002]  bus_for_each_dev+0x74/0xd4
-[    8.221862]  driver_attach+0x24/0x30
-[    8.225444]  bus_add_driver+0x148/0x250
-[    8.229283]  driver_register+0x78/0x130
-[    8.233140]  i2c_register_driver+0x4c/0xe0
-[    8.237250]  sbs_driver_init+0x20/0x1000 [sbs_charger]
-[    8.242424]  do_one_initcall+0x50/0x1b0
-[    8.242434]  do_init_module+0x44/0x230
-[    8.242438]  load_module+0x2200/0x27c0
-[    8.242442]  __do_sys_finit_module+0xa8/0x11c
-[    8.242447]  __arm64_sys_finit_module+0x20/0x30
-[    8.242457]  el0_svc_common.constprop.0+0x64/0x154
-[    8.242464]  do_el0_svc+0x24/0x8c
-[    8.242474]  el0_svc+0x10/0x20
-[    8.242481]  el0_sync_handler+0x108/0x114
-[    8.242485]  el0_sync+0x180/0x1c0
-[    8.243847] sbs-charger 20-0009: Failed to register power supply
-[    8.287934] sbs-charger: probe of 20-0009 failed with error -17
-
-This is mainly because the "name" field of power_supply_desc is a constant.
-This patch fixes the issue by reusing the same approach as sbs-battery.
-With this patch, the result is:
-[    7.819532] sbs-charger 18-0009: ltc4100: smart charger device registered
-[    7.825305] sbs-battery 18-000b: sbs-battery: battery gas gauge device registered
-[    7.887423] sbs-battery 20-000b: sbs-battery: battery gas gauge device registered
-[    7.893501] sbs-charger 20-0009: ltc4100: smart charger device registered
-
-Signed-off-by: Fabien Proriol <fabien.proriol@viavisolutions.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/sbs-charger.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/soc/tegra/fuse/fuse-tegra30.c | 122 ++++++++++++++++++++++++++
+ 1 file changed, 122 insertions(+)
 
-diff --git a/drivers/power/supply/sbs-charger.c b/drivers/power/supply/sbs-charger.c
-index bc927c0ddd343..7dfed22fbce3b 100644
---- a/drivers/power/supply/sbs-charger.c
-+++ b/drivers/power/supply/sbs-charger.c
-@@ -154,8 +154,7 @@ static const struct regmap_config sbs_regmap = {
- 	.val_format_endian = REGMAP_ENDIAN_LITTLE, /* since based on SMBus */
+diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
+index b071d433d74f8..bfc8d39ae9efd 100644
+--- a/drivers/soc/tegra/fuse/fuse-tegra30.c
++++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
+@@ -117,6 +117,124 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
+ #endif
+ 
+ #ifdef CONFIG_ARCH_TEGRA_114_SOC
++static const struct nvmem_cell_info tegra114_fuse_cells[] = {
++	{
++		.name = "tsensor-cpu1",
++		.offset = 0x084,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu2",
++		.offset = 0x088,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-common",
++		.offset = 0x08c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu0",
++		.offset = 0x098,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "xusb-pad-calibration",
++		.offset = 0x0f0,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-cpu3",
++		.offset = 0x12c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-gpu",
++		.offset = 0x154,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-mem0",
++		.offset = 0x158,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-mem1",
++		.offset = 0x15c,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	}, {
++		.name = "tsensor-pllx",
++		.offset = 0x160,
++		.bytes = 4,
++		.bit_offset = 0,
++		.nbits = 32,
++	},
++};
++
++static const struct nvmem_cell_lookup tegra114_fuse_lookups[] = {
++	{
++		.nvmem_name = "fuse",
++		.cell_name = "xusb-pad-calibration",
++		.dev_id = "7009f000.padctl",
++		.con_id = "calibration",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-common",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "common",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu0",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu0",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu1",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu1",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu2",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu2",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-cpu3",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "cpu3",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-mem0",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "mem0",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-mem1",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "mem1",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-gpu",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "gpu",
++	}, {
++		.nvmem_name = "fuse",
++		.cell_name = "tsensor-pllx",
++		.dev_id = "700e2000.thermal-sensor",
++		.con_id = "pllx",
++	},
++};
++
+ static const struct tegra_fuse_info tegra114_fuse_info = {
+ 	.read = tegra30_fuse_read,
+ 	.size = 0x2a0,
+@@ -127,6 +245,10 @@ const struct tegra_fuse_soc tegra114_fuse_soc = {
+ 	.init = tegra30_fuse_init,
+ 	.speedo_init = tegra114_init_speedo_data,
+ 	.info = &tegra114_fuse_info,
++	.lookups = tegra114_fuse_lookups,
++	.num_lookups = ARRAY_SIZE(tegra114_fuse_lookups),
++	.cells = tegra114_fuse_cells,
++	.num_cells = ARRAY_SIZE(tegra114_fuse_cells),
+ 	.soc_attr_group = &tegra_soc_attr_group,
+ 	.clk_suspend_on = false,
  };
- 
--static const struct power_supply_desc sbs_desc = {
--	.name = "sbs-charger",
-+static const struct power_supply_desc sbs_default_desc = {
- 	.type = POWER_SUPPLY_TYPE_MAINS,
- 	.properties = sbs_properties,
- 	.num_properties = ARRAY_SIZE(sbs_properties),
-@@ -166,9 +165,20 @@ static int sbs_probe(struct i2c_client *client,
- 		     const struct i2c_device_id *id)
- {
- 	struct power_supply_config psy_cfg = {};
-+	struct power_supply_desc *sbs_desc;
- 	struct sbs_info *chip;
- 	int ret, val;
- 
-+	sbs_desc = devm_kmemdup(&client->dev, &sbs_default_desc,
-+				sizeof(*sbs_desc), GFP_KERNEL);
-+	if (!sbs_desc)
-+		return -ENOMEM;
-+
-+	sbs_desc->name = devm_kasprintf(&client->dev, GFP_KERNEL, "sbs-%s",
-+					dev_name(&client->dev));
-+	if (!sbs_desc->name)
-+		return -ENOMEM;
-+
- 	chip = devm_kzalloc(&client->dev, sizeof(struct sbs_info), GFP_KERNEL);
- 	if (!chip)
- 		return -ENOMEM;
-@@ -192,7 +202,7 @@ static int sbs_probe(struct i2c_client *client,
- 		return dev_err_probe(&client->dev, ret, "Failed to get device status\n");
- 	chip->last_state = val;
- 
--	chip->power_supply = devm_power_supply_register(&client->dev, &sbs_desc, &psy_cfg);
-+	chip->power_supply = devm_power_supply_register(&client->dev, sbs_desc, &psy_cfg);
- 	if (IS_ERR(chip->power_supply))
- 		return dev_err_probe(&client->dev, PTR_ERR(chip->power_supply),
- 				     "Failed to register power supply\n");
 -- 
 2.51.0
 
