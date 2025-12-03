@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0B7363C79;
-	Wed,  3 Dec 2025 16:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBBA3644A6;
+	Wed,  3 Dec 2025 16:30:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779421; cv=none; b=C3/SbF1ZQKuwicBAEOh/2SENmKLe+jGN8qbILvpdoxWfI/dGUlrJQZmrwalOni78UjdVpULJrvgHxglZgcQWQcfZX74I6BTAMVmF0F1R6alwbnBxeFqeNfflfRAikfLOCT1napzeJftkyMQt6JwcDik2/lffDpzs4IIfOBPS9g8=
+	t=1764779424; cv=none; b=rblM5A9398BTbYACDVER25+6bG3err2w60FT4DpNo1Hidz0EsAvVuK9EG02zFHdxsGEXVGlwXkPBO0BBRx9OyPf6i+41dNeOzrd/kcDV4rBO3f37DLXyaheL5ASK72BbzNSY1mg5YXMWmT23HCUd73J4I2QSuSSYUni8sq6BRBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779421; c=relaxed/simple;
-	bh=ozepmgtiaQ4KopdBsm2lwGpU5t0lUjsJm13IYNPDuL4=;
+	s=arc-20240116; t=1764779424; c=relaxed/simple;
+	bh=s25iSyiWqe+08Zq7pu3lfwpf9epe4omVFDKkRIYbK0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTPSouPlEpc2qWmBD+Z9AwxqJM1N6sDXL6KBh1K9C7fW1b0p9bitBN6QX4NdciMdl3uBqwv4AtdnmPI8J7eyUJ7NrCE73WCV+NBGxv7BXLtjBW0jsF5+dD07V5yDOTak7asstcInNuKEEymnC23PQw5AnmCZp4WyVBOKb/Um3Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niLAlkyB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NmzEcCg8STOmDWFJHA3jBGMY4Z21l5SNiHfPpw5wJpILntJTH+/eF59vX8wp8eshDLj0WJ5nV9KNYASRitvS98ko7OrWPaEbHpYQcQwPmLfJ/m+kBkTlEcUBpYfKsDXmrqlzr3u2/XcYJeoLbneRwZVdABZ/MZBXajNZcZRuTbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PL1I8qYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niLAlkyB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3347C4CEF5;
-	Wed,  3 Dec 2025 16:30:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PL1I8qYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178A4C4CEF5;
+	Wed,  3 Dec 2025 16:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779421;
-	bh=ozepmgtiaQ4KopdBsm2lwGpU5t0lUjsJm13IYNPDuL4=;
+	s=korg; t=1764779424;
+	bh=s25iSyiWqe+08Zq7pu3lfwpf9epe4omVFDKkRIYbK0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=niLAlkyBbCfwQNNe5hh2EitKONsdJRt2X77h9bvfC+lhrvcLTsmYdKYFlxNqUCihc
-	 5EstqJYJIgT7gjA0mOkkYSuNeF70VvloGTNP0lA/wRS6noLijA4MgWWz+lrG7yQE40
-	 5VbK5DPboGdOht+tLBiVG6+ioFigPNJtc5noo0tA=
+	b=PL1I8qYdYohcxgPvnfOQazFkKeEfDhOmZYZeSty7XFHUE7LkhjvlwYowEBFuPjTN4
+	 TXoidMr6i3QwyFmus1XWbRyJYK9rl4rm9yY5K+KmtN5l5lyG+aLeh40+x+jI+jR1U1
+	 e3SXMCQT4RYzFjDpkc8nlffzxodVcmK3ri/sTAeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
-	Brahmajit Das <listout@listout.xyz>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Anthony Iliopoulos <ailiop@suse.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 245/568] net: intel: fm10k: Fix parameter idx set but not used
-Date: Wed,  3 Dec 2025 16:24:07 +0100
-Message-ID: <20251203152449.692663073@linuxfoundation.org>
+Subject: [PATCH 6.1 254/568] NFSv4.1: fix mount hang after CREATE_SESSION failure
+Date: Wed,  3 Dec 2025 16:24:16 +0100
+Message-ID: <20251203152450.023765828@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,90 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brahmajit Das <listout@listout.xyz>
+From: Anthony Iliopoulos <ailiop@suse.com>
 
-[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
+[ Upstream commit bf75ad096820fee5da40e671ebb32de725a1c417 ]
 
-Variable idx is set in the loop, but is never used resulting in dead
-code. Building with GCC 16, which enables
--Werror=unused-but-set-parameter= by default results in build error.
-This patch removes the idx parameter, since all the callers of the
-fm10k_unbind_hw_stats_q as 0 as idx anyways.
+When client initialization goes through server trunking discovery, it
+schedules the state manager and then sleeps waiting for nfs_client
+initialization completion.
 
-Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
-Signed-off-by: Brahmajit Das <listout@listout.xyz>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+The state manager can fail during state recovery, and specifically in
+lease establishment as nfs41_init_clientid() will bail out in case of
+errors returned from nfs4_proc_create_session(), without ever marking
+the client ready. The session creation can fail for a variety of reasons
+e.g. during backchannel parameter negotiation, with status -EINVAL.
+
+The error status will propagate all the way to the nfs4_state_manager
+but the client status will not be marked, and thus the mount process
+will remain blocked waiting.
+
+Fix it by adding -EINVAL error handling to nfs4_state_manager().
+
+Signed-off-by: Anthony Iliopoulos <ailiop@suse.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
- drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
- drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
- drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
- 4 files changed, 5 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4state.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-index f51a63fca513e..1f919a50c7653 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
-@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
- /**
-  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
-  *  @q: pointer to the ring of hardware statistics queue
-- *  @idx: index pointing to the start of the ring iteration
-  *  @count: number of queues to iterate over
-  *
-  *  Function invalidates the index values for the queues so any updates that
-  *  may have happened are ignored and the base for the queue stats is reset.
-  **/
--void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
-+void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
- {
- 	u32 i;
- 
--	for (i = 0; i < count; i++, idx++, q++) {
-+	for (i = 0; i < count; i++, q++) {
- 		q->rx_stats_idx = 0;
- 		q->tx_stats_idx = 0;
- 	}
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-index 4c48fb73b3e78..13fca6a91a01b 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
-@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
- void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
- 			     u32 idx, u32 count);
- #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
--void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
-+void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
- s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
- #endif /* _FM10K_COMMON_H_ */
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-index af1b0cde36703..8fb99fa7ae600 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
-@@ -1509,7 +1509,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
- 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
- 
- 	/* Unbind Queue Statistics */
--	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
-+	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
- 
- 	/* Reinitialize bases for all stats */
- 	fm10k_update_hw_stats_pf(hw, stats);
-diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-index dc8ccd378ec92..6a3aebd56e6c4 100644
---- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-+++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
-@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
- 				     struct fm10k_hw_stats *stats)
- {
- 	/* Unbind Queue Statistics */
--	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
-+	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
- 
- 	/* Reinitialize bases for all stats */
- 	fm10k_update_hw_stats_vf(hw, stats);
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 80a7c5bd7a476..c30c6dbbf9254 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -2742,6 +2742,9 @@ static void nfs4_state_manager(struct nfs_client *clp)
+ 	case -ENETUNREACH:
+ 		nfs_mark_client_ready(clp, -EIO);
+ 		break;
++	case -EINVAL:
++		nfs_mark_client_ready(clp, status);
++		break;
+ 	default:
+ 		ssleep(1);
+ 		break;
 -- 
 2.51.0
 
