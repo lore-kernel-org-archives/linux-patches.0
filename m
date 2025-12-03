@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8537934888F;
-	Wed,  3 Dec 2025 16:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DAE348886;
+	Wed,  3 Dec 2025 16:18:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778725; cv=none; b=G5dvOY0srusx1JbanGVMnQyrzjUXSrkywaRJH3bMXete3PXNk+K/1l4N0q/8cfDcIb3iSmShJm4RO448XFr+3PCiEdj9U3mV4eymIrevH9pPw6lO1txFkWvDFPTSyPJxNyPOiOzbrs4AIL/x+86xyC20VjkfOiqjgGfibjSSn4o=
+	t=1764778728; cv=none; b=UyVa0VCr+NiM3GaCMyxNWXI5BFy+SF5y3j4CzQnIqG0PESGh24LmJbqdlTsrN/gOmVsWGFdyEcXJajmHl5dTp1cWN3dotrSLmgpPPj8Elw4OnmRP7T9I56tv+7Rw1+/y6gUpitITJKA0Bj4Gy4SNcTs5ADaHcNdvqDuau6ysnGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778725; c=relaxed/simple;
-	bh=BAuHPzXYPH5+rp7PNJWiV4dUpmQcnZ03S2kghAxng6o=;
+	s=arc-20240116; t=1764778728; c=relaxed/simple;
+	bh=IpUyAK9Ul1KcsG7cdxT9cXHvsl8+X7v2SghFFXWXSBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iakVQNuTLF7H76ySb0pq8BUrD8fIQhcIpDqP4ScN8QLXriH/79SXjl1U/6/So2ohflg9T2Bs5OJevOC1QnRhorapmvipAAyjsoentGo474ZqyNJZZx5TG1R0juuHKRlYL+OS1pmiMFU4LbFHHLvkcVv9ca4f7xzev4HUdStSuUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JXOS3gHO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7JjCIjIu01BKmo5YqF3Zovypm3gBr0pZEUmcipzvvwBckTSS7H4lT5eG/1Zf9ZZ4xXcuBAEYND5xzlt7agm3TzUUk/Db7yrG+pKc1cEGuFWCvJUYQv+SLeQIQBtuy1p+ssSSVAZxvh8eeMaodauLEmdg+YUhcXKNJZItUy+K00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sOFn/5yI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JXOS3gHO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 849DAC4CEF5;
-	Wed,  3 Dec 2025 16:18:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sOFn/5yI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F28C4CEF5;
+	Wed,  3 Dec 2025 16:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778725;
-	bh=BAuHPzXYPH5+rp7PNJWiV4dUpmQcnZ03S2kghAxng6o=;
+	s=korg; t=1764778728;
+	bh=IpUyAK9Ul1KcsG7cdxT9cXHvsl8+X7v2SghFFXWXSBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXOS3gHOz+5UO2NivsohAGr6WIxolqElCbQQwSMki7II1xVvI1deVmto5lf+FhAIR
-	 zHhLFNGG9o/Spz8is3V7hif9e/BvwQWDP+3kAQGxkz7abrGWJLFA/8OHKBSH7mqi8J
-	 OhialtygmG7UGA7PsYClWeOZse1ja/LUkUVFo0n8=
+	b=sOFn/5yIuva5U49MgxZkvafq7AJRG5cwvkozEGMdt0DEAdyUX3aYp063dCG2fUjL5
+	 K+WHADuyQXs8eTC1qg0pQjcdffrkDwOD3QWraQIeEp1j8VILxD79S2iea/x4qjmpOc
+	 B4q5y+A597eYHpnDQ00mY25bPgq855DiqME/B8bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/568] bpf: Do not audit capability check in do_jit()
-Date: Wed,  3 Dec 2025 16:20:43 +0100
-Message-ID: <20251203152442.195622641@linuxfoundation.org>
+Subject: [PATCH 6.1 042/568] ASoC: Intel: avs: Unprepare a stream when XRUN occurs
+Date: Wed,  3 Dec 2025 16:20:44 +0100
+Message-ID: <20251203152442.233806257@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,48 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 881a9c9cb7856b24e390fad9f59acfd73b98b3b2 ]
+[ Upstream commit cfca1637bc2b6b1e4f191d2f0b25f12402fbbb26 ]
 
-The failure of this check only results in a security mitigation being
-applied, slightly affecting performance of the compiled BPF program. It
-doesn't result in a failed syscall, an thus auditing a failed LSM
-permission check for it is unwanted. For example with SELinux, it causes
-a denial to be reported for confined processes running as root, which
-tends to be flagged as a problem to be fixed in the policy. Yet
-dontauditing or allowing CAP_SYS_ADMIN to the domain may not be
-desirable, as it would allow/silence also other checks - either going
-against the principle of least privilege or making debugging potentially
-harder.
+The pcm->prepare() function may be called multiple times in a row by the
+userspace, as mentioned in the documentation. The driver shall take that
+into account and prevent redundancy. However, the exact same function is
+called during XRUNs and in such case, the particular stream shall be
+reset and setup anew.
 
-Fix it by changing it from capable() to ns_capable_noaudit(), which
-instructs the LSMs to not audit the resulting denials.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2369326
-Fixes: d4e89d212d40 ("x86/bpf: Call branch history clearing sequence on exit")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Reviewed-by: Paul Moore <paul@paul-moore.com>
-Link: https://lore.kernel.org/r/20251021122758.2659513-1-omosnace@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 9114700b496c ("ASoC: Intel: avs: Generic PCM FE operations")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://patch.msgid.link/20251023092348.3119313-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/net/bpf_jit_comp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/avs/pcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index f3068bb53c4db..095fec941bb73 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -1809,7 +1809,7 @@ st:			if (is_imm8(insn->off))
- 			ctx->cleanup_addr = proglen;
+diff --git a/sound/soc/intel/avs/pcm.c b/sound/soc/intel/avs/pcm.c
+index 07428b5755b8a..9d3c0ea99a298 100644
+--- a/sound/soc/intel/avs/pcm.c
++++ b/sound/soc/intel/avs/pcm.c
+@@ -556,6 +556,8 @@ static int avs_dai_fe_prepare(struct snd_pcm_substream *substream, struct snd_so
+ 	data = snd_soc_dai_get_dma_data(dai, substream);
+ 	host_stream = data->host_stream;
  
- 			if (bpf_prog_was_classic(bpf_prog) &&
--			    !capable(CAP_SYS_ADMIN)) {
-+			    !ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN)) {
- 				u8 *ip = image + addrs[i - 1];
++	if (runtime->state == SNDRV_PCM_STATE_XRUN)
++		hdac_stream(host_stream)->prepared = false;
+ 	if (hdac_stream(host_stream)->prepared)
+ 		return 0;
  
- 				if (emit_spectre_bhb_barrier(&prog, ip, bpf_prog))
 -- 
 2.51.0
 
