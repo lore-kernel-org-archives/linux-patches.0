@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E94F35B139;
-	Wed,  3 Dec 2025 16:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2276B35B148;
+	Wed,  3 Dec 2025 16:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778927; cv=none; b=J6RS9MdvpToTkWjpHGzUudFLKhFp/S7HzR+VxHBTgwB15vlfZ3nBczzqCPg/r5NhKEbe7n0JvchejRco/tjx9Vy0RLwBXOLojAEx6c4Se6xCDI75AkkFRe/d4oCqrQS2vO0qX2KarxcRM8yQEln2hSIxMV6hTlV7qv/zEqdCmmM=
+	t=1764778930; cv=none; b=o0Tlj0WRu8/DQtTXkpGTand8X6mHhd0kQVTaX+wQx6qwC/bUL08PJFi5XBKyxcAdNGywc5v7KWr2In6l6wf8gKrJL8ooO1zqXPm86EkLAmmMcMCNN0YxwQVgSBbgD9zTK+Tr51vENVMad2LT7SFjvKD6+2hyJy/GQzoBiwcOB8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778927; c=relaxed/simple;
-	bh=GAZr4lAcbAIBYi2uRVzjfIsC+cIDljPZ2PbV3LTdWYA=;
+	s=arc-20240116; t=1764778930; c=relaxed/simple;
+	bh=FGfrvbshCidwMCeZOUHk3n1qUbrMbS/pOa9y+V9/x78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tjM68i8W3Ow8K1DVSst90BUVNVwsHv3mawuFj8PCyTwhfxShNDzXAXdtf71+U3WKzCgOsZ2H+MdVL7Fko9lkCW/NpWRhB70UQ1eOOS+cAg+aUVIPXAAOVEcf3m//4BNiUU1oHwF3Zc0oMono/UTFDpNDifnjrIhB7JQB8XX0E0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBKgdg6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GBKrp6jBPn/3mZY8motskWfSLrthkMgHdPzwsjwJAVNXrLPdRRCm0X6CmCVUS+4Y5P9MDcIxrl8SETIWLOECug/KrqM+4IdAwiQlBVA72FVEAsFhtEbAxeUf+uqvrNWKEskUGzy9NImoEtEd1gPpv8skskUeFuCXMdgD084SWbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+3MpbMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBKgdg6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD1ECC4CEF5;
-	Wed,  3 Dec 2025 16:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+3MpbMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A19DC4CEF5;
+	Wed,  3 Dec 2025 16:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778927;
-	bh=GAZr4lAcbAIBYi2uRVzjfIsC+cIDljPZ2PbV3LTdWYA=;
+	s=korg; t=1764778930;
+	bh=FGfrvbshCidwMCeZOUHk3n1qUbrMbS/pOa9y+V9/x78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yBKgdg6S2oWWjpYPjlBrPhsGfLhA4cPAoQsAMVgLNFVvTr17qGQ8ylrtjpAM/A0rR
-	 /Wk3N2mOh9K6+Oe0kaULmGa3WTwidUXU3zvig4HRLN6qYmgGdNW+KOwVkRdG2wORSL
-	 dK1LV0d5NdIYd9+miOqiT91KrZwLfud9J/GUmkQc=
+	b=s+3MpbMC1Y6dKvnhj38BKNtblhiimeCoZjNNys/8JzHhCLZA5c+oLt+VAK9xVJmP8
+	 ucGM6IzOcPtw9AAr9KNVxHQQ9yf6MwHdY1sWgWV4+Zwct5LzQamdcPaMPGwBdQzD+C
+	 L7OF275t76SZ9+O1uZHMQdI7GIL+UjJ0ereaO6s0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	Pierre Gondois <pierre.gondois@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Wen Yang <wen.yang@linux.dev>
-Subject: [PATCH 6.1 070/568] arch_topology: Build cacheinfo from primary CPU
-Date: Wed,  3 Dec 2025 16:21:12 +0100
-Message-ID: <20251203152443.272193166@linuxfoundation.org>
+Subject: [PATCH 6.1 071/568] cacheinfo: Initialize variables in fetch_cache_info()
+Date: Wed,  3 Dec 2025 16:21:13 +0100
+Message-ID: <20251203152443.309201219@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,239 +55,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit 5944ce092b97caed5d86d961e963b883b5c44ee2 ]
+[ Upstream commit ecaef469920fd6d2c7687f19081946f47684a423 ]
 
-commit 3fcbf1c77d08 ("arch_topology: Fix cache attributes detection
-in the CPU hotplug path")
-adds a call to detect_cache_attributes() to populate the cacheinfo
-before updating the siblings mask. detect_cache_attributes() allocates
-memory and can take the PPTT mutex (on ACPI platforms). On PREEMPT_RT
-kernels, on secondary CPUs, this triggers a:
-  'BUG: sleeping function called from invalid context' [1]
-as the code is executed with preemption and interrupts disabled.
+Set potentially uninitialized variables to 0. This is particularly
+relevant when CONFIG_ACPI_PPTT is not set.
 
-The primary CPU was previously storing the cache information using
-the now removed (struct cpu_topology).llc_id:
-commit 5b8dc787ce4a ("arch_topology: Drop LLC identifier stash from
-the CPU topology")
-
-allocate_cache_info() tries to build the cacheinfo from the primary
-CPU prior secondary CPUs boot, if the DT/ACPI description
-contains cache information.
-If allocate_cache_info() fails, then fallback to the current state
-for the cacheinfo allocation. [1] will be triggered in such case.
-
-When unplugging a CPU, the cacheinfo memory cannot be freed. If it
-was, then the memory would be allocated early by the re-plugged
-CPU and would trigger [1].
-
-Note that populate_cache_leaves() might be called multiple times
-due to populate_leaves being moved up. This is required since
-detect_cache_attributes() might be called with per_cpu_cacheinfo(cpu)
-being allocated but not populated.
-
-[1]:
- | BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
- | in_atomic(): 1, irqs_disabled(): 128, non_block: 0, pid: 0, name: swapper/111
- | preempt_count: 1, expected: 0
- | RCU nest depth: 1, expected: 1
- | 3 locks held by swapper/111/0:
- |  #0:  (&pcp->lock){+.+.}-{3:3}, at: get_page_from_freelist+0x218/0x12c8
- |  #1:  (rcu_read_lock){....}-{1:3}, at: rt_spin_trylock+0x48/0xf0
- |  #2:  (&zone->lock){+.+.}-{3:3}, at: rmqueue_bulk+0x64/0xa80
- | irq event stamp: 0
- | hardirqs last  enabled at (0):  0x0
- | hardirqs last disabled at (0):  copy_process+0x5dc/0x1ab8
- | softirqs last  enabled at (0):  copy_process+0x5dc/0x1ab8
- | softirqs last disabled at (0):  0x0
- | Preemption disabled at:
- |  migrate_enable+0x30/0x130
- | CPU: 111 PID: 0 Comm: swapper/111 Tainted: G        W          6.0.0-rc4-rt6-[...]
- | Call trace:
- |  __kmalloc+0xbc/0x1e8
- |  detect_cache_attributes+0x2d4/0x5f0
- |  update_siblings_masks+0x30/0x368
- |  store_cpu_topology+0x78/0xb8
- |  secondary_start_kernel+0xd0/0x198
- |  __secondary_switched+0xb0/0xb4
-
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202301052307.JYt1GWaJ-lkp@intel.com/
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/all/Y86iruJPuwNN7rZw@kili/
+Fixes: 5944ce092b97 ("arch_topology: Build cacheinfo from primary CPU")
 Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20230104183033.755668-7-pierre.gondois@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230124154053.355376-2-pierre.gondois@arm.com
 Signed-off-by: Wen Yang <wen.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cacheinfo.c |    5 --
- drivers/base/arch_topology.c  |   12 +++++--
- drivers/base/cacheinfo.c      |   71 +++++++++++++++++++++++++++++++-----------
- include/linux/cacheinfo.h     |    1 
- 4 files changed, 65 insertions(+), 24 deletions(-)
+ drivers/base/cacheinfo.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/cacheinfo.c
-+++ b/arch/riscv/kernel/cacheinfo.c
-@@ -113,11 +113,6 @@ static void fill_cacheinfo(struct cachei
- 	}
- }
- 
--int init_cache_level(unsigned int cpu)
--{
--	return init_of_cache_level(cpu);
--}
--
- int populate_cache_leaves(unsigned int cpu)
- {
- 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
---- a/drivers/base/arch_topology.c
-+++ b/drivers/base/arch_topology.c
-@@ -736,7 +736,7 @@ void update_siblings_masks(unsigned int
- 
- 	ret = detect_cache_attributes(cpuid);
- 	if (ret && ret != -ENOENT)
--		pr_info("Early cacheinfo failed, ret = %d\n", ret);
-+		pr_info("Early cacheinfo allocation failed, ret = %d\n", ret);
- 
- 	/* update core and thread sibling masks */
- 	for_each_online_cpu(cpu) {
-@@ -825,7 +825,7 @@ __weak int __init parse_acpi_topology(vo
- #if defined(CONFIG_ARM64) || defined(CONFIG_RISCV)
- void __init init_cpu_topology(void)
- {
--	int ret;
-+	int cpu, ret;
- 
- 	reset_cpu_topology();
- 	ret = parse_acpi_topology();
-@@ -840,6 +840,14 @@ void __init init_cpu_topology(void)
- 		reset_cpu_topology();
- 		return;
- 	}
-+
-+	for_each_possible_cpu(cpu) {
-+		ret = fetch_cache_info(cpu);
-+		if (ret) {
-+			pr_err("Early cacheinfo failed, ret = %d\n", ret);
-+			break;
-+		}
-+	}
- }
- 
- void store_cpu_topology(unsigned int cpuid)
 --- a/drivers/base/cacheinfo.c
 +++ b/drivers/base/cacheinfo.c
-@@ -412,10 +412,6 @@ static void free_cache_attributes(unsign
- 		return;
- 
- 	cache_shared_cpu_map_remove(cpu);
--
--	kfree(per_cpu_cacheinfo(cpu));
--	per_cpu_cacheinfo(cpu) = NULL;
--	cache_leaves(cpu) = 0;
- }
- 
- int __weak init_cache_level(unsigned int cpu)
-@@ -428,29 +424,71 @@ int __weak populate_cache_leaves(unsigne
- 	return -ENOENT;
- }
- 
-+static inline
-+int allocate_cache_info(int cpu)
-+{
-+	per_cpu_cacheinfo(cpu) = kcalloc(cache_leaves(cpu),
-+					 sizeof(struct cacheinfo), GFP_ATOMIC);
-+	if (!per_cpu_cacheinfo(cpu)) {
-+		cache_leaves(cpu) = 0;
-+		return -ENOMEM;
-+	}
-+
-+	return 0;
-+}
-+
-+int fetch_cache_info(unsigned int cpu)
-+{
-+	struct cpu_cacheinfo *this_cpu_ci;
-+	unsigned int levels, split_levels;
-+	int ret;
-+
-+	if (acpi_disabled) {
-+		ret = init_of_cache_level(cpu);
-+		if (ret < 0)
-+			return ret;
-+	} else {
-+		ret = acpi_get_cache_info(cpu, &levels, &split_levels);
-+		if (ret < 0)
-+			return ret;
-+
-+		this_cpu_ci = get_cpu_cacheinfo(cpu);
-+		this_cpu_ci->num_levels = levels;
-+		/*
-+		 * This assumes that:
-+		 * - there cannot be any split caches (data/instruction)
-+		 *   above a unified cache
-+		 * - data/instruction caches come by pair
-+		 */
-+		this_cpu_ci->num_leaves = levels + split_levels;
-+	}
-+	if (!cache_leaves(cpu))
-+		return -ENOENT;
-+
-+	return allocate_cache_info(cpu);
-+}
-+
- int detect_cache_attributes(unsigned int cpu)
+@@ -440,7 +440,7 @@ int allocate_cache_info(int cpu)
+ int fetch_cache_info(unsigned int cpu)
  {
+ 	struct cpu_cacheinfo *this_cpu_ci;
+-	unsigned int levels, split_levels;
++	unsigned int levels = 0, split_levels = 0;
  	int ret;
  
--	/* Since early detection of the cacheinfo is allowed via this
--	 * function and this also gets called as CPU hotplug callbacks via
--	 * cacheinfo_cpu_online, the initialisation can be skipped and only
--	 * CPU maps can be updated as the CPU online status would be update
--	 * if called via cacheinfo_cpu_online path.
-+	/* Since early initialization/allocation of the cacheinfo is allowed
-+	 * via fetch_cache_info() and this also gets called as CPU hotplug
-+	 * callbacks via cacheinfo_cpu_online, the init/alloc can be skipped
-+	 * as it will happen only once (the cacheinfo memory is never freed).
-+	 * Just populate the cacheinfo.
- 	 */
- 	if (per_cpu_cacheinfo(cpu))
--		goto update_cpu_map;
-+		goto populate_leaves;
- 
- 	if (init_cache_level(cpu) || !cache_leaves(cpu))
- 		return -ENOENT;
- 
--	per_cpu_cacheinfo(cpu) = kcalloc(cache_leaves(cpu),
--					 sizeof(struct cacheinfo), GFP_ATOMIC);
--	if (per_cpu_cacheinfo(cpu) == NULL) {
--		cache_leaves(cpu) = 0;
--		return -ENOMEM;
--	}
-+	ret = allocate_cache_info(cpu);
-+	if (ret)
-+		return ret;
- 
-+populate_leaves:
- 	/*
- 	 * populate_cache_leaves() may completely setup the cache leaves and
- 	 * shared_cpu_map or it may leave it partially setup.
-@@ -459,7 +497,6 @@ int detect_cache_attributes(unsigned int
- 	if (ret)
- 		goto free_ci;
- 
--update_cpu_map:
- 	/*
- 	 * For systems using DT for cache hierarchy, fw_token
- 	 * and shared_cpu_map will be set up here only if they are
---- a/include/linux/cacheinfo.h
-+++ b/include/linux/cacheinfo.h
-@@ -85,6 +85,7 @@ int populate_cache_leaves(unsigned int c
- int cache_setup_acpi(unsigned int cpu);
- bool last_level_cache_is_valid(unsigned int cpu);
- bool last_level_cache_is_shared(unsigned int cpu_x, unsigned int cpu_y);
-+int fetch_cache_info(unsigned int cpu);
- int detect_cache_attributes(unsigned int cpu);
- #ifndef CONFIG_ACPI_PPTT
- /*
+ 	if (acpi_disabled) {
 
 
