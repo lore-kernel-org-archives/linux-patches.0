@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54632D420;
-	Wed,  3 Dec 2025 16:49:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96582FD1D7;
+	Wed,  3 Dec 2025 16:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780547; cv=none; b=eCmTZIQGM7EK0xku/cc6ZLnFZlUz4YsX1dhLLEEez6D7ljqKZ6HPg36ecz8+jDADxLm6jWg7dNFGEDqk7ivXZNEyK2cuSJHC2xuC9LunVdfroS2yQswsGOSsB+F8RlScEKFJZiA3E6R9aL6nHkFqsIjwd1F33uADBkkZioi/UKI=
+	t=1764780550; cv=none; b=ILKiGaa79KMpLhmRT0qLxkk0zWFiON+C5kyL1da/E5Vx6tXY09ZxNX0MPgIRfWUQ92dL9OljKn+8CEX2uyVCGywLHc4KQzFg+n3OtlO38Izun7/QUZTqi9Gih+ovi59b9bHba7JABkoRCwnD1wIH8rWXkczUBx5pO5xiwiZ8rAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780547; c=relaxed/simple;
-	bh=HVEZthPdF2VAEyxkRh5P01znPddS8WWQ1ivb1YQCRWQ=;
+	s=arc-20240116; t=1764780550; c=relaxed/simple;
+	bh=7I94jGwYRrjsfJG9jt1Qfvq3q96OoNgZ8xGN7asFYLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uX2+V8mLwa+j0PuMlmJZHvABtw4PqinlKKrlGSUuzdSqoyUjdzR90QUwhP2Wyqs00pSdPt+9bJROEd/2HcSFgo9CP7Ixrjob8YROTBBV/5ti6xGN9sVP/SsWvFhg+HGfqoDwDgQ+AtfkQi84oF73fO17TTNVblSTUrAyi+2C6pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRH7vK0a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2wnPdxhvJKauwxTsPniBLfxUy9NYJVEQ3UT2laH5R7BkpLTQTNIFTM8ukH5pmbFKBLRxB8kqzQNZVLYHkcv7CzwWBTE9oPpxxQg06g62UUjG6nhKNZzDBua+bvRo4XkJKsPsHG3YNUaSi/h+dAJfQSl95bCwEZTcjsAfuo/tl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=khlv9s9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRH7vK0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DABC4CEF5;
-	Wed,  3 Dec 2025 16:49:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="khlv9s9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25833C4CEF5;
+	Wed,  3 Dec 2025 16:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780543;
-	bh=HVEZthPdF2VAEyxkRh5P01znPddS8WWQ1ivb1YQCRWQ=;
+	s=korg; t=1764780550;
+	bh=7I94jGwYRrjsfJG9jt1Qfvq3q96OoNgZ8xGN7asFYLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRH7vK0aJuCM0pariVy1wzke8TMgeWZjP2fCakLAoI4eE6tZDrhZHKXDKZ6laZ7En
-	 nSxYP+lnGp2UpAxdVA0jEgjGVHPVYJ4smLXnm/pcBQB2VDPeQbvZ9zQIo2W8pcNMZz
-	 cvDiRGcJO81zo6qqtxN1MODRT84bi6qPZ0fS5fsE=
+	b=khlv9s9JHAQ3UXVWdpOFG6tD3DlwKTOr3uxcL8+8/hhGE/f8N5cqL4+K3T1NgCoxr
+	 /4S3gUS7hWZHs8ETZCsnEw+pokgb1kivdvV0K/P4xBz0jtqMFIFoEBZlPeoY0WRyiu
+	 ERyQqkfxrRGj2+qTyVCy2A2V8045r7ZKKGdafiNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashutosh Dixit <ashutosh.dixit@intel.com>,
-	Harish Chegondi <harish.chegondi@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 018/132] drm/xe: Fix conversion from clock ticks to milliseconds
-Date: Wed,  3 Dec 2025 16:28:17 +0100
-Message-ID: <20251203152343.972130155@linuxfoundation.org>
+Subject: [PATCH 6.12 002/132] can: gs_usb: gs_usb_xmit_callback(): fix handling of failed transmitted URBs
+Date: Wed,  3 Dec 2025 16:28:01 +0100
+Message-ID: <20251203152343.381338558@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -53,52 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harish Chegondi <harish.chegondi@intel.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 7276878b069c57d9a9cca5db01d2f7a427b73456 ]
+[ Upstream commit 516a0cd1c03fa266bb67dd87940a209fd4e53ce7 ]
 
-When tick counts are large and multiplication by MSEC_PER_SEC is larger
-than 64 bits, the conversion from clock ticks to milliseconds can go bad.
+The driver lacks the cleanup of failed transfers of URBs. This reduces the
+number of available URBs per error by 1. This leads to reduced performance
+and ultimately to a complete stop of the transmission.
 
-Use mul_u64_u32_div() instead.
+If the sending of a bulk URB fails do proper cleanup:
+- increase netdev stats
+- mark the echo_sbk as free
+- free the driver's context and do accounting
+- wake the send queue
 
-Cc: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Signed-off-by: Harish Chegondi <harish.chegondi@intel.com>
-Suggested-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Fixes: 49cc215aad7f ("drm/xe: Add xe_gt_clock_interval_to_ms helper")
-Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
-Link: https://patch.msgid.link/1562f1b62d5be3fbaee100f09107f3cc49e40dd1.1763408584.git.harish.chegondi@intel.com
-(cherry picked from commit 96b93ac214f9dd66294d975d86c5dee256faef91)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Closes: https://github.com/candle-usb/candleLight_fw/issues/187
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-1-a29b42eacada@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_gt_clock.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ drivers/net/can/usb/gs_usb.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_gt_clock.c b/drivers/gpu/drm/xe/xe_gt_clock.c
-index 86c2d62b4bdc3..fa66295695c01 100644
---- a/drivers/gpu/drm/xe/xe_gt_clock.c
-+++ b/drivers/gpu/drm/xe/xe_gt_clock.c
-@@ -82,11 +82,6 @@ int xe_gt_clock_init(struct xe_gt *gt)
- 	return 0;
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index fb904dc28b8ee..fd34945d831e9 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -747,8 +747,21 @@ static void gs_usb_xmit_callback(struct urb *urb)
+ 	struct gs_can *dev = txc->dev;
+ 	struct net_device *netdev = dev->netdev;
+ 
+-	if (urb->status)
+-		netdev_info(netdev, "usb xmit fail %u\n", txc->echo_id);
++	if (!urb->status)
++		return;
++
++	if (urb->status != -ESHUTDOWN && net_ratelimit())
++		netdev_info(netdev, "failed to xmit URB %u: %pe\n",
++			    txc->echo_id, ERR_PTR(urb->status));
++
++	netdev->stats.tx_dropped++;
++	netdev->stats.tx_errors++;
++
++	can_free_echo_skb(netdev, txc->echo_id, NULL);
++	gs_free_tx_context(txc);
++	atomic_dec(&dev->active_tx_urbs);
++
++	netif_wake_queue(netdev);
  }
  
--static u64 div_u64_roundup(u64 n, u32 d)
--{
--	return div_u64(n + d - 1, d);
--}
--
- /**
-  * xe_gt_clock_interval_to_ms - Convert sampled GT clock ticks to msec
-  *
-@@ -97,5 +92,5 @@ static u64 div_u64_roundup(u64 n, u32 d)
-  */
- u64 xe_gt_clock_interval_to_ms(struct xe_gt *gt, u64 count)
- {
--	return div_u64_roundup(count * MSEC_PER_SEC, gt->info.reference_clock);
-+	return mul_u64_u32_div(count, MSEC_PER_SEC, gt->info.reference_clock);
- }
+ static netdev_tx_t gs_can_start_xmit(struct sk_buff *skb,
 -- 
 2.51.0
 
