@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BFE93370E1;
-	Wed,  3 Dec 2025 16:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AAF341ADD;
+	Wed,  3 Dec 2025 16:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778421; cv=none; b=Tj7fCWxiWKWT7W4hM20Nj1HA7F5vaEeqFFrbR5aSVxbroIsxqXLruDp3+R95aqspK5qwsDFtpPQeb39UlC1ll6SsbYGZYpJxfXKL6oS/iKZ31RFaOnJ7ZnDXn9MjmtFqXPEERkmhjxI66cd72SPoBTm/mIEx0Z2RyOqBxqq0WJ0=
+	t=1764778424; cv=none; b=aTDoExdR+ux7/XrX4+Ff2ePAIZFZDOMJ4CwyQ6KU3ow2CGVvZB+YU0sIsfdrKsblDTIBqC7PIci49g0gc4zRB9v0l2jfH/lACbKb5Cw2GsR0CeNxB0c/KTPjyor3xgr751rUpHDaTUfmBN7/Vk8O6kclJS4I+WpwPTwfeku7nTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778421; c=relaxed/simple;
-	bh=HDACurqQTXG6TtOBYw+9nYTujeXVqBIAfPH0WHgBGkA=;
+	s=arc-20240116; t=1764778424; c=relaxed/simple;
+	bh=EQhuFae3xRnDJ2eXzdrx4Iec5+1wgZZobsxQKrY9akE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=T02FV7lT+YZzjw8efnJfURSrWSR7sKpq1ULAwqcLs3f8J0tKmnt+t70DyATsKe5fd2vm86TtX5g5VrGRYw8ns4gXMHZCuszlkOl4qZ4S+XDfkDtBdAYQEPIzxwjwLsos/0WBH6ubU+0U6eAspjYG52P4CFJK5gdvOFRlaHPwp9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/dG6INl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nOF4mNG+y43O8nFcgyriGrpmrM2UkRecWXgj08NJ9ZPHQQ9uUmcnR7w+rlcJ/6evScs1P2ZqGhk4xfSrQbm8PYpOTcpyZyNGAKRqRIJFGcODPEH6ThkFA85f/pRjGGPF23rhqw0dc1e8/dJXIukGKjfAHF/h781Ur+YiAHBzKBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgvz8hg2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/dG6INl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69EDC4CEF5;
-	Wed,  3 Dec 2025 16:13:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgvz8hg2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31481C4CEF5;
+	Wed,  3 Dec 2025 16:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778421;
-	bh=HDACurqQTXG6TtOBYw+9nYTujeXVqBIAfPH0WHgBGkA=;
+	s=korg; t=1764778424;
+	bh=EQhuFae3xRnDJ2eXzdrx4Iec5+1wgZZobsxQKrY9akE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y/dG6INlu3OlEhBhvUBPJgfNQ/bkq8t2020qySQHi2GHMibPW+M70N7fbU5gnYC04
-	 cu3V9AtRg95+8vgQuwgW9pepAzFFv6yPKNwH4MxJ1/Xu0voERl0EdJHibVdQ4AkZuB
-	 DVrGLA4c1iIHwOLvjm39IE2SXqMRTvnVoMpenu64=
+	b=xgvz8hg2lc/tPwS3CDuwDUQXLIynDLUDJXv/+AgLTQ4LnovHecMTS3kY+tFHQPZRv
+	 aKpbdiDOo2uzn7B0n4Gvs02jSh8xb4bdBdGzsMC6dzFHfWGsA578vS5VgaGoQJLNPS
+	 Q4tajLrqSXImEfA+WgukHYHtyxu8vNmeXEpnEW3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Carol Soto <csoto@nvidia.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 339/392] platform/x86: intel: punit_ipc: fix memory corruption
-Date: Wed,  3 Dec 2025 16:28:09 +0100
-Message-ID: <20251203152426.645897748@linuxfoundation.org>
+Subject: [PATCH 5.15 340/392] net: aquantia: Add missing descriptor cache invalidation on ATL2
+Date: Wed,  3 Dec 2025 16:28:10 +0100
+Message-ID: <20251203152426.682126136@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -45,48 +47,148 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Kai-Heng Feng <kaihengf@nvidia.com>
 
-[ Upstream commit 9b9c0adbc3f8a524d291baccc9d0c04097fb4869 ]
+[ Upstream commit 7526183cfdbe352c51c285762f0e15b7c428ea06 ]
 
-This passes the address of the pointer "&punit_ipcdev" when the intent
-was to pass the pointer itself "punit_ipcdev" (without the ampersand).
-This means that the:
+ATL2 hardware was missing descriptor cache invalidation in hw_stop(),
+causing SMMU translation faults during device shutdown and module removal:
+[   70.355743] arm-smmu-v3 arm-smmu-v3.5.auto: event 0x10 received:
+[   70.361893] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0002060000000010
+[   70.367948] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000020000000000
+[   70.374002] arm-smmu-v3 arm-smmu-v3.5.auto:  0x00000000ff9bc000
+[   70.380055] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000000000000000
+[   70.386109] arm-smmu-v3 arm-smmu-v3.5.auto: event: F_TRANSLATION client: 0001:06:00.0 sid: 0x20600 ssid: 0x0 iova: 0xff9bc000 ipa: 0x0
+[   70.398531] arm-smmu-v3 arm-smmu-v3.5.auto: unpriv data write s1 "Input address caused fault" stag: 0x0
 
-	complete(&ipcdev->cmd_complete);
+Commit 7a1bb49461b1 ("net: aquantia: fix potential IOMMU fault after
+driver unbind") and commit ed4d81c4b3f2 ("net: aquantia: when cleaning
+hw cache it should be toggled") fixed cache invalidation for ATL B0, but
+ATL2 was left with only interrupt disabling. This allowed hardware to
+write to cached descriptors after DMA memory was unmapped, triggering
+SMMU faults. Once cache invalidation is applied to ATL2, the translation
+fault can't be observed anymore.
 
-in intel_punit_ioc() will write to a wrong memory address corrupting it.
+Add shared aq_hw_invalidate_descriptor_cache() helper and use it in both
+ATL B0 and ATL2 hw_stop() implementations for consistent behavior.
 
-Fixes: fdca4f16f57d ("platform:x86: add Intel P-Unit mailbox IPC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aSCmoBipSQ_tlD-D@stanley.mountain
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: e54dcf4bba3e ("net: atlantic: basic A2 init/deinit hw_ops")
+Tested-by: Carol Soto <csoto@nvidia.com>
+Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251120041537.62184-1-kaihengf@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/punit_ipc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/aquantia/atlantic/aq_hw_utils.c  | 22 +++++++++++++++++++
+ .../ethernet/aquantia/atlantic/aq_hw_utils.h  |  1 +
+ .../aquantia/atlantic/hw_atl/hw_atl_b0.c      | 19 +---------------
+ .../aquantia/atlantic/hw_atl2/hw_atl2.c       |  2 +-
+ 4 files changed, 25 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/punit_ipc.c b/drivers/platform/x86/intel/punit_ipc.c
-index 66bb39fd0ef90..8602f4175f123 100644
---- a/drivers/platform/x86/intel/punit_ipc.c
-+++ b/drivers/platform/x86/intel/punit_ipc.c
-@@ -283,7 +283,7 @@ static int intel_punit_ipc_probe(struct platform_device *pdev)
- 	} else {
- 		ret = devm_request_irq(&pdev->dev, irq, intel_punit_ioc,
- 				       IRQF_NO_SUSPEND, "intel_punit_ipc",
--				       &punit_ipcdev);
-+				       punit_ipcdev);
- 		if (ret) {
- 			dev_err(&pdev->dev, "Failed to request irq: %d\n", irq);
- 			return ret;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
+index 1921741f7311d..18b08277d2e1a 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
+@@ -15,6 +15,7 @@
+ 
+ #include "aq_hw.h"
+ #include "aq_nic.h"
++#include "hw_atl/hw_atl_llh.h"
+ 
+ void aq_hw_write_reg_bit(struct aq_hw_s *aq_hw, u32 addr, u32 msk,
+ 			 u32 shift, u32 val)
+@@ -81,6 +82,27 @@ void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value)
+ 		lo_hi_writeq(value, hw->mmio + reg);
+ }
+ 
++int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw)
++{
++	int err;
++	u32 val;
++
++	/* Invalidate Descriptor Cache to prevent writing to the cached
++	 * descriptors and to the data pointer of those descriptors
++	 */
++	hw_atl_rdm_rx_dma_desc_cache_init_tgl(hw);
++
++	err = aq_hw_err_from_flags(hw);
++	if (err)
++		goto err_exit;
++
++	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
++				  hw, val, val == 1, 1000U, 10000U);
++
++err_exit:
++	return err;
++}
++
+ int aq_hw_err_from_flags(struct aq_hw_s *hw)
+ {
+ 	int err = 0;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
+index ffa6e4067c211..d89c63d88e4a4 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
+@@ -35,6 +35,7 @@ u32 aq_hw_read_reg(struct aq_hw_s *hw, u32 reg);
+ void aq_hw_write_reg(struct aq_hw_s *hw, u32 reg, u32 value);
+ u64 aq_hw_read_reg64(struct aq_hw_s *hw, u32 reg);
+ void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value);
++int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw);
+ int aq_hw_err_from_flags(struct aq_hw_s *hw);
+ int aq_hw_num_tcs(struct aq_hw_s *hw);
+ int aq_hw_q_per_tc(struct aq_hw_s *hw);
+diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
+index 15ede7285fb5d..b50c9b6dfb5bf 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
++++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
+@@ -1198,26 +1198,9 @@ static int hw_atl_b0_hw_interrupt_moderation_set(struct aq_hw_s *self)
+ 
+ static int hw_atl_b0_hw_stop(struct aq_hw_s *self)
+ {
+-	int err;
+-	u32 val;
+-
+ 	hw_atl_b0_hw_irq_disable(self, HW_ATL_B0_INT_MASK);
+ 
+-	/* Invalidate Descriptor Cache to prevent writing to the cached
+-	 * descriptors and to the data pointer of those descriptors
+-	 */
+-	hw_atl_rdm_rx_dma_desc_cache_init_tgl(self);
+-
+-	err = aq_hw_err_from_flags(self);
+-
+-	if (err)
+-		goto err_exit;
+-
+-	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
+-				  self, val, val == 1, 1000U, 10000U);
+-
+-err_exit:
+-	return err;
++	return aq_hw_invalidate_descriptor_cache(self);
+ }
+ 
+ int hw_atl_b0_hw_ring_tx_stop(struct aq_hw_s *self, struct aq_ring_s *ring)
+diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
+index 5dfc751572edc..bc4e1b6035e08 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
++++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
+@@ -759,7 +759,7 @@ static int hw_atl2_hw_stop(struct aq_hw_s *self)
+ {
+ 	hw_atl_b0_hw_irq_disable(self, HW_ATL2_INT_MASK);
+ 
+-	return 0;
++	return aq_hw_invalidate_descriptor_cache(self);
+ }
+ 
+ static struct aq_stats_s *hw_atl2_utils_get_hw_stats(struct aq_hw_s *self)
 -- 
 2.51.0
 
