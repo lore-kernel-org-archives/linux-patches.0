@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D62E639A254;
-	Wed,  3 Dec 2025 16:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A66C39A262;
+	Wed,  3 Dec 2025 16:53:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780802; cv=none; b=Zh2YhrDsigRqwqhvEafztBkmYfn9z8HJOM+zim457qq4JiKHZi/7IbC7wyHnWOW6hsIUFqR9yo2G7zV0NaAsTCnQqB5q1XZETuGI3sbVvWT3VPEhOrFsd3yTEuLILDFSuSEOJ+9fOV3wtchr87fjCaFo7b6GLgTNpQj0O9PtJ7o=
+	t=1764780806; cv=none; b=VWJoLNsIUMzwuLVrpAPF6/j7TiqAY8Nj0L4E3T4FlDZqpl+WvEYg6x82VWWLiubl676rB4FqnZNaZuokaNKyXkjYkdwYTX2x+Vqs+sRVFFRsMSdjb3DZAeidAiRzcNtMJtSo1ePUAJOz0Essfq3QaoSB3Gd24PPRwQuQMukwODY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780802; c=relaxed/simple;
-	bh=sghb4c0fYWMWaaPnu5D2mU9gzWI7Gbx1Z3L1FgLqhdY=;
+	s=arc-20240116; t=1764780806; c=relaxed/simple;
+	bh=AO+s2Yz4YUeOdDdhC5aY04JNLgbdMcrGSbFGpz7qbnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMfXYhRdT/erzq1xA4/NorPpZwAFuYzVNIrq8E1QiNVyZjN6GRO6zdEfI9+7vVRtNy8lki9Lf0OyezVmawGG7TMsVzpjVsJHZNLmnQ5eDkPVY02hVv50LyqCOaIrZ2Cs4qXfXfHsQf2o3sTqKrr/861jQ2EjQ0gDV841PJNVa7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHYz7p05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pc8VI7NV4AQ5ArSVACQWclxnf72XnranEAZ00/6y+GFC1iVh59631ANMSFrCUXVJexhmGV7/HaBvqFLOfpoN2A6ZTyLt7n4TdQiGXK/x93oVvaWZl13+56BBjVZA4LR+mRxm+fi1KvJ6OxbivVCTg1f51hznJSFuNWRJRNMR/qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGx1Z4/p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHYz7p05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4857BC116B1;
-	Wed,  3 Dec 2025 16:53:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGx1Z4/p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95B4C4CEF5;
+	Wed,  3 Dec 2025 16:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780802;
-	bh=sghb4c0fYWMWaaPnu5D2mU9gzWI7Gbx1Z3L1FgLqhdY=;
+	s=korg; t=1764780806;
+	bh=AO+s2Yz4YUeOdDdhC5aY04JNLgbdMcrGSbFGpz7qbnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHYz7p05HhHPsVFvE/GTVbmCsh0tlKcvzINHjFwaScknmWzMqgG4+KAF13N5WFzuE
-	 SmABWJCblTvlZlTDtIhKt6bzbhNhChx8DcHTEqT4QyY3rzwFDHQbACD4hjq/P/fVcS
-	 GSSolcgcFZCWNn3m+1yjvrYTbAoA/K1pCP3uPVIY=
+	b=wGx1Z4/pTZAIdMiR88Gq6cBiUyzTQvH6gnafTJKCOkKUEFoIMJiw7yYoFmd+cPkmU
+	 510BxJhbLVBY4WiA+e2CYb8sGn1xaK4wCVXvL3EDrT1cfmzvH7CfwvaTcwWaOR5624
+	 c/BgVdskPQu0zN/Eoz1yiKDlHURnkFe8OOuSjvkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 093/132] usb: storage: sddr55: Reject out-of-bound new_pba
-Date: Wed,  3 Dec 2025 16:29:32 +0100
-Message-ID: <20251203152346.737092964@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Yu Chen <chenyu45@xiaomi.com>,
+	Owen Gu <guhuinan@xiaomi.com>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.12 094/132] usb: uas: fix urb unmapping issue when the uas device is remove during ongoing data transfer
+Date: Wed,  3 Dec 2025 16:29:33 +0100
+Message-ID: <20251203152346.772819734@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -50,42 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Owen Gu <guhuinan@xiaomi.com>
 
-commit b59d4fda7e7d0aff1043a7f742487cb829f5aac1 upstream.
+commit 26d56a9fcb2014b99e654127960aa0a48a391e3c upstream.
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
+When a UAS device is unplugged during data transfer, there is
+a probability of a system panic occurring. The root cause is
+an access to an invalid memory address during URB callback handling.
+Specifically, this happens when the dma_direct_unmap_sg() function
+is called within the usb_hcd_unmap_urb_for_dma() interface, but the
+sg->dma_address field is 0 and the sg data structure has already been
+freed.
 
-new_pba comes from the status packet returned after each write.
-A bogus device could report values beyond the block count derived
-from info->capacity, letting the driver walk off the end of
-pba_to_lba[] and corrupt heap memory.
+The SCSI driver sends transfer commands by invoking uas_queuecommand_lck()
+in uas.c, using the uas_submit_urbs() function to submit requests to USB.
+Within the uas_submit_urbs() implementation, three URBs (sense_urb,
+data_urb, and cmd_urb) are sequentially submitted. Device removal may
+occur at any point during uas_submit_urbs execution, which may result
+in URB submission failure. However, some URBs might have been successfully
+submitted before the failure, and uas_submit_urbs will return the -ENODEV
+error code in this case. The current error handling directly calls
+scsi_done(). In the SCSI driver, this eventually triggers scsi_complete()
+to invoke scsi_end_request() for releasing the sgtable. The successfully
+submitted URBs, when being unlinked to giveback, call
+usb_hcd_unmap_urb_for_dma() in hcd.c, leading to exceptions during sg
+unmapping operations since the sg data structure has already been freed.
 
-Reject PBAs that exceed the computed block count and fail the
-transfer so we avoid touching out-of-range mapping entries.
+This patch modifies the error condition check in the uas_submit_urbs()
+function. When a UAS device is removed but one or more URBs have already
+been successfully submitted to USB, it avoids immediately invoking
+scsi_done() and save the cmnd to devinfo->cmnd array. If the successfully
+submitted URBs is completed before devinfo->resetting being set, then
+the scsi_done() function will be called within uas_try_complete() after
+all pending URB operations are finalized. Otherwise, the scsi_done()
+function will be called within uas_zap_pending(), which is executed after
+usb_kill_anchored_urbs().
 
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
+The error handling only takes effect when uas_queuecommand_lck() calls
+uas_submit_urbs() and returns the error value -ENODEV . In this case,
+the device is disconnected, and the flow proceeds to uas_disconnect(),
+where uas_zap_pending() is invoked to call uas_try_complete().
+
+Fixes: eb2a86ae8c54 ("USB: UAS: fix disconnect by unplugging a hub")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/B2DC73A3EE1E3A1D+202511161322001664687@tencent.com
+Signed-off-by: Yu Chen <chenyu45@xiaomi.com>
+Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20251120123336.3328-1-guhuinan@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/sddr55.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/storage/uas.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/storage/sddr55.c
-+++ b/drivers/usb/storage/sddr55.c
-@@ -469,6 +469,12 @@ static int sddr55_write_data(struct us_d
- 		new_pba = (status[3] + (status[4] << 8) + (status[5] << 16))
- 						  >> info->blockshift;
- 
-+		/* check if device-reported new_pba is out of range */
-+		if (new_pba >= (info->capacity >> (info->blockshift + info->pageshift))) {
-+			result = USB_STOR_TRANSPORT_FAILED;
-+			goto leave;
-+		}
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -698,6 +698,10 @@ static int uas_queuecommand_lck(struct s
+ 	 * of queueing, no matter how fatal the error
+ 	 */
+ 	if (err == -ENODEV) {
++		if (cmdinfo->state & (COMMAND_INFLIGHT | DATA_IN_URB_INFLIGHT |
++				DATA_OUT_URB_INFLIGHT))
++			goto out;
 +
- 		/* check status for error */
- 		if (status[0] == 0xff && status[1] == 0x4) {
- 			info->pba_to_lba[new_pba] = BAD_BLOCK;
+ 		set_host_byte(cmnd, DID_NO_CONNECT);
+ 		scsi_done(cmnd);
+ 		goto zombie;
+@@ -711,6 +715,7 @@ static int uas_queuecommand_lck(struct s
+ 		uas_add_work(cmnd);
+ 	}
+ 
++out:
+ 	devinfo->cmnd[idx] = cmnd;
+ zombie:
+ 	spin_unlock_irqrestore(&devinfo->lock, flags);
 
 
