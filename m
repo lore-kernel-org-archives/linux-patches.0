@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 045BE33E36A;
-	Wed,  3 Dec 2025 16:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF1233E36A;
+	Wed,  3 Dec 2025 16:38:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779901; cv=none; b=JcE7E5fAneX//Qpt3T/tCPrCS7o6zcq0/Bvht7oIa4NYpo7hIlJpWG6t+YCBFS5Kx8qS0mi575moblRvBQSVxOabghMDuLxOSVoXuyZXxSZBigcv89dXks9TZVl1Y9r0bILbDuWWlTZHuOlJQ7TMBn7z+vhR4GqlYuilXBjgbQU=
+	t=1764779904; cv=none; b=Ugi7ofy6AfTA2qpcBqdLtUBg9+PvunKPmma2ef5XPNqDGepbvdQijEZlGsfGViqluAzMbiWND1Z8OjDaoUGoLH9xnIm8OR3GzWIW4utSpbuKqFcgDHq0dMtTkBo9sAsNzWvQGROzI0V26Rcy3f/HgPHsPryIAdvqGAeSYJsmK38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779901; c=relaxed/simple;
-	bh=4lV0apCaPBcIGeYdFUq+Ntm2f7k6QBDZLAcoInOqOII=;
+	s=arc-20240116; t=1764779904; c=relaxed/simple;
+	bh=YuutO9no87joUamNLX3hgFkeV71TaZwIprJU1T1TdaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uq6NWv/SCiuc9uLtcw70ZHfFhgtptkNH9CkHOx/cNN8PVozMFZsWgHcIbEgrIrv0H3H8CkPPvJFvtA8FIdh39GgkuzG+wJMzhzOR05qTBRvovEosrpp7xGdavzC23r5Ce16hpem8oml1p85Mj/kx1AIeMiNVNRwA9/VeNllSS6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ar75an/p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MVStltO83YaGoqrQdITIWDLj/5oQ8cpsH3ua8XY6V9SY1tp3yH/9cAMNQrf3D1psyYvoUXOFubZSy8nGDqXsie9QwZ269jAgeUK8FyEUdy8Qr8PT+ZVfzi0G27SX4sq/3zqbqScPzECYK1MdIdgyBX6IWggEqF7OoPwlIyv4eYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OATzdd43; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ar75an/p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B71C4CEF5;
-	Wed,  3 Dec 2025 16:38:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OATzdd43"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DDCC4CEF5;
+	Wed,  3 Dec 2025 16:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779900;
-	bh=4lV0apCaPBcIGeYdFUq+Ntm2f7k6QBDZLAcoInOqOII=;
+	s=korg; t=1764779904;
+	bh=YuutO9no87joUamNLX3hgFkeV71TaZwIprJU1T1TdaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ar75an/p42JbLjUa02TmKddh5rLyEPgAFJ7yOcRmMP6H30GwD26RD0Vv64GGZSFWh
-	 Fr3+u1qW6XrFwi4hYbE8tGoB82uPHc+WC0C/cuS/9UN4l9REHtBWnQZsn13vFSSOAB
-	 iAKwuXSLCdlzfH6YyLM3CsHzodd2KYzMME+Xu6VU=
+	b=OATzdd431RiwuwvaZD0kkAhYl8bBVTf0qRmVsYU70pGnQIJ+L3qZE5C1zCFWLmF0D
+	 cSIGrT+Td9ofpQGsyeYF2jXk78W+LtiruPkxaCkrXcSvmQp2IcBEDoWNWEugNgf3yU
+	 GQXLFR9iS+slsFqRI2lFjOWl50Pkg7EBdYZoXFMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 397/568] gcov: add support for GCC 15
-Date: Wed,  3 Dec 2025 16:26:39 +0100
-Message-ID: <20251203152455.231985745@linuxfoundation.org>
+	Joshua Rogers <linux@joshua.hu>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 398/568] ksmbd: close accepted socket when per-IP limit rejects connection
+Date: Wed,  3 Dec 2025 16:26:40 +0100
+Message-ID: <20251203152455.268985788@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,40 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Joshua Rogers <linux@joshua.hu>
 
-commit ec4d11fc4b2dd4a2fa8c9d801ee9753b74623554 upstream.
+commit 98a5fd31cbf72d46bf18e50b3ab0ce86d5f319a9 upstream.
 
-Using gcov on kernels compiled with GCC 15 results in truncated 16-byte
-long .gcda files with no usable data.  To fix this, update GCOV_COUNTERS
-to match the value defined by GCC 15.
+When the per-IP connection limit is exceeded in ksmbd_kthread_fn(),
+the code sets ret = -EAGAIN and continues the accept loop without
+closing the just-accepted socket. That leaks one socket per rejected
+attempt from a single IP and enables a trivial remote DoS.
 
-Tested with GCC 14.3.0 and GCC 15.2.0.
+Release client_sk before continuing.
 
-Link: https://lkml.kernel.org/r/20251028115125.1319410-1-oberpar@linux.ibm.com
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reported-by: Matthieu Baerts <matttbe@kernel.org>
-Closes: https://github.com/linux-test-project/lcov/issues/445
-Tested-by: Matthieu Baerts <matttbe@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This bug was found with ZeroPath.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Joshua Rogers <linux@joshua.hu>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/gcov/gcc_4_7.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/smb/server/transport_tcp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -18,7 +18,9 @@
- #include <linux/mm.h>
- #include "gcov.h"
+--- a/fs/smb/server/transport_tcp.c
++++ b/fs/smb/server/transport_tcp.c
+@@ -282,8 +282,11 @@ static int ksmbd_kthread_fn(void *p)
+ 			}
+ 		}
+ 		up_read(&conn_list_lock);
+-		if (ret == -EAGAIN)
++		if (ret == -EAGAIN) {
++			/* Per-IP limit hit: release the just-accepted socket. */
++			sock_release(client_sk);
+ 			continue;
++		}
  
--#if (__GNUC__ >= 14)
-+#if (__GNUC__ >= 15)
-+#define GCOV_COUNTERS			10
-+#elif (__GNUC__ >= 14)
- #define GCOV_COUNTERS			9
- #elif (__GNUC__ >= 10)
- #define GCOV_COUNTERS			8
+ skip_max_ip_conns_limit:
+ 		if (server_conf.max_connections &&
 
 
