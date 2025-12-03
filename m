@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A311C3148C1;
-	Wed,  3 Dec 2025 15:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB85E314A91;
+	Wed,  3 Dec 2025 15:38:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776279; cv=none; b=sUYtaP3PjSXJGCb1O9bRhKqAlS/M55Ch8jXnCDXs+0YlrFqww++I2GiHHDSjzKxxDp21l7+1fzPcd1MbyH1t1rxGZuIgdR1xYTot+TX97HExM4wjXgCYGu+oKcOmTDrOzv8Bz1omJufdSjXSuShb6UxhlRFXgPRFjL30n+AfFrs=
+	t=1764776283; cv=none; b=ZWzt73fBKRRcuY1vxPCvzPaKPm9ZkuputDTWPFZlDtekla196JLLJ69UTihVP//JFaGyTK91TSlNRcbCXJ9BWr3rSeV5zszprsP1JSscac3p8DxzSoqliykQ/XtyPJZvyIwrlS58SYaBoPbMpeYVHwYUAAYHf8PAfV8b4eMXKeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776279; c=relaxed/simple;
-	bh=BzOQ7YANzYQfaunqRrdZhHnNch4mFKLGDr4BGGj1gf4=;
+	s=arc-20240116; t=1764776283; c=relaxed/simple;
+	bh=d62e1N6QbNaeNeH8lqjqymYAeHGizwqZb/7ed4Bfx7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KhKwVOHYLp4w0hiz9ZyXc5WMT4z4CAnq9P7qel8DI0S/ui/kZUkNEYMMa3Q+cqjO3tt69/xQFxI9LuUDCsy5GcSC9MapDJio/sIFKMjk7J1FlfZEfoSOaiGA9wAAwbarfzZkiaHtUtcc6RJ0PUQHmkrA/9JocIkM5Gs2QK7lY8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKxMnypU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ecfb87/oGB6TPE+h2cTth2EqTT82JOkRBlFYdZPV4aXTXDMbNSm+R1r+AFxkb+v6gSy60U1OeWf9fLtzvpaqPl0VBu7s3vyQ4wgMElVgJa2uTC+rec42JyaWAyG0ASB7BFJH+OkKRh2zroTOGajm3fTfG4AYDhOiAuEwVCc9+2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XiJBIE6f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKxMnypU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE587C4CEF5;
-	Wed,  3 Dec 2025 15:37:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XiJBIE6f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44249C4CEF5;
+	Wed,  3 Dec 2025 15:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776279;
-	bh=BzOQ7YANzYQfaunqRrdZhHnNch4mFKLGDr4BGGj1gf4=;
+	s=korg; t=1764776282;
+	bh=d62e1N6QbNaeNeH8lqjqymYAeHGizwqZb/7ed4Bfx7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKxMnypU6E2XSSe63mi6BXQWgYGzhcAXm6BIXFKGvYZN59ibY98Pj7pN3/60WQq+G
-	 0UK5ZhM+AGMafaXXfBBLo+msmqUtnSFZk5qiyBhDepLOb6b5woyrmXm03UJtQ2HWZ0
-	 S/LRROAzi9Xqq8BwjZqtENjVDwoT84pS11PsgeTE=
+	b=XiJBIE6fUH3ekYWJfKiFMfcJAQaRP0+vFBGyo2+739YTstfVXqftVC/P6EV3s7Knp
+	 gHp+HdIZyiJ9sslNvas4rshmpbgfvH/r89H3p1RjPJAvvJv0MoOjgbugkgb0WkiXKI
+	 8O90iRtgSg4gAdq7UrGo3cn+7AxC3vazG2yAI5qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Devendra K Verma <devverma@amd.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Yue Haibing <yuehaibing@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 102/300] dmaengine: dw-edma: Set status for callback_result
-Date: Wed,  3 Dec 2025 16:25:06 +0100
-Message-ID: <20251203152404.403643470@linuxfoundation.org>
+Subject: [PATCH 5.10 103/300] ipv6: Add sanity checks on ipv6_devconf.rpl_seg_enabled
+Date: Wed,  3 Dec 2025 16:25:07 +0100
+Message-ID: <20251203152404.440639792@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,72 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Devendra K Verma <devverma@amd.com>
+From: Yue Haibing <yuehaibing@huawei.com>
 
-[ Upstream commit 5e742de97c806a4048418237ef1283e7d71eaf4b ]
+[ Upstream commit 3d95261eeb74958cd496e1875684827dc5d028cc ]
 
-DMA Engine has support for the callback_result which provides
-the status of the request and the residue. This helps in
-determining the correct status of the request and in
-efficient resource management of the request.
-The 'callback_result' method is preferred over the deprecated
-'callback' method.
+In ipv6_rpl_srh_rcv() we use min(net->ipv6.devconf_all->rpl_seg_enabled,
+idev->cnf.rpl_seg_enabled) is intended to return 0 when either value is
+zero, but if one of the values is negative it will in fact return non-zero.
 
-Signed-off-by: Devendra K Verma <devverma@amd.com>
-Link: https://lore.kernel.org/r/20250821121505.318179-1-devverma@amd.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Yue Haibing <yuehaibing@huawei.com>
+Link: https://patch.msgid.link/20250901123726.1972881-3-yuehaibing@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ net/ipv6/addrconf.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index f91dbf43a5980..df2874f6f4620 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -488,6 +488,25 @@ dw_edma_device_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t paddr,
- 	return dw_edma_device_transfer(&xfer);
- }
- 
-+static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
-+					enum dmaengine_tx_result result)
-+{
-+	u32 residue = 0;
-+	struct dw_edma_desc *desc;
-+	struct dmaengine_result *res;
-+
-+	if (!vd->tx.callback_result)
-+		return;
-+
-+	desc = vd2dw_edma_desc(vd);
-+	if (desc)
-+		residue = desc->alloc_sz - desc->xfer_sz;
-+
-+	res = &vd->tx_result;
-+	res->result = result;
-+	res->residue = residue;
-+}
-+
- static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- {
- 	struct dw_edma_desc *desc;
-@@ -503,6 +522,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- 		case EDMA_REQ_NONE:
- 			desc = vd2dw_edma_desc(vd);
- 			if (!desc->chunks_alloc) {
-+				dw_hdma_set_callback_result(vd,
-+							    DMA_TRANS_NOERROR);
- 				list_del(&vd->node);
- 				vchan_cookie_complete(vd);
- 			}
-@@ -541,6 +562,7 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
- 	spin_lock_irqsave(&chan->vc.lock, flags);
- 	vd = vchan_next_desc(&chan->vc);
- 	if (vd) {
-+		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
- 		list_del(&vd->node);
- 		vchan_cookie_complete(vd);
- 	}
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index d38d15ccc7501..ced20abf4ef8e 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -6978,7 +6978,9 @@ static const struct ctl_table addrconf_sysctl[] = {
+ 		.data		= &ipv6_devconf.rpl_seg_enabled,
+ 		.maxlen		= sizeof(int),
+ 		.mode		= 0644,
+-		.proc_handler	= proc_dointvec,
++		.proc_handler   = proc_dointvec_minmax,
++		.extra1         = SYSCTL_ZERO,
++		.extra2         = SYSCTL_ONE,
+ 	},
+ 	{
+ 		/* sentinel */
 -- 
 2.51.0
 
