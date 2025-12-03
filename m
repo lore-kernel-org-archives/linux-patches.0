@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4433735BDBF;
-	Wed,  3 Dec 2025 16:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2F135C1AC;
+	Wed,  3 Dec 2025 16:42:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780165; cv=none; b=DDsnn3P0HP7I5bUqWVlAQMdrhZdWLM0KfQo4+dhSspfLPuNUUI9sLnkFYO+wLT4fE+GsHHAgoEZKZyCYn7R6D9d1VfbhcOYCAA8LhqQZ1eYXFLpJZXNLGpPZZuPVV2hcMkrCjDtO4CqV7X0h99iFTQDnfXOclXBfRor3ngOkkG8=
+	t=1764780168; cv=none; b=cEMvVZryDOpDft6jr3geyNaaylRvAO8hD+vfAsnrwf1/WsdKV90wayyli5YxrFGYiLFc9ch2qQwgWhgg+YcHKbHzaa2SundGXaDa1ISxeb7fWkCke1+eyJ7JjmYfy/AV2/y5HQ6GFf/Qncmp79epayTuP/s9+DsncxLppD5ni1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780165; c=relaxed/simple;
-	bh=zCVJ1sSpHVeeCvGvQyECUH7VZSK1i8I8M9XN97V+8Jg=;
+	s=arc-20240116; t=1764780168; c=relaxed/simple;
+	bh=7nkiVVuXJ2DArrl6U8URNFuQ0BEhVZVIHTdaWMZNM14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l5CatKWFE6SvpXQGhguHbQDVwNcetHq7pXPjFc2gu6lRU1bCJdwlwo5GX61XPWZVWIhLgQugruNdHyawCJzM6QgGtvDdyHJ0PmEv4VY1jCqV1spS1AJ+e0ZvdKu98wr1phTZP8E25BZFcoSDcYEkF0WmlBEhhvnKl//tFKzb+8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aHxB6UkE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rsUfATY7YPHcCNJCb3/o0lo0dXE3ovLyQ6NCMAZGaYYCY+96SLtE/OIC4KelguIrvMA8tNYrtdwd7bPJM5Om3TnuisWVQwcQ0SFGkyT4tXxAE2n1A57uTE0VIeQTYFpKAZ21SJ9VRjveBpB4mDL+N8+bZ3eW7iIj3T5MVJUhiVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mA2AdImp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aHxB6UkE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6332EC4CEF5;
-	Wed,  3 Dec 2025 16:42:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mA2AdImp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD9AC4CEF5;
+	Wed,  3 Dec 2025 16:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780164;
-	bh=zCVJ1sSpHVeeCvGvQyECUH7VZSK1i8I8M9XN97V+8Jg=;
+	s=korg; t=1764780168;
+	bh=7nkiVVuXJ2DArrl6U8URNFuQ0BEhVZVIHTdaWMZNM14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHxB6UkEHq0uEbKKJZOOHs3Glz7Ye9mFisy7ezAQP8Mo4uJ2iJxOr4sCmRtJ3zc3c
-	 b7ODlX+uyICmXfRerO3ob60qk1U6ceJ1FFSTsgRmvUcstQ6Fww8XcmOfT298O93DIV
-	 kx1uZT/Q6fBzX9iaVJSYd87aSQ22foaTpVArFhOY=
+	b=mA2AdImp7QnmwmndG1EWRDChKWV0aoto0xfhqFbPQ5RoTSJ17ZyH4OsAVSSAct7H0
+	 7SIT0D2ZpouFZD6Wbaz7NSzANOjdIwNXqXOalea+f27IzIfW3dv1bVEcEoc5cu9TdM
+	 8CNCRq4HLCoEYrFAe6y0yaPf5BmxsQwhYdKChCZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <longli@microsoft.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Naman Jain <namjain@linux.microsoft.com>
-Subject: [PATCH 6.1 476/568] uio_hv_generic: Set event for all channels on the device
-Date: Wed,  3 Dec 2025 16:27:58 +0100
-Message-ID: <20251203152458.131947054@linuxfoundation.org>
+	Aswin Karuvally <aswin@linux.ibm.com>,
+	Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 459/568] s390/ctcm: Fix double-kfree
+Date: Wed,  3 Dec 2025 16:27:41 +0100
+Message-ID: <20251203152457.516391485@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,74 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <longli@microsoft.com>
+From: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
 
-commit d062463edf1770427dc2d637df4088df4835aa47 upstream.
+[ Upstream commit da02a1824884d6c84c5e5b5ac373b0c9e3288ec2 ]
 
-Hyper-V may offer a non latency sensitive device with subchannels without
-monitor bit enabled. The decision is entirely on the Hyper-V host not
-configurable within guest.
+The function 'mpc_rcvd_sweep_req(mpcginfo)' is called conditionally
+from function 'ctcmpc_unpack_skb'. It frees passed mpcginfo.
+After that a call to function 'kfree' in function 'ctcmpc_unpack_skb'
+frees it again.
 
-When a device has subchannels, also signal events for the subchannel
-if its monitor bit is disabled.
+Remove 'kfree' call in function 'mpc_rcvd_sweep_req(mpcginfo)'.
 
-This patch also removes the memory barrier when monitor bit is enabled
-as it is not necessary. The memory barrier is only needed between
-setting up interrupt mask and calling vmbus_set_event() when monitor
-bit is disabled.
+Bug detected by the clang static analyzer.
 
-Signed-off-by: Long Li <longli@microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Reviewed-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Link: https://lore.kernel.org/r/1741644721-20389-1-git-send-email-longli@linuxonhyperv.com
-Fixes: b15b7d2a1b09 ("uio_hv_generic: Let userspace take care of interrupt mask")
-Closes: https://bugs.debian.org/1120602
-Signed-off-by: Naman Jain <namjain@linux.microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c0b20587b9f25a2 ("s390/ctcm: fix potential memory leak")
+Reviewed-by: Aswin Karuvally <aswin@linux.ibm.com>
+Signed-off-by: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
+Signed-off-by: Aswin Karuvally <aswin@linux.ibm.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251112182724.1109474-1-aswin@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_hv_generic.c |   21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ drivers/s390/net/ctcm_mpc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/uio/uio_hv_generic.c
-+++ b/drivers/uio/uio_hv_generic.c
-@@ -80,9 +80,15 @@ hv_uio_irqcontrol(struct uio_info *info,
- {
- 	struct hv_uio_private_data *pdata = info->priv;
- 	struct hv_device *dev = pdata->device;
-+	struct vmbus_channel *primary, *sc;
+diff --git a/drivers/s390/net/ctcm_mpc.c b/drivers/s390/net/ctcm_mpc.c
+index 8ac213a551418..55216d2fbea0b 100644
+--- a/drivers/s390/net/ctcm_mpc.c
++++ b/drivers/s390/net/ctcm_mpc.c
+@@ -698,7 +698,6 @@ static void mpc_rcvd_sweep_req(struct mpcg_info *mpcginfo)
  
--	dev->channel->inbound.ring_buffer->interrupt_mask = !irq_state;
--	virt_mb();
-+	primary = dev->channel;
-+	primary->inbound.ring_buffer->interrupt_mask = !irq_state;
-+
-+	mutex_lock(&vmbus_connection.channel_mutex);
-+	list_for_each_entry(sc, &primary->sc_list, sc_list)
-+		sc->inbound.ring_buffer->interrupt_mask = !irq_state;
-+	mutex_unlock(&vmbus_connection.channel_mutex);
- 
- 	return 0;
- }
-@@ -93,11 +99,18 @@ hv_uio_irqcontrol(struct uio_info *info,
- static void hv_uio_channel_cb(void *context)
- {
- 	struct vmbus_channel *chan = context;
--	struct hv_device *hv_dev = chan->device_obj;
--	struct hv_uio_private_data *pdata = hv_get_drvdata(hv_dev);
-+	struct hv_device *hv_dev;
-+	struct hv_uio_private_data *pdata;
- 
- 	virt_mb();
- 
-+	/*
-+	 * The callback may come from a subchannel, in which case look
-+	 * for the hv device in the primary channel
-+	 */
-+	hv_dev = chan->primary_channel ?
-+		 chan->primary_channel->device_obj : chan->device_obj;
-+	pdata = hv_get_drvdata(hv_dev);
- 	uio_event_notify(&pdata->info);
+ 	grp->sweep_req_pend_num--;
+ 	ctcmpc_send_sweep_resp(ch);
+-	kfree(mpcginfo);
+ 	return;
  }
  
+-- 
+2.51.0
+
 
 
