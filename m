@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE0A731A04D;
-	Wed,  3 Dec 2025 16:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF47931B832;
+	Wed,  3 Dec 2025 16:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779657; cv=none; b=gxvs3g66ZDYE9PBEc7VwANmNalJyHlfbpGdnbYAoyzDHeQAPBz1nXieEHXLNxkCTHokD9ar+kHWum1vmVnDtjr3bWq7/ubMiB5V8J+FapmRWwNZbsUuVcV2qims/0qUF01cCO5+1OhVKJw6XV8odfrv1Q9FTHrTTj920yxs+1mM=
+	t=1764779661; cv=none; b=aPVTWA0PzCioFHeNzRQzCBxjbQ2rdJb00AtjnuJkYGOjr5CL2iHzO4lmsF6LvDn99P9Hn/HXIlsBz4Px7FdKhu3VsrE2zbDnH8wYSsQtXAcSJsgSgyg8ZLzROOJsLgkbRG4Fvp1C83F0VYzwJWkGYpfHCGXCACr2PXjTs6S4Q/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779657; c=relaxed/simple;
-	bh=tMMeMRczCRjOe5ZT4tAnEWoPIhJt7s8JNPQfFiYVE5Q=;
+	s=arc-20240116; t=1764779661; c=relaxed/simple;
+	bh=IAJwZ76QgfRTg8TlkrtBxtK6VjFDUsRGAuL+T+h03Mw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MACD2uuzEHFUonIm4j7x/C4OUSDTnS157YFQIaWuWBS8EXe+zoBraKmYH3TTC1zFyxruQYBqJs26WzUTlGEpdLu1QKaucJS5sLx5xh4EL61pGTuSRD9+5O4OFxmwcV7xUGxwcbGoaXijAqYW4/P4fg+FGk7Kfnusekg6MlWSbmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ys9ENGwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lW57GETR0AEA7H8Iu43nPfA8uY/gMU90tLcANIx63PxGshZK+fge9Hqc8yMNXoaHkl37BY1+l1iK1uqqfRnPLMeNw2xk+4wKUlGay4cJT9JEKzngonNDivcc3s2sU2qa9sEVPpPky9h3KxSZFGgcCb1efJbcDMtSSJzepfvzn6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zyh8ZMmI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ys9ENGwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8D7C4CEF5;
-	Wed,  3 Dec 2025 16:34:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zyh8ZMmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 604C3C4CEF5;
+	Wed,  3 Dec 2025 16:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779657;
-	bh=tMMeMRczCRjOe5ZT4tAnEWoPIhJt7s8JNPQfFiYVE5Q=;
+	s=korg; t=1764779660;
+	bh=IAJwZ76QgfRTg8TlkrtBxtK6VjFDUsRGAuL+T+h03Mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ys9ENGweDsejY7w1WG3Jm1VUfcR9ZFNmvZSfCvdpyBBVrEJnlMLVRE37NHGOWCcRm
-	 M0V5OJVg0KBtBXU+5dJZ8IOY0CpJvzi5CXygzUZUHCfR8LxN1yLqSnvt5oBpL7MWJH
-	 CjaBK0dnlYMQsh3jG+Qy6cO610SYUYqAd9C7aPdc=
+	b=Zyh8ZMmIHd7q/bTHJM6P3T6J6xjtELXhPDy55YFRSjJPHFqW72brtuGYPehu6wC2C
+	 sVt9oK2P8LxXkLyUpyi/RR7XS/CX0+cgzRj0VkaJqaUxpG65FIW/NmHhdYZ07OwGO/
+	 3ZwZwJpoyJagLwK5Fn/J8cmoxSCz7qfSVbdV7Wmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Stefan Wiehler <stefan.wiehler@nokia.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 279/568] RDMA/hns: Fix wrong WQE data when QP wraps around
-Date: Wed,  3 Dec 2025 16:24:41 +0100
-Message-ID: <20251203152450.927013133@linuxfoundation.org>
+Subject: [PATCH 6.1 316/568] sctp: Prevent TOCTOU out-of-bounds write
+Date: Wed,  3 Dec 2025 16:25:18 +0100
+Message-ID: <20251203152452.287322489@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,79 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Stefan Wiehler <stefan.wiehler@nokia.com>
 
-[ Upstream commit fe9622011f955e35ba84d3af7b2f2fed31cf8ca1 ]
+[ Upstream commit 95aef86ab231f047bb8085c70666059b58f53c09 ]
 
-When QP wraps around, WQE data from the previous use at the same
-position still remains as driver does not clear it. The WQE field
-layout differs across different opcodes, causing that the fields
-that are not explicitly assigned for the current opcode retain
-stale values, and are issued to HW by mistake. Such fields are as
-follows:
+For the following path not holding the sock lock,
 
-* MSG_START_SGE_IDX field in ATOMIC WQE
-* BLOCK_SIZE and ZBVA fields in FRMR WQE
-* DirectWQE fields when DirectWQE not used
+  sctp_diag_dump() -> sctp_for_each_endpoint() -> sctp_ep_dump()
 
-For ATOMIC WQE, always set the latest sge index in MSG_START_SGE_IDX
-as required by HW.
+make sure not to exceed bounds in case the address list has grown
+between buffer allocation (time-of-check) and write (time-of-use).
 
-For FRMR WQE and DirectWQE, clear only those unassigned fields
-instead of the entire WQE to avoid performance penalty.
-
-Fixes: 68a997c5d28c ("RDMA/hns: Add FRMR support for hip08")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20251016114051.1963197-4-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Suggested-by: Kuniyuki Iwashima <kuniyu@google.com>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251028161506.3294376-3-stefan.wiehler@nokia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/sctp/diag.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 72c719805af32..5fdab366fb32d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -161,6 +161,8 @@ static void set_frmr_seg(struct hns_roce_v2_rc_send_wqe *rc_sq_wqe,
- 	hr_reg_write(fseg, FRMR_PBL_BUF_PG_SZ,
- 		     to_hr_hw_page_shift(mr->pbl_mtr.hem_cfg.buf_pg_shift));
- 	hr_reg_clear(fseg, FRMR_BLK_MODE);
-+	hr_reg_clear(fseg, FRMR_BLOCK_SIZE);
-+	hr_reg_clear(fseg, FRMR_ZBVA);
- }
- 
- static void set_atomic_seg(const struct ib_send_wr *wr,
-@@ -335,9 +337,6 @@ static int set_rwqe_data_seg(struct ib_qp *ibqp, const struct ib_send_wr *wr,
- 	int j = 0;
- 	int i;
- 
--	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_MSG_START_SGE_IDX,
--		     (*sge_ind) & (qp->sge.sge_cnt - 1));
--
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_INLINE,
- 		     !!(wr->send_flags & IB_SEND_INLINE));
- 	if (wr->send_flags & IB_SEND_INLINE)
-@@ -586,6 +585,9 @@ static inline int set_rc_wqe(struct hns_roce_qp *qp,
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_CQE,
- 		     (wr->send_flags & IB_SEND_SIGNALED) ? 1 : 0);
- 
-+	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_MSG_START_SGE_IDX,
-+		     curr_idx & (qp->sge.sge_cnt - 1));
+diff --git a/net/sctp/diag.c b/net/sctp/diag.c
+index 31cf52026202b..3631a32d96b07 100644
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -88,6 +88,9 @@ static int inet_diag_msg_sctpladdrs_fill(struct sk_buff *skb,
+ 		memcpy(info, &laddr->a, sizeof(laddr->a));
+ 		memset(info + sizeof(laddr->a), 0, addrlen - sizeof(laddr->a));
+ 		info += addrlen;
 +
- 	if (wr->opcode == IB_WR_ATOMIC_CMP_AND_SWP ||
- 	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD) {
- 		if (msg_len != ATOMIC_WR_LEN)
-@@ -734,6 +736,9 @@ static int hns_roce_v2_post_send(struct ib_qp *ibqp,
- 		owner_bit =
- 		       ~(((qp->sq.head + nreq) >> ilog2(qp->sq.wqe_cnt)) & 0x1);
++		if (!--addrcnt)
++			break;
+ 	}
+ 	rcu_read_unlock();
  
-+		/* RC and UD share the same DirectWQE field layout */
-+		((struct hns_roce_v2_rc_send_wqe *)wqe)->byte_4 = 0;
-+
- 		/* Corresponding to the QP type, wqe process separately */
- 		if (ibqp->qp_type == IB_QPT_RC)
- 			ret = set_rc_wqe(qp, wr, wqe, &sge_idx, owner_bit);
 -- 
 2.51.0
 
