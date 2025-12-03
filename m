@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B25A2FFFAD;
-	Wed,  3 Dec 2025 15:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA618DDAB;
+	Wed,  3 Dec 2025 15:39:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776393; cv=none; b=CbuSnDDoPQFcsngii9ZQm0YDdKSmoxprUH3rSPN+E5WqMTBafKBZ/gXYIn2LheQc7S4SXKvN8iTKf8TclRkWk6llIN/pj0L8ebor+svXZKdzeGpIQTG0Wz3B804MrTX9ZWZ9Z9LUVufAPJGJRojqIiKpotj1Un4tSLNNSr4ybA4=
+	t=1764776397; cv=none; b=EhwC3Oj1xnXprXwmdUCM7cu1FblFKmLC/W5k3EmpZvqpJUgRBlQ2dZSJVGDbxg89u3MQCdCfHmUfzBJG8zk2BZ6fLB6w43AHBLJeuY1grSnvKcOgI9M7pfZRQCaen73WnYL5L/VoQdTXpaDDNWzPXuyZGnxmBiF2NfQXX8OvzzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776393; c=relaxed/simple;
-	bh=1b95N5qshDYBO9JlFVyVmVcUyAXiVUMV9mEyAXFoT3s=;
+	s=arc-20240116; t=1764776397; c=relaxed/simple;
+	bh=ZM1LrnGkm1aHBYnTbWG9aPfLEZzsY5YtpV3IAnqyRLE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sGKC566SzkLiymWBeXtiW3E6NUmFPdeVoUUIGgu6AS6Ba+N8mYvm/tvIYADTNEz1ucLCpExGQTL9HRt241Ny1He4Ro/rd/FQzEuvlDtvsxQiZvmUG4DPdjbtRwn+HKVJ1qFgsMJDR/17+Y+urUlrehfiZh3VjU54jaMWNIjpE9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy1bW5eQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fjtz0KLEbdFMDuDrYHgNjUe+1jQhzRet4XFY8UBZ8XA08GuYtRAL4bw8Mdx/b8LKCWaO4AuN2aqN4h1xIufAQoHTN5J/enF3Av4LgHEt9G/qsAu8Vi3JaB1iWIGCxRfihCzAlVt1Vg97SPvQ1Xv1ozze2HGeCuvwBOhpEfMO7Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxzY/CvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy1bW5eQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 103A9C4CEF5;
-	Wed,  3 Dec 2025 15:39:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxzY/CvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53AD7C116B1;
+	Wed,  3 Dec 2025 15:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776393;
-	bh=1b95N5qshDYBO9JlFVyVmVcUyAXiVUMV9mEyAXFoT3s=;
+	s=korg; t=1764776396;
+	bh=ZM1LrnGkm1aHBYnTbWG9aPfLEZzsY5YtpV3IAnqyRLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qy1bW5eQVnEzFle/pOFz3+cVhwS2bXVm1ckNB7LMzjLU+eJTxl9Y7613znANOiUfZ
-	 3S13hwEXNJb8w8F4+pC3G62c5LTAV8Li08jPS4gTt9nbUxksxDsgJGJoY8pAWllBo6
-	 PWkWlNACzps4eHgQFMX1fgit/XZZDKUXoHA3pToM=
+	b=DxzY/CvBdWnQCYUvbI15gMrusDWXh2qHA1DEgb8/4m6dwoGSWFtrckd+4j3n39TLb
+	 qVfoIRqDwx/tTTG2wJ+Ytgc7vLvEU5ZczV8oFD/ww/s8zsKfFVfXaQcvhUpnNaSCjM
+	 rberBG5hLSJzc8lLMrlpPzCS++lvpDzR3KzHgQPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	chuguangqing <chuguangqing@inspur.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 136/300] nfs4_setup_readdir(): insufficient locking for ->d_parent->d_inode dereferencing
-Date: Wed,  3 Dec 2025 16:25:40 +0100
-Message-ID: <20251203152405.652563232@linuxfoundation.org>
+Subject: [PATCH 5.10 137/300] fs: ext4: change GFP_KERNEL to GFP_NOFS to avoid deadlock
+Date: Wed,  3 Dec 2025 16:25:41 +0100
+Message-ID: <20251203152405.689631873@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,38 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: chuguangqing <chuguangqing@inspur.com>
 
-[ Upstream commit a890a2e339b929dbd843328f9a92a1625404fe63 ]
+[ Upstream commit 1534f72dc2a11ded38b0e0268fbcc0ca24e9fd4a ]
 
-Theoretically it's an oopsable race, but I don't believe one can manage
-to hit it on real hardware; might become doable on a KVM, but it still
-won't be easy to attack.
+The parent function ext4_xattr_inode_lookup_create already uses GFP_NOFS for memory alloction, so the function ext4_xattr_inode_cache_find should use same gfp_flag.
 
-Anyway, it's easy to deal with - since xdr_encode_hyper() is just a call of
-put_unaligned_be64(), we can put that under ->d_lock and be done with that.
-
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Signed-off-by: chuguangqing <chuguangqing@inspur.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index c454fb042ab2b..12f5c240a2689 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -365,7 +365,9 @@ static void nfs4_setup_readdir(u64 cookie, __be32 *verifier, struct dentry *dent
- 	*p++ = htonl(attrs);                           /* bitmap */
- 	*p++ = htonl(12);             /* attribute buffer length */
- 	*p++ = htonl(NF4DIR);
-+	spin_lock(&dentry->d_lock);
- 	p = xdr_encode_hyper(p, NFS_FILEID(d_inode(dentry->d_parent)));
-+	spin_unlock(&dentry->d_lock);
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index 203ffcc999400..fa8ce1c66d123 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1492,7 +1492,7 @@ ext4_xattr_inode_cache_find(struct inode *inode, const void *value,
+ 	WARN_ON_ONCE(ext4_handle_valid(journal_current_handle()) &&
+ 		     !(current->flags & PF_MEMALLOC_NOFS));
  
- 	readdir->pgbase = (char *)p - (char *)start;
- 	readdir->count -= readdir->pgbase;
+-	ea_data = kvmalloc(value_len, GFP_KERNEL);
++	ea_data = kvmalloc(value_len, GFP_NOFS);
+ 	if (!ea_data) {
+ 		mb_cache_entry_put(ea_inode_cache, ce);
+ 		return NULL;
 -- 
 2.51.0
 
