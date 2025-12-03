@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F8C317715;
-	Wed,  3 Dec 2025 15:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862CB31A7F1;
+	Wed,  3 Dec 2025 15:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777220; cv=none; b=KN2lc4tYwnx4mTYbZY2j8S1EakgOgSyCP1qN4uyLmnyvWJm1hqUDFZemIbfZpvbNzDd1e80lNeBYsPIemPcT0pynykJ6VdAFlZkCyK9GINTTPmFO83vf2N0DQQyfsEAAaUhKRdytG/5tNQ5+bxWBkxWHHELY3pedZCtVAa+pBiA=
+	t=1764777223; cv=none; b=j+2PqAis4MQuZ/fNmjQkDDnK2xN9dNWeI2u0+0KN1D4nOgC2SlGnXs2PwXiPpQ1YbUbOkYYiHjOyvBWL8PUcvCcZzneHL/R0RiyXXFdA6u/DIHElioRd0JEeTwmIjkcQn3y5RrkuuEuEqvF5n2onPWGr72llIY8wpltHsg7AWfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777220; c=relaxed/simple;
-	bh=RyC8OeKmKMHo2XbXVWRu26ChHXhRsV12jQmjmVy8QII=;
+	s=arc-20240116; t=1764777223; c=relaxed/simple;
+	bh=0tEoipaoI7q/1ylKZCH2S5Ra3/kuW4m4lqEWuKlT3go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dbv5Ow1xd/Z5tKcZyF8mEey8c7iVX0PGue7K0gv65Ogol/pvzEdGViIFX5ME0v+3wKseR1i5NPQ/yozMqSPV6rsffXMZcMRMXvDfeY3Uz1nR4h4KumbP4AK5JZW9lJK4UiObxdrsGojc1TI2G0l8k5+ZraL1eMjQpqjIKx9Y6PQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lCPctvji; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTkkMp3j1PR1LGOq0of9J89zaDAOUBoTrJucVdc3GowXflBgvBVRGVuS1TfW3cpvouiCd5/e7a0Zuq5v5HE2R0flelXO59MBjp1UEhpiAYJ0Z6/Th+jh0pPQg1r6Z+bO3Bf7WK3s3lmBOgqOLxKwWTeucA94hjfITN/4wdWuiYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMbtMoJS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lCPctvji"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6422C4CEF5;
-	Wed,  3 Dec 2025 15:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMbtMoJS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3594C116C6;
+	Wed,  3 Dec 2025 15:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777220;
-	bh=RyC8OeKmKMHo2XbXVWRu26ChHXhRsV12jQmjmVy8QII=;
+	s=korg; t=1764777223;
+	bh=0tEoipaoI7q/1ylKZCH2S5Ra3/kuW4m4lqEWuKlT3go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCPctvjipziTJBYbwNj4kvSEi7fZdvl7O2V+fHo5pOUz8dWIyKnFhcR5NxBcXY6r8
-	 wnrVCd7rYyM3x4dLdZMP5kljrt256B7Bi3MaoWQHb89U0g5C4SGx6X377UlAXBYZlv
-	 Pn8QybOol+Qp2T7JDW5jsu1V9/pq2XFhxDfiFEEY=
+	b=GMbtMoJSJTHJM1m/SLNO+6DP6gCFnmVc6UBeKd3rEFM+qFfXuKbq82Yl0u0UBixhY
+	 z+3g4EwD0sHWTwZtZGx+55lPZKQYDY6Nc9R9ihBohiPQJODAMT2vFOoF1Cb4pRh7CE
+	 6MnrxBGCE+4oTSIZwxs6T9//XF7YJ6+/pmbu002E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Manish Nagar <manish.nagar@oss.qualcomm.com>
-Subject: [PATCH 6.17 120/146] usb: dwc3: Fix race condition between concurrent dwc3_remove_requests() call paths
-Date: Wed,  3 Dec 2025 16:28:18 +0100
-Message-ID: <20251203152350.855303484@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.17 121/146] xhci: fix stale flag preventig URBs after link state error is cleared
+Date: Wed,  3 Dec 2025 16:28:19 +0100
+Message-ID: <20251203152350.891194194@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,84 +49,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manish Nagar <manish.nagar@oss.qualcomm.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit e4037689a366743c4233966f0e74bc455820d316 upstream.
+commit b69dfcab6894b1fed5362a364411502a7469fce3 upstream.
 
-This patch addresses a race condition caused by unsynchronized
-execution of multiple call paths invoking `dwc3_remove_requests()`,
-leading to premature freeing of USB requests and subsequent crashes.
+A usb device caught behind a link in ss.Inactive error state needs to
+be reset to recover. A VDEV_PORT_ERROR flag is used to track this state,
+preventing new transfers from being queued until error is cleared.
 
-Three distinct execution paths interact with `dwc3_remove_requests()`:
-Path 1:
-Triggered via `dwc3_gadget_reset_interrupt()` during USB reset
-handling. The call stack includes:
-- `dwc3_ep0_reset_state()`
-- `dwc3_ep0_stall_and_restart()`
-- `dwc3_ep0_out_start()`
-- `dwc3_remove_requests()`
-- `dwc3_gadget_del_and_unmap_request()`
+This flag may be left uncleared if link goes to error state between two
+resets, and print the following message:
 
-Path 2:
-Also initiated from `dwc3_gadget_reset_interrupt()`, but through
-`dwc3_stop_active_transfers()`. The call stack includes:
-- `dwc3_stop_active_transfers()`
-- `dwc3_remove_requests()`
-- `dwc3_gadget_del_and_unmap_request()`
+"xhci_hcd 0000:00:14.0: Can't queue urb, port error, link inactive"
 
-Path 3:
-Occurs independently during `adb root` execution, which triggers
-USB function unbind and bind operations. The sequence includes:
-- `gserial_disconnect()`
-- `usb_ep_disable()`
-- `dwc3_gadget_ep_disable()`
-- `dwc3_remove_requests()` with `-ESHUTDOWN` status
+Fix setting and clearing the flag.
 
-Path 3 operates asynchronously and lacks synchronization with Paths
-1 and 2. When Path 3 completes, it disables endpoints and frees 'out'
-requests. If Paths 1 or 2 are still processing these requests,
-accessing freed memory leads to a crash due to use-after-free conditions.
+The flag is cleared after hub driver has successfully reset the device
+when hcd->reset_device is called. xhci-hcd issues an internal "reset
+device" command in this callback, and clear all flags once the command
+completes successfully.
 
-To fix this added check for request completion and skip processing
-if already completed and added the request status for ep0 while queue.
+This command may complete with a context state error if slot was recently
+reset and is already in the defauilt state. This is treated as a success
+but flag was left uncleared.
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable <stable@kernel.org>
-Suggested-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Manish Nagar <manish.nagar@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251120074435.1983091-1-manish.nagar@oss.qualcomm.com
+The link state field is also unreliable if port is currently in reset,
+so don't set the flag in active reset cases.
+Also clear the flag immediately when link is no longer in ss.Inactive
+state and port event handler detects a completed reset.
+
+This issue was discovered while debugging kernel bugzilla issue 220491.
+It is likely one small part of the problem, causing some of the failures,
+but root cause remains unknown
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220491
+Fixes: b8c3b718087b ("usb: xhci: Don't try to recover an endpoint if port is in error state.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20251107162819.1362579-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/ep0.c    |    1 +
- drivers/usb/dwc3/gadget.c |    7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/usb/host/xhci-ring.c |   15 ++++++++++-----
+ drivers/usb/host/xhci.c      |    1 +
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/dwc3/ep0.c
-+++ b/drivers/usb/dwc3/ep0.c
-@@ -94,6 +94,7 @@ static int __dwc3_gadget_ep0_queue(struc
- 	req->request.actual	= 0;
- 	req->request.status	= -EINPROGRESS;
- 	req->epnum		= dep->number;
-+	req->status		= DWC3_REQUEST_STATUS_QUEUED;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1984,6 +1984,7 @@ static void xhci_cavium_reset_phy_quirk(
  
- 	list_add_tail(&req->list, &dep->pending_list);
- 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -228,6 +228,13 @@ void dwc3_gadget_giveback(struct dwc3_ep
+ static void handle_port_status(struct xhci_hcd *xhci, union xhci_trb *event)
  {
- 	struct dwc3			*dwc = dep->dwc;
++	struct xhci_virt_device *vdev = NULL;
+ 	struct usb_hcd *hcd;
+ 	u32 port_id;
+ 	u32 portsc, cmd_reg;
+@@ -2015,6 +2016,9 @@ static void handle_port_status(struct xh
+ 		goto cleanup;
+ 	}
  
-+	/*
-+	 * The request might have been processed and completed while the
-+	 * spinlock was released. Skip processing if already completed.
-+	 */
-+	if (req->status == DWC3_REQUEST_STATUS_COMPLETED)
-+		return;
++	if (port->slot_id)
++		vdev = xhci->devs[port->slot_id];
 +
- 	dwc3_gadget_del_and_unmap_request(dep, req, status);
- 	req->status = DWC3_REQUEST_STATUS_COMPLETED;
+ 	/* We might get interrupts after shared_hcd is removed */
+ 	if (port->rhub == &xhci->usb3_rhub && xhci->shared_hcd == NULL) {
+ 		xhci_dbg(xhci, "ignore port event for removed USB3 hcd\n");
+@@ -2037,10 +2041,11 @@ static void handle_port_status(struct xh
+ 		usb_hcd_resume_root_hub(hcd);
+ 	}
  
+-	if (hcd->speed >= HCD_USB3 &&
+-	    (portsc & PORT_PLS_MASK) == XDEV_INACTIVE) {
+-		if (port->slot_id && xhci->devs[port->slot_id])
+-			xhci->devs[port->slot_id]->flags |= VDEV_PORT_ERROR;
++	if (vdev && (portsc & PORT_PLS_MASK) == XDEV_INACTIVE) {
++		if (!(portsc & PORT_RESET))
++			vdev->flags |= VDEV_PORT_ERROR;
++	} else if (vdev && portsc & PORT_RC) {
++		vdev->flags &= ~VDEV_PORT_ERROR;
+ 	}
+ 
+ 	if ((portsc & PORT_PLC) && (portsc & PORT_PLS_MASK) == XDEV_RESUME) {
+@@ -2098,7 +2103,7 @@ static void handle_port_status(struct xh
+ 		 * so the roothub behavior is consistent with external
+ 		 * USB 3.0 hub behavior.
+ 		 */
+-		if (port->slot_id && xhci->devs[port->slot_id])
++		if (vdev)
+ 			xhci_ring_device(xhci, port->slot_id);
+ 		if (bus_state->port_remote_wakeup & (1 << hcd_portnum)) {
+ 			xhci_test_and_clear_bit(xhci, port, PORT_PLC);
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -3993,6 +3993,7 @@ static int xhci_discover_or_reset_device
+ 				xhci_get_slot_state(xhci, virt_dev->out_ctx));
+ 		xhci_dbg(xhci, "Not freeing device rings.\n");
+ 		/* Don't treat this as an error.  May change my mind later. */
++		virt_dev->flags = 0;
+ 		ret = 0;
+ 		goto command_cleanup;
+ 	case COMP_SUCCESS:
 
 
