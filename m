@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984C1313270;
-	Wed,  3 Dec 2025 15:36:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5D2313535;
+	Wed,  3 Dec 2025 15:36:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776196; cv=none; b=jnQ0+Bis7pG/i98PAclBSUe69ISoHQFclNhaiD86auWzvy8Rlz1DghYoiZt2WF5xrwHBPGKIucJ3YUCl8QtQwaWssQRLX2fhu53v+Hef5gR+zI92MNtU75s6jLEjYMig3RZN8+/2x6quRR5Pvco5+Qf86yLSuJXJtbFy+VFzgLE=
+	t=1764776199; cv=none; b=U6UbyrD9RIdq9ZyMSESw+75Adg+PSsqKotTWSBmXFP1cgR4ZaFiJZZBJzbHtaXCW2PDn+eXTlTUWkl2ggMeCWel0GE/KssXLzBz14jNAzxGN4eXHoAsJA6jNmNl1QHaR12NIJqqRgbMN4vpJeJq7L1u+9Z0hyz/ca8OQNo0PKHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776196; c=relaxed/simple;
-	bh=7Q2dkM39dSp7aAbwIx9f6IJsPx+O9A1dLqAK53UyHyI=;
+	s=arc-20240116; t=1764776199; c=relaxed/simple;
+	bh=VdCgBsswWc7HTyxwmQp+t5W5nxmxaBhE8kIj/72wYsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qV2D34kp0JkqqlJnu5oB8qKGeyhqEmOd1gu/U82A379rC0xQGp3QBNIJfSbr5NFmwXbUMPoAf6GjMYa+wGmj6fKkE/F5Id9MSLFW1BtwP4UMggKG9H+weMvzh82UmvAcIkVIskWJw8WlgPclqI67rPHZXwgDsu+Gj69ec5tSvh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMtq7UPQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ezK0FQOpeAtcC7s3dtq19ZtFsdioV+O6gq40qa0QG26PwyOexXw/l8h1gfCxlTTDIwJAf2IENTPWMcIEtPR8EKUPTkpnopC7QZUSavxib8rEaxUQKWIOmMJvbz9DTh/tAxqG9mhSXivuDG5VZpC6ZNyvVLBcccTxOKH5uFl8tQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XWcl8bXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMtq7UPQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F8BC4CEF5;
-	Wed,  3 Dec 2025 15:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XWcl8bXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1F7C4CEF5;
+	Wed,  3 Dec 2025 15:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776196;
-	bh=7Q2dkM39dSp7aAbwIx9f6IJsPx+O9A1dLqAK53UyHyI=;
+	s=korg; t=1764776199;
+	bh=VdCgBsswWc7HTyxwmQp+t5W5nxmxaBhE8kIj/72wYsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMtq7UPQptbjVtR4CiEJrVIc9+wDFcz9RdkFPKviu8NkDBEYP0RLx3GGKL1yspZaL
-	 2yyHEjdjgLQJlPjSB6b8kZn6c41PpcjErP1lq9eLWhumbg8yM5LEUOVqAlDE506rFQ
-	 6pMqxpuvVwqUVJE0xO3pBQmBfRCZk+5/1U7hknxQ=
+	b=XWcl8bXB84Px2UITSukbwME2++u4HpHSfob6dAshKnvez6GAq3P4AB2aT+WCfea82
+	 xo0kaMQPGDNJIg1cDsTBAnXFPenixMSnf8pRLKJm4l7KuCzNJTDcBg3Z30n2fL1qpW
+	 P2Rz7FzQkNXY88+2/wxi+oFs84f1QFURQapAgda0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udit Kumar <u-kumar1@ti.com>,
-	Devarsh Thakkar <devarsht@ti.com>,
-	Harikrishna Shenoy <h-shenoy@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/300] phy: cadence: cdns-dphy: Enable lower resolutions in dphy
-Date: Wed,  3 Dec 2025 16:25:14 +0100
-Message-ID: <20251203152404.697284933@linuxfoundation.org>
+Subject: [PATCH 5.10 111/300] net: sh_eth: Disable WoL if system can not suspend
+Date: Wed,  3 Dec 2025 16:25:15 +0100
+Message-ID: <20251203152404.733782618@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -47,55 +47,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harikrishna Shenoy <h-shenoy@ti.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit 43bd2c44515f8ee5c019ce6e6583f5640387a41b ]
+[ Upstream commit 9c02ea544ac35a9def5827d30594406947ccd81a ]
 
-Enable support for data lane rates between 80-160 Mbps cdns dphy
-as mentioned in TRM [0] by setting the pll_opdiv field to 16.
-This change enables lower resolutions like 640x480 at 60Hz.
+The MAC can't facilitate WoL if the system can't go to sleep. Gate the
+WoL support callbacks in ethtool at compile time using CONFIG_PM_SLEEP.
 
-[0]: https://www.ti.com/lit/zip/spruil1
-(Table 12-552. DPHY_TX_PLL_CTRL Register Field Descriptions)
-
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Reviewed-by: Devarsh Thakkar <devarsht@ti.com>
-Signed-off-by: Harikrishna Shenoy <h-shenoy@ti.com>
-Link: https://lore.kernel.org/r/20250807052002.717807-1-h-shenoy@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250909085849.3808169-1-niklas.soderlund+renesas@ragnatech.se
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/cadence/cdns-dphy.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/renesas/sh_eth.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/phy/cadence/cdns-dphy.c b/drivers/phy/cadence/cdns-dphy.c
-index 90c4e9b5aac83..04cee5a00a5b4 100644
---- a/drivers/phy/cadence/cdns-dphy.c
-+++ b/drivers/phy/cadence/cdns-dphy.c
-@@ -115,7 +115,7 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
+diff --git a/drivers/net/ethernet/renesas/sh_eth.c b/drivers/net/ethernet/renesas/sh_eth.c
+index e2019dc3ac563..88ba7972ce635 100644
+--- a/drivers/net/ethernet/renesas/sh_eth.c
++++ b/drivers/net/ethernet/renesas/sh_eth.c
+@@ -2362,6 +2362,7 @@ static int sh_eth_set_ringparam(struct net_device *ndev,
+ 	return 0;
+ }
  
- 	dlane_bps = opts->hs_clk_rate;
++#ifdef CONFIG_PM_SLEEP
+ static void sh_eth_get_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
+ {
+ 	struct sh_eth_private *mdp = netdev_priv(ndev);
+@@ -2388,6 +2389,7 @@ static int sh_eth_set_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
  
--	if (dlane_bps > 2500000000UL || dlane_bps < 160000000UL)
-+	if (dlane_bps > 2500000000UL || dlane_bps < 80000000UL)
- 		return -EINVAL;
- 	else if (dlane_bps >= 1250000000)
- 		cfg->pll_opdiv = 1;
-@@ -125,6 +125,8 @@ static int cdns_dsi_get_dphy_pll_cfg(struct cdns_dphy *dphy,
- 		cfg->pll_opdiv = 4;
- 	else if (dlane_bps >= 160000000)
- 		cfg->pll_opdiv = 8;
-+	else if (dlane_bps >= 80000000)
-+		cfg->pll_opdiv = 16;
+ 	return 0;
+ }
++#endif
  
- 	cfg->pll_fbdiv = DIV_ROUND_UP_ULL(dlane_bps * 2 * cfg->pll_opdiv *
- 					  cfg->pll_ipdiv,
+ static const struct ethtool_ops sh_eth_ethtool_ops = {
+ 	.get_regs_len	= sh_eth_get_regs_len,
+@@ -2403,8 +2405,10 @@ static const struct ethtool_ops sh_eth_ethtool_ops = {
+ 	.set_ringparam	= sh_eth_set_ringparam,
+ 	.get_link_ksettings = phy_ethtool_get_link_ksettings,
+ 	.set_link_ksettings = phy_ethtool_set_link_ksettings,
++#ifdef CONFIG_PM_SLEEP
+ 	.get_wol	= sh_eth_get_wol,
+ 	.set_wol	= sh_eth_set_wol,
++#endif
+ };
+ 
+ /* network device open function */
 -- 
 2.51.0
 
