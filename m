@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCE931D38F;
-	Wed,  3 Dec 2025 16:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998573587AE;
+	Wed,  3 Dec 2025 16:45:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780297; cv=none; b=L3L/5hEdL4EKDcSsB4wsCpUKsaWHfOwiMTwiaxfj9Fa4L/y/erBe4+PpdPxwc2bUw2Od+n9HoHXNdvSn+Owi/M/lEDHf59s7Pf6F8pPp8icl1Zadr8n0V26N1BhvzItm5iqaCqOTfmmTRYg6yirMVCZQExtFZvbPwi4W4kqKgfE=
+	t=1764780300; cv=none; b=Ybh4AtvUNU7l502RxZUgsUqbdmr2tBLKo+DBuZCzHyIuRgRivzaPti1UtrLG0pSYAooICi+qJPCI6aFRjvHhrSOQ7aF/AAJkdOeJ9euGOsv9AW86vzeMTTIfijC23tzhHRxRfryjFsLI6C8uZ8I/VU6NkKRJBZbehhgQzY7fXjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780297; c=relaxed/simple;
-	bh=kv8lLp+0MfiS8LmmbXdVW5ZquUA03phRf8PbXmkM4y4=;
+	s=arc-20240116; t=1764780300; c=relaxed/simple;
+	bh=XOaQIIx0SdO9qv59eBc7g5M9XJIwjP6t7tq90M11Bnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnS9+wC8tFZWQFVp3af/PSTCK8CyR3ZRHLhs2veylwSTy0TFKlEvnaNjabZdO1Ct2Ks7MnNypxVKA/AAou+vqbR6D+SBBq6k/ro0X/HLI9Rgtq2WYchHIrw/eoebKpzryWS53I17/w2ZN6PLhYwWXDUwJxACyZIyWRxF2RAPjh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x8UYDy0P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f3bGU3N53QpMTJzGdFOoD02ynCWWKDbeIaUk0iUzFgL3HvSHCKc1ExaQ3S4qQsT2dunkhtMx0ZXFIfEbEGQJlRMIc8V00MnQOAS/0UBqur36nPxMotfYMDxyoT/5hPW9SL2NKSgtSZuh3BDzjlFaL6wdSk0Qh7rK71m5W68F7C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nascdf6K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x8UYDy0P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A557C4CEF5;
-	Wed,  3 Dec 2025 16:44:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nascdf6K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8285C4CEF5;
+	Wed,  3 Dec 2025 16:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780296;
-	bh=kv8lLp+0MfiS8LmmbXdVW5ZquUA03phRf8PbXmkM4y4=;
+	s=korg; t=1764780300;
+	bh=XOaQIIx0SdO9qv59eBc7g5M9XJIwjP6t7tq90M11Bnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8UYDy0PQ04OuDuI8gVV1O2W1wFdR4w+P9Sjtsg3K/2Zn8CE8g7jfBRJ9XBsfZycQ
-	 gyf8YnAQKoKCGj8ozH5Mc+A9HE1FCv5y7bXJIgkjModcA19h71GhOth+Y3LUZU6BkV
-	 WeqGv/jLy8hi+OhcRyJW1VI5r49ohtqcP1f6p2PM=
+	b=nascdf6Ki3QvBszYA40fgEY1p4BAshmiigS/hjWAAcn5dFxYAPI6zx1UeZKssDNd+
+	 XnXeIvm8JX5QIQ619anZmwUBvBJN/WVRPp0D2Sv3xMZWjJclpcCDSp8BcQPtHXSEBH
+	 fv3CA7nM+TL3ImfTdzvxOtXR1REfGvLdOm0U+FnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Iles <jamie.iles@oss.qualcomm.com>,
-	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Hang Zhou <929513338@qq.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 514/568] mailbox: pcc: dont zero error register
-Date: Wed,  3 Dec 2025 16:28:36 +0100
-Message-ID: <20251203152459.540710841@linuxfoundation.org>
+Subject: [PATCH 6.1 515/568] spi: bcm63xx: fix premature CS deassertion on RX-only transactions
+Date: Wed,  3 Dec 2025 16:28:37 +0100
+Message-ID: <20251203152459.577127878@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,55 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Iles <jamie.iles@oss.qualcomm.com>
+From: Hang Zhou <929513338@qq.com>
 
-[ Upstream commit ff0e4d4c97c94af34cc9cad37b5a5cdbe597a3b0 ]
+[ Upstream commit fd9862f726aedbc2f29a29916cabed7bcf5cadb6 ]
 
-The error status mask for a type 3/4 subspace is used for reading the
-error status, and the bitwise inverse is used for clearing the error
-with the intent being to preserve any of the non-error bits.  However,
-we were previously applying the mask to extract the status and then
-applying the inverse to the result which ended up clearing all bits.
+On BCM6358 (and also observed on BCM6368) the controller appears to
+only generate as many SPI clocks as bytes that have been written into
+the TX FIFO. For RX-only transfers the driver programs the transfer
+length in SPI_MSG_CTL but does not write anything into the FIFO, so
+chip select is deasserted early and the RX transfer segment is never
+fully clocked in.
 
-Instead, store the inverse mask in the preserve mask and then use that
-on the original value read from the error status so that only the error
-is cleared.
+A concrete failing case is a three-transfer MAC address read from
+SPI-NOR:
+  - TX 0x03 (read command)
+  - TX 3-byte address
+  - RX 6 bytes (MAC)
 
-Fixes: c45ded7e1135 ("mailbox: pcc: Add support for PCCT extended PCC subspaces(type 3/4)")
-Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
-Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+In contrast, a two-transfer JEDEC-ID read (0x9f + 6-byte RX) works
+because the driver uses prepend_len and writes dummy bytes into the
+TX FIFO for the RX part.
+
+Fix this by writing 0xff dummy bytes into the TX FIFO for RX-only
+segments so that the number of bytes written to the FIFO matches the
+total message length seen by the controller.
+
+Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
+
+Signed-off-by: Hang Zhou <929513338@qq.com>
+Link: https://patch.msgid.link/tencent_7AC88FCB3076489A4A7E6C2163DF1ACF8D06@qq.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spi/spi-bcm63xx.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 94e99b87496d2..0729988467554 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -278,9 +278,8 @@ static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index 2f2a130464651..e57e1f75cd9f9 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -257,6 +257,20 @@ static int bcm63xx_txrx_bufs(struct spi_device *spi, struct spi_transfer *first,
  
--	val &= pchan->error.status_mask;
--	if (val) {
--		val &= ~pchan->error.status_mask;
-+	if (val & pchan->error.status_mask) {
-+		val &= pchan->error.preserve_mask;
- 		pcc_chan_reg_write(&pchan->error, val);
- 		return -EIO;
- 	}
-@@ -662,7 +661,8 @@ static int pcc_parse_subspace_db_reg(struct pcc_chan_info *pchan,
- 
- 		ret = pcc_chan_reg_init(&pchan->error,
- 					&pcct_ext->error_status_register,
--					0, 0, pcct_ext->error_status_mask,
-+					~pcct_ext->error_status_mask, 0,
-+					pcct_ext->error_status_mask,
- 					"Error Status");
- 	}
- 	return ret;
+ 		if (t->rx_buf) {
+ 			do_rx = true;
++
++			/*
++			 * In certain hardware implementations, there appears to be a
++			 * hidden accumulator that tracks the number of bytes written into
++			 * the hardware FIFO, and this accumulator overrides the length in
++			 * the SPI_MSG_CTL register.
++			 *
++			 * Therefore, for read-only transfers, we need to write some dummy
++			 * value into the FIFO to keep the accumulator tracking the correct
++			 * length.
++			 */
++			if (!t->tx_buf)
++				memset_io(bs->tx_io + len, 0xFF, t->len);
++
+ 			/* prepend is half-duplex write only */
+ 			if (t == first)
+ 				prepend_len = 0;
 -- 
 2.51.0
 
