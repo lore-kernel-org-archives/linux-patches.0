@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED9734AAEF;
-	Wed,  3 Dec 2025 16:40:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1E934F48F;
+	Wed,  3 Dec 2025 16:40:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780044; cv=none; b=R0EyD+4HZhG8+h7Yvtq1T+1+IpyH1IuS+SbedVrVQGmbdm6KEey3PJTMyLksvTVd5PcT6G5wx3dRVcVN1Et+Bz4n/5/0yL2GtbtjF5GvdM3F9stG6zWfGuDc3PkkfYXZKHv4Rc0XAJza8bq/YOLu9Rn4oStos1yjZtHPvdZ782k=
+	t=1764780047; cv=none; b=F4DuRsTHImxideTElYK2IrxDm/2MCXYHBBiYhen35nQsNrNrGSxWpsvzibTe2ZUEDATVN8Bfqvb0xnZa3BaJmrz1OYvaZ1fkqrdH4U1kpS09A8F6IA+cmFGwgtmgZ1Jcxh19XRAKVxTLgjKBzb1qHeaYeofCBSvU2Sj7iTjnbqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780044; c=relaxed/simple;
-	bh=LKgnNxJ+gIFS/XuoYp6oGHmvN0+XiugXyOlI3WN3ijI=;
+	s=arc-20240116; t=1764780047; c=relaxed/simple;
+	bh=lLjooOKzKUgID5LEYGptglRdVBqT58O4YJTO72CEC6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s2JTmTFL0b7Vdf+81z7eTfYkB9A/AlsrZn6nQy/xNvwoNwz+N9rquRHJOe9WE279l5uY1HLq0RNxz2ShVhFrxnPjtCt1pE9pthT0uMutyb+4cPmUPt2ckZ781oglbqDX2sisqZvbJ9eHqg0c+VHwkjg8I55sVxZEXK4DRbjnjWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pudv9+PO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ejAHwZLVszMhSNoQSnS4L8buEV85cV4z/033OuVvw3YEXk8I9N0gbvCZLdqVjErWywiL9UoopTr+oRXnF6eTkhI2adigxwY/e48QDEC2GxYcIpbzEXsEei8oClotOw6yCxSrp0ch5iW4JZTt8C1rdTHKXYjWCzOTeOoIJdaLRvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFdJCIIG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pudv9+PO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 305DDC19421;
-	Wed,  3 Dec 2025 16:40:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFdJCIIG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDB2C4CEF5;
+	Wed,  3 Dec 2025 16:40:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780043;
-	bh=LKgnNxJ+gIFS/XuoYp6oGHmvN0+XiugXyOlI3WN3ijI=;
+	s=korg; t=1764780046;
+	bh=lLjooOKzKUgID5LEYGptglRdVBqT58O4YJTO72CEC6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pudv9+PO9UjuBNFLZ4w17ogkDicYWsk7FmzxfdZA34EmQVXjEtIn68OHnVg/Hvprd
-	 NL7LE2AEchR35gVAJFj/OFc+LWjKAh7ZBRYPoop0nBPOBGEhYrXcTNqUd0rpjTS1rP
-	 r1siNqZIj4OkFXm67hTi0iT58vrYmeX2T8h6kvTs=
+	b=bFdJCIIG7bbvCTjkcaCC9zYhTGPmUstpl3vuoldKTM1igzyLSNhxDJ79Wwzootx2N
+	 qu57KRQmEbs3yUnQdBAZkJ/0ttBR/o+A45S6p+65U65/YrlSOIxpXoNvcaCA1DdP9l
+	 sD8Ddq7Qrbsx6Tl8GplpU1irmW4jBNz8s1TzH5cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Patalano <mpatalan@redhat.com>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 439/568] nvme: nvme-fc: Ensure ->ioerr_work is cancelled in nvme_fc_delete_ctrl()
-Date: Wed,  3 Dec 2025 16:27:21 +0100
-Message-ID: <20251203152456.774899876@linuxfoundation.org>
+	syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com,
+	Hannes Reinecke <hare@suse.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 440/568] scsi: sg: Do not sleep in atomic context
+Date: Wed,  3 Dec 2025 16:27:22 +0100
+Message-ID: <20251203152456.811044164@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,90 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ewan D. Milne <emilne@redhat.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-commit 0a2c5495b6d1ecb0fa18ef6631450f391a888256 upstream.
+commit 90449f2d1e1f020835cba5417234636937dd657e upstream.
 
-nvme_fc_delete_assocation() waits for pending I/O to complete before
-returning, and an error can cause ->ioerr_work to be queued after
-cancel_work_sync() had been called.  Move the call to cancel_work_sync() to
-be after nvme_fc_delete_association() to ensure ->ioerr_work is not running
-when the nvme_fc_ctrl object is freed.  Otherwise the following can occur:
+sg_finish_rem_req() calls blk_rq_unmap_user(). The latter function may
+sleep. Hence, call sg_finish_rem_req() with interrupts enabled instead
+of disabled.
 
-[ 1135.911754] list_del corruption, ff2d24c8093f31f8->next is NULL
-[ 1135.917705] ------------[ cut here ]------------
-[ 1135.922336] kernel BUG at lib/list_debug.c:52!
-[ 1135.926784] Oops: invalid opcode: 0000 [#1] SMP NOPTI
-[ 1135.931851] CPU: 48 UID: 0 PID: 726 Comm: kworker/u449:23 Kdump: loaded Not tainted 6.12.0 #1 PREEMPT(voluntary)
-[ 1135.943490] Hardware name: Dell Inc. PowerEdge R660/0HGTK9, BIOS 2.5.4 01/16/2025
-[ 1135.950969] Workqueue:  0x0 (nvme-wq)
-[ 1135.954673] RIP: 0010:__list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1135.961041] Code: c7 c7 98 68 72 94 e8 26 45 fe ff 0f 0b 48 c7 c7 70 68 72 94 e8 18 45 fe ff 0f 0b 48 89 fe 48 c7 c7 80 69 72 94 e8 07 45 fe ff <0f> 0b 48 89 d1 48 c7 c7 a0 6a 72 94 48 89 c2 e8 f3 44 fe ff 0f 0b
-[ 1135.979788] RSP: 0018:ff579b19482d3e50 EFLAGS: 00010046
-[ 1135.985015] RAX: 0000000000000033 RBX: ff2d24c8093f31f0 RCX: 0000000000000000
-[ 1135.992148] RDX: 0000000000000000 RSI: ff2d24d6bfa1d0c0 RDI: ff2d24d6bfa1d0c0
-[ 1135.999278] RBP: ff2d24c8093f31f8 R08: 0000000000000000 R09: ffffffff951e2b08
-[ 1136.006413] R10: ffffffff95122ac8 R11: 0000000000000003 R12: ff2d24c78697c100
-[ 1136.013546] R13: fffffffffffffff8 R14: 0000000000000000 R15: ff2d24c78697c0c0
-[ 1136.020677] FS:  0000000000000000(0000) GS:ff2d24d6bfa00000(0000) knlGS:0000000000000000
-[ 1136.028765] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 1136.034510] CR2: 00007fd207f90b80 CR3: 000000163ea22003 CR4: 0000000000f73ef0
-[ 1136.041641] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[ 1136.048776] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
-[ 1136.055910] PKRU: 55555554
-[ 1136.058623] Call Trace:
-[ 1136.061074]  <TASK>
-[ 1136.063179]  ? show_trace_log_lvl+0x1b0/0x2f0
-[ 1136.067540]  ? show_trace_log_lvl+0x1b0/0x2f0
-[ 1136.071898]  ? move_linked_works+0x4a/0xa0
-[ 1136.075998]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.081744]  ? __die_body.cold+0x8/0x12
-[ 1136.085584]  ? die+0x2e/0x50
-[ 1136.088469]  ? do_trap+0xca/0x110
-[ 1136.091789]  ? do_error_trap+0x65/0x80
-[ 1136.095543]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.101289]  ? exc_invalid_op+0x50/0x70
-[ 1136.105127]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.110874]  ? asm_exc_invalid_op+0x1a/0x20
-[ 1136.115059]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
-[ 1136.120806]  move_linked_works+0x4a/0xa0
-[ 1136.124733]  worker_thread+0x216/0x3a0
-[ 1136.128485]  ? __pfx_worker_thread+0x10/0x10
-[ 1136.132758]  kthread+0xfa/0x240
-[ 1136.135904]  ? __pfx_kthread+0x10/0x10
-[ 1136.139657]  ret_from_fork+0x31/0x50
-[ 1136.143236]  ? __pfx_kthread+0x10/0x10
-[ 1136.146988]  ret_from_fork_asm+0x1a/0x30
-[ 1136.150915]  </TASK>
-
-Fixes: 19fce0470f05 ("nvme-fc: avoid calling _nvme_fc_abort_outstanding_ios from interrupt context")
+Reported-by: syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-scsi/691560c4.a70a0220.3124cb.001a.GAE@google.com/
+Cc: Hannes Reinecke <hare@suse.de>
 Cc: stable@vger.kernel.org
-Tested-by: Marco Patalano <mpatalan@redhat.com>
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Ewan D. Milne <emilne@redhat.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 97d27b0dd015 ("scsi: sg: close race condition in sg_remove_sfp_usercontext()")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20251113181643.1108973-1-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/fc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/sg.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3262,7 +3262,6 @@ nvme_fc_delete_ctrl(struct nvme_ctrl *nc
- {
- 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
+--- a/drivers/scsi/sg.c
++++ b/drivers/scsi/sg.c
+@@ -2204,9 +2204,17 @@ sg_remove_sfp_usercontext(struct work_st
+ 	write_lock_irqsave(&sfp->rq_list_lock, iflags);
+ 	while (!list_empty(&sfp->rq_list)) {
+ 		srp = list_first_entry(&sfp->rq_list, Sg_request, entry);
+-		sg_finish_rem_req(srp);
+ 		list_del(&srp->entry);
++		write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
++
++		sg_finish_rem_req(srp);
++		/*
++		 * sg_rq_end_io() uses srp->parentfp. Hence, only clear
++		 * srp->parentfp after blk_mq_free_request() has been called.
++		 */
+ 		srp->parentfp = NULL;
++
++		write_lock_irqsave(&sfp->rq_list_lock, iflags);
+ 	}
+ 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
  
--	cancel_work_sync(&ctrl->ioerr_work);
- 	cancel_delayed_work_sync(&ctrl->connect_work);
- 	/*
- 	 * kill the association on the link side.  this will block
-@@ -3333,6 +3332,7 @@ nvme_fc_reset_ctrl_work(struct work_stru
- 
- 	/* will block will waiting for io to terminate */
- 	nvme_fc_delete_association(ctrl);
-+	cancel_work_sync(&ctrl->ioerr_work);
- 
- 	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING))
- 		dev_err(ctrl->ctrl.device,
 
 
