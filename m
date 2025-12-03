@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C2D3563D0;
-	Wed,  3 Dec 2025 16:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6DD3570C8;
+	Wed,  3 Dec 2025 16:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778695; cv=none; b=oCBIKVZ9YGRgE9n760Q3clRrLeX9C7acM/6SrGUztMNLmxJjrXri+9onPWBFofiVkXYeKEAn/2cgNZdSutGMXhYhUZ/YR62S4zN0Vf4wzINsQJ7KJZGLpJW297m7TArt+/7CuGd43gwW5wKEZ74LrkZDD4bNpojSEXyktZxqJUU=
+	t=1764778698; cv=none; b=BBOCRzx8p+Pedym6WP1rUE7vG8O7WKpayggXVdqiAiVog/8e3+l2yomtrBBj1neyeP+H2SnP/bf920q3oW5yz/vS/p0QMzjDbUDrjjkyAxgjldquye/ZVZG5tNSih95JxfR4xXMDewCNU0OLBy1zE4kbxj4/5NfZ2KDcd7cWy7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778695; c=relaxed/simple;
-	bh=2CN5ixrYm5PR6fafwEVcELawZZkZ7qeIuJZZI5xvLlg=;
+	s=arc-20240116; t=1764778698; c=relaxed/simple;
+	bh=hTF1Dp8kfHUFwVwXvPpM61HsKEtZ9faSCiIwkqMvpkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rPNxKuOlwXbKFEbwYaKXrCEyk7/LBb/TuChUSLRW7IWnKO3rajTOPE2Ju93+1ctjFDPdaQ24bqC2jkWesFtcE8TPGV2uBvh4Xr3PEArcrDMV3kwtm2C5ff06ZwQpfp6Jtne0gmk9oan8vxoKSRhVffNV1Ra44qxdz2GE+vbOWBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yE9N8rui; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ln1qm5/xI0dA+Wk0ht5glh/yfsMf7ZiZ8K5Yn7FGWzGPE3l1NYYhOtLkygZFidz2auwMC3oxP3ygJgyQmKtjPQ8Ri4r+YHgmn8lyqgvvxcoI8ByHxns0KIVSLP1tmJxcgX6KQUiStYhyPi9d8YBH4sTqohLJcvQKFpzL7NQ25OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ymmxpwTh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yE9N8rui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C00C4CEF5;
-	Wed,  3 Dec 2025 16:18:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ymmxpwTh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098FCC4CEF5;
+	Wed,  3 Dec 2025 16:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778695;
-	bh=2CN5ixrYm5PR6fafwEVcELawZZkZ7qeIuJZZI5xvLlg=;
+	s=korg; t=1764778698;
+	bh=hTF1Dp8kfHUFwVwXvPpM61HsKEtZ9faSCiIwkqMvpkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yE9N8ruiho/aUcqf0w2p1Enf9/Zdlfi0lO3SfcI+tvsc2FRJYBcntL3Cuh4V3EOLy
-	 vZLszoimBjInk8beDQD8C0AGIKmc9TAAuXKrjMZzd1QHlPfOCFcTtpQKZG+iq4ULex
-	 YItDh+s+NRDg5WwmvKy6F8nN12OUUl7aWVo3+mrw=
+	b=ymmxpwThdtOHghG1PBERs7DlVSanoXdVNyccwwrvkE9MGosxBEiYYqP6JjcH+dlej
+	 3v1UflSVc0rnIxFacMPmnLZFK2zojQNJWlwjtXJf8UrakTQi6fe87HmPgrZwNEcQQb
+	 SGsEojFWJ4uIYg53zpKTM+KXRmgACtqFZkKZGCEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avadhut Naik <avadhut.naik@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/568] EDAC/mc_sysfs: Increase legacy channel support to 16
-Date: Wed,  3 Dec 2025 16:20:06 +0100
-Message-ID: <20251203152440.817451816@linuxfoundation.org>
+Subject: [PATCH 6.1 005/568] btrfs: zoned: refine extent allocator hint selection
+Date: Wed,  3 Dec 2025 16:20:07 +0100
+Message-ID: <20251203152440.853307566@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,87 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Avadhut Naik <avadhut.naik@amd.com>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 6e1c2c6c2c40ce99e0d2633b212f43c702c1a002 ]
+[ Upstream commit 0d703963d297964451783e1a0688ebdf74cd6151 ]
 
-Newer AMD systems can support up to 16 channels per EDAC "mc" device.
-These are detected by the EDAC module running on the device, and the
-current EDAC interface is appropriately enumerated.
+The hint block group selection in the extent allocator is wrong in the
+first place, as it can select the dedicated data relocation block group for
+the normal data allocation.
 
-The legacy EDAC sysfs interface however, provides device attributes for
-channels 0 through 11 only. Consequently, the last four channels, 12
-through 15, will not be enumerated and will not be visible through the
-legacy sysfs interface.
+Since we separated the normal data space_info and the data relocation
+space_info, we can easily identify a block group is for data relocation or
+not. Do not choose it for the normal data allocation.
 
-Add additional device attributes to ensure that all 16 channels, if
-present, are enumerated by and visible through the legacy EDAC sysfs
-interface.
-
-Signed-off-by: Avadhut Naik <avadhut.naik@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/20250916203242.1281036-1-avadhut.naik@amd.com
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/edac_mc_sysfs.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ fs/btrfs/extent-tree.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/edac/edac_mc_sysfs.c b/drivers/edac/edac_mc_sysfs.c
-index 15f63452a9bec..b01436d9ddaed 100644
---- a/drivers/edac/edac_mc_sysfs.c
-+++ b/drivers/edac/edac_mc_sysfs.c
-@@ -306,6 +306,14 @@ DEVICE_CHANNEL(ch10_dimm_label, S_IRUGO | S_IWUSR,
- 	channel_dimm_label_show, channel_dimm_label_store, 10);
- DEVICE_CHANNEL(ch11_dimm_label, S_IRUGO | S_IWUSR,
- 	channel_dimm_label_show, channel_dimm_label_store, 11);
-+DEVICE_CHANNEL(ch12_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 12);
-+DEVICE_CHANNEL(ch13_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 13);
-+DEVICE_CHANNEL(ch14_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 14);
-+DEVICE_CHANNEL(ch15_dimm_label, S_IRUGO | S_IWUSR,
-+	channel_dimm_label_show, channel_dimm_label_store, 15);
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 5395e27f9e89a..7985ca56f6b70 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -4224,7 +4224,8 @@ static int prepare_allocation_clustered(struct btrfs_fs_info *fs_info,
+ }
  
- /* Total possible dynamic DIMM Label attribute file table */
- static struct attribute *dynamic_csrow_dimm_attr[] = {
-@@ -321,6 +329,10 @@ static struct attribute *dynamic_csrow_dimm_attr[] = {
- 	&dev_attr_legacy_ch9_dimm_label.attr.attr,
- 	&dev_attr_legacy_ch10_dimm_label.attr.attr,
- 	&dev_attr_legacy_ch11_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch12_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch13_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch14_dimm_label.attr.attr,
-+	&dev_attr_legacy_ch15_dimm_label.attr.attr,
- 	NULL
- };
+ static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
+-				    struct find_free_extent_ctl *ffe_ctl)
++				    struct find_free_extent_ctl *ffe_ctl,
++				    struct btrfs_space_info *space_info)
+ {
+ 	if (ffe_ctl->for_treelog) {
+ 		spin_lock(&fs_info->treelog_bg_lock);
+@@ -4248,6 +4249,7 @@ static int prepare_allocation_zoned(struct btrfs_fs_info *fs_info,
+ 			u64 avail = block_group->zone_capacity - block_group->alloc_offset;
  
-@@ -349,6 +361,14 @@ DEVICE_CHANNEL(ch10_ce_count, S_IRUGO,
- 		   channel_ce_count_show, NULL, 10);
- DEVICE_CHANNEL(ch11_ce_count, S_IRUGO,
- 		   channel_ce_count_show, NULL, 11);
-+DEVICE_CHANNEL(ch12_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 12);
-+DEVICE_CHANNEL(ch13_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 13);
-+DEVICE_CHANNEL(ch14_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 14);
-+DEVICE_CHANNEL(ch15_ce_count, S_IRUGO,
-+		   channel_ce_count_show, NULL, 15);
- 
- /* Total possible dynamic ce_count attribute file table */
- static struct attribute *dynamic_csrow_ce_count_attr[] = {
-@@ -364,6 +384,10 @@ static struct attribute *dynamic_csrow_ce_count_attr[] = {
- 	&dev_attr_legacy_ch9_ce_count.attr.attr,
- 	&dev_attr_legacy_ch10_ce_count.attr.attr,
- 	&dev_attr_legacy_ch11_ce_count.attr.attr,
-+	&dev_attr_legacy_ch12_ce_count.attr.attr,
-+	&dev_attr_legacy_ch13_ce_count.attr.attr,
-+	&dev_attr_legacy_ch14_ce_count.attr.attr,
-+	&dev_attr_legacy_ch15_ce_count.attr.attr,
- 	NULL
- };
- 
+ 			if (block_group_bits(block_group, ffe_ctl->flags) &&
++			    block_group->space_info == space_info &&
+ 			    avail >= ffe_ctl->num_bytes) {
+ 				ffe_ctl->hint_byte = block_group->start;
+ 				break;
+@@ -4269,7 +4271,7 @@ static int prepare_allocation(struct btrfs_fs_info *fs_info,
+ 		return prepare_allocation_clustered(fs_info, ffe_ctl,
+ 						    space_info, ins);
+ 	case BTRFS_EXTENT_ALLOC_ZONED:
+-		return prepare_allocation_zoned(fs_info, ffe_ctl);
++		return prepare_allocation_zoned(fs_info, ffe_ctl, space_info);
+ 	default:
+ 		BUG();
+ 	}
 -- 
 2.51.0
 
