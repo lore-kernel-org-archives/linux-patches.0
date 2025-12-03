@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE84308F1C;
-	Wed,  3 Dec 2025 15:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2457F3074BA;
+	Wed,  3 Dec 2025 15:44:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776647; cv=none; b=rARK7UOLadYqqbzG2oMuGWOtnflDtBgM+cVMH4Ik4BUtAKA9ys9mTVe/ACg6hnDVg6Mbkco2+IPNQVsnkHxMdjJ1G4aqh3TUX11RCbDqJuY8GsFKXmDcrT01K14kot8Shmpbg/2Gz6JVEPn+pxhpDhW9RmE4DkQSihEkeWir2xo=
+	t=1764776651; cv=none; b=QfthP0HQfCR6vxflSTDuGVRPDyqeaWIzuEux7b925R5zwvNBH5QkAwLipwNQ21Y2FZJpdMSlS6uQ5eEo1QKGOWd3hEjVt6OQzb/dY05XhQ3ZKIMGTGaRtM86JxiWomrU385hsKMoOW0mr3YRTqxQocotrO04gbERZLWkVJSp0Mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776647; c=relaxed/simple;
-	bh=ofkhEjE7ewjU+pWUGQAJZKqTX2tXaQehQgGjUZf1G5I=;
+	s=arc-20240116; t=1764776651; c=relaxed/simple;
+	bh=KZkgOL8VO0DtePNTAy33c0FMfYlJeN/lQXRR/XoFfJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HHxwrQ5UrhyTkkXwcwQiM1YsgXnAny3Kw9DxCCnrB8C+PsxdKSwAQLIdEwaMUeUQWYANA3zX0w7WXZnVCuy0Dh4cZsqvYG7sSg7qCriL1Mory27vO7k1FZZN27wIk4SEvbUimdl90VdSiPGvu8g5kWgoMLn459Gshusn2sLzOjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2luO5gMs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TQXRldF3yJ427sG0TaEllU5qGWsbNFzJqraT2ZOcCyKNV5IY0ru9910Y08jmL9/mLs1OoIvoTK5yAiYB1bVXA2wV9Y4u1yPdwuJEjfiI9dffKJlmTkkHxt7vjxYfqz1mnwa/30ulDfndC2WG6jhNVo/D3zYayPypYMkBHEdsFDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2CYHAbi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2luO5gMs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E034AC4CEF5;
-	Wed,  3 Dec 2025 15:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2CYHAbi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C87C4CEF5;
+	Wed,  3 Dec 2025 15:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776647;
-	bh=ofkhEjE7ewjU+pWUGQAJZKqTX2tXaQehQgGjUZf1G5I=;
+	s=korg; t=1764776651;
+	bh=KZkgOL8VO0DtePNTAy33c0FMfYlJeN/lQXRR/XoFfJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2luO5gMs/vXEcM8r/hj1Yincw8v/NQo2J7PaRXyxqcDaLveoU21DnB+pdACJ6fJA6
-	 /2INiRIGsI4cuW9y614w8wkSYTi4xJXyzCs+xGS7yUL5NapiGpWmqz3WLqHGXbD1Tf
-	 i79Dt6VBuZZyQks31jiqX8yM8ktZl6H77//vSZL8=
+	b=J2CYHAbiFzKNrQHYidDAbhF9SM5pwyALzRRPD8fLaucP5WO/jWqdP00mUQB5Rc9aG
+	 6thhErNTaDgEz8tiAVD//XGBlMVmBiNvWS2/VhQeoAgAYnw7h4wN84zrQ5lZsbmHLn
+	 u9eRnpw6cQRsevYxNlwplWpIGAx+ku6WHT0Q2+K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 5.10 212/300] EDAC/altera: Handle OCRAM ECC enable after warm reset
-Date: Wed,  3 Dec 2025 16:26:56 +0100
-Message-ID: <20251203152408.476750650@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 203/300] mtd: onenand: Pass correct pointer to IRQ handler
+Date: Wed,  3 Dec 2025 16:26:47 +0100
+Message-ID: <20251203152408.145355700@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,55 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit fd3ecda38fe0cb713d167b5477d25f6b350f0514 upstream.
+[ Upstream commit 97315e7c901a1de60e8ca9b11e0e96d0f9253e18 ]
 
-The OCRAM ECC is always enabled either by the BootROM or by the Secure Device
-Manager (SDM) during a power-on reset on SoCFPGA.
+This was supposed to pass "onenand" instead of "&onenand" with the
+ampersand.  Passing a random stack address which will be gone when the
+function ends makes no sense.  However the good thing is that the pointer
+is never used, so this doesn't cause a problem at run time.
 
-However, during a warm reset, the OCRAM content is retained to preserve data,
-while the control and status registers are reset to their default values. As
-a result, ECC must be explicitly re-enabled after a warm reset.
-
-Fixes: 17e47dc6db4f ("EDAC/altera: Add Stratix10 OCRAM ECC support")
-Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20251111080801.1279401-1-niravkumarlaxmidas.rabara@altera.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e23abf4b7743 ("mtd: OneNAND: S5PC110: Implement DMA interrupt method")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/altera_edac.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/onenand/onenand_samsung.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/edac/altera_edac.c
-+++ b/drivers/edac/altera_edac.c
-@@ -1147,10 +1147,22 @@ altr_check_ocram_deps_init(struct altr_e
- 	if (ret)
- 		return ret;
- 
--	/* Verify OCRAM has been initialized */
-+	/*
-+	 * Verify that OCRAM has been initialized.
-+	 * During a warm reset, OCRAM contents are retained, but the control
-+	 * and status registers are reset to their default values. Therefore,
-+	 * ECC must be explicitly re-enabled in the control register.
-+	 * Error condition: if INITCOMPLETEA is clear and ECC_EN is already set.
-+	 */
- 	if (!ecc_test_bits(ALTR_A10_ECC_INITCOMPLETEA,
--			   (base + ALTR_A10_ECC_INITSTAT_OFST)))
--		return -ENODEV;
-+			   (base + ALTR_A10_ECC_INITSTAT_OFST))) {
-+		if (!ecc_test_bits(ALTR_A10_ECC_EN,
-+				   (base + ALTR_A10_ECC_CTRL_OFST)))
-+			ecc_set_bits(ALTR_A10_ECC_EN,
-+				     (base + ALTR_A10_ECC_CTRL_OFST));
-+		else
-+			return -ENODEV;
-+	}
- 
- 	/* Enable IRQ on Single Bit Error */
- 	writel(ALTR_A10_ECC_SERRINTEN, (base + ALTR_A10_ECC_ERRINTENS_OFST));
+diff --git a/drivers/mtd/nand/onenand/onenand_samsung.c b/drivers/mtd/nand/onenand/onenand_samsung.c
+index 87b28e397d671..d51d3ff6f0a3c 100644
+--- a/drivers/mtd/nand/onenand/onenand_samsung.c
++++ b/drivers/mtd/nand/onenand/onenand_samsung.c
+@@ -908,7 +908,7 @@ static int s3c_onenand_probe(struct platform_device *pdev)
+ 			err = devm_request_irq(&pdev->dev, r->start,
+ 					       s5pc110_onenand_irq,
+ 					       IRQF_SHARED, "onenand",
+-					       &onenand);
++					       onenand);
+ 			if (err) {
+ 				dev_err(&pdev->dev, "failed to get irq\n");
+ 				return err;
+-- 
+2.51.0
+
 
 
