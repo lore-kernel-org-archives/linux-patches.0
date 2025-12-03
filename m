@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D7C349AE7;
-	Wed,  3 Dec 2025 16:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C058349AE0;
+	Wed,  3 Dec 2025 16:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780594; cv=none; b=gcRAZtLiizw7mKqVGk8BMHN/Ii9mJKkj7xdVyRHWIGdDICkG/Z/ABjFxO+rStOM0gceQhQikwwT73mpttfiH25D+WhP1xJbYQ3SDbhtfLU66z0jlnAo665iIk5IH01qUKG3U3HIttqLbLMG8ylBLQH6L9h7ZeZDIzcL9p3v6ae4=
+	t=1764780597; cv=none; b=F2/KpqGN1kIIcOn3QTvE7DbKmg/JVQI0z3y7Y57u/RlcXBDk+7ypKJZKWuNplB/4mWDcC10DxpKS6kQjxe06tITKl6poEbwCM17O9dTQ+YxSnnL+ABsCogOgg0lSKEAsP05IqGZNxXdBkgGn/bvmx0xZIOB+JkTRn6lvPMmdvaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780594; c=relaxed/simple;
-	bh=fVcWNo1dUbdosGOTZd8MVo9CEZyZ6oS4Aer/TqNPio0=;
+	s=arc-20240116; t=1764780597; c=relaxed/simple;
+	bh=oICig/v+ikYFpAJeZ7QZktP7cMngW8eOoMdyjiQUxFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JxerecTpTFUwiyKxu4VIRbEd7rSQwBAYC9U9YxDPVzJhBR+/tgRCoNMMFejfs9ax9qx3cvaQTaospNwDwtbM+g1wMlIEkIJVnZn/yVbrbQZ/wuHNe5Au9Gb1paWcaGb5mV3PhUBXQGvLAM32iVd7YZRhDXytsEPH2s4bPpiicOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aS6xhvXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JQxlytcR8yBgOjp5hOmlK1p/DxdSK4XMycScVGtAW4kd9ICnZzcGo2XMfGaufmsYdQpgZwkMfDO7YXbqvuqJ2JAniVuOuC1qoKXwqk+l3zDhU5ryNRJG6ye59BC719aFZtlEcypMicEc6D6mDbwgHtBUL9rphBWQTBgVeZ5tyNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKRx2dax; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aS6xhvXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EAFC4CEF5;
-	Wed,  3 Dec 2025 16:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKRx2dax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03663C4CEF5;
+	Wed,  3 Dec 2025 16:49:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780594;
-	bh=fVcWNo1dUbdosGOTZd8MVo9CEZyZ6oS4Aer/TqNPio0=;
+	s=korg; t=1764780597;
+	bh=oICig/v+ikYFpAJeZ7QZktP7cMngW8eOoMdyjiQUxFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aS6xhvXc/y9pQ1yqpZyUCtTFINkXPBnQrxpTZ2th+vbgfVq/cLT0JbSWnz8Rs4Z5S
-	 OncfkX/KKjhMLxQ4ymePCOW6LfIIJOPglvaK+fTs5pwhmACoM2LwDyb8XbyAQASlBM
-	 vrUMBCQkBUD3n9WQfoMZbmayJip8ANGYV9TlG2uU=
+	b=GKRx2daxGHbnXTVq5WLPc0T+9ecUlNeV6mgsXHCbiANIZlmI8dvSpw0Pvgk+t7AU6
+	 WUOu8D5vZw03PzpW47GEK2pdVSnrHGnvHov44ApYPnrjGuoobwm0ItEVvSjy9iqyKw
+	 DzbGf4pe2IfXnb0xIz2jn60AUMuSOlxZn9fYEuRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	David Ahern <dsahern@kernel.org>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/132] Bluetooth: SMP: Fix not generating mackey and ltk when repairing
-Date: Wed,  3 Dec 2025 16:28:07 +0100
-Message-ID: <20251203152343.600901785@linuxfoundation.org>
+Subject: [PATCH 6.12 009/132] net: sched: generalize check for no-queue qdisc on TX queue
+Date: Wed,  3 Dec 2025 16:28:08 +0100
+Message-ID: <20251203152343.637307392@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -44,91 +47,95 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Jesper Dangaard Brouer <hawk@kernel.org>
 
-[ Upstream commit 545d7827b2cd5de5eb85580cebeda6b35b3ff443 ]
+[ Upstream commit 34dd0fecaa02d654c447d43a7e4c72f9b18b7033 ]
 
-The change eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-introduced a goto that bypasses the creation of temporary mackey and ltk
-which are later used by the likes of DHKey Check step.
+The "noqueue" qdisc can either be directly attached, or get default
+attached if net_device priv_flags has IFF_NO_QUEUE. In both cases, the
+allocated Qdisc structure gets it's enqueue function pointer reset to
+NULL by noqueue_init() via noqueue_qdisc_ops.
 
-Later ffee202a78c2 ("Bluetooth: Always request for user confirmation for
-Just Works (LE SC)") which means confirm_hint is always set in case
-JUST_WORKS so the branch checking for an existing LTK becomes pointless
-as confirm_hint will always be set, so this just merge both cases of
-malicious or legitimate devices to be confirmed before continuing with the
-pairing procedure.
+This is a common case for software virtual net_devices. For these devices
+with no-queue, the transmission path in __dev_queue_xmit() will bypass
+the qdisc layer. Directly invoking device drivers ndo_start_xmit (via
+dev_hard_start_xmit).  In this mode the device driver is not allowed to
+ask for packets to be queued (either via returning NETDEV_TX_BUSY or
+stopping the TXQ).
 
-Link: https://github.com/bluez/bluez/issues/1622
-Fixes: eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+The simplest and most reliable way to identify this no-queue case is by
+checking if enqueue == NULL.
+
+The vrf driver currently open-codes this check (!qdisc->enqueue). While
+functionally correct, this low-level detail is better encapsulated in a
+dedicated helper for clarity and long-term maintainability.
+
+To make this behavior more explicit and reusable, this patch introduce a
+new helper: qdisc_txq_has_no_queue(). Helper will also be used by the
+veth driver in the next patch, which introduces optional qdisc-based
+backpressure.
+
+This is a non-functional change.
+
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/174559293172.827981.7583862632045264175.stgit@firesoul
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: a14602fcae17 ("veth: reduce XDP no_direct return section to fix race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 31 +++++++------------------------
- 1 file changed, 7 insertions(+), 24 deletions(-)
+ drivers/net/vrf.c         | 4 +---
+ include/net/sch_generic.h | 8 ++++++++
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index a31971fe2fd7e..3a33fd06e6a4c 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2136,7 +2136,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	struct smp_chan *smp = chan->data;
- 	struct hci_conn *hcon = conn->hcon;
- 	u8 *pkax, *pkbx, *na, *nb, confirm_hint;
--	u32 passkey;
-+	u32 passkey = 0;
- 	int err;
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index 89dde220058a2..b62462d8eff26 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -352,15 +352,13 @@ static int vrf_ifindex_lookup_by_table_id(struct net *net, u32 table_id)
+ static bool qdisc_tx_is_default(const struct net_device *dev)
+ {
+ 	struct netdev_queue *txq;
+-	struct Qdisc *qdisc;
  
- 	bt_dev_dbg(hcon->hdev, "conn %p", conn);
-@@ -2188,24 +2188,6 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
- 			     smp->prnd);
- 		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
--
--		/* Only Just-Works pairing requires extra checks */
--		if (smp->method != JUST_WORKS)
--			goto mackey_and_ltk;
--
--		/* If there already exists long term key in local host, leave
--		 * the decision to user space since the remote device could
--		 * be legitimate or malicious.
--		 */
--		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
--				 hcon->role)) {
--			/* Set passkey to 0. The value can be any number since
--			 * it'll be ignored anyway.
--			 */
--			passkey = 0;
--			confirm_hint = 1;
--			goto confirm;
--		}
- 	}
+ 	if (dev->num_tx_queues > 1)
+ 		return false;
  
- mackey_and_ltk:
-@@ -2226,11 +2208,12 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	if (err)
- 		return SMP_UNSPECIFIED;
+ 	txq = netdev_get_tx_queue(dev, 0);
+-	qdisc = rcu_access_pointer(txq->qdisc);
  
--	confirm_hint = 0;
--
--confirm:
--	if (smp->method == JUST_WORKS)
--		confirm_hint = 1;
-+	/* Always require user confirmation for Just-Works pairing to prevent
-+	 * impersonation attacks, or in case of a legitimate device that is
-+	 * repairing use the confirmation as acknowledgment to proceed with the
-+	 * creation of new keys.
-+	 */
-+	confirm_hint = smp->method == JUST_WORKS ? 1 : 0;
+-	return !qdisc->enqueue;
++	return qdisc_txq_has_no_queue(txq);
+ }
  
- 	err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
- 					hcon->dst_type, passkey, confirm_hint);
+ /* Local traffic destined to local address. Reinsert the packet to rx
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index a9d7e9ecee6b5..1e002b1dea629 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -803,6 +803,14 @@ static inline bool qdisc_tx_changing(const struct net_device *dev)
+ 	return false;
+ }
+ 
++/* "noqueue" qdisc identified by not having any enqueue, see noqueue_init() */
++static inline bool qdisc_txq_has_no_queue(const struct netdev_queue *txq)
++{
++	struct Qdisc *qdisc = rcu_access_pointer(txq->qdisc);
++
++	return qdisc->enqueue == NULL;
++}
++
+ /* Is the device using the noop qdisc on all queues?  */
+ static inline bool qdisc_tx_is_noop(const struct net_device *dev)
+ {
 -- 
 2.51.0
 
