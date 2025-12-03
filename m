@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC1334D918;
-	Wed,  3 Dec 2025 16:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1DFE357A24;
+	Wed,  3 Dec 2025 16:50:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780622; cv=none; b=PerB+8wPO41Q5dg27KUvF9xlecWwM+oSMHmtyV+l6F0QvIMDh0iG9vVD3j11pOI+GcN0ielGX6XrHzOJq4rG9N9VBmrMuqxQ6siiKVjTXnoKKOhJIPrrANjxnTAaof9CrrHopfaqcwIVbkgz3flclRvOn4Mu09TqjxIOu3U7+Zo=
+	t=1764780626; cv=none; b=WvwC+8QCHDh+0+fOvvzzt0gf6x0kUjgvNj6T10xqq6OAvplD/+dzZPrVQ8M2brXy7cbnbdjimErPQhlTZBowpa/6lD39OLcBdniUW2iLpU2OtlF77Yc1jWVRGgqtdTEnTCcrPL4E88hDhKRXN2cQr5hJ6QQGVgYU1ggevQEli6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780622; c=relaxed/simple;
-	bh=txRaVSPl9MCA5CX56FjIcdl5GN5Vr0QDlqEp/lDPRzQ=;
+	s=arc-20240116; t=1764780626; c=relaxed/simple;
+	bh=btvOm48iiBV32iWFgrm1/dpur2Yhvu9vWk5YC88wCxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZzRca7+K77O0p1WExFrqvNayu5gbPCopIoIahd2X8VEVB89eTGRgQPyVdnhYra/2FC6GGAUMN4zKmA9PM+REKTH7cyKhTpoQKgJjBUcg0NGNQvNC29lrgV787qvsnZWncke9B6cPDxkQLmNtyeUZrDrEsd7kTkWPfl74Y19qWgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsPOpPhS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UsgUQgiZ8nlPRw+avOHERhz47IW2ccKIOKBz9dZJvDSet16jZlcOvnnPOivQJ6w+b+l60wu2kXiLNmcXA5JbsR0PC9RGHn8aKvjlFupJOO0oZhPff7J7IvDEC/PSXyscdJBegmQPHRL6FGydgXNESDDF3PylGLtpvhPCQv0Fz4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QuJQ2+Za; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsPOpPhS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1130C4CEF5;
-	Wed,  3 Dec 2025 16:50:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QuJQ2+Za"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD96C4CEF5;
+	Wed,  3 Dec 2025 16:50:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780622;
-	bh=txRaVSPl9MCA5CX56FjIcdl5GN5Vr0QDlqEp/lDPRzQ=;
+	s=korg; t=1764780625;
+	bh=btvOm48iiBV32iWFgrm1/dpur2Yhvu9vWk5YC88wCxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsPOpPhSna7J5L6MypyXYdlqb6UaWhbim/SrbYYV4TEjVdLKOM5oveMg+NpsJcOC6
-	 qDObdweAL9JvuBZ3iyVR5CqhpoVKGzHgcFxgYfS9wZwHEi202EYOb18/J/JF+SPJuB
-	 RLiZtFrqgCdM4H+11rYhjex2ZlwJSOPwkTuPDl8g=
+	b=QuJQ2+ZaUpio00dTeM+rv5WJ+GNzn0iObE2I/YG/s3oC2GVDFXY0bNkM2o+FxsTdJ
+	 q+VKb33MMwb0Jqi9l0m51CgZXFDrAWsznoFmE1vlsxjP63KF0R818F1caug6jds6QU
+	 7/LKAaXWMrJN69tFZtmwgHMmDZMyjClC0FH7y9sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	JaimeLiao <jaimeliao@mxic.com.tw>,
-	AlvinZhou <alvinzhou@mxic.com.tw>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Mark Brown <broonie@kernel.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/132] spi: spi-mem: Allow specifying the byte order in Octal DTR mode
-Date: Wed,  3 Dec 2025 16:28:40 +0100
-Message-ID: <20251203152344.817852784@linuxfoundation.org>
+Subject: [PATCH 6.12 042/132] spi: spi-mem: Extend spi-mem operations with a per-operation maximum frequency
+Date: Wed,  3 Dec 2025 16:28:41 +0100
+Message-ID: <20251203152344.854513198@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -54,91 +52,218 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 030ace430afcf847f537227afceb22dfe8fb8fc8 ]
+[ Upstream commit 0fefeade90e74bc8f40ab0e460f483565c492e28 ]
 
-There are NOR flashes (Macronix) that swap the bytes on a 16-bit
-boundary when configured in Octal DTR mode. The byte order of
-16-bit words is swapped when read or written in Octal Double
-Transfer Rate (DTR) mode compared to Single Transfer Rate (STR)
-modes. If one writes D0 D1 D2 D3 bytes using 1-1-1 mode, and uses
-8D-8D-8D SPI mode for reading, it will read back D1 D0 D3 D2.
-Swapping the bytes may introduce some endianness problems. It can
-affect the boot sequence if the entire boot sequence is not handled
-in either 8D-8D-8D mode or 1-1-1 mode. Therefore, it is necessary
-to swap the bytes back to ensure the same byte order as in STR modes.
-Fortunately there are controllers that could swap the bytes back at
-runtime, addressing the flash's endianness requirements. Provide a
-way for the upper layers to specify the byte order in Octal DTR mode.
+In the spi subsystem, the bus frequency is derived as follows:
+- the controller may expose a minimum and maximum operating frequency
+- the hardware description, through the spi peripheral properties,
+  advise what is the maximum acceptable frequency from a device/wiring
+  point of view.
+Transfers must be observed at a frequency which fits both (so in
+practice, the lowest maximum).
 
-Merge Tudor's patch and add modifications for suiting newer version
-of Linux kernel.
+Actually, this second point mixes two information and already takes the
+lowest frequency among:
+- what the spi device is capable of (what is written in the component
+  datasheet)
+- what the wiring allows (electromagnetic sensibility, crossovers,
+  terminations, antenna effect, etc).
 
-Suggested-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: JaimeLiao <jaimeliao@mxic.com.tw>
-Signed-off-by: AlvinZhou <alvinzhou@mxic.com.tw>
-Acked-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20240926141956.2386374-3-alvinzhou.tw@gmail.com
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+This logic works until spi devices are no longer capable of sustaining
+their highest frequency regardless of the operation. Spi memories are
+typically subject to such variation. Some devices are capable of
+spitting their internally stored data (essentially in read mode) at a
+very fast rate, typically up to 166MHz on Winbond SPI-NAND chips, using
+"fast" commands. However, some of the low-end operations, such as
+regular page read-from-cache commands, are more limited and can only be
+executed at 54MHz at most. This is currently a problem in the SPI-NAND
+subsystem. Another situation, even if not yet supported, will be with
+DTR commands, when the data is latched on both edges of the clock. The
+same chips as mentioned previously are in this case limited to
+80MHz. Yet another example might be continuous reads, which, under
+certain circumstances, can also run at most at 104 or 120MHz.
+
+As a matter of fact, the "one frequency per chip" policy is outdated and
+more fine grain configuration is needed: we need to allow per-operation
+frequency limitations. So far, all datasheets I encountered advertise a
+maximum default frequency, which need to be lowered for certain specific
+operations. So based on the current infrastructure, we can still expect
+firmware (device trees in general) to continued advertising the same
+maximum speed which is a mix between the PCB limitations and the chip
+maximum capability, and expect per-operation lower frequencies when this
+is relevant.
+
+Add a `struct spi_mem_op` member to carry this information. Not
+providing this field explicitly from upper layers means that there is no
+further constraint and the default spi device maximum speed will be
+carried instead. The SPI_MEM_OP() macro is also expanded with an
+optional frequency argument, because virtually all operations can be
+subject to such a limitation, and this will allow for a smooth and
+discrete transition.
+
+For controller drivers which do not implement the spi-mem interface, the
+per-transfer speed is also set acordingly to a lower (than the maximum
+default) speed when relevant.
+
+Acked-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20241224-winbond-6-11-rc1-quad-support-v2-1-ad218dbc406f@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 40ad64ac25bb ("spi: nxp-fspi: Propagate fwnode in ACPI case as well")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mem.c       | 3 +++
- include/linux/spi/spi-mem.h | 8 +++++++-
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/spi/core.c |  2 ++
+ drivers/spi/spi-mem.c       | 28 ++++++++++++++++++++++++++++
+ include/linux/spi/spi-mem.h | 12 +++++++++++-
+ 3 files changed, 41 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/mtd/nand/spi/core.c b/drivers/mtd/nand/spi/core.c
+index c523a1a22c2b0..57b8807b19482 100644
+--- a/drivers/mtd/nand/spi/core.c
++++ b/drivers/mtd/nand/spi/core.c
+@@ -1217,6 +1217,8 @@ spinand_select_op_variant(struct spinand_device *spinand,
+ 			if (ret)
+ 				break;
+ 
++			spi_mem_adjust_op_freq(spinand->spimem, &op);
++
+ 			if (!spi_mem_supports_op(spinand->spimem, &op))
+ 				break;
+ 
 diff --git a/drivers/spi/spi-mem.c b/drivers/spi/spi-mem.c
-index 17b8baf749e6a..abc6792e738c7 100644
+index abc6792e738c7..12299ce89a1cc 100644
 --- a/drivers/spi/spi-mem.c
 +++ b/drivers/spi/spi-mem.c
-@@ -172,6 +172,9 @@ bool spi_mem_default_supports_op(struct spi_mem *mem,
- 		if (!spi_mem_controller_is_capable(ctlr, dtr))
+@@ -187,6 +187,10 @@ bool spi_mem_default_supports_op(struct spi_mem *mem,
  			return false;
+ 	}
  
-+		if (op->data.swap16 && !spi_mem_controller_is_capable(ctlr, swap16))
-+			return false;
++	if (op->max_freq && mem->spi->controller->min_speed_hz &&
++	    op->max_freq < mem->spi->controller->min_speed_hz)
++		return false;
 +
- 		if (op->cmd.nbytes != 2)
- 			return false;
- 	} else {
+ 	return spi_mem_check_buswidth(mem, op);
+ }
+ EXPORT_SYMBOL_GPL(spi_mem_default_supports_op);
+@@ -364,6 +368,9 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 	u8 *tmpbuf;
+ 	int ret;
+ 
++	/* Make sure the operation frequency is correct before going futher */
++	spi_mem_adjust_op_freq(mem, (struct spi_mem_op *)op);
++
+ 	ret = spi_mem_check_op(op);
+ 	if (ret)
+ 		return ret;
+@@ -410,6 +417,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 	xfers[xferpos].tx_buf = tmpbuf;
+ 	xfers[xferpos].len = op->cmd.nbytes;
+ 	xfers[xferpos].tx_nbits = op->cmd.buswidth;
++	xfers[xferpos].speed_hz = op->max_freq;
+ 	spi_message_add_tail(&xfers[xferpos], &msg);
+ 	xferpos++;
+ 	totalxferlen++;
+@@ -424,6 +432,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 		xfers[xferpos].tx_buf = tmpbuf + 1;
+ 		xfers[xferpos].len = op->addr.nbytes;
+ 		xfers[xferpos].tx_nbits = op->addr.buswidth;
++		xfers[xferpos].speed_hz = op->max_freq;
+ 		spi_message_add_tail(&xfers[xferpos], &msg);
+ 		xferpos++;
+ 		totalxferlen += op->addr.nbytes;
+@@ -435,6 +444,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 		xfers[xferpos].len = op->dummy.nbytes;
+ 		xfers[xferpos].tx_nbits = op->dummy.buswidth;
+ 		xfers[xferpos].dummy_data = 1;
++		xfers[xferpos].speed_hz = op->max_freq;
+ 		spi_message_add_tail(&xfers[xferpos], &msg);
+ 		xferpos++;
+ 		totalxferlen += op->dummy.nbytes;
+@@ -450,6 +460,7 @@ int spi_mem_exec_op(struct spi_mem *mem, const struct spi_mem_op *op)
+ 		}
+ 
+ 		xfers[xferpos].len = op->data.nbytes;
++		xfers[xferpos].speed_hz = op->max_freq;
+ 		spi_message_add_tail(&xfers[xferpos], &msg);
+ 		xferpos++;
+ 		totalxferlen += op->data.nbytes;
+@@ -528,6 +539,23 @@ int spi_mem_adjust_op_size(struct spi_mem *mem, struct spi_mem_op *op)
+ }
+ EXPORT_SYMBOL_GPL(spi_mem_adjust_op_size);
+ 
++/**
++ * spi_mem_adjust_op_freq() - Adjust the frequency of a SPI mem operation to
++ *			      match controller, PCB and chip limitations
++ * @mem: the SPI memory
++ * @op: the operation to adjust
++ *
++ * Some chips have per-op frequency limitations and must adapt the maximum
++ * speed. This function allows SPI mem drivers to set @op->max_freq to the
++ * maximum supported value.
++ */
++void spi_mem_adjust_op_freq(struct spi_mem *mem, struct spi_mem_op *op)
++{
++	if (!op->max_freq || op->max_freq > mem->spi->max_speed_hz)
++		op->max_freq = mem->spi->max_speed_hz;
++}
++EXPORT_SYMBOL_GPL(spi_mem_adjust_op_freq);
++
+ static ssize_t spi_mem_no_dirmap_read(struct spi_mem_dirmap_desc *desc,
+ 				      u64 offs, size_t len, void *buf)
+ {
 diff --git a/include/linux/spi/spi-mem.h b/include/linux/spi/spi-mem.h
-index f866d5c8ed32a..c46d2b8029be5 100644
+index c46d2b8029be5..84ec524987921 100644
 --- a/include/linux/spi/spi-mem.h
 +++ b/include/linux/spi/spi-mem.h
-@@ -90,6 +90,8 @@ enum spi_mem_data_dir {
-  * @data.buswidth: number of IO lanes used to send/receive the data
-  * @data.dtr: whether the data should be sent in DTR mode or not
-  * @data.ecc: whether error correction is required or not
-+ * @data.swap16: whether the byte order of 16-bit words is swapped when read
-+ *		 or written in Octal DTR mode compared to STR mode.
-  * @data.dir: direction of the transfer
-  * @data.nbytes: number of data bytes to send/receive. Can be zero if the
-  *		 operation does not involve transferring data
-@@ -124,7 +126,8 @@ struct spi_mem_op {
- 		u8 buswidth;
- 		u8 dtr : 1;
- 		u8 ecc : 1;
--		u8 __pad : 6;
-+		u8 swap16 : 1;
-+		u8 __pad : 5;
- 		enum spi_mem_data_dir dir;
- 		unsigned int nbytes;
- 		union {
-@@ -297,10 +300,13 @@ struct spi_controller_mem_ops {
-  * struct spi_controller_mem_caps - SPI memory controller capabilities
-  * @dtr: Supports DTR operations
-  * @ecc: Supports operations with error correction
-+ * @swap16: Supports swapping bytes on a 16 bit boundary when configured in
-+ *	    Octal DTR
-  */
- struct spi_controller_mem_caps {
- 	bool dtr;
- 	bool ecc;
-+	bool swap16;
+@@ -68,6 +68,9 @@ enum spi_mem_data_dir {
+ 	SPI_MEM_DATA_OUT,
  };
  
- #define spi_mem_controller_is_capable(ctlr, cap)	\
++#define SPI_MEM_OP_MAX_FREQ(__freq)				\
++	.max_freq = __freq
++
+ /**
+  * struct spi_mem_op - describes a SPI memory operation
+  * @cmd.nbytes: number of opcode bytes (only 1 or 2 are valid). The opcode is
+@@ -97,6 +100,9 @@ enum spi_mem_data_dir {
+  *		 operation does not involve transferring data
+  * @data.buf.in: input buffer (must be DMA-able)
+  * @data.buf.out: output buffer (must be DMA-able)
++ * @max_freq: frequency limitation wrt this operation. 0 means there is no
++ *	      specific constraint and the highest achievable frequency can be
++ *	      attempted.
+  */
+ struct spi_mem_op {
+ 	struct {
+@@ -135,14 +141,17 @@ struct spi_mem_op {
+ 			const void *out;
+ 		} buf;
+ 	} data;
++
++	unsigned int max_freq;
+ };
+ 
+-#define SPI_MEM_OP(__cmd, __addr, __dummy, __data)		\
++#define SPI_MEM_OP(__cmd, __addr, __dummy, __data, ...)		\
+ 	{							\
+ 		.cmd = __cmd,					\
+ 		.addr = __addr,					\
+ 		.dummy = __dummy,				\
+ 		.data = __data,					\
++		__VA_ARGS__					\
+ 	}
+ 
+ /**
+@@ -371,6 +380,7 @@ bool spi_mem_default_supports_op(struct spi_mem *mem,
+ #endif /* CONFIG_SPI_MEM */
+ 
+ int spi_mem_adjust_op_size(struct spi_mem *mem, struct spi_mem_op *op);
++void spi_mem_adjust_op_freq(struct spi_mem *mem, struct spi_mem_op *op);
+ 
+ bool spi_mem_supports_op(struct spi_mem *mem,
+ 			 const struct spi_mem_op *op);
 -- 
 2.51.0
 
