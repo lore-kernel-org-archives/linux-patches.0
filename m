@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEEF309EFF;
-	Wed,  3 Dec 2025 15:37:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F5A309EFF;
+	Wed,  3 Dec 2025 15:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776257; cv=none; b=FhGhlzuX0Jb4xSvn8lIvISXap8bR0co0w7fqDcgxQTFJAODo6ayzl/RM6cG0mRI4qAi6k+yUN6dGcQEYFkie/khqKaJBoJKQl/oUoZMtIsRs03k3P5u2lHTsyYF+6s3/Zr+mVJDLyMhrk5F3fUUBtYbQR+eqP/1jkmmLHGHf/LY=
+	t=1764776260; cv=none; b=h1FkBJKlixreXdDJtr7pYQuu2M5De+yYOW41rVBMJF0qCPX1k4CHhNQY6WKM9H6gomNLLgSMArvqpMhnclWMLHigUmaC7rTVDj57rXA5kK/S4BhZextiIed71ayh56FC/HZG0mSPvuKmyaK6cKHLzXdcHSYhE0e/SsDNXvHC2Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776257; c=relaxed/simple;
-	bh=DVkEti/QjbT4TAtMEdCeEW2BaK5tQ++AvLwI7Tqar84=;
+	s=arc-20240116; t=1764776260; c=relaxed/simple;
+	bh=+GBFxvLFlNDR23dcMYDLQEnQZtNZn+v19SL9eUN/8eA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a58V07qOTdL3umfFO0cXYMIDKMjghTpjLCFpL0KKirPdCdK/FfklEok0JC8vhw1fwiiJehhvXf59FS5leIB4Fy24PqiO7Uq78EWWqEE5XI7+KoOe7P6bEBh/oKfkhdlVnE6V80Bh2jXE4S+EDia81n7CNfJ9qPLvTZUya6GUxwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q8EIfO9n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ch+bp/0OsQFfoMftxI4Hkqd5dZRRrmApaDSREzwXQjALk5wF1UhY6KUhbgWdgkL8ZlIz3tVAHcQjdEkNEYVFYUofXha4W2VgTEeS8VZ+amrE3Wbgdpe+d7CD9hqD+eccF7QLnPm9oAjGUrS9Dc6CyRTRSTUuAKOz4kEXy63mUlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxV6lr6z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q8EIfO9n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA507C116B1;
-	Wed,  3 Dec 2025 15:37:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxV6lr6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C2EC116B1;
+	Wed,  3 Dec 2025 15:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776257;
-	bh=DVkEti/QjbT4TAtMEdCeEW2BaK5tQ++AvLwI7Tqar84=;
+	s=korg; t=1764776260;
+	bh=+GBFxvLFlNDR23dcMYDLQEnQZtNZn+v19SL9eUN/8eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8EIfO9nnBJimAeSTVspbFsU+kS1i/+WLpSkh1D8WLDXUpNZn2k9WXfbtm9Jspe5J
-	 IW2mUp+EqSMLBZZcM+Di1l2Vz5hf208gsYJcbnIMra6n49fRi/fhLIMvyfnUfYFxvZ
-	 qQ5KGzbMCsOx25/hx2GV4DhU8xngnAzh0O916BLw=
+	b=GxV6lr6zMBdScVP0OkQ/gDSOaaYXvp+BNP/Ng7nrZqKXO2q2KQ3nimIUlVka/83qn
+	 HnjAvtPjetrSaA5MbA4Bzen+k6oCGBs9STI2ssEp9v+Evyua9+/2Ohm7G+2YVX292o
+	 9/7Vw3OPgf9e8Q26gGMqKj5FVBkb3l13+hnGjpgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com,
-	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/300] jfs: fix uninitialized waitqueue in transaction manager
-Date: Wed,  3 Dec 2025 16:25:31 +0100
-Message-ID: <20251203152405.317330579@linuxfoundation.org>
+Subject: [PATCH 5.10 128/300] wifi: ath10k: Fix connection after GTK rekeying
+Date: Wed,  3 Dec 2025 16:25:32 +0100
+Message-ID: <20251203152405.353280118@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,59 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
 
-[ Upstream commit 300b072df72694ea330c4c673c035253e07827b8 ]
+[ Upstream commit 487e8a8c3421df0af3707e54c7e069f1d89cbda7 ]
 
-The transaction manager initialization in txInit() was not properly
-initializing TxBlock[0].waitor waitqueue, causing a crash when
-txEnd(0) is called on read-only filesystems.
+It appears that not all hardware/firmware implementations support
+group key deletion correctly, which can lead to connection hangs
+and deauthentication following GTK rekeying (delete and install).
 
-When a filesystem is mounted read-only, txBegin() returns tid=0 to
-indicate no transaction. However, txEnd(0) still gets called and
-tries to access TxBlock[0].waitor via tid_to_tblock(0), but this
-waitqueue was never initialized because the initialization loop
-started at index 1 instead of 0.
+To avoid this issue, instead of attempting to delete the key using
+the special WMI_CIPHER_NONE value, we now replace the key with an
+invalid (random) value.
 
-This causes a 'non-static key' lockdep warning and system crash:
-  INFO: trying to register non-static key in txEnd
+This behavior has been observed with WCN39xx chipsets.
 
-Fix by ensuring all transaction blocks including TxBlock[0] have
-their waitqueues properly initialized during txInit().
-
-Reported-by: syzbot+c4f3462d8b2ad7977bea@syzkaller.appspotmail.com
-
-Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Tested-on: WCN3990 hw1.0 WLAN.HL.3.3.7.c2-00931-QCAHLSWMTPLZ-1
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Closes: https://lore.kernel.org/all/DAWJQ2NIKY28.1XOG35E4A682G@linaro.org
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org> # QRB2210 RB1
+Link: https://patch.msgid.link/20250902143225.837487-1-loic.poulain@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_txnmgr.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath10k/mac.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_txnmgr.c b/fs/jfs/jfs_txnmgr.c
-index 6f6a5b9203d3f..97a2eb0f0b75d 100644
---- a/fs/jfs/jfs_txnmgr.c
-+++ b/fs/jfs/jfs_txnmgr.c
-@@ -272,14 +272,15 @@ int txInit(void)
- 	if (TxBlock == NULL)
- 		return -ENOMEM;
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index 5dd0239e9d51b..3a708b3c9d4ec 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -13,6 +13,7 @@
+ #include <linux/acpi.h>
+ #include <linux/of.h>
+ #include <linux/bitfield.h>
++#include <linux/random.h>
  
--	for (k = 1; k < nTxBlock - 1; k++) {
--		TxBlock[k].next = k + 1;
-+	for (k = 0; k < nTxBlock; k++) {
- 		init_waitqueue_head(&TxBlock[k].gcwait);
- 		init_waitqueue_head(&TxBlock[k].waitor);
+ #include "hif.h"
+ #include "core.h"
+@@ -275,8 +276,15 @@ static int ath10k_send_key(struct ath10k_vif *arvif,
+ 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV;
+ 
+ 	if (cmd == DISABLE_KEY) {
+-		arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
+-		arg.key_data = NULL;
++		if (flags & WMI_KEY_GROUP) {
++			/* Not all hardware handles group-key deletion operation
++			 * correctly. Replace the key with a junk value to invalidate it.
++			 */
++			get_random_bytes(key->key, key->keylen);
++		} else {
++			arg.key_cipher = ar->wmi_key_cipher[WMI_CIPHER_NONE];
++			arg.key_data = NULL;
++		}
  	}
-+
-+	for (k = 1; k < nTxBlock - 1; k++) {
-+		TxBlock[k].next = k + 1;
-+	}
- 	TxBlock[k].next = 0;
--	init_waitqueue_head(&TxBlock[k].gcwait);
--	init_waitqueue_head(&TxBlock[k].waitor);
  
- 	TxAnchor.freetid = 1;
- 	init_waitqueue_head(&TxAnchor.freewait);
+ 	return ath10k_wmi_vdev_install_key(arvif->ar, &arg);
 -- 
 2.51.0
 
