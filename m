@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C76306D3D;
-	Wed,  3 Dec 2025 15:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA37313E33;
+	Wed,  3 Dec 2025 15:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776189; cv=none; b=I7gK2TVgPIJqKdnK1U6ecwdVq3kLeS97aNoB/tkorUjeMpy8iz6ipFjZ2RKZ1Cc2X0sCclEE8bmxhHjgyOQ/ePT7nGoTUpmZ+qf2TDontP4ijh5aDCp/w6yHV5aykKmVUS1Wy+6e0NSSZGeX8VyOeCOx33+mjUbBi3M+2E5Z6DM=
+	t=1764776193; cv=none; b=cmhocZwMa7iDhFjEmuFvvTllIVpLZslVUxzyTazovc7iYBQmVQEkv6vXAa8w4Nv0M5TlqYwqLjnaB1fXbBqqbCuwBp6kCi0hAK8xxd4ZuKAXu1qDn1honJnPYUEJwtJkQOA6pBmJPVJHfGSGqf86SoZej5nx7Qv10o373xrwJL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776189; c=relaxed/simple;
-	bh=fj/8QwchYFoQCdJR6pN1RSH41Kq+XUNrYbyoBb2pzHI=;
+	s=arc-20240116; t=1764776193; c=relaxed/simple;
+	bh=60UYSVG9xdkjuwOqvewBYqZ+h+HiParSLyrTJW3cJ1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M7Xxr3yrAW6b5QjgpZOrb/ocpFWXZWNuggfPQncHClsOqzw/ArSKC6W7ItUfXLHIYldueU8nCBJ9Z0tsEU/j0BsgFvDmP5KBB7l0j6qBHFGwy0y1B/K4xU8PXAcDE3Zy/DF3orD3WGujPUkNB7GDBim780WiSy38X+g0CmH3rJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkYpy7mj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eBbKiI0yrUiDpMDx3wXFCTCWrKjx7aZbcVN6PAC9gud2tVUU38aQ+CYqsXpX2baExoBL/wzb0Qy4x1XQnqT/JUjaNtQtElRg4OIV+zKy0TRTuGOzK4klZWVQkOC327ryDpB4m59MrL0xwo+99zuYhfKxnCH6n8/NaYMCtHXnZeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yh3RWfOf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkYpy7mj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C12FC4CEF5;
-	Wed,  3 Dec 2025 15:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yh3RWfOf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58DA6C4CEF5;
+	Wed,  3 Dec 2025 15:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776189;
-	bh=fj/8QwchYFoQCdJR6pN1RSH41Kq+XUNrYbyoBb2pzHI=;
+	s=korg; t=1764776192;
+	bh=60UYSVG9xdkjuwOqvewBYqZ+h+HiParSLyrTJW3cJ1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkYpy7mjhtlUMFf6uORTwpbJ9eJCabWRr38iPJ+bCWRKyaXNexyAKyBJzPbKz1PiU
-	 YM2/WU80NxfK5NL/ZK6Cxw5WRao+C57EgtiEVyuyqxFLD6NUkczc/7BpxbbYpWKz9v
-	 9ph8a8rWUy1Un87srHEDjfxlbr/+3U8WNYNlyodo=
+	b=yh3RWfOf070lc9I0Ks0M1B10pSgropcpED2ocfw9SRemOQp1H2aG9GM9J0Xfhn9Zu
+	 t3dZnphrM/WBYpde45gKUKDVHD1lYq4UvOLXOsoZeTE9WSl4sUibxJajyCOmb0RHeY
+	 LXKOPeVG7ln7WdNv+BguVvxnwfAwPlrYfVXAhuTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Wu <william.wu@rock-chips.com>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/300] usb: gadget: f_hid: Fix zero length packet transfer
-Date: Wed,  3 Dec 2025 16:25:12 +0100
-Message-ID: <20251203152404.624173532@linuxfoundation.org>
+Subject: [PATCH 5.10 109/300] net: phy: marvell: Fix 88e1510 downshift counter errata
+Date: Wed,  3 Dec 2025 16:25:13 +0100
+Message-ID: <20251203152404.660771977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,45 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: William Wu <william.wu@rock-chips.com>
+From: Rohan G Thomas <rohan.g.thomas@altera.com>
 
-[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
+[ Upstream commit deb105f49879dd50d595f7f55207d6e74dec34e6 ]
 
-Set the hid req->zero flag of ep0/in_ep to true by default,
-then the UDC drivers can transfer a zero length packet at
-the end if the hid transfer with size divisible to EPs max
-packet size according to the USB 2.0 spec.
+The 88e1510 PHY has an erratum where the phy downshift counter is not
+cleared after phy being suspended(BMCR_PDOWN set) and then later
+resumed(BMCR_PDOWN cleared). This can cause the gigabit link to
+intermittently downshift to a lower speed.
 
-Signed-off-by: William Wu <william.wu@rock-chips.com>
-Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Disabling and re-enabling the downshift feature clears the counter,
+allowing the PHY to retry gigabit link negotiation up to the programmed
+retry count times before downshifting. This behavior has been observed
+on copper links.
+
+Signed-off-by: Rohan G Thomas <rohan.g.thomas@altera.com>
+Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20250906-marvell_fix-v2-1-f6efb286937f@altera.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/marvell.c | 39 ++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 38 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 2f30699f0426f..c285b23c3707c 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -490,7 +490,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
- 	}
+diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
+index 54786712a9913..6504aa0f1889d 100644
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -1596,6 +1596,43 @@ static int marvell_resume(struct phy_device *phydev)
+ 	return err;
+ }
  
- 	req->status   = 0;
--	req->zero     = 0;
-+	req->zero     = 1;
- 	req->length   = count;
- 	req->complete = f_hidg_req_complete;
- 	req->context  = hidg;
-@@ -761,7 +761,7 @@ static int hidg_setup(struct usb_function *f,
- 	return -EOPNOTSUPP;
- 
- respond:
--	req->zero = 0;
-+	req->zero = 1;
- 	req->length = length;
- 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
- 	if (status < 0)
++/* m88e1510_resume
++ *
++ * The 88e1510 PHY has an erratum where the phy downshift counter is not cleared
++ * after phy being suspended(BMCR_PDOWN set) and then later resumed(BMCR_PDOWN
++ * cleared). This can cause the link to intermittently downshift to a lower speed.
++ *
++ * Disabling and re-enabling the downshift feature clears the counter, allowing
++ * the PHY to retry gigabit link negotiation up to the programmed retry count
++ * before downshifting. This behavior has been observed on copper links.
++ */
++static int m88e1510_resume(struct phy_device *phydev)
++{
++	int err;
++	u8 cnt = 0;
++
++	err = marvell_resume(phydev);
++	if (err < 0)
++		return err;
++
++	/* read downshift counter value */
++	err = m88e1011_get_downshift(phydev, &cnt);
++	if (err < 0)
++		return err;
++
++	if (cnt) {
++		/* downshift disabled */
++		err = m88e1011_set_downshift(phydev, 0);
++		if (err < 0)
++			return err;
++
++		/* downshift enabled, with previous counter value */
++		err = m88e1011_set_downshift(phydev, cnt);
++	}
++
++	return err;
++}
++
+ static int marvell_aneg_done(struct phy_device *phydev)
+ {
+ 	int retval = phy_read(phydev, MII_M1011_PHY_STATUS);
+@@ -2845,7 +2882,7 @@ static struct phy_driver marvell_drivers[] = {
+ 		.did_interrupt = m88e1121_did_interrupt,
+ 		.get_wol = m88e1318_get_wol,
+ 		.set_wol = m88e1318_set_wol,
+-		.resume = marvell_resume,
++		.resume = m88e1510_resume,
+ 		.suspend = marvell_suspend,
+ 		.read_page = marvell_read_page,
+ 		.write_page = marvell_write_page,
 -- 
 2.51.0
 
