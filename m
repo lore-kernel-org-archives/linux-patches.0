@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143DE34D937;
-	Wed,  3 Dec 2025 16:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B50303A11;
+	Wed,  3 Dec 2025 16:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777777; cv=none; b=VgagHIEtrk6xKyxWYC3cvud2lyAyo/lvpckAkZqtg581wcZyhlqYss/HQ3VM8zodvFtVGd5j35Ex36217R815szHKdS0GTSzBQZR7GHg8StzT8HdDUVI9EU2k/vbRTDEiGw/5BliXAvSHpQPsd3z9Enq2wjk5ItzL37hDOOZksk=
+	t=1764777780; cv=none; b=KAVUzWPWrc5+ldg3SPShu9iKmR8h4fbvNo5R9NheMmlkMkfEMrPkiWDBgKIR8sKU79/UYPhymmZIsM4qc6gOAGRiTj2nWUR19Vi3Pr1rEZs5J7jBlqA5aZl2hItf3PgZsyhQ1nmqgfNzW+Y5l5W5s/i32ZcP39+JvggjUJni49I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777777; c=relaxed/simple;
-	bh=oBnyBt0ZwoZsRmTnX/LU+Az0K3iAo56+/D3Wd8JRA34=;
+	s=arc-20240116; t=1764777780; c=relaxed/simple;
+	bh=W247V04tnVUsEK8D1Z9vWE/6NTEbA/gYeSMmB0jrjAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KdeP7Ig++UznhDfDg+OkoIg1UpC9FOKTsvJEsyYV9l+LdDCU28mk4kZmxHGyioplRtXVZHjm+he+c6kDWzNI1O6KSwRgmQlOwbih7Lfb5P1s8WHKoSBfPmBP4T6j9s8s63yTjLkGpwWlnIcI9qSVFguMmBsE9vPdnf9XccR3TSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SljDQR3F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UW+Glds2UvNLM0vso+lndbY5Og7cE6XcQ62hhAb5PsjQQf39ipjJhco+rVSAIxgQjy7X2Cy7RkirFxO59nR7DcPr+XclO2yfSQLU17/GXKYmc/0zIYifyNL738nzsK1poY38/zskGiOpX9HyNozJdSVp1zT+9P6x66fpnJVa1Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tqEXAYcY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SljDQR3F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C58AC4CEF5;
-	Wed,  3 Dec 2025 16:02:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tqEXAYcY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E6DC4CEF5;
+	Wed,  3 Dec 2025 16:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777776;
-	bh=oBnyBt0ZwoZsRmTnX/LU+Az0K3iAo56+/D3Wd8JRA34=;
+	s=korg; t=1764777780;
+	bh=W247V04tnVUsEK8D1Z9vWE/6NTEbA/gYeSMmB0jrjAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SljDQR3FvyUnZb68zSK92YeNtdUf9+ulsjdwmh19epGOIdNwkGbm2j4OX0XwVmNrp
-	 zQB698zRfXMRKTa8NuJv1wkg8Ss3b9l6NmIUOE0GapaoOqMuUx8q10Jb+WbNCm7Mne
-	 gaO0RN0f/1rJ6a3N4s57AXf4MRgBIcUL6aX5lTwE=
+	b=tqEXAYcYMHiRcZtWhwYBBMipibmht/F5vUk3hWQbTY/Ei+OONGq0qw47VoXBE9M80
+	 QgX0leCCI6Za+shMRS+YLr6BoweK9ve0dHDSV3AhWpRTVKBGZbfRDLp2sibTXfSAU0
+	 9l+wBUuLOUyiv9ORbxAyvDmpTREAO+yjyAJy/j/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Qianfeng Rong <rongqianfeng@vivo.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 144/392] net: sh_eth: Disable WoL if system can not suspend
-Date: Wed,  3 Dec 2025 16:24:54 +0100
-Message-ID: <20251203152419.384875755@linuxfoundation.org>
+Subject: [PATCH 5.15 145/392] media: redrat3: use int type to store negative error codes
+Date: Wed,  3 Dec 2025 16:24:55 +0100
+Message-ID: <20251203152419.420789724@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -47,61 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Qianfeng Rong <rongqianfeng@vivo.com>
 
-[ Upstream commit 9c02ea544ac35a9def5827d30594406947ccd81a ]
+[ Upstream commit ecba852dc9f4993f4f894ea1f352564560e19a3e ]
 
-The MAC can't facilitate WoL if the system can't go to sleep. Gate the
-WoL support callbacks in ethtool at compile time using CONFIG_PM_SLEEP.
+Change "ret" from u8 to int type in redrat3_enable_detector() to store
+negative error codes or zero returned by redrat3_send_cmd() and
+usb_submit_urb() - this better aligns with the coding standards and
+maintains code consistency.
 
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250909085849.3808169-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+No effect on runtime.
+
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/sh_eth.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/rc/redrat3.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/renesas/sh_eth.c b/drivers/net/ethernet/renesas/sh_eth.c
-index 183db093815cb..b6f11c0c3e009 100644
---- a/drivers/net/ethernet/renesas/sh_eth.c
-+++ b/drivers/net/ethernet/renesas/sh_eth.c
-@@ -2362,6 +2362,7 @@ static int sh_eth_set_ringparam(struct net_device *ndev,
- 	return 0;
- }
- 
-+#ifdef CONFIG_PM_SLEEP
- static void sh_eth_get_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
+diff --git a/drivers/media/rc/redrat3.c b/drivers/media/rc/redrat3.c
+index cb22316b3f002..6d70b49b524e5 100644
+--- a/drivers/media/rc/redrat3.c
++++ b/drivers/media/rc/redrat3.c
+@@ -422,7 +422,7 @@ static int redrat3_send_cmd(int cmd, struct redrat3_dev *rr3)
+ static int redrat3_enable_detector(struct redrat3_dev *rr3)
  {
- 	struct sh_eth_private *mdp = netdev_priv(ndev);
-@@ -2388,6 +2389,7 @@ static int sh_eth_set_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
+ 	struct device *dev = rr3->dev;
+-	u8 ret;
++	int ret;
  
- 	return 0;
- }
-+#endif
- 
- static const struct ethtool_ops sh_eth_ethtool_ops = {
- 	.get_regs_len	= sh_eth_get_regs_len,
-@@ -2403,8 +2405,10 @@ static const struct ethtool_ops sh_eth_ethtool_ops = {
- 	.set_ringparam	= sh_eth_set_ringparam,
- 	.get_link_ksettings = phy_ethtool_get_link_ksettings,
- 	.set_link_ksettings = phy_ethtool_set_link_ksettings,
-+#ifdef CONFIG_PM_SLEEP
- 	.get_wol	= sh_eth_get_wol,
- 	.set_wol	= sh_eth_set_wol,
-+#endif
- };
- 
- /* network device open function */
+ 	ret = redrat3_send_cmd(RR3_RC_DET_ENABLE, rr3);
+ 	if (ret != 0)
 -- 
 2.51.0
 
