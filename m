@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E823365A1B;
-	Wed,  3 Dec 2025 16:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481C03AA195;
+	Wed,  3 Dec 2025 16:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780753; cv=none; b=m4eSMwbadINBoo54hoA1WdncxrbRO/4NzuWl6F4+5oYWXesBqtBqd7Dj28GGHZhRrbE96LZQWRYuvwxuyRcQsLolSVYT7flH9pYK4o/+RQm7cVEvshThYzN0tZ4ePJ3LUipqDvLk9PAUCjt4ZpLA8JYF/0yuMJgp01YoQF/RI/g=
+	t=1764780756; cv=none; b=dKVsdMBaa8l1hkSrJ5YiNV4wcovTEZUjTuF8EyYbpiv2UR2H4jVXOT9OwkhDRHlQp044/PGYIpB/Ssr0xgqImdfCBAXa1o4RT4ZPUHkE+YsUDDUWPlUpJeTyuhpRYDgCm4kbK+NY7QDgVgWJLJY5F94BEbDVg48v4hA+t9A6I+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780753; c=relaxed/simple;
-	bh=35rYMvNL5FA+tOIbYNz5iGJ+Jvqci8fGOtiwYxkRXDk=;
+	s=arc-20240116; t=1764780756; c=relaxed/simple;
+	bh=mpGWUpNh88z+DxMansY8IA9IYMC7mbD5LzXpxqXgvRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZxV+WoweHvE2NEiGo7qn6MoSc7SBPBNmigNpzIUmdTYQDEgjgDgfXUzYhBUIA2T8gfh5WSFbBa/RSJVhnG8ItzljxTs+w+WcdZ4+slpqVDvQtv6c3jHtynKU7gm9V3OWA7sN0WFkc+CBEvzsWrBSFTNv1WhePgDolE0j7CvMPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTpdq8E6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mHnXghywSLZyhtMaD/maDgO8o9O/xUoaJ9Qn49jpUcsKklmpOmjk88OMPFHvEThvHxMeaJ3W8hVTz7tT5/YAncFfrESTEWvxwEmg8lEnyE5ChKiIvvCrYSgTzWRwKmQZqmS2FOjXQtnviVHsdiaIFPsVgiMwWIt+mEoCeZp9h8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GGWW9qPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTpdq8E6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D336C4CEF5;
-	Wed,  3 Dec 2025 16:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GGWW9qPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF18CC4CEF5;
+	Wed,  3 Dec 2025 16:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780752;
-	bh=35rYMvNL5FA+tOIbYNz5iGJ+Jvqci8fGOtiwYxkRXDk=;
+	s=korg; t=1764780756;
+	bh=mpGWUpNh88z+DxMansY8IA9IYMC7mbD5LzXpxqXgvRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VTpdq8E6h84pXGjYonp+VPDhYJwRt+CsMzyBVQGfzKqI+bVCAloF7dDp70HveE/++
-	 +MAsbC6Yzudih1cTs0JCSs+EtLnCew2wUHkWJo+w2VVfI4WzKV6Dy7xFyim7uNXrkl
-	 EmNtJJzqAPTpfnGL02EPgbRKoFPWHLK/REwlzaNk=
+	b=GGWW9qPmBAuyI38skYS+1fzLshK6GKTLXWQ3eqycUZEYbrQ+2HmKXK9hje9zsboAl
+	 uZSH67bcSgK7hj/7cVzFcAUnT2QiRc2Ih/P6pej1hAtIyPt0UkTbRRL23riGtSNeGh
+	 h+6BfpjQ+fWOqXgmKBMqcTdrR5yPZJd0onyS/dI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	WangYuli <wangyl5933@chinaunicom.cn>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	Srinivas Kandagatla <srini@kernel.org>
-Subject: [PATCH 6.12 080/132] nvmem: layouts: fix nvmem_layout_bus_uevent
-Date: Wed,  3 Dec 2025 16:29:19 +0100
-Message-ID: <20251203152346.257169973@linuxfoundation.org>
+	Ang Tien Sung <tiensung.ang@altera.com>,
+	Khairul Anuar Romli <khairul.anuar.romli@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.12 081/132] firmware: stratix10-svc: fix bug in saving controller data
+Date: Wed,  3 Dec 2025 16:29:20 +0100
+Message-ID: <20251203152346.293417090@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,40 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentao Guan <guanwentao@uniontech.com>
+From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
 
-commit 03bc4831ef064e114328dea906101cff7c6fb8b3 upstream.
+commit d0fcf70c680e4d1669fcb3a8632f41400b9a73c2 upstream.
 
-correctly check the ENODEV return value.
+Fix the incorrect usage of platform_set_drvdata and dev_set_drvdata. They
+both are of the same data and overrides each other. This resulted in the
+rmmod of the svc driver to fail and throw a kernel panic for kthread_stop
+and fifo free.
 
-Fixes: 810b790033cc ("nvmem: layouts: fix automatic module loading")
-CC: stable@vger.kernel.org
-Co-developed-by: WangYuli <wangyl5933@chinaunicom.cn>
-Signed-off-by: WangYuli <wangyl5933@chinaunicom.cn>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
-Link: https://patch.msgid.link/20251114110539.143154-1-srini@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b5dc75c915cd ("firmware: stratix10-svc: extend svc to support new RSU features")
+Cc: stable@vger.kernel.org # 6.6+
+Signed-off-by: Ang Tien Sung <tiensung.ang@altera.com>
+Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/layouts.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/stratix10-svc.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvmem/layouts.c b/drivers/nvmem/layouts.c
-index f381ce1e84bd..7ebe53249035 100644
---- a/drivers/nvmem/layouts.c
-+++ b/drivers/nvmem/layouts.c
-@@ -51,7 +51,7 @@ static int nvmem_layout_bus_uevent(const struct device *dev,
- 	int ret;
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -134,6 +134,7 @@ struct stratix10_svc_data {
+  * @complete_status: state for completion
+  * @svc_fifo_lock: protect access to service message data queue
+  * @invoke_fn: function to issue secure monitor call or hypervisor call
++ * @svc: manages the list of client svc drivers
+  *
+  * This struct is used to create communication channels for service clients, to
+  * handle secure monitor or hypervisor call.
+@@ -150,6 +151,7 @@ struct stratix10_svc_controller {
+ 	struct completion complete_status;
+ 	spinlock_t svc_fifo_lock;
+ 	svc_invoke_fn *invoke_fn;
++	struct stratix10_svc *svc;
+ };
  
- 	ret = of_device_uevent_modalias(dev, env);
--	if (ret != ENODEV)
-+	if (ret != -ENODEV)
- 		return ret;
+ /**
+@@ -1209,6 +1211,7 @@ static int stratix10_svc_drv_probe(struc
+ 		ret = -ENOMEM;
+ 		goto err_free_kfifo;
+ 	}
++	controller->svc = svc;
+ 
+ 	svc->stratix10_svc_rsu = platform_device_alloc(STRATIX10_RSU, 0);
+ 	if (!svc->stratix10_svc_rsu) {
+@@ -1240,8 +1243,6 @@ static int stratix10_svc_drv_probe(struc
+ 	if (ret)
+ 		goto err_unregister_fcs_dev;
+ 
+-	dev_set_drvdata(dev, svc);
+-
+ 	pr_info("Intel Service Layer Driver Initialized\n");
  
  	return 0;
--- 
-2.52.0
-
+@@ -1259,8 +1260,8 @@ err_destroy_pool:
+ 
+ static void stratix10_svc_drv_remove(struct platform_device *pdev)
+ {
+-	struct stratix10_svc *svc = dev_get_drvdata(&pdev->dev);
+ 	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
++	struct stratix10_svc *svc = ctrl->svc;
+ 
+ 	of_platform_depopulate(ctrl->dev);
+ 
 
 
