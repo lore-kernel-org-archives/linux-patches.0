@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C6C35E535;
-	Wed,  3 Dec 2025 16:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A5B35E533;
+	Wed,  3 Dec 2025 16:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779228; cv=none; b=jIi2iHuDUeh5gMTiA9/PGq6qwqLyQXZund2XWlvj4oOxr3bbwx8YJNQE4N/n58d/EDyCO4ihFZBqpHb3YPuAtgI0WFoQJGdnduRHC24mzNC71IY8BrUzmCG2wA4x7iozEbkzisHq09pZgq6V/8pzFSDJBnkUchjXmy1D/9cg6E0=
+	t=1764779230; cv=none; b=MFcRzU82qEgPyueP1wmV+KrT9dLl03jSr258e0na23YFt7KLFJgOsuVyqym3FGXbv4bfi1oo4YyVshB+cv0+S+8xCi1HFrOmXKex8R8hqzeg55iCvO0zzAHPAcB8qezoUEc+dNA8fg11tYSRh5q6jg8xZxpQCNKeuEeRdgP1tog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779228; c=relaxed/simple;
-	bh=99f3Ujs9UJkv1G2+3Gr8Jn0MFG7K3QEDdfuPCYojXy8=;
+	s=arc-20240116; t=1764779230; c=relaxed/simple;
+	bh=yczbnw6GLYbC44TmxzyGwMNp9Ki4slutU+7A+3XtSAo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q7T7Voqtf9Xhkp0ZGg5V5vW/cnVRM2bNPSTB2ApdGDdSx9YF2MXEHgWA9utx2LVIlerMYj5RMBx+jZSdSj7nYthK5J1vCiPf0JehNo2fISNdXlFwWsexafhoApT7Y6HK7o0D1yMK3SoFqnI16sNG8A5B5kUc5db/mvV9Stfh76c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQGTxv71; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q+GITomD3amXSBa74ZIMg0Nvr7HgXWaVHWwK/GSO07pijDC9zSuC10Cae+v4pQ7Kprv2UBLxItvQPFpvDu6mncehl3SOOUb+Z0y2pjrd7+ihE00GyVQQQxe+pDOkaD4LH/pQI0pqJWbTyh/3afB+4p6+Xo+qbVlzvm29dv7HXQ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgNbcW5X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQGTxv71"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186B0C4CEF5;
-	Wed,  3 Dec 2025 16:27:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgNbcW5X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75054C4CEF5;
+	Wed,  3 Dec 2025 16:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779226;
-	bh=99f3Ujs9UJkv1G2+3Gr8Jn0MFG7K3QEDdfuPCYojXy8=;
+	s=korg; t=1764779229;
+	bh=yczbnw6GLYbC44TmxzyGwMNp9Ki4slutU+7A+3XtSAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sQGTxv71nH6qLRiY7E41mTmT4NY/1QJ/hY/t2iXVsA75vRpwZmPcLm3y6yiu9NSHt
-	 CJVtY1/lRcu8aBDrk0Ef/fe1Xu5D7Ji3FpIkfUV081pwT7mMk5LEMbi2VIkljD1+Ka
-	 sfUJ9+/b4F94nmz/L2eSl570I44tbdpjjVcXm7no=
+	b=rgNbcW5X84qjIHf5j0fYI35Tnn6CsDgBdHC2v9k5GvUE+hZLyhxq5oAyQOPbz0jVp
+	 ShwyJW3B5SJRd5wtw25B790SBtfLlO8Ad/cm3UHTUHSk0vc+e3ZYvP4ICKm5BxjL4O
+	 kglpLGGeZUpJAebx2dNu7cuD944F6rV6PK7KnrFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Paul Kocialkowski <paulk@sys-base.io>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 193/568] media: adv7180: Only validate format in querystd
-Date: Wed,  3 Dec 2025 16:23:15 +0100
-Message-ID: <20251203152447.794220142@linuxfoundation.org>
+Subject: [PATCH 6.1 194/568] media: verisilicon: Explicitly disable selection api ioctls for decoders
+Date: Wed,  3 Dec 2025 16:23:16 +0100
+Message-ID: <20251203152447.831041006@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,87 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Paul Kocialkowski <paulk@sys-base.io>
 
-[ Upstream commit 91c5d7c849273d14bc4bae1b92666bdb5409294a ]
+[ Upstream commit 73d50aa92f28ee8414fbfde011974fce970b82cc ]
 
-The .querystd callback should not program the device with the detected
-standard, it should only report the standard to user-space. User-space
-may then use .s_std to set the standard, if it wants to use it.
+Call the dedicated v4l2_disable_ioctl helper instead of manually
+checking whether the current context is an encoder for the selection
+api ioctls.
 
-All that is required of .querystd is to setup the auto detection of
-standards and report its findings.
-
-While at it add some documentation on why this can't happen while
-streaming and improve the error handling using a scoped guard.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/adv7180.c | 37 ++++++++++++++++---------------------
- 1 file changed, 16 insertions(+), 21 deletions(-)
+ drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
+ drivers/media/platform/verisilicon/hantro_v4l2.c | 6 ++----
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
-index 74356ea06deee..5d10edcfcc3b5 100644
---- a/drivers/media/i2c/adv7180.c
-+++ b/drivers/media/i2c/adv7180.c
-@@ -356,32 +356,27 @@ static inline struct adv7180_state *to_state(struct v4l2_subdev *sd)
- static int adv7180_querystd(struct v4l2_subdev *sd, v4l2_std_id *std)
- {
- 	struct adv7180_state *state = to_state(sd);
--	int err = mutex_lock_interruptible(&state->mutex);
--	if (err)
--		return err;
--
--	if (state->streaming) {
--		err = -EBUSY;
--		goto unlock;
--	}
-+	int ret;
+diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
+index 69a2442f31223..a35b6ae62d585 100644
+--- a/drivers/media/platform/verisilicon/hantro_drv.c
++++ b/drivers/media/platform/verisilicon/hantro_drv.c
+@@ -819,6 +819,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
+ 		vpu->decoder = func;
+ 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
+ 		v4l2_disable_ioctl(vfd, VIDIOC_ENCODER_CMD);
++		v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);
++		v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);
+ 	}
  
--	err = adv7180_set_video_standard(state,
--			ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
--	if (err)
--		goto unlock;
-+	guard(mutex)(&state->mutex);
+ 	video_set_drvdata(vfd, vpu);
+diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
+index b2da48936e3f1..31ae6750321c4 100644
+--- a/drivers/media/platform/verisilicon/hantro_v4l2.c
++++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
+@@ -629,8 +629,7 @@ static int vidioc_g_selection(struct file *file, void *priv,
+ 	struct hantro_ctx *ctx = fh_to_ctx(priv);
  
--	msleep(100);
--	__adv7180_status(state, NULL, std);
-+	/*
-+	 * We can't sample the standard if the device is streaming as that would
-+	 * interfere with the capture session as the VID_SEL reg is touched.
-+	 */
-+	if (state->streaming)
-+		return -EBUSY;
+ 	/* Crop only supported on source. */
+-	if (!ctx->is_encoder ||
+-	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
++	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
+ 		return -EINVAL;
  
--	err = v4l2_std_to_adv7180(state->curr_norm);
--	if (err < 0)
--		goto unlock;
-+	/* Set the standard to autodetect PAL B/G/H/I/D, NTSC J or SECAM */
-+	ret = adv7180_set_video_standard(state,
-+					 ADV7180_STD_AD_PAL_BG_NTSC_J_SECAM);
-+	if (ret)
-+		return ret;
+ 	switch (sel->target) {
+@@ -662,8 +661,7 @@ static int vidioc_s_selection(struct file *file, void *priv,
+ 	struct vb2_queue *vq;
  
--	err = adv7180_set_video_standard(state, err);
-+	/* Allow some time for the autodetection to run. */
-+	msleep(100);
+ 	/* Crop only supported on source. */
+-	if (!ctx->is_encoder ||
+-	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
++	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
+ 		return -EINVAL;
  
--unlock:
--	mutex_unlock(&state->mutex);
--	return err;
-+	return __adv7180_status(state, NULL, std);
- }
- 
- static int adv7180_s_routing(struct v4l2_subdev *sd, u32 input,
+ 	/* Change not allowed if the queue is streaming. */
 -- 
 2.51.0
 
