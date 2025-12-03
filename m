@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472B343D8C;
-	Wed,  3 Dec 2025 15:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B5B344057;
+	Wed,  3 Dec 2025 15:58:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777478; cv=none; b=GPBBiJuwnXzk/A8oeXCNqYMaFTJb/S4R8y+M0MKBJEwLHj1x/ehZ1t/UO+YXJ204/jFQk7bek0K0thUrTOO1wEYTAZcrdDwwq9D5dGYrGmYfFXXNBn9kNTAhkz1FexpSCt5He3+2yS+OEACqhKmmyBDxAtJKSN2t2oCuOOieYMY=
+	t=1764777481; cv=none; b=WcNaDr0ym8gPwWDmp8aBD5jGY0f7N+HPIe+Pv0xqjxh3hnDCbYrvF0UqFUO81U1FFfcj13iM8+3ELe46mACf1RbNoWRlQVPQWF+OvMcfn/xGuvQf8+vGex+WHxwPM7Z8K4CJ5TACM+OhbOQtKppH+ii+f+ZzJ6fWM4SSsSeWKYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777478; c=relaxed/simple;
-	bh=R2revpk2iQmIZAGPbwI41WGY4+9POVu/wEytarGLP/c=;
+	s=arc-20240116; t=1764777481; c=relaxed/simple;
+	bh=SzlOag40qPB8UH3dzOEGlFHhXv/EJOUl26h5dVH3WCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r6wrcqA5yhr7i3bT83CIxdUZaSESplRrm8DXK1vFAXqEbl8GcVHGKIUMTEdVrLOo31C/rrh9WAb8KEf3ckUvQlmDz16hZEqadkARP6hboS8sdLL/2sCx0oWHr3Fx22ys/QMan1XHNqKWWzSCau63LBECu25jOIUYYPCPTEcA+Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAHteO97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mSQW+pZmJ1Yjl5wUOjSUhejC/aTZvyq7GQqaILKARuTIbQ9vY5sa4D8uN/esf4gZgM/gArqPDDasg651y33/zbMDnBpdadsWiYWWDznFWhCTn01Dz3SDIIXWI3X7uhZdBxOGJnbAaX3fZo7Aw/+yduN8FjyxnfRtAt94GEBZRkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KjLzmFVd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAHteO97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E514CC4CEF5;
-	Wed,  3 Dec 2025 15:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KjLzmFVd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3611C4CEF5;
+	Wed,  3 Dec 2025 15:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777478;
-	bh=R2revpk2iQmIZAGPbwI41WGY4+9POVu/wEytarGLP/c=;
+	s=korg; t=1764777481;
+	bh=SzlOag40qPB8UH3dzOEGlFHhXv/EJOUl26h5dVH3WCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAHteO97gYf+lj917NlE9+4xETGiLoVDwSAeccUbKRTXOdwoIqHqe8t8lzY314GKI
-	 zS5fa6NHkC4ecsTzIrEa3nBAn8+c7HnVPx0MVEXauw2GJAYPWSHb0XqnC4JVVKtcol
-	 fBi0ZBpqGZ4GlKH1qdmbzWyv9D6Ysno+cOQRqhXg=
+	b=KjLzmFVdd0RsLUZmDio3J89MTyi1z3mgTphEexcf0EvcED1V0FbWWt6orU5e/AGef
+	 G7ff/SIP8La6WHd4XFXKp/PhL6z51dqp719w22V8zCA3hkeTdps+SwVR+LcoqoWpdW
+	 Moas3qQlep6XmhA9iKsk5iO+h1N2cerQGAMwIsxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Philipp Stanner <phasta@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Melissa Wen <melissa.srw@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/392] drm/sched: Fix race in drm_sched_entity_select_rq()
-Date: Wed,  3 Dec 2025 16:23:20 +0100
-Message-ID: <20251203152415.953895791@linuxfoundation.org>
+Subject: [PATCH 5.15 051/392] drm/sysfb: Do not dereference NULL pointer in plane reset
+Date: Wed,  3 Dec 2025 16:23:21 +0100
+Message-ID: <20251203152415.991485169@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,41 +58,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit d25e3a610bae03bffc5c14b5d944a5d0cd844678 ]
+[ Upstream commit 14e02ed3876f4ab0ed6d3f41972175f8b8df3d70 ]
 
-In a past bug fix it was forgotten that entity access must be protected
-by the entity lock. That's a data race and potentially UB.
+The plane state in __drm_gem_reset_shadow_plane() can be NULL. Do not
+deref that pointer, but forward NULL to the other plane-reset helpers.
+Clears plane->state to NULL.
 
-Move the spin_unlock() to the appropriate position.
+v2:
+- fix typo in commit description (Javier)
 
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: ac4eb83ab255 ("drm/sched: select new rq even if there is only one v3")
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251022063402.87318-2-phasta@kernel.org
-[ adapted lock field name from entity->lock to entity->rq_lock ]
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: b71565022031 ("drm/gem: Export implementation of shadow-plane helpers")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/dri-devel/aPIDAsHIUHp_qSW4@stanley.mountain/
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Melissa Wen <melissa.srw@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.15+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20251017091407.58488-1-tzimmermann@suse.de
+[ removed drm_format_conv_state_init() call ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_atomic_helper.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -456,10 +456,11 @@ void drm_sched_entity_select_rq(struct d
- 		drm_sched_rq_remove_entity(entity->rq, entity);
- 		entity->rq = rq;
- 	}
--	spin_unlock(&entity->rq_lock);
- 
- 	if (entity->num_sched_list == 1)
- 		entity->sched_list = NULL;
-+
-+	spin_unlock(&entity->rq_lock);
+--- a/drivers/gpu/drm/drm_gem_atomic_helper.c
++++ b/drivers/gpu/drm/drm_gem_atomic_helper.c
+@@ -282,7 +282,11 @@ EXPORT_SYMBOL(drm_gem_destroy_shadow_pla
+ void __drm_gem_reset_shadow_plane(struct drm_plane *plane,
+ 				  struct drm_shadow_plane_state *shadow_plane_state)
+ {
+-	__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
++	if (shadow_plane_state) {
++		__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
++	} else {
++		__drm_atomic_helper_plane_reset(plane, NULL);
++	}
  }
+ EXPORT_SYMBOL(__drm_gem_reset_shadow_plane);
  
- /**
 
 
