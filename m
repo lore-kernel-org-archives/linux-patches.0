@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4CB349AE7;
-	Wed,  3 Dec 2025 16:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D4349AE0;
+	Wed,  3 Dec 2025 16:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780587; cv=none; b=NEPwLK+Y3HXLdWSKQV94ldAo8a8Xggy+0DG4SRTUnoWPdC2U72D5Oqv4lGvvOirkV1wp9o3kyIUzPb0LzZEvZKdNsrzsqjU0knaza4dgEsHaS3iia/QoOkJg+0QaOokp+yMUZenURwAnWzDILbT6iJyV+IpIAzqYmMhq+IOPlwo=
+	t=1764780591; cv=none; b=ZsQprI01I8f0UPV1w9JkaWv5ayDq/NyucG/swZ6c6/Txn+u+b1irf3HZbU+s/QgMEa2FnCi8U1W5uX5Sff9zcXzdxE026FRyNqWe7Jb0GMaa6fUrPh7My89+EkiDhgCduzpGBVUa9WVMFnODc5eTARQJdDGIsLzKQ0u8mlFkIzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780587; c=relaxed/simple;
-	bh=dYyWVk/RZKpst02gcylyPSv++9NI2vUXZj40+f21oQs=;
+	s=arc-20240116; t=1764780591; c=relaxed/simple;
+	bh=BnGxS5fac7xf0zR8TjgIwMO87vjthznWJgcA8CwhJqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORcm0LWc+N9tNl0Xa5+vZzSyZmtEFi7+V7qqe0x656h0pMwFjmTo6h0GWBN/SIh8yR/ivEC9AejS5o3OOGxJ1+zJrNiYjWuzYvh2qfgcxNeZ8HiS5LFQJNc1XPjJ+WViWrk06Vkd+IxwNfL1shWR5LODdINHM4yDtxKho8YNfZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBAwqP5j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2ufhvzp4kXQHR5zLKv/aqceQx/Rv9a9RS0HUG+3ualJSWFiTexLHryhKfzYGDCDAJCQ0U7e+jTZpnqnlR14GmXQexOqD9HvCyiBlwV732lGz1XucyElVKyruRG/0w4O48PPJxzX5naNFuHnm+LICgqHjbkBWj/8Yl2GWQl4Ggg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FGyeFMbN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBAwqP5j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036B8C4CEF5;
-	Wed,  3 Dec 2025 16:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FGyeFMbN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63A5EC4CEF5;
+	Wed,  3 Dec 2025 16:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780587;
-	bh=dYyWVk/RZKpst02gcylyPSv++9NI2vUXZj40+f21oQs=;
+	s=korg; t=1764780590;
+	bh=BnGxS5fac7xf0zR8TjgIwMO87vjthznWJgcA8CwhJqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBAwqP5jOmfr3ETTpNe3KH3c4TOrhQGQsCGD1GIyz110tzeOBhBWHGH8CsKsgDIzn
-	 b8f9q+PNl2zjqO7E+wcEAeklufifx7HMtCfcfCworPOUVUyxZcgbzDZQWrm/dMNnEh
-	 g1NGjEaCvZnSvPnsqjiDlpy++bwSWOkKnrI2QT70=
+	b=FGyeFMbNLrAzh6i/vyJLHrHtUnBLguMJkBLqGoFd+CBHCucgdDG9g12Tlwqe05LOW
+	 x3pqwvN8ypwmGl1jdtanfjLlf8Nn/X2BbrEQzKRDWJdRzr9SLuOvoNQ7OFw/si65Hg
+	 Q8znalxmJS8ZYKTc/BpMHcm2q+qVvp5F/FvtmCJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/132] Bluetooth: hci_core: Fix triggering cmd_timer for HCI_OP_NOP
-Date: Wed,  3 Dec 2025 16:28:05 +0100
-Message-ID: <20251203152343.527912624@linuxfoundation.org>
+Subject: [PATCH 6.12 007/132] Bluetooth: hci_sock: Prevent race in socket write iter and sock bind
+Date: Wed,  3 Dec 2025 16:28:06 +0100
+Message-ID: <20251203152343.564190791@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -50,83 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 275ddfeb3fdc274050c2173ffd985b1e80a9aa37 ]
+[ Upstream commit 89bb613511cc21ed5ba6bddc1c9b9ae9c0dad392 ]
 
-HCI_OP_NOP means no command was actually sent so there is no point in
-triggering cmd_timer which may cause a hdev->reset in the process since
-it is assumed that the controller is stuck processing a command.
+There is a potential race condition between sock bind and socket write
+iter. bind may free the same cmd via mgmt_pending before write iter sends
+the cmd, just as syzbot reported in UAF[1].
 
-Fixes: e2d471b7806b ("Bluetooth: ISO: Fix not using SID from adv report")
+Here we use hci_dev_lock to synchronize the two, thereby avoiding the
+UAF mentioned in [1].
+
+[1]
+syzbot reported:
+BUG: KASAN: slab-use-after-free in mgmt_pending_remove+0x3b/0x210 net/bluetooth/mgmt_util.c:316
+Read of size 8 at addr ffff888077164818 by task syz.0.17/5989
+Call Trace:
+ mgmt_pending_remove+0x3b/0x210 net/bluetooth/mgmt_util.c:316
+ set_link_security+0x5c2/0x710 net/bluetooth/mgmt.c:1918
+ hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
+ hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0x21c/0x270 net/socket.c:742
+ sock_write_iter+0x279/0x360 net/socket.c:1195
+
+Allocated by task 5989:
+ mgmt_pending_add+0x35/0x140 net/bluetooth/mgmt_util.c:296
+ set_link_security+0x557/0x710 net/bluetooth/mgmt.c:1910
+ hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
+ hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0x21c/0x270 net/socket.c:742
+ sock_write_iter+0x279/0x360 net/socket.c:1195
+
+Freed by task 5991:
+ mgmt_pending_free net/bluetooth/mgmt_util.c:311 [inline]
+ mgmt_pending_foreach+0x30d/0x380 net/bluetooth/mgmt_util.c:257
+ mgmt_index_removed+0x112/0x2f0 net/bluetooth/mgmt.c:9477
+ hci_sock_bind+0xbe9/0x1000 net/bluetooth/hci_sock.c:1314
+
+Fixes: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
+Reported-by: syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9aa47cd4633a3cf92a80
+Tested-by: syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index b74ada8092378..ba01d0fa07193 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -4076,7 +4076,7 @@ static void hci_rx_work(struct work_struct *work)
- 	}
- }
- 
--static void hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
-+static int hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	int err;
- 
-@@ -4088,16 +4088,19 @@ static void hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
- 	if (!hdev->sent_cmd) {
- 		skb_queue_head(&hdev->cmd_q, skb);
- 		queue_work(hdev->workqueue, &hdev->cmd_work);
--		return;
-+		return -EINVAL;
- 	}
- 
- 	if (hci_skb_opcode(skb) != HCI_OP_NOP) {
- 		err = hci_send_frame(hdev, skb);
- 		if (err < 0) {
- 			hci_cmd_sync_cancel_sync(hdev, -err);
--			return;
-+			return err;
+diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
+index 4ad5296d79345..fbfc962374a88 100644
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1304,7 +1304,9 @@ static int hci_sock_bind(struct socket *sock, struct sockaddr *addr,
+ 			goto done;
  		}
- 		atomic_dec(&hdev->cmd_cnt);
-+	} else {
-+		err = -ENODATA;
-+		kfree_skb(skb);
- 	}
  
- 	if (hdev->req_status == HCI_REQ_PEND &&
-@@ -4105,12 +4108,15 @@ static void hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
- 		kfree_skb(hdev->req_skb);
- 		hdev->req_skb = skb_clone(hdev->sent_cmd, GFP_KERNEL);
- 	}
-+
-+	return err;
- }
++		hci_dev_lock(hdev);
+ 		mgmt_index_removed(hdev);
++		hci_dev_unlock(hdev);
  
- static void hci_cmd_work(struct work_struct *work)
- {
- 	struct hci_dev *hdev = container_of(work, struct hci_dev, cmd_work);
- 	struct sk_buff *skb;
-+	int err;
- 
- 	BT_DBG("%s cmd_cnt %d cmd queued %d", hdev->name,
- 	       atomic_read(&hdev->cmd_cnt), skb_queue_len(&hdev->cmd_q));
-@@ -4121,7 +4127,9 @@ static void hci_cmd_work(struct work_struct *work)
- 		if (!skb)
- 			return;
- 
--		hci_send_cmd_sync(hdev, skb);
-+		err = hci_send_cmd_sync(hdev, skb);
-+		if (err)
-+			return;
- 
- 		rcu_read_lock();
- 		if (test_bit(HCI_RESET, &hdev->flags) ||
+ 		err = hci_dev_open(hdev->id);
+ 		if (err) {
 -- 
 2.51.0
 
