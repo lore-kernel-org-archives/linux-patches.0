@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60928349B09;
-	Wed,  3 Dec 2025 16:49:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D4CB349AE7;
+	Wed,  3 Dec 2025 16:49:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780584; cv=none; b=jtgHibda26zC5GVi5+iZBy+UVUZzxBmVAltPfINWucNLvur6WSbHpZwkka1tmeSdHG4nptLBHhkxHe9aLkVl4//YNF8FtsKGAIi9X2njdQFWkiKyk3b5ES4ommIxvYde9XrEHNOVqSgulY25lDXZqOGqIuMznMZ31KCgwZ9RRXk=
+	t=1764780587; cv=none; b=NEPwLK+Y3HXLdWSKQV94ldAo8a8Xggy+0DG4SRTUnoWPdC2U72D5Oqv4lGvvOirkV1wp9o3kyIUzPb0LzZEvZKdNsrzsqjU0knaza4dgEsHaS3iia/QoOkJg+0QaOokp+yMUZenURwAnWzDILbT6iJyV+IpIAzqYmMhq+IOPlwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780584; c=relaxed/simple;
-	bh=WZ7UkCChsgizw0J3+OP+PFt7QVmB7ATKkuvWqKdmhpY=;
+	s=arc-20240116; t=1764780587; c=relaxed/simple;
+	bh=dYyWVk/RZKpst02gcylyPSv++9NI2vUXZj40+f21oQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nFhHBjP98pm8iACEnY3tOfoXj7KDzvIrRHYnEpea1qgenO4mYstC8k84nv9wnw9HkOFpDRyZBfNmfVPDtb79UPk3WIYmZ45bSfaOkwCebUauEko9gBvVciLlyUvxT4dmDjNNr6q+im43zo2Mu+GGkO6hzpxbb4VcxO6WxwiBOBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiinjY86; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ORcm0LWc+N9tNl0Xa5+vZzSyZmtEFi7+V7qqe0x656h0pMwFjmTo6h0GWBN/SIh8yR/ivEC9AejS5o3OOGxJ1+zJrNiYjWuzYvh2qfgcxNeZ8HiS5LFQJNc1XPjJ+WViWrk06Vkd+IxwNfL1shWR5LODdINHM4yDtxKho8YNfZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fBAwqP5j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiinjY86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCB0C4CEF5;
-	Wed,  3 Dec 2025 16:49:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fBAwqP5j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036B8C4CEF5;
+	Wed,  3 Dec 2025 16:49:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780584;
-	bh=WZ7UkCChsgizw0J3+OP+PFt7QVmB7ATKkuvWqKdmhpY=;
+	s=korg; t=1764780587;
+	bh=dYyWVk/RZKpst02gcylyPSv++9NI2vUXZj40+f21oQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiinjY86RuQd/VDNNP7OXPn6y9JITaig6FLX4HnK2ujBWkJFvfOE1vyRUKss/Ws+0
-	 1GJEKhCh9yOsWeUgKVVx762AdsDnqs1r/DsY8QDtEvDroQDUb53mHmV5YHUAFx3pGZ
-	 UYVxXYh4+E7mn6P5h108WUxOL/2yU16AJ/JZ4vjc=
+	b=fBAwqP5jOmfr3ETTpNe3KH3c4TOrhQGQsCGD1GIyz110tzeOBhBWHGH8CsKsgDIzn
+	 b8f9q+PNl2zjqO7E+wcEAeklufifx7HMtCfcfCworPOUVUyxZcgbzDZQWrm/dMNnEh
+	 g1NGjEaCvZnSvPnsqjiDlpy++bwSWOkKnrI2QT70=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Lu <chris.lu@mediatek.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 005/132] Bluetooth: btusb: mediatek: Fix kernel crash when releasing mtk iso interface
-Date: Wed,  3 Dec 2025 16:28:04 +0100
-Message-ID: <20251203152343.490737104@linuxfoundation.org>
+Subject: [PATCH 6.12 006/132] Bluetooth: hci_core: Fix triggering cmd_timer for HCI_OP_NOP
+Date: Wed,  3 Dec 2025 16:28:05 +0100
+Message-ID: <20251203152343.527912624@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,129 +50,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 4015b979767125cf8a2233a145a3b3af78bfd8fb ]
+[ Upstream commit 275ddfeb3fdc274050c2173ffd985b1e80a9aa37 ]
 
-When performing reset tests and encountering abnormal card drop issues
-that lead to a kernel crash, it is necessary to perform a null check
-before releasing resources to avoid attempting to release a null pointer.
+HCI_OP_NOP means no command was actually sent so there is no point in
+triggering cmd_timer which may cause a hdev->reset in the process since
+it is assumed that the controller is stuck processing a command.
 
-<4>[   29.158070] Hardware name: Google Quigon sku196612/196613 board (DT)
-<4>[   29.158076] Workqueue: hci0 hci_cmd_sync_work [bluetooth]
-<4>[   29.158154] pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-<4>[   29.158162] pc : klist_remove+0x90/0x158
-<4>[   29.158174] lr : klist_remove+0x88/0x158
-<4>[   29.158180] sp : ffffffc0846b3c00
-<4>[   29.158185] pmr_save: 000000e0
-<4>[   29.158188] x29: ffffffc0846b3c30 x28: ffffff80cd31f880 x27: ffffff80c1bdc058
-<4>[   29.158199] x26: dead000000000100 x25: ffffffdbdc624ea3 x24: ffffff80c1bdc4c0
-<4>[   29.158209] x23: ffffffdbdc62a3e6 x22: ffffff80c6c07000 x21: ffffffdbdc829290
-<4>[   29.158219] x20: 0000000000000000 x19: ffffff80cd3e0648 x18: 000000031ec97781
-<4>[   29.158229] x17: ffffff80c1bdc4a8 x16: ffffffdc10576548 x15: ffffff80c1180428
-<4>[   29.158238] x14: 0000000000000000 x13: 000000000000e380 x12: 0000000000000018
-<4>[   29.158248] x11: ffffff80c2a7fd10 x10: 0000000000000000 x9 : 0000000100000000
-<4>[   29.158257] x8 : 0000000000000000 x7 : 7f7f7f7f7f7f7f7f x6 : 2d7223ff6364626d
-<4>[   29.158266] x5 : 0000008000000000 x4 : 0000000000000020 x3 : 2e7325006465636e
-<4>[   29.158275] x2 : ffffffdc11afeff8 x1 : 0000000000000000 x0 : ffffffdc11be4d0c
-<4>[   29.158285] Call trace:
-<4>[   29.158290]  klist_remove+0x90/0x158
-<4>[   29.158298]  device_release_driver_internal+0x20c/0x268
-<4>[   29.158308]  device_release_driver+0x1c/0x30
-<4>[   29.158316]  usb_driver_release_interface+0x70/0x88
-<4>[   29.158325]  btusb_mtk_release_iso_intf+0x68/0xd8 [btusb (HASH:e8b6 5)]
-<4>[   29.158347]  btusb_mtk_reset+0x5c/0x480 [btusb (HASH:e8b6 5)]
-<4>[   29.158361]  hci_cmd_sync_work+0x10c/0x188 [bluetooth (HASH:a4fa 6)]
-<4>[   29.158430]  process_scheduled_works+0x258/0x4e8
-<4>[   29.158441]  worker_thread+0x300/0x428
-<4>[   29.158448]  kthread+0x108/0x1d0
-<4>[   29.158455]  ret_from_fork+0x10/0x20
-<0>[   29.158467] Code: 91343000 940139d1 f9400268 927ff914 (f9401297)
-<4>[   29.158474] ---[ end trace 0000000000000000 ]---
-<0>[   29.167129] Kernel panic - not syncing: Oops: Fatal exception
-<2>[   29.167144] SMP: stopping secondary CPUs
-<4>[   29.167158] ------------[ cut here ]------------
-
-Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Fixes: e2d471b7806b ("Bluetooth: ISO: Fix not using SID from adv report")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c        | 34 +++++++++++++++++++++++++-------
- include/net/bluetooth/hci_core.h |  1 -
- 2 files changed, 27 insertions(+), 8 deletions(-)
+ net/bluetooth/hci_core.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index aedb478614000..b6c37e87c6a08 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -2704,9 +2704,16 @@ static int btusb_recv_event_realtek(struct hci_dev *hdev, struct sk_buff *skb)
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index b74ada8092378..ba01d0fa07193 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -4076,7 +4076,7 @@ static void hci_rx_work(struct work_struct *work)
+ 	}
+ }
  
- static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
+-static void hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
++static int hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
  {
--	struct btmtk_data *btmtk_data = hci_get_priv(data->hdev);
-+	struct btmtk_data *btmtk_data;
  	int err;
  
-+	if (!data->hdev)
-+		return;
-+
-+	btmtk_data = hci_get_priv(data->hdev);
-+	if (!btmtk_data)
-+		return;
-+
- 	/*
- 	 * The function usb_driver_claim_interface() is documented to need
- 	 * locks held if it's not called from a probe routine. The code here
-@@ -2728,17 +2735,30 @@ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
- 
- static void btusb_mtk_release_iso_intf(struct hci_dev *hdev)
- {
--	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
-+	struct btmtk_data *btmtk_data;
-+
-+	if (!hdev)
-+		return;
-+
-+	btmtk_data = hci_get_priv(hdev);
-+	if (!btmtk_data)
-+		return;
- 
- 	if (test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
- 		usb_kill_anchored_urbs(&btmtk_data->isopkt_anchor);
- 		clear_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags);
- 
--		dev_kfree_skb_irq(btmtk_data->isopkt_skb);
--		btmtk_data->isopkt_skb = NULL;
--		usb_set_intfdata(btmtk_data->isopkt_intf, NULL);
--		usb_driver_release_interface(&btusb_driver,
--					     btmtk_data->isopkt_intf);
-+		if (btmtk_data->isopkt_skb) {
-+			dev_kfree_skb_irq(btmtk_data->isopkt_skb);
-+			btmtk_data->isopkt_skb = NULL;
-+		}
-+
-+		if (btmtk_data->isopkt_intf) {
-+			usb_set_intfdata(btmtk_data->isopkt_intf, NULL);
-+			usb_driver_release_interface(&btusb_driver,
-+						     btmtk_data->isopkt_intf);
-+			btmtk_data->isopkt_intf = NULL;
-+		}
+@@ -4088,16 +4088,19 @@ static void hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
+ 	if (!hdev->sent_cmd) {
+ 		skb_queue_head(&hdev->cmd_q, skb);
+ 		queue_work(hdev->workqueue, &hdev->cmd_work);
+-		return;
++		return -EINVAL;
  	}
  
- 	clear_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags);
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 35b5f58b562cb..ba5d176069a69 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -732,7 +732,6 @@ struct hci_conn {
+ 	if (hci_skb_opcode(skb) != HCI_OP_NOP) {
+ 		err = hci_send_frame(hdev, skb);
+ 		if (err < 0) {
+ 			hci_cmd_sync_cancel_sync(hdev, -err);
+-			return;
++			return err;
+ 		}
+ 		atomic_dec(&hdev->cmd_cnt);
++	} else {
++		err = -ENODATA;
++		kfree_skb(skb);
+ 	}
  
- 	__u8		remote_cap;
- 	__u8		remote_auth;
--	__u8		remote_id;
+ 	if (hdev->req_status == HCI_REQ_PEND &&
+@@ -4105,12 +4108,15 @@ static void hci_send_cmd_sync(struct hci_dev *hdev, struct sk_buff *skb)
+ 		kfree_skb(hdev->req_skb);
+ 		hdev->req_skb = skb_clone(hdev->sent_cmd, GFP_KERNEL);
+ 	}
++
++	return err;
+ }
  
- 	unsigned int	sent;
+ static void hci_cmd_work(struct work_struct *work)
+ {
+ 	struct hci_dev *hdev = container_of(work, struct hci_dev, cmd_work);
+ 	struct sk_buff *skb;
++	int err;
  
+ 	BT_DBG("%s cmd_cnt %d cmd queued %d", hdev->name,
+ 	       atomic_read(&hdev->cmd_cnt), skb_queue_len(&hdev->cmd_q));
+@@ -4121,7 +4127,9 @@ static void hci_cmd_work(struct work_struct *work)
+ 		if (!skb)
+ 			return;
+ 
+-		hci_send_cmd_sync(hdev, skb);
++		err = hci_send_cmd_sync(hdev, skb);
++		if (err)
++			return;
+ 
+ 		rcu_read_lock();
+ 		if (test_bit(HCI_RESET, &hdev->flags) ||
 -- 
 2.51.0
 
