@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EF434166A;
-	Wed,  3 Dec 2025 16:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AEF734250B;
+	Wed,  3 Dec 2025 16:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777831; cv=none; b=pRhW3vFRuKEdRxMn9Jo85TYYvUQWGy2lbEi5S35wz+IS6yyoRYKFs4a/nhXFL2JX54IKtSGzfr8L13Tkl/Z3HZstK3AYnAjnLkNBg3i0s+vMuDfRfahhz7ogXEM6Ux8tkKVPZqGN4vcFxgKB0m/XTaMWAIdGK1Hy5X6VQAGRZFk=
+	t=1764777834; cv=none; b=JBWpfps0ibHeLLIiHTwJzspiN3GD86dhd0tnuFOlIBAClfWs2e65Tg+vP16PdZIC08qXVOgTBs+TzKUcHfm5Syzi7xGpqmUjNyojGz+uIq7swIAE4fcp1xEqmyRXnyx09lejiVNERPjriBs/5YdNrjDqeqMxfljTlZvtIG55FjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777831; c=relaxed/simple;
-	bh=uAqcw2IM+hIAjaLdv/Tim/Y9m8B1h6xg+ZnAYcFqS/4=;
+	s=arc-20240116; t=1764777834; c=relaxed/simple;
+	bh=BszxpdBd89WtAOl1L3Ds5lszGOxr7bYoJJu+FLk3RIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IdKJSTEvHaRcikR8wBwBRcmaOEL8jsiwSlyLx6cHK0LbxcgatdnMgxfTRO+5a1+ucvdBUrFLyH2ReOxdP5Xiq7EF1rQe0oyerRWMmI6vGb3ax49VF98rWiTD5Dgne0JNjcIEf7JQo0JJDWPgeEa2YIgTBxumogyxN/4G0v0KaXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VV7mjPjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=prHJLiMFwrm4hemFXKCBL3SfN0ldjOAfVsdO27pWpwpIhabIFMo8LxmL8Jl5+RWxOrRwB2JkSFGAGf80fGIT52Gc8vaWMIYIY89BKRpu/CgRXy16qYQVhWaFmvdn9uY67chO7vbjUiID8xj1jfE+PwipCEL1O6DIfXeX+AvQcH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPzAji+K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VV7mjPjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87B63C4CEF5;
-	Wed,  3 Dec 2025 16:03:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPzAji+K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0F4C4CEF5;
+	Wed,  3 Dec 2025 16:03:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777830;
-	bh=uAqcw2IM+hIAjaLdv/Tim/Y9m8B1h6xg+ZnAYcFqS/4=;
+	s=korg; t=1764777834;
+	bh=BszxpdBd89WtAOl1L3Ds5lszGOxr7bYoJJu+FLk3RIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VV7mjPjRxj9Bpi5l+0fwkymk7xUBvtTVQ2lgAm+3BXyXmXr89z8pinHJsu+JjcAnZ
-	 7fWhICIsJf9Yo9Y6p8LR9/Nc27h8JK6d57hLFRaYNRivhCUG7w9OjREB3bXlnpT7f4
-	 lmRa9ZLc9iadzZyfO4x3MtOUraYkJvVPAk+zpdxo=
+	b=BPzAji+KCBovmF4GHGl8a2HYBK5AmZEWC4jK41iea/jIRKt+U/OoVNWR8Yl65fzLx
+	 xpANSpu1atgMKrZSHC9k8xaoTTe+PWQ5ig7VjJkoKGeukv4R1qyGbXsWCbbjfCpSNz
+	 N+NNPOQilqwyEa4nnaj0/mzxtEbIIIewxHcE6o9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Juraj=20=C5=A0arinay?= <juraj@sarinay.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/392] net: nfc: nci: Increase NCI_DATA_TIMEOUT to 3000 ms
-Date: Wed,  3 Dec 2025 16:24:43 +0100
-Message-ID: <20251203152418.985817026@linuxfoundation.org>
+Subject: [PATCH 5.15 160/392] allow finish_no_open(file, ERR_PTR(-E...))
+Date: Wed,  3 Dec 2025 16:25:10 +0100
+Message-ID: <20251203152419.967040967@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -46,49 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juraj Šarinay <juraj@sarinay.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 21f82062d0f241e55dd59eb630e8710862cc90b4 ]
+[ Upstream commit fe91e078b60d1beabf5cef4a37c848457a6d2dfb ]
 
-An exchange with a NFC target must complete within NCI_DATA_TIMEOUT.
-A delay of 700 ms is not sufficient for cryptographic operations on smart
-cards. CardOS 6.0 may need up to 1.3 seconds to perform 256-bit ECDH
-or 3072-bit RSA. To prevent brute-force attacks, passports and similar
-documents introduce even longer delays into access control protocols
-(BAC/PACE).
+... allowing any ->lookup() return value to be passed to it.
 
-The timeout should be higher, but not too much. The expiration allows
-us to detect that a NFC target has disappeared.
-
-Signed-off-by: Juraj Šarinay <juraj@sarinay.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250902113630.62393-1-juraj@sarinay.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/nfc/nci_core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/open.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/nfc/nci_core.h b/include/net/nfc/nci_core.h
-index ea8595651c384..e066bdbc807be 100644
---- a/include/net/nfc/nci_core.h
-+++ b/include/net/nfc/nci_core.h
-@@ -52,7 +52,7 @@ enum nci_state {
- #define NCI_RF_DISC_SELECT_TIMEOUT		5000
- #define NCI_RF_DEACTIVATE_TIMEOUT		30000
- #define NCI_CMD_TIMEOUT				5000
--#define NCI_DATA_TIMEOUT			700
-+#define NCI_DATA_TIMEOUT			3000
- 
- struct nci_dev;
- 
+diff --git a/fs/open.c b/fs/open.c
+index 84e5dcc31c0e4..bdfe88fab1f1c 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -921,18 +921,20 @@ EXPORT_SYMBOL(finish_open);
+  * finish_no_open - finish ->atomic_open() without opening the file
+  *
+  * @file: file pointer
+- * @dentry: dentry or NULL (as returned from ->lookup())
++ * @dentry: dentry, ERR_PTR(-E...) or NULL (as returned from ->lookup())
+  *
+- * This can be used to set the result of a successful lookup in ->atomic_open().
++ * This can be used to set the result of a lookup in ->atomic_open().
+  *
+  * NB: unlike finish_open() this function does consume the dentry reference and
+  * the caller need not dput() it.
+  *
+- * Returns "0" which must be the return value of ->atomic_open() after having
+- * called this function.
++ * Returns 0 or -E..., which must be the return value of ->atomic_open() after
++ * having called this function.
+  */
+ int finish_no_open(struct file *file, struct dentry *dentry)
+ {
++	if (IS_ERR(dentry))
++		return PTR_ERR(dentry);
+ 	file->f_path.dentry = dentry;
+ 	return 0;
+ }
 -- 
 2.51.0
 
