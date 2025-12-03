@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15CB53590C6;
-	Wed,  3 Dec 2025 16:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A8A35A94D;
+	Wed,  3 Dec 2025 16:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780636; cv=none; b=HuVIryTBJTqgFVARa6pFAzT2PEZN2XpZVJAeDlocOLLfKkSZk8kULPWnh+0GB2erUw+Fc1zSbY6W8Ri2XCT+5UmyynoJ+0+BYGqCjZjTjCeq8r7AFZj8TJLggcR5+gYMapJyDLB4+YpCmWtpYlClXlwWKs1gsVan/OPE8yKmSOo=
+	t=1764780639; cv=none; b=Agkq4Y/CB5kKIR+yuK46QgKba/e981UkS2vEe8BjWbZ4KRRglkOrZ/hepx7ANdcCAF/1Eu3jjYoydbj7+jsKuK9HeBfmG426uCoREqstEtd7uyGwLVMLCRJc8gxIG0lGwx0zxTCmXGZUuepIezbg6YWIi1/SDkhkCHF3Db/RLJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780636; c=relaxed/simple;
-	bh=tbXkoSmuFXenXMNRVpZpviERKUEaRu6IS1wCXrd1TiA=;
+	s=arc-20240116; t=1764780639; c=relaxed/simple;
+	bh=KQWoYHe39gSnEzjl0CivEjqwvWYmh8JYtCOB6PVG9cM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JrcJv0lwvAGOXHnzzQdsveioIdUSrPsGVNBKGXpSjekG0PTStAB+ifOi+g4E5dpBKsv4gqO7xMcrzRP9RzmOWgbB8sAvTfDKRNquekkB4RUJjb9WQGZC/90IfFq4IgiB1M02zLV47JlFMTPkVBXMqhyPSXcPk4Om6J/d1az5/ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNttH100; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YjecMvATlPc5zsbqpArTlpsM4Z0owL9RpKTxak9y4TyaoGCgGtbwiowxnddVru8JSeU/7kJ0FkcbzWi+zuN51mAUVtkj/p4FagjFN1TB+250UBNP4lYF4/zUhZ29vwKKwfsnBbkcV89apx6/MghTCPFPeVGHJWTNmNmxPYRacN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=An/ZtR2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNttH100"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878ABC4CEF5;
-	Wed,  3 Dec 2025 16:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="An/ZtR2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC975C4CEF5;
+	Wed,  3 Dec 2025 16:50:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780635;
-	bh=tbXkoSmuFXenXMNRVpZpviERKUEaRu6IS1wCXrd1TiA=;
+	s=korg; t=1764780639;
+	bh=KQWoYHe39gSnEzjl0CivEjqwvWYmh8JYtCOB6PVG9cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNttH100fvITGmRFbil2kshXGuZLjFMTJQgiW39i4Kn0GmiO64uQiOSyH6h4GTRzk
-	 FwI6w0cgrFRR4Hlv92hVLWK54D6jruewyNGmsGREoIXEY+Wtd9Z8iJTy871FEGFHrX
-	 4cP5KQChbE/QqgL3nmK09z2q2dasjIhCBHGg1Ng8=
+	b=An/ZtR2px63k9E+gltiTz/qoN8M/BBVFrE1ZQeSElkOv94N56pgdAm4dBWjeRXPVI
+	 yv4KJGoQHhHhPb/bneQnI1RqlOxZQVVWfcaUJk8VzWKHgv1HAKWTZ2DeHrzNydGUTb
+	 6rZsHElYP8IDsK8L5RCkFXnDfb3dDfLS/mf9UfVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/132] spi: spi-nxp-fspi: remove the goto in probe
-Date: Wed,  3 Dec 2025 16:28:44 +0100
-Message-ID: <20251203152344.964863209@linuxfoundation.org>
+Subject: [PATCH 6.12 046/132] spi: spi-nxp-fspi: Add OCT-DTR mode support
+Date: Wed,  3 Dec 2025 16:28:45 +0100
+Message-ID: <20251203152345.001823811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -53,175 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 48900813abd2730a35c6e3afd1609bafac5271cc ]
+[ Upstream commit 0f67557763accbdd56681f17ed5350735198c57b ]
 
-Remove all the goto in probe to simplify the driver.
+Add OCT-DTR mode support in default, since flexspi do not supports
+swapping bytes on a 16 bit boundary in OCT-DTR mode, so mark swap16
+as false.
+
+lx2160a do not support DQS, so add a quirk to disable DTR mode for this
+platform.
 
 Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20250428-flexspipatch-v3-1-61d5e8f591bc@nxp.com
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250917-flexspi-ddr-v2-5-bb9fe2a01889@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 40ad64ac25bb ("spi: nxp-fspi: Propagate fwnode in ACPI case as well")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-nxp-fspi.c | 87 ++++++++++++--------------------------
- 1 file changed, 27 insertions(+), 60 deletions(-)
+ drivers/spi/spi-nxp-fspi.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 78afef8851fc9..825b2a36377c2 100644
+index 825b2a36377c2..6cdeee9c581bd 100644
 --- a/drivers/spi/spi-nxp-fspi.c
 +++ b/drivers/spi/spi-nxp-fspi.c
-@@ -1167,10 +1167,10 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	struct device_node *np = dev->of_node;
- 	struct resource *res;
- 	struct nxp_fspi *f;
--	int ret;
-+	int ret, irq;
- 	u32 reg;
+@@ -325,6 +325,8 @@
  
--	ctlr = spi_alloc_host(&pdev->dev, sizeof(*f));
-+	ctlr = devm_spi_alloc_host(&pdev->dev, sizeof(*f));
- 	if (!ctlr)
- 		return -ENOMEM;
+ /* Access flash memory using IP bus only */
+ #define FSPI_QUIRK_USE_IP_ONLY	BIT(0)
++/* Disable DTR */
++#define FSPI_QUIRK_DISABLE_DTR	BIT(1)
  
-@@ -1180,10 +1180,8 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	f = spi_controller_get_devdata(ctlr);
- 	f->dev = dev;
- 	f->devtype_data = (struct nxp_fspi_devtype_data *)device_get_match_data(dev);
--	if (!f->devtype_data) {
--		ret = -ENODEV;
--		goto err_put_ctrl;
--	}
-+	if (!f->devtype_data)
-+		return -ENODEV;
+ struct nxp_fspi_devtype_data {
+ 	unsigned int rxfifo;
+@@ -339,7 +341,7 @@ static struct nxp_fspi_devtype_data lx2160a_data = {
+ 	.rxfifo = SZ_512,       /* (64  * 64 bits)  */
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+-	.quirks = 0,
++	.quirks = FSPI_QUIRK_DISABLE_DTR,
+ 	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+@@ -1157,6 +1159,13 @@ static const struct spi_controller_mem_ops nxp_fspi_mem_ops = {
+ };
  
- 	platform_set_drvdata(pdev, f);
- 
-@@ -1192,11 +1190,8 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 		f->iobase = devm_platform_ioremap_resource(pdev, 0);
- 	else
- 		f->iobase = devm_platform_ioremap_resource_byname(pdev, "fspi_base");
--
--	if (IS_ERR(f->iobase)) {
--		ret = PTR_ERR(f->iobase);
--		goto err_put_ctrl;
--	}
-+	if (IS_ERR(f->iobase))
-+		return PTR_ERR(f->iobase);
- 
- 	/* find the resources - controller memory mapped space */
- 	if (is_acpi_node(dev_fwnode(f->dev)))
-@@ -1204,11 +1199,8 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	else
- 		res = platform_get_resource_byname(pdev,
- 				IORESOURCE_MEM, "fspi_mmap");
--
--	if (!res) {
--		ret = -ENODEV;
--		goto err_put_ctrl;
--	}
-+	if (!res)
-+		return -ENODEV;
- 
- 	/* assign memory mapped starting address and mapped size. */
- 	f->memmap_phy = res->start;
-@@ -1217,69 +1209,46 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	/* find the clocks */
- 	if (dev_of_node(&pdev->dev)) {
- 		f->clk_en = devm_clk_get(dev, "fspi_en");
--		if (IS_ERR(f->clk_en)) {
--			ret = PTR_ERR(f->clk_en);
--			goto err_put_ctrl;
--		}
-+		if (IS_ERR(f->clk_en))
-+			return PTR_ERR(f->clk_en);
- 
- 		f->clk = devm_clk_get(dev, "fspi");
--		if (IS_ERR(f->clk)) {
--			ret = PTR_ERR(f->clk);
--			goto err_put_ctrl;
--		}
--
--		ret = nxp_fspi_clk_prep_enable(f);
--		if (ret) {
--			dev_err(dev, "can not enable the clock\n");
--			goto err_put_ctrl;
--		}
-+		if (IS_ERR(f->clk))
-+			return PTR_ERR(f->clk);
- 	}
- 
-+	/* find the irq */
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return dev_err_probe(dev, irq, "Failed to get irq source");
+ static const struct spi_controller_mem_caps nxp_fspi_mem_caps = {
++	.dtr = true,
++	.swap16 = false,
++	.per_op_freq = true,
++};
 +
-+	ret = nxp_fspi_clk_prep_enable(f);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Can't enable the clock\n");
-+
- 	/* Clear potential interrupts */
- 	reg = fspi_readl(f, f->iobase + FSPI_INTR);
- 	if (reg)
- 		fspi_writel(f, reg, f->iobase + FSPI_INTR);
++static const struct spi_controller_mem_caps nxp_fspi_mem_caps_disable_dtr = {
++	.dtr = false,
+ 	.per_op_freq = true,
+ };
  
--	/* find the irq */
--	ret = platform_get_irq(pdev, 0);
--	if (ret < 0)
--		goto err_disable_clk;
-+	nxp_fspi_default_setup(f);
- 
--	ret = devm_request_irq(dev, ret,
-+	ret = devm_request_irq(dev, irq,
- 			nxp_fspi_irq_handler, 0, pdev->name, f);
- 	if (ret) {
--		dev_err(dev, "failed to request irq: %d\n", ret);
--		goto err_disable_clk;
-+		nxp_fspi_clk_disable_unprep(f);
-+		return dev_err_probe(dev, ret, "Failed to request irq\n");
- 	}
- 
--	mutex_init(&f->lock);
-+	devm_mutex_init(dev, &f->lock);
- 
+@@ -1245,7 +1254,12 @@ static int nxp_fspi_probe(struct platform_device *pdev)
  	ctlr->bus_num = -1;
  	ctlr->num_chipselect = NXP_FSPI_MAX_CHIPSELECT;
  	ctlr->mem_ops = &nxp_fspi_mem_ops;
- 	ctlr->mem_caps = &nxp_fspi_mem_caps;
--
--	nxp_fspi_default_setup(f);
--
+-	ctlr->mem_caps = &nxp_fspi_mem_caps;
++
++	if (f->devtype_data->quirks & FSPI_QUIRK_DISABLE_DTR)
++		ctlr->mem_caps = &nxp_fspi_mem_caps_disable_dtr;
++	else
++		ctlr->mem_caps = &nxp_fspi_mem_caps;
++
  	ctlr->dev.of_node = np;
  
--	ret = devm_spi_register_controller(&pdev->dev, ctlr);
--	if (ret)
--		goto err_destroy_mutex;
--
--	return 0;
--
--err_destroy_mutex:
--	mutex_destroy(&f->lock);
--
--err_disable_clk:
--	nxp_fspi_clk_disable_unprep(f);
--
--err_put_ctrl:
--	spi_controller_put(ctlr);
--
--	dev_err(dev, "NXP FSPI probe failed\n");
--	return ret;
-+	return devm_spi_register_controller(&pdev->dev, ctlr);
- }
- 
- static void nxp_fspi_remove(struct platform_device *pdev)
-@@ -1291,8 +1260,6 @@ static void nxp_fspi_remove(struct platform_device *pdev)
- 
- 	nxp_fspi_clk_disable_unprep(f);
- 
--	mutex_destroy(&f->lock);
--
- 	if (f->ahb_addr)
- 		iounmap(f->ahb_addr);
- }
+ 	return devm_spi_register_controller(&pdev->dev, ctlr);
 -- 
 2.51.0
 
