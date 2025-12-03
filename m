@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FB736920B;
-	Wed,  3 Dec 2025 16:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7791A36C5AE;
+	Wed,  3 Dec 2025 16:57:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781056; cv=none; b=GLnhIOstjR/Q6b2KcSuer9rv7W9Ru35nsYfQR2NYewqQOnjrU2SI1W6EGPFnMocWwsRN2EQIBkyOI8RUZYhUjOqfVWWQWyPBDySeVC3gunTOhZ08LHjrFq5VRIakSHLpwDmVK19j/fOsP7Ly1gGpPzyiu4eKEpsoMwbmtNtzzfU=
+	t=1764781059; cv=none; b=uwrHwGROGdO4i6BqAv6hn01nhuZsL07aH6WLKx/bJDPabQtB7+VLWQAjw16Qj0UyWcjJlJJhxpl776CcxAE+gFWOd1XjdkYT0D4afqULiRZo2IIOTFH7zvumm4jVmQmliUHqvGqEqEzTb9mtbi7GRmSyR32YyAcem8I3uJnfrFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781056; c=relaxed/simple;
-	bh=CDmeRn3rQ9Y1QcCU1VtVc5k/I4dyFPIvchOBq/cTUiQ=;
+	s=arc-20240116; t=1764781059; c=relaxed/simple;
+	bh=DTYV3EoIHP/NyVO4aMllbh9QsnkV2h4bO7LLkx0OXuM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=be3uTaGic4pEwWyzOc877YGRo0+2A39/VcPChjmsn/5lqWWPmgTKE4T7f9T2BNhCovpPokoxzG+vFN3zeTOurGr9sWzk1ZGtgoIBrgNtQZbMhILpkb4DNlHuDJIt5hkFKoLisdY0hkmTHcJ7JNmdN4aCzMf7pyWb82iIS8/8gN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VbKl3Hl1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pq1XbgZ/2Y/0V/UHL6nyfxTfW8KV5hQA3BcIptzQg+JZgvR8J9mUBfD3X4Yp22bWQHU+FVGKFNSqNr4Tta5SDTQNbaRM5Bhs7kZlt6xZBmWwfjoK3TRxBN1X0FU6MVJPBKS8bc1chRmeWkr3Rn/tzmDe/hhbTIVGuDkj0+3GLrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z7To5qzM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VbKl3Hl1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F4CC4CEF5;
-	Wed,  3 Dec 2025 16:57:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z7To5qzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9C9C116C6;
+	Wed,  3 Dec 2025 16:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781056;
-	bh=CDmeRn3rQ9Y1QcCU1VtVc5k/I4dyFPIvchOBq/cTUiQ=;
+	s=korg; t=1764781059;
+	bh=DTYV3EoIHP/NyVO4aMllbh9QsnkV2h4bO7LLkx0OXuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VbKl3Hl1FZovcPkR1UN1GkFmog3/KjlvCQb163Kck5OHNHhepgnmyQSQb4v3iFxrz
-	 4+E+Hb/1z9PRaBpnofuo5znMjjYtDiJmts8suXxvWMAPhHRgsFuWkawQF3nh8v7DAW
-	 +ZSlD9uvEFRmepUOvb6S6p0pO6Io0ZsYsdd6S9Pg=
+	b=z7To5qzMbgmvwJLnKVbItp8+S0R6ajTxtS5opgvBufKq1gQxG5b7LMQRu3ohCR62Q
+	 oCl4wi0yizo4zSPR4Oe9fM+rUUaFRRmD3nis9G8kRv4lO8uOil40reJmXKRzjyavMB
+	 ePvrxwIrO1uMe2+zQnHw6g2nAWq+FQrghFZZILeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 36/93] iio:common:ssp_sensors: Fix an error handling path ssp_probe()
-Date: Wed,  3 Dec 2025 16:29:29 +0100
-Message-ID: <20251203152337.850919927@linuxfoundation.org>
+	Wei Fang <wei.fang@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 19/93] net: fec: do not allow enabling PPS and PEROUT simultaneously
+Date: Wed,  3 Dec 2025 16:29:12 +0100
+Message-ID: <20251203152337.222030866@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -46,50 +45,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Wei Fang <wei.fang@nxp.com>
 
-commit 21553258b94861a73d7f2cf15469d69240e1170d upstream.
+[ Upstream commit c0a1f3d7e128e8d1b6c0fe09c68eac5ebcf677c8 ]
 
-If an error occurs after a successful mfd_add_devices() call, it should be
-undone by a corresponding mfd_remove_devices() call, as already done in the
-remove function.
+In the current driver, PPS and PEROUT use the same channel to generate
+the events, so they cannot be enabled at the same time. Otherwise, the
+later configuration will overwrite the earlier configuration. Therefore,
+when configuring PPS, the driver will check whether PEROUT is enabled.
+Similarly, when configuring PEROUT, the driver will check whether PPS
+is enabled.
 
-Fixes: 50dd64d57eee ("iio: common: ssp_sensors: Add sensorhub driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 350749b909bf ("net: fec: Add support for periodic output signal of PPS")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Link: https://patch.msgid.link/20251125085210.1094306-4-wei.fang@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/common/ssp_sensors/ssp_dev.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/freescale/fec_ptp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/iio/common/ssp_sensors/ssp_dev.c
-+++ b/drivers/iio/common/ssp_sensors/ssp_dev.c
-@@ -503,7 +503,7 @@ static int ssp_probe(struct spi_device *
- 	ret = spi_setup(spi);
- 	if (ret < 0) {
- 		dev_err(&spi->dev, "Failed to setup spi\n");
--		return ret;
-+		goto err_setup_spi;
- 	}
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index a3853fccdc7b6..beb1d98fa741a 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -129,6 +129,12 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
  
- 	data->fw_dl_state = SSP_FW_DL_STATE_NONE;
-@@ -568,6 +568,8 @@ err_read_reg:
- err_setup_irq:
- 	mutex_destroy(&data->pending_lock);
- 	mutex_destroy(&data->comm_lock);
-+err_setup_spi:
-+	mfd_remove_devices(&spi->dev);
+ 	spin_lock_irqsave(&fep->tmreg_lock, flags);
  
- 	dev_err(&spi->dev, "Probe failed!\n");
++	if (fep->perout_enable) {
++		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
++		dev_err(&fep->pdev->dev, "PEROUT is running");
++		return -EBUSY;
++	}
++
+ 	if (fep->pps_enable == enable) {
+ 		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
+ 		return 0;
+@@ -572,6 +578,12 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
+ 			}
+ 			spin_lock_irqsave(&fep->tmreg_lock, flags);
  
++			if (fep->pps_enable) {
++				dev_err(&fep->pdev->dev, "PPS is running");
++				ret = -EBUSY;
++				goto unlock;
++			}
++
+ 			if (fep->perout_enable) {
+ 				dev_err(&fep->pdev->dev,
+ 					"PEROUT has been enabled\n");
+-- 
+2.51.0
+
 
 
