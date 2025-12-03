@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EECC359F9E;
-	Wed,  3 Dec 2025 16:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D717735A940;
+	Wed,  3 Dec 2025 16:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780057; cv=none; b=ScQRa+2KDZ0WUyMlbbbBuR4uXpuzkKpMkCHsJtngJmn2Aac/RoFLYPWZJFy57YGnvH6unlcAEOXPGJ3hJSseuvCq6HogAcwNJ0OJ+0kqWPmLQ+ZLuJ/irb7rEhHKzWOxx7EiOln2ZyXYTAU+wzG34jfs3JGIRVyr0Zdm4naimmM=
+	t=1764780060; cv=none; b=V8I2OPiwuciqDTx7SqUXEzooFcthHPHs0lcWnYrUSHpniQefPpiiNEj/6JFvSZva6oR0NxByulIyB01tx1Wy+BmenL+NafqXrD8BHj3yAJTKxKh80eEnaHUJ//Rke9Jnxd72GVgRxr531iyto8TTOI4J8fFYfZhfutKQ88TMHdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780057; c=relaxed/simple;
-	bh=ZCb2HytYkGqiiq+4tSf/PT5Gasmxf7aLGG+Lwik8aoU=;
+	s=arc-20240116; t=1764780060; c=relaxed/simple;
+	bh=fss6q06xY/fteH91S10K8WtvyKpiuuYec7KruOb1qvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uXTk5T9Z2h9ES3bQ6TV94jALTxjmH3Jm0+LbkwctzMOY0dn2gtdbA602wkCbQYapGdQw0Sm8JWYlS7lvXmQtjHtet9y9Dv0XXo8980BjT7FT6hgeUoBwke+9UHioMVbEopU4bE+5HdVR5gXABLTZr+OoPnLi3T5jDL/4LsOwjA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RJnkgvl+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n8pEq5DMYI4pC4uZZw0GiJERCTJbCXeKrwZDpTUhUXA4MddeP6Cz6EHCoZ2lF6BD6j+OeiGRYb3C7Ev16Xmtg9jd1MB7ZG/DS0BnQiUf46km0Rw3b8OjiugMI9vPhbpdTSdpCxBKEFVnGYuG6hfaVLnjopkCU3dzbURan1W1/9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3IxpqMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RJnkgvl+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AEEC4CEF5;
-	Wed,  3 Dec 2025 16:40:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3IxpqMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4022C4CEF5;
+	Wed,  3 Dec 2025 16:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780056;
-	bh=ZCb2HytYkGqiiq+4tSf/PT5Gasmxf7aLGG+Lwik8aoU=;
+	s=korg; t=1764780060;
+	bh=fss6q06xY/fteH91S10K8WtvyKpiuuYec7KruOb1qvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RJnkgvl+vb1nTp9fO6PIz5VzOqqp438xwYGr1Gk/oCKisY7JQZkYSIrVedcDRf6Hk
-	 jh4WeZ/BGmbdQUvKnx161A97Kkd7uvrkaJW7rHKbRzvehQodSWZg+tbF7S55vdf7Rk
-	 2RuigQ6MzjwbXKLi6dTtjtTqwUeJQct5/4kXQTPs=
+	b=M3IxpqMC+qGsWfPiSgI/9iXhz9jDzhBSrjc1seLGoLFJ6huGoEvKTa0qNvLM7F8K0
+	 fyE9+tAvc6WWxQT5MepAEzxDF/HL7UjKUFm4kcaimxDmQy/ZKP9+yxIfjMSQZSeA1i
+	 ZW8/0ZQrZ1Ra8szhqEQn26bSzNHMWk3CGRWUIgrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 442/568] MIPS: Malta: Fix !EVA SOC-it PCI MMIO
-Date: Wed,  3 Dec 2025 16:27:24 +0100
-Message-ID: <20251203152456.884357085@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 443/568] LoongArch: Dont panic if no valid cache info for PCI
+Date: Wed,  3 Dec 2025 16:27:25 +0100
+Message-ID: <20251203152456.923637505@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,100 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej W. Rozycki <macro@orcam.me.uk>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit ebd729fef31620e0bf74cbf8a4c7fda73a2a4e7e upstream.
+commit a6b533adfc05ba15360631e019d3e18275080275 upstream.
 
-Fix a regression that has caused accesses to the PCI MMIO window to
-complete unclaimed in non-EVA configurations with the SOC-it family of
-system controllers, preventing PCI devices from working that use MMIO.
+If there is no valid cache info detected (may happen in virtual machine)
+for pci_dfl_cache_line_size, kernel shouldn't panic. Because in the PCI
+core it will be evaluated to (L1_CACHE_BYTES >> 2).
 
-In the non-EVA case PHYS_OFFSET is set to 0, meaning that PCI_BAR0 is
-set with an empty mask (and PCI_HEAD4 matches addresses starting from 0
-accordingly).  Consequently all addresses are matched for incoming DMA
-accesses from PCI.  This seems to confuse the system controller's logic
-and outgoing bus cycles targeting the PCI MMIO window seem not to make
-it to the intended devices.
-
-This happens as well when a wider mask is used with PCI_BAR0, such as
-0x80000000 or 0xe0000000, that makes addresses match that overlap with
-the PCI MMIO window, which starts at 0x10000000 in our configuration.
-
-Set the mask in PCI_BAR0 to 0xf0000000 for non-EVA then, covering the
-non-EVA maximum 256 MiB of RAM, which is what YAMON does and which used
-to work correctly up to the offending commit.  Set PCI_P2SCMSKL to match
-PCI_BAR0 as required by the system controller's specification, and match
-PCI_P2SCMAPL to PCI_HEAD4 for identity mapping.
-
-Verified with:
-
-Core board type/revision =      0x0d (Core74K) / 0x01
-System controller/revision =    MIPS SOC-it 101 OCP / 1.3   SDR-FW-4:1
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x1c
-Processor ID/revision =         0x97 (MIPS 74Kf) / 0x4c
-
-for non-EVA and with:
-
-Core board type/revision =      0x0c (CoreFPGA-5) / 0x00
-System controller/revision =    MIPS ROC-it2 / 0.0   FW-1:1 (CLK_unknown) GIC
-Processor Company ID/options =  0x01 (MIPS Technologies, Inc.) / 0x00
-Processor ID/revision =         0xa0 (MIPS interAptiv UP) / 0x20
-
-for EVA/non-EVA, fixing:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: Could not read adapter factory MAC address!
-
-vs:
-
-defxx 0000:00:12.0: assign IRQ: got 10
-defxx: v1.12 2021/03/10  Lawrence V. Stefani and others
-0000:00:12.0: DEFPA at MMIO addr = 0x10142000, IRQ = 10, Hardware addr = 00-00-f8-xx-xx-xx
-0000:00:12.0: registered as fddi0
-
-for non-EVA and causing no change for EVA.
-
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Fixes: 422dd256642b ("MIPS: Malta: Allow PCI devices DMA to lower 2GB physical")
-Cc: stable@vger.kernel.org # v4.9+
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mti-malta/malta-init.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ arch/loongarch/pci/pci.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/mips/mti-malta/malta-init.c
-+++ b/arch/mips/mti-malta/malta-init.c
-@@ -241,16 +241,22 @@ mips_pci_controller:
- #endif
+--- a/arch/loongarch/pci/pci.c
++++ b/arch/loongarch/pci/pci.c
+@@ -51,11 +51,11 @@ static int __init pcibios_init(void)
+ 	 */
+ 	lsize = cpu_last_level_cache_line_size();
  
- 		/*
--		 * Setup the Malta max (2GB) memory for PCI DMA in host bridge
--		 * in transparent addressing mode.
-+		 * Set up memory mapping in host bridge for PCI DMA masters,
-+		 * in transparent addressing mode.  For EVA use the Malta
-+		 * maximum of 2 GiB memory in the alias space at 0x80000000
-+		 * as per PHYS_OFFSET.  Otherwise use 256 MiB of memory in
-+		 * the regular space, avoiding mapping the PCI MMIO window
-+		 * for DMA as it seems to confuse the system controller's
-+		 * logic, causing PCI MMIO to stop working.
- 		 */
--		mask = PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH;
--		MSC_WRITE(MSC01_PCI_BAR0, mask);
--		MSC_WRITE(MSC01_PCI_HEAD4, mask);
-+		mask = PHYS_OFFSET ? PHYS_OFFSET : 0xf0000000;
-+		MSC_WRITE(MSC01_PCI_BAR0,
-+			  mask | PCI_BASE_ADDRESS_MEM_PREFETCH);
-+		MSC_WRITE(MSC01_PCI_HEAD4,
-+			  PHYS_OFFSET | PCI_BASE_ADDRESS_MEM_PREFETCH);
+-	BUG_ON(!lsize);
++	if (lsize) {
++		pci_dfl_cache_line_size = lsize >> 2;
  
--		mask &= MSC01_PCI_BAR0_SIZE_MSK;
- 		MSC_WRITE(MSC01_PCI_P2SCMSKL, mask);
--		MSC_WRITE(MSC01_PCI_P2SCMAPL, mask);
-+		MSC_WRITE(MSC01_PCI_P2SCMAPL, PHYS_OFFSET);
+-	pci_dfl_cache_line_size = lsize >> 2;
+-
+-	pr_debug("PCI: pci_cache_line_size set to %d bytes\n", lsize);
++		pr_debug("PCI: pci_cache_line_size set to %d bytes\n", lsize);
++	}
  
- 		/* Don't handle target retries indefinitely.  */
- 		if ((data & MSC01_PCI_CFG_MAXRTRY_MSK) ==
+ 	return 0;
+ }
 
 
