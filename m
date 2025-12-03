@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9985F34FF77;
-	Wed,  3 Dec 2025 16:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1C830C358;
+	Wed,  3 Dec 2025 16:20:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778810; cv=none; b=niVN9vfW+egnjd0LZcpPfUnYBN380dCiuMZibFQngzROLm7DOfAp57H5udSl+mix9aSUlbxHTq7kHenTADMIaKqB1g5UhGrCn8FHmfwgYkX+N1+QUHLn/oOOw7pRBPmI1i7FAKOLSQJC+y53fo3ZfCZLyq9Em2KvqVpwQY8H9Y4=
+	t=1764778814; cv=none; b=b84Rl3xr7bkrDqVda2HIvs+EFd7NMB7ChEL8DGlWzGgilMadpdM8jkJ4W0zNo9GrG9ajoInTSU7Qt6V9dFBQtyWkuHrnCUswMFp2aN+IZFhi35hzHojy5pw9V1JiF2PbrkWoN1FymZHC9bAQO+F9/HZQDQpcFnIOaDOYKotmHpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778810; c=relaxed/simple;
-	bh=W3tYUGV7WSW5j/bfS+m+4Z6KcT6efi1C4VuvoE1J/dk=;
+	s=arc-20240116; t=1764778814; c=relaxed/simple;
+	bh=2FRZ6DAHfKje0gkw7zJHsetveROE/V5QCgcBvn+OSAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpTkgasxu6QPsJYa1ZEDaKR1xEuIQ+0AszRaI+E0yuJ9vDxQ4d8GAimwaqVVgzUL39tN4+bijt06wvu5/1FWvK94QAkTNjaS/g/1GDTJP3YfaNj9YTW/i+1CeiYsDm1qEcvymcdiEASroRUuV2JRdHOb92C2Vz/eMqFped7g+8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/GT5SLv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f29dduii5bCOjEklOjFClSswvvOGRaXkSmbTZ5kyEyrO3eE2pbVtWrsEE2LzOnER8myJEbowMNHXPPc1zB9YUFIyI3LRff98Z9UTJIoMdcwH0nfW08Brnm0sr0xl+QlBP4uf+iWgn+mXXgr9I9FVP6oHnEj9RMA5JrA8IyDxYt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1njWiQcp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/GT5SLv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9B6C4CEF5;
-	Wed,  3 Dec 2025 16:20:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1njWiQcp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39534C4CEF5;
+	Wed,  3 Dec 2025 16:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778810;
-	bh=W3tYUGV7WSW5j/bfS+m+4Z6KcT6efi1C4VuvoE1J/dk=;
+	s=korg; t=1764778813;
+	bh=2FRZ6DAHfKje0gkw7zJHsetveROE/V5QCgcBvn+OSAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/GT5SLvA32qOjFDxanVERVY3DBMmXJs3CB73wgyqRsIFK02UiJALMc/eabAP7ib4
-	 g9yd6wgZZnjNTn12dv5nySw4HoJdMm3uxcdc42pZNFzEo/TqXT+xkvGDHtMwf8sQC9
-	 yFXw6sJ63y76QPp5FA5wu20LUO6eSYdWPl7RLfp8=
+	b=1njWiQcpj/07IyTrb/YB/L7581rn6vrPrpAUW65qbp4zEgruSVArS0dbO7Z9ur1Oz
+	 pUIL+n9aIhdM2TMDGvtJbsesJ2N2sstMOT8poWeuyCbW1uDKFtwiQGTsYIXt9Mv/W9
+	 C/aMZxfvq9vC/rhm4zecqTPPGwuBuXDmabw1MdYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Wen Yang <wen.yang@linux.dev>
-Subject: [PATCH 6.1 065/568] cacheinfo: Use RISC-Vs init_cache_level() as generic OF implementation
-Date: Wed,  3 Dec 2025 16:21:07 +0100
-Message-ID: <20251203152443.085396796@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 034/568] ASoC: qdsp6: q6asm: do not sleep while atomic
+Date: Wed,  3 Dec 2025 16:20:36 +0100
+Message-ID: <20251203152441.922033281@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,144 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-[ Upstream commit c3719bd9eeb2edf84bd263d662e36ca0ba262a23 ]
+commit fdbb53d318aa94a094434e5f226617f0eb1e8f22 upstream.
 
-RISC-V's implementation of init_of_cache_level() is following
-the Devicetree Specification v0.3 regarding caches, cf.:
-- s3.7.3 'Internal (L1) Cache Properties'
-- s3.8 'Multi-level and Shared Cache Nodes'
+For some reason we ended up kfree between spinlock lock and unlock,
+which can sleep.
 
-Allow reusing the implementation by moving it.
+move the kfree out of spinlock section.
 
-Also make 'levels', 'leaves' and 'level' unsigned int.
-
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20230104183033.755668-2-pierre.gondois@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
+Fixes: a2a5d30218fd ("ASoC: qdsp6: q6asm: Add support to memory map and unmap")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017085307.4325-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/cacheinfo.c |   39 -------------------------------------
- drivers/base/cacheinfo.c      |   44 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/cacheinfo.h     |    1 
- 3 files changed, 46 insertions(+), 38 deletions(-)
+ sound/soc/qcom/qdsp6/q6asm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/cacheinfo.c
-+++ b/arch/riscv/kernel/cacheinfo.c
-@@ -115,44 +115,7 @@ static void fill_cacheinfo(struct cachei
+--- a/sound/soc/qcom/qdsp6/q6asm.c
++++ b/sound/soc/qcom/qdsp6/q6asm.c
+@@ -376,9 +376,9 @@ static void q6asm_audio_client_free_buf(
  
- int init_cache_level(unsigned int cpu)
- {
--	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
--	struct device_node *np = of_cpu_device_node_get(cpu);
--	struct device_node *prev = NULL;
--	int levels = 0, leaves = 0, level;
--
--	if (of_property_read_bool(np, "cache-size"))
--		++leaves;
--	if (of_property_read_bool(np, "i-cache-size"))
--		++leaves;
--	if (of_property_read_bool(np, "d-cache-size"))
--		++leaves;
--	if (leaves > 0)
--		levels = 1;
--
--	prev = np;
--	while ((np = of_find_next_cache_node(np))) {
--		of_node_put(prev);
--		prev = np;
--		if (!of_device_is_compatible(np, "cache"))
--			break;
--		if (of_property_read_u32(np, "cache-level", &level))
--			break;
--		if (level <= levels)
--			break;
--		if (of_property_read_bool(np, "cache-size"))
--			++leaves;
--		if (of_property_read_bool(np, "i-cache-size"))
--			++leaves;
--		if (of_property_read_bool(np, "d-cache-size"))
--			++leaves;
--		levels = level;
--	}
--
--	of_node_put(np);
--	this_cpu_ci->num_levels = levels;
--	this_cpu_ci->num_leaves = leaves;
--
--	return 0;
-+	return init_of_cache_level(cpu);
+ 	spin_lock_irqsave(&ac->lock, flags);
+ 	port->num_periods = 0;
++	spin_unlock_irqrestore(&ac->lock, flags);
+ 	kfree(port->buf);
+ 	port->buf = NULL;
+-	spin_unlock_irqrestore(&ac->lock, flags);
  }
  
- int populate_cache_leaves(unsigned int cpu)
---- a/drivers/base/cacheinfo.c
-+++ b/drivers/base/cacheinfo.c
-@@ -223,8 +223,52 @@ static int cache_setup_of_node(unsigned
- 
- 	return 0;
- }
-+
-+int init_of_cache_level(unsigned int cpu)
-+{
-+	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
-+	struct device_node *np = of_cpu_device_node_get(cpu);
-+	struct device_node *prev = NULL;
-+	unsigned int levels = 0, leaves = 0, level;
-+
-+	if (of_property_read_bool(np, "cache-size"))
-+		++leaves;
-+	if (of_property_read_bool(np, "i-cache-size"))
-+		++leaves;
-+	if (of_property_read_bool(np, "d-cache-size"))
-+		++leaves;
-+	if (leaves > 0)
-+		levels = 1;
-+
-+	prev = np;
-+	while ((np = of_find_next_cache_node(np))) {
-+		of_node_put(prev);
-+		prev = np;
-+		if (!of_device_is_compatible(np, "cache"))
-+			break;
-+		if (of_property_read_u32(np, "cache-level", &level))
-+			break;
-+		if (level <= levels)
-+			break;
-+		if (of_property_read_bool(np, "cache-size"))
-+			++leaves;
-+		if (of_property_read_bool(np, "i-cache-size"))
-+			++leaves;
-+		if (of_property_read_bool(np, "d-cache-size"))
-+			++leaves;
-+		levels = level;
-+	}
-+
-+	of_node_put(np);
-+	this_cpu_ci->num_levels = levels;
-+	this_cpu_ci->num_leaves = leaves;
-+
-+	return 0;
-+}
-+
- #else
- static inline int cache_setup_of_node(unsigned int cpu) { return 0; }
-+int init_of_cache_level(unsigned int cpu) { return 0; }
- #endif
- 
- int __weak cache_setup_acpi(unsigned int cpu)
---- a/include/linux/cacheinfo.h
-+++ b/include/linux/cacheinfo.h
-@@ -80,6 +80,7 @@ struct cpu_cacheinfo {
- 
- struct cpu_cacheinfo *get_cpu_cacheinfo(unsigned int cpu);
- int init_cache_level(unsigned int cpu);
-+int init_of_cache_level(unsigned int cpu);
- int populate_cache_leaves(unsigned int cpu);
- int cache_setup_acpi(unsigned int cpu);
- bool last_level_cache_is_valid(unsigned int cpu);
+ /**
 
 
