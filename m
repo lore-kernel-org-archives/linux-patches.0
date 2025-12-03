@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD153446A2;
-	Wed,  3 Dec 2025 16:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0713446A2;
+	Wed,  3 Dec 2025 16:54:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780889; cv=none; b=H24qmvld40dvdtmzs5jAGyBt8dX64Z4f7N2NNOlQ8arC3hjwuPpwuXfyH90+xqHBONgepMcbOaKCz+ssyZhSq64O04fNUX57G8e2ZKvLH60tWTePqR1WYh22BAH4nD8PR+7gczlO80Lr8c1r6k2Q8NKAwrsfMs7cePLzTo/lvCo=
+	t=1764780892; cv=none; b=uR5ZHRm7+Wri66YzzvHvifhIjnrzEZJlvwKLukaQednMGbvHi3zEruhyNB5/2kkzKGCBj2YF589iSXaJllV6t1eqsmcwTbkJF0HPPqdJWxo9VddkIyZY6aRMaBylEc3uTmwkDHOY4AjKlYYacL3LfjIiRN/Nj3rvr/TXGPeNgeU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780889; c=relaxed/simple;
-	bh=FqcyIIZ0+RVh0L1TYFqErntn/Rhi95cE7OkrvUO4fEg=;
+	s=arc-20240116; t=1764780892; c=relaxed/simple;
+	bh=zqCmK8HdnNshQA8R3eY5Ai680SFVO5m1DJDlhAVyuWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uf5a52HGxmdhfUF7qv2k6fNf2N5jxEDsS7l2qXPbWDR1WJtY2GpxNwUkrsIr6Y0yl65jWd0NDPGUcry2fdjtShvyp98FPMUVPFzKSPJ5Eq4oDRpMIlyjjjA/qa+DqlHbSFNU6FttHsc3ryIsj0gHScivZkj2Tqa3rDSNH/KL0cY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7cj7BKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VImgtTSSPO0r+Uw2TlmKgYDv55n6SdMg534HadTH9H/YIyEgsBHvxEVrBvBbMWrey/K4pn6pr+YRfqRUwsUus65m/vhDJzxiYCEFqYTRN7iPXkOF0NOxADmDpsXiVYGXIiHIYAQ4pm9JYbv7ThpJhzJi7832YFk7+U//NOd02yA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIIxXob0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7cj7BKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2B5C4CEF5;
-	Wed,  3 Dec 2025 16:54:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIIxXob0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E7EC4CEF5;
+	Wed,  3 Dec 2025 16:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780889;
-	bh=FqcyIIZ0+RVh0L1TYFqErntn/Rhi95cE7OkrvUO4fEg=;
+	s=korg; t=1764780892;
+	bh=zqCmK8HdnNshQA8R3eY5Ai680SFVO5m1DJDlhAVyuWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7cj7BKy0Ot67IqFp7Vo6LcWDl45/Pl8aDfHEl87J79Duc7239xkagKVUENtiBgpl
-	 pxbAbYIpkuawuPFqKnp7KC+mx6rtqJj43/BJ81OunU5FbHpGHczlQObLwQimHc89Qv
-	 UewVFWnfGsVpLHDItuxM/Jm6QMZMjr+QqmrW4pzg=
+	b=UIIxXob0cHkWDflC/7HJ8auvvhyCJnwc652cSVD/DCvVe+6kzwSiw3Wb/uHqlo9Ql
+	 yTM4c/EqyuAltU2G/NIPTT4KOIPqAcKFwidF7H0RyNiPMRVQuCfk1t/9DUZv53hWZL
+	 j6iYmNy4TMCRZvoSc24oR7PqZ1K/BdR1xXnTk+74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jimmy Hu <hhhuuu@google.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/132] usb: gadget: udc: fix use-after-free in usb_gadget_state_work
-Date: Wed,  3 Dec 2025 16:29:58 +0100
-Message-ID: <20251203152347.720485053@linuxfoundation.org>
+Subject: [PATCH 6.12 120/132] mm/huge_memory: fix NULL pointer deference when splitting folio
+Date: Wed,  3 Dec 2025 16:29:59 +0100
+Message-ID: <20251203152347.757649744@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,113 +54,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-[ Upstream commit baeb66fbd4201d1c4325074e78b1f557dff89b5b ]
+[ Upstream commit cff47b9e39a6abf03dde5f4f156f841b0c54bba0 ]
 
-A race condition during gadget teardown can lead to a use-after-free
-in usb_gadget_state_work(), as reported by KASAN:
+Commit c010d47f107f ("mm: thp: split huge page to any lower order pages")
+introduced an early check on the folio's order via mapping->flags before
+proceeding with the split work.
 
-  BUG: KASAN: invalid-access in sysfs_notify+0x2c/0xd0
-  Workqueue: events usb_gadget_state_work
+This check introduced a bug: for shmem folios in the swap cache and
+truncated folios, the mapping pointer can be NULL.  Accessing
+mapping->flags in this state leads directly to a NULL pointer dereference.
 
-The fundamental race occurs because a concurrent event (e.g., an
-interrupt) can call usb_gadget_set_state() and schedule gadget->work
-at any time during the cleanup process in usb_del_gadget().
+This commit fixes the issue by moving the check for mapping != NULL before
+any attempt to access mapping->flags.
 
-Commit 399a45e5237c ("usb: gadget: core: flush gadget workqueue after
-device removal") attempted to fix this by moving flush_work() to after
-device_del(). However, this does not fully solve the race, as a new
-work item can still be scheduled *after* flush_work() completes but
-before the gadget's memory is freed, leading to the same use-after-free.
-
-This patch fixes the race condition robustly by introducing a 'teardown'
-flag and a 'state_lock' spinlock to the usb_gadget struct. The flag is
-set during cleanup in usb_del_gadget() *before* calling flush_work() to
-prevent any new work from being scheduled once cleanup has commenced.
-The scheduling site, usb_gadget_set_state(), now checks this flag under
-the lock before queueing the work, thus safely closing the race window.
-
-Fixes: 5702f75375aa9 ("usb: gadget: udc-core: move sysfs_notify() to a workqueue")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Link: https://patch.msgid.link/20251023054945.233861-1-hhhuuu@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20251119235302.24773-1-richard.weiyang@gmail.com
+Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ applied fix to split_huge_page_to_list_to_order() instead of __folio_split() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |   17 ++++++++++++++++-
- include/linux/usb/gadget.h    |    5 +++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ mm/huge_memory.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1126,8 +1126,13 @@ static void usb_gadget_state_work(struct
- void usb_gadget_set_state(struct usb_gadget *gadget,
- 		enum usb_device_state state)
- {
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&gadget->state_lock, flags);
- 	gadget->state = state;
--	schedule_work(&gadget->work);
-+	if (!gadget->teardown)
-+		schedule_work(&gadget->work);
-+	spin_unlock_irqrestore(&gadget->state_lock, flags);
- 	trace_usb_gadget_set_state(gadget, 0);
- }
- EXPORT_SYMBOL_GPL(usb_gadget_set_state);
-@@ -1361,6 +1366,8 @@ static void usb_udc_nop_release(struct d
- void usb_initialize_gadget(struct device *parent, struct usb_gadget *gadget,
- 		void (*release)(struct device *dev))
- {
-+	spin_lock_init(&gadget->state_lock);
-+	gadget->teardown = false;
- 	INIT_WORK(&gadget->work, usb_gadget_state_work);
- 	gadget->dev.parent = parent;
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3404,6 +3404,16 @@ int split_huge_page_to_list_to_order(str
+ 	if (new_order >= folio_order(folio))
+ 		return -EINVAL;
  
-@@ -1535,6 +1542,7 @@ EXPORT_SYMBOL_GPL(usb_add_gadget_udc);
- void usb_del_gadget(struct usb_gadget *gadget)
- {
- 	struct usb_udc *udc = gadget->udc;
-+	unsigned long flags;
- 
- 	if (!udc)
- 		return;
-@@ -1548,6 +1556,13 @@ void usb_del_gadget(struct usb_gadget *g
- 	kobject_uevent(&udc->dev.kobj, KOBJ_REMOVE);
- 	sysfs_remove_link(&udc->dev.kobj, "gadget");
- 	device_del(&gadget->dev);
 +	/*
-+	 * Set the teardown flag before flushing the work to prevent new work
-+	 * from being scheduled while we are cleaning up.
++	 * Folios that just got truncated cannot get split. Signal to the
++	 * caller that there was a race.
++	 *
++	 * TODO: this will also currently refuse shmem folios that are in the
++	 * swapcache.
 +	 */
-+	spin_lock_irqsave(&gadget->state_lock, flags);
-+	gadget->teardown = true;
-+	spin_unlock_irqrestore(&gadget->state_lock, flags);
- 	flush_work(&gadget->work);
- 	ida_free(&gadget_id_numbers, gadget->id_number);
- 	cancel_work_sync(&udc->vbus_work);
---- a/include/linux/usb/gadget.h
-+++ b/include/linux/usb/gadget.h
-@@ -376,6 +376,9 @@ struct usb_gadget_ops {
-  *	can handle. The UDC must support this and all slower speeds and lower
-  *	number of lanes.
-  * @state: the state we are now (attached, suspended, configured, etc)
-+ * @state_lock: Spinlock protecting the `state` and `teardown` members.
-+ * @teardown: True if the device is undergoing teardown, used to prevent
-+ *	new work from being scheduled during cleanup.
-  * @name: Identifies the controller hardware type.  Used in diagnostics
-  *	and sometimes configuration.
-  * @dev: Driver model state for this abstract device.
-@@ -451,6 +454,8 @@ struct usb_gadget {
- 	enum usb_ssp_rate		max_ssp_rate;
++	if (!is_anon && !folio->mapping)
++		return -EBUSY;
++
+ 	if (is_anon) {
+ 		/* order-1 is not supported for anonymous THP. */
+ 		if (new_order == 1) {
+@@ -3466,13 +3476,6 @@ int split_huge_page_to_list_to_order(str
+ 		gfp_t gfp;
  
- 	enum usb_device_state		state;
-+	spinlock_t			state_lock;
-+	bool				teardown;
- 	const char			*name;
- 	struct device			dev;
- 	unsigned			isoch_delay;
+ 		mapping = folio->mapping;
+-
+-		/* Truncated ? */
+-		if (!mapping) {
+-			ret = -EBUSY;
+-			goto out;
+-		}
+-
+ 		min_order = mapping_min_folio_order(folio->mapping);
+ 		if (new_order < min_order) {
+ 			VM_WARN_ONCE(1, "Cannot split mapped folio below min-order: %u",
 
 
