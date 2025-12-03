@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0F932ABC7;
-	Wed,  3 Dec 2025 15:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6570C32B9B3;
+	Wed,  3 Dec 2025 15:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776990; cv=none; b=sVg7zXqbJSY4Dsw6A+EUiAaTrzS03U8iAF87j74xa9xU7ACK79HwInJstLLJdgVyHdMc+LiRUcYDFqq3Tnd00iR6okIUPGnm3NM8CAZ5/ft7dgK0ZEWiKhj6UtjvA9XFv8wp917erEv3DB8Xiua61NOPhX7dn1+YVZLAjy1gN50=
+	t=1764776993; cv=none; b=GGrklp0yNoUM0dPDMbwwmV0kuhmrq1+i/GQrT3wLpGJ3eCBU+a6bAclHQZ4PnVzytKqV4ke5sGDjVbCMZX3uGKSIwrHx0jH0V0gNFJ+0CJk7z1KjX9FcConjxx2axXmQ/YtoHswdenPTf+4oRSjKcGjKx8lIT/qyZiBszKw15jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776990; c=relaxed/simple;
-	bh=vM1cwB9prmsd8+CChzJ1kerK1EnHDd2lY6UpGI/oZvE=;
+	s=arc-20240116; t=1764776993; c=relaxed/simple;
+	bh=jO8uzi3Si5l3LVhDdcaywLi3ykfjTVkA16+VrEW12OA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOEM1bdhXNorTEbOn1XQYT/QKFI+Z+pjyTqdJcpw5VnvZGtLKEN7vl3ek61DobJBoyTwEWBbTQNHczUMktBPdsZQ4Gn9Hx8M3Q2z05zf7a3TJL/uoVayyoVXBCjhdhObGYKh6mHi7AWMmlQZ7uKZmS7/ntvxugRdJxZTBtPGSKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8L34++b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tWXHm4dd4gnRCKNjZpullJa33lcG+ufkyCt1vUwvtB8zfhbdBRgt2nmCrnMFQcfCEfdQRyQn/+e66a1ycXCL69Zb83dN3PnsYODT+Cifpxo8WJmOfwY3/rouqO1SSLfac/pp3L81MLn2U6RwDbyQxizO/9/sv7Q623spxTri+io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyY83qXJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8L34++b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 716CEC4CEF5;
-	Wed,  3 Dec 2025 15:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyY83qXJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C951CC116B1;
+	Wed,  3 Dec 2025 15:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776989;
-	bh=vM1cwB9prmsd8+CChzJ1kerK1EnHDd2lY6UpGI/oZvE=;
+	s=korg; t=1764776993;
+	bh=jO8uzi3Si5l3LVhDdcaywLi3ykfjTVkA16+VrEW12OA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8L34++bX/FbvdY2kl1kcD5p0VDC7HCV/wodQ/SHJDv7Q6HuRZ0r7I2aLPdQMgn8q
-	 VqlNo2dWGK0NA1AVXEwZP8Mg4NhpnZEi523hfxiKVzu9OqYWbf2Dr9oGS9I9Nw0GYX
-	 9ozD9FtBIEtq65KBbSNfsHsG7te9s+lHfKt5JfIM=
+	b=SyY83qXJps64oZUFTd01h3BdLWBuTuZa4pA5aOJ+h1CAxyPSKzYNLC7vfPxiQ2ri1
+	 tma9cxML9+/bZ0nkOvgaciTXJVp4Rcf0k1H8mCKHs11FnrsfVVAkQ8V0qTS1Geufuv
+	 4izpuBszKWKSl4K6e5x0NLJJFQPw/FPNZFhkWz7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hang Zhou <929513338@qq.com>,
-	Mark Brown <broonie@kernel.org>,
+	Paulo Alcantra <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com,
+	linux-afs@lists.infradead.org,
+	linux-fsdevel@vger.kernel.org,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 049/146] spi: bcm63xx: fix premature CS deassertion on RX-only transactions
-Date: Wed,  3 Dec 2025 16:27:07 +0100
-Message-ID: <20251203152348.267336518@linuxfoundation.org>
+Subject: [PATCH 6.17 050/146] afs: Fix uninit var in afs_alloc_anon_key()
+Date: Wed,  3 Dec 2025 16:27:08 +0100
+Message-ID: <20251203152348.302980110@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,66 +56,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hang Zhou <929513338@qq.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit fd9862f726aedbc2f29a29916cabed7bcf5cadb6 ]
+[ Upstream commit 19eef1d98eeda3745df35839190b7d4a4adea656 ]
 
-On BCM6358 (and also observed on BCM6368) the controller appears to
-only generate as many SPI clocks as bytes that have been written into
-the TX FIFO. For RX-only transfers the driver programs the transfer
-length in SPI_MSG_CTL but does not write anything into the FIFO, so
-chip select is deasserted early and the RX transfer segment is never
-fully clocked in.
+Fix an uninitialised variable (key) in afs_alloc_anon_key() by setting it
+to cell->anonymous_key.  Without this change, the error check may return a
+false failure with a bad error number.
 
-A concrete failing case is a three-transfer MAC address read from
-SPI-NOR:
-  - TX 0x03 (read command)
-  - TX 3-byte address
-  - RX 6 bytes (MAC)
+Most of the time this is unlikely to happen because the first encounter
+with afs_alloc_anon_key() will usually be from (auto)mount, for which all
+subsequent operations must wait - apart from other (auto)mounts.  Once the
+call->anonymous_key is allocated, all further calls to afs_request_key()
+will skip the call to afs_alloc_anon_key() for that cell.
 
-In contrast, a two-transfer JEDEC-ID read (0x9f + 6-byte RX) works
-because the driver uses prepend_len and writes dummy bytes into the
-TX FIFO for the RX part.
-
-Fix this by writing 0xff dummy bytes into the TX FIFO for RX-only
-segments so that the number of bytes written to the FIFO matches the
-total message length seen by the controller.
-
-Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
-
-Signed-off-by: Hang Zhou <929513338@qq.com>
-Link: https://patch.msgid.link/tencent_7AC88FCB3076489A4A7E6C2163DF1ACF8D06@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: d27c71257825 ("afs: Fix delayed allocation of a cell's anonymous key")
+Reported-by: Paulo Alcantra <pc@manguebit.org>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Paulo Alcantara <pc@manguebit.org>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com
+cc: linux-afs@lists.infradead.org
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-bcm63xx.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/afs/security.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index b56210734caaf..2e3c62f12bef9 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -247,6 +247,20 @@ static int bcm63xx_txrx_bufs(struct spi_device *spi, struct spi_transfer *first,
+diff --git a/fs/afs/security.c b/fs/afs/security.c
+index ff8830e6982fb..55ddce94af031 100644
+--- a/fs/afs/security.c
++++ b/fs/afs/security.c
+@@ -26,7 +26,8 @@ static int afs_alloc_anon_key(struct afs_cell *cell)
+ 	struct key *key;
  
- 		if (t->rx_buf) {
- 			do_rx = true;
-+
-+			/*
-+			 * In certain hardware implementations, there appears to be a
-+			 * hidden accumulator that tracks the number of bytes written into
-+			 * the hardware FIFO, and this accumulator overrides the length in
-+			 * the SPI_MSG_CTL register.
-+			 *
-+			 * Therefore, for read-only transfers, we need to write some dummy
-+			 * value into the FIFO to keep the accumulator tracking the correct
-+			 * length.
-+			 */
-+			if (!t->tx_buf)
-+				memset_io(bs->tx_io + len, 0xFF, t->len);
-+
- 			/* prepend is half-duplex write only */
- 			if (t == first)
- 				prepend_len = 0;
+ 	mutex_lock(&afs_key_lock);
+-	if (!cell->anonymous_key) {
++	key = cell->anonymous_key;
++	if (!key) {
+ 		key = rxrpc_get_null_key(cell->key_desc);
+ 		if (!IS_ERR(key))
+ 			cell->anonymous_key = key;
 -- 
 2.51.0
 
