@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FBF36A020;
-	Wed,  3 Dec 2025 16:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513B836A038;
+	Wed,  3 Dec 2025 16:31:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779479; cv=none; b=f2MX3FUxk3q7Sj6KobZTRyBSvHJ3NI01Obht6rhTffA9WgO5uEFrvf5Or6eMwydr97HRhk7QZ8tWQA4qJF2yfg6H1AeE/a2k7qcSgW7uoO6WhqaWunpCPFGDT6nbQkYKo4gsYtqGl15UUlK60B2JgzxJq9kQB1bpQyOB42YjrZI=
+	t=1764779483; cv=none; b=RCrQ5RzU3a2/K8MSuZ/HqmZ98PBkl1kDh5EMky0wcjNa8XUzJSAHpmFwLwtLxejUuj/Wr9ZAmKXz9F3VyTSGYVd2c1TVYg1RdKvpVZ0jf4RQLzwJb+3zoFXZrtLDjPgmrElv9ac8yzgjvQsxtXS9fcRAMWfdM5QuwkUqGAnPUG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779479; c=relaxed/simple;
-	bh=tQ6kn3b2thcAKCx35gysv9EIr3PztSZxW1b1bCNas9Q=;
+	s=arc-20240116; t=1764779483; c=relaxed/simple;
+	bh=eTfRkl6qKUh/rZcwuccFe7PtYuaMReUrdtWai3KeOxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p736qpoLfHgaqZkQXXdC9GbE/GvBqwM4s4fQx3X9Shph7gwhmKvNvQSn6SwepR1at2IBRHBvwWLi284Esb0eA2yc33vzhExfajyq8EBOts6k+I9Pa938rFPa/VhEw8CtutazbtukK2hdHb2DLNAdTIV6V7K5bCEW2b8gV8jeza4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xTIQuoAm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ttu/DHVrXrzfUBBZIlRsIaE+A3qegcQo5h33XCUDboEGPBcyp96Ja7M4C1rL1Y5pZaHuW1uCjDa+7jEJQBTFxNjqpEKxmOv7nXA5B2wrpKn83KY387Txur25KHRyjV6iDuaxoRaUv5ULzAfuTt44Jv5YiKFxeMqN9bHMpJnzZXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ny95TE+J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xTIQuoAm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987F5C4CEF5;
-	Wed,  3 Dec 2025 16:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ny95TE+J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2963C4CEF5;
+	Wed,  3 Dec 2025 16:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779479;
-	bh=tQ6kn3b2thcAKCx35gysv9EIr3PztSZxW1b1bCNas9Q=;
+	s=korg; t=1764779483;
+	bh=eTfRkl6qKUh/rZcwuccFe7PtYuaMReUrdtWai3KeOxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTIQuoAmxUuFU0kPrz6PQCdGBRjc3AwruURUi1AlcmPmfgVGQTdBsJa8Yv8ZwbZ/H
-	 KU7K27i9e6vIMJQr7se03qLudUhTa2EHR9TXiyNqpiip+K0iJJu1gBZQ66mHRVm5px
-	 YPk8oM99TkkoiTWWl2GI2yuL/oI6mpyAxcK0KVjo=
+	b=Ny95TE+J0LpjcZHUq33QNKoaE/U4N7wv+IpNZtP+bpzW7K0mJgA+xtbO/UvdvNm7l
+	 fVFLiG8BzOkKtqBeqbjA3+fz6StikycQjizMDfwk6UXEqfNy4ZA3B7ZBdjOLwxIfOv
+	 kyVC1ZnEqQEDOOHgmoZEM0xGEUTr8QEPjToC4Qd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mike Marshall <hubcap@omnibond.com>,
+	Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 269/568] page_pool: Clamp pool size to max 16K pages
-Date: Wed,  3 Dec 2025 16:24:31 +0100
-Message-ID: <20251203152450.565866632@linuxfoundation.org>
+Subject: [PATCH 6.1 270/568] orangefs: fix xattr related buffer overflow...
+Date: Wed,  3 Dec 2025 16:24:32 +0100
+Message-ID: <20251203152450.602500847@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,50 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Mike Marshall <hubcap@omnibond.com>
 
-[ Upstream commit a1b501a8c6a87c9265fd03bd004035199e2e8128 ]
+[ Upstream commit 025e880759c279ec64d0f754fe65bf45961da864 ]
 
-page_pool_init() returns E2BIG when the page_pool size goes above 32K
-pages. As some drivers are configuring the page_pool size according to
-the MTU and ring size, there are cases where this limit is exceeded and
-the queue creation fails.
+Willy Tarreau <w@1wt.eu> forwarded me a message from
+Disclosure <disclosure@aisle.com> with the following
+warning:
 
-The page_pool size doesn't have to cover a full queue, especially for
-larger ring size. So clamp the size instead of returning an error. Do
-this in the core to avoid having each driver do the clamping.
+> The helper `xattr_key()` uses the pointer variable in the loop condition
+> rather than dereferencing it. As `key` is incremented, it remains non-NULL
+> (until it runs into unmapped memory), so the loop does not terminate on
+> valid C strings and will walk memory indefinitely, consuming CPU or hanging
+> the thread.
 
-The current limit was deemed to high [1] so it was reduced to 16K to avoid
-page waste.
+I easily reproduced this with setfattr and getfattr, causing a kernel
+oops, hung user processes and corrupted orangefs files. Disclosure
+sent along a diff (not a patch) with a suggested fix, which I based
+this patch on.
 
-[1] https://lore.kernel.org/all/1758532715-820422-3-git-send-email-tariqt@nvidia.com/
+After xattr_key started working right, xfstest generic/069 exposed an
+xattr related memory leak that lead to OOM. xattr_key returns
+a hashed key.  When adding xattrs to the orangefs xattr cache, orangefs
+used hash_add, a kernel hashing macro. hash_add also hashes the key using
+hash_log which resulted in additions to the xattr cache going to the wrong
+hash bucket. generic/069 tortures a single file and orangefs does a
+getattr for the xattr "security.capability" every time. Orangefs
+negative caches on xattrs which includes a kmalloc. Since adds to the
+xattr cache were going to the wrong bucket, every getattr for
+"security.capability" resulted in another kmalloc, none of which were
+ever freed.
 
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20250926131605.2276734-2-dtatulea@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+I changed the two uses of hash_add to hlist_add_head instead
+and the memory leak ceased and generic/069 quit throwing furniture.
+
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Reported-by: Stanislav Fort of Aisle Research <stanislav.fort@aisle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/page_pool.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ fs/orangefs/xattr.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/net/core/page_pool.c b/net/core/page_pool.c
-index 8ce34d1c2e076..5c66092f95801 100644
---- a/net/core/page_pool.c
-+++ b/net/core/page_pool.c
-@@ -168,11 +168,7 @@ static int page_pool_init(struct page_pool *pool,
- 		return -EINVAL;
+diff --git a/fs/orangefs/xattr.c b/fs/orangefs/xattr.c
+index 9a5b757fbd2f6..2d2d16caf9190 100644
+--- a/fs/orangefs/xattr.c
++++ b/fs/orangefs/xattr.c
+@@ -54,7 +54,9 @@ static inline int convert_to_internal_xattr_flags(int setxattr_flags)
+ static unsigned int xattr_key(const char *key)
+ {
+ 	unsigned int i = 0;
+-	while (key)
++	if (!key)
++		return 0;
++	while (*key)
+ 		i += *key++;
+ 	return i % 16;
+ }
+@@ -175,8 +177,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
+ 				cx->length = -1;
+ 				cx->timeout = jiffies +
+ 				    orangefs_getattr_timeout_msecs*HZ/1000;
+-				hash_add(orangefs_inode->xattr_cache, &cx->node,
+-				    xattr_key(cx->key));
++				hlist_add_head( &cx->node,
++                                   &orangefs_inode->xattr_cache[xattr_key(cx->key)]);
+ 			}
+ 		}
+ 		goto out_release_op;
+@@ -229,8 +231,8 @@ ssize_t orangefs_inode_getxattr(struct inode *inode, const char *name,
+ 			memcpy(cx->val, buffer, length);
+ 			cx->length = length;
+ 			cx->timeout = jiffies + HZ;
+-			hash_add(orangefs_inode->xattr_cache, &cx->node,
+-			    xattr_key(cx->key));
++			hlist_add_head(&cx->node,
++				&orangefs_inode->xattr_cache[xattr_key(cx->key)]);
+ 		}
+ 	}
  
- 	if (pool->p.pool_size)
--		ring_qsize = pool->p.pool_size;
--
--	/* Sanity limit mem that can be pinned down */
--	if (ring_qsize > 32768)
--		return -E2BIG;
-+		ring_qsize = min(pool->p.pool_size, 16384);
- 
- 	/* DMA direction is either DMA_FROM_DEVICE or DMA_BIDIRECTIONAL.
- 	 * DMA_BIDIRECTIONAL is for allowing page used for DMA sending,
 -- 
 2.51.0
 
