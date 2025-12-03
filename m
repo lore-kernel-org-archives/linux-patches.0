@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D68B313E03;
-	Wed,  3 Dec 2025 16:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD20313558;
+	Wed,  3 Dec 2025 16:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777998; cv=none; b=b6yCYiCfOEBvN/62QjdltWUvgQflBPaCIrFMR+pn0ubrDiOVUznAc9JMFZJ++5YpRuztQdb+nxuvFGPEWiN7paW1dTHzM+lMeudHAxF03oqySoBkNwvOFUKSdRZYo2mCLzmlwQ3U9UEwireOzsuTfHw5xMeiq6W3EhVcAAufX1M=
+	t=1764778001; cv=none; b=mainhc05euYie2jLn1Q3p+GzQ5PvpGjO3WA7AwQey8jhvMniHlGPTPPuruWX+p/SQRQUPDV+767TNSrf7lBz16oTab14NN+yLe27NPl+odw8AZMthSMjj8+g/T/oIn4VY7OGC5S86dvJdjgfQO1etU7kthT2trSEqh0ELjXQbXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777998; c=relaxed/simple;
-	bh=XONGgOhfbwFMAJXbFP7rLNOYi3O8jFtJHyi7QAkR2+Y=;
+	s=arc-20240116; t=1764778001; c=relaxed/simple;
+	bh=SpugAN5EEf2RW9z4Km8ZC6BPCK+8tVUHWf9OwmDZvIM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Grjzov5BNcKg0S8QI+v1r/9lkV7orFZM4rLusy36AO5BBtjyuz2SkaJSGXrkvgWYqbMkWXNR8z5owuVDy/lh8EylcbywesO5ww6sZTSoAdyS3sq/9HtQJ+BXZpGc0J4EYcgdL+goa+CpVwYUAGsk+hkPtASaaMSwPYWKDhXxjS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/gzXW/7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tetk4vgtbpcUEba3NjNugMLPxpOKqATpvdfmBJjbqcE8myK2j6TItYaHZae8IffiD96Ultx0CgfjMN/MrOluX0fyy+ObuSnCC7zKl1tzsmXpmoCjElypBcNhLhePp7LUi4eaJGvTq+iaQoksjCXZY+SAf8FMZvw71vLasTiXcNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkb29Lzu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/gzXW/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48815C116B1;
-	Wed,  3 Dec 2025 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkb29Lzu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7118DC4CEF5;
+	Wed,  3 Dec 2025 16:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777997;
-	bh=XONGgOhfbwFMAJXbFP7rLNOYi3O8jFtJHyi7QAkR2+Y=;
+	s=korg; t=1764778000;
+	bh=SpugAN5EEf2RW9z4Km8ZC6BPCK+8tVUHWf9OwmDZvIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/gzXW/7t8HXbwojqoB1+jzB0Mcb/QkbB9NTPEHYRL9GtAUhk+a44uhX2t+dC7vVg
-	 3WFSemxBpoujhpJmPlO4LkJf3zN5IhbwuJN6wgcFGAqMkbdcxLgfwYZQqcq4Y28xu0
-	 yR4c1mFlJ+Tz4Rr9tZY4XA5KQ3uYuh9qiXBi3AHs=
+	b=fkb29Lzu+5gOgWGO1O7T7juYNaymjeEYkmx4eYh2G8W744IXiFCnr75oZCCB+VyFW
+	 b93IbiNEqsFaCyXqdp5TOl/2GymGXOITMSxvzZJ/dt6JBIRZqbVNtfOc3VO86vuGyK
+	 CwmWQ76GP+ZUNxa+zus8MxpWSl9SNbvIThfKw084=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Anubhav Singh <anubhavsinggh@google.com>,
+	David Wei <dw@davidwei.uk>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 212/392] selftests/net: use destination options instead of hop-by-hop
-Date: Wed,  3 Dec 2025 16:26:02 +0100
-Message-ID: <20251203152421.872685755@linuxfoundation.org>
+Subject: [PATCH 5.15 213/392] netdevsim: add Makefile for selftests
+Date: Wed,  3 Dec 2025 16:26:03 +0100
+Message-ID: <20251203152421.908015159@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,56 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anubhav Singh <anubhavsinggh@google.com>
+From: David Wei <dw@davidwei.uk>
 
-[ Upstream commit f8e8486702abb05b8c734093aab1606af0eac068 ]
+[ Upstream commit 8ff25dac88f616ebebb30830e3a20f079d7a30c9 ]
 
-The GRO self-test, gro.c, currently constructs IPv6 packets containing a
-Hop-by-Hop Options header (IPPROTO_HOPOPTS) to ensure the GRO path
-correctly handles IPv6 extension headers.
+Add a Makefile for netdevsim selftests and add selftests path to
+MAINTAINERS
 
-However, network elements may be configured to drop packets with the
-Hop-by-Hop Options header (HBH). This causes the self-test to fail
-in environments where such network elements are present.
-
-To improve the robustness and reliability of this test in diverse
-network environments, switch from using IPPROTO_HOPOPTS to
-IPPROTO_DSTOPTS (Destination Options).
-
-The Destination Options header is less likely to be dropped by
-intermediate routers and still serves the core purpose of the test:
-validating GRO's handling of an IPv6 extension header. This change
-ensures the test can execute successfully without being incorrectly
-failed by network policies outside the kernel's control.
-
-Fixes: 7d1575014a63 ("selftests/net: GRO coalesce test")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Anubhav Singh <anubhavsinggh@google.com>
-Link: https://patch.msgid.link/20251030060436.1556664-1-anubhavsinggh@google.com
+Signed-off-by: David Wei <dw@davidwei.uk>
+Link: https://lore.kernel.org/r/20240130214620.3722189-5-dw@davidwei.uk
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: d01f8136d46b ("selftests: netdevsim: Fix ethtool-coalesce.sh fail by installing ethtool-common.sh")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/gro.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ MAINTAINERS                                     |  1 +
+ .../selftests/drivers/net/netdevsim/Makefile    | 17 +++++++++++++++++
+ 2 files changed, 18 insertions(+)
+ create mode 100644 tools/testing/selftests/drivers/net/netdevsim/Makefile
 
-diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
-index a6cf29c2c9318..e220b6f12336e 100644
---- a/tools/testing/selftests/net/gro.c
-+++ b/tools/testing/selftests/net/gro.c
-@@ -622,11 +622,11 @@ static void send_ipv6_exthdr(int fd, struct sockaddr_ll *daddr, char *ext_data1,
- 	static char exthdr_pck[sizeof(buf) + MIN_EXTHDR_SIZE];
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 6bfc75861c8c0..c88de6f356d11 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -12939,6 +12939,7 @@ NETDEVSIM
+ M:	Jakub Kicinski <kuba@kernel.org>
+ S:	Maintained
+ F:	drivers/net/netdevsim/*
++F:	tools/testing/selftests/drivers/net/netdevsim/*
  
- 	create_packet(buf, 0, 0, PAYLOAD_LEN, 0);
--	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data1);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_DSTOPTS, ext_data1);
- 	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
- 
- 	create_packet(buf, PAYLOAD_LEN * 1, 0, PAYLOAD_LEN, 0);
--	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data2);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_DSTOPTS, ext_data2);
- 	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
- }
- 
+ NETEM NETWORK EMULATOR
+ M:	Stephen Hemminger <stephen@networkplumber.org>
+diff --git a/tools/testing/selftests/drivers/net/netdevsim/Makefile b/tools/testing/selftests/drivers/net/netdevsim/Makefile
+new file mode 100644
+index 0000000000000..7a29a05bea8bc
+--- /dev/null
++++ b/tools/testing/selftests/drivers/net/netdevsim/Makefile
+@@ -0,0 +1,17 @@
++# SPDX-License-Identifier: GPL-2.0+ OR MIT
++
++TEST_PROGS = devlink.sh \
++	devlink_in_netns.sh \
++	devlink_trap.sh \
++	ethtool-coalesce.sh \
++	ethtool-fec.sh \
++	ethtool-pause.sh \
++	ethtool-ring.sh \
++	fib.sh \
++	hw_stats_l3.sh \
++	nexthop.sh \
++	psample.sh \
++	tc-mq-visibility.sh \
++	udp_tunnel_nic.sh \
++
++include ../../../lib.mk
 -- 
 2.51.0
 
