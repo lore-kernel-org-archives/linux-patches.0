@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4470735BDDB;
-	Wed,  3 Dec 2025 16:37:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E62435C184;
+	Wed,  3 Dec 2025 16:37:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779865; cv=none; b=jGMa7TCNWWeBSKwBXEbH4n6CAd3mKBuPkaIzEMnPitHBb9tzCEfCLoigcxlEKpz+ZnYUKOfWZEMjjRiEMotFMnBxeuYcwUOAh6XnEok34glK0vKl3IGTOsFYvJ0S3QNnMo3Dh3+4Ktd5jHeImWjD6L5CIWnRZIhlfdwPfeEEq+Q=
+	t=1764779868; cv=none; b=V7P9wXFx8euGKlTD99SWTjtNokG8Y+xm4RYKJI+rXs+s/Pdkc1MMWHF6fSxQFwS+iinOkIvYkAksbu4PQWXzr9VdEyMU5vM9otOh2A2AfS5WBS1x8XCgpaiG37uKgyNkJGd+3yyrwOMEhedRdgGixChHOWoME6sV21r11saDutE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779865; c=relaxed/simple;
-	bh=DrRNDl2Qcrfbr96v1/A0sq8BxEgTMA56xYV5ITNMANQ=;
+	s=arc-20240116; t=1764779868; c=relaxed/simple;
+	bh=U3515F7c2aWWVnHYigHnssz+q1jcYkttaLhISJJj8ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c//bWCW2otrJv5ucfhi5QQ4D73rTfWRjUDq5fQZK9G+Xc2y7MKKm4k9gWtsfh5LdeQF3MMEukiSQiMCNANvj/W3Nlyr251JYOHgTe/uvXa7fLHGmbyBdiSr2WEgH3/Eek8uj25JOprvS3RCIwhzQ6/il841JydQIg8oB3KsFz/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0lFQtYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ono54IVfuErjTA5U/7K0W+DQEIUveXJa76nTbBZRPlj2CwDE/cZgjmNz+r/jT8TbObc4iL99SBbp7YVVbNTtru2jYZsa5LdIAheohEl860knwjxZTW92I/BlG5K6pnbz8QABnE4LGHab8d80XkjdRLzYpg0cDeppcHTGrEyOR9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxfub1NQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0lFQtYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E04C4CEF5;
-	Wed,  3 Dec 2025 16:37:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxfub1NQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D678AC116B1;
+	Wed,  3 Dec 2025 16:37:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779865;
-	bh=DrRNDl2Qcrfbr96v1/A0sq8BxEgTMA56xYV5ITNMANQ=;
+	s=korg; t=1764779868;
+	bh=U3515F7c2aWWVnHYigHnssz+q1jcYkttaLhISJJj8ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0lFQtYDllFP3h12ACYBFT1N2PFDtfDaK/EtwozBVJjCtiKVCIC13Dy0zyAKDxNMO
-	 dT4oCojmtn21+NyPrpNaQfx8NEzVIpIuLF7h+zioLmigyLV9XHc3qh8J62Zs2SrORA
-	 l+rcI3DHTuTF90gWywlhnm9pl2E35yRkjBzfOKTU=
+	b=yxfub1NQQvEsGg9AYU9batdhtmHU7ww+cEtZH9GlrZsL9/bWuXD+S6epqSIF/NJai
+	 vxOIEKREUwRTxZnBmgTlbXpZHs4XGshHgyvKSiKkYNSTy7r+MNH3fKo6FSOzw7yeZo
+	 lHH2oND7tUbtz2ri6J6D4X0IIXoZc6Q6f8JG+WEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohit Keshri <rkeshri@redhat.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 384/568] drm/vmwgfx: Validate command header size against SVGA_CMD_MAX_DATASIZE
-Date: Wed,  3 Dec 2025 16:26:26 +0100
-Message-ID: <20251203152454.758959021@linuxfoundation.org>
+Subject: [PATCH 6.1 385/568] NFSv4: Fix an incorrect parameter when calling nfs4_call_sync()
+Date: Wed,  3 Dec 2025 16:26:27 +0100
+Message-ID: <20251203152454.794768302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,41 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 32b415a9dc2c212e809b7ebc2b14bc3fbda2b9af ]
+[ Upstream commit 1f214e9c3aef2d0936be971072e991d78a174d71 ]
 
-This data originates from userspace and is used in buffer offset
-calculations which could potentially overflow causing an out-of-bounds
-access.
+The Smatch static checker noted that in _nfs4_proc_lookupp(), the flag
+RPC_TASK_TIMEOUT is being passed as an argument to nfs4_init_sequence(),
+which is clearly incorrect.
+Since LOOKUPP is an idempotent operation, nfs4_init_sequence() should
+not ask the server to cache the result. The RPC_TASK_TIMEOUT flag needs
+to be passed down to the RPC layer.
 
-Fixes: 8ce75f8ab904 ("drm/vmwgfx: Update device includes for DX device functionality")
-Reported-by: Rohit Keshri <rkeshri@redhat.com>
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20251021190128.13014-1-ian.forbes@broadcom.com
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reported-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Fixes: 76998ebb9158 ("NFSv4: Observe the NFS_MOUNT_SOFTREVAL flag in _nfs4_proc_lookupp")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfs/nfs4proc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index 0d12d6af67c09..247ef293bf845 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -3669,6 +3669,11 @@ static int vmw_cmd_check(struct vmw_private *dev_priv,
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index f387a3862ca09..d4ae2ce56af4a 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -4584,16 +4584,19 @@ static int _nfs4_proc_lookupp(struct inode *inode,
+ 	};
+ 	unsigned short task_flags = 0;
  
+-	if (NFS_SERVER(inode)->flags & NFS_MOUNT_SOFTREVAL)
++	if (server->flags & NFS_MOUNT_SOFTREVAL)
+ 		task_flags |= RPC_TASK_TIMEOUT;
++	if (server->caps & NFS_CAP_MOVEABLE)
++		task_flags |= RPC_TASK_MOVEABLE;
  
- 	cmd_id = header->id;
-+	if (header->size > SVGA_CMD_MAX_DATASIZE) {
-+		VMW_DEBUG_USER("SVGA3D command: %d is too big.\n",
-+			       cmd_id + SVGA_3D_CMD_BASE);
-+		return -E2BIG;
-+	}
- 	*size = header->size + sizeof(SVGA3dCmdHeader);
+ 	args.bitmask = nfs4_bitmask(server, fattr->label);
  
- 	cmd_id -= SVGA_3D_CMD_BASE;
+ 	nfs_fattr_init(fattr);
++	nfs4_init_sequence(&args.seq_args, &res.seq_res, 0, 0);
+ 
+ 	dprintk("NFS call  lookupp ino=0x%lx\n", inode->i_ino);
+-	status = nfs4_call_sync(clnt, server, &msg, &args.seq_args,
+-				&res.seq_res, task_flags);
++	status = nfs4_do_call_sync(clnt, server, &msg, &args.seq_args,
++				   &res.seq_res, task_flags);
+ 	dprintk("NFS reply lookupp: %d\n", status);
+ 	return status;
+ }
 -- 
 2.51.0
 
