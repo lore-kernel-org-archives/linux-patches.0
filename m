@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52883307AD9;
-	Wed,  3 Dec 2025 15:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100513074A0;
+	Wed,  3 Dec 2025 15:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776687; cv=none; b=DMMemfya3Q7t3O2Jd+0dWpdDZyIiTD8hWhvVnqoDIhbiQKesVnw58Yjoa/KWZry7HWfkZQakofoqkAUE8FedHwevOPjxcwWWLfpTbS9fmIiJatwyGPvwr0pmMoJdGedC5Hfnw/ofqbfMxKb05VKCSEVIJ6Q6SVEI29hZds5ybQ4=
+	t=1764776691; cv=none; b=enBvi4Tfnr198gudrEPh0po4rsOaMbsVPl/Re0z4WuSpwgrB2dj+wuPCiJbtSQ6xYVPE9sHHjHUvGleKWSdn54Ax/CfJu5JheF491waNjgZpl2ELBODs34SO2NFFLrF7y1acr4pWAjSlRvo6CZnRoeYVO1bR1cCvR1NDKlUQfJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776687; c=relaxed/simple;
-	bh=d+vUFuv8NByvXDo3B26dKehb6X61XmCrRdWarz7m+tw=;
+	s=arc-20240116; t=1764776691; c=relaxed/simple;
+	bh=eENgCL/a7RBp6TXqkIp1h15HMOVR8MuOtVMyS55paT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rdDtyVRut+8vyxjLHMsLOk9VtDgn0Ma5tHj0HVtgM6KsQTtZYNLAWM49zJyNODqZOFJIPTIdLUHljSHTNPfyoCtFnpzcFm4i/4xljKPvTsFilWPVvYxun34oxNHABrx3+5yiqBjjXyuzNFbj+gn6H5tWAa7DiyklXB2Nqd+H8Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IIVmSBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sxw/VyqRewloo/YgxMuYCj7DPqkq+blW26zBqAvtYJLfxRd88hpcdkxpQ8D4WzUb81JuznP1R7cM9/llKnkbJUSHIzs+ac6gssvRjYMO9pHAUbZj1TR8bO9CdspFOD5rO1kRA8N8ItotrZla0ZTlqDMipFud78YP6t3etTimKjc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ch55sJ1h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IIVmSBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67F6C4CEF5;
-	Wed,  3 Dec 2025 15:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ch55sJ1h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2285AC4CEF5;
+	Wed,  3 Dec 2025 15:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776687;
-	bh=d+vUFuv8NByvXDo3B26dKehb6X61XmCrRdWarz7m+tw=;
+	s=korg; t=1764776690;
+	bh=eENgCL/a7RBp6TXqkIp1h15HMOVR8MuOtVMyS55paT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IIVmSBwQFIvRVxjYjH+x4qaA9lHJN/4KkJOoYO2nV/lwRxKz6is4yZ8L7SiUOkyy
-	 fJEnil1R5pMUXQAHyptUc3gd3VSuEj/nn/mKYMD3iDZYqOtGqeVCt6VX6uIM4B+EtI
-	 pYzRuwE1USoXOHVLfJdHyOMRpkdXC/+EWqg5/kzU=
+	b=Ch55sJ1hrPZR5d7p+a/d6CX+vp9ycg0+j2u5KZL/QY2MX6izcxxPOHIH7PImOcAH0
+	 a9+YS5RLnwoDeXwbKn6a/Sa58Vw2DAU/OuGGhRx8/Y2Lfk+R1zs0Unz7Ye3vt2NroC
+	 lGtP9nKyqElT7i7DhfrkKR4097BWYGI2KrOBL+G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carol Soto <csoto@nvidia.com>,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Breno Leitao <leitao@debian.org>,
 	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 258/300] net: aquantia: Add missing descriptor cache invalidation on ATL2
-Date: Wed,  3 Dec 2025 16:27:42 +0100
-Message-ID: <20251203152410.197463922@linuxfoundation.org>
+Subject: [PATCH 5.10 241/300] net: netpoll: fix incorrect refcount handling causing incorrect cleanup
+Date: Wed,  3 Dec 2025 16:27:25 +0100
+Message-ID: <20251203152409.552890516@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,144 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kaihengf@nvidia.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 7526183cfdbe352c51c285762f0e15b7c428ea06 ]
+[ Upstream commit 49c8d2c1f94cc2f4d1a108530d7ba52614b874c2 ]
 
-ATL2 hardware was missing descriptor cache invalidation in hw_stop(),
-causing SMMU translation faults during device shutdown and module removal:
-[   70.355743] arm-smmu-v3 arm-smmu-v3.5.auto: event 0x10 received:
-[   70.361893] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0002060000000010
-[   70.367948] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000020000000000
-[   70.374002] arm-smmu-v3 arm-smmu-v3.5.auto:  0x00000000ff9bc000
-[   70.380055] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000000000000000
-[   70.386109] arm-smmu-v3 arm-smmu-v3.5.auto: event: F_TRANSLATION client: 0001:06:00.0 sid: 0x20600 ssid: 0x0 iova: 0xff9bc000 ipa: 0x0
-[   70.398531] arm-smmu-v3 arm-smmu-v3.5.auto: unpriv data write s1 "Input address caused fault" stag: 0x0
+commit efa95b01da18 ("netpoll: fix use after free") incorrectly
+ignored the refcount and prematurely set dev->npinfo to NULL during
+netpoll cleanup, leading to improper behavior and memory leaks.
 
-Commit 7a1bb49461b1 ("net: aquantia: fix potential IOMMU fault after
-driver unbind") and commit ed4d81c4b3f2 ("net: aquantia: when cleaning
-hw cache it should be toggled") fixed cache invalidation for ATL B0, but
-ATL2 was left with only interrupt disabling. This allowed hardware to
-write to cached descriptors after DMA memory was unmapped, triggering
-SMMU faults. Once cache invalidation is applied to ATL2, the translation
-fault can't be observed anymore.
+Scenario causing lack of proper cleanup:
 
-Add shared aq_hw_invalidate_descriptor_cache() helper and use it in both
-ATL B0 and ATL2 hw_stop() implementations for consistent behavior.
+1) A netpoll is associated with a NIC (e.g., eth0) and netdev->npinfo is
+   allocated, and refcnt = 1
+   - Keep in mind that npinfo is shared among all netpoll instances. In
+     this case, there is just one.
 
-Fixes: e54dcf4bba3e ("net: atlantic: basic A2 init/deinit hw_ops")
-Tested-by: Carol Soto <csoto@nvidia.com>
-Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
+2) Another netpoll is also associated with the same NIC and
+   npinfo->refcnt += 1.
+   - Now dev->npinfo->refcnt = 2;
+   - There is just one npinfo associated to the netdev.
+
+3) When the first netpolls goes to clean up:
+   - The first cleanup succeeds and clears np->dev->npinfo, ignoring
+     refcnt.
+     - It basically calls `RCU_INIT_POINTER(np->dev->npinfo, NULL);`
+   - Set dev->npinfo = NULL, without proper cleanup
+   - No ->ndo_netpoll_cleanup() is either called
+
+4) Now the second target tries to clean up
+   - The second cleanup fails because np->dev->npinfo is already NULL.
+     * In this case, ops->ndo_netpoll_cleanup() was never called, and
+       the skb pool is not cleaned as well (for the second netpoll
+       instance)
+  - This leaks npinfo and skbpool skbs, which is clearly reported by
+    kmemleak.
+
+Revert commit efa95b01da18 ("netpoll: fix use after free") and adds
+clarifying comments emphasizing that npinfo cleanup should only happen
+once the refcount reaches zero, ensuring stable and correct netpoll
+behavior.
+
+Cc: <stable@vger.kernel.org> # 3.17.x
+Cc: Jay Vosburgh <jv@jvosburgh.net>
+Fixes: efa95b01da18 ("netpoll: fix use after free")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251120041537.62184-1-kaihengf@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://patch.msgid.link/20251107-netconsole_torture-v10-1-749227b55f63@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../ethernet/aquantia/atlantic/aq_hw_utils.c  | 22 +++++++++++++++++++
- .../ethernet/aquantia/atlantic/aq_hw_utils.h  |  1 +
- .../aquantia/atlantic/hw_atl/hw_atl_b0.c      | 19 +---------------
- .../aquantia/atlantic/hw_atl2/hw_atl2.c       |  2 +-
- 4 files changed, 25 insertions(+), 19 deletions(-)
+ net/core/netpoll.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
-index 1921741f7311d..18b08277d2e1a 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
-@@ -15,6 +15,7 @@
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -863,6 +863,10 @@ void __netpoll_cleanup(struct netpoll *n
  
- #include "aq_hw.h"
- #include "aq_nic.h"
-+#include "hw_atl/hw_atl_llh.h"
+ 	synchronize_srcu(&netpoll_srcu);
  
- void aq_hw_write_reg_bit(struct aq_hw_s *aq_hw, u32 addr, u32 msk,
- 			 u32 shift, u32 val)
-@@ -81,6 +82,27 @@ void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value)
- 		lo_hi_writeq(value, hw->mmio + reg);
- }
- 
-+int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw)
-+{
-+	int err;
-+	u32 val;
-+
-+	/* Invalidate Descriptor Cache to prevent writing to the cached
-+	 * descriptors and to the data pointer of those descriptors
++	/* At this point, there is a single npinfo instance per netdevice, and
++	 * its refcnt tracks how many netpoll structures are linked to it. We
++	 * only perform npinfo cleanup when the refcnt decrements to zero.
 +	 */
-+	hw_atl_rdm_rx_dma_desc_cache_init_tgl(hw);
-+
-+	err = aq_hw_err_from_flags(hw);
-+	if (err)
-+		goto err_exit;
-+
-+	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
-+				  hw, val, val == 1, 1000U, 10000U);
-+
-+err_exit:
-+	return err;
-+}
-+
- int aq_hw_err_from_flags(struct aq_hw_s *hw)
- {
- 	int err = 0;
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
-index ffa6e4067c211..d89c63d88e4a4 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
-@@ -35,6 +35,7 @@ u32 aq_hw_read_reg(struct aq_hw_s *hw, u32 reg);
- void aq_hw_write_reg(struct aq_hw_s *hw, u32 reg, u32 value);
- u64 aq_hw_read_reg64(struct aq_hw_s *hw, u32 reg);
- void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value);
-+int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw);
- int aq_hw_err_from_flags(struct aq_hw_s *hw);
- int aq_hw_num_tcs(struct aq_hw_s *hw);
- int aq_hw_q_per_tc(struct aq_hw_s *hw);
-diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
-index 45c17c585d743..2236bc9ba54d2 100644
---- a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
-@@ -1198,26 +1198,9 @@ static int hw_atl_b0_hw_interrupt_moderation_set(struct aq_hw_s *self)
+ 	if (refcount_dec_and_test(&npinfo->refcnt)) {
+ 		const struct net_device_ops *ops;
  
- static int hw_atl_b0_hw_stop(struct aq_hw_s *self)
- {
--	int err;
--	u32 val;
--
- 	hw_atl_b0_hw_irq_disable(self, HW_ATL_B0_INT_MASK);
+@@ -872,8 +876,7 @@ void __netpoll_cleanup(struct netpoll *n
  
--	/* Invalidate Descriptor Cache to prevent writing to the cached
--	 * descriptors and to the data pointer of those descriptors
--	 */
--	hw_atl_rdm_rx_dma_desc_cache_init_tgl(self);
--
--	err = aq_hw_err_from_flags(self);
--
--	if (err)
--		goto err_exit;
--
--	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
--				  self, val, val == 1, 1000U, 10000U);
--
--err_exit:
--	return err;
-+	return aq_hw_invalidate_descriptor_cache(self);
+ 		RCU_INIT_POINTER(np->dev->npinfo, NULL);
+ 		call_rcu(&npinfo->rcu, rcu_cleanup_netpoll_info);
+-	} else
+-		RCU_INIT_POINTER(np->dev->npinfo, NULL);
++	}
  }
+ EXPORT_SYMBOL_GPL(__netpoll_cleanup);
  
- int hw_atl_b0_hw_ring_tx_stop(struct aq_hw_s *self, struct aq_ring_s *ring)
-diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
-index c76ccdc77ba60..98d4ba879dd08 100644
---- a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
-@@ -759,7 +759,7 @@ static int hw_atl2_hw_stop(struct aq_hw_s *self)
- {
- 	hw_atl_b0_hw_irq_disable(self, HW_ATL2_INT_MASK);
- 
--	return 0;
-+	return aq_hw_invalidate_descriptor_cache(self);
- }
- 
- static struct aq_stats_s *hw_atl2_utils_get_hw_stats(struct aq_hw_s *self)
--- 
-2.51.0
-
 
 
