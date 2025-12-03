@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB254313523;
-	Wed,  3 Dec 2025 16:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E521303A28;
+	Wed,  3 Dec 2025 16:05:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777946; cv=none; b=XW2jGtbK55aLH+RZc/CrpPUU3dgOKH1Vw1b7Vw3MMmPm184gwbFyKmv/pDki81r1iBQFZQW0I+5SpA1/NEKR7pimhtxEL/66OqnQtgSs18JrJURcX8fmBhw03P9TG+9l/eQUkLoZW61c8xeH/TDtiK66n+LKf3940uRBTTGsHww=
+	t=1764777949; cv=none; b=Sy8lPDh+ZK4vVzk1WL7b2q8oS3Pgx/JqjCPFzhb1Fho7Ze/qhDz5b5WJsVUGXbSoiGm/Dfq8za7tqai1eTY0X2Qj+yGxRr2GwaLzeLE3tURhPewDqBIlNbPu6TztS0zA1z56k5v+oZucZV04hmbjXUgVrPLXM+YBbVo7eaMUH4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777946; c=relaxed/simple;
-	bh=lCxFO2de/A9M4+iuOkl6krfbtltxn1QYy/63755dIjs=;
+	s=arc-20240116; t=1764777949; c=relaxed/simple;
+	bh=CjX3aGpVCDhmAzi8YhGSRskYhNWREVkn8rkZMiOTz/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOsuK8wUaYUPILZKVvlq3iyorxhLJZejA485JMiMeajXydx7mycZlYw3pE8bGosbqvvrYQd8bXkUg30+7hGtaQMCdHvyPoRtvPtujWAhDq9Plpo24+WcozvSdDWf9GonHInSwhAnr1B/7Z/n6My/HqmNiAw1Y5ful7JQ+W/WDrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFohm1OC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V4V62LNO5Kpv5r44HdfZk3dk5dJGuBt/7m7yJ80t42Lp5cSkx/THjiaw4AuCeAhWnmJ7f5iI67yMLecBEQrkDwE8pndAgzoIzX9SFwPhhMjXGfpwHFnSRdEJbdpxr1bzIYMRAXs0mC6vKZ5EgVKD2l4HAHH45FOSHxZTChJt2qk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kz358T9n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFohm1OC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58BF4C116C6;
-	Wed,  3 Dec 2025 16:05:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kz358T9n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D50FC4CEF5;
+	Wed,  3 Dec 2025 16:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777945;
-	bh=lCxFO2de/A9M4+iuOkl6krfbtltxn1QYy/63755dIjs=;
+	s=korg; t=1764777949;
+	bh=CjX3aGpVCDhmAzi8YhGSRskYhNWREVkn8rkZMiOTz/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFohm1OCulVYFJy2G0L/w3jWcsXMmJ6fiobVr9pDsh+jU5xDWirpT2VSts6jDsNS/
-	 AVWpaCBYHmpGNBzuEu/4CaJQVMuG1ij393bTpeneGo7NBjkA0RaStkcf5GabCQfexg
-	 zGdc5FYoSb21ZTvCuhXxwqk8F25FPLcY8b++mHKI=
+	b=kz358T9nhCFRR9QyLAKreYzRko3isLMxdnyicQSbRsJURdh8Bman0Sc8RxqpCq/gi
+	 /zhsYsSv8GK1NJzk+vzWcLEWMZ9MBtTYoL3u5PZOh3OdYwWunO7W0EDPvQ7By6j2wj
+	 snu1ZanS/00N9G0RTTsFcp9Lem+GeYF6Kf6s0hIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Brahmajit Das <listout@listout.xyz>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 195/392] ARM: at91: pm: save and restore ACR during PLL disable/enable
-Date: Wed,  3 Dec 2025 16:25:45 +0100
-Message-ID: <20251203152421.249494048@linuxfoundation.org>
+Subject: [PATCH 5.15 169/392] net: intel: fm10k: Fix parameter idx set but not used
+Date: Wed,  3 Dec 2025 16:25:19 +0100
+Message-ID: <20251203152420.297457584@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,57 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Brahmajit Das <listout@listout.xyz>
 
-[ Upstream commit 0c01fe49651d387776abed6a28541e80c8a93319 ]
+[ Upstream commit 99e9c5ffbbee0f258a1da4eadf602b943f8c8300 ]
 
-Add a new word in assembly to store ACR value during the calls
-to at91_plla_disable/at91_plla_enable macros and use it.
+Variable idx is set in the loop, but is never used resulting in dead
+code. Building with GCC 16, which enables
+-Werror=unused-but-set-parameter= by default results in build error.
+This patch removes the idx parameter, since all the callers of the
+fm10k_unbind_hw_stats_q as 0 as idx anyways.
 
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-[cristian.birsan@microchip.com: remove ACR_DEFAULT_PLLA loading]
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Link: https://lore.kernel.org/r/20250827145427.46819-4-nicolas.ferre@microchip.com
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Suggested-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: Brahmajit Das <listout@listout.xyz>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm_suspend.S | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/fm10k/fm10k_common.c | 5 ++---
+ drivers/net/ethernet/intel/fm10k/fm10k_common.h | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_pf.c     | 2 +-
+ drivers/net/ethernet/intel/fm10k/fm10k_vf.c     | 2 +-
+ 4 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index 60f9d6f5f8229..1b8d1fbb41ef4 100644
---- a/arch/arm/mach-at91/pm_suspend.S
-+++ b/arch/arm/mach-at91/pm_suspend.S
-@@ -685,6 +685,10 @@ sr_dis_exit:
- 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
- 	str	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.c b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+index f51a63fca513e..1f919a50c7653 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.c
+@@ -447,17 +447,16 @@ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ /**
+  *  fm10k_unbind_hw_stats_q - Unbind the queue counters from their queues
+  *  @q: pointer to the ring of hardware statistics queue
+- *  @idx: index pointing to the start of the ring iteration
+  *  @count: number of queues to iterate over
+  *
+  *  Function invalidates the index values for the queues so any updates that
+  *  may have happened are ignored and the base for the queue stats is reset.
+  **/
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count)
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count)
+ {
+ 	u32 i;
  
-+	/* save acr */
-+	ldr	tmp2, [pmc, #AT91_PMC_PLL_ACR]
-+	str	tmp2, .saved_acr
-+
- 	/* save div. */
- 	mov	tmp1, #0
- 	ldr	tmp2, [pmc, #AT91_PMC_PLL_CTRL0]
-@@ -754,7 +758,7 @@ sr_dis_exit:
- 	str	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
+-	for (i = 0; i < count; i++, idx++, q++) {
++	for (i = 0; i < count; i++, q++) {
+ 		q->rx_stats_idx = 0;
+ 		q->tx_stats_idx = 0;
+ 	}
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_common.h b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+index 4c48fb73b3e78..13fca6a91a01b 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_common.h
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_common.h
+@@ -43,6 +43,6 @@ u32 fm10k_read_hw_stats_32b(struct fm10k_hw *hw, u32 addr,
+ void fm10k_update_hw_stats_q(struct fm10k_hw *hw, struct fm10k_hw_stats_q *q,
+ 			     u32 idx, u32 count);
+ #define fm10k_unbind_hw_stats_32b(s) ((s)->base_h = 0)
+-void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 idx, u32 count);
++void fm10k_unbind_hw_stats_q(struct fm10k_hw_stats_q *q, u32 count);
+ s32 fm10k_get_host_state_generic(struct fm10k_hw *hw, bool *host_ready);
+ #endif /* _FM10K_COMMON_H_ */
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+index af1b0cde36703..8fb99fa7ae600 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_pf.c
+@@ -1509,7 +1509,7 @@ static void fm10k_rebind_hw_stats_pf(struct fm10k_hw *hw,
+ 	fm10k_unbind_hw_stats_32b(&stats->nodesc_drop);
  
- 	/* step 2. */
--	ldr	tmp1, =AT91_PMC_PLL_ACR_DEFAULT_PLLA
-+	ldr	tmp1, .saved_acr
- 	str	tmp1, [pmc, #AT91_PMC_PLL_ACR]
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
  
- 	/* step 3. */
-@@ -1130,6 +1134,8 @@ ENDPROC(at91_pm_suspend_in_sram)
- 	.word 0
- .saved_mckr:
- 	.word 0
-+.saved_acr:
-+	.word 0
- .saved_pllar:
- 	.word 0
- .saved_sam9_lpr:
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_pf(hw, stats);
+diff --git a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+index dc8ccd378ec92..6a3aebd56e6c4 100644
+--- a/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
++++ b/drivers/net/ethernet/intel/fm10k/fm10k_vf.c
+@@ -465,7 +465,7 @@ static void fm10k_rebind_hw_stats_vf(struct fm10k_hw *hw,
+ 				     struct fm10k_hw_stats *stats)
+ {
+ 	/* Unbind Queue Statistics */
+-	fm10k_unbind_hw_stats_q(stats->q, 0, hw->mac.max_queues);
++	fm10k_unbind_hw_stats_q(stats->q, hw->mac.max_queues);
+ 
+ 	/* Reinitialize bases for all stats */
+ 	fm10k_update_hw_stats_vf(hw, stats);
 -- 
 2.51.0
 
