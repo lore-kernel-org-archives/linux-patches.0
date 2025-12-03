@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A607D30DECE;
-	Wed,  3 Dec 2025 15:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BFF30C63C;
+	Wed,  3 Dec 2025 15:32:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775945; cv=none; b=Ke9fgC0yUhaVvxWdOtZ481sXPFgRTXnrC8hn/siBxmZA0V383QsqQn8XM6P6p3s/DTRVyjaMLLT9tPWymXIpKUGYjhjb1KzO1UGvSh32E+a/icUa7mGMunzpTqv1eIIsolMxcnyB7zwdY139Dz8DR1SHDKSQYA2QWL0FmxB2bnk=
+	t=1764775949; cv=none; b=fR2sbYe52xxVQwk+3oZol9btvrrULEheV9kcUFaAlidUZhDhFXhNKyfGYL7HNV7aixyKlDa+rnXB5pUvVKRruHwhAlzHrWDph01j9qdea9UdXdagtZKvjsj94jaXPqFMvogoRc5XnzIP4aUJm8ZpUCnFViF2jYVJ1wpcyBkUiwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775945; c=relaxed/simple;
-	bh=ot+zeokK+4kUPY+8JFJF4kZ2q0GcENesYgnWCIQa3qM=;
+	s=arc-20240116; t=1764775949; c=relaxed/simple;
+	bh=fAGQXlmpLWqb5ZqqQI1XfT9e6TxiBJ2UUooE3ApT9/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUwCohbB/NKqvOQq8n1ahZSvGXdkqLP5XSCl911tCT0EWtLpiKQkru2oXd4ZZiisWMrcDQWghEGzIfITXMUcjEYrQBU4PJ34wfEf5uaQDUiV0cpt48vsyytrMrqJ+7aegv4ZOq5aO6EGBGgiVsvD21vZN1NtR4WckS5vIXJF3kw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nixY3Rb/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPknsFOZ9Zvtd8AeYQ4ukdlXh3LFM595sqPA32eyxmCGbEEjJSXNn5kPsCmkoWrsBfeapJOufHM4oMW4cTYk6lDsiJkgGTQDdzwDIbsh13VaFTWCep1BRI67DqVpmT4XzG41/8zHqGFzzbdEsNmqNSv4ZjKxyz4sEb8Fe2cn6yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6NxolbZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nixY3Rb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC6C3C4CEF5;
-	Wed,  3 Dec 2025 15:32:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6NxolbZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172C7C4CEF5;
+	Wed,  3 Dec 2025 15:32:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775945;
-	bh=ot+zeokK+4kUPY+8JFJF4kZ2q0GcENesYgnWCIQa3qM=;
+	s=korg; t=1764775948;
+	bh=fAGQXlmpLWqb5ZqqQI1XfT9e6TxiBJ2UUooE3ApT9/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nixY3Rb/VOAl1Squ16lY0VjfajcuEAxlacxVrNsWMxTwLvgIwsa5+zdArKkmorInS
-	 bcZK34zBtuDwP/s9LuNHcvHAQ1EPD9UVyKnrNAge4s+jBhtEe95JXYzVX9+EJ6KurO
-	 u/uwZP7wKYBfYGPAdMu2vz6XxyqgyoTwXx+X2qFc=
+	b=V6NxolbZWFe0ZH1iaAYAXLeN+5ze3vgRcY5K5z5pDd5Q2FdcwAMYJ8Waf1MUW/QFy
+	 GLVbdP8gOXirz65L5V+QbYhiaEeqk+o98N3mpZcK+JShoNiXwWyUEZgdeXqmhsNY/x
+	 FRIWtM1Il7BcRkCudeFMIvUU/+NjelcmdK6VX8ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Douglas Raillard <douglas.raillard@arm.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Subject: [PATCH 5.10 035/300] tracing: fix declaration-after-statement warning
-Date: Wed,  3 Dec 2025 16:23:59 +0100
-Message-ID: <20251203152401.763604981@linuxfoundation.org>
+	Owen Gu <guhuinan@xiaomi.com>
+Subject: [PATCH 5.10 036/300] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
+Date: Wed,  3 Dec 2025 16:24:00 +0100
+Message-ID: <20251203152401.805094251@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,55 +49,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Owen Gu <guhuinan@xiaomi.com>
 
-When building this kernel version this warning is visible:
+commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
 
-  kernel/trace/trace_events_synth.c: In function 'synth_event_reg':
-  kernel/trace/trace_events_synth.c:847:9: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
-    847 |         int ret = trace_event_reg(call, type, data);
-        |         ^~~
+A race condition occurs when ffs_func_eps_enable() runs concurrently
+with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
+sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
+to a NULL pointer dereference when accessing epfile->ep in
+ffs_func_eps_enable() after successful usb_ep_enable().
 
-This can be easily fixed by declaring 'ret' earlier.
+The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
+ffs_data_close() functions, and its modification is protected by the
+spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
+is also protected by ffs->eps_lock.
 
-This issue is visible in < v5.18, because -std=gnu89 is used by default,
-see commit e8c07082a810 ("Kbuild: move to -std=gnu11").
+Thus, add NULL pointer handling for ffs->epfiles in the
+ffs_func_eps_enable() function to fix issues
 
-Please note that in v5.15.y, the 'Fixes' commit has been modified during
-the backport, not to have this warning. See commit 72848b81b3dd
-("tracing: Ensure module defining synth event cannot be unloaded while
-tracing") from v5.15.y.
-
-Fixes: 21581dd4e7ff ("tracing: Ensure module defining synth event cannot be unloaded while tracing")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Cc: Douglas Raillard <douglas.raillard@arm.com>
-Cc: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
+Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -831,6 +831,7 @@ static int synth_event_reg(struct trace_
- 		    enum trace_reg type, void *data)
- {
- 	struct synth_event *event = container_of(call, struct synth_event, call);
-+	int ret;
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -1993,7 +1993,12 @@ static int ffs_func_eps_enable(struct ff
+ 	ep = func->eps;
+ 	epfile = ffs->epfiles;
+ 	count = ffs->eps_count;
+-	while(count--) {
++	if (!epfile) {
++		ret = -ENOMEM;
++		goto done;
++	}
++
++	while (count--) {
+ 		ep->ep->driver_data = ep;
  
- 	switch (type) {
- #ifdef CONFIG_PERF_EVENTS
-@@ -844,7 +845,7 @@ static int synth_event_reg(struct trace_
- 		break;
+ 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
+@@ -2017,6 +2022,7 @@ static int ffs_func_eps_enable(struct ff
  	}
  
--	int ret = trace_event_reg(call, type, data);
-+	ret = trace_event_reg(call, type, data);
+ 	wake_up_interruptible(&ffs->wait);
++done:
+ 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
  
- 	switch (type) {
- #ifdef CONFIG_PERF_EVENTS
+ 	return ret;
 
 
