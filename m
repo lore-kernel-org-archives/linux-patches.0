@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8716B2FD1C5;
-	Wed,  3 Dec 2025 16:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFD13596FA;
+	Wed,  3 Dec 2025 16:37:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779821; cv=none; b=ch6vv8Q4SdVKMCpE9Gc5HXF806H6VTf6xqeTxqA1ulnm6Vd+OvmcTanc91cYAvYDN5wkCy5ug3NN7QTnkCtuNHKrEhH14rGho7jF0BtQKwUp1XTllXjWuW14W8enNn3STa2QyLt2UG43s5U4kvuPjsK8GS/LaaH58988q7nTsEY=
+	t=1764779824; cv=none; b=Z6XDd7W6KqyhrxfY1bsoM0gy0L7jf9PCEOJQb0zOdjuwBx2uCxDZbxOfVSXIhKNr7S6C0NB9v424csmypnbiWPhzZfpzF6xlLDt76Ou3xLQ/D/brYdZZ/oE1zkcZQVnvuADu5RYli7hAfepOK2fQAZnPlhe+CAOumXzpha1WFmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779821; c=relaxed/simple;
-	bh=Q7D5leUPq1aoQIU5EnPFflMGvvRx3zN1dKsd0VfDVVw=;
+	s=arc-20240116; t=1764779824; c=relaxed/simple;
+	bh=Y5kbytZSXHwy6krwISeZDNUjEtarJ5hmodx7m+QRIFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9aus9UyIG3pyxiCJNy1o7qY0lBCuWf2HMEJctNd0/eeHbH2MbAvaA2ce/8/a481MbSUXM+FSW6I55746W21Qtt22T5K5qEfZ4RR2W3sPx1//9QV5w/PtZ408dH6AtBzIqLuY45P2TzXE2ngupNTMXuBvOldrcoDsujWHMti8WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1fnoDb73; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BvTSoh0fGH9s5JXYeXC+mwYqOPAxk5WTTl//YF5Is6EZuJdmaMjfhUzl1sh6tVKbOeesWWIGLBw+thosT1jb5hRK8U3MzckiXfaKxX5Z0MoE59VlHpCn7AjZ6qWEZs5dWWvbZJTW+09tUbk3Z1hCG/Sdnh3d6WhGvPWeSetqcrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrn1DgU4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1fnoDb73"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E82C4CEF5;
-	Wed,  3 Dec 2025 16:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrn1DgU4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35FEC4CEF5;
+	Wed,  3 Dec 2025 16:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779821;
-	bh=Q7D5leUPq1aoQIU5EnPFflMGvvRx3zN1dKsd0VfDVVw=;
+	s=korg; t=1764779824;
+	bh=Y5kbytZSXHwy6krwISeZDNUjEtarJ5hmodx7m+QRIFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fnoDb73JAk2GOK9W+3ekAq0nehpV8J7aZwHT00wBo6fFzml6Sz3n6xt5oF1IbO3e
-	 L4HnaSCmFqh5ZbyVBl7KcZnHABARJflckeGGCd6RJlh+PCMc0y7/a5vc87719diNmG
-	 DRP564qCC3dn+Dyh5CQKN+8oO/jI8t+/U053psqs=
+	b=lrn1DgU42AMiN0BZH+6MNBq7BQUa9e1iKMlik6bryxfaFfPCa5o0xRvuIfPMeEcwa
+	 /z04rsNng7w9XQu9idBGJ9n9+tFcjxi8CoaCiZkDtRs7eCX1QvrAUfHheBnlQm457e
+	 eUt5spnc+yclV0ztVKBhpUQ+EG56V6PgEuTzAnbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 371/568] net/mlx5e: Consider internal buffers size in port buffer calculations
-Date: Wed,  3 Dec 2025 16:26:13 +0100
-Message-ID: <20251203152454.286944910@linuxfoundation.org>
+Subject: [PATCH 6.1 372/568] net/mlx5e: Remove mlx5e_dbg() and msglvl support
+Date: Wed,  3 Dec 2025 16:26:14 +0100
+Message-ID: <20251203152454.323332858@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,207 +52,319 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maher Sanalla <msanalla@nvidia.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 81fe2be062915e2a2fdc494c3cd90e946e946c25 ]
+[ Upstream commit 559f4c32ebff40a25199b5178d58c9283ac5eb9c ]
 
-Currently, when a user triggers a change in port buffer headroom
-(buffers 0-7), the driver checks that the requested headroom does
-not exceed the total port buffer size. However, this check does not
-take into account the internal buffers (buffers 8-9), which are also
-part of the total port buffer. This can result in treating invalid port
-buffer change requests as valid, causing unintended changes to the shared
-buffer.
+The msglvl support was implemented using the mlx5e_dbg() macro which is
+rarely used in the driver, and is not very useful when you can just use
+dynamic debug instead.
+Remove mlx5e_dbg() and convert its usages to netdev_dbg().
 
-To address this, include the internal buffers size in the calculation of
-available port buffer space which ensures that port buffer requests do not
-exceed the correct limit.
-
-Furthermore, remove internal buffers (8-9) size from the total_size
-calculation as these buffers are reserved for internal use and are not
-exposed to the user.
-
-While at it, add verbosity to the debug prints in
-mlx5e_port_query_buffer() function to ease future debugging.
-
-Fixes: ecdf2dadee8e ("net/mlx5e: Receive buffer support for DCBX")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Stable-dep-of: 9fcc2b6c1052 ("net/mlx5e: Fix potentially misleading debug message")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en/port_buffer.c       | 42 ++++++++++++-------
- .../mellanox/mlx5/core/en/port_buffer.h       |  8 ++--
- .../ethernet/mellanox/mlx5/core/en_dcbnl.c    |  7 ++--
- 3 files changed, 36 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en.h  | 10 -----
+ .../mellanox/mlx5/core/en/port_buffer.c       | 44 ++++++++++---------
+ .../net/ethernet/mellanox/mlx5/core/en_arfs.c |  8 ++--
+ .../ethernet/mellanox/mlx5/core/en_dcbnl.c    | 26 +++++------
+ .../ethernet/mellanox/mlx5/core/en_ethtool.c  | 18 ++------
+ .../net/ethernet/mellanox/mlx5/core/en_main.c |  5 +--
+ 6 files changed, 45 insertions(+), 66 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index 0ee456480a488..906bf327cdef8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -165,15 +165,6 @@ struct page_pool;
+ #define MLX5E_MAX_KLM_PER_WQE(mdev) \
+ 	MLX5E_KLM_ENTRIES_PER_WQE(MLX5_SEND_WQE_BB * mlx5e_get_max_sq_aligned_wqebbs(mdev))
+ 
+-#define MLX5E_MSG_LEVEL			NETIF_MSG_LINK
+-
+-#define mlx5e_dbg(mlevel, priv, format, ...)                    \
+-do {                                                            \
+-	if (NETIF_MSG_##mlevel & (priv)->msglevel)              \
+-		netdev_warn(priv->netdev, format,               \
+-			    ##__VA_ARGS__);                     \
+-} while (0)
+-
+ #define mlx5e_state_dereference(priv, p) \
+ 	rcu_dereference_protected((p), lockdep_is_held(&(priv)->state_lock))
+ 
+@@ -901,7 +892,6 @@ struct mlx5e_priv {
+ #endif
+ 	/* priv data path fields - end */
+ 
+-	u32                        msglevel;
+ 	unsigned long              state;
+ 	struct mutex               state_lock; /* Protects Interface state */
+ 	struct mlx5e_rq            drop_rq;
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-index e846417a8ca94..b02cba086b366 100644
+index b02cba086b366..9be06df2d6e82 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-@@ -51,7 +51,7 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
- 	if (err)
- 		goto out;
+@@ -65,12 +65,13 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 			MLX5_GET(bufferx_reg, buffer, xoff_threshold) * port_buff_cell_sz;
+ 		total_used += port_buffer->buffer[i].size;
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		buffer = MLX5_ADDR_OF(pbmc_reg, out, buffer[i]);
- 		port_buffer->buffer[i].lossy =
- 			MLX5_GET(bufferx_reg, buffer, lossy);
-@@ -73,14 +73,24 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
- 			  port_buffer->buffer[i].lossy);
+-		mlx5e_dbg(HW, priv, "buffer %d: size=%d, xon=%d, xoff=%d, epsb=%d, lossy=%d\n", i,
+-			  port_buffer->buffer[i].size,
+-			  port_buffer->buffer[i].xon,
+-			  port_buffer->buffer[i].xoff,
+-			  port_buffer->buffer[i].epsb,
+-			  port_buffer->buffer[i].lossy);
++		netdev_dbg(priv->netdev, "buffer %d: size=%d, xon=%d, xoff=%d, epsb=%d, lossy=%d\n",
++			   i,
++			   port_buffer->buffer[i].size,
++			   port_buffer->buffer[i].xon,
++			   port_buffer->buffer[i].xoff,
++			   port_buffer->buffer[i].epsb,
++			   port_buffer->buffer[i].lossy);
  	}
  
--	port_buffer->headroom_size = total_used;
-+	port_buffer->internal_buffers_size = 0;
-+	for (i = MLX5E_MAX_NETWORK_BUFFER; i < MLX5E_TOTAL_BUFFERS; i++) {
-+		buffer = MLX5_ADDR_OF(pbmc_reg, out, buffer[i]);
-+		port_buffer->internal_buffers_size +=
-+			MLX5_GET(bufferx_reg, buffer, size) * port_buff_cell_sz;
-+	}
-+
- 	port_buffer->port_buffer_size =
- 		MLX5_GET(pbmc_reg, out, port_buffer_size) * port_buff_cell_sz;
--	port_buffer->spare_buffer_size =
--		port_buffer->port_buffer_size - total_used;
--
--	mlx5e_dbg(HW, priv, "total buffer size=%d, spare buffer size=%d\n",
--		  port_buffer->port_buffer_size,
-+	port_buffer->headroom_size = total_used;
-+	port_buffer->spare_buffer_size = port_buffer->port_buffer_size -
-+					 port_buffer->internal_buffers_size -
-+					 port_buffer->headroom_size;
-+
-+	mlx5e_dbg(HW, priv,
-+		  "total buffer size=%u, headroom buffer size=%u, internal buffers size=%u, spare buffer size=%u\n",
-+		  port_buffer->port_buffer_size, port_buffer->headroom_size,
-+		  port_buffer->internal_buffers_size,
- 		  port_buffer->spare_buffer_size);
+ 	port_buffer->internal_buffers_size = 0;
+@@ -87,11 +88,11 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 					 port_buffer->internal_buffers_size -
+ 					 port_buffer->headroom_size;
+ 
+-	mlx5e_dbg(HW, priv,
+-		  "total buffer size=%u, headroom buffer size=%u, internal buffers size=%u, spare buffer size=%u\n",
+-		  port_buffer->port_buffer_size, port_buffer->headroom_size,
+-		  port_buffer->internal_buffers_size,
+-		  port_buffer->spare_buffer_size);
++	netdev_dbg(priv->netdev,
++		   "total buffer size=%u, headroom buffer size=%u, internal buffers size=%u, spare buffer size=%u\n",
++		   port_buffer->port_buffer_size, port_buffer->headroom_size,
++		   port_buffer->internal_buffers_size,
++		   port_buffer->spare_buffer_size);
  out:
  	kfree(out);
-@@ -206,11 +216,11 @@ static int port_update_pool_cfg(struct mlx5_core_dev *mdev,
- 	if (!MLX5_CAP_GEN(mdev, sbcam_reg))
- 		return 0;
+ 	return err;
+@@ -352,7 +353,7 @@ static u32 calculate_xoff(struct mlx5e_priv *priv, unsigned int mtu)
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++)
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
- 		lossless_buff_count += ((port_buffer->buffer[i].size) &&
- 				       (!(port_buffer->buffer[i].lossy)));
+ 	xoff = (301 + 216 * priv->dcbx.cable_len / 100) * speed / 1000 + 272 * mtu / 100;
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		p = select_sbcm_params(&port_buffer->buffer[i], lossless_buff_count);
- 		err = mlx5e_port_set_sbcm(mdev, 0, i,
- 					  MLX5_INGRESS_DIR,
-@@ -293,7 +303,7 @@ static int port_set_buffer(struct mlx5e_priv *priv,
- 	if (err)
- 		goto out;
+-	mlx5e_dbg(HW, priv, "%s: xoff=%d\n", __func__, xoff);
++	netdev_dbg(priv->netdev, "%s: xoff=%d\n", __func__, xoff);
+ 	return xoff;
+ }
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		void *buffer = MLX5_ADDR_OF(pbmc_reg, in, buffer[i]);
- 		u64 size = port_buffer->buffer[i].size;
- 		u64 xoff = port_buffer->buffer[i].xoff;
-@@ -351,7 +361,7 @@ static int update_xoff_threshold(struct mlx5e_port_buffer *port_buffer,
+@@ -484,6 +485,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 				    u8 *prio2buffer)
  {
- 	int i;
- 
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		if (port_buffer->buffer[i].lossy) {
- 			port_buffer->buffer[i].xoff = 0;
- 			port_buffer->buffer[i].xon  = 0;
-@@ -408,7 +418,7 @@ static int update_buffer_lossy(struct mlx5_core_dev *mdev,
+ 	u16 port_buff_cell_sz = priv->dcbx.port_buff_cell_sz;
++	struct net_device *netdev = priv->netdev;
+ 	struct mlx5e_port_buffer port_buffer;
+ 	u32 xoff = calculate_xoff(priv, mtu);
+ 	bool update_prio2buffer = false;
+@@ -495,7 +497,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
  	int err;
  	int i;
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		prio_count = 0;
- 		lossy_count = 0;
+-	mlx5e_dbg(HW, priv, "%s: change=%x\n", __func__, change);
++	netdev_dbg(netdev, "%s: change=%x\n", __func__, change);
+ 	max_mtu = max_t(unsigned int, priv->netdev->max_mtu, MINIMUM_MAX_MTU);
  
-@@ -515,7 +525,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
- 
- 	if (change & MLX5E_PORT_BUFFER_PRIO2BUFFER) {
- 		update_prio2buffer = true;
--		for (i = 0; i < MLX5E_MAX_BUFFER; i++)
-+		for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
- 			mlx5e_dbg(HW, priv, "%s: requested to map prio[%d] to buffer %d\n",
- 				  __func__, i, prio2buffer[i]);
- 
-@@ -530,7 +540,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 	err = mlx5e_port_query_buffer(priv, &port_buffer);
+@@ -510,8 +512,8 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
  	}
  
+ 	if (change & MLX5E_PORT_BUFFER_PFC) {
+-		mlx5e_dbg(HW, priv, "%s: requested PFC per priority bitmask: 0x%x\n",
+-			  __func__, pfc->pfc_en);
++		netdev_dbg(netdev, "%s: requested PFC per priority bitmask: 0x%x\n",
++			   __func__, pfc->pfc_en);
+ 		err = mlx5e_port_query_priority2buffer(priv->mdev, buffer);
+ 		if (err)
+ 			return err;
+@@ -526,8 +528,8 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 	if (change & MLX5E_PORT_BUFFER_PRIO2BUFFER) {
+ 		update_prio2buffer = true;
+ 		for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
+-			mlx5e_dbg(HW, priv, "%s: requested to map prio[%d] to buffer %d\n",
+-				  __func__, i, prio2buffer[i]);
++			netdev_dbg(priv->netdev, "%s: requested to map prio[%d] to buffer %d\n",
++				   __func__, i, prio2buffer[i]);
+ 
+ 		err = fill_pfc_en(priv->mdev, &curr_pfc_en);
+ 		if (err)
+@@ -541,10 +543,10 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 
  	if (change & MLX5E_PORT_BUFFER_SIZE) {
--		for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+		for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 			mlx5e_dbg(HW, priv, "%s: buffer[%d]=%d\n", __func__, i, buffer_size[i]);
+ 		for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
+-			mlx5e_dbg(HW, priv, "%s: buffer[%d]=%d\n", __func__, i, buffer_size[i]);
++			netdev_dbg(priv->netdev, "%s: buffer[%d]=%d\n", __func__, i, buffer_size[i]);
  			if (!port_buffer.buffer[i].lossy && !buffer_size[i]) {
- 				mlx5e_dbg(HW, priv, "%s: lossless buffer[%d] size cannot be zero\n",
-@@ -544,7 +554,9 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+-				mlx5e_dbg(HW, priv, "%s: lossless buffer[%d] size cannot be zero\n",
+-					  __func__, i);
++				netdev_dbg(priv->netdev, "%s: lossless buffer[%d] size cannot be zero\n",
++					   __func__, i);
+ 				return -EINVAL;
+ 			}
  
- 		mlx5e_dbg(HW, priv, "%s: total buffer requested=%d\n", __func__, total_used);
+@@ -552,7 +554,7 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 			total_used += buffer_size[i];
+ 		}
  
--		if (total_used > port_buffer.port_buffer_size)
-+		if (total_used > port_buffer.headroom_size &&
-+		    (total_used - port_buffer.headroom_size) >
-+			    port_buffer.spare_buffer_size)
- 			return -EINVAL;
+-		mlx5e_dbg(HW, priv, "%s: total buffer requested=%d\n", __func__, total_used);
++		netdev_dbg(priv->netdev, "%s: total buffer requested=%d\n", __func__, total_used);
  
- 		update_buffer = true;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-index a6ef118de758f..f4a19ffbb641c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
-@@ -35,7 +35,8 @@
- #include "en.h"
- #include "port.h"
+ 		if (total_used > port_buffer.headroom_size &&
+ 		    (total_used - port_buffer.headroom_size) >
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
+index ad51edf553185..16fade5b2d7ea 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_arfs.c
+@@ -595,10 +595,10 @@ static struct mlx5_flow_handle *arfs_add_rule(struct mlx5e_priv *priv,
+ 	if (IS_ERR(rule)) {
+ 		err = PTR_ERR(rule);
+ 		priv->channel_stats[arfs_rule->rxq]->rq.arfs_err++;
+-		mlx5e_dbg(HW, priv,
+-			  "%s: add rule(filter id=%d, rq idx=%d, ip proto=0x%x) failed,err=%d\n",
+-			  __func__, arfs_rule->filter_id, arfs_rule->rxq,
+-			  tuple->ip_proto, err);
++		netdev_dbg(priv->netdev,
++			   "%s: add rule(filter id=%d, rq idx=%d, ip proto=0x%x) failed,err=%d\n",
++			   __func__, arfs_rule->filter_id, arfs_rule->rxq,
++			   tuple->ip_proto, err);
+ 	}
  
--#define MLX5E_MAX_BUFFER 8
-+#define MLX5E_MAX_NETWORK_BUFFER 8
-+#define MLX5E_TOTAL_BUFFERS 10
- #define MLX5E_DEFAULT_CABLE_LEN 7 /* 7 meters */
- 
- #define MLX5_BUFFER_SUPPORTED(mdev) (MLX5_CAP_GEN(mdev, pcam_reg) && \
-@@ -60,8 +61,9 @@ struct mlx5e_bufferx_reg {
- struct mlx5e_port_buffer {
- 	u32                       port_buffer_size;
- 	u32                       spare_buffer_size;
--	u32                       headroom_size;
--	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_BUFFER];
-+	u32                       headroom_size;	  /* Buffers 0-7 */
-+	u32                       internal_buffers_size;  /* Buffers 8-9 */
-+	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_NETWORK_BUFFER];
- };
- 
- int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ out:
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 2d20e2ff29677..55ceb6740291d 100644
+index 55ceb6740291d..ca096d8bcca60 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -935,9 +935,10 @@ static int mlx5e_dcbnl_getbuffer(struct net_device *dev,
+@@ -275,10 +275,10 @@ static int mlx5e_dcbnl_ieee_setets_core(struct mlx5e_priv *priv, struct ieee_ets
+ 	memcpy(priv->dcbx.tc_tsa, ets->tc_tsa, sizeof(ets->tc_tsa));
+ 
+ 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
+-		mlx5e_dbg(HW, priv, "%s: prio_%d <=> tc_%d\n",
+-			  __func__, i, ets->prio_tc[i]);
+-		mlx5e_dbg(HW, priv, "%s: tc_%d <=> tx_bw_%d%%, group_%d\n",
+-			  __func__, i, tc_tx_bw[i], tc_group[i]);
++		netdev_dbg(priv->netdev, "%s: prio_%d <=> tc_%d\n",
++			   __func__, i, ets->prio_tc[i]);
++		netdev_dbg(priv->netdev, "%s: tc_%d <=> tx_bw_%d%%, group_%d\n",
++			   __func__, i, tc_tx_bw[i], tc_group[i]);
+ 	}
+ 
+ 	return err;
+@@ -399,9 +399,9 @@ static int mlx5e_dcbnl_ieee_setpfc(struct net_device *dev,
+ 	}
+ 
+ 	if (!ret) {
+-		mlx5e_dbg(HW, priv,
+-			  "%s: PFC per priority bit mask: 0x%x\n",
+-			  __func__, pfc->pfc_en);
++		netdev_dbg(dev,
++			   "%s: PFC per priority bit mask: 0x%x\n",
++			   __func__, pfc->pfc_en);
+ 	}
+ 	return ret;
+ }
+@@ -620,8 +620,8 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
+ 	}
+ 
+ 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
+-		mlx5e_dbg(HW, priv, "%s: tc_%d <=> max_bw %d Gbps\n",
+-			  __func__, i, max_bw_value[i]);
++		netdev_dbg(netdev, "%s: tc_%d <=> max_bw %d Gbps\n",
++			   __func__, i, max_bw_value[i]);
+ 	}
+ 
+ 	return mlx5_modify_port_ets_rate_limit(mdev, max_bw_value, max_bw_unit);
+@@ -649,10 +649,10 @@ static u8 mlx5e_dcbnl_setall(struct net_device *netdev)
+ 		ets.tc_rx_bw[i] = cee_cfg->pg_bw_pct[i];
+ 		ets.tc_tsa[i]   = IEEE_8021QAZ_TSA_ETS;
+ 		ets.prio_tc[i]  = cee_cfg->prio_to_pg_map[i];
+-		mlx5e_dbg(HW, priv,
+-			  "%s: Priority group %d: tx_bw %d, rx_bw %d, prio_tc %d\n",
+-			  __func__, i, ets.tc_tx_bw[i], ets.tc_rx_bw[i],
+-			  ets.prio_tc[i]);
++		netdev_dbg(netdev,
++			   "%s: Priority group %d: tx_bw %d, rx_bw %d, prio_tc %d\n",
++			   __func__, i, ets.tc_tx_bw[i], ets.tc_rx_bw[i],
++			   ets.prio_tc[i]);
+ 	}
+ 
+ 	err = mlx5e_dbcnl_validate_ets(netdev, &ets, true);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 8cb127a6fabfe..35f33feee4dec 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -1703,16 +1703,6 @@ static int mlx5e_set_fecparam(struct net_device *netdev,
+ 	return 0;
+ }
+ 
+-static u32 mlx5e_get_msglevel(struct net_device *dev)
+-{
+-	return ((struct mlx5e_priv *)netdev_priv(dev))->msglevel;
+-}
+-
+-static void mlx5e_set_msglevel(struct net_device *dev, u32 val)
+-{
+-	((struct mlx5e_priv *)netdev_priv(dev))->msglevel = val;
+-}
+-
+ static int mlx5e_set_phys_id(struct net_device *dev,
+ 			     enum ethtool_phys_id_state state)
+ {
+@@ -1966,9 +1956,9 @@ int mlx5e_modify_rx_cqe_compression_locked(struct mlx5e_priv *priv, bool new_val
  	if (err)
  		return err;
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++)
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++)
- 		dcb_buffer->buffer_size[i] = port_buffer.buffer[i].size;
--	dcb_buffer->total_size = port_buffer.port_buffer_size;
-+	dcb_buffer->total_size = port_buffer.port_buffer_size -
-+				 port_buffer.internal_buffers_size;
+-	mlx5e_dbg(DRV, priv, "MLX5E: RxCqeCmprss was turned %s\n",
+-		  MLX5E_GET_PFLAG(&priv->channels.params,
+-				  MLX5E_PFLAG_RX_CQE_COMPRESS) ? "ON" : "OFF");
++	netdev_dbg(priv->netdev, "MLX5E: RxCqeCmprss was turned %s\n",
++		   MLX5E_GET_PFLAG(&priv->channels.params,
++				   MLX5E_PFLAG_RX_CQE_COMPRESS) ? "ON" : "OFF");
  
  	return 0;
  }
-@@ -979,7 +980,7 @@ static int mlx5e_dcbnl_setbuffer(struct net_device *dev,
- 	if (err)
- 		return err;
+@@ -2450,8 +2440,6 @@ const struct ethtool_ops mlx5e_ethtool_ops = {
+ 	.get_priv_flags    = mlx5e_get_priv_flags,
+ 	.set_priv_flags    = mlx5e_set_priv_flags,
+ 	.self_test         = mlx5e_self_test,
+-	.get_msglevel      = mlx5e_get_msglevel,
+-	.set_msglevel      = mlx5e_set_msglevel,
+ 	.get_fec_stats     = mlx5e_get_fec_stats,
+ 	.get_fecparam      = mlx5e_get_fecparam,
+ 	.set_fecparam      = mlx5e_set_fecparam,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 887d446354006..0c1f89196f6c1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -2339,7 +2339,7 @@ static int mlx5e_channel_stats_alloc(struct mlx5e_priv *priv, int ix, int cpu)
+ 	/* Asymmetric dynamic memory allocation.
+ 	 * Freed in mlx5e_priv_arrays_free, not on channel closure.
+ 	 */
+-	mlx5e_dbg(DRV, priv, "Creating channel stats %d\n", ix);
++	netdev_dbg(priv->netdev, "Creating channel stats %d\n", ix);
+ 	priv->channel_stats[ix] = kvzalloc_node(sizeof(**priv->channel_stats),
+ 						GFP_KERNEL, cpu_to_node(cpu));
+ 	if (!priv->channel_stats[ix])
+@@ -2714,7 +2714,7 @@ int mlx5e_update_tx_netdev_queues(struct mlx5e_priv *priv)
+ 	if (MLX5E_GET_PFLAG(&priv->channels.params, MLX5E_PFLAG_TX_PORT_TS))
+ 		num_txqs += ntc;
  
--	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
-+	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		if (port_buffer.buffer[i].size != dcb_buffer->buffer_size[i]) {
- 			changed |= MLX5E_PORT_BUFFER_SIZE;
- 			buffer_size = dcb_buffer->buffer_size;
+-	mlx5e_dbg(DRV, priv, "Setting num_txqs %d\n", num_txqs);
++	netdev_dbg(priv->netdev, "Setting num_txqs %d\n", num_txqs);
+ 	err = netif_set_real_num_tx_queues(priv->netdev, num_txqs);
+ 	if (err)
+ 		netdev_warn(priv->netdev, "netif_set_real_num_tx_queues failed, %d\n", err);
+@@ -5515,7 +5515,6 @@ int mlx5e_priv_init(struct mlx5e_priv *priv,
+ 	/* priv init */
+ 	priv->mdev        = mdev;
+ 	priv->netdev      = netdev;
+-	priv->msglevel    = MLX5E_MSG_LEVEL;
+ 	priv->max_nch     = nch;
+ 	priv->max_opened_tc = 1;
+ 
 -- 
 2.51.0
 
