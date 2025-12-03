@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637E42FD1C5;
-	Wed,  3 Dec 2025 16:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E322FD1C5;
+	Wed,  3 Dec 2025 16:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779815; cv=none; b=KaUHlLHMenIwMI8dhRggPVtRBIwqmSZre92hcRuwO8V37FMzIRpGmdfVXr8wFMdvM7FNd1F/BxdaW/REUkRJeWUs6jxzI9O1t4Q41dHP7Tt4sgckJk9iLfbSYTr8/yEztHNL5FhSAWJNCForqcbhzc9iK57TYPtyKxMAmrRHA2k=
+	t=1764779818; cv=none; b=SVMPUKd1FS+lfLKSel6NG1KFd/BYRSzJXA181SpynWRuUMNs45t4h1cQePoLktdUT0ngVYLN4RJYheQnQqqzUlb4mvhG2R6ZayoIcif389Ebj0JYYZdOZWVrSZirX6LsQ5D9F/9YobW6eEDG/LD8zkOVHacZWHye4jfpfutP8EI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779815; c=relaxed/simple;
-	bh=PKlCqHWfcCkSObL2ZnTppAuHkY1JQK9Y3Nx4tTFGiZ0=;
+	s=arc-20240116; t=1764779818; c=relaxed/simple;
+	bh=lWvFTjlZHMjPFg/LCsq8naRn6o56m9E/YvgqoXfp5L8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4EAxceTyzGy1n2+WhQeNn2NSN/N42VNccIdfaxaVr2kny1qjZnZb7y/it37EzSNYYz4sPzxD0bA78RnDSc+qHKbd+GjCZG8PZAg1+Ruqp8fsrO/YEhnBVf/lGXsmCOnwGRv0LvvytlJApo/uwYQ1kxYFdWhYbNBhNeS6l8UQ74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4nWK9dj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ME/bTS44Z7grBs9Tlu7cN5xl2UMWYqZcgWZHlbpIbrbHmggw245Z2nufZewZRzs31eqfEu/aVsiY22zI6bvqU7k4QYBDUeMwHTPwiokDhGdozzBczOVD0+dBfh63mf9XbplBLwkhIEtfzp2D4RrSuqGgmNnVdd/xE32iSvBfuEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVjs9Ay+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4nWK9dj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFBE5C4CEF5;
-	Wed,  3 Dec 2025 16:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVjs9Ay+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C95C116B1;
+	Wed,  3 Dec 2025 16:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779815;
-	bh=PKlCqHWfcCkSObL2ZnTppAuHkY1JQK9Y3Nx4tTFGiZ0=;
+	s=korg; t=1764779818;
+	bh=lWvFTjlZHMjPFg/LCsq8naRn6o56m9E/YvgqoXfp5L8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A4nWK9djFO95j/V+QWBVI/CKC8EETxFE2smsQ982IcKVfgVvM1/xRKJ+UI4IiFRvB
-	 IhmfI8d0d1zKyGWF9SnIYHSI+6B0JmF8cZofHUF5maesfvKnX6+ZQ3YNUWxnrH8Wwl
-	 RYkvWPDEHidTbgyqnh8fx68jlYJ4EyyYIS9ZreWY=
+	b=GVjs9Ay+r0ZizOmgbA2h92j6sUBPKpERfV/u+ogJFBdzt2KZcyF3KiVpQEwkj50Gm
+	 OchIN9AN93UPwbTbDFi5T3WDtBL6cVYBqSjClA4ffSj1hQVoeIn2HG3KkVEzAR6LcT
+	 qxpbsPJBYTsXt7joI1B+O7rnD23QziUQLuCQ2r8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com,
-	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 352/568] Bluetooth: btusb: reorder cleanup in btusb_disconnect to avoid UAF
-Date: Wed,  3 Dec 2025 16:25:54 +0100
-Message-ID: <20251203152453.598232996@linuxfoundation.org>
+Subject: [PATCH 6.1 370/568] net/mlx5e: Update shared buffer along with device buffer changes
+Date: Wed,  3 Dec 2025 16:26:12 +0100
+Message-ID: <20251203152454.250297855@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,62 +52,363 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+From: Maher Sanalla <msanalla@nvidia.com>
 
-[ Upstream commit 23d22f2f71768034d6ef86168213843fc49bf550 ]
+[ Upstream commit a440030d8946bfe3fd44b6da685e33ffe0ecd1ff ]
 
-There is a KASAN: slab-use-after-free read in btusb_disconnect().
-Calling "usb_driver_release_interface(&btusb_driver, data->intf)" will
-free the btusb data associated with the interface. The same data is
-then used later in the function, hence the UAF.
+Currently, the user can modify device's receive buffer size, modify the
+mapping between QoS priority groups to buffers and change the buffer
+state to become lossy/lossless via pfc command.
 
-Fix by moving the accesses to btusb data to before the data is free'd.
+However, the shared receive buffer pool alignments, as a result of
+such commands, is performed only when the shared buffer is in FW ownership.
+When a user changes the mapping of priority groups or buffer size,
+the shared buffer is moved to SW ownership.
 
-Reported-by: syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2fc81b50a4f8263a159b
-Tested-by: syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com
-Fixes: fd913ef7ce619 ("Bluetooth: btusb: Add out-of-band wakeup support")
-Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Therefore, for devices that support shared buffer, handle the shared buffer
+alignments in accordance to user's desired configurations.
+
+Meaning, the following will be performed:
+1. For every change of buffer's headroom, recalculate the size of shared
+   buffer to be equal to "total_buffer_size" - "new_headroom_size".
+   The new shared buffer size will be split in ratio of 3:1 between
+   lossy and lossless pools, respectively.
+
+2. For each port buffer change, count the number of lossless buffers.
+   If there is only one lossless buffer, then set its lossless pool
+   usage threshold to be infinite. Otherwise, if there is more than
+   one lossless buffer, set a usage threshold for each lossless buffer.
+
+While at it, add more verbosity to debug prints when handling user
+commands, to assist in future debug.
+
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: 9fcc2b6c1052 ("net/mlx5e: Fix potentially misleading debug message")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ .../mellanox/mlx5/core/en/port_buffer.c       | 222 +++++++++++++++++-
+ .../mellanox/mlx5/core/en/port_buffer.h       |   1 +
+ 2 files changed, 219 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 29130160066a5..70cdcef684138 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4204,6 +4204,11 @@ static void btusb_disconnect(struct usb_interface *intf)
- 
- 	hci_unregister_dev(hdev);
- 
-+	if (data->oob_wake_irq)
-+		device_init_wakeup(&data->udev->dev, false);
-+	if (data->reset_gpio)
-+		gpiod_put(data->reset_gpio);
-+
- 	if (intf == data->intf) {
- 		if (data->isoc)
- 			usb_driver_release_interface(&btusb_driver, data->isoc);
-@@ -4214,17 +4219,11 @@ static void btusb_disconnect(struct usb_interface *intf)
- 			usb_driver_release_interface(&btusb_driver, data->diag);
- 		usb_driver_release_interface(&btusb_driver, data->intf);
- 	} else if (intf == data->diag) {
--		usb_driver_release_interface(&btusb_driver, data->intf);
- 		if (data->isoc)
- 			usb_driver_release_interface(&btusb_driver, data->isoc);
-+		usb_driver_release_interface(&btusb_driver, data->intf);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
+index 7899a7230299d..e846417a8ca94 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
+@@ -73,6 +73,7 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 			  port_buffer->buffer[i].lossy);
  	}
  
--	if (data->oob_wake_irq)
--		device_init_wakeup(&data->udev->dev, false);
--
--	if (data->reset_gpio)
--		gpiod_put(data->reset_gpio);
--
- 	hci_free_dev(hdev);
++	port_buffer->headroom_size = total_used;
+ 	port_buffer->port_buffer_size =
+ 		MLX5_GET(pbmc_reg, out, port_buffer_size) * port_buff_cell_sz;
+ 	port_buffer->spare_buffer_size =
+@@ -86,16 +87,204 @@ int mlx5e_port_query_buffer(struct mlx5e_priv *priv,
+ 	return err;
  }
+ 
++struct mlx5e_buffer_pool {
++	u32 infi_size;
++	u32 size;
++	u32 buff_occupancy;
++};
++
++static int mlx5e_port_query_pool(struct mlx5_core_dev *mdev,
++				 struct mlx5e_buffer_pool *buffer_pool,
++				 u32 desc, u8 dir, u8 pool_idx)
++{
++	u32 out[MLX5_ST_SZ_DW(sbpr_reg)] = {};
++	int err;
++
++	err = mlx5e_port_query_sbpr(mdev, desc, dir, pool_idx, out,
++				    sizeof(out));
++	if (err)
++		return err;
++
++	buffer_pool->size = MLX5_GET(sbpr_reg, out, size);
++	buffer_pool->infi_size = MLX5_GET(sbpr_reg, out, infi_size);
++	buffer_pool->buff_occupancy = MLX5_GET(sbpr_reg, out, buff_occupancy);
++
++	return err;
++}
++
++enum {
++	MLX5_INGRESS_DIR = 0,
++	MLX5_EGRESS_DIR = 1,
++};
++
++enum {
++	MLX5_LOSSY_POOL = 0,
++	MLX5_LOSSLESS_POOL = 1,
++};
++
++/* No limit on usage of shared buffer pool (max_buff=0) */
++#define MLX5_SB_POOL_NO_THRESHOLD  0
++/* Shared buffer pool usage threshold when calculated
++ * dynamically in alpha units. alpha=13 is equivalent to
++ * HW_alpha of  [(1/128) * 2 ^ (alpha-1)] = 32, where HW_alpha
++ * equates to the following portion of the shared buffer pool:
++ * [32 / (1 + n * 32)] While *n* is the number of buffers
++ * that are using the shared buffer pool.
++ */
++#define MLX5_SB_POOL_THRESHOLD 13
++
++/* Shared buffer class management parameters */
++struct mlx5_sbcm_params {
++	u8 pool_idx;
++	u8 max_buff;
++	u8 infi_size;
++};
++
++static const struct mlx5_sbcm_params sbcm_default = {
++	.pool_idx = MLX5_LOSSY_POOL,
++	.max_buff = MLX5_SB_POOL_NO_THRESHOLD,
++	.infi_size = 0,
++};
++
++static const struct mlx5_sbcm_params sbcm_lossy = {
++	.pool_idx = MLX5_LOSSY_POOL,
++	.max_buff = MLX5_SB_POOL_NO_THRESHOLD,
++	.infi_size = 1,
++};
++
++static const struct mlx5_sbcm_params sbcm_lossless = {
++	.pool_idx = MLX5_LOSSLESS_POOL,
++	.max_buff = MLX5_SB_POOL_THRESHOLD,
++	.infi_size = 0,
++};
++
++static const struct mlx5_sbcm_params sbcm_lossless_no_threshold = {
++	.pool_idx = MLX5_LOSSLESS_POOL,
++	.max_buff = MLX5_SB_POOL_NO_THRESHOLD,
++	.infi_size = 1,
++};
++
++/**
++ * select_sbcm_params() - selects the shared buffer pool configuration
++ *
++ * @buffer: <input> port buffer to retrieve params of
++ * @lossless_buff_count: <input> number of lossless buffers in total
++ *
++ * The selection is based on the following rules:
++ * 1. If buffer size is 0, no shared buffer pool is used.
++ * 2. If buffer is lossy, use lossy shared buffer pool.
++ * 3. If there are more than 1 lossless buffers, use lossless shared buffer pool
++ *    with threshold.
++ * 4. If there is only 1 lossless buffer, use lossless shared buffer pool
++ *    without threshold.
++ *
++ * @return const struct mlx5_sbcm_params* selected values
++ */
++static const struct mlx5_sbcm_params *
++select_sbcm_params(struct mlx5e_bufferx_reg *buffer, u8 lossless_buff_count)
++{
++	if (buffer->size == 0)
++		return &sbcm_default;
++
++	if (buffer->lossy)
++		return &sbcm_lossy;
++
++	if (lossless_buff_count > 1)
++		return &sbcm_lossless;
++
++	return &sbcm_lossless_no_threshold;
++}
++
++static int port_update_pool_cfg(struct mlx5_core_dev *mdev,
++				struct mlx5e_port_buffer *port_buffer)
++{
++	const struct mlx5_sbcm_params *p;
++	u8 lossless_buff_count = 0;
++	int err;
++	int i;
++
++	if (!MLX5_CAP_GEN(mdev, sbcam_reg))
++		return 0;
++
++	for (i = 0; i < MLX5E_MAX_BUFFER; i++)
++		lossless_buff_count += ((port_buffer->buffer[i].size) &&
++				       (!(port_buffer->buffer[i].lossy)));
++
++	for (i = 0; i < MLX5E_MAX_BUFFER; i++) {
++		p = select_sbcm_params(&port_buffer->buffer[i], lossless_buff_count);
++		err = mlx5e_port_set_sbcm(mdev, 0, i,
++					  MLX5_INGRESS_DIR,
++					  p->infi_size,
++					  p->max_buff,
++					  p->pool_idx);
++		if (err)
++			return err;
++	}
++
++	return 0;
++}
++
++static int port_update_shared_buffer(struct mlx5_core_dev *mdev,
++				     u32 current_headroom_size,
++				     u32 new_headroom_size)
++{
++	struct mlx5e_buffer_pool lossless_ipool;
++	struct mlx5e_buffer_pool lossy_epool;
++	u32 lossless_ipool_size;
++	u32 shared_buffer_size;
++	u32 total_buffer_size;
++	u32 lossy_epool_size;
++	int err;
++
++	if (!MLX5_CAP_GEN(mdev, sbcam_reg))
++		return 0;
++
++	err = mlx5e_port_query_pool(mdev, &lossy_epool, 0, MLX5_EGRESS_DIR,
++				    MLX5_LOSSY_POOL);
++	if (err)
++		return err;
++
++	err = mlx5e_port_query_pool(mdev, &lossless_ipool, 0, MLX5_INGRESS_DIR,
++				    MLX5_LOSSLESS_POOL);
++	if (err)
++		return err;
++
++	total_buffer_size = current_headroom_size + lossy_epool.size +
++			    lossless_ipool.size;
++	shared_buffer_size = total_buffer_size - new_headroom_size;
++
++	if (shared_buffer_size < 4) {
++		pr_err("Requested port buffer is too large, not enough space left for shared buffer\n");
++		return -EINVAL;
++	}
++
++	/* Total shared buffer size is split in a ratio of 3:1 between
++	 * lossy and lossless pools respectively.
++	 */
++	lossy_epool_size = (shared_buffer_size / 4) * 3;
++	lossless_ipool_size = shared_buffer_size / 4;
++
++	mlx5e_port_set_sbpr(mdev, 0, MLX5_EGRESS_DIR, MLX5_LOSSY_POOL, 0,
++			    lossy_epool_size);
++	mlx5e_port_set_sbpr(mdev, 0, MLX5_INGRESS_DIR, MLX5_LOSSLESS_POOL, 0,
++			    lossless_ipool_size);
++	return 0;
++}
++
+ static int port_set_buffer(struct mlx5e_priv *priv,
+ 			   struct mlx5e_port_buffer *port_buffer)
+ {
+ 	u16 port_buff_cell_sz = priv->dcbx.port_buff_cell_sz;
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	int sz = MLX5_ST_SZ_BYTES(pbmc_reg);
++	u32 new_headroom_size = 0;
++	u32 current_headroom_size;
+ 	void *in;
+ 	int err;
+ 	int i;
+ 
++	current_headroom_size = port_buffer->headroom_size;
++
+ 	in = kzalloc(sz, GFP_KERNEL);
+ 	if (!in)
+ 		return -ENOMEM;
+@@ -110,6 +299,7 @@ static int port_set_buffer(struct mlx5e_priv *priv,
+ 		u64 xoff = port_buffer->buffer[i].xoff;
+ 		u64 xon = port_buffer->buffer[i].xon;
+ 
++		new_headroom_size += size;
+ 		do_div(size, port_buff_cell_sz);
+ 		do_div(xoff, port_buff_cell_sz);
+ 		do_div(xon, port_buff_cell_sz);
+@@ -119,6 +309,17 @@ static int port_set_buffer(struct mlx5e_priv *priv,
+ 		MLX5_SET(bufferx_reg, buffer, xon_threshold, xon);
+ 	}
+ 
++	new_headroom_size /= port_buff_cell_sz;
++	current_headroom_size /= port_buff_cell_sz;
++	err = port_update_shared_buffer(priv->mdev, current_headroom_size,
++					new_headroom_size);
++	if (err)
++		return err;
++
++	err = port_update_pool_cfg(priv->mdev, port_buffer);
++	if (err)
++		return err;
++
+ 	err = mlx5e_port_set_pbmc(mdev, in);
+ out:
+ 	kfree(in);
+@@ -174,6 +375,7 @@ static int update_xoff_threshold(struct mlx5e_port_buffer *port_buffer,
+ 
+ /**
+  *	update_buffer_lossy	- Update buffer configuration based on pfc
++ *	@mdev: port function core device
+  *	@max_mtu: netdev's max_mtu
+  *	@pfc_en: <input> current pfc configuration
+  *	@buffer: <input> current prio to buffer mapping
+@@ -192,7 +394,8 @@ static int update_xoff_threshold(struct mlx5e_port_buffer *port_buffer,
+  *	@return: 0 if no error,
+  *	sets change to true if buffer configuration was modified.
+  */
+-static int update_buffer_lossy(unsigned int max_mtu,
++static int update_buffer_lossy(struct mlx5_core_dev *mdev,
++			       unsigned int max_mtu,
+ 			       u8 pfc_en, u8 *buffer, u32 xoff, u16 port_buff_cell_sz,
+ 			       struct mlx5e_port_buffer *port_buffer,
+ 			       bool *change)
+@@ -229,6 +432,10 @@ static int update_buffer_lossy(unsigned int max_mtu,
+ 	}
+ 
+ 	if (changed) {
++		err = port_update_pool_cfg(mdev, port_buffer);
++		if (err)
++			return err;
++
+ 		err = update_xoff_threshold(port_buffer, xoff, max_mtu, port_buff_cell_sz);
+ 		if (err)
+ 			return err;
+@@ -293,23 +500,30 @@ int mlx5e_port_manual_buffer_config(struct mlx5e_priv *priv,
+ 	}
+ 
+ 	if (change & MLX5E_PORT_BUFFER_PFC) {
++		mlx5e_dbg(HW, priv, "%s: requested PFC per priority bitmask: 0x%x\n",
++			  __func__, pfc->pfc_en);
+ 		err = mlx5e_port_query_priority2buffer(priv->mdev, buffer);
+ 		if (err)
+ 			return err;
+ 
+-		err = update_buffer_lossy(max_mtu, pfc->pfc_en, buffer, xoff, port_buff_cell_sz,
+-					  &port_buffer, &update_buffer);
++		err = update_buffer_lossy(priv->mdev, max_mtu, pfc->pfc_en, buffer, xoff,
++					  port_buff_cell_sz, &port_buffer,
++					  &update_buffer);
+ 		if (err)
+ 			return err;
+ 	}
+ 
+ 	if (change & MLX5E_PORT_BUFFER_PRIO2BUFFER) {
+ 		update_prio2buffer = true;
++		for (i = 0; i < MLX5E_MAX_BUFFER; i++)
++			mlx5e_dbg(HW, priv, "%s: requested to map prio[%d] to buffer %d\n",
++				  __func__, i, prio2buffer[i]);
++
+ 		err = fill_pfc_en(priv->mdev, &curr_pfc_en);
+ 		if (err)
+ 			return err;
+ 
+-		err = update_buffer_lossy(max_mtu, curr_pfc_en, prio2buffer, xoff,
++		err = update_buffer_lossy(priv->mdev, max_mtu, curr_pfc_en, prio2buffer, xoff,
+ 					  port_buff_cell_sz, &port_buffer, &update_buffer);
+ 		if (err)
+ 			return err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+index 80af7a5ac6046..a6ef118de758f 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.h
+@@ -60,6 +60,7 @@ struct mlx5e_bufferx_reg {
+ struct mlx5e_port_buffer {
+ 	u32                       port_buffer_size;
+ 	u32                       spare_buffer_size;
++	u32                       headroom_size;
+ 	struct mlx5e_bufferx_reg  buffer[MLX5E_MAX_BUFFER];
+ };
  
 -- 
 2.51.0
