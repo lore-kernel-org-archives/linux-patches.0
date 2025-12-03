@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0603D33506D;
-	Wed,  3 Dec 2025 15:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403F13358A8;
+	Wed,  3 Dec 2025 15:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777198; cv=none; b=uSJlRbX8HRP9h9zKMXH9DGi+/lFrNIX+juZCXjtCwHZedYNG6NiYDLac2oJucz8ORelughFGh5oG2ZA+7oWhPAihVCFPkpuhE3UevMqFVB64A4TCsTFU00+bzVsb1REhpCfG6kbUTmhYxKegXQjD+kNyXg7kTrLYtr8+iXLSgDM=
+	t=1764777201; cv=none; b=JO+rTvQ/AMUMPLkE/CZZ9TWe6tFasXGsZzfpAguf7l+aFSy4++dIqgSLz1fl0IKM3RIJGaIUFdiN6R8OgPwZ47sBsZ4gYlLTe1KZUr2fl1tkOSAHaQTlwGKJtPKgVrGZ9Ld9yitvwlkxix20kvL4KR1L0UtBpf9pjNkszLMJ4Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777198; c=relaxed/simple;
-	bh=1HgY1Sga16RBijABOAEPa+Qdqw9o+hfLQ1FPC2crqoA=;
+	s=arc-20240116; t=1764777201; c=relaxed/simple;
+	bh=ga+d34LiqF4XQULrvaHPjlssNkew6mFKTYS14yixh/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDQ/K5WYAaj+tPfDtml9GC2mDPzCXiJX2RVX9b7am5QNNY0zogFDyjMN4vm4h087qOTNpMryNCLev42slH14pYP6GvoNpBtf5AbhC0FzSmne7S9DGcr616kU7ebs9BqXgny/wM75b2YpSDP9N1+uF78Ax2Wj9xpNy2VJEM5cTlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPGH2l+C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mDvvDRV/u35HLaLDnlmzTWgXPWuO9wPlXd/PNDouD2s+I371mlUh8F8u3VstzhA87jQpNejXTkQ7CKirp9L3P3/s412CgAMq06JTKeXQ3+UWd4KAOnR3e8L5YXFd94RMyd2oDUgP9Ih8zZSKeSu0bJmmdByq1L/xD9FXTfA3ibo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YZoVamrt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPGH2l+C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF00C116B1;
-	Wed,  3 Dec 2025 15:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YZoVamrt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F3FC4CEF5;
+	Wed,  3 Dec 2025 15:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777197;
-	bh=1HgY1Sga16RBijABOAEPa+Qdqw9o+hfLQ1FPC2crqoA=;
+	s=korg; t=1764777201;
+	bh=ga+d34LiqF4XQULrvaHPjlssNkew6mFKTYS14yixh/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MPGH2l+CwL1OhtKIX7b9ELdol2Ftu//c0mMYCLZALZPc+HSFy+PaveeZSGC/LGkM6
-	 uRdOynJ0JqlC3ZV7PhTXr2yeiJ53vxcCmCm9msEHxhUmkB+FZCo0bUDZGJDqNn99K7
-	 mj3aXHuG3YK96fFpo38KqPNWesRr0aK6TG7GxKt4=
+	b=YZoVamrtjG/aHirNZ8L+ndkEkBB8eeDKYQ+T2diioptoQ+PQUDh7njmFkd3dN4OY3
+	 LKcZGY72tl9z3qrJWdC3mQwRyMxvZfm0bKbAr3yFe/w9CfBwiMK/WUJT8kmeo7suV6
+	 t1K+4y8kZonMhc5/dtdwhHlt8ZW9K2CC7CASIZQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Li <jun.li@nxp.com>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.17 079/146] arm64: dts: imx8qm-mek: fix mux-controller select/enable-gpios polarity
-Date: Wed,  3 Dec 2025 16:27:37 +0100
-Message-ID: <20251203152349.355205299@linuxfoundation.org>
+	"Maciej W. Rozycki" <macro@orcam.me.uk>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.17 070/146] MIPS: mm: Prevent a TLB shutdown on initial uniquification
+Date: Wed,  3 Dec 2025 16:27:28 +0100
+Message-ID: <20251203152349.027860123@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,39 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xu Yang <xu.yang_2@nxp.com>
+From: Maciej W. Rozycki <macro@orcam.me.uk>
 
-commit e89ee35567d3d465ef0715953170be72f5ef1d4c upstream.
+commit 9f048fa487409e364cf866c957cf0b0d782ca5a3 upstream.
 
-According to the board design, set SEL to high means flipped
-connection (TX2/RX2). And the TCPM will output logical 1 if it needs
-flipped connection. So switch to active high for select-gpios.
-The EN pin on mux chip is low active, so switch to active low for
-enable-gpios too.
+Depending on the particular CPU implementation a TLB shutdown may occur
+if multiple matching entries are detected upon the execution of a TLBP
+or the TLBWI/TLBWR instructions.  Given that we don't know what entries
+we have been handed we need to be very careful with the initial TLB
+setup and avoid all these instructions.
 
-Fixes: b237975b2cd5 ("arm64: dts: imx8qm-mek: add usb 3.0 and related type C nodes")
+Therefore read all the TLB entries one by one with the TLBR instruction,
+bypassing the content addressing logic, and truncate any large pages in
+place so as to avoid a case in the second step where an incoming entry
+for a large page at a lower address overlaps with a replacement entry
+chosen at another index.  Then preinitialize the TLB using addresses
+outside our usual unique range and avoiding clashes with any entries
+received, before making the usual call to local_flush_tlb_all().
+
+This fixes (at least) R4x00 cores if TLBP hits multiple matching TLB
+entries (SGI IP22 PROM for examples sets up all TLBs to the same virtual
+address).
+
+Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
+Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
 Cc: stable@vger.kernel.org
-Reviewed-by: Jun Li <jun.li@nxp.com>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com> # Boston I6400, M5150 sim
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8qm-mek.dts |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/mm/tlb-r4k.c |  102 ++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 64 insertions(+), 38 deletions(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
-@@ -217,8 +217,8 @@
- 		compatible = "nxp,cbdtu02043", "gpio-sbu-mux";
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_typec_mux>;
--		select-gpios = <&lsio_gpio4 6 GPIO_ACTIVE_LOW>;
--		enable-gpios = <&lsio_gpio4 19 GPIO_ACTIVE_HIGH>;
-+		select-gpios = <&lsio_gpio4 6 GPIO_ACTIVE_HIGH>;
-+		enable-gpios = <&lsio_gpio4 19 GPIO_ACTIVE_LOW>;
- 		orientation-switch;
+--- a/arch/mips/mm/tlb-r4k.c
++++ b/arch/mips/mm/tlb-r4k.c
+@@ -15,6 +15,7 @@
+ #include <linux/mm.h>
+ #include <linux/hugetlb.h>
+ #include <linux/export.h>
++#include <linux/sort.h>
  
- 		port {
+ #include <asm/cpu.h>
+ #include <asm/cpu-type.h>
+@@ -508,55 +509,79 @@ static int __init set_ntlb(char *str)
+ 
+ __setup("ntlb=", set_ntlb);
+ 
+-/* Initialise all TLB entries with unique values */
++
++/* Comparison function for EntryHi VPN fields.  */
++static int r4k_vpn_cmp(const void *a, const void *b)
++{
++	long v = *(unsigned long *)a - *(unsigned long *)b;
++	int s = sizeof(long) > sizeof(int) ? sizeof(long) * 8 - 1: 0;
++	return s ? (v != 0) | v >> s : v;
++}
++
++/*
++ * Initialise all TLB entries with unique values that do not clash with
++ * what we have been handed over and what we'll be using ourselves.
++ */
+ static void r4k_tlb_uniquify(void)
+ {
+-	int entry = num_wired_entries();
++	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
++	int tlbsize = current_cpu_data.tlbsize;
++	int start = num_wired_entries();
++	unsigned long vpn_mask;
++	int cnt, ent, idx, i;
++
++	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
++	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
+ 
+ 	htw_stop();
+-	write_c0_entrylo0(0);
+-	write_c0_entrylo1(0);
+ 
+-	while (entry < current_cpu_data.tlbsize) {
+-		unsigned long asid_mask = cpu_asid_mask(&current_cpu_data);
+-		unsigned long asid = 0;
+-		int idx;
++	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
++		unsigned long vpn;
+ 
+-		/* Skip wired MMID to make ginvt_mmid work */
+-		if (cpu_has_mmid)
+-			asid = MMID_KERNEL_WIRED + 1;
++		write_c0_index(i);
++		mtc0_tlbr_hazard();
++		tlb_read();
++		tlb_read_hazard();
++		vpn = read_c0_entryhi();
++		vpn &= vpn_mask & PAGE_MASK;
++		tlb_vpns[cnt] = vpn;
+ 
+-		/* Check for match before using UNIQUE_ENTRYHI */
+-		do {
+-			if (cpu_has_mmid) {
+-				write_c0_memorymapid(asid);
+-				write_c0_entryhi(UNIQUE_ENTRYHI(entry));
+-			} else {
+-				write_c0_entryhi(UNIQUE_ENTRYHI(entry) | asid);
+-			}
+-			mtc0_tlbw_hazard();
+-			tlb_probe();
+-			tlb_probe_hazard();
+-			idx = read_c0_index();
+-			/* No match or match is on current entry */
+-			if (idx < 0 || idx == entry)
+-				break;
+-			/*
+-			 * If we hit a match, we need to try again with
+-			 * a different ASID.
+-			 */
+-			asid++;
+-		} while (asid < asid_mask);
+-
+-		if (idx >= 0 && idx != entry)
+-			panic("Unable to uniquify TLB entry %d", idx);
+-
+-		write_c0_index(entry);
++		/* Prevent any large pages from overlapping regular ones.  */
++		write_c0_pagemask(read_c0_pagemask() & PM_DEFAULT_MASK);
+ 		mtc0_tlbw_hazard();
+ 		tlb_write_indexed();
+-		entry++;
++		tlbw_use_hazard();
+ 	}
+ 
++	sort(tlb_vpns, cnt, sizeof(tlb_vpns[0]), r4k_vpn_cmp, NULL);
++
++	write_c0_pagemask(PM_DEFAULT_MASK);
++	write_c0_entrylo0(0);
++	write_c0_entrylo1(0);
++
++	idx = 0;
++	ent = tlbsize;
++	for (i = start; i < tlbsize; i++)
++		while (1) {
++			unsigned long entryhi, vpn;
++
++			entryhi = UNIQUE_ENTRYHI(ent);
++			vpn = entryhi & vpn_mask & PAGE_MASK;
++
++			if (idx >= cnt || vpn < tlb_vpns[idx]) {
++				write_c0_entryhi(entryhi);
++				write_c0_index(i);
++				mtc0_tlbw_hazard();
++				tlb_write_indexed();
++				ent++;
++				break;
++			} else if (vpn == tlb_vpns[idx]) {
++				ent++;
++			} else {
++				idx++;
++			}
++		}
++
+ 	tlbw_use_hazard();
+ 	htw_start();
+ 	flush_micro_tlb();
+@@ -602,6 +627,7 @@ static void r4k_tlb_configure(void)
+ 
+ 	/* From this point on the ARC firmware is dead.	 */
+ 	r4k_tlb_uniquify();
++	local_flush_tlb_all();
+ 
+ 	/* Did I tell you that ARC SUCKS?  */
+ }
 
 
