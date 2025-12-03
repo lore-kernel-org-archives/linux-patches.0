@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40D532ED43;
-	Wed,  3 Dec 2025 16:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A641533B6FC;
+	Wed,  3 Dec 2025 16:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779682; cv=none; b=ExmvWDPoBlze3jMIAp3DmtCeIp8Gd+scMpupJxTvjy+c6P8qE3aPDRdqT84eG9w7dXNIFcSecvmVbL/4qPqsdxtsIC8Psl2Lsf5Oq9Ggb3mcpB99dEDM8wcv7gatSnOffzIx8HWDyn9P3lk7x5JFnf+l5Ii34iV18nZwmmvyhYk=
+	t=1764779685; cv=none; b=V3vMQBGVjbBVmj3QiZl2rCQUDHcpkHfGRmuhym8zWS6cvLFcxBFXMCTMqp7c0M9Hgk9ARoURoJX5ckMTSiF+eGA1NoJckxFW/a0h47mXuJgRG6gQLsA+uVeOYEUrvzgZqFZbsRUOvJhjwcpNseNB2QhNSgS7+HymVPmveOWr1v4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779682; c=relaxed/simple;
-	bh=FsQcMRRa/uD5gMXXOpMkuZVRQPJEFf21vBQQMklPQx0=;
+	s=arc-20240116; t=1764779685; c=relaxed/simple;
+	bh=Bo6+UmSRgU1hyBZ03/T2Sz0b6VWTdRNmrxqBjk+ItSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k/sZANPpXtTXLT4bN7xutZ9QlolWjqJ3MmhlU6nU+I1chcCMZExmNaPIx5mwecxl/O5FbG93wFtMePL1pEqeH5JpAPuKKbUeS8lZ/njd1ohsmpCJ+0WAYd/cDZhuyn7lUQrWkL0JN57FT7SQsMogWwTvBTw7IiCtAu7GAcCPErU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYabqluE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tx6kxKniz/DxuyWr56fAIykTr9+8V5xIwWQRnf1WwSwJmXVnqG8RQatGNg3HP0R5/RWuOwBQnvj+bcsLYzbHn5Xh6e/w83TQGvHwgjGPJmznsb+omejBeLogCENsRHnSyjmj0UAxOMTeRkoLmxWxbDRQYWWYVN+PN56Acq/69CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0oF8E/ue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYabqluE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4755AC4CEF5;
-	Wed,  3 Dec 2025 16:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0oF8E/ue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0DFEC4CEF5;
+	Wed,  3 Dec 2025 16:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779681;
-	bh=FsQcMRRa/uD5gMXXOpMkuZVRQPJEFf21vBQQMklPQx0=;
+	s=korg; t=1764779685;
+	bh=Bo6+UmSRgU1hyBZ03/T2Sz0b6VWTdRNmrxqBjk+ItSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYabqluEDDxEy+eeYt1Q27T+tTjI7I72iUwV7v8/JCWd56EW+uGEtW3ko5/zKoKOl
-	 6lnAe+0y12jn+zs9HbRuIOm/pPVdU6QXTXhFwbx6mnsIciDdc+zkaVUBjUF4kvlOPp
-	 2OOLaO6h4Di24nR708WS9e8yAazPVM/FkoH7GGQk=
+	b=0oF8E/ue8UestdjfPdJkyA21InzYUmBfct7NB5aL8VMtPStxTK96s3+6mKmD6aBPP
+	 GYXaRpbWP70e1subImrrb+DqDV+BxsBfpP1zgf58SnIEX3Vj1bmNIzimijSJ4jRSZx
+	 KdvlzPJPP0M9twYJXQD+FYmC9+gh4Kmsj9mEAwIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>
-Subject: [PATCH 6.1 330/568] extcon: adc-jack: Cleanup wakeup source only if it was enabled
-Date: Wed,  3 Dec 2025 16:25:32 +0100
-Message-ID: <20251203152452.796265075@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Subject: [PATCH 6.1 331/568] drm/amdgpu: Fix function header names in amdgpu_connectors.c
+Date: Wed,  3 Dec 2025 16:25:33 +0100
+Message-ID: <20251203152452.833043630@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,42 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit 92bac7d4de9c07933f6b76d8f1c7f8240f911f4f upstream.
+commit 38ab33dbea594700c8d6cc81eec0a54e95d3eb2f upstream.
 
-Driver in the probe enables wakeup source conditionally, so the cleanup
-path should do the same - do not release the wakeup source memory if it
-was not allocated.
+Align the function headers for `amdgpu_max_hdmi_pixel_clock` and
+`amdgpu_connector_dvi_mode_valid` with the function implementations so
+they match the expected kdoc style.
 
-Link: https://lore.kernel.org/lkml/20250509071703.39442-2-krzysztof.kozlowski@linaro.org/
-Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Closes: https://lore.kernel.org/r/22aaebb7-553b-4571-8a43-58a523241082@wanadoo.fr/
-Fixes: 78b6a991eb6c ("extcon: adc-jack: Fix wakeup source leaks on device unbind")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c:1199: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+ * Returns the maximum supported HDMI (TMDS) pixel clock in KHz.
+drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c:1212: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
+ * Validates the given display mode on DVI and HDMI connectors.
+
+Fixes: 585b2f685c56 ("drm/amdgpu: Respect max pixel clock for HDMI and DVI-D (v2)")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/extcon/extcon-adc-jack.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/extcon/extcon-adc-jack.c
-+++ b/drivers/extcon/extcon-adc-jack.c
-@@ -162,7 +162,8 @@ static int adc_jack_remove(struct platfo
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_connectors.c
+@@ -1166,7 +1166,10 @@ static void amdgpu_connector_dvi_force(s
+ }
+ 
+ /**
+- * Returns the maximum supported HDMI (TMDS) pixel clock in KHz.
++ * amdgpu_max_hdmi_pixel_clock - Return max supported HDMI (TMDS) pixel clock
++ * @adev: pointer to amdgpu_device
++ *
++ * Return: maximum supported HDMI (TMDS) pixel clock in KHz.
+  */
+ static int amdgpu_max_hdmi_pixel_clock(const struct amdgpu_device *adev)
  {
- 	struct adc_jack_data *data = platform_get_drvdata(pdev);
+@@ -1179,8 +1182,14 @@ static int amdgpu_max_hdmi_pixel_clock(c
+ }
  
--	device_init_wakeup(&pdev->dev, false);
-+	if (data->wakeup_source)
-+		device_init_wakeup(&pdev->dev, false);
- 	free_irq(data->irq, data);
- 	cancel_work_sync(&data->handler.work);
- 
+ /**
+- * Validates the given display mode on DVI and HDMI connectors,
+- * including analog signals on DVI-I.
++ * amdgpu_connector_dvi_mode_valid - Validate a mode on DVI/HDMI connectors
++ * @connector: DRM connector to validate the mode on
++ * @mode: display mode to validate
++ *
++ * Validate the given display mode on DVI and HDMI connectors, including
++ * analog signals on DVI-I.
++ *
++ * Return: drm_mode_status indicating whether the mode is valid.
+  */
+ static enum drm_mode_status amdgpu_connector_dvi_mode_valid(struct drm_connector *connector,
+ 					    struct drm_display_mode *mode)
 
 
