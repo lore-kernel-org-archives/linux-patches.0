@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6B3362123;
-	Wed,  3 Dec 2025 16:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD3335C1B2;
+	Wed,  3 Dec 2025 16:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780209; cv=none; b=PqkHqOqbZR4E6T1EOyRete7BYNmqG1mhVu9pOMcm+p/sDWIXXXPEC2E4RhD2nMR3OzpV6Gj87KLCi9yxx3VV+sJrdlvsNSu4/+8IME8fdoh8wEoQGqUEkWDsl+WVZDfhULmzpNZwCsp/bxu1TzBqjzf9IEPsfsyilxuuXiCgOa8=
+	t=1764780213; cv=none; b=pDO63cIdtQxyizLmGYNoOgO5dW8k/ejKoXAY8iXVW2i6MzRvyzaX2QO0vjoXTMJs+3Zfr/tz63/iVMnVDJMCLfBBVAzfuTc7cg83rCH5PEDPJkMQwYl6vrd/a44gfSpM2zJhgk5FzeTTWn6WqluI9uFfbUUPPg02w12RPL1EKEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780209; c=relaxed/simple;
-	bh=BJOPCHC8VWyVMsMgBY99bZuIWvmad6NBcgsIwgt0UK4=;
+	s=arc-20240116; t=1764780213; c=relaxed/simple;
+	bh=fSZ7THvPpiygu2IYWURCIOreVR95JbKES8572pb2kyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o5wAzTKKAm0dHBSC9S43juIvXsENYd0DmdMqiDJaR10s3eFQgI6+9TBsfTxwqtDIv7xG9Q/9n32B+Gy5S/ufuDoSaiF/G0nRpV8m3KUSEBfBq/Wb3hrXjIv+kAnjCV9gRlUb+BK4yCaKSMeTzu8r+z1SOUAAsE2ZTuUcsQ7l1cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuW7uOXX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Kyvz2Vonu/Lwj10FcBCyJRgp9iL1ekVbbuRiT5pgjBHySPRuqoFNzsG6/K2qxVhVPrfh2BpZzKO+3d2sEZwqnLZZoLkwJxUxJUJeAIJ7eerKmBKRSVJ/Qno5b9H1YG8p4T6j5i7vA8ocjJrRtpS8VJ34p7gYFjhGPJekkwXwaFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LW1D5A6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuW7uOXX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF48CC116C6;
-	Wed,  3 Dec 2025 16:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LW1D5A6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A0EC4CEF5;
+	Wed,  3 Dec 2025 16:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780209;
-	bh=BJOPCHC8VWyVMsMgBY99bZuIWvmad6NBcgsIwgt0UK4=;
+	s=korg; t=1764780212;
+	bh=fSZ7THvPpiygu2IYWURCIOreVR95JbKES8572pb2kyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuW7uOXXUnK9C/cvwRBIn2N93MKhdrO1dn0WbwQKlLrwB3vraKehJqIWZpZCqKWGo
-	 HBxmN3LQyZqfk+4olakkTc304dOBGFomGn6MNJTfBxSxlJ0QzY1vjNwTHe+bTQ7/7J
-	 VU5w/3ylGtYzvaAgfOZEx6pZyLLKG1Mcrig5dCEc=
+	b=LW1D5A6vjIV33dbC5g8bal/mbtXwmSlsGP5XRl7N8No8feYHdK5MBcfC77xzvDUdB
+	 yTU0AeV7+aqV9Ewue7CHWzryZOOl1bXwAUlDrjXcX3mMbdtafOsNFijnMwunITShT7
+	 kr4psttQM6OW2/VmnT+kRV+RZIAJ9NCaUabfPKIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peter Griffin <peter.griffin@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 487/568] selftests: mptcp: connect: fix fallback note due to OoO
-Date: Wed,  3 Dec 2025 16:28:09 +0100
-Message-ID: <20251203152458.542605477@linuxfoundation.org>
+Subject: [PATCH 6.1 488/568] pmdomain: samsung: plug potential memleak during probe
+Date: Wed,  3 Dec 2025 16:28:10 +0100
+Message-ID: <20251203152458.579432661@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -46,48 +48,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: André Draszik <andre.draszik@linaro.org>
 
-[ Upstream commit 63c643aa7b7287fdbb0167063785f89ece3f000f ]
+[ Upstream commit 90c82941adf1986364e0f82c35cf59f2bf5f6a1d ]
 
-The "fallback due to TCP OoO" was never printed because the stat_ooo_now
-variable was checked twice: once in the parent if-statement, and one in
-the child one. The second condition was then always true then, and the
-'else' branch was never taken.
+of_genpd_add_provider_simple() could fail, in which case this code
+leaks the domain name, pd->pd.name.
 
-The idea is that when there are more ACK + MP_CAPABLE than expected, the
-test either fails if there was no out of order packets, or a notice is
-printed.
+Use devm_kstrdup_const() to plug this leak. As a side-effect, we can
+simplify existing error handling.
 
-Fixes: 69ca3d29a755 ("mptcp: update selftest for fallback due to OoO")
+Fixes: c09a3e6c97f0 ("soc: samsung: pm_domains: Convert to regular platform driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251110-net-mptcp-sft-join-unstable-v1-1-a4332c714e10@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Different operators used ]
+Reviewed-by: Peter Griffin <peter.griffin@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: André Draszik <andre.draszik@linaro.org>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+[ drivers/pmdomain/samsung/exynos-pm-domains.c -> drivers/soc/samsung/pm_domains.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_connect.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/samsung/pm_domains.c |   11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_connect.sh
-@@ -523,7 +523,7 @@ do_transfer()
- 			"${stat_synrx_now_l}" "${expect_synrx}" 1>&2
- 		retc=1
- 	fi
--	if [ ${stat_ackrx_now_l} -lt ${expect_ackrx} -a ${stat_ooo_now} -eq 0 ]; then
-+	if [ ${stat_ackrx_now_l} -lt ${expect_ackrx} ]; then
- 		if [ ${stat_ooo_now} -eq 0 ]; then
- 			printf "[ FAIL ] lower MPC ACK rx (%d) than expected (%d)\n" \
- 				"${stat_ackrx_now_l}" "${expect_ackrx}" 1>&2
+--- a/drivers/soc/samsung/pm_domains.c
++++ b/drivers/soc/samsung/pm_domains.c
+@@ -91,13 +91,14 @@ static const struct of_device_id exynos_
+ 	{ },
+ };
+ 
+-static const char *exynos_get_domain_name(struct device_node *node)
++static const char *exynos_get_domain_name(struct device *dev,
++					  struct device_node *node)
+ {
+ 	const char *name;
+ 
+ 	if (of_property_read_string(node, "label", &name) < 0)
+ 		name = kbasename(node->full_name);
+-	return kstrdup_const(name, GFP_KERNEL);
++	return devm_kstrdup_const(dev, name, GFP_KERNEL);
+ }
+ 
+ static int exynos_pd_probe(struct platform_device *pdev)
+@@ -114,15 +115,13 @@ static int exynos_pd_probe(struct platfo
+ 	if (!pd)
+ 		return -ENOMEM;
+ 
+-	pd->pd.name = exynos_get_domain_name(np);
++	pd->pd.name = exynos_get_domain_name(dev, np);
+ 	if (!pd->pd.name)
+ 		return -ENOMEM;
+ 
+ 	pd->base = of_iomap(np, 0);
+-	if (!pd->base) {
+-		kfree_const(pd->pd.name);
++	if (!pd->base)
+ 		return -ENODEV;
+-	}
+ 
+ 	pd->pd.power_off = exynos_pd_power_off;
+ 	pd->pd.power_on = exynos_pd_power_on;
 
 
