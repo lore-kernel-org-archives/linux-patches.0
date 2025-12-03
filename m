@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE903074BA;
-	Wed,  3 Dec 2025 15:44:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0EC3074A0;
+	Wed,  3 Dec 2025 15:44:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776671; cv=none; b=LLL+/5Gc2GxUj8eG6DM9UxFqraSIINaS48bXGL4bailM41ZmHMlX7HXM/6ftYULfAnIfeBuwR/G6KvG/zBIerKfaZOLPzzYWOnVKM09Sb9E4CO5K0TMLwIcK7VejRIWDXRKfU8i7rcfTBIqGNJkzcXBJ5VcLLKf1qeO7YTxN/ug=
+	t=1764776674; cv=none; b=ht/lsZ6b/KYdVjqGm7f8DT8GOUoeFlsWsqsVApFqziTKVDSTmgnc29+sXREXwuSeP+fv1QJUgYZTcVET6m0ASQmOgzmJKNzcF9nbZwYSnpW8NQABwh7x0yobTqhGBJY6MmeMI+1Os+AXedVENue5mZvqbVl58qAPxqJ05OEvzH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776671; c=relaxed/simple;
-	bh=1q21mOeBl/zzrBc07A8/xwjpRuBizfiStdz2jqBlc3A=;
+	s=arc-20240116; t=1764776674; c=relaxed/simple;
+	bh=dr41HTht+XeQ/pYYkNEs/+zLt2fd5aMj082QBjhQYXs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/AzkRzaSScfVk0tsvNci2ejBN4Y7zw1VDQSfgeZuWUO0Z1WFFCd6JRC/6GxJC2xuxzEEpYHGcT7b79Bp9FeJ/assUhJ9vRO3zZzIvVbtty9Lf2qdEf9LCIGLsqUqDbY+QGtcATaw5R2o99Snho/CSwrzIDdMRyJn7PotRb/Mag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iF8dkv5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qJf5982+CsYDvWluqbtoZn+f3rgb5tfvp3e2VU1XO2pP5fob/vCyEF5NCzTdcCzMM1GA2c4KBvOc1aWogWXeVL2qz8rNYqWBUcKzUG4gSdRW+/f5NEadtFyNjnxeUrLOVfUdFmpXbKjwlGAz4pZ0TdmOuuw32KnVUs2GVjZj7uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjaGSDaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iF8dkv5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72018C4CEF5;
-	Wed,  3 Dec 2025 15:44:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjaGSDaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAB8C4CEF5;
+	Wed,  3 Dec 2025 15:44:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776670;
-	bh=1q21mOeBl/zzrBc07A8/xwjpRuBizfiStdz2jqBlc3A=;
+	s=korg; t=1764776674;
+	bh=dr41HTht+XeQ/pYYkNEs/+zLt2fd5aMj082QBjhQYXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iF8dkv5c9EKTBk8hUXm6IOg6s/Csw0MVH7jHKJJ9/uGBy62EvL3J9LtD+U48JWfPQ
-	 j/r4T0JgRgUjZ+iVs4Mgb6eLpC26RZEu80ORSwTagY+F2WpOQeoglVzsvU0+CD3EEp
-	 hIGfiRvC9myM8+PlWbO2w2XoqNA7S0MQyT30eQCg=
+	b=TjaGSDaMHAfgQZHfF6ZlWn+DkYjGe7l3T6Ci08d5A7o2OIaXGaP7bq6/pb2JQamc8
+	 QR4ZdltP+frhO04AanHn5qkmf1SJuYolifZcLtdmX7age4UHxcRH0ai/YDdFMfJrN4
+	 f/Jj2rKdeYq9pbprx2svguPqzsH6M2uonPFG4Vcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ville Syrjala <syrjala@sci.fi>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Henk Vergonet <Henk.Vergonet@gmail.com>,
 	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 253/300] usb: deprecate the third argument of usb_maxpacket()
-Date: Wed,  3 Dec 2025 16:27:37 +0100
-Message-ID: <20251203152410.010884123@linuxfoundation.org>
+Subject: [PATCH 5.10 254/300] Input: remove third argument of usb_maxpacket()
+Date: Wed,  3 Dec 2025 16:27:38 +0100
+Message-ID: <20251203152410.047260399@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,80 +55,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit 0f08c2e7458e25c967d844170f8ad1aac3b57a02 ]
+[ Upstream commit 948bf187694fc1f4c20cf972fa18b1a6fb3d7603 ]
 
-This is a transitional patch with the ultimate goal of changing the
-prototype of usb_maxpacket() from:
-| static inline __u16
-| usb_maxpacket(struct usb_device *udev, int pipe, int is_out)
+The third argument of usb_maxpacket(): in_out has been deprecated
+because it could be derived from the second argument (e.g. using
+usb_pipeout(pipe)).
 
-into:
-| static inline u16 usb_maxpacket(struct usb_device *udev, int pipe)
+N.B. function usb_maxpacket() was made variadic to accommodate the
+transition from the old prototype with three arguments to the new one
+with only two arguments (so that no renaming is needed). The variadic
+argument is to be removed once all users of usb_maxpacket() get
+migrated.
 
-The third argument of usb_maxpacket(): is_out gets removed because it
-can be derived from its second argument: pipe using
-usb_pipeout(pipe). Furthermore, in the current version,
-ubs_pipeout(pipe) is called regardless in order to sanitize the is_out
-parameter.
-
-In order to make a smooth change, we first deprecate the is_out
-parameter by simply ignoring it (using a variadic function) and will
-remove it later, once all the callers get updated.
-
-The body of the function is reworked accordingly and is_out is
-replaced by usb_pipeout(pipe). The WARN_ON() calls become unnecessary
-and get removed.
-
-Finally, the return type is changed from __u16 to u16 because this is
-not a UAPI function.
-
+CC: Ville Syrjala <syrjala@sci.fi>
+CC: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+CC: Henk Vergonet <Henk.Vergonet@gmail.com>
 Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
-Link: https://lore.kernel.org/r/20220317035514.6378-2-mailhol.vincent@wanadoo.fr
+Link: https://lore.kernel.org/r/20220317035514.6378-4-mailhol.vincent@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 69aeb5073123 ("Input: pegasus-notetaker - fix potential out-of-bounds access")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/usb.h |   16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/input/misc/ati_remote2.c         |    2 +-
+ drivers/input/misc/cm109.c               |    2 +-
+ drivers/input/misc/powermate.c           |    2 +-
+ drivers/input/misc/yealink.c             |    2 +-
+ drivers/input/tablet/acecad.c            |    2 +-
+ drivers/input/tablet/pegasus_notetaker.c |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1980,21 +1980,17 @@ usb_pipe_endpoint(struct usb_device *dev
- 	return eps[usb_pipeendpoint(pipe)];
- }
+--- a/drivers/input/misc/ati_remote2.c
++++ b/drivers/input/misc/ati_remote2.c
+@@ -639,7 +639,7 @@ static int ati_remote2_urb_init(struct a
+ 			return -ENOMEM;
  
--/*-------------------------------------------------------------------------*/
--
--static inline __u16
--usb_maxpacket(struct usb_device *udev, int pipe, int is_out)
-+static inline u16 usb_maxpacket(struct usb_device *udev, int pipe,
-+				/* int is_out deprecated */ ...)
- {
- 	struct usb_host_endpoint	*ep;
- 	unsigned			epnum = usb_pipeendpoint(pipe);
+ 		pipe = usb_rcvintpipe(udev, ar2->ep[i]->bEndpointAddress);
+-		maxp = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++		maxp = usb_maxpacket(udev, pipe);
+ 		maxp = maxp > 4 ? 4 : maxp;
  
--	if (is_out) {
--		WARN_ON(usb_pipein(pipe));
-+	if (usb_pipeout(pipe))
- 		ep = udev->ep_out[epnum];
--	} else {
--		WARN_ON(usb_pipeout(pipe));
-+	else
- 		ep = udev->ep_in[epnum];
--	}
-+
- 	if (!ep)
- 		return 0;
+ 		usb_fill_int_urb(ar2->urb[i], udev, pipe, ar2->buf[i], maxp,
+--- a/drivers/input/misc/cm109.c
++++ b/drivers/input/misc/cm109.c
+@@ -745,7 +745,7 @@ static int cm109_usb_probe(struct usb_in
  
-@@ -2002,8 +1998,6 @@ usb_maxpacket(struct usb_device *udev, i
- 	return usb_endpoint_maxp(&ep->desc);
- }
+ 	/* get a handle to the interrupt data pipe */
+ 	pipe = usb_rcvintpipe(udev, endpoint->bEndpointAddress);
+-	ret = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++	ret = usb_maxpacket(udev, pipe);
+ 	if (ret != USB_PKT_LEN)
+ 		dev_err(&intf->dev, "invalid payload size %d, expected %d\n",
+ 			ret, USB_PKT_LEN);
+--- a/drivers/input/misc/powermate.c
++++ b/drivers/input/misc/powermate.c
+@@ -374,7 +374,7 @@ static int powermate_probe(struct usb_in
  
--/* ----------------------------------------------------------------------- */
--
- /* translate USB error codes to codes user space understands */
- static inline int usb_translate_errors(int error_code)
- {
+ 	/* get a handle to the interrupt data pipe */
+ 	pipe = usb_rcvintpipe(udev, endpoint->bEndpointAddress);
+-	maxp = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++	maxp = usb_maxpacket(udev, pipe);
+ 
+ 	if (maxp < POWERMATE_PAYLOAD_SIZE_MIN || maxp > POWERMATE_PAYLOAD_SIZE_MAX) {
+ 		printk(KERN_WARNING "powermate: Expected payload of %d--%d bytes, found %d bytes!\n",
+--- a/drivers/input/misc/yealink.c
++++ b/drivers/input/misc/yealink.c
+@@ -905,7 +905,7 @@ static int usb_probe(struct usb_interfac
+ 
+ 	/* get a handle to the interrupt data pipe */
+ 	pipe = usb_rcvintpipe(udev, endpoint->bEndpointAddress);
+-	ret = usb_maxpacket(udev, pipe, usb_pipeout(pipe));
++	ret = usb_maxpacket(udev, pipe);
+ 	if (ret != USB_PKT_LEN)
+ 		dev_err(&intf->dev, "invalid payload size %d, expected %zd\n",
+ 			ret, USB_PKT_LEN);
+--- a/drivers/input/tablet/acecad.c
++++ b/drivers/input/tablet/acecad.c
+@@ -130,7 +130,7 @@ static int usb_acecad_probe(struct usb_i
+ 		return -ENODEV;
+ 
+ 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
+-	maxp = usb_maxpacket(dev, pipe, usb_pipeout(pipe));
++	maxp = usb_maxpacket(dev, pipe);
+ 
+ 	acecad = kzalloc(sizeof(struct usb_acecad), GFP_KERNEL);
+ 	input_dev = input_allocate_device();
+--- a/drivers/input/tablet/pegasus_notetaker.c
++++ b/drivers/input/tablet/pegasus_notetaker.c
+@@ -296,7 +296,7 @@ static int pegasus_probe(struct usb_inte
+ 	pegasus->intf = intf;
+ 
+ 	pipe = usb_rcvintpipe(dev, endpoint->bEndpointAddress);
+-	pegasus->data_len = usb_maxpacket(dev, pipe, usb_pipeout(pipe));
++	pegasus->data_len = usb_maxpacket(dev, pipe);
+ 
+ 	pegasus->data = usb_alloc_coherent(dev, pegasus->data_len, GFP_KERNEL,
+ 					   &pegasus->data_dma);
 
 
