@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A3F34B1B0;
-	Wed,  3 Dec 2025 16:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B5234B1A6;
+	Wed,  3 Dec 2025 16:01:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777687; cv=none; b=FmNMswfoNsLa/yRghlxB2UpF7JKVULfGRo+9u2+918j3IB7zbDY4rOhfuUaYT41TDiH1Wx1+n4X3GphMT4EYawgPRIiKR1y9JbrPoR9vGxCEGDCNsxriCGY1BwHdv7YeHHRidvEV2MV87VD5VsYLf0jaXrLYDn8rJvK0Mlc6aFY=
+	t=1764777690; cv=none; b=Uni9gY5JY1nhZsFENC65GtpYyTqYqOuaGfYhUR/Q1cMF4vKSsA5OEQXoGDV1y79KsNVGMjF770T9qYhOkFCAQtWR1+caGaE7NaWCphbQZw0uLkmXU9d0UfsJ8da5KCCTCqgtQkkSOdqUcagIGKli4gwgg2rvJ4mEWiWHs6FukxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777687; c=relaxed/simple;
-	bh=k21pjHh+SZOom5ij6K1L7WC8NrdUm5i+ZswtDIQq4d4=;
+	s=arc-20240116; t=1764777690; c=relaxed/simple;
+	bh=yAltdXVrf2NaQDmkTHi3NYQeOm0+KabG9TUlH8q5E20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hpk1YSNHGVYimy6MYAZG379i3QRggV/X8UmIMGMaXubM1vG1sTAhMupgXbAfim7m0LIa4hRJnapRbvH/wh2QpiR8tpfRW1IlfnFNKmjQBRGaRz6rvi2UgmpfTi+FRevdZIwrdZYvbmcGdFoYjF5rwRGGKc8y5y3N8sx+P6e0TJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vX9M5gUu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eGN5kPI9Ej3vVXbUQxw5jWy1ivAQhlZigBb8jWoOAFQ9WJUI2pzw5kpQm5EHjjp6I56Emzg0w0zfnWnpe0aXnhVSFBCqZeH4/9Fl37pdLzPAYqkDktH0FcOjW2BVw4ppaJlR5weYvq8c8Wpj9KmClQ2qy2XWENDexroPuFVCT4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JCy7G9r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vX9M5gUu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706D8C4CEF5;
-	Wed,  3 Dec 2025 16:01:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JCy7G9r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ABBC4CEF5;
+	Wed,  3 Dec 2025 16:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777686;
-	bh=k21pjHh+SZOom5ij6K1L7WC8NrdUm5i+ZswtDIQq4d4=;
+	s=korg; t=1764777689;
+	bh=yAltdXVrf2NaQDmkTHi3NYQeOm0+KabG9TUlH8q5E20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vX9M5gUuGfDxbo3tFlQGLSPv/w7xuRkw8J1JcGqA5nQxFEf1WH56YLSfOqF0Y3k+L
-	 cWcZOLgSPiKpC40BPu6EuZD+1qou9bR7x0pxYpvRpEWGbH0pfQq6EllLp136eAeZx7
-	 BrvCD3ncnZAsOGDGn1lPYca4jls0YqKW/p4GVy5Q=
+	b=2JCy7G9r17rpKJ1xwuO2YFT6UhKlMyEtcHtjZnidCLW3IqNEVix74pq76urx/U9eF
+	 hCNCtlFtmRFP0YB1LKpnTRgDDndLlH/sCKEmyoI7PO5kNkRgVreYKdMerNToiyEbBK
+	 NiK+m+obS1U7dZZgRmQr0rzO6VH5LlVrvhPF6GBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoffrey McRae <geoffrey.mcrae@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 097/392] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
-Date: Wed,  3 Dec 2025 16:24:07 +0100
-Message-ID: <20251203152417.670279437@linuxfoundation.org>
+Subject: [PATCH 5.15 115/392] ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
+Date: Wed,  3 Dec 2025 16:24:25 +0100
+Message-ID: <20251203152418.329686690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,51 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey McRae <geoffrey.mcrae@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 57af162bfc8c05332a28c4d458d246cc46d2746d ]
+[ Upstream commit 2aec0b6a6b5395bca7d6fde9c7e9dc391d329698 ]
 
-Some kfd ioctls may not be available depending on the kernel version the
-user is running, as such we need to report -ENOTTY so userland can
-determine the cause of the ioctl failure.
+Just add fixed struct size validations for UAC2 and UAC3 effect
+units.  The descriptor has a variable-length array, so it should be
+validated with a proper function later once when the unit is really
+parsed and used by the driver (currently only referred partially for
+the input terminal parsing).
 
-Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://patch.msgid.link/20250821151751.12100-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/usb/validate.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 7b2111be3019a..4f60ba2db1811 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -1947,8 +1947,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 	unsigned int usize, asize;
- 	int retcode = -EINVAL;
- 
--	if (nr >= AMDKFD_CORE_IOCTL_COUNT)
-+	if (nr >= AMDKFD_CORE_IOCTL_COUNT) {
-+		retcode = -ENOTTY;
- 		goto err_i1;
-+	}
- 
- 	if ((nr >= AMDKFD_COMMAND_START) && (nr < AMDKFD_COMMAND_END)) {
- 		u32 amdkfd_size;
-@@ -1961,8 +1963,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 			asize = amdkfd_size;
- 
- 		cmd = ioctl->cmd;
--	} else
-+	} else {
-+		retcode = -ENOTTY;
- 		goto err_i1;
-+	}
- 
- 	dev_dbg(kfd_device, "ioctl cmd 0x%x (#0x%x), arg 0x%lx\n", cmd, nr, arg);
- 
+diff --git a/sound/usb/validate.c b/sound/usb/validate.c
+index a0d55b77c9941..4bb4893f6e74f 100644
+--- a/sound/usb/validate.c
++++ b/sound/usb/validate.c
+@@ -266,7 +266,11 @@ static const struct usb_desc_validator audio_validators[] = {
+ 	FUNC(UAC_VERSION_2, UAC_MIXER_UNIT, validate_mixer_unit),
+ 	FUNC(UAC_VERSION_2, UAC_SELECTOR_UNIT, validate_selector_unit),
+ 	FUNC(UAC_VERSION_2, UAC_FEATURE_UNIT, validate_uac2_feature_unit),
+-	/* UAC_VERSION_2, UAC2_EFFECT_UNIT: not implemented yet */
++	/* just a stop-gap, it should be a proper function for the array
++	 * once if the unit is really parsed/used
++	 */
++	FIXED(UAC_VERSION_2, UAC2_EFFECT_UNIT,
++	      struct uac2_effect_unit_descriptor),
+ 	FUNC(UAC_VERSION_2, UAC2_PROCESSING_UNIT_V2, validate_processing_unit),
+ 	FUNC(UAC_VERSION_2, UAC2_EXTENSION_UNIT_V2, validate_processing_unit),
+ 	FIXED(UAC_VERSION_2, UAC2_CLOCK_SOURCE,
+@@ -286,7 +290,8 @@ static const struct usb_desc_validator audio_validators[] = {
+ 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
+ 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
+ 	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
+-	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
++	FIXED(UAC_VERSION_3, UAC3_EFFECT_UNIT,
++	      struct uac2_effect_unit_descriptor), /* sharing the same struct */
+ 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
+ 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
+ 	FIXED(UAC_VERSION_3, UAC3_CLOCK_SOURCE,
 -- 
 2.51.0
 
