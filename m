@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8057340281;
-	Wed,  3 Dec 2025 16:40:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70143340281;
+	Wed,  3 Dec 2025 16:40:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780009; cv=none; b=JLElio4jXCUY36DhsFyaSCpajJIh+nDHG1zyJbiuAn2Bk2B2xPBCV7BccFiqRs2IBUeFG+EUzI6k3TNhLoiAzQNA9XwIH9tr/Ux3CWc8Deo8v8zFuTbymbe18OnKihWXmuGn/imAG0UtJpP/4oSezVJR0HYyIEWk81e3GFaZ/94=
+	t=1764780013; cv=none; b=olFheqt6Fnn1NVaka4+dHY6Rnwj4pkdfu3DZAyg1OIpiu59pQQfkFEHZF4xiML/LcxrO1KPovjOMHJyxlAVLu+Jo3O7UviBaxQPIMfMF/ZGuExuSTAV5i7UxbhpA+NhcftiJ21YnaCdb5C36+xxOyKdKq+4hwvjKoZA0COROyto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780009; c=relaxed/simple;
-	bh=0sGo2/6zxVNemXFgw0lrLioWDMM76U320BuO5CaV+ac=;
+	s=arc-20240116; t=1764780013; c=relaxed/simple;
+	bh=PwNLt8EYJKSj3Ph+Fqx4IyEJCC1KD7Pk7H94ytI+Q3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WwcVyy/QONUYiPMJhrjMYYp7CzVTNLSNSxTXWeY9AjN6rNEIU+u6m/aLnN9pkD78kPwMuX0ePBSo5k/Pho89VOyn60NAr713zzlyHr9Fxmin2sgwiBzeHF5ByWMzYaC0WhkXIFj6gjewRk3kq9yzuqqb/zdOidfs8/E0VCrsiLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2aTLG90s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uY/3e/6Ifp3RCW3axIL1kYParxpSiK8fO0eRcYtkE8pEN4Wiydh7nH9p+FVhkkAZltdy0ibx4bmk50/y1r27yn4KmyXmcTpPkaSqXu5DjMxWfzV7UX5Dvpx6fDu1YJzwwmyZ9tIoq32J7i+zVSnbynIYKznt/IytG7dxgWE9bM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p96F2Kgk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2aTLG90s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1383BC4CEF5;
-	Wed,  3 Dec 2025 16:40:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p96F2Kgk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF492C4CEF5;
+	Wed,  3 Dec 2025 16:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780009;
-	bh=0sGo2/6zxVNemXFgw0lrLioWDMM76U320BuO5CaV+ac=;
+	s=korg; t=1764780013;
+	bh=PwNLt8EYJKSj3Ph+Fqx4IyEJCC1KD7Pk7H94ytI+Q3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2aTLG90sE0dNwOyrJ2GWwyBeYugt4TQGzJpkWhguW2cxZXnvBx2PdPW6H/WseNh8u
-	 H25WNT3sn/KnBZONt3Fu9CRfgv30bCMjCxOnykDX1On+FhRDQ/MsFS0VYf37jpHLAb
-	 usfkhksnyc7GogMgw1+2bDsubDd1yton1dT4H/l4=
+	b=p96F2KgkC1itq/ZYkCGrkW+ayDoIZcLsyeN/xsewJIhamop8FP26jusBt3wYgCxoX
+	 5uIlgK8D4gY5DrtBnh7Zyseiie71lslEvuCF/UBrl0DliyJycirotyjaYOeqf2SFzP
+	 BKJBNrntUNwrjpTcvgIBKpThKfkwLH7CSggy2aFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Ichikawa <masami256@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Haein Lee <lhi0729@kaist.ac.kr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 395/568] HID: hid-ntrig: Prevent memory leak in ntrig_report_version()
-Date: Wed,  3 Dec 2025 16:26:37 +0100
-Message-ID: <20251203152455.158994181@linuxfoundation.org>
+Subject: [PATCH 6.1 386/568] ALSA: usb-audio: Fix NULL pointer dereference in snd_usb_mixer_controls_badd
+Date: Wed,  3 Dec 2025 16:26:28 +0100
+Message-ID: <20251203152454.831404407@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,53 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Ichikawa <masami256@gmail.com>
+From: Haein Lee <lhi0729@kaist.ac.kr>
 
-[ Upstream commit 53f731f5bba0cf03b751ccceb98b82fadc9ccd1e ]
+[ Upstream commit 632108ec072ad64c8c83db6e16a7efee29ebfb74 ]
 
-Use a scope-based cleanup helper for the buffer allocated with kmalloc()
-in ntrig_report_version() to simplify the cleanup logic and prevent
-memory leaks (specifically the !hid_is_usb()-case one).
+In snd_usb_create_streams(), for UAC version 3 devices, the Interface
+Association Descriptor (IAD) is retrieved via usb_ifnum_to_if(). If this
+call fails, a fallback routine attempts to obtain the IAD from the next
+interface and sets a BADD profile. However, snd_usb_mixer_controls_badd()
+assumes that the IAD retrieved from usb_ifnum_to_if() is always valid,
+without performing a NULL check. This can lead to a NULL pointer
+dereference when usb_ifnum_to_if() fails to find the interface descriptor.
 
-[jkosina@suse.com: elaborate on the actual existing leak]
-Fixes: 185c926283da ("HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()")
-Signed-off-by: Masami Ichikawa <masami256@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+This patch adds a NULL pointer check after calling usb_ifnum_to_if() in
+snd_usb_mixer_controls_badd() to prevent the dereference.
+
+This issue was discovered by syzkaller, which triggered the bug by sending
+a crafted USB device descriptor.
+
+Fixes: 17156f23e93c ("ALSA: usb: add UAC3 BADD profiles support")
+Signed-off-by: Haein Lee <lhi0729@kaist.ac.kr>
+Link: https://patch.msgid.link/vwhzmoba9j2f.vwhzmob9u9e2.g6@dooray.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ntrig.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ sound/usb/mixer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hid/hid-ntrig.c b/drivers/hid/hid-ntrig.c
-index a1128c5315fff..3c41f6841f775 100644
---- a/drivers/hid/hid-ntrig.c
-+++ b/drivers/hid/hid-ntrig.c
-@@ -142,13 +142,13 @@ static void ntrig_report_version(struct hid_device *hdev)
- 	int ret;
- 	char buf[20];
- 	struct usb_device *usb_dev = hid_to_usb_dev(hdev);
--	unsigned char *data = kmalloc(8, GFP_KERNEL);
-+	unsigned char *data __free(kfree) = kmalloc(8, GFP_KERNEL);
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index d258c7324fcc7..9b34004e67131 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -3081,6 +3081,8 @@ static int snd_usb_mixer_controls_badd(struct usb_mixer_interface *mixer,
+ 	int i;
  
- 	if (!hid_is_usb(hdev))
- 		return;
+ 	assoc = usb_ifnum_to_if(dev, ctrlif)->intf_assoc;
++	if (!assoc)
++		return -EINVAL;
  
- 	if (!data)
--		goto err_free;
-+		return;
- 
- 	ret = usb_control_msg(usb_dev, usb_rcvctrlpipe(usb_dev, 0),
- 			      USB_REQ_CLEAR_FEATURE,
-@@ -163,9 +163,6 @@ static void ntrig_report_version(struct hid_device *hdev)
- 		hid_info(hdev, "Firmware version: %s (%02x%02x %02x%02x)\n",
- 			 buf, data[2], data[3], data[4], data[5]);
- 	}
--
--err_free:
--	kfree(data);
- }
- 
- static ssize_t show_phys_width(struct device *dev,
+ 	/* Detect BADD capture/playback channels from AS EP descriptors */
+ 	for (i = 0; i < assoc->bInterfaceCount; i++) {
 -- 
 2.51.0
 
