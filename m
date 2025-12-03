@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC90F15ADB4;
-	Wed,  3 Dec 2025 15:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB9415ADB4;
+	Wed,  3 Dec 2025 15:32:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775969; cv=none; b=tgPdbrnZb0I5NErEm6CxTuyXfEt5NXeV08v0UdOl0aoI2iWBjGjHrHtpObl+HzyVlPjx2n4hb2J8s2HixOQ1+0HrXzaRIAkVCPBAidH7+o8MMRfFmamLyrn4XUA2B7dz8q5GeEA1YmCBoAi5rueknlNZsxQdJsfA7UiBm2RZMds=
+	t=1764775972; cv=none; b=BsSkcZMNuLWlqHpyy5LONmUXNP1z28gbC6486nIzRFxsbjelVvByX+XuhxpJaUjU9+yl7wv0Bk+vD97Yl1lgV7UPISvOjHNDH7ui6/W853t5xmnFC9W/tcb1h+eJGwS8DiTJqcb67lRtJO3P7VusdwYzz2e4nPh2lm66EepdDGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775969; c=relaxed/simple;
-	bh=8yrLxUipeICx4ofQkiWhICISu8NtYbTCzNOThM3VdZ8=;
+	s=arc-20240116; t=1764775972; c=relaxed/simple;
+	bh=4AMXrnsypvifbJEePw1o8p5VC8FnOxH6wigU5VSIzmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l2zEv/beMdPFRkb8WBG+3FC71KBs2x9U9haUJQIli8H5B9kdPkyw+qPTquYa/akREY8kPe1fp45egUpmP6t/2HdjMusFXmgLfaH2torVbYjVltiqgKjbT9QsQ7Sxn6oIKCyuwtPHMOnbyjFW27gjg29jMepQl2SiA59DO5Vj1Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEnzQA8C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DsuIYri8fhmRzaQZjUrFEnhANIVhFIKaVXA2kZtVaf5CRmpH0RwK9/ZRXu3HTi5dgXutwxy59Cm9J+CxiQEUpIF9LXI8Ia8GnZmEAGhCCJl8EGFkky8COjM9IQVkQywNP0yiLsjI/pZGLp96Figae+O/Cw6go6VrwwtV6lvF5QQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPdcBTXO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEnzQA8C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C592EC4CEF5;
-	Wed,  3 Dec 2025 15:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPdcBTXO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16AC8C4CEF5;
+	Wed,  3 Dec 2025 15:32:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775969;
-	bh=8yrLxUipeICx4ofQkiWhICISu8NtYbTCzNOThM3VdZ8=;
+	s=korg; t=1764775972;
+	bh=4AMXrnsypvifbJEePw1o8p5VC8FnOxH6wigU5VSIzmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEnzQA8CkV5xG4qgOI1hT9acOq9UPTyqD1E19y+XI3ghdfXlnTpVRiYyDpqZzKy8+
-	 mimffJCk0p4cx0vAZyucKrgfZ1rl83t4N577py/c6L/xOqybqxrbnUdvv6e9sFsGpT
-	 RssePj4aV9yYlR1VvdW7mUdOimcokcSyDR/bnTu4=
+	b=BPdcBTXOGNeq9H2JaDIgJ8OBxfeht31m16rSH6IAxkRS9Dno9qfANVS6miU+dcWyx
+	 WB5eYHR1/RPxeKVRqK/YY0jDKcK/op9XKiWL5FHwIOWLdZs8/o9KBMlAOTXlLDJhVA
+	 0aHKRkv3Vw87DbipwrrY1HJOu/xHM1HTk5cRPb1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhang <chizhang@asrmicro.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/300] pinctrl: single: fix bias pull up/down handling in pin_config_set
-Date: Wed,  3 Dec 2025 16:24:06 +0100
-Message-ID: <20251203152402.171444507@linuxfoundation.org>
+Subject: [PATCH 5.10 043/300] mmc: host: renesas_sdhi: Fix the actual clock
+Date: Wed,  3 Dec 2025 16:24:07 +0100
+Message-ID: <20251203152402.208719437@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,46 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chi Zhang <chizhang@asrmicro.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit 236152dd9b1675a35eee912e79e6c57ca6b6732f ]
+[ Upstream commit 9c174e4dacee9fb2014a4ffc953d79a5707b77e4 ]
 
-In the pin_config_set function, when handling PIN_CONFIG_BIAS_PULL_DOWN or
-PIN_CONFIG_BIAS_PULL_UP, the function calls pcs_pinconf_clear_bias()
-which writes the register. However, the subsequent operations continue
-using the stale 'data' value from before the register write, effectively
-causing the bias clear operation to be overwritten and not take effect.
+Wrong actual clock reported, if the SD clock division ratio is other
+than 1:1(bits DIV[7:0] in SD_CLK_CTRL are set to 11111111).
 
-Fix this by reading the 'data' value from the register after calling
-pcs_pinconf_clear_bias().
+On high speed mode, cat /sys/kernel/debug/mmc1/ios
+Without the patch:
+clock:          50000000 Hz
+actual clock:   200000000 Hz
 
-This bug seems to have existed when this code was first merged in commit
-9dddb4df90d1 ("pinctrl: single: support generic pinconf").
+After the fix:
+clock:          50000000 Hz
+actual clock:   50000000 Hz
 
-Signed-off-by: Chi Zhang <chizhang@asrmicro.com>
-Link: https://lore.kernel.org/20250807062038.13610-1-chizhang@asrmicro.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250629203859.170850-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mmc/host/renesas_sdhi_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 22fd7ebd5cf3f..9485737638b3c 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -586,8 +586,10 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 				break;
- 			case PIN_CONFIG_BIAS_PULL_DOWN:
- 			case PIN_CONFIG_BIAS_PULL_UP:
--				if (arg)
-+				if (arg) {
- 					pcs_pinconf_clear_bias(pctldev, pin);
-+					data = pcs->read(pcs->base + offset);
-+				}
- 				fallthrough;
- 			case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
- 				data &= ~func->conf[i].mask;
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index a15b44ca87d35..c0acb309e3243 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -183,7 +183,11 @@ static void renesas_sdhi_set_clock(struct tmio_mmc_host *host,
+ 			clk &= ~0xff;
+ 	}
+ 
+-	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clk & CLK_CTL_DIV_MASK);
++	clock = clk & CLK_CTL_DIV_MASK;
++	if (clock != 0xff)
++		host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
++
++	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clock);
+ 	if (!(host->pdata->flags & TMIO_MMC_MIN_RCAR2))
+ 		usleep_range(10000, 11000);
+ 
 -- 
 2.51.0
 
