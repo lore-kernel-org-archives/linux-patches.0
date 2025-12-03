@@ -1,40 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342DC2FB987;
-	Wed,  3 Dec 2025 20:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A212FFF98;
+	Wed,  3 Dec 2025 20:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764793780; cv=none; b=IVVcjXwP+E5r+dk3byt27jH+BnplDAFvGV5fGtLDTgf7tJvxx25GHTX92pmo7MB5Uh7S7rcLXavG05jdX9fLOGmYa40sVgDzeSKm6ffwd5bysmzOBcw4mHWG41LqZWINwKN0pPbuNButxCGDnzfBL2//yd6bXbTviZ3wn8Fucfs=
+	t=1764793782; cv=none; b=B/jQgssww0gjb7NZHVW8voaAHmrXXWtm4RjyXaLIlT86AAjopTKKvhVCtQdsqyebBM8JM/Z7E8mcwt0aJZSqPVgIF8D+OabyuDa1rzx2CK6AdIpBx6TWcsdY57Yee3gM32HRq7S2fYHZmLl1qwJoOppi/C84ablhZwI2GhBqyQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764793780; c=relaxed/simple;
-	bh=Mb1bm1d9o9me5mGeDh0YdJ0PFI6UcFHvFGARmB3BzD0=;
+	s=arc-20240116; t=1764793782; c=relaxed/simple;
+	bh=h8B0Zjix0+jmOtI6eBS4vfgWeG0zQjRVR6cYNlU89PM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HDsT18VW35JBvWIBwTlILZwASsX6VRNXjJEpkxqoplWoE5u9Kp+yVJ3agi/8aA1KZG4YRf+q2EntyPDM1IU+rP2JvdfbAw0ysvhL6O3ukNTysRVedtRMTdENswpyMawSdt5Bgnlk9SYmWG6ScZLKzQ0jpIZ497M3TbIYSNr8WwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=byO8E7cD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KYukWEGyFOM+rQsuWSvS0nlta/udrgTMXq9IBJYVKEhShRkM4426upUuGbmGkMW2kbWcndc+O9wuXgVC/RAtBoKcIjJCzuN3ovNsHYeeBKXSHdhNVMjPkOSO/VNGo9sXeReoT2n1iSQNriEpxqcaP/WkgwhVrCTxZUwNhcAYUAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dixTMhdP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="byO8E7cD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE739C4CEFB;
-	Wed,  3 Dec 2025 20:29:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dixTMhdP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44ECC4CEFB;
+	Wed,  3 Dec 2025 20:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764793779;
-	bh=Mb1bm1d9o9me5mGeDh0YdJ0PFI6UcFHvFGARmB3BzD0=;
+	s=k20201202; t=1764793782;
+	bh=h8B0Zjix0+jmOtI6eBS4vfgWeG0zQjRVR6cYNlU89PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byO8E7cDCCa+Z7CVu2WA7EUNcDo53LOpuwwAqZKuOz8j/NTX659dNvLt5Msux+Izs
-	 cZz7KGS7bVy6zHCy9rEqJINwkVMY8+pT942VXbjql2CbNLmr3jcN0CIEDbB5x6Gpl2
-	 ToMjmoTp9KqGC5pHVPSaMzvsHIN8AaiUJAJQ99j4mcemIGLfnKwXyQJWUFGf6bwXgT
-	 UaaiHC6bnKrFRqRcM0j7OJnjheewsDWMfb9TIATuMFxV7GJx7udVKUjKtT4YcjxfJe
-	 BQcEYA9tqOITAYQj7Oq0tbe8mxUh6Wf3fCDuw1pUMW9LY2keSGfJaILcEBxetsQkFC
-	 7QhAQowuxWplA==
+	b=dixTMhdPcgUkynepIlEj8qQB0tf3IwuIztNGcc/M7QhmAhfhDU+wHxyeMGZOE47mF
+	 7hBKt792PBPGsdCynsy7/fJKRsH5s6GlhHzgAv31FQ7vjEeNAqwrs9Yeu3rAHk+9xx
+	 Y3Nu4HbG0CV3CfqoePh1zlR8FNOudksZH8fXjGsYsi+mHnBLNi8D6MGNE7Fm1VNkJj
+	 oaVJDSOCV6KH9Qu5RLTp/JCkuMjdlE232rx2I2muM+Ze1cpzxGJukJdNkbrr6pcxwl
+	 cXA7pWZy4sD7RE6879aSsC5mZEm7+lbOlJCcTswNaQR7hHhWwr4hG1muD4YxiNYU1K
+	 FXS0zewxirgCg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pankaj Raghav <p.raghav@samsung.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.18-6.12] scripts/faddr2line: Fix "Argument list too long" error
-Date: Wed,  3 Dec 2025 15:29:28 -0500
-Message-ID: <20251203202933.826777-2-sashal@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	Joseph Salisbury <joseph.salisbury@oracle.com>,
+	Adam Li <adamli@os.amperecomputing.com>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
+	Chris Mason <clm@meta.com>,
+	Sasha Levin <sashal@kernel.org>,
+	mingo@redhat.com,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] sched/fair: Revert max_newidle_lb_cost bump
+Date: Wed,  3 Dec 2025 15:29:29 -0500
+Message-ID: <20251203202933.826777-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251203202933.826777-1-sashal@kernel.org>
 References: <20251203202933.826777-1-sashal@kernel.org>
@@ -50,271 +58,276 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pankaj Raghav <p.raghav@samsung.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit ff5c0466486ba8d07ab2700380e8fd6d5344b4e9 ]
+[ Upstream commit d206fbad9328ddb68ebabd7cf7413392acd38081 ]
 
-The run_readelf() function reads the entire output of readelf into a
-single shell variable. For large object files with extensive debug
-information, the size of this variable can exceed the system's
-command-line argument length limit.
+Many people reported regressions on their database workloads due to:
 
-When this variable is subsequently passed to sed via `echo "${out}"`, it
-triggers an "Argument list too long" error, causing the script to fail.
+  155213a2aed4 ("sched/fair: Bump sd->max_newidle_lb_cost when newidle balance fails")
 
-Fix this by redirecting the output of readelf to a temporary file
-instead of a variable. The sed commands are then modified to read from
-this file, avoiding the argument length limitation entirely.
+For instance Adam Li reported a 6% regression on SpecJBB.
 
-Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Conversely this will regress schbench again; on my machine from 2.22
+Mrps/s down to 2.04 Mrps/s.
+
+Reported-by: Joseph Salisbury <joseph.salisbury@oracle.com>
+Reported-by: Adam Li <adamli@os.amperecomputing.com>
+Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Reported-by: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Tested-by: Chris Mason <clm@meta.com>
+Link: https://lkml.kernel.org/r/20250626144017.1510594-2-clm@fb.com
+Link: https://lkml.kernel.org/r/006c9df2-b691-47f1-82e6-e233c3f91faf@oracle.com
+Link: https://patch.msgid.link/20251107161739.406147760@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Comprehensive Analysis of Commit ff5c0466486ba
+Now I have all the information needed for a comprehensive analysis. Let
+me compile my findings.
+
+---
+
+## COMPREHENSIVE BACKPORT ANALYSIS
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: `scripts/faddr2line: Fix "Argument list too long" error`
+**Subject:** `sched/fair: Revert max_newidle_lb_cost bump`
 
-The commit message clearly identifies this as a **bug fix** with
-explicit use of the word "Fix" and a specific error being addressed.
+**Key signals:**
+- **"Revert"** - This is undoing a previous change that caused problems
+- **Multiple "Reported-by:" tags** from major organizations:
+  - Joseph Salisbury (Oracle)
+  - Adam Li (Ampere Computing)
+  - Dietmar Eggemann (ARM)
+  - Hazem Mohamed Abuelfotoh (Amazon)
+- **"Tested-by:" and "Reviewed-by:"** tags showing validation
+- **Explicit regression** mentioned: "6% regression on SpecJBB"
+- **No "Cc: stable" tag** explicitly, but this is fixing a regression in
+  code that WAS backported
 
-**Key elements**:
-- **Problem identified**: The `run_readelf()` function stores readelf
-  output in a shell variable, which can exceed the system's `ARG_MAX`
-  limit (typically 2MB on Linux)
-- **Failure mode**: When `echo "${out}"` is used to pipe to sed, the
-  shell expansion triggers "Argument list too long" (E2BIG error)
-- **Solution**: Redirect readelf output to a temporary file, have sed
-  read from the file directly
-
-**Important missing tags**:
-- **No `Cc: stable@vger.kernel.org` tag** - maintainer did not
-  explicitly request backport
-- **No `Fixes:` tag** - though the bug was clearly introduced in commit
-  `b8d9d9496c1e7`
-
----
+**Missing Fixes: tag:** There's no explicit `Fixes:` tag, but the commit
+message clearly states it reverts `155213a2aed4`.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change modifies the `run_readelf()` function in
-`scripts/faddr2line`:
+The revert removes two related changes from the original commit:
 
-**Before (buggy code):**
-```bash
-run_readelf() {
-    local objfile=$1
-    local out=$(${READELF} --file-header --section-headers --symbols
---wide $objfile)
+**Change 1 - `update_newidle_cost()` function:**
+```c
+// BEFORE (problematic - being reverted):
+sd->max_newidle_lb_cost = min(cost, sysctl_sched_migration_cost + 200);
 
-    ELF_FILEHEADER=$(echo "${out}" | sed -n '...')
-    ELF_SECHEADERS=$(echo "${out}" | sed -n '...')
-    ELF_SYMS=$(echo "${out}" | sed -n '...')
-}
+// AFTER (restored original):
+sd->max_newidle_lb_cost = cost;
 ```
 
-**After (fixed code):**
-```bash
-run_readelf() {
-    local objfile=$1
-    local tmpfile
-    tmpfile=$(mktemp)
+**Change 2 - `sched_balance_newidle()` function:**
+```c
+// BEFORE (problematic - being reverted):
+domain_cost = t1 - t0;
+curr_cost += domain_cost;
+t0 = t1;
 
-    ${READELF} --file-header --section-headers --symbols --wide
-"$objfile" > "$tmpfile"
+if (!pulled_task)
+    domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
 
-    ELF_FILEHEADER=$(sed -n '...' "$tmpfile")
-    ELF_SECHEADERS=$(sed -n '...' "$tmpfile")
-    ELF_SYMS=$(sed -n '...' "$tmpfile")
+update_newidle_cost(sd, domain_cost);
 
-    rm -f -- "$tmpfile"
-}
+// AFTER (restored original):
+domain_cost = t1 - t0;
+update_newidle_cost(sd, domain_cost);
+
+curr_cost += domain_cost;
+t0 = t1;
 ```
 
-**Technical mechanism of the bug**:
-1. `readelf` output for large vmlinux with `CONFIG_DEBUG_INFO` can
-   easily exceed 2MB
-2. When bash expands `${out}` in `echo "${out}"`, the expanded text
-   becomes part of the argument vector
-3. Linux enforces `ARG_MAX` limit (~2MB by default) on total argument
-   size for `execve()`
-4. When exceeded, the kernel returns `E2BIG` error, causing "Argument
-   list too long"
+**Technical explanation:**
+The original commit 155213a2aed4 tried to fix a schbench regression by:
+1. Capping `max_newidle_lb_cost` to `sysctl_sched_migration_cost + 200`
+2. Artificially bumping the cost by 50% when newidle balance fails to
+   find work
 
-**Why the fix works**:
-- Writing to a file bypasses `ARG_MAX` entirely
-- `sed` can read arbitrarily large files without limit
-- `mktemp` ensures safe temp file creation; `rm -f -- "$tmpfile"`
-  properly cleans up
-
-**Code quality**:
-- Proper quoting of `"$objfile"` (fixed unquoted variable)
-- Uses `--` in `rm` to handle files starting with `-`
-- Clean, minimal change
-
----
+The intent was to make the scheduler stop doing expensive newidle
+balancing operations that weren't productive. However, this approach was
+too aggressive and caused database workloads to suffer because they rely
+on the scheduler's ability to quickly migrate tasks to idle CPUs.
 
 ### 3. CLASSIFICATION
 
-- **Bug type**: Real functional bug causing tool failure
-- **Exception category**: This is a **BUILD/TOOL FIX** - faddr2line is a
-  developer tool used for analyzing stack traces from kernel oopses
-- **Security implications**: None
+| Category | Assessment |
+|----------|------------|
+| Bug fix | **YES** - Fixing a performance regression |
+| Security fix | NO |
+| Feature addition | NO - This removes code |
+| Cleanup/refactoring | NO |
+| Device ID/quirk | NO |
 
----
+This is a **clear regression fix** - the original commit caused
+measurable performance degradation in real-world workloads.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Metric | Value |
-|--------|-------|
-| Lines changed | +9/-4 (13 total) |
-| Files modified | 1 (`scripts/faddr2line`) |
-| Subsystem | Developer scripts (not kernel runtime code) |
-| Risk level | **VERY LOW** |
+**Size:** 1 file, 19 lines changed (-16 lines removed, +3 lines added)
 
-**Why risk is minimal**:
-- It's a shell script, not compiled kernel code
-- Cannot cause kernel crashes or data corruption
-- Logically equivalent transformation (temp file vs shell variable)
-- Well-understood shell programming pattern
+**Complexity:** LOW - This is a straight revert removing problematic
+logic
 
----
+**Subsystem:** Scheduler (kernel/sched/fair.c) - Core but well-tested
+area
+
+**Risk factors:**
+- ✅ Simple revert to known-good state
+- ✅ Tested by multiple parties
+- ✅ Well-understood change
+- ⚠️ Will cause schbench regression (~8%), but this is a synthetic
+  benchmark
 
 ### 5. USER IMPACT
 
-**Who is affected**:
-- Kernel developers debugging oopses/crashes using faddr2line
-- Anyone using faddr2line on vmlinux with `CONFIG_DEBUG_INFO` enabled
+**Who is affected:**
+- **Database workloads** (SpecJBB) - MAJOR, 6% regression fixed
+- **Production systems** running Oracle, Amazon, ARM platforms
+- Any workload relying on fast task migration to idle CPUs
 
-**Impact severity**:
-- **HIGH within scope**: The tool fails completely on large object files
-- **Limited audience**: Developer tool, not end-user facing
-
-**Real-world trigger**:
-- Building vmlinux with `CONFIG_DEBUG_INFO=y` (common for debugging)
-- Running `scripts/faddr2line vmlinux func+0x123`
-- If readelf output > 2MB, **script fails completely**
-
----
+**Severity:** HIGH - This affects real production database workloads
+with measurable performance impact
 
 ### 6. STABILITY INDICATORS
 
-- **Author**: Pankaj Raghav (Samsung) - active kernel contributor
-- **Signed-off-by**: Josh Poimboeuf - **official MAINTAINER** for
-  faddr2line per `MAINTAINERS` file
-- **No Tested-by tag**, but the fix is straightforward
+| Tag | Present |
+|-----|---------|
+| Reviewed-by | ✅ Dietmar Eggemann (ARM) |
+| Tested-by | ✅ Dietmar Eggemann (ARM), Chris Mason (Meta) |
+| Signed-off-by | ✅ Peter Zijlstra (Intel) - scheduler maintainer |
 
----
+**Maturity:** The revert was authored by Peter Zijlstra, the primary
+Linux scheduler maintainer, demonstrating careful consideration.
 
 ### 7. DEPENDENCY CHECK
 
-**Bug introduction**: Commit `b8d9d9496c1e7` ("scripts/faddr2line:
-Combine three readelf calls into one") first appeared in **v6.11-rc1**
+I verified the commits between the original and the revert:
 
-**Affected stable versions**:
-- v6.11.y: **HAS BUGGY CODE** ✓
-- v6.12.y: **HAS BUGGY CODE** ✓
-- v6.6.y: Does NOT have buggy code (older implementation)
-- v6.1.y: Does NOT have buggy code (older implementation)
+```
+d206fbad9328d sched/fair: Revert max_newidle_lb_cost bump
+522fb20fbdbe4 sched/fair: Have SD_SERIALIZE affect newidle balancing
+...
+```
 
-**Patch applicability**:
-- ✓ Applies cleanly to v6.11
-- ✓ Applies cleanly to v6.12
-- Not needed for v6.6 and earlier
+The `SD_SERIALIZE` commit (522fb20fbdbe4) touches `sched_balance_rq()`,
+not the areas modified by the revert. **No dependencies or conflicts
+detected.**
 
-**Dependencies**: None - completely self-contained fix
+### 8. STABLE TREE STATUS - CRITICAL FINDING
+
+**The original problematic commit WAS backported to multiple stable
+branches:**
+
+| Stable Branch | Original Commit Hash | Revert Status |
+|--------------|---------------------|---------------|
+| 6.12.y (LTS) | fc4289233e4b7 | ❌ NOT REVERTED |
+| 6.15.y | a4946f4b01421 | ❌ NOT REVERTED |
+| 6.16.y | c6e88242c06d4 | ❌ NOT REVERTED |
+| 6.17.y | 155213a2aed4 | ❌ NOT REVERTED |
+| 6.18.y | 155213a2aed4 | ❌ NOT REVERTED |
+
+**This means all these stable branches currently have the regression-
+causing code!**
+
+I verified the code in these branches - they all have:
+1. The capped `min(cost, sysctl_sched_migration_cost + 200)`
+2. The bump logic `(3 * sd->max_newidle_lb_cost) / 2`
+
+The revert applies cleanly because the code structure is identical.
+
+### 9. TRADE-OFF ANALYSIS
+
+| Workload | Impact |
+|----------|--------|
+| SpecJBB (database) | **+6% restored** |
+| schbench (synthetic) | -8% regression |
+
+The maintainers deliberately chose to prioritize real-world database
+workloads over a synthetic microbenchmark. This is the correct decision
+for stable trees.
 
 ---
 
-### 8. HISTORICAL CONTEXT
+## FINAL ASSESSMENT
 
-The bug was introduced as an unintended side effect of a performance
-optimization:
+**This commit SHOULD be backported to stable trees because:**
 
-```
-39cf650d68289 (Apr 2024): Introduced run_readelf() with 3 separate
-readelf calls
-b8d9d9496c1e7 (Jul 2024): Combined into single readelf call, storing in
-variable
-                          ← BUG INTRODUCED HERE
-ff5c0466486ba (Oct 2025): Fix by using temp file instead of variable
-```
+1. **Fixes a real performance regression** - 6% on database workloads is
+   significant
+2. **Multiple independent reporters** from Oracle, Ampere, ARM, and
+   Amazon confirms real-world impact
+3. **The problematic commit was already backported** to 6.12.y, 6.15.y,
+   6.16.y, 6.17.y, and 6.18.y - users of these stable trees are
+   currently affected
+4. **Simple, low-risk change** - It's a revert returning to previous
+   stable behavior
+5. **Small and contained** - 19 lines in one file, no architectural
+   changes
+6. **Well-tested** - Has Tested-by and Reviewed-by tags from ARM and
+   Meta engineers
+7. **Authored by maintainer** - Peter Zijlstra (scheduler maintainer)
+   made this decision deliberately
+8. **Clean backport** - Code matches exactly in stable trees, will apply
+   without conflicts
 
-The original optimization was well-intentioned (reduce readelf
-invocations from many to one), but the implementer didn't account for
-the `ARG_MAX` limit.
-
----
-
-### FINAL ASSESSMENT
-
-**Arguments FOR backporting**:
-1. ✓ **Obviously correct**: The fix is a standard shell scripting
-   pattern to avoid `ARG_MAX` limits
-2. ✓ **Fixes real bug**: Tool fails completely on large vmlinux files
-   (not theoretical)
-3. ✓ **Small and contained**: Only 13 lines changed in one file
-4. ✓ **No new features**: Pure bug fix
-5. ✓ **Applies cleanly**: Tested on v6.11 and v6.12
-6. ✓ **No dependencies**: Self-contained
-7. ✓ **Zero runtime risk**: It's a shell script, not kernel code
-8. ✓ **Maintainer approved**: Josh Poimboeuf signed off
-
-**Arguments AGAINST backporting**:
-1. ✗ No explicit `Cc: stable@vger.kernel.org` tag
-2. ✗ No `Fixes:` tag pointing to the introducing commit
-3. ✗ Developer tool, not end-user visible
-
-**Verdict**: The lack of explicit stable tags is not disqualifying. This
-is a clear, surgical bug fix to a commonly-used developer tool. The fix
-has zero risk of causing regressions (it's a shell script), and it
-enables faddr2line to work correctly on large vmlinux files. For
-developers using stable kernels (6.11.y, 6.12.y) who need to debug
-kernel issues, having a functioning faddr2line is valuable.
-
-The fix meets all the technical criteria for stable backporting:
-- Obviously correct
-- Fixes a real bug that affects users
-- Small and contained
-- No new features
+**This is exactly the type of fix stable trees need:** fixing
+regressions introduced by prior backports, with minimal risk and maximum
+user benefit.
 
 **YES**
 
- scripts/faddr2line | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c | 19 +++----------------
+ 1 file changed, 3 insertions(+), 16 deletions(-)
 
-diff --git a/scripts/faddr2line b/scripts/faddr2line
-index 1fa6beef9f978..477b6d2aa3179 100755
---- a/scripts/faddr2line
-+++ b/scripts/faddr2line
-@@ -107,14 +107,19 @@ find_dir_prefix() {
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 5b752324270b0..9492a1de2501a 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -12159,14 +12159,8 @@ static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
+ 		/*
+ 		 * Track max cost of a domain to make sure to not delay the
+ 		 * next wakeup on the CPU.
+-		 *
+-		 * sched_balance_newidle() bumps the cost whenever newidle
+-		 * balance fails, and we don't want things to grow out of
+-		 * control.  Use the sysctl_sched_migration_cost as the upper
+-		 * limit, plus a litle extra to avoid off by ones.
+ 		 */
+-		sd->max_newidle_lb_cost =
+-			min(cost, sysctl_sched_migration_cost + 200);
++		sd->max_newidle_lb_cost = cost;
+ 		sd->last_decay_max_lb_cost = jiffies;
+ 	} else if (time_after(jiffies, sd->last_decay_max_lb_cost + HZ)) {
+ 		/*
+@@ -12858,17 +12852,10 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
  
- run_readelf() {
- 	local objfile=$1
--	local out=$(${READELF} --file-header --section-headers --symbols --wide $objfile)
-+	local tmpfile
-+	tmpfile=$(mktemp)
+ 			t1 = sched_clock_cpu(this_cpu);
+ 			domain_cost = t1 - t0;
++			update_newidle_cost(sd, domain_cost);
 +
-+	${READELF} --file-header --section-headers --symbols --wide "$objfile" > "$tmpfile"
+ 			curr_cost += domain_cost;
+ 			t0 = t1;
+-
+-			/*
+-			 * Failing newidle means it is not effective;
+-			 * bump the cost so we end up doing less of it.
+-			 */
+-			if (!pulled_task)
+-				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
+-
+-			update_newidle_cost(sd, domain_cost);
+ 		}
  
- 	# This assumes that readelf first prints the file header, then the section headers, then the symbols.
- 	# Note: It seems that GNU readelf does not prefix section headers with the "There are X section headers"
- 	# line when multiple options are given, so let's also match with the "Section Headers:" line.
--	ELF_FILEHEADER=$(echo "${out}" | sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/q;p')
--	ELF_SECHEADERS=$(echo "${out}" | sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/,$p' | sed -n '/Symbol table .* contains [0-9]* entries:/q;p')
--	ELF_SYMS=$(echo "${out}" | sed -n '/Symbol table .* contains [0-9]* entries:/,$p')
-+	ELF_FILEHEADER=$(sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/q;p' "$tmpfile")
-+	ELF_SECHEADERS=$(sed -n '/There are [0-9]* section headers, starting at offset\|Section Headers:/,$p' "$tmpfile" | sed -n '/Symbol table .* contains [0-9]* entries:/q;p')
-+	ELF_SYMS=$(sed -n '/Symbol table .* contains [0-9]* entries:/,$p' "$tmpfile")
-+
-+	rm -f -- "$tmpfile"
- }
- 
- check_vmlinux() {
+ 		/*
 -- 
 2.51.0
 
