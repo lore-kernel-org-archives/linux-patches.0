@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B2A313E00;
-	Wed,  3 Dec 2025 15:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772F3313E00;
+	Wed,  3 Dec 2025 15:46:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776771; cv=none; b=CqGSZvHSgBjWnFptcb0URqSIcEyJixyuCk3PbYI9Lohc+NGdSWUmaiM+7b3s7cpXW0DX7UMkJaJQixa0IiYwjHLnnLSEO5iTHu+3orO9gSMrAkpr4e69QNCN5wSgHyjKyPc3Jh7vsXflquyLlqN66uOSA381KkYDNXuVKpSBnPQ=
+	t=1764776774; cv=none; b=L3ZWMiL2kt7uWwCMXvj3w9PubNf2SAenC0MLcN8WpTAHjn9uROfJPxj79/27FWoPV0Dht5P25x9likVPN8nMxcGQooduHbev9xGw/RqD8KoDX+ZBs8WB5CLNTJiWq1BGn3JpZX7YV48cXTGlXOL3vzsC+tRQygeIYSWcQjQmH4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776771; c=relaxed/simple;
-	bh=KakpE9ql+E08l1BOhbRQZrp2qjsr04ga2hDCTH55b1g=;
+	s=arc-20240116; t=1764776774; c=relaxed/simple;
+	bh=pSGhcBfJhahy2gBzPJKAdbyI1+fPWhZ7S52p42w8Ecc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlMB90WEimsuvZmrrLKWsW18T0Fz3q06xxeu2DxlOEzmVCPrjiGPDYcKnQ7DOjB2G6XGBwoW+CxLZRvPw1/gL3mpW9VAh5FxXNiK9KFT2+nQdP3TIFAA8rKutRtxoHO/2DTvJwSU28z4IquGdi8rnIYBM9FhXdEDYl4SpPtOIXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zaTmayi+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UZIULfEt4CEfewzlB8fvrupz04ZTOtZufvUCotzeDmc8bfw+7eoCUx9bOjZntHLSTk5N2/HFYzHaL1RRNdkFL7pMi4XO0aGqXYqJRamQi6NHmcbHU0gyhwqH44kn2yufDDVPKlZN4X5zwgJrKIQsVLdr2WxWUP032pLBYrVlEHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mlaxKgf8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zaTmayi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96791C4CEF5;
-	Wed,  3 Dec 2025 15:46:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mlaxKgf8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF731C4CEF5;
+	Wed,  3 Dec 2025 15:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776771;
-	bh=KakpE9ql+E08l1BOhbRQZrp2qjsr04ga2hDCTH55b1g=;
+	s=korg; t=1764776774;
+	bh=pSGhcBfJhahy2gBzPJKAdbyI1+fPWhZ7S52p42w8Ecc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zaTmayi++XuvzSDZMDBJcdjxtRk+z017qwfrbToEZaVQZTcQyQzha4Uuix1tns+E0
-	 bWMRJAm7/7FBoZo5HMJrFZQSUywDyCM/MfogjxkxIDqP2hxUPKygl6BykdZSCONvhW
-	 xga+9PihY665jR80UFcmCUTm9oL8opB8WWTmqzsU=
+	b=mlaxKgf831oqp75SMmZZUk+Y/VfKZqmw5Jb5dxmRqjwBYwMNHprnx9gp/xio7zl/J
+	 Mc76IM1JbwzqORFUbsO/iccrYdG/pO9XbGGBfbC7mcB21I43zl+ijwvWFiv1P1B7+8
+	 w9g41cydnZ6F8+abQ8/lcGUP1vptSZjzxlU7sNcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ang Tien Sung <tiensung.ang@altera.com>,
-	Khairul Anuar Romli <khairul.anuar.romli@altera.com>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 5.10 275/300] firmware: stratix10-svc: fix bug in saving controller data
-Date: Wed,  3 Dec 2025 16:27:59 +0100
-Message-ID: <20251203152410.817393010@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 284/300] xhci: dbgtty: Fix data corruption when transmitting data form DbC to host
+Date: Wed,  3 Dec 2025 16:28:08 +0100
+Message-ID: <20251203152411.145565022@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -45,75 +44,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit d0fcf70c680e4d1669fcb3a8632f41400b9a73c2 upstream.
+commit f6bb3b67be9af0cfb90075c60850b6af5338a508 upstream.
 
-Fix the incorrect usage of platform_set_drvdata and dev_set_drvdata. They
-both are of the same data and overrides each other. This resulted in the
-rmmod of the svc driver to fail and throw a kernel panic for kthread_stop
-and fifo free.
+Data read from a DbC device may be corrupted due to a race between
+ongoing write and write request completion handler both queuing new
+transfer blocks (TRBs) if there are remining data in the kfifo.
 
-Fixes: b5dc75c915cd ("firmware: stratix10-svc: extend svc to support new RSU features")
-Cc: stable@vger.kernel.org # 6.6+
-Signed-off-by: Ang Tien Sung <tiensung.ang@altera.com>
-Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+TRBs may be in incorrct order compared to the data in the kfifo.
+
+Driver fails to keep lock between reading data from kfifo into a
+dbc request buffer, and queuing the request to the transfer ring.
+
+This allows completed request to re-queue itself in the middle of
+an ongoing transfer loop, forcing itself between a kfifo read and
+request TRB write of another request
+
+cpu0					cpu1 (re-queue completed req2)
+
+lock(port_lock)
+dbc_start_tx()
+kfifo_out(fifo, req1->buffer)
+unlock(port_lock)
+					lock(port_lock)
+					dbc_write_complete(req2)
+					dbc_start_tx()
+      					kfifo_out(fifo, req2->buffer)
+					unlock(port_lock)
+					lock(port_lock)
+					req2->trb = ring->enqueue;
+					ring->enqueue++
+					unlock(port_lock)
+lock(port_lock)
+req1->trb = ring->enqueue;
+ring->enqueue++
+unlock(port_lock)
+
+In the above scenario a kfifo containing "12345678" would read "1234" to
+req1 and "5678" to req2, but req2 is queued before req1 leading to
+data being transmitted as "56781234"
+
+Solve this by adding a flag that prevents starting a new tx if we
+are already mid dbc_start_tx() during the unlocked part.
+
+The already running dbc_do_start_tx() will make sure the newly completed
+request gets re-queued as it is added to the request write_pool while
+holding the lock.
+
+Cc: stable@vger.kernel.org
+Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
+Tested-by: Łukasz Bartosik <ukaszb@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://patch.msgid.link/20251107162819.1362579-3-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/stratix10-svc.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-dbgcap.h |    1 +
+ drivers/usb/host/xhci-dbgtty.c |   17 ++++++++++++++++-
+ 2 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -127,6 +127,7 @@ struct stratix10_svc_data {
-  * @complete_status: state for completion
-  * @svc_fifo_lock: protect access to service message data queue
-  * @invoke_fn: function to issue secure monitor call or hypervisor call
-+ * @svc: manages the list of client svc drivers
-  *
-  * This struct is used to create communication channels for service clients, to
-  * handle secure monitor or hypervisor call.
-@@ -143,6 +144,7 @@ struct stratix10_svc_controller {
- 	struct completion complete_status;
- 	spinlock_t svc_fifo_lock;
- 	svc_invoke_fn *invoke_fn;
-+	struct stratix10_svc *svc;
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -110,6 +110,7 @@ struct dbc_port {
+ 	struct kfifo			write_fifo;
+ 
+ 	bool				registered;
++	bool				tx_running;
  };
  
- /**
-@@ -1038,6 +1040,7 @@ static int stratix10_svc_drv_probe(struc
- 		ret = -ENOMEM;
- 		goto err_free_kfifo;
- 	}
-+	controller->svc = svc;
+ struct dbc_driver {
+--- a/drivers/usb/host/xhci-dbgtty.c
++++ b/drivers/usb/host/xhci-dbgtty.c
+@@ -37,7 +37,7 @@ dbc_send_packet(struct dbc_port *port, c
+ 	return size;
+ }
  
- 	svc->stratix10_svc_rsu = platform_device_alloc(STRATIX10_RSU, 0);
- 	if (!svc->stratix10_svc_rsu) {
-@@ -1050,8 +1053,6 @@ static int stratix10_svc_drv_probe(struc
- 	if (ret)
- 		goto err_put_device;
- 
--	dev_set_drvdata(dev, svc);
--
- 	pr_info("Intel Service Layer Driver Initialized\n");
- 
- 	return 0;
-@@ -1065,8 +1066,8 @@ err_free_kfifo:
- 
- static int stratix10_svc_drv_remove(struct platform_device *pdev)
+-static int dbc_start_tx(struct dbc_port *port)
++static int dbc_do_start_tx(struct dbc_port *port)
+ 	__releases(&port->port_lock)
+ 	__acquires(&port->port_lock)
  {
--	struct stratix10_svc *svc = dev_get_drvdata(&pdev->dev);
- 	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
-+	struct stratix10_svc *svc = ctrl->svc;
+@@ -47,6 +47,8 @@ static int dbc_start_tx(struct dbc_port
+ 	bool			do_tty_wake = false;
+ 	struct list_head	*pool = &port->write_pool;
  
- 	platform_device_unregister(svc->stratix10_svc_rsu);
++	port->tx_running = true;
++
+ 	while (!list_empty(pool)) {
+ 		req = list_entry(pool->next, struct dbc_request, list_pool);
+ 		len = dbc_send_packet(port, req->buf, DBC_MAX_PACKET);
+@@ -67,12 +69,25 @@ static int dbc_start_tx(struct dbc_port
+ 		}
+ 	}
  
++	port->tx_running = false;
++
+ 	if (do_tty_wake && port->port.tty)
+ 		tty_wakeup(port->port.tty);
+ 
+ 	return status;
+ }
+ 
++/* must be called with port->port_lock held */
++static int dbc_start_tx(struct dbc_port *port)
++{
++	lockdep_assert_held(&port->port_lock);
++
++	if (port->tx_running)
++		return -EBUSY;
++
++	return dbc_do_start_tx(port);
++}
++
+ static void dbc_start_rx(struct dbc_port *port)
+ 	__releases(&port->port_lock)
+ 	__acquires(&port->port_lock)
 
 
