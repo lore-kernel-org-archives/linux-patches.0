@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965682FB0B4;
-	Wed,  3 Dec 2025 16:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E03D313546;
+	Wed,  3 Dec 2025 16:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778045; cv=none; b=Ucxn5xqCF1GdMbyD/EQQRFY57ju7n9905HTmdeXDgNqSsHgX30wmtfev84eqnOmdlSSQdsTMrgej0YottK+pwl2JCUZkFNVJY3Y4+Dn/6SbQUEy1xx+9h7hgAbXrpPcdm32oNPW5kD98LwZ81KtSl/H66KoHLFLDQPlsRu8qItE=
+	t=1764778048; cv=none; b=Mp8HJ3ur/2StHnOzch4WwPsEyVai42HyJI5nEEL6nsxTL5XqMUQGojen6ihLG0KkW2e2UpId/AR13qQi3SnRpJH/0SWqxf/6RHrkeiHJZdysCu+noI6EUaWZEO0DA2Sv60eiZaiCPANNOYyWHkn9FFDlvcBZybyrUjGaHFfcu2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778045; c=relaxed/simple;
-	bh=6xQZERcSWnzJDyn5IQqBUOvLTdmdBJgz6+Stylh5zEg=;
+	s=arc-20240116; t=1764778048; c=relaxed/simple;
+	bh=HUPccETqboeJN1+1LmMxli1KY7ZoEhxPdzq+8EkW+K8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfqJ0L8mKuCfT84Se4hUn5J0DHhFvayCYBrzdroVpQerlsVHar1MyE9IVHu/N/lp7of2s6OQeqwDEI58906PQ+byzab8VXlrQsytPvuO91k82HwmSQAvAUi+SQ91ZS3MrR6sgDRnE89Aziy5OgO+L2T5uGjSnpCsgqhtJXooxFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ezWFtJnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fK+g/C1Tb8xowL9li3uC3pzyeULOOwx1218Q9/g7VvlCjjK1PorirWNVkGZ+Wh4BmX+Ba1MlY6tOC0lq6fixjO3AtjAMZpGN1DoMPmJYDCCzX+6g/r0Jbk2Otm6MTJkRj6KFRM0xPc6bp+0KOLUS+K/29U600bgnZD4lHWOaS5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNbYsT2s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ezWFtJnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05310C4CEF5;
-	Wed,  3 Dec 2025 16:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNbYsT2s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197D0C4CEF5;
+	Wed,  3 Dec 2025 16:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778045;
-	bh=6xQZERcSWnzJDyn5IQqBUOvLTdmdBJgz6+Stylh5zEg=;
+	s=korg; t=1764778048;
+	bh=HUPccETqboeJN1+1LmMxli1KY7ZoEhxPdzq+8EkW+K8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezWFtJnr14vWsVhV5J7ACcKKhc/egMahcO49lz8Rq5OOQfvQWH4acQLm/65VSaNQh
-	 8KsjUfbNYyWIP7wbiaexjI7MiTOEHxaW3PcLEkE1tt/pm3qxxNDidNQXqcvZMHC87Z
-	 BCoO8AmtpgUGG2BlE8m3LoE+lLpeuST+7Jq+9AZk=
+	b=KNbYsT2sq42jI7kEZYe7CWYFTKFiifnLIe+cBcx/5OlhVgIUNnPun6PMuvcG6wwH1
+	 /yDvzddohZK1RrNN7FGboSkGCJVySvgK2F+7QlOWVBCiRxreO/sIAuKaEin5Ob5LcY
+	 FiF7Fl+SnyT1aiRZbQ3eBTMJociExkcAj9itXyRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuta Hayama <hayama@lineo.co.jp>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 5.15 226/392] rtc: rx8025: fix incorrect register reference
-Date: Wed,  3 Dec 2025 16:26:16 +0100
-Message-ID: <20251203152422.500240321@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 5.15 227/392] lib/crypto: curve25519-hacl64: Fix older clang KASAN workaround for GCC
+Date: Wed,  3 Dec 2025 16:26:17 +0100
+Message-ID: <20251203152422.536149420@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,33 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuta Hayama <hayama@lineo.co.jp>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 162f24cbb0f6ec596e7e9f3e91610d79dc805229 upstream.
+commit 2b81082ad37cc3f28355fb73a6a69b91ff7dbf20 upstream.
 
-This code is intended to operate on the CTRL1 register, but ctrl[1] is
-actually CTRL2. Correctly, ctrl[0] is CTRL1.
+Commit 2f13daee2a72 ("lib/crypto/curve25519-hacl64: Disable KASAN with
+clang-17 and older") inadvertently disabled KASAN in curve25519-hacl64.o
+for GCC unconditionally because clang-min-version will always evaluate
+to nothing for GCC. Add a check for CONFIG_CC_IS_CLANG to avoid applying
+the workaround for GCC, which is only needed for clang-17 and older.
 
-Signed-off-by: Yuta Hayama <hayama@lineo.co.jp>
-Fixes: 71af91565052 ("rtc: rx8025: fix 12/24 hour mode detection on RX-8035")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/eae5f479-5d28-4a37-859d-d54794e7628c@lineo.co.jp
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 2f13daee2a72 ("lib/crypto/curve25519-hacl64: Disable KASAN with clang-17 and older")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20251103-curve25519-hacl64-fix-kasan-workaround-v2-1-ab581cbd8035@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-rx8025.c |    2 +-
+ lib/crypto/Makefile |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rtc/rtc-rx8025.c
-+++ b/drivers/rtc/rtc-rx8025.c
-@@ -318,7 +318,7 @@ static int rx8025_init_client(struct i2c
- 			return hour_reg;
- 		rx8025->is_24 = (hour_reg & RX8035_BIT_HOUR_1224);
- 	} else {
--		rx8025->is_24 = (ctrl[1] & RX8025_BIT_CTRL1_1224);
-+		rx8025->is_24 = (ctrl[0] & RX8025_BIT_CTRL1_1224);
- 	}
- out:
- 	return err;
+--- a/lib/crypto/Makefile
++++ b/lib/crypto/Makefile
+@@ -23,7 +23,7 @@ libcurve25519-generic-y				:= curve25519
+ libcurve25519-generic-$(CONFIG_ARCH_SUPPORTS_INT128)	:= curve25519-hacl64.o
+ libcurve25519-generic-y				+= curve25519-generic.o
+ # clang versions prior to 18 may blow out the stack with KASAN
+-ifeq ($(call clang-min-version, 180000),)
++ifeq ($(CONFIG_CC_IS_CLANG)_$(call clang-min-version, 180000),y_)
+ KASAN_SANITIZE_curve25519-hacl64.o := n
+ endif
+ 
 
 
