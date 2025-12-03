@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90158139579;
-	Wed,  3 Dec 2025 16:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18DF636A010;
+	Wed,  3 Dec 2025 16:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780343; cv=none; b=nTBOOpzx51urzz7UJIW+f9NyIaamPYQ9YeHMhJv9C/MxdaEPTXI6L7f4jkBiUxQn/c5ze6bYLCgloq11adij3YyrsKE+OYq3u6h7+ezOuQTNbspD0zQdK12RJiUgjnj0xFMy8SHMQKsbdVlgpZujvqU4HgueMOzdEBvmM9/cu5I=
+	t=1764780347; cv=none; b=AKK6iX1tpgdGcHkTYeX7Kfhcebl9aWo2GdS/xKw2d02v1YcZPI3skgXEMwZmW9stV/fBKBHnspBj+c2o5cJBanc+vUdDhENnZ5wYB9GpnBC/hRyAIt0xh34FquUaj/M7Z8IWTpuoYTMK73NMIMLJQD0LGj9abixUOto2UXA8CL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780343; c=relaxed/simple;
-	bh=erbCkasglCB/dV5XxvJ5JZ59T7SqeDlhMgZgcHWadB8=;
+	s=arc-20240116; t=1764780347; c=relaxed/simple;
+	bh=yRBxsTJB/IW/sMCt8t2STK1FunQP9NQy9UksBd8J+7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CDtVgAtaxUBB6PK4mzjqresPX/Gs/68lEn75nBaMGg0hM58Ej9aJIcJ+qO4CmrwsYo+EHzGvR0nr1hburvM8sItUUBoUcrFZZ2Jqkm/m1mTVS8EgfFRI00SKj4ajVwiOVqTWUIjY7bSMVt3D74NSdbxRuKS8z8Vpg+jurjd9i+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIUrV5U8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UC7q8WalU2K6NnXEQ7BiNxleHxBt3ULvRWfhS3ZbXYVTBnUwiibRNOciPARcPpcNvgW6zlh3TiHfnzHYTcNEcdeYnh7yMrCGmhVFiIrdPs0Ufc4qZFvJhbjcIJp94KzGrLgyjbPNNUr7iZDhkKgeXRSJPM4rlov/oSAvPbmdiGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJOWNxLN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIUrV5U8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8806C116B1;
-	Wed,  3 Dec 2025 16:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJOWNxLN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B51C4CEF5;
+	Wed,  3 Dec 2025 16:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780343;
-	bh=erbCkasglCB/dV5XxvJ5JZ59T7SqeDlhMgZgcHWadB8=;
+	s=korg; t=1764780346;
+	bh=yRBxsTJB/IW/sMCt8t2STK1FunQP9NQy9UksBd8J+7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIUrV5U8E29mJV7wcXEKPEXiWq3hAXw7AkLWZ5aBsOKnWR/ReClS00fhB2VTj43ym
-	 QdEEXGJ41ojqBvc4tAbYJI4QO+Gpi937eXU4o88Ci9sxpwchuq6LWXxhrUti1RXcsR
-	 yOkKQRwuS57wjZFYP5dy3FaKZl+Qo/5hYK+SDxDs=
+	b=HJOWNxLNBVt5zvaLHeoPdg3esKxRoBGZsk9nBOE9FDBPsO0zhGC2PWXq5a/QIYZAU
+	 pULcUxRs2DhzVjFozK+9o49qm6Q/gcC1Wk6ECgJLM2YF1xUOkx7qeUHyNmgBCoNDJF
+	 erMGi21cRIZ/+0z3IgFxrpmBDDbti9rzj8G9eKz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20M=C3=BChlbacher?= <tmuehlbacher@posteo.net>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 527/568] can: sun4i_can: sun4i_can_interrupt(): fix max irq loop handling
-Date: Wed,  3 Dec 2025 16:28:49 +0100
-Message-ID: <20251203152500.016255387@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 496/568] Bluetooth: SMP: Fix not generating mackey and ltk when repairing
+Date: Wed,  3 Dec 2025 16:28:18 +0100
+Message-ID: <20251203152458.881284472@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,49 +44,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit 76544beea7cfe5bcce6d60f53811657b88ec8be1 upstream.
+[ Upstream commit 545d7827b2cd5de5eb85580cebeda6b35b3ff443 ]
 
-Reading the interrupt register `SUN4I_REG_INT_ADDR` causes all of its bits
-to be reset. If we ever reach the condition of handling more than
-`SUN4I_CAN_MAX_IRQ` IRQs, we will have read the register and reset all its
-bits but without actually handling the interrupt inside of the loop body.
+The change eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
+introduced a goto that bypasses the creation of temporary mackey and ltk
+which are later used by the likes of DHKey Check step.
 
-This may, among other issues, cause us to never `netif_wake_queue()` again
-after a transmission interrupt.
+Later ffee202a78c2 ("Bluetooth: Always request for user confirmation for
+Just Works (LE SC)") which means confirm_hint is always set in case
+JUST_WORKS so the branch checking for an existing LTK becomes pointless
+as confirm_hint will always be set, so this just merge both cases of
+malicious or legitimate devices to be confirmed before continuing with the
+pairing procedure.
 
-Fixes: 0738eff14d81 ("can: Allwinner A10/A20 CAN Controller support - Kernel module")
-Cc: stable@vger.kernel.org
-Co-developed-by: Thomas Mühlbacher <tmuehlbacher@posteo.net>
-Signed-off-by: Thomas Mühlbacher <tmuehlbacher@posteo.net>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20251116-sun4i-fix-loop-v1-1-3d76d3f81950@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/bluez/bluez/issues/1622
+Fixes: eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/sun4i_can.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/smp.c | 31 +++++++------------------------
+ 1 file changed, 7 insertions(+), 24 deletions(-)
 
---- a/drivers/net/can/sun4i_can.c
-+++ b/drivers/net/can/sun4i_can.c
-@@ -658,8 +658,8 @@ static irqreturn_t sun4i_can_interrupt(i
- 	u8 isrc, status;
- 	int n = 0;
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index a03920fe44d94..d8a77bfe65a62 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2130,7 +2130,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	struct smp_chan *smp = chan->data;
+ 	struct hci_conn *hcon = conn->hcon;
+ 	u8 *pkax, *pkbx, *na, *nb, confirm_hint;
+-	u32 passkey;
++	u32 passkey = 0;
+ 	int err;
  
--	while ((isrc = readl(priv->base + SUN4I_REG_INT_ADDR)) &&
--	       (n < SUN4I_CAN_MAX_IRQ)) {
-+	while ((n < SUN4I_CAN_MAX_IRQ) &&
-+	       (isrc = readl(priv->base + SUN4I_REG_INT_ADDR))) {
- 		n++;
- 		status = readl(priv->base + SUN4I_REG_STA_ADDR);
+ 	bt_dev_dbg(hcon->hdev, "conn %p", conn);
+@@ -2182,24 +2182,6 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
+ 			     smp->prnd);
+ 		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
+-
+-		/* Only Just-Works pairing requires extra checks */
+-		if (smp->method != JUST_WORKS)
+-			goto mackey_and_ltk;
+-
+-		/* If there already exists long term key in local host, leave
+-		 * the decision to user space since the remote device could
+-		 * be legitimate or malicious.
+-		 */
+-		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
+-				 hcon->role)) {
+-			/* Set passkey to 0. The value can be any number since
+-			 * it'll be ignored anyway.
+-			 */
+-			passkey = 0;
+-			confirm_hint = 1;
+-			goto confirm;
+-		}
+ 	}
  
+ mackey_and_ltk:
+@@ -2220,11 +2202,12 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	if (err)
+ 		return SMP_UNSPECIFIED;
+ 
+-	confirm_hint = 0;
+-
+-confirm:
+-	if (smp->method == JUST_WORKS)
+-		confirm_hint = 1;
++	/* Always require user confirmation for Just-Works pairing to prevent
++	 * impersonation attacks, or in case of a legitimate device that is
++	 * repairing use the confirmation as acknowledgment to proceed with the
++	 * creation of new keys.
++	 */
++	confirm_hint = smp->method == JUST_WORKS ? 1 : 0;
+ 
+ 	err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
+ 					hcon->dst_type, passkey, confirm_hint);
+-- 
+2.51.0
+
 
 
