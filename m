@@ -1,39 +1,63 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E683A32E13E;
-	Wed,  3 Dec 2025 16:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5BE34F49C;
+	Wed,  3 Dec 2025 16:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778101; cv=none; b=HeQeVe/6KrpTA8FN1DOYwDjCPRmiDxDlInkUJ0lZzYGlrL06Bs2zNeYxXTPn0u1e/MggKgB1YUE0xV6s9GXZWEDuK3dCYOd18Txd0QYV5bFPraLEPK8tDloV1DZyFb0DU4A8gOyhlgy/u2MrbOYV57LhPx7smKEmY1HS8gUWWY0=
+	t=1764778104; cv=none; b=i/POsD0yLZs0yamCcrO+XiySBkHwK46BHXIAzfHRKm1qdnHIp+djS5lHcAEUuG8VmjO64/2wUpoo2S63RF5XTuZifs6iKqVfm+RH2G14X1qsIzBEBlFm6/VrxGjCt82jddVCSs02HBOjSlRmOin4xQg7TcrXbqB8uT1Sw0qQeCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778101; c=relaxed/simple;
-	bh=jINz+BTwM+hiXB7ZM/gtb+k26Eg8vVJfNalI6kH4pbg=;
+	s=arc-20240116; t=1764778104; c=relaxed/simple;
+	bh=GoUahgCZ2pC+WPHgw+sPS5D9SJ6RyDJtiRPS9xWl5Gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SPe2BSIA0K1G657Ab2+BKuAxVNtBQmoRH5kqTlxTiVzkRdvarkvxoCvJ9gDDmdqXrRacwK+rxrWO/etaiWop6jvaZTDaRaXwWAcpC+trjIh/QJwAOga1KSClqdN1ZPW+hefRORwyN/KSEP/194UgJ5mX7lYZAMXtXRiOqF2DG1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlCiEYm9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H4F2DCjRa/obuLLPsLkTE0RR36ZRLRPGfo2zyyjcqSaOqWNoYHMNvrgc1YYE3oNOLRGMTSppmZzVasD5HvwU1e6eDwqKVqn8FTQupGj18J6JqJ0zdYGmGvWMy4UvJwdRfw5R6xAGX60TyURyfW2Ne+vaAxnlyuRDnzP32BSCPfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=idWiNWhB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlCiEYm9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBE5C4CEF5;
-	Wed,  3 Dec 2025 16:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="idWiNWhB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAA6C4CEF5;
+	Wed,  3 Dec 2025 16:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778100;
-	bh=jINz+BTwM+hiXB7ZM/gtb+k26Eg8vVJfNalI6kH4pbg=;
+	s=korg; t=1764778104;
+	bh=GoUahgCZ2pC+WPHgw+sPS5D9SJ6RyDJtiRPS9xWl5Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlCiEYm9NV20ab+X6Bq3KvO+G81bIpEl5t8A185ypVHoUjZ4+2/EJX6Je1tXCswHk
-	 rDCCu/xVyt/QBmlxMIOndiGy5onvGQGwx9Mrhy3/IB36DYraE/zs+Azf+4APk2KA46
-	 /aj8fFIesCxp3B9yf+pealygzFS2148WBqZQ3HA8=
+	b=idWiNWhBaNhxktytq1xN5dUY7Hbc7HfNpDWaZpWPZztSVNkFmUCHA0c4Bj5gAZCcN
+	 Q/KiKQ+mxVPsAEPz5TjDM27mq9lvTt4CPZL34p6cvim0td/vFdKGCC1QZWME6zEgCO
+	 fPJx4EVYY7k1YZa2Ll1GrnzL4ZrMi9fRWVugV1aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Gobert <richardbgobert@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Ian Rogers <irogers@google.com>,
+	Yury Norov <yury.norov@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Darren Hart <dvhart@infradead.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Ingo Molnar <mingo@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jason Xing <kerneljasonxing@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Jonas Gottlieb <jonas.gottlieb@stackit.cloud>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Maurice Lambert <mauricelambert434@gmail.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Petr Machata <petrm@nvidia.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yuyang Huang <yuyanghuang@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 211/392] selftests/net: fix GRO coalesce test and add ext header coalesce tests
-Date: Wed,  3 Dec 2025 16:26:01 +0100
-Message-ID: <20251203152421.836141469@linuxfoundation.org>
+Subject: [PATCH 5.15 202/392] tools bitmap: Add missing asm-generic/bitsperlong.h include
+Date: Wed,  3 Dec 2025 16:25:52 +0100
+Message-ID: <20251203152421.507110253@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -46,203 +70,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Gobert <richardbgobert@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 4e321d590cec6053cb3c566413794706035ee638 ]
+[ Upstream commit f38ce0209ab4553906b44bd1159e35c740a84161 ]
 
-Currently there is no test which checks that IPv6 extension header packets
-successfully coalesce. This commit adds a test, which verifies two IPv6
-packets with HBH extension headers do coalesce, and another test which
-checks that packets with different extension header data do not coalesce
-in GRO.
+small_const_nbits is defined in asm-generic/bitsperlong.h which
+bitmap.h uses but doesn't include causing build failures in some build
+systems. Add the missing #include.
 
-I changed the receive socket filter to accept a packet with one extension
-header. This change exposed a bug in the fragment test -- the old BPF did
-not accept the fragment packet. I updated correct_num_packets in the
-fragment test accordingly.
+Note the bitmap.h in tools has diverged from that of the kernel, so no
+changes are made there.
 
-Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/69282fed-2415-47e8-b3d3-34939ec3eb56@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f8e8486702ab ("selftests/net: use destination options instead of hop-by-hop")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Acked-by: Yury Norov <yury.norov@gmail.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: André Almeida <andrealmeid@igalia.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Darren Hart <dvhart@infradead.org>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Cc: Ido Schimmel <idosch@nvidia.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Jason Xing <kerneljasonxing@gmail.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Jonas Gottlieb <jonas.gottlieb@stackit.cloud>
+Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Maurice Lambert <mauricelambert434@gmail.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Petr Machata <petrm@nvidia.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Yuyang Huang <yuyanghuang@google.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/gro.c | 93 +++++++++++++++++++++++++++++--
- 1 file changed, 87 insertions(+), 6 deletions(-)
+ tools/include/linux/bitmap.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
-index 687ab5e7cecf1..a6cf29c2c9318 100644
---- a/tools/testing/selftests/net/gro.c
-+++ b/tools/testing/selftests/net/gro.c
-@@ -74,6 +74,12 @@
- #define MAX_PAYLOAD (IP_MAXPACKET - sizeof(struct tcphdr) - sizeof(struct ipv6hdr))
- #define NUM_LARGE_PKT (MAX_PAYLOAD / MSS)
- #define MAX_HDR_LEN (ETH_HLEN + sizeof(struct ipv6hdr) + sizeof(struct tcphdr))
-+#define MIN_EXTHDR_SIZE 8
-+#define EXT_PAYLOAD_1 "\x00\x00\x00\x00\x00\x00"
-+#define EXT_PAYLOAD_2 "\x11\x11\x11\x11\x11\x11"
-+
-+#define ipv6_optlen(p)  (((p)->hdrlen+1) << 3) /* calculate IPv6 extension header len */
-+#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
+diff --git a/tools/include/linux/bitmap.h b/tools/include/linux/bitmap.h
+index a83ffdf1e2117..e65a7e84c7541 100644
+--- a/tools/include/linux/bitmap.h
++++ b/tools/include/linux/bitmap.h
+@@ -3,6 +3,7 @@
+ #define _PERF_BITOPS_H
  
- static int proto = -1;
- static uint8_t src_mac[ETH_ALEN], dst_mac[ETH_ALEN];
-@@ -103,7 +109,7 @@ static void setup_sock_filter(int fd)
- 	const int dport_off = tcp_offset + offsetof(struct tcphdr, dest);
- 	const int ethproto_off = offsetof(struct ethhdr, h_proto);
- 	int optlen = 0;
--	int ipproto_off;
-+	int ipproto_off, opt_ipproto_off;
- 	int next_off;
- 
- 	if (proto == PF_INET)
-@@ -115,14 +121,30 @@ static void setup_sock_filter(int fd)
- 	if (strcmp(testname, "ip") == 0) {
- 		if (proto == PF_INET)
- 			optlen = sizeof(struct ip_timestamp);
--		else
--			optlen = sizeof(struct ip6_frag);
-+		else {
-+			BUILD_BUG_ON(sizeof(struct ip6_hbh) > MIN_EXTHDR_SIZE);
-+			BUILD_BUG_ON(sizeof(struct ip6_dest) > MIN_EXTHDR_SIZE);
-+			BUILD_BUG_ON(sizeof(struct ip6_frag) > MIN_EXTHDR_SIZE);
-+
-+			/* same size for HBH and Fragment extension header types */
-+			optlen = MIN_EXTHDR_SIZE;
-+			opt_ipproto_off = ETH_HLEN + sizeof(struct ipv6hdr)
-+				+ offsetof(struct ip6_ext, ip6e_nxt);
-+		}
- 	}
- 
-+	/* this filter validates the following:
-+	 *	- packet is IPv4/IPv6 according to the running test.
-+	 *	- packet is TCP. Also handles the case of one extension header and then TCP.
-+	 *	- checks the packet tcp dport equals to DPORT. Also handles the case of one
-+	 *	  extension header and then TCP.
-+	 */
- 	struct sock_filter filter[] = {
- 			BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, ethproto_off),
--			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, ntohs(ethhdr_proto), 0, 7),
-+			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, ntohs(ethhdr_proto), 0, 9),
- 			BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, ipproto_off),
-+			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_TCP, 2, 0),
-+			BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, opt_ipproto_off),
- 			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_TCP, 0, 5),
- 			BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, dport_off),
- 			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, DPORT, 2, 0),
-@@ -575,6 +597,39 @@ static void add_ipv4_ts_option(void *buf, void *optpkt)
- 	iph->check = checksum_fold(iph, sizeof(struct iphdr) + optlen, 0);
- }
- 
-+static void add_ipv6_exthdr(void *buf, void *optpkt, __u8 exthdr_type, char *ext_payload)
-+{
-+	struct ipv6_opt_hdr *exthdr = (struct ipv6_opt_hdr *)(optpkt + tcp_offset);
-+	struct ipv6hdr *iph = (struct ipv6hdr *)(optpkt + ETH_HLEN);
-+	char *exthdr_payload_start = (char *)(exthdr + 1);
-+
-+	exthdr->hdrlen = 0;
-+	exthdr->nexthdr = IPPROTO_TCP;
-+
-+	memcpy(exthdr_payload_start, ext_payload, MIN_EXTHDR_SIZE - sizeof(*exthdr));
-+
-+	memcpy(optpkt, buf, tcp_offset);
-+	memcpy(optpkt + tcp_offset + MIN_EXTHDR_SIZE, buf + tcp_offset,
-+		sizeof(struct tcphdr) + PAYLOAD_LEN);
-+
-+	iph->nexthdr = exthdr_type;
-+	iph->payload_len = htons(ntohs(iph->payload_len) + MIN_EXTHDR_SIZE);
-+}
-+
-+static void send_ipv6_exthdr(int fd, struct sockaddr_ll *daddr, char *ext_data1, char *ext_data2)
-+{
-+	static char buf[MAX_HDR_LEN + PAYLOAD_LEN];
-+	static char exthdr_pck[sizeof(buf) + MIN_EXTHDR_SIZE];
-+
-+	create_packet(buf, 0, 0, PAYLOAD_LEN, 0);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data1);
-+	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
-+
-+	create_packet(buf, PAYLOAD_LEN * 1, 0, PAYLOAD_LEN, 0);
-+	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data2);
-+	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
-+}
-+
- /* IPv4 options shouldn't coalesce */
- static void send_ip_options(int fd, struct sockaddr_ll *daddr)
- {
-@@ -696,7 +751,7 @@ static void send_fragment6(int fd, struct sockaddr_ll *daddr)
- 		create_packet(buf, PAYLOAD_LEN * i, 0, PAYLOAD_LEN, 0);
- 		write_packet(fd, buf, bufpkt_len, daddr);
- 	}
--
-+	sleep(1);
- 	create_packet(buf, PAYLOAD_LEN * 2, 0, PAYLOAD_LEN, 0);
- 	memset(extpkt, 0, extpkt_len);
- 
-@@ -759,6 +814,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
- 	vlog("}, Total %d packets\nReceived {", correct_num_pkts);
- 
- 	while (1) {
-+		ip_ext_len = 0;
- 		pkt_size = recv(fd, buffer, IP_MAXPACKET + ETH_HLEN + 1, 0);
- 		if (pkt_size < 0)
- 			error(1, errno, "could not receive");
-@@ -766,7 +822,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
- 		if (iph->version == 4)
- 			ip_ext_len = (iph->ihl - 5) * 4;
- 		else if (ip6h->version == 6 && ip6h->nexthdr != IPPROTO_TCP)
--			ip_ext_len = sizeof(struct ip6_frag);
-+			ip_ext_len = MIN_EXTHDR_SIZE;
- 
- 		tcph = (struct tcphdr *)(buffer + tcp_offset + ip_ext_len);
- 
-@@ -887,7 +943,21 @@ static void gro_sender(void)
- 			sleep(1);
- 			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
- 		} else if (proto == PF_INET6) {
-+			sleep(1);
- 			send_fragment6(txfd, &daddr);
-+			sleep(1);
-+			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
-+
-+			sleep(1);
-+			/* send IPv6 packets with ext header with same payload */
-+			send_ipv6_exthdr(txfd, &daddr, EXT_PAYLOAD_1, EXT_PAYLOAD_1);
-+			sleep(1);
-+			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
-+
-+			sleep(1);
-+			/* send IPv6 packets with ext header with different payload */
-+			send_ipv6_exthdr(txfd, &daddr, EXT_PAYLOAD_1, EXT_PAYLOAD_2);
-+			sleep(1);
- 			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
- 		}
- 	} else if (strcmp(testname, "large") == 0) {
-@@ -1004,6 +1074,17 @@ static void gro_receiver(void)
- 			 */
- 			printf("fragmented ip6 doesn't coalesce: ");
- 			correct_payload[0] = PAYLOAD_LEN * 2;
-+			correct_payload[1] = PAYLOAD_LEN;
-+			correct_payload[2] = PAYLOAD_LEN;
-+			check_recv_pkts(rxfd, correct_payload, 3);
-+
-+			printf("ipv6 with ext header does coalesce: ");
-+			correct_payload[0] = PAYLOAD_LEN * 2;
-+			check_recv_pkts(rxfd, correct_payload, 1);
-+
-+			printf("ipv6 with ext header with different payloads doesn't coalesce: ");
-+			correct_payload[0] = PAYLOAD_LEN;
-+			correct_payload[1] = PAYLOAD_LEN;
- 			check_recv_pkts(rxfd, correct_payload, 2);
- 		}
- 	} else if (strcmp(testname, "large") == 0) {
+ #include <string.h>
++#include <asm-generic/bitsperlong.h>
+ #include <linux/align.h>
+ #include <linux/bitops.h>
+ #include <stdlib.h>
 -- 
 2.51.0
 
