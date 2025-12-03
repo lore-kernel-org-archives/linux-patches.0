@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C63C313E1E;
-	Wed,  3 Dec 2025 16:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9423054D4;
+	Wed,  3 Dec 2025 16:34:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779636; cv=none; b=GnNt7HCygkk0oniAm9zFGpkRLzT94ppGFBC24ee4QRx9KYMTaY2nwW0EjLk9LJ1AswhCJMhdi67aFxQkOQESvC+q1ti8w08sWzvj2DJI5y83VEnorhcZZv5iVxiEqS/RsKCzuFzlirBytzfzEw0Kcxykl3Ms5bRZkiOmZ4aH2pY=
+	t=1764779640; cv=none; b=q8tWV1qlI5pNs6G9ab/UmVMvu6PLu0J03F12v3t8TL4hm6eB8jZggZhZcYPFHsKcq+EFk22v7/LSif6L02zE7S3zFsA77u9HdhOBE2V5UP/Tj65BqIoP7Rxv++n8PJ29PtKEMMiaaD5iDAPdUgQfquQ/BQzaFkx6vH4YsNgkrgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779636; c=relaxed/simple;
-	bh=ch3pWST715Ega5L7b4K+tr60VDXx0fMjNzgUnwqumfE=;
+	s=arc-20240116; t=1764779640; c=relaxed/simple;
+	bh=ilPuThBdmnrLb+p0PeuVg/omcpKrBuiv+YM8kLkWSAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ams+eRcTOWmEq6HiDZFyOSpzZg6EploPu+fBrpBtrJcEZCcic/cmErFWQlyiq4DIS9mv/ko6rGCbc2wHdHeLpNddZbNZu2QPDSd2AB1W/ZUO5xVbIpnICRG05IydVwFytQS1dds/R2W1a6o4wqT8fkKQRLBLo3eI84ilv92+ScI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0Ca2aTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lKKQMFjSROJsXGXqnMUXAdWlSmaOLQH+gD3cM1+c3V4hqwrWD7BeMiq1WreU8URNuyNDEWnipjwK9d7vEItD6ZYZPK8ptSvcYGgyOXRJX7lL+RbEr/j0LWgPARvyRbt4RbtZf1rmyY2mumUyCvIQJQqIGOj07DW0amv/qoMeuZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0CmjAtw2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0Ca2aTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B685C4CEF5;
-	Wed,  3 Dec 2025 16:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0CmjAtw2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F13AC4CEF5;
+	Wed,  3 Dec 2025 16:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779636;
-	bh=ch3pWST715Ega5L7b4K+tr60VDXx0fMjNzgUnwqumfE=;
+	s=korg; t=1764779640;
+	bh=ilPuThBdmnrLb+p0PeuVg/omcpKrBuiv+YM8kLkWSAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0Ca2aTr7W9nmHVHJtzJE1JU408Mm05YqYWShXDtUQ5NM1AB9fMLTl8jNObpgiTuO
-	 AaotCvQyqeoWiRSJLhvjWBxG2iHDm4llyFMEyM8yKNvyX1KE5l3rpQv1UQ+g9ev0Zn
-	 0J4h7urLDHp+ITU9T9iTn1NoLn7g1bgzdvD+cWdg=
+	b=0CmjAtw2DzE85j1QaebMSSd3THUbW/fFNxSTw3vBpWfRFgxq84KZZOVq3oJub5G9m
+	 q3CB+eViOqMF3QiAHk0GxQB4HS51rUqkbJkvBAIfayF9j1TFURVMifxGaDDP6WbvcT
+	 uRK9omwXY/+3jQl8L1PhNX0/SPbXTK3ChZt2p6hw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Chen-Yu Tsai <wens@csie.org>,
+	Josua Mayer <josua@solid-run.com>,
+	Bruno Thomsen <bruno.thomsen@gmail.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 283/568] clk: sunxi-ng: sun6i-rtc: Add A523 specifics
-Date: Wed,  3 Dec 2025 16:24:45 +0100
-Message-ID: <20251203152451.071218150@linuxfoundation.org>
+Subject: [PATCH 6.1 284/568] rtc: pcf2127: clear minute/second interrupt
+Date: Wed,  3 Dec 2025 16:24:46 +0100
+Message-ID: <20251203152451.107333230@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,55 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen-Yu Tsai <wens@csie.org>
+From: Josua Mayer <josua@solid-run.com>
 
-[ Upstream commit 7aa8781f379c32c31bd78f1408a31765b2297c43 ]
+[ Upstream commit a6f1a4f05970664004a9370459c6799c1b2f2dcf ]
 
-The A523's RTC block is backward compatible with the R329's, but it also
-has a calibration function for its internal oscillator, which would
-allow it to provide a clock rate closer to the desired 32.768 KHz. This
-is useful on the Radxa Cubie A5E, which does not have an external 32.768
-KHz crystal.
+PCF2127 can generate interrupt every full second or minute configured
+from control and status register 1, bits MI (1) and SI (0).
 
-Add new compatible-specific data for it.
+On interrupt control register 2 bit MSF (7) is set and must be cleared
+to continue normal operation.
 
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://patch.msgid.link/20250909170947.2221611-1-wens@kernel.org
-Signed-off-by: Chen-Yu Tsai <wens@csie.org>
+While the driver never enables this interrupt on its own, users or
+firmware may do so - e.g. as an easy way to test the interrupt.
+
+Add preprocessor definition for MSF bit and include it in the irq
+bitmask to ensure minute and second interrupts are cleared when fired.
+
+This fixes an issue where the rtc enters a test mode and becomes
+unresponsive after a second interrupt has fired and is not cleared in
+time. In this state register writes to control registers have no
+effect and the interrupt line is kept asserted [1]:
+
+[1] userspace commands to put rtc into unresponsive state:
+$ i2cget -f -y 2 0x51 0x00
+0x04
+$ i2cset -f -y 2 0x51 0x00 0x05 # set bit 0 SI
+$ i2cget -f -y 2 0x51 0x00
+0x84 # bit 8 EXT_TEST set
+$ i2cset -f -y 2 0x51 0x00 0x05 # try overwrite control register
+$ i2cget -f -y 2 0x51 0x00
+0x84 # no change
+
+Signed-off-by: Josua Mayer <josua@solid-run.com>
+Reviewed-by: Bruno Thomsen <bruno.thomsen@gmail.com>
+Link: https://lore.kernel.org/r/20250825-rtc-irq-v1-1-0133319406a7@solid-run.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/sunxi-ng/ccu-sun6i-rtc.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/rtc/rtc-pcf2127.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-index d65398497d5f6..e42348bda20f8 100644
---- a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-+++ b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-@@ -323,6 +323,13 @@ static const struct sun6i_rtc_match_data sun50i_r329_rtc_ccu_data = {
- 	.osc32k_fanout_nparents	= ARRAY_SIZE(sun50i_r329_osc32k_fanout_parents),
- };
+diff --git a/drivers/rtc/rtc-pcf2127.c b/drivers/rtc/rtc-pcf2127.c
+index 87f4fc9df68b4..ae2c52a0dab25 100644
+--- a/drivers/rtc/rtc-pcf2127.c
++++ b/drivers/rtc/rtc-pcf2127.c
+@@ -35,6 +35,7 @@
+ #define PCF2127_BIT_CTRL2_AF			BIT(4)
+ #define PCF2127_BIT_CTRL2_TSF2			BIT(5)
+ #define PCF2127_BIT_CTRL2_WDTF			BIT(6)
++#define PCF2127_BIT_CTRL2_MSF			BIT(7)
+ /* Control register 3 */
+ #define PCF2127_REG_CTRL3		0x02
+ #define PCF2127_BIT_CTRL3_BLIE			BIT(0)
+@@ -99,7 +100,8 @@
+ #define PCF2127_CTRL2_IRQ_MASK ( \
+ 		PCF2127_BIT_CTRL2_AF | \
+ 		PCF2127_BIT_CTRL2_WDTF | \
+-		PCF2127_BIT_CTRL2_TSF2)
++		PCF2127_BIT_CTRL2_TSF2 | \
++		PCF2127_BIT_CTRL2_MSF)
  
-+static const struct sun6i_rtc_match_data sun55i_a523_rtc_ccu_data = {
-+	.have_ext_osc32k	= true,
-+	.have_iosc_calibration	= true,
-+	.osc32k_fanout_parents	= sun50i_r329_osc32k_fanout_parents,
-+	.osc32k_fanout_nparents	= ARRAY_SIZE(sun50i_r329_osc32k_fanout_parents),
-+};
-+
- static const struct of_device_id sun6i_rtc_ccu_match[] = {
- 	{
- 		.compatible	= "allwinner,sun50i-h616-rtc",
-@@ -332,6 +339,10 @@ static const struct of_device_id sun6i_rtc_ccu_match[] = {
- 		.compatible	= "allwinner,sun50i-r329-rtc",
- 		.data		= &sun50i_r329_rtc_ccu_data,
- 	},
-+	{
-+		.compatible	= "allwinner,sun55i-a523-rtc",
-+		.data		= &sun55i_a523_rtc_ccu_data,
-+	},
- 	{},
- };
- 
+ struct pcf2127 {
+ 	struct rtc_device *rtc;
 -- 
 2.51.0
 
