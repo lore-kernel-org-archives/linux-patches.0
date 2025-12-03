@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BB030DEC4;
-	Wed,  3 Dec 2025 16:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029B331B824;
+	Wed,  3 Dec 2025 16:33:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779626; cv=none; b=JLbAFjfXdlZNDvfl2M1vcE4O9YNtLHoS6yUeyBhkLLRSB7WbwlIVVrp85k7Zj14ZmW4NJstK4R1bG6wh5GhpAUAMmTLr8Eo8fJM7LIPBY9at0z5MkniMU+9DpwZv+yLP0MEDLjR8HyQW7wcc3ZXF3mONP85TyIySD8vDI9Tssqo=
+	t=1764779630; cv=none; b=BUru8BaDzQjUXFD6YdFMM10If1J3UbIoe8B6unTRkqwr6K3CmkjHSvJeFx3tlakxRHtEQ1X18M+q1L42fOwbRdRsw0+RQg1e14oYaBQ8NvLdrdQmlaX0XXvdqUR6Gl2odtBs/8v6VaEyY7jUK7X+Us5dIAP5ITfA6izlDeEUvEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779626; c=relaxed/simple;
-	bh=XxVmpzUlB5fuGervVhGyhoYF35grvSpY0Jx68Z/cfFQ=;
+	s=arc-20240116; t=1764779630; c=relaxed/simple;
+	bh=i5GQaEaE/ZjKbRr3Rz9YYXjjX05Bvf9pJKrDSTKwJgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mTyEsk7KCletexZrNPCtWTigd+abz3eEJyC9ulpiDc/qAe7IOMgUBFnva00AHJyKxLpKjn4pYNcxTaosCXpNJsPBgl8btfWukv0aobyJc0HiwDLGKYeDEF1nAFC4XWnKEyaKh6iLW/ujMwUU6JGKD6td9rbc7RMoI2cFTqz42vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpTtQg05; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ew0ZgaVYNe97GA6+DQDE9NbvHqyey7o7JGpMX/faCfDMGBm32jfWTBpnxOGiKcyv4GABh6XbBZubYc7moxqe0RyNqc/LclMEl+SPw1UnNmCxWuQYOjrThS2pNXbR5JI0SGqvkhJfPyyjuwWIIf9Cx1nmbMMHvNNNb13nM+gj1Ts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3jT5Cv+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpTtQg05"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58C7C116B1;
-	Wed,  3 Dec 2025 16:33:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3jT5Cv+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5B9C4CEF5;
+	Wed,  3 Dec 2025 16:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779626;
-	bh=XxVmpzUlB5fuGervVhGyhoYF35grvSpY0Jx68Z/cfFQ=;
+	s=korg; t=1764779629;
+	bh=i5GQaEaE/ZjKbRr3Rz9YYXjjX05Bvf9pJKrDSTKwJgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NpTtQg05jEzhhvmVfXokV6IHmQpRcpkEFb4ddQNXmBTsSbDHgKFq24e5XJQzH/fR8
-	 Th15FPGqeQbb2RLOKn5Grhp+yFSeBL/rg79+lPF7JGjVg1uv9sUqwjHbD2ED0kKbJM
-	 8WMZD1r3y+xUpClV4ITiAVr5k4z3HsQ9USWHF6ks=
+	b=Y3jT5Cv+O2rUzsaybWNysmSXX9z0oyasZPMZw5txcpI8j9ZBYKYbMUJiEzd+bSCqU
+	 voSpVt1tXBqsjTm9dktPECN84HDx/egOfHUW/rFc0QvXAMxGwN8uYfqyeeKyNN3HOf
+	 5iowdCQIbAEm2jRjPt3Z6NoZXAnkx4Of6EWjyVjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 312/568] net: dsa: b53: fix resetting speed and pause on forced link
-Date: Wed,  3 Dec 2025 16:25:14 +0100
-Message-ID: <20251203152452.140905775@linuxfoundation.org>
+Subject: [PATCH 6.1 313/568] net: dsa: b53: fix enabling ip multicast
+Date: Wed,  3 Dec 2025 16:25:15 +0100
+Message-ID: <20251203152452.176857926@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,60 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit b6a8a5477fe9bd6be2b594a88f82f8bba41e6d54 ]
+[ Upstream commit c264294624e956a967a9e2e5fa41e3273340b089 ]
 
-There is no guarantee that the port state override registers have their
-default values, as not all switches support being reset via register or
-have a reset GPIO.
+In the New Control register bit 1 is either reserved, or has a different
+function:
 
-So when forcing port config, we need to make sure to clear all fields,
-which we currently do not do for the speed and flow control
-configuration. This can cause flow control stay enabled, or in the case
-of speed becoming an illegal value, e.g. configured for 1G (0x2), then
-setting 100M (0x1), results in 0x3 which is invalid.
+    Out of Range Error Discard
 
-For PORT_OVERRIDE_SPEED_2000M we need to make sure to only clear it on
-supported chips, as the bit can have different meanings on other chips,
-e.g. for BCM5389 this controls scanning PHYs for link/speed
-configuration.
+    When enabled, the ingress port discards any frames
+    if the Length field is between 1500 and 1536
+    (excluding 1500 and 1536) and with good CRC.
 
-Fixes: 5e004460f874 ("net: dsa: b53: Add helper to set link parameters")
+The actual bit for enabling IP multicast is bit 0, which was only
+explicitly enabled for BCM5325 so far.
+
+For older switch chips, this bit defaults to 0, so we want to enable it
+as well, while newer switch chips default to 1, and their documentation
+says "It is illegal to set this bit to zero."
+
+So drop the wrong B53_IPMC_FWD_EN define, enable the IP multicast bit
+also for other switch chips. While at it, rename it to (B53_)IP_MC as
+that is how it is called in Broadcom code.
+
+Fixes: 63cc54a6f073 ("net: dsa: b53: Fix egress flooding settings")
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251101132807.50419-2-jonas.gorski@gmail.com
+Link: https://patch.msgid.link/20251102100758.28352-2-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/dsa/b53/b53_common.c | 4 ++--
+ drivers/net/dsa/b53/b53_regs.h   | 3 +--
+ 2 files changed, 3 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index b0e283bc3efbc..d5a1d26e8e3de 100644
+index d5a1d26e8e3de..037e1c7e9f45c 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1215,6 +1215,10 @@ static void b53_force_port_config(struct b53_device *dev, int port,
- 	else
- 		reg &= ~PORT_OVERRIDE_FULL_DUPLEX;
- 
-+	reg &= ~(0x3 << GMII_PO_SPEED_S);
-+	if (is5301x(dev) || is58xx(dev))
-+		reg &= ~PORT_OVERRIDE_SPEED_2000M;
-+
- 	switch (speed) {
- 	case 2000:
- 		reg |= PORT_OVERRIDE_SPEED_2000M;
-@@ -1233,6 +1237,11 @@ static void b53_force_port_config(struct b53_device *dev, int port,
- 		return;
+@@ -349,11 +349,11 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
+ 		 * frames should be flooded or not.
+ 		 */
+ 		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
+-		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
++		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IP_MC;
+ 		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
+ 	} else {
+ 		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
+-		mgmt |= B53_IP_MCAST_25;
++		mgmt |= B53_IP_MC;
+ 		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
  	}
+ }
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index 77fb7ae660b8c..95f70248c194d 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -104,8 +104,7 @@
  
-+	if (is5325(dev))
-+		reg &= ~PORT_OVERRIDE_LP_FLOW_25;
-+	else
-+		reg &= ~(PORT_OVERRIDE_RX_FLOW | PORT_OVERRIDE_TX_FLOW);
-+
- 	if (rx_pause) {
- 		if (is5325(dev))
- 			reg |= PORT_OVERRIDE_LP_FLOW_25;
+ /* IP Multicast control (8 bit) */
+ #define B53_IP_MULTICAST_CTRL		0x21
+-#define  B53_IP_MCAST_25		BIT(0)
+-#define  B53_IPMC_FWD_EN		BIT(1)
++#define  B53_IP_MC			BIT(0)
+ #define  B53_UC_FWD_EN			BIT(6)
+ #define  B53_MC_FWD_EN			BIT(7)
+ 
 -- 
 2.51.0
 
