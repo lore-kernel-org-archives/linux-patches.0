@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B903148C1;
-	Wed,  3 Dec 2025 15:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C7E314A9B;
+	Wed,  3 Dec 2025 15:38:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776288; cv=none; b=k6fkzCgAlCBpmBwzQtH0yrmDkDNdmbw2Avqd/tcBqNF3in+cWNAy76erOoovc4VzzrObh8rSEMK/QzzZVaTV+BzU0JUZZowcbmYKbnRdBlcsOhQ7p2qUi7HQYuxXvlkTUbVS2ab/iAPgMKVqUQdVRy3ji+aMILdJeEwL3tTm6Fg=
+	t=1764776289; cv=none; b=A6JUG2sZq7xIIW5iWE5VKtCeEXQ9XTeo7rwjHV5EArq4gCCqEISCoA9+kMf9f+DZ9Qy6k4hMVi4QXUQ5J7+z6s8q33fb+zCnL/ycjXTi+6i04Vp11qQn2dJbyzuuW/SPkB79GEIhW8FkX7+C+7lQCxhMjIv3XANMYRI8v5yW8Pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776288; c=relaxed/simple;
-	bh=+q1v+R412vGRE1KAj2amxzHRJPGwiAUYiKJNa4UtZ8c=;
+	s=arc-20240116; t=1764776289; c=relaxed/simple;
+	bh=7bEMhweOpmcBRSl/4s9hfHeP6smQMy7spEc80B81474=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Kw22X5oSlXn8oUkasdiyUxXZEasSQMH+OfUh91m7WUnsUcO8jfckEXUEYojDP5ZMFUE8kPEF26Bw0W1W7+5vHPqZdQ9ZMlMUqQZ7spj2QgJZ86cBf0L4cWcvRbMbb32GUiZoQT+O4dG+TJ85xAQXtEF3I0r35oNZNGtYJyR51Zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFj7MZpS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ujFXZAH1eP9ctlwOkWeqotNt8MT+FYQspm3cjzjZe4c0JaR2qj0mAw8izCbSVltbrF2jm5yinnE3ZCVqlJpM/RPO5y47rzAHChZ3ZhrwqifUdFqf/72S8e/dXwMrfqg3L+ipSNNS1QHqSP6ZfXW4hou/UwfSG9KuNVpZhAJtQO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+8rqiPu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFj7MZpS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8323EC4CEF5;
-	Wed,  3 Dec 2025 15:38:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+8rqiPu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096C1C4CEF5;
+	Wed,  3 Dec 2025 15:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776286;
-	bh=+q1v+R412vGRE1KAj2amxzHRJPGwiAUYiKJNa4UtZ8c=;
+	s=korg; t=1764776289;
+	bh=7bEMhweOpmcBRSl/4s9hfHeP6smQMy7spEc80B81474=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFj7MZpS/nIjyyB6PmKV3DlYDY+Ig3oyIPy9GF0+p1ROfZCcRWjuvVeIH0PP2qcuD
-	 7lOzGAPALYItSuJbUBVzwh+2wmekdXDPuDzWdngbtxYJX5Ek/SlKdeuV12EOmyIjXy
-	 rdYonRj4kIugOBhH99oDcLd46T9IYe7CwJmF0AN4=
+	b=H+8rqiPu7MP2SvaGQqlISkyWAGwSlqVsEexbXvmzAed+0iOQBeiFwSDWJyy+7jJrH
+	 EWPTbrrhieNrbVMC6tl3EhMYf2u5/9HRVmF72w5Q9h4r8UZM/HLSUZBzmrYlOks7cO
+	 UF7PAZCIGHrVFVyFyDljS34bygKkLqZ/SQTCor+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Juraj=20=C5=A0arinay?= <juraj@sarinay.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 104/300] net: nfc: nci: Increase NCI_DATA_TIMEOUT to 3000 ms
-Date: Wed,  3 Dec 2025 16:25:08 +0100
-Message-ID: <20251203152404.477229627@linuxfoundation.org>
+Subject: [PATCH 5.10 105/300] ALSA: usb-audio: apply quirk for MOONDROP Quark2
+Date: Wed,  3 Dec 2025 16:25:09 +0100
+Message-ID: <20251203152404.513991761@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -46,48 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Juraj Šarinay <juraj@sarinay.com>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 21f82062d0f241e55dd59eb630e8710862cc90b4 ]
+[ Upstream commit a73349c5dd27bc544b048e2e2c8ef6394f05b793 ]
 
-An exchange with a NFC target must complete within NCI_DATA_TIMEOUT.
-A delay of 700 ms is not sufficient for cryptographic operations on smart
-cards. CardOS 6.0 may need up to 1.3 seconds to perform 256-bit ECDH
-or 3072-bit RSA. To prevent brute-force attacks, passports and similar
-documents introduce even longer delays into access control protocols
-(BAC/PACE).
+It reports a MIN value -15360 for volume control, but will mute when
+setting it less than -14208
 
-The timeout should be higher, but not too much. The expiration allows
-us to detect that a NFC target has disappeared.
-
-Signed-off-by: Juraj Šarinay <juraj@sarinay.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20250902113630.62393-1-juraj@sarinay.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250903-sound-v1-4-d4ca777b8512@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/nfc/nci_core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/mixer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/include/net/nfc/nci_core.h b/include/net/nfc/nci_core.h
-index 004e49f748419..beea7e014b157 100644
---- a/include/net/nfc/nci_core.h
-+++ b/include/net/nfc/nci_core.h
-@@ -52,7 +52,7 @@ enum nci_state {
- #define NCI_RF_DISC_SELECT_TIMEOUT		5000
- #define NCI_RF_DEACTIVATE_TIMEOUT		30000
- #define NCI_CMD_TIMEOUT				5000
--#define NCI_DATA_TIMEOUT			700
-+#define NCI_DATA_TIMEOUT			3000
- 
- struct nci_dev;
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 8826a588f5ab8..c84e25b2b1fb9 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1192,6 +1192,13 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
+ 			cval->res = 1;
+ 		}
+ 		break;
++	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
++		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
++			usb_audio_info(chip,
++				"set volume quirk for MOONDROP Quark2\n");
++			cval->min = -14208; /* Mute under it */
++		}
++		break;
+ 	}
+ }
  
 -- 
 2.51.0
