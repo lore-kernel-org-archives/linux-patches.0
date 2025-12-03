@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E7F346FC8;
-	Wed,  3 Dec 2025 16:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78188346FC8;
+	Wed,  3 Dec 2025 16:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778318; cv=none; b=oj051N+/7t5glEaAHvAvq81ov5Q2xK1FcjheX0E+EJHCkDybP+Twy7jPnk010v6T7c9za4Flx8pjKMDkqvZG3L1ZOvOdQ8mW1cx1YqOTIqlkbVSynoM6d7GrB/kb2UNd/E/ixlM1H5u2sm5FYRJROj+rufPPZUXV1nZPO8FKnAE=
+	t=1764778321; cv=none; b=BRfAYYvWKgxveSKM6r3iadXgcfZDjTYV4E8U+MKvfqdsNlpLexZTPxZc4Gl0u7Yj1aoJSPk7eiMUblN20pQ8dBmw3t/FcO5BViNLKaRYVmDtZMaF4g7unT/tKPS03OEmMHCnHLHYxutgkCA/KXre0ZZYglbrdJ2fUvX8nwAIs4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778318; c=relaxed/simple;
-	bh=vugptuwN6hgMpZykDvRNimLvAohhBS4YiFYmKuV8cgQ=;
+	s=arc-20240116; t=1764778321; c=relaxed/simple;
+	bh=xiw+mDpvVTlx4y7XmT2i+/M9Um7ikQt9X3BGj6TyyZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VQOb4R8Eh8VzXtMveVuB5VpYOcki1qM4MXeyXIR5y+Et1eivSuY6grTYxGEKjWdpSTvH4QzTqJ3yRDcybXazv7Bg0F2mNzSp/oj8edume7ziRQqbkFANV+lxBA+l1r58OMmXBuA0YijNd37+CVbk58fH0cGHg2CzRaq/2momdW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xs/ZJ9Z1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7GTMDgj+/l0kCpPgh/2yxl7pDi1H2lUITYvkQcReKawqeDgMs0IghhsVgj2kLVADEy71E5KAHSIceX0oINYktdgjugf2cbrGi1p18uOwBjfAUhu+dPNJ4w+GZ1GmPqsHZgu85BPVPp/KOUzLIPEnS4kecu769Iv1T0p58/BXgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULDuH1ic; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xs/ZJ9Z1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC39C4CEF5;
-	Wed,  3 Dec 2025 16:11:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULDuH1ic"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5602C4CEF5;
+	Wed,  3 Dec 2025 16:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778318;
-	bh=vugptuwN6hgMpZykDvRNimLvAohhBS4YiFYmKuV8cgQ=;
+	s=korg; t=1764778321;
+	bh=xiw+mDpvVTlx4y7XmT2i+/M9Um7ikQt9X3BGj6TyyZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xs/ZJ9Z1gz6HzW1iqzHGJ6uBy96AgFLbZGE+42o34EBhMdtmlNjoYxq6FtTfXnN8m
-	 OTOcbQ3PSCaB3xOU/JSo5UIJNOQwmAbYqE+ObR1RBrt451XFxIeC1wPVoL0rEsKkOG
-	 XvPP/LKGRi4dONMleHW53XLIZfTbUXcqN13SRPoE=
+	b=ULDuH1iciasril9mWUYiKKvRjwwNOrRx4wJIdaaejDnRTbX96E/vLPZzFSR7TVKSz
+	 RwndTVm1WT9LeuBckBWMUcc1uh3jAcbSEK2WN7DJtPZqhR/PFAUy5V3rcj74n2M5ff
+	 KJgk2mxRHRnUoHT9+TPkhn9en6f+AAodFa80L2Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	Google Big Sleep <big-sleep-vuln-reports@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 308/392] mm/secretmem: fix use-after-free race in fault handler
-Date: Wed,  3 Dec 2025 16:27:38 +0100
-Message-ID: <20251203152425.495815843@linuxfoundation.org>
+	Hans de Goede <hansg@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 277/392] spi: Try to get ACPI GPIO IRQ earlier
+Date: Wed,  3 Dec 2025 16:27:07 +0100
+Message-ID: <20251203152424.356157705@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -56,69 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 6f86d0534fddfbd08687fa0f01479d4226bc3c3d ]
+commit 3cd2018e15b3d66d2187d92867e265f45ad79e6f upstream.
 
-When a page fault occurs in a secret memory file created with
-`memfd_secret(2)`, the kernel will allocate a new page for it, mark the
-underlying page as not-present in the direct map, and add it to the file
-mapping.
+Since commit d24cfee7f63d ("spi: Fix acpi deferred irq probe"), the
+acpi_dev_gpio_irq_get() call gets delayed till spi_probe() is called
+on the SPI device.
 
-If two tasks cause a fault in the same page concurrently, both could end
-up allocating a page and removing the page from the direct map, but only
-one would succeed in adding the page to the file mapping.  The task that
-failed undoes the effects of its attempt by (a) freeing the page again
-and (b) putting the page back into the direct map.  However, by doing
-these two operations in this order, the page becomes available to the
-allocator again before it is placed back in the direct mapping.
+If there is no driver for the SPI device then the move to spi_probe()
+results in acpi_dev_gpio_irq_get() never getting called. This may
+cause problems by leaving the GPIO pin floating because this call is
+responsible for setting up the GPIO pin direction and/or bias according
+to the values from the ACPI tables.
 
-If another task attempts to allocate the page between (a) and (b), and the
-kernel tries to access it via the direct map, it would result in a
-supervisor not-present page fault.
+Re-add the removed acpi_dev_gpio_irq_get() in acpi_register_spi_device()
+to ensure the GPIO pin is always correctly setup, while keeping the
+acpi_dev_gpio_irq_get() call added to spi_probe() to deal with
+-EPROBE_DEFER returns caused by the GPIO controller not having a driver
+yet.
 
-Fix the ordering to restore the direct map before the page is freed.
-
-Link: https://lkml.kernel.org/r/20251031120955.92116-1-lance.yang@linux.dev
-Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Reported-by: Google Big Sleep <big-sleep-vuln-reports@google.com>
-Closes: https://lore.kernel.org/linux-mm/CAEXGt5QeDpiHTu3K9tvjUTPqo+d-=wuCNYPa+6sWKrdQJ-ATdg@mail.gmail.com/
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 6f86d0534fddfbd08687fa0f01479d4226bc3c3d)
-[rppt: replaced folio with page in the patch and in the changelog]
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bbs.archlinux.org/viewtopic.php?id=302348
+Fixes: d24cfee7f63d ("spi: Fix acpi deferred irq probe")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20251102190921.30068-1-hansg@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/secretmem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/mm/secretmem.c b/mm/secretmem.c
-index 624663a948083..0c86133ad33fe 100644
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -82,13 +82,13 @@ static vm_fault_t secretmem_fault(struct vm_fault *vmf)
- 		__SetPageUptodate(page);
- 		err = add_to_page_cache_lru(page, mapping, offset, gfp);
- 		if (unlikely(err)) {
--			put_page(page);
- 			/*
- 			 * If a split of large page was required, it
- 			 * already happened when we marked the page invalid
- 			 * which guarantees that this call won't fail
- 			 */
- 			set_direct_map_default_noflush(page);
-+			put_page(page);
- 			if (err == -EEXIST)
- 				goto retry;
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2416,6 +2416,16 @@ static acpi_status acpi_register_spi_dev
+ 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
+ 			  sizeof(spi->modalias));
  
--- 
-2.51.0
-
++	/*
++	 * This gets re-tried in spi_probe() for -EPROBE_DEFER handling in case
++	 * the GPIO controller does not have a driver yet. This needs to be done
++	 * here too, because this call sets the GPIO direction and/or bias.
++	 * Setting these needs to be done even if there is no driver, in which
++	 * case spi_probe() will never get called.
++	 */
++	if (spi->irq < 0)
++		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
++
+ 	acpi_device_set_enumerated(adev);
+ 
+ 	adev->power.flags.ignore_parent = true;
 
 
