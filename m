@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FCC3090C6;
-	Wed,  3 Dec 2025 15:35:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077DA311599;
+	Wed,  3 Dec 2025 15:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776123; cv=none; b=I+XS30uATMqY6rw2WgcrEHC3YRxvwkfIIUuMSX4VnYSLmPgavRqO3mJ87u6jopZsJDokvKtPRsvTcIRgp7hVJkBsvhgYFn7IHW8xWygmKP5/ODFv4bq2PXgUBoXflqrEEeoGPIGop7/MQ1Y1Gtm8jsxPfnqbFquBbn/NiSc23zI=
+	t=1764776127; cv=none; b=CSQ3n7/kHrDyk6tZQf4ARgSXic+NqctaLGtEMfAZvcR30t7jF9RB0a91mlzMU/sHdd80nkJFfh28vNmSQv0yPt+fyaPJ0zfaTgPWmcs9NMEjuNFVq4/fjxm8Ku+XFdK+SgZyhmI9NX+2FCb/7jaHoZgTENfP6gEImX+osGskGLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776123; c=relaxed/simple;
-	bh=FUIxtTfETSnfOKjwSricfWJcR7bjoappWGgAKjjDwoQ=;
+	s=arc-20240116; t=1764776127; c=relaxed/simple;
+	bh=SOdo/TQ3M1bfhR0ziMgb8w+imrhgrGByQp7A6v9DyI8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9Ldrd0RfWAyPdcMEg1QvaET44uca9vPH7ndOhZlXX78LiSfraEYaWLiuGjlnOOpMoyWMqHieE4rZVyD6+SVQRlTEGbeWGFuM0I0LquKdVoeb1Ue3Kt2/Hh1ZMAmaQrTYZXCuNkgPsECjOUDnecpf/7yY+krz7cQbNZYIqyfYs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgxk7YHi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWZWfzva+ut89+0MVA84tN2A+1P5gh7aH+la8UwIZ6SqX+uNgo0dwN+QhGp2o9CZoQrdbCt4RxHjh8lyMDalbcdmWeWC9+PG+F+Z2eckv35eDQbUL3lQ+jNJop0YIPgyDJsDoTOetWnT3eMsRH9I/1P+HnofoCBucKhmFnaU9V0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2vVr9x0V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgxk7YHi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CDFC4CEF5;
-	Wed,  3 Dec 2025 15:35:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2vVr9x0V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A775C4CEF5;
+	Wed,  3 Dec 2025 15:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776123;
-	bh=FUIxtTfETSnfOKjwSricfWJcR7bjoappWGgAKjjDwoQ=;
+	s=korg; t=1764776126;
+	bh=SOdo/TQ3M1bfhR0ziMgb8w+imrhgrGByQp7A6v9DyI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jgxk7YHi+gBznJhxPzq2/1fiJzBZlfwvfRVRFb0yUdfURJdr8VzToCwbRHweHYQEB
-	 9ZOj6N//TOvt7PN/eMYxckDWHEgqSXEa2lih7qFx56MYg3hWZo/epJj+3hrz08aGNZ
-	 PzQsu6+BAOziH4Le44xy/WzRZuV9+uPcmkhFPoyU=
+	b=2vVr9x0VIn7YntnZLuNZ8pSvi4Pbxlfw5wiFUnVdNOjAB2dhPdUgB30vpi2WtknWZ
+	 OAvGBHLImFuWRWS5+++qenqIUXnpDjI+sYEvhVCqTVys2BXvndyiNS8sLh0jYtdztt
+	 29iQgF2itM5qS83ePoedkhmMqpSG0KR5WVyE0tlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@openai.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/300] net: When removing nexthops, dont call synchronize_net if it is not necessary
-Date: Wed,  3 Dec 2025 16:24:51 +0100
-Message-ID: <20251203152403.847021532@linuxfoundation.org>
+Subject: [PATCH 5.10 088/300] net: Call trace_sock_exceed_buf_limit() for memcg failure with SK_MEM_RECV.
+Date: Wed,  3 Dec 2025 16:24:52 +0100
+Message-ID: <20251203152403.882962141@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -55,94 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Paasch <cpaasch@openai.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
+[ Upstream commit 9d85c565a7b7c78b732393c02bcaa4d5c275fe58 ]
 
-When removing a nexthop, commit
-90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
-call to synchronize_rcu() (later changed to _net()) to make sure
-everyone sees the new nexthop-group before the rtnl-lock is released.
+Initially, trace_sock_exceed_buf_limit() was invoked when
+__sk_mem_raise_allocated() failed due to the memcg limit or the
+global limit.
 
-When one wants to delete a large number of groups and nexthops, it is
-fastest to first flush the groups (ip nexthop flush groups) and then
-flush the nexthops themselves (ip -6 nexthop flush). As that way the
-groups don't need to be rebalanced.
+However, commit d6f19938eb031 ("net: expose sk wmem in
+sock_exceed_buf_limit tracepoint") somehow suppressed the event
+only when memcg failed to charge for SK_MEM_RECV, although the
+memcg failure for SK_MEM_SEND still triggers the event.
 
-However, `ip -6 nexthop flush` will still take a long time if there is
-a very large number of nexthops because of the call to
-synchronize_net(). Now, if there are no more groups, there is no point
-in calling synchronize_net(). So, let's skip that entirely by checking
-if nh->grp_list is empty.
+Let's restore the event for SK_MEM_RECV.
 
-This gives us a nice speedup:
-
-BEFORE:
-=======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	1m45.345s
-user	0m0.001s
-sys	0m0.005s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	3m10.430s
-user	0m0.002s
-sys	0m0.004s
-
-AFTER:
-======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	0m17.545s
-user	0m0.003s
-sys	0m0.003s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	0m35.823s
-user	0m0.002s
-sys	0m0.004s
-
-Signed-off-by: Christoph Paasch <cpaasch@openai.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
+Reviewed-by: Shakeel Butt <shakeel.butt@linux.dev>
+Link: https://patch.msgid.link/20250815201712.1745332-5-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/core/sock.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 477d6a6f0de36..75e1c8d3bd835 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -843,6 +843,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
- {
- 	struct nh_grp_entry *nhge, *tmp;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 3108c999ccdbb..37f2a79c23b23 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2695,8 +2695,7 @@ int __sk_mem_raise_allocated(struct sock *sk, int size, int amt, int kind)
+ 			return 1;
+ 	}
  
-+	/* If there is nothing to do, let's avoid the costly call to
-+	 * synchronize_net()
-+	 */
-+	if (list_empty(&nh->grp_list))
-+		return;
-+
- 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
- 		remove_nh_grp_entry(net, nhge, nlinfo);
+-	if (kind == SK_MEM_SEND || (kind == SK_MEM_RECV && charged))
+-		trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
++	trace_sock_exceed_buf_limit(sk, prot, allocated, kind);
+ 
+ 	sk_memory_allocated_sub(sk, amt);
  
 -- 
 2.51.0
