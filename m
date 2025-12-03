@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D026350297;
-	Wed,  3 Dec 2025 16:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C99349AF9;
+	Wed,  3 Dec 2025 16:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780615; cv=none; b=gKN37LQCrIeM5zhF5feYcgZqOQH6uSOW/Hg4hxC4HY446rpmSdI1Qaz5/yoZD+AIIRo/1oVK6V/qi4IiFrEZc8RfwB19wE89nc78X/HQP9E6CZllMHf3a+1D9DqGEu9rXp30EQbFZZWTOM7IX5LwDZcGe1Wf2SPb0c/i6eksWg0=
+	t=1764780619; cv=none; b=MZCowS7xKqrWkZQ4xjPvHmrxX0fMHOHOyJowe/YOYxGl69oaiAVA0IvWjpxXeuLN8w8GcwI8Hcu4jqa1IlEPuJ5cj/e2M4E7cb8wECAElelUOww+mGR6TCGdglYmGdyrrZAP9sc25q62Ie+qMn+4qndkIweYSlkFuV+/izJDz40=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780615; c=relaxed/simple;
-	bh=RAKOeo5GjLM1BcLY+a+z6PPcN5dR7MrkG3sKwc8yCDg=;
+	s=arc-20240116; t=1764780619; c=relaxed/simple;
+	bh=M9nJ91ZnLQsDFiNi6SBFfq2D5bk1fC85DqV9kB6uOqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuVJhW5SZNEnETzmF2EJp+mmpb/bKsIdqBQXRz7PQSbsp2wqG7gUfOy8/R1nKuTIKYxPjDb/SjI0qsn/pGakYzXe1Fp7rTGKlNJcubWwMZjc88rpwOumlXBtX/UUP08KJpkI1IOBHFWTfjbu8fml7ZGqIFaIQSP6q8lWUOC92/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q2aRn97v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgxtYKWOnM6hxNSBSlmQwGAzkESjzS/soMkRwMD8hj/aaOq6skNFXeJOA8O5RPlBKt9ibCmMj97jS2X4BqND+82+d9qzdMtwYZIT6drSpSzDbodHzvdjtlIOwaPO5usaWHHJvh9k+iyTTe55dGAkoTZ8GG46UlSpWdUK+f+BEsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6CvfEkh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q2aRn97v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9232C4CEF5;
-	Wed,  3 Dec 2025 16:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6CvfEkh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55443C4CEF5;
+	Wed,  3 Dec 2025 16:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780615;
-	bh=RAKOeo5GjLM1BcLY+a+z6PPcN5dR7MrkG3sKwc8yCDg=;
+	s=korg; t=1764780618;
+	bh=M9nJ91ZnLQsDFiNi6SBFfq2D5bk1fC85DqV9kB6uOqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2aRn97vYGodZRw+ZP/0AXhRw1DstvEZHz5z59kY1bgXVfKW1CXdnlXB3n8wvU5jf
-	 l7llwPjx6ux+PfcPR716wCSJpSfcCnj7e7gjcKTNhTZdE/0rCq/LTlHVPnIeORobcW
-	 OiQatO6Dj0C8DaY5zkzoGPCHCnAG/8OeJeHjrGpU=
+	b=M6CvfEkhCPXvghEUABlE3BPX2uzjjNu89IVZUKsZb+gDks2OGblJCw3nmcFT095ZG
+	 tnD6DUxohhUEWgEM8aTLkgs6T0Acza93CNedszyZ7sq9kHPDSDtxTl5Dc0fLqfLm8v
+	 yqOTj+INxops0Zv1X5q0hfSLJZJXnCaKtAmesjlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 039/132] spi: tegra114: remove Kconfig dependency on TEGRA20_APB_DMA
-Date: Wed,  3 Dec 2025 16:28:38 +0100
-Message-ID: <20251203152344.743880551@linuxfoundation.org>
+Subject: [PATCH 6.12 040/132] spi: amlogic-spifc-a1: Handle devm_pm_runtime_enable() errors
+Date: Wed,  3 Dec 2025 16:28:39 +0100
+Message-ID: <20251203152344.781192909@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,42 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 3dcf44ab56e1d3ca3532083c0d5390b758e45b45 ]
+[ Upstream commit a90903c2a3c38bce475f46ea3f93dbf6a9971553 ]
 
-This driver runs also on Tegra SoCs without a Tegra20 APB DMA controller
-(e.g. Tegra234).
-Remove the Kconfig dependency on TEGRA20_APB_DMA; in addition, amend the
-help text to reflect the fact that this driver works on SoCs different from
-Tegra114.
+devm_pm_runtime_enable() can fail due to memory allocation. The current
+code ignores its return value, potentially causing runtime PM operations
+to fail silently after autosuspend configuration.
 
-Fixes: bb9667d8187b ("arm64: tegra: Add SPI device tree nodes for Tegra234")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Link: https://patch.msgid.link/20251126095027.4102004-1-flavra@baylibre.com
+Check the return value of devm_pm_runtime_enable() and return on failure.
+
+Fixes: 909fac05b926 ("spi: add support for Amlogic A1 SPI Flash Controller")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251124015852.937-1-vulab@iscas.ac.cn
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-amlogic-spifc-a1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
-index 8237972174048..06c740442fa73 100644
---- a/drivers/spi/Kconfig
-+++ b/drivers/spi/Kconfig
-@@ -1087,10 +1087,10 @@ config SPI_TEGRA210_QUAD
+diff --git a/drivers/spi/spi-amlogic-spifc-a1.c b/drivers/spi/spi-amlogic-spifc-a1.c
+index fadf6667cd51c..b430bca4f8bce 100644
+--- a/drivers/spi/spi-amlogic-spifc-a1.c
++++ b/drivers/spi/spi-amlogic-spifc-a1.c
+@@ -349,7 +349,9 @@ static int amlogic_spifc_a1_probe(struct platform_device *pdev)
  
- config SPI_TEGRA114
- 	tristate "NVIDIA Tegra114 SPI Controller"
--	depends on (ARCH_TEGRA && TEGRA20_APB_DMA) || COMPILE_TEST
-+	depends on ARCH_TEGRA || COMPILE_TEST
- 	depends on RESET_CONTROLLER
- 	help
--	  SPI driver for NVIDIA Tegra114 SPI Controller interface. This controller
-+	  SPI controller driver for NVIDIA Tegra114 and later SoCs. This controller
- 	  is different than the older SoCs SPI controller and also register interface
- 	  get changed with this controller.
+ 	pm_runtime_set_autosuspend_delay(spifc->dev, 500);
+ 	pm_runtime_use_autosuspend(spifc->dev);
+-	devm_pm_runtime_enable(spifc->dev);
++	ret = devm_pm_runtime_enable(spifc->dev);
++	if (ret)
++		return ret;
  
+ 	ctrl->num_chipselect = 1;
+ 	ctrl->dev.of_node = pdev->dev.of_node;
 -- 
 2.51.0
 
