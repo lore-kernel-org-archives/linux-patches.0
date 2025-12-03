@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E247234DCE3;
-	Wed,  3 Dec 2025 16:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B2734F497;
+	Wed,  3 Dec 2025 16:05:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777929; cv=none; b=YdNwVrhdjE3g3GkbbSOCQnG/b8uGA+jAa1dsmhvel/1RVoz+vrdby1F/s7+Isa6Jl3xiLzirSTHhRsFXlNsgdunEcos7bTzI8fBo6Z7yVnANE3V09O9k01MUaW9W69DdZn+koKsJ5/BgqJh18DMNaycqvpVUVpfiZpNqGKEffg0=
+	t=1764777932; cv=none; b=IDV0If8Cg47nVY5nkKBACt4b+Vq7Ce+1vLwL5TygmuPio3dukB/avOhcmiM1u0XKvdRl6YtpBXt5V0ao1O5lLHwCS0HNSfNkcZGRZcSyJ+tb0rNV2x+oV0P/u+kvCfDOeBWIlMBLAcPtgF9iwzhQ3w6fV0BfwQl/9F+jvglcW88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777929; c=relaxed/simple;
-	bh=KSb00PrHiBfh230qWuO38Tt8RynAkrrK3QzAkCrFnhQ=;
+	s=arc-20240116; t=1764777932; c=relaxed/simple;
+	bh=4OQzqCtKlFQM377vlNOyeOGb2BtGle1av0rTZSPWvp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fuu5UnxQ6+NucRqJ9+PySKerxAiscXjamELZx6xj1SMYibVBSs2O98sMPfr+Erw++bhbe70LnXE1OL+JZzDxe1e6gs64JQoU5JRXKK3b3TOnXYy/E4P71HA5h5B9wu52rDFzN6RBKMnZVM/4NHjG0RZx+VMDepG2KnLMXu4gL+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fueiRsWM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SJnCDXVnQN6OAIY9PD8YrQqJkulfF/OUUxkeiZhY4FmbMxHZr10hLo0aEAWqaN1DUlJiINtZnm06XplZ9IDBhy7fIKGGYtuCjTa0qvCmb3rc5nG/+SZBPh/eiPhEyPkXGFQm95qtyPLCajQvfKq5obkElQkapk4tNJdc7uPYw28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJPrFD5n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fueiRsWM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60159C4CEF5;
-	Wed,  3 Dec 2025 16:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJPrFD5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB57C4CEF5;
+	Wed,  3 Dec 2025 16:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777928;
-	bh=KSb00PrHiBfh230qWuO38Tt8RynAkrrK3QzAkCrFnhQ=;
+	s=korg; t=1764777932;
+	bh=4OQzqCtKlFQM377vlNOyeOGb2BtGle1av0rTZSPWvp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fueiRsWMr5HMSkYWQgfBrZsNfhplcdOVgr56rBXzd+vA5VSMQjDgziFRerRdsKMyH
-	 W7/NJ6vdYLCASLXB34ENe6DzOB0DJG8ncApFcmhszatE1yT7Dgo7nRxCJulPF66ZiV
-	 VHUdAstXcGW/kMXnA2ouYPz+4s1u6AlZ22zlOv5o=
+	b=bJPrFD5nR6BhFt9pck5SW97t1q7OWGqwQjk8lzL62zcjWHWKoYq086Dw4xOv0AL4i
+	 Tp7GPjuImTDJ1ezcxc9ubKEzYT2+oBlupk/28T6YFw6ZogKlQOs4oKhDOd0fUbKm5T
+	 Uw/u45gQqg/zH6Th8MyW73btjWLFe4apTv4jbjMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	austinchang <austinchang@synology.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/392] RDMA/hns: Fix wrong WQE data when QP wraps around
-Date: Wed,  3 Dec 2025 16:25:40 +0100
-Message-ID: <20251203152421.068895227@linuxfoundation.org>
+Subject: [PATCH 5.15 191/392] btrfs: mark dirty extent range for out of bound prealloc extents
+Date: Wed,  3 Dec 2025 16:25:41 +0100
+Message-ID: <20251203152421.105121524@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,79 +52,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: austinchang <austinchang@synology.com>
 
-[ Upstream commit fe9622011f955e35ba84d3af7b2f2fed31cf8ca1 ]
+[ Upstream commit 3b1a4a59a2086badab391687a6a0b86e03048393 ]
 
-When QP wraps around, WQE data from the previous use at the same
-position still remains as driver does not clear it. The WQE field
-layout differs across different opcodes, causing that the fields
-that are not explicitly assigned for the current opcode retain
-stale values, and are issued to HW by mistake. Such fields are as
-follows:
+In btrfs_fallocate(), when the allocated range overlaps with a prealloc
+extent and the extent starts after i_size, the range doesn't get marked
+dirty in file_extent_tree. This results in persisting an incorrect
+disk_i_size for the inode when not using the no-holes feature.
 
-* MSG_START_SGE_IDX field in ATOMIC WQE
-* BLOCK_SIZE and ZBVA fields in FRMR WQE
-* DirectWQE fields when DirectWQE not used
+This is reproducible since commit 41a2ee75aab0 ("btrfs: introduce
+per-inode file extent tree"), then became hidden since commit 3d7db6e8bd22
+("btrfs: don't allocate file extent tree for non regular files") and then
+visible again after commit 8679d2687c35 ("btrfs: initialize
+inode::file_extent_tree after i_mode has been set"), which fixes the
+previous commit.
 
-For ATOMIC WQE, always set the latest sge index in MSG_START_SGE_IDX
-as required by HW.
+The following reproducer triggers the problem:
 
-For FRMR WQE and DirectWQE, clear only those unassigned fields
-instead of the entire WQE to avoid performance penalty.
+$ cat test.sh
 
-Fixes: 68a997c5d28c ("RDMA/hns: Add FRMR support for hip08")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://patch.msgid.link/20251016114051.1963197-4-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+MNT=/mnt/test
+DEV=/dev/vdb
+
+mkdir -p $MNT
+
+mkfs.btrfs -f -O ^no-holes $DEV
+mount $DEV $MNT
+
+touch $MNT/file1
+fallocate -n -o 1M -l 2M $MNT/file1
+
+umount $MNT
+mount $DEV $MNT
+
+len=$((1 * 1024 * 1024))
+
+fallocate -o 1M -l $len $MNT/file1
+
+du --bytes $MNT/file1
+
+umount $MNT
+mount $DEV $MNT
+
+du --bytes $MNT/file1
+
+umount $MNT
+
+Running the reproducer gives the following result:
+
+$ ./test.sh
+(...)
+2097152 /mnt/test/file1
+1048576 /mnt/test/file1
+
+The difference is exactly 1048576 as we assigned.
+
+Fix by adding a call to btrfs_inode_set_file_extent_range() in
+btrfs_fallocate_update_isize().
+
+Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
+Signed-off-by: austinchang <austinchang@synology.com>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/btrfs/file.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 74f48e201031d..8baf6fb2d1fa5 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -125,6 +125,8 @@ static void set_frmr_seg(struct hns_roce_v2_rc_send_wqe *rc_sq_wqe,
- 	hr_reg_write(fseg, FRMR_PBL_BUF_PG_SZ,
- 		     to_hr_hw_page_shift(mr->pbl_mtr.hem_cfg.buf_pg_shift));
- 	hr_reg_clear(fseg, FRMR_BLK_MODE);
-+	hr_reg_clear(fseg, FRMR_BLOCK_SIZE);
-+	hr_reg_clear(fseg, FRMR_ZBVA);
- }
+diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
+index 0dd5a90feca34..cfc515f0d25f9 100644
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -3216,12 +3216,22 @@ static int btrfs_fallocate_update_isize(struct inode *inode,
+ {
+ 	struct btrfs_trans_handle *trans;
+ 	struct btrfs_root *root = BTRFS_I(inode)->root;
++	u64 range_start;
++	u64 range_end;
+ 	int ret;
+ 	int ret2;
  
- static void set_atomic_seg(const struct ib_send_wr *wr,
-@@ -309,9 +311,6 @@ static int set_rwqe_data_seg(struct ib_qp *ibqp, const struct ib_send_wr *wr,
- 	int j = 0;
- 	int i;
+ 	if (mode & FALLOC_FL_KEEP_SIZE || end <= i_size_read(inode))
+ 		return 0;
  
--	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_MSG_START_SGE_IDX,
--		     (*sge_ind) & (qp->sge.sge_cnt - 1));
--
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_INLINE,
- 		     !!(wr->send_flags & IB_SEND_INLINE));
- 	if (wr->send_flags & IB_SEND_INLINE)
-@@ -574,6 +573,9 @@ static inline int set_rc_wqe(struct hns_roce_qp *qp,
- 	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_CQE,
- 		     (wr->send_flags & IB_SEND_SIGNALED) ? 1 : 0);
- 
-+	hr_reg_write(rc_sq_wqe, RC_SEND_WQE_MSG_START_SGE_IDX,
-+		     curr_idx & (qp->sge.sge_cnt - 1));
++	range_start = round_down(i_size_read(inode), root->fs_info->sectorsize);
++	range_end = round_up(end, root->fs_info->sectorsize);
 +
- 	if (wr->opcode == IB_WR_ATOMIC_CMP_AND_SWP ||
- 	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD)
- 		set_atomic_seg(wr, rc_sq_wqe, valid_num_sge);
-@@ -717,6 +719,9 @@ static int hns_roce_v2_post_send(struct ib_qp *ibqp,
- 		owner_bit =
- 		       ~(((qp->sq.head + nreq) >> ilog2(qp->sq.wqe_cnt)) & 0x1);
- 
-+		/* RC and UD share the same DirectWQE field layout */
-+		((struct hns_roce_v2_rc_send_wqe *)wqe)->byte_4 = 0;
++	ret = btrfs_inode_set_file_extent_range(BTRFS_I(inode), range_start,
++						range_end - range_start);
++	if (ret)
++		return ret;
 +
- 		/* Corresponding to the QP type, wqe process separately */
- 		if (ibqp->qp_type == IB_QPT_RC)
- 			ret = set_rc_wqe(qp, wr, wqe, &sge_idx, owner_bit);
+ 	trans = btrfs_start_transaction(root, 1);
+ 	if (IS_ERR(trans))
+ 		return PTR_ERR(trans);
 -- 
 2.51.0
 
