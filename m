@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A993191D0;
-	Wed,  3 Dec 2025 15:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34955313E30;
+	Wed,  3 Dec 2025 15:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776804; cv=none; b=RYRspEjB5nT4Up2ZCbDr2OyuGuvfrvVXTYebXvVdSRFKlnPzVoC1tknjpCqFFQyXobzzH0OYoXB+/HEFlcAXKRxxR8bjrtzn6nkaPvBDW5hIo+4LeOWSFQsgjTFQxUjLu/EGw9OWWK4uJr/npX+Ci9ohAvPLOMwDbsGcH9CtO5Y=
+	t=1764776807; cv=none; b=XfHVAufBSnD0nj+r4Wh30H2VuIVjFrKUNJ1wyUfl4NdR7RVIJmn35BaSS7njR6RzYFuGUDvIwvPfRtby/qzQwQdfN8OjMwGN8y2UCtfmNoUOfcKnniIEg2NYI1n7B26KHiaXn7psWSw6yZBQfLqASJALeB4wqQZBGuY9QMuOsZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776804; c=relaxed/simple;
-	bh=DL07vahdGHCGyfQLjropEHQ7nBl+JZRIuflhGzB0ofo=;
+	s=arc-20240116; t=1764776807; c=relaxed/simple;
+	bh=vnQDg0V9Fq8zPN3RZ67ecxXP9NnWQEfc2xuqfF2nqNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tfcmD6II3fXPqVsXhR4ggSQ+KkLK0ajbnFGGUNMNl0r5gwnR0RPR38NFwR6IhcDXq/3lUYsh7L1UumDqUU3I+0GSUDNT6a+WWhyml7IObwWJYElDVErdXqVXysUCtVZa8RKGfczcIuRRog5acrIFivhBOCyOXqxUkERodY7gL8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSXBvdP+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXWtQEBrwCoEeYTXP+k9HbZfSsufWxjt+SBv34xWYMCi1EqQkdCx8TKG1Erq98u98Q17cAzUSiuhxzxihT8SIgLVRLrlvN4BZIjuf8cjRUgzCvtzpvarQyl8xhEu5QwCXXyIA5vWIh2sm18NnVU0y93XL6OQFeN+tSCSe/DGrLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UpEdkOgc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSXBvdP+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805EAC4CEF5;
-	Wed,  3 Dec 2025 15:46:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UpEdkOgc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A01C4CEF5;
+	Wed,  3 Dec 2025 15:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776803;
-	bh=DL07vahdGHCGyfQLjropEHQ7nBl+JZRIuflhGzB0ofo=;
+	s=korg; t=1764776807;
+	bh=vnQDg0V9Fq8zPN3RZ67ecxXP9NnWQEfc2xuqfF2nqNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fSXBvdP+G5dWbj/DpvIEJy+uvAoMHt6OXZmaxi7hKad7ii1H45pN5LteUmLYiV//I
-	 g9FiDpO47jeHANdwjhdlJH/KdwJOqhZQwvW3RBSirFLORlSi89BG7dQ8nAKoF6b2XL
-	 3X8KCOhHAKCI6rR2Qv5qkCtpJEsfTsygdreGuUXM=
+	b=UpEdkOgcGn2gRhQCd20cJ0O9j14ur4KJ0wC5CdIcg1TdL6wzbFRuAeoTIVS36f8rP
+	 Q3pYLaaPtkblwhHYoL1hTVzo1mQFBAhrqsyf75IumC/trMVOjFihFNWEEXpLJ2RboH
+	 n2Jz2lO0iEf3UzgV0KNCbuDGMCAWgWIfntt/fO94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Terrence Adams <tadamsjr@google.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Nazar Kalashnikov <sivartiwe@gmail.com>
-Subject: [PATCH 5.10 293/300] scsi: pm80xx: Set phy->enable_completion only when we
-Date: Wed,  3 Dec 2025 16:28:17 +0100
-Message-ID: <20251203152411.476516015@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>
+Subject: [PATCH 5.10 276/300] serial: amba-pl011: prefer dma_mapping_error() over explicit address checking
+Date: Wed,  3 Dec 2025 16:28:00 +0100
+Message-ID: <20251203152410.854797540@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,63 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit e4f949ef1516c0d74745ee54a0f4882c1f6c7aea ]
+commit eb4917f557d43c7a1c805dd73ffcdfddb2aba39a upstream.
 
-pm8001_phy_control() populates the enable_completion pointer with a stack
-address, sends a PHY_LINK_RESET / PHY_HARD_RESET, waits 300 ms, and
-returns. The problem arises when a phy control response comes late.  After
-300 ms the pm8001_phy_control() function returns and the passed
-enable_completion stack address is no longer valid. Late phy control
-response invokes complete() on a dangling enable_completion pointer which
-leads to a kernel crash.
+Check for returned DMA addresses using specialized dma_mapping_error()
+helper which is generally recommended for this purpose by
+Documentation/core-api/dma-api.rst:
 
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Signed-off-by: Terrence Adams <tadamsjr@google.com>
-Link: https://lore.kernel.org/r/20240627155924.2361370-2-tadamsjr@google.com
-Acked-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Nazar Kalashnikov <sivartiwe@gmail.com>
+  "In some circumstances dma_map_single(), ...
+will fail to create a mapping. A driver can check for these errors
+by testing the returned DMA address with dma_mapping_error()."
+
+Found via static analysis and this is similar to commit fa0308134d26
+("ALSA: memalloc: prefer dma_mapping_error() over explicit address checking")
+
+Fixes: 58ac1b379979 ("ARM: PL011: Fix DMA support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Link: https://patch.msgid.link/20251027092053.87937-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Backport fix for CVE-2024-47666
- drivers/scsi/pm8001/pm8001_sas.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/tty/serial/amba-pl011.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -163,7 +163,6 @@ int pm8001_phy_control(struct asd_sas_ph
- 	unsigned long flags;
- 	pm8001_ha = sas_phy->ha->lldd_ha;
- 	phy = &pm8001_ha->phy[phy_id];
--	pm8001_ha->phy[phy_id].enable_completion = &completion;
- 	switch (func) {
- 	case PHY_FUNC_SET_LINK_RATE:
- 		rates = funcdata;
-@@ -176,6 +175,7 @@ int pm8001_phy_control(struct asd_sas_ph
- 				rates->maximum_linkrate;
- 		}
- 		if (pm8001_ha->phy[phy_id].phy_state ==  PHY_LINK_DISABLE) {
-+			pm8001_ha->phy[phy_id].enable_completion = &completion;
- 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
- 			wait_for_completion(&completion);
- 		}
-@@ -184,6 +184,7 @@ int pm8001_phy_control(struct asd_sas_ph
- 		break;
- 	case PHY_FUNC_HARD_RESET:
- 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
-+			pm8001_ha->phy[phy_id].enable_completion = &completion;
- 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
- 			wait_for_completion(&completion);
- 		}
-@@ -192,6 +193,7 @@ int pm8001_phy_control(struct asd_sas_ph
- 		break;
- 	case PHY_FUNC_LINK_RESET:
- 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
-+			pm8001_ha->phy[phy_id].enable_completion = &completion;
- 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
- 			wait_for_completion(&completion);
- 		}
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -636,7 +636,7 @@ static int pl011_dma_tx_refill(struct ua
+ 	dmatx->len = count;
+ 	dmatx->dma = dma_map_single(dma_dev->dev, dmatx->buf, count,
+ 				    DMA_TO_DEVICE);
+-	if (dmatx->dma == DMA_MAPPING_ERROR) {
++	if (dma_mapping_error(dma_dev->dev, dmatx->dma)) {
+ 		uap->dmatx.queued = false;
+ 		dev_dbg(uap->port.dev, "unable to map TX DMA\n");
+ 		return -EBUSY;
 
 
