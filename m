@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01FE934D3B5;
-	Wed,  3 Dec 2025 16:02:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 347E734D4CE;
+	Wed,  3 Dec 2025 16:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777754; cv=none; b=uwwUrXN12g7RuYUt9bgVxhd77/ktVUf1tuBF+6iinQLYD79YPONlDP+1+LP9GLXriUHNpd+/AmCBlRcMIEsOI+6bUEj8CP9OwnJkexBWkNC9p5KbEW/7A+zHMardiPhRilo+kopkKg5vpi+FR26/DgNHrhi8gWkKCMOdOtWsRZ4=
+	t=1764777757; cv=none; b=mH+wR+jLTcIGIGZxtR06Hx71tSX4lleHzbzJ+OO2y2Rm9FifFNaZpbPpaAS/GXqqyQTeniCAWjeRCZpzcH17ZwTgzgmUcdUag20IhrmqL47Rnyvtl4nVzHdWWqX9Xv7aDw4b2bwfcTPw+5YK+pcaA7W/+jCA1nrwmecBHvjBjXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777754; c=relaxed/simple;
-	bh=vnQGA7ev2Ltrt3hVPelcb0yjpTZl2eDiGXYSPfu0KAI=;
+	s=arc-20240116; t=1764777757; c=relaxed/simple;
+	bh=U1xv2y9oNdQTv3QNzndKwBVbuQWLSo/F5gjPVVaAcC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fBHV/r/plkjaeG70/7kS6WNdfGuvY8ogoUq5CJrHk20/HgZa9IRmbBiGhpH9LgSHsX9nauvFVK9pXoG2iDgPrPnoDpD6hwI+uml2zAHmg7D0kmrWiCpr5FgecIsM3fhRZ2cLCvqirVc0JaWAfH9WxpLgJzPPexpAQ2EvaDhc4gY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KSUl7G+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0QAgfUrW1AvK9Qvha6xnOrsLPggI4fUBKWfooyvvQAkXh7F7hOu+IzXvVgmGuMy1v6tawoAzdo+qQMaNTe0TCdeREtG3zywDNdlTXSQar59iD+nWDM8gc/bkMu4FswTANvqWIHRqXWrfEqH+NSZIrXb1F3KSYjx4pYokVS6S10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rJgjYXTr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KSUl7G+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81896C4CEF5;
-	Wed,  3 Dec 2025 16:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rJgjYXTr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35B0C4CEF5;
+	Wed,  3 Dec 2025 16:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777753;
-	bh=vnQGA7ev2Ltrt3hVPelcb0yjpTZl2eDiGXYSPfu0KAI=;
+	s=korg; t=1764777757;
+	bh=U1xv2y9oNdQTv3QNzndKwBVbuQWLSo/F5gjPVVaAcC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KSUl7G+YQjEBXlDPBzoVWD1XYC/Lv65fz7VdPcsVSYXOcM5ultXP9Ohb/Ux+Ml/PR
-	 JMSbKeIH7KN4u2IA+YyLAvKavmXMH45eEW3rymFEn+LWXzXN4v93N0PupSiPQ8zR0C
-	 WbK+q7NWHAMNdi4dy3kvX2JLQ3LutXoteI356ZYs=
+	b=rJgjYXTrmgZVR7emd+eUyvRvSqZXZc2igUz87m9eoUQO4mfDp+pE41eCWikbP0kZF
+	 B7uEqUNUNtXuvYezQpTYeKk1Nx/tJQuBNXmIT/TiTT5m5bCd5W6UY8qtSbvGHmyGOr
+	 K2uTJBa5x9+Ms3qiT5PMLF9K285jYPhB+uhE3Bw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
+	Wake Liu <wakel@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/392] powerpc/eeh: Use result of error_detected() in uevent
-Date: Wed,  3 Dec 2025 16:24:14 +0100
-Message-ID: <20251203152417.926062783@linuxfoundation.org>
+Subject: [PATCH 5.15 095/392] selftests/net: Replace non-standard __WORDSIZE with sizeof(long) * 8
+Date: Wed,  3 Dec 2025 16:24:05 +0100
+Message-ID: <20251203152417.597850352@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -54,46 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Wake Liu <wakel@google.com>
 
-[ Upstream commit 704e5dd1c02371dfc7d22e1520102b197a3b628b ]
+[ Upstream commit c36748e8733ef9c5f4cd1d7c4327994e5b88b8df ]
 
-Ever since uevent support was added for AER and EEH with commit
-856e1eb9bdd4 ("PCI/AER: Add uevents in AER and EEH error/resume"), it
-reported PCI_ERS_RESULT_NONE as uevent when recovery begins.
+The `__WORDSIZE` macro, defined in the non-standard `<bits/wordsize.h>`
+header, is a GNU extension and not universally available with all
+toolchains, such as Clang when used with musl libc.
 
-Commit 7b42d97e99d3 ("PCI/ERR: Always report current recovery status for
-udev") subsequently amended AER to report the actual return value of
-error_detected().
+This can lead to build failures in environments where this header is
+missing.
 
-Make the same change to EEH to align it with AER and s390.
+The intention of the code is to determine the bit width of a C `long`.
+Replace the non-portable `__WORDSIZE` with the standard and portable
+`sizeof(long) * 8` expression to achieve the same result.
 
-Suggested-by: Lukas Wunner <lukas@wunner.de>
-Link: https://lore.kernel.org/linux-pci/aIp6LiKJor9KLVpv@wunner.de/
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Reviewed-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Acked-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-Link: https://patch.msgid.link/20250807-add_err_uevents-v5-3-adf85b0620b0@linux.ibm.com
+This change also removes the inclusion of the now-unused
+`<bits/wordsize.h>` header.
+
+Signed-off-by: Wake Liu <wakel@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/eeh_driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/psock_tpacket.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/eeh_driver.c b/arch/powerpc/kernel/eeh_driver.c
-index ed5be1bff60ca..2f13d906e1fcb 100644
---- a/arch/powerpc/kernel/eeh_driver.c
-+++ b/arch/powerpc/kernel/eeh_driver.c
-@@ -335,7 +335,7 @@ static enum pci_ers_result eeh_report_error(struct eeh_dev *edev,
- 	rc = driver->err_handler->error_detected(pdev, pci_channel_io_frozen);
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index 404a2ce759ab6..93092d13b3c59 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -33,7 +33,6 @@
+ #include <ctype.h>
+ #include <fcntl.h>
+ #include <unistd.h>
+-#include <bits/wordsize.h>
+ #include <net/ethernet.h>
+ #include <netinet/ip.h>
+ #include <arpa/inet.h>
+@@ -785,7 +784,7 @@ static int test_kernel_bit_width(void)
  
- 	edev->in_error = true;
--	pci_uevent_ers(pdev, PCI_ERS_RESULT_NONE);
-+	pci_uevent_ers(pdev, rc);
- 	return rc;
+ static int test_user_bit_width(void)
+ {
+-	return __WORDSIZE;
++	return sizeof(long) * 8;
  }
  
+ static const char *tpacket_str[] = {
 -- 
 2.51.0
 
