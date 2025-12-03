@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB72344044;
-	Wed,  3 Dec 2025 15:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45EA30FF2F;
+	Wed,  3 Dec 2025 15:58:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777515; cv=none; b=WAgU0sjccyxaBigtuJ92+kyEDaSD0zqHY9mrgVf+2umnVFerxV+2dCjujiL04cv+4k1EHmJQFNbFb4E2GUvn8vGTAPwI8w3Ykahtq4slp7ZNd2AFhe4m6mX9XtgdOlKDeRWBsy19rXJtxAD2A/QkHKJXrDdz35KEDz2d2mP4WHQ=
+	t=1764777518; cv=none; b=puSSuwUed5OeiYtnQfmubvw3t6JttS6AqSRqUr9lM5z+PlrcrCh1/6jpn9NZJg4hYHLgPPcIpbm2HFH1oDUryfgVT4JWYUc6uC9Nx1wEHxRay49LtHZ+3X9HY6emaqJrZtEtHCfslwYFZ+lpJUx4JrvDRULnodtfbQVtFmGjeTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777515; c=relaxed/simple;
-	bh=nrk4o6IAH8QtzC8a35vkXVUASWnzdBB/2tCEiN8WLNs=;
+	s=arc-20240116; t=1764777518; c=relaxed/simple;
+	bh=GM5xW2oW1B0gmbRJx0EkNHotaMT1Ix9ZG6MAjAy63e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSh3QNvue/inOE1pVcAx9Lp4D8mCmEL6Jqlo27S3wO+F7XpTakTNKUVVH00u4IyrlLnZMEl+ndtnKfqTLriBaX0ikYX9+h6yaBybhqHEGBLILrtG3huvRD/MgszER8PBiuIdzcrHDeykPW/BaPoVtiP8ggFBHDdLvgjSF8zoHlE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRXW7lRB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XnEeklipng2R5NpQEugv8nIJ1fRUkaUMkuPgjq92Lv3HeDs8uHJ6Iypsy3HyswYJ4J1KsMXoolyyMaplxVoxmsJ6ktPpI4p6mox9crstQuvup8UUuFPodICZFh68n0eMJZLbzsCz6a1i9Vw9t3OyyXKrV1Mxhn9KX6oHDjcuj0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yBKZVVtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRXW7lRB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5E7C4CEF5;
-	Wed,  3 Dec 2025 15:58:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yBKZVVtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF98C116C6;
+	Wed,  3 Dec 2025 15:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777514;
-	bh=nrk4o6IAH8QtzC8a35vkXVUASWnzdBB/2tCEiN8WLNs=;
+	s=korg; t=1764777517;
+	bh=GM5xW2oW1B0gmbRJx0EkNHotaMT1Ix9ZG6MAjAy63e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iRXW7lRBNlG/r3noMNd0lU9H7SxrOAvx9NLgJ2mZiptDdjDt1FF0xQZAbj+rfSYzl
-	 l8GyUpGjbVIf+SjLui+aM7MybS9V6LABc8Nbx20US6D5wzONdSME+g0KLM587ppcZw
-	 m7FEHj6EJwDv8k+gVi+iT6r5GAPgYZeUZeqUl6QU=
+	b=yBKZVVtvlh0KVumLidsMwezNRqSq/z0E8r8wlnF7BHPjr/5sM9qPafH5ZlQMsM/L7
+	 b/7lQQE6u9WjWyFGR3qXvFGfy9vHwiYQIloyHOs2jTzAf5rPZjFOmsQ8U41qMkivwe
+	 qd5mgH+WQM4oml7N7RYt5piNS/bAoCfNQ/IXAfLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Smith <itistotalbotnet@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/392] drm/amd/pm/powerplay/smumgr: Fix PCIeBootLinkLevel value on Iceland
-Date: Wed,  3 Dec 2025 16:22:59 +0100
-Message-ID: <20251203152415.172355559@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 030/392] block: fix op_is_zone_mgmt() to handle REQ_OP_ZONE_RESET_ALL
+Date: Wed,  3 Dec 2025 16:23:00 +0100
+Message-ID: <20251203152415.209230742@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,39 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Smith <itistotalbotnet@gmail.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 501672e3c1576aa9a8364144213c77b98a31a42c ]
+commit 12a1c9353c47c0fb3464eba2d78cdf649dee1cf7 upstream.
 
-Previously this was initialized with zero which represented PCIe Gen
-1.0 instead of using the
-maximum value from the speed table which is the behaviour of all other
-smumgr implementations.
+REQ_OP_ZONE_RESET_ALL is a zone management request. Fix
+op_is_zone_mgmt() to return true for that operation, like it already
+does for REQ_OP_ZONE_RESET.
 
-Fixes: 18aafc59b106 ("drm/amd/powerplay: implement fw related smu interface for iceland.")
-Signed-off-by: John Smith <itistotalbotnet@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 92b0a6ae6672857ddeabf892223943d2f0e06c97)
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While no problems were reported without this fix, this change allows
+strengthening checks in various block device drivers (scsi sd,
+virtioblk, DM) where op_is_zone_mgmt() is used to verify that a zone
+management command is not being issued to a regular block device.
+
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/blk_types.h |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c
-index 03df35dee8ba8..6ddf9ce5471e8 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/iceland_smumgr.c
-@@ -2028,7 +2028,7 @@ static int iceland_init_smc_table(struct pp_hwmgr *hwmgr)
- 	table->VoltageResponseTime  = 0;
- 	table->PhaseResponseTime  = 0;
- 	table->MemoryThermThrottleEnable  = 1;
--	table->PCIeBootLinkLevel = 0;
-+	table->PCIeBootLinkLevel = (uint8_t) (data->dpm_table.pcie_speed_table.count);
- 	table->PCIeGenInterval = 1;
- 
- 	result = iceland_populate_smc_svi2_config(hwmgr, table);
--- 
-2.51.0
-
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -481,6 +481,7 @@ static inline bool op_is_zone_mgmt(enum
+ {
+ 	switch (op & REQ_OP_MASK) {
+ 	case REQ_OP_ZONE_RESET:
++	case REQ_OP_ZONE_RESET_ALL:
+ 	case REQ_OP_ZONE_OPEN:
+ 	case REQ_OP_ZONE_CLOSE:
+ 	case REQ_OP_ZONE_FINISH:
 
 
