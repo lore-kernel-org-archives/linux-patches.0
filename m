@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCA61A2C25;
-	Wed,  3 Dec 2025 15:34:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AECF2FD678;
+	Wed,  3 Dec 2025 15:34:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776074; cv=none; b=HCBeqFCZ9zKhHriZ3R1po9QPHdfvSJT13FwoG3aQFn8VXbCOU8jcfNtrO6zv+1yNJu6pxdWCBOE3mZ9iFLWX5hh/hLXknbqPlAeh2660jBEKV/eITeF/hWemkPU80GZQbxMYo5r51WL4kpzZ8Sk7qjosYIq7shcumqedCODbi0s=
+	t=1764776077; cv=none; b=m6wrP87oTZ8k+NKNjKeDRC6svoq3mNa7g5dT0afCbqJPlEsLmH85JeV4EU4x1bv+Di/FSukSEwQkeqHoTTRXUNUTAehLHrW+qYGRJeUIwMFtJKwCA6Kz7ymmU0QXryCBCslvTGqHq9v6gY2TduHrv8bPjIQ2TGktElwTTe2ABxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776074; c=relaxed/simple;
-	bh=0+dfEa5n5PjSu2ztsXdaB0Wij4zoisPPGGj5w43muUU=;
+	s=arc-20240116; t=1764776077; c=relaxed/simple;
+	bh=ks/mU3e/sxn6lGTrXUgOOqYwwt1r9pPNfGl2fMIUdco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGVHMrTHzprAk4yv4YO4Dy+tvyEfDSSLMWmc3moU0n77URPsDHd7lJrpErhPnKbBW6Gya8YvNB/zZ0P+bUXRTetGIdW1j7nIMcOFo3ncOxzlQ/PV1VcV6q3cK6Q00UyLcLJygpWjnrDcU6zjCh/ZDPp0EkBeBI2XLcDkbDS2vbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYQadurX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQsDfbxwRALHCuY6PvF/6FVAkPACQj6nFscZSL2dUTRpo9K9GaJBFxhAlnqJwYWwWVGQALvdTaETeRLNpQu5f0jU1RoLoJjaSUeS45O6G6P3xUkJ4DWQlX6PYqK2QyqnPaYzJgpFMTeyv1b2G5naqUnxKejRAmrEJ2Cs0TqhPXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9QsKRhC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYQadurX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD7EC4CEF5;
-	Wed,  3 Dec 2025 15:34:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9QsKRhC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A990C4CEF5;
+	Wed,  3 Dec 2025 15:34:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776073;
-	bh=0+dfEa5n5PjSu2ztsXdaB0Wij4zoisPPGGj5w43muUU=;
+	s=korg; t=1764776076;
+	bh=ks/mU3e/sxn6lGTrXUgOOqYwwt1r9pPNfGl2fMIUdco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYQadurXy+lvubqzMF9Ov/cFyWMxMVpKCIk8qXJW56DTmeS4l+pJXsS7SIDld3ihL
-	 Nx/be3hSTvgUMM6DnHuciypYEcXnsGtVY2rbzpsohEnB/6nSzZ6uaQChlMVRK9fNV/
-	 BvqMBbM/jdW8Q4FhSqfStxUws5rWNay9+uvjTdr4=
+	b=S9QsKRhCOQiaocf37SCA7ImYG4XStdw8WbUEMmN5iRCCIFlckPUmp304VpF0Q8y1Z
+	 I0oMUj4+53iOMxoQ19+WcQ3VgZMzd88yEuyT9HDNotNW4lHiAkXzQESmuFvAB694WP
+	 b+5nr/tPoJdSDxvY4cRG05sCIYeODleo6EFS2ocM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Geoffrey McRae <geoffrey.mcrae@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Felix Kuehling <felix.kuehling@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/300] selftests/net: Ensure assert() triggers in psock_tpacket.c
-Date: Wed,  3 Dec 2025 16:24:37 +0100
-Message-ID: <20251203152403.326510472@linuxfoundation.org>
+Subject: [PATCH 5.10 074/300] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
+Date: Wed,  3 Dec 2025 16:24:38 +0100
+Message-ID: <20251203152403.364234118@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,43 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Geoffrey McRae <geoffrey.mcrae@amd.com>
 
-[ Upstream commit bc4c0a48bdad7f225740b8e750fdc1da6d85e1eb ]
+[ Upstream commit 57af162bfc8c05332a28c4d458d246cc46d2746d ]
 
-The get_next_frame() function in psock_tpacket.c was missing a return
-statement in its default switch case, leading to a compiler warning.
+Some kfd ioctls may not be available depending on the kernel version the
+user is running, as such we need to report -ENOTTY so userland can
+determine the cause of the ioctl failure.
 
-This was caused by a `bug_on(1)` call, which is defined as an
-`assert()`, being compiled out because NDEBUG is defined during the
-build.
-
-Instead of adding a `return NULL;` which would silently hide the error
-and could lead to crashes later, this change restores the original
-author's intent. By adding `#undef NDEBUG` before including <assert.h>,
-we ensure the assertion is active and will cause the test to abort if
-this unreachable code is ever executed.
-
-Signed-off-by: Wake Liu <wakel@google.com>
-Link: https://patch.msgid.link/20250809062013.2407822-1-wakel@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/psock_tpacket.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
-index 93092d13b3c59..ca0d9a5a9e08c 100644
---- a/tools/testing/selftests/net/psock_tpacket.c
-+++ b/tools/testing/selftests/net/psock_tpacket.c
-@@ -22,6 +22,7 @@
-  *   - TPACKET_V3: RX_RING
-  */
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+index 869c8786df5c9..04367ae4b425d 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
+@@ -1887,8 +1887,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 	unsigned int usize, asize;
+ 	int retcode = -EINVAL;
  
-+#undef NDEBUG
- #include <stdio.h>
- #include <stdlib.h>
- #include <sys/types.h>
+-	if (nr >= AMDKFD_CORE_IOCTL_COUNT)
++	if (nr >= AMDKFD_CORE_IOCTL_COUNT) {
++		retcode = -ENOTTY;
+ 		goto err_i1;
++	}
+ 
+ 	if ((nr >= AMDKFD_COMMAND_START) && (nr < AMDKFD_COMMAND_END)) {
+ 		u32 amdkfd_size;
+@@ -1901,8 +1903,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
+ 			asize = amdkfd_size;
+ 
+ 		cmd = ioctl->cmd;
+-	} else
++	} else {
++		retcode = -ENOTTY;
+ 		goto err_i1;
++	}
+ 
+ 	dev_dbg(kfd_device, "ioctl cmd 0x%x (#0x%x), arg 0x%lx\n", cmd, nr, arg);
+ 
 -- 
 2.51.0
 
