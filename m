@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F005F342509;
-	Wed,  3 Dec 2025 15:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE162341650;
+	Wed,  3 Dec 2025 15:57:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777443; cv=none; b=Xq4nfw+5Gtgx6S5sQXf8WfnBYYIitiyTa5ImLVgzF51R52lXuwyokWRmxhv3Rm5iQRDOf7VDa4l/6FqSOplLUD6kLEFDA/RgjL2XXz0JkcYlXWgjJ4u70DZGtDLKEu6jKl1jpRaFD2WCv7UJkoWC/k4u8CNKliuXdRKrdycOyLw=
+	t=1764777446; cv=none; b=Ikhw47g1C0OMrNdtKPrWpW2Su6wcqLUUi43S5otuikz+7D6DvMHAsQNCV0j6E1pvNYSzUiqBugmP91yj+G5hLfReEdDG24hYL0Ck1L0O/9CqXlPWlqerhhBmhyYF0Aqqtc9r5UmKAHVj9USZLxDWF04FNIE1GpJvdAka8dbbKsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777443; c=relaxed/simple;
-	bh=7Y6M0sqSDJUJeniC1obg5g8MHXaU7M+yOJqm51cBIQA=;
+	s=arc-20240116; t=1764777446; c=relaxed/simple;
+	bh=bfm1/jteo9kt7NKvLQ1vRUjLGu4RTQl0bLg2UGMYXVU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fSXCyLpsvkgo1p7JYM4hnAXsaCQuKDIMjNMZ+AIo0WEcHYACn2TdyzTPE8EFkZ0526Lrhy50ZG5FmqTGADIXf36IF0RrAGzA+bR4FuRA8I6dhtgUT20ftWRdA7f1ekdcXw/+rDW1kpPNmauE/r1MsqwDeCzoZtO6DB7YtPftuUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fVJvjWjO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RI3QLBEBxrBb9VPtmCm/AFG9YQEfKAG3Pne1Bo/EI7K8+MhMAsCrF4nn0zbxnC49Btw1h/+u7Q2cNxFjKQhEeWgDMFrOjkJKOqc3zwwd3WFwmzNM54yC7AHVcjOIhg0ljAJBHP1ByjGo5HKX14KMiCA3DM5AfBrPqbi7Zkd6AxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fY/w/G41; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fVJvjWjO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7497AC116C6;
-	Wed,  3 Dec 2025 15:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fY/w/G41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F087C4CEF5;
+	Wed,  3 Dec 2025 15:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777442;
-	bh=7Y6M0sqSDJUJeniC1obg5g8MHXaU7M+yOJqm51cBIQA=;
+	s=korg; t=1764777445;
+	bh=bfm1/jteo9kt7NKvLQ1vRUjLGu4RTQl0bLg2UGMYXVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fVJvjWjOJ/6p4HtCZ99gpfW8jZzJ0M/Yc5mbVyIcpUqYmJ0U4oh8fnXBd0dVTjIde
-	 2OgQArtZBvImv6toW7r76TpA04JWvSs7qKwmicZ+5HwTTRj6rvMgN0tmtYGGkSGW5f
-	 nWSgo/Cc57pOoumT0fRzyhu1j8CF4h+EKqlDrEPI=
+	b=fY/w/G41pbCJ2Q+RVu438n1jgN6i1MiLNs+i9pQrOm9d1lo+GIYzSIOROqtht0KpO
+	 iEHw9wTqUPhnRUCXvfZGh+7HSSk1Z0cZBAncCeLfxmOZaQpRa425JSevXR1gH0mZlh
+	 40kkUZILhNHJRMUQ71zs6MnDEtpWGEJaxqVNRyno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babu Moger <babu.moger@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 5.15 039/392] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
-Date: Wed,  3 Dec 2025 16:23:09 +0100
-Message-ID: <20251203152415.547047587@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 040/392] xhci: dbc: Provide sysfs option to configure dbc descriptors
+Date: Wed,  3 Dec 2025 16:23:10 +0100
+Message-ID: <20251203152415.584505116@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,137 +50,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babu Moger <babu.moger@amd.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 ]
+[ Upstream commit edf1664f3249a091a2b91182fc087b3253b0b4c2 ]
 
-Users can create as many monitoring groups as the number of RMIDs supported
-by the hardware. However, on AMD systems, only a limited number of RMIDs
-are guaranteed to be actively tracked by the hardware. RMIDs that exceed
-this limit are placed in an "Unavailable" state.
+When DbC is enabled the first port on the xHC host acts as a usb device.
+xHC provides the descriptors automatically when the DbC device is
+enumerated. Most of the values are hardcoded, but some fields such as
+idProduct, idVendor, bcdDevice and bInterfaceProtocol can be modified.
 
-When a bandwidth counter is read for such an RMID, the hardware sets
-MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
-again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
-remains set on first read after tracking re-starts and is clear on all
-subsequent reads as long as the RMID is tracked.
+Add sysfs entries that allow userspace to change these.
+User can only change them before dbc is enabled, i.e. before writing
+"enable" to dbc sysfs file as we don't want these values to change while
+device is connected, or during  enumeration.
 
-resctrl miscounts the bandwidth events after an RMID transitions from the
-"Unavailable" state back to being tracked. This happens because when the
-hardware starts counting again after resetting the counter to zero, resctrl
-in turn compares the new count against the counter value stored from the
-previous time the RMID was tracked.
+Add documentation for these entries in
+Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd
 
-This results in resctrl computing an event value that is either undercounting
-(when new counter is more than stored counter) or a mistaken overflow (when
-new counter is less than stored counter).
-
-Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
-zero whenever the RMID is in the "Unavailable" state to ensure accurate
-counting after the RMID resets to zero when it starts to be tracked again.
-
-Example scenario that results in mistaken overflow
-==================================================
-1. The resctrl filesystem is mounted, and a task is assigned to a
-   monitoring group.
-
-   $mount -t resctrl resctrl /sys/fs/resctrl
-   $mkdir /sys/fs/resctrl/mon_groups/test1/
-   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   21323            <- Total bytes on domain 0
-   "Unavailable"    <- Total bytes on domain 1
-
-   Task is running on domain 0. Counter on domain 1 is "Unavailable".
-
-2. The task runs on domain 0 for a while and then moves to domain 1. The
-   counter starts incrementing on domain 1.
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   7345357          <- Total bytes on domain 0
-   4545             <- Total bytes on domain 1
-
-3. At some point, the RMID in domain 0 transitions to the "Unavailable"
-   state because the task is no longer executing in that domain.
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   "Unavailable"    <- Total bytes on domain 0
-   434341           <- Total bytes on domain 1
-
-4.  Since the task continues to migrate between domains, it may eventually
-    return to domain 0.
-
-    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-    17592178699059  <- Overflow on domain 0
-    3232332         <- Total bytes on domain 1
-
-In this case, the RMID on domain 0 transitions from "Unavailable" state to
-active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
-the counter is read and begins tracking the RMID counting from 0.
-
-Subsequent reads succeed but return a value smaller than the previously
-saved MSR value (7345357). Consequently, the resctrl's overflow logic is
-triggered, it compares the previous value (7345357) with the new, smaller
-value and incorrectly interprets this as a counter overflow, adding a large
-delta.
-
-In reality, this is a false positive: the counter did not overflow but was
-simply reset when the RMID transitioned from "Unavailable" back to active
-state.
-
-Here is the text from APM [1] available from [2].
-
-"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
-first QM_CTR read when it begins tracking an RMID that it was not
-previously tracking. The U bit will be zero for all subsequent reads from
-that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
-read with the U bit set when that RMID is in use by a processor can be
-considered 0 when calculating the difference with a subsequent read."
-
-[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
-    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
-    Bandwidth (MBM).
-
-  [ bp: Split commit message into smaller paragraph chunks for better
-    consumption. ]
-
-Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
-(cherry picked from commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92)
-[babu.moger@amd.com: Fix conflict in monitor.c for v5.15 stable]
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230317154715.535523-9-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f3d12ec847b9 ("xhci: dbc: fix bogus 1024 byte prefix if ttyDBC read races with stall event")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/monitor.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd |   52 ++++
+ drivers/usb/host/xhci-dbgcap.c                           |  191 ++++++++++++++-
+ drivers/usb/host/xhci-dbgcap.h                           |    4 
+ 3 files changed, 243 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -288,11 +288,19 @@ static u64 mbm_overflow_count(u64 prev_m
- static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
- {
- 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(rr->r);
--	struct mbm_state *m;
-+	struct mbm_state *m = NULL;
- 	u64 chunks, tval;
+--- a/Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd
++++ b/Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd
+@@ -23,3 +23,55 @@ Description:
+ 		Reading this attribute gives the state of the DbC. It
+ 		can be one of the following states: disabled, enabled,
+ 		initialized, connected, configured and stalled.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_idVendor
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This dbc_idVendor attribute lets us change the idVendor field
++		presented in the USB device descriptor by this xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB device descriptor change while
++		connected to a USB host.
++		The default value is 0x1d6b (Linux Foundation).
++		It can be any 16-bit integer.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_idProduct
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This dbc_idProduct attribute lets us change the idProduct field
++		presented in the USB device descriptor by this xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB device descriptor change while
++		connected to a USB host.
++		The default value is 0x0010. It can be any 16-bit integer.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_bcdDevice
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This dbc_bcdDevice attribute lets us change the bcdDevice field
++		presented in the USB device descriptor by this xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB device descriptor change while
++		connected to a USB host.
++		The default value is 0x0010. (device rev 0.10)
++		It can be any 16-bit integer.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_bInterfaceProtocol
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This attribute lets us change the bInterfaceProtocol field
++		presented in the USB Interface descriptor by the xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB descriptor change while
++		connected to a USB host.
++		The default value is 1  (GNU Remote Debug command).
++		Other permissible value is 0 which is for vendor defined debug
++		target.
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -133,10 +133,10 @@ static void xhci_dbc_init_contexts(struc
+ 	/* Set DbC context and info registers: */
+ 	lo_hi_writeq(dbc->ctx->dma, &dbc->regs->dccp);
  
- 	tval = __rmid_read(rmid, rr->evtid);
- 	if (tval & (RMID_VAL_ERROR | RMID_VAL_UNAVAIL)) {
-+		if (tval & RMID_VAL_UNAVAIL) {
-+			if (rr->evtid == QOS_L3_MBM_TOTAL_EVENT_ID)
-+				m = &rr->d->mbm_total[rmid];
-+			else if (rr->evtid == QOS_L3_MBM_LOCAL_EVENT_ID)
-+				m = &rr->d->mbm_local[rmid];
-+			if (m)
-+				m->prev_msr = 0;
-+		}
- 		return tval;
- 	}
- 	switch (rr->evtid) {
+-	dev_info = cpu_to_le32((DBC_VENDOR_ID << 16) | DBC_PROTOCOL);
++	dev_info = (dbc->idVendor << 16) | dbc->bInterfaceProtocol;
+ 	writel(dev_info, &dbc->regs->devinfo1);
+ 
+-	dev_info = cpu_to_le32((DBC_DEVICE_REV << 16) | DBC_PRODUCT_ID);
++	dev_info = (dbc->bcdDevice << 16) | dbc->idProduct;
+ 	writel(dev_info, &dbc->regs->devinfo2);
+ }
+ 
+@@ -1044,7 +1044,186 @@ static ssize_t dbc_store(struct device *
+ 	return count;
+ }
+ 
++static ssize_t dbc_idVendor_show(struct device *dev,
++			    struct device_attribute *attr,
++			    char *buf)
++{
++	struct xhci_dbc		*dbc;
++	struct xhci_hcd		*xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%04x\n", dbc->idVendor);
++}
++
++static ssize_t dbc_idVendor_store(struct device *dev,
++			     struct device_attribute *attr,
++			     const char *buf, size_t size)
++{
++	struct xhci_dbc		*dbc;
++	struct xhci_hcd		*xhci;
++	void __iomem		*ptr;
++	u16			value;
++	u32			dev_info;
++
++	if (kstrtou16(buf, 0, &value))
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->idVendor = value;
++	ptr = &dbc->regs->devinfo1;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffffu << 16)) | (value << 16);
++	writel(dev_info, ptr);
++
++	return size;
++}
++
++static ssize_t dbc_idProduct_show(struct device *dev,
++			    struct device_attribute *attr,
++			    char *buf)
++{
++	struct xhci_dbc         *dbc;
++	struct xhci_hcd         *xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%04x\n", dbc->idProduct);
++}
++
++static ssize_t dbc_idProduct_store(struct device *dev,
++			     struct device_attribute *attr,
++			     const char *buf, size_t size)
++{
++	struct xhci_dbc         *dbc;
++	struct xhci_hcd         *xhci;
++	void __iomem		*ptr;
++	u32			dev_info;
++	u16			value;
++
++	if (kstrtou16(buf, 0, &value))
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->idProduct = value;
++	ptr = &dbc->regs->devinfo2;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffffu)) | value;
++	writel(dev_info, ptr);
++	return size;
++}
++
++static ssize_t dbc_bcdDevice_show(struct device *dev,
++				   struct device_attribute *attr,
++				   char *buf)
++{
++	struct xhci_dbc	*dbc;
++	struct xhci_hcd	*xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%04x\n", dbc->bcdDevice);
++}
++
++static ssize_t dbc_bcdDevice_store(struct device *dev,
++				    struct device_attribute *attr,
++				    const char *buf, size_t size)
++{
++	struct xhci_dbc	*dbc;
++	struct xhci_hcd	*xhci;
++	void __iomem *ptr;
++	u32 dev_info;
++	u16 value;
++
++	if (kstrtou16(buf, 0, &value))
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->bcdDevice = value;
++	ptr = &dbc->regs->devinfo2;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffffu << 16)) | (value << 16);
++	writel(dev_info, ptr);
++
++	return size;
++}
++
++static ssize_t dbc_bInterfaceProtocol_show(struct device *dev,
++				 struct device_attribute *attr,
++				 char *buf)
++{
++	struct xhci_dbc	*dbc;
++	struct xhci_hcd	*xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%02x\n", dbc->bInterfaceProtocol);
++}
++
++static ssize_t dbc_bInterfaceProtocol_store(struct device *dev,
++				  struct device_attribute *attr,
++				  const char *buf, size_t size)
++{
++	struct xhci_dbc *dbc;
++	struct xhci_hcd *xhci;
++	void __iomem *ptr;
++	u32 dev_info;
++	u8 value;
++	int ret;
++
++	/* bInterfaceProtocol is 8 bit, but xhci only supports values 0 and 1 */
++	ret = kstrtou8(buf, 0, &value);
++	if (ret || value > 1)
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->bInterfaceProtocol = value;
++	ptr = &dbc->regs->devinfo1;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffu)) | value;
++	writel(dev_info, ptr);
++
++	return size;
++}
++
+ static DEVICE_ATTR_RW(dbc);
++static DEVICE_ATTR_RW(dbc_idVendor);
++static DEVICE_ATTR_RW(dbc_idProduct);
++static DEVICE_ATTR_RW(dbc_bcdDevice);
++static DEVICE_ATTR_RW(dbc_bInterfaceProtocol);
++
++static struct attribute *dbc_dev_attributes[] = {
++	&dev_attr_dbc.attr,
++	&dev_attr_dbc_idVendor.attr,
++	&dev_attr_dbc_idProduct.attr,
++	&dev_attr_dbc_bcdDevice.attr,
++	&dev_attr_dbc_bInterfaceProtocol.attr,
++	NULL
++};
++
++static const struct attribute_group dbc_dev_attrib_grp = {
++	.attrs = dbc_dev_attributes,
++};
+ 
+ struct xhci_dbc *
+ xhci_alloc_dbc(struct device *dev, void __iomem *base, const struct dbc_driver *driver)
+@@ -1059,6 +1238,10 @@ xhci_alloc_dbc(struct device *dev, void
+ 	dbc->regs = base;
+ 	dbc->dev = dev;
+ 	dbc->driver = driver;
++	dbc->idProduct = DBC_PRODUCT_ID;
++	dbc->idVendor = DBC_VENDOR_ID;
++	dbc->bcdDevice = DBC_DEVICE_REV;
++	dbc->bInterfaceProtocol = DBC_PROTOCOL;
+ 
+ 	if (readl(&dbc->regs->control) & DBC_CTRL_DBC_ENABLE)
+ 		goto err;
+@@ -1066,7 +1249,7 @@ xhci_alloc_dbc(struct device *dev, void
+ 	INIT_DELAYED_WORK(&dbc->event_work, xhci_dbc_handle_events);
+ 	spin_lock_init(&dbc->lock);
+ 
+-	ret = device_create_file(dev, &dev_attr_dbc);
++	ret = sysfs_create_group(&dev->kobj, &dbc_dev_attrib_grp);
+ 	if (ret)
+ 		goto err;
+ 
+@@ -1085,7 +1268,7 @@ void xhci_dbc_remove(struct xhci_dbc *db
+ 	xhci_dbc_stop(dbc);
+ 
+ 	/* remove sysfs files */
+-	device_remove_file(dbc->dev, &dev_attr_dbc);
++	sysfs_remove_group(&dbc->dev->kobj, &dbc_dev_attrib_grp);
+ 
+ 	kfree(dbc);
+ }
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -131,6 +131,10 @@ struct xhci_dbc {
+ 	struct dbc_str_descs		*string;
+ 	dma_addr_t			string_dma;
+ 	size_t				string_size;
++	u16				idVendor;
++	u16				idProduct;
++	u16				bcdDevice;
++	u8				bInterfaceProtocol;
+ 
+ 	enum dbc_state			state;
+ 	struct delayed_work		event_work;
 
 
