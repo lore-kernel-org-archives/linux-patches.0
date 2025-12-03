@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D1A393DC8;
-	Wed,  3 Dec 2025 16:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DE1393DD7;
+	Wed,  3 Dec 2025 16:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780685; cv=none; b=Mhfp8qRDoA62G05M/R2V5TGxDf//WovafJX2Nxx9kbIZ6eL9Kc4i5He0k/nyJZI8KSMBwwx6eN35G7R7IbG4JOkNpOcaaTW+2CJRO7eeUFxgYzRUeidUDl08etOvAiSwZSBM9iTjgOpxVSUmOYUucCpLu0ipJoT0HkpHVBN3iWM=
+	t=1764780689; cv=none; b=DSzAM9WXf1KSS9cuq4qoUgMKxsqYgH4hIPKBmzHB4dSCrPtK4qE93IBtXqoINqUfePHZ1obnTCPm/iujToQlYImLrzqu8oVqJf1iWfEaouFmnGe9lf4C+faBt9q5mfXKC+4AgOtaqwWw2RE7ko6zITJ+OqYgnq+1KPV5BvgvvF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780685; c=relaxed/simple;
-	bh=xYYgnEs+7y053+nGplvB4Szg/BuZhm1eFzSUv5EiuGw=;
+	s=arc-20240116; t=1764780689; c=relaxed/simple;
+	bh=NVeQLv/V7RhU98lUaXjF32F2dIyqVPz0RmHuj/0yMaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RdjlsP7BMRYAt0aUXq9IFpvEBJWRdqxvTaMGlk4KTGYlHdXWtHxtla2mZitTvu6vR7yFChPkjGOgap1K+F4ZbAqkX/LQloxe2pmiQX6LkDccLIUSE+8/exwdekKXv/TnpNbq9CaLJjrs3CMR0lXrC91M4VX2zLsTopHwqwCFl5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eWC0CAbm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GW7nsc7MeMrADy4taeg+VUYFAkcNRS+rJ2Mq83dlIZoMGvlHvwDy2Z9IH49vGX5vFfulVuqGuLyS5baCg0/4f/Bwo9emL5KB7A8YrYYE1cPJLSX0M5y7WYjwZp+Mh6sPCAxAynKKFOaO8aEQ0p2wJTwNsKruPqy34dWjbfzUreU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFJfcQTi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eWC0CAbm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20748C4CEF5;
-	Wed,  3 Dec 2025 16:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFJfcQTi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D89C4CEF5;
+	Wed,  3 Dec 2025 16:51:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780685;
-	bh=xYYgnEs+7y053+nGplvB4Szg/BuZhm1eFzSUv5EiuGw=;
+	s=korg; t=1764780689;
+	bh=NVeQLv/V7RhU98lUaXjF32F2dIyqVPz0RmHuj/0yMaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWC0CAbmFtIcjKYVrT92zagZS49zR/Uij3wJHMbVlLZTbW62QN9mlwNKj7ynvSLZz
-	 WZ8bsEQiQfgmNKNw9t1AygbSNmMOyEjaMO9o4oBROoVyU0LHLOjgxNyYAQHoI+7v0H
-	 fbCqZE8QVMjhxCScRLxOwmTF8kpUcA8lJKmVrKTs=
+	b=TFJfcQTio+hbzM4i0XRevzs3SZqFngSYhjNV7OCEjtkFpCwTDQSsf+TBRimoHzZVZ
+	 JwMY8afbqa5+ifIYjFctTgASs+/KpfAoJzE3aSfuHGQ9fEL4/PqzJAPQppVWrrmcWj
+	 TAp4W/a6qng85Tr9npOZ69IQBpqtQRTmXNHIGFqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 058/132] iio: adc: stm32-dfsdm: fix st,adc-alt-channel property handling
-Date: Wed,  3 Dec 2025 16:28:57 +0100
-Message-ID: <20251203152345.446334559@linuxfoundation.org>
+Subject: [PATCH 6.12 059/132] iio: accel: bmc150: Fix irq assumption regression
+Date: Wed,  3 Dec 2025 16:28:58 +0100
+Message-ID: <20251203152345.482197389@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -53,40 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-commit 8a6b7989ff0cd0a95c93be1927f2af7ad10f28de upstream.
+commit 3aa385a9c75c09b59dcab2ff76423439d23673ab upstream.
 
-Initially st,adc-alt-channel property was defined as an enum in the DFSDM
-binding. The DFSDM binding has been changed to use the new IIO backend
-framework, along with the adoption of IIO generic channels.
-In this new binding st,adc-alt-channel is defined as a boolean property,
-but it is still handled has an enum in DFSDM driver.
-Fix st,adc-alt-channel property handling in DFSDM driver.
+The code in bmc150-accel-core.c unconditionally calls
+bmc150_accel_set_interrupt() in the iio_buffer_setup_ops,
+such as on the runtime PM resume path giving a kernel
+splat like this if the device has no interrupts:
 
-Fixes: 3208fa0cd919 ("iio: adc: stm32-dfsdm: adopt generic channels bindings")
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Unable to handle kernel NULL pointer dereference at virtual
+  address 00000001 when read
+
+PC is at bmc150_accel_set_interrupt+0x98/0x194
+LR is at __pm_runtime_resume+0x5c/0x64
+(...)
+Call trace:
+bmc150_accel_set_interrupt from bmc150_accel_buffer_postenable+0x40/0x108
+bmc150_accel_buffer_postenable from __iio_update_buffers+0xbe0/0xcbc
+__iio_update_buffers from enable_store+0x84/0xc8
+enable_store from kernfs_fop_write_iter+0x154/0x1b4
+
+This bug seems to have been in the driver since the beginning,
+but it only manifests recently, I do not know why.
+
+Store the IRQ number in the state struct, as this is a common
+pattern in other drivers, then use this to determine if we have
+IRQ support or not.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/stm32-dfsdm-adc.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/iio/accel/bmc150-accel-core.c |    5 +++++
+ drivers/iio/accel/bmc150-accel.h      |    1 +
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/iio/adc/stm32-dfsdm-adc.c
-+++ b/drivers/iio/adc/stm32-dfsdm-adc.c
-@@ -721,9 +721,8 @@ static int stm32_dfsdm_generic_channel_p
+--- a/drivers/iio/accel/bmc150-accel-core.c
++++ b/drivers/iio/accel/bmc150-accel-core.c
+@@ -529,6 +529,10 @@ static int bmc150_accel_set_interrupt(st
+ 	const struct bmc150_accel_interrupt_info *info = intr->info;
+ 	int ret;
+ 
++	/* We do not always have an IRQ */
++	if (data->irq <= 0)
++		return 0;
++
+ 	if (state) {
+ 		if (atomic_inc_return(&intr->users) > 1)
+ 			return 0;
+@@ -1702,6 +1706,7 @@ int bmc150_accel_core_probe(struct devic
  	}
- 	df_ch->src = val;
  
--	ret = fwnode_property_read_u32(node, "st,adc-alt-channel", &df_ch->alt_si);
--	if (ret != -EINVAL)
--		df_ch->alt_si = 0;
-+	if (fwnode_property_present(node, "st,adc-alt-channel"))
-+		df_ch->alt_si = 1;
+ 	if (irq > 0) {
++		data->irq = irq;
+ 		ret = devm_request_threaded_irq(dev, irq,
+ 						bmc150_accel_irq_handler,
+ 						bmc150_accel_irq_thread_handler,
+--- a/drivers/iio/accel/bmc150-accel.h
++++ b/drivers/iio/accel/bmc150-accel.h
+@@ -57,6 +57,7 @@ enum bmc150_accel_trigger_id {
  
- 	if (adc->dev_data->type == DFSDM_IIO) {
- 		backend = devm_iio_backend_fwnode_get(&indio_dev->dev, NULL, node);
+ struct bmc150_accel_data {
+ 	struct regmap *regmap;
++	int irq;
+ 	struct regulator_bulk_data regulators[2];
+ 	struct bmc150_accel_interrupt interrupts[BMC150_ACCEL_INTERRUPTS];
+ 	struct bmc150_accel_trigger triggers[BMC150_ACCEL_TRIGGERS];
 
 
