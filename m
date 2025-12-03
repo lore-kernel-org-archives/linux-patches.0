@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8765F25BEE5;
-	Wed,  3 Dec 2025 15:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86C8DDAB;
+	Wed,  3 Dec 2025 15:40:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776427; cv=none; b=AXvkZ6O/42FLNsMQRK0UiV5TGr4D3vfprclLwFpMQofXTd1z1YuR69rrSJpQi+lg5KwXNwwModW994BbZu9ClwfgW1Zy+L+pZ9k/QnzExiHT9DQJd1r+aCDELe9posqzmd7Dgg/ZsikDW4FAzI242IPJfmLz/SJLrUrSVRVCz50=
+	t=1764776431; cv=none; b=IWOPsAYthVtPn6I4Nq6BG5ffgXTMJFCnYKMcIBycUvPuAA6somxBrcYSctzclBcnuqDzF9qPG92vLJPf/BerzRE+v7wgnj+t9D3cVHOdmetEJ0ljaEt+kh+ftzmaU4KdDNreSg9LyclvFelIwIEDg7BufUA1GDL9EcY/h8vJ9ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776427; c=relaxed/simple;
-	bh=668ZlH4eIW7ct00rsrBkQd6eNoBB5C7tIiYwvG7C+NY=;
+	s=arc-20240116; t=1764776431; c=relaxed/simple;
+	bh=T5Zszy90TyCp4WBM8czdVlBpoLjBWNSN3AVrhgCeFjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCDvVq3IpF4lBi7We1WxFAv4K/qAsM1rNMzT7zDX1682RMxy6SfGoWXT415y06Adn4by6Gmeec6bxxSd6b81Gxazij2XvfY58RJX/lQdMSDR9e/RwZPQlmV5O/zBPioZnkKV2GVn6MTMpUg+rXu7BoKZZ51Uc3d4g9KGqYWNhWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5hwlQcT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y/Dzf9BfF7CIOlwt2CyAKB1o6atMDrTVSypvS9kTVfVnTmnzlpxBoJbaK947RkmYaML8n1owcWg+M88NcMRuNl0g+DzE+Pv4K/FJa72A1CJHY3IPlYelrxUU4ruT/Wsds0GmgfD+yG5OyreSiJUnf/rQ0r44PPpa6BALn374p4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgQpG0pE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5hwlQcT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9640C4CEF5;
-	Wed,  3 Dec 2025 15:40:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgQpG0pE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55C58C4CEF5;
+	Wed,  3 Dec 2025 15:40:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776427;
-	bh=668ZlH4eIW7ct00rsrBkQd6eNoBB5C7tIiYwvG7C+NY=;
+	s=korg; t=1764776430;
+	bh=T5Zszy90TyCp4WBM8czdVlBpoLjBWNSN3AVrhgCeFjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5hwlQcT8exl6ZPdKNCocpLR50gWLCjVjVUoUNJQsgU4Z0c/d177jn0WqkSTNB9i/
-	 SNk6PlomkXnOBUMyn2xTERtsOmryRUYBgYgxYyG76dmF/2mXb6puFP13mfn7C+sR0e
-	 WX4fPlad1CrCvJZzVBj0bOnuqf1ziflXWyo18/Vk=
+	b=tgQpG0pEEzFD/UrYxkLyvMiCY9btCOYbDxv3m/Me9NYyiIkp5qxxuy8jecJqJ2BaU
+	 yIG75huumq6XC+Cm47p0SvjXoOkcGxzKLiOYX0xLJ6MTz21P1urDb8v98d7GTZCqrF
+	 CXqTmVaE9LwWECp77+EbTwOYSKSB42eeDEKbT+Xs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 180/300] Bluetooth: 6lowpan: reset link-local header on ipv6 recv path
-Date: Wed,  3 Dec 2025 16:26:24 +0100
-Message-ID: <20251203152407.296077202@linuxfoundation.org>
+Subject: [PATCH 5.10 181/300] Bluetooth: 6lowpan: fix BDADDR_LE vs ADDR_LE_DEV address type confusion
+Date: Wed,  3 Dec 2025 16:26:25 +0100
+Message-ID: <20251203152407.333416591@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -54,50 +54,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 3b78f50918276ab28fb22eac9aa49401ac436a3b ]
+[ Upstream commit b454505bf57a2e4f5d49951d4deb03730a9348d9 ]
 
-Bluetooth 6lowpan.c netdev has header_ops, so it must set link-local
-header for RX skb, otherwise things crash, eg. with AF_PACKET SOCK_RAW
+Bluetooth 6lowpan.c confuses BDADDR_LE and ADDR_LE_DEV address types,
+e.g. debugfs "connect" command takes the former, and "disconnect" and
+"connect" to already connected device take the latter.  This is due to
+using same value both for l2cap_chan_connect and hci_conn_hash_lookup_le
+which take different dst_type values.
 
-Add missing skb_reset_mac_header() for uncompressed ipv6 RX path.
+Fix address type passed to hci_conn_hash_lookup_le().
 
-For the compressed one, it is done in lowpan_header_decompress().
+Retain the debugfs API difference between "connect" and "disconnect"
+commands since it's been like this since 2015 and nobody apparently
+complained.
 
-Log: (BlueZ 6lowpan-tester Client Recv Raw - Success)
-------
-kernel BUG at net/core/skbuff.c:212!
-Call Trace:
-<IRQ>
-...
-packet_rcv (net/packet/af_packet.c:2152)
-...
-<TASK>
-__local_bh_enable_ip (kernel/softirq.c:407)
-netif_rx (net/core/dev.c:5648)
-chan_recv_cb (net/bluetooth/6lowpan.c:294 net/bluetooth/6lowpan.c:359)
-------
-
-Fixes: 18722c247023 ("Bluetooth: Enable 6LoWPAN support for BT LE devices")
+Fixes: f5ad4ffceba0 ("Bluetooth: 6lowpan: Use hci_conn_hash_lookup_le() when possible")
 Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/6lowpan.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/6lowpan.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
 diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
-index 7e698b0ac7bc7..32dc74115dcbc 100644
+index 32dc74115dcbc..d035bb927aec2 100644
 --- a/net/bluetooth/6lowpan.c
 +++ b/net/bluetooth/6lowpan.c
-@@ -317,6 +317,7 @@ static int recv_pkt(struct sk_buff *skb, struct net_device *dev,
- 		local_skb->pkt_type = PACKET_HOST;
- 		local_skb->dev = dev;
+@@ -994,10 +994,11 @@ static struct l2cap_chan *bt_6lowpan_listen(void)
+ }
  
-+		skb_reset_mac_header(local_skb);
- 		skb_set_transport_header(local_skb, sizeof(struct ipv6hdr));
+ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
+-			  struct l2cap_conn **conn)
++			  struct l2cap_conn **conn, bool disconnect)
+ {
+ 	struct hci_conn *hcon;
+ 	struct hci_dev *hdev;
++	int le_addr_type;
+ 	int n;
  
- 		if (give_skb_to_upper(local_skb, dev) != NET_RX_SUCCESS) {
+ 	n = sscanf(buf, "%hhx:%hhx:%hhx:%hhx:%hhx:%hhx %hhu",
+@@ -1008,13 +1009,32 @@ static int get_l2cap_conn(char *buf, bdaddr_t *addr, u8 *addr_type,
+ 	if (n < 7)
+ 		return -EINVAL;
+ 
++	if (disconnect) {
++		/* The "disconnect" debugfs command has used different address
++		 * type constants than "connect" since 2015. Let's retain that
++		 * for now even though it's obviously buggy...
++		 */
++		*addr_type += 1;
++	}
++
++	switch (*addr_type) {
++	case BDADDR_LE_PUBLIC:
++		le_addr_type = ADDR_LE_DEV_PUBLIC;
++		break;
++	case BDADDR_LE_RANDOM:
++		le_addr_type = ADDR_LE_DEV_RANDOM;
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	/* The LE_PUBLIC address type is ignored because of BDADDR_ANY */
+ 	hdev = hci_get_route(addr, BDADDR_ANY, BDADDR_LE_PUBLIC);
+ 	if (!hdev)
+ 		return -ENOENT;
+ 
+ 	hci_dev_lock(hdev);
+-	hcon = hci_conn_hash_lookup_le(hdev, addr, *addr_type);
++	hcon = hci_conn_hash_lookup_le(hdev, addr, le_addr_type);
+ 	hci_dev_unlock(hdev);
+ 	hci_dev_put(hdev);
+ 
+@@ -1141,7 +1161,7 @@ static ssize_t lowpan_control_write(struct file *fp,
+ 	buf[buf_size] = '\0';
+ 
+ 	if (memcmp(buf, "connect ", 8) == 0) {
+-		ret = get_l2cap_conn(&buf[8], &addr, &addr_type, &conn);
++		ret = get_l2cap_conn(&buf[8], &addr, &addr_type, &conn, false);
+ 		if (ret == -EINVAL)
+ 			return ret;
+ 
+@@ -1178,7 +1198,7 @@ static ssize_t lowpan_control_write(struct file *fp,
+ 	}
+ 
+ 	if (memcmp(buf, "disconnect ", 11) == 0) {
+-		ret = get_l2cap_conn(&buf[11], &addr, &addr_type, &conn);
++		ret = get_l2cap_conn(&buf[11], &addr, &addr_type, &conn, true);
+ 		if (ret < 0)
+ 			return ret;
+ 
 -- 
 2.51.0
 
