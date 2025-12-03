@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBF3307AD9;
-	Wed,  3 Dec 2025 15:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52883307AD9;
+	Wed,  3 Dec 2025 15:44:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776684; cv=none; b=CQqWZljCJIKEr225+P+A1D/FtoMwFeMWC6w84kk6DRi1ZywyCpTwIaIqlM5MYWVIKgDwnIYTFnPt7X1nFtqTZA7+fV3m3GMzh4LAcSnJpq6Drg45PRgG+RjB1RmzwTSoxiTiivnuhsx/wGTrw73NPMJNQezM3b80udzg31z92rg=
+	t=1764776687; cv=none; b=DMMemfya3Q7t3O2Jd+0dWpdDZyIiTD8hWhvVnqoDIhbiQKesVnw58Yjoa/KWZry7HWfkZQakofoqkAUE8FedHwevOPjxcwWWLfpTbS9fmIiJatwyGPvwr0pmMoJdGedC5Hfnw/ofqbfMxKb05VKCSEVIJ6Q6SVEI29hZds5ybQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776684; c=relaxed/simple;
-	bh=Ws7lfQ83yvWFlQkh4CFzO2Lx15ofF/QW1Vm9uW7xkT8=;
+	s=arc-20240116; t=1764776687; c=relaxed/simple;
+	bh=d+vUFuv8NByvXDo3B26dKehb6X61XmCrRdWarz7m+tw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OviSlioYtKaDt9axxyVDEM7dPka4lqf2ogXFrL49GRFcZRmXYcDSgDcTQinV4n6XNwqTZcxHAK5qfVsBrbnrbVt7DRLZmXu7IuB+ZOqCWV/O3VM9jdaGusHRRRVgAFbn1PkY3AboLSxdSe/meLhXMg682NcbdzH6X2FP0/L3mIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o5BjaphB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdDtyVRut+8vyxjLHMsLOk9VtDgn0Ma5tHj0HVtgM6KsQTtZYNLAWM49zJyNODqZOFJIPTIdLUHljSHTNPfyoCtFnpzcFm4i/4xljKPvTsFilWPVvYxun34oxNHABrx3+5yiqBjjXyuzNFbj+gn6H5tWAa7DiyklXB2Nqd+H8Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1IIVmSBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o5BjaphB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CAEC4CEF5;
-	Wed,  3 Dec 2025 15:44:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1IIVmSBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67F6C4CEF5;
+	Wed,  3 Dec 2025 15:44:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776683;
-	bh=Ws7lfQ83yvWFlQkh4CFzO2Lx15ofF/QW1Vm9uW7xkT8=;
+	s=korg; t=1764776687;
+	bh=d+vUFuv8NByvXDo3B26dKehb6X61XmCrRdWarz7m+tw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5BjaphBZPCg8BwBIXeobmUr7ca8EPNoyjJscRKBVo6zOYQDmVo/AL5oFRUUPHOHa
-	 ve5IRGdd/d+UvmNzKCjgmw8r0O+0BkBnyexf0xPdC/bAnhlf6air0PMxaFH3INGDLO
-	 EBB3qDJ8g6/1YTCwjqMU5H6rrNjehMMp7A4R5w+U=
+	b=1IIVmSBwQFIvRVxjYjH+x4qaA9lHJN/4KkJOoYO2nV/lwRxKz6is4yZ8L7SiUOkyy
+	 fJEnil1R5pMUXQAHyptUc3gd3VSuEj/nn/mKYMD3iDZYqOtGqeVCt6VX6uIM4B+EtI
+	 pYzRuwE1USoXOHVLfJdHyOMRpkdXC/+EWqg5/kzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Carol Soto <csoto@nvidia.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 257/300] Bluetooth: SMP: Fix not generating mackey and ltk when repairing
-Date: Wed,  3 Dec 2025 16:27:41 +0100
-Message-ID: <20251203152410.160920206@linuxfoundation.org>
+Subject: [PATCH 5.10 258/300] net: aquantia: Add missing descriptor cache invalidation on ATL2
+Date: Wed,  3 Dec 2025 16:27:42 +0100
+Message-ID: <20251203152410.197463922@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,85 +53,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Kai-Heng Feng <kaihengf@nvidia.com>
 
-[ Upstream commit 545d7827b2cd5de5eb85580cebeda6b35b3ff443 ]
+[ Upstream commit 7526183cfdbe352c51c285762f0e15b7c428ea06 ]
 
-The change eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-introduced a goto that bypasses the creation of temporary mackey and ltk
-which are later used by the likes of DHKey Check step.
+ATL2 hardware was missing descriptor cache invalidation in hw_stop(),
+causing SMMU translation faults during device shutdown and module removal:
+[   70.355743] arm-smmu-v3 arm-smmu-v3.5.auto: event 0x10 received:
+[   70.361893] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0002060000000010
+[   70.367948] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000020000000000
+[   70.374002] arm-smmu-v3 arm-smmu-v3.5.auto:  0x00000000ff9bc000
+[   70.380055] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000000000000000
+[   70.386109] arm-smmu-v3 arm-smmu-v3.5.auto: event: F_TRANSLATION client: 0001:06:00.0 sid: 0x20600 ssid: 0x0 iova: 0xff9bc000 ipa: 0x0
+[   70.398531] arm-smmu-v3 arm-smmu-v3.5.auto: unpriv data write s1 "Input address caused fault" stag: 0x0
 
-Later ffee202a78c2 ("Bluetooth: Always request for user confirmation for
-Just Works (LE SC)") which means confirm_hint is always set in case
-JUST_WORKS so the branch checking for an existing LTK becomes pointless
-as confirm_hint will always be set, so this just merge both cases of
-malicious or legitimate devices to be confirmed before continuing with the
-pairing procedure.
+Commit 7a1bb49461b1 ("net: aquantia: fix potential IOMMU fault after
+driver unbind") and commit ed4d81c4b3f2 ("net: aquantia: when cleaning
+hw cache it should be toggled") fixed cache invalidation for ATL B0, but
+ATL2 was left with only interrupt disabling. This allowed hardware to
+write to cached descriptors after DMA memory was unmapped, triggering
+SMMU faults. Once cache invalidation is applied to ATL2, the translation
+fault can't be observed anymore.
 
-Link: https://github.com/bluez/bluez/issues/1622
-Fixes: eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Add shared aq_hw_invalidate_descriptor_cache() helper and use it in both
+ATL B0 and ATL2 hw_stop() implementations for consistent behavior.
+
+Fixes: e54dcf4bba3e ("net: atlantic: basic A2 init/deinit hw_ops")
+Tested-by: Carol Soto <csoto@nvidia.com>
+Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251120041537.62184-1-kaihengf@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/smp.c | 31 +++++++------------------------
- 1 file changed, 7 insertions(+), 24 deletions(-)
+ .../ethernet/aquantia/atlantic/aq_hw_utils.c  | 22 +++++++++++++++++++
+ .../ethernet/aquantia/atlantic/aq_hw_utils.h  |  1 +
+ .../aquantia/atlantic/hw_atl/hw_atl_b0.c      | 19 +---------------
+ .../aquantia/atlantic/hw_atl2/hw_atl2.c       |  2 +-
+ 4 files changed, 25 insertions(+), 19 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index fc896d39a6d95..79550d115364e 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2131,7 +2131,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	struct smp_chan *smp = chan->data;
- 	struct hci_conn *hcon = conn->hcon;
- 	u8 *pkax, *pkbx, *na, *nb, confirm_hint;
--	u32 passkey;
-+	u32 passkey = 0;
- 	int err;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
+index 1921741f7311d..18b08277d2e1a 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
+@@ -15,6 +15,7 @@
  
- 	bt_dev_dbg(hcon->hdev, "conn %p", conn);
-@@ -2183,24 +2183,6 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
- 			     smp->prnd);
- 		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
--
--		/* Only Just-Works pairing requires extra checks */
--		if (smp->method != JUST_WORKS)
--			goto mackey_and_ltk;
--
--		/* If there already exists long term key in local host, leave
--		 * the decision to user space since the remote device could
--		 * be legitimate or malicious.
--		 */
--		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
--				 hcon->role)) {
--			/* Set passkey to 0. The value can be any number since
--			 * it'll be ignored anyway.
--			 */
--			passkey = 0;
--			confirm_hint = 1;
--			goto confirm;
--		}
- 	}
+ #include "aq_hw.h"
+ #include "aq_nic.h"
++#include "hw_atl/hw_atl_llh.h"
  
- mackey_and_ltk:
-@@ -2221,11 +2203,12 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
- 	if (err)
- 		return SMP_UNSPECIFIED;
+ void aq_hw_write_reg_bit(struct aq_hw_s *aq_hw, u32 addr, u32 msk,
+ 			 u32 shift, u32 val)
+@@ -81,6 +82,27 @@ void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value)
+ 		lo_hi_writeq(value, hw->mmio + reg);
+ }
  
--	confirm_hint = 0;
--
--confirm:
--	if (smp->method == JUST_WORKS)
--		confirm_hint = 1;
-+	/* Always require user confirmation for Just-Works pairing to prevent
-+	 * impersonation attacks, or in case of a legitimate device that is
-+	 * repairing use the confirmation as acknowledgment to proceed with the
-+	 * creation of new keys.
++int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw)
++{
++	int err;
++	u32 val;
++
++	/* Invalidate Descriptor Cache to prevent writing to the cached
++	 * descriptors and to the data pointer of those descriptors
 +	 */
-+	confirm_hint = smp->method == JUST_WORKS ? 1 : 0;
++	hw_atl_rdm_rx_dma_desc_cache_init_tgl(hw);
++
++	err = aq_hw_err_from_flags(hw);
++	if (err)
++		goto err_exit;
++
++	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
++				  hw, val, val == 1, 1000U, 10000U);
++
++err_exit:
++	return err;
++}
++
+ int aq_hw_err_from_flags(struct aq_hw_s *hw)
+ {
+ 	int err = 0;
+diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
+index ffa6e4067c211..d89c63d88e4a4 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
++++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
+@@ -35,6 +35,7 @@ u32 aq_hw_read_reg(struct aq_hw_s *hw, u32 reg);
+ void aq_hw_write_reg(struct aq_hw_s *hw, u32 reg, u32 value);
+ u64 aq_hw_read_reg64(struct aq_hw_s *hw, u32 reg);
+ void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value);
++int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw);
+ int aq_hw_err_from_flags(struct aq_hw_s *hw);
+ int aq_hw_num_tcs(struct aq_hw_s *hw);
+ int aq_hw_q_per_tc(struct aq_hw_s *hw);
+diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
+index 45c17c585d743..2236bc9ba54d2 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
++++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
+@@ -1198,26 +1198,9 @@ static int hw_atl_b0_hw_interrupt_moderation_set(struct aq_hw_s *self)
  
- 	err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
- 					hcon->dst_type, passkey, confirm_hint);
+ static int hw_atl_b0_hw_stop(struct aq_hw_s *self)
+ {
+-	int err;
+-	u32 val;
+-
+ 	hw_atl_b0_hw_irq_disable(self, HW_ATL_B0_INT_MASK);
+ 
+-	/* Invalidate Descriptor Cache to prevent writing to the cached
+-	 * descriptors and to the data pointer of those descriptors
+-	 */
+-	hw_atl_rdm_rx_dma_desc_cache_init_tgl(self);
+-
+-	err = aq_hw_err_from_flags(self);
+-
+-	if (err)
+-		goto err_exit;
+-
+-	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
+-				  self, val, val == 1, 1000U, 10000U);
+-
+-err_exit:
+-	return err;
++	return aq_hw_invalidate_descriptor_cache(self);
+ }
+ 
+ int hw_atl_b0_hw_ring_tx_stop(struct aq_hw_s *self, struct aq_ring_s *ring)
+diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
+index c76ccdc77ba60..98d4ba879dd08 100644
+--- a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
++++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
+@@ -759,7 +759,7 @@ static int hw_atl2_hw_stop(struct aq_hw_s *self)
+ {
+ 	hw_atl_b0_hw_irq_disable(self, HW_ATL2_INT_MASK);
+ 
+-	return 0;
++	return aq_hw_invalidate_descriptor_cache(self);
+ }
+ 
+ static struct aq_stats_s *hw_atl2_utils_get_hw_stats(struct aq_hw_s *self)
 -- 
 2.51.0
 
