@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A604735BDB9;
-	Wed,  3 Dec 2025 16:41:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D1F35BDB9;
+	Wed,  3 Dec 2025 16:41:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780116; cv=none; b=oHMsNI3KUAgInv/OIffuR3iuviHr+CZcJykFVDX1sxH7cAqGKQtu7FIMZCmpL1KDTvkhbJ5Elhatp6+DjH58a/3osl41GghcvC8xwuHCkyq9hMLio9GLwMSA3NGlaknM3w/Tg0lehUNK/mro/0EY3tYBVCEomsWcqosfZkbhukA=
+	t=1764780120; cv=none; b=SBb3Kcpj43FKWEGVutrqDPj/XWvFMskrnY4yP7SdjQGtYP4KsWJG/IqKMlkFDwu6GYf8PO0wq98qj/tbvvvumEZc0XhO9hU1+8lMTEX4/rrgS6+X2G7v54WWUA+t0QA9/tPsubkJOBAFFB919aO+6nMt6YEm1VSYEQvSjmXNPBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780116; c=relaxed/simple;
-	bh=UGLLZrFATmWQ9HfB9ThpVbPjqLRHejoO2KPV1lSuNpg=;
+	s=arc-20240116; t=1764780120; c=relaxed/simple;
+	bh=77JRD8mF3R0KfzRbaMegHwkJgVdVnyC2SjsvkuNmGhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klUYpTlcgGgsXSej3/u6Rcuf9AjmqGIe/MPRg9tFDCNzuYuaYIhxLFewyJUE42sbCo2AYx8IJWdUlKWqWU5379W3eRXYnIcsWehQxNYOBSYfsg4WipqHzGgBwnXUE7gp+4d9R4EklWf4iIwGT4VAUz0GJ7bgSWcmeTum1KicSdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4I2m6ZQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T2ppnUjpc76ELcppj5M5feyX1CJKZd7SnN1uiIVKMxaKeVv0CN9yAWicMjT9LuYqzHxwAV0Sg8I59DUtU9QgOae+zDu9T/11+DHkJPml63VpjIomWzndA6lrK5H527SR8fOqTWNrR6zLPIgDVV5bglUeP/3PnLvwK3rg/cmIAok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dvVLQz7m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4I2m6ZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B51AC4CEF5;
-	Wed,  3 Dec 2025 16:41:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dvVLQz7m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302DEC4CEF5;
+	Wed,  3 Dec 2025 16:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780116;
-	bh=UGLLZrFATmWQ9HfB9ThpVbPjqLRHejoO2KPV1lSuNpg=;
+	s=korg; t=1764780119;
+	bh=77JRD8mF3R0KfzRbaMegHwkJgVdVnyC2SjsvkuNmGhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4I2m6ZQEsfoKkeijTLACTivXYLKCfsewtOwqVoSEbXrciWhx7Pwklmfjpd4ksvXm
-	 kUP1Y39SrV6ZsFMx01tCdPPfUeAFyNeanOEbLdK/UolRt8XQzsBNNitEvFBYSzN+Mx
-	 LIA1VAFZliDO60Sewg6SWatbXqGPmTTPLByrsoiI=
+	b=dvVLQz7mnNXaObXapFlouiiAR80QQsdXmcK2m/3Ys2KgFb+NktmTAVIM2uELRtg2h
+	 lSYZUnE280VZPPZg6RcK4fjiRhGC6MD48zQXE/6+1eqo1CzQaEkI0j/45Yg0pv8bma
+	 hxbdUTmYyD+JtVJ3PrhEGFZF7Y+rmWL6iunCXI6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	staffan.melin@oscillator.se,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Jiri Kosina <jkosina@suse.com>
-Subject: [PATCH 6.1 428/568] HID: quirks: work around VID/PID conflict for 0x4c4a/0x4155
-Date: Wed,  3 Dec 2025 16:27:10 +0100
-Message-ID: <20251203152456.371134539@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.1 429/568] mtd: rawnand: cadence: fix DMA device NULL pointer dereference
+Date: Wed,  3 Dec 2025 16:27:11 +0100
+Message-ID: <20251203152456.407410297@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,70 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
 
-commit beab067dbcff642243291fd528355d64c41dc3b2 upstream.
+commit 5c56bf214af85ca042bf97f8584aab2151035840 upstream.
 
-Based on available evidence, the USB ID 4c4a:4155 used by multiple
-devices has been attributed to Jieli. The commit 1a8953f4f774
-("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY") affected touchscreen
-functionality. Added checks for manufacturer and serial number to
-maintain microphone compatibility, enabling both devices to function
-properly.
+The DMA device pointer `dma_dev` was being dereferenced before ensuring
+that `cdns_ctrl->dmac` is properly initialized.
 
-[jkosina@suse.com: edit shortlog]
-Fixes: 1a8953f4f774 ("HID: Add IGNORE quirk for SMARTLINKTECHNOLOGY")
+Move the assignment of `dma_dev` after successfully acquiring the DMA
+channel to ensure the pointer is valid before use.
+
+Fixes: d76d22b5096c ("mtd: rawnand: cadence: use dma_map_resource for sdma address")
 Cc: stable@vger.kernel.org
-Tested-by: staffan.melin@oscillator.se
-Reviewed-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h    |    4 ++--
- drivers/hid/hid-quirks.c |   13 ++++++++++++-
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ drivers/mtd/nand/raw/cadence-nand-controller.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1460,7 +1460,7 @@
- #define USB_VENDOR_ID_SIGNOTEC			0x2133
- #define USB_DEVICE_ID_SIGNOTEC_VIEWSONIC_PD1011	0x0018
+--- a/drivers/mtd/nand/raw/cadence-nand-controller.c
++++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
+@@ -2830,7 +2830,7 @@ cadence_nand_irq_cleanup(int irqnum, str
+ static int cadence_nand_init(struct cdns_nand_ctrl *cdns_ctrl)
+ {
+ 	dma_cap_mask_t mask;
+-	struct dma_device *dma_dev = cdns_ctrl->dmac->device;
++	struct dma_device *dma_dev;
+ 	int ret;
  
--#define USB_VENDOR_ID_SMARTLINKTECHNOLOGY              0x4c4a
--#define USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155         0x4155
-+#define USB_VENDOR_ID_JIELI_SDK_DEFAULT		0x4c4a
-+#define USB_DEVICE_ID_JIELI_SDK_4155		0x4155
- 
- #endif
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -888,7 +888,6 @@ static const struct hid_device_id hid_ig
- #endif
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_YEALINK, USB_DEVICE_ID_YEALINK_P1K_P4K_B2K) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_QUANTA, USB_DEVICE_ID_QUANTA_HP_5MP_CAMERA_5473) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_SMARTLINKTECHNOLOGY, USB_DEVICE_ID_SMARTLINKTECHNOLOGY_4155) },
- 	{ }
- };
- 
-@@ -1045,6 +1044,18 @@ bool hid_ignore(struct hid_device *hdev)
- 					     strlen(elan_acpi_id[i].id)))
- 					return true;
- 		break;
-+	case USB_VENDOR_ID_JIELI_SDK_DEFAULT:
-+		/*
-+		 * Multiple USB devices with identical IDs (mic & touchscreen).
-+		 * The touch screen requires hid core processing, but the
-+		 * microphone does not. They can be distinguished by manufacturer
-+		 * and serial number.
-+		 */
-+		if (hdev->product == USB_DEVICE_ID_JIELI_SDK_4155 &&
-+		    strncmp(hdev->name, "SmartlinkTechnology", 19) == 0 &&
-+		    strncmp(hdev->uniq, "20201111000001", 14) == 0)
-+			return true;
-+		break;
+ 	cdns_ctrl->cdma_desc = dma_alloc_coherent(cdns_ctrl->dev,
+@@ -2874,6 +2874,7 @@ static int cadence_nand_init(struct cdns
+ 		}
  	}
  
- 	if (hdev->type == HID_TYPE_USBMOUSE &&
++	dma_dev = cdns_ctrl->dmac->device;
+ 	cdns_ctrl->io.iova_dma = dma_map_resource(dma_dev->dev, cdns_ctrl->io.dma,
+ 						  cdns_ctrl->io.size,
+ 						  DMA_BIDIRECTIONAL, 0);
 
 
