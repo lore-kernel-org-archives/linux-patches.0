@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B5AE369219;
-	Wed,  3 Dec 2025 16:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BDFA369234;
+	Wed,  3 Dec 2025 16:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779455; cv=none; b=dBQKFTzJHerJzCC7DcM1ytIZyo7QJ06eXSbGqXl4DNsT7FvgSiLbe8rK86HLwWroQh+8tHv6xUPOz8FUKVcLMvnwY+ofPMZTBr2VwolDjRId2KhkF+RRf1c9IyqgjMo5Z/4H+gPCK+AXBKZqlNbUAc7iIdp/GTijjZa/Kzd6QpA=
+	t=1764779458; cv=none; b=E8aWnyhgMgxTp4L0bWCKTGkc6CYa0smoHmf0X4DYNPt79O/WY//spD8EKYzHnP0gVQqBB1aZhwfB11MaYtQnM+V0GU6n0JaV21zTDOkSTU3WaHtv/w3RnFWYwGwtLVFf5zP4AzH4ZIAUsVVg7YVxs5W412AxmoufvYLZcRA1EM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779455; c=relaxed/simple;
-	bh=WIYqdB6zFR8eT5w93e/aNjiBjR4/tI0tgTzHllzuAtM=;
+	s=arc-20240116; t=1764779458; c=relaxed/simple;
+	bh=E64nmcPe8jcABOSYIMY1V8RS9FnoVku4COi0GFf3PSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JcAyqtts5gMgr7/uurSFZy8oL/RorPgs+pnpla4T8d1x0wq+9BBcFBw7IUuMBM0ZCal8BysH1w2UqTBsZVb6CHrhzMQ5vcn1BUIFixfE4VlioGXYNeRnIo+wlZOkVLzrd+3Bgpat3nYqIaVxiT0LxF0JAveiXrpHhVzgf9BpML4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=03+4Spb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jzJLDhchnXIpeVpyE5CnbaGaBWuA2pIMbWYzYrIRYr3moO9CKdj0ewMDztOErr3ghvtUMefVEe4/MGms5y0c/b4TVXRvzVCSxC2xc5WPwuyZYItB2+Whsbdm01x71rgBIXG8MNSvhPw7azdWnkSTZT4LaJUSqpx5PcKG7Om76uY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayysNl7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="03+4Spb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A27C7C4CEF5;
-	Wed,  3 Dec 2025 16:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayysNl7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A15BC4CEF5;
+	Wed,  3 Dec 2025 16:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779455;
-	bh=WIYqdB6zFR8eT5w93e/aNjiBjR4/tI0tgTzHllzuAtM=;
+	s=korg; t=1764779458;
+	bh=E64nmcPe8jcABOSYIMY1V8RS9FnoVku4COi0GFf3PSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=03+4Spb7S+u4v8X9UhSLqDqqr1kvxC42QoQfylNt4xdlJi+5Hrl35JoI+xBH/eK6P
-	 K/EIoYzN+/okMI5wMrnQ4QFsRriUXIygdyZ8KGpBIiXBVrFvOeDpTQdcfbpP9JacOx
-	 swWKXkG3mlTEK1yBVDd0dp/qM4Z1yyxVyziZVvoU=
+	b=ayysNl7BJawjoZLoZ/9gFpc0RKtowzp5nbVCXMGJNglECluIDnEE3shqojoeaOS21
+	 +EUmFr3um5htVtZktx9RzJeptTC/izSv9zhxkCOMty5pjbF8GNy6p5FaQ/dtAIhaiD
+	 VedGhgdy1Q3laI6wJQ5Pdun5yTcCqj3WSrCJczmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	ChunHao Lin <hau@realtek.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 263/568] Bluetooth: btusb: Check for unexpected bytes when defragmenting HCI frames
-Date: Wed,  3 Dec 2025 16:24:25 +0100
-Message-ID: <20251203152450.350040732@linuxfoundation.org>
+Subject: [PATCH 6.1 246/568] r8169: set EEE speed down ratio to 1
+Date: Wed,  3 Dec 2025 16:24:08 +0100
+Message-ID: <20251203152449.729166370@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,119 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
+From: ChunHao Lin <hau@realtek.com>
 
-[ Upstream commit 7722d6fb54e428a8f657fccf422095a8d7e2d72c ]
+[ Upstream commit bf7154ffb1c65a201906296a9d3eb22e9daa5ffc ]
 
-Some Barrot based USB Bluetooth dongles erroneously send one extra
-random byte for the HCI_OP_READ_LOCAL_EXT_FEATURES command. The
-consequence of that is that the next HCI transfer is misaligned by one
-byte causing undefined behavior. In most cases the response event for
-the next command fails with random error code.
+EEE speed down means speed down MAC MCU clock. It is not from spec.
+It is kind of Realtek specific power saving feature. But enable it
+may cause some issues, like packet drop or interrupt loss. Different
+hardware may have different issues.
 
-Since the HCI_OP_READ_LOCAL_EXT_FEATURES command is used during HCI
-controller initialization, the initialization fails rendering the USB
-dongle not usable.
+EEE speed down ratio (mac ocp 0xe056[7:4]) is used to set EEE speed
+down rate. The larger this value is, the more power can save. But it
+actually save less power then we expected. And, as mentioned above,
+will impact compatibility. So set it to 1 (mac ocp 0xe056[7:4] = 0)
+, which means not to speed down, to improve compatibility.
 
-> [59.464099] usb 1-1.3: new full-speed USB device number 11 using xhci_hcd
-> [59.561617] usb 1-1.3: New USB device found, idVendor=33fa, idProduct=0012, bcdDevice=88.91
-> [59.561642] usb 1-1.3: New USB device strings: Mfr=0, Product=2, SerialNumber=0
-> [59.561656] usb 1-1.3: Product: UGREEN BT6.0 Adapter
-> [61.720116] Bluetooth: hci1: command 0x1005 tx timeout
-> [61.720167] Bluetooth: hci1: Opcode 0x1005 failed: -110
-
-This patch was tested with the 33fa:0012 device. The info from the
-/sys/kernel/debug/usb/devices is shown below:
-
-T:  Bus=01 Lev=02 Prnt=02 Port=02 Cnt=01 Dev#= 12 Spd=12   MxCh= 0
-D:  Ver= 2.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=33fa ProdID=0012 Rev=88.91
-S:  Product=UGREEN BT6.0 Adapter
-C:* #Ifs= 2 Cfg#= 1 Atr=c0 MxPwr=100mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-
-Now the device is initialized properly:
-
-> [43.329852] usb 1-1.4: new full-speed USB device number 4 using dwc_otg
-> [43.446790] usb 1-1.4: New USB device found, idVendor=33fa, idProduct=0012, bcdDevice=88.91
-> [43.446813] usb 1-1.4: New USB device strings: Mfr=0, Product=2, SerialNumber=0
-> [43.446821] usb 1-1.4: Product: UGREEN BT6.0 Adapter
-> [43.582024] Bluetooth: hci1: Unexpected continuation: 1 bytes
-> [43.703025] Bluetooth: hci1: Unexpected continuation: 1 bytes
-> [43.750141] Bluetooth: MGMT ver 1.23
-
-Link: https://github.com/bluez/bluez/issues/1326
-Signed-off-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-Tested-by: Arkadiusz Bokowy <arkadiusz.bokowy@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: ChunHao Lin <hau@realtek.com>
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://patch.msgid.link/20250918023425.3463-1-hau@realtek.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/net/ethernet/realtek/r8169_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 8bb1162031a6a..29130160066a5 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -64,6 +64,7 @@ static struct usb_driver btusb_driver;
- #define BTUSB_INTEL_BROKEN_INITIAL_NCMD BIT(25)
- #define BTUSB_INTEL_NO_WBS_SUPPORT	BIT(26)
- #define BTUSB_ACTIONS_SEMI		BIT(27)
-+#define BTUSB_BARROT			BIT(28)
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index 6879660e44fad..29f4695606ca1 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -3354,7 +3354,7 @@ static void rtl_hw_start_8168h_1(struct rtl8169_private *tp)
+ 		r8168_mac_ocp_modify(tp, 0xd412, 0x0fff, sw_cnt_1ms_ini);
+ 	}
  
- static const struct usb_device_id btusb_table[] = {
- 	/* Generic Bluetooth USB device */
-@@ -699,6 +700,10 @@ static const struct usb_device_id blacklist_table[] = {
- 	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+-	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0070);
++	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
+ 	r8168_mac_ocp_modify(tp, 0xe052, 0x6000, 0x8008);
+ 	r8168_mac_ocp_modify(tp, 0xe0d6, 0x01ff, 0x017f);
+ 	r8168_mac_ocp_modify(tp, 0xd420, 0x0fff, 0x047f);
+@@ -3468,7 +3468,7 @@ static void rtl_hw_start_8117(struct rtl8169_private *tp)
+ 		r8168_mac_ocp_modify(tp, 0xd412, 0x0fff, sw_cnt_1ms_ini);
+ 	}
  
-+	/* Barrot Technology Bluetooth devices */
-+	{ USB_DEVICE(0x33fa, 0x0010), .driver_info = BTUSB_BARROT },
-+	{ USB_DEVICE(0x33fa, 0x0012), .driver_info = BTUSB_BARROT },
-+
- 	/* Actions Semiconductor ATS2851 based devices */
- 	{ USB_DEVICE(0x10d7, 0xb012), .driver_info = BTUSB_ACTIONS_SEMI },
- 
-@@ -991,6 +996,18 @@ static int btusb_recv_intr(struct btusb_data *data, void *buffer, int count)
- 		}
- 
- 		if (!hci_skb_expect(skb)) {
-+			/* Each chunk should correspond to at least 1 or more
-+			 * events so if there are still bytes left that doesn't
-+			 * constitute a new event this is likely a bug in the
-+			 * controller.
-+			 */
-+			if (count && count < HCI_EVENT_HDR_SIZE) {
-+				bt_dev_warn(data->hdev,
-+					"Unexpected continuation: %d bytes",
-+					count);
-+				count = 0;
-+			}
-+
- 			/* Complete frame */
- 			btusb_recv_event(data, skb);
- 			skb = NULL;
+-	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0070);
++	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
+ 	r8168_mac_ocp_write(tp, 0xea80, 0x0003);
+ 	r8168_mac_ocp_modify(tp, 0xe052, 0x0000, 0x0009);
+ 	r8168_mac_ocp_modify(tp, 0xd420, 0x0fff, 0x047f);
+@@ -3666,7 +3666,7 @@ static void rtl_hw_start_8125_common(struct rtl8169_private *tp)
+ 	r8168_mac_ocp_modify(tp, 0xc0b4, 0x0000, 0x000c);
+ 	r8168_mac_ocp_modify(tp, 0xeb6a, 0x00ff, 0x0033);
+ 	r8168_mac_ocp_modify(tp, 0xeb50, 0x03e0, 0x0040);
+-	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0030);
++	r8168_mac_ocp_modify(tp, 0xe056, 0x00f0, 0x0000);
+ 	r8168_mac_ocp_modify(tp, 0xe040, 0x1000, 0x0000);
+ 	r8168_mac_ocp_modify(tp, 0xea1c, 0x0003, 0x0001);
+ 	r8168_mac_ocp_modify(tp, 0xe0c0, 0x4f0f, 0x4403);
 -- 
 2.51.0
 
