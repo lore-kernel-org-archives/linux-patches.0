@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604DD306D3D;
-	Wed,  3 Dec 2025 15:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C76306D3D;
+	Wed,  3 Dec 2025 15:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776186; cv=none; b=Qo4zUku2Z22Ktkr8+1cRLhj8vWXTBc034ekAle99cOvLgYHHGUVUrCiGdWRKkbeExa3lLiOSqSvhhAkzMkBeGV24EnmeBQH5iwqfxmDKD/9yUioV1iizMLdOWX+yea0qAKybImGSH3WAout+/bBRHEA3dOViU3K2CLX0+W3yMZk=
+	t=1764776189; cv=none; b=I7gK2TVgPIJqKdnK1U6ecwdVq3kLeS97aNoB/tkorUjeMpy8iz6ipFjZ2RKZ1Cc2X0sCclEE8bmxhHjgyOQ/ePT7nGoTUpmZ+qf2TDontP4ijh5aDCp/w6yHV5aykKmVUS1Wy+6e0NSSZGeX8VyOeCOx33+mjUbBi3M+2E5Z6DM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776186; c=relaxed/simple;
-	bh=+TmqS4yQsEcRMvZrf86ooHWy631Roft9HRVfjb++FxQ=;
+	s=arc-20240116; t=1764776189; c=relaxed/simple;
+	bh=fj/8QwchYFoQCdJR6pN1RSH41Kq+XUNrYbyoBb2pzHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a13/l78a1d7eIy9u6sgEKXJekVsVxum0SSs7SghfC2zKS9fVMo4nlUqOReC3QF4NbenKKfBclCe9lss7DrZUEg392Jin7BQWcYpWWUf0d0aYrvShRobR2bjlqFUGEXqbYbgOBengFSkNnGiw8WPtV8d7SfmXG4JJtRlfTm+dyFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BO15ppkL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M7Xxr3yrAW6b5QjgpZOrb/ocpFWXZWNuggfPQncHClsOqzw/ArSKC6W7ItUfXLHIYldueU8nCBJ9Z0tsEU/j0BsgFvDmP5KBB7l0j6qBHFGwy0y1B/K4xU8PXAcDE3Zy/DF3orD3WGujPUkNB7GDBim780WiSy38X+g0CmH3rJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkYpy7mj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BO15ppkL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BCCC4CEF5;
-	Wed,  3 Dec 2025 15:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkYpy7mj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C12FC4CEF5;
+	Wed,  3 Dec 2025 15:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776186;
-	bh=+TmqS4yQsEcRMvZrf86ooHWy631Roft9HRVfjb++FxQ=;
+	s=korg; t=1764776189;
+	bh=fj/8QwchYFoQCdJR6pN1RSH41Kq+XUNrYbyoBb2pzHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BO15ppkLe1ZPT21nVzkhNz69Sn6jV2lemdOpTY5XNQ5fXSEUVOxWMyvbquJOgQIba
-	 CN3Qya+WePE5VVSqcQIUICBpw0cA2+UZEwDF7snReS7cmbQk/xb2GOmrPPEy50xQSc
-	 LhIuj5D3tffB1NiCsKOl3otT0gNM71EOgowa1+pU=
+	b=AkYpy7mjhtlUMFf6uORTwpbJ9eJCabWRr38iPJ+bCWRKyaXNexyAKyBJzPbKz1PiU
+	 YM2/WU80NxfK5NL/ZK6Cxw5WRao+C57EgtiEVyuyqxFLD6NUkczc/7BpxbbYpWKz9v
+	 9ph8a8rWUy1Un87srHEDjfxlbr/+3U8WNYNlyodo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Sairaj Kodilkar <sarunkod@amd.com>,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	William Wu <william.wu@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 107/300] iommu/amd: Skip enabling command/event buffers for kdump
-Date: Wed,  3 Dec 2025 16:25:11 +0100
-Message-ID: <20251203152404.587364809@linuxfoundation.org>
+Subject: [PATCH 5.10 108/300] usb: gadget: f_hid: Fix zero length packet transfer
+Date: Wed,  3 Dec 2025 16:25:12 +0100
+Message-ID: <20251203152404.624173532@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,77 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: William Wu <william.wu@rock-chips.com>
 
-[ Upstream commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb ]
+[ Upstream commit ed6f727c575b1eb8136e744acfd5e7306c9548f6 ]
 
-After a panic if SNP is enabled in the previous kernel then the kdump
-kernel boots with IOMMU SNP enforcement still enabled.
+Set the hid req->zero flag of ep0/in_ep to true by default,
+then the UDC drivers can transfer a zero length packet at
+the end if the hid transfer with size divisible to EPs max
+packet size according to the USB 2.0 spec.
 
-IOMMU command buffers and event buffer registers remain locked and
-exclusive to the previous kernel. Attempts to enable command and event
-buffers in the kdump kernel will fail, as hardware ignores writes to
-the locked MMIO registers as per AMD IOMMU spec Section 2.12.2.1.
-
-Skip enabling command buffers and event buffers for kdump boot as they
-are already enabled in the previous kernel.
-
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Link: https://lore.kernel.org/r/576445eb4f168b467b0fc789079b650ca7c5b037.1756157913.git.ashish.kalra@amd.com
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Signed-off-by: William Wu <william.wu@rock-chips.com>
+Link: https://lore.kernel.org/r/1756204087-26111-1-git-send-email-william.wu@rock-chips.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/init.c | 28 +++++++++++++++++++---------
- 1 file changed, 19 insertions(+), 9 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 1ba6adb5b9124..8ac0ac915efd3 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -697,11 +697,16 @@ static void iommu_enable_command_buffer(struct amd_iommu *iommu)
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 2f30699f0426f..c285b23c3707c 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -490,7 +490,7 @@ static ssize_t f_hidg_write(struct file *file, const char __user *buffer,
+ 	}
  
- 	BUG_ON(iommu->cmd_buf == NULL);
+ 	req->status   = 0;
+-	req->zero     = 0;
++	req->zero     = 1;
+ 	req->length   = count;
+ 	req->complete = f_hidg_req_complete;
+ 	req->context  = hidg;
+@@ -761,7 +761,7 @@ static int hidg_setup(struct usb_function *f,
+ 	return -EOPNOTSUPP;
  
--	entry = iommu_virt_to_phys(iommu->cmd_buf);
--	entry |= MMIO_CMD_SIZE_512;
--
--	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+	if (!is_kdump_kernel()) {
-+		/*
-+		 * Command buffer is re-used for kdump kernel and setting
-+		 * of MMIO register is not required.
-+		 */
-+		entry = iommu_virt_to_phys(iommu->cmd_buf);
-+		entry |= MMIO_CMD_SIZE_512;
-+		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
-+			    &entry, sizeof(entry));
-+	}
- 
- 	amd_iommu_reset_cmd_buffer(iommu);
- }
-@@ -750,10 +755,15 @@ static void iommu_enable_event_buffer(struct amd_iommu *iommu)
- 
- 	BUG_ON(iommu->evt_buf == NULL);
- 
--	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
--
--	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
--		    &entry, sizeof(entry));
-+	if (!is_kdump_kernel()) {
-+		/*
-+		 * Event buffer is re-used for kdump kernel and setting
-+		 * of MMIO register is not required.
-+		 */
-+		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
-+		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
-+			    &entry, sizeof(entry));
-+	}
- 
- 	/* set head and tail to zero manually */
- 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+ respond:
+-	req->zero = 0;
++	req->zero = 1;
+ 	req->length = length;
+ 	status = usb_ep_queue(cdev->gadget->ep0, req, GFP_ATOMIC);
+ 	if (status < 0)
 -- 
 2.51.0
 
