@@ -1,55 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35E4368273;
-	Wed,  3 Dec 2025 16:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9403536C0C1;
+	Wed,  3 Dec 2025 16:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780367; cv=none; b=mcl4reAuSKFcFa/BgLWZSNjwbT8KNeAIfIpA8U9IaKdIbMJvR3pHhTwQBxeLxjnGXeRHUbmxF2TqCrRFxqZACuJDGHenGwQA7vsxqQ9Uis6/6oVQzy+I+BQf//dgVrT8SODGz/p8hj8oSHdmdaXIYoZTvCPAkELbuP2H2MYzRGs=
+	t=1764780370; cv=none; b=IXDYJv5DnZ+8ZCuk/maBcIicRWf39X3+lynu0XHyOgLnI306QB7A4aph8E0vTQ1q1iZ+q6ylT95I60FQhHSR6Bi927PxZLGndpbZMmZPtU0Brp8uR43p596krXTXGq2WFjU4GVY2rWNleQH3rtrHQAX2HNHhEJq9+tHTx3ACsvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780367; c=relaxed/simple;
-	bh=ZFsRvhoeVRotGBEiCVQ/RXUniFXbWuLwUAO2uMCYKic=;
+	s=arc-20240116; t=1764780370; c=relaxed/simple;
+	bh=RPSKY+KASsd2AWnGBQJkHr35dzLAs5thiHEeGd+p0Xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eDmahGGWD6tDsu73Nnzn3hodn3PqGuRZPOq2qHp15Apw/rZdmaZq8exyWofvq5IcBVYnBlQ9vineAyhXt1BE37ggXRihItoTaeN0nAu28PECenK1qlljCuAqq6iUtWFO46YthljIqzGACRTPU/NEIVUS7Q5m5PLTPzfH0SSaetE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfSIKgLn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3ojktPrGsdap6rtn4FeG1d37OhYh2+bl2vS/DjnJU2PKc2kpjQEluCEMcEKubCa7FBz+RLsQx/Lsy/VteFV5ix313evuqiQ5ZkXlGf5y6e3Hz9VdGx9DBetPg9emxGnpCrxdeIDOTC9FZSPoPESUZq2IkqwGbn6ccC5Ann/s34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EV8148/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfSIKgLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410A0C4CEF5;
-	Wed,  3 Dec 2025 16:46:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EV8148/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8241C4CEF5;
+	Wed,  3 Dec 2025 16:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780366;
-	bh=ZFsRvhoeVRotGBEiCVQ/RXUniFXbWuLwUAO2uMCYKic=;
+	s=korg; t=1764780370;
+	bh=RPSKY+KASsd2AWnGBQJkHr35dzLAs5thiHEeGd+p0Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfSIKgLnf29VnezorjHBD7Yg24rgWe/MAM8tgUnX6vURK9Ks8l3nd2jTczNFULpxI
-	 Q5DJbpIv9A4HQVCJ1O3625Uvn0Q4QAsBRpMXlN0eQHwxCXhx5g3hxgUCAXsV1hFXz+
-	 OWUIrmHtAXos7oqDld8k3AzgLEbE4Vozidl2uiEY=
+	b=EV8148/71s5r6POtY7idC682dHref2LB6lP8Aw8KRxYkZBgbMGG8yp2cbtqkxYMmy
+	 hxiesbevbTG/zB1sT0g8et6TPGE3osyP1uMZ/8FYHF73npGZ6LQNkAWOhqPn+hzNZf
+	 3STG3xyh8xG0h9Cr+w2WFc34bP9fR+EZjCVqLS7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiryl Shutsemau <kas@kernel.org>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	David Hildenbrand <david@redhat.com>,
-	Hugh Dickins <hughd@google.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Rik van Riel <riel@surriel.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 492/568] mm/memory: do not populate page table entries beyond i_size
-Date: Wed,  3 Dec 2025 16:28:14 +0100
-Message-ID: <20251203152458.735215257@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jamie Iles <jamie.iles@oss.qualcomm.com>,
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.1 529/568] drivers/usb/dwc3: fix PCI parent check
+Date: Wed,  3 Dec 2025 16:28:51 +0100
+Message-ID: <20251203152500.090201704@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -68,206 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiryl Shutsemau <kas@kernel.org>
+From: Jamie Iles <jamie.iles@oss.qualcomm.com>
 
-[ Upstream commit 74207de2ba10c2973334906822dc94d2e859ffc5 ]
+commit 40f8d17eed7533ed2bbb5e3cc680049b19411b2e upstream.
 
-Patch series "Fix SIGBUS semantics with large folios", v3.
+The sysdev_is_parent check was being used to infer PCI devices that have
+the DMA mask set from the PCI capabilities, but sysdev_is_parent is also
+used for non-PCI ACPI devices in which case the DMA mask would be the
+bus default or as set by the _DMA method.
 
-Accessing memory within a VMA, but beyond i_size rounded up to the next
-page size, is supposed to generate SIGBUS.
+Without this fix the DMA mask would default to 32-bits and so allocation
+would fail if there was no DRAM below 4GB.
 
-Darrick reported[1] an xfstests regression in v6.18-rc1.  generic/749
-failed due to missing SIGBUS.  This was caused by my recent changes that
-try to fault in the whole folio where possible:
-
-        19773df031bc ("mm/fault: try to map the entire file folio in finish_fault()")
-        357b92761d94 ("mm/filemap: map entire large folio faultaround")
-
-These changes did not consider i_size when setting up PTEs, leading to
-xfstest breakage.
-
-However, the problem has been present in the kernel for a long time -
-since huge tmpfs was introduced in 2016.  The kernel happily maps
-PMD-sized folios as PMD without checking i_size.  And huge=always tmpfs
-allocates PMD-size folios on any writes.
-
-I considered this corner case when I implemented a large tmpfs, and my
-conclusion was that no one in their right mind should rely on receiving a
-SIGBUS signal when accessing beyond i_size.  I cannot imagine how it could
-be useful for the workload.
-
-But apparently filesystem folks care a lot about preserving strict SIGBUS
-semantics.
-
-Generic/749 was introduced last year with reference to POSIX, but no real
-workloads were mentioned.  It also acknowledged the tmpfs deviation from
-the test case.
-
-POSIX indeed says[3]:
-
-        References within the address range starting at pa and
-        continuing for len bytes to whole pages following the end of an
-        object shall result in delivery of a SIGBUS signal.
-
-The patchset fixes the regression introduced by recent changes as well as
-more subtle SIGBUS breakage due to split failure on truncation.
-
-This patch (of 2):
-
-Accesses within VMA, but beyond i_size rounded up to PAGE_SIZE are
-supposed to generate SIGBUS.
-
-Recent changes attempted to fault in full folio where possible.  They did
-not respect i_size, which led to populating PTEs beyond i_size and
-breaking SIGBUS semantics.
-
-Darrick reported generic/749 breakage because of this.
-
-However, the problem existed before the recent changes.  With huge=always
-tmpfs, any write to a file leads to PMD-size allocation.  Following the
-fault-in of the folio will install PMD mapping regardless of i_size.
-
-Fix filemap_map_pages() and finish_fault() to not install:
-  - PTEs beyond i_size;
-  - PMD mappings across i_size;
-
-Make an exception for shmem/tmpfs that for long time intentionally
-mapped with PMDs across i_size.
-
-Link: https://lkml.kernel.org/r/20251027115636.82382-1-kirill@shutemov.name
-Link: https://lkml.kernel.org/r/20251027115636.82382-2-kirill@shutemov.name
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Fixes: 6795801366da ("xfs: Support large folios")
-Reported-by: "Darrick J. Wong" <djwong@kernel.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Dave Chinner <david@fromorbit.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Shakeel Butt <shakeel.butt@linux.dev>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 47ce45906ca9 ("usb: dwc3: leave default DMA for PCI devices")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251107104437.1602509-1-punit.agrawal@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/filemap.c | 20 +++++++++++++++-----
- mm/memory.c  | 24 +++++++++++++++++++++++-
- 2 files changed, 38 insertions(+), 6 deletions(-)
+ drivers/usb/dwc3/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index 40c186c7210bf..4088d1a5360fa 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3467,13 +3467,27 @@ vm_fault_t filemap_map_pages(struct vm_fault *vmf,
- 	struct page *page;
- 	unsigned int mmap_miss = READ_ONCE(file->f_ra.mmap_miss);
- 	vm_fault_t ret = 0;
-+	bool can_map_large;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -25,6 +25,7 @@
+ #include <linux/of.h>
+ #include <linux/of_graph.h>
+ #include <linux/acpi.h>
++#include <linux/pci.h>
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/reset.h>
+ #include <linux/bitfield.h>
+@@ -1996,7 +1997,7 @@ static int dwc3_probe(struct platform_de
+ 	platform_set_drvdata(pdev, dwc);
+ 	dwc3_cache_hwparams(dwc);
  
- 	rcu_read_lock();
- 	folio = first_map_page(mapping, &xas, end_pgoff);
- 	if (!folio)
- 		goto out;
- 
--	if (filemap_map_pmd(vmf, &folio->page)) {
-+	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-+	end_pgoff = min(end_pgoff, file_end);
-+
-+	/*
-+	 * Do not allow to map with PTEs beyond i_size and with PMD
-+	 * across i_size to preserve SIGBUS semantics.
-+	 *
-+	 * Make an exception for shmem/tmpfs that for long time
-+	 * intentionally mapped with PMDs across i_size.
-+	 */
-+	can_map_large = shmem_mapping(mapping) ||
-+		file_end >= folio_next_index(folio);
-+
-+	if (can_map_large && filemap_map_pmd(vmf, &folio->page)) {
- 		ret = VM_FAULT_NOPAGE;
- 		goto out;
- 	}
-@@ -3481,10 +3495,6 @@ vm_fault_t filemap_map_pages(struct vm_fault *vmf,
- 	addr = vma->vm_start + ((start_pgoff - vma->vm_pgoff) << PAGE_SHIFT);
- 	vmf->pte = pte_offset_map_lock(vma->vm_mm, vmf->pmd, addr, &vmf->ptl);
- 
--	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
--	if (end_pgoff > file_end)
--		end_pgoff = file_end;
--
- 	do {
- again:
- 		page = folio_file_page(folio, xas.xa_index);
-diff --git a/mm/memory.c b/mm/memory.c
-index 454d918449b3a..f0b506acfcc5d 100644
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -67,6 +67,7 @@
- #include <linux/gfp.h>
- #include <linux/migrate.h>
- #include <linux/string.h>
-+#include <linux/shmem_fs.h>
- #include <linux/memory-tiers.h>
- #include <linux/debugfs.h>
- #include <linux/userfaultfd_k.h>
-@@ -4452,6 +4453,8 @@ static bool vmf_pte_changed(struct vm_fault *vmf)
- vm_fault_t finish_fault(struct vm_fault *vmf)
- {
- 	struct vm_area_struct *vma = vmf->vma;
-+	bool needs_fallback = false;
-+	struct folio *folio;
- 	struct page *page;
- 	vm_fault_t ret;
- 
-@@ -4461,6 +4464,8 @@ vm_fault_t finish_fault(struct vm_fault *vmf)
- 	else
- 		page = vmf->page;
- 
-+	folio = page_folio(page);
-+
- 	/*
- 	 * check even for read faults because we might have lost our CoWed
- 	 * page
-@@ -4471,8 +4476,25 @@ vm_fault_t finish_fault(struct vm_fault *vmf)
- 			return ret;
- 	}
- 
-+	if (!needs_fallback && vma->vm_file) {
-+		struct address_space *mapping = vma->vm_file->f_mapping;
-+		pgoff_t file_end;
-+
-+		file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE);
-+
-+		/*
-+		 * Do not allow to map with PTEs beyond i_size and with PMD
-+		 * across i_size to preserve SIGBUS semantics.
-+		 *
-+		 * Make an exception for shmem/tmpfs that for long time
-+		 * intentionally mapped with PMDs across i_size.
-+		 */
-+		needs_fallback = !shmem_mapping(mapping) &&
-+			file_end < folio_next_index(folio);
-+	}
-+
- 	if (pmd_none(*vmf->pmd)) {
--		if (PageTransCompound(page)) {
-+		if (!needs_fallback && PageTransCompound(page)) {
- 			ret = do_set_pmd(vmf, page);
- 			if (ret != VM_FAULT_FALLBACK)
- 				return ret;
--- 
-2.51.0
-
+-	if (!dwc->sysdev_is_parent &&
++	if (!dev_is_pci(dwc->sysdev) &&
+ 	    DWC3_GHWPARAMS0_AWIDTH(dwc->hwparams.hwparams0) == 64) {
+ 		ret = dma_set_mask_and_coherent(dwc->sysdev, DMA_BIT_MASK(64));
+ 		if (ret)
 
 
