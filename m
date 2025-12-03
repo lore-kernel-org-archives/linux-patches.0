@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9655632572C;
-	Wed,  3 Dec 2025 15:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D82327C03;
+	Wed,  3 Dec 2025 15:59:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777559; cv=none; b=gSXxPhpxMa4oBe433YdvFnKO8fcFBJP1C8bbe5f9F8I2T/MmiSKqg1gFxSVStS0Oa/dMhdqMGzU6ARPHRvwWZvdWpMeIbgbPca6PfwcgrR6pFJEmdbjBjLfYh82fSLNeoao8aiSVTYC/03D17SY8Gbz/oemVtVV41T/VN1W3srg=
+	t=1764777564; cv=none; b=P8F7zENnoc0UdzwxnWX5x4YPF3rC+c34ajSElh2AajQYl0W5HyYeJz/uqCA1y1aLdtbPPEfmU5iwC+nyPuDQLBFL0SGL4ic5SFrOtklhMT2xMldWXVlziJn7le1bZroBRbA0NAYNBNfsfEGEhJ59I/cQ4aJgeFIkGxkkHAZbtUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777559; c=relaxed/simple;
-	bh=iPVvGTGdquT1OiPo2SaXLoDyB0m+v8Cex4DV7J5K/FY=;
+	s=arc-20240116; t=1764777564; c=relaxed/simple;
+	bh=UI4GVS/wYL2myiWPBEogXyWF/7a3NEBXW/ERz1sq6IM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBgXdxByxhuf1NKK+rDqy/5w6NAvocsJ8EgPauUEv7VMwwskhPjGBMhfitd00QVGPjWNNsE0fGXstkBKvWRIvNIG11LcDlLhYcf0RvIrabVTjCZZtZHg0Fppdv3w++OdBT64L7c3gG75ZEVySnnEkXA0m7ouK9UX05qJg7xX534=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMqRdZ9W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJo35V7wTN5lYEWaJXqoOHXZVBqG1vt/7LRfg046F8AdjSEoNnMhEfKDJ+Sf6vldOm/U8BRC0PhmnePs+piVcZsZpG879frcKKPRpdBRRmVCmr+EeLorOyXGIeaOa8Bn0io+7glJxdAkqojsNH3ULe/C2bmiC1Xrn6ea3LEw9c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMwFnZU6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMqRdZ9W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025F2C4CEF5;
-	Wed,  3 Dec 2025 15:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMwFnZU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993E7C116B1;
+	Wed,  3 Dec 2025 15:59:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777559;
-	bh=iPVvGTGdquT1OiPo2SaXLoDyB0m+v8Cex4DV7J5K/FY=;
+	s=korg; t=1764777564;
+	bh=UI4GVS/wYL2myiWPBEogXyWF/7a3NEBXW/ERz1sq6IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMqRdZ9Wa90Q7agJO6MUqtT7rJNVO565TlKxmzw5uR7g/qHybyyKfPv6QwzhJ1CTC
-	 MWtCAHcoZ4SCbyahzNK+CFDjyMoZPeEswmkRHbIssC4ym5/gi0lJ3Q/vXESbE0TC6T
-	 rpySoU24JQi8N5l23rOhuQOiq0wi9y8zHH876qnk=
+	b=yMwFnZU6Ms9RFGh8IYapHM18ssyE7Mlvg9emFyqcsq42+5OHWenbDxqQAGuej0a/F
+	 LtHXifhqGgYwamR659lLXzbI41DU8eFUspDGoe8VF1FxFRr9Qe3tYTT5BylHhyyvfJ
+	 hHkl4tLQ9nIpwsfwcTUYHHb1HWUTNeYTE/ZU0wfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 077/392] tools/cpupower: fix error return value in cpupower_write_sysfs()
-Date: Wed,  3 Dec 2025 16:23:47 +0100
-Message-ID: <20251203152416.938581757@linuxfoundation.org>
+Subject: [PATCH 5.15 078/392] cpuidle: Fail cpuidle device registration if there is one already
+Date: Wed,  3 Dec 2025 16:23:48 +0100
+Message-ID: <20251203152416.974983473@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,42 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 57b100d4cf14276e0340eecb561005c07c129eb8 ]
+[ Upstream commit 7b1b7961170e4fcad488755e5ffaaaf9bd527e8f ]
 
-The cpupower_write_sysfs() function currently returns -1 on
-write failure, but the function signature indicates it should
-return an unsigned int. Returning -1 from an unsigned function
-results in a large positive value rather than indicating
-an error condition.
+Refuse to register a cpuidle device if the given CPU has a cpuidle
+device already and print a message regarding it.
 
-Fix this by returning 0 on failure, which is more appropriate
-for an unsigned return type and maintains consistency with typical
-success/failure semantics where 0 indicates failure and non-zero
-indicates success (bytes written).
+Without this, an attempt to register a new cpuidle device without
+unregistering the existing one leads to the removal of the existing
+cpuidle device without removing its sysfs interface.
 
-Link: https://lore.kernel.org/r/20250828063000.803229-1-kaushlendra.kumar@intel.com
-Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/lib/cpupower.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/cpuidle.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/cpupower/lib/cpupower.c b/tools/power/cpupower/lib/cpupower.c
-index 3f7d0c0c50676..0e29365e23a59 100644
---- a/tools/power/cpupower/lib/cpupower.c
-+++ b/tools/power/cpupower/lib/cpupower.c
-@@ -48,7 +48,7 @@ unsigned int cpupower_write_sysfs(const char *path, char *buf, size_t buflen)
- 	if (numwritten < 1) {
- 		perror(path);
- 		close(fd);
--		return -1;
-+		return 0;
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index ef2ea1b12cd84..e371d6972f8d9 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -597,8 +597,14 @@ static void __cpuidle_device_init(struct cpuidle_device *dev)
+ static int __cpuidle_register_device(struct cpuidle_device *dev)
+ {
+ 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
++	unsigned int cpu = dev->cpu;
+ 	int i, ret;
+ 
++	if (per_cpu(cpuidle_devices, cpu)) {
++		pr_info("CPU%d: cpuidle device already registered\n", cpu);
++		return -EEXIST;
++	}
++
+ 	if (!try_module_get(drv->owner))
+ 		return -EINVAL;
+ 
+@@ -610,7 +616,7 @@ static int __cpuidle_register_device(struct cpuidle_device *dev)
+ 			dev->states_usage[i].disable |= CPUIDLE_STATE_DISABLED_BY_USER;
  	}
  
- 	close(fd);
+-	per_cpu(cpuidle_devices, dev->cpu) = dev;
++	per_cpu(cpuidle_devices, cpu) = dev;
+ 	list_add(&dev->device_list, &cpuidle_detected_devices);
+ 
+ 	ret = cpuidle_coupled_register_device(dev);
 -- 
 2.51.0
 
