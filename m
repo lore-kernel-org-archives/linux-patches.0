@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613233168FB;
-	Wed,  3 Dec 2025 15:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FE33168E8;
+	Wed,  3 Dec 2025 15:43:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776607; cv=none; b=jMChcSybAtWAOIBYCFiFlOwaDsxqGgPj3fRDwAq0zguuxwAZAauqZ2aia2H1n+orPXPmK8J/mTugUe21+MRxAnK8jSxrcxEsBBu9JuRKzUcGLDkt9gnY/oZOJNu7faW9SN8QK06NgqdG/t63GnDnJ3lgFhlZ3R2MMnYX8oGylNo=
+	t=1764776610; cv=none; b=SH8d7mjmpdnJh1nGNNB3cgBhi/9hX0K+vwI9/5xmhhCmVgMs4VdjuJIbgXcNe5LZ8kIQG/hzFbrOR9iTgZ5pl2t+kphobB6KNy+jL2JwozlE3JI/kiAQMcrGfbsHcBUNPoQTnuzO7j4SmYE6NpO+3amoqSOKDjvbM00VphwgAMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776607; c=relaxed/simple;
-	bh=kGv7nwGTpucbUnklSIpjlvEkS0EhmaeZ7N9xbyQlgGc=;
+	s=arc-20240116; t=1764776610; c=relaxed/simple;
+	bh=QTHkV4stns3yCn4gHJsqRRvyT4PNNbAJD92NLzzBDuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUOcppHBsZ47A9sdylL5OHdhdPdHoRco9LEnzIy/zYMUl36iV9rCRAXRx8BVfdi+CkLw4RHvZvWb97bS0//vlO1JTMkdGJwKc5wqpowhsAdmDiCDQuxZi3NMPwK/P97TB/OuDBsYAz9iIcRT3Sro4gQGFfz+0V7vICfWQf4vTrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8bAYZkm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=C272C/N/OR/c34e7tFZhl+dWxaOONXfPd+aX1k/9QFVHnQBhv0ip/icb5lq2arfyKdb+QXh+/tHO2e6RZsnNHM8tU1Ax9fIfRqXvi4r+Mzree2CJFFsBeXTn4u7E+SImRmo6ac6RP8cOhS4apNNPgju+qOGxVYcOymISsideJj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQvn6SQk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8bAYZkm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BDFEC19425;
-	Wed,  3 Dec 2025 15:43:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQvn6SQk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4010CC4CEF5;
+	Wed,  3 Dec 2025 15:43:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776607;
-	bh=kGv7nwGTpucbUnklSIpjlvEkS0EhmaeZ7N9xbyQlgGc=;
+	s=korg; t=1764776610;
+	bh=QTHkV4stns3yCn4gHJsqRRvyT4PNNbAJD92NLzzBDuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8bAYZkmU6oxVTL+MJW7+d6Tk9ztxOvNrcCYqyN7PbiHItqXtL1hI7rOJcn5eNCwe
-	 ALLsCIQB2gHZZdTOop5dku4pR1lzEkTI5SShCbW8iBEyuhdwEQmbJ8b1++VOENUAcj
-	 6iNvCM8hOP13srbW2SebU+/HlwX79W8XIjaBctug=
+	b=AQvn6SQkNQwl2NLLTFq+rfs2GRDm744MmYF5CuzD7y2HbZedyAUitp8uvVZaM2WLS
+	 cOiBKvU4B6zOWxftppRyyb8i8PtGqogyeVZ6ekN7vJEDjS+e10Ottcr2wHjumPPA3D
+	 j9Tii5Bjlw3HEvKk3njq3t/3lvZHXhuOwPrL1lxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	rtm@csail.mit.edu,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 206/300] NFSD: free copynotify stateid in nfs4_free_ol_stateid()
-Date: Wed,  3 Dec 2025 16:26:50 +0100
-Message-ID: <20251203152408.254904186@linuxfoundation.org>
+	=?UTF-8?q?Jakub=20Hork=C3=BD?= <jakub.git@horky.net>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 233/300] kconfig/nconf: Initialize the default locale at startup
+Date: Wed,  3 Dec 2025 16:27:17 +0100
+Message-ID: <20251203152409.258703007@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -45,91 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olga Kornievskaia <okorniev@redhat.com>
+From: Jakub Horký <jakub.git@horky.net>
 
-commit 4aa17144d5abc3c756883e3a010246f0dba8b468 upstream.
+[ Upstream commit 43c2931a95e6b295bfe9e3b90dbe0f7596933e91 ]
 
-Typically copynotify stateid is freed either when parent's stateid
-is being close/freed or in nfsd4_laundromat if the stateid hasn't
-been used in a lease period.
+Fix bug where make nconfig doesn't initialize the default locale, which
+causes ncurses menu borders to be displayed incorrectly (lqqqqk) in
+UTF-8 terminals that don't support VT100 ACS by default, such as PuTTY.
 
-However, in case when the server got an OPEN (which created
-a parent stateid), followed by a COPY_NOTIFY using that stateid,
-followed by a client reboot. New client instance while doing
-CREATE_SESSION would force expire previous state of this client.
-It leads to the open state being freed thru release_openowner->
-nfs4_free_ol_stateid() and it finds that it still has copynotify
-stateid associated with it. We currently print a warning and is
-triggerred
-
-WARNING: CPU: 1 PID: 8858 at fs/nfsd/nfs4state.c:1550 nfs4_free_ol_stateid+0xb0/0x100 [nfsd]
-
-This patch, instead, frees the associated copynotify stateid here.
-
-If the parent stateid is freed (without freeing the copynotify
-stateids associated with it), it leads to the list corruption
-when laundromat ends up freeing the copynotify state later.
-
-[ 1626.839430] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
-[ 1626.842828] Modules linked in: nfnetlink_queue nfnetlink_log bluetooth cfg80211 rpcrdma rdma_cm iw_cm ib_cm ib_core nfsd nfs_acl lockd grace nfs_localio ext4 crc16 mbcache jbd2 overlay uinput snd_seq_dummy snd_hrtimer qrtr rfkill vfat fat uvcvideo snd_hda_codec_generic videobuf2_vmalloc videobuf2_memops snd_hda_intel uvc snd_intel_dspcfg videobuf2_v4l2 videobuf2_common snd_hda_codec snd_hda_core videodev snd_hwdep snd_seq mc snd_seq_device snd_pcm snd_timer snd soundcore sg loop auth_rpcgss vsock_loopback vmw_vsock_virtio_transport_common vmw_vsock_vmci_transport vmw_vmci vsock xfs 8021q garp stp llc mrp nvme ghash_ce e1000e nvme_core sr_mod nvme_keyring nvme_auth cdrom vmwgfx drm_ttm_helper ttm sunrpc dm_mirror dm_region_hash dm_log iscsi_tcp libiscsi_tcp libiscsi scsi_transport_iscsi fuse dm_multipath dm_mod nfnetlink
-[ 1626.855594] CPU: 2 UID: 0 PID: 199 Comm: kworker/u24:33 Kdump: loaded Tainted: G    B   W           6.17.0-rc7+ #22 PREEMPT(voluntary)
-[ 1626.857075] Tainted: [B]=BAD_PAGE, [W]=WARN
-[ 1626.857573] Hardware name: VMware, Inc. VMware20,1/VBSA, BIOS VMW201.00V.24006586.BA64.2406042154 06/04/2024
-[ 1626.858724] Workqueue: nfsd4 laundromat_main [nfsd]
-[ 1626.859304] pstate: 61400005 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
-[ 1626.860010] pc : __list_del_entry_valid_or_report+0x148/0x200
-[ 1626.860601] lr : __list_del_entry_valid_or_report+0x148/0x200
-[ 1626.861182] sp : ffff8000881d7a40
-[ 1626.861521] x29: ffff8000881d7a40 x28: 0000000000000018 x27: ffff0000c2a98200
-[ 1626.862260] x26: 0000000000000600 x25: 0000000000000000 x24: ffff8000881d7b20
-[ 1626.862986] x23: ffff0000c2a981e8 x22: 1fffe00012410e7d x21: ffff0000920873e8
-[ 1626.863701] x20: ffff0000920873e8 x19: ffff000086f22998 x18: 0000000000000000
-[ 1626.864421] x17: 20747562202c3839 x16: 3932326636383030 x15: 3030666666662065
-[ 1626.865092] x14: 6220646c756f6873 x13: 0000000000000001 x12: ffff60004fd9e4a3
-[ 1626.865713] x11: 1fffe0004fd9e4a2 x10: ffff60004fd9e4a2 x9 : dfff800000000000
-[ 1626.866320] x8 : 00009fffb0261b5e x7 : ffff00027ecf2513 x6 : 0000000000000001
-[ 1626.866938] x5 : ffff00027ecf2510 x4 : ffff60004fd9e4a3 x3 : 0000000000000000
-[ 1626.867553] x2 : 0000000000000000 x1 : ffff000096069640 x0 : 000000000000006d
-[ 1626.868167] Call trace:
-[ 1626.868382]  __list_del_entry_valid_or_report+0x148/0x200 (P)
-[ 1626.868876]  _free_cpntf_state_locked+0xd0/0x268 [nfsd]
-[ 1626.869368]  nfs4_laundromat+0x6f8/0x1058 [nfsd]
-[ 1626.869813]  laundromat_main+0x24/0x60 [nfsd]
-[ 1626.870231]  process_one_work+0x584/0x1050
-[ 1626.870595]  worker_thread+0x4c4/0xc60
-[ 1626.870893]  kthread+0x2f8/0x398
-[ 1626.871146]  ret_from_fork+0x10/0x20
-[ 1626.871422] Code: aa1303e1 aa1403e3 910e8000 97bc55d7 (d4210000)
-[ 1626.871892] SMP: stopping secondary CPUs
-
-Reported-by: rtm@csail.mit.edu
-Closes: https://lore.kernel.org/linux-nfs/d8f064c1-a26f-4eed-b4f0-1f7f608f415f@oracle.com/T/#t
-Fixes: 624322f1adc5 ("NFSD add COPY_NOTIFY operation")
-Cc: stable@vger.kernel.org
-Signed-off-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jakub Horký <jakub.git@horky.net>
+Link: https://patch.msgid.link/20251014144405.3975275-2-jakub.git@horky.net
+[nathan: Alphabetize locale.h include]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ scripts/kconfig/nconf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -1499,7 +1499,8 @@ static void nfs4_free_ol_stateid(struct
- 	release_all_access(stp);
- 	if (stp->st_stateowner)
- 		nfs4_put_stateowner(stp->st_stateowner);
--	WARN_ON(!list_empty(&stid->sc_cp_list));
-+	if (!list_empty(&stid->sc_cp_list))
-+		nfs4_free_cpntf_statelist(stid->sc_client->net, stid);
- 	kmem_cache_free(stateid_slab, stid);
- }
+diff --git a/scripts/kconfig/nconf.c b/scripts/kconfig/nconf.c
+index cdbd60a3ae16a..5b504be357135 100644
+--- a/scripts/kconfig/nconf.c
++++ b/scripts/kconfig/nconf.c
+@@ -7,6 +7,7 @@
+ #ifndef _GNU_SOURCE
+ #define _GNU_SOURCE
+ #endif
++#include <locale.h>
+ #include <string.h>
+ #include <strings.h>
+ #include <stdlib.h>
+@@ -1478,6 +1479,8 @@ int main(int ac, char **av)
+ 	int lines, columns;
+ 	char *mode;
  
++	setlocale(LC_ALL, "");
++
+ 	if (ac > 1 && strcmp(av[1], "-s") == 0) {
+ 		/* Silence conf_read() until the real callback is set up */
+ 		conf_set_message_callback(NULL);
+-- 
+2.51.0
+
 
 
