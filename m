@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132C93590C3;
-	Wed,  3 Dec 2025 16:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 604953596E9;
+	Wed,  3 Dec 2025 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778869; cv=none; b=DeLeNOrhB6DkXAsoDfpAM9/D0eL+UVYopEBTXilC6dz31g5oIfXxJLnbxR7f4W/zEAtLGBUrnhPlUEW4HN5OeND54ME4+800xhd+TYSO4UlgIettTCVYAlhAckonwwDoUXZmstBPG6xqsJUU2ZdzdxcKqyAlj5ErBKVldpRA0Ow=
+	t=1764778872; cv=none; b=jPmfspiLqI7A2eVYOrCd1A1kfl4t4DLO7ImRNdU1JirbKMKnoQh0jbgOQfgCznMFmC02UtaPRiKuQX1+kZWPgYQeA3SRThZi+Oast/d/QB2tq91DOWEZ/VOzVY8NHkjihGDn99PgDc2jn/irF/5CjEOfxqabsjdAgt52W030wqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778869; c=relaxed/simple;
-	bh=ekZOL1Sg7CW79MuF1BNQiA/Lan4UCCDNJm99pH6DKnY=;
+	s=arc-20240116; t=1764778872; c=relaxed/simple;
+	bh=5MNVrpJq7Cb5Hb/AACOgqJ05B2d7JkW5B4GnBs5i+XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwtpe8Ya+db0wNVoWtAHFf51M3btxQqgS4uDR5nk1MdFZTFmb+6F3SfxWteelzCjsCGzksKJnBFwxGRKpXbsgpqgEhcnXJdu2+E1NmPUB+gKiplheIht41pAPeHJoubt3r8tWFiO8oksKeKQqlh78Zbcpu/eNAr2I1gwv9EtcOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Afbd5EV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uHo5nx1ESMpoPASH875MhrxmQRc21Sd9kg8iF+kn+NTKvWi1uLIR3U9s5pp1CQqOdRU/LfUxpOcdZfdO+31vY3vAKUq+83ZkV/a1QxcGCAE4v+xgEwNGlwb21P+3rb0Zyyv58fOQLjPwBOChZpu3wIpQ7OI/kbvYuGLrSoSSKlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyGMCLZE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Afbd5EV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD3CC116C6;
-	Wed,  3 Dec 2025 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyGMCLZE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 434DBC4CEF5;
+	Wed,  3 Dec 2025 16:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778868;
-	bh=ekZOL1Sg7CW79MuF1BNQiA/Lan4UCCDNJm99pH6DKnY=;
+	s=korg; t=1764778871;
+	bh=5MNVrpJq7Cb5Hb/AACOgqJ05B2d7JkW5B4GnBs5i+XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Afbd5EV776V2lcPqQ/hbybWBoS8btxSSQGueA8t9vWAAhzTlpuf0PJjvvtzUSvpqs
-	 CKJd6+usU7d5KpDFGVb4JJlp1C4mcZ08FN0tUebIQ3rxw6PrLA+eLuV0b3tl10xqFS
-	 Kn9ZZYC0XJ1BVAh+NIpQW/iWN18sPl3SKQmfNKRI=
+	b=IyGMCLZEyVjQU1tUrdUSCYr3NVaMoNLY5dmAtBFmxdYplHRyCsjjIxRQnu28D5s6/
+	 r4YtbA+pPQJipNEPa+d06oHc65wNOH9lo+iX977aznrYAUCwGwHXt1FIY4g99pZERm
+	 n3tGW5Uu6Lhe4bAySQUxYfEngVYdAr74/ooxRQmA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Philipp Stanner <phasta@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 085/568] drm/sched: Fix race in drm_sched_entity_select_rq()
-Date: Wed,  3 Dec 2025 16:21:27 +0100
-Message-ID: <20251203152443.848965682@linuxfoundation.org>
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Jeremy Linton <jeremy.linton@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Wen Yang <wen.yang@linux.dev>
+Subject: [PATCH 6.1 068/568] ACPI: PPTT: Remove acpi_find_cache_levels()
+Date: Wed,  3 Dec 2025 16:21:10 +0100
+Message-ID: <20251203152443.196963155@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,41 +54,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Philipp Stanner <phasta@kernel.org>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit d25e3a610bae03bffc5c14b5d944a5d0cd844678 ]
+[ Upstream commit fa4d566a605bc4cf32d69f16ef8cf9696635f75a ]
 
-In a past bug fix it was forgotten that entity access must be protected
-by the entity lock. That's a data race and potentially UB.
+acpi_find_cache_levels() is used at a single place and is short
+enough to be merged into the calling function. The removal allows
+an easier renaming of the calling function in the next patch.
 
-Move the spin_unlock() to the appropriate position.
+Also reorder the local variables in the 'reversed Christmas tree'
+order.
 
-Cc: stable@vger.kernel.org # v5.13+
-Fixes: ac4eb83ab255 ("drm/sched: select new rq even if there is only one v3")
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Philipp Stanner <phasta@kernel.org>
-Link: https://patch.msgid.link/20251022063402.87318-2-phasta@kernel.org
-[ adapted lock field name from entity->lock to entity->rq_lock ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Reviewed-by: Jeremy Linton <jeremy.linton@arm.com>
+Acked-by: Rafael J. Wysocki  <rafael.j.wysocki@intel.com>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20230104183033.755668-5-pierre.gondois@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Wen Yang <wen.yang@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/pptt.c |   21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
---- a/drivers/gpu/drm/scheduler/sched_entity.c
-+++ b/drivers/gpu/drm/scheduler/sched_entity.c
-@@ -471,10 +471,11 @@ void drm_sched_entity_select_rq(struct d
- 		drm_sched_rq_remove_entity(entity->rq, entity);
- 		entity->rq = rq;
- 	}
--	spin_unlock(&entity->rq_lock);
- 
- 	if (entity->num_sched_list == 1)
- 		entity->sched_list = NULL;
-+
-+	spin_unlock(&entity->rq_lock);
+--- a/drivers/acpi/pptt.c
++++ b/drivers/acpi/pptt.c
+@@ -286,19 +286,6 @@ static struct acpi_pptt_processor *acpi_
+ 	return NULL;
  }
  
- /**
+-static int acpi_find_cache_levels(struct acpi_table_header *table_hdr,
+-				  u32 acpi_cpu_id)
+-{
+-	int number_of_levels = 0;
+-	struct acpi_pptt_processor *cpu;
+-
+-	cpu = acpi_find_processor_node(table_hdr, acpi_cpu_id);
+-	if (cpu)
+-		number_of_levels = acpi_count_levels(table_hdr, cpu);
+-
+-	return number_of_levels;
+-}
+-
+ static u8 acpi_cache_type(enum cache_type type)
+ {
+ 	switch (type) {
+@@ -621,9 +608,10 @@ static int check_acpi_cpu_flag(unsigned
+  */
+ int acpi_find_last_cache_level(unsigned int cpu)
+ {
+-	u32 acpi_cpu_id;
++	struct acpi_pptt_processor *cpu_node;
+ 	struct acpi_table_header *table;
+ 	int number_of_levels = 0;
++	u32 acpi_cpu_id;
+ 
+ 	table = acpi_get_pptt();
+ 	if (!table)
+@@ -632,7 +620,10 @@ int acpi_find_last_cache_level(unsigned
+ 	pr_debug("Cache Setup find last level CPU=%d\n", cpu);
+ 
+ 	acpi_cpu_id = get_acpi_id_for_cpu(cpu);
+-	number_of_levels = acpi_find_cache_levels(table, acpi_cpu_id);
++	cpu_node = acpi_find_processor_node(table, acpi_cpu_id);
++	if (cpu_node)
++		number_of_levels = acpi_count_levels(table, cpu_node);
++
+ 	pr_debug("Cache Setup find last level level=%d\n", number_of_levels);
+ 
+ 	return number_of_levels;
 
 
