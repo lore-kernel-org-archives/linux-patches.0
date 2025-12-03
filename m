@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8FD324B2C;
-	Wed,  3 Dec 2025 16:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D2F733032D;
+	Wed,  3 Dec 2025 16:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778242; cv=none; b=YOsykTDJX1v9tIPyr8yzV1ecLtySO5wxsmJhVzGQBou5AmYIt2OvjT6GH3zjHkqEerD/48x2UtptdXcOtxh7UD/uJ2ZXedkEEQ6UYAAWYfS7O0ftM+pXSrX91tavM5SPiwxOf964k4Qcy9FLpdZyzHWplh4hICveN61u/brcEfM=
+	t=1764778245; cv=none; b=gFHiKYCNaRN5yhLkjVojfmiJfSXE4/dzCvXFWoxWH9hDG2s4iQosoc4beslFV9yyE6LrkVjslYG7jMqcueqcB+/zOB/woI++wAWGg5NrzaBZZnFZC4nEFqXvJacFtlAoCNRgnkAr1v0+H7lYKQibglHHYEQiF+jCNyetj4nO/Dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778242; c=relaxed/simple;
-	bh=T7Z0f4saomKbf90zrkI3wvqjVSVLD1BWz1nMUNlzulw=;
+	s=arc-20240116; t=1764778245; c=relaxed/simple;
+	bh=6n1DOFv4fnjkkwcG07VeNe1yfcgsusX45WxmNDf4IaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DiaEPTwd2xune7ldxLHSEk/xIHwdFwg/s0Q4VxV2HYf1/LLTEv+i6cq1dwU06WLyxe6uV0Xre4wpZq9FJLSJ9MvCwmpi0K4pq5KSIkLBLCQVrotjdTwlU4QbPd6W/guG+EEZpTNcS0Iy18oGPE8KTKT/ITMcuZLaM2Trxo+2/HA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VN1UIqhu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X+DYOGx5XvirtKFX98ghdOYxq4Bi5V3wBjARM8bPpXJ2DLU/NjwQgRV3b4BKCdg/3uFM6tbaOjMRCLFk2kJ1ubceLDeZlaWuBcdFmJFnV5sLy8miLXPllhEg4jgEgFyeIHg0MKRHsBDe1wp3MgmH6S4270BBIQ0rY1+l8hWtdLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q88gIgjv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VN1UIqhu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9CDC16AAE;
-	Wed,  3 Dec 2025 16:10:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q88gIgjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2125C4CEF5;
+	Wed,  3 Dec 2025 16:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778241;
-	bh=T7Z0f4saomKbf90zrkI3wvqjVSVLD1BWz1nMUNlzulw=;
+	s=korg; t=1764778245;
+	bh=6n1DOFv4fnjkkwcG07VeNe1yfcgsusX45WxmNDf4IaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VN1UIqhuoPaMUaaGbJfPAuGMnQQBD7+QsgvphegxidtT1wUDuzCv/PRu5qF5POlDn
-	 /Etkmza+zX1B9TzUyxbNKB3rY0ir3kH2GTDjhx6nWB5Me5y1n2EQm+F22vxB8EqV04
-	 IEgjNy34gNVSu+HHiZhAkQrrBIyAipKaO8QuWrgs=
+	b=Q88gIgjvEJTSHwvS0TRx5XoRL6COjmyk+SvzxUYl+uXHIdZxmnOOcp8xMrgE+1r/T
+	 JNk7gKmH3C/ecZdyqk8lbVF9tDWaWVe1A8kwTzqRE4p+iEKq1I1+anagooshZkj5/R
+	 3RKC4q9QrgMF+NvGOCZg4eiM+SP05+PZiDtO6u6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Peng Fan <peng.fan@nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 287/392] Input: imx_sc_key - fix memory corruption on unload
-Date: Wed,  3 Dec 2025 16:27:17 +0100
-Message-ID: <20251203152424.719709612@linuxfoundation.org>
+	Marco Patalano <mpatalan@redhat.com>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
+	Keith Busch <kbusch@kernel.org>
+Subject: [PATCH 5.15 288/392] nvme: nvme-fc: Ensure ->ioerr_work is cancelled in nvme_fc_delete_ctrl()
+Date: Wed,  3 Dec 2025 16:27:18 +0100
+Message-ID: <20251203152424.755789320@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,36 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Ewan D. Milne <emilne@redhat.com>
 
-commit d83f1512758f4ef6fc5e83219fe7eeeb6b428ea4 upstream.
+commit 0a2c5495b6d1ecb0fa18ef6631450f391a888256 upstream.
 
-This is supposed to be "priv" but we accidentally pass "&priv" which is
-an address in the stack and so it will lead to memory corruption when
-the imx_sc_key_action() function is called.  Remove the &.
+nvme_fc_delete_assocation() waits for pending I/O to complete before
+returning, and an error can cause ->ioerr_work to be queued after
+cancel_work_sync() had been called.  Move the call to cancel_work_sync() to
+be after nvme_fc_delete_association() to ensure ->ioerr_work is not running
+when the nvme_fc_ctrl object is freed.  Otherwise the following can occur:
 
-Fixes: 768062fd1284 ("Input: imx_sc_key - use devm_add_action_or_reset() to handle all cleanups")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/aQYKR75r2VMFJutT@stanley.mountain
+[ 1135.911754] list_del corruption, ff2d24c8093f31f8->next is NULL
+[ 1135.917705] ------------[ cut here ]------------
+[ 1135.922336] kernel BUG at lib/list_debug.c:52!
+[ 1135.926784] Oops: invalid opcode: 0000 [#1] SMP NOPTI
+[ 1135.931851] CPU: 48 UID: 0 PID: 726 Comm: kworker/u449:23 Kdump: loaded Not tainted 6.12.0 #1 PREEMPT(voluntary)
+[ 1135.943490] Hardware name: Dell Inc. PowerEdge R660/0HGTK9, BIOS 2.5.4 01/16/2025
+[ 1135.950969] Workqueue:  0x0 (nvme-wq)
+[ 1135.954673] RIP: 0010:__list_del_entry_valid_or_report.cold+0xf/0x6f
+[ 1135.961041] Code: c7 c7 98 68 72 94 e8 26 45 fe ff 0f 0b 48 c7 c7 70 68 72 94 e8 18 45 fe ff 0f 0b 48 89 fe 48 c7 c7 80 69 72 94 e8 07 45 fe ff <0f> 0b 48 89 d1 48 c7 c7 a0 6a 72 94 48 89 c2 e8 f3 44 fe ff 0f 0b
+[ 1135.979788] RSP: 0018:ff579b19482d3e50 EFLAGS: 00010046
+[ 1135.985015] RAX: 0000000000000033 RBX: ff2d24c8093f31f0 RCX: 0000000000000000
+[ 1135.992148] RDX: 0000000000000000 RSI: ff2d24d6bfa1d0c0 RDI: ff2d24d6bfa1d0c0
+[ 1135.999278] RBP: ff2d24c8093f31f8 R08: 0000000000000000 R09: ffffffff951e2b08
+[ 1136.006413] R10: ffffffff95122ac8 R11: 0000000000000003 R12: ff2d24c78697c100
+[ 1136.013546] R13: fffffffffffffff8 R14: 0000000000000000 R15: ff2d24c78697c0c0
+[ 1136.020677] FS:  0000000000000000(0000) GS:ff2d24d6bfa00000(0000) knlGS:0000000000000000
+[ 1136.028765] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 1136.034510] CR2: 00007fd207f90b80 CR3: 000000163ea22003 CR4: 0000000000f73ef0
+[ 1136.041641] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 1136.048776] DR3: 0000000000000000 DR6: 00000000fffe07f0 DR7: 0000000000000400
+[ 1136.055910] PKRU: 55555554
+[ 1136.058623] Call Trace:
+[ 1136.061074]  <TASK>
+[ 1136.063179]  ? show_trace_log_lvl+0x1b0/0x2f0
+[ 1136.067540]  ? show_trace_log_lvl+0x1b0/0x2f0
+[ 1136.071898]  ? move_linked_works+0x4a/0xa0
+[ 1136.075998]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
+[ 1136.081744]  ? __die_body.cold+0x8/0x12
+[ 1136.085584]  ? die+0x2e/0x50
+[ 1136.088469]  ? do_trap+0xca/0x110
+[ 1136.091789]  ? do_error_trap+0x65/0x80
+[ 1136.095543]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
+[ 1136.101289]  ? exc_invalid_op+0x50/0x70
+[ 1136.105127]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
+[ 1136.110874]  ? asm_exc_invalid_op+0x1a/0x20
+[ 1136.115059]  ? __list_del_entry_valid_or_report.cold+0xf/0x6f
+[ 1136.120806]  move_linked_works+0x4a/0xa0
+[ 1136.124733]  worker_thread+0x216/0x3a0
+[ 1136.128485]  ? __pfx_worker_thread+0x10/0x10
+[ 1136.132758]  kthread+0xfa/0x240
+[ 1136.135904]  ? __pfx_kthread+0x10/0x10
+[ 1136.139657]  ret_from_fork+0x31/0x50
+[ 1136.143236]  ? __pfx_kthread+0x10/0x10
+[ 1136.146988]  ret_from_fork_asm+0x1a/0x30
+[ 1136.150915]  </TASK>
+
+Fixes: 19fce0470f05 ("nvme-fc: avoid calling _nvme_fc_abort_outstanding_ios from interrupt context")
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Tested-by: Marco Patalano <mpatalan@redhat.com>
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Ewan D. Milne <emilne@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/keyboard/imx_sc_key.c |    2 +-
+ drivers/nvme/host/fc.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/input/keyboard/imx_sc_key.c
-+++ b/drivers/input/keyboard/imx_sc_key.c
-@@ -158,7 +158,7 @@ static int imx_sc_key_probe(struct platf
- 		return error;
- 	}
+--- a/drivers/nvme/host/fc.c
++++ b/drivers/nvme/host/fc.c
+@@ -3261,7 +3261,6 @@ nvme_fc_delete_ctrl(struct nvme_ctrl *nc
+ {
+ 	struct nvme_fc_ctrl *ctrl = to_fc_ctrl(nctrl);
  
--	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, &priv);
-+	error = devm_add_action_or_reset(&pdev->dev, imx_sc_key_action, priv);
- 	if (error)
- 		return error;
+-	cancel_work_sync(&ctrl->ioerr_work);
+ 	cancel_delayed_work_sync(&ctrl->connect_work);
+ 	/*
+ 	 * kill the association on the link side.  this will block
+@@ -3332,6 +3331,7 @@ nvme_fc_reset_ctrl_work(struct work_stru
  
+ 	/* will block will waiting for io to terminate */
+ 	nvme_fc_delete_association(ctrl);
++	cancel_work_sync(&ctrl->ioerr_work);
+ 
+ 	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING))
+ 		dev_err(ctrl->ctrl.device,
 
 
