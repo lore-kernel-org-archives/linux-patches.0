@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6BE3090C6;
-	Wed,  3 Dec 2025 15:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FCC3090C6;
+	Wed,  3 Dec 2025 15:35:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776120; cv=none; b=ICIR3DsFjDpmDqEStesR/2Y2HssypukJZeyDUI4soZ0fxLzWirCwEsLR3uIrZ9y1Q0BXVwMdxNzfdJC7Wf8xVoZu4vznPKYOpSyJ4dKdhpCv0ELW/GNy6K71KQJ9hppZs6P8aNBBtVAv0WO4CjHRNGOEEZ9F/LgV+eH+va5+ASA=
+	t=1764776123; cv=none; b=I+XS30uATMqY6rw2WgcrEHC3YRxvwkfIIUuMSX4VnYSLmPgavRqO3mJ87u6jopZsJDokvKtPRsvTcIRgp7hVJkBsvhgYFn7IHW8xWygmKP5/ODFv4bq2PXgUBoXflqrEEeoGPIGop7/MQ1Y1Gtm8jsxPfnqbFquBbn/NiSc23zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776120; c=relaxed/simple;
-	bh=+Q9apZVoiILT+L4kyl66HJxlW/ZLOImi2OZXfND2ZxU=;
+	s=arc-20240116; t=1764776123; c=relaxed/simple;
+	bh=FUIxtTfETSnfOKjwSricfWJcR7bjoappWGgAKjjDwoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/JBleL66dlOTpdfzb2w3OUtyodaxxjenNAeLsnL+gfxrLRjmWQFhcJdDvIQ6zmSvmoKsH9bpFbAxaqy0hQcWVV88QFYYeik6l5TjBBSSXzFEac2/SdlOT39I0OrfZhy8MiGSQBpCvczT92LSPNRzZFYL5E64m8eNj69PB/tfdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdI0iKnd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u9Ldrd0RfWAyPdcMEg1QvaET44uca9vPH7ndOhZlXX78LiSfraEYaWLiuGjlnOOpMoyWMqHieE4rZVyD6+SVQRlTEGbeWGFuM0I0LquKdVoeb1Ue3Kt2/Hh1ZMAmaQrTYZXCuNkgPsECjOUDnecpf/7yY+krz7cQbNZYIqyfYs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jgxk7YHi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdI0iKnd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 860E3C4CEF5;
-	Wed,  3 Dec 2025 15:35:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jgxk7YHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CDFC4CEF5;
+	Wed,  3 Dec 2025 15:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776120;
-	bh=+Q9apZVoiILT+L4kyl66HJxlW/ZLOImi2OZXfND2ZxU=;
+	s=korg; t=1764776123;
+	bh=FUIxtTfETSnfOKjwSricfWJcR7bjoappWGgAKjjDwoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdI0iKndCLMmmicOqTfg0rqFgudJGjX9+xQQvF9MsvT0m9Erx94etZxNQDbZe1XbS
-	 13XK1T5qRsIhZaPXxekFnd+2us0bPckifsEuJZbvj3PveznCItlfOqlNjbTLGZV6ym
-	 G7KjmEJsuPnJpEExbopod/2TU/ixOfpJlzBqhi6A=
+	b=jgxk7YHi+gBznJhxPzq2/1fiJzBZlfwvfRVRFb0yUdfURJdr8VzToCwbRHweHYQEB
+	 9ZOj6N//TOvt7PN/eMYxckDWHEgqSXEa2lih7qFx56MYg3hWZo/epJj+3hrz08aGNZ
+	 PzQsu6+BAOziH4Le44xy/WzRZuV9+uPcmkhFPoyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thadeu Lima de Souza Cascardo <cascardo@igalia.com>,
-	Zijun Hu <zijun.hu@oss.qualcomm.com>,
+	Christoph Paasch <cpaasch@openai.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/300] char: misc: Does not request module for miscdevice with dynamic minor
-Date: Wed,  3 Dec 2025 16:24:50 +0100
-Message-ID: <20251203152403.810360777@linuxfoundation.org>
+Subject: [PATCH 5.10 087/300] net: When removing nexthops, dont call synchronize_net if it is not necessary
+Date: Wed,  3 Dec 2025 16:24:51 +0100
+Message-ID: <20251203152403.847021532@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,56 +55,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <zijun.hu@oss.qualcomm.com>
+From: Christoph Paasch <cpaasch@openai.com>
 
-[ Upstream commit 1ba0fb42aa6a5f072b1b8c0b0520b32ad4ef4b45 ]
+[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
 
-misc_open() may request module for miscdevice with dynamic minor, which
-is meaningless since:
+When removing a nexthop, commit
+90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
+call to synchronize_rcu() (later changed to _net()) to make sure
+everyone sees the new nexthop-group before the rtnl-lock is released.
 
-- The dynamic minor allocated is unknown in advance without registering
-  miscdevice firstly.
-- Macro MODULE_ALIAS_MISCDEV() is not applicable for dynamic minor.
+When one wants to delete a large number of groups and nexthops, it is
+fastest to first flush the groups (ip nexthop flush groups) and then
+flush the nexthops themselves (ip -6 nexthop flush). As that way the
+groups don't need to be rebalanced.
 
-Fix by only requesting module for miscdevice with fixed minor.
+However, `ip -6 nexthop flush` will still take a long time if there is
+a very large number of nexthops because of the call to
+synchronize_net(). Now, if there are no more groups, there is no point
+in calling synchronize_net(). So, let's skip that entirely by checking
+if nh->grp_list is empty.
 
-Acked-by: Thadeu Lima de Souza Cascardo <cascardo@igalia.com>
-Signed-off-by: Zijun Hu <zijun.hu@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250714-rfc_miscdev-v6-6-2ed949665bde@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This gives us a nice speedup:
+
+BEFORE:
+=======
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 2097152 nexthops
+
+real	1m45.345s
+user	0m0.001s
+sys	0m0.005s
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 4194304 nexthops
+
+real	3m10.430s
+user	0m0.002s
+sys	0m0.004s
+
+AFTER:
+======
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 2097152 nexthops
+
+real	0m17.545s
+user	0m0.003s
+sys	0m0.003s
+
+$ time sudo ip -6 nexthop flush
+Dump was interrupted and may be inconsistent.
+Flushed 4194304 nexthops
+
+real	0m35.823s
+user	0m0.002s
+sys	0m0.004s
+
+Signed-off-by: Christoph Paasch <cpaasch@openai.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/misc.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/ipv4/nexthop.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/char/misc.c b/drivers/char/misc.c
-index f6a147427029a..cbe86a1f2244b 100644
---- a/drivers/char/misc.c
-+++ b/drivers/char/misc.c
-@@ -113,7 +113,8 @@ static int misc_open(struct inode *inode, struct file *file)
- 		}
- 	}
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index 477d6a6f0de36..75e1c8d3bd835 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -843,6 +843,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
+ {
+ 	struct nh_grp_entry *nhge, *tmp;
  
--	if (!new_fops) {
-+	/* Only request module for fixed minor code */
-+	if (!new_fops && minor < MISC_DYNAMIC_MINOR) {
- 		mutex_unlock(&misc_mtx);
- 		request_module("char-major-%d-%d", MISC_MAJOR, minor);
- 		mutex_lock(&misc_mtx);
-@@ -124,10 +125,11 @@ static int misc_open(struct inode *inode, struct file *file)
- 				break;
- 			}
- 		}
--		if (!new_fops)
--			goto fail;
- 	}
- 
-+	if (!new_fops)
-+		goto fail;
++	/* If there is nothing to do, let's avoid the costly call to
++	 * synchronize_net()
++	 */
++	if (list_empty(&nh->grp_list))
++		return;
 +
- 	/*
- 	 * Place the miscdevice in the file's
- 	 * private_data so it can be used by the
+ 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
+ 		remove_nh_grp_entry(net, nhge, nlinfo);
+ 
 -- 
 2.51.0
 
