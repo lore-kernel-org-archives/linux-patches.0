@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C59D364EB3;
-	Wed,  3 Dec 2025 16:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AB0365A0B;
+	Wed,  3 Dec 2025 16:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781044; cv=none; b=C+QoOc1n1S1eUU9bQFO0aTfAQVVOkAsezVjs4x6WvYclMSuWDrzR6+NlYrDhFEd60foIg80s5WG01HzVH3ld+F8H6Kmv81JjudY7IMfqnxULQm2qtFT+/LTA28KLs/ylcH31POVNxy2Kdwwfm0VjtHDEVNVQuPPtLIjztaAGFdQ=
+	t=1764781047; cv=none; b=toMgMlp5FnyCRtwp+O2hu/dd3/Kc7mZ66aLhsE/bBbM5AzaU274tc5lFLkdbzilV3KpFZQHEJoJbRRCYp8j7YRI7wUcuOvB5mXNxNx31K+0pml9lGzSJ4/1j1yk5F6I5KMa5h3A4NuW334X/abB9/97LL23S8SV+lvhGP5q+3PQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781044; c=relaxed/simple;
-	bh=+WiJGoxvMRbwY0SF7aW+1LULRhL3tsWgtbcOQBwJE0M=;
+	s=arc-20240116; t=1764781047; c=relaxed/simple;
+	bh=g2auZI9AnfEQc2s8TtDez6GZ8+DSTMfYWeti3CliWS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPQiEKqk2XHoBrykVtmxTjhOH1YvGTorLqj/xYvyDS/4BhPfwI3YrsTFizXZU6QCfr/+IsAMDZQNhvGBVYEzHtCkHzFeoDYwwKiT87Z1OdORD+EUTObobVy8E48lAY05AFChWZ/MfIqzk2BAIyEWzDVxOel0fGbxQ4iQklDRHWQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxF5phT8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNGr9oBnIMzF+JtERCx4JtYKQDzU/HzkSthyHX8fozDR87REq05mLOmHKfJiKUd5jYpehrz+Ew0/etMiIQtqJA10EjLjqm/DuH83EOHrxd/rAlfc1x55Ww0VeQ6UMiKzHF7m3x9IYofzKU9YCfV2qR7bXF4szyAvDTrKC5Y6hXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yk9yk4wT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxF5phT8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92EFC4CEF5;
-	Wed,  3 Dec 2025 16:57:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yk9yk4wT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0573AC4CEF5;
+	Wed,  3 Dec 2025 16:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781043;
-	bh=+WiJGoxvMRbwY0SF7aW+1LULRhL3tsWgtbcOQBwJE0M=;
+	s=korg; t=1764781046;
+	bh=g2auZI9AnfEQc2s8TtDez6GZ8+DSTMfYWeti3CliWS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxF5phT8Up0FH4hkZp47qM3GDwzK0/XnpmWPMCpwOYNBWrO6ghEPQ1eCxRdpkPEvO
-	 jpsk/uj8Aq9DfXOCPY7JwYufnB9LT0SlquGwIKz9ZsAc7afyLS8QhF77X4HNYwG+cB
-	 FtbakPWXze5aznwqWl/qES92r358yxfJZEaR67y0=
+	b=Yk9yk4wTAbmQ2k4wIXtySJqsjhWYXzsdPuFYXQkE9Z/z/b2O0Im2EFGxOUSolYtnB
+	 UQo3NAJ3Uyaa4EL9nnKZ8iOyHL++rDfuWYqw4NSfPxllGGS6/5+iKHNy/9FIeMGCD7
+	 iuUshchKPZRgUOIFjoA35cEszJKC9WlBIMBRDnYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Haibo Chen <haibo.chen@nxp.com>,
+	Hang Zhou <929513338@qq.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 32/93] spi: nxp-fspi: Propagate fwnode in ACPI case as well
-Date: Wed,  3 Dec 2025 16:29:25 +0100
-Message-ID: <20251203152337.704193662@linuxfoundation.org>
+Subject: [PATCH 6.6 33/93] spi: bcm63xx: fix premature CS deassertion on RX-only transactions
+Date: Wed,  3 Dec 2025 16:29:26 +0100
+Message-ID: <20251203152337.740848256@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -52,76 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Hang Zhou <929513338@qq.com>
 
-[ Upstream commit 40ad64ac25bb736740f895d99a4aebbda9b80991 ]
+[ Upstream commit fd9862f726aedbc2f29a29916cabed7bcf5cadb6 ]
 
-Propagate fwnode of the ACPI device to the SPI controller Linux device.
-Currently only OF case propagates fwnode to the controller.
+On BCM6358 (and also observed on BCM6368) the controller appears to
+only generate as many SPI clocks as bytes that have been written into
+the TX FIFO. For RX-only transfers the driver programs the transfer
+length in SPI_MSG_CTL but does not write anything into the FIFO, so
+chip select is deasserted early and the RX transfer segment is never
+fully clocked in.
 
-While at it, replace several calls to dev_fwnode() with a single one
-cached in a local variable, and unify checks for fwnode type by using
-is_*_node() APIs.
+A concrete failing case is a three-transfer MAC address read from
+SPI-NOR:
+  - TX 0x03 (read command)
+  - TX 3-byte address
+  - RX 6 bytes (MAC)
 
-Fixes: 55ab8487e01d ("spi: spi-nxp-fspi: Add ACPI support")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Haibo Chen <haibo.chen@nxp.com>
-Link: https://patch.msgid.link/20251126202501.2319679-1-andriy.shevchenko@linux.intel.com
+In contrast, a two-transfer JEDEC-ID read (0x9f + 6-byte RX) works
+because the driver uses prepend_len and writes dummy bytes into the
+TX FIFO for the RX part.
+
+Fix this by writing 0xff dummy bytes into the TX FIFO for RX-only
+segments so that the number of bytes written to the FIFO matches the
+total message length seen by the controller.
+
+Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
+
+Signed-off-by: Hang Zhou <929513338@qq.com>
+Link: https://patch.msgid.link/tencent_7AC88FCB3076489A4A7E6C2163DF1ACF8D06@qq.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-nxp-fspi.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/spi/spi-bcm63xx.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
-index 5d631f8c593e3..ce110035a3597 100644
---- a/drivers/spi/spi-nxp-fspi.c
-+++ b/drivers/spi/spi-nxp-fspi.c
-@@ -1165,7 +1165,7 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- {
- 	struct spi_controller *ctlr;
- 	struct device *dev = &pdev->dev;
--	struct device_node *np = dev->of_node;
-+	struct fwnode_handle *fwnode = dev_fwnode(dev);
- 	struct resource *res;
- 	struct nxp_fspi *f;
- 	int ret;
-@@ -1189,7 +1189,7 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, f);
+diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
+index a95badb7b7114..ba66fe9f1f543 100644
+--- a/drivers/spi/spi-bcm63xx.c
++++ b/drivers/spi/spi-bcm63xx.c
+@@ -247,6 +247,20 @@ static int bcm63xx_txrx_bufs(struct spi_device *spi, struct spi_transfer *first,
  
- 	/* find the resources - configuration register address space */
--	if (is_acpi_node(dev_fwnode(f->dev)))
-+	if (is_acpi_node(fwnode))
- 		f->iobase = devm_platform_ioremap_resource(pdev, 0);
- 	else
- 		f->iobase = devm_platform_ioremap_resource_byname(pdev, "fspi_base");
-@@ -1200,7 +1200,7 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	}
- 
- 	/* find the resources - controller memory mapped space */
--	if (is_acpi_node(dev_fwnode(f->dev)))
-+	if (is_acpi_node(fwnode))
- 		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
- 	else
- 		res = platform_get_resource_byname(pdev,
-@@ -1216,7 +1216,7 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 	f->memmap_phy_size = resource_size(res);
- 
- 	/* find the clocks */
--	if (dev_of_node(&pdev->dev)) {
-+	if (is_of_node(fwnode)) {
- 		f->clk_en = devm_clk_get(dev, "fspi_en");
- 		if (IS_ERR(f->clk_en)) {
- 			ret = PTR_ERR(f->clk_en);
-@@ -1262,7 +1262,7 @@ static int nxp_fspi_probe(struct platform_device *pdev)
- 
- 	nxp_fspi_default_setup(f);
- 
--	ctlr->dev.of_node = np;
-+	device_set_node(&ctlr->dev, fwnode);
- 
- 	ret = devm_spi_register_controller(&pdev->dev, ctlr);
- 	if (ret)
+ 		if (t->rx_buf) {
+ 			do_rx = true;
++
++			/*
++			 * In certain hardware implementations, there appears to be a
++			 * hidden accumulator that tracks the number of bytes written into
++			 * the hardware FIFO, and this accumulator overrides the length in
++			 * the SPI_MSG_CTL register.
++			 *
++			 * Therefore, for read-only transfers, we need to write some dummy
++			 * value into the FIFO to keep the accumulator tracking the correct
++			 * length.
++			 */
++			if (!t->tx_buf)
++				memset_io(bs->tx_io + len, 0xFF, t->len);
++
+ 			/* prepend is half-duplex write only */
+ 			if (t == first)
+ 				prepend_len = 0;
 -- 
 2.51.0
 
