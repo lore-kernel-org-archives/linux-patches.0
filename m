@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B17C32C92E;
-	Wed,  3 Dec 2025 15:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0338732C92E;
+	Wed,  3 Dec 2025 15:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777015; cv=none; b=LVfWBHTdG+7FaGUcMJFj9OlBaK6SXeIW3NPt5+f/GEGNtCfMWaIgQ+ka4/FaZCFp67WOhnul1ncSMUzKspgGS5KFlYT0HmhfIo1jI53Gb/uc9ggYegYhuMqjPR3159E727ErXOlrpBhPvzGnnXa/ECqD/Mkqtyv6hzhLsqDYYjA=
+	t=1764777019; cv=none; b=Z5/4FlRd988z/sjDTCZlnloTrs0WRY1pcwqhnqXOhL08GU+RpFK0Y/K6DgCQRNqF2HODVdW9IAHRjlowTGlai2z7m7HXBvVnm5E11cUv5CuHycpVbr5ZzC4IlMfIWhel9oELCM3ENJTOEfS3SOeYx6EzrMZj45vTyh36H/ntYn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777015; c=relaxed/simple;
-	bh=4/r/+TI8vUw9O/LoUe6UdbTKOu8YPTDU3C58SNbb6KE=;
+	s=arc-20240116; t=1764777019; c=relaxed/simple;
+	bh=c4hNJ4QgEi1e8LYYWn+AEGf/F7PSx0YEnvu8nJoZXOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LsOa3jA/ZRDvO82wIVBfTKZM0wSld0jDCrDWE67pmzXjPo/m1ocXQolgwlf4l7jkhCeN7+2f7FbbmJT3dZjiEapRLx5JJBlWfcMigNdinYEhm55FBmRvY9Ere4Bqcw+cqyeaOceSAw4FUeAbXOapC67hklEAf8JJ7q3Ii0Ocpyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLL92n2N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rts+VhZbZ3mxUGdu7hRMrwcocrBq/Ng1gecY3/BsleQKBdOmudrY2LsEIjFMEE8/fEeSXptS7P/O1PXJxAi7tLRpRIKDrzGYZLG0xSoOGz0hNSRWrmcoHpsK1+CTdT/Hl+HlPJFNh/h2l9umeR+KEoCF4cw20hFE3m6Hj6BJ0EM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FrWd6Bhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLL92n2N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8B17C4CEF5;
-	Wed,  3 Dec 2025 15:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FrWd6Bhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68BFAC4CEF5;
+	Wed,  3 Dec 2025 15:50:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777015;
-	bh=4/r/+TI8vUw9O/LoUe6UdbTKOu8YPTDU3C58SNbb6KE=;
+	s=korg; t=1764777018;
+	bh=c4hNJ4QgEi1e8LYYWn+AEGf/F7PSx0YEnvu8nJoZXOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLL92n2N/Jy2rHnzmH69EXdceUa9UoTDf8Hx0j+clpWWxgbPKFm1EmvUxvBYcEUBp
-	 qWcIQYUp5VMPmgYBFffzcrApAxODeGCoshkEgMKal1Q23T7VEKAF8sz8cwWKsOarcC
-	 sLmOjpKGE0HkGhHw4Yt3I/jpuUzgemplVfYGUV/o=
+	b=FrWd6BhyC4Zei8F4/mglBFgVZGSnOjXAO2zisrV+gYDGt4ayi8puaVBSLxdmGJJwz
+	 k9J/0mhe2VvpgukdbHG5Z68adLdWt2Eq9AndqoC6lQgUQtVBsTBC/yCxo8zZxWstjR
+	 b4gKvp0Yj7lBjHJi5Ca+1uQB8JcNrO71if7TSaws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Chris Lesiak <chris.lesiak@licorbio.com>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.17 056/146] iio: buffer: support getting dma channel from the buffer
-Date: Wed,  3 Dec 2025 16:27:14 +0100
-Message-ID: <20251203152348.521598104@linuxfoundation.org>
+Subject: [PATCH 6.17 057/146] iio: humditiy: hdc3020: fix units for temperature and humidity measurement
+Date: Wed,  3 Dec 2025 16:27:15 +0100
+Message-ID: <20251203152348.557167346@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -45,132 +47,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
 
-commit a514bb109eada64f798f1c86c17182229cc20fe7 upstream.
+commit 7b8dc11c0a830caa0d890c603d597161c6c26095 upstream.
 
-Add a new buffer accessor .get_dma_dev() in order to get the
-struct device responsible for actually providing the dma channel. We
-cannot assume that we can use the parent of the IIO device for mapping
-the DMA buffer. This becomes important on systems (like the Xilinx/AMD
-zynqMP Ultrascale) where memory (or part of it) is mapped above the
-32 bit range. On such systems and given that a device by default has
-a dma mask of 32 bits we would then need to rely on bounce buffers (to
-swiotlb) for mapping memory above the dma mask limit.
+According to the ABI the units after application of scale and offset are
+milli degrees for temperature measurements and milli percent for relative
+humidity measurements. Currently the resulting units are degree celsius for
+temperature measurements and percent for relative humidity measurements.
+Change scale factor to fix this issue.
 
-In the process, add an iio_buffer_get_dma_dev() helper function to get
-the proper DMA device.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Fixes: c9180b8e39be ("iio: humidity: Add driver for ti HDC302x humidity sensors")
+Reported-by: Chris Lesiak <chris.lesiak@licorbio.com>
+Suggested-by: Chris Lesiak <chris.lesiak@licorbio.com>
+Reviewed-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Signed-off-by: Dimitri Fedrau <dimitri.fedrau@liebherr.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |   21 ++++++++++++++++-----
- include/linux/iio/buffer_impl.h   |    2 ++
- 2 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/iio/humidity/hdc3020.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -1623,19 +1623,28 @@ static int iio_dma_resv_lock(struct dma_
- 	return 0;
- }
+--- a/drivers/iio/humidity/hdc3020.c
++++ b/drivers/iio/humidity/hdc3020.c
+@@ -301,9 +301,9 @@ static int hdc3020_read_raw(struct iio_d
+ 	case IIO_CHAN_INFO_SCALE:
+ 		*val2 = 65536;
+ 		if (chan->type == IIO_TEMP)
+-			*val = 175;
++			*val = 175 * MILLI;
+ 		else
+-			*val = 100;
++			*val = 100 * MILLI;
+ 		return IIO_VAL_FRACTIONAL;
  
-+static struct device *iio_buffer_get_dma_dev(const struct iio_dev *indio_dev,
-+					     struct iio_buffer *buffer)
-+{
-+	if (buffer->access->get_dma_dev)
-+		return buffer->access->get_dma_dev(buffer);
-+
-+	return indio_dev->dev.parent;
-+}
-+
- static struct dma_buf_attachment *
- iio_buffer_find_attachment(struct iio_dev_buffer_pair *ib,
- 			   struct dma_buf *dmabuf, bool nonblock)
- {
--	struct device *dev = ib->indio_dev->dev.parent;
- 	struct iio_buffer *buffer = ib->buffer;
-+	struct device *dma_dev = iio_buffer_get_dma_dev(ib->indio_dev, buffer);
- 	struct dma_buf_attachment *attach = NULL;
- 	struct iio_dmabuf_priv *priv;
- 
- 	guard(mutex)(&buffer->dmabufs_mutex);
- 
- 	list_for_each_entry(priv, &buffer->dmabufs, entry) {
--		if (priv->attach->dev == dev
-+		if (priv->attach->dev == dma_dev
- 		    && priv->attach->dmabuf == dmabuf) {
- 			attach = priv->attach;
- 			break;
-@@ -1653,6 +1662,7 @@ static int iio_buffer_attach_dmabuf(stru
- {
- 	struct iio_dev *indio_dev = ib->indio_dev;
- 	struct iio_buffer *buffer = ib->buffer;
-+	struct device *dma_dev = iio_buffer_get_dma_dev(indio_dev, buffer);
- 	struct dma_buf_attachment *attach;
- 	struct iio_dmabuf_priv *priv, *each;
- 	struct dma_buf *dmabuf;
-@@ -1679,7 +1689,7 @@ static int iio_buffer_attach_dmabuf(stru
- 		goto err_free_priv;
- 	}
- 
--	attach = dma_buf_attach(dmabuf, indio_dev->dev.parent);
-+	attach = dma_buf_attach(dmabuf, dma_dev);
- 	if (IS_ERR(attach)) {
- 		err = PTR_ERR(attach);
- 		goto err_dmabuf_put;
-@@ -1719,7 +1729,7 @@ static int iio_buffer_attach_dmabuf(stru
- 	 * combo. If we do, refuse to attach.
- 	 */
- 	list_for_each_entry(each, &buffer->dmabufs, entry) {
--		if (each->attach->dev == indio_dev->dev.parent
-+		if (each->attach->dev == dma_dev
- 		    && each->attach->dmabuf == dmabuf) {
- 			/*
- 			 * We unlocked the reservation object, so going through
-@@ -1758,6 +1768,7 @@ static int iio_buffer_detach_dmabuf(stru
- {
- 	struct iio_buffer *buffer = ib->buffer;
- 	struct iio_dev *indio_dev = ib->indio_dev;
-+	struct device *dma_dev = iio_buffer_get_dma_dev(indio_dev, buffer);
- 	struct iio_dmabuf_priv *priv;
- 	struct dma_buf *dmabuf;
- 	int dmabuf_fd, ret = -EPERM;
-@@ -1772,7 +1783,7 @@ static int iio_buffer_detach_dmabuf(stru
- 	guard(mutex)(&buffer->dmabufs_mutex);
- 
- 	list_for_each_entry(priv, &buffer->dmabufs, entry) {
--		if (priv->attach->dev == indio_dev->dev.parent
-+		if (priv->attach->dev == dma_dev
- 		    && priv->attach->dmabuf == dmabuf) {
- 			list_del(&priv->entry);
- 
---- a/include/linux/iio/buffer_impl.h
-+++ b/include/linux/iio/buffer_impl.h
-@@ -50,6 +50,7 @@ struct sg_table;
-  * @enqueue_dmabuf:	called from userspace via ioctl to queue this DMABUF
-  *			object to this buffer. Requires a valid DMABUF fd, that
-  *			was previouly attached to this buffer.
-+ * @get_dma_dev:	called to get the DMA channel associated with this buffer.
-  * @lock_queue:		called when the core needs to lock the buffer queue;
-  *                      it is used when enqueueing DMABUF objects.
-  * @unlock_queue:       used to unlock a previously locked buffer queue
-@@ -90,6 +91,7 @@ struct iio_buffer_access_funcs {
- 			      struct iio_dma_buffer_block *block,
- 			      struct dma_fence *fence, struct sg_table *sgt,
- 			      size_t size, bool cyclic);
-+	struct device * (*get_dma_dev)(struct iio_buffer *buffer);
- 	void (*lock_queue)(struct iio_buffer *buffer);
- 	void (*unlock_queue)(struct iio_buffer *buffer);
- 
+ 	case IIO_CHAN_INFO_OFFSET:
 
 
