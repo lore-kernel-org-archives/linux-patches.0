@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836303101B8;
-	Wed,  3 Dec 2025 15:35:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE8224BD03;
+	Wed,  3 Dec 2025 15:35:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776103; cv=none; b=OcwklZwKqHkbmMXkN3skSsYK3tasty9rmMAPxNno4BTFSqob0L0vB1iqASLKsRObGfQWTIzJnPDNUt426MetRGHNsPV4zn8R8EP56X8dOm6K8BG7pv7LbCedaGULLcm5dv5kXLpCRZFGKuJzfHFLH/JA6oXVy2lFTj47woHJaJA=
+	t=1764776107; cv=none; b=cRNwm5FA/yG7KpPpX1DBbSglnNNHpJVYyiblgz7JlUFk786gPwVkZd7U3phxgCd+5o1jmYFqM8ukjzCcqMdnUnpcM1T8gThKggTVghv3o8bLnc/03GGGUHbOz4583FF1CEF2+Ioe8bi5q5Aevm/IG9kAagznJybO65G+XdAcyAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776103; c=relaxed/simple;
-	bh=uKndyT/fqHis2s9m1AgfxoP1eDf2Oj14zsob5kft3h8=;
+	s=arc-20240116; t=1764776107; c=relaxed/simple;
+	bh=1CcBVtbU16bzJMkw/77HBFvSlpFetDouKWxKeOMjCi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QY2Q1YXHJN3yH/vSFfVrYnJGbB7mMM61taifIgBmgXpQADWonnr9NvzdEzxIGXXn8vLDmrfqRq9mRqaIa9mozxXQ0zGChzzf0/7lEqtrza4HwVCGh6z9at5tYl7HCqwi8DXsXdIok+dl86h4NhTMBEBys8htYX+Ef2lCy7DbPd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04KLhcIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=go7NiVY0RhDylzdK7JFTXdBaxP+cGIE4VIqozaHRrjrYkY8h1AQ+2k0buO/hWOS+rqpbY2Eg+IbKdW2c+QBnovqjcZxcgFjP5e9/eUwreWLAO6mj98O+lJrDymi148a9BKuyHMrgygmGZwgEYBZIpGDO6MGOFWByW1+e4BnTjBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIB27i/D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04KLhcIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB7DC4CEF5;
-	Wed,  3 Dec 2025 15:35:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIB27i/D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F0FC4CEF5;
+	Wed,  3 Dec 2025 15:35:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776103;
-	bh=uKndyT/fqHis2s9m1AgfxoP1eDf2Oj14zsob5kft3h8=;
+	s=korg; t=1764776106;
+	bh=1CcBVtbU16bzJMkw/77HBFvSlpFetDouKWxKeOMjCi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=04KLhcItgtCiz2vdyOgd6WQAGoqmbkscraXTGdNIrM9gOFY/MtKG2aHLKQrykPxim
-	 vISqZlEfvoYoab255Z+8Z+BRnGSm6q1FvLK5+MR+ya7FqVekiuI4qXV5SBwGibkxdU
-	 +7hhnfBODySGicY6dGnXzdZ/oCVdhAsjHS3CSgAE=
+	b=vIB27i/D88RMX8NHHcYVmh9B8wV1xTGWCVRxfPCnjTpUb/r9wnKv/RXh0gEf+vN/T
+	 XKVfLc2lYtwWdz6OBKyYTw2sXSGd15YVxZ0HkYYG83QIJS2c8zq48YTRIeJLavzbUg
+	 AfwtHhEyNeRQvjU89ZK6YbIVNVwJcKrJCuvrH0xU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
-	Charalampos Mitrodimas <charmitro@posteo.net>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 081/300] net: ipv6: fix field-spanning memcpy warning in AH output
-Date: Wed,  3 Dec 2025 16:24:45 +0100
-Message-ID: <20251203152403.627150865@linuxfoundation.org>
+Subject: [PATCH 5.10 082/300] media: imon: make send_packet() more robust
+Date: Wed,  3 Dec 2025 16:24:46 +0100
+Message-ID: <20251203152403.663017755@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,115 +52,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charalampos Mitrodimas <charmitro@posteo.net>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
+[ Upstream commit eecd203ada43a4693ce6fdd3a58ae10c7819252c ]
 
-Fix field-spanning memcpy warnings in ah6_output() and
-ah6_output_done() where extension headers are copied to/from IPv6
-address fields, triggering fortify-string warnings about writes beyond
-the 16-byte address fields.
+syzbot is reporting that imon has three problems which result in
+hung tasks due to forever holding device lock [1].
 
-  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
-  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
+First problem is that when usb_rx_callback_intf0() once got -EPROTO error
+after ictx->dev_present_intf0 became true, usb_rx_callback_intf0()
+resubmits urb after printk(), and resubmitted urb causes
+usb_rx_callback_intf0() to again get -EPROTO error. This results in
+printk() flooding (RCU stalls).
 
-The warnings are false positives as the extension headers are
-intentionally placed after the IPv6 header in memory. Fix by properly
-copying addresses and extension headers separately, and introduce
-helper functions to avoid code duplication.
+Alan Stern commented [2] that
 
-Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
-Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+  In theory it's okay to resubmit _if_ the driver has a robust
+  error-recovery scheme (such as giving up after some fixed limit on the
+  number of errors or after some fixed time has elapsed, perhaps with a
+  time delay to prevent a flood of errors).  Most drivers don't bother to
+  do this; they simply give up right away.  This makes them more
+  vulnerable to short-term noise interference during USB transfers, but in
+  reality such interference is quite rare.  There's nothing really wrong
+  with giving up right away.
+
+but imon has a poor error-recovery scheme which just retries forever;
+this behavior should be fixed.
+
+Since I'm not sure whether it is safe for imon users to give up upon any
+error code, this patch takes care of only union of error codes chosen from
+modules in drivers/media/rc/ directory which handle -EPROTO error (i.e.
+ir_toy, mceusb and igorplugusb).
+
+Second problem is that when usb_rx_callback_intf0() once got -EPROTO error
+before ictx->dev_present_intf0 becomes true, usb_rx_callback_intf0() always
+resubmits urb due to commit 8791d63af0cf ("[media] imon: don't wedge
+hardware after early callbacks"). Move the ictx->dev_present_intf0 test
+introduced by commit 6f6b90c9231a ("[media] imon: don't parse scancodes
+until intf configured") to immediately before imon_incoming_packet(), or
+the first problem explained above happens without printk() flooding (i.e.
+hung task).
+
+Third problem is that when usb_rx_callback_intf0() is not called for some
+reason (e.g. flaky hardware; the reproducer for this problem sometimes
+prevents usb_rx_callback_intf0() from being called),
+wait_for_completion_interruptible() in send_packet() never returns (i.e.
+hung task). As a workaround for such situation, change send_packet() to
+wait for completion with timeout of 10 seconds.
+
+Link: https://syzkaller.appspot.com/bug?extid=592e2ab8775dbe0bf09a [1]
+Link: https://lkml.kernel.org/r/d6da6709-d799-4be3-a695-850bddd6eb24@rowland.harvard.edu [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
- 1 file changed, 31 insertions(+), 19 deletions(-)
+ drivers/media/rc/imon.c | 61 +++++++++++++++++++++++++----------------
+ 1 file changed, 37 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
-index 080ee7f44c649..4bc6767c7e139 100644
---- a/net/ipv6/ah6.c
-+++ b/net/ipv6/ah6.c
-@@ -46,6 +46,34 @@ struct ah_skb_cb {
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 1de0fe3e58799..565826cff0db4 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -650,12 +650,15 @@ static int send_packet(struct imon_context *ictx)
+ 		smp_rmb(); /* ensure later readers know we're not busy */
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+-		/* Wait for transmission to complete (or abort) */
+-		retval = wait_for_completion_interruptible(
+-				&ictx->tx.finished);
+-		if (retval) {
++		/* Wait for transmission to complete (or abort or timeout) */
++		retval = wait_for_completion_interruptible_timeout(&ictx->tx.finished, 10 * HZ);
++		if (retval <= 0) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
++			if (retval < 0)
++				ictx->tx.status = retval;
++			else
++				ictx->tx.status = -ETIMEDOUT;
+ 		}
  
- #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
+ 		ictx->tx.busy = false;
+@@ -1759,14 +1762,6 @@ static void usb_rx_callback_intf0(struct urb *urb)
+ 	if (!ictx)
+ 		return;
  
-+/* Helper to save IPv6 addresses and extension headers to temporary storage */
-+static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
-+				 struct ipv6hdr *top_iph, int extlen)
-+{
-+	if (!extlen)
+-	/*
+-	 * if we get a callback before we're done configuring the hardware, we
+-	 * can't yet process the data, as there's nowhere to send it, but we
+-	 * still need to submit a new rx URB to avoid wedging the hardware
+-	 */
+-	if (!ictx->dev_present_intf0)
+-		goto out;
+-
+ 	switch (urb->status) {
+ 	case -ENOENT:		/* usbcore unlink successful! */
+ 		return;
+@@ -1775,16 +1770,29 @@ static void usb_rx_callback_intf0(struct urb *urb)
+ 		break;
+ 
+ 	case 0:
+-		imon_incoming_packet(ictx, urb, intfnum);
++		/*
++		 * if we get a callback before we're done configuring the hardware, we
++		 * can't yet process the data, as there's nowhere to send it, but we
++		 * still need to submit a new rx URB to avoid wedging the hardware
++		 */
++		if (ictx->dev_present_intf0)
++			imon_incoming_packet(ictx, urb, intfnum);
+ 		break;
+ 
++	case -ECONNRESET:
++	case -EILSEQ:
++	case -EPROTO:
++	case -EPIPE:
++		dev_warn(ictx->dev, "imon %s: status(%d)\n",
++			 __func__, urb->status);
 +		return;
 +
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	iph_ext->saddr = top_iph->saddr;
-+#endif
-+	iph_ext->daddr = top_iph->daddr;
-+	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
-+}
-+
-+/* Helper to restore IPv6 addresses and extension headers from temporary storage */
-+static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
-+				    struct tmp_ext *iph_ext, int extlen)
-+{
-+	if (!extlen)
+ 	default:
+ 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
+ 			 __func__, urb->status);
+ 		break;
+ 	}
+ 
+-out:
+ 	usb_submit_urb(ictx->rx_urb_intf0, GFP_ATOMIC);
+ }
+ 
+@@ -1800,14 +1808,6 @@ static void usb_rx_callback_intf1(struct urb *urb)
+ 	if (!ictx)
+ 		return;
+ 
+-	/*
+-	 * if we get a callback before we're done configuring the hardware, we
+-	 * can't yet process the data, as there's nowhere to send it, but we
+-	 * still need to submit a new rx URB to avoid wedging the hardware
+-	 */
+-	if (!ictx->dev_present_intf1)
+-		goto out;
+-
+ 	switch (urb->status) {
+ 	case -ENOENT:		/* usbcore unlink successful! */
+ 		return;
+@@ -1816,16 +1816,29 @@ static void usb_rx_callback_intf1(struct urb *urb)
+ 		break;
+ 
+ 	case 0:
+-		imon_incoming_packet(ictx, urb, intfnum);
++		/*
++		 * if we get a callback before we're done configuring the hardware, we
++		 * can't yet process the data, as there's nowhere to send it, but we
++		 * still need to submit a new rx URB to avoid wedging the hardware
++		 */
++		if (ictx->dev_present_intf1)
++			imon_incoming_packet(ictx, urb, intfnum);
+ 		break;
+ 
++	case -ECONNRESET:
++	case -EILSEQ:
++	case -EPROTO:
++	case -EPIPE:
++		dev_warn(ictx->dev, "imon %s: status(%d)\n",
++			 __func__, urb->status);
 +		return;
 +
-+#if IS_ENABLED(CONFIG_IPV6_MIP6)
-+	top_iph->saddr = iph_ext->saddr;
-+#endif
-+	top_iph->daddr = iph_ext->daddr;
-+	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
-+}
-+
- static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
- 			  unsigned int size)
- {
-@@ -307,13 +335,7 @@ static void ah6_output_done(struct crypto_async_request *base, int err)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
+ 	default:
+ 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
+ 			 __func__, urb->status);
+ 		break;
+ 	}
  
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+-out:
+ 	usb_submit_urb(ictx->rx_urb_intf1, GFP_ATOMIC);
+ }
  
- 	kfree(AH_SKB_CB(skb)->tmp);
- 	xfrm_output_resume(skb->sk, skb, err);
-@@ -384,12 +406,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	 */
- 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
- 
-+	ah6_save_hdrs(iph_ext, top_iph, extlen);
- 	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(iph_ext, &top_iph->saddr, extlen);
--#else
--		memcpy(iph_ext, &top_iph->daddr, extlen);
--#endif
- 		err = ipv6_clear_mutable_options(top_iph,
- 						 extlen - sizeof(*iph_ext) +
- 						 sizeof(*top_iph),
-@@ -440,13 +458,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
- 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
- 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
- 
--	if (extlen) {
--#if IS_ENABLED(CONFIG_IPV6_MIP6)
--		memcpy(&top_iph->saddr, iph_ext, extlen);
--#else
--		memcpy(&top_iph->daddr, iph_ext, extlen);
--#endif
--	}
-+	ah6_restore_hdrs(top_iph, iph_ext, extlen);
- 
- out_free:
- 	kfree(iph_base);
 -- 
 2.51.0
 
