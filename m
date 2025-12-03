@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB90313546;
-	Wed,  3 Dec 2025 16:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C21313546;
+	Wed,  3 Dec 2025 16:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780448; cv=none; b=ROKCDMy3DlwjYnRNvCMZclbNy3lWFvhbJcRuDxRxFrGOvn6Ur2N4+U9J0YzW0hco5lLwfpAzsb2BVWeCjL/1sPtCEUXOpbfjPwyvzfmesiIKA0gMd9d+1Ai/WNI2LYAwiGEBV2q37CMaWbtyCTZjSLEcxVAtHsJ8V5ZTOn3WQIE=
+	t=1764780451; cv=none; b=ADRw40lE5bhAODgrMQ+j6AfGOld/1/yYvDZ8bigjkiparI6ZJzBivMNXQ5Kn2GJSevQ7h9RYL5WAOoOeidjgzP5eP2b06GZqgi+Famk75u3btMkDKVb03giH4modaSi1HAEc7ZL62W4eknLx50Jdyq+BjUYFeWZMZhv68g9phro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780448; c=relaxed/simple;
-	bh=41rZlCvZ1TjE+8aTYVXBe7V2Iu9D6Bo27SI2AirKwYc=;
+	s=arc-20240116; t=1764780451; c=relaxed/simple;
+	bh=qx1nChWIlWLx1bdxH3rB1p3HaO0il9VgFW20qO7m5lI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SFUhELPFDYvsaM31PK7/mJtiv10Sq8F2GqPml8g3JN3tpMHrCRjuFUdEk6Bs/hJoO7q754VSIcKhrA6H36vuTjyaEuEyhyWzStlm0mb6jShbPY+9EvMnofoPvGlycei8EfIjUOH03Rhq/Iqf74v36wOt+iHQRr6w/GXkwT7FNIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3O/W+qt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UVfUCKuMbOxNL6rDBvQOuBDly8Et2lSiijlvKxkTEWdgS2jL/9wjVxXvjV11n7bQNXEoLlj93jTSitEWSnAUTfpUAWCdFp40GQttNvsPnLQVZq0f+ydqPoJZYWU4klfqr6QPMfATun2azL75JgDwXMEMD/KYZv2LZeTNwIgihPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAnCwhLq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3O/W+qt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EB5C4CEF5;
-	Wed,  3 Dec 2025 16:47:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAnCwhLq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D77EC4CEF5;
+	Wed,  3 Dec 2025 16:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780447;
-	bh=41rZlCvZ1TjE+8aTYVXBe7V2Iu9D6Bo27SI2AirKwYc=;
+	s=korg; t=1764780450;
+	bh=qx1nChWIlWLx1bdxH3rB1p3HaO0il9VgFW20qO7m5lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3O/W+qtEsd0HGz7n+L2s1VW+CVT5ORZmDJ+XgR7wT/kxJP4V4PxPubnIHxVMifnq
-	 BFUqOjLF4A7RdIrKAVBsgBBRbNByGkivb5GAi7FVpkzHILQZOf/Hc+uNn/1Dv2phRX
-	 FzGEpjnjVMcGSzUt92UmU4Dgmmm7yV1j5daVa92M=
+	b=dAnCwhLqS8PVWvnjVBXiysnX3MXbyFjC8+E7RNXtOTsAemoOWz5wCs+Bcg1AV+4PY
+	 olF+dJ/d2tDJZM//oJKlR50nNZF5Hk1N8ZRVs58GJoH2nBWbQFcslEm5r0hV4Kup6g
+	 YK3o3gNUWzaaPryoJz2LD1cjs1NuUqxAG7lE3QsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paolo Abeni <pabeni@redhat.com>,
 	Geliang Tang <geliang@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 558/568] selftests: mptcp: join: endpoints: longer transfer
-Date: Wed,  3 Dec 2025 16:29:20 +0100
-Message-ID: <20251203152501.148157090@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 559/568] mptcp: fix duplicate reset on fastclose
+Date: Wed,  3 Dec 2025 16:29:21 +0100
+Message-ID: <20251203152501.185702729@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,80 +52,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 6457595db9870298ee30b6d75287b8548e33fe19 ]
+commit ae155060247be8dcae3802a95bd1bdf93ab3215d upstream.
 
-In rare cases, when the test environment is very slow, some userspace
-tests can fail because some expected events have not been seen.
+The CI reports sporadic failures of the fastclose self-tests. The root
+cause is a duplicate reset, not carrying the relevant MPTCP option.
+In the failing scenario the bad reset is received by the peer before
+the fastclose one, preventing the reception of the latter.
 
-Because the tests are expecting a long on-going connection, and they are
-not waiting for the end of the transfer, it is fine to make the
-connection longer. This connection will be killed at the end, after the
-verifications, so making it longer doesn't change anything, apart from
-avoid it to end before the end of the verifications
+Indeed there is window of opportunity at fastclose time for the
+following race:
 
-To play it safe, all endpoints tests not waiting for the end of the
-transfer are now sharing a longer file (128KB) at slow speed.
+  mptcp_do_fastclose
+    __mptcp_close_ssk
+      __tcp_close()
+        tcp_set_state() [1]
+        tcp_send_active_reset() [2]
 
-Fixes: 69c6ce7b6eca ("selftests: mptcp: add implicit endpoint test case")
+After [1] the stack will send reset to in-flight data reaching the now
+closed port. Such reset may race with [2].
+
+Address the issue explicitly sending a single reset on fastclose before
+explicitly moving the subflow to close status.
+
+Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios")
 Cc: stable@vger.kernel.org
-Fixes: e274f7154008 ("selftests: mptcp: add subflow limits test-cases")
-Fixes: b5e2fb832f48 ("selftests: mptcp: add explicit test case for remove/readd")
-Fixes: e06959e9eebd ("selftests: mptcp: join: test for flush/re-add endpoints")
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/596
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251110-net-mptcp-sft-join-unstable-v1-3-a4332c714e10@kernel.org
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-6-806d3781c95f@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ removed curly braces and stderr redirection ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-[ Conflicts in mptcp_join.sh because commit 0c93af1f8907 ("selftests:
-  mptcp: drop test_linkfail parameter") is not in this version. It moved
-  the 4th parameter to an env var. To fix the conflicts, the new value
-  simply needs to be added as the 4th argument instead of an env var. ]
+[ Conflicts in protocol.c, because commit bbd49d114d57 ("mptcp:
+  consolidate transition to TCP_CLOSE in mptcp_do_fastclose()") is not
+  in this version. It introduced a new line in the context. The same
+  modification can still be applied.
+  Also, tcp_send_active_reset() doesn't take a 3rd argument
+  (sk_rst_reason) in this version, see commit 5691276b39da ("rstreason:
+  prepare for active reset"). This argument is only helpful for tracing,
+  it is fine to drop it. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c |   34 +++++++++++++++++++++-------------
+ 1 file changed, 21 insertions(+), 13 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3313,7 +3313,7 @@ endpoint_tests()
- 		pm_nl_set_limits $ns1 2 2
- 		pm_nl_set_limits $ns2 2 2
- 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
--		run_tests $ns1 $ns2 10.0.1.1 0 0 0 slow 2>/dev/null &
-+		run_tests $ns1 $ns2 10.0.1.1 128 0 0 slow 2>/dev/null &
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2440,7 +2440,6 @@ bool __mptcp_retransmit_pending_data(str
  
- 		wait_mpj $ns1
- 		pm_nl_check_endpoint 1 "creation" \
-@@ -3336,7 +3336,7 @@ endpoint_tests()
- 		pm_nl_set_limits $ns2 0 3
- 		pm_nl_add_endpoint $ns2 10.0.1.2 id 1 dev ns2eth1 flags subflow
- 		pm_nl_add_endpoint $ns2 10.0.2.2 id 2 dev ns2eth2 flags subflow
--		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_5 2>/dev/null &
-+		run_tests $ns1 $ns2 10.0.1.1 128 0 0 speed_5 2>/dev/null &
- 		local tests_pid=$!
+ /* flags for __mptcp_close_ssk() */
+ #define MPTCP_CF_PUSH		BIT(1)
+-#define MPTCP_CF_FASTCLOSE	BIT(2)
  
- 		wait_mpj $ns2
-@@ -3401,7 +3401,7 @@ endpoint_tests()
- 		# broadcast IP: no packet for this address will be received on ns1
- 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
- 		pm_nl_add_endpoint $ns1 10.0.1.1 id 42 flags signal
--		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_5 2>/dev/null &
-+		run_tests $ns1 $ns2 10.0.1.1 128 0 0 speed_5 2>/dev/null &
- 		local tests_pid=$!
+ /* be sure to send a reset only if the caller asked for it, also
+  * clean completely the subflow status when the subflow reaches
+@@ -2451,7 +2450,7 @@ static void __mptcp_subflow_disconnect(s
+ 				       unsigned int flags)
+ {
+ 	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
+-	    (flags & MPTCP_CF_FASTCLOSE)) {
++	    subflow->send_fastclose) {
+ 		/* The MPTCP code never wait on the subflow sockets, TCP-level
+ 		 * disconnect should never fail
+ 		 */
+@@ -2498,14 +2497,8 @@ static void __mptcp_close_ssk(struct soc
  
- 		wait_mpj $ns2
-@@ -3464,7 +3464,7 @@ endpoint_tests()
- 		# broadcast IP: no packet for this address will be received on ns1
- 		pm_nl_add_endpoint $ns1 224.0.0.1 id 2 flags signal
- 		pm_nl_add_endpoint $ns2 10.0.3.2 id 3 flags subflow
--		run_tests $ns1 $ns2 10.0.1.1 4 0 0 speed_20 2>/dev/null &
-+		run_tests $ns1 $ns2 10.0.1.1 128 0 0 speed_20 2>/dev/null &
- 		local tests_pid=$!
+ 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
  
- 		wait_attempt_fail $ns2
+-	if ((flags & MPTCP_CF_FASTCLOSE) && !__mptcp_check_fallback(msk)) {
+-		/* be sure to force the tcp_close path
+-		 * to generate the egress reset
+-		 */
+-		ssk->sk_lingertime = 0;
+-		sock_set_flag(ssk, SOCK_LINGER);
+-		subflow->send_fastclose = 1;
+-	}
++	if (subflow->send_fastclose && ssk->sk_state != TCP_CLOSE)
++		tcp_set_state(ssk, TCP_CLOSE);
+ 
+ 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
+ 	if (!dispose_it) {
+@@ -2794,9 +2787,24 @@ static void mptcp_do_fastclose(struct so
+ 	struct mptcp_subflow_context *subflow, *tmp;
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 
+-	mptcp_for_each_subflow_safe(msk, subflow, tmp)
+-		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow),
+-				  subflow, MPTCP_CF_FASTCLOSE);
++	/* Explicitly send the fastclose reset as need */
++	if (__mptcp_check_fallback(msk))
++		return;
++
++	mptcp_for_each_subflow_safe(msk, subflow, tmp) {
++		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
++
++		lock_sock(ssk);
++
++		/* Some subflow socket states don't allow/need a reset.*/
++		if ((1 << ssk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE))
++			goto unlock;
++
++		subflow->send_fastclose = 1;
++		tcp_send_active_reset(ssk, ssk->sk_allocation);
++unlock:
++		release_sock(ssk);
++	}
+ }
+ 
+ static void mptcp_worker(struct work_struct *work)
 
 
