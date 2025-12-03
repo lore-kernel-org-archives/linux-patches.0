@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B5234B1A6;
-	Wed,  3 Dec 2025 16:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0C734B40E;
+	Wed,  3 Dec 2025 16:01:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777690; cv=none; b=Uni9gY5JY1nhZsFENC65GtpYyTqYqOuaGfYhUR/Q1cMF4vKSsA5OEQXoGDV1y79KsNVGMjF770T9qYhOkFCAQtWR1+caGaE7NaWCphbQZw0uLkmXU9d0UfsJ8da5KCCTCqgtQkkSOdqUcagIGKli4gwgg2rvJ4mEWiWHs6FukxY=
+	t=1764777693; cv=none; b=b2JEV0UpF7oXtcs5yP0W5qr0Ej0SRltUcOX2zrcp5nAGMVNlrK31fPe9sGLiCtCGzFSihd2XcuuGLompecIADoc9zSmh/7ds0u7CGGTi7RZozB+0lsJYg8qhc8hkMreOZwboJcEDJgoK285QdmEozqDyKStHFFdXASsejawOkHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777690; c=relaxed/simple;
-	bh=yAltdXVrf2NaQDmkTHi3NYQeOm0+KabG9TUlH8q5E20=;
+	s=arc-20240116; t=1764777693; c=relaxed/simple;
+	bh=PjoVhRFruOmVTEs0OxGNNQVdQzIqzvVHNTh3k8kobAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eGN5kPI9Ej3vVXbUQxw5jWy1ivAQhlZigBb8jWoOAFQ9WJUI2pzw5kpQm5EHjjp6I56Emzg0w0zfnWnpe0aXnhVSFBCqZeH4/9Fl37pdLzPAYqkDktH0FcOjW2BVw4ppaJlR5weYvq8c8Wpj9KmClQ2qy2XWENDexroPuFVCT4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JCy7G9r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KRG6CddI8lfv25Y8NGMezvPd3n1VOUcZe+5ieTpsLNpEwkB+BAl5zmGysLldvWXdIw9TbBxxQjvZjmomosXpwdLu4xz9cnyNKlkuAW2EIZo6Kr4qJLvKb68pKA3qzbV5cTiGnM/1p3IZ6aDAavygV0aE89DjsbYdc0YPVMZISCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJu7rDN/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JCy7G9r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ABBC4CEF5;
-	Wed,  3 Dec 2025 16:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJu7rDN/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C122C4CEF5;
+	Wed,  3 Dec 2025 16:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777689;
-	bh=yAltdXVrf2NaQDmkTHi3NYQeOm0+KabG9TUlH8q5E20=;
+	s=korg; t=1764777692;
+	bh=PjoVhRFruOmVTEs0OxGNNQVdQzIqzvVHNTh3k8kobAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JCy7G9r17rpKJ1xwuO2YFT6UhKlMyEtcHtjZnidCLW3IqNEVix74pq76urx/U9eF
-	 hCNCtlFtmRFP0YB1LKpnTRgDDndLlH/sCKEmyoI7PO5kNkRgVreYKdMerNToiyEbBK
-	 NiK+m+obS1U7dZZgRmQr0rzO6VH5LlVrvhPF6GBU=
+	b=tJu7rDN/sDFlCbV7WToauqeZ6ojXrygjvg1W2t/5GWmcf6hkrn/KR2y8s15obexQb
+	 Euaz6jTIKng4rTfZVECl2cMSrZbt8ClPmoSXyDRnC0q/x4yHC0F2SCUxdIBZeiEhsz
+	 SySM1Kn/gpBvrXmVrl46hX+7xmjMcpb8qMyDehFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Ujwal Kundur <ujwal.kundur@gmail.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/392] ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
-Date: Wed,  3 Dec 2025 16:24:25 +0100
-Message-ID: <20251203152418.329686690@linuxfoundation.org>
+Subject: [PATCH 5.15 116/392] rds: Fix endianness annotation for RDS_MPATH_HASH
+Date: Wed,  3 Dec 2025 16:24:26 +0100
+Message-ID: <20251203152418.365515351@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,50 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ujwal Kundur <ujwal.kundur@gmail.com>
 
-[ Upstream commit 2aec0b6a6b5395bca7d6fde9c7e9dc391d329698 ]
+[ Upstream commit 77907a068717fbefb25faf01fecca553aca6ccaa ]
 
-Just add fixed struct size validations for UAC2 and UAC3 effect
-units.  The descriptor has a variable-length array, so it should be
-validated with a proper function later once when the unit is really
-parsed and used by the driver (currently only referred partially for
-the input terminal parsing).
+jhash_1word accepts host endian inputs while rs_bound_port is a be16
+value (sockaddr_in6.sin6_port). Use ntohs() for consistency.
 
-Link: https://patch.msgid.link/20250821151751.12100-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Flagged by Sparse.
+
+Signed-off-by: Ujwal Kundur <ujwal.kundur@gmail.com>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://patch.msgid.link/20250820175550.498-4-ujwal.kundur@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/validate.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/rds/rds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/validate.c b/sound/usb/validate.c
-index a0d55b77c9941..4bb4893f6e74f 100644
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -266,7 +266,11 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_2, UAC_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_2, UAC_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_2, UAC_FEATURE_UNIT, validate_uac2_feature_unit),
--	/* UAC_VERSION_2, UAC2_EFFECT_UNIT: not implemented yet */
-+	/* just a stop-gap, it should be a proper function for the array
-+	 * once if the unit is really parsed/used
-+	 */
-+	FIXED(UAC_VERSION_2, UAC2_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor),
- 	FUNC(UAC_VERSION_2, UAC2_PROCESSING_UNIT_V2, validate_processing_unit),
- 	FUNC(UAC_VERSION_2, UAC2_EXTENSION_UNIT_V2, validate_processing_unit),
- 	FIXED(UAC_VERSION_2, UAC2_CLOCK_SOURCE,
-@@ -286,7 +290,8 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
--	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
-+	FIXED(UAC_VERSION_3, UAC3_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor), /* sharing the same struct */
- 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
- 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
- 	FIXED(UAC_VERSION_3, UAC3_CLOCK_SOURCE,
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index d35d1fc398076..1257867e85e4e 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -93,7 +93,7 @@ enum {
+ 
+ /* Max number of multipaths per RDS connection. Must be a power of 2 */
+ #define	RDS_MPATH_WORKERS	8
+-#define	RDS_MPATH_HASH(rs, n) (jhash_1word((rs)->rs_bound_port, \
++#define	RDS_MPATH_HASH(rs, n) (jhash_1word(ntohs((rs)->rs_bound_port), \
+ 			       (rs)->rs_hash_initval) & ((n) - 1))
+ 
+ #define IS_CANONICAL(laddr, faddr) (htonl(laddr) < htonl(faddr))
 -- 
 2.51.0
 
