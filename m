@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B19354AF8;
-	Wed,  3 Dec 2025 16:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5A2354AF8;
+	Wed,  3 Dec 2025 16:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778633; cv=none; b=X3G+PPUOpwMyTl4K1BGKFvqnRkx73FeAMszJOq0O6k9bGO+M82/kx6hfjreZya8vJb4qTHDeHyFLIL2VYvEiYL1pIIyN7GiFQynEf65f2LQ1CvUA889Hso+6sXTovdl2kH6Wqc9va/c9Ym0PDp1a5zd4ydOBChhHaz7vluAIqb8=
+	t=1764778637; cv=none; b=o+ZCJEUtErkAGn3EkD57zcTT46qLr0DcbP64YaF/M9iRiglAP/+QpckRmSTN0KW/oJxztnJ3cdczycO6ridFxLGL1zjB0eOAW0BogPlRHjYjs82BNnpJ2IkTxdPIrlATr9IXSx2xiufmtkTt3iX5EzFXAWZe5f+JmOx+HsqxwMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778633; c=relaxed/simple;
-	bh=1Jlprrfe3nPqrEen03BsDuNzgMNyc7BwYvHvskjAnuo=;
+	s=arc-20240116; t=1764778637; c=relaxed/simple;
+	bh=N8kPKkbwcxNyF9KYo0Np8VDA6tuMgC4DL7x+bb2TotI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V80A28vIGedkhH+FLdtqBZk6d3TUwd63bYT5SXP2SNfH8rSscK9yqf4ePaQJdDXh6DkeBU//cO088RA3s77pGZBuBrXlLza4LIRXBV9qDbGxo2b6T5HSwoHjUcGM47+ZCKv8g/O2zm1hlnkuPhlULBCn3HLnEp9igGKAy8Z4+wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGsq44J7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBhEt5Rqu3qiGedWKnfHjzzr/swddBW+qB6fzTk2zgP+0QSonXzWFnf+5JHPV9tNOwKhknaDr/e7WM1rHvirKy3+pMSvu6lUNG2uwpBPr6RMhU/jPYNWxqIbH6aAiAgZAU7dBk8Mlzr7x2FEJMP/T7E2GKWt3DYdbkUBJzyx/xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KloOtNUT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGsq44J7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F952C116B1;
-	Wed,  3 Dec 2025 16:17:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KloOtNUT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B52BC4CEF5;
+	Wed,  3 Dec 2025 16:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778633;
-	bh=1Jlprrfe3nPqrEen03BsDuNzgMNyc7BwYvHvskjAnuo=;
+	s=korg; t=1764778636;
+	bh=N8kPKkbwcxNyF9KYo0Np8VDA6tuMgC4DL7x+bb2TotI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGsq44J7dqrOZoObUHim2kU/uXFektuowxVZ2K13RoFLdYrI0uPhsXTI0EOrIvj2S
-	 jpz1eivrU/8oZGjcNEISDZh0XhXZcIgtw++zt1OuIpOlyjBeAlIawpKluBiHSxxsrL
-	 tApFKvdQAG3gnoyCS9wt4FMy1jRUYKDe6KlGgrcE=
+	b=KloOtNUTYp1wo1xY2Z3Vjk6Ys2zgJCgKieKyD/0LryIp9Ae1ar0fQvlRslfJB5Y0A
+	 uyG1Fnu/e2GzufKcFrCxgBjTWEoPo/lXTYifYiQJUj6iYMnPWrk1YT5oEgTyeqeBTP
+	 QibUfUfjn0t6bfJ9BBF1c1Wj5rYztlMPeUEbVwOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/568] selftests: mptcp: join: mark delete re-add signal as skipped if not supported
-Date: Wed,  3 Dec 2025 16:20:15 +0100
-Message-ID: <20251203152441.146465877@linuxfoundation.org>
+Subject: [PATCH 6.1 014/568] xhci: dbc: Provide sysfs option to configure dbc descriptors
+Date: Wed,  3 Dec 2025 16:20:16 +0100
+Message-ID: <20251203152441.183427291@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,37 +50,336 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit c3496c052ac36ea98ec4f8e95ae6285a425a2457 ]
+[ Upstream commit edf1664f3249a091a2b91182fc087b3253b0b4c2 ]
 
-The call to 'continue_if' was missing: it properly marks a subtest as
-'skipped' if the attached condition is not valid.
+When DbC is enabled the first port on the xHC host acts as a usb device.
+xHC provides the descriptors automatically when the DbC device is
+enumerated. Most of the values are hardcoded, but some fields such as
+idProduct, idVendor, bcdDevice and bInterfaceProtocol can be modified.
 
-Without that, the test is wrongly marked as passed on older kernels.
+Add sysfs entries that allow userspace to change these.
+User can only change them before dbc is enabled, i.e. before writing
+"enable" to dbc sysfs file as we don't want these values to change while
+device is connected, or during  enumeration.
 
-Fixes: b5e2fb832f48 ("selftests: mptcp: add explicit test case for remove/readd")
-Cc: stable@vger.kernel.org
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-4-8207030cb0e8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add documentation for these entries in
+Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd
+
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230317154715.535523-9-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: f3d12ec847b9 ("xhci: dbc: fix bogus 1024 byte prefix if ttyDBC read races with stall event")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd |   52 ++++
+ drivers/usb/host/xhci-dbgcap.c                           |  191 ++++++++++++++-
+ drivers/usb/host/xhci-dbgcap.h                           |    4 
+ 3 files changed, 243 insertions(+), 4 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -3393,7 +3393,7 @@ endpoint_tests()
+--- a/Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd
++++ b/Documentation/ABI/testing/sysfs-bus-pci-drivers-xhci_hcd
+@@ -23,3 +23,55 @@ Description:
+ 		Reading this attribute gives the state of the DbC. It
+ 		can be one of the following states: disabled, enabled,
+ 		initialized, connected, configured and stalled.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_idVendor
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This dbc_idVendor attribute lets us change the idVendor field
++		presented in the USB device descriptor by this xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB device descriptor change while
++		connected to a USB host.
++		The default value is 0x1d6b (Linux Foundation).
++		It can be any 16-bit integer.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_idProduct
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This dbc_idProduct attribute lets us change the idProduct field
++		presented in the USB device descriptor by this xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB device descriptor change while
++		connected to a USB host.
++		The default value is 0x0010. It can be any 16-bit integer.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_bcdDevice
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This dbc_bcdDevice attribute lets us change the bcdDevice field
++		presented in the USB device descriptor by this xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB device descriptor change while
++		connected to a USB host.
++		The default value is 0x0010. (device rev 0.10)
++		It can be any 16-bit integer.
++
++What:		/sys/bus/pci/drivers/xhci_hcd/.../dbc_bInterfaceProtocol
++Date:		March 2023
++Contact:	Mathias Nyman <mathias.nyman@linux.intel.com>
++Description:
++		This attribute lets us change the bInterfaceProtocol field
++		presented in the USB Interface descriptor by the xhci debug
++		device.
++		Value can only be changed while debug capability (DbC) is in
++		disabled state to prevent USB descriptor change while
++		connected to a USB host.
++		The default value is 1  (GNU Remote Debug command).
++		Other permissible value is 0 which is for vendor defined debug
++		target.
+--- a/drivers/usb/host/xhci-dbgcap.c
++++ b/drivers/usb/host/xhci-dbgcap.c
+@@ -133,10 +133,10 @@ static void xhci_dbc_init_contexts(struc
+ 	/* Set DbC context and info registers: */
+ 	lo_hi_writeq(dbc->ctx->dma, &dbc->regs->dccp);
  
- 	# remove and re-add
- 	if reset_with_events "delete re-add signal" &&
--	   mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
-+	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
- 		ip netns exec $ns1 sysctl -q net.mptcp.add_addr_timeout=0
- 		pm_nl_set_limits $ns1 0 3
- 		pm_nl_set_limits $ns2 3 3
+-	dev_info = cpu_to_le32((DBC_VENDOR_ID << 16) | DBC_PROTOCOL);
++	dev_info = (dbc->idVendor << 16) | dbc->bInterfaceProtocol;
+ 	writel(dev_info, &dbc->regs->devinfo1);
+ 
+-	dev_info = cpu_to_le32((DBC_DEVICE_REV << 16) | DBC_PRODUCT_ID);
++	dev_info = (dbc->bcdDevice << 16) | dbc->idProduct;
+ 	writel(dev_info, &dbc->regs->devinfo2);
+ }
+ 
+@@ -1044,7 +1044,186 @@ static ssize_t dbc_store(struct device *
+ 	return count;
+ }
+ 
++static ssize_t dbc_idVendor_show(struct device *dev,
++			    struct device_attribute *attr,
++			    char *buf)
++{
++	struct xhci_dbc		*dbc;
++	struct xhci_hcd		*xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%04x\n", dbc->idVendor);
++}
++
++static ssize_t dbc_idVendor_store(struct device *dev,
++			     struct device_attribute *attr,
++			     const char *buf, size_t size)
++{
++	struct xhci_dbc		*dbc;
++	struct xhci_hcd		*xhci;
++	void __iomem		*ptr;
++	u16			value;
++	u32			dev_info;
++
++	if (kstrtou16(buf, 0, &value))
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->idVendor = value;
++	ptr = &dbc->regs->devinfo1;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffffu << 16)) | (value << 16);
++	writel(dev_info, ptr);
++
++	return size;
++}
++
++static ssize_t dbc_idProduct_show(struct device *dev,
++			    struct device_attribute *attr,
++			    char *buf)
++{
++	struct xhci_dbc         *dbc;
++	struct xhci_hcd         *xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%04x\n", dbc->idProduct);
++}
++
++static ssize_t dbc_idProduct_store(struct device *dev,
++			     struct device_attribute *attr,
++			     const char *buf, size_t size)
++{
++	struct xhci_dbc         *dbc;
++	struct xhci_hcd         *xhci;
++	void __iomem		*ptr;
++	u32			dev_info;
++	u16			value;
++
++	if (kstrtou16(buf, 0, &value))
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->idProduct = value;
++	ptr = &dbc->regs->devinfo2;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffffu)) | value;
++	writel(dev_info, ptr);
++	return size;
++}
++
++static ssize_t dbc_bcdDevice_show(struct device *dev,
++				   struct device_attribute *attr,
++				   char *buf)
++{
++	struct xhci_dbc	*dbc;
++	struct xhci_hcd	*xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%04x\n", dbc->bcdDevice);
++}
++
++static ssize_t dbc_bcdDevice_store(struct device *dev,
++				    struct device_attribute *attr,
++				    const char *buf, size_t size)
++{
++	struct xhci_dbc	*dbc;
++	struct xhci_hcd	*xhci;
++	void __iomem *ptr;
++	u32 dev_info;
++	u16 value;
++
++	if (kstrtou16(buf, 0, &value))
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->bcdDevice = value;
++	ptr = &dbc->regs->devinfo2;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffffu << 16)) | (value << 16);
++	writel(dev_info, ptr);
++
++	return size;
++}
++
++static ssize_t dbc_bInterfaceProtocol_show(struct device *dev,
++				 struct device_attribute *attr,
++				 char *buf)
++{
++	struct xhci_dbc	*dbc;
++	struct xhci_hcd	*xhci;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++
++	return sprintf(buf, "%02x\n", dbc->bInterfaceProtocol);
++}
++
++static ssize_t dbc_bInterfaceProtocol_store(struct device *dev,
++				  struct device_attribute *attr,
++				  const char *buf, size_t size)
++{
++	struct xhci_dbc *dbc;
++	struct xhci_hcd *xhci;
++	void __iomem *ptr;
++	u32 dev_info;
++	u8 value;
++	int ret;
++
++	/* bInterfaceProtocol is 8 bit, but xhci only supports values 0 and 1 */
++	ret = kstrtou8(buf, 0, &value);
++	if (ret || value > 1)
++		return -EINVAL;
++
++	xhci = hcd_to_xhci(dev_get_drvdata(dev));
++	dbc = xhci->dbc;
++	if (dbc->state != DS_DISABLED)
++		return -EBUSY;
++
++	dbc->bInterfaceProtocol = value;
++	ptr = &dbc->regs->devinfo1;
++	dev_info = readl(ptr);
++	dev_info = (dev_info & ~(0xffu)) | value;
++	writel(dev_info, ptr);
++
++	return size;
++}
++
+ static DEVICE_ATTR_RW(dbc);
++static DEVICE_ATTR_RW(dbc_idVendor);
++static DEVICE_ATTR_RW(dbc_idProduct);
++static DEVICE_ATTR_RW(dbc_bcdDevice);
++static DEVICE_ATTR_RW(dbc_bInterfaceProtocol);
++
++static struct attribute *dbc_dev_attributes[] = {
++	&dev_attr_dbc.attr,
++	&dev_attr_dbc_idVendor.attr,
++	&dev_attr_dbc_idProduct.attr,
++	&dev_attr_dbc_bcdDevice.attr,
++	&dev_attr_dbc_bInterfaceProtocol.attr,
++	NULL
++};
++
++static const struct attribute_group dbc_dev_attrib_grp = {
++	.attrs = dbc_dev_attributes,
++};
+ 
+ struct xhci_dbc *
+ xhci_alloc_dbc(struct device *dev, void __iomem *base, const struct dbc_driver *driver)
+@@ -1059,6 +1238,10 @@ xhci_alloc_dbc(struct device *dev, void
+ 	dbc->regs = base;
+ 	dbc->dev = dev;
+ 	dbc->driver = driver;
++	dbc->idProduct = DBC_PRODUCT_ID;
++	dbc->idVendor = DBC_VENDOR_ID;
++	dbc->bcdDevice = DBC_DEVICE_REV;
++	dbc->bInterfaceProtocol = DBC_PROTOCOL;
+ 
+ 	if (readl(&dbc->regs->control) & DBC_CTRL_DBC_ENABLE)
+ 		goto err;
+@@ -1066,7 +1249,7 @@ xhci_alloc_dbc(struct device *dev, void
+ 	INIT_DELAYED_WORK(&dbc->event_work, xhci_dbc_handle_events);
+ 	spin_lock_init(&dbc->lock);
+ 
+-	ret = device_create_file(dev, &dev_attr_dbc);
++	ret = sysfs_create_group(&dev->kobj, &dbc_dev_attrib_grp);
+ 	if (ret)
+ 		goto err;
+ 
+@@ -1085,7 +1268,7 @@ void xhci_dbc_remove(struct xhci_dbc *db
+ 	xhci_dbc_stop(dbc);
+ 
+ 	/* remove sysfs files */
+-	device_remove_file(dbc->dev, &dev_attr_dbc);
++	sysfs_remove_group(&dbc->dev->kobj, &dbc_dev_attrib_grp);
+ 
+ 	kfree(dbc);
+ }
+--- a/drivers/usb/host/xhci-dbgcap.h
++++ b/drivers/usb/host/xhci-dbgcap.h
+@@ -132,6 +132,10 @@ struct xhci_dbc {
+ 	struct dbc_str_descs		*string;
+ 	dma_addr_t			string_dma;
+ 	size_t				string_size;
++	u16				idVendor;
++	u16				idProduct;
++	u16				bcdDevice;
++	u8				bInterfaceProtocol;
+ 
+ 	enum dbc_state			state;
+ 	struct delayed_work		event_work;
 
 
