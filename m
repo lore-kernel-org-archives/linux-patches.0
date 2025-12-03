@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADFC34D4DB;
-	Wed,  3 Dec 2025 16:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AA834DB48;
+	Wed,  3 Dec 2025 16:13:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778381; cv=none; b=GSh7WkaVsA1Avud+EHDeqrRBIwCiKtHUlRheS2eeNsx4uTKbZDFKt0njJqTgg3SIvArSBHPlXUIVSnQjOZneHhCqmazMaRzhjFedDo8j1QWv6ySOWuRJOfXFPRcaVjl3ZYPyRyIgSEGb9OWpHuSEpn/JWvsYI/rhhrnw+FNoMek=
+	t=1764778384; cv=none; b=rgHSIorIL/XDJc+k3VI+8d/umv5clBNQR2fbQ7EAC/B2b8u35wEXgTXEiBT8ugis7Y+FS71Cf1NpRxS0D6OBoJUaYk+rQq32p16owQmDQ2OpoNQGXZfqfKgBEE8iXvPL5kNSFzjHNNX1JDsrLqId8f0VFA/1FQATsKgn1Sm8/A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778381; c=relaxed/simple;
-	bh=x5uDpfPXajp1udaDQoxaFCpkskOzq0zx5HVNwz5wKCM=;
+	s=arc-20240116; t=1764778384; c=relaxed/simple;
+	bh=icws8GIuwDLKahsggebXcojELyfG3xXb7ZX2015Pkec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QN2qBFjYwEQ3IYYiy/cVmtC1Tu2PMnl8f/3jem+IlLFtdBLWVcEsA2TNsY0GY1lMzFCS19YMlstjviwjAmqo6WmDqUAgYIOtyzuAnhOEhKYW40naCuf81ZltujvANFAI2N6Teia2NAhPN4DS1KBGm5ag74YSgnu1mlos8ILMRtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH4ZaLpP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bn/NPqNmrlCprnY5uqZxppKfzxjPgHsjU3XXdNB92TDUEKQ1tXPoUp/LB5gq2M6lkWHNzllbNrZCxxX2z+Kg1rzvGVLntHZfwrA3x9QNRRE/tIZQKqBtjVom4lCSzAcOliBF7IEz5Q7Ms4aMbJcexolbqmlAmzQaHE1NQcyRiiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0RGL/bd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH4ZaLpP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0F0C4CEF5;
-	Wed,  3 Dec 2025 16:13:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0RGL/bd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28587C116B1;
+	Wed,  3 Dec 2025 16:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778381;
-	bh=x5uDpfPXajp1udaDQoxaFCpkskOzq0zx5HVNwz5wKCM=;
+	s=korg; t=1764778384;
+	bh=icws8GIuwDLKahsggebXcojELyfG3xXb7ZX2015Pkec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IH4ZaLpPAHObV5vAuf3b6jRsjrH/bJ2ltGnPcMbU8x977VB21NIHR3XwkzwEcXkuI
-	 07+5XP85N6GUaNIyzfTtVnwYYs6Be68cf8iXW976inUwB5IiAnvWwa0vknBuX3aCtp
-	 HbHaiWRefLhVrPpFYMk7mOdLcyQT17uZ8j/9SDuQ=
+	b=T0RGL/bd1uck+KJoKEMxNENcLU/TjY1IiOfihcn7PogsN4E8QjDKWQ6aV5vKQacuY
+	 Osaf0t7CvuNzbBPxzIsJ2aoR/maKKKMVmjs0g3FSX41Q2R0bBRHLeORjT9gwpwHg3W
+	 OWVuNKFua8sd8g/a1ii5bNJxS+luZJbx01ScE/nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Chujun <zhangchujun@cmss.chinamobile.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Fabio M. De Francesco" <fabio.maria.de.francesco@linux.intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 311/392] tracing/tools: Fix incorrcet short option in usage text for --threads
-Date: Wed,  3 Dec 2025 16:27:41 +0100
-Message-ID: <20251203152425.605608758@linuxfoundation.org>
+Subject: [PATCH 5.15 329/392] mm/mempool: replace kmap_atomic() with kmap_local_page()
+Date: Wed,  3 Dec 2025 16:27:59 +0100
+Message-ID: <20251203152426.271725935@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,43 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Chujun <zhangchujun@cmss.chinamobile.com>
+From: "Fabio M. De Francesco" <fabio.maria.de.francesco@linux.intel.com>
 
-[ Upstream commit 53afec2c8fb2a562222948cb1c2aac48598578c9 ]
+[ Upstream commit f2bcc99a5e901a13b754648d1dbab60f4adf9375 ]
 
-The help message incorrectly listed '-t' as the short option for
---threads, but the actual getopt_long configuration uses '-e'.
-This mismatch can confuse users and lead to incorrect command-line
-usage. This patch updates the usage string to correctly show:
-	"-e, --threads NRTHR"
-to match the implementation.
+kmap_atomic() has been deprecated in favor of kmap_local_page().
 
-Note: checkpatch.pl reports a false-positive spelling warning on
-'Run', which is intentional.
+Therefore, replace kmap_atomic() with kmap_local_page().
 
-Link: https://patch.msgid.link/20251106031040.1869-1-zhangchujun@cmss.chinamobile.com
-Signed-off-by: Zhang Chujun <zhangchujun@cmss.chinamobile.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+kmap_atomic() is implemented like a kmap_local_page() which also disables
+page-faults and preemption (the latter only in !PREEMPT_RT kernels).  The
+kernel virtual addresses returned by these two API are only valid in the
+context of the callers (i.e., they cannot be handed to other threads).
+
+With kmap_local_page() the mappings are per thread and CPU local like in
+kmap_atomic(); however, they can handle page-faults and can be called from
+any context (including interrupts).  The tasks that call kmap_local_page()
+can be preempted and, when they are scheduled to run again, the kernel
+virtual addresses are restored and are still valid.
+
+The code blocks between the mappings and un-mappings don't rely on the
+above-mentioned side effects of kmap_atomic(), so that mere replacements
+of the old API with the new one is all that they require (i.e., there is
+no need to explicitly call pagefault_disable() and/or preempt_disable()).
+
+Link: https://lkml.kernel.org/r/20231120142640.7077-1-fabio.maria.de.francesco@linux.intel.com
+Signed-off-by: Fabio M. De Francesco <fabio.maria.de.francesco@linux.intel.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ec33b59542d9 ("mm/mempool: fix poisoning order>0 pages with HIGHMEM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/tracing/latency/latency-collector.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mempool.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/tracing/latency/latency-collector.c b/tools/tracing/latency/latency-collector.c
-index f7ed8084e16ad..ec95b94f80e1f 100644
---- a/tools/tracing/latency/latency-collector.c
-+++ b/tools/tracing/latency/latency-collector.c
-@@ -1725,7 +1725,7 @@ static void show_usage(void)
- "-n, --notrace\t\tIf latency is detected, do not print out the content of\n"
- "\t\t\tthe trace file to standard output\n\n"
+--- a/mm/mempool.c
++++ b/mm/mempool.c
+@@ -63,10 +63,10 @@ static void check_element(mempool_t *poo
+ 	} else if (pool->free == mempool_free_pages) {
+ 		/* Mempools backed by page allocator */
+ 		int order = (int)(long)pool->pool_data;
+-		void *addr = kmap_atomic((struct page *)element);
++		void *addr = kmap_local_page((struct page *)element);
  
--"-t, --threads NRTHR\tRun NRTHR threads for printing. Default is %d.\n\n"
-+"-e, --threads NRTHR\tRun NRTHR threads for printing. Default is %d.\n\n"
+ 		__check_element(pool, addr, 1UL << (PAGE_SHIFT + order));
+-		kunmap_atomic(addr);
++		kunmap_local(addr);
+ 	}
+ }
  
- "-r, --random\t\tArbitrarily sleep a certain amount of time, default\n"
- "\t\t\t%ld ms, before reading the trace file. The\n"
--- 
-2.51.0
-
+@@ -86,10 +86,10 @@ static void poison_element(mempool_t *po
+ 	} else if (pool->alloc == mempool_alloc_pages) {
+ 		/* Mempools backed by page allocator */
+ 		int order = (int)(long)pool->pool_data;
+-		void *addr = kmap_atomic((struct page *)element);
++		void *addr = kmap_local_page((struct page *)element);
+ 
+ 		__poison_element(addr, 1UL << (PAGE_SHIFT + order));
+-		kunmap_atomic(addr);
++		kunmap_local(addr);
+ 	}
+ }
+ #else /* CONFIG_DEBUG_SLAB || CONFIG_SLUB_DEBUG_ON */
 
 
