@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9A7330B06;
-	Wed,  3 Dec 2025 15:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A570330B06;
+	Wed,  3 Dec 2025 15:52:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777134; cv=none; b=bp1Tmpu5tJk2VTOt4jAJBJu0BmglxgihbZXTN76pT0mLfGBPlqNBH/K0b3+Ir1+ojr3KbA5eGrgQbUkJiQMr5wGVwhaMXW3Y3bS0Ynmish+nca9hOHnK7TjWG+06HVlyWc6x0KJf0ZMDVPekdMrWkq9TXK8j2V69Qn4+uAwtdCA=
+	t=1764777137; cv=none; b=EIpidnlDZkTtOwwb+eaxQjezDPAe32YQL4naDHOiO6O5SigcgQhW04lwYhtzR+bZuKv0ZqvdJWrmxFYjyW02zQHBhlmY/IuPdhGTCsjKIz4/AYYH3Me8H3CC6sp/LqNYYnDJ7KWxyVYRDStUSX7sGT98lBFccygKGUcTd8vUnNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777134; c=relaxed/simple;
-	bh=gZS87XFu+oGRCW4WJQbLlpHuEH/LB/mHLpgdiEDPi00=;
+	s=arc-20240116; t=1764777137; c=relaxed/simple;
+	bh=ptZKBvrM79wM2IXiHey9QzxxXWKlKXFUWt1sHVc95a8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S95WjEX4FQsVIimveGXHE2EdlD/hKTY5dcRqk93Tg5Y+6XowcXAuTJvxe6j1QlV2yIYtSC+yKorZ/d9jnOM6qhInyiKeoRDzXM9vuu2u23TVTgpe99q0GrunlQ0QRbxt7maonmwB3dCyq204T7OZM8E+fHRLqvbVUil2iRJ2OfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ly26oAaT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WzOiJg6k++sg/dyPJv+WVqadfCwIPVCORIdA7Z2jsT3nRZvv0zX9Kevc8cZ1T9ny4p8njD7n8hPxDGCr5IwhZeVCut1W+9ls5KnaLrSlUEBkOuMv4h5mLY76QoNQpSSCl28stNo7RC//yYI1D8LzcXlYo7R3u3mMRnCXgEh/6YA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EkvRAH6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ly26oAaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37DCC4CEF5;
-	Wed,  3 Dec 2025 15:52:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EkvRAH6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F121C4CEF5;
+	Wed,  3 Dec 2025 15:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777134;
-	bh=gZS87XFu+oGRCW4WJQbLlpHuEH/LB/mHLpgdiEDPi00=;
+	s=korg; t=1764777137;
+	bh=ptZKBvrM79wM2IXiHey9QzxxXWKlKXFUWt1sHVc95a8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ly26oAaTPxIl5sJuizcpzyrrBJIVPBdaFAMJatQ0UN+dTRH0ZU6M+nCzVDJ97IoIy
-	 rjLhyaiCVrM3gOnYhZ6tSMSb6Yo9d1Wu0OMLfCGGKWwktrREIOtGaR0R6jwmLDyGnk
-	 a3uf7K3gQ4YQs5Y4fGtdH4zv3I8xBimMAZtZjc6Y=
+	b=EkvRAH6j2D9EQXXFMv2H3HCa5lRPA9pvuW5NUbH9ZqFg2Ub0NkyXdhd2sobdzB5oC
+	 8Wtb46GK4QBKmsnuhkwsDFOw5GPV61UwDMcbaR5DxRRC+aeKhsrdud92QyvwyADNoW
+	 NgZ2tcmJtGHsUHSrL3BukVbAbDzRHi/sD73P6Z/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.17 092/146] thunderbolt: Add support for Intel Wildcat Lake
-Date: Wed,  3 Dec 2025 16:27:50 +0100
-Message-ID: <20251203152349.827198506@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.17 093/146] slimbus: ngd: Fix reference count leak in qcom_slim_ngd_notify_slaves
+Date: Wed,  3 Dec 2025 16:27:51 +0100
+Message-ID: <20251203152349.863972749@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -50,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 3575254546a27210a4b661ea37fbbfb836c0815d upstream.
+commit 96cf8500934e0ce2a6c486f1dbc3b1fff12f7a5e upstream.
 
-Intel Wildcat Lake derives its Thunderbolt/USB4 controller from Lunar
-Lake platform. Add Wildcat Lake PCI ID to the driver list of supported
-devices.
+The function qcom_slim_ngd_notify_slaves() calls of_slim_get_device() which
+internally uses device_find_child() to obtain a device reference.
+According to the device_find_child() documentation,
+the caller must drop the reference with put_device() after use.
 
-Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Found via static analysis and this is similar to commit 4e65bda8273c
+("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
+
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251027060601.33228-1-linmq006@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/nhi.c |    2 ++
- drivers/thunderbolt/nhi.h |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/slimbus/qcom-ngd-ctrl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/thunderbolt/nhi.c
-+++ b/drivers/thunderbolt/nhi.c
-@@ -1528,6 +1528,8 @@ static struct pci_device_id nhi_ids[] =
- 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_P_NHI1),
- 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_WCL_NHI0),
-+	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1241,6 +1241,7 @@ static void qcom_slim_ngd_notify_slaves(
  
---- a/drivers/thunderbolt/nhi.h
-+++ b/drivers/thunderbolt/nhi.h
-@@ -75,6 +75,7 @@ extern const struct tb_nhi_ops icl_nhi_o
- #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE	0x15ef
- #define PCI_DEVICE_ID_INTEL_ADL_NHI0			0x463e
- #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
-+#define PCI_DEVICE_ID_INTEL_WCL_NHI0			0x4d33
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
- #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HUB_80G_BRIDGE 0x5786
+ 		if (slim_get_logical_addr(sbdev))
+ 			dev_err(ctrl->dev, "Failed to get logical address\n");
++		put_device(&sbdev->dev);
+ 	}
+ }
+ 
 
 
