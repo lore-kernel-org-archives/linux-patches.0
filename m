@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5979E349AE6;
-	Wed,  3 Dec 2025 16:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B6834887C;
+	Wed,  3 Dec 2025 16:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777640; cv=none; b=sKXSx045wOiokERq1pN47ryL7vhIlmaGRZ/FpoU8e88ym8SLQL8CxGRtm1xRoLrJgLMElXjv6aBPB8CNSQ6K2JPiBAmlv/oqjze0btzJlMIb1oTpvu+pme1pX+ptpXga2wN8xiEDNubW+9EAf97JIF8rnSO2mY0xe5n9ZAAb8pM=
+	t=1764777643; cv=none; b=RstarkRtPrATT+ld899JG4Pjg9QVG6OWVsq3aWTlQybOPHNIeAp1sJ/2dhudRpXhvU40wzwHqm6n2n1jdPUR7Y+ToeDH2OQHP4yagQiiqgEQFE03v9WtNA2KlQbM7w1aLHmM2kRxSnK+9lQEqa7RkE+1u3wOkczRi1bbrfk0ItY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777640; c=relaxed/simple;
-	bh=+gJoTt2Hcep1evxbZUIJ0pTrgAguJkiR1PVFVTivDvM=;
+	s=arc-20240116; t=1764777643; c=relaxed/simple;
+	bh=8zx+6R2jXTEwa1b2tZjkZKMFhinGVR4rwGv2Xo/KONo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UkAmJVHHi2LN4ewYlJwSI6PvrVvNmqJu6o0h9scj3ZxN1GSyCNJr+6fEbXUsUMRHZ7o4jdHCjLkbtvMapIUV8+ZXiYKoz0shr32Qcya2WSoyjQhCO4dm4a8qWg+HtlbT3Xho7NRbq8Cyg1D86x+wDVAtFXORl9UPtndPcYJC+Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PetBWdSh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UvcOiu9eDVNjWggn6k0CEBoWrJGrE2XVEHDFbbkELyxA75NYwAI6mvN8RZz4lA5kdvXe6fCo2AzLjpjTCwwU8gInDXQA7yMrxGJLZ2XViyX+GIwG+j2X29V1MrOnfD+ASTtSjbjlDTETTsJurXAykqQQol7KtGvx1Coj1IE/fyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QLrv0Ln; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PetBWdSh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02F2C4CEF5;
-	Wed,  3 Dec 2025 16:00:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QLrv0Ln"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10684C116C6;
+	Wed,  3 Dec 2025 16:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777640;
-	bh=+gJoTt2Hcep1evxbZUIJ0pTrgAguJkiR1PVFVTivDvM=;
+	s=korg; t=1764777643;
+	bh=8zx+6R2jXTEwa1b2tZjkZKMFhinGVR4rwGv2Xo/KONo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PetBWdShu3yfWIfngGkC8zJ2uzRox01x0BzYzX0z3agO6n+E6Yi8k7T5PmgjkSU7+
-	 0xgMb+gZueEmyPD1uB2ETFHvFttLfSsQGjBdjSPaXCzITY0OF6mCZ/q/AOERbtnw80
-	 J/wMD8eD10t6uJ7wYYK7Rxq0n2XgMUBk182hMx+s=
+	b=1QLrv0LnBrgrR692uhaUp0Ke4oPZ8pGrtP7hgqXh9c8jV3PeVz9owf+UNzWZCrwmb
+	 YDBPq3sQpjj6B1ZN9Uv0fQzsn8Hj1V6of8rgH8GKb0z3nwL9Wp3DKdSQh5YbMVFGDm
+	 7Pj3dKXDzr6tzq1qB4BgN9BdJxk6KD4iLVL97DTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chuande Chen <chuachen@cisco.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/392] ACPI: scan: Add Intel CVS ACPI HIDs to acpi_ignore_dep_ids[]
-Date: Wed,  3 Dec 2025 16:23:37 +0100
-Message-ID: <20251203152416.575716976@linuxfoundation.org>
+Subject: [PATCH 5.15 068/392] hwmon: (sbtsi_temp) AMD CPU extended temperature range support
+Date: Wed,  3 Dec 2025 16:23:38 +0100
+Message-ID: <20251203152416.611236748@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,50 +51,138 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Chuande Chen <chuachen@cisco.com>
 
-[ Upstream commit 4405a214df146775338a1e6232701a29024b82e1 ]
+[ Upstream commit d9d61f1da35038793156c04bb13f0a1350709121 ]
 
-Some x86/ACPI laptops with MIPI cameras have a INTC10DE or INTC10E0 ACPI
-device in the _DEP dependency list of the ACPI devices for the camera-
-sensors (which have flags.honor_deps set).
+Many AMD CPUs can support this feature now. We would get a wrong CPU DIE
+temperature if don't consider this. In low-temperature environments,
+the CPU die temperature can drop below zero. So many platforms would like
+to make extended temperature range as their default configuration.
+Default temperature range (0C to 255.875C).
+Extended temperature range (-49C to +206.875C).
+Ref Doc: AMD V3000 PPR (Doc ID #56558).
 
-These devices are for an Intel Vision CVS chip for which an out of tree
-driver is available [1].
-
-The camera sensor works fine without a driver being loaded for this
-ACPI device on the 2 laptops this was tested on:
-
-ThinkPad X1 Carbon Gen 12 (Meteor Lake)
-ThinkPad X1 2-in-1 Gen 10 (Arrow Lake)
-
-For now add these HIDs to acpi_ignore_dep_ids[] so that
-acpi_dev_ready_for_enumeration() will return true once the other _DEP
-dependencies are met and an i2c_client for the camera sensor will get
-instantiated.
-
-Link: https://github.com/intel/vision-drivers/ [1]
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20250829142748.21089-1-hansg@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Chuande Chen <chuachen@cisco.com>
+Link: https://lore.kernel.org/r/20250814053940.96764-1-chenchuande@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/scan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/sbtsi_temp.c | 46 +++++++++++++++++++++++++-------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
-index 2393cd993b3cb..151c57c7bb3a4 100644
---- a/drivers/acpi/scan.c
-+++ b/drivers/acpi/scan.c
-@@ -789,6 +789,8 @@ static bool acpi_info_matches_ids(struct acpi_device_info *info,
- static const char * const acpi_ignore_dep_ids[] = {
- 	"PNP0D80", /* Windows-compatible System Power Management Controller */
- 	"INT33BD", /* Intel Baytrail Mailbox Device */
-+	"INTC10DE", /* Intel CVS LNL */
-+	"INTC10E0", /* Intel CVS ARL */
- 	"LATT2021", /* Lattice FW Update Client Driver */
- 	NULL
+diff --git a/drivers/hwmon/sbtsi_temp.c b/drivers/hwmon/sbtsi_temp.c
+index e35357c48b8e6..b2ef2ada4bfe2 100644
+--- a/drivers/hwmon/sbtsi_temp.c
++++ b/drivers/hwmon/sbtsi_temp.c
+@@ -15,6 +15,7 @@
+ #include <linux/mutex.h>
+ #include <linux/of_device.h>
+ #include <linux/of.h>
++#include <linux/bitfield.h>
+ 
+ /*
+  * SB-TSI registers only support SMBus byte data access. "_INT" registers are
+@@ -30,8 +31,22 @@
+ #define SBTSI_REG_TEMP_HIGH_DEC		0x13 /* RW */
+ #define SBTSI_REG_TEMP_LOW_DEC		0x14 /* RW */
+ 
++/*
++ * Bit for reporting value with temperature measurement range.
++ * bit == 0: Use default temperature range (0C to 255.875C).
++ * bit == 1: Use extended temperature range (-49C to +206.875C).
++ */
++#define SBTSI_CONFIG_EXT_RANGE_SHIFT	2
++/*
++ * ReadOrder bit specifies the reading order of integer and decimal part of
++ * CPU temperature for atomic reads. If bit == 0, reading integer part triggers
++ * latching of the decimal part, so integer part should be read first.
++ * If bit == 1, read order should be reversed.
++ */
+ #define SBTSI_CONFIG_READ_ORDER_SHIFT	5
+ 
++#define SBTSI_TEMP_EXT_RANGE_ADJ	49000
++
+ #define SBTSI_TEMP_MIN	0
+ #define SBTSI_TEMP_MAX	255875
+ 
+@@ -39,6 +54,8 @@
+ struct sbtsi_data {
+ 	struct i2c_client *client;
+ 	struct mutex lock;
++	bool ext_range_mode;
++	bool read_order;
  };
+ 
+ /*
+@@ -75,23 +92,11 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+ {
+ 	struct sbtsi_data *data = dev_get_drvdata(dev);
+ 	s32 temp_int, temp_dec;
+-	int err;
+ 
+ 	switch (attr) {
+ 	case hwmon_temp_input:
+-		/*
+-		 * ReadOrder bit specifies the reading order of integer and
+-		 * decimal part of CPU temp for atomic reads. If bit == 0,
+-		 * reading integer part triggers latching of the decimal part,
+-		 * so integer part should be read first. If bit == 1, read
+-		 * order should be reversed.
+-		 */
+-		err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
+-		if (err < 0)
+-			return err;
+-
+ 		mutex_lock(&data->lock);
+-		if (err & BIT(SBTSI_CONFIG_READ_ORDER_SHIFT)) {
++		if (data->read_order) {
+ 			temp_dec = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_DEC);
+ 			temp_int = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_INT);
+ 		} else {
+@@ -123,6 +128,8 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
+ 		return temp_dec;
+ 
+ 	*val = sbtsi_reg_to_mc(temp_int, temp_dec);
++	if (data->ext_range_mode)
++		*val -= SBTSI_TEMP_EXT_RANGE_ADJ;
+ 
+ 	return 0;
+ }
+@@ -147,6 +154,8 @@ static int sbtsi_write(struct device *dev, enum hwmon_sensor_types type,
+ 		return -EINVAL;
+ 	}
+ 
++	if (data->ext_range_mode)
++		val += SBTSI_TEMP_EXT_RANGE_ADJ;
+ 	val = clamp_val(val, SBTSI_TEMP_MIN, SBTSI_TEMP_MAX);
+ 	sbtsi_mc_to_reg(val, &temp_int, &temp_dec);
+ 
+@@ -205,6 +214,7 @@ static int sbtsi_probe(struct i2c_client *client,
+ 	struct device *dev = &client->dev;
+ 	struct device *hwmon_dev;
+ 	struct sbtsi_data *data;
++	int err;
+ 
+ 	data = devm_kzalloc(dev, sizeof(struct sbtsi_data), GFP_KERNEL);
+ 	if (!data)
+@@ -213,8 +223,14 @@ static int sbtsi_probe(struct i2c_client *client,
+ 	data->client = client;
+ 	mutex_init(&data->lock);
+ 
+-	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data, &sbtsi_chip_info,
+-							 NULL);
++	err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
++	if (err < 0)
++		return err;
++	data->ext_range_mode = FIELD_GET(BIT(SBTSI_CONFIG_EXT_RANGE_SHIFT), err);
++	data->read_order = FIELD_GET(BIT(SBTSI_CONFIG_READ_ORDER_SHIFT), err);
++
++	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
++							 &sbtsi_chip_info, NULL);
+ 
+ 	return PTR_ERR_OR_ZERO(hwmon_dev);
+ }
 -- 
 2.51.0
 
