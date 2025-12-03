@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BC630B520;
-	Wed,  3 Dec 2025 15:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B4C30AD06;
+	Wed,  3 Dec 2025 15:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776353; cv=none; b=dFTULJYWQl4+Patks+8OKTFVbziLZhKhRjSn/KdJnMbENlTSnU1CGRBKzl7ex9TFTqb0yG+5Mf+s7VsXUaz/KYyOI2dZSxR18GoR5m1XkjiErj/o0kdyFcYGRuJv1TNVlIbVV1DExHW4jKlVYhRr6MDk/cV16vLMU19asAwWtQA=
+	t=1764776356; cv=none; b=ogvP7s3RXU9qaUKYaPwBrhKzqKNBiXpWSq55DCz6vKKIb39+jhax+4Q2QZReaetMDwYdrQuevwsZHJt6mDvZ9YW3MheCarTl9goIvbFcG5cck1J13P8Aa70VtPHWR4a7ZZnpHJsalu+NE4fx3A0/jLAbiWfATo5C7ptwKyTAJBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776353; c=relaxed/simple;
-	bh=DywWd+Nc4yoVd2fLiVoo83IzEfN0SF87j3nlI6KvpOQ=;
+	s=arc-20240116; t=1764776356; c=relaxed/simple;
+	bh=9LaLU9P4Q80+RXqlm7BTBprqzP0opA2K8PhSsQ3lZyI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZDf2EFSuq6WUhXqY71C6iS6ggbG1XHAUr5fi/Zp18iZlUgogAvLpEyG37s8vNXQO0bX1kPfTpihy3stJYtbRatXGt8GifuX3q7d4UVM7Y1bEwRTIxRjmzheX3KWLoiOtWyI2oUXCi4JWrtEmbXblF/QWzAGQeu6U2DfhC5uadQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhHQru6j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dYtguQiQQJ9YQ2p+oICNUaglHRTKBCBsfysSz7hiCjkijI4P3aezWwZvoaHXRaCroDakuyumg2P4l91rarxsFARWJD2Is9niuNn8wRAjf48kBvtgsQAhpjuV90gDkSZKAWo2iiAXVyoNYXblfy4rqeNIuCuodw3fKr1LCI3svMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m6omVpob; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhHQru6j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A6FC4CEF5;
-	Wed,  3 Dec 2025 15:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m6omVpob"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6F5C4CEF5;
+	Wed,  3 Dec 2025 15:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776353;
-	bh=DywWd+Nc4yoVd2fLiVoo83IzEfN0SF87j3nlI6KvpOQ=;
+	s=korg; t=1764776356;
+	bh=9LaLU9P4Q80+RXqlm7BTBprqzP0opA2K8PhSsQ3lZyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fhHQru6jCiY4gacZUJ/87d/+nB3PJEBcbOtpyaVKyTPQmZXcyqDqwiDP+ziB0L5NW
-	 s3oD3PoykX+BDCJIoNd90wGitOx+im+tUUdk856J4CzZZErWSR+Sulw6ggCvrlJmET
-	 lk+Zmc1Lyvkbs91DT4L4pdUltbriP61O0FI6D1Pc=
+	b=m6omVpob1ADtPm+SUGa90UZLw0AcJl9+Qw4AiwtAtJJdXEuvPWV3+b2dnYW4l/W23
+	 LVobj4bgAUYjYmyR1B+faouNYEzbePFz+iGFA5Lks1yO3gC83DH3F2bpf44Qs3FQOO
+	 BXRArkfTGXqljgN3JMgFwblMQiH6nzYXNHT8+IAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Josephine Pfeiffer <hi@josie.lol>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 157/300] ALSA: hda/realtek: Audio disappears on HP 15-fc000 after warm boot again
-Date: Wed,  3 Dec 2025 16:26:01 +0100
-Message-ID: <20251203152406.433752455@linuxfoundation.org>
+Subject: [PATCH 5.10 158/300] riscv: ptdump: use seq_puts() in pt_dump_seq_puts() macro
+Date: Wed,  3 Dec 2025 16:26:02 +0100
+Message-ID: <20251203152406.471428022@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,71 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Josephine Pfeiffer <hi@josie.lol>
 
-[ Upstream commit f4b3cef55f5f96fdb4e7f9ca90b7d6213689faeb ]
+[ Upstream commit a74f038fa50e0d33b740f44f862fe856f16de6a8 ]
 
-There was a similar bug in the past (Bug 217440), which was fixed for
-this laptop.
-The same issue is occurring again as of kernel v.6.12.2. The symptoms
-are very similar - initially audio works but after a warm reboot, the
-audio completely disappears until the computer is powered off (there
-is no audio output at all).
+The pt_dump_seq_puts() macro incorrectly uses seq_printf() instead of
+seq_puts(). This is both a performance issue and conceptually wrong,
+as the macro name suggests plain string output (puts) but the
+implementation uses formatted output (printf).
 
-The issue is also related by caused by a different change now. By
-bisecting different kernel versions, I found that reverting
-cc3d0b5dd989 in patch_realtek.c[*] restores the sound and it works
-fine after the reboot.
+The macro is used in ptdump.c:301 to output a newline character. Using
+seq_printf() adds unnecessary overhead for format string parsing when
+outputting this constant string.
 
-[*] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/sound/pci/hda/patch_realtek.c?h=v6.12.2&id=4ed7f16070a8475c088ff423b2eb11ba15eb89b6
+This bug was introduced in commit 59c4da8640cc ("riscv: Add support to
+dump the kernel page tables") in 2020, which copied the implementation
+pattern from other architectures that had the same bug.
 
-[ patch description reformatted by tiwai ]
-
-Fixes: cc3d0b5dd989 ("ALSA: hda/realtek: Update ALC256 depop procedure")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220109
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/5317ca723c82447a938414fcca85cbf5@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 59c4da8640cc ("riscv: Add support to dump the kernel page tables")
+Signed-off-by: Josephine Pfeiffer <hi@josie.lol>
+Link: https://lore.kernel.org/r/20251018170451.3355496-1-hi@josie.lol
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/riscv/mm/ptdump.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 84dde97424080..a9c71f38710ed 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -3637,6 +3637,15 @@ static void alc256_shutup(struct hda_codec *codec)
- 		hp_pin = 0x21;
+diff --git a/arch/riscv/mm/ptdump.c b/arch/riscv/mm/ptdump.c
+index ace74dec7492c..dddb1932ba8b6 100644
+--- a/arch/riscv/mm/ptdump.c
++++ b/arch/riscv/mm/ptdump.c
+@@ -22,7 +22,7 @@
+ #define pt_dump_seq_puts(m, fmt)	\
+ ({					\
+ 	if (m)				\
+-		seq_printf(m, fmt);	\
++		seq_puts(m, fmt);	\
+ })
  
- 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
-+
-+	/* 3k pull low control for Headset jack. */
-+	/* NOTE: call this before clearing the pin, otherwise codec stalls */
-+	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
-+	 * when booting with headset plugged. So skip setting it for the codec alc257
-+	 */
-+	if (spec->en_3kpull_low)
-+		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
-+
- 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
- 
- 	if (hp_pin_sense) {
-@@ -3647,14 +3656,6 @@ static void alc256_shutup(struct hda_codec *codec)
- 
- 		msleep(75);
- 
--	/* 3k pull low control for Headset jack. */
--	/* NOTE: call this before clearing the pin, otherwise codec stalls */
--	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
--	 * when booting with headset plugged. So skip setting it for the codec alc257
--	 */
--		if (spec->en_3kpull_low)
--			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
--
- 		if (!spec->no_shutup_pins)
- 			snd_hda_codec_write(codec, hp_pin, 0,
- 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
+ /*
 -- 
 2.51.0
 
