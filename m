@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1154D310785;
-	Wed,  3 Dec 2025 15:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C516A324707;
+	Wed,  3 Dec 2025 15:59:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777553; cv=none; b=V44KkkmdfYGOsORcKv/dXeP67TZbmXydeJ8cNz71HYpj3uL+hAYlNgxgCfEpi4dkRDc+37acovaWAjZ0i1S21oiRv7gqulZ0yReDxUhhvKrx+blOoP66FoveIcj4iWDYsD8yQ8Y8c5Jg38MMEVgQoM1jlI7krHUx7EJNqEzoPAg=
+	t=1764777556; cv=none; b=FV9zaHMTjdPIWPoOC6WlWl3Qo2gP+NW4oqm+GSjZTnbD3Bez+/nsGAwueCogPhrPZJS0UYm8+x0zuaFgtA9gVYEhebGh6U3+YuxOSy4xDN0qZsVJA/+JGU44V7yW9Gn8x6+bZWMLBvJYqDe4PJkgbHZxfvRjsW2fHAn2uVuD77s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777553; c=relaxed/simple;
-	bh=W7iDy2jpLz5JPZcT64aWy/YzGyFaXbJEEYVBHU2iEB8=;
+	s=arc-20240116; t=1764777556; c=relaxed/simple;
+	bh=96GqKXL1kmYXLJXYwuaIlEUgaTeHKotc7gh3vXTQ7YE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VGG8UefbAV8w8Rqrz4PwFhiEhohhtUn3EiagZhhPSJkWSpe6lmoCDxeDXCnVGEuA6RLLlTaOvzTDC2fmyS2QcQSOXH6gj35IrYdxPwqiKOcbp3XFHoMg02qJhgdqaimLVoMDRwJCzuCUju636HrjLCnSx8l5ei8P+VQhJgV1rjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bGvQF3A0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ILQ0D6F6UsfQjQCA63aB2N5VoMixvFhwJQqH0f+YoyFZnQrsxEEsRRqRfG/b1Cmd6C7PIP8u/CssuUEgeQJnxEotXvIl7uJdBkNQFDKpcJBl9knnb4vEAm2uM1W8s0dUFnoFBbxjrjdIN8pZS7UvgHQLDXLwuad+N2up1zYgeDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SkGiA3R6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bGvQF3A0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242A5C4CEF5;
-	Wed,  3 Dec 2025 15:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SkGiA3R6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FE6C4CEF5;
+	Wed,  3 Dec 2025 15:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777552;
-	bh=W7iDy2jpLz5JPZcT64aWy/YzGyFaXbJEEYVBHU2iEB8=;
+	s=korg; t=1764777556;
+	bh=96GqKXL1kmYXLJXYwuaIlEUgaTeHKotc7gh3vXTQ7YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGvQF3A09NzJ/9H+WvZMsmLs8mnpfdHKpoQEcKST+Zln8T+5ZlJiQ4tYtCpqWe+q9
-	 O37BQU920KjyxYTRsr6LCytEyV7r4f07iSZhFLsiDP2NbPEYvedCJJUt89JklO8Iec
-	 Lp1HCvDVKkEhPd8tv6AFjuXFE6MGOUGtAo6rNXw8=
+	b=SkGiA3R6sLWBKzXoHSK1GlbbwPXmXSRAPZWnhjhSNlWO3tGzJY9XtyMxDDzmfwqMI
+	 3XUKsfV/daQ2J3dIQmY849WpW866vfle9mqvLztb0/v8JjYWqZeBxzkOwutuj7Fuiy
+	 5/U1d/AEAs9+nQTw7WqdAlY07m48LTBKXTfAC5cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Daniel Wagner <wagi@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Svyatoslav Ryhel <clamor95@gmail.com>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 075/392] nvme-fc: use lock accessing port_state and rport state
-Date: Wed,  3 Dec 2025 16:23:45 +0100
-Message-ID: <20251203152416.865750465@linuxfoundation.org>
+Subject: [PATCH 5.15 076/392] video: backlight: lp855x_bl: Set correct EPROM start for LP8556
+Date: Wed,  3 Dec 2025 16:23:46 +0100
+Message-ID: <20251203152416.901897353@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,50 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Svyatoslav Ryhel <clamor95@gmail.com>
 
-[ Upstream commit 891cdbb162ccdb079cd5228ae43bdeebce8597ad ]
+[ Upstream commit 07c7efda24453e05951fb2879f5452b720b91169 ]
 
-nvme_fc_unregister_remote removes the remote port on a lport object at
-any point in time when there is no active association. This races with
-with the reconnect logic, because nvme_fc_create_association is not
-taking a lock to check the port_state and atomically increase the
-active count on the rport.
+According to LP8556 datasheet EPROM region starts at 0x98 so adjust value
+in the driver accordingly.
 
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Closes: https://lore.kernel.org/all/u4ttvhnn7lark5w3sgrbuy2rxupcvosp4qmvj46nwzgeo5ausc@uyrkdls2muwx
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
+Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
+Link: https://lore.kernel.org/r/20250909074304.92135-2-clamor95@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/video/backlight/lp855x_bl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index ebe8c2f147a33..8a9cb7709b32d 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3039,11 +3039,17 @@ nvme_fc_create_association(struct nvme_fc_ctrl *ctrl)
+diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backlight/lp855x_bl.c
+index e94932c69f540..80a4b12563c6f 100644
+--- a/drivers/video/backlight/lp855x_bl.c
++++ b/drivers/video/backlight/lp855x_bl.c
+@@ -21,7 +21,7 @@
+ #define LP855X_DEVICE_CTRL		0x01
+ #define LP855X_EEPROM_START		0xA0
+ #define LP855X_EEPROM_END		0xA7
+-#define LP8556_EPROM_START		0xA0
++#define LP8556_EPROM_START		0x98
+ #define LP8556_EPROM_END		0xAF
  
- 	++ctrl->ctrl.nr_reconnects;
- 
--	if (ctrl->rport->remoteport.port_state != FC_OBJSTATE_ONLINE)
-+	spin_lock_irqsave(&ctrl->rport->lock, flags);
-+	if (ctrl->rport->remoteport.port_state != FC_OBJSTATE_ONLINE) {
-+		spin_unlock_irqrestore(&ctrl->rport->lock, flags);
- 		return -ENODEV;
-+	}
- 
--	if (nvme_fc_ctlr_active_on_rport(ctrl))
-+	if (nvme_fc_ctlr_active_on_rport(ctrl)) {
-+		spin_unlock_irqrestore(&ctrl->rport->lock, flags);
- 		return -ENOTUNIQ;
-+	}
-+	spin_unlock_irqrestore(&ctrl->rport->lock, flags);
- 
- 	dev_info(ctrl->ctrl.device,
- 		"NVME-FC{%d}: create association : host wwpn 0x%016llx "
+ /* LP8555/7 Registers */
 -- 
 2.51.0
 
