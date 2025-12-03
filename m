@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23480313546;
-	Wed,  3 Dec 2025 16:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F173074B3;
+	Wed,  3 Dec 2025 16:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778064; cv=none; b=GB9YDFRhcx4ry2P9meE9TIMDwjdAg4s2ghMW4W3139ORo99ydCSCUFUPvdA6Vps2097rrg5CxAqd1ZMTbCvW7jGxgQywy1cx0OpL0OyP92iplnrx9Sci95KQH3qJIivinGsDpXMMz81UwkFBiKsZgzEsO2Phw8WU70fVT9WQT3M=
+	t=1764778067; cv=none; b=beyskZCeJ9Zab1vw2WWFkVVpL5TXYb0MlKzpxK8zvb9lORMPy9z9VfrOqqz2NFlczGspSXLOYYOarMCow/RDCQk7ApVWvzSRfXWqOlmDiQFZCbQa4SvR5ytM4WS4azrp+MSnUw9MYMIUE9qvRFqDhpsQgd3oBxTDDd5o6jVKsVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778064; c=relaxed/simple;
-	bh=md7O2iDK5uqo0/EMO+bRcghytxMk01PGg8LU27gsBJE=;
+	s=arc-20240116; t=1764778067; c=relaxed/simple;
+	bh=HU5/UI1DtFdQR1a2RIq8JGD7d9bojZoxCKsSSt5Bg6w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5kuFnKtFt3ebMRM+EGPIWHqryYOH5a0kgww3E8MVLIiD+es1AIL+E9aday0KId0IvjsSg9PTpKojT+iya81JcKk6FHtmDYpMJRrWnnrRLK+l2KAd0zY39CciFAoUan4G5klseCkV2eFyQuISxapGtVzg3xXX52+b3FMgV8byuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vv0ouKRs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pzy5amxU2LOBch87pudrFIRJHw6cdfjYestYc0+dthHGh0wa6dq0PsJ0nh7GTcLAi3W8SQWemHfxSp2dybBrFxUXgUzcJM3zkMIYlhJVruU+ZOwkOW4T5+EFR5xvvVDNzvjO+5Lj9zjdCqNuj/MQgIw+jcsoUT0Yf6YRZVE576k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0LfIi/Wh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vv0ouKRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C878C4CEF5;
-	Wed,  3 Dec 2025 16:07:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0LfIi/Wh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEF1C4CEF5;
+	Wed,  3 Dec 2025 16:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778064;
-	bh=md7O2iDK5uqo0/EMO+bRcghytxMk01PGg8LU27gsBJE=;
+	s=korg; t=1764778067;
+	bh=HU5/UI1DtFdQR1a2RIq8JGD7d9bojZoxCKsSSt5Bg6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vv0ouKRs9vgtN4zhfB4TExWr3T8BbhhXMjckhklHy89xQiym+DD/++UetFJ5Agefl
-	 Z1NJsd4UD8ACuX4qayUR7NrrPgPoYFi0z2XotuQCWv4WARPwKASIJyryUBOcYrhnQC
-	 jvKG13z+zMOwTxHFmRiE5zbupKuZ+VrwCgGrNXwY=
+	b=0LfIi/WhLOa/Gv5CcczZAd7tAHd3o5Eb6wdZqVI/+U+skKi3GZtCJza03AS4+zkDe
+	 oKaMdjAWMdjRQAR7LDU33rWDsPVu2kA7KOrh1gJ6hBInTocyVQIgkjtudIKtdvfNj3
+	 pHYvHz+cBGWnQe9TsiPaWsg4L16dF9KhJXkamX0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 205/392] ceph: add checking of wait_for_completion_killable() return value
-Date: Wed,  3 Dec 2025 16:25:55 +0100
-Message-ID: <20251203152421.617954270@linuxfoundation.org>
+Subject: [PATCH 5.15 232/392] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
+Date: Wed,  3 Dec 2025 16:26:22 +0100
+Message-ID: <20251203152422.718637808@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,48 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
 
-[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
+[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
 
-The Coverity Scan service has detected the calling of
-wait_for_completion_killable() without checking the return
-value in ceph_lock_wait_for_completion() [1]. The CID 1636232
-defect contains explanation: "If the function returns an error
-value, the error value may be mistaken for a normal value.
-In ceph_lock_wait_for_completion(): Value returned from
-a function is not checked for errors before being used. (CWE-252)".
+openSBI v1.7 adds harts checks for ipi operations. Especially it
+adds comparison between hmask passed as an argument from linux
+and mask of online harts (from openSBI side). If they don't
+fit each other the error occurs.
 
-The patch adds the checking of wait_for_completion_killable()
-return value and return the error code from
-ceph_lock_wait_for_completion().
+When cpu is offline, cpu_online_mask is explicitly cleared in
+__cpu_disable. However, there is no explicit clearing of
+mm_cpumask. mm_cpumask is used for rfence operations that
+call openSBI RFENCE extension which uses ipi to remote harts.
+If hart is offline there may be error if mask of linux is not
+as mask of online harts in openSBI.
 
-[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
+this patch adds explicit clearing of mm_cpumask for offline hart.
 
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
+[pjw@kernel.org: rewrote subject line for clarity]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/locks.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/cpu-hotplug.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
-index 3e3b8be76b21e..38974c54240d6 100644
---- a/fs/ceph/locks.c
-+++ b/fs/ceph/locks.c
-@@ -202,7 +202,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
- 	if (err && err != -ERESTARTSYS)
- 		return err;
+diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
+index 28a3fa6e67d79..25659db3b1a43 100644
+--- a/arch/riscv/kernel/cpu-hotplug.c
++++ b/arch/riscv/kernel/cpu-hotplug.c
+@@ -67,6 +67,7 @@ void __cpu_die(unsigned int cpu)
+ 	}
+ 	pr_notice("CPU%u: off\n", cpu);
  
--	wait_for_completion_killable(&req->r_safe_completion);
-+	err = wait_for_completion_killable(&req->r_safe_completion);
-+	if (err)
-+		return err;
-+
- 	return 0;
- }
- 
++	clear_tasks_mm_cpumask(cpu);
+ 	/* Verify from the firmware if the cpu is really stopped*/
+ 	if (cpu_ops[cpu]->cpu_is_stopped)
+ 		ret = cpu_ops[cpu]->cpu_is_stopped(cpu);
 -- 
 2.51.0
 
