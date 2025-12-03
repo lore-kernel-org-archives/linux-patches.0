@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E2A15ADB4;
-	Wed,  3 Dec 2025 15:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19422DA769;
+	Wed,  3 Dec 2025 15:43:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776627; cv=none; b=r/TQfzQxFbrf4m5kaw9y2JHmUG4cmMmoMzQ8tQL2W/5VUcABXwbqocvdrCKIPCKSa6bBzBOTfsRwXw00i1qbKBg1uO6x6z3TDAY+WesaZg5K7ROKUyn9vglP7f40mlm1501aNwcTperEiPn69VuWO5wOFQVTQLgFZk9reABH6rk=
+	t=1764776631; cv=none; b=Y0MSezLBz7SfTAlAJEYiKVgIIN1jF4YNn2vRBEbtQ7yujKDsAMagvJM33OZ5Wch/ajPcyid5SXzTK2rPenHjl0HKr34a+CRh0HK23eCWE3UdGJQOTyxyOkU3OjLe6qXWZFtVzKh/6Gu25uKTpHJglIGlKVf5vMKY/zkIMhdIm2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776627; c=relaxed/simple;
-	bh=pzoExyn3O3fTr9EJnueblI284Gc6EZ5GihRg+yqbUqo=;
+	s=arc-20240116; t=1764776631; c=relaxed/simple;
+	bh=+hzTvBGMmRB+f5cNnmxUsJyRYDIjB3UAcbITVgd6OpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APeJga+RtZfRoylN63nw/iPD4m1/UXAeSM0wtSusJY5bRB7EkP0Ovgyhk7h5NkSWPA6Byd3wM9R1IIsdSFsQdJAbtIxjHFNAWSTTnUX/TDa66iIjjZK4S2IC1BKovoH6ARMBoqZVfqCnqFEvs273QY64KVZ6y0PuBtODO7cQMXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JOWTm8Vb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1WJjpsIcUMokyr+ybjPlbdxrJ+Qr/h+Oy8A9eTIXgVfaIiqbFy16058ilw+A+ppDFtkiazOMIRlYHH8zNW+bD7np3QG7tcagXTz3Ui/ON1ksRPk1n5sCCPUV+/gs1mviESr0SaELhc5VvV2s0TrVw2sX+Xl3QVRpbJ8TRQB0gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9+Z1fEc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JOWTm8Vb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24722C4CEF5;
-	Wed,  3 Dec 2025 15:43:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9+Z1fEc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A0C4CEF5;
+	Wed,  3 Dec 2025 15:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776627;
-	bh=pzoExyn3O3fTr9EJnueblI284Gc6EZ5GihRg+yqbUqo=;
+	s=korg; t=1764776630;
+	bh=+hzTvBGMmRB+f5cNnmxUsJyRYDIjB3UAcbITVgd6OpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOWTm8Vb9t1DU12WOY8ZjOybKpqKcW71AwOhElTm1b4ktAWI/aDEQbmoGTwH/ULKO
-	 JR//MsX4mjgjZ3JI0AbrlbVgU3n0Vf2Uyjwk9UnDfhEInRyvmRWe3e20NkaFtuFTPD
-	 RFCCPPetdxyrTSnRbgBCX9otqxGKrAV3trecoHJA=
+	b=M9+Z1fEc7rof15lCtoy23YDzA93VW5kn9IcOOLE3ZpTn52hpucB+59JJP0LRqCeFk
+	 xM5DPzu/DNEIx2ea0ysxisYK0uE5/zufClP8JJfnBdejevpTsoSbSee7HqfXC+ocnQ
+	 FVEFH/WL0Z9McDhaUH81Ch0H27t+llrkiJazWXPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 238/300] net: qede: Initialize qede_ll_ops with designated initializer
-Date: Wed,  3 Dec 2025 16:27:22 +0100
-Message-ID: <20251203152409.442124809@linuxfoundation.org>
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Matthieu Baerts <matttbe@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 207/300] gcov: add support for GCC 15
+Date: Wed,  3 Dec 2025 16:26:51 +0100
+Message-ID: <20251203152408.291453271@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,43 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit 6b3ab7f2cbfaeb6580709cd8ef4d72cfd01bfde4 upstream.
+commit ec4d11fc4b2dd4a2fa8c9d801ee9753b74623554 upstream.
 
-After a recent change [1] in clang's randstruct implementation to
-randomize structures that only contain function pointers, there is an
-error because qede_ll_ops get randomized but does not use a designated
-initializer for the first member:
+Using gcov on kernels compiled with GCC 15 results in truncated 16-byte
+long .gcda files with no usable data.  To fix this, update GCOV_COUNTERS
+to match the value defined by GCC 15.
 
-  drivers/net/ethernet/qlogic/qede/qede_main.c:206:2: error: a randomized struct can only be initialized with a designated initializer
-    206 |         {
-        |         ^
+Tested with GCC 14.3.0 and GCC 15.2.0.
 
-Explicitly initialize the common member using a designated initializer
-to fix the build.
-
-Cc: stable@vger.kernel.org
-Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
-Link: https://github.com/llvm/llvm-project/commit/04364fb888eea6db9811510607bed4b200bcb082 [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20250507-qede-fix-clang-randstruct-v1-1-5ccc15626fba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20251028115125.1319410-1-oberpar@linux.ibm.com
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reported-by: Matthieu Baerts <matttbe@kernel.org>
+Closes: https://github.com/linux-test-project/lcov/issues/445
+Tested-by: Matthieu Baerts <matttbe@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/gcov/gcc_4_7.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -199,7 +199,7 @@ static struct pci_driver qede_pci_driver
- };
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -19,7 +19,9 @@
+ #include <linux/vmalloc.h>
+ #include "gcov.h"
  
- static struct qed_eth_cb_ops qede_ll_ops = {
--	{
-+	.common = {
- #ifdef CONFIG_RFS_ACCEL
- 		.arfs_filter_op = qede_arfs_filter_op,
- #endif
+-#if (__GNUC__ >= 14)
++#if (__GNUC__ >= 15)
++#define GCOV_COUNTERS			10
++#elif (__GNUC__ >= 14)
+ #define GCOV_COUNTERS			9
+ #elif (__GNUC__ >= 10)
+ #define GCOV_COUNTERS			8
 
 
