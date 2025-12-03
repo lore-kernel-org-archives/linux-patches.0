@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E138F327215;
-	Wed,  3 Dec 2025 15:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B59D032779D;
+	Wed,  3 Dec 2025 15:49:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776948; cv=none; b=DATQjB/nD51VSTPpRproZ3XHPaimp2r3B00tNittNCQxedb7+yzrjclbvbraOpOJyO7b/QZMxrPhQLfd8VfBnZ26E1bJIwFPntvtZLoyKhT3thJ0PhcefeZyUXIVEEBqeeuhTdAMuMN7obRK3Urf96exlmdFuTb6kfaNU+vxEAo=
+	t=1764776950; cv=none; b=EIc0ajnkLSC8matY4lIGDWZBJ+f2hOJkxyiTOoMOPDVMDZGhXYRqewVztp8I0p8qQWIiyOhHhWMEdO+EkCawg+EWeZBe4YyKpnx7Z1wUd/Rcs26j04I+8aKBgsn8RD7UzH+dd0qx/P4Xp9l/Sw2o7LE48keLe2OLChgSpnV5RK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776948; c=relaxed/simple;
-	bh=3p2N1RHPp6CZjwnMH7VR44c54fqCtjPmLqBoxhgdZPY=;
+	s=arc-20240116; t=1764776950; c=relaxed/simple;
+	bh=aifbKhtlH/mFF2ENeacMc4iJZCmljjGuLwTUJrXLXp0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mrke/K/EEw7wffd0KtUTJ1ca7zde/lKc2EsMf5bB2OdAve8qo7VG2xMgi7hGh9nIAFuhbkuVEyyhyiSt8rMXkUg1pP06oliHDZ6NPfeMnV6em5bmRiaBmehIFBfetJP99XhVhgJn4joKjD71OHTkwhoBlWuh9TK2yXRUacoZEec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hhri77FM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KvYrgtmI4x5dA88ehRHjSJWMKafftS+YgLz6UFZwGv0zNG5XIod0zpDMJbHYMKcRYzSg/+EtdH8xXhPFXJppyck50gdx53YcNg389FJb6XEUdcorOpwC8H9DcCBsz7XCvEN3QNi27oA+8X2PmPbdH8r3/lWaqu+u/hiuOHRLVE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9GqFapZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hhri77FM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA0EC116B1;
-	Wed,  3 Dec 2025 15:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9GqFapZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39FE4C4CEF5;
+	Wed,  3 Dec 2025 15:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776947;
-	bh=3p2N1RHPp6CZjwnMH7VR44c54fqCtjPmLqBoxhgdZPY=;
+	s=korg; t=1764776950;
+	bh=aifbKhtlH/mFF2ENeacMc4iJZCmljjGuLwTUJrXLXp0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hhri77FMnGPNaZrsShl7nS2k8hv4jZwoEltErql7/gEC++FHDKpjkMVgBPsd+bTcQ
-	 ks1fAmogPDldevNuere+ApyNaz14XaUoaLFjj+x6Nx+UC2svpMZVewReP7feqDl//2
-	 O6zWoB4oh7CyXt8aPyc2TYuiaGFGkDAbNXefwjmE=
+	b=R9GqFapZWrCiKPE1g8oTiW2QqAw2b+Nm5v/eY3MLf2OsK32cq5JWVM60jXesahquD
+	 4ytDi/EhPs9RmjpW/fmRW8V5qZ4OXnuh+13E47S3oDsdNeItfwhuvFIywhV5XpnDSd
+	 xUFuVxeK6qYaq9mpQs5QcEdHoxC9jMyWNIXj1IhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Chris Lu <chris.lu@mediatek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 004/146] can: gs_usb: gs_usb_receive_bulk_callback(): check actual_length before accessing data
-Date: Wed,  3 Dec 2025 16:26:22 +0100
-Message-ID: <20251203152346.624609168@linuxfoundation.org>
+Subject: [PATCH 6.17 005/146] Bluetooth: btusb: mediatek: Fix kernel crash when releasing mtk iso interface
+Date: Wed,  3 Dec 2025 16:26:23 +0100
+Message-ID: <20251203152346.661300712@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -50,137 +51,129 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 395d988f93861101ec89d0dd9e3b876ae9392a5b ]
+[ Upstream commit 4015b979767125cf8a2233a145a3b3af78bfd8fb ]
 
-The URB received in gs_usb_receive_bulk_callback() contains a struct
-gs_host_frame. The length of the data after the header depends on the
-gs_host_frame hf::flags and the active device features (e.g. time
-stamping).
+When performing reset tests and encountering abnormal card drop issues
+that lead to a kernel crash, it is necessary to perform a null check
+before releasing resources to avoid attempting to release a null pointer.
 
-Introduce a new function gs_usb_get_minimum_length() and check that we have
-at least received the required amount of data before accessing it. Only
-copy the data to that skb that has actually been received.
+<4>[   29.158070] Hardware name: Google Quigon sku196612/196613 board (DT)
+<4>[   29.158076] Workqueue: hci0 hci_cmd_sync_work [bluetooth]
+<4>[   29.158154] pstate: 20400009 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+<4>[   29.158162] pc : klist_remove+0x90/0x158
+<4>[   29.158174] lr : klist_remove+0x88/0x158
+<4>[   29.158180] sp : ffffffc0846b3c00
+<4>[   29.158185] pmr_save: 000000e0
+<4>[   29.158188] x29: ffffffc0846b3c30 x28: ffffff80cd31f880 x27: ffffff80c1bdc058
+<4>[   29.158199] x26: dead000000000100 x25: ffffffdbdc624ea3 x24: ffffff80c1bdc4c0
+<4>[   29.158209] x23: ffffffdbdc62a3e6 x22: ffffff80c6c07000 x21: ffffffdbdc829290
+<4>[   29.158219] x20: 0000000000000000 x19: ffffff80cd3e0648 x18: 000000031ec97781
+<4>[   29.158229] x17: ffffff80c1bdc4a8 x16: ffffffdc10576548 x15: ffffff80c1180428
+<4>[   29.158238] x14: 0000000000000000 x13: 000000000000e380 x12: 0000000000000018
+<4>[   29.158248] x11: ffffff80c2a7fd10 x10: 0000000000000000 x9 : 0000000100000000
+<4>[   29.158257] x8 : 0000000000000000 x7 : 7f7f7f7f7f7f7f7f x6 : 2d7223ff6364626d
+<4>[   29.158266] x5 : 0000008000000000 x4 : 0000000000000020 x3 : 2e7325006465636e
+<4>[   29.158275] x2 : ffffffdc11afeff8 x1 : 0000000000000000 x0 : ffffffdc11be4d0c
+<4>[   29.158285] Call trace:
+<4>[   29.158290]  klist_remove+0x90/0x158
+<4>[   29.158298]  device_release_driver_internal+0x20c/0x268
+<4>[   29.158308]  device_release_driver+0x1c/0x30
+<4>[   29.158316]  usb_driver_release_interface+0x70/0x88
+<4>[   29.158325]  btusb_mtk_release_iso_intf+0x68/0xd8 [btusb (HASH:e8b6 5)]
+<4>[   29.158347]  btusb_mtk_reset+0x5c/0x480 [btusb (HASH:e8b6 5)]
+<4>[   29.158361]  hci_cmd_sync_work+0x10c/0x188 [bluetooth (HASH:a4fa 6)]
+<4>[   29.158430]  process_scheduled_works+0x258/0x4e8
+<4>[   29.158441]  worker_thread+0x300/0x428
+<4>[   29.158448]  kthread+0x108/0x1d0
+<4>[   29.158455]  ret_from_fork+0x10/0x20
+<0>[   29.158467] Code: 91343000 940139d1 f9400268 927ff914 (f9401297)
+<4>[   29.158474] ---[ end trace 0000000000000000 ]---
+<0>[   29.167129] Kernel panic - not syncing: Oops: Fatal exception
+<2>[   29.167144] SMP: stopping secondary CPUs
+<4>[   29.167158] ------------[ cut here ]------------
 
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-3-a29b42eacada@pengutronix.de
-[mkl: rename gs_usb_get_minimum_length() -> +gs_usb_get_minimum_rx_length()]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: ceac1cb0259d ("Bluetooth: btusb: mediatek: add ISO data transmission functions")
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 59 +++++++++++++++++++++++++++++++++---
- 1 file changed, 54 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btusb.c        | 34 +++++++++++++++++++++++++-------
+ include/net/bluetooth/hci_core.h |  1 -
+ 2 files changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 51f8d694104d9..8d8a610f91441 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -261,6 +261,11 @@ struct canfd_quirk {
- 	u8 quirk;
- } __packed;
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index a722446ec73dd..202a845e0236f 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -2711,9 +2711,16 @@ static int btusb_recv_event_realtek(struct hci_dev *hdev, struct sk_buff *skb)
  
-+/* struct gs_host_frame::echo_id == GS_HOST_FRAME_ECHO_ID_RX indicates
-+ * a regular RX'ed CAN frame
-+ */
-+#define GS_HOST_FRAME_ECHO_ID_RX 0xffffffff
-+
- struct gs_host_frame {
- 	struct_group(header,
- 		u32 echo_id;
-@@ -570,6 +575,37 @@ gs_usb_get_echo_skb(struct gs_can *dev, struct sk_buff *skb,
- 	return len;
- }
- 
-+static unsigned int
-+gs_usb_get_minimum_rx_length(const struct gs_can *dev, const struct gs_host_frame *hf,
-+			     unsigned int *data_length_p)
-+{
-+	unsigned int minimum_length, data_length = 0;
-+
-+	if (hf->flags & GS_CAN_FLAG_FD) {
-+		if (hf->echo_id == GS_HOST_FRAME_ECHO_ID_RX)
-+			data_length = can_fd_dlc2len(hf->can_dlc);
-+
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			/* timestamp follows data field of max size */
-+			minimum_length = struct_size(hf, canfd_ts, 1);
-+		else
-+			minimum_length = sizeof(hf->header) + data_length;
-+	} else {
-+		if (hf->echo_id == GS_HOST_FRAME_ECHO_ID_RX &&
-+		    !(hf->can_id & cpu_to_le32(CAN_RTR_FLAG)))
-+			data_length = can_cc_dlc2len(hf->can_dlc);
-+
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			/* timestamp follows data field of max size */
-+			minimum_length = struct_size(hf, classic_can_ts, 1);
-+		else
-+			minimum_length = sizeof(hf->header) + data_length;
-+	}
-+
-+	*data_length_p = data_length;
-+	return minimum_length;
-+}
-+
- static void gs_usb_receive_bulk_callback(struct urb *urb)
+ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
  {
- 	struct gs_usb *parent = urb->context;
-@@ -578,7 +614,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	int rc;
- 	struct net_device_stats *stats;
- 	struct gs_host_frame *hf = urb->transfer_buffer;
--	unsigned int minimum_length;
-+	unsigned int minimum_length, data_length;
- 	struct gs_tx_context *txc;
- 	struct can_frame *cf;
- 	struct canfd_frame *cfd;
-@@ -621,20 +657,33 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	if (!netif_running(netdev))
- 		goto resubmit_urb;
+-	struct btmtk_data *btmtk_data = hci_get_priv(data->hdev);
++	struct btmtk_data *btmtk_data;
+ 	int err;
  
--	if (hf->echo_id == -1) { /* normal rx */
-+	minimum_length = gs_usb_get_minimum_rx_length(dev, hf, &data_length);
-+	if (urb->actual_length < minimum_length) {
-+		stats->rx_errors++;
-+		stats->rx_length_errors++;
++	if (!data->hdev)
++		return;
 +
-+		if (net_ratelimit())
-+			netdev_err(netdev,
-+				   "short read (actual_length=%u, minimum_length=%u)\n",
-+				   urb->actual_length, minimum_length);
++	btmtk_data = hci_get_priv(data->hdev);
++	if (!btmtk_data)
++		return;
 +
-+		goto resubmit_urb;
-+	}
+ 	/*
+ 	 * The function usb_driver_claim_interface() is documented to need
+ 	 * locks held if it's not called from a probe routine. The code here
+@@ -2735,17 +2742,30 @@ static void btusb_mtk_claim_iso_intf(struct btusb_data *data)
+ 
+ static void btusb_mtk_release_iso_intf(struct hci_dev *hdev)
+ {
+-	struct btmtk_data *btmtk_data = hci_get_priv(hdev);
++	struct btmtk_data *btmtk_data;
 +
-+	if (hf->echo_id == GS_HOST_FRAME_ECHO_ID_RX) { /* normal rx */
- 		if (hf->flags & GS_CAN_FLAG_FD) {
- 			skb = alloc_canfd_skb(netdev, &cfd);
- 			if (!skb)
- 				return;
++	if (!hdev)
++		return;
++
++	btmtk_data = hci_get_priv(hdev);
++	if (!btmtk_data)
++		return;
  
- 			cfd->can_id = le32_to_cpu(hf->can_id);
--			cfd->len = can_fd_dlc2len(hf->can_dlc);
-+			cfd->len = data_length;
- 			if (hf->flags & GS_CAN_FLAG_BRS)
- 				cfd->flags |= CANFD_BRS;
- 			if (hf->flags & GS_CAN_FLAG_ESI)
- 				cfd->flags |= CANFD_ESI;
+ 	if (test_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags)) {
+ 		usb_kill_anchored_urbs(&btmtk_data->isopkt_anchor);
+ 		clear_bit(BTMTK_ISOPKT_RUNNING, &btmtk_data->flags);
  
--			memcpy(cfd->data, hf->canfd->data, cfd->len);
-+			memcpy(cfd->data, hf->canfd->data, data_length);
- 		} else {
- 			skb = alloc_can_skb(netdev, &cf);
- 			if (!skb)
-@@ -643,7 +692,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 			cf->can_id = le32_to_cpu(hf->can_id);
- 			can_frame_set_cc_len(cf, hf->can_dlc, dev->can.ctrlmode);
+-		dev_kfree_skb_irq(btmtk_data->isopkt_skb);
+-		btmtk_data->isopkt_skb = NULL;
+-		usb_set_intfdata(btmtk_data->isopkt_intf, NULL);
+-		usb_driver_release_interface(&btusb_driver,
+-					     btmtk_data->isopkt_intf);
++		if (btmtk_data->isopkt_skb) {
++			dev_kfree_skb_irq(btmtk_data->isopkt_skb);
++			btmtk_data->isopkt_skb = NULL;
++		}
++
++		if (btmtk_data->isopkt_intf) {
++			usb_set_intfdata(btmtk_data->isopkt_intf, NULL);
++			usb_driver_release_interface(&btusb_driver,
++						     btmtk_data->isopkt_intf);
++			btmtk_data->isopkt_intf = NULL;
++		}
+ 	}
  
--			memcpy(cf->data, hf->classic_can->data, 8);
-+			memcpy(cf->data, hf->classic_can->data, data_length);
+ 	clear_bit(BTMTK_ISOPKT_OVER_INTR, &btmtk_data->flags);
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index 8d78cb2b9f1ab..4ccb462a0a4b8 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -748,7 +748,6 @@ struct hci_conn {
  
- 			/* ERROR frames tell us information about the controller */
- 			if (le32_to_cpu(hf->can_id) & CAN_ERR_FLAG)
+ 	__u8		remote_cap;
+ 	__u8		remote_auth;
+-	__u8		remote_id;
+ 
+ 	unsigned int	sent;
+ 
 -- 
 2.51.0
 
