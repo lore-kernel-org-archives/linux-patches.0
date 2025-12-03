@@ -1,36 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47CF358D26;
-	Wed,  3 Dec 2025 16:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313433590B2;
+	Wed,  3 Dec 2025 16:21:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778861; cv=none; b=pAPXAuz4+NC07Jkl9DF7tFF58PMxVnmCBIRorP0fcNOmakTUcCLnK0YBYXM09XPxI/nmkjsillNFUZXooGE8I0ImYEiOVndPyBJs/gHVHzvEitXC13Pb/O1Cnwm02XS+y5j9217QNoDRkvyT941xtup6piWUIoo2SnlynNiP8o0=
+	t=1764778865; cv=none; b=HYtDO4xo7Z27EzgFEVcZMR2RemFDXMpZHmrGpvBE19/PSfUOJa9qRR8RK+iMBC77UchTTm++z1AAYcDD8EGoH0I4ievuU2i+iisrgSNXTxDYxN7DvecJZzj8aVKL+EipOtLMl1fyCIMpQIq/LEf9fSqDQH82ENG0Y2jWJ+cmAH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778861; c=relaxed/simple;
-	bh=fvsmdwy5lTtWlcAe4H+qDQULfKXsQ4FEkSm1MNBkAfU=;
+	s=arc-20240116; t=1764778865; c=relaxed/simple;
+	bh=nRZWo95fAkG4NI9TX/fZYVVAtRMa1t0L5PAyUEOxsbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcl8rkbSb5loN+ifDj75IdeXSjswCTLOPplHzVjDQfsHhuYFPuAZ5oaB6s1i9usddDLVJM750Ei+hyN2c1eDGJeqiQ5RQbbX6cQC2x5bYSAqaMXGyMYtR/YTy/AICwZoVuTc5lzRPYgiI0Gk4GlV3JmRFCA/uB0ZGvXKfj6D0Bs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ElL53Xqv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KIuLHJiFhtnV4/PYIzjPuMBkTI2d6JiKoqnrqmWca5TJMAC+ppuHsrEFOoMUBQqFQtnWGNQnoi1aBLWXRPjLxoPcboM1OgXX8vU2qsRn5S3THlk3ULJC/7jG2fNOTO53m9yMxzZqCw3kQme/gsGu90TEvZUi3SBY2iuu80i9uLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GurQpm2H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ElL53Xqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F86EC4CEF5;
-	Wed,  3 Dec 2025 16:21:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GurQpm2H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 698CEC4CEF5;
+	Wed,  3 Dec 2025 16:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778861;
-	bh=fvsmdwy5lTtWlcAe4H+qDQULfKXsQ4FEkSm1MNBkAfU=;
+	s=korg; t=1764778865;
+	bh=nRZWo95fAkG4NI9TX/fZYVVAtRMa1t0L5PAyUEOxsbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ElL53Xqv7QaeZCw5XvFCI5b+iSZ8o9YEFIbGGwlm/u02kVY4FXF/bN1KWo4ntK7Lr
-	 U3O7PI/lSRkIsoYwQQnK6L96pwICeyvjXqPzx1GE6EMfcm/nciBaZn3KgU0lA5cZ10
-	 p6zKb53CnVWpn78Xbn7TsJjXO/YsFeqizuLDubBc=
+	b=GurQpm2HOnEZdjdKoPEuQV8TIUzY2ch30lkhQIZXc88DuT3C8ABlepVMYB/ZeY5ne
+	 5uRvdugEkHVE6UbH5aNREYnf2nQM+FmFdXHN2zeysAHo+vAR1vDyGHJdfDxZ2wrUjc
+	 fzWsyAxVSLT4xRsw2PVclLu+vpjHj+EeKa8z1Et4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Owen Gu <guhuinan@xiaomi.com>
-Subject: [PATCH 6.1 083/568] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
-Date: Wed,  3 Dec 2025 16:21:25 +0100
-Message-ID: <20251203152443.773565182@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Melissa Wen <melissa.srw@gmail.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	dri-devel@lists.freedesktop.org,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 084/568] drm/sysfb: Do not dereference NULL pointer in plane reset
+Date: Wed,  3 Dec 2025 16:21:26 +0100
+Message-ID: <20251203152443.811067294@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -49,54 +58,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
+[ Upstream commit 14e02ed3876f4ab0ed6d3f41972175f8b8df3d70 ]
 
-A race condition occurs when ffs_func_eps_enable() runs concurrently
-with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
-sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
-to a NULL pointer dereference when accessing epfile->ep in
-ffs_func_eps_enable() after successful usb_ep_enable().
+The plane state in __drm_gem_reset_shadow_plane() can be NULL. Do not
+deref that pointer, but forward NULL to the other plane-reset helpers.
+Clears plane->state to NULL.
 
-The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
-ffs_data_close() functions, and its modification is protected by the
-spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
-is also protected by ffs->eps_lock.
+v2:
+- fix typo in commit description (Javier)
 
-Thus, add NULL pointer handling for ffs->epfiles in the
-ffs_func_eps_enable() function to fix issues
-
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: b71565022031 ("drm/gem: Export implementation of shadow-plane helpers")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/dri-devel/aPIDAsHIUHp_qSW4@stanley.mountain/
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Melissa Wen <melissa.srw@gmail.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Simona Vetter <simona@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v5.15+
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20251017091407.58488-1-tzimmermann@suse.de
+[ removed drm_format_conv_state_init() call ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_gem_atomic_helper.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2005,7 +2005,12 @@ static int ffs_func_eps_enable(struct ff
- 	ep = func->eps;
- 	epfile = ffs->epfiles;
- 	count = ffs->eps_count;
--	while(count--) {
-+	if (!epfile) {
-+		ret = -ENOMEM;
-+		goto done;
+--- a/drivers/gpu/drm/drm_gem_atomic_helper.c
++++ b/drivers/gpu/drm/drm_gem_atomic_helper.c
+@@ -330,7 +330,11 @@ EXPORT_SYMBOL(drm_gem_destroy_shadow_pla
+ void __drm_gem_reset_shadow_plane(struct drm_plane *plane,
+ 				  struct drm_shadow_plane_state *shadow_plane_state)
+ {
+-	__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
++	if (shadow_plane_state) {
++		__drm_atomic_helper_plane_reset(plane, &shadow_plane_state->base);
++	} else {
++		__drm_atomic_helper_plane_reset(plane, NULL);
 +	}
-+
-+	while (count--) {
- 		ep->ep->driver_data = ep;
+ }
+ EXPORT_SYMBOL(__drm_gem_reset_shadow_plane);
  
- 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
-@@ -2029,6 +2034,7 @@ static int ffs_func_eps_enable(struct ff
- 	}
- 
- 	wake_up_interruptible(&ffs->wait);
-+done:
- 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
- 
- 	return ret;
 
 
