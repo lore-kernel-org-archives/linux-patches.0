@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D4B34887C;
-	Wed,  3 Dec 2025 16:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5979E349AE6;
+	Wed,  3 Dec 2025 16:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777637; cv=none; b=hAq0aMlBRH8tw7TAenaXoLsV5fwO4qctD5UoRGh0ncdueomNj+3sVxP0rSbYht4vlGuMvxft++IqpSz3OrN6QL3pRQVR+E2v3LvkvuwC7ed9UKEE6vAywNfC2gVeTRB/03nVS1zc1dWEjyUBxwI4iWkwlxUl0HRmxiotmnBKlAw=
+	t=1764777640; cv=none; b=sKXSx045wOiokERq1pN47ryL7vhIlmaGRZ/FpoU8e88ym8SLQL8CxGRtm1xRoLrJgLMElXjv6aBPB8CNSQ6K2JPiBAmlv/oqjze0btzJlMIb1oTpvu+pme1pX+ptpXga2wN8xiEDNubW+9EAf97JIF8rnSO2mY0xe5n9ZAAb8pM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777637; c=relaxed/simple;
-	bh=gHeQljv4VUMqtC4FK5hknlN7AXer1/6H0R4zWi8VQQY=;
+	s=arc-20240116; t=1764777640; c=relaxed/simple;
+	bh=+gJoTt2Hcep1evxbZUIJ0pTrgAguJkiR1PVFVTivDvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjyGTDpK+9CdWdN1A4qV95ezvvlvPC5xV/wlr34IfWXYOWPUtP3j8y/p8AbtStYROjRhFg8DiBIH8Vxa+ljteP/bvgrlpilTpwnwKN4Xpe3JxAf9VTzSPGkiUV0d+/PNW9T2RJ9G7mk4gCEHT36o8qQ+Up4mbzNNSYGyVtNPDSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhouETtI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UkAmJVHHi2LN4ewYlJwSI6PvrVvNmqJu6o0h9scj3ZxN1GSyCNJr+6fEbXUsUMRHZ7o4jdHCjLkbtvMapIUV8+ZXiYKoz0shr32Qcya2WSoyjQhCO4dm4a8qWg+HtlbT3Xho7NRbq8Cyg1D86x+wDVAtFXORl9UPtndPcYJC+Z0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PetBWdSh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhouETtI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6820C4CEF5;
-	Wed,  3 Dec 2025 16:00:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PetBWdSh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02F2C4CEF5;
+	Wed,  3 Dec 2025 16:00:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777637;
-	bh=gHeQljv4VUMqtC4FK5hknlN7AXer1/6H0R4zWi8VQQY=;
+	s=korg; t=1764777640;
+	bh=+gJoTt2Hcep1evxbZUIJ0pTrgAguJkiR1PVFVTivDvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhouETtItW0Cmh8hS3sdArkUHqodUVdP6K8k6pJpGFEO1GBvcbDd3K3qhkzo8KMNc
-	 A4LWSNOH3hZ+Yx2IV+XUKL4RRSFgaM5kRnnnnS17bve3OHcOxKEmRZ4u6pXpT+M4Rx
-	 mjCg+HaIMag0QxX2pLLUAhgChDoLm9mznFReKvuk=
+	b=PetBWdShu3yfWIfngGkC8zJ2uzRox01x0BzYzX0z3agO6n+E6Yi8k7T5PmgjkSU7+
+	 0xgMb+gZueEmyPD1uB2ETFHvFttLfSsQGjBdjSPaXCzITY0OF6mCZ/q/AOERbtnw80
+	 J/wMD8eD10t6uJ7wYYK7Rxq0n2XgMUBk182hMx+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Shang song (Lenovo)" <shangsong2@foxmail.com>,
+	Hans de Goede <hansg@kernel.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/392] ACPI: PRM: Skip handlers with NULL handler_address or NULL VA
-Date: Wed,  3 Dec 2025 16:23:36 +0100
-Message-ID: <20251203152416.539049391@linuxfoundation.org>
+Subject: [PATCH 5.15 067/392] ACPI: scan: Add Intel CVS ACPI HIDs to acpi_ignore_dep_ids[]
+Date: Wed,  3 Dec 2025 16:23:37 +0100
+Message-ID: <20251203152416.575716976@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,59 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shang song (Lenovo) <shangsong2@foxmail.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 311942ce763e21dacef7e53996d5a1e19b8adab1 ]
+[ Upstream commit 4405a214df146775338a1e6232701a29024b82e1 ]
 
-If handler_address or mapped VA is NULL, the related buffer address and
-VA can be ignored, so make acpi_parse_prmt() skip the current handler
-in those cases.
+Some x86/ACPI laptops with MIPI cameras have a INTC10DE or INTC10E0 ACPI
+device in the _DEP dependency list of the ACPI devices for the camera-
+sensors (which have flags.honor_deps set).
 
-Signed-off-by: Shang song (Lenovo) <shangsong2@foxmail.com>
-Link: https://patch.msgid.link/20250826030229.834901-1-shangsong2@foxmail.com
-[ rjw: Subject and changelog edits ]
+These devices are for an Intel Vision CVS chip for which an out of tree
+driver is available [1].
+
+The camera sensor works fine without a driver being loaded for this
+ACPI device on the 2 laptops this was tested on:
+
+ThinkPad X1 Carbon Gen 12 (Meteor Lake)
+ThinkPad X1 2-in-1 Gen 10 (Arrow Lake)
+
+For now add these HIDs to acpi_ignore_dep_ids[] so that
+acpi_dev_ready_for_enumeration() will return true once the other _DEP
+dependencies are met and an i2c_client for the camera sensor will get
+instantiated.
+
+Link: https://github.com/intel/vision-drivers/ [1]
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20250829142748.21089-1-hansg@kernel.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/prmt.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/acpi/scan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/acpi/prmt.c b/drivers/acpi/prmt.c
-index 6290ed84c5950..04228582a1f56 100644
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -138,15 +138,28 @@ acpi_parse_prmt(union acpi_subtable_headers *header, const unsigned long end)
- 		th = &tm->handlers[cur_handler];
- 
- 		guid_copy(&th->guid, (guid_t *)handler_info->handler_guid);
-+
-+		/*
-+		 * Print an error message if handler_address is NULL, the parse of VA also
-+		 * can be skipped.
-+		 */
-+		if (unlikely(!handler_info->handler_address)) {
-+			pr_info("Skipping handler with NULL address for GUID: %pUL",
-+					(guid_t *)handler_info->handler_guid);
-+			continue;
-+		}
-+
- 		th->handler_addr =
- 			(void *)efi_pa_va_lookup(&th->guid, handler_info->handler_address);
- 		/*
--		 * Print a warning message if handler_addr is zero which is not expected to
--		 * ever happen.
-+		 * Print a warning message and skip the parse of VA if handler_addr is zero
-+		 * which is not expected to ever happen.
- 		 */
--		if (unlikely(!th->handler_addr))
-+		if (unlikely(!th->handler_addr)) {
- 			pr_warn("Failed to find VA of handler for GUID: %pUL, PA: 0x%llx",
- 				&th->guid, handler_info->handler_address);
-+			continue;
-+		}
- 
- 		th->static_data_buffer_addr =
- 			efi_pa_va_lookup(&th->guid, handler_info->static_data_buffer_address);
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 2393cd993b3cb..151c57c7bb3a4 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -789,6 +789,8 @@ static bool acpi_info_matches_ids(struct acpi_device_info *info,
+ static const char * const acpi_ignore_dep_ids[] = {
+ 	"PNP0D80", /* Windows-compatible System Power Management Controller */
+ 	"INT33BD", /* Intel Baytrail Mailbox Device */
++	"INTC10DE", /* Intel CVS LNL */
++	"INTC10E0", /* Intel CVS ARL */
+ 	"LATT2021", /* Lattice FW Update Client Driver */
+ 	NULL
+ };
 -- 
 2.51.0
 
