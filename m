@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7EE434E74B;
-	Wed,  3 Dec 2025 16:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D24834E769;
+	Wed,  3 Dec 2025 16:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777865; cv=none; b=PyrNmjbjqmhd8P8JPTzx5Mu8VzKSIxO5yGVVOJaBkgaTwFn9VfHjRtWK96Q6DeNsRXN0ETryEbNNVliyIQ62hBSwCKRrI+R4bEw8/ktqaPE6wEkOEc3BkfP+LuSPGCU2J5nAat+3elqeMlPeaAl6OsM3dMAYKcKhYB6ItRz98kk=
+	t=1764777869; cv=none; b=m1/TSH74RUOJZjGVsHI9leUsrjmKChRZa53nL8At2WMkLCXWmzZ9y5MeFlYekM3rVOlvOdf0WFrvKxWfig9nPy4yUXNUNPV++vhi+UZvjJiNlJwmLH2knaQUSAWmGg7vARHHy1mnKkj3CY6sfWB+wxW7x4HCnNXzftHJpjzDy3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777865; c=relaxed/simple;
-	bh=Ztg4Dth53FC7NT0bZIqWM2a2OdXW7X1nm3+eydv48XY=;
+	s=arc-20240116; t=1764777869; c=relaxed/simple;
+	bh=L+LyCavVTfDRMhMG2qmn85b1vJT/qA6g/ggPOEjBTo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5hKR5fVLvgafyF82+Daa1lO0of+mdkU1yeNvOD7ZhJJe/iCtyxtmp308fCFjFFjvm1xBaOWSnhXxV9vckSLjetoPfNSghO429ohRb/6InHq5ThkO827TxXIr0wGyBpytbHDawSizWsUuLkCZl8lwm+gvpmRyTvPtpONJw29yrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q5Tojhsl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pjDpTBVqIj3HaSS7c/5D5Xb+joE8mnxDJxSuJjXurIKRp6KZyvqCIqezpul1kKDUvEwY03IMl0oE+mjuoFM4QBEJ5VRqMMchsK6Zvsfrybp67UlrT5iYmcpkvu/y2INpSnoYnW3veYCF8YM6NyQmpkftKcbBsZ5botC82n/8ziE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EuLTO8hU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q5Tojhsl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA42C4CEF5;
-	Wed,  3 Dec 2025 16:04:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EuLTO8hU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC16C4CEF5;
+	Wed,  3 Dec 2025 16:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777865;
-	bh=Ztg4Dth53FC7NT0bZIqWM2a2OdXW7X1nm3+eydv48XY=;
+	s=korg; t=1764777869;
+	bh=L+LyCavVTfDRMhMG2qmn85b1vJT/qA6g/ggPOEjBTo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5TojhsllD7bPMbEVX149dhcWZkEsGEklVZUL2XY1giNadAT5nLFkf0416IDEBp8s
-	 IBYNDuyY7Q7NMdcXLYWBks8T9mjIsJ0CjpowTwUuSfdodrh3U1BioY9iN3Jt8S2GoG
-	 PEwlwMTe/e1oXMiiUtGyiFzg5Iy+5OIxH6AWQWAc=
+	b=EuLTO8hU5ECzE6kg1o3b4rYWeejiCrw00Wxr3XwCbf7V8Z6CYxB0c2ATaplk74JWV
+	 Qk6pcdzT4bw7NoYOwLeMO0mijDxXl55Ii2Ke7FGeUrh6/61vUBA73YNz/ltZCdFuuT
+	 l9uookhrKPINRVyauqX9tuQFE4GyplHZFLjLG6s4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Yufeng <chenyufeng@iie.ac.cn>,
+	Antonino Maniscalco <antomani103@gmail.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/392] usb: cdns3: gadget: Use-after-free during failed initialization and exit of cdnsp gadget
-Date: Wed,  3 Dec 2025 16:24:48 +0100
-Message-ID: <20251203152419.166924484@linuxfoundation.org>
+Subject: [PATCH 5.15 139/392] drm/msm: make sure to not queue up recovery more than once
+Date: Wed,  3 Dec 2025 16:24:49 +0100
+Message-ID: <20251203152419.204096005@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,59 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Yufeng <chenyufeng@iie.ac.cn>
+From: Antonino Maniscalco <antomani103@gmail.com>
 
-[ Upstream commit 87c5ff5615dc0a37167e8faf3adeeddc6f1344a3 ]
+[ Upstream commit 10fb1b2fcaee5545a5e54db1ed4d7b15c2db50c8 ]
 
-In the __cdnsp_gadget_init() and cdnsp_gadget_exit() functions, the gadget
-structure (pdev->gadget) was freed before its endpoints.
-The endpoints are linked via the ep_list in the gadget structure.
-Freeing the gadget first leaves dangling pointers in the endpoint list.
-When the endpoints are subsequently freed, this results in a use-after-free.
+If two fault IRQs arrive in short succession recovery work will be
+queued up twice.
 
-Fix:
-By separating the usb_del_gadget_udc() operation into distinct "del" and
-"put" steps, cdnsp_gadget_free_endpoints() can be executed prior to the
-final release of the gadget structure with usb_put_gadget().
+When recovery runs a second time it may end up killing an unrelated
+context.
 
-A patch similar to bb9c74a5bd14("usb: dwc3: gadget: Free gadget structure
- only after freeing endpoints").
+Prevent this by masking off interrupts when triggering recovery.
 
-Signed-off-by: Chen Yufeng <chenyufeng@iie.ac.cn>
-Link: https://lore.kernel.org/r/20250905094842.1232-1-chenyufeng@iie.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Antonino Maniscalco <antomani103@gmail.com>
+Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/670023/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdnsp-gadget.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/cdns3/cdnsp-gadget.c b/drivers/usb/cdns3/cdnsp-gadget.c
-index 1de82fb9dcb48..6bd9a2ebf687d 100644
---- a/drivers/usb/cdns3/cdnsp-gadget.c
-+++ b/drivers/usb/cdns3/cdnsp-gadget.c
-@@ -1978,7 +1978,10 @@ static int __cdnsp_gadget_init(struct cdns *cdns)
- 	return 0;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 1c38c3acacbeb..95c31009bbec1 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1386,6 +1386,9 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
+ 	/* Turn off the hangcheck timer to keep it from bothering us */
+ 	del_timer(&gpu->hangcheck_timer);
  
- del_gadget:
--	usb_del_gadget_udc(&pdev->gadget);
-+	usb_del_gadget(&pdev->gadget);
-+	cdnsp_gadget_free_endpoints(pdev);
-+	usb_put_gadget(&pdev->gadget);
-+	goto halt_pdev;
- free_endpoints:
- 	cdnsp_gadget_free_endpoints(pdev);
- halt_pdev:
-@@ -2000,8 +2003,9 @@ static void cdnsp_gadget_exit(struct cdns *cdns)
- 	devm_free_irq(pdev->dev, cdns->dev_irq, pdev);
- 	pm_runtime_mark_last_busy(cdns->dev);
- 	pm_runtime_put_autosuspend(cdns->dev);
--	usb_del_gadget_udc(&pdev->gadget);
-+	usb_del_gadget(&pdev->gadget);
- 	cdnsp_gadget_free_endpoints(pdev);
-+	usb_put_gadget(&pdev->gadget);
- 	cdnsp_mem_cleanup(pdev);
- 	kfree(pdev);
- 	cdns->gadget_dev = NULL;
++	/* Turn off interrupts to avoid triggering recovery again */
++	gpu_write(gpu, REG_A6XX_RBBM_INT_0_MASK, 0);
++
+ 	kthread_queue_work(gpu->worker, &gpu->recover_work);
+ }
+ 
 -- 
 2.51.0
 
