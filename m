@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3335631ED8D;
-	Wed,  3 Dec 2025 15:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D3A33BBAC;
+	Wed,  3 Dec 2025 15:54:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777248; cv=none; b=ai+WEFI8Mmsbm3rbyNT89RPla0rPK7pWEMqh4JXRn0OtfBtGmuVqDTLqVAyA/FROTPJu6/t4o2oy4E9Cw5JevFFiDuY7upkIpqcTyyq8r5kI45KS58qUyudJ0wObLBDrqY1vofGyfcxVHhkT2+9STbHBHSIYDQCPMSYXAQHuGN8=
+	t=1764777251; cv=none; b=RwXVOtksSHRaoriwl/0FPJMbrXAw8eJMeLWGIge2VQmbZ6CoWnRtBIz+T5qHytnXkUiTH03PauidT70VrezKaovY3gLtfpDva2I7N1C9lLXnP+WkUI89fFhxnjhIhV0RAN7DHHsMgYOVOM62d9HVSBTHUCXIYrq3tjeFkoBLikk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777248; c=relaxed/simple;
-	bh=dfPx3cIQEFqlR4iRW5NvppB6Ff2CWkYi9kBXcWgz1Hk=;
+	s=arc-20240116; t=1764777251; c=relaxed/simple;
+	bh=2hMT/s2jhoI+nrwaNEsWkGGcfcKekTlnWrorsunJx7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Z8Z/G3YdQasUTe2K2kjce3TTr6nBZblpmHPcpPLAkOy/pjpONWJ5EwDlXwIvwMvExCNXEn/E21oW1kFoh7RWvsAKGuPKBq2+AzL/MJBuKCR4iHySl7/K+Knj38zeUq0dZRI3oxjkhwezsnrLffyNL56NUKarTGcKq/dtVw2e3Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVbXQa9N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrauYFBCNLV8hUDx6iJYkaszz/K+BJRC5GKkB/6rAUjVSCVE5zzMXm9nN18LQSRL68e5ohKv71gEpk0Vv4b3EKDM9MOt/8q6bsrYdCs1zwct3qJUNcEWZxGxOqOvfLJ79EB1eqiKHF6FgMngEheHUJzKcB0n9LfwVuKPdnxga8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hd8pyGnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVbXQa9N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A23C2BCB9;
-	Wed,  3 Dec 2025 15:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hd8pyGnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C081EC116B1;
+	Wed,  3 Dec 2025 15:54:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777247;
-	bh=dfPx3cIQEFqlR4iRW5NvppB6Ff2CWkYi9kBXcWgz1Hk=;
+	s=korg; t=1764777251;
+	bh=2hMT/s2jhoI+nrwaNEsWkGGcfcKekTlnWrorsunJx7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVbXQa9NpIT0ev1DG1+DaKeb2epNyWR5L50YFXn0fhDOtfW1TyIRgG3SxMmkkbuve
-	 QVdP59xCd5pzwoE8r6nTbpoRjnpr9rLHXuTNnfT5HEDKKjhHoPD9cQTsyI/rxKkBFY
-	 W8rkDwd78Z+K/QO+zeDY6b67byyBB3QpwqUu/mpo=
+	b=Hd8pyGnr4JNHkTu/sqzh64M5gFMX1Q5Y6KqmY86SPyVJB9e1OTdyPQ+NliKw4G82U
+	 n6EXCXpL6LhVvN40t5/BgxMmFc2LbHXwxUBh+CXOlPVhCbTWYNBtGx2LGkbsQxECpk
+	 WzBZjhTGhdw5rqE0dZmqVkGqZVbPBuGDIduSFvRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.17 127/146] drm/i915/psr: Reject async flips when selective fetch is enabled
-Date: Wed,  3 Dec 2025 16:28:25 +0100
-Message-ID: <20251203152351.108995964@linuxfoundation.org>
+	Sagar Ghuge <sagar.ghuge@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>
+Subject: [PATCH 6.17 128/146] drm/xe/guc: Fix stack_depot usage
+Date: Wed,  3 Dec 2025 16:28:26 +0100
+Message-ID: <20251203152351.145133093@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -45,73 +45,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-commit 7c373b3bd03c77fe8f6ea206ed49375eb4d43d13 upstream.
+commit 0e234632e39bd21dd28ffc9ba3ae8eec4deb949c upstream.
 
-The selective fetch code doesn't handle asycn flips correctly.
-There is a nonsense check for async flips in
-intel_psr2_sel_fetch_config_valid() but that only gets called
-for modesets/fastsets and thus does nothing for async flips.
+Add missing stack_depot_init() call when CONFIG_DRM_XE_DEBUG_GUC is
+enabled to fix the following call stack:
 
-Currently intel_async_flip_check_hw() is very unhappy as the
-selective fetch code pulls in planes that are not even async
-flips capable.
+	[] BUG: kernel NULL pointer dereference, address: 0000000000000000
+	[] Workqueue:  drm_sched_run_job_work [gpu_sched]
+	[] RIP: 0010:stack_depot_save_flags+0x172/0x870
+	[] Call Trace:
+	[]  <TASK>
+	[]  fast_req_track+0x58/0xb0 [xe]
 
-Reject async flips when selective fetch is enabled, until
-someone fixes this properly (ie. disable selective fetch while
-async flips are being issued).
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20251105171015.22234-1-ville.syrjala@linux.intel.com
-Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
-(cherry picked from commit a5f0cc8e0cd4007370af6985cb152001310cf20c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 16b7e65d299d ("drm/xe/guc: Track FAST_REQ H2Gs to report where errors came from")
+Tested-by: Sagar Ghuge <sagar.ghuge@intel.com>
+Cc: stable@vger.kernel.org # v6.17+
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Link: https://patch.msgid.link/20251118-fix-debug-guc-v1-1-9f780c6bedf8@intel.com
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+(cherry picked from commit 64fdf496a6929a0a194387d2bb5efaf5da2b542f)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c |    8 ++++++++
- drivers/gpu/drm/i915/display/intel_psr.c     |    6 ------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/xe/xe_guc_ct.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -5958,6 +5958,14 @@ static int intel_async_flip_check_uapi(s
- 		return -EINVAL;
- 	}
- 
-+	/* FIXME: selective fetch should be disabled for async flips */
-+	if (new_crtc_state->enable_psr2_sel_fetch) {
-+		drm_dbg_kms(display->drm,
-+			    "[CRTC:%d:%s] async flip disallowed with PSR2 selective fetch\n",
-+			    crtc->base.base.id, crtc->base.name);
-+		return -EINVAL;
-+	}
-+
- 	for_each_oldnew_intel_plane_in_state(state, plane, old_plane_state,
- 					     new_plane_state, i) {
- 		if (plane->pipe != crtc->pipe)
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1274,12 +1274,6 @@ static bool intel_psr2_sel_fetch_config_
- 		return false;
- 	}
- 
--	if (crtc_state->uapi.async_flip) {
--		drm_dbg_kms(display->drm,
--			    "PSR2 sel fetch not enabled, async flip enabled\n");
--		return false;
--	}
--
- 	return crtc_state->enable_psr2_sel_fetch = true;
- }
- 
+--- a/drivers/gpu/drm/xe/xe_guc_ct.c
++++ b/drivers/gpu/drm/xe/xe_guc_ct.c
+@@ -237,6 +237,9 @@ int xe_guc_ct_init_noalloc(struct xe_guc
+ #if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
+ 	spin_lock_init(&ct->dead.lock);
+ 	INIT_WORK(&ct->dead.worker, ct_dead_worker_func);
++#if IS_ENABLED(CONFIG_DRM_XE_DEBUG_GUC)
++	stack_depot_init();
++#endif
+ #endif
+ 	init_waitqueue_head(&ct->wq);
+ 	init_waitqueue_head(&ct->g2h_fence_wq);
 
 
