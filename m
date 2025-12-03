@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A3830EF9E;
-	Wed,  3 Dec 2025 15:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A29230E0D9;
+	Wed,  3 Dec 2025 15:33:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776022; cv=none; b=W3ACZwv0bUCliJAYQhJorr1vmK/ecRC/5sqcAMNT+IB061zfG8aQZMr+5hYvnaJuCKADI0XUKYesGyB4AkgWM7SI2ayPY0ODvN3Mr+fmPHjrEMQipoCpiFt47dbRGuLJb1rzziDWl4o7Xk88teQ12syUIzeVBtEBAN0lm4/C7wI=
+	t=1764776026; cv=none; b=q6R9lnPC18Q5tH25cCFk2i2FqL3Bg+T7hkojtuqLMSXFYd096w8FI1d+M0c+WHMliSnSM1NCYK7iGFeWQQg+quSbZLTANz97UHTosW/GiyzfaD4yUyHzecfk+Vi05M4RBVmhTBCo29yeRXCp3au/75R2mvfy/J3/OrG0v/gKlNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776022; c=relaxed/simple;
-	bh=D5TZ6Wy5OCwoERLL3Pa+GCKsgWabZNGNH5USnqVLGqE=;
+	s=arc-20240116; t=1764776026; c=relaxed/simple;
+	bh=ETPR2+TWUNGvGO0TGWGFzx4cAKi8o6PGyMvx1dixo6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uaglxeIx6a8hpbdkyG/314RlxNQRk/CfDXFmxQ4VtwBkluVcTEcMf0da7ALN1dNlde+zls+I2mfWDxif6sAnZQrWlrvBaw7ZIeIOqdvciv/pEZBi/LB2k3TG3Wa0lHnfa4mG5lex0z6vtbDbHxSCeZ1d/NDim4DyRo4dl8U05R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdgGe0Zg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nyYaHn/mTxJDZB3JC2zyGS0GVDvbnINZQtc2iCIM0TgU4x+/Mo0eEQ7HPx3xCD1UwCSUlXrgopE/pLZDM5XFTUyuyS7GLHBsoYQfScczS/Q3wleH7L2/9B/cxEsHicPul2qA3oVFULEi3mo30uKjlrYOdTqMQiXbfg5Uf/R7q0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Og1w8KDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdgGe0Zg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA41DC4CEF5;
-	Wed,  3 Dec 2025 15:33:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Og1w8KDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F8DC4CEF5;
+	Wed,  3 Dec 2025 15:33:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776022;
-	bh=D5TZ6Wy5OCwoERLL3Pa+GCKsgWabZNGNH5USnqVLGqE=;
+	s=korg; t=1764776026;
+	bh=ETPR2+TWUNGvGO0TGWGFzx4cAKi8o6PGyMvx1dixo6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdgGe0ZgyCn5kWnhIoVoMhAjyy+kLYFFezZMAkdsnkFf8mUowllCeesCEyAlDszyg
-	 gRxF1jSTdSQFI72zM+42L6k+JYTB8YBtL/NuiaEu1DHXCmksdz5plytOnuWrkAQut7
-	 KuzMiEZ4sGT/c5J2y/mlFfyBnpYEYUmQT8SVh6mw=
+	b=Og1w8KDbiduVuCy/0J1VUs1UNY4+awnN9XyfimIqVP1trWpoUxKJI43ZwmEGjn1rB
+	 e2tX05PpAeNcDXBHKuyyu59EEHOg9YM86WmfHNKoEEzmfTcv86jibznPS4Po+auCWJ
+	 jSvBHnafOY8xthXP9DCt36K5rWHItrzeByUm/BOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/300] cpuidle: Fail cpuidle device registration if there is one already
-Date: Wed,  3 Dec 2025 16:24:20 +0100
-Message-ID: <20251203152402.697809966@linuxfoundation.org>
+Subject: [PATCH 5.10 057/300] clocksource/drivers/vf-pit: Replace raw_readl/writel to readl/writel
+Date: Wed,  3 Dec 2025 16:24:21 +0100
+Message-ID: <20251203152402.734104953@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,51 +51,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-[ Upstream commit 7b1b7961170e4fcad488755e5ffaaaf9bd527e8f ]
+[ Upstream commit 0b781f527d6f99e68e5b3780ae03cd69a7cb5c0c ]
 
-Refuse to register a cpuidle device if the given CPU has a cpuidle
-device already and print a message regarding it.
+The driver uses the raw_readl() and raw_writel() functions. Those are
+not for MMIO devices. Replace them with readl() and writel()
 
-Without this, an attempt to register a new cpuidle device without
-unregistering the existing one leads to the removal of the existing
-cpuidle device without removing its sysfs interface.
+[ dlezcano: Fixed typo in the subject s/reald/readl/ ]
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Acked-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20250804152344.1109310-2-daniel.lezcano@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/cpuidle.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/clocksource/timer-vf-pit.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
-index 83af15f77f66f..1c1fa6ac9244a 100644
---- a/drivers/cpuidle/cpuidle.c
-+++ b/drivers/cpuidle/cpuidle.c
-@@ -576,8 +576,14 @@ static void __cpuidle_device_init(struct cpuidle_device *dev)
- static int __cpuidle_register_device(struct cpuidle_device *dev)
+diff --git a/drivers/clocksource/timer-vf-pit.c b/drivers/clocksource/timer-vf-pit.c
+index 1a86a4e7e3443..d948ab2720a76 100644
+--- a/drivers/clocksource/timer-vf-pit.c
++++ b/drivers/clocksource/timer-vf-pit.c
+@@ -35,30 +35,30 @@ static unsigned long cycle_per_jiffy;
+ 
+ static inline void pit_timer_enable(void)
  {
- 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
-+	unsigned int cpu = dev->cpu;
- 	int i, ret;
+-	__raw_writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
++	writel(PITTCTRL_TEN | PITTCTRL_TIE, clkevt_base + PITTCTRL);
+ }
  
-+	if (per_cpu(cpuidle_devices, cpu)) {
-+		pr_info("CPU%d: cpuidle device already registered\n", cpu);
-+		return -EEXIST;
-+	}
-+
- 	if (!try_module_get(drv->owner))
- 		return -EINVAL;
+ static inline void pit_timer_disable(void)
+ {
+-	__raw_writel(0, clkevt_base + PITTCTRL);
++	writel(0, clkevt_base + PITTCTRL);
+ }
  
-@@ -589,7 +595,7 @@ static int __cpuidle_register_device(struct cpuidle_device *dev)
- 			dev->states_usage[i].disable |= CPUIDLE_STATE_DISABLED_BY_USER;
- 	}
+ static inline void pit_irq_acknowledge(void)
+ {
+-	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
++	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
+ }
  
--	per_cpu(cpuidle_devices, dev->cpu) = dev;
-+	per_cpu(cpuidle_devices, cpu) = dev;
- 	list_add(&dev->device_list, &cpuidle_detected_devices);
+ static u64 notrace pit_read_sched_clock(void)
+ {
+-	return ~__raw_readl(clksrc_base + PITCVAL);
++	return ~readl(clksrc_base + PITCVAL);
+ }
  
- 	ret = cpuidle_coupled_register_device(dev);
+ static int __init pit_clocksource_init(unsigned long rate)
+ {
+ 	/* set the max load value and start the clock source counter */
+-	__raw_writel(0, clksrc_base + PITTCTRL);
+-	__raw_writel(~0UL, clksrc_base + PITLDVAL);
+-	__raw_writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
++	writel(0, clksrc_base + PITTCTRL);
++	writel(~0UL, clksrc_base + PITLDVAL);
++	writel(PITTCTRL_TEN, clksrc_base + PITTCTRL);
+ 
+ 	sched_clock_register(pit_read_sched_clock, 32, rate);
+ 	return clocksource_mmio_init(clksrc_base + PITCVAL, "vf-pit", rate,
+@@ -76,7 +76,7 @@ static int pit_set_next_event(unsigned long delta,
+ 	 * hardware requirement.
+ 	 */
+ 	pit_timer_disable();
+-	__raw_writel(delta - 1, clkevt_base + PITLDVAL);
++	writel(delta - 1, clkevt_base + PITLDVAL);
+ 	pit_timer_enable();
+ 
+ 	return 0;
+@@ -125,8 +125,8 @@ static struct clock_event_device clockevent_pit = {
+ 
+ static int __init pit_clockevent_init(unsigned long rate, int irq)
+ {
+-	__raw_writel(0, clkevt_base + PITTCTRL);
+-	__raw_writel(PITTFLG_TIF, clkevt_base + PITTFLG);
++	writel(0, clkevt_base + PITTCTRL);
++	writel(PITTFLG_TIF, clkevt_base + PITTFLG);
+ 
+ 	BUG_ON(request_irq(irq, pit_timer_interrupt, IRQF_TIMER | IRQF_IRQPOLL,
+ 			   "VF pit timer", &clockevent_pit));
+@@ -183,7 +183,7 @@ static int __init pit_timer_init(struct device_node *np)
+ 	cycle_per_jiffy = clk_rate / (HZ);
+ 
+ 	/* enable the pit module */
+-	__raw_writel(~PITMCR_MDIS, timer_base + PITMCR);
++	writel(~PITMCR_MDIS, timer_base + PITMCR);
+ 
+ 	ret = pit_clocksource_init(clk_rate);
+ 	if (ret)
 -- 
 2.51.0
 
