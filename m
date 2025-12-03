@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771DB313E3D;
-	Wed,  3 Dec 2025 15:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC458305067;
+	Wed,  3 Dec 2025 15:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776889; cv=none; b=XI66Muy6ggJTOvxws1kKUfjM0fgBio52z6dro62VmLCrTWRD3Rhq8Y2KplM7+vTibq1PCP88SQtmp001bUEJsgDdZrOLxSj4PakpQXWxfGvVLW3xmJajv1QVTh4jvsCkHjl/ZOxaDY1aE+bX3pf5wGCrpODqvtDoLogDELP65KE=
+	t=1764776892; cv=none; b=axE4wieMp0ymEvjaPkM8fLOwyoBqzeMnFef5myFKcNVQ18cCjRqhHfET5PqbKGrSr5/4f3guapaAVLiBSrSBBoSSJvJC+pLspzD6xKzhMjqwd0JLibWNyo6VabMlb0HjLJUqodgW5cfjltGvA9StkDr0Ec+STW11wUc8HrcxkI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776889; c=relaxed/simple;
-	bh=B3I9WBX8zsyLjxiqaDfLZYsNyB0eOpSI0el16vrcW3I=;
+	s=arc-20240116; t=1764776892; c=relaxed/simple;
+	bh=Fxa8b6rNORJVHDLLRA7frv1Ew4YnFghOf8RO0qa05VI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O6D7dTN1vFki0/dsWd+OI3sGn/4UZLagDaTzpccfLVfOb+bKmvqtshrqm0EoomeOqLo48NaUgSpeONpeR1yjHDV/y9bpa8EU8jOFpAb8KlF6GnUjr4Uh01n9H/PWotCdDYp5Qn0tIyHTKEJ06VRKmvEy5Vx+d1gE/dc3r1DaOvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgE0hEqC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MBG8YD2wLWM6IdUDGhxh+wcUOXujSWMv9k0a7phCgKX+OfKyblaDgenMQamG3j8m21w79A+aJPqg9gmsR7mIk8DpdHAanWIf3vQDc1BoNazK0E4qI/ckR9F+S+MusfMJjHteGZannrAYDm9HteU9deXKfJwn8gdwzZ0+mv5+97E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0piUJyIE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgE0hEqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D942EC4CEF5;
-	Wed,  3 Dec 2025 15:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0piUJyIE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABF2C4CEF5;
+	Wed,  3 Dec 2025 15:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776889;
-	bh=B3I9WBX8zsyLjxiqaDfLZYsNyB0eOpSI0el16vrcW3I=;
+	s=korg; t=1764776892;
+	bh=Fxa8b6rNORJVHDLLRA7frv1Ew4YnFghOf8RO0qa05VI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FgE0hEqCevq8Oj2s+iUyw7zkzt8zAAAZl7uy8kngOtSL+fSQF6Dho2IPbE/p0ODxX
-	 2zolR8rwncRv3k+UmXtG7y/KdRO1nE+VowXaS/9sq6ywZeW5VI2Xy3VuhR67vPJJye
-	 wRRtMjGDtTGo6QIgmAdRsBTXm10jX9XpBWlevNBo=
+	b=0piUJyIEG4rRS4rPRIYM5oiZarDA7/yAMYpS0vUlMIBo7G0MX8l/Fllb6/belnHTY
+	 S5vKycta21eRiMfBuLJTdWCJto8KCSY96WD4Su7lA7rH1t/tzzqYsbeFtK4dkXVl7v
+	 d0RT3Q61wzs2pC5G8K29KxPSTAIEVUgX9Lg+WuSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Costantino <dcostantino@meta.com>,
-	Gal Pressman <gal@nvidia.com>,
+	syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 018/146] net/mlx5e: Fix validation logic in rate limiting
-Date: Wed,  3 Dec 2025 16:26:36 +0100
-Message-ID: <20251203152347.135940631@linuxfoundation.org>
+Subject: [PATCH 6.17 019/146] team: Move team device type change at the end of team_port_add
+Date: Wed,  3 Dec 2025 16:26:37 +0100
+Message-ID: <20251203152347.171981200@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,61 +53,116 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Costantino <dcostantino@meta.com>
+From: Nikola Z. Ivanov <zlatistiv@gmail.com>
 
-[ Upstream commit d2099d9f16dbfa1c5266d4230ff7860047bb0b68 ]
+[ Upstream commit 0ae9cfc454ea5ead5f3ddbdfe2e70270d8e2c8ef ]
 
-The rate limiting validation condition currently checks the output
-variable max_bw_value[i] instead of the input value
-maxrate->tc_maxrate[i]. This causes the validation to compare an
-uninitialized or stale value rather than the actual requested rate.
+Attempting to add a port device that is already up will expectedly fail,
+but not before modifying the team device header_ops.
 
-The condition should check the input rate to properly validate against
-the upper limit:
+In the case of the syzbot reproducer the gre0 device is
+already in state UP when it attempts to add it as a
+port device of team0, this fails but before that
+header_ops->create of team0 is changed from eth_header to ipgre_header
+in the call to team_dev_type_check_change.
 
-    } else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
+Later when we end up in ipgre_header() struct ip_tunnel* points to nonsense
+as the private data of the device still holds a struct team.
 
-This aligns with the pattern used in the first branch, which correctly
-checks maxrate->tc_maxrate[i] against upper_limit_mbps.
+Example sequence of iproute2 commands to reproduce the hang/BUG():
+ip link add dev team0 type team
+ip link add dev gre0 type gre
+ip link set dev gre0 up
+ip link set dev gre0 master team0
+ip link set dev team0 up
+ping -I team0 1.1.1.1
 
-The current implementation can lead to unreliable validation behavior:
+Move team_dev_type_check_change down where all other checks have passed
+as it changes the dev type with no way to restore it in case
+one of the checks that follow it fail.
 
-- For rates between 25.5 Gbps and 255 Gbps, if max_bw_value[i] is 0
-  from initialization, the GBPS path may be taken regardless of whether
-  the actual rate is within bounds
+Also make sure to preserve the origial mtu assignment:
+  - If port_dev is not the same type as dev, dev takes mtu from port_dev
+  - If port_dev is the same type as dev, port_dev takes mtu from dev
 
-- When processing multiple TCs (i > 0), max_bw_value[i] contains the
-  value computed for the previous TC, affecting the validation logic
+This is done by adding a conditional before the call to dev_set_mtu
+to prevent it from assigning port_dev->mtu = dev->mtu and instead
+letting team_dev_type_check_change assign dev->mtu = port_dev->mtu.
+The conditional is needed because the patch moves the call to
+team_dev_type_check_change past dev_set_mtu.
 
-- The overflow check for rates exceeding 255 Gbps may not trigger
-  consistently depending on previous array values
+Testing:
+  - team device driver in-tree selftests
+  - Add/remove various devices as slaves of team device
+  - syzbot
 
-This patch ensures the validation correctly examines the requested rate
-value for proper bounds checking.
-
-Fixes: 43b27d1bd88a ("net/mlx5e: Fix wraparound in rate limiting for values above 255 Gbps")
-Signed-off-by: Danielle Costantino <dcostantino@meta.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20251124180043.2314428-1-dcostantino@meta.com
+Reported-by: syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=a2a3b519de727b0f7903
+Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251122002027.695151-1-zlatistiv@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/team/team_core.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 9b93da4d52f64..cf8f14ce4cd50 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -627,7 +627,7 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
- 						  MLX5E_100MB);
- 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
- 			max_bw_unit[i]  = MLX5_100_MBPS_UNIT;
--		} else if (max_bw_value[i] <= upper_limit_gbps) {
-+		} else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
- 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
- 						  MLX5E_1GB);
- 			max_bw_unit[i]  = MLX5_GBPS_UNIT;
+diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
+index 17f07eb0ee52a..25562b17debe1 100644
+--- a/drivers/net/team/team_core.c
++++ b/drivers/net/team/team_core.c
+@@ -1191,10 +1191,6 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		return -EPERM;
+ 	}
+ 
+-	err = team_dev_type_check_change(dev, port_dev);
+-	if (err)
+-		return err;
+-
+ 	if (port_dev->flags & IFF_UP) {
+ 		NL_SET_ERR_MSG(extack, "Device is up. Set it down before adding it as a team port");
+ 		netdev_err(dev, "Device %s is up. Set it down before adding it as a team port\n",
+@@ -1212,10 +1208,16 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 	INIT_LIST_HEAD(&port->qom_list);
+ 
+ 	port->orig.mtu = port_dev->mtu;
+-	err = dev_set_mtu(port_dev, dev->mtu);
+-	if (err) {
+-		netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
+-		goto err_set_mtu;
++	/*
++	 * MTU assignment will be handled in team_dev_type_check_change
++	 * if dev and port_dev are of different types
++	 */
++	if (dev->type == port_dev->type) {
++		err = dev_set_mtu(port_dev, dev->mtu);
++		if (err) {
++			netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
++			goto err_set_mtu;
++		}
+ 	}
+ 
+ 	memcpy(port->orig.dev_addr, port_dev->dev_addr, port_dev->addr_len);
+@@ -1290,6 +1292,10 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 		}
+ 	}
+ 
++	err = team_dev_type_check_change(dev, port_dev);
++	if (err)
++		goto err_set_dev_type;
++
+ 	if (dev->flags & IFF_UP) {
+ 		netif_addr_lock_bh(dev);
+ 		dev_uc_sync_multiple(port_dev, dev);
+@@ -1308,6 +1314,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
+ 
+ 	return 0;
+ 
++err_set_dev_type:
+ err_set_slave_promisc:
+ 	__team_option_inst_del_port(team, port);
+ 
 -- 
 2.51.0
 
