@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A95256C9E;
-	Wed,  3 Dec 2025 15:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF8E256C9E;
+	Wed,  3 Dec 2025 15:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776046; cv=none; b=htz9ddufFiPSanUslMH2xqZok3I03J+mAMCYY5OJzMAaZB2qrSpDc/d8HQ8UkeR+ZXLoFf7loYRv01Kd/dgcflGS6SmtgMIlrX6By//n3hnyT/uWvajSED7vBEV6qulftjI/LwI9qZpfLivIZiNkPN0NKKQhFql3D/TebS9B6GU=
+	t=1764776049; cv=none; b=UmD1zKTSZU3NBcNQu2Tltx/bNcrG6yZiT8mUbAB9yCP7ofDh7tuuA/4jOc7Cc+cT+YMK3PNvVNAbCes2v/kDOZLqDdZN04j0LQWCWm+6Cf+2S5sNkaBmVWm+xfYzgZS6FsXZZVErkiQA+2TDFYdQrObOc3Yho1xTKRziBSoD8j4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776046; c=relaxed/simple;
-	bh=bpMAjWxSnVfQXB9CnlCv719ED03le4WMjbRhS2AEGG8=;
+	s=arc-20240116; t=1764776049; c=relaxed/simple;
+	bh=LWBhH7xTKQHfHJxBXNB+G/PX6mfJdGoRRfIVmud5qHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bg8kdGBa7z7Npb5BVstlgYo+e6qJKKMC4nG40s2Rgzf1By6jnCpSJdKpv+kmA69lw2Jrp9XJ0/Rt3qlnOKQT2GEwRmstmLolsUEQQjecXQiJmI2swQ4LF7b1S+wwv20YnrcYYPqvt9GIDAWVjnT5sFtaBfSkGovlk1lRHupcedg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tg3nSE/c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EuWGSa0pGOP80pZDCAliJQc5BIoafVQGhgjuBuU8Q3VN2mrIYBxTJptIRqu9GR2Tn/qtNjU7wjVOlRsAk/D9v4TVQNTHg2Jng3d7+FKtoGk2WZCt6UYHRGJMaJs2XRLn5l1XyVb9OMyxOR/IEhHu01KrcqESALa0/xGN2R4lrUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJQTesQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tg3nSE/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84589C4CEF5;
-	Wed,  3 Dec 2025 15:34:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJQTesQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C77C4CEF5;
+	Wed,  3 Dec 2025 15:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776046;
-	bh=bpMAjWxSnVfQXB9CnlCv719ED03le4WMjbRhS2AEGG8=;
+	s=korg; t=1764776049;
+	bh=LWBhH7xTKQHfHJxBXNB+G/PX6mfJdGoRRfIVmud5qHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tg3nSE/c+nLe+t9ZoDf8lvxXaRysFM5UVDmK52O4dyZfOL2b8MSZdru4DueOLsvzF
-	 M3fbKzQWiMDIw+OLLfYfaeTa8SxjtROPHkWydA7EDLJJkhvj73uMBusVQ4iwbr/ocs
-	 vRxBAbqaYTR3QCR4MUb3hg8VEur/Olk44liWBLFY=
+	b=eJQTesQEacUlq4ePABE0F5KmtIc52W7ngNN/EEsQGlxXHRngQAYQep49el+pEY7qL
+	 r1S6yQXMBlhJmmrHA5NLVmMzNKdm58wLXat91nmXPbaXdn2TgDVUpkJhq620250Go3
+	 G7J2mZRemFLBSTTho+QucP0zAP77V8v+4Di3GhKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Artem Shimko <a.shimko.dev@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 031/300] serial: 8250_dw: handle reset control deassert error
-Date: Wed,  3 Dec 2025 16:23:55 +0100
-Message-ID: <20251203152401.613740925@linuxfoundation.org>
+	Babu Moger <babu.moger@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>
+Subject: [PATCH 5.10 032/300] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
+Date: Wed,  3 Dec 2025 16:23:56 +0100
+Message-ID: <20251203152401.650662598@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,44 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Shimko <a.shimko.dev@gmail.com>
+From: Babu Moger <babu.moger@amd.com>
 
-[ Upstream commit daeb4037adf7d3349b4a1fb792f4bc9824686a4b ]
+[ Upstream commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 ]
 
-Check the return value of reset_control_deassert() in the probe
-function to prevent continuing probe when reset deassertion fails.
+Users can create as many monitoring groups as the number of RMIDs supported
+by the hardware. However, on AMD systems, only a limited number of RMIDs
+are guaranteed to be actively tracked by the hardware. RMIDs that exceed
+this limit are placed in an "Unavailable" state.
 
-Previously, reset_control_deassert() was called without checking its
-return value, which could lead to probe continuing even when the
-device reset wasn't properly deasserted.
+When a bandwidth counter is read for such an RMID, the hardware sets
+MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
+again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
+remains set on first read after tracking re-starts and is clear on all
+subsequent reads as long as the RMID is tracked.
 
-The fix checks the return value and returns an error with dev_err_probe()
-if reset deassertion fails, providing better error handling and
-diagnostics.
+resctrl miscounts the bandwidth events after an RMID transitions from the
+"Unavailable" state back to being tracked. This happens because when the
+hardware starts counting again after resetting the counter to zero, resctrl
+in turn compares the new count against the counter value stored from the
+previous time the RMID was tracked.
 
-Fixes: acbdad8dd1ab ("serial: 8250_dw: simplify optional reset handling")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Artem Shimko <a.shimko.dev@gmail.com>
-Link: https://patch.msgid.link/20251019095131.252848-1-a.shimko.dev@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This results in resctrl computing an event value that is either undercounting
+(when new counter is more than stored counter) or a mistaken overflow (when
+new counter is less than stored counter).
+
+Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
+zero whenever the RMID is in the "Unavailable" state to ensure accurate
+counting after the RMID resets to zero when it starts to be tracked again.
+
+Example scenario that results in mistaken overflow
+==================================================
+1. The resctrl filesystem is mounted, and a task is assigned to a
+   monitoring group.
+
+   $mount -t resctrl resctrl /sys/fs/resctrl
+   $mkdir /sys/fs/resctrl/mon_groups/test1/
+   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   21323            <- Total bytes on domain 0
+   "Unavailable"    <- Total bytes on domain 1
+
+   Task is running on domain 0. Counter on domain 1 is "Unavailable".
+
+2. The task runs on domain 0 for a while and then moves to domain 1. The
+   counter starts incrementing on domain 1.
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   7345357          <- Total bytes on domain 0
+   4545             <- Total bytes on domain 1
+
+3. At some point, the RMID in domain 0 transitions to the "Unavailable"
+   state because the task is no longer executing in that domain.
+
+   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+   "Unavailable"    <- Total bytes on domain 0
+   434341           <- Total bytes on domain 1
+
+4.  Since the task continues to migrate between domains, it may eventually
+    return to domain 0.
+
+    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
+    17592178699059  <- Overflow on domain 0
+    3232332         <- Total bytes on domain 1
+
+In this case, the RMID on domain 0 transitions from "Unavailable" state to
+active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
+the counter is read and begins tracking the RMID counting from 0.
+
+Subsequent reads succeed but return a value smaller than the previously
+saved MSR value (7345357). Consequently, the resctrl's overflow logic is
+triggered, it compares the previous value (7345357) with the new, smaller
+value and incorrectly interprets this as a counter overflow, adding a large
+delta.
+
+In reality, this is a false positive: the counter did not overflow but was
+simply reset when the RMID transitioned from "Unavailable" back to active
+state.
+
+Here is the text from APM [1] available from [2].
+
+"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
+first QM_CTR read when it begins tracking an RMID that it was not
+previously tracking. The U bit will be zero for all subsequent reads from
+that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
+read with the U bit set when that RMID is in use by a processor can be
+considered 0 when calculating the difference with a subsequent read."
+
+[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
+    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
+    Bandwidth (MBM).
+
+  [ bp: Split commit message into smaller paragraph chunks for better
+    consumption. ]
+
+Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Tested-by: Reinette Chatre <reinette.chatre@intel.com>
+Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
+(cherry picked from commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92)
+[babu.moger@amd.com: Needed backport for v5.10 stable]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -580,7 +580,9 @@ static int dw8250_probe(struct platform_
- 	if (IS_ERR(data->rst))
- 		return PTR_ERR(data->rst);
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -224,11 +224,19 @@ static u64 mbm_overflow_count(u64 prev_m
  
--	reset_control_deassert(data->rst);
-+	err = reset_control_deassert(data->rst);
-+	if (err)
-+		return dev_err_probe(dev, err, "failed to deassert resets\n");
+ static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
+ {
+-	struct mbm_state *m;
++	struct mbm_state *m = NULL;
+ 	u64 chunks, tval;
  
- 	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
- 	if (err)
+ 	tval = __rmid_read(rmid, rr->evtid);
+ 	if (tval & (RMID_VAL_ERROR | RMID_VAL_UNAVAIL)) {
++		if (tval & RMID_VAL_UNAVAIL) {
++			if (rr->evtid == QOS_L3_MBM_TOTAL_EVENT_ID)
++				m = &rr->d->mbm_total[rmid];
++			else if (rr->evtid == QOS_L3_MBM_LOCAL_EVENT_ID)
++				m = &rr->d->mbm_local[rmid];
++			if (m)
++				m->prev_msr = 0;
++		}
+ 		return tval;
+ 	}
+ 	switch (rr->evtid) {
 
 
