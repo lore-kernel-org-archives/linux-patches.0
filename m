@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892FB31329C;
-	Wed,  3 Dec 2025 15:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1D2313E22;
+	Wed,  3 Dec 2025 15:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776754; cv=none; b=pYgLL8mAdvKQwNqqC/2cMp4dMbQtzBUUeBrhU87RfZDWD5qvbbCVv/NxK+kbTbqdG22WEtW73FBV0aG0NFnZxxw1HUu4jreA5eeiTzT4hdd0hCnDHaFDoUjEptycAOZI0buaklBoC21Q5L7wuGZD86DfLOFfjGfbgiRHKxhnfXY=
+	t=1764776757; cv=none; b=k3zvYon3u6qODwM4bI7iLxfM7U6F8Mu+EME/hwHdx7koc+W2zoueyDm7jbquGrMtL9pr9Xdu0WMO6ou0OBA9BN2r9XxxD8xx8Cy4+PattLEbjNIMUtY7WhZcPWEfZRAVf1fKI2aS/4hsF69wV4i6bl3w8KJqZLjLFXDbid9v4rQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776754; c=relaxed/simple;
-	bh=aymxE2+/DwZSiEIqsgepuNx9AeQWKaLwYdtFo9Xtcao=;
+	s=arc-20240116; t=1764776757; c=relaxed/simple;
+	bh=ZXCbuR2X4rMn9s0EL+T4Ru1Yf8u7vm8oO+s0O7KxcyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oui4I0harUO2mMtvRt7UxlXaJ3JPE/xzgKEU8Z5ianisd1UMdkTUKBWuUcpJppWFnRTO8lB0OOP5usRNHtTv1+g4fwgnIkyaBj5lQSFiwwjs3QpAT60HICb5qqM/3VlWnQRF7BraFT+PVYU0EA8CftWj6f7Fa2EoDaZWyEFdwew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKxlxr92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CwoFr3DtcHiG1ZKVCrAKlSjIRjFrZMGafkWk9OjJi2BFmYFL4hgBaIAiBzyCUJF5RNbYQWsmhbhzlyWd3G7oi1hpZ+T/XMPmrvQ78PkV+CnEM/AHmLfu2LAFp1RC1yQ5Dl2eEK9Lf6snzxMZW6GJmlrrtc/KI0Fr9AyzOTt9x1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sKfxv/r/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKxlxr92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E75F2C4CEF5;
-	Wed,  3 Dec 2025 15:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sKfxv/r/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34081C4CEF5;
+	Wed,  3 Dec 2025 15:45:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776754;
-	bh=aymxE2+/DwZSiEIqsgepuNx9AeQWKaLwYdtFo9Xtcao=;
+	s=korg; t=1764776757;
+	bh=ZXCbuR2X4rMn9s0EL+T4Ru1Yf8u7vm8oO+s0O7KxcyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKxlxr929InLMjCLveMl/BxQKx1+zk9ZLxB6jgmhv7fTVun550LBSv740cLL65GTu
-	 QSIluHLU6p/rQs2wci8+Lz8pxOnE8xy6LGNNkIG7zv1teVFx70OpKbR1u7hngSNx7J
-	 0KU5ceEBpcG053kL/chrfpvRuXJIyfzIYUzmuwWE=
+	b=sKfxv/r/AW3hORU0k1XXnb9635iSvWFeo3W2PSfhUv7p2aTLZt7aB5chHeryGO9NO
+	 /OBilIGMqwR57sJM1TcAar+XCE3sQozxtQ3QBdQRNsavmETpMIzrliDVyl2Lvadk9I
+	 0xnU+ggufzj3icOoYrfMhvWVtXhshb8Me0npztco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilia Baryshnikov <qwelias@gmail.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 245/300] ata: libata-scsi: Fix system suspend for a security locked drive
-Date: Wed,  3 Dec 2025 16:27:29 +0100
-Message-ID: <20251203152409.706014279@linuxfoundation.org>
+Subject: [PATCH 5.10 246/300] mptcp: introduce mptcp_schedule_work
+Date: Wed,  3 Dec 2025 16:27:30 +0100
+Message-ID: <20251203152409.745076866@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -54,79 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit b11890683380a36b8488229f818d5e76e8204587 ]
+[ Upstream commit ba8f48f7a4d79352b764ace585b5f602ef940be0 ]
 
-Commit cf3fc037623c ("ata: libata-scsi: Fix ata_to_sense_error() status
-handling") fixed ata_to_sense_error() to properly generate sense key
-ABORTED COMMAND (without any additional sense code), instead of the
-previous bogus sense key ILLEGAL REQUEST with the additional sense code
-UNALIGNED WRITE COMMAND, for a failed command.
+remove some of code duplications an allow preventing
+rescheduling on close.
 
-However, this broke suspend for Security locked drives (drives that have
-Security enabled, and have not been Security unlocked by boot firmware).
-
-The reason for this is that the SCSI disk driver, for the Synchronize
-Cache command only, treats any sense data with sense key ILLEGAL REQUEST
-as a successful command (regardless of ASC / ASCQ).
-
-After commit cf3fc037623c ("ata: libata-scsi: Fix ata_to_sense_error()
-status handling") the code that treats any sense data with sense key
-ILLEGAL REQUEST as a successful command is no longer applicable, so the
-command fails, which causes the system suspend to be aborted:
-
-  sd 1:0:0:0: PM: dpm_run_callback(): scsi_bus_suspend returns -5
-  sd 1:0:0:0: PM: failed to suspend async: error -5
-  PM: Some devices failed to suspend, or early wake event detected
-
-To make suspend work once again, for a Security locked device only,
-return sense data LOGICAL UNIT ACCESS NOT AUTHORIZED, the actual sense
-data which a real SCSI device would have returned if locked.
-The SCSI disk driver treats this sense data as a successful command.
-
-Cc: stable@vger.kernel.org
-Reported-by: Ilia Baryshnikov <qwelias@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220704
-Fixes: cf3fc037623c ("ata: libata-scsi: Fix ata_to_sense_error() status handling")
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-[ Adjust context ]
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 035bca3f017e ("mptcp: fix race condition in mptcp_schedule_work()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |    8 ++++++++
- include/linux/ata.h       |    1 +
- 2 files changed, 9 insertions(+)
+ net/mptcp/pm.c       |    3 +--
+ net/mptcp/protocol.c |   36 ++++++++++++++++++++++--------------
+ net/mptcp/protocol.h |    1 +
+ 3 files changed, 24 insertions(+), 16 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -961,6 +961,14 @@ static void ata_gen_ata_sense(struct ata
- 		ata_scsi_set_sense(dev, cmd, NOT_READY, 0x04, 0x21);
- 		return;
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -89,8 +89,7 @@ static bool mptcp_pm_schedule_work(struc
+ 		return false;
+ 
+ 	msk->pm.status |= BIT(new_status);
+-	if (schedule_work(&msk->work))
+-		sock_hold((struct sock *)msk);
++	mptcp_schedule_work((struct sock *)msk);
+ 	return true;
+ }
+ 
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -641,9 +641,8 @@ static bool move_skbs_to_msk(struct mptc
+ 		 * this is not a good place to change state. Let the workqueue
+ 		 * do it.
+ 		 */
+-		if (mptcp_pending_data_fin(sk, NULL) &&
+-		    schedule_work(&msk->work))
+-			sock_hold(sk);
++		if (mptcp_pending_data_fin(sk, NULL))
++			mptcp_schedule_work(sk);
  	}
-+
-+	if (ata_id_is_locked(dev->id)) {
-+		/* Security locked */
-+		/* LOGICAL UNIT ACCESS NOT AUTHORIZED */
-+		ata_scsi_set_sense(dev, cmd, DATA_PROTECT, 0x74, 0x71);
-+		return;
+ 
+ 	spin_unlock_bh(&sk->sk_lock.slock);
+@@ -715,23 +714,32 @@ static void mptcp_reset_timer(struct soc
+ 	sk_reset_timer(sk, &icsk->icsk_retransmit_timer, jiffies + tout);
+ }
+ 
++bool mptcp_schedule_work(struct sock *sk)
++{
++	if (inet_sk_state_load(sk) != TCP_CLOSE &&
++	    schedule_work(&mptcp_sk(sk)->work)) {
++		/* each subflow already holds a reference to the sk, and the
++		 * workqueue is invoked by a subflow, so sk can't go away here.
++		 */
++		sock_hold(sk);
++		return true;
 +	}
++	return false;
++}
 +
- 	/* Use ata_to_sense_error() to map status register bits
- 	 * onto sense key, asc & ascq.
- 	 */
---- a/include/linux/ata.h
-+++ b/include/linux/ata.h
-@@ -557,6 +557,7 @@ struct ata_bmdma_prd {
- #define ata_id_has_ncq(id)	((id)[ATA_ID_SATA_CAPABILITY] & (1 << 8))
- #define ata_id_queue_depth(id)	(((id)[ATA_ID_QUEUE_DEPTH] & 0x1f) + 1)
- #define ata_id_removable(id)	((id)[ATA_ID_CONFIG] & (1 << 7))
-+#define ata_id_is_locked(id)	(((id)[ATA_ID_DLF] & 0x7) == 0x7)
- #define ata_id_has_atapi_AN(id)	\
- 	((((id)[ATA_ID_SATA_CAPABILITY] != 0x0000) && \
- 	  ((id)[ATA_ID_SATA_CAPABILITY] != 0xffff)) && \
+ void mptcp_data_acked(struct sock *sk)
+ {
+ 	mptcp_reset_timer(sk);
+ 
+ 	if ((!test_bit(MPTCP_SEND_SPACE, &mptcp_sk(sk)->flags) ||
+-	     (inet_sk_state_load(sk) != TCP_ESTABLISHED)) &&
+-	    schedule_work(&mptcp_sk(sk)->work))
+-		sock_hold(sk);
++	     (inet_sk_state_load(sk) != TCP_ESTABLISHED)))
++		mptcp_schedule_work(sk);
+ }
+ 
+ void mptcp_subflow_eof(struct sock *sk)
+ {
+-	struct mptcp_sock *msk = mptcp_sk(sk);
+-
+-	if (!test_and_set_bit(MPTCP_WORK_EOF, &msk->flags) &&
+-	    schedule_work(&msk->work))
+-		sock_hold(sk);
++	if (!test_and_set_bit(MPTCP_WORK_EOF, &mptcp_sk(sk)->flags))
++		mptcp_schedule_work(sk);
+ }
+ 
+ static void mptcp_check_for_eof(struct mptcp_sock *msk)
+@@ -1643,8 +1651,7 @@ static void mptcp_retransmit_handler(str
+ 		mptcp_stop_timer(sk);
+ 	} else {
+ 		set_bit(MPTCP_WORK_RTX, &msk->flags);
+-		if (schedule_work(&msk->work))
+-			sock_hold(sk);
++		mptcp_schedule_work(sk);
+ 	}
+ }
+ 
+@@ -2503,7 +2510,8 @@ static void mptcp_release_cb(struct sock
+ 		struct sock *ssk;
+ 
+ 		ssk = mptcp_subflow_recv_lookup(msk);
+-		if (!ssk || !schedule_work(&msk->work))
++		if (!ssk || sk->sk_state == TCP_CLOSE ||
++		    !schedule_work(&msk->work))
+ 			__sock_put(sk);
+ 	}
+ 
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -410,6 +410,7 @@ static inline bool mptcp_is_fully_establ
+ void mptcp_rcv_space_init(struct mptcp_sock *msk, const struct sock *ssk);
+ void mptcp_data_ready(struct sock *sk, struct sock *ssk);
+ bool mptcp_finish_join(struct sock *sk);
++bool mptcp_schedule_work(struct sock *sk);
+ void mptcp_data_acked(struct sock *sk);
+ void mptcp_subflow_eof(struct sock *sk);
+ bool mptcp_update_rcv_data_fin(struct mptcp_sock *msk, u64 data_fin_seq, bool use_64bit);
 
 
