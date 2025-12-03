@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1745234D3B6;
-	Wed,  3 Dec 2025 16:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0744B34F49C;
+	Wed,  3 Dec 2025 16:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778388; cv=none; b=dBLs588lMt9z8IN3IwIdJ71xAuFFbv49DE6g7GeTTSgw2ZUduM/pabGdl+27tWCsq33QU2m4kb+CsqmxN3Y2DHoAgv9AmE0Sd79MI6+Rb2SbS/fffwYHyvQc8OtAZ2MNzE+NSlHjthzdEmIptlOm0rxkQym2Tr5ZjeTVDJ8FyxI=
+	t=1764778392; cv=none; b=iKtd/2wvPP7fjkxVC8YTVlDErFqislwmqUfeezj7iIs0vpv4KGsX5j/yR/qoVuMEODJyV2109Xifswhnrm2AFsQmQxbRu606mahy6CAkN7sJGfdK01OvDj/fWh3bKGuU2oIJt+RvPePpVNO+SHLUT3B3asNJlwymyg79suYqSdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778388; c=relaxed/simple;
-	bh=ekCxI3N9oIKallO78FI0BzgGLkHspg+Bwtn4QBUpt0I=;
+	s=arc-20240116; t=1764778392; c=relaxed/simple;
+	bh=cEoLVAAPLkhcNvt1BzJCCTaMS+c1GhD/vOOXHwcfxTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rF7ES3N138EpXx34t4pYVtcOOY63TSi5o1bB1nRD7BlcK8m++TI1HB5kT5v4VgTymD+WMkuMwsBZk10xM67QzqX0EmJJVbMKRGfpAN5k4nFIlilWTvRRoF9MypSrb3FMKCrwpVjEMa0GlWVLAIrC0z30H7bmeEpOHOLZG4CU/eI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JZzQSvZz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YEgd6N3+kqmy+NqlwTYAP2lX0EbAArmwXQbECPj7bq8FZUuVdk7ZOmEV6V8VsmWi9eaBasKw9MlKn15yo8wI+cWTxu9UiVrBRuC6hbbZE9RU4jtsG8DLt1fHXhnUpcRkBuHnA8JR540Jo6QrYG/q5sognr92dd79YyFNeMAhhYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3mntrv+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JZzQSvZz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 566D9C4CEF5;
-	Wed,  3 Dec 2025 16:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3mntrv+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C6BC4CEF5;
+	Wed,  3 Dec 2025 16:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778387;
-	bh=ekCxI3N9oIKallO78FI0BzgGLkHspg+Bwtn4QBUpt0I=;
+	s=korg; t=1764778391;
+	bh=cEoLVAAPLkhcNvt1BzJCCTaMS+c1GhD/vOOXHwcfxTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZzQSvZz47f+I7jwKl3F3yCXRFDmBJ50blW3jzRbKGp+kpf+52e7CigFHNiMuU10b
-	 034ZH0gkeh1eBvJSYo4fJ94aAb4GHt7oOD3mWZb5j/zOehADn+tLTdZKDaVevtG2Oe
-	 Ao4eO0jIgWRoO8e8KkeFXLL/u8qv+PRHeZTufvC8=
+	b=b3mntrv+2UTqea0yswvSSJxbAVjpf0/Ur3MogM1+zvCRQ4YjLghOBCHnTY7bE1GpI
+	 Na2Yx7u7v7hTcl3i6swHly7gx2hP4wsw293Gru6ztCND0IbQmcW72e8XtRF8Xj4oHk
+	 K+5PlEBFrSX9+ljiLyMj5OL0XCUlJiiKzr+xSPZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Vlastimil Babka <vbabka@suse.cz>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 330/392] mm/mempool: fix poisoning order>0 pages with HIGHMEM
-Date: Wed,  3 Dec 2025 16:28:00 +0100
-Message-ID: <20251203152426.308728867@linuxfoundation.org>
+Subject: [PATCH 5.15 331/392] mptcp: fix ack generation for fallback msk
+Date: Wed,  3 Dec 2025 16:28:01 +0100
+Message-ID: <20251203152426.348293192@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,107 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit ec33b59542d96830e3c89845ff833cf7b25ef172 ]
+[ Upstream commit 5e15395f6d9ec07395866c5511f4b4ac566c0c9b ]
 
-The kernel test has reported:
+mptcp_cleanup_rbuf() needs to know the last most recent, mptcp-level
+rcv_wnd sent, and such information is tracked into the msk->old_wspace
+field, updated at ack transmission time by mptcp_write_options().
 
-  BUG: unable to handle page fault for address: fffba000
-  #PF: supervisor write access in kernel mode
-  #PF: error_code(0x0002) - not-present page
-  *pde = 03171067 *pte = 00000000
-  Oops: Oops: 0002 [#1]
-  CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Tainted: G                T   6.18.0-rc2-00031-gec7f31b2a2d3 #1 NONE  a1d066dfe789f54bc7645c7989957d2bdee593ca
-  Tainted: [T]=RANDSTRUCT
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-  EIP: memset (arch/x86/include/asm/string_32.h:168 arch/x86/lib/memcpy_32.c:17)
-  Code: a5 8b 4d f4 83 e1 03 74 02 f3 a4 83 c4 04 5e 5f 5d 2e e9 73 41 01 00 90 90 90 3e 8d 74 26 00 55 89 e5 57 56 89 c6 89 d0 89 f7 <f3> aa 89 f0 5e 5f 5d 2e e9 53 41 01 00 cc cc cc 55 89 e5 53 57 56
-  EAX: 0000006b EBX: 00000015 ECX: 001fefff EDX: 0000006b
-  ESI: fffb9000 EDI: fffba000 EBP: c611fbf0 ESP: c611fbe8
-  DS: 007b ES: 007b FS: 0000 GS: 0000 SS: 0068 EFLAGS: 00010287
-  CR0: 80050033 CR2: fffba000 CR3: 0316e000 CR4: 00040690
-  Call Trace:
-   poison_element (mm/mempool.c:83 mm/mempool.c:102)
-   mempool_init_node (mm/mempool.c:142 mm/mempool.c:226)
-   mempool_init_noprof (mm/mempool.c:250 (discriminator 1))
-   ? mempool_alloc_pages (mm/mempool.c:640)
-   bio_integrity_initfn (block/bio-integrity.c:483 (discriminator 8))
-   ? mempool_alloc_pages (mm/mempool.c:640)
-   do_one_initcall (init/main.c:1283)
+Fallback socket do not add any mptcp options, such helper is never
+invoked, and msk->old_wspace value remain stale. That in turn makes
+ack generation at recvmsg() time quite random.
 
-Christoph found out this is due to the poisoning code not dealing
-properly with CONFIG_HIGHMEM because only the first page is mapped but
-then the whole potentially high-order page is accessed.
+Address the issue ensuring mptcp_write_options() is invoked even for
+fallback sockets, and just update the needed info in such a case.
 
-We could give up on HIGHMEM here, but it's straightforward to fix this
-with a loop that's mapping, poisoning or checking and unmapping
-individual pages.
+The issue went unnoticed for a long time, as mptcp currently overshots
+the fallback socket receive buffer autotune significantly. It is going
+to change in the near future.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202511111411.9ebfa1ba-lkp@intel.com
-Analyzed-by: Christoph Hellwig <hch@lst.de>
-Fixes: bdfedb76f4f5 ("mm, mempool: poison elements backed by slab allocator")
+Fixes: e3859603ba13 ("mptcp: better msk receive window updates")
 Cc: stable@vger.kernel.org
-Tested-by: kernel test robot <oliver.sang@intel.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20251113-mempool-poison-v1-1-233b3ef984c3@suse.cz
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/594
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-1-806d3781c95f@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Adjust context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempool.c |   32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ net/mptcp/options.c |   25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
 
---- a/mm/mempool.c
-+++ b/mm/mempool.c
-@@ -63,10 +63,20 @@ static void check_element(mempool_t *poo
- 	} else if (pool->free == mempool_free_pages) {
- 		/* Mempools backed by page allocator */
- 		int order = (int)(long)pool->pool_data;
--		void *addr = kmap_local_page((struct page *)element);
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -810,8 +810,11 @@ bool mptcp_established_options(struct so
  
--		__check_element(pool, addr, 1UL << (PAGE_SHIFT + order));
--		kunmap_local(addr);
-+#ifdef CONFIG_HIGHMEM
-+		for (int i = 0; i < (1 << order); i++) {
-+			struct page *page = (struct page *)element;
-+			void *addr = kmap_local_page(page + i);
-+
-+			__check_element(pool, addr, PAGE_SIZE);
-+			kunmap_local(addr);
-+		}
-+#else
-+		void *addr = page_address((struct page *)element);
-+
-+		__check_element(pool, addr, PAGE_SIZE << order);
-+#endif
- 	}
+ 	opts->suboptions = 0;
+ 
++	/* Force later mptcp_write_options(), but do not use any actual
++	 * option space.
++	 */
+ 	if (unlikely(__mptcp_check_fallback(msk)))
+-		return false;
++		return true;
+ 
+ 	if (unlikely(skb && TCP_SKB_CB(skb)->tcp_flags & TCPHDR_RST)) {
+ 		if (mptcp_established_options_mp_fail(sk, &opt_size, remaining, opts)) {
+@@ -1222,6 +1225,20 @@ static void mptcp_set_rwin(const struct
+ 		WRITE_ONCE(msk->rcv_wnd_sent, ack_seq);
  }
  
-@@ -86,10 +96,20 @@ static void poison_element(mempool_t *po
- 	} else if (pool->alloc == mempool_alloc_pages) {
- 		/* Mempools backed by page allocator */
- 		int order = (int)(long)pool->pool_data;
--		void *addr = kmap_local_page((struct page *)element);
- 
--		__poison_element(addr, 1UL << (PAGE_SHIFT + order));
--		kunmap_local(addr);
-+#ifdef CONFIG_HIGHMEM
-+		for (int i = 0; i < (1 << order); i++) {
-+			struct page *page = (struct page *)element;
-+			void *addr = kmap_local_page(page + i);
++static void mptcp_track_rwin(const struct tcp_sock *tp)
++{
++	const struct sock *ssk = (const struct sock *)tp;
++	struct mptcp_subflow_context *subflow;
++	struct mptcp_sock *msk;
 +
-+			__poison_element(addr, PAGE_SIZE);
-+			kunmap_local(addr);
-+		}
-+#else
-+		void *addr = page_address((struct page *)element);
++	if (!ssk)
++		return;
 +
-+		__poison_element(addr, PAGE_SIZE << order);
-+#endif
++	subflow = mptcp_subflow_ctx(ssk);
++	msk = mptcp_sk(subflow->conn);
++	WRITE_ONCE(msk->old_wspace, tp->rcv_wnd);
++}
++
+ __sum16 __mptcp_make_csum(u64 data_seq, u32 subflow_seq, u16 data_len, __wsum sum)
+ {
+ 	struct csum_pseudo_header header;
+@@ -1283,6 +1300,12 @@ void mptcp_write_options(__be32 *ptr, co
+ 		return;
  	}
- }
- #else /* CONFIG_DEBUG_SLAB || CONFIG_SLUB_DEBUG_ON */
+ 
++	/* Fallback to TCP */
++	if (unlikely(!opts->suboptions)) {
++		mptcp_track_rwin(tp);
++		return;
++	}
++
+ 	/* DSS, MPC, MPJ and ADD_ADDR are mutually exclusive, see
+ 	 * mptcp_established_options*()
+ 	 */
 
 
