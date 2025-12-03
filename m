@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE85331A46;
-	Wed,  3 Dec 2025 16:10:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA6A33291C;
+	Wed,  3 Dec 2025 16:11:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778259; cv=none; b=pvv6eMpFpkpSxLlKRfK0+HbgmxmNNLxQ1VFhqrOnluoldd7XHZP0drwFErUhwsNUV8oAhnE/S9ZgMDgsM52VeFP+Uqa3+pgL72z/oHkQjbbQFddRhjeoRilfBDyVkbKFI/igz3M5JEigJQv6tXb9c85fFUxRPhizjGXRGjvij+0=
+	t=1764778262; cv=none; b=I8GYWoSk7Iselvn9b4M5QludabbsXeqsfk0eLZWPfnJ5dXNN3XuTotOJDQyFBonX3HkhBo4ZdM7Wi09fHrzjHJIImOgLcJM6dOFrHdVz7GsM9vSS05sTSYsGgbxx9BAhNELPPN8Y4yFL7vWbq7GewysztwOEXHzPEt74MFMjNPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778259; c=relaxed/simple;
-	bh=bvTzGH4AI6l0dqh8v9bV5XO4MiO2ieE56mEssa621bA=;
+	s=arc-20240116; t=1764778262; c=relaxed/simple;
+	bh=UrG4CvIww6a6sKV6oBXrkxuMgTHl19FKyouzGrCPycU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fC4+jTJWDfeGyQw0WEykesuY0dLmiiUuYi/SPk9cNBblTWuc7+RZlsmwhdvospKMV2VNR60uYIoUNFpCz9+Ng3JNOcBegHl58cpFpGSDrcni8iTyMGi8HyWAHDqUcwhwF/rfxmE5ZuyCsCRrQEuJzdhkmHEONvJvwsMH7N2tCNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qXzHr0o5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aezcpoHsjPoYsklkWa15HCDMI1BLxL3Bi8CpwISVdveyJYJVCCD6QThZ20/Y9w1GPPTSPDIbR5j1jedJ2YWs6aqr6iQKSn5yrM2IuDWc+QHeH7jz77a34WGh/p5mzkvuLZMo58Q7UNKUH85EpfHSucyuCwzQkDJ2ubs7Vem2pQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KCdDxFOU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qXzHr0o5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD67C4CEF5;
-	Wed,  3 Dec 2025 16:10:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KCdDxFOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16F9DC4CEF5;
+	Wed,  3 Dec 2025 16:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778259;
-	bh=bvTzGH4AI6l0dqh8v9bV5XO4MiO2ieE56mEssa621bA=;
+	s=korg; t=1764778262;
+	bh=UrG4CvIww6a6sKV6oBXrkxuMgTHl19FKyouzGrCPycU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXzHr0o5VFsEQ34BxKWZxOtbhrrj2LQfv0n//NhA3fR3HixkqiKsA8fiTxdoa5sa3
-	 fGPLtgYWsVBafuUPl+mMnXclJphvNs91shcd9ySwst2mHsmV/vJIqWwQSNL7du+tG+
-	 Fftc9izNN4rBFoW8zchf6jGsIWa1E8cjNqg6J4xk=
+	b=KCdDxFOUMDoJVz0tCth78dhwY5rM18laEAV3AZ7cxf67jzo51UULws/blXOaeUvcX
+	 mzu+kHB9AY2G/raqMU59HY0UYjR4TYzI3fEUrWRDj6arSwBuafZUTL3Jcol35SlSfz
+	 1jQ3Esh07bwInlqhNp+rhP13QliBK3gSDSWd1zzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+355158e7e301548a1424@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 292/392] mptcp: fix race condition in mptcp_schedule_work()
-Date: Wed,  3 Dec 2025 16:27:22 +0100
-Message-ID: <20251203152424.902339429@linuxfoundation.org>
+	Wei Yang <albinwyang@tencent.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	wangzijie <wangzijie1@honor.com>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 275/392] fs/proc: fix uaf in proc_readdir_de()
+Date: Wed,  3 Dec 2025 16:27:05 +0100
+Message-ID: <20251203152424.283557632@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,96 +54,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Wei Yang <albinwyang@tencent.com>
 
-commit 035bca3f017ee9dea3a5a756e77a6f7138cc6eea upstream.
+commit 895b4c0c79b092d732544011c3cecaf7322c36a1 upstream.
 
-syzbot reported use-after-free in mptcp_schedule_work() [1]
+Pde is erased from subdir rbtree through rb_erase(), but not set the node
+to EMPTY, which may result in uaf access.  We should use RB_CLEAR_NODE()
+set the erased node to EMPTY, then pde_subdir_next() will return NULL to
+avoid uaf access.
 
-Issue here is that mptcp_schedule_work() schedules a work,
-then gets a refcount on sk->sk_refcnt if the work was scheduled.
-This refcount will be released by mptcp_worker().
+We found an uaf issue while using stress-ng testing, need to run testcase
+getdent and tun in the same time.  The steps of the issue is as follows:
 
-[A] if (schedule_work(...)) {
-[B]     sock_hold(sk);
-        return true;
-    }
+1) use getdent to traverse dir /proc/pid/net/dev_snmp6/, and current
+   pde is tun3;
 
-Problem is that mptcp_worker() can run immediately and complete before [B]
+2) in the [time windows] unregister netdevice tun3 and tun2, and erase
+   them from rbtree.  erase tun3 first, and then erase tun2.  the
+   pde(tun2) will be released to slab;
 
-We need instead :
+3) continue to getdent process, then pde_subdir_next() will return
+   pde(tun2) which is released, it will case uaf access.
 
-    sock_hold(sk);
-    if (schedule_work(...))
-        return true;
-    sock_put(sk);
+CPU 0                                      |    CPU 1
+-------------------------------------------------------------------------
+traverse dir /proc/pid/net/dev_snmp6/      |   unregister_netdevice(tun->dev)   //tun3 tun2
+sys_getdents64()                           |
+  iterate_dir()                            |
+    proc_readdir()                         |
+      proc_readdir_de()                    |     snmp6_unregister_dev()
+        pde_get(de);                       |       proc_remove()
+        read_unlock(&proc_subdir_lock);    |         remove_proc_subtree()
+                                           |           write_lock(&proc_subdir_lock);
+        [time window]                      |           rb_erase(&root->subdir_node, &parent->subdir);
+                                           |           write_unlock(&proc_subdir_lock);
+        read_lock(&proc_subdir_lock);      |
+        next = pde_subdir_next(de);        |
+        pde_put(de);                       |
+        de = next;    //UAF                |
 
-[1]
-refcount_t: addition on 0; use-after-free.
- WARNING: CPU: 1 PID: 29 at lib/refcount.c:25 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:25
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:-1 [inline]
-  __refcount_inc include/linux/refcount.h:366 [inline]
-  refcount_inc include/linux/refcount.h:383 [inline]
-  sock_hold include/net/sock.h:816 [inline]
-  mptcp_schedule_work+0x164/0x1a0 net/mptcp/protocol.c:943
-  mptcp_tout_timer+0x21/0xa0 net/mptcp/protocol.c:2316
-  call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
-  expire_timers kernel/time/timer.c:1798 [inline]
-  __run_timers kernel/time/timer.c:2372 [inline]
-  __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
-  run_timer_base kernel/time/timer.c:2393 [inline]
-  run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
-  handle_softirqs+0x22f/0x710 kernel/softirq.c:622
-  __do_softirq kernel/softirq.c:656 [inline]
-  run_ktimerd+0xcf/0x190 kernel/softirq.c:1138
-  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
+rbtree of dev_snmp6
+                        |
+                    pde(tun3)
+                     /    \
+                  NULL  pde(tun2)
 
-Cc: stable@vger.kernel.org
-Fixes: 3b1d6210a957 ("mptcp: implement and use MPTCP-level retransmission")
-Reported-by: syzbot+355158e7e301548a1424@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6915b46f.050a0220.3565dc.0028.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251113103924.3737425-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20251025024233.158363-1-albin_yang@163.com
+Signed-off-by: Wei Yang <albinwyang@tencent.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: wangzijie <wangzijie1@honor.com>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ fs/proc/generic.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -880,14 +880,19 @@ static void mptcp_reset_rtx_timer(struct
- 
- bool mptcp_schedule_work(struct sock *sk)
- {
--	if (inet_sk_state_load(sk) != TCP_CLOSE &&
--	    schedule_work(&mptcp_sk(sk)->work)) {
--		/* each subflow already holds a reference to the sk, and the
--		 * workqueue is invoked by a subflow, so sk can't go away here.
--		 */
--		sock_hold(sk);
-+	if (inet_sk_state_load(sk) == TCP_CLOSE)
-+		return false;
-+
-+	/* Get a reference on this socket, mptcp_worker() will release it.
-+	 * As mptcp_worker() might complete before us, we can not avoid
-+	 * a sock_hold()/sock_put() if schedule_work() returns false.
-+	 */
-+	sock_hold(sk);
-+
-+	if (schedule_work(&mptcp_sk(sk)->work))
- 		return true;
--	}
-+
-+	sock_put(sk);
- 	return false;
+--- a/fs/proc/generic.c
++++ b/fs/proc/generic.c
+@@ -688,6 +688,12 @@ void pde_put(struct proc_dir_entry *pde)
+ 	}
  }
  
++static void pde_erase(struct proc_dir_entry *pde, struct proc_dir_entry *parent)
++{
++	rb_erase(&pde->subdir_node, &parent->subdir);
++	RB_CLEAR_NODE(&pde->subdir_node);
++}
++
+ /*
+  * Remove a /proc entry and free it if it's not currently in use.
+  */
+@@ -710,7 +716,7 @@ void remove_proc_entry(const char *name,
+ 			WARN(1, "removing permanent /proc entry '%s'", de->name);
+ 			de = NULL;
+ 		} else {
+-			rb_erase(&de->subdir_node, &parent->subdir);
++			pde_erase(de, parent);
+ 			if (S_ISDIR(de->mode))
+ 				parent->nlink--;
+ 		}
+@@ -754,7 +760,7 @@ int remove_proc_subtree(const char *name
+ 			root->parent->name, root->name);
+ 		return -EINVAL;
+ 	}
+-	rb_erase(&root->subdir_node, &parent->subdir);
++	pde_erase(root, parent);
+ 
+ 	de = root;
+ 	while (1) {
+@@ -766,7 +772,7 @@ int remove_proc_subtree(const char *name
+ 					next->parent->name, next->name);
+ 				return -EINVAL;
+ 			}
+-			rb_erase(&next->subdir_node, &de->subdir);
++			pde_erase(next, de);
+ 			de = next;
+ 			continue;
+ 		}
 
 
