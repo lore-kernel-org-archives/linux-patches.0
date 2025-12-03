@@ -1,36 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A742B350285;
-	Wed,  3 Dec 2025 16:13:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACBD3502A2;
+	Wed,  3 Dec 2025 16:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778404; cv=none; b=db+ce7huzfYsUCqc/O/t42PtImNtwYRfetBvSsdzPC4UjGZJCZNsptO81CaJ7ZenIy2iBxOG6d9wrpjLRHj0J8PaYkF6nuJkP61WijnjqIyZXYFUYt6vU8MNPZtNY6zpGfzHftHl4cEk0yKBNxLqliXdkE7W8DVP6f5pSFQDNyM=
+	t=1764778408; cv=none; b=pa2tnR5f18i/Ax54HwNIXqPtTOWM2xWCIqYzcFS87wl1A6yo8poMRW+sNDjgHudTRkm38C8TAUPPNvoEy2aN9FObGjU8j+xzdDn1qOaY2t8CA5CoLNMXjvX7U92WL99vbycF9nUi/6kyjyCNYukRikVx7uu/UArq/QUoSjo/ObY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778404; c=relaxed/simple;
-	bh=JY9DHwvrsVk6Q+KfHvjmc2ago19h1QChcYIudLfB4/U=;
+	s=arc-20240116; t=1764778408; c=relaxed/simple;
+	bh=O/mySWCqsQDsHwTNugyFMSDwFdUrqNTv4W2u5c42WwU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZRBqtarvz5ZPHvsOKO7VS3Ql3/Mo/epL60lsDKZ4YdbeMUSqCw3DD1fexDHG+BqFmFRgE5yEpIhjwUGYND5vrlG/tgXdfzjrkanywVzboUPFgVfxUuE5aWL/asZtDsAxOOh5Vu8VivdpTGZnqpLs4v2pdL4TEPHovz9bxAISSQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoqXRk+o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tAAjaOHcktR0ThsBE7emD/ZgJhmdc1kNeimI5E5hkrdGFPlk5fIqvDiC1hMFeo4BYOEAZMYMECPiMB5BGgmcuhARQ8f2GhiWWBwv7u2rd3JTwWflrDi+IGRy+LKuGdwdnr333+4PZLHFiyGHTSRtAWw4LG6tuQ+FhjhpFGoZ63Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B3oWF+fJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoqXRk+o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0519BC4CEF5;
-	Wed,  3 Dec 2025 16:13:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B3oWF+fJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6552EC4CEF5;
+	Wed,  3 Dec 2025 16:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778404;
-	bh=JY9DHwvrsVk6Q+KfHvjmc2ago19h1QChcYIudLfB4/U=;
+	s=korg; t=1764778407;
+	bh=O/mySWCqsQDsHwTNugyFMSDwFdUrqNTv4W2u5c42WwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JoqXRk+onSBEEqiIQjjGPNI6nye9Y0VQxlzb0LhW7p0ea5eOp6CfXnInbHnP2v2VN
-	 1RVkoEqyAyR969A0DhkRvV6zv/IFHEU4z5r1t4RWMsjYzd9ErRSLHI7yWVLmXe96Ft
-	 QQMLYjQibwS9WJqtDgA9cXO5MTLG7Yt6jzuOnWxo=
+	b=B3oWF+fJC3BhKfA873gHFDXgYu0z+YhcF4NHR7Apn3H3PRy+DBgB15DF2JQyXww1Y
+	 X0u1aiOfCr8AhuCMLsTPtN/j7nAFxexgWyKA3ijHheFwVvunzn/OIUkcM5a2m1wleg
+	 MBaN45TG08UOwBECWGsiDxGqJv+J3bf+e+bsod0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gulam Mohamed <gulam.mohamed@oracle.com>
-Subject: [PATCH 5.15 335/392] Revert "block: Move checking GENHD_FL_NO_PART to bdev_add_partition()"
-Date: Wed,  3 Dec 2025 16:28:05 +0100
-Message-ID: <20251203152426.498533675@linuxfoundation.org>
+Subject: [PATCH 5.15 336/392] Revert "block: dont add or resize partition on the disk with GENHD_FL_NO_PART"
+Date: Wed,  3 Dec 2025 16:28:06 +0100
+Message-ID: <20251203152426.535356428@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,7 +51,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Gulam Mohamed <gulam.mohamed@oracle.com>
 
-This reverts commit 7777f47f2ea64efd1016262e7b59fab34adfb869.
+This reverts commit 1a721de8489fa559ff4471f73c58bb74ac5580d3.
 
 The commit 1a721de8489f ("block: don't add or resize partition on the disk
 with GENHD_FL_NO_PART") and the commit 7777f47f2ea6 ("block: Move checking
@@ -96,34 +96,19 @@ Cc: stable@vger.kernel.org
 Signed-off-by: Gulam Mohamed <gulam.mohamed@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/ioctl.c           |    2 ++
- block/partitions/core.c |    5 -----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ block/ioctl.c |    2 --
+ 1 file changed, 2 deletions(-)
 
 --- a/block/ioctl.c
 +++ b/block/ioctl.c
-@@ -20,6 +20,8 @@ static int blkpg_do_ioctl(struct block_d
+@@ -20,8 +20,6 @@ static int blkpg_do_ioctl(struct block_d
  	struct blkpg_partition p;
  	sector_t start, length;
  
-+	if (disk->flags & GENHD_FL_NO_PART)
-+		return -EINVAL;
+-	if (disk->flags & GENHD_FL_NO_PART)
+-		return -EINVAL;
  	if (!capable(CAP_SYS_ADMIN))
  		return -EACCES;
  	if (copy_from_user(&p, upart, sizeof(struct blkpg_partition)))
---- a/block/partitions/core.c
-+++ b/block/partitions/core.c
-@@ -463,11 +463,6 @@ int bdev_add_partition(struct gendisk *d
- 		goto out;
- 	}
- 
--	if (disk->flags & GENHD_FL_NO_PART) {
--		ret = -EINVAL;
--		goto out;
--	}
--
- 	if (partition_overlaps(disk, start, length, -1)) {
- 		ret = -EBUSY;
- 		goto out;
 
 
