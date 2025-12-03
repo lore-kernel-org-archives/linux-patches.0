@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D3A33BBAC;
-	Wed,  3 Dec 2025 15:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42B333C1BA;
+	Wed,  3 Dec 2025 15:54:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777251; cv=none; b=RwXVOtksSHRaoriwl/0FPJMbrXAw8eJMeLWGIge2VQmbZ6CoWnRtBIz+T5qHytnXkUiTH03PauidT70VrezKaovY3gLtfpDva2I7N1C9lLXnP+WkUI89fFhxnjhIhV0RAN7DHHsMgYOVOM62d9HVSBTHUCXIYrq3tjeFkoBLikk=
+	t=1764777255; cv=none; b=qr8VAX9KVGcNLqmWm4lh4utLniJ8OWxFhylHpZ9hgTxM5BWNoROgWbRqyBKWuroFcIjKDoM1CNnQbu1bFgEZ3HfEzxxdNlajQR/nhB1aII9nd8LuuBlV4WISpOxpZa3fmIFyXpHuWl4Yynlf6nkpIfcG6cGt99+aQN7eWPWwEJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777251; c=relaxed/simple;
-	bh=2hMT/s2jhoI+nrwaNEsWkGGcfcKekTlnWrorsunJx7E=;
+	s=arc-20240116; t=1764777255; c=relaxed/simple;
+	bh=m3S2KYGE+O9j4MIyByZ9Cc8IzKkW4+VZD4Kmv+s6D0E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UrauYFBCNLV8hUDx6iJYkaszz/K+BJRC5GKkB/6rAUjVSCVE5zzMXm9nN18LQSRL68e5ohKv71gEpk0Vv4b3EKDM9MOt/8q6bsrYdCs1zwct3qJUNcEWZxGxOqOvfLJ79EB1eqiKHF6FgMngEheHUJzKcB0n9LfwVuKPdnxga8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hd8pyGnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BYDe1q437KlCRQDv2NSET+maia5mmVa2mz348qn2JV9sfzaYypgCStbQqXvKACqshypCLNy6TPKuadiisPi0LAjMolTNCoixLGnsuYGSCyvQ7nyki+8ZYuodurpBtATC30HvHUfqnxFNF+JVgUYVZ320Qbb7M40fw1apJS3Y7Z4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QZ4L3+P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hd8pyGnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C081EC116B1;
-	Wed,  3 Dec 2025 15:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QZ4L3+P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75752C2BD01;
+	Wed,  3 Dec 2025 15:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777251;
-	bh=2hMT/s2jhoI+nrwaNEsWkGGcfcKekTlnWrorsunJx7E=;
+	s=korg; t=1764777254;
+	bh=m3S2KYGE+O9j4MIyByZ9Cc8IzKkW4+VZD4Kmv+s6D0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hd8pyGnr4JNHkTu/sqzh64M5gFMX1Q5Y6KqmY86SPyVJB9e1OTdyPQ+NliKw4G82U
-	 n6EXCXpL6LhVvN40t5/BgxMmFc2LbHXwxUBh+CXOlPVhCbTWYNBtGx2LGkbsQxECpk
-	 WzBZjhTGhdw5rqE0dZmqVkGqZVbPBuGDIduSFvRo=
+	b=1QZ4L3+Pu9gbrQhZGHEZfnw2r3PP09NMem/y3fZPKzGjj+wEeyLVINoQGLmx2B3Po
+	 e37RQpfQlKQ1v5NW77HSHn0qcLeKslN3UrFLpg7fjzQosp3gpHg91KW/MqGUJ7oKBx
+	 yKTWPvXLVX7JukeUfTN6V3Yhrc5kp56vBlTqpe2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagar Ghuge <sagar.ghuge@intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>
-Subject: [PATCH 6.17 128/146] drm/xe/guc: Fix stack_depot usage
-Date: Wed,  3 Dec 2025 16:28:26 +0100
-Message-ID: <20251203152351.145133093@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.17 129/146] drm/amdgpu: attach tlb fence to the PTs update
+Date: Wed,  3 Dec 2025 16:28:27 +0100
+Message-ID: <20251203152351.182356193@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -45,50 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit 0e234632e39bd21dd28ffc9ba3ae8eec4deb949c upstream.
+commit b4a7f4e7ad2b120a94f3111f92a11520052c762d upstream.
 
-Add missing stack_depot_init() call when CONFIG_DRM_XE_DEBUG_GUC is
-enabled to fix the following call stack:
+Ensure the userq TLB flush is emitted only after
+the VM update finishes and the PT BOs have been
+annotated with bookkeeping fences.
 
-	[] BUG: kernel NULL pointer dereference, address: 0000000000000000
-	[] Workqueue:  drm_sched_run_job_work [gpu_sched]
-	[] RIP: 0010:stack_depot_save_flags+0x172/0x870
-	[] Call Trace:
-	[]  <TASK>
-	[]  fast_req_track+0x58/0xb0 [xe]
-
-Fixes: 16b7e65d299d ("drm/xe/guc: Track FAST_REQ H2Gs to report where errors came from")
-Tested-by: Sagar Ghuge <sagar.ghuge@intel.com>
-Cc: stable@vger.kernel.org # v6.17+
-Reviewed-by: Stuart Summers <stuart.summers@intel.com>
-Link: https://patch.msgid.link/20251118-fix-debug-guc-v1-1-9f780c6bedf8@intel.com
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-(cherry picked from commit 64fdf496a6929a0a194387d2bb5efaf5da2b542f)
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f3854e04b708d73276c4488231a8bd66d30b4671)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -237,6 +237,9 @@ int xe_guc_ct_init_noalloc(struct xe_guc
- #if IS_ENABLED(CONFIG_DRM_XE_DEBUG)
- 	spin_lock_init(&ct->dead.lock);
- 	INIT_WORK(&ct->dead.worker, ct_dead_worker_func);
-+#if IS_ENABLED(CONFIG_DRM_XE_DEBUG_GUC)
-+	stack_depot_init();
-+#endif
- #endif
- 	init_waitqueue_head(&ct->wq);
- 	init_waitqueue_head(&ct->g2h_fence_wq);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -1056,7 +1056,7 @@ amdgpu_vm_tlb_flush(struct amdgpu_vm_upd
+ 	}
+ 
+ 	/* Prepare a TLB flush fence to be attached to PTs */
+-	if (!params->unlocked && vm->is_compute_context) {
++	if (!params->unlocked) {
+ 		amdgpu_vm_tlb_fence_create(params->adev, vm, fence);
+ 
+ 		/* Makes sure no PD/PT is freed before the flush */
 
 
