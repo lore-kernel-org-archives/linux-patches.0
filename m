@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0713446A2;
-	Wed,  3 Dec 2025 16:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFAA346FBE;
+	Wed,  3 Dec 2025 16:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780892; cv=none; b=uR5ZHRm7+Wri66YzzvHvifhIjnrzEZJlvwKLukaQednMGbvHi3zEruhyNB5/2kkzKGCBj2YF589iSXaJllV6t1eqsmcwTbkJF0HPPqdJWxo9VddkIyZY6aRMaBylEc3uTmwkDHOY4AjKlYYacL3LfjIiRN/Nj3rvr/TXGPeNgeU=
+	t=1764780896; cv=none; b=aC3o6sWzeTHkl0EX6fNMCY598+JIuPXJ9SD6Gk5Yqc2NoGnU43vjuNsX+MtEDyHTAi33g6MMvPMiuY7+AFKLiZgYSFDujpRDPgkLTQyfRTerKauIafxyuHq3BuZSh/38gT6oR9fz5XFd2ovdca955pAvvRGua17dyqzOD57l0Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780892; c=relaxed/simple;
-	bh=zqCmK8HdnNshQA8R3eY5Ai680SFVO5m1DJDlhAVyuWA=;
+	s=arc-20240116; t=1764780896; c=relaxed/simple;
+	bh=+yX0p1Bbs5ubaVEVkZYf+aIiArWI/Gq5opyNBLmqKcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VImgtTSSPO0r+Uw2TlmKgYDv55n6SdMg534HadTH9H/YIyEgsBHvxEVrBvBbMWrey/K4pn6pr+YRfqRUwsUus65m/vhDJzxiYCEFqYTRN7iPXkOF0NOxADmDpsXiVYGXIiHIYAQ4pm9JYbv7ThpJhzJi7832YFk7+U//NOd02yA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UIIxXob0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mP4XKjvZf27ubHD+m+O3tufrbZ8+5fDciy6fyJxG3mUN+QvXUO+9hPd07FLW7yV0ZVRi8Uz6ebvHjR6PvoEBOfFAElCezrdILQHOOaViGUUJSb3WsldDZd8E1IdWFqRIUnJkXtm+GGb1rCGgv9FeIXkyMII1i4wUAMzyb6Kmayc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z4bdam1A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UIIxXob0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E7EC4CEF5;
-	Wed,  3 Dec 2025 16:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z4bdam1A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55419C4CEF5;
+	Wed,  3 Dec 2025 16:54:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780892;
-	bh=zqCmK8HdnNshQA8R3eY5Ai680SFVO5m1DJDlhAVyuWA=;
+	s=korg; t=1764780895;
+	bh=+yX0p1Bbs5ubaVEVkZYf+aIiArWI/Gq5opyNBLmqKcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UIIxXob0cHkWDflC/7HJ8auvvhyCJnwc652cSVD/DCvVe+6kzwSiw3Wb/uHqlo9Ql
-	 yTM4c/EqyuAltU2G/NIPTT4KOIPqAcKFwidF7H0RyNiPMRVQuCfk1t/9DUZv53hWZL
-	 j6iYmNy4TMCRZvoSc24oR7PqZ1K/BdR1xXnTk+74=
+	b=Z4bdam1Ao4Boi/rXTBun0s0JtgUax+gHaV+NQmt3M4yRDGUZKJzr1dRUThAek0g2w
+	 qa2vvaz/jy4XyX3b4jLJ1PRgEJAgBddREmtE/tWf7Yg4XC88kYTvfF/Ary9bQhDcQT
+	 3slnMg/uv5M+iP+GAhIniL969UT/MJIuYgc9YSo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
-	"David Hildenbrand (Red Hat)" <david@kernel.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/132] mm/huge_memory: fix NULL pointer deference when splitting folio
-Date: Wed,  3 Dec 2025 16:29:59 +0100
-Message-ID: <20251203152347.757649744@linuxfoundation.org>
+	Yosry Ahmed <yosry.ahmed@linux.dev>
+Subject: [PATCH 6.12 121/132] KVM: SVM: Introduce svm_recalc_lbr_msr_intercepts()
+Date: Wed,  3 Dec 2025 16:30:00 +0100
+Message-ID: <20251203152347.796828790@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -54,68 +49,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Yang <richard.weiyang@gmail.com>
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
 
-[ Upstream commit cff47b9e39a6abf03dde5f4f156f841b0c54bba0 ]
+Introduce a helper updating the intercepts for LBR MSRs, similar to the
+one introduced upstream by commit 160f143cc131 ("KVM: SVM: Manually
+recalc all MSR intercepts on userspace MSR filter change"). The main
+difference is that this version uses set_msr_interception(), which has
+inverted polarity compared to svm_set_intercept_for_msr().
 
-Commit c010d47f107f ("mm: thp: split huge page to any lower order pages")
-introduced an early check on the folio's order via mapping->flags before
-proceeding with the split work.
+This is intended to simplify incoming backports. No functional changes
+intended.
 
-This check introduced a bug: for shmem folios in the swap cache and
-truncated folios, the mapping pointer can be NULL.  Accessing
-mapping->flags in this state leads directly to a NULL pointer dereference.
-
-This commit fixes the issue by moving the check for mapping != NULL before
-any attempt to access mapping->flags.
-
-Link: https://lkml.kernel.org/r/20251119235302.24773-1-richard.weiyang@gmail.com
-Fixes: c010d47f107f ("mm: thp: split huge page to any lower order pages")
-Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ applied fix to split_huge_page_to_list_to_order() instead of __folio_split() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |   17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ arch/x86/kvm/svm/svm.c |   32 +++++++++++++++++++++-----------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3404,6 +3404,16 @@ int split_huge_page_to_list_to_order(str
- 	if (new_order >= folio_order(folio))
- 		return -EINVAL;
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -995,18 +995,31 @@ void svm_copy_lbrs(struct vmcb *to_vmcb,
+ 	vmcb_mark_dirty(to_vmcb, VMCB_LBR);
+ }
  
-+	/*
-+	 * Folios that just got truncated cannot get split. Signal to the
-+	 * caller that there was a race.
-+	 *
-+	 * TODO: this will also currently refuse shmem folios that are in the
-+	 * swapcache.
-+	 */
-+	if (!is_anon && !folio->mapping)
-+		return -EBUSY;
+-void svm_enable_lbrv(struct kvm_vcpu *vcpu)
++static void svm_recalc_lbr_msr_intercepts(struct kvm_vcpu *vcpu)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
++	bool intercept = !(svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK);
+ 
+-	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 1, 1);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 1, 1);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP,
++			     !intercept, !intercept);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP,
++			     !intercept, !intercept);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP,
++			     !intercept, !intercept);
++	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP,
++			     !intercept, !intercept);
+ 
+ 	if (sev_es_guest(vcpu->kvm))
+-		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_DEBUGCTLMSR, 1, 1);
++		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_DEBUGCTLMSR,
++				     !intercept, !intercept);
++}
 +
- 	if (is_anon) {
- 		/* order-1 is not supported for anonymous THP. */
- 		if (new_order == 1) {
-@@ -3466,13 +3476,6 @@ int split_huge_page_to_list_to_order(str
- 		gfp_t gfp;
++void svm_enable_lbrv(struct kvm_vcpu *vcpu)
++{
++	struct vcpu_svm *svm = to_svm(vcpu);
++
++	svm->vmcb->control.virt_ext |= LBR_CTL_ENABLE_MASK;
++	svm_recalc_lbr_msr_intercepts(vcpu);
  
- 		mapping = folio->mapping;
--
--		/* Truncated ? */
--		if (!mapping) {
--			ret = -EBUSY;
--			goto out;
--		}
--
- 		min_order = mapping_min_folio_order(folio->mapping);
- 		if (new_order < min_order) {
- 			VM_WARN_ONCE(1, "Cannot split mapped folio below min-order: %u",
+ 	/* Move the LBR msrs to the vmcb02 so that the guest can see them. */
+ 	if (is_guest_mode(vcpu))
+@@ -1020,10 +1033,7 @@ static void svm_disable_lbrv(struct kvm_
+ 	KVM_BUG_ON(sev_es_guest(vcpu->kvm), vcpu->kvm);
+ 
+ 	svm->vmcb->control.virt_ext &= ~LBR_CTL_ENABLE_MASK;
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHFROMIP, 0, 0);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTBRANCHTOIP, 0, 0);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTFROMIP, 0, 0);
+-	set_msr_interception(vcpu, svm->msrpm, MSR_IA32_LASTINTTOIP, 0, 0);
++	svm_recalc_lbr_msr_intercepts(vcpu);
+ 
+ 	/*
+ 	 * Move the LBR msrs back to the vmcb01 to avoid copying them
 
 
