@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A5B35E533;
-	Wed,  3 Dec 2025 16:27:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B3C35E523;
+	Wed,  3 Dec 2025 16:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779230; cv=none; b=MFcRzU82qEgPyueP1wmV+KrT9dLl03jSr258e0na23YFt7KLFJgOsuVyqym3FGXbv4bfi1oo4YyVshB+cv0+S+8xCi1HFrOmXKex8R8hqzeg55iCvO0zzAHPAcB8qezoUEc+dNA8fg11tYSRh5q6jg8xZxpQCNKeuEeRdgP1tog=
+	t=1764779233; cv=none; b=VPAQqXbaxo3RnjvSzsGT6OUVsX6Mi0iZ0//Dcu2vCQOE0iZ8HxVvXKqUXCbL1ZhwsIWNrHn3eOy0jFYshKa95mkd504Go/BUWZyQ0U5HzYr7CW4zieFLGBZVU4ixaGi+/uzwj3oDmX7AjcZj8K58aQNdh5yZzeieAsNfyoQMPec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779230; c=relaxed/simple;
-	bh=yczbnw6GLYbC44TmxzyGwMNp9Ki4slutU+7A+3XtSAo=;
+	s=arc-20240116; t=1764779233; c=relaxed/simple;
+	bh=wneHHsXu1XVwgEbXkDcXBLBAEY9rZ0/HuVXjVStNW4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q+GITomD3amXSBa74ZIMg0Nvr7HgXWaVHWwK/GSO07pijDC9zSuC10Cae+v4pQ7Kprv2UBLxItvQPFpvDu6mncehl3SOOUb+Z0y2pjrd7+ihE00GyVQQQxe+pDOkaD4LH/pQI0pqJWbTyh/3afB+4p6+Xo+qbVlzvm29dv7HXQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgNbcW5X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U2q9tZDOsdAMvcdEKyCOmQ1h9dHqfDe+ZCWlYdWS2xw2esHig2KEQ1yHnN8sz9QoeZvNwERIQmvSSpqsFFORGxjauYRUsOTdqkrgRJQ8OfxkqdvfmnPI4ysKBCCR3pJtEjnicBNfWhq2kTrhzri4rpJt5aAUTmMEVvPbH5TS52Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUyZtlbT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgNbcW5X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75054C4CEF5;
-	Wed,  3 Dec 2025 16:27:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUyZtlbT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E85CC4CEF5;
+	Wed,  3 Dec 2025 16:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779229;
-	bh=yczbnw6GLYbC44TmxzyGwMNp9Ki4slutU+7A+3XtSAo=;
+	s=korg; t=1764779233;
+	bh=wneHHsXu1XVwgEbXkDcXBLBAEY9rZ0/HuVXjVStNW4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgNbcW5X84qjIHf5j0fYI35Tnn6CsDgBdHC2v9k5GvUE+hZLyhxq5oAyQOPbz0jVp
-	 ShwyJW3B5SJRd5wtw25B790SBtfLlO8Ad/cm3UHTUHSk0vc+e3ZYvP4ICKm5BxjL4O
-	 kglpLGGeZUpJAebx2dNu7cuD944F6rV6PK7KnrFM=
+	b=EUyZtlbTZZbGis/uoi2gv3evu2mZ0GCK+L4NFKJR9m5j9UiXRW6b2gQjuL/rudB8W
+	 OcXNd7yXmalLeVUIzYV6Z0Bk5kP+AsPPj4ZB/c/pvVxRJd5wngJy/OKlCynPgEYNpE
+	 CQof7OByWxOQOk0Re4g3uob0+NnlWZ4mGiOLAMtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paulk@sys-base.io>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Guoli An <anguoli@uniontech.com>,
+	Cryolitia PukNgae <cryolitia@uniontech.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/568] media: verisilicon: Explicitly disable selection api ioctls for decoders
-Date: Wed,  3 Dec 2025 16:23:16 +0100
-Message-ID: <20251203152447.831041006@linuxfoundation.org>
+Subject: [PATCH 6.1 195/568] ALSA: usb-audio: apply quirk for MOONDROP Quark2
+Date: Wed,  3 Dec 2025 16:23:17 +0100
+Message-ID: <20251203152447.867809202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,61 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Kocialkowski <paulk@sys-base.io>
+From: Cryolitia PukNgae <cryolitia@uniontech.com>
 
-[ Upstream commit 73d50aa92f28ee8414fbfde011974fce970b82cc ]
+[ Upstream commit a73349c5dd27bc544b048e2e2c8ef6394f05b793 ]
 
-Call the dedicated v4l2_disable_ioctl helper instead of manually
-checking whether the current context is an encoder for the selection
-api ioctls.
+It reports a MIN value -15360 for volume control, but will mute when
+setting it less than -14208
 
-Signed-off-by: Paul Kocialkowski <paulk@sys-base.io>
-Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Tested-by: Guoli An <anguoli@uniontech.com>
+Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20250903-sound-v1-4-d4ca777b8512@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro_drv.c  | 2 ++
- drivers/media/platform/verisilicon/hantro_v4l2.c | 6 ++----
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ sound/usb/mixer.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index 69a2442f31223..a35b6ae62d585 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -819,6 +819,8 @@ static int hantro_add_func(struct hantro_dev *vpu, unsigned int funcid)
- 		vpu->decoder = func;
- 		v4l2_disable_ioctl(vfd, VIDIOC_TRY_ENCODER_CMD);
- 		v4l2_disable_ioctl(vfd, VIDIOC_ENCODER_CMD);
-+		v4l2_disable_ioctl(vfd, VIDIOC_G_SELECTION);
-+		v4l2_disable_ioctl(vfd, VIDIOC_S_SELECTION);
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index 4cded91d22a8d..d258c7324fcc7 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -1191,6 +1191,13 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
+ 			cval->res = 1;
+ 		}
+ 		break;
++	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
++		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
++			usb_audio_info(chip,
++				"set volume quirk for MOONDROP Quark2\n");
++			cval->min = -14208; /* Mute under it */
++		}
++		break;
  	}
+ }
  
- 	video_set_drvdata(vfd, vpu);
-diff --git a/drivers/media/platform/verisilicon/hantro_v4l2.c b/drivers/media/platform/verisilicon/hantro_v4l2.c
-index b2da48936e3f1..31ae6750321c4 100644
---- a/drivers/media/platform/verisilicon/hantro_v4l2.c
-+++ b/drivers/media/platform/verisilicon/hantro_v4l2.c
-@@ -629,8 +629,7 @@ static int vidioc_g_selection(struct file *file, void *priv,
- 	struct hantro_ctx *ctx = fh_to_ctx(priv);
- 
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
- 
- 	switch (sel->target) {
-@@ -662,8 +661,7 @@ static int vidioc_s_selection(struct file *file, void *priv,
- 	struct vb2_queue *vq;
- 
- 	/* Crop only supported on source. */
--	if (!ctx->is_encoder ||
--	    sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
-+	if (sel->type != V4L2_BUF_TYPE_VIDEO_OUTPUT)
- 		return -EINVAL;
- 
- 	/* Change not allowed if the queue is streaming. */
 -- 
 2.51.0
 
