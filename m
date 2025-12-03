@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E18318131;
-	Wed,  3 Dec 2025 15:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D60231D38F;
+	Wed,  3 Dec 2025 15:48:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776895; cv=none; b=PIgyRmyn6CimwOFNt0GgdQ17TyMs7YhGa+Stl5ydrVQN8KJK7eFd/Cv+imc8xZs5ZN+KfVnxQ+MfhIVrFnNXsNFEKtNTmnOlPxOrhyzXdx1rtF+z8NE1xCn+euzqrAI14MqKGroEBaVpEBM0wlaqBXuMnlCpKCOa0e/WILTTAIw=
+	t=1764776899; cv=none; b=uq9siNrSJbAAcfvQp4ALV5h9B5PUU9hLFL9cIvHWR51R65hdTkgjSd3BD20Uj0yr/5lRSr8eB3spYN0jnul3sZct8yqLeCpaG7neB3piFXCBU95bMqoTryqHVFMJ16PAi3aYsjEVVYO4dZMx4t08ff+76Zc9zpxtvI2MxoP6Vz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776895; c=relaxed/simple;
-	bh=chDk7tYDTScLhpd3/Ulxj05Hc5CcRyCgnpNIGRBuQSs=;
+	s=arc-20240116; t=1764776899; c=relaxed/simple;
+	bh=dT3a4OV/zUkPDe9bH2IuBgCPohnsLp9P24lGrHKutkY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mICbr8jTgnr2sWSFlqljxjyPNH6mPXt/Wr3Nr10zaX+fNF9QgzgNBSM50xhkGm+apKKOEGlfqvEKmJJOLbJ75oO8h6nlc1ohfKN3edbXpk4RJMUF1CyRN1tL7gqEMclH8pgtgMMCCqvaHIKxgRKtVRLT0kYeRrqmatxG+o9Z0BU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEW02NmN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YqZhBA9gHpy+x0w+tv7DjBN1AaxP3AcVUEXq9TGUKdphrvaQUaq5c0Ec9Ub3ffQpbzYG8uVXlzVUH4N2fJ6Th18UeeheZcK2nFENx37/i43EyURpVKADugcFfDoqv22Xwhnjcpv8zD2XaLhJM02uAUgVWhMYHCYLsNyEQIBj2yU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/2Lffwr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEW02NmN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC28C4CEF5;
-	Wed,  3 Dec 2025 15:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/2Lffwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3364CC4CEF5;
+	Wed,  3 Dec 2025 15:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776895;
-	bh=chDk7tYDTScLhpd3/Ulxj05Hc5CcRyCgnpNIGRBuQSs=;
+	s=korg; t=1764776898;
+	bh=dT3a4OV/zUkPDe9bH2IuBgCPohnsLp9P24lGrHKutkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WEW02NmNmhH4wJxkkGgowAOMFABIoDWBof92J8dIJ8DdC5I6FAriXkmnbPVGcxlfR
-	 Iwr6iIwWw9KhzG3It1Jn567LQYn/SbTpG6eeHwrRlAFHLKBLprmlH4ty3rg7uctb2F
-	 34ZcvA0AhG4rb6w3v0vFpOYo1xQo4ISpdRI4Rgho=
+	b=o/2LffwrZbEpd9tkSvTgGWGrQuRGwWr0aASp3fMApWw99RpTtxhTBNtMVfhxrh1in
+	 A3R9JsGW3744BXoYpoEVAHotS06imprtty5saA+6lescukRckVG0xOmjxmwfEr6Iv8
+	 2qoUXCvS3Ylk0ifNm2CHemPE4gclgUJm2g8JqNu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 002/146] can: gs_usb: gs_usb_xmit_callback(): fix handling of failed transmitted URBs
-Date: Wed,  3 Dec 2025 16:26:20 +0100
-Message-ID: <20251203152346.550648565@linuxfoundation.org>
+Subject: [PATCH 6.17 020/146] net: sxgbe: fix potential NULL dereference in sxgbe_rx()
+Date: Wed,  3 Dec 2025 16:26:38 +0100
+Message-ID: <20251203152347.208028299@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -50,57 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 516a0cd1c03fa266bb67dd87940a209fd4e53ce7 ]
+[ Upstream commit f5bce28f6b9125502abec4a67d68eabcd24b3b17 ]
 
-The driver lacks the cleanup of failed transfers of URBs. This reduces the
-number of available URBs per error by 1. This leads to reduced performance
-and ultimately to a complete stop of the transmission.
+Currently, when skb is null, the driver prints an error and then
+dereferences skb on the next line.
 
-If the sending of a bulk URB fails do proper cleanup:
-- increase netdev stats
-- mark the echo_sbk as free
-- free the driver's context and do accounting
-- wake the send queue
+To fix this, let's add a 'break' after the error message to switch
+to sxgbe_rx_refill(), which is similar to the approach taken by the
+other drivers in this particular case, e.g. calxeda with xgmac_rx().
 
-Closes: https://github.com/candle-usb/candleLight_fw/issues/187
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-1-a29b42eacada@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Found during a code review.
+
+Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251121123834.97748-1-aleksei.kodanev@bell-sw.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 69b8d6da651bf..fa9bab8c89aea 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -750,8 +750,21 @@ static void gs_usb_xmit_callback(struct urb *urb)
- 	struct gs_can *dev = txc->dev;
- 	struct net_device *netdev = dev->netdev;
+diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+index 75bad561b3525..849c5a6c2af1e 100644
+--- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
++++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+@@ -1521,8 +1521,10 @@ static int sxgbe_rx(struct sxgbe_priv_data *priv, int limit)
  
--	if (urb->status)
--		netdev_info(netdev, "usb xmit fail %u\n", txc->echo_id);
-+	if (!urb->status)
-+		return;
-+
-+	if (urb->status != -ESHUTDOWN && net_ratelimit())
-+		netdev_info(netdev, "failed to xmit URB %u: %pe\n",
-+			    txc->echo_id, ERR_PTR(urb->status));
-+
-+	netdev->stats.tx_dropped++;
-+	netdev->stats.tx_errors++;
-+
-+	can_free_echo_skb(netdev, txc->echo_id, NULL);
-+	gs_free_tx_context(txc);
-+	atomic_dec(&dev->active_tx_urbs);
-+
-+	netif_wake_queue(netdev);
- }
+ 		skb = priv->rxq[qnum]->rx_skbuff[entry];
  
- static netdev_tx_t gs_can_start_xmit(struct sk_buff *skb,
+-		if (unlikely(!skb))
++		if (unlikely(!skb)) {
+ 			netdev_err(priv->dev, "rx descriptor is not consistent\n");
++			break;
++		}
+ 
+ 		prefetch(skb->data - NET_IP_ALIGN);
+ 		priv->rxq[qnum]->rx_skbuff[entry] = NULL;
 -- 
 2.51.0
 
