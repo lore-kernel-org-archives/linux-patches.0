@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2290313E00;
-	Wed,  3 Dec 2025 15:47:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FBE31960B;
+	Wed,  3 Dec 2025 15:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776864; cv=none; b=aXQG0efkAHMSbJRVhd+Rkf9tIOIqp5k6u9x/pp+Lbpqv3zBnzoyATJBMN8C++nhCPVYXsAdDnmzX7fUI12D8C/9Fj4kZxmQiq8r9RtQk71o4XY4KsyO7D36UYToT3jc0G5xT60xwJ82VYO9WpH/8cbGQPOdmPQS0W/mBOAe9dg0=
+	t=1764776867; cv=none; b=mLcZMkCcl3Bp/SdOKTV76zx98wnvDTlyu1iEzTFoMAtaGihdQbGgUxwu3sOHM7inV19rOVHPll1UVm7+0Z3LnBgv3WCjGZJLyg1uZAXmTWhMJZyE5GJQMRR2wgxu9KZl7f9ta0JkhTOXhuPimxcFV4Bd7Wv4p5aYyNvOU/UfDcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776864; c=relaxed/simple;
-	bh=pzsk2o6X58kH3i+XJYFvbxlW8B2J24UuIVMiu8s+TkA=;
+	s=arc-20240116; t=1764776867; c=relaxed/simple;
+	bh=QimqsfUzCweCEqCq9rhLXicdPISupUGqItdAZAIGcg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dSjnpum19hxy6E9yQepQ0D/I/40zfEZfJLj336dChmXhXvd2nUr2ST0LXPFaD0Irve0TJNl+J/Aij81rKoaKydo9MWuf4kQnWexE3BNsC4wpveEsuCr7eP/xKezxhDa1BgHECPq0sRrAJUFj1kxy74uHS4j0ngwuKw2ZYxmjNeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=09MQhFpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QbPo04JTkZ1AVpIGrltVhDoKxf/4ANJH8k9ORJDDx6b2dFuOMa0KznIa5Bqp3nn3tRLL7K67GMhl3m7JyHMzdOKxqjgssl2pX/oI3OvKB3VBxEraRJHDN9OOVcqe+7GJt0+PgP7Kui0ajV844SXFrt/TUkaViMtG4APuqmI0Uao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcJyLRdz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="09MQhFpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6A1C4CEF5;
-	Wed,  3 Dec 2025 15:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcJyLRdz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89498C4CEF5;
+	Wed,  3 Dec 2025 15:47:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776863;
-	bh=pzsk2o6X58kH3i+XJYFvbxlW8B2J24UuIVMiu8s+TkA=;
+	s=korg; t=1764776867;
+	bh=QimqsfUzCweCEqCq9rhLXicdPISupUGqItdAZAIGcg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09MQhFpaghzPVBg/DnyoAKq3vTA0Q2AJZAA7S9YLzHzp5LEDzxJmY6pIfHlcm6AqX
-	 GkvSU8ufMmHyEwW0So3uwFrVzrrIkfo+PgC4pN3c3iCbuDJQCoSYgg0THtfWUFebCm
-	 ur94lwJW95iaQUab1GHFCzG8K4jgVxe/I6w5rb4U=
+	b=LcJyLRdz5DhIVOAF0wAdiZRHRJQigYkhqqq98B+52JYXOReR+6SDx5Dn4ssrZetKl
+	 UQUcaGohAGQsqF19YTXVlxmwE31er3FyehiuN2gbdOpYNiCMwiBIk/0S2PF3IuIpJs
+	 PIKvQCirlcyRxafyIIDbFERHvVNnOE4hOL6zfEVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 010/146] veth: reduce XDP no_direct return section to fix race
-Date: Wed,  3 Dec 2025 16:26:28 +0100
-Message-ID: <20251203152346.842079621@linuxfoundation.org>
+Subject: [PATCH 6.17 011/146] drm/bridge: sii902x: Fix HDMI detection with DRM_BRIDGE_ATTACH_NO_CONNECTOR
+Date: Wed,  3 Dec 2025 16:26:29 +0100
+Message-ID: <20251203152346.878014361@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,68 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesper Dangaard Brouer <hawk@kernel.org>
+From: Devarsh Thakkar <devarsht@ti.com>
 
-[ Upstream commit a14602fcae17a3f1cb8a8521bedf31728f9e7e39 ]
+[ Upstream commit d6732ef4ab252e5753be7acad87b0a91cfd06953 ]
 
-As explain in commit fa349e396e48 ("veth: Fix race with AF_XDP exposing
-old or uninitialized descriptors") for veth there is a chance after
-napi_complete_done() that another CPU can manage start another NAPI
-instance running veth_pool(). For NAPI this is correctly handled as the
-napi_schedule_prep() check will prevent multiple instances from getting
-scheduled, but for the remaining code in veth_pool() this can run
-concurrent with the newly started NAPI instance.
+The sii902x driver was caching HDMI detection state in a sink_is_hdmi field
+and checking it in mode_set() to determine whether to set HDMI or DVI
+output mode. This approach had two problems:
 
-The problem/race is that xdp_clear_return_frame_no_direct() isn't
-designed to be nested.
+1. With DRM_BRIDGE_ATTACH_NO_CONNECTOR (used by modern display drivers like
+TIDSS), the bridge's get_modes() is never called. Instead, the
+drm_bridge_connector helper calls the bridge's edid_read() and updates the
+connector itself. This meant sink_is_hdmi was never populated, causing the
+driver to default to DVI mode and breaking HDMI audio.
 
-Prior to commit 401cb7dae813 ("net: Reference bpf_redirect_info via
-task_struct on PREEMPT_RT.") the temporary BPF net context
-bpf_redirect_info was stored per CPU, where this wasn't an issue. Since
-this commit the BPF context is stored in 'current' task_struct. When
-running veth in threaded-NAPI mode, then the kthread becomes the storage
-area. Now a race exists between two concurrent veth_pool() function calls
-one exiting NAPI and one running new NAPI, both using the same BPF net
-context.
+2. The mode_set() callback doesn't receive atomic state or connector
+pointer, making it impossible to check connector->display_info.is_hdmi
+directly at that point.
 
-Race is when another CPU gets within the xdp_set_return_frame_no_direct()
-section before exiting veth_pool() calls the clear-function
-xdp_clear_return_frame_no_direct().
+Fix this by moving the HDMI vs DVI decision from mode_set() to
+atomic_enable(), where we can access the connector via
+drm_atomic_get_new_connector_for_encoder(). This works for both connector
+models:
 
-Fixes: 401cb7dae8130 ("net: Reference bpf_redirect_info via task_struct on PREEMPT_RT.")
-Signed-off-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/176356963888.337072.4805242001928705046.stgit@firesoul
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+- With DRM_BRIDGE_ATTACH_NO_CONNECTOR: Returns the drm_bridge_connector
+  created by the display driver, which has already been updated by the
+helper's call to drm_edid_connector_update()
+
+- Without DRM_BRIDGE_ATTACH_NO_CONNECTOR (legacy): Returns the connector
+  embedded in sii902x struct, which gets updated by the bridge's own
+get_modes()
+
+Fixes: 3de47e1309c2 ("drm/bridge: sii902x: use display info is_hdmi")
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20251030151635.3019864-1-devarsht@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/veth.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/sii902x.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/veth.c b/drivers/net/veth.c
-index 35dd89aff4a94..cc502bf022d55 100644
---- a/drivers/net/veth.c
-+++ b/drivers/net/veth.c
-@@ -975,6 +975,9 @@ static int veth_poll(struct napi_struct *napi, int budget)
+diff --git a/drivers/gpu/drm/bridge/sii902x.c b/drivers/gpu/drm/bridge/sii902x.c
+index d537b1d036fb0..1f0aba28ad1e1 100644
+--- a/drivers/gpu/drm/bridge/sii902x.c
++++ b/drivers/gpu/drm/bridge/sii902x.c
+@@ -179,7 +179,6 @@ struct sii902x {
+ 	struct drm_connector connector;
+ 	struct gpio_desc *reset_gpio;
+ 	struct i2c_mux_core *i2cmux;
+-	bool sink_is_hdmi;
+ 	u32 bus_width;
  
- 	if (stats.xdp_redirect > 0)
- 		xdp_do_flush();
-+	if (stats.xdp_tx > 0)
-+		veth_xdp_flush(rq, &bq);
-+	xdp_clear_return_frame_no_direct();
- 
- 	if (done < budget && napi_complete_done(napi, done)) {
- 		/* Write rx_notify_masked before reading ptr_ring */
-@@ -987,10 +990,6 @@ static int veth_poll(struct napi_struct *napi, int budget)
- 		}
+ 	/*
+@@ -315,8 +314,6 @@ static int sii902x_get_modes(struct drm_connector *connector)
+ 		drm_edid_free(drm_edid);
  	}
  
--	if (stats.xdp_tx > 0)
--		veth_xdp_flush(rq, &bq);
--	xdp_clear_return_frame_no_direct();
+-	sii902x->sink_is_hdmi = connector->display_info.is_hdmi;
 -
- 	/* Release backpressure per NAPI poll */
- 	smp_rmb(); /* Paired with netif_tx_stop_queue set_bit */
- 	if (peer_txq && netif_tx_queue_stopped(peer_txq)) {
+ 	return num;
+ }
+ 
+@@ -342,9 +339,17 @@ static void sii902x_bridge_atomic_enable(struct drm_bridge *bridge,
+ 					 struct drm_atomic_state *state)
+ {
+ 	struct sii902x *sii902x = bridge_to_sii902x(bridge);
++	struct drm_connector *connector;
++	u8 output_mode = SII902X_SYS_CTRL_OUTPUT_DVI;
++
++	connector = drm_atomic_get_new_connector_for_encoder(state, bridge->encoder);
++	if (connector && connector->display_info.is_hdmi)
++		output_mode = SII902X_SYS_CTRL_OUTPUT_HDMI;
+ 
+ 	mutex_lock(&sii902x->mutex);
+ 
++	regmap_update_bits(sii902x->regmap, SII902X_SYS_CTRL_DATA,
++			   SII902X_SYS_CTRL_OUTPUT_MODE, output_mode);
+ 	regmap_update_bits(sii902x->regmap, SII902X_PWR_STATE_CTRL,
+ 			   SII902X_AVI_POWER_STATE_MSK,
+ 			   SII902X_AVI_POWER_STATE_D(0));
+@@ -359,16 +364,12 @@ static void sii902x_bridge_mode_set(struct drm_bridge *bridge,
+ 				    const struct drm_display_mode *adj)
+ {
+ 	struct sii902x *sii902x = bridge_to_sii902x(bridge);
+-	u8 output_mode = SII902X_SYS_CTRL_OUTPUT_DVI;
+ 	struct regmap *regmap = sii902x->regmap;
+ 	u8 buf[HDMI_INFOFRAME_SIZE(AVI)];
+ 	struct hdmi_avi_infoframe frame;
+ 	u16 pixel_clock_10kHz = adj->clock / 10;
+ 	int ret;
+ 
+-	if (sii902x->sink_is_hdmi)
+-		output_mode = SII902X_SYS_CTRL_OUTPUT_HDMI;
+-
+ 	buf[0] = pixel_clock_10kHz & 0xff;
+ 	buf[1] = pixel_clock_10kHz >> 8;
+ 	buf[2] = drm_mode_vrefresh(adj);
+@@ -384,11 +385,6 @@ static void sii902x_bridge_mode_set(struct drm_bridge *bridge,
+ 
+ 	mutex_lock(&sii902x->mutex);
+ 
+-	ret = regmap_update_bits(sii902x->regmap, SII902X_SYS_CTRL_DATA,
+-				 SII902X_SYS_CTRL_OUTPUT_MODE, output_mode);
+-	if (ret)
+-		goto out;
+-
+ 	ret = regmap_bulk_write(regmap, SII902X_TPI_VIDEO_DATA, buf, 10);
+ 	if (ret)
+ 		goto out;
 -- 
 2.51.0
 
