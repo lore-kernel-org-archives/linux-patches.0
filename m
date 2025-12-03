@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3DED35F8B2;
-	Wed,  3 Dec 2025 16:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969A535F8CF;
+	Wed,  3 Dec 2025 16:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780149; cv=none; b=eKP1HjdSOMHyDIig7BF8RYzlfKBL4dTAA8Hc8YtgxLAI/ZINNWXgQJYg5LHp9wlBuPCJCf6eT13gb4GDRfWf+FFYf0f+grT1qE7oW3EE9wQmeV1oTB7TrlBvwVbZfSrYoUqqNK7thenMcXrvNN3RKCZFd4cwF9vUstmWMuCRylY=
+	t=1764780152; cv=none; b=spIknFU+v2J+hOLEE1Mj3FAD0KV6lJMM52nEIkDP3M2hxGVom6iNRHYNYsbhew4K64JXSGGAPaxcCaCOMoJxbCmRlSfBhkX/DYcPRMl145D73fKZRIj3wX5UhAMoOJOhgKDicB1RJG/EV78fS0bYtMJEDZp/nKhrIx3ll/pnYQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780149; c=relaxed/simple;
-	bh=2n5I/mDYhuQrkgpa/VyrtEP923Dgtf8bpJqZeY3UDYM=;
+	s=arc-20240116; t=1764780152; c=relaxed/simple;
+	bh=QkadBt5dhCGOomIvbpvyUhL4e8WjKoX7H9Q+9Pd+Ark=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kkyf3UkAT5iWtL6WMJu2MRRNFv78V5PlmxWz3PLmfI5KLya6WTW85ggh3fHSsGA53CJgHe9r1tHQhGEL/kYzT8WngulnGeKivhWlDzHhCfFpS5a/ZLvBxVpFTVoOh2xbhfVZTO4y8egHuiKh5186ciJ0xunlbqtmgV3ohhxTWCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z/zSEd2C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQ2jl0bnhGlXDo+5+dIahejCuK7JYoyhRfBHPCWlLdWqLl4hK/cNC6ZIKPN2qasoh5g3OTUIU90UTjuw726veodSotl4Z33WuDGxPppLHq0acUzFgr3WiqsYqthwacZlcIso3mVqmXMSe3LINLRbnHlys7US4evaJah1JSn9jS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfEIpuUW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z/zSEd2C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F92EC4CEF5;
-	Wed,  3 Dec 2025 16:42:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfEIpuUW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00314C4CEF5;
+	Wed,  3 Dec 2025 16:42:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780148;
-	bh=2n5I/mDYhuQrkgpa/VyrtEP923Dgtf8bpJqZeY3UDYM=;
+	s=korg; t=1764780152;
+	bh=QkadBt5dhCGOomIvbpvyUhL4e8WjKoX7H9Q+9Pd+Ark=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/zSEd2CnPyaCiZEPtBtKbf8ae+o4zVB1OucPdFp08hwEF/P6aJVoUlHLWGLQ2dKN
-	 4rhtmrJhzXpEU5SsTccWGElpxWbWYDtI1fyeisVyZIn+rokoH141NgtNkN0GojyDiv
-	 J3st1qDqX1XBEHAdl9bcQ3MWId5rjErJNpbk4dOg=
+	b=yfEIpuUW9VEw9LCCxdcOzTEhNK/3eOt6fsZ9FNPAwU4GGZp/apRiImy3lT1Hu8wGH
+	 TL1KP2ViQadhNJcM8SF/xVU/EpC6jzp7X4qoSo1z5aMmVxLWbO3bPc26ubJLuw0pW0
+	 rxGXDUHpXt2qSFelQsREwZcsXION9vI/PXyy2aCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Yang <lance.yang@linux.dev>,
-	Google Big Sleep <big-sleep-vuln-reports@google.com>,
-	David Hildenbrand <david@redhat.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
 	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 471/568] mm/secretmem: fix use-after-free race in fault handler
-Date: Wed,  3 Dec 2025 16:27:53 +0100
-Message-ID: <20251203152457.950870433@linuxfoundation.org>
+Subject: [PATCH 6.1 472/568] mm/mm_init: fix hash table order logging in alloc_large_system_hash()
+Date: Wed,  3 Dec 2025 16:27:54 +0100
+Message-ID: <20251203152457.987473219@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -56,66 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lance Yang <lance.yang@linux.dev>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-[ Upstream commit 6f86d0534fddfbd08687fa0f01479d4226bc3c3d ]
+[ Upstream commit 0d6c356dd6547adac2b06b461528e3573f52d953 ]
 
-When a page fault occurs in a secret memory file created with
-`memfd_secret(2)`, the kernel will allocate a new page for it, mark the
-underlying page as not-present in the direct map, and add it to the file
-mapping.
+When emitting the order of the allocation for a hash table,
+alloc_large_system_hash() unconditionally subtracts PAGE_SHIFT from log
+base 2 of the allocation size.  This is not correct if the allocation size
+is smaller than a page, and yields a negative value for the order as seen
+below:
 
-If two tasks cause a fault in the same page concurrently, both could end
-up allocating a page and removing the page from the direct map, but only
-one would succeed in adding the page to the file mapping.  The task that
-failed undoes the effects of its attempt by (a) freeing the page again
-and (b) putting the page back into the direct map.  However, by doing
-these two operations in this order, the page becomes available to the
-allocator again before it is placed back in the direct mapping.
+TCP established hash table entries: 32 (order: -4, 256 bytes, linear) TCP
+bind hash table entries: 32 (order: -2, 1024 bytes, linear)
 
-If another task attempts to allocate the page between (a) and (b), and the
-kernel tries to access it via the direct map, it would result in a
-supervisor not-present page fault.
+Use get_order() to compute the order when emitting the hash table
+information to correctly handle cases where the allocation size is smaller
+than a page:
 
-Fix the ordering to restore the direct map before the page is freed.
+TCP established hash table entries: 32 (order: 0, 256 bytes, linear) TCP
+bind hash table entries: 32 (order: 0, 1024 bytes, linear)
 
-Link: https://lkml.kernel.org/r/20251031120955.92116-1-lance.yang@linux.dev
-Fixes: 1507f51255c9 ("mm: introduce memfd_secret system call to create "secret" memory areas")
-Signed-off-by: Lance Yang <lance.yang@linux.dev>
-Reported-by: Google Big Sleep <big-sleep-vuln-reports@google.com>
-Closes: https://lore.kernel.org/linux-mm/CAEXGt5QeDpiHTu3K9tvjUTPqo+d-=wuCNYPa+6sWKrdQJ-ATdg@mail.gmail.com/
-Acked-by: David Hildenbrand <david@redhat.com>
+Link: https://lkml.kernel.org/r/20251028191020.413002-1-isaacmanjarres@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
 Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: David Hildenbrand <david@redhat.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[rppt: replaced folio with page in the patch and in the changelog]
+(cherry picked from commit 0d6c356dd6547adac2b06b461528e3573f52d953)
 Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/secretmem.c | 2 +-
+ mm/page_alloc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mm/secretmem.c b/mm/secretmem.c
-index 18954eae995fc..b570a6e25b6be 100644
---- a/mm/secretmem.c
-+++ b/mm/secretmem.c
-@@ -82,13 +82,13 @@ static vm_fault_t secretmem_fault(struct vm_fault *vmf)
- 		__SetPageUptodate(page);
- 		err = add_to_page_cache_lru(page, mapping, offset, gfp);
- 		if (unlikely(err)) {
--			put_page(page);
- 			/*
- 			 * If a split of large page was required, it
- 			 * already happened when we marked the page invalid
- 			 * which guarantees that this call won't fail
- 			 */
- 			set_direct_map_default_noflush(page);
-+			put_page(page);
- 			if (err == -EEXIST)
- 				goto retry;
+diff --git a/mm/page_alloc.c b/mm/page_alloc.c
+index 86066a2cf258a..d760b96604eca 100644
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -9225,7 +9225,7 @@ void *__init alloc_large_system_hash(const char *tablename,
+ 		panic("Failed to allocate %s hash table\n", tablename);
  
+ 	pr_info("%s hash table entries: %ld (order: %d, %lu bytes, %s)\n",
+-		tablename, 1UL << log2qty, ilog2(size) - PAGE_SHIFT, size,
++		tablename, 1UL << log2qty, get_order(size), size,
+ 		virt ? (huge ? "vmalloc hugepage" : "vmalloc") : "linear");
+ 
+ 	if (_hash_shift)
 -- 
 2.51.0
 
