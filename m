@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D176434AB0D;
-	Wed,  3 Dec 2025 16:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A28432ED4D;
+	Wed,  3 Dec 2025 16:43:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780222; cv=none; b=QnCPRgqVGHs/akoZG2+leSIpRVAxN7SVA1dysQMn8aIACojKOhXTr3tGRD9VXR+ZUpdr+R2ElUEbjuVnMM/ye+0ApnvwNGRXXOgUM41w2NstgPlK/qQp7gcF8zKhtoO0AVnCP3d49cCqqD+w2l7SO9rh0KWRc3bpI0ybYgAbvU4=
+	t=1764780226; cv=none; b=nmQy8u4DMEwY/ElXfRM4LuUZvXAzkgcFNMOf6jVUlTTWxbLsNA+5gkKNuObUCN/JIb2NcymR4+8srJS+4DA1ds+meRJZyZqeEPH111hu2hmBbFJKeNwakiQUSDFpS5ATMWn50QGWjE5eCe2HIVX6J84DYYt7qD5M/xyeumHxxNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780222; c=relaxed/simple;
-	bh=5ECccdfKmnwt0siobcRdJanmQ4L5Ugn46cOn00GRFpA=;
+	s=arc-20240116; t=1764780226; c=relaxed/simple;
+	bh=8Uxu+NFHa9q8noKCU1HQUsYeS4FMBEkWz5wZ9ZDVg/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WGLmrQWl3A5Lkd3+N6a+UfxIvmmzBMwjejoFPiXkPDt5nkmaQ2HHtl7SdY6I5GdL4qExd/vmxK10bl/Kjis0tqGy88sKA8ij9uHMze6UZD/ngP+Uzcy+Kip7na/H4NnIKtstkyzeOX07lneSxe94cEL+U6LaS06jdmdPjTy2lP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlIFTgWg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYXrNfUFijZeYqxSZU1njZk3lqYuonxhZt2Id7Wik5F+j9z3bevrxdS2+BYAGLc/6BY7ZYBFxtBSaadFPdFB02ZKbFjut+D3DxLbfq+r6Nu1gOJdyWxk1SuXI2yIl34bwzoH0SRDemd3MCQGoBD1Fp8j4r/DbxAKYltK5TREsEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQWJEQEZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlIFTgWg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0776AC4CEF5;
-	Wed,  3 Dec 2025 16:43:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQWJEQEZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5D2C116B1;
+	Wed,  3 Dec 2025 16:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780222;
-	bh=5ECccdfKmnwt0siobcRdJanmQ4L5Ugn46cOn00GRFpA=;
+	s=korg; t=1764780226;
+	bh=8Uxu+NFHa9q8noKCU1HQUsYeS4FMBEkWz5wZ9ZDVg/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlIFTgWg/GAxIA5x9fttdf3ChuITsPNNbFINPAsM8ExKltPaCYZSu9rgtSjtOPJlG
-	 1baW1SVLwrCk6ea478lcxTXTxQZvxVaJ1iulAz87sbNTlJtEwE+yn4RR0V/vJmXNiZ
-	 TGyVHtpx98HvvtwefUrkjGDH3oUoXj0t+wYWCsRQ=
+	b=HQWJEQEZQuLODAdi7umHaLb4fJ/TvOp3mxB6S3DpV41LYcaXvh2gyjza+YIBO9Sia
+	 EDKNOKITiJEmrwHzaIJhNrkHEgOoQGXZOMK9cp5iBbTuVFGASRpt+4fy0+U+tjTqcJ
+	 id4g6zNz1oQY5dLJqox5ts7iOnWEkcKbO7j/5t/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Pankaj Raghav <p.raghav@samsung.com>,
-	David Howells <dhowells@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Dave Chinner <dchinner@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Kiryl Shutsemau <kas@kernel.org>,
+	Alejandro Colomar <alx@kernel.org>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 491/568] filemap: cap PTE range to be created to allowed zero fill in folio_map_range()
-Date: Wed,  3 Dec 2025 16:28:13 +0100
-Message-ID: <20251203152458.698936689@linuxfoundation.org>
+Subject: [PATCH 6.1 461/568] kernel.h: Move ARRAY_SIZE() to a separate header
+Date: Wed,  3 Dec 2025 16:27:43 +0100
+Message-ID: <20251203152457.589244778@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -59,74 +53,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pankaj Raghav <p.raghav@samsung.com>
+From: Alejandro Colomar <alx@kernel.org>
 
-[ Upstream commit 743a2753a02e805347969f6f89f38b736850d808 ]
+[ Upstream commit 3cd39bc3b11b8d34b7d7c961a35fdfd18b0ebf75 ]
 
-Usually the page cache does not extend beyond the size of the inode,
-therefore, no PTEs are created for folios that extend beyond the size.
+Touching files so used for the kernel,
+forces 'make' to recompile most of the kernel.
 
-But with LBS support, we might extend page cache beyond the size of the
-inode as we need to guarantee folios of minimum order. While doing a
-read, do_fault_around() can create PTEs for pages that lie beyond the
-EOF leading to incorrect error return when accessing a page beyond the
-mapped file.
+Having those definitions in more granular files
+helps avoid recompiling so much of the kernel.
 
-Cap the PTE range to be created for the page cache up to the end of
-file(EOF) in filemap_map_pages() so that return error codes are consistent
-with POSIX[1] for LBS configurations.
-
-generic/749 has been created to trigger this edge case. This also fixes
-generic/749 for tmpfs with huge=always on systems with 4k base page size.
-
-[1](from mmap(2))  SIGBUS
-    Attempted access to a page of the buffer that lies beyond the end
-    of the mapped file.  For an explanation of the treatment  of  the
-    bytes  in  the  page that corresponds to the end of a mapped file
-    that is not a multiple of the page size, see NOTES.
-
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
-Link: https://lore.kernel.org/r/20240822135018.1931258-6-kernel@pankajraghav.com
-Tested-by: David Howells <dhowells@redhat.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Signed-off-by: Alejandro Colomar <alx@kernel.org>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230817143352.132583-2-lucas.segarra.fernandez@intel.com
+[andy: reduced to cover only string.h for now]
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Stable-dep-of: 896f1a2493b5 ("net: qlogic/qede: fix potential out-of-bounds read in qede_tpa_cont() and qede_tpa_end()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/filemap.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ include/linux/array_size.h | 13 +++++++++++++
+ include/linux/kernel.h     |  7 +------
+ include/linux/string.h     |  1 +
+ 3 files changed, 15 insertions(+), 6 deletions(-)
+ create mode 100644 include/linux/array_size.h
 
-diff --git a/mm/filemap.c b/mm/filemap.c
-index b77f534dfad35..40c186c7210bf 100644
---- a/mm/filemap.c
-+++ b/mm/filemap.c
-@@ -3460,7 +3460,7 @@ vm_fault_t filemap_map_pages(struct vm_fault *vmf,
- 	struct vm_area_struct *vma = vmf->vma;
- 	struct file *file = vma->vm_file;
- 	struct address_space *mapping = file->f_mapping;
--	pgoff_t last_pgoff = start_pgoff;
-+	pgoff_t file_end, last_pgoff = start_pgoff;
- 	unsigned long addr;
- 	XA_STATE(xas, &mapping->i_pages, start_pgoff);
- 	struct folio *folio;
-@@ -3480,6 +3480,11 @@ vm_fault_t filemap_map_pages(struct vm_fault *vmf,
+diff --git a/include/linux/array_size.h b/include/linux/array_size.h
+new file mode 100644
+index 0000000000000..06d7d83196ca3
+--- /dev/null
++++ b/include/linux/array_size.h
+@@ -0,0 +1,13 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_ARRAY_SIZE_H
++#define _LINUX_ARRAY_SIZE_H
++
++#include <linux/compiler.h>
++
++/**
++ * ARRAY_SIZE - get the number of elements in array @arr
++ * @arr: array to be sized
++ */
++#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
++
++#endif  /* _LINUX_ARRAY_SIZE_H */
+diff --git a/include/linux/kernel.h b/include/linux/kernel.h
+index fe6efb24d151a..50254bb6b7a98 100644
+--- a/include/linux/kernel.h
++++ b/include/linux/kernel.h
+@@ -13,6 +13,7 @@
  
- 	addr = vma->vm_start + ((start_pgoff - vma->vm_pgoff) << PAGE_SHIFT);
- 	vmf->pte = pte_offset_map_lock(vma->vm_mm, vmf->pmd, addr, &vmf->ptl);
-+
-+	file_end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE) - 1;
-+	if (end_pgoff > file_end)
-+		end_pgoff = file_end;
-+
- 	do {
- again:
- 		page = folio_file_page(folio, xas.xa_index);
+ #include <linux/stdarg.h>
+ #include <linux/align.h>
++#include <linux/array_size.h>
+ #include <linux/limits.h>
+ #include <linux/linkage.h>
+ #include <linux/stddef.h>
+@@ -48,12 +49,6 @@
+ #define READ			0
+ #define WRITE			1
+ 
+-/**
+- * ARRAY_SIZE - get the number of elements in array @arr
+- * @arr: array to be sized
+- */
+-#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
+-
+ #define PTR_IF(cond, ptr)	((cond) ? (ptr) : NULL)
+ 
+ #define u64_to_user_ptr(x) (		\
+diff --git a/include/linux/string.h b/include/linux/string.h
+index 422606e98cc42..e7ade5223d422 100644
+--- a/include/linux/string.h
++++ b/include/linux/string.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_STRING_H_
+ #define _LINUX_STRING_H_
+ 
++#include <linux/array_size.h>
+ #include <linux/compiler.h>	/* for inline */
+ #include <linux/types.h>	/* for size_t */
+ #include <linux/stddef.h>	/* for NULL */
 -- 
 2.51.0
 
