@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629AA3570A0;
-	Wed,  3 Dec 2025 17:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF284359701;
+	Wed,  3 Dec 2025 17:00:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781232; cv=none; b=ka92tf8Xg2kwWx5yhI6KV4vZCL9JD6vLTI1oRZUXzvvcj/8cEBkhmY6kH8FvZxSNcA46ultPYa8biUKKzV+FI9wRZTxbcKFM1ZtxtFWYfW9FT0dsJQaa2goHYaoW82SzZcShYCCuIxmtIwBKCC+ljcHGxz4e/PaXQY+9dgBsOo8=
+	t=1764781234; cv=none; b=FsNL+uH55vYoGuRTZekXA0Qd10vTOAIU+ZdfrT4iAHoB4I7rEHTbeM3AJrDcIXotpBEHB5Ukn5B4NMwnuC+12DYsXCIJqm+EllMPPFXunr3R07/l2wrP31cjiLmZDPyYi20hjlcQbBRZ9yTZzUQXja2VQniPdbMsAGTsNuk6uho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781232; c=relaxed/simple;
-	bh=SecK1LREYYhdQy5BUlYsqZnSOjut/poFKIBCiO09U0M=;
+	s=arc-20240116; t=1764781234; c=relaxed/simple;
+	bh=ibd64aUxnM540gKpihya+JEbfw5533lSY+ExWNRFCSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hpOUnsMdMYvqRHwFL2H+on9sDvLTlNJT95lH42nE+P4Bv0ohZbFXTlz4qVszIiR+4DjiZwJJdmuuUSml5NvbWwXi2miu184SN9CGhHqw5H73/AENQQCHiD0mJ20GEnOZlLIN/gr8OTy282EotKmUHZI3YWl3xhwFxSAdJLOt5gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1ew3k/d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7wPVF073u/SeS0t5qsYUMb3/0pngBRKI90qGGbQLOrz/Nr1HWFuZdteSjxckbunvwY3cKCshxoQerzjwRH/H5oOflI039kA4jUlHzIA/CyyI7P4yqXVtvRWVdj8DWic/W9ZDli31QJsWTBtxWqmUus8bbxzdiZSizRTGR04Ops=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWHT4ouq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1ew3k/d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FDAC4CEF5;
-	Wed,  3 Dec 2025 17:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWHT4ouq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57993C4CEF5;
+	Wed,  3 Dec 2025 17:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781231;
-	bh=SecK1LREYYhdQy5BUlYsqZnSOjut/poFKIBCiO09U0M=;
+	s=korg; t=1764781234;
+	bh=ibd64aUxnM540gKpihya+JEbfw5533lSY+ExWNRFCSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1ew3k/dgchyc4NwQd78y1tbIBUr9vUFg/j8MELqK53SfKDo6Wigm9Ek/i6+mWCma
-	 K1Q+XMn0t52j1ccpwymUjJ+/gdT5QaUTvDLuNj3IUsxDLiHk+HshVaNLwUSXQkZnsz
-	 cLkH5KrRuoYIO+P+PNrk3MZauVupxZ/BryVB8/hY=
+	b=UWHT4ouq47oKEx376SRN/zrIoQuigiOArZOfFdds8pPTkh3A53fSB/qs8W0B1V+++
+	 AUalFFtq4VXYNGShRIbpJAdfCpj/VwDBOfIrrtd4gQ8y/LMrAqd/FnWwIbi8vME2yg
+	 mX20NTivqp8HQw33aNdV3Flbgod4JxPwjkoZc2K8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Desnes Nunes <desnesn@redhat.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 60/93] usb: storage: Fix memory leak in USB bulk transport
-Date: Wed,  3 Dec 2025 16:29:53 +0100
-Message-ID: <20251203152338.742191778@linuxfoundation.org>
+	stealth <oleg.smirnov.1988@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 61/93] USB: storage: Remove subclass and protocol overrides from Novatek quirk
+Date: Wed,  3 Dec 2025 16:29:54 +0100
+Message-ID: <20251203152338.780388271@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,62 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Desnes Nunes <desnesn@redhat.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 41e99fe2005182139b1058db71f0d241f8f0078c upstream.
+commit df5fde297e617041449f603ed5f646861c80000b upstream.
 
-A kernel memory leak was identified by the 'ioctl_sg01' test from Linux
-Test Project (LTP). The following bytes were mainly observed: 0x53425355.
+A report from Oleg Smirnov indicates that the unusual_devs quirks
+entry for the Novatek camera does not need to override the subclass
+and protocol parameters:
 
-When USB storage devices incorrectly skip the data phase with status data,
-the code extracts/validates the CSW from the sg buffer, but fails to clear
-it afterwards. This leaves status protocol data in srb's transfer buffer,
-such as the US_BULK_CS_SIGN 'USBS' signature observed here. Thus, this can
-lead to USB protocols leaks to user space through SCSI generic (/dev/sg*)
-interfaces, such as the one seen here when the LTP test requested 512 KiB.
+[3266355.209532] usb 1-3: new high-speed USB device number 10 using xhci_hcd
+[3266355.333031] usb 1-3: New USB device found, idVendor=0603, idProduct=8611, bcdDevice= 1.00
+[3266355.333040] usb 1-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[3266355.333043] usb 1-3: Product: YICARCAM
+[3266355.333045] usb 1-3: Manufacturer: XIAO-YI
+[3266355.333047] usb 1-3: SerialNumber: 966110000000100
+[3266355.338621] usb-storage 1-3:1.0: USB Mass Storage device detected
+[3266355.338817] usb-storage 1-3:1.0: Quirks match for vid 0603 pid 8611: 4000
+[3266355.338821] usb-storage 1-3:1.0: This device (0603,8611,0100 S 06 P 50) has unneeded SubClass and Protocol entries in unusual_devs.h (kernel 6.16.10-arch1-1)
+                    Please send a copy of this message to
+<linux-usb@vger.kernel.org> and <usb-storage@lists.one-eyed-alien.net>
 
-Fix the leak by zeroing the CSW data in srb's transfer buffer immediately
-after the validation of devices that skip data phase.
+The overrides are harmless but they do provoke the driver into logging
+this annoying message.  Update the entry to remove the unneeded entries.
 
-Note: Differently from CVE-2018-1000204, which fixed a big leak by zero-
-ing pages at allocation time, this leak occurs after allocation, when USB
-protocol data is written to already-allocated sg pages.
-
-Fixes: a45b599ad808 ("scsi: sg: allocate with __GFP_ZERO in sg_build_indirect()")
+Reported-by: stealth <oleg.smirnov.1988@gmail.com>
+Closes: https://lore.kernel.org/CAKxjRRxhC0s19iEWoN=pEMqXJ_z8w_moC0GCXSqSKCcOddnWjQ@mail.gmail.com/
+Fixes: 6ca8af3c8fb5 ("USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera")
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Desnes Nunes <desnesn@redhat.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20251031043436.55929-1-desnesn@redhat.com
+Link: https://patch.msgid.link/b440f177-f0b8-4d5a-8f7b-10855d4424ee@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/transport.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/usb/storage/unusual_devs.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/storage/transport.c
-+++ b/drivers/usb/storage/transport.c
-@@ -1204,7 +1204,23 @@ int usb_stor_Bulk_transport(struct scsi_
- 						US_BULK_CS_WRAP_LEN &&
- 					bcs->Signature ==
- 						cpu_to_le32(US_BULK_CS_SIGN)) {
-+				unsigned char buf[US_BULK_CS_WRAP_LEN];
-+
- 				usb_stor_dbg(us, "Device skipped data phase\n");
-+
-+				/*
-+				 * Devices skipping data phase might leave CSW data in srb's
-+				 * transfer buffer. Zero it to prevent USB protocol leakage.
-+				 */
-+				sg = NULL;
-+				offset = 0;
-+				memset(buf, 0, sizeof(buf));
-+				if (usb_stor_access_xfer_buf(buf,
-+						US_BULK_CS_WRAP_LEN, srb, &sg,
-+						&offset, TO_XFER_BUF) !=
-+							US_BULK_CS_WRAP_LEN)
-+					usb_stor_dbg(us, "Failed to clear CSW data\n");
-+
- 				scsi_set_resid(srb, transfer_length);
- 				goto skipped_data_phase;
- 			}
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -938,7 +938,7 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
+ UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
+ 		"Novatek",
+ 		"NTK96550-based camera",
+-		USB_SC_SCSI, USB_PR_BULK, NULL,
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_BULK_IGNORE_TAG ),
+ 
+ /*
 
 
