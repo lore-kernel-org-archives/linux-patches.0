@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255FE35BDAE;
-	Wed,  3 Dec 2025 16:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D79C340279;
+	Wed,  3 Dec 2025 16:41:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780081; cv=none; b=dz+8bQOwzaHPXCIKWHdQSvDfnVy9iwOd6mFOHKdN5v39jzuLgUgkHvhtYPWhXViNUdp6IvfzPt/hlbHOuXYBdV+tcm5uzStJTw+3b8nypv1ch4Y9c4t9odDy7yKuKzUaK9Awrn0q9v7yB2OCSImT7MvtsWuq+burj8GCaLc3PvQ=
+	t=1764780084; cv=none; b=SVUYCwB2fOmFZdEt4y+Telm7rZGcwnGqoq+YZ0FwSRcaEBhB/NAYIW/lOX1QdzcVOeszc0H24GkQPiwsTIwYouPod34faGAXL3VejdqwsXV+qR3s0FyICbpOkXIuxJnOs+n58qJbEAe1LNlFcQ80ya+kbNOhlN8lqf8aKD5m8oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780081; c=relaxed/simple;
-	bh=EyhENrqjcdsk2j5twZY24VC8FT7iotyCaw2X2GrsKTQ=;
+	s=arc-20240116; t=1764780084; c=relaxed/simple;
+	bh=p1L1q2gXVuMlxHT02lST4BcJniVoCj5Roe2KfniQ07M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q8+Jp/ALkm5jpiniAVIJWas569QUjTze/1DQaWjEvk/M79rrRjr1kv0DW9kBhSpqdwdknhdCjbT8+/GRh9edZsxx8Ag5geg1lmlZHoGMwlFa8K5bshM7S++6LY9FcsuMBtIH2uRwHVOPFIgnKxOt9GvcYr/epvzjGt0TKqy2VnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jp2LXA0H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L/MNmrWGqQQO0CCMrxIluYe6FJpAnxTnyzRWLzLH3cHjv98glxVWt187zIblZIJKqkMI4fXiLPPcPTNez/GsgBGAR1tmXohfixzr6KCF0umFpq4IuUL+CwspqbYtFw/8XJS+N7WTwBTodnpInd9563TLY+XT1xw71bihGzpP31U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lx6+v+FM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jp2LXA0H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8872BC4CEF5;
-	Wed,  3 Dec 2025 16:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lx6+v+FM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC8DC116C6;
+	Wed,  3 Dec 2025 16:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780081;
-	bh=EyhENrqjcdsk2j5twZY24VC8FT7iotyCaw2X2GrsKTQ=;
+	s=korg; t=1764780084;
+	bh=p1L1q2gXVuMlxHT02lST4BcJniVoCj5Roe2KfniQ07M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jp2LXA0HxdrKpYKxaHNcRlzRL8SXweRqr+B/As400dk7U4kclXfKEGn6ju/FDCALZ
-	 0UK+OYFpAiFwSkIHs0cwqeNbGT5myfph+lQvLLJn0x+rxhg1H0JqK5obvO2xd4dfaD
-	 rPap2/7XYiHZqMCMgHbZZhDbmnuLIkPI5/WBYZf4=
+	b=lx6+v+FMJM3SqNIlhfuKA+XatZRWdOPyTId5JCJtK/vRcHcU1VcpiocQDArGCzXH/
+	 32rcuCv2ire2OnirD2xpENRexdt0HfE1nEnX+zXrm7+uxGYQEeZL3wWZyN//upF9fm
+	 EeTxPyvOZ+SoYrTvzGCq9Ipp55lVrS1Drs8/uEow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>
-Subject: [PATCH 6.1 449/568] drm/tegra: dc: Fix reference leak in tegra_dc_couple()
-Date: Wed,  3 Dec 2025 16:27:31 +0100
-Message-ID: <20251203152457.152764852@linuxfoundation.org>
+	Yifan Zha <Yifan.Zha@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 450/568] drm/amdgpu: Skip emit de meta data on gfx11 with rs64 enabled
+Date: Wed,  3 Dec 2025 16:27:32 +0100
+Message-ID: <20251203152457.188609462@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,37 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Yifan Zha <Yifan.Zha@amd.com>
 
-commit 4c5376b4b143c4834ebd392aef2215847752b16a upstream.
+commit 80d8a9ad1587b64c545d515ab6cb7ecb9908e1b3 upstream.
 
-driver_find_device() calls get_device() to increment the reference
-count once a matching device is found, but there is no put_device() to
-balance the reference count. To avoid reference count leakage, add
-put_device() to decrease the reference count.
+[Why]
+Accoreding to CP updated to RS64 on gfx11,
+WRITE_DATA with PREEMPTION_META_MEMORY(dst_sel=8) is illegal for CP FW.
+That packet is used for MCBP on F32 based system.
+So it would lead to incorrect GRBM write and FW is not handling that
+extra case correctly.
 
-Found by code review.
+[How]
+With gfx11 rs64 enabled, skip emit de meta data.
 
+Signed-off-by: Yifan Zha <Yifan.Zha@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8366cd442d226463e673bed5d199df916f4ecbcf)
 Cc: stable@vger.kernel.org
-Fixes: a31500fe7055 ("drm/tegra: dc: Restore coupling of display controllers")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Acked-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20251022114720.24937-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/tegra/dc.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/tegra/dc.c
-+++ b/drivers/gpu/drm/tegra/dc.c
-@@ -3141,6 +3141,7 @@ static int tegra_dc_couple(struct tegra_
- 		dc->client.parent = &parent->client;
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -5392,9 +5392,9 @@ static void gfx_v11_0_ring_emit_ib_gfx(s
+ 		if (flags & AMDGPU_IB_PREEMPTED)
+ 			control |= INDIRECT_BUFFER_PRE_RESUME(1);
  
- 		dev_dbg(dc->dev, "coupled to %s\n", dev_name(companion));
-+		put_device(companion);
+-		if (vmid)
++		if (vmid && !ring->adev->gfx.rs64_enable)
+ 			gfx_v11_0_ring_emit_de_meta(ring,
+-				    (!amdgpu_sriov_vf(ring->adev) && flags & AMDGPU_IB_PREEMPTED) ? true : false);
++				!amdgpu_sriov_vf(ring->adev) && (flags & AMDGPU_IB_PREEMPTED));
  	}
  
- 	return 0;
+ 	if (ring->is_mes_queue)
 
 
