@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE29230BB94;
-	Wed,  3 Dec 2025 15:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E308430C61E;
+	Wed,  3 Dec 2025 15:31:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775884; cv=none; b=IGO110cL6RLrSqr0IyBd3kJhLtib0QTgz6N89ARAjFd7huTn8jM1pP65Kqpqf52OMkQa8/ecOwL2PRpCiYOJ0ZjvtHqABhEQ0++FjNY31u5GFOFU1bbeSloCFsHYMGqHtpv+GhT67/eFz0syXv4iLxQdrHLcHFaDjJ+rj3bzzCA=
+	t=1764775886; cv=none; b=hjR7mNeMOprYBlO8wuRFP9eA4DIYNDW9JZOgsrE1/KN8OSXpYwRZBaYJNy/vryosHqnZUk1eYmInWvW7r6VkcZ8bHvjWW9aDjSCRCS8Tu9LvZs69aKfAVDOhaE+mHZtRwZ2d1kisdZ9Ddhi2TWXl/f8S3Un0lOypAkiTtFvdcto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775884; c=relaxed/simple;
-	bh=MKgMOgvKlDVKIfi/vQ8EKdzlMOJNTjWO43cDZQspjmI=;
+	s=arc-20240116; t=1764775886; c=relaxed/simple;
+	bh=y5EMBsRSHwxwhPGQo0f7ZSPAmfDIx7EbZ/KSUHJ4dx4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q/Iuj5tj+Ix3Tia5XgmL2azhvQuNeV+9KyUdH7mpucaL2x9snd9ZGT/EshN5pBMhI/uET+/khsHEhmpQvSRSspAgG2RpmVovcRcKYFR1Ve8WIpl8T63Uyl2oa91VC/WP9ONkMQ4p8AdBDND3SA+c4a13Yb9+NI1FkHhk3MKdgmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA5G/t5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tUcOVhFDlZsrkyDGsGmhP9CYe3NG6m7SmW1AWNQlNyWdad5hVsOxMWUZy4HPObNJiK3da5yzO9u1pkg1I819TfX4eJ80mmaLtCE4Eb72o0UgL6VFy67ych/l0WyAxoccefpLmmU8/uwY4o1cAsWGQFil9HQXOuAAcRCtGMX0mrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV9xxvGq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA5G/t5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF875C4CEF5;
-	Wed,  3 Dec 2025 15:31:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV9xxvGq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A899C116C6;
+	Wed,  3 Dec 2025 15:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775882;
-	bh=MKgMOgvKlDVKIfi/vQ8EKdzlMOJNTjWO43cDZQspjmI=;
+	s=korg; t=1764775885;
+	bh=y5EMBsRSHwxwhPGQo0f7ZSPAmfDIx7EbZ/KSUHJ4dx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RA5G/t5iENZPCES8+52InaDAL23xnM9DJJNIl0qLVxjuyfFTzyL6Eh5MxJQ/gz8Z8
-	 KRiUoiStWCJleJzM94x2CoUglziyO2YNfUEPRHOAxVGpq3nt67j+foD2cFwlgVYpgS
-	 AI99UBR8jCt46ObV41ap3Hgem9htK64Y55ACoi78=
+	b=UV9xxvGq6/o6qv5vWwlrRciLdYuJVlDu+QJOPAeMMMJvfRw0LuYidTd2IZJPWSvas
+	 VDLV75Ghf6wKnyus7xLdhHOj0WL13FdtNCukwUyUtTwf2YA6oi8ZGVOTrIWteHVAus
+	 Dls5cvXaWLdsi34e6ru4+9DUUHFX+GtSQBHCHku4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot+2617fc732430968b45d2@syzkaller.appspotmail.com,
+	Noorain Eqbal <nooraineqbal@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 016/300] ALSA: usb-audio: fix control pipe direction
-Date: Wed,  3 Dec 2025 16:23:40 +0100
-Message-ID: <20251203152401.059296802@linuxfoundation.org>
+Subject: [PATCH 5.10 017/300] bpf: Sync pending IRQ work before freeing ring buffer
+Date: Wed,  3 Dec 2025 16:23:41 +0100
+Message-ID: <20251203152401.095630489@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,37 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+From: Noorain Eqbal <nooraineqbal@gmail.com>
 
-[ Upstream commit 7963891f7c9c6f759cc9ab7da71406b4234f3dd6 ]
+[ Upstream commit 4e9077638301816a7d73fa1e1b4c1db4a7e3b59c ]
 
-Since the requesttype has USB_DIR_OUT the pipe should be
-constructed with usb_sndctrlpipe().
+Fix a race where irq_work can be queued in bpf_ringbuf_commit()
+but the ring buffer is freed before the work executes.
+In the syzbot reproducer, a BPF program attached to sched_switch
+triggers bpf_ringbuf_commit(), queuing an irq_work. If the ring buffer
+is freed before this work executes, the irq_work thread may accesses
+freed memory.
+Calling `irq_work_sync(&rb->work)` ensures that all pending irq_work
+complete before freeing the buffer.
 
-Fixes: 8dc5efe3d17c ("ALSA: usb-audio: Add support for Presonus Studio 1810c")
-Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
-Link: https://patch.msgid.link/aPPL3tBFE_oU-JHv@ark
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
+Reported-by: syzbot+2617fc732430968b45d2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2617fc732430968b45d2
+Tested-by: syzbot+2617fc732430968b45d2@syzkaller.appspotmail.com
+Signed-off-by: Noorain Eqbal <nooraineqbal@gmail.com>
+Link: https://lore.kernel.org/r/20251020180301.103366-1-nooraineqbal@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_s1810c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/ringbuf.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
-index c53a9773f310b..457e07f6fc7c8 100644
---- a/sound/usb/mixer_s1810c.c
-+++ b/sound/usb/mixer_s1810c.c
-@@ -181,7 +181,7 @@ snd_sc1810c_get_status_field(struct usb_device *dev,
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -209,6 +209,8 @@ static void bpf_ringbuf_free(struct bpf_
+ 	struct page **pages = rb->pages;
+ 	int i, nr_pages = rb->nr_pages;
  
- 	pkt_out.fields[SC1810C_STATE_F1_IDX] = SC1810C_SET_STATE_F1;
- 	pkt_out.fields[SC1810C_STATE_F2_IDX] = SC1810C_SET_STATE_F2;
--	ret = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0),
-+	ret = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0),
- 			      SC1810C_SET_STATE_REQ,
- 			      SC1810C_SET_STATE_REQTYPE,
- 			      (*seqnum), 0, &pkt_out, sizeof(pkt_out));
--- 
-2.51.0
-
++	irq_work_sync(&rb->work);
++
+ 	vunmap(rb);
+ 	for (i = 0; i < nr_pages; i++)
+ 		__free_page(pages[i]);
 
 
