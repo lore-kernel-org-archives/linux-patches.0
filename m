@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB8D830276F;
-	Wed,  3 Dec 2025 15:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0AEE307AD9;
+	Wed,  3 Dec 2025 15:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776654; cv=none; b=n6sGS3WvCI9Xbqc4CXmlAUysCCUb+YkRf3ZcypS+BJknnvGmbbmFEXfglZ3aLl8QeQQHgo1cGAJIKQXYUl2nDwzOZBLGklnccNRPUgaIeHo193xtYUx60VYu4ZRwbgmLJAPD3Wx3c76t84P9F3URXkxWnN7V3ZFffC98ui0e82U=
+	t=1764776657; cv=none; b=IE5RUXAsen5oLCEZB+t4s8DYP1bFKpIqpc+0XlUCjwkzLd4NnXHVOJci2CTFgcxeaFkuxxKUwpNEvZFdCekdp6x17y65LSkA8IxDYUvl+FsW+Y5acTJ4qMV7DjpJhNxFKVux5W2aOVwPvnIlAQid84/X30gYPCYSBXv0juvf1dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776654; c=relaxed/simple;
-	bh=n52nT0oB8+gzPqbtHzKPYOv0fkxIvMC0YzLZwLfMUtA=;
+	s=arc-20240116; t=1764776657; c=relaxed/simple;
+	bh=ZcQMLq8tQyCGZ8Y2TTYKq1Mkwxd24/WQGltWz64n2/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNrjxSyPoZ9pSFGWalXzYEil8FDmxy8oqQIQaEMB0FGibPIM99PYHvtZ6NWk623g56zkLG3LprMxdTUEsD1WbcwqhixGBWI3HMYUuCYhdNnAr1FtCpiPP6UTlOgWMYINIflGplf2yXAsZHLyzWeIciCQ//toNjNWYpNCMotLW+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4ipM/cn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IIHgOeU1VQvtgCYykfKg1t7p26vMaX7pBwLKQCH62Xl2cfH61G2WFJ0rEyCBCi+upKxFeJqMuDAA/JZ4lkpnQ2Rx6+fUZ8MrwbEGmdGT2UjuhfM7Fy4ILqhK7wGan9xr0TyWfL6TyfYaPKTOUyl/s0okx6GwApBiI5uhwp7D90I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G3RT5pdE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4ipM/cn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005BDC4CEF5;
-	Wed,  3 Dec 2025 15:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G3RT5pdE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E54AC4CEF5;
+	Wed,  3 Dec 2025 15:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776654;
-	bh=n52nT0oB8+gzPqbtHzKPYOv0fkxIvMC0YzLZwLfMUtA=;
+	s=korg; t=1764776657;
+	bh=ZcQMLq8tQyCGZ8Y2TTYKq1Mkwxd24/WQGltWz64n2/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4ipM/cnMDR2r2k+EeRugKUMQ3q0R+y1KPg/V0UuHSekoJeyxLp3oUqxYRfq+qCGI
-	 Js3VFkDIEof7fGNqPc3jJeb7qCO1wEWAMxA+82/yCIrJiD1Z5BaAAL54aPXqZxHZm/
-	 SiQ6nCjizVsM04vYP74zuRPqZ4Ueajb7O08fTXBY=
+	b=G3RT5pdE1aw3msxBToswdwgEsgNvCcAY75lq0PlOfMWHz2s+Poe2Jyw9S+zPArTyk
+	 HRB/bilow60EN4GnDwxXFqE58/+s2M5/iV6iuCr+ZslVS7BhkRM3StWoNcNiWf3bby
+	 S5J1TzzPIrjdRh030z06aCzPyLf28Yas2zbi7Bdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ahmed, Aaron" <aarnahmd@amazon.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>
-Subject: [PATCH 5.10 240/300] Revert "NFS: Dont set NFS_INO_REVAL_PAGECACHE in the inode cache validity"
-Date: Wed,  3 Dec 2025 16:27:24 +0100
-Message-ID: <20251203152409.516297001@linuxfoundation.org>
+	"Fabio M. De Francesco" <fabio.maria.de.francesco@linux.intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 249/300] mm/mempool: replace kmap_atomic() with kmap_local_page()
+Date: Wed,  3 Dec 2025 16:27:33 +0100
+Message-ID: <20251203152409.858206648@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,74 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: "Fabio M. De Francesco" <fabio.maria.de.francesco@linux.intel.com>
 
-This reverts commit 36a9346c225270262d9f34e66c91aa1723fa903f.
+[ Upstream commit f2bcc99a5e901a13b754648d1dbab60f4adf9375 ]
 
-The above commit was incorrectly labelled as a dependency for commit
-b01f21cacde9 ("NFS: Fix the setting of capabilities when automounting a
-new filesystem")
-A revert is needed, since the incorrectly applied commit depends upon a
-series of other patches that were merged into Linux 5.13, but have not
-been applied to the 5.10 stable series.
+kmap_atomic() has been deprecated in favor of kmap_local_page().
 
-Reported-by: "Ahmed, Aaron" <aarnahmd@amazon.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Therefore, replace kmap_atomic() with kmap_local_page().
+
+kmap_atomic() is implemented like a kmap_local_page() which also disables
+page-faults and preemption (the latter only in !PREEMPT_RT kernels).  The
+kernel virtual addresses returned by these two API are only valid in the
+context of the callers (i.e., they cannot be handed to other threads).
+
+With kmap_local_page() the mappings are per thread and CPU local like in
+kmap_atomic(); however, they can handle page-faults and can be called from
+any context (including interrupts).  The tasks that call kmap_local_page()
+can be preempted and, when they are scheduled to run again, the kernel
+virtual addresses are restored and are still valid.
+
+The code blocks between the mappings and un-mappings don't rely on the
+above-mentioned side effects of kmap_atomic(), so that mere replacements
+of the old API with the new one is all that they require (i.e., there is
+no need to explicitly call pagefault_disable() and/or preempt_disable()).
+
+Link: https://lkml.kernel.org/r/20231120142640.7077-1-fabio.maria.de.francesco@linux.intel.com
+Signed-off-by: Fabio M. De Francesco <fabio.maria.de.francesco@linux.intel.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: ec33b59542d9 ("mm/mempool: fix poisoning order>0 pages with HIGHMEM")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/inode.c    |    6 ++++--
- fs/nfs/nfs4proc.c |    1 +
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ mm/mempool.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/nfs/inode.c
-+++ b/fs/nfs/inode.c
-@@ -217,12 +217,11 @@ static void nfs_set_cache_invalid(struct
- 			flags &= ~NFS_INO_INVALID_OTHER;
- 		flags &= ~(NFS_INO_INVALID_CHANGE
- 				| NFS_INO_INVALID_SIZE
-+				| NFS_INO_REVAL_PAGECACHE
- 				| NFS_INO_INVALID_XATTR);
- 	} else if (flags & NFS_INO_REVAL_PAGECACHE)
- 		flags |= NFS_INO_INVALID_CHANGE | NFS_INO_INVALID_SIZE;
+--- a/mm/mempool.c
++++ b/mm/mempool.c
+@@ -63,10 +63,10 @@ static void check_element(mempool_t *poo
+ 	} else if (pool->free == mempool_free_pages) {
+ 		/* Mempools backed by page allocator */
+ 		int order = (int)(long)pool->pool_data;
+-		void *addr = kmap_atomic((struct page *)element);
++		void *addr = kmap_local_page((struct page *)element);
  
--	flags &= ~NFS_INO_REVAL_PAGECACHE;
--
- 	if (!nfs_has_xattr_cache(nfsi))
- 		flags &= ~NFS_INO_INVALID_XATTR;
- 	if (inode->i_mapping->nrpages == 0)
-@@ -1901,6 +1900,7 @@ static int nfs_update_inode(struct inode
- 	nfsi->cache_validity &= ~(NFS_INO_INVALID_ATTR
- 			| NFS_INO_INVALID_ATIME
- 			| NFS_INO_REVAL_FORCED
-+			| NFS_INO_REVAL_PAGECACHE
- 			| NFS_INO_INVALID_BLOCKS);
- 
- 	/* Do atomic weak cache consistency updates */
-@@ -1942,6 +1942,7 @@ static int nfs_update_inode(struct inode
- 	} else {
- 		nfsi->cache_validity |= save_cache_validity &
- 				(NFS_INO_INVALID_CHANGE
-+				| NFS_INO_REVAL_PAGECACHE
- 				| NFS_INO_REVAL_FORCED);
- 		cache_revalidated = false;
+ 		__check_element(pool, addr, 1UL << (PAGE_SHIFT + order));
+-		kunmap_atomic(addr);
++		kunmap_local(addr);
  	}
-@@ -1987,6 +1988,7 @@ static int nfs_update_inode(struct inode
- 	} else {
- 		nfsi->cache_validity |= save_cache_validity &
- 				(NFS_INO_INVALID_SIZE
-+				| NFS_INO_REVAL_PAGECACHE
- 				| NFS_INO_REVAL_FORCED);
- 		cache_revalidated = false;
- 	}
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1212,6 +1212,7 @@ nfs4_update_changeattr_locked(struct ino
- 		| cache_validity;
+ }
  
- 	if (cinfo->atomic && cinfo->before == inode_peek_iversion_raw(inode)) {
-+		nfsi->cache_validity &= ~NFS_INO_REVAL_PAGECACHE;
- 		nfsi->attrtimeo_timestamp = jiffies;
- 	} else {
- 		if (S_ISDIR(inode->i_mode)) {
+@@ -86,10 +86,10 @@ static void poison_element(mempool_t *po
+ 	} else if (pool->alloc == mempool_alloc_pages) {
+ 		/* Mempools backed by page allocator */
+ 		int order = (int)(long)pool->pool_data;
+-		void *addr = kmap_atomic((struct page *)element);
++		void *addr = kmap_local_page((struct page *)element);
+ 
+ 		__poison_element(addr, 1UL << (PAGE_SHIFT + order));
+-		kunmap_atomic(addr);
++		kunmap_local(addr);
+ 	}
+ }
+ #else /* CONFIG_DEBUG_SLAB || CONFIG_SLUB_DEBUG_ON */
 
 
