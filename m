@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7E430F7F6;
-	Wed,  3 Dec 2025 15:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B6930F552;
+	Wed,  3 Dec 2025 15:31:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775912; cv=none; b=jryBzD8wk7gWicwxBveqsDp6cnxl76eGFC+6Mt+uuPdAUrnlVjqbk11D9X1IRNYskE342T/6YEVBOhGmQchIQWDVG7fPxxxa8oRmKpCf+crsneShQsh7SnHrfXDlhh3NIHHs49b56//zuLhqKI9DzmIwhMkXhLKEd7kv99OM2DI=
+	t=1764775915; cv=none; b=Zr6cQBmlhqyJrlLFkyjqbOFcGGEmzgiCyOxuCqW/+up4ZIbr0WfPrx57/Jc2hMikmzK8CuZNVnSpfmcKXO2mXGxNMzGYCsddYC6qbJkmOEcY0z/801CIUE7LdaRIRdKmvl8WWYwOvSGsLHPQqZFzhRZPfHlVKFs/vertO68D3tA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775912; c=relaxed/simple;
-	bh=t8plqfGggaQ3neuP27evXDRMsOEfaJyuJE0PbRZHjos=;
+	s=arc-20240116; t=1764775915; c=relaxed/simple;
+	bh=0eznp9j2jri5r3xhNQCfDKuUccv1n7fxmUKwV2tTRcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNr7dDL0Ri5jhRVOsdHkClPkV/euGnwT8SuInlP7vPhKFTn3VejtXsWOgfrxmfs54521FYC7RbMMmIDQgOw4wqd4uTDFy6rjX//PSyOoztKLIdZPOu4sRUf+7T7jAEegrN+Itp+O+qVBMvoK6ka3rxTezlXYwscZuaCLWC7K+k0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppU28Wbf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CR1hpiJQwlo0JqoHQ6qkwiRGqIRPidEVYvbdoaxyuIoLgzN3kFnrMlE8ZN0oOws2vrXC55U4yPNn913YPsKnT1F+alBQ7Mc9N+vLcqMBdZJ9XilgVka2PxhCuroCPv5m0bQ+oXIJLTgvktctd0QgKRr2ZjX7vRENTAAdW84Ll+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=he0R8+i0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppU28Wbf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27456C4CEF5;
-	Wed,  3 Dec 2025 15:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="he0R8+i0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8821BC4CEF5;
+	Wed,  3 Dec 2025 15:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775911;
-	bh=t8plqfGggaQ3neuP27evXDRMsOEfaJyuJE0PbRZHjos=;
+	s=korg; t=1764775914;
+	bh=0eznp9j2jri5r3xhNQCfDKuUccv1n7fxmUKwV2tTRcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppU28Wbfz+SIVw0g8pQFnPHjSDREpOBqfdCWJnTBxzA0nzK6TxFcF2v+IsmMLixF2
-	 bKx4qq3UQMPACnwo7kydX4LZSqVmpz6g+y7ZAXi1nOMg2YSjgZSK7K4liRE6X27Dr0
-	 BIwPuj2RFizXbFWDFTbp47w9ukmBI8CuFl7TjM+8=
+	b=he0R8+i0huy2XaByc0f4vd37V00hfiZkXS669mar8eN+698xc4gmzRCuSwiWRxSdw
+	 jIuZfgIlDTdEZeb6byZTNRdFV/Oc3U2sZ/HqZ2/opQjSRiFhrzD92fW695y6oEIuwl
+	 0gMboMpkKUZdY6/mGc00Z9p4PWh0jma06nQDPmlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Steev Klimaszewski <steev@kali.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 024/300] regmap: slimbus: fix bus_context pointer in regmap init calls
-Date: Wed,  3 Dec 2025 16:23:48 +0100
-Message-ID: <20251203152401.352627207@linuxfoundation.org>
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 003/300] btrfs: always drop log root tree reference in btrfs_replay_log()
+Date: Wed,  3 Dec 2025 16:23:27 +0100
+Message-ID: <20251203152400.584563083@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -55,98 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 434f7349a1f00618a620b316f091bd13a12bc8d2 upstream.
+[ Upstream commit 2f5b8095ea47b142c56c09755a8b1e14145a2d30 ]
 
-Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
-wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
-That commit breaks audio playback, for instance, on sdm845 Thundercomm
-Dragonboard 845c board:
+Currently we have this odd behaviour:
 
- Unable to handle kernel paging request at virtual address ffff8000847cbad4
- ...
- CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
- Hardware name: Thundercomm Dragonboard 845c (DT)
- ...
- Call trace:
-  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
-  slim_read+0x48/0x74 [slimbus]
-  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
-  _regmap_raw_read+0xe8/0x174
-  _regmap_bus_read+0x44/0x80
-  _regmap_read+0x60/0xd8
-  _regmap_update_bits+0xf4/0x140
-  _regmap_select_page+0xa8/0x124
-  _regmap_raw_write_impl+0x3b8/0x65c
-  _regmap_bus_raw_write+0x60/0x80
-  _regmap_write+0x58/0xc0
-  regmap_write+0x4c/0x80
-  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
-  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
-  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
-  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
-  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
-  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
-  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
-  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
-  __arm64_sys_ioctl+0xac/0x104
-  invoke_syscall+0x48/0x104
-  el0_svc_common.constprop.0+0x40/0xe0
-  do_el0_svc+0x1c/0x28
-  el0_svc+0x34/0xec
-  el0t_64_sync_handler+0xa0/0xf0
-  el0t_64_sync+0x198/0x19c
+1) At btrfs_replay_log() we drop the reference of the log root tree if
+   the call to btrfs_recover_log_trees() failed;
 
-The __devm_regmap_init_slimbus() started to be used instead of
-__regmap_init_slimbus() after the commit mentioned above and turns out
-the incorrect bus_context pointer (3rd argument) was used in
-__devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
-to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
-the first user of devm_regmap_init_slimbus() but we should fix it till
-the point where __devm_regmap_init_slimbus() was introduced therefore
-two "Fixes" tags.
+2) But if the call to btrfs_recover_log_trees() did not fail, we don't
+   drop the reference in btrfs_replay_log() - we expect that
+   btrfs_recover_log_trees() does it in case it returns success.
 
-While at this, also correct the same argument in __regmap_init_slimbus().
+Let's simplify this and make btrfs_replay_log() always drop the reference
+on the log root tree, not only this simplifies code as it's what makes
+sense since it's btrfs_replay_log() who grabbed the reference in the first
+place.
 
-Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
-Cc: stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Ma Ke <make24@iscas.ac.cn>
-Cc: Steev Klimaszewski <steev@kali.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251022201013.1740211-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-slimbus.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/btrfs/disk-io.c  | 2 +-
+ fs/btrfs/tree-log.c | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/base/regmap/regmap-slimbus.c
-+++ b/drivers/base/regmap/regmap-slimbus.c
-@@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(str
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 91475cb7d568b..29f0ba4adfbce 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -2309,10 +2309,10 @@ static int btrfs_replay_log(struct btrfs_fs_info *fs_info,
+ 	}
+ 	/* returns with log_tree_root freed on success */
+ 	ret = btrfs_recover_log_trees(log_tree_root);
++	btrfs_put_root(log_tree_root);
+ 	if (ret) {
+ 		btrfs_handle_fs_error(fs_info, ret,
+ 				      "Failed to recover log tree");
+-		btrfs_put_root(log_tree_root);
+ 		return ret;
+ 	}
  
--	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
--			     lock_key, lock_name);
-+	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
- }
- EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 6d715bb773643..cdb5a2770faf3 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -6432,7 +6432,6 @@ int btrfs_recover_log_trees(struct btrfs_root *log_root_tree)
  
-@@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbu
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
+ 	log_root_tree->log_root = NULL;
+ 	clear_bit(BTRFS_FS_LOG_RECOVERING, &fs_info->flags);
+-	btrfs_put_root(log_root_tree);
  
--	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
--				  lock_key, lock_name);
-+	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
- }
- EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
- 
+ 	return 0;
+ error:
+-- 
+2.51.0
+
 
 
