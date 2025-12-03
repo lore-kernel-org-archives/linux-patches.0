@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B89934CFA1;
-	Wed,  3 Dec 2025 16:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9D1134C98C;
+	Wed,  3 Dec 2025 16:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778749; cv=none; b=o84O1X/GKLZXpS0Ge6mG07iBrWQXVNTkYegfUR16JWUkG3akbYxeT13R6B/AzndBRrpGG2zMAxj5zxFjocTkQqpdBRswJQ9b05oISdhSopktppB7tkdOcSlxNsCfcyr5NpwDxzYOOnLhVRZatdJQ7eFbjos8GTvN37VAh3+jfRE=
+	t=1764778752; cv=none; b=kyWAoLZXyNZyvoKn/6SLbkXgRQmdgg/P7LUc7EdanJmz/FLaz7LFfqOBtX2IPOYZ4KIYKr5WWoXhRvcF7N4ggs89weLhuYSftwGjxv1a8L6BKKyDRaxM/xllNMKN4SM2RvhNaM5t/S6yAlEbsaQv4KmtwF9TRnmsGUWgbl1DhBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778749; c=relaxed/simple;
-	bh=YnoFc1NoatUx8xkbzUFRibng3n1DQuI/4vBU7JsV2Cs=;
+	s=arc-20240116; t=1764778752; c=relaxed/simple;
+	bh=erdCZpDEStRbglVQqnrePC6uUHnA0SdlSO/jnbwwGB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4zhj00PW6xKXBk2cycE0TYAIb4t0sjMEm5FrUZXaojqTnBGCeGmNj6c5BlueHo80ffbQy6qGaSK9ZNPOZ2FctFOPh4bn/YCNquCfzKu0IO/alVyuyBTeDyQKJUAUPs7FF04OUam7wvMXlLCKtUL9fJGvSDkuU0wLiMC+T6Ze7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWXv3Y2S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AphgclkD3QH7Lz7irgfdJ5EH8CRrzRZPe1qvlOwEvdCSODtDHhdXdCMw6GB77m5RAI+Y7r3AbrkO0AzS2EJEqjhTNwJUxNnjdE2Hw19GDSYYJy3LNrQRg2r+Cd0qFolc+W1fIAXlVsyLGpAcaO9b2AMcsJU8IC7eEpCVfzlePz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+8TbF90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWXv3Y2S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE861C4CEF5;
-	Wed,  3 Dec 2025 16:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+8TbF90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15571C4CEF5;
+	Wed,  3 Dec 2025 16:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778749;
-	bh=YnoFc1NoatUx8xkbzUFRibng3n1DQuI/4vBU7JsV2Cs=;
+	s=korg; t=1764778752;
+	bh=erdCZpDEStRbglVQqnrePC6uUHnA0SdlSO/jnbwwGB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWXv3Y2SWGisSEVe1biIGyYvk4OjcRzHPEHbKdwJ6S+6iaB2FZZzzDIMwJomNaPh4
-	 03u0DQEO3dtAP+0QoqI0WtMcnsO2puhFGfHnnyOLuQFn5za7MMSuNYxchKE7auvV1l
-	 V+b5+2a8gTBaE1XhH/zgDkfUv51JX1+RfHGQjbxE=
+	b=C+8TbF90EENvbR/1BhpYz/9lfShy0bNCSsf8jsEnUlwRJALutQ1AQTUCtsd/mG2vd
+	 zlYffvPbdgzti/7LxAUPbk0X6x8k3DZ/lX6hn4y5fwrJjlAdRf63A6MMQuFbK6eZse
+	 DNAheP4+a+di2ox84bySnn5L/jVX4zA9Zxu8Um2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Claudia Draghicescu <claudia.rosu@nxp.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 048/568] Bluetooth: HCI: Fix tracking of advertisement set/instance 0x00
-Date: Wed,  3 Dec 2025 16:20:50 +0100
-Message-ID: <20251203152442.450236485@linuxfoundation.org>
+Subject: [PATCH 6.1 049/568] Bluetooth: ISO: Add support for periodic adv reports processing
+Date: Wed,  3 Dec 2025 16:20:51 +0100
+Message-ID: <20251203152442.487101350@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,76 +51,162 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Claudia Draghicescu <claudia.rosu@nxp.com>
 
-[ Upstream commit 0d92808024b4e9868cef68d16f121d509843e80e ]
+[ Upstream commit 9c0826310bfb784c9bac7d1d9454e304185446c5 ]
 
-This fixes the state tracking of advertisement set/instance 0x00 which
-is considered a legacy instance and is not tracked individually by
-adv_instances list, previously it was assumed that hci_dev itself would
-track it via HCI_LE_ADV but that is a global state not specifc to
-instance 0x00, so to fix it a new flag is introduced that only tracks the
-state of instance 0x00.
+In the case of a Periodic Synchronized Receiver,
+the PA report received from a Broadcaster contains the BASE,
+which has information about codec and other parameters of a BIG.
+This isnformation is stored and the application can retrieve it
+using getsockopt(BT_ISO_BASE).
 
-Fixes: 1488af7b8b5f ("Bluetooth: hci_sync: Fix hci_resume_advertising_sync")
+Signed-off-by: Claudia Draghicescu <claudia.rosu@nxp.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Stable-dep-of: c403da5e98b0 ("Bluetooth: ISO: Fix another instance of dst_type handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h | 1 +
- net/bluetooth/hci_event.c   | 4 ++++
- net/bluetooth/hci_sync.c    | 5 ++---
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ include/net/bluetooth/hci.h | 11 +++++++++++
+ net/bluetooth/hci_event.c   | 23 +++++++++++++++++++++++
+ net/bluetooth/iso.c         | 28 +++++++++++++++++++++++++++-
+ 3 files changed, 61 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 09bc4bf805c62..1a20fb1fa157b 100644
+index 1a20fb1fa157b..018fc64329fc6 100644
 --- a/include/net/bluetooth/hci.h
 +++ b/include/net/bluetooth/hci.h
-@@ -372,6 +372,7 @@ enum {
- 	HCI_USER_CHANNEL,
- 	HCI_EXT_CONFIGURED,
- 	HCI_LE_ADV,
-+	HCI_LE_ADV_0,
- 	HCI_LE_PER_ADV,
- 	HCI_LE_SCAN,
- 	HCI_SSP_ENABLED,
+@@ -2768,6 +2768,17 @@ struct hci_ev_le_enh_conn_complete {
+ 	__u8      clk_accurancy;
+ } __packed;
+ 
++#define HCI_EV_LE_PER_ADV_REPORT    0x0f
++struct hci_ev_le_per_adv_report {
++	__le16	 sync_handle;
++	__u8	 tx_power;
++	__u8	 rssi;
++	__u8	 cte_type;
++	__u8	 data_status;
++	__u8     length;
++	__u8     data[];
++} __packed;
++
+ #define HCI_EV_LE_EXT_ADV_SET_TERM	0x12
+ struct hci_evt_le_ext_adv_set_term {
+ 	__u8	status;
 diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index a0ce0a1e3258e..e1f1be4dfe97a 100644
+index e1f1be4dfe97a..e516b169b12fb 100644
 --- a/net/bluetooth/hci_event.c
 +++ b/net/bluetooth/hci_event.c
-@@ -1655,6 +1655,8 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
+@@ -6469,6 +6469,24 @@ static void hci_le_pa_sync_estabilished_evt(struct hci_dev *hdev, void *data,
+ 	hci_dev_unlock(hdev);
+ }
  
- 		if (adv)
- 			adv->enabled = true;
-+		else if (!set->handle)
-+			hci_dev_set_flag(hdev, HCI_LE_ADV_0);
++static void hci_le_per_adv_report_evt(struct hci_dev *hdev, void *data,
++				      struct sk_buff *skb)
++{
++	struct hci_ev_le_per_adv_report *ev = data;
++	int mask = hdev->link_mode;
++	__u8 flags = 0;
++
++	bt_dev_dbg(hdev, "sync_handle 0x%4.4x", le16_to_cpu(ev->sync_handle));
++
++	hci_dev_lock(hdev);
++
++	mask |= hci_proto_connect_ind(hdev, BDADDR_ANY, ISO_LINK, &flags);
++	if (!(mask & HCI_LM_ACCEPT))
++		hci_le_pa_term_sync(hdev, ev->sync_handle);
++
++	hci_dev_unlock(hdev);
++}
++
+ static void hci_le_remote_feat_complete_evt(struct hci_dev *hdev, void *data,
+ 					    struct sk_buff *skb)
+ {
+@@ -7002,6 +7020,11 @@ static const struct hci_le_ev {
+ 	HCI_LE_EV(HCI_EV_LE_PA_SYNC_ESTABLISHED,
+ 		  hci_le_pa_sync_estabilished_evt,
+ 		  sizeof(struct hci_ev_le_pa_sync_established)),
++	/* [0x0f = HCI_EV_LE_PER_ADV_REPORT] */
++	HCI_LE_EV_VL(HCI_EV_LE_PER_ADV_REPORT,
++				 hci_le_per_adv_report_evt,
++				 sizeof(struct hci_ev_le_per_adv_report),
++				 HCI_MAX_EVENT_SIZE),
+ 	/* [0x12 = HCI_EV_LE_EXT_ADV_SET_TERM] */
+ 	HCI_LE_EV(HCI_EV_LE_EXT_ADV_SET_TERM, hci_le_ext_adv_term_evt,
+ 		  sizeof(struct hci_evt_le_ext_adv_set_term)),
+diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
+index c542497f040cc..bf7692e15deef 100644
+--- a/net/bluetooth/iso.c
++++ b/net/bluetooth/iso.c
+@@ -1314,7 +1314,8 @@ static int iso_sock_getsockopt(struct socket *sock, int level, int optname,
+ 		break;
  
- 		conn = hci_lookup_le_connect(hdev);
- 		if (conn)
-@@ -1665,6 +1667,8 @@ static u8 hci_cc_le_set_ext_adv_enable(struct hci_dev *hdev, void *data,
- 		if (cp->num_of_sets) {
- 			if (adv)
- 				adv->enabled = false;
-+			else if (!set->handle)
-+				hci_dev_clear_flag(hdev, HCI_LE_ADV_0);
+ 	case BT_ISO_BASE:
+-		if (sk->sk_state == BT_CONNECTED) {
++		if (sk->sk_state == BT_CONNECTED &&
++		    !bacmp(&iso_pi(sk)->dst, BDADDR_ANY)) {
+ 			base_len = iso_pi(sk)->conn->hcon->le_per_adv_data_len;
+ 			base = iso_pi(sk)->conn->hcon->le_per_adv_data;
+ 		} else {
+@@ -1487,6 +1488,9 @@ static void iso_conn_ready(struct iso_conn *conn)
  
- 			/* If just one instance was disabled check if there are
- 			 * any other instance enabled before clearing HCI_LE_ADV
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 2937e7a37bcba..5ad09900f8ff1 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2607,9 +2607,8 @@ static int hci_resume_advertising_sync(struct hci_dev *hdev)
- 		/* If current advertising instance is set to instance 0x00
- 		 * then we need to re-enable it.
- 		 */
--		if (!hdev->cur_adv_instance)
--			err = hci_enable_ext_advertising_sync(hdev,
--							      hdev->cur_adv_instance);
-+		if (hci_dev_test_and_clear_flag(hdev, HCI_LE_ADV_0))
-+			err = hci_enable_ext_advertising_sync(hdev, 0x00);
+ 		bacpy(&iso_pi(sk)->dst, &hcon->dst);
+ 		iso_pi(sk)->dst_type = hcon->dst_type;
++		iso_pi(sk)->sync_handle = iso_pi(parent)->sync_handle;
++		memcpy(iso_pi(sk)->base, iso_pi(parent)->base, iso_pi(parent)->base_len);
++		iso_pi(sk)->base_len = iso_pi(parent)->base_len;
+ 
+ 		hci_conn_hold(hcon);
+ 		iso_chan_add(conn, sk, parent);
+@@ -1517,12 +1521,20 @@ static bool iso_match_sync_handle(struct sock *sk, void *data)
+ 	return le16_to_cpu(ev->sync_handle) == iso_pi(sk)->sync_handle;
+ }
+ 
++static bool iso_match_sync_handle_pa_report(struct sock *sk, void *data)
++{
++	struct hci_ev_le_per_adv_report *ev = data;
++
++	return le16_to_cpu(ev->sync_handle) == iso_pi(sk)->sync_handle;
++}
++
+ /* ----- ISO interface with lower layer (HCI) ----- */
+ 
+ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ {
+ 	struct hci_ev_le_pa_sync_established *ev1;
+ 	struct hci_evt_le_big_info_adv_report *ev2;
++	struct hci_ev_le_per_adv_report *ev3;
+ 	struct sock *sk;
+ 	int lm = 0;
+ 
+@@ -1538,6 +1550,9 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 	 * 2. HCI_EVT_LE_BIG_INFO_ADV_REPORT: When connect_ind is triggered by a
+ 	 * a BIG Info it attempts to check if there any listening socket with
+ 	 * the same sync_handle and if it does then attempt to create a sync.
++	 * 3. HCI_EV_LE_PER_ADV_REPORT: When a PA report is received, it is stored
++	 * in iso_pi(sk)->base so it can be passed up to user, in the case of a
++	 * broadcast sink.
+ 	 */
+ 	ev1 = hci_recv_event_data(hdev, HCI_EV_LE_PA_SYNC_ESTABLISHED);
+ 	if (ev1) {
+@@ -1570,6 +1585,17 @@ int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags)
+ 				sk = NULL;
+ 			}
+ 		}
++	}
++
++	ev3 = hci_recv_event_data(hdev, HCI_EV_LE_PER_ADV_REPORT);
++	if (ev3) {
++		sk = iso_get_sock_listen(&hdev->bdaddr, bdaddr,
++					 iso_match_sync_handle_pa_report, ev3);
++
++		if (sk) {
++			memcpy(iso_pi(sk)->base, ev3->data, ev3->length);
++			iso_pi(sk)->base_len = ev3->length;
++		}
  	} else {
- 		/* Schedule for most recent instance to be restarted and begin
- 		 * the software rotation loop
+ 		sk = iso_get_sock_listen(&hdev->bdaddr, BDADDR_ANY, NULL, NULL);
+ 	}
 -- 
 2.51.0
 
