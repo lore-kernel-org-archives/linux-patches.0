@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3F4326D77;
-	Wed,  3 Dec 2025 16:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B54632D420;
+	Wed,  3 Dec 2025 16:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780547; cv=none; b=pFxkiW3njUyJyLgtZENek4BQhDGkpKg57sZxU2xORS9mc0AfDYapiY9Mk7lHBHhLokwEvw5kENNfJuPdnP2k5tzg1d9WEjHUyve5hHZCLVni4WAu5xS6DliThR6R3YJmxXBMtUyCnA/P9h8IDcsjiVTDFZ5ErDibGd4MkT3amJ4=
+	t=1764780547; cv=none; b=eCmTZIQGM7EK0xku/cc6ZLnFZlUz4YsX1dhLLEEez6D7ljqKZ6HPg36ecz8+jDADxLm6jWg7dNFGEDqk7ivXZNEyK2cuSJHC2xuC9LunVdfroS2yQswsGOSsB+F8RlScEKFJZiA3E6R9aL6nHkFqsIjwd1F33uADBkkZioi/UKI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764780547; c=relaxed/simple;
-	bh=jCMXjIu+Ee0viD/5UcvDFhAT2CT0lh35jyHHDzpd9wc=;
+	bh=HVEZthPdF2VAEyxkRh5P01znPddS8WWQ1ivb1YQCRWQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ro2JOlZvlN1buvMD1mOPf7qxgeBu5ZnEOs9Rv1BgV6uzh89+A7ErdMEIvjYH4S2fOBiRdCjQ6Ph82tc7qTWoq+HkWWOUpgFbz8z9Njrk9JRkN41Js2wTsF1tbgmVB1RnYm0vCSo010gy7eyiJv1bnixzZcrfojsLbV2rbniDNck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SVPkMH5M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uX2+V8mLwa+j0PuMlmJZHvABtw4PqinlKKrlGSUuzdSqoyUjdzR90QUwhP2Wyqs00pSdPt+9bJROEd/2HcSFgo9CP7Ixrjob8YROTBBV/5ti6xGN9sVP/SsWvFhg+HGfqoDwDgQ+AtfkQi84oF73fO17TTNVblSTUrAyi+2C6pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GRH7vK0a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SVPkMH5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC97EC116B1;
-	Wed,  3 Dec 2025 16:49:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GRH7vK0a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63DABC4CEF5;
+	Wed,  3 Dec 2025 16:49:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780547;
-	bh=jCMXjIu+Ee0viD/5UcvDFhAT2CT0lh35jyHHDzpd9wc=;
+	s=korg; t=1764780543;
+	bh=HVEZthPdF2VAEyxkRh5P01znPddS8WWQ1ivb1YQCRWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SVPkMH5MBeiAUmXuYhIz8WQiWWvBweAv3aK04sLP55Nv2TWiQKOD6Z4AC6Numbr8U
-	 tyMFyarz/818pOSwImGccYw4hy8yYJxKUwojGxVzGrHc8VBJzdEUFOFPenehrGNphN
-	 m7J8dHHygZfRz/jp+sKm8Bg0OSxim8Dn34cevZMQ=
+	b=GRH7vK0aJuCM0pariVy1wzke8TMgeWZjP2fCakLAoI4eE6tZDrhZHKXDKZ6laZ7En
+	 nSxYP+lnGp2UpAxdVA0jEgjGVHPVYJ4smLXnm/pcBQB2VDPeQbvZ9zQIo2W8pcNMZz
+	 cvDiRGcJO81zo6qqtxN1MODRT84bi6qPZ0fS5fsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Costantino <dcostantino@meta.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Harish Chegondi <harish.chegondi@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 019/132] net/mlx5e: Fix validation logic in rate limiting
-Date: Wed,  3 Dec 2025 16:28:18 +0100
-Message-ID: <20251203152344.009038038@linuxfoundation.org>
+Subject: [PATCH 6.12 018/132] drm/xe: Fix conversion from clock ticks to milliseconds
+Date: Wed,  3 Dec 2025 16:28:17 +0100
+Message-ID: <20251203152343.972130155@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -52,61 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Costantino <dcostantino@meta.com>
+From: Harish Chegondi <harish.chegondi@intel.com>
 
-[ Upstream commit d2099d9f16dbfa1c5266d4230ff7860047bb0b68 ]
+[ Upstream commit 7276878b069c57d9a9cca5db01d2f7a427b73456 ]
 
-The rate limiting validation condition currently checks the output
-variable max_bw_value[i] instead of the input value
-maxrate->tc_maxrate[i]. This causes the validation to compare an
-uninitialized or stale value rather than the actual requested rate.
+When tick counts are large and multiplication by MSEC_PER_SEC is larger
+than 64 bits, the conversion from clock ticks to milliseconds can go bad.
 
-The condition should check the input rate to properly validate against
-the upper limit:
+Use mul_u64_u32_div() instead.
 
-    } else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
-
-This aligns with the pattern used in the first branch, which correctly
-checks maxrate->tc_maxrate[i] against upper_limit_mbps.
-
-The current implementation can lead to unreliable validation behavior:
-
-- For rates between 25.5 Gbps and 255 Gbps, if max_bw_value[i] is 0
-  from initialization, the GBPS path may be taken regardless of whether
-  the actual rate is within bounds
-
-- When processing multiple TCs (i > 0), max_bw_value[i] contains the
-  value computed for the previous TC, affecting the validation logic
-
-- The overflow check for rates exceeding 255 Gbps may not trigger
-  consistently depending on previous array values
-
-This patch ensures the validation correctly examines the requested rate
-value for proper bounds checking.
-
-Fixes: 43b27d1bd88a ("net/mlx5e: Fix wraparound in rate limiting for values above 255 Gbps")
-Signed-off-by: Danielle Costantino <dcostantino@meta.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20251124180043.2314428-1-dcostantino@meta.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Signed-off-by: Harish Chegondi <harish.chegondi@intel.com>
+Suggested-by: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Fixes: 49cc215aad7f ("drm/xe: Add xe_gt_clock_interval_to_ms helper")
+Reviewed-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Link: https://patch.msgid.link/1562f1b62d5be3fbaee100f09107f3cc49e40dd1.1763408584.git.harish.chegondi@intel.com
+(cherry picked from commit 96b93ac214f9dd66294d975d86c5dee256faef91)
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_gt_clock.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 2ca32fb1961e1..84e700777941e 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -627,7 +627,7 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
- 						  MLX5E_100MB);
- 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
- 			max_bw_unit[i]  = MLX5_100_MBPS_UNIT;
--		} else if (max_bw_value[i] <= upper_limit_gbps) {
-+		} else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
- 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
- 						  MLX5E_1GB);
- 			max_bw_unit[i]  = MLX5_GBPS_UNIT;
+diff --git a/drivers/gpu/drm/xe/xe_gt_clock.c b/drivers/gpu/drm/xe/xe_gt_clock.c
+index 86c2d62b4bdc3..fa66295695c01 100644
+--- a/drivers/gpu/drm/xe/xe_gt_clock.c
++++ b/drivers/gpu/drm/xe/xe_gt_clock.c
+@@ -82,11 +82,6 @@ int xe_gt_clock_init(struct xe_gt *gt)
+ 	return 0;
+ }
+ 
+-static u64 div_u64_roundup(u64 n, u32 d)
+-{
+-	return div_u64(n + d - 1, d);
+-}
+-
+ /**
+  * xe_gt_clock_interval_to_ms - Convert sampled GT clock ticks to msec
+  *
+@@ -97,5 +92,5 @@ static u64 div_u64_roundup(u64 n, u32 d)
+  */
+ u64 xe_gt_clock_interval_to_ms(struct xe_gt *gt, u64 count)
+ {
+-	return div_u64_roundup(count * MSEC_PER_SEC, gt->info.reference_clock);
++	return mul_u64_u32_div(count, MSEC_PER_SEC, gt->info.reference_clock);
+ }
 -- 
 2.51.0
 
