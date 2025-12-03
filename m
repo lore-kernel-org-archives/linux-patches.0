@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B592DA769;
-	Wed,  3 Dec 2025 15:35:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B2230FC30;
+	Wed,  3 Dec 2025 15:35:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776136; cv=none; b=DI6eJFObggd+2hD5z8j+VU6fH3fTbU+eCRv0VjfySjHQUmj+pJ4TZp3Nuzwx0lJbwsrig6fafXinQ7OoAtmkpl538wPrmX2DLoideVEo7RWzxjAH1lo6dSOoUkgd7bAIblysgCA5AZ2DRXMdgDJGeQwzVqNwCDwW2e9SQG9oTIs=
+	t=1764776139; cv=none; b=IbXspnCy6Od9RhGsz2r2l8srMR/UtKkhCuCCSWiKuzAV29vZowAbDOztzJB3U0y6TLkEFc58XArnvV26SDgpSE7ExL4x0eGQddhQnTdNKKvpCG1+256MolYfzb1tqnNKVHD7jF1VUTc9e7uBAbOH5u8l//vQeNPPBVyZvzjEF0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776136; c=relaxed/simple;
-	bh=iVyKqYvYZQTw4ijQK9MzlcdMVJeJUlSdMKeAK92CgIM=;
+	s=arc-20240116; t=1764776139; c=relaxed/simple;
+	bh=pTGCTSNInxJkjOw1dGGyk2KOP2yB92y5daEXKjpBDuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ebkCYChydDRsTdVRcoSE8FjPC/bdk/xh2cy76f2tSZFUzlAZJ1K/q3qONTTuiC8qUHq4Jb+dpiR7m2gZYW7o/TVGDlX3TLBD8eQvBXSRzxLorGtzs5QpGcHAc/QO7fua7I3ufvuLZiiEYItH1WAspbPtqWHNRz9rohp/3IX+P9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I34bCVQL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaGMmRazJXodvHqWEe0U5ZatGehF/k26+3Ju9Kvcb7UpslXPITEkKgfFcHZ59pF3hFzkjhULittz74l3X0ob9CI7U2r6+1F9gN2YSptPxq8rX+HFuYqH8gsRUVmkrtpcOMBFjFFVAKtj68urWaKta1d85eldNOuTaKfOZZ0ma9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsSk/Yzp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I34bCVQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23823C4CEF5;
-	Wed,  3 Dec 2025 15:35:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsSk/Yzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4398FC4CEF5;
+	Wed,  3 Dec 2025 15:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776136;
-	bh=iVyKqYvYZQTw4ijQK9MzlcdMVJeJUlSdMKeAK92CgIM=;
+	s=korg; t=1764776139;
+	bh=pTGCTSNInxJkjOw1dGGyk2KOP2yB92y5daEXKjpBDuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I34bCVQLcsHV0YogdnV1ExDaVVVS0BsZeRK+o5FvxBe4BGHYjmt+hIJn8b30daURa
-	 KYiHsx/gb8040gV5negziPmJp6ddgtgWyijbQq/dethfky9tMpRxVb29YT+OrER5Kp
-	 T9wNDdiZHoQee2Ig1M14x1+8OpXd1dbhJmWbCjK4=
+	b=jsSk/YzpFWe8jkmSp4vb9xN59feeWvrzGz8/s5UWtQNXbNjLv8cjWcJrQUAC6FmKw
+	 7Ze1dQJVQASNrFvWkEUTfmYZnsyUae+VF0t9i1bZicGTbdBiZpCDYvd6KAgzFbNNmY
+	 Cb6cNIf02s2zHWDLX4n7vOgLuCyC1ugOI3RVqpRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Lee Jones <lee@kernel.org>,
+	Ujwal Kundur <ujwal.kundur@gmail.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/300] mfd: stmpe: Remove IRQ domain upon removal
-Date: Wed,  3 Dec 2025 16:24:28 +0100
-Message-ID: <20251203152402.992766759@linuxfoundation.org>
+Subject: [PATCH 5.10 091/300] rds: Fix endianness annotation for RDS_MPATH_HASH
+Date: Wed,  3 Dec 2025 16:24:55 +0100
+Message-ID: <20251203152403.994907401@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,35 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Ujwal Kundur <ujwal.kundur@gmail.com>
 
-[ Upstream commit 57bf2a312ab2d0bc8ee0f4e8a447fa94a2fc877d ]
+[ Upstream commit 77907a068717fbefb25faf01fecca553aca6ccaa ]
 
-The IRQ domain is (optionally) added during stmpe_probe, but never removed.
-Add the call to stmpe_remove.
+jhash_1word accepts host endian inputs while rs_bound_port is a be16
+value (sockaddr_in6.sin6_port). Use ntohs() for consistency.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20250725070752.338376-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Flagged by Sparse.
+
+Signed-off-by: Ujwal Kundur <ujwal.kundur@gmail.com>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://patch.msgid.link/20250820175550.498-4-ujwal.kundur@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/stmpe.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/rds/rds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/stmpe.c b/drivers/mfd/stmpe.c
-index 7f758fb60c1fa..70ca3fe4e99ee 100644
---- a/drivers/mfd/stmpe.c
-+++ b/drivers/mfd/stmpe.c
-@@ -1494,6 +1494,9 @@ int stmpe_probe(struct stmpe_client_info *ci, enum stmpe_partnum partnum)
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index d35d1fc398076..1257867e85e4e 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -93,7 +93,7 @@ enum {
  
- int stmpe_remove(struct stmpe *stmpe)
- {
-+	if (stmpe->domain)
-+		irq_domain_remove(stmpe->domain);
-+
- 	if (!IS_ERR(stmpe->vio) && regulator_is_enabled(stmpe->vio))
- 		regulator_disable(stmpe->vio);
- 	if (!IS_ERR(stmpe->vcc) && regulator_is_enabled(stmpe->vcc))
+ /* Max number of multipaths per RDS connection. Must be a power of 2 */
+ #define	RDS_MPATH_WORKERS	8
+-#define	RDS_MPATH_HASH(rs, n) (jhash_1word((rs)->rs_bound_port, \
++#define	RDS_MPATH_HASH(rs, n) (jhash_1word(ntohs((rs)->rs_bound_port), \
+ 			       (rs)->rs_hash_initval) & ((n) - 1))
+ 
+ #define IS_CANONICAL(laddr, faddr) (htonl(laddr) < htonl(faddr))
 -- 
 2.51.0
 
