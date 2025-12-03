@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAD3362121;
-	Wed,  3 Dec 2025 16:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37FBD363C77;
+	Wed,  3 Dec 2025 16:45:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780306; cv=none; b=aPzzR0Rm7Jdk63GSBuxcCTV9hD+iOk+e2/8eMsfExA0RaqHqU4t7qKXLNf+k0PIitB3p7Dv0b5OViejxt4v9h7tYiLs7p9P2R/C95dK4+glMbL98ZfeIW7mGcqpa20S6tYfpC+9hfbhJobJvDnz2KI1gWl99GLqSAMQDOCJo6NM=
+	t=1764780310; cv=none; b=X+ky3nr7RPz1S5uHx0oEL7GQHzj2nnj64LCw/vSI8zNGh3LsrsrVdkTBey/Q0ix2UOz9xRtDG8R1ap7TR9mewdysPXAhyhDWVvwutqNrcbkq9alO1zdyO1Po5EGG4ClA5hvXIgeDmNXLMwfj0tYJgbmMIIrKyq6rw6NuZKMhtWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780306; c=relaxed/simple;
-	bh=xOXsogycBy+7XI6HoZFR/hniF4s7ftA8WJnR3ymMTJE=;
+	s=arc-20240116; t=1764780310; c=relaxed/simple;
+	bh=xToGr4c8aL+pyxSVG82dpV7te/mioFnx8H8ZyFEd3Pk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G6EE9gXaq3j6vUpLmPs6juIRy68xMh0PSdHUG5R6chHCcvk+WfMVmO/x6CniHJmEp8IPw+45uspIuMU1Cf3i7+vSqfs/GEAYvDxSCr/Ed1UV8eHH0U4+8cBA2msFWhWR4pukKN7lKnfodfctAEL5wFJuELoEU9EFuFnhqruugJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJX6vlk8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=qo3V/avfpEj7D84VQofYVoMPGm3L7tbBytoBVXDSKY3PfO7qMVTrD25eUIC2LzwTuG/PDbObwv8kGTJW1QWsyMQvzoYNTPzyziAx3XF6R5mm15OYOdnoXH9ISmWDOKq77YsA1zYo3F0s9iclEeqnNqEInqrjLbfe8mUtQtNeeE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NTBBvGSv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJX6vlk8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC85C4CEF5;
-	Wed,  3 Dec 2025 16:45:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NTBBvGSv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98818C4CEF5;
+	Wed,  3 Dec 2025 16:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780306;
-	bh=xOXsogycBy+7XI6HoZFR/hniF4s7ftA8WJnR3ymMTJE=;
+	s=korg; t=1764780310;
+	bh=xToGr4c8aL+pyxSVG82dpV7te/mioFnx8H8ZyFEd3Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJX6vlk8utaU5NdDyr1Z2bRy7DLhtdOciA/fVW9HxfVaHtCxXK4Z5vJbMgkJzzRRV
-	 Gqi9/FcYc6kViSzFt6PY7uhZjgguvVgaMkRxe6WV1+Nc2NuKuJ5vciMynkITkCdvjy
-	 VY5L6olfuGvlDAXrW+Myc7up0V3BiwZftXA+xpOM=
+	b=NTBBvGSv7z0Di5LYgyGXiRC1zUt/Hsugt5jpPQb7CasoSEKTCvpb/0/Ek8a8+0WGw
+	 3nDFsU0TCNkwgWVmWbNHayoOPz+bfT/oqhNJM8K3PGox27g15dRADbHiY5s+XHPEOp
+	 +uXL63bDeA1QLMRCbRCuwZ3f0Nzt6Tva4JE3bDY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Lavra <flavra@baylibre.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 517/568] iio: imu: st_lsm6dsx: fix array size for st_lsm6dsx_settings fields
-Date: Wed,  3 Dec 2025 16:28:39 +0100
-Message-ID: <20251203152459.650457599@linuxfoundation.org>
+Subject: [PATCH 6.1 518/568] iio:common:ssp_sensors: Fix an error handling path ssp_probe()
+Date: Wed,  3 Dec 2025 16:28:40 +0100
+Message-ID: <20251203152459.686369339@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -46,79 +46,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Francesco Lavra <flavra@baylibre.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 3af0c1fb1cdc351b64ff1a4bc06d491490c1f10a upstream.
+commit 21553258b94861a73d7f2cf15469d69240e1170d upstream.
 
-The `decimator` and `batch` fields of struct st_lsm6dsx_settings
-are arrays indexed by sensor type, not by sensor hardware
-identifier; moreover, the `batch` field is only used for the
-accelerometer and gyroscope.
-Change the array size for `decimator` from ST_LSM6DSX_MAX_ID to
-ST_LSM6DSX_ID_MAX, and change the array size for `batch` from
-ST_LSM6DSX_MAX_ID to 2; move the enum st_lsm6dsx_sensor_id
-definition so that the ST_LSM6DSX_ID_MAX value is usable within
-the struct st_lsm6dsx_settings definition.
+If an error occurs after a successful mfd_add_devices() call, it should be
+undone by a corresponding mfd_remove_devices() call, as already done in the
+remove function.
 
-Fixes: 801a6e0af0c6c ("iio: imu: st_lsm6dsx: add support to LSM6DSO")
-Signed-off-by: Francesco Lavra <flavra@baylibre.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Fixes: 50dd64d57eee ("iio: common: ssp_sensors: Add sensorhub driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h |   22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/iio/common/ssp_sensors/ssp_dev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-+++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
-@@ -232,6 +232,15 @@ struct st_lsm6dsx_event_settings {
- 	u8 wakeup_src_x_mask;
- };
+--- a/drivers/iio/common/ssp_sensors/ssp_dev.c
++++ b/drivers/iio/common/ssp_sensors/ssp_dev.c
+@@ -503,7 +503,7 @@ static int ssp_probe(struct spi_device *
+ 	ret = spi_setup(spi);
+ 	if (ret < 0) {
+ 		dev_err(&spi->dev, "Failed to setup spi\n");
+-		return ret;
++		goto err_setup_spi;
+ 	}
  
-+enum st_lsm6dsx_sensor_id {
-+	ST_LSM6DSX_ID_GYRO,
-+	ST_LSM6DSX_ID_ACC,
-+	ST_LSM6DSX_ID_EXT0,
-+	ST_LSM6DSX_ID_EXT1,
-+	ST_LSM6DSX_ID_EXT2,
-+	ST_LSM6DSX_ID_MAX
-+};
-+
- enum st_lsm6dsx_ext_sensor_id {
- 	ST_LSM6DSX_ID_MAGN,
- };
-@@ -315,23 +324,14 @@ struct st_lsm6dsx_settings {
- 	struct st_lsm6dsx_reg drdy_mask;
- 	struct st_lsm6dsx_odr_table_entry odr_table[2];
- 	struct st_lsm6dsx_fs_table_entry fs_table[2];
--	struct st_lsm6dsx_reg decimator[ST_LSM6DSX_MAX_ID];
--	struct st_lsm6dsx_reg batch[ST_LSM6DSX_MAX_ID];
-+	struct st_lsm6dsx_reg decimator[ST_LSM6DSX_ID_MAX];
-+	struct st_lsm6dsx_reg batch[2];
- 	struct st_lsm6dsx_fifo_ops fifo_ops;
- 	struct st_lsm6dsx_hw_ts_settings ts_settings;
- 	struct st_lsm6dsx_shub_settings shub_settings;
- 	struct st_lsm6dsx_event_settings event_settings;
- };
+ 	data->fw_dl_state = SSP_FW_DL_STATE_NONE;
+@@ -568,6 +568,8 @@ err_read_reg:
+ err_setup_irq:
+ 	mutex_destroy(&data->pending_lock);
+ 	mutex_destroy(&data->comm_lock);
++err_setup_spi:
++	mfd_remove_devices(&spi->dev);
  
--enum st_lsm6dsx_sensor_id {
--	ST_LSM6DSX_ID_GYRO,
--	ST_LSM6DSX_ID_ACC,
--	ST_LSM6DSX_ID_EXT0,
--	ST_LSM6DSX_ID_EXT1,
--	ST_LSM6DSX_ID_EXT2,
--	ST_LSM6DSX_ID_MAX,
--};
--
- enum st_lsm6dsx_fifo_mode {
- 	ST_LSM6DSX_FIFO_BYPASS = 0x0,
- 	ST_LSM6DSX_FIFO_CONT = 0x6,
+ 	dev_err(&spi->dev, "Probe failed!\n");
+ 
 
 
