@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A28535CBCD;
-	Wed,  3 Dec 2025 16:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6651035CBDF;
+	Wed,  3 Dec 2025 16:27:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779220; cv=none; b=HhgXecXkvawgzefGGk/69OLyrpnOt5StGE88iuToSInGPJa3z9Mgihe3LYjK6JizMkwCZUIBl8wH09gXOMm6Tz47D25dsJ4DGZ6GCEtcqn24/NaeVjaOLkpeqkE5z15//g7FhrRwzPVF1pOQhUACfgccuRPb/kHvJpkUvUNcrDo=
+	t=1764779223; cv=none; b=ulg3FBpbX7DQhj8wiRbrfNq7flqv+k+jo6Xe6nqnweRbOEyTQ59AzGSHyF1qlt85UUAn9dICu8yC5nXrOb9vEWiZRK4xPUBWX+Eat8R4z/zFAcHXClyccrzFodnJmNpSeo6nGT+roIiWY6Qx2VHzbgAnKrCOb8rcLkgeo6J6WdU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779220; c=relaxed/simple;
-	bh=FqyRZDXiHJbOKkeeajxUhqAHoK4LN9c3/nY4Y0yD0Jg=;
+	s=arc-20240116; t=1764779223; c=relaxed/simple;
+	bh=hHWF6e7o9WBwr9bcIv4uuL/pascecDH6xrB7I9BqWP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qQR6QWmUWzl6qoTU9H4/ZDoa4NK9Iya9VXNGNkpXJCJX5VG2Dqt3DeHYqZh9TPpHie4YLeUlNcUaGoJVVMSxntafATExRtXkV2I2+1lYDhgnZLNHrDStNGCuB3k6lNj9ZRzUTZ1zGv8mQLYsppVj6G39zH/K8+3d4HC+NAv8458=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJfksuxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hGvy5CXFiXZ1mb1kmASL6newqQeVf+F6GczXQ2RA66bVAZO8FL5YQ/LIl8hNZ62hGxCBJD1sCQRq/Eg2GEAzbR6CHcZBRgZxwtKLaCBbqPDCkQ5PDyEPbJxAb5ffzYNyEJwyQ3MBnoRhsavS029CfxOuC1PC1831qMz10T+XB0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=coKqMvft; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJfksuxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37F1C4CEF5;
-	Wed,  3 Dec 2025 16:26:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="coKqMvft"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E27BFC116C6;
+	Wed,  3 Dec 2025 16:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779220;
-	bh=FqyRZDXiHJbOKkeeajxUhqAHoK4LN9c3/nY4Y0yD0Jg=;
+	s=korg; t=1764779223;
+	bh=hHWF6e7o9WBwr9bcIv4uuL/pascecDH6xrB7I9BqWP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJfksuxnzDW+nvuXgX4uNUwFkYH1cDeFUiWDzjS13VcBSaT4kEKeeWphwZr3RjEbR
-	 0JVVpDHUHXA4TVUBTuTK3ubdLFQ8ikFlBEZmubglDOQ8LfjtJ6eub7BuJTxe1JCkiQ
-	 QLsSYYrcfjD/COazUCR1uP4GY0yPp1z+AKwbMOVc=
+	b=coKqMvftT4h09ti94ytCeoiO6UaExP9TdKgSwpdjvL6thXUqZTCP6Ls1/q6GaTggC
+	 k4ymK2c2EFXwviTTvoP1spVX9G3/e7CFJlHqwEAyhTdNgNMCuK6CE80UVjH5J/pOmf
+	 7b0q1Zj9vG1v+IE5I8pRoK1513Gil9uK8yqx4TJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chelsy Ratnawat <chelsyratnawat2001@gmail.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/568] media: fix uninitialized symbol warnings
-Date: Wed,  3 Dec 2025 16:22:56 +0100
-Message-ID: <20251203152447.104433548@linuxfoundation.org>
+Subject: [PATCH 6.1 192/568] media: adv7180: Do not write format to device in set_fmt
+Date: Wed,  3 Dec 2025 16:23:14 +0100
+Message-ID: <20251203152447.757098778@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,117 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit b4c441310c3baaa7c39a5457e305ca93c7a0400d ]
+[ Upstream commit 46c1e7814d1c3310ef23c01ed1a582ef0c8ab1d2 ]
 
-Initialize variables to fix these smatch warnings
-drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
-symbol 'protocol'.
-drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
-symbol 'scancode'.
-drivers/media/i2c/ir-kbd-i2c.c:339 ir_key_poll() error: uninitialized
-symbol 'toggle'.
-drivers/media/tuners/xc4000.c:1102 xc_debug_dump() error: uninitialized
-symbol 'adc_envelope'.
-drivers/media/tuners/xc4000.c:1108 xc_debug_dump() error: uninitialized
-symbol 'lock_status'.
-drivers/media/tuners/xc4000.c:1123 xc_debug_dump() error: uninitialized
-symbol 'frame_lines'.
-drivers/media/tuners/xc4000.c:1127 xc_debug_dump() error: uninitialized
-symbol 'quality'.
-drivers/media/tuners/xc5000.c:645 xc_debug_dump() error: uninitialized
-symbol 'adc_envelope'.
-drivers/media/tuners/xc5000.c:651 xc_debug_dump() error: uninitialized
-symbol 'lock_status'.
-drivers/media/tuners/xc5000.c:665 xc_debug_dump() error: uninitialized
-symbol 'frame_lines'.
-drivers/media/tuners/xc5000.c:668 xc_debug_dump() error: uninitialized
-symbol 'quality'.
-drivers/media/tuners/xc5000.c:671 xc_debug_dump() error: uninitialized
-symbol 'snr'.
-drivers/media/tuners/xc5000.c:674 xc_debug_dump() error: uninitialized
-symbol 'totalgain'.
+The .set_fmt callback should not write the new format directly do the
+device, it should only store it and have it applied by .s_stream.
 
-Signed-off-by: Chelsy Ratnawat <chelsyratnawat2001@gmail.com>
+The .s_stream callback already calls adv7180_set_field_mode() so it's
+safe to remove programming of the device and just store the format and
+have .s_stream apply it.
+
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
-[hverkuil: dropped ' = 0' from rc in ir-kbd-i2c.c, not needed]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ir-kbd-i2c.c |  6 +++---
- drivers/media/tuners/xc4000.c  |  8 ++++----
- drivers/media/tuners/xc5000.c  | 12 ++++++------
- 3 files changed, 13 insertions(+), 13 deletions(-)
+ drivers/media/i2c/adv7180.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/media/i2c/ir-kbd-i2c.c b/drivers/media/i2c/ir-kbd-i2c.c
-index 25bf1132dbff8..fce54c8dad3e4 100644
---- a/drivers/media/i2c/ir-kbd-i2c.c
-+++ b/drivers/media/i2c/ir-kbd-i2c.c
-@@ -321,9 +321,9 @@ static int get_key_avermedia_cardbus(struct IR_i2c *ir, enum rc_proto *protocol,
+diff --git a/drivers/media/i2c/adv7180.c b/drivers/media/i2c/adv7180.c
+index a7977f9c64c88..74356ea06deee 100644
+--- a/drivers/media/i2c/adv7180.c
++++ b/drivers/media/i2c/adv7180.c
+@@ -803,14 +803,7 @@ static int adv7180_set_pad_format(struct v4l2_subdev *sd,
+ 	ret = adv7180_mbus_fmt(sd,  &format->format);
  
- static int ir_key_poll(struct IR_i2c *ir)
- {
--	enum rc_proto protocol;
--	u32 scancode;
--	u8 toggle;
-+	enum rc_proto protocol = 0;
-+	u32 scancode = 0;
-+	u8 toggle = 0;
- 	int rc;
- 
- 	dev_dbg(&ir->rc->dev, "%s\n", __func__);
-diff --git a/drivers/media/tuners/xc4000.c b/drivers/media/tuners/xc4000.c
-index 29bc63021c5aa..6fb3550811a28 100644
---- a/drivers/media/tuners/xc4000.c
-+++ b/drivers/media/tuners/xc4000.c
-@@ -1087,12 +1087,12 @@ static int check_firmware(struct dvb_frontend *fe, unsigned int type,
- 
- static void xc_debug_dump(struct xc4000_priv *priv)
- {
--	u16	adc_envelope;
-+	u16	adc_envelope = 0;
- 	u32	freq_error_hz = 0;
--	u16	lock_status;
-+	u16	lock_status = 0;
- 	u32	hsync_freq_hz = 0;
--	u16	frame_lines;
--	u16	quality;
-+	u16	frame_lines = 0;
-+	u16	quality = 0;
- 	u16	signal = 0;
- 	u16	noise = 0;
- 	u8	hw_majorversion = 0, hw_minorversion = 0;
-diff --git a/drivers/media/tuners/xc5000.c b/drivers/media/tuners/xc5000.c
-index ec9a3cd4784e1..a28481edd22ed 100644
---- a/drivers/media/tuners/xc5000.c
-+++ b/drivers/media/tuners/xc5000.c
-@@ -622,14 +622,14 @@ static int xc5000_fwupload(struct dvb_frontend *fe,
- 
- static void xc_debug_dump(struct xc5000_priv *priv)
- {
--	u16 adc_envelope;
-+	u16 adc_envelope = 0;
- 	u32 freq_error_hz = 0;
--	u16 lock_status;
-+	u16 lock_status = 0;
- 	u32 hsync_freq_hz = 0;
--	u16 frame_lines;
--	u16 quality;
--	u16 snr;
--	u16 totalgain;
-+	u16 frame_lines = 0;
-+	u16 quality = 0;
-+	u16 snr = 0;
-+	u16 totalgain = 0;
- 	u8 hw_majorversion = 0, hw_minorversion = 0;
- 	u8 fw_majorversion = 0, fw_minorversion = 0;
- 	u16 fw_buildversion = 0;
+ 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE) {
+-		if (state->field != format->format.field) {
+-			guard(mutex)(&state->mutex);
+-
+-			state->field = format->format.field;
+-			adv7180_set_power(state, false);
+-			adv7180_set_field_mode(state);
+-			adv7180_set_power(state, true);
+-		}
++		state->field = format->format.field;
+ 	} else {
+ 		framefmt = v4l2_subdev_get_try_format(sd, sd_state, 0);
+ 		*framefmt = format->format;
 -- 
 2.51.0
 
