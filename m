@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F52F34A77E;
-	Wed,  3 Dec 2025 16:01:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE0F34A79E;
+	Wed,  3 Dec 2025 16:01:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777667; cv=none; b=M8qUde7cgdW8VeM0cqz/igB9AgQWfDNNGvCwrosUy+RtqHQmbHtac61lQk+F9+1D9xomd8nCzhssjA5MO1+zNt5mM/1RrOcRByxBu3uFjVnFOKFbtSgIDjTX56OUxTAdGvqLNtdUeg9ydZJjZ2BZzw5sz1XTbkCynUt5T2N/XQE=
+	t=1764777670; cv=none; b=OlAj6i6B0gztDpo4RDB8l1pi+sDumPH/VAYxxJ9PnCDwYf00DkgHc0EACHR4NbO7v3a5HWVarxlsmkGPlTuAiPMeknRm0s52Cgex3JgOSzxBlxJ/xif0mMS9VGwoN4bWn20MX0zS8I/XXi0PcGzkqZIjKHH2Fz7DUkkZYyDQ9kM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777667; c=relaxed/simple;
-	bh=WAJndhheaQWhDobcJqDngIqhlsW5EkT/lpfAbnnkTmk=;
+	s=arc-20240116; t=1764777670; c=relaxed/simple;
+	bh=36+qM03Pa0Pl5bxmk9pSM1z7E+oitXUzQGi3klXkS14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IE1vRclxr2jr3336HJw6V1iky2fHNVyIFGc1gNLtlQp+a6bVTkxWWdV7nxumNlvPsoAAzQWZ9OItz6K90wzR3FchFNrmQYgblAOMw/W/Q+JkhObxpyl3/XTWXT5CMztuFce208FaMj58oQvVTG/Bhr1PCf2xkWrN2J54N7EpiFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFtjzu1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eEoe2yR8OEBHAn0H9VBnsEwcSbD66lzJNatevgrzXEEw3UV3e8iGH7VnkNyNHCWRnzvkzLF1g07rdRfT1M0kKvAv6yXzF4V6LK3q9fbAqcFYBktxiLGhQFpJopn6IPsduQLY0JDSF5AQC6osgZvxfoWTtXnSe7+/HK6r0/NsB5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYLJoAAj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFtjzu1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DE3C4CEF5;
-	Wed,  3 Dec 2025 16:01:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYLJoAAj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73C9C4CEF5;
+	Wed,  3 Dec 2025 16:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777667;
-	bh=WAJndhheaQWhDobcJqDngIqhlsW5EkT/lpfAbnnkTmk=;
+	s=korg; t=1764777670;
+	bh=36+qM03Pa0Pl5bxmk9pSM1z7E+oitXUzQGi3klXkS14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFtjzu1uD1SKYEf8KIIAW2NdBbZKzDz/zoBiEPd9+vCk9f/bgMsz4K8E6cQh1YCWJ
-	 RtdIWsrbIEy48GDYlM7c1QfBFLaYWKR1EAgdsVx3NdQLJlOk47YlIR7dilZK0JJING
-	 Kcse3mCX7GbsGlJ7h9i698s9+o8a7DTHV1JqkVTY=
+	b=vYLJoAAjGk5roaa50aGOrDyRpM3cG02c/UQFfDCuMVM2TltstTwWz8lz3VTdBZY7T
+	 qjZX4lWg3hU93q2e825Uz/o5rke16KbyA3rhcdltzB17PdK11q6c8IrQcVjQIgxNTN
+	 6pszLV1AXkOG1eF2/huGBwwgDm8ex3vrmElX217w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	raub camaioni <raubcameo@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/392] iio: adc: spear_adc: mask SPEAR_ADC_STATUS channel and avg sample before setting register
-Date: Wed,  3 Dec 2025 16:24:19 +0100
-Message-ID: <20251203152418.109529204@linuxfoundation.org>
+Subject: [PATCH 5.15 110/392] usb: gadget: f_ncm: Fix MAC assignment NCM ethernet
+Date: Wed,  3 Dec 2025 16:24:20 +0100
+Message-ID: <20251203152418.145142076@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,62 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+From: raub camaioni <raubcameo@gmail.com>
 
-[ Upstream commit d75c7021c08e8ae3f311ef2464dca0eaf75fab9f ]
+[ Upstream commit 956606bafb5fc6e5968aadcda86fc0037e1d7548 ]
 
-avg sample info is a bit field coded inside the following
-bits: 5,6,7 and 8 of a device status register.
+This fix is already present in f_ecm.c and was never
+propagated to f_ncm.c
 
-Channel num info the same, but over bits: 1, 2 and 3.
+When creating multiple NCM ethernet devices
+on a composite usb gadget device
+each MAC address on the HOST side will be identical.
+Having the same MAC on different network interfaces is bad.
 
-Mask both values in order to avoid touching other register bits,
-since the first info (avg sample), came from DT.
+This fix updates the MAC address inside the
+ncm_strings_defs global during the ncm_bind call.
+This ensures each device has a unique MAC.
+In f_ecm.c ecm_string_defs is updated in the same way.
 
-Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20250717221559.158872-1-rodrigo.gobbi.7@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+The defunct MAC assignment in ncm_alloc has been removed.
+
+Signed-off-by: raub camaioni <raubcameo@gmail.com>
+Link: https://lore.kernel.org/r/20250815131358.1047525-1-raubcameo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/spear_adc.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
-index d93e580b3dc5b..8fda16dd012f7 100644
---- a/drivers/iio/adc/spear_adc.c
-+++ b/drivers/iio/adc/spear_adc.c
-@@ -12,6 +12,7 @@
- #include <linux/kernel.h>
- #include <linux/slab.h>
- #include <linux/io.h>
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/err.h>
- #include <linux/completion.h>
-@@ -29,9 +30,9 @@
+diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
+index 4fe6a1efe0986..1ee950bf1604e 100644
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1468,6 +1468,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
  
- /* Bit definitions for SPEAR_ADC_STATUS */
- #define SPEAR_ADC_STATUS_START_CONVERSION	BIT(0)
--#define SPEAR_ADC_STATUS_CHANNEL_NUM(x)		((x) << 1)
-+#define SPEAR_ADC_STATUS_CHANNEL_NUM_MASK	GENMASK(3, 1)
- #define SPEAR_ADC_STATUS_ADC_ENABLE		BIT(4)
--#define SPEAR_ADC_STATUS_AVG_SAMPLE(x)		((x) << 5)
-+#define SPEAR_ADC_STATUS_AVG_SAMPLE_MASK	GENMASK(8, 5)
- #define SPEAR_ADC_STATUS_VREF_INTERNAL		BIT(9)
+ 	ncm_opts->bound = true;
  
- #define SPEAR_ADC_DATA_MASK		0x03ff
-@@ -157,8 +158,8 @@ static int spear_adc_read_raw(struct iio_dev *indio_dev,
- 	case IIO_CHAN_INFO_RAW:
- 		mutex_lock(&st->lock);
++	ncm_string_defs[1].s = ncm->ethaddr;
++
+ 	us = usb_gstrings_attach(cdev, ncm_strings,
+ 				 ARRAY_SIZE(ncm_string_defs));
+ 	if (IS_ERR(us))
+@@ -1717,7 +1719,6 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
+ 		mutex_unlock(&opts->lock);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+-	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
  
--		status = SPEAR_ADC_STATUS_CHANNEL_NUM(chan->channel) |
--			SPEAR_ADC_STATUS_AVG_SAMPLE(st->avg_samples) |
-+		status = FIELD_PREP(SPEAR_ADC_STATUS_CHANNEL_NUM_MASK, chan->channel) |
-+			FIELD_PREP(SPEAR_ADC_STATUS_AVG_SAMPLE_MASK, st->avg_samples) |
- 			SPEAR_ADC_STATUS_START_CONVERSION |
- 			SPEAR_ADC_STATUS_ADC_ENABLE;
- 		if (st->vref_external == 0)
+ 	spin_lock_init(&ncm->lock);
+ 	ncm_reset_values(ncm);
 -- 
 2.51.0
 
