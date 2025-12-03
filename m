@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6769DDDAB;
-	Wed,  3 Dec 2025 15:41:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B237A30C37A;
+	Wed,  3 Dec 2025 15:41:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776495; cv=none; b=A3hbC50lJFAfMDaBmJyL15dqzIXK/fjMQuZQhH6EnV8F2SXeKEdWvhhAWqidY8GUe1+bRcbFwlxdUIpqNb7+MvfKGZfbiv/rVZ/ROaxZL9R+fvnhmhj0RfkPfagAxc13kKJvRd+BiING8fl4UbxyQWneyVY6X0wX2+lREweJDtc=
+	t=1764776498; cv=none; b=cD3ghbeiliHHiiqJM82dpgWVIfoWXrgZE/YWCG0GYJDVxKWpGhVowL7Hj6kRlSWAM2FUWMLI4aDj/YxBGFnNCjlTctwgVlc15rqmktzw5I8HY7kDBqM7mfhyoSs5R7WBeXIfYdFpfEYWDEw3fAIoEWN4hi+QL+K8eVewt2sPzqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776495; c=relaxed/simple;
-	bh=3kjUvPTyBE2Rf0L8niTtEU0PxSmPlGoObF2/tK9knYU=;
+	s=arc-20240116; t=1764776498; c=relaxed/simple;
+	bh=skWwdF2yERqkcChDT0IL7CgMH4YgpDagwk7ZlLfcTsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wz3DsPnhKJqGxhGfUp4SqQ7SRdry9iBxLZBXGSGH5lpZbY4182jKziXYCcnY6Tf34mn9LxDbdtyxtueKbIsEOCGV3ZRbgHWO/7uWLFb6ofzV/wj8zqdKn5ugJLIh9+3IF86gjwtwWUzkhX0ZVqnvL2TJDTijIxLFnn+iNyWoWt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBeHnhXc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PqMrUPaRyay/sEv9pAbIQXwzNRrEmvc0GekBpRvK1JCdUfaQf0ltRn2C0E43sLlBut5pNBUTHr0ilT83d/iWD4oecncHOmUjBUqhqy97nGA89KasVNYucAajFv6qC0qgNrvgbzWSM0ztiOzKPGJDixirj51fosWyAoEH75nNTEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYVA8ABI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBeHnhXc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAD46C4CEF5;
-	Wed,  3 Dec 2025 15:41:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYVA8ABI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8FDC4CEF5;
+	Wed,  3 Dec 2025 15:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776495;
-	bh=3kjUvPTyBE2Rf0L8niTtEU0PxSmPlGoObF2/tK9knYU=;
+	s=korg; t=1764776498;
+	bh=skWwdF2yERqkcChDT0IL7CgMH4YgpDagwk7ZlLfcTsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBeHnhXcahj9ub4bp78UmCLCoskoWzlM+U0sEasXmwmVM0Zhnm/56g8AfrBaZkc0E
-	 gxTJNWYZyH22Do1jDH57DggW7nmIP9W9PpDvOj29/RR3p8Utoiv3rXKeH5PRMHs/F7
-	 s4+zK0ThBu+qsAR/SXSxCSoj7hmnLCI1gjyumaeE=
+	b=IYVA8ABIY7LN90rnMe8K3dB98jCsyIuGE9xWeG6Bm8QirtyPYJvSmSLOnJH/Yizq/
+	 JQDD4NAut7+pKFOuRQhPPfNqMBsLGEDj26UpRH28NR1zcSE9Ilp3oq86HTNp7RnPBp
+	 4e42SLvvWndKVTpRThxUe6RPpCU3EWnayAe3Ek3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohit Keshri <rkeshri@redhat.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Haein Lee <lhi0729@kaist.ac.kr>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 198/300] drm/vmwgfx: Validate command header size against SVGA_CMD_MAX_DATASIZE
-Date: Wed,  3 Dec 2025 16:26:42 +0100
-Message-ID: <20251203152407.960633068@linuxfoundation.org>
+Subject: [PATCH 5.10 199/300] ALSA: usb-audio: Fix NULL pointer dereference in snd_usb_mixer_controls_badd
+Date: Wed,  3 Dec 2025 16:26:43 +0100
+Message-ID: <20251203152407.997164743@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,41 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Haein Lee <lhi0729@kaist.ac.kr>
 
-[ Upstream commit 32b415a9dc2c212e809b7ebc2b14bc3fbda2b9af ]
+[ Upstream commit 632108ec072ad64c8c83db6e16a7efee29ebfb74 ]
 
-This data originates from userspace and is used in buffer offset
-calculations which could potentially overflow causing an out-of-bounds
-access.
+In snd_usb_create_streams(), for UAC version 3 devices, the Interface
+Association Descriptor (IAD) is retrieved via usb_ifnum_to_if(). If this
+call fails, a fallback routine attempts to obtain the IAD from the next
+interface and sets a BADD profile. However, snd_usb_mixer_controls_badd()
+assumes that the IAD retrieved from usb_ifnum_to_if() is always valid,
+without performing a NULL check. This can lead to a NULL pointer
+dereference when usb_ifnum_to_if() fails to find the interface descriptor.
 
-Fixes: 8ce75f8ab904 ("drm/vmwgfx: Update device includes for DX device functionality")
-Reported-by: Rohit Keshri <rkeshri@redhat.com>
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20251021190128.13014-1-ian.forbes@broadcom.com
+This patch adds a NULL pointer check after calling usb_ifnum_to_if() in
+snd_usb_mixer_controls_badd() to prevent the dereference.
+
+This issue was discovered by syzkaller, which triggered the bug by sending
+a crafted USB device descriptor.
+
+Fixes: 17156f23e93c ("ALSA: usb: add UAC3 BADD profiles support")
+Signed-off-by: Haein Lee <lhi0729@kaist.ac.kr>
+Link: https://patch.msgid.link/vwhzmoba9j2f.vwhzmob9u9e2.g6@dooray.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/usb/mixer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index 987633c6c49f4..17d7f172a9e0f 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -3622,6 +3622,11 @@ static int vmw_cmd_check(struct vmw_private *dev_priv,
+diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
+index c84e25b2b1fb9..6b9a472ea43cb 100644
+--- a/sound/usb/mixer.c
++++ b/sound/usb/mixer.c
+@@ -2999,6 +2999,8 @@ static int snd_usb_mixer_controls_badd(struct usb_mixer_interface *mixer,
+ 	int i;
  
+ 	assoc = usb_ifnum_to_if(dev, ctrlif)->intf_assoc;
++	if (!assoc)
++		return -EINVAL;
  
- 	cmd_id = header->id;
-+	if (header->size > SVGA_CMD_MAX_DATASIZE) {
-+		VMW_DEBUG_USER("SVGA3D command: %d is too big.\n",
-+			       cmd_id + SVGA_3D_CMD_BASE);
-+		return -E2BIG;
-+	}
- 	*size = header->size + sizeof(SVGA3dCmdHeader);
- 
- 	cmd_id -= SVGA_3D_CMD_BASE;
+ 	/* Detect BADD capture/playback channels from AS EP descriptors */
+ 	for (i = 0; i < assoc->bInterfaceCount; i++) {
 -- 
 2.51.0
 
