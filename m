@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503F234BA28;
-	Wed,  3 Dec 2025 16:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EB634F250;
+	Wed,  3 Dec 2025 16:14:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778477; cv=none; b=BmvFuHG/FDm5+TorbiNjKTNOKX7LcoCyjkPu6aEBUSa38UwFVNBH4yS37bNWZbm5du8nAqTXeF/hWZoWqdf4PLgHF5N3RA82ocM21ComARTZRynP4u/lVY42lcTwacvcY5RRbU1qMGw2WSInrB2ENqdldPQmINDghnRsNR56R1Q=
+	t=1764778480; cv=none; b=u3nv83QnHUwyNPua+K1XMK+C6ezmifmaZ1V6P1EE+jjXqNPNzrpLJjDt1S9YV1JJ4Dp7J+M7FUq4cpPXxR5XZW3IGTrFQFwRffkCZFObPlpFOxWzrTQIbu8uO0DfnNE0nW4749DKir4HHvbHBXcehEEGOlOShLnBnGMQZFqFBvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778477; c=relaxed/simple;
-	bh=J7kR6cFGXGms8u2EOdBxhGwPiPeSThneeD5Q3mmYuhc=;
+	s=arc-20240116; t=1764778480; c=relaxed/simple;
+	bh=jzq1xZGL3ArOT0YHPQRMh1dPwlPMIN0DlV/hd8gST4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t8Uq2RmeeMmXwpYvbVMLgI3Pffm6qkwT3g3uMRVw77sQ1GRlJsdfnrhYWG5hdUIY14+Tn4LdEms7SZeaYrN3wE2301ej4Foaqt4F4Q98Cyi82ktMshvqlmfHMo9znsxm1yKzTCOsxE00rg+ZQP1A8g3d1uyahhPrbUsqyayQGEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ab4W6ch+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiHRXn5NffhvJ2Y8vvq9kriG2Pc4kOuwmVN1Dfl0L/8NR/Wkit46/pSWb6JKulBD6X0Qo0lLHIvntNrqoDooY6sRDpVmyO+G27aev/8waGgdg8VyH2xgaZiUZe4p8tsBeaF4DSIHinQafZK+7sQsdy56tuA8QFs49UXX8MbqK54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTNt0tpT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ab4W6ch+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3736C4CEF5;
-	Wed,  3 Dec 2025 16:14:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTNt0tpT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015B9C4CEF5;
+	Wed,  3 Dec 2025 16:14:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778477;
-	bh=J7kR6cFGXGms8u2EOdBxhGwPiPeSThneeD5Q3mmYuhc=;
+	s=korg; t=1764778480;
+	bh=jzq1xZGL3ArOT0YHPQRMh1dPwlPMIN0DlV/hd8gST4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ab4W6ch+ecurmZ5+H4Mf+wmGyaqDHbxaVyQJiTZSizBWyaCJVBiX1n7Z1gR0etGKQ
-	 muo+dxFRb21eUiRfc4CVcLM4p5x4ZL5wdEBbhbyQX/Hs579J7BOnifa65pSybBEBLb
-	 8lxddMVfCLl6bzkUtVZoHLtndLOHzs9Lfq1OjKBo=
+	b=rTNt0tpTyXkfOV7ZLnqPpz6QabhObSmizJ9PI+/Z05II8xeE/LMWFifwWErMOk8C2
+	 mu82rBlf+kYBhazDlT9MdmuAcOtEk/PL3ZmCOzLeRNFjsk6CYnN8MHZi3E7VV08qGM
+	 8LSVYq8dEPyA305fAgIf00g3ItnDtkKE/OC2MDoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.15 358/392] dm-verity: fix unreliable memory allocation
-Date: Wed,  3 Dec 2025 16:28:28 +0100
-Message-ID: <20251203152427.339754563@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jamie Iles <jamie.iles@oss.qualcomm.com>,
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 5.15 359/392] drivers/usb/dwc3: fix PCI parent check
+Date: Wed,  3 Dec 2025 16:28:29 +0100
+Message-ID: <20251203152427.375681842@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,36 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Jamie Iles <jamie.iles@oss.qualcomm.com>
 
-commit fe680d8c747f4e676ac835c8c7fb0f287cd98758 upstream.
+commit 40f8d17eed7533ed2bbb5e3cc680049b19411b2e upstream.
 
-GFP_NOWAIT allocation may fail anytime. It needs to be changed to
-GFP_NOIO. There's no need to handle an error because mempool_alloc with
-GFP_NOIO can't fail.
+The sysdev_is_parent check was being used to infer PCI devices that have
+the DMA mask set from the PCI capabilities, but sysdev_is_parent is also
+used for non-PCI ACPI devices in which case the DMA mask would be the
+bus default or as set by the _DMA method.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Without this fix the DMA mask would default to 32-bits and so allocation
+would fail if there was no DRAM below 4GB.
+
+Fixes: 47ce45906ca9 ("usb: dwc3: leave default DMA for PCI devices")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20251107104437.1602509-1-punit.agrawal@oss.qualcomm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/usb/dwc3/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -314,11 +314,7 @@ static int fec_alloc_bufs(struct dm_veri
- 		if (fio->bufs[n])
- 			continue;
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -24,6 +24,7 @@
+ #include <linux/dma-mapping.h>
+ #include <linux/of.h>
+ #include <linux/acpi.h>
++#include <linux/pci.h>
+ #include <linux/pinctrl/consumer.h>
+ #include <linux/reset.h>
  
--		fio->bufs[n] = mempool_alloc(&v->fec->prealloc_pool, GFP_NOWAIT);
--		if (unlikely(!fio->bufs[n])) {
--			DMERR("failed to allocate FEC buffer");
--			return -ENOMEM;
--		}
-+		fio->bufs[n] = mempool_alloc(&v->fec->prealloc_pool, GFP_NOIO);
- 	}
+@@ -1667,7 +1668,7 @@ static int dwc3_probe(struct platform_de
+ 	platform_set_drvdata(pdev, dwc);
+ 	dwc3_cache_hwparams(dwc);
  
- 	/* try to allocate the maximum number of buffers */
+-	if (!dwc->sysdev_is_parent &&
++	if (!dev_is_pci(dwc->sysdev) &&
+ 	    DWC3_GHWPARAMS0_AWIDTH(dwc->hwparams.hwparams0) == 64) {
+ 		ret = dma_set_mask_and_coherent(dwc->sysdev, DMA_BIT_MASK(64));
+ 		if (ret)
 
 
