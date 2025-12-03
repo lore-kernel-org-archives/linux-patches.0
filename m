@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE8224BD03;
-	Wed,  3 Dec 2025 15:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F6B244665;
+	Wed,  3 Dec 2025 15:35:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776107; cv=none; b=cRNwm5FA/yG7KpPpX1DBbSglnNNHpJVYyiblgz7JlUFk786gPwVkZd7U3phxgCd+5o1jmYFqM8ukjzCcqMdnUnpcM1T8gThKggTVghv3o8bLnc/03GGGUHbOz4583FF1CEF2+Ioe8bi5q5Aevm/IG9kAagznJybO65G+XdAcyAY=
+	t=1764776110; cv=none; b=ADO1qpKESWaxJeNmXKBSx32QH75qIazoO77RQcDpsob3ORZh+cal/CozVVWxlu4gjAf712ANrvTrDGDGiX/t5YwGSBKUFt5sC+Z/Y+NoH7aSrwqgkgpKDpDaiiYKcpd+fMBFNXz+njhTAQ1xERiKdIHdPD7D7TgzxLckvSO264s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776107; c=relaxed/simple;
-	bh=1CcBVtbU16bzJMkw/77HBFvSlpFetDouKWxKeOMjCi0=;
+	s=arc-20240116; t=1764776110; c=relaxed/simple;
+	bh=nSrqHJzvFEVreGab573qZBD786I05VPsdjLOjqQcHz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=go7NiVY0RhDylzdK7JFTXdBaxP+cGIE4VIqozaHRrjrYkY8h1AQ+2k0buO/hWOS+rqpbY2Eg+IbKdW2c+QBnovqjcZxcgFjP5e9/eUwreWLAO6mj98O+lJrDymi148a9BKuyHMrgygmGZwgEYBZIpGDO6MGOFWByW1+e4BnTjBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vIB27i/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MDXMyIg90gJPHMUmmQzegSnEmC+y4b0kmykDZB/6FWJQIE/XrmDWZP7f9hCuwh/FoCxo6IG9S29LEOYypqIVkZD7ULQObCRcUh7DRc+Wt7dvgPjPwQHzoxlhNjIaHz4YSbMw4Pl2aRubPMwr1ov6hZ2hBXFx6NwBCSNgm91821k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+C2SgK3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vIB27i/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F0FC4CEF5;
-	Wed,  3 Dec 2025 15:35:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+C2SgK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B5CC4CEF5;
+	Wed,  3 Dec 2025 15:35:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776106;
-	bh=1CcBVtbU16bzJMkw/77HBFvSlpFetDouKWxKeOMjCi0=;
+	s=korg; t=1764776110;
+	bh=nSrqHJzvFEVreGab573qZBD786I05VPsdjLOjqQcHz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vIB27i/D88RMX8NHHcYVmh9B8wV1xTGWCVRxfPCnjTpUb/r9wnKv/RXh0gEf+vN/T
-	 XKVfLc2lYtwWdz6OBKyYTw2sXSGd15YVxZ0HkYYG83QIJS2c8zq48YTRIeJLavzbUg
-	 AfwtHhEyNeRQvjU89ZK6YbIVNVwJcKrJCuvrH0xU=
+	b=f+C2SgK3bUdRStj/pkaLIZiJ7LJtZDx5dSfx6ykTA9oi7q2rWurCs8ZhMoMA6n3wB
+	 ma2lYthM9HT7Xjf8OoTik5PANYb917CKX+QWBDSDDkWypuvuQJsbC12NlHUxLKlplD
+	 lTLPxJbODaOUmAY7cFD7lxR3ZXHxNvdRXx75z154=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 082/300] media: imon: make send_packet() more robust
-Date: Wed,  3 Dec 2025 16:24:46 +0100
-Message-ID: <20251203152403.663017755@linuxfoundation.org>
+Subject: [PATCH 5.10 083/300] drm/bridge: display-connector: dont set OP_DETECT for DisplayPorts
+Date: Wed,  3 Dec 2025 16:24:47 +0100
+Message-ID: <20251203152403.700340085@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,182 +54,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit eecd203ada43a4693ce6fdd3a58ae10c7819252c ]
+[ Upstream commit cb640b2ca54617f4a9d4d6efd5ff2afd6be11f19 ]
 
-syzbot is reporting that imon has three problems which result in
-hung tasks due to forever holding device lock [1].
+Detecting the monitor for DisplayPort targets is more complicated than
+just reading the HPD pin level: it requires reading the DPCD in order to
+check what kind of device is attached to the port and whether there is
+an actual display attached.
 
-First problem is that when usb_rx_callback_intf0() once got -EPROTO error
-after ictx->dev_present_intf0 became true, usb_rx_callback_intf0()
-resubmits urb after printk(), and resubmitted urb causes
-usb_rx_callback_intf0() to again get -EPROTO error. This results in
-printk() flooding (RCU stalls).
+In order to let DRM framework handle such configurations, disable
+DRM_BRIDGE_OP_DETECT for dp-connector devices, letting the actual DP
+driver perform detection. This still keeps DRM_BRIDGE_OP_HPD enabled, so
+it is valid for the bridge to report HPD events.
 
-Alan Stern commented [2] that
+Currently inside the kernel there are only two targets which list
+hpd-gpios for dp-connector devices: arm64/qcom/qcs6490-rb3gen2 and
+arm64/qcom/sa8295p-adp. Both should be fine with this change.
 
-  In theory it's okay to resubmit _if_ the driver has a robust
-  error-recovery scheme (such as giving up after some fixed limit on the
-  number of errors or after some fixed time has elapsed, perhaps with a
-  time delay to prevent a flood of errors).  Most drivers don't bother to
-  do this; they simply give up right away.  This makes them more
-  vulnerable to short-term noise interference during USB transfers, but in
-  reality such interference is quite rare.  There's nothing really wrong
-  with giving up right away.
-
-but imon has a poor error-recovery scheme which just retries forever;
-this behavior should be fixed.
-
-Since I'm not sure whether it is safe for imon users to give up upon any
-error code, this patch takes care of only union of error codes chosen from
-modules in drivers/media/rc/ directory which handle -EPROTO error (i.e.
-ir_toy, mceusb and igorplugusb).
-
-Second problem is that when usb_rx_callback_intf0() once got -EPROTO error
-before ictx->dev_present_intf0 becomes true, usb_rx_callback_intf0() always
-resubmits urb due to commit 8791d63af0cf ("[media] imon: don't wedge
-hardware after early callbacks"). Move the ictx->dev_present_intf0 test
-introduced by commit 6f6b90c9231a ("[media] imon: don't parse scancodes
-until intf configured") to immediately before imon_incoming_packet(), or
-the first problem explained above happens without printk() flooding (i.e.
-hung task).
-
-Third problem is that when usb_rx_callback_intf0() is not called for some
-reason (e.g. flaky hardware; the reproducer for this problem sometimes
-prevents usb_rx_callback_intf0() from being called),
-wait_for_completion_interruptible() in send_packet() never returns (i.e.
-hung task). As a workaround for such situation, change send_packet() to
-wait for completion with timeout of 10 seconds.
-
-Link: https://syzkaller.appspot.com/bug?extid=592e2ab8775dbe0bf09a [1]
-Link: https://lkml.kernel.org/r/d6da6709-d799-4be3-a695-850bddd6eb24@rowland.harvard.edu [2]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org
+Acked-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Link: https://lore.kernel.org/r/20250802-dp-conn-no-detect-v1-1-2748c2b946da@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 61 +++++++++++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 24 deletions(-)
+ drivers/gpu/drm/bridge/display-connector.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 1de0fe3e58799..565826cff0db4 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -650,12 +650,15 @@ static int send_packet(struct imon_context *ictx)
- 		smp_rmb(); /* ensure later readers know we're not busy */
- 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
- 	} else {
--		/* Wait for transmission to complete (or abort) */
--		retval = wait_for_completion_interruptible(
--				&ictx->tx.finished);
--		if (retval) {
-+		/* Wait for transmission to complete (or abort or timeout) */
-+		retval = wait_for_completion_interruptible_timeout(&ictx->tx.finished, 10 * HZ);
-+		if (retval <= 0) {
- 			usb_kill_urb(ictx->tx_urb);
- 			pr_err_ratelimited("task interrupted\n");
-+			if (retval < 0)
-+				ictx->tx.status = retval;
-+			else
-+				ictx->tx.status = -ETIMEDOUT;
- 		}
- 
- 		ictx->tx.busy = false;
-@@ -1759,14 +1762,6 @@ static void usb_rx_callback_intf0(struct urb *urb)
- 	if (!ictx)
- 		return;
- 
--	/*
--	 * if we get a callback before we're done configuring the hardware, we
--	 * can't yet process the data, as there's nowhere to send it, but we
--	 * still need to submit a new rx URB to avoid wedging the hardware
--	 */
--	if (!ictx->dev_present_intf0)
--		goto out;
--
- 	switch (urb->status) {
- 	case -ENOENT:		/* usbcore unlink successful! */
- 		return;
-@@ -1775,16 +1770,29 @@ static void usb_rx_callback_intf0(struct urb *urb)
- 		break;
- 
- 	case 0:
--		imon_incoming_packet(ictx, urb, intfnum);
-+		/*
-+		 * if we get a callback before we're done configuring the hardware, we
-+		 * can't yet process the data, as there's nowhere to send it, but we
-+		 * still need to submit a new rx URB to avoid wedging the hardware
-+		 */
-+		if (ictx->dev_present_intf0)
-+			imon_incoming_packet(ictx, urb, intfnum);
- 		break;
- 
-+	case -ECONNRESET:
-+	case -EILSEQ:
-+	case -EPROTO:
-+	case -EPIPE:
-+		dev_warn(ictx->dev, "imon %s: status(%d)\n",
-+			 __func__, urb->status);
-+		return;
-+
- 	default:
- 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
- 			 __func__, urb->status);
- 		break;
- 	}
- 
--out:
- 	usb_submit_urb(ictx->rx_urb_intf0, GFP_ATOMIC);
- }
- 
-@@ -1800,14 +1808,6 @@ static void usb_rx_callback_intf1(struct urb *urb)
- 	if (!ictx)
- 		return;
- 
--	/*
--	 * if we get a callback before we're done configuring the hardware, we
--	 * can't yet process the data, as there's nowhere to send it, but we
--	 * still need to submit a new rx URB to avoid wedging the hardware
--	 */
--	if (!ictx->dev_present_intf1)
--		goto out;
--
- 	switch (urb->status) {
- 	case -ENOENT:		/* usbcore unlink successful! */
- 		return;
-@@ -1816,16 +1816,29 @@ static void usb_rx_callback_intf1(struct urb *urb)
- 		break;
- 
- 	case 0:
--		imon_incoming_packet(ictx, urb, intfnum);
-+		/*
-+		 * if we get a callback before we're done configuring the hardware, we
-+		 * can't yet process the data, as there's nowhere to send it, but we
-+		 * still need to submit a new rx URB to avoid wedging the hardware
-+		 */
-+		if (ictx->dev_present_intf1)
-+			imon_incoming_packet(ictx, urb, intfnum);
- 		break;
- 
-+	case -ECONNRESET:
-+	case -EILSEQ:
-+	case -EPROTO:
-+	case -EPIPE:
-+		dev_warn(ictx->dev, "imon %s: status(%d)\n",
-+			 __func__, urb->status);
-+		return;
-+
- 	default:
- 		dev_warn(ictx->dev, "imon %s: status(%d): ignored\n",
- 			 __func__, urb->status);
- 		break;
- 	}
- 
--out:
- 	usb_submit_urb(ictx->rx_urb_intf1, GFP_ATOMIC);
- }
- 
+diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
+index 544a47335cac4..d34120eb5e674 100644
+--- a/drivers/gpu/drm/bridge/display-connector.c
++++ b/drivers/gpu/drm/bridge/display-connector.c
+@@ -229,7 +229,8 @@ static int display_connector_probe(struct platform_device *pdev)
+ 	if (conn->bridge.ddc)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_EDID
+ 				 |  DRM_BRIDGE_OP_DETECT;
+-	if (conn->hpd_gpio)
++	/* Detecting the monitor requires reading DPCD */
++	if (conn->hpd_gpio && type != DRM_MODE_CONNECTOR_DisplayPort)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
+ 	if (conn->hpd_irq >= 0)
+ 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
 -- 
 2.51.0
 
