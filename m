@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960D33126C7;
-	Wed,  3 Dec 2025 16:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF1F3126C7;
+	Wed,  3 Dec 2025 16:03:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777786; cv=none; b=BGnbh0Zk+cz18NhpKdkly+/9ed2KGc24ClNHt7gjksuBTtdz25NC81eA59KlsfIF5L/K5FebmxkqpUU9xwHkk6Bt2xM8yY5gEUFQvD3cBavI3DiBBgkYn1TERkj0szI8rMFDTtgPX+Jmtn7s0+JrN9t8wqJBMXjTVRwiH9J1QYQ=
+	t=1764777789; cv=none; b=GzIjJDpySSgsl3eGO18uBKlF88/6/feCfayrzMfkuTlCDgen0MLY1HSIV1qly6S/jME34PiRxvzOwrcla/czmnm8dlf8kRvtRXvcP8L1dlhh8BuJ1KnVQkaH495Dhlz0CrgjsNu2qY80mzYn6WM7/egm3Vap7L2XF5CZjq5i3dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777786; c=relaxed/simple;
-	bh=11qrLR5ZzU8xFJOQol8NctcNsUhyYEUbo++8CNo4Vb8=;
+	s=arc-20240116; t=1764777789; c=relaxed/simple;
+	bh=I3k6OiJXkneovfDxEJaGOh76QI77iourj51EJ2/yFDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zz+iv2g/tAAmgqEZtAF0rRkxoNOwo0oohA4eW3cRmH8tFUij+4oRiTvSAbWWWW7M+qeOGbBGOCFgqO+67jZB6KZGLoZSCqhniao4+hwQWp0nA3gxLIuuUyUMqMUOi5noHQaEWJH/qeWAtm8Iy6QM/x4MAuqH/34Kj1LHpkYJKx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qHSP8Hzc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QszjTChA/C1sJDwbv8W5b7WQuCk5CqcO+bwWfBFmCX5TfGUIjwT8/erHThHJ5WmHkikQlmdQ+ZSqy4tDMBp2qPXvJFDps7IfZRr62DvnSFRjXXB1QR16D09zHoVkKQxKsHlJHRGKFAVhXlqA7RekvzIJIYqQqLU75VKaI6dgKro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h2ahxC3H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qHSP8Hzc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212A1C4CEF5;
-	Wed,  3 Dec 2025 16:03:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h2ahxC3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8654C4CEF5;
+	Wed,  3 Dec 2025 16:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777786;
-	bh=11qrLR5ZzU8xFJOQol8NctcNsUhyYEUbo++8CNo4Vb8=;
+	s=korg; t=1764777789;
+	bh=I3k6OiJXkneovfDxEJaGOh76QI77iourj51EJ2/yFDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qHSP8Hzc5nmuP9ZAwvChH7NCv6xeeV2/0ZH3VcjoWSKumOVPnFS67wtnmt+7EbF0D
-	 WZGw8vfbF0u43AtEs/KTyAu6oyv9TFoJaI/7LWWUYEsFibutNY6t69xcPO0lMNLCnU
-	 80u3pnRLic232kNGDWMv/i7CD0/J3S30P9DsSsCc=
+	b=h2ahxC3HjwYtkA3wp6JXm7NlPhOoeo/5L1IW356DjVsUYEV4kYHx/ue27AIiwlYv4
+	 4PoXHARs5Ey8tLOUrWCbyBQlrdacknUUZfMyxRtgaCdpX/aX22u+YlsUXmYZkaC1BU
+	 3J+5zNZqRcjxVHCW8TTIQSN1GC7IUNunzQrsgmB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Li RongQing <lirongqing@baidu.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Wangyang Guo <wangyang.guo@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/392] netfilter: nf_reject: dont reply to icmp error messages
-Date: Wed,  3 Dec 2025 16:24:57 +0100
-Message-ID: <20251203152419.493742446@linuxfoundation.org>
+Subject: [PATCH 5.15 148/392] x86/kvm: Prefer native qspinlock for dedicated vCPUs irrespective of PV_UNHALT
+Date: Wed,  3 Dec 2025 16:24:58 +0100
+Message-ID: <20251203152419.531144305@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,127 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit db99b2f2b3e2cd8227ac9990ca4a8a31a1e95e56 ]
+[ Upstream commit 960550503965094b0babd7e8c83ec66c8a763b0b ]
 
-tcp reject code won't reply to a tcp reset.
+The commit b2798ba0b876 ("KVM: X86: Choose qspinlock when dedicated
+physical CPUs are available") states that when PV_DEDICATED=1
+(vCPU has dedicated pCPU), qspinlock should be preferred regardless of
+PV_UNHALT.  However, the current implementation doesn't reflect this: when
+PV_UNHALT=0, we still use virt_spin_lock() even with dedicated pCPUs.
 
-But the icmp reject 'netdev' family versions will reply to icmp
-dst-unreach errors, unlike icmp_send() and icmp6_send() which are used
-by the inet family implementation (and internally by the REJECT target).
+This is suboptimal because:
+1. Native qspinlocks should outperform virt_spin_lock() for dedicated
+   vCPUs irrespective of HALT exiting
+2. virt_spin_lock() should only be preferred when vCPUs may be preempted
+   (non-dedicated case)
 
-Check for the icmp(6) type and do not respond if its an unreachable error.
+So reorder the PV spinlock checks to:
+1. First handle dedicated pCPU case (disable virt_spin_lock_key)
+2. Second check single CPU, and nopvspin configuration
+3. Only then check PV_UNHALT support
 
-Without this, something like 'ip protocol icmp reject', when used
-in a netdev chain attached to 'lo', cause a packet loop.
+This ensures we always use native qspinlock for dedicated vCPUs, delivering
+pretty performance gains at high contention levels.
 
-Same for two hosts that both use such a rule: each error packet
-will be replied to.
-
-Such situation persist until the (bogus) rule is amended to ratelimit or
-checks the icmp type before the reject statement.
-
-As the inet versions don't do this make the netdev ones follow along.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Reviewed-by: Sean Christopherson <seanjc@google.com>
+Tested-by: Wangyang Guo <wangyang.guo@intel.com>
+Link: https://lore.kernel.org/r/20250722110005.4988-1-lirongqing@baidu.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/netfilter/nf_reject_ipv4.c | 25 ++++++++++++++++++++++++
- net/ipv6/netfilter/nf_reject_ipv6.c | 30 +++++++++++++++++++++++++++++
- 2 files changed, 55 insertions(+)
+ arch/x86/kernel/kvm.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/net/ipv4/netfilter/nf_reject_ipv4.c b/net/ipv4/netfilter/nf_reject_ipv4.c
-index c1f5ca847c8a8..4d16d49b430e9 100644
---- a/net/ipv4/netfilter/nf_reject_ipv4.c
-+++ b/net/ipv4/netfilter/nf_reject_ipv4.c
-@@ -71,6 +71,27 @@ struct sk_buff *nf_reject_skb_v4_tcp_reset(struct net *net,
- }
- EXPORT_SYMBOL_GPL(nf_reject_skb_v4_tcp_reset);
+diff --git a/arch/x86/kernel/kvm.c b/arch/x86/kernel/kvm.c
+index eba6485a59a39..4286b0f247ea3 100644
+--- a/arch/x86/kernel/kvm.c
++++ b/arch/x86/kernel/kvm.c
+@@ -959,16 +959,6 @@ ASM_RET
+  */
+ void __init kvm_spinlock_init(void)
+ {
+-	/*
+-	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
+-	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
+-	 * preferred over native qspinlock when vCPU is preempted.
+-	 */
+-	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
+-		pr_info("PV spinlocks disabled, no host support\n");
+-		return;
+-	}
+-
+ 	/*
+ 	 * Disable PV spinlocks and use native qspinlock when dedicated pCPUs
+ 	 * are available.
+@@ -988,6 +978,16 @@ void __init kvm_spinlock_init(void)
+ 		goto out;
+ 	}
  
-+static bool nf_skb_is_icmp_unreach(const struct sk_buff *skb)
-+{
-+	const struct iphdr *iph = ip_hdr(skb);
-+	u8 *tp, _type;
-+	int thoff;
++	/*
++	 * In case host doesn't support KVM_FEATURE_PV_UNHALT there is still an
++	 * advantage of keeping virt_spin_lock_key enabled: virt_spin_lock() is
++	 * preferred over native qspinlock when vCPU is preempted.
++	 */
++	if (!kvm_para_has_feature(KVM_FEATURE_PV_UNHALT)) {
++		pr_info("PV spinlocks disabled, no host support\n");
++		return;
++	}
 +
-+	if (iph->protocol != IPPROTO_ICMP)
-+		return false;
-+
-+	thoff = skb_network_offset(skb) + sizeof(*iph);
-+
-+	tp = skb_header_pointer(skb,
-+				thoff + offsetof(struct icmphdr, type),
-+				sizeof(_type), &_type);
-+
-+	if (!tp)
-+		return false;
-+
-+	return *tp == ICMP_DEST_UNREACH;
-+}
-+
- struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
- 					 struct sk_buff *oldskb,
- 					 const struct net_device *dev,
-@@ -90,6 +111,10 @@ struct sk_buff *nf_reject_skb_v4_unreach(struct net *net,
- 	if (ip_hdr(oldskb)->frag_off & htons(IP_OFFSET))
- 		return NULL;
+ 	pr_info("PV spinlocks enabled\n");
  
-+	/* don't reply to ICMP_DEST_UNREACH with ICMP_DEST_UNREACH. */
-+	if (nf_skb_is_icmp_unreach(oldskb))
-+		return NULL;
-+
- 	/* RFC says return as much as we can without exceeding 576 bytes. */
- 	len = min_t(unsigned int, 536, oldskb->len);
- 
-diff --git a/net/ipv6/netfilter/nf_reject_ipv6.c b/net/ipv6/netfilter/nf_reject_ipv6.c
-index ca39b83c2a5d1..e209e8ca0c1cf 100644
---- a/net/ipv6/netfilter/nf_reject_ipv6.c
-+++ b/net/ipv6/netfilter/nf_reject_ipv6.c
-@@ -91,6 +91,32 @@ struct sk_buff *nf_reject_skb_v6_tcp_reset(struct net *net,
- }
- EXPORT_SYMBOL_GPL(nf_reject_skb_v6_tcp_reset);
- 
-+static bool nf_skb_is_icmp6_unreach(const struct sk_buff *skb)
-+{
-+	const struct ipv6hdr *ip6h = ipv6_hdr(skb);
-+	u8 proto = ip6h->nexthdr;
-+	u8 _type, *tp;
-+	int thoff;
-+	__be16 fo;
-+
-+	thoff = ipv6_skip_exthdr(skb, ((u8 *)(ip6h + 1) - skb->data), &proto, &fo);
-+
-+	if (thoff < 0 || thoff >= skb->len || fo != 0)
-+		return false;
-+
-+	if (proto != IPPROTO_ICMPV6)
-+		return false;
-+
-+	tp = skb_header_pointer(skb,
-+				thoff + offsetof(struct icmp6hdr, icmp6_type),
-+				sizeof(_type), &_type);
-+
-+	if (!tp)
-+		return false;
-+
-+	return *tp == ICMPV6_DEST_UNREACH;
-+}
-+
- struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
- 					 struct sk_buff *oldskb,
- 					 const struct net_device *dev,
-@@ -104,6 +130,10 @@ struct sk_buff *nf_reject_skb_v6_unreach(struct net *net,
- 	if (!nf_reject_ip6hdr_validate(oldskb))
- 		return NULL;
- 
-+	/* Don't reply to ICMPV6_DEST_UNREACH with ICMPV6_DEST_UNREACH */
-+	if (nf_skb_is_icmp6_unreach(oldskb))
-+		return NULL;
-+
- 	/* Include "As much of invoking packet as possible without the ICMPv6
- 	 * packet exceeding the minimum IPv6 MTU" in the ICMP payload.
- 	 */
+ 	__pv_init_lock_hash();
 -- 
 2.51.0
 
