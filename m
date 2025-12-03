@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8462B327C05;
-	Wed,  3 Dec 2025 15:49:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3CA327BF9;
+	Wed,  3 Dec 2025 15:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776960; cv=none; b=QcOjlC/hSnRLMmSqoHBaqVU9l5XlFEz1Pa8ZtmOpRuixZNUL2S5OVDcegpurQms7X+WEq8GIcRBVi8KXx+YNExO5wEbbWIr37DyImNO7Pa4b+gVHWY9T3f5Fps+WOYGQidH19OSVyHY1rJF1wdAgn6ZBeFAT+fjOx5H3lhxlyqU=
+	t=1764776963; cv=none; b=tbueaxqdJL1nFjLJ8X0Z38pZfUU6Us/BfM+ihAm1udjo8krEir9Mw0T8SOY/aAO93j0T6u1uHa0BuInBs09f8xve/lEotYiM2GM7InHKi+1Sw03GhubGUtuIbK4k7IEJP+PnR1771D6oPoSYP+wJZM6F0r1eBc2cyFqhYmP73qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776960; c=relaxed/simple;
-	bh=RdiS4J8884H0Ffp/6enZ2jEyP9P6Ph9zmAsoyiqPECU=;
+	s=arc-20240116; t=1764776963; c=relaxed/simple;
+	bh=sjEW/uTYLHu+N/RySBp/WppbiauEUDtXquJ2ezd7erE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FfOdPj6aiVsR+HAvsHs6JwuaUHtIuxC48j3HUyei3wzFezXKXwYige3Qob4NYZhOcOKnA9DLII5iT6zQyEZGZt6cfvQ9g/Q2Okwk/gVtofjQ+lvARNzXoc/G8yNWK7glzDgKbeuqZaWOsSvZbyPoCsytMcUW5P+hnT5XuLUBL/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VBJL5aX7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eiPerseUFZk0Go6oXTMDWrMSOixnpNhA+t2ciGE31BudroTLYo14y24j4BVVqjzBbm1EswcB6hErxh5OoePMmimce5HnzDoD0GG2cGNG7TKifMQZ857iixGGthhY5bbCzJK+k0K9CWw8Zmzoz91sGBZU44YdHTWrkX88i5CQIBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JpsraCda; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VBJL5aX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBA0C4CEF5;
-	Wed,  3 Dec 2025 15:49:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JpsraCda"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB27BC116C6;
+	Wed,  3 Dec 2025 15:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776960;
-	bh=RdiS4J8884H0Ffp/6enZ2jEyP9P6Ph9zmAsoyiqPECU=;
+	s=korg; t=1764776963;
+	bh=sjEW/uTYLHu+N/RySBp/WppbiauEUDtXquJ2ezd7erE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBJL5aX7RFNonoHoPcvbeOC/ZoRUvQz3GJjTsvnrGD2G9DaUGX+7prAlZHPYgay6y
-	 fxCZ1JvBWG1ae7NP8Kc7xOluBIeNHZ1LnQnBEFo0KGHRXNl/BUXve9V1Va6OR+pPa1
-	 f9H0mv/eMWbb8VIUTu9WSho2oasAg9Wa7C9MqM6g=
+	b=JpsraCdauca/vKn87dyRScFnXrdkMBgpp/I8r2AJ/AaSnEIFcRD2NDIe2t4TlAEdq
+	 iLb1//nFgX1UjIE4h8xkFr5VZTbQQ1Gbii8VhOFA5g6MrXdc7FVcg38DnsfXsQGbpF
+	 MYxJF/LO+42d8Nc59yyAa9gN6nt20ulaZQWuec+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d32d77220b92eddd89ad@syzkaller.appspotmail.com,
-	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 008/146] Bluetooth: hci_core: lookup hci_conn on RX path on protocol side
-Date: Wed,  3 Dec 2025 16:26:26 +0100
-Message-ID: <20251203152346.770142653@linuxfoundation.org>
+Subject: [PATCH 6.17 009/146] Bluetooth: SMP: Fix not generating mackey and ltk when repairing
+Date: Wed,  3 Dec 2025 16:26:27 +0100
+Message-ID: <20251203152346.806052433@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -52,415 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 79a2d4678ba90bdba577dc3af88cc900d6dcd5ee ]
+[ Upstream commit 545d7827b2cd5de5eb85580cebeda6b35b3ff443 ]
 
-The hdev lock/lookup/unlock/use pattern in the packet RX path doesn't
-ensure hci_conn* is not concurrently modified/deleted. This locking
-appears to be leftover from before conn_hash started using RCU
-commit bf4c63252490b ("Bluetooth: convert conn hash to RCU")
-and not clear if it had purpose since then.
+The change eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
+introduced a goto that bypasses the creation of temporary mackey and ltk
+which are later used by the likes of DHKey Check step.
 
-Currently, there are code paths that delete hci_conn* from elsewhere
-than the ordered hdev->workqueue where the RX work runs in. E.g.
-commit 5af1f84ed13a ("Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync")
-introduced some of these, and there probably were a few others before
-it.  It's better to do the locking so that even if these run
-concurrently no UAF is possible.
+Later ffee202a78c2 ("Bluetooth: Always request for user confirmation for
+Just Works (LE SC)") which means confirm_hint is always set in case
+JUST_WORKS so the branch checking for an existing LTK becomes pointless
+as confirm_hint will always be set, so this just merge both cases of
+malicious or legitimate devices to be confirmed before continuing with the
+pairing procedure.
 
-Move the lookup of hci_conn and associated socket-specific conn to
-protocol recv handlers, and do them within a single critical section
-to cover hci_conn* usage and lookup.
-
-syzkaller has reported a crash that appears to be this issue:
-
-    [Task hdev->workqueue]          [Task 2]
-                                    hci_disconnect_all_sync
-    l2cap_recv_acldata(hcon)
-                                      hci_conn_get(hcon)
-                                      hci_abort_conn_sync(hcon)
-                                        hci_dev_lock
-      hci_dev_lock
-                                        hci_conn_del(hcon)
-      v-------------------------------- hci_dev_unlock
-                                      hci_conn_put(hcon)
-      conn = hcon->l2cap_data (UAF)
-
-Fixes: 5af1f84ed13a ("Bluetooth: hci_sync: Fix UAF on hci_abort_conn_sync")
-Reported-by: syzbot+d32d77220b92eddd89ad@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=d32d77220b92eddd89ad
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Link: https://github.com/bluez/bluez/issues/1622
+Fixes: eed467b517e8 ("Bluetooth: fix passkey uninitialized when used")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci_core.h | 20 ++++++---
- net/bluetooth/hci_core.c         | 73 +++++++++++---------------------
- net/bluetooth/iso.c              | 30 ++++++++++---
- net/bluetooth/l2cap_core.c       | 23 +++++++---
- net/bluetooth/sco.c              | 35 +++++++++++----
- 5 files changed, 108 insertions(+), 73 deletions(-)
+ net/bluetooth/smp.c | 31 +++++++------------------------
+ 1 file changed, 7 insertions(+), 24 deletions(-)
 
-diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index 4ccb462a0a4b8..b020ce30929e6 100644
---- a/include/net/bluetooth/hci_core.h
-+++ b/include/net/bluetooth/hci_core.h
-@@ -855,11 +855,12 @@ extern struct mutex hci_cb_list_lock;
- /* ----- HCI interface to upper protocols ----- */
- int l2cap_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr);
- int l2cap_disconn_ind(struct hci_conn *hcon);
--void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags);
-+int l2cap_recv_acldata(struct hci_dev *hdev, u16 handle, struct sk_buff *skb,
-+		       u16 flags);
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 45512b2ba951c..3a1ce04a7a536 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2136,7 +2136,7 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	struct smp_chan *smp = chan->data;
+ 	struct hci_conn *hcon = conn->hcon;
+ 	u8 *pkax, *pkbx, *na, *nb, confirm_hint;
+-	u32 passkey;
++	u32 passkey = 0;
+ 	int err;
  
- #if IS_ENABLED(CONFIG_BT_BREDR)
- int sco_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags);
--void sco_recv_scodata(struct hci_conn *hcon, struct sk_buff *skb);
-+int sco_recv_scodata(struct hci_dev *hdev, u16 handle, struct sk_buff *skb);
- #else
- static inline int sco_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr,
- 				  __u8 *flags)
-@@ -867,23 +868,30 @@ static inline int sco_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr,
- 	return 0;
- }
- 
--static inline void sco_recv_scodata(struct hci_conn *hcon, struct sk_buff *skb)
-+static inline int sco_recv_scodata(struct hci_dev *hdev, u16 handle,
-+				   struct sk_buff *skb)
- {
-+	kfree_skb(skb);
-+	return -ENOENT;
- }
- #endif
- 
- #if IS_ENABLED(CONFIG_BT_LE)
- int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr, __u8 *flags);
--void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags);
-+int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb,
-+	     u16 flags);
- #else
- static inline int iso_connect_ind(struct hci_dev *hdev, bdaddr_t *bdaddr,
- 				  __u8 *flags)
- {
- 	return 0;
- }
--static inline void iso_recv(struct hci_conn *hcon, struct sk_buff *skb,
--			    u16 flags)
-+
-+static inline int iso_recv(struct hci_dev *hdev, u16 handle,
-+			   struct sk_buff *skb, u16 flags)
- {
-+	kfree_skb(skb);
-+	return -ENOENT;
- }
- #endif
- 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 72c7607aac209..057ec1a5230d9 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3804,13 +3804,14 @@ static void hci_tx_work(struct work_struct *work)
- static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct hci_acl_hdr *hdr;
--	struct hci_conn *conn;
- 	__u16 handle, flags;
-+	int err;
- 
- 	hdr = skb_pull_data(skb, sizeof(*hdr));
- 	if (!hdr) {
- 		bt_dev_err(hdev, "ACL packet too small");
--		goto drop;
-+		kfree_skb(skb);
-+		return;
+ 	bt_dev_dbg(hcon->hdev, "conn %p", conn);
+@@ -2188,24 +2188,6 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 		smp_send_cmd(conn, SMP_CMD_PAIRING_RANDOM, sizeof(smp->prnd),
+ 			     smp->prnd);
+ 		SMP_ALLOW_CMD(smp, SMP_CMD_DHKEY_CHECK);
+-
+-		/* Only Just-Works pairing requires extra checks */
+-		if (smp->method != JUST_WORKS)
+-			goto mackey_and_ltk;
+-
+-		/* If there already exists long term key in local host, leave
+-		 * the decision to user space since the remote device could
+-		 * be legitimate or malicious.
+-		 */
+-		if (hci_find_ltk(hcon->hdev, &hcon->dst, hcon->dst_type,
+-				 hcon->role)) {
+-			/* Set passkey to 0. The value can be any number since
+-			 * it'll be ignored anyway.
+-			 */
+-			passkey = 0;
+-			confirm_hint = 1;
+-			goto confirm;
+-		}
  	}
  
- 	handle = __le16_to_cpu(hdr->handle);
-@@ -3822,36 +3823,27 @@ static void hci_acldata_packet(struct hci_dev *hdev, struct sk_buff *skb)
+ mackey_and_ltk:
+@@ -2226,11 +2208,12 @@ static u8 smp_cmd_pairing_random(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	if (err)
+ 		return SMP_UNSPECIFIED;
  
- 	hdev->stat.acl_rx++;
- 
--	hci_dev_lock(hdev);
--	conn = hci_conn_hash_lookup_handle(hdev, handle);
--	hci_dev_unlock(hdev);
+-	confirm_hint = 0;
 -
--	if (conn) {
--		hci_conn_enter_active_mode(conn, BT_POWER_FORCE_ACTIVE_OFF);
--
--		/* Send to upper protocol */
--		l2cap_recv_acldata(conn, skb, flags);
--		return;
--	} else {
-+	err = l2cap_recv_acldata(hdev, handle, skb, flags);
-+	if (err == -ENOENT)
- 		bt_dev_err(hdev, "ACL packet for unknown connection handle %d",
- 			   handle);
--	}
--
--drop:
--	kfree_skb(skb);
-+	else if (err)
-+		bt_dev_dbg(hdev, "ACL packet recv for handle %d failed: %d",
-+			   handle, err);
- }
+-confirm:
+-	if (smp->method == JUST_WORKS)
+-		confirm_hint = 1;
++	/* Always require user confirmation for Just-Works pairing to prevent
++	 * impersonation attacks, or in case of a legitimate device that is
++	 * repairing use the confirmation as acknowledgment to proceed with the
++	 * creation of new keys.
++	 */
++	confirm_hint = smp->method == JUST_WORKS ? 1 : 0;
  
- /* SCO data packet */
- static void hci_scodata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct hci_sco_hdr *hdr;
--	struct hci_conn *conn;
- 	__u16 handle, flags;
-+	int err;
- 
- 	hdr = skb_pull_data(skb, sizeof(*hdr));
- 	if (!hdr) {
- 		bt_dev_err(hdev, "SCO packet too small");
--		goto drop;
-+		kfree_skb(skb);
-+		return;
- 	}
- 
- 	handle = __le16_to_cpu(hdr->handle);
-@@ -3863,34 +3855,28 @@ static void hci_scodata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 
- 	hdev->stat.sco_rx++;
- 
--	hci_dev_lock(hdev);
--	conn = hci_conn_hash_lookup_handle(hdev, handle);
--	hci_dev_unlock(hdev);
-+	hci_skb_pkt_status(skb) = flags & 0x03;
- 
--	if (conn) {
--		/* Send to upper protocol */
--		hci_skb_pkt_status(skb) = flags & 0x03;
--		sco_recv_scodata(conn, skb);
--		return;
--	} else {
-+	err = sco_recv_scodata(hdev, handle, skb);
-+	if (err == -ENOENT)
- 		bt_dev_err_ratelimited(hdev, "SCO packet for unknown connection handle %d",
- 				       handle);
--	}
--
--drop:
--	kfree_skb(skb);
-+	else if (err)
-+		bt_dev_dbg(hdev, "SCO packet recv for handle %d failed: %d",
-+			   handle, err);
- }
- 
- static void hci_isodata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct hci_iso_hdr *hdr;
--	struct hci_conn *conn;
- 	__u16 handle, flags;
-+	int err;
- 
- 	hdr = skb_pull_data(skb, sizeof(*hdr));
- 	if (!hdr) {
- 		bt_dev_err(hdev, "ISO packet too small");
--		goto drop;
-+		kfree_skb(skb);
-+		return;
- 	}
- 
- 	handle = __le16_to_cpu(hdr->handle);
-@@ -3900,22 +3886,13 @@ static void hci_isodata_packet(struct hci_dev *hdev, struct sk_buff *skb)
- 	bt_dev_dbg(hdev, "len %d handle 0x%4.4x flags 0x%4.4x", skb->len,
- 		   handle, flags);
- 
--	hci_dev_lock(hdev);
--	conn = hci_conn_hash_lookup_handle(hdev, handle);
--	hci_dev_unlock(hdev);
--
--	if (!conn) {
-+	err = iso_recv(hdev, handle, skb, flags);
-+	if (err == -ENOENT)
- 		bt_dev_err(hdev, "ISO packet for unknown connection handle %d",
- 			   handle);
--		goto drop;
--	}
--
--	/* Send to upper protocol */
--	iso_recv(conn, skb, flags);
--	return;
--
--drop:
--	kfree_skb(skb);
-+	else if (err)
-+		bt_dev_dbg(hdev, "ISO packet recv for handle %d failed: %d",
-+			   handle, err);
- }
- 
- static bool hci_req_is_complete(struct hci_dev *hdev)
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 3d98cb6291da6..616c2fef91d24 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -2314,14 +2314,31 @@ static void iso_disconn_cfm(struct hci_conn *hcon, __u8 reason)
- 	iso_conn_del(hcon, bt_to_errno(reason));
- }
- 
--void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
-+int iso_recv(struct hci_dev *hdev, u16 handle, struct sk_buff *skb, u16 flags)
- {
--	struct iso_conn *conn = hcon->iso_data;
-+	struct hci_conn *hcon;
-+	struct iso_conn *conn;
- 	struct skb_shared_hwtstamps *hwts;
- 	__u16 pb, ts, len, sn;
- 
--	if (!conn)
--		goto drop;
-+	hci_dev_lock(hdev);
-+
-+	hcon = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (!hcon) {
-+		hci_dev_unlock(hdev);
-+		kfree_skb(skb);
-+		return -ENOENT;
-+	}
-+
-+	conn = iso_conn_hold_unless_zero(hcon->iso_data);
-+	hcon = NULL;
-+
-+	hci_dev_unlock(hdev);
-+
-+	if (!conn) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
- 
- 	pb     = hci_iso_flags_pb(flags);
- 	ts     = hci_iso_flags_ts(flags);
-@@ -2377,7 +2394,7 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 			hci_skb_pkt_status(skb) = flags & 0x03;
- 			hci_skb_pkt_seqnum(skb) = sn;
- 			iso_recv_frame(conn, skb);
--			return;
-+			goto done;
- 		}
- 
- 		if (pb == ISO_SINGLE) {
-@@ -2455,6 +2472,9 @@ void iso_recv(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 
- drop:
- 	kfree_skb(skb);
-+done:
-+	iso_conn_put(conn);
-+	return 0;
- }
- 
- static struct hci_cb iso_cb = {
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 35c57657bcf4e..07b493331fd78 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7510,13 +7510,24 @@ struct l2cap_conn *l2cap_conn_hold_unless_zero(struct l2cap_conn *c)
- 	return c;
- }
- 
--void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
-+int l2cap_recv_acldata(struct hci_dev *hdev, u16 handle,
-+		       struct sk_buff *skb, u16 flags)
- {
-+	struct hci_conn *hcon;
- 	struct l2cap_conn *conn;
- 	int len;
- 
--	/* Lock hdev to access l2cap_data to avoid race with l2cap_conn_del */
--	hci_dev_lock(hcon->hdev);
-+	/* Lock hdev for hci_conn, and race on l2cap_data vs. l2cap_conn_del */
-+	hci_dev_lock(hdev);
-+
-+	hcon = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (!hcon) {
-+		hci_dev_unlock(hdev);
-+		kfree_skb(skb);
-+		return -ENOENT;
-+	}
-+
-+	hci_conn_enter_active_mode(hcon, BT_POWER_FORCE_ACTIVE_OFF);
- 
- 	conn = hcon->l2cap_data;
- 
-@@ -7524,12 +7535,13 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- 		conn = l2cap_conn_add(hcon);
- 
- 	conn = l2cap_conn_hold_unless_zero(conn);
-+	hcon = NULL;
- 
--	hci_dev_unlock(hcon->hdev);
-+	hci_dev_unlock(hdev);
- 
- 	if (!conn) {
- 		kfree_skb(skb);
--		return;
-+		return -EINVAL;
- 	}
- 
- 	BT_DBG("conn %p len %u flags 0x%x", conn, skb->len, flags);
-@@ -7643,6 +7655,7 @@ void l2cap_recv_acldata(struct hci_conn *hcon, struct sk_buff *skb, u16 flags)
- unlock:
- 	mutex_unlock(&conn->lock);
- 	l2cap_conn_put(conn);
-+	return 0;
- }
- 
- static struct hci_cb l2cap_cb = {
-diff --git a/net/bluetooth/sco.c b/net/bluetooth/sco.c
-index ab0cf442d57b9..298c2a9ab4df8 100644
---- a/net/bluetooth/sco.c
-+++ b/net/bluetooth/sco.c
-@@ -1458,22 +1458,39 @@ static void sco_disconn_cfm(struct hci_conn *hcon, __u8 reason)
- 	sco_conn_del(hcon, bt_to_errno(reason));
- }
- 
--void sco_recv_scodata(struct hci_conn *hcon, struct sk_buff *skb)
-+int sco_recv_scodata(struct hci_dev *hdev, u16 handle, struct sk_buff *skb)
- {
--	struct sco_conn *conn = hcon->sco_data;
-+	struct hci_conn *hcon;
-+	struct sco_conn *conn;
- 
--	if (!conn)
--		goto drop;
-+	hci_dev_lock(hdev);
-+
-+	hcon = hci_conn_hash_lookup_handle(hdev, handle);
-+	if (!hcon) {
-+		hci_dev_unlock(hdev);
-+		kfree_skb(skb);
-+		return -ENOENT;
-+	}
-+
-+	conn = sco_conn_hold_unless_zero(hcon->sco_data);
-+	hcon = NULL;
-+
-+	hci_dev_unlock(hdev);
-+
-+	if (!conn) {
-+		kfree_skb(skb);
-+		return -EINVAL;
-+	}
- 
- 	BT_DBG("conn %p len %u", conn, skb->len);
- 
--	if (skb->len) {
-+	if (skb->len)
- 		sco_recv_frame(conn, skb);
--		return;
--	}
-+	else
-+		kfree_skb(skb);
- 
--drop:
--	kfree_skb(skb);
-+	sco_conn_put(conn);
-+	return 0;
- }
- 
- static struct hci_cb sco_cb = {
+ 	err = mgmt_user_confirm_request(hcon->hdev, &hcon->dst, hcon->type,
+ 					hcon->dst_type, passkey, confirm_hint);
 -- 
 2.51.0
 
