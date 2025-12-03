@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E9632D42D;
-	Wed,  3 Dec 2025 15:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA4832E69C;
+	Wed,  3 Dec 2025 15:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777574; cv=none; b=qPteRjcYRKcMj6cQLNaIEMnmny6Grue1IZt5coJHjCc6rohPbmfTPkLM1N7pjieAncl+aX+T8eGjf7JQd0ZTcHNOJQo246AWbzD+0IuyNhypp26/LiUuiKjt4T1McsZJk3i2e7/eeyT+1OOPcMc1RHGo1MRsIEtMuBVn3S5IRok=
+	t=1764777578; cv=none; b=aOCjuiWNER9hd7HNc3V+4BNSOp598JrXPeVkI49n4zHPlix+BnMh53YlG8UK3i4p2wQR4qAarDXEz3WKdkxK5FfnMLQcinXDq5rI/QI2A+iYT0ByV2wo0ZmGC3GLXNulU5T7PJ8qa4kKU69ER7ZDXDfeVS/BP67FqQ0eEhrkEk8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777574; c=relaxed/simple;
-	bh=M3sX12S2DfwKyJ0ScVtOjHbbdiorVBkHeqUPSRpI1KI=;
+	s=arc-20240116; t=1764777578; c=relaxed/simple;
+	bh=XOz7j9DR2u9EnwDmOsTPtbqxDTzcy7NKBJMsCHbeUvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pMphrrSPHECl7PCSL44flnpo0N5uUoOYNfLT0kYzMa2MH8MXe18McFKBbtgiVVxt2ulOh2TsRJ+FiFIgSPIFuHesxio2wpm0ktDBwI+XkNAmXdMwm/1Lo4p/6WHCezL/BQDjhOD1HNSLu9RYCoG0FFqoiFsZyV7wxwyiUEc6pRQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mpdiMnlh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MtmSQ686Y9vxLm10eCCv4Olorg1aQYiKHJ3fnEgUrZ5uG6+5JXk7d1ePU4/4PELk6YA+RGkPZ5KvJk9I+9tJieSipAwgcmwjvvDZ3zGlPtnnncRmr+mKFdtE6odlPiYNbr0U6Pz2b62MDia0F7jkzt7yKDd4mZenHwOq5DklOfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fAVyZYem; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mpdiMnlh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A25EAC4CEF5;
-	Wed,  3 Dec 2025 15:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fAVyZYem"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD02AC4CEF5;
+	Wed,  3 Dec 2025 15:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777574;
-	bh=M3sX12S2DfwKyJ0ScVtOjHbbdiorVBkHeqUPSRpI1KI=;
+	s=korg; t=1764777577;
+	bh=XOz7j9DR2u9EnwDmOsTPtbqxDTzcy7NKBJMsCHbeUvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpdiMnlh5nfIkXLaF8+k8D+L2UgYwaQMUoG4ucArTnkjOJUQoASt2fzki84y2Np3H
-	 u4WCJtC+vUZbB/oM3kE7GRRU1ksIJe2lDn8Kg+/3YgMIoRvfJVj7+5n7P11jCdcTaa
-	 CVHVgmCILo9iGIroYJbXAWdJB5pBokjXsCR60FTI=
+	b=fAVyZYem2dyYfuE6RDd0J9OdMyeVzDFAnBBqIKpaIDZDgx9xQfP+vmli7+rePbA7u
+	 7OKHazocoeEdVul4xALdd2VFDfhWlwgyqyCqxv06QKe1PdnNOCixmGPSEp39GCjUXL
+	 28BaZuNKza0NgF9QBwwtdJYU++mzko7dkkSd5bz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 080/392] uprobe: Do not emulate/sstep original instruction when ip is changed
-Date: Wed,  3 Dec 2025 16:23:50 +0100
-Message-ID: <20251203152417.048226672@linuxfoundation.org>
+Subject: [PATCH 5.15 081/392] hwmon: (dell-smm) Add support for Dell OptiPlex 7040
+Date: Wed,  3 Dec 2025 16:23:51 +0100
+Message-ID: <20251203152417.084560009@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,48 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 4363264111e1297fa37aa39b0598faa19298ecca ]
+[ Upstream commit 53d3bd48ef6ff1567a75ca77728968f5ab493cb4 ]
 
-If uprobe handler changes instruction pointer we still execute single
-step) or emulate the original instruction and increment the (new) ip
-with its length.
+The Dell OptiPlex 7040 supports the legacy SMM interface for reading
+sensors and performing fan control. Whitelist this machine so that
+this driver loads automatically.
 
-This makes the new instruction pointer bogus and application will
-likely crash on illegal instruction execution.
-
-If user decided to take execution elsewhere, it makes little sense
-to execute the original instruction, so let's skip it.
-
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20250916215301.664963-3-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Closes: https://github.com/Wer-Wolf/i8kutils/issues/15
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://lore.kernel.org/r/20250917181036.10972-5-W_Armin@gmx.de
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 7 +++++++
+ drivers/hwmon/dell-smm-hwmon.c | 7 +++++++
  1 file changed, 7 insertions(+)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index b37a6bde8a915..4e6ada6a11c7e 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -2241,6 +2241,13 @@ static void handle_swbp(struct pt_regs *regs)
- 
- 	handler_chain(uprobe, regs);
- 
-+	/*
-+	 * If user decided to take execution elsewhere, it makes little sense
-+	 * to execute the original instruction, so let's skip it.
-+	 */
-+	if (instruction_pointer(regs) != bp_vaddr)
-+		goto out;
-+
- 	if (arch_uprobe_skip_sstep(&uprobe->arch, regs))
- 		goto out;
- 
+diff --git a/drivers/hwmon/dell-smm-hwmon.c b/drivers/hwmon/dell-smm-hwmon.c
+index 597cbb4391bdc..ff0209c92a755 100644
+--- a/drivers/hwmon/dell-smm-hwmon.c
++++ b/drivers/hwmon/dell-smm-hwmon.c
+@@ -1030,6 +1030,13 @@ static const struct dmi_system_id i8k_dmi_table[] __initconst = {
+ 		},
+ 		.driver_data = (void *)&i8k_config_data[DELL_PRECISION_490],
+ 	},
++	{
++		.ident = "Dell OptiPlex 7040",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "OptiPlex 7040"),
++		},
++	},
+ 	{
+ 		.ident = "Dell Precision",
+ 		.matches = {
 -- 
 2.51.0
 
