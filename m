@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A793148B9;
-	Wed,  3 Dec 2025 15:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 329E515ADB4;
+	Wed,  3 Dec 2025 15:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776822; cv=none; b=d1aoapmUtHlKnNenWZysBRzVEXKXdygcbdvJraKU0VsRFbyfd5eDgpKpWTwSGb9+7UmUrTRZLv1ruw/KM4D65JYo/SvhZT7VVk4/mbvPkbxBHxvbRUy0aJnUS5prYdjw0BR5h/o4vTmMtEpU8qizYEy7hFspCYA7jdBtlF16b2c=
+	t=1764776825; cv=none; b=tL864vu1BtGEMtRFd/rAOwakTH7c+phUqkkhWeYF7JkkBok9q2hWJTM+cQlBl0IX4WQ1SKT0ZkZYuwqqhq7In/MnZAGh2ncl6Ko7ERiZH4KSzo7Xx1GsiE34RE5LboaU5xyJ1wHSSMMnH/ZnPiPRTeUnDmnGh7OV157ItSQ2NAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776822; c=relaxed/simple;
-	bh=vqKmAGd7HTl/Q9AY8aXegRinyF0mDojx2rPc69VM/Mw=;
+	s=arc-20240116; t=1764776825; c=relaxed/simple;
+	bh=6udfINIVTAUx9sbLisajiNBNad4mkDxN0onYR7XVFGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jvn+rXFwqQXDwepH4+7mrS95OJqoM0S6nW3zGx76Xdbidppo3pL99P5o3br+JPstVpT/ukIp8ErHkqPaQ621zG6SudC/u9AMnYOLJwdyzhQjyEZ7wuk8mXcv/IMKh7cbTsACzR1onD9Gt+qK6QlngHDu4AY4TF0rjKsny4Vi/yI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BXG2YAoS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UHQ8YGpOArfB7IJ1TTFY5A2qd+7B8VpRWdlKmKZj8GCNfwXanrXC7AoclwdkMJ13BeNMKd4nedTTWhZKYwpD4XwNZ44qwPoefrxJnioWJZK89ndqQGrPmpsWPrbDD3wXfhQ1/xCbCE1ZRRDbo/mh1hXTnlZRiFheccTQY0mkAYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v9tWH4hV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BXG2YAoS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AF6C4CEF5;
-	Wed,  3 Dec 2025 15:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v9tWH4hV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA03C4CEF5;
+	Wed,  3 Dec 2025 15:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776821;
-	bh=vqKmAGd7HTl/Q9AY8aXegRinyF0mDojx2rPc69VM/Mw=;
+	s=korg; t=1764776825;
+	bh=6udfINIVTAUx9sbLisajiNBNad4mkDxN0onYR7XVFGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BXG2YAoSy/m9x8RhnELLE4+bBtSxdI4CsjNQfLBJCuFGckpMUrNbt/9MLgWrACgUZ
-	 rJfNaSKKmC2wBoEfchMHEiTVVCxqNrMWzBFakjERDTL2vFCPj/peuBjcdykdtE3Xwj
-	 DnZor14PHwW+Gk6UaZGx+NOcbpq9W/VoHfEUvHy8=
+	b=v9tWH4hVmWTMwdzClnOSxRiywMdmnBBfP1o4VDloTCEmta03mYSRds+K2pS6gEIZu
+	 aWBgWuATWL0SapUrIHxQtkd7/T2FkM0tJVyxZkGSGaTQq8e971jXOJ3HPOgbNMODOk
+	 3JzKyKN0L0d3jDkYbGlm0NlyfXi4jAYADPokxQ24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Yu Chen <chenyu45@xiaomi.com>,
+	Owen Gu <guhuinan@xiaomi.com>,
+	Oliver Neukum <oneukum@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 297/300] usb: renesas_usbhs: Fix synchronous external abort on unbind
-Date: Wed,  3 Dec 2025 16:28:21 +0100
-Message-ID: <20251203152411.625640645@linuxfoundation.org>
+Subject: [PATCH 5.10 298/300] usb: uas: fix urb unmapping issue when the uas device is remove during ongoing data transfer
+Date: Wed,  3 Dec 2025 16:28:22 +0100
+Message-ID: <20251203152411.662476099@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,143 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Owen Gu <guhuinan@xiaomi.com>
 
-[ Upstream commit eb9ac779830b2235847b72cb15cf07c7e3333c5e ]
+[ Upstream commit 26d56a9fcb2014b99e654127960aa0a48a391e3c ]
 
-A synchronous external abort occurs on the Renesas RZ/G3S SoC if unbind is
-executed after the configuration sequence described above:
+When a UAS device is unplugged during data transfer, there is
+a probability of a system panic occurring. The root cause is
+an access to an invalid memory address during URB callback handling.
+Specifically, this happens when the dma_direct_unmap_sg() function
+is called within the usb_hcd_unmap_urb_for_dma() interface, but the
+sg->dma_address field is 0 and the sg data structure has already been
+freed.
 
-modprobe usb_f_ecm
-modprobe libcomposite
-modprobe configfs
-cd /sys/kernel/config/usb_gadget
-mkdir -p g1
-cd g1
-echo "0x1d6b" > idVendor
-echo "0x0104" > idProduct
-mkdir -p strings/0x409
-echo "0123456789" > strings/0x409/serialnumber
-echo "Renesas." > strings/0x409/manufacturer
-echo "Ethernet Gadget" > strings/0x409/product
-mkdir -p functions/ecm.usb0
-mkdir -p configs/c.1
-mkdir -p configs/c.1/strings/0x409
-echo "ECM" > configs/c.1/strings/0x409/configuration
+The SCSI driver sends transfer commands by invoking uas_queuecommand_lck()
+in uas.c, using the uas_submit_urbs() function to submit requests to USB.
+Within the uas_submit_urbs() implementation, three URBs (sense_urb,
+data_urb, and cmd_urb) are sequentially submitted. Device removal may
+occur at any point during uas_submit_urbs execution, which may result
+in URB submission failure. However, some URBs might have been successfully
+submitted before the failure, and uas_submit_urbs will return the -ENODEV
+error code in this case. The current error handling directly calls
+scsi_done(). In the SCSI driver, this eventually triggers scsi_complete()
+to invoke scsi_end_request() for releasing the sgtable. The successfully
+submitted URBs, when being unlinked to giveback, call
+usb_hcd_unmap_urb_for_dma() in hcd.c, leading to exceptions during sg
+unmapping operations since the sg data structure has already been freed.
 
-if [ ! -L configs/c.1/ecm.usb0 ]; then
-        ln -s functions/ecm.usb0 configs/c.1
-fi
+This patch modifies the error condition check in the uas_submit_urbs()
+function. When a UAS device is removed but one or more URBs have already
+been successfully submitted to USB, it avoids immediately invoking
+scsi_done() and save the cmnd to devinfo->cmnd array. If the successfully
+submitted URBs is completed before devinfo->resetting being set, then
+the scsi_done() function will be called within uas_try_complete() after
+all pending URB operations are finalized. Otherwise, the scsi_done()
+function will be called within uas_zap_pending(), which is executed after
+usb_kill_anchored_urbs().
 
-echo 11e20000.usb > UDC
-echo 11e20000.usb > /sys/bus/platform/drivers/renesas_usbhs/unbind
+The error handling only takes effect when uas_queuecommand_lck() calls
+uas_submit_urbs() and returns the error value -ENODEV . In this case,
+the device is disconnected, and the flow proceeds to uas_disconnect(),
+where uas_zap_pending() is invoked to call uas_try_complete().
 
-The displayed trace is as follows:
-
- Internal error: synchronous external abort: 0000000096000010 [#1] SMP
- CPU: 0 UID: 0 PID: 188 Comm: sh Tainted: G M 6.17.0-rc7-next-20250922-00010-g41050493b2bd #55 PREEMPT
- Tainted: [M]=MACHINE_CHECK
- Hardware name: Renesas SMARC EVK version 2 based on r9a08g045s33 (DT)
- pstate: 604000c5 (nZCv daIF +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : usbhs_sys_function_pullup+0x10/0x40 [renesas_usbhs]
- lr : usbhsg_update_pullup+0x3c/0x68 [renesas_usbhs]
- sp : ffff8000838b3920
- x29: ffff8000838b3920 x28: ffff00000d585780 x27: 0000000000000000
- x26: 0000000000000000 x25: 0000000000000000 x24: ffff00000c3e3810
- x23: ffff00000d5e5c80 x22: ffff00000d5e5d40 x21: 0000000000000000
- x20: 0000000000000000 x19: ffff00000d5e5c80 x18: 0000000000000020
- x17: 2e30303230316531 x16: 312d7968703a7968 x15: 3d454d414e5f4344
- x14: 000000000000002c x13: 0000000000000000 x12: 0000000000000000
- x11: ffff00000f358f38 x10: ffff00000f358db0 x9 : ffff00000b41f418
- x8 : 0101010101010101 x7 : 7f7f7f7f7f7f7f7f x6 : fefefeff6364626d
- x5 : 8080808000000000 x4 : 000000004b5ccb9d x3 : 0000000000000000
- x2 : 0000000000000000 x1 : ffff800083790000 x0 : ffff00000d5e5c80
- Call trace:
- usbhs_sys_function_pullup+0x10/0x40 [renesas_usbhs] (P)
- usbhsg_pullup+0x4c/0x7c [renesas_usbhs]
- usb_gadget_disconnect_locked+0x48/0xd4
- gadget_unbind_driver+0x44/0x114
- device_remove+0x4c/0x80
- device_release_driver_internal+0x1c8/0x224
- device_release_driver+0x18/0x24
- bus_remove_device+0xcc/0x10c
- device_del+0x14c/0x404
- usb_del_gadget+0x88/0xc0
- usb_del_gadget_udc+0x18/0x30
- usbhs_mod_gadget_remove+0x24/0x44 [renesas_usbhs]
- usbhs_mod_remove+0x20/0x30 [renesas_usbhs]
- usbhs_remove+0x98/0xdc [renesas_usbhs]
- platform_remove+0x20/0x30
- device_remove+0x4c/0x80
- device_release_driver_internal+0x1c8/0x224
- device_driver_detach+0x18/0x24
- unbind_store+0xb4/0xb8
- drv_attr_store+0x24/0x38
- sysfs_kf_write+0x7c/0x94
- kernfs_fop_write_iter+0x128/0x1b8
- vfs_write+0x2ac/0x350
- ksys_write+0x68/0xfc
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x110
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x34/0xf0
- el0t_64_sync_handler+0xa0/0xe4
- el0t_64_sync+0x198/0x19c
- Code: 7100003f 1a9f07e1 531c6c22 f9400001 (79400021)
- ---[ end trace 0000000000000000 ]---
- note: sh[188] exited with irqs disabled
- note: sh[188] exited with preempt_count 1
-
-The issue occurs because usbhs_sys_function_pullup(), which accesses the IP
-registers, is executed after the USBHS clocks have been disabled. The
-problem is reproducible on the Renesas RZ/G3S SoC starting with the
-addition of module stop in the clock enable/disable APIs. With module stop
-functionality enabled, a bus error is expected if a master accesses a
-module whose clock has been stopped and module stop activated.
-
-Disable the IP clocks at the end of remove.
-
+Fixes: eb2a86ae8c54 ("USB: UAS: fix disconnect by unplugging a hub")
 Cc: stable <stable@kernel.org>
-Fixes: f1407d5c6624 ("usb: renesas_usbhs: Add Renesas USBHS common code")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Link: https://patch.msgid.link/20251027140741.557198-1-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Yu Chen <chenyu45@xiaomi.com>
+Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20251120123336.3328-1-guhuinan@xiaomi.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-[ Adjust context ]
+[ adapted scsi_done(cmnd) helper to older cmnd->scsi_done(cmnd) callback API ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/renesas_usbhs/common.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/usb/storage/uas.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/renesas_usbhs/common.c
-+++ b/drivers/usb/renesas_usbhs/common.c
-@@ -802,19 +802,19 @@ static int usbhs_remove(struct platform_
- 
- 	flush_delayed_work(&priv->notify_hotplug_work);
- 
--	/* power off */
--	if (!usbhs_get_dparam(priv, runtime_pwctrl))
--		usbhsc_power_ctrl(priv, 0);
--
--	pm_runtime_disable(&pdev->dev);
--
- 	usbhs_platform_call(priv, hardware_exit, pdev);
--	usbhsc_clk_put(priv);
- 	reset_control_assert(priv->rsts);
- 	usbhs_mod_remove(priv);
- 	usbhs_fifo_remove(priv);
- 	usbhs_pipe_remove(priv);
- 
-+	/* power off */
-+	if (!usbhs_get_dparam(priv, runtime_pwctrl))
-+		usbhsc_power_ctrl(priv, 0);
+--- a/drivers/usb/storage/uas.c
++++ b/drivers/usb/storage/uas.c
+@@ -705,7 +705,11 @@ static int uas_queuecommand_lck(struct s
+ 	 * of queueing, no matter how fatal the error
+ 	 */
+ 	if (err == -ENODEV) {
+-		set_host_byte(cmnd, DID_ERROR);
++		if (cmdinfo->state & (COMMAND_INFLIGHT | DATA_IN_URB_INFLIGHT |
++				DATA_OUT_URB_INFLIGHT))
++			goto out;
 +
-+	usbhsc_clk_put(priv);
-+	pm_runtime_disable(&pdev->dev);
-+
- 	return 0;
- }
++		set_host_byte(cmnd, DID_NO_CONNECT);
+ 		cmnd->scsi_done(cmnd);
+ 		goto zombie;
+ 	}
+@@ -718,6 +722,7 @@ static int uas_queuecommand_lck(struct s
+ 		uas_add_work(cmdinfo);
+ 	}
  
++out:
+ 	devinfo->cmnd[idx] = cmnd;
+ zombie:
+ 	spin_unlock_irqrestore(&devinfo->lock, flags);
 
 
