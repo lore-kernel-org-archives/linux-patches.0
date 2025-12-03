@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE1B3148A3;
-	Wed,  3 Dec 2025 15:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1331314A78;
+	Wed,  3 Dec 2025 15:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776273; cv=none; b=SvLBhwPX/vIfrfqbszcCeIUCTZHDKmdI0K3zshwqnh4/yX+5PtIZGJrFrB2QOJ0gpPa8wEXayjlI0fQkn6/S4pjnxVeOhjnNrUUvqk1Xy6L8Vjt3b3lRPbpVs9y4yekXkwAOVXhtl3Vmu5iE1zrUxVxki6tdTxzdDp1sr3RGMFE=
+	t=1764776276; cv=none; b=G+9Ok9qBV0lyXYxTnyHppx1fb4djDAyVISaF7o56D2RGvCQ4cj7Me/Kki9LzjsytCkotcHBl/u+Q0WXNFYds8KyErO3ukr0ebYHPVwlSAAfi4GD87JKumZTgov6HBzsfcxKFfg+JWUDnjamCX+evMxdStsxzQOhNUOz38mj+DUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776273; c=relaxed/simple;
-	bh=tgsqtQTPf8KjIWs7usKt5c/nVUx8FaGYCJu5Pe6mjF8=;
+	s=arc-20240116; t=1764776276; c=relaxed/simple;
+	bh=C9TnJozgwQZNBPLvDseVt/VmR8k+gqASbfaUmJcZuKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VXRJUfI0SS0LcLEhtfmj9CcUrbqksTG5mav0uyb9WGFtcSJHahxGpmz9EqrJcMz7GduBXvEDUurNlL2q+QIJwniMqLxQCcurkahqPdfkA9+R5sBbeZBgg08uptjbJjk8+zA79m/y1bfqS940OILBdsjLdfKZyzxoyySPZTgxoX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W4EQI3jZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EJkqXzZE4MUgoRHI+4atTWe8Q9a2xmiqk+dGwT22VBjxCKGotLzmSuDhgyqCIwrDck5pcDzcH5hNEH4MRh9Xei/QD245zIOieC7BauXH6MZ0QlyeLD/4YrB5Oe0KYh9yzAURkHaesfVY0KBKBUx5xZBzxTr1pXayE7fcc5+oie4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0Zoq7B+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W4EQI3jZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4105C4CEF5;
-	Wed,  3 Dec 2025 15:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0Zoq7B+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DC2C4CEF5;
+	Wed,  3 Dec 2025 15:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776273;
-	bh=tgsqtQTPf8KjIWs7usKt5c/nVUx8FaGYCJu5Pe6mjF8=;
+	s=korg; t=1764776276;
+	bh=C9TnJozgwQZNBPLvDseVt/VmR8k+gqASbfaUmJcZuKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4EQI3jZoTfw1BZKSv0CfSq9A84LCfeHd25e7UoStMui310f0mRPkAZTa3Dnf6nIo
-	 bx1JgiOZgX6oQuvGO/EHY4dMxa18w0I3OFXBvAI22xYSA+MqQuHOVDBwH0IJIt81nI
-	 gnZCpdVnaYkYCeD+bShdHwreTBymqrfkM+jsqbBE=
+	b=t0Zoq7B+5VjveAwVluKVrwM8fdLuY6pt7RF3eLXCURxwFD1KdEMxXD5F3TSbvwVgD
+	 89x2g9NBohKYUwBpmjNIl936BFXvfEnmWwZclzuvbFdmjG7W2vYybVXXB6ASu0TGAi
+	 gKRlFWS4XBd6QqjXUzbayalof+5RXfGly8L8BVww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Andreatta <thomas.andreatta2000@gmail.com>,
+	Rosen Penev <rosenp@gmail.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 100/300] dmaengine: sh: setup_xref error handling
-Date: Wed,  3 Dec 2025 16:25:04 +0100
-Message-ID: <20251203152404.329361249@linuxfoundation.org>
+Subject: [PATCH 5.10 101/300] dmaengine: mv_xor: match alloc_wc and free_wc
+Date: Wed,  3 Dec 2025 16:25:05 +0100
+Message-ID: <20251203152404.366462049@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,116 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Andreatta <thomasandreatta2000@gmail.com>
+From: Rosen Penev <rosenp@gmail.com>
 
-[ Upstream commit d9a3e9929452780df16f3414f0d59b5f69d058cf ]
+[ Upstream commit a33e3b667d2f004fdfae6b442bd4676f6c510abb ]
 
-This patch modifies the type of setup_xref from void to int and handles
-errors since the function can fail.
+dma_alloc_wc is used but not dma_free_wc.
 
-`setup_xref` now returns the (eventual) error from
-`dmae_set_dmars`|`dmae_set_chcr`, while `shdma_tx_submit` handles the
-result, removing the chunks from the queue and marking PM as idle in
-case of an error.
-
-Signed-off-by: Thomas Andreatta <thomas.andreatta2000@gmail.com>
-Link: https://lore.kernel.org/r/20250827152442.90962-1-thomas.andreatta2000@gmail.com
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Link: https://lore.kernel.org/r/20250821220942.10578-1-rosenp@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/sh/shdma-base.c | 25 +++++++++++++++++++------
- drivers/dma/sh/shdmac.c     | 17 +++++++++++++----
- include/linux/shdma-base.h  |  2 +-
- 3 files changed, 33 insertions(+), 11 deletions(-)
+ drivers/dma/mv_xor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/sh/shdma-base.c b/drivers/dma/sh/shdma-base.c
-index 7f72b3f4cd1ae..e1b8808f2a984 100644
---- a/drivers/dma/sh/shdma-base.c
-+++ b/drivers/dma/sh/shdma-base.c
-@@ -129,12 +129,25 @@ static dma_cookie_t shdma_tx_submit(struct dma_async_tx_descriptor *tx)
- 			const struct shdma_ops *ops = sdev->ops;
- 			dev_dbg(schan->dev, "Bring up channel %d\n",
- 				schan->id);
--			/*
--			 * TODO: .xfer_setup() might fail on some platforms.
--			 * Make it int then, on error remove chunks from the
--			 * queue again
--			 */
--			ops->setup_xfer(schan, schan->slave_id);
-+
-+			ret = ops->setup_xfer(schan, schan->slave_id);
-+			if (ret < 0) {
-+				dev_err(schan->dev, "setup_xfer failed: %d\n", ret);
-+
-+				/* Remove chunks from the queue and mark them as idle */
-+				list_for_each_entry_safe(chunk, c, &schan->ld_queue, node) {
-+					if (chunk->cookie == cookie) {
-+						chunk->mark = DESC_IDLE;
-+						list_move(&chunk->node, &schan->ld_free);
-+					}
-+				}
-+
-+				schan->pm_state = SHDMA_PM_ESTABLISHED;
-+				ret = pm_runtime_put(schan->dev);
-+
-+				spin_unlock_irq(&schan->chan_lock);
-+				return ret;
-+			}
+diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
+index 94a12f3267c14..8224d52d16901 100644
+--- a/drivers/dma/mv_xor.c
++++ b/drivers/dma/mv_xor.c
+@@ -1013,7 +1013,7 @@ static int mv_xor_channel_remove(struct mv_xor_chan *mv_chan)
  
- 			if (schan->pm_state == SHDMA_PM_PENDING)
- 				shdma_chan_xfer_ld_queue(schan);
-diff --git a/drivers/dma/sh/shdmac.c b/drivers/dma/sh/shdmac.c
-index 5aafe548ca5f3..2b9774ae7fd32 100644
---- a/drivers/dma/sh/shdmac.c
-+++ b/drivers/dma/sh/shdmac.c
-@@ -301,21 +301,30 @@ static bool sh_dmae_channel_busy(struct shdma_chan *schan)
- 	return dmae_is_busy(sh_chan);
- }
+ 	dma_async_device_unregister(&mv_chan->dmadev);
  
--static void sh_dmae_setup_xfer(struct shdma_chan *schan,
--			       int slave_id)
-+static int sh_dmae_setup_xfer(struct shdma_chan *schan, int slave_id)
- {
- 	struct sh_dmae_chan *sh_chan = container_of(schan, struct sh_dmae_chan,
- 						    shdma_chan);
- 
-+	int ret = 0;
- 	if (slave_id >= 0) {
- 		const struct sh_dmae_slave_config *cfg =
- 			sh_chan->config;
- 
--		dmae_set_dmars(sh_chan, cfg->mid_rid);
--		dmae_set_chcr(sh_chan, cfg->chcr);
-+		ret = dmae_set_dmars(sh_chan, cfg->mid_rid);
-+		if (ret < 0)
-+			goto END;
-+
-+		ret = dmae_set_chcr(sh_chan, cfg->chcr);
-+		if (ret < 0)
-+			goto END;
-+
- 	} else {
- 		dmae_init(sh_chan);
- 	}
-+
-+END:
-+	return ret;
- }
- 
- /*
-diff --git a/include/linux/shdma-base.h b/include/linux/shdma-base.h
-index 6dfd05ef5c2d9..03ba4dab2ef73 100644
---- a/include/linux/shdma-base.h
-+++ b/include/linux/shdma-base.h
-@@ -96,7 +96,7 @@ struct shdma_ops {
- 	int (*desc_setup)(struct shdma_chan *, struct shdma_desc *,
- 			  dma_addr_t, dma_addr_t, size_t *);
- 	int (*set_slave)(struct shdma_chan *, int, dma_addr_t, bool);
--	void (*setup_xfer)(struct shdma_chan *, int);
-+	int (*setup_xfer)(struct shdma_chan *, int);
- 	void (*start_xfer)(struct shdma_chan *, struct shdma_desc *);
- 	struct shdma_desc *(*embedded_desc)(void *, int);
- 	bool (*chan_irq)(struct shdma_chan *, int);
+-	dma_free_coherent(dev, MV_XOR_POOL_SIZE,
++	dma_free_wc(dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+ 	dma_unmap_single(dev, mv_chan->dummy_src_addr,
+ 			 MV_XOR_MIN_BYTE_COUNT, DMA_FROM_DEVICE);
+@@ -1163,7 +1163,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
+ err_free_irq:
+ 	free_irq(mv_chan->irq, mv_chan);
+ err_free_dma:
+-	dma_free_coherent(&pdev->dev, MV_XOR_POOL_SIZE,
++	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
+ 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
+ err_unmap_dst:
+ 	dma_unmap_single(dma_dev->dev, mv_chan->dummy_dst_addr,
 -- 
 2.51.0
 
