@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3526A3AA194;
-	Wed,  3 Dec 2025 16:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725653AA194;
+	Wed,  3 Dec 2025 16:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779572; cv=none; b=V5E54F2n+uXckR5IMxqJWQmGIQsoZT5tVGgzvaoDxUf0BBv8Ly1jnJtQhf6ArcPiHtlb+YUcYPs16BAvlk+nQGXKKrNHwWYgOw51Vw/xwN15p4Bki0N5ppVdKziyEk1vmojquUrIDmUxzqwpDi1o6OWhvrfiNNqr1PocCUr7z24=
+	t=1764779575; cv=none; b=eakSSasnEUS9YaNtHqDzsg5wVmXg/PKCnQORqGx9ZpVoVg/NSMT9R37/TJBEtcyrY39PczFzKhrC4w/p3CGdiFtdSTf8fYMZPa5ONt+FUIqX3WCgwkVR8wQEEwdc7Sr8fn94UFDQ66Y5XrpDXJXKQK2Dnwd/BVgdShaSSUqx23E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779572; c=relaxed/simple;
-	bh=Br7FJ0pw0UFB7ALDXH8NlL6iBhrHrAHzxQ9uGAhlXfs=;
+	s=arc-20240116; t=1764779575; c=relaxed/simple;
+	bh=dXNC9XoxHY9djLrRkS6PylF0IOHadb5FBRoHOT+3TEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uqLrQVmPmt2cMrJaNlL0kFPW6uQaqLQF0WdgU9mpsiAC4VMR2fFUK0O9FnjCJ8xnyHXKhLADX8PQq5AUOSThhxB8pya6ewPt0e+E4Kmdx62PLyW/RZVyX6rJRmtTNHCyg5BcRzLFFrjRzoBShC5A6TtIe2kR7gumKe4lF8oYxq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVELz2YI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cbbi9aDMOJj0VeQjWkCKqXxuPKxy1IaFLGUUtx9xWaP9TBHnDmj5cYCyRz2o7fhpoiRXFqpfpEDMHIIfLVNMK90BRYtHalYAtPnSrlo+ZU1s4TJpqrEKjIeJxWnMgbYnDtNhS5PlOchynlOft10AvwVSCwueZajgAeXcU4kMHvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NniEp6kw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVELz2YI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CDDC4CEF5;
-	Wed,  3 Dec 2025 16:32:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NniEp6kw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F6EC4CEF5;
+	Wed,  3 Dec 2025 16:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779572;
-	bh=Br7FJ0pw0UFB7ALDXH8NlL6iBhrHrAHzxQ9uGAhlXfs=;
+	s=korg; t=1764779575;
+	bh=dXNC9XoxHY9djLrRkS6PylF0IOHadb5FBRoHOT+3TEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVELz2YI2j2uthGICVsgj1snUaIZuRPNVegDzt/c1RZXlghgV7uqhfMBlAWdyIG/k
-	 cSl9aSBdSW+bJEwyJh2KrhHNTgUQlpVnROsET9icS3kqGJJ2fw04yRQFra1bsNrGST
-	 WLlg5Ltvkh3UfqfSwyyUcmcit4Al50PLS3qDSX3M=
+	b=NniEp6kw89egV9U2V662J7srEWNPVLRfdHSrrrVAMVSEeymJlrujieN3bNwLZCWIb
+	 fjymhfSyahcayy4MTm9ThyK0dTbfl5kJ2IFVKOzuo+h9WEYWCWdQyalZ4fMWFV7JjS
+	 w2R0lqAGdMqpjCMsFydjPZBl7Nn95Hp0OB5reffw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+48b0652a95834717f190@syzkaller.appspotmail.com,
-	Helge Deller <deller@gmx.de>,
-	Albin Babu Varghese <albinbabuvarghese20@gmail.com>,
+	Yikang Yue <yikangy2@illinois.edu>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 298/568] fbdev: Add bounds checking in bit_putcs to fix vmalloc-out-of-bounds
-Date: Wed,  3 Dec 2025 16:25:00 +0100
-Message-ID: <20251203152451.622277599@linuxfoundation.org>
+Subject: [PATCH 6.1 281/568] fs/hpfs: Fix error code for new_inode() failure in mkdir/create/mknod/symlink
+Date: Wed,  3 Dec 2025 16:24:43 +0100
+Message-ID: <20251203152450.999138991@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,67 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
+From: Yikang Yue <yikangy2@illinois.edu>
 
-[ Upstream commit 3637d34b35b287ab830e66048841ace404382b67 ]
+[ Upstream commit 32058c38d3b79a28963a59ac0353644dc24775cd ]
 
-Add bounds checking to prevent writes past framebuffer boundaries when
-rendering text near screen edges. Return early if the Y position is off-screen
-and clip image height to screen boundary. Break from the rendering loop if the
-X position is off-screen. When clipping image width to fit the screen, update
-the character count to match the clipped width to prevent buffer size
-mismatches.
+The function call new_inode() is a primitive for allocating an inode in memory,
+rather than planning disk space for it. Therefore, -ENOMEM should be returned
+as the error code rather than -ENOSPC.
 
-Without the character count update, bit_putcs_aligned and bit_putcs_unaligned
-receive mismatched parameters where the buffer is allocated for the clipped
-width but cnt reflects the original larger count, causing out-of-bounds writes.
+To be specific, new_inode()'s call path looks like this:
+new_inode
+  new_inode_pseudo
+    alloc_inode
+      ops->alloc_inode (hpfs_alloc_inode)
+        alloc_inode_sb
+          kmem_cache_alloc_lru
 
-Reported-by: syzbot+48b0652a95834717f190@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=48b0652a95834717f190
-Suggested-by: Helge Deller <deller@gmx.de>
-Tested-by: syzbot+48b0652a95834717f190@syzkaller.appspotmail.com
-Signed-off-by: Albin Babu Varghese <albinbabuvarghese20@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Therefore, the failure of new_inode() indicates a memory presure issue (-ENOMEM),
+not a lack of disk space. However, the current implementation of
+hpfs_mkdir/create/mknod/symlink incorrectly returns -ENOSPC when new_inode() fails.
+This patch fix this by set err to -ENOMEM before the goto statement.
+
+BTW, we also noticed that other nested calls within these four functions,
+like hpfs_alloc_f/dnode and hpfs_add_dirent, might also fail due to memory presure.
+But similarly, only -ENOSPC is returned. Addressing these will involve code
+modifications in other functions, and we plan to submit dedicated patches for these
+issues in the future. For this patch, we focus on new_inode().
+
+Signed-off-by: Yikang Yue <yikangy2@illinois.edu>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/bitblit.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ fs/hpfs/namei.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/core/bitblit.c b/drivers/video/fbdev/core/bitblit.c
-index a4b4e1ec702e5..8563264d11fac 100644
---- a/drivers/video/fbdev/core/bitblit.c
-+++ b/drivers/video/fbdev/core/bitblit.c
-@@ -168,6 +168,11 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 	image.height = vc->vc_font.height;
- 	image.depth = 1;
+diff --git a/fs/hpfs/namei.c b/fs/hpfs/namei.c
+index 15fc63276caae..63779d978c6db 100644
+--- a/fs/hpfs/namei.c
++++ b/fs/hpfs/namei.c
+@@ -53,8 +53,10 @@ static int hpfs_mkdir(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.fnode = cpu_to_le32(fno);
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail2;
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -156,9 +158,10 @@ static int hpfs_create(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
-+	if (image.dy >= info->var.yres)
-+		return;
-+
-+	image.height = min(image.height, info->var.yres - image.dy);
-+
- 	if (attribute) {
- 		buf = kmalloc(cellsize, GFP_ATOMIC);
- 		if (!buf)
-@@ -181,6 +186,18 @@ static void bit_putcs(struct vc_data *vc, struct fb_info *info,
- 			cnt = count;
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-	
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	result->i_mode |= S_IFREG;
+@@ -244,9 +247,10 @@ static int hpfs_mknod(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
- 		image.width = vc->vc_font.width * cnt;
-+
-+		if (image.dx >= info->var.xres)
-+			break;
-+
-+		if (image.dx + image.width > info->var.xres) {
-+			image.width = info->var.xres - image.dx;
-+			cnt = image.width / vc->vc_font.width;
-+			if (cnt == 0)
-+				break;
-+			image.width = cnt * vc->vc_font.width;
-+		}
-+
- 		pitch = DIV_ROUND_UP(image.width, 8) + scan_align;
- 		pitch &= ~scan_align;
- 		size = pitch * image.height + buf_align;
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -321,8 +325,10 @@ static int hpfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
++	}
+ 	result->i_ino = fno;
+ 	hpfs_init_inode(result);
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
 -- 
 2.51.0
 
