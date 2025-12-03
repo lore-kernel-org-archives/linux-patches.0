@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906BD34FF62;
-	Wed,  3 Dec 2025 16:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E683A32E13E;
+	Wed,  3 Dec 2025 16:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778097; cv=none; b=kQ8xmFwG5jjzQA9/XUcF65vgq6t4TxQyPz1aOZHzzxkQzGHBkfsSBZGTH5BaFAD606iOOm0V3k/zctpCuIEwstQbFHU7NCz1qWxKhtj3sYQlQVlSqo+OZkcO3219sCXllSIPTUUYN5PB0hTMmM+yKJvE1N3h4KQqnhzJE5X4Bzg=
+	t=1764778101; cv=none; b=HeQeVe/6KrpTA8FN1DOYwDjCPRmiDxDlInkUJ0lZzYGlrL06Bs2zNeYxXTPn0u1e/MggKgB1YUE0xV6s9GXZWEDuK3dCYOd18Txd0QYV5bFPraLEPK8tDloV1DZyFb0DU4A8gOyhlgy/u2MrbOYV57LhPx7smKEmY1HS8gUWWY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778097; c=relaxed/simple;
-	bh=vgpXBf5giiDLnhyPFU7DcnYlte+zXwVWcSX3RnEOMpU=;
+	s=arc-20240116; t=1764778101; c=relaxed/simple;
+	bh=jINz+BTwM+hiXB7ZM/gtb+k26Eg8vVJfNalI6kH4pbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WgsAxcKNPKl5t7iZAdGaYNQkH1bw/FEtAAISRRCDh8lMhRbicq8FuOeJMNQmTDAKf2Z5SKq/p/aoSCXm3isE+cVFC7LkzfSZ5d2xSJhi/QupoURivajH437rKGs0gqDWTXOa4iWigBGTP5gR4W6yErGYZ6NnKFMvrWL0X7aweo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OxXq/Rny; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SPe2BSIA0K1G657Ab2+BKuAxVNtBQmoRH5kqTlxTiVzkRdvarkvxoCvJ9gDDmdqXrRacwK+rxrWO/etaiWop6jvaZTDaRaXwWAcpC+trjIh/QJwAOga1KSClqdN1ZPW+hefRORwyN/KSEP/194UgJ5mX7lYZAMXtXRiOqF2DG1Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlCiEYm9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OxXq/Rny"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E649C116B1;
-	Wed,  3 Dec 2025 16:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlCiEYm9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBE5C4CEF5;
+	Wed,  3 Dec 2025 16:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778097;
-	bh=vgpXBf5giiDLnhyPFU7DcnYlte+zXwVWcSX3RnEOMpU=;
+	s=korg; t=1764778100;
+	bh=jINz+BTwM+hiXB7ZM/gtb+k26Eg8vVJfNalI6kH4pbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OxXq/RnyjjFdIhQEtWkReOVSAkShryq1k1YF+EcKQOvRtZ8V2WQU9Usxm/Afpab2d
-	 PexpvDMe5jxdPZT+0IpY/UqqccZsHCuidPLYpaU8kRb6ReSweHzL2xBh+3nsMF8pUR
-	 02gzu6+P7GmKrW7+F/9Behl3QPjg1vXqF46o6Q/Y=
+	b=KlCiEYm9NV20ab+X6Bq3KvO+G81bIpEl5t8A185ypVHoUjZ4+2/EJX6Je1tXCswHk
+	 rDCCu/xVyt/QBmlxMIOndiGy5onvGQGwx9Mrhy3/IB36DYraE/zs+Azf+4APk2KA46
+	 /aj8fFIesCxp3B9yf+pealygzFS2148WBqZQ3HA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Richard Gobert <richardbgobert@gmail.com>,
 	Willem de Bruijn <willemb@google.com>,
-	Anubhav Singh <anubhavsinggh@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/392] selftests/net: fix out-of-order delivery of FIN in gro:tcp test
-Date: Wed,  3 Dec 2025 16:26:00 +0100
-Message-ID: <20251203152421.800207540@linuxfoundation.org>
+Subject: [PATCH 5.15 211/392] selftests/net: fix GRO coalesce test and add ext header coalesce tests
+Date: Wed,  3 Dec 2025 16:26:01 +0100
+Message-ID: <20251203152421.836141469@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,64 +52,197 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anubhav Singh <anubhavsinggh@google.com>
+From: Richard Gobert <richardbgobert@gmail.com>
 
-[ Upstream commit 02d064de05b1fcca769391fa82d205bed8bb9bf0 ]
+[ Upstream commit 4e321d590cec6053cb3c566413794706035ee638 ]
 
-Due to the gro_sender sending data packets and FIN packets
-in very quick succession, these are received almost simultaneously
-by the gro_receiver. FIN packets are sometimes processed before the
-data packets leading to intermittent (~1/100) test failures.
+Currently there is no test which checks that IPv6 extension header packets
+successfully coalesce. This commit adds a test, which verifies two IPv6
+packets with HBH extension headers do coalesce, and another test which
+checks that packets with different extension header data do not coalesce
+in GRO.
 
-This change adds a delay of 100ms before sending FIN packets
-in gro:tcp test to avoid the out-of-order delivery. The same
-mitigation already exists for the gro:ip test.
+I changed the receive socket filter to accept a packet with one extension
+header. This change exposed a bug in the fragment test -- the old BPF did
+not accept the fragment packet. I updated correct_num_packets in the
+fragment test accordingly.
 
-Fixes: 7d1575014a63 ("selftests/net: GRO coalesce test")
+Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Anubhav Singh <anubhavsinggh@google.com>
-Link: https://patch.msgid.link/20251030062818.1562228-1-anubhavsinggh@google.com
+Link: https://lore.kernel.org/r/69282fed-2415-47e8-b3d3-34939ec3eb56@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: f8e8486702ab ("selftests/net: use destination options instead of hop-by-hop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/gro.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/net/gro.c | 93 +++++++++++++++++++++++++++++--
+ 1 file changed, 87 insertions(+), 6 deletions(-)
 
 diff --git a/tools/testing/selftests/net/gro.c b/tools/testing/selftests/net/gro.c
-index cf37ce86b0fd0..687ab5e7cecf1 100644
+index 687ab5e7cecf1..a6cf29c2c9318 100644
 --- a/tools/testing/selftests/net/gro.c
 +++ b/tools/testing/selftests/net/gro.c
-@@ -801,6 +801,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
+@@ -74,6 +74,12 @@
+ #define MAX_PAYLOAD (IP_MAXPACKET - sizeof(struct tcphdr) - sizeof(struct ipv6hdr))
+ #define NUM_LARGE_PKT (MAX_PAYLOAD / MSS)
+ #define MAX_HDR_LEN (ETH_HLEN + sizeof(struct ipv6hdr) + sizeof(struct tcphdr))
++#define MIN_EXTHDR_SIZE 8
++#define EXT_PAYLOAD_1 "\x00\x00\x00\x00\x00\x00"
++#define EXT_PAYLOAD_2 "\x11\x11\x11\x11\x11\x11"
++
++#define ipv6_optlen(p)  (((p)->hdrlen+1) << 3) /* calculate IPv6 extension header len */
++#define BUILD_BUG_ON(condition) ((void)sizeof(char[1 - 2*!!(condition)]))
  
- static void gro_sender(void)
+ static int proto = -1;
+ static uint8_t src_mac[ETH_ALEN], dst_mac[ETH_ALEN];
+@@ -103,7 +109,7 @@ static void setup_sock_filter(int fd)
+ 	const int dport_off = tcp_offset + offsetof(struct tcphdr, dest);
+ 	const int ethproto_off = offsetof(struct ethhdr, h_proto);
+ 	int optlen = 0;
+-	int ipproto_off;
++	int ipproto_off, opt_ipproto_off;
+ 	int next_off;
+ 
+ 	if (proto == PF_INET)
+@@ -115,14 +121,30 @@ static void setup_sock_filter(int fd)
+ 	if (strcmp(testname, "ip") == 0) {
+ 		if (proto == PF_INET)
+ 			optlen = sizeof(struct ip_timestamp);
+-		else
+-			optlen = sizeof(struct ip6_frag);
++		else {
++			BUILD_BUG_ON(sizeof(struct ip6_hbh) > MIN_EXTHDR_SIZE);
++			BUILD_BUG_ON(sizeof(struct ip6_dest) > MIN_EXTHDR_SIZE);
++			BUILD_BUG_ON(sizeof(struct ip6_frag) > MIN_EXTHDR_SIZE);
++
++			/* same size for HBH and Fragment extension header types */
++			optlen = MIN_EXTHDR_SIZE;
++			opt_ipproto_off = ETH_HLEN + sizeof(struct ipv6hdr)
++				+ offsetof(struct ip6_ext, ip6e_nxt);
++		}
+ 	}
+ 
++	/* this filter validates the following:
++	 *	- packet is IPv4/IPv6 according to the running test.
++	 *	- packet is TCP. Also handles the case of one extension header and then TCP.
++	 *	- checks the packet tcp dport equals to DPORT. Also handles the case of one
++	 *	  extension header and then TCP.
++	 */
+ 	struct sock_filter filter[] = {
+ 			BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, ethproto_off),
+-			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, ntohs(ethhdr_proto), 0, 7),
++			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, ntohs(ethhdr_proto), 0, 9),
+ 			BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, ipproto_off),
++			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_TCP, 2, 0),
++			BPF_STMT(BPF_LD  + BPF_B   + BPF_ABS, opt_ipproto_off),
+ 			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, IPPROTO_TCP, 0, 5),
+ 			BPF_STMT(BPF_LD  + BPF_H   + BPF_ABS, dport_off),
+ 			BPF_JUMP(BPF_JMP + BPF_JEQ + BPF_K, DPORT, 2, 0),
+@@ -575,6 +597,39 @@ static void add_ipv4_ts_option(void *buf, void *optpkt)
+ 	iph->check = checksum_fold(iph, sizeof(struct iphdr) + optlen, 0);
+ }
+ 
++static void add_ipv6_exthdr(void *buf, void *optpkt, __u8 exthdr_type, char *ext_payload)
++{
++	struct ipv6_opt_hdr *exthdr = (struct ipv6_opt_hdr *)(optpkt + tcp_offset);
++	struct ipv6hdr *iph = (struct ipv6hdr *)(optpkt + ETH_HLEN);
++	char *exthdr_payload_start = (char *)(exthdr + 1);
++
++	exthdr->hdrlen = 0;
++	exthdr->nexthdr = IPPROTO_TCP;
++
++	memcpy(exthdr_payload_start, ext_payload, MIN_EXTHDR_SIZE - sizeof(*exthdr));
++
++	memcpy(optpkt, buf, tcp_offset);
++	memcpy(optpkt + tcp_offset + MIN_EXTHDR_SIZE, buf + tcp_offset,
++		sizeof(struct tcphdr) + PAYLOAD_LEN);
++
++	iph->nexthdr = exthdr_type;
++	iph->payload_len = htons(ntohs(iph->payload_len) + MIN_EXTHDR_SIZE);
++}
++
++static void send_ipv6_exthdr(int fd, struct sockaddr_ll *daddr, char *ext_data1, char *ext_data2)
++{
++	static char buf[MAX_HDR_LEN + PAYLOAD_LEN];
++	static char exthdr_pck[sizeof(buf) + MIN_EXTHDR_SIZE];
++
++	create_packet(buf, 0, 0, PAYLOAD_LEN, 0);
++	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data1);
++	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
++
++	create_packet(buf, PAYLOAD_LEN * 1, 0, PAYLOAD_LEN, 0);
++	add_ipv6_exthdr(buf, exthdr_pck, IPPROTO_HOPOPTS, ext_data2);
++	write_packet(fd, exthdr_pck, total_hdr_len + PAYLOAD_LEN + MIN_EXTHDR_SIZE, daddr);
++}
++
+ /* IPv4 options shouldn't coalesce */
+ static void send_ip_options(int fd, struct sockaddr_ll *daddr)
  {
-+	const int fin_delay_us = 100 * 1000;
- 	static char fin_pkt[MAX_HDR_LEN];
- 	struct sockaddr_ll daddr = {};
- 	int txfd = -1;
-@@ -844,15 +845,22 @@ static void gro_sender(void)
- 		write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
- 	} else if (strcmp(testname, "tcp") == 0) {
- 		send_changed_checksum(txfd, &daddr);
-+		/* Adding sleep before sending FIN so that it is not
-+		 * received prior to other packets.
-+		 */
-+		usleep(fin_delay_us);
- 		write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
+@@ -696,7 +751,7 @@ static void send_fragment6(int fd, struct sockaddr_ll *daddr)
+ 		create_packet(buf, PAYLOAD_LEN * i, 0, PAYLOAD_LEN, 0);
+ 		write_packet(fd, buf, bufpkt_len, daddr);
+ 	}
+-
++	sleep(1);
+ 	create_packet(buf, PAYLOAD_LEN * 2, 0, PAYLOAD_LEN, 0);
+ 	memset(extpkt, 0, extpkt_len);
  
- 		send_changed_seq(txfd, &daddr);
-+		usleep(fin_delay_us);
- 		write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
+@@ -759,6 +814,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
+ 	vlog("}, Total %d packets\nReceived {", correct_num_pkts);
  
- 		send_changed_ts(txfd, &daddr);
-+		usleep(fin_delay_us);
- 		write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
+ 	while (1) {
++		ip_ext_len = 0;
+ 		pkt_size = recv(fd, buffer, IP_MAXPACKET + ETH_HLEN + 1, 0);
+ 		if (pkt_size < 0)
+ 			error(1, errno, "could not receive");
+@@ -766,7 +822,7 @@ static void check_recv_pkts(int fd, int *correct_payload,
+ 		if (iph->version == 4)
+ 			ip_ext_len = (iph->ihl - 5) * 4;
+ 		else if (ip6h->version == 6 && ip6h->nexthdr != IPPROTO_TCP)
+-			ip_ext_len = sizeof(struct ip6_frag);
++			ip_ext_len = MIN_EXTHDR_SIZE;
  
- 		send_diff_opt(txfd, &daddr);
-+		usleep(fin_delay_us);
- 		write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
- 	} else if (strcmp(testname, "ip") == 0) {
- 		send_changed_ECN(txfd, &daddr);
+ 		tcph = (struct tcphdr *)(buffer + tcp_offset + ip_ext_len);
+ 
+@@ -887,7 +943,21 @@ static void gro_sender(void)
+ 			sleep(1);
+ 			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
+ 		} else if (proto == PF_INET6) {
++			sleep(1);
+ 			send_fragment6(txfd, &daddr);
++			sleep(1);
++			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
++
++			sleep(1);
++			/* send IPv6 packets with ext header with same payload */
++			send_ipv6_exthdr(txfd, &daddr, EXT_PAYLOAD_1, EXT_PAYLOAD_1);
++			sleep(1);
++			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
++
++			sleep(1);
++			/* send IPv6 packets with ext header with different payload */
++			send_ipv6_exthdr(txfd, &daddr, EXT_PAYLOAD_1, EXT_PAYLOAD_2);
++			sleep(1);
+ 			write_packet(txfd, fin_pkt, total_hdr_len, &daddr);
+ 		}
+ 	} else if (strcmp(testname, "large") == 0) {
+@@ -1004,6 +1074,17 @@ static void gro_receiver(void)
+ 			 */
+ 			printf("fragmented ip6 doesn't coalesce: ");
+ 			correct_payload[0] = PAYLOAD_LEN * 2;
++			correct_payload[1] = PAYLOAD_LEN;
++			correct_payload[2] = PAYLOAD_LEN;
++			check_recv_pkts(rxfd, correct_payload, 3);
++
++			printf("ipv6 with ext header does coalesce: ");
++			correct_payload[0] = PAYLOAD_LEN * 2;
++			check_recv_pkts(rxfd, correct_payload, 1);
++
++			printf("ipv6 with ext header with different payloads doesn't coalesce: ");
++			correct_payload[0] = PAYLOAD_LEN;
++			correct_payload[1] = PAYLOAD_LEN;
+ 			check_recv_pkts(rxfd, correct_payload, 2);
+ 		}
+ 	} else if (strcmp(testname, "large") == 0) {
 -- 
 2.51.0
 
