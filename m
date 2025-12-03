@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED911B983F;
-	Wed,  3 Dec 2025 16:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B13376BE4;
+	Wed,  3 Dec 2025 16:57:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781066; cv=none; b=IYKEpyYMGVJMmnUx9LEP1D7nKjx+JYpVxrhsD+Gdhdra3WEqmxTNuwWdYuv/u14qk0VRVQkhGbhPXotiGm2R3uQwlKEqTagoIOefmG2e+UznL6IWT0OvzfCRs3wIqRn9boEeA4QXjV/bx07xzu/taU12M8Obagyrpy9VsWhZmqA=
+	t=1764781069; cv=none; b=T0+hvLnJqRVjnWCdk8rKK4fE6MjfAceQDL3xKSzS7LYJO3+RIM28DVCc0SOyC+PuU/3MOAxGEE+ftXJixWqo/pr6EHZ/WVqJ4u3lB3fd00I1j3bl0bNEhJhevZ24t+wmyXzvGwNWmb1rGsnQbTBqGgz2gJ4drJSOFUpOjDtIa88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781066; c=relaxed/simple;
-	bh=Ht7TjHEzENDiwRJgCuEt7rahK0/8iL64pGwai0FVVis=;
+	s=arc-20240116; t=1764781069; c=relaxed/simple;
+	bh=EoGQL/YVRlV9NpQGmAJulvkeDseChIOy/tZk5liyCow=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uz5B5vddzBfOOSJKe9ZtbxF+xFWcQGc+fm1nZj8o8LmIiXXVcV7OSK2DZIuS+cYUWRmboqdY+4J/mfwrjJeQobUvCUvljLWE5qsQF58DWlQhr9V8bC7ER5xPlApPC7ksOHraIAJlTYJjV0AlnwvWXIBWRzmrR4eVftFThymYNy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cltWGkPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I5ICGvCS1qRPqDiwfr7vms+I+9o8CjZQxKsyb12OdFG/KZbK+EY5M/sSeUbW4Jlw01pJcM8xFPM+ZCeYbuYyuXSlxFRcZ6lviyxS9EC3g7aS64gpS+oo2Aio+nPVQ4YPXkUOA9LfmpbwmCzs9jp8qW6JBCsJcxTGYirqn9u9n70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rf27lQfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cltWGkPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D933C4CEF5;
-	Wed,  3 Dec 2025 16:57:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rf27lQfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2998C4CEF5;
+	Wed,  3 Dec 2025 16:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781065;
-	bh=Ht7TjHEzENDiwRJgCuEt7rahK0/8iL64pGwai0FVVis=;
+	s=korg; t=1764781069;
+	bh=EoGQL/YVRlV9NpQGmAJulvkeDseChIOy/tZk5liyCow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cltWGkPEVqiEwOdiXtNlsj39l/z+EOFEnrrJ88XF2uOB+nQQmWcDfbU0Eo7elMFoZ
-	 zXcN/UpoHiiNNuPOvvhqxLeKR4JykjY81cqErzJfEObi5kaztcVleJUAwYFsB2cZXo
-	 dHkRAvkOG43cqGkXyGHPKfpR7Y52Egza+osrXR5Q=
+	b=rf27lQfo5sNPFP3znOkXouF+Go7IjYqjznvU3LXzS8BP4e6o7N/Xzb0sp1ZF84648
+	 NsSsDqto7C49jk9/D7pBqdfWo3n3+s94BI+OGOJSKo0Wj38eqBt9FFN/3doktPsWUk
+	 q5XfvH/8UApwTbBrNk6NR0OwZ1iq3OdzdX9EJBgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Valek Andrej <andrej.v@skyrain.eu>,
-	Kessler Markus <markus.kessler@hilti.com>,
+	David Lechner <dlechner@baylibre.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.6 38/93] iio: accel: fix ADXL355 startup race condition
-Date: Wed,  3 Dec 2025 16:29:31 +0100
-Message-ID: <20251203152337.927139815@linuxfoundation.org>
+Subject: [PATCH 6.6 39/93] iio: adc: ad7280a: fix ad7280_store_balance_timer()
+Date: Wed,  3 Dec 2025 16:29:32 +0100
+Message-ID: <20251203152337.963750950@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -46,101 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Valek Andrej <andrej.v@skyrain.eu>
+From: David Lechner <dlechner@baylibre.com>
 
-commit c92c1bc408e9e11ae3c7011b062fdd74c09283a3 upstream.
+commit bd886cdcbf9e746f61c74035a3acd42e9108e115 upstream.
 
-There is an race-condition where device is not full working after SW reset.
-Therefore it's necessary to wait some time after reset and verify shadow
-registers values by reading and comparing the values before/after reset.
-This mechanism is described in datasheet at least from revision D.
+Use correct argument to iio_str_to_fixpoint() to parse 3 decimal places.
 
-Fixes: 12ed27863ea3 ("iio: accel: Add driver support for ADXL355")
-Signed-off-by: Valek Andrej <andrej.v@skyrain.eu>
-Signed-off-by: Kessler Markus <markus.kessler@hilti.com>
+iio_str_to_fixpoint() has a bit of an unintuitive API where the
+fract_mult parameter is the multiplier of the first decimal place as if
+it was already an integer.  So to get 3 decimal places, fract_mult must
+be 100 rather than 1000.
+
+Fixes: 96ccdbc07a74 ("staging:iio:adc:ad7280a: Standardize extended ABI naming")
+Signed-off-by: David Lechner <dlechner@baylibre.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/adxl355_core.c |   44 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 39 insertions(+), 5 deletions(-)
+ drivers/iio/adc/ad7280a.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/accel/adxl355_core.c
-+++ b/drivers/iio/accel/adxl355_core.c
-@@ -56,6 +56,8 @@
- #define  ADXL355_POWER_CTL_DRDY_MSK	BIT(2)
- #define ADXL355_SELF_TEST_REG		0x2E
- #define ADXL355_RESET_REG		0x2F
-+#define ADXL355_BASE_ADDR_SHADOW_REG	0x50
-+#define ADXL355_SHADOW_REG_COUNT	5
- 
- #define ADXL355_DEVID_AD_VAL		0xAD
- #define ADXL355_DEVID_MST_VAL		0x1D
-@@ -294,7 +296,12 @@ static void adxl355_fill_3db_frequency_t
- static int adxl355_setup(struct adxl355_data *data)
- {
- 	unsigned int regval;
-+	int retries = 5; /* the number is chosen based on empirical reasons */
+--- a/drivers/iio/adc/ad7280a.c
++++ b/drivers/iio/adc/ad7280a.c
+@@ -540,7 +540,7 @@ static ssize_t ad7280_store_balance_time
+ 	int val, val2;
  	int ret;
-+	u8 *shadow_regs __free(kfree) = kzalloc(ADXL355_SHADOW_REG_COUNT, GFP_KERNEL);
-+
-+	if (!shadow_regs)
-+		return -ENOMEM;
  
- 	ret = regmap_read(data->regmap, ADXL355_DEVID_AD_REG, &regval);
- 	if (ret)
-@@ -321,14 +328,41 @@ static int adxl355_setup(struct adxl355_
- 	if (regval != ADXL355_PARTID_VAL)
- 		dev_warn(data->dev, "Invalid DEV ID 0x%02x\n", regval);
- 
--	/*
--	 * Perform a software reset to make sure the device is in a consistent
--	 * state after start-up.
--	 */
--	ret = regmap_write(data->regmap, ADXL355_RESET_REG, ADXL355_RESET_CODE);
-+	/* Read shadow registers to be compared after reset */
-+	ret = regmap_bulk_read(data->regmap,
-+			       ADXL355_BASE_ADDR_SHADOW_REG,
-+			       shadow_regs, ADXL355_SHADOW_REG_COUNT);
+-	ret = iio_str_to_fixpoint(buf, 1000, &val, &val2);
++	ret = iio_str_to_fixpoint(buf, 100, &val, &val2);
  	if (ret)
  		return ret;
  
-+	do {
-+		if (--retries == 0) {
-+			dev_err(data->dev, "Shadow registers mismatch\n");
-+			return -EIO;
-+		}
-+
-+		/*
-+		 * Perform a software reset to make sure the device is in a consistent
-+		 * state after start-up.
-+		 */
-+		ret = regmap_write(data->regmap, ADXL355_RESET_REG,
-+				   ADXL355_RESET_CODE);
-+		if (ret)
-+			return ret;
-+
-+		/* Wait at least 5ms after software reset */
-+		usleep_range(5000, 10000);
-+
-+		/* Read shadow registers for comparison */
-+		ret = regmap_bulk_read(data->regmap,
-+				       ADXL355_BASE_ADDR_SHADOW_REG,
-+				       data->buffer.buf,
-+				       ADXL355_SHADOW_REG_COUNT);
-+		if (ret)
-+			return ret;
-+	} while (memcmp(shadow_regs, data->buffer.buf,
-+			ADXL355_SHADOW_REG_COUNT));
-+
- 	ret = regmap_update_bits(data->regmap, ADXL355_POWER_CTL_REG,
- 				 ADXL355_POWER_CTL_DRDY_MSK,
- 				 FIELD_PREP(ADXL355_POWER_CTL_DRDY_MSK, 1));
 
 
