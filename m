@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911FC1A2C25;
-	Wed,  3 Dec 2025 15:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D1130F535;
+	Wed,  3 Dec 2025 15:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776057; cv=none; b=AdnAW79tNKUXuymlmsYzmU8DtLpf7ooCDnJA8KKzV7zFxg39CZbiomHIdmqDkC6H047RYYJ7+QH38KsH8z7BEdKGt7ZIhkjW44cxRCwyTFhl9GAZBIY64aUIcv30fl3OF8wmqfIbo39OebdJhZ15MnRh3zxVqGcxYe1/CPXAkco=
+	t=1764776060; cv=none; b=Fk21uUX9HL4Arj7Sq5go+pJ8g0qK1wUxeOJGQ000tb17/F1617SQkaFTP8GnIy7dDrD26O4EPweUo5rr+2IsZHzWyB/1qld+Rw01ezIX4sXcZSk1UaFss5cNGbFZl5xwbLEereT8rxd5vbLycu5rNd9mZTgCcZRnSFQL9ajzBx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776057; c=relaxed/simple;
-	bh=mygK41qAGbgLv0I9VrTwg/jn3fpp72IHgWAwvrZd0Xs=;
+	s=arc-20240116; t=1764776060; c=relaxed/simple;
+	bh=gsqPRCnbnpKkpkf/CYXL+p6FYzJoJ0J696RS3Bzqm8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnx3sQQkXUcfDMtEvNboLHEk+vaEx84k+6EgqoeJ4WrfnDw9aPO3HB1iAI3pHMtnBKGmQx3dYXxzoo3OMs9Hqi+V8F4prUq5Hnh/rezcUGjtTVkrMT+6yCWL+EXXRk1lm1dTXnk2V57vx3DPDbedz4FiLFDgSO0DRkJx7n48UeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlQO1QvW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V2nVivI0rZ8w+fgsNCuYYrOVDjhmv+d0neiAWulTpWKJgM4h+QjrJYdNbdmmr4NpP6CQ/aG3SDmS1wB8b6zyjhQ6D916em7KYf6SvCWokVOiUOYfbhmIo1gYbF2D0yMAnozf//e9lDJTHbMkjSdfjR5n76dDUTVWK7+MJahwr7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmmKWUdi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlQO1QvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4695AC4CEF5;
-	Wed,  3 Dec 2025 15:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmmKWUdi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B538AC4CEF5;
+	Wed,  3 Dec 2025 15:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776056;
-	bh=mygK41qAGbgLv0I9VrTwg/jn3fpp72IHgWAwvrZd0Xs=;
+	s=korg; t=1764776060;
+	bh=gsqPRCnbnpKkpkf/CYXL+p6FYzJoJ0J696RS3Bzqm8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nlQO1QvWk73zdn3mtJpbzMv/J0Z5y2UOyQNHx69hDfaMFPdnefy62yTMsJkAYhpCd
-	 6572DwLpzK13/y3Bdjug582mDVDlKJUQaDY4Rf8kh25LL+daxGdq2UWDfe9CwPXrr6
-	 mSOI7RlEv/R3l+O7NlIH65jWC4chlj1b07BapB2I=
+	b=dmmKWUdi9rk2pTwA9M2BVCDmMeynqVnTgI30DjgQF3e/O9gdM5Tyb6naD7bs8rCWk
+	 aCbMgeqxgvPWeiGkgYQjCR23h3j0Vv1nduVUodhA3qCqEwElh5heFdjs1AeScKHsM8
+	 g49UaDufW7MonwucNM0068Rx6js01/o82YwkcFI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 034/300] arch: back to -std=gnu89 in < v5.18
-Date: Wed,  3 Dec 2025 16:23:58 +0100
-Message-ID: <20251203152401.725896224@linuxfoundation.org>
+	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 025/300] net: phy: dp83867: Disable EEE support as not implemented
+Date: Wed,  3 Dec 2025 16:23:49 +0100
+Message-ID: <20251203152401.390045616@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,108 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
 
-Recent fixes have been backported to < v5.18 to fix build issues with
-GCC 5.15. They all force -std=gnu11 in the CFLAGS, "because [the kernel]
-requests the gnu11 standard via '-std=' in the main Makefile".
+[ Upstream commit 84a905290cb4c3d9a71a9e3b2f2e02e031e7512f ]
 
-This is true for >= 5.18 versions, but not before. This switch to
--std=gnu11 has been done in commit e8c07082a810 ("Kbuild: move to
--std=gnu11").
+While the DP83867 PHYs report EEE capability through their feature
+registers, the actual hardware does not support EEE (see Links).
+When the connected MAC enables EEE, it causes link instability and
+communication failures.
 
-For a question of uniformity, force -std=gnu89, similar to what is done
-in the main Makefile.
+The issue is reproducible with a iMX8MP and relevant stmmac ethernet port.
+Since the introduction of phylink-managed EEE support in the stmmac driver,
+EEE is now enabled by default, leading to issues on systems using the
+DP83867 PHY.
 
-Note: the fixes tags below refers to upstream commits, but this fix is
-only for kernels not having commit e8c07082a810 ("Kbuild: move to
--std=gnu11").
+Call phy_disable_eee during phy initialization to prevent EEE from being
+enabled on DP83867 PHYs.
 
-Fixes: 7cbb015e2d3d ("parisc: fix building with gcc-15")
-Fixes: 3b8b80e99376 ("s390: Add '-std=gnu11' to decompressor and purgatory CFLAGS")
-Fixes: b3bee1e7c3f2 ("x86/boot: Compile boot code with -std=gnu11 too")
-Fixes: ee2ab467bddf ("x86/boot: Use '-std=gnu11' to fix build with GCC 15")
-Fixes: 8ba14d9f490a ("efi: libstub: Use '-std=gnu11' to fix build with GCC 15")
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
+Link: https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1445244/dp83867ir-dp83867-disable-eee-lpi
+Link: https://e2e.ti.com/support/interface-group/interface/f/interface-forum/658638/dp83867ir-eee-energy-efficient-ethernet
+Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
+Cc: stable@vger.kernel.org
+Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20251023144857.529566-1-ghidoliemanuele@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ replaced phy_disable_eee() call with direct eee_broken_modes assignment ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/boot/compressed/Makefile  |    2 +-
- arch/s390/Makefile                    |    2 +-
- arch/s390/purgatory/Makefile          |    2 +-
- arch/x86/Makefile                     |    2 +-
- arch/x86/boot/compressed/Makefile     |    2 +-
- drivers/firmware/efi/libstub/Makefile |    2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/phy/dp83867.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/parisc/boot/compressed/Makefile
-+++ b/arch/parisc/boot/compressed/Makefile
-@@ -22,7 +22,7 @@ KBUILD_CFLAGS += -fno-PIE -mno-space-reg
- ifndef CONFIG_64BIT
- KBUILD_CFLAGS += -mfast-indirect-calls
- endif
--KBUILD_CFLAGS += -std=gnu11
-+KBUILD_CFLAGS += -std=gnu89
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -664,6 +664,12 @@ static int dp83867_config_init(struct ph
+ 			return ret;
+ 	}
  
- OBJECTS += $(obj)/head.o $(obj)/real2.o $(obj)/firmware.o $(obj)/misc.o $(obj)/piggy.o
- 
---- a/arch/s390/Makefile
-+++ b/arch/s390/Makefile
-@@ -23,7 +23,7 @@ endif
- aflags_dwarf	:= -Wa,-gdwarf-2
- KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -D__ASSEMBLY__
- KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
--KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -std=gnu11
-+KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -std=gnu89
- KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float
- KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
---- a/arch/s390/purgatory/Makefile
-+++ b/arch/s390/purgatory/Makefile
-@@ -20,7 +20,7 @@ GCOV_PROFILE := n
- UBSAN_SANITIZE := n
- KASAN_SANITIZE := n
- 
--KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
-+KBUILD_CFLAGS := -std=gnu89 -fno-strict-aliasing -Wall -Wstrict-prototypes
- KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
- KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
- KBUILD_CFLAGS += -c -MD -Os -m64 -msoft-float -fno-common
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -31,7 +31,7 @@ endif
- CODE16GCC_CFLAGS := -m32 -Wa,$(srctree)/arch/x86/boot/code16gcc.h
- M16_CFLAGS	 := $(call cc-option, -m16, $(CODE16GCC_CFLAGS))
- 
--REALMODE_CFLAGS	:= -std=gnu11 $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
-+REALMODE_CFLAGS	:= -std=gnu89 $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
- 		   -Wall -Wstrict-prototypes -march=i386 -mregparm=3 \
- 		   -fno-strict-aliasing -fomit-frame-pointer -fno-pic \
- 		   -mno-mmx -mno-sse $(call cc-option,-fcf-protection=none)
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -33,7 +33,7 @@ targets := vmlinux vmlinux.bin vmlinux.b
- # avoid errors with '-march=i386', and future flags may depend on the target to
- # be valid.
- KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
--KBUILD_CFLAGS += -std=gnu11
-+KBUILD_CFLAGS += -std=gnu89
- KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
- KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
- cflags-$(CONFIG_X86_32) := -march=i386
---- a/drivers/firmware/efi/libstub/Makefile
-+++ b/drivers/firmware/efi/libstub/Makefile
-@@ -7,7 +7,7 @@
- #
- cflags-$(CONFIG_X86_32)		:= -march=i386
- cflags-$(CONFIG_X86_64)		:= -mcmodel=small
--cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
-+cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu89 \
- 				   -fPIC -fno-strict-aliasing -mno-red-zone \
- 				   -mno-mmx -mno-sse -fshort-wchar \
- 				   -Wno-pointer-sign \
++	/* Although the DP83867 reports EEE capability through the
++	 * MDIO_PCS_EEE_ABLE and MDIO_AN_EEE_ADV registers, the feature
++	 * is not actually implemented in hardware.
++	 */
++	phydev->eee_broken_modes = MDIO_EEE_100TX | MDIO_EEE_1000T;
++
+ 	if (phy_interface_is_rgmii(phydev) ||
+ 	    phydev->interface == PHY_INTERFACE_MODE_SGMII) {
+ 		val = phy_read(phydev, MII_DP83867_PHYCTRL);
 
 
