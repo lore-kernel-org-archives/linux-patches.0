@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC36434CFD8;
-	Wed,  3 Dec 2025 16:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D0934D386;
+	Wed,  3 Dec 2025 16:02:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777741; cv=none; b=AH2xPvRuSzbR1IEXplxQhfdLgX29Zz3AZ6mm2ln0IJMGd9QDdwiHb/fK7LdmA2kM/WZovGhFYjdJj2Zf+eog5MbVPjYY1nSP8xwkcGukgW6g2HttN2boC7lKKgtKROcm5rYW+kD7zKz66kgnINgb1vyOLQqZ09wgic3iy3hVOw4=
+	t=1764777745; cv=none; b=QvMruuUvykIS2kc96mjMqdChUdvG2IRyRbHdVN2Uza9+G9q5XO4yLQrCHb4u47BihSucI0FyggcE4/N88VDuVfaXLNs22hnxXKtpX5KaZDJKKbyrXehg3MQbhVcOWATJ/hG8kS4GNxGKpvnEx4hnL23AUPp/3usF+644o9Rnat0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777741; c=relaxed/simple;
-	bh=R98UVH9RRYvMoRXn7p3v4Y4eftVujSENtlMIqqWrhg4=;
+	s=arc-20240116; t=1764777745; c=relaxed/simple;
+	bh=XIPsndvm7QWIcznKXmMYWBFswn6TGjAJQ6QZRmMutw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cbSJj3fsVJuQ+1LHWfv7m672Mo5Z8b7A8eUvD//Us5Q29zwaIhqZUqdTR1A2icwN09Rgl+tcTsqIWL04Uq8/2EWcsji+p8dZT+97dJpUS1fG8VzzmZER15cs5xmSQqP9L03ine+DDB2lp6FFlQNVNVsoJbUDWSofupktfY4X9Wg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JCN49O6B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3/OHc1qhk6RviaClARCBpdkI3g7z9KLxDzNNtFxHWS8vFm04IWhlVT/1jKd86p/RZ83UUcKoWjncZN7D5EGVgdQnAg10G6dovW8mMR8xo1kbIU0n+pXW08AMRli0Tzj6s9UVHwsOQ9gCtszdS3Bqr7IZIDnTDVgHMYOhccRLI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QK64p2g3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JCN49O6B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52CA0C4CEF5;
-	Wed,  3 Dec 2025 16:02:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QK64p2g3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB6FC4CEF5;
+	Wed,  3 Dec 2025 16:02:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777741;
-	bh=R98UVH9RRYvMoRXn7p3v4Y4eftVujSENtlMIqqWrhg4=;
+	s=korg; t=1764777744;
+	bh=XIPsndvm7QWIcznKXmMYWBFswn6TGjAJQ6QZRmMutw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JCN49O6Bu9t2R9SBwaF3mrBXWyoamG6kWKqOtXMRU6VXwz/Bf2VpUcuXh0D/m6O+y
-	 g56Sg4a45xS/4DMDpj4qDNA4xnpcDPHFsuU0uia8SxPp75QO9lrXzKldmvUgHVR5YX
-	 3AI4Z+xFdS2Rr+SfTqDIdDtGhZl+bEfxlufoN/3A=
+	b=QK64p2g3L1eUjUhMId6/pSCoXpHygYp+SA4ZF+CTkwodc76kb7U53YfGULqHKnt6Y
+	 iaz7vNxoNBbdRqhVjuQqiXExPPZZWDRofu5gnrIAvIIuOL6v/0qX/4j7hqLLvaT5it
+	 UH5sn0A8sVYd9Kwz8/7FHoofJbzwUC/oCzD4NC8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/392] drm/tidss: Set crtc modesetting parameters with adjusted mode
-Date: Wed,  3 Dec 2025 16:24:10 +0100
-Message-ID: <20251203152417.778807830@linuxfoundation.org>
+	Andrew Cooper <andrew.cooper3@citrix.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Dave Hansen <dave.hansen@intel.com>
+Subject: [PATCH 5.15 101/392] x86/vsyscall: Do not require X86_PF_INSTR to emulate vsyscall
+Date: Wed,  3 Dec 2025 16:24:11 +0100
+Message-ID: <20251203152417.814959588@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,46 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
 
-[ Upstream commit cfb29225db20c56432a8525366321c0c09edfb2e ]
+[ Upstream commit 8ba38a7a9a699905b84fa97578a8291010dec273 ]
 
-TIDSS uses crtc_* fields to propagate its registers and set the
-clock rates. So set the CRTC modesetting timing parameters with
-the adjusted mode when needed, to set correct values.
+emulate_vsyscall() expects to see X86_PF_INSTR in PFEC on a vsyscall
+page fault, but the CPU does not report X86_PF_INSTR if neither
+X86_FEATURE_NX nor X86_FEATURE_SMEP are enabled.
 
-Cc: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Link: https://lore.kernel.org/r/20250624080402.302526-1-j-choudhary@ti.com
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+X86_FEATURE_NX should be enabled on nearly all 64-bit CPUs, except for
+early P4 processors that did not support this feature.
+
+Instead of explicitly checking for X86_PF_INSTR, compare the fault
+address to RIP.
+
+On machines with X86_FEATURE_NX enabled, issue a warning if RIP is equal
+to fault address but X86_PF_INSTR is absent.
+
+[ dhansen: flesh out code comments ]
+
+Originally-by: Dave Hansen <dave.hansen@intel.com>
+Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Link: https://lore.kernel.org/all/bd81a98b-f8d4-4304-ac55-d4151a1a77ab@intel.com
+Link: https://lore.kernel.org/all/20250624145918.2720487-1-kirill.shutemov%40linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tidss/tidss_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/entry/vsyscall/vsyscall_64.c | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/tidss/tidss_crtc.c b/drivers/gpu/drm/tidss/tidss_crtc.c
-index 3de103c673576..123060f682e68 100644
---- a/drivers/gpu/drm/tidss/tidss_crtc.c
-+++ b/drivers/gpu/drm/tidss/tidss_crtc.c
-@@ -94,7 +94,7 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
- 	struct dispc_device *dispc = tidss->dispc;
- 	struct tidss_crtc *tcrtc = to_tidss_crtc(crtc);
- 	u32 hw_videoport = tcrtc->hw_videoport;
--	const struct drm_display_mode *mode;
-+	struct drm_display_mode *mode;
- 	enum drm_mode_status ok;
+diff --git a/arch/x86/entry/vsyscall/vsyscall_64.c b/arch/x86/entry/vsyscall/vsyscall_64.c
+index ba3172d5b3286..99400d72c4e6c 100644
+--- a/arch/x86/entry/vsyscall/vsyscall_64.c
++++ b/arch/x86/entry/vsyscall/vsyscall_64.c
+@@ -124,7 +124,12 @@ bool emulate_vsyscall(unsigned long error_code,
+ 	if ((error_code & (X86_PF_WRITE | X86_PF_USER)) != X86_PF_USER)
+ 		return false;
  
- 	dev_dbg(ddev->dev, "%s\n", __func__);
-@@ -111,6 +111,9 @@ static int tidss_crtc_atomic_check(struct drm_crtc *crtc,
- 		return -EINVAL;
+-	if (!(error_code & X86_PF_INSTR)) {
++	/*
++	 * Assume that faults at regs->ip are because of an
++	 * instruction fetch. Return early and avoid
++	 * emulation for faults during data accesses:
++	 */
++	if (address != regs->ip) {
+ 		/* Failed vsyscall read */
+ 		if (vsyscall_mode == EMULATE)
+ 			return false;
+@@ -136,13 +141,19 @@ bool emulate_vsyscall(unsigned long error_code,
+ 		return false;
  	}
  
-+	if (drm_atomic_crtc_needs_modeset(crtc_state))
-+		drm_mode_set_crtcinfo(mode, 0);
++	/*
++	 * X86_PF_INSTR is only set when NX is supported.  When
++	 * available, use it to double-check that the emulation code
++	 * is only being used for instruction fetches:
++	 */
++	if (cpu_feature_enabled(X86_FEATURE_NX))
++		WARN_ON_ONCE(!(error_code & X86_PF_INSTR));
 +
- 	return dispc_vp_bus_check(dispc, hw_videoport, crtc_state);
- }
+ 	/*
+ 	 * No point in checking CS -- the only way to get here is a user mode
+ 	 * trap to a high address, which means that we're in 64-bit user code.
+ 	 */
  
+-	WARN_ON_ONCE(address != regs->ip);
+-
+ 	if (vsyscall_mode == NONE) {
+ 		warn_bad_vsyscall(KERN_INFO, regs,
+ 				  "vsyscall attempted with vsyscall=none");
 -- 
 2.51.0
 
