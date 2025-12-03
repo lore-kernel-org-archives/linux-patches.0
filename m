@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04AF35BDC0;
-	Wed,  3 Dec 2025 16:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B448B35BDD6;
+	Wed,  3 Dec 2025 16:36:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779778; cv=none; b=Zhevv2/mn2au2kAosmw7cCwt9u84Jg7ySC4krD40FGY3pbTW88CGghM4SPP1RfOe7E4Ipj7Tz880mOls74De+itPV/JB3yycAF+MCertfYpees7qrIgblzyJj9rMJlqJ9aBUJ6egqRsz72smisu+l4hWsZ4m+NYmI7JE3+Vsfsc=
+	t=1764779782; cv=none; b=piQAN4l1Tzlm0F6T2gt2EnnKU3Uie7+7TQmbNwd+ZxhIioPrCYIOVYpjNenFGZOiDjty/FkACxO/taOxuUwpEesRT1sqT1w9cwTlu6wBi4jEKFSAIYzipDjz09I4xadhdoq+BVKPbYRzqDsxQMNk22mqQg/y8anb3RzguNI3/kU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779778; c=relaxed/simple;
-	bh=gd5dO5wz9yMYhsPkm/ReYEjql/7slNy83PaYGepAmbE=;
+	s=arc-20240116; t=1764779782; c=relaxed/simple;
+	bh=CZrNPmct2ogEErAnea+NpStMZfDqUuDFYws0Z4YcMMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sxQiaGmoI4UUZfSmdMExZ3J5xaPyT1oGShzqhVxiP6aBBAF44KoRZJ4/dEpxxCPGYs4Jfm3KNC7XYywBUhrS6guJHR9eT8rnwDol4CKQUQgY5oeMmRNJUSU/bxL4EPNwI09HTrIL3nsnsGFD/aB2lGHu9cg1Xy58CpYVgDXWzFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLtzOZjp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=efWShMfBYl4Z/3iJAjwss/m+CAX4CiKfsaOg6OT+nIhVZa8SUq2CsErhZio3XKCpj0pRKupyT+2mZKsd6Ol9zd2QIEyH9gCu3aprkE44+W367TRV4NsJOLRiqBxeC0kFnsKSlFhn9QN/c3pREwLvaPP3kGsrvqjKCv0r9/kyXAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONtI4RRE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLtzOZjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D117C4CEF5;
-	Wed,  3 Dec 2025 16:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONtI4RRE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7EFAC4CEF5;
+	Wed,  3 Dec 2025 16:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779778;
-	bh=gd5dO5wz9yMYhsPkm/ReYEjql/7slNy83PaYGepAmbE=;
+	s=korg; t=1764779782;
+	bh=CZrNPmct2ogEErAnea+NpStMZfDqUuDFYws0Z4YcMMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLtzOZjp5n0qlo9wf+Cyrr2vQ7hguhgav+aJs1Rs8gyI6UaKDSH+c+HleIAQUoW8K
-	 /UABJH+8cMdsuOrZYfN532gNPbKliONw8ok4xcGWgkooXcq5hk3roLy2LF5F8MvnOX
-	 Ox8SHbdMnpo/Be0HPR6LM0uxbY+Xe8jR4h0HyA6I=
+	b=ONtI4RRE9gYbG2+ulCtXF67LoBVULY7RJA+d8tlzvDdKPXvr8wv3VadthUdXaxCzD
+	 I0+s/dsWJ2gKp+bzIGXaxoC+9oh7QqPNtJCFnTBVFbtUFpPnhenxanYQjqF0b0ydt3
+	 svt5ncarjGdfWjwe9KyVlY2HSngGcLM7ya+Zyuzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pauli Virtanen <pav@iki.fi>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Benjamin Berg <benjamin.berg@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 351/568] Bluetooth: MGMT: cancel mesh send timer when hdev removed
-Date: Wed,  3 Dec 2025 16:25:53 +0100
-Message-ID: <20251203152453.560912955@linuxfoundation.org>
+Subject: [PATCH 6.1 360/568] wifi: mac80211: skip rate verification for not captured PSDUs
+Date: Wed,  3 Dec 2025 16:26:02 +0100
+Message-ID: <20251203152453.887720695@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,54 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pauli Virtanen <pav@iki.fi>
+From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit 55fb52ffdd62850d667ebed842815e072d3c9961 ]
+[ Upstream commit 7fe0d21f5633af8c3fab9f0ef0706c6156623484 ]
 
-mesh_send_done timer is not canceled when hdev is removed, which causes
-crash if the timer triggers after hdev is gone.
+If for example the sniffer did not follow any AIDs in an MU frame, then
+some of the information may not be filled in or is even expected to be
+invalid. As an example, in that case it is expected that Nss is zero.
 
-Cancel the timer when MGMT removes the hdev, like other MGMT timers.
-
-Should fix the BUG: sporadically seen by BlueZ test bot
-(in "Mesh - Send cancel - 1" test).
-
-Log:
-------
-BUG: KASAN: slab-use-after-free in run_timer_softirq+0x76b/0x7d0
-...
-Freed by task 36:
- kasan_save_stack+0x24/0x50
- kasan_save_track+0x14/0x30
- __kasan_save_free_info+0x3a/0x60
- __kasan_slab_free+0x43/0x70
- kfree+0x103/0x500
- device_release+0x9a/0x210
- kobject_put+0x100/0x1e0
- vhci_release+0x18b/0x240
-------
-
-Fixes: b338d91703fa ("Bluetooth: Implement support for Mesh")
-Link: https://lore.kernel.org/linux-bluetooth/67364c09.0c0a0220.113cba.39ff@mx.google.com/
-Signed-off-by: Pauli Virtanen <pav@iki.fi>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 2ff5e52e7836 ("radiotap: add 0-length PSDU "not captured" type")
+Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://patch.msgid.link/20251110142554.83a2858ee15b.I9f78ce7984872f474722f9278691ae16378f0a3e@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/rx.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 9bd4d5bc84db1..b89c3fc364b83 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -9501,6 +9501,7 @@ void mgmt_index_removed(struct hci_dev *hdev)
- 	cancel_delayed_work_sync(&hdev->discov_off);
- 	cancel_delayed_work_sync(&hdev->service_cache);
- 	cancel_delayed_work_sync(&hdev->rpa_expired);
-+	cancel_delayed_work_sync(&hdev->mesh_send_done);
- }
+diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
+index 776f9fcf05abe..1cd75c200cfe6 100644
+--- a/net/mac80211/rx.c
++++ b/net/mac80211/rx.c
+@@ -5228,10 +5228,14 @@ void ieee80211_rx_list(struct ieee80211_hw *hw, struct ieee80211_sta *pubsta,
+ 	if (WARN_ON(!local->started))
+ 		goto drop;
  
- void mgmt_power_on(struct hci_dev *hdev, int err)
+-	if (likely(!(status->flag & RX_FLAG_FAILED_PLCP_CRC))) {
++	if (likely(!(status->flag & RX_FLAG_FAILED_PLCP_CRC) &&
++		   !(status->flag & RX_FLAG_NO_PSDU &&
++		     status->zero_length_psdu_type ==
++		     IEEE80211_RADIOTAP_ZERO_LEN_PSDU_NOT_CAPTURED))) {
+ 		/*
+-		 * Validate the rate, unless a PLCP error means that
+-		 * we probably can't have a valid rate here anyway.
++		 * Validate the rate, unless there was a PLCP error which may
++		 * have an invalid rate or the PSDU was not capture and may be
++		 * missing rate information.
+ 		 */
+ 
+ 		switch (status->encoding) {
 -- 
 2.51.0
 
