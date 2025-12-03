@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BCC3148CD;
-	Wed,  3 Dec 2025 16:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D3F376BCC;
+	Wed,  3 Dec 2025 16:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780504; cv=none; b=IMjTv3dLhWL/ww6WddgWLvqBGHzi26l6ZyO4XieM2EIuBxiX2aQHA5u77QLDcuirvXmUKK5gcJR7zvOO0xRiL4XLTwb+Kr8Oor/dz2+LHrozcJtx7grqSYmgyqKocz3ACnSIQvHkzc5UdM4msNq3zHpAed/SD2tlwKsnwxxEK8c=
+	t=1764780507; cv=none; b=Rl5I6MnwCAXq7rLUvmErE2FajV2GA1VNnXYjU4NN3IwId9Vo+y+Qi5SgBJpTOlJqPyq6NoGQPicL3jHRasK+pyz8i/iiqJ+z+iCHCyFbBEWFrQ+ZtqvUbsFAdkrv2IbRcJjv8OI7m1Xxm9zlhCDd8s/nZYh+9t6sUpMISSmaQj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780504; c=relaxed/simple;
-	bh=ffTNd57sRrKUwIC/7Str78Qym88dWOsZChPl7nNpVTw=;
+	s=arc-20240116; t=1764780507; c=relaxed/simple;
+	bh=FCvoBqRWDm7u4KVA6H82r/WWxo/Fs5MrneDMG13HemI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0efEKo8TcWx9jYcsJyFwtWv2inEimzBM9dtx1Hdf6P5RmthmqaNpBwavj2mtsB/h0XazWBeGtOuCPlBXhiWtXIixZ6oNWPgZSCpizpzu/s/LQhPt/WZxRr001epcMQ8HUYjeH5cRAR/X9Ci/WlKYDCY01VKPi4cY+mwYwVlCbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OrCRCOGQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RU1FXXwHBpu0BA1bniCwSjR99vU1IpUuFn95llrAo+RlBg5isFQyNtOO6qxM6kgdg/HYm6EOQm9SRxCy0wIVfIw4x8/Hc+D/4t0IKBgce0LrTMmakNj4X0X4JqMDcTyFzCqQhPrseG7dTfxDYbc7mcX5vYETVauRZb4bxsiflwY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uRUXMR3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OrCRCOGQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C7A6C4CEF5;
-	Wed,  3 Dec 2025 16:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uRUXMR3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3669C116C6;
+	Wed,  3 Dec 2025 16:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780503;
-	bh=ffTNd57sRrKUwIC/7Str78Qym88dWOsZChPl7nNpVTw=;
+	s=korg; t=1764780507;
+	bh=FCvoBqRWDm7u4KVA6H82r/WWxo/Fs5MrneDMG13HemI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrCRCOGQ8ob8I9BBHrLdFCzbjMe3jLqHcyCrh1fjn/kIVRlcDIvuRutexwjOyD/Si
-	 Jiu9ikrq8W7gFkMozcW5zgNpir8HitDvCsYaIjJShNiYvB/2QoISBzubOOeY+ARF4h
-	 SF8mFRxPAmyzhr/zM0o5djSqmed2hjKJOf73ANec=
+	b=0uRUXMR3KKWQ9T3MPwtxer9VzWV8QvtQN4wgHbAHVxdel168vX09HoTSQ7Naxap6k
+	 Nc1On1RJBmYZnbJ0DOJa8KqByIqB2i7aH3RYCLz3wUsAH3VY9dJeHxnABCK4XcTD7m
+	 gKWGxH44Pig0C8jzTgwQbu9c6U1eVeFoGOixO7ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.1 567/568] i2c: xgene-slimpro: Migrate to use generic PCC shmem related macros
-Date: Wed,  3 Dec 2025 16:29:29 +0100
-Message-ID: <20251203152501.518097111@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 6.1 568/568] HID: core: Harden s32ton() against conversion to 0 bits
+Date: Wed,  3 Dec 2025 16:29:30 +0100
+Message-ID: <20251203152501.554151430@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,65 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 89a4ad1f437c049534891c3d83cd96d7c7debd2a upstream.
+[ Upstream commit a6b87bfc2ab5bccb7ad953693c85d9062aef3fdd ]
 
-Use the newly defined common and generic PCC shared memory region
-related macros in this driver to replace the locally defined ones.
+Testing by the syzbot fuzzer showed that the HID core gets a
+shift-out-of-bounds exception when it tries to convert a 32-bit
+quantity to a 0-bit quantity.  Ideally this should never occur, but
+there are buggy devices and some might have a report field with size
+set to zero; we shouldn't reject the report or the device just because
+of that.
 
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Acked-by: Wolfram Sang <wsa@kernel.org>
-Link: https://lore.kernel.org/r/20230927-pcc_defines-v2-2-0b8ffeaef2e5@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Instead, harden the s32ton() routine so that it returns a reasonable
+result instead of crashing when it is called with the number of bits
+set to 0 -- the same as what snto32() does.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-by: syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/68753a08.050a0220.33d347.0008.GAE@google.com/
+Tested-by: syzbot+b63d677d63bcac06cf90@syzkaller.appspotmail.com
+Fixes: dde5845a529f ("[PATCH] Generic HID layer - code split")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/613a66cd-4309-4bce-a4f7-2905f9bce0c9@rowland.harvard.edu
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+[ s32ton() was moved by c653ffc28340 ("HID: stop exporting hid_snto32()").
+  Minor context change fixed. ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-xgene-slimpro.c |   16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/hid/hid-core.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-xgene-slimpro.c
-+++ b/drivers/i2c/busses/i2c-xgene-slimpro.c
-@@ -91,14 +91,6 @@
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1354,7 +1354,12 @@ EXPORT_SYMBOL_GPL(hid_snto32);
  
- #define SLIMPRO_IIC_MSG_DWORD_COUNT			3
- 
--/* PCC related defines */
--#define PCC_SIGNATURE			0x50424300
--#define PCC_STS_CMD_COMPLETE		BIT(0)
--#define PCC_STS_SCI_DOORBELL		BIT(1)
--#define PCC_STS_ERR			BIT(2)
--#define PCC_STS_PLAT_NOTIFY		BIT(3)
--#define PCC_CMD_GENERATE_DB_INT		BIT(15)
--
- struct slimpro_i2c_dev {
- 	struct i2c_adapter adapter;
- 	struct device *dev;
-@@ -160,11 +152,11 @@ static void slimpro_i2c_pcc_rx_cb(struct
- 
- 	/* Check if platform sends interrupt */
- 	if (!xgene_word_tst_and_clr(&generic_comm_base->status,
--				    PCC_STS_SCI_DOORBELL))
-+				    PCC_STATUS_SCI_DOORBELL))
- 		return;
- 
- 	if (xgene_word_tst_and_clr(&generic_comm_base->status,
--				   PCC_STS_CMD_COMPLETE)) {
-+				   PCC_STATUS_CMD_COMPLETE)) {
- 		msg = generic_comm_base + 1;
- 
- 		/* Response message msg[1] contains the return value. */
-@@ -186,10 +178,10 @@ static void slimpro_i2c_pcc_tx_prepare(s
- 		   cpu_to_le32(PCC_SIGNATURE | ctx->mbox_idx));
- 
- 	WRITE_ONCE(generic_comm_base->command,
--		   cpu_to_le16(SLIMPRO_MSG_TYPE(msg[0]) | PCC_CMD_GENERATE_DB_INT));
-+		   cpu_to_le16(SLIMPRO_MSG_TYPE(msg[0]) | PCC_CMD_GENERATE_DB_INTR));
- 
- 	status = le16_to_cpu(READ_ONCE(generic_comm_base->status));
--	status &= ~PCC_STS_CMD_COMPLETE;
-+	status &= ~PCC_STATUS_CMD_COMPLETE;
- 	WRITE_ONCE(generic_comm_base->status, cpu_to_le16(status));
- 
- 	/* Copy the message to the PCC comm space */
+ static u32 s32ton(__s32 value, unsigned n)
+ {
+-	s32 a = value >> (n - 1);
++	s32 a;
++	if (!value || !n)
++		return 0;
++
++	a = value >> (n - 1);
++
+ 	if (a && a != -1)
+ 		return value < 0 ? 1 << (n - 1) : (1 << (n - 1)) - 1;
+ 	return value & ((1 << n) - 1);
 
 
