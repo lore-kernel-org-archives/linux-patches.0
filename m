@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E91DDAB;
-	Wed,  3 Dec 2025 15:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8765F25BEE5;
+	Wed,  3 Dec 2025 15:40:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776424; cv=none; b=ayeq1KzB7vFzd9r8KlQFdDOP4rBKnOQUo6oOkhOXOKqYMFluJoRYJzLUGqzhysflP1vKG4bN7o0PtxSYGyA+oukUiTj28+LLv4UQD0ORxoZ3AW85ct6ksl6Ov4nHoHii2U1vkdBbn+y60J6CzBZsTD5Hn4mvEDkfVtSnmGQLTI4=
+	t=1764776427; cv=none; b=AXvkZ6O/42FLNsMQRK0UiV5TGr4D3vfprclLwFpMQofXTd1z1YuR69rrSJpQi+lg5KwXNwwModW994BbZu9ClwfgW1Zy+L+pZ9k/QnzExiHT9DQJd1r+aCDELe9posqzmd7Dgg/ZsikDW4FAzI242IPJfmLz/SJLrUrSVRVCz50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776424; c=relaxed/simple;
-	bh=1DGqSx19oZvViD+VbQMHxlnMEMTchQm6qUqoisVs1t4=;
+	s=arc-20240116; t=1764776427; c=relaxed/simple;
+	bh=668ZlH4eIW7ct00rsrBkQd6eNoBB5C7tIiYwvG7C+NY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YH55Tk84AZ6bEFyzSKHm2U/z6g/VPYLXPTorslw5Asa2uJmPNNIrSi5B/oO3USP0y7QbAcrqxr5dF7O/6WtGCFZbmoTZBuuIlEQgm7lh8Src7z5lYbGAkouvlQKQY+eBCCnTzQDhVTtj72Sqk6i4KgkV1GUH3P/1MMe0SsZ/qZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zwsuRsEa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PCDvVq3IpF4lBi7We1WxFAv4K/qAsM1rNMzT7zDX1682RMxy6SfGoWXT415y06Adn4by6Gmeec6bxxSd6b81Gxazij2XvfY58RJX/lQdMSDR9e/RwZPQlmV5O/zBPioZnkKV2GVn6MTMpUg+rXu7BoKZZ51Uc3d4g9KGqYWNhWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5hwlQcT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zwsuRsEa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BC5C4CEF5;
-	Wed,  3 Dec 2025 15:40:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5hwlQcT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9640C4CEF5;
+	Wed,  3 Dec 2025 15:40:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776423;
-	bh=1DGqSx19oZvViD+VbQMHxlnMEMTchQm6qUqoisVs1t4=;
+	s=korg; t=1764776427;
+	bh=668ZlH4eIW7ct00rsrBkQd6eNoBB5C7tIiYwvG7C+NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwsuRsEa+M/k0axiUlOTJitNeLw+beJ3z42+kZ7AWUURiFAYCYNh9AN+vJ9gz4NH+
-	 LGE5xEb+wx6zQlq0WmGgV3B/WpUWo9doV9sIL49bAh0hK+DjJt7r1CkHz2A2PzR8/8
-	 ERQMuwx50IrXexb+0r6DxCszXNTfY8PKknB1ygww=
+	b=S5hwlQcT8exl6ZPdKNCocpLR50gWLCjVjVUoUNJQsgU4Z0c/d177jn0WqkSTNB9i/
+	 SNk6PlomkXnOBUMyn2xTERtsOmryRUYBgYgxYyG76dmF/2mXb6puFP13mfn7C+sR0e
+	 WX4fPlad1CrCvJZzVBj0bOnuqf1ziflXWyo18/Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com,
-	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Pauli Virtanen <pav@iki.fi>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 179/300] Bluetooth: btusb: reorder cleanup in btusb_disconnect to avoid UAF
-Date: Wed,  3 Dec 2025 16:26:23 +0100
-Message-ID: <20251203152407.258982950@linuxfoundation.org>
+Subject: [PATCH 5.10 180/300] Bluetooth: 6lowpan: reset link-local header on ipv6 recv path
+Date: Wed,  3 Dec 2025 16:26:24 +0100
+Message-ID: <20251203152407.296077202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,63 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 23d22f2f71768034d6ef86168213843fc49bf550 ]
+[ Upstream commit 3b78f50918276ab28fb22eac9aa49401ac436a3b ]
 
-There is a KASAN: slab-use-after-free read in btusb_disconnect().
-Calling "usb_driver_release_interface(&btusb_driver, data->intf)" will
-free the btusb data associated with the interface. The same data is
-then used later in the function, hence the UAF.
+Bluetooth 6lowpan.c netdev has header_ops, so it must set link-local
+header for RX skb, otherwise things crash, eg. with AF_PACKET SOCK_RAW
 
-Fix by moving the accesses to btusb data to before the data is free'd.
+Add missing skb_reset_mac_header() for uncompressed ipv6 RX path.
 
-Reported-by: syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2fc81b50a4f8263a159b
-Tested-by: syzbot+2fc81b50a4f8263a159b@syzkaller.appspotmail.com
-Fixes: fd913ef7ce619 ("Bluetooth: btusb: Add out-of-band wakeup support")
-Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+For the compressed one, it is done in lowpan_header_decompress().
+
+Log: (BlueZ 6lowpan-tester Client Recv Raw - Success)
+------
+kernel BUG at net/core/skbuff.c:212!
+Call Trace:
+<IRQ>
+...
+packet_rcv (net/packet/af_packet.c:2152)
+...
+<TASK>
+__local_bh_enable_ip (kernel/softirq.c:407)
+netif_rx (net/core/dev.c:5648)
+chan_recv_cb (net/bluetooth/6lowpan.c:294 net/bluetooth/6lowpan.c:359)
+------
+
+Fixes: 18722c247023 ("Bluetooth: Enable 6LoWPAN support for BT LE devices")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ net/bluetooth/6lowpan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index cf0a0b3eaf886..155eaaf0485a1 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4391,6 +4391,11 @@ static void btusb_disconnect(struct usb_interface *intf)
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index 7e698b0ac7bc7..32dc74115dcbc 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -317,6 +317,7 @@ static int recv_pkt(struct sk_buff *skb, struct net_device *dev,
+ 		local_skb->pkt_type = PACKET_HOST;
+ 		local_skb->dev = dev;
  
- 	hci_unregister_dev(hdev);
++		skb_reset_mac_header(local_skb);
+ 		skb_set_transport_header(local_skb, sizeof(struct ipv6hdr));
  
-+	if (data->oob_wake_irq)
-+		device_init_wakeup(&data->udev->dev, false);
-+	if (data->reset_gpio)
-+		gpiod_put(data->reset_gpio);
-+
- 	if (intf == data->intf) {
- 		if (data->isoc)
- 			usb_driver_release_interface(&btusb_driver, data->isoc);
-@@ -4401,17 +4406,11 @@ static void btusb_disconnect(struct usb_interface *intf)
- 			usb_driver_release_interface(&btusb_driver, data->diag);
- 		usb_driver_release_interface(&btusb_driver, data->intf);
- 	} else if (intf == data->diag) {
--		usb_driver_release_interface(&btusb_driver, data->intf);
- 		if (data->isoc)
- 			usb_driver_release_interface(&btusb_driver, data->isoc);
-+		usb_driver_release_interface(&btusb_driver, data->intf);
- 	}
- 
--	if (data->oob_wake_irq)
--		device_init_wakeup(&data->udev->dev, false);
--
--	if (data->reset_gpio)
--		gpiod_put(data->reset_gpio);
--
- 	hci_free_dev(hdev);
- }
- 
+ 		if (give_skb_to_upper(local_skb, dev) != NET_RX_SUCCESS) {
 -- 
 2.51.0
 
