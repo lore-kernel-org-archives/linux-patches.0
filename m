@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8104368287;
-	Wed,  3 Dec 2025 16:52:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E823365A1B;
+	Wed,  3 Dec 2025 16:52:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780749; cv=none; b=i/UIeix2poExhgJcgylMlWn+lciKQG+UfawhiL4L4NvT/VnMgC+OFh3a70CWHMEcP+x74eAKbyqxSdj0mqkNN4Cn2ZtCgdLFT6iSbbrj1d2xkd2D5hpn/cL8n61CFehGZGIxwPYML1uondxsBcZImq8G55VcH2x9bXgOUIMNpyk=
+	t=1764780753; cv=none; b=m4eSMwbadINBoo54hoA1WdncxrbRO/4NzuWl6F4+5oYWXesBqtBqd7Dj28GGHZhRrbE96LZQWRYuvwxuyRcQsLolSVYT7flH9pYK4o/+RQm7cVEvshThYzN0tZ4ePJ3LUipqDvLk9PAUCjt4ZpLA8JYF/0yuMJgp01YoQF/RI/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780749; c=relaxed/simple;
-	bh=4dKKPgjBk15aXMuSn7opo+2TBCIKHk3TdiIzn8hcyoU=;
+	s=arc-20240116; t=1764780753; c=relaxed/simple;
+	bh=35rYMvNL5FA+tOIbYNz5iGJ+Jvqci8fGOtiwYxkRXDk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=beuVDAvSL346QUY5O8he++Vg35u0g3+JJYyQtNfZuak5gmXABT7aOdRm6mR8/oG6PZqaGc5/q0ZqeOktvk1IjhOlnrZcn360zdmib5VQ1wm9KKa8cCEjTvrBlYHjFR30UKIEiyRJCFMqTt4jDROCdndyN6hESyHSMkVRrhKaqDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5RI/iJB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qZxV+WoweHvE2NEiGo7qn6MoSc7SBPBNmigNpzIUmdTYQDEgjgDgfXUzYhBUIA2T8gfh5WSFbBa/RSJVhnG8ItzljxTs+w+WcdZ4+slpqVDvQtv6c3jHtynKU7gm9V3OWA7sN0WFkc+CBEvzsWrBSFTNv1WhePgDolE0j7CvMPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VTpdq8E6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5RI/iJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5660BC4CEF5;
-	Wed,  3 Dec 2025 16:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VTpdq8E6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D336C4CEF5;
+	Wed,  3 Dec 2025 16:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780749;
-	bh=4dKKPgjBk15aXMuSn7opo+2TBCIKHk3TdiIzn8hcyoU=;
+	s=korg; t=1764780752;
+	bh=35rYMvNL5FA+tOIbYNz5iGJ+Jvqci8fGOtiwYxkRXDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5RI/iJB8ITIunAWe2oDa3PW9VuvavGhPXYs56rExdvlbnGADEXoqSiFRTd++PoxD
-	 ziI+VLLSsfj57EUge/ozYf6QJEPGcdrAptyNvUyYyUuw7eKPnkrDbPBhB2fSRd4x8O
-	 wxthO2Ltmw1vJXET1EME6n86NAiVP+ApQoQke6Qs=
+	b=VTpdq8E6h84pXGjYonp+VPDhYJwRt+CsMzyBVQGfzKqI+bVCAloF7dDp70HveE/++
+	 +MAsbC6Yzudih1cTs0JCSs+EtLnCew2wUHkWJo+w2VVfI4WzKV6Dy7xFyim7uNXrkl
+	 EmNtJJzqAPTpfnGL02EPgbRKoFPWHLK/REwlzaNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.12 079/132] slimbus: ngd: Fix reference count leak in qcom_slim_ngd_notify_slaves
-Date: Wed,  3 Dec 2025 16:29:18 +0100
-Message-ID: <20251203152346.220514598@linuxfoundation.org>
+	WangYuli <wangyl5933@chinaunicom.cn>,
+	Wentao Guan <guanwentao@uniontech.com>,
+	Srinivas Kandagatla <srini@kernel.org>
+Subject: [PATCH 6.12 080/132] nvmem: layouts: fix nvmem_layout_bus_uevent
+Date: Wed,  3 Dec 2025 16:29:19 +0100
+Message-ID: <20251203152346.257169973@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Wentao Guan <guanwentao@uniontech.com>
 
-commit 96cf8500934e0ce2a6c486f1dbc3b1fff12f7a5e upstream.
+commit 03bc4831ef064e114328dea906101cff7c6fb8b3 upstream.
 
-The function qcom_slim_ngd_notify_slaves() calls of_slim_get_device() which
-internally uses device_find_child() to obtain a device reference.
-According to the device_find_child() documentation,
-the caller must drop the reference with put_device() after use.
+correctly check the ENODEV return value.
 
-Found via static analysis and this is similar to commit 4e65bda8273c
-("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-
-Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251027060601.33228-1-linmq006@gmail.com
+Fixes: 810b790033cc ("nvmem: layouts: fix automatic module loading")
+CC: stable@vger.kernel.org
+Co-developed-by: WangYuli <wangyl5933@chinaunicom.cn>
+Signed-off-by: WangYuli <wangyl5933@chinaunicom.cn>
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: Srinivas Kandagatla <srini@kernel.org>
+Link: https://patch.msgid.link/20251114110539.143154-1-srini@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/slimbus/qcom-ngd-ctrl.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvmem/layouts.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/slimbus/qcom-ngd-ctrl.c
-+++ b/drivers/slimbus/qcom-ngd-ctrl.c
-@@ -1241,6 +1241,7 @@ static void qcom_slim_ngd_notify_slaves(
+diff --git a/drivers/nvmem/layouts.c b/drivers/nvmem/layouts.c
+index f381ce1e84bd..7ebe53249035 100644
+--- a/drivers/nvmem/layouts.c
++++ b/drivers/nvmem/layouts.c
+@@ -51,7 +51,7 @@ static int nvmem_layout_bus_uevent(const struct device *dev,
+ 	int ret;
  
- 		if (slim_get_logical_addr(sbdev))
- 			dev_err(ctrl->dev, "Failed to get logical address\n");
-+		put_device(&sbdev->dev);
- 	}
- }
+ 	ret = of_device_uevent_modalias(dev, env);
+-	if (ret != ENODEV)
++	if (ret != -ENODEV)
+ 		return ret;
  
+ 	return 0;
+-- 
+2.52.0
+
 
 
