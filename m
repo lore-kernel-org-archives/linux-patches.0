@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B2734F497;
-	Wed,  3 Dec 2025 16:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD73E34F49C;
+	Wed,  3 Dec 2025 16:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777932; cv=none; b=IDV0If8Cg47nVY5nkKBACt4b+Vq7Ce+1vLwL5TygmuPio3dukB/avOhcmiM1u0XKvdRl6YtpBXt5V0ao1O5lLHwCS0HNSfNkcZGRZcSyJ+tb0rNV2x+oV0P/u+kvCfDOeBWIlMBLAcPtgF9iwzhQ3w6fV0BfwQl/9F+jvglcW88=
+	t=1764777935; cv=none; b=q7Ra3JdO21Uhk8BvchNYQmJieSUcvLeYwm+wCY15YHzIRc7mGU4Jv6fiBAeR84sGfuzSPA0Q+UeZhN79vtXtIiXRDULh8WmrjmuV/LYcOMVYHRcHqaFEB1xE4yRmHp4UIKfzB7s04d/YC2Vzfshg5Dtglw/KTSy4ZJLyU/zavoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777932; c=relaxed/simple;
-	bh=4OQzqCtKlFQM377vlNOyeOGb2BtGle1av0rTZSPWvp4=;
+	s=arc-20240116; t=1764777935; c=relaxed/simple;
+	bh=Aw06kBW+InVUI2Sl91VOGQweAQEbdGV62xIRYtqcIh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJnCDXVnQN6OAIY9PD8YrQqJkulfF/OUUxkeiZhY4FmbMxHZr10hLo0aEAWqaN1DUlJiINtZnm06XplZ9IDBhy7fIKGGYtuCjTa0qvCmb3rc5nG/+SZBPh/eiPhEyPkXGFQm95qtyPLCajQvfKq5obkElQkapk4tNJdc7uPYw28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bJPrFD5n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cHMLmDLRgGmEFbjXVIsxr4QUoE7XJr5c/YcVpnoeItrr15Zvhs6kqTGhbj1GRBI+rXGa7NcDq1ZEeOeWSOk8luutgQ9ZWsNDE3R8k4rcx2nnnxTV7QmfzoTykDVgIp5O3kenORkyYhzzEVBiB3iKuueq9KwmHCEwfnjRH0D8Cr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Knf+bQS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bJPrFD5n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FB57C4CEF5;
-	Wed,  3 Dec 2025 16:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Knf+bQS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20861C116C6;
+	Wed,  3 Dec 2025 16:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777932;
-	bh=4OQzqCtKlFQM377vlNOyeOGb2BtGle1av0rTZSPWvp4=;
+	s=korg; t=1764777935;
+	bh=Aw06kBW+InVUI2Sl91VOGQweAQEbdGV62xIRYtqcIh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJPrFD5nR6BhFt9pck5SW97t1q7OWGqwQjk8lzL62zcjWHWKoYq086Dw4xOv0AL4i
-	 Tp7GPjuImTDJ1ezcxc9ubKEzYT2+oBlupk/28T6YFw6ZogKlQOs4oKhDOd0fUbKm5T
-	 Uw/u45gQqg/zH6Th8MyW73btjWLFe4apTv4jbjMI=
+	b=2Knf+bQSLmK4YpuDRVPzfY06yiuWoYwTKAcm+vD7CN34rki9WbWYQeM7+Juj8Vy6R
+	 sfADq0iwWhwp0aPJLTDRyTCNW8+V2Eejj6VriLDhVsAWTcusuIThbBF+hlEKSUiBFH
+	 /ah0Ia75S8UK28nyj7kzAcci8IiYNPln212ROKhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	austinchang <austinchang@synology.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Yikang Yue <yikangy2@illinois.edu>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/392] btrfs: mark dirty extent range for out of bound prealloc extents
-Date: Wed,  3 Dec 2025 16:25:41 +0100
-Message-ID: <20251203152421.105121524@linuxfoundation.org>
+Subject: [PATCH 5.15 192/392] fs/hpfs: Fix error code for new_inode() failure in mkdir/create/mknod/symlink
+Date: Wed,  3 Dec 2025 16:25:42 +0100
+Message-ID: <20251203152421.140899024@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,102 +51,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: austinchang <austinchang@synology.com>
+From: Yikang Yue <yikangy2@illinois.edu>
 
-[ Upstream commit 3b1a4a59a2086badab391687a6a0b86e03048393 ]
+[ Upstream commit 32058c38d3b79a28963a59ac0353644dc24775cd ]
 
-In btrfs_fallocate(), when the allocated range overlaps with a prealloc
-extent and the extent starts after i_size, the range doesn't get marked
-dirty in file_extent_tree. This results in persisting an incorrect
-disk_i_size for the inode when not using the no-holes feature.
+The function call new_inode() is a primitive for allocating an inode in memory,
+rather than planning disk space for it. Therefore, -ENOMEM should be returned
+as the error code rather than -ENOSPC.
 
-This is reproducible since commit 41a2ee75aab0 ("btrfs: introduce
-per-inode file extent tree"), then became hidden since commit 3d7db6e8bd22
-("btrfs: don't allocate file extent tree for non regular files") and then
-visible again after commit 8679d2687c35 ("btrfs: initialize
-inode::file_extent_tree after i_mode has been set"), which fixes the
-previous commit.
+To be specific, new_inode()'s call path looks like this:
+new_inode
+  new_inode_pseudo
+    alloc_inode
+      ops->alloc_inode (hpfs_alloc_inode)
+        alloc_inode_sb
+          kmem_cache_alloc_lru
 
-The following reproducer triggers the problem:
+Therefore, the failure of new_inode() indicates a memory presure issue (-ENOMEM),
+not a lack of disk space. However, the current implementation of
+hpfs_mkdir/create/mknod/symlink incorrectly returns -ENOSPC when new_inode() fails.
+This patch fix this by set err to -ENOMEM before the goto statement.
 
-$ cat test.sh
+BTW, we also noticed that other nested calls within these four functions,
+like hpfs_alloc_f/dnode and hpfs_add_dirent, might also fail due to memory presure.
+But similarly, only -ENOSPC is returned. Addressing these will involve code
+modifications in other functions, and we plan to submit dedicated patches for these
+issues in the future. For this patch, we focus on new_inode().
 
-MNT=/mnt/test
-DEV=/dev/vdb
-
-mkdir -p $MNT
-
-mkfs.btrfs -f -O ^no-holes $DEV
-mount $DEV $MNT
-
-touch $MNT/file1
-fallocate -n -o 1M -l 2M $MNT/file1
-
-umount $MNT
-mount $DEV $MNT
-
-len=$((1 * 1024 * 1024))
-
-fallocate -o 1M -l $len $MNT/file1
-
-du --bytes $MNT/file1
-
-umount $MNT
-mount $DEV $MNT
-
-du --bytes $MNT/file1
-
-umount $MNT
-
-Running the reproducer gives the following result:
-
-$ ./test.sh
-(...)
-2097152 /mnt/test/file1
-1048576 /mnt/test/file1
-
-The difference is exactly 1048576 as we assigned.
-
-Fix by adding a call to btrfs_inode_set_file_extent_range() in
-btrfs_fallocate_update_isize().
-
-Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
-Signed-off-by: austinchang <austinchang@synology.com>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Yikang Yue <yikangy2@illinois.edu>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/file.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/hpfs/namei.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/fs/btrfs/file.c b/fs/btrfs/file.c
-index 0dd5a90feca34..cfc515f0d25f9 100644
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -3216,12 +3216,22 @@ static int btrfs_fallocate_update_isize(struct inode *inode,
- {
- 	struct btrfs_trans_handle *trans;
- 	struct btrfs_root *root = BTRFS_I(inode)->root;
-+	u64 range_start;
-+	u64 range_end;
- 	int ret;
- 	int ret2;
+diff --git a/fs/hpfs/namei.c b/fs/hpfs/namei.c
+index d73f8a67168e9..c1c53602e4130 100644
+--- a/fs/hpfs/namei.c
++++ b/fs/hpfs/namei.c
+@@ -53,8 +53,10 @@ static int hpfs_mkdir(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.fnode = cpu_to_le32(fno);
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail2;
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -156,9 +158,10 @@ static int hpfs_create(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
- 	if (mode & FALLOC_FL_KEEP_SIZE || end <= i_size_read(inode))
- 		return 0;
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-	
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	result->i_mode |= S_IFREG;
+@@ -244,9 +247,10 @@ static int hpfs_mknod(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
  
-+	range_start = round_down(i_size_read(inode), root->fs_info->sectorsize);
-+	range_end = round_up(end, root->fs_info->sectorsize);
-+
-+	ret = btrfs_inode_set_file_extent_range(BTRFS_I(inode), range_start,
-+						range_end - range_start);
-+	if (ret)
-+		return ret;
-+
- 	trans = btrfs_start_transaction(root, 1);
- 	if (IS_ERR(trans))
- 		return PTR_ERR(trans);
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
+-
++	}
+ 	hpfs_init_inode(result);
+ 	result->i_ino = fno;
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
+@@ -321,8 +325,10 @@ static int hpfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 	dee.creation_date = dee.write_date = dee.read_date = cpu_to_le32(local_get_seconds(dir->i_sb));
+ 
+ 	result = new_inode(dir->i_sb);
+-	if (!result)
++	if (!result) {
++		err = -ENOMEM;
+ 		goto bail1;
++	}
+ 	result->i_ino = fno;
+ 	hpfs_init_inode(result);
+ 	hpfs_i(result)->i_parent_dir = dir->i_ino;
 -- 
 2.51.0
 
