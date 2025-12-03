@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AB834DB7B;
-	Wed,  3 Dec 2025 16:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D467D30ACEE;
+	Wed,  3 Dec 2025 16:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777811; cv=none; b=YWz30zy3EXasXv+XkhHgdD9/9m2EzSxCGKgBjF0CKRoKuAlR27zsCkBN9v2ORHFVWqGS14BU+CI+Qo2eEnR3ZCPHol0lE9zDn8LDB0aC//ZSs1g25eslWm85a8L0ROpeLZ0VpaIa6PlGl5fnRY1OicYA4yC1oS+1fG8XqtwVbL8=
+	t=1764777814; cv=none; b=iwJ3zr8b4wbcXoP2QNvXOQA9Je3t+wjvsKIju5qMA9c51qL0Qiu8tjgZks26hOPiZ8sR+Sd/VL/y93Bo3b2FpWZzeZU5dx/OMw7/X19qWqjgMT0sQmoOIUqgTQtdMjfr3WrIx2t2YhFs4MZnyS3kjSttQcMjJAy0tGtb/H/dfIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777811; c=relaxed/simple;
-	bh=FVkoMd4WSZt25+y60t4KjlhI+WB97f2fsUug9JwuwIs=;
+	s=arc-20240116; t=1764777814; c=relaxed/simple;
+	bh=tgrkkC1v9SKJHbmBQ+rAtEfJbDe021JSPJ2w/NeeB6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N+sfW5aEH7VpIq+puKEhJbCeOJMLX99oeK6BnjaJjiqnBmvDxil8OOHT0mFzkbiQAKhyHwYXbVzH95jwzSGuGj82HZQVotoGHD+u8MsUz9Z2eGY/A+Kx8UtIKdt8nDKVOadu/82yS4hWKDX9loqur/xu4fHSPv680UobJCOAGPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kW6P6LHm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=He7eZer9Jyv9DzYv7CdxMHvKcodzNwAMjUsJ8EzyvRiYe8hTaORinKokbz0JNrtfqtBya8ZY28Oy/dQZSWz2nZxnUx0Hhzp1B/PRTqo94ZkenDeygsn0rZLmswM7VKYJ112VRPYBpJ44andrm38FGL6BBtS7mYqkvRvRQmpNT0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+nYPk2b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kW6P6LHm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487ADC4CEF5;
-	Wed,  3 Dec 2025 16:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+nYPk2b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4822EC4CEF5;
+	Wed,  3 Dec 2025 16:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777811;
-	bh=FVkoMd4WSZt25+y60t4KjlhI+WB97f2fsUug9JwuwIs=;
+	s=korg; t=1764777814;
+	bh=tgrkkC1v9SKJHbmBQ+rAtEfJbDe021JSPJ2w/NeeB6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kW6P6LHmegLsdG7OWQlSUv+O6JRgx2nuT8CYn/jQMt6ZkQHH1SDYknU4vc9sbW0rM
-	 CFuN0zQrYJGVYL3pWRWXQdgGWlu0gI/lramRZxPFiaQC4+pTWUy8hQEVQLHkJ/uWsS
-	 eUi+1JhaJdDsyRmwI9h9p5VvkamXdrO8VJc8MDSs=
+	b=1+nYPk2bkOygIm/Pl2ju1JSfzdhGiN3Yhiys4O7HguqbSrBsKK539o7QDaKYJPhPu
+	 In0GkP83bLt2baw6e44YYspv6E4/xgg9f+2Vhmlr/gVCe0vMgNxdfOyNMOAgKAqogi
+	 nPuLwA0FNSTjF9jU2ULNVbrqFG6LwstJXzhbelt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Mina Almasry <almasrymina@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/392] drm/amdgpu: Use memdup_array_user in amdgpu_cs_wait_fences_ioctl
-Date: Wed,  3 Dec 2025 16:25:04 +0100
-Message-ID: <20251203152419.747958114@linuxfoundation.org>
+Subject: [PATCH 5.15 155/392] page_pool: always add GFP_NOWARN for ATOMIC allocations
+Date: Wed,  3 Dec 2025 16:25:05 +0100
+Message-ID: <20251203152419.785234134@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,62 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit dea75df7afe14d6217576dbc28cc3ec1d1f712fb ]
+[ Upstream commit f3b52167a0cb23b27414452fbc1278da2ee884fc ]
 
-Replace kmalloc_array() + copy_from_user() with memdup_array_user().
+Driver authors often forget to add GFP_NOWARN for page allocation
+from the datapath. This is annoying to users as OOMs are a fact
+of life, and we pretty much expect network Rx to hit page allocation
+failures during OOM. Make page pool add GFP_NOWARN for ATOMIC allocations
+by default.
 
-This shrinks the source code and improves separation between the kernel
-and userspace slabs.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Mina Almasry <almasrymina@google.com>
+Link: https://patch.msgid.link/20250912161703.361272-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ net/core/page_pool.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index f293d0dfec613..98c842cf03e4a 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1625,30 +1625,21 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
- {
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 	union drm_amdgpu_wait_fences *wait = data;
--	uint32_t fence_count = wait->in.fence_count;
--	struct drm_amdgpu_fence *fences_user;
- 	struct drm_amdgpu_fence *fences;
- 	int r;
+diff --git a/net/core/page_pool.c b/net/core/page_pool.c
+index 416be038e1cae..813d15a5593c6 100644
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -283,6 +283,12 @@ static struct page *__page_pool_alloc_pages_slow(struct page_pool *pool,
+ 	struct page *page;
+ 	int i, nr_pages;
  
- 	/* Get the fences from userspace */
--	fences = kmalloc_array(fence_count, sizeof(struct drm_amdgpu_fence),
--			GFP_KERNEL);
--	if (fences == NULL)
--		return -ENOMEM;
--
--	fences_user = u64_to_user_ptr(wait->in.fences);
--	if (copy_from_user(fences, fences_user,
--		sizeof(struct drm_amdgpu_fence) * fence_count)) {
--		r = -EFAULT;
--		goto err_free_fences;
--	}
-+	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
-+				   wait->in.fence_count,
-+				   sizeof(struct drm_amdgpu_fence));
-+	if (IS_ERR(fences))
-+		return PTR_ERR(fences);
- 
- 	if (wait->in.wait_all)
- 		r = amdgpu_cs_wait_all_fences(adev, filp, wait, fences);
- 	else
- 		r = amdgpu_cs_wait_any_fence(adev, filp, wait, fences);
- 
--err_free_fences:
- 	kfree(fences);
- 
- 	return r;
++	/* Unconditionally set NOWARN if allocating from NAPI.
++	 * Drivers forget to set it, and OOM reports on packet Rx are useless.
++	 */
++	if ((gfp & GFP_ATOMIC) == GFP_ATOMIC)
++		gfp |= __GFP_NOWARN;
++
+ 	/* Don't support bulk alloc for high-order pages */
+ 	if (unlikely(pp_order))
+ 		return __page_pool_alloc_page_order(pool, gfp);
 -- 
 2.51.0
 
