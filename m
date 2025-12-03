@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15700307AD9;
-	Wed,  3 Dec 2025 16:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814C731354A;
+	Wed,  3 Dec 2025 16:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779935; cv=none; b=MPW/+Hz01y9pNBjSNi6i+iHm8v/pcfm1LbcpKMZ543kaaqGZXw/4CcZAnKgPVExtMp6tHn91qcFpI2bMdnfCrBvVAuoRHg5LgK5nzEERBLzSorn0Gu9fbKJXT+E2vOQX8kxdjHPOWWf8dEWuuk02WvYOTj2tc7AM8tAxsU6o15w=
+	t=1764779938; cv=none; b=D+bRAJnkVWV4S0QrV+eqeTF7iNjo76cBW/zqQhFKCLg1E/aWMjPXjytwtesPYZgF0dr0fwtHgi6hBAGbqG4oT8lFUUTw1Ht/LGRBZzFdBoCtSXqdJAwa0yTZKYn+V9BW0Jd2HgkefuAQZZQMY++BuJoYRJI+NPk+RirNkJ3KFxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779935; c=relaxed/simple;
-	bh=EvlCL4vNjL0ZlBRbcAsv2B2cNvX6oLHLGKYStMmNtqg=;
+	s=arc-20240116; t=1764779938; c=relaxed/simple;
+	bh=gkVfl1Bx4oUg8QPRGC1gQzwDMW2ge7X8wSPz+RvrtoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tnDl/mPh3S0Pmxkga8jQPJ2N0fSCvAy49Y9hexzFiZ62OuNGoyhdBVIGwK4Ooiq7LSZIGWrC6l4hXgRBS8dk2X/KkLi63ryomhLjN6Cm4wrpYEvnFF8ncIy7tOiWmz0PqGIlTxlv8NkMEw43BHV3izkgcpZtsXjzaTQaNa/rpbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCxzOBbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iJTgIQ1UvE9IaFjk6SfGz/BCx8hg3X8hERzSOJg2w3Zao6EU/6EDmLykKv5pjvp3QMoSiXpBxfv5Dr/vHSYEF9QZtnbo4hW/8r9DymWo6w3JlAsTLpYjxUTet80u47puEjvNdX2xJLcoK57T4l8/DZMRG08iRTUaFkr4Q7C+AA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rygPpAQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCxzOBbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3226AC116B1;
-	Wed,  3 Dec 2025 16:38:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rygPpAQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92570C4CEF5;
+	Wed,  3 Dec 2025 16:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779934;
-	bh=EvlCL4vNjL0ZlBRbcAsv2B2cNvX6oLHLGKYStMmNtqg=;
+	s=korg; t=1764779938;
+	bh=gkVfl1Bx4oUg8QPRGC1gQzwDMW2ge7X8wSPz+RvrtoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vCxzOBbL0k94fXfz9vUNsZM6WK45BbSWV/lHzlzRrwbIvytCpJY+2ZlI4LKVqAAae
-	 YExzFFyo7hlObzXAm4tFv0N1u3610BWlOZ8vboZjU6rFNi/5y+9PU5UEQAZllqIA9V
-	 Dg/Vc5JPJN6h5h40bLkCRo4jbMf0U/TQUShxUSzQ=
+	b=rygPpAQ9lZgwgnucdTZl5GXU21tV5mJ27qGt1GCORVBPOIZjRLoz/cqIwJU/A7FHO
+	 nH+0C+Fn+yKdRJoY3fa38DNvhYIgP9+/1SWFcTmPOdUCJV0/7arqoYB3OHMX/22j8R
+	 XH6vj2ildpWsWr/amJ5Qrfs7lGQVucw1/N3sgD+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 406/568] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
-Date: Wed,  3 Dec 2025 16:26:48 +0100
-Message-ID: <20251203152455.557940099@linuxfoundation.org>
+	Hans de Goede <hansg@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 407/568] spi: Try to get ACPI GPIO IRQ earlier
+Date: Wed,  3 Dec 2025 16:26:49 +0100
+Message-ID: <20251203152455.593585131@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,53 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hans de Goede <hansg@kernel.org>
 
-commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf upstream.
+commit 3cd2018e15b3d66d2187d92867e265f45ad79e6f upstream.
 
-The PCM stream data in USB-audio driver is transferred over USB URB
-packet buffers, and each packet size is determined dynamically.  The
-packet sizes are limited by some factors such as wMaxPacketSize USB
-descriptor.  OTOH, in the current code, the actually used packet sizes
-are determined only by the rate and the PPS, which may be bigger than
-the size limit above.  This results in a buffer overflow, as reported
-by syzbot.
+Since commit d24cfee7f63d ("spi: Fix acpi deferred irq probe"), the
+acpi_dev_gpio_irq_get() call gets delayed till spi_probe() is called
+on the SPI device.
 
-Basically when the limit is smaller than the calculated packet size,
-it implies that something is wrong, most likely a weird USB
-descriptor.  So the best option would be just to return an error at
-the parameter setup time before doing any further operations.
+If there is no driver for the SPI device then the move to spi_probe()
+results in acpi_dev_gpio_irq_get() never getting called. This may
+cause problems by leaving the GPIO pin floating because this call is
+responsible for setting up the GPIO pin direction and/or bias according
+to the values from the ACPI tables.
 
-This patch introduces such a sanity check, and returns -EINVAL when
-the packet size is greater than maxpacksize.  The comparison with
-ep->packsize[1] alone should suffice since it's always equal or
-greater than ep->packsize[0].
+Re-add the removed acpi_dev_gpio_irq_get() in acpi_register_spi_device()
+to ensure the GPIO pin is always correctly setup, while keeping the
+acpi_dev_gpio_irq_get() call added to spi_probe() to deal with
+-EPROBE_DEFER returns caused by the GPIO controller not having a driver
+yet.
 
-Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
-Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
-Cc: Lizhi Xu <lizhi.xu@windriver.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://bbs.archlinux.org/viewtopic.php?id=302348
+Fixes: d24cfee7f63d ("spi: Fix acpi deferred irq probe")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Link: https://patch.msgid.link/20251102190921.30068-1-hansg@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/endpoint.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/spi/spi.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -1379,6 +1379,11 @@ int snd_usb_endpoint_set_params(struct s
- 	ep->sample_rem = ep->cur_rate % ep->pps;
- 	ep->packsize[0] = ep->cur_rate / ep->pps;
- 	ep->packsize[1] = (ep->cur_rate + (ep->pps - 1)) / ep->pps;
-+	if (ep->packsize[1] > ep->maxpacksize) {
-+		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
-+			      ep->maxpacksize, ep->cur_rate, ep->pps);
-+		return -EINVAL;
-+	}
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -2707,6 +2707,16 @@ static acpi_status acpi_register_spi_dev
+ 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
+ 			  sizeof(spi->modalias));
  
- 	/* calculate the frequency in 16.16 format */
- 	ep->freqm = ep->freqn;
++	/*
++	 * This gets re-tried in spi_probe() for -EPROBE_DEFER handling in case
++	 * the GPIO controller does not have a driver yet. This needs to be done
++	 * here too, because this call sets the GPIO direction and/or bias.
++	 * Setting these needs to be done even if there is no driver, in which
++	 * case spi_probe() will never get called.
++	 */
++	if (spi->irq < 0)
++		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
++
+ 	acpi_device_set_enumerated(adev);
+ 
+ 	adev->power.flags.ignore_parent = true;
 
 
