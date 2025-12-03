@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029B331B824;
-	Wed,  3 Dec 2025 16:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6D730AAA6;
+	Wed,  3 Dec 2025 16:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779630; cv=none; b=BUru8BaDzQjUXFD6YdFMM10If1J3UbIoe8B6unTRkqwr6K3CmkjHSvJeFx3tlakxRHtEQ1X18M+q1L42fOwbRdRsw0+RQg1e14oYaBQ8NvLdrdQmlaX0XXvdqUR6Gl2odtBs/8v6VaEyY7jUK7X+Us5dIAP5ITfA6izlDeEUvEI=
+	t=1764779633; cv=none; b=YMR2j4AhC7yyhQm7fMgAToTFeGBYSCY975AmIA8Mdn6ZaLU4TUeHrjGTaRWsCyf1aWPfhb2geJieQuOaHw6Jj/3WhETj9aDhWhJSevtTw4nth/D2rxuAtiXDyuVqrgSlXtRORONy98ze7oetlwslcZ4f70SZK2q91DKpdnzFOHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779630; c=relaxed/simple;
-	bh=i5GQaEaE/ZjKbRr3Rz9YYXjjX05Bvf9pJKrDSTKwJgQ=;
+	s=arc-20240116; t=1764779633; c=relaxed/simple;
+	bh=vo2RneG9Ls9c15nD/GKpseQyAFNDxbgtacaeVFIhxDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ew0ZgaVYNe97GA6+DQDE9NbvHqyey7o7JGpMX/faCfDMGBm32jfWTBpnxOGiKcyv4GABh6XbBZubYc7moxqe0RyNqc/LclMEl+SPw1UnNmCxWuQYOjrThS2pNXbR5JI0SGqvkhJfPyyjuwWIIf9Cx1nmbMMHvNNNb13nM+gj1Ts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3jT5Cv+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lh/fqTbU/0N5nMHBO+pV+lmmMdsd/zZJbKIffItet8NE4ZTsEFQayAFqn84n3a+nwSzNGKWA/yktVGk5tnXBb4HCODVu9qSrowbp68PPFnVPQhrh/4B6G3ksy6LDK73C40elhVo2L0OGXWK0MySkraw50Gfw/YFFJ+pXsLX1kYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZydilRk2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3jT5Cv+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E5B9C4CEF5;
-	Wed,  3 Dec 2025 16:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZydilRk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43AEC4CEF5;
+	Wed,  3 Dec 2025 16:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779629;
-	bh=i5GQaEaE/ZjKbRr3Rz9YYXjjX05Bvf9pJKrDSTKwJgQ=;
+	s=korg; t=1764779633;
+	bh=vo2RneG9Ls9c15nD/GKpseQyAFNDxbgtacaeVFIhxDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3jT5Cv+O2rUzsaybWNysmSXX9z0oyasZPMZw5txcpI8j9ZBYKYbMUJiEzd+bSCqU
-	 voSpVt1tXBqsjTm9dktPECN84HDx/egOfHUW/rFc0QvXAMxGwN8uYfqyeeKyNN3HOf
-	 5iowdCQIbAEm2jRjPt3Z6NoZXAnkx4Of6EWjyVjs=
+	b=ZydilRk2lMGGqh71Zag8uWwpiXhIfJ9sx7a4FBF5RgvzLD9CYkUGgKbaMEU6CqqmN
+	 7PrgSQniHnr4VcU2xhxAB6TOcm3aiC9pdyqcFqepJ2CqMDPuPmWFxD99jdgY0WUEDJ
+	 Db89mIpvDc6j31bTf8XIXucvG4HL9iS7IFuktVro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 313/568] net: dsa: b53: fix enabling ip multicast
-Date: Wed,  3 Dec 2025 16:25:15 +0100
-Message-ID: <20251203152452.176857926@linuxfoundation.org>
+Subject: [PATCH 6.1 314/568] net: dsa: b53: stop reading ARL entries if search is done
+Date: Wed,  3 Dec 2025 16:25:16 +0100
+Message-ID: <20251203152452.214126787@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,71 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit c264294624e956a967a9e2e5fa41e3273340b089 ]
+[ Upstream commit 0be04b5fa62a82a9929ca261f6c9f64a3d0a28da ]
 
-In the New Control register bit 1 is either reserved, or has a different
-function:
+The switch clears the ARL_SRCH_STDN bit when the search is done, i.e. it
+finished traversing the ARL table.
 
-    Out of Range Error Discard
+This means that there will be no valid result, so we should not attempt
+to read and process any further entries.
 
-    When enabled, the ingress port discards any frames
-    if the Length field is between 1500 and 1536
-    (excluding 1500 and 1536) and with good CRC.
+We only ever check the validity of the entries for 4 ARL bin chips, and
+only after having passed the first entry to the b53_fdb_copy().
 
-The actual bit for enabling IP multicast is bit 0, which was only
-explicitly enabled for BCM5325 so far.
+This means that we always pass an invalid entry at the end to the
+b53_fdb_copy(). b53_fdb_copy() does check the validity though before
+passing on the entry, so it never gets passed on.
 
-For older switch chips, this bit defaults to 0, so we want to enable it
-as well, while newer switch chips default to 1, and their documentation
-says "It is illegal to set this bit to zero."
+On < 4 ARL bin chips, we will even continue reading invalid entries
+until we reach the result limit.
 
-So drop the wrong B53_IPMC_FWD_EN define, enable the IP multicast bit
-also for other switch chips. While at it, rename it to (B53_)IP_MC as
-that is how it is called in Broadcom code.
-
-Fixes: 63cc54a6f073 ("net: dsa: b53: Fix egress flooding settings")
+Fixes: 1da6df85c6fb ("net: dsa: b53: Implement ARL add/del/dump operations")
 Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251102100758.28352-2-jonas.gorski@gmail.com
+Link: https://patch.msgid.link/20251102100758.28352-3-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 4 ++--
- drivers/net/dsa/b53/b53_regs.h   | 3 +--
- 2 files changed, 3 insertions(+), 4 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index d5a1d26e8e3de..037e1c7e9f45c 100644
+index 037e1c7e9f45c..bdbb873fe6eb0 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -349,11 +349,11 @@ static void b53_set_forwarding(struct b53_device *dev, int enable)
- 		 * frames should be flooded or not.
- 		 */
- 		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
--		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IPMC_FWD_EN;
-+		mgmt |= B53_UC_FWD_EN | B53_MC_FWD_EN | B53_IP_MC;
- 		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
- 	} else {
- 		b53_read8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, &mgmt);
--		mgmt |= B53_IP_MCAST_25;
-+		mgmt |= B53_IP_MC;
- 		b53_write8(dev, B53_CTRL_PAGE, B53_IP_MULTICAST_CTRL, mgmt);
- 	}
- }
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index 77fb7ae660b8c..95f70248c194d 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -104,8 +104,7 @@
+@@ -1785,7 +1785,7 @@ static int b53_arl_search_wait(struct b53_device *dev)
+ 	do {
+ 		b53_read8(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_CTL, &reg);
+ 		if (!(reg & ARL_SRCH_STDN))
+-			return 0;
++			return -ENOENT;
  
- /* IP Multicast control (8 bit) */
- #define B53_IP_MULTICAST_CTRL		0x21
--#define  B53_IP_MCAST_25		BIT(0)
--#define  B53_IPMC_FWD_EN		BIT(1)
-+#define  B53_IP_MC			BIT(0)
- #define  B53_UC_FWD_EN			BIT(6)
- #define  B53_MC_FWD_EN			BIT(7)
- 
+ 		if (reg & ARL_SRCH_VLID)
+ 			return 0;
 -- 
 2.51.0
 
