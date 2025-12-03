@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B822A35BDB4;
-	Wed,  3 Dec 2025 16:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EF0534F49A;
+	Wed,  3 Dec 2025 16:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778965; cv=none; b=J9j0a8nN5N4BxDDiPTXRpjRzDN7p9BCZl9gD4V5BzqOLx3PR2jfaTb29Ym0qikYELxoo1YQHtMYWcZgDoP7RbFa90EE8XFrvHqGvsXpbRnrQeMKsu6mYTgywWySzDRXGIlDIsX7hPvyhgVaTSr/gtAqB2NQ5FNNM1WFGD6PkG1g=
+	t=1764778968; cv=none; b=tGl+v6ibRGucllmTTPFoUAjjDVZ1gHf93vysNdRsBq2dzxb/TM+5RjbSLpscZZN9ekOyNcrswBo7whpINs9TQ/tiSQoVFkOcgCe4EJ1KFGSnKKPjJp67hNoh74pRkQ1In9yB4hheAcC75zWMARV194nxbcDOWwbbrUtZYjVKzoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778965; c=relaxed/simple;
-	bh=UaDqP+Y3LulkfP5Df5LRb0JECP51SIHA3F86/X4aZ1o=;
+	s=arc-20240116; t=1764778968; c=relaxed/simple;
+	bh=HUF1DpuwoZN/vyKY6wOYkw9qni6Hoqkfb11b7DEeGmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3ELUOmtfjHJnGwiTMJHWRten4VT3sMq1mavZrdI1HounPHdyoHrDVKXZ1oQTwaG9cZJHVtgWNfxgVOcEv7E6Q9EBczzwbavhL2sYSMeQnTCBY7g+AZBQuKIeJ6mFKBJPJPGXO2SiibOYJZ2iVX23syf+YeoeruVe5bsP/jxIY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMXGhbWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QRM36EdsQi+YK/be9vsUuavmH//lYAsurTYQnABQ84/wm/7yCHm9JOLLWatUPOTQHUEL/0xvBfZqC/uz2yTPmKUY3y+5D3mYBcGXBg9AbCSAV/2l2nkTxfDJQcaGPeH8GKpTfDh/4I3FNvrON8WOGUVnV6F8BEewRbAw03D608c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A4VpDKEH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMXGhbWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6080C4CEF5;
-	Wed,  3 Dec 2025 16:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A4VpDKEH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F76DC116C6;
+	Wed,  3 Dec 2025 16:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778965;
-	bh=UaDqP+Y3LulkfP5Df5LRb0JECP51SIHA3F86/X4aZ1o=;
+	s=korg; t=1764778968;
+	bh=HUF1DpuwoZN/vyKY6wOYkw9qni6Hoqkfb11b7DEeGmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMXGhbWVsrftK777zMqsxINOtC+KQQjKKoMJCTNUKNB5ycXkee0GD7pxKoogopRjR
-	 2IuoWl5xWJ1OI9YUdzSpwddN8aGrMByQyJrxrL1MqCPBOY9Lg5odf5xGCAonX8LYBf
-	 T3bbVePcDA44ZWUMjjidZtCYTOd1JFQtJyXvNIiM=
+	b=A4VpDKEHBUANTghkUkCm4TZaoVBVdE/sqnm+RKR+a0lx9myvurCXcxEJHBcY4k090
+	 OwG71kxfVV5J1XiLrksMUVgMsBi4JR+t47plPm5uwfbKqv9SiPq2/ThRD6/fWf5LGT
+	 iNQwyxTVBqzFf6Cwa4iN51E0sDEO1lvKcEp6H2b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Stellard <tstellar@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Quentin Monnet <qmo@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 115/568] bpftool: Fix -Wuninitialized-const-pointer warnings with clang >= 21
-Date: Wed,  3 Dec 2025 16:21:57 +0100
-Message-ID: <20251203152444.947075244@linuxfoundation.org>
+Subject: [PATCH 6.1 116/568] cpuidle: Fail cpuidle device registration if there is one already
+Date: Wed,  3 Dec 2025 16:21:58 +0100
+Message-ID: <20251203152444.984003058@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,59 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tom Stellard <tstellar@redhat.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 5612ea8b554375d45c14cbb0f8ea93ec5d172891 ]
+[ Upstream commit 7b1b7961170e4fcad488755e5ffaaaf9bd527e8f ]
 
-This fixes the build with -Werror -Wall.
+Refuse to register a cpuidle device if the given CPU has a cpuidle
+device already and print a message regarding it.
 
-btf_dumper.c:71:31: error: variable 'finfo' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
-   71 |         info.func_info = ptr_to_u64(&finfo);
-      |                                      ^~~~~
+Without this, an attempt to register a new cpuidle device without
+unregistering the existing one leads to the removal of the existing
+cpuidle device without removing its sysfs interface.
 
-prog.c:2294:31: error: variable 'func_info' is uninitialized when passed as a const pointer argument here [-Werror,-Wuninitialized-const-pointer]
- 2294 |         info.func_info = ptr_to_u64(&func_info);
-      |
-
-v2:
-  - Initialize instead of using memset.
-
-Signed-off-by: Tom Stellard <tstellar@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Quentin Monnet <qmo@kernel.org>
-Link: https://lore.kernel.org/bpf/20250917183847.318163-1-tstellar@redhat.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/btf_dumper.c | 2 +-
- tools/bpf/bpftool/prog.c       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpuidle/cpuidle.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/btf_dumper.c b/tools/bpf/bpftool/btf_dumper.c
-index 19924b6ce796f..56100ad2fa0d2 100644
---- a/tools/bpf/bpftool/btf_dumper.c
-+++ b/tools/bpf/bpftool/btf_dumper.c
-@@ -38,7 +38,7 @@ static int dump_prog_id_as_func_ptr(const struct btf_dumper *d,
- 	__u32 info_len = sizeof(info);
- 	const char *prog_name = NULL;
- 	struct btf *prog_btf = NULL;
--	struct bpf_func_info finfo;
-+	struct bpf_func_info finfo = {};
- 	__u32 finfo_rec_size;
- 	char prog_str[1024];
- 	int err;
-diff --git a/tools/bpf/bpftool/prog.c b/tools/bpf/bpftool/prog.c
-index 1c3dc1dae23f6..e158e010266d5 100644
---- a/tools/bpf/bpftool/prog.c
-+++ b/tools/bpf/bpftool/prog.c
-@@ -2104,7 +2104,7 @@ static void profile_print_readings(void)
- 
- static char *profile_target_name(int tgt_fd)
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index 6eceb19882430..fdd25271106a3 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -602,8 +602,14 @@ static void __cpuidle_device_init(struct cpuidle_device *dev)
+ static int __cpuidle_register_device(struct cpuidle_device *dev)
  {
--	struct bpf_func_info func_info;
-+	struct bpf_func_info func_info = {};
- 	struct bpf_prog_info info = {};
- 	__u32 info_len = sizeof(info);
- 	const struct btf_type *t;
+ 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
++	unsigned int cpu = dev->cpu;
+ 	int i, ret;
+ 
++	if (per_cpu(cpuidle_devices, cpu)) {
++		pr_info("CPU%d: cpuidle device already registered\n", cpu);
++		return -EEXIST;
++	}
++
+ 	if (!try_module_get(drv->owner))
+ 		return -EINVAL;
+ 
+@@ -615,7 +621,7 @@ static int __cpuidle_register_device(struct cpuidle_device *dev)
+ 			dev->states_usage[i].disable |= CPUIDLE_STATE_DISABLED_BY_USER;
+ 	}
+ 
+-	per_cpu(cpuidle_devices, dev->cpu) = dev;
++	per_cpu(cpuidle_devices, cpu) = dev;
+ 	list_add(&dev->device_list, &cpuidle_detected_devices);
+ 
+ 	ret = cpuidle_coupled_register_device(dev);
 -- 
 2.51.0
 
