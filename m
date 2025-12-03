@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9563343D92;
-	Wed,  3 Dec 2025 15:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EFF93446B0;
+	Wed,  3 Dec 2025 15:58:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777484; cv=none; b=mTsfnCJyr1fZ4VdRW9Lav7+WIZQyVpbbkJsqW+IOzeeRRoYBJRW0d5aA+6hmyk7TKuFZnnw8Eg+yZqAqpvulxWp3a0PSuYsGOPNnkb5dFl7zmjBwqcdPAU4gkDNLH44C75CEqAS/iLHwzeZPdRFTsAcHkUeu891+kUrcR6F1n/M=
+	t=1764777487; cv=none; b=PeX1HF0Vvi21Xl1pqXvhSmN0/RkpRwd6O/iYC5zHsZ5VOIPidos2g4hBxurev+eFobdsueYMHQ2/W0ZBeZ5Yos/JVF73PBgDqxXagp4UhQHkH0IM5dQLU+i+MCpthLtQwC6GL1YmtAlnHnbF/aeTa4sKWE5/DTGKQOAkB/Ht3lc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777484; c=relaxed/simple;
-	bh=AgdfgVC5EyTFmkTmvug0pfLvQVygyDc/aJfxx9Q94Tk=;
+	s=arc-20240116; t=1764777487; c=relaxed/simple;
+	bh=x6Q15zudK345hSFLFmWentRVZ6/H5GBQqbRrkvLYyQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTAeeceplAyFdkmw3n2dzJME8pFRYB9jI5wCTXqqo2QoAUG7DCdhAW3pI2azlQE22sUbSeGcln3iSU9qCpIgMu6hbD/sXYPWW8j3zvsGY1brPxcjNNG+w0YAyQfIEgFOjq680nnCJtRvpXuVD6wZ1ot1wMfBQpVTL+BH9VeJxqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfKUxQdE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UP8PkOJ85ZfDKelbbiBEK44xhfNpXRJ9+2O1jWYoVS1KnoCEAJpFss5HqDn0ROzIdM2hqaiPEACF4525ekfVRY5jjizmquNTYhd7ZkyfBmqomEmtNZBUNu+I/PIUlRJy6pesD8dNe3lBRBnVLPSO/RV803TcJfNBodL/4sz0sis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G88Q+cjx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfKUxQdE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11061C116C6;
-	Wed,  3 Dec 2025 15:58:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G88Q+cjx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02603C4CEF5;
+	Wed,  3 Dec 2025 15:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777484;
-	bh=AgdfgVC5EyTFmkTmvug0pfLvQVygyDc/aJfxx9Q94Tk=;
+	s=korg; t=1764777487;
+	bh=x6Q15zudK345hSFLFmWentRVZ6/H5GBQqbRrkvLYyQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfKUxQdE4YN4cqlhyOBjkX27XxM5kgk2iu576KMHfL+n/ZCCGafeFtuvhbKLS/HdZ
-	 gnO8aR4izAiB/7546zxg3oC+bmHizgbCXxhiLrju/AkoQ0BDCzDWqDlWD7PPo0Zd6C
-	 9VkrIallbYPjORpJB1v5TZAxuUHItjzznS8I+8D8=
+	b=G88Q+cjx0S4Hs5ERKIWdDW3S3cUiYG6xU90xyuSEAjlOIasBeY9ubexCjPWnp+i/q
+	 N8nmrviSXONxV0lzFtgjohjs6dNpZENAHz/6bAyFLelrTjewJkK7wto9Uaa1tbonfe
+	 t4IICU2GGmi1sgK1qp5XhVnUQAiEsZT2pIln2DnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/392] block: make REQ_OP_ZONE_OPEN a write operation
-Date: Wed,  3 Dec 2025 16:23:22 +0100
-Message-ID: <20251203152416.028550531@linuxfoundation.org>
+Subject: [PATCH 5.15 026/392] net: hns3: return error code when function fails
+Date: Wed,  3 Dec 2025 16:22:56 +0100
+Message-ID: <20251203152415.064076314@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -54,62 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 19de03b312d69a7e9bacb51c806c6e3f4207376c ]
+[ Upstream commit 03ca7c8c42be913529eb9f188278114430c6abbd ]
 
-A REQ_OP_OPEN_ZONE request changes the condition of a sequential zone of
-a zoned block device to the explicitly open condition
-(BLK_ZONE_COND_EXP_OPEN). As such, it should be considered a write
-operation.
+Currently, in hclge_mii_ioctl(), the operation to
+read the PHY register (SIOCGMIIREG) always returns 0.
 
-Change this operation code to be an odd number to reflect this. The
-following operation numbers are changed to keep the numbering compact.
+This patch changes the return type of hclge_read_phy_reg(),
+returning an error code when the function fails.
 
-No problems were reported without this change as this operation has no
-data. However, this unifies the zone operation to reflect that they
-modify the device state and also allows strengthening checks in the
-block layer, e.g. checking if this operation is not issued against a
-read-only device.
-
-Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[ relocated REQ_OP_ZONE_APPEND from 15 to 21 to resolve numbering conflict ]
+Fixes: 024712f51e57 ("net: hns3: add ioctl support for imp-controlled PHYs")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Link: https://patch.msgid.link/20251023131338.2642520-2-shaojijie@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blk_types.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c | 3 +--
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c | 9 ++++++---
+ drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h | 2 +-
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/include/linux/blk_types.h
-+++ b/include/linux/blk_types.h
-@@ -337,17 +337,17 @@ enum req_opf {
- 	/* write the zero filled sector many times */
- 	REQ_OP_WRITE_ZEROES	= 9,
- 	/* Open a zone */
--	REQ_OP_ZONE_OPEN	= 10,
-+	REQ_OP_ZONE_OPEN	= 11,
- 	/* Close a zone */
--	REQ_OP_ZONE_CLOSE	= 11,
-+	REQ_OP_ZONE_CLOSE	= 13,
- 	/* Transition a zone to full */
--	REQ_OP_ZONE_FINISH	= 13,
--	/* write data at the current zone write pointer */
--	REQ_OP_ZONE_APPEND	= 15,
-+	REQ_OP_ZONE_FINISH	= 15,
- 	/* reset a zone write pointer */
- 	REQ_OP_ZONE_RESET	= 17,
- 	/* reset all the zone present on the device */
- 	REQ_OP_ZONE_RESET_ALL	= 19,
-+	/* write data at the current zone write pointer */
-+	REQ_OP_ZONE_APPEND	= 21,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index d228e37f8b3d9..492a754f84a94 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -9562,8 +9562,7 @@ static int hclge_mii_ioctl(struct hclge_dev *hdev, struct ifreq *ifr, int cmd)
+ 		/* this command reads phy id and register at the same time */
+ 		fallthrough;
+ 	case SIOCGMIIREG:
+-		data->val_out = hclge_read_phy_reg(hdev, data->reg_num);
+-		return 0;
++		return hclge_read_phy_reg(hdev, data->reg_num, &data->val_out);
  
- 	/* Driver private requests */
- 	REQ_OP_DRV_IN		= 34,
+ 	case SIOCSMIIREG:
+ 		return hclge_write_phy_reg(hdev, data->reg_num, data->val_in);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
+index 63d2be4349e3e..87a196256864f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.c
+@@ -271,7 +271,7 @@ void hclge_mac_stop_phy(struct hclge_dev *hdev)
+ 	phy_stop(phydev);
+ }
+ 
+-u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr)
++int hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 *val)
+ {
+ 	struct hclge_phy_reg_cmd *req;
+ 	struct hclge_desc desc;
+@@ -283,11 +283,14 @@ u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr)
+ 	req->reg_addr = cpu_to_le16(reg_addr);
+ 
+ 	ret = hclge_cmd_send(&hdev->hw, &desc, 1);
+-	if (ret)
++	if (ret) {
+ 		dev_err(&hdev->pdev->dev,
+ 			"failed to read phy reg, ret = %d.\n", ret);
++		return ret;
++	}
+ 
+-	return le16_to_cpu(req->reg_val);
++	*val = le16_to_cpu(req->reg_val);
++	return 0;
+ }
+ 
+ int hclge_write_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 val)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
+index fd0e20190b90f..baeee805a9510 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mdio.h
+@@ -9,7 +9,7 @@ int hclge_mac_connect_phy(struct hnae3_handle *handle);
+ void hclge_mac_disconnect_phy(struct hnae3_handle *handle);
+ void hclge_mac_start_phy(struct hclge_dev *hdev);
+ void hclge_mac_stop_phy(struct hclge_dev *hdev);
+-u16 hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr);
++int hclge_read_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 *val);
+ int hclge_write_phy_reg(struct hclge_dev *hdev, u16 reg_addr, u16 val);
+ 
+ #endif
+-- 
+2.51.0
+
 
 
