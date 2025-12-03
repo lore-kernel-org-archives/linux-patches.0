@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF8E256C9E;
-	Wed,  3 Dec 2025 15:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493872FF179;
+	Wed,  3 Dec 2025 15:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776049; cv=none; b=UmD1zKTSZU3NBcNQu2Tltx/bNcrG6yZiT8mUbAB9yCP7ofDh7tuuA/4jOc7Cc+cT+YMK3PNvVNAbCes2v/kDOZLqDdZN04j0LQWCWm+6Cf+2S5sNkaBmVWm+xfYzgZS6FsXZZVErkiQA+2TDFYdQrObOc3Yho1xTKRziBSoD8j4=
+	t=1764776053; cv=none; b=XHIUUBiXxgGvDWT+wV/DnFWA/sAy6J+z1wydIR7emqh597XRC+nwpKjB+f9YxtRlVG36uKhOfOpTajSxxOGidlOs1uoMp76ns8HTAOyA2jK4VOfgG5eWjtWc1iAblb9hm+54Kp3AJ3wpkSYRu+yWAib7Z1pVAQDLxVem+jgn75Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776049; c=relaxed/simple;
-	bh=LWBhH7xTKQHfHJxBXNB+G/PX6mfJdGoRRfIVmud5qHk=;
+	s=arc-20240116; t=1764776053; c=relaxed/simple;
+	bh=WoKMF2SLzGPcmIaSlSrGzyeola7PEKlG/SpjXt8tmro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EuWGSa0pGOP80pZDCAliJQc5BIoafVQGhgjuBuU8Q3VN2mrIYBxTJptIRqu9GR2Tn/qtNjU7wjVOlRsAk/D9v4TVQNTHg2Jng3d7+FKtoGk2WZCt6UYHRGJMaJs2XRLn5l1XyVb9OMyxOR/IEhHu01KrcqESALa0/xGN2R4lrUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eJQTesQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bWwRuzC/3EYWUZG7JGMXDkZsbJWU0DrnD+LnSzNNACB+O4yObrKI20+qsKD+pP6N3pMLOBeiGFR1auom7M21r7ZaZdw6V6BTs7riKLKkdjyGBLVSB4QZ6xE1kHXc1QjWNH8ZCr0UX5hh0MzLLbKvo/zIJkOapNaZmg4hexTEC3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0yDQhIl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eJQTesQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C77C4CEF5;
-	Wed,  3 Dec 2025 15:34:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0yDQhIl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915BEC4CEF5;
+	Wed,  3 Dec 2025 15:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776049;
-	bh=LWBhH7xTKQHfHJxBXNB+G/PX6mfJdGoRRfIVmud5qHk=;
+	s=korg; t=1764776053;
+	bh=WoKMF2SLzGPcmIaSlSrGzyeola7PEKlG/SpjXt8tmro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJQTesQEacUlq4ePABE0F5KmtIc52W7ngNN/EEsQGlxXHRngQAYQep49el+pEY7qL
-	 r1S6yQXMBlhJmmrHA5NLVmMzNKdm58wLXat91nmXPbaXdn2TgDVUpkJhq620250Go3
-	 G7J2mZRemFLBSTTho+QucP0zAP77V8v+4Di3GhKI=
+	b=W0yDQhIl9EfYBH1ukkmSXebSYairDakOvZr2E6d6vpv2zwcdPXa43FJwiIBRNUQz6
+	 9th5f/KgJJOf88N1t8hTrxlnJCmDf6+hHPJ2xvPhDe60aZKO4Xi2XRX/L3+EVYk2hO
+	 sH6264jhiFcD41su0TMO+jFCOou4JgLIy34uuj+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Babu Moger <babu.moger@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>
-Subject: [PATCH 5.10 032/300] x86/resctrl: Fix miscount of bandwidth event when reactivating previously unavailable RMID
-Date: Wed,  3 Dec 2025 16:23:56 +0100
-Message-ID: <20251203152401.650662598@linuxfoundation.org>
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.10 033/300] x86/boot: Compile boot code with -std=gnu11 too
+Date: Wed,  3 Dec 2025 16:23:57 +0100
+Message-ID: <20251203152401.688382185@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,137 +55,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Babu Moger <babu.moger@amd.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92 ]
+commit b3bee1e7c3f2b1b77182302c7b2131c804175870 upstream.
 
-Users can create as many monitoring groups as the number of RMIDs supported
-by the hardware. However, on AMD systems, only a limited number of RMIDs
-are guaranteed to be actively tracked by the hardware. RMIDs that exceed
-this limit are placed in an "Unavailable" state.
+Use -std=gnu11 for consistency with main kernel code.
 
-When a bandwidth counter is read for such an RMID, the hardware sets
-MSR_IA32_QM_CTR.Unavailable (bit 62). When such an RMID starts being tracked
-again the hardware counter is reset to zero. MSR_IA32_QM_CTR.Unavailable
-remains set on first read after tracking re-starts and is clear on all
-subsequent reads as long as the RMID is tracked.
+It doesn't seem to change anything in vmlinux.
 
-resctrl miscounts the bandwidth events after an RMID transitions from the
-"Unavailable" state back to being tracked. This happens because when the
-hardware starts counting again after resetting the counter to zero, resctrl
-in turn compares the new count against the counter value stored from the
-previous time the RMID was tracked.
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
+Link: https://lore.kernel.org/r/2058761e-12a4-4b2f-9690-3c3c1c9902a5@p183
+[ This kernel version doesn't build with GCC 15:
 
-This results in resctrl computing an event value that is either undercounting
-(when new counter is more than stored counter) or a mistaken overflow (when
-new counter is less than stored counter).
+    In file included from include/uapi/linux/posix_types.h:5,
+                     from include/uapi/linux/types.h:14,
+                     from include/linux/types.h:6,
+                     from arch/x86/realmode/rm/wakeup.h:11,
+                     from arch/x86/realmode/rm/wakemain.c:2:
+    include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
+       11 |         false   = 0,
+          |         ^~~~~
+    include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
+    include/linux/types.h:30:33: error: 'bool' cannot be defined via 'typedef'
+       30 | typedef _Bool                   bool;
+          |                                 ^~~~
+    include/linux/types.h:30:33: note: 'bool' is a keyword with '-std=c23' onwards
+    include/linux/types.h:30:1: warning: useless type name in empty declaration
+       30 | typedef _Bool                   bool;
+          | ^~~~~~~
 
-Reset the stored value (arch_mbm_state::prev_msr) of MSR_IA32_QM_CTR to
-zero whenever the RMID is in the "Unavailable" state to ensure accurate
-counting after the RMID resets to zero when it starts to be tracked again.
+  The fix is similar to commit ee2ab467bddf ("x86/boot: Use '-std=gnu11'
+  to fix build with GCC 15") which has been backported to this kernel.
 
-Example scenario that results in mistaken overflow
-==================================================
-1. The resctrl filesystem is mounted, and a task is assigned to a
-   monitoring group.
-
-   $mount -t resctrl resctrl /sys/fs/resctrl
-   $mkdir /sys/fs/resctrl/mon_groups/test1/
-   $echo 1234 > /sys/fs/resctrl/mon_groups/test1/tasks
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   21323            <- Total bytes on domain 0
-   "Unavailable"    <- Total bytes on domain 1
-
-   Task is running on domain 0. Counter on domain 1 is "Unavailable".
-
-2. The task runs on domain 0 for a while and then moves to domain 1. The
-   counter starts incrementing on domain 1.
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   7345357          <- Total bytes on domain 0
-   4545             <- Total bytes on domain 1
-
-3. At some point, the RMID in domain 0 transitions to the "Unavailable"
-   state because the task is no longer executing in that domain.
-
-   $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-   "Unavailable"    <- Total bytes on domain 0
-   434341           <- Total bytes on domain 1
-
-4.  Since the task continues to migrate between domains, it may eventually
-    return to domain 0.
-
-    $cat /sys/fs/resctrl/mon_groups/test1/mon_data/mon_L3_*/mbm_total_bytes
-    17592178699059  <- Overflow on domain 0
-    3232332         <- Total bytes on domain 1
-
-In this case, the RMID on domain 0 transitions from "Unavailable" state to
-active state. The hardware sets MSR_IA32_QM_CTR.Unavailable (bit 62) when
-the counter is read and begins tracking the RMID counting from 0.
-
-Subsequent reads succeed but return a value smaller than the previously
-saved MSR value (7345357). Consequently, the resctrl's overflow logic is
-triggered, it compares the previous value (7345357) with the new, smaller
-value and incorrectly interprets this as a counter overflow, adding a large
-delta.
-
-In reality, this is a false positive: the counter did not overflow but was
-simply reset when the RMID transitioned from "Unavailable" back to active
-state.
-
-Here is the text from APM [1] available from [2].
-
-"In PQOS Version 2.0 or higher, the MBM hardware will set the U bit on the
-first QM_CTR read when it begins tracking an RMID that it was not
-previously tracking. The U bit will be zero for all subsequent reads from
-that RMID while it is still tracked by the hardware. Therefore, a QM_CTR
-read with the U bit set when that RMID is in use by a processor can be
-considered 0 when calculating the difference with a subsequent read."
-
-[1] AMD64 Architecture Programmer's Manual Volume 2: System Programming
-    Publication # 24593 Revision 3.41 section 19.3.3 Monitoring L3 Memory
-    Bandwidth (MBM).
-
-  [ bp: Split commit message into smaller paragraph chunks for better
-    consumption. ]
-
-Fixes: 4d05bf71f157d ("x86/resctrl: Introduce AMD QOS feature")
-Signed-off-by: Babu Moger <babu.moger@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Tested-by: Reinette Chatre <reinette.chatre@intel.com>
-Cc: stable@vger.kernel.org # needs adjustments for <= v6.17
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=206537 # [2]
-(cherry picked from commit 15292f1b4c55a3a7c940dbcb6cb8793871ed3d92)
-[babu.moger@amd.com: Needed backport for v5.10 stable]
+  Note: In < 5.18 version, -std=gnu89 is used instead of -std=gnu11, see
+  commit e8c07082a810 ("Kbuild: move to -std=gnu11"). I suggest not to
+  modify that in this commit here as all the other similar fixes to
+  support GCC 15 set -std=gnu11. This can be done in a dedicated commit
+  if needed.
+  There was a conflict, because commit 2838307b019d ("x86/build: Remove
+  -m16 workaround for unsupported versions of GCC") is not in this
+  version and change code in the context. -std=gnu11 can still be added
+  at the same place. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/monitor.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/x86/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -224,11 +224,19 @@ static u64 mbm_overflow_count(u64 prev_m
+--- a/arch/x86/Makefile
++++ b/arch/x86/Makefile
+@@ -31,7 +31,7 @@ endif
+ CODE16GCC_CFLAGS := -m32 -Wa,$(srctree)/arch/x86/boot/code16gcc.h
+ M16_CFLAGS	 := $(call cc-option, -m16, $(CODE16GCC_CFLAGS))
  
- static u64 __mon_event_count(u32 rmid, struct rmid_read *rr)
- {
--	struct mbm_state *m;
-+	struct mbm_state *m = NULL;
- 	u64 chunks, tval;
- 
- 	tval = __rmid_read(rmid, rr->evtid);
- 	if (tval & (RMID_VAL_ERROR | RMID_VAL_UNAVAIL)) {
-+		if (tval & RMID_VAL_UNAVAIL) {
-+			if (rr->evtid == QOS_L3_MBM_TOTAL_EVENT_ID)
-+				m = &rr->d->mbm_total[rmid];
-+			else if (rr->evtid == QOS_L3_MBM_LOCAL_EVENT_ID)
-+				m = &rr->d->mbm_local[rmid];
-+			if (m)
-+				m->prev_msr = 0;
-+		}
- 		return tval;
- 	}
- 	switch (rr->evtid) {
+-REALMODE_CFLAGS	:= $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
++REALMODE_CFLAGS	:= -std=gnu11 $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
+ 		   -Wall -Wstrict-prototypes -march=i386 -mregparm=3 \
+ 		   -fno-strict-aliasing -fomit-frame-pointer -fno-pic \
+ 		   -mno-mmx -mno-sse $(call cc-option,-fcf-protection=none)
 
 
