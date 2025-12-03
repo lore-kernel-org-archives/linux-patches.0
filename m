@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F63734E768;
-	Wed,  3 Dec 2025 16:19:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A5034EEF6;
+	Wed,  3 Dec 2025 16:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778789; cv=none; b=XB/FGCKRgsWT1vDy/+8fW4CZpVka9zWabn+DaGgX1MO3Hrq8qtUX2UfTEmxnwyddOsdA0NkURsRRv/QYU4pntoD8ONPrEThTZWj23LgjLeTqVrszmuhORo2EAnDzsYk+TM95Y0is7LxYFiItg5q0NhNKhOFjmftO37H7vzoz1aU=
+	t=1764778792; cv=none; b=GCXlpHtikqK0qdH2kubDBi1z8vzQg65SIxW0r+LhrdzuEK2fi4rs3LLS+pERv95yPInOPU3Ta2rzZgUtABgT+NqTJMd6GeywoQ/03zsb3IelJLBum5wpvtnSHwEZwhkzcL8ta8tXL/3bnXeOUr6YbcyeiOzxydFsuYzZEG7N9kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778789; c=relaxed/simple;
-	bh=H0w2D5rLjiPZj0FocZh8+K245zP+CEuAko7mBKgKFI4=;
+	s=arc-20240116; t=1764778792; c=relaxed/simple;
+	bh=bVvGPP6PHSgW3l4mFmqkaOLo6ABFPhT2AjY90VrCncE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WfIqiQeeYURMhgF48Jencr9CQKrv0fNTfYyRZgwvd7jFcIInQdDWuVITIFnIbS3l2lM+HRm+l48rkB+dQwSFZhlBYqF1OnmgL0L10q7FtglZAr1B8m3/E2U1NQbsO7CVQFDHf+7tVIojKvJlAU0OCLSZ+404QAePTLjKlRA3GKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgzQlgWl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hWFJ+kqjRthWf1l9f9ZTNHn11VA1kIBzRx6raiof6aGi8OYNX6/3y3o/c5bW3LJ5w+sA7FB9K+igx5f1jUIKkjUGmefxR16nzrP7B4vzOZAzS185flgeI67B3d86b6COqBH+GlNYWY43uzEp3dN2HIQ3TSKFTNfnJ9fV/5kSjmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m7k+zzcX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgzQlgWl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8957BC116B1;
-	Wed,  3 Dec 2025 16:19:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m7k+zzcX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 058DCC4CEF5;
+	Wed,  3 Dec 2025 16:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778789;
-	bh=H0w2D5rLjiPZj0FocZh8+K245zP+CEuAko7mBKgKFI4=;
+	s=korg; t=1764778792;
+	bh=bVvGPP6PHSgW3l4mFmqkaOLo6ABFPhT2AjY90VrCncE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgzQlgWlkhjIcobUnFfp7/Ff1/N6i7Me25GIdDoTFO33PO0pV9zWtF3OpzDxN6ORR
-	 L3h0rbgBjmW/WKW7MKMhC9XGyy+AC+O5Y4rzeZ2v9qipBIGxuGXOJ89bfhW5pyFPVx
-	 7CQwjwVGRkswy5nipUuJ1+3B6nTmcvBZmA+EEX3k=
+	b=m7k+zzcXwq+NdjfpHIgfQfGfW3NLWTl9yO8x5Nfzz5gmgI7PuOyqIwVNdDyae0FEo
+	 8mn5dDkwb/HIauCCMmfBz8zBGqJqsqg8eS6kaH5NddnZmrX1ODxbSSQvPpeAKHDFeD
+	 cTxkQHbk1+L5Uug/Y8rKcsuDxLZOa/Gvnvg7TtZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Salvatore Bonaccorso <carnil@debian.org>
-Subject: [PATCH 6.1 059/568] Reapply "Revert drm/amd/display: Enable Freesync Video Mode by default"
-Date: Wed,  3 Dec 2025 16:21:01 +0100
-Message-ID: <20251203152442.859526246@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 033/568] mptcp: restore window probe
+Date: Wed,  3 Dec 2025 16:20:35 +0100
+Message-ID: <20251203152441.884615959@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,74 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-This reverts commit 11b92df8a2f7f4605ccc764ce6ae4a72760674df.
+commit a824084b98d8a1dbd6e85d0842a8eb5e73467f59 upstream.
 
-This conflicts with how compositors want to handle VRR.  Now
-that compositors actually handle VRR, we probably don't need
-freesync video.
+Since commit 72377ab2d671 ("mptcp: more conservative check for zero
+probes") the MPTCP-level zero window probe check is always disabled, as
+the TCP-level write queue always contains at least the newly allocated
+skb.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/2985
-Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ Salvatore Bonaccorso: Adjust context due to missing 3e094a287526
-  ("drm/amd/display: Use drm_connector in create_stream_for_sink") in
-  6.1.y stable series ]
-Signed-off-by: Salvatore Bonaccorso <carnil@debian.org>
+Refine the relevant check tacking in account that the above condition
+and that such skb can have zero length.
+
+Fixes: 72377ab2d671 ("mptcp: more conservative check for zero probes")
+Cc: stable@vger.kernel.org
+Reported-by: Geliang Tang <geliang@kernel.org>
+Closes: https://lore.kernel.org/d0a814c364e744ca6b836ccd5b6e9146882e8d42.camel@kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-3-38ffff5a9ec8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ net/mptcp/protocol.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -6044,7 +6044,8 @@ create_stream_for_sink(struct amdgpu_dm_
- 		 */
- 		DRM_DEBUG_DRIVER("No preferred mode found\n");
- 	} else {
--		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
-+		recalculate_timing = amdgpu_freesync_vid_mode &&
-+				 is_freesync_video_mode(&mode, aconnector);
- 		if (recalculate_timing) {
- 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
- 			drm_mode_copy(&saved_mode, &mode);
-@@ -7147,7 +7148,7 @@ static void amdgpu_dm_connector_add_free
- 	struct amdgpu_dm_connector *amdgpu_dm_connector =
- 		to_amdgpu_dm_connector(connector);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1391,7 +1391,12 @@ alloc_skb:
+ 	if (copy == 0) {
+ 		u64 snd_una = READ_ONCE(msk->snd_una);
  
--	if (!edid)
-+	if (!(amdgpu_freesync_vid_mode && edid))
- 		return;
- 
- 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
-@@ -9160,7 +9161,8 @@ static int dm_update_crtc_state(struct a
- 		 * TODO: Refactor this function to allow this check to work
- 		 * in all conditions.
- 		 */
--		if (dm_new_crtc_state->stream &&
-+		if (amdgpu_freesync_vid_mode &&
-+		    dm_new_crtc_state->stream &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
- 			goto skip_modeset;
- 
-@@ -9200,7 +9202,7 @@ static int dm_update_crtc_state(struct a
+-		if (snd_una != msk->snd_nxt || tcp_write_queue_tail(ssk)) {
++		/* No need for zero probe if there are any data pending
++		 * either at the msk or ssk level; skb is the current write
++		 * queue tail and can be empty at this point.
++		 */
++		if (snd_una != msk->snd_nxt || skb->len ||
++		    skb != tcp_send_head(ssk)) {
+ 			tcp_remove_empty_skb(ssk);
+ 			return 0;
  		}
- 
- 		/* Now check if we should set freesync video mode */
--		if (dm_new_crtc_state->stream &&
-+		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
- 		    dc_is_stream_unchanged(new_stream, dm_old_crtc_state->stream) &&
- 		    dc_is_stream_scaling_unchanged(new_stream, dm_old_crtc_state->stream) &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state,
-@@ -9213,7 +9215,7 @@ static int dm_update_crtc_state(struct a
- 			set_freesync_fixed_config(dm_new_crtc_state);
- 
- 			goto skip_modeset;
--		} else if (aconnector &&
-+		} else if (amdgpu_freesync_vid_mode && aconnector &&
- 			   is_freesync_video_mode(&new_crtc_state->mode,
- 						  aconnector)) {
- 			struct drm_display_mode *high_mode;
 
 
