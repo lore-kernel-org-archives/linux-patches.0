@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AA3C3446AB;
-	Wed,  3 Dec 2025 16:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AE293446B1;
+	Wed,  3 Dec 2025 16:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777853; cv=none; b=ip7GfHa4DZsTgpLNlVusA41G87TylhDT7j7ECUp7xISm0elwmtJUGDsQJ64+HqiE0wbNzqQwutLdLtM+lW/Rc7NCnFTEHzfmHN34Kqgtgsx8k7mE3ZibUjmDa3LFUU1UJHY/tP0kGQuSt9vBWtPgOmxHf7xx+v8ai9v2T9NerVA=
+	t=1764777856; cv=none; b=WWULLCFFE6z0FbZHO/sx30AikL115haLu/BlJVEIecnI3O32iM8O7ibi0/t68BI5xkxLtJOEaL5F5MB5+WTp/80qOXDd+L06N4oXBhX0ZLkeRMlx27NHjVI4oN0MrjyOPJqal/VY0J7NcYip4susIj3pYqxxfba2zIfEGZXH/ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777853; c=relaxed/simple;
-	bh=fsK8LqSW+Def1DtDXeN+qA4ESwvHWEgn59CYOIvVaqA=;
+	s=arc-20240116; t=1764777856; c=relaxed/simple;
+	bh=0br//yBRddY7g6sjRI227jaoSCp66MvQr2tFYvGb6IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J7aI1/d7eZMV/fADyq7poKmZExr8I/cPnSsyzlktxGPNv7bH3jenP2SW9m4rAOyQk54KFLaqstmjXWhVTMDro9oxXoYDmbr3mp1ePqgz/z3TIVysjKUm72UUJjnoAN3loL8uTCE2vh1Zoc3fhY+o1E4/fuaBXpmdr0mXBi8nciQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emuKrZ7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSZseCfdlae7jf+0hqp+5gCBrBF8czttA4DhOtcueBFxMWsSFx5ZLB4c5WUjMhB9aggQI+vA9eCElODOzJzys0qmGtTMDHQHFEIdgUvQGztCG0V8xzxh8rIjbIpKDFJMQiJ90zVdH6cugIyxm2x7GTO3RRXxSOOa4V10t+k5bkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t25hjdaZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emuKrZ7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC299C4CEF5;
-	Wed,  3 Dec 2025 16:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t25hjdaZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDCFC4CEF5;
+	Wed,  3 Dec 2025 16:04:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777853;
-	bh=fsK8LqSW+Def1DtDXeN+qA4ESwvHWEgn59CYOIvVaqA=;
+	s=korg; t=1764777856;
+	bh=0br//yBRddY7g6sjRI227jaoSCp66MvQr2tFYvGb6IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emuKrZ7O85dVKzzR54DmKXLXpBq1ynCFhfCvSD5jOhQAquG7nzcNmn5KLSgbiRwQo
-	 +uM2WMZLBQFeRkBhtAPSz6Ls23fuQVYvyxcOtMN3eqRgUTfIwJ6QrdQ0MruxvxkpP/
-	 C7hg1VnT7ggP0QiwuFuBejkOHXyz0tzoHkpl8Cpk=
+	b=t25hjdaZvxkpgLVk8e71UCvVPKC+4XjHapPlohMNxi4jjX/bb3jE0a7CEDr8H45Ta
+	 5qfzTeSu1lJL+UX8mlR8E5ruMgs5JuG7/bSL9RqxLFmmFEW0M25/WCMDvTIJ1U4Fym
+	 /belrhXvb3KqZX2zQr/3KBNTDVKpGSZ67Yn0N+O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Sairaj Kodilkar <sarunkod@amd.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/392] net: call cond_resched() less often in __release_sock()
-Date: Wed,  3 Dec 2025 16:24:44 +0100
-Message-ID: <20251203152419.022432231@linuxfoundation.org>
+Subject: [PATCH 5.15 135/392] iommu/amd: Skip enabling command/event buffers for kdump
+Date: Wed,  3 Dec 2025 16:24:45 +0100
+Message-ID: <20251203152419.058640608@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,107 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit 16c610162d1f1c332209de1c91ffb09b659bb65d ]
+[ Upstream commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb ]
 
-While stress testing TCP I had unexpected retransmits and sack packets
-when a single cpu receives data from multiple high-throughput flows.
+After a panic if SNP is enabled in the previous kernel then the kdump
+kernel boots with IOMMU SNP enforcement still enabled.
 
-super_netperf 4 -H srv -T,10 -l 3000 &
+IOMMU command buffers and event buffer registers remain locked and
+exclusive to the previous kernel. Attempts to enable command and event
+buffers in the kdump kernel will fail, as hardware ignores writes to
+the locked MMIO registers as per AMD IOMMU spec Section 2.12.2.1.
 
-Tcpdump extract:
+Skip enabling command buffers and event buffers for kdump boot as they
+are already enabled in the previous kernel.
 
- 00:00:00.000007 IP6 clnt > srv: Flags [.], seq 26062848:26124288, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
- 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26124288:26185728, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26185728:26243072, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 57344
- 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26243072:26304512, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26304512:26365952, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
- 00:00:00.000007 IP6 clnt > srv: Flags [P.], seq 26365952:26423296, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 57344
- 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26423296:26484736, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26484736:26546176, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
- 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26546176:26603520, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 57344
- 00:00:00.003932 IP6 clnt > srv: Flags [P.], seq 26603520:26619904, ack 1, win 66, options [nop,nop,TS val 651464844 ecr 3100753141], length 16384
- 00:00:00.006602 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651471419 ecr 3100759716], length 4096
- 00:00:00.013000 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651484421 ecr 3100772718], length 4096
- 00:00:00.000416 IP6 srv > clnt: Flags [.], ack 26619904, win 1393, options [nop,nop,TS val 3100773185 ecr 651484421,nop,nop,sack 1 {24862720:24866816}], length 0
-
-After analysis, it appears this is because of the cond_resched()
-call from  __release_sock().
-
-When current thread is yielding, while still holding the TCP socket lock,
-it might regain the cpu after a very long time.
-
-Other peer TLP/RTO is firing (multiple times) and packets are retransmit,
-while the initial copy is waiting in the socket backlog or receive queue.
-
-In this patch, I call cond_resched() only once every 16 packets.
-
-Modern TCP stack now spends less time per packet in the backlog,
-especially because ACK are no longer sent (commit 133c4c0d3717
-"tcp: defer regular ACK while processing socket backlog")
-
-Before:
-
-clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
-TcpOutSegs                      19046186           0.0
-TcpRetransSegs                  1471               0.0
-TcpExtTCPTimeouts               1397               0.0
-TcpExtTCPLossProbes             1356               0.0
-TcpExtTCPDSACKRecv              1352               0.0
-TcpExtTCPSpuriousRTOs           114                0.0
-TcpExtTCPDSACKRecvSegs          1352               0.0
-
-After:
-
-clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
-TcpOutSegs                      19218936           0.0
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20250903174811.1930820-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Link: https://lore.kernel.org/r/576445eb4f168b467b0fc789079b650ca7c5b037.1756157913.git.ashish.kalra@amd.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/iommu/amd/init.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/net/core/sock.c b/net/core/sock.c
-index 645860eace46d..b4e605ac79c9f 100644
---- a/net/core/sock.c
-+++ b/net/core/sock.c
-@@ -2716,23 +2716,27 @@ void __release_sock(struct sock *sk)
- 	__acquires(&sk->sk_lock.slock)
- {
- 	struct sk_buff *skb, *next;
-+	int nb = 0;
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 065d626d59050..9549fbffa66d0 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -696,11 +696,16 @@ static void iommu_enable_command_buffer(struct amd_iommu *iommu)
  
- 	while ((skb = sk->sk_backlog.head) != NULL) {
- 		sk->sk_backlog.head = sk->sk_backlog.tail = NULL;
+ 	BUG_ON(iommu->cmd_buf == NULL);
  
- 		spin_unlock_bh(&sk->sk_lock.slock);
- 
--		do {
-+		while (1) {
- 			next = skb->next;
- 			prefetch(next);
- 			WARN_ON_ONCE(skb_dst_is_noref(skb));
- 			skb_mark_not_on_list(skb);
- 			sk_backlog_rcv(sk, skb);
- 
--			cond_resched();
+-	entry = iommu_virt_to_phys(iommu->cmd_buf);
+-	entry |= MMIO_CMD_SIZE_512;
 -
- 			skb = next;
--		} while (skb != NULL);
-+			if (!skb)
-+				break;
-+
-+			if (!(++nb & 15))
-+				cond_resched();
-+		}
+-	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
+-		    &entry, sizeof(entry));
++	if (!is_kdump_kernel()) {
++		/*
++		 * Command buffer is re-used for kdump kernel and setting
++		 * of MMIO register is not required.
++		 */
++		entry = iommu_virt_to_phys(iommu->cmd_buf);
++		entry |= MMIO_CMD_SIZE_512;
++		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
++			    &entry, sizeof(entry));
++	}
  
- 		spin_lock_bh(&sk->sk_lock.slock);
- 	}
+ 	amd_iommu_reset_cmd_buffer(iommu);
+ }
+@@ -749,10 +754,15 @@ static void iommu_enable_event_buffer(struct amd_iommu *iommu)
+ 
+ 	BUG_ON(iommu->evt_buf == NULL);
+ 
+-	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+-
+-	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+-		    &entry, sizeof(entry));
++	if (!is_kdump_kernel()) {
++		/*
++		 * Event buffer is re-used for kdump kernel and setting
++		 * of MMIO register is not required.
++		 */
++		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
++		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
++			    &entry, sizeof(entry));
++	}
+ 
+ 	/* set head and tail to zero manually */
+ 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
 -- 
 2.51.0
 
