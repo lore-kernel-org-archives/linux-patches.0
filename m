@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F52A343D62;
-	Wed,  3 Dec 2025 16:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43B2347BDB;
+	Wed,  3 Dec 2025 16:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778431; cv=none; b=lnLKXk41g9fgB9OTZn1YMrONj1Pu2GaQ6hZPhzuMtdjBYNy6/VqY9s0qoWXIGR4wMaknC1qAP4SgTcI/IadVR+NyOxHN5Ckn9sqqeFfUvRkPvGm2vniKbgB/86MQRHNUf5rtBJoAIGGfLhiLLp8CT5hziOwTk97XeEuiLlOqqcU=
+	t=1764778434; cv=none; b=BHnaP84BoxT1sv8jruH/mWJQIXIzd2tbFvXo2q6eqOa2wSBNXdS5VQCECL2sBcajq66pN/oi1SaXQjm/750XQc6hSSoQHNh1403lBZdl+dLDBoKeGoNvv2pXsaSEW5RCncCFLXNF/P+BJkKJzsDGPS969N5ZsYR7L5JZovMx2MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778431; c=relaxed/simple;
-	bh=HbbMgggzUOR3biRo3EkbXmW0YF9mo6f9tLugQjBzGq4=;
+	s=arc-20240116; t=1764778434; c=relaxed/simple;
+	bh=V68IN+jwCFelQuRdygHVO9yemFp+cdTBmsSnMw6nFCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nCDJrB+V26Z+6sWtfg0C1Im/5hqHvoCMsUm25vqyTJsvo08s1ymo3OSg7v1HQHdDzbvpzYpnbl1XyaBRp/VpV5o1beav/T9R46Kofey6ftwwlUxLBOM9KkzfxT8WmfHqV9OpFNZwujdg5plEsREiNE/CihSGFy5fIU/I7Q9D6tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bB5Ii+Qu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vC8r4oAGPDVPMsr94msrACSD563pV4Zm2aaexcpMjUxZzFRKues/XnYHTLur3p08UpbfobxezlkUT2cWjVcl1SCIyW0f0VBGsnJaKKDSSjFGvfg4hHGfwKzfzZTHUj9nY62Ysm5btpjafJLkEuaZqRlXP0Mwc9qO9fPxdfBQkDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mM7USTdU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bB5Ii+Qu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06C0C4CEF5;
-	Wed,  3 Dec 2025 16:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mM7USTdU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B8EC4CEF5;
+	Wed,  3 Dec 2025 16:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778431;
-	bh=HbbMgggzUOR3biRo3EkbXmW0YF9mo6f9tLugQjBzGq4=;
+	s=korg; t=1764778434;
+	bh=V68IN+jwCFelQuRdygHVO9yemFp+cdTBmsSnMw6nFCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bB5Ii+QuBRbZQNLITDLN54g9cQ2C1ynDC/Ovorf7o/lMYuhYGkMZE3/m07KERGfxU
-	 Ux9MRpLyuVRHXhWnUgqxuSpBJ5QdnBGo3HNEm8g1Znqt0zyJP+CtEsC6ikYp2hnosb
-	 puGrDfYA0dw1UUvCI5o+nEt5giOFdxusx5ur0/rI=
+	b=mM7USTdUc3l+ghcRJfLnXrDJnEb36u0gBwdLoKOUxIIB28JwRC/Cwt0ipg5J0lnWX
+	 xF9I6Ag3hMx1pHshKgiuNG73kI6HiTOebthckA9vZv1tlGI2pbINgy9b4uWTV3EGrR
+	 rZ555r3oL7DLpZPyEqnfgPqzOlv51yKUJLuYzjJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 342/392] net: sxgbe: fix potential NULL dereference in sxgbe_rx()
-Date: Wed,  3 Dec 2025 16:28:12 +0100
-Message-ID: <20251203152426.754461111@linuxfoundation.org>
+Subject: [PATCH 5.15 343/392] net: dsa: sja1105: Convert to mdiobus_c45_read
+Date: Wed,  3 Dec 2025 16:28:13 +0100
+Message-ID: <20251203152426.791150045@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,45 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Andrew Lunn <andrew@lunn.ch>
 
-[ Upstream commit f5bce28f6b9125502abec4a67d68eabcd24b3b17 ]
+[ Upstream commit 639e4b93ab68f5f5fc4734c766124ca96c167f14 ]
 
-Currently, when skb is null, the driver prints an error and then
-dereferences skb on the next line.
+Stop using the helpers to construct a special phy address which
+indicates C45. Instead use the C45 accessors, which will call the
+busses C45 specific read/write API.
 
-To fix this, let's add a 'break' after the error message to switch
-to sxgbe_rx_refill(), which is similar to the approach taken by the
-other drivers in this particular case, e.g. calxeda with xgmac_rx().
-
-Found during a code review.
-
-Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251121123834.97748-1-aleksei.kodanev@bell-sw.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: da62abaaa268 ("net: dsa: sja1105: fix SGMII linking at 10M or 100M but not passing traffic")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/dsa/sja1105/sja1105_main.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-index 1b415fe6f9b9f..1fe687b594f9d 100644
---- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-+++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
-@@ -1518,8 +1518,10 @@ static int sxgbe_rx(struct sxgbe_priv_data *priv, int limit)
+diff --git a/drivers/net/dsa/sja1105/sja1105_main.c b/drivers/net/dsa/sja1105/sja1105_main.c
+index ec1c0ad591184..5c37478a7e822 100644
+--- a/drivers/net/dsa/sja1105/sja1105_main.c
++++ b/drivers/net/dsa/sja1105/sja1105_main.c
+@@ -2180,14 +2180,13 @@ int sja1105_static_config_reload(struct sja1105_private *priv,
+ 	 * change it through the dynamic interface later.
+ 	 */
+ 	for (i = 0; i < ds->num_ports; i++) {
+-		u32 reg_addr = mdiobus_c45_addr(MDIO_MMD_VEND2, MDIO_CTRL1);
+-
+ 		speed_mbps[i] = sja1105_port_speed_to_ethtool(priv,
+ 							      mac[i].speed);
+ 		mac[i].speed = priv->info->port_speed[SJA1105_SPEED_AUTO];
  
- 		skb = priv->rxq[qnum]->rx_skbuff[entry];
+ 		if (priv->xpcs[i])
+-			bmcr[i] = mdiobus_read(priv->mdio_pcs, i, reg_addr);
++			bmcr[i] = mdiobus_c45_read(priv->mdio_pcs, i,
++						   MDIO_MMD_VEND2, MDIO_CTRL1);
+ 	}
  
--		if (unlikely(!skb))
-+		if (unlikely(!skb)) {
- 			netdev_err(priv->dev, "rx descriptor is not consistent\n");
-+			break;
-+		}
- 
- 		prefetch(skb->data - NET_IP_ALIGN);
- 		priv->rxq[qnum]->rx_skbuff[entry] = NULL;
+ 	/* No PTP operations can run right now */
 -- 
 2.51.0
 
