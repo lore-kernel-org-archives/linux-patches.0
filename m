@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B3C35E523;
-	Wed,  3 Dec 2025 16:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389B335E551;
+	Wed,  3 Dec 2025 16:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779233; cv=none; b=VPAQqXbaxo3RnjvSzsGT6OUVsX6Mi0iZ0//Dcu2vCQOE0iZ8HxVvXKqUXCbL1ZhwsIWNrHn3eOy0jFYshKa95mkd504Go/BUWZyQ0U5HzYr7CW4zieFLGBZVU4ixaGi+/uzwj3oDmX7AjcZj8K58aQNdh5yZzeieAsNfyoQMPec=
+	t=1764779236; cv=none; b=hiyYzK1uY/G+SHczn253t4eKpmvl6moNK4f8JL3EW1DCkO+E43X7nwuz2ulrrKz71OjR3iWZkGGlWIs7fTheft0HaeejSchYKuNZUxuFS44zbf92Dr/az3c3T511Sy4LdaBr0HlJ7SAjXeEVtL0c13v/JytOGa3e+80rZVLvAHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779233; c=relaxed/simple;
-	bh=wneHHsXu1XVwgEbXkDcXBLBAEY9rZ0/HuVXjVStNW4w=;
+	s=arc-20240116; t=1764779236; c=relaxed/simple;
+	bh=iDo2e7bYUWQt7zEI+Myikkj8N9TfrhnQoFHfosa4LVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U2q9tZDOsdAMvcdEKyCOmQ1h9dHqfDe+ZCWlYdWS2xw2esHig2KEQ1yHnN8sz9QoeZvNwERIQmvSSpqsFFORGxjauYRUsOTdqkrgRJQ8OfxkqdvfmnPI4ysKBCCR3pJtEjnicBNfWhq2kTrhzri4rpJt5aAUTmMEVvPbH5TS52Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUyZtlbT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sUESdKm8KixicqpsaQJ01YX/lGdNWtbOKIWL5t5n81oXyvd0xYf/z5Wj1at4L2idtzDRGrsHfQBBqQKAVOShH6uuhI/R/lKjL8GfD0ogaJYXpwnqdowm+p9KzASVtJGp5xfjy9wencmoMAXPy9JM3rNlhEttzbzYyJA/pOeiI/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QnlTlF6T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUyZtlbT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E85CC4CEF5;
-	Wed,  3 Dec 2025 16:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QnlTlF6T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4376C4CEF5;
+	Wed,  3 Dec 2025 16:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779233;
-	bh=wneHHsXu1XVwgEbXkDcXBLBAEY9rZ0/HuVXjVStNW4w=;
+	s=korg; t=1764779236;
+	bh=iDo2e7bYUWQt7zEI+Myikkj8N9TfrhnQoFHfosa4LVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUyZtlbTZZbGis/uoi2gv3evu2mZ0GCK+L4NFKJR9m5j9UiXRW6b2gQjuL/rudB8W
-	 OcXNd7yXmalLeVUIzYV6Z0Bk5kP+AsPPj4ZB/c/pvVxRJd5wngJy/OKlCynPgEYNpE
-	 CQof7OByWxOQOk0Re4g3uob0+NnlWZ4mGiOLAMtA=
+	b=QnlTlF6TQWZSN1VKR4c+kxmn0UfZjt/mhwb4vY4IJt5dudVnW3GrFP/VpNNpxE7O6
+	 xLff4LhVAB5s1/T5gT2cWUTEqvSj9krDA9mWyU1CSNN3um/H3yXvKlBj/FumwF2IrC
+	 Drg7+D4ogtuA97MUzoAQbxjCYF3yLZlfys3DlYVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guoli An <anguoli@uniontech.com>,
-	Cryolitia PukNgae <cryolitia@uniontech.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/568] ALSA: usb-audio: apply quirk for MOONDROP Quark2
-Date: Wed,  3 Dec 2025 16:23:17 +0100
-Message-ID: <20251203152447.867809202@linuxfoundation.org>
+Subject: [PATCH 6.1 196/568] net: call cond_resched() less often in __release_sock()
+Date: Wed,  3 Dec 2025 16:23:18 +0100
+Message-ID: <20251203152447.904343778@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,40 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cryolitia PukNgae <cryolitia@uniontech.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a73349c5dd27bc544b048e2e2c8ef6394f05b793 ]
+[ Upstream commit 16c610162d1f1c332209de1c91ffb09b659bb65d ]
 
-It reports a MIN value -15360 for volume control, but will mute when
-setting it less than -14208
+While stress testing TCP I had unexpected retransmits and sack packets
+when a single cpu receives data from multiple high-throughput flows.
 
-Tested-by: Guoli An <anguoli@uniontech.com>
-Signed-off-by: Cryolitia PukNgae <cryolitia@uniontech.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20250903-sound-v1-4-d4ca777b8512@uniontech.com
+super_netperf 4 -H srv -T,10 -l 3000 &
+
+Tcpdump extract:
+
+ 00:00:00.000007 IP6 clnt > srv: Flags [.], seq 26062848:26124288, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26124288:26185728, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26185728:26243072, ack 1, win 66, options [nop,nop,TS val 651460834 ecr 3100749131], length 57344
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26243072:26304512, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26304512:26365952, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 61440
+ 00:00:00.000007 IP6 clnt > srv: Flags [P.], seq 26365952:26423296, ack 1, win 66, options [nop,nop,TS val 651460844 ecr 3100749141], length 57344
+ 00:00:00.000006 IP6 clnt > srv: Flags [.], seq 26423296:26484736, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [.], seq 26484736:26546176, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 61440
+ 00:00:00.000005 IP6 clnt > srv: Flags [P.], seq 26546176:26603520, ack 1, win 66, options [nop,nop,TS val 651460853 ecr 3100749150], length 57344
+ 00:00:00.003932 IP6 clnt > srv: Flags [P.], seq 26603520:26619904, ack 1, win 66, options [nop,nop,TS val 651464844 ecr 3100753141], length 16384
+ 00:00:00.006602 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651471419 ecr 3100759716], length 4096
+ 00:00:00.013000 IP6 clnt > srv: Flags [.], seq 24862720:24866816, ack 1, win 66, options [nop,nop,TS val 651484421 ecr 3100772718], length 4096
+ 00:00:00.000416 IP6 srv > clnt: Flags [.], ack 26619904, win 1393, options [nop,nop,TS val 3100773185 ecr 651484421,nop,nop,sack 1 {24862720:24866816}], length 0
+
+After analysis, it appears this is because of the cond_resched()
+call from  __release_sock().
+
+When current thread is yielding, while still holding the TCP socket lock,
+it might regain the cpu after a very long time.
+
+Other peer TLP/RTO is firing (multiple times) and packets are retransmit,
+while the initial copy is waiting in the socket backlog or receive queue.
+
+In this patch, I call cond_resched() only once every 16 packets.
+
+Modern TCP stack now spends less time per packet in the backlog,
+especially because ACK are no longer sent (commit 133c4c0d3717
+"tcp: defer regular ACK while processing socket backlog")
+
+Before:
+
+clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
+TcpOutSegs                      19046186           0.0
+TcpRetransSegs                  1471               0.0
+TcpExtTCPTimeouts               1397               0.0
+TcpExtTCPLossProbes             1356               0.0
+TcpExtTCPDSACKRecv              1352               0.0
+TcpExtTCPSpuriousRTOs           114                0.0
+TcpExtTCPDSACKRecvSegs          1352               0.0
+
+After:
+
+clnt:/# nstat -n;sleep 10;nstat|egrep "TcpOutSegs|TcpRetransSegs|TCPFastRetrans|TCPTimeouts|Probes|TCPSpuriousRTOs|DSACK"
+TcpOutSegs                      19218936           0.0
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250903174811.1930820-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ net/core/sock.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 4cded91d22a8d..d258c7324fcc7 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1191,6 +1191,13 @@ static void volume_control_quirks(struct usb_mixer_elem_info *cval,
- 			cval->res = 1;
- 		}
- 		break;
-+	case USB_ID(0x3302, 0x12db): /* MOONDROP Quark2 */
-+		if (!strcmp(kctl->id.name, "PCM Playback Volume")) {
-+			usb_audio_info(chip,
-+				"set volume quirk for MOONDROP Quark2\n");
-+			cval->min = -14208; /* Mute under it */
-+		}
-+		break;
- 	}
- }
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 1c4d225e93290..7702033680e7b 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2930,23 +2930,27 @@ void __release_sock(struct sock *sk)
+ 	__acquires(&sk->sk_lock.slock)
+ {
+ 	struct sk_buff *skb, *next;
++	int nb = 0;
  
+ 	while ((skb = sk->sk_backlog.head) != NULL) {
+ 		sk->sk_backlog.head = sk->sk_backlog.tail = NULL;
+ 
+ 		spin_unlock_bh(&sk->sk_lock.slock);
+ 
+-		do {
++		while (1) {
+ 			next = skb->next;
+ 			prefetch(next);
+ 			DEBUG_NET_WARN_ON_ONCE(skb_dst_is_noref(skb));
+ 			skb_mark_not_on_list(skb);
+ 			sk_backlog_rcv(sk, skb);
+ 
+-			cond_resched();
+-
+ 			skb = next;
+-		} while (skb != NULL);
++			if (!skb)
++				break;
++
++			if (!(++nb & 15))
++				cond_resched();
++		}
+ 
+ 		spin_lock_bh(&sk->sk_lock.slock);
+ 	}
 -- 
 2.51.0
 
