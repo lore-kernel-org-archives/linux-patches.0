@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4073B352F95;
-	Wed,  3 Dec 2025 16:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39A6E352FA4;
+	Wed,  3 Dec 2025 16:16:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778599; cv=none; b=Tmn/5/vku6jhf0RDbgU+HIV4d4SOlLtPojnOt71PfSLIAhIjD8t+Cdm0PbVoZuata+9pNUM9zWcSp0qMEoVaj7NgbVrlOQYIouv1eNH9nnnkUWOIMjjrSCOt6VrKWc6nriVWUb4BsNxuiYJ4eUpFQsyXAahyjIefBqFhtQPxQKc=
+	t=1764778602; cv=none; b=fLGSqk64+/WxRRPYzxNMxWDf8HzFS3F4bh00kux/VJQpSno3/wO+HRLQjQ1HdkHtSwEG8G8/FEPaEn2R1RDU/R1PWsa2ccraVApMbntjKznpYbcMVlzg0QklTgzwApdEi4UNhIZwiGioyf9i8V8/yTUBsODcuvYFifyMCscm7Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778599; c=relaxed/simple;
-	bh=8bdRHbgj6GBrXGjBh26PrekPZKqdMsxBtA2BuRfYRVU=;
+	s=arc-20240116; t=1764778602; c=relaxed/simple;
+	bh=PaE8zb1Xh6bx9NyX/twwj5rPFYLXPZPBsrzUp4laVlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6S20L1LvVBkSXBcHCHSj9cTD475vrrh5MYLcbHShMdd7c77yrCtlWyVh02iw6FUaaxCpnDzjiFqvV6TBo5Jkg3ZkmrBuV0bp6LvNB1WnwSCbeg7Qzu9TfUvW7OtchpSKYAemFJTJH3YNvnSuQA3uq/i4J0vnUubuUO24FSjhuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuYPyfj3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OZensG0gPuYZALRjARcGcEOIISFtkKdyNx+qqZOv9vs1hchy9Qy2uZDqp5jkzmEhKUsQ3hFmYMTQur5N/Rs040YJjL/WRTx6E4mbgbJqZ/qCLWBWsd41XWAhY/S07uNW7tsJJaFNTFR/YthqtsGIq/HG0BqoHFqMkmR/TxN4OrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P+0Ufcl4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuYPyfj3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A876AC4CEF5;
-	Wed,  3 Dec 2025 16:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P+0Ufcl4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB530C116C6;
+	Wed,  3 Dec 2025 16:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778599;
-	bh=8bdRHbgj6GBrXGjBh26PrekPZKqdMsxBtA2BuRfYRVU=;
+	s=korg; t=1764778602;
+	bh=PaE8zb1Xh6bx9NyX/twwj5rPFYLXPZPBsrzUp4laVlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GuYPyfj31MXQOagAdMHdg9pI+UIIZba9MKGvXV5A7BFaxNFPrZp4tfnwyRdYwassZ
-	 /FNxLsYsVpv75jg15Rr97G8+oUECewsOJviKSok7Aje0mHrTvw8WoxpoWvNpuoa7yh
-	 tKao9dtob/DO1xsqrBefARNyLqWQw2pnVkr8P+oU=
+	b=P+0Ufcl4NIhyXpkwZFZ1QBUMMc+FvbIBv/fQSTiiBieru5Exiw3UKVc0jXmgwT/ha
+	 6X8D2nZ0uCIX8HtOT4B1tbJK6/RfYs80MHWC6n8wZzhBu0Zu2rE8+hpegdUm2UBa0O
+	 IqnLPlDS676wuwxLzll3GKQj3Cl6CFsV7y697TI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Jay Shin <jaeshin@redhat.com>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 383/392] smb: client: fix memory leak in cifs_construct_tcon()
-Date: Wed,  3 Dec 2025 16:28:53 +0100
-Message-ID: <20251203152428.287701996@linuxfoundation.org>
+Subject: [PATCH 5.15 384/392] usb: renesas_usbhs: Convert to platform remove callback returning void
+Date: Wed,  3 Dec 2025 16:28:54 +0100
+Message-ID: <20251203152428.325763861@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -48,73 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 3184b6a5a24ec9ee74087b2a550476f386df7dc2 ]
+[ Upstream commit 456a91ce7de4b9157fd5013c1e4dd8dd3c6daccb ]
 
-When having a multiuser mount with domain= specified and using
-cifscreds, cifs_set_cifscreds() will end up setting @ctx->domainname,
-so it needs to be freed before leaving cifs_construct_tcon().
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart from
+emitting a warning) and this typically results in resource leaks. To improve
+here there is a quest to make the remove callback return void. In the first
+step of this quest all drivers are converted to .remove_new() which already
+returns void. Eventually after all drivers are converted, .remove_new() is
+renamed to .remove().
 
-This fixes the following memory leak reported by kmemleak:
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-  mount.cifs //srv/share /mnt -o domain=ZELDA,multiuser,...
-  su - testuser
-  cifscreds add -d ZELDA -u testuser
-  ...
-  ls /mnt/1
-  ...
-  umount /mnt
-  echo scan > /sys/kernel/debug/kmemleak
-  cat /sys/kernel/debug/kmemleak
-  unreferenced object 0xffff8881203c3f08 (size 8):
-    comm "ls", pid 5060, jiffies 4307222943
-    hex dump (first 8 bytes):
-      5a 45 4c 44 41 00 cc cc                          ZELDA...
-    backtrace (crc d109a8cf):
-      __kmalloc_node_track_caller_noprof+0x572/0x710
-      kstrdup+0x3a/0x70
-      cifs_sb_tlink+0x1209/0x1770 [cifs]
-      cifs_get_fattr+0xe1/0xf50 [cifs]
-      cifs_get_inode_info+0xb5/0x240 [cifs]
-      cifs_revalidate_dentry_attr+0x2d1/0x470 [cifs]
-      cifs_getattr+0x28e/0x450 [cifs]
-      vfs_getattr_nosec+0x126/0x180
-      vfs_statx+0xf6/0x220
-      do_statx+0xab/0x110
-      __x64_sys_statx+0xd5/0x130
-      do_syscall_64+0xbb/0x380
-      entry_SYSCALL_64_after_hwframe+0x77/0x7f
-
-Fixes: f2aee329a68f ("cifs: set domainName when a domain-key is used in multiuser")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: Jay Shin <jaeshin@redhat.com>
-Cc: stable@vger.kernel.org
-Cc: linux-cifs@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ applied fix to fs/cifs/connect.c ]
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20230517230239.187727-89-u.kleine-koenig@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: eb9ac779830b ("usb: renesas_usbhs: Fix synchronous external abort on unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/renesas_usbhs/common.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -3926,6 +3926,7 @@ cifs_construct_tcon(struct cifs_sb_info
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -794,7 +794,7 @@ probe_pm_disable:
+ 	return ret;
+ }
  
- out:
- 	kfree(ctx->username);
-+	kfree(ctx->domainname);
- 	kfree_sensitive(ctx->password);
- 	kfree(ctx);
+-static int usbhs_remove(struct platform_device *pdev)
++static void usbhs_remove(struct platform_device *pdev)
+ {
+ 	struct usbhs_priv *priv = usbhs_pdev_to_priv(pdev);
  
+@@ -814,8 +814,6 @@ static int usbhs_remove(struct platform_
+ 	usbhs_mod_remove(priv);
+ 	usbhs_fifo_remove(priv);
+ 	usbhs_pipe_remove(priv);
+-
+-	return 0;
+ }
+ 
+ static __maybe_unused int usbhsc_suspend(struct device *dev)
+@@ -860,7 +858,7 @@ static struct platform_driver renesas_us
+ 		.of_match_table = of_match_ptr(usbhs_of_match),
+ 	},
+ 	.probe		= usbhs_probe,
+-	.remove		= usbhs_remove,
++	.remove_new	= usbhs_remove,
+ };
+ 
+ module_platform_driver(renesas_usbhs_driver);
 
 
