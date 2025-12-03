@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749BD3128BC;
-	Wed,  3 Dec 2025 15:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D05312800;
+	Wed,  3 Dec 2025 15:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776162; cv=none; b=DpMR/CJhOplORgBf7Wl47QcHJRFFaE0z7ErPB7FCNBQtm1YVoSnRge+fHDnJCuSFjs3Y2qX4nBIPUcUNCXe/jIH5r7wZBZ55Udvadl19A71B9Dgtzd/RaJXyJZBdcvgSkbsVfSvFqgiJeFvGDx7umeht9V1DJ3fpnHvP/IX+tQQ=
+	t=1764776163; cv=none; b=SIhr32jjPE8is/TsjACsSdbWGVcl6Z87nyA+msv2BBgHYdnJ7j4sEL9ZK/gnZpO9hRvVduDrDslM/bjCLVU7NOY1dTYzoPRNd2C+zU00k1D2J3K9fu6wXI16lX7FKiEzZ7yuGrJClkHEwlssWOIbz1Rpg9pZZbBXGAaGSTVt5Tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776162; c=relaxed/simple;
-	bh=VlkVFWdQBwOQ6Edrk/3Dkti+YAZ7+7aeevlJ07ODSRk=;
+	s=arc-20240116; t=1764776163; c=relaxed/simple;
+	bh=kODvYBdNLBC6PlnHihk0z78pbSxzCxWnmvFyws+7rIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=shi19hjEnrWgUv8OsV2fHTssMfqtE38fhpIEucSorVoBaTTW3f6ireOFVZrFgIhkT2SePfvZajythK2rVB+zbyq3P4ucAfQXQJFqHzVhu+arwrOKblv/O6N3101LuiL01gyHH49CEIqbzMQtxvesMP/VGZYjdXBuXZEXRE2Q2JQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=akz8TQth; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OYiEk3wdZxV4DgFeTNnkooQtHT0xtocNziDK6wrzTmhZcvS927UbJdc+hGfM1pttWg/TAfrBPuSbnucsVDzK8L4NDLbfVb+wAx1YEb92hHUCfvu9RabN57jBRTBb3tH9csiaEyt5Qco/k+1xQ1IU6PEvNlZ5rG9P0iIB78idkTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGcoudIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="akz8TQth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EB5FC4CEF5;
-	Wed,  3 Dec 2025 15:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGcoudIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0212C4CEF5;
+	Wed,  3 Dec 2025 15:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776160;
-	bh=VlkVFWdQBwOQ6Edrk/3Dkti+YAZ7+7aeevlJ07ODSRk=;
+	s=korg; t=1764776163;
+	bh=kODvYBdNLBC6PlnHihk0z78pbSxzCxWnmvFyws+7rIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=akz8TQthngZIa1O7mO3on61wmMYCu/YPICuD50KVX6iVk/ZfmbYlEzT1xwvEMBxGv
-	 M1B9hb51LVhYT4OxcnRI/MroPY4IN+56FOCus65iC0xzQ8BvCjH+RcX4aGoKt+KvHY
-	 35lht18vfsUkarahR+XWS9Dvi34eoFbCA+zTM7ls=
+	b=HGcoudITa3UU4nJostwHFeMoitfz15Q1HlJfqd89O2s298m1xr4+AJ6k0HCCXB6GN
+	 4lA1A15IMDS/s2R+PdqIH1i4oJAiaaFUdO4MiaEfeifnD+69SICgWdQ1UcQGPU8GRl
+	 yXO4O3vX83N8YLOsRveDAys9OCZ26lYXpM24ekmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Jens Kehne <jens.kehne@agilent.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 066/300] mfd: madera: Work around false-positive -Wininitialized warning
-Date: Wed,  3 Dec 2025 16:24:30 +0100
-Message-ID: <20251203152403.068688439@linuxfoundation.org>
+Subject: [PATCH 5.10 067/300] mfd: da9063: Split chip variant reading in two bus transactions
+Date: Wed,  3 Dec 2025 16:24:31 +0100
+Message-ID: <20251203152403.104469120@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,59 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jens Kehne <jens.kehne@agilent.com>
 
-[ Upstream commit 364752aa0c6ab0a06a2d5bfdb362c1ca407f1a30 ]
+[ Upstream commit 9ac4890ac39352ccea132109e32911495574c3ec ]
 
-clang-21 warns about one uninitialized variable getting dereferenced
-in madera_dev_init:
+We observed the initial probe of the da9063 failing in
+da9063_get_device_type in about 30% of boots on a Xilinx ZynqMP based
+board. The problem originates in da9063_i2c_blockreg_read, which uses
+a single bus transaction to turn the register page and then read a
+register. On the bus, this should translate to a write to register 0,
+followed by a read to the target register, separated by a repeated
+start. However, we found that after the write to register 0, the
+controller sometimes continues directly with the register address of
+the read request, without sending the chip address or a repeated start
+in between, which makes the read request invalid.
 
-drivers/mfd/madera-core.c:739:10: error: variable 'mfd_devs' is uninitialized when used here [-Werror,-Wuninitialized]
-  739 |                               mfd_devs, n_devs,
-      |                               ^~~~~~~~
-drivers/mfd/madera-core.c:459:33: note: initialize the variable 'mfd_devs' to silence this warning
-  459 |         const struct mfd_cell *mfd_devs;
-      |                                        ^
-      |                                         = NULL
+To fix this, separate turning the page and reading the register into
+two separate transactions. This brings the initialization code in line
+with the rest of the driver, which uses register maps (which to my
+knowledge do not use repeated starts after turning the page). This has
+been included in our kernel for several months and was recently
+included in a shipped product. For us, it reliably fixes the issue,
+and we have not observed any new issues.
 
-The code is actually correct here because n_devs is only nonzero
-when mfd_devs is a valid pointer, but this is impossible for the
-compiler to see reliably.
+While the underlying problem is probably with the i2c controller or
+its driver, I still propose a change here in the interest of
+robustness: First, I'm not sure this issue can be fixed on the
+controller side, since there are other issues related to repeated
+start which can't (AR# 60695, AR# 61664). Second, similar problems
+might exist with other controllers.
 
-Change the logic to check for the pointer as well, to make this easier
-for the compiler to follow.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20250807071932.4085458-1-arnd@kernel.org
+Signed-off-by: Jens Kehne <jens.kehne@agilent.com>
+Link: https://lore.kernel.org/r/20250804133754.3496718-1-jens.kehne@agilent.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/madera-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mfd/da9063-i2c.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mfd/madera-core.c b/drivers/mfd/madera-core.c
-index 4ed6ad8ce0020..e3b7048de0c66 100644
---- a/drivers/mfd/madera-core.c
-+++ b/drivers/mfd/madera-core.c
-@@ -436,7 +436,7 @@ int madera_dev_init(struct madera *madera)
- 	struct device *dev = madera->dev;
- 	unsigned int hwid;
- 	int (*patch_fn)(struct madera *) = NULL;
--	const struct mfd_cell *mfd_devs;
-+	const struct mfd_cell *mfd_devs = NULL;
- 	int n_devs = 0;
- 	int i, ret;
+diff --git a/drivers/mfd/da9063-i2c.c b/drivers/mfd/da9063-i2c.c
+index 3419814d016b5..6e6a466c7d8c9 100644
+--- a/drivers/mfd/da9063-i2c.c
++++ b/drivers/mfd/da9063-i2c.c
+@@ -37,9 +37,13 @@ enum da9063_page_sel_buf_fmt {
+ 	DA9063_PAGE_SEL_BUF_SIZE,
+ };
  
-@@ -642,7 +642,7 @@ int madera_dev_init(struct madera *madera)
- 		goto err_reset;
- 	}
++enum da9063_page_sel_msgs {
++	DA9063_PAGE_SEL_MSG = 0,
++	DA9063_PAGE_SEL_CNT,
++};
++
+ enum da9063_paged_read_msgs {
+-	DA9063_PAGED_READ_MSG_PAGE_SEL = 0,
+-	DA9063_PAGED_READ_MSG_REG_SEL,
++	DA9063_PAGED_READ_MSG_REG_SEL = 0,
+ 	DA9063_PAGED_READ_MSG_DATA,
+ 	DA9063_PAGED_READ_MSG_CNT,
+ };
+@@ -65,10 +69,21 @@ static int da9063_i2c_blockreg_read(struct i2c_client *client, u16 addr,
+ 		(page_num << DA9063_I2C_PAGE_SEL_SHIFT) & DA9063_REG_PAGE_MASK;
  
--	if (!n_devs) {
-+	if (!n_devs || !mfd_devs) {
- 		dev_err(madera->dev, "Device ID 0x%x not a %s\n", hwid,
- 			madera->type_name);
- 		ret = -ENODEV;
+ 	/* Write reg address, page selection */
+-	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].addr = client->addr;
+-	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].flags = 0;
+-	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].len = DA9063_PAGE_SEL_BUF_SIZE;
+-	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].buf = page_sel_buf;
++	xfer[DA9063_PAGE_SEL_MSG].addr = client->addr;
++	xfer[DA9063_PAGE_SEL_MSG].flags = 0;
++	xfer[DA9063_PAGE_SEL_MSG].len = DA9063_PAGE_SEL_BUF_SIZE;
++	xfer[DA9063_PAGE_SEL_MSG].buf = page_sel_buf;
++
++	ret = i2c_transfer(client->adapter, xfer, DA9063_PAGE_SEL_CNT);
++	if (ret < 0) {
++		dev_err(&client->dev, "Page switch failed: %d\n", ret);
++		return ret;
++	}
++
++	if (ret != DA9063_PAGE_SEL_CNT) {
++		dev_err(&client->dev, "Page switch failed to complete\n");
++		return -EIO;
++	}
+ 
+ 	/* Select register address */
+ 	xfer[DA9063_PAGED_READ_MSG_REG_SEL].addr = client->addr;
 -- 
 2.51.0
 
