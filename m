@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C9635CB78;
-	Wed,  3 Dec 2025 16:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1475135CB93;
+	Wed,  3 Dec 2025 16:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779202; cv=none; b=F26fL3i6yiK3sTzGO9LBQPTSch1JhidUWw8KncedeEUB2J3U+hvBD/5k9TtAuialLo3Sqsxmc6FtX+3PdoAQ3Mvrx/0G6PEwuwKC4cYeaBWFh06VirJ+esW2TJkfH7MTgEOxsUuMLQtlhG1rJ0AswVfxLgC7t4GlMxrKjRwyAWc=
+	t=1764779205; cv=none; b=DECG6Bh1AAqiaEbQjovX0KnMXQ01h5ymAoJuzdyqXb30+apl9OOqzSnHCd8967Lwfzr6MoRuZUFAmSnuhU9mJWUvbT9mQIkNLQmF49AUtEjfvS/qrJNulnTcAXNJ4Zike321O+OOD08x4G7pH6dorF7CO4daWsCVgbsVDD+AJfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779202; c=relaxed/simple;
-	bh=8fXt2rgsW1IxFju5F5qJ52YXNVwe6wxFBVyyV8ZvJtM=;
+	s=arc-20240116; t=1764779205; c=relaxed/simple;
+	bh=+HC8NMLQ0g0vIAU4wZstQoZnF0xCu/DkW1rVAfeU7ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KxIFDVOVZ+dZKftn9zjnTWx1G5a+FXvzwvsXheRkX6QqB+AEC7ywlpK+ztiwOShaBA//4/vV7wTwM/vV95Q+bn7yi4A+fNtZHoZ1cHvbJ+cqObtHz5fw0/7Isf3/voBxIuGP1YcTCbhLtuq/JsT44g/6a9Ntl8hzFPoWZlOveK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBB05fvf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JqVEFDWPeqmLheFAlctp61OMXoAmiYsIKTffT4LtT8FsOUBNUtK5i9wVjk5dlycxMW1W6JNBfdmqRtbFl4UxbM6Wcu+JLJ4ktnzVS3uBMdzOv31IzijjA4RKeNRfEE5mcr9rIAYd4EvRU7uBZQXI+wwS164SyYnsdtqgLXjR1YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pd94aSY3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBB05fvf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ECF5C4CEF5;
-	Wed,  3 Dec 2025 16:26:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pd94aSY3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919D1C4CEF5;
+	Wed,  3 Dec 2025 16:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779202;
-	bh=8fXt2rgsW1IxFju5F5qJ52YXNVwe6wxFBVyyV8ZvJtM=;
+	s=korg; t=1764779205;
+	bh=+HC8NMLQ0g0vIAU4wZstQoZnF0xCu/DkW1rVAfeU7ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBB05fvfE+Wq28cSZ5j3iZfrladQfiRJikfcRzp13EM44raU9/6rhlMX5GrVgd11j
-	 4Y8euJmOeki8D/IUBCVyxc4SAE8IDoG326gOwhuqoGdoo9uiFnp7S3+TArOLE5qFiK
-	 zgertDvQpQBdv+38UXZslt2YMjNzJ8vFd/X4OU2c=
+	b=pd94aSY3plWe9wEbizRuizXREEJoZwZmEMi6NnjQVFvbhpiGfov5f5myId0kcr92i
+	 9y6/FSHY7GZ0zyUUo7KCXkVfR7cN5rt0ofpKPeK6tpuVY0UYmtH9w0bXZxEvExgWCB
+	 ehiwAdqbKrVkQga3d6Ih8HZO9AO7sXCYB7taLoi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/568] drm/msm/dsi/phy: Toggle back buffer resync after preparing PLL
-Date: Wed,  3 Dec 2025 16:23:08 +0100
-Message-ID: <20251203152447.538856583@linuxfoundation.org>
+Subject: [PATCH 6.1 187/568] drm/msm/dsi/phy_7nm: Fix missing initial VCO rate
+Date: Wed,  3 Dec 2025 16:23:09 +0100
+Message-ID: <20251203152447.574764283@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,39 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b63f008f395ca5f6bc89123db97440bdc19981c4 ]
+[ Upstream commit 5ddcb0cb9d10e6e70a68e0cb8f0b8e3a7eb8ccaf ]
 
-According to Hardware Programming Guide for DSI PHY, the retime buffer
-resync should be done after PLL clock users (byte_clk and intf_byte_clk)
-are enabled.  Downstream also does it as part of configuring the PLL.
+Driver unconditionally saves current state on first init in
+dsi_pll_7nm_init(), but does not save the VCO rate, only some of the
+divider registers.  The state is then restored during probe/enable via
+msm_dsi_phy_enable() -> msm_dsi_phy_pll_restore_state() ->
+dsi_7nm_pll_restore_state().
 
-Driver was only turning off the resync FIFO buffer, but never bringing it
-on again.
+Restoring calls dsi_pll_7nm_vco_set_rate() with
+pll_7nm->vco_current_rate=0, which basically overwrites existing rate of
+VCO and messes with clock hierarchy, by setting frequency to 0 to clock
+tree.  This makes anyway little sense - VCO rate was not saved, so
+should not be restored.
+
+If PLL was not configured configure it to minimum rate to avoid glitches
+and configuring entire in clock hierarchy to 0 Hz.
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/657823/
-Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-6-ee633e3ddbff@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/657827/
+Link: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-9-ee633e3ddbff@linaro.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 9e7fa7d88ead2..9f2806b9e1740 100644
+index 9f2806b9e1740..a44cb48c6db7f 100644
 --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
 +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -400,6 +400,10 @@ static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
- 	if (pll_7nm->slave)
- 		dsi_pll_enable_global_clk(pll_7nm->slave);
+@@ -752,6 +752,12 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
  
-+	writel(0x1, pll_7nm->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+	if (pll_7nm->slave)
-+		writel(0x1, pll_7nm->slave->phy->base + REG_DSI_7nm_PHY_CMN_RBUF_CTRL);
-+
- error:
- 	return rc;
+ 	/* TODO: Remove this when we have proper display handover support */
+ 	msm_dsi_phy_pll_save_state(phy);
++	/*
++	 * Store also proper vco_current_rate, because its value will be used in
++	 * dsi_7nm_pll_restore_state().
++	 */
++	if (!dsi_pll_7nm_vco_recalc_rate(&pll_7nm->clk_hw, VCO_REF_CLK_RATE))
++		pll_7nm->vco_current_rate = pll_7nm->phy->cfg->min_pll_rate;
+ 
+ 	return 0;
  }
 -- 
 2.51.0
