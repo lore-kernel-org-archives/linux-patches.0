@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2FA34C128;
-	Wed,  3 Dec 2025 16:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4EA34E771;
+	Wed,  3 Dec 2025 16:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780925; cv=none; b=pvDUbQrJuqlB927fxVWhFnEY/98zDzeEi+YFcDCsvQylGvXewRUJ8M3NQ01iBTL2fNPpF2T1jEW0JSumbV4en2c/mmc87j2Z9MZzz2qxbdx0rTNR9R72R5SY1pFqbPUX/ru7T/tPTwGMP6qkfOsZwmAYuEoKv1bUOnz6ktqXphY=
+	t=1764780928; cv=none; b=qxJHiaL0un8XyS4ZnGDudFZkmbKzI+wGCoi1F3we1RSSqMBGcxmHmDMhzYPDFjcIhN1Zd1q3CNt9Zzd2UubF4FudApGtcNR9hKzs/+ULpTlAB00hZJpjaqlwODElgTJtbAz82I9aF6rkPLrGa6ZRMjk7smtor4TZn/Dedk/Sb+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780925; c=relaxed/simple;
-	bh=5zeEjFiZ3q6rEF7W8TYE2rVpMeHn79p/RsOYyKTjLCI=;
+	s=arc-20240116; t=1764780928; c=relaxed/simple;
+	bh=sgOwnE/kUxo/M+P7p+4t2hzBQM5sfXn9RVsgY/wcXbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QtBKAbsdnFOIKfOhQypZWy1OmSb/KzKSYopbKI1RhDItxBc0wJwqJueBf5fbexWTKpQDWTaKZIe0tjVVn0Xm7hDkzCXij6YuGW+cycTU2YPczHROT+9s0SX0ZHLnVvuXSzG3N9RhqM9Vo/yY/6MzpE/Ba5qMht3e0RdiztXKOPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dSe1MO4O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tn5VadOId791q17SNrQf1Nw3U3/J3X7rRHGVZ1kAFR4yG4/xwiGS82NKme/zhCLGmor4TWU+37pNT0LBbd5cxWdhGOVrTp4XPbiboMiQNgzakxVj7yVf6jkPmsYrNqMh3a97alZdGzL7sVuCHCctWPJOxLw0XEaEIV11az0W+O4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QUk7MDRi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dSe1MO4O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A859C4CEF5;
-	Wed,  3 Dec 2025 16:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QUk7MDRi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03756C4CEF5;
+	Wed,  3 Dec 2025 16:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780925;
-	bh=5zeEjFiZ3q6rEF7W8TYE2rVpMeHn79p/RsOYyKTjLCI=;
+	s=korg; t=1764780928;
+	bh=sgOwnE/kUxo/M+P7p+4t2hzBQM5sfXn9RVsgY/wcXbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dSe1MO4OlSiobZz00yQwT9xW38a7zqCDNvHdB55vECI70Bn0TVoDnFxZo0nIoERGY
-	 E/JHTCoqYRlZZF1dOneW6ud+mQx8sDjKl3CLHYh7WxcN+MhtlRHbwpcGjq+NHugUGx
-	 jiXVIPYCxDY+/U9EgnyTeXuJ5HEWDJGFhnOXDj00=
+	b=QUk7MDRiZxoy2hkebeOnhNyDwCRA7+e+iIklU9tXcNQg2dcEGZCxWYC37Z3qLNGsl
+	 StJqbPLko+sD1s7TOZbPS8yYalsigehQV0oRzHX2vCjqIJEHma8kbLJZQVqlgSfZvJ
+	 KvZmS+WAHGrJoS7HedyJ9mTKK9JVpMuJohA87HM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <quic_sarishar@quicinc.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Oliver Sedlbauer <os@dev.tdt.de>
-Subject: [PATCH 6.12 129/132] wifi: ath12k: correctly handle mcast packets for clients
-Date: Wed,  3 Dec 2025 16:30:08 +0100
-Message-ID: <20251203152348.095115509@linuxfoundation.org>
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.12 130/132] Revert "ACPI: Suppress misleading SPCR console message when SPCR table is absent"
+Date: Wed,  3 Dec 2025 16:30:09 +0100
+Message-ID: <20251203152348.131829533@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -52,68 +50,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <quic_sarishar@quicinc.com>
+From: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
 
-commit 4541b0c8c3c1b85564971d497224e57cf8076a02 upstream.
+commit eeb8c19896952e18fb538ec76e603884070a6c6a upstream.
 
-Currently, RX is_mcbc bit is set for packets sent from client as
-destination address (DA) is multicast/broadcast address, but packets
-are actually unicast as receiver address (RA) is not multicast address.
-Hence, packets are not handled properly due to this is_mcbc bit.
+This reverts commit bad3fa2fb9206f4dcec6ddef094ec2fbf6e8dcb2.
 
-Therefore, reset the is_mcbc bit if interface type is AP.
+Commit bad3fa2fb920 ("ACPI: Suppress misleading SPCR console message
+when SPCR table is absent") mistakenly assumes acpi_parse_spcr()
+returning 0 to indicate a failure to parse SPCR. While addressing the
+resultant incorrect logging it was deemed that dropping the message is
+a better approach as it is not particularly useful.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+Roll back the commit introducing the bug as a step towards dropping
+the log message.
 
-Signed-off-by: Sarika Sharma <quic_sarishar@quicinc.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250411061523.859387-3-quic_sarishar@quicinc.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-[ Adjust context ]
-Signed-off-by: Oliver Sedlbauer <os@dev.tdt.de>
+Link: https://lore.kernel.org/all/aQN0YWUYaPYWpgJM@willie-the-truck/
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c |    5 +++++
- drivers/net/wireless/ath/ath12k/peer.c  |    3 +++
- drivers/net/wireless/ath/ath12k/peer.h  |    2 ++
- 3 files changed, 10 insertions(+)
+ arch/arm64/kernel/acpi.c |   10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -2214,6 +2214,11 @@ static void ath12k_dp_rx_h_mpdu(struct a
- 	spin_lock_bh(&ar->ab->base_lock);
- 	peer = ath12k_dp_rx_h_find_peer(ar->ab, msdu);
- 	if (peer) {
-+		/* resetting mcbc bit because mcbc packets are unicast
-+		 * packets only for AP as STA sends unicast packets.
-+		 */
-+		rxcb->is_mcbc = rxcb->is_mcbc && !peer->ucast_ra_only;
-+
- 		if (rxcb->is_mcbc)
- 			enctype = peer->sec_type_grp;
- 		else
---- a/drivers/net/wireless/ath/ath12k/peer.c
-+++ b/drivers/net/wireless/ath/ath12k/peer.c
-@@ -331,6 +331,9 @@ int ath12k_peer_create(struct ath12k *ar
- 		arvif->ast_idx = peer->hw_peer_id;
- 	}
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -197,8 +197,6 @@ out:
+  */
+ void __init acpi_boot_table_init(void)
+ {
+-	int ret;
+-
+ 	/*
+ 	 * Enable ACPI instead of device tree unless
+ 	 * - ACPI has been disabled explicitly (acpi=off), or
+@@ -252,12 +250,10 @@ done:
+ 		 * behaviour, use acpi=nospcr to disable console in ACPI SPCR
+ 		 * table as default serial console.
+ 		 */
+-		ret = acpi_parse_spcr(earlycon_acpi_spcr_enable,
++		acpi_parse_spcr(earlycon_acpi_spcr_enable,
+ 			!param_acpi_nospcr);
+-		if (!ret || param_acpi_nospcr || !IS_ENABLED(CONFIG_ACPI_SPCR_TABLE))
+-			pr_info("Use ACPI SPCR as default console: No\n");
+-		else
+-			pr_info("Use ACPI SPCR as default console: Yes\n");
++		pr_info("Use ACPI SPCR as default console: %s\n",
++				param_acpi_nospcr ? "No" : "Yes");
  
-+	if (arvif->vif->type == NL80211_IFTYPE_AP)
-+		peer->ucast_ra_only = true;
-+
- 	peer->sec_type = HAL_ENCRYPT_TYPE_OPEN;
- 	peer->sec_type_grp = HAL_ENCRYPT_TYPE_OPEN;
- 
---- a/drivers/net/wireless/ath/ath12k/peer.h
-+++ b/drivers/net/wireless/ath/ath12k/peer.h
-@@ -47,6 +47,8 @@ struct ath12k_peer {
- 
- 	/* protected by ab->data_lock */
- 	bool dp_setup_done;
-+
-+	bool ucast_ra_only;
- };
- 
- void ath12k_peer_unmap_event(struct ath12k_base *ab, u16 peer_id);
+ 		if (IS_ENABLED(CONFIG_ACPI_BGRT))
+ 			acpi_table_parse(ACPI_SIG_BGRT, acpi_parse_bgrt);
 
 
