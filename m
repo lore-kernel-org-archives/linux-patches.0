@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3437E314A8A;
-	Wed,  3 Dec 2025 16:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2151F350285;
+	Wed,  3 Dec 2025 16:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778621; cv=none; b=Mm0542PU5H+IGCb7OjEcYhdF1QUjch7EhMz1+MVXjzrjycDXU27GDDzFDu9UJoPX7Liw3DCaEf7LzMwj2zmTFsFW3SUYbzaZ8lMloLD2l6eUXBXmLLWFlwLwiTy/J6aj+3V0/2BxjwnV6MyNLLuRu4PCMaNEgZiptm3vMKK5ORM=
+	t=1764778625; cv=none; b=BAQcbowe4BtncjTrNOvdnKxJ4Q/T1vqGfEbQWyISv3M2Llw2y7gLVj8tkZKrNm6bmL4QR0PsIVvuvfdAu4jtViG+Us+6EjQDd27jOi54NZ945tnJ7U9E1NKQ4bqco1zheTPhxQUYCLsUT1B5CkxRdmuMVrit0mEVt405X6tCUNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778621; c=relaxed/simple;
-	bh=xRfRhwiRPi2dpHqfQveoiFEjtPF9qR2BkqhfzLiFvc0=;
+	s=arc-20240116; t=1764778625; c=relaxed/simple;
+	bh=1ti+wOn1pxFy6srM31h5drzQE6ff4XuSxNjNUXuWysw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QcHF9RtyRI3QWsMZ5Bh66oaoy3wrSDLdYth8fsnAFodKXZ5z053mE4iR2XMQOMWDO+k5VNv7ASwpeZZGB8TNUNGpLFQE4yJ50vnLSJMHe8fWH0hfaGMD8acIoTYtY/jgK+QCtTbqtRR+L2j/Zk3w0jPZL6PYKkslQqRi5nntg5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ANyXRPyI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iWYsq722L+R34oh7rUuLbI1GstyB4Mq0T+VBjfQW4ZfKwcUq2ybPjCMkoHhOy9pZbqBtlQ+6bg8o2RXcAbSbzgfFozp15KKSV3ECw18IYtyWm3+cDOni4qHM+tyES3DKW2a+RTsZyPGbacyNywXBRbrCCzZqFZQM0Knn7or25bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1dmrc7ZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ANyXRPyI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE9C9C4CEF5;
-	Wed,  3 Dec 2025 16:17:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1dmrc7ZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921D3C4CEF5;
+	Wed,  3 Dec 2025 16:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778621;
-	bh=xRfRhwiRPi2dpHqfQveoiFEjtPF9qR2BkqhfzLiFvc0=;
+	s=korg; t=1764778623;
+	bh=1ti+wOn1pxFy6srM31h5drzQE6ff4XuSxNjNUXuWysw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANyXRPyIZWPZ6RXFo/b3AoBuYa+YFFNtkxOcq4YafOsQlJUDvDaav6cFS1L3mpOkr
-	 NSp0a6lVrQywjRXxQOhNl3OhTxTH8ee+q9TvjHawkDFA0ra6FK+/gddFfCqquKyx8E
-	 jvtolhZRQ2XfyQAgINCU14iTGWpMb8YGoLrWWznQ=
+	b=1dmrc7ZBkQ9XYio99Bonj+YnVOtydp5H4EWK8okZ3kp2RooPoa5zMnx0TT5lzannC
+	 SE2P9FF49NhmnMzMfd+gSe7b3VkDy6nQG/sxbvn6MVr/FlPBdhlREURSpmVssZunfO
+	 QyDLaDXBMdy3Y/dVm4/dlprO6lqzCvzTARW5Yono=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 001/568] net/sched: sch_qfq: Fix null-deref in agg_dequeue
-Date: Wed,  3 Dec 2025 16:20:03 +0100
-Message-ID: <20251203152440.707309368@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/568] mptcp: pm: in-kernel: C-flag: handle late ADD_ADDR
+Date: Wed,  3 Dec 2025 16:20:12 +0100
+Message-ID: <20251203152441.035270415@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,129 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit dd831ac8221e691e9e918585b1003c7071df0379 upstream.
+[ Upstream commit e84cb860ac3ce67ec6ecc364433fd5b412c448bc ]
 
-To prevent a potential crash in agg_dequeue (net/sched/sch_qfq.c)
-when cl->qdisc->ops->peek(cl->qdisc) returns NULL, we check the return
-value before using it, similar to the existing approach in sch_hfsc.c.
+The special C-flag case expects the ADD_ADDR to be received when
+switching to 'fully-established'. But for various reasons, the ADD_ADDR
+could be sent after the "4th ACK", and the special case doesn't work.
 
-To avoid code duplication, the following changes are made:
+On NIPA, the new test validating this special case for the C-flag failed
+a few times, e.g.
 
-1. Changed qdisc_warn_nonwc(include/net/pkt_sched.h) into a static
-inline function.
+  102 default limits, server deny join id 0
+        syn rx                 [FAIL] got 0 JOIN[s] syn rx expected 2
 
-2. Moved qdisc_peek_len from net/sched/sch_hfsc.c to
-include/net/pkt_sched.h so that sch_qfq can reuse it.
+  Server ns stats
+  (...)
+  MPTcpExtAddAddrTx  1
+  MPTcpExtEchoAdd    1
 
-3. Applied qdisc_peek_len in agg_dequeue to avoid crashing.
+  Client ns stats
+  (...)
+  MPTcpExtAddAddr    1
+  MPTcpExtEchoAddTx  1
 
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Reviewed-by: Cong Wang <xiyou.wangcong@gmail.com>
-Link: https://patch.msgid.link/20250705212143.3982664-1-xmei5@asu.edu
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+        synack rx              [FAIL] got 0 JOIN[s] synack rx expected 2
+        ack rx                 [FAIL] got 0 JOIN[s] ack rx expected 2
+        join Rx                [FAIL] see above
+        syn tx                 [FAIL] got 0 JOIN[s] syn tx expected 2
+        join Tx                [FAIL] see above
+
+I had a suspicion about what the issue could be: the ADD_ADDR might have
+been received after the switch to the 'fully-established' state. The
+issue was not easy to reproduce. The packet capture shown that the
+ADD_ADDR can indeed be sent with a delay, and the client would not try
+to establish subflows to it as expected.
+
+A simple fix is not to mark the endpoints as 'used' in the C-flag case,
+when looking at creating subflows to the remote initial IP address and
+port. In this case, there is no need to try.
+
+Note: newly added fullmesh endpoints will still continue to be used as
+expected, thanks to the conditions behind mptcp_pm_add_addr_c_flag_case.
+
+Fixes: 4b1ff850e0c1 ("mptcp: pm: in-kernel: usable client side with C-flag")
+Cc: stable@vger.kernel.org
+Reviewed-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251020-net-mptcp-c-flag-late-add-addr-v1-1-8207030cb0e8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ applied to pm_netlink.c instead of pm_kernel.c ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/pkt_sched.h |   25 ++++++++++++++++++++++++-
- net/sched/sch_api.c     |   10 ----------
- net/sched/sch_hfsc.c    |   16 ----------------
- net/sched/sch_qfq.c     |    2 +-
- 4 files changed, 25 insertions(+), 28 deletions(-)
+ net/mptcp/pm_netlink.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/include/net/pkt_sched.h
-+++ b/include/net/pkt_sched.h
-@@ -113,7 +113,6 @@ struct qdisc_rate_table *qdisc_get_rtab(
- 					struct netlink_ext_ack *extack);
- void qdisc_put_rtab(struct qdisc_rate_table *tab);
- void qdisc_put_stab(struct qdisc_size_table *tab);
--void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc);
- bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
- 		     struct net_device *dev, struct netdev_queue *txq,
- 		     spinlock_t *root_lock, bool validate);
-@@ -247,4 +246,28 @@ static inline bool tc_qdisc_stats_dump(s
- 	return true;
- }
- 
-+static inline void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
-+{
-+	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
-+		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
-+			txt, qdisc->ops->id, qdisc->handle >> 16);
-+		qdisc->flags |= TCQ_F_WARN_NONWC;
-+	}
-+}
-+
-+static inline unsigned int qdisc_peek_len(struct Qdisc *sch)
-+{
-+	struct sk_buff *skb;
-+	unsigned int len;
-+
-+	skb = sch->ops->peek(sch);
-+	if (unlikely(skb == NULL)) {
-+		qdisc_warn_nonwc("qdisc_peek_len", sch);
-+		return 0;
-+	}
-+	len = qdisc_pkt_len(skb);
-+
-+	return len;
-+}
-+
- #endif
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -598,16 +598,6 @@ out:
- 	qdisc_skb_cb(skb)->pkt_len = pkt_len;
- }
- 
--void qdisc_warn_nonwc(const char *txt, struct Qdisc *qdisc)
--{
--	if (!(qdisc->flags & TCQ_F_WARN_NONWC)) {
--		pr_warn("%s: %s qdisc %X: is non-work-conserving?\n",
--			txt, qdisc->ops->id, qdisc->handle >> 16);
--		qdisc->flags |= TCQ_F_WARN_NONWC;
--	}
--}
--EXPORT_SYMBOL(qdisc_warn_nonwc);
--
- static enum hrtimer_restart qdisc_watchdog(struct hrtimer *timer)
- {
- 	struct qdisc_watchdog *wd = container_of(timer, struct qdisc_watchdog,
---- a/net/sched/sch_hfsc.c
-+++ b/net/sched/sch_hfsc.c
-@@ -836,22 +836,6 @@ update_vf(struct hfsc_class *cl, unsigne
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -623,6 +623,10 @@ static void mptcp_pm_create_subflow_or_s
  	}
+ 
+ subflow:
++	/* No need to try establishing subflows to remote id0 if not allowed */
++	if (mptcp_pm_add_addr_c_flag_case(msk))
++		goto exit;
++
+ 	/* check if should create a new subflow */
+ 	while (msk->pm.local_addr_used < local_addr_max &&
+ 	       msk->pm.subflows < subflows_max) {
+@@ -654,6 +658,8 @@ subflow:
+ 			__mptcp_subflow_connect(sk, &local.addr, &addrs[i]);
+ 		spin_lock_bh(&msk->pm.lock);
+ 	}
++
++exit:
+ 	mptcp_pm_nl_check_work_pending(msk);
  }
  
--static unsigned int
--qdisc_peek_len(struct Qdisc *sch)
--{
--	struct sk_buff *skb;
--	unsigned int len;
--
--	skb = sch->ops->peek(sch);
--	if (unlikely(skb == NULL)) {
--		qdisc_warn_nonwc("qdisc_peek_len", sch);
--		return 0;
--	}
--	len = qdisc_pkt_len(skb);
--
--	return len;
--}
--
- static void
- hfsc_adjust_levels(struct hfsc_class *cl)
- {
---- a/net/sched/sch_qfq.c
-+++ b/net/sched/sch_qfq.c
-@@ -1001,7 +1001,7 @@ static struct sk_buff *agg_dequeue(struc
- 
- 	if (cl->qdisc->q.qlen == 0) /* no more packets, remove from list */
- 		list_del_init(&cl->alist);
--	else if (cl->deficit < qdisc_pkt_len(cl->qdisc->ops->peek(cl->qdisc))) {
-+	else if (cl->deficit < qdisc_peek_len(cl->qdisc)) {
- 		cl->deficit += agg->lmax;
- 		list_move_tail(&cl->alist, &agg->active);
- 	}
 
 
