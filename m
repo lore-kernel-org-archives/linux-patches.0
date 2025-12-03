@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35B332F77C;
-	Wed,  3 Dec 2025 15:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5315832FA06;
+	Wed,  3 Dec 2025 15:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777102; cv=none; b=Z+L53yRbIISba+Ohknc5V4DuKxHeJQokvtUhTi0x2D0yMLMwkuhGR0LEqqGaTrZpD2Z4nnETx3Eph0VkWU5w83CGUab81hhGCfzX1Yhmd9uwRzYT9wCbRG1pXknO0bV/aC5+eDHbv0Tg6x4vdPjejczHfh8xptFENV8O+t2zdtE=
+	t=1764777105; cv=none; b=FALanNxrcZKv0RiIYdArIhIEvDV5+SQuz6baqnYYuazEveISy9T1QkqwDr1nut2baaq6KrZTRjL/VTQU5SZtwLlExUUB1Z/ms22kICYMU6w46fY8fIbeacYeUePblOtNU0xtnR9gz8AbAVYKTGlk3WL+/StO9Bnk6ewnZJL8KfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777102; c=relaxed/simple;
-	bh=3Wzc6B7/4Ho/O0y9sMSe8LxdTlHUNXqSjCOVPT2Uy1g=;
+	s=arc-20240116; t=1764777105; c=relaxed/simple;
+	bh=IwK+vcatgQxajwo+M73tKMMQAJrOKQz/FiQVH+bIBzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OVvvrE7yQtb9iWp9AYGUGt4Pq3jj2jOmDuIE+g/xbi3pwGsR+B6wwEBsR4Fi4RcVtuAJpwQnAIFBh+ZK2PvJcphwQ3yqp9h5+Z3cXkYggTw0kT3tpWcci/da9Yq2PelQ4VbKTGXThexDTpaKCWe6S2bXaQhvRM06UQ/cXun5KwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKsIQSaD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ciIbAzYhjRMAKCOtZjtHqjXfuZ4V4bgx35d6zPsUUC0pPf/6nOotUhhqcsuhxWTzRGnbf6Uspw56EAXFGqui55plQfRScOn8WXJ2Ib8Pe0+ABO5H2uCSINcT4NQV/yIfqiLufzRBQ7VNz/APEfkLMwQvPnw7yJm4QqK6K6t6dgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jkOxLGNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKsIQSaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0ADC4CEF5;
-	Wed,  3 Dec 2025 15:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jkOxLGNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0A9C4CEF5;
+	Wed,  3 Dec 2025 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777101;
-	bh=3Wzc6B7/4Ho/O0y9sMSe8LxdTlHUNXqSjCOVPT2Uy1g=;
+	s=korg; t=1764777105;
+	bh=IwK+vcatgQxajwo+M73tKMMQAJrOKQz/FiQVH+bIBzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKsIQSaDzRZ9wFbad1CTzj/3Mc53ALJIQfGplMPHN4EKCCPrIFGnw45PsuW/x4ltv
-	 m41NirIRHhGGLM4JOSlYLDNfeFi6qUUaCL+HxOPI/iXTxXKKM+gUvc+M2av+xzFIJI
-	 C8p2m72XZyxn3q9H3oG+UEbfcxMzXM0YUhstQ3PA=
+	b=jkOxLGNifADxi+ql9Kc4Qt74G6Z7mH/TOOaeqTqiRpd771YCIzFFx3lK+hXViTBfN
+	 ctrnq92r5EsOWijctxIcOk05i/J3JYjHdMjZiTXq0/RND3v4Up3e6H+7ZnuJbYlXVo
+	 MQ8VOoLGSBhskLIre/9azblVEFr3OlKPG/HnaVdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
+	=?UTF-8?q?Thomas=20M=C3=BChlbacher?= <tmuehlbacher@posteo.net>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.17 083/146] can: rcar_canfd: Fix CAN-FD mode as default
-Date: Wed,  3 Dec 2025 16:27:41 +0100
-Message-ID: <20251203152349.500654114@linuxfoundation.org>
+Subject: [PATCH 6.17 084/146] can: sja1000: fix max irq loop handling
+Date: Wed,  3 Dec 2025 16:27:42 +0100
+Message-ID: <20251203152349.537143680@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -44,126 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Thomas Mühlbacher <tmuehlbacher@posteo.net>
 
-commit 6d849ff573722afcf5508d2800017bdd40f27eb9 upstream.
+commit 30db4451c7f6aabcada029b15859a76962ec0cf8 upstream.
 
-The commit 5cff263606a1 ("can: rcar_canfd: Fix controller mode setting")
-has aligned with the flow mentioned in the hardware manual for all SoCs
-except R-Car Gen3 and RZ/G2L SoCs. On R-Car Gen4 and RZ/G3E SoCs, due to
-the wrong logic in the commit[1] sets the default mode to FD-Only mode
-instead of CAN-FD mode.
+Reading the interrupt register `SJA1000_IR` causes all of its bits to be
+reset. If we ever reach the condition of handling more than
+`SJA1000_MAX_IRQ` IRQs, we will have read the register and reset all its
+bits but without actually handling the interrupt inside of the loop
+body.
 
-This patch sets the CAN-FD mode as the default for all SoCs by dropping
-the rcar_canfd_set_mode() as some SoC requires mode setting in global
-reset mode, and the rest of the SoCs in channel reset mode and update the
-rcar_canfd_reset_controller() to take care of these constraints. Moreover,
-the RZ/G3E and R-Car Gen4 SoCs support 3 modes compared to 2 modes on the
-R-Car Gen3. Use inverted logic in rcar_canfd_reset_controller() to
-simplify the code later to support FD-only mode.
+This may, among other issues, cause us to never `netif_wake_queue()`
+again after a transmission interrupt.
 
-[1]
-commit 45721c406dcf ("can: rcar_canfd: Add support for r8a779a0 SoC")
-
-Fixes: 5cff263606a1 ("can: rcar_canfd: Fix controller mode setting")
+Fixes: 429da1cc841b ("can: Driver for the SJA1000 CAN controller")
 Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Link: https://patch.msgid.link/20251118123926.193445-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Thomas Mühlbacher <tmuehlbacher@posteo.net>
+Acked-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20251115153437.11419-1-tmuehlbacher@posteo.net
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/rcar/rcar_canfd.c |   53 ++++++++++++++++++++++----------------
- 1 file changed, 31 insertions(+), 22 deletions(-)
+ drivers/net/can/sja1000/sja1000.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/rcar/rcar_canfd.c
-+++ b/drivers/net/can/rcar/rcar_canfd.c
-@@ -726,6 +726,11 @@ static void rcar_canfd_set_bit_reg(void
- 	rcar_canfd_update(val, val, addr);
- }
+--- a/drivers/net/can/sja1000/sja1000.c
++++ b/drivers/net/can/sja1000/sja1000.c
+@@ -548,8 +548,8 @@ irqreturn_t sja1000_interrupt(int irq, v
+ 	if (priv->read_reg(priv, SJA1000_IER) == IRQ_OFF)
+ 		goto out;
  
-+static void rcar_canfd_clear_bit_reg(void __iomem *addr, u32 val)
-+{
-+	rcar_canfd_update(val, 0, addr);
-+}
-+
- static void rcar_canfd_update_bit_reg(void __iomem *addr, u32 mask, u32 val)
- {
- 	rcar_canfd_update(mask, val, addr);
-@@ -772,25 +777,6 @@ static void rcar_canfd_set_rnc(struct rc
- 	rcar_canfd_set_bit(gpriv->base, RCANFD_GAFLCFG(w), rnc);
- }
+-	while ((isrc = priv->read_reg(priv, SJA1000_IR)) &&
+-	       (n < SJA1000_MAX_IRQ)) {
++	while ((n < SJA1000_MAX_IRQ) &&
++	       (isrc = priv->read_reg(priv, SJA1000_IR))) {
  
--static void rcar_canfd_set_mode(struct rcar_canfd_global *gpriv)
--{
--	if (gpriv->info->ch_interface_mode) {
--		u32 ch, val = gpriv->fdmode ? RCANFD_GEN4_FDCFG_FDOE
--					    : RCANFD_GEN4_FDCFG_CLOE;
--
--		for_each_set_bit(ch, &gpriv->channels_mask,
--				 gpriv->info->max_channels)
--			rcar_canfd_set_bit_reg(&gpriv->fcbase[ch].cfdcfg, val);
--	} else {
--		if (gpriv->fdmode)
--			rcar_canfd_set_bit(gpriv->base, RCANFD_GRMCFG,
--					   RCANFD_GRMCFG_RCMC);
--		else
--			rcar_canfd_clear_bit(gpriv->base, RCANFD_GRMCFG,
--					     RCANFD_GRMCFG_RCMC);
--	}
--}
--
- static int rcar_canfd_reset_controller(struct rcar_canfd_global *gpriv)
- {
- 	struct device *dev = &gpriv->pdev->dev;
-@@ -823,6 +809,16 @@ static int rcar_canfd_reset_controller(s
- 	/* Reset Global error flags */
- 	rcar_canfd_write(gpriv->base, RCANFD_GERFL, 0x0);
- 
-+	/* Set the controller into appropriate mode */
-+	if (!gpriv->info->ch_interface_mode) {
-+		if (gpriv->fdmode)
-+			rcar_canfd_set_bit(gpriv->base, RCANFD_GRMCFG,
-+					   RCANFD_GRMCFG_RCMC);
-+		else
-+			rcar_canfd_clear_bit(gpriv->base, RCANFD_GRMCFG,
-+					     RCANFD_GRMCFG_RCMC);
-+	}
-+
- 	/* Transition all Channels to reset mode */
- 	for_each_set_bit(ch, &gpriv->channels_mask, gpriv->info->max_channels) {
- 		rcar_canfd_clear_bit(gpriv->base,
-@@ -840,10 +836,23 @@ static int rcar_canfd_reset_controller(s
- 			dev_dbg(dev, "channel %u reset failed\n", ch);
- 			return err;
- 		}
--	}
- 
--	/* Set the controller into appropriate mode */
--	rcar_canfd_set_mode(gpriv);
-+		/* Set the controller into appropriate mode */
-+		if (gpriv->info->ch_interface_mode) {
-+			/* Do not set CLOE and FDOE simultaneously */
-+			if (!gpriv->fdmode) {
-+				rcar_canfd_clear_bit_reg(&gpriv->fcbase[ch].cfdcfg,
-+							 RCANFD_GEN4_FDCFG_FDOE);
-+				rcar_canfd_set_bit_reg(&gpriv->fcbase[ch].cfdcfg,
-+						       RCANFD_GEN4_FDCFG_CLOE);
-+			} else {
-+				rcar_canfd_clear_bit_reg(&gpriv->fcbase[ch].cfdcfg,
-+							 RCANFD_GEN4_FDCFG_FDOE);
-+				rcar_canfd_clear_bit_reg(&gpriv->fcbase[ch].cfdcfg,
-+							 RCANFD_GEN4_FDCFG_CLOE);
-+			}
-+		}
-+	}
- 
- 	return 0;
- }
+ 		status = priv->read_reg(priv, SJA1000_SR);
+ 		/* check for absent controller due to hw unplug */
 
 
