@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6570C32B9B3;
-	Wed,  3 Dec 2025 15:49:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03EB32C327;
+	Wed,  3 Dec 2025 15:49:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776993; cv=none; b=GGrklp0yNoUM0dPDMbwwmV0kuhmrq1+i/GQrT3wLpGJ3eCBU+a6bAclHQZ4PnVzytKqV4ke5sGDjVbCMZX3uGKSIwrHx0jH0V0gNFJ+0CJk7z1KjX9FcConjxx2axXmQ/YtoHswdenPTf+4oRSjKcGjKx8lIT/qyZiBszKw15jw=
+	t=1764776996; cv=none; b=eM7Ym1NnRvkUCmp0q+Ek5aeynQIjDoW5C7LJU1of38ypJbo384x0DN3c2uA7ob650bfpqsn+7RbuNii5PByfyhKCqKAZDYITtAc0BCF6HDlKJ2tV+P71umMaowFds8nZ5B/gJ34GW1rqAWClfT9Chl8ukMauPbYyam8lUgxKL6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776993; c=relaxed/simple;
-	bh=jO8uzi3Si5l3LVhDdcaywLi3ykfjTVkA16+VrEW12OA=;
+	s=arc-20240116; t=1764776996; c=relaxed/simple;
+	bh=LvL7+i1TfD+WpM/3BkeadnxSCAuBBjVYasfcF6gOR+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWXHm4dd4gnRCKNjZpullJa33lcG+ufkyCt1vUwvtB8zfhbdBRgt2nmCrnMFQcfCEfdQRyQn/+e66a1ycXCL69Zb83dN3PnsYODT+Cifpxo8WJmOfwY3/rouqO1SSLfac/pp3L81MLn2U6RwDbyQxizO/9/sv7Q623spxTri+io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SyY83qXJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KLjGWx2UEoZd5wpuWMHd+iAd6hKgWY/WPsRnC6Ct0j+BaY9pmoPU5HAZEaVUBnXJyE3QdEI0jSuECFDtdcS0gDOCON1GqcQfXQ/jm6HvdQgztqiw3QnK6q9SUd79vtUICDdAbM+SrWSMcsFd1AgAf3WFf3LR5Jn5tWOM8FGa1n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5TnSzV6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SyY83qXJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C951CC116B1;
-	Wed,  3 Dec 2025 15:49:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5TnSzV6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D69FC4CEF5;
+	Wed,  3 Dec 2025 15:49:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776993;
-	bh=jO8uzi3Si5l3LVhDdcaywLi3ykfjTVkA16+VrEW12OA=;
+	s=korg; t=1764776996;
+	bh=LvL7+i1TfD+WpM/3BkeadnxSCAuBBjVYasfcF6gOR+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SyY83qXJps64oZUFTd01h3BdLWBuTuZa4pA5aOJ+h1CAxyPSKzYNLC7vfPxiQ2ri1
-	 tma9cxML9+/bZ0nkOvgaciTXJVp4Rcf0k1H8mCKHs11FnrsfVVAkQ8V0qTS1Geufuv
-	 4izpuBszKWKSl4K6e5x0NLJJFQPw/FPNZFhkWz7Y=
+	b=z5TnSzV6kGUMQm3Y5J00wofheNNo5Nswe43IpSXnlYPNnjnEUqE66Z0n0nCKvaknN
+	 EZhM/pDUiJa3qPazu9qOjKntEHKPG5YXegVWMUjfYD4/mht/g1YNRyMfRrc3OImGbh
+	 Tmf2RQiVnxc98uN4fwDnRSxMCitJbJ6pxsaF3NKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Alcantra <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com,
-	linux-afs@lists.infradead.org,
-	linux-fsdevel@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 050/146] afs: Fix uninit var in afs_alloc_anon_key()
-Date: Wed,  3 Dec 2025 16:27:08 +0100
-Message-ID: <20251203152348.302980110@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Malaya Kumar Rout <mrout@redhat.com>
+Subject: [PATCH 6.17 051/146] timekeeping: Fix error code in tk_aux_sysfs_init()
+Date: Wed,  3 Dec 2025 16:27:09 +0100
+Message-ID: <20251203152348.339798323@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -56,50 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 19eef1d98eeda3745df35839190b7d4a4adea656 ]
+commit c7418164b463056bf4327b6a2abe638b78250f13 upstream.
 
-Fix an uninitialised variable (key) in afs_alloc_anon_key() by setting it
-to cell->anonymous_key.  Without this change, the error check may return a
-false failure with a bad error number.
+If kobject_create_and_add() fails on the first iteration, then the error
+code is set to -ENOMEM which is correct. But if it fails in subsequent
+iterations then "ret" is zero, which means success, but it should be
+-ENOMEM.
 
-Most of the time this is unlikely to happen because the first encounter
-with afs_alloc_anon_key() will usually be from (auto)mount, for which all
-subsequent operations must wait - apart from other (auto)mounts.  Once the
-call->anonymous_key is allocated, all further calls to afs_request_key()
-will skip the call to afs_alloc_anon_key() for that cell.
+Set the error code to -ENOMEM correctly.
 
-Fixes: d27c71257825 ("afs: Fix delayed allocation of a cell's anonymous key")
-Reported-by: Paulo Alcantra <pc@manguebit.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara <pc@manguebit.org>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: syzbot+41c68824eefb67cdf00c@syzkaller.appspotmail.com
-cc: linux-afs@lists.infradead.org
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 7b5ab04f035f ("timekeeping: Fix resource leak in tk_aux_sysfs_init() error paths")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Malaya Kumar Rout <mrout@redhat.com>
+Link: https://patch.msgid.link/aSW1R8q5zoY_DgQE@stanley.mountain
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/afs/security.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/time/timekeeping.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/afs/security.c b/fs/afs/security.c
-index ff8830e6982fb..55ddce94af031 100644
---- a/fs/afs/security.c
-+++ b/fs/afs/security.c
-@@ -26,7 +26,8 @@ static int afs_alloc_anon_key(struct afs_cell *cell)
- 	struct key *key;
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index 08e0943b54da..4790da895203 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -3073,8 +3073,10 @@ static int __init tk_aux_sysfs_init(void)
+ 		char id[2] = { [0] = '0' + i, };
+ 		struct kobject *clk = kobject_create_and_add(id, auxo);
  
- 	mutex_lock(&afs_key_lock);
--	if (!cell->anonymous_key) {
-+	key = cell->anonymous_key;
-+	if (!key) {
- 		key = rxrpc_get_null_key(cell->key_desc);
- 		if (!IS_ERR(key))
- 			cell->anonymous_key = key;
+-		if (!clk)
++		if (!clk) {
++			ret = -ENOMEM;
+ 			goto err_clean;
++		}
+ 
+ 		ret = sysfs_create_group(clk, &aux_clock_enable_attr_group);
+ 		if (ret)
 -- 
-2.51.0
+2.52.0
 
 
 
