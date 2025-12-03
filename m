@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF4135FF4E;
-	Wed,  3 Dec 2025 16:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BEC2FB62A;
+	Wed,  3 Dec 2025 16:28:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779303; cv=none; b=qCqT1JYhW1g26P7iYtYmlUHU5CAKwuyT5imKEm72VUC2zX8EqniJDC/wpryM4pBPGDJc+KLaXHjNCCtieZRdkiQArRU9sFNLzR9lfuhsG6OdU2m30OL4H9Tl8/BnOFxysxQbN7dzV6xlwvNSEFl1Q5uCDgZpVa2Hsup8/fYZ6ro=
+	t=1764779307; cv=none; b=TAxJmwwsCrmY0gfjbln1sgXdcDV3WMkCkYnkv5cMoC8Ejm3r7Ud8H9PzE8Pbd/aaZLpXYzrn/+075GEdiJ2iiJNGFCyXj1q0tfsiGaglWisRFsT02tzH5xfw5s+ISSJcBYC56VkDSHW/gD/vBNA6BZFq/m4VBbQPy4osTyZ+48g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779303; c=relaxed/simple;
-	bh=KtsN93mrf0dQJRl2bhv1J24xiOGCzTl4PtJz3Y4Hd1g=;
+	s=arc-20240116; t=1764779307; c=relaxed/simple;
+	bh=nOq08zCshsXFJs+T6e3kUvgTAOUyPc8zY3QpsOSVf50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l6XXMDNIespJxB/EHsOMNwVn92fV83nQ209QHT2ZYGUHeyUduotIsdtFhBteX080wcmxbIWSZNTzsoq5aaZvTGLLv49Ll74+TKdm5OslDLPtgzeM5qNC0hSutpEyUM6awnsxewiPIyZMtN5J6srvmXopHbKB7Cq4sf2dn9qcQ1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEwBO8Qv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TGNJ+cvXZtLasVfbn0bN9wF0bbmuKKjFiWa3bynPV5vd7qgBPToCDe8uevvHPvHDoftaIDpH1v4G0o8YewC6fooN3DVlye3dYPg9ccm/qsaiS2DXPkYbRQbIfYhtDc3ezktUxuL3GTSrjXT8kcMTd3C8V8YBxI28PwePFGR5oBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGm8XLAo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEwBO8Qv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0BEC4CEF5;
-	Wed,  3 Dec 2025 16:28:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGm8XLAo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E83AC4CEF5;
+	Wed,  3 Dec 2025 16:28:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779303;
-	bh=KtsN93mrf0dQJRl2bhv1J24xiOGCzTl4PtJz3Y4Hd1g=;
+	s=korg; t=1764779306;
+	bh=nOq08zCshsXFJs+T6e3kUvgTAOUyPc8zY3QpsOSVf50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEwBO8QvuY4wHIVvh7ISnIMyclBrEAVN1E1ch7nRontdZFmUApepfp9QAEvTwWozZ
-	 QK/PefogVvjoKmCDyCN9MAaNK00fm+Hs+JIpq+5oYRZeaRqgQ62YIBNrZpeCzEA1wB
-	 FBpsPUquuZ/5p+K4DF5yLhmHBf+1aDX88J/2kQHM=
+	b=ZGm8XLAojhafNy/IXMS8zIkOgQMzHJSaXSs0xZ9hFNl4TT32WJlJf6WVOrtEXBerA
+	 sqOzSUcDjxvy31e/R4fCVlvWKvx8cVRES104ru/4KxtHm7yFtlJvF043P50+WLrwSt
+	 THw/xzwEQfMPzqWivgOoOYt+qD+zAHB86m4CeiD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
-	Simon Horman <horms@kernel.org>,
+	Daniel Palmer <daniel@thingy.jp>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/568] selftests: Disable dad for ipv6 in fcnal-test.sh
-Date: Wed,  3 Dec 2025 16:23:40 +0100
-Message-ID: <20251203152448.706625853@linuxfoundation.org>
+Subject: [PATCH 6.1 219/568] eth: 8139too: Make 8139TOO_PIO depend on !NO_IOPORT_MAP
+Date: Wed,  3 Dec 2025 16:23:41 +0100
+Message-ID: <20251203152448.743922935@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,35 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Ahern <dsahern@kernel.org>
+From: Daniel Palmer <daniel@thingy.jp>
 
-[ Upstream commit 53d591730ea34f97a82f7ec6e7c987ca6e34dc21 ]
+[ Upstream commit 43adad382e1fdecabd2c4cd2bea777ef4ce4109e ]
 
-Constrained test environment; duplicate address detection is not needed
-and causes races so disable it.
+When 8139too is probing and 8139TOO_PIO=y it will call pci_iomap_range()
+and from there __pci_ioport_map() for the PCI IO space.
+If HAS_IOPORT_MAP=n and NO_GENERIC_PCI_IOPORT_MAP=n, like it is on my
+m68k config, __pci_ioport_map() becomes NULL, pci_iomap_range() will
+always fail and the driver will complain it couldn't map the PIO space
+and return an error.
 
-Signed-off-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20250910025828.38900-1-dsahern@kernel.org
+NO_IOPORT_MAP seems to cover the case where what 8139too is trying
+to do cannot ever work so make 8139TOO_PIO depend on being it false
+and avoid creating an unusable driver.
+
+Signed-off-by: Daniel Palmer <daniel@thingy.jp>
+Link: https://patch.msgid.link/20250907064349.3427600-1-daniel@thingy.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fcnal-test.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/realtek/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
-index 1c0dcddbe2bd1..135e19db39eb0 100755
---- a/tools/testing/selftests/net/fcnal-test.sh
-+++ b/tools/testing/selftests/net/fcnal-test.sh
-@@ -423,6 +423,8 @@ create_ns()
- 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.keep_addr_on_down=1
- 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.forwarding=1
- 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.default.forwarding=1
-+	ip netns exec ${ns} sysctl -qw net.ipv6.conf.default.accept_dad=0
-+	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.accept_dad=0
- }
- 
- # create veth pair to connect namespaces and apply addresses.
+diff --git a/drivers/net/ethernet/realtek/Kconfig b/drivers/net/ethernet/realtek/Kconfig
+index 93d9df55b361a..01811924c4db4 100644
+--- a/drivers/net/ethernet/realtek/Kconfig
++++ b/drivers/net/ethernet/realtek/Kconfig
+@@ -58,7 +58,7 @@ config 8139TOO
+ config 8139TOO_PIO
+ 	bool "Use PIO instead of MMIO"
+ 	default y
+-	depends on 8139TOO
++	depends on 8139TOO && !NO_IOPORT_MAP
+ 	help
+ 	  This instructs the driver to use programmed I/O ports (PIO) instead
+ 	  of PCI shared memory (MMIO).  This can possibly solve some problems
 -- 
 2.51.0
 
