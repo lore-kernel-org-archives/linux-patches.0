@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ABE34F494;
-	Wed,  3 Dec 2025 16:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44250313546;
+	Wed,  3 Dec 2025 16:07:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778058; cv=none; b=asPWquYPZxwDP8zaFpm/Kh4Eqh3q6/y8keikcfViz6PN2EOjivSBFtVc4AijK3D6k6j0TZ+vClAUjUeGfdWEGu/CCO0MelhY40PfQN0T/h4NwwL7zm90SXbyC0jJt4vU6lvRTx78LxrLmyPsdzYvdh/iuBqNsoptuSEjfdl9w4E=
+	t=1764778061; cv=none; b=Ry3ycZBPGtMmxbASAE+XrYqpJeT3xEQC++hToh+T4Bv5U44ElO71vKxzQlCTtjwRjrL7qhRYHA//xxj+Awd2RsAAs0LJlaxBaOcpkRk8Gw61+Z59jcOyQHMQmzCQJNGQmCI9HwTv/zw3YV+yrglyMI+z0L2TgGAxl3Jb/0P3TTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778058; c=relaxed/simple;
-	bh=q3ohomufYX449yJh2r47NqDzmTDA09WMNl12VpW0RtA=;
+	s=arc-20240116; t=1764778061; c=relaxed/simple;
+	bh=yDYFpFBXqYsvNeuLdKVSBksMNmUVkfz6y3sRLSf9VrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XATLvjngGahZhZSm/BN/WSfHqPjRjpo0HYjDMUvu4YoCGsJa374s3Jfwg964hfFdPdRWbwURJiK6FGokUXczFBwlY1OWmRu1NWRKOgkFPulDEXg8EwXaHZf+CS3i6TqKKryItolyG3nxIvZgbgAycVPvlkkSYzIQoNnOQW5jYek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLP6kJF3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g4wI4/KqJfqiKXMfjCHobAp8/jA5YME8kJEX/CDel1yTuixJOL2XVh4zmxzxaPy/BxpmXpfvi+BP94BrjhjGS0nQGg9Blkf6+ZOM8Tb4+Elh3SS02nPThiaEpZpliSIeWf2zsA5QPYMNwN7VUyXaeI/R79mOi5wzL16QMAQCITo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zzDm2Sde; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLP6kJF3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F7BC4CEF5;
-	Wed,  3 Dec 2025 16:07:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zzDm2Sde"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A773FC116C6;
+	Wed,  3 Dec 2025 16:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778057;
-	bh=q3ohomufYX449yJh2r47NqDzmTDA09WMNl12VpW0RtA=;
+	s=korg; t=1764778061;
+	bh=yDYFpFBXqYsvNeuLdKVSBksMNmUVkfz6y3sRLSf9VrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLP6kJF3hcDW6EFCFxjDbG47liVlj52V3NzlPbZgBwRR3neTt1riZRd9Fez8DiovD
-	 7OEbyfZFuBwCnxfyZDo3Wu2Rh89jm1spn9WAx8o0vBqbg3OW94iTnLVZk/Lp7ZEU+N
-	 3zJsgtOPMM/7YOPNWyw90nzKCns9z+NGxUiUWILI=
+	b=zzDm2SdeEcb3iOdBV3Q6+MgdQVGOP5MefUmALKvt5tBlUdrYH8YTeWGOQAxWGKUWi
+	 4Qc4zz9l/LU6WEG9J57h72BfCyexcYk1Nmp3jYLmzgwBpoW7TOeQ6OEH6AWlazFbm9
+	 swtG9G5GHm6MHNWSCw/0pAaAw9IlaIyqhvYJbyO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Sebastian Brzezinka <sebastian.brzezinka@intel.com>,
-	Krzysztof Karas <krzysztof.karas@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/392] drm/i915: Avoid lock inversion when pinning to GGTT on CHV/BXT+VTD
-Date: Wed,  3 Dec 2025 16:26:20 +0100
-Message-ID: <20251203152422.645972195@linuxfoundation.org>
+Subject: [PATCH 5.15 231/392] compiler_types: Move unused static inline functions warning to W=2
+Date: Wed,  3 Dec 2025 16:26:21 +0100
+Message-ID: <20251203152422.682527290@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -55,274 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 84bbe327a5cbb060f3321c9d9d4d53936fc1ef9b ]
+[ Upstream commit 9818af18db4bfefd320d0fef41390a616365e6f7 ]
 
-On completion of i915_vma_pin_ww(), a synchronous variant of
-dma_fence_work_commit() is called.  When pinning a VMA to GGTT address
-space on a Cherry View family processor, or on a Broxton generation SoC
-with VTD enabled, i.e., when stop_machine() is then called from
-intel_ggtt_bind_vma(), that can potentially lead to lock inversion among
-reservation_ww and cpu_hotplug locks.
+Per Nathan, clang catches unused "static inline" functions in C files
+since commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
+inline functions for W=1 build").
 
-[86.861179] ======================================================
-[86.861193] WARNING: possible circular locking dependency detected
-[86.861209] 6.15.0-rc5-CI_DRM_16515-gca0305cadc2d+ #1 Tainted: G     U
-[86.861226] ------------------------------------------------------
-[86.861238] i915_module_loa/1432 is trying to acquire lock:
-[86.861252] ffffffff83489090 (cpu_hotplug_lock){++++}-{0:0}, at: stop_machine+0x1c/0x50
-[86.861290]
-but task is already holding lock:
-[86.861303] ffffc90002e0b4c8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: i915_vma_pin.constprop.0+0x39/0x1d0 [i915]
-[86.862233]
-which lock already depends on the new lock.
-[86.862251]
-the existing dependency chain (in reverse order) is:
-[86.862265]
--> #5 (reservation_ww_class_mutex){+.+.}-{3:3}:
-[86.862292]        dma_resv_lockdep+0x19a/0x390
-[86.862315]        do_one_initcall+0x60/0x3f0
-[86.862334]        kernel_init_freeable+0x3cd/0x680
-[86.862353]        kernel_init+0x1b/0x200
-[86.862369]        ret_from_fork+0x47/0x70
-[86.862383]        ret_from_fork_asm+0x1a/0x30
-[86.862399]
--> #4 (reservation_ww_class_acquire){+.+.}-{0:0}:
-[86.862425]        dma_resv_lockdep+0x178/0x390
-[86.862440]        do_one_initcall+0x60/0x3f0
-[86.862454]        kernel_init_freeable+0x3cd/0x680
-[86.862470]        kernel_init+0x1b/0x200
-[86.862482]        ret_from_fork+0x47/0x70
-[86.862495]        ret_from_fork_asm+0x1a/0x30
-[86.862509]
--> #3 (&mm->mmap_lock){++++}-{3:3}:
-[86.862531]        down_read_killable+0x46/0x1e0
-[86.862546]        lock_mm_and_find_vma+0xa2/0x280
-[86.862561]        do_user_addr_fault+0x266/0x8e0
-[86.862578]        exc_page_fault+0x8a/0x2f0
-[86.862593]        asm_exc_page_fault+0x27/0x30
-[86.862607]        filldir64+0xeb/0x180
-[86.862620]        kernfs_fop_readdir+0x118/0x480
-[86.862635]        iterate_dir+0xcf/0x2b0
-[86.862648]        __x64_sys_getdents64+0x84/0x140
-[86.862661]        x64_sys_call+0x1058/0x2660
-[86.862675]        do_syscall_64+0x91/0xe90
-[86.862689]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[86.862703]
--> #2 (&root->kernfs_rwsem){++++}-{3:3}:
-[86.862725]        down_write+0x3e/0xf0
-[86.862738]        kernfs_add_one+0x30/0x3c0
-[86.862751]        kernfs_create_dir_ns+0x53/0xb0
-[86.862765]        internal_create_group+0x134/0x4c0
-[86.862779]        sysfs_create_group+0x13/0x20
-[86.862792]        topology_add_dev+0x1d/0x30
-[86.862806]        cpuhp_invoke_callback+0x4b5/0x850
-[86.862822]        cpuhp_issue_call+0xbf/0x1f0
-[86.862836]        __cpuhp_setup_state_cpuslocked+0x111/0x320
-[86.862852]        __cpuhp_setup_state+0xb0/0x220
-[86.862866]        topology_sysfs_init+0x30/0x50
-[86.862879]        do_one_initcall+0x60/0x3f0
-[86.862893]        kernel_init_freeable+0x3cd/0x680
-[86.862908]        kernel_init+0x1b/0x200
-[86.862921]        ret_from_fork+0x47/0x70
-[86.862934]        ret_from_fork_asm+0x1a/0x30
-[86.862947]
--> #1 (cpuhp_state_mutex){+.+.}-{3:3}:
-[86.862969]        __mutex_lock+0xaa/0xed0
-[86.862982]        mutex_lock_nested+0x1b/0x30
-[86.862995]        __cpuhp_setup_state_cpuslocked+0x67/0x320
-[86.863012]        __cpuhp_setup_state+0xb0/0x220
-[86.863026]        page_alloc_init_cpuhp+0x2d/0x60
-[86.863041]        mm_core_init+0x22/0x2d0
-[86.863054]        start_kernel+0x576/0xbd0
-[86.863068]        x86_64_start_reservations+0x18/0x30
-[86.863084]        x86_64_start_kernel+0xbf/0x110
-[86.863098]        common_startup_64+0x13e/0x141
-[86.863114]
--> #0 (cpu_hotplug_lock){++++}-{0:0}:
-[86.863135]        __lock_acquire+0x1635/0x2810
-[86.863152]        lock_acquire+0xc4/0x2f0
-[86.863166]        cpus_read_lock+0x41/0x100
-[86.863180]        stop_machine+0x1c/0x50
-[86.863194]        bxt_vtd_ggtt_insert_entries__BKL+0x3b/0x60 [i915]
-[86.863987]        intel_ggtt_bind_vma+0x43/0x70 [i915]
-[86.864735]        __vma_bind+0x55/0x70 [i915]
-[86.865510]        fence_work+0x26/0xa0 [i915]
-[86.866248]        fence_notify+0xa1/0x140 [i915]
-[86.866983]        __i915_sw_fence_complete+0x8f/0x270 [i915]
-[86.867719]        i915_sw_fence_commit+0x39/0x60 [i915]
-[86.868453]        i915_vma_pin_ww+0x462/0x1360 [i915]
-[86.869228]        i915_vma_pin.constprop.0+0x133/0x1d0 [i915]
-[86.870001]        initial_plane_vma+0x307/0x840 [i915]
-[86.870774]        intel_initial_plane_config+0x33f/0x670 [i915]
-[86.871546]        intel_display_driver_probe_nogem+0x1c6/0x260 [i915]
-[86.872330]        i915_driver_probe+0x7fa/0xe80 [i915]
-[86.873057]        i915_pci_probe+0xe6/0x220 [i915]
-[86.873782]        local_pci_probe+0x47/0xb0
-[86.873802]        pci_device_probe+0xf3/0x260
-[86.873817]        really_probe+0xf1/0x3c0
-[86.873833]        __driver_probe_device+0x8c/0x180
-[86.873848]        driver_probe_device+0x24/0xd0
-[86.873862]        __driver_attach+0x10f/0x220
-[86.873876]        bus_for_each_dev+0x7f/0xe0
-[86.873892]        driver_attach+0x1e/0x30
-[86.873904]        bus_add_driver+0x151/0x290
-[86.873917]        driver_register+0x5e/0x130
-[86.873931]        __pci_register_driver+0x7d/0x90
-[86.873945]        i915_pci_register_driver+0x23/0x30 [i915]
-[86.874678]        i915_init+0x37/0x120 [i915]
-[86.875347]        do_one_initcall+0x60/0x3f0
-[86.875369]        do_init_module+0x97/0x2a0
-[86.875385]        load_module+0x2c54/0x2d80
-[86.875398]        init_module_from_file+0x96/0xe0
-[86.875413]        idempotent_init_module+0x117/0x330
-[86.875426]        __x64_sys_finit_module+0x77/0x100
-[86.875440]        x64_sys_call+0x24de/0x2660
-[86.875454]        do_syscall_64+0x91/0xe90
-[86.875470]        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[86.875486]
-other info that might help us debug this:
-[86.875502] Chain exists of:
-  cpu_hotplug_lock --> reservation_ww_class_acquire --> reservation_ww_class_mutex
-[86.875539]  Possible unsafe locking scenario:
-[86.875552]        CPU0                    CPU1
-[86.875563]        ----                    ----
-[86.875573]   lock(reservation_ww_class_mutex);
-[86.875588]                                lock(reservation_ww_class_acquire);
-[86.875606]                                lock(reservation_ww_class_mutex);
-[86.875624]   rlock(cpu_hotplug_lock);
-[86.875637]
- *** DEADLOCK ***
-[86.875650] 3 locks held by i915_module_loa/1432:
-[86.875663]  #0: ffff888101f5c1b0 (&dev->mutex){....}-{3:3}, at: __driver_attach+0x104/0x220
-[86.875699]  #1: ffffc90002e0b4a0 (reservation_ww_class_acquire){+.+.}-{0:0}, at: i915_vma_pin.constprop.0+0x39/0x1d0 [i915]
-[86.876512]  #2: ffffc90002e0b4c8 (reservation_ww_class_mutex){+.+.}-{3:3}, at: i915_vma_pin.constprop.0+0x39/0x1d0 [i915]
-[86.877305]
-stack backtrace:
-[86.877326] CPU: 0 UID: 0 PID: 1432 Comm: i915_module_loa Tainted: G     U              6.15.0-rc5-CI_DRM_16515-gca0305cadc2d+ #1 PREEMPT(voluntary)
-[86.877334] Tainted: [U]=USER
-[86.877336] Hardware name:  /NUC5CPYB, BIOS PYBSWCEL.86A.0079.2020.0420.1316 04/20/2020
-[86.877339] Call Trace:
-[86.877344]  <TASK>
-[86.877353]  dump_stack_lvl+0x91/0xf0
-[86.877364]  dump_stack+0x10/0x20
-[86.877369]  print_circular_bug+0x285/0x360
-[86.877379]  check_noncircular+0x135/0x150
-[86.877390]  __lock_acquire+0x1635/0x2810
-[86.877403]  lock_acquire+0xc4/0x2f0
-[86.877408]  ? stop_machine+0x1c/0x50
-[86.877422]  ? __pfx_bxt_vtd_ggtt_insert_entries__cb+0x10/0x10 [i915]
-[86.878173]  cpus_read_lock+0x41/0x100
-[86.878182]  ? stop_machine+0x1c/0x50
-[86.878191]  ? __pfx_bxt_vtd_ggtt_insert_entries__cb+0x10/0x10 [i915]
-[86.878916]  stop_machine+0x1c/0x50
-[86.878927]  bxt_vtd_ggtt_insert_entries__BKL+0x3b/0x60 [i915]
-[86.879652]  intel_ggtt_bind_vma+0x43/0x70 [i915]
-[86.880375]  __vma_bind+0x55/0x70 [i915]
-[86.881133]  fence_work+0x26/0xa0 [i915]
-[86.881851]  fence_notify+0xa1/0x140 [i915]
-[86.882566]  __i915_sw_fence_complete+0x8f/0x270 [i915]
-[86.883286]  i915_sw_fence_commit+0x39/0x60 [i915]
-[86.884003]  i915_vma_pin_ww+0x462/0x1360 [i915]
-[86.884756]  ? i915_vma_pin.constprop.0+0x6c/0x1d0 [i915]
-[86.885513]  i915_vma_pin.constprop.0+0x133/0x1d0 [i915]
-[86.886281]  initial_plane_vma+0x307/0x840 [i915]
-[86.887049]  intel_initial_plane_config+0x33f/0x670 [i915]
-[86.887819]  intel_display_driver_probe_nogem+0x1c6/0x260 [i915]
-[86.888587]  i915_driver_probe+0x7fa/0xe80 [i915]
-[86.889293]  ? mutex_unlock+0x12/0x20
-[86.889301]  ? drm_privacy_screen_get+0x171/0x190
-[86.889308]  ? acpi_dev_found+0x66/0x80
-[86.889321]  i915_pci_probe+0xe6/0x220 [i915]
-[86.890038]  local_pci_probe+0x47/0xb0
-[86.890049]  pci_device_probe+0xf3/0x260
-[86.890058]  really_probe+0xf1/0x3c0
-[86.890067]  __driver_probe_device+0x8c/0x180
-[86.890072]  driver_probe_device+0x24/0xd0
-[86.890078]  __driver_attach+0x10f/0x220
-[86.890083]  ? __pfx___driver_attach+0x10/0x10
-[86.890088]  bus_for_each_dev+0x7f/0xe0
-[86.890097]  driver_attach+0x1e/0x30
-[86.890101]  bus_add_driver+0x151/0x290
-[86.890107]  driver_register+0x5e/0x130
-[86.890113]  __pci_register_driver+0x7d/0x90
-[86.890119]  i915_pci_register_driver+0x23/0x30 [i915]
-[86.890833]  i915_init+0x37/0x120 [i915]
-[86.891482]  ? __pfx_i915_init+0x10/0x10 [i915]
-[86.892135]  do_one_initcall+0x60/0x3f0
-[86.892145]  ? __kmalloc_cache_noprof+0x33f/0x470
-[86.892157]  do_init_module+0x97/0x2a0
-[86.892164]  load_module+0x2c54/0x2d80
-[86.892168]  ? __kernel_read+0x15c/0x300
-[86.892185]  ? kernel_read_file+0x2b1/0x320
-[86.892195]  init_module_from_file+0x96/0xe0
-[86.892199]  ? init_module_from_file+0x96/0xe0
-[86.892211]  idempotent_init_module+0x117/0x330
-[86.892224]  __x64_sys_finit_module+0x77/0x100
-[86.892230]  x64_sys_call+0x24de/0x2660
-[86.892236]  do_syscall_64+0x91/0xe90
-[86.892243]  ? irqentry_exit+0x77/0xb0
-[86.892249]  ? sysvec_apic_timer_interrupt+0x57/0xc0
-[86.892256]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[86.892261] RIP: 0033:0x7303e1b2725d
-[86.892271] Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 8b bb 0d 00 f7 d8 64 89 01 48
-[86.892276] RSP: 002b:00007ffddd1fdb38 EFLAGS: 00000246 ORIG_RAX: 0000000000000139
-[86.892281] RAX: ffffffffffffffda RBX: 00005d771d88fd90 RCX: 00007303e1b2725d
-[86.892285] RDX: 0000000000000000 RSI: 00005d771d893aa0 RDI: 000000000000000c
-[86.892287] RBP: 00007ffddd1fdbf0 R08: 0000000000000040 R09: 00007ffddd1fdb80
-[86.892289] R10: 00007303e1c03b20 R11: 0000000000000246 R12: 00005d771d893aa0
-[86.892292] R13: 0000000000000000 R14: 00005d771d88f0d0 R15: 00005d771d895710
-[86.892304]  </TASK>
+Linus said:
 
-Call asynchronous variant of dma_fence_work_commit() in that case.
+> So I entirely ignore W=1 issues, because I think so many of the extra
+> warnings are bogus.
+>
+> But if this one in particular is causing more problems than most -
+> some teams do seem to use W=1 as part of their test builds - it's fine
+> to send me a patch that just moves bad warnings to W=2.
+>
+> And if anybody uses W=2 for their test builds, that's THEIR problem..
 
-v3: Provide more verbose in-line comment (Andi),
-  - mention target environments in commit message.
+Here is the change to bump the warning from W=1 to W=2.
 
-Fixes: 7d1c2618eac59 ("drm/i915: Take reservation lock around i915_vma_pin.")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14985
-Cc: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Reviewed-by: Sebastian Brzezinka <sebastian.brzezinka@intel.com>
-Reviewed-by: Krzysztof Karas <krzysztof.karas@intel.com>
-Acked-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20251023082925.351307-6-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit 648ef1324add1c2e2b6041cdf0b28d31fbca5f13)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
+Signed-off-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://patch.msgid.link/20251106105000.2103276-1-andriy.shevchenko@linux.intel.com
+[nathan: Adjust comment as well]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_vma.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ include/linux/compiler_types.h | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_vma.c b/drivers/gpu/drm/i915/i915_vma.c
-index 3df304edabc79..d9ca42203517a 100644
---- a/drivers/gpu/drm/i915/i915_vma.c
-+++ b/drivers/gpu/drm/i915/i915_vma.c
-@@ -1012,8 +1012,20 @@ int i915_vma_pin_ww(struct i915_vma *vma, struct i915_gem_ww_ctx *ww,
- err_unlock:
- 	mutex_unlock(&vma->vm->mutex);
- err_fence:
--	if (work)
--		dma_fence_work_commit_imm(&work->base);
-+	if (work) {
-+		/*
-+		 * When pinning VMA to GGTT on CHV or BXT with VTD enabled,
-+		 * commit VMA binding asynchronously to avoid risk of lock
-+		 * inversion among reservation_ww locks held here and
-+		 * cpu_hotplug_lock acquired from stop_machine(), which we
-+		 * wrap around GGTT updates when running in those environments.
-+		 */
-+		if (i915_vma_is_ggtt(vma) &&
-+		    intel_vm_no_concurrent_access_wa(vma->vm->i915))
-+			dma_fence_work_commit(&work->base);
-+		else
-+			dma_fence_work_commit_imm(&work->base);
-+	}
- err_rpm:
- 	if (wakeref)
- 		intel_runtime_pm_put(&vma->vm->i915->runtime_pm, wakeref);
+diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
+index 4f2203c4a2574..ca9345e2934d3 100644
+--- a/include/linux/compiler_types.h
++++ b/include/linux/compiler_types.h
+@@ -163,10 +163,9 @@ struct ftrace_likely_data {
+ /*
+  * GCC does not warn about unused static inline functions for -Wunused-function.
+  * Suppress the warning in clang as well by using __maybe_unused, but enable it
+- * for W=1 build. This will allow clang to find unused functions. Remove the
+- * __inline_maybe_unused entirely after fixing most of -Wunused-function warnings.
++ * for W=2 build. This will allow clang to find unused functions.
+  */
+-#ifdef KBUILD_EXTRA_WARN1
++#ifdef KBUILD_EXTRA_WARN2
+ #define __inline_maybe_unused
+ #else
+ #define __inline_maybe_unused __maybe_unused
 -- 
 2.51.0
 
