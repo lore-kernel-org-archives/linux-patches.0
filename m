@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888A9320A05;
-	Wed,  3 Dec 2025 15:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F558320CD1;
+	Wed,  3 Dec 2025 15:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777524; cv=none; b=jC6CYW30JyGLGROcGyGZczTzZE6aah79fUnn5SFFS/0v6GB2XPNvZNSEvC1qnp9HqXO8qH0vVgwgEYoBsOrxuATFjQbRXDtc/0QELio7sbzS56O35InrN1zQj642tJHKRMdceWOTjwBvohsSJfGa/JMSB8JgacneBVuILBgG91g=
+	t=1764777528; cv=none; b=GYc/7pmFEhHhcpAODaJL/Tra6LXGfCP4o65jGtdiyWt81Avv2qES+9y9TOxeNALL24+iOW0EUcwsP1zvRcS/Z+QI1KzhhyjQNerDlTiT/T3SZkgBUp3Db1LCd6EO77mB/X3QOFibx1l6x4INrDPtqip3y5NjoOnCCFozIqiSfyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777524; c=relaxed/simple;
-	bh=kYqujmHnvb3UBS9F5C2FAQW4D3jtem0MwyfAH7vm4J4=;
+	s=arc-20240116; t=1764777528; c=relaxed/simple;
+	bh=u3Txwa+/4NEgdnj6SzozzhxkEmxUaPibI8OQeTuFqZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVd+ZfHHLh6DFJBT3Lzf/vEQUSfMhVrS1Xw3cvCtuNlkGYmNgC/5/lE1+Zl6dGlYcWpXk0d8gynkvjEehGMmaz9LieMkk0aztbKNxrCvifCvtmwVdeq+tGWEvyAkn4wPaZKz49WbxKuvOc4fXX35rOqJMEcdds/F+3ga5zN4kXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPiWqsCj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F0Ypb8INMZ24+/VzjVVnHnuFRn/CwddeUc11FgoHi5pIcgEtVIE0gFOZsIbfoI8ndvKQSvnqTI9N2sA4WPBTLZsrg3GcjXwEpuOVGFq5qVWKK8fVinq/CO3tjhYS2W82Sm3/twb96y70GGuXlIBcFwDdmW6VWrB2nbYnXkX5P9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=umwyN2EX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPiWqsCj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806E1C4CEF5;
-	Wed,  3 Dec 2025 15:58:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="umwyN2EX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E923BC4CEF5;
+	Wed,  3 Dec 2025 15:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777523;
-	bh=kYqujmHnvb3UBS9F5C2FAQW4D3jtem0MwyfAH7vm4J4=;
+	s=korg; t=1764777527;
+	bh=u3Txwa+/4NEgdnj6SzozzhxkEmxUaPibI8OQeTuFqZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XPiWqsCjB9F2xNJ8iy8aQ1oAAGn63VQo9uk3x+zw6wjC5WVtVyUJ4V8G81axembkc
-	 UZfw5kvL55kocrT04FxCqSZoG2drBd0Rz3WqKCTvKqnY80pCX0iNl0R+xeNAkNhLrT
-	 dW5zoD68Vk5oE5iOiuzlzzdrPFXCJ8W/CgoFBcIo=
+	b=umwyN2EX6yOXr1uilTuSqZAcueLJNvhPodA9TT0PpsNr24xkK05Bw0ikdqry+STTX
+	 qYT/dbL2Ah+MX0EXjs49gSmE9pDT5KlPlrCjS58hvij58C0kigkEX3Rq0cskBZNjMV
+	 A4jUi6AQxOMB7S4Kboa/Z0NoTdSjLMwG/sMI5YBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/392] serial: 8250_dw: Use devm_add_action_or_reset()
-Date: Wed,  3 Dec 2025 16:23:02 +0100
-Message-ID: <20251203152415.283998921@linuxfoundation.org>
+Subject: [PATCH 5.15 023/392] libbpf: Fix powerpcs stack register definition in bpf_tracing.h
+Date: Wed,  3 Dec 2025 16:22:53 +0100
+Message-ID: <20251203152414.956510794@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,140 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 295b09128d12fb1a7a67f771cc0ae0df869eafaf ]
+[ Upstream commit 7221b9caf84b3294688228a19273d74ea19a2ee4 ]
 
-Slightly simplify ->probe() and drop a few goto labels by using
-devm_add_action_or_reset() for clock and reset cleanup.
+retsnoop's build on powerpc (ppc64le) architecture ([0]) failed due to
+wrong definition of PT_REGS_SP() macro. Looking at powerpc's
+implementation of stack unwinding in perf_callchain_user_64() clearly
+shows that stack pointer register is gpr[1].
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20220509172129.37770-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: daeb4037adf7 ("serial: 8250_dw: handle reset control deassert error")
+Fix libbpf's definition of __PT_SP_REG for powerpc to fix all this.
+
+  [0] https://kojipkgs.fedoraproject.org/work/tasks/1544/137921544/build.log
+
+Fixes: 138d6153a139 ("samples/bpf: Enable powerpc support")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/20251020203643.989467-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |   63 ++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 32 deletions(-)
+ tools/lib/bpf/bpf_tracing.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dw.c
-+++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -438,6 +438,16 @@ static void dw8250_quirks(struct uart_po
- 	}
- }
+diff --git a/tools/lib/bpf/bpf_tracing.h b/tools/lib/bpf/bpf_tracing.h
+index 20fe06d0acd98..950ce502d655c 100644
+--- a/tools/lib/bpf/bpf_tracing.h
++++ b/tools/lib/bpf/bpf_tracing.h
+@@ -176,7 +176,7 @@
+ #define __PT_RET_REG regs[31]
+ #define __PT_FP_REG __unsupported__
+ #define __PT_RC_REG gpr[3]
+-#define __PT_SP_REG sp
++#define __PT_SP_REG gpr[1]
+ #define __PT_IP_REG nip
  
-+static void dw8250_clk_disable_unprepare(void *data)
-+{
-+	clk_disable_unprepare(data);
-+}
-+
-+static void dw8250_reset_control_assert(void *data)
-+{
-+	reset_control_assert(data);
-+}
-+
- static int dw8250_probe(struct platform_device *pdev)
- {
- 	struct uart_8250_port uart = {}, *up = &uart;
-@@ -539,35 +549,43 @@ static int dw8250_probe(struct platform_
- 	if (err)
- 		dev_warn(dev, "could not enable optional baudclk: %d\n", err);
- 
-+	err = devm_add_action_or_reset(dev, dw8250_clk_disable_unprepare, data->clk);
-+	if (err)
-+		return err;
-+
- 	if (data->clk)
- 		p->uartclk = clk_get_rate(data->clk);
- 
- 	/* If no clock rate is defined, fail. */
- 	if (!p->uartclk) {
- 		dev_err(dev, "clock rate not defined\n");
--		err = -EINVAL;
--		goto err_clk;
-+		return -EINVAL;
- 	}
- 
- 	data->pclk = devm_clk_get_optional(dev, "apb_pclk");
--	if (IS_ERR(data->pclk)) {
--		err = PTR_ERR(data->pclk);
--		goto err_clk;
--	}
-+	if (IS_ERR(data->pclk))
-+		return PTR_ERR(data->pclk);
- 
- 	err = clk_prepare_enable(data->pclk);
- 	if (err) {
- 		dev_err(dev, "could not enable apb_pclk\n");
--		goto err_clk;
-+		return err;
- 	}
- 
-+	err = devm_add_action_or_reset(dev, dw8250_clk_disable_unprepare, data->pclk);
-+	if (err)
-+		return err;
-+
- 	data->rst = devm_reset_control_get_optional_exclusive(dev, NULL);
--	if (IS_ERR(data->rst)) {
--		err = PTR_ERR(data->rst);
--		goto err_pclk;
--	}
-+	if (IS_ERR(data->rst))
-+		return PTR_ERR(data->rst);
-+
- 	reset_control_deassert(data->rst);
- 
-+	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
-+	if (err)
-+		return err;
-+
- 	dw8250_quirks(p, data);
- 
- 	/* If the Busy Functionality is not implemented, don't handle it */
-@@ -585,10 +603,8 @@ static int dw8250_probe(struct platform_
- 	}
- 
- 	data->data.line = serial8250_register_8250_port(up);
--	if (data->data.line < 0) {
--		err = data->data.line;
--		goto err_reset;
--	}
-+	if (data->data.line < 0)
-+		return data->data.line;
- 
- 	/*
- 	 * Some platforms may provide a reference clock shared between several
-@@ -609,17 +625,6 @@ static int dw8250_probe(struct platform_
- 	pm_runtime_enable(dev);
- 
- 	return 0;
--
--err_reset:
--	reset_control_assert(data->rst);
--
--err_pclk:
--	clk_disable_unprepare(data->pclk);
--
--err_clk:
--	clk_disable_unprepare(data->clk);
--
--	return err;
- }
- 
- static int dw8250_remove(struct platform_device *pdev)
-@@ -637,12 +642,6 @@ static int dw8250_remove(struct platform
- 
- 	serial8250_unregister_port(data->data.line);
- 
--	reset_control_assert(data->rst);
--
--	clk_disable_unprepare(data->pclk);
--
--	clk_disable_unprepare(data->clk);
--
- 	pm_runtime_disable(dev);
- 	pm_runtime_put_noidle(dev);
- 
+ #elif defined(bpf_target_sparc)
+-- 
+2.51.0
+
 
 
