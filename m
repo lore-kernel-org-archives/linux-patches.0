@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E6634DCD6;
-	Wed,  3 Dec 2025 16:50:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2836C35E546;
+	Wed,  3 Dec 2025 16:51:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780659; cv=none; b=mm+7NSYoydZTCaMS52A6IZI4u4kOI1Hqkh0ZNYbwTEH9JA0AHgDnu93yDYyIgUEIzqd7r/tlLbx+qo+S9os5tudc+7vPV0Xo3ebS1miMAhf7omVKScXEqOfjfRXY0b2msA0aWz9WPQlfcOkuI2029/rim5czYS/srsuktaxi/Sk=
+	t=1764780662; cv=none; b=NiEEO2y9Y9liiygo6OAg+thrNoG0xOXhdIQmwrhQxcLUE9cnPtUFO6UItWXjCAzNnq6Nt7H9KKnSrs22dZ9qW/u/HduVIegNvxR8YUJ307NyNvzE00eoMWoscT7LZhtOGNQG2XeDJfFBL1qt71LgJ534HoacHRDTSwmA6r6+y7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780659; c=relaxed/simple;
-	bh=RuzhchP8PSMYK+O9FJAEL2jCM3KCV/I7i97oJfw+qcw=;
+	s=arc-20240116; t=1764780662; c=relaxed/simple;
+	bh=jWT9Cw9GXyqDrrWOt/fD0ijpyFbbdYhCroT3VsKdObQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=h8UK/yMX+ffVb7VLdes2+YONXDeTNKr+U72gZ7UJbN3Ifb87Ijjajg8lXK91HRjhDcx/xRMT8wybOE2JRf2GrZkThmF+Ji0v6ku8x+pku00p+H9feNPDaz1TqxtArpuUZM28E3krEiPpdC/R1yFQ0PFr9TRQFcKIBMM4PVF1JVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7XBbRpX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=meKJBdEZdF7Fsao6s6x+lKRkq+Pk1lO66lNzQ+ZL+trUGHHYz9E9hYPMjsYcxerJnDnE3YWwsTjbO0MVaPrcZqyCyKABO3Kzi0tua0EwZr6sc2g3LQ4ODGInOB9x5BvSayz+ETHCJ8gdBqWiXFaUQgBHN0X5ndF5lTjKuhMjNuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVs3yT8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7XBbRpX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71686C116C6;
-	Wed,  3 Dec 2025 16:50:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVs3yT8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1CA5C4CEF5;
+	Wed,  3 Dec 2025 16:51:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780658;
-	bh=RuzhchP8PSMYK+O9FJAEL2jCM3KCV/I7i97oJfw+qcw=;
+	s=korg; t=1764780662;
+	bh=jWT9Cw9GXyqDrrWOt/fD0ijpyFbbdYhCroT3VsKdObQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7XBbRpXFwDbYvwCwLswBdYQK18JDpojhY6WyrwLYjFA3FQ09x6bePuRRzml61IQT
-	 ysIofAzJo1bJkdn5qryqLp6exItCn1Kl5Vr3O5AazC3SrwJzQdQfIR3i1Q1q/jIsYm
-	 9FcgAXh2wOj3m2agmb+6fYOv9oSu4Y3BDDmextC4=
+	b=lVs3yT8tBG0NwnZF72Ey+q4imJ1JaOJdKYR+KqqbFUYDG4zyYMOhE6jox44CVSo7c
+	 IAwr8LURsej5r5SRQyD1yvbwKOLaI6aWO9V5mu+1A05ctWmndPmNzoNRYbCVTlM9S4
+	 Pn8kn+8+bnvEIRTv8BBQWXofr7G+Y6OMpUWyySBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Lechner <dlechner@baylibre.com>,
 	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 051/132] iio: buffer-dma: support getting the DMA channel
-Date: Wed,  3 Dec 2025 16:28:50 +0100
-Message-ID: <20251203152345.187147467@linuxfoundation.org>
+Subject: [PATCH 6.12 052/132] iio: buffer-dmaengine: enable .get_dma_dev()
+Date: Wed,  3 Dec 2025 16:28:51 +0100
+Message-ID: <20251203152345.223890551@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -54,50 +55,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Nuno Sá <nuno.sa@analog.com>
 
-commit f9c198c3ccaf90a1a265fb2ffa8d4b093c3b0784 upstream.
+commit 3db847df994d475db7812dde90376f2848bcd30a upstream.
 
-Implement the .get_dma_dev() callback for DMA buffers by returning the
-device that owns the DMA channel. This allows the core DMABUF
-infrastructure to properly map DMA buffers using the correct device,
-avoiding the need for bounce buffers on systems where memory is mapped
-above the 32-bit range.
+Wire up the .get_dma_dev() callback to use the DMA buffer infrastructure's
+implementation. This ensures that DMABUF operations use the correct DMA
+device for mapping, which is essential for proper operation on systems
+where memory is mapped above the 32-bit range.
 
-The function returns the DMA queue's device, which is the actual device
-responsible for DMA operations in buffer-dma implementations.
+Without this callback, the core would fall back to using the IIO device's
+parent, which may not have the appropriate DMA mask configuration for
+high memory access.
 
-Cc: stable@vger.kernel.org
+Fixes: 7a86d469983a ("iio: buffer-dmaengine: Support new DMABUF based userspace API")
 Reviewed-by: David Lechner <dlechner@baylibre.com>
 Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/buffer/industrialio-buffer-dma.c |    6 ++++++
- include/linux/iio/buffer-dma.h               |    1 +
- 2 files changed, 7 insertions(+)
+ drivers/iio/buffer/industrialio-buffer-dmaengine.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/iio/buffer/industrialio-buffer-dma.c
-+++ b/drivers/iio/buffer/industrialio-buffer-dma.c
-@@ -786,6 +786,12 @@ out_end_signalling:
- }
- EXPORT_SYMBOL_NS_GPL(iio_dma_buffer_enqueue_dmabuf, IIO_DMA_BUFFER);
+--- a/drivers/iio/buffer/industrialio-buffer-dmaengine.c
++++ b/drivers/iio/buffer/industrialio-buffer-dmaengine.c
+@@ -177,6 +177,8 @@ static const struct iio_buffer_access_fu
+ 	.lock_queue = iio_dma_buffer_lock_queue,
+ 	.unlock_queue = iio_dma_buffer_unlock_queue,
  
-+struct device *iio_dma_buffer_get_dma_dev(struct iio_buffer *buffer)
-+{
-+	return iio_buffer_to_queue(buffer)->dev;
-+}
-+EXPORT_SYMBOL_NS_GPL(iio_dma_buffer_get_dma_dev, IIO_DMA_BUFFER);
++	.get_dma_dev = iio_dma_buffer_get_dma_dev,
 +
- void iio_dma_buffer_lock_queue(struct iio_buffer *buffer)
- {
- 	struct iio_dma_buffer_queue *queue = iio_buffer_to_queue(buffer);
---- a/include/linux/iio/buffer-dma.h
-+++ b/include/linux/iio/buffer-dma.h
-@@ -174,5 +174,6 @@ int iio_dma_buffer_enqueue_dmabuf(struct
- 				  size_t size, bool cyclic);
- void iio_dma_buffer_lock_queue(struct iio_buffer *buffer);
- void iio_dma_buffer_unlock_queue(struct iio_buffer *buffer);
-+struct device *iio_dma_buffer_get_dma_dev(struct iio_buffer *buffer);
- 
- #endif
+ 	.modes = INDIO_BUFFER_HARDWARE,
+ 	.flags = INDIO_BUFFER_FLAG_FIXED_WATERMARK,
+ };
 
 
