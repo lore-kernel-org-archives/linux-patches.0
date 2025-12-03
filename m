@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D29630CDB1;
-	Wed,  3 Dec 2025 16:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB0826B756;
+	Wed,  3 Dec 2025 16:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778166; cv=none; b=pemxyWAYd5Lpc9ZKrnha7DGxYY0el/XjqGqDlu5NtDeCljStCI2YYRdJ3csYxWxjvDp6T0HLS4kDYKD0TXrn5NItrKpgaBWB9cfAgsUfcbbMkzkXDs7LihA18KLpUlv4nhKs7fiJc0f/cxHxMRxF+ikq/J1sRWg/zhqEeiFMrpA=
+	t=1764778169; cv=none; b=uEXsiVnF2aZWvu0/i0dY3u1Pftm6N8Fyoxs4YprFYpolyIFrmr1pXu3iJWoQHwFUOc/frJ8eTUPtBdiFVUOgo6K7nXGFzihFpsuFYVxxJIgDyCpSiMJvtWEL+ERfEVAcvEhn9qNXl2AZaSCzruK1+27zPN81oFc+qVygsqCsLo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778166; c=relaxed/simple;
-	bh=OywTpRZJ32oqjklvRqQXgNR+6tEHfKsWjUqwF/MAi/U=;
+	s=arc-20240116; t=1764778169; c=relaxed/simple;
+	bh=TvXYRFO9nJXm+nuN4bSBxclUnzOUp5gmlzMA5LB+QvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oDsZGkWvWjzE5/X6sVF6e+rz6Ry/e+iure2vVjEJ+zK0+yGHCoEcGulQ938rLVsR3KVMNLFTjPEf56KPsJn9N3E1MdhJdy2GLhyPUoqbvypZ1L/XPBLHjtZ96/9hv2wxXz7p7IpkDOC4v7lrEh+qnmu0Gk09fZLoartITDibAsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqZ4qi3+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KKIXNFFnt5Jt52KjZ6jpQGQU7uFsCIjXPN13RoWF3nOIJjh/OpPMC1z1/sWoPptE2F1r24WQQIhrnjpOZYtNHgJbN0sYkJhyvtBaToCOtksmfo4Z680EQkemr6GZ3quW1gBpTx52oBHYXPU2ZGxH6EmngZ7Bqry1Q71yUCDZtXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pBHtaKF6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqZ4qi3+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E62DC4CEF5;
-	Wed,  3 Dec 2025 16:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pBHtaKF6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AD9C4CEF5;
+	Wed,  3 Dec 2025 16:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778165;
-	bh=OywTpRZJ32oqjklvRqQXgNR+6tEHfKsWjUqwF/MAi/U=;
+	s=korg; t=1764778169;
+	bh=TvXYRFO9nJXm+nuN4bSBxclUnzOUp5gmlzMA5LB+QvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqZ4qi3+//4UepumCxSYeO79/Hz+Et3p446AggILaOjNHwbSH/gChNGdhHTbZhDAl
-	 58a+boloDTUkS/OXNdOC3lzaqwovzzN1oqIHWOCi/lbc6LpXzKl61F0GDFBOFxhyvq
-	 WnLvurQlPieNrqx1QO5R8fs7BgZlD0oaT1rdffPg=
+	b=pBHtaKF6TZ6ac8lEgLU25UeC2Bc+slnnW/BNSXhUOi9Z5ESTjfqj9Cn914JzptTxB
+	 bV58iUvLixLZwQIRaa8Vz+Te+SOsaJMa+XnwkRuCcsEKq/LYo79lynxGxhowK7mKay
+	 1ttHqGxnLAamUkZfT7XTzHWCH+tv6RAcddd4Pduk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haein Lee <lhi0729@kaist.ac.kr>,
-	Takashi Iwai <tiwai@suse.de>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 263/392] ALSA: usb-audio: Fix NULL pointer dereference in snd_usb_mixer_controls_badd
-Date: Wed,  3 Dec 2025 16:26:53 +0100
-Message-ID: <20251203152423.844550681@linuxfoundation.org>
+Subject: [PATCH 5.15 264/392] bpf: Add bpf_prog_run_data_pointers()
+Date: Wed,  3 Dec 2025 16:26:54 +0100
+Message-ID: <20251203152423.880607280@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,46 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haein Lee <lhi0729@kaist.ac.kr>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 632108ec072ad64c8c83db6e16a7efee29ebfb74 ]
+[ Upstream commit 4ef92743625818932b9c320152b58274c05e5053 ]
 
-In snd_usb_create_streams(), for UAC version 3 devices, the Interface
-Association Descriptor (IAD) is retrieved via usb_ifnum_to_if(). If this
-call fails, a fallback routine attempts to obtain the IAD from the next
-interface and sets a BADD profile. However, snd_usb_mixer_controls_badd()
-assumes that the IAD retrieved from usb_ifnum_to_if() is always valid,
-without performing a NULL check. This can lead to a NULL pointer
-dereference when usb_ifnum_to_if() fails to find the interface descriptor.
+syzbot found that cls_bpf_classify() is able to change
+tc_skb_cb(skb)->drop_reason triggering a warning in sk_skb_reason_drop().
 
-This patch adds a NULL pointer check after calling usb_ifnum_to_if() in
-snd_usb_mixer_controls_badd() to prevent the dereference.
+WARNING: CPU: 0 PID: 5965 at net/core/skbuff.c:1192 __sk_skb_reason_drop net/core/skbuff.c:1189 [inline]
+WARNING: CPU: 0 PID: 5965 at net/core/skbuff.c:1192 sk_skb_reason_drop+0x76/0x170 net/core/skbuff.c:1214
 
-This issue was discovered by syzkaller, which triggered the bug by sending
-a crafted USB device descriptor.
+struct tc_skb_cb has been added in commit ec624fe740b4 ("net/sched:
+Extend qdisc control block with tc control block"), which added a wrong
+interaction with db58ba459202 ("bpf: wire in data and data_end for
+cls_act_bpf").
 
-Fixes: 17156f23e93c ("ALSA: usb: add UAC3 BADD profiles support")
-Signed-off-by: Haein Lee <lhi0729@kaist.ac.kr>
-Link: https://patch.msgid.link/vwhzmoba9j2f.vwhzmob9u9e2.g6@dooray.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+drop_reason was added later.
+
+Add bpf_prog_run_data_pointers() helper to save/restore the net_sched
+storage colliding with BPF data_meta/data_end.
+
+Fixes: ec624fe740b4 ("net/sched: Extend qdisc control block with tc control block")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Closes: https://lore.kernel.org/netdev/6913437c.a70a0220.22f260.013b.GAE@google.com/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Victor Nogueira <victor@mojatatu.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20251112125516.1563021-1-edumazet@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/filter.h | 20 ++++++++++++++++++++
+ net/sched/act_bpf.c    |  6 ++----
+ net/sched/cls_bpf.c    |  6 ++----
+ 3 files changed, 24 insertions(+), 8 deletions(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index 5163d5e7682e7..de80240d9ed58 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -3071,6 +3071,8 @@ static int snd_usb_mixer_controls_badd(struct usb_mixer_interface *mixer,
- 	int i;
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index dc49c8eb00fd6..e8d52cf2883a6 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -701,6 +701,26 @@ static inline void bpf_compute_data_pointers(struct sk_buff *skb)
+ 	cb->data_end  = skb->data + skb_headlen(skb);
+ }
  
- 	assoc = usb_ifnum_to_if(dev, ctrlif)->intf_assoc;
-+	if (!assoc)
-+		return -EINVAL;
++static inline int bpf_prog_run_data_pointers(
++	const struct bpf_prog *prog,
++	struct sk_buff *skb)
++{
++	struct bpf_skb_data_end *cb = (struct bpf_skb_data_end *)skb->cb;
++	void *save_data_meta, *save_data_end;
++	int res;
++
++	save_data_meta = cb->data_meta;
++	save_data_end = cb->data_end;
++
++	bpf_compute_data_pointers(skb);
++	res = bpf_prog_run(prog, skb);
++
++	cb->data_meta = save_data_meta;
++	cb->data_end = save_data_end;
++
++	return res;
++}
++
+ /* Similar to bpf_compute_data_pointers(), except that save orginal
+  * data in cb->data and cb->meta_data for restore.
+  */
+diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
+index 5576eb97d39e0..e1b6e88feaf51 100644
+--- a/net/sched/act_bpf.c
++++ b/net/sched/act_bpf.c
+@@ -45,12 +45,10 @@ static int tcf_bpf_act(struct sk_buff *skb, const struct tc_action *act,
+ 	filter = rcu_dereference(prog->filter);
+ 	if (at_ingress) {
+ 		__skb_push(skb, skb->mac_len);
+-		bpf_compute_data_pointers(skb);
+-		filter_res = bpf_prog_run(filter, skb);
++		filter_res = bpf_prog_run_data_pointers(filter, skb);
+ 		__skb_pull(skb, skb->mac_len);
+ 	} else {
+-		bpf_compute_data_pointers(skb);
+-		filter_res = bpf_prog_run(filter, skb);
++		filter_res = bpf_prog_run_data_pointers(filter, skb);
+ 	}
+ 	if (skb_sk_is_prefetched(skb) && filter_res != TC_ACT_OK)
+ 		skb_orphan(skb);
+diff --git a/net/sched/cls_bpf.c b/net/sched/cls_bpf.c
+index b7c46a93a4121..63fb61a290cd6 100644
+--- a/net/sched/cls_bpf.c
++++ b/net/sched/cls_bpf.c
+@@ -95,12 +95,10 @@ static int cls_bpf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+ 		} else if (at_ingress) {
+ 			/* It is safe to push/pull even if skb_shared() */
+ 			__skb_push(skb, skb->mac_len);
+-			bpf_compute_data_pointers(skb);
+-			filter_res = bpf_prog_run(prog->filter, skb);
++			filter_res = bpf_prog_run_data_pointers(prog->filter, skb);
+ 			__skb_pull(skb, skb->mac_len);
+ 		} else {
+-			bpf_compute_data_pointers(skb);
+-			filter_res = bpf_prog_run(prog->filter, skb);
++			filter_res = bpf_prog_run_data_pointers(prog->filter, skb);
+ 		}
  
- 	/* Detect BADD capture/playback channels from AS EP descriptors */
- 	for (i = 0; i < assoc->bInterfaceCount; i++) {
+ 		if (prog->exts_integrated) {
 -- 
 2.51.0
 
