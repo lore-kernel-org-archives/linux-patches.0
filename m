@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E10736BCDC;
-	Wed,  3 Dec 2025 16:31:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77A736BCEB;
+	Wed,  3 Dec 2025 16:31:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779493; cv=none; b=uUksN9PynX0fyhimlN0qBZXKGF90F3tw0kAVGAP3ndw8soH4/W0wG6Pyo2KmRJ7dPwcGqUJUGequp5ii5NKINM9o3O802IMVGeZL31xfEwQ3Uc3oVjC6fuZectnq3B1aWPlj/RXebLzHOyQu47FhJndZ9TYw43h6bf6VgLNJHVk=
+	t=1764779497; cv=none; b=De1rJq/uKADVFgxmCnPD1czh6OqLeCxYM4e6IgncWBjfzjMsn3TUqerNX7doBJZKRQBq5aPugo+rwT5PlHrXDupaFsZtFTsilqul8bXx1ZL71Eedcv/2vbLyIVAv6zTd5CMIu413Dn4hEQ0V6N1sd2grj101fxuLQpXhworHM9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779493; c=relaxed/simple;
-	bh=P9ZdOE1JXWBmYAWk0kvmL6WxX/A8fPRf6qrdHcXYgT0=;
+	s=arc-20240116; t=1764779497; c=relaxed/simple;
+	bh=TnGajzmdmi4DdxKF77LGYKkT+GpRU+MNJhP2r3RprWM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kuqNVQdO5PZJ3U31A9JbaKEJGtqP7nLOzAeC5OdJhg9iKqV7g72QdHvFcNBViU+oauZG67i3Bp2MHiqKPGggAKkONC6AUG6IQJfnnaLQ9OJVCZJhw622u/2w4rW8CC+Xo0QWntHuDSs87w1JWT5o4DS6/3nCEDS27jnExFOP5s0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lgwm84oi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E1bVxFW/F/TP0+gqmDUtN1iwiDJirp3CYFizSt51g3E6eamdD4/0/ayi30oQ7Z8RDX/Dqjdcr+39i5fBksP8GFF1MbReRcrRTp3kl8nMWUV/MtINE8o6kYhDfJ7OeXmHqsVbCsUm4osSLWpjgu4spH7GzLaP3THZMm4C8JBL5cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTdqZz7b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lgwm84oi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE13C116B1;
-	Wed,  3 Dec 2025 16:31:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTdqZz7b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A482C16AAE;
+	Wed,  3 Dec 2025 16:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779493;
-	bh=P9ZdOE1JXWBmYAWk0kvmL6WxX/A8fPRf6qrdHcXYgT0=;
+	s=korg; t=1764779496;
+	bh=TnGajzmdmi4DdxKF77LGYKkT+GpRU+MNJhP2r3RprWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lgwm84oiR8kStI6UR30QVV05SXnJAqVy7mro5zU4+F5Hcmw7l7t87L8fkIfJb/+Yj
-	 t3aTctXJJhje16bMviqp5uLqeb+CrwhGwqby3n5NLzbOTfzkLenVg0LydVZA2w0FAx
-	 2ybTZmUqNNwUPMZ7Z6p2v3nC/6yQxTMFbrOOQ4J0=
+	b=cTdqZz7b5AC0UnzZBdN2VEwHMpYiGZYNM7Co8to0Yf6nur0XkG0PSYPVZLhMdseCc
+	 kFkiXDXeyP1RJ8tW1KanremxH5CKKWhRGT/6P51+wya7jgZNbEA8v9w3Q1mhZm6N4Q
+	 HA62Ow3kPd8jji2b7iSlj/urtEhdeJmP2jMiKOd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fiona Ebner <f.ebner@proxmox.com>,
-	Steve French <stfrench@microsoft.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 273/568] smb: client: transport: avoid reconnects triggered by pending task work
-Date: Wed,  3 Dec 2025 16:24:35 +0100
-Message-ID: <20251203152450.710421077@linuxfoundation.org>
+Subject: [PATCH 6.1 247/568] PCI: cadence: Check for the existence of cdns_pcie::ops before using it
+Date: Wed,  3 Dec 2025 16:24:09 +0100
+Message-ID: <20251203152449.765953485@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,67 +51,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Chen Wang <unicorn_wang@outlook.com>
 
-[ Upstream commit 00be6f26a2a7c671f1402d74c4d3c30a5844660a ]
+[ Upstream commit 49a6c160ad4812476f8ae1a8f4ed6d15adfa6c09 ]
 
-When io_uring is used in the same task as CIFS, there might be
-unnecessary reconnects, causing issues in user-space applications
-like QEMU with a log like:
+cdns_pcie::ops might not be populated by all the Cadence glue drivers. This
+is going to be true for the upcoming Sophgo platform which doesn't set the
+ops.
 
-> CIFS: VFS: \\10.10.100.81 Error -512 sending data on socket to server
+Hence, add a check to prevent NULL pointer dereference.
 
-Certain io_uring completions might be added to task_work with
-notify_method being TWA_SIGNAL and thus TIF_NOTIFY_SIGNAL is set for
-the task.
-
-In __smb_send_rqst(), signals are masked before calling
-smb_send_kvec(), but the masking does not apply to TIF_NOTIFY_SIGNAL.
-
-If sk_stream_wait_memory() is reached via sock_sendmsg() while
-TIF_NOTIFY_SIGNAL is set, signal_pending(current) will evaluate to
-true there, and -EINTR will be propagated all the way from
-sk_stream_wait_memory() to sock_sendmsg() in smb_send_kvec().
-Afterwards, __smb_send_rqst() will see that not everything was written
-and reconnect.
-
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Chen Wang <unicorn_wang@outlook.com>
+[mani: reworded subject and description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://patch.msgid.link/35182ee1d972dfcd093a964e11205efcebbdc044.1757643388.git.unicorn_wang@outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/transport.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/pci/controller/cadence/pcie-cadence-host.c | 2 +-
+ drivers/pci/controller/cadence/pcie-cadence.c      | 4 ++--
+ drivers/pci/controller/cadence/pcie-cadence.h      | 6 +++---
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index d2867bd263c55..8a0342bb3ebe7 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -22,6 +22,7 @@
- #include <linux/mempool.h>
- #include <linux/sched/signal.h>
- #include <linux/task_io_accounting_ops.h>
-+#include <linux/task_work.h>
- #include "cifspdu.h"
- #include "cifsglob.h"
- #include "cifsproto.h"
-@@ -211,9 +212,16 @@ smb_send_kvec(struct TCP_Server_Info *server, struct msghdr *smb_msg,
- 		 * send a packet.  In most cases if we fail to send
- 		 * after the retries we will kill the socket and
- 		 * reconnect which may clear the network problem.
-+		 *
-+		 * Even if regular signals are masked, EINTR might be
-+		 * propagated from sk_stream_wait_memory() to here when
-+		 * TIF_NOTIFY_SIGNAL is used for task work. For example,
-+		 * certain io_uring completions will use that. Treat
-+		 * having EINTR with pending task work the same as EAGAIN
-+		 * to avoid unnecessary reconnects.
- 		 */
- 		rc = sock_sendmsg(ssocket, smb_msg);
--		if (rc == -EAGAIN) {
-+		if (rc == -EAGAIN || unlikely(rc == -EINTR && task_work_pending(current))) {
- 			retries++;
- 			if (retries >= 14 ||
- 			    (!server->noblocksnd && (retries > 2))) {
+diff --git a/drivers/pci/controller/cadence/pcie-cadence-host.c b/drivers/pci/controller/cadence/pcie-cadence-host.c
+index 0a1b11d41a38a..d2c8d5e0882a5 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence-host.c
++++ b/drivers/pci/controller/cadence/pcie-cadence-host.c
+@@ -452,7 +452,7 @@ static int cdns_pcie_host_init_address_translation(struct cdns_pcie_rc *rc)
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_PCI_ADDR1(0), addr1);
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(0), desc1);
+ 
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(12) |
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
+index 13c4032ca379a..ddf893fb8e164 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.c
++++ b/drivers/pci/controller/cadence/pcie-cadence.c
+@@ -89,7 +89,7 @@ void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
+ 	cdns_pcie_writel(pcie, CDNS_PCIE_AT_OB_REGION_DESC1(r), desc1);
+ 
+ 	/* Set the CPU address */
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(nbits) |
+@@ -119,7 +119,7 @@ void cdns_pcie_set_outbound_region_for_normal_msg(struct cdns_pcie *pcie,
+ 	}
+ 
+ 	/* Set the CPU address */
+-	if (pcie->ops->cpu_addr_fixup)
++	if (pcie->ops && pcie->ops->cpu_addr_fixup)
+ 		cpu_addr = pcie->ops->cpu_addr_fixup(pcie, cpu_addr);
+ 
+ 	addr0 = CDNS_PCIE_AT_OB_REGION_CPU_ADDR0_NBITS(17) |
+diff --git a/drivers/pci/controller/cadence/pcie-cadence.h b/drivers/pci/controller/cadence/pcie-cadence.h
+index 2891e8c16a592..ff5ee5c787fbc 100644
+--- a/drivers/pci/controller/cadence/pcie-cadence.h
++++ b/drivers/pci/controller/cadence/pcie-cadence.h
+@@ -494,7 +494,7 @@ static inline u32 cdns_pcie_ep_fn_readl(struct cdns_pcie *pcie, u8 fn, u32 reg)
+ 
+ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->start_link)
++	if (pcie->ops && pcie->ops->start_link)
+ 		return pcie->ops->start_link(pcie);
+ 
+ 	return 0;
+@@ -502,13 +502,13 @@ static inline int cdns_pcie_start_link(struct cdns_pcie *pcie)
+ 
+ static inline void cdns_pcie_stop_link(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->stop_link)
++	if (pcie->ops && pcie->ops->stop_link)
+ 		pcie->ops->stop_link(pcie);
+ }
+ 
+ static inline bool cdns_pcie_link_up(struct cdns_pcie *pcie)
+ {
+-	if (pcie->ops->link_up)
++	if (pcie->ops && pcie->ops->link_up)
+ 		return pcie->ops->link_up(pcie);
+ 
+ 	return true;
 -- 
 2.51.0
 
