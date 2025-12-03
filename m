@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E485398F9B;
-	Wed,  3 Dec 2025 16:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74115398FA5;
+	Wed,  3 Dec 2025 16:58:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781135; cv=none; b=vE20okiWeGKRTsK1tTKpaNdk2gnZEQ4jggbpM9Q6vwdEFHO7OnWHZ2WF08KgsqpWtxEGnMLDkH8s7f9l2S+3SL39Tf9XU1YS5li47cDwY17gKi24Rx0B1akyJ5FQFiqkb/V9uVyNw/y/EqMLNadEVhkjt2QejbqcRKgoEb6Kd8I=
+	t=1764781138; cv=none; b=GZLpdtuunil7CNwmAfzEfN2Qphd4Bnpv6yA9Z80PIs2O9APhSqZ0K5lC7AH+H0QcBt2KXK4hH7eR2gm+m3w25xjEufIr+NNZEBCJqxXdurl254QeM9qmV3nwV2sRKG5MeMAi1zthHR5C8wzXJJKulBuskGsqH0JVEWvvKtkaoU0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781135; c=relaxed/simple;
-	bh=l5E5WdZNG9BR3ZMrpej7gLujfYobZxy5xH4P1afD4+o=;
+	s=arc-20240116; t=1764781138; c=relaxed/simple;
+	bh=WEUutv3PxOZrXBwqd/zLsHqHUlgJPdJAAH0KSkVWQPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XXtQ9iVgZoglIlKC3TnNOhwjeQxhL/EFvKYuFfUXEyD9fsvuk1I4/V+aDWYBByl0UvNeuqx8Lg9xD8TmXYR9cdRt1mjmmkk3oDAI5zbibrB1BTlbe9qoygfaYX7xSt9WL0kbutvgYIjbFMRDhq+wqXAAuhXrw+9ETbAL6ikktlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qs94F5d7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TarxvdDiCaye72eIrdkt18kNL9e10+gfNX054vW/XFKKEJbOOcPleO3Zl/o0y+dePneXPL1CiD4y1C+FLfuJYjSOkTh0Bo4XPf8NdX0d0J7aFYSmUP2WuDg/eK7YXib6KXlJYweLnVRElt23vsWmAc3EFmrGemie1zuQ1+1n4fU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaZAVyJk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qs94F5d7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28842C4CEF5;
-	Wed,  3 Dec 2025 16:58:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaZAVyJk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A9F4C4CEF5;
+	Wed,  3 Dec 2025 16:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781134;
-	bh=l5E5WdZNG9BR3ZMrpej7gLujfYobZxy5xH4P1afD4+o=;
+	s=korg; t=1764781137;
+	bh=WEUutv3PxOZrXBwqd/zLsHqHUlgJPdJAAH0KSkVWQPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qs94F5d7qqaopSFZNLBu2w041JV/5odD7N0VkJQxoi9yrOn+hN5jYlErsIK9+Q5Nb
-	 vO9jfB2Iu8KIH428wWfbDj1CWzXjgWcm+c8UopTWObMOMNKqFZQLsdAC/upi8VPyxc
-	 UhqqH14qhieRLjDXRMZkBrCRWhgXqzeHeWnz6BsQ=
+	b=WaZAVyJkDqdD3AVRWP3i5Gr+7FIYHPxE/F54Izu+/3Wr5xtSqE3vp3AlA1i25Ghw0
+	 IZAyuZRNrKhAAJr/vLl0/clWxoXKSD0+zkz+I2gDRYFuUs/Dm5MOHiOpHUsZfXsY6b
+	 NE3m9Qprj6L1A5tlMm9uUm9DUBZHHEnVejay202Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 17/93] net: fec: cancel perout_timer when PEROUT is disabled
-Date: Wed,  3 Dec 2025 16:29:10 +0100
-Message-ID: <20251203152337.148279531@linuxfoundation.org>
+	Ang Tien Sung <tiensung.ang@altera.com>,
+	Khairul Anuar Romli <khairul.anuar.romli@altera.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.6 53/93] firmware: stratix10-svc: fix bug in saving controller data
+Date: Wed,  3 Dec 2025 16:29:46 +0100
+Message-ID: <20251203152338.484005690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,42 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
 
-[ Upstream commit 50caa744689e505414673c20359b04aa918439e3 ]
+commit d0fcf70c680e4d1669fcb3a8632f41400b9a73c2 upstream.
 
-The PEROUT allows the user to set a specified future time to output the
-periodic signal. If the future time is far from the current time, the FEC
-driver will use hrtimer to configure PEROUT one second before the future
-time. However, the hrtimer will not be canceled if the PEROUT is disabled
-before the hrtimer expires. So the PEROUT will be configured when the
-hrtimer expires, which is not as expected. Therefore, cancel the hrtimer
-in fec_ptp_pps_disable() to fix this issue.
+Fix the incorrect usage of platform_set_drvdata and dev_set_drvdata. They
+both are of the same data and overrides each other. This resulted in the
+rmmod of the svc driver to fail and throw a kernel panic for kthread_stop
+and fifo free.
 
-Fixes: 350749b909bf ("net: fec: Add support for periodic output signal of PPS")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20251125085210.1094306-2-wei.fang@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b5dc75c915cd ("firmware: stratix10-svc: extend svc to support new RSU features")
+Cc: stable@vger.kernel.org # 6.6+
+Signed-off-by: Ang Tien Sung <tiensung.ang@altera.com>
+Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/fec_ptp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firmware/stratix10-svc.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 7f6b574320716..cb3f05da3eee6 100644
---- a/drivers/net/ethernet/freescale/fec_ptp.c
-+++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -498,6 +498,8 @@ static int fec_ptp_pps_disable(struct fec_enet_private *fep, uint channel)
- {
- 	unsigned long flags;
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -134,6 +134,7 @@ struct stratix10_svc_data {
+  * @complete_status: state for completion
+  * @svc_fifo_lock: protect access to service message data queue
+  * @invoke_fn: function to issue secure monitor call or hypervisor call
++ * @svc: manages the list of client svc drivers
+  *
+  * This struct is used to create communication channels for service clients, to
+  * handle secure monitor or hypervisor call.
+@@ -150,6 +151,7 @@ struct stratix10_svc_controller {
+ 	struct completion complete_status;
+ 	spinlock_t svc_fifo_lock;
+ 	svc_invoke_fn *invoke_fn;
++	struct stratix10_svc *svc;
+ };
  
-+	hrtimer_cancel(&fep->perout_timer);
-+
- 	spin_lock_irqsave(&fep->tmreg_lock, flags);
- 	writel(0, fep->hwp + FEC_TCSR(channel));
- 	spin_unlock_irqrestore(&fep->tmreg_lock, flags);
--- 
-2.51.0
-
+ /**
+@@ -1209,6 +1211,7 @@ static int stratix10_svc_drv_probe(struc
+ 		ret = -ENOMEM;
+ 		goto err_free_kfifo;
+ 	}
++	controller->svc = svc;
+ 
+ 	svc->stratix10_svc_rsu = platform_device_alloc(STRATIX10_RSU, 0);
+ 	if (!svc->stratix10_svc_rsu) {
+@@ -1236,8 +1239,6 @@ static int stratix10_svc_drv_probe(struc
+ 		goto err_unregister_dev;
+ 	}
+ 
+-	dev_set_drvdata(dev, svc);
+-
+ 	pr_info("Intel Service Layer Driver Initialized\n");
+ 
+ 	return 0;
+@@ -1253,8 +1254,8 @@ err_destroy_pool:
+ 
+ static int stratix10_svc_drv_remove(struct platform_device *pdev)
+ {
+-	struct stratix10_svc *svc = dev_get_drvdata(&pdev->dev);
+ 	struct stratix10_svc_controller *ctrl = platform_get_drvdata(pdev);
++	struct stratix10_svc *svc = ctrl->svc;
+ 
+ 	platform_device_unregister(svc->intel_svc_fcs);
+ 	platform_device_unregister(svc->stratix10_svc_rsu);
 
 
