@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001D034A3D0;
-	Wed,  3 Dec 2025 16:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F52F34A77E;
+	Wed,  3 Dec 2025 16:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777664; cv=none; b=qu14Im+qSwiwyQRehqoEakN5L0Vw5FDIHCMYaFN1/fLzy7rnoQG1CCVDf5eCWvhhxbIB0Sg17BfuyJ56Px/IXhkMHshZIQP7urwSSnq5sycLbXbTI+BpM2ug/RA0q6sIumuTaEbXvYeKacthBFVu0vJPViCBc/gOCwOZLw+OQnU=
+	t=1764777667; cv=none; b=M8qUde7cgdW8VeM0cqz/igB9AgQWfDNNGvCwrosUy+RtqHQmbHtac61lQk+F9+1D9xomd8nCzhssjA5MO1+zNt5mM/1RrOcRByxBu3uFjVnFOKFbtSgIDjTX56OUxTAdGvqLNtdUeg9ydZJjZ2BZzw5sz1XTbkCynUt5T2N/XQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777664; c=relaxed/simple;
-	bh=MlOcCRStL/CrFsnbwShZgg650SSCkFd/FhdGi62x+bw=;
+	s=arc-20240116; t=1764777667; c=relaxed/simple;
+	bh=WAJndhheaQWhDobcJqDngIqhlsW5EkT/lpfAbnnkTmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JiM0E0AIWFZ/JGUs9IJ/1EECodjsGx8aK2JxOYut4DUGUV7y5X//1hrLUsX3uOLWa6kNer+I2WuR716QQckJ/93dw4N245Wf1q12aHkGBxLgE5EaHFoQJ011CiuSpGPP1EiHsN1ooU9FdM86Xx1F19KnnKuRAOM32FdJROP9YqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHKIl14j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IE1vRclxr2jr3336HJw6V1iky2fHNVyIFGc1gNLtlQp+a6bVTkxWWdV7nxumNlvPsoAAzQWZ9OItz6K90wzR3FchFNrmQYgblAOMw/W/Q+JkhObxpyl3/XTWXT5CMztuFce208FaMj58oQvVTG/Bhr1PCf2xkWrN2J54N7EpiFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFtjzu1u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHKIl14j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFC4C4CEF5;
-	Wed,  3 Dec 2025 16:01:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFtjzu1u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DE3C4CEF5;
+	Wed,  3 Dec 2025 16:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777663;
-	bh=MlOcCRStL/CrFsnbwShZgg650SSCkFd/FhdGi62x+bw=;
+	s=korg; t=1764777667;
+	bh=WAJndhheaQWhDobcJqDngIqhlsW5EkT/lpfAbnnkTmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHKIl14jnRkfyg6iCnTm+72teObltbiabEkdTUF3o01b75hMw1S2WfX6oQS8Uxx1B
-	 gHfVLDet1ZMc+y/FjATMqALqfAOZMzz7Ehu4LPBurQx8LrAjw0yCHx/D+9JlHI0LU8
-	 mtjAQmq6UHIfoRLwDK/Q2xQOPhIH1TZr3EF8rIxk=
+	b=YFtjzu1uD1SKYEf8KIIAW2NdBbZKzDz/zoBiEPd9+vCk9f/bgMsz4K8E6cQh1YCWJ
+	 RtdIWsrbIEy48GDYlM7c1QfBFLaYWKR1EAgdsVx3NdQLJlOk47YlIR7dilZK0JJING
+	 Kcse3mCX7GbsGlJ7h9i698s9+o8a7DTHV1JqkVTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/392] drm/bridge: display-connector: dont set OP_DETECT for DisplayPorts
-Date: Wed,  3 Dec 2025 16:24:18 +0100
-Message-ID: <20251203152418.072806330@linuxfoundation.org>
+Subject: [PATCH 5.15 109/392] iio: adc: spear_adc: mask SPEAR_ADC_STATUS channel and avg sample before setting register
+Date: Wed,  3 Dec 2025 16:24:19 +0100
+Message-ID: <20251203152418.109529204@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -54,49 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
 
-[ Upstream commit cb640b2ca54617f4a9d4d6efd5ff2afd6be11f19 ]
+[ Upstream commit d75c7021c08e8ae3f311ef2464dca0eaf75fab9f ]
 
-Detecting the monitor for DisplayPort targets is more complicated than
-just reading the HPD pin level: it requires reading the DPCD in order to
-check what kind of device is attached to the port and whether there is
-an actual display attached.
+avg sample info is a bit field coded inside the following
+bits: 5,6,7 and 8 of a device status register.
 
-In order to let DRM framework handle such configurations, disable
-DRM_BRIDGE_OP_DETECT for dp-connector devices, letting the actual DP
-driver perform detection. This still keeps DRM_BRIDGE_OP_HPD enabled, so
-it is valid for the bridge to report HPD events.
+Channel num info the same, but over bits: 1, 2 and 3.
 
-Currently inside the kernel there are only two targets which list
-hpd-gpios for dp-connector devices: arm64/qcom/qcs6490-rb3gen2 and
-arm64/qcom/sa8295p-adp. Both should be fine with this change.
+Mask both values in order to avoid touching other register bits,
+since the first info (avg sample), came from DT.
 
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org
-Acked-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://lore.kernel.org/r/20250802-dp-conn-no-detect-v1-1-2748c2b946da@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Rodrigo Gobbi <rodrigo.gobbi.7@gmail.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Link: https://patch.msgid.link/20250717221559.158872-1-rodrigo.gobbi.7@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/display-connector.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/adc/spear_adc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/display-connector.c b/drivers/gpu/drm/bridge/display-connector.c
-index d24f5b90feabf..d8510d9239119 100644
---- a/drivers/gpu/drm/bridge/display-connector.c
-+++ b/drivers/gpu/drm/bridge/display-connector.c
-@@ -351,7 +351,8 @@ static int display_connector_probe(struct platform_device *pdev)
- 	if (conn->bridge.ddc)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_EDID
- 				 |  DRM_BRIDGE_OP_DETECT;
--	if (conn->hpd_gpio)
-+	/* Detecting the monitor requires reading DPCD */
-+	if (conn->hpd_gpio && type != DRM_MODE_CONNECTOR_DisplayPort)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_DETECT;
- 	if (conn->hpd_irq >= 0)
- 		conn->bridge.ops |= DRM_BRIDGE_OP_HPD;
+diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
+index d93e580b3dc5b..8fda16dd012f7 100644
+--- a/drivers/iio/adc/spear_adc.c
++++ b/drivers/iio/adc/spear_adc.c
+@@ -12,6 +12,7 @@
+ #include <linux/kernel.h>
+ #include <linux/slab.h>
+ #include <linux/io.h>
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/err.h>
+ #include <linux/completion.h>
+@@ -29,9 +30,9 @@
+ 
+ /* Bit definitions for SPEAR_ADC_STATUS */
+ #define SPEAR_ADC_STATUS_START_CONVERSION	BIT(0)
+-#define SPEAR_ADC_STATUS_CHANNEL_NUM(x)		((x) << 1)
++#define SPEAR_ADC_STATUS_CHANNEL_NUM_MASK	GENMASK(3, 1)
+ #define SPEAR_ADC_STATUS_ADC_ENABLE		BIT(4)
+-#define SPEAR_ADC_STATUS_AVG_SAMPLE(x)		((x) << 5)
++#define SPEAR_ADC_STATUS_AVG_SAMPLE_MASK	GENMASK(8, 5)
+ #define SPEAR_ADC_STATUS_VREF_INTERNAL		BIT(9)
+ 
+ #define SPEAR_ADC_DATA_MASK		0x03ff
+@@ -157,8 +158,8 @@ static int spear_adc_read_raw(struct iio_dev *indio_dev,
+ 	case IIO_CHAN_INFO_RAW:
+ 		mutex_lock(&st->lock);
+ 
+-		status = SPEAR_ADC_STATUS_CHANNEL_NUM(chan->channel) |
+-			SPEAR_ADC_STATUS_AVG_SAMPLE(st->avg_samples) |
++		status = FIELD_PREP(SPEAR_ADC_STATUS_CHANNEL_NUM_MASK, chan->channel) |
++			FIELD_PREP(SPEAR_ADC_STATUS_AVG_SAMPLE_MASK, st->avg_samples) |
+ 			SPEAR_ADC_STATUS_START_CONVERSION |
+ 			SPEAR_ADC_STATUS_ADC_ENABLE;
+ 		if (st->vref_external == 0)
 -- 
 2.51.0
 
