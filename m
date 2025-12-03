@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16DE1393DD7;
-	Wed,  3 Dec 2025 16:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F709393DE6;
+	Wed,  3 Dec 2025 16:51:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780689; cv=none; b=DSzAM9WXf1KSS9cuq4qoUgMKxsqYgH4hIPKBmzHB4dSCrPtK4qE93IBtXqoINqUfePHZ1obnTCPm/iujToQlYImLrzqu8oVqJf1iWfEaouFmnGe9lf4C+faBt9q5mfXKC+4AgOtaqwWw2RE7ko6zITJ+OqYgnq+1KPV5BvgvvF8=
+	t=1764780692; cv=none; b=F6upomaJGFSZ2ERt+NGMpYsrqJisbmwFCBcIxyz3RjjX5Eb+DFq4AoQZJwk+kcUFahWZ4pQQaB6lBhoRlVQU9hMzwmmDvtACaTGhnBMEv/X/Dep38YNZQh8CU6FI/A/3n4Asa/gbrv9xO1+ANSeSMxBk2ZBe1Hu7QVNay+ILVbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780689; c=relaxed/simple;
-	bh=NVeQLv/V7RhU98lUaXjF32F2dIyqVPz0RmHuj/0yMaQ=;
+	s=arc-20240116; t=1764780692; c=relaxed/simple;
+	bh=7u/TbkyrglSHPc8lChmjrv1+CCeJIQwjcilXkE4xff8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GW7nsc7MeMrADy4taeg+VUYFAkcNRS+rJ2Mq83dlIZoMGvlHvwDy2Z9IH49vGX5vFfulVuqGuLyS5baCg0/4f/Bwo9emL5KB7A8YrYYE1cPJLSX0M5y7WYjwZp+Mh6sPCAxAynKKFOaO8aEQ0p2wJTwNsKruPqy34dWjbfzUreU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFJfcQTi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JeQIFVvB8ul26QB5A/LXRzKU2x3JpeEu7OwCgW1zTJkDObtdqYYT19cDlc619Mfr2c/WghyhCRpdDfcaM1GBQ+Xo3qjcMmcHEWgnyKhaq2qCoJ4WMKq5Sry/ELvcDIbskJIg4I43IRN2cx0og5I4M82A8vouLqqY75ojY/cHhUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=II9OtNZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFJfcQTi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D89C4CEF5;
-	Wed,  3 Dec 2025 16:51:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="II9OtNZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD575C4CEF5;
+	Wed,  3 Dec 2025 16:51:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780689;
-	bh=NVeQLv/V7RhU98lUaXjF32F2dIyqVPz0RmHuj/0yMaQ=;
+	s=korg; t=1764780692;
+	bh=7u/TbkyrglSHPc8lChmjrv1+CCeJIQwjcilXkE4xff8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFJfcQTio+hbzM4i0XRevzs3SZqFngSYhjNV7OCEjtkFpCwTDQSsf+TBRimoHzZVZ
-	 JwMY8afbqa5+ifIYjFctTgASs+/KpfAoJzE3aSfuHGQ9fEL4/PqzJAPQppVWrrmcWj
-	 TAp4W/a6qng85Tr9npOZ69IQBpqtQRTmXNHIGFqQ=
+	b=II9OtNZoHszj+Vze/CsEGkh11efyskjV4b2bKdwKY0ClJgJ2rRe0HNvO+pXrgxImR
+	 S8NzZu8IXTnW8MSt3iiGs6AZ8cZkdngpVguFnANO88ysIStESvLVakJ0knSs3NE6xY
+	 AdL6T0kSOR00gA7E0aJwo2kTzrAeHJyz+TksTMmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Valek Andrej <andrej.v@skyrain.eu>,
+	Kessler Markus <markus.kessler@hilti.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 059/132] iio: accel: bmc150: Fix irq assumption regression
-Date: Wed,  3 Dec 2025 16:28:58 +0100
-Message-ID: <20251203152345.482197389@linuxfoundation.org>
+Subject: [PATCH 6.12 060/132] iio: accel: fix ADXL355 startup race condition
+Date: Wed,  3 Dec 2025 16:28:59 +0100
+Message-ID: <20251203152345.519033442@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -46,82 +46,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Valek Andrej <andrej.v@skyrain.eu>
 
-commit 3aa385a9c75c09b59dcab2ff76423439d23673ab upstream.
+commit c92c1bc408e9e11ae3c7011b062fdd74c09283a3 upstream.
 
-The code in bmc150-accel-core.c unconditionally calls
-bmc150_accel_set_interrupt() in the iio_buffer_setup_ops,
-such as on the runtime PM resume path giving a kernel
-splat like this if the device has no interrupts:
+There is an race-condition where device is not full working after SW reset.
+Therefore it's necessary to wait some time after reset and verify shadow
+registers values by reading and comparing the values before/after reset.
+This mechanism is described in datasheet at least from revision D.
 
-Unable to handle kernel NULL pointer dereference at virtual
-  address 00000001 when read
-
-PC is at bmc150_accel_set_interrupt+0x98/0x194
-LR is at __pm_runtime_resume+0x5c/0x64
-(...)
-Call trace:
-bmc150_accel_set_interrupt from bmc150_accel_buffer_postenable+0x40/0x108
-bmc150_accel_buffer_postenable from __iio_update_buffers+0xbe0/0xcbc
-__iio_update_buffers from enable_store+0x84/0xc8
-enable_store from kernfs_fop_write_iter+0x154/0x1b4
-
-This bug seems to have been in the driver since the beginning,
-but it only manifests recently, I do not know why.
-
-Store the IRQ number in the state struct, as this is a common
-pattern in other drivers, then use this to determine if we have
-IRQ support or not.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Fixes: 12ed27863ea3 ("iio: accel: Add driver support for ADXL355")
+Signed-off-by: Valek Andrej <andrej.v@skyrain.eu>
+Signed-off-by: Kessler Markus <markus.kessler@hilti.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/accel/bmc150-accel-core.c |    5 +++++
- drivers/iio/accel/bmc150-accel.h      |    1 +
- 2 files changed, 6 insertions(+)
+ drivers/iio/accel/adxl355_core.c |   44 ++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 39 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/accel/bmc150-accel-core.c
-+++ b/drivers/iio/accel/bmc150-accel-core.c
-@@ -529,6 +529,10 @@ static int bmc150_accel_set_interrupt(st
- 	const struct bmc150_accel_interrupt_info *info = intr->info;
+--- a/drivers/iio/accel/adxl355_core.c
++++ b/drivers/iio/accel/adxl355_core.c
+@@ -56,6 +56,8 @@
+ #define  ADXL355_POWER_CTL_DRDY_MSK	BIT(2)
+ #define ADXL355_SELF_TEST_REG		0x2E
+ #define ADXL355_RESET_REG		0x2F
++#define ADXL355_BASE_ADDR_SHADOW_REG	0x50
++#define ADXL355_SHADOW_REG_COUNT	5
+ 
+ #define ADXL355_DEVID_AD_VAL		0xAD
+ #define ADXL355_DEVID_MST_VAL		0x1D
+@@ -294,7 +296,12 @@ static void adxl355_fill_3db_frequency_t
+ static int adxl355_setup(struct adxl355_data *data)
+ {
+ 	unsigned int regval;
++	int retries = 5; /* the number is chosen based on empirical reasons */
  	int ret;
- 
-+	/* We do not always have an IRQ */
-+	if (data->irq <= 0)
-+		return 0;
++	u8 *shadow_regs __free(kfree) = kzalloc(ADXL355_SHADOW_REG_COUNT, GFP_KERNEL);
 +
- 	if (state) {
- 		if (atomic_inc_return(&intr->users) > 1)
- 			return 0;
-@@ -1702,6 +1706,7 @@ int bmc150_accel_core_probe(struct devic
- 	}
++	if (!shadow_regs)
++		return -ENOMEM;
  
- 	if (irq > 0) {
-+		data->irq = irq;
- 		ret = devm_request_threaded_irq(dev, irq,
- 						bmc150_accel_irq_handler,
- 						bmc150_accel_irq_thread_handler,
---- a/drivers/iio/accel/bmc150-accel.h
-+++ b/drivers/iio/accel/bmc150-accel.h
-@@ -57,6 +57,7 @@ enum bmc150_accel_trigger_id {
+ 	ret = regmap_read(data->regmap, ADXL355_DEVID_AD_REG, &regval);
+ 	if (ret)
+@@ -321,14 +328,41 @@ static int adxl355_setup(struct adxl355_
+ 	if (regval != ADXL355_PARTID_VAL)
+ 		dev_warn(data->dev, "Invalid DEV ID 0x%02x\n", regval);
  
- struct bmc150_accel_data {
- 	struct regmap *regmap;
-+	int irq;
- 	struct regulator_bulk_data regulators[2];
- 	struct bmc150_accel_interrupt interrupts[BMC150_ACCEL_INTERRUPTS];
- 	struct bmc150_accel_trigger triggers[BMC150_ACCEL_TRIGGERS];
+-	/*
+-	 * Perform a software reset to make sure the device is in a consistent
+-	 * state after start-up.
+-	 */
+-	ret = regmap_write(data->regmap, ADXL355_RESET_REG, ADXL355_RESET_CODE);
++	/* Read shadow registers to be compared after reset */
++	ret = regmap_bulk_read(data->regmap,
++			       ADXL355_BASE_ADDR_SHADOW_REG,
++			       shadow_regs, ADXL355_SHADOW_REG_COUNT);
+ 	if (ret)
+ 		return ret;
+ 
++	do {
++		if (--retries == 0) {
++			dev_err(data->dev, "Shadow registers mismatch\n");
++			return -EIO;
++		}
++
++		/*
++		 * Perform a software reset to make sure the device is in a consistent
++		 * state after start-up.
++		 */
++		ret = regmap_write(data->regmap, ADXL355_RESET_REG,
++				   ADXL355_RESET_CODE);
++		if (ret)
++			return ret;
++
++		/* Wait at least 5ms after software reset */
++		usleep_range(5000, 10000);
++
++		/* Read shadow registers for comparison */
++		ret = regmap_bulk_read(data->regmap,
++				       ADXL355_BASE_ADDR_SHADOW_REG,
++				       data->buffer.buf,
++				       ADXL355_SHADOW_REG_COUNT);
++		if (ret)
++			return ret;
++	} while (memcmp(shadow_regs, data->buffer.buf,
++			ADXL355_SHADOW_REG_COUNT));
++
+ 	ret = regmap_update_bits(data->regmap, ADXL355_POWER_CTL_REG,
+ 				 ADXL355_POWER_CTL_DRDY_MSK,
+ 				 FIELD_PREP(ADXL355_POWER_CTL_DRDY_MSK, 1));
 
 
