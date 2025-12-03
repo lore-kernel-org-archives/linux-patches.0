@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6231B3451B4;
-	Wed,  3 Dec 2025 15:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905943446D3;
+	Wed,  3 Dec 2025 15:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777506; cv=none; b=IyLOvQmsxHdnVbJ9HzFuxmU1aJeHc+2cXjxSUYpifKqXSIBeXQABdy46NL+5tnJPtBkoaOU4CUI6Q2wplz+yM7R3c3IVqaaVi/i7WqY6BA1enbfxjPl7T5s+pkfmf3wVDWkj2dfnykDpQ5lk4Hu6Qv5B/7w4mvC8CIcvJ7sXmDU=
+	t=1764777508; cv=none; b=pE/MgWBC4rDONoIKjQV0xMiTsD8nkMt2U9wqJuhIu96HPWiC96pxJVQbSVBfWDc2lDgOamUU+0XHIsnwbUaT6s97mlpDTTUfqOzdg5UlOnaLmb/mIQvPOevjfSkPdXZ92vsv3JBzb7JzA+UignM8R8pjg5EVNNiHo0Wp4UP6C0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777506; c=relaxed/simple;
-	bh=9CJd6JsUM+v+N7mHRCUEm4O6TxZ4NdAo0g6H99jIhOQ=;
+	s=arc-20240116; t=1764777508; c=relaxed/simple;
+	bh=RHFfZbU1//L6R2I7QTkkmgfwcLI8D3n+/fPmsq8VJQ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQQk0IUPvVy+pyrr96uaxBwNAbiLJkmBPDx8kptBmgIFBi5vkh2D7Yp+CAzoG0W+KYC0BIJGAfQ+78l/bwT9V7CdYaJgKCB36Yk3mUA497L+I+8u6aQRvG/glCCDZrkcxWbESVPfy6gqMKJC8tFSjsgxhQWJseV1c8HuGI78QrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WosGoDR2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTX4IeLdqsafKXGjt+O1JFSnxUaW+axpvcju9OmtHotDEEzYZEMu/zPHsEPbgHLicBUlSGstuHmewwn+0M5vSXeqm50Kamt9D7p2vwMWBx4ZeFF9k8rht0sEW5H0f8xugdGPfI/s+N4pOYCU+10OuCGo8HIfMZlTBNUZO6I0jV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lofbNsq/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WosGoDR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8055C4CEF5;
-	Wed,  3 Dec 2025 15:58:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lofbNsq/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83FE3C4CEF5;
+	Wed,  3 Dec 2025 15:58:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777505;
-	bh=9CJd6JsUM+v+N7mHRCUEm4O6TxZ4NdAo0g6H99jIhOQ=;
+	s=korg; t=1764777507;
+	bh=RHFfZbU1//L6R2I7QTkkmgfwcLI8D3n+/fPmsq8VJQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WosGoDR2UM0+BYm+qt/pg5GH2blNGvZQnkdZJi1rPR+LMvpk1S8gX5SuPMaUIJ4Bm
-	 SS3OOjWTGKgqGO6JYb4C1aSz/ldeFFoSK+KkduszSJlIOz/6L5ExLnAV1yZSdO0Zy1
-	 m1TWvHMe/Sd1N0/kktnlLSI4BK5jID4ErK9+eRmA=
+	b=lofbNsq/XQOIIac5A1sd6G0DkmYOBI+BQkboLbQ5hFs7KnX3eRCLFSs0GMxcklHf4
+	 UYcWlNCk8D8EYrhICLPN45g12DS/sGrcRZd9KfI77cdnQncGlIQ+HbpLoRHBKnJM2U
+	 8v8RhWGFMGWuV2YrBmfaeE3ea7ogKwGbLKWpY4xo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chi Zhang <chizhang@asrmicro.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/392] pinctrl: single: fix bias pull up/down handling in pin_config_set
-Date: Wed,  3 Dec 2025 16:23:28 +0100
-Message-ID: <20251203152416.249657279@linuxfoundation.org>
+Subject: [PATCH 5.15 027/392] drm/amd/pm: fix smu table id bound check issue in smu_cmn_update_table()
+Date: Wed,  3 Dec 2025 16:22:57 +0100
+Message-ID: <20251203152415.100020024@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,46 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chi Zhang <chizhang@asrmicro.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit 236152dd9b1675a35eee912e79e6c57ca6b6732f ]
+[ Upstream commit 238d468d3ed18a324bb9d8c99f18c665dbac0511 ]
 
-In the pin_config_set function, when handling PIN_CONFIG_BIAS_PULL_DOWN or
-PIN_CONFIG_BIAS_PULL_UP, the function calls pcs_pinconf_clear_bias()
-which writes the register. However, the subsequent operations continue
-using the stale 'data' value from before the register write, effectively
-causing the bias clear operation to be overwritten and not take effect.
+'table_index' is a variable defined by the smu driver (kmd)
+'table_id' is a variable defined by the hw smu (pmfw)
 
-Fix this by reading the 'data' value from the register after calling
-pcs_pinconf_clear_bias().
+This code should use table_index as a bounds check.
 
-This bug seems to have existed when this code was first merged in commit
-9dddb4df90d1 ("pinctrl: single: support generic pinconf").
-
-Signed-off-by: Chi Zhang <chizhang@asrmicro.com>
-Link: https://lore.kernel.org/20250807062038.13610-1-chizhang@asrmicro.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: caad2613dc4bd ("drm/amd/powerplay: move table setting common code to smu_cmn.c")
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit fca0c66b22303de0d1d6313059baf4dc960a4753)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 28f3fabc72e30..a72911e8ea82d 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -588,8 +588,10 @@ static int pcs_pinconf_set(struct pinctrl_dev *pctldev,
- 				break;
- 			case PIN_CONFIG_BIAS_PULL_DOWN:
- 			case PIN_CONFIG_BIAS_PULL_UP:
--				if (arg)
-+				if (arg) {
- 					pcs_pinconf_clear_bias(pctldev, pin);
-+					data = pcs->read(pcs->base + offset);
-+				}
- 				fallthrough;
- 			case PIN_CONFIG_INPUT_SCHMITT_ENABLE:
- 				data &= ~func->conf[i].mask;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+index 843d2cbfc71d4..fbbbea75c52d4 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
+@@ -883,7 +883,7 @@ int smu_cmn_update_table(struct smu_context *smu,
+ 						      table_index);
+ 	uint32_t table_size;
+ 	int ret = 0;
+-	if (!table_data || table_id >= SMU_TABLE_COUNT || table_id < 0)
++	if (!table_data || table_index >= SMU_TABLE_COUNT || table_id < 0)
+ 		return -EINVAL;
+ 
+ 	table_size = smu_table->tables[table_index].size;
 -- 
 2.51.0
 
