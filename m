@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6447335FF47;
-	Wed,  3 Dec 2025 16:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6E35347BBE;
+	Wed,  3 Dec 2025 16:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779280; cv=none; b=EVkZ8vQdscbmN3aBlPh4be9jN838BBxzs9BbRoC3LUNq5P2LT4DsQ2XGKaQAq18B4c0nb0KCI2rocB+k7bMrMEmO+8aK4/1NI+GkvvAuwKzVYDN+jW3M5VhEnNFhD77lzw/hlLsmxNL+5nUvk06cgqtFrb6SA8Wllfn3PEtKTRc=
+	t=1764779284; cv=none; b=mmLhk29SwNdb3uyLylDkAOVafM43bNgFc/9hwDV9ODhKkRH6UYUbJkuMeXaVb8KX04JMHUrSdkjiQ3wDeb5ae1ZcZFu2ygh0STz02AWPzIcjztDqMphklRXP84A9IQiIorBvvyf0BDguouLoG4hK9yUnNPave9TNJQ15QTIhOoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779280; c=relaxed/simple;
-	bh=A9roOKi9hZc9zXgk5zO8tW610PCSaJiXOSWwdafdYJI=;
+	s=arc-20240116; t=1764779284; c=relaxed/simple;
+	bh=6eD6dT3i1lydbnEWc3yILPy8OrnctzQVDyivME8VkKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R/tQ7OGAhOTX25+LkTK3j+6RFT1zOkwQDSY00GiSZG8ov1sgxsfq+pWAsFdEAEI8/mPvZtqZnUO2kHmwz+UJpwz5eKc3EsZYvBdKYW4WsJ/5JRjnDO+dcg4Zd6YIlkC5dtaaybxVA7NrSKFbZ3q64mJ9NBnNKDTJa4F14xcSQHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rM2Dr4/b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HKHtiXGr28LrkOVAEMvmsEuKRMCc5+wLTCm0ZALhAklAz5fZxsph5i48EOGGG1pqZ2CI3jRZXW0u2pOQfXi2eWNNFH2ZUIR9rchpdTwIUmKq/O+VNMPUv2MWzq8YcGmXhg8l3ZvYzqpN/8lSkcdyIYZqCmgy/EUTzTwaGwxAiiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AHPnGaKd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rM2Dr4/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4634C4CEF5;
-	Wed,  3 Dec 2025 16:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AHPnGaKd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC231C4CEF5;
+	Wed,  3 Dec 2025 16:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779280;
-	bh=A9roOKi9hZc9zXgk5zO8tW610PCSaJiXOSWwdafdYJI=;
+	s=korg; t=1764779283;
+	bh=6eD6dT3i1lydbnEWc3yILPy8OrnctzQVDyivME8VkKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rM2Dr4/bzPgzQpxmYVsqbnyYfI0d2ILfRpP3meQffwf4Vafc/GRSM191HFAcnzRj+
-	 mdWapJer5oykNKYfJjOjusryPsF84A1j4hkgw8paBbKWUgUwlXe6rgk+FQ8cMLTEOO
-	 MAkmLoyYiHXPV5TvFhuQzzaQRNzFV+oJ1ReKE6sg=
+	b=AHPnGaKdsA7C7sk9qIasKDoXW4Sd5X/iSsAYKW7yIu477UVVawTaIMnjFkZGJ39k2
+	 PiiPICsUClbNSalp8MwhNtrLjZI1NpemhxJSHf86wUe24QNN2nxwj9vI9AuyjGbldi
+	 tU6X7uh600nEJRdWxFkwBAA0J1ycOlLUBNoK6gA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aleksander Jan Bajkowski <olek2@wp.pl>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 177/568] mips: lantiq: danube: add model to EASY50712 dts
-Date: Wed,  3 Dec 2025 16:22:59 +0100
-Message-ID: <20251203152447.214076668@linuxfoundation.org>
+Subject: [PATCH 6.1 178/568] mips: lantiq: danube: add missing device_type in pci node
+Date: Wed,  3 Dec 2025 16:23:00 +0100
+Message-ID: <20251203152447.250409866@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,32 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Aleksander Jan Bajkowski <olek2@wp.pl>
 
-[ Upstream commit cb96fd880ef78500b34d10fa76ddd3fa070287d6 ]
+[ Upstream commit d66949a1875352d2ddd52b144333288952a9e36f ]
 
 This fixes the following warning:
-arch/mips/boot/dts/lantiq/danube_easy50712.dtb: / (lantiq,xway): 'model' is a required property
-	from schema $id: http://devicetree.org/schemas/root-node.yaml#
+arch/mips/boot/dts/lantiq/danube_easy50712.dtb: pci@e105400 (lantiq,pci-xway): 'device_type' is a required property
+	from schema $id: http://devicetree.org/schemas/pci/pci-bus-common.yaml#
 
 Signed-off-by: Aleksander Jan Bajkowski <olek2@wp.pl>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/lantiq/danube_easy50712.dts | 2 ++
+ arch/mips/boot/dts/lantiq/danube.dtsi | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/mips/boot/dts/lantiq/danube_easy50712.dts b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-index c4d7aa5753b04..ab70028dbefcf 100644
---- a/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-+++ b/arch/mips/boot/dts/lantiq/danube_easy50712.dts
-@@ -4,6 +4,8 @@
- /include/ "danube.dtsi"
- 
- / {
-+	model = "Intel EASY50712";
+diff --git a/arch/mips/boot/dts/lantiq/danube.dtsi b/arch/mips/boot/dts/lantiq/danube.dtsi
+index ff6ff9568e1bc..1a5f4faa0831f 100644
+--- a/arch/mips/boot/dts/lantiq/danube.dtsi
++++ b/arch/mips/boot/dts/lantiq/danube.dtsi
+@@ -105,6 +105,8 @@
+ 				  0x1000000 0 0x00000000 0xae00000 0 0x200000>; /* io space */
+ 			reg = <0x7000000 0x8000		/* config space */
+ 				0xe105400 0x400>;	/* pci bridge */
 +
- 	chosen {
- 		bootargs = "console=ttyLTQ0,115200 init=/etc/preinit";
++			device_type = "pci";
+ 		};
  	};
+ };
 -- 
 2.51.0
 
