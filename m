@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A7CE34F259;
-	Wed,  3 Dec 2025 16:20:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A04134FF65;
+	Wed,  3 Dec 2025 16:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778805; cv=none; b=MsKbLOOgL4IqOHS5iNwnGgHLPgkk/dDWJoOj50lMlncRTnbCAJY46He2sisfMMtRShLnkwSgVpnODGWFmXJUh7IL3tWw3tjU19IJfy5P5ZYVmOc8CXzXisuLOFeDIdvGXQOjzvNWE81QGaen5N5zraJ1AUwyxeMqbz2zT4BSvlw=
+	t=1764778808; cv=none; b=BL6MWhVY1cbFb+Su3P10Rl2+0MKHayaEfrfTAKfOP+O2DeKJu8Uh83O+ByCh4qj+u2hOexKheIgn5CInVFcpIYoudHjOjUWpl5PIKfZvjfZua9D7cpom1CR1Bfkre9D03e4lYVPRcmF1mKPfpaLM8ADhQCNBUEaV//eSldji6mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778805; c=relaxed/simple;
-	bh=oPlZVZtdwksU4mf9cI0tA5eolu80f5Wllp8w6vFgDZE=;
+	s=arc-20240116; t=1764778808; c=relaxed/simple;
+	bh=zzPVokjFD9/YHZsQCRyd2MSyUtNQfS4Y65WIOiVEWX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMlLzRz31jKB1M/8B3BMkS6lVMoKizWCL6QsK6zgxxuNLPH9vzGFkcDV8PhOcf4eHXDfJRbNnusKXKv9Br3IX3SRe+O0I6slKQDN+UsQ3222QsUcMn0KBqL3bFB0UQe0c2xEt25KCrCXf5yWc64E/4/nJGACRWTlyb8GwKObH14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gv2FBlca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uiWkZAmTN74EFNYrjwgIA2A06ddxARMYmbhPfWe9SEZWaeXzgCMfs2kjFhxZ1KQT6RmpDBij92VNmWBqQ7oJB16ArQmhS0c46me3A8u+irn62uQQXZQknjJqt3A6pTJf8+ffcpPtrHVi2MVY6eJULV34+rOKWo3zJ6VTLLPK/nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m9q5FJjj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gv2FBlca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337D0C4CEF5;
-	Wed,  3 Dec 2025 16:20:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m9q5FJjj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 281C2C116B1;
+	Wed,  3 Dec 2025 16:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778804;
-	bh=oPlZVZtdwksU4mf9cI0tA5eolu80f5Wllp8w6vFgDZE=;
+	s=korg; t=1764778807;
+	bh=zzPVokjFD9/YHZsQCRyd2MSyUtNQfS4Y65WIOiVEWX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gv2FBlcaP/98d5GbbG0GAReZf4b6DQPUvYVrFKgDybJeoLUVxUOXoaOXXK6DRe6oU
-	 4SzfibEtB/j10OaHFtXWovC2jgiUQPOVfT/X2qe8jlbiJrPpdpU4OyLJzMaKBdmxNZ
-	 IymIBXUIzJCLi7AuLGrYNpD6hO6Elz+Gx60dLYWA=
+	b=m9q5FJjjUWnM9sGnFIAYBDKLC/TQcJz+YuY6Xc8I5n18OZGnNQAzPYzfCCgPe2fLk
+	 Gu9nfMe33zpxmjOA5ZmfaPDaJ2JzYFKdQxM643v1x43drowgz0fQ1rWssPGNVqwZcV
+	 zaVAhBOtvc2/9jW3/ICI/7VPrNj9bb+DX7QB4xek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/568] mptcp: drop bogus optimization in __mptcp_check_push()
-Date: Wed,  3 Dec 2025 16:21:05 +0100
-Message-ID: <20251203152443.010161765@linuxfoundation.org>
+	Runcheng Lu <runcheng.lu@hpmicro.com>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	Celeste Liu <uwu@coelacanthus.name>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 064/568] can: gs_usb: increase max interface to U8_MAX
+Date: Wed,  3 Dec 2025 16:21:06 +0100
+Message-ID: <20251203152443.047465538@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,106 +52,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Celeste Liu <uwu@coelacanthus.name>
 
-[ Upstream commit 27b0e701d3872ba59c5b579a9e8a02ea49ad3d3b ]
+commit 2a27f6a8fb5722223d526843040f747e9b0e8060 upstream
 
-Accessing the transmit queue without owning the msk socket lock is
-inherently racy, hence __mptcp_check_push() could actually quit early
-even when there is pending data.
+This issue was found by Runcheng Lu when develop HSCanT USB to CAN FD
+converter[1]. The original developers may have only 3 interfaces
+device to test so they write 3 here and wait for future change.
 
-That in turn could cause unexpected tx lock and timeout.
+During the HSCanT development, we actually used 4 interfaces, so the
+limitation of 3 is not enough now. But just increase one is not
+future-proofed. Since the channel index type in gs_host_frame is u8,
+just make canch[] become a flexible array with a u8 index, so it
+naturally constraint by U8_MAX and avoid statically allocate 256
+pointer for every gs_usb device.
 
-Dropping the early check avoids the race, implicitly relaying on later
-tests under the relevant lock. With such change, all the other
-mptcp_send_head() call sites are now under the msk socket lock and we
-can additionally drop the now unneeded annotation on the transmit head
-pointer accesses.
+[1]: https://github.com/cherry-embedded/HSCanT-hardware
 
-Fixes: 6e628cd3a8f7 ("mptcp: use mptcp release_cb for delayed tasks")
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Reported-by: Runcheng Lu <runcheng.lu@hpmicro.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
-Tested-by: Geliang Tang <geliang@kernel.org>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-1-38ffff5a9ec8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ split upstream __subflow_push_pending change across __mptcp_push_pending and __mptcp_subflow_push_pending ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
+Signed-off-by: Celeste Liu <uwu@coelacanthus.name>
+Link: https://patch.msgid.link/20250930-gs-usb-max-if-v5-1-863330bf6666@coelacanthus.name
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   13 +++++--------
- net/mptcp/protocol.h |    2 +-
- 2 files changed, 6 insertions(+), 9 deletions(-)
+ drivers/net/can/usb/gs_usb.c |   21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1101,7 +1101,7 @@ static void __mptcp_clean_una(struct soc
- 			if (WARN_ON_ONCE(!msk->recovery))
- 				break;
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -277,10 +277,6 @@ struct gs_host_frame {
+ #define GS_MAX_TX_URBS 10
+ /* Only launch a max of GS_MAX_RX_URBS usb requests at a time. */
+ #define GS_MAX_RX_URBS 30
+-/* Maximum number of interfaces the driver supports per device.
+- * Current hardware only supports 3 interfaces. The future may vary.
+- */
+-#define GS_MAX_INTF 3
  
--			WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
-+			msk->first_pending = mptcp_send_next(sk);
- 		}
+ struct gs_tx_context {
+ 	struct gs_can *dev;
+@@ -318,14 +314,15 @@ struct gs_can {
  
- 		dfrag_clear(sk, dfrag);
-@@ -1691,7 +1691,7 @@ void __mptcp_push_pending(struct sock *s
+ /* usb interface struct */
+ struct gs_usb {
+-	struct gs_can *canch[GS_MAX_INTF];
+ 	struct usb_anchor rx_submitted;
+ 	struct usb_device *udev;
+ 	unsigned int hf_size_rx;
+ 	u8 active_channels;
++	u8 channel_cnt;
  
- 			mptcp_update_post_push(msk, dfrag, ret);
- 		}
--		WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
-+		msk->first_pending = mptcp_send_next(sk);
+ 	unsigned int pipe_in;
+ 	unsigned int pipe_out;
++	struct gs_can *canch[];
+ };
+ 
+ /* 'allocate' a tx context.
+@@ -550,7 +547,7 @@ static void gs_usb_receive_bulk_callback
  	}
  
- 	/* at this point we held the socket lock for the last subflow we used */
-@@ -1747,7 +1747,7 @@ static void __mptcp_subflow_push_pending
+ 	/* device reports out of range channel id */
+-	if (hf->channel >= GS_MAX_INTF)
++	if (hf->channel >= parent->channel_cnt)
+ 		goto device_detach;
  
- 			mptcp_update_post_push(msk, dfrag, ret);
+ 	dev = parent->canch[hf->channel];
+@@ -653,7 +650,7 @@ resubmit_urb:
+ 	/* USB failure take down all interfaces */
+ 	if (rc == -ENODEV) {
+ device_detach:
+-		for (rc = 0; rc < GS_MAX_INTF; rc++) {
++		for (rc = 0; rc < parent->channel_cnt; rc++) {
+ 			if (parent->canch[rc])
+ 				netif_device_detach(parent->canch[rc]->netdev);
  		}
--		WRITE_ONCE(msk->first_pending, mptcp_send_next(sk));
-+		msk->first_pending = mptcp_send_next(sk);
+@@ -1374,17 +1371,19 @@ static int gs_usb_probe(struct usb_inter
+ 	icount = dconf.icount + 1;
+ 	dev_info(&intf->dev, "Configuring for %u interfaces\n", icount);
+ 
+-	if (icount > GS_MAX_INTF) {
++	if (icount > type_max(typeof(parent->channel_cnt))) {
+ 		dev_err(&intf->dev,
+ 			"Driver cannot handle more that %u CAN interfaces\n",
+-			GS_MAX_INTF);
++			type_max(typeof(parent->channel_cnt)));
+ 		return -EINVAL;
  	}
  
- out:
-@@ -1917,7 +1917,7 @@ static int mptcp_sendmsg(struct sock *sk
- 			get_page(dfrag->page);
- 			list_add_tail(&dfrag->list, &msk->rtx_queue);
- 			if (!msk->first_pending)
--				WRITE_ONCE(msk->first_pending, dfrag);
-+				msk->first_pending = dfrag;
- 		}
- 		pr_debug("msk=%p dfrag at seq=%llu len=%u sent=%u new=%d\n", msk,
- 			 dfrag->data_seq, dfrag->data_len, dfrag->already_sent,
-@@ -2915,7 +2915,7 @@ static void __mptcp_clear_xmit(struct so
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	struct mptcp_data_frag *dtmp, *dfrag;
+-	parent = kzalloc(sizeof(*parent), GFP_KERNEL);
++	parent = kzalloc(struct_size(parent, canch, icount), GFP_KERNEL);
+ 	if (!parent)
+ 		return -ENOMEM;
  
--	WRITE_ONCE(msk->first_pending, NULL);
-+	msk->first_pending = NULL;
- 	list_for_each_entry_safe(dfrag, dtmp, &msk->rtx_queue, list)
- 		dfrag_clear(sk, dfrag);
- }
-@@ -3496,9 +3496,6 @@ void __mptcp_data_acked(struct sock *sk)
++	parent->channel_cnt = icount;
++
+ 	init_usb_anchor(&parent->rx_submitted);
  
- void __mptcp_check_push(struct sock *sk, struct sock *ssk)
- {
--	if (!mptcp_send_head(sk))
--		return;
--
- 	if (!sock_owned_by_user(sk))
- 		__mptcp_subflow_push_pending(sk, ssk, false);
- 	else
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -360,7 +360,7 @@ static inline struct mptcp_data_frag *mp
- {
- 	const struct mptcp_sock *msk = mptcp_sk(sk);
+ 	usb_set_intfdata(intf, parent);
+@@ -1445,7 +1444,7 @@ static void gs_usb_disconnect(struct usb
+ 		return;
+ 	}
  
--	return READ_ONCE(msk->first_pending);
-+	return msk->first_pending;
- }
+-	for (i = 0; i < GS_MAX_INTF; i++)
++	for (i = 0; i < parent->channel_cnt; i++)
+ 		if (parent->canch[i])
+ 			gs_destroy_candev(parent->canch[i]);
  
- static inline struct mptcp_data_frag *mptcp_send_next(struct sock *sk)
 
 
