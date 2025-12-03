@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EB230B51F;
-	Wed,  3 Dec 2025 15:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364C6305978;
+	Wed,  3 Dec 2025 15:33:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775998; cv=none; b=EmOCFWZuf467NfbykEr6oe2dr+SxA9FEsQNmRwVF9rv9u2KCfvmLWUKu1+3mLG+dmGPWmSGS6eD59C5qqr2B3xXsKino5trZk1CWdiwDFXiLfHpOmwEIW4sKsH0wFk5ezx2TlqXHXfnNhLFC3GqL4mmzGdOgdD+UmD5K7F8Wnig=
+	t=1764776002; cv=none; b=alW2nGzYIzpRajFln7KkocYntBxww8H21z1fu+cIEoR3tOim/jtO/X11/GAzPPhZZpgdyOSkw9ti8zCXyEc4M5fTZkZYb/RZDkWCgcRBnCWQKanKtP/DwAoSPIfNaWq3lNsKQ6nvAziXOOvU0Dk4skaAi6N5EBUZGp/tfks4rfg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775998; c=relaxed/simple;
-	bh=S2o2Az80Pt9QEJ004utgUNTlS28xezLz+0QbN26+wS0=;
+	s=arc-20240116; t=1764776002; c=relaxed/simple;
+	bh=RT8pSYQ+pY1uqcmB7MrSCT++iwmP5Gua3wk/mNphgrY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+4ClIOQpql4Was9gOl+wdDqICHMb0ay81+Ru6Q5QqOARWmoKqFfqMlGDpI4dH4qKYcDXVZWkjPfVE9JFQ3aBt+dlct1pk2X7A4+BprfImFYSIsTPavrxkCHUxDezsy1bsKsCGVrzp4tgVyMn9hZ2xI+MV+uJMvO7gddTmvrsRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHpcKkOQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFcqvOzd3zkK3jgg/4xD7lyYkKxuFSS1e+xIAlSWlMViKxiWJiNKvF3VTD19qInTKxAW3365zDuz8jgwxil525Op+nm4Ox+77jFZaMWPjw8G8DVValquyn3lbEweOHAnqC5GDpv7GsYeNWKw++RBRUY3xE/Pg3X9dZSwR2dj1GU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nur873ij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHpcKkOQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C25ACC4CEF5;
-	Wed,  3 Dec 2025 15:33:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nur873ij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4592FC116B1;
+	Wed,  3 Dec 2025 15:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775998;
-	bh=S2o2Az80Pt9QEJ004utgUNTlS28xezLz+0QbN26+wS0=;
+	s=korg; t=1764776001;
+	bh=RT8pSYQ+pY1uqcmB7MrSCT++iwmP5Gua3wk/mNphgrY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rHpcKkOQefciSP5OH3s+oErK2XU7gWwnL2XtMQeg3imj8gCitPEIHEXE9vuTnV6Hf
-	 Vl/SUwh3X2CX7lL4WYOA1ZTl6hnWtV3YYa3+FNlSHU2jwROZbi5v6/wY9bORxJ/Hr6
-	 a9K28Kj16NlBx6V8RGtixafpb+4G/9caFQndegKE=
+	b=nur873ij3jwOXdFm/dJyCrARKf5SOl9eHYkr5t4r2wyOrcxzlu+HZg7oedzSJg20S
+	 MfS5tMXSNccEZafHHro6JfUHY3IJT3JNsCxqFwnYJqV3EHFnbc27M0IODEtpRbAQ4h
+	 xd7vh47ulc53JA2hD+rXCVnkUayrSLAPp8SH1Wn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Sarthak Garg <quic_sartgarg@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/300] soc/tegra: fuse: Add Tegra114 nvmem cells and fuse lookups
-Date: Wed,  3 Dec 2025 16:24:14 +0100
-Message-ID: <20251203152402.472460147@linuxfoundation.org>
+Subject: [PATCH 5.10 051/300] mmc: sdhci-msm: Enable tuning for SDR50 mode for SD card
+Date: Wed,  3 Dec 2025 16:24:15 +0100
+Message-ID: <20251203152402.510379563@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,161 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Sarthak Garg <quic_sartgarg@quicinc.com>
 
-[ Upstream commit b9c01adedf38c69abb725a60a05305ef70dbce03 ]
+[ Upstream commit 08b68ca543ee9d5a8d2dc406165e4887dd8f170b ]
 
-Add missing Tegra114 nvmem cells and fuse lookups which were added for
-Tegra124+ but omitted for Tegra114.
+For Qualcomm SoCs which needs level shifter for SD card, extra delay is
+seen on receiver data path.
 
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+To compensate this delay enable tuning for SDR50 mode for targets which
+has level shifter. SDHCI_SDR50_NEEDS_TUNING caps will be set for targets
+with level shifter on Qualcomm SOC's.
+
+Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/fuse/fuse-tegra30.c | 122 ++++++++++++++++++++++++++
- 1 file changed, 122 insertions(+)
+ drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/soc/tegra/fuse/fuse-tegra30.c b/drivers/soc/tegra/fuse/fuse-tegra30.c
-index c1aa7815bd6ec..f7f1a73a52f3a 100644
---- a/drivers/soc/tegra/fuse/fuse-tegra30.c
-+++ b/drivers/soc/tegra/fuse/fuse-tegra30.c
-@@ -117,6 +117,124 @@ const struct tegra_fuse_soc tegra30_fuse_soc = {
- #endif
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index 183617d56b446..c900525b52516 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -78,6 +78,7 @@
+ #define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
+ #define CORE_IO_PAD_PWR_SWITCH	BIT(16)
+ #define CORE_HC_SELECT_IN_EN	BIT(18)
++#define CORE_HC_SELECT_IN_SDR50	(4 << 19)
+ #define CORE_HC_SELECT_IN_HS400	(6 << 19)
+ #define CORE_HC_SELECT_IN_MASK	(7 << 19)
  
- #ifdef CONFIG_ARCH_TEGRA_114_SOC
-+static const struct nvmem_cell_info tegra114_fuse_cells[] = {
-+	{
-+		.name = "tsensor-cpu1",
-+		.offset = 0x084,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-cpu2",
-+		.offset = 0x088,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-common",
-+		.offset = 0x08c,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-cpu0",
-+		.offset = 0x098,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "xusb-pad-calibration",
-+		.offset = 0x0f0,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-cpu3",
-+		.offset = 0x12c,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-gpu",
-+		.offset = 0x154,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-mem0",
-+		.offset = 0x158,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-mem1",
-+		.offset = 0x15c,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	}, {
-+		.name = "tsensor-pllx",
-+		.offset = 0x160,
-+		.bytes = 4,
-+		.bit_offset = 0,
-+		.nbits = 32,
-+	},
-+};
+@@ -1113,6 +1114,10 @@ static bool sdhci_msm_is_tuning_needed(struct sdhci_host *host)
+ {
+ 	struct mmc_ios *ios = &host->mmc->ios;
+ 
++	if (ios->timing == MMC_TIMING_UHS_SDR50 &&
++	    host->flags & SDHCI_SDR50_NEEDS_TUNING)
++		return true;
 +
-+static const struct nvmem_cell_lookup tegra114_fuse_lookups[] = {
-+	{
-+		.nvmem_name = "fuse",
-+		.cell_name = "xusb-pad-calibration",
-+		.dev_id = "7009f000.padctl",
-+		.con_id = "calibration",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-common",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "common",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu0",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu0",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu1",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu1",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu2",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu2",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-cpu3",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "cpu3",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-mem0",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "mem0",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-mem1",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "mem1",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-gpu",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "gpu",
-+	}, {
-+		.nvmem_name = "fuse",
-+		.cell_name = "tsensor-pllx",
-+		.dev_id = "700e2000.thermal-sensor",
-+		.con_id = "pllx",
-+	},
-+};
+ 	/*
+ 	 * Tuning is required for SDR104, HS200 and HS400 cards and
+ 	 * if clock frequency is greater than 100MHz in these modes.
+@@ -1181,6 +1186,8 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 	struct mmc_ios ios = host->mmc->ios;
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
++	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
++	u32 config;
+ 
+ 	if (!sdhci_msm_is_tuning_needed(host)) {
+ 		msm_host->use_cdr = false;
+@@ -1197,6 +1204,14 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+ 	 */
+ 	msm_host->tuning_done = 0;
+ 
++	if (ios.timing == MMC_TIMING_UHS_SDR50 &&
++	    host->flags & SDHCI_SDR50_NEEDS_TUNING) {
++		config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec);
++		config &= ~CORE_HC_SELECT_IN_MASK;
++		config |= CORE_HC_SELECT_IN_EN | CORE_HC_SELECT_IN_SDR50;
++		writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
++	}
 +
- static const struct tegra_fuse_info tegra114_fuse_info = {
- 	.read = tegra30_fuse_read,
- 	.size = 0x2a0,
-@@ -127,6 +245,10 @@ const struct tegra_fuse_soc tegra114_fuse_soc = {
- 	.init = tegra30_fuse_init,
- 	.speedo_init = tegra114_init_speedo_data,
- 	.info = &tegra114_fuse_info,
-+	.lookups = tegra114_fuse_lookups,
-+	.num_lookups = ARRAY_SIZE(tegra114_fuse_lookups),
-+	.cells = tegra114_fuse_cells,
-+	.num_cells = ARRAY_SIZE(tegra114_fuse_cells),
- 	.soc_attr_group = &tegra_soc_attr_group,
- };
- #endif
+ 	/*
+ 	 * For HS400 tuning in HS200 timing requires:
+ 	 * - select MCLK/2 in VENDOR_SPEC
 -- 
 2.51.0
 
