@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F6B32F761;
-	Wed,  3 Dec 2025 16:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10830305E05;
+	Wed,  3 Dec 2025 16:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779989; cv=none; b=QiqWlnfeNoUhwH9n1RsnmxS/OBsMcVojEmWFsfwupCQr8ivWIUC56ZSQqcDeErznY29aw8sWVHgoauLmDwZgR76DbKHyziGvcjdT3Yt3fKFGq6zloJ2HPrzVmltVjyeK8z+WiasM0OEEk9oNBmqea5JBPz1d72sphhRZKj+32EU=
+	t=1764779993; cv=none; b=BD0mET4AGG7/I2uMigH//GDFzBWb1DKVeYZqpAgq1d4kPu6tn2/j1YrRyLa6+3mGMDrqjshn3BtEEqOUYwmUM0NFV4c82CVf50HXso6fKj7V/JrHnCyfGlcfPPVeF0uvAk+bB9SoSOHKDvMwetSzBC2uqxNW/D3y5+869ZrYQCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779989; c=relaxed/simple;
-	bh=7Lpty1hWTegaRqpeKbq5LRz9j6XMIq8yOWOHUbDm0Hg=;
+	s=arc-20240116; t=1764779993; c=relaxed/simple;
+	bh=dQ73bm1OBx4QuEoCQqQvnrShB32S4Jv9HN8hRWVvsZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAkUvPMyIw+N2/YJIT1prg+UTPXW1NJISHI5wHk8hGsS7pIcySaOnnE7BLN0qqECJHpPdfYy/8i/rT1iWigNnSsCPg0HII2gH2auqujo+PLAocPUwi+Y7GP/H+ydxtxFRHgP4eMdNrqBEwW8Q4pBdzTPp+pEGo5dG6g9+5Ac2/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KbRxlAkW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KBHZBbahSOgwebkYgQ0LK5E629z0+1oB17/BcvJeQkN+f5K2RirQdH334ASSP24gpIBNynqecTGCgrLa0Vfmi5BVDaiqWH7Vlobl4/LevAADpdAEzHEjhPibWOU1wTZQTgBw3xzY/4SuZiUCpx7EgRlyTb6PleCUpPhe+HOViKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXUB5kp6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KbRxlAkW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02020C4CEF5;
-	Wed,  3 Dec 2025 16:39:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXUB5kp6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73DB6C4CEF5;
+	Wed,  3 Dec 2025 16:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779989;
-	bh=7Lpty1hWTegaRqpeKbq5LRz9j6XMIq8yOWOHUbDm0Hg=;
+	s=korg; t=1764779992;
+	bh=dQ73bm1OBx4QuEoCQqQvnrShB32S4Jv9HN8hRWVvsZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbRxlAkWDnxThci2TtP6S2ZbWZ9eENB32CWmKDaO7zUTAjncUQrHqaIUOXpBkVtQa
-	 NZNJ+l3EoHHmkyhSUh8oM11B/4uePucOyAquydJ7fYXFoao8dCZMNFCccXObdwjwz7
-	 rNHn+3dT+jAiyfu8CLZeNbLSjRYE+QM+KS94JDGI=
+	b=yXUB5kp6jyugxrAGqx46r+O+9S9Kxt/qwN4lJXQ48aZ5ZB+awTW9BgWOuye0WZNQ1
+	 c/D3LsRXibUCIdu9a5UjRYqyd2qYnWLmO8oaiCyvYOV2Cw+dv8ImQHUDgpPXMrUEYW
+	 8hy2FKt8aMQVjeZGP6xbZMBvpYGmrULogwcMEBJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 421/568] isdn: mISDN: hfcsusb: fix memory leak in hfcsusb_probe()
-Date: Wed,  3 Dec 2025 16:27:03 +0100
-Message-ID: <20251203152456.117839920@linuxfoundation.org>
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Simon Horman <horms@kernel.org>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Ruohan Lan <ruohanlan@aliyun.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 390/568] espintcp: fix skb leaks
+Date: Wed,  3 Dec 2025 16:26:32 +0100
+Message-ID: <20251203152454.975761704@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,75 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Sabrina Dubroca <sd@queasysnail.net>
 
-commit 3f978e3f1570155a1327ffa25f60968bc7b9398f upstream.
+[ Upstream commit 63c1f19a3be3169e51a5812d22a6d0c879414076 ]
 
-In hfcsusb_probe(), the memory allocated for ctrl_urb gets leaked when
-setup_instance() fails with an error code. Fix that by freeing the urb
-before freeing the hw structure. Also change the error paths to use the
-goto ladder style.
+A few error paths are missing a kfree_skb.
 
-Compile tested only. Issue found using a prototype static analysis tool.
-
-Fixes: 69f52adb2d53 ("mISDN: Add HFC USB driver")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Link: https://patch.msgid.link/20251030042524.194812-1-nihaal@cse.iitm.ac.in
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+[ Minor context change fixed. ]
+Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcsusb.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ net/ipv4/esp4.c     | 4 +++-
+ net/ipv6/esp6.c     | 4 +++-
+ net/xfrm/espintcp.c | 4 +++-
+ 3 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/isdn/hardware/mISDN/hfcsusb.c
-+++ b/drivers/isdn/hardware/mISDN/hfcsusb.c
-@@ -1903,13 +1903,13 @@ out:
- 	mISDN_freebchannel(&hw->bch[1]);
- 	mISDN_freebchannel(&hw->bch[0]);
- 	mISDN_freedchannel(&hw->dch);
--	kfree(hw);
- 	return err;
- }
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index 8f5417ff355d7..a40f78a6474c6 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -152,8 +152,10 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
  
- static int
- hfcsusb_probe(struct usb_interface *intf, const struct usb_device_id *id)
- {
-+	int err;
- 	struct hfcsusb			*hw;
- 	struct usb_device		*dev = interface_to_usbdev(intf);
- 	struct usb_host_interface	*iface = intf->cur_altsetting;
-@@ -2100,20 +2100,28 @@ hfcsusb_probe(struct usb_interface *intf
- 	if (!hw->ctrl_urb) {
- 		pr_warn("%s: No memory for control urb\n",
- 			driver_info->vend_name);
--		kfree(hw);
--		return -ENOMEM;
-+		err = -ENOMEM;
-+		goto err_free_hw;
- 	}
- 
- 	pr_info("%s: %s: detected \"%s\" (%s, if=%d alt=%d)\n",
- 		hw->name, __func__, driver_info->vend_name,
- 		conf_str[small_match], ifnum, alt_used);
- 
--	if (setup_instance(hw, dev->dev.parent))
--		return -EIO;
-+	if (setup_instance(hw, dev->dev.parent)) {
-+		err = -EIO;
-+		goto err_free_urb;
+ 	sk = esp_find_tcp_sk(x);
+ 	err = PTR_ERR_OR_ZERO(sk);
+-	if (err)
++	if (err) {
++		kfree_skb(skb);
+ 		goto out;
 +	}
  
- 	hw->intf = intf;
- 	usb_set_intfdata(hw->intf, hw);
- 	return 0;
-+
-+err_free_urb:
-+	usb_free_urb(hw->ctrl_urb);
-+err_free_hw:
-+	kfree(hw);
-+	return err;
- }
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk))
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index 085a83b807afd..48963fc9057bc 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -169,8 +169,10 @@ static int esp_output_tcp_finish(struct xfrm_state *x, struct sk_buff *skb)
  
- /* function called when an active device is removed */
+ 	sk = esp6_find_tcp_sk(x);
+ 	err = PTR_ERR_OR_ZERO(sk);
+-	if (err)
++	if (err) {
++		kfree_skb(skb);
+ 		goto out;
++	}
+ 
+ 	bh_lock_sock(sk);
+ 	if (sock_owned_by_user(sk))
+diff --git a/net/xfrm/espintcp.c b/net/xfrm/espintcp.c
+index d6fece1ed982d..b26fbaead7a55 100644
+--- a/net/xfrm/espintcp.c
++++ b/net/xfrm/espintcp.c
+@@ -168,8 +168,10 @@ int espintcp_queue_out(struct sock *sk, struct sk_buff *skb)
+ {
+ 	struct espintcp_ctx *ctx = espintcp_getctx(sk);
+ 
+-	if (skb_queue_len(&ctx->out_queue) >= READ_ONCE(netdev_max_backlog))
++	if (skb_queue_len(&ctx->out_queue) >= READ_ONCE(netdev_max_backlog)) {
++		kfree_skb(skb);
+ 		return -ENOBUFS;
++	}
+ 
+ 	__skb_queue_tail(&ctx->out_queue, skb);
+ 
+-- 
+2.51.0
+
 
 
