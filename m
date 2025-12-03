@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077352EFD9C;
-	Wed,  3 Dec 2025 15:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D24338F39;
+	Wed,  3 Dec 2025 15:55:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777356; cv=none; b=UkxNCm5Uid+LsSUmmrjiSrxALpUXss5F8AiX4aAuephMMBujSa9/iWZj9Us2MqM/6qCF2GUJfhylzRNqn3pCDfVjHXh6+JZ6ifguQtBN+zPjoAO9Wk7jlXxlSUVFQtXtCrtnHOrOXmpfh7gNODJ+Gvi067QE9mP+zfEciAzz6XY=
+	t=1764777358; cv=none; b=UIJIdtzwMZVBsqp5AD5dWtznIV3ei2THDErAfJln0XHky44HtdZUoA6mcQJwFvu5WwU4BIfl7qqzHJRTN78LuKye7C92Od92+/TCo2+DZVRS+H83+eXNXrjpWXbojAlzyrHEsqIBxKSgW5mvw6IBuJzKHnduRxDsAmr1m+VLFdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777356; c=relaxed/simple;
-	bh=r5lXpIMFsjvZpt1/16clq1XRXahjI01tPApDT0Gb9wE=;
+	s=arc-20240116; t=1764777358; c=relaxed/simple;
+	bh=bmAAjUFQRFHyS0RuySDo4lzdUICw4YVmTMPk7cazxvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txx/xqX/Mq7KCWPslCIU9NUoto3c/2/TydbqnMti8qZVv4x4SFRaKTmT6rVWAwZAE6RwIETwMg1k+ruc/CgagJPfDhosTOkcqduOxOBo6TogT7hwXhuyntdZ0Qdc8wQEqPH2btXRkoUoNrw3TDAf1YpRVLjsFcdpZJ1jxz2tZ0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rMVnQTL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NN4RI33nya7f8OIWJaOhVheFTG9sJzUK06WlwaFzDLSri9yIFiAEj+pRJCPaZTIVUSC7YDQjpmcjUHPt/etz2lt6hg6VEOlO0l0R5ztp2mOCaWW7WhjOek94OXsCYyoDs6m192R1dcuyWzx1ZlwJxZzIdBsfhsLiMAE4cF3xesw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECi0TQHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rMVnQTL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34173C4CEF5;
-	Wed,  3 Dec 2025 15:55:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECi0TQHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F680C4CEF5;
+	Wed,  3 Dec 2025 15:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777354;
-	bh=r5lXpIMFsjvZpt1/16clq1XRXahjI01tPApDT0Gb9wE=;
+	s=korg; t=1764777357;
+	bh=bmAAjUFQRFHyS0RuySDo4lzdUICw4YVmTMPk7cazxvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rMVnQTLNrmDpabo2mL1QY1GstdFpSlrHy6eprFT4EPiSUb48Xy5Mb/yrzsNZUBU0
-	 cvCtJHkG4ksuMnrIG36RrAoLSajBfZ2DqBMHJhvg5mKnaU27/2s6LTrfkj3WMprHht
-	 f8A8eDosGYQ2rGzBzJTzZoUVAvmzmhkC34TtAP8Q=
+	b=ECi0TQHCTRe/scM40/qTHM/w9ZqkRyKIjcd82w6r2J6oKzi9DQQsurd8pK4nx1Gsg
+	 9wCsZwQpgSknr2fTlspbMZ9XoHA5r+rSIfc7eL/mikxf1wJ1HSoSDdLkpearGb+zBI
+	 Zqb+zJu/ePMFyYdmwx7G6zbRNL6zqt1VjzB1KOEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.15 013/392] fbdev: valkyriefb: Fix reference count leak in valkyriefb_init
-Date: Wed,  3 Dec 2025 16:22:43 +0100
-Message-ID: <20251203152414.592944698@linuxfoundation.org>
+	Geliang Tang <geliang@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 014/392] mptcp: restore window probe
+Date: Wed,  3 Dec 2025 16:22:44 +0100
+Message-ID: <20251203152414.629300325@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,40 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit eb53368f8d6e2dfba84c8a94d245719bcf9ae270 upstream.
+commit a824084b98d8a1dbd6e85d0842a8eb5e73467f59 upstream.
 
-The of_find_node_by_name() function returns a device tree node with its
-reference count incremented. The caller is responsible for calling
-of_node_put() to release this reference when done.
+Since commit 72377ab2d671 ("mptcp: more conservative check for zero
+probes") the MPTCP-level zero window probe check is always disabled, as
+the TCP-level write queue always contains at least the newly allocated
+skb.
 
-Found via static analysis.
+Refine the relevant check tacking in account that the above condition
+and that such skb can have zero length.
 
-Fixes: cc5d0189b9ba ("[PATCH] powerpc: Remove device_node addrs/n_addr")
+Fixes: 72377ab2d671 ("mptcp: more conservative check for zero probes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-by: Geliang Tang <geliang@kernel.org>
+Closes: https://lore.kernel.org/d0a814c364e744ca6b836ccd5b6e9146882e8d42.camel@kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Tested-by: Geliang Tang <geliang@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-3-38ffff5a9ec8@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/valkyriefb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/protocol.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/valkyriefb.c
-+++ b/drivers/video/fbdev/valkyriefb.c
-@@ -336,11 +336,13 @@ int __init valkyriefb_init(void)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1411,7 +1411,12 @@ alloc_skb:
+ 	if (copy == 0) {
+ 		u64 snd_una = READ_ONCE(msk->snd_una);
  
- 		if (of_address_to_resource(dp, 0, &r)) {
- 			printk(KERN_ERR "can't find address for valkyrie\n");
-+			of_node_put(dp);
+-		if (snd_una != msk->snd_nxt || tcp_write_queue_tail(ssk)) {
++		/* No need for zero probe if there are any data pending
++		 * either at the msk or ssk level; skb is the current write
++		 * queue tail and can be empty at this point.
++		 */
++		if (snd_una != msk->snd_nxt || skb->len ||
++		    skb != tcp_send_head(ssk)) {
+ 			tcp_remove_empty_skb(ssk);
  			return 0;
  		}
- 
- 		frame_buffer_phys = r.start;
- 		cmap_regs_phys = r.start + 0x304000;
-+		of_node_put(dp);
- 	}
- #endif /* ppc (!CONFIG_MAC) */
- 
 
 
