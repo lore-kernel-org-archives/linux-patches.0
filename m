@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC458305067;
-	Wed,  3 Dec 2025 15:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6E18318131;
+	Wed,  3 Dec 2025 15:48:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776892; cv=none; b=axE4wieMp0ymEvjaPkM8fLOwyoBqzeMnFef5myFKcNVQ18cCjRqhHfET5PqbKGrSr5/4f3guapaAVLiBSrSBBoSSJvJC+pLspzD6xKzhMjqwd0JLibWNyo6VabMlb0HjLJUqodgW5cfjltGvA9StkDr0Ec+STW11wUc8HrcxkI8=
+	t=1764776895; cv=none; b=PIgyRmyn6CimwOFNt0GgdQ17TyMs7YhGa+Stl5ydrVQN8KJK7eFd/Cv+imc8xZs5ZN+KfVnxQ+MfhIVrFnNXsNFEKtNTmnOlPxOrhyzXdx1rtF+z8NE1xCn+euzqrAI14MqKGroEBaVpEBM0wlaqBXuMnlCpKCOa0e/WILTTAIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776892; c=relaxed/simple;
-	bh=Fxa8b6rNORJVHDLLRA7frv1Ew4YnFghOf8RO0qa05VI=;
+	s=arc-20240116; t=1764776895; c=relaxed/simple;
+	bh=chDk7tYDTScLhpd3/Ulxj05Hc5CcRyCgnpNIGRBuQSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBG8YD2wLWM6IdUDGhxh+wcUOXujSWMv9k0a7phCgKX+OfKyblaDgenMQamG3j8m21w79A+aJPqg9gmsR7mIk8DpdHAanWIf3vQDc1BoNazK0E4qI/ckR9F+S+MusfMJjHteGZannrAYDm9HteU9deXKfJwn8gdwzZ0+mv5+97E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0piUJyIE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mICbr8jTgnr2sWSFlqljxjyPNH6mPXt/Wr3Nr10zaX+fNF9QgzgNBSM50xhkGm+apKKOEGlfqvEKmJJOLbJ75oO8h6nlc1ohfKN3edbXpk4RJMUF1CyRN1tL7gqEMclH8pgtgMMCCqvaHIKxgRKtVRLT0kYeRrqmatxG+o9Z0BU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WEW02NmN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0piUJyIE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABF2C4CEF5;
-	Wed,  3 Dec 2025 15:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WEW02NmN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC28C4CEF5;
+	Wed,  3 Dec 2025 15:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776892;
-	bh=Fxa8b6rNORJVHDLLRA7frv1Ew4YnFghOf8RO0qa05VI=;
+	s=korg; t=1764776895;
+	bh=chDk7tYDTScLhpd3/Ulxj05Hc5CcRyCgnpNIGRBuQSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0piUJyIEG4rRS4rPRIYM5oiZarDA7/yAMYpS0vUlMIBo7G0MX8l/Fllb6/belnHTY
-	 S5vKycta21eRiMfBuLJTdWCJto8KCSY96WD4Su7lA7rH1t/tzzqYsbeFtK4dkXVl7v
-	 d0RT3Q61wzs2pC5G8K29KxPSTAIEVUgX9Lg+WuSs=
+	b=WEW02NmNmhH4wJxkkGgowAOMFABIoDWBof92J8dIJ8DdC5I6FAriXkmnbPVGcxlfR
+	 Iwr6iIwWw9KhzG3It1Jn567LQYn/SbTpG6eeHwrRlAFHLKBLprmlH4ty3rg7uctb2F
+	 34ZcvA0AhG4rb6w3v0vFpOYo1xQo4ISpdRI4Rgho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 019/146] team: Move team device type change at the end of team_port_add
-Date: Wed,  3 Dec 2025 16:26:37 +0100
-Message-ID: <20251203152347.171981200@linuxfoundation.org>
+Subject: [PATCH 6.17 002/146] can: gs_usb: gs_usb_xmit_callback(): fix handling of failed transmitted URBs
+Date: Wed,  3 Dec 2025 16:26:20 +0100
+Message-ID: <20251203152346.550648565@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -53,116 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikola Z. Ivanov <zlatistiv@gmail.com>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-[ Upstream commit 0ae9cfc454ea5ead5f3ddbdfe2e70270d8e2c8ef ]
+[ Upstream commit 516a0cd1c03fa266bb67dd87940a209fd4e53ce7 ]
 
-Attempting to add a port device that is already up will expectedly fail,
-but not before modifying the team device header_ops.
+The driver lacks the cleanup of failed transfers of URBs. This reduces the
+number of available URBs per error by 1. This leads to reduced performance
+and ultimately to a complete stop of the transmission.
 
-In the case of the syzbot reproducer the gre0 device is
-already in state UP when it attempts to add it as a
-port device of team0, this fails but before that
-header_ops->create of team0 is changed from eth_header to ipgre_header
-in the call to team_dev_type_check_change.
+If the sending of a bulk URB fails do proper cleanup:
+- increase netdev stats
+- mark the echo_sbk as free
+- free the driver's context and do accounting
+- wake the send queue
 
-Later when we end up in ipgre_header() struct ip_tunnel* points to nonsense
-as the private data of the device still holds a struct team.
-
-Example sequence of iproute2 commands to reproduce the hang/BUG():
-ip link add dev team0 type team
-ip link add dev gre0 type gre
-ip link set dev gre0 up
-ip link set dev gre0 master team0
-ip link set dev team0 up
-ping -I team0 1.1.1.1
-
-Move team_dev_type_check_change down where all other checks have passed
-as it changes the dev type with no way to restore it in case
-one of the checks that follow it fail.
-
-Also make sure to preserve the origial mtu assignment:
-  - If port_dev is not the same type as dev, dev takes mtu from port_dev
-  - If port_dev is the same type as dev, port_dev takes mtu from dev
-
-This is done by adding a conditional before the call to dev_set_mtu
-to prevent it from assigning port_dev->mtu = dev->mtu and instead
-letting team_dev_type_check_change assign dev->mtu = port_dev->mtu.
-The conditional is needed because the patch moves the call to
-team_dev_type_check_change past dev_set_mtu.
-
-Testing:
-  - team device driver in-tree selftests
-  - Add/remove various devices as slaves of team device
-  - syzbot
-
-Reported-by: syzbot+a2a3b519de727b0f7903@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a2a3b519de727b0f7903
-Fixes: 1d76efe1577b ("team: add support for non-ethernet devices")
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20251122002027.695151-1-zlatistiv@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Closes: https://github.com/candle-usb/candleLight_fw/issues/187
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-1-a29b42eacada@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/team/team_core.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/net/can/usb/gs_usb.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/team/team_core.c b/drivers/net/team/team_core.c
-index 17f07eb0ee52a..25562b17debe1 100644
---- a/drivers/net/team/team_core.c
-+++ b/drivers/net/team/team_core.c
-@@ -1191,10 +1191,6 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 		return -EPERM;
- 	}
+diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
+index 69b8d6da651bf..fa9bab8c89aea 100644
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -750,8 +750,21 @@ static void gs_usb_xmit_callback(struct urb *urb)
+ 	struct gs_can *dev = txc->dev;
+ 	struct net_device *netdev = dev->netdev;
  
--	err = team_dev_type_check_change(dev, port_dev);
--	if (err)
--		return err;
--
- 	if (port_dev->flags & IFF_UP) {
- 		NL_SET_ERR_MSG(extack, "Device is up. Set it down before adding it as a team port");
- 		netdev_err(dev, "Device %s is up. Set it down before adding it as a team port\n",
-@@ -1212,10 +1208,16 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 	INIT_LIST_HEAD(&port->qom_list);
- 
- 	port->orig.mtu = port_dev->mtu;
--	err = dev_set_mtu(port_dev, dev->mtu);
--	if (err) {
--		netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
--		goto err_set_mtu;
-+	/*
-+	 * MTU assignment will be handled in team_dev_type_check_change
-+	 * if dev and port_dev are of different types
-+	 */
-+	if (dev->type == port_dev->type) {
-+		err = dev_set_mtu(port_dev, dev->mtu);
-+		if (err) {
-+			netdev_dbg(dev, "Error %d calling dev_set_mtu\n", err);
-+			goto err_set_mtu;
-+		}
- 	}
- 
- 	memcpy(port->orig.dev_addr, port_dev->dev_addr, port_dev->addr_len);
-@@ -1290,6 +1292,10 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
- 		}
- 	}
- 
-+	err = team_dev_type_check_change(dev, port_dev);
-+	if (err)
-+		goto err_set_dev_type;
+-	if (urb->status)
+-		netdev_info(netdev, "usb xmit fail %u\n", txc->echo_id);
++	if (!urb->status)
++		return;
 +
- 	if (dev->flags & IFF_UP) {
- 		netif_addr_lock_bh(dev);
- 		dev_uc_sync_multiple(port_dev, dev);
-@@ -1308,6 +1314,7 @@ static int team_port_add(struct team *team, struct net_device *port_dev,
++	if (urb->status != -ESHUTDOWN && net_ratelimit())
++		netdev_info(netdev, "failed to xmit URB %u: %pe\n",
++			    txc->echo_id, ERR_PTR(urb->status));
++
++	netdev->stats.tx_dropped++;
++	netdev->stats.tx_errors++;
++
++	can_free_echo_skb(netdev, txc->echo_id, NULL);
++	gs_free_tx_context(txc);
++	atomic_dec(&dev->active_tx_urbs);
++
++	netif_wake_queue(netdev);
+ }
  
- 	return 0;
- 
-+err_set_dev_type:
- err_set_slave_promisc:
- 	__team_option_inst_del_port(team, port);
- 
+ static netdev_tx_t gs_can_start_xmit(struct sk_buff *skb,
 -- 
 2.51.0
 
