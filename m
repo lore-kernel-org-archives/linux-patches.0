@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D566C3191DA;
-	Wed,  3 Dec 2025 15:46:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A993191D0;
+	Wed,  3 Dec 2025 15:46:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776800; cv=none; b=MUv0cimcaqVybIn0HN8g2iTcbnTXBBj+E73ZX5osq1BdtMAaUqoohMqzkkHOsj6VyJ6HGvsEwnnD5DQ+RPRFuGaGGj+xyvBW50UaXoebHp+BAWX6bAbDCfei+oouUlCulc3uPuO2+cecgOv9Fm4gFx56mw0O0pAUMH4vHUpMtOw=
+	t=1764776804; cv=none; b=RYRspEjB5nT4Up2ZCbDr2OyuGuvfrvVXTYebXvVdSRFKlnPzVoC1tknjpCqFFQyXobzzH0OYoXB+/HEFlcAXKRxxR8bjrtzn6nkaPvBDW5hIo+4LeOWSFQsgjTFQxUjLu/EGw9OWWK4uJr/npX+Ci9ohAvPLOMwDbsGcH9CtO5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776800; c=relaxed/simple;
-	bh=HIkHFv5MAMMh2JY3Yf32a3Na73zCzMVqmBFvSCUcWHg=;
+	s=arc-20240116; t=1764776804; c=relaxed/simple;
+	bh=DL07vahdGHCGyfQLjropEHQ7nBl+JZRIuflhGzB0ofo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bagtmZgzyV9PTgK4Y2V5XIUk2ZUS6xp00jDePAdo7R3xaA1G0Xq5JUcvljiTn1BYD3lWqDBXssoWxUwYoBz48YWm+HQVr1bOk9glGOGxIo9YfO1p1cOqUUVwhK7IL18AKFNWMO7Igeyuv214RjYhO8BJrHxSozI3kM3azUxRcNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qelT9NXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfcmD6II3fXPqVsXhR4ggSQ+KkLK0ajbnFGGUNMNl0r5gwnR0RPR38NFwR6IhcDXq/3lUYsh7L1UumDqUU3I+0GSUDNT6a+WWhyml7IObwWJYElDVErdXqVXysUCtVZa8RKGfczcIuRRog5acrIFivhBOCyOXqxUkERodY7gL8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fSXBvdP+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qelT9NXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36CBAC16AAE;
-	Wed,  3 Dec 2025 15:46:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fSXBvdP+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 805EAC4CEF5;
+	Wed,  3 Dec 2025 15:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776800;
-	bh=HIkHFv5MAMMh2JY3Yf32a3Na73zCzMVqmBFvSCUcWHg=;
+	s=korg; t=1764776803;
+	bh=DL07vahdGHCGyfQLjropEHQ7nBl+JZRIuflhGzB0ofo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qelT9NXNoOraj2kkvs7hZgwZbFXu9IUaGUs0B3M742q2FEaivEM89LcO1EUlIR3P9
-	 qhX659Qj0pDI8/w59ec5WnuI7Yx300m5JZ6ch5bHG4K+PZpCEsA41UaaJrCE5qsumv
-	 XzJC+o13jrq07PYlgIH1f280VjPdKXcc/lBzesf0=
+	b=fSXBvdP+G5dWbj/DpvIEJy+uvAoMHt6OXZmaxi7hKad7ii1H45pN5LteUmLYiV//I
+	 g9FiDpO47jeHANdwjhdlJH/KdwJOqhZQwvW3RBSirFLORlSi89BG7dQ8nAKoF6b2XL
+	 3X8KCOhHAKCI6rR2Qv5qkCtpJEsfTsygdreGuUXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Chen <yiche@redhat.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Terrence Adams <tadamsjr@google.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Nazar Kalashnikov <sivartiwe@gmail.com>
-Subject: [PATCH 5.10 292/300] netfilter: nf_set_pipapo: fix initial map fill
-Date: Wed,  3 Dec 2025 16:28:16 +0100
-Message-ID: <20251203152411.439594032@linuxfoundation.org>
+Subject: [PATCH 5.10 293/300] scsi: pm80xx: Set phy->enable_completion only when we
+Date: Wed,  3 Dec 2025 16:28:17 +0100
+Message-ID: <20251203152411.476516015@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,135 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 791a615b7ad2258c560f91852be54b0480837c93 ]
+[ Upstream commit e4f949ef1516c0d74745ee54a0f4882c1f6c7aea ]
 
-The initial buffer has to be inited to all-ones, but it must restrict
-it to the size of the first field, not the total field size.
+pm8001_phy_control() populates the enable_completion pointer with a stack
+address, sends a PHY_LINK_RESET / PHY_HARD_RESET, waits 300 ms, and
+returns. The problem arises when a phy control response comes late.  After
+300 ms the pm8001_phy_control() function returns and the passed
+enable_completion stack address is no longer valid. Late phy control
+response invokes complete() on a dangling enable_completion pointer which
+leads to a kernel crash.
 
-After each round in the map search step, the result and the fill map
-are swapped, so if we have a set where f->bsize of the first element
-is smaller than m->bsize_max, those one-bits are leaked into future
-rounds result map.
-
-This makes pipapo find an incorrect matching results for sets where
-first field size is not the largest.
-
-Followup patch adds a test case to nft_concat_range.sh selftest script.
-
-Thanks to Stefano Brivio for pointing out that we need to zero out
-the remainder explicitly, only correcting memset() argument isn't enough.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Reported-by: Yi Chen <yiche@redhat.com>
-Cc: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Signed-off-by: Terrence Adams <tadamsjr@google.com>
+Link: https://lore.kernel.org/r/20240627155924.2361370-2-tadamsjr@google.com
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Nazar Kalashnikov <sivartiwe@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
-Backport fix for CVE-2024-57947
- net/netfilter/nft_set_pipapo.c      |    4 ++--
- net/netfilter/nft_set_pipapo.h      |   21 +++++++++++++++++++++
- net/netfilter/nft_set_pipapo_avx2.c |   10 ++++++----
- 3 files changed, 29 insertions(+), 6 deletions(-)
+Backport fix for CVE-2024-47666
+ drivers/scsi/pm8001/pm8001_sas.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -432,7 +432,7 @@ bool nft_pipapo_lookup(const struct net
- 	res_map  = scratch->map + (map_index ? m->bsize_max : 0);
- 	fill_map = scratch->map + (map_index ? 0 : m->bsize_max);
- 
--	memset(res_map, 0xff, m->bsize_max * sizeof(*res_map));
-+	pipapo_resmap_init(m, res_map);
- 
- 	nft_pipapo_for_each_field(f, i, m) {
- 		bool last = i == m->field_count - 1;
-@@ -536,7 +536,7 @@ static struct nft_pipapo_elem *pipapo_ge
- 		goto out;
- 	}
- 
--	memset(res_map, 0xff, m->bsize_max * sizeof(*res_map));
-+	pipapo_resmap_init(m, res_map);
- 
- 	nft_pipapo_for_each_field(f, i, m) {
- 		bool last = i == m->field_count - 1;
---- a/net/netfilter/nft_set_pipapo.h
-+++ b/net/netfilter/nft_set_pipapo.h
-@@ -287,4 +287,25 @@ static u64 pipapo_estimate_size(const st
- 	return size;
- }
- 
-+/**
-+ * pipapo_resmap_init() - Initialise result map before first use
-+ * @m:		Matching data, including mapping table
-+ * @res_map:	Result map
-+ *
-+ * Initialize all bits covered by the first field to one, so that after
-+ * the first step, only the matching bits of the first bit group remain.
-+ *
-+ * If other fields have a large bitmap, set remainder of res_map to 0.
-+ */
-+static inline void pipapo_resmap_init(const struct nft_pipapo_match *m, unsigned long *res_map)
-+{
-+	const struct nft_pipapo_field *f = m->f;
-+	int i;
-+
-+	for (i = 0; i < f->bsize; i++)
-+		res_map[i] = ULONG_MAX;
-+
-+	for (i = f->bsize; i < m->bsize_max; i++)
-+		res_map[i] = 0ul;
-+}
- #endif /* _NFT_SET_PIPAPO_H */
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -1028,6 +1028,7 @@ nothing:
- 
- /**
-  * nft_pipapo_avx2_lookup_slow() - Fallback function for uncommon field sizes
-+ * @mdata:	Matching data, including mapping table
-  * @map:	Previous match result, used as initial bitmap
-  * @fill:	Destination bitmap to be filled with current match result
-  * @f:		Field, containing lookup and mapping tables
-@@ -1043,7 +1044,8 @@ nothing:
-  * Return: -1 on no match, rule index of match if @last, otherwise first long
-  * word index to be checked next (i.e. first filled word).
-  */
--static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
-+static int nft_pipapo_avx2_lookup_slow(const struct nft_pipapo_match *mdata,
-+					unsigned long *map, unsigned long *fill,
- 					struct nft_pipapo_field *f, int offset,
- 					const u8 *pkt, bool first, bool last)
- {
-@@ -1053,7 +1055,7 @@ static int nft_pipapo_avx2_lookup_slow(u
- 	lt += offset * NFT_PIPAPO_LONGS_PER_M256;
- 
- 	if (first)
--		memset(map, 0xff, bsize * sizeof(*map));
-+		pipapo_resmap_init(mdata, map);
- 
- 	for (i = offset; i < bsize; i++) {
- 		if (f->bb == 8)
-@@ -1181,7 +1183,7 @@ next_match:
- 			} else if (f->groups == 16) {
- 				NFT_SET_PIPAPO_AVX2_LOOKUP(8, 16);
- 			} else {
--				ret = nft_pipapo_avx2_lookup_slow(res, fill, f,
-+				ret = nft_pipapo_avx2_lookup_slow(m, res, fill, f,
- 								  ret, rp,
- 								  first, last);
- 			}
-@@ -1197,7 +1199,7 @@ next_match:
- 			} else if (f->groups == 32) {
- 				NFT_SET_PIPAPO_AVX2_LOOKUP(4, 32);
- 			} else {
--				ret = nft_pipapo_avx2_lookup_slow(res, fill, f,
-+				ret = nft_pipapo_avx2_lookup_slow(m, res, fill, f,
- 								  ret, rp,
- 								  first, last);
- 			}
+--- a/drivers/scsi/pm8001/pm8001_sas.c
++++ b/drivers/scsi/pm8001/pm8001_sas.c
+@@ -163,7 +163,6 @@ int pm8001_phy_control(struct asd_sas_ph
+ 	unsigned long flags;
+ 	pm8001_ha = sas_phy->ha->lldd_ha;
+ 	phy = &pm8001_ha->phy[phy_id];
+-	pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 	switch (func) {
+ 	case PHY_FUNC_SET_LINK_RATE:
+ 		rates = funcdata;
+@@ -176,6 +175,7 @@ int pm8001_phy_control(struct asd_sas_ph
+ 				rates->maximum_linkrate;
+ 		}
+ 		if (pm8001_ha->phy[phy_id].phy_state ==  PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
+@@ -184,6 +184,7 @@ int pm8001_phy_control(struct asd_sas_ph
+ 		break;
+ 	case PHY_FUNC_HARD_RESET:
+ 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
+@@ -192,6 +193,7 @@ int pm8001_phy_control(struct asd_sas_ph
+ 		break;
+ 	case PHY_FUNC_LINK_RESET:
+ 		if (pm8001_ha->phy[phy_id].phy_state == PHY_LINK_DISABLE) {
++			pm8001_ha->phy[phy_id].enable_completion = &completion;
+ 			PM8001_CHIP_DISP->phy_start_req(pm8001_ha, phy_id);
+ 			wait_for_completion(&completion);
+ 		}
 
 
