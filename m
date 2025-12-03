@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E0E030C606;
-	Wed,  3 Dec 2025 15:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F53230C62A;
+	Wed,  3 Dec 2025 15:31:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775899; cv=none; b=IgLe5mZWDwuu4Joe7p7iWt8oJicrbcTlY41W8mq/r2udy370RAR47T3TP4cOAEpluW5AFu+Wj2w/SQcVDyDyTMhY/RNhrjD52IwCyYKXv9ITdJRZ+69OpzdnIaOwZISwYioWAnpjv77BJcYhUM6k5sw8aVWJ7iUC4Z3NG9BMwFc=
+	t=1764775902; cv=none; b=rBQmq3Lk/fPPAns6D0gGbt/mW7/XFnGjfmMOHKPlipJAH9Hcju/AXPmfM307XjjuLWwDoOUiYAracAT4k9my/V8LOlF8tLkRnT73q6o8+mvs8S4CU+ykj+w0ONwvwmAvaQP54CJnRTYERug8rlGPDjSHG42atAbo7AB40PvSXKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775899; c=relaxed/simple;
-	bh=Hy5a7dFtAQjcVIpFz9xEjzS2q0vHRBWXdLG7LyeTE7U=;
+	s=arc-20240116; t=1764775902; c=relaxed/simple;
+	bh=r+NS4PrrQaV6s7gIxlfE5bw+MgY+TifmY9mfeOweTBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9Ib7On5KGrlYcOAs+NdQKi4Hp4moH0ndFG/2OZokpTZ0xJNEeOaHcEe0EElMruylwif8cqUtbB9Isb0QZ0+rjULNzl6JaMsTLv38mDsNelVBgPVukH6+3/VPCsw4IHdpGqbOIbPC68yRCa5fBZQRRmUH/vJd4YdDf827O58cEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eLQY6dvd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkMCCEIA5Nzf39Yni4vzNBk2bq61Ma0MTf3b8VlJpvl3Mg/hHSf8o3samuHOkckjGhKwwDbkHWz3xK7hVfuE61YqUdgPbglGZOVdXFKXLTIFe1yTaPr6FSL0PUijc6QMl5fCcPlM11P8tcxRvukW/bQ9aisN4O7lbC37VdNGvrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ki3PgWWs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eLQY6dvd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86506C4CEF5;
-	Wed,  3 Dec 2025 15:31:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ki3PgWWs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B930EC4CEF5;
+	Wed,  3 Dec 2025 15:31:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775898;
-	bh=Hy5a7dFtAQjcVIpFz9xEjzS2q0vHRBWXdLG7LyeTE7U=;
+	s=korg; t=1764775902;
+	bh=r+NS4PrrQaV6s7gIxlfE5bw+MgY+TifmY9mfeOweTBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLQY6dvd7F13Eg9o6na+xG9y/a42JTv3FTzJpwwtVecU2N+wPoxkECGwjZsiP7mnC
-	 KZaoufW542HBnFyrvnllK38umBZTKbfTz9SG/zTd4+DXgDU8bXQJdznl32sMXTdg1w
-	 25KHjS9JVfJhdlNHMkzbWBld0TpRIfhllSk4vP2A=
+	b=ki3PgWWsnehiE8PcY3+o62MjDtsPtXEw7NbvMVgF+gPRQi+B0CG/xCkJUCBBVODBp
+	 T92UsGIFbzgsSNn1JDgY4l+qky9IsVJkTb9sl4O6YHX/1j3HTK5mPNllfK/MU01b9o
+	 CLdxc6M/GACC10o9n58yVDs0RVYMs+WEuq7c2L6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
+	John Smith <itistotalbotnet@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 020/300] drm/amd/pm: fix smu table id bound check issue in smu_cmn_update_table()
-Date: Wed,  3 Dec 2025 16:23:44 +0100
-Message-ID: <20251203152401.206743524@linuxfoundation.org>
+Subject: [PATCH 5.10 021/300] drm/amd/pm/powerplay/smumgr: Fix PCIeBootLinkLevel value on Fiji
+Date: Wed,  3 Dec 2025 16:23:45 +0100
+Message-ID: <20251203152401.243109460@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,38 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: John Smith <itistotalbotnet@gmail.com>
 
-[ Upstream commit 238d468d3ed18a324bb9d8c99f18c665dbac0511 ]
+[ Upstream commit 07a13f913c291d6ec72ee4fc848d13ecfdc0e705 ]
 
-'table_index' is a variable defined by the smu driver (kmd)
-'table_id' is a variable defined by the hw smu (pmfw)
+Previously this was initialized with zero which represented PCIe Gen
+1.0 instead of using the
+maximum value from the speed table which is the behaviour of all other
+smumgr implementations.
 
-This code should use table_index as a bounds check.
-
-Fixes: caad2613dc4bd ("drm/amd/powerplay: move table setting common code to smu_cmn.c")
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Fixes: 18edef19ea44 ("drm/amd/powerplay: implement fw image related smu interface for Fiji.")
+Signed-off-by: John Smith <itistotalbotnet@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fca0c66b22303de0d1d6313059baf4dc960a4753)
+(cherry picked from commit c52238c9fb414555c68340cd80e487d982c1921c)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c | 2 +-
+ drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-index 92b2ea4c197b8..5219eb685c88e 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-@@ -587,7 +587,7 @@ int smu_cmn_update_table(struct smu_context *smu,
- 						      table_index);
- 	uint32_t table_size;
- 	int ret = 0;
--	if (!table_data || table_id >= SMU_TABLE_COUNT || table_id < 0)
-+	if (!table_data || table_index >= SMU_TABLE_COUNT || table_id < 0)
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
+index ecb9ee46d6b35..6049edcaf6ce9 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/smumgr/fiji_smumgr.c
+@@ -2026,7 +2026,7 @@ static int fiji_init_smc_table(struct pp_hwmgr *hwmgr)
+ 	table->VoltageResponseTime = 0;
+ 	table->PhaseResponseTime = 0;
+ 	table->MemoryThermThrottleEnable = 1;
+-	table->PCIeBootLinkLevel = 0;      /* 0:Gen1 1:Gen2 2:Gen3*/
++	table->PCIeBootLinkLevel = (uint8_t) (data->dpm_table.pcie_speed_table.count);
+ 	table->PCIeGenInterval = 1;
+ 	table->VRConfig = 0;
  
- 	table_size = smu_table->tables[table_index].size;
 -- 
 2.51.0
 
