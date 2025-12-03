@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B6834887C;
-	Wed,  3 Dec 2025 16:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E975534887C;
+	Wed,  3 Dec 2025 16:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777643; cv=none; b=RstarkRtPrATT+ld899JG4Pjg9QVG6OWVsq3aWTlQybOPHNIeAp1sJ/2dhudRpXhvU40wzwHqm6n2n1jdPUR7Y+ToeDH2OQHP4yagQiiqgEQFE03v9WtNA2KlQbM7w1aLHmM2kRxSnK+9lQEqa7RkE+1u3wOkczRi1bbrfk0ItY=
+	t=1764777647; cv=none; b=tnNA22aGUj4sEO9UkPzQUrZKH4Oqv3zGgqPArUV1Awlktb8VAFG8rR7rkHPz5X1ckXtIvrNz0lPG09VsES9QJoHLCEgGaSiyzTkfuuL44OJM6K6d/Uz4ss984NdNnFPQzXETO3RNGrtBH4uD2OeoLNYIHK+Z+XzwFYObrL9kap0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777643; c=relaxed/simple;
-	bh=8zx+6R2jXTEwa1b2tZjkZKMFhinGVR4rwGv2Xo/KONo=;
+	s=arc-20240116; t=1764777647; c=relaxed/simple;
+	bh=SMP98IaZvIpRnhh0FvzX5N50VMAxFUN8RJZfx2Jyx10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UvcOiu9eDVNjWggn6k0CEBoWrJGrE2XVEHDFbbkELyxA75NYwAI6mvN8RZz4lA5kdvXe6fCo2AzLjpjTCwwU8gInDXQA7yMrxGJLZ2XViyX+GIwG+j2X29V1MrOnfD+ASTtSjbjlDTETTsJurXAykqQQol7KtGvx1Coj1IE/fyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1QLrv0Ln; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y21t/vN3EAAbjU5z0D4wOWLSOekDxWr1gmtiA3AIHmeFNXJGcPOtbbW2uKf8m88kIt3radr2D0j8NxX4h3Ggcoa0vZKf+Wmv76h5svMMoBpLnl9XnsQ6i/DIbnvPZC9oxYz8QqTvYFW/GcCZt6TyBfITR5z4Uoxl8FMRnzsRA20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFQqO1Co; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1QLrv0Ln"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10684C116C6;
-	Wed,  3 Dec 2025 16:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFQqO1Co"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B22EC4CEF5;
+	Wed,  3 Dec 2025 16:00:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777643;
-	bh=8zx+6R2jXTEwa1b2tZjkZKMFhinGVR4rwGv2Xo/KONo=;
+	s=korg; t=1764777646;
+	bh=SMP98IaZvIpRnhh0FvzX5N50VMAxFUN8RJZfx2Jyx10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1QLrv0LnBrgrR692uhaUp0Ke4oPZ8pGrtP7hgqXh9c8jV3PeVz9owf+UNzWZCrwmb
-	 YDBPq3sQpjj6B1ZN9Uv0fQzsn8Hj1V6of8rgH8GKb0z3nwL9Wp3DKdSQh5YbMVFGDm
-	 7Pj3dKXDzr6tzq1qB4BgN9BdJxk6KD4iLVL97DTo=
+	b=jFQqO1Co/ymzMzlunH9rSjuj/WBawJbjL6ELMI7UR6y8tiDcwsyEpr1ak5NMakC7q
+	 29F+H24zOvscOKXyvVJcbveUn4JLH1AZOQcjcT7UtDzYKquiNU1pI+211p849WsdHK
+	 mosd5o8d6OEzm9Ch7C6bHGPJI1xdXhoPaySXrNcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuande Chen <chuachen@cisco.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 068/392] hwmon: (sbtsi_temp) AMD CPU extended temperature range support
-Date: Wed,  3 Dec 2025 16:23:38 +0100
-Message-ID: <20251203152416.611236748@linuxfoundation.org>
+Subject: [PATCH 5.15 059/392] mmc: host: renesas_sdhi: Fix the actual clock
+Date: Wed,  3 Dec 2025 16:23:29 +0100
+Message-ID: <20251203152416.285368150@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,138 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuande Chen <chuachen@cisco.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit d9d61f1da35038793156c04bb13f0a1350709121 ]
+[ Upstream commit 9c174e4dacee9fb2014a4ffc953d79a5707b77e4 ]
 
-Many AMD CPUs can support this feature now. We would get a wrong CPU DIE
-temperature if don't consider this. In low-temperature environments,
-the CPU die temperature can drop below zero. So many platforms would like
-to make extended temperature range as their default configuration.
-Default temperature range (0C to 255.875C).
-Extended temperature range (-49C to +206.875C).
-Ref Doc: AMD V3000 PPR (Doc ID #56558).
+Wrong actual clock reported, if the SD clock division ratio is other
+than 1:1(bits DIV[7:0] in SD_CLK_CTRL are set to 11111111).
 
-Signed-off-by: Chuande Chen <chuachen@cisco.com>
-Link: https://lore.kernel.org/r/20250814053940.96764-1-chenchuande@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+On high speed mode, cat /sys/kernel/debug/mmc1/ios
+Without the patch:
+clock:          50000000 Hz
+actual clock:   200000000 Hz
+
+After the fix:
+clock:          50000000 Hz
+actual clock:   50000000 Hz
+
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://lore.kernel.org/r/20250629203859.170850-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/sbtsi_temp.c | 46 +++++++++++++++++++++++++-------------
- 1 file changed, 31 insertions(+), 15 deletions(-)
+ drivers/mmc/host/renesas_sdhi_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/sbtsi_temp.c b/drivers/hwmon/sbtsi_temp.c
-index e35357c48b8e6..b2ef2ada4bfe2 100644
---- a/drivers/hwmon/sbtsi_temp.c
-+++ b/drivers/hwmon/sbtsi_temp.c
-@@ -15,6 +15,7 @@
- #include <linux/mutex.h>
- #include <linux/of_device.h>
- #include <linux/of.h>
-+#include <linux/bitfield.h>
- 
- /*
-  * SB-TSI registers only support SMBus byte data access. "_INT" registers are
-@@ -30,8 +31,22 @@
- #define SBTSI_REG_TEMP_HIGH_DEC		0x13 /* RW */
- #define SBTSI_REG_TEMP_LOW_DEC		0x14 /* RW */
- 
-+/*
-+ * Bit for reporting value with temperature measurement range.
-+ * bit == 0: Use default temperature range (0C to 255.875C).
-+ * bit == 1: Use extended temperature range (-49C to +206.875C).
-+ */
-+#define SBTSI_CONFIG_EXT_RANGE_SHIFT	2
-+/*
-+ * ReadOrder bit specifies the reading order of integer and decimal part of
-+ * CPU temperature for atomic reads. If bit == 0, reading integer part triggers
-+ * latching of the decimal part, so integer part should be read first.
-+ * If bit == 1, read order should be reversed.
-+ */
- #define SBTSI_CONFIG_READ_ORDER_SHIFT	5
- 
-+#define SBTSI_TEMP_EXT_RANGE_ADJ	49000
-+
- #define SBTSI_TEMP_MIN	0
- #define SBTSI_TEMP_MAX	255875
- 
-@@ -39,6 +54,8 @@
- struct sbtsi_data {
- 	struct i2c_client *client;
- 	struct mutex lock;
-+	bool ext_range_mode;
-+	bool read_order;
- };
- 
- /*
-@@ -75,23 +92,11 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
- {
- 	struct sbtsi_data *data = dev_get_drvdata(dev);
- 	s32 temp_int, temp_dec;
--	int err;
- 
- 	switch (attr) {
- 	case hwmon_temp_input:
--		/*
--		 * ReadOrder bit specifies the reading order of integer and
--		 * decimal part of CPU temp for atomic reads. If bit == 0,
--		 * reading integer part triggers latching of the decimal part,
--		 * so integer part should be read first. If bit == 1, read
--		 * order should be reversed.
--		 */
--		err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
--		if (err < 0)
--			return err;
--
- 		mutex_lock(&data->lock);
--		if (err & BIT(SBTSI_CONFIG_READ_ORDER_SHIFT)) {
-+		if (data->read_order) {
- 			temp_dec = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_DEC);
- 			temp_int = i2c_smbus_read_byte_data(data->client, SBTSI_REG_TEMP_INT);
- 		} else {
-@@ -123,6 +128,8 @@ static int sbtsi_read(struct device *dev, enum hwmon_sensor_types type,
- 		return temp_dec;
- 
- 	*val = sbtsi_reg_to_mc(temp_int, temp_dec);
-+	if (data->ext_range_mode)
-+		*val -= SBTSI_TEMP_EXT_RANGE_ADJ;
- 
- 	return 0;
- }
-@@ -147,6 +154,8 @@ static int sbtsi_write(struct device *dev, enum hwmon_sensor_types type,
- 		return -EINVAL;
+diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
+index 9ea9bc250543f..2b5dc342d30ab 100644
+--- a/drivers/mmc/host/renesas_sdhi_core.c
++++ b/drivers/mmc/host/renesas_sdhi_core.c
+@@ -193,7 +193,11 @@ static void renesas_sdhi_set_clock(struct tmio_mmc_host *host,
+ 			clk &= ~0xff;
  	}
  
-+	if (data->ext_range_mode)
-+		val += SBTSI_TEMP_EXT_RANGE_ADJ;
- 	val = clamp_val(val, SBTSI_TEMP_MIN, SBTSI_TEMP_MAX);
- 	sbtsi_mc_to_reg(val, &temp_int, &temp_dec);
- 
-@@ -205,6 +214,7 @@ static int sbtsi_probe(struct i2c_client *client,
- 	struct device *dev = &client->dev;
- 	struct device *hwmon_dev;
- 	struct sbtsi_data *data;
-+	int err;
- 
- 	data = devm_kzalloc(dev, sizeof(struct sbtsi_data), GFP_KERNEL);
- 	if (!data)
-@@ -213,8 +223,14 @@ static int sbtsi_probe(struct i2c_client *client,
- 	data->client = client;
- 	mutex_init(&data->lock);
- 
--	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data, &sbtsi_chip_info,
--							 NULL);
-+	err = i2c_smbus_read_byte_data(data->client, SBTSI_REG_CONFIG);
-+	if (err < 0)
-+		return err;
-+	data->ext_range_mode = FIELD_GET(BIT(SBTSI_CONFIG_EXT_RANGE_SHIFT), err);
-+	data->read_order = FIELD_GET(BIT(SBTSI_CONFIG_READ_ORDER_SHIFT), err);
+-	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clk & CLK_CTL_DIV_MASK);
++	clock = clk & CLK_CTL_DIV_MASK;
++	if (clock != 0xff)
++		host->mmc->actual_clock /= (1 << (ffs(clock) + 1));
 +
-+	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
-+							 &sbtsi_chip_info, NULL);
++	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, clock);
+ 	if (!(host->pdata->flags & TMIO_MMC_MIN_RCAR2))
+ 		usleep_range(10000, 11000);
  
- 	return PTR_ERR_OR_ZERO(hwmon_dev);
- }
 -- 
 2.51.0
 
