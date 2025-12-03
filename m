@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A917B3054D4;
-	Wed,  3 Dec 2025 16:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4020631961F;
+	Wed,  3 Dec 2025 16:34:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779643; cv=none; b=RkfLpqChWEcWJt15m6y6qh9PyGuLGcy1PhtUJVeC3oncOrCn6BBMrmQQ5bw13jN4VR760ivnfwRLdpUf1mz9Eddh8w8fCNdUt8L7QdpcnOtcFIQrXFdnLRSQPHA35E8WF/+abfOK6kQgqvUN/np1AlhgE6wXS+WOeb6MtmaoEwg=
+	t=1764779647; cv=none; b=Qg/x527EEsw9WNLH+jMYEwZxshWwjcVQap9j9ymIlo+DMM86qbBMoBybLcRJkpJFXPuoyGlRCT4nWWkT4Xn5YXJJt1rX1COexGy2KLKaJu+BCIGy7vQoo7CwvQCd0GY+XeplLU8PMlYguOrTQ+wqHqiljPSPm1UlvEvAMAOyFaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779643; c=relaxed/simple;
-	bh=qHO4pvGiF/uP23CFybtkWeTdVV4EC12CyR/SqfYbLqc=;
+	s=arc-20240116; t=1764779647; c=relaxed/simple;
+	bh=qpkIcVJ5miBuK6sYHytIt7HDp1ODdKaWYKa1EPzgVoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JyvfeNTCboiKM5fGIOIjVQb+ZRbRLz79mc6yNzvxT1AXd/z9QvLSyXFvlrvr6znMi4/174cKiLE5i7QBFGj/O5B6tTkiO+nBPPZ3XG9IdM6O18NoCyH/BrbN1Otw1rCzj1qhbV0tw5Zg1Q8kHvunycq5ebEGq1QoJfQssazsIg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8P71Yw8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KwFWHMNMM1jJUAo/PbfCThWOVhBmxgfwqNNruJJQs3BvumQQuGSEX/Y7lYccrw9SpPjeEHfJQCeUVRTDiHJUpPy30654XmefHijVUNQMF07dyeWhH7d6om37YqA1yoBkfVJ5oTOSHTZZ0xtiIL/sRTgviSyY6cCLGBpQ8At0raI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCOuel4s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8P71Yw8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C1FC4CEF5;
-	Wed,  3 Dec 2025 16:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCOuel4s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C3FC4CEF5;
+	Wed,  3 Dec 2025 16:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779643;
-	bh=qHO4pvGiF/uP23CFybtkWeTdVV4EC12CyR/SqfYbLqc=;
+	s=korg; t=1764779647;
+	bh=qpkIcVJ5miBuK6sYHytIt7HDp1ODdKaWYKa1EPzgVoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8P71Yw8p/fQGUhHMSDBFRNQyPEakn4Vnoju6Z0YGxdauHrnRqLgP+zBEuAP8ybVf
-	 nwgGfPI9GrdRNNd1+C/4YY3NV1UojGAj2y9hco7KgED+8wYZWuZHNF7Wtwq62CyJjb
-	 QKbFdp75xZz6/h0dub1K0oWhICvlyjPSEPDsxlqE=
+	b=wCOuel4sGKyEuuDkhcTbyYp83S/49qhAnFpo7ZnzHok4ZMyCkcuWYEjArjXDzMTbw
+	 sK1C4xrI2fszo2bj9vPAyn2qsDPFHHcizYgstV707IbcS09E/0s8Kc74NKTZsPr5oz
+	 I+pDsGcdD9FmjtA+Ik4KZZvv5oOEfnc+ypNkIF3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ryan Wanner <Ryan.Wanner@microchip.com>,
 	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 285/568] ARM: at91: pm: save and restore ACR during PLL disable/enable
-Date: Wed,  3 Dec 2025 16:24:47 +0100
-Message-ID: <20251203152451.143243340@linuxfoundation.org>
+Subject: [PATCH 6.1 286/568] clk: at91: clk-master: Add check for divide by 3
+Date: Wed,  3 Dec 2025 16:24:48 +0100
+Message-ID: <20251203152451.179025601@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -53,57 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Ryan Wanner <Ryan.Wanner@microchip.com>
 
-[ Upstream commit 0c01fe49651d387776abed6a28541e80c8a93319 ]
+[ Upstream commit e0237f5635727d64635ec6665e1de9f4cacce35c ]
 
-Add a new word in assembly to store ACR value during the calls
-to at91_plla_disable/at91_plla_enable macros and use it.
+A potential divider for the master clock is div/3. The register
+configuration for div/3 is MASTER_PRES_MAX. The current bit shifting
+method does not work for this case. Checking for MASTER_PRES_MAX will
+ensure the correct decimal value is stored in the system.
 
+Signed-off-by: Ryan Wanner <Ryan.Wanner@microchip.com>
 Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-[cristian.birsan@microchip.com: remove ACR_DEFAULT_PLLA loading]
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Link: https://lore.kernel.org/r/20250827145427.46819-4-nicolas.ferre@microchip.com
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm_suspend.S | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/clk/at91/clk-master.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index 0af2598899fc5..c410da92ce38b 100644
---- a/arch/arm/mach-at91/pm_suspend.S
-+++ b/arch/arm/mach-at91/pm_suspend.S
-@@ -685,6 +685,10 @@ sr_dis_exit:
- 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
- 	str	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
+diff --git a/drivers/clk/at91/clk-master.c b/drivers/clk/at91/clk-master.c
+index b7cd1924de52a..1f07a5d292602 100644
+--- a/drivers/clk/at91/clk-master.c
++++ b/drivers/clk/at91/clk-master.c
+@@ -574,6 +574,9 @@ clk_sama7g5_master_recalc_rate(struct clk_hw *hw,
+ {
+ 	struct clk_master *master = to_clk_master(hw);
  
-+	/* save acr */
-+	ldr	tmp2, [pmc, #AT91_PMC_PLL_ACR]
-+	str	tmp2, .saved_acr
++	if (master->div == MASTER_PRES_MAX)
++		return DIV_ROUND_CLOSEST_ULL(parent_rate, 3);
 +
- 	/* save div. */
- 	mov	tmp1, #0
- 	ldr	tmp2, [pmc, #AT91_PMC_PLL_CTRL0]
-@@ -754,7 +758,7 @@ sr_dis_exit:
- 	str	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
+ 	return DIV_ROUND_CLOSEST_ULL(parent_rate, (1 << master->div));
+ }
  
- 	/* step 2. */
--	ldr	tmp1, =AT91_PMC_PLL_ACR_DEFAULT_PLLA
-+	ldr	tmp1, .saved_acr
- 	str	tmp1, [pmc, #AT91_PMC_PLL_ACR]
- 
- 	/* step 3. */
-@@ -1130,6 +1134,8 @@ ENDPROC(at91_pm_suspend_in_sram)
- 	.word 0
- .saved_mckr:
- 	.word 0
-+.saved_acr:
-+	.word 0
- .saved_pllar:
- 	.word 0
- .saved_sam9_lpr:
 -- 
 2.51.0
 
