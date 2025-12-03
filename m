@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D05312800;
-	Wed,  3 Dec 2025 15:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E88131328E;
+	Wed,  3 Dec 2025 15:36:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776163; cv=none; b=SIhr32jjPE8is/TsjACsSdbWGVcl6Z87nyA+msv2BBgHYdnJ7j4sEL9ZK/gnZpO9hRvVduDrDslM/bjCLVU7NOY1dTYzoPRNd2C+zU00k1D2J3K9fu6wXI16lX7FKiEzZ7yuGrJClkHEwlssWOIbz1Rpg9pZZbBXGAaGSTVt5Tw=
+	t=1764776167; cv=none; b=PBzEoWa/TGmRfEii5qgRD78ArR28DWqdcd7m2GWzwQ7J+kFQDYyjKslDUHToyWmQYibEb7zCp6qzxfBUpaJ6sFVFHUkrJWzZVyld+xO7aQLabR4kxgiHZqr9e8n5AFX+aBGysk2QUOCGd/f+9kdf3s5nmaYYJEHL50StSqMlAKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776163; c=relaxed/simple;
-	bh=kODvYBdNLBC6PlnHihk0z78pbSxzCxWnmvFyws+7rIw=;
+	s=arc-20240116; t=1764776167; c=relaxed/simple;
+	bh=IVhGL2lEFGvXAHh7BWJJGXseA+QGtr9PyWqP0sIFHgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OYiEk3wdZxV4DgFeTNnkooQtHT0xtocNziDK6wrzTmhZcvS927UbJdc+hGfM1pttWg/TAfrBPuSbnucsVDzK8L4NDLbfVb+wAx1YEb92hHUCfvu9RabN57jBRTBb3tH9csiaEyt5Qco/k+1xQ1IU6PEvNlZ5rG9P0iIB78idkTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HGcoudIT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISlpjohzaqreUh40qJD+KfZ3S/HOvC/zd5sUNm5+dCCyqWxPcqQ0W+/AtO9yCJQxJP+rWZUz0EsrDGPtCejl3lIv7y1Kdn4oNWLcdUjftGnQ13wM+3xTfA64H5Li5pMNumB2oETnmIQbrR4X93yTzo7Iop/9sU9TFGe3X1ITs+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cRRtyMaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HGcoudIT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0212C4CEF5;
-	Wed,  3 Dec 2025 15:36:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cRRtyMaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563EDC4CEF5;
+	Wed,  3 Dec 2025 15:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776163;
-	bh=kODvYBdNLBC6PlnHihk0z78pbSxzCxWnmvFyws+7rIw=;
+	s=korg; t=1764776166;
+	bh=IVhGL2lEFGvXAHh7BWJJGXseA+QGtr9PyWqP0sIFHgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGcoudITa3UU4nJostwHFeMoitfz15Q1HlJfqd89O2s298m1xr4+AJ6k0HCCXB6GN
-	 4lA1A15IMDS/s2R+PdqIH1i4oJAiaaFUdO4MiaEfeifnD+69SICgWdQ1UcQGPU8GRl
-	 yXO4O3vX83N8YLOsRveDAys9OCZ26lYXpM24ekmI=
+	b=cRRtyMaRhGd/3hqQW4d84iPs29grKIDmnYf9hIUPHriPpcww0u65nhx0GBl/ZhrDd
+	 tdZW00OfTND9QtyQlSeD6mOVAlRSxcxu/d2MdGtJFjoj3lreoDVGn36ZYJp+t3bBav
+	 GcYQwb/lwa31rCv0hOfDgmecs4+EthytctzNmlwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Kehne <jens.kehne@agilent.com>,
-	Lee Jones <lee@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/300] mfd: da9063: Split chip variant reading in two bus transactions
-Date: Wed,  3 Dec 2025 16:24:31 +0100
-Message-ID: <20251203152403.104469120@linuxfoundation.org>
+Subject: [PATCH 5.10 068/300] drm/amd/pm: Use cached metrics data on arcturus
+Date: Wed,  3 Dec 2025 16:24:32 +0100
+Message-ID: <20251203152403.141591941@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,90 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Kehne <jens.kehne@agilent.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 9ac4890ac39352ccea132109e32911495574c3ec ]
+[ Upstream commit 2f3b1ccf83be83a3330e38194ddfd1a91fec69be ]
 
-We observed the initial probe of the da9063 failing in
-da9063_get_device_type in about 30% of boots on a Xilinx ZynqMP based
-board. The problem originates in da9063_i2c_blockreg_read, which uses
-a single bus transaction to turn the register page and then read a
-register. On the bus, this should translate to a write to register 0,
-followed by a read to the target register, separated by a repeated
-start. However, we found that after the write to register 0, the
-controller sometimes continues directly with the register address of
-the read request, without sending the chip address or a repeated start
-in between, which makes the read request invalid.
+Cached metrics data validity is 1ms on arcturus. It's not reasonable for
+any client to query gpu_metrics at a faster rate and constantly
+interrupt PMFW.
 
-To fix this, separate turning the page and reading the register into
-two separate transactions. This brings the initialization code in line
-with the rest of the driver, which uses register maps (which to my
-knowledge do not use repeated starts after turning the page). This has
-been included in our kernel for several months and was recently
-included in a shipped product. For us, it reliably fixes the issue,
-and we have not observed any new issues.
-
-While the underlying problem is probably with the i2c controller or
-its driver, I still propose a change here in the interest of
-robustness: First, I'm not sure this issue can be fixed on the
-controller side, since there are other issues related to repeated
-start which can't (AR# 60695, AR# 61664). Second, similar problems
-might exist with other controllers.
-
-Signed-off-by: Jens Kehne <jens.kehne@agilent.com>
-Link: https://lore.kernel.org/r/20250804133754.3496718-1-jens.kehne@agilent.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9063-i2c.c | 27 +++++++++++++++++++++------
- 1 file changed, 21 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/da9063-i2c.c b/drivers/mfd/da9063-i2c.c
-index 3419814d016b5..6e6a466c7d8c9 100644
---- a/drivers/mfd/da9063-i2c.c
-+++ b/drivers/mfd/da9063-i2c.c
-@@ -37,9 +37,13 @@ enum da9063_page_sel_buf_fmt {
- 	DA9063_PAGE_SEL_BUF_SIZE,
- };
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+index 3a31058b029e3..729f6d60fac0a 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/arcturus_ppt.c
+@@ -2276,7 +2276,7 @@ static ssize_t arcturus_get_gpu_metrics(struct smu_context *smu,
  
-+enum da9063_page_sel_msgs {
-+	DA9063_PAGE_SEL_MSG = 0,
-+	DA9063_PAGE_SEL_CNT,
-+};
-+
- enum da9063_paged_read_msgs {
--	DA9063_PAGED_READ_MSG_PAGE_SEL = 0,
--	DA9063_PAGED_READ_MSG_REG_SEL,
-+	DA9063_PAGED_READ_MSG_REG_SEL = 0,
- 	DA9063_PAGED_READ_MSG_DATA,
- 	DA9063_PAGED_READ_MSG_CNT,
- };
-@@ -65,10 +69,21 @@ static int da9063_i2c_blockreg_read(struct i2c_client *client, u16 addr,
- 		(page_num << DA9063_I2C_PAGE_SEL_SHIFT) & DA9063_REG_PAGE_MASK;
+ 	ret = smu_cmn_get_metrics_table(smu,
+ 					&metrics,
+-					true);
++					false);
+ 	if (ret)
+ 		return ret;
  
- 	/* Write reg address, page selection */
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].addr = client->addr;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].flags = 0;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].len = DA9063_PAGE_SEL_BUF_SIZE;
--	xfer[DA9063_PAGED_READ_MSG_PAGE_SEL].buf = page_sel_buf;
-+	xfer[DA9063_PAGE_SEL_MSG].addr = client->addr;
-+	xfer[DA9063_PAGE_SEL_MSG].flags = 0;
-+	xfer[DA9063_PAGE_SEL_MSG].len = DA9063_PAGE_SEL_BUF_SIZE;
-+	xfer[DA9063_PAGE_SEL_MSG].buf = page_sel_buf;
-+
-+	ret = i2c_transfer(client->adapter, xfer, DA9063_PAGE_SEL_CNT);
-+	if (ret < 0) {
-+		dev_err(&client->dev, "Page switch failed: %d\n", ret);
-+		return ret;
-+	}
-+
-+	if (ret != DA9063_PAGE_SEL_CNT) {
-+		dev_err(&client->dev, "Page switch failed to complete\n");
-+		return -EIO;
-+	}
- 
- 	/* Select register address */
- 	xfer[DA9063_PAGED_READ_MSG_REG_SEL].addr = client->addr;
 -- 
 2.51.0
 
