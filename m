@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 139B836A013;
-	Wed,  3 Dec 2025 16:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9316536A00E;
+	Wed,  3 Dec 2025 16:31:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779469; cv=none; b=GMTFWgf3f8EZSzTZ4kb1MaGqWmRzrY6OSOdanE4S6diajC4NwV/JVN42QGXslIpMcQzCAA32znRA0t7g2HrFQEu01BUGiRy0+0h2bBbTk6qyUfA72UvaL7/xVeRobQsK2f0Has0Qz7j5TKgygAuD93hUGtFq0OzvRPXT7xyrA8s=
+	t=1764779472; cv=none; b=ug+48v40bQhkQrVmUm9X/v2Cb5VqSbng2QqoUFr9z0CfHybxKKRxHcwYkTGSFtQFqk5ZZaThwuw5DkBn4wYZ7OuSQPSIYzCTv+xx3XIKCQRzrb02fQpekYhW7lnuss/Up8CONPyso+kVgXGtJvaH01z8OtqWgbH8u+/HJT/T6wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779469; c=relaxed/simple;
-	bh=F+NrHz639X1YGK3Tpl80kRv2U2mvnqev/ZBULx0rBYA=;
+	s=arc-20240116; t=1764779472; c=relaxed/simple;
+	bh=SzJ6iIcD2QFE8FjJwrEpprMPDc1Pl8Z5YR4Dm80r0So=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b38ghpf08hoXC8+zbfzJcoeqNfPR1LCtD4BBZXH3QRWpv5aFPn/g2yKm2aSc9/zqXNRirWFuQS0ryFYsBLp5nkudqHl/0AwilpAg16Xfes9sMK0r1Kh+zhIkdKdRZZQMibCHiyN/FraaXeM8pDXoKizAxL4uAl36wNQeNvXeOTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HOp3v2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E0UiBkjgRzblc3QCVu4JiIr3Zj8EMsI8ueLDvdR9RpNnlUGn5QOGNR9X05wQH/BJ+avASruvKkrAZYgsKM+MuYBc6PUS7gOIHjzKNyn5y7M5MzMcbA10iS3KHCGJtZXLQywyjhaDXgq1OGTMNTM0o4f/XmIg4+yK4QX+tMtAIeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r2xmLE93; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HOp3v2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A8A8C4CEF5;
-	Wed,  3 Dec 2025 16:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r2xmLE93"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF28BC4CEF5;
+	Wed,  3 Dec 2025 16:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779469;
-	bh=F+NrHz639X1YGK3Tpl80kRv2U2mvnqev/ZBULx0rBYA=;
+	s=korg; t=1764779472;
+	bh=SzJ6iIcD2QFE8FjJwrEpprMPDc1Pl8Z5YR4Dm80r0So=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0HOp3v2ltXXpu9X7qVZVnxS1XSNAy0PCyH/Tb5vwcWN0rcKaz9kijGzbL188OKIxP
-	 /B0KowirY+lxqvdoGFUQNUwnZnqt3X3MYzq0f17Pu8UkNZ3AvPTPBzEXe9CedhjJRe
-	 qZn3M9zTmrUmOulddZ52Dvk7zpowSlEXayIvrUug=
+	b=r2xmLE933m140YH5WnwDsh5lAM8MPyXm59670bawQTqQ64myTpUA+jg7PFmJdKr0s
+	 ABtFPo2pXJ8znDVxJaEtsYxtV4+WB2JuMn2FlZWoKgGnxqa/IGqefy4f5AH1DRSgpR
+	 extKcC58nn+NUndKyHqWSDva22Yp62oaZuhScyX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 266/568] ALSA: usb-audio: add mono main switch to Presonus S1824c
-Date: Wed,  3 Dec 2025 16:24:28 +0100
-Message-ID: <20251203152450.459077325@linuxfoundation.org>
+Subject: [PATCH 6.1 267/568] exfat: limit log print for IO error
+Date: Wed,  3 Dec 2025 16:24:29 +0100
+Message-ID: <20251203152450.494537008@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,78 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 659169c4eb21f8d9646044a4f4e1bc314f6f9d0c ]
+[ Upstream commit 6dfba108387bf4e71411b3da90b2d5cce48ba054 ]
 
-The 1824c does not have the A/B switch that the 1810c has,
-but instead it has a mono main switch that sums the two
-main output channels to mono.
+For exFAT filesystems with 4MB read_ahead_size, removing the storage device
+when the read operation is in progress, which cause the last read syscall
+spent 150s [1]. The main reason is that exFAT generates excessive log
+messages [2].
 
-Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+After applying this patch, approximately 300,000 lines of log messages
+were suppressed, and the delay of the last read() syscall was reduced
+to about 4 seconds.
+
+[1]:
+write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000120>
+read(4, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000032>
+write(5, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 131072) = 131072 <0.000119>
+read(4, 0x7fccf28ae000, 131072)         = -1 EIO (Input/output error) <150.186215>
+
+[2]:
+[  333.696603] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
+[  333.697378] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
+[  333.698156] exFAT-fs (vdb): error, failed to access to FAT (entry 0x0000d780, err:-5)
+
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer_s1810c.c | 26 +++++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ fs/exfat/fatent.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
-index 65bdda0841048..2413a6d96971c 100644
---- a/sound/usb/mixer_s1810c.c
-+++ b/sound/usb/mixer_s1810c.c
-@@ -93,6 +93,7 @@ struct s1810c_ctl_packet {
+diff --git a/fs/exfat/fatent.c b/fs/exfat/fatent.c
+index 9fa4cffabfb67..e7e160d022566 100644
+--- a/fs/exfat/fatent.c
++++ b/fs/exfat/fatent.c
+@@ -89,35 +89,36 @@ int exfat_ent_get(struct super_block *sb, unsigned int loc,
+ 	int err;
  
- #define SC1810C_CTL_LINE_SW	0
- #define SC1810C_CTL_MUTE_SW	1
-+#define SC1824C_CTL_MONO_SW	2
- #define SC1810C_CTL_AB_SW	3
- #define SC1810C_CTL_48V_SW	4
+ 	if (!is_valid_cluster(sbi, loc)) {
+-		exfat_fs_error(sb, "invalid access to FAT (entry 0x%08x)",
++		exfat_fs_error_ratelimit(sb,
++			"invalid access to FAT (entry 0x%08x)",
+ 			loc);
+ 		return -EIO;
+ 	}
  
-@@ -123,6 +124,7 @@ struct s1810c_state_packet {
- #define SC1810C_STATE_48V_SW	58
- #define SC1810C_STATE_LINE_SW	59
- #define SC1810C_STATE_MUTE_SW	60
-+#define SC1824C_STATE_MONO_SW	61
- #define SC1810C_STATE_AB_SW	62
+ 	err = __exfat_ent_get(sb, loc, content);
+ 	if (err) {
+-		exfat_fs_error(sb,
++		exfat_fs_error_ratelimit(sb,
+ 			"failed to access to FAT (entry 0x%08x, err:%d)",
+ 			loc, err);
+ 		return err;
+ 	}
  
- struct s1810_mixer_state {
-@@ -502,6 +504,15 @@ static const struct snd_kcontrol_new snd_s1810c_mute_sw = {
- 	.private_value = (SC1810C_STATE_MUTE_SW | SC1810C_CTL_MUTE_SW << 8)
- };
+ 	if (*content == EXFAT_FREE_CLUSTER) {
+-		exfat_fs_error(sb,
++		exfat_fs_error_ratelimit(sb,
+ 			"invalid access to FAT free cluster (entry 0x%08x)",
+ 			loc);
+ 		return -EIO;
+ 	}
  
-+static const struct snd_kcontrol_new snd_s1824c_mono_sw = {
-+	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
-+	.name = "Mono Main Out Switch",
-+	.info = snd_ctl_boolean_mono_info,
-+	.get = snd_s1810c_switch_get,
-+	.put = snd_s1810c_switch_set,
-+	.private_value = (SC1824C_STATE_MONO_SW | SC1824C_CTL_MONO_SW << 8)
-+};
-+
- static const struct snd_kcontrol_new snd_s1810c_48v_sw = {
- 	.iface = SNDRV_CTL_ELEM_IFACE_MIXER,
- 	.name = "48V Phantom Power On Mic Inputs Switch",
-@@ -588,8 +599,17 @@ int snd_sc1810_init_mixer(struct usb_mixer_interface *mixer)
- 	if (ret < 0)
- 		return ret;
+ 	if (*content == EXFAT_BAD_CLUSTER) {
+-		exfat_fs_error(sb,
++		exfat_fs_error_ratelimit(sb,
+ 			"invalid access to FAT bad cluster (entry 0x%08x)",
+ 			loc);
+ 		return -EIO;
+ 	}
  
--	ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
--	if (ret < 0)
--		return ret;
-+	// The 1824c has a Mono Main switch instead of a
-+	// A/B select switch.
-+	if (mixer->chip->usb_id == USB_ID(0x194f, 0x010d)) {
-+		ret = snd_s1810c_switch_init(mixer, &snd_s1824c_mono_sw);
-+		if (ret < 0)
-+			return ret;
-+	} else if (mixer->chip->usb_id == USB_ID(0x194f, 0x010c)) {
-+		ret = snd_s1810c_switch_init(mixer, &snd_s1810c_ab_sw);
-+		if (ret < 0)
-+			return ret;
-+	}
-+
- 	return ret;
- }
+ 	if (*content != EXFAT_EOF_CLUSTER && !is_valid_cluster(sbi, *content)) {
+-		exfat_fs_error(sb,
++		exfat_fs_error_ratelimit(sb,
+ 			"invalid access to FAT (entry 0x%08x) bogus content (0x%08x)",
+ 			loc, *content);
+ 		return -EIO;
 -- 
 2.51.0
 
