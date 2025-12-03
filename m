@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D6C7306D49;
-	Wed,  3 Dec 2025 15:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836303101B8;
+	Wed,  3 Dec 2025 15:35:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776100; cv=none; b=tzzTn84kTuyXhHF+7zfPxIYFKYV3JkObrsoo59nNEdx/to7uCMpLjec3DSBhRHDN9hhDGXFqcc/E0gDqJZLNNyJdBK1bL3qifGgpBjPAvG6eOm0ns8r/QbsgAl7WQHmsmnfNPQdQ1s0VCs41r9xpJe4gfYNbVHytsDwXH4Q7WeM=
+	t=1764776103; cv=none; b=OcwklZwKqHkbmMXkN3skSsYK3tasty9rmMAPxNno4BTFSqob0L0vB1iqASLKsRObGfQWTIzJnPDNUt426MetRGHNsPV4zn8R8EP56X8dOm6K8BG7pv7LbCedaGULLcm5dv5kXLpCRZFGKuJzfHFLH/JA6oXVy2lFTj47woHJaJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776100; c=relaxed/simple;
-	bh=r4t3bFpHEJQlkj0tZDU8+rciJFa83vGurEQX34xRrpc=;
+	s=arc-20240116; t=1764776103; c=relaxed/simple;
+	bh=uKndyT/fqHis2s9m1AgfxoP1eDf2Oj14zsob5kft3h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MFiG0UQxCX9cqzZ0aNfR98z/Nf8urC53Bq+/ll4jOxK58DzskUOUNabeLJI27tNyAeFKejShwnmRSfxtpH5YErSg7GsuFFPJqD6sTiBUOuN7qezAzFcxPev6NsaxdszhIfd7mb1uCH0qIGirP+brCtxY6sp74/Ec06WH2zr1fIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7jeHgH9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QY2Q1YXHJN3yH/vSFfVrYnJGbB7mMM61taifIgBmgXpQADWonnr9NvzdEzxIGXXn8vLDmrfqRq9mRqaIa9mozxXQ0zGChzzf0/7lEqtrza4HwVCGh6z9at5tYl7HCqwi8DXsXdIok+dl86h4NhTMBEBys8htYX+Ef2lCy7DbPd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04KLhcIt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7jeHgH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE1EC4CEF5;
-	Wed,  3 Dec 2025 15:34:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04KLhcIt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB7DC4CEF5;
+	Wed,  3 Dec 2025 15:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776100;
-	bh=r4t3bFpHEJQlkj0tZDU8+rciJFa83vGurEQX34xRrpc=;
+	s=korg; t=1764776103;
+	bh=uKndyT/fqHis2s9m1AgfxoP1eDf2Oj14zsob5kft3h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7jeHgH9IvqapiI6ueVvlLO5l0EptPdssuZTgnVF22UD9GeUDrfdHK+H5IE/BWplP
-	 sY/LYoaWuqZKNgTLoj44IMotrnkopv6I1C8iX2Cn/S6cZPDfqmh9mFSuSv53meu9Cq
-	 fDtAzhrZlFY55TwHJFAVxN6tStYrh26HwCzoivtU=
+	b=04KLhcItgtCiz2vdyOgd6WQAGoqmbkscraXTGdNIrM9gOFY/MtKG2aHLKQrykPxim
+	 vISqZlEfvoYoab255Z+8Z+BRnGSm6q1FvLK5+MR+ya7FqVekiuI4qXV5SBwGibkxdU
+	 +7hhnfBODySGicY6dGnXzdZ/oCVdhAsjHS3CSgAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Len Brown <len.brown@intel.com>,
+	syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/300] tools/power x86_energy_perf_policy: Prefer driver HWP limits
-Date: Wed,  3 Dec 2025 16:24:27 +0100
-Message-ID: <20251203152402.956046435@linuxfoundation.org>
+Subject: [PATCH 5.10 081/300] net: ipv6: fix field-spanning memcpy warning in AH output
+Date: Wed,  3 Dec 2025 16:24:45 +0100
+Message-ID: <20251203152403.627150865@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,73 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Charalampos Mitrodimas <charmitro@posteo.net>
 
-[ Upstream commit 2734fdbc9bb8a3aeb309ba0d62212d7f53f30bc7 ]
+[ Upstream commit 2327a3d6f65ce2fe2634546dde4a25ef52296fec ]
 
-When we are successful in using cpufreq min/max limits,
-skip setting the raw MSR limits entirely.
+Fix field-spanning memcpy warnings in ah6_output() and
+ah6_output_done() where extension headers are copied to/from IPv6
+address fields, triggering fortify-string warnings about writes beyond
+the 16-byte address fields.
 
-This is necessary to avoid undoing any modification that
-the cpufreq driver makes to our sysfs request.
+  memcpy: detected field-spanning write (size 40) of single field "&top_iph->saddr" at net/ipv6/ah6.c:439 (size 16)
+  WARNING: CPU: 0 PID: 8838 at net/ipv6/ah6.c:439 ah6_output+0xe7e/0x14e0 net/ipv6/ah6.c:439
 
-eg. intel_pstate may take our request for a limit
-that is valid according to HWP.CAP.MIN/MAX and clip
-it to be within the range available in PLATFORM_INFO.
+The warnings are false positives as the extension headers are
+intentionally placed after the IPv6 header in memory. Fix by properly
+copying addresses and extension headers separately, and introduce
+helper functions to avoid code duplication.
 
-Signed-off-by: Len Brown <len.brown@intel.com>
+Reported-by: syzbot+01b0667934cdceb4451c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=01b0667934cdceb4451c
+Signed-off-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../x86_energy_perf_policy/x86_energy_perf_policy.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ net/ipv6/ah6.c | 50 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
 
-diff --git a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-index 5c93546fc689b..702b5882cfce4 100644
---- a/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-+++ b/tools/power/x86/x86_energy_perf_policy/x86_energy_perf_policy.c
-@@ -62,6 +62,7 @@ unsigned char turbo_update_value;
- unsigned char update_hwp_epp;
- unsigned char update_hwp_min;
- unsigned char update_hwp_max;
-+unsigned char hwp_limits_done_via_sysfs;
- unsigned char update_hwp_desired;
- unsigned char update_hwp_window;
- unsigned char update_hwp_use_pkg;
-@@ -862,8 +863,10 @@ int ratio_2_sysfs_khz(int ratio)
- }
- /*
-  * If HWP is enabled and cpufreq sysfs attribtes are present,
-- * then update sysfs, so that it will not become
-- * stale when we write to MSRs.
-+ * then update via sysfs. The intel_pstate driver may modify (clip)
-+ * this request, say, when HWP_CAP is outside of PLATFORM_INFO limits,
-+ * and the driver-chosen value takes precidence.
-+ *
-  * (intel_pstate's max_perf_pct and min_perf_pct will follow cpufreq,
-  *  so we don't have to touch that.)
-  */
-@@ -918,6 +921,8 @@ int update_sysfs(int cpu)
- 	if (update_hwp_max)
- 		update_cpufreq_scaling_freq(1, cpu, req_update.hwp_max);
+diff --git a/net/ipv6/ah6.c b/net/ipv6/ah6.c
+index 080ee7f44c649..4bc6767c7e139 100644
+--- a/net/ipv6/ah6.c
++++ b/net/ipv6/ah6.c
+@@ -46,6 +46,34 @@ struct ah_skb_cb {
  
-+	hwp_limits_done_via_sysfs = 1;
+ #define AH_SKB_CB(__skb) ((struct ah_skb_cb *)&((__skb)->cb[0]))
+ 
++/* Helper to save IPv6 addresses and extension headers to temporary storage */
++static inline void ah6_save_hdrs(struct tmp_ext *iph_ext,
++				 struct ipv6hdr *top_iph, int extlen)
++{
++	if (!extlen)
++		return;
 +
- 	return 0;
- }
++#if IS_ENABLED(CONFIG_IPV6_MIP6)
++	iph_ext->saddr = top_iph->saddr;
++#endif
++	iph_ext->daddr = top_iph->daddr;
++	memcpy(&iph_ext->hdrs, top_iph + 1, extlen - sizeof(*iph_ext));
++}
++
++/* Helper to restore IPv6 addresses and extension headers from temporary storage */
++static inline void ah6_restore_hdrs(struct ipv6hdr *top_iph,
++				    struct tmp_ext *iph_ext, int extlen)
++{
++	if (!extlen)
++		return;
++
++#if IS_ENABLED(CONFIG_IPV6_MIP6)
++	top_iph->saddr = iph_ext->saddr;
++#endif
++	top_iph->daddr = iph_ext->daddr;
++	memcpy(top_iph + 1, &iph_ext->hdrs, extlen - sizeof(*iph_ext));
++}
++
+ static void *ah_alloc_tmp(struct crypto_ahash *ahash, int nfrags,
+ 			  unsigned int size)
+ {
+@@ -307,13 +335,7 @@ static void ah6_output_done(struct crypto_async_request *base, int err)
+ 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+ 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
  
-@@ -996,10 +1001,10 @@ int update_hwp_request(int cpu)
- 	if (debug)
- 		print_hwp_request(cpu, &req, "old: ");
+-	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(&top_iph->saddr, iph_ext, extlen);
+-#else
+-		memcpy(&top_iph->daddr, iph_ext, extlen);
+-#endif
+-	}
++	ah6_restore_hdrs(top_iph, iph_ext, extlen);
  
--	if (update_hwp_min)
-+	if (update_hwp_min && !hwp_limits_done_via_sysfs)
- 		req.hwp_min = req_update.hwp_min;
+ 	kfree(AH_SKB_CB(skb)->tmp);
+ 	xfrm_output_resume(skb->sk, skb, err);
+@@ -384,12 +406,8 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
+ 	 */
+ 	memcpy(iph_base, top_iph, IPV6HDR_BASELEN);
  
--	if (update_hwp_max)
-+	if (update_hwp_max && !hwp_limits_done_via_sysfs)
- 		req.hwp_max = req_update.hwp_max;
++	ah6_save_hdrs(iph_ext, top_iph, extlen);
+ 	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(iph_ext, &top_iph->saddr, extlen);
+-#else
+-		memcpy(iph_ext, &top_iph->daddr, extlen);
+-#endif
+ 		err = ipv6_clear_mutable_options(top_iph,
+ 						 extlen - sizeof(*iph_ext) +
+ 						 sizeof(*top_iph),
+@@ -440,13 +458,7 @@ static int ah6_output(struct xfrm_state *x, struct sk_buff *skb)
+ 	memcpy(ah->auth_data, icv, ahp->icv_trunc_len);
+ 	memcpy(top_iph, iph_base, IPV6HDR_BASELEN);
  
- 	if (update_hwp_desired)
+-	if (extlen) {
+-#if IS_ENABLED(CONFIG_IPV6_MIP6)
+-		memcpy(&top_iph->saddr, iph_ext, extlen);
+-#else
+-		memcpy(&top_iph->daddr, iph_ext, extlen);
+-#endif
+-	}
++	ah6_restore_hdrs(top_iph, iph_ext, extlen);
+ 
+ out_free:
+ 	kfree(iph_base);
 -- 
 2.51.0
 
