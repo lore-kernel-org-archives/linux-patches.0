@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9003A31354A;
-	Wed,  3 Dec 2025 15:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D6030C37A;
+	Wed,  3 Dec 2025 15:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776514; cv=none; b=eS8tDFPmov6sE7fgLI/OCD9eTxKGG+sQU7X1djTcEzrKuNAVC24HIacXn+LPSmjgGtuF+q/wA4XVe0v0w+hk7wa8aXX+Zal5Zs+xQ9h/5tO5kWHVTNUMvDdVXeu5my5BlTNKYr1FNxDVVyWvA6u4XYhHDB4sFDXyG8mT5s/x05g=
+	t=1764776517; cv=none; b=f8vuGmWtZbRHAJR65xvGEnyAHeeNCQ3QGR7KtUP9/JWL/WRE720+kOKkE6P6v4V8Q5HPgGXxULX5uMp8c49sdTpbCD3yYCOyV7q2zG16NMkBcgPLijnSjnZBRlnVOU8oJi64RQZ5ZERNiDVjySIEwCAT+dFkABoK2BEn1cjcFAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776514; c=relaxed/simple;
-	bh=zan1xZbjMJed59HePQyBs6VLfXxpsvJQz+o7026tpps=;
+	s=arc-20240116; t=1764776517; c=relaxed/simple;
+	bh=lMYUb+pAEOiU1Ia76nqpvaKw6ei6BjKxQuMD5c3Xbzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oZrj9QJNQOmZRVpWQVvGgYYtN8QsdKhSQcbReCjDT3Gc0BLkyg3btkOK4ulBfQDACWrPmGcpdTl5AXfA79SV48JlQHq4ffZuTWjzusT2nDm32beVXHeIrjZSMu23fHrC0wDph343W5DoBVlPeoh8MKPsFRxFJVD0rWR4IsHeehk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCtXF/MO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pnz0vJHhLAxHM8RtOKRWe9PMhW7OUxpnX0P+jyaCQPJSdq4Gu+nhKImo/aa9YEu1VAxieg39MTFflcEbCG5F0YwA0brYbUXxFqiNdRVC3PRy41v6EkETr/FUgGZnekFzOFprEZDz4IJb7ajGnpWzSM4urY9BrooojVf42twjd3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znhMvGtw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCtXF/MO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1247C4CEF5;
-	Wed,  3 Dec 2025 15:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znhMvGtw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3144C116B1;
+	Wed,  3 Dec 2025 15:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776514;
-	bh=zan1xZbjMJed59HePQyBs6VLfXxpsvJQz+o7026tpps=;
+	s=korg; t=1764776517;
+	bh=lMYUb+pAEOiU1Ia76nqpvaKw6ei6BjKxQuMD5c3Xbzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCtXF/MOKHO3SITzHQeP3KtPOzKfOOrfH/0yJeyGmoDwr71JhiuUia0dC5dnV3S0d
-	 A2SCH0UbhMQ/G6YWR/4SSAPrS5xs/TbaB0dc2AWeRmMVMrYJbgU3QeUEBZQWBNsa4K
-	 IfYXLUNPMlipxvuQ06fPHCxRZWiS9Rgfmeh3hysM=
+	b=znhMvGtwLb9OKoFQtFMlnm/9q1rc0cFZ33JVTe1XNlGIPYyuPY78aquThBAyzGqDu
+	 RaHiJ2KYQWq7qickjSXRmdR5wJb8ilQftUjXDDy6/xs50+mKKGm6FMPlc0BIHgAz39
+	 jj4jCxY5rEvnh5vnX9YmU9S9+9jxTdxtFOw1KLiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Paul Walmsley <pjw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 173/300] compiler_types: Move unused static inline functions warning to W=2
-Date: Wed,  3 Dec 2025 16:26:17 +0100
-Message-ID: <20251203152407.030104046@linuxfoundation.org>
+Subject: [PATCH 5.10 174/300] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
+Date: Wed,  3 Dec 2025 16:26:18 +0100
+Message-ID: <20251203152407.072293592@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,55 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
 
-[ Upstream commit 9818af18db4bfefd320d0fef41390a616365e6f7 ]
+[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
 
-Per Nathan, clang catches unused "static inline" functions in C files
-since commit 6863f5643dd7 ("kbuild: allow Clang to find unused static
-inline functions for W=1 build").
+openSBI v1.7 adds harts checks for ipi operations. Especially it
+adds comparison between hmask passed as an argument from linux
+and mask of online harts (from openSBI side). If they don't
+fit each other the error occurs.
 
-Linus said:
+When cpu is offline, cpu_online_mask is explicitly cleared in
+__cpu_disable. However, there is no explicit clearing of
+mm_cpumask. mm_cpumask is used for rfence operations that
+call openSBI RFENCE extension which uses ipi to remote harts.
+If hart is offline there may be error if mask of linux is not
+as mask of online harts in openSBI.
 
-> So I entirely ignore W=1 issues, because I think so many of the extra
-> warnings are bogus.
->
-> But if this one in particular is causing more problems than most -
-> some teams do seem to use W=1 as part of their test builds - it's fine
-> to send me a patch that just moves bad warnings to W=2.
->
-> And if anybody uses W=2 for their test builds, that's THEIR problem..
+this patch adds explicit clearing of mm_cpumask for offline hart.
 
-Here is the change to bump the warning from W=1 to W=2.
-
-Fixes: 6863f5643dd7 ("kbuild: allow Clang to find unused static inline functions for W=1 build")
-Signed-off-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://patch.msgid.link/20251106105000.2103276-1-andriy.shevchenko@linux.intel.com
-[nathan: Adjust comment as well]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
+[pjw@kernel.org: rewrote subject line for clarity]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/compiler_types.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/riscv/kernel/cpu-hotplug.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/compiler_types.h b/include/linux/compiler_types.h
-index eb2bda017ccb7..9cecd02c1280a 100644
---- a/include/linux/compiler_types.h
-+++ b/include/linux/compiler_types.h
-@@ -158,10 +158,9 @@ struct ftrace_likely_data {
- /*
-  * GCC does not warn about unused static inline functions for -Wunused-function.
-  * Suppress the warning in clang as well by using __maybe_unused, but enable it
-- * for W=1 build. This will allow clang to find unused functions. Remove the
-- * __inline_maybe_unused entirely after fixing most of -Wunused-function warnings.
-+ * for W=2 build. This will allow clang to find unused functions.
-  */
--#ifdef KBUILD_EXTRA_WARN1
-+#ifdef KBUILD_EXTRA_WARN2
- #define __inline_maybe_unused
- #else
- #define __inline_maybe_unused __maybe_unused
+diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
+index 0e948e87bd813..6cd16a2af2ee0 100644
+--- a/arch/riscv/kernel/cpu-hotplug.c
++++ b/arch/riscv/kernel/cpu-hotplug.c
+@@ -65,6 +65,7 @@ void __cpu_die(unsigned int cpu)
+ 	}
+ 	pr_notice("CPU%u: off\n", cpu);
+ 
++	clear_tasks_mm_cpumask(cpu);
+ 	/* Verify from the firmware if the cpu is really stopped*/
+ 	if (cpu_ops[cpu]->cpu_is_stopped)
+ 		ret = cpu_ops[cpu]->cpu_is_stopped(cpu);
 -- 
 2.51.0
 
