@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A33733FE0E;
-	Wed,  3 Dec 2025 15:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DC63385A7;
+	Wed,  3 Dec 2025 15:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777336; cv=none; b=Fi0xxIIeqp8hvPW+/YK/pQUdCQOAUAIb6hoc5pfz8j1FFBWcjVAAB5iTwWk+Hup44oAUy+qH2JK5OcGnwpPxKLUneMBMZyszzUPiCSXqtoEn2p/XDiXckI7sDxIf1qUEMK28gMS6yLuFfH1nrKa3B8dgF3XhhKm0qccmrenoaqc=
+	t=1764777339; cv=none; b=mZcxZcPgs+sdsVmcRAGKe2XJyKDDbgmszbtIy9Y0sPiIEWp3gJF5vaByo/0iO0pPa3bdeDRbFSFcmhMMMOXs9u7r5QDZW/WkJWy1btMdTZCwkr6ZueuliWiEyuDI1QqlrQogZTfY7+x2pGgHRc5k02RCKr14Bj6PIutEgfTEXZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777336; c=relaxed/simple;
-	bh=+fabW5JY2f1rmnBjkJKeP1cLWQnSbfx8wVRlrMDLdhM=;
+	s=arc-20240116; t=1764777339; c=relaxed/simple;
+	bh=Q1YsiGOpztF3PcmmTChpmADjp+QfgT4E7PnY3ZWtBeA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhog9M6zBAUj5wBei5QxPiI+eVFnfcUAyo8idcooqpl4WAnF0UON9E+ElHVouW97vl0BnbKZuU6UfaJWKuSrWLUk5HTWEBkkvc4yTt6kqN+142RXjM3TJ7PlhQMVjjcQeAnv+NJ6S3ebnxogj5ih83E6zN5B24g2w3FGG14l4A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oywQ6X6S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+Dpo/TuV/57mB7iCfy2DPwto0O0o/C5uANNV4+WlkEfg8MgtbIYuTMvrfqHWND5h7DZKRtE5FMhPT416jB/YRBU3xXt2jJy0ph2ogba0jcvCxrnsMLJZ+Ac09DkcF2GcD5ucmWnePfC/cmCplo852Irgy3e+wWzHOUenTx/+nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rU7g4jQj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oywQ6X6S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B7CFC4CEF5;
-	Wed,  3 Dec 2025 15:55:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rU7g4jQj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61AAC4CEF5;
+	Wed,  3 Dec 2025 15:55:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777336;
-	bh=+fabW5JY2f1rmnBjkJKeP1cLWQnSbfx8wVRlrMDLdhM=;
+	s=korg; t=1764777339;
+	bh=Q1YsiGOpztF3PcmmTChpmADjp+QfgT4E7PnY3ZWtBeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oywQ6X6Se31/GsTb3ZvGxte9uqYqALSFcag1DGaGf7ELdu9wtUWk62t6tpZGS1QMn
-	 5qIfjq1pJ97IFbnLyvlVgOIkzhQD2/P5n+R+yIQBOK3MgqjNTETSB/CaORCZERS45Y
-	 HGSmb/upAZYDXFvrA4/VdKmXQqi85qFRzS3f+JWY=
+	b=rU7g4jQjUpjz/PHivuQpdeOMVUL6EeBUEWBCUbBva9PqlwayAaSwtnRjegTjcgKCs
+	 cHxXW2LWQ11d0IHNnJH7FvJvJk/SGuRDsMlfFOF4B+Aizb01mLR2Vqe+CgAiSvNH5o
+	 uTy39BexEcrjZzKNnkyQIMT7lPbsm9t3ZYUn4pLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.17 146/146] spi: cadence-quadspi: Fix cqspi_probe() error handling for runtime pm
-Date: Wed,  3 Dec 2025 16:28:44 +0100
-Message-ID: <20251203152351.817577211@linuxfoundation.org>
+	Youngjun Park <youngjun.park@lge.com>,
+	Chris Li <chrisl@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Kairui Song <kasong@tencent.com>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Baoquan He <bhe@redhat.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 142/146] mm: swap: remove duplicate nr_swap_pages decrement in get_swap_page_of_type()
+Date: Wed,  3 Dec 2025 16:28:40 +0100
+Message-ID: <20251203152351.670553767@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -50,71 +57,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Youngjun Park <youngjun.park@lge.com>
 
-commit 295fe8406a357bc0abb901a21d1a554fd4dd1d05 upstream.
+[ Upstream commit f5e31a196edcd1f1bb44f26b6f9299b9a5b9b3c4 ]
 
-Commit f1eb4e792bb1 ("spi: spi-cadence-quadspi: Enable pm runtime earlier
-to avoid imbalance") relocated code but missed updating the error handling
-path associated with it.
+After commit 4f78252da887, nr_swap_pages is decremented in
+swap_range_alloc(). Since cluster_alloc_swap_entry() calls
+swap_range_alloc() internally, the decrement in get_swap_page_of_type()
+causes double-decrementing.
 
-Prior to the relocation, runtime pm was enabled after the code-block
-associated with 'cqspi_request_mmap_dma()', due to which, the error
-handling for the same didn't require invoking 'pm_runtime_disable()'.
+As a representative userspace-visible runtime example of the impact,
+/proc/meminfo reports increasingly inaccurate SwapFree values.  The
+discrepancy grows with each swap allocation, and during hibernation
+when large amounts of memory are written to swap, the reported value
+can deviate significantly from actual available swap space, misleading
+users and monitoring tools.
 
-Post refactoring, runtime pm has been enabled before the code-block and
-when an error is encountered, jumping to 'probe_dma_failed' doesn't
-invoke 'pm_runtime_disable()'. This leads to a race condition wherein
-'cqspi_runtime_suspend()' is invoked while the error handling path executes
-in parallel. The resulting error is the following:
+Remove the duplicate decrement.
 
-  clk:103:0 already disabled
-  WARNING: drivers/clk/clk.c:1188 at clk_core_disable+0x80/0xa0, CPU#1: kworker/u8:0/12
-  [TRIMMED]
-  pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : clk_core_disable+0x80/0xa0
-  lr : clk_core_disable+0x80/0xa0
-  [TRIMMED]
-  Call trace:
-   clk_core_disable+0x80/0xa0 (P)
-   clk_core_disable_lock+0x88/0x10c
-   clk_disable+0x24/0x30
-   cqspi_probe+0xa3c/0xae8
-  [TRIMMED]
-
-The error is due to the second invocation of 'clk_disable_unprepare()' on
-'cqspi->clk' in the error handling within 'cqspi_probe()', with the first
-invocation being within 'cqspi_runtime_suspend()'.
-
-Fix this by correcting the error handling.
-
-Fixes: f1eb4e792bb1 ("spi: spi-cadence-quadspi: Enable pm runtime earlier to avoid imbalance")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20251119152545.2591651-1-s-vadapalli@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20251102082456.79807-1-youngjun.park@lge.com
+Fixes: 4f78252da887 ("mm: swap: move nr_swap_pages counter decrement from folio_alloc_swap() to swap_range_alloc()")
+Signed-off-by: Youngjun Park <youngjun.park@lge.com>
+Acked-by: Chris Li <chrisl@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Kairui Song <kasong@tencent.com>
+Acked-by: Nhat Pham <nphamcs@gmail.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Kemeng Shi <shikemeng@huaweicloud.com>
+Cc: <stable@vger.kernel.org> [6.17+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ adjusted context ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-cadence-quadspi.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/swapfile.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -2002,7 +2002,7 @@ static int cqspi_probe(struct platform_d
- 	if (cqspi->use_direct_mode) {
- 		ret = cqspi_request_mmap_dma(cqspi);
- 		if (ret == -EPROBE_DEFER)
--			goto probe_dma_failed;
-+			goto probe_setup_failed;
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -1866,10 +1866,8 @@ swp_entry_t get_swap_page_of_type(int ty
+ 	if (get_swap_device_info(si)) {
+ 		if (si->flags & SWP_WRITEOK) {
+ 			offset = cluster_alloc_swap_entry(si, 0, 1);
+-			if (offset) {
++			if (offset)
+ 				entry = swp_entry(si->type, offset);
+-				atomic_long_dec(&nr_swap_pages);
+-			}
+ 		}
+ 		put_swap_device(si);
  	}
- 
- 	ret = spi_register_controller(host);
-@@ -2020,7 +2020,6 @@ static int cqspi_probe(struct platform_d
- probe_setup_failed:
- 	if (!(ddata && (ddata->quirks & CQSPI_DISABLE_RUNTIME_PM)))
- 		pm_runtime_disable(dev);
--probe_dma_failed:
- 	cqspi_controller_enable(cqspi, 0);
- probe_reset_failed:
- 	if (cqspi->is_jh7110)
 
 
