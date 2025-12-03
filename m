@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B237A30C37A;
-	Wed,  3 Dec 2025 15:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCCD03081AF;
+	Wed,  3 Dec 2025 15:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776498; cv=none; b=cD3ghbeiliHHiiqJM82dpgWVIfoWXrgZE/YWCG0GYJDVxKWpGhVowL7Hj6kRlSWAM2FUWMLI4aDj/YxBGFnNCjlTctwgVlc15rqmktzw5I8HY7kDBqM7mfhyoSs5R7WBeXIfYdFpfEYWDEw3fAIoEWN4hi+QL+K8eVewt2sPzqA=
+	t=1764776502; cv=none; b=T3OdVuz1UtqKzg/wbco//rFUU03kK/gFQdWTTeGp/lXOytMABfXui7A+mkS9rVAr4QHpws433ixFIDcx5XcQE344j8NfiIR/2K1r6m1BjQE3JusZvlZHsx8hLZ1yJ4jrPA2hMrNmLBTmg/+uaJhWu8KzW2s3ZhqI+w0FzM2t0xI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776498; c=relaxed/simple;
-	bh=skWwdF2yERqkcChDT0IL7CgMH4YgpDagwk7ZlLfcTsw=;
+	s=arc-20240116; t=1764776502; c=relaxed/simple;
+	bh=va/jygWQ+i9KpzqxdOj1O3kNxHVpMmdEQJYCjaqaUhE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PqMrUPaRyay/sEv9pAbIQXwzNRrEmvc0GekBpRvK1JCdUfaQf0ltRn2C0E43sLlBut5pNBUTHr0ilT83d/iWD4oecncHOmUjBUqhqy97nGA89KasVNYucAajFv6qC0qgNrvgbzWSM0ztiOzKPGJDixirj51fosWyAoEH75nNTEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYVA8ABI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+6TcOszG06uupFerwCQsDrQzfcl+RNrx/cvIpT+zjFlZyx+2V6ztWgFnTufK6hEMjb0zwE6YdFvn0fuDL2WHaq5vpTYXTmFND85onNFsHZ5Dduvapnh6v+mrlaqWvunSNcBBVYszbXQYCslYxqdK4wFfFghXMWvZsQPBC4rlnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TFWCpW/C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYVA8ABI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E8FDC4CEF5;
-	Wed,  3 Dec 2025 15:41:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TFWCpW/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49966C4CEF5;
+	Wed,  3 Dec 2025 15:41:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776498;
-	bh=skWwdF2yERqkcChDT0IL7CgMH4YgpDagwk7ZlLfcTsw=;
+	s=korg; t=1764776501;
+	bh=va/jygWQ+i9KpzqxdOj1O3kNxHVpMmdEQJYCjaqaUhE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IYVA8ABIY7LN90rnMe8K3dB98jCsyIuGE9xWeG6Bm8QirtyPYJvSmSLOnJH/Yizq/
-	 JQDD4NAut7+pKFOuRQhPPfNqMBsLGEDj26UpRH28NR1zcSE9Ilp3oq86HTNp7RnPBp
-	 4e42SLvvWndKVTpRThxUe6RPpCU3EWnayAe3Ek3w=
+	b=TFWCpW/COAE0qWgJhsx/7YalIRNvHtqlw89OLXIdYRTV+TPQsaTmkY6kBYhRAfTII
+	 fGYa2nsxoBACvNCaYaKQ3NerI7Zh1LLrkvRHhj4TdQjWynSlUDUFgtwHOtpyIU+OS1
+	 wIKdEJfno7WoH/HVtw0B3P78dEeBWYMxZyb/yAQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haein Lee <lhi0729@kaist.ac.kr>,
-	Takashi Iwai <tiwai@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Eliav Farber <farbere@amazon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 199/300] ALSA: usb-audio: Fix NULL pointer dereference in snd_usb_mixer_controls_badd
-Date: Wed,  3 Dec 2025 16:26:43 +0100
-Message-ID: <20251203152407.997164743@linuxfoundation.org>
+Subject: [PATCH 5.10 200/300] fsdax: mark the iomap argument to dax_iomap_sector as const
+Date: Wed,  3 Dec 2025 16:26:44 +0100
+Message-ID: <20251203152408.033844627@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,46 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haein Lee <lhi0729@kaist.ac.kr>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 632108ec072ad64c8c83db6e16a7efee29ebfb74 ]
+[ Upstream commit 7e4f4b2d689d959b03cb07dfbdb97b9696cb1076 ]
 
-In snd_usb_create_streams(), for UAC version 3 devices, the Interface
-Association Descriptor (IAD) is retrieved via usb_ifnum_to_if(). If this
-call fails, a fallback routine attempts to obtain the IAD from the next
-interface and sets a BADD profile. However, snd_usb_mixer_controls_badd()
-assumes that the IAD retrieved from usb_ifnum_to_if() is always valid,
-without performing a NULL check. This can lead to a NULL pointer
-dereference when usb_ifnum_to_if() fails to find the interface descriptor.
-
-This patch adds a NULL pointer check after calling usb_ifnum_to_if() in
-snd_usb_mixer_controls_badd() to prevent the dereference.
-
-This issue was discovered by syzkaller, which triggered the bug by sending
-a crafted USB device descriptor.
-
-Fixes: 17156f23e93c ("ALSA: usb: add UAC3 BADD profiles support")
-Signed-off-by: Haein Lee <lhi0729@kaist.ac.kr>
-Link: https://patch.msgid.link/vwhzmoba9j2f.vwhzmob9u9e2.g6@dooray.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Eliav Farber <farbere@amazon.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/dax.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/usb/mixer.c b/sound/usb/mixer.c
-index c84e25b2b1fb9..6b9a472ea43cb 100644
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -2999,6 +2999,8 @@ static int snd_usb_mixer_controls_badd(struct usb_mixer_interface *mixer,
- 	int i;
+diff --git a/fs/dax.c b/fs/dax.c
+index 91820b9b50b73..2ca33ef5d519d 100644
+--- a/fs/dax.c
++++ b/fs/dax.c
+@@ -1006,7 +1006,7 @@ int dax_writeback_mapping_range(struct address_space *mapping,
+ }
+ EXPORT_SYMBOL_GPL(dax_writeback_mapping_range);
  
- 	assoc = usb_ifnum_to_if(dev, ctrlif)->intf_assoc;
-+	if (!assoc)
-+		return -EINVAL;
- 
- 	/* Detect BADD capture/playback channels from AS EP descriptors */
- 	for (i = 0; i < assoc->bInterfaceCount; i++) {
+-static sector_t dax_iomap_sector(struct iomap *iomap, loff_t pos)
++static sector_t dax_iomap_sector(const struct iomap *iomap, loff_t pos)
+ {
+ 	return (iomap->addr + (pos & PAGE_MASK) - iomap->offset) >> 9;
+ }
 -- 
 2.51.0
 
