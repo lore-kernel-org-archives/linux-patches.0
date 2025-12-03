@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7935533F366;
-	Wed,  3 Dec 2025 15:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8326533F37E;
+	Wed,  3 Dec 2025 15:54:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777270; cv=none; b=dYLdzebwEJmlV7tnTQWNNLHlfIF+fwPFd8BmUc3dS7F7PMatuCfIWbufiG8mUsv3N5eC6rugE+/n3FoUXgVpaGq0UQBPh4TCPANaoTvNOTGlhrCeGpeSl701eEnxjKFYUTRDTnn+eaCxl6SEYxzOVom8fe8zuijbaybmp1Gmwww=
+	t=1764777273; cv=none; b=khtqKgYPPbSYFWnU6qQ+S+myNb9Cdbk/UPHQf6Pc7l+Nk9+nHphB9Xf6VTk4Hmv32pViTHgtQ3mOtOW87Y1CYDHyLzZDCRrdlFx66sdNoiR+z6ErfvbRATc/3qRY8skb6z0uQMJ4OKFOPp3vAyR+L+85iJbF1tWmB1q4xW8NQBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777270; c=relaxed/simple;
-	bh=ABeoAXc0kg0oqr6iq+uxa6WuRrByfqpF1HQE08isirI=;
+	s=arc-20240116; t=1764777273; c=relaxed/simple;
+	bh=4JboxKlYkKEek98rT0VfcdMDhRGZ9OKYwLAMQEMHJWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JkGBGiDvEFPkO1AcIwbQ1dDcY6hH2n5jUSgfKGO98TOHaq/daBGl8KH5AagVBrD45V/fErlwWKR+yOM0udAyCDfj+014yuEnD6GF7XSPCcxyTBLSdxrOJM0KE9G468ZQNJGKwF3RJuN5cBoPno96uMPqLtWWpAJlPw1txEA4Dbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEKe/i5D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHMQpA9YykvCO4U0ZhBGcuyfMkm2t8dIHnjphZ3iDRpR9POF2w12qokhmopVgR46sCvitIr4M4gqJ00HP4sz6v0KVf8D60mc3JeqAXbWKEQaQKABWn4QpXss4zn+2KQ1H/SyYahgE2Y22L65WuVou4yBr5RBW05hIYN5Oy/ikO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZZaxjPv8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEKe/i5D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F2AC2BC86;
-	Wed,  3 Dec 2025 15:54:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZZaxjPv8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4168C4CEF5;
+	Wed,  3 Dec 2025 15:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777270;
-	bh=ABeoAXc0kg0oqr6iq+uxa6WuRrByfqpF1HQE08isirI=;
+	s=korg; t=1764777273;
+	bh=4JboxKlYkKEek98rT0VfcdMDhRGZ9OKYwLAMQEMHJWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEKe/i5Dg0AU5Qn/hUv1ei8+HY1JcdjTqsrnB0KolEhEJYQiHd5xnx89Rl0S5v9eq
-	 FbL961g12hmwCHJjsJuGSOB9EklBg5QW6WsAyZaTyjDcIwiNzBtCsEximPjpI/kI7o
-	 o26T5NrR0OCDIYREuMbEvipwZSl0xipJVvb9LbfI=
+	b=ZZaxjPv8AcqqkZP1zUhPrFYJhRLHkbz2GJqcqJxSXipUJGVzs8LTUUrG81xwMLG++
+	 a0iTuMWrQnxZilAFxWBT1IS/OUTfAl8/YFyiRj0T3AJId46cpn3G4RiUso5xISqpYd
+	 MbNclJqFTdzoeQZlEos8gz+tViQfC2AQRLdjuEEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Dan Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.17 133/146] drm/amd/display: Increase EDID read retries
-Date: Wed,  3 Dec 2025 16:28:31 +0100
-Message-ID: <20251203152351.339178859@linuxfoundation.org>
+	Andrew Lunn <andrew@lunn.ch>,
+	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.17 134/146] net: dsa: microchip: common: Fix checks on irq_find_mapping()
+Date: Wed,  3 Dec 2025 16:28:32 +0100
+Message-ID: <20251203152351.376703817@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -53,64 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
 
-commit 8ea902361734c87b82122f9c17830f168ebfc65a upstream.
+commit 7b3c09e1667977edee11de94a85e2593a7c15e87 upstream.
 
-[WHY]
-When monitor is still booting EDID read can fail while DPCD read
-is successful.  In this case no EDID data will be returned, and this
-could happen for a while.
+irq_find_mapping() returns a positive IRQ number or 0 if no IRQ is found
+but it never returns a negative value. However, on each
+irq_find_mapping() call, we verify that the returned value isn't
+negative.
 
-[HOW]
-Increase number of attempts to read EDID in dm_helpers_read_local_edid()
-to 25.
+Fix the irq_find_mapping() checks to enter error paths when 0 is
+returned. Return -EINVAL in such cases.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4672
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit a76d6f2c76c3abac519ba753e2723e6ffe8e461c)
-Cc: stable@vger.kernel.org
+CC: stable@vger.kernel.org
+Fixes: c9cd961c0d43 ("net: dsa: microchip: lan937x: add interrupt support for port phy link")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+Link: https://patch.msgid.link/20251120-ksz-fix-v6-1-891f80ae7f8f@bootlin.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |    8 ++++----
+ drivers/net/dsa/microchip/ksz_common.c |    8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
-@@ -996,8 +996,8 @@ enum dc_edid_status dm_helpers_read_loca
- 	struct amdgpu_dm_connector *aconnector = link->priv;
- 	struct drm_connector *connector = &aconnector->base;
- 	struct i2c_adapter *ddc;
--	int retry = 3;
--	enum dc_edid_status edid_status;
-+	int retry = 25;
-+	enum dc_edid_status edid_status = EDID_NO_RESPONSE;
- 	const struct drm_edid *drm_edid;
- 	const struct edid *edid;
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -2587,8 +2587,8 @@ static int ksz_irq_phy_setup(struct ksz_
  
-@@ -1027,7 +1027,7 @@ enum dc_edid_status dm_helpers_read_loca
- 		}
+ 			irq = irq_find_mapping(dev->ports[port].pirq.domain,
+ 					       PORT_SRC_PHY_INT);
+-			if (irq < 0) {
+-				ret = irq;
++			if (!irq) {
++				ret = -EINVAL;
+ 				goto out;
+ 			}
+ 			ds->user_mii_bus->irq[phy] = irq;
+@@ -2952,8 +2952,8 @@ static int ksz_pirq_setup(struct ksz_dev
+ 	snprintf(pirq->name, sizeof(pirq->name), "port_irq-%d", p);
  
- 		if (!drm_edid)
--			return EDID_NO_RESPONSE;
-+			continue;
+ 	pirq->irq_num = irq_find_mapping(dev->girq.domain, p);
+-	if (pirq->irq_num < 0)
+-		return pirq->irq_num;
++	if (!pirq->irq_num)
++		return -EINVAL;
  
- 		edid = drm_edid_raw(drm_edid); // FIXME: Get rid of drm_edid_raw()
- 		if (!edid ||
-@@ -1045,7 +1045,7 @@ enum dc_edid_status dm_helpers_read_loca
- 						&sink->dc_edid,
- 						&sink->edid_caps);
- 
--	} while (edid_status == EDID_BAD_CHECKSUM && --retry > 0);
-+	} while ((edid_status == EDID_BAD_CHECKSUM || edid_status == EDID_NO_RESPONSE) && --retry > 0);
- 
- 	if (edid_status != EDID_OK)
- 		DRM_ERROR("EDID err: %d, on connector: %s",
+ 	return ksz_irq_common_setup(dev, pirq);
+ }
 
 
