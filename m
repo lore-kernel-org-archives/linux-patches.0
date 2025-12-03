@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260D83570CC;
-	Wed,  3 Dec 2025 16:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B135BDC9;
+	Wed,  3 Dec 2025 16:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779139; cv=none; b=eS9GAgkeC1i6K5HP1UDzGTSiVZVXAnVXCWUs8IykpjVvb0kV1dL99j5fW2hRoJjhQTPBTEaoyEhUat2jHExj1ZpKcnpRg87MBS2Fn51GiisC8lMTQYAKaxwuJDm+gnfBbysUINklWxcPP4sMUIQCkNI07QBYPvM5e4O2s7iVe6A=
+	t=1764779142; cv=none; b=H+tEmXddHtNA1ovnpPZqq1DmS2H0qGMduIZvrQrBDLt30tu/aw4QXC/DebTypZMB1UZNY8vbm0ncDGXhkLFiDWOfCMWNoKwqXPbYo+o8qgExRZjEY+TNipdR70aKMIF5qOMJne/XBqbvi1EEx14YwQL3ASuyOBZWsU9wgO+dzW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779139; c=relaxed/simple;
-	bh=Wf6l3xJbHA4p49zQlbo+LfnY4UnmOHpNp8GWcNjQcGU=;
+	s=arc-20240116; t=1764779142; c=relaxed/simple;
+	bh=iJJZU81qQ4CwFbfwUv104bouXMAi4gWO4nysheOGMMU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ppEbirk5R50LTfqOrkLZPt4CovGnRb9lt1VQxmoiCJrHEcbgOAgeaCitOFLhE+T4u9vTUpNC86JYa2V7inCA3r18A0fIJ2YDVjX6x9FQ5RGh/FlGOm4zwWnTSFv5226n8cZY3arjTfJjLL+TlyGqwyiye5FzC/0JOEhqPWa82NM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ENYS7+FK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lNArIh2vY2K4jEIFtYD0YGaRE4AImRSNq2Oia8NWVozwiVucyX5uUpD8nm7HFPOpkM8p+bOY2+E+4pCBpZboIbqnOZUNNu6spV9SM77cFVLEr+AbT7y1W5TnG1p7I5ZvkfBAI6AD9SeVdNzy0ekus6m5wEAhrATgmYtIjuir3dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nqvr4BMP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ENYS7+FK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 832A4C4CEF5;
-	Wed,  3 Dec 2025 16:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nqvr4BMP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABAAC4CEF5;
+	Wed,  3 Dec 2025 16:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779139;
-	bh=Wf6l3xJbHA4p49zQlbo+LfnY4UnmOHpNp8GWcNjQcGU=;
+	s=korg; t=1764779142;
+	bh=iJJZU81qQ4CwFbfwUv104bouXMAi4gWO4nysheOGMMU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENYS7+FKdNpQLiXh8b6KyM7NIIv9Dfirgcw0/YYahKn/yNwDaMOLWw2PF8EPlA4e4
-	 IyLCHcuVUBwzSu9/b6qbSc8UzSJfzdyk1hwPnkcVav3yJpvWiwWvd+UVBT9LoZaJVV
-	 8rhf/gX64hMO5warP484qJuE1uOXdf6uOzg1LByY=
+	b=Nqvr4BMP4H6z32J0YS76MRoC7r03894/bNDqqBIUtmT+xwBW4a37j1k4+J3uS+PN5
+	 Nk0yH1djXSo+F56ojvaaPH+A0gofRsmA30pUlFHgbJjkAdikSv319NxLxdmYGfjTXV
+	 1U7le4jwg/2S/wZRTVO4Zn40Kj5x3KII04UfFQIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Wake Liu <wakel@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/568] ALSA: usb-audio: Add validation of UAC2/UAC3 effect units
-Date: Wed,  3 Dec 2025 16:22:48 +0100
-Message-ID: <20251203152446.803714587@linuxfoundation.org>
+Subject: [PATCH 6.1 140/568] selftests/net: Ensure assert() triggers in psock_tpacket.c
+Date: Wed,  3 Dec 2025 16:22:22 +0100
+Message-ID: <20251203152445.854870676@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,50 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Wake Liu <wakel@google.com>
 
-[ Upstream commit 2aec0b6a6b5395bca7d6fde9c7e9dc391d329698 ]
+[ Upstream commit bc4c0a48bdad7f225740b8e750fdc1da6d85e1eb ]
 
-Just add fixed struct size validations for UAC2 and UAC3 effect
-units.  The descriptor has a variable-length array, so it should be
-validated with a proper function later once when the unit is really
-parsed and used by the driver (currently only referred partially for
-the input terminal parsing).
+The get_next_frame() function in psock_tpacket.c was missing a return
+statement in its default switch case, leading to a compiler warning.
 
-Link: https://patch.msgid.link/20250821151751.12100-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This was caused by a `bug_on(1)` call, which is defined as an
+`assert()`, being compiled out because NDEBUG is defined during the
+build.
+
+Instead of adding a `return NULL;` which would silently hide the error
+and could lead to crashes later, this change restores the original
+author's intent. By adding `#undef NDEBUG` before including <assert.h>,
+we ensure the assertion is active and will cause the test to abort if
+this unreachable code is ever executed.
+
+Signed-off-by: Wake Liu <wakel@google.com>
+Link: https://patch.msgid.link/20250809062013.2407822-1-wakel@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/validate.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ tools/testing/selftests/net/psock_tpacket.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/validate.c b/sound/usb/validate.c
-index a0d55b77c9941..4bb4893f6e74f 100644
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -266,7 +266,11 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_2, UAC_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_2, UAC_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_2, UAC_FEATURE_UNIT, validate_uac2_feature_unit),
--	/* UAC_VERSION_2, UAC2_EFFECT_UNIT: not implemented yet */
-+	/* just a stop-gap, it should be a proper function for the array
-+	 * once if the unit is really parsed/used
-+	 */
-+	FIXED(UAC_VERSION_2, UAC2_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor),
- 	FUNC(UAC_VERSION_2, UAC2_PROCESSING_UNIT_V2, validate_processing_unit),
- 	FUNC(UAC_VERSION_2, UAC2_EXTENSION_UNIT_V2, validate_processing_unit),
- 	FIXED(UAC_VERSION_2, UAC2_CLOCK_SOURCE,
-@@ -286,7 +290,8 @@ static const struct usb_desc_validator audio_validators[] = {
- 	FUNC(UAC_VERSION_3, UAC3_MIXER_UNIT, validate_mixer_unit),
- 	FUNC(UAC_VERSION_3, UAC3_SELECTOR_UNIT, validate_selector_unit),
- 	FUNC(UAC_VERSION_3, UAC3_FEATURE_UNIT, validate_uac3_feature_unit),
--	/*  UAC_VERSION_3, UAC3_EFFECT_UNIT: not implemented yet */
-+	FIXED(UAC_VERSION_3, UAC3_EFFECT_UNIT,
-+	      struct uac2_effect_unit_descriptor), /* sharing the same struct */
- 	FUNC(UAC_VERSION_3, UAC3_PROCESSING_UNIT, validate_processing_unit),
- 	FUNC(UAC_VERSION_3, UAC3_EXTENSION_UNIT, validate_processing_unit),
- 	FIXED(UAC_VERSION_3, UAC3_CLOCK_SOURCE,
+diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
+index 93092d13b3c59..ca0d9a5a9e08c 100644
+--- a/tools/testing/selftests/net/psock_tpacket.c
++++ b/tools/testing/selftests/net/psock_tpacket.c
+@@ -22,6 +22,7 @@
+  *   - TPACKET_V3: RX_RING
+  */
+ 
++#undef NDEBUG
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <sys/types.h>
 -- 
 2.51.0
 
