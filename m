@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3A4312813;
-	Wed,  3 Dec 2025 15:45:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00AAE312813;
+	Wed,  3 Dec 2025 15:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776724; cv=none; b=X90EGI/pW514fo/X0vdjCQMoz36v0XcuLmnTgG6ZwKNvh4uXLeE7hrh45e+ohQ0E1GYy12QZWSRSTxvdWzWTLgjpn9AynwKhSCH6ClGZoEItwBrpUcacbPZctnnlm5CWKvlsS81V7iroQ6p+h8PEbKa1IqQKHjbMRzJS7Q/SsQY=
+	t=1764776728; cv=none; b=RdMrBm3iYxlob2sLXk9QgGGAb6qsfPHkFPlv7c4UUKav9vaEaKp0oTsVudxPt2NS2jCFRnflyju5L7dodWBFPreO9YEhwH2G2UhIwKZcqRT+QRcbkSm1AMz7IxGTDsjQWYpw1jIQj5MeXMA894OTInKS+MyVC07oNlS1uioPkUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776724; c=relaxed/simple;
-	bh=RKdfLhLBRTL9fCC3wS9Rdc0mpVa7i37TcXjbtegr+7M=;
+	s=arc-20240116; t=1764776728; c=relaxed/simple;
+	bh=IMnftusQ1MOqKHxDejdX9DbLern6530dPOyGfQtfKkI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZdAdUMpU9yPVrOA5t3MTVhxe/jwat75hGixI/NVuL0gLpnWetBd6PTwR0PmX0Xt7cCkbajV8mDZmgh7EEr/FwMAxOhFkKpAjlxgLLxQX+pMFbLZkAi0OQVN3k1Nn4z4gWAP+tlFxU94v+k58jwTu9glfo1ApawWsSoCQutn6hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EK+EZ3o4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hsrQt5dNTZmAuuhiN50PE3vK6nPByJ4uJ0UEFiu1h9aMwUqNvO3gKXh12Yqokf4SeQJP993GGgm+ZDyRuZeTLF4i76Xgpi7+IdQ2Uui1QbQcIanbymuKZBycRQLgJpYa9VPkUkxd+1n+slxBSgJc5mhR4ilbvbdNCT69SnKGdb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xUsLQ/Vr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EK+EZ3o4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227A4C4CEF5;
-	Wed,  3 Dec 2025 15:45:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xUsLQ/Vr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606D3C116C6;
+	Wed,  3 Dec 2025 15:45:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776724;
-	bh=RKdfLhLBRTL9fCC3wS9Rdc0mpVa7i37TcXjbtegr+7M=;
+	s=korg; t=1764776727;
+	bh=IMnftusQ1MOqKHxDejdX9DbLern6530dPOyGfQtfKkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EK+EZ3o4SSaKaPVcy4u44Kv5okLUMMQ/g5P/dvZjhaJwXiKZ0bsGYO37cq+WqhDvt
-	 AT0FzVTRx75oSCw1H2f+inMkG2MTVVbgwe4V1aLaF6KzvIxcJyDk3sX4W+gs9I9DS9
-	 +snnk+JCCmEDjR5ldYNIlNzdcLqHGjmxzxJywqvM=
+	b=xUsLQ/VrFT2+nOA9y0MBGNkcwErvoEiB3Nn/DDHUshVbzED9vAWehsvjG12O2XJ7/
+	 rYD9xbhFzur5zGnelrwp9PZsEDH/Khw0gysqlhHdoV8xxAqtUH+oR7RwC+uwUY0Pol
+	 09b5UvbCWiBCu/5EiWIJHI8SJMa5zLW7g0H6IfLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Klara Modin <klarasmodin@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 268/300] MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow
-Date: Wed,  3 Dec 2025 16:27:52 +0100
-Message-ID: <20251203152410.563059023@linuxfoundation.org>
+	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 242/300] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
+Date: Wed,  3 Dec 2025 16:27:26 +0100
+Message-ID: <20251203152409.591731015@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,76 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 841ecc979b18d3227fad5e2d6a1e6f92688776b5 upstream.
+[ Upstream commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf ]
 
-Owing to Config4.MMUSizeExt and VTLB/FTLB MMU features later MIPSr2+
-cores can have more than 64 TLB entries.  Therefore allocate an array
-for uniquification instead of placing too an small array on the stack.
+The PCM stream data in USB-audio driver is transferred over USB URB
+packet buffers, and each packet size is determined dynamically.  The
+packet sizes are limited by some factors such as wMaxPacketSize USB
+descriptor.  OTOH, in the current code, the actually used packet sizes
+are determined only by the rate and the PPS, which may be bigger than
+the size limit above.  This results in a buffer overflow, as reported
+by syzbot.
 
-Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
-Co-developed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.17+: 9f048fa48740: MIPS: mm: Prevent a TLB shutdown on initial uniquification
-Cc: stable@vger.kernel.org # v6.17+
-Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Tested-by: Klara Modin <klarasmodin@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Basically when the limit is smaller than the calculated packet size,
+it implies that something is wrong, most likely a weird USB
+descriptor.  So the best option would be just to return an error at
+the parameter setup time before doing any further operations.
+
+This patch introduces such a sanity check, and returns -EINVAL when
+the packet size is greater than maxpacksize.  The comparison with
+ep->packsize[1] alone should suffice since it's always equal or
+greater than ep->packsize[0].
+
+Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
+Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
+Cc: Lizhi Xu <lizhi.xu@windriver.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+[ changed ep->cur_rate to rate parameter and chip to ep->chip ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ sound/usb/endpoint.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -12,6 +12,7 @@
- #include <linux/init.h>
- #include <linux/sched.h>
- #include <linux/smp.h>
-+#include <linux/memblock.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -512,17 +513,26 @@ static int r4k_vpn_cmp(const void *a, co
-  * Initialise all TLB entries with unique values that do not clash with
-  * what we have been handed over and what we'll be using ourselves.
-  */
--static void r4k_tlb_uniquify(void)
-+static void __ref r4k_tlb_uniquify(void)
- {
--	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
- 	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
- 	int start = num_wired_entries();
-+	phys_addr_t tlb_vpn_size;
-+	unsigned long *tlb_vpns;
- 	unsigned long vpn_mask;
- 	int cnt, ent, idx, i;
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1093,6 +1093,11 @@ int snd_usb_endpoint_set_params(struct s
+ 	ep->sample_rem = rate % ep->pps;
+ 	ep->packsize[0] = rate / ep->pps;
+ 	ep->packsize[1] = (rate + (ep->pps - 1)) / ep->pps;
++	if (ep->packsize[1] > ep->maxpacksize) {
++		usb_audio_dbg(ep->chip, "Too small maxpacksize %u for rate %u / pps %u\n",
++			      ep->maxpacksize, rate, ep->pps);
++		return -EINVAL;
++	}
  
- 	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
- 	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
- 
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
-+
- 	htw_stop();
- 
- 	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
-@@ -575,6 +585,10 @@ static void r4k_tlb_uniquify(void)
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
-+	if (use_slab)
-+		kfree(tlb_vpns);
-+	else
-+		memblock_free(tlb_vpns, tlb_vpn_size);
- }
- 
- /*
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
 
 
