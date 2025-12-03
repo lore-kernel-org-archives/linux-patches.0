@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDEA35BDBD;
-	Wed,  3 Dec 2025 16:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D1735C193;
+	Wed,  3 Dec 2025 16:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780110; cv=none; b=f1gc52tPUBAzFGcFM2C3zxPI4e/MpzNYKawUTcUW9BZQ+8fi7Y6hp9L6+y3W9Im9g8JSmfisaN++Kqou7uHbcj3cv4TIVu68K67Un9unARK4JkMObOyWuoX2YETJpHRmRTETclFJNjT1zYsyn3QufiztP3CLPpvy5G5Yzje1ODc=
+	t=1764780113; cv=none; b=rRnfL7fWGzF+VN3gsQTNHx3sDBGnUuBCThRgowVnOdFLuiuOfQ6OenkN6B+/jtL2thHX7lrGkm6x/XkzE1fGSSW2bHXp5PwhSFeJ9kwrwCSTy4i6GxnBRUmnB0YEXMeZoiofo18LNndKsal29a1L9rlbEEMkf7iSOtRy6DGzKCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780110; c=relaxed/simple;
-	bh=yZFleS3X42mAfQyP6f+Yw18eoJxED1GPoJK0f2DAX9I=;
+	s=arc-20240116; t=1764780113; c=relaxed/simple;
+	bh=gWym7HL1iil6CemRoI9rWk11HQAWq3swoyYHJ17xddY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hYfR1UNP73H61gO67KudD/qFbcmTtZg8Bcavgx0XL0tmOAZJAl+QmFnnM6TzoWk3mOKAUcK2nEG67qF99QpoDz7vV0yWNRkk7IlxwCpCc67q5mjMYq1aCpcBgozrutkcSEoZOsN/VKeV/rWi4BOEPC2PeDKHhX6OgEyfZ3oEVfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gDJTkIHb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G3H7tDlR3D1ipcRQ+Dturdor+enfeAwc1M9YtXc/SshoTje42WPpLAj0jzt+bUDB4xwV/RgY+RqEpO1RCQseMWoV8re0FWCl49el90G8r7zjnVlxj9KVizDvMVWUHuJpWpsk/GwcqcnN7hj2IRrRtnpONTz7bKRRN6vIq0Zu3QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lx0mGp89; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gDJTkIHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD52CC4CEF5;
-	Wed,  3 Dec 2025 16:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lx0mGp89"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF3EC4CEF5;
+	Wed,  3 Dec 2025 16:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780110;
-	bh=yZFleS3X42mAfQyP6f+Yw18eoJxED1GPoJK0f2DAX9I=;
+	s=korg; t=1764780113;
+	bh=gWym7HL1iil6CemRoI9rWk11HQAWq3swoyYHJ17xddY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gDJTkIHbYP6XO2iF2itwURdhy9uYFQk41t1Pk0LYD2ltf1xoXbAJNV+f3I/Y/imI0
-	 o945Ts6sCvOnOrqD6r6mJPi+T1WDj1z6HQX+QkMS9hqMZ0TVU3Ur7bfwjgwW7aoMnm
-	 hqbgg3xpYtUH2CLbZb7qpQ4ZA90apDjYwzDrUVGc=
+	b=lx0mGp89B74HV9eLSKphbPz5iBsdw+/x2+Ixb9YMMO6O9j2NsM+CZsJFPCPYgZIy+
+	 O5Fm9Z7RaI/n6tELWbgdaaAOfAJovKNIRRbcCWUQExIXlN6+JbM2QOgnZ5VBavsyRn
+	 vf065meNLCv50RmSNlNGI6xyZXtolMVW/WlqudYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armen Ratner <armeng@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Alexei Lazar <alazar@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 426/568] net/mlx5e: Preserve shared buffer capacity during headroom updates
-Date: Wed,  3 Dec 2025 16:27:08 +0100
-Message-ID: <20251203152456.298744662@linuxfoundation.org>
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 427/568] timers: Fix NULL function pointer race in timer_shutdown_sync()
+Date: Wed,  3 Dec 2025 16:27:09 +0100
+Message-ID: <20251203152456.334938331@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -55,102 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armen Ratner <armeng@nvidia.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-commit 8b0587a885fdb34fd6090a3f8625cb7ac1444826 upstream.
+commit 20739af07383e6eb1ec59dcd70b72ebfa9ac362c upstream.
 
-When port buffer headroom changes, port_update_shared_buffer()
-recalculates the shared buffer size and splits it in a 3:1 ratio
-(lossy:lossless) - Currently, the calculation is:
-lossless = shared / 4;
-lossy = (shared / 4) * 3;
+There is a race condition between timer_shutdown_sync() and timer
+expiration that can lead to hitting a WARN_ON in expire_timers().
 
-Meaning, the calculation dropped the remainder of shared % 4 due to
-integer division, unintentionally reducing the total shared buffer
-by up to three cells on each update. Over time, this could shrink
-the buffer below usable size.
+The issue occurs when timer_shutdown_sync() clears the timer function
+to NULL while the timer is still running on another CPU. The race
+scenario looks like this:
 
-Fix it by changing the calculation to:
-lossless = shared / 4;
-lossy = shared - lossless;
+CPU0					CPU1
+					<SOFTIRQ>
+					lock_timer_base()
+					expire_timers()
+					base->running_timer = timer;
+					unlock_timer_base()
+					[call_timer_fn enter]
+					mod_timer()
+					...
+timer_shutdown_sync()
+lock_timer_base()
+// For now, will not detach the timer but only clear its function to NULL
+if (base->running_timer != timer)
+	ret = detach_if_pending(timer, base, true);
+if (shutdown)
+	timer->function = NULL;
+unlock_timer_base()
+					[call_timer_fn exit]
+					lock_timer_base()
+					base->running_timer = NULL;
+					unlock_timer_base()
+					...
+					// Now timer is pending while its function set to NULL.
+					// next timer trigger
+					<SOFTIRQ>
+					expire_timers()
+					WARN_ON_ONCE(!fn) // hit
+					...
+lock_timer_base()
+// Now timer will detach
+if (base->running_timer != timer)
+	ret = detach_if_pending(timer, base, true);
+if (shutdown)
+	timer->function = NULL;
+unlock_timer_base()
 
-This retains all buffer cells while still approximating the
-intended 3:1 split, preventing capacity loss over time.
+The problem is that timer_shutdown_sync() clears the timer function
+regardless of whether the timer is currently running. This can leave a
+pending timer with a NULL function pointer, which triggers the
+WARN_ON_ONCE(!fn) check in expire_timers().
 
-While at it, perform headroom calculations in units of cells rather than
-in bytes for more accurate calculations avoiding extra divisions.
+Fix this by only clearing the timer function when actually detaching the
+timer. If the timer is running, leave the function pointer intact, which is
+safe because the timer will be properly detached when it finishes running.
 
-Fixes: a440030d8946 ("net/mlx5e: Update shared buffer along with device buffer changes")
-Signed-off-by: Armen Ratner <armeng@nvidia.com>
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Alexei Lazar <alazar@nvidia.com>
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://patch.msgid.link/20250820133209.389065-9-mbloch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 0cc04e80458a ("timers: Add shutdown mechanism to the internal functions")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251122093942.301559-1-zouyipeng@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c |   18 ++++++---------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ kernel/time/timer.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/port_buffer.c
-@@ -272,8 +272,8 @@ static int port_update_shared_buffer(str
- 	/* Total shared buffer size is split in a ratio of 3:1 between
- 	 * lossy and lossless pools respectively.
- 	 */
--	lossy_epool_size = (shared_buffer_size / 4) * 3;
- 	lossless_ipool_size = shared_buffer_size / 4;
-+	lossy_epool_size    = shared_buffer_size - lossless_ipool_size;
+--- a/kernel/time/timer.c
++++ b/kernel/time/timer.c
+@@ -1413,10 +1413,11 @@ static int __try_to_del_timer_sync(struc
  
- 	mlx5e_port_set_sbpr(mdev, 0, MLX5_EGRESS_DIR, MLX5_LOSSY_POOL, 0,
- 			    lossy_epool_size);
-@@ -288,14 +288,12 @@ static int port_set_buffer(struct mlx5e_
- 	u16 port_buff_cell_sz = priv->dcbx.port_buff_cell_sz;
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 	int sz = MLX5_ST_SZ_BYTES(pbmc_reg);
--	u32 new_headroom_size = 0;
--	u32 current_headroom_size;
-+	u32 current_headroom_cells = 0;
-+	u32 new_headroom_cells = 0;
- 	void *in;
- 	int err;
- 	int i;
+ 	base = lock_timer_base(timer, &flags);
  
--	current_headroom_size = port_buffer->headroom_size;
--
- 	in = kzalloc(sz, GFP_KERNEL);
- 	if (!in)
- 		return -ENOMEM;
-@@ -306,12 +304,14 @@ static int port_set_buffer(struct mlx5e_
+-	if (base->running_timer != timer)
++	if (base->running_timer != timer) {
+ 		ret = detach_if_pending(timer, base, true);
+-	if (shutdown)
+-		timer->function = NULL;
++		if (shutdown)
++			timer->function = NULL;
++	}
  
- 	for (i = 0; i < MLX5E_MAX_NETWORK_BUFFER; i++) {
- 		void *buffer = MLX5_ADDR_OF(pbmc_reg, in, buffer[i]);
-+		current_headroom_cells += MLX5_GET(bufferx_reg, buffer, size);
-+
- 		u64 size = port_buffer->buffer[i].size;
- 		u64 xoff = port_buffer->buffer[i].xoff;
- 		u64 xon = port_buffer->buffer[i].xon;
- 
--		new_headroom_size += size;
- 		do_div(size, port_buff_cell_sz);
-+		new_headroom_cells += size;
- 		do_div(xoff, port_buff_cell_sz);
- 		do_div(xon, port_buff_cell_sz);
- 		MLX5_SET(bufferx_reg, buffer, size, size);
-@@ -320,10 +320,8 @@ static int port_set_buffer(struct mlx5e_
- 		MLX5_SET(bufferx_reg, buffer, xon_threshold, xon);
- 	}
- 
--	new_headroom_size /= port_buff_cell_sz;
--	current_headroom_size /= port_buff_cell_sz;
--	err = port_update_shared_buffer(priv->mdev, current_headroom_size,
--					new_headroom_size);
-+	err = port_update_shared_buffer(priv->mdev, current_headroom_cells,
-+					new_headroom_cells);
- 	if (err)
- 		goto out;
+ 	raw_spin_unlock_irqrestore(&base->lock, flags);
  
 
 
