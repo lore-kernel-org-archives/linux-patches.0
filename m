@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2B335FF6B;
-	Wed,  3 Dec 2025 16:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF4135FF4E;
+	Wed,  3 Dec 2025 16:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779300; cv=none; b=rbqksqidex7L4sDQRE0APYhkiiUUck1VAMXqzc7ls+FCwGPo0cd9LlJm/PcjjLJ9wOY7JIT14zPyx1Qlh818O/SQ/NzICWQ9T7TCY9SL5np48wtqUJb2CUBXeOz/lFW+peezzPogbVtES4Mvx5KlSkAVkF19GAiNettSxN9xuX8=
+	t=1764779303; cv=none; b=qCqT1JYhW1g26P7iYtYmlUHU5CAKwuyT5imKEm72VUC2zX8EqniJDC/wpryM4pBPGDJc+KLaXHjNCCtieZRdkiQArRU9sFNLzR9lfuhsG6OdU2m30OL4H9Tl8/BnOFxysxQbN7dzV6xlwvNSEFl1Q5uCDgZpVa2Hsup8/fYZ6ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779300; c=relaxed/simple;
-	bh=86mYzpP3M44yRL/wsD0GpeOp8afTTdLcCkYa2Zof84w=;
+	s=arc-20240116; t=1764779303; c=relaxed/simple;
+	bh=KtsN93mrf0dQJRl2bhv1J24xiOGCzTl4PtJz3Y4Hd1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXDNTa0QVZ45egJfvpuo7CVg72L1JaVHAZr6BsMfdycCO6xkg8x4uLSHXGZs8yo8RCBHp605F+CcKIILs1141VaZ2zHdVJC7YHKYPN0HIcOaWw5iFNUvVtxzeMQ1UsJ6JfOTIiOjOgi4R0At2A0u18Og4QMDEeAQG6IHrAdd9dY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uz3vyv/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l6XXMDNIespJxB/EHsOMNwVn92fV83nQ209QHT2ZYGUHeyUduotIsdtFhBteX080wcmxbIWSZNTzsoq5aaZvTGLLv49Ll74+TKdm5OslDLPtgzeM5qNC0hSutpEyUM6awnsxewiPIyZMtN5J6srvmXopHbKB7Cq4sf2dn9qcQ1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEwBO8Qv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uz3vyv/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA7DC4CEF5;
-	Wed,  3 Dec 2025 16:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEwBO8Qv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0BEC4CEF5;
+	Wed,  3 Dec 2025 16:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779300;
-	bh=86mYzpP3M44yRL/wsD0GpeOp8afTTdLcCkYa2Zof84w=;
+	s=korg; t=1764779303;
+	bh=KtsN93mrf0dQJRl2bhv1J24xiOGCzTl4PtJz3Y4Hd1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uz3vyv/9rcDiElgVKlTpJoewFNXykRcgAeEFRLXn5w5fgwxRRuwjkEzXm1dKFp80d
-	 fBy9+r1yO1Js7Yq9OVZQyAL7lRiXFuIF67a2KHQGv82fvlkG7Bb+TNoT04I0rW7FMY
-	 zZmaoE5j9JZmZtiNUf31ver5eV8tlnBvzndmwhLw=
+	b=TEwBO8QvuY4wHIVvh7ISnIMyclBrEAVN1E1ch7nRontdZFmUApepfp9QAEvTwWozZ
+	 QK/PefogVvjoKmCDyCN9MAaNK00fm+Hs+JIpq+5oYRZeaRqgQ62YIBNrZpeCzEA1wB
+	 FBpsPUquuZ/5p+K4DF5yLhmHBf+1aDX88J/2kQHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/568] wifi: mac80211: Fix HE capabilities element check
-Date: Wed,  3 Dec 2025 16:23:31 +0100
-Message-ID: <20251203152448.380094340@linuxfoundation.org>
+Subject: [PATCH 6.1 218/568] selftests: Disable dad for ipv6 in fcnal-test.sh
+Date: Wed,  3 Dec 2025 16:23:40 +0100
+Message-ID: <20251203152448.706625853@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,35 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: David Ahern <dsahern@kernel.org>
 
-[ Upstream commit ea928544f3215fdeac24d66bef85e10bb638b8c1 ]
+[ Upstream commit 53d591730ea34f97a82f7ec6e7c987ca6e34dc21 ]
 
-The element data length check did not account for the extra
-octet used for the extension ID. Fix it.
+Constrained test environment; duplicate address detection is not needed
+and causes races so disable it.
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20250907115109.8da0012e2286.I8c0c69a0011f7153c13b365b14dfef48cfe7c3e3@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250910025828.38900-1-dsahern@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mlme.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/fcnal-test.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index cc47d6b88f04d..15826bbde70c2 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -4386,7 +4386,7 @@ static u8 ieee80211_max_rx_chains(struct ieee80211_link_data *link,
- 	he_cap_elem = cfg80211_find_ext_elem(WLAN_EID_EXT_HE_CAPABILITY,
- 					     ies->data, ies->len);
+diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
+index 1c0dcddbe2bd1..135e19db39eb0 100755
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -423,6 +423,8 @@ create_ns()
+ 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.keep_addr_on_down=1
+ 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.forwarding=1
+ 	ip netns exec ${ns} sysctl -qw net.ipv6.conf.default.forwarding=1
++	ip netns exec ${ns} sysctl -qw net.ipv6.conf.default.accept_dad=0
++	ip netns exec ${ns} sysctl -qw net.ipv6.conf.all.accept_dad=0
+ }
  
--	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap))
-+	if (!he_cap_elem || he_cap_elem->datalen < sizeof(*he_cap) + 1)
- 		return chains;
- 
- 	/* skip one byte ext_tag_id */
+ # create veth pair to connect namespaces and apply addresses.
 -- 
 2.51.0
 
