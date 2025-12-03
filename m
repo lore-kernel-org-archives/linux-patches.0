@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C21313546;
-	Wed,  3 Dec 2025 16:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9CF313546;
+	Wed,  3 Dec 2025 16:47:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780451; cv=none; b=ADRw40lE5bhAODgrMQ+j6AfGOld/1/yYvDZ8bigjkiparI6ZJzBivMNXQ5Kn2GJSevQ7h9RYL5WAOoOeidjgzP5eP2b06GZqgi+Famk75u3btMkDKVb03giH4modaSi1HAEc7ZL62W4eknLx50Jdyq+BjUYFeWZMZhv68g9phro=
+	t=1764780454; cv=none; b=quTHGvD3Bkz9NE3axnh+WPWtUOsMMi1/uYZbUd2dfvvtsLYz45h/+6D0HVFy+NC1l5mljguvpWuxNTYB6EEEniV1Prtw7mShs0WXlz2KzTdSubPOxr96VjTGediwNp/UEYjaVZU+ydVYl8kfJJ+eO5ZJrt2LhvXk7iQNRpzGxzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780451; c=relaxed/simple;
-	bh=qx1nChWIlWLx1bdxH3rB1p3HaO0il9VgFW20qO7m5lI=;
+	s=arc-20240116; t=1764780454; c=relaxed/simple;
+	bh=6TmJcxQqz/ZjzchD0zIJeqhO+CyPzFjnHpPKKdDRo7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UVfUCKuMbOxNL6rDBvQOuBDly8Et2lSiijlvKxkTEWdgS2jL/9wjVxXvjV11n7bQNXEoLlj93jTSitEWSnAUTfpUAWCdFp40GQttNvsPnLQVZq0f+ydqPoJZYWU4klfqr6QPMfATun2azL75JgDwXMEMD/KYZv2LZeTNwIgihPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAnCwhLq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KyU1Pkyo4VyBF43fb/bcakXo1/FANlZ+fJuHlodgbrFGLcreTXjpSadWab5TO9l+kNYIPuFcu2Jqfq/M0WdKlBPjngpZ56zzSWmy+GG9u8nQn91QXc2GwOtReHDc2ueQC/IAWdCtGp2Z5JM7Gt4xXfI1Hb1Aw59WUdYlP/neM54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYqR8Fee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAnCwhLq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D77EC4CEF5;
-	Wed,  3 Dec 2025 16:47:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYqR8Fee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFDB4C4CEF5;
+	Wed,  3 Dec 2025 16:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780450;
-	bh=qx1nChWIlWLx1bdxH3rB1p3HaO0il9VgFW20qO7m5lI=;
+	s=korg; t=1764780454;
+	bh=6TmJcxQqz/ZjzchD0zIJeqhO+CyPzFjnHpPKKdDRo7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAnCwhLqS8PVWvnjVBXiysnX3MXbyFjC8+E7RNXtOTsAemoOWz5wCs+Bcg1AV+4PY
-	 olF+dJ/d2tDJZM//oJKlR50nNZF5Hk1N8ZRVs58GJoH2nBWbQFcslEm5r0hV4Kup6g
-	 YK3o3gNUWzaaPryoJz2LD1cjs1NuUqxAG7lE3QsQ=
+	b=LYqR8Fee1BaP0dleE49/ijLd8oDrCLZQLE/+vxdmxLy09IsvE5mVBc+hb3dSftQfI
+	 KhI6Ng8nLLx4BptWRZ+bhRvUK0AVJJ/0Hs3Q3VmFIUFkDjm3TG5s63JWA1mVrp75Jo
+	 RSHNK5RVSToB4jaWWzGM8DumiQIX//YVVMWNNejc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Geliang Tang <geliang@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 559/568] mptcp: fix duplicate reset on fastclose
-Date: Wed,  3 Dec 2025 16:29:21 +0100
-Message-ID: <20251203152501.185702729@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 6.1 560/568] mptcp: Fix proto fallback detection with BPF
+Date: Wed,  3 Dec 2025 16:29:22 +0100
+Message-ID: <20251203152501.222977731@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,116 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit ae155060247be8dcae3802a95bd1bdf93ab3215d upstream.
+commit c77b3b79a92e3345aa1ee296180d1af4e7031f8f upstream.
 
-The CI reports sporadic failures of the fastclose self-tests. The root
-cause is a duplicate reset, not carrying the relevant MPTCP option.
-In the failing scenario the bad reset is received by the peer before
-the fastclose one, preventing the reception of the latter.
+The sockmap feature allows bpf syscall from userspace, or based
+on bpf sockops, replacing the sk_prot of sockets during protocol stack
+processing with sockmap's custom read/write interfaces.
+'''
+tcp_rcv_state_process()
+  syn_recv_sock()/subflow_syn_recv_sock()
+    tcp_init_transfer(BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB)
+      bpf_skops_established       <== sockops
+        bpf_sock_map_update(sk)   <== call bpf helper
+          tcp_bpf_update_proto()  <== update sk_prot
+'''
 
-Indeed there is window of opportunity at fastclose time for the
-following race:
+When the server has MPTCP enabled but the client sends a TCP SYN
+without MPTCP, subflow_syn_recv_sock() performs a fallback on the
+subflow, replacing the subflow sk's sk_prot with the native sk_prot.
+'''
+subflow_syn_recv_sock()
+  subflow_ulp_fallback()
+    subflow_drop_ctx()
+      mptcp_subflow_ops_undo_override()
+'''
 
-  mptcp_do_fastclose
-    __mptcp_close_ssk
-      __tcp_close()
-        tcp_set_state() [1]
-        tcp_send_active_reset() [2]
+Then, this subflow can be normally used by sockmap, which replaces the
+native sk_prot with sockmap's custom sk_prot. The issue occurs when the
+user executes accept::mptcp_stream_accept::mptcp_fallback_tcp_ops().
+Here, it uses sk->sk_prot to compare with the native sk_prot, but this
+is incorrect when sockmap is used, as we may incorrectly set
+sk->sk_socket->ops.
 
-After [1] the stack will send reset to in-flight data reaching the now
-closed port. Such reset may race with [2].
+This fix uses the more generic sk_family for the comparison instead.
 
-Address the issue explicitly sending a single reset on fastclose before
-explicitly moving the subflow to close status.
+Additionally, this also prevents a WARNING from occurring:
 
-Fixes: d21f83485518 ("mptcp: use fastclose on more edge scenarios")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/596
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Geliang Tang <geliang@kernel.org>
+result from ./scripts/decode_stacktrace.sh:
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 337 at net/mptcp/protocol.c:68 mptcp_stream_accept \
+(net/mptcp/protocol.c:4005)
+Modules linked in:
+...
+
+PKRU: 55555554
+Call Trace:
+<TASK>
+do_accept (net/socket.c:1989)
+__sys_accept4 (net/socket.c:2028 net/socket.c:2057)
+__x64_sys_accept (net/socket.c:2067)
+x64_sys_call (arch/x86/entry/syscall_64.c:41)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+RIP: 0033:0x7f87ac92b83d
+
+---[ end trace 0000000000000000 ]---
+
+Fixes: 0b4f33def7bb ("mptcp: fix tcp fallback crash")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-6-806d3781c95f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in protocol.c, because commit bbd49d114d57 ("mptcp:
-  consolidate transition to TCP_CLOSE in mptcp_do_fastclose()") is not
-  in this version. It introduced a new line in the context. The same
-  modification can still be applied.
-  Also, tcp_send_active_reset() doesn't take a 3rd argument
-  (sk_rst_reason) in this version, see commit 5691276b39da ("rstreason:
-  prepare for active reset"). This argument is only helpful for tracing,
-  it is fine to drop it. ]
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251111060307.194196-3-jiayuan.chen@linux.dev
+[ Conflicts in protocol.c, because commit 8e2b8a9fa512 ("mptcp: don't
+  overwrite sock_ops in mptcp_is_tcpsk()") is not in this version. It
+  changes the logic on how and where the sock_ops is overridden in case
+  of passive fallback. To fix this, mptcp_is_tcpsk() is modified to use
+  the family, but first, a check of the protocol is required to continue
+  returning 'false' in case of MPTCP socket. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   34 +++++++++++++++++++++-------------
- 1 file changed, 21 insertions(+), 13 deletions(-)
+ net/mptcp/protocol.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 --- a/net/mptcp/protocol.c
 +++ b/net/mptcp/protocol.c
-@@ -2440,7 +2440,6 @@ bool __mptcp_retransmit_pending_data(str
- 
- /* flags for __mptcp_close_ssk() */
- #define MPTCP_CF_PUSH		BIT(1)
--#define MPTCP_CF_FASTCLOSE	BIT(2)
- 
- /* be sure to send a reset only if the caller asked for it, also
-  * clean completely the subflow status when the subflow reaches
-@@ -2451,7 +2450,7 @@ static void __mptcp_subflow_disconnect(s
- 				       unsigned int flags)
+@@ -79,8 +79,13 @@ static u64 mptcp_wnd_end(const struct mp
+ static bool mptcp_is_tcpsk(struct sock *sk)
  {
- 	if (((1 << ssk->sk_state) & (TCPF_CLOSE | TCPF_LISTEN)) ||
--	    (flags & MPTCP_CF_FASTCLOSE)) {
-+	    subflow->send_fastclose) {
- 		/* The MPTCP code never wait on the subflow sockets, TCP-level
- 		 * disconnect should never fail
- 		 */
-@@ -2498,14 +2497,8 @@ static void __mptcp_close_ssk(struct soc
+ 	struct socket *sock = sk->sk_socket;
++	unsigned short family;
  
- 	lock_sock_nested(ssk, SINGLE_DEPTH_NESTING);
- 
--	if ((flags & MPTCP_CF_FASTCLOSE) && !__mptcp_check_fallback(msk)) {
--		/* be sure to force the tcp_close path
--		 * to generate the egress reset
--		 */
--		ssk->sk_lingertime = 0;
--		sock_set_flag(ssk, SOCK_LINGER);
--		subflow->send_fastclose = 1;
--	}
-+	if (subflow->send_fastclose && ssk->sk_state != TCP_CLOSE)
-+		tcp_set_state(ssk, TCP_CLOSE);
- 
- 	need_push = (flags & MPTCP_CF_PUSH) && __mptcp_retransmit_pending_data(sk);
- 	if (!dispose_it) {
-@@ -2794,9 +2787,24 @@ static void mptcp_do_fastclose(struct so
- 	struct mptcp_subflow_context *subflow, *tmp;
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 
--	mptcp_for_each_subflow_safe(msk, subflow, tmp)
--		__mptcp_close_ssk(sk, mptcp_subflow_tcp_sock(subflow),
--				  subflow, MPTCP_CF_FASTCLOSE);
-+	/* Explicitly send the fastclose reset as need */
-+	if (__mptcp_check_fallback(msk))
-+		return;
+-	if (unlikely(sk->sk_prot == &tcp_prot)) {
++	if (likely(sk->sk_protocol == IPPROTO_MPTCP))
++		return false;
 +
-+	mptcp_for_each_subflow_safe(msk, subflow, tmp) {
-+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
-+
-+		lock_sock(ssk);
-+
-+		/* Some subflow socket states don't allow/need a reset.*/
-+		if ((1 << ssk->sk_state) & (TCPF_LISTEN | TCPF_CLOSE))
-+			goto unlock;
-+
-+		subflow->send_fastclose = 1;
-+		tcp_send_active_reset(ssk, ssk->sk_allocation);
-+unlock:
-+		release_sock(ssk);
-+	}
- }
- 
- static void mptcp_worker(struct work_struct *work)
++	family = READ_ONCE(sk->sk_family);
++	if (unlikely(family == AF_INET)) {
+ 		/* we are being invoked after mptcp_accept() has
+ 		 * accepted a non-mp-capable flow: sk is a tcp_sk,
+ 		 * not an mptcp one.
+@@ -91,7 +96,7 @@ static bool mptcp_is_tcpsk(struct sock *
+ 		sock->ops = &inet_stream_ops;
+ 		return true;
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+-	} else if (unlikely(sk->sk_prot == &tcpv6_prot)) {
++	} else if (unlikely(family == AF_INET6)) {
+ 		sock->ops = &inet6_stream_ops;
+ 		return true;
+ #endif
 
 
