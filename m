@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F43DDAB;
-	Wed,  3 Dec 2025 15:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504293081AF;
+	Wed,  3 Dec 2025 15:41:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776457; cv=none; b=J4KU/X+1BaRNsD+dOpXf4vLxicoLievgMobW6jxSpyafGVZ2044cjEdhALYIyawmwGb46csTx2Bqr4v1MD6wvueo66WFUePKTGR3RxGL/pdCI0EPS/SXLKE35kDnYBRm3nb2l5PHdM8APV4c8HQWwj2YvSpvysrkfVk/jw+knOQ=
+	t=1764776460; cv=none; b=CEoXb5qTyljzZyxQNQ9zkKh1XadSie/VhNoQsdfSJLvo0UK4xuK5E3c0j0g02nwF65kR4xQaJ/pNPp69F5XknzUdrlDia5e12Pyo8LK5TKLwZGf3fZcnFvwR+8ZMZbINPlTW42F94/IPMrthF/CoTgs+YI6rlIEJwU1LcvZDTTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776457; c=relaxed/simple;
-	bh=rmm+wyVyxDIS3bhx/s3jGsd3db0LfiLR0zphv+wZGBw=;
+	s=arc-20240116; t=1764776460; c=relaxed/simple;
+	bh=Se37BBj6MVFiB4Kg/dCY8/NNnhvGwRUgE9ZV7YA9yOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gR6NaD8ZwYubsE/4C3ymuIHRU0A0NSYnedNq75deJJG6MtvUgKbBGDS5Nu5e2GXmjSxYoRq56paww3mYSsoX1h0+K45Zzx4eTzX3tymK3tfjpPSVh5c606wQ308qD3rjqZUgX/kLD7mymUeEAVsG7r2vFuy/OqBkYDwsFsDGU38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6ZhPK0M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C90qNzwyXtvU5YQcW2ly1NofHpbeB1t759H6gFvPNcUPP4UovWLylgTuq4RTprgVsuER9gzLke7ubSXMR8hTEwsO2mIPCm+KjunDIdyqBr09/9hNWtvLCsml7nrXNJ4o8u3k1hn15e3K9iwRocngfTffD20iPHo99p08R0w9zgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iC5XyTfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6ZhPK0M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9837EC4CEF5;
-	Wed,  3 Dec 2025 15:40:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iC5XyTfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C585C116C6;
+	Wed,  3 Dec 2025 15:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776457;
-	bh=rmm+wyVyxDIS3bhx/s3jGsd3db0LfiLR0zphv+wZGBw=;
+	s=korg; t=1764776460;
+	bh=Se37BBj6MVFiB4Kg/dCY8/NNnhvGwRUgE9ZV7YA9yOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6ZhPK0MDtwjfZzKmYzPVLMTHL8liIbFZpwQSrCSfWis92F+jTgc2yKH1IGbVAP5o
-	 T8z72/7T/o3iPcdJ+yTcdxp5nwgY5f/tsFK/ztirILWGW1U8mH10V/4r30reHybAMU
-	 p3p+q2///RQVn5ohmc+cxFoWt/PBvkh8N36i9dD8=
+	b=iC5XyTfoIqmQOODaUil4Y6nuF9Y7I+BTiXOJ8gapJNv/ULwhAxsiymqldbEcPUabv
+	 fPqgZ9aY+Fuptt2PClO0lfbqUSd/IzqV83EVraeLqKI3dIDG8B7K5GJyWAJHb0uQnd
+	 r3Qdqt1NUHz/DcCBB9VKWxK/wehe8aES2Tyy7fKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com,
-	Ranganath V N <vnranganath.20@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <xiyou.wangcong@gmail.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Nimrod Oren <noren@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 188/300] net: sched: act_ife: initialize struct tc_ife to fix KMSAN kernel-infoleak
-Date: Wed,  3 Dec 2025 16:26:32 +0100
-Message-ID: <20251203152407.592079128@linuxfoundation.org>
+Subject: [PATCH 5.10 189/300] net/mlx5e: Fix maxrate wraparound in threshold between units
+Date: Wed,  3 Dec 2025 16:26:33 +0100
+Message-ID: <20251203152407.628593063@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -54,67 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranganath V N <vnranganath.20@gmail.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit ce50039be49eea9b4cd8873ca6eccded1b4a130a ]
+[ Upstream commit a7bf4d5063c7837096aab2853224eb23628514d9 ]
 
-Fix a KMSAN kernel-infoleak detected  by the syzbot .
+The previous calculation used roundup() which caused an overflow for
+rates between 25.5Gbps and 26Gbps.
+For example, a rate of 25.6Gbps would result in using 100Mbps units with
+value of 256, which would overflow the 8 bits field.
 
-[net?] KMSAN: kernel-infoleak in __skb_datagram_iter
+Simplify the upper_limit_mbps calculation by removing the
+unnecessary roundup, and adjust the comparison to use <= to correctly
+handle the boundary condition.
 
-In tcf_ife_dump(), the variable 'opt' was partially initialized using a
-designatied initializer. While the padding bytes are reamined
-uninitialized. nla_put() copies the entire structure into a
-netlink message, these uninitialized bytes leaked to userspace.
-
-Initialize the structure with memset before assigning its fields
-to ensure all members and padding are cleared prior to beign copied.
-
-This change silences the KMSAN report and prevents potential information
-leaks from the kernel memory.
-
-This fix has been tested and validated by syzbot. This patch closes the
-bug reported at the following syzkaller link and ensures no infoleak.
-
-Reported-by: syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=0c85cae3350b7d486aee
-Tested-by: syzbot+0c85cae3350b7d486aee@syzkaller.appspotmail.com
-Fixes: ef6980b6becb ("introduce IFE action")
-Signed-off-by: Ranganath V N <vnranganath.20@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251109091336.9277-3-vnranganath.20@gmail.com
-Acked-by: Cong Wang <xiyou.wangcong@gmail.com>
+Fixes: d8880795dabf ("net/mlx5e: Implement DCBNL IEEE max rate")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1762681073-1084058-4-git-send-email-tariqt@nvidia.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_ife.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index 99548b2a1bc83..892d4824d81d5 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -643,13 +643,15 @@ static int tcf_ife_dump(struct sk_buff *skb, struct tc_action *a, int bind,
- 	unsigned char *b = skb_tail_pointer(skb);
- 	struct tcf_ife_info *ife = to_ife(a);
- 	struct tcf_ife_params *p;
--	struct tc_ife opt = {
--		.index = ife->tcf_index,
--		.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
--		.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
--	};
-+	struct tc_ife opt;
- 	struct tcf_t t;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index c25fb0cbde274..4f1ce1287cdae 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -587,18 +587,19 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
+ 	struct mlx5_core_dev *mdev = priv->mdev;
+ 	u8 max_bw_value[IEEE_8021QAZ_MAX_TCS];
+ 	u8 max_bw_unit[IEEE_8021QAZ_MAX_TCS];
+-	__u64 upper_limit_mbps = roundup(255 * MLX5E_100MB, MLX5E_1GB);
++	__u64 upper_limit_mbps;
+ 	int i;
  
-+	memset(&opt, 0, sizeof(opt));
-+
-+	opt.index = ife->tcf_index,
-+	opt.refcnt = refcount_read(&ife->tcf_refcnt) - ref,
-+	opt.bindcnt = atomic_read(&ife->tcf_bindcnt) - bind,
-+
- 	spin_lock_bh(&ife->tcf_lock);
- 	opt.action = ife->tcf_action;
- 	p = rcu_dereference_protected(ife->params,
+ 	memset(max_bw_value, 0, sizeof(max_bw_value));
+ 	memset(max_bw_unit, 0, sizeof(max_bw_unit));
++	upper_limit_mbps = 255 * MLX5E_100MB;
+ 
+ 	for (i = 0; i <= mlx5_max_tc(mdev); i++) {
+ 		if (!maxrate->tc_maxrate[i]) {
+ 			max_bw_unit[i]  = MLX5_BW_NO_LIMIT;
+ 			continue;
+ 		}
+-		if (maxrate->tc_maxrate[i] < upper_limit_mbps) {
++		if (maxrate->tc_maxrate[i] <= upper_limit_mbps) {
+ 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
+ 						  MLX5E_100MB);
+ 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
 -- 
 2.51.0
 
