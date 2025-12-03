@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236B2340D90;
-	Wed,  3 Dec 2025 16:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5870834F49A;
+	Wed,  3 Dec 2025 16:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778959; cv=none; b=JJ170woGZHEdYWxVRWksacMVz+vQLGzDPsq424REK954PtdC1OUJ2fDbSoACWTnHRhR9zQXK0MPk0XwK/Z7ZumJsX04wqKfHrFn96wvjzdKywhjdJcKbHw/O7BbhcU2Vo7YUYkAJCCRHTkwA3MsoHc9O9XExdWKHNKL17bbg1Ak=
+	t=1764778962; cv=none; b=VflhgogkBqz2NPtxq8+ll+KJrE+OgrUyFxBFkfJ2Kph76GvMWt0374DuBjohfsGofsufLIDeWE9+xAKrU9a4xn9ITmufdp3U4O4WMKGNULOcYoH0V4e6/T3PSvTDNP275D9vgJWE5LGFJZLZO6xjYgYdLEhgv7F455yw1p9Lq50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778959; c=relaxed/simple;
-	bh=y2c4WUsxOpNDp4beAtgzMXJX1qWuTKqm+L0tnJXzN3g=;
+	s=arc-20240116; t=1764778962; c=relaxed/simple;
+	bh=gAdjYkGhJKlI+hTizF/rIny4/VnJA3K8pqqBsIQRnWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tiixAaoEVCxtOe2fUoVJSmilQ81bxOqR221ElKsrRQ+vW6uYAlqJTi/Y4TXx++tovHf9myKqqcQ5PzLJ3bvIzruMA7ktNizh3H8ce5KwbGSzy4oBoulFvVr0D+QR6OWk+nP6jyW9kT/AV8Rd6/HOFdN4qo5mhps4Xql/+QHzeaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nks6jtkk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FlYPqjBapKOLctA29pYni0zMhCh3WWlGo2b87UWGN8Q1Qt+guDvqEr2hmd4/5xa+KsbRcAFZB07cMzc82a6ZoMxr+jaY7DLsi5kfjJB1/cBi+bwckb6+0wCb33JuYcH0Cu9XBtFcRGCaixzxY4+xgYDu4tjXh2bECX2TjvNrzqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK+qW/Tx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nks6jtkk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 840BDC4CEF5;
-	Wed,  3 Dec 2025 16:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK+qW/Tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F14C4CEF5;
+	Wed,  3 Dec 2025 16:22:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778959;
-	bh=y2c4WUsxOpNDp4beAtgzMXJX1qWuTKqm+L0tnJXzN3g=;
+	s=korg; t=1764778962;
+	bh=gAdjYkGhJKlI+hTizF/rIny4/VnJA3K8pqqBsIQRnWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nks6jtkkJUCA9K030xYiARfkmar2reAijR5+rgksPYpr5ysRZlkGMAE+hte6stiEb
-	 /kFj956ke5nDIAKegKBMRT2uUaQJpCiCX0+s0qLIxRoysNg/vUMKA4XCHT4GIJ+0aS
-	 hd2EqUZtupaa40rH/UpL64OkWRnSYKFab/pKGD0w=
+	b=PK+qW/TxTQ6L6z7klm9zjWAVwzTP5DB/EehDpD/xzqqp6TTtygvOMus3IHybLtqaC
+	 YocTy7WVKOZnxomMenkCExefmF15+0K2ocLsVq8KssdTN4OBrWsAX4evcJGb2sYDjw
+	 E6SJOrQE+UNejE5zL95dkX1fhnv+PUoZpGUGluNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Svyatoslav Ryhel <clamor95@gmail.com>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Kaushlendra Kumar <kaushlendra.kumar@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/568] video: backlight: lp855x_bl: Set correct EPROM start for LP8556
-Date: Wed,  3 Dec 2025 16:21:55 +0100
-Message-ID: <20251203152444.874800895@linuxfoundation.org>
+Subject: [PATCH 6.1 114/568] tools/cpupower: fix error return value in cpupower_write_sysfs()
+Date: Wed,  3 Dec 2025 16:21:56 +0100
+Message-ID: <20251203152444.910855324@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,35 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Svyatoslav Ryhel <clamor95@gmail.com>
+From: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
 
-[ Upstream commit 07c7efda24453e05951fb2879f5452b720b91169 ]
+[ Upstream commit 57b100d4cf14276e0340eecb561005c07c129eb8 ]
 
-According to LP8556 datasheet EPROM region starts at 0x98 so adjust value
-in the driver accordingly.
+The cpupower_write_sysfs() function currently returns -1 on
+write failure, but the function signature indicates it should
+return an unsigned int. Returning -1 from an unsigned function
+results in a large positive value rather than indicating
+an error condition.
 
-Signed-off-by: Svyatoslav Ryhel <clamor95@gmail.com>
-Reviewed-by: "Daniel Thompson (RISCstar)" <danielt@kernel.org>
-Link: https://lore.kernel.org/r/20250909074304.92135-2-clamor95@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fix this by returning 0 on failure, which is more appropriate
+for an unsigned return type and maintains consistency with typical
+success/failure semantics where 0 indicates failure and non-zero
+indicates success (bytes written).
+
+Link: https://lore.kernel.org/r/20250828063000.803229-1-kaushlendra.kumar@intel.com
+Signed-off-by: Kaushlendra Kumar <kaushlendra.kumar@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/backlight/lp855x_bl.c | 2 +-
+ tools/power/cpupower/lib/cpupower.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/backlight/lp855x_bl.c b/drivers/video/backlight/lp855x_bl.c
-index bd0bdeae23a4f..7e6d252313b7d 100644
---- a/drivers/video/backlight/lp855x_bl.c
-+++ b/drivers/video/backlight/lp855x_bl.c
-@@ -22,7 +22,7 @@
- #define LP855X_DEVICE_CTRL		0x01
- #define LP855X_EEPROM_START		0xA0
- #define LP855X_EEPROM_END		0xA7
--#define LP8556_EPROM_START		0xA0
-+#define LP8556_EPROM_START		0x98
- #define LP8556_EPROM_END		0xAF
+diff --git a/tools/power/cpupower/lib/cpupower.c b/tools/power/cpupower/lib/cpupower.c
+index 3f7d0c0c50676..0e29365e23a59 100644
+--- a/tools/power/cpupower/lib/cpupower.c
++++ b/tools/power/cpupower/lib/cpupower.c
+@@ -48,7 +48,7 @@ unsigned int cpupower_write_sysfs(const char *path, char *buf, size_t buflen)
+ 	if (numwritten < 1) {
+ 		perror(path);
+ 		close(fd);
+-		return -1;
++		return 0;
+ 	}
  
- /* LP8555/7 Registers */
+ 	close(fd);
 -- 
 2.51.0
 
