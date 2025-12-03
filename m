@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B86C31352C;
-	Wed,  3 Dec 2025 16:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DAD320CAC;
+	Wed,  3 Dec 2025 16:03:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777818; cv=none; b=knbwPOxrl3vqb6llLSq7yu19t91bQ4xQNAIJH7+1iLtr8bL0n/J7zjs0jdMqO/JtKVjKwiQmBs1dkkfBZ3ACvBUtYC26QSEwSlL2o+cviapSDvM428ZAqv18S8mhxKkiPbWHWEB348aWH+GWuXbcHjLgqikQy2r6o45r7cvqXSI=
+	t=1764777821; cv=none; b=oFSG7Ew06YmxiKWvUQq7IZZi4Cr0aWPGmPeqhLrhgZriNRhkrJTdkIhW2HHlkpKVXsPawo2fJzfLC6CGvW2pHWTAdzM274xNcwaFzAtz5PQj/LdwKL5rWzJwXO6Ap0+T5I3gyzgTenWxiNL8OtgFBl9wapKtKO1n8evro9oMdKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777818; c=relaxed/simple;
-	bh=wn/abU0bahT7Wf56sRxS9ejtZEiv3awvShuzJ1A4s6w=;
+	s=arc-20240116; t=1764777821; c=relaxed/simple;
+	bh=mOBp4Uw1+DqVD0kaDXEJedM0XrlR7xhyrYsPi813VvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oBxIRgGiuzGnwTavtVGiWaaev9sITDm9mHsKK+13Q7d7uraayZLQ0d8qLDwFHQm+zMILjfH0bl1f5Cl9iHQjpTn/8lb9C9JH0sHKqccnd2sbOfFhn7mlWvejybJ3iFbhOOh82pqGuLwwlkaEAloPOgifPOIiuJJ9xHhqVJ5Rpi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oucD0o82; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PubnZ84we18b1Km3FYWBpsb449kwsW5UxgjMg3SWtO1g0/zPm8vmaE6TsmTxzA6TB3Vr1apauZDAEAkOZqVPYs8QsMS5sJZJ54Dz4EjrMfTQT9gCD6L8MfhtYA2G7N4dvTc57o/UmN+9xQIdiELitIeWQ6ei4ORxh2xKGUPTwA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDsnFM/1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oucD0o82"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A062C4CEF5;
-	Wed,  3 Dec 2025 16:03:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDsnFM/1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B957AC4CEF5;
+	Wed,  3 Dec 2025 16:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777818;
-	bh=wn/abU0bahT7Wf56sRxS9ejtZEiv3awvShuzJ1A4s6w=;
+	s=korg; t=1764777821;
+	bh=mOBp4Uw1+DqVD0kaDXEJedM0XrlR7xhyrYsPi813VvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oucD0o82Y2imlOcPOkOTh07mlRF7m3jXatztJtWzjFgUSC/unR65Hj3EVOMVOK/CF
-	 88gwE/gBcgZZfn3CN3BxPFrPfHvRbewGh2b3WFVhgevg9+8EKKU8NhYWfWBQsoMbLK
-	 8AGsaDN6gZwLQVVya5PpSfOsgn+24kwu9oIVq2vs=
+	b=aDsnFM/12R5kMAu7h9ZZTq1PoTSdoyKkAyuge8eVGnucCk9N2LScir/Z4/lWtX128
+	 GY1ovUrnvsYU0PeMZOh1vUud5ymZWw0OxsJR3YTJ2Pkyn6L/TIHb9+oMknFFppMf2L
+	 kWOPH9aWPXosKGxNZFJWQ1rFnWeg0AkikCfjqSfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nai-Chen Cheng <bleach1827@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 156/392] selftests/Makefile: include $(INSTALL_DEP_TARGETS) in clean target to clean net/lib dependency
-Date: Wed,  3 Dec 2025 16:25:06 +0100
-Message-ID: <20251203152419.820802926@linuxfoundation.org>
+Subject: [PATCH 5.15 157/392] scsi: lpfc: Check return status of lpfc_reset_flush_io_context during TGT_RESET
+Date: Wed,  3 Dec 2025 16:25:07 +0100
+Message-ID: <20251203152419.858073316@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,41 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nai-Chen Cheng <bleach1827@gmail.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-[ Upstream commit d3f7457da7b9527a06dbcbfaf666aa51ac2eeb53 ]
+[ Upstream commit f408dde2468b3957e92b25e7438f74c8e9fb9e73 ]
 
-The selftests 'make clean' does not clean the net/lib because it only
-processes $(TARGETS) and ignores $(INSTALL_DEP_TARGETS). This leaves
-compiled objects in net/lib after cleaning, requiring manual cleanup.
+If lpfc_reset_flush_io_context fails to execute, then the wrong return
+status code may be passed back to upper layers when issuing a target
+reset TMF command.  Fix by checking the return status from
+lpfc_reset_flush_io_context() first in order to properly return FAILED
+or FAST_IO_FAIL.
 
-Include $(INSTALL_DEP_TARGETS) in clean target to ensure net/lib
-dependency is properly cleaned.
-
-Signed-off-by: Nai-Chen Cheng <bleach1827@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Simon Horman <horms@kernel.org> # build-tested
-Acked-by: Shuah Khan <skhan@linuxfoundation.org>
-Link: https://patch.msgid.link/20250910-selftests-makefile-clean-v1-1-29e7f496cd87@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Message-ID: <20250915180811.137530-7-justintee8345@gmail.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_scsi.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/Makefile b/tools/testing/selftests/Makefile
-index c16e4da988257..8b71b7958effc 100644
---- a/tools/testing/selftests/Makefile
-+++ b/tools/testing/selftests/Makefile
-@@ -260,7 +260,7 @@ gen_tar: install
- 	@echo "Created ${TAR_PATH}"
+diff --git a/drivers/scsi/lpfc/lpfc_scsi.c b/drivers/scsi/lpfc/lpfc_scsi.c
+index 520491a8b56e6..d97bc6445e9e3 100644
+--- a/drivers/scsi/lpfc/lpfc_scsi.c
++++ b/drivers/scsi/lpfc/lpfc_scsi.c
+@@ -6268,7 +6268,7 @@ lpfc_chk_tgt_mapped(struct lpfc_vport *vport, struct scsi_cmnd *cmnd)
+ /**
+  * lpfc_reset_flush_io_context -
+  * @vport: The virtual port (scsi_host) for the flush context
+- * @tgt_id: If aborting by Target contect - specifies the target id
++ * @tgt_id: If aborting by Target context - specifies the target id
+  * @lun_id: If aborting by Lun context - specifies the lun id
+  * @context: specifies the context level to flush at.
+  *
+@@ -6434,8 +6434,14 @@ lpfc_target_reset_handler(struct scsi_cmnd *cmnd)
+ 			pnode->nlp_fcp_info &= ~NLP_FCP_2_DEVICE;
+ 			spin_unlock_irqrestore(&pnode->lock, flags);
+ 		}
+-		lpfc_reset_flush_io_context(vport, tgt_id, lun_id,
+-					  LPFC_CTX_TGT);
++		status = lpfc_reset_flush_io_context(vport, tgt_id, lun_id,
++						     LPFC_CTX_TGT);
++		if (status != SUCCESS) {
++			lpfc_printf_vlog(vport, KERN_ERR, LOG_FCP,
++					 "0726 Target Reset flush status x%x\n",
++					 status);
++			return status;
++		}
+ 		return FAST_IO_FAIL;
+ 	}
  
- clean:
--	@for TARGET in $(TARGETS); do \
-+	@for TARGET in $(TARGETS) $(INSTALL_DEP_TARGETS); do \
- 		BUILD_TARGET=$$BUILD/$$TARGET;	\
- 		$(MAKE) OUTPUT=$$BUILD_TARGET -C $$TARGET clean;\
- 	done;
+@@ -6620,7 +6626,7 @@ lpfc_host_reset_handler(struct scsi_cmnd *cmnd)
+ 	int rc, ret = SUCCESS;
+ 
+ 	lpfc_printf_vlog(vport, KERN_ERR, LOG_FCP,
+-			 "3172 SCSI layer issued Host Reset Data:\n");
++			 "3172 SCSI layer issued Host Reset\n");
+ 
+ 	lpfc_offline_prep(phba, LPFC_MBX_WAIT);
+ 	lpfc_offline(phba);
 -- 
 2.51.0
 
