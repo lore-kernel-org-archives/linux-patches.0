@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E65939A27B;
-	Wed,  3 Dec 2025 16:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6568E255F2D;
+	Wed,  3 Dec 2025 16:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780823; cv=none; b=DT/Avg2MIT59sRz2r0/7z6vWX7/OWmXKg6bh1P79h2JNxbqdEi9axPTnbuNWyRBMVJJfvnRdqkQwVVmbwth//qbWXPC5gmE1YFvbiVtcUTUIkEHZWPRUZU+Y1YOFYSEHkBXxvcNlB4afGns9Rl/mjIw3CP4vuCbmpu0css4N/QU=
+	t=1764780826; cv=none; b=QVGPcGXnb9S29qel3sZ/xULuIxZGNpO8C4HgSLLYQU37UMnx7OF20UIqcHW2w8gjKRSdujmIZqehtTrCftUvbDsTzEc+17ySAJfIObRqw2Eelu8ugqPdcc8dKCyspia/xLU/FIf5MxHXEBuf333Q4IE/uGIN9sKjp1X/7v6rkzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780823; c=relaxed/simple;
-	bh=9bbMl+VR//pz9hOQjx6eQmrkN9HOBfIlgGzUTjpvhbg=;
+	s=arc-20240116; t=1764780826; c=relaxed/simple;
+	bh=8APOHNfaa1KZAJekPXjoQvS6ferYjyAlC3fhoOCluEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkZEAfd/3XNKhyJ/Lb2TaW8qllsFOCkhcyWBp7yDu3ZAEwcJqP0H61vJrog7nxlohM2pWlI7Gw4ih7xEVW56jsyXni6XIJtDkCt0ujOP9yiPBIomHeBFHll4Qd0hFVkgcIyGfx+QCO/bQpnGo2pX6T73IypKLA1QDtV8oLzIxDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCooicbO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJbnpkAYT5c3QX6jCguc9kG5n6hEkxy8PenhfmrvW5ubNUX5i9+cyk4gByEGI5hcsnLulUZ67sj27WSgXjNNXB1PIBKAC/knaltWcpLP+uwjqahPmmMOwWYoz9u8VUUuxebkt7Bk9y4hXSXw1HW5FT2KU+cQyZthUGp+Y3LYH1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MgFhxOsQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCooicbO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BD4C4CEF5;
-	Wed,  3 Dec 2025 16:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MgFhxOsQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D90FFC4CEF5;
+	Wed,  3 Dec 2025 16:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780822;
-	bh=9bbMl+VR//pz9hOQjx6eQmrkN9HOBfIlgGzUTjpvhbg=;
+	s=korg; t=1764780826;
+	bh=8APOHNfaa1KZAJekPXjoQvS6ferYjyAlC3fhoOCluEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCooicbOdhHsynfIRQRzS0DF0jGewx2owWxjV2cYXbB4YpvmzCu1iBCT58bZWhdNo
-	 rpPJugeBgCFT9PG7o3t9Uh/xqz+hfyHWZJlplbYBYQMrBrIG6aOOxUz0ReNnA0rlNt
-	 kBsSyw4/v1w6TyFjKg/YJx9owOlDtX+njgks+1ys=
+	b=MgFhxOsQyQCILirM0pRgU+oWmCGjgEf4mmHiHs4iGJwZ8ZK4SHnJxMytXU3Pp6ukb
+	 7cdKetOJxun2YNJw321G60VKSRQFdCsUChaqFaMElC4DQxRP0cankxwHuNuRnBqd5+
+	 qHUMFUMGU+0HzDxXm+wiK9K5S/SkZJOfaD+5Gkic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jun Li <jun.li@nxp.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
 	Frank Li <Frank.Li@nxp.com>,
-	Alexander Dahl <ada@thorsis.com>,
 	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.12 067/132] arm64: dts: imx8dxl-ss-conn: swap interrupts number of eqos
-Date: Wed,  3 Dec 2025 16:29:06 +0100
-Message-ID: <20251203152345.779604914@linuxfoundation.org>
+Subject: [PATCH 6.12 068/132] arm64: dts: imx8qm-mek: fix mux-controller select/enable-gpios polarity
+Date: Wed,  3 Dec 2025 16:29:07 +0100
+Message-ID: <20251203152345.816488367@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,38 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit 5b6677d6451bbbac3b6ab93fae6506b59e2c19bd upstream.
+commit e89ee35567d3d465ef0715953170be72f5ef1d4c upstream.
 
-Swap interrupt numbers of eqos because the below commit just swap
-interrupt-names and missed swap interrupts also.
+According to the board design, set SEL to high means flipped
+connection (TX2/RX2). And the TCPM will output logical 1 if it needs
+flipped connection. So switch to active high for select-gpios.
+The EN pin on mux chip is low active, so switch to active low for
+enable-gpios too.
 
-The driver (drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c) use
-interrupt-names to get irq numbers.
-
-Fixes: f29c19a6e488 ("arm64: dts: imx8dxl-ss-conn: Fix Ethernet interrupt-names order")
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Tested-by: Alexander Dahl <ada@thorsis.com>
+Fixes: b237975b2cd5 ("arm64: dts: imx8qm-mek: add usb 3.0 and related type C nodes")
 Cc: stable@vger.kernel.org
+Reviewed-by: Jun Li <jun.li@nxp.com>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi |    4 ++--
+ arch/arm64/boot/dts/freescale/imx8qm-mek.dts |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi
-@@ -27,8 +27,8 @@
- 		compatible = "nxp,imx8dxl-dwmac-eqos", "snps,dwmac-5.10a";
- 		reg = <0x5b050000 0x10000>;
- 		interrupt-parent = <&gic>;
--		interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
--			     <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupts = <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
-+			     <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
- 		interrupt-names = "macirq", "eth_wake_irq";
- 		clocks = <&eqos_lpcg IMX_LPCG_CLK_4>,
- 			 <&eqos_lpcg IMX_LPCG_CLK_6>,
+--- a/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qm-mek.dts
+@@ -114,8 +114,8 @@
+ 		compatible = "nxp,cbdtu02043", "gpio-sbu-mux";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_typec_mux>;
+-		select-gpios = <&lsio_gpio4 6 GPIO_ACTIVE_LOW>;
+-		enable-gpios = <&lsio_gpio4 19 GPIO_ACTIVE_HIGH>;
++		select-gpios = <&lsio_gpio4 6 GPIO_ACTIVE_HIGH>;
++		enable-gpios = <&lsio_gpio4 19 GPIO_ACTIVE_LOW>;
+ 		orientation-switch;
+ 
+ 		port {
 
 
