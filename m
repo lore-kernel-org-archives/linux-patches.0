@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB4FC350D60;
-	Wed,  3 Dec 2025 17:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF5F3502AC;
+	Wed,  3 Dec 2025 17:00:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781205; cv=none; b=dZGuwLf6gqahRP75P5+D+wynVUfw1IY8++6PtZDVxterMuFIqDe08FZYrNKBkZcII4P2Sf7+CpC63eVlEp6/hEH8Y3k1Oixw6PcLuFLAI2mFgodtIx1iwqyVyQ5QlLqn5ADxTNVK/FUJ4DZQSt5vjt18H6EeFmTyYy/IuZCV9E4=
+	t=1764781207; cv=none; b=dmfDRmjLwEcTCZd4UIsm80TGFhwUhKdCdTO3+YpqJ0Nmq+dQT9FMmbrTLkWV628eI7cI828Aj3/+hgB3dx7AlmoDObYeEN+FwNslxRGX52ErBI/rmYrW5OYkDa+XA0XW0fzsl8k5XiUgroj9DCT8BfCLi3I2h6FJy5iBege0C20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781205; c=relaxed/simple;
-	bh=H1dsj1s/vE7eHD1S9UAtCxf8EtgFhGtpcxyYzpsJ0DY=;
+	s=arc-20240116; t=1764781207; c=relaxed/simple;
+	bh=Yi4JABfcsfQNuagwZM1txBq8J2KmMOek0H7UisARtlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TdGm7XYWwmWT+S1gU+b11YAskrr/1w8yWYH5jcv+oABG2W3qH+ves4tTsQmGSbFj/zwVOcn3eJClARlpVzxt4EmU0fJh6pjpfcTZj3EOSXP2Tkls/hsc6JMHxyCMnlzyWT4gRbj3g8141Oh4vKcoDA4nk5L4i8jZ28Mn2R6I0+A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUv/4mUp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7IVcKcdUkfnNnUHjlLFUvRHWP/CEKbRBoOYsjmspuiP5qVfjFOkk4yrggNEM+1seAxBlZVF26Hze6rELxkK+anp37BokPvNOTvZbPJ0pwp8mUUaSNijdQcZm8I068SHJb4ktUvAV+rmgEOtqG7Jw673xQD5Ts57/rgrWsdqdwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOEBhCQW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUv/4mUp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8277AC4CEF5;
-	Wed,  3 Dec 2025 17:00:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOEBhCQW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3991CC4CEF5;
+	Wed,  3 Dec 2025 17:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781203;
-	bh=H1dsj1s/vE7eHD1S9UAtCxf8EtgFhGtpcxyYzpsJ0DY=;
+	s=korg; t=1764781206;
+	bh=Yi4JABfcsfQNuagwZM1txBq8J2KmMOek0H7UisARtlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUv/4mUpEkbyuEvBkbRJi0V4d1Aq1AMSBU9AlYLv4CnJgXBgqQPRe//K53wBrJL+n
-	 1ZdkRiAPyfgUK6tK+sEVLxzODMs+XgQgHhkK5xurbuYESK9SsNVwiwyir65Dcavvfk
-	 em2uFN7xTlWuQCz7tiXVjnNnG84vHtX2z+JPOqg0=
+	b=SOEBhCQWtEbCmU9gWKvv23Va9Mq5RoCAhB58teBvk7E3henzY9ZEDVCYK8Umn5SEL
+	 9D4W9W6w/ZO8dO59SwfuicjEItg9jeTOc/Ir3d8gZjGCPtrWTPyy8UC+0D39ooLHUQ
+	 vmtBCpZRsWggan4wOtybu0/kl8ZFYtd8unvnugDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>
-Subject: [PATCH 6.6 55/93] serial: amba-pl011: prefer dma_mapping_error() over explicit address checking
-Date: Wed,  3 Dec 2025 16:29:48 +0100
-Message-ID: <20251203152338.558043312@linuxfoundation.org>
+	Jimmy Hu <hhhuuu@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 82/93] usb: gadget: udc: fix use-after-free in usb_gadget_state_work
+Date: Wed,  3 Dec 2025 16:30:15 +0100
+Message-ID: <20251203152339.554726938@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,41 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Jimmy Hu <hhhuuu@google.com>
 
-commit eb4917f557d43c7a1c805dd73ffcdfddb2aba39a upstream.
+[ Upstream commit baeb66fbd4201d1c4325074e78b1f557dff89b5b ]
 
-Check for returned DMA addresses using specialized dma_mapping_error()
-helper which is generally recommended for this purpose by
-Documentation/core-api/dma-api.rst:
+A race condition during gadget teardown can lead to a use-after-free
+in usb_gadget_state_work(), as reported by KASAN:
 
-  "In some circumstances dma_map_single(), ...
-will fail to create a mapping. A driver can check for these errors
-by testing the returned DMA address with dma_mapping_error()."
+  BUG: KASAN: invalid-access in sysfs_notify+0x2c/0xd0
+  Workqueue: events usb_gadget_state_work
 
-Found via static analysis and this is similar to commit fa0308134d26
-("ALSA: memalloc: prefer dma_mapping_error() over explicit address checking")
+The fundamental race occurs because a concurrent event (e.g., an
+interrupt) can call usb_gadget_set_state() and schedule gadget->work
+at any time during the cleanup process in usb_del_gadget().
 
-Fixes: 58ac1b379979 ("ARM: PL011: Fix DMA support")
+Commit 399a45e5237c ("usb: gadget: core: flush gadget workqueue after
+device removal") attempted to fix this by moving flush_work() to after
+device_del(). However, this does not fully solve the race, as a new
+work item can still be scheduled *after* flush_work() completes but
+before the gadget's memory is freed, leading to the same use-after-free.
+
+This patch fixes the race condition robustly by introducing a 'teardown'
+flag and a 'state_lock' spinlock to the usb_gadget struct. The flag is
+set during cleanup in usb_del_gadget() *before* calling flush_work() to
+prevent any new work from being scheduled once cleanup has commenced.
+The scheduling site, usb_gadget_set_state(), now checks this flag under
+the lock before queueing the work, thus safely closing the race window.
+
+Fixes: 5702f75375aa9 ("usb: gadget: udc-core: move sysfs_notify() to a workqueue")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Link: https://patch.msgid.link/20251027092053.87937-1-linmq006@gmail.com
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
+Link: https://patch.msgid.link/20251023054945.233861-1-hhhuuu@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/amba-pl011.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/core.c |   17 ++++++++++++++++-
+ include/linux/usb/gadget.h    |    5 +++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -636,7 +636,7 @@ static int pl011_dma_tx_refill(struct ua
- 	dmatx->len = count;
- 	dmatx->dma = dma_map_single(dma_dev->dev, dmatx->buf, count,
- 				    DMA_TO_DEVICE);
--	if (dmatx->dma == DMA_MAPPING_ERROR) {
-+	if (dma_mapping_error(dma_dev->dev, dmatx->dma)) {
- 		uap->dmatx.queued = false;
- 		dev_dbg(uap->port.dev, "unable to map TX DMA\n");
- 		return -EBUSY;
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -1121,8 +1121,13 @@ static void usb_gadget_state_work(struct
+ void usb_gadget_set_state(struct usb_gadget *gadget,
+ 		enum usb_device_state state)
+ {
++	unsigned long flags;
++
++	spin_lock_irqsave(&gadget->state_lock, flags);
+ 	gadget->state = state;
+-	schedule_work(&gadget->work);
++	if (!gadget->teardown)
++		schedule_work(&gadget->work);
++	spin_unlock_irqrestore(&gadget->state_lock, flags);
+ 	trace_usb_gadget_set_state(gadget, 0);
+ }
+ EXPORT_SYMBOL_GPL(usb_gadget_set_state);
+@@ -1356,6 +1361,8 @@ static void usb_udc_nop_release(struct d
+ void usb_initialize_gadget(struct device *parent, struct usb_gadget *gadget,
+ 		void (*release)(struct device *dev))
+ {
++	spin_lock_init(&gadget->state_lock);
++	gadget->teardown = false;
+ 	INIT_WORK(&gadget->work, usb_gadget_state_work);
+ 	gadget->dev.parent = parent;
+ 
+@@ -1530,6 +1537,7 @@ EXPORT_SYMBOL_GPL(usb_add_gadget_udc);
+ void usb_del_gadget(struct usb_gadget *gadget)
+ {
+ 	struct usb_udc *udc = gadget->udc;
++	unsigned long flags;
+ 
+ 	if (!udc)
+ 		return;
+@@ -1543,6 +1551,13 @@ void usb_del_gadget(struct usb_gadget *g
+ 	kobject_uevent(&udc->dev.kobj, KOBJ_REMOVE);
+ 	sysfs_remove_link(&udc->dev.kobj, "gadget");
+ 	device_del(&gadget->dev);
++	/*
++	 * Set the teardown flag before flushing the work to prevent new work
++	 * from being scheduled while we are cleaning up.
++	 */
++	spin_lock_irqsave(&gadget->state_lock, flags);
++	gadget->teardown = true;
++	spin_unlock_irqrestore(&gadget->state_lock, flags);
+ 	flush_work(&gadget->work);
+ 	ida_free(&gadget_id_numbers, gadget->id_number);
+ 	cancel_work_sync(&udc->vbus_work);
+--- a/include/linux/usb/gadget.h
++++ b/include/linux/usb/gadget.h
+@@ -374,6 +374,9 @@ struct usb_gadget_ops {
+  *	can handle. The UDC must support this and all slower speeds and lower
+  *	number of lanes.
+  * @state: the state we are now (attached, suspended, configured, etc)
++ * @state_lock: Spinlock protecting the `state` and `teardown` members.
++ * @teardown: True if the device is undergoing teardown, used to prevent
++ *	new work from being scheduled during cleanup.
+  * @name: Identifies the controller hardware type.  Used in diagnostics
+  *	and sometimes configuration.
+  * @dev: Driver model state for this abstract device.
+@@ -449,6 +452,8 @@ struct usb_gadget {
+ 	enum usb_ssp_rate		max_ssp_rate;
+ 
+ 	enum usb_device_state		state;
++	spinlock_t			state_lock;
++	bool				teardown;
+ 	const char			*name;
+ 	struct device			dev;
+ 	unsigned			isoch_delay;
 
 
