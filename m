@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78188346FC8;
-	Wed,  3 Dec 2025 16:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0060346FC8;
+	Wed,  3 Dec 2025 16:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778321; cv=none; b=BRfAYYvWKgxveSKM6r3iadXgcfZDjTYV4E8U+MKvfqdsNlpLexZTPxZc4Gl0u7Yj1aoJSPk7eiMUblN20pQ8dBmw3t/FcO5BViNLKaRYVmDtZMaF4g7unT/tKPS03OEmMHCnHLHYxutgkCA/KXre0ZZYglbrdJ2fUvX8nwAIs4U=
+	t=1764778324; cv=none; b=jxviOqqbJbVH5/HY4DllbVvpZlGuFqhqsOBd0uVGwytnMb7nQmESupV97EGwvmqfAymVX+4aGas4gwaPa3BIP7sk9H5ddqvpEJFU3XLhdmSYlp0fYmYOlSlINMdwWysMfb74SHV2X5Fen7upI6Q5Tx12g2umPTo42vQ0Iz7l5S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778321; c=relaxed/simple;
-	bh=xiw+mDpvVTlx4y7XmT2i+/M9Um7ikQt9X3BGj6TyyZs=;
+	s=arc-20240116; t=1764778324; c=relaxed/simple;
+	bh=4GFr5Wgtt/QYjDHD9vZ6z3ilRbBg+PKhdMJevVbVdD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f7GTMDgj+/l0kCpPgh/2yxl7pDi1H2lUITYvkQcReKawqeDgMs0IghhsVgj2kLVADEy71E5KAHSIceX0oINYktdgjugf2cbrGi1p18uOwBjfAUhu+dPNJ4w+GZ1GmPqsHZgu85BPVPp/KOUzLIPEnS4kecu769Iv1T0p58/BXgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULDuH1ic; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGT30m19dffolbYro5Z6pyEtLRRj9MRseTLFU72N02Kd9wjPQyCX6gKQV1cSBst3SlSgYxDVaRWojyP86Mlt4OUvbKK0owJ0aDGx/372TTcw0OTmmm0OvFY9h/Do43oPMRBUioaSobJTyztvkwaOVs1k7XCliMbFzJK8tTOxJtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cNLLUiXC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULDuH1ic"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5602C4CEF5;
-	Wed,  3 Dec 2025 16:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cNLLUiXC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2465EC4CEF5;
+	Wed,  3 Dec 2025 16:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778321;
-	bh=xiw+mDpvVTlx4y7XmT2i+/M9Um7ikQt9X3BGj6TyyZs=;
+	s=korg; t=1764778324;
+	bh=4GFr5Wgtt/QYjDHD9vZ6z3ilRbBg+PKhdMJevVbVdD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULDuH1iciasril9mWUYiKKvRjwwNOrRx4wJIdaaejDnRTbX96E/vLPZzFSR7TVKSz
-	 RwndTVm1WT9LeuBckBWMUcc1uh3jAcbSEK2WN7DJtPZqhR/PFAUy5V3rcj74n2M5ff
-	 KJgk2mxRHRnUoHT9+TPkhn9en6f+AAodFa80L2Ss=
+	b=cNLLUiXChMZKzw00b4Tz0V4iXXlXASasml3UouV+Z75Y5F+FQIAopDiBILAAaC51Q
+	 kQKloj6klp+0fw1+RkWBf3WyRwpfHo2PTO8AnZI8W/fQCBXl1cBmKIVF+YONLwkJEI
+	 q+9TuRAI7PGtZnUwg4tmgCdY9y2d/a0/R63fBPBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 277/392] spi: Try to get ACPI GPIO IRQ earlier
-Date: Wed,  3 Dec 2025 16:27:07 +0100
-Message-ID: <20251203152424.356157705@linuxfoundation.org>
+	Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 5.15 278/392] EDAC/altera: Handle OCRAM ECC enable after warm reset
+Date: Wed,  3 Dec 2025 16:27:08 +0100
+Message-ID: <20251203152424.392631391@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,55 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hansg@kernel.org>
+From: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
 
-commit 3cd2018e15b3d66d2187d92867e265f45ad79e6f upstream.
+commit fd3ecda38fe0cb713d167b5477d25f6b350f0514 upstream.
 
-Since commit d24cfee7f63d ("spi: Fix acpi deferred irq probe"), the
-acpi_dev_gpio_irq_get() call gets delayed till spi_probe() is called
-on the SPI device.
+The OCRAM ECC is always enabled either by the BootROM or by the Secure Device
+Manager (SDM) during a power-on reset on SoCFPGA.
 
-If there is no driver for the SPI device then the move to spi_probe()
-results in acpi_dev_gpio_irq_get() never getting called. This may
-cause problems by leaving the GPIO pin floating because this call is
-responsible for setting up the GPIO pin direction and/or bias according
-to the values from the ACPI tables.
+However, during a warm reset, the OCRAM content is retained to preserve data,
+while the control and status registers are reset to their default values. As
+a result, ECC must be explicitly re-enabled after a warm reset.
 
-Re-add the removed acpi_dev_gpio_irq_get() in acpi_register_spi_device()
-to ensure the GPIO pin is always correctly setup, while keeping the
-acpi_dev_gpio_irq_get() call added to spi_probe() to deal with
--EPROBE_DEFER returns caused by the GPIO controller not having a driver
-yet.
-
-Link: https://bbs.archlinux.org/viewtopic.php?id=302348
-Fixes: d24cfee7f63d ("spi: Fix acpi deferred irq probe")
+Fixes: 17e47dc6db4f ("EDAC/altera: Add Stratix10 OCRAM ECC support")
+Signed-off-by: Niravkumar L Rabara <niravkumarlaxmidas.rabara@altera.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251102190921.30068-1-hansg@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20251111080801.1279401-1-niravkumarlaxmidas.rabara@altera.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/edac/altera_edac.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2416,6 +2416,16 @@ static acpi_status acpi_register_spi_dev
- 	acpi_set_modalias(adev, acpi_device_hid(adev), spi->modalias,
- 			  sizeof(spi->modalias));
+--- a/drivers/edac/altera_edac.c
++++ b/drivers/edac/altera_edac.c
+@@ -1156,10 +1156,22 @@ altr_check_ocram_deps_init(struct altr_e
+ 	if (ret)
+ 		return ret;
  
+-	/* Verify OCRAM has been initialized */
 +	/*
-+	 * This gets re-tried in spi_probe() for -EPROBE_DEFER handling in case
-+	 * the GPIO controller does not have a driver yet. This needs to be done
-+	 * here too, because this call sets the GPIO direction and/or bias.
-+	 * Setting these needs to be done even if there is no driver, in which
-+	 * case spi_probe() will never get called.
++	 * Verify that OCRAM has been initialized.
++	 * During a warm reset, OCRAM contents are retained, but the control
++	 * and status registers are reset to their default values. Therefore,
++	 * ECC must be explicitly re-enabled in the control register.
++	 * Error condition: if INITCOMPLETEA is clear and ECC_EN is already set.
 +	 */
-+	if (spi->irq < 0)
-+		spi->irq = acpi_dev_gpio_irq_get(adev, 0);
-+
- 	acpi_device_set_enumerated(adev);
+ 	if (!ecc_test_bits(ALTR_A10_ECC_INITCOMPLETEA,
+-			   (base + ALTR_A10_ECC_INITSTAT_OFST)))
+-		return -ENODEV;
++			   (base + ALTR_A10_ECC_INITSTAT_OFST))) {
++		if (!ecc_test_bits(ALTR_A10_ECC_EN,
++				   (base + ALTR_A10_ECC_CTRL_OFST)))
++			ecc_set_bits(ALTR_A10_ECC_EN,
++				     (base + ALTR_A10_ECC_CTRL_OFST));
++		else
++			return -ENODEV;
++	}
  
- 	adev->power.flags.ignore_parent = true;
+ 	/* Enable IRQ on Single Bit Error */
+ 	writel(ALTR_A10_ECC_SERRINTEN, (base + ALTR_A10_ECC_ERRINTENS_OFST));
 
 
