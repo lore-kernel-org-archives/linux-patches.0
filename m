@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2F9B33A6EC;
-	Wed,  3 Dec 2025 16:56:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCCC34E74B;
+	Wed,  3 Dec 2025 16:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780968; cv=none; b=qKHwtwTNQLEQVbOIZSSjPApndHEZokJZXYARsh7LmkHFVy+hgNBWNCoat+QnVerSIxnyCX0AjnK2hgfIUZXJR0wIc5JdYqFbsPhh0I2EvgDlcHPkfAw8sy0qSt3r0T5vNs3OtaLfEGrXyLywrETxGUH740JuB35ulLmFj07RWM0=
+	t=1764780973; cv=none; b=H35NsrlBuJbQ1CN63hYu9fQu120h80o6wIq4W/FVWZoaj5UHfMIqizBcAg6MwPES0D8xH6ZAQ7sLlXv0QDntP7o92N6TGZgbbyM2WtQcFakHqf35fDRWTvRVf4Ifmc8jua3QWWYj3BjJvtIho2QBjtdRdxTjGTGWd5/kWG9Fcx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780968; c=relaxed/simple;
-	bh=qw97Go1N8RIUUSz/5I/tICF5PaUPBWPI9wO5B8HmeBU=;
+	s=arc-20240116; t=1764780973; c=relaxed/simple;
+	bh=XMEjew+5B+vsAj2AmQjb1xC442fTaRQxPNXPIks4Pqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tdf55u07pVMjRPUSi/U0NY3owElQoxmCQTuWkR/hKRrFdtGglgH45oPho9CSGUydcCyoJCSWoPBUCbHoChVL2qhAvMaR9R+uVvQJEGF8Fq5OW6AEIPFkKHrMMD3Ya0lTuMTsDo4HN+Bda9vs/CcOxgAOkFSQQiVMEXYdxyxaGmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Leka/U9P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o12zd5vD7WNmLPQIaWklWgrVenIZ/8R32RNYaESNq2Z1gQUlxtIqUtiWQxJxDbnao83/oVJnzvd3BZ/J/wahk/0XOG990REMHCyFtp5DQujzQpFqOzOI1ndlS4egr5jqWIGzgeZiQN619rutYWvl4fkKd47YHYWXIn3XoUn2ZGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y/0yOPBj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Leka/U9P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CE3C4CEF5;
-	Wed,  3 Dec 2025 16:56:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y/0yOPBj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17705C4CEF5;
+	Wed,  3 Dec 2025 16:56:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780968;
-	bh=qw97Go1N8RIUUSz/5I/tICF5PaUPBWPI9wO5B8HmeBU=;
+	s=korg; t=1764780972;
+	bh=XMEjew+5B+vsAj2AmQjb1xC442fTaRQxPNXPIks4Pqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Leka/U9Po6fnpOvoGPdXN2SBeLkdpeCnOb3pqvSNP0zto/wz51A28MKDt4DNVK5IM
-	 gkglfFIwJrMyb0n/97EWeidH6l6uAfamfmtZcRP6MdNWvkQTIELJOlOWErboub1fB+
-	 f6WsWs+7wCyzM2VH4oEU8PpBvpB2lGkTSoJivg6w=
+	b=Y/0yOPBjYafsDw3Y7AVAb/DtCUIk6sroj5IjNjYHdbnHm3JtuXtktOurlBzCj3Gja
+	 tq4GKe18qo4/fSjZypvSv+Z2VHXFkXn9QLPjQn3q6mETF5VlhZeaLKSlHd0dxpYuFh
+	 xEM4Tdb/YjH4LTW5GwTyZ0sQ16nZor+M4fTYZt+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danielle Costantino <dcostantino@meta.com>,
-	Gal Pressman <gal@nvidia.com>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 11/93] net/mlx5e: Fix validation logic in rate limiting
-Date: Wed,  3 Dec 2025 16:29:04 +0100
-Message-ID: <20251203152336.925273297@linuxfoundation.org>
+Subject: [PATCH 6.6 12/93] net: sxgbe: fix potential NULL dereference in sxgbe_rx()
+Date: Wed,  3 Dec 2025 16:29:05 +0100
+Message-ID: <20251203152336.963270372@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -52,61 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danielle Costantino <dcostantino@meta.com>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit d2099d9f16dbfa1c5266d4230ff7860047bb0b68 ]
+[ Upstream commit f5bce28f6b9125502abec4a67d68eabcd24b3b17 ]
 
-The rate limiting validation condition currently checks the output
-variable max_bw_value[i] instead of the input value
-maxrate->tc_maxrate[i]. This causes the validation to compare an
-uninitialized or stale value rather than the actual requested rate.
+Currently, when skb is null, the driver prints an error and then
+dereferences skb on the next line.
 
-The condition should check the input rate to properly validate against
-the upper limit:
+To fix this, let's add a 'break' after the error message to switch
+to sxgbe_rx_refill(), which is similar to the approach taken by the
+other drivers in this particular case, e.g. calxeda with xgmac_rx().
 
-    } else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
+Found during a code review.
 
-This aligns with the pattern used in the first branch, which correctly
-checks maxrate->tc_maxrate[i] against upper_limit_mbps.
-
-The current implementation can lead to unreliable validation behavior:
-
-- For rates between 25.5 Gbps and 255 Gbps, if max_bw_value[i] is 0
-  from initialization, the GBPS path may be taken regardless of whether
-  the actual rate is within bounds
-
-- When processing multiple TCs (i > 0), max_bw_value[i] contains the
-  value computed for the previous TC, affecting the validation logic
-
-- The overflow check for rates exceeding 255 Gbps may not trigger
-  consistently depending on previous array values
-
-This patch ensures the validation correctly examines the requested rate
-value for proper bounds checking.
-
-Fixes: 43b27d1bd88a ("net/mlx5e: Fix wraparound in rate limiting for values above 255 Gbps")
-Signed-off-by: Danielle Costantino <dcostantino@meta.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Link: https://patch.msgid.link/20251124180043.2314428-1-dcostantino@meta.com
+Fixes: 1edb9ca69e8a ("net: sxgbe: add basic framework for Samsung 10Gb ethernet driver")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251121123834.97748-1-aleksei.kodanev@bell-sw.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index 29e633e6dd3f0..e29a8ed7e7ac1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -619,7 +619,7 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
- 						  MLX5E_100MB);
- 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
- 			max_bw_unit[i]  = MLX5_100_MBPS_UNIT;
--		} else if (max_bw_value[i] <= upper_limit_gbps) {
-+		} else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
- 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
- 						  MLX5E_1GB);
- 			max_bw_unit[i]  = MLX5_GBPS_UNIT;
+diff --git a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+index 71439825ea4e0..d662679c29832 100644
+--- a/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
++++ b/drivers/net/ethernet/samsung/sxgbe/sxgbe_main.c
+@@ -1521,8 +1521,10 @@ static int sxgbe_rx(struct sxgbe_priv_data *priv, int limit)
+ 
+ 		skb = priv->rxq[qnum]->rx_skbuff[entry];
+ 
+-		if (unlikely(!skb))
++		if (unlikely(!skb)) {
+ 			netdev_err(priv->dev, "rx descriptor is not consistent\n");
++			break;
++		}
+ 
+ 		prefetch(skb->data - NET_IP_ALIGN);
+ 		priv->rxq[qnum]->rx_skbuff[entry] = NULL;
 -- 
 2.51.0
 
