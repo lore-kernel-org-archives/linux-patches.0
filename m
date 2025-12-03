@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DF135C185;
-	Wed,  3 Dec 2025 16:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1120C3596FA;
+	Wed,  3 Dec 2025 16:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779827; cv=none; b=tj2PGfiFJSoT1S10I4VOsCXY9HBqpGoo4D84gA5UMecdeoKhkaKa1pG3q0C3O4VNK/FMEv9imgfrtZBtyh3Wyt9LP6ricYKFSfShfvblxilAruMMuTXO7AjWCO23xh2cw7NtSRZqQJU8lfZMvlJEQo63yURob6XxflL68gy/3uc=
+	t=1764779831; cv=none; b=DZAMrO4VRMFy/smEZ2tVIAdfY4HHOtsTPhCwOFui/feTB3+mKZxNnbHofC3odOMfUTTnaksA4D5/XuRmbYKSEQl2XX/87ASv1RVNsYg1v5hYFK+eNxhX3wVJM3HtnC5N0etPm8Z5JfTX+5zj4rEpw6Uj5iWL06TOjyI9a0eHuxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779827; c=relaxed/simple;
-	bh=thvuptWvUX3gWb3ZnoeXMGYeEIH2g+BROnm4F9ghNgY=;
+	s=arc-20240116; t=1764779831; c=relaxed/simple;
+	bh=BrQrc2Rvx3m9pupC44PiLSdDQQrtR6V5qhNOX1t5iLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WCdMtiHUjg9sSyM6jpdhY/K4k2jwHtpBu4sS/fhrFvf5zejY/ET52zp8W72qBfgGL6Y5QbOYwFd49QkS1MiL5duPFfpek5ojLeHiP1gH8oqAKuZJ+t26r245z8UhwdxiY2a9Cbx77M8bkdsUsgKXjSjl1kLTC30etnSl+zu0CrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKvg5IKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lHJqeHmquzCvch57nu5YM531XegqiINLfaEPaO4AyggCxTTkdZGlYUACl7+ZBHFmY1toLUgyt+wE0TmCINvqHjJFgtMDbiYa7LLQjPQLxMyNVKpXaURxdpKy7YV5E6zhUU1gKKCAh8P74x53lA/VwGTNcFntCU8YzhX8N2j+0Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R6vrV75p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKvg5IKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF65C4CEF5;
-	Wed,  3 Dec 2025 16:37:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R6vrV75p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9120DC116B1;
+	Wed,  3 Dec 2025 16:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779827;
-	bh=thvuptWvUX3gWb3ZnoeXMGYeEIH2g+BROnm4F9ghNgY=;
+	s=korg; t=1764779830;
+	bh=BrQrc2Rvx3m9pupC44PiLSdDQQrtR6V5qhNOX1t5iLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKvg5IKMuPoibPaUPSxo6Z6Ll4Cka2Go71f7mM5gKzmllO9WZtBjFbQJKSpGc5UMT
-	 LbBSKglLurlKFTGP8w6xukK/bGYaC2QD4hpJdQAvMhw6L9a7CKiBwlyStUwfV278G/
-	 c2Vg9O7tzCJDsjq787r43ZvmK59kWY4HB2VgC7y0=
+	b=R6vrV75pC6tKwP4uGjToSzz4Jta2ysOWJhCg6pRotbbatKJrZgzIfLla8kNGcssBG
+	 ZS6biQXKqEXfMD4WrFRYQs3LBskSE6WvY2ZDo7uqLudgzcnv7vak6nmiVMz7JC27Zq
+	 4/ioct7lBM7JmLPaNekprSVmtUE3Sv7S5+2Up6Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
-	Nimrod Oren <noren@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 373/568] net/mlx5e: Fix potentially misleading debug message
-Date: Wed,  3 Dec 2025 16:26:15 +0100
-Message-ID: <20251203152454.359373337@linuxfoundation.org>
+Subject: [PATCH 6.1 374/568] net_sched: limit try_bulk_dequeue_skb() batches
+Date: Wed,  3 Dec 2025 16:26:16 +0100
+Message-ID: <20251203152454.396121723@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -47,66 +47,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9fcc2b6c10523f7e75db6387946c86fcf19dc97e ]
+[ Upstream commit 0345552a653ce5542affeb69ac5aa52177a5199b ]
 
-Change the debug message to print the correct units instead of always
-assuming Gbps, as the value can be in either 100 Mbps or 1 Gbps units.
+After commit 100dfa74cad9 ("inet: dev_queue_xmit() llist adoption")
+I started seeing many qdisc requeues on IDPF under high TX workload.
 
-Fixes: 5da8bc3effb6 ("net/mlx5e: DCBNL, Add debug messages log")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Nimrod Oren <noren@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1762681073-1084058-6-git-send-email-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+$ tc -s qd sh dev eth1 handle 1: ; sleep 1; tc -s qd sh dev eth1 handle 1:
+qdisc mq 1: root
+ Sent 43534617319319 bytes 268186451819 pkt (dropped 0, overlimits 0 requeues 3532840114)
+ backlog 1056Kb 6675p requeues 3532840114
+qdisc mq 1: root
+ Sent 43554665866695 bytes 268309964788 pkt (dropped 0, overlimits 0 requeues 3537737653)
+ backlog 781164b 4822p requeues 3537737653
+
+This is caused by try_bulk_dequeue_skb() being only limited by BQL budget.
+
+perf record -C120-239 -e qdisc:qdisc_dequeue sleep 1 ; perf script
+...
+ netperf 75332 [146]  2711.138269: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1292 skbaddr=0xff378005a1e9f200
+ netperf 75332 [146]  2711.138953: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1213 skbaddr=0xff378004d607a500
+ netperf 75330 [144]  2711.139631: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1233 skbaddr=0xff3780046be20100
+ netperf 75333 [147]  2711.140356: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1093 skbaddr=0xff37800514845b00
+ netperf 75337 [151]  2711.141037: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1353 skbaddr=0xff37800460753300
+ netperf 75337 [151]  2711.141877: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1367 skbaddr=0xff378004e72c7b00
+ netperf 75330 [144]  2711.142643: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1202 skbaddr=0xff3780045bd60000
+...
+
+This is bad because :
+
+1) Large batches hold one victim cpu for a very long time.
+
+2) Driver often hit their own TX ring limit (all slots are used).
+
+3) We call dev_requeue_skb()
+
+4) Requeues are using a FIFO (q->gso_skb), breaking qdisc ability to
+   implement FQ or priority scheduling.
+
+5) dequeue_skb() gets packets from q->gso_skb one skb at a time
+   with no xmit_more support. This is causing many spinlock games
+   between the qdisc and the device driver.
+
+Requeues were supposed to be very rare, lets keep them this way.
+
+Limit batch sizes to /proc/sys/net/core/dev_weight (default 64) as
+__qdisc_run() was designed to use.
+
+Fixes: 5772e9a3463b ("qdisc: bulk dequeue support for qdiscs with TCQ_F_ONETXQUEUE")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Link: https://patch.msgid.link/20251109161215.2574081-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ net/sched/sch_generic.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-index ca096d8bcca60..29e633e6dd3f0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
-@@ -590,6 +590,19 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
- 	__u64 upper_limit_mbps;
- 	__u64 upper_limit_gbps;
- 	int i;
-+	struct {
-+		int scale;
-+		const char *units_str;
-+	} units[] = {
-+		[MLX5_100_MBPS_UNIT] = {
-+			.scale = 100,
-+			.units_str = "Mbps",
-+		},
-+		[MLX5_GBPS_UNIT] = {
-+			.scale = 1,
-+			.units_str = "Gbps",
-+		},
-+	};
+diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
+index b51af871a621c..1b51b3038b4bd 100644
+--- a/net/sched/sch_generic.c
++++ b/net/sched/sch_generic.c
+@@ -178,9 +178,10 @@ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
+ static void try_bulk_dequeue_skb(struct Qdisc *q,
+ 				 struct sk_buff *skb,
+ 				 const struct netdev_queue *txq,
+-				 int *packets)
++				 int *packets, int budget)
+ {
+ 	int bytelimit = qdisc_avail_bulklimit(txq) - skb->len;
++	int cnt = 0;
  
- 	memset(max_bw_value, 0, sizeof(max_bw_value));
- 	memset(max_bw_unit, 0, sizeof(max_bw_unit));
-@@ -620,8 +633,9 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
+ 	while (bytelimit > 0) {
+ 		struct sk_buff *nskb = q->dequeue(q);
+@@ -191,8 +192,10 @@ static void try_bulk_dequeue_skb(struct Qdisc *q,
+ 		bytelimit -= nskb->len; /* covers GSO len */
+ 		skb->next = nskb;
+ 		skb = nskb;
+-		(*packets)++; /* GSO counts as one pkt */
++		if (++cnt >= budget)
++			break;
  	}
++	(*packets) += cnt;
+ 	skb_mark_not_on_list(skb);
+ }
  
- 	for (i = 0; i < IEEE_8021QAZ_MAX_TCS; i++) {
--		netdev_dbg(netdev, "%s: tc_%d <=> max_bw %d Gbps\n",
--			   __func__, i, max_bw_value[i]);
-+		netdev_dbg(netdev, "%s: tc_%d <=> max_bw %u %s\n", __func__, i,
-+			   max_bw_value[i] * units[max_bw_unit[i]].scale,
-+			   units[max_bw_unit[i]].units_str);
+@@ -226,7 +229,7 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
+  * A requeued skb (via q->gso_skb) can also be a SKB list.
+  */
+ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
+-				   int *packets)
++				   int *packets, int budget)
+ {
+ 	const struct netdev_queue *txq = q->dev_queue;
+ 	struct sk_buff *skb = NULL;
+@@ -293,7 +296,7 @@ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
+ 	if (skb) {
+ bulk:
+ 		if (qdisc_may_bulk(q))
+-			try_bulk_dequeue_skb(q, skb, txq, packets);
++			try_bulk_dequeue_skb(q, skb, txq, packets, budget);
+ 		else
+ 			try_bulk_dequeue_skb_slow(q, skb, packets);
  	}
+@@ -385,7 +388,7 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
+  *				>0 - queue is not empty.
+  *
+  */
+-static inline bool qdisc_restart(struct Qdisc *q, int *packets)
++static inline bool qdisc_restart(struct Qdisc *q, int *packets, int budget)
+ {
+ 	spinlock_t *root_lock = NULL;
+ 	struct netdev_queue *txq;
+@@ -394,7 +397,7 @@ static inline bool qdisc_restart(struct Qdisc *q, int *packets)
+ 	bool validate;
  
- 	return mlx5_modify_port_ets_rate_limit(mdev, max_bw_value, max_bw_unit);
+ 	/* Dequeue packet */
+-	skb = dequeue_skb(q, &validate, packets);
++	skb = dequeue_skb(q, &validate, packets, budget);
+ 	if (unlikely(!skb))
+ 		return false;
+ 
+@@ -412,7 +415,7 @@ void __qdisc_run(struct Qdisc *q)
+ 	int quota = READ_ONCE(dev_tx_weight);
+ 	int packets;
+ 
+-	while (qdisc_restart(q, &packets)) {
++	while (qdisc_restart(q, &packets, quota)) {
+ 		quota -= packets;
+ 		if (quota <= 0) {
+ 			if (q->flags & TCQ_F_NOLOCK)
 -- 
 2.51.0
 
