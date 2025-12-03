@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B779C393DDB;
-	Wed,  3 Dec 2025 16:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06BAE3A1D05;
+	Wed,  3 Dec 2025 16:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779555; cv=none; b=jctf/41AQUnwRoN5OjGi6dzIuhuKdCL4loefsjJeoN3WOLzaJzFFsmJWNnfeV/Fy1yUFmjxaQGFpMkOVDIUkjdtOnbO+j0eDeyvgdm9g7kqfHlZLcsSscmh/6rRglIwZzzw6RE4VXTxb+174jSP4Ora3baduQdTAkHWHG7y27BA=
+	t=1764779559; cv=none; b=NzMY6wjTRwGdda3EFhEGpvH6rRMm9qEs4KU/AfuJ8clotyInrpFCrQCsG5FZ5sVlZdkty44xuse92taUiA2x1zyrKZSA4zluDsSTtAwbfbtn5dQUeA73pB/RK1N4ocG5pPhMCmPwWWp0Qlb8ptXr5gWNjLupOGTQojoslNx1A2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779555; c=relaxed/simple;
-	bh=HF1zRSGMbYarJqBwoTV+khtecDE2uEuJ9AZLqV/yMf8=;
+	s=arc-20240116; t=1764779559; c=relaxed/simple;
+	bh=XPHdjiAcROzHoUq3ZrEtD832vpwFDo5NSxRWX1iCZLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6LaIj8FFOe0497Ob23GkpeNNww0JgyBDhvVLdz/lZqFEsKDZzxD4KlKCBDm92vZcQbbJLFCsVhtD7DQ4lIWt0NxLf8/Nhh8G9sgh9sYR8W65alN/HNNWFF55FuZazyTUKoero7EedOoRBQHJNjlLIwc/kudi4iQw2YnqaFBVmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jSZp6Pfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mrZrOGe7CfdbJrWsMBJdmwOdPjzTHMLV5dxTTwh+Opn8YH/IQZkeGS7/Up0mQeTcRpSrh0midYb4Wpud+BJ+6762tZUzaLj+PBz726I6XHZcxPFLBIiSLqh7pFsh0/M39vz1LddrsLnfdGsRtmvaqKWQ1QY5MDNxfcphZtOUALo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YoDLADK1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jSZp6Pfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD05C4CEF5;
-	Wed,  3 Dec 2025 16:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YoDLADK1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 714D9C4CEF5;
+	Wed,  3 Dec 2025 16:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779555;
-	bh=HF1zRSGMbYarJqBwoTV+khtecDE2uEuJ9AZLqV/yMf8=;
+	s=korg; t=1764779558;
+	bh=XPHdjiAcROzHoUq3ZrEtD832vpwFDo5NSxRWX1iCZLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSZp6PfcpoM+9725ztb6MIR2oyC8spY5XWQk4oGbFEHjkmQayp9xjSqx5OWwYB4FS
-	 mTZN8bCW4nQl3lXznYv6UV3xP344pGB/dh+dkoLv9WMOOaNetw9Hn0oUP2J8oVpSz8
-	 ViPTZUSuf6Qb8NErLGyJqqL1K4R82MeVF6FT0p9Y=
+	b=YoDLADK1wx4Uqvblkl1ogimgVcTFhhzB7qNY/ynC6fLOtk/5JZ5GkoBBD713zEDgy
+	 rTjBVj/WiKR5VDxIsu1deY/DTLHjCGtR8pe6PbG9CSJqb9Kcys0iTbzJt4HVCXTmyk
+	 olO5aGTU6ooA0EGsnokxJPHQciuvnhUuaCoJpxu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hoyoung Seo <hy50.seo@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/568] scsi: ufs: core: Include UTP error in INT_FATAL_ERRORS
-Date: Wed,  3 Dec 2025 16:24:55 +0100
-Message-ID: <20251203152451.434230500@linuxfoundation.org>
+Subject: [PATCH 6.1 294/568] ACPI: property: Return present device nodes only on fwnode interface
+Date: Wed,  3 Dec 2025 16:24:56 +0100
+Message-ID: <20251203152451.470212359@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,75 +53,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hoyoung Seo <hy50.seo@samsung.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit 558ae4579810fa0fef011944230c65a6f3087f85 ]
+[ Upstream commit d9f866b2bb3eec38b3734f1fed325ec7c55ccdfa ]
 
-When a UTP error occurs in isolation, UFS is not currently recoverable.
-This is because the UTP error is not considered fatal in the error
-handling code, leading to either an I/O timeout or an OCS error.
+fwnode_graph_get_next_subnode() may return fwnode backed by ACPI
+device nodes and there has been no check these devices are present
+in the system, unlike there has been on fwnode OF backend.
 
-Add the UTP error flag to INT_FATAL_ERRORS so the controller will be
-reset in this situation.
+In order to provide consistent behaviour towards callers,
+add a check for device presence by introducing
+a new function acpi_get_next_present_subnode(), used as the
+get_next_child_node() fwnode operation that also checks device
+node presence.
 
-  sd 0:0:0:0: [sda] tag#38 UNKNOWN(0x2003) Result: hostbyte=0x07
-  driverbyte=DRIVER_OK cmd_age=0s
-  sd 0:0:0:0: [sda] tag#38 CDB: opcode=0x28 28 00 00 51 24 e2 00 00 08 00
-  I/O error, dev sda, sector 42542864 op 0x0:(READ) flags 0x80700 phys_seg
-  8 prio class 2
-  OCS error from controller = 9 for tag 39
-  pa_err[1] = 0x80000010 at 2667224756 us
-  pa_err: total cnt=2
-  dl_err[0] = 0x80000002 at 2667148060 us
-  dl_err[1] = 0x80002000 at 2667282844 us
-  No record of nl_err
-  No record of tl_err
-  No record of dme_err
-  No record of auto_hibern8_err
-  fatal_err[0] = 0x804 at 2667282836 us
-
-  ---------------------------------------------------
-  		REGISTER
-  ---------------------------------------------------
-                             NAME	      OFFSET	         VALUE
-                      STD HCI SFR	  0xfffffff0	           0x0
-                             AHIT	        0x18	         0x814
-                 INTERRUPT STATUS	        0x20	        0x1000
-                 INTERRUPT ENABLE	        0x24	       0x70ef5
-
-[mkp: commit desc]
-
-Signed-off-by: Hoyoung Seo <hy50.seo@samsung.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Message-Id: <20250930061428.617955-1-hy50.seo@samsung.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20251001102636.1272722-2-sakari.ailus@linux.intel.com
+[ rjw: Kerneldoc comment and changelog edits ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/ufs/ufshci.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/property.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/include/ufs/ufshci.h b/include/ufs/ufshci.h
-index f525566a0864d..6e80ed46e44ae 100644
---- a/include/ufs/ufshci.h
-+++ b/include/ufs/ufshci.h
-@@ -123,6 +123,7 @@ static inline u32 ufshci_version(u32 major, u32 minor)
- #define UTP_TASK_REQ_COMPL			0x200
- #define UIC_COMMAND_COMPL			0x400
- #define DEVICE_FATAL_ERROR			0x800
-+#define UTP_ERROR				0x1000
- #define CONTROLLER_FATAL_ERROR			0x10000
- #define SYSTEM_BUS_FATAL_ERROR			0x20000
- #define CRYPTO_ENGINE_FATAL_ERROR		0x40000
-@@ -141,7 +142,8 @@ static inline u32 ufshci_version(u32 major, u32 minor)
- 				CONTROLLER_FATAL_ERROR |\
- 				SYSTEM_BUS_FATAL_ERROR |\
- 				CRYPTO_ENGINE_FATAL_ERROR |\
--				UIC_LINK_LOST)
-+				UIC_LINK_LOST |\
-+				UTP_ERROR)
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index 46003b642b597..9f7880cc2bd8c 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1298,6 +1298,28 @@ struct fwnode_handle *acpi_get_next_subnode(const struct fwnode_handle *fwnode,
+ 	return NULL;
+ }
  
- /* HCS - Host Controller Status 30h */
- #define DEVICE_PRESENT				0x1
++/*
++ * acpi_get_next_present_subnode - Return the next present child node handle
++ * @fwnode: Firmware node to find the next child node for.
++ * @child: Handle to one of the device's child nodes or a null handle.
++ *
++ * Like acpi_get_next_subnode(), but the device nodes returned by
++ * acpi_get_next_present_subnode() are guaranteed to be present.
++ *
++ * Returns: The fwnode handle of the next present sub-node.
++ */
++static struct fwnode_handle *
++acpi_get_next_present_subnode(const struct fwnode_handle *fwnode,
++			      struct fwnode_handle *child)
++{
++	do {
++		child = acpi_get_next_subnode(fwnode, child);
++	} while (is_acpi_device_node(child) &&
++		 !acpi_device_is_present(to_acpi_device_node(child)));
++
++	return child;
++}
++
+ /**
+  * acpi_node_get_parent - Return parent fwnode of this fwnode
+  * @fwnode: Firmware node whose parent to get
+@@ -1641,7 +1663,7 @@ static int acpi_fwnode_irq_get(const struct fwnode_handle *fwnode,
+ 		.property_read_string_array =				\
+ 			acpi_fwnode_property_read_string_array,		\
+ 		.get_parent = acpi_node_get_parent,			\
+-		.get_next_child_node = acpi_get_next_subnode,		\
++		.get_next_child_node = acpi_get_next_present_subnode,	\
+ 		.get_named_child_node = acpi_fwnode_get_named_child_node, \
+ 		.get_name = acpi_fwnode_get_name,			\
+ 		.get_name_prefix = acpi_fwnode_get_name_prefix,		\
 -- 
 2.51.0
 
