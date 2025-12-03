@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93EB634F250;
-	Wed,  3 Dec 2025 16:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FB5A350A03;
+	Wed,  3 Dec 2025 16:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778480; cv=none; b=u3nv83QnHUwyNPua+K1XMK+C6ezmifmaZ1V6P1EE+jjXqNPNzrpLJjDt1S9YV1JJ4Dp7J+M7FUq4cpPXxR5XZW3IGTrFQFwRffkCZFObPlpFOxWzrTQIbu8uO0DfnNE0nW4749DKir4HHvbHBXcehEEGOlOShLnBnGMQZFqFBvU=
+	t=1764778484; cv=none; b=jRxfQ7JvaBJzIWaUbbpMwXpt+XeNBV+rBa2qL30cbkKXzhWY+y9VC+oHglRks00zQRbmb+GYWxbjmhWx868xr518tT0pVWhcNxZPPiUqLG/aMK9sJtDIVFHjzKVTlPsdxwzi5uX+LWxgfCAvlXZhK0wSRsbqMz6CbGvt4/bkxGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778480; c=relaxed/simple;
-	bh=jzq1xZGL3ArOT0YHPQRMh1dPwlPMIN0DlV/hd8gST4s=;
+	s=arc-20240116; t=1764778484; c=relaxed/simple;
+	bh=ySWV+Up9JvPLAZ//Dc5T1Dd3K1leFdHLjyRWMf24Tts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uiHRXn5NffhvJ2Y8vvq9kriG2Pc4kOuwmVN1Dfl0L/8NR/Wkit46/pSWb6JKulBD6X0Qo0lLHIvntNrqoDooY6sRDpVmyO+G27aev/8waGgdg8VyH2xgaZiUZe4p8tsBeaF4DSIHinQafZK+7sQsdy56tuA8QFs49UXX8MbqK54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTNt0tpT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q67uWa67x4D87/4FUORN38aXgG8rW4WS+TNs5o43AmHiz4CkWOG8tvPwt9PzPfPtUsCN+jkWX1O7wQ2MIhhmBMjTZJe+itgxTthzLkCH+YFrbWyaIORgIUVtWEVC+U/ypGpmfkXr13FLXhUKrajwbLcHAZy7xYLBC/oDIsBGP6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhq9bVpW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTNt0tpT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015B9C4CEF5;
-	Wed,  3 Dec 2025 16:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhq9bVpW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDA1C4CEF5;
+	Wed,  3 Dec 2025 16:14:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778480;
-	bh=jzq1xZGL3ArOT0YHPQRMh1dPwlPMIN0DlV/hd8gST4s=;
+	s=korg; t=1764778483;
+	bh=ySWV+Up9JvPLAZ//Dc5T1Dd3K1leFdHLjyRWMf24Tts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTNt0tpTyXkfOV7ZLnqPpz6QabhObSmizJ9PI+/Z05II8xeE/LMWFifwWErMOk8C2
-	 mu82rBlf+kYBhazDlT9MdmuAcOtEk/PL3ZmCOzLeRNFjsk6CYnN8MHZi3E7VV08qGM
-	 8LSVYq8dEPyA305fAgIf00g3ItnDtkKE/OC2MDoQ=
+	b=jhq9bVpWwWmHwulNbMEFn65LgnaZH7UXl3ZHL3LY2BYmo0hdY/QqmtLtO19pe0fnQ
+	 qCEO+tC8+EBnSR6+zsrnUB19lx8WHC+7aFrETPYPA7HCjezZYHqoFiwrq8uEVyGBvB
+	 zBANGUnjGemncmwB4bJERdejXwfcoQKkjQJKO+pY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jamie Iles <jamie.iles@oss.qualcomm.com>,
-	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 5.15 359/392] drivers/usb/dwc3: fix PCI parent check
-Date: Wed,  3 Dec 2025 16:28:29 +0100
-Message-ID: <20251203152427.375681842@linuxfoundation.org>
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.15 360/392] thunderbolt: Add support for Intel Wildcat Lake
+Date: Wed,  3 Dec 2025 16:28:30 +0100
+Message-ID: <20251203152427.413032642@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,48 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Iles <jamie.iles@oss.qualcomm.com>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-commit 40f8d17eed7533ed2bbb5e3cc680049b19411b2e upstream.
+commit 3575254546a27210a4b661ea37fbbfb836c0815d upstream.
 
-The sysdev_is_parent check was being used to infer PCI devices that have
-the DMA mask set from the PCI capabilities, but sysdev_is_parent is also
-used for non-PCI ACPI devices in which case the DMA mask would be the
-bus default or as set by the _DMA method.
+Intel Wildcat Lake derives its Thunderbolt/USB4 controller from Lunar
+Lake platform. Add Wildcat Lake PCI ID to the driver list of supported
+devices.
 
-Without this fix the DMA mask would default to 32-bits and so allocation
-would fail if there was no DRAM below 4GB.
-
-Fixes: 47ce45906ca9 ("usb: dwc3: leave default DMA for PCI devices")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
-Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20251107104437.1602509-1-punit.agrawal@oss.qualcomm.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/thunderbolt/nhi.c |    2 ++
+ drivers/thunderbolt/nhi.h |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -24,6 +24,7 @@
- #include <linux/dma-mapping.h>
- #include <linux/of.h>
- #include <linux/acpi.h>
-+#include <linux/pci.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/reset.h>
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1459,6 +1459,8 @@ static struct pci_device_id nhi_ids[] =
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_P_NHI1),
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_WCL_NHI0),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
  
-@@ -1667,7 +1668,7 @@ static int dwc3_probe(struct platform_de
- 	platform_set_drvdata(pdev, dwc);
- 	dwc3_cache_hwparams(dwc);
- 
--	if (!dwc->sysdev_is_parent &&
-+	if (!dev_is_pci(dwc->sysdev) &&
- 	    DWC3_GHWPARAMS0_AWIDTH(dwc->hwparams.hwparams0) == 64) {
- 		ret = dma_set_mask_and_coherent(dwc->sysdev, DMA_BIT_MASK(64));
- 		if (ret)
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -75,6 +75,7 @@ extern const struct tb_nhi_ops icl_nhi_o
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE	0x15ef
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI0			0x463e
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
++#define PCI_DEVICE_ID_INTEL_WCL_NHI0			0x4d33
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
+ #define PCI_DEVICE_ID_INTEL_MTL_M_NHI0			0x7eb2
 
 
