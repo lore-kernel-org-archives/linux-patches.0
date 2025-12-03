@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784E2313E26;
-	Wed,  3 Dec 2025 15:46:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E1E31355A;
+	Wed,  3 Dec 2025 15:46:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776761; cv=none; b=ielv1LDY0zqkX1dIncjeNgd1eZeOGGmNjsCGwgnZwqmgWbhK8nMEfVFcvpbi8PjmFTRsFuPUrB/mktBee2yHAj+8zVp+7DnkErzbITpOIwbN++qANh/AuXPqfI8XSPYl8z1IoAQNTVC6D7RkfN67hvYjoXsUa+uDwx2//6J94Ck=
+	t=1764776764; cv=none; b=Xg/04CSohqn/7LbjKT8w/qqMczuAd2Xuu/rpr/Vf0SWxIwo7kFXzs5Tx1FfDqgazuGiZQuropkWBZBYGHlBjl+LeBPVLTCqnyTazFCsRj+ORgv+UZmWj3pWWhuHqWaIxQZa0s+pFOWt6rsFLwaEvq4X+arZUMXeGw67CpKhNXuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776761; c=relaxed/simple;
-	bh=D1j7SA6YOrDSl2Nx+1B7pMsCGOvEYZmQrG/RR/NoOvI=;
+	s=arc-20240116; t=1764776764; c=relaxed/simple;
+	bh=lpNf41n2VRHRO+DUlQiokvbwxSKshQgemOZSXdIU+Po=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rox9uKoZzVkUcYPF63S69lEo0/kxAR3KsdiSiOEK9N/L+xqxi1zNg8d6RTh4x4/K9j2wxSVruXeAO7ZWgydA7qe5bE1Krs8bDm+2gqYowoExXG/Ud75iHkSrydkDcesdzUyRFQ9i+xb6Pn/j/kBhLpRXFpWw9/Nq8P+hdXdtZUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3Ny28vQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PHp9Mlj5n+sSnwSRULHfPrOqop8A6S9pmYnnv4z5+AMLVgUNiz9zwKf1q5SzpQJHXu+coSA7bFZUyUfj3RZ9U6F5fRX3Pm7G/z6F04NRqD7u15a5rsCjVhprM0bTNR5qY4Mjz04QFA6mz6WictPUvTNpFVDa7gVojrFNlJyCxEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPU8CjKC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3Ny28vQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD2A5C4CEF5;
-	Wed,  3 Dec 2025 15:46:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPU8CjKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E2EC4CEF5;
+	Wed,  3 Dec 2025 15:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776761;
-	bh=D1j7SA6YOrDSl2Nx+1B7pMsCGOvEYZmQrG/RR/NoOvI=;
+	s=korg; t=1764776764;
+	bh=lpNf41n2VRHRO+DUlQiokvbwxSKshQgemOZSXdIU+Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q3Ny28vQe9U1NPBXkjauNRFpl/GJ7gVQmjMXddBpm7d5+WHUQs3YeW5bXeAKeNXYF
-	 7vdbYsXcibUBn+o6oQDgugesFM4qTUJsRi44KVbmHIZ5Ei4AF1R68XARfbDpu9Jk+D
-	 4cQacjLV1NMBxc3S1IKLwU6NgNyG9cz2wr/upb+k=
+	b=xPU8CjKCTATeW31/hdTNF5tuxDDJFOnwRaNeaNWzK9pCuUTG7DskF+D0G6G4+p+IM
+	 tOz8Dl8/0GqBPLef2XD9UGyM7Ab6Jr0/NaloicTsIFz/SmgQBWSViWTuDQLGpIJd65
+	 DCgEIlmHtQzZaH/JazwbE2JhDTFu63dNfkLRqYEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+355158e7e301548a1424@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 247/300] mptcp: fix race condition in mptcp_schedule_work()
-Date: Wed,  3 Dec 2025 16:27:31 +0100
-Message-ID: <20251203152409.782877883@linuxfoundation.org>
+Subject: [PATCH 5.10 248/300] dt-bindings: pinctrl: toshiba,visconti: Fix number of items in groups
+Date: Wed,  3 Dec 2025 16:27:32 +0100
+Message-ID: <20251203152409.820310772@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,97 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 035bca3f017ee9dea3a5a756e77a6f7138cc6eea ]
+[ Upstream commit 316e361b5d2cdeb8d778983794a1c6eadcb26814 ]
 
-syzbot reported use-after-free in mptcp_schedule_work() [1]
+The "groups" property can hold multiple entries (e.g.
+toshiba/tmpv7708-rm-mbrc.dts file), so allow that by dropping incorrect
+type (pinmux-node.yaml schema already defines that as string-array) and
+adding constraints for items.  This fixes dtbs_check warnings like:
 
-Issue here is that mptcp_schedule_work() schedules a work,
-then gets a refcount on sk->sk_refcnt if the work was scheduled.
-This refcount will be released by mptcp_worker().
+  toshiba/tmpv7708-rm-mbrc.dtb: pinctrl@24190000 (toshiba,tmpv7708-pinctrl):
+    pwm-pins:groups: ['pwm0_gpio16_grp', 'pwm1_gpio17_grp', 'pwm2_gpio18_grp', 'pwm3_gpio19_grp'] is too long
 
-[A] if (schedule_work(...)) {
-[B]     sock_hold(sk);
-        return true;
-    }
-
-Problem is that mptcp_worker() can run immediately and complete before [B]
-
-We need instead :
-
-    sock_hold(sk);
-    if (schedule_work(...))
-        return true;
-    sock_put(sk);
-
-[1]
-refcount_t: addition on 0; use-after-free.
- WARNING: CPU: 1 PID: 29 at lib/refcount.c:25 refcount_warn_saturate+0xfa/0x1d0 lib/refcount.c:25
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:-1 [inline]
-  __refcount_inc include/linux/refcount.h:366 [inline]
-  refcount_inc include/linux/refcount.h:383 [inline]
-  sock_hold include/net/sock.h:816 [inline]
-  mptcp_schedule_work+0x164/0x1a0 net/mptcp/protocol.c:943
-  mptcp_tout_timer+0x21/0xa0 net/mptcp/protocol.c:2316
-  call_timer_fn+0x17e/0x5f0 kernel/time/timer.c:1747
-  expire_timers kernel/time/timer.c:1798 [inline]
-  __run_timers kernel/time/timer.c:2372 [inline]
-  __run_timer_base+0x648/0x970 kernel/time/timer.c:2384
-  run_timer_base kernel/time/timer.c:2393 [inline]
-  run_timer_softirq+0xb7/0x180 kernel/time/timer.c:2403
-  handle_softirqs+0x22f/0x710 kernel/softirq.c:622
-  __do_softirq kernel/softirq.c:656 [inline]
-  run_ktimerd+0xcf/0x190 kernel/softirq.c:1138
-  smpboot_thread_fn+0x542/0xa60 kernel/smpboot.c:160
-  kthread+0x711/0x8a0 kernel/kthread.c:463
-  ret_from_fork+0x4bc/0x870 arch/x86/kernel/process.c:158
-  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:245
-
+Fixes: 1825c1fe0057 ("pinctrl: Add DT bindings for Toshiba Visconti TMPV7700 SoC")
 Cc: stable@vger.kernel.org
-Fixes: 3b1d6210a957 ("mptcp: implement and use MPTCP-level retransmission")
-Reported-by: syzbot+355158e7e301548a1424@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/6915b46f.050a0220.3565dc.0028.GAE@google.com/T/#u
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251113103924.3737425-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+[ adjusted $ref context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml |   26 +++++-----
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -716,14 +716,19 @@ static void mptcp_reset_timer(struct soc
+--- a/Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/toshiba,visconti-pinctrl.yaml
+@@ -46,18 +46,20 @@ patternProperties:
+       groups:
+         description:
+           Name of the pin group to use for the functions.
+-        $ref: "/schemas/types.yaml#/definitions/string"
+-        enum: [i2c0_grp, i2c1_grp, i2c2_grp, i2c3_grp, i2c4_grp,
+-               i2c5_grp, i2c6_grp, i2c7_grp, i2c8_grp,
+-               spi0_grp, spi0_cs0_grp, spi0_cs1_grp, spi0_cs2_grp,
+-               spi1_grp, spi2_grp, spi3_grp, spi4_grp, spi5_grp, spi6_grp,
+-               uart0_grp, uart1_grp, uart2_grp, uart3_grp,
+-               pwm0_gpio4_grp, pwm0_gpio8_grp, pwm0_gpio12_grp,
+-               pwm0_gpio16_grp, pwm1_gpio5_grp, pwm1_gpio9_grp,
+-               pwm1_gpio13_grp, pwm1_gpio17_grp, pwm2_gpio6_grp,
+-               pwm2_gpio10_grp, pwm2_gpio14_grp, pwm2_gpio18_grp,
+-               pwm3_gpio7_grp, pwm3_gpio11_grp, pwm3_gpio15_grp,
+-               pwm3_gpio19_grp, pcmif_out_grp, pcmif_in_grp]
++        items:
++          enum: [i2c0_grp, i2c1_grp, i2c2_grp, i2c3_grp, i2c4_grp,
++                 i2c5_grp, i2c6_grp, i2c7_grp, i2c8_grp,
++                 spi0_grp, spi0_cs0_grp, spi0_cs1_grp, spi0_cs2_grp,
++                 spi1_grp, spi2_grp, spi3_grp, spi4_grp, spi5_grp, spi6_grp,
++                 uart0_grp, uart1_grp, uart2_grp, uart3_grp,
++                 pwm0_gpio4_grp, pwm0_gpio8_grp, pwm0_gpio12_grp,
++                 pwm0_gpio16_grp, pwm1_gpio5_grp, pwm1_gpio9_grp,
++                 pwm1_gpio13_grp, pwm1_gpio17_grp, pwm2_gpio6_grp,
++                 pwm2_gpio10_grp, pwm2_gpio14_grp, pwm2_gpio18_grp,
++                 pwm3_gpio7_grp, pwm3_gpio11_grp, pwm3_gpio15_grp,
++                 pwm3_gpio19_grp, pcmif_out_grp, pcmif_in_grp]
++        minItems: 1
++        maxItems: 8
  
- bool mptcp_schedule_work(struct sock *sk)
- {
--	if (inet_sk_state_load(sk) != TCP_CLOSE &&
--	    schedule_work(&mptcp_sk(sk)->work)) {
--		/* each subflow already holds a reference to the sk, and the
--		 * workqueue is invoked by a subflow, so sk can't go away here.
--		 */
--		sock_hold(sk);
-+	if (inet_sk_state_load(sk) == TCP_CLOSE)
-+		return false;
-+
-+	/* Get a reference on this socket, mptcp_worker() will release it.
-+	 * As mptcp_worker() might complete before us, we can not avoid
-+	 * a sock_hold()/sock_put() if schedule_work() returns false.
-+	 */
-+	sock_hold(sk);
-+
-+	if (schedule_work(&mptcp_sk(sk)->work))
- 		return true;
--	}
-+
-+	sock_put(sk);
- 	return false;
- }
- 
+       drive-strength:
+         enum: [2, 4, 6, 8, 16, 24, 32]
 
 
