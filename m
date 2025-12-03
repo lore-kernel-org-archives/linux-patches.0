@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F3034CFB4;
-	Wed,  3 Dec 2025 16:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60B93587BE;
+	Wed,  3 Dec 2025 16:44:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780287; cv=none; b=Mi7/sZo+uou6SrAjIoCWza63gLEzGe5c29s500EmY6mGHJC9vp1dUDI6udc2PoZl00IlddP+IvbkqGA6hoAdIFnTlrzHo2IqTM65317qX+4Xr9BWF4p+u7cfG4NVp/SbUkLMQi+cd5axDhPfzIXgTuhnbBcT6e9aSW0EPav9TTo=
+	t=1764780291; cv=none; b=WchCprrswcimrqOko6TLF27WWPU5v/cgB7nE64rer5TBv0vq3NiBuXpVPj2e/HzcUToXyohEWohCw3vRSeqDw//fwWkcfVIQBAjJZWOfxuzwtD8Ka/ukgz14sIJdU5AXFq4LPZ6p+lagl+AU3NaHBypOyiuxkc0qnGVXZUxY/5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780287; c=relaxed/simple;
-	bh=L4LycI8eBVhc49C5W0xmErJLM/9jNGOfOVdivWCV0Og=;
+	s=arc-20240116; t=1764780291; c=relaxed/simple;
+	bh=sSXlo851qADlsNwYNW48W0JNviXT1mfAuw4REouo7BA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L0aXO5+iSQvwfLNrYzxa9aFcl23x5Jkd/2rcAM7hn7GeBkwCVmXNnTUp1x7JGyB9Cp25yMiZqWPwCGFoksG8ZrJzOeDx9119h6DUfOzzsx1AkvuyMsJPDmRd966ou8JUuXJMSJQW9nA2X6p+z/JWomiPx5G2jDCoEOa/pJZjI9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cx8nb4Md; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D1bSjdZo/F4KvlSGneeqyJNES4+GeD82hjl5iF5hWe4lh/oF6ipw6sklwfoOdOP8YASun3sWlYC9uidYpLxu4wkt747nlTTf2XwbbhRq7dNR/WhTvwKDCP7j1F2EsdWdWisFgvOdt/NZLNbhnbGxEZqtHRDWnSGM69QS8JnDNI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XlvrxzGN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cx8nb4Md"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D73E1C4CEF5;
-	Wed,  3 Dec 2025 16:44:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XlvrxzGN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD69C4CEF5;
+	Wed,  3 Dec 2025 16:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780287;
-	bh=L4LycI8eBVhc49C5W0xmErJLM/9jNGOfOVdivWCV0Og=;
+	s=korg; t=1764780290;
+	bh=sSXlo851qADlsNwYNW48W0JNviXT1mfAuw4REouo7BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cx8nb4MdkOc51jblXVF7P5/617pqmT4OTlysPpcmQwHk07OyQTq9Nzc33pA8zh4wi
-	 JcTuSJOh/mh/1STuiCd9W74Zz1fPLQKAJoImYmIkRqmQfCcN0rF5WUlWBfC81rP5o3
-	 OBcb8qKSnKFkKBJOjwCNLcaGaZCSujeos0ZISACM=
+	b=XlvrxzGNirIpYBudHG7HIVjYQZ3oK57NvA2WCaoe+EZBe8vDadUeCmoRhcvyjdfRR
+	 MXTTPy5faXrCSr5IuZ+MkMJGDzVbo9pHB3Cw7Xg4d1IE3V1VYbldbTall8ZD0WBY9s
+	 Yll9g7L2CcvkX3bS8sXZ8rC4G3KsPnizNr50MLzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Adam Young <admiyo@os.amperecomputing.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 494/568] can: gs_usb: gs_usb_xmit_callback(): fix handling of failed transmitted URBs
-Date: Wed,  3 Dec 2025 16:28:16 +0100
-Message-ID: <20251203152458.808462268@linuxfoundation.org>
+Subject: [PATCH 6.1 512/568] mailbox: pcc: Check before sending MCTP PCC response ACK
+Date: Wed,  3 Dec 2025 16:28:34 +0100
+Message-ID: <20251203152459.465981560@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,57 +52,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Adam Young <admiyo@os.amperecomputing.com>
 
-[ Upstream commit 516a0cd1c03fa266bb67dd87940a209fd4e53ce7 ]
+[ Upstream commit 7f9e19f207be0c534d517d65e01417ba968cdd34 ]
 
-The driver lacks the cleanup of failed transfers of URBs. This reduces the
-number of available URBs per error by 1. This leads to reduced performance
-and ultimately to a complete stop of the transmission.
+Type 4 PCC channels have an option to send back a response
+to the platform when they are done processing the request.
+The flag to indicate whether or not to respond is inside
+the message body, and thus is not available to the pcc
+mailbox.
 
-If the sending of a bulk URB fails do proper cleanup:
-- increase netdev stats
-- mark the echo_sbk as free
-- free the driver's context and do accounting
-- wake the send queue
+If the flag is not set, still set command completion
+bit after processing message.
 
-Closes: https://github.com/candle-usb/candleLight_fw/issues/187
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-1-a29b42eacada@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+In order to read the flag, this patch maps the shared
+buffer to virtual memory. To avoid duplication of mapping
+the shared buffer is then made available to be used by
+the driver that uses the mailbox.
+
+Signed-off-by: Adam Young <admiyo@os.amperecomputing.com>
+Cc: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Stable-dep-of: ff0e4d4c97c9 ("mailbox: pcc: don't zero error register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/mailbox/pcc.c | 61 +++++++++++++++++++++++++++++++++++++------
+ include/acpi/pcc.h    |  7 +++++
+ 2 files changed, 60 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index 2cacea6b00f80..7fe9d497491d1 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -707,8 +707,21 @@ static void gs_usb_xmit_callback(struct urb *urb)
- 	struct gs_can *dev = txc->dev;
- 	struct net_device *netdev = dev->netdev;
- 
--	if (urb->status)
--		netdev_info(netdev, "usb xmit fail %u\n", txc->echo_id);
-+	if (!urb->status)
-+		return;
-+
-+	if (urb->status != -ESHUTDOWN && net_ratelimit())
-+		netdev_info(netdev, "failed to xmit URB %u: %pe\n",
-+			    txc->echo_id, ERR_PTR(urb->status));
-+
-+	netdev->stats.tx_dropped++;
-+	netdev->stats.tx_errors++;
-+
-+	can_free_echo_skb(netdev, txc->echo_id, NULL);
-+	gs_free_tx_context(txc);
-+	atomic_dec(&dev->active_tx_urbs);
-+
-+	netif_wake_queue(netdev);
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 94885e411085a..82102a4c5d688 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -269,6 +269,35 @@ static bool pcc_mbox_cmd_complete_check(struct pcc_chan_info *pchan)
+ 	return !!val;
  }
  
- static netdev_tx_t gs_can_start_xmit(struct sk_buff *skb,
++static void check_and_ack(struct pcc_chan_info *pchan, struct mbox_chan *chan)
++{
++	struct acpi_pcct_ext_pcc_shared_memory pcc_hdr;
++
++	if (pchan->type != ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE)
++		return;
++	/* If the memory region has not been mapped, we cannot
++	 * determine if we need to send the message, but we still
++	 * need to set the cmd_update flag before returning.
++	 */
++	if (pchan->chan.shmem == NULL) {
++		pcc_chan_reg_read_modify_write(&pchan->cmd_update);
++		return;
++	}
++	memcpy_fromio(&pcc_hdr, pchan->chan.shmem,
++		      sizeof(struct acpi_pcct_ext_pcc_shared_memory));
++	/*
++	 * The PCC slave subspace channel needs to set the command complete bit
++	 * after processing message. If the PCC_ACK_FLAG is set, it should also
++	 * ring the doorbell.
++	 *
++	 * The PCC master subspace channel clears chan_in_use to free channel.
++	 */
++	if (le32_to_cpup(&pcc_hdr.flags) & PCC_ACK_FLAG_MASK)
++		pcc_send_data(chan, NULL);
++	else
++		pcc_chan_reg_read_modify_write(&pchan->cmd_update);
++}
++
+ /**
+  * pcc_mbox_irq - PCC mailbox interrupt handler
+  * @irq:	interrupt number
+@@ -306,14 +335,7 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
+ 
+ 	mbox_chan_received_data(chan, NULL);
+ 
+-	/*
+-	 * The PCC slave subspace channel needs to set the command complete bit
+-	 * and ring doorbell after processing message.
+-	 *
+-	 * The PCC master subspace channel clears chan_in_use to free channel.
+-	 */
+-	if (pchan->type == ACPI_PCCT_TYPE_EXT_PCC_SLAVE_SUBSPACE)
+-		pcc_send_data(chan, NULL);
++	check_and_ack(pchan, chan);
+ 	pchan->chan_in_use = false;
+ 
+ 	return IRQ_HANDLED;
+@@ -365,14 +387,37 @@ EXPORT_SYMBOL_GPL(pcc_mbox_request_channel);
+ void pcc_mbox_free_channel(struct pcc_mbox_chan *pchan)
+ {
+ 	struct mbox_chan *chan = pchan->mchan;
++	struct pcc_chan_info *pchan_info;
++	struct pcc_mbox_chan *pcc_mbox_chan;
+ 
+ 	if (!chan || !chan->cl)
+ 		return;
++	pchan_info = chan->con_priv;
++	pcc_mbox_chan = &pchan_info->chan;
++	if (pcc_mbox_chan->shmem) {
++		iounmap(pcc_mbox_chan->shmem);
++		pcc_mbox_chan->shmem = NULL;
++	}
+ 
+ 	mbox_free_channel(chan);
+ }
+ EXPORT_SYMBOL_GPL(pcc_mbox_free_channel);
+ 
++int pcc_mbox_ioremap(struct mbox_chan *chan)
++{
++	struct pcc_chan_info *pchan_info;
++	struct pcc_mbox_chan *pcc_mbox_chan;
++
++	if (!chan || !chan->cl)
++		return -1;
++	pchan_info = chan->con_priv;
++	pcc_mbox_chan = &pchan_info->chan;
++	pcc_mbox_chan->shmem = ioremap(pcc_mbox_chan->shmem_base_addr,
++				       pcc_mbox_chan->shmem_size);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(pcc_mbox_ioremap);
++
+ /**
+  * pcc_send_data - Called from Mailbox Controller code. Used
+  *		here only to ring the channel doorbell. The PCC client
+diff --git a/include/acpi/pcc.h b/include/acpi/pcc.h
+index 9b373d172a776..699c1a37b8e78 100644
+--- a/include/acpi/pcc.h
++++ b/include/acpi/pcc.h
+@@ -12,6 +12,7 @@
+ struct pcc_mbox_chan {
+ 	struct mbox_chan *mchan;
+ 	u64 shmem_base_addr;
++	void __iomem *shmem;
+ 	u64 shmem_size;
+ 	u32 latency;
+ 	u32 max_access_rate;
+@@ -31,11 +32,13 @@ struct pcc_mbox_chan {
+ #define PCC_CMD_COMPLETION_NOTIFY	BIT(0)
+ 
+ #define MAX_PCC_SUBSPACES	256
++#define PCC_ACK_FLAG_MASK	0x1
+ 
+ #ifdef CONFIG_PCC
+ extern struct pcc_mbox_chan *
+ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id);
+ extern void pcc_mbox_free_channel(struct pcc_mbox_chan *chan);
++extern int pcc_mbox_ioremap(struct mbox_chan *chan);
+ #else
+ static inline struct pcc_mbox_chan *
+ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+@@ -43,6 +46,10 @@ pcc_mbox_request_channel(struct mbox_client *cl, int subspace_id)
+ 	return ERR_PTR(-ENODEV);
+ }
+ static inline void pcc_mbox_free_channel(struct pcc_mbox_chan *chan) { }
++static inline int pcc_mbox_ioremap(struct mbox_chan *chan)
++{
++	return 0;
++};
+ #endif
+ 
+ #endif /* _PCC_H */
 -- 
 2.51.0
 
