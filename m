@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43E4343D7A;
-	Wed,  3 Dec 2025 15:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6472B343D8C;
+	Wed,  3 Dec 2025 15:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777475; cv=none; b=WuvP4BNkW7QG7Jzux/YNPc3ihoCKXMo6NxM4Z8Hv8QKnUVF/SrTljX+s1NylYik4SzHA0DnrlNKhNGThSS37HtBzUpwWtMxUhQfi41rGzjOXpQ5oOO6bF+891pqwC83hn/AA2y9x6hJIi+cVCdsnp8PkJQ47cb6XAn1yQY7cdH4=
+	t=1764777478; cv=none; b=GPBBiJuwnXzk/A8oeXCNqYMaFTJb/S4R8y+M0MKBJEwLHj1x/ehZ1t/UO+YXJ204/jFQk7bek0K0thUrTOO1wEYTAZcrdDwwq9D5dGYrGmYfFXXNBn9kNTAhkz1FexpSCt5He3+2yS+OEACqhKmmyBDxAtJKSN2t2oCuOOieYMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777475; c=relaxed/simple;
-	bh=NNSOpLK0sTYwX5MWgoBawKCAIgwTzoxtP2Wh+o5ZOaE=;
+	s=arc-20240116; t=1764777478; c=relaxed/simple;
+	bh=R2revpk2iQmIZAGPbwI41WGY4+9POVu/wEytarGLP/c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tcG8hmfSqyvBE8APza+nmqXfjHNiRQ98bPZ6cIZ28dHXmbLeXBNPL+luH4FmJNRNn7BWeybJJJ98w6omrHSSoi0+cZS1Zkjg/YvVR/el/gqsA2rIUPoWT8Jn1MkMF4sG/WfI8LXvGfVXZCUq7Js1vJt+fDZ6J386U4tzkq0YysI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MUU9+kxo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r6wrcqA5yhr7i3bT83CIxdUZaSESplRrm8DXK1vFAXqEbl8GcVHGKIUMTEdVrLOo31C/rrh9WAb8KEf3ckUvQlmDz16hZEqadkARP6hboS8sdLL/2sCx0oWHr3Fx22ys/QMan1XHNqKWWzSCau63LBECu25jOIUYYPCPTEcA+Is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAHteO97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MUU9+kxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2526FC4CEF5;
-	Wed,  3 Dec 2025 15:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAHteO97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E514CC4CEF5;
+	Wed,  3 Dec 2025 15:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777475;
-	bh=NNSOpLK0sTYwX5MWgoBawKCAIgwTzoxtP2Wh+o5ZOaE=;
+	s=korg; t=1764777478;
+	bh=R2revpk2iQmIZAGPbwI41WGY4+9POVu/wEytarGLP/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MUU9+kxo03MJXIPlEAW3Jyxeu3kKtCe15JRNsBJsKdNyXBFfYOl5LlJ0OgRAVB5iS
-	 uP9cQauSag9B7I0oQ6Y36bQ2YE7fIuCxW6j06gUzAzT4HjEvTPxa/hLDt7j8Nx++R4
-	 zUjTtxD3fAK7kRg9oFASB8xVnBa/hT5Iz7kDyhd0=
+	b=VAHteO97gYf+lj917NlE9+4xETGiLoVDwSAeccUbKRTXOdwoIqHqe8t8lzY314GKI
+	 zS5fa6NHkC4ecsTzIrEa3nBAn8+c7HnVPx0MVEXauw2GJAYPWSHb0XqnC4JVVKtcol
+	 fBi0ZBpqGZ4GlKH1qdmbzWyv9D6Ysno+cOQRqhXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Owen Gu <guhuinan@xiaomi.com>
-Subject: [PATCH 5.15 049/392] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
-Date: Wed,  3 Dec 2025 16:23:19 +0100
-Message-ID: <20251203152415.917545995@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	Philipp Stanner <phasta@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 050/392] drm/sched: Fix race in drm_sched_entity_select_rq()
+Date: Wed,  3 Dec 2025 16:23:20 +0100
+Message-ID: <20251203152415.953895791@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -49,54 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Philipp Stanner <phasta@kernel.org>
 
-commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
+[ Upstream commit d25e3a610bae03bffc5c14b5d944a5d0cd844678 ]
 
-A race condition occurs when ffs_func_eps_enable() runs concurrently
-with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
-sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
-to a NULL pointer dereference when accessing epfile->ep in
-ffs_func_eps_enable() after successful usb_ep_enable().
+In a past bug fix it was forgotten that entity access must be protected
+by the entity lock. That's a data race and potentially UB.
 
-The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
-ffs_data_close() functions, and its modification is protected by the
-spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
-is also protected by ffs->eps_lock.
+Move the spin_unlock() to the appropriate position.
 
-Thus, add NULL pointer handling for ffs->epfiles in the
-ffs_func_eps_enable() function to fix issues
-
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
+Cc: stable@vger.kernel.org # v5.13+
+Fixes: ac4eb83ab255 ("drm/sched: select new rq even if there is only one v3")
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Signed-off-by: Philipp Stanner <phasta@kernel.org>
+Link: https://patch.msgid.link/20251022063402.87318-2-phasta@kernel.org
+[ adapted lock field name from entity->lock to entity->rq_lock ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/scheduler/sched_entity.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -2005,7 +2005,12 @@ static int ffs_func_eps_enable(struct ff
- 	ep = func->eps;
- 	epfile = ffs->epfiles;
- 	count = ffs->eps_count;
--	while(count--) {
-+	if (!epfile) {
-+		ret = -ENOMEM;
-+		goto done;
-+	}
-+
-+	while (count--) {
- 		ep->ep->driver_data = ep;
- 
- 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
-@@ -2029,6 +2034,7 @@ static int ffs_func_eps_enable(struct ff
+--- a/drivers/gpu/drm/scheduler/sched_entity.c
++++ b/drivers/gpu/drm/scheduler/sched_entity.c
+@@ -456,10 +456,11 @@ void drm_sched_entity_select_rq(struct d
+ 		drm_sched_rq_remove_entity(entity->rq, entity);
+ 		entity->rq = rq;
  	}
+-	spin_unlock(&entity->rq_lock);
  
- 	wake_up_interruptible(&ffs->wait);
-+done:
- 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
+ 	if (entity->num_sched_list == 1)
+ 		entity->sched_list = NULL;
++
++	spin_unlock(&entity->rq_lock);
+ }
  
- 	return ret;
+ /**
 
 
