@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1722EDD7A;
-	Wed,  3 Dec 2025 16:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2244E238C1B;
+	Wed,  3 Dec 2025 16:09:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778140; cv=none; b=XoWVe6jSZTevs6yXIU53FbGU9s3B/UywhY1eqnMKPf1ygQW9GWGZcBGjsLAVFrxVnj9i8da5pc9oCBlQx6BhlBSmeqeWJUgd3aRkSgloTmbk+4qAWqonQmmaOREazQNdQUEb0LrtZxnaB3g3BslyykmtJHGY4LT3EGhwQOr3Ps8=
+	t=1764778143; cv=none; b=dv2KxsoL0YKiqmOv1m71wZG6/d94GwzJSHnWaBNZuL++7fzzSy1McgxZsOcbXTFVlezIefSR02+wqh9hYOGyC8on4Zpg/wK9iAOuL/W+TGK9AXIDztkphslXDDalQw5lKJxBqIh0ypCnv7Y1g6VR0t7e1hoAGPPBgT54NgsOvMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778140; c=relaxed/simple;
-	bh=m3urx/id/4/R+zG56DrFyLjPxmNYFCUe+AwSncgcmxY=;
+	s=arc-20240116; t=1764778143; c=relaxed/simple;
+	bh=aW6V3cG3E0UwKVqEl6eaCLIxBU+g54wU36pCcaYGuq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kWVYmTWU74+6U7p4GPeKlQIBAJU8JqaWaeeKzEGfkvNdcTpVkURiUcvWW21fDHlqxCX5TnNUau0OPZKPZ3SvZ1rr9N6crnoZyOE64d/WYxSWEttwF23nXxajywEQO2oI/82KoKuTP4yoIESm0LLf90EWycmlWuKtsX49OTrb3aU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEwNpqbc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f86Zmpl4aIllC3iz3GIUAWjdeQxTkurGOm8HcOxail+ChiPhplRcbJuj4x2RAa53UET9jj+MagiYlBoJUyrcPFTXgbgfn+UITkuulNXUiHm7s87gjTbZbMiYaJ0JcNgrBcAkRGePW2XBQWKjLHReakT056qM5FcPaE20VBh+1/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UodJoh5G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEwNpqbc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7E2C4CEF5;
-	Wed,  3 Dec 2025 16:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UodJoh5G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED14C4CEF5;
+	Wed,  3 Dec 2025 16:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778139;
-	bh=m3urx/id/4/R+zG56DrFyLjPxmNYFCUe+AwSncgcmxY=;
+	s=korg; t=1764778142;
+	bh=aW6V3cG3E0UwKVqEl6eaCLIxBU+g54wU36pCcaYGuq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TEwNpqbchzuS/L5AjPOUlSK8EAv4GNmfItiukY78ATpjKL4Z1nrbBbFcHDJ6aBfF+
-	 h7DUh/PaoQ+jkDsJxo1Fgwyc8upOKbqVQaXmclAf/ciDq2MeMEE0SPrznCPbxeKco8
-	 oVLeo+L+pDSB4mVCmptkK8JxN1Vim+8p4LhpUHAw=
+	b=UodJoh5G1icnf9kQmabdc2GJ+Lp4Fjz8mj2wlF//NXzcyZQSv9dGwUF4jK/n4R903
+	 6fYi8+Nr92RUif5FJtoWA2iSmgSk9q3CnN5iMHjkHwqYe9KR/SxuuzY1QOO5+E+nwX
+	 Qwj/JqFzvR4+KE93QQ4t4YokwI/Fi0mW6pLYzu8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Felix Maurer <fmaurer@redhat.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Pauli Virtanen <pav@iki.fi>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 256/392] hsr: Fix supervision frame sending on HSRv0
-Date: Wed,  3 Dec 2025 16:26:46 +0100
-Message-ID: <20251203152423.589481109@linuxfoundation.org>
+Subject: [PATCH 5.15 239/392] Bluetooth: 6lowpan: reset link-local header on ipv6 recv path
+Date: Wed,  3 Dec 2025 16:26:29 +0100
+Message-ID: <20251203152422.970249825@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,48 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Maurer <fmaurer@redhat.com>
+From: Pauli Virtanen <pav@iki.fi>
 
-[ Upstream commit 96a3a03abf3d8cc38cd9cb0d280235fbcf7c3f7f ]
+[ Upstream commit 3b78f50918276ab28fb22eac9aa49401ac436a3b ]
 
-On HSRv0, no supervision frames were sent. The supervison frames were
-generated successfully, but failed the check for a sufficiently long mac
-header, i.e., at least sizeof(struct hsr_ethhdr), in hsr_fill_frame_info()
-because the mac header only contained the ethernet header.
+Bluetooth 6lowpan.c netdev has header_ops, so it must set link-local
+header for RX skb, otherwise things crash, eg. with AF_PACKET SOCK_RAW
 
-Fix this by including the HSR header in the mac header when generating HSR
-supervision frames. Note that the mac header now also includes the TLV
-fields. This matches how we set the headers on rx and also the size of
-struct hsrv0_ethhdr_sp.
+Add missing skb_reset_mac_header() for uncompressed ipv6 RX path.
 
-Reported-by: Hangbin Liu <liuhangbin@gmail.com>
-Closes: https://lore.kernel.org/netdev/aMONxDXkzBZZRfE5@fedora/
-Fixes: 9cfb5e7f0ded ("net: hsr: fix hsr_init_sk() vs network/transport headers.")
-Signed-off-by: Felix Maurer <fmaurer@redhat.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/4354114fea9a642fe71f49aeeb6c6159d1d61840.1762876095.git.fmaurer@redhat.com
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+For the compressed one, it is done in lowpan_header_decompress().
+
+Log: (BlueZ 6lowpan-tester Client Recv Raw - Success)
+------
+kernel BUG at net/core/skbuff.c:212!
+Call Trace:
+<IRQ>
+...
+packet_rcv (net/packet/af_packet.c:2152)
+...
+<TASK>
+__local_bh_enable_ip (kernel/softirq.c:407)
+netif_rx (net/core/dev.c:5648)
+chan_recv_cb (net/bluetooth/6lowpan.c:294 net/bluetooth/6lowpan.c:359)
+------
+
+Fixes: 18722c247023 ("Bluetooth: Enable 6LoWPAN support for BT LE devices")
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Pauli Virtanen <pav@iki.fi>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/6lowpan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 503f2064e7323..85537b245aaeb 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -316,6 +316,9 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 	}
+diff --git a/net/bluetooth/6lowpan.c b/net/bluetooth/6lowpan.c
+index c4a1b478cf3e9..cfe3753a6f160 100644
+--- a/net/bluetooth/6lowpan.c
++++ b/net/bluetooth/6lowpan.c
+@@ -288,6 +288,7 @@ static int recv_pkt(struct sk_buff *skb, struct net_device *dev,
+ 		local_skb->pkt_type = PACKET_HOST;
+ 		local_skb->dev = dev;
  
- 	hsr_stag = skb_put(skb, sizeof(struct hsr_sup_tag));
-+	skb_set_network_header(skb, ETH_HLEN + HSR_HLEN);
-+	skb_reset_mac_len(skb);
-+
- 	set_hsr_stag_path(hsr_stag, (hsr->prot_version ? 0x0 : 0xf));
- 	set_hsr_stag_HSR_ver(hsr_stag, hsr->prot_version);
++		skb_reset_mac_header(local_skb);
+ 		skb_set_transport_header(local_skb, sizeof(struct ipv6hdr));
  
+ 		if (give_skb_to_upper(local_skb, dev) != NET_RX_SUCCESS) {
 -- 
 2.51.0
 
