@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16D9A34889C;
-	Wed,  3 Dec 2025 16:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6983F34B669;
+	Wed,  3 Dec 2025 16:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778739; cv=none; b=KoTW+0eY1LksLr48gtypKS/xaFwzTOAFkyAAhiCrVh6NetCfr9qQ57t6EkdzS50TABDhokrXd2yLT62iv0OGGY8s4QRDVsBCdmMhjMSmvpVyNYo32Ryn44JN9k/6kWbLKgizakXdhzQnqgqOpUkTNqXs1X8sOQ4YnmKjk6KZu6A=
+	t=1764778742; cv=none; b=L8Uq4oDiUJ1TjL+fnVOuVEjcx6jhna898aoGISk3/INcb3uw659zSo3ocxN8+qblNYbjkz+cseWf0+Cu0PWT2fROE7kJuD7ofCrkJtkiZC7GxVmljTrhuxeq3Hhsr4J4nliyEOfMY/yP/DoVIIsGEZpRc81uep6QDhi3Iy6TCbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778739; c=relaxed/simple;
-	bh=zKmdtIhxz1IAsGsW1Cf4bCYBHOm3Nz9Hu3yRfbjZLY0=;
+	s=arc-20240116; t=1764778742; c=relaxed/simple;
+	bh=yAzePoYwwIt2hqioYH6c8xjJrr8yLdmZe1YYqeAqYDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nQJrhU3hu9by0Y8rlJs/U3ANnqJ3nBz59UaFD/dReIm7b7ovGIj59+mqpSYCR9JyH9tXgNPMsUArP746pONrwrhmha2CENKjlVvsOSDK+b1jQahQ0jE3UXFGg/0SLjPeOMk34c6qJWbE+v9lPFr2nUaCBTPBACIAQkcifIDeP9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRWxqOry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U0WZhUf436h8H7Ky3HQU2eGNVFm6p0CKv2YmNC2WTlF/UaW98R1exsZEGtFGsjK/Gs1ad3BWF52TMprTXUqRGsKTGw3wrMras7zZDxm1ze1DTid6Ty/YIhlB3ysJtRTgZik05IJM01NYleGEVm8uuVf29eHzkd06O76Y9Gw5U5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3In3FAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRWxqOry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851A1C4CEF5;
-	Wed,  3 Dec 2025 16:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3In3FAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0668C4CEF5;
+	Wed,  3 Dec 2025 16:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778738;
-	bh=zKmdtIhxz1IAsGsW1Cf4bCYBHOm3Nz9Hu3yRfbjZLY0=;
+	s=korg; t=1764778742;
+	bh=yAzePoYwwIt2hqioYH6c8xjJrr8yLdmZe1YYqeAqYDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hRWxqOryv7ilUmzMqSUm4qGLXjHboeoqJQgS5SHZtvLPeQ4OCLsgobO6st6V2j+qY
-	 km0/Use4/VCr0DJLwUI9os0N9lkXoFzU16AFvCIJHAg36wn7wz/NYlkf8+su1nVEa6
-	 7YxF/cCLfKpv/WLFGHIlHi9REI7mwTUrdWHfeIlE=
+	b=F3In3FAP4s451FfDLPl6wZZna1EbTHuc7DgzfXfUh+WfW+yO52GAaCQJdhpLOZBN8
+	 MPHwqJbEJhmce2DZJeJp/SXEWjMLDiZiuR8++HcBOV6psLF1uxZSrhwVQLyAncnMfj
+	 iBYWMU1EO6t4IZtvojH6+n/3z69R1bRiCm8va//U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Sun <samsun1006219@gmail.com>,
-	Lizhi Xu <lizhi.xu@windriver.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Cen Zhang <zzzccc427@163.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/568] usbnet: Prevents free active kevent
-Date: Wed,  3 Dec 2025 16:20:47 +0100
-Message-ID: <20251203152442.341618329@linuxfoundation.org>
+Subject: [PATCH 6.1 046/568] Bluetooth: hci_sync: fix race in hci_cmd_sync_dequeue_once
+Date: Wed,  3 Dec 2025 16:20:48 +0100
+Message-ID: <20251203152442.377822367@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,48 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Xu <lizhi.xu@windriver.com>
+From: Cen Zhang <zzzccc427@163.com>
 
-[ Upstream commit 420c84c330d1688b8c764479e5738bbdbf0a33de ]
+[ Upstream commit 09b0cd1297b4dbfe736aeaa0ceeab2265f47f772 ]
 
-The root cause of this issue are:
-1. When probing the usbnet device, executing usbnet_link_change(dev, 0, 0);
-put the kevent work in global workqueue. However, the kevent has not yet
-been scheduled when the usbnet device is unregistered. Therefore, executing
-free_netdev() results in the "free active object (kevent)" error reported
-here.
+hci_cmd_sync_dequeue_once() does lookup and then cancel
+the entry under two separate lock sections. Meanwhile,
+hci_cmd_sync_work() can also delete the same entry,
+leading to double list_del() and "UAF".
 
-2. Another factor is that when calling usbnet_disconnect()->unregister_netdev(),
-if the usbnet device is up, ndo_stop() is executed to cancel the kevent.
-However, because the device is not up, ndo_stop() is not executed.
+Fix this by holding cmd_sync_work_lock across both
+lookup and cancel, so that the entry cannot be removed
+concurrently.
 
-The solution to this problem is to cancel the kevent before executing
-free_netdev().
-
-Fixes: a69e617e533e ("usbnet: Fix linkwatch use-after-free on disconnect")
-Reported-by: Sam Sun <samsun1006219@gmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=8bfd7bcc98f7300afb84
-Signed-off-by: Lizhi Xu <lizhi.xu@windriver.com>
-Link: https://patch.msgid.link/20251022024007.1831898-1-lizhi.xu@windriver.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 505ea2b29592 ("Bluetooth: hci_sync: Add helper functions to manipulate cmd_sync queue")
+Reported-by: Cen Zhang <zzzccc427@163.com>
+Signed-off-by: Cen Zhang <zzzccc427@163.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/usbnet.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/hci_sync.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/usbnet.c b/drivers/net/usb/usbnet.c
-index a68fead887207..6bdf035e35f56 100644
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1645,6 +1645,8 @@ void usbnet_disconnect (struct usb_interface *intf)
- 	net = dev->net;
- 	unregister_netdev (net);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 851a43a5aee0c..2937e7a37bcba 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -838,11 +838,17 @@ bool hci_cmd_sync_dequeue_once(struct hci_dev *hdev,
+ {
+ 	struct hci_cmd_sync_work_entry *entry;
  
-+	cancel_work_sync(&dev->kevent);
+-	entry = hci_cmd_sync_lookup_entry(hdev, func, data, destroy);
+-	if (!entry)
++	mutex_lock(&hdev->cmd_sync_work_lock);
 +
- 	while ((urb = usb_get_from_anchor(&dev->deferred))) {
- 		dev_kfree_skb(urb->context);
- 		kfree(urb->sg);
++	entry = _hci_cmd_sync_lookup_entry(hdev, func, data, destroy);
++	if (!entry) {
++		mutex_unlock(&hdev->cmd_sync_work_lock);
+ 		return false;
++	}
+ 
+-	hci_cmd_sync_cancel_entry(hdev, entry);
++	_hci_cmd_sync_cancel_entry(hdev, entry, -ECANCELED);
++
++	mutex_unlock(&hdev->cmd_sync_work_lock);
+ 
+ 	return true;
+ }
 -- 
 2.51.0
 
