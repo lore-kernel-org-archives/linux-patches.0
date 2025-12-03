@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AAF341ADD;
-	Wed,  3 Dec 2025 16:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029B534166A;
+	Wed,  3 Dec 2025 16:13:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778424; cv=none; b=aTDoExdR+ux7/XrX4+Ff2ePAIZFZDOMJ4CwyQ6KU3ow2CGVvZB+YU0sIsfdrKsblDTIBqC7PIci49g0gc4zRB9v0l2jfH/lACbKb5Cw2GsR0CeNxB0c/KTPjyor3xgr751rUpHDaTUfmBN7/Vk8O6kclJS4I+WpwPTwfeku7nTg=
+	t=1764778428; cv=none; b=fRvrZX2FPGZ5p1Hxd56EGfVGscWXpcH/hcOU72YoXUgKwutSKLeOFun1/JWcbFU4HVyJP94pkRJGchn7PWHlfxsaoHCwbbWjy9bxS4jPFUAI5ndJi2hFDkmqGsE+qQcE299lhNtJ3QnvOiFLQHpnN5Sm9IBCfGaZEBhoBDVV1UM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778424; c=relaxed/simple;
-	bh=EQhuFae3xRnDJ2eXzdrx4Iec5+1wgZZobsxQKrY9akE=;
+	s=arc-20240116; t=1764778428; c=relaxed/simple;
+	bh=bOs1B/aTDlJ2hm/rzC65IVSH12sicC5xzfd4FnxK0gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nOF4mNG+y43O8nFcgyriGrpmrM2UkRecWXgj08NJ9ZPHQQ9uUmcnR7w+rlcJ/6evScs1P2ZqGhk4xfSrQbm8PYpOTcpyZyNGAKRqRIJFGcODPEH6ThkFA85f/pRjGGPF23rhqw0dc1e8/dJXIukGKjfAHF/h781Ur+YiAHBzKBk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgvz8hg2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Dp5OGW617i1iPLbeCzYpjkVZCK9K4chYUuvriD1Bgh2xM4pOVgzfGVeD0p2pAy20QO+EJg+4Ezmy/DeWeEoDM3e5JcZGPg2o285Hx6PTsctNTsJcdHafRQ8NnKZpiyKxhYXXkpdoADp4ETv2i5hcMADPpIItL6DvElbEY8Ce9uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lApIXdAM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgvz8hg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31481C4CEF5;
-	Wed,  3 Dec 2025 16:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lApIXdAM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0F2C4CEF5;
+	Wed,  3 Dec 2025 16:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778424;
-	bh=EQhuFae3xRnDJ2eXzdrx4Iec5+1wgZZobsxQKrY9akE=;
+	s=korg; t=1764778427;
+	bh=bOs1B/aTDlJ2hm/rzC65IVSH12sicC5xzfd4FnxK0gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgvz8hg2lc/tPwS3CDuwDUQXLIynDLUDJXv/+AgLTQ4LnovHecMTS3kY+tFHQPZRv
-	 aKpbdiDOo2uzn7B0n4Gvs02jSh8xb4bdBdGzsMC6dzFHfWGsA578vS5VgaGoQJLNPS
-	 Q4tajLrqSXImEfA+WgukHYHtyxu8vNmeXEpnEW3E=
+	b=lApIXdAM4VLbAUXK57wxdmCfvtp5C78+6NpcJUt1yywJBqt/yYc5V5JAXxXcU+5pR
+	 mguGnr3BKkjBqWDP4mZT6xt5smLPcnGox7yKVWjqNMg3umT13LLVpkiqiFLfhKLIYm
+	 L14RZUUWDo6Or2l/M8bzK4m/zYgDn//jMFWdkxBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carol Soto <csoto@nvidia.com>,
-	Kai-Heng Feng <kaihengf@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Danielle Costantino <dcostantino@meta.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 340/392] net: aquantia: Add missing descriptor cache invalidation on ATL2
-Date: Wed,  3 Dec 2025 16:28:10 +0100
-Message-ID: <20251203152426.682126136@linuxfoundation.org>
+Subject: [PATCH 5.15 341/392] net/mlx5e: Fix validation logic in rate limiting
+Date: Wed,  3 Dec 2025 16:28:11 +0100
+Message-ID: <20251203152426.718314583@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,142 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kai-Heng Feng <kaihengf@nvidia.com>
+From: Danielle Costantino <dcostantino@meta.com>
 
-[ Upstream commit 7526183cfdbe352c51c285762f0e15b7c428ea06 ]
+[ Upstream commit d2099d9f16dbfa1c5266d4230ff7860047bb0b68 ]
 
-ATL2 hardware was missing descriptor cache invalidation in hw_stop(),
-causing SMMU translation faults during device shutdown and module removal:
-[   70.355743] arm-smmu-v3 arm-smmu-v3.5.auto: event 0x10 received:
-[   70.361893] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0002060000000010
-[   70.367948] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000020000000000
-[   70.374002] arm-smmu-v3 arm-smmu-v3.5.auto:  0x00000000ff9bc000
-[   70.380055] arm-smmu-v3 arm-smmu-v3.5.auto:  0x0000000000000000
-[   70.386109] arm-smmu-v3 arm-smmu-v3.5.auto: event: F_TRANSLATION client: 0001:06:00.0 sid: 0x20600 ssid: 0x0 iova: 0xff9bc000 ipa: 0x0
-[   70.398531] arm-smmu-v3 arm-smmu-v3.5.auto: unpriv data write s1 "Input address caused fault" stag: 0x0
+The rate limiting validation condition currently checks the output
+variable max_bw_value[i] instead of the input value
+maxrate->tc_maxrate[i]. This causes the validation to compare an
+uninitialized or stale value rather than the actual requested rate.
 
-Commit 7a1bb49461b1 ("net: aquantia: fix potential IOMMU fault after
-driver unbind") and commit ed4d81c4b3f2 ("net: aquantia: when cleaning
-hw cache it should be toggled") fixed cache invalidation for ATL B0, but
-ATL2 was left with only interrupt disabling. This allowed hardware to
-write to cached descriptors after DMA memory was unmapped, triggering
-SMMU faults. Once cache invalidation is applied to ATL2, the translation
-fault can't be observed anymore.
+The condition should check the input rate to properly validate against
+the upper limit:
 
-Add shared aq_hw_invalidate_descriptor_cache() helper and use it in both
-ATL B0 and ATL2 hw_stop() implementations for consistent behavior.
+    } else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
 
-Fixes: e54dcf4bba3e ("net: atlantic: basic A2 init/deinit hw_ops")
-Tested-by: Carol Soto <csoto@nvidia.com>
-Signed-off-by: Kai-Heng Feng <kaihengf@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20251120041537.62184-1-kaihengf@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This aligns with the pattern used in the first branch, which correctly
+checks maxrate->tc_maxrate[i] against upper_limit_mbps.
+
+The current implementation can lead to unreliable validation behavior:
+
+- For rates between 25.5 Gbps and 255 Gbps, if max_bw_value[i] is 0
+  from initialization, the GBPS path may be taken regardless of whether
+  the actual rate is within bounds
+
+- When processing multiple TCs (i > 0), max_bw_value[i] contains the
+  value computed for the previous TC, affecting the validation logic
+
+- The overflow check for rates exceeding 255 Gbps may not trigger
+  consistently depending on previous array values
+
+This patch ensures the validation correctly examines the requested rate
+value for proper bounds checking.
+
+Fixes: 43b27d1bd88a ("net/mlx5e: Fix wraparound in rate limiting for values above 255 Gbps")
+Signed-off-by: Danielle Costantino <dcostantino@meta.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Link: https://patch.msgid.link/20251124180043.2314428-1-dcostantino@meta.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/aquantia/atlantic/aq_hw_utils.c  | 22 +++++++++++++++++++
- .../ethernet/aquantia/atlantic/aq_hw_utils.h  |  1 +
- .../aquantia/atlantic/hw_atl/hw_atl_b0.c      | 19 +---------------
- .../aquantia/atlantic/hw_atl2/hw_atl2.c       |  2 +-
- 4 files changed, 25 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
-index 1921741f7311d..18b08277d2e1a 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.c
-@@ -15,6 +15,7 @@
- 
- #include "aq_hw.h"
- #include "aq_nic.h"
-+#include "hw_atl/hw_atl_llh.h"
- 
- void aq_hw_write_reg_bit(struct aq_hw_s *aq_hw, u32 addr, u32 msk,
- 			 u32 shift, u32 val)
-@@ -81,6 +82,27 @@ void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value)
- 		lo_hi_writeq(value, hw->mmio + reg);
- }
- 
-+int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw)
-+{
-+	int err;
-+	u32 val;
-+
-+	/* Invalidate Descriptor Cache to prevent writing to the cached
-+	 * descriptors and to the data pointer of those descriptors
-+	 */
-+	hw_atl_rdm_rx_dma_desc_cache_init_tgl(hw);
-+
-+	err = aq_hw_err_from_flags(hw);
-+	if (err)
-+		goto err_exit;
-+
-+	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
-+				  hw, val, val == 1, 1000U, 10000U);
-+
-+err_exit:
-+	return err;
-+}
-+
- int aq_hw_err_from_flags(struct aq_hw_s *hw)
- {
- 	int err = 0;
-diff --git a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
-index ffa6e4067c211..d89c63d88e4a4 100644
---- a/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
-+++ b/drivers/net/ethernet/aquantia/atlantic/aq_hw_utils.h
-@@ -35,6 +35,7 @@ u32 aq_hw_read_reg(struct aq_hw_s *hw, u32 reg);
- void aq_hw_write_reg(struct aq_hw_s *hw, u32 reg, u32 value);
- u64 aq_hw_read_reg64(struct aq_hw_s *hw, u32 reg);
- void aq_hw_write_reg64(struct aq_hw_s *hw, u32 reg, u64 value);
-+int aq_hw_invalidate_descriptor_cache(struct aq_hw_s *hw);
- int aq_hw_err_from_flags(struct aq_hw_s *hw);
- int aq_hw_num_tcs(struct aq_hw_s *hw);
- int aq_hw_q_per_tc(struct aq_hw_s *hw);
-diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
-index 15ede7285fb5d..b50c9b6dfb5bf 100644
---- a/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl/hw_atl_b0.c
-@@ -1198,26 +1198,9 @@ static int hw_atl_b0_hw_interrupt_moderation_set(struct aq_hw_s *self)
- 
- static int hw_atl_b0_hw_stop(struct aq_hw_s *self)
- {
--	int err;
--	u32 val;
--
- 	hw_atl_b0_hw_irq_disable(self, HW_ATL_B0_INT_MASK);
- 
--	/* Invalidate Descriptor Cache to prevent writing to the cached
--	 * descriptors and to the data pointer of those descriptors
--	 */
--	hw_atl_rdm_rx_dma_desc_cache_init_tgl(self);
--
--	err = aq_hw_err_from_flags(self);
--
--	if (err)
--		goto err_exit;
--
--	readx_poll_timeout_atomic(hw_atl_rdm_rx_dma_desc_cache_init_done_get,
--				  self, val, val == 1, 1000U, 10000U);
--
--err_exit:
--	return err;
-+	return aq_hw_invalidate_descriptor_cache(self);
- }
- 
- int hw_atl_b0_hw_ring_tx_stop(struct aq_hw_s *self, struct aq_ring_s *ring)
-diff --git a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
-index 5dfc751572edc..bc4e1b6035e08 100644
---- a/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
-+++ b/drivers/net/ethernet/aquantia/atlantic/hw_atl2/hw_atl2.c
-@@ -759,7 +759,7 @@ static int hw_atl2_hw_stop(struct aq_hw_s *self)
- {
- 	hw_atl_b0_hw_irq_disable(self, HW_ATL2_INT_MASK);
- 
--	return 0;
-+	return aq_hw_invalidate_descriptor_cache(self);
- }
- 
- static struct aq_stats_s *hw_atl2_utils_get_hw_stats(struct aq_hw_s *self)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+index 86545554abb4e..dae944d28ee26 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_dcbnl.c
+@@ -606,7 +606,7 @@ static int mlx5e_dcbnl_ieee_setmaxrate(struct net_device *netdev,
+ 						  MLX5E_100MB);
+ 			max_bw_value[i] = max_bw_value[i] ? max_bw_value[i] : 1;
+ 			max_bw_unit[i]  = MLX5_100_MBPS_UNIT;
+-		} else if (max_bw_value[i] <= upper_limit_gbps) {
++		} else if (maxrate->tc_maxrate[i] <= upper_limit_gbps) {
+ 			max_bw_value[i] = div_u64(maxrate->tc_maxrate[i],
+ 						  MLX5E_1GB);
+ 			max_bw_unit[i]  = MLX5_GBPS_UNIT;
 -- 
 2.51.0
 
