@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6E032571C;
-	Wed,  3 Dec 2025 15:48:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0213271F5;
+	Wed,  3 Dec 2025 15:49:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776937; cv=none; b=cyGCHJcVR5/FMNkDmFQj+bupXNJIvxbRtqiP9yqsrbgfTj8mLdJGwr5qMaj/N3J3OUwkFxQP4mSYm55fiN2UyFf5hmEbucHHEXpXf2QkiR1h7FFASpgTKSAOcZLdvuH7xNxrovffe+grVL51YCnbtMRqCg5iM9RmdsZKza84tsM=
+	t=1764776941; cv=none; b=op33tF6WPHLjscK/6cTCAjLb/ziwlB5MxWhn+TyrjIWc75MImikJB3/KMQRqILQ7RfDuKREXfubsYG5zUgttREaxVI6DOKMPjZyQaA5kEewGswPyQ6Z+XktbiSnI/DGVNlYOZwdzHNd0AMPWDKe/vUZlHT5V1lp7hSOAV7XOMjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776937; c=relaxed/simple;
-	bh=/kejqO0JdP+TbbpKf/rwInw8JbMQdU9NUCVjjB6ccRU=;
+	s=arc-20240116; t=1764776941; c=relaxed/simple;
+	bh=rdrSJ6u0LCcCXiDyPtzSEwmgX1fug5KB2CYaSgTU5Sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZsZoich6S5DUygpScRxqSCEmvtSX5Igs/yXgOQ9+mn4B+gbAzyQ22sRdjJaCVee2wfwBILVLofaecbD5NcvpWvBpfuBIY+IBd8k4GebFUaNQyHdo76L9qf07nbvL0TXG0iJNBv62vO6Qhq/yhXSLOGtLqoK+1/bDOqoEW/ot4Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2N6sPznz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FMNZAXpMmMvf1ZzeVHJlIS7vm31ndvhDBPaZnkLFwWWJlfBmL3cOW35x0p0jCL1PIwc96a2Aj3Fcbxuz5wJet47n+ypnqcwmvMJxIyVdn7S2QqW1hdgbiLDwDhXg1ojFQ1NsWPtQHoiiBhMIa3sPvgWF8NUpm0Z71Z6fizpNyKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U9N+SAwr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2N6sPznz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF73CC4CEF5;
-	Wed,  3 Dec 2025 15:48:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U9N+SAwr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66796C116C6;
+	Wed,  3 Dec 2025 15:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776937;
-	bh=/kejqO0JdP+TbbpKf/rwInw8JbMQdU9NUCVjjB6ccRU=;
+	s=korg; t=1764776940;
+	bh=rdrSJ6u0LCcCXiDyPtzSEwmgX1fug5KB2CYaSgTU5Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2N6sPznzlSNAyhSA9BI2NRLrhawAZ6wsnBIwqXfDv8vu3Tg1EoFF4ziKXjX8eXGk8
-	 0YiNU+iC1nL+PIkISoqRGkx6Ti/ox7pxOjewp7xC5M5wfki5kkKnLKwV95eSPyT+jy
-	 f4XlOyPCfE41yVGNwYgQ4boNZllD9FNbQpqGV8/A=
+	b=U9N+SAwrcphgW/2izbwsXV+/QItYQ2T/oEEjnDOfvv8kww9hgXO+Mwox744X8KTcm
+	 4F+1jX8NceJB6YAC3Pn7lt2f57fb2DD1BOBUATTmS8r3/tSKSJ/TC1CaC03nCGuBLe
+	 MabB0fUIGfqrPJdefy9LOxqQTa4Xx/dax3ICoam0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Wei Fang <wei.fang@nxp.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 031/146] net: fec: do not update PEROUT if it is enabled
-Date: Wed,  3 Dec 2025 16:26:49 +0100
-Message-ID: <20251203152347.612899443@linuxfoundation.org>
+Subject: [PATCH 6.17 032/146] net: fec: do not allow enabling PPS and PEROUT simultaneously
+Date: Wed,  3 Dec 2025 16:26:50 +0100
+Message-ID: <20251203152347.649470418@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -53,133 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit e97faa0c20ea8840f45569ba434e30538fff8fc9 ]
+[ Upstream commit c0a1f3d7e128e8d1b6c0fe09c68eac5ebcf677c8 ]
 
-If the previously set PEROUT is already active, updating it will cause
-the new PEROUT to start immediately instead of at the specified time.
-This is because fep->reload_period is updated whithout check whether
-the PEROUT is enabled, and the old PEROUT is not disabled. Therefore,
-the pulse period will be updated immediately in the pulse interrupt
-handler fec_pps_interrupt().
-
-Currently, the driver does not support directly updating PEROUT and it
-will make the logic be more complicated. To fix the current issue, add
-a check before enabling the PEROUT, the driver will return an error if
-PEROUT is enabled. If users wants to update a new PEROUT, they should
-disable the old PEROUT first.
+In the current driver, PPS and PEROUT use the same channel to generate
+the events, so they cannot be enabled at the same time. Otherwise, the
+later configuration will overwrite the earlier configuration. Therefore,
+when configuring PPS, the driver will check whether PEROUT is enabled.
+Similarly, when configuring PEROUT, the driver will check whether PPS
+is enabled.
 
 Fixes: 350749b909bf ("net: fec: Add support for periodic output signal of PPS")
 Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Link: https://patch.msgid.link/20251125085210.1094306-3-wei.fang@nxp.com
+Link: https://patch.msgid.link/20251125085210.1094306-4-wei.fang@nxp.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec.h     |  1 +
- drivers/net/ethernet/freescale/fec_ptp.c | 43 ++++++++++++++++++------
- 2 files changed, 34 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/freescale/fec_ptp.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/net/ethernet/freescale/fec.h b/drivers/net/ethernet/freescale/fec.h
-index 5c8fdcef759ba..2601e0b074dd6 100644
---- a/drivers/net/ethernet/freescale/fec.h
-+++ b/drivers/net/ethernet/freescale/fec.h
-@@ -680,6 +680,7 @@ struct fec_enet_private {
- 	unsigned int reload_period;
- 	int pps_enable;
- 	unsigned int next_counter;
-+	bool perout_enable;
- 	struct hrtimer perout_timer;
- 	u64 perout_stime;
- 
 diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
-index 7a5367ea94101..f31b1626c12f7 100644
+index f31b1626c12f7..ed5d59abeb537 100644
 --- a/drivers/net/ethernet/freescale/fec_ptp.c
 +++ b/drivers/net/ethernet/freescale/fec_ptp.c
-@@ -243,6 +243,7 @@ static int fec_ptp_pps_perout(struct fec_enet_private *fep)
- 	 * the FEC_TCCR register in time and missed the start time.
- 	 */
- 	if (fep->perout_stime < curr_time + 100 * NSEC_PER_MSEC) {
-+		fep->perout_enable = false;
- 		dev_err(&fep->pdev->dev, "Current time is too close to the start time!\n");
- 		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
- 		return -1;
-@@ -500,6 +501,7 @@ static int fec_ptp_pps_disable(struct fec_enet_private *fep, uint channel)
- 	hrtimer_cancel(&fep->perout_timer);
+@@ -128,6 +128,12 @@ static int fec_ptp_enable_pps(struct fec_enet_private *fep, uint enable)
  
  	spin_lock_irqsave(&fep->tmreg_lock, flags);
-+	fep->perout_enable = false;
- 	writel(0, fep->hwp + FEC_TCSR(channel));
- 	spin_unlock_irqrestore(&fep->tmreg_lock, flags);
  
-@@ -531,6 +533,8 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
- 
- 		return ret;
- 	} else if (rq->type == PTP_CLK_REQ_PEROUT) {
-+		u32 reload_period;
++	if (fep->perout_enable) {
++		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
++		dev_err(&fep->pdev->dev, "PEROUT is running");
++		return -EBUSY;
++	}
 +
- 		/* Reject requests with unsupported flags */
- 		if (rq->perout.flags)
- 			return -EOPNOTSUPP;
-@@ -550,12 +554,14 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
- 			return -EOPNOTSUPP;
- 		}
- 
--		fep->reload_period = div_u64(period_ns, 2);
--		if (on && fep->reload_period) {
-+		reload_period = div_u64(period_ns, 2);
-+		if (on && reload_period) {
-+			u64 perout_stime;
-+
- 			/* Convert 1588 timestamp to ns*/
- 			start_time.tv_sec = rq->perout.start.sec;
- 			start_time.tv_nsec = rq->perout.start.nsec;
--			fep->perout_stime = timespec64_to_ns(&start_time);
-+			perout_stime = timespec64_to_ns(&start_time);
- 
- 			mutex_lock(&fep->ptp_clk_mutex);
- 			if (!fep->ptp_clk_on) {
-@@ -564,18 +570,35 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
- 				return -EOPNOTSUPP;
+ 	if (fep->pps_enable == enable) {
+ 		spin_unlock_irqrestore(&fep->tmreg_lock, flags);
+ 		return 0;
+@@ -571,6 +577,12 @@ static int fec_ptp_enable(struct ptp_clock_info *ptp,
  			}
  			spin_lock_irqsave(&fep->tmreg_lock, flags);
-+
-+			if (fep->perout_enable) {
-+				dev_err(&fep->pdev->dev,
-+					"PEROUT has been enabled\n");
+ 
++			if (fep->pps_enable) {
++				dev_err(&fep->pdev->dev, "PPS is running");
 +				ret = -EBUSY;
 +				goto unlock;
 +			}
 +
- 			/* Read current timestamp */
- 			curr_time = timecounter_read(&fep->tc);
--			spin_unlock_irqrestore(&fep->tmreg_lock, flags);
--			mutex_unlock(&fep->ptp_clk_mutex);
-+			if (perout_stime <= curr_time) {
-+				dev_err(&fep->pdev->dev,
-+					"Start time must be greater than current time\n");
-+				ret = -EINVAL;
-+				goto unlock;
-+			}
- 
- 			/* Calculate time difference */
--			delta = fep->perout_stime - curr_time;
-+			delta = perout_stime - curr_time;
-+			fep->reload_period = reload_period;
-+			fep->perout_stime = perout_stime;
-+			fep->perout_enable = true;
- 
--			if (fep->perout_stime <= curr_time) {
--				dev_err(&fep->pdev->dev, "Start time must larger than current time!\n");
--				return -EINVAL;
--			}
-+unlock:
-+			spin_unlock_irqrestore(&fep->tmreg_lock, flags);
-+			mutex_unlock(&fep->ptp_clk_mutex);
-+
-+			if (ret)
-+				return ret;
- 
- 			/* Because the timer counter of FEC only has 31-bits, correspondingly,
- 			 * the time comparison register FEC_TCCR also only low 31 bits can be
+ 			if (fep->perout_enable) {
+ 				dev_err(&fep->pdev->dev,
+ 					"PEROUT has been enabled\n");
 -- 
 2.51.0
 
