@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74793570A7;
-	Wed,  3 Dec 2025 16:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B4E53570A7;
+	Wed,  3 Dec 2025 16:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780998; cv=none; b=Y02SEt83lSnPA2JYRwU4+HK3Zu8m+vGuHLvd8HhR5ApEtQcfzmdhV8Ds+VdhU7PsdaOAAikLQkUQ4HF66I1rof4j2w68G1igoUYr+33tLQuV8/R0mN7P4njgOTr5UKGq3ohLhddSnCUKon9PC8wUbL4nsTPdQEVs73PP1Ib89A4=
+	t=1764781002; cv=none; b=uYwtzOva9AJhVppOBsqymvLKwjNUi5fYAfo9upwmngJBBuT+SouQHMKhe8cW9ImPMTBFYahX+OrljSWSYbosKj489lsg2+DZYxecVounNIum24gBwDPaR0A3XxHK2vzFzQ5Z8wpn6VRTVJTJ+dy868i9DKrcmLKxJl7on8qVwmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780998; c=relaxed/simple;
-	bh=MSSxpK+yW9pDmBYRRnp0heT46746QOWBNHx18vfxtig=;
+	s=arc-20240116; t=1764781002; c=relaxed/simple;
+	bh=2vHUP3/wegvbWGJQCrnj9qho8F+/mTtFa4bYsqRoi7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J++YfQJ5vzuCvFpcTM8AIr6MY2K+8p2JhNzXDWE30w+9KUEECjkyEcY5aRMu1ZW60ImBPbgB0NTxylMddT4puG+2FGGsLc4A5nmUBbNl0OOWlSRl5OFVvyBN0Ke6TyxtNN/V+BvcFd0KP0DQb2hQ+4dLw2wA0aej3hDTQfkPdqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qMd69mIf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yn6TIGgxFVVRqQG7lLW6OFuiD6dskLbvgbTcD1GvykLXflBKDx3E4DpGjb+YTcFfT/qJI1wt3mGQOtGAoKHLGfTZ8mZ+qI4fQty2vq3JgRzLK3dDj+F3ALnU5ADWEIX0hlJ4LsKH+Rix1srvx6Qv/YR8iML0WeGO8wMURPv4/0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EZqnQAL7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qMd69mIf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0318C4CEF5;
-	Wed,  3 Dec 2025 16:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EZqnQAL7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA23C4CEF5;
+	Wed,  3 Dec 2025 16:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780998;
-	bh=MSSxpK+yW9pDmBYRRnp0heT46746QOWBNHx18vfxtig=;
+	s=korg; t=1764781001;
+	bh=2vHUP3/wegvbWGJQCrnj9qho8F+/mTtFa4bYsqRoi7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMd69mIfQoLiVFZ2QnUmvTtpG+AVPH4Lve1ZJJDt85kte/rpxI60ZkwF7qm5Yb4FB
-	 43qUlCeqve/ANBG9/I0BQ619wkiviBWhVh1yhDpUTFv8xo0RukXu5SgvbDCJeV5dAq
-	 gNcFcw0FqMO4D0REbk0Yb9E7pEzJNXGLo7tX14nk=
+	b=EZqnQAL77C9/7D56DmiRz48H8HVP2MmnZFhLP0lHbujTbz4N/pYfiB64BY/8uSrYi
+	 XvX8TjhAtrvr7WldKUT0eSk6Zd8GOZRTE34DPrlpiLQLNHw0lfu6PPpz1Dtl2EHkXg
+	 fxZBVbYGj19aAHRZv2r0SIXmt5XHBh6c4rn8NXYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 04/93] can: gs_usb: gs_usb_receive_bulk_callback(): check actual_length before accessing data
-Date: Wed,  3 Dec 2025 16:28:57 +0100
-Message-ID: <20251203152336.663417695@linuxfoundation.org>
+Subject: [PATCH 6.6 05/93] Bluetooth: hci_sock: Prevent race in socket write iter and sock bind
+Date: Wed,  3 Dec 2025 16:28:58 +0100
+Message-ID: <20251203152336.701516958@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -50,137 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 395d988f93861101ec89d0dd9e3b876ae9392a5b ]
+[ Upstream commit 89bb613511cc21ed5ba6bddc1c9b9ae9c0dad392 ]
 
-The URB received in gs_usb_receive_bulk_callback() contains a struct
-gs_host_frame. The length of the data after the header depends on the
-gs_host_frame hf::flags and the active device features (e.g. time
-stamping).
+There is a potential race condition between sock bind and socket write
+iter. bind may free the same cmd via mgmt_pending before write iter sends
+the cmd, just as syzbot reported in UAF[1].
 
-Introduce a new function gs_usb_get_minimum_length() and check that we have
-at least received the required amount of data before accessing it. Only
-copy the data to that skb that has actually been received.
+Here we use hci_dev_lock to synchronize the two, thereby avoiding the
+UAF mentioned in [1].
 
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20251114-gs_usb-fix-usb-callbacks-v1-3-a29b42eacada@pengutronix.de
-[mkl: rename gs_usb_get_minimum_length() -> +gs_usb_get_minimum_rx_length()]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+[1]
+syzbot reported:
+BUG: KASAN: slab-use-after-free in mgmt_pending_remove+0x3b/0x210 net/bluetooth/mgmt_util.c:316
+Read of size 8 at addr ffff888077164818 by task syz.0.17/5989
+Call Trace:
+ mgmt_pending_remove+0x3b/0x210 net/bluetooth/mgmt_util.c:316
+ set_link_security+0x5c2/0x710 net/bluetooth/mgmt.c:1918
+ hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
+ hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0x21c/0x270 net/socket.c:742
+ sock_write_iter+0x279/0x360 net/socket.c:1195
+
+Allocated by task 5989:
+ mgmt_pending_add+0x35/0x140 net/bluetooth/mgmt_util.c:296
+ set_link_security+0x557/0x710 net/bluetooth/mgmt.c:1910
+ hci_mgmt_cmd+0x9c9/0xef0 net/bluetooth/hci_sock.c:1719
+ hci_sock_sendmsg+0x6ca/0xef0 net/bluetooth/hci_sock.c:1839
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg+0x21c/0x270 net/socket.c:742
+ sock_write_iter+0x279/0x360 net/socket.c:1195
+
+Freed by task 5991:
+ mgmt_pending_free net/bluetooth/mgmt_util.c:311 [inline]
+ mgmt_pending_foreach+0x30d/0x380 net/bluetooth/mgmt_util.c:257
+ mgmt_index_removed+0x112/0x2f0 net/bluetooth/mgmt.c:9477
+ hci_sock_bind+0xbe9/0x1000 net/bluetooth/hci_sock.c:1314
+
+Fixes: 6fe26f694c82 ("Bluetooth: MGMT: Protect mgmt_pending list with its own lock")
+Reported-by: syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=9aa47cd4633a3cf92a80
+Tested-by: syzbot+9aa47cd4633a3cf92a80@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c | 59 +++++++++++++++++++++++++++++++++---
- 1 file changed, 54 insertions(+), 5 deletions(-)
+ net/bluetooth/hci_sock.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/can/usb/gs_usb.c b/drivers/net/can/usb/gs_usb.c
-index e786616d167b8..72997312c9567 100644
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -258,6 +258,11 @@ struct canfd_quirk {
- 	u8 quirk;
- } __packed;
+diff --git a/net/bluetooth/hci_sock.c b/net/bluetooth/hci_sock.c
+index d2613bd3e6db0..8b3ef088ed14e 100644
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -1304,7 +1304,9 @@ static int hci_sock_bind(struct socket *sock, struct sockaddr *addr,
+ 			goto done;
+ 		}
  
-+/* struct gs_host_frame::echo_id == GS_HOST_FRAME_ECHO_ID_RX indicates
-+ * a regular RX'ed CAN frame
-+ */
-+#define GS_HOST_FRAME_ECHO_ID_RX 0xffffffff
-+
- struct gs_host_frame {
- 	struct_group(header,
- 		u32 echo_id;
-@@ -567,6 +572,37 @@ gs_usb_get_echo_skb(struct gs_can *dev, struct sk_buff *skb,
- 	return len;
- }
++		hci_dev_lock(hdev);
+ 		mgmt_index_removed(hdev);
++		hci_dev_unlock(hdev);
  
-+static unsigned int
-+gs_usb_get_minimum_rx_length(const struct gs_can *dev, const struct gs_host_frame *hf,
-+			     unsigned int *data_length_p)
-+{
-+	unsigned int minimum_length, data_length = 0;
-+
-+	if (hf->flags & GS_CAN_FLAG_FD) {
-+		if (hf->echo_id == GS_HOST_FRAME_ECHO_ID_RX)
-+			data_length = can_fd_dlc2len(hf->can_dlc);
-+
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			/* timestamp follows data field of max size */
-+			minimum_length = struct_size(hf, canfd_ts, 1);
-+		else
-+			minimum_length = sizeof(hf->header) + data_length;
-+	} else {
-+		if (hf->echo_id == GS_HOST_FRAME_ECHO_ID_RX &&
-+		    !(hf->can_id & cpu_to_le32(CAN_RTR_FLAG)))
-+			data_length = can_cc_dlc2len(hf->can_dlc);
-+
-+		if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
-+			/* timestamp follows data field of max size */
-+			minimum_length = struct_size(hf, classic_can_ts, 1);
-+		else
-+			minimum_length = sizeof(hf->header) + data_length;
-+	}
-+
-+	*data_length_p = data_length;
-+	return minimum_length;
-+}
-+
- static void gs_usb_receive_bulk_callback(struct urb *urb)
- {
- 	struct gs_usb *parent = urb->context;
-@@ -575,7 +611,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	int rc;
- 	struct net_device_stats *stats;
- 	struct gs_host_frame *hf = urb->transfer_buffer;
--	unsigned int minimum_length;
-+	unsigned int minimum_length, data_length;
- 	struct gs_tx_context *txc;
- 	struct can_frame *cf;
- 	struct canfd_frame *cfd;
-@@ -618,20 +654,33 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 	if (!netif_running(netdev))
- 		goto resubmit_urb;
- 
--	if (hf->echo_id == -1) { /* normal rx */
-+	minimum_length = gs_usb_get_minimum_rx_length(dev, hf, &data_length);
-+	if (urb->actual_length < minimum_length) {
-+		stats->rx_errors++;
-+		stats->rx_length_errors++;
-+
-+		if (net_ratelimit())
-+			netdev_err(netdev,
-+				   "short read (actual_length=%u, minimum_length=%u)\n",
-+				   urb->actual_length, minimum_length);
-+
-+		goto resubmit_urb;
-+	}
-+
-+	if (hf->echo_id == GS_HOST_FRAME_ECHO_ID_RX) { /* normal rx */
- 		if (hf->flags & GS_CAN_FLAG_FD) {
- 			skb = alloc_canfd_skb(netdev, &cfd);
- 			if (!skb)
- 				return;
- 
- 			cfd->can_id = le32_to_cpu(hf->can_id);
--			cfd->len = can_fd_dlc2len(hf->can_dlc);
-+			cfd->len = data_length;
- 			if (hf->flags & GS_CAN_FLAG_BRS)
- 				cfd->flags |= CANFD_BRS;
- 			if (hf->flags & GS_CAN_FLAG_ESI)
- 				cfd->flags |= CANFD_ESI;
- 
--			memcpy(cfd->data, hf->canfd->data, cfd->len);
-+			memcpy(cfd->data, hf->canfd->data, data_length);
- 		} else {
- 			skb = alloc_can_skb(netdev, &cf);
- 			if (!skb)
-@@ -640,7 +689,7 @@ static void gs_usb_receive_bulk_callback(struct urb *urb)
- 			cf->can_id = le32_to_cpu(hf->can_id);
- 			can_frame_set_cc_len(cf, hf->can_dlc, dev->can.ctrlmode);
- 
--			memcpy(cf->data, hf->classic_can->data, 8);
-+			memcpy(cf->data, hf->classic_can->data, data_length);
- 
- 			/* ERROR frames tell us information about the controller */
- 			if (le32_to_cpu(hf->can_id) & CAN_ERR_FLAG)
+ 		err = hci_dev_open(hdev->id);
+ 		if (err) {
 -- 
 2.51.0
 
