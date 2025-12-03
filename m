@@ -1,163 +1,190 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CA6376BCE;
-	Wed,  3 Dec 2025 16:48:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B713148CD
+	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 16:48:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780497; cv=none; b=ejWjU1dCFWsSbFh76C45nDzvpu3Y0r5RLODS/XSpzaBkCHsxl5r9FPbnlcjszvyl24L9H2MWNXl6nAC9NDAMbEaXzo2IdZpAiSeQ1ze/voT3aZL+iMjmev98abAgtywyrOH+ZxdhjkPAGfr+sVQ3Kopj0ezD6kQmXcaHvTlc9rM=
+	t=1764780498; cv=none; b=qrIBh5IzXIhVTCmZ+2FNv9ImLEtg/tyyWV8GrEjiyjzRKeAgx8WSam8uYcXgp8kb30ir+QdhBrma6BxThWU9PDJaHXjqNlp73Uj3LADCY7JrJisQ3QDaPYebOMHaX0mxjczymlow2BOHASfk22TsplvNBqVbJRh3JJpApZheZWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780497; c=relaxed/simple;
-	bh=rHrFaV1o2L3n++sW5yOStA6A389wyXqXWlYwv8tACQs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gl7l6EfxcZS0+sd3A3/drecw2sXkNb10B/q1uVold+dX+oTn2FtL38zD/ZokXV4oVZmv8GDc4O2RQSGZQ1B/w7E/jhoWCvL0erHFaPna+e4eoQMK1SreswIFVNr1aZCUuuuqjptT6kyuP/gmbHswPCt+X3T2DZsFOzGigfBhWAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuPGvEEi; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764780498; c=relaxed/simple;
+	bh=oxau6eDveYWaz/EjGdZfCMTH0+2DX3glMxo4bJIV3yk=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=C5a0+G0/YxNYGneenF9sYVTEO4xLtkqGb6NqQTLP1BeLTBFu3DQ0JPr+k65HxVMvCKs/25AAIsofEp/6Ua//smh9xI8+Nsm88iFFz6fR0R05XkKnIlx171J+Nd6MkpdmBpRaP2E+9Q4YmuBqQF9ec0jvoG1nekqfr5SU6aUyBl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=n9xuJeZh; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=tB+sKH98; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=n9xuJeZh; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=tB+sKH98; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuPGvEEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32F5C4CEF5;
-	Wed,  3 Dec 2025 16:48:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780497;
-	bh=rHrFaV1o2L3n++sW5yOStA6A389wyXqXWlYwv8tACQs=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuPGvEEiDCr3oTWuo4j7xA28rjDO9DA9tXJe6KiE7uA1hgBNiYhU/pzrEVjl92GzN
-	 QPtSuArLppI979OKSRTh2YPdGb7r6OHEepVJfEEcyf1gVVfwF2uoMJyz+mWkrUjuG8
-	 zKP4Jer/qsLrOHRKF7EYXNnoDRWCnCxgSpImBWX4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="n9xuJeZh";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="tB+sKH98";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="n9xuJeZh";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="tB+sKH98"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 07B8A33724;
+	Wed,  3 Dec 2025 16:48:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1764780494; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I+s/foWkzpPy6jsmhSOz94twtb5X2L/oL9LWMEW7BFs=;
+	b=n9xuJeZhmQAe8ry7hikcCzzm5vkT7PrOEPES/RR3glrPl1SkJYmfx+9laRrqOG7hAZumJ5
+	Sn9JV0P/CNic3ID1sU6nY+Sme82OZGwxbN+qtw55S099cspOGhr3MkbCM+XgCDrejsxTmp
+	FqHYy9/z7Xc0DDF8mAwMYO+iygf+yAY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1764780494;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I+s/foWkzpPy6jsmhSOz94twtb5X2L/oL9LWMEW7BFs=;
+	b=tB+sKH98XYhQr9EHhnURbCRa6Mmf9ZTlwsQaa89Ohz9lhag4nKliMekKxYAH+qFzEiZSE1
+	sTYkQRAuauPURoDQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=n9xuJeZh;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=tB+sKH98
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1764780494; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I+s/foWkzpPy6jsmhSOz94twtb5X2L/oL9LWMEW7BFs=;
+	b=n9xuJeZhmQAe8ry7hikcCzzm5vkT7PrOEPES/RR3glrPl1SkJYmfx+9laRrqOG7hAZumJ5
+	Sn9JV0P/CNic3ID1sU6nY+Sme82OZGwxbN+qtw55S099cspOGhr3MkbCM+XgCDrejsxTmp
+	FqHYy9/z7Xc0DDF8mAwMYO+iygf+yAY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1764780494;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=I+s/foWkzpPy6jsmhSOz94twtb5X2L/oL9LWMEW7BFs=;
+	b=tB+sKH98XYhQr9EHhnURbCRa6Mmf9ZTlwsQaa89Ohz9lhag4nKliMekKxYAH+qFzEiZSE1
+	sTYkQRAuauPURoDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D07253EA63;
+	Wed,  3 Dec 2025 16:48:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id RMi+Mc1pMGkNJgAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Wed, 03 Dec 2025 16:48:13 +0000
+Date: Wed, 03 Dec 2025 17:48:13 +0100
+Message-ID: <878qfjse9e.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jimmy Hu <hhhuuu@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 565/568] usb: gadget: udc: fix use-after-free in usb_gadget_state_work
-Date: Wed,  3 Dec 2025 16:29:27 +0100
-Message-ID: <20251203152501.443350549@linuxfoundation.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
+	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: Re: [PATCH 6.1 406/568] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
+In-Reply-To: <20251203152455.557940099@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	<20251203152455.557940099@linuxfoundation.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/30.1 Mule/6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	ARC_NA(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	RCVD_TLS_ALL(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TAGGED_RCPT(0.00)[bfd77469c8966de076f7];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,appspotmail.com:email,syzkaller.appspot.com:url,suse.de:email,suse.de:dkim,suse.de:mid,msgid.link:url,windriver.com:email];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spam-Level: 
+X-Rspamd-Queue-Id: 07B8A33724
+X-Spam-Flag: NO
+X-Spam-Score: -2.01
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On Wed, 03 Dec 2025 16:26:48 +0100,
+Greg Kroah-Hartman wrote:
+> 
+> 6.1-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Takashi Iwai <tiwai@suse.de>
+> 
+> commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf upstream.
+> 
+> The PCM stream data in USB-audio driver is transferred over USB URB
+> packet buffers, and each packet size is determined dynamically.  The
+> packet sizes are limited by some factors such as wMaxPacketSize USB
+> descriptor.  OTOH, in the current code, the actually used packet sizes
+> are determined only by the rate and the PPS, which may be bigger than
+> the size limit above.  This results in a buffer overflow, as reported
+> by syzbot.
+> 
+> Basically when the limit is smaller than the calculated packet size,
+> it implies that something is wrong, most likely a weird USB
+> descriptor.  So the best option would be just to return an error at
+> the parameter setup time before doing any further operations.
+> 
+> This patch introduces such a sanity check, and returns -EINVAL when
+> the packet size is greater than maxpacksize.  The comparison with
+> ep->packsize[1] alone should suffice since it's always equal or
+> greater than ep->packsize[0].
+> 
+> Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
+> Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
+> Cc: Lizhi Xu <lizhi.xu@windriver.com>
+> Cc: <stable@vger.kernel.org>
+> Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  sound/usb/endpoint.c |    5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> --- a/sound/usb/endpoint.c
+> +++ b/sound/usb/endpoint.c
+> @@ -1379,6 +1379,11 @@ int snd_usb_endpoint_set_params(struct s
+>  	ep->sample_rem = ep->cur_rate % ep->pps;
+>  	ep->packsize[0] = ep->cur_rate / ep->pps;
+>  	ep->packsize[1] = (ep->cur_rate + (ep->pps - 1)) / ep->pps;
+> +	if (ep->packsize[1] > ep->maxpacksize) {
+> +		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
+> +			      ep->maxpacksize, ep->cur_rate, ep->pps);
+> +		return -EINVAL;
+> +	}
+>  
+>  	/* calculate the frequency in 16.16 format */
+>  	ep->freqm = ep->freqn;
 
-------------------
-
-From: Jimmy Hu <hhhuuu@google.com>
-
-[ Upstream commit baeb66fbd4201d1c4325074e78b1f557dff89b5b ]
-
-A race condition during gadget teardown can lead to a use-after-free
-in usb_gadget_state_work(), as reported by KASAN:
-
-  BUG: KASAN: invalid-access in sysfs_notify+0x2c/0xd0
-  Workqueue: events usb_gadget_state_work
-
-The fundamental race occurs because a concurrent event (e.g., an
-interrupt) can call usb_gadget_set_state() and schedule gadget->work
-at any time during the cleanup process in usb_del_gadget().
-
-Commit 399a45e5237c ("usb: gadget: core: flush gadget workqueue after
-device removal") attempted to fix this by moving flush_work() to after
-device_del(). However, this does not fully solve the race, as a new
-work item can still be scheduled *after* flush_work() completes but
-before the gadget's memory is freed, leading to the same use-after-free.
-
-This patch fixes the race condition robustly by introducing a 'teardown'
-flag and a 'state_lock' spinlock to the usb_gadget struct. The flag is
-set during cleanup in usb_del_gadget() *before* calling flush_work() to
-prevent any new work from being scheduled once cleanup has commenced.
-The scheduling site, usb_gadget_set_state(), now checks this flag under
-the lock before queueing the work, thus safely closing the race window.
-
-Fixes: 5702f75375aa9 ("usb: gadget: udc-core: move sysfs_notify() to a workqueue")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Link: https://patch.msgid.link/20251023054945.233861-1-hhhuuu@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/gadget/udc/core.c |   17 ++++++++++++++++-
- include/linux/usb/gadget.h    |    5 +++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
-
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -1121,8 +1121,13 @@ static void usb_gadget_state_work(struct
- void usb_gadget_set_state(struct usb_gadget *gadget,
- 		enum usb_device_state state)
- {
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&gadget->state_lock, flags);
- 	gadget->state = state;
--	schedule_work(&gadget->work);
-+	if (!gadget->teardown)
-+		schedule_work(&gadget->work);
-+	spin_unlock_irqrestore(&gadget->state_lock, flags);
- 	trace_usb_gadget_set_state(gadget, 0);
- }
- EXPORT_SYMBOL_GPL(usb_gadget_set_state);
-@@ -1356,6 +1361,8 @@ static void usb_udc_nop_release(struct d
- void usb_initialize_gadget(struct device *parent, struct usb_gadget *gadget,
- 		void (*release)(struct device *dev))
- {
-+	spin_lock_init(&gadget->state_lock);
-+	gadget->teardown = false;
- 	INIT_WORK(&gadget->work, usb_gadget_state_work);
- 	gadget->dev.parent = parent;
- 
-@@ -1530,6 +1537,7 @@ EXPORT_SYMBOL_GPL(usb_add_gadget_udc);
- void usb_del_gadget(struct usb_gadget *gadget)
- {
- 	struct usb_udc *udc = gadget->udc;
-+	unsigned long flags;
- 
- 	if (!udc)
- 		return;
-@@ -1543,6 +1551,13 @@ void usb_del_gadget(struct usb_gadget *g
- 	kobject_uevent(&udc->dev.kobj, KOBJ_REMOVE);
- 	sysfs_remove_link(&udc->dev.kobj, "gadget");
- 	device_del(&gadget->dev);
-+	/*
-+	 * Set the teardown flag before flushing the work to prevent new work
-+	 * from being scheduled while we are cleaning up.
-+	 */
-+	spin_lock_irqsave(&gadget->state_lock, flags);
-+	gadget->teardown = true;
-+	spin_unlock_irqrestore(&gadget->state_lock, flags);
- 	flush_work(&gadget->work);
- 	ida_free(&gadget_id_numbers, gadget->id_number);
- 	cancel_work_sync(&udc->vbus_work);
---- a/include/linux/usb/gadget.h
-+++ b/include/linux/usb/gadget.h
-@@ -373,6 +373,9 @@ struct usb_gadget_ops {
-  *	can handle. The UDC must support this and all slower speeds and lower
-  *	number of lanes.
-  * @state: the state we are now (attached, suspended, configured, etc)
-+ * @state_lock: Spinlock protecting the `state` and `teardown` members.
-+ * @teardown: True if the device is undergoing teardown, used to prevent
-+ *	new work from being scheduled during cleanup.
-  * @name: Identifies the controller hardware type.  Used in diagnostics
-  *	and sometimes configuration.
-  * @dev: Driver model state for this abstract device.
-@@ -448,6 +451,8 @@ struct usb_gadget {
- 	enum usb_ssp_rate		max_ssp_rate;
- 
- 	enum usb_device_state		state;
-+	spinlock_t			state_lock;
-+	bool				teardown;
- 	const char			*name;
- 	struct device			dev;
- 	unsigned			isoch_delay;
+This one requires the same workaround again, just as mentioned for
+5.15.y:
+  https://lore.kernel.org/87ecpbsfbj.wl-tiwai@suse.de 
 
 
+thanks,
+
+Takashi
