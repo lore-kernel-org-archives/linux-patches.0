@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493872FF179;
-	Wed,  3 Dec 2025 15:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911FC1A2C25;
+	Wed,  3 Dec 2025 15:34:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776053; cv=none; b=XHIUUBiXxgGvDWT+wV/DnFWA/sAy6J+z1wydIR7emqh597XRC+nwpKjB+f9YxtRlVG36uKhOfOpTajSxxOGidlOs1uoMp76ns8HTAOyA2jK4VOfgG5eWjtWc1iAblb9hm+54Kp3AJ3wpkSYRu+yWAib7Z1pVAQDLxVem+jgn75Q=
+	t=1764776057; cv=none; b=AdnAW79tNKUXuymlmsYzmU8DtLpf7ooCDnJA8KKzV7zFxg39CZbiomHIdmqDkC6H047RYYJ7+QH38KsH8z7BEdKGt7ZIhkjW44cxRCwyTFhl9GAZBIY64aUIcv30fl3OF8wmqfIbo39OebdJhZ15MnRh3zxVqGcxYe1/CPXAkco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776053; c=relaxed/simple;
-	bh=WoKMF2SLzGPcmIaSlSrGzyeola7PEKlG/SpjXt8tmro=;
+	s=arc-20240116; t=1764776057; c=relaxed/simple;
+	bh=mygK41qAGbgLv0I9VrTwg/jn3fpp72IHgWAwvrZd0Xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bWwRuzC/3EYWUZG7JGMXDkZsbJWU0DrnD+LnSzNNACB+O4yObrKI20+qsKD+pP6N3pMLOBeiGFR1auom7M21r7ZaZdw6V6BTs7riKLKkdjyGBLVSB4QZ6xE1kHXc1QjWNH8ZCr0UX5hh0MzLLbKvo/zIJkOapNaZmg4hexTEC3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0yDQhIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fnx3sQQkXUcfDMtEvNboLHEk+vaEx84k+6EgqoeJ4WrfnDw9aPO3HB1iAI3pHMtnBKGmQx3dYXxzoo3OMs9Hqi+V8F4prUq5Hnh/rezcUGjtTVkrMT+6yCWL+EXXRk1lm1dTXnk2V57vx3DPDbedz4FiLFDgSO0DRkJx7n48UeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nlQO1QvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0yDQhIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915BEC4CEF5;
-	Wed,  3 Dec 2025 15:34:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nlQO1QvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4695AC4CEF5;
+	Wed,  3 Dec 2025 15:34:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776053;
-	bh=WoKMF2SLzGPcmIaSlSrGzyeola7PEKlG/SpjXt8tmro=;
+	s=korg; t=1764776056;
+	bh=mygK41qAGbgLv0I9VrTwg/jn3fpp72IHgWAwvrZd0Xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0yDQhIl9EfYBH1ukkmSXebSYairDakOvZr2E6d6vpv2zwcdPXa43FJwiIBRNUQz6
-	 9th5f/KgJJOf88N1t8hTrxlnJCmDf6+hHPJ2xvPhDe60aZKO4Xi2XRX/L3+EVYk2hO
-	 sH6264jhiFcD41su0TMO+jFCOou4JgLIy34uuj+g=
+	b=nlQO1QvWk73zdn3mtJpbzMv/J0Z5y2UOyQNHx69hDfaMFPdnefy62yTMsJkAYhpCd
+	 6572DwLpzK13/y3Bdjug582mDVDlKJUQaDY4Rf8kh25LL+daxGdq2UWDfe9CwPXrr6
+	 mSOI7RlEv/R3l+O7NlIH65jWC4chlj1b07BapB2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	"H. Peter Anvin (Intel)" <hpa@zytor.com>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.10 033/300] x86/boot: Compile boot code with -std=gnu11 too
-Date: Wed,  3 Dec 2025 16:23:57 +0100
-Message-ID: <20251203152401.688382185@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.10 034/300] arch: back to -std=gnu89 in < v5.18
+Date: Wed,  3 Dec 2025 16:23:58 +0100
+Message-ID: <20251203152401.725896224@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -55,68 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit b3bee1e7c3f2b1b77182302c7b2131c804175870 upstream.
+Recent fixes have been backported to < v5.18 to fix build issues with
+GCC 5.15. They all force -std=gnu11 in the CFLAGS, "because [the kernel]
+requests the gnu11 standard via '-std=' in the main Makefile".
 
-Use -std=gnu11 for consistency with main kernel code.
+This is true for >= 5.18 versions, but not before. This switch to
+-std=gnu11 has been done in commit e8c07082a810 ("Kbuild: move to
+-std=gnu11").
 
-It doesn't seem to change anything in vmlinux.
+For a question of uniformity, force -std=gnu89, similar to what is done
+in the main Makefile.
 
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: H. Peter Anvin (Intel) <hpa@zytor.com>
-Link: https://lore.kernel.org/r/2058761e-12a4-4b2f-9690-3c3c1c9902a5@p183
-[ This kernel version doesn't build with GCC 15:
+Note: the fixes tags below refers to upstream commits, but this fix is
+only for kernels not having commit e8c07082a810 ("Kbuild: move to
+-std=gnu11").
 
-    In file included from include/uapi/linux/posix_types.h:5,
-                     from include/uapi/linux/types.h:14,
-                     from include/linux/types.h:6,
-                     from arch/x86/realmode/rm/wakeup.h:11,
-                     from arch/x86/realmode/rm/wakemain.c:2:
-    include/linux/stddef.h:11:9: error: cannot use keyword 'false' as enumeration constant
-       11 |         false   = 0,
-          |         ^~~~~
-    include/linux/stddef.h:11:9: note: 'false' is a keyword with '-std=c23' onwards
-    include/linux/types.h:30:33: error: 'bool' cannot be defined via 'typedef'
-       30 | typedef _Bool                   bool;
-          |                                 ^~~~
-    include/linux/types.h:30:33: note: 'bool' is a keyword with '-std=c23' onwards
-    include/linux/types.h:30:1: warning: useless type name in empty declaration
-       30 | typedef _Bool                   bool;
-          | ^~~~~~~
-
-  The fix is similar to commit ee2ab467bddf ("x86/boot: Use '-std=gnu11'
-  to fix build with GCC 15") which has been backported to this kernel.
-
-  Note: In < 5.18 version, -std=gnu89 is used instead of -std=gnu11, see
-  commit e8c07082a810 ("Kbuild: move to -std=gnu11"). I suggest not to
-  modify that in this commit here as all the other similar fixes to
-  support GCC 15 set -std=gnu11. This can be done in a dedicated commit
-  if needed.
-  There was a conflict, because commit 2838307b019d ("x86/build: Remove
-  -m16 workaround for unsupported versions of GCC") is not in this
-  version and change code in the context. -std=gnu11 can still be added
-  at the same place. ]
+Fixes: 7cbb015e2d3d ("parisc: fix building with gcc-15")
+Fixes: 3b8b80e99376 ("s390: Add '-std=gnu11' to decompressor and purgatory CFLAGS")
+Fixes: b3bee1e7c3f2 ("x86/boot: Compile boot code with -std=gnu11 too")
+Fixes: ee2ab467bddf ("x86/boot: Use '-std=gnu11' to fix build with GCC 15")
+Fixes: 8ba14d9f490a ("efi: libstub: Use '-std=gnu11' to fix build with GCC 15")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
 Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/boot/compressed/Makefile  |    2 +-
+ arch/s390/Makefile                    |    2 +-
+ arch/s390/purgatory/Makefile          |    2 +-
+ arch/x86/Makefile                     |    2 +-
+ arch/x86/boot/compressed/Makefile     |    2 +-
+ drivers/firmware/efi/libstub/Makefile |    2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
+--- a/arch/parisc/boot/compressed/Makefile
++++ b/arch/parisc/boot/compressed/Makefile
+@@ -22,7 +22,7 @@ KBUILD_CFLAGS += -fno-PIE -mno-space-reg
+ ifndef CONFIG_64BIT
+ KBUILD_CFLAGS += -mfast-indirect-calls
+ endif
+-KBUILD_CFLAGS += -std=gnu11
++KBUILD_CFLAGS += -std=gnu89
+ 
+ OBJECTS += $(obj)/head.o $(obj)/real2.o $(obj)/firmware.o $(obj)/misc.o $(obj)/piggy.o
+ 
+--- a/arch/s390/Makefile
++++ b/arch/s390/Makefile
+@@ -23,7 +23,7 @@ endif
+ aflags_dwarf	:= -Wa,-gdwarf-2
+ KBUILD_AFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -D__ASSEMBLY__
+ KBUILD_AFLAGS_DECOMPRESSOR += $(if $(CONFIG_DEBUG_INFO),$(aflags_dwarf))
+-KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -std=gnu11
++KBUILD_CFLAGS_DECOMPRESSOR := $(CLANG_FLAGS) -m64 -O2 -std=gnu89
+ KBUILD_CFLAGS_DECOMPRESSOR += -DDISABLE_BRANCH_PROFILING -D__NO_FORTIFY
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-delete-null-pointer-checks -msoft-float
+ KBUILD_CFLAGS_DECOMPRESSOR += -fno-asynchronous-unwind-tables
+--- a/arch/s390/purgatory/Makefile
++++ b/arch/s390/purgatory/Makefile
+@@ -20,7 +20,7 @@ GCOV_PROFILE := n
+ UBSAN_SANITIZE := n
+ KASAN_SANITIZE := n
+ 
+-KBUILD_CFLAGS := -std=gnu11 -fno-strict-aliasing -Wall -Wstrict-prototypes
++KBUILD_CFLAGS := -std=gnu89 -fno-strict-aliasing -Wall -Wstrict-prototypes
+ KBUILD_CFLAGS += -Wno-pointer-sign -Wno-sign-compare
+ KBUILD_CFLAGS += -fno-zero-initialized-in-bss -fno-builtin -ffreestanding
+ KBUILD_CFLAGS += -c -MD -Os -m64 -msoft-float -fno-common
 --- a/arch/x86/Makefile
 +++ b/arch/x86/Makefile
 @@ -31,7 +31,7 @@ endif
  CODE16GCC_CFLAGS := -m32 -Wa,$(srctree)/arch/x86/boot/code16gcc.h
  M16_CFLAGS	 := $(call cc-option, -m16, $(CODE16GCC_CFLAGS))
  
--REALMODE_CFLAGS	:= $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
-+REALMODE_CFLAGS	:= -std=gnu11 $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
+-REALMODE_CFLAGS	:= -std=gnu11 $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
++REALMODE_CFLAGS	:= -std=gnu89 $(M16_CFLAGS) -g -Os -DDISABLE_BRANCH_PROFILING -D__DISABLE_EXPORTS \
  		   -Wall -Wstrict-prototypes -march=i386 -mregparm=3 \
  		   -fno-strict-aliasing -fomit-frame-pointer -fno-pic \
  		   -mno-mmx -mno-sse $(call cc-option,-fcf-protection=none)
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -33,7 +33,7 @@ targets := vmlinux vmlinux.bin vmlinux.b
+ # avoid errors with '-march=i386', and future flags may depend on the target to
+ # be valid.
+ KBUILD_CFLAGS := -m$(BITS) -O2 $(CLANG_FLAGS)
+-KBUILD_CFLAGS += -std=gnu11
++KBUILD_CFLAGS += -std=gnu89
+ KBUILD_CFLAGS += -fno-strict-aliasing -fPIE
+ KBUILD_CFLAGS += -DDISABLE_BRANCH_PROFILING
+ cflags-$(CONFIG_X86_32) := -march=i386
+--- a/drivers/firmware/efi/libstub/Makefile
++++ b/drivers/firmware/efi/libstub/Makefile
+@@ -7,7 +7,7 @@
+ #
+ cflags-$(CONFIG_X86_32)		:= -march=i386
+ cflags-$(CONFIG_X86_64)		:= -mcmodel=small
+-cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu11 \
++cflags-$(CONFIG_X86)		+= -m$(BITS) -D__KERNEL__ -std=gnu89 \
+ 				   -fPIC -fno-strict-aliasing -mno-red-zone \
+ 				   -mno-mmx -mno-sse -fshort-wchar \
+ 				   -Wno-pointer-sign \
 
 
