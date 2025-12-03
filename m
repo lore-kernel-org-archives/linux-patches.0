@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B886F36827D;
-	Wed,  3 Dec 2025 16:45:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E635936A00B;
+	Wed,  3 Dec 2025 16:45:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780333; cv=none; b=LMZ4IMZqpPS2XkFVufxvzYmStCWE7tsvtbSdmwsanhGx3o/sQ3VqJJM9AtJODu761oek6d6EBSbHNye2uYfoA7cbTEDAWcCqzYf5IIxaA+tk1iQ7eDfMhck0ohppCEHsvf9UYg0ewAwa1wenklwfL9sPIK1vIOeG/ZddBIgPEMc=
+	t=1764780337; cv=none; b=Bs3WtU4WXkYpIqgaOzAXurCqjODnsfARAIFvDXBQRPSW7GrdmTQWl/dadZHqmNn4W6OVlNtMohEXRu4/FQi/mw0eFhXbYq6Mgce9goiNENGeNJyOAS9feLmeD+wKJuBEl/BpdLhohlnsv9h2LnJTH4wXzq++xcFQdoj3kJAgq3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780333; c=relaxed/simple;
-	bh=2VwDW8lwXh7P+lJ241yaYt0iuDDeANJBeEY0z5Rt+ko=;
+	s=arc-20240116; t=1764780337; c=relaxed/simple;
+	bh=lIeA/RyiwzPU1wMyTelhWt5LzqrDc3AoU4SzBwX3E1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKIzBPx9vWT1TUxhW0s+FlTSEnIgaA+wRVuFHDGwHe+G/yLk6OzYTBMbf1c4MMCWmwpqgh4hh7aPQjSQ5j1luMntJ0NpLcS1aM9cpK0kgiMQDqSBRzcyJCCg8uDH/E60bEMQ79NHDDyhC2nzHxHGqXeRd91M/ugXpMDYUa196CM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZKcjOirW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IsZDrSAh/aCPwsoLILYNZlnenI4+kV2xA0pTChdSNk3ujfkrqLDGsYLv9xwxYi++Spg2b3iFjppblkR0hlrrSmcy0/cn64VtirKceJdAZflWX1WlrV76+zDGDt3VTP2wUevx7ncYlZ6fHmWaQ+UXcwQ5xcOelrn7yvxnD1pfTl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GC+XGrNv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZKcjOirW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D166FC4CEF5;
-	Wed,  3 Dec 2025 16:45:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GC+XGrNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF3AC4CEF5;
+	Wed,  3 Dec 2025 16:45:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780333;
-	bh=2VwDW8lwXh7P+lJ241yaYt0iuDDeANJBeEY0z5Rt+ko=;
+	s=korg; t=1764780336;
+	bh=lIeA/RyiwzPU1wMyTelhWt5LzqrDc3AoU4SzBwX3E1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKcjOirWt9FCkuWso7cTG34sevHtD3BUZYXCN8NJqklDXEM7soHVrwUkJ5s1lQpLc
-	 LGWBXJReaADxB89ke8QnSZZKhbozHddt2K027jm0tXygkLs8hgtL7gUu5H10t3SQYu
-	 yXW0Hfq6Ol96LViYWQFrPoeWnhD7LWct8HnattzY=
+	b=GC+XGrNvnS/iwPv853HovH/rJn3HoVfNQPSmbK2j9z41imwtFV53dmFc/mH6Nyrhp
+	 O8Ex2i8Ol0d2V6Hg3LkY26bKuJX6j+hwSoXUVdRmsAXNKwRqwWGMb/KmyVmmE+RArw
+	 azKwWheJ6HPvqYkuxpF8HrxWFl4ERMB3quBp0nOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Zhaldak <i.v.zhaldak@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 524/568] ALSA: usb-audio: Add DSD quirk for LEAK Stereo 230
-Date: Wed,  3 Dec 2025 16:28:46 +0100
-Message-ID: <20251203152459.906318660@linuxfoundation.org>
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 525/568] atm/fore200e: Fix possible data race in fore200e_open()
+Date: Wed,  3 Dec 2025 16:28:47 +0100
+Message-ID: <20251203152459.942765757@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,46 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Zhaldak <i.v.zhaldak@gmail.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-commit c83fc13960643c4429cd9dfef1321e6430a81b47 upstream.
+commit 82fca3d8a4a34667f01ec2351a607135249c9cff upstream.
 
-Integrated amplifier LEAK Stereo 230 by IAG Limited has built-in
-ESS9038Q2M DAC served by XMOS controller. It supports both DSD Native
-and DSD-over-PCM (DoP) operational modes. But it doesn't work properly
-by default and tries DSD-to-PCM conversion. USB quirks below allow it
-to operate as designed.
+Protect access to fore200e->available_cell_rate with rate_mtx lock in the
+error handling path of fore200e_open() to prevent a data race.
 
-Add DSD_RAW quirk flag for IAG Limited devices (vendor ID 0x2622)
-Add DSD format quirk for LEAK Stereo 230 (USB ID 0x2622:0x0061)
+The field fore200e->available_cell_rate is a shared resource used to track
+available bandwidth. It is concurrently accessed by fore200e_open(),
+fore200e_close(), and fore200e_change_qos().
 
-Signed-off-by: Ivan Zhaldak <i.v.zhaldak@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251117125848.30769-1-i.v.zhaldak@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+In fore200e_open(), the lock rate_mtx is correctly held when subtracting
+vcc->qos.txtp.max_pcr from available_cell_rate to reserve bandwidth.
+However, if the subsequent call to fore200e_activate_vcin() fails, the
+function restores the reserved bandwidth by adding back to
+available_cell_rate without holding the lock.
+
+This introduces a race condition because available_cell_rate is a global
+device resource shared across all VCCs. If the error path in
+fore200e_open() executes concurrently with operations like
+fore200e_close() or fore200e_change_qos() on other VCCs, a
+read-modify-write race occurs.
+
+Specifically, the error path reads the rate without the lock. If another
+CPU acquires the lock and modifies the rate (e.g., releasing bandwidth in
+fore200e_close()) between this read and the subsequent write, the error
+path will overwrite the concurrent update with a stale value. This results
+in incorrect bandwidth accounting.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20251120120657.2462194-1-hanguidong02@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/atm/fore200e.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -1926,6 +1926,7 @@ u64 snd_usb_interface_dsd_format_quirks(
- 	case USB_ID(0x249c, 0x9326): /* M2Tech Young MkIII */
- 	case USB_ID(0x2616, 0x0106): /* PS Audio NuWave DAC */
- 	case USB_ID(0x2622, 0x0041): /* Audiolab M-DAC+ */
-+	case USB_ID(0x2622, 0x0061): /* LEAK Stereo 230 */
- 	case USB_ID(0x278b, 0x5100): /* Rotel RC-1590 */
- 	case USB_ID(0x27f7, 0x3002): /* W4S DAC-2v2SE */
- 	case USB_ID(0x29a2, 0x0086): /* Mutec MC3+ USB */
-@@ -2309,6 +2310,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x25ce, /* Mytek devices */
- 		   QUIRK_FLAG_DSD_RAW),
-+	VENDOR_FLG(0x2622, /* IAG Limited devices */
-+		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x278b, /* Rotel? */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
+--- a/drivers/atm/fore200e.c
++++ b/drivers/atm/fore200e.c
+@@ -1377,7 +1377,9 @@ fore200e_open(struct atm_vcc *vcc)
+ 
+ 	vcc->dev_data = NULL;
+ 
++	mutex_lock(&fore200e->rate_mtx);
+ 	fore200e->available_cell_rate += vcc->qos.txtp.max_pcr;
++	mutex_unlock(&fore200e->rate_mtx);
+ 
+ 	kfree(fore200e_vcc);
+ 	return -EINVAL;
 
 
