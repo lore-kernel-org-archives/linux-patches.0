@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD47835BDB4;
-	Wed,  3 Dec 2025 16:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64CA235C193;
+	Wed,  3 Dec 2025 16:42:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780123; cv=none; b=DQyJzpSEU0s6azjIo6kiGahOdt9Lr0p0KHAAvIQQazSGJxI5PrNMEO26JBtUr8U2RnpuaFIFL+hr2irff+ScOHmDbxBRgOthA1yXsAr66vyc0vasc66Tgt+EeGSCgwMTHm94RXIj3gxE7IVonmM7oxXNSJITS1VVjord8Dd2i5s=
+	t=1764780126; cv=none; b=KzgS7GEi/kXfTZgWEj85EzaDXPOzadYBTM3WeLueZJekaOiIhj0b7HPmbK+ALlDmOncymQLQl55bMjU9n61upmd+hIrGwIQ+w1oYVbrlW+7OVLfd3sBEjFM+Uya+I6dYcuR9k/kg7qVlKLIzRom9A8l5LD4qG0GpF7hjj543ZyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780123; c=relaxed/simple;
-	bh=WhY7CBnZjYt09WFMw+lNzb0XTWJTaC+aKhXZKz0+XT8=;
+	s=arc-20240116; t=1764780126; c=relaxed/simple;
+	bh=JZS7YiEBI0yALU2Amm207KETagVm6OfNHKidTGFx2vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bG8/soy50Kt0Q5hMeh4Bwn3oVmgPyZloriU05ha+M2HcWbghTkeS8q+/V+30iPVKDJM+nEUBRlSghEL4hXlOKQp7pzIPDykw60GEr+rms7n2T7CjsX2cMYaPoxQRwcOMUBnMJc+JI1KM5FMTxZ4BHZdn/yi+hL1rgLOg/oBfwxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MAaBLspU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pOtsxATCl3nzDJkIw2nP7iUDCHuJNk49Gg8UWmiqu58FowNZtQ2OCdaASKmSRwfKI9L1NESe2MS93zE4wlIBkuYHnHTLR5KNA2pzsIvo6L3YD14cmSFo/+2E0yaKGsKcTDxIGV4sc3JUiQXoIEWtuIwVuEun/dVqpHGVKj7KFVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BD4GU9Bz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MAaBLspU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217BAC4CEF5;
-	Wed,  3 Dec 2025 16:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BD4GU9Bz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95FB3C4CEF5;
+	Wed,  3 Dec 2025 16:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780122;
-	bh=WhY7CBnZjYt09WFMw+lNzb0XTWJTaC+aKhXZKz0+XT8=;
+	s=korg; t=1764780126;
+	bh=JZS7YiEBI0yALU2Amm207KETagVm6OfNHKidTGFx2vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MAaBLspUjTQ+VLkvWCPvXjewzIUi21PxneBySmznnqgk+UW6jp7ZNSLm1XI3A9EdD
-	 aMES6rFnFnN1RAGRXzGD+lJUz8jv7DAYHDJDEPGA9qUJGNhYolLAXB29aT6f0DNScU
-	 3gmB9PlJXZDDgBN0XBC9837DbG0S5R+RcMqf5Qv8=
+	b=BD4GU9Bz5+tq6PLgOxB6n7CGr0O2ZOq8RGVvttyGbR5lVrIgfisUPwdJ0SNcwJes0
+	 1WTqlyIzMM0f3JFPnT75pggDQ1ue1hPuCCsnJTirarbM0MLLEKcOWEjhwGBtCBfIPd
+	 StdPBV/dnEjhzcgiT5ubFz7hguUrI1Q3pcG5T9qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 430/568] mtdchar: fix integer overflow in read/write ioctls
-Date: Wed,  3 Dec 2025 16:27:12 +0100
-Message-ID: <20251203152456.443761474@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Yongpeng Yang <yangyongpeng@xiaomi.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 431/568] exfat: check return value of sb_min_blocksize in exfat_read_boot_sector
+Date: Wed,  3 Dec 2025 16:27:13 +0100
+Message-ID: <20251203152456.480798477@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,62 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yongpeng Yang <yangyongpeng@xiaomi.com>
 
-commit e4185bed738da755b191aa3f2e16e8b48450e1b8 upstream.
+commit f2c1f631630e01821fe4c3fdf6077bc7a8284f82 upstream.
 
-The "req.start" and "req.len" variables are u64 values that come from the
-user at the start of the function.  We mask away the high 32 bits of
-"req.len" so that's capped at U32_MAX but the "req.start" variable can go
-up to U64_MAX which means that the addition can still integer overflow.
+sb_min_blocksize() may return 0. Check its return value to avoid
+accessing the filesystem super block when sb->s_blocksize is 0.
 
-Use check_add_overflow() to fix this bug.
-
-Fixes: 095bb6e44eb1 ("mtdchar: add MEMREAD ioctl")
-Fixes: 6420ac0af95d ("mtdchar: prevent unbounded allocation in MEMWRITE ioctl")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Cc: stable@vger.kernel.org # v6.15
+Fixes: 719c1e1829166d ("exfat: add super block operations")
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yongpeng Yang <yangyongpeng@xiaomi.com>
+Link: https://patch.msgid.link/20251104125009.2111925-3-yangyongpeng.storage@gmail.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdchar.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/exfat/super.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/mtdchar.c
-+++ b/drivers/mtd/mtdchar.c
-@@ -599,6 +599,7 @@ mtdchar_write_ioctl(struct mtd_info *mtd
- 	uint8_t *datbuf = NULL, *oobbuf = NULL;
- 	size_t datbuf_len, oobbuf_len;
- 	int ret = 0;
-+	u64 end;
+--- a/fs/exfat/super.c
++++ b/fs/exfat/super.c
+@@ -425,7 +425,10 @@ static int exfat_read_boot_sector(struct
+ 	struct exfat_sb_info *sbi = EXFAT_SB(sb);
  
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -618,7 +619,7 @@ mtdchar_write_ioctl(struct mtd_info *mtd
- 	req.len &= 0xffffffff;
- 	req.ooblen &= 0xffffffff;
+ 	/* set block size to read super block */
+-	sb_min_blocksize(sb, 512);
++	if (!sb_min_blocksize(sb, 512)) {
++		exfat_err(sb, "unable to set blocksize");
++		return -EINVAL;
++	}
  
--	if (req.start + req.len > mtd->size)
-+	if (check_add_overflow(req.start, req.len, &end) || end > mtd->size)
- 		return -EINVAL;
- 
- 	datbuf_len = min_t(size_t, req.len, mtd->erasesize);
-@@ -698,6 +699,7 @@ mtdchar_read_ioctl(struct mtd_info *mtd,
- 	size_t datbuf_len, oobbuf_len;
- 	size_t orig_len, orig_ooblen;
- 	int ret = 0;
-+	u64 end;
- 
- 	if (copy_from_user(&req, argp, sizeof(req)))
- 		return -EFAULT;
-@@ -724,7 +726,7 @@ mtdchar_read_ioctl(struct mtd_info *mtd,
- 	req.len &= 0xffffffff;
- 	req.ooblen &= 0xffffffff;
- 
--	if (req.start + req.len > mtd->size) {
-+	if (check_add_overflow(req.start, req.len, &end) || end > mtd->size) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ 	/* read boot sector */
+ 	sbi->boot_bh = sb_bread(sb, 0);
 
 
