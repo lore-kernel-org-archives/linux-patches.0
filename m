@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744D631328E;
-	Wed,  3 Dec 2025 15:45:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67DC30E0C2;
+	Wed,  3 Dec 2025 15:45:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776741; cv=none; b=sta9ca/Px+Df/M3XRyU0pEN/sbxfc/1VRIQEJvLV3tsxrjBDQXipYHgmETrl5nAXjfpucZrqfoh0sd5NMEevu5zzxe5Jv0gI/yQx6MAK8EagaZY7Xrf2VXL4ayxe9Evl17j6CFv4+3q4AqLSLhN8FEuhSf7mzMkMmQ88lN/EIw0=
+	t=1764776744; cv=none; b=fVar66EjwfK4/sQEr7cGAVZUSFRrL7/NMPR3Jjjwm70qScZfhbDNNDJmrrfgyVdezSanEHCb5zxNuce73Yo5+DiLE+Wf2oMpKvCyKE1VM4UXUU0IvnfDo/w7VXfsa9JtkKlyRcJ7tgvDwFjIXROVFvXgieBNH4Pl189bjbJjgnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776741; c=relaxed/simple;
-	bh=Kyr+TQyb4Bdf72YPxiPRcz0g23djHJ0oVYNBaa0DTls=;
+	s=arc-20240116; t=1764776744; c=relaxed/simple;
+	bh=VU5P1vO90POWQ2+c2ki+yNGGj46hgmkJ08mI2eyFy8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N0rSW9iK5L01uwJyLn9vYq62S3y8omRsBf8qXwqgNIS3Cu/FXY/H5WW7AExrnXZgEsxKDRqVqA3s8Jo8tk53FLR2MKTtc804qsfkEwvjQ7uLHeAiuDJ1DOQlu+8UbQLecaT6kfua72dPkTKiOHWvhS54S5M0NTf6rZi2p133FF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEqYTlNi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hpv/JGUpFyhZeqJtrWm5befUtLEuW/NwyOVSYbtjaH8RgDbuXAffhWecoJUY37ux0zm4uyctt21RbjHe0v6ldiQ4njijrxdzVpM0y1iIVGlP8MvDGdRz30KkP0gGk8eZq0UKwrWzEg+GlbcjN+kBg/ioZo/9DSqJsp7F/VxTZW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JHn+YC+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEqYTlNi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B270AC4CEF5;
-	Wed,  3 Dec 2025 15:45:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JHn+YC+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3043CC4CEF5;
+	Wed,  3 Dec 2025 15:45:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776741;
-	bh=Kyr+TQyb4Bdf72YPxiPRcz0g23djHJ0oVYNBaa0DTls=;
+	s=korg; t=1764776744;
+	bh=VU5P1vO90POWQ2+c2ki+yNGGj46hgmkJ08mI2eyFy8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEqYTlNi0+VqXirEXq+H9j6EnFhbRsDOkMfvAIloh+3MYTjUUctSPiWs3vYUJBMJN
-	 pKPttUDTYydzSGBFCJ3RKFDb51TFDsv9FV9JihiaRaDc73c/aHKtDhqh+Ve7LmiJBv
-	 ISz2Dh+cwd/52RvGrPSiwIemMfxOGyTGyHub/C0s=
+	b=JHn+YC+SAoqYa6nfue+3sABlR5rTzM4hlcbYjVs1xldTxVwPdzqwBOoWPu3+GwgDc
+	 KpqrlvaiPjlVQr/fs1K0tvxOnHimjWEseyCCBnRVfMhhdzPliE/SJb8QSr9EkyQJvB
+	 e/pzXygwKdzAfeBCGJUIofHEJ35SSsa8HZUg3zc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 5.10 272/300] dm-verity: fix unreliable memory allocation
-Date: Wed,  3 Dec 2025 16:27:56 +0100
-Message-ID: <20251203152410.709121085@linuxfoundation.org>
+	Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.10 273/300] thunderbolt: Add support for Intel Wildcat Lake
+Date: Wed,  3 Dec 2025 16:27:57 +0100
+Message-ID: <20251203152410.745156514@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -50,36 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 
-commit fe680d8c747f4e676ac835c8c7fb0f287cd98758 upstream.
+commit 3575254546a27210a4b661ea37fbbfb836c0815d upstream.
 
-GFP_NOWAIT allocation may fail anytime. It needs to be changed to
-GFP_NOIO. There's no need to handle an error because mempool_alloc with
-GFP_NOIO can't fail.
+Intel Wildcat Lake derives its Thunderbolt/USB4 controller from Lunar
+Lake platform. Add Wildcat Lake PCI ID to the driver list of supported
+devices.
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Alan Borzeszkowski <alan.borzeszkowski@linux.intel.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/thunderbolt/nhi.c |    2 ++
+ drivers/thunderbolt/nhi.h |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -314,11 +314,7 @@ static int fec_alloc_bufs(struct dm_veri
- 		if (fio->bufs[n])
- 			continue;
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -1375,6 +1375,8 @@ static struct pci_device_id nhi_ids[] =
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_PTL_P_NHI1),
+ 	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
++	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_WCL_NHI0),
++	  .driver_data = (kernel_ulong_t)&icl_nhi_ops },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI) },
+ 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI) },
  
--		fio->bufs[n] = mempool_alloc(&v->fec->prealloc_pool, GFP_NOWAIT);
--		if (unlikely(!fio->bufs[n])) {
--			DMERR("failed to allocate FEC buffer");
--			return -ENOMEM;
--		}
-+		fio->bufs[n] = mempool_alloc(&v->fec->prealloc_pool, GFP_NOIO);
- 	}
- 
- 	/* try to allocate the maximum number of buffers */
+--- a/drivers/thunderbolt/nhi.h
++++ b/drivers/thunderbolt/nhi.h
+@@ -75,6 +75,7 @@ extern const struct tb_nhi_ops icl_nhi_o
+ #define PCI_DEVICE_ID_INTEL_TITAN_RIDGE_DD_BRIDGE	0x15ef
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI0			0x463e
+ #define PCI_DEVICE_ID_INTEL_ADL_NHI1			0x466d
++#define PCI_DEVICE_ID_INTEL_WCL_NHI0			0x4d33
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_80G_NHI	0x5781
+ #define PCI_DEVICE_ID_INTEL_BARLOW_RIDGE_HOST_40G_NHI	0x5784
+ #define PCI_DEVICE_ID_INTEL_MTL_M_NHI0			0x7eb2
 
 
