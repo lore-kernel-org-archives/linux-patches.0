@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C30130AD13;
-	Wed,  3 Dec 2025 15:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE29230BB94;
+	Wed,  3 Dec 2025 15:31:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775879; cv=none; b=CqZKFP7A1wCYzKsa/cpSZX6cNxuKkA2b8O34nQh2kzyKaqx7DUyVKnFO3Pjcq1zakFMn+9LhD77lQET72nifO+X2YOryntJffzYUXMf6UaECM0Wyav8Rm1/ZOJUvVbBZJaXZOX//kbkKbcrdJixH9YmcAmCp/aIejYQQWCCiz1Y=
+	t=1764775884; cv=none; b=IGO110cL6RLrSqr0IyBd3kJhLtib0QTgz6N89ARAjFd7huTn8jM1pP65Kqpqf52OMkQa8/ecOwL2PRpCiYOJ0ZjvtHqABhEQ0++FjNY31u5GFOFU1bbeSloCFsHYMGqHtpv+GhT67/eFz0syXv4iLxQdrHLcHFaDjJ+rj3bzzCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775879; c=relaxed/simple;
-	bh=F3xeFIj7lp8vtFmjqnqR0uWYNwO7fEL+nZTlqFpbFok=;
+	s=arc-20240116; t=1764775884; c=relaxed/simple;
+	bh=MKgMOgvKlDVKIfi/vQ8EKdzlMOJNTjWO43cDZQspjmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuvAKPqJ7W1XeqId1Uux57nWRKEThy9DKJolSP9A/IgAgR72y1ctvhgPpRxzV+PQfGew3xvuQfjd3uXQCAZpBFQYKApOwP47O92/g48SCar7DgYjZ5uAEL8/8lNPr4yQORptMAhKhvcfsP4EYehIzbNda9UPT2Q+N7RBJbKs7wU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UiIbBm9M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q/Iuj5tj+Ix3Tia5XgmL2azhvQuNeV+9KyUdH7mpucaL2x9snd9ZGT/EshN5pBMhI/uET+/khsHEhmpQvSRSspAgG2RpmVovcRcKYFR1Ve8WIpl8T63Uyl2oa91VC/WP9ONkMQ4p8AdBDND3SA+c4a13Yb9+NI1FkHhk3MKdgmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RA5G/t5i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UiIbBm9M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60E8EC4CEF5;
-	Wed,  3 Dec 2025 15:31:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RA5G/t5i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF875C4CEF5;
+	Wed,  3 Dec 2025 15:31:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775878;
-	bh=F3xeFIj7lp8vtFmjqnqR0uWYNwO7fEL+nZTlqFpbFok=;
+	s=korg; t=1764775882;
+	bh=MKgMOgvKlDVKIfi/vQ8EKdzlMOJNTjWO43cDZQspjmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiIbBm9MpFKzw62zslb3tzUD8VMFRUyKBqWiMPyIk9Z5LZTuO/PSof8Ocg6ocIDgY
-	 Z64Dgjeq7oPx4OmGWD1PBbgiHIg3K3uX44SkXe3l/LUh/ZGNC3l76lyZ9yamUHtT5t
-	 nDxn4lNQObm4ERJHdwNnANFIyW0Ih+UNCITZVwF0=
+	b=RA5G/t5iENZPCES8+52InaDAL23xnM9DJJNIl0qLVxjuyfFTzyL6Eh5MxJQ/gz8Z8
+	 KRiUoiStWCJleJzM94x2CoUglziyO2YNfUEPRHOAxVGpq3nt67j+foD2cFwlgVYpgS
+	 AI99UBR8jCt46ObV41ap3Hgem9htK64Y55ACoi78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/300] drm/msm/a6xx: Fix GMU firmware parser
-Date: Wed,  3 Dec 2025 16:23:39 +0100
-Message-ID: <20251203152401.022528269@linuxfoundation.org>
+Subject: [PATCH 5.10 016/300] ALSA: usb-audio: fix control pipe direction
+Date: Wed,  3 Dec 2025 16:23:40 +0100
+Message-ID: <20251203152401.059296802@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,49 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
 
-[ Upstream commit b4789aac9d3441d9f830f0a4022d8dc122d6cab3 ]
+[ Upstream commit 7963891f7c9c6f759cc9ab7da71406b4234f3dd6 ]
 
-Current parser logic for GMU firmware assumes a dword aligned payload
-size for every block. This is not true for all GMU firmwares. So, fix
-this by using correct 'size' value in the calculation for the offset
-for the next block's header.
+Since the requesttype has USB_DIR_OUT the pipe should be
+constructed with usb_sndctrlpipe().
 
-Fixes: c6ed04f856a4 ("drm/msm/a6xx: A640/A650 GMU firmware path")
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/674040/
-Message-ID: <20250911-assorted-sept-1-v2-2-a8bf1ee20792@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: 8dc5efe3d17c ("ALSA: usb-audio: Add support for Presonus Studio 1810c")
+Signed-off-by: Roy Vegard Ovesen <roy.vegard.ovesen@gmail.com>
+Link: https://patch.msgid.link/aPPL3tBFE_oU-JHv@ark
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/usb/mixer_s1810c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index f11da95566dab..e3b36e2373567 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -666,6 +666,9 @@ static bool fw_block_mem(struct a6xx_gmu_bo *bo, const struct block_header *blk)
- 	return true;
- }
+diff --git a/sound/usb/mixer_s1810c.c b/sound/usb/mixer_s1810c.c
+index c53a9773f310b..457e07f6fc7c8 100644
+--- a/sound/usb/mixer_s1810c.c
++++ b/sound/usb/mixer_s1810c.c
+@@ -181,7 +181,7 @@ snd_sc1810c_get_status_field(struct usb_device *dev,
  
-+#define NEXT_BLK(blk) \
-+	((const struct block_header *)((const char *)(blk) + sizeof(*(blk)) + (blk)->size))
-+
- static int a6xx_gmu_fw_load(struct a6xx_gmu *gmu)
- {
- 	struct a6xx_gpu *a6xx_gpu = container_of(gmu, struct a6xx_gpu, gmu);
-@@ -696,7 +699,7 @@ static int a6xx_gmu_fw_load(struct a6xx_gmu *gmu)
- 
- 	for (blk = (const struct block_header *) fw_image->data;
- 	     (const u8*) blk < fw_image->data + fw_image->size;
--	     blk = (const struct block_header *) &blk->data[blk->size >> 2]) {
-+	     blk = NEXT_BLK(blk)) {
- 		if (blk->size == 0)
- 			continue;
- 
+ 	pkt_out.fields[SC1810C_STATE_F1_IDX] = SC1810C_SET_STATE_F1;
+ 	pkt_out.fields[SC1810C_STATE_F2_IDX] = SC1810C_SET_STATE_F2;
+-	ret = snd_usb_ctl_msg(dev, usb_rcvctrlpipe(dev, 0),
++	ret = snd_usb_ctl_msg(dev, usb_sndctrlpipe(dev, 0),
+ 			      SC1810C_SET_STATE_REQ,
+ 			      SC1810C_SET_STATE_REQTYPE,
+ 			      (*seqnum), 0, &pkt_out, sizeof(pkt_out));
 -- 
 2.51.0
 
