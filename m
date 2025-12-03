@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5196303C91;
-	Wed,  3 Dec 2025 15:39:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BC630B520;
+	Wed,  3 Dec 2025 15:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776350; cv=none; b=LKc0zsJkLS7EG5ZqL+M+7UgKMuBbq4ANEyLwps2Dfukhqf08nS26L64Be1Dhq8ICfJTZPoE6MYxLqq7AgW8VDMqn5RbwHDDK3putqgMKbl8NPW7am8HEVzB/fK9FxT4rODKNtysbJQ93YQftghLlV7M4mUq2zj9iGgoDzE1EJQU=
+	t=1764776353; cv=none; b=dFTULJYWQl4+Patks+8OKTFVbziLZhKhRjSn/KdJnMbENlTSnU1CGRBKzl7ex9TFTqb0yG+5Mf+s7VsXUaz/KYyOI2dZSxR18GoR5m1XkjiErj/o0kdyFcYGRuJv1TNVlIbVV1DExHW4jKlVYhRr6MDk/cV16vLMU19asAwWtQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776350; c=relaxed/simple;
-	bh=VeYYyj6gRHBy9urlgqmLi8spTG2hRmC87yDKDgjULBg=;
+	s=arc-20240116; t=1764776353; c=relaxed/simple;
+	bh=DywWd+Nc4yoVd2fLiVoo83IzEfN0SF87j3nlI6KvpOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fRY74Pai3ocPvAdLQ11SNxwWJ2/qywswtH5AN5crQ5G/S6KWXL7RMAOKBH+VzZmMRFMQw0Arq1mUJ4CvTUgD/b3YSATHDxmPQTTSmlHIBg89j4g6HqmtuZZDQnwGwcnK+GZOLmH+mTPpmgUVooNOG/y4aqHB9rB93KU9P3FuOTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIhikIVd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZDf2EFSuq6WUhXqY71C6iS6ggbG1XHAUr5fi/Zp18iZlUgogAvLpEyG37s8vNXQO0bX1kPfTpihy3stJYtbRatXGt8GifuX3q7d4UVM7Y1bEwRTIxRjmzheX3KWLoiOtWyI2oUXCi4JWrtEmbXblF/QWzAGQeu6U2DfhC5uadQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fhHQru6j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIhikIVd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54FC2C4CEF5;
-	Wed,  3 Dec 2025 15:39:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fhHQru6j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A6FC4CEF5;
+	Wed,  3 Dec 2025 15:39:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776349;
-	bh=VeYYyj6gRHBy9urlgqmLi8spTG2hRmC87yDKDgjULBg=;
+	s=korg; t=1764776353;
+	bh=DywWd+Nc4yoVd2fLiVoo83IzEfN0SF87j3nlI6KvpOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIhikIVd9i8VLBEbTgHwHzUnxQZxJ3Ank4bJZzugfqZ/pMF60waNpMWLePEl872aN
-	 sdzDcTVm0o5NHgSCe05/Ln914sm4Zew8gmK5+Nmp2G2KzOClzG/rS52wAcetb9ADYz
-	 tAjFHN5y4V12ONMOUr+Ep/2OIIuZBh9z77BMLYXE=
+	b=fhHQru6jCiY4gacZUJ/87d/+nB3PJEBcbOtpyaVKyTPQmZXcyqDqwiDP+ziB0L5NW
+	 s3oD3PoykX+BDCJIoNd90wGitOx+im+tUUdk856J4CzZZErWSR+Sulw6ggCvrlJmET
+	 lk+Zmc1Lyvkbs91DT4L4pdUltbriP61O0FI6D1Pc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 156/300] ceph: add checking of wait_for_completion_killable() return value
-Date: Wed,  3 Dec 2025 16:26:00 +0100
-Message-ID: <20251203152406.397438748@linuxfoundation.org>
+Subject: [PATCH 5.10 157/300] ALSA: hda/realtek: Audio disappears on HP 15-fc000 after warm boot again
+Date: Wed,  3 Dec 2025 16:26:01 +0100
+Message-ID: <20251203152406.433752455@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,48 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit b7ed1e29cfe773d648ca09895b92856bd3a2092d ]
+[ Upstream commit f4b3cef55f5f96fdb4e7f9ca90b7d6213689faeb ]
 
-The Coverity Scan service has detected the calling of
-wait_for_completion_killable() without checking the return
-value in ceph_lock_wait_for_completion() [1]. The CID 1636232
-defect contains explanation: "If the function returns an error
-value, the error value may be mistaken for a normal value.
-In ceph_lock_wait_for_completion(): Value returned from
-a function is not checked for errors before being used. (CWE-252)".
+There was a similar bug in the past (Bug 217440), which was fixed for
+this laptop.
+The same issue is occurring again as of kernel v.6.12.2. The symptoms
+are very similar - initially audio works but after a warm reboot, the
+audio completely disappears until the computer is powered off (there
+is no audio output at all).
 
-The patch adds the checking of wait_for_completion_killable()
-return value and return the error code from
-ceph_lock_wait_for_completion().
+The issue is also related by caused by a different change now. By
+bisecting different kernel versions, I found that reverting
+cc3d0b5dd989 in patch_realtek.c[*] restores the sound and it works
+fine after the reboot.
 
-[1] https://scan5.scan.coverity.com/#/project-view/64304/10063?selectedIssue=1636232
+[*] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/sound/pci/hda/patch_realtek.c?h=v6.12.2&id=4ed7f16070a8475c088ff423b2eb11ba15eb89b6
 
-Signed-off-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+[ patch description reformatted by tiwai ]
+
+Fixes: cc3d0b5dd989 ("ALSA: hda/realtek: Update ALC256 depop procedure")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220109
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/5317ca723c82447a938414fcca85cbf5@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/locks.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
-index 674d6ea89f717..642582a642a3a 100644
---- a/fs/ceph/locks.c
-+++ b/fs/ceph/locks.c
-@@ -202,7 +202,10 @@ static int ceph_lock_wait_for_completion(struct ceph_mds_client *mdsc,
- 	if (err && err != -ERESTARTSYS)
- 		return err;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 84dde97424080..a9c71f38710ed 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3637,6 +3637,15 @@ static void alc256_shutup(struct hda_codec *codec)
+ 		hp_pin = 0x21;
  
--	wait_for_completion_killable(&req->r_safe_completion);
-+	err = wait_for_completion_killable(&req->r_safe_completion);
-+	if (err)
-+		return err;
+ 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
 +
- 	return 0;
- }
++	/* 3k pull low control for Headset jack. */
++	/* NOTE: call this before clearing the pin, otherwise codec stalls */
++	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
++	 * when booting with headset plugged. So skip setting it for the codec alc257
++	 */
++	if (spec->en_3kpull_low)
++		alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
++
+ 	hp_pin_sense = snd_hda_jack_detect(codec, hp_pin);
  
+ 	if (hp_pin_sense) {
+@@ -3647,14 +3656,6 @@ static void alc256_shutup(struct hda_codec *codec)
+ 
+ 		msleep(75);
+ 
+-	/* 3k pull low control for Headset jack. */
+-	/* NOTE: call this before clearing the pin, otherwise codec stalls */
+-	/* If disable 3k pulldown control for alc257, the Mic detection will not work correctly
+-	 * when booting with headset plugged. So skip setting it for the codec alc257
+-	 */
+-		if (spec->en_3kpull_low)
+-			alc_update_coef_idx(codec, 0x46, 0, 3 << 12);
+-
+ 		if (!spec->no_shutup_pins)
+ 			snd_hda_codec_write(codec, hp_pin, 0,
+ 				    AC_VERB_SET_PIN_WIDGET_CONTROL, 0x0);
 -- 
 2.51.0
 
