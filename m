@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19422DA769;
-	Wed,  3 Dec 2025 15:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00EB30BB9B;
+	Wed,  3 Dec 2025 15:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776631; cv=none; b=Y0MSezLBz7SfTAlAJEYiKVgIIN1jF4YNn2vRBEbtQ7yujKDsAMagvJM33OZ5Wch/ajPcyid5SXzTK2rPenHjl0HKr34a+CRh0HK23eCWE3UdGJQOTyxyOkU3OjLe6qXWZFtVzKh/6Gu25uKTpHJglIGlKVf5vMKY/zkIMhdIm2U=
+	t=1764776634; cv=none; b=cqxsBZ7eFGF6I9LIHJsf+xq7kgs8cIJezSK/bInDcP6XTujAiBjEbl/l/K9ENgCs6cyVjn1QWax7e8iSfGX7Av4vj4jMR+efcW9OVuI2qj1FgF6uLdXrvF1TcmWGcbivNJZS0IWWpcA52W2oTKFy7VpxxxwB1j7F4j8PGkeUjAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776631; c=relaxed/simple;
-	bh=+hzTvBGMmRB+f5cNnmxUsJyRYDIjB3UAcbITVgd6OpU=;
+	s=arc-20240116; t=1764776634; c=relaxed/simple;
+	bh=DjOGT5FWLu602LBZNvDzlHOmPGSq7keSe5/AOvaU38Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R1WJjpsIcUMokyr+ybjPlbdxrJ+Qr/h+Oy8A9eTIXgVfaIiqbFy16058ilw+A+ppDFtkiazOMIRlYHH8zNW+bD7np3QG7tcagXTz3Ui/ON1ksRPk1n5sCCPUV+/gs1mviESr0SaELhc5VvV2s0TrVw2sX+Xl3QVRpbJ8TRQB0gM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9+Z1fEc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qdGEkwbySpXB4R7A2mCmkxTIIaDvsL74It2KARBN0Gc6KwYWv8jqaD6pMl3Whk2FWX2DeHQRDWDMy8Z5TsmffaNYNIbiwfeFAeVaLJEMyKkDZsXGaPyyVTTyUy/wsWL6A3DHdlG04o97tPBw7v/6/IWfjC4BzAllpG+WSfKSCZI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F9izfbHc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9+Z1fEc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1A0C4CEF5;
-	Wed,  3 Dec 2025 15:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F9izfbHc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7C34C4CEF5;
+	Wed,  3 Dec 2025 15:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776630;
-	bh=+hzTvBGMmRB+f5cNnmxUsJyRYDIjB3UAcbITVgd6OpU=;
+	s=korg; t=1764776634;
+	bh=DjOGT5FWLu602LBZNvDzlHOmPGSq7keSe5/AOvaU38Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9+Z1fEc7rof15lCtoy23YDzA93VW5kn9IcOOLE3ZpTn52hpucB+59JJP0LRqCeFk
-	 xM5DPzu/DNEIx2ea0ysxisYK0uE5/zufClP8JJfnBdejevpTsoSbSee7HqfXC+ocnQ
-	 FVEFH/WL0Z9McDhaUH81Ch0H27t+llrkiJazWXPs=
+	b=F9izfbHcGxS7lA56WqrAZnxQNnEf5Nc6c8VXX090uuRMWxFqx/KLGWTBgUNkHgRok
+	 nSjT6dmxeUXzmaijczqKqRR6mtLPQdOHEfsgQKyJ7SQGspV8Hjf9mCaOYplv8AcpBm
+	 WuzvLnY75ae/bDmoyLkCS59ZOdIXJFMqSq+AAbCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 207/300] gcov: add support for GCC 15
-Date: Wed,  3 Dec 2025 16:26:51 +0100
-Message-ID: <20251203152408.291453271@linuxfoundation.org>
+	Nate Karstens <nate.karstens@garmin.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 208/300] strparser: Fix signed/unsigned mismatch bug
+Date: Wed,  3 Dec 2025 16:26:52 +0100
+Message-ID: <20251203152408.329439767@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,40 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Oberparleiter <oberpar@linux.ibm.com>
+From: Nate Karstens <nate.karstens@garmin.com>
 
-commit ec4d11fc4b2dd4a2fa8c9d801ee9753b74623554 upstream.
+commit 4da4e4bde1c453ac5cc2dce5def81d504ae257ee upstream.
 
-Using gcov on kernels compiled with GCC 15 results in truncated 16-byte
-long .gcda files with no usable data.  To fix this, update GCOV_COUNTERS
-to match the value defined by GCC 15.
+The `len` member of the sk_buff is an unsigned int. This is cast to
+`ssize_t` (a signed type) for the first sk_buff in the comparison,
+but not the second sk_buff. On 32-bit systems, this can result in
+an integer underflow for certain values because unsigned arithmetic
+is being used.
 
-Tested with GCC 14.3.0 and GCC 15.2.0.
+This appears to be an oversight: if the intention was to use unsigned
+arithmetic, then the first cast would have been omitted. The change
+ensures both len values are cast to `ssize_t`.
 
-Link: https://lkml.kernel.org/r/20251028115125.1319410-1-oberpar@linux.ibm.com
-Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reported-by: Matthieu Baerts <matttbe@kernel.org>
-Closes: https://github.com/linux-test-project/lcov/issues/445
-Tested-by: Matthieu Baerts <matttbe@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+The underflow causes an issue with ktls when multiple TLS PDUs are
+included in a single TCP segment. The mainline kernel does not use
+strparser for ktls anymore, but this is still useful for other
+features that still use strparser, and for backporting.
+
+Signed-off-by: Nate Karstens <nate.karstens@garmin.com>
+Cc: stable@vger.kernel.org
+Fixes: 43a0c6751a32 ("strparser: Stream parser for messages")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Link: https://patch.msgid.link/20251106222835.1871628-1-nate.karstens@garmin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/gcov/gcc_4_7.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/strparser/strparser.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -19,7 +19,9 @@
- #include <linux/vmalloc.h>
- #include "gcov.h"
- 
--#if (__GNUC__ >= 14)
-+#if (__GNUC__ >= 15)
-+#define GCOV_COUNTERS			10
-+#elif (__GNUC__ >= 14)
- #define GCOV_COUNTERS			9
- #elif (__GNUC__ >= 10)
- #define GCOV_COUNTERS			8
+--- a/net/strparser/strparser.c
++++ b/net/strparser/strparser.c
+@@ -238,7 +238,7 @@ static int __strp_recv(read_descriptor_t
+ 				strp_parser_err(strp, -EMSGSIZE, desc);
+ 				break;
+ 			} else if (len <= (ssize_t)head->len -
+-					  skb->len - stm->strp.offset) {
++					  (ssize_t)skb->len - stm->strp.offset) {
+ 				/* Length must be into new skb (and also
+ 				 * greater than zero)
+ 				 */
 
 
