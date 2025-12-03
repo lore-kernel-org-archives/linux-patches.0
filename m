@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B53398F82;
-	Wed,  3 Dec 2025 16:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB38398FA2;
+	Wed,  3 Dec 2025 16:58:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781129; cv=none; b=PbCjTCzlQw3SKdO+Q4GnQpdfYF3cAw85FTDHcmQhWoCeV68wyISHnS68LPxcZDZLEqpgcn3XDM/L8MEYPhMqObAxPzgGDMU9VXPqhMGye99le95sjVZfbFjlnQU7Jsp0QWwHYMUZvIGfmeMALa+z8avexpLbcZHK8QWJJMioCYk=
+	t=1764781131; cv=none; b=Di6htvPukCLy/0+8yL574SM0C9YR+SKQHAzwqTJf8vzTfDE9q75OPUaEJ2tBTH0QWCo4aJouNYke2LU3xkTSOstDr5lMM7LPVdSifvUhL4w/CPdpnn24P0nGtZdJeBQCGKdZDmnkWa/AHpFa72FBPUCWU4CtTsfUsX1wpdnAjLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781129; c=relaxed/simple;
-	bh=7+SznoJJKR/EDtTdfWIeU2+jZge+h6i4MdLVeI/3OUU=;
+	s=arc-20240116; t=1764781131; c=relaxed/simple;
+	bh=6HVgGwTPl78YhVItI8YKbS5u97jQX9nTd4so5fMBgq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nj5ibeNPBQL+16WmQNi1YPMIXv9GpfZiBeD3lF+kTzk/2yva6LHVFVCYZtnz/BT8Zgj3+McsvgKURuxdSiifjU28VuPdNq1ZZhijG7P2mUl/vghriZZoXnT7S7jfIsnWzJq2H52MVrjnOiRpAv13OtqDXat4qCqiKOLeha4mLHs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzbBmOeK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dnbyCbVrn+LVBxA+WWoCl6JcLnjyIeXUGx31dIh6D0DC+FlY3LLbF4L9qnFaGuTvx8fIAFqoMAr7RcEZxthuaTXbH44teGwPYkUifcn04ab5PRT9wVW3d/ParrwxbC7qKuhYYnPRYAc78dAAiCWM9MZG4mfnqWaJ2mN1h9hfgVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa+4PQhQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzbBmOeK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BDAC4CEF5;
-	Wed,  3 Dec 2025 16:58:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa+4PQhQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C03C116B1;
+	Wed,  3 Dec 2025 16:58:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781125;
-	bh=7+SznoJJKR/EDtTdfWIeU2+jZge+h6i4MdLVeI/3OUU=;
+	s=korg; t=1764781128;
+	bh=6HVgGwTPl78YhVItI8YKbS5u97jQX9nTd4so5fMBgq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzbBmOeKgJZE2FWtAi4lGTREDLZIYKLkxVA3fzA9bbhAJEODayHuHW2J0qwpmHgqw
-	 qDy0nIMSLJUQXdBO2LnU40u4pbJV0nmOmdj6RJcH/RYCNIGq+rdReAK8CrNYAKBZcw
-	 G7/U58PO/e4HDUgEXv/D+uekCxQKUCwJr3vNWKS0=
+	b=Xa+4PQhQ0QRD1e57L2tlwWjun9fCqjljLPlIBXHxsKHLsk+q6ExGIGgyZd2S0pKc/
+	 5FnXaEwJyi2qxmGAUn3WYKLnymc6k1WLMO+3RbmlMyhpSRRcCthAsDqqppp89UBbRG
+	 VvyiAuCvfDfS3dG9m97m+9QQuCeDdS1sJemPodqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huisong Li <lihuisong@huawei.com>,
-	Adam Young <admiyo@os.amperecomputing.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Jamie Iles <jamie.iles@oss.qualcomm.com>,
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 24/93] mailbox: pcc: Refactor error handling in irq handler into separate function
-Date: Wed,  3 Dec 2025 16:29:17 +0100
-Message-ID: <20251203152337.407003666@linuxfoundation.org>
+Subject: [PATCH 6.6 25/93] mailbox: pcc: dont zero error register
+Date: Wed,  3 Dec 2025 16:29:18 +0100
+Message-ID: <20251203152337.444163325@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -53,89 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Jamie Iles <jamie.iles@oss.qualcomm.com>
 
-[ Upstream commit 3a675f50415b95f2ae10bfd932e2154ba1a08ee7 ]
+[ Upstream commit ff0e4d4c97c94af34cc9cad37b5a5cdbe597a3b0 ]
 
-The existing error handling logic in pcc_mbox_irq() is intermixed with the
-main flow of the function. The command complete check and the complete
-complete update/acknowledgment are nicely factored into separate functions.
+The error status mask for a type 3/4 subspace is used for reading the
+error status, and the bitwise inverse is used for clearing the error
+with the intent being to preserve any of the non-error bits.  However,
+we were previously applying the mask to extract the status and then
+applying the inverse to the result which ended up clearing all bits.
 
-Moves error detection and clearing logic into a separate function called:
-pcc_mbox_error_check_and_clear() by extracting error-handling logic from
-pcc_mbox_irq().
+Instead, store the inverse mask in the preserve mask and then use that
+on the original value read from the error status so that only the error
+is cleared.
 
-This ensures error checking and clearing are handled separately and it
-improves maintainability by keeping the IRQ handler focused on processing
-events.
-
-Acked-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Huisong Li <lihuisong@huawei.com>
-Tested-by: Adam Young <admiyo@os.amperecomputing.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: c45ded7e1135 ("mailbox: pcc: Add support for PCCT extended PCC subspaces(type 3/4)")
+Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-Stable-dep-of: ff0e4d4c97c9 ("mailbox: pcc: don't zero error register")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ drivers/mailbox/pcc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index 49254d99a8ad6..bb977cf8ad423 100644
+index bb977cf8ad423..2b7d0bc920726 100644
 --- a/drivers/mailbox/pcc.c
 +++ b/drivers/mailbox/pcc.c
-@@ -269,6 +269,25 @@ static bool pcc_mbox_cmd_complete_check(struct pcc_chan_info *pchan)
- 	return !!val;
- }
+@@ -278,9 +278,8 @@ static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
+ 	if (ret)
+ 		return ret;
  
-+static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
-+{
-+	u64 val;
-+	int ret;
-+
-+	ret = pcc_chan_reg_read(&pchan->error, &val);
-+	if (ret)
-+		return ret;
-+
-+	val &= pchan->error.status_mask;
-+	if (val) {
-+		val &= ~pchan->error.status_mask;
-+		pcc_chan_reg_write(&pchan->error, val);
-+		return -EIO;
-+	}
-+
-+	return 0;
-+}
-+
- static void check_and_ack(struct pcc_chan_info *pchan, struct mbox_chan *chan)
- {
- 	struct acpi_pcct_ext_pcc_shared_memory pcc_hdr;
-@@ -309,8 +328,6 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- {
- 	struct pcc_chan_info *pchan;
- 	struct mbox_chan *chan = p;
--	u64 val;
--	int ret;
- 
- 	pchan = chan->con_priv;
- 
-@@ -324,15 +341,8 @@ static irqreturn_t pcc_mbox_irq(int irq, void *p)
- 	if (!pcc_mbox_cmd_complete_check(pchan))
- 		return IRQ_NONE;
- 
--	ret = pcc_chan_reg_read(&pchan->error, &val);
--	if (ret)
-+	if (pcc_mbox_error_check_and_clear(pchan))
- 		return IRQ_NONE;
 -	val &= pchan->error.status_mask;
 -	if (val) {
 -		val &= ~pchan->error.status_mask;
--		pcc_chan_reg_write(&pchan->error, val);
--		return IRQ_NONE;
--	}
++	if (val & pchan->error.status_mask) {
++		val &= pchan->error.preserve_mask;
+ 		pcc_chan_reg_write(&pchan->error, val);
+ 		return -EIO;
+ 	}
+@@ -673,7 +672,8 @@ static int pcc_parse_subspace_db_reg(struct pcc_chan_info *pchan,
  
- 	/*
- 	 * Clear this flag after updating interrupt ack register and just
+ 		ret = pcc_chan_reg_init(&pchan->error,
+ 					&pcct_ext->error_status_register,
+-					0, 0, pcct_ext->error_status_mask,
++					~pcct_ext->error_status_mask, 0,
++					pcct_ext->error_status_mask,
+ 					"Error Status");
+ 	}
+ 	return ret;
 -- 
 2.51.0
 
