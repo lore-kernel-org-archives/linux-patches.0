@@ -1,39 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BAD3624A4;
-	Wed,  3 Dec 2025 16:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24749368287;
+	Wed,  3 Dec 2025 16:52:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780759; cv=none; b=KsK+WkYRvkO9W7OSjWYo+3fLKD9Nrps6TPyLLvXtPuEAkPPUxaY1nvs6dW89/vIDn7dvj1p84YxpNj8lK/Gaq0DiVCHbO/ts3bP+c9FkkWD1qB2J06nhl05Q9YQZAlpnId8cIHnQKAcZwQzIMt6xwxheOJNRG61i1CEd7t52LOo=
+	t=1764780763; cv=none; b=RNnXfYecUIHg7fsRb9g1didi3rRRSnD1G95FXEg/Sxgo5ic/mmKfw/nb8tEjwh3zlBsth+Z5sBxBgPTAh5YzCiUUGYyw+XDHsE3SELdupUU7qgSceb5FtIsxGxb9O9gddZ6K9zIQO+uL5om42NcppNtSVz6T7iOOdQTcmiTMYtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780759; c=relaxed/simple;
-	bh=T/nQUIYnU7LFnUI09xtxulyMyLNZA9FtRRJF6fb5KOg=;
+	s=arc-20240116; t=1764780763; c=relaxed/simple;
+	bh=sZM6BBW01MED9VPcrT5uDa2sL12YSOHQj8iYvVut6ZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Em05ZgZi+CpwBjp597lr4OhAuU0Lo/YkF5oSYt3mOVx5Nb/FckmNXw3cNy8eGI1BbJeqwHbtY5ul1sAWZXUT/nb83loN4K+leWAeirJQ2yE46BTjKsBCv1raCD0989d4HnU1/iCP0+AVPYPqd402q0Jbemr9oraYVRod+c5M4E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imhWkmNp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FaOUHEc12bN0f0v/vKlqD4JCYpGfeWt4aJuaGN8nmJGp7Of3T3oB1O0Kz8yVrYxiBXWIBCNFUSISx/A6JFfC7Hb2i7HREbLUXbeDUti/FX/qTgFfT2d2ayR42AenIfBMZTrNnhz3RJlPxai6fgn3dF09nYCACMd9jRxNudDlv8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ke3ryLQp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imhWkmNp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2576CC4CEF5;
-	Wed,  3 Dec 2025 16:52:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ke3ryLQp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F87EC4CEF5;
+	Wed,  3 Dec 2025 16:52:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780759;
-	bh=T/nQUIYnU7LFnUI09xtxulyMyLNZA9FtRRJF6fb5KOg=;
+	s=korg; t=1764780762;
+	bh=sZM6BBW01MED9VPcrT5uDa2sL12YSOHQj8iYvVut6ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imhWkmNpwGMQ98vBYCnnAYfx22jwVko/76P7O3TV+3ugEsE286XtpqPuZ6K07RLI+
-	 Js3WS89Z3c2xLM1ZUuRGzjmjqczcNc9cZuBQWn9AimIj+Pl6SV3hKwte960tsW10Na
-	 01G0Bx2Nd9IOWwiG4coUr+3paUAoJE9/S+3NHKmI=
+	b=ke3ryLQpOIw+yUhqUPjjEMim4I3570Ewejvc050ifnPMXo0Imhl/zf6nR5P1g8ZPB
+	 84wAu4Wbl9L/g3fjFWGf8NtMCqYHHi37L/qgt4I/MXfMhFXddt+FFZozE0EspUTAq+
+	 Dfo79ll7JSqG6qsAdk9q7j54H94w/KfOgpbnlr5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Maciej W. Rozycki" <macro@orcam.me.uk>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Klara Modin <klarasmodin@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.12 064/132] MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow
-Date: Wed,  3 Dec 2025 16:29:03 +0100
-Message-ID: <20251203152345.668510869@linuxfoundation.org>
+	Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+f64019ba229e3a5c411b@syzkaller.appspotmail.com,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Hugh Dickins <hughd@google.com>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Christoph Hellwig <hch@lst.de>
+Subject: [PATCH 6.12 082/132] mm/memfd: fix information leak in hugetlb folios
+Date: Wed,  3 Dec 2025 16:29:21 +0100
+Message-ID: <20251203152346.331538323@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -52,81 +60,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-commit 841ecc979b18d3227fad5e2d6a1e6f92688776b5 upstream.
+commit de8798965fd0d9a6c47fc2ac57767ec32de12b49 upstream.
 
-Owing to Config4.MMUSizeExt and VTLB/FTLB MMU features later MIPSr2+
-cores can have more than 64 TLB entries.  Therefore allocate an array
-for uniquification instead of placing too an small array on the stack.
+When allocating hugetlb folios for memfd, three initialization steps are
+missing:
 
-Fixes: 35ad7e181541 ("MIPS: mm: tlb-r4k: Uniquify TLB entries on init")
-Co-developed-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Signed-off-by: Maciej W. Rozycki <macro@orcam.me.uk>
-Cc: stable@vger.kernel.org # v6.17+: 9f048fa48740: MIPS: mm: Prevent a TLB shutdown on initial uniquification
-Cc: stable@vger.kernel.org # v6.17+
-Tested-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Tested-by: Klara Modin <klarasmodin@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+1. Folios are not zeroed, leading to kernel memory disclosure to userspace
+2. Folios are not marked uptodate before adding to page cache
+3. hugetlb_fault_mutex is not taken before hugetlb_add_to_page_cache()
+
+The memfd allocation path bypasses the normal page fault handler
+(hugetlb_no_page) which would handle all of these initialization steps.
+This is problematic especially for udmabuf use cases where folios are
+pinned and directly accessed by userspace via DMA.
+
+Fix by matching the initialization pattern used in hugetlb_no_page():
+- Zero the folio using folio_zero_user() which is optimized for huge pages
+- Mark it uptodate with folio_mark_uptodate()
+- Take hugetlb_fault_mutex before adding to page cache to prevent races
+
+The folio_zero_user() change also fixes a potential security issue where
+uninitialized kernel memory could be disclosed to userspace through read()
+or mmap() operations on the memfd.
+
+Link: https://lkml.kernel.org/r/20251112145034.2320452-1-kartikey406@gmail.com
+Fixes: 89c1905d9c14 ("mm/gup: introduce memfd_pin_folios() for pinning memfd folios")
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Reported-by: syzbot+f64019ba229e3a5c411b@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/20251112031631.2315651-1-kartikey406@gmail.com/ [v1]
+Closes: https://syzkaller.appspot.com/bug?extid=f64019ba229e3a5c411b
+Suggested-by: Oscar Salvador <osalvador@suse.de>
+Suggested-by: David Hildenbrand <david@redhat.com>
+Tested-by: syzbot+f64019ba229e3a5c411b@syzkaller.appspotmail.com
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Acked-by: Hugh Dickins <hughd@google.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com> (v2)
+Cc: Christoph Hellwig <hch@lst.de> (v6)
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/mm/tlb-r4k.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ mm/memfd.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/arch/mips/mm/tlb-r4k.c b/arch/mips/mm/tlb-r4k.c
-index 3facf7cc6c7d..44a662536148 100644
---- a/arch/mips/mm/tlb-r4k.c
-+++ b/arch/mips/mm/tlb-r4k.c
-@@ -12,6 +12,7 @@
- #include <linux/init.h>
- #include <linux/sched.h>
- #include <linux/smp.h>
-+#include <linux/memblock.h>
- #include <linux/mm.h>
- #include <linux/hugetlb.h>
- #include <linux/export.h>
-@@ -522,17 +523,26 @@ static int r4k_vpn_cmp(const void *a, const void *b)
-  * Initialise all TLB entries with unique values that do not clash with
-  * what we have been handed over and what we'll be using ourselves.
-  */
--static void r4k_tlb_uniquify(void)
-+static void __ref r4k_tlb_uniquify(void)
- {
--	unsigned long tlb_vpns[1 << MIPS_CONF1_TLBS_SIZE];
- 	int tlbsize = current_cpu_data.tlbsize;
-+	bool use_slab = slab_is_available();
- 	int start = num_wired_entries();
-+	phys_addr_t tlb_vpn_size;
-+	unsigned long *tlb_vpns;
- 	unsigned long vpn_mask;
- 	int cnt, ent, idx, i;
- 
- 	vpn_mask = GENMASK(cpu_vmbits - 1, 13);
- 	vpn_mask |= IS_ENABLED(CONFIG_64BIT) ? 3ULL << 62 : 1 << 31;
- 
-+	tlb_vpn_size = tlbsize * sizeof(*tlb_vpns);
-+	tlb_vpns = (use_slab ?
-+		    kmalloc(tlb_vpn_size, GFP_KERNEL) :
-+		    memblock_alloc_raw(tlb_vpn_size, sizeof(*tlb_vpns)));
-+	if (WARN_ON(!tlb_vpns))
-+		return; /* Pray local_flush_tlb_all() is good enough. */
+--- a/mm/memfd.c
++++ b/mm/memfd.c
+@@ -90,9 +90,36 @@ struct folio *memfd_alloc_folio(struct f
+ 						    NULL,
+ 						    gfp_mask);
+ 		if (folio) {
++			u32 hash;
 +
- 	htw_stop();
- 
- 	for (i = start, cnt = 0; i < tlbsize; i++, cnt++) {
-@@ -585,6 +595,10 @@ static void r4k_tlb_uniquify(void)
- 	tlbw_use_hazard();
- 	htw_start();
- 	flush_micro_tlb();
-+	if (use_slab)
-+		kfree(tlb_vpns);
-+	else
-+		memblock_free(tlb_vpns, tlb_vpn_size);
- }
- 
- /*
--- 
-2.52.0
-
++			/*
++			 * Zero the folio to prevent information leaks to userspace.
++			 * Use folio_zero_user() which is optimized for huge/gigantic
++			 * pages. Pass 0 as addr_hint since this is not a faulting path
++			 *  and we don't have a user virtual address yet.
++			 */
++			folio_zero_user(folio, 0);
++
++			/*
++			 * Mark the folio uptodate before adding to page cache,
++			 * as required by filemap.c and other hugetlb paths.
++			 */
++			__folio_mark_uptodate(folio);
++
++			/*
++			 * Serialize hugepage allocation and instantiation to prevent
++			 * races with concurrent allocations, as required by all other
++			 * callers of hugetlb_add_to_page_cache().
++			 */
++			hash = hugetlb_fault_mutex_hash(memfd->f_mapping, idx);
++			mutex_lock(&hugetlb_fault_mutex_table[hash]);
++
+ 			err = hugetlb_add_to_page_cache(folio,
+ 							memfd->f_mapping,
+ 							idx);
++
++			mutex_unlock(&hugetlb_fault_mutex_table[hash]);
++
+ 			if (err) {
+ 				folio_put(folio);
+ 				return ERR_PTR(err);
 
 
