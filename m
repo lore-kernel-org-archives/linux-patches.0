@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003C13563E1;
-	Wed,  3 Dec 2025 16:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E07453559C4;
+	Wed,  3 Dec 2025 16:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778669; cv=none; b=qQwVS9ys5LPQYfhSebfcwf9vutu/6hmFIwuG5J5QBej877VgThu+FLdt0CyHxARloVseqBZWfCaOW4PE5MvEu9qRb/8V2isZo7/Ebn5ApZP69auG2crrt8+HELXoDsT8k83yTVJ6GVZwBZy+cCAKokOWsE9gUrs5ByjHTW0Gkqk=
+	t=1764778672; cv=none; b=Q5Vo5LYVrZG7S/ujaAqu/Ln9hlLXs9AWCQ53RpeoFhSyfmUswSyOou3QYrV8YaEWq12fwgqCt/J4bQjvvcvovy5xIbNgzrQRxuPV0Gl+A51pDaEMRD6uml/a6NzLUSFxKzouBofygpHuv2j8jZa0Oi24hUM5MIH2g6CorYRoof8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778669; c=relaxed/simple;
-	bh=A2//YzEb0fh1q9H3gqLCSCGS7Plkq9jpikKMBpxrLzI=;
+	s=arc-20240116; t=1764778672; c=relaxed/simple;
+	bh=9zarvc9YeiikFXRwtcQVR8FtTj3yZk97SEvhqFIcpqk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NyXjn9xTT+YiAUiYs9VlntRp2TQYbW2THgfYw1xTvbH49dSIia/2cveFZvGTETkHFiSOixVAQ6Cu7ozwlDKymxHmHCKZXydAWEY6JaSdr1r0evu531LCyB4UHGtYpR+B1N5hFMBbab7um4Vg8CA6xrODutnoUKqMJyu45+raSbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCaMHDwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J6xa48XcwT8C+oTx9BxKK4cCeddMlRSFXH8qfR9QcuKIIvNelLdNLrItS/wYO4EGzi5WoSLPvKixPI1YTVy7x6KmUBFQfkIkyxbDYsPL24sRuhwNHbm3JJ4RGJjhiqMmg6yv7IIdQIkKf5yQXZ1m2Bb6haexSFD0ilTGJX6bVos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5MMd5W0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCaMHDwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5107CC4CEF5;
-	Wed,  3 Dec 2025 16:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5MMd5W0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CFB7C4CEF5;
+	Wed,  3 Dec 2025 16:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778668;
-	bh=A2//YzEb0fh1q9H3gqLCSCGS7Plkq9jpikKMBpxrLzI=;
+	s=korg; t=1764778671;
+	bh=9zarvc9YeiikFXRwtcQVR8FtTj3yZk97SEvhqFIcpqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCaMHDwelvBO003Kxeu/SwH2VTe9Vp2eYOvnAHYu7pfRS8Fk3Jd3w48r3TivFr8im
-	 o6lSoJD16k1giapBabXOFEpTvjGnwihSJH007Gr+xVEc3RmxBZvoBBbZzs6aYxCQ7l
-	 tO/ytxbhZH0SBPNPCe6HpZIOl9hyQdUYug1qYOMI=
+	b=X5MMd5W0Sb+N/dGQjeTk3IMezRv2mEiqPZAx2Yiu6iYttzgnWwFg9AozCMbENkG9r
+	 YQ8UpyY1Zl1HMZes/MBZHhatoSEOYwd74i9QVAYFiOQIv8qTKnvB17uIpp8gxbc1oO
+	 qMBPAay8GApgdNtht1Rr9IGYOSYMx7CGjzonB0f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/568] serial: sc16is7xx: remove useless enable of enhanced features
-Date: Wed,  3 Dec 2025 16:20:25 +0100
-Message-ID: <20251203152441.511937664@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 024/568] NFSD: Fix crash in nfsd4_read_release()
+Date: Wed,  3 Dec 2025 16:20:26 +0100
+Message-ID: <20251203152441.547519978@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,44 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 1c05bf6c0262f946571a37678250193e46b1ff0f ]
+commit abb1f08a2121dd270193746e43b2a9373db9ad84 upstream.
 
-Commit 43c51bb573aa ("sc16is7xx: make sure device is in suspend once
-probed") permanently enabled access to the enhanced features in
-sc16is7xx_probe(), and it is never disabled after that.
+When tracing is enabled, the trace_nfsd_read_done trace point
+crashes during the pynfs read.testNoFh test.
 
-Therefore, remove re-enable of enhanced features in
-sc16is7xx_set_baud(). This eliminates a potential useless read + write
-cycle each time the baud rate is reconfigured.
-
-Fixes: 43c51bb573aa ("sc16is7xx: make sure device is in suspend once probed")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
-Link: https://patch.msgid.link/20251006142002.177475-1-hugo@hugovil.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 15a8b55dbb1b ("nfsd: call op_release, even when op_func returns an error")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/sc16is7xx.c |    7 -------
- 1 file changed, 7 deletions(-)
+ fs/nfsd/nfs4proc.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/sc16is7xx.c
-+++ b/drivers/tty/serial/sc16is7xx.c
-@@ -582,13 +582,6 @@ static int sc16is7xx_set_baud(struct uar
- 		div /= prescaler;
- 	}
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -944,10 +944,11 @@ nfsd4_read(struct svc_rqst *rqstp, struc
+ static void
+ nfsd4_read_release(union nfsd4_op_u *u)
+ {
+-	if (u->read.rd_nf)
++	if (u->read.rd_nf) {
++		trace_nfsd_read_done(u->read.rd_rqstp, u->read.rd_fhp,
++				     u->read.rd_offset, u->read.rd_length);
+ 		nfsd_file_put(u->read.rd_nf);
+-	trace_nfsd_read_done(u->read.rd_rqstp, u->read.rd_fhp,
+-			     u->read.rd_offset, u->read.rd_length);
++	}
+ }
  
--	/* Enable enhanced features */
--	sc16is7xx_efr_lock(port);
--	sc16is7xx_port_update(port, SC16IS7XX_EFR_REG,
--			      SC16IS7XX_EFR_ENABLE_BIT,
--			      SC16IS7XX_EFR_ENABLE_BIT);
--	sc16is7xx_efr_unlock(port);
--
- 	/* If bit MCR_CLKSEL is set, the divide by 4 prescaler is activated. */
- 	sc16is7xx_port_update(port, SC16IS7XX_MCR_REG,
- 			      SC16IS7XX_MCR_CLKSEL_BIT,
+ static __be32
 
 
