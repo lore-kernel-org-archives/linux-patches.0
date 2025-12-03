@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0CD030B51F;
-	Wed,  3 Dec 2025 15:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C4430E839;
+	Wed,  3 Dec 2025 15:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776039; cv=none; b=XvzNSq7TVzWD/XBsbthP+21Mor7GGNPlXiUEBBvMtXXTEIRKgp7+JTmn4XL9cDh4u7SqKeUuJPRunpnsJc/tvirzha2GSNnuCKtoIsGONHsBECw/3jscbtnzZ7U2BHTDyoCCaVk7THF9wkQmYuEgGA/BjbXFHV8Ku6+bSlqU8U8=
+	t=1764776042; cv=none; b=DB/oxq856O0K/QAKZYWRwQaytHwlUAG17LUs6Jo++LDCGKgEu50lcv+A+JrWwv2xKEVbURhk3Qq64eZouWfyR2oKf02QcUXuJQsKEz1R+15XjhxPP/dk7LWUixLvmh/iLXscH7guBZT8+1VrOQe4IVAuqrnBzHjsIXNNGbC00F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776039; c=relaxed/simple;
-	bh=VnTYL+q285TzllG49qcmD78b8E5WszG3UiS31oQiHhQ=;
+	s=arc-20240116; t=1764776042; c=relaxed/simple;
+	bh=40lIErxWgsRUkzyYuRNpWzlm3EkuNKHID/Efi/CN60I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m8uBoMUrZO7yN/EQupkOC0RfMNJKRbLfzV9HrZnRuHkPS8AN7v6zl19AlhYLdKMGEBFSdnV1p8GXT9i5GqDtQzC2BKZqbvuFFW7Y9ZZPzh7z5wMeK5pFLT6g5uGkhfbcZJYjP0EUGZQXNzbCuilD+ZNIJdeFV6aImyWrAea3NQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeZ+Ud0d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B8KAig7CkxeNyRMZcvnAdphX6ptA+INTIgkes/ORQbcw44BsdMCSoBFeQPuGdRV9zUG4eb5j1hxM7K8keJhNCo1T6g0Pf7J4CHWeqxcZq7kOOp96ksIHbAduDqPQwL9E2uuwMQ1QmK+Z8s159e3z9dPj3tZLfaQeTkpjfFfO+Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEDfYTPb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeZ+Ud0d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998C2C4CEF5;
-	Wed,  3 Dec 2025 15:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEDfYTPb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E03C4CEF5;
+	Wed,  3 Dec 2025 15:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776039;
-	bh=VnTYL+q285TzllG49qcmD78b8E5WszG3UiS31oQiHhQ=;
+	s=korg; t=1764776042;
+	bh=40lIErxWgsRUkzyYuRNpWzlm3EkuNKHID/Efi/CN60I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeZ+Ud0dB2eGYaysYHthFUKW7noEZMLrE0OofJRP2uvsIVUmMYC5uy0hr0nXejjh8
-	 gcKZLuVxVbBv7GzYSs/LMW/a99qIE1dbjb7+2kvhh2MDovYsMkloA+rgVD6e9h7iO0
-	 ynETc0jJISwpo//PiJdeJ+5NJdWw6Z5Z7D0D5fp8=
+	b=nEDfYTPbOyYDfJZHBXS95DHHYjoSqAQII7HtZlTGx8JqxkFzMjr/2LFfLGP793jJe
+	 b/QLbuUUQ8w6h3dWzKYspU3PpggyCqzq2U7V1p8sW9yVjIidfopyFfPlOivR9/LB6E
+	 oUXpMq4b2az7FpQ3i+jnM1ED8j+7TSlRu1nXIFWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Runcheng Lu <runcheng.lu@hpmicro.com>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Celeste Liu <uwu@coelacanthus.name>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.10 029/300] can: gs_usb: increase max interface to U8_MAX
-Date: Wed,  3 Dec 2025 16:23:53 +0100
-Message-ID: <20251203152401.541036563@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 030/300] serial: 8250_dw: Use devm_add_action_or_reset()
+Date: Wed,  3 Dec 2025 16:23:54 +0100
+Message-ID: <20251203152401.577982174@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,114 +50,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Celeste Liu <uwu@coelacanthus.name>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 2a27f6a8fb5722223d526843040f747e9b0e8060 upstream
+[ Upstream commit 295b09128d12fb1a7a67f771cc0ae0df869eafaf ]
 
-This issue was found by Runcheng Lu when develop HSCanT USB to CAN FD
-converter[1]. The original developers may have only 3 interfaces
-device to test so they write 3 here and wait for future change.
+Slightly simplify ->probe() and drop a few goto labels by using
+devm_add_action_or_reset() for clock and reset cleanup.
 
-During the HSCanT development, we actually used 4 interfaces, so the
-limitation of 3 is not enough now. But just increase one is not
-future-proofed. Since the channel index type in gs_host_frame is u8,
-just make canch[] become a flexible array with a u8 index, so it
-naturally constraint by U8_MAX and avoid statically allocate 256
-pointer for every gs_usb device.
-
-[1]: https://github.com/cherry-embedded/HSCanT-hardware
-
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Reported-by: Runcheng Lu <runcheng.lu@hpmicro.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Signed-off-by: Celeste Liu <uwu@coelacanthus.name>
-Link: https://patch.msgid.link/20250930-gs-usb-max-if-v5-1-863330bf6666@coelacanthus.name
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20220509172129.37770-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: daeb4037adf7 ("serial: 8250_dw: handle reset control deassert error")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |   23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ drivers/tty/serial/8250/8250_dw.c |   63 ++++++++++++++++++--------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -156,10 +156,6 @@ struct gs_host_frame {
- #define GS_MAX_TX_URBS 10
- /* Only launch a max of GS_MAX_RX_URBS usb requests at a time. */
- #define GS_MAX_RX_URBS 30
--/* Maximum number of interfaces the driver supports per device.
-- * Current hardware only supports 2 interfaces. The future may vary.
-- */
--#define GS_MAX_INTF 2
- 
- struct gs_tx_context {
- 	struct gs_can *dev;
-@@ -190,10 +186,11 @@ struct gs_can {
- 
- /* usb interface struct */
- struct gs_usb {
--	struct gs_can *canch[GS_MAX_INTF];
- 	struct usb_anchor rx_submitted;
- 	struct usb_device *udev;
- 	u8 active_channels;
-+	u8 channel_cnt;
-+	struct gs_can *canch[];
- };
- 
- /* 'allocate' a tx context.
-@@ -321,7 +318,7 @@ static void gs_usb_receive_bulk_callback
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -438,6 +438,16 @@ static void dw8250_quirks(struct uart_po
  	}
+ }
  
- 	/* device reports out of range channel id */
--	if (hf->channel >= GS_MAX_INTF)
-+	if (hf->channel >= usbcan->channel_cnt)
- 		goto device_detach;
- 
- 	dev = usbcan->canch[hf->channel];
-@@ -409,7 +406,7 @@ static void gs_usb_receive_bulk_callback
- 	/* USB failure take down all interfaces */
- 	if (rc == -ENODEV) {
-  device_detach:
--		for (rc = 0; rc < GS_MAX_INTF; rc++) {
-+		for (rc = 0; rc < usbcan->channel_cnt; rc++) {
- 			if (usbcan->canch[rc])
- 				netif_device_detach(usbcan->canch[rc]->netdev);
- 		}
-@@ -991,20 +988,22 @@ static int gs_usb_probe(struct usb_inter
- 	icount = dconf->icount + 1;
- 	dev_info(&intf->dev, "Configuring for %d interfaces\n", icount);
- 
--	if (icount > GS_MAX_INTF) {
-+	if (icount > type_max(typeof(dev->channel_cnt))) {
- 		dev_err(&intf->dev,
--			"Driver cannot handle more that %d CAN interfaces\n",
--			GS_MAX_INTF);
-+			"Driver cannot handle more that %u CAN interfaces\n",
-+			type_max(typeof(dev->channel_cnt)));
- 		kfree(dconf);
- 		return -EINVAL;
- 	}
- 
--	dev = kzalloc(sizeof(*dev), GFP_KERNEL);
-+	dev = kzalloc(struct_size(dev, canch, icount), GFP_KERNEL);
- 	if (!dev) {
- 		kfree(dconf);
- 		return -ENOMEM;
- 	}
- 
-+	dev->channel_cnt = icount;
++static void dw8250_clk_disable_unprepare(void *data)
++{
++	clk_disable_unprepare(data);
++}
 +
- 	init_usb_anchor(&dev->rx_submitted);
++static void dw8250_reset_control_assert(void *data)
++{
++	reset_control_assert(data);
++}
++
+ static int dw8250_probe(struct platform_device *pdev)
+ {
+ 	struct uart_8250_port uart = {}, *up = &uart;
+@@ -539,35 +549,43 @@ static int dw8250_probe(struct platform_
+ 	if (err)
+ 		dev_warn(dev, "could not enable optional baudclk: %d\n", err);
  
- 	usb_set_intfdata(intf, dev);
-@@ -1045,7 +1044,7 @@ static void gs_usb_disconnect(struct usb
- 		return;
++	err = devm_add_action_or_reset(dev, dw8250_clk_disable_unprepare, data->clk);
++	if (err)
++		return err;
++
+ 	if (data->clk)
+ 		p->uartclk = clk_get_rate(data->clk);
+ 
+ 	/* If no clock rate is defined, fail. */
+ 	if (!p->uartclk) {
+ 		dev_err(dev, "clock rate not defined\n");
+-		err = -EINVAL;
+-		goto err_clk;
++		return -EINVAL;
  	}
  
--	for (i = 0; i < GS_MAX_INTF; i++)
-+	for (i = 0; i < dev->channel_cnt; i++)
- 		if (dev->canch[i])
- 			gs_destroy_candev(dev->canch[i]);
+ 	data->pclk = devm_clk_get_optional(dev, "apb_pclk");
+-	if (IS_ERR(data->pclk)) {
+-		err = PTR_ERR(data->pclk);
+-		goto err_clk;
+-	}
++	if (IS_ERR(data->pclk))
++		return PTR_ERR(data->pclk);
+ 
+ 	err = clk_prepare_enable(data->pclk);
+ 	if (err) {
+ 		dev_err(dev, "could not enable apb_pclk\n");
+-		goto err_clk;
++		return err;
+ 	}
+ 
++	err = devm_add_action_or_reset(dev, dw8250_clk_disable_unprepare, data->pclk);
++	if (err)
++		return err;
++
+ 	data->rst = devm_reset_control_get_optional_exclusive(dev, NULL);
+-	if (IS_ERR(data->rst)) {
+-		err = PTR_ERR(data->rst);
+-		goto err_pclk;
+-	}
++	if (IS_ERR(data->rst))
++		return PTR_ERR(data->rst);
++
+ 	reset_control_deassert(data->rst);
+ 
++	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
++	if (err)
++		return err;
++
+ 	dw8250_quirks(p, data);
+ 
+ 	/* If the Busy Functionality is not implemented, don't handle it */
+@@ -585,10 +603,8 @@ static int dw8250_probe(struct platform_
+ 	}
+ 
+ 	data->data.line = serial8250_register_8250_port(up);
+-	if (data->data.line < 0) {
+-		err = data->data.line;
+-		goto err_reset;
+-	}
++	if (data->data.line < 0)
++		return data->data.line;
+ 
+ 	/*
+ 	 * Some platforms may provide a reference clock shared between several
+@@ -609,17 +625,6 @@ static int dw8250_probe(struct platform_
+ 	pm_runtime_enable(dev);
+ 
+ 	return 0;
+-
+-err_reset:
+-	reset_control_assert(data->rst);
+-
+-err_pclk:
+-	clk_disable_unprepare(data->pclk);
+-
+-err_clk:
+-	clk_disable_unprepare(data->clk);
+-
+-	return err;
+ }
+ 
+ static int dw8250_remove(struct platform_device *pdev)
+@@ -637,12 +642,6 @@ static int dw8250_remove(struct platform
+ 
+ 	serial8250_unregister_port(data->data.line);
+ 
+-	reset_control_assert(data->rst);
+-
+-	clk_disable_unprepare(data->pclk);
+-
+-	clk_disable_unprepare(data->clk);
+-
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_put_noidle(dev);
  
 
 
