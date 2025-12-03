@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627A333BBA0;
-	Wed,  3 Dec 2025 16:24:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E903242C8;
+	Wed,  3 Dec 2025 16:24:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779055; cv=none; b=YxhQUHn12+sEecECq2q4hbLWVqUUPr4jEl7wKBhIwPSuUctFURjAOJTbw7VdSMy6phFrykF05DBNulxd9FcN4UPHmejV4Umb6U19ffXKLjouRqm+f1qspglOEfR97gksThth6HpRMe4+mfoyjnh7V+0JORRdRJx2UFFZstfLCaY=
+	t=1764779059; cv=none; b=N9CURzZlqHyLUz+vtyYK0Y7lAEgJLqUYESDTqobRgbSgvpNr7u55uB7WQtu8tbZjr98yzz+1s1H/ZuSx0sZXPUTA4KUL5epFwHHcikbC2G9O1Ul4GAQ4Z3Lqp6cURAUBY92jOGJCRwLl8bjCfu7dh3Tisa3gvOwHxfhgkmDgE1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779055; c=relaxed/simple;
-	bh=OJgkeDXsa9rPwxzDjZCgvm0sfcTJfStgQ6obqrHcXOY=;
+	s=arc-20240116; t=1764779059; c=relaxed/simple;
+	bh=JebPXOhrzH34Trvd2RwS8Mu158khiSzYXvPqER8n5m0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VPsI/YCFHUkVgABONiaJ7kubTTuPM3rpTF5068okj6AnsX/JLkkD0Pz1hmjNeRatswUjcGsFWF5VIUcgiyIawCsTbpRFso57lUTvLOOjlnF1nMUu0JRWIN5e60I0IqzNW4HItS92oQnaD/yotl6UotjhJQmCkiVZQ0CxgxdQ91I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9cpYZsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNXXaukqqiUv58A/9Jel3Apja9aBkcxGGB1Vd6QvO+Sj/SLVgerKQ7SdP1CbkiO6r7O4sD7bM78EfXbNW/vo0fMODjK3BBdz1mjfw5N0aQR3tINhkkiQ0QNyk8vO7o8PjzX5uB008/YhZobA7MsSCg0lzj3rSb+UbHNnc4+quIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgBqF3wp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9cpYZsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F09C4CEF5;
-	Wed,  3 Dec 2025 16:24:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgBqF3wp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD3FC4CEF5;
+	Wed,  3 Dec 2025 16:24:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779055;
-	bh=OJgkeDXsa9rPwxzDjZCgvm0sfcTJfStgQ6obqrHcXOY=;
+	s=korg; t=1764779058;
+	bh=JebPXOhrzH34Trvd2RwS8Mu158khiSzYXvPqER8n5m0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9cpYZsXQt5gqLVUbbKCzBj9o2AcYkKAVVEPKWfEMFvY15lm0Uw09msE1nSO0Ek73
-	 2TBt9FsCcosK2VAsqIArMbP2Bs7OX52zNVRksvVgbxeE/1opN979SJehg+ljARfm3F
-	 EZMTj2F1l4lqaFOe/61xBZeZitqYIiiQUUd06PtY=
+	b=tgBqF3wpCUnb5O4efRsfsHDULgteIvvOVF2PiL1Ngg32AgS2uobSei82xFmhGsmIl
+	 j2cAPRowaqIr1I5vPPREQLubRGhLdCSo19gIjc/o/Uytn2y3r3VEkTj686yB5cWgm2
+	 Ubgn6hEru+YlqFbVelsF3uF09Xj+x5GGbT811mjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarthak Garg <quic_sartgarg@quicinc.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hans de Goede <hansg@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/568] mmc: sdhci-msm: Enable tuning for SDR50 mode for SD card
-Date: Wed,  3 Dec 2025 16:21:50 +0100
-Message-ID: <20251203152444.691345935@linuxfoundation.org>
+Subject: [PATCH 6.1 109/568] ACPICA: dispatcher: Use acpi_ds_clear_operands() in acpi_ds_call_control_method()
+Date: Wed,  3 Dec 2025 16:21:51 +0100
+Message-ID: <20251203152444.727956552@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,72 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
+From: Hans de Goede <hansg@kernel.org>
 
-[ Upstream commit 08b68ca543ee9d5a8d2dc406165e4887dd8f170b ]
+[ Upstream commit e9dff11a7a50fcef23fe3e8314fafae6d5641826 ]
 
-For Qualcomm SoCs which needs level shifter for SD card, extra delay is
-seen on receiver data path.
+When deleting the previous walkstate operand stack
+acpi_ds_call_control_method() was deleting obj_desc->Method.param_count
+operands. But Method.param_count does not necessarily match
+this_walk_state->num_operands, it may be either less or more.
 
-To compensate this delay enable tuning for SDR50 mode for targets which
-has level shifter. SDHCI_SDR50_NEEDS_TUNING caps will be set for targets
-with level shifter on Qualcomm SOC's.
+After correcting the for loop to check `i < this_walk_state->num_operands`
+the code is identical to acpi_ds_clear_operands(), so just outright
+replace the code with acpi_ds_clear_operands() to fix this.
 
-Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://github.com/acpica/acpica/commit/53fc0220
+Signed-off-by: Hans de Goede <hansg@kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-msm.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/acpi/acpica/dsmethod.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index f507fa491c58f..996ab8c760d35 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -79,6 +79,7 @@
- #define CORE_IO_PAD_PWR_SWITCH_EN	BIT(15)
- #define CORE_IO_PAD_PWR_SWITCH	BIT(16)
- #define CORE_HC_SELECT_IN_EN	BIT(18)
-+#define CORE_HC_SELECT_IN_SDR50	(4 << 19)
- #define CORE_HC_SELECT_IN_HS400	(6 << 19)
- #define CORE_HC_SELECT_IN_MASK	(7 << 19)
- 
-@@ -1129,6 +1130,10 @@ static bool sdhci_msm_is_tuning_needed(struct sdhci_host *host)
- {
- 	struct mmc_ios *ios = &host->mmc->ios;
- 
-+	if (ios->timing == MMC_TIMING_UHS_SDR50 &&
-+	    host->flags & SDHCI_SDR50_NEEDS_TUNING)
-+		return true;
-+
- 	/*
- 	 * Tuning is required for SDR104, HS200 and HS400 cards and
- 	 * if clock frequency is greater than 100MHz in these modes.
-@@ -1197,6 +1202,8 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
- 	struct mmc_ios ios = host->mmc->ios;
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
-+	const struct sdhci_msm_offset *msm_offset = msm_host->offset;
-+	u32 config;
- 
- 	if (!sdhci_msm_is_tuning_needed(host)) {
- 		msm_host->use_cdr = false;
-@@ -1213,6 +1220,14 @@ static int sdhci_msm_execute_tuning(struct mmc_host *mmc, u32 opcode)
+diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
+index 05fd1ec8de14e..c5ad377558645 100644
+--- a/drivers/acpi/acpica/dsmethod.c
++++ b/drivers/acpi/acpica/dsmethod.c
+@@ -546,14 +546,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
+ 	 * Delete the operands on the previous walkstate operand stack
+ 	 * (they were copied to new objects)
  	 */
- 	msm_host->tuning_done = 0;
+-	for (i = 0; i < obj_desc->method.param_count; i++) {
+-		acpi_ut_remove_reference(this_walk_state->operands[i]);
+-		this_walk_state->operands[i] = NULL;
+-	}
+-
+-	/* Clear the operand stack */
+-
+-	this_walk_state->num_operands = 0;
++	acpi_ds_clear_operands(this_walk_state);
  
-+	if (ios.timing == MMC_TIMING_UHS_SDR50 &&
-+	    host->flags & SDHCI_SDR50_NEEDS_TUNING) {
-+		config = readl_relaxed(host->ioaddr + msm_offset->core_vendor_spec);
-+		config &= ~CORE_HC_SELECT_IN_MASK;
-+		config |= CORE_HC_SELECT_IN_EN | CORE_HC_SELECT_IN_SDR50;
-+		writel_relaxed(config, host->ioaddr + msm_offset->core_vendor_spec);
-+	}
-+
- 	/*
- 	 * For HS400 tuning in HS200 timing requires:
- 	 * - select MCLK/2 in VENDOR_SPEC
+ 	ACPI_DEBUG_PRINT((ACPI_DB_DISPATCH,
+ 			  "**** Begin nested execution of [%4.4s] **** WalkState=%p\n",
 -- 
 2.51.0
 
