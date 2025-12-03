@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B97F539A26E;
-	Wed,  3 Dec 2025 16:53:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E65939A27B;
+	Wed,  3 Dec 2025 16:53:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780819; cv=none; b=QuZXsPvMagySfuZ6vswFnmPO5ucAYgUtWwcq8Iml1l0zwR6asfirhdDrRCcORcg5niUUeC09pNp/dX/rgjgk/MN+IM2VQnV6rQqemkQ5pcyVPfDftAwKWdXMyer7s1h4RKOZVO2BBXEVSZM+wGP113kaK5vB8tWp8S3vKlKMvo0=
+	t=1764780823; cv=none; b=DT/Avg2MIT59sRz2r0/7z6vWX7/OWmXKg6bh1P79h2JNxbqdEi9axPTnbuNWyRBMVJJfvnRdqkQwVVmbwth//qbWXPC5gmE1YFvbiVtcUTUIkEHZWPRUZU+Y1YOFYSEHkBXxvcNlB4afGns9Rl/mjIw3CP4vuCbmpu0css4N/QU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780819; c=relaxed/simple;
-	bh=v/rhyZXIZbfggC/A9vFCA/AMDVI6hVY2+A7RB/Kl0tY=;
+	s=arc-20240116; t=1764780823; c=relaxed/simple;
+	bh=9bbMl+VR//pz9hOQjx6eQmrkN9HOBfIlgGzUTjpvhbg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W4BdWAjHaVAi5p3HaOFzfHAfeZvJPwq0Z6w2p91pchfMIWJqYTygfEIxpO7rZY4VMgMHRaAUexqU3wAA8CXuiAdnysp4QT7UejatGuh35GV06EySfX3CeaP1O18r/Eq82WnmKsaI/gyrJ5vTJ4YeYmJoel2Fgd166BnF5W/SS9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3x/bjU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NkZEAfd/3XNKhyJ/Lb2TaW8qllsFOCkhcyWBp7yDu3ZAEwcJqP0H61vJrog7nxlohM2pWlI7Gw4ih7xEVW56jsyXni6XIJtDkCt0ujOP9yiPBIomHeBFHll4Qd0hFVkgcIyGfx+QCO/bQpnGo2pX6T73IypKLA1QDtV8oLzIxDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCooicbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3x/bjU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C47EC4CEF5;
-	Wed,  3 Dec 2025 16:53:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCooicbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57BD4C4CEF5;
+	Wed,  3 Dec 2025 16:53:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780819;
-	bh=v/rhyZXIZbfggC/A9vFCA/AMDVI6hVY2+A7RB/Kl0tY=;
+	s=korg; t=1764780822;
+	bh=9bbMl+VR//pz9hOQjx6eQmrkN9HOBfIlgGzUTjpvhbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a3x/bjU0AtH8AyHI4KlIzshi2jsctzpa9d+5vyfp3+y0Qjk0zbNRUjmoNVLUcSG/h
-	 i1lkP+adKDxmVwBqFgJxIeIg/ZEtIqelr09w85mHErVMs3ZDO9I228IjIZV8iicRZu
-	 gZcaTbKI3uXeJTxvRtqx1+m15s5Agt+2p08W/5Wo=
+	b=pCooicbOdhHsynfIRQRzS0DF0jGewx2owWxjV2cYXbB4YpvmzCu1iBCT58bZWhdNo
+	 rpPJugeBgCFT9PG7o3t9Uh/xqz+hfyHWZJlplbYBYQMrBrIG6aOOxUz0ReNnA0rlNt
+	 kBsSyw4/v1w6TyFjKg/YJx9owOlDtX+njgks+1ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Zhaldak <i.v.zhaldak@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 066/132] ALSA: usb-audio: Add DSD quirk for LEAK Stereo 230
-Date: Wed,  3 Dec 2025 16:29:05 +0100
-Message-ID: <20251203152345.742599822@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Alexander Dahl <ada@thorsis.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.12 067/132] arm64: dts: imx8dxl-ss-conn: swap interrupts number of eqos
+Date: Wed,  3 Dec 2025 16:29:06 +0100
+Message-ID: <20251203152345.779604914@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -50,46 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Zhaldak <i.v.zhaldak@gmail.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit c83fc13960643c4429cd9dfef1321e6430a81b47 upstream.
+commit 5b6677d6451bbbac3b6ab93fae6506b59e2c19bd upstream.
 
-Integrated amplifier LEAK Stereo 230 by IAG Limited has built-in
-ESS9038Q2M DAC served by XMOS controller. It supports both DSD Native
-and DSD-over-PCM (DoP) operational modes. But it doesn't work properly
-by default and tries DSD-to-PCM conversion. USB quirks below allow it
-to operate as designed.
+Swap interrupt numbers of eqos because the below commit just swap
+interrupt-names and missed swap interrupts also.
 
-Add DSD_RAW quirk flag for IAG Limited devices (vendor ID 0x2622)
-Add DSD format quirk for LEAK Stereo 230 (USB ID 0x2622:0x0061)
+The driver (drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c) use
+interrupt-names to get irq numbers.
 
-Signed-off-by: Ivan Zhaldak <i.v.zhaldak@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20251117125848.30769-1-i.v.zhaldak@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: f29c19a6e488 ("arm64: dts: imx8dxl-ss-conn: Fix Ethernet interrupt-names order")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Tested-by: Alexander Dahl <ada@thorsis.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2028,6 +2028,7 @@ u64 snd_usb_interface_dsd_format_quirks(
- 	case USB_ID(0x249c, 0x9326): /* M2Tech Young MkIII */
- 	case USB_ID(0x2616, 0x0106): /* PS Audio NuWave DAC */
- 	case USB_ID(0x2622, 0x0041): /* Audiolab M-DAC+ */
-+	case USB_ID(0x2622, 0x0061): /* LEAK Stereo 230 */
- 	case USB_ID(0x278b, 0x5100): /* Rotel RC-1590 */
- 	case USB_ID(0x27f7, 0x3002): /* W4S DAC-2v2SE */
- 	case USB_ID(0x29a2, 0x0086): /* Mutec MC3+ USB */
-@@ -2411,6 +2412,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x25ce, /* Mytek devices */
- 		   QUIRK_FLAG_DSD_RAW),
-+	VENDOR_FLG(0x2622, /* IAG Limited devices */
-+		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x278b, /* Rotel? */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x292b, /* Gustard/Ess based devices */
+--- a/arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8dxl-ss-conn.dtsi
+@@ -27,8 +27,8 @@
+ 		compatible = "nxp,imx8dxl-dwmac-eqos", "snps,dwmac-5.10a";
+ 		reg = <0x5b050000 0x10000>;
+ 		interrupt-parent = <&gic>;
+-		interrupts = <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
+-			     <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>;
++		interrupts = <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
++			     <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>;
+ 		interrupt-names = "macirq", "eth_wake_irq";
+ 		clocks = <&eqos_lpcg IMX_LPCG_CLK_4>,
+ 			 <&eqos_lpcg IMX_LPCG_CLK_6>,
 
 
