@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E7B39A255;
-	Wed,  3 Dec 2025 16:53:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF4839A255;
+	Wed,  3 Dec 2025 16:53:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780796; cv=none; b=GsQoe4PP7D93tGl+EYoQ0DoGJU55/vOwMV4Z/nHiGqAIuT4qnMpJfaQvkGy0o+mHrvN1QDYjpx7c2YnuuFJF8eorf3N21fJ5Rms1JImEmw93TmECOUfv0dSKgOemoLxvEiv1IZ17L9Vp/dDSpU8PZTMO4dK5xW1nhyXT5P699Io=
+	t=1764780799; cv=none; b=QR8ElbyyvhG8PKqxwH8OUf9UkTzyUSyr9Xx9A0O7z3hsSH3fJ56OTMo+XV9dqLPpGXpfQ86MCEUpjDH702dlaOq3YIEOSAgz48gvuXTWbZkrpebOGZZ9BqUo0PRFqc7LlEwRGn605CIonrzF3+Mp0nx3y1z/6Os3up/eKZIVs1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780796; c=relaxed/simple;
-	bh=27b24KjNTv6DwWYWHMA6b86kIhT+1t75PK+kqVg7FaQ=;
+	s=arc-20240116; t=1764780799; c=relaxed/simple;
+	bh=Up9HohnIBhlnFWhH1OVJuRYdmi6UV4bZHx2sLt7Ntaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLA0YuH3JU1miVr3MAx6S77GK42J95OTGYGRKYdv7+ojW9a7aj2pUrrwMNuEyG+teRcnO+y/wSLPUZcc0mqAdO3BfHSvmRZ5kRGTsXynb9u862rDDJtP8ZaHY5tUkmRcWwPeZ4ZjvSfn9JY3+xA0PFIWOf/OIAy8uFtimivHox0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAhlvCzD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qa6xWPrIDinc7Hbks+PUMKB1Nf1jjbMbP+qorWgq7LIUhSMZqzDfenx3+DiLQv3xusNs/oEVSliL9qmmIJX3VaPNnOKBO11fnyEAqUvJuH2uDYE7O30gmNszCB8RybKP28KABSpYZJXXmW/bNVFkgtzDN+WzbX2r7g8N0snc2hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Few6tLW2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAhlvCzD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE91C4CEF5;
-	Wed,  3 Dec 2025 16:53:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Few6tLW2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA3A1C4CEF5;
+	Wed,  3 Dec 2025 16:53:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780796;
-	bh=27b24KjNTv6DwWYWHMA6b86kIhT+1t75PK+kqVg7FaQ=;
+	s=korg; t=1764780799;
+	bh=Up9HohnIBhlnFWhH1OVJuRYdmi6UV4bZHx2sLt7Ntaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAhlvCzDZAREH5Pk5CPxxVM2fLYHKOFEkSQ13UUXLqSMkLQRc1AqUFFyg2+1I19if
-	 0H59/B8UtcBr06cqRdznu2QYHdA+0/hWACTyiSvPuLqeZIg9jVCo7n50seejO0IAi3
-	 ClPuuyTzRzazY4sDsLzcfGOgxpokOYKaHWGWgHdI=
+	b=Few6tLW2OS/whb8cMn9lvLsSYKYYFrgom/1UnVr0i8MmjwaoFLUYkOgqnpRmCGqdZ
+	 kKwcyDAqCB+nq46lkKpxQJKfdwAKwbq6TxtJBIAjTylWQ4Ji89IcYNt+9A03141L/k
+	 P5Ap/OIlMZjOPfOz9VssA34FGS06DiptPKEKLYK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 065/132] tracing: Fix WARN_ON in tracing_buffers_mmap_close for split VMAs
-Date: Wed,  3 Dec 2025 16:29:04 +0100
-Message-ID: <20251203152345.706019338@linuxfoundation.org>
+	stealth <oleg.smirnov.1988@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 092/132] USB: storage: Remove subclass and protocol overrides from Novatek quirk
+Date: Wed,  3 Dec 2025 16:29:31 +0100
+Message-ID: <20251203152346.699518986@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -51,57 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit b042fdf18e89a347177a49e795d8e5184778b5b6 upstream.
+commit df5fde297e617041449f603ed5f646861c80000b upstream.
 
-When a VMA is split (e.g., by partial munmap or MAP_FIXED), the kernel
-calls vm_ops->close on each portion. For trace buffer mappings, this
-results in ring_buffer_unmap() being called multiple times while
-ring_buffer_map() was only called once.
+A report from Oleg Smirnov indicates that the unusual_devs quirks
+entry for the Novatek camera does not need to override the subclass
+and protocol parameters:
 
-This causes ring_buffer_unmap() to return -ENODEV on subsequent calls
-because user_mapped is already 0, triggering a WARN_ON.
+[3266355.209532] usb 1-3: new high-speed USB device number 10 using xhci_hcd
+[3266355.333031] usb 1-3: New USB device found, idVendor=0603, idProduct=8611, bcdDevice= 1.00
+[3266355.333040] usb 1-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[3266355.333043] usb 1-3: Product: YICARCAM
+[3266355.333045] usb 1-3: Manufacturer: XIAO-YI
+[3266355.333047] usb 1-3: SerialNumber: 966110000000100
+[3266355.338621] usb-storage 1-3:1.0: USB Mass Storage device detected
+[3266355.338817] usb-storage 1-3:1.0: Quirks match for vid 0603 pid 8611: 4000
+[3266355.338821] usb-storage 1-3:1.0: This device (0603,8611,0100 S 06 P 50) has unneeded SubClass and Protocol entries in unusual_devs.h (kernel 6.16.10-arch1-1)
+                    Please send a copy of this message to
+<linux-usb@vger.kernel.org> and <usb-storage@lists.one-eyed-alien.net>
 
-Trace buffer mappings cannot support partial mappings because the ring
-buffer structure requires the complete buffer including the meta page.
+The overrides are harmless but they do provoke the driver into logging
+this annoying message.  Update the entry to remove the unneeded entries.
 
-Fix this by adding a may_split callback that returns -EINVAL to prevent
-VMA splits entirely.
-
-Cc: stable@vger.kernel.org
-Fixes: cf9f0f7c4c5bb ("tracing: Allow user-space mapping of the ring-buffer")
-Link: https://patch.msgid.link/20251119064019.25904-1-kartikey406@gmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a72c325b042aae6403c7
-Tested-by: syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com
-Reported-by: syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reported-by: stealth <oleg.smirnov.1988@gmail.com>
+Closes: https://lore.kernel.org/CAKxjRRxhC0s19iEWoN=pEMqXJ_z8w_moC0GCXSqSKCcOddnWjQ@mail.gmail.com/
+Fixes: 6ca8af3c8fb5 ("USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera")
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/b440f177-f0b8-4d5a-8f7b-10855d4424ee@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/usb/storage/unusual_devs.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8283,8 +8283,18 @@ static void tracing_buffers_mmap_close(s
- 	put_snapshot_map(iter->tr);
- }
+--- a/drivers/usb/storage/unusual_devs.h
++++ b/drivers/usb/storage/unusual_devs.h
+@@ -938,7 +938,7 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
+ UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
+ 		"Novatek",
+ 		"NTK96550-based camera",
+-		USB_SC_SCSI, USB_PR_BULK, NULL,
++		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_BULK_IGNORE_TAG ),
  
-+static int tracing_buffers_may_split(struct vm_area_struct *vma, unsigned long addr)
-+{
-+	/*
-+	 * Trace buffer mappings require the complete buffer including
-+	 * the meta page. Partial mappings are not supported.
-+	 */
-+	return -EINVAL;
-+}
-+
- static const struct vm_operations_struct tracing_buffers_vmops = {
- 	.close		= tracing_buffers_mmap_close,
-+	.may_split      = tracing_buffers_may_split,
- };
- 
- static int tracing_buffers_mmap(struct file *filp, struct vm_area_struct *vma)
+ /*
 
 
