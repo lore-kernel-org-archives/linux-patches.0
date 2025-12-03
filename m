@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D24338F39;
-	Wed,  3 Dec 2025 15:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAA3338597;
+	Wed,  3 Dec 2025 15:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777358; cv=none; b=UIJIdtzwMZVBsqp5AD5dWtznIV3ei2THDErAfJln0XHky44HtdZUoA6mcQJwFvu5WwU4BIfl7qqzHJRTN78LuKye7C92Od92+/TCo2+DZVRS+H83+eXNXrjpWXbojAlzyrHEsqIBxKSgW5mvw6IBuJzKHnduRxDsAmr1m+VLFdc=
+	t=1764777361; cv=none; b=rMO7ywgjXCcxee9x13mr0pFX10iZgIeQGeAaNEchWkx+EBv+MVAcwtcn3JJ9Z7/hlbl1tmQK2XJpRstYovJZTnfYfri6lFkAlIlCcLhnq7nrFLiq+j1iaMpYLJbwrlk+UtQTgVS+550Z1I86i/zJpdXbJOvALgEz1FjE7JCn21g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777358; c=relaxed/simple;
-	bh=bmAAjUFQRFHyS0RuySDo4lzdUICw4YVmTMPk7cazxvc=;
+	s=arc-20240116; t=1764777361; c=relaxed/simple;
+	bh=GLr8eELwDBRHw6VEicbHk6Ag95TlxJsS+Qc0Z188mnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NN4RI33nya7f8OIWJaOhVheFTG9sJzUK06WlwaFzDLSri9yIFiAEj+pRJCPaZTIVUSC7YDQjpmcjUHPt/etz2lt6hg6VEOlO0l0R5ztp2mOCaWW7WhjOek94OXsCYyoDs6m192R1dcuyWzx1ZlwJxZzIdBsfhsLiMAE4cF3xesw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ECi0TQHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cAGyS2NLc32r4lWdsJzq1+i1DJPhBw1E0XaQOXExkb8970Kj2zAFX9dbjcAy+O4Nz94fCXlQ40jwBR/T/riTOUeIJ0H3U7aKp91Hu9h/S18TVl/dJ0niQWoAlstJ3ku9KdS3mng6T9Km2MyutPwiIa80KFB44oD9ADM9sRhjw6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ATPLM0aN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ECi0TQHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F680C4CEF5;
-	Wed,  3 Dec 2025 15:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ATPLM0aN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7017C4CEF5;
+	Wed,  3 Dec 2025 15:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777357;
-	bh=bmAAjUFQRFHyS0RuySDo4lzdUICw4YVmTMPk7cazxvc=;
+	s=korg; t=1764777361;
+	bh=GLr8eELwDBRHw6VEicbHk6Ag95TlxJsS+Qc0Z188mnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECi0TQHCTRe/scM40/qTHM/w9ZqkRyKIjcd82w6r2J6oKzi9DQQsurd8pK4nx1Gsg
-	 9wCsZwQpgSknr2fTlspbMZ9XoHA5r+rSIfc7eL/mikxf1wJ1HSoSDdLkpearGb+zBI
-	 Zqb+zJu/ePMFyYdmwx7G6zbRNL6zqt1VjzB1KOEk=
+	b=ATPLM0aNjb2wGtD95+x5qv4fgwevLyX9PAWnTKsabVchCQCdMrSPBla8d9t6Ij7zV
+	 enFKf5xOLzu/QZVS1K4Hom3sxCOfDQwH9bE0qfbgbQNpSLJKT6hSotizVD4wCD00R5
+	 LEtDPFLS95jc9rl5HU6frQ3qxsWZ25fjWq6KlUo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 014/392] mptcp: restore window probe
-Date: Wed,  3 Dec 2025 16:22:44 +0100
-Message-ID: <20251203152414.629300325@linuxfoundation.org>
+	Stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 015/392] ASoC: qdsp6: q6asm: do not sleep while atomic
+Date: Wed,  3 Dec 2025 16:22:45 +0100
+Message-ID: <20251203152414.665699631@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -53,48 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-commit a824084b98d8a1dbd6e85d0842a8eb5e73467f59 upstream.
+commit fdbb53d318aa94a094434e5f226617f0eb1e8f22 upstream.
 
-Since commit 72377ab2d671 ("mptcp: more conservative check for zero
-probes") the MPTCP-level zero window probe check is always disabled, as
-the TCP-level write queue always contains at least the newly allocated
-skb.
+For some reason we ended up kfree between spinlock lock and unlock,
+which can sleep.
 
-Refine the relevant check tacking in account that the above condition
-and that such skb can have zero length.
+move the kfree out of spinlock section.
 
-Fixes: 72377ab2d671 ("mptcp: more conservative check for zero probes")
-Cc: stable@vger.kernel.org
-Reported-by: Geliang Tang <geliang@kernel.org>
-Closes: https://lore.kernel.org/d0a814c364e744ca6b836ccd5b6e9146882e8d42.camel@kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Tested-by: Geliang Tang <geliang@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251028-net-mptcp-send-timeout-v1-3-38ffff5a9ec8@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a2a5d30218fd ("ASoC: qdsp6: q6asm: Add support to memory map and unmap")
+Cc: Stable@vger.kernel.org
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017085307.4325-2-srinivas.kandagatla@oss.qualcomm.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/qcom/qdsp6/q6asm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -1411,7 +1411,12 @@ alloc_skb:
- 	if (copy == 0) {
- 		u64 snd_una = READ_ONCE(msk->snd_una);
+--- a/sound/soc/qcom/qdsp6/q6asm.c
++++ b/sound/soc/qcom/qdsp6/q6asm.c
+@@ -376,9 +376,9 @@ static void q6asm_audio_client_free_buf(
  
--		if (snd_una != msk->snd_nxt || tcp_write_queue_tail(ssk)) {
-+		/* No need for zero probe if there are any data pending
-+		 * either at the msk or ssk level; skb is the current write
-+		 * queue tail and can be empty at this point.
-+		 */
-+		if (snd_una != msk->snd_nxt || skb->len ||
-+		    skb != tcp_send_head(ssk)) {
- 			tcp_remove_empty_skb(ssk);
- 			return 0;
- 		}
+ 	spin_lock_irqsave(&ac->lock, flags);
+ 	port->num_periods = 0;
++	spin_unlock_irqrestore(&ac->lock, flags);
+ 	kfree(port->buf);
+ 	port->buf = NULL;
+-	spin_unlock_irqrestore(&ac->lock, flags);
+ }
+ 
+ /**
 
 
