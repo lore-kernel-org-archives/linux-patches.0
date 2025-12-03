@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFA8354AEF;
-	Wed,  3 Dec 2025 16:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E21E350A00;
+	Wed,  3 Dec 2025 16:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778530; cv=none; b=NxcFFfhWNOLn62mE38sYJ8vtBOCex0wDCS+0DrlWI8MOnPs5NK8PIcEtcl5x+oyIjPKu4XXMvq1Tl+kM3a9yn9N+Zba8QPyC++VBxiXNbLQzsDoZlZ9YoYYI56MRCwDxXQpBodXt5vPZLaJuXJGU83QADwiz4OiU2zvOp6tI+qc=
+	t=1764778533; cv=none; b=S1YGCplcNTUPgZoi4kBlvkglRGm/HbDq5/5bdyCNqhYFX6fre+MXaALuicyLztQ0c5FpQomQDEoHxbd86JlqmKdDjq1j4+voyV0ShimrA/BZBXxoucFBu98xst+IQ1OSt3sP1d6B69sBmkuRGbEHM7BhJ9VRmQbwZhBr3P/tIRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778530; c=relaxed/simple;
-	bh=GqWshF/IbVX0OwEl1sOt23Mog7BKLLbdfBTFK+pf1y4=;
+	s=arc-20240116; t=1764778533; c=relaxed/simple;
+	bh=77FhJCdW4+o79GEnTOeS3Tvyg494AoBlogM+gPEoHuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3UHpZZPu7XapemFqmAu/ITXkyOGt6zRCeuxlWnlnvXKG2OPRttVFzpwkhHZ1BJBoxn81+tsfkqkHrVAKjX+3uDmFEm9WSU0mU1PnIi05FDyiTDhfUeynmRtU9XPl4LID2ZBxYXXXPMcNZqfmTkzAsBM90GdQxkLCx4H76q6p1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lqFrdKYt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qayjxLwp1bI4aiplWbf59tdrK07oopz0ZY7YeoeIyIIkkzCo2g9CRpJc63H9HZruC7P+os74cLA0K4MZdZ+ZvaRHxFGO0ClQJjr9uJ2A2KdwQsR14B3+bLVQXy5Q1FncsqJAwOigweNdW1NKXp/hWaWx/6+YDrpfZcdRnYVM5Bw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AmCSc/Zr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lqFrdKYt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E22C4CEF5;
-	Wed,  3 Dec 2025 16:15:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AmCSc/Zr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFD9C4CEF5;
+	Wed,  3 Dec 2025 16:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778530;
-	bh=GqWshF/IbVX0OwEl1sOt23Mog7BKLLbdfBTFK+pf1y4=;
+	s=korg; t=1764778533;
+	bh=77FhJCdW4+o79GEnTOeS3Tvyg494AoBlogM+gPEoHuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lqFrdKYtApCyUr4RkCHRxYGGjT5KU9W4qlqA4U1AG3+8egKbUIe4gsqRQiKwjxXM3
-	 E+Gty0iKP3RrkK66u4REe8OXvplR3nGTldCRgjDHWrPbIThrh4ZQnF5vIqiHJ+bv9D
-	 yeiMZroL6nqAXV40piYYB3fSYj3jFyrXXahXBwLA=
+	b=AmCSc/ZrgapuRr0DKXXW+KxWLlIlQvtn+tjuAB52RP/Jbopd880dJa37/8axDj1Dj
+	 MeQP3OcmdYsQBXGXBoSIjdPrW7Kn8IubhtOQo9VP+O2FrJUNH/AAZKAqZq9DGwIe1b
+	 2dXkE25kP5A6U2VF0/OeMg1zrUJJR7yQ64v7nVto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Suvorov <cryosay@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 373/392] USB: serial: ftdi_sio: add support for u-blox EVK-M101
-Date: Wed,  3 Dec 2025 16:28:43 +0100
-Message-ID: <20251203152427.883124456@linuxfoundation.org>
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 347/392] mailbox: mailbox-test: Fix debugfs_create_dir error checking
+Date: Wed,  3 Dec 2025 16:28:17 +0100
+Message-ID: <20251203152426.936776750@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -50,58 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksandr Suvorov <cryosay@gmail.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-commit 2d8ab771d5316de64f3bb920b82575c58eb00b1b upstream.
+[ Upstream commit 3acf1028f5003731977f750a7070f3321a9cb740 ]
 
-The U-Blox EVK-M101 enumerates as 1546:0506 [1] with four FTDI interfaces:
-- EVK-M101 current sensors
-- EVK-M101 I2C
-- EVK-M101 UART
-- EVK-M101 port D
+The debugfs_create_dir() function returns ERR_PTR() on error, not NULL.
+The current null-check fails to catch errors.
 
-Only the third USB interface is a UART. This change lets ftdi_sio probe
-the VID/PID and registers only interface #3 as a TTY, leaving the rest
-available for other drivers.
+Use IS_ERR() to correctly check for errors.
 
-[1]
-usb 5-1.3: new high-speed USB device number 11 using xhci_hcd
-usb 5-1.3: New USB device found, idVendor=1546, idProduct=0506, bcdDevice= 8.00
-usb 5-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=0
-usb 5-1.3: Product: EVK-M101
-usb 5-1.3: Manufacturer: u-blox AG
-
-Datasheet: https://content.u-blox.com/sites/default/files/documents/EVK-M10_UserGuide_UBX-21003949.pdf
-
-Signed-off-by: Oleksandr Suvorov <cryosay@gmail.com>
-Link: https://lore.kernel.org/20250926060235.3442748-1-cryosay@gmail.com/
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8ea4484d0c2b ("mailbox: Add generic mechanism for testing Mailbox Controllers")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/ftdi_sio.c     |    1 +
- drivers/usb/serial/ftdi_sio_ids.h |    1 +
- 2 files changed, 2 insertions(+)
+ drivers/mailbox/mailbox-test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/ftdi_sio.c
-+++ b/drivers/usb/serial/ftdi_sio.c
-@@ -1052,6 +1052,7 @@ static const struct usb_device_id id_tab
- 	/* U-Blox devices */
- 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ZED_PID) },
- 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ODIN_PID) },
-+	{ USB_DEVICE_INTERFACE_NUMBER(UBLOX_VID, UBLOX_EVK_M101_PID, 2) },
- 	/* FreeCalypso USB adapters */
- 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_BUF_PID),
- 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
---- a/drivers/usb/serial/ftdi_sio_ids.h
-+++ b/drivers/usb/serial/ftdi_sio_ids.h
-@@ -1607,6 +1607,7 @@
- #define UBLOX_VID			0x1546
- #define UBLOX_C099F9P_ZED_PID		0x0502
- #define UBLOX_C099F9P_ODIN_PID		0x0503
-+#define UBLOX_EVK_M101_PID		0x0506
+diff --git a/drivers/mailbox/mailbox-test.c b/drivers/mailbox/mailbox-test.c
+index abcee58e851c2..29c04157b5e88 100644
+--- a/drivers/mailbox/mailbox-test.c
++++ b/drivers/mailbox/mailbox-test.c
+@@ -267,7 +267,7 @@ static int mbox_test_add_debugfs(struct platform_device *pdev,
+ 		return 0;
  
- /*
-  * GMC devices
+ 	tdev->root_debugfs_dir = debugfs_create_dir(dev_name(&pdev->dev), NULL);
+-	if (!tdev->root_debugfs_dir) {
++	if (IS_ERR(tdev->root_debugfs_dir)) {
+ 		dev_err(&pdev->dev, "Failed to create Mailbox debugfs\n");
+ 		return -EINVAL;
+ 	}
+-- 
+2.51.0
+
 
 
