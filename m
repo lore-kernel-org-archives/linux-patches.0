@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54909331204;
-	Wed,  3 Dec 2025 16:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E22C334C1A;
+	Wed,  3 Dec 2025 16:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779329; cv=none; b=Ls17EjfgkF6QqbQYKcETy2NrLVpBZixqjtVk7sRmnOIxB8rPWJ+TbkN5/Zfk4L9Usop4d1X54AqraxM7dS/vXn3X/63OBNBorv+zBisDFooiwwkS+Q4PKwLpVZQMt5pROMlMmAbnCoRjJWs7/D8XE7dzRXNa0ZTBf+8VtB8Gfek=
+	t=1764779332; cv=none; b=UR6FCOHroLHO2A7QV1h8JCzCbc5wYaLZRJZNknhhOh2wslErAD/UkWJTfIi9KzkNkkqJRNwA7NQ65qUefZb5+QP2AmSp5kA+jeG2O5MSftCTOS9Ld1lcrBjlbF7axrS+4pfjlMxDgLOCsEdQ9yd9kO3FWqGuWwZR5pRvCCD67Dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779329; c=relaxed/simple;
-	bh=m0AEI3SYjWcpjL9aY1myhD6mHZ6bt2AtGd9Y7TZPwIE=;
+	s=arc-20240116; t=1764779332; c=relaxed/simple;
+	bh=DSLoEPUgpOT381LQZLpmzz56fvB0N86D5sphAHFfTo4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hwYKSZIMog6ONoGgVXZzMAA+btQuP47FN6OGutardgCC0ggmpU/RygG6ABuhfeqvJbPLwBy+I/r+F9cJUmofhjN5EuVxOHqbPxt+SYDRcHxJOKhAFKs9cNcgL5J+mJoDOw1qyjuUB/IGBABzhFAiExXG/ZPL51TVllRwd/pjzlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XILq2rQA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SdXV4UqafScHPonrVLJpm1LhlZ42FjVVyI8O2zF0nkbQ4oQDeR2tgSs54YmJ4QuctZk7Wu79HFRck3UXWQrOgDvlIPWoL5Buk2HfwWPt0rwWvpEjn6d+tJhjnNulmyQVHCf/Ue3SDoNh0saKR9XlW2HMxcpy8UQh6tpDr0HSC0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YvR4B0A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XILq2rQA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6693C4CEF5;
-	Wed,  3 Dec 2025 16:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YvR4B0A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F110BC4CEF5;
+	Wed,  3 Dec 2025 16:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779329;
-	bh=m0AEI3SYjWcpjL9aY1myhD6mHZ6bt2AtGd9Y7TZPwIE=;
+	s=korg; t=1764779332;
+	bh=DSLoEPUgpOT381LQZLpmzz56fvB0N86D5sphAHFfTo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XILq2rQANeKxSDBsHgekjmj7AzHEfMmIL9cz/R+kxuwq+ne0juC/JfINlIUDSWm1p
-	 PvoC74/IbvIgZDR6mxL1dHcEUDdb7iIIyAfRJ5+IpguQhAupryL4KzMreJDfClFxaC
-	 loFP0K+Gmum1rAn5aKDZmrXb3JuVf3UMZRmIWxBI=
+	b=2YvR4B0A0KB2DJNmY/AlLt8dF/tEM+4AYsY0erUEZlZl/4G6xIsB+nJuTLGP92kjW
+	 sO1ZWjVieNdQZanORL1dkkXa+ARvbc1oPAc5mQB9u6lf1UU9lcLs52zU05pe2A3Age
+	 y70PwQNyWuIqk1/uvPBvgjcYAOh6h4x/NlKQ5fc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	AceLan Kao <acelan.kao@canonical.com>,
+	Kai-Heng Feng <kaihengf@nvidia.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Denis Benato <benato.denis96@gmail.com>,
+	=?UTF-8?q?Merthan=20Karaka=C5=9F?= <m3rthn.k@gmail.com>,
+	Eric Naim <dnaim@cachyos.org>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 226/568] drm/amdgpu: Use memdup_array_user in amdgpu_cs_wait_fences_ioctl
-Date: Wed,  3 Dec 2025 16:23:48 +0100
-Message-ID: <20251203152449.000074488@linuxfoundation.org>
+Subject: [PATCH 6.1 227/568] drm/amd: Avoid evicting resources at S5
+Date: Wed,  3 Dec 2025 16:23:49 +0100
+Message-ID: <20251203152449.036244947@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,68 +51,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Mario Limonciello (AMD) <superm1@kernel.org>
 
-[ Upstream commit dea75df7afe14d6217576dbc28cc3ec1d1f712fb ]
+[ Upstream commit 531df041f2a5296174abd8292d298eb62fe1ea97 ]
 
-Replace kmalloc_array() + copy_from_user() with memdup_array_user().
+Normally resources are evicted on dGPUs at suspend or hibernate and
+on APUs at hibernate.  These steps are unnecessary when using the S4
+callbacks to put the system into S5.
 
-This shrinks the source code and improves separation between the kernel
-and userspace slabs.
-
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Cc: AceLan Kao <acelan.kao@canonical.com>
+Cc: Kai-Heng Feng <kaihengf@nvidia.com>
+Cc: Mark Pearson <mpearson-lenovo@squebb.ca>
+Cc: Denis Benato <benato.denis96@gmail.com>
+Cc: Merthan Karakaş <m3rthn.k@gmail.com>
+Tested-by: Eric Naim <dnaim@cachyos.org>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-index 25cccd080d977..e0cd6a08ffb27 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1695,30 +1695,21 @@ int amdgpu_cs_wait_fences_ioctl(struct drm_device *dev, void *data,
- {
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 	union drm_amdgpu_wait_fences *wait = data;
--	uint32_t fence_count = wait->in.fence_count;
--	struct drm_amdgpu_fence *fences_user;
- 	struct drm_amdgpu_fence *fences;
- 	int r;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 18a0802cb74dc..f18f165876043 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4187,6 +4187,10 @@ static int amdgpu_device_evict_resources(struct amdgpu_device *adev)
+ 	if ((adev->in_s3 || adev->in_s0ix) && (adev->flags & AMD_IS_APU))
+ 		return 0;
  
- 	/* Get the fences from userspace */
--	fences = kmalloc_array(fence_count, sizeof(struct drm_amdgpu_fence),
--			GFP_KERNEL);
--	if (fences == NULL)
--		return -ENOMEM;
--
--	fences_user = u64_to_user_ptr(wait->in.fences);
--	if (copy_from_user(fences, fences_user,
--		sizeof(struct drm_amdgpu_fence) * fence_count)) {
--		r = -EFAULT;
--		goto err_free_fences;
--	}
-+	fences = memdup_array_user(u64_to_user_ptr(wait->in.fences),
-+				   wait->in.fence_count,
-+				   sizeof(struct drm_amdgpu_fence));
-+	if (IS_ERR(fences))
-+		return PTR_ERR(fences);
- 
- 	if (wait->in.wait_all)
- 		r = amdgpu_cs_wait_all_fences(adev, filp, wait, fences);
- 	else
- 		r = amdgpu_cs_wait_any_fence(adev, filp, wait, fences);
- 
--err_free_fences:
- 	kfree(fences);
- 
- 	return r;
++	/* No need to evict when going to S5 through S4 callbacks */
++	if (system_state == SYSTEM_POWER_OFF)
++		return 0;
++
+ 	ret = amdgpu_ttm_evict_resources(adev, TTM_PL_VRAM);
+ 	if (ret)
+ 		DRM_WARN("evicting device resources failed\n");
 -- 
 2.51.0
 
