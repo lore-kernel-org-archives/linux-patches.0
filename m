@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD04F316198;
-	Wed,  3 Dec 2025 15:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20616315D51;
+	Wed,  3 Dec 2025 15:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776566; cv=none; b=CiwQoTx4ZRUPMAFGZnY5C2Q4dLq6uJJGrD2gzuR7GkntEdypvcdWvuPhlgOUtxJMu4wcKlFLiNAcFcT013UDFCnllFrz1gmWL84woKkIdbnseu6VEzy6neD7oqA0iuYMBkTANAxU5MUKftT7FFxSBC1qDK1UO0Fe52GQ1cTX/Cw=
+	t=1764776570; cv=none; b=V8RsgXi2p3X6vtlNaE61L6laG7r9DdaJXh/nunwE38STaYlP1wZt3iRl+e4414EpRIYP9wSFwr0T28E4k3mRDIAIuWv0QXTYlVctyUgdM2Wy0/zwTSWWEq26McOU/3VAEWsFaNLa9ussw9eN98zEDwd1g1tfnLTg3KQBMjokOGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776566; c=relaxed/simple;
-	bh=Y13Tt4z3tHgdmUUWVcBO+2oNJev/+f/ZBSph70q/0Sg=;
+	s=arc-20240116; t=1764776570; c=relaxed/simple;
+	bh=i60slNYl/39H+n7gX74aDvl0trY4EYXVyOUJO+p1zd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZP7i9GQU1JsTrQI3vr6DeOqcjIE8NG5TpHGQjvmQ2sHHzd62AkQIFyED/ulSRe+9eGjr3C6mmT1v1LSCgujwH2fF31ChY1pYe/hKgu4orB4PYDkmobG0kWTtB7puTiNdmVhbZ55xm7eAFL2uAqQ9WpfgDEv9rakaJpFX1flAzc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j1AqKeMQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=leEvRb0GIGuc5ETzEtb3P0lx7drSceTz2GmjUuS6ozeL4QFkrOTjoEd3xHEWDWXPujLlxkQBYm+jI+qQVKVj30FEC2uFxRLvcbO5+BBnoai8Qvq3pYME6mxTkjLuXIXZbxMVePTHUp8bGD4EMIxiHu0ujnCOsFO8GthMzN6MWzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzCHYMeU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j1AqKeMQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9D0C4CEF5;
-	Wed,  3 Dec 2025 15:42:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzCHYMeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D945C4CEF5;
+	Wed,  3 Dec 2025 15:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776566;
-	bh=Y13Tt4z3tHgdmUUWVcBO+2oNJev/+f/ZBSph70q/0Sg=;
+	s=korg; t=1764776570;
+	bh=i60slNYl/39H+n7gX74aDvl0trY4EYXVyOUJO+p1zd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1AqKeMQ3eiphtry37OFGj+k8Jo6f3esBKe7ozuOWpLBoc+B2cn6LaJXETaJMJPEX
-	 91EWpT5BxPeAlB6zVUYifs+Ib2KI6+GMIJmZ7QOc21PUuazyLmSvfAejU1xt5QdL9m
-	 P/uu9TX5OKyImpTtYM+luJ/SpJ7CFI0agCUX/2OQ=
+	b=DzCHYMeUYDVaopl2AgSYdNPayrA33ms8fEEBwFRVMkN5JeAjHT/ul0wD1qU0m4fah
+	 8bQBIrAesWnDmFSBHeqNqKckbK328MVxgeLhdgfxnOhJXgqU9bVtW+my67HfLm8V1Z
+	 E8RiHt1qzQuQKjyq4hzFretTdBxOH4jfnIeU7/QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com,
-	Hannes Reinecke <hare@suse.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 222/300] scsi: sg: Do not sleep in atomic context
-Date: Wed,  3 Dec 2025 16:27:06 +0100
-Message-ID: <20251203152408.847778442@linuxfoundation.org>
+	Masami Ichikawa <masami256@gmail.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 205/300] HID: hid-ntrig: Prevent memory leak in ntrig_report_version()
+Date: Wed,  3 Dec 2025 16:26:49 +0100
+Message-ID: <20251203152408.218237892@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,47 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Masami Ichikawa <masami256@gmail.com>
 
-commit 90449f2d1e1f020835cba5417234636937dd657e upstream.
+[ Upstream commit 53f731f5bba0cf03b751ccceb98b82fadc9ccd1e ]
 
-sg_finish_rem_req() calls blk_rq_unmap_user(). The latter function may
-sleep. Hence, call sg_finish_rem_req() with interrupts enabled instead
-of disabled.
+Use a scope-based cleanup helper for the buffer allocated with kmalloc()
+in ntrig_report_version() to simplify the cleanup logic and prevent
+memory leaks (specifically the !hid_is_usb()-case one).
 
-Reported-by: syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-scsi/691560c4.a70a0220.3124cb.001a.GAE@google.com/
-Cc: Hannes Reinecke <hare@suse.de>
-Cc: stable@vger.kernel.org
-Fixes: 97d27b0dd015 ("scsi: sg: close race condition in sg_remove_sfp_usercontext()")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251113181643.1108973-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[jkosina@suse.com: elaborate on the actual existing leak]
+Fixes: 185c926283da ("HID: hid-ntrig: fix unable to handle page fault in ntrig_report_version()")
+Signed-off-by: Masami Ichikawa <masami256@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sg.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/hid/hid-ntrig.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -2235,9 +2235,17 @@ sg_remove_sfp_usercontext(struct work_st
- 	write_lock_irqsave(&sfp->rq_list_lock, iflags);
- 	while (!list_empty(&sfp->rq_list)) {
- 		srp = list_first_entry(&sfp->rq_list, Sg_request, entry);
--		sg_finish_rem_req(srp);
- 		list_del(&srp->entry);
-+		write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
-+
-+		sg_finish_rem_req(srp);
-+		/*
-+		 * sg_rq_end_io() uses srp->parentfp. Hence, only clear
-+		 * srp->parentfp after blk_mq_free_request() has been called.
-+		 */
- 		srp->parentfp = NULL;
-+
-+		write_lock_irqsave(&sfp->rq_list_lock, iflags);
- 	}
- 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
+diff --git a/drivers/hid/hid-ntrig.c b/drivers/hid/hid-ntrig.c
+index a1128c5315fff..3c41f6841f775 100644
+--- a/drivers/hid/hid-ntrig.c
++++ b/drivers/hid/hid-ntrig.c
+@@ -142,13 +142,13 @@ static void ntrig_report_version(struct hid_device *hdev)
+ 	int ret;
+ 	char buf[20];
+ 	struct usb_device *usb_dev = hid_to_usb_dev(hdev);
+-	unsigned char *data = kmalloc(8, GFP_KERNEL);
++	unsigned char *data __free(kfree) = kmalloc(8, GFP_KERNEL);
  
+ 	if (!hid_is_usb(hdev))
+ 		return;
+ 
+ 	if (!data)
+-		goto err_free;
++		return;
+ 
+ 	ret = usb_control_msg(usb_dev, usb_rcvctrlpipe(usb_dev, 0),
+ 			      USB_REQ_CLEAR_FEATURE,
+@@ -163,9 +163,6 @@ static void ntrig_report_version(struct hid_device *hdev)
+ 		hid_info(hdev, "Firmware version: %s (%02x%02x %02x%02x)\n",
+ 			 buf, data[2], data[3], data[4], data[5]);
+ 	}
+-
+-err_free:
+-	kfree(data);
+ }
+ 
+ static ssize_t show_phys_width(struct device *dev,
+-- 
+2.51.0
+
 
 
