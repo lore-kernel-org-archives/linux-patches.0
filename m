@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A271A313546;
-	Wed,  3 Dec 2025 16:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27A1313558;
+	Wed,  3 Dec 2025 16:07:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778051; cv=none; b=Xef+qjDBmJSMoptt7ophpe57vI725hpbGk2gOgXHNEqjZbRlR8EEpcq92xjcfoFjOBFOl6NonAPPkBsvdG32SocTNhxWkd/0uOgQb5YxgdCJC7qg+4wp8RSSiewwsRz1OGhbFWJsDqSg+FiiRbT3Wt3C4RPWnC7Jhos39jpnCiQ=
+	t=1764778054; cv=none; b=JEzwL+vTcXPOSvflf4x9vq0ldWW6Q/IGRzCmSsHD+dj2WxusQynpziNB8XkRG/VwYhHUWjN8oGmTiicwsMQG9EwA6rATmkxaRiK5f/0x50jfCo27uOSxLCfj8pMBkdMW/W6PQrjWVitT+9nTXjrQO/NuiKto0Y7fFZds9sI1ZQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778051; c=relaxed/simple;
-	bh=L32Dfthnso2ZJ3EXurLjHI4yB5whjjsGUn9B2LngGXo=;
+	s=arc-20240116; t=1764778054; c=relaxed/simple;
+	bh=Lu83OpVvrjR6fnu5Qq00tSDUy1sxgkUkH1q55TgBx/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iAy7MMaHUfzufbHiXrCfkzPD4Zddj/TorjdAMbY7tbfGu5dHWS6PFmkGjeI7RcX1fRTq+iWgXQPC8n+fQKJj5diScAfWTLJXYz63woIisJKcn/yBMn4JS6/lHpdyxtLTD+GbxssLprYwGe11T3UTzK9TllSXzf6NbzHcE2nh4tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=unNeLCuy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C4eW6so44XBMHLfoagW26yqdXc8CdpsMjE+vtGVeHEf7TFpPkh4nHKi0knsjTxyclI78z1W72flvCQPbqGRMHjAilL8V8mqWTr4nk1LtQyMGy0yTMIGc9AOxiBY0yAq9KbAwVu0TYfpfgyGbj7Dqh3M6kt48sBHe4a4nNKwJ6ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xu4GRZEJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="unNeLCuy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2715CC4CEF5;
-	Wed,  3 Dec 2025 16:07:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xu4GRZEJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 558F4C4CEF5;
+	Wed,  3 Dec 2025 16:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778051;
-	bh=L32Dfthnso2ZJ3EXurLjHI4yB5whjjsGUn9B2LngGXo=;
+	s=korg; t=1764778054;
+	bh=Lu83OpVvrjR6fnu5Qq00tSDUy1sxgkUkH1q55TgBx/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=unNeLCuybJukVBwfOrexjrFeFF6cyLqrTlERxWhAT6S8yfmtoc6WpWnpEASgdOUaS
-	 +GYbglG3P1dne1dAQaqfJBBzX9kcEE19eq+aesYM1vhIKOLF40VcVTvnXbbeRNuOAv
-	 GtsjZKgFw++iULtIU3R8l19OR8eExYMw6nF3F47E=
+	b=Xu4GRZEJOP3vw2JMVhHer9viL/dfR1xP1JBwGbsSolfxj2i/LaNtdoZYrR8SG0RG4
+	 f8IdE9R7MS5p6/pVk22CYZ9wAjNgWxFvyqckm2IdkutzULg/U2S+eyj/paOtBjNmQu
+	 qPvaeRm4vsARd4iSsgsCDhTLsvdjBKkvGWejA01A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Chanwoo Choi <cw00.choi@samsung.com>
-Subject: [PATCH 5.15 228/392] extcon: adc-jack: Cleanup wakeup source only if it was enabled
-Date: Wed,  3 Dec 2025 16:26:18 +0100
-Message-ID: <20251203152422.573433041@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 229/392] selftests: netdevsim: set test timeout to 10 minutes
+Date: Wed,  3 Dec 2025 16:26:19 +0100
+Message-ID: <20251203152422.609748217@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,36 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 92bac7d4de9c07933f6b76d8f1c7f8240f911f4f upstream.
+commit afbf75e8da8ce8a0698212953d350697bb4355a6 upstream.
 
-Driver in the probe enables wakeup source conditionally, so the cleanup
-path should do the same - do not release the wakeup source memory if it
-was not allocated.
+The longest running netdevsim test, nexthop.sh, currently takes
+5 min to finish. Around 260s to be exact, and 310s on a debug kernel.
+The default timeout in selftest is 45sec, so we need an explicit
+config. Give ourselves some headroom and use 10min.
 
-Link: https://lore.kernel.org/lkml/20250509071703.39442-2-krzysztof.kozlowski@linaro.org/
-Reported-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Closes: https://lore.kernel.org/r/22aaebb7-553b-4571-8a43-58a523241082@wanadoo.fr/
-Fixes: 78b6a991eb6c ("extcon: adc-jack: Fix wakeup source leaks on device unbind")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Commit under Fixes isn't really to "blame" but prior to that
+netdevsim tests weren't integrated with kselftest infra
+so blaming the tests themselves doesn't seem right, either.
+
+Fixes: 8ff25dac88f6 ("netdevsim: add Makefile for selftests")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/extcon/extcon-adc-jack.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/drivers/net/netdevsim/settings |    1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 tools/testing/selftests/drivers/net/netdevsim/settings
 
---- a/drivers/extcon/extcon-adc-jack.c
-+++ b/drivers/extcon/extcon-adc-jack.c
-@@ -162,7 +162,8 @@ static int adc_jack_remove(struct platfo
- {
- 	struct adc_jack_data *data = platform_get_drvdata(pdev);
- 
--	device_init_wakeup(&pdev->dev, false);
-+	if (data->wakeup_source)
-+		device_init_wakeup(&pdev->dev, false);
- 	free_irq(data->irq, data);
- 	cancel_work_sync(&data->handler.work);
- 
+--- /dev/null
++++ b/tools/testing/selftests/drivers/net/netdevsim/settings
+@@ -0,0 +1 @@
++timeout=600
 
 
