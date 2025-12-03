@@ -1,38 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F2335BDAD;
-	Wed,  3 Dec 2025 16:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D046035BDB7;
+	Wed,  3 Dec 2025 16:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778940; cv=none; b=mW5Y6aHKroFH4Wx6Mu9NwrrprCw5X7YCDn7L6k+6K4XotKP3ZwfOkbBPFIXgVqnSASl6TbA8D7zx/vrBWqS5EU8URnDka++ZT1uA5l7vV0BJyR8WO1Nc5Q0M765q4B4N8veP+8hP5jcdeljNpK6K0PEwnGFNsdpR2ompkMUY9Lk=
+	t=1764778942; cv=none; b=g2bnnGL7Yagodz+Cn6coo5AxY4KffsTlJ0rN4/GhkrK6xhjtrCRuB+aJRji3J5xo7zeUNvA7MdH2N5U8wW/i1KmvhJToKK2p/INCMKryyc3Uu4l4ymKEeTEZdUbwD1lie0xMJu0JspkxohaV2TPAeu2qUn3befhv8NG1lMYIoBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778940; c=relaxed/simple;
-	bh=DRhMATHWb0+k14E+DlFa4bEBrTHbH/RkVO518XFjhwA=;
+	s=arc-20240116; t=1764778942; c=relaxed/simple;
+	bh=ALXgtfDOMBNDD4pXARpdK/thigiAm3BEnjS9H0togzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAI4woWzBG9bBKmEQIdSGueHts/IG6+Ahd6dmx4QDxN1apjQV8X+Al+qg5Goog+M3eGMjeUujOlrm8XgthVXkor+NXMBMd8o8sQMrccg5nGCbZmTQDvhU/5L9yGkEPtVjPKbRAlTykU4vD0ttph0+1LJ2WDb605niWOrYrbZLdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWhNEDFt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQOPNc7HJD+s6gn+BZmNDO7Cbr446epge6LFcuNhbe20xPSVlduqNbXZQddMoDqfHjMyW6WmHbRjSoWYdHNkKV11cJT5WT+mJDSTEqObL0Bc8qOVpQ4Hu5wDfrz3G/tMEWP7vwm0UHeZjNm732Jk0eREP+FfESOKRdYzhCUWpVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjVIM/8b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWhNEDFt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D3F6C4CEF5;
-	Wed,  3 Dec 2025 16:22:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjVIM/8b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E58C4CEF5;
+	Wed,  3 Dec 2025 16:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778939;
-	bh=DRhMATHWb0+k14E+DlFa4bEBrTHbH/RkVO518XFjhwA=;
+	s=korg; t=1764778942;
+	bh=ALXgtfDOMBNDD4pXARpdK/thigiAm3BEnjS9H0togzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWhNEDFt9JAsp0hzp5jZEkr7zRcUCqgZpbdCQ47qvaK1a7NliqpM9JWbTXJANosBK
-	 J6b0MOV2m3W2orB4rvPGtQ/ZrvymwWt3LtG7Dfqz1oLWM04E/VDL96/8pyGlm/iA3d
-	 PED39xiH612EMV3w/lz5u6xt5yPYGu9Yk3QaLNfA=
+	b=HjVIM/8biahyY5J4+DHd6op0RW4A/4FV2/t6vTt5Ag4O61wrzQcKoB6PCsf1PS+bj
+	 ffUFr93QzdkaP7qhZdYezqnJbUA7V6NAZu/g7UG0H3phLuEmT1ePxcfsVXnxoqmzTw
+	 mTkWTGZo097jT731ThU9CzEnzFEQHRTySKQ2omek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Wen Yang <wen.yang@linux.dev>
-Subject: [PATCH 6.1 074/568] arm64: tegra: Update cache properties
-Date: Wed,  3 Dec 2025 16:21:16 +0100
-Message-ID: <20251203152443.427346457@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Andreas Gruenbacher <agruenba@redhat.com>,
+	Anna Schumaker <anna@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Miklos Szeredi <miklos@szeredi.hu>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Mahmoud Adam <mngyadam@amazon.de>
+Subject: [PATCH 6.1 075/568] filemap: add a kiocb_invalidate_pages helper
+Date: Wed,  3 Dec 2025 16:21:17 +0100
+Message-ID: <20251203152443.464932328@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,244 +69,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 27f1568b1d5fe35014074f92717b250afbe67031 ]
+commit e003f74afbd2feadbb9ffbf9135e2d2fb5d320a5 upstream.
 
-The DeviceTree Specification v0.3 specifies that the cache node
-'compatible' and 'cache-level' properties are 'required'. Cf.
-s3.8 Multi-level and Shared Cache Nodes
-The 'cache-unified' property should be present if one of the
-properties for unified cache is present ('cache-size', ...).
+Factor out a helper that calls filemap_write_and_wait_range and
+invalidate_inode_pages2_range for the range covered by a write kiocb or
+returns -EAGAIN if the kiocb is marked as nowait and there would be pages
+to write or invalidate.
 
-Update the Device Trees accordingly.
-
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Wen Yang <wen.yang@linux.dev>
+Link: https://lkml.kernel.org/r/20230601145904.1385409-6-hch@lst.de
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Andreas Gruenbacher <agruenba@redhat.com>
+Cc: Anna Schumaker <anna@kernel.org>
+Cc: Chao Yu <chao@kernel.org>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Ilya Dryomov <idryomov@gmail.com>
+Cc: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Miklos Szeredi <miklos@szeredi.hu>
+Cc: Miklos Szeredi <mszeredi@redhat.com>
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Trond Myklebust <trond.myklebust@hammerspace.com>
+Cc: Xiubo Li <xiubli@redhat.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Mahmoud Adam <mngyadam@amazon.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra194.dtsi |   15 ++++++++++++++
- arch/arm64/boot/dts/nvidia/tegra210.dtsi |    1 
- arch/arm64/boot/dts/nvidia/tegra234.dtsi |   33 +++++++++++++++++++++++++++++++
- 3 files changed, 49 insertions(+)
+ include/linux/pagemap.h |    1 +
+ mm/filemap.c            |   48 ++++++++++++++++++++++++++++--------------------
+ 2 files changed, 29 insertions(+), 20 deletions(-)
 
---- a/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra194.dtsi
-@@ -3029,36 +3029,51 @@
- 		};
+--- a/include/linux/pagemap.h
++++ b/include/linux/pagemap.h
+@@ -30,6 +30,7 @@ static inline void invalidate_remote_ino
+ int invalidate_inode_pages2(struct address_space *mapping);
+ int invalidate_inode_pages2_range(struct address_space *mapping,
+ 		pgoff_t start, pgoff_t end);
++int kiocb_invalidate_pages(struct kiocb *iocb, size_t count);
+ int write_inode_now(struct inode *, int sync);
+ int filemap_fdatawrite(struct address_space *);
+ int filemap_flush(struct address_space *);
+--- a/mm/filemap.c
++++ b/mm/filemap.c
+@@ -2839,6 +2839,33 @@ put_folios:
+ }
+ EXPORT_SYMBOL_GPL(filemap_read);
  
- 		l2c_0: l2-cache0 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c>;
- 		};
++int kiocb_invalidate_pages(struct kiocb *iocb, size_t count)
++{
++	struct address_space *mapping = iocb->ki_filp->f_mapping;
++	loff_t pos = iocb->ki_pos;
++	loff_t end = pos + count - 1;
++	int ret;
++
++	if (iocb->ki_flags & IOCB_NOWAIT) {
++		/* we could block if there are any pages in the range */
++		if (filemap_range_has_page(mapping, pos, end))
++			return -EAGAIN;
++	} else {
++		ret = filemap_write_and_wait_range(mapping, pos, end);
++		if (ret)
++			return ret;
++	}
++
++	/*
++	 * After a write we want buffered reads to be sure to go to disk to get
++	 * the new data.  We invalidate clean cached page from the region we're
++	 * about to write.  We do this *before* the write so that we can return
++	 * without clobbering -EIOCBQUEUED from ->direct_IO().
++	 */
++	return invalidate_inode_pages2_range(mapping, pos >> PAGE_SHIFT,
++					     end >> PAGE_SHIFT);
++}
++
+ /**
+  * generic_file_read_iter - generic filesystem read routine
+  * @iocb:	kernel I/O control block
+@@ -3737,30 +3764,11 @@ generic_file_direct_write(struct kiocb *
+ 	write_len = iov_iter_count(from);
+ 	end = (pos + write_len - 1) >> PAGE_SHIFT;
  
- 		l2c_1: l2-cache1 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c>;
- 		};
- 
- 		l2c_2: l2-cache2 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c>;
- 		};
- 
- 		l2c_3: l2-cache3 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c>;
- 		};
- 
- 		l3c: l3-cache {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <4194304>;
- 			cache-line-size = <64>;
-+			cache-level = <3>;
- 			cache-sets = <4096>;
- 		};
- 	};
---- a/arch/arm64/boot/dts/nvidia/tegra210.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra210.dtsi
-@@ -2005,6 +2005,7 @@
- 
- 		L2: l2-cache {
- 			compatible = "cache";
-+			cache-level = <2>;
- 		};
- 	};
- 
---- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
-@@ -2907,117 +2907,150 @@
- 		};
- 
- 		l2c0_0: l2-cache00 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c0>;
- 		};
- 
- 		l2c0_1: l2-cache01 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c0>;
- 		};
- 
- 		l2c0_2: l2-cache02 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c0>;
- 		};
- 
- 		l2c0_3: l2-cache03 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c0>;
- 		};
- 
- 		l2c1_0: l2-cache10 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c1>;
- 		};
- 
- 		l2c1_1: l2-cache11 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c1>;
- 		};
- 
- 		l2c1_2: l2-cache12 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c1>;
- 		};
- 
- 		l2c1_3: l2-cache13 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c1>;
- 		};
- 
- 		l2c2_0: l2-cache20 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c2>;
- 		};
- 
- 		l2c2_1: l2-cache21 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c2>;
- 		};
- 
- 		l2c2_2: l2-cache22 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c2>;
- 		};
- 
- 		l2c2_3: l2-cache23 {
-+			compatible = "cache";
- 			cache-size = <262144>;
- 			cache-line-size = <64>;
- 			cache-sets = <512>;
- 			cache-unified;
-+			cache-level = <2>;
- 			next-level-cache = <&l3c2>;
- 		};
- 
- 		l3c0: l3-cache0 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <3>;
- 		};
- 
- 		l3c1: l3-cache1 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <3>;
- 		};
- 
- 		l3c2: l3-cache2 {
-+			compatible = "cache";
-+			cache-unified;
- 			cache-size = <2097152>;
- 			cache-line-size = <64>;
- 			cache-sets = <2048>;
-+			cache-level = <3>;
- 		};
- 	};
- 
+-	if (iocb->ki_flags & IOCB_NOWAIT) {
+-		/* If there are pages to writeback, return */
+-		if (filemap_range_has_page(file->f_mapping, pos,
+-					   pos + write_len - 1))
+-			return -EAGAIN;
+-	} else {
+-		written = filemap_write_and_wait_range(mapping, pos,
+-							pos + write_len - 1);
+-		if (written)
+-			goto out;
+-	}
+-
+-	/*
+-	 * After a write we want buffered reads to be sure to go to disk to get
+-	 * the new data.  We invalidate clean cached page from the region we're
+-	 * about to write.  We do this *before* the write so that we can return
+-	 * without clobbering -EIOCBQUEUED from ->direct_IO().
+-	 */
+-	written = invalidate_inode_pages2_range(mapping,
+-					pos >> PAGE_SHIFT, end);
+ 	/*
+ 	 * If a page can not be invalidated, return 0 to fall back
+ 	 * to buffered write.
+ 	 */
++	written = kiocb_invalidate_pages(iocb, write_len);
+ 	if (written) {
+ 		if (written == -EBUSY)
+ 			return 0;
 
 
