@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12A431354A;
-	Wed,  3 Dec 2025 15:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 888A9320A05;
+	Wed,  3 Dec 2025 15:58:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777521; cv=none; b=lv3jGJKDY4BbnZr4N6idwME27gcStzvxyskufO89fKVuDnVrJwCGMbTlstzFANCcwh/g/cu9VupapwBDu15pymWIx2FiymsSdQiEN7ZSRPfSter0ymMz7ky06igv/VMS1vUPi5QTAc+0VFcrp0OxJIfaNDz8/2Pllwloj63YhYA=
+	t=1764777524; cv=none; b=jC6CYW30JyGLGROcGyGZczTzZE6aah79fUnn5SFFS/0v6GB2XPNvZNSEvC1qnp9HqXO8qH0vVgwgEYoBsOrxuATFjQbRXDtc/0QELio7sbzS56O35InrN1zQj642tJHKRMdceWOTjwBvohsSJfGa/JMSB8JgacneBVuILBgG91g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777521; c=relaxed/simple;
-	bh=KKcORY67KM5zpClatcxtUKmpHQJkrvPqsVAZn5whZN8=;
+	s=arc-20240116; t=1764777524; c=relaxed/simple;
+	bh=kYqujmHnvb3UBS9F5C2FAQW4D3jtem0MwyfAH7vm4J4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RV19rzfAzHgAk1zzpu3qjyzGp1Tr++MSMfvZXYUnV21M8MI85SIE13XtS++S2qtJDdZpla/g6UcgBhmZFZfL1fGJ9iA/8cIo31UlcICzkB5D874pXEiRj3lSuQSrzRzOegRANnsOzC9UXbCtg1UpPKUxBXbyHibz4JOG8Wpq0h8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oWGxXIW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PVd+ZfHHLh6DFJBT3Lzf/vEQUSfMhVrS1Xw3cvCtuNlkGYmNgC/5/lE1+Zl6dGlYcWpXk0d8gynkvjEehGMmaz9LieMkk0aztbKNxrCvifCvtmwVdeq+tGWEvyAkn4wPaZKz49WbxKuvOc4fXX35rOqJMEcdds/F+3ga5zN4kXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XPiWqsCj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oWGxXIW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 312E1C4CEF5;
-	Wed,  3 Dec 2025 15:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XPiWqsCj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806E1C4CEF5;
+	Wed,  3 Dec 2025 15:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777520;
-	bh=KKcORY67KM5zpClatcxtUKmpHQJkrvPqsVAZn5whZN8=;
+	s=korg; t=1764777523;
+	bh=kYqujmHnvb3UBS9F5C2FAQW4D3jtem0MwyfAH7vm4J4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oWGxXIWopWs2S7occSMGJPn9HfRO/YQYQlPIF2JaV6ovqLcv8+cAHxqNwcBg1IFJ
-	 K/iqIr327W4xr2k1AyKLIW6AkFdFhFs0oTRhyRHJfK8bSzFHigzSj9Qsu3v0wfdXPq
-	 ctAoeln7YEGP2Wvc/rDEEOGzFSSXRMcVzZaSS91A=
+	b=XPiWqsCjB9F2xNJ8iy8aQ1oAAGn63VQo9uk3x+zw6wjC5WVtVyUJ4V8G81axembkc
+	 UZfw5kvL55kocrT04FxCqSZoG2drBd0Rz3WqKCTvKqnY80pCX0iNl0R+xeNAkNhLrT
+	 dW5zoD68Vk5oE5iOiuzlzzdrPFXCJ8W/CgoFBcIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Ma Ke <make24@iscas.ac.cn>,
-	Steev Klimaszewski <steev@kali.org>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 031/392] regmap: slimbus: fix bus_context pointer in regmap init calls
-Date: Wed,  3 Dec 2025 16:23:01 +0100
-Message-ID: <20251203152415.246063205@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 032/392] serial: 8250_dw: Use devm_add_action_or_reset()
+Date: Wed,  3 Dec 2025 16:23:02 +0100
+Message-ID: <20251203152415.283998921@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -55,98 +50,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Klimov <alexey.klimov@linaro.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 434f7349a1f00618a620b316f091bd13a12bc8d2 upstream.
+[ Upstream commit 295b09128d12fb1a7a67f771cc0ae0df869eafaf ]
 
-Commit 4e65bda8273c ("ASoC: wcd934x: fix error handling in
-wcd934x_codec_parse_data()") revealed the problem in the slimbus regmap.
-That commit breaks audio playback, for instance, on sdm845 Thundercomm
-Dragonboard 845c board:
+Slightly simplify ->probe() and drop a few goto labels by using
+devm_add_action_or_reset() for clock and reset cleanup.
 
- Unable to handle kernel paging request at virtual address ffff8000847cbad4
- ...
- CPU: 5 UID: 0 PID: 776 Comm: aplay Not tainted 6.18.0-rc1-00028-g7ea30958b305 #11 PREEMPT
- Hardware name: Thundercomm Dragonboard 845c (DT)
- ...
- Call trace:
-  slim_xfer_msg+0x24/0x1ac [slimbus] (P)
-  slim_read+0x48/0x74 [slimbus]
-  regmap_slimbus_read+0x18/0x24 [regmap_slimbus]
-  _regmap_raw_read+0xe8/0x174
-  _regmap_bus_read+0x44/0x80
-  _regmap_read+0x60/0xd8
-  _regmap_update_bits+0xf4/0x140
-  _regmap_select_page+0xa8/0x124
-  _regmap_raw_write_impl+0x3b8/0x65c
-  _regmap_bus_raw_write+0x60/0x80
-  _regmap_write+0x58/0xc0
-  regmap_write+0x4c/0x80
-  wcd934x_hw_params+0x494/0x8b8 [snd_soc_wcd934x]
-  snd_soc_dai_hw_params+0x3c/0x7c [snd_soc_core]
-  __soc_pcm_hw_params+0x22c/0x634 [snd_soc_core]
-  dpcm_be_dai_hw_params+0x1d4/0x38c [snd_soc_core]
-  dpcm_fe_dai_hw_params+0x9c/0x17c [snd_soc_core]
-  snd_pcm_hw_params+0x124/0x464 [snd_pcm]
-  snd_pcm_common_ioctl+0x110c/0x1820 [snd_pcm]
-  snd_pcm_ioctl+0x34/0x4c [snd_pcm]
-  __arm64_sys_ioctl+0xac/0x104
-  invoke_syscall+0x48/0x104
-  el0_svc_common.constprop.0+0x40/0xe0
-  do_el0_svc+0x1c/0x28
-  el0_svc+0x34/0xec
-  el0t_64_sync_handler+0xa0/0xf0
-  el0t_64_sync+0x198/0x19c
-
-The __devm_regmap_init_slimbus() started to be used instead of
-__regmap_init_slimbus() after the commit mentioned above and turns out
-the incorrect bus_context pointer (3rd argument) was used in
-__devm_regmap_init_slimbus(). It should be just "slimbus" (which is equal
-to &slimbus->dev). Correct it. The wcd934x codec seems to be the only or
-the first user of devm_regmap_init_slimbus() but we should fix it till
-the point where __devm_regmap_init_slimbus() was introduced therefore
-two "Fixes" tags.
-
-While at this, also correct the same argument in __regmap_init_slimbus().
-
-Fixes: 4e65bda8273c ("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
-Fixes: 7d6f7fb053ad ("regmap: add SLIMbus support")
-Cc: stable@vger.kernel.org
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Ma Ke <make24@iscas.ac.cn>
-Cc: Steev Klimaszewski <steev@kali.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251022201013.1740211-1-alexey.klimov@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20220509172129.37770-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: daeb4037adf7 ("serial: 8250_dw: handle reset control deassert error")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/regmap/regmap-slimbus.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_dw.c |   63 ++++++++++++++++++--------------------
+ 1 file changed, 31 insertions(+), 32 deletions(-)
 
---- a/drivers/base/regmap/regmap-slimbus.c
-+++ b/drivers/base/regmap/regmap-slimbus.c
-@@ -48,8 +48,7 @@ struct regmap *__regmap_init_slimbus(str
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
- 
--	return __regmap_init(&slimbus->dev, bus, &slimbus->dev, config,
--			     lock_key, lock_name);
-+	return __regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
+--- a/drivers/tty/serial/8250/8250_dw.c
++++ b/drivers/tty/serial/8250/8250_dw.c
+@@ -438,6 +438,16 @@ static void dw8250_quirks(struct uart_po
+ 	}
  }
- EXPORT_SYMBOL_GPL(__regmap_init_slimbus);
  
-@@ -63,8 +62,7 @@ struct regmap *__devm_regmap_init_slimbu
- 	if (IS_ERR(bus))
- 		return ERR_CAST(bus);
++static void dw8250_clk_disable_unprepare(void *data)
++{
++	clk_disable_unprepare(data);
++}
++
++static void dw8250_reset_control_assert(void *data)
++{
++	reset_control_assert(data);
++}
++
+ static int dw8250_probe(struct platform_device *pdev)
+ {
+ 	struct uart_8250_port uart = {}, *up = &uart;
+@@ -539,35 +549,43 @@ static int dw8250_probe(struct platform_
+ 	if (err)
+ 		dev_warn(dev, "could not enable optional baudclk: %d\n", err);
  
--	return __devm_regmap_init(&slimbus->dev, bus, &slimbus, config,
--				  lock_key, lock_name);
-+	return __devm_regmap_init(&slimbus->dev, bus, slimbus, config, lock_key, lock_name);
++	err = devm_add_action_or_reset(dev, dw8250_clk_disable_unprepare, data->clk);
++	if (err)
++		return err;
++
+ 	if (data->clk)
+ 		p->uartclk = clk_get_rate(data->clk);
+ 
+ 	/* If no clock rate is defined, fail. */
+ 	if (!p->uartclk) {
+ 		dev_err(dev, "clock rate not defined\n");
+-		err = -EINVAL;
+-		goto err_clk;
++		return -EINVAL;
+ 	}
+ 
+ 	data->pclk = devm_clk_get_optional(dev, "apb_pclk");
+-	if (IS_ERR(data->pclk)) {
+-		err = PTR_ERR(data->pclk);
+-		goto err_clk;
+-	}
++	if (IS_ERR(data->pclk))
++		return PTR_ERR(data->pclk);
+ 
+ 	err = clk_prepare_enable(data->pclk);
+ 	if (err) {
+ 		dev_err(dev, "could not enable apb_pclk\n");
+-		goto err_clk;
++		return err;
+ 	}
+ 
++	err = devm_add_action_or_reset(dev, dw8250_clk_disable_unprepare, data->pclk);
++	if (err)
++		return err;
++
+ 	data->rst = devm_reset_control_get_optional_exclusive(dev, NULL);
+-	if (IS_ERR(data->rst)) {
+-		err = PTR_ERR(data->rst);
+-		goto err_pclk;
+-	}
++	if (IS_ERR(data->rst))
++		return PTR_ERR(data->rst);
++
+ 	reset_control_deassert(data->rst);
+ 
++	err = devm_add_action_or_reset(dev, dw8250_reset_control_assert, data->rst);
++	if (err)
++		return err;
++
+ 	dw8250_quirks(p, data);
+ 
+ 	/* If the Busy Functionality is not implemented, don't handle it */
+@@ -585,10 +603,8 @@ static int dw8250_probe(struct platform_
+ 	}
+ 
+ 	data->data.line = serial8250_register_8250_port(up);
+-	if (data->data.line < 0) {
+-		err = data->data.line;
+-		goto err_reset;
+-	}
++	if (data->data.line < 0)
++		return data->data.line;
+ 
+ 	/*
+ 	 * Some platforms may provide a reference clock shared between several
+@@ -609,17 +625,6 @@ static int dw8250_probe(struct platform_
+ 	pm_runtime_enable(dev);
+ 
+ 	return 0;
+-
+-err_reset:
+-	reset_control_assert(data->rst);
+-
+-err_pclk:
+-	clk_disable_unprepare(data->pclk);
+-
+-err_clk:
+-	clk_disable_unprepare(data->clk);
+-
+-	return err;
  }
- EXPORT_SYMBOL_GPL(__devm_regmap_init_slimbus);
+ 
+ static int dw8250_remove(struct platform_device *pdev)
+@@ -637,12 +642,6 @@ static int dw8250_remove(struct platform
+ 
+ 	serial8250_unregister_port(data->data.line);
+ 
+-	reset_control_assert(data->rst);
+-
+-	clk_disable_unprepare(data->pclk);
+-
+-	clk_disable_unprepare(data->clk);
+-
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_put_noidle(dev);
  
 
 
