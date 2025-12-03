@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA43535A936;
-	Wed,  3 Dec 2025 16:21:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61FC35A942;
+	Wed,  3 Dec 2025 16:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778911; cv=none; b=Ocz/HeRO/LbBdohZUtdsZXGaJ7kqu9xtcN/AV+bro22byhpXM2UGfNuumtLJnztNyP2svrbPdnjGrcc5XBqODCO/oD6JqVj4O8q5YdSdWPn9eL002RsGEogHQa9Xse8gXFgI1i35EqtrZrhoQq612hG2lrVJcw/pP6d2cypO9tA=
+	t=1764778914; cv=none; b=tAzpSl3mO5UhAaa79Z6s6KGXYR1Pd5b2nz1JraWsZrqWCEpIGBMuMTCMHK6Svn0Vd1PssSb/K7CB2XMzxgaZZM03aU525rIjRgRhnByk3DXzRwOU5/Hp4UpPIBcn664NuO1W2LPPWwu0zP5shQlSf0oilv83/DgdgQ/+8ifTpHg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778911; c=relaxed/simple;
-	bh=J70TTEiKF9c8C7OfF8ShswOOmjOxIxQHUL5ODBHflOg=;
+	s=arc-20240116; t=1764778914; c=relaxed/simple;
+	bh=aMNvChc1grJxas3PHzjB6NnPNp5MmD+8D7/FAfdj+rE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dfJ87wxT/mlGnG1Z//OpVGtaqozV/7L0xVDAvjNsQ8Bukl9dC5uGhRCQO1XWJja1jzZHdD5g22P8IvRtuIIKIgx780zk0PkYOElzxo3B97hEkuQBj6l3IC//xQPG1dd0a/ZpSjy2hts7ei0kacLo/p7/PulmAosI/KLL/o2DUjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sg1grwsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kphaAo/1B+nfRRBSvqiV1WZxemRL9oSF0X0Dv0ZkUO8Z+YpKUolWBSEUFOF07EFTARLzGVGZ8Kquz08Tv2pso3Q7VL1TmzqlUMx8NHi0Vl8glJUx+mJ8veAg2MlbFivjKFPHjyVIwy/egYCYe6JWlJ9mr9a98I2s6hp++9IQYIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cIxYkqyD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sg1grwsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D96C4CEF5;
-	Wed,  3 Dec 2025 16:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cIxYkqyD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F4BC4CEF5;
+	Wed,  3 Dec 2025 16:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778911;
-	bh=J70TTEiKF9c8C7OfF8ShswOOmjOxIxQHUL5ODBHflOg=;
+	s=korg; t=1764778914;
+	bh=aMNvChc1grJxas3PHzjB6NnPNp5MmD+8D7/FAfdj+rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sg1grwsKpXbo83F8TdOrQMAzDdtUFyNBbxFaff4Keg6YkWEm7iOs+Zh1FF0tDESlH
-	 lPbyScSBbJ93UKlDX/guaSkMU9aQ2orRfouRSPGozbHVXE3RmvRDzJXWTBoavnd+yp
-	 AzgVoyh/2Ut+fyMEeD6da9oLFL+5439WksJFimTU=
+	b=cIxYkqyDa+zpJJSlAvbjFTWGbO4lRzKQpQeTA8ggXOfpDCNBsiznrtp9ZW0vaATxx
+	 tn1G4V9kXtkdO323+2TUTA6l4nKD1IbMNspwU3V05iNpFGdFw1yekd5rz2GTHtv2DC
+	 aC4C/pEkg0kiCqK3ew3ryqQbHvYvNQOv0YcL8TpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Dennis Beier <nanovim@gmail.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/568] selftests/bpf: Fix bpf_prog_detach2 usage in test_lirc_mode2
-Date: Wed,  3 Dec 2025 16:21:38 +0100
-Message-ID: <20251203152444.255794937@linuxfoundation.org>
+Subject: [PATCH 6.1 097/568] cpufreq/longhaul: handle NULL policy in longhaul_exit
+Date: Wed,  3 Dec 2025 16:21:39 +0100
+Message-ID: <20251203152444.292622392@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -45,42 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Dennis Beier <nanovim@gmail.com>
 
-[ Upstream commit 98857d111c53954aa038fcbc4cf48873e4240f7c ]
+[ Upstream commit 592532a77b736b5153e0c2e4c74aa50af0a352ab ]
 
-Commit e9fc3ce99b34 ("libbpf: Streamline error reporting for high-level
-APIs") redefined the way that bpf_prog_detach2() returns. Therefore, adapt
-the usage in test_lirc_mode2_user.c.
+longhaul_exit() was calling cpufreq_cpu_get(0) without checking
+for a NULL policy pointer. On some systems, this could lead to a
+NULL dereference and a kernel warning or panic.
 
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20250828-selftests-bpf-v1-1-c7811cd8b98c@suse.com
+This patch adds a check using unlikely() and returns early if the
+policy is NULL.
+
+Bugzilla: #219962
+
+Signed-off-by: Dennis Beier <nanovim@gmail.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_lirc_mode2_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/longhaul.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_lirc_mode2_user.c b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-index 4694422aa76c3..88e4aeab21b7b 100644
---- a/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-+++ b/tools/testing/selftests/bpf/test_lirc_mode2_user.c
-@@ -74,7 +74,7 @@ int main(int argc, char **argv)
+diff --git a/drivers/cpufreq/longhaul.c b/drivers/cpufreq/longhaul.c
+index 3e000e1a75c6c..9b6ec68753dde 100644
+--- a/drivers/cpufreq/longhaul.c
++++ b/drivers/cpufreq/longhaul.c
+@@ -953,6 +953,9 @@ static void __exit longhaul_exit(void)
+ 	struct cpufreq_policy *policy = cpufreq_cpu_get(0);
+ 	int i;
  
- 	/* Let's try detach it before it was ever attached */
- 	ret = bpf_prog_detach2(progfd, lircfd, BPF_LIRC_MODE2);
--	if (ret != -1 || errno != ENOENT) {
-+	if (ret != -ENOENT) {
- 		printf("bpf_prog_detach2 not attached should fail: %m\n");
- 		return 1;
- 	}
++	if (unlikely(!policy))
++		return;
++
+ 	for (i = 0; i < numscales; i++) {
+ 		if (mults[i] == maxmult) {
+ 			struct cpufreq_freqs freqs;
 -- 
 2.51.0
 
