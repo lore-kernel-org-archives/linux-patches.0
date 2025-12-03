@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFA430F543;
-	Wed,  3 Dec 2025 15:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F348530F535;
+	Wed,  3 Dec 2025 15:34:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776087; cv=none; b=Dn6glJjwUDFs8lhwYq4+94qWGngmPbZllv+T2p6zEQIS8aStMnRpDyvnJBoqD/DcoW8Wcm53DfcmUmnZgHH4dpKdKqBk5cTgKn2P7P0ZtxnuMKNyQbbmJwd26gawJcOer47/deXgV2J1LhGjQ+yoSwjkgH+Yoch/ORAnewBcxcM=
+	t=1764776091; cv=none; b=Wgj+saYP3DpXEjzhPuUzlkR73FhiheSRSKBkgzOzDiM41Fta+VRxgN5BpRRjvEEdNjpKmiV9IyhuBV2c9GA1qPK13ghykKd04ccoC4xKzPdyJh4Nsk/SKfpDa776SZkpYMyZ5rgCok6ClnGwLHBRETzOs+FZ/JHivHcqqkWEiO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776087; c=relaxed/simple;
-	bh=savPbnjixpmZCaHGMSN0snEoEIvT52NQaSDQ8oY/gGw=;
+	s=arc-20240116; t=1764776091; c=relaxed/simple;
+	bh=ibqH2NtZDA6cL7Rycm7psrmLqF2SrtWvnVvNdSGms8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWlC15gIFiZiQnymEeRKns5VxAsU1THcTC+Ool2hOq+1xoROikaLm3DrdvgsPDYiK63YfVWYyWouTygs27tBy6R0zZfpKUW3+fXH5MA6dkMdlV52gIkD1Ph0sHnWkoAGhFFmAbNGFbve96bRr6u6yTHXcoWt0UXxB6qXB7kLRV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=acAb2Jys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qqQe1FvyG5zGn6qbopwZgJTDZdZDcuPoUE0JpEiTztCabTZ6d8smm6gqowB1gFz9kzuinGxT7mT0vpxV5ffm5o1j5w9w/amenqaiOQfcE7Kth7kkvds6/Ko2Km1H0yJDPOc7Xm8Y3mP37/vtl5c38xjNqrs7HENdfCblay32a0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BZ3JKJvy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="acAb2Jys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C5F7C116C6;
-	Wed,  3 Dec 2025 15:34:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BZ3JKJvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F25C4CEF5;
+	Wed,  3 Dec 2025 15:34:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776087;
-	bh=savPbnjixpmZCaHGMSN0snEoEIvT52NQaSDQ8oY/gGw=;
+	s=korg; t=1764776090;
+	bh=ibqH2NtZDA6cL7Rycm7psrmLqF2SrtWvnVvNdSGms8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=acAb2JyszlWZDAx0oaT9TBaU/W+w/gjpKI/MuNTTYAyrZlnAC3FXsBsorgAewrSMz
-	 BuJwwlt+S3KdHWqUH8XYRnYR75UTiMKoibY2dwDBPJwcfTRtAGxRXTSJdycPJpbG2f
-	 XmaIbyCgFgPyioEhx6KwH1ilqkAhHNQzZyRbh/yA=
+	b=BZ3JKJvyuqiUww0UyShvZd2KU7CV13FQwC7IGEy9zE6SycWLyJcxCkF3VNKtrIqDB
+	 IFqdoUUSW1f/asmr/rg4CPELm8NDNs0dAsV489EjZW+FzyKajTVkrfMHrNnvb2TRtz
+	 q0Zu1oUafOwwgcTWkhyQiIsgZSRwc6n5b/s9DgXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Dave Hansen <dave.hansen@intel.com>
-Subject: [PATCH 5.10 077/300] x86/vsyscall: Do not require X86_PF_INSTR to emulate vsyscall
-Date: Wed,  3 Dec 2025 16:24:41 +0100
-Message-ID: <20251203152403.476679374@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 078/300] net: stmmac: Check stmmac_hw_setup() in stmmac_resume()
+Date: Wed,  3 Dec 2025 16:24:42 +0100
+Message-ID: <20251203152403.514814699@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -53,77 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-[ Upstream commit 8ba38a7a9a699905b84fa97578a8291010dec273 ]
+[ Upstream commit 6896c2449a1858acb643014894d01b3a1223d4e5 ]
 
-emulate_vsyscall() expects to see X86_PF_INSTR in PFEC on a vsyscall
-page fault, but the CPU does not report X86_PF_INSTR if neither
-X86_FEATURE_NX nor X86_FEATURE_SMEP are enabled.
+stmmac_hw_setup() may return 0 on success and an appropriate negative
+integer as defined in errno.h file on failure, just check it and then
+return early if failed in stmmac_resume().
 
-X86_FEATURE_NX should be enabled on nearly all 64-bit CPUs, except for
-early P4 processors that did not support this feature.
-
-Instead of explicitly checking for X86_PF_INSTR, compare the fault
-address to RIP.
-
-On machines with X86_FEATURE_NX enabled, issue a warning if RIP is equal
-to fault address but X86_PF_INSTR is absent.
-
-[ dhansen: flesh out code comments ]
-
-Originally-by: Dave Hansen <dave.hansen@intel.com>
-Reported-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Link: https://lore.kernel.org/all/bd81a98b-f8d4-4304-ac55-d4151a1a77ab@intel.com
-Link: https://lore.kernel.org/all/20250624145918.2720487-1-kirill.shutemov%40linux.intel.com
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
+Link: https://patch.msgid.link/20250811073506.27513-2-yangtiezhu@loongson.cn
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/vsyscall/vsyscall_64.c | 17 ++++++++++++++---
- 1 file changed, 14 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/entry/vsyscall/vsyscall_64.c b/arch/x86/entry/vsyscall/vsyscall_64.c
-index f0b817eb6e8ba..3e60a355dd5ad 100644
---- a/arch/x86/entry/vsyscall/vsyscall_64.c
-+++ b/arch/x86/entry/vsyscall/vsyscall_64.c
-@@ -124,7 +124,12 @@ bool emulate_vsyscall(unsigned long error_code,
- 	if ((error_code & (X86_PF_WRITE | X86_PF_USER)) != X86_PF_USER)
- 		return false;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index e6fa2782d28f2..ac278d81f1614 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5415,7 +5415,14 @@ int stmmac_resume(struct device *dev)
+ 	stmmac_free_tx_skbufs(priv);
+ 	stmmac_clear_descriptors(priv);
  
--	if (!(error_code & X86_PF_INSTR)) {
-+	/*
-+	 * Assume that faults at regs->ip are because of an
-+	 * instruction fetch. Return early and avoid
-+	 * emulation for faults during data accesses:
-+	 */
-+	if (address != regs->ip) {
- 		/* Failed vsyscall read */
- 		if (vsyscall_mode == EMULATE)
- 			return false;
-@@ -136,13 +141,19 @@ bool emulate_vsyscall(unsigned long error_code,
- 		return false;
- 	}
- 
-+	/*
-+	 * X86_PF_INSTR is only set when NX is supported.  When
-+	 * available, use it to double-check that the emulation code
-+	 * is only being used for instruction fetches:
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_NX))
-+		WARN_ON_ONCE(!(error_code & X86_PF_INSTR));
+-	stmmac_hw_setup(ndev, false);
++	ret = stmmac_hw_setup(ndev, false);
++	if (ret < 0) {
++		netdev_err(priv->dev, "%s: Hw setup failed\n", __func__);
++		mutex_unlock(&priv->lock);
++		rtnl_unlock();
++		return ret;
++	}
 +
- 	/*
- 	 * No point in checking CS -- the only way to get here is a user mode
- 	 * trap to a high address, which means that we're in 64-bit user code.
- 	 */
+ 	stmmac_init_coalesce(priv);
+ 	stmmac_set_rx_mode(ndev);
  
--	WARN_ON_ONCE(address != regs->ip);
--
- 	if (vsyscall_mode == NONE) {
- 		warn_bad_vsyscall(KERN_INFO, regs,
- 				  "vsyscall attempted with vsyscall=none");
 -- 
 2.51.0
 
