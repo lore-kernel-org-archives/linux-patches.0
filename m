@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1E134B669;
-	Wed,  3 Dec 2025 16:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD86A350D65;
+	Wed,  3 Dec 2025 16:55:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780935; cv=none; b=Avxg6q0Boq4XQp2/6uguUOIjNOOECHHRfoyRXreAWsiD5IuBYCJWHhZxPKb92Ja5jsxk15SJbvdYWCynZHTkLK4qpc6kvN5yPxYC0N0pdmolRjMToK59iEH6KMpfEVgmBQk0wzTCg5UWNSd9SnHeRsobsAS6UC0tQbqmJBMoSNU=
+	t=1764780938; cv=none; b=qumGRECljhA+KrPr1OFyFGe+9jgVBaIJfELZ6Qze878k2yc0OEGeQxgTZHzcQMPwGYSfPGQ54QDDcjfSzICglF/a0ARyQFYzkVQVdbh/1BmvA90SFSiHa8U2xJu75ib9610Nb5WlJmYRTtWoaTu4LpJjrYNNKW8duMmnw4jA+3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780935; c=relaxed/simple;
-	bh=9PohBXnnjYeFbp/9KElKZ7XjZYAoAEi4rPHbnd5qd3o=;
+	s=arc-20240116; t=1764780938; c=relaxed/simple;
+	bh=m4bvjCWEtBtYqcBtPGIIQCauS71eoX73uUOGUIggaPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FCm9H9Pxu6Er5RtGKThBvKG54DOkC2jcSNLrCzFBJz5155HqUU5kVY/sGERH8DZ3xoydkO4OTM10H+eesy7RvrO+3rM7fVnhAPS2NZ4sozjDYkVIAnaalVb7lgE1LYlwzr/D931nyzYOUDGws/51+7SZkSEElKP/LIUuKYXAu/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3nJfJb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PB7+l0tYz62aSXB3s1s3Xk9dOEQU3DiBM5XHCt+mYPIkKoqwGTPycTW3Lij6omzopzl2Go5tmP6z+VIunadKLayizT1T5ikmDWdNkS4dbenkWMZTmCLnBOUFu2QKIXA5hdmmrbV/cF7MzWOrXIc8Czt93zUko+zrgjkRBi23jYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfupR/K1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3nJfJb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E11C4CEF5;
-	Wed,  3 Dec 2025 16:55:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfupR/K1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28459C4CEF5;
+	Wed,  3 Dec 2025 16:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780935;
-	bh=9PohBXnnjYeFbp/9KElKZ7XjZYAoAEi4rPHbnd5qd3o=;
+	s=korg; t=1764780938;
+	bh=m4bvjCWEtBtYqcBtPGIIQCauS71eoX73uUOGUIggaPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I3nJfJb1UIkQEEyBswmOZnPIwA4qY33DYP3tKFulQIOVQGzzr0tiKyaG+CBI+tENq
-	 kJyWPrglhCdQ7njJQK5y7ZtXCFoU1tBtWqJGp7XM4nyIPD9XRIbgibxfGO8V/VsizT
-	 O1uUYY0K5ZH7kwSnySPB9YW5dJxI3EG5d3BzmKwo=
+	b=wfupR/K1wZ6OhwFsu9DH4FDBhEcs3Ibzdw8jQlcAgOzEIYbyR6ztHAd1M1ptbTxQw
+	 PHSgpGSTcFIxQomgHchg1wuZe/5lI/OSSjurpFX9nwzN9aDZ2cQkXxCMCw2q/RSUPB
+	 tIDtPNheJODsl+SK/4utPN1fYMS8n/5hUTLaUDDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Johan Hovold <johan@kernel.org>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 6.12 103/132] drm: sti: fix device leaks at component probe
-Date: Wed,  3 Dec 2025 16:29:42 +0100
-Message-ID: <20251203152347.102853362@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Prike Liang <Prike.Liang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 104/132] drm/amdgpu: attach tlb fence to the PTs update
+Date: Wed,  3 Dec 2025 16:29:43 +0100
+Message-ID: <20251203152347.140534129@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -45,55 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Prike Liang <Prike.Liang@amd.com>
 
-commit 620a8f131154250f6a64a07d049a4f235d6451a5 upstream.
+commit b4a7f4e7ad2b120a94f3111f92a11520052c762d upstream.
 
-Make sure to drop the references taken to the vtg devices by
-of_find_device_by_node() when looking up their driver data during
-component probe.
+Ensure the userq TLB flush is emitted only after
+the VM update finishes and the PT BOs have been
+annotated with bookkeeping fences.
 
-Note that holding a reference to a platform device does not prevent its
-driver data from going away so there is no point in keeping the
-reference after the lookup helper returns.
-
-Fixes: cc6b741c6f63 ("drm: sti: remove useless fields from vtg structure")
-Cc: stable@vger.kernel.org	# 4.16
-Cc: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20250922122012.27407-1-johan@kernel.org
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Prike Liang <Prike.Liang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f3854e04b708d73276c4488231a8bd66d30b4671)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sti/sti_vtg.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/sti/sti_vtg.c
-+++ b/drivers/gpu/drm/sti/sti_vtg.c
-@@ -143,12 +143,17 @@ struct sti_vtg {
- struct sti_vtg *of_vtg_find(struct device_node *np)
- {
- 	struct platform_device *pdev;
-+	struct sti_vtg *vtg;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -917,7 +917,7 @@ amdgpu_vm_tlb_flush(struct amdgpu_vm_upd
+ 	}
  
- 	pdev = of_find_device_by_node(np);
- 	if (!pdev)
- 		return NULL;
+ 	/* Prepare a TLB flush fence to be attached to PTs */
+-	if (!params->unlocked && vm->is_compute_context) {
++	if (!params->unlocked) {
+ 		amdgpu_vm_tlb_fence_create(params->adev, vm, fence);
  
--	return (struct sti_vtg *)platform_get_drvdata(pdev);
-+	vtg = platform_get_drvdata(pdev);
-+
-+	put_device(&pdev->dev);
-+
-+	return vtg;
- }
- 
- static void vtg_reset(struct sti_vtg *vtg)
+ 		/* Makes sure no PD/PT is freed before the flush */
 
 
