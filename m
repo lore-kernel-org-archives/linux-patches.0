@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF284359701;
-	Wed,  3 Dec 2025 17:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1BC4359FA5;
+	Wed,  3 Dec 2025 17:00:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781234; cv=none; b=FsNL+uH55vYoGuRTZekXA0Qd10vTOAIU+ZdfrT4iAHoB4I7rEHTbeM3AJrDcIXotpBEHB5Ukn5B4NMwnuC+12DYsXCIJqm+EllMPPFXunr3R07/l2wrP31cjiLmZDPyYi20hjlcQbBRZ9yTZzUQXja2VQniPdbMsAGTsNuk6uho=
+	t=1764781237; cv=none; b=UoqGvLDQiuBIrzwa09RO/1olccoDpilr36FH5DiG2mTjhOVddKdkFo9qMtVDAc1Lm9ar7SVbwd2CEdvvP4pMN9bXbevx18e2vVcA/DWXowxuYNAaagIIukgCOF7m00EUtie9YXYEe6mlzSIKtf74TW2GxILgC7taeRiPQgLb0sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781234; c=relaxed/simple;
-	bh=ibd64aUxnM540gKpihya+JEbfw5533lSY+ExWNRFCSs=;
+	s=arc-20240116; t=1764781237; c=relaxed/simple;
+	bh=zta7Z9vvB6YQUYimTECM+2Rh0YUGATPSceDZtIxOpNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7wPVF073u/SeS0t5qsYUMb3/0pngBRKI90qGGbQLOrz/Nr1HWFuZdteSjxckbunvwY3cKCshxoQerzjwRH/H5oOflI039kA4jUlHzIA/CyyI7P4yqXVtvRWVdj8DWic/W9ZDli31QJsWTBtxWqmUus8bbxzdiZSizRTGR04Ops=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWHT4ouq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngEWPXYdUUCQ2uwslT+57A16kFDNlH0/kkDOfRzAZGnQ9E6ct/Y5b/tlBCGMoIEq71nN6rqwVRqx999K9c+SqV0EYWJ0uA8d7c757uD4XTMaHcen91sjmWffpw3D4K7JbxJwcDvhlJd1P+nsFp9MyY2NdjrShBMSXKCMvAXSH90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBDBvhpS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWHT4ouq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57993C4CEF5;
-	Wed,  3 Dec 2025 17:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBDBvhpS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D4FBC4CEF5;
+	Wed,  3 Dec 2025 17:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781234;
-	bh=ibd64aUxnM540gKpihya+JEbfw5533lSY+ExWNRFCSs=;
+	s=korg; t=1764781237;
+	bh=zta7Z9vvB6YQUYimTECM+2Rh0YUGATPSceDZtIxOpNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWHT4ouq47oKEx376SRN/zrIoQuigiOArZOfFdds8pPTkh3A53fSB/qs8W0B1V+++
-	 AUalFFtq4VXYNGShRIbpJAdfCpj/VwDBOfIrrtd4gQ8y/LMrAqd/FnWwIbi8vME2yg
-	 mX20NTivqp8HQw33aNdV3Flbgod4JxPwjkoZc2K8=
+	b=QBDBvhpSX6k0BrKcksXpiR5HT123mgSU3v+JAk1suZlvPOEYQNQ6zeWsDeeX0UlZ5
+	 BlSel9UqGsl8fThuZx77uX6/+cPIFD9kNPjC9TAZGxVnSsKORPJmBXMU1LqcRvhpvb
+	 CPbZwgEsG64glpsu2GT29AuwRrEqlexrK33kz3cE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stealth <oleg.smirnov.1988@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.6 61/93] USB: storage: Remove subclass and protocol overrides from Novatek quirk
-Date: Wed,  3 Dec 2025 16:29:54 +0100
-Message-ID: <20251203152338.780388271@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.6 52/93] slimbus: ngd: Fix reference count leak in qcom_slim_ngd_notify_slaves
+Date: Wed,  3 Dec 2025 16:29:45 +0100
+Message-ID: <20251203152338.444217707@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,50 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit df5fde297e617041449f603ed5f646861c80000b upstream.
+commit 96cf8500934e0ce2a6c486f1dbc3b1fff12f7a5e upstream.
 
-A report from Oleg Smirnov indicates that the unusual_devs quirks
-entry for the Novatek camera does not need to override the subclass
-and protocol parameters:
+The function qcom_slim_ngd_notify_slaves() calls of_slim_get_device() which
+internally uses device_find_child() to obtain a device reference.
+According to the device_find_child() documentation,
+the caller must drop the reference with put_device() after use.
 
-[3266355.209532] usb 1-3: new high-speed USB device number 10 using xhci_hcd
-[3266355.333031] usb 1-3: New USB device found, idVendor=0603, idProduct=8611, bcdDevice= 1.00
-[3266355.333040] usb 1-3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[3266355.333043] usb 1-3: Product: YICARCAM
-[3266355.333045] usb 1-3: Manufacturer: XIAO-YI
-[3266355.333047] usb 1-3: SerialNumber: 966110000000100
-[3266355.338621] usb-storage 1-3:1.0: USB Mass Storage device detected
-[3266355.338817] usb-storage 1-3:1.0: Quirks match for vid 0603 pid 8611: 4000
-[3266355.338821] usb-storage 1-3:1.0: This device (0603,8611,0100 S 06 P 50) has unneeded SubClass and Protocol entries in unusual_devs.h (kernel 6.16.10-arch1-1)
-                    Please send a copy of this message to
-<linux-usb@vger.kernel.org> and <usb-storage@lists.one-eyed-alien.net>
+Found via static analysis and this is similar to commit 4e65bda8273c
+("ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()")
 
-The overrides are harmless but they do provoke the driver into logging
-this annoying message.  Update the entry to remove the unneeded entries.
-
-Reported-by: stealth <oleg.smirnov.1988@gmail.com>
-Closes: https://lore.kernel.org/CAKxjRRxhC0s19iEWoN=pEMqXJ_z8w_moC0GCXSqSKCcOddnWjQ@mail.gmail.com/
-Fixes: 6ca8af3c8fb5 ("USB: storage: Add unusual-devs entry for Novatek NTK96550-based camera")
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 917809e2280b ("slimbus: ngd: Add qcom SLIMBus NGD driver")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/b440f177-f0b8-4d5a-8f7b-10855d4424ee@rowland.harvard.edu
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251027060601.33228-1-linmq006@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/unusual_devs.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/slimbus/qcom-ngd-ctrl.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/storage/unusual_devs.h
-+++ b/drivers/usb/storage/unusual_devs.h
-@@ -938,7 +938,7 @@ UNUSUAL_DEV(  0x05e3, 0x0723, 0x9451, 0x
- UNUSUAL_DEV(  0x0603, 0x8611, 0x0000, 0xffff,
- 		"Novatek",
- 		"NTK96550-based camera",
--		USB_SC_SCSI, USB_PR_BULK, NULL,
-+		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_BULK_IGNORE_TAG ),
+--- a/drivers/slimbus/qcom-ngd-ctrl.c
++++ b/drivers/slimbus/qcom-ngd-ctrl.c
+@@ -1239,6 +1239,7 @@ static void qcom_slim_ngd_notify_slaves(
  
- /*
+ 		if (slim_get_logical_addr(sbdev))
+ 			dev_err(ctrl->dev, "Failed to get logical address\n");
++		put_device(&sbdev->dev);
+ 	}
+ }
+ 
 
 
