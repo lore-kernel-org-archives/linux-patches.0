@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876BC31ED6C;
-	Wed,  3 Dec 2025 16:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4494932ED43;
+	Wed,  3 Dec 2025 16:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779671; cv=none; b=ECeFGEpahfNDFqZdJdJl73cluS9EpVPdYIhQZVona9cF58Ze+VyF495Tgi8Kmx9dgnhHbPf44pZYDC+CLqRx4tZtSYA5rF4OlyQQv0Be+Z+OsO6nberlWzNpHb8R79suBbaYSDpmdavbi8Zzi7gq2noj/ClaZ0u4XodfuJO8yrA=
+	t=1764779675; cv=none; b=fP9G9GdXAFUuryTj/ILl+SbDQypfVHj3GhCoVg4LgNdl/7eC8MOrSQHCuK+5uabYJaqzf3FUnPuxyQisU80LKcrYkESvhZhjp67gZoZs1IMmF1ZL2HtDSBKfNOXsA+UZRYh1UlJvNhd1BhO0LRd6i0eGnfX6GBa/fyfi2ngxu6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779671; c=relaxed/simple;
-	bh=9q4x4IktGc//A31X25JPW3i6RIfIAIScv79D2l1K3UM=;
+	s=arc-20240116; t=1764779675; c=relaxed/simple;
+	bh=Rtwx67Hs+wNfgSPEXfisUpAd58FksXiabT70LiXZRKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=posPJTglP18JnW3FEp0yBXWoqGYKnAEG6pfzbPt8pcAszWLoy82tgDllZOtCjn3635btklCFj8/5SXlgqRGhgMuV/tcCfxu8rjRi1RPwpmg0lfCqTGi6RfOpSpWMnJIMSd8byrTTBWL35xnZ3eJ28DMUKPrKwSuNR+vnIbO2c1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y5YCxRSD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TZssnDGw8lmdCJgxk2NDycrN2ssMEfXYmDlQsAaMdt+rN0hDnL3S7nEN5HOC7N2yqP7RRHrriUQq2zrhFBckGyUKeikhC1Gzo79jmCkIAinBNfZPr1UWAMzRp6lcBJ8kIIu/dWZguXeTKLOsa2fenIV7EaGlsrsU+I6UvNQIWJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CWb3MVoD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y5YCxRSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8060C4CEF5;
-	Wed,  3 Dec 2025 16:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CWb3MVoD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C43BC4CEF5;
+	Wed,  3 Dec 2025 16:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779671;
-	bh=9q4x4IktGc//A31X25JPW3i6RIfIAIScv79D2l1K3UM=;
+	s=korg; t=1764779674;
+	bh=Rtwx67Hs+wNfgSPEXfisUpAd58FksXiabT70LiXZRKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y5YCxRSD7m/lS1luv+CabV9aDv6xJbLhk6hkQJOv9jNL4N01P612s5nnBgvzh4VDz
-	 kINKqc5j5zfL8r6HVoC6hCRZNDaFd4dL61OYGsCzdbWZTjmDc7saCcKLkb2q5kpsTi
-	 PlSHCMZHWdhawNQTglrM/CcgNcP/EzPS2t//vzn0=
+	b=CWb3MVoDVTuX7RSySLNFUsKYp7XqXF9GBxPTZClZAbhiWv3q5qfDgKL910umRZbHe
+	 QuIkRYzP4Nq6E/Zr0Deph/nGKNDdQdNRL6YEtFgm8fdTwfRxLb5dIw8C2SM1ztui27
+	 SDseGXrjwYBXHfhEHxA/piB6mv4fIFO6i6Uovuu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joshua Rogers <linux@joshua.hu>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 327/568] smb: client: validate change notify buffer before copy
-Date: Wed,  3 Dec 2025 16:25:29 +0100
-Message-ID: <20251203152452.686714245@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.1 328/568] lib/crypto: curve25519-hacl64: Fix older clang KASAN workaround for GCC
+Date: Wed,  3 Dec 2025 16:25:30 +0100
+Message-ID: <20251203152452.723037753@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joshua Rogers <linux@joshua.hu>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 4012abe8a78fbb8869634130024266eaef7081fe upstream.
+commit 2b81082ad37cc3f28355fb73a6a69b91ff7dbf20 upstream.
 
-SMB2_change_notify called smb2_validate_iov() but ignored the return
-code, then kmemdup()ed using server provided OutputBufferOffset/Length.
+Commit 2f13daee2a72 ("lib/crypto/curve25519-hacl64: Disable KASAN with
+clang-17 and older") inadvertently disabled KASAN in curve25519-hacl64.o
+for GCC unconditionally because clang-min-version will always evaluate
+to nothing for GCC. Add a check for CONFIG_CC_IS_CLANG to avoid applying
+the workaround for GCC, which is only needed for clang-17 and older.
 
-Check the return of smb2_validate_iov() and bail out on error.
-
-Discovered with help from the ZeroPath security tooling.
-
-Signed-off-by: Joshua Rogers <linux@joshua.hu>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
 Cc: stable@vger.kernel.org
-Fixes: e3e9463414f61 ("smb3: improve SMB3 change notification support")
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 2f13daee2a72 ("lib/crypto/curve25519-hacl64: Disable KASAN with clang-17 and older")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20251103-curve25519-hacl64-fix-kasan-workaround-v2-1-ab581cbd8035@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ lib/crypto/Makefile |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3837,9 +3837,12 @@ SMB2_change_notify(const unsigned int xi
+--- a/lib/crypto/Makefile
++++ b/lib/crypto/Makefile
+@@ -26,7 +26,7 @@ libcurve25519-generic-y				:= curve25519
+ libcurve25519-generic-$(CONFIG_ARCH_SUPPORTS_INT128)	:= curve25519-hacl64.o
+ libcurve25519-generic-y				+= curve25519-generic.o
+ # clang versions prior to 18 may blow out the stack with KASAN
+-ifeq ($(call clang-min-version, 180000),)
++ifeq ($(CONFIG_CC_IS_CLANG)_$(call clang-min-version, 180000),y_)
+ KASAN_SANITIZE_curve25519-hacl64.o := n
+ endif
  
- 		smb_rsp = (struct smb2_change_notify_rsp *)rsp_iov.iov_base;
- 
--		smb2_validate_iov(le16_to_cpu(smb_rsp->OutputBufferOffset),
--				le32_to_cpu(smb_rsp->OutputBufferLength), &rsp_iov,
-+		rc = smb2_validate_iov(le16_to_cpu(smb_rsp->OutputBufferOffset),
-+				le32_to_cpu(smb_rsp->OutputBufferLength),
-+				&rsp_iov,
- 				sizeof(struct file_notify_information));
-+		if (rc)
-+			goto cnotify_exit;
- 
- 		*out_data = kmemdup((char *)smb_rsp + le16_to_cpu(smb_rsp->OutputBufferOffset),
- 				le32_to_cpu(smb_rsp->OutputBufferLength), GFP_KERNEL);
 
 
