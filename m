@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEFA35B150;
-	Wed,  3 Dec 2025 16:48:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CA6376BCE;
+	Wed,  3 Dec 2025 16:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780494; cv=none; b=tFI7NHiAGenmIrYBv3U9ifLWRbJicSQqQeAW0OK6VYr19OVK/OVRLiOltsOY+ExRfaV8NG3uXgYO1rkJUIWc/DYSX3AgEmwJACt/gJ+/SMW2sFpULdC9yR72Ty/9V0GpH8/jJAObO5cmFlzlKoueaLuJ8D0F+WtHDZFTmhzO+qo=
+	t=1764780497; cv=none; b=ejWjU1dCFWsSbFh76C45nDzvpu3Y0r5RLODS/XSpzaBkCHsxl5r9FPbnlcjszvyl24L9H2MWNXl6nAC9NDAMbEaXzo2IdZpAiSeQ1ze/voT3aZL+iMjmev98abAgtywyrOH+ZxdhjkPAGfr+sVQ3Kopj0ezD6kQmXcaHvTlc9rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780494; c=relaxed/simple;
-	bh=KJlwpIJelMoHScP1xkS2uSn2m03yNB7kvMs/iQiegTs=;
+	s=arc-20240116; t=1764780497; c=relaxed/simple;
+	bh=rHrFaV1o2L3n++sW5yOStA6A389wyXqXWlYwv8tACQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uLVxR/IU3uMasurgGpON1v+Mv/I4ssz+qhGjVYc+MpZ3UeZcuBlillY+4H8xySBHBIqMbbf8gDp3YW8sfrbB00jC+0O4GYuNXwxoPZDQwM25/OdEcHEUP+cejL0ExUfp1KzbRZj2+yU9WnKkxtnnu8dSQlPlx/3wf1bWL1PA1uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q1I69B8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gl7l6EfxcZS0+sd3A3/drecw2sXkNb10B/q1uVold+dX+oTn2FtL38zD/ZokXV4oVZmv8GDc4O2RQSGZQ1B/w7E/jhoWCvL0erHFaPna+e4eoQMK1SreswIFVNr1aZCUuuuqjptT6kyuP/gmbHswPCt+X3T2DZsFOzGigfBhWAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuPGvEEi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q1I69B8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A47FC4CEF5;
-	Wed,  3 Dec 2025 16:48:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuPGvEEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32F5C4CEF5;
+	Wed,  3 Dec 2025 16:48:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780493;
-	bh=KJlwpIJelMoHScP1xkS2uSn2m03yNB7kvMs/iQiegTs=;
+	s=korg; t=1764780497;
+	bh=rHrFaV1o2L3n++sW5yOStA6A389wyXqXWlYwv8tACQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q1I69B8dkGaB3MLM8DX+QV0W/5U0+SebfLUVPN/lg6TXuGrdZlc2nL+vqmw+vqCN6
-	 OUdQfIKsDJdT0hW2six9LihK/beTtX7NHXmyuPzMqX6D1C1BlvrPiABPZG0pliqzf4
-	 dHVQ/kgPkU6J0HtK4W1Do4Ob+9lFb5CNWIfl9pb4=
+	b=JuPGvEEiDCr3oTWuo4j7xA28rjDO9DA9tXJe6KiE7uA1hgBNiYhU/pzrEVjl92GzN
+	 QPtSuArLppI979OKSRTh2YPdGb7r6OHEepVJfEEcyf1gVVfwF2uoMJyz+mWkrUjuG8
+	 zKP4Jer/qsLrOHRKF7EYXNnoDRWCnCxgSpImBWX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuen-Han Tsai <khtsai@google.com>,
+	stable <stable@kernel.org>,
+	Jimmy Hu <hhhuuu@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 564/568] usb: udc: Add trace event for usb_gadget_set_state
-Date: Wed,  3 Dec 2025 16:29:26 +0100
-Message-ID: <20251203152501.402211131@linuxfoundation.org>
+Subject: [PATCH 6.1 565/568] usb: gadget: udc: fix use-after-free in usb_gadget_state_work
+Date: Wed,  3 Dec 2025 16:29:27 +0100
+Message-ID: <20251203152501.443350549@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,51 +51,113 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Jimmy Hu <hhhuuu@google.com>
 
-[ Upstream commit 7bf1158514e410310aec975e630cec99d4e4092f ]
+[ Upstream commit baeb66fbd4201d1c4325074e78b1f557dff89b5b ]
 
-While the userspace program can be notified of gadget state changes,
-timing issue can lead to missed transitions when reading the state
-value.
+A race condition during gadget teardown can lead to a use-after-free
+in usb_gadget_state_work(), as reported by KASAN:
 
-Introduce a trace event for usb_gadget_set_state to reliably track state
-transitions.
+  BUG: KASAN: invalid-access in sysfs_notify+0x2c/0xd0
+  Workqueue: events usb_gadget_state_work
 
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://lore.kernel.org/r/20250818082722.2952867-1-khtsai@google.com
+The fundamental race occurs because a concurrent event (e.g., an
+interrupt) can call usb_gadget_set_state() and schedule gadget->work
+at any time during the cleanup process in usb_del_gadget().
+
+Commit 399a45e5237c ("usb: gadget: core: flush gadget workqueue after
+device removal") attempted to fix this by moving flush_work() to after
+device_del(). However, this does not fully solve the race, as a new
+work item can still be scheduled *after* flush_work() completes but
+before the gadget's memory is freed, leading to the same use-after-free.
+
+This patch fixes the race condition robustly by introducing a 'teardown'
+flag and a 'state_lock' spinlock to the usb_gadget struct. The flag is
+set during cleanup in usb_del_gadget() *before* calling flush_work() to
+prevent any new work from being scheduled once cleanup has commenced.
+The scheduling site, usb_gadget_set_state(), now checks this flag under
+the lock before queueing the work, thus safely closing the race window.
+
+Fixes: 5702f75375aa9 ("usb: gadget: udc-core: move sysfs_notify() to a workqueue")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
+Link: https://patch.msgid.link/20251023054945.233861-1-hhhuuu@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: baeb66fbd420 ("usb: gadget: udc: fix use-after-free in usb_gadget_state_work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c  |    1 +
- drivers/usb/gadget/udc/trace.h |    5 +++++
- 2 files changed, 6 insertions(+)
+ drivers/usb/gadget/udc/core.c |   17 ++++++++++++++++-
+ include/linux/usb/gadget.h    |    5 +++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
 --- a/drivers/usb/gadget/udc/core.c
 +++ b/drivers/usb/gadget/udc/core.c
-@@ -1123,6 +1123,7 @@ void usb_gadget_set_state(struct usb_gad
+@@ -1121,8 +1121,13 @@ static void usb_gadget_state_work(struct
+ void usb_gadget_set_state(struct usb_gadget *gadget,
+ 		enum usb_device_state state)
  {
++	unsigned long flags;
++
++	spin_lock_irqsave(&gadget->state_lock, flags);
  	gadget->state = state;
- 	schedule_work(&gadget->work);
-+	trace_usb_gadget_set_state(gadget, 0);
+-	schedule_work(&gadget->work);
++	if (!gadget->teardown)
++		schedule_work(&gadget->work);
++	spin_unlock_irqrestore(&gadget->state_lock, flags);
+ 	trace_usb_gadget_set_state(gadget, 0);
  }
  EXPORT_SYMBOL_GPL(usb_gadget_set_state);
+@@ -1356,6 +1361,8 @@ static void usb_udc_nop_release(struct d
+ void usb_initialize_gadget(struct device *parent, struct usb_gadget *gadget,
+ 		void (*release)(struct device *dev))
+ {
++	spin_lock_init(&gadget->state_lock);
++	gadget->teardown = false;
+ 	INIT_WORK(&gadget->work, usb_gadget_state_work);
+ 	gadget->dev.parent = parent;
  
---- a/drivers/usb/gadget/udc/trace.h
-+++ b/drivers/usb/gadget/udc/trace.h
-@@ -81,6 +81,11 @@ DECLARE_EVENT_CLASS(udc_log_gadget,
- 		__entry->ret)
- );
+@@ -1530,6 +1537,7 @@ EXPORT_SYMBOL_GPL(usb_add_gadget_udc);
+ void usb_del_gadget(struct usb_gadget *gadget)
+ {
+ 	struct usb_udc *udc = gadget->udc;
++	unsigned long flags;
  
-+DEFINE_EVENT(udc_log_gadget, usb_gadget_set_state,
-+	TP_PROTO(struct usb_gadget *g, int ret),
-+	TP_ARGS(g, ret)
-+);
-+
- DEFINE_EVENT(udc_log_gadget, usb_gadget_frame_number,
- 	TP_PROTO(struct usb_gadget *g, int ret),
- 	TP_ARGS(g, ret)
+ 	if (!udc)
+ 		return;
+@@ -1543,6 +1551,13 @@ void usb_del_gadget(struct usb_gadget *g
+ 	kobject_uevent(&udc->dev.kobj, KOBJ_REMOVE);
+ 	sysfs_remove_link(&udc->dev.kobj, "gadget");
+ 	device_del(&gadget->dev);
++	/*
++	 * Set the teardown flag before flushing the work to prevent new work
++	 * from being scheduled while we are cleaning up.
++	 */
++	spin_lock_irqsave(&gadget->state_lock, flags);
++	gadget->teardown = true;
++	spin_unlock_irqrestore(&gadget->state_lock, flags);
+ 	flush_work(&gadget->work);
+ 	ida_free(&gadget_id_numbers, gadget->id_number);
+ 	cancel_work_sync(&udc->vbus_work);
+--- a/include/linux/usb/gadget.h
++++ b/include/linux/usb/gadget.h
+@@ -373,6 +373,9 @@ struct usb_gadget_ops {
+  *	can handle. The UDC must support this and all slower speeds and lower
+  *	number of lanes.
+  * @state: the state we are now (attached, suspended, configured, etc)
++ * @state_lock: Spinlock protecting the `state` and `teardown` members.
++ * @teardown: True if the device is undergoing teardown, used to prevent
++ *	new work from being scheduled during cleanup.
+  * @name: Identifies the controller hardware type.  Used in diagnostics
+  *	and sometimes configuration.
+  * @dev: Driver model state for this abstract device.
+@@ -448,6 +451,8 @@ struct usb_gadget {
+ 	enum usb_ssp_rate		max_ssp_rate;
+ 
+ 	enum usb_device_state		state;
++	spinlock_t			state_lock;
++	bool				teardown;
+ 	const char			*name;
+ 	struct device			dev;
+ 	unsigned			isoch_delay;
 
 
