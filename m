@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0A212FFF98;
-	Wed,  3 Dec 2025 20:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7A331354B;
+	Wed,  3 Dec 2025 20:29:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764793782; cv=none; b=B/jQgssww0gjb7NZHVW8voaAHmrXXWtm4RjyXaLIlT86AAjopTKKvhVCtQdsqyebBM8JM/Z7E8mcwt0aJZSqPVgIF8D+OabyuDa1rzx2CK6AdIpBx6TWcsdY57Yee3gM32HRq7S2fYHZmLl1qwJoOppi/C84ablhZwI2GhBqyQs=
+	t=1764793786; cv=none; b=ddoFZitftksqCN93NfNnXM4Ztp7nRTOUvRqiXwRbGToPovzosnZXJpPE/satWyqKr/MUitSGsMCvNcppcwAUvpcN+9k+EhuoozsqyzANVsn1y7339kr0aDj1Z5TpDGthQMViWvCZc+OEyKE+KvSVJCksVkeShoos3PVdFjR1zEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764793782; c=relaxed/simple;
-	bh=h8B0Zjix0+jmOtI6eBS4vfgWeG0zQjRVR6cYNlU89PM=;
+	s=arc-20240116; t=1764793786; c=relaxed/simple;
+	bh=NSUJzjsQd33DgLTn4foaiEKrvWV6nMtKd2xZ7eYS15k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KYukWEGyFOM+rQsuWSvS0nlta/udrgTMXq9IBJYVKEhShRkM4426upUuGbmGkMW2kbWcndc+O9wuXgVC/RAtBoKcIjJCzuN3ovNsHYeeBKXSHdhNVMjPkOSO/VNGo9sXeReoT2n1iSQNriEpxqcaP/WkgwhVrCTxZUwNhcAYUAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dixTMhdP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YrL4ipBWMYaVf0+9K+aMcrzm/WZodbNURS4curwMLkfuAaxpOfMDKGb4u4TDB5VBiJ6RFSElRC5rPXtTFOvGNY2Up8zZNaMEswzpMxvG0kjNW1C4znsyh+rWTZz/oSdzu5y7x3wF4WBSI7+x5KqzQW9jtI9f56IB89taaUxKUhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nFxYiChU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dixTMhdP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B44ECC4CEFB;
-	Wed,  3 Dec 2025 20:29:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nFxYiChU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37919C4CEF5;
+	Wed,  3 Dec 2025 20:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764793782;
-	bh=h8B0Zjix0+jmOtI6eBS4vfgWeG0zQjRVR6cYNlU89PM=;
+	s=k20201202; t=1764793785;
+	bh=NSUJzjsQd33DgLTn4foaiEKrvWV6nMtKd2xZ7eYS15k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dixTMhdPcgUkynepIlEj8qQB0tf3IwuIztNGcc/M7QhmAhfhDU+wHxyeMGZOE47mF
-	 7hBKt792PBPGsdCynsy7/fJKRsH5s6GlhHzgAv31FQ7vjEeNAqwrs9Yeu3rAHk+9xx
-	 Y3Nu4HbG0CV3CfqoePh1zlR8FNOudksZH8fXjGsYsi+mHnBLNi8D6MGNE7Fm1VNkJj
-	 oaVJDSOCV6KH9Qu5RLTp/JCkuMjdlE232rx2I2muM+Ze1cpzxGJukJdNkbrr6pcxwl
-	 cXA7pWZy4sD7RE6879aSsC5mZEm7+lbOlJCcTswNaQR7hHhWwr4hG1muD4YxiNYU1K
-	 FXS0zewxirgCg==
+	b=nFxYiChUJc5x9Bg3ky7ZUcyGJSn08eoL1PhDyt+ObqKlro7CWzrDjAGjRfQ9cjClV
+	 zjloDz6blFnAJ5dJ8FjfjmJrp0L+8ulyEUbLfTJI+LxVRKtg/5FMIfe7IdlgWIa0N2
+	 13SWonydqZzLg9PCs1gpK1KBHUHgoMjFS5doQfeRqAaewq4Wn7xV8pCQxYp3Ia4PeT
+	 yMgnkpN7mp3Y3043oXam4jYIwHjnTkdRA6N8z3BpY2kxVHS+rqiNlLIgY+VG+nn/1q
+	 MjhTLJPnw8tA9QlvghbQmim0FfTvoXgBQBaa8dy7yanRIlOIMPvSpnj8yjVbpe4dQu
+	 WGxiz2RYO/iTA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Joseph Salisbury <joseph.salisbury@oracle.com>,
-	Adam Li <adamli@os.amperecomputing.com>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>,
-	Chris Mason <clm@meta.com>,
+Cc: Doug Berger <opendmb@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
 	mingo@redhat.com,
 	juri.lelli@redhat.com,
 	vincent.guittot@linaro.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] sched/fair: Revert max_newidle_lb_cost bump
-Date: Wed,  3 Dec 2025 15:29:29 -0500
-Message-ID: <20251203202933.826777-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.15] sched/deadline: only set free_cpus for online runqueues
+Date: Wed,  3 Dec 2025 15:29:30 -0500
+Message-ID: <20251203202933.826777-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251203202933.826777-1-sashal@kernel.org>
 References: <20251203202933.826777-1-sashal@kernel.org>
@@ -55,279 +51,321 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit d206fbad9328ddb68ebabd7cf7413392acd38081 ]
+[ Upstream commit 382748c05e58a9f1935f5a653c352422375566ea ]
 
-Many people reported regressions on their database workloads due to:
+Commit 16b269436b72 ("sched/deadline: Modify cpudl::free_cpus
+to reflect rd->online") introduced the cpudl_set/clear_freecpu
+functions to allow the cpu_dl::free_cpus mask to be manipulated
+by the deadline scheduler class rq_on/offline callbacks so the
+mask would also reflect this state.
 
-  155213a2aed4 ("sched/fair: Bump sd->max_newidle_lb_cost when newidle balance fails")
+Commit 9659e1eeee28 ("sched/deadline: Remove cpu_active_mask
+from cpudl_find()") removed the check of the cpu_active_mask to
+save some processing on the premise that the cpudl::free_cpus
+mask already reflected the runqueue online state.
 
-For instance Adam Li reported a 6% regression on SpecJBB.
+Unfortunately, there are cases where it is possible for the
+cpudl_clear function to set the free_cpus bit for a CPU when the
+deadline runqueue is offline. When this occurs while a CPU is
+connected to the default root domain the flag may retain the bad
+state after the CPU has been unplugged. Later, a different CPU
+that is transitioning through the default root domain may push a
+deadline task to the powered down CPU when cpudl_find sees its
+free_cpus bit is set. If this happens the task will not have the
+opportunity to run.
 
-Conversely this will regress schbench again; on my machine from 2.22
-Mrps/s down to 2.04 Mrps/s.
+One example is outlined here:
+https://lore.kernel.org/lkml/20250110233010.2339521-1-opendmb@gmail.com
 
-Reported-by: Joseph Salisbury <joseph.salisbury@oracle.com>
-Reported-by: Adam Li <adamli@os.amperecomputing.com>
-Reported-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Reported-by: Hazem Mohamed Abuelfotoh <abuehaze@amazon.com>
+Another occurs when the last deadline task is migrated from a
+CPU that has an offlined runqueue. The dequeue_task member of
+the deadline scheduler class will eventually call cpudl_clear
+and set the free_cpus bit for the CPU.
+
+This commit modifies the cpudl_clear function to be aware of the
+online state of the deadline runqueue so that the free_cpus mask
+can be updated appropriately.
+
+It is no longer necessary to manage the mask outside of the
+cpudl_set/clear functions so the cpudl_set/clear_freecpu
+functions are removed. In addition, since the free_cpus mask is
+now only updated under the cpudl lock the code was changed to
+use the non-atomic __cpumask functions.
+
+Signed-off-by: Doug Berger <opendmb@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Tested-by: Chris Mason <clm@meta.com>
-Link: https://lkml.kernel.org/r/20250626144017.1510594-2-clm@fb.com
-Link: https://lkml.kernel.org/r/006c9df2-b691-47f1-82e6-e233c3f91faf@oracle.com
-Link: https://patch.msgid.link/20251107161739.406147760@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile my findings.
+Now I have all the information needed for a complete analysis. Let me
+summarize:
 
----
-
-## COMPREHENSIVE BACKPORT ANALYSIS
+## DETAILED ANALYSIS
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** `sched/fair: Revert max_newidle_lb_cost bump`
+**Subject**: `sched/deadline: only set free_cpus for online runqueues`
 
-**Key signals:**
-- **"Revert"** - This is undoing a previous change that caused problems
-- **Multiple "Reported-by:" tags** from major organizations:
-  - Joseph Salisbury (Oracle)
-  - Adam Li (Ampere Computing)
-  - Dietmar Eggemann (ARM)
-  - Hazem Mohamed Abuelfotoh (Amazon)
-- **"Tested-by:" and "Reviewed-by:"** tags showing validation
-- **Explicit regression** mentioned: "6% regression on SpecJBB"
-- **No "Cc: stable" tag** explicitly, but this is fixing a regression in
-  code that WAS backported
+**Key points from message**:
+- References two previous commits that introduced the bug:
+  - `16b269436b72` ("sched/deadline: Modify cpudl::free_cpus to reflect
+    rd->online") - from v4.0-rc1
+  - `9659e1eeee28` ("sched/deadline: Remove cpu_active_mask from
+    cpudl_find()") - from v4.0-rc1
+- Describes a real bug where `cpudl_clear()` can incorrectly set
+  `free_cpus` bit for an offline CPU
+- **Consequence**: Tasks can be pushed to powered-down CPUs and won't
+  run
 
-**Missing Fixes: tag:** There's no explicit `Fixes:` tag, but the commit
-message clearly states it reverts `155213a2aed4`.
+**Missing tags**:
+- **NO "Cc: stable@vger.kernel.org"** - maintainer didn't explicitly
+  request stable backport
+- **NO "Fixes:" tag** - doesn't explicitly reference the buggy commit
 
 ### 2. CODE CHANGE ANALYSIS
 
-The revert removes two related changes from the original commit:
+**The Bug Mechanism**:
+1. `cpudl::free_cpus` tracks which CPUs can receive deadline tasks
+2. When a CPU goes offline, `rq_offline_dl()` calls `cpudl_clear()` +
+   `cpudl_clear_freecpu()` to clear its bit
+3. **BUT**: If the last DL task is later migrated away from that offline
+   CPU, `dec_dl_deadline()` calls `cpudl_clear()` which
+   **unconditionally sets the bit** in `free_cpus`
+4. Now `cpudl_find()` sees this offline CPU as available and may push
+   tasks to it
+5. **Result**: Tasks pushed to offline CPUs won't run - **task
+   starvation**
 
-**Change 1 - `update_newidle_cost()` function:**
-```c
-// BEFORE (problematic - being reverted):
-sd->max_newidle_lb_cost = min(cost, sysctl_sched_migration_cost + 200);
+**The Fix**:
+- Adds `bool online` parameter to `cpudl_clear(struct cpudl *cp, int
+  cpu, bool online)`
+- `dec_dl_deadline()`: passes `rq->online` - only sets bit if CPU is
+  online
+- `rq_online_dl()`: passes `true`
+- `rq_offline_dl()`: passes `false` - ensures bit stays cleared
+- Removes now-unnecessary `cpudl_set_freecpu()` and
+  `cpudl_clear_freecpu()` helpers
+- Uses non-atomic `__cpumask_*` functions since operations are under
+  `cp->lock`
 
-// AFTER (restored original):
-sd->max_newidle_lb_cost = cost;
-```
+### 3. SCOPE AND RISK ASSESSMENT
 
-**Change 2 - `sched_balance_newidle()` function:**
-```c
-// BEFORE (problematic - being reverted):
-domain_cost = t1 - t0;
-curr_cost += domain_cost;
-t0 = t1;
+**Files changed**: 3 (cpudeadline.c, cpudeadline.h, deadline.c)
+**Lines changed**: +14 / -32 (net code removal)
 
-if (!pulled_task)
-    domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
+**Risk factors**:
+- Touches scheduler core code (high impact if wrong)
+- Changes function signature (API change)
+- BUT: Logic is straightforward - add online state check
+- BUT: Self-contained change with no dependencies
 
-update_newidle_cost(sd, domain_cost);
+### 4. COMPATIBILITY CHECK
 
-// AFTER (restored original):
-domain_cost = t1 - t0;
-update_newidle_cost(sd, domain_cost);
-
-curr_cost += domain_cost;
-t0 = t1;
-```
-
-**Technical explanation:**
-The original commit 155213a2aed4 tried to fix a schbench regression by:
-1. Capping `max_newidle_lb_cost` to `sysctl_sched_migration_cost + 200`
-2. Artificially bumping the cost by 50% when newidle balance fails to
-   find work
-
-The intent was to make the scheduler stop doing expensive newidle
-balancing operations that weren't productive. However, this approach was
-too aggressive and caused database workloads to suffer because they rely
-on the scheduler's ability to quickly migrate tasks to idle CPUs.
-
-### 3. CLASSIFICATION
-
-| Category | Assessment |
-|----------|------------|
-| Bug fix | **YES** - Fixing a performance regression |
-| Security fix | NO |
-| Feature addition | NO - This removes code |
-| Cleanup/refactoring | NO |
-| Device ID/quirk | NO |
-
-This is a **clear regression fix** - the original commit caused
-measurable performance degradation in real-world workloads.
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-**Size:** 1 file, 19 lines changed (-16 lines removed, +3 lines added)
-
-**Complexity:** LOW - This is a straight revert removing problematic
-logic
-
-**Subsystem:** Scheduler (kernel/sched/fair.c) - Core but well-tested
-area
-
-**Risk factors:**
-- ✅ Simple revert to known-good state
-- ✅ Tested by multiple parties
-- ✅ Well-understood change
-- ⚠️ Will cause schbench regression (~8%), but this is a synthetic
-  benchmark
+Verified the code structure is **identical** across all stable kernels
+(v5.4, v5.10, v5.15, v6.1, v6.6):
+- `rq->online` field exists in all versions
+- `rq_online_dl()` / `rq_offline_dl()` functions are identical
+- `cpudl_clear()` signature and callers are identical
+- **Fix will apply cleanly to all stable trees**
 
 ### 5. USER IMPACT
 
-**Who is affected:**
-- **Database workloads** (SpecJBB) - MAJOR, 6% regression fixed
-- **Production systems** running Oracle, Amazon, ARM platforms
-- Any workload relying on fast task migration to idle CPUs
-
-**Severity:** HIGH - This affects real production database workloads
-with measurable performance impact
+- **Who's affected**: Users running SCHED_DEADLINE tasks with CPU
+  hotplug
+- **Severity**: HIGH - tasks may not run (starvation)
+- **Bug age**: 10 years (since v4.0-rc1 in 2015)
+- **Trigger conditions**: Requires specific timing with CPU hotplug + DL
+  tasks
+- **Referenced LKML report**: https://lore.kernel.org/lkml/2025011023301
+  0.2339521-1-opendmb@gmail.com - shows real-world occurrence
 
 ### 6. STABILITY INDICATORS
 
-| Tag | Present |
-|-----|---------|
-| Reviewed-by | ✅ Dietmar Eggemann (ARM) |
-| Tested-by | ✅ Dietmar Eggemann (ARM), Chris Mason (Meta) |
-| Signed-off-by | ✅ Peter Zijlstra (Intel) - scheduler maintainer |
+**Positive**:
+- Signed-off by Peter Zijlstra (Intel) - the main scheduler maintainer
+- Logic is straightforward and correct
+- Self-contained fix
 
-**Maturity:** The revert was authored by Peter Zijlstra, the primary
-Linux scheduler maintainer, demonstrating careful consideration.
+**Concerning**:
+- Very fresh commit (just merged to 6.18-rc cycle)
+- No Tested-by or Reviewed-by tags
+- No explicit stable request from maintainer
 
-### 7. DEPENDENCY CHECK
+### 7. DECISION FACTORS
 
-I verified the commits between the original and the revert:
+**FOR backporting**:
+1. Fixes a real, severe bug (task starvation)
+2. Bug has existed for 10 years affecting ALL stable kernels
+3. Fix is small (~50 lines), surgical, and correct
+4. Applies cleanly to all stable trees
+5. Signed off by scheduler maintainer
+6. The change is logically straightforward (add online state awareness)
 
-```
-d206fbad9328d sched/fair: Revert max_newidle_lb_cost bump
-522fb20fbdbe4 sched/fair: Have SD_SERIALIZE affect newidle balancing
-...
-```
+**AGAINST backporting**:
+1. No Cc: stable tag - maintainer didn't explicitly request it
+2. No Fixes: tag
+3. Brand new commit - hasn't soaked in mainline
+4. Scheduler is sensitive - regressions impact all workloads
+5. Bug requires specific conditions to trigger
 
-The `SD_SERIALIZE` commit (522fb20fbdbe4) touches `sched_balance_rq()`,
-not the areas modified by the revert. **No dependencies or conflicts
-detected.**
+### CONCLUSION
 
-### 8. STABLE TREE STATUS - CRITICAL FINDING
+This is a genuine bug fix for a task starvation issue that has existed
+since 2015. While the commit lacks explicit stable markers (Cc: stable,
+Fixes:), the fix is:
+- **Obviously correct** - adds missing online state check
+- **Small and contained** - ~50 lines across 3 files
+- **Applies cleanly** - code structure identical in all stable kernels
+- **Signed off by the maintainer** - Peter Zijlstra reviewed and
+  approved it
+- **Fixes a severe bug** - tasks pushed to offline CPUs won't run
 
-**The original problematic commit WAS backported to multiple stable
-branches:**
-
-| Stable Branch | Original Commit Hash | Revert Status |
-|--------------|---------------------|---------------|
-| 6.12.y (LTS) | fc4289233e4b7 | ❌ NOT REVERTED |
-| 6.15.y | a4946f4b01421 | ❌ NOT REVERTED |
-| 6.16.y | c6e88242c06d4 | ❌ NOT REVERTED |
-| 6.17.y | 155213a2aed4 | ❌ NOT REVERTED |
-| 6.18.y | 155213a2aed4 | ❌ NOT REVERTED |
-
-**This means all these stable branches currently have the regression-
-causing code!**
-
-I verified the code in these branches - they all have:
-1. The capped `min(cost, sysctl_sched_migration_cost + 200)`
-2. The bump logic `(3 * sd->max_newidle_lb_cost) / 2`
-
-The revert applies cleanly because the code structure is identical.
-
-### 9. TRADE-OFF ANALYSIS
-
-| Workload | Impact |
-|----------|--------|
-| SpecJBB (database) | **+6% restored** |
-| schbench (synthetic) | -8% regression |
-
-The maintainers deliberately chose to prioritize real-world database
-workloads over a synthetic microbenchmark. This is the correct decision
-for stable trees.
-
----
-
-## FINAL ASSESSMENT
-
-**This commit SHOULD be backported to stable trees because:**
-
-1. **Fixes a real performance regression** - 6% on database workloads is
-   significant
-2. **Multiple independent reporters** from Oracle, Ampere, ARM, and
-   Amazon confirms real-world impact
-3. **The problematic commit was already backported** to 6.12.y, 6.15.y,
-   6.16.y, 6.17.y, and 6.18.y - users of these stable trees are
-   currently affected
-4. **Simple, low-risk change** - It's a revert returning to previous
-   stable behavior
-5. **Small and contained** - 19 lines in one file, no architectural
-   changes
-6. **Well-tested** - Has Tested-by and Reviewed-by tags from ARM and
-   Meta engineers
-7. **Authored by maintainer** - Peter Zijlstra (scheduler maintainer)
-   made this decision deliberately
-8. **Clean backport** - Code matches exactly in stable trees, will apply
-   without conflicts
-
-**This is exactly the type of fix stable trees need:** fixing
-regressions introduced by prior backports, with minimal risk and maximum
-user benefit.
+The absence of explicit stable tagging is concerning and suggests the
+maintainer may want it to soak in mainline first. However, the severity
+of the bug (task starvation) and the correctness of the fix make it a
+reasonable candidate for stable backporting.
 
 **YES**
 
- kernel/sched/fair.c | 19 +++----------------
- 1 file changed, 3 insertions(+), 16 deletions(-)
+ kernel/sched/cpudeadline.c | 34 +++++++++-------------------------
+ kernel/sched/cpudeadline.h |  4 +---
+ kernel/sched/deadline.c    |  8 ++++----
+ 3 files changed, 14 insertions(+), 32 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 5b752324270b0..9492a1de2501a 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -12159,14 +12159,8 @@ static inline bool update_newidle_cost(struct sched_domain *sd, u64 cost)
+diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
+index cdd740b3f7743..37b572cc8aca2 100644
+--- a/kernel/sched/cpudeadline.c
++++ b/kernel/sched/cpudeadline.c
+@@ -166,12 +166,13 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
+  * cpudl_clear - remove a CPU from the cpudl max-heap
+  * @cp: the cpudl max-heap context
+  * @cpu: the target CPU
++ * @online: the online state of the deadline runqueue
+  *
+  * Notes: assumes cpu_rq(cpu)->lock is locked
+  *
+  * Returns: (void)
+  */
+-void cpudl_clear(struct cpudl *cp, int cpu)
++void cpudl_clear(struct cpudl *cp, int cpu, bool online)
+ {
+ 	int old_idx, new_cpu;
+ 	unsigned long flags;
+@@ -184,7 +185,7 @@ void cpudl_clear(struct cpudl *cp, int cpu)
+ 	if (old_idx == IDX_INVALID) {
  		/*
- 		 * Track max cost of a domain to make sure to not delay the
- 		 * next wakeup on the CPU.
--		 *
--		 * sched_balance_newidle() bumps the cost whenever newidle
--		 * balance fails, and we don't want things to grow out of
--		 * control.  Use the sysctl_sched_migration_cost as the upper
--		 * limit, plus a litle extra to avoid off by ones.
+ 		 * Nothing to remove if old_idx was invalid.
+-		 * This could happen if a rq_offline_dl is
++		 * This could happen if rq_online_dl or rq_offline_dl is
+ 		 * called for a CPU without -dl tasks running.
  		 */
--		sd->max_newidle_lb_cost =
--			min(cost, sysctl_sched_migration_cost + 200);
-+		sd->max_newidle_lb_cost = cost;
- 		sd->last_decay_max_lb_cost = jiffies;
- 	} else if (time_after(jiffies, sd->last_decay_max_lb_cost + HZ)) {
- 		/*
-@@ -12858,17 +12852,10 @@ static int sched_balance_newidle(struct rq *this_rq, struct rq_flags *rf)
- 
- 			t1 = sched_clock_cpu(this_cpu);
- 			domain_cost = t1 - t0;
-+			update_newidle_cost(sd, domain_cost);
+ 	} else {
+@@ -195,9 +196,12 @@ void cpudl_clear(struct cpudl *cp, int cpu)
+ 		cp->elements[new_cpu].idx = old_idx;
+ 		cp->elements[cpu].idx = IDX_INVALID;
+ 		cpudl_heapify(cp, old_idx);
+-
+-		cpumask_set_cpu(cpu, cp->free_cpus);
+ 	}
++	if (likely(online))
++		__cpumask_set_cpu(cpu, cp->free_cpus);
++	else
++		__cpumask_clear_cpu(cpu, cp->free_cpus);
 +
- 			curr_cost += domain_cost;
- 			t0 = t1;
--
--			/*
--			 * Failing newidle means it is not effective;
--			 * bump the cost so we end up doing less of it.
--			 */
--			if (!pulled_task)
--				domain_cost = (3 * sd->max_newidle_lb_cost) / 2;
--
--			update_newidle_cost(sd, domain_cost);
- 		}
+ 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+ }
  
- 		/*
+@@ -228,7 +232,7 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
+ 		cp->elements[new_idx].cpu = cpu;
+ 		cp->elements[cpu].idx = new_idx;
+ 		cpudl_heapify_up(cp, new_idx);
+-		cpumask_clear_cpu(cpu, cp->free_cpus);
++		__cpumask_clear_cpu(cpu, cp->free_cpus);
+ 	} else {
+ 		cp->elements[old_idx].dl = dl;
+ 		cpudl_heapify(cp, old_idx);
+@@ -237,26 +241,6 @@ void cpudl_set(struct cpudl *cp, int cpu, u64 dl)
+ 	raw_spin_unlock_irqrestore(&cp->lock, flags);
+ }
+ 
+-/*
+- * cpudl_set_freecpu - Set the cpudl.free_cpus
+- * @cp: the cpudl max-heap context
+- * @cpu: rd attached CPU
+- */
+-void cpudl_set_freecpu(struct cpudl *cp, int cpu)
+-{
+-	cpumask_set_cpu(cpu, cp->free_cpus);
+-}
+-
+-/*
+- * cpudl_clear_freecpu - Clear the cpudl.free_cpus
+- * @cp: the cpudl max-heap context
+- * @cpu: rd attached CPU
+- */
+-void cpudl_clear_freecpu(struct cpudl *cp, int cpu)
+-{
+-	cpumask_clear_cpu(cpu, cp->free_cpus);
+-}
+-
+ /*
+  * cpudl_init - initialize the cpudl structure
+  * @cp: the cpudl max-heap context
+diff --git a/kernel/sched/cpudeadline.h b/kernel/sched/cpudeadline.h
+index 11c0f1faa7e11..d7699468eedd5 100644
+--- a/kernel/sched/cpudeadline.h
++++ b/kernel/sched/cpudeadline.h
+@@ -19,8 +19,6 @@ struct cpudl {
+ 
+ int  cpudl_find(struct cpudl *cp, struct task_struct *p, struct cpumask *later_mask);
+ void cpudl_set(struct cpudl *cp, int cpu, u64 dl);
+-void cpudl_clear(struct cpudl *cp, int cpu);
++void cpudl_clear(struct cpudl *cp, int cpu, bool online);
+ int  cpudl_init(struct cpudl *cp);
+-void cpudl_set_freecpu(struct cpudl *cp, int cpu);
+-void cpudl_clear_freecpu(struct cpudl *cp, int cpu);
+ void cpudl_cleanup(struct cpudl *cp);
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 7b7671060bf9e..19b1a8b81c76c 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -1811,7 +1811,7 @@ static void dec_dl_deadline(struct dl_rq *dl_rq, u64 deadline)
+ 	if (!dl_rq->dl_nr_running) {
+ 		dl_rq->earliest_dl.curr = 0;
+ 		dl_rq->earliest_dl.next = 0;
+-		cpudl_clear(&rq->rd->cpudl, rq->cpu);
++		cpudl_clear(&rq->rd->cpudl, rq->cpu, rq->online);
+ 		cpupri_set(&rq->rd->cpupri, rq->cpu, rq->rt.highest_prio.curr);
+ 	} else {
+ 		struct rb_node *leftmost = rb_first_cached(&dl_rq->root);
+@@ -2883,9 +2883,10 @@ static void rq_online_dl(struct rq *rq)
+ 	if (rq->dl.overloaded)
+ 		dl_set_overload(rq);
+ 
+-	cpudl_set_freecpu(&rq->rd->cpudl, rq->cpu);
+ 	if (rq->dl.dl_nr_running > 0)
+ 		cpudl_set(&rq->rd->cpudl, rq->cpu, rq->dl.earliest_dl.curr);
++	else
++		cpudl_clear(&rq->rd->cpudl, rq->cpu, true);
+ }
+ 
+ /* Assumes rq->lock is held */
+@@ -2894,8 +2895,7 @@ static void rq_offline_dl(struct rq *rq)
+ 	if (rq->dl.overloaded)
+ 		dl_clear_overload(rq);
+ 
+-	cpudl_clear(&rq->rd->cpudl, rq->cpu);
+-	cpudl_clear_freecpu(&rq->rd->cpudl, rq->cpu);
++	cpudl_clear(&rq->rd->cpudl, rq->cpu, false);
+ }
+ 
+ void __init init_sched_dl_class(void)
 -- 
 2.51.0
 
