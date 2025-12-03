@@ -1,36 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BFF30C63C;
-	Wed,  3 Dec 2025 15:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 744DB309F01;
+	Wed,  3 Dec 2025 15:32:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764775949; cv=none; b=fR2sbYe52xxVQwk+3oZol9btvrrULEheV9kcUFaAlidUZhDhFXhNKyfGYL7HNV7aixyKlDa+rnXB5pUvVKRruHwhAlzHrWDph01j9qdea9UdXdagtZKvjsj94jaXPqFMvogoRc5XnzIP4aUJm8ZpUCnFViF2jYVJ1wpcyBkUiwI=
+	t=1764775953; cv=none; b=GuK2Tk+/i9VXT0TgqwErv+i3orXZnzPMsUymyM/6Da1rMI2x3CDd0zGupZeAgB7GcXQSVPWLn0fSZyNckSWUbvaDfcaOaz3D9+daoP406ghoI10ksZzLTLF4QaMk/x1PB0i/LzPlxBKPooVcyGw/k6wcFbM5V20fgo5dGZMdVuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764775949; c=relaxed/simple;
-	bh=fAGQXlmpLWqb5ZqqQI1XfT9e6TxiBJ2UUooE3ApT9/E=;
+	s=arc-20240116; t=1764775953; c=relaxed/simple;
+	bh=WYF27qSygnLaUKoqrbCcib89IAHdLhFfVTxp7f8Ph74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPknsFOZ9Zvtd8AeYQ4ukdlXh3LFM595sqPA32eyxmCGbEEjJSXNn5kPsCmkoWrsBfeapJOufHM4oMW4cTYk6lDsiJkgGTQDdzwDIbsh13VaFTWCep1BRI67DqVpmT4XzG41/8zHqGFzzbdEsNmqNSv4ZjKxyz4sEb8Fe2cn6yY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V6NxolbZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlLoEXg9QHkJt74sLxy7CZYqmRrE3GBeE4c3oLPw8MA5Xfd1g1EmKydcXAehlyN2qs7XSJ9z8NMQe+iPSV1AoHBpyxB+EW4iYxoYNTN4p5CajiITeN1Lvm5xe2+0vzC30Pp9IKMmcj+lcqujk+e4OHmerSuCpKgjqmbIaGfEr3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebG+7izH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V6NxolbZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 172C7C4CEF5;
-	Wed,  3 Dec 2025 15:32:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebG+7izH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 990CFC116B1;
+	Wed,  3 Dec 2025 15:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764775948;
-	bh=fAGQXlmpLWqb5ZqqQI1XfT9e6TxiBJ2UUooE3ApT9/E=;
+	s=korg; t=1764775952;
+	bh=WYF27qSygnLaUKoqrbCcib89IAHdLhFfVTxp7f8Ph74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V6NxolbZWFe0ZH1iaAYAXLeN+5ze3vgRcY5K5z5pDd5Q2FdcwAMYJ8Waf1MUW/QFy
-	 GLVbdP8gOXirz65L5V+QbYhiaEeqk+o98N3mpZcK+JShoNiXwWyUEZgdeXqmhsNY/x
-	 FRIWtM1Il7BcRkCudeFMIvUU/+NjelcmdK6VX8ps=
+	b=ebG+7izHV5i2Zl2ayyX4sSZAt94aFcxHBpBl9GBhRHCB8Aaq4m1q8qHmMlyJuXfpH
+	 R6XIt4jhWMHVizhrrfQZuZHZujROeowOECxTDJE9O11ZuUeX5oJebtRXxcvpwM2WqI
+	 3F1g7dQjqkgK2WpZXyHHBdReZEVQETy0IYcILrSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Owen Gu <guhuinan@xiaomi.com>
-Subject: [PATCH 5.10 036/300] usb: gadget: f_fs: Fix epfile null pointer access after ep enable.
-Date: Wed,  3 Dec 2025 16:24:00 +0100
-Message-ID: <20251203152401.805094251@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 037/300] block: make REQ_OP_ZONE_OPEN a write operation
+Date: Wed,  3 Dec 2025 16:24:01 +0100
+Message-ID: <20251203152401.840520554@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -49,54 +54,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Owen Gu <guhuinan@xiaomi.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit cfd6f1a7b42f62523c96d9703ef32b0dbc495ba4 upstream.
+[ Upstream commit 19de03b312d69a7e9bacb51c806c6e3f4207376c ]
 
-A race condition occurs when ffs_func_eps_enable() runs concurrently
-with ffs_data_reset(). The ffs_data_clear() called in ffs_data_reset()
-sets ffs->epfiles to NULL before resetting ffs->eps_count to 0, leading
-to a NULL pointer dereference when accessing epfile->ep in
-ffs_func_eps_enable() after successful usb_ep_enable().
+A REQ_OP_OPEN_ZONE request changes the condition of a sequential zone of
+a zoned block device to the explicitly open condition
+(BLK_ZONE_COND_EXP_OPEN). As such, it should be considered a write
+operation.
 
-The ffs->epfiles pointer is set to NULL in both ffs_data_clear() and
-ffs_data_close() functions, and its modification is protected by the
-spinlock ffs->eps_lock. And the whole ffs_func_eps_enable() function
-is also protected by ffs->eps_lock.
+Change this operation code to be an odd number to reflect this. The
+following operation numbers are changed to keep the numbering compact.
 
-Thus, add NULL pointer handling for ffs->epfiles in the
-ffs_func_eps_enable() function to fix issues
+No problems were reported without this change as this operation has no
+data. However, this unifies the zone operation to reflect that they
+modify the device state and also allows strengthening checks in the
+block layer, e.g. checking if this operation is not issued against a
+read-only device.
 
-Signed-off-by: Owen Gu <guhuinan@xiaomi.com>
-Link: https://lore.kernel.org/r/20250915092907.17802-1-guhuinan@xiaomi.com
+Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+[ relocated REQ_OP_ZONE_APPEND from 15 to 21 to resolve numbering conflict ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_fs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/linux/blk_types.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1993,7 +1993,12 @@ static int ffs_func_eps_enable(struct ff
- 	ep = func->eps;
- 	epfile = ffs->epfiles;
- 	count = ffs->eps_count;
--	while(count--) {
-+	if (!epfile) {
-+		ret = -ENOMEM;
-+		goto done;
-+	}
-+
-+	while (count--) {
- 		ep->ep->driver_data = ep;
+--- a/include/linux/blk_types.h
++++ b/include/linux/blk_types.h
+@@ -349,17 +349,17 @@ enum req_opf {
+ 	/* write the zero filled sector many times */
+ 	REQ_OP_WRITE_ZEROES	= 9,
+ 	/* Open a zone */
+-	REQ_OP_ZONE_OPEN	= 10,
++	REQ_OP_ZONE_OPEN	= 11,
+ 	/* Close a zone */
+-	REQ_OP_ZONE_CLOSE	= 11,
++	REQ_OP_ZONE_CLOSE	= 13,
+ 	/* Transition a zone to full */
+-	REQ_OP_ZONE_FINISH	= 13,
+-	/* write data at the current zone write pointer */
+-	REQ_OP_ZONE_APPEND	= 15,
++	REQ_OP_ZONE_FINISH	= 15,
+ 	/* reset a zone write pointer */
+ 	REQ_OP_ZONE_RESET	= 17,
+ 	/* reset all the zone present on the device */
+ 	REQ_OP_ZONE_RESET_ALL	= 19,
++	/* write data at the current zone write pointer */
++	REQ_OP_ZONE_APPEND	= 21,
  
- 		ret = config_ep_by_speed(func->gadget, &func->function, ep->ep);
-@@ -2017,6 +2022,7 @@ static int ffs_func_eps_enable(struct ff
- 	}
- 
- 	wake_up_interruptible(&ffs->wait);
-+done:
- 	spin_unlock_irqrestore(&func->ffs->eps_lock, flags);
- 
- 	return ret;
+ 	/* SCSI passthrough using struct scsi_request */
+ 	REQ_OP_SCSI_IN		= 32,
 
 
