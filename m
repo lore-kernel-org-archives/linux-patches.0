@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39DB7303A3D;
-	Wed,  3 Dec 2025 15:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641133148A3;
+	Wed,  3 Dec 2025 15:38:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776324; cv=none; b=Ltk5B/+jBayDpa7LbnhIFcEb+tBigetZVSt3PSX6mVfoAr/5hG5JXNIVnHdx6V2fFH2dB+tLgjAYEdE9JU+4JPQ9O+kqY6KkV6JSS7+NzgeuSNHeWGNfjHgeogermSMeA7QWCUtx3yHgeW9EG176ZVdoMkuhmWtMk6mV37LHKV0=
+	t=1764776327; cv=none; b=GDunhjWfg/JI/Dw28Trg4wiBwbYP0jhn1sdg4cTFwxP4oNIcoCBUFR5phJogA8OunPdpzoFsLV2cQYqQngi3NGrAqCU5fhX3t31BHlyHl3SXT762njEpm5PQ4nQsgbsf9bpatQxRMrV0mvQjtewZ0xbmpnc6gYqE58bU3pPNr1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776324; c=relaxed/simple;
-	bh=OB8yzuLl1tcK+cqwFWFxlIeA7zIdAXTnJJmi1cRbems=;
+	s=arc-20240116; t=1764776327; c=relaxed/simple;
+	bh=gDI0uph5URALL+qGku4O1hus5ynq2iTw9apZaQBhn4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yoql5OeDawGA0P4MNZM1wNrhGOV0V7At49OuCr97s2I3gM9hJqqbGbqyPDeeaWjk21Y9YSXDijego29v1TcoZ4Mp61W9VcvgXN7eck72GrZMyZj2Qvy2TKMjX2blcZYTvztoLVSSY6c3JciKFUwa45y0YAGCvxXNkjekUwA1Dx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMvJM9Di; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WsDC2fAf+nOY7DOgMW8dAt8MGEwKqnKOtYUuDAngLmA3EdSqcS5l/DiE8whARy8D412nOA6AZP3n8ONfTmxRSB/xgPCmi+T3n09ilL4pJqRi4zfYPvubA6KUd1hzAWcBSgQA6hTXNEXXyaSQt2Eng3xc8EoNZ38yEFXSfa9UKxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BBumcN8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMvJM9Di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB18C4CEF5;
-	Wed,  3 Dec 2025 15:38:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BBumcN8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F8CC4CEF5;
+	Wed,  3 Dec 2025 15:38:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776324;
-	bh=OB8yzuLl1tcK+cqwFWFxlIeA7zIdAXTnJJmi1cRbems=;
+	s=korg; t=1764776327;
+	bh=gDI0uph5URALL+qGku4O1hus5ynq2iTw9apZaQBhn4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMvJM9DiDqAJQX4wKxFs3VGmEeLsJWussH/7UNAEhrS+dIf72qjCSWHk7qOvriR/A
-	 Ch8vdF0gzvBenk0OA/btOQG8gOTOioJAzI7BQweHxf5/976Ibsqmv3NuWWCUAnUyHW
-	 chs01R9nnGS/sGMrioU8LXJzUTmxfbDgojKC5v74=
+	b=BBumcN8tqJJ2wlk8nXchOtQ2ae/22U5miuEMi2F1BXebofjs5ry9z5JCBnv9cgF15
+	 /yIFIY96rvrvnwQ6PNP3FDVeerSIqWME9yjeW+5azF4O8zFo3p8gMHnCqrjj36OK9v
+	 e4vTmjKI0mxZUz8PBmHgaZwftfB8SgvwxrybCAAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Cristian Birsan <cristian.birsan@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	"Randall P. Embry" <rpembry@gmail.com>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/300] ARM: at91: pm: save and restore ACR during PLL disable/enable
-Date: Wed,  3 Dec 2025 16:25:53 +0100
-Message-ID: <20251203152406.137569309@linuxfoundation.org>
+Subject: [PATCH 5.10 150/300] 9p: fix /sys/fs/9p/caches overwriting itself
+Date: Wed,  3 Dec 2025 16:25:54 +0100
+Message-ID: <20251203152406.174697330@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -47,63 +45,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Ferre <nicolas.ferre@microchip.com>
+From: Randall P. Embry <rpembry@gmail.com>
 
-[ Upstream commit 0c01fe49651d387776abed6a28541e80c8a93319 ]
+[ Upstream commit 86db0c32f16c5538ddb740f54669ace8f3a1f3d7 ]
 
-Add a new word in assembly to store ACR value during the calls
-to at91_plla_disable/at91_plla_enable macros and use it.
+caches_show() overwrote its buffer on each iteration,
+so only the last cache tag was visible in sysfs output.
 
-Signed-off-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-[cristian.birsan@microchip.com: remove ACR_DEFAULT_PLLA loading]
-Signed-off-by: Cristian Birsan <cristian.birsan@microchip.com>
-Link: https://lore.kernel.org/r/20250827145427.46819-4-nicolas.ferre@microchip.com
-Reviewed-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Properly append with snprintf(buf + count, …).
+
+Signed-off-by: Randall P. Embry <rpembry@gmail.com>
+Message-ID: <20250926-v9fs_misc-v1-2-a8b3907fc04d@codewreck.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-at91/pm_suspend.S | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/9p/v9fs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-at91/pm_suspend.S b/arch/arm/mach-at91/pm_suspend.S
-index b683c2caa40b9..80494afb28a33 100644
---- a/arch/arm/mach-at91/pm_suspend.S
-+++ b/arch/arm/mach-at91/pm_suspend.S
-@@ -373,6 +373,10 @@ ENDPROC(at91_backup_mode)
- 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
- 	str	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
- 
-+	/* save acr */
-+	ldr	tmp2, [pmc, #AT91_PMC_PLL_ACR]
-+	str	tmp2, .saved_acr
-+
- 	/* save div. */
- 	mov	tmp1, #0
- 	ldr	tmp2, [pmc, #AT91_PMC_PLL_CTRL0]
-@@ -442,7 +446,7 @@ ENDPROC(at91_backup_mode)
- 	str	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
- 
- 	/* step 2. */
--	ldr	tmp1, =AT91_PMC_PLL_ACR_DEFAULT_PLLA
-+	ldr	tmp1, .saved_acr
- 	str	tmp1, [pmc, #AT91_PMC_PLL_ACR]
- 
- 	/* step 3. */
-@@ -694,6 +698,8 @@ ENDPROC(at91_sramc_self_refresh)
- 	.word 0
- .saved_mckr:
- 	.word 0
-+.saved_acr:
-+	.word 0
- .saved_pllar:
- 	.word 0
- .saved_sam9_lpr:
+diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
+index 39def020a074b..b304e070139ca 100644
+--- a/fs/9p/v9fs.c
++++ b/fs/9p/v9fs.c
+@@ -558,7 +558,7 @@ static ssize_t caches_show(struct kobject *kobj,
+ 	spin_lock(&v9fs_sessionlist_lock);
+ 	list_for_each_entry(v9ses, &v9fs_sessionlist, slist) {
+ 		if (v9ses->cachetag) {
+-			n = snprintf(buf, limit, "%s\n", v9ses->cachetag);
++			n = snprintf(buf + count, limit, "%s\n", v9ses->cachetag);
+ 			if (n < 0) {
+ 				count = n;
+ 				break;
 -- 
 2.51.0
 
