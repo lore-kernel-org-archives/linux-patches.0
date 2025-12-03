@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB38398FA2;
-	Wed,  3 Dec 2025 16:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E5C398FB8;
+	Wed,  3 Dec 2025 16:58:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781131; cv=none; b=Di6htvPukCLy/0+8yL574SM0C9YR+SKQHAzwqTJf8vzTfDE9q75OPUaEJ2tBTH0QWCo4aJouNYke2LU3xkTSOstDr5lMM7LPVdSifvUhL4w/CPdpnn24P0nGtZdJeBQCGKdZDmnkWa/AHpFa72FBPUCWU4CtTsfUsX1wpdnAjLQ=
+	t=1764781133; cv=none; b=Dj7h/qkkXy/WW1wGKKHNKeyZsnFY1V4qPh78b4g2nLSvTWa/gdYShVtE4c50wZHk5xtLROi1xCrUlIDxHCEawvAkCR9BOTUKdsOLjhAPsnX8GvO7n2SLIRA8MbNVYwOftW9LcrfNDmehqrzKxJb/MI+611JkDRxnAm73WmsD5Ec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781131; c=relaxed/simple;
-	bh=6HVgGwTPl78YhVItI8YKbS5u97jQX9nTd4so5fMBgq4=;
+	s=arc-20240116; t=1764781133; c=relaxed/simple;
+	bh=oBrSHqv7vD0nZyQCgu4wXaQGEAT0T/Gs8/wvbE1uk8E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dnbyCbVrn+LVBxA+WWoCl6JcLnjyIeXUGx31dIh6D0DC+FlY3LLbF4L9qnFaGuTvx8fIAFqoMAr7RcEZxthuaTXbH44teGwPYkUifcn04ab5PRT9wVW3d/ParrwxbC7qKuhYYnPRYAc78dAAiCWM9MZG4mfnqWaJ2mN1h9hfgVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xa+4PQhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LiEJ0w7Z40uZ+igNWNaD62HTzOgWR7KCB0EZai50vudFAz13tyFz300iyKoyQGVRpmuW7/V/bv1OFGryTUbbuCxinSK8LVFHXby8e6aGHhKf5yxWsXdMOoq1SzwZb04tfWfbuVeuXyZUDj6Hrh8uyWaJBPBsDTS/u+SLslevjn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tg4jWAip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xa+4PQhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C03C116B1;
-	Wed,  3 Dec 2025 16:58:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tg4jWAip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F05BC4CEF5;
+	Wed,  3 Dec 2025 16:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781128;
-	bh=6HVgGwTPl78YhVItI8YKbS5u97jQX9nTd4so5fMBgq4=;
+	s=korg; t=1764781131;
+	bh=oBrSHqv7vD0nZyQCgu4wXaQGEAT0T/Gs8/wvbE1uk8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xa+4PQhQ0QRD1e57L2tlwWjun9fCqjljLPlIBXHxsKHLsk+q6ExGIGgyZd2S0pKc/
-	 5FnXaEwJyi2qxmGAUn3WYKLnymc6k1WLMO+3RbmlMyhpSRRcCthAsDqqppp89UBbRG
-	 VvyiAuCvfDfS3dG9m97m+9QQuCeDdS1sJemPodqM=
+	b=Tg4jWAip2sTEZgPB6glguyPCe7zkLYu9C8OK+icLxsrKLqDnqmmfUYmk8qu7n01WS
+	 m8RDGNX8Z4mwT/orC325TuIkJFov69FpJl9H/ZYp+fEZWKRXaTZjKTyni+JWxLikI7
+	 yu0ZqNHPtIbVcnq8S5EjnNxwoxvYU6HxY0qHrXps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Iles <jamie.iles@oss.qualcomm.com>,
-	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Francesco Lavra <flavra@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 25/93] mailbox: pcc: dont zero error register
-Date: Wed,  3 Dec 2025 16:29:18 +0100
-Message-ID: <20251203152337.444163325@linuxfoundation.org>
+Subject: [PATCH 6.6 26/93] spi: tegra114: remove Kconfig dependency on TEGRA20_APB_DMA
+Date: Wed,  3 Dec 2025 16:29:19 +0100
+Message-ID: <20251203152337.483247063@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -52,55 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Iles <jamie.iles@oss.qualcomm.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-[ Upstream commit ff0e4d4c97c94af34cc9cad37b5a5cdbe597a3b0 ]
+[ Upstream commit 3dcf44ab56e1d3ca3532083c0d5390b758e45b45 ]
 
-The error status mask for a type 3/4 subspace is used for reading the
-error status, and the bitwise inverse is used for clearing the error
-with the intent being to preserve any of the non-error bits.  However,
-we were previously applying the mask to extract the status and then
-applying the inverse to the result which ended up clearing all bits.
+This driver runs also on Tegra SoCs without a Tegra20 APB DMA controller
+(e.g. Tegra234).
+Remove the Kconfig dependency on TEGRA20_APB_DMA; in addition, amend the
+help text to reflect the fact that this driver works on SoCs different from
+Tegra114.
 
-Instead, store the inverse mask in the preserve mask and then use that
-on the original value read from the error status so that only the error
-is cleared.
-
-Fixes: c45ded7e1135 ("mailbox: pcc: Add support for PCCT extended PCC subspaces(type 3/4)")
-Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
-Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: bb9667d8187b ("arm64: tegra: Add SPI device tree nodes for Tegra234")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Link: https://patch.msgid.link/20251126095027.4102004-1-flavra@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/spi/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index bb977cf8ad423..2b7d0bc920726 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -278,9 +278,8 @@ static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/spi/Kconfig b/drivers/spi/Kconfig
+index 3ce0fd5df8e9c..cda333f226b66 100644
+--- a/drivers/spi/Kconfig
++++ b/drivers/spi/Kconfig
+@@ -1059,10 +1059,10 @@ config SPI_TEGRA210_QUAD
  
--	val &= pchan->error.status_mask;
--	if (val) {
--		val &= ~pchan->error.status_mask;
-+	if (val & pchan->error.status_mask) {
-+		val &= pchan->error.preserve_mask;
- 		pcc_chan_reg_write(&pchan->error, val);
- 		return -EIO;
- 	}
-@@ -673,7 +672,8 @@ static int pcc_parse_subspace_db_reg(struct pcc_chan_info *pchan,
+ config SPI_TEGRA114
+ 	tristate "NVIDIA Tegra114 SPI Controller"
+-	depends on (ARCH_TEGRA && TEGRA20_APB_DMA) || COMPILE_TEST
++	depends on ARCH_TEGRA || COMPILE_TEST
+ 	depends on RESET_CONTROLLER
+ 	help
+-	  SPI driver for NVIDIA Tegra114 SPI Controller interface. This controller
++	  SPI controller driver for NVIDIA Tegra114 and later SoCs. This controller
+ 	  is different than the older SoCs SPI controller and also register interface
+ 	  get changed with this controller.
  
- 		ret = pcc_chan_reg_init(&pchan->error,
- 					&pcct_ext->error_status_register,
--					0, 0, pcct_ext->error_status_mask,
-+					~pcct_ext->error_status_mask, 0,
-+					pcct_ext->error_status_mask,
- 					"Error Status");
- 	}
- 	return ret;
 -- 
 2.51.0
 
