@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23CA3385A2;
-	Wed,  3 Dec 2025 15:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3335631ED8D;
+	Wed,  3 Dec 2025 15:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777244; cv=none; b=R8bgwJHrUFRYjYMIsufbkSae6iV8Lq/HyNCc/jr1ovGUkHyTqQjrvAiVK7hKWpkhIiln5r7nwIqhMhUrdiwOuyDEh8Y+2PYwA4tuZxSpWFejCNHHqHyolhwcBOVDkQm8ypJzd17dPAJ9WSDIJLoBSCly/quUxH8EL8j2XxOGQqA=
+	t=1764777248; cv=none; b=ai+WEFI8Mmsbm3rbyNT89RPla0rPK7pWEMqh4JXRn0OtfBtGmuVqDTLqVAyA/FROTPJu6/t4o2oy4E9Cw5JevFFiDuY7upkIpqcTyyq8r5kI45KS58qUyudJ0wObLBDrqY1vofGyfcxVHhkT2+9STbHBHSIYDQCPMSYXAQHuGN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777244; c=relaxed/simple;
-	bh=AJOPlJsqrAm4Rh0bY5XPeqBwxsQOcsrN/dRCNWNTxXA=;
+	s=arc-20240116; t=1764777248; c=relaxed/simple;
+	bh=dfPx3cIQEFqlR4iRW5NvppB6Ff2CWkYi9kBXcWgz1Hk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FcMj+djVqRVj9JVgzJI1akbWQQsQvDSmd+mRGXJ9Wn4HLTGQdLPgwVqKRQTdoTqbTvHK0nafOWb6M7yEZ9kFnTSmUf6mMCJYoBW6DnDJIaM8TRnnVd0Nmz9aFsQyv2yqtbjI2q/YDdwNwykIprfNT60LZyDs3LZuwInX5Hrs26o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBe5B9Qi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Z8Z/G3YdQasUTe2K2kjce3TTr6nBZblpmHPcpPLAkOy/pjpONWJ5EwDlXwIvwMvExCNXEn/E21oW1kFoh7RWvsAKGuPKBq2+AzL/MJBuKCR4iHySl7/K+Knj38zeUq0dZRI3oxjkhwezsnrLffyNL56NUKarTGcKq/dtVw2e3Oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVbXQa9N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBe5B9Qi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B59C19422;
-	Wed,  3 Dec 2025 15:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVbXQa9N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A23C2BCB9;
+	Wed,  3 Dec 2025 15:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777244;
-	bh=AJOPlJsqrAm4Rh0bY5XPeqBwxsQOcsrN/dRCNWNTxXA=;
+	s=korg; t=1764777247;
+	bh=dfPx3cIQEFqlR4iRW5NvppB6Ff2CWkYi9kBXcWgz1Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBe5B9QibJDn8xiznf7XToFdesyaOEaIc/sv7zw/KJQmfw7o/Fa4QsYvyFVKNIYEJ
-	 4gPuhCcHLFGyPorDF+UrFxLyeKWvrS/p3z6xfotUryOiMiukxIbdkpD9lSRZRoeFjT
-	 PjikVF5JJKLUTW13kv7kSo39XOOILnjVfZrxwCK8=
+	b=dVbXQa9NpIT0ev1DG1+DaKeb2epNyWR5L50YFXn0fhDOtfW1TyIRgG3SxMmkkbuve
+	 QVdP59xCd5pzwoE8r6nTbpoRjnpr9rLHXuTNnfT5HEDKKjhHoPD9cQTsyI/rxKkBFY
+	 W8rkDwd78Z+K/QO+zeDY6b67byyBB3QpwqUu/mpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-	Johan Hovold <johan@kernel.org>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-Subject: [PATCH 6.17 126/146] drm: sti: fix device leaks at component probe
-Date: Wed,  3 Dec 2025 16:28:24 +0100
-Message-ID: <20251203152351.071653475@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.17 127/146] drm/i915/psr: Reject async flips when selective fetch is enabled
+Date: Wed,  3 Dec 2025 16:28:25 +0100
+Message-ID: <20251203152351.108995964@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -45,55 +45,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 620a8f131154250f6a64a07d049a4f235d6451a5 upstream.
+commit 7c373b3bd03c77fe8f6ea206ed49375eb4d43d13 upstream.
 
-Make sure to drop the references taken to the vtg devices by
-of_find_device_by_node() when looking up their driver data during
-component probe.
+The selective fetch code doesn't handle asycn flips correctly.
+There is a nonsense check for async flips in
+intel_psr2_sel_fetch_config_valid() but that only gets called
+for modesets/fastsets and thus does nothing for async flips.
 
-Note that holding a reference to a platform device does not prevent its
-driver data from going away so there is no point in keeping the
-reference after the lookup helper returns.
+Currently intel_async_flip_check_hw() is very unhappy as the
+selective fetch code pulls in planes that are not even async
+flips capable.
 
-Fixes: cc6b741c6f63 ("drm: sti: remove useless fields from vtg structure")
-Cc: stable@vger.kernel.org	# 4.16
-Cc: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20250922122012.27407-1-johan@kernel.org
-Signed-off-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
+Reject async flips when selective fetch is enabled, until
+someone fixes this properly (ie. disable selective fetch while
+async flips are being issued).
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patch.msgid.link/20251105171015.22234-1-ville.syrjala@linux.intel.com
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+(cherry picked from commit a5f0cc8e0cd4007370af6985cb152001310cf20c)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/sti/sti_vtg.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display.c |    8 ++++++++
+ drivers/gpu/drm/i915/display/intel_psr.c     |    6 ------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/sti/sti_vtg.c
-+++ b/drivers/gpu/drm/sti/sti_vtg.c
-@@ -143,12 +143,17 @@ struct sti_vtg {
- struct sti_vtg *of_vtg_find(struct device_node *np)
- {
- 	struct platform_device *pdev;
-+	struct sti_vtg *vtg;
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -5958,6 +5958,14 @@ static int intel_async_flip_check_uapi(s
+ 		return -EINVAL;
+ 	}
  
- 	pdev = of_find_device_by_node(np);
- 	if (!pdev)
- 		return NULL;
++	/* FIXME: selective fetch should be disabled for async flips */
++	if (new_crtc_state->enable_psr2_sel_fetch) {
++		drm_dbg_kms(display->drm,
++			    "[CRTC:%d:%s] async flip disallowed with PSR2 selective fetch\n",
++			    crtc->base.base.id, crtc->base.name);
++		return -EINVAL;
++	}
++
+ 	for_each_oldnew_intel_plane_in_state(state, plane, old_plane_state,
+ 					     new_plane_state, i) {
+ 		if (plane->pipe != crtc->pipe)
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -1274,12 +1274,6 @@ static bool intel_psr2_sel_fetch_config_
+ 		return false;
+ 	}
  
--	return (struct sti_vtg *)platform_get_drvdata(pdev);
-+	vtg = platform_get_drvdata(pdev);
-+
-+	put_device(&pdev->dev);
-+
-+	return vtg;
+-	if (crtc_state->uapi.async_flip) {
+-		drm_dbg_kms(display->drm,
+-			    "PSR2 sel fetch not enabled, async flip enabled\n");
+-		return false;
+-	}
+-
+ 	return crtc_state->enable_psr2_sel_fetch = true;
  }
  
- static void vtg_reset(struct sti_vtg *vtg)
 
 
