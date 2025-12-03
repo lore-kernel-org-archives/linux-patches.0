@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E58B3596FB;
-	Wed,  3 Dec 2025 16:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A898A359709;
+	Wed,  3 Dec 2025 16:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778885; cv=none; b=UpUwOnKL5uxADIg8eTzk4wkz/RNc1DZGVTR8kGOZkjvLqroMcfcTk1Mgi4cHClCyxQCUOhHuL/JiQjIxeweyzcSTfo8A8Eu8XuNuHRQXjYDRjXAc798Ez4eJ9kHUZtdKEvt860pbGsz4YDg8NPkkSH0KM0cqCFeykIm5dje1LUk=
+	t=1764778888; cv=none; b=eDxsT16A/AG83c0rrhkJ7fsNEe6SrQGj+/4o1owF6MHAIT1u8eyKXPH0jOS9qNlaQm2McL4/G8EPwMJGI6XmHPAerhnWw+u+YNGTQjNUdJk+FzIQ8ePmdA5FvT5v7DQL5ZA7Ry/wfj8vZb8NNARPp6yPfa2mgyNb2GghschD2U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778885; c=relaxed/simple;
-	bh=JUccqiNd3WxE1EiEXwIiv1qrzx+JwByI8lcRt7SlBEU=;
+	s=arc-20240116; t=1764778888; c=relaxed/simple;
+	bh=/XkI6JRtucdqeUiAMOQhXgm3FrVID9VGt8yH1nz6o10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sz49y7G0Yo+ecNMTDcPZjhfrSQ4FVB6pYcIvQE68CUG0SHIZahe8Ivah9DnLwRbl5e5wvHKkGjysVZWxBCuhUgPzaNUn1MD5KwIXzflpD/0ZcWW0cao+yORwJAmb7D+KI7v5mR5210P49BKB8LsDYbcFLdlDkidmPIaloU0V/Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUSqCGUU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E+d9K2JufVIc8Cd18bhLs7UfdsrMwhUo+5uubQOXv4+bRPE+oJGbdrXj6nEFCVvo2WHuJTcZo5f6AemS+2HoBwGg8ePLTOJeKFmQxMlgvv1EyrlNvBPIWGl7znkQ8mn3S3W1kG38d4r9s4w3s2pQVn4X+v3sxoHgZaxQSb51cMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Njn/0dl+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUSqCGUU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91811C4CEF5;
-	Wed,  3 Dec 2025 16:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Njn/0dl+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB007C4CEF5;
+	Wed,  3 Dec 2025 16:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778885;
-	bh=JUccqiNd3WxE1EiEXwIiv1qrzx+JwByI8lcRt7SlBEU=;
+	s=korg; t=1764778888;
+	bh=/XkI6JRtucdqeUiAMOQhXgm3FrVID9VGt8yH1nz6o10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUSqCGUUQwMMKSIcoRkx3dKQLYF7x5JA1it9DsvRD7NTEcngDY9U48TpgDyq1lkFc
-	 pFpOSuSX6roTwNb8czhDAEhfc/5Uk0V4UZCLUFqmf1PyV2slIyCrbtM2UGRWfR9Cik
-	 X1I4a8tEAgKWulQkUGuDq3CdyJzMinND7PHkPOWE=
+	b=Njn/0dl+NRQZMmbQgKA0FuHEe3gTg0RAweK0xLVPYYzKV+vTjGQDgR2BREXqeVyWj
+	 Hlyq6lo1ig7y51k3THE0jWbBq+SKzR1YhkeZjrjyv+AfcpOeAjZWowW62D+moAeti2
+	 7Y/fauBf9ldyMEgZyzm92Ec7FFcQ5JYjPTnLtQPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/568] spi: loopback-test: Dont use %pK through printk
-Date: Wed,  3 Dec 2025 16:21:31 +0100
-Message-ID: <20251203152443.998141331@linuxfoundation.org>
+Subject: [PATCH 6.1 090/568] soc: ti: pruss: dont use %pK through printk
+Date: Wed,  3 Dec 2025 16:21:32 +0100
+Message-ID: <20251203152444.035187395@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,7 +54,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit b832b19318534bb4f1673b24d78037fee339c679 ]
+[ Upstream commit a5039648f86424885aae37f03dc39bc9cb972ecb ]
 
 In the past %pK was preferable to %p as it would not leak raw pointer
 values into the kernel log.
@@ -66,67 +66,28 @@ acquire sleeping locks in atomic contexts.
 
 Switch to the regular pointer formatting which is safer and
 easier to reason about.
-There are still a few users of %pK left, but these use it through seq_file,
-for which its usage is safe.
 
 Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Link: https://patch.msgid.link/20250811-restricted-pointers-spi-v1-1-32c47f954e4d@linutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20250811-restricted-pointers-soc-v2-1-7af7ed993546@linutronix.de
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-loopback-test.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/soc/ti/pruss.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-loopback-test.c b/drivers/spi/spi-loopback-test.c
-index ab29ae463f677..c011a67ce2108 100644
---- a/drivers/spi/spi-loopback-test.c
-+++ b/drivers/spi/spi-loopback-test.c
-@@ -436,7 +436,7 @@ static void spi_test_dump_message(struct spi_device *spi,
- 	int i;
- 	u8 b;
+diff --git a/drivers/soc/ti/pruss.c b/drivers/soc/ti/pruss.c
+index 6882c86b3ce54..dd5d4675d26f4 100644
+--- a/drivers/soc/ti/pruss.c
++++ b/drivers/soc/ti/pruss.c
+@@ -270,7 +270,7 @@ static int pruss_probe(struct platform_device *pdev)
+ 		pruss->mem_regions[i].pa = res.start;
+ 		pruss->mem_regions[i].size = resource_size(&res);
  
--	dev_info(&spi->dev, "  spi_msg@%pK\n", msg);
-+	dev_info(&spi->dev, "  spi_msg@%p\n", msg);
- 	if (msg->status)
- 		dev_info(&spi->dev, "    status:        %i\n",
- 			 msg->status);
-@@ -446,15 +446,15 @@ static void spi_test_dump_message(struct spi_device *spi,
- 		 msg->actual_length);
- 
- 	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
--		dev_info(&spi->dev, "    spi_transfer@%pK\n", xfer);
-+		dev_info(&spi->dev, "    spi_transfer@%p\n", xfer);
- 		dev_info(&spi->dev, "      len:    %i\n", xfer->len);
--		dev_info(&spi->dev, "      tx_buf: %pK\n", xfer->tx_buf);
-+		dev_info(&spi->dev, "      tx_buf: %p\n", xfer->tx_buf);
- 		if (dump_data && xfer->tx_buf)
- 			spi_test_print_hex_dump("          TX: ",
- 						xfer->tx_buf,
- 						xfer->len);
- 
--		dev_info(&spi->dev, "      rx_buf: %pK\n", xfer->rx_buf);
-+		dev_info(&spi->dev, "      rx_buf: %p\n", xfer->rx_buf);
- 		if (dump_data && xfer->rx_buf)
- 			spi_test_print_hex_dump("          RX: ",
- 						xfer->rx_buf,
-@@ -548,7 +548,7 @@ static int spi_check_rx_ranges(struct spi_device *spi,
- 		/* if still not found then something has modified too much */
- 		/* we could list the "closest" transfer here... */
- 		dev_err(&spi->dev,
--			"loopback strangeness - rx changed outside of allowed range at: %pK\n",
-+			"loopback strangeness - rx changed outside of allowed range at: %p\n",
- 			addr);
- 		/* do not return, only set ret,
- 		 * so that we list all addresses
-@@ -686,7 +686,7 @@ static int spi_test_translate(struct spi_device *spi,
+-		dev_dbg(dev, "memory %8s: pa %pa size 0x%zx va %pK\n",
++		dev_dbg(dev, "memory %8s: pa %pa size 0x%zx va %p\n",
+ 			mem_names[i], &pruss->mem_regions[i].pa,
+ 			pruss->mem_regions[i].size, pruss->mem_regions[i].va);
  	}
- 
- 	dev_err(&spi->dev,
--		"PointerRange [%pK:%pK[ not in range [%pK:%pK[ or [%pK:%pK[\n",
-+		"PointerRange [%p:%p[ not in range [%p:%p[ or [%p:%p[\n",
- 		*ptr, *ptr + len,
- 		RX(0), RX(SPI_TEST_MAX_SIZE),
- 		TX(0), TX(SPI_TEST_MAX_SIZE));
 -- 
 2.51.0
 
