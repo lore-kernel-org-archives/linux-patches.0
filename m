@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0043596FC;
-	Wed,  3 Dec 2025 16:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2E2359701;
+	Wed,  3 Dec 2025 16:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778878; cv=none; b=Nv3MWDccIvE39SQjoI5Z9+fQUOpr11qL1EiKRyFjjMFmZFL1ggeTpmR4Ra4G86KW3DC6Ex+G9BbAMBG2D0NWFOTIWiK8pL6cGdwVhFwqwJwoKCGAfbRSRfsNbx6L8Tl7J9lS463PNl9jhjl7vomoFkCYmt9vT2GdVnlIUrAU1D4=
+	t=1764778882; cv=none; b=gUefVyh1sdHNqI5byOGsWlzB4L9fhvGEHOm/PzEpGu8ib4NX+mud8oQCaZUqrIIbDsWDdX9P5tInAUhOz4axVsZy6MCOYlFkVhQLSYP4onIAm8VAAQI2FQKcPr7OK3+l4vppS2a0Kdz+/9ijNxPbRSX5YO7qoyr355rw2o/vMFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778878; c=relaxed/simple;
-	bh=b5rpSnLeDbLG2U2fFAE8m1fsJqznvhTwpg3qgARGIDQ=;
+	s=arc-20240116; t=1764778882; c=relaxed/simple;
+	bh=GD8YwcmNRz36chIwbcMwzZkGIJtjDHwMexNWUTOHYIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHlDksWFHkXcoBCq7aKlS8PPMjjmmTIUEZVMyoEo6ASZSR79IGe81s1gjV5MHmXAoUzVxOv5T8ltsJVYrA7/1nGawz70qHyi1yNxZ3NAVhG29+iAF8N+6STzR4qf185ufYIQGDWqeLKwEoTtrZ6MFWjzKyY9SR9aTcpcoGMR0Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=shcS+z46; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=naICVjA/7NRn/yIbjC3ordAf+xu08tziH8U0fiRb+bg9BA7Bfz8Mn0BmVJVFJpA1KNvMZl9wxrIbkoqAySd8+7L3zUyd5ocoM5mrdBp+pfroNW39TsSJpZd0wo2M05p85ioQya6Ea1Q3TbPnaO0bxsparZTxu93hQfJRrFEexkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2S/n2K7G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="shcS+z46"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6812C4CEF5;
-	Wed,  3 Dec 2025 16:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2S/n2K7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5066FC4CEF5;
+	Wed,  3 Dec 2025 16:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778878;
-	bh=b5rpSnLeDbLG2U2fFAE8m1fsJqznvhTwpg3qgARGIDQ=;
+	s=korg; t=1764778881;
+	bh=GD8YwcmNRz36chIwbcMwzZkGIJtjDHwMexNWUTOHYIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shcS+z46n9mSEjhgUY8xZNYA9l4DO1I7UexOcrDCP2HbqSYw8+9WSkhKlXDYDisWb
-	 w2Thdc8AF0pQaX66tywL9tE+MGD8t0kTRov2AzVZEvwy6YXwlwAZ4pJKbQo9lbZhKw
-	 6eacdB602dP5mRhKxUUzSF0WZabOfHx0ocQ0aRW8=
+	b=2S/n2K7GZXnLP3thQGzyLYfwOlYBTi6TKkTBMuDKNvSPkknbQGNFS8BySvEvQ45cb
+	 zYNTaKpTYSsGv0zdCedwIZn82r2M+VQc1+kO9jSlcW9CQcTn81jRRiNcAbHb+P64rM
+	 OJ8OuOoxRUB4qFo4rs2XpgGXp684qM/oH25hSQ0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Chen <ryan_chen@aspeedtech.com>,
-	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Jens Reidel <adrian@mainlining.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 087/568] soc: aspeed: socinfo: Add AST27xx silicon IDs
-Date: Wed,  3 Dec 2025 16:21:29 +0100
-Message-ID: <20251203152443.924761779@linuxfoundation.org>
+Subject: [PATCH 6.1 088/568] soc: qcom: smem: Fix endian-unaware access of num_entries
+Date: Wed,  3 Dec 2025 16:21:30 +0100
+Message-ID: <20251203152443.961448585@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,35 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryan Chen <ryan_chen@aspeedtech.com>
+From: Jens Reidel <adrian@mainlining.org>
 
-[ Upstream commit c30dcfd4b5a0f0e3fe7138bf287f6de6b1b00278 ]
+[ Upstream commit 19e7aa0e9e46d0ad111a4af55b3d681b6ad945e0 ]
 
-Extend the ASPEED SoC info driver to support AST27XX silicon IDs.
+Add a missing le32_to_cpu when accessing num_entries, which is always a
+little endian integer.
 
-Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
-Link: https://patch.msgid.link/20250807005208.3517283-1-ryan_chen@aspeedtech.com
-Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
+Fixes booting on Xiaomi Mi 9T (xiaomi-davinci) in big endian.
+
+Signed-off-by: Jens Reidel <adrian@mainlining.org>
+Link: https://lore.kernel.org/r/20250726235646.254730-1-adrian@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/aspeed/aspeed-socinfo.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/soc/qcom/smem.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/aspeed/aspeed-socinfo.c b/drivers/soc/aspeed/aspeed-socinfo.c
-index 3f759121dc00a..67e9ac3d08ecc 100644
---- a/drivers/soc/aspeed/aspeed-socinfo.c
-+++ b/drivers/soc/aspeed/aspeed-socinfo.c
-@@ -27,6 +27,10 @@ static struct {
- 	{ "AST2620", 0x05010203 },
- 	{ "AST2605", 0x05030103 },
- 	{ "AST2625", 0x05030403 },
-+	/* AST2700 */
-+	{ "AST2750", 0x06000003 },
-+	{ "AST2700", 0x06000103 },
-+	{ "AST2720", 0x06000203 },
- };
+diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+index af8d90efd91fa..e4e6c6d69bf55 100644
+--- a/drivers/soc/qcom/smem.c
++++ b/drivers/soc/qcom/smem.c
+@@ -810,7 +810,7 @@ static u32 qcom_smem_get_item_count(struct qcom_smem *smem)
+ 	if (IS_ERR_OR_NULL(ptable))
+ 		return SMEM_ITEM_COUNT;
  
- static const char *siliconid_to_name(u32 siliconid)
+-	info = (struct smem_info *)&ptable->entry[ptable->num_entries];
++	info = (struct smem_info *)&ptable->entry[le32_to_cpu(ptable->num_entries)];
+ 	if (memcmp(info->magic, SMEM_INFO_MAGIC, sizeof(info->magic)))
+ 		return SMEM_ITEM_COUNT;
+ 
 -- 
 2.51.0
 
