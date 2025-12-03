@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293AD314D0A;
-	Wed,  3 Dec 2025 16:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB47832ED39;
+	Wed,  3 Dec 2025 16:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779320; cv=none; b=HLTGi+PqU2NznaBf4h6GOlPAhm+4/3432R2HHSI6R0hLfYtpub+VthCH32yU2tnb7F+IHfrkXKLeXisrL1VNX4A95TiDNToIjtn0VH7xh0Wt9jGWVd6awwlWXsCl3L6UTZqm29xfgu0MuW/rYAy42qPcB+cUBKTk7uj8wBXSIcQ=
+	t=1764779323; cv=none; b=S7RjwEKrNUPtcZfxtenrkAc7P717rf+g730R0LyyaA7EWg0eFgU09H2l1w4ygOaoOyUG1i3Wz+6MRs1ilcqXVYaQu/qyvahQZtPpM9ixAQWJqtet73FVrg7U+kvgU5uteO6L0QAoX4jvUzROg78C4uLh1y9i99FpDigODXUXo/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779320; c=relaxed/simple;
-	bh=D7GHncPf9Weny2vzUEAXjeT9gybO6fFv9+6kZb3QYKA=;
+	s=arc-20240116; t=1764779323; c=relaxed/simple;
+	bh=eErzncC9T5nLS8pxbrhLJ7Es9HRfVn5E4OWXYuBg4BQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APa7gVKh3HONvnJ5o77dFsnQ4UmyBdRMPCouxvCWIWvZoTp9EDt0u5m8bLtFGHNs73RJ+YTvbWOdtKZBiyrYB7t7vB4VZ0P2705rIFU48hJqNOdaRVPUvhw+8QcHC3WFVUgiRfuOeu9HUI7TuHPqmsWzwm2PIDrj0gfy8gfgO6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O+iUUV6K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvHvFccjYh+lW6auBuoo3v6IJG46WJoMuC7/6dr8pnAysl4637tW5yjfGJoUE8Uco9qDljmdavR6n0oNT1RPC88RqqolMjQVioVT4p+y9RYX41gjl06+ph30U7law9nna/eicR2GTNxG/Mu5MrMJHZEdLKr6lNs6kHfqFGGQPiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5IPgVy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O+iUUV6K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF22C4CEF5;
-	Wed,  3 Dec 2025 16:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5IPgVy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5746EC4CEF5;
+	Wed,  3 Dec 2025 16:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779319;
-	bh=D7GHncPf9Weny2vzUEAXjeT9gybO6fFv9+6kZb3QYKA=;
+	s=korg; t=1764779322;
+	bh=eErzncC9T5nLS8pxbrhLJ7Es9HRfVn5E4OWXYuBg4BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+iUUV6KGLgp083XVJMqanLDSQFHalbWac8WtvW97/WKtiTKXcoeYr1USGQ8v72uX
-	 3EmFcoDm3S8OJa16aZF60taXAMJ7T37TAwkPE+53vvCjDdFdKFW9mgA+gHAoWlN65T
-	 cQFIWvk0lEbtDlfYjj3RJLSeD6BM1ws+WrjP1OCA=
+	b=R5IPgVy8hP+iDaQ0JDSNa/hzJBwyZ0K5cJktzPLA5ItgFoRgReXp7pK50AfgXJ5wY
+	 lKtsqXWASiMWQfBP+ZVfmv0WdpwrA8h0PpIvnl4Xrp3lL37HmKpEQQwPgT9TlP8dJS
+	 kd/WWkSo5uegJhcpelwMLxkI2A5JrgcuRp8RQteQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yafang Shao <laoar.shao@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Thomas Graf <tgraf@suug.ch>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 223/568] net/cls_cgroup: Fix task_get_classid() during qdisc run
-Date: Wed,  3 Dec 2025 16:23:45 +0100
-Message-ID: <20251203152448.890376559@linuxfoundation.org>
+Subject: [PATCH 6.1 224/568] wifi: mt76: mt7921: Add 160MHz beamformee capability for mt7922 device
+Date: Wed,  3 Dec 2025 16:23:46 +0100
+Message-ID: <20251203152448.927186534@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -55,105 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yafang Shao <laoar.shao@gmail.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 66048f8b3cc7e462953c04285183cdee43a1cb89 ]
+[ Upstream commit 25ef5b5d02ac03fe8dd91cf25bd011a570fbeba2 ]
 
-During recent testing with the netem qdisc to inject delays into TCP
-traffic, we observed that our CLS BPF program failed to function correctly
-due to incorrect classid retrieval from task_get_classid(). The issue
-manifests in the following call stack:
+Enable 160MHz beamformee support on mt7922 by updating HE capability
+element configuration. Previously, only 160MHz channel width was set,
+but beamformee for 160MHz was not properly advertised. This patch
+adds BEAMFORMEE_MAX_STS_ABOVE_80MHZ_4 capability to allow devices
+to utilize 160MHz BW for beamforming.
 
-        bpf_get_cgroup_classid+5
-        cls_bpf_classify+507
-        __tcf_classify+90
-        tcf_classify+217
-        __dev_queue_xmit+798
-        bond_dev_queue_xmit+43
-        __bond_start_xmit+211
-        bond_start_xmit+70
-        dev_hard_start_xmit+142
-        sch_direct_xmit+161
-        __qdisc_run+102             <<<<< Issue location
-        __dev_xmit_skb+1015
-        __dev_queue_xmit+637
-        neigh_hh_output+159
-        ip_finish_output2+461
-        __ip_finish_output+183
-        ip_finish_output+41
-        ip_output+120
-        ip_local_out+94
-        __ip_queue_xmit+394
-        ip_queue_xmit+21
-        __tcp_transmit_skb+2169
-        tcp_write_xmit+959
-        __tcp_push_pending_frames+55
-        tcp_push+264
-        tcp_sendmsg_locked+661
-        tcp_sendmsg+45
-        inet_sendmsg+67
-        sock_sendmsg+98
-        sock_write_iter+147
-        vfs_write+786
-        ksys_write+181
-        __x64_sys_write+25
-        do_syscall_64+56
-        entry_SYSCALL_64_after_hwframe+100
+Tested by connecting to 160MHz-bandwidth beamforming AP and verified
+HE capability.
 
-The problem occurs when multiple tasks share a single qdisc. In such cases,
-__qdisc_run() may transmit skbs created by different tasks. Consequently,
-task_get_classid() retrieves an incorrect classid since it references the
-current task's context rather than the skb's originating task.
-
-Given that dev_queue_xmit() always executes with bh disabled, we can use
-softirq_count() instead to obtain the correct classid.
-
-The simple steps to reproduce this issue:
-1. Add network delay to the network interface:
-  such as: tc qdisc add dev bond0 root netem delay 1.5ms
-2. Build two distinct net_cls cgroups, each with a network-intensive task
-3. Initiate parallel TCP streams from both tasks to external servers.
-
-Under this specific condition, the issue reliably occurs. The kernel
-eventually dequeues an SKB that originated from Task-A while executing in
-the context of Task-B.
-
-It is worth noting that it will change the established behavior for a
-slightly different scenario:
-
-  <sock S is created by task A>
-  <class ID for task A is changed>
-  <skb is created by sock S xmit and classified>
-
-prior to this patch the skb will be classified with the 'new' task A
-classid, now with the old/original one. The bpf_get_cgroup_classid_curr()
-function is a more appropriate choice for this case.
-
-Signed-off-by: Yafang Shao <laoar.shao@gmail.com>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Thomas Graf <tgraf@suug.ch>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20250902062933.30087-1-laoar.shao@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Link: https://patch.msgid.link/ae637afaffed387018fdc43709470ef65898ff0b.1756383627.git.quan.zhou@mediatek.com
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/cls_cgroup.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/net/cls_cgroup.h b/include/net/cls_cgroup.h
-index 7e78e7d6f0152..668aeee9b3f66 100644
---- a/include/net/cls_cgroup.h
-+++ b/include/net/cls_cgroup.h
-@@ -63,7 +63,7 @@ static inline u32 task_get_classid(const struct sk_buff *skb)
- 	 * calls by looking at the number of nested bh disable calls because
- 	 * softirqs always disables bh.
- 	 */
--	if (in_serving_softirq()) {
-+	if (softirq_count()) {
- 		struct sock *sk = skb_to_full_sk(skb);
- 
- 		/* If there is an sock_cgroup_classid we'll use that. */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 7adda1718d6ac..fd91d2c537603 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -156,6 +156,8 @@ mt7921_init_he_caps(struct mt7921_phy *phy, enum nl80211_band band,
+ 			if (is_mt7922(phy->mt76->dev)) {
+ 				he_cap_elem->phy_cap_info[0] |=
+ 					IEEE80211_HE_PHY_CAP0_CHANNEL_WIDTH_SET_160MHZ_IN_5G;
++				he_cap_elem->phy_cap_info[4] |=
++					IEEE80211_HE_PHY_CAP4_BEAMFORMEE_MAX_STS_ABOVE_80MHZ_4;
+ 				he_cap_elem->phy_cap_info[8] |=
+ 					IEEE80211_HE_PHY_CAP8_20MHZ_IN_160MHZ_HE_PPDU |
+ 					IEEE80211_HE_PHY_CAP8_80MHZ_IN_160MHZ_HE_PPDU;
 -- 
 2.51.0
 
