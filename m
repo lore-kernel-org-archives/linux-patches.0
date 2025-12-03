@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8559C32E755;
-	Wed,  3 Dec 2025 15:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9718B32E75C;
+	Wed,  3 Dec 2025 15:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777061; cv=none; b=JMHbXOJrrvZ2IBLzlv3RIR51/3FM4Oq6hImtgpjxB0Uoy89h647s3TVdVmIJwQBD9v6VkiCEY/qzrE3eN7hqZVhq7ABeaNYB1KHDtLLELE/J7GuaBt7Kp0zdDBXrEzih9/pjv63vpEV0PfIbx0VFrrtA/msiSGDmNxLMP707keQ=
+	t=1764777064; cv=none; b=dXdY8KlmSzzxRHYmFpzZ7oV6DE8a9wwGB1gTzIE1DddnxIcgGi3lCX/5cNtROKA656zCRt2R4t9+sDfuPYYUMHGBjn7HLo2F/X7QBW4n+Yedl2F9kyrJutMtjkWc9uAW+1OXZqZqdOPQHv7zrQo07xwqIX0MUlg5Jt8VU2ySI1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777061; c=relaxed/simple;
-	bh=+BhPiWak2vFgolUsIr8akPEejOUklIVhLm7Hw9j6LBA=;
+	s=arc-20240116; t=1764777064; c=relaxed/simple;
+	bh=tSRQB9EEMpXUmM2E+LP2FU+fVWZSZjxEEq+KAHsUqVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NPwp38vUuXdjhhVO7t0BL4CYHhzVO1RIagz4GBmFdNCdH+oVT3vjXxyISdMfCeYpDh5VPl28yn6sr9Xwv0oyi4hTG68lM/FBeuSHchyUTjaYASdQ/T2CazlaoF4syZ8/xLipN0GwdQ1hVHf59Phfy6lBJkT+cdpBbLe3agDX0so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zP4psUNm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L41q4V+/QGHm4reVMuhFyVgJAkZKPDb3152zL+ke9sJPygmU77sSFvzW+MaLwynpUDvpJeqOwYADYLTbPa46wItm74vk60ODNFl76vXdmWCZfiDlzbj8Pk/T98oj/mPrhUuOVwIV7zUm19ICUo6fRl/pLnebaBQ5fQurYCqm9lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ly5rrSrJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zP4psUNm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E34C4CEF5;
-	Wed,  3 Dec 2025 15:51:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ly5rrSrJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA74C4CEF5;
+	Wed,  3 Dec 2025 15:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777061;
-	bh=+BhPiWak2vFgolUsIr8akPEejOUklIVhLm7Hw9j6LBA=;
+	s=korg; t=1764777064;
+	bh=tSRQB9EEMpXUmM2E+LP2FU+fVWZSZjxEEq+KAHsUqVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zP4psUNmfdmQGnWdMr5ddK6Gdi4v+xP9k9yl54dJOo72c5l0YMqmHCIU15+5kkJLk
-	 uxJXF5Fu+wW6kAskpSPBHPb3y0/bqv9HkweJy1/JvPP/QWbOyonYJ6GHuxCR3IG0Zv
-	 0h/kuTtJ03oL/26DxJYL95Vu3mlSP9awnW7QKxI4=
+	b=Ly5rrSrJwnKmmAMIeerc9RoUvYnO9EcT698nUBCTUFaDBpTujcaKmrr9RLInqZzym
+	 hUc5QpywoxaIlSfSk8WxhD7UTRA06bzdMmNaeJRqchqcIyf+t8iQJkqT2/YxSZw6SM
+	 Ci0QMMTqRZ8ISHencUJiEJ9Wxc1O3h79A4LwFhdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Hsu <andy_ya_hsu@wiwynn.com>,
-	ChiYuan Huang <cy_huang@richtek.com>,
-	David Lechner <dlechner@baylibre.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.17 069/146] iio: adc: rtq6056: Correct the sign bit index
-Date: Wed,  3 Dec 2025 16:27:27 +0100
-Message-ID: <20251203152348.991820924@linuxfoundation.org>
+	Jamie Iles <jamie.iles@oss.qualcomm.com>,
+	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
+	Jassi Brar <jassisinghbrar@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 038/146] mailbox: pcc: dont zero error register
+Date: Wed,  3 Dec 2025 16:26:56 +0100
+Message-ID: <20251203152347.868560220@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -53,34 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ChiYuan Huang <cy_huang@richtek.com>
+From: Jamie Iles <jamie.iles@oss.qualcomm.com>
 
-commit 9b45744bf09fc2a3287e05287141d6e123c125a7 upstream.
+[ Upstream commit ff0e4d4c97c94af34cc9cad37b5a5cdbe597a3b0 ]
 
-The vshunt/current reported register is a signed 16bit integer. The
-sign bit index should be '15', not '16'.
+The error status mask for a type 3/4 subspace is used for reading the
+error status, and the bitwise inverse is used for clearing the error
+with the intent being to preserve any of the non-error bits.  However,
+we were previously applying the mask to extract the status and then
+applying the inverse to the result which ended up clearing all bits.
 
-Fixes: 4396f45d211b ("iio: adc: Add rtq6056 support")
-Reported-by: Andy Hsu <andy_ya_hsu@wiwynn.com>
-Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Instead, store the inverse mask in the preserve mask and then use that
+on the original value read from the error status so that only the error
+is cleared.
+
+Fixes: c45ded7e1135 ("mailbox: pcc: Add support for PCCT extended PCC subspaces(type 3/4)")
+Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
+Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
+Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/rtq6056.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mailbox/pcc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/adc/rtq6056.c
-+++ b/drivers/iio/adc/rtq6056.c
-@@ -300,7 +300,7 @@ static int rtq6056_adc_read_channel(stru
- 		return IIO_VAL_INT;
- 	case RTQ6056_REG_SHUNTVOLT:
- 	case RTQ6056_REG_CURRENT:
--		*val = sign_extend32(regval, 16);
-+		*val = sign_extend32(regval, 15);
- 		return IIO_VAL_INT;
- 	default:
- 		return -EINVAL;
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 0a00719b24827..ff292b9e0be9e 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -276,9 +276,8 @@ static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
+ 	if (ret)
+ 		return ret;
+ 
+-	val &= pchan->error.status_mask;
+-	if (val) {
+-		val &= ~pchan->error.status_mask;
++	if (val & pchan->error.status_mask) {
++		val &= pchan->error.preserve_mask;
+ 		pcc_chan_reg_write(&pchan->error, val);
+ 		return -EIO;
+ 	}
+@@ -745,7 +744,8 @@ static int pcc_parse_subspace_db_reg(struct pcc_chan_info *pchan,
+ 
+ 		ret = pcc_chan_reg_init(&pchan->error,
+ 					&pcct_ext->error_status_register,
+-					0, 0, pcct_ext->error_status_mask,
++					~pcct_ext->error_status_mask, 0,
++					pcct_ext->error_status_mask,
+ 					"Error Status");
+ 	}
+ 	return ret;
+-- 
+2.51.0
+
 
 
