@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE583346BF;
-	Wed,  3 Dec 2025 15:53:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B773346BF;
+	Wed,  3 Dec 2025 15:53:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764777182; cv=none; b=IQN5i3bU5a93me192g+cbdMSvQcggPQ7CZBXeylY1U0ABLt51vlVt+JQP9Ybep1BlonpesO0UknbDQhs4WqZg+SpK67z1EpIyQkqQq2r7u6Qd9DvkS4UrGBcHqc+V5Plu/6woWDGsumSCINKI7GqwAssZF/PdnR+zAS+idnN+Y0=
+	t=1764777185; cv=none; b=Z82UtmLSm/WhPUd8RW5Da9eiIH4aQhT+jMuCk9sB+j7I9NpYH7IU7vnzoO6PPwaolWHKbesR6SHwYh3Pa0+vBLi/GU6o1Ul+r1xXjRYGGRSKKp404YwrWfHVZZjMWEJrpIo7EoYqyJTn/eQiTdbvS3r6VMg2lzoEc68u7MWTsdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764777182; c=relaxed/simple;
-	bh=xYC+6AspqE/xLAWuA57+Xcobb2/yVr9N985gGQg8EQE=;
+	s=arc-20240116; t=1764777185; c=relaxed/simple;
+	bh=IUIWCAkgasHRunhCFdFK+M+9uterBT/Nb4bQo9BJPdI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTGJVaw3Y5q1oSxJjcRn/hEmAtwdCo4maTvQeow9XJ8VrPsIAZvIPWJeX5942qAOAGYU/4VEAHGTe2ztEDQN+IX0G4UGom67j18xweOcLpU4v40yxsiTqTi1WJy8NodPSrHFpw4U4h0DNNCT2Bl+QYfaIVA74teJob+hSTDv7hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzbexxdp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=e4SDk1ACq84JeLGfOiHUCiMc9GsvhO0ptaX6PwuJgBmZh1Rh/RxVZ2s21ESDW739R6oyWAPealN13ugB15Q/ax8bAA5C2G4o43V35Le4N8IIZcmpJrH8fFYoJcN60fWVKMg0TGrAmICAAwn7+sxr0KB+Jw+R3JXp02LPUoWnsmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wa49rrW1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzbexxdp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23743C4CEF5;
-	Wed,  3 Dec 2025 15:53:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wa49rrW1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A665C4CEF5;
+	Wed,  3 Dec 2025 15:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764777181;
-	bh=xYC+6AspqE/xLAWuA57+Xcobb2/yVr9N985gGQg8EQE=;
+	s=korg; t=1764777185;
+	bh=IUIWCAkgasHRunhCFdFK+M+9uterBT/Nb4bQo9BJPdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzbexxdpn8K3DH07bH1xsIWUmXRldn14g/NEvJrQmS6qmdgXBTULR2QLXoGrvlJtf
-	 TUHJfw0VuFdAapb3oQ5+IpY6wzty7i/dmsEvGlTllRly5gpzuV+PQc+MtmPlrkRfVU
-	 TVKu373illlvjwOrg4szF/hohJhJsx8msgooYyAU=
+	b=Wa49rrW1rJnsdPEpg9v98bXWLe9+kB6vLpZgnEVMjnRfLQW7akqPbFvJE8zDkLEWg
+	 K99teDRtwVB4SOK9d5zaKYZYapMeemv9yvAXhgG8+jgdLM7GWXp0pYAhoiDQzjVY7y
+	 PM/Lry6/phUCHLTO/Qb2tRu0p9TtcPsGggA1Gsgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com,
-	Deepanshu Kartikey <kartikey406@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.17 074/146] tracing: Fix WARN_ON in tracing_buffers_mmap_close for split VMAs
-Date: Wed,  3 Dec 2025 16:27:32 +0100
-Message-ID: <20251203152349.174529159@linuxfoundation.org>
+	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
+	sstable@vger.kernel.org,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.17 075/146] ALSA: hda/cirrus fix cs420x MacPro 6,1 inverted jack detection
+Date: Wed,  3 Dec 2025 16:27:33 +0100
+Message-ID: <20251203152349.210283280@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -45,63 +45,38 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: René Rebe <rene@exactco.de>
 
-commit b042fdf18e89a347177a49e795d8e5184778b5b6 upstream.
+commit 5719a189c9345977c16f10874fd5102f70094d8f upstream.
 
-When a VMA is split (e.g., by partial munmap or MAP_FIXED), the kernel
-calls vm_ops->close on each portion. For trace buffer mappings, this
-results in ring_buffer_unmap() being called multiple times while
-ring_buffer_map() was only called once.
+Turns out the Apple MacPro 6,1 trashcan also needs the inverted jack
+detection like Mac mini patched, too.
 
-This causes ring_buffer_unmap() to return -ENODEV on subsequent calls
-because user_mapped is already 0, triggering a WARN_ON.
-
-Trace buffer mappings cannot support partial mappings because the ring
-buffer structure requires the complete buffer including the meta page.
-
-Fix this by adding a may_split callback that returns -EINVAL to prevent
-VMA splits entirely.
-
-Cc: stable@vger.kernel.org
-Fixes: cf9f0f7c4c5bb ("tracing: Allow user-space mapping of the ring-buffer")
-Link: https://patch.msgid.link/20251119064019.25904-1-kartikey406@gmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=a72c325b042aae6403c7
-Tested-by: syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com
-Reported-by: syzbot+a72c325b042aae6403c7@syzkaller.appspotmail.com
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: René Rebe <rene@exactco.de>
+Cc: <sstable@vger.kernel.org>
+Link: https://patch.msgid.link/20251117.182351.1595411649664739497.rene@exactco.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/hda/codecs/cirrus/cs420x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -8781,8 +8781,18 @@ static void tracing_buffers_mmap_close(s
- 	put_snapshot_map(iter->tr);
- }
- 
-+static int tracing_buffers_may_split(struct vm_area_struct *vma, unsigned long addr)
-+{
-+	/*
-+	 * Trace buffer mappings require the complete buffer including
-+	 * the meta page. Partial mappings are not supported.
-+	 */
-+	return -EINVAL;
-+}
-+
- static const struct vm_operations_struct tracing_buffers_vmops = {
- 	.close		= tracing_buffers_mmap_close,
-+	.may_split      = tracing_buffers_may_split,
+--- a/sound/hda/codecs/cirrus/cs420x.c
++++ b/sound/hda/codecs/cirrus/cs420x.c
+@@ -585,6 +585,7 @@ static const struct hda_quirk cs4208_mac
+ 	SND_PCI_QUIRK(0x106b, 0x6c00, "MacMini 7,1", CS4208_MACMINI),
+ 	SND_PCI_QUIRK(0x106b, 0x7100, "MacBookAir 6,1", CS4208_MBA6),
+ 	SND_PCI_QUIRK(0x106b, 0x7200, "MacBookAir 6,2", CS4208_MBA6),
++	SND_PCI_QUIRK(0x106b, 0x7800, "MacPro 6,1", CS4208_MACMINI),
+ 	SND_PCI_QUIRK(0x106b, 0x7b00, "MacBookPro 12,1", CS4208_MBP11),
+ 	{} /* terminator */
  };
- 
- static int tracing_buffers_mmap(struct file *filp, struct vm_area_struct *vma)
 
 
