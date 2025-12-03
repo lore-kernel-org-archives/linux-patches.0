@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6187934E74B;
-	Wed,  3 Dec 2025 16:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF340349AF4;
+	Wed,  3 Dec 2025 16:50:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780608; cv=none; b=FK7eVKplo9a+81rq0Am5zAljp289H70LZkkD7HJL1/D7zc9n5MUwuTcTbSvfxUv2doDAxNXNAi8yG4cMs2lMfZ4KV6f60NAY2cNVs53SG/U0bG0epPjNg875aenlxy6xY3VPIqaxvWliBoJyKa0NKixQYylXavSfOcyyteFq0ng=
+	t=1764780612; cv=none; b=IbUuesl84DOCtBH74hh4MdZ1N9PWSPjTQwhiaj8Z7ibeud4Yk79QVmAU/dNcwby3YF7xDfS35Wjq2FHRhdQkrcfRU/csgi0N6lV89AnTjyT6HNBILMTTLF9n6/W8Qyp8xR4/2KCrzqInmPAECON8xLKjngvf1WceZ5BEU8Ue4pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780608; c=relaxed/simple;
-	bh=yyRvzzfc1EHqfWPs9VPrn9bSIzdoX452680qPSW+j9k=;
+	s=arc-20240116; t=1764780612; c=relaxed/simple;
+	bh=LECsBgpNOEeRzBCDIE4vPprxjNuaMfKAZ7yB4rX3dqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuXRMkK7fg7NqdjaXdqY+KoVECmrn6xcI3gZI2FixUoV8I12eLEkMEW77+9gK9rt1XdB10DIEcKAPC/7dyr/FCPtWyGNx1U9TfBwa3rmV6N/BCusCiTgeDaNqdPdliRCrNe1MY4ot1IS4UiXAU6vlPbyVS+gvabgmLfSk/kIL2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oT2s1I3i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHvZcL8udkSP83u1O5LmaXZ33Ma4cQbcSMp+UyKCiai2oSNIHbmC2s9gg1ebqryD4IBzlnYohjh8oMo3y6PDP0ihNSZvLr6Y2pk0eNmHtl8v0fYZw2RT9OrTERFWLztyhoBaH6n3QXUBn8ItYXwZL8cTfORvIiyftH8KEDSzAiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqO0r+E2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oT2s1I3i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5980C4CEF5;
-	Wed,  3 Dec 2025 16:50:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqO0r+E2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49A14C116C6;
+	Wed,  3 Dec 2025 16:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780608;
-	bh=yyRvzzfc1EHqfWPs9VPrn9bSIzdoX452680qPSW+j9k=;
+	s=korg; t=1764780611;
+	bh=LECsBgpNOEeRzBCDIE4vPprxjNuaMfKAZ7yB4rX3dqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oT2s1I3iph0XJlQvNyxUAEhFNgEiGGdYbMtAU9LExJu5BIllAn+1vbcgIUaZoIA6+
-	 K03NHF30lJa7FdFFjFMUGJwnu8I4dfnakQwfAyXaNpSDLR+4lF6j8d7pOKC3uc6r4T
-	 H/pPl39Mo5iORWz0+csoQb5xw1/HLjpOa5PMRggg=
+	b=qqO0r+E2qRlG3mdD86XJ+/SJD/ROTLzwfyqNpTgS1QHgosdMe+RO76L9/SoO3FRvA
+	 rb/Il8dMFVuVQQLJNnSYI2BTVYHG7WBF2xVfWPy9Ff25NGOchQjl5p5OzNH6mP6zgS
+	 XzRG7dAs1i/9G6bZ1TcVgd3rLco3TCrPqX4upK+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamie Iles <jamie.iles@oss.qualcomm.com>,
-	Punit Agrawal <punit.agrawal@oss.qualcomm.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Andrei Vagin <avagin@google.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/132] mailbox: pcc: dont zero error register
-Date: Wed,  3 Dec 2025 16:28:36 +0100
-Message-ID: <20251203152344.670316234@linuxfoundation.org>
+Subject: [PATCH 6.12 038/132] fs/namespace: fix reference leak in grab_requested_mnt_ns
+Date: Wed,  3 Dec 2025 16:28:37 +0100
+Message-ID: <20251203152344.706936158@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152343.285859633@linuxfoundation.org>
 References: <20251203152343.285859633@linuxfoundation.org>
@@ -52,55 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jamie Iles <jamie.iles@oss.qualcomm.com>
+From: Andrei Vagin <avagin@google.com>
 
-[ Upstream commit ff0e4d4c97c94af34cc9cad37b5a5cdbe597a3b0 ]
+[ Upstream commit 7b6dcd9bfd869eee7693e45b1817dac8c56e5f86 ]
 
-The error status mask for a type 3/4 subspace is used for reading the
-error status, and the bitwise inverse is used for clearing the error
-with the intent being to preserve any of the non-error bits.  However,
-we were previously applying the mask to extract the status and then
-applying the inverse to the result which ended up clearing all bits.
+lookup_mnt_ns() already takes a reference on mnt_ns.
+grab_requested_mnt_ns() doesn't need to take an extra reference.
 
-Instead, store the inverse mask in the preserve mask and then use that
-on the original value read from the error status so that only the error
-is cleared.
-
-Fixes: c45ded7e1135 ("mailbox: pcc: Add support for PCCT extended PCC subspaces(type 3/4)")
-Signed-off-by: Jamie Iles <jamie.iles@oss.qualcomm.com>
-Signed-off-by: Punit Agrawal <punit.agrawal@oss.qualcomm.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 78f0e33cd6c93 ("fs/namespace: correctly handle errors returned by grab_requested_mnt_ns")
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Link: https://patch.msgid.link/20251122071953.3053755-1-avagin@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/pcc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/namespace.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
-index bb977cf8ad423..2b7d0bc920726 100644
---- a/drivers/mailbox/pcc.c
-+++ b/drivers/mailbox/pcc.c
-@@ -278,9 +278,8 @@ static int pcc_mbox_error_check_and_clear(struct pcc_chan_info *pchan)
- 	if (ret)
- 		return ret;
+diff --git a/fs/namespace.c b/fs/namespace.c
+index 035d6f1f0b6ef..c3702f3303a89 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -5345,6 +5345,8 @@ static struct mnt_namespace *grab_requested_mnt_ns(const struct mnt_id_req *kreq
  
--	val &= pchan->error.status_mask;
--	if (val) {
--		val &= ~pchan->error.status_mask;
-+	if (val & pchan->error.status_mask) {
-+		val &= pchan->error.preserve_mask;
- 		pcc_chan_reg_write(&pchan->error, val);
- 		return -EIO;
- 	}
-@@ -673,7 +672,8 @@ static int pcc_parse_subspace_db_reg(struct pcc_chan_info *pchan,
+ 	if (kreq->mnt_ns_id) {
+ 		mnt_ns = lookup_mnt_ns(kreq->mnt_ns_id);
++		if (!mnt_ns)
++			return ERR_PTR(-ENOENT);
+ 	} else if (kreq->mnt_ns_fd) {
+ 		struct ns_common *ns;
  
- 		ret = pcc_chan_reg_init(&pchan->error,
- 					&pcct_ext->error_status_register,
--					0, 0, pcct_ext->error_status_mask,
-+					~pcct_ext->error_status_mask, 0,
-+					pcct_ext->error_status_mask,
- 					"Error Status");
+@@ -5360,13 +5362,12 @@ static struct mnt_namespace *grab_requested_mnt_ns(const struct mnt_id_req *kreq
+ 			return ERR_PTR(-EINVAL);
+ 
+ 		mnt_ns = to_mnt_ns(ns);
++		refcount_inc(&mnt_ns->passive);
+ 	} else {
+ 		mnt_ns = current->nsproxy->mnt_ns;
++		refcount_inc(&mnt_ns->passive);
  	}
- 	return ret;
+-	if (!mnt_ns)
+-		return ERR_PTR(-ENOENT);
+ 
+-	refcount_inc(&mnt_ns->passive);
+ 	return mnt_ns;
+ }
+ 
 -- 
 2.51.0
 
