@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 561B135BDC9;
-	Wed,  3 Dec 2025 16:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A580235C19C;
+	Wed,  3 Dec 2025 16:25:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779142; cv=none; b=H+tEmXddHtNA1ovnpPZqq1DmS2H0qGMduIZvrQrBDLt30tu/aw4QXC/DebTypZMB1UZNY8vbm0ncDGXhkLFiDWOfCMWNoKwqXPbYo+o8qgExRZjEY+TNipdR70aKMIF5qOMJne/XBqbvi1EEx14YwQL3ASuyOBZWsU9wgO+dzW0=
+	t=1764779145; cv=none; b=PfMuDhUsES4T7uv1tCXjWWNLeVq29USIvqaKGStFab6Q232s16X9JCpquh+95G16BN2MFVNU68gOHndbN6n+VbQ8Z6mvaZ+w1uBSRtx0A51TyhZA3/RhP1NBoifNy2kYtp7LI10HrcTboyANr0d0acqTCe4q52ocr0RmH5yNo7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779142; c=relaxed/simple;
-	bh=iJJZU81qQ4CwFbfwUv104bouXMAi4gWO4nysheOGMMU=;
+	s=arc-20240116; t=1764779145; c=relaxed/simple;
+	bh=p79TINPoyWyEXr7eTEDGYUjd02snDnkXHayUbm8NpGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNArIh2vY2K4jEIFtYD0YGaRE4AImRSNq2Oia8NWVozwiVucyX5uUpD8nm7HFPOpkM8p+bOY2+E+4pCBpZboIbqnOZUNNu6spV9SM77cFVLEr+AbT7y1W5TnG1p7I5ZvkfBAI6AD9SeVdNzy0ekus6m5wEAhrATgmYtIjuir3dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nqvr4BMP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qsmvGLFNLVahjYArf7bYufTIpYbLadXA6SjCqVsBMPN2e6DEK01W9KKdl0cqPknEwz3hJ3JMmK8jKkmCyUYm/ImCnkNTUOVRJ0O8+sGt1qTJN1yUHq63l0toC3QbHioAhHfBvPZ9cnblHfLUhGcglhUvd8OROHQuucPdSKi60kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwAYtdAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nqvr4BMP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABAAC4CEF5;
-	Wed,  3 Dec 2025 16:25:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwAYtdAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 183FBC116C6;
+	Wed,  3 Dec 2025 16:25:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779142;
-	bh=iJJZU81qQ4CwFbfwUv104bouXMAi4gWO4nysheOGMMU=;
+	s=korg; t=1764779145;
+	bh=p79TINPoyWyEXr7eTEDGYUjd02snDnkXHayUbm8NpGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nqvr4BMP4H6z32J0YS76MRoC7r03894/bNDqqBIUtmT+xwBW4a37j1k4+J3uS+PN5
-	 Nk0yH1djXSo+F56ojvaaPH+A0gofRsmA30pUlFHgbJjkAdikSv319NxLxdmYGfjTXV
-	 1U7le4jwg/2S/wZRTVO4Zn40Kj5x3KII04UfFQIg=
+	b=pwAYtdAi+YkkEg4ONKMKUWeHHEPaaO1qciw86+v0gL44LW0UH5zeaFLAHtTnPBIFf
+	 1+m1dmm8MpN7MfPyXkvDICQZKazvipYolluATT5hFEyBbYVeFL+93wIpgCZP68/sLo
+	 WK283aIgCLAUECAHnyOXqqE4qCUVzxCPbPxV7ZfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
+	Ujwal Kundur <ujwal.kundur@gmail.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 140/568] selftests/net: Ensure assert() triggers in psock_tpacket.c
-Date: Wed,  3 Dec 2025 16:22:22 +0100
-Message-ID: <20251203152445.854870676@linuxfoundation.org>
+Subject: [PATCH 6.1 167/568] rds: Fix endianness annotation for RDS_MPATH_HASH
+Date: Wed,  3 Dec 2025 16:22:49 +0100
+Message-ID: <20251203152446.840140464@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,43 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Ujwal Kundur <ujwal.kundur@gmail.com>
 
-[ Upstream commit bc4c0a48bdad7f225740b8e750fdc1da6d85e1eb ]
+[ Upstream commit 77907a068717fbefb25faf01fecca553aca6ccaa ]
 
-The get_next_frame() function in psock_tpacket.c was missing a return
-statement in its default switch case, leading to a compiler warning.
+jhash_1word accepts host endian inputs while rs_bound_port is a be16
+value (sockaddr_in6.sin6_port). Use ntohs() for consistency.
 
-This was caused by a `bug_on(1)` call, which is defined as an
-`assert()`, being compiled out because NDEBUG is defined during the
-build.
+Flagged by Sparse.
 
-Instead of adding a `return NULL;` which would silently hide the error
-and could lead to crashes later, this change restores the original
-author's intent. By adding `#undef NDEBUG` before including <assert.h>,
-we ensure the assertion is active and will cause the test to abort if
-this unreachable code is ever executed.
-
-Signed-off-by: Wake Liu <wakel@google.com>
-Link: https://patch.msgid.link/20250809062013.2407822-1-wakel@google.com
+Signed-off-by: Ujwal Kundur <ujwal.kundur@gmail.com>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://patch.msgid.link/20250820175550.498-4-ujwal.kundur@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/psock_tpacket.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/rds/rds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/psock_tpacket.c b/tools/testing/selftests/net/psock_tpacket.c
-index 93092d13b3c59..ca0d9a5a9e08c 100644
---- a/tools/testing/selftests/net/psock_tpacket.c
-+++ b/tools/testing/selftests/net/psock_tpacket.c
-@@ -22,6 +22,7 @@
-  *   - TPACKET_V3: RX_RING
-  */
+diff --git a/net/rds/rds.h b/net/rds/rds.h
+index d35d1fc398076..1257867e85e4e 100644
+--- a/net/rds/rds.h
++++ b/net/rds/rds.h
+@@ -93,7 +93,7 @@ enum {
  
-+#undef NDEBUG
- #include <stdio.h>
- #include <stdlib.h>
- #include <sys/types.h>
+ /* Max number of multipaths per RDS connection. Must be a power of 2 */
+ #define	RDS_MPATH_WORKERS	8
+-#define	RDS_MPATH_HASH(rs, n) (jhash_1word((rs)->rs_bound_port, \
++#define	RDS_MPATH_HASH(rs, n) (jhash_1word(ntohs((rs)->rs_bound_port), \
+ 			       (rs)->rs_hash_initval) & ((n) - 1))
+ 
+ #define IS_CANONICAL(laddr, faddr) (htonl(laddr) < htonl(faddr))
 -- 
 2.51.0
 
