@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81AC376BCC;
-	Wed,  3 Dec 2025 16:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCD1313546;
+	Wed,  3 Dec 2025 16:47:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780424; cv=none; b=L/lhS3T0bRl82mhFfLTKXdXcT2mxdc6wAUHTkidbqCP10vjjiJ+M6P1hPYtGhj7O1YauZCayFbcfHGIvgtgIDE/vULMErgsP212jiUrDOu3bbWULf3uNS86H35fq+JfyTxssQpQZ1BSqd6I6rEgcrr1lMowW2RbMk2OdiICUwtQ=
+	t=1764780428; cv=none; b=UzVj6ps8MyjnPY59j1jXUqx+cWERdY7VIvAgOnkvRQMuLarIF0LPOKJ8TTuOhswswhd1JLd4cx6fmHIHb7+fkP5DIwhHxv8Mg3B8imKw4l4aw8M8uasFXEPJfxmJbXbgP52S7rW+km9M2PgGuzVd621lltFVf3sVS7veUqEaGvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780424; c=relaxed/simple;
-	bh=j9k/p0vc2SI7fZe0xi4iq91O+ZpbE15mzjhxDQa7dLQ=;
+	s=arc-20240116; t=1764780428; c=relaxed/simple;
+	bh=Hpp//6eGvTxDY09jjrBz7cO7nNx0K6x+7ZyZP0ffgZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swUebo24klKEljYL28ymAcOh9Q2deO/FBG1nsYadG9iaFxOZ/8N6va2evucC4gys+O/cjUhJApcUX3U9qDRVzbsaZx3QrvggjUVwZVItmFnf6aZCCpIO39AZP4FwYUDc80FGkCOOYztQHDGPQ2BxRRq46kC9rER8Xsp7EERCIN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eryo9K3/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQ7Yg3lio6xzxXsNW5xlXWfSb8R7Edkt9naaZZGd6L3mMrDxTIkJSJ4P6JRBU6DWAwpurwL1o2d8Gw3hRpumd3WceVRUIF5/9kV+/CplrZjiXmvJV4jBJ+QjRyonoJpzU4dPBW5RJLZfdt6vHgI2J6gPMHleqTvAz5tZC3ulpPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vFoQckJ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eryo9K3/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20820C4CEF5;
-	Wed,  3 Dec 2025 16:47:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vFoQckJ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF70AC4CEF5;
+	Wed,  3 Dec 2025 16:47:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780424;
-	bh=j9k/p0vc2SI7fZe0xi4iq91O+ZpbE15mzjhxDQa7dLQ=;
+	s=korg; t=1764780428;
+	bh=Hpp//6eGvTxDY09jjrBz7cO7nNx0K6x+7ZyZP0ffgZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eryo9K3/7MPiPCPQ/qUuBNGekDM7IpSep8bZDwOxLPgxOCRdMvMCC/tnc5fV+7viD
-	 FXp/2E26ulnEDbYwXoB+O2OREP1/KXLPin6JI7tcT9T2yGDOgqvGXyGK3erUamNE0l
-	 9dntEDuVlxHWpqLMeQ9cBrMoKqV3zkZE6UfRplQI=
+	b=vFoQckJ+D0m2QKg645crvElbgeG144wp7bpXaD+YmuNupCFyy/AIvvmHpibFT66B0
+	 uSTRk/3x6zVjH3z9ZEr6G2aazz6kFJ7FfSv0qS/SMZJW6840VnBY4pMj6qrn6NdfxF
+	 lCefmMwVd5oWSST6YO6pLSNijwVHYou1fjPGIuRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ziming zhang <ezrakiez@gmail.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 552/568] libceph: replace BUG_ON with bounds check for map->max_osd
-Date: Wed,  3 Dec 2025 16:29:14 +0100
-Message-ID: <20251203152500.928255077@linuxfoundation.org>
+	NeilBrown <neil@brown.name>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 553/568] nfsd: Replace clamp_t in nfsd4_get_drc_mem()
+Date: Wed,  3 Dec 2025 16:29:15 +0100
+Message-ID: <20251203152500.965331640@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -50,92 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ziming zhang <ezrakiez@gmail.com>
+From: NeilBrown <neil@brown.name>
 
-commit ec3797f043756a94ea2d0f106022e14ac4946c02 upstream.
+A recent change to clamp_t() in 6.1.y caused fs/nfsd/nfs4state.c to fail
+to compile with gcc-9. The code in nfsd4_get_drc_mem() was written with
+the assumption that when "max < min",
 
-OSD indexes come from untrusted network packets. Boundary checks are
-added to validate these against map->max_osd.
+   clamp(val, min, max)
 
-[ idryomov: drop BUG_ON in ceph_get_primary_affinity(), minor cosmetic
-  edits ]
+would return max.  This assumption is not documented as an API promise
+and the change caused a compile failure if it could be statically
+determined that "max < min".
 
-Cc: stable@vger.kernel.org
-Signed-off-by: ziming zhang <ezrakiez@gmail.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+The relevant code was no longer present upstream when commit 1519fbc8832b
+("minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()")
+landed there, so there is no upstream change to nfsd4_get_drc_mem() to
+backport.
+
+There is no clear case that the existing code in nfsd4_get_drc_mem()
+is functioning incorrectly. The goal of this patch is to permit the clean
+application of commit 1519fbc8832b ("minmax.h: use BUILD_BUG_ON_MSG() for
+the lo < hi test in clamp()"), and any commits that depend on it, to LTS
+kernels without affecting the ability to compile those kernels. This is
+done by open-coding the __clamp() macro sans the built-in type checking.
+
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220745#c0
+Signed-off-by: NeilBrown <neil@brown.name>
+Stable-dep-of: 1519fbc8832b ("minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reviewed_by: David Laight <david.laight.linux@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/osdmap.c |   18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ fs/nfsd/nfs4state.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/ceph/osdmap.c
-+++ b/net/ceph/osdmap.c
-@@ -1504,8 +1504,6 @@ static int decode_new_primary_temp(void
+Changes since Neil's post:
+* Editorial changes to the commit message
+* Attempt to address David's review comments
+* Applied to linux-6.12.y, passed NFSD upstream CI suite
+
+This patch is intended to be applied to linux-6.12.y, and should
+apply cleanly to other LTS kernels since nfsd4_get_drc_mem hasn't
+changed since v5.4.
+
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -1823,8 +1823,10 @@ static u32 nfsd4_get_drc_mem(struct nfsd
+ 	 */
+ 	scale_factor = max_t(unsigned int, 8, nn->nfsd_serv->sv_nrthreads);
  
- u32 ceph_get_primary_affinity(struct ceph_osdmap *map, int osd)
- {
--	BUG_ON(osd >= map->max_osd);
--
- 	if (!map->osd_primary_affinity)
- 		return CEPH_OSD_DEFAULT_PRIMARY_AFFINITY;
- 
-@@ -1514,8 +1512,6 @@ u32 ceph_get_primary_affinity(struct cep
- 
- static int set_primary_affinity(struct ceph_osdmap *map, int osd, u32 aff)
- {
--	BUG_ON(osd >= map->max_osd);
--
- 	if (!map->osd_primary_affinity) {
- 		int i;
- 
-@@ -1577,6 +1573,8 @@ static int decode_new_primary_affinity(v
- 
- 		ceph_decode_32_safe(p, end, osd, e_inval);
- 		ceph_decode_32_safe(p, end, aff, e_inval);
-+		if (osd >= map->max_osd)
-+			goto e_inval;
- 
- 		ret = set_primary_affinity(map, osd, aff);
- 		if (ret)
-@@ -1879,7 +1877,9 @@ static int decode_new_up_state_weight(vo
- 		ceph_decode_need(p, end, 2*sizeof(u32), e_inval);
- 		osd = ceph_decode_32(p);
- 		w = ceph_decode_32(p);
--		BUG_ON(osd >= map->max_osd);
-+		if (osd >= map->max_osd)
-+			goto e_inval;
-+
- 		osdmap_info(map, "osd%d weight 0x%x %s\n", osd, w,
- 			    w == CEPH_OSD_IN ? "(in)" :
- 			    (w == CEPH_OSD_OUT ? "(out)" : ""));
-@@ -1905,13 +1905,15 @@ static int decode_new_up_state_weight(vo
- 		u32 xorstate;
- 
- 		osd = ceph_decode_32(p);
-+		if (osd >= map->max_osd)
-+			goto e_inval;
-+
- 		if (struct_v >= 5)
- 			xorstate = ceph_decode_32(p);
- 		else
- 			xorstate = ceph_decode_8(p);
- 		if (xorstate == 0)
- 			xorstate = CEPH_OSD_UP;
--		BUG_ON(osd >= map->max_osd);
- 		if ((map->osd_state[osd] & CEPH_OSD_UP) &&
- 		    (xorstate & CEPH_OSD_UP))
- 			osdmap_info(map, "osd%d down\n", osd);
-@@ -1937,7 +1939,9 @@ static int decode_new_up_state_weight(vo
- 		struct ceph_entity_addr addr;
- 
- 		osd = ceph_decode_32(p);
--		BUG_ON(osd >= map->max_osd);
-+		if (osd >= map->max_osd)
-+			goto e_inval;
-+
- 		if (struct_v >= 7)
- 			ret = ceph_decode_entity_addrvec(p, end, msgr2, &addr);
- 		else
+-	avail = clamp_t(unsigned long, avail, slotsize,
+-			total_avail/scale_factor);
++	if (avail > total_avail / scale_factor)
++		avail = total_avail / scale_factor;
++	else if (avail < slotsize)
++		avail = slotsize;
+ 	num = min_t(int, num, avail / slotsize);
+ 	num = max_t(int, num, 1);
+ 	nfsd_drc_mem_used += num * slotsize;
 
 
