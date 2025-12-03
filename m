@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B88354AF5;
-	Wed,  3 Dec 2025 16:26:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED60735CB6D;
+	Wed,  3 Dec 2025 16:26:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779162; cv=none; b=Ga7qc5B2s710XyQJpl3cEDjGfuwo/6nuqOPEONS5Kxc1xW/zs2Ds2cKiWzD8w96Gac2Dg72WG6CrkoQpXccDbTZTfmW5aIUBhp1JqZLH90xK/Jfg7qXOJmdcwXl/rWlZvISGzOMCVbawx8CFEkOzPnWwVwhwZiGnl5j7hTpKn3w=
+	t=1764779166; cv=none; b=D4b6PVtZxqtR1Ukpv0IgKkQkEbeo8oqAGIOsryG07jf6rX0pI9Drgcq9Db5DBXyZ1RgPa53TxJBAnoR1wNPvOcdNk8BXviehkmJ6rP5HKj7TRmKtuWr5K1bgL8l5XbI67PdipGBHKwgW/XDWHZ+jARtCIzzhTyYZbyvTHuFPojY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779162; c=relaxed/simple;
-	bh=MsdNdq/FpN4M5m9goM3sLbBXmM4Atrie0ZKIBPX8qN0=;
+	s=arc-20240116; t=1764779166; c=relaxed/simple;
+	bh=lgSpXTuBKcbHzlFGJ6N7nBPpli43EcoJpOHCfYtM6Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xg3KGlNEGlXmJsvCtE0yTHpraRY6+G2hRKwuUlTIODsMlocuF+zThX288mw2qtao2QCMJDCPPf5FDnDp45CHSINKSJ8iylGntqZZJM438GztrkhiMsk5gcV45qiSrg5aanS+D97sJ9t56CJ/oAZYZWALk3McWx2JnosPIPt/f2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZF1a6In; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eErvJm5Mbrp18gVs3aRtabTcTwfjTvlPU+cKulo5HZGFXOAOLgahvnAKO9YJc9lNRCgwizet35u0YPMj6nzm3HwlkgLE3bIUTGwDJksc/d4iFA9SoOFuP9hpUpEtVF6Rf7JLyLFm/79DF5P1uWn+NAhKeBAayv0IkDlSLKFvcr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrI08dKG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZF1a6In"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02723C4CEF5;
-	Wed,  3 Dec 2025 16:26:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrI08dKG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBFDC4CEF5;
+	Wed,  3 Dec 2025 16:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779162;
-	bh=MsdNdq/FpN4M5m9goM3sLbBXmM4Atrie0ZKIBPX8qN0=;
+	s=korg; t=1764779165;
+	bh=lgSpXTuBKcbHzlFGJ6N7nBPpli43EcoJpOHCfYtM6Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZF1a6Insx2ct5MTF8HnFm769rBA3l7WWhy//sBebBxZpuO/nh1JWJ6yt+Nzluykf
-	 5x4fJbH+D2Xr6AzskNvA9Ka1IyYV87fu3pSxFal3LjPEJptHxejvoiCvz6xWkLxuv9
-	 qogTewJQZxCI12KMZVoC6FM5UHAOg4aavT3dnWdI=
+	b=PrI08dKGCIh4j3mAPZBoq4yObamKoya4a1TEHH0LqAiB4wNTZheKLnTEPkackSjHh
+	 ZyPCef2wkkV1UG/WITEFKLW3/yv6121iDkoywDx++qTxr3rdZFMy+w3dDpiSS9pYeA
+	 9b84pSXgZG2PRz0G4x0ottFYbcIc7Yan7CzjxVk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geoffrey McRae <geoffrey.mcrae@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/568] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
-Date: Wed,  3 Dec 2025 16:22:23 +0100
-Message-ID: <20251203152445.892234297@linuxfoundation.org>
+Subject: [PATCH 6.1 142/568] media: pci: ivtv: Dont create fake v4l2_fh
+Date: Wed,  3 Dec 2025 16:22:24 +0100
+Message-ID: <20251203152445.929130212@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,50 +51,177 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey McRae <geoffrey.mcrae@amd.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit 57af162bfc8c05332a28c4d458d246cc46d2746d ]
+[ Upstream commit cc6e8d1ccea792d8550428e0831e3a35b0ccfddc ]
 
-Some kfd ioctls may not be available depending on the kernel version the
-user is running, as such we need to report -ENOTTY so userland can
-determine the cause of the ioctl failure.
+The ivtv driver has a structure named ivtv_open_id that models an open
+file handle for the device. It embeds a v4l2_fh instance for file
+handles that correspond to a V4L2 video device, and stores a pointer to
+that v4l2_fh in struct ivtv_stream to identify which open file handle
+owns a particular stream.
 
-Signed-off-by: Geoffrey McRae <geoffrey.mcrae@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In addition to video devices, streams can be owned by ALSA PCM devices.
+Those devices do not make use of the v4l2_fh instance for obvious
+reasons, but the snd_ivtv_pcm_capture_open() function still initializes
+a "fake" v4l2_fh for the sole purpose of using it as an open file handle
+identifier. The v4l2_fh is not properly destroyed when the ALSA PCM
+device is closed, leading to possible resource leaks.
+
+Fortunately, the v4l2_fh instance pointed to by ivtv_stream is not
+accessed, only the pointer value is used for comparison. Replace it with
+a pointer to the ivtv_open_id structure that embeds the v4l2_fh, and
+don't initialize the v4l2_fh for ALSA PCM devices.
+
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_chardev.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/pci/ivtv/ivtv-alsa-pcm.c |  2 --
+ drivers/media/pci/ivtv/ivtv-driver.h   |  3 ++-
+ drivers/media/pci/ivtv/ivtv-fileops.c  | 18 +++++++++---------
+ drivers/media/pci/ivtv/ivtv-irq.c      |  4 ++--
+ 4 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-index 773913a7d6e90..c1cb91a79b796 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_chardev.c
-@@ -2790,8 +2790,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 	int retcode = -EINVAL;
- 	bool ptrace_attached = false;
+diff --git a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
+index 8f346d7da9c8d..269a799ec046c 100644
+--- a/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
++++ b/drivers/media/pci/ivtv/ivtv-alsa-pcm.c
+@@ -148,14 +148,12 @@ static int snd_ivtv_pcm_capture_open(struct snd_pcm_substream *substream)
  
--	if (nr >= AMDKFD_CORE_IOCTL_COUNT)
-+	if (nr >= AMDKFD_CORE_IOCTL_COUNT) {
-+		retcode = -ENOTTY;
- 		goto err_i1;
-+	}
+ 	s = &itv->streams[IVTV_ENC_STREAM_TYPE_PCM];
  
- 	if ((nr >= AMDKFD_COMMAND_START) && (nr < AMDKFD_COMMAND_END)) {
- 		u32 amdkfd_size;
-@@ -2804,8 +2806,10 @@ static long kfd_ioctl(struct file *filep, unsigned int cmd, unsigned long arg)
- 			asize = amdkfd_size;
+-	v4l2_fh_init(&item.fh, &s->vdev);
+ 	item.itv = itv;
+ 	item.type = s->type;
  
- 		cmd = ioctl->cmd;
--	} else
-+	} else {
-+		retcode = -ENOTTY;
- 		goto err_i1;
-+	}
+ 	/* See if the stream is available */
+ 	if (ivtv_claim_stream(&item, item.type)) {
+ 		/* No, it's already in use */
+-		v4l2_fh_exit(&item.fh);
+ 		snd_ivtv_unlock(itvsc);
+ 		return -EBUSY;
+ 	}
+diff --git a/drivers/media/pci/ivtv/ivtv-driver.h b/drivers/media/pci/ivtv/ivtv-driver.h
+index ce3a7ca51736e..df2dcef1af3f0 100644
+--- a/drivers/media/pci/ivtv/ivtv-driver.h
++++ b/drivers/media/pci/ivtv/ivtv-driver.h
+@@ -322,6 +322,7 @@ struct ivtv_queue {
+ };
  
- 	dev_dbg(kfd_device, "ioctl cmd 0x%x (#0x%x), arg 0x%lx\n", cmd, nr, arg);
+ struct ivtv;				/* forward reference */
++struct ivtv_open_id;
+ 
+ struct ivtv_stream {
+ 	/* These first four fields are always set, even if the stream
+@@ -331,7 +332,7 @@ struct ivtv_stream {
+ 	const char *name;		/* name of the stream */
+ 	int type;			/* stream type */
+ 
+-	struct v4l2_fh *fh;		/* pointer to the streaming filehandle */
++	struct ivtv_open_id *id;	/* pointer to the streaming ivtv_open_id */
+ 	spinlock_t qlock;		/* locks access to the queues */
+ 	unsigned long s_flags;		/* status flags, see above */
+ 	int dma;			/* can be PCI_DMA_TODEVICE, PCI_DMA_FROMDEVICE or PCI_DMA_NONE */
+diff --git a/drivers/media/pci/ivtv/ivtv-fileops.c b/drivers/media/pci/ivtv/ivtv-fileops.c
+index 4202c3a47d33e..7ed0d2d85253e 100644
+--- a/drivers/media/pci/ivtv/ivtv-fileops.c
++++ b/drivers/media/pci/ivtv/ivtv-fileops.c
+@@ -38,16 +38,16 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
+ 
+ 	if (test_and_set_bit(IVTV_F_S_CLAIMED, &s->s_flags)) {
+ 		/* someone already claimed this stream */
+-		if (s->fh == &id->fh) {
++		if (s->id == id) {
+ 			/* yes, this file descriptor did. So that's OK. */
+ 			return 0;
+ 		}
+-		if (s->fh == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
++		if (s->id == NULL && (type == IVTV_DEC_STREAM_TYPE_VBI ||
+ 					 type == IVTV_ENC_STREAM_TYPE_VBI)) {
+ 			/* VBI is handled already internally, now also assign
+ 			   the file descriptor to this stream for external
+ 			   reading of the stream. */
+-			s->fh = &id->fh;
++			s->id = id;
+ 			IVTV_DEBUG_INFO("Start Read VBI\n");
+ 			return 0;
+ 		}
+@@ -55,7 +55,7 @@ int ivtv_claim_stream(struct ivtv_open_id *id, int type)
+ 		IVTV_DEBUG_INFO("Stream %d is busy\n", type);
+ 		return -EBUSY;
+ 	}
+-	s->fh = &id->fh;
++	s->id = id;
+ 	if (type == IVTV_DEC_STREAM_TYPE_VBI) {
+ 		/* Enable reinsertion interrupt */
+ 		ivtv_clear_irq_mask(itv, IVTV_IRQ_DEC_VBI_RE_INSERT);
+@@ -93,7 +93,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
+ 	struct ivtv *itv = s->itv;
+ 	struct ivtv_stream *s_vbi;
+ 
+-	s->fh = NULL;
++	s->id = NULL;
+ 	if ((s->type == IVTV_DEC_STREAM_TYPE_VBI || s->type == IVTV_ENC_STREAM_TYPE_VBI) &&
+ 		test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
+ 		/* this stream is still in use internally */
+@@ -125,7 +125,7 @@ void ivtv_release_stream(struct ivtv_stream *s)
+ 		/* was already cleared */
+ 		return;
+ 	}
+-	if (s_vbi->fh) {
++	if (s_vbi->id) {
+ 		/* VBI stream still claimed by a file descriptor */
+ 		return;
+ 	}
+@@ -349,7 +349,7 @@ static ssize_t ivtv_read(struct ivtv_stream *s, char __user *ubuf, size_t tot_co
+ 	size_t tot_written = 0;
+ 	int single_frame = 0;
+ 
+-	if (atomic_read(&itv->capturing) == 0 && s->fh == NULL) {
++	if (atomic_read(&itv->capturing) == 0 && s->id == NULL) {
+ 		/* shouldn't happen */
+ 		IVTV_DEBUG_WARN("Stream %s not initialized before read\n", s->name);
+ 		return -EIO;
+@@ -819,7 +819,7 @@ void ivtv_stop_capture(struct ivtv_open_id *id, int gop_end)
+ 		     id->type == IVTV_ENC_STREAM_TYPE_VBI) &&
+ 		    test_bit(IVTV_F_S_INTERNAL_USE, &s->s_flags)) {
+ 			/* Also used internally, don't stop capturing */
+-			s->fh = NULL;
++			s->id = NULL;
+ 		}
+ 		else {
+ 			ivtv_stop_v4l2_encode_stream(s, gop_end);
+@@ -903,7 +903,7 @@ int ivtv_v4l2_close(struct file *filp)
+ 	v4l2_fh_exit(fh);
+ 
+ 	/* Easy case first: this stream was never claimed by us */
+-	if (s->fh != &id->fh)
++	if (s->id != id)
+ 		goto close_done;
+ 
+ 	/* 'Unclaim' this stream */
+diff --git a/drivers/media/pci/ivtv/ivtv-irq.c b/drivers/media/pci/ivtv/ivtv-irq.c
+index e39bf64c5c715..404335e5aff4e 100644
+--- a/drivers/media/pci/ivtv/ivtv-irq.c
++++ b/drivers/media/pci/ivtv/ivtv-irq.c
+@@ -305,7 +305,7 @@ static void dma_post(struct ivtv_stream *s)
+ 			ivtv_process_vbi_data(itv, buf, 0, s->type);
+ 			s->q_dma.bytesused += buf->bytesused;
+ 		}
+-		if (s->fh == NULL) {
++		if (s->id == NULL) {
+ 			ivtv_queue_move(s, &s->q_dma, NULL, &s->q_free, 0);
+ 			return;
+ 		}
+@@ -330,7 +330,7 @@ static void dma_post(struct ivtv_stream *s)
+ 		set_bit(IVTV_F_I_HAVE_WORK, &itv->i_flags);
+ 	}
+ 
+-	if (s->fh)
++	if (s->id)
+ 		wake_up(&s->waitq);
+ }
  
 -- 
 2.51.0
