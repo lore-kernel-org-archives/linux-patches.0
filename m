@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F2834DB6D;
-	Wed,  3 Dec 2025 16:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C08134DCF2;
+	Wed,  3 Dec 2025 16:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778779; cv=none; b=Z9YZNULFeplGnic7St6c7sBo907fk03kBgIFikPw17261AC5lcuv1H7boHUaNpzvT0oP3nkhpZ6xBpbdYcBGlse95GkiE8ZTAj8BOJEbUmRi/SW1KsC6fFHlj6e2XaTyU6C2vZMcYPmxPN4E4a/7iSZOdMKYtkCCoQQpTdP1f1o=
+	t=1764778782; cv=none; b=X/nd8DtDOqfQU+M0PNdYvlT1VK1eJ6SIr30optfh7P3bU6/da7p1i2rqTuro+tJ/ubOhDKEyGb9P8HPl+irLLw8/4cw+2OEz49YOFiARaNU8Pmv7+Ezy2mH8nC3DBIm9ZsLQLZXVXl+SPIbkeHhiqj9opteTANV1uOl8c0XLPiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778779; c=relaxed/simple;
-	bh=pxBwxhE2SowLXuXWwdyoqoNKMuD17lG3phktFh2KsRw=;
+	s=arc-20240116; t=1764778782; c=relaxed/simple;
+	bh=M1UZyPnMf+p9AUkOB9Uz1qqyN3fvMX2olp4v8qLK9PM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0lskbg3v5u4T4yLbYcB2+1KoBBd9kJ10s+0q6GwNZtUP2Y1Ut32d2PbgQBmP9V02ZbBe1q02AeeaTbZSWHdl7SOkmdX7RDvEcAqH1vV0Vykiix0D8SSLo5zERm6U8okoxPcaZY333ztVKEHHdWmqy9YIdmMaJICY3C87gXFfog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G9n4QTHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sV/9SKYG1mblkN1ChjgLsk5KoIdHEeJkXKgBmYwrVEh/ezL5bHSWtjfy/w0Xf/h3Gms9ZlCsP26zSFfD/47bREEQAASWpWGz0ZejNsTuB3FOGWcCINehEVl4YW3BSuWxFaiobgeaceOshSn8WyKBNqQ8QBH5kwKsPBMzegGqTWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iK7sCSMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G9n4QTHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BE4EC4CEF5;
-	Wed,  3 Dec 2025 16:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iK7sCSMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF56C4CEF5;
+	Wed,  3 Dec 2025 16:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778779;
-	bh=pxBwxhE2SowLXuXWwdyoqoNKMuD17lG3phktFh2KsRw=;
+	s=korg; t=1764778782;
+	bh=M1UZyPnMf+p9AUkOB9Uz1qqyN3fvMX2olp4v8qLK9PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9n4QTHAa1J37hzt0bvvymugAA3EsSJ7klsAXnresl+Z8vuRsieyQwSdV5m27JPhr
-	 /FqBx2wPBPpKdxx7AhTTxPooUDO5YLjxSNyIuMdUDTly0vtz1lNhXOV+8k2IRYlXBY
-	 9kFNKW9aWJs3WV4QnR4tCyUVQXlRRsgpW6QRx08I=
+	b=iK7sCSMzOylXDpO4HjlgYW1DfJJxk1SLUU4116Wnd35Tp1Wx8mG2WhrBe8wTnQWFr
+	 z+d1K/NLQGaS+ieXvfliAIWs3ZxDagZL4jId7qgiYvH2Edr1Mf3ywsxXXvJ0CkwlfZ
+	 fYNDLQM4SyjE3MEiJAGabFfYQOVM+xRgH63qKsIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 056/568] block: fix op_is_zone_mgmt() to handle REQ_OP_ZONE_RESET_ALL
-Date: Wed,  3 Dec 2025 16:20:58 +0100
-Message-ID: <20251203152442.749308248@linuxfoundation.org>
+Subject: [PATCH 6.1 057/568] block: make REQ_OP_ZONE_OPEN a write operation
+Date: Wed,  3 Dec 2025 16:20:59 +0100
+Message-ID: <20251203152442.786197994@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -55,16 +55,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <dlemoal@kernel.org>
 
-commit 12a1c9353c47c0fb3464eba2d78cdf649dee1cf7 upstream.
+commit 19de03b312d69a7e9bacb51c806c6e3f4207376c upstream.
 
-REQ_OP_ZONE_RESET_ALL is a zone management request. Fix
-op_is_zone_mgmt() to return true for that operation, like it already
-does for REQ_OP_ZONE_RESET.
+A REQ_OP_OPEN_ZONE request changes the condition of a sequential zone of
+a zoned block device to the explicitly open condition
+(BLK_ZONE_COND_EXP_OPEN). As such, it should be considered a write
+operation.
 
-While no problems were reported without this fix, this change allows
-strengthening checks in various block device drivers (scsi sd,
-virtioblk, DM) where op_is_zone_mgmt() is used to verify that a zone
-management command is not being issued to a regular block device.
+Change this operation code to be an odd number to reflect this. The
+following operation numbers are changed to keep the numbering compact.
+
+No problems were reported without this change as this operation has no
+data. However, this unifies the zone operation to reflect that they
+modify the device state and also allows strengthening checks in the
+block layer, e.g. checking if this operation is not issued against a
+read-only device.
 
 Fixes: 6c1b1da58f8c ("block: add zone open, close and finish operations")
 Cc: stable@vger.kernel.org
@@ -75,18 +80,31 @@ Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blk_types.h |    1 +
- 1 file changed, 1 insertion(+)
+ include/linux/blk_types.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 --- a/include/linux/blk_types.h
 +++ b/include/linux/blk_types.h
-@@ -519,6 +519,7 @@ static inline bool op_is_zone_mgmt(enum
- {
- 	switch (op & REQ_OP_MASK) {
- 	case REQ_OP_ZONE_RESET:
-+	case REQ_OP_ZONE_RESET_ALL:
- 	case REQ_OP_ZONE_OPEN:
- 	case REQ_OP_ZONE_CLOSE:
- 	case REQ_OP_ZONE_FINISH:
+@@ -371,15 +371,15 @@ enum req_op {
+ 	/* write the zero filled sector many times */
+ 	REQ_OP_WRITE_ZEROES	= (__force blk_opf_t)9,
+ 	/* Open a zone */
+-	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)10,
++	REQ_OP_ZONE_OPEN	= (__force blk_opf_t)11,
+ 	/* Close a zone */
+-	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)11,
++	REQ_OP_ZONE_CLOSE	= (__force blk_opf_t)13,
+ 	/* Transition a zone to full */
+-	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)13,
++	REQ_OP_ZONE_FINISH	= (__force blk_opf_t)15,
+ 	/* reset a zone write pointer */
+-	REQ_OP_ZONE_RESET	= (__force blk_opf_t)15,
++	REQ_OP_ZONE_RESET	= (__force blk_opf_t)17,
+ 	/* reset all the zone present on the device */
+-	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)17,
++	REQ_OP_ZONE_RESET_ALL	= (__force blk_opf_t)19,
+ 
+ 	/* Driver private requests */
+ 	REQ_OP_DRV_IN		= (__force blk_opf_t)34,
 
 
