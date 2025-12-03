@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E050316184;
-	Wed,  3 Dec 2025 15:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FE5314A9B;
+	Wed,  3 Dec 2025 15:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776597; cv=none; b=cHu6NWaaZQwbPM7XJ5FsV1KHj8AULekzgZvUk+K2H+au97RYXXA9mMX5dL1bNmFMaS3qVL4z95y/ma+uSprEU9fA2iFLPJc9pgcu3q02YhJjJOfA1QnMqkOpyx6k166EnaHmYPCz1QsmZBAevKUSX9fDURkEqmssyQOlSx7Cfm4=
+	t=1764776600; cv=none; b=XyL7d/3kqhFoo/xXg9DAYy4Pqx5cQZUcNXHaSQVkNP6dPX0uKSepuWMp4YQRN4vDGxo2uZFWNZqGxoyzGy3p3Fd53UDt3HpbNwtUyNLZkYrqNQmMvARIRN0G8YrCe+KIFT25lnotYc58U+BNypGpCSHInm/+39QL5WoSGWW1oqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776597; c=relaxed/simple;
-	bh=Ql5RI2a77XkYBLFH6KKx4wa2xKacQouAuirBZyHFdHA=;
+	s=arc-20240116; t=1764776600; c=relaxed/simple;
+	bh=NOS5BwbuOiI63g5t03DD/4hAJIZbmu0hCEJFCwUI49Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iaxK4WDxYhzsTXyXKALhMM1P+TLiOCvm+s/TolbHQUUCeWev76iCNRdZ2ROZxC+/vwa5Fy3DvenJi5gLqpTqtSTkIfwIoRWWHBIC7enx1Gqa1/vjmfJuTIRLwOwPVs/460e97e5ofRJ8ZKs/V76Q0MJjs+KOIFmFFucW/zNktLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Obcb1K08; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZd1IF7b8gZ3J01r1O10hkF5jQPmWzDHib9gAkVnoBIe4clBfQRLulgvA4enpkq6Ue05Bp/6NJjFuGIrTL+0x+KZjduPK6uHfgVgYBaSwT9SNN3VEcRLgCtKpVKKzS3kNSplMdirLeihjzUI+tcB3bmrgPaUJ0kcuO6ab/KtoKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a235EXFf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Obcb1K08"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A98C4CEF5;
-	Wed,  3 Dec 2025 15:43:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a235EXFf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC2EC4CEF5;
+	Wed,  3 Dec 2025 15:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776596;
-	bh=Ql5RI2a77XkYBLFH6KKx4wa2xKacQouAuirBZyHFdHA=;
+	s=korg; t=1764776600;
+	bh=NOS5BwbuOiI63g5t03DD/4hAJIZbmu0hCEJFCwUI49Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Obcb1K081lKRU8mrnRjS5vvlqKXAt6800Bu4mg7ype37AI83r6wYWrIYDABksiOzK
-	 zTjseo+BQghJ3vGOW+UWPE1bGEOUw86dH1IUiTtOfESsdNE0mvxiephP2pm85jbPpa
-	 nFsGnZ89PsXvVsmmmYa5wqqWRwHTUAF5WVvXlYvg=
+	b=a235EXFfvgNCvDScLAtlRuxfueKvmY40GncUcAjnC4YC5rkbW2QLyI518FzpL91Gp
+	 kCffub21Y0D8heJmCvnXMfTsV6jtP6H1tcNLd4ewlxJ3DK/MLauZwk/9wZbvS7LyVn
+	 0GNitd9BahAAAYOv3LVnQXXG6QyBXVB/1hpdqQOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/300] scsi: core: Fix a regression triggered by scsi_host_busy()
-Date: Wed,  3 Dec 2025 16:27:14 +0100
-Message-ID: <20251203152409.147484703@linuxfoundation.org>
+Subject: [PATCH 5.10 231/300] net: tls: Cancel RX async resync request on rcd_delta overflow
+Date: Wed,  3 Dec 2025 16:27:15 +0100
+Message-ID: <20251203152409.184212657@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -54,75 +53,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit a0b7780602b1b196f47e527fec82166a7e67c4d0 ]
+[ Upstream commit c15d5c62ab313c19121f10e25d4fec852bd1c40c ]
 
-Commit 995412e23bb2 ("blk-mq: Replace tags->lock with SRCU for tag
-iterators") introduced the following regression:
+When a netdev issues a RX async resync request for a TLS connection,
+the TLS module handles it by logging record headers and attempting to
+match them to the tcp_sn provided by the device. If a match is found,
+the TLS module approves the tcp_sn for resynchronization.
 
-Call trace:
- __srcu_read_lock+0x30/0x80 (P)
- blk_mq_tagset_busy_iter+0x44/0x300
- scsi_host_busy+0x38/0x70
- ufshcd_print_host_state+0x34/0x1bc
- ufshcd_link_startup.constprop.0+0xe4/0x2e0
- ufshcd_init+0x944/0xf80
- ufshcd_pltfrm_init+0x504/0x820
- ufs_rockchip_probe+0x2c/0x88
- platform_probe+0x5c/0xa4
- really_probe+0xc0/0x38c
- __driver_probe_device+0x7c/0x150
- driver_probe_device+0x40/0x120
- __driver_attach+0xc8/0x1e0
- bus_for_each_dev+0x7c/0xdc
- driver_attach+0x24/0x30
- bus_add_driver+0x110/0x230
- driver_register+0x68/0x130
- __platform_driver_register+0x20/0x2c
- ufs_rockchip_pltform_init+0x1c/0x28
- do_one_initcall+0x60/0x1e0
- kernel_init_freeable+0x248/0x2c4
- kernel_init+0x20/0x140
- ret_from_fork+0x10/0x20
+While waiting for a device response, the TLS module also increments
+rcd_delta each time a new TLS record is received, tracking the distance
+from the original resync request.
 
-Fix this regression by making scsi_host_busy() check whether the SCSI
-host tag set has already been initialized. tag_set->ops is set by
-scsi_mq_setup_tags() just before blk_mq_alloc_tag_set() is called. This
-fix is based on the assumption that scsi_host_busy() and
-scsi_mq_setup_tags() calls are serialized. This is the case in the UFS
-driver.
+However, if the device response is delayed or fails (e.g due to
+unstable connection and device getting out of tracking, hardware
+errors, resource exhaustion etc.), the TLS module keeps logging and
+incrementing, which can lead to a WARN() when rcd_delta exceeds the
+threshold.
 
-Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Closes: https://lore.kernel.org/linux-block/pnezafputodmqlpumwfbn644ohjybouveehcjhz2hmhtcf2rka@sdhoiivync4y/
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Link: https://patch.msgid.link/20251007214800.1678255-1-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+To address this, introduce tls_offload_rx_resync_async_request_cancel()
+to explicitly cancel resync requests when a device response failure is
+detected. Call this helper also as a final safeguard when rcd_delta
+crosses its threshold, as reaching this point implies that earlier
+cancellation did not occur.
+
+Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/1761508983-937977-3-git-send-email-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hosts.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/net/tls.h    | 6 ++++++
+ net/tls/tls_device.c | 4 +++-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hosts.c b/drivers/scsi/hosts.c
-index 17fa1cd91da61..97cbe22d7fee2 100644
---- a/drivers/scsi/hosts.c
-+++ b/drivers/scsi/hosts.c
-@@ -598,8 +598,9 @@ int scsi_host_busy(struct Scsi_Host *shost)
- {
- 	int cnt = 0;
- 
--	blk_mq_tagset_busy_iter(&shost->tag_set,
--				scsi_host_check_in_flight, &cnt);
-+	if (shost->tag_set.ops)
-+		blk_mq_tagset_busy_iter(&shost->tag_set,
-+					scsi_host_check_in_flight, &cnt);
- 	return cnt;
+diff --git a/include/net/tls.h b/include/net/tls.h
+index c76a827a678ae..b4040f76b007f 100644
+--- a/include/net/tls.h
++++ b/include/net/tls.h
+@@ -674,6 +674,12 @@ tls_offload_rx_resync_async_request_end(struct sock *sk, __be32 seq)
+ 		     ((u64)ntohl(seq) << 32) | RESYNC_REQ);
  }
- EXPORT_SYMBOL(scsi_host_busy);
+ 
++static inline void
++tls_offload_rx_resync_async_request_cancel(struct tls_offload_resync_async *resync_async)
++{
++	atomic64_set(&resync_async->req, 0);
++}
++
+ static inline void
+ tls_offload_rx_resync_set_type(struct sock *sk, enum tls_offload_sync_type type)
+ {
+diff --git a/net/tls/tls_device.c b/net/tls/tls_device.c
+index 5cb6846544cc7..8e89ff403073b 100644
+--- a/net/tls/tls_device.c
++++ b/net/tls/tls_device.c
+@@ -710,8 +710,10 @@ tls_device_rx_resync_async(struct tls_offload_resync_async *resync_async,
+ 		/* shouldn't get to wraparound:
+ 		 * too long in async stage, something bad happened
+ 		 */
+-		if (WARN_ON_ONCE(resync_async->rcd_delta == USHRT_MAX))
++		if (WARN_ON_ONCE(resync_async->rcd_delta == USHRT_MAX)) {
++			tls_offload_rx_resync_async_request_cancel(resync_async);
+ 			return false;
++		}
+ 
+ 		/* asynchronous stage: log all headers seq such that
+ 		 * req_seq <= seq <= end_seq, and wait for real resync request
 -- 
 2.51.0
 
