@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BEC2FB62A;
-	Wed,  3 Dec 2025 16:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3223612DC;
+	Wed,  3 Dec 2025 16:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779307; cv=none; b=TAxJmwwsCrmY0gfjbln1sgXdcDV3WMkCkYnkv5cMoC8Ejm3r7Ud8H9PzE8Pbd/aaZLpXYzrn/+075GEdiJ2iiJNGFCyXj1q0tfsiGaglWisRFsT02tzH5xfw5s+ISSJcBYC56VkDSHW/gD/vBNA6BZFq/m4VBbQPy4osTyZ+48g=
+	t=1764779310; cv=none; b=Z9L5bsfVA8P7yI4Xk3G0k2hzwRHCuY0tVidfaAxnr9RqnJBjs7A6NH2HaDvzZq5qCLhJpESdAZec9iYbTjcTCCaaixX7gkQM4fwyUR90YFGoyWssZ0yLmuC4avuOqami2TaAGQCBmQMhmVM8OEuAznBZ4xPCOCCqn9CRYrpzuAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779307; c=relaxed/simple;
-	bh=nOq08zCshsXFJs+T6e3kUvgTAOUyPc8zY3QpsOSVf50=;
+	s=arc-20240116; t=1764779310; c=relaxed/simple;
+	bh=I1JrhXmYxwOQsfD92ypRx3Mv4MXOezTJS9GSChIM62c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TGNJ+cvXZtLasVfbn0bN9wF0bbmuKKjFiWa3bynPV5vd7qgBPToCDe8uevvHPvHDoftaIDpH1v4G0o8YewC6fooN3DVlye3dYPg9ccm/qsaiS2DXPkYbRQbIfYhtDc3ezktUxuL3GTSrjXT8kcMTd3C8V8YBxI28PwePFGR5oBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGm8XLAo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qDP8GBPB+5Z1DfZuA43HTvGW11uurhL6+FCl3aIh3P8WLayGVhpWxE0/b3jVgiFWKLkAZgtFc5LskUV2Kg7vwTAQV8ubJHRu4YZrg7UIGTQjei9t+mURYrpBfTpEPArg6I1Uv7Rns1A70pYw8gWkqev6O//2QNa+PcRgibBf6QA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wd4o3Nq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGm8XLAo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E83AC4CEF5;
-	Wed,  3 Dec 2025 16:28:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wd4o3Nq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B00C4CEF5;
+	Wed,  3 Dec 2025 16:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779306;
-	bh=nOq08zCshsXFJs+T6e3kUvgTAOUyPc8zY3QpsOSVf50=;
+	s=korg; t=1764779310;
+	bh=I1JrhXmYxwOQsfD92ypRx3Mv4MXOezTJS9GSChIM62c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGm8XLAojhafNy/IXMS8zIkOgQMzHJSaXSs0xZ9hFNl4TT32WJlJf6WVOrtEXBerA
-	 sqOzSUcDjxvy31e/R4fCVlvWKvx8cVRES104ru/4KxtHm7yFtlJvF043P50+WLrwSt
-	 THw/xzwEQfMPzqWivgOoOYt+qD+zAHB86m4CeiD0=
+	b=wd4o3Nq0OFLhdmBUKiWMk04QMUSm038/o5qjV7AgCAkH32bwco49SzSOMEwFL+cTk
+	 ZTuUN7BKFqA3RY54QO1QSKn7Yvp+EivXI+6024gBv9Gss8xoKwKl45Lw9XiKDiHZz4
+	 PRsHUZ5fsZ73OVYUO0EEOMPBJuxbFjbfcX64KYQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Palmer <daniel@thingy.jp>,
+	David Ahern <dsahern@kernel.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 219/568] eth: 8139too: Make 8139TOO_PIO depend on !NO_IOPORT_MAP
-Date: Wed,  3 Dec 2025 16:23:41 +0100
-Message-ID: <20251203152448.743922935@linuxfoundation.org>
+Subject: [PATCH 6.1 220/568] selftests: Replace sleep with slowwait
+Date: Wed,  3 Dec 2025 16:23:42 +0100
+Message-ID: <20251203152448.780758510@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,42 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Palmer <daniel@thingy.jp>
+From: David Ahern <dsahern@kernel.org>
 
-[ Upstream commit 43adad382e1fdecabd2c4cd2bea777ef4ce4109e ]
+[ Upstream commit 2f186dd5585c3afb415df80e52f71af16c9d3655 ]
 
-When 8139too is probing and 8139TOO_PIO=y it will call pci_iomap_range()
-and from there __pci_ioport_map() for the PCI IO space.
-If HAS_IOPORT_MAP=n and NO_GENERIC_PCI_IOPORT_MAP=n, like it is on my
-m68k config, __pci_ioport_map() becomes NULL, pci_iomap_range() will
-always fail and the driver will complain it couldn't map the PIO space
-and return an error.
+Replace the sleep in kill_procs with slowwait.
 
-NO_IOPORT_MAP seems to cover the case where what 8139too is trying
-to do cannot ever work so make 8139TOO_PIO depend on being it false
-and avoid creating an unusable driver.
-
-Signed-off-by: Daniel Palmer <daniel@thingy.jp>
-Link: https://patch.msgid.link/20250907064349.3427600-1-daniel@thingy.jp
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20250910025828.38900-2-dsahern@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/Kconfig | 2 +-
+ tools/testing/selftests/net/fcnal-test.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/Kconfig b/drivers/net/ethernet/realtek/Kconfig
-index 93d9df55b361a..01811924c4db4 100644
---- a/drivers/net/ethernet/realtek/Kconfig
-+++ b/drivers/net/ethernet/realtek/Kconfig
-@@ -58,7 +58,7 @@ config 8139TOO
- config 8139TOO_PIO
- 	bool "Use PIO instead of MMIO"
- 	default y
--	depends on 8139TOO
-+	depends on 8139TOO && !NO_IOPORT_MAP
- 	help
- 	  This instructs the driver to use programmed I/O ports (PIO) instead
- 	  of PCI shared memory (MMIO).  This can possibly solve some problems
+diff --git a/tools/testing/selftests/net/fcnal-test.sh b/tools/testing/selftests/net/fcnal-test.sh
+index 135e19db39eb0..bb20dac178698 100755
+--- a/tools/testing/selftests/net/fcnal-test.sh
++++ b/tools/testing/selftests/net/fcnal-test.sh
+@@ -194,7 +194,7 @@ show_hint()
+ kill_procs()
+ {
+ 	killall nettest ping ping6 >/dev/null 2>&1
+-	sleep 1
++	slowwait 2 sh -c 'test -z "$(pgrep '"'^(nettest|ping|ping6)$'"')"'
+ }
+ 
+ do_run_cmd()
 -- 
 2.51.0
 
