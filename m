@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ECA3491C9;
-	Wed,  3 Dec 2025 16:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA527352F96;
+	Wed,  3 Dec 2025 16:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780250; cv=none; b=SMntSurKMOpwRV7w3198IJW3WpaVFD2NTQrbaTiPkqWHQX7mmXcqMjNB74Wi3YhkflUDecObH4lGEnR6cmBp4EFb1N8WQSFcEWZj+cfsBZqUUJOOvRspF4lV4CoXnoUMm3hjdoSrdWZzrysW4EtGGFKbTjKsJdvQcBzdMUbmzhQ=
+	t=1764780253; cv=none; b=Agp1ZaFIlkJWPt/IbbMO9nUlWlTfehXfq68OSBErI9hUJ6GCR/E9uw/ljo6tPcAZ/obB3bc1J0RE3vekRkK1WvLFPS6skKzehd1xmFVmAJ/l89TNIgj8KE7xyZWXw4dazuDoaisJR/P7duaLtTSTDgIJtT7GYxFNCzSBaerJvTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780250; c=relaxed/simple;
-	bh=LWHK+wP8sK5AhKs1dNfDswjMvhByeTaSDamT6xtm7RQ=;
+	s=arc-20240116; t=1764780253; c=relaxed/simple;
+	bh=zJDnNDrx45kehE+yw6oahSAj15O3o/Z/EFc5EOSZ59M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cZY3GxDyGM1zjGJrdktHw+3KWb3r0OfTEboFpXJKHmhi/cBsfva5CENrphOz3pIOhO80cNAyiMXSuWLuDdestjtIXnMbvONNl5NnMwW2ldfel0s+2e7JuCRJ7M60kLdlv0KmrXRXDYFpEshZglkZGi6rNv0OXotQc4yrgUkDHJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzeAMyyO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=meHxTPufELqrL57p4f76XAdRlQ31BK/Hh9hvXFh3IIZbMieQx+IsEry6BMmnKgRDMf0rQcCM2rzTa0DPhHOVnxFhKFhZ7GfL3BY8H6PpuNrDJk+EceIQBq+TjvxRXXLwAyKycRWTVivGDKlWQOc4HwNqbWeZRmRhz1AbX7Cmtg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2uzrQJNM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzeAMyyO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95784C4CEF5;
-	Wed,  3 Dec 2025 16:44:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2uzrQJNM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4C7C4CEF5;
+	Wed,  3 Dec 2025 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780250;
-	bh=LWHK+wP8sK5AhKs1dNfDswjMvhByeTaSDamT6xtm7RQ=;
+	s=korg; t=1764780253;
+	bh=zJDnNDrx45kehE+yw6oahSAj15O3o/Z/EFc5EOSZ59M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzeAMyyOUkmP/uakMC2b7Dh6DSgGIRTHm/NxODYAa6DcjIu31PHaUOtnudamQjpwo
-	 CrGoNiHoLNA/3T0NhhxSBgVdhxIzOnS5kspedhPBXuZok1RHqK4jLKHGY5pGX9Z2aD
-	 /urXQdz545JFQy+KSBkJgUjgByEbN6dTV2AEWUeM=
+	b=2uzrQJNMosUe/l0jR//Hd63XvJOsJ8R3TpflH+axEQLrtPOQNl1D48llYljY7H0eQ
+	 hqBgn2E8b7yJRZwxNWcws5EF+L5NZCCP4INee4IZb1FpRwHVAyH8sDcp5RDZtMpf5c
+	 LQm2O3nom2NH3Uoq2IXbAij8Z1vAflpJpQBPcqdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 493/568] can: kvaser_usb: leaf: Fix potential infinite loop in command parsers
-Date: Wed,  3 Dec 2025 16:28:15 +0100
-Message-ID: <20251203152458.772327530@linuxfoundation.org>
+Subject: [PATCH 6.1 502/568] drm/amdgpu: fix cyan_skillfish2 gpu info fw handling
+Date: Wed,  3 Dec 2025 16:28:24 +0100
+Message-ID: <20251203152459.100127802@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -52,60 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 0c73772cd2b8cc108d5f5334de89ad648d89b9ec ]
+[ Upstream commit 7fa666ab07ba9e08f52f357cb8e1aad753e83ac6 ]
 
-The `kvaser_usb_leaf_wait_cmd()` and `kvaser_usb_leaf_read_bulk_callback`
-functions contain logic to zero-length commands. These commands are used
-to align data to the USB endpoint's wMaxPacketSize boundary.
+If the board supports IP discovery, we don't need to
+parse the gpu info firmware.
 
-The driver attempts to skip these placeholders by aligning the buffer
-position `pos` to the next packet boundary using `round_up()` function.
+Backport to 6.18.
 
-However, if zero-length command is found exactly on a packet boundary
-(i.e., `pos` is a multiple of wMaxPacketSize, including 0), `round_up`
-function will return the unchanged value of `pos`. This prevents `pos`
-to be increased, causing an infinite loop in the parsing logic.
-
-This patch fixes this in the function by using `pos + 1` instead.
-This ensures that even if `pos` is on a boundary, the calculation is
-based on `pos + 1`, forcing `round_up()` to always return the next
-aligned boundary.
-
-Fixes: 7259124eac7d ("can: kvaser_usb: Split driver into kvaser_usb_core.c and kvaser_usb_leaf.c")
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Reviewed-by: Jimmy Assarsson <extja@kvaser.com>
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://patch.msgid.link/20251023162709.348240-1-eeodqql09@gmail.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4721
+Fixes: fa819e3a7c1e ("drm/amdgpu: add support for cyan skillfish gpu_info")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 5427e32fa3a0ba9a016db83877851ed277b065fb)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index b423fd4c79890..57c68bc926d8d 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -608,7 +608,7 @@ static int kvaser_usb_leaf_wait_cmd(const struct kvaser_usb *dev, u8 id,
- 			 * for further details.
- 			 */
- 			if (tmp->len == 0) {
--				pos = round_up(pos,
-+				pos = round_up(pos + 1,
- 					       le16_to_cpu
- 						(dev->bulk_in->wMaxPacketSize));
- 				continue;
-@@ -1567,7 +1567,7 @@ static void kvaser_usb_leaf_read_bulk_callback(struct kvaser_usb *dev,
- 		 * number of events in case of a heavy rx load on the bus.
- 		 */
- 		if (cmd->len == 0) {
--			pos = round_up(pos, le16_to_cpu
-+			pos = round_up(pos + 1, le16_to_cpu
- 						(dev->bulk_in->wMaxPacketSize));
- 			continue;
- 		}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index f18f165876043..38b81ae236cb3 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -2021,6 +2021,8 @@ static int amdgpu_device_parse_gpu_info_fw(struct amdgpu_device *adev)
+ 		chip_name = "navi12";
+ 		break;
+ 	case CHIP_CYAN_SKILLFISH:
++		if (adev->mman.discovery_bin)
++			return 0;
+ 		chip_name = "cyan_skillfish";
+ 		break;
+ 	}
 -- 
 2.51.0
 
