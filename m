@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3EC313538;
-	Wed,  3 Dec 2025 16:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE4D3557E1;
+	Wed,  3 Dec 2025 16:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778593; cv=none; b=Q/x6s53cf+esbNtAYLHyaUe1b/8sxGEhrUwe8h3KLqr3MfOJ/tibQC+C6GueSAXy5Zr8uH9yeI7IitbcfTg60mfhvmjRR8712mHmYp64xedwrxx2HNu5G1wFU6oY6Y9bwpVnosCKc5S8pVwoTz9OVz1OKjOwWse1Gzu/Ir+M5DY=
+	t=1764778596; cv=none; b=KPbwstLB03Ct4oHppg6fafJyoCvXqOcVmdW+HoQeHiiMjMkPWsCzjntDEZJkrXG8LTZTY7fiKdf6i7k52UN2vN8FIBJf/0Jr5qIiXCN5/TkRGz8X/c5RfALUKU7ZpC00PCi6gs7bEBOhiS1zPJ7NdNEJKSFdrQy3HFJ4DD4NUCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778593; c=relaxed/simple;
-	bh=CVttcWoj34YdqI5FCe4AIp/PMmhJzMVzBmm7z2yQ9/o=;
+	s=arc-20240116; t=1764778596; c=relaxed/simple;
+	bh=9ygMFvv9oHBGqM1BTEN07CCi/4Sx8SUCPUrvPZl+TvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t9yjmHw8yXzgC438sY29XOb1IazH8nk9IWkfffNSUvgRwFqXh/kUoOVudHH44FfzCXNJ4z1VbI2Pw7DCm64bk3MdtWPz0u8aZlrxFdmCqXVoJBdo2anEvs3krHLQpB9sZwMjK3GzYbs9oxteWIGNhpQ8qVGAPn96a4wLIAkU/hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oG6D6K4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmQiG7t5ROXWBMLtEBJT9igwLnZ0FbyKwzD962YMf1xPNCSczzMrbUJs0DkJi0X0LC2OhHKHa1qDCFjLMK1PXTGIfzD4uegErZsgE2EX4JcQuwRqm8JiQ+dferc4Hllk0s95TbeGM6rOqjSSc3l/fqqX7U+Ofx/7j/nx1lanH6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnRPkp1G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oG6D6K4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55D27C4CEF5;
-	Wed,  3 Dec 2025 16:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnRPkp1G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E695C4CEF5;
+	Wed,  3 Dec 2025 16:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778592;
-	bh=CVttcWoj34YdqI5FCe4AIp/PMmhJzMVzBmm7z2yQ9/o=;
+	s=korg; t=1764778595;
+	bh=9ygMFvv9oHBGqM1BTEN07CCi/4Sx8SUCPUrvPZl+TvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oG6D6K4xzckwQlmzFeg1PwnsTMUQz58GqpPGP2EL75ZR5yPnO1zMqOTKNcZ5SoZ/a
-	 mi8KbCmw4NSCXTjpjq4wZXqN9KVRagSnn5tycZNApNm7yOSGVLvTRRAuzQxt0OEsSq
-	 9GtiFD8lUhOrxqzXeKT/xRQhBajI0/+cuaJATU/4=
+	b=XnRPkp1GqHGMnp1iM2TF+jT9KfVKiSRBt0G8J0TlXMFys5YXp17X9cz+BslmFFx/a
+	 Qbeebrh+iPc691kojFXlrfkNfVHxPTvx+5AAgWvrjJ4sea/U5dkuaEID+1e00Eq+X7
+	 j1XWHOxbxk+3punZB5hOVwAN+KteWB7XpvOjWGdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 381/392] mptcp: avoid unneeded subflow-level drops
-Date: Wed,  3 Dec 2025 16:28:51 +0100
-Message-ID: <20251203152428.211012091@linuxfoundation.org>
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+Subject: [PATCH 5.15 382/392] mptcp: Fix proto fallback detection with BPF
+Date: Wed,  3 Dec 2025 16:28:52 +0100
+Message-ID: <20251203152428.249082305@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -51,127 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Jiayuan Chen <jiayuan.chen@linux.dev>
 
-commit 4f102d747cadd8f595f2b25882eed9bec1675fb1 upstream.
+commit c77b3b79a92e3345aa1ee296180d1af4e7031f8f upstream.
 
-The rcv window is shared among all the subflows. Currently, MPTCP sync
-the TCP-level rcv window with the MPTCP one at tcp_transmit_skb() time.
+The sockmap feature allows bpf syscall from userspace, or based
+on bpf sockops, replacing the sk_prot of sockets during protocol stack
+processing with sockmap's custom read/write interfaces.
+'''
+tcp_rcv_state_process()
+  syn_recv_sock()/subflow_syn_recv_sock()
+    tcp_init_transfer(BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB)
+      bpf_skops_established       <== sockops
+        bpf_sock_map_update(sk)   <== call bpf helper
+          tcp_bpf_update_proto()  <== update sk_prot
+'''
 
-The above means that incoming data may sporadically observe outdated
-TCP-level rcv window and being wrongly dropped by TCP.
+When the server has MPTCP enabled but the client sends a TCP SYN
+without MPTCP, subflow_syn_recv_sock() performs a fallback on the
+subflow, replacing the subflow sk's sk_prot with the native sk_prot.
+'''
+subflow_syn_recv_sock()
+  subflow_ulp_fallback()
+    subflow_drop_ctx()
+      mptcp_subflow_ops_undo_override()
+'''
 
-Address the issue checking for the edge condition before queuing the
-data at TCP level, and eventually syncing the rcv window as needed.
+Then, this subflow can be normally used by sockmap, which replaces the
+native sk_prot with sockmap's custom sk_prot. The issue occurs when the
+user executes accept::mptcp_stream_accept::mptcp_fallback_tcp_ops().
+Here, it uses sk->sk_prot to compare with the native sk_prot, but this
+is incorrect when sockmap is used, as we may incorrectly set
+sk->sk_socket->ops.
 
-Note that the issue is actually present from the very first MPTCP
-implementation, but backports older than the blamed commit below will
-range from impossible to useless.
+This fix uses the more generic sk_family for the comparison instead.
 
-Before:
+Additionally, this also prevents a WARNING from occurring:
 
-  $ nstat -n; sleep 1; nstat -z TcpExtBeyondWindow
-  TcpExtBeyondWindow              14                 0.0
+result from ./scripts/decode_stacktrace.sh:
+------------[ cut here ]------------
+WARNING: CPU: 0 PID: 337 at net/mptcp/protocol.c:68 mptcp_stream_accept \
+(net/mptcp/protocol.c:4005)
+Modules linked in:
+...
 
-After:
+PKRU: 55555554
+Call Trace:
+<TASK>
+do_accept (net/socket.c:1989)
+__sys_accept4 (net/socket.c:2028 net/socket.c:2057)
+__x64_sys_accept (net/socket.c:2067)
+x64_sys_call (arch/x86/entry/syscall_64.c:41)
+do_syscall_64 (arch/x86/entry/syscall_64.c:63 arch/x86/entry/syscall_64.c:94)
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+RIP: 0033:0x7f87ac92b83d
 
-  $ nstat -n; sleep 1; nstat -z TcpExtBeyondWindow
-  TcpExtBeyondWindow              0                  0.0
+---[ end trace 0000000000000000 ]---
 
-Fixes: fa3fe2b15031 ("mptcp: track window announced to peer")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0b4f33def7bb ("mptcp: fix tcp fallback crash")
+Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
 Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20251118-net-mptcp-misc-fixes-6-18-rc6-v1-2-806d3781c95f@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in options.c, because the new rwin_update() helper has been
-  added after __mptcp_snd_una_update() which is not in this version --
-  see commit -- and then causing conflicts in the context. There were
-  also some conflicts in mptcp_set_rwin(), because commit f3589be0c420
-  ("mptcp: never shrink offered window") is not in this version. Only
-  the update of subflow->rcv_wnd_sent has been added. Also
-  msk->rcv_wnd_sent is a u64 before this commit: in rwin_update(),
-  READ_ONCE() is used instead of atomic64_read(&). ]
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20251111060307.194196-3-jiayuan.chen@linux.dev
+[ Conflicts in protocol.c, because commit 8e2b8a9fa512 ("mptcp: don't
+  overwrite sock_ops in mptcp_is_tcpsk()") is not in this version. It
+  changes the logic on how and where the sock_ops is overridden in case
+  of passive fallback. To fix this, mptcp_is_tcpsk() is modified to use
+  the family, but first, a check of the protocol is required to continue
+  returning 'false' in case of MPTCP socket. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c  |   32 ++++++++++++++++++++++++++++++--
- net/mptcp/protocol.h |    1 +
- 2 files changed, 31 insertions(+), 2 deletions(-)
+ net/mptcp/protocol.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -1001,6 +1001,31 @@ u64 __mptcp_expand_seq(u64 old_seq, u64
- 	return cur_seq;
- }
- 
-+static void rwin_update(struct mptcp_sock *msk, struct sock *ssk,
-+			struct sk_buff *skb)
-+{
-+	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
-+	struct tcp_sock *tp = tcp_sk(ssk);
-+	u64 mptcp_rcv_wnd;
-+
-+	/* Avoid touching extra cachelines if TCP is going to accept this
-+	 * skb without filling the TCP-level window even with a possibly
-+	 * outdated mptcp-level rwin.
-+	 */
-+	if (!skb->len || skb->len < tcp_receive_window(tp))
-+		return;
-+
-+	mptcp_rcv_wnd = READ_ONCE(msk->rcv_wnd_sent);
-+	if (!after64(mptcp_rcv_wnd, subflow->rcv_wnd_sent))
-+		return;
-+
-+	/* Some other subflow grew the mptcp-level rwin since rcv_wup,
-+	 * resync.
-+	 */
-+	tp->rcv_wnd += mptcp_rcv_wnd - subflow->rcv_wnd_sent;
-+	subflow->rcv_wnd_sent = mptcp_rcv_wnd;
-+}
-+
- static void ack_update_msk(struct mptcp_sock *msk,
- 			   struct sock *ssk,
- 			   struct mptcp_options_received *mp_opt)
-@@ -1160,6 +1185,7 @@ bool mptcp_incoming_options(struct sock
- 	 */
- 	if (mp_opt.use_ack)
- 		ack_update_msk(msk, sk, &mp_opt);
-+	rwin_update(msk, sk, skb);
- 
- 	/* Zero-data-length packets are dropped by the caller and not
- 	 * propagated to the MPTCP layer, so the skb extension does not
-@@ -1212,7 +1238,7 @@ bool mptcp_incoming_options(struct sock
- static void mptcp_set_rwin(const struct tcp_sock *tp)
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -77,8 +77,13 @@ static u64 mptcp_wnd_end(const struct mp
+ static bool mptcp_is_tcpsk(struct sock *sk)
  {
- 	const struct sock *ssk = (const struct sock *)tp;
--	const struct mptcp_subflow_context *subflow;
-+	struct mptcp_subflow_context *subflow;
- 	struct mptcp_sock *msk;
- 	u64 ack_seq;
+ 	struct socket *sock = sk->sk_socket;
++	unsigned short family;
  
-@@ -1221,8 +1247,10 @@ static void mptcp_set_rwin(const struct
- 
- 	ack_seq = READ_ONCE(msk->ack_seq) + tp->rcv_wnd;
- 
--	if (after64(ack_seq, READ_ONCE(msk->rcv_wnd_sent)))
-+	if (after64(ack_seq, READ_ONCE(msk->rcv_wnd_sent))) {
- 		WRITE_ONCE(msk->rcv_wnd_sent, ack_seq);
-+		subflow->rcv_wnd_sent = ack_seq;
-+	}
- }
- 
- static void mptcp_track_rwin(const struct tcp_sock *tp)
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -417,6 +417,7 @@ struct mptcp_subflow_context {
- 	u64	remote_key;
- 	u64	idsn;
- 	u64	map_seq;
-+	u64	rcv_wnd_sent;
- 	u32	snd_isn;
- 	u32	token;
- 	u32	rel_write_seq;
+-	if (unlikely(sk->sk_prot == &tcp_prot)) {
++	if (likely(sk->sk_protocol == IPPROTO_MPTCP))
++		return false;
++
++	family = READ_ONCE(sk->sk_family);
++	if (unlikely(family == AF_INET)) {
+ 		/* we are being invoked after mptcp_accept() has
+ 		 * accepted a non-mp-capable flow: sk is a tcp_sk,
+ 		 * not an mptcp one.
+@@ -89,7 +94,7 @@ static bool mptcp_is_tcpsk(struct sock *
+ 		sock->ops = &inet_stream_ops;
+ 		return true;
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+-	} else if (unlikely(sk->sk_prot == &tcpv6_prot)) {
++	} else if (unlikely(family == AF_INET6)) {
+ 		sock->ops = &inet6_stream_ops;
+ 		return true;
+ #endif
 
 
