@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A7D3313558;
-	Wed,  3 Dec 2025 16:07:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A10313546;
+	Wed,  3 Dec 2025 16:07:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778026; cv=none; b=ZHGqcxIMRkx5SfYg3nt2lCu05SRpD7lVAn9pItnCmsIHHFqnPgKCpsbDmFNklm9+kBJfTe5GPRhWigkoV8GG4U9U/83LH7iqDVWxFC9wRnBzqkC7h7nRHjp9DLLuNcpTO+YcuXBLbEHIVG3NV9A3YBtNQKzH1gvsjO+73hl04kU=
+	t=1764778029; cv=none; b=s7pGp2HJ0p3KJTAtGap9JjdrzgC/WPlGA44Fmjhj3OLpJGlRfBdXZJ0mIV8hTB2ADPkH4sgUBSLDVSNL9F4FdauiP/i8hpLU0WDzTXoh10yWyHzAFpu6Q+dMSz6HWi/CXqQ1RT6r6kasgKCDgYHIRiL1kUaVoaho7NJkphgngf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778026; c=relaxed/simple;
-	bh=yeSnQGbFi4tH0JyonIdbUDdmz2cHsHIXHeVGvKE2JP0=;
+	s=arc-20240116; t=1764778029; c=relaxed/simple;
+	bh=S9w8J7XlmneRZmPWhI2MqTb+hGzZCilEXrE8Vgjr6Ec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gYCFFheuWmmQ8OFLLe5Bh+q+MEIVjvTZkFLVYQJZAofDrgAOunGZY3SdTIhgQ44Pzs/WTprrqaYTzhv4LCQ7a+x0B+9k0k7qjeSiWixHt4Lw8z8J6dUL81S/4aQMayaapVDeDlwP+OdaJYBy5Nj/i7Hm03lNPUpG7xqVXQSpr78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ey+fc3so; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JQgCHGQiiW2EMFwzCmrUh7dlOsSz+GEsvqLb/d6NwvLq8WRCvTV6PCjxPXvo4xKz3wUs5zM0QXCwiAA94WnB/BiPseFp2QL/MFesDaBNzjjRY8f9BvQgUmwytVBNoysBKn+kEa1GqHG8ZtIxmUGXPP/kB2NWeRJpAyYv4vhgKbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPJOLUoU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ey+fc3so"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C56C4CEF5;
-	Wed,  3 Dec 2025 16:07:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPJOLUoU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D31CC4CEF5;
+	Wed,  3 Dec 2025 16:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778026;
-	bh=yeSnQGbFi4tH0JyonIdbUDdmz2cHsHIXHeVGvKE2JP0=;
+	s=korg; t=1764778029;
+	bh=S9w8J7XlmneRZmPWhI2MqTb+hGzZCilEXrE8Vgjr6Ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ey+fc3soMrvRw4Z/z6SATRNa0L5KX8HLNwfaj/SbPa86bT0AnAHzH8ERzy0bOQzpA
-	 p6hKZldlt6jlgl7b7RThYPQuO2f5DLrFbF9z1R0EdwVsFvNwuTZRmKe8jlev3o7KBK
-	 cg8yW8ly/v/GwKoUULovHE5rcp6L5fMfYH3l0dEY=
+	b=pPJOLUoUvLVSLxaE3XkJeAEx2tc1jHjZxSzKvGBYnDkqXrJ5UPni2teT/l4GKb5bk
+	 pf16wfw8USAwqqtN0ytTmWJC5Lyv2z39XAVSvUsOo2CSi7f4Q4YEpwkSSkVzqHf6NK
+	 YTUv/sHWzrZ1D3qRZdtk2rl2V25he8ZxZR6Z+s4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Stefan Wiehler <stefan.wiehler@nokia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Valerio Setti <vsetti@baylibre.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/392] sctp: Hold sock lock while iterating over address list
-Date: Wed,  3 Dec 2025 16:26:11 +0100
-Message-ID: <20251203152422.318518677@linuxfoundation.org>
+Subject: [PATCH 5.15 204/392] ASoC: meson: aiu-encoder-i2s: fix bit clock polarity
+Date: Wed,  3 Dec 2025 16:25:54 +0100
+Message-ID: <20251203152421.580860849@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,64 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wiehler <stefan.wiehler@nokia.com>
+From: Valerio Setti <vsetti@baylibre.com>
 
-[ Upstream commit f1fc201148c7e684c10a72b6a3375597f28d1ef6 ]
+[ Upstream commit 4c4ed5e073a923fb3323022e1131cb51ad8df7a0 ]
 
-Move address list traversal in inet_assoc_attr_size() under the sock
-lock to avoid holding the RCU read lock.
+According to I2S specs audio data is sampled on the rising edge of the
+clock and it can change on the falling one. When operating in normal mode
+this SoC behaves the opposite so a clock polarity inversion is required
+in this case.
 
-Suggested-by: Xin Long <lucien.xin@gmail.com>
-Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
-Signed-off-by: Stefan Wiehler <stefan.wiehler@nokia.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251028161506.3294376-4-stefan.wiehler@nokia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This was tested on an OdroidC2 (Amlogic S905 SoC) board.
+
+Signed-off-by: Valerio Setti <vsetti@baylibre.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Tested-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://patch.msgid.link/20251007-fix-i2s-polarity-v1-1-86704d9cda10@baylibre.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/diag.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ sound/soc/meson/aiu-encoder-i2s.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/sctp/diag.c b/net/sctp/diag.c
-index 3631a32d96b07..2cf5ee7a698e2 100644
---- a/net/sctp/diag.c
-+++ b/net/sctp/diag.c
-@@ -230,14 +230,15 @@ struct sctp_comm_param {
- 	bool net_admin;
+diff --git a/sound/soc/meson/aiu-encoder-i2s.c b/sound/soc/meson/aiu-encoder-i2s.c
+index 67729de41a73e..a512cd49bc507 100644
+--- a/sound/soc/meson/aiu-encoder-i2s.c
++++ b/sound/soc/meson/aiu-encoder-i2s.c
+@@ -236,8 +236,12 @@ static int aiu_encoder_i2s_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+ 	    inv == SND_SOC_DAIFMT_IB_IF)
+ 		val |= AIU_CLK_CTRL_LRCLK_INVERT;
+ 
+-	if (inv == SND_SOC_DAIFMT_IB_NF ||
+-	    inv == SND_SOC_DAIFMT_IB_IF)
++	/*
++	 * The SoC changes data on the rising edge of the bitclock
++	 * so an inversion of the bitclock is required in normal mode
++	 */
++	if (inv == SND_SOC_DAIFMT_NB_NF ||
++	    inv == SND_SOC_DAIFMT_NB_IF)
+ 		val |= AIU_CLK_CTRL_AOCLK_INVERT;
+ 
+ 	/* Signal skew */
+@@ -328,4 +332,3 @@ const struct snd_soc_dai_ops aiu_encoder_i2s_dai_ops = {
+ 	.startup	= aiu_encoder_i2s_startup,
+ 	.shutdown	= aiu_encoder_i2s_shutdown,
  };
- 
--static size_t inet_assoc_attr_size(struct sctp_association *asoc)
-+static size_t inet_assoc_attr_size(struct sock *sk,
-+				   struct sctp_association *asoc)
- {
- 	int addrlen = sizeof(struct sockaddr_storage);
- 	int addrcnt = 0;
- 	struct sctp_sockaddr_entry *laddr;
- 
- 	list_for_each_entry_rcu(laddr, &asoc->base.bind_addr.address_list,
--				list)
-+				list, lockdep_sock_is_held(sk))
- 		addrcnt++;
- 
- 	return	  nla_total_size(sizeof(struct sctp_info))
-@@ -263,11 +264,14 @@ static int sctp_sock_dump_one(struct sctp_endpoint *ep, struct sctp_transport *t
- 	if (err)
- 		return err;
- 
--	rep = nlmsg_new(inet_assoc_attr_size(assoc), GFP_KERNEL);
--	if (!rep)
-+	lock_sock(sk);
-+
-+	rep = nlmsg_new(inet_assoc_attr_size(sk, assoc), GFP_KERNEL);
-+	if (!rep) {
-+		release_sock(sk);
- 		return -ENOMEM;
-+	}
- 
--	lock_sock(sk);
- 	if (ep != assoc->ep) {
- 		err = -EAGAIN;
- 		goto out;
+-
 -- 
 2.51.0
 
