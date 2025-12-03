@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87551328B65;
-	Wed,  3 Dec 2025 15:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB475328B65;
+	Wed,  3 Dec 2025 15:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776980; cv=none; b=XA6D0GRJ+f4sHDSSNYvaP/RMvFJQVitTO1zTrLguVNUah7TNrO5ohXZ/RQVLBwny3QUgQ9hGbFwEfovGyHtbnxj16A6QzhD/uLd/SxBOWBIR8jBQPZctIsCxsHYhu5aitHBk4lBK2bzsm3M0tE3R6zXVS6apYWDFzQIHxD6AisU=
+	t=1764776983; cv=none; b=AHLiKLRcf2EFqAfKs25CMehYsQXxwprYAjJn2ntljeEFOWxzFnk4RTUGXQ40Tnj73DhUPAZvbwiGgt2QsCgor1s7VdY6NF9pF5YDznfJB1pDiy3nG3b7jx/ZrzYxzaTV25Jky3I3hNdZxXiEeToQ2g1c3S9BjrKhAZf26Vxd62c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776980; c=relaxed/simple;
-	bh=C45qZ0/cbNM3pVF68gs2PV1VR36mhXxVhsmD0EHUHgM=;
+	s=arc-20240116; t=1764776983; c=relaxed/simple;
+	bh=t4pjJU9EwdedkfKNxndNUKxbmLeWXTbGDvGNN9bzMg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WujD7+DUQHXPgGDD41/+r1qStgNcAq8jmeLuHwQ2dNzanucLbQeHrYZNxwCYQh903OJbIsFiJShTFuAbPHlR1qop0jZ9ahDQ61vhFK0QTHnY/pbfad9WrtdIKrmhWRWfAgBbPAOpx16vgvYvYY8jC3x1rCWjI2Y9oZ2bawYeic4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y9BVN50H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ldFjtqs3E6HtOxVBHDCMysuLKkki9wEGrUt301kO2AzFJaUHshmmfPD27D7mOZ51wBJhMY8n3UqcZwNCY2w5Pz8phdtVH65d7AsN/TsGr3SfLvu7U6e+A6CYl5SPMSKKvm29Db0A7rUUMzN0VmkYh0A2+zacQiP8SBTAxafXJnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5GP6ark; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y9BVN50H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97785C4CEF5;
-	Wed,  3 Dec 2025 15:49:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5GP6ark"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA83EC4CEF5;
+	Wed,  3 Dec 2025 15:49:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776980;
-	bh=C45qZ0/cbNM3pVF68gs2PV1VR36mhXxVhsmD0EHUHgM=;
+	s=korg; t=1764776983;
+	bh=t4pjJU9EwdedkfKNxndNUKxbmLeWXTbGDvGNN9bzMg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9BVN50HoNAlOyXtNC9LbkzS+FP/oIZQyXw0nBDwnVBngaR06LAlPD6hlTa24aJZ/
-	 ifoc10lbtytXqLbe9NvStbcnDnC1X0VSFu5x+7onM8kzqljMydqGz++OMF+tomd70X
-	 Vlg+XIDHZVECKoDN2pbl9iYeQCtQIw0XKecCDr/c=
+	b=p5GP6arkp/fqjru+lUXajShVxk7/y2ybCdTY9EKr7F+2Oc4GLzKL14L/Gdd2CCtFo
+	 2sZhZJN5CraaqvrfpQB0FUoSKLA0w1Ii4NeOWNNiw0aMcrNnIq1r8A2Ja3x/nuGpbi
+	 PzwQyiCokyfTKyNOU1a3IxZW0hHEIbCECvgfcdxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Frank Li <Frank.Li@nxp.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 046/146] spi: amlogic-spifc-a1: Handle devm_pm_runtime_enable() errors
-Date: Wed,  3 Dec 2025 16:27:04 +0100
-Message-ID: <20251203152348.159728939@linuxfoundation.org>
+Subject: [PATCH 6.17 047/146] spi: spi-nxp-fspi: Add OCT-DTR mode support
+Date: Wed,  3 Dec 2025 16:27:05 +0100
+Message-ID: <20251203152348.195895937@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152346.456176474@linuxfoundation.org>
 References: <20251203152346.456176474@linuxfoundation.org>
@@ -51,40 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit a90903c2a3c38bce475f46ea3f93dbf6a9971553 ]
+[ Upstream commit 0f67557763accbdd56681f17ed5350735198c57b ]
 
-devm_pm_runtime_enable() can fail due to memory allocation. The current
-code ignores its return value, potentially causing runtime PM operations
-to fail silently after autosuspend configuration.
+Add OCT-DTR mode support in default, since flexspi do not supports
+swapping bytes on a 16 bit boundary in OCT-DTR mode, so mark swap16
+as false.
 
-Check the return value of devm_pm_runtime_enable() and return on failure.
+lx2160a do not support DQS, so add a quirk to disable DTR mode for this
+platform.
 
-Fixes: 909fac05b926 ("spi: add support for Amlogic A1 SPI Flash Controller")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251124015852.937-1-vulab@iscas.ac.cn
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20250917-flexspi-ddr-v2-5-bb9fe2a01889@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 40ad64ac25bb ("spi: nxp-fspi: Propagate fwnode in ACPI case as well")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spifc-a1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-nxp-fspi.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-amlogic-spifc-a1.c b/drivers/spi/spi-amlogic-spifc-a1.c
-index 18c9aa2cbc290..eb503790017b2 100644
---- a/drivers/spi/spi-amlogic-spifc-a1.c
-+++ b/drivers/spi/spi-amlogic-spifc-a1.c
-@@ -353,7 +353,9 @@ static int amlogic_spifc_a1_probe(struct platform_device *pdev)
+diff --git a/drivers/spi/spi-nxp-fspi.c b/drivers/spi/spi-nxp-fspi.c
+index ab13f11242c3c..fcf10be66d391 100644
+--- a/drivers/spi/spi-nxp-fspi.c
++++ b/drivers/spi/spi-nxp-fspi.c
+@@ -330,6 +330,8 @@
  
- 	pm_runtime_set_autosuspend_delay(spifc->dev, 500);
- 	pm_runtime_use_autosuspend(spifc->dev);
--	devm_pm_runtime_enable(spifc->dev);
-+	ret = devm_pm_runtime_enable(spifc->dev);
-+	if (ret)
-+		return ret;
+ /* Access flash memory using IP bus only */
+ #define FSPI_QUIRK_USE_IP_ONLY	BIT(0)
++/* Disable DTR */
++#define FSPI_QUIRK_DISABLE_DTR	BIT(1)
  
- 	ctrl->num_chipselect = 1;
- 	ctrl->dev.of_node = pdev->dev.of_node;
+ struct nxp_fspi_devtype_data {
+ 	unsigned int rxfifo;
+@@ -344,7 +346,7 @@ static struct nxp_fspi_devtype_data lx2160a_data = {
+ 	.rxfifo = SZ_512,       /* (64  * 64 bits)  */
+ 	.txfifo = SZ_1K,        /* (128 * 64 bits)  */
+ 	.ahb_buf_size = SZ_2K,  /* (256 * 64 bits)  */
+-	.quirks = 0,
++	.quirks = FSPI_QUIRK_DISABLE_DTR,
+ 	.lut_num = 32,
+ 	.little_endian = true,  /* little-endian    */
+ };
+@@ -1236,6 +1238,13 @@ static const struct spi_controller_mem_ops nxp_fspi_mem_ops = {
+ };
+ 
+ static const struct spi_controller_mem_caps nxp_fspi_mem_caps = {
++	.dtr = true,
++	.swap16 = false,
++	.per_op_freq = true,
++};
++
++static const struct spi_controller_mem_caps nxp_fspi_mem_caps_disable_dtr = {
++	.dtr = false,
+ 	.per_op_freq = true,
+ };
+ 
+@@ -1351,7 +1360,12 @@ static int nxp_fspi_probe(struct platform_device *pdev)
+ 	ctlr->bus_num = -1;
+ 	ctlr->num_chipselect = NXP_FSPI_MAX_CHIPSELECT;
+ 	ctlr->mem_ops = &nxp_fspi_mem_ops;
+-	ctlr->mem_caps = &nxp_fspi_mem_caps;
++
++	if (f->devtype_data->quirks & FSPI_QUIRK_DISABLE_DTR)
++		ctlr->mem_caps = &nxp_fspi_mem_caps_disable_dtr;
++	else
++		ctlr->mem_caps = &nxp_fspi_mem_caps;
++
+ 	ctlr->dev.of_node = np;
+ 
+ 	ret = devm_add_action_or_reset(dev, nxp_fspi_cleanup, f);
 -- 
 2.51.0
 
