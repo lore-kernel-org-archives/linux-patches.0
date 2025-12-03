@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1331314A78;
-	Wed,  3 Dec 2025 15:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A311C3148C1;
+	Wed,  3 Dec 2025 15:37:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776276; cv=none; b=G+9Ok9qBV0lyXYxTnyHppx1fb4djDAyVISaF7o56D2RGvCQ4cj7Me/Kki9LzjsytCkotcHBl/u+Q0WXNFYds8KyErO3ukr0ebYHPVwlSAAfi4GD87JKumZTgov6HBzsfcxKFfg+JWUDnjamCX+evMxdStsxzQOhNUOz38mj+DUs=
+	t=1764776279; cv=none; b=sUYtaP3PjSXJGCb1O9bRhKqAlS/M55Ch8jXnCDXs+0YlrFqww++I2GiHHDSjzKxxDp21l7+1fzPcd1MbyH1t1rxGZuIgdR1xYTot+TX97HExM4wjXgCYGu+oKcOmTDrOzv8Bz1omJufdSjXSuShb6UxhlRFXgPRFjL30n+AfFrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776276; c=relaxed/simple;
-	bh=C9TnJozgwQZNBPLvDseVt/VmR8k+gqASbfaUmJcZuKM=;
+	s=arc-20240116; t=1764776279; c=relaxed/simple;
+	bh=BzOQ7YANzYQfaunqRrdZhHnNch4mFKLGDr4BGGj1gf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJkqXzZE4MUgoRHI+4atTWe8Q9a2xmiqk+dGwT22VBjxCKGotLzmSuDhgyqCIwrDck5pcDzcH5hNEH4MRh9Xei/QD245zIOieC7BauXH6MZ0QlyeLD/4YrB5Oe0KYh9yzAURkHaesfVY0KBKBUx5xZBzxTr1pXayE7fcc5+oie4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t0Zoq7B+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KhKwVOHYLp4w0hiz9ZyXc5WMT4z4CAnq9P7qel8DI0S/ui/kZUkNEYMMa3Q+cqjO3tt69/xQFxI9LuUDCsy5GcSC9MapDJio/sIFKMjk7J1FlfZEfoSOaiGA9wAAwbarfzZkiaHtUtcc6RJ0PUQHmkrA/9JocIkM5Gs2QK7lY8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKxMnypU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t0Zoq7B+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5DC2C4CEF5;
-	Wed,  3 Dec 2025 15:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKxMnypU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE587C4CEF5;
+	Wed,  3 Dec 2025 15:37:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776276;
-	bh=C9TnJozgwQZNBPLvDseVt/VmR8k+gqASbfaUmJcZuKM=;
+	s=korg; t=1764776279;
+	bh=BzOQ7YANzYQfaunqRrdZhHnNch4mFKLGDr4BGGj1gf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t0Zoq7B+5VjveAwVluKVrwM8fdLuY6pt7RF3eLXCURxwFD1KdEMxXD5F3TSbvwVgD
-	 89x2g9NBohKYUwBpmjNIl936BFXvfEnmWwZclzuvbFdmjG7W2vYybVXXB6ASu0TGAi
-	 gKRlFWS4XBd6QqjXUzbayalof+5RXfGly8L8BVww=
+	b=BKxMnypU6E2XSSe63mi6BXQWgYGzhcAXm6BIXFKGvYZN59ibY98Pj7pN3/60WQq+G
+	 0UK5ZhM+AGMafaXXfBBLo+msmqUtnSFZk5qiyBhDepLOb6b5woyrmXm03UJtQ2HWZ0
+	 S/LRROAzi9Xqq8BwjZqtENjVDwoT84pS11PsgeTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rosen Penev <rosenp@gmail.com>,
+	Devendra K Verma <devverma@amd.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/300] dmaengine: mv_xor: match alloc_wc and free_wc
-Date: Wed,  3 Dec 2025 16:25:05 +0100
-Message-ID: <20251203152404.366462049@linuxfoundation.org>
+Subject: [PATCH 5.10 102/300] dmaengine: dw-edma: Set status for callback_result
+Date: Wed,  3 Dec 2025 16:25:06 +0100
+Message-ID: <20251203152404.403643470@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -51,42 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Devendra K Verma <devverma@amd.com>
 
-[ Upstream commit a33e3b667d2f004fdfae6b442bd4676f6c510abb ]
+[ Upstream commit 5e742de97c806a4048418237ef1283e7d71eaf4b ]
 
-dma_alloc_wc is used but not dma_free_wc.
+DMA Engine has support for the callback_result which provides
+the status of the request and the residue. This helps in
+determining the correct status of the request and in
+efficient resource management of the request.
+The 'callback_result' method is preferred over the deprecated
+'callback' method.
 
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Link: https://lore.kernel.org/r/20250821220942.10578-1-rosenp@gmail.com
+Signed-off-by: Devendra K Verma <devverma@amd.com>
+Link: https://lore.kernel.org/r/20250821121505.318179-1-devverma@amd.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/mv_xor.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/drivers/dma/mv_xor.c b/drivers/dma/mv_xor.c
-index 94a12f3267c14..8224d52d16901 100644
---- a/drivers/dma/mv_xor.c
-+++ b/drivers/dma/mv_xor.c
-@@ -1013,7 +1013,7 @@ static int mv_xor_channel_remove(struct mv_xor_chan *mv_chan)
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index f91dbf43a5980..df2874f6f4620 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -488,6 +488,25 @@ dw_edma_device_prep_dma_cyclic(struct dma_chan *dchan, dma_addr_t paddr,
+ 	return dw_edma_device_transfer(&xfer);
+ }
  
- 	dma_async_device_unregister(&mv_chan->dmadev);
- 
--	dma_free_coherent(dev, MV_XOR_POOL_SIZE,
-+	dma_free_wc(dev, MV_XOR_POOL_SIZE,
- 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
- 	dma_unmap_single(dev, mv_chan->dummy_src_addr,
- 			 MV_XOR_MIN_BYTE_COUNT, DMA_FROM_DEVICE);
-@@ -1163,7 +1163,7 @@ mv_xor_channel_add(struct mv_xor_device *xordev,
- err_free_irq:
- 	free_irq(mv_chan->irq, mv_chan);
- err_free_dma:
--	dma_free_coherent(&pdev->dev, MV_XOR_POOL_SIZE,
-+	dma_free_wc(&pdev->dev, MV_XOR_POOL_SIZE,
- 			  mv_chan->dma_desc_pool_virt, mv_chan->dma_desc_pool);
- err_unmap_dst:
- 	dma_unmap_single(dma_dev->dev, mv_chan->dummy_dst_addr,
++static void dw_hdma_set_callback_result(struct virt_dma_desc *vd,
++					enum dmaengine_tx_result result)
++{
++	u32 residue = 0;
++	struct dw_edma_desc *desc;
++	struct dmaengine_result *res;
++
++	if (!vd->tx.callback_result)
++		return;
++
++	desc = vd2dw_edma_desc(vd);
++	if (desc)
++		residue = desc->alloc_sz - desc->xfer_sz;
++
++	res = &vd->tx_result;
++	res->result = result;
++	res->residue = residue;
++}
++
+ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ {
+ 	struct dw_edma_desc *desc;
+@@ -503,6 +522,8 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ 		case EDMA_REQ_NONE:
+ 			desc = vd2dw_edma_desc(vd);
+ 			if (!desc->chunks_alloc) {
++				dw_hdma_set_callback_result(vd,
++							    DMA_TRANS_NOERROR);
+ 				list_del(&vd->node);
+ 				vchan_cookie_complete(vd);
+ 			}
+@@ -541,6 +562,7 @@ static void dw_edma_abort_interrupt(struct dw_edma_chan *chan)
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+ 	vd = vchan_next_desc(&chan->vc);
+ 	if (vd) {
++		dw_hdma_set_callback_result(vd, DMA_TRANS_ABORTED);
+ 		list_del(&vd->node);
+ 		vchan_cookie_complete(vd);
+ 	}
 -- 
 2.51.0
 
