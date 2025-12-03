@@ -1,151 +1,193 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40DD350A03;
-	Wed,  3 Dec 2025 16:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D313E34EEF3
+	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 16:25:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779128; cv=none; b=mGj9ubppXLbmSzqo+twJ7fQWVDkaHcGNYUQOqPNF44mp1w77ka6+exlHDI5aF7SmobSRo9wzOevQwsi4O+ML+5Sd6coEbxWV9sUuChIFir773mtHutjlB03/xtNi00Jsc+ryI3PHnGUfogZ2BbZJgH/oJHofDL3hFpcdxQ4SA7I=
+	t=1764779128; cv=none; b=VobYHOvH2FgtLg0ZYhV+fxsAXrT5c7j29oXdjBJ2q/b3fryzEaDLKH7P6Tw6YQYmW3dM5pWcX92ChyyaEt8SGUwl0lyblhS/b1EN1a+T99OmxdFP9wU3YR7wWwwOIBKWIKqP6Vt3T3u8OH1LN26WliCgDhzeg0oG86P4oLqgCWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1764779128; c=relaxed/simple;
-	bh=oXBYx1rjxiUFFsAVzHFguAly1OVdnWx/fPH1U9lDTaM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gZ/GEhfqGeB/CoZXR/mwiDW4u0L9PUWOqJzHh/kNFd5GlBRolTnI4tjK9rAU9i1Ko0LvBse4eDi6G7HfJHCYhoY1G9W4fDxFsEPWHZbG/VEFOTaem/74A4L7+bKw1qswOWxgS8sJSxQR7HTC84kBF0rrgfBpDvQioNrGvunRqiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9tsW8lF; arc=none smtp.client-ip=10.30.226.201
+	bh=kRtZt2+xC3jiWLOR6EQNf0RED6xeCCW7ZCYxEDIHAlA=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=PEVSWTCAlOy9anrK9CUpVVuZOlFptQnL5WQn5q0c6Tyiu/npZuCRB+p0QEjf/Em9NunMHFmLxf9U+XOYzJMKdNKW2gmoy+fwciUQyPrjTyR50z6VTkx7rvTvT8LGxzh5ivb1+y7AcQdJQ9+dzbo2HPpAUnsD/PnJKYauLVa7ovo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=HWntTxFG; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=luALAtNN; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=A9EmrxSR; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=TNorrLWd; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9tsW8lF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45034C116C6;
-	Wed,  3 Dec 2025 16:25:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779127;
-	bh=oXBYx1rjxiUFFsAVzHFguAly1OVdnWx/fPH1U9lDTaM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9tsW8lFQpksyJb+B7O68dZEJuRgETdd0Gv7+2YBvxr1Ku0MhooZrafs2IzlWl1MD
-	 VEFD4dP5ZGRkYnxZgxOmRTsZuwjO3Yn/kHaXVcT7bJqmPcnvEQrU37u2kO3QEFp8bC
-	 EtItj9vi9vi/utBxDwJhRr2Oh/5OFYeYFs0pj5tk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="HWntTxFG";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="luALAtNN";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="A9EmrxSR";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="TNorrLWd"
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 67D0B336F0;
+	Wed,  3 Dec 2025 16:25:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1764779122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PJsGlmKUmNCUFu/ai9KmssCBkH1xCYbK1kcPiYz9Ml8=;
+	b=HWntTxFGofhEQeKmKiDhblxMDg1qeaZXqHkVCGopdv2qao8XsDGLGSM59UGzprOrPcfPtp
+	ZgmPmRr4vQixu4YniA43Bwld3uIoOGr/xd+1llJ/bncFbKKO7gUk0zAkNxhokAliDHYlog
+	A8noKM1QnuSNCRta4bCrSIY2d9rCglo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1764779122;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PJsGlmKUmNCUFu/ai9KmssCBkH1xCYbK1kcPiYz9Ml8=;
+	b=luALAtNNXLsDgw8GaFkeWjyvaFY00LTq+DPntledOnE6WsjDuSTd648VRzKISeiB9kKyiy
+	0Ua543DPbroAudBQ==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=A9EmrxSR;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=TNorrLWd
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1764779121; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PJsGlmKUmNCUFu/ai9KmssCBkH1xCYbK1kcPiYz9Ml8=;
+	b=A9EmrxSRswXd6sU8X399spT7Ejaq6QEMfh2yFpeWRP5EZT4Xd/K5IQOWyPF5ntwh5kmwm7
+	ykzsiu16PcIdV9E0AHeK5ELuknga2kdtrW3jSiu8eeno3HdFqHovg6ami4/koMDDaCZ0DX
+	rnV1HgcGuqzMCIgSvOpERnPbrY/Ruck=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1764779121;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=PJsGlmKUmNCUFu/ai9KmssCBkH1xCYbK1kcPiYz9Ml8=;
+	b=TNorrLWd8OQIsJ6LqoX6gcW6q1krILp7sYg0eqLPJGVx0U3RldpXEk/bj00Sg1TPqCeNpI
+	DLsmcn8vA4GIjjAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 363073EA63;
+	Wed,  3 Dec 2025 16:25:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id onsIDHFkMGmfEQAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Wed, 03 Dec 2025 16:25:21 +0000
+Date: Wed, 03 Dec 2025 17:25:20 +0100
+Message-ID: <87ecpbsfbj.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@openai.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/568] net: When removing nexthops, dont call synchronize_net if it is not necessary
-Date: Wed,  3 Dec 2025 16:22:45 +0100
-Message-ID: <20251203152446.693308921@linuxfoundation.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
-References: <20251203152440.645416925@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com,
+	Lizhi Xu <lizhi.xu@windriver.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: Re: [PATCH 5.15 276/392] ALSA: usb-audio: Fix potential overflow of PCM transfer buffer
+In-Reply-To: <20251203152424.319007924@linuxfoundation.org>
+References: <20251203152414.082328008@linuxfoundation.org>
+	<20251203152424.319007924@linuxfoundation.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/30.1 Mule/6.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Flag: NO
+X-Spam-Score: -2.01
+X-Rspamd-Queue-Id: 67D0B336F0
+X-Spamd-Result: default: False [-2.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_CONTAINS_FROM(1.00)[];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TO_DN_SOME(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+	ARC_NA(0.00)[];
+	TAGGED_RCPT(0.00)[bfd77469c8966de076f7];
+	RCVD_TLS_ALL(0.00)[];
+	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	RCPT_COUNT_FIVE(0.00)[6];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[msgid.link:url,syzkaller.appspot.com:url,linuxfoundation.org:email,appspotmail.com:email,windriver.com:email,suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+X-Spam-Level: 
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+On Wed, 03 Dec 2025 16:27:06 +0100,
+Greg Kroah-Hartman wrote:
+> 
+> 5.15-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Takashi Iwai <tiwai@suse.de>
+> 
+> commit 05a1fc5efdd8560f34a3af39c9cf1e1526cc3ddf upstream.
+> 
+> The PCM stream data in USB-audio driver is transferred over USB URB
+> packet buffers, and each packet size is determined dynamically.  The
+> packet sizes are limited by some factors such as wMaxPacketSize USB
+> descriptor.  OTOH, in the current code, the actually used packet sizes
+> are determined only by the rate and the PPS, which may be bigger than
+> the size limit above.  This results in a buffer overflow, as reported
+> by syzbot.
+> 
+> Basically when the limit is smaller than the calculated packet size,
+> it implies that something is wrong, most likely a weird USB
+> descriptor.  So the best option would be just to return an error at
+> the parameter setup time before doing any further operations.
+> 
+> This patch introduces such a sanity check, and returns -EINVAL when
+> the packet size is greater than maxpacksize.  The comparison with
+> ep->packsize[1] alone should suffice since it's always equal or
+> greater than ep->packsize[0].
+> 
+> Reported-by: syzbot+bfd77469c8966de076f7@syzkaller.appspotmail.com
+> Closes: https://syzkaller.appspot.com/bug?extid=bfd77469c8966de076f7
+> Link: https://lore.kernel.org/690b6b46.050a0220.3d0d33.0054.GAE@google.com
+> Cc: Lizhi Xu <lizhi.xu@windriver.com>
+> Cc: <stable@vger.kernel.org>
+> Link: https://patch.msgid.link/20251109091211.12739-1-tiwai@suse.de
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  sound/usb/endpoint.c |    5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> --- a/sound/usb/endpoint.c
+> +++ b/sound/usb/endpoint.c
+> @@ -1374,6 +1374,11 @@ int snd_usb_endpoint_set_params(struct s
+>  	ep->sample_rem = ep->cur_rate % ep->pps;
+>  	ep->packsize[0] = ep->cur_rate / ep->pps;
+>  	ep->packsize[1] = (ep->cur_rate + (ep->pps - 1)) / ep->pps;
+> +	if (ep->packsize[1] > ep->maxpacksize) {
+> +		usb_audio_dbg(chip, "Too small maxpacksize %u for rate %u / pps %u\n",
+> +			      ep->maxpacksize, ep->cur_rate, ep->pps);
+> +		return -EINVAL;
+> +	}
+>  
+>  	/* calculate the frequency in 16.16 format */
+>  	ep->freqm = ep->freqn;
 
-------------------
+This backport requires a similar workaround done for 6.12.y for the
+unbalanced mutex lock, the downstream commit fdf0dc82eb60
+    ALSA: usb-audio: Fix missing unlock at error path of maxpacksize check
 
-From: Christoph Paasch <cpaasch@openai.com>
-
-[ Upstream commit b0ac6d3b56a2384db151696cfda2836a8a961b6d ]
-
-When removing a nexthop, commit
-90f33bffa382 ("nexthops: don't modify published nexthop groups") added a
-call to synchronize_rcu() (later changed to _net()) to make sure
-everyone sees the new nexthop-group before the rtnl-lock is released.
-
-When one wants to delete a large number of groups and nexthops, it is
-fastest to first flush the groups (ip nexthop flush groups) and then
-flush the nexthops themselves (ip -6 nexthop flush). As that way the
-groups don't need to be rebalanced.
-
-However, `ip -6 nexthop flush` will still take a long time if there is
-a very large number of nexthops because of the call to
-synchronize_net(). Now, if there are no more groups, there is no point
-in calling synchronize_net(). So, let's skip that entirely by checking
-if nh->grp_list is empty.
-
-This gives us a nice speedup:
-
-BEFORE:
-=======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	1m45.345s
-user	0m0.001s
-sys	0m0.005s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	3m10.430s
-user	0m0.002s
-sys	0m0.004s
-
-AFTER:
-======
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 2097152 nexthops
-
-real	0m17.545s
-user	0m0.003s
-sys	0m0.003s
-
-$ time sudo ip -6 nexthop flush
-Dump was interrupted and may be inconsistent.
-Flushed 4194304 nexthops
-
-real	0m35.823s
-user	0m0.002s
-sys	0m0.004s
-
-Signed-off-by: Christoph Paasch <cpaasch@openai.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250816-nexthop_dump-v2-2-491da3462118@openai.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- net/ipv4/nexthop.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index c0f9d125f401c..10cb365639aaa 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -1812,6 +1812,12 @@ static void remove_nexthop_from_groups(struct net *net, struct nexthop *nh,
- {
- 	struct nh_grp_entry *nhge, *tmp;
- 
-+	/* If there is nothing to do, let's avoid the costly call to
-+	 * synchronize_net()
-+	 */
-+	if (list_empty(&nh->grp_list))
-+		return;
-+
- 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
- 		remove_nh_grp_entry(net, nhge, nlinfo);
- 
--- 
-2.51.0
-
+It seems that 5.10.y doesn't need the workaround as it has no mutex
+lock applied around it.
 
 
+thanks,
+
+Takashi
