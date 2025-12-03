@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50AB0365A0B;
-	Wed,  3 Dec 2025 16:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E8F366576;
+	Wed,  3 Dec 2025 16:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781047; cv=none; b=toMgMlp5FnyCRtwp+O2hu/dd3/Kc7mZ66aLhsE/bBbM5AzaU274tc5lFLkdbzilV3KpFZQHEJoJbRRCYp8j7YRI7wUcuOvB5mXNxNx31K+0pml9lGzSJ4/1j1yk5F6I5KMa5h3A4NuW334X/abB9/97LL23S8SV+lvhGP5q+3PQ=
+	t=1764781050; cv=none; b=nqHFxC7n0FWQKcIQi6XIqPsl5ddu9flWL5XOewy7imgwXJw1krwaOpwttqeunWw1LOx8NEn9RpGMQxh0wL5EnwAIhJA9lYrtM29/9ZUFx6ahTnT/a9iB2k2gdfn/BxQsJSxH3Prnapee/LUmDnjcv6OtdZdSnTCtvYZxsPANyb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781047; c=relaxed/simple;
-	bh=g2auZI9AnfEQc2s8TtDez6GZ8+DSTMfYWeti3CliWS0=;
+	s=arc-20240116; t=1764781050; c=relaxed/simple;
+	bh=UhiRudpoeoaXvRrE2mTyvwvPDKsQOilWMzgXn+p/Yl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNGr9oBnIMzF+JtERCx4JtYKQDzU/HzkSthyHX8fozDR87REq05mLOmHKfJiKUd5jYpehrz+Ew0/etMiIQtqJA10EjLjqm/DuH83EOHrxd/rAlfc1x55Ww0VeQ6UMiKzHF7m3x9IYofzKU9YCfV2qR7bXF4szyAvDTrKC5Y6hXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yk9yk4wT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XeHFeaDBJBIjwh3xC/2LcDyWFo0Az7Uy98VLTdQtZ/g7w6Q/vwjr24lmP8Hb6EE7fpQbLH6Ex2BMK4hU6tUB0YdSrM2CPKUMrzXUodLnUMvlCi+4YhVhgtnv1ZO7102mTLcSCUM3yl7piYmzZNxO80x/e069EXJzFpTdUGr5bpk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeJi5xKu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yk9yk4wT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0573AC4CEF5;
-	Wed,  3 Dec 2025 16:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeJi5xKu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40474C4CEF5;
+	Wed,  3 Dec 2025 16:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781046;
-	bh=g2auZI9AnfEQc2s8TtDez6GZ8+DSTMfYWeti3CliWS0=;
+	s=korg; t=1764781049;
+	bh=UhiRudpoeoaXvRrE2mTyvwvPDKsQOilWMzgXn+p/Yl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yk9yk4wTAbmQ2k4wIXtySJqsjhWYXzsdPuFYXQkE9Z/z/b2O0Im2EFGxOUSolYtnB
-	 UQo3NAJ3Uyaa4EL9nnKZ8iOyHL++rDfuWYqw4NSfPxllGGS6/5+iKHNy/9FIeMGCD7
-	 iuUshchKPZRgUOIFjoA35cEszJKC9WlBIMBRDnYQ=
+	b=jeJi5xKuL/PyUY631crm/WYK1+5X4vlgGBXA0XYwqsXulw74aXHBuDKomTF5PxbmN
+	 D5iLYO5kAX+oGiW7It06fImPFhGIwg5cVJ/JiZrSZ2JqAlrMG1qvib6RCly/9Kenms
+	 97g5S6rk9ZAXQpd9dDvUTVZbEJLEaoUuOrAErU1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hang Zhou <929513338@qq.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 33/93] spi: bcm63xx: fix premature CS deassertion on RX-only transactions
-Date: Wed,  3 Dec 2025 16:29:26 +0100
-Message-ID: <20251203152337.740848256@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 34/93] Revert "perf/x86: Always store regs->ip in perf_callchain_kernel()"
+Date: Wed,  3 Dec 2025 16:29:27 +0100
+Message-ID: <20251203152337.777757657@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -51,68 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hang Zhou <929513338@qq.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit fd9862f726aedbc2f29a29916cabed7bcf5cadb6 ]
+commit 6d08340d1e354787d6c65a8c3cdd4d41ffb8a5ed upstream.
 
-On BCM6358 (and also observed on BCM6368) the controller appears to
-only generate as many SPI clocks as bytes that have been written into
-the TX FIFO. For RX-only transfers the driver programs the transfer
-length in SPI_MSG_CTL but does not write anything into the FIFO, so
-chip select is deasserted early and the RX transfer segment is never
-fully clocked in.
+This reverts commit 83f44ae0f8afcc9da659799db8693f74847e66b3.
 
-A concrete failing case is a three-transfer MAC address read from
-SPI-NOR:
-  - TX 0x03 (read command)
-  - TX 3-byte address
-  - RX 6 bytes (MAC)
+Currently we store initial stacktrace entry twice for non-HW ot_regs, which
+means callers that fail perf_hw_regs(regs) condition in perf_callchain_kernel.
 
-In contrast, a two-transfer JEDEC-ID read (0x9f + 6-byte RX) works
-because the driver uses prepend_len and writes dummy bytes into the
-TX FIFO for the RX part.
+It's easy to reproduce this bpftrace:
 
-Fix this by writing 0xff dummy bytes into the TX FIFO for RX-only
-segments so that the number of bytes written to the FIFO matches the
-total message length seen by the controller.
+  # bpftrace -e 'tracepoint:sched:sched_process_exec { print(kstack()); }'
+  Attaching 1 probe...
 
-Fixes: b17de076062a ("spi/bcm63xx: work around inability to keep CS up")
+        bprm_execve+1767
+        bprm_execve+1767
+        do_execveat_common.isra.0+425
+        __x64_sys_execve+56
+        do_syscall_64+133
+        entry_SYSCALL_64_after_hwframe+118
 
-Signed-off-by: Hang Zhou <929513338@qq.com>
-Link: https://patch.msgid.link/tencent_7AC88FCB3076489A4A7E6C2163DF1ACF8D06@qq.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When perf_callchain_kernel calls unwind_start with first_frame, AFAICS
+we do not skip regs->ip, but it's added as part of the unwind process.
+Hence reverting the extra perf_callchain_store for non-hw regs leg.
+
+I was not able to bisect this, so I'm not really sure why this was needed
+in v5.2 and why it's not working anymore, but I could see double entries
+as far as v5.10.
+
+I did the test for both ORC and framepointer unwind with and without the
+this fix and except for the initial entry the stacktraces are the same.
+
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20251104215405.168643-2-jolsa@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-bcm63xx.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ arch/x86/events/core.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-index a95badb7b7114..ba66fe9f1f543 100644
---- a/drivers/spi/spi-bcm63xx.c
-+++ b/drivers/spi/spi-bcm63xx.c
-@@ -247,6 +247,20 @@ static int bcm63xx_txrx_bufs(struct spi_device *spi, struct spi_transfer *first,
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2769,13 +2769,13 @@ perf_callchain_kernel(struct perf_callch
+ 		return;
+ 	}
  
- 		if (t->rx_buf) {
- 			do_rx = true;
-+
-+			/*
-+			 * In certain hardware implementations, there appears to be a
-+			 * hidden accumulator that tracks the number of bytes written into
-+			 * the hardware FIFO, and this accumulator overrides the length in
-+			 * the SPI_MSG_CTL register.
-+			 *
-+			 * Therefore, for read-only transfers, we need to write some dummy
-+			 * value into the FIFO to keep the accumulator tracking the correct
-+			 * length.
-+			 */
-+			if (!t->tx_buf)
-+				memset_io(bs->tx_io + len, 0xFF, t->len);
-+
- 			/* prepend is half-duplex write only */
- 			if (t == first)
- 				prepend_len = 0;
--- 
-2.51.0
-
+-	if (perf_callchain_store(entry, regs->ip))
+-		return;
+-
+-	if (perf_hw_regs(regs))
++	if (perf_hw_regs(regs)) {
++		if (perf_callchain_store(entry, regs->ip))
++			return;
+ 		unwind_start(&state, current, regs, NULL);
+-	else
++	} else {
+ 		unwind_start(&state, current, NULL, (void *)regs->sp);
++	}
+ 
+ 	for (; !unwind_done(&state); unwind_next_frame(&state)) {
+ 		addr = unwind_get_return_address(&state);
 
 
