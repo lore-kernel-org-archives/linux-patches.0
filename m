@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD8A35E556;
-	Wed,  3 Dec 2025 16:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B33235E55F;
+	Wed,  3 Dec 2025 16:27:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779239; cv=none; b=bo2Z+u+jNEEzkZptmaQ0lpJRKa8c3JepLW6RM5QjJ608zJ4tyiJrGitF7yTg7uZuczcGw+w/oaFxW/CoSJaFbq1aZwlUrwo4AN1FPo8On9YhTypTaowLE36Y9EqLsv1V/Fh10JHkGUJiDRO89bOt8mVcuOMKZRyRsuZP88o1T5U=
+	t=1764779243; cv=none; b=V1CwGC8T21hu7lI+u7Km/z9P7m3greWgvtthOFpKd//Eg5WCdHOMmj2yGekfMr9jn47ejJ1keK4dIq0NllEagBIZhLvs+BIJsH9ICQ5yRMtIA7snBS6CqyhvKEL2wmR0eaRM/r3Zw0MlV04+FfUr6oOPsH5DQswhihWPhUs9Y/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779239; c=relaxed/simple;
-	bh=N+/TWSQ1vVzpe0M8wFxmkDUXIBPJwzhaL/kal3pPUoE=;
+	s=arc-20240116; t=1764779243; c=relaxed/simple;
+	bh=B4yZeH4/8uV239twcDjK+ttRRX4G4dAu7KaIf09/reI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4mbvNle3SpmBzMDFqC+dTmFgBFvGFEjU1WO/ayv1Tc6zSEWfzes9s5obzvQkQdhB6ClRgb4C+85vMRnhjElvGVhryfPsabfjHnAU6bXkem73bq6P8N3r6ts0heQY5hs9cnd6eupskGfMtK2ygLxRFgXLrbal+EaHP4CYDtBhog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bc5XuRMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GK5KhvHu0/pqr5ONnTsmoIMPPqR8UZPQ4Qg9+vfNXxG4n1YumGVSq/o10hXH+sckCY90eZzjipHxcHInq/Ckef9ylzEooegVikfzac9FIlIhFfvp0h2n/9L6n+MyuUadQfUOakg7vwCBY83AJTtqAJBwyhZL9iBDVzL562DFYEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oH9kLxU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bc5XuRMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FC0C4CEF5;
-	Wed,  3 Dec 2025 16:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oH9kLxU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61457C4CEF5;
+	Wed,  3 Dec 2025 16:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764779239;
-	bh=N+/TWSQ1vVzpe0M8wFxmkDUXIBPJwzhaL/kal3pPUoE=;
+	s=korg; t=1764779242;
+	bh=B4yZeH4/8uV239twcDjK+ttRRX4G4dAu7KaIf09/reI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bc5XuRMZgBNE1gW2DpGDTqhiNu0XeeEgDXu7ZIitf5xjb7qkF7y4PQFBjn7x6cBCt
-	 HW721HNrwZXXMsF4BfyVueTK2SlA8QqfVfeL1AulNk0nS7/jESEWCNu8BTGdLMWOlZ
-	 /KLpjXqIZw0CoMQNSf357xTz5GUvQ0hHh42k19Kw=
+	b=oH9kLxU5eRstB8WT7Rl1t36VuOvMl32JJYeAcOqSyMdMOQ2/+p3Hm5UKvmSANdcfB
+	 FU6C4Jn3N5DZyXb61QuxfTHj8BXjfDkKMl34ywJ+f7Y2wC5UtaaduZ5t3ByDHR5ilk
+	 GhxeM4DwwVZK5tAkpKS+u5sgz7o2I4uY9oIuz6So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Sairaj Kodilkar <sarunkod@amd.com>,
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 197/568] smsc911x: add second read of EEPROM mac when possible corruption seen
-Date: Wed,  3 Dec 2025 16:23:19 +0100
-Message-ID: <20251203152447.941981728@linuxfoundation.org>
+Subject: [PATCH 6.1 198/568] iommu/amd: Skip enabling command/event buffers for kdump
+Date: Wed,  3 Dec 2025 16:23:20 +0100
+Message-ID: <20251203152447.978016598@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -51,53 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Colin Foster <colin.foster@in-advantage.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-[ Upstream commit 69777753a8919b0b8313c856e707e1d1fe5ced85 ]
+[ Upstream commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb ]
 
-When the EEPROM MAC is read by way of ADDRH, it can return all 0s the
-first time. Subsequent reads succeed.
+After a panic if SNP is enabled in the previous kernel then the kdump
+kernel boots with IOMMU SNP enforcement still enabled.
 
-This is fully reproduceable on the Phytec PCM049 SOM.
+IOMMU command buffers and event buffer registers remain locked and
+exclusive to the previous kernel. Attempts to enable command and event
+buffers in the kdump kernel will fail, as hardware ignores writes to
+the locked MMIO registers as per AMD IOMMU spec Section 2.12.2.1.
 
-Re-read the ADDRH when this behaviour is observed, in an attempt to
-correctly apply the EEPROM MAC address.
+Skip enabling command buffers and event buffers for kdump boot as they
+are already enabled in the previous kernel.
 
-Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
-Link: https://patch.msgid.link/20250903132610.966787-1-colin.foster@in-advantage.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Link: https://lore.kernel.org/r/576445eb4f168b467b0fc789079b650ca7c5b037.1756157913.git.ashish.kalra@amd.com
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/smsc/smsc911x.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/init.c | 28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/smsc/smsc911x.c b/drivers/net/ethernet/smsc/smsc911x.c
-index a690d139e1770..a1bb16ba36595 100644
---- a/drivers/net/ethernet/smsc/smsc911x.c
-+++ b/drivers/net/ethernet/smsc/smsc911x.c
-@@ -2165,10 +2165,20 @@ static const struct net_device_ops smsc911x_netdev_ops = {
- static void smsc911x_read_mac_address(struct net_device *dev)
- {
- 	struct smsc911x_data *pdata = netdev_priv(dev);
--	u32 mac_high16 = smsc911x_mac_read(pdata, ADDRH);
--	u32 mac_low32 = smsc911x_mac_read(pdata, ADDRL);
-+	u32 mac_high16, mac_low32;
- 	u8 addr[ETH_ALEN];
+diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+index 23804270eda19..12bc854fd177f 100644
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -805,11 +805,16 @@ static void iommu_enable_command_buffer(struct amd_iommu *iommu)
  
-+	mac_high16 = smsc911x_mac_read(pdata, ADDRH);
-+	mac_low32 = smsc911x_mac_read(pdata, ADDRL);
-+
-+	/* The first mac_read in some setups can incorrectly read 0. Re-read it
-+	 * to get the full MAC if this is observed.
-+	 */
-+	if (mac_high16 == 0) {
-+		SMSC_TRACE(pdata, probe, "Re-read MAC ADDRH\n");
-+		mac_high16 = smsc911x_mac_read(pdata, ADDRH);
+ 	BUG_ON(iommu->cmd_buf == NULL);
+ 
+-	entry = iommu_virt_to_phys(iommu->cmd_buf);
+-	entry |= MMIO_CMD_SIZE_512;
+-
+-	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
+-		    &entry, sizeof(entry));
++	if (!is_kdump_kernel()) {
++		/*
++		 * Command buffer is re-used for kdump kernel and setting
++		 * of MMIO register is not required.
++		 */
++		entry = iommu_virt_to_phys(iommu->cmd_buf);
++		entry |= MMIO_CMD_SIZE_512;
++		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
++			    &entry, sizeof(entry));
 +	}
-+
- 	addr[0] = (u8)(mac_low32);
- 	addr[1] = (u8)(mac_low32 >> 8);
- 	addr[2] = (u8)(mac_low32 >> 16);
+ 
+ 	amd_iommu_reset_cmd_buffer(iommu);
+ }
+@@ -858,10 +863,15 @@ static void iommu_enable_event_buffer(struct amd_iommu *iommu)
+ 
+ 	BUG_ON(iommu->evt_buf == NULL);
+ 
+-	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+-
+-	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+-		    &entry, sizeof(entry));
++	if (!is_kdump_kernel()) {
++		/*
++		 * Event buffer is re-used for kdump kernel and setting
++		 * of MMIO register is not required.
++		 */
++		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
++		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
++			    &entry, sizeof(entry));
++	}
+ 
+ 	/* set head and tail to zero manually */
+ 	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
 -- 
 2.51.0
 
