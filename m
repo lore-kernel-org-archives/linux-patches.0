@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F169D33C1A6;
-	Wed,  3 Dec 2025 16:59:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E4832C944;
+	Wed,  3 Dec 2025 16:59:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764781159; cv=none; b=f/3vB8mRCSG4QLhndjEvdGryNNeLDAit2qUbT8QRIm3uTw9JjyaGiSQNYflpu+H/250Z/4qF60L1EtCDDJFW+/gdUZbEYCuB+D5z8SfTlT2vQGjgMM82eiEElqNsxW7EdpdgwViO/OafcFF7J85zMFbXbptchAuUXiutY3W7x34=
+	t=1764781162; cv=none; b=We1qP23GqmxoHFvjkl9cNTgtltA3dgeTSz4NsXHFn6/mAOIFTu3rdTNcbzrokCZ7SYmjNRhz/kYZ8DVlKIz07y+5df7TY7n6yAew87bR88z7942fc+A88GuSqMSp4mD9NsQ/NLRM/mZP7HsWH3vY0KOEBo0MbQy0rxCf0WflhE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764781159; c=relaxed/simple;
-	bh=GOpxJI8KY5pJ6dflJZgJa0a0aCPF/u7jmQdSVrVwQws=;
+	s=arc-20240116; t=1764781162; c=relaxed/simple;
+	bh=0YIWKbvjDM60pCRq4ocxHcy3Vg4nTjkiu/qk7II+Z6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bFKKFIcr6j9vj1tyRzESLqIRIIzVKOi4TwiYBR3eZDRQJj+p6k6C3P1iavyX8UzqPU0Xwk1aWfQacWytU8vRjeyTd6332x+iv4ma+gxTv01JmNjRlH/dmln/qDrx6kmvj9k4VoZmxZ12jSEpHmB1roLw+w4FP0mbSD1kwlhY8AI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SgrDw2jU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jf7I3DFWTFuS0LdL+2hav5jf/Ckz+SaJhghef0MOqa3zHidrmkO5ax2iQMdhPcLJHBaydaWucxd/1E9XPn1VvrJ2RWtSXr9/wie2ezRAg/TQ1F+suoCHfJDeUineeKsGfzm8IwZKyQNv/dlWcIXRwEN09sSz2+4ifloJvlGw4Fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B5IOIJI9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SgrDw2jU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9F7C4CEF5;
-	Wed,  3 Dec 2025 16:59:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B5IOIJI9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E312C4CEF5;
+	Wed,  3 Dec 2025 16:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764781158;
-	bh=GOpxJI8KY5pJ6dflJZgJa0a0aCPF/u7jmQdSVrVwQws=;
+	s=korg; t=1764781161;
+	bh=0YIWKbvjDM60pCRq4ocxHcy3Vg4nTjkiu/qk7II+Z6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SgrDw2jUEe92MFThzxeRa7R1YpfWfJeftRP8E58KKysUMXQIDLJxocYk5Crm5ddFW
-	 D1p+/Y2VLq5RwucviCQR2acxbN6tBaGEdwbpjIr8luengL8y1NOrFaC+qA5BuEXdiU
-	 apNCO3TJKf3p2+B0viDpceZYM4jlNJWWW4GVBYxc=
+	b=B5IOIJI9gXxGkEtyYzuscyl3ZHvxUGjojG3Z4D1vhDw/YiREN282PMJl3bHWSgOm4
+	 MnIbzYJQ/oPml2JRBHZX5ZG4k+89njCAQP8sIgzu8zgtSSOkb48r2Q6X4agwly8ljE
+	 W8Rx4jy0T8QkIvQk3rIgllb8YAMZ2ZQcNWtCBLT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?=C5=81ukasz=20Bartosik?= <ukaszb@chromium.org>
-Subject: [PATCH 6.6 68/93] xhci: dbgtty: fix device unregister
-Date: Wed,  3 Dec 2025 16:30:01 +0100
-Message-ID: <20251203152339.038684679@linuxfoundation.org>
+	Oleksandr Suvorov <cryosay@gmail.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.6 69/93] USB: serial: ftdi_sio: add support for u-blox EVK-M101
+Date: Wed,  3 Dec 2025 16:30:02 +0100
+Message-ID: <20251203152339.075313724@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
 References: <20251203152336.494201426@linuxfoundation.org>
@@ -44,49 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Łukasz Bartosik <ukaszb@chromium.org>
+From: Oleksandr Suvorov <cryosay@gmail.com>
 
-commit 1f73b8b56cf35de29a433aee7bfff26cea98be3f upstream.
+commit 2d8ab771d5316de64f3bb920b82575c58eb00b1b upstream.
 
-When DbC is disconnected then xhci_dbc_tty_unregister_device()
-is called. However if there is any user space process blocked
-on write to DbC terminal device then it will never be signalled
-and thus stay blocked indifinitely.
+The U-Blox EVK-M101 enumerates as 1546:0506 [1] with four FTDI interfaces:
+- EVK-M101 current sensors
+- EVK-M101 I2C
+- EVK-M101 UART
+- EVK-M101 port D
 
-This fix adds a tty_vhangup() call in xhci_dbc_tty_unregister_device().
-The tty_vhangup() wakes up any blocked writers and causes subsequent
-write attempts to DbC terminal device to fail.
+Only the third USB interface is a UART. This change lets ftdi_sio probe
+the VID/PID and registers only interface #3 as a TTY, leaving the rest
+available for other drivers.
 
-Cc: stable <stable@kernel.org>
-Fixes: dfba2174dc42 ("usb: xhci: Add DbC support in xHCI driver")
-Signed-off-by: Łukasz Bartosik <ukaszb@chromium.org>
-Link: https://patch.msgid.link/20251119212910.1245694-1-ukaszb@google.com
+[1]
+usb 5-1.3: new high-speed USB device number 11 using xhci_hcd
+usb 5-1.3: New USB device found, idVendor=1546, idProduct=0506, bcdDevice= 8.00
+usb 5-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+usb 5-1.3: Product: EVK-M101
+usb 5-1.3: Manufacturer: u-blox AG
+
+Datasheet: https://content.u-blox.com/sites/default/files/documents/EVK-M10_UserGuide_UBX-21003949.pdf
+
+Signed-off-by: Oleksandr Suvorov <cryosay@gmail.com>
+Link: https://lore.kernel.org/20250926060235.3442748-1-cryosay@gmail.com/
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-dbgtty.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/usb/serial/ftdi_sio.c     |    1 +
+ drivers/usb/serial/ftdi_sio_ids.h |    1 +
+ 2 files changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-dbgtty.c
-+++ b/drivers/usb/host/xhci-dbgtty.c
-@@ -518,6 +518,12 @@ static void xhci_dbc_tty_unregister_devi
+--- a/drivers/usb/serial/ftdi_sio.c
++++ b/drivers/usb/serial/ftdi_sio.c
+@@ -1074,6 +1074,7 @@ static const struct usb_device_id id_tab
+ 	/* U-Blox devices */
+ 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ZED_PID) },
+ 	{ USB_DEVICE(UBLOX_VID, UBLOX_C099F9P_ODIN_PID) },
++	{ USB_DEVICE_INTERFACE_NUMBER(UBLOX_VID, UBLOX_EVK_M101_PID, 2) },
+ 	/* FreeCalypso USB adapters */
+ 	{ USB_DEVICE(FTDI_VID, FTDI_FALCONIA_JTAG_BUF_PID),
+ 		.driver_info = (kernel_ulong_t)&ftdi_jtag_quirk },
+--- a/drivers/usb/serial/ftdi_sio_ids.h
++++ b/drivers/usb/serial/ftdi_sio_ids.h
+@@ -1614,6 +1614,7 @@
+ #define UBLOX_VID			0x1546
+ #define UBLOX_C099F9P_ZED_PID		0x0502
+ #define UBLOX_C099F9P_ODIN_PID		0x0503
++#define UBLOX_EVK_M101_PID		0x0506
  
- 	if (!port->registered)
- 		return;
-+	/*
-+	 * Hang up the TTY. This wakes up any blocked
-+	 * writers and causes subsequent writes to fail.
-+	 */
-+	tty_vhangup(port->port.tty);
-+
- 	tty_unregister_device(dbc_tty_driver, port->minor);
- 	xhci_dbc_tty_exit_port(port);
- 	port->registered = false;
+ /*
+  * GMC devices
 
 
