@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E102A238C1B;
-	Wed,  3 Dec 2025 16:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1722EDD7A;
+	Wed,  3 Dec 2025 16:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778137; cv=none; b=l4RKfqaL8gUp8BBHI9CXBCNO49s563ed3SgY9KJW0b7PfwLsqqsNutTBFF5gIRki4BvKeLci/hz0mgZ7tGLsZ4XyIxT8oMdiiePd2LjY6IOrLkL/p7mFG3rNwr3YYP2G42cMt7kDKs45Xyp1Q2RNmnxfKaTvCdQpy8GrjCRHeSY=
+	t=1764778140; cv=none; b=XoWVe6jSZTevs6yXIU53FbGU9s3B/UywhY1eqnMKPf1ygQW9GWGZcBGjsLAVFrxVnj9i8da5pc9oCBlQx6BhlBSmeqeWJUgd3aRkSgloTmbk+4qAWqonQmmaOREazQNdQUEb0LrtZxnaB3g3BslyykmtJHGY4LT3EGhwQOr3Ps8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778137; c=relaxed/simple;
-	bh=9baBBSxVnzMB81MXxNHQMF1jOLvasT1E6YjLBxp8Fd4=;
+	s=arc-20240116; t=1764778140; c=relaxed/simple;
+	bh=m3urx/id/4/R+zG56DrFyLjPxmNYFCUe+AwSncgcmxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gVi9sCd4VEKkKYHjxZWUSX8mKS0CYkKh/fSZ5QJ5rlaZEoJsprjebXT5JoNxdm2upAfr3yp6ee38uLcfQ5hrKI85TbpNW7Z+UYgLpqyzGYcP9QVM16qReE7AsH5s2dJYXbYtGMJA7+g/Dje8tl5q85aLElevemR+pMkzYgF5feY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t8dJ2THO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kWVYmTWU74+6U7p4GPeKlQIBAJU8JqaWaeeKzEGfkvNdcTpVkURiUcvWW21fDHlqxCX5TnNUau0OPZKPZ3SvZ1rr9N6crnoZyOE64d/WYxSWEttwF23nXxajywEQO2oI/82KoKuTP4yoIESm0LLf90EWycmlWuKtsX49OTrb3aU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TEwNpqbc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t8dJ2THO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21775C116C6;
-	Wed,  3 Dec 2025 16:08:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TEwNpqbc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7E2C4CEF5;
+	Wed,  3 Dec 2025 16:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778136;
-	bh=9baBBSxVnzMB81MXxNHQMF1jOLvasT1E6YjLBxp8Fd4=;
+	s=korg; t=1764778139;
+	bh=m3urx/id/4/R+zG56DrFyLjPxmNYFCUe+AwSncgcmxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8dJ2THORT8zUFWmI0k+5qwqV6a7b/8BRsKogYo+IIkgQZD84S3uCj7bwwEu4CwzP
-	 35rAP2gN9cWB5zf8IBhSCp9zpn7RvJGYgQ3HFEU5nSFOn9E3u2qQBWpXbufCvd4GC9
-	 WNa9OoOc2k0UPWVM/bwwJZ1wUqMDAbTpyAGzM3lM=
+	b=TEwNpqbchzuS/L5AjPOUlSK8EAv4GNmfItiukY78ATpjKL4Z1nrbBbFcHDJ6aBfF+
+	 h7DUh/PaoQ+jkDsJxo1Fgwyc8upOKbqVQaXmclAf/ciDq2MeMEE0SPrznCPbxeKco8
+	 oVLeo+L+pDSB4mVCmptkK8JxN1Vim+8p4LhpUHAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Felix Maurer <fmaurer@redhat.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 255/392] net_sched: limit try_bulk_dequeue_skb() batches
-Date: Wed,  3 Dec 2025 16:26:45 +0100
-Message-ID: <20251203152423.553469000@linuxfoundation.org>
+Subject: [PATCH 5.15 256/392] hsr: Fix supervision frame sending on HSRv0
+Date: Wed,  3 Dec 2025 16:26:46 +0100
+Message-ID: <20251203152423.589481109@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -47,145 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Felix Maurer <fmaurer@redhat.com>
 
-[ Upstream commit 0345552a653ce5542affeb69ac5aa52177a5199b ]
+[ Upstream commit 96a3a03abf3d8cc38cd9cb0d280235fbcf7c3f7f ]
 
-After commit 100dfa74cad9 ("inet: dev_queue_xmit() llist adoption")
-I started seeing many qdisc requeues on IDPF under high TX workload.
+On HSRv0, no supervision frames were sent. The supervison frames were
+generated successfully, but failed the check for a sufficiently long mac
+header, i.e., at least sizeof(struct hsr_ethhdr), in hsr_fill_frame_info()
+because the mac header only contained the ethernet header.
 
-$ tc -s qd sh dev eth1 handle 1: ; sleep 1; tc -s qd sh dev eth1 handle 1:
-qdisc mq 1: root
- Sent 43534617319319 bytes 268186451819 pkt (dropped 0, overlimits 0 requeues 3532840114)
- backlog 1056Kb 6675p requeues 3532840114
-qdisc mq 1: root
- Sent 43554665866695 bytes 268309964788 pkt (dropped 0, overlimits 0 requeues 3537737653)
- backlog 781164b 4822p requeues 3537737653
+Fix this by including the HSR header in the mac header when generating HSR
+supervision frames. Note that the mac header now also includes the TLV
+fields. This matches how we set the headers on rx and also the size of
+struct hsrv0_ethhdr_sp.
 
-This is caused by try_bulk_dequeue_skb() being only limited by BQL budget.
-
-perf record -C120-239 -e qdisc:qdisc_dequeue sleep 1 ; perf script
-...
- netperf 75332 [146]  2711.138269: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1292 skbaddr=0xff378005a1e9f200
- netperf 75332 [146]  2711.138953: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1213 skbaddr=0xff378004d607a500
- netperf 75330 [144]  2711.139631: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1233 skbaddr=0xff3780046be20100
- netperf 75333 [147]  2711.140356: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1093 skbaddr=0xff37800514845b00
- netperf 75337 [151]  2711.141037: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1353 skbaddr=0xff37800460753300
- netperf 75337 [151]  2711.141877: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1367 skbaddr=0xff378004e72c7b00
- netperf 75330 [144]  2711.142643: qdisc:qdisc_dequeue: dequeue ifindex=5 qdisc handle=0x80150000 parent=0x10013 txq_state=0x0 packets=1202 skbaddr=0xff3780045bd60000
-...
-
-This is bad because :
-
-1) Large batches hold one victim cpu for a very long time.
-
-2) Driver often hit their own TX ring limit (all slots are used).
-
-3) We call dev_requeue_skb()
-
-4) Requeues are using a FIFO (q->gso_skb), breaking qdisc ability to
-   implement FQ or priority scheduling.
-
-5) dequeue_skb() gets packets from q->gso_skb one skb at a time
-   with no xmit_more support. This is causing many spinlock games
-   between the qdisc and the device driver.
-
-Requeues were supposed to be very rare, lets keep them this way.
-
-Limit batch sizes to /proc/sys/net/core/dev_weight (default 64) as
-__qdisc_run() was designed to use.
-
-Fixes: 5772e9a3463b ("qdisc: bulk dequeue support for qdiscs with TCQ_F_ONETXQUEUE")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
-Link: https://patch.msgid.link/20251109161215.2574081-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Closes: https://lore.kernel.org/netdev/aMONxDXkzBZZRfE5@fedora/
+Fixes: 9cfb5e7f0ded ("net: hsr: fix hsr_init_sk() vs network/transport headers.")
+Signed-off-by: Felix Maurer <fmaurer@redhat.com>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Link: https://patch.msgid.link/4354114fea9a642fe71f49aeeb6c6159d1d61840.1762876095.git.fmaurer@redhat.com
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_generic.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ net/hsr/hsr_device.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sched/sch_generic.c b/net/sched/sch_generic.c
-index 02299785209c1..565970cca295b 100644
---- a/net/sched/sch_generic.c
-+++ b/net/sched/sch_generic.c
-@@ -178,9 +178,10 @@ static inline void dev_requeue_skb(struct sk_buff *skb, struct Qdisc *q)
- static void try_bulk_dequeue_skb(struct Qdisc *q,
- 				 struct sk_buff *skb,
- 				 const struct netdev_queue *txq,
--				 int *packets)
-+				 int *packets, int budget)
- {
- 	int bytelimit = qdisc_avail_bulklimit(txq) - skb->len;
-+	int cnt = 0;
- 
- 	while (bytelimit > 0) {
- 		struct sk_buff *nskb = q->dequeue(q);
-@@ -191,8 +192,10 @@ static void try_bulk_dequeue_skb(struct Qdisc *q,
- 		bytelimit -= nskb->len; /* covers GSO len */
- 		skb->next = nskb;
- 		skb = nskb;
--		(*packets)++; /* GSO counts as one pkt */
-+		if (++cnt >= budget)
-+			break;
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 503f2064e7323..85537b245aaeb 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -316,6 +316,9 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
  	}
-+	(*packets) += cnt;
- 	skb_mark_not_on_list(skb);
- }
  
-@@ -226,7 +229,7 @@ static void try_bulk_dequeue_skb_slow(struct Qdisc *q,
-  * A requeued skb (via q->gso_skb) can also be a SKB list.
-  */
- static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
--				   int *packets)
-+				   int *packets, int budget)
- {
- 	const struct netdev_queue *txq = q->dev_queue;
- 	struct sk_buff *skb = NULL;
-@@ -293,7 +296,7 @@ static struct sk_buff *dequeue_skb(struct Qdisc *q, bool *validate,
- 	if (skb) {
- bulk:
- 		if (qdisc_may_bulk(q))
--			try_bulk_dequeue_skb(q, skb, txq, packets);
-+			try_bulk_dequeue_skb(q, skb, txq, packets, budget);
- 		else
- 			try_bulk_dequeue_skb_slow(q, skb, packets);
- 	}
-@@ -385,7 +388,7 @@ bool sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
-  *				>0 - queue is not empty.
-  *
-  */
--static inline bool qdisc_restart(struct Qdisc *q, int *packets)
-+static inline bool qdisc_restart(struct Qdisc *q, int *packets, int budget)
- {
- 	spinlock_t *root_lock = NULL;
- 	struct netdev_queue *txq;
-@@ -394,7 +397,7 @@ static inline bool qdisc_restart(struct Qdisc *q, int *packets)
- 	bool validate;
+ 	hsr_stag = skb_put(skb, sizeof(struct hsr_sup_tag));
++	skb_set_network_header(skb, ETH_HLEN + HSR_HLEN);
++	skb_reset_mac_len(skb);
++
+ 	set_hsr_stag_path(hsr_stag, (hsr->prot_version ? 0x0 : 0xf));
+ 	set_hsr_stag_HSR_ver(hsr_stag, hsr->prot_version);
  
- 	/* Dequeue packet */
--	skb = dequeue_skb(q, &validate, packets);
-+	skb = dequeue_skb(q, &validate, packets, budget);
- 	if (unlikely(!skb))
- 		return false;
- 
-@@ -412,7 +415,7 @@ void __qdisc_run(struct Qdisc *q)
- 	int quota = READ_ONCE(dev_tx_weight);
- 	int packets;
- 
--	while (qdisc_restart(q, &packets)) {
-+	while (qdisc_restart(q, &packets, quota)) {
- 		quota -= packets;
- 		if (quota <= 0) {
- 			if (q->flags & TCQ_F_NOLOCK)
 -- 
 2.51.0
 
