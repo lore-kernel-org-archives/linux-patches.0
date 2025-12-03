@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D6030C37A;
-	Wed,  3 Dec 2025 15:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575AC30F7E4;
+	Wed,  3 Dec 2025 15:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764776517; cv=none; b=f8vuGmWtZbRHAJR65xvGEnyAHeeNCQ3QGR7KtUP9/JWL/WRE720+kOKkE6P6v4V8Q5HPgGXxULX5uMp8c49sdTpbCD3yYCOyV7q2zG16NMkBcgPLijnSjnZBRlnVOU8oJi64RQZ5ZERNiDVjySIEwCAT+dFkABoK2BEn1cjcFAU=
+	t=1764776521; cv=none; b=SpdEyohHOP8wrWFXB90efDHw/XLM3EPTaYdFPdMNiytSGos/hdLotYvl1ArhYblbnKBIPLzmQbLFdwPQubcNPkksLDLwCeyeEXihH+9YYy2qWnDdgz2anIC20Q9bEMb172Wjw0TGmxGQmuiL899QSbrS/YJ3kQ8WBHelDR43mjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764776517; c=relaxed/simple;
-	bh=lMYUb+pAEOiU1Ia76nqpvaKw6ei6BjKxQuMD5c3Xbzc=;
+	s=arc-20240116; t=1764776521; c=relaxed/simple;
+	bh=JBEyMXp8DEdLg51aWBN7TkjPqr4Avhn7aVQ+cbr2hlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pnz0vJHhLAxHM8RtOKRWe9PMhW7OUxpnX0P+jyaCQPJSdq4Gu+nhKImo/aa9YEu1VAxieg39MTFflcEbCG5F0YwA0brYbUXxFqiNdRVC3PRy41v6EkETr/FUgGZnekFzOFprEZDz4IJb7ajGnpWzSM4urY9BrooojVf42twjd3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znhMvGtw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sS/Ul+CqI55pPya0IsaypQa5Rkk3XRVBX1c/VOd8HOXDIq7t7LowOGsr3et3TsA4bXbd9h5nQYKfuiSv5vcz/UW/+EnKakKtrbMQWC1e6K2BTrVK+MZlaKigbZqYYGyFv8klO/HxjO8OTqmb/jgdItPrDbc+Bya6uS+xJqYBdVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3qtGzUs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znhMvGtw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3144C116B1;
-	Wed,  3 Dec 2025 15:41:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3qtGzUs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F56C4CEF5;
+	Wed,  3 Dec 2025 15:42:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764776517;
-	bh=lMYUb+pAEOiU1Ia76nqpvaKw6ei6BjKxQuMD5c3Xbzc=;
+	s=korg; t=1764776521;
+	bh=JBEyMXp8DEdLg51aWBN7TkjPqr4Avhn7aVQ+cbr2hlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znhMvGtwLb9OKoFQtFMlnm/9q1rc0cFZ33JVTe1XNlGIPYyuPY78aquThBAyzGqDu
-	 RaHiJ2KYQWq7qickjSXRmdR5wJb8ilQftUjXDDy6/xs50+mKKGm6FMPlc0BIHgAz39
-	 jj4jCxY5rEvnh5vnX9YmU9S9+9jxTdxtFOw1KLiw=
+	b=f3qtGzUsMQCBaHqF8p7Nsv9fG/JQw3PrBVD+iWTVFNd5zWrKK9H1ABL36K0Sr6jc9
+	 7dvQLIlUl1AbtNDjHSDy6EnAhsEGHMMkjXzZ324bccoLsAcLHk4MpmyPFhpVQj7I6B
+	 c1R5tgeWmCJzgnOMncTmM2TP8b12nx4HnLV2Lw38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Paul Walmsley <pjw@kernel.org>,
+	Joshua Watt <jpewhacker@gmail.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/300] RISC-V: clear hot-unplugged cores from all task mm_cpumasks to avoid rfence errors
-Date: Wed,  3 Dec 2025 16:26:18 +0100
-Message-ID: <20251203152407.072293592@linuxfoundation.org>
+Subject: [PATCH 5.10 175/300] NFS4: Fix state renewals missing after boot
+Date: Wed,  3 Dec 2025 16:26:19 +0100
+Message-ID: <20251203152407.109136515@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
 References: <20251203152400.447697997@linuxfoundation.org>
@@ -52,46 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
+From: Joshua Watt <jpewhacker@gmail.com>
 
-[ Upstream commit ae9e9f3d67dcef7582a4524047b01e33c5185ddb ]
+[ Upstream commit 9bb3baa9d1604cd20f49ae7dac9306b4037a0e7a ]
 
-openSBI v1.7 adds harts checks for ipi operations. Especially it
-adds comparison between hmask passed as an argument from linux
-and mask of online harts (from openSBI side). If they don't
-fit each other the error occurs.
+Since the last renewal time was initialized to 0 and jiffies start
+counting at -5 minutes, any clients connected in the first 5 minutes
+after a reboot would have their renewal timer set to a very long
+interval. If the connection was idle, this would result in the client
+state timing out on the server and the next call to the server would
+return NFS4ERR_BADSESSION.
 
-When cpu is offline, cpu_online_mask is explicitly cleared in
-__cpu_disable. However, there is no explicit clearing of
-mm_cpumask. mm_cpumask is used for rfence operations that
-call openSBI RFENCE extension which uses ipi to remote harts.
-If hart is offline there may be error if mask of linux is not
-as mask of online harts in openSBI.
+Fix this by initializing the last renewal time to the current jiffies
+instead of 0.
 
-this patch adds explicit clearing of mm_cpumask for offline hart.
-
-Signed-off-by: Danil Skrebenkov <danil.skrebenkov@cloudbear.ru>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Link: https://lore.kernel.org/r/20250919132849.31676-1-danil.skrebenkov@cloudbear.ru
-[pjw@kernel.org: rewrote subject line for clarity]
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
+Signed-off-by: Joshua Watt <jpewhacker@gmail.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/cpu-hotplug.c | 1 +
+ fs/nfs/nfs4client.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/riscv/kernel/cpu-hotplug.c b/arch/riscv/kernel/cpu-hotplug.c
-index 0e948e87bd813..6cd16a2af2ee0 100644
---- a/arch/riscv/kernel/cpu-hotplug.c
-+++ b/arch/riscv/kernel/cpu-hotplug.c
-@@ -65,6 +65,7 @@ void __cpu_die(unsigned int cpu)
- 	}
- 	pr_notice("CPU%u: off\n", cpu);
- 
-+	clear_tasks_mm_cpumask(cpu);
- 	/* Verify from the firmware if the cpu is really stopped*/
- 	if (cpu_ops[cpu]->cpu_is_stopped)
- 		ret = cpu_ops[cpu]->cpu_is_stopped(cpu);
+diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
+index 89835457b7fda..5fd63df2db8b1 100644
+--- a/fs/nfs/nfs4client.c
++++ b/fs/nfs/nfs4client.c
+@@ -221,6 +221,7 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
+ 	clp->cl_state = 1 << NFS4CLNT_LEASE_EXPIRED;
+ 	clp->cl_mvops = nfs_v4_minor_ops[cl_init->minorversion];
+ 	clp->cl_mig_gen = 1;
++	clp->cl_last_renewal = jiffies;
+ #if IS_ENABLED(CONFIG_NFS_V4_1)
+ 	init_waitqueue_head(&clp->cl_lock_waitq);
+ #endif
 -- 
 2.51.0
 
