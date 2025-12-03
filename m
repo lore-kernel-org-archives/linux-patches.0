@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D647A32F74D;
-	Wed,  3 Dec 2025 16:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08B7331A7B;
+	Wed,  3 Dec 2025 16:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764778248; cv=none; b=TtPFl/GRFaT3bjAn6kWJn91XHpS+46oMBu8G1nNxbaw2gizte7851HXiOIwl70OF26EE/k6z9Z7gr8+0T8I0s2O1EiUnpzDSRiTfRTJdrmtKWKWvoqszZH63kRbdIeha2UxHq6+cpLWT6STVfCcL2SEwxh+Mu+DXTz+ZucgZeSc=
+	t=1764778252; cv=none; b=j9WzYqL3fnK2iUn4qw1E2z6+2jDACkRIHN0+jv17Pu5FfoUPSr8oJeYyHhW5oa/IEmuTPIuWQ68gSAitV6O4YeaxeDMjn+iv3lh4UUBuB9Lq9ox65bkDy2NRdLORQ0Q6hryERCUBfrN7UivzBzLMh9kgq3Ii2QZuR/5DPbYd23o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764778248; c=relaxed/simple;
-	bh=lS6NEzby+2hMtkJjnNe5knR2afByblWtNMA2fF5DSjs=;
+	s=arc-20240116; t=1764778252; c=relaxed/simple;
+	bh=ria0pktmPASNFdOwRG9F7IHYGKBmmYCludIaHHoy5PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxDbiHsuMmQA9mFAVIGhojqvT6TbRQNpULZe9e0LDXtCVp/+3hPT1gScRxbtL5e1CpR1/HaXp/IhzJnjY6HaNl9ihPCNah6wsZxQL4GBEazGIrvolP7ttbgwPLUsbU6b41pBg97kZBKgYdENwGd2YNgP3pNgZUsKp2nX7gpeMxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DpPS3xFK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WgDCwl72CGaNuHDmsCJL1aBuUaE3QsZ8RGTixUY3OxnnsRtdhdDxtacw6igcvU+V1+0ivRumAmCsKXemp/Thi3U7dCidka94yBA7upV1uAWl0yj7TFWvzOhXoUZPmgdCGWsCPtfjqPUft8puWy0Nfzceg0pUdPJZKoXjFlpT17U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnNkjvfS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DpPS3xFK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4652AC4CEF5;
-	Wed,  3 Dec 2025 16:10:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnNkjvfS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D471CC4CEF5;
+	Wed,  3 Dec 2025 16:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764778248;
-	bh=lS6NEzby+2hMtkJjnNe5knR2afByblWtNMA2fF5DSjs=;
+	s=korg; t=1764778252;
+	bh=ria0pktmPASNFdOwRG9F7IHYGKBmmYCludIaHHoy5PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpPS3xFKdYhB3q3PZ3dYY1csRNrMKpfjG4K+MkoUoxK08EATqY+m8+njfI+iEwEVW
-	 dZIf1cYY/763KzpSo1PpylYD3Dc2cybmwcfuzrVfmLCitnvqcNY5upsE4QQnt5V4XX
-	 VqcRwavbnVp5GomdAXbtEkSTQqvTcSxciJigCdLE=
+	b=XnNkjvfSgqppotoCXx4kCvnAIkW/BtD6Vk7igTGe2V7ja+j3tk+8wLRMba9LXIFQB
+	 Oo/U801yXNt0h46QUxeGdVJwENbZfqkYmnNVrcY0d3k1jxzJr1M6p5rOiDxaWNJT6X
+	 7RLc3zeeUsUjVEIsb8wjbf+GMSvzcYbjQpacAZ8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com,
-	Hannes Reinecke <hare@suse.de>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Allen Pais <apais@linux.microsoft.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 289/392] scsi: sg: Do not sleep in atomic context
-Date: Wed,  3 Dec 2025 16:27:19 +0100
-Message-ID: <20251203152424.792649984@linuxfoundation.org>
+Subject: [PATCH 5.15 290/392] scsi: target: tcm_loop: Fix segfault in tcm_loop_tpg_address_show()
+Date: Wed,  3 Dec 2025 16:27:20 +0100
+Message-ID: <20251203152424.829066860@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
 References: <20251203152414.082328008@linuxfoundation.org>
@@ -52,47 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
 
-commit 90449f2d1e1f020835cba5417234636937dd657e upstream.
+commit e6965188f84a7883e6a0d3448e86b0cf29b24dfc upstream.
 
-sg_finish_rem_req() calls blk_rq_unmap_user(). The latter function may
-sleep. Hence, call sg_finish_rem_req() with interrupts enabled instead
-of disabled.
+If the allocation of tl_hba->sh fails in tcm_loop_driver_probe() and we
+attempt to dereference it in tcm_loop_tpg_address_show() we will get a
+segfault, see below for an example. So, check tl_hba->sh before
+dereferencing it.
 
-Reported-by: syzbot+c01f8e6e73f20459912e@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-scsi/691560c4.a70a0220.3124cb.001a.GAE@google.com/
-Cc: Hannes Reinecke <hare@suse.de>
+  Unable to allocate struct scsi_host
+  BUG: kernel NULL pointer dereference, address: 0000000000000194
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 1 PID: 8356 Comm: tokio-runtime-w Not tainted 6.6.104.2-4.azl3 #1
+  Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/28/2024
+  RIP: 0010:tcm_loop_tpg_address_show+0x2e/0x50 [tcm_loop]
+...
+  Call Trace:
+   <TASK>
+   configfs_read_iter+0x12d/0x1d0 [configfs]
+   vfs_read+0x1b5/0x300
+   ksys_read+0x6f/0xf0
+...
+
 Cc: stable@vger.kernel.org
-Fixes: 97d27b0dd015 ("scsi: sg: close race condition in sg_remove_sfp_usercontext()")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20251113181643.1108973-1-bvanassche@acm.org
+Fixes: 2628b352c3d4 ("tcm_loop: Show address of tpg in configfs")
+Signed-off-by: Hamza Mahfooz <hamzamahfooz@linux.microsoft.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Allen Pais <apais@linux.microsoft.com>
+Link: https://patch.msgid.link/1762370746-6304-1-git-send-email-hamzamahfooz@linux.microsoft.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sg.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/target/loopback/tcm_loop.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/sg.c
-+++ b/drivers/scsi/sg.c
-@@ -2198,9 +2198,17 @@ sg_remove_sfp_usercontext(struct work_st
- 	write_lock_irqsave(&sfp->rq_list_lock, iflags);
- 	while (!list_empty(&sfp->rq_list)) {
- 		srp = list_first_entry(&sfp->rq_list, Sg_request, entry);
--		sg_finish_rem_req(srp);
- 		list_del(&srp->entry);
-+		write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
-+
-+		sg_finish_rem_req(srp);
-+		/*
-+		 * sg_rq_end_io() uses srp->parentfp. Hence, only clear
-+		 * srp->parentfp after blk_mq_free_request() has been called.
-+		 */
- 		srp->parentfp = NULL;
-+
-+		write_lock_irqsave(&sfp->rq_list_lock, iflags);
- 	}
- 	write_unlock_irqrestore(&sfp->rq_list_lock, iflags);
+--- a/drivers/target/loopback/tcm_loop.c
++++ b/drivers/target/loopback/tcm_loop.c
+@@ -934,6 +934,9 @@ static ssize_t tcm_loop_tpg_address_show
+ 			struct tcm_loop_tpg, tl_se_tpg);
+ 	struct tcm_loop_hba *tl_hba = tl_tpg->tl_hba;
  
++	if (!tl_hba->sh)
++		return -ENODEV;
++
+ 	return snprintf(page, PAGE_SIZE, "%d:0:%d\n",
+ 			tl_hba->sh->host_no, tl_tpg->tl_tpgt);
+ }
 
 
