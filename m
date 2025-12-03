@@ -1,133 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F24A32E69E
-	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 16:39:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1644C31A077;
+	Wed,  3 Dec 2025 16:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764779973; cv=none; b=sZkvpUsLbQCklpzlSW4nm65jJ0Vr78BLcJNjHiu/TAV0+SOsDP3t9J+1L9U29VZ1yhWiHQ7lfd17WTVuCU7AFKiek7yhKdQ3hE+Fz1KxJrEa0XD3+rWYQAwiDP3Bxo9leysQVrPx1LagqWjZyvP82hTka9ZL9aqZwAYX58H2Sy0=
+	t=1764779976; cv=none; b=Kvfql1v8s3LBvLyFFpSt6Q0NdZjvlNF+cl/AldVesZRKPjbMj7ZHkVim2SJq0uHdCTG6I8JCsg0bUo8TXdZ4KzjIyevsejtjUXvInb0gzzTlnj5XTEbuMmrqhVSnlbr9VCSCYy5hoBf4qYT9gTJBKuPr1Qdfef9GxYakV5ke+X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764779973; c=relaxed/simple;
-	bh=nGI+90G+qxZwST01C3YjM07YV9L/HeblzgbrJvTyowU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QuyzUMBrzHlkA0DvDCfnI2NjOxeH72NOhobabnj4VI1lLh073qiw/nK4klSwujtkTDtjnSfADvbzfYnleLD0aFF1gGptYbVDp7OMxL4wwPNeT6Y+3BmaDP00VuIWRBu0QfxTRlnr6+OO3aEll+6ZJyQdYJyQEzIUhxDYgFglkCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fSrWNmta; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764779976; c=relaxed/simple;
+	bh=M0dvR6WmuFRPqCtcxsST9z9oLau2zmj0a7Ut+OVWBBE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=O7ISileT+XOMUOpAak9t1O67Gt8NflhNsgEOs3o3SPr/xd3zs04ToB92qTPqEzPTbBsVjHKaXs7nYE245ma9u7XeF0lhaSxowCcqof8P3SZjmFqV6K9bmm8Wj6BDqCHIhPkgm+1Q0IS7qfPengKXbRO2K7VdeLfIknU6VD730bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKDXVObA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fSrWNmta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4350DC116C6
-	for <patches@lists.linux.dev>; Wed,  3 Dec 2025 16:39:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764779973;
-	bh=nGI+90G+qxZwST01C3YjM07YV9L/HeblzgbrJvTyowU=;
-	h=References:In-Reply-To:Reply-To:From:Date:Subject:To:Cc:From;
-	b=fSrWNmta3l0wExlZVRKdQ9KfqWL60/01T5rx8+OoQW6BBfncYA/gDaYIPe4fO2K5p
-	 iucicAETFNAHvjubHZH6mMIrrtBI3yG12q3TEz4NbPQCVgb9NLI8g2vr5zCQ4V6i3T
-	 pI1UKYcdO28XdkUk1edpeBJF7jSFKW6SNiM5M/qemdciQJVV1nB+a8Y4JfbZ3Q+bnq
-	 uCV1kSoOlnnOuU5sDyMqxX5Yq21zgbyFktY+8AwIqWclnlqYzzSCVG8HnLavKaLazF
-	 Ql/bIB6pGZft8Zl7OxaZKSjCpR92O0jIbCx6bUNHLrfFqZ+8PrZWAnBAS66u6B/nmo
-	 8OSsA2fNpUpEA==
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-37a2dcc52aeso62932941fa.0
-        for <patches@lists.linux.dev>; Wed, 03 Dec 2025 08:39:33 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCViLmc0GUdDkG8uToC/5IUeWOK9rBE8MUqTAvCKay+wpJB9RMMWNBrT120Ziv40NmtdKUVVDobY@lists.linux.dev
-X-Gm-Message-State: AOJu0YwNN9itOuLJUI6TUN2FZWQ1CHoPtClnbbahwXU9qEwKtaM6zTRp
-	vy1qYH2MjD8KVtvzxDWaAaR7NkNNo47awYmr08+ggtatG3Ev9q0ZxIU4COQTeeuLwnBLhdUE0kt
-	zK0DXq333DEzbHj3T+d+vYQKlRDA/Neg=
-X-Google-Smtp-Source: AGHT+IGm0vXbsh0XtG/ynlgazAvS1H3eYlsF8Yd6HuqsVLDuqeCsn1/RkJZdvB9GVzU2RpR3/w9+a/1QbTwcQAS8Wik=
-X-Received: by 2002:a05:651c:23c3:20b0:375:ffc2:1b40 with SMTP id
- 38308e7fff4ca-37e6391d3a8mr8131711fa.35.1764779971589; Wed, 03 Dec 2025
- 08:39:31 -0800 (PST)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKDXVObA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DD1C4CEF5;
+	Wed,  3 Dec 2025 16:39:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1764779976;
+	bh=M0dvR6WmuFRPqCtcxsST9z9oLau2zmj0a7Ut+OVWBBE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=cKDXVObANcYdSLBzgEFP78KESShX2p9g94dbss9m25zAdtvbFEWbjrv9gs/fGWV8G
+	 JqkjPxU3vJqY6ADN4BlSvi+rDzPEkvXidcG3t0tXdAA97hxYC6tfP/yG8XnAQap8jn
+	 YIt+xBHGFy3+L0whv0pFip7Yyk2RNtev9tr3QJqM=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Matteo Rizzo <matteorizzo@google.com>,
+	evn@google.com,
+	Jim Mattson <jmattson@google.com>,
+	Yosry Ahmed <yosry.ahmed@linux.dev>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 417/568] KVM: SVM: Mark VMCB_LBR dirty when MSR_IA32_DEBUGCTLMSR is updated
+Date: Wed,  3 Dec 2025 16:26:59 +0100
+Message-ID: <20251203152455.968090987@linuxfoundation.org>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
+References: <20251203152440.645416925@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251203152440.645416925@linuxfoundation.org> <20251203152451.071218150@linuxfoundation.org>
-In-Reply-To: <20251203152451.071218150@linuxfoundation.org>
-Reply-To: wens@kernel.org
-From: Chen-Yu Tsai <wens@kernel.org>
-Date: Thu, 4 Dec 2025 00:39:19 +0800
-X-Gmail-Original-Message-ID: <CAGb2v66AhhbEdXJVOZbUiUa2yJ-XAroSvHi3Xqyot6dUkfj7iQ@mail.gmail.com>
-X-Gm-Features: AWmQ_blg5NpXOz2PHei0zlzpGhp0VIiFBZDw-a0IBHQLiuOvXj79j_NVDBClfdw
-Message-ID: <CAGb2v66AhhbEdXJVOZbUiUa2yJ-XAroSvHi3Xqyot6dUkfj7iQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 283/568] clk: sunxi-ng: sun6i-rtc: Add A523 specifics
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Sasha Levin <sashal@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 4, 2025 at 12:34=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> 6.1-stable review patch.  If anyone has any objections, please let me kno=
-w.
->
-> ------------------
->
-> From: Chen-Yu Tsai <wens@csie.org>
->
-> [ Upstream commit 7aa8781f379c32c31bd78f1408a31765b2297c43 ]
->
-> The A523's RTC block is backward compatible with the R329's, but it also
-> has a calibration function for its internal oscillator, which would
-> allow it to provide a clock rate closer to the desired 32.768 KHz. This
-> is useful on the Radxa Cubie A5E, which does not have an external 32.768
-> KHz crystal.
->
-> Add new compatible-specific data for it.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
-Support for the A523 SoC was added in v6.16. I don't think we need to
-backport A523 specific stuff any further back.
+------------------
+
+From: Yosry Ahmed <yosry.ahmed@linux.dev>
+
+[ Upstream commit dc55b3c3f61246e483e50c85d8d5366f9567e188 ]
+
+The APM lists the DbgCtlMsr field as being tracked by the VMCB_LBR clean
+bit.  Always clear the bit when MSR_IA32_DEBUGCTLMSR is updated.
+
+The history is complicated, it was correctly cleared for L1 before
+commit 1d5a1b5860ed ("KVM: x86: nSVM: correctly virtualize LBR msrs when
+L2 is running").  At that point svm_set_msr() started to rely on
+svm_update_lbrv() to clear the bit, but when nested virtualization
+is enabled the latter does not always clear it even if MSR_IA32_DEBUGCTLMSR
+changed. Go back to clearing it directly in svm_set_msr().
+
+Fixes: 1d5a1b5860ed ("KVM: x86: nSVM: correctly virtualize LBR msrs when L2 is running")
+Reported-by: Matteo Rizzo <matteorizzo@google.com>
+Reported-by: evn@google.com
+Co-developed-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Signed-off-by: Yosry Ahmed <yosry.ahmed@linux.dev>
+Link: https://patch.msgid.link/20251108004524.1600006-2-yosry.ahmed@linux.dev
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[ Open coded svm_get_lbr_vmcb() call ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/x86/kvm/svm/svm.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3053,11 +3053,17 @@ static int svm_set_msr(struct kvm_vcpu *
+ 		if (data & DEBUGCTL_RESERVED_BITS)
+ 			return 1;
+ 
+-		if (svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK)
++		if (svm->vmcb->control.virt_ext & LBR_CTL_ENABLE_MASK) {
++			if (svm->vmcb->save.dbgctl == data)
++				break;
+ 			svm->vmcb->save.dbgctl = data;
+-		else
++		} else {
++			if (svm->vmcb01.ptr->save.dbgctl == data)
++				break;
+ 			svm->vmcb01.ptr->save.dbgctl = data;
++		}
+ 
++		vmcb_mark_dirty(svm->vmcb, VMCB_LBR);
+ 		svm_update_lbrv(vcpu);
+ 
+ 		break;
 
 
-ChenYu
-
-
-> Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-> Link: https://patch.msgid.link/20250909170947.2221611-1-wens@kernel.org
-> Signed-off-by: Chen-Yu Tsai <wens@csie.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/clk/sunxi-ng/ccu-sun6i-rtc.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
-> diff --git a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c b/drivers/clk/sunxi-ng/=
-ccu-sun6i-rtc.c
-> index d65398497d5f6..e42348bda20f8 100644
-> --- a/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-> +++ b/drivers/clk/sunxi-ng/ccu-sun6i-rtc.c
-> @@ -323,6 +323,13 @@ static const struct sun6i_rtc_match_data sun50i_r329=
-_rtc_ccu_data =3D {
->         .osc32k_fanout_nparents =3D ARRAY_SIZE(sun50i_r329_osc32k_fanout_=
-parents),
->  };
->
-> +static const struct sun6i_rtc_match_data sun55i_a523_rtc_ccu_data =3D {
-> +       .have_ext_osc32k        =3D true,
-> +       .have_iosc_calibration  =3D true,
-> +       .osc32k_fanout_parents  =3D sun50i_r329_osc32k_fanout_parents,
-> +       .osc32k_fanout_nparents =3D ARRAY_SIZE(sun50i_r329_osc32k_fanout_=
-parents),
-> +};
-> +
->  static const struct of_device_id sun6i_rtc_ccu_match[] =3D {
->         {
->                 .compatible     =3D "allwinner,sun50i-h616-rtc",
-> @@ -332,6 +339,10 @@ static const struct of_device_id sun6i_rtc_ccu_match=
-[] =3D {
->                 .compatible     =3D "allwinner,sun50i-r329-rtc",
->                 .data           =3D &sun50i_r329_rtc_ccu_data,
->         },
-> +       {
-> +               .compatible     =3D "allwinner,sun55i-a523-rtc",
-> +               .data           =3D &sun55i_a523_rtc_ccu_data,
-> +       },
->         {},
->  };
->
-> --
-> 2.51.0
->
->
->
