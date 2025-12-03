@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BABD35C1B6;
-	Wed,  3 Dec 2025 16:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B002C35CBA2;
+	Wed,  3 Dec 2025 16:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764780133; cv=none; b=q7owNTN7hWprDZiojER5qmn/gmWgXD7/Tviwec3CJA9jPgBP9DX/YpNRdDqDGZBQarOugfAPgGVG4e/qAGv4JMoJoHiOu4aTKnmWSdBcejnMT1z6slM3uUCpbU1j6oonQqc9R++ZAihqQ7vg7aYSJCbOBYihijMK09uFZUJJCRc=
+	t=1764780136; cv=none; b=fTgpqQnn523le/viMY8yiBFwz+6Shv5+CSW70w1W1sYooZ8gIjECBfUTI753VWx7UmD3JxX/1aBMR36oXE7e+Qzrpf8VQUpGXAxC3ltNgnfnVihRXMjxUr69arTefTM2/DYcaGsv0iWElcNJyvPUx9dBwrwWyQueCtFg1oHt7a0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764780133; c=relaxed/simple;
-	bh=Y8sRz4YJ3jtTCcHP6RKhfW0OFIF9ffTazoXsDzljVsA=;
+	s=arc-20240116; t=1764780136; c=relaxed/simple;
+	bh=JD+th2TnAPMc/3095Qsi8PSlId2mrHCafUj4ZigXgYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=imyeQ1ifadrzljf6EpBmaKGoUIk/zdziC4iTfZ/giqgenYySZfmnDsULXPLWfdHwA6zoIqtypCYN+D9yBlTXyReZoEV2QlL4nBwP0yR0Dov20m7yUmfMpefSwXz1WdPXl3FjsRM1RP+0YSgwGLBgYqn8GNDJKKJ4+NbIxRP0pA0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z5U5kEn6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgXgUJBXAOnvp6X3KxUHTQY1m8VU7a/er2i/Bqs4g6iYa3jjIbA92SBqXU4FrSHypjyva6JF6/ucJ88GCDTrPK5PbPwQd2Zcj+ImxtXhKm1MG5dHqGkVKuvpwurOdHHeNGpx5FSiHk16oZDZfEZHr8NfvfNDp17Sos4KkVAfUfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9VEfhDl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z5U5kEn6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DECC4CEF5;
-	Wed,  3 Dec 2025 16:42:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9VEfhDl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEEF8C4CEF5;
+	Wed,  3 Dec 2025 16:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764780132;
-	bh=Y8sRz4YJ3jtTCcHP6RKhfW0OFIF9ffTazoXsDzljVsA=;
+	s=korg; t=1764780136;
+	bh=JD+th2TnAPMc/3095Qsi8PSlId2mrHCafUj4ZigXgYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z5U5kEn6SMLHiBxCm/l3Tgum+rl7yJKj7md9QF8XojOy0CCUI1U95W8bGOopZW+/r
-	 0AmXGLLSgQevHPBa/+wGP9yJ41tkLFt9BIVLVOos6ODMuQl438xX4ICy3cQQrEj99e
-	 zGLxMm0Y50vD3ABEuwL26dLMeGACV3L6cZexyHIU=
+	b=J9VEfhDlA0QZg1NgCzKxs7vi58rpLdtscNAVMQP7SHpV9RD0C1VyPwWf8LL+oBycf
+	 TylOXl2PJxfyAObIv1Ovq1WcD9/RiBgpl8PAJkqU6+MWotoSiHLWpUAiqMZtOrnVzc
+	 3NuchG6ZyPmWTIPi+D5jldb8duBIV3Y9Ovs6prB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Edoardo Canepa <edoardo.canepa@canonical.com>,
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 458/568] nvme-multipath: fix lockdep WARN due to partition scan work
-Date: Wed,  3 Dec 2025 16:27:40 +0100
-Message-ID: <20251203152457.480409935@linuxfoundation.org>
+Subject: [PATCH 6.1 467/568] selftests: net: use BASH for bareudp testing
+Date: Wed,  3 Dec 2025 16:27:49 +0100
+Message-ID: <20251203152457.805862811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
 References: <20251203152440.645416925@linuxfoundation.org>
@@ -54,45 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-[ Upstream commit 6d87cd5335784351280f82c47cc8a657271929c3 ]
+[ Upstream commit 9311e9540a8b406d9f028aa87fb072a3819d4c82 ]
 
-Blktests test cases nvme/014, 057 and 058 fail occasionally due to a
-lockdep WARN. As reported in the Closes tag URL, the WARN indicates that
-a deadlock can happen due to the dependency among disk->open_mutex,
-kblockd workqueue completion and partition_scan_work completion.
+In bareudp.sh, this script uses /bin/sh and it will load another lib.sh
+BASH script at the very beginning.
 
-To avoid the lockdep WARN and the potential deadlock, cut the dependency
-by running the partition_scan_work not by kblockd workqueue but by
-nvme_wq.
+But on some operating systems like Ubuntu, /bin/sh is actually pointed to
+DASH, thus it will try to run BASH commands with DASH and consequently
+leads to syntax issues:
+  # ./bareudp.sh: 4: ./lib.sh: Bad substitution
+  # ./bareudp.sh: 5: ./lib.sh: source: not found
+  # ./bareudp.sh: 24: ./lib.sh: Syntax error: "(" unexpected
 
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/linux-block/CAHj4cs8mJ+R_GmQm9R8ebResKAWUE8kF5+_WVg0v8zndmqd6BQ@mail.gmail.com/
-Link: https://lore.kernel.org/linux-block/oeyzci6ffshpukpfqgztsdeke5ost5hzsuz4rrsjfmvpqcevax@5nhnwbkzbrpa/
-Fixes: 1f021341eef4 ("nvme-multipath: defer partition scanning")
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fix this by explicitly using BASH for bareudp.sh. This fixes test
+execution failures on systems where /bin/sh is not BASH.
+
+Reported-by: Edoardo Canepa <edoardo.canepa@canonical.com>
+Link: https://bugs.launchpad.net/bugs/2129812
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Link: https://patch.msgid.link/20251027095710.2036108-2-po-hsu.lin@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 2 +-
+ tools/testing/selftests/net/bareudp.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index 43b89c7d585f0..a3e225bb4b88f 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -577,7 +577,7 @@ static void nvme_mpath_set_live(struct nvme_ns *ns)
- 			return;
- 		}
- 		nvme_add_ns_head_cdev(head);
--		kblockd_schedule_work(&head->partition_scan_work);
-+		queue_work(nvme_wq, &head->partition_scan_work);
- 	}
+diff --git a/tools/testing/selftests/net/bareudp.sh b/tools/testing/selftests/net/bareudp.sh
+index f366cadbc5e86..ff4308b48e65d 100755
+--- a/tools/testing/selftests/net/bareudp.sh
++++ b/tools/testing/selftests/net/bareudp.sh
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ # SPDX-License-Identifier: GPL-2.0
  
- 	mutex_lock(&head->lock);
+ # Test various bareudp tunnel configurations.
 -- 
 2.51.0
 
