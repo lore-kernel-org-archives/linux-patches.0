@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A7E32A3CA
-	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 20:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A667329E5A
+	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 20:54:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764881683; cv=none; b=WUrAhaDJUxH2IaLSX0pyJ0PSJjHqLWpWNFKHn2ttWEWsnlek5DZ/sn+9uFMxQOmmTEQNFK3ytBvhouZDOE2JVktowPnF2sCeTRIPRiAwpoVNaLI/D5+y1bOf7weWwuwx0slYNYJhQGWSomjB8h7odSE5zaypheI0hALYo2o6QCg=
+	t=1764881684; cv=none; b=DOhZjujSRJlvrcHV3rkUcvboYGPf10IEaAbyEIhR6Gk5WX4n3rWl/9cJYXRDOUtkJyLlnNsR9n4qVJwzqsz26RICCdYPhB8ruB5qvyP0PcPuHWNXI+f+iYcElBmtEoyKQBcxqN6T592f72hw8WxFrnig8feqtSj9JuabYeP1ulk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764881683; c=relaxed/simple;
-	bh=+n+JvokATZFeYc55f/ADAB5n8RX+tcT3RgtqGGFpAQU=;
+	s=arc-20240116; t=1764881684; c=relaxed/simple;
+	bh=6P6/qdwIinWh3GhPxgZSngc0CYjUPfiSTLftQro4OAU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSPdyl2n/sZbNesVIzKF9Pw+bps0fAvXKYOQTE8qQWSbiZvvuJ4ze354rtarNjsTfgTpGBrDxd8Sozl9O40WJ0CLWdgeKnSKKxnpvLmCbroXKVSP78qIdX3XIfkERcBGW3xr+4Lsfp0eAuu4ZmVNakQ2Y0yO5wdIHNHMwPppDeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UtvV8+IF; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=FOMwJOiYA85KX8HblmwkFadQ3tLlW6muko2UBinRRAumeAUkYRJAlrjDDxlFHidxGd5DwXgXTdRjqNTq/6qLZQxOoJzNuMIb3EjBy70mQZc9DQevVg4mZmqjPZRZIPJ//FcneE3fngoCqJAenhYyYuNFMwEf9lVitpx3dXrT0bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gvDTkO5i; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UtvV8+IF"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gvDTkO5i"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764881681; x=1796417681;
+  t=1764881680; x=1796417680;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=+n+JvokATZFeYc55f/ADAB5n8RX+tcT3RgtqGGFpAQU=;
-  b=UtvV8+IFUrwJAKqMqa1JSxouWd4XgEwNsSGO9dx5OUICrbhV7DeOToCU
-   fKWWRBQkhyyP1Pq46bYJ97ely5uWg/t4hIoOH7vd6hvdG1gPYBUSueML1
-   zDVU8T6mdW7W7zLjTkUIHBuDezmyvcJRopiN6UqRAZC0I6+yOjAnR+25N
-   tGyWxFbUtsnLhNPH7QR+lhmjAPeNuvst+qCMeGTSK/mU73IddBAm/3mS3
-   JhqTLurglMow+vkotF0FO/HGqYWn/9QwNwsKY+ZdRcn9I9gvqfP+p+TSP
-   Nwi1RJ2m1umLtcw3Qp0QrRlP8qHH6arkPJW1za/O255PSYDNuNgJPecpy
+  bh=6P6/qdwIinWh3GhPxgZSngc0CYjUPfiSTLftQro4OAU=;
+  b=gvDTkO5i9gZk9aHhXMdblHLzIRpvZ1sR4gpxg7IPG92CGZ5GcVJOqDYN
+   o0F826wuNgAkocjCmE6zR5W52K/aYXomGh5lwaFXEr4XU3pcRQvLw5tn8
+   pCXgqNuRtP6+HiT5VDUe0Bm5/riufA1d+yi05QnPHwKadCkr/2rMJu2KR
+   jOttE9TX2OANc2FrvUDarplwiiG8u0ZUW4iNNt5B9yrB9iE81sF4dNJPZ
+   Ah27iHLyh5GMR21brJEUgmjGJ3kuPRLtd9t8dgD0bLxDsZ/MK2YpifXpT
+   L/F1q2MxkDxtpEqp9XvAOhOzzciz7AKxCBvdKeQD+0DK/PD7/zi7aKu8Y
    A==;
-X-CSE-ConnectionGUID: i//Slb3zR3+zDU7FuzUUwQ==
-X-CSE-MsgGUID: rYdB1477SJWMBZjfNZPYSQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11632"; a="69511085"
+X-CSE-ConnectionGUID: aW5DWQYdSYGFTw6VF/4YXg==
+X-CSE-MsgGUID: Qs3mF0kDSaG1gwR/oS9txA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11632"; a="69511077"
 X-IronPort-AV: E=Sophos;i="6.20,250,1758610800"; 
-   d="scan'208";a="69511085"
+   d="scan'208";a="69511077"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2025 12:54:32 -0800
-X-CSE-ConnectionGUID: bwVfA3SfQ+OLk7Zojl9awg==
-X-CSE-MsgGUID: dkNvCY32TMyJ9KyTMTJxHA==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2025 12:54:31 -0800
+X-CSE-ConnectionGUID: GQ1uEawjRES/qp8Qiju/qA==
+X-CSE-MsgGUID: GaErUmvAT5CEg7lurl7z5w==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,250,1758610800"; 
-   d="scan'208";a="225752878"
+   d="scan'208";a="225752868"
 Received: from mgerlach-mobl1.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.220.165])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2025 12:54:31 -0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2025 12:54:30 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v15 28/32] fs/resctrl: Move RMID initialization to first mount
-Date: Thu,  4 Dec 2025 12:53:58 -0800
-Message-ID: <20251204205404.12763-29-tony.luck@intel.com>
+Subject: [PATCH v15 27/32] x86,fs/resctrl: Compute number of RMIDs as minimum across resources
+Date: Thu,  4 Dec 2025 12:53:57 -0800
+Message-ID: <20251204205404.12763-28-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251204205404.12763-1-tony.luck@intel.com>
 References: <20251204205404.12763-1-tony.luck@intel.com>
@@ -71,176 +71,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-L3 monitor features are enumerated during resctrl initialization and
-rmid_ptrs[] that tracks all RMIDs and depends on the number of supported
-RMIDs is allocated during this time.
+resctrl assumes that only the L3 resource supports monitor events, so it
+simply takes the rdt_resource::num_rmid from RDT_RESOURCE_L3 as the system's
+number of RMIDs.
 
-Telemetry monitor features are enumerated during first resctrl mount and
-may support a different number of RMIDs compared to L3 monitor features.
+The addition of telemetry events in a different resource breaks that
+assumption.
 
-Delay allocation and initialization of rmid_ptrs[] until first mount.
-Since the number of RMIDs cannot change on later mounts, keep the same set of
-rmid_ptrs[] until resctrl_exit(). This is required because the limbo handler
-keeps running after resctrl is unmounted and needs to access rmid_ptrs[]
-as it keeps tracking busy RMIDs after unmount.
+Compute the number of available RMIDs as the minimum value across all
+mon_capable resources (analogous to how the number of CLOSIDs is computed
+across alloc_capable resources).
 
-Rename routines to match what they now do:
-dom_data_init() -> setup_rmid_lru_list()
-dom_data_exit() -> free_rmid_lru_list()
+Note that mount time enumeration of the telemetry resource means that
+this number can be reduced. If this happens, then some memory will
+be wasted as the allocations for rdt_l3_mon_domain::mbm_states[] and
+rdt_l3_mon_domain::rmid_busy_llc created during resctrl initialization will
+be larger than needed.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- fs/resctrl/internal.h |  4 ++++
- fs/resctrl/monitor.c  | 54 ++++++++++++++++++++-----------------------
- fs/resctrl/rdtgroup.c |  5 ++++
- 3 files changed, 34 insertions(+), 29 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c | 15 +++++++++++++--
+ fs/resctrl/rdtgroup.c              |  6 ++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index 399f625be67d..1a9b29119f88 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -369,6 +369,10 @@ int closids_supported(void);
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 960974ffa866..bca65851d592 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -110,12 +110,23 @@ struct rdt_hw_resource rdt_resources_all[RDT_NUM_RESOURCES] = {
+ 	},
+ };
  
- void closid_free(int closid);
- 
-+int setup_rmid_lru_list(void);
-+
-+void free_rmid_lru_list(void);
-+
- int alloc_rmid(u32 closid);
- 
- void free_rmid(u32 closid, u32 rmid);
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 4cfddef45006..0ba1b3fb6525 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -904,20 +904,29 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
- 		schedule_delayed_work_on(cpu, &dom->mbm_over, delay);
- }
- 
--static int dom_data_init(struct rdt_resource *r)
-+int setup_rmid_lru_list(void)
++/**
++ * resctrl_arch_system_num_rmid_idx - Compute number of supported RMIDs
++ *				      (minimum across all mon_capable resource)
++ *
++ * Return: Number of supported RMIDs at time of call. Note that mount time
++ * enumeration of resources may reduce the number.
++ */
+ u32 resctrl_arch_system_num_rmid_idx(void)
  {
--	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
- 	struct rmid_entry *entry = NULL;
--	int err = 0, i;
-+	u32 idx_limit;
- 	u32 idx;
-+	int i;
- 
--	mutex_lock(&rdtgroup_mutex);
-+	if (!resctrl_arch_mon_capable())
-+		return 0;
- 
-+	/*
-+	 * Called on every mount, but the number of RMIDs cannot change
-+	 * after the first mount, so keep using the same set of rmid_ptrs[]
-+	 * until resctrl_exit(). Note that the limbo handler continues to
-+	 * access rmid_ptrs[] after resctrl is unmounted.
-+	 */
-+	if (rmid_ptrs)
-+		return 0;
+-	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
++	u32 num_rmids = U32_MAX;
++	struct rdt_resource *r;
 +
-+	idx_limit = resctrl_arch_system_num_rmid_idx();
- 	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
--	if (!rmid_ptrs) {
--		err = -ENOMEM;
--		goto out_unlock;
--	}
-+	if (!rmid_ptrs)
-+		return -ENOMEM;
++	for_each_mon_capable_rdt_resource(r)
++		num_rmids = min(num_rmids, r->mon.num_rmid);
  
- 	for (i = 0; i < idx_limit; i++) {
- 		entry = &rmid_ptrs[i];
-@@ -930,30 +939,24 @@ static int dom_data_init(struct rdt_resource *r)
- 	/*
- 	 * RESCTRL_RESERVED_CLOSID and RESCTRL_RESERVED_RMID are special and
- 	 * are always allocated. These are used for the rdtgroup_default
--	 * control group, which will be setup later in resctrl_init().
-+	 * control group, which was setup earlier in rdtgroup_setup_default().
- 	 */
- 	idx = resctrl_arch_rmid_idx_encode(RESCTRL_RESERVED_CLOSID,
- 					   RESCTRL_RESERVED_RMID);
- 	entry = __rmid_entry(idx);
- 	list_del(&entry->list);
- 
--out_unlock:
--	mutex_unlock(&rdtgroup_mutex);
--
--	return err;
-+	return 0;
+ 	/* RMID are independent numbers for x86. num_rmid_idx == num_rmid */
+-	return r->mon.num_rmid;
++	return num_rmids == U32_MAX ? 0 : num_rmids;
  }
  
--static void dom_data_exit(struct rdt_resource *r)
-+void free_rmid_lru_list(void)
- {
--	mutex_lock(&rdtgroup_mutex);
--
--	if (!r->mon_capable)
--		goto out_unlock;
-+	if (!resctrl_arch_mon_capable())
-+		return;
- 
-+	mutex_lock(&rdtgroup_mutex);
- 	kfree(rmid_ptrs);
- 	rmid_ptrs = NULL;
--
--out_unlock:
- 	mutex_unlock(&rdtgroup_mutex);
- }
- 
-@@ -1831,7 +1834,8 @@ static void closid_num_dirty_rmid_free(void)
-  * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
-  *
-  * Allocate and initialise global monitor resources that do not belong to a
-- * specific domain. i.e. the rmid_ptrs[] used for the limbo and free lists.
-+ * specific domain. i.e. the closid_num_dirty_rmid[] used to find the CLOSID
-+ * with the cleanest set of RMIDs.
-  * Called once during boot after the struct rdt_resource's have been configured
-  * but before the filesystem is mounted.
-  * Resctrl's cpuhp callbacks may be called before this point to bring a domain
-@@ -1851,12 +1855,6 @@ int resctrl_l3_mon_resource_init(void)
- 	if (ret)
- 		return ret;
- 
--	ret = dom_data_init(r);
--	if (ret) {
--		closid_num_dirty_rmid_free();
--		return ret;
--	}
--
- 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
- 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
- 		resctrl_file_fflags_init("mbm_total_bytes_config",
-@@ -1903,6 +1901,4 @@ void resctrl_l3_mon_resource_exit(void)
- 		return;
- 
- 	closid_num_dirty_rmid_free();
--
--	dom_data_exit(r);
- }
+ struct rdt_resource *resctrl_arch_get_resource(enum resctrl_res_level l)
 diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index e95d3d0dc515..d49ffc56ea61 100644
+index 60ce2390723e..e95d3d0dc515 100644
 --- a/fs/resctrl/rdtgroup.c
 +++ b/fs/resctrl/rdtgroup.c
-@@ -2799,6 +2799,10 @@ static int rdt_get_tree(struct fs_context *fc)
- 		goto out;
- 	}
- 
-+	ret = setup_rmid_lru_list();
-+	if (ret)
-+		goto out;
-+
- 	ret = rdtgroup_setup_root(ctx);
- 	if (ret)
- 		goto out;
-@@ -4654,4 +4658,5 @@ void resctrl_exit(void)
- 	 */
- 
- 	resctrl_l3_mon_resource_exit();
-+	free_rmid_lru_list();
- }
+@@ -4352,6 +4352,12 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+  * During boot this may be called before global allocations have been made by
+  * resctrl_l3_mon_resource_init().
+  *
++ * Called during CPU online that may run as soon as CPU online callbacks
++ * are set up during resctrl initialization. The number of supported RMIDs
++ * may be reduced if additional mon_capable resources are enumerated
++ * at mount time. This means the rdt_l3_mon_domain::mbm_states[] and
++ * rdt_l3_mon_domain::rmid_busy_llc allocations may be larger than needed.
++ *
+  * Return: 0 for success, or -ENOMEM.
+  */
+ static int domain_setup_l3_mon_state(struct rdt_resource *r, struct rdt_l3_mon_domain *d)
 -- 
 2.51.1
 
