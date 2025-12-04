@@ -1,63 +1,73 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A363002CA;
-	Thu,  4 Dec 2025 16:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44A6349B04;
+	Thu,  4 Dec 2025 16:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764864994; cv=none; b=rmR+s3cP1mAnDcl6pYtJfJl9RxRzx7rmYlWggfrqdPXVcI15FHt63t/firV8nwnwpIWxySvEjCVI0CCgwmBg6kUqXJR66nix5DlqkseElxHvPnwaelwjg9b8tVbRtqrExuV08bZk+gQwRktUBzsTrpsVv0iTuMFSWnWAW5laac8=
+	t=1764865103; cv=none; b=Rh+SRmn9PTHDlQoVDixVnVxNdfijlIZ7pjdaDkct8nw7O7SljrVFjSQInhBU8Yuk/7njN62HIaGZJ2+v+ibaWfOjmf73lkJgUIdquAdRRfpU0S5Pi+sKFKr5F3/3RQ0Wh1XLaHEh3kyCAyMkdxFZcze/Itl+M2yEAIO2kwEiV6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764864994; c=relaxed/simple;
-	bh=An2BxO+S0ZrHLRF/BdDPEpDVM46IIuIL33gO+IY611A=;
+	s=arc-20240116; t=1764865103; c=relaxed/simple;
+	bh=hZZzBNQ85Cyj5r/py0IyyWj/HxWMJgHqx0pz+fV913o=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oWgDhOuoj0vU4NtOAMQ5YnCNnW/Y3/VjKlBaSoDGWpeo3QCSF7rsHWW8X6Un7NxDDsbMNxMXqkS7SwxUU+/S8n3Py0vNiRQkhkWXvUuGMZgGnmBhox4FzF83VAIaE523YHA484uWtwo9SqIHtL7TtVCcCR7iZkUJKatt6a5pWEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5vsSAlj; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=LrS3p50qwfW6hkPSpLP89LMIhRjqzes3f68/Fhzc4MY228KaZvjECKQ/W0VmqhyNPHumALxXliys295xXAXv/3mWbUGD+pK7uA3zr1baPq/AyFk/TSUgE9xbeuvSMq78ocT6nv3ugL2kEJo6hJgkNFQx06LYwJBCEvMRzw0pHvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZkRL27+9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5vsSAlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63FCFC4CEFB;
-	Thu,  4 Dec 2025 16:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZkRL27+9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4EDC4CEFB;
+	Thu,  4 Dec 2025 16:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764864993;
-	bh=An2BxO+S0ZrHLRF/BdDPEpDVM46IIuIL33gO+IY611A=;
+	s=korg; t=1764865103;
+	bh=hZZzBNQ85Cyj5r/py0IyyWj/HxWMJgHqx0pz+fV913o=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=g5vsSAljd2ab7gcLQ5b/sCYMMVL5KPb2tjqU3nMkmrOE8Wa7hVkk/277tYrzF3GEh
-	 l1nYtsCYYrh8HXTpOEGk24UwLQS/vr5bIEd4Zmo0+DdQgJeztYwXncqZmmcGu4RYrB
-	 2QGcMKJYqjB9xtvHOfdax395ESXg3qnqh9qWemew=
-Date: Thu, 4 Dec 2025 17:16:30 +0100
+	b=ZkRL27+9HnwAiQyNVjCaHEh3TqFB0/cotbxgXRTVPIw4mKyazNRt1W01eL4KWMpdX
+	 qNzDlM7NtZkRAPy+kWQ2CfJoh1P1Rlb2f80kkVxRFoe2EeKS5lRxE86WQGOFZX2ZO8
+	 Qcy8vnYzRv8REmDawxIA8dsUiUOKjmrednLQqocE=
+Date: Thu, 4 Dec 2025 17:18:20 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
+To: Chen-Yu Tsai <wens@kernel.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 6.17 000/146] 6.17.11-rc1 review
-Message-ID: <2025120413-impotence-cornfield-16aa@gregkh>
-References: <20251203152346.456176474@linuxfoundation.org>
- <CAG=yYw=7i7O7nLLDQ5hdP03wHFSQ04QEXtP8dX-2ytBmiJWsaw@mail.gmail.com>
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 283/568] clk: sunxi-ng: sun6i-rtc: Add A523 specifics
+Message-ID: <2025120413-gizmo-prepaid-468d@gregkh>
+References: <20251203152440.645416925@linuxfoundation.org>
+ <20251203152451.071218150@linuxfoundation.org>
+ <CAGb2v66AhhbEdXJVOZbUiUa2yJ-XAroSvHi3Xqyot6dUkfj7iQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAG=yYw=7i7O7nLLDQ5hdP03wHFSQ04QEXtP8dX-2ytBmiJWsaw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGb2v66AhhbEdXJVOZbUiUa2yJ-XAroSvHi3Xqyot6dUkfj7iQ@mail.gmail.com>
 
-On Thu, Dec 04, 2025 at 02:38:10PM +0530, Jeffrin Thalakkottoor wrote:
->  hello
+On Thu, Dec 04, 2025 at 12:39:19AM +0800, Chen-Yu Tsai wrote:
+> On Thu, Dec 4, 2025 at 12:34 AM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > 6.1-stable review patch.  If anyone has any objections, please let me know.
+> >
+> > ------------------
+> >
+> > From: Chen-Yu Tsai <wens@csie.org>
+> >
+> > [ Upstream commit 7aa8781f379c32c31bd78f1408a31765b2297c43 ]
+> >
+> > The A523's RTC block is backward compatible with the R329's, but it also
+> > has a calibration function for its internal oscillator, which would
+> > allow it to provide a clock rate closer to the desired 32.768 KHz. This
+> > is useful on the Radxa Cubie A5E, which does not have an external 32.768
+> > KHz crystal.
+> >
+> > Add new compatible-specific data for it.
 > 
-> Compiled and booted  6.17.11-rc1+
-> 
-> dmesg shows err and warn
+> Support for the A523 SoC was added in v6.16. I don't think we need to
+> backport A523 specific stuff any further back.
 
-Are these new from 6.17.10?  if so, can you bisect to find the offending
-commit?
-
-thanks,
+Now dropped, thanks!
 
 greg k-h
