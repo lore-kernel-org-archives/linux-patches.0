@@ -1,144 +1,115 @@
-Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188FB3081C2;
-	Thu,  4 Dec 2025 21:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D863074A9
+	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 22:55:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764884726; cv=none; b=D8TgcRjAk+yEyWCd1wpXqyuG5wBBGP0Qzo9jolCdnzKNEzU2JQ+DKRJQjbXAO/GpW9Bnvhw8jInEKujGvMxqAhhy3I5ZTxtX35x5h3DPDlL8kLaPvBY90ufIgqdReC0OT0CCS3siICRX/4s6tHDcNgkMpcYd7+w8ggTNoICv9tI=
+	t=1764888927; cv=none; b=ZDGezdXoSgPpyDUhZpcB4Md6H4J1HjsTCR0xOayM9Lij3fCkGDpvbXp+zdUbTJaNq0EyKa7/+zq2l7TKrlyymhv2cZdFZ8X8pysMi+hMuBMh3dk7EhaHcBuedHQZinBJ/mIeBSurVkR0WJ4U2wZIr2znQuwk7MwFEOPaxIiwDR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764884726; c=relaxed/simple;
-	bh=JacmcE2VUtvgotHA9Ha1QmmeZf8PhTpLq2/q5wacEM8=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=CuNVA+zKmxiA4AXqXmTRuoB6D8LjtgDd54/OeMru5D7MQz2TyEjk0jRt63OAkZr/Su5Ahud2XA54apRcXsvsyVI2kBxW7acTYLK0PhpLEcecsAkod7y2cLGqpgITN8sZqJJ1hjNY/hgVMBwe/Ih0iIvwitZFKkXtLZ+IkN70eVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
-Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
-	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vRH8Y-006EDn-33;
-	Thu, 04 Dec 2025 21:45:18 +0000
-Received: from ben by deadeye with local (Exim 4.99)
-	(envelope-from <ben@decadent.org.uk>)
-	id 1vRH8X-000000003fY-3RBb;
-	Thu, 04 Dec 2025 22:45:17 +0100
-Message-ID: <21524ff157007f80e5b0b4dfb130736c034f0c56.camel@decadent.org.uk>
-Subject: Re: [PATCH 5.10 044/300] memstick: Add timeout to prevent
- indefinite waiting
-From: Ben Hutchings <ben@decadent.org.uk>
-To: Jiayi Li <lijiayi@kylinos.cn>
-Cc: patches@lists.linux.dev, Ulf Hansson <ulf.hansson@linaro.org>, Sasha
- Levin	 <sashal@kernel.org>, Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>, stable	 <stable@vger.kernel.org>
-Date: Thu, 04 Dec 2025 22:45:12 +0100
-In-Reply-To: <20251203152402.246628462@linuxfoundation.org>
-References: <20251203152400.447697997@linuxfoundation.org>
-	 <20251203152402.246628462@linuxfoundation.org>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-+LSVuDIfcuX0+Wk0nIPU"
-User-Agent: Evolution 3.56.2-7 
+	s=arc-20240116; t=1764888927; c=relaxed/simple;
+	bh=plQQVY+CU3JnJUBVg1DX0qL8eqRn+H2UK7YrAQOcpLM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oCqLfHqLcdsUN+6zOKrwSgKSt+1wxJSlw3607SqOzjd0fLTNCYMCZ6cjQ3JmflfKjqtMejkGTwGiellYll324m3GQt0Bu+rBI/c9QPo4wKQv7R67i/n+G1BuDvYGT1NqrzPDSFQBWHq5C9hIfyT57wvDZ994kMZEyKHrBc3HwJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=uJNPcxBF; arc=none smtp.client-ip=44.202.169.39
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="uJNPcxBF"
+Received: from eig-obgw-5004b.ext.cloudfilter.net ([10.0.29.208])
+	by cmsmtp with ESMTPS
+	id RFJLvX3u3v724RIEMvmEsY; Thu, 04 Dec 2025 22:55:22 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id RIEMvKHkBqfpWRIEMvaJcP; Thu, 04 Dec 2025 22:55:22 +0000
+X-Authority-Analysis: v=2.4 cv=A55sP7WG c=1 sm=1 tr=0 ts=6932115a
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=wP3pNCr1ah4A:10 a=7vwVE5O1G3EA:10 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=ehwNO0zokx9VrzKGBBwA:9 a=QEXdDO2ut3YA:10
+ a=nmWuMzfKamIsx3l42hEX:22 a=Wh1V8bzkS9CpCxOpQUxp:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
+	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=r2KyoncmFKG6UtIH1bR2pNoDEdqYgV9vjgqB0LVKO0w=; b=uJNPcxBFGfyJ2WZOYX6rKyU1tm
+	oyWRUp93kcyhzD9qwIYtskIu6w3+Ok+En8ORYRhTfbPrzfFKja+1XN0PRXzOELhwEjycfh3DziqSL
+	A36bERJV96NFbyETuJYc9i1+uAtPSQrmInI/uNGINqyZ6/SdBCLwtBDRVrfT2iLY49LW7TzoN137f
+	ig4jqr7gRXYilKiFKwqgy23hcGchJvSISDDUZYjeHG7sayYwByGOpQopLN5dNkq8jgihzWOpyS5wA
+	1kinanRT1WSLUPZXsbDwcl5mVF5l358dhleH3Un6PTrxoI4UMOiL1VjuW0UvPcMGUIpaPZuEnilcp
+	gmHgl13w==;
+Received: from c-73-92-56-26.hsd1.ca.comcast.net ([73.92.56.26]:57414 helo=[10.0.1.180])
+	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+	(Exim 4.98.2)
+	(envelope-from <re@w6rz.net>)
+	id 1vRIEL-00000002HcJ-3nhr;
+	Thu, 04 Dec 2025 15:55:21 -0700
+Message-ID: <9d989e8f-edb2-4338-af0b-051a72159ca2@w6rz.net>
+Date: Thu, 4 Dec 2025 14:55:20 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
-X-SA-Exim-Mail-From: ben@decadent.org.uk
-X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/567] 6.1.159-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20251204163841.693429967@linuxfoundation.org>
+Content-Language: en-US
+From: Ron Economos <re@w6rz.net>
+In-Reply-To: <20251204163841.693429967@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.92.56.26
+X-Source-L: No
+X-Exim-ID: 1vRIEL-00000002HcJ-3nhr
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-92-56-26.hsd1.ca.comcast.net ([10.0.1.180]) [73.92.56.26]:57414
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 21
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfAR/p0mu/2qbyMg0Rk6PP+nj+TEpTS9eN+mpJmUc0y8NGp0wVZepDpvqvFdEedKEBQpNq6IUmb9qQdAJWe98hpUW7AcaGS+5pyDwpL8o1zUphHWKzstu
+ G1QabKtfyUQLfaOrjXXbtMz/tpxGAxLhIYo3fJo/jDKy0QwWKVQm6eMppw6lPCP6mTc4r1jXo80WIw==
 
+On 12/4/25 08:44, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.159 release.
+> There are 567 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 06 Dec 2025 16:37:18 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.159-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
---=-+LSVuDIfcuX0+Wk0nIPU
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-On Wed, 2025-12-03 at 16:24 +0100, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me kn=
-ow.
->=20
-> ------------------
->=20
-> From: Jiayi Li <lijiayi@kylinos.cn>
->=20
-> [ Upstream commit b65e630a55a490a0269ab1e4a282af975848064c ]
->=20
-> Add timeout handling to wait_for_completion calls in memstick_set_rw_addr=
-()
-> and memstick_alloc_card() to prevent indefinite blocking in case of
-> hardware or communication failures.
+Tested-by: Ron Economos <re@w6rz.net>
 
-However, if the card does respond after the timeout, it appears that
-there can be a data race and UAF of the memstick_dev structure in
-memstick_next_req() and the callback function.  It looks like some (but
-not all) host drivers implement command timeouts themselves, so perhaps
-that is where this should actually be fixed.
-
-Ben.
-
-> Signed-off-by: Jiayi Li <lijiayi@kylinos.cn>
-> Link: https://lore.kernel.org/r/20250804024825.1565078-1-lijiayi@kylinos.=
-cn
-> Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  drivers/memstick/core/memstick.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/memstick/core/memstick.c b/drivers/memstick/core/mem=
-stick.c
-> index e24ab362e51a9..7b8483f8d6f4f 100644
-> --- a/drivers/memstick/core/memstick.c
-> +++ b/drivers/memstick/core/memstick.c
-> @@ -369,7 +369,9 @@ int memstick_set_rw_addr(struct memstick_dev *card)
->  {
->  	card->next_request =3D h_memstick_set_rw_addr;
->  	memstick_new_req(card->host);
-> -	wait_for_completion(&card->mrq_complete);
-> +	if (!wait_for_completion_timeout(&card->mrq_complete,
-> +			msecs_to_jiffies(500)))
-> +		card->current_mrq.error =3D -ETIMEDOUT;
-> =20
->  	return card->current_mrq.error;
->  }
-> @@ -403,7 +405,9 @@ static struct memstick_dev *memstick_alloc_card(struc=
-t memstick_host *host)
-> =20
->  		card->next_request =3D h_memstick_read_dev_id;
->  		memstick_new_req(host);
-> -		wait_for_completion(&card->mrq_complete);
-> +		if (!wait_for_completion_timeout(&card->mrq_complete,
-> +				msecs_to_jiffies(500)))
-> +			card->current_mrq.error =3D -ETIMEDOUT;
-> =20
->  		if (card->current_mrq.error)
->  			goto err_out;
-
---=20
-Ben Hutchings
-It is easier to change the specification to fit the program
-than vice versa.
-
---=-+LSVuDIfcuX0+Wk0nIPU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmkyAOkACgkQ57/I7JWG
-EQlW3xAAqHPMd/uPqFBPveJ8hRD4sQiGDVpXlq6RPzAIdMR7p7a8d5MmEq6y3wsu
-AedY5f9pgWmpxTcRuEnn84R6dLzp7/jfD8CiZwfg/UxVaP+UriB6cmi+r+tIabMk
-NJgwpG9ciMCr1xI7sXxc7vNF+nKKPf4nOsJtgYFLYTehjAOPGxPjJcYWEitF1C8C
-febciNVcFlGf882+4tHpEO8kA7HhUUvkjLpeVsY1qdvPw6O4kUwjakGBkLVoCNxL
-ZmAOuu3UUFmsYPk2/HHrez7M0L3dXJwAObxxyzQ8X/MJ47wNtnNe7kcU6niP6nFy
-/TsLO2zhUM5krAqtmsBdEeVZ1IX+plWhTBuRuccs3YE0sjJGh3XBIGBqCqfInKn3
-pRM+GN5yKAA3rUIS2hFkxz+tCsCrSypdUtA2kGjmVSNJyelwxwEA1B6K9FrVjknE
-PbL3YZ4uQRrczTcSQUENxXFT+SyWhF5SYBKUuph2yg2BIi1/yRQ4bj4xJjuzIL5m
-IDXqtkc70WoPXFyDKLQpdU7Qdue89Ny+/qqzOycdCUUKXnHTBVGmHRf8i4+DrV/q
-LL028JpAdy6ZcSef56Mnnvmfc6h2HXNceVsAsX4ZtkCbKK+DsHRmLbiCbwp4qQcC
-pOf/o3Ot9aGNeGk1l2JZ5RNq3hci/idZ9hZIrJVvje4md6KX3E4=
-=lEf5
------END PGP SIGNATURE-----
-
---=-+LSVuDIfcuX0+Wk0nIPU--
