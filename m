@@ -1,76 +1,140 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from flow-a7-smtp.messagingengine.com (flow-a7-smtp.messagingengine.com [103.168.172.142])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4192F746D;
-	Thu,  4 Dec 2025 16:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541F72F362A
+	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 16:31:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764865837; cv=none; b=Vr86CNqg6am07xO0gmddigkVoJh32mxs16n2LOQJVFhyeza8krrR34zzR72YcFSTUkwznctxFzh2D6HH+OpMzYmj+5IHYIJRf0izRc8cOsvBpMvPloPikDNLgT32vnj88u8vcMnb7/rpO3lINnvQKslJILYHllQbxXkBaGyeeQ4=
+	t=1764865895; cv=none; b=NNHK7Guli9F6xJIkZ2S1u/tgusGGjgPrd87PqP5zNWi++l2cgvHF0uX9aovt+OFGIB4CUo55GtRQhJRYw241WIlzmcfeY0e5Tvjw/JoYkmkvYYFVJdAm3J0oJAU5vZLe0mkc/T4n8PprhWnC+zpPeQXJcDIkuGePhHp4yICiaXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764865837; c=relaxed/simple;
-	bh=f3WMv3N5LqECui7C5uL8QRDByLseqNRjd02PewqXFKg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C2dKGwAqDzwtr0AS9X1sFjevE/rlkjH/7GT8zOiD93VO5UM0C/ybIWH5WOd+QcLQq/pbaG3phta2Y+9nfJ7dq/mD21gXNmWKVAkqqWjpW1KlmmODrg8nJPN2CrcZBRiP61+e+g6/iLgdDQnf74ZhUbwnxdPjyCKbp6wna+XLOJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcejqSFw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764865895; c=relaxed/simple;
+	bh=KbEil2lubnfSakCS41E/8rJxcQMGzpPhzaGip53kKUw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MpRUFvGPGUXLyenG2YxDl44Y+SBmubr+cif3+PMOHTYWEzTojwxJ7jQm1ML6E4adXpKiCMnTFId13Wc7TamwZAlljS8JZj/cpttbFRBN9WfrhdTWkBveMBEFL8u/4rGhIO5CorC6zEGJnin+mhu5ifpSOVVnd4YZhmAcrSPQ52s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ThtB4NIX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b0diRqw4; arc=none smtp.client-ip=103.168.172.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcejqSFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666D3C116B1;
-	Thu,  4 Dec 2025 16:30:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1764865836;
-	bh=f3WMv3N5LqECui7C5uL8QRDByLseqNRjd02PewqXFKg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bcejqSFw1Hhkft2nMq+/0zGqY8Otrqtm63S2nOj3kPhQuVWhUO+PUZ52abt5p07SW
-	 lUDtv0jcrwspT46xUWsIU+cy+a3R+M2Z5HELx9ebaJKA94q2ZL5F/As2vLAcOTlG+s
-	 5AyXKFTxb+c+E6avT+jUund8GmJo90oo+6rEi2o0=
-Date: Thu, 4 Dec 2025 17:30:33 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Deucher, Alexander" <Alexander.Deucher@amd.com>
-Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 136/392] drm/amd: add more cyan skillfish PCI ids
-Message-ID: <2025120427-marrow-seismic-6fa2@gregkh>
-References: <20251203152414.082328008@linuxfoundation.org>
- <20251203152419.094422510@linuxfoundation.org>
- <BL1PR12MB5144D48B9A9E384045157D13F7D9A@BL1PR12MB5144.namprd12.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ThtB4NIX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b0diRqw4"
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+	by mailflow.phl.internal (Postfix) with ESMTP id 6C7AC138064B;
+	Thu,  4 Dec 2025 11:31:31 -0500 (EST)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Thu, 04 Dec 2025 11:31:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1764865891;
+	 x=1764873091; bh=yqPGATl2rTanhgyzXYobGmpCO+TOPUonPFn5aoFMLVY=; b=
+	ThtB4NIXPNYa40EfYlh+BiEzG68dWAVz6G/AD+8GiNFjL3uXDnBHwETKC5as6vFm
+	oQq2hWW8xlCrtjV+h3ytU/wwxojPO7VQT+t2n3YTnbe6CWOKRCKlKIN+FQrFQ32L
+	DR34evyQ/2EFRz7NgLY4lQh85iuAU1+2wJcVCspU7+dhDvORmoBKoHoqpvVausbZ
+	2qOtd2lkyj0siQ8erFf2JNNTzLAuI/qp9M5MPAGcHiafYPC4PvtyRGYBvXr8bB9R
+	9WxS6o+w4+pwrUziV/5lSoDBHZIx5TQdTYB9qVv7rPHa6i3C8CZksD2SZhBZtQ++
+	l92tp1jr0KDT/VnEIc60zA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1764865891; x=
+	1764873091; bh=yqPGATl2rTanhgyzXYobGmpCO+TOPUonPFn5aoFMLVY=; b=b
+	0diRqw40g5HVole+KVyopWQh1aKjs8vazosmoYS4QgpTp6NCcJqVf6yW+lhHq3TE
+	NYE8HY9IMzpRo+8Koo0+bTmT1xwIT8DLfE0xVyvLW1wkeNDaArgFmng/xsESetDk
+	QlQDXLelfSsqwRsxrqNOmj9hZFeTFe2p6/vJVzlBhoMlDTgDvTRk5ExSQcxeyaBh
+	4/do7V8fYPM4MG/tSt30cxLX/4nafajsrIUer8gzpxH4480/WhRsmk9TFLFoVTkE
+	SHVZQKe6+jZdrc4OPvhcqerWsX5FatCeMD5jMaEk4zkbLK89rceMhFswWb78D4t1
+	lLbJffj4I6lGrBTOeii2w==
+X-ME-Sender: <xms:Y7cxac_HUVFuzguP8KI3RFqXgRRS83zo4UdAu6hsa_W4U14AMi32Bw>
+    <xme:Y7cxaeB8F7LbTmC0nhqNT5WtF5ND_2IOw1JsU4s4I_Xj5GBWUcRvAWhrm38MV25mH
+    zM2J1c3S5vRVF8uTSMxjUGqY80YyJa7fP63D0Yil0kPL71SsfFcXnA>
+X-ME-Received: <xmr:Y7cxaZQ6J7N5d44Lu6lb5ClrSwl1c5Uj-b_30lyoJbxsA5_tq9yMDPP6qx2Uq4I0POByWPvWo7_QFN7fVL3TIUB06T1l8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeitdeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucfrhhhishhhihhnghdqkffkrfgprhhtucdliedtjedmnecujf
+    gurhepkfffgggfuffvvehfhfgjtgfgsehtkeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeefjeeggeehkefghfeviedvheeghfelleefkeeutedvtdffgfevheek
+    iefgffdtjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
+    ohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehs
+    thgrsghlvgesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghttghhvg
+    hssehlihhsthhsrdhlihhnuhigrdguvghvpdhrtghpthhtohepphhhihhlihhpphdrghdr
+    hhhorhhtmhgrnhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepughomhhinhhikhdrkh
+    grrhholhdrphhirghtkhhofihskhhisehprhhothhonhhmrghilhdrtghomhdprhgtphht
+    thhopehlihhnuhigsehrohgvtghkqdhushdrnhgvth
+X-ME-Proxy: <xmx:Y7cxadsH9W0ND_aPolSfbucC7Nf9aE0Y31crol8gSlZTGiDsy3zwiQ>
+    <xmx:Y7cxad2QTywXBa7MWq-Gri0l7ldk2_KvN5oWkCkSQjDi8rS9Gt0OsA>
+    <xmx:Y7cxaWVAkYraFO9XpzxBGVoCz2IHjoXkbnoMZCkCACeiE5LhlASRVg>
+    <xmx:Y7cxaQIFE15XLqDb0SzbiqTNfE-RGdRSyQNhsiUkQh13WbwNqGyXpA>
+    <xmx:Y7cxaY_dmHeMxvl_-cmHp-sF5i7hC-0xBaVvxsrZk3kh3K2jtL0Dyugq>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 4 Dec 2025 11:31:30 -0500 (EST)
+Message-ID: <d1588e38-c109-4784-86bc-a45d370430d7@pobox.com>
+Date: Thu, 4 Dec 2025 08:31:29 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BL1PR12MB5144D48B9A9E384045157D13F7D9A@BL1PR12MB5144.namprd12.prod.outlook.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.12 114/132] [PATCH v6.12] staging: rtl8712: Remove
+ driver using deprecated API wext
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Philipp Hortmann <philipp.g.hortmann@gmail.com>,
+ =?UTF-8?Q?Dominik_Karol_Pi=C4=85tkowski?=
+ <dominik.karol.piatkowski@protonmail.com>, Guenter Roeck <linux@roeck-us.net>
+References: <20251203152343.285859633@linuxfoundation.org>
+ <20251203152347.516234988@linuxfoundation.org>
+Content-Language: en-US
+From: "Barry K. Nathan" <barryn@pobox.com>
+In-Reply-To: <20251203152347.516234988@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 03, 2025 at 04:50:42PM +0000, Deucher, Alexander wrote:
-> [Public]
+On 12/3/25 07:29, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
 > 
-> > -----Original Message-----
-> > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Sent: Wednesday, December 3, 2025 10:25 AM
-> > To: stable@vger.kernel.org
-> > Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>;
-> > patches@lists.linux.dev; Deucher, Alexander <Alexander.Deucher@amd.com>;
-> > Sasha Levin <sashal@kernel.org>
-> > Subject: [PATCH 5.15 136/392] drm/amd: add more cyan skillfish PCI ids
-> >
-> > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> >
-> > From: Alex Deucher <alexander.deucher@amd.com>
-> >
-> > [ Upstream commit 1e18746381793bef7c715fc5ec5611a422a75c4c ]
-> >
-> > Add additional PCI IDs to the cyan skillfish family.
-> >
-> > Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ------------------
 > 
-> There is no need to backport this patch to stable. It depends on a bunch of changes which are not in older kernels.  Please drop for stable.
+> From: Philipp Hortmann <philipp.g.hortmann@gmail.com>
+> 
+> commit e8785404de06a69d89dcdd1e9a0b6ea42dc6d327 upstream.
 
-Now dropped, thanks.
+As far as I can tell, this isn't the correct upstream commit. Commit 
+e8785404de06a69d89dcdd1e9a0b6ea42dc6d327 upstream is
+"Bluetooth: MGMT: fix crash in set_mesh_sync and set_mesh_complete"
+and I think the actual upstream commit for this patch is 
+41e883c137ebe6eec042658ef750cbb0529f6ca8.
 
-greg k-h
+
+Once the incorrect upstream commit ID caught my attention, I also 
+noticed the following:
+
+> The longterm kernels will still support this hardware for years.
+
+The commit messages for the 5.15, 6.1, and 6.6 backports removed this 
+line. (I'm mentioning this because I'm guessing the 6.12 backport commit 
+message was also supposed to remove it.)
+
+> Find further discussions in the Link below.
+> 
+> Link: https://lore.kernel.org/linux-staging/a02e3e0b-8a9b-47d5-87cf-2c957a474daa@gmail.com/T/#t
+> Signed-off-by: Philipp Hortmann <philipp.g.hortmann@gmail.com>
+> Tested-by: Dominik Karol Piątkowski <dominik.karol.piatkowski@protonmail.com>
+> Link: https://lore.kernel.org/r/20241020144933.10956-1-philipp.g.hortmann@gmail.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> [groeck: Resolved conflicts]
+> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Another link that I believe does a better job of explaining why this 
+driver is being removed from LTS kernels, and why now:
+
+Link: https://lore.kernel.org/stable/20251204021604.GA843400@ax162/T/#t
+
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
