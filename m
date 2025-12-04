@@ -1,183 +1,331 @@
-Received: from CO1PR03CU002.outbound.protection.outlook.com (mail-westus2azon11010021.outbound.protection.outlook.com [52.101.46.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECBB1EF36C
-	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 08:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.46.21
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764835659; cv=fail; b=lor9XwSVFn2gl2HHtL+qUextKPkIRwA1kDwycigYB2FgddmmP2Ows0VpnuZvBLwCpg/MjQyuIedni0bCsAwWlqjBnVUWpBmqt+xf0lg1RBulNOop91fpQmPcwLvVwhdUkavUuQDeAkH24QSJn959RVstZqVDAY2T6p/EBDjGXsQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764835659; c=relaxed/simple;
-	bh=bpJepj1CaJ8itAlsK+WR5X6I7QQH9PUTvHdts0D62l8=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Efaogv1PpW1R8x6LeZaizygpxQdGJuoe/7bRQJRgZNpODegrse7SOrP64a2i+K1Dpc3JEKcpAEK2t8NxmZ1DUBgPlsjyVE3NOSUWB2sMKqe7uuOANgtOdAvQYKXXwPNjveZQWtBsPTm1BrpGqVwgtgtUJVGjVbE3V5EMUpAMRko=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=u2FxjBB0; arc=fail smtp.client-ip=52.101.46.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98D832694E
+	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 08:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764837521; cv=none; b=pT6iqL9d+O75CrUU9lm5CUusTfcopwRLK+2tKhAMK3byn+UEIlKgNcnZKg1rgRDstJzrG8/0h9S0K7Zd7rmep+XpNvRwgw08NcweXUkv2uua4ZaRrjWN5JykX9dwsXGFwHOSr/4LYEmoxqX8XlnNH9Wfcc/X/8816sC3ooL45Fk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764837521; c=relaxed/simple;
+	bh=mqhXiD/NpVQgpF5pRnCUAPxzIeECRU0KQVh4dg8DiKU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FRAfJRjilQ1aJcVWw1jqLoxT1caTEl/DPU4a3mW3AXeY9uwUu4oRI3lZs64ZiHlzKGiGvVVVIS6RXou3oDNrpAWhixCD78KZo+h8Gu45fsP+eT8Tl7mH4vK2trg5yIzmVzNHTqfJVr80PHmjrSj9hvgfJnP1/HaEkwVJNkH+qWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CHd1QtC+; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="u2FxjBB0"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OlIQwpVOilVmHqhZ8D/8sajt7a09YEJ6utJE4X01jJiltiGHpN9CyrazdLCnB64DyDCiqqSLtWArZyYP5Yreg0DeUefFk9OiL/9I3z8iZ5Yx+sv//4r6PH7rmgGDpCnp7rBOD7qIAzbwBLSks0k5ZCqSdxGfmZYLOSq3nHljgbvi4VHPXEY1GH75S8gfvF8GaTetmzmk0p3/H8m8i6hz83NAuIzLKFIgxqIX4Fws3LIx7ZvEty5gMt3HRH1brxpLnQ+c9itoO2bFUxWUKmeQjrggEz4izfWrJ7v2hnl46e2FfCYasFs4aTCBaqOAZOgWEUisCLyOvLJC3j5oRp16zw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SKsrJYEz+ANaUcp6aOCbxuH5+8R06ucVqqfPA2ILsdc=;
- b=UYLOc22QqgxxswhmU9oxnLCANjnARdPaGWU522SDp2/kZapxGHOTvv+KIUxRtDrPqePNZkTOFpJV9CYzgtL4mkbhPErEcGRRUXVqOjWSsndzTRw+actvo3ZXS2cObGIzQCwvHDnhWH2T21IIPZlN9PSaekokVoI3ORc6OmBF44J8L7B+rlVdzNCYkM/U5W08GuHbBcLM9fD7qwIGSyUwL4hFOxfFcpkq7DRVcjR7TtWABEPzbshGHOUD8GbCJx1ZbMD2ua1WoLSBYGxS739eZiMQWrgMpr+NlWdeaBMKE2CVNIhygFM9NPjk5bSpKv+ZxX8FN/JE3GSk+aBwjIDuaA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SKsrJYEz+ANaUcp6aOCbxuH5+8R06ucVqqfPA2ILsdc=;
- b=u2FxjBB0TboyW86vw6T6slWCgPKhIk37w/wxOhGIL8oXcbsbtmvsT97qAY9lS94UVpnsnIo7P/z2tkiEXxe3rm7ewGnZ+vCBc2Chty4nyHSSsBbhQKnkZ4XLraulpvQvhqy+u9dFY4ctvyV9tQTOq+Cd2nQ03O30tqwpx2Bi5EA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
- by IA4PR12MB9785.namprd12.prod.outlook.com (2603:10b6:208:55b::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Thu, 4 Dec
- 2025 08:07:36 +0000
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::46fb:96f2:7667:7ca5]) by PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::46fb:96f2:7667:7ca5%4]) with mapi id 15.20.9388.003; Thu, 4 Dec 2025
- 08:07:36 +0000
-Message-ID: <0db8813c-f740-4890-8e29-f23ab232c393@amd.com>
-Date: Thu, 4 Dec 2025 09:07:32 +0100
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.17 129/146] drm/amdgpu: attach tlb fence to the PTs
- update
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Prike Liang <Prike.Liang@amd.com>, Alex Deucher <alexander.deucher@amd.com>
-References: <20251203152346.456176474@linuxfoundation.org>
- <20251203152351.182356193@linuxfoundation.org>
- <725a5847-9653-454e-a6f6-5e689825d64c@amd.com>
- <2025120333-earpiece-dragonfly-457d@gregkh>
-Content-Language: en-US
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-In-Reply-To: <2025120333-earpiece-dragonfly-457d@gregkh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR4P281CA0390.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f7::15) To PH7PR12MB5685.namprd12.prod.outlook.com
- (2603:10b6:510:13c::22)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CHd1QtC+"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-bd610f4425fso373096a12.3
+        for <patches@lists.linux.dev>; Thu, 04 Dec 2025 00:38:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1764837517; x=1765442317; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0JlKi5Mxej8/+ZcumeV18Yc+KKJCP9ofTFD7HkIbArE=;
+        b=CHd1QtC+lXeE5Slowd1RYhRlbb6Kk5lxz/e0oTOiNGyt3kmvGoDPTGn6F/akoRBx+y
+         VHx0y+6cfTcSSXZE+8e34ZILLddXi9GSlxZov2URVfl+yL29X1xbIIXuMAHs0vjrnmC7
+         HMBNtPVrxVawu4hQniYbGt0RsbkrqHZA4oQmyBMx6AuZ0peqmumPj9MqDo0q7FlxBrBU
+         VByJSoeYTe/BhWD/RLou1VOm/wj5RQY1id8UxkMfzLW0y7jG9jTdabOn/YCmmUh+z9xu
+         y1ka/UPC+xdW5hwzOaBwZ4xYB3MH8SoyMzCtX7o2JtBZQOnzX3tkj7KePN6XvNewAG83
+         /rvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764837517; x=1765442317;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0JlKi5Mxej8/+ZcumeV18Yc+KKJCP9ofTFD7HkIbArE=;
+        b=dEtPDE8mIKaJqnmrlU9/PVT8E0YnhMzrp2vSCFNEVDO5VGFW3JOhtrEy8iMD++UGZE
+         4yWjPoJFWVBFTGuh1nis4K/rI2qMtkzUUgdToGa7xNFhFd1jMhHFFOw6D1BZWmXYGKAD
+         kvRqBmZ7F7rBRxRRjM0GZ0NHdhy9OotywyBWIFyq5qQOeG3ZW0+PYjMjmZ6GOKcpCR1P
+         40V7PZWKYuMpWr9xUDd3SJiOyMLuALVHlTIxJeCGSBlt8jONbpiTjmnuq2QXyPTtTzBK
+         7zfhQ3e98DurYjfhzl6VjtwXveypng6bV85vMOn9M8jNgnJBfZ7xDCN72na1/MEklpA0
+         9X9A==
+X-Forwarded-Encrypted: i=1; AJvYcCXXLGPApUGyL5LSFxCjCyANssv5IefWvQaZlzBhcd4kthuTj6/oFN0r2urDVUJBy3XzFJ8Dqw7/@lists.linux.dev
+X-Gm-Message-State: AOJu0YyAQzZwskZs4cN4p86jppSJZeqzyO64XdyBhbOhNSWARyQJEIDb
+	/olj+xSHUYoj/LJOwYfHVRiT3EwJqmJFVbbHHziaJqMixvR5yqKVfHayym8IaYrkZOPnl4YEu7W
+	lOPYxmLhk60F9gLop+sCnynHneIzyICXX1MpFiHo3zQ==
+X-Gm-Gg: ASbGncuXbtXesaHw0NiuZoKXn9o8iZmcyjpJXgGeIYZrOob7tO30X6ByrceDWMZZUX1
+	oisreAQZstRlNiKdtKUEUimFPU+51r30QFiq3KQWW8PT+hOD87WCwTtdYdeCeGSho1RWEfRzw+J
+	tCerxw3Cbn/JTPg3L6W/MBIFuCPuTXGUSS2ws/fWCDyeVsnkE7TQb3mysyTlT3e3E0qipVywh55
+	BUstSO7mKHJY+gC+MFHiTUkC/1NJ0KDSf9TWMedHi+C300CgqAuHN4n86JpswD8CsXwhZglpW+D
+	f3s/ZCpCdTnFKmLIb1iBkPZ0X45H
+X-Google-Smtp-Source: AGHT+IFZEAv1ezVPCker9GLaQZImi3N5jH6VXIGomJJWxOm3zS/LZIZssrCOD1GSIIbrPIuYSxinKKQkE6vNP8MxkPE=
+X-Received: by 2002:a05:693c:3111:b0:2a4:3592:c5fb with SMTP id
+ 5a478bee46e88-2aba424d110mr1567722eec.12.1764837517021; Thu, 04 Dec 2025
+ 00:38:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|IA4PR12MB9785:EE_
-X-MS-Office365-Filtering-Correlation-Id: 698bb50b-1dd0-450a-26f0-08de330c2f19
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NUFaODJ1M1ppUm5rVkJhTktTbzZKTWdVaVRzWHMvY3ZxMnNyaUVwaHMrcWw2?=
- =?utf-8?B?N2RvZFdVUHl0WlZxcENaL2V2dlJJS0FNQ2MrQ3BpNU5WZE5UUTFNSzhSRXhh?=
- =?utf-8?B?ZlYrRGYvdzR3eTAzVVpiSHJraFZaL3VoTWxIMXBGRmdQamtvdjkxUmNRVGpx?=
- =?utf-8?B?RGdDRzFoQ3M3Sk16ZnllTStzOTBPclN4Q21qSDlEcyttM2wxaGt4VGtiNVpl?=
- =?utf-8?B?Mk5sbUhwUVNDT1duMDlGY3F0cDFHSklVY01uWElyeFBUZTYzbUlGTlluOXk1?=
- =?utf-8?B?YWl3amFLRGNwZ0twM2MvQWl5eXZ3SFBHVjRqNk5UbEkxSVJhajVIMjhzanR4?=
- =?utf-8?B?SE53RlVoVmpCQVZ0L2ZUSkRCTTJjTGUxMlJjenVmUldRR3JIUndzYVRZOWVP?=
- =?utf-8?B?T3ZBcERORzdYMEVJMFNTUnkrYUtLS00raExvWitySDNPcEgwVDMzWXRwbzA1?=
- =?utf-8?B?b2tTaVB4V3VBQ0hncy9HMlczaVQxYnlzUnJUWTlJTEdpNW1WaktmNEo3cG1o?=
- =?utf-8?B?enFMb0RrU1JzVWo0QXVvYkUvZDhTRzk0WGl2c2p6emVRSVoxbkhab3JGVFNC?=
- =?utf-8?B?NXhBR3Yxa3NTWUl4bFYxZnlTMEp0K0k1QVkxTmNiSWJHK3FpeVR5NEJOVm5S?=
- =?utf-8?B?SW5tR0RFbmN1WFFHUnV4SlFMamhvejVQemp6d2F0LzBwTlNKYlhpMy8rMGRZ?=
- =?utf-8?B?WVh4M0ROZTNpUk9iRDk0WVI4VGdSZ2NNSnorMjNzTHVaUWRxYXgweXVFbUlh?=
- =?utf-8?B?aWVRR0xOdUo3OTB1RThJcFJyaktMYzh5TzZ6TWR2ODE5Q08va3VJT2hsSDZU?=
- =?utf-8?B?clU2M2xHNzN4dmhxZGN3QWk3cTZ4UmYyUkhkKzlwOTUzT2l1Z1B2MVgwY3lk?=
- =?utf-8?B?Ylk1ZFJPNFlKZmZEdjhCUGdrWkRDT0xFd2hzcEw2QkczdWNGMWZFaUZ0SENP?=
- =?utf-8?B?YWc1a1NRRlZETjJVY045NVhLbFl0dWVZd1dSbXVNYmpiTkwxNmJFcVJzaTlS?=
- =?utf-8?B?S0k1K29VcDJiQThMSHU0YTJUZUgrZU5NTExNRnNUZ2pyTkFodjdZOStiMlJS?=
- =?utf-8?B?c0NuWkVxWWF2dFFnNC9UVlQ0QWFTZ2lFY2RTZGcxcmZaSkZVNy9tcDFRM0Vh?=
- =?utf-8?B?cVpBRVZNQ3BiVEhqbS9DQit3S1FsYStmZ01oRzVXNFdKQk5OUE9yUlNES2RZ?=
- =?utf-8?B?UThydFlRb1BIVGtmR0ozOGcxM0k0NHVJQXlwSkNQdnZZNG1ZNks0RjBqODM5?=
- =?utf-8?B?THZDUGMwZS9mYmUwdzU4UmhTMEswRDdVUkgwT28xTXdNZiszQksyS3REdG8z?=
- =?utf-8?B?SzlSWGJENTljdmZkWkxQaDB2dTIyUGZHT3R6dzJiZFVFQ0M3NlhUa0ZaemlK?=
- =?utf-8?B?QnVsajNJYkd2cE9zYUtlYk4rWFhGZWJpTjR5bVplYVFLRGRGTmM0OGVyNndy?=
- =?utf-8?B?b3o2aDllck9hbStuTFh4NkRacHE5WGpBN3ZqTEhkWUhDMnJoeG9Dendjc0dk?=
- =?utf-8?B?eElYcEx1bHE1OWplUHJpODV0L2c2aUxUZEZiblpGRmZmazUxeDFhck90Y1lk?=
- =?utf-8?B?SXVOZGRJWXYzMFpidncvczlaNkhVREVzS3BkekkyS29MQ25UZDBYRW5nL0R3?=
- =?utf-8?B?S29DdVF4dDYralZ2L094Q0RKRXVuM2hZTG9ldWNVaTU2aVhrRzh0bThrWThh?=
- =?utf-8?B?aHlFOVBpL1dBdGtGdndBRllGYzM1OStQajlhU2orTDg3MmVFOVFYVTZoOVps?=
- =?utf-8?B?cVp4OW1pTFdTMWJHYzZYRkNkb21DYzk3SkNWQ09mYmlXRm1BM1ZSZEo4MENH?=
- =?utf-8?B?dlZCdFN0Q2wzZ0xZYjRhRVE0MXdxdnBtRjZIbmNjYWlCSmpJZS94S1ZNWXBw?=
- =?utf-8?B?eTVNc1JBM1RVZHVSU00raXFQdk1Kd1NZd3dxMWNPQVR3Z1A5alVzOWFBbWhG?=
- =?utf-8?Q?TWq4CwVIy5pPJj31F6fNB3s5eNYcFmHO?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TTcyb2FPWmtuNWJaV0FFWm5HNmRCL0lRMElMZUdGOVVBSnBjYk1MdGpUb3N5?=
- =?utf-8?B?SStZRk4yNVhKeU9jTm91SDk0OCtiaGFYVDF1YklwOHhpRzRBdVYxRjY3bzhq?=
- =?utf-8?B?NFpxMU0wTXBMMVk1SEg3SWw4WjlyV29MekV0V2ZxK3RDNWh5N0RXd3FZdEQ5?=
- =?utf-8?B?Wk8yUCs1ek9hWFlHRXNXS2R3SGdSU1gvVFdtTlEwd0dpcElMcDhoTXhPWnFz?=
- =?utf-8?B?NHlYL2p3M3RnWXB4Rjd0VmVvWWhGVHUzV1R5VUNRbmNINDc2R2lXSDkwbFpN?=
- =?utf-8?B?VGI4djhJbW9qdnZNTytXNkxndU4ySmZhdVRhVVpJR3k2WnlTRUJ6WlBIK1l5?=
- =?utf-8?B?NC94RlZPcjlpUyt4QTgyZ1BFZVF5UDJsL1VNMlNPTEl6cmRZQkxIdldzQUti?=
- =?utf-8?B?SGRGZm50ZkpIdUR6d1FoOEJFenlSWGFFS2cyU1hUenRXWDJOS2VTdFJ4NDZl?=
- =?utf-8?B?clFNMUx3dGFFS0FwRXFuRmhwL01SZHJsNy9pUXJPTTcvN1EyZ3d4UXA3T0kz?=
- =?utf-8?B?RjgyTi9Sb3FSMVZ1M1NUeDQrd1ZnTWtHRVZ1Z1Q3TTFKbXBRT3h6ZSthZHNz?=
- =?utf-8?B?MzZ4ZVZ0RDhHay9RTUtRU0hkODNvRi91ZklJQXcyYTZxTjRPNlROL1RhcGtS?=
- =?utf-8?B?QXUrZ3lDWVJyOWcxaGZlc3dDKzlEdkJQNG9zZXRyTDc5NzQ5SmI3MDZ4alNM?=
- =?utf-8?B?MEVqR2VMYUZ6RFJZU0JsQzdWdmRhVGxJSmtRazVHSlF3SUFUcnp4ZkJWZ1hS?=
- =?utf-8?B?S240VGJwQVdpcmF5WlZuMHRyb0xRQnkxNVZNNWNaTXJHUloyN25wWUU4TER1?=
- =?utf-8?B?eTdnV2NvY3ZwbC91Wno5Qi9IVis1SkErTDRxa0tCSmlZK29HcjlxS20xVm1H?=
- =?utf-8?B?c1R5SGNmRktSRFZsdlk1OFpmcFFWZXBPVFUvNmNNUnZPSmxhWHU3dEQybVMz?=
- =?utf-8?B?Z1ViODd0bms3RUxHblVuNXlKazRncWhGQVNJWnVDSDltM0phZEV5Q1RqQWpr?=
- =?utf-8?B?a3d5VVdpaGpudEVSbUIvaFpOMytVZE1sL2NKZFlRa1U5c2k1UkFibGZBZkNw?=
- =?utf-8?B?VDhhWFNyd2MyTDZlVDh1VlJNbzdxVXRuYndicmNTOWlNS2pDVm9KWHZEK1Ey?=
- =?utf-8?B?dzhZaUQ4VzVmUXArYmFmdzZJQjBRRWV3dzJUYUZtc1ExaDFaZlhJcW9yekMv?=
- =?utf-8?B?YTgzUDdHTzUwVHdkSUJaSWlWZEtuSGwrdGZNUzJmbEQ0aEltSldpWHNSVzF0?=
- =?utf-8?B?UkZLQVA4SXpndXFic2dYb0NJRFJQcWZFNkx2S3MxVUEwZTdKNk9rbFFuNmlq?=
- =?utf-8?B?Mkg1a1JadEo5N1V5OHJGQkM3eHRsZktOQmIxOUZCQmttdzFYWGtIV2RwUnh6?=
- =?utf-8?B?bUhJRHJZcmNyWHZ0djAyNzBXSkthN0MxWVhZWk9CQ1EzdloyWHlUeFdKODlt?=
- =?utf-8?B?NlVmb3Y1dktpQzNJRjZZZWVBRmNFQURmN1g3SnFZT2pxRVVWMDV5cXF4UGxr?=
- =?utf-8?B?eGMrdTV0YkNPSDljZG9DWklQNittL1paaHViUFNnQjJlbGVHM2t5Q3g0QUpi?=
- =?utf-8?B?djhHcGlKR3dMQWxUZDBINUIxZExpRXNNYnNzbG5qNytnRi9KajB1UlVlQ1VM?=
- =?utf-8?B?ZVYvWE5jRDZDNXNtNEkvQUNzVFk0MXYzcVVSb2wrT0lxdVNxcHkwNnRxc1po?=
- =?utf-8?B?Zmg3WTBNZFpCT3prNTNYa0RxWEgwRSs0eDhiYTdraVhTZWk1dXN6TDU3ZTlr?=
- =?utf-8?B?N2xuQTlkbDRtYktGK1VQZlVIYkxTYVFyalpYME92ZmRINko0akNIajQ0dFRN?=
- =?utf-8?B?bFBuTmhCckR5UDhxbW0yT3JDUFBCZ0pkQ1ZYdXo0b1c2Rzg2d3dLOG1ZNkNk?=
- =?utf-8?B?eDd3Y21JaGNPOVRTT2JyK0E1enl1dUZLMWtBamdaWUwyU3lCQ013a3JRbjJK?=
- =?utf-8?B?OWNyZ0d4ZTJBOW43MGZtdy9ZVC9hK3piQTV1dE50T3pWVmFSblhIWnF2Z1J4?=
- =?utf-8?B?TTMyWmN4TEVtOUxBWXcrVExPc2lTaC92bzEzTEhVdlZJU2FpLzlHUU5xRXhG?=
- =?utf-8?B?Z3lwVDM2ajlSVTNrMmNrK1o1R0d5OFliR2lzQ2JGZGpQOWM5OUtrV2JndUpi?=
- =?utf-8?Q?mzFLCEXXRnzze2FUCkHUXPfR0?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 698bb50b-1dd0-450a-26f0-08de330c2f19
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Dec 2025 08:07:35.9032
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0XMp3m0qDgRlZ3ekFafP73JAwgAkB8s6I6+qO6cPjv2eLFOyvs3jr1yRWu3OWeYk
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR12MB9785
+References: <20251203152414.082328008@linuxfoundation.org>
+In-Reply-To: <20251203152414.082328008@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 4 Dec 2025 14:08:24 +0530
+X-Gm-Features: AWmQ_bnogH29i6myZ_z674xGj0T3c_RPNdGl1-x_I57yUAyVvG1sIUwN6973xXs
+Message-ID: <CA+G9fYvmhQs9qx-XpLiaOUZQKj=gR=-X5MoJ1auRmbC7cC+AXw@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/392] 5.15.197-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com, Vlastimil Babka <vbabka@suse.cz>, 
+	"Fabio M. De Francesco" <fabio.maria.de.francesco@linux.intel.com>, 
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>, Svyatoslav Ryhel <clamor95@gmail.com>, 
+	Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>, 
+	Anders Roxell <anders.roxell@linaro.org>, Ben Copeland <benjamin.copeland@linaro.org>, 
+	Ian Rogers <irogers@google.com>, linux-mips@vger.kernel.org, 
+	linuxppc-dev <linuxppc-dev@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 12/3/25 17:24, Greg Kroah-Hartman wrote:
-> On Wed, Dec 03, 2025 at 05:03:11PM +0100, Christian König wrote:
->> Oh, wait a second, that one should clearly *not* be backported!
-> 
-> Why not, it was explictly asked to be backported:
-> 
->>> Cc: stable@vger.kernel.org
-> 
-> Did someone add this incorrectly?
-
-Yes, most likely.
-
-The patch should be backported to 6.17, but not older kernels.
-
-Regards,
-Christian.
-
-> 
-> confused,
-> 
+On Wed, 3 Dec 2025 at 21:27, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.197 release.
+> There are 392 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 05 Dec 2025 15:23:16 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.197-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
 > greg k-h
 
+The arm, mips and powerpc builds failed on the stable-rc 5.15.197-rc1.
+
+Build regressions: arm, fuse-tegra30.c:250:10: error: 'const struct
+tegra_fuse_soc' has no member named 'cells'
+Build regressions: arm, fuse-tegra30.c:250:18: error: initialization
+of 'const struct attribute_group *' from incompatible pointer type
+'const struct nvmem_cell_info *' [-Werror=incompatible-pointer-types]
+Build regressions: arm, fuse-tegra30.c:251:10: error: 'const struct
+tegra_fuse_soc' has no member named 'num_cells'
+
+Build regressions: mips, tlb-r4k.c:591:31: error: passing argument 1
+of 'memblock_free' makes integer from pointer without a cast
+[-Werror=int-conversion]
+
+Build regressions: powerpc, mm/mempool.c:68:17: error: 'for' loop
+initial declarations are only allowed in C99 or C11 mode
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+ARM build regressions are due to,
+
+  soc/tegra: fuse: Add Tegra114 nvmem cells and fuse lookups
+  [ Upstream commit b9c01adedf38c69abb725a60a05305ef70dbce03 ]
+
+MIPS build regressions are due to,
+
+  MIPS: mm: kmalloc tlb_vpn array to avoid stack overflow
+  commit 841ecc979b18d3227fad5e2d6a1e6f92688776b5 upstream.
+
+Powerpc build regressions are due to,
+
+  mm/mempool: replace kmap_atomic() with kmap_local_page()
+  [ Upstream commit f2bcc99a5e901a13b754648d1dbab60f4adf9375 ]
+
+### arm build error
+drivers/soc/tegra/fuse/fuse-tegra30.c:250:10: error: 'const struct
+tegra_fuse_soc' has no member named 'cells'
+  250 |         .cells = tegra114_fuse_cells,
+      |          ^~~~~
+drivers/soc/tegra/fuse/fuse-tegra30.c:250:18: error: initialization of
+'const struct attribute_group *' from incompatible pointer type 'const
+struct nvmem_cell_info *' [-Werror=incompatible-pointer-types]
+  250 |         .cells = tegra114_fuse_cells,
+      |                  ^~~~~~~~~~~~~~~~~~~
+drivers/soc/tegra/fuse/fuse-tegra30.c:250:18: note: (near
+initialization for 'tegra114_fuse_soc.soc_attr_group')
+drivers/soc/tegra/fuse/fuse-tegra30.c:251:10: error: 'const struct
+tegra_fuse_soc' has no member named 'num_cells'
+  251 |         .num_cells = ARRAY_SIZE(tegra114_fuse_cells),
+      |          ^~~~~~~~~
+cc1: some warnings being treated as errors
+
+### mips Build error
+arch/mips/mm/tlb-r4k.c: In function 'r4k_tlb_uniquify':
+arch/mips/mm/tlb-r4k.c:591:31: error: passing argument 1 of
+'memblock_free' makes integer from pointer without a cast
+[-Werror=int-conversion]
+  591 |                 memblock_free(tlb_vpns, tlb_vpn_size);
+      |                               ^~~~~~~~
+      |                               |
+      |                               long unsigned int *
+In file included from arch/mips/mm/tlb-r4k.c:15:
+include/linux/memblock.h:107:31: note: expected 'phys_addr_t' {aka
+'unsigned int'} but argument is of type 'long unsigned int *'
+  107 | int memblock_free(phys_addr_t base, phys_addr_t size);
+      |                   ~~~~~~~~~~~~^~~~
+cc1: all warnings being treated as errors
+
+### powerpc build error
+mm/mempool.c: In function 'check_element':
+mm/mempool.c:68:17: error: 'for' loop initial declarations are only
+allowed in C99 or C11 mode
+   68 |                 for (int i = 0; i < (1 << order); i++) {
+      |                 ^~~
+mm/mempool.c:68:17: note: use option '-std=c99', '-std=gnu99',
+'-std=c11' or '-std=gnu11' to compile your code
+mm/mempool.c: In function 'poison_element':
+mm/mempool.c:101:17: error: 'for' loop initial declarations are only
+allowed in C99 or C11 mode
+  101 |                 for (int i = 0; i < (1 << order); i++) {
+      |                 ^~~
+make[2]: *** [scripts/Makefile.build:289: mm/mempool.o] Error 1
+
+## Build
+* kernel: 5.15.197-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+* git commit: d6138097171ea16c4b0e51c3414d51c473f820cc
+* git describe: v5.15.196-393-gd6138097171e
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.196-393-gd6138097171e
+
+## Test Regressions (compared to v5.15.195-118-g59a59821e6b5)
+* arm, build
+  - clang-21-defconfig
+  - clang-21-lkftconfig
+  - clang-21-lkftconfig-no-kselftest-frag
+  - clang-nightly-lkftconfig-kselftest
+  - gcc-12-defconfig
+  - gcc-12-lkftconfig
+  - gcc-12-lkftconfig-debug
+  - gcc-12-lkftconfig-kasan
+  - gcc-12-lkftconfig-kunit
+  - gcc-12-lkftconfig-libgpiod
+  - gcc-12-lkftconfig-no-kselftest-frag
+  - gcc-12-lkftconfig-perf
+  - gcc-12-lkftconfig-rcutorture
+  - gcc-8-defconfig
+
+* mips, build
+  - clang-21-allnoconfig
+  - clang-21-defconfig
+  - clang-21-tinyconfig
+  - gcc-12-allnoconfig
+  - gcc-12-ath79_defconfig
+  - gcc-12-bcm47xx_defconfig
+  - gcc-12-bcm63xx_defconfig
+  - gcc-12-cavium_octeon_defconfig
+  - gcc-12-defconfig
+  - gcc-12-e55_defconfig
+  - gcc-12-malta_defconfig
+  - gcc-12-rt305x_defconfig
+  - gcc-12-tinyconfig
+  - gcc-8-allnoconfig
+  - gcc-8-ath79_defconfig
+  - gcc-8-bcm47xx_defconfig
+  - gcc-8-bcm63xx_defconfig
+  - gcc-8-cavium_octeon_defconfig
+  - gcc-8-defconfig
+  - gcc-8-malta_defconfig
+  - gcc-8-rt305x_defconfig
+  - gcc-8-tinyconfig
+
+* powerpc, build
+  - gcc-12-ppc6xx_defconfig
+  - gcc-8-allnoconfig
+  - gcc-8-ppc6xx_defconfig
+
+
+## Metric Regressions (compared to v5.15.195-118-g59a59821e6b5)
+
+## Test Fixes (compared to v5.15.195-118-g59a59821e6b5)
+
+## Metric Fixes (compared to v5.15.195-118-g59a59821e6b5)
+
+## Test result summary
+total: 28764, pass: 21862, fail: 2212, skip: 4511, xfail: 179
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 101 total, 86 passed, 15 failed
+* arm64: 28 total, 28 passed, 0 failed
+* i386: 18 total, 18 passed, 0 failed
+* mips: 22 total, 0 passed, 22 failed
+* parisc: 3 total, 3 passed, 0 failed
+* powerpc: 22 total, 19 passed, 3 failed
+* riscv: 8 total, 8 passed, 0 failed
+* s390: 9 total, 9 passed, 0 failed
+* sh: 10 total, 10 passed, 0 failed
+* sparc: 6 total, 6 passed, 0 failed
+* x86_64: 24 total, 24 passed, 0 failed
+
+## Test suites summary
+* boot
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-exec
+* kselftest-fpu
+* kselftest-futex
+* kselftest-intel_pstate
+* kselftest-kcmp
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-openat2
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-x86
+* kunit
+* lava
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-build-clang
+* log-parser-build-gcc
+* log-parser-test
+* ltp-capability
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-hugetlb
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* perf
+* rcutorture
+
+--
+Linaro LKFT
+https://lkft.linaro.org
