@@ -1,84 +1,110 @@
-Received: from submarine.notk.org (submarine.notk.org [62.210.214.84])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06246244670
-	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 02:22:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.210.214.84
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B69C2F999F
+	for <patches@lists.linux.dev>; Thu,  4 Dec 2025 05:59:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764814970; cv=none; b=NoCqeF9Klb3PKnkqtON1CGVyUupPfia+cffewMMwHFdOhN9ZuZV9dMxFGNtpmRyH7ha3VwMahMurVjLFM7I9hPPJVTfgiQrjXRdZIzWzVTV0k+IthjmnvtQ0xhgp76iXDRuV73gZJLK7/PtelLtlm18LD5a7mQVzroITDel7Pmw=
+	t=1764827998; cv=none; b=F4Ot7dNWSebLjIWq4wYCXDyZVRcOQoJNzjnqRztT6CrP3gKoGmmt4fLtBJUJPx1lgKiFj/kKWY5QefQW18Ye22bq8If8p4x8Z76FylrfpURPzMAthPLAQHPx5UfHDzEBNdeAHfu6JQ3v+yZfw4PxjMd764cgYk9JRN5xRooBNz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764814970; c=relaxed/simple;
-	bh=yzAODckhM4rFpo7i9i05cohU5moyuWPql2YE5M8UYxQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pPefa0zqXM5uLkwd++ET8+hoGiPfN/6baWpeAU9vwDfeC/0hoXVQiIpNvjC2oMGIqR8zDRiN0MhdL5GZnnDjFUfG0l7N2yPe4FE2obk6VHTiXONOtFV5rkMnBUbV89OwQ2CA+/Hah+kf5PYmyfvZmw6ESefs27iqUixsDT6I6w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org; spf=pass smtp.mailfrom=codewreck.org; dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b=FUtorLZe; arc=none smtp.client-ip=62.210.214.84
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=codewreck.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=codewreck.org
+	s=arc-20240116; t=1764827998; c=relaxed/simple;
+	bh=72hvBrbG4zzHEnzsLBUiKxK6ye8DrkxZH38BILJu58I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=LW6Nen7ViVzFxqahHzr8Jqbh3am+9lbw9sOAGVvUVhi9vQMUNbKEm+jI+V52Dn0EK2x0MwJmDTRmHz0UJUIOSO4HsdeWX1Sy+ioEhvAD2QRwB/lYp1lthOaDt0ewTYpRlqdoi2qTKX5zkIpiyRwqxW3uAvGm22M2rKs+mtjmFv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=gYBQWu92; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codewreck.org header.i=@codewreck.org header.b="FUtorLZe"
-Received: from gaia.codewreck.org (localhost [127.0.0.1])
-	by submarine.notk.org (Postfix) with ESMTPS id 29BFC14C2D6;
-	Thu,  4 Dec 2025 03:22:34 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=codewreck.org;
-	s=2; t=1764814960;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=eDHm18M974h7SrfSginIdxPvfaA4pN1AlaDtA/joVMs=;
-	b=FUtorLZeWqSRN0lsarMADHq/fh4hk4nGqvGsOGlxBWOeXyMEmE6xp4xBqkI/HjafWXU+T0
-	E5vAF1lOndwlfH24+yEKYV2zRgL6Nj8KkjOvkLjQfL+1A4OAs/4p2q9FXy3609xIg6wjA1
-	929rlPH3/kIQO3hdQJ5EmiBvFJAU3hLF8XphKSyEzEebY6qBsnFGS+trr6YnRMwDHmEpGK
-	ls4bvv7zaB2jbasyvaZ/u/qkiImr7qN/F7tykgC3YFDbSNW8pTc6PStYNPVArneX/II46h
-	EB2/v5AtpJyc2jmhT1IBv6lB7TaKmhIAmrcZL7EC6PBU+URwRF8t8prUbN2ZBA==
-Received: from localhost (gaia.codewreck.org [local])
-	by gaia.codewreck.org (OpenSMTPD) with ESMTPA id fbf56700;
-	Thu, 4 Dec 2025 02:22:33 +0000 (UTC)
-Date: Thu, 4 Dec 2025 11:22:18 +0900
-From: Dominique Martinet <asmadeus@codewreck.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.10 000/300] 5.10.247-rc1 review
-Message-ID: <aTDwWlpRn4I2JmuL@codewreck.org>
-References: <20251203152400.447697997@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="gYBQWu92"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-42e33956e76so262583f8f.3
+        for <patches@lists.linux.dev>; Wed, 03 Dec 2025 21:59:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1764827995; x=1765432795; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QgS/O6/Sl8IAMxGl+9k2XWQCGd5oRGPkIOX63aTsOEk=;
+        b=gYBQWu92s21tNFjZwoL2VZHGxlm3d4neWUvuEBkJDA3T21MYqz2TojnpjSaEo2Z7Sq
+         dOLvOoOH1gcrLdleU3rn0jRwUyV5w101dNNHXRz6C/t2zwOSFkVMNr6YcHLRWC+wab8p
+         TZ6pr5apCddFKkdGPKVP6n//7MPNs/gFZPcM6kmVWtJSCqKdoYn+hwJQ0d60M9fN5hdA
+         IyzxvtGjFhfx0guT63umIt13RIC3mRon3vyaNj88KDssvcA3jM1LDpSdWQeb2fNByaEq
+         tlA/XbikLm5xwbJSH+Bkn12Uh9STE1Pv+naYI5B2G/Mr0q7dpUvNzWMAF8P4VL5JvsAP
+         ET2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764827995; x=1765432795;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QgS/O6/Sl8IAMxGl+9k2XWQCGd5oRGPkIOX63aTsOEk=;
+        b=Kc3pmEhyyxS51aQwxcPD0sviysbpk7I+21zkTOJGNSQNvObKy5cFsyNRER5Aykufvl
+         KnGHUHe8roDrA2pvHeQdZnsXfN6CjwEcsVPviDyW6ZTw3r7Z6fMuyTf8CtlVikPNNv3g
+         h5wlbdDi+b0M/qVyIbkKqZFKq/8nekP8FgCPLogEbF55dQRjUtLsNmIf0Fs6DmoKNdQW
+         +Xh1aMrvrpwXxa2D5zMN/jAASIVdMLxvr3jjFmAv6LJBcJ2O6UPSBgrzAVpNi64KYONM
+         4ppEvsZHAXq9sDhfap7/j+/Y9Hf2w6+WCcmCg6oSbkvQ6ACFqNYixngclrayK+WtkZzF
+         Cc7w==
+X-Gm-Message-State: AOJu0YxygHQ3RLFswA4eQOgo8C0B5d1mxicGNQ60NpxVLM9mEyPIpXAN
+	ejNz7Mg7UNbHPzFqxzr/zwz8OBsNVNH3ath1enPS5l1U0zBOn1hFN54=
+X-Gm-Gg: ASbGnctGd7j/l9nJawECHFn/dqLOYUeAavOsN6AiP7km/i4FBi4ijudMc5xf/MbaMlU
+	oqGpXTiJjpoOFSepI4nVfw6AnIFmJu2UhGlzo8lnOcr5hy78L/ttxpEjUS9J2B7RR9LVRv8+kOQ
+	APvWTYs70wMmJGlxJE0tca+7EKRDX9c04sJfzUm95SMSDWV8LgVH4uRq+GldIR/c5c76RHriQEa
+	pL1Ul7iPsz6tHXZsMW4kbYr7+V0dS9npPLnei5uVZWXFrz3EXP0ZU01MH32Je5Wfs8ilgInAcWL
+	zI34h9ExCSFHrTdcaAA5opU8ZVqzC4ebJEv/O/ThIU72n5AFi+2K103TEYSOW6+uXy0xYz1bTel
+	znMJG9frUfLN2Lyqzk6PDcRztoTIIAil3n38SOPVtN+eLmdbVn4AkV6A6zO6HXSoJsuWHOFH2qg
+	k45LvVrLFvzbjMjvCYhAGUh/AZt2IuZiE6gSz7ZeRVb/W0+0uSwuqkcbRwisJ9K5Wa877XcZuCM
+	3Y=
+X-Google-Smtp-Source: AGHT+IH9D+k1SnCVN25YpRn4b/dyEdDyhiW6KnqgmakDVpUUwqiq+qosJE/0arN9UTx1Lm+BXs4wFw==
+X-Received: by 2002:a05:6000:2013:b0:42b:3246:1681 with SMTP id ffacd0b85a97d-42f7317d5b9mr4900772f8f.18.1764827995335;
+        Wed, 03 Dec 2025 21:59:55 -0800 (PST)
+Received: from [192.168.1.3] (p5b2ac6aa.dip0.t-ipconnect.de. [91.42.198.170])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7cbfeb38sm1199930f8f.12.2025.12.03.21.59.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Dec 2025 21:59:54 -0800 (PST)
+Message-ID: <cc2b0762-0dd7-48fa-9630-8bb895cf9ca7@googlemail.com>
+Date: Thu, 4 Dec 2025 06:59:53 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20251203152400.447697997@linuxfoundation.org>
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/568] 6.1.159-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+References: <20251203152440.645416925@linuxfoundation.org>
+Content-Language: de-DE
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20251203152440.645416925@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Greg Kroah-Hartman wrote on Wed, Dec 03, 2025 at 04:23:24PM +0100:
-> This is the start of the stable review cycle for the 5.10.247 release.
-> There are 300 patches in this series, all will be posted as a response
+Am 03.12.2025 um 16:20 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.159 release.
+> There are 568 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Fri, 05 Dec 2025 15:23:16 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.247-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
+
+Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+
+Tested-by: Peter Schneider <pschneider1968@googlemail.com>
 
 
-Tested d50f2a03a87b ("Linux 5.10.247-rc1") on:
-- arm i.MX6ULL (Armadillo 640)
-- arm64 i.MX8MP (Armadillo G4)
+Beste Grüße,
+Peter Schneider
 
-No obvious regression in dmesg or basic tests:
-Tested-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
 -- 
-Dominique Martinet
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
 
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
