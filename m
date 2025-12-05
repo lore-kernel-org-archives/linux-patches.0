@@ -1,72 +1,73 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6297935C1BD
-	for <patches@lists.linux.dev>; Fri,  5 Dec 2025 07:29:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69590315D26
+	for <patches@lists.linux.dev>; Fri,  5 Dec 2025 08:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764919806; cv=none; b=s6aFwwItK/NmdWoLCBkrKwAXCb0V/TGhZo/lAcBntQ8Lzwe4WX7IIy3TMRSi7+DaLcXTysjnBa9i1ELdzdrRlFtXw8sxwUZkl3Md/LMaLY+iKRYJywMTyM/YpNL+qq8xd8U5ZamrU6Fm4spkmfTpgMUkEGz4sqryM/Nj5nHVd1s=
+	t=1764922906; cv=none; b=MQwKvCkYkvcK2SbUloqX2H/y+fJoNARCL28FyQlq8YgRq5RsujD2axSmzuciSkU+4wkf4GsayMXhkkVgNVz1XE5ocmCuGFcZti6btmQMVUQyD9v8nOx2lb5Nw46at2LUhPrWZYB2HXxFYkryH0vj1tMbS4tFvVIYZ+JnlZIYoCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764919806; c=relaxed/simple;
-	bh=bu3z0sYuFgAI3jnyoHwx9hy3reIbpBfRjF6TOJos6zo=;
+	s=arc-20240116; t=1764922906; c=relaxed/simple;
+	bh=r/FEYp9G7BrUaKaqwcSpDLY7KkubmezBOfuvt/6isEU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l9EanWzW5ij8O6VA/9SGDTNgao5mGB6RRihOMRwMwPVbmc//U8TRtAoBblbX1b8b59WCXq1R10ns61+1OIb6FbXThDJP72zQG41WdkTMKVvqwNeLXMcinNF04qYif5rFGaYoOXe1qjUFoLl4b66uGrD3F7M2Ui4oL6AyxG3oPBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gWEIPyr1; arc=none smtp.client-ip=209.85.215.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	 To:Cc:Content-Type; b=qFbEK7d5j30V+rg1/OVUuTk8nflVsq4S44Xgm60iehkd0eAGj0PrA4U07egFVdfqHhdmwE53QxnL6hyw84GYJoPHOZoyNtjXj3+9/yFMqeRDXshoI2S6S/mD18QzL7G8IpVL9tA8EzDi/hDEBF53KeTFD0nvHJIb63pjdtMbWks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=boLemkue; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gWEIPyr1"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-bdde8f1814fso1389718a12.2
-        for <patches@lists.linux.dev>; Thu, 04 Dec 2025 23:29:49 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="boLemkue"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b7697e8b01aso82976466b.2
+        for <patches@lists.linux.dev>; Fri, 05 Dec 2025 00:21:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1764919789; x=1765524589; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UahO3NU1ywZFNUrFNPD9TI07fUnqlVn56j/RsJpQWL4=;
-        b=gWEIPyr1ld143pU9wmifIqsDBAxHXzEaQmPo06YEpRcSL7p4gkTyLv6+ccly/ZhI8U
-         lN+Sny17hIWjCKzlX+uWozh9KEy2fF8BZ5szCJX9isAlrSM/J8I9FqQ5+gXpot8wx4+C
-         lgkpKKvNJIZ0LSAnmkbl3fbmpNq5O1cqku9XJAYvxV9Z+Imf06yftdIXfyeTacvWZrBB
-         4tAwzrNMePLqRDGIIPQTGmJYmxKr6cgPc+0O2SArLU4wvEOqOj8FkaWZMaH3stHyEXCg
-         EPcl2Pqz9JN8+ykH9hGxQjfxkVsu3jAe9nTd45oU3DJxf369xwWVtoKbkbOYjA0DMY4S
-         rKMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764919789; x=1765524589;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1764922888; x=1765527688; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UahO3NU1ywZFNUrFNPD9TI07fUnqlVn56j/RsJpQWL4=;
-        b=P4oPt10lWvj3zDbXc3UBuz99fQGPfygnvWzyyEw6faNu3AaRt6wzEy04JhrQnKvNy9
-         YbUDUERZKIIVunteHcuE90aKpteKdG7INpQ2MGUQBPHeijxrMIqZbMBwgsvLYHvtngr4
-         7NvGE+vG54y4+UZe+IMI5VhRfl1K6VV7Lczg7rifVyFe2nzFDjMg/H2AtIBX8qLI5k/C
-         Nu4+weO5vg1W2p0bvvLco9MusFM9ZU49jfCSuBJCrqyzY1MA4BolLFVz4bMqmldmh2nA
-         qMx+RrZXvrWarLyjVSriMpqiDCOj89fUiVYSIqbaClJ+zGv3tF4JcxCHTbSVqfMXYsNT
-         ZjHw==
-X-Forwarded-Encrypted: i=1; AJvYcCWDOvNobi0S6I7WwL3VKPQI/jkT5Z6LUj6Usgh1E2QjTr52FJZ0VkIyqSJYpU6XGKKT8B8DeO6+@lists.linux.dev
-X-Gm-Message-State: AOJu0YzU0yBDrvZdQu9fu/+DwXgysteB/Z7c7EhASghkbJBUtMjvPJFo
-	xm49rFjAi+rcP2yijof9LDeCvWgEqXc7jEJ4YBrEcdvi9RhFphAd0E5vwYnPSRZzMqUPQZmMd33
-	1Hn9zhboO2n1X5yZx5vPKdFb6AYiCLoCG47J0IFQmOQ==
-X-Gm-Gg: ASbGncsTaVFAQv77ua5I397JHw+WiZBMtzAzENN70iNKV3SEKO9WdPIB2ZpzoF2Ddxd
-	8S6xQcG8nTXGhh6+zTGNcbwdkSdMRxlnFm5PPphASMKi/Jzu3p8LP4QiJEWZtXp6fja6uD7cLLt
-	V20jvjL2ufLK18H0A1hEB1uC3PtKCRqunEQkTpNdCYri0piGkJvZqMu9a1k3ok5xjPaR+y0sa2d
-	PEPi/R5UgDk9Co1BDw4+dCt+F6j72KOm9uji8/e8kCllU9VbO4YeNCqfHLc8gQDKHkVZfun2blh
-	gA8Vnfy0dZuQDfXpmzhcWLbddXql
-X-Google-Smtp-Source: AGHT+IHuL+oIcjQZ4wcxldh0cmXKonJ+cSVNcTlZOBGSI7LHuQ3p6WyyrJz/Vvr0NtdfDBhEDzBs3U9jWqBlQ1QbjpA=
-X-Received: by 2002:a05:7300:2a8e:b0:2a4:3593:6476 with SMTP id
- 5a478bee46e88-2ab92ed29bdmr4438176eec.38.1764919788530; Thu, 04 Dec 2025
- 23:29:48 -0800 (PST)
+        bh=CFTqnO/Fd2sawQQhIPcCoLFvSOoCx15UbnxbNG9nqpA=;
+        b=boLemkueBzN7VdPmiWC9kCT7ZZVYrNSm5EujGdIPiH9DUFE9799Qr7EBoUHkhA7XV2
+         CRMXfmwD611LVC+EoRmTq3o9I3hhn3LWbS52InbYgPrjo31BMD5SrPAVe6UjLO6BMKr5
+         Qaa8bdc8HTtngYm9NFxEV4GzFMKg8HzlS2KW51yIngSWEsNj18oU+x88us+aCWMIN1pl
+         Tgt/7t4CJ6RfGugyhNyJVYjRsNyaf6nBslYvZwtkfHqYTSekz0/88z6qC+nN3nzjikHf
+         hePq/48mUST5z6u7xgFUe4M5Nl4L7e4RJANCMgiSbEzI49eBzWu83NYTfddlPthYEcPu
+         mrVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764922888; x=1765527688;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=CFTqnO/Fd2sawQQhIPcCoLFvSOoCx15UbnxbNG9nqpA=;
+        b=L+kOaXev7FIxXwD/BXZXnyp71rQIiYQav3wa1KU6SKi6/auh/rLT7TEv89Jj21KS1q
+         rY0Jtp5BN/QpuHInBJPeC/9AV3vUmWLZEoXPgjFhRslyY6TtVavq/o1X02c4ZIBMjMah
+         YMO9fi9bKr/LQqHC4JTA+wVaWbpkEwMa04Ax4yshNPKYhEb19qmEMV2rqUOiGRW0bVNc
+         5ThkqvYY9OrPz4jYybJhbs9dYAtWxuyUMf+lu0PGmG7xVNwend92wMivI32R0KPr5ha0
+         PIRJz/FR2SIkJTH2eLyxpxJU8VmB6gwWVSx/cWtFanZGRWdF/zpCqxt/vWT4mwaqMObG
+         RzDA==
+X-Forwarded-Encrypted: i=1; AJvYcCVOGXjrLuQ/DHmWJE0Zl4UifsYeF4NNI7OvItHzoZbV+Q1lpV6/la1EY1+o1c5hO62YENYHqVmI@lists.linux.dev
+X-Gm-Message-State: AOJu0YxVFSoV3/OtnTl77bDunRPbsjNdOnL5s0chs1b1dPcnZa0UqaKH
+	7U+kHW9jmLRxZEt4rdyYW+w1Lfsfi2rN7ZAS2JCcuuyPcvi2O02EN66f5mO6E3ga3frCigvBVsE
+	OuYls4aw8z0SO5l/u1Lj/bTlJJYV8ZfzlryeuAYj3UA==
+X-Gm-Gg: ASbGncvfKIgqfTaYcoXoqS0MVfSEgm5iLuuO6sRIfzwj6unpy4Jjys3nrNMXx6WT0w7
+	wBTvHTs2VWJTP4a9srWUTlu0/XpduM5WcmNpfDdjy7SlLfXS8qgYb0kBH2aBRKowHljqa3Ql7Dw
+	SKfOLKSYFM5jgU4QvDB1e8vV9HaUP02DCEr3zfd/FjRTY2MFdVVAI8MqXdAHxUSv/uGBmWfOz0R
+	8mK2V3BK7s0peAPG6aOqZ+xHOtC77fc54FvN1HqUJMqV2et6J5uhNIcwCQry7P7XyyG1I0=
+X-Google-Smtp-Source: AGHT+IEhwwxVHvBzGnvcRs1ZBsC6V2SXb5WppN3WR1olH3vWXdyabaLt9X81lmdZJ3z1dsJ5nsyoiNdGQcjQaOVSH5w=
+X-Received: by 2002:a17:907:1c27:b0:b73:848b:34ae with SMTP id
+ a640c23a62f3a-b79dbea8994mr919780966b.18.1764922888243; Fri, 05 Dec 2025
+ 00:21:28 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251204163821.402208337@linuxfoundation.org>
-In-Reply-To: <20251204163821.402208337@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 5 Dec 2025 12:59:37 +0530
-X-Gm-Features: AQt7F2p61xA3vxDJr5nQjj2q6XgpicN80z9X8VqKCA8Ij1U1GuY_k5HOmUEJ-rw
-Message-ID: <CA+G9fYvz4R6SRM0ZZ6xDtnFcHo-RdQkrE3b9WTM0RCgWNiuieQ@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/387] 5.15.197-rc2 review
+References: <20251203152346.456176474@linuxfoundation.org> <CAG=yYw=7i7O7nLLDQ5hdP03wHFSQ04QEXtP8dX-2ytBmiJWsaw@mail.gmail.com>
+ <2025120413-impotence-cornfield-16aa@gregkh>
+In-Reply-To: <2025120413-impotence-cornfield-16aa@gregkh>
+From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
+Date: Fri, 5 Dec 2025 13:50:51 +0530
+X-Gm-Features: AWmQ_bnFM0yAOGrLLgGAq_Fa0ruYEvV3PENXxVfn2W7oaTqf_5z9_nXm-BZquAA
+Message-ID: <CAG=yYw=8ZXmf3KE8QDAOJrJ8VtRWgMtCNv6=6FNJw1P_jFw+Rw@mail.gmail.com>
+Subject: Re: [PATCH 6.17 000/146] 6.17.11-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -74,158 +75,27 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
 	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com, 
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>, 
-	Anders Roxell <anders.roxell@linaro.org>, Ben Copeland <benjamin.copeland@linaro.org>
+	achill@achill.org, sr@sladewatkins.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 4 Dec 2025 at 22:14, Greg Kroah-Hartman
+On Thu, Dec 4, 2025 at 9:46=E2=80=AFPM Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.15.197 release.
-> There are 387 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 06 Dec 2025 16:37:24 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.197-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
+> Are these new from 6.17.10?  if so, can you bisect to find the offending
+> commit?
 >
 > thanks,
 >
 > greg k-h
+i Have not  compiled 6.17.10
+This machine  is not the normal machine i compile  for kernek testin
+THis is a typically old  processor and motherboard
+But let me try to compile 6.17.10.
+and see if i can do git bisec ( i kind of forgot .. i have to learn again)
 
+anyway THANKSt
 
-The powerpc allnoconfig failed with gcc-8 but passed with gcc-12.
-
-Build regression: powerpc: allnoconfig: gcc-8: Inconsistent kallsyms data
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-### Build error Powerpc
-Inconsistent kallsyms data
-Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-make[1]: *** [Makefile:1244: vmlinux] Error 1
-
-### Commit pointing to,
-  Makefile.compiler: replace cc-ifversion with compiler-specific macros
-  commit 88b61e3bff93f99712718db785b4aa0c1165f35c upstream.
-
-### Build
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/36OCnVeYGpKUCXtxVdz6gezHjcQ/
- - https://storage.tuxsuite.com/public/linaro/lkft/builds/36OCnVeYGpKUCXtxVdz6gezHjcQ/config
-
-### Steps to reproduce
- - tuxmake --runtime podman --target-arch powerpc --toolchain gcc-8
---kconfig allnoconfig
-
-## Build
-* kernel: 5.15.197-rc2
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 19afef1f91d735ad63a7caa2e406e6379ede166b
-* git describe: v5.15.196-388-g19afef1f91d7
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.196-388-g19afef1f91d7
-
-## Test Regressions (compared to v5.15.195-118-g59a59821e6b5)
-* powerpc, build
-  - gcc-8-allnoconfig
-
-## Metric Regressions (compared to v5.15.195-118-g59a59821e6b5)
-
-## Test Fixes (compared to v5.15.195-118-g59a59821e6b5)
-
-## Metric Fixes (compared to v5.15.195-118-g59a59821e6b5)
-
-## Test result summary
-total: 32860, pass: 25148, fail: 2537, skip: 4848, xfail: 327
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 101 total, 101 passed, 0 failed
-* arm64: 28 total, 28 passed, 0 failed
-* i386: 18 total, 18 passed, 0 failed
-* mips: 22 total, 22 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 22 total, 21 passed, 1 failed
-* riscv: 8 total, 8 passed, 0 failed
-* s390: 9 total, 9 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 24 total, 24 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-exec
-* kselftest-fpu
-* kselftest-futex
-* kselftest-intel_pstate
-* kselftest-kcmp
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
+--=20
+software engineer
+rajagiri school of engineering and technology
