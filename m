@@ -1,49 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A377081E;
-	Fri,  5 Dec 2025 03:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB33F287511;
+	Fri,  5 Dec 2025 03:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764906773; cv=none; b=JW5fu21H1hUt84d216iQyFoWoeMx4tOMYygm5BghwzMaYKr98EsYNv0HHPCNT3/56Sxlo9QQtVeD80nSjP4pOFGWfV5bV7ElZ9lW7pcohuq5+oV1XcQNdzNmlC0LjFIvXqndQMMeT4ZiNzJcK88/EcyBACXoRm3hRnue84ZKBNA=
+	t=1764906776; cv=none; b=TJBk3Y8HOYwBVC9QjeIstTopJ0ckckAHzg0h/R/DY9okiOmX1ipSHGCQCXVr1yY2sFSgaHZWAV/AXC3gFRl4TzHPHkxfansTu4ExQyZb7+P5ScaWx7QbaYfDSgRU9NN36QmdslwW9qZVVwXMGw0YnkuX/iIbsuu3kOEzLdwLmTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764906773; c=relaxed/simple;
-	bh=aCnktdb+wTVLC3gj9nec1duNC0hS3OcJnFItNItmnAQ=;
+	s=arc-20240116; t=1764906776; c=relaxed/simple;
+	bh=NUISdYukTJaqN4rnMX/MjabMnKemln+4pC0/rTyxsxw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VOtP9RnA+DhhfJUgkg4BuBQPQrH+7Jjtgr5zw4MSdKcpTGoFkdE0lIlSUCGOLLKenRbJUUMe2R7yKlvLAm9QlSYYAz1JRivTFg9bzdWBoZ996doP8tJhev/WcYMqAp1z9mYwsEc59PvB6YMTEWMVAi03k4KfTH4yfRTnOHAqmzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T2RxtvSM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MZ7FgCh7b3qWLiv0Z/ZX+FusL5ARWZWEA5lYn/CHmVcy166Xmi078eIc/mARs8Irin702lDPMhFWvRnWModCb0/pLGv0CY7OuY9iv4PpeSB7vI1bu8BgZkqcQeU6oMDPRIgkixsBvaAH6JAiY2IJQ2nNNGwr6qhtC5pYv/BD9/Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGDqP6xk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T2RxtvSM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18DCC116B1;
-	Fri,  5 Dec 2025 03:52:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGDqP6xk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED980C116D0;
+	Fri,  5 Dec 2025 03:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764906773;
-	bh=aCnktdb+wTVLC3gj9nec1duNC0hS3OcJnFItNItmnAQ=;
+	s=k20201202; t=1764906775;
+	bh=NUISdYukTJaqN4rnMX/MjabMnKemln+4pC0/rTyxsxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2RxtvSMdslKaWhoOtZaHjmqC/MSnyHnAd9TLVevkydFuHJVs0P4nxWnDAhkzIvKl
-	 zVdbFFUVq4w5tVg3ormyLggB4Xp8OujJMTUsUcvrQgIqSTdUsPhD+pVSUxqgqoJ3b1
-	 wrp1x4EU4NiaWo6qeFVTyQWTOVH9qullRl+codpIW8Iqf1ihXhQN5iS2ndBdzSdRUS
-	 edzNBDushAKlMltIAmRH4lpJTAHMgg1OBWX9WTYlPadxktRcuSWmKofDfe3r+lNUK6
-	 r+DJWrvEP4bHqydVtgwq2vW8IxvfHqlP6UHaPSL/GIWAWTpBbx8V4hG0XYZ4KHI3WH
-	 QKKmEma42gNKA==
+	b=WGDqP6xkl5NEovweba7tB3prQECC5bMzHytZc0QuJT3+oz87EAi4AxYKUiq8mkrRm
+	 HW4rujiGGNErH9qym3zT74+tBvPUnl0HpTVdbv0/1JMNZ3w81vEm8RItK1ZRPvfANN
+	 0j7/SqFGEGL2MktO39i64fjSv6TKe0ns0RQXi42NuxnOH9XK6iRcREpqtifP8pdRqr
+	 S6zCmGsgKmFoRz7N0ONlVAIMhAHls/Ndkhj+i3ZzVHHQCtllHF8c04Q/wCCyIKsA36
+	 FKyOewkp+ei5tUCg6+4bFIq2W9lqLE41042dJw2B0oRgbkIqdkaUCXJJXkLMDqyuiY
+	 HcZ0Uhu7Go7Uw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuhao Fu <sfual@cse.ust.hk>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+Cc: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>,
+	WangYuli <wangyl5933@chinaunicom.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	rafael@kernel.org,
-	krzk@kernel.org,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-pm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-5.10] cpufreq: s5pv210: fix refcount leak
-Date: Thu,  4 Dec 2025 22:52:34 -0500
-Message-ID: <20251205035239.341989-5-sashal@kernel.org>
+	robert.moore@intel.com,
+	linux-acpi@vger.kernel.org,
+	acpica-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPICA: Avoid walking the Namespace if start_node is NULL
+Date: Thu,  4 Dec 2025 22:52:35 -0500
+Message-ID: <20251205035239.341989-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251205035239.341989-1-sashal@kernel.org>
 References: <20251205035239.341989-1-sashal@kernel.org>
@@ -59,188 +55,220 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuhao Fu <sfual@cse.ust.hk>
+From: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
 
-[ Upstream commit 2de5cb96060a1664880d65b120e59485a73588a8 ]
+[ Upstream commit 9d6c58dae8f6590c746ac5d0012ffe14a77539f0 ]
 
-In function `s5pv210_cpu_init`, a possible refcount inconsistency has
-been identified, causing a resource leak.
+Although commit 0c9992315e73 ("ACPICA: Avoid walking the ACPI Namespace
+if it is not there") fixed the situation when both start_node and
+acpi_gbl_root_node are NULL, the Linux kernel mainline now still crashed
+on Honor Magicbook 14 Pro [1].
 
-Why it is a bug:
-1. For every clk_get, there should be a matching clk_put on every
-successive error handling path.
-2. After calling `clk_get(dmc1_clk)`, variable `dmc1_clk` will not be
-freed even if any error happens.
+That happens due to the access to the member of parent_node in
+acpi_ns_get_next_node().  The NULL pointer dereference will always
+happen, no matter whether or not the start_node is equal to
+ACPI_ROOT_OBJECT, so move the check of start_node being NULL
+out of the if block.
 
-How it is fixed: For every failed path, an extra goto label is added to
-ensure `dmc1_clk` will be freed regardlessly.
+Unfortunately, all the attempts to contact Honor have failed, they
+refused to provide any technical support for Linux.
 
-Signed-off-by: Shuhao Fu <sfual@cse.ust.hk>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+The bad DSDT table's dump could be found on GitHub [2].
+
+DMI: HONOR FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025
+
+Link: https://github.com/acpica/acpica/commit/1c1b57b9eba4554cb132ee658dd942c0210ed20d
+Link: https://gist.github.com/Cryolitia/a860ffc97437dcd2cd988371d5b73ed7 [1]
+Link: https://github.com/denis-bb/honor-fmb-p-dsdt [2]
+Signed-off-by: Cryolitia PukNgae <cryolitia.pukngae@linux.dev>
+Reviewed-by: WangYuli <wangyl5933@chinaunicom.cn>
+[ rjw: Subject adjustment, changelog edits ]
+Link: https://patch.msgid.link/20251125-acpica-v1-1-99e63b1b25f8@linux.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message describes a refcount leak:
-- Subject: "cpufreq: s5pv210: fix refcount leak"
-- Explains the bug: `dmc1_clk` is not freed on error paths
-- Explains the fix: adds a new `out:` label to ensure cleanup
-- Signed-off-by: Shuhao Fu and Viresh Kumar (cpufreq maintainer)
+**Subject**: "ACPICA: Avoid walking the Namespace if start_node is NULL"
 
-Missing tags:
-- No "Cc: stable@vger.kernel.org"
-- No "Fixes:" tag pointing to the commit that introduced the bug
-  (4911ca1031c2ad from 2011)
+The commit message clearly indicates:
+- This is a fix to a prior fix (commit 0c9992315e73)
+- It addresses a real crash on Honor Magicbook 14 Pro hardware
+- The bug is a NULL pointer dereference in `acpi_ns_get_next_node()`
+- Link to ACPICA upstream commit
+  (1c1b57b9eba4554cb132ee658dd942c0210ed20d) - this is coordinated with
+  the ACPICA project
+- Signed off by Rafael J. Wysocki (ACPI maintainer) with "Reviewed-by"
+  tag
+
+**Missing tags**: No explicit `Cc: stable@vger.kernel.org` or `Fixes:`
+tag, but this is clearly a fix to a stable-tree-relevant commit.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The bug:
-- In `s5pv210_cpu_init()`, after `dmc1_clk = clk_get(...)` succeeds, two
-  error paths jump to `out_dmc1`:
-  1. `policy->cpu != 0` (line 521)
-  2. Unsupported memory type (line 533)
-- `out_dmc1` only frees `dmc0_clk` and `policy->clk`, not `dmc1_clk`,
-  causing a refcount leak.
+**The bug mechanism**:
 
-The fix:
-- Adds a new `out:` label that calls `clk_put(dmc1_clk)`
-- Changes the two error paths to `goto out;` instead of `goto out_dmc1;`
-- `out:` falls through to `out_dmc1` for the rest of cleanup
+Looking at `acpi_ns_get_next_node()` (lines 34-46 of nswalk.c):
 
-Change size: 4 lines added, 2 lines modified (minimal change)
+```c
+if (!child_node) {
+    /* It's really the parent's _scope_ that we want */
+    return (parent_node->child);  // <-- CRASH if parent_node is NULL
+}
+```
+
+The original fix (0c9992315e73) added this check **inside** the
+ACPI_ROOT_OBJECT branch:
+```c
+if (start_node == ACPI_ROOT_OBJECT) {
+    start_node = acpi_gbl_root_node;
+    if (!start_node) {  // Only catches: ACPI_ROOT_OBJECT +
+gbl_root_node==NULL
+        return_ACPI_STATUS(AE_NO_NAMESPACE);
+    }
+}
+```
+
+**The problem**: If `start_node` is passed as NULL directly (not via
+ACPI_ROOT_OBJECT), the check is never executed:
+- `start_node` remains NULL
+- `parent_node = start_node;` makes `parent_node` = NULL
+- `acpi_ns_get_next_node(parent_node, NULL)` dereferences
+  `parent_node->child` → **KERNEL PANIC**
+
+**The fix** (this commit): Move the NULL check outside the if block:
+```c
+if (start_node == ACPI_ROOT_OBJECT) {
+    start_node = acpi_gbl_root_node;
+}
+
+/* Avoid walking the namespace if the StartNode is NULL */
+if (!start_node) {  // Now catches ALL NULL cases
+    return_ACPI_STATUS(AE_NO_NAMESPACE);
+}
+```
 
 ### 3. CLASSIFICATION
 
-- Bug fix: fixes a resource leak
-- Not a feature addition
-- Not a new API
-- Standard error handling pattern
+- **Type**: Bug fix (NULL pointer dereference crash)
+- **Not an exception category**: This is a pure crash fix, not a device
+  ID, quirk, or DT update
+- **Severity**: Kernel panic/crash - HIGH severity for affected hardware
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- Scope: single function, error paths only
-- Risk: low
-  - Only affects error paths
-  - Standard cleanup pattern
-  - No logic changes beyond cleanup
-- Subsystem: cpufreq (mature)
-- Dependencies: none; self-contained
+**Lines changed**: 8 (minimal)
+**Files touched**: 1 (`drivers/acpi/acpica/nswalk.c`)
+**Complexity**: Trivial - literally moving 3 lines of code outside an if
+block
+
+**Risk**: VERY LOW
+- The change only affects the code path when `start_node` is NULL
+- For non-NULL `start_node`, behavior is identical
+- The fix is obviously correct - you must catch all NULL cases
+- The fix was also merged upstream to ACPICA project
 
 ### 5. USER IMPACT
 
-- Affected users: systems using the S5PV210/S5PC110 cpufreq driver
-- Severity: resource leak (not a crash, but still a bug)
-- Trigger conditions:
-  1. `policy->cpu != 0` (non-zero CPU)
-  2. Unsupported memory type (not LPDDR/LPDDR2)
-- Impact: clock reference leak on error paths
+**Who is affected**:
+- Users with Honor Magicbook 14 Pro (FMB-P series)
+- Potentially other devices with similar DSDT issues
 
-Historical context:
-- Driver introduced in v2.6.37 (2010)
-- Bug introduced in commit 4911ca1031c2ad (2011-06-06)
-- Present in all stable trees since 2011
+**Impact severity**:
+- Complete system crash (kernel panic) during boot
+- System is completely unusable without this fix
+
+**Evidence**: Real crash report linked in commit with DMI string: "HONOR
+FMB-P/FMB-P-PCB, BIOS 1.13 05/08/2025"
 
 ### 6. STABILITY INDICATORS
 
-- Tested: no "Tested-by:" tag
-- Reviewed: signed by Viresh Kumar (maintainer)
-- Age: commit is recent (Oct 2025), but the bug is old
+**Positive signals**:
+- Reviewed-by tag present
+- Signed off by Rafael J. Wysocki (ACPI maintainer - highly trusted)
+- Merged to ACPICA upstream (external validation)
+- Very simple, obvious logic fix
+
+**Concerns**:
+- Very recent commit (Nov 25, 2025)
+- No explicit Cc: stable tag
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies
-- Code exists in stable trees (driver present since v2.6.37)
-- Fix applies cleanly to stable trees
+**Dependencies**:
+- Requires commit 0c9992315e73 to be present (it added the original NULL
+  check that this fix improves)
+- Commit 0c9992315e73 is already in stable trees (v5.18+, backported to
+  many LTS trees)
 
-### 8. COMPARISON WITH SIMILAR FIXES
+The code change is self-contained - no other changes required.
 
-Similar refcount leak fixes in cpufreq:
-- `cpufreq: nforce2: fix reference count leak` (9600156bb9985)
-- `cpufreq: mediatek: fix device leak on probe failure` (ebc4ed14a4dbf)
-- `cpufreq: qcom-nvmem: fix memory leaks in probe error paths`
-  (e3fd01a810537)
+### 8. HISTORICAL CONTEXT
 
-These follow the same pattern and are appropriate for stable.
+The original commit 0c9992315e73 was introduced in March 2022 and was
+backported to all stable trees. This new fix addresses a gap in that
+original fix. The fact that the original fix was deemed stable-worthy
+means this completion of that fix should also be stable material.
 
-### 9. STABLE KERNEL RULES COMPLIANCE
+---
 
-- Obviously correct: yes — standard cleanup pattern
-- Fixes a real bug: yes — resource leak
-- Important issue: moderate — resource leak, not a crash
-- Small and contained: yes — 6 lines changed
-- No new features: yes — only fixes cleanup
-- Applies cleanly: yes — no dependencies
+## Final Assessment
 
-### 10. RISK VS BENEFIT TRADE-OFF
+**Should this be backported?** YES
 
-Benefits:
-- Fixes a long-standing bug (14 years)
-- Prevents resource leaks
-- Low risk, small change
-- Standard pattern
+**Rationale**:
+1. **Fixes a real crash**: NULL pointer dereference causing kernel panic
+   on real hardware
+2. **Minimal, surgical change**: Only 8 lines changed, moving code
+   outside an if block
+3. **Obviously correct**: The logic is trivial - catch ALL NULL cases,
+   not just one path
+4. **Completes a prior stable fix**: The original fix (0c9992315e73) is
+   already in stable trees; this completes it
+5. **Low risk**: Only affects NULL case; no behavioral change for
+   working systems
+6. **Externally validated**: Merged to ACPICA upstream project
+7. **Trusted maintainer**: Signed off by Rafael J. Wysocki
 
-Risks:
-- Minimal — only touches error paths
-- No functional changes
+**Backport considerations**:
+- Should apply cleanly to all kernels that have commit 0c9992315e73
+- May have minor copyright year conflicts (trivial to resolve)
+- No functional dependencies beyond the original fix
 
-Concerns:
-- No explicit stable request tag
-- Driver targets older ARM SoCs (may have limited current use)
-- Leak only occurs on error paths
-
-### FINAL ASSESSMENT
-
-This is a valid bug fix that meets stable criteria:
-1. Fixes a real resource leak
-2. Small, contained change
-3. Low risk
-4. No new features
-5. Standard error handling pattern
-
-The lack of a "Cc: stable" tag is not a blocker; maintainers may add it,
-or it may have been missed. The fix is appropriate for stable backport.
+The lack of explicit `Cc: stable` tag is likely an oversight. The commit
+is clearly stable material as it fixes a crash that makes hardware
+completely unusable.
 
 **YES**
 
- drivers/cpufreq/s5pv210-cpufreq.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/nswalk.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/cpufreq/s5pv210-cpufreq.c b/drivers/cpufreq/s5pv210-cpufreq.c
-index 4215621deb3fe..ba8a1c96427a1 100644
---- a/drivers/cpufreq/s5pv210-cpufreq.c
-+++ b/drivers/cpufreq/s5pv210-cpufreq.c
-@@ -518,7 +518,7 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
+diff --git a/drivers/acpi/acpica/nswalk.c b/drivers/acpi/acpica/nswalk.c
+index a2ac06a26e921..5670ff5a43cd4 100644
+--- a/drivers/acpi/acpica/nswalk.c
++++ b/drivers/acpi/acpica/nswalk.c
+@@ -169,9 +169,12 @@ acpi_ns_walk_namespace(acpi_object_type type,
  
- 	if (policy->cpu != 0) {
- 		ret = -EINVAL;
--		goto out_dmc1;
-+		goto out;
+ 	if (start_node == ACPI_ROOT_OBJECT) {
+ 		start_node = acpi_gbl_root_node;
+-		if (!start_node) {
+-			return_ACPI_STATUS(AE_NO_NAMESPACE);
+-		}
++	}
++
++	/* Avoid walking the namespace if the StartNode is NULL */
++
++	if (!start_node) {
++		return_ACPI_STATUS(AE_NO_NAMESPACE);
  	}
  
- 	/*
-@@ -530,7 +530,7 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
- 	if ((mem_type != LPDDR) && (mem_type != LPDDR2)) {
- 		pr_err("CPUFreq doesn't support this memory type\n");
- 		ret = -EINVAL;
--		goto out_dmc1;
-+		goto out;
- 	}
- 
- 	/* Find current refresh counter and frequency each DMC */
-@@ -544,6 +544,8 @@ static int s5pv210_cpu_init(struct cpufreq_policy *policy)
- 	cpufreq_generic_init(policy, s5pv210_freq_table, 40000);
- 	return 0;
- 
-+out:
-+	clk_put(dmc1_clk);
- out_dmc1:
- 	clk_put(dmc0_clk);
- out_dmc0:
+ 	/* Null child means "get first node" */
 -- 
 2.51.0
 
