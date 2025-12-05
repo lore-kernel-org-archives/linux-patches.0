@@ -1,101 +1,81 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69590315D26
-	for <patches@lists.linux.dev>; Fri,  5 Dec 2025 08:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64AEC309F09;
+	Fri,  5 Dec 2025 09:12:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764922906; cv=none; b=MQwKvCkYkvcK2SbUloqX2H/y+fJoNARCL28FyQlq8YgRq5RsujD2axSmzuciSkU+4wkf4GsayMXhkkVgNVz1XE5ocmCuGFcZti6btmQMVUQyD9v8nOx2lb5Nw46at2LUhPrWZYB2HXxFYkryH0vj1tMbS4tFvVIYZ+JnlZIYoCo=
+	t=1764925939; cv=none; b=khseqm5gDnR1cUtEBf02rnwt00C9/LAHLBErFyeHrde6BV/ctkC6gmzTNXs2Ugl32g9FpuuyljdOm3mRBCtBUu0bEfoQmUDbdtNima11RAuZko08d8O2tMNaBQglPM9GeFvDlIPH5WbuhksiOMqNikQ9e0B9C+4RfMBXRelVyCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764922906; c=relaxed/simple;
-	bh=r/FEYp9G7BrUaKaqwcSpDLY7KkubmezBOfuvt/6isEU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qFbEK7d5j30V+rg1/OVUuTk8nflVsq4S44Xgm60iehkd0eAGj0PrA4U07egFVdfqHhdmwE53QxnL6hyw84GYJoPHOZoyNtjXj3+9/yFMqeRDXshoI2S6S/mD18QzL7G8IpVL9tA8EzDi/hDEBF53KeTFD0nvHJIb63pjdtMbWks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=boLemkue; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	s=arc-20240116; t=1764925939; c=relaxed/simple;
+	bh=do08iCYqDQ0Ju3D7AlDAjTJ6lm3rv2JLympBivXnyrk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Z3leOXWpwtfG8mpJVBZ8xi/xPoNSXwv1P2XNhfcVC0nd7tran055/G9DIcbXIjLqZQ5dfBQagqh+1GWwqTIXsuujmR/PpEBBmrwFlGq406WKiF+viblKS7UTKg9SeDP5OPz2svPbT9sbCImIm1qbPpeLxKizjcqmfrHPVcXCXa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QaGq3T7Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="boLemkue"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b7697e8b01aso82976466b.2
-        for <patches@lists.linux.dev>; Fri, 05 Dec 2025 00:21:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1764922888; x=1765527688; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CFTqnO/Fd2sawQQhIPcCoLFvSOoCx15UbnxbNG9nqpA=;
-        b=boLemkueBzN7VdPmiWC9kCT7ZZVYrNSm5EujGdIPiH9DUFE9799Qr7EBoUHkhA7XV2
-         CRMXfmwD611LVC+EoRmTq3o9I3hhn3LWbS52InbYgPrjo31BMD5SrPAVe6UjLO6BMKr5
-         Qaa8bdc8HTtngYm9NFxEV4GzFMKg8HzlS2KW51yIngSWEsNj18oU+x88us+aCWMIN1pl
-         Tgt/7t4CJ6RfGugyhNyJVYjRsNyaf6nBslYvZwtkfHqYTSekz0/88z6qC+nN3nzjikHf
-         hePq/48mUST5z6u7xgFUe4M5Nl4L7e4RJANCMgiSbEzI49eBzWu83NYTfddlPthYEcPu
-         mrVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764922888; x=1765527688;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=CFTqnO/Fd2sawQQhIPcCoLFvSOoCx15UbnxbNG9nqpA=;
-        b=L+kOaXev7FIxXwD/BXZXnyp71rQIiYQav3wa1KU6SKi6/auh/rLT7TEv89Jj21KS1q
-         rY0Jtp5BN/QpuHInBJPeC/9AV3vUmWLZEoXPgjFhRslyY6TtVavq/o1X02c4ZIBMjMah
-         YMO9fi9bKr/LQqHC4JTA+wVaWbpkEwMa04Ax4yshNPKYhEb19qmEMV2rqUOiGRW0bVNc
-         5ThkqvYY9OrPz4jYybJhbs9dYAtWxuyUMf+lu0PGmG7xVNwend92wMivI32R0KPr5ha0
-         PIRJz/FR2SIkJTH2eLyxpxJU8VmB6gwWVSx/cWtFanZGRWdF/zpCqxt/vWT4mwaqMObG
-         RzDA==
-X-Forwarded-Encrypted: i=1; AJvYcCVOGXjrLuQ/DHmWJE0Zl4UifsYeF4NNI7OvItHzoZbV+Q1lpV6/la1EY1+o1c5hO62YENYHqVmI@lists.linux.dev
-X-Gm-Message-State: AOJu0YxVFSoV3/OtnTl77bDunRPbsjNdOnL5s0chs1b1dPcnZa0UqaKH
-	7U+kHW9jmLRxZEt4rdyYW+w1Lfsfi2rN7ZAS2JCcuuyPcvi2O02EN66f5mO6E3ga3frCigvBVsE
-	OuYls4aw8z0SO5l/u1Lj/bTlJJYV8ZfzlryeuAYj3UA==
-X-Gm-Gg: ASbGncvfKIgqfTaYcoXoqS0MVfSEgm5iLuuO6sRIfzwj6unpy4Jjys3nrNMXx6WT0w7
-	wBTvHTs2VWJTP4a9srWUTlu0/XpduM5WcmNpfDdjy7SlLfXS8qgYb0kBH2aBRKowHljqa3Ql7Dw
-	SKfOLKSYFM5jgU4QvDB1e8vV9HaUP02DCEr3zfd/FjRTY2MFdVVAI8MqXdAHxUSv/uGBmWfOz0R
-	8mK2V3BK7s0peAPG6aOqZ+xHOtC77fc54FvN1HqUJMqV2et6J5uhNIcwCQry7P7XyyG1I0=
-X-Google-Smtp-Source: AGHT+IEhwwxVHvBzGnvcRs1ZBsC6V2SXb5WppN3WR1olH3vWXdyabaLt9X81lmdZJ3z1dsJ5nsyoiNdGQcjQaOVSH5w=
-X-Received: by 2002:a17:907:1c27:b0:b73:848b:34ae with SMTP id
- a640c23a62f3a-b79dbea8994mr919780966b.18.1764922888243; Fri, 05 Dec 2025
- 00:21:28 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QaGq3T7Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0C2C4CEF1;
+	Fri,  5 Dec 2025 09:12:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764925937;
+	bh=do08iCYqDQ0Ju3D7AlDAjTJ6lm3rv2JLympBivXnyrk=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=QaGq3T7Q0qvUVHTD5HE0Cs2zxkOrSksLRAD78s6YtwU7d2yyGJ5Dr1EZDI5zKsGEO
+	 qr/Ndtjasn7V6GEAfIj3E8JVzA+1JevPRQ3CTjozmoriDqRWNXpkOcR8mN0mQfbO6Y
+	 UWvSFvyZ0qitZ5tw4fr5T88JzmgNMVTF3Jj+x2W3O6PcAw49NVhLVkS11NRQWwCt2p
+	 MTHBZTTtOzjM3LcCOMtGksH6mT2SgizakJjkqFDliIVkVaYHHAa1pmhEp2YUTc+CiE
+	 jN5nGQQKRS09mZGSNoS723//Yu7da7wbtRmmuooid10EqdvChGdSQXiI8kQLKrLfz0
+	 XM86kw3U1ikBw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@denx.de,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: Re: [PATCH 6.6 00/93] 6.6.119-rc1 review
+Date: Fri,  5 Dec 2025 10:09:54 +0100
+Message-ID: <20251205090954.2161640-1-ojeda@kernel.org>
+In-Reply-To: <20251203152336.494201426@linuxfoundation.org>
+References: <20251203152336.494201426@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251203152346.456176474@linuxfoundation.org> <CAG=yYw=7i7O7nLLDQ5hdP03wHFSQ04QEXtP8dX-2ytBmiJWsaw@mail.gmail.com>
- <2025120413-impotence-cornfield-16aa@gregkh>
-In-Reply-To: <2025120413-impotence-cornfield-16aa@gregkh>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Fri, 5 Dec 2025 13:50:51 +0530
-X-Gm-Features: AWmQ_bnFM0yAOGrLLgGAq_Fa0ruYEvV3PENXxVfn2W7oaTqf_5z9_nXm-BZquAA
-Message-ID: <CAG=yYw=8ZXmf3KE8QDAOJrJ8VtRWgMtCNv6=6FNJw1P_jFw+Rw@mail.gmail.com>
-Subject: Re: [PATCH 6.17 000/146] 6.17.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 4, 2025 at 9:46=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Wed, 03 Dec 2025 16:28:53 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 >
-> Are these new from 6.17.10?  if so, can you bisect to find the offending
-> commit?
->
-> thanks,
->
-> greg k-h
-i Have not  compiled 6.17.10
-This machine  is not the normal machine i compile  for kernek testin
-THis is a typically old  processor and motherboard
-But let me try to compile 6.17.10.
-and see if i can do git bisec ( i kind of forgot .. i have to learn again)
+> This is the start of the stable review cycle for the 6.6.119 release.
+> There are 93 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 05 Dec 2025 15:23:16 +0000.
+> Anything received after that time might be too late.
 
-anyway THANKSt
+Boot-tested under QEMU for Rust x86_64:
 
---=20
-software engineer
-rajagiri school of engineering and technology
+Tested-by: Miguel Ojeda <ojeda@kernel.org>
+
+Thanks!
+
+Cheers,
+Miguel
