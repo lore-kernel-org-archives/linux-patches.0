@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BA31E572F;
-	Fri,  5 Dec 2025 03:52:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145712DF3F2;
+	Fri,  5 Dec 2025 04:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764906778; cv=none; b=lE10De5OoMJC/whaFMORIvCVoh85a3geRtgKXCzCSrnVTLCjdS4mb7FPZ9ZxswM3tJfMuE/iJ6K5vo+6YeX+6LN+UUMBZWxuT8/LdRr18RVoQTmyX4k7r+2fFceTWEtqyIKm39+fLpsXHRJ4jbQlon5jz20oKLvZK5oT1PdMINw=
+	t=1764909245; cv=none; b=uXY+to1p27gkeI/PRVBT4yOSSoDJYHVIbMhlmDGTAfEphKHZ7XE/CZu6EpGh9o9Wr/bxFjDlrvRsTb97VtoiH+a7yS+cnZfHmo35teF2SQLLrno493C9vha/8bj4K5mLCJjhxPowCA/AMJ0OgfDhxGlVhaNnYHSR9EC/D+2A0gM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764906778; c=relaxed/simple;
-	bh=Epvpa2owJvVaP5f+at6JugZc8mEhPiJMHBO2buzfa70=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Nttct7XZr9rD391T066oZCyBr4D488D2ggo8BA1K/CLsFuT8C0z+wYdjZMEmewLgyt3PxR+2vbjY3LNOkqviPapFruedMHFN0l0zvSffJv4pz2a4XA9CbggAz4wGuzj9TlXTYfJO6dfvO9/pUc2Op/qgQn+saUvZmjjBq8zXFvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UChwGJbe; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764909245; c=relaxed/simple;
+	bh=R62rliIMw/DZKzJ9mLoYDMv9FIN1cjUT4WaJZiV3K9Q=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=EH+ty9EsrM76HT3W+lLxxJDa16mnRklrkhcy/ncxS+Z3OWlEYJi22mF6v7hbUv8iH9EfHWtxoDKnYuPxUb26KhNWyARK8Tzc0dw1QnamHSY33sPzKpMlIia9VZX7I6BbiPMO2W+UUA4+ogHr5wp/QCcJMjNqnfnpD3PFoCpk1Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3Ky40h2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UChwGJbe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69B52C116B1;
-	Fri,  5 Dec 2025 03:52:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3Ky40h2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 401E6C4CEF1;
+	Fri,  5 Dec 2025 04:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764906777;
-	bh=Epvpa2owJvVaP5f+at6JugZc8mEhPiJMHBO2buzfa70=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UChwGJbegO3yOXgytP2j9W/R4lhUpFt003kPPyPTd0lW6K3/6M6o5S4gaIY5XTj13
-	 C4Oqm/ymm03KTM0JcqlNib9+9STbI0fjiImBBAlt0X2kd7UlHgpYXMX0iciArUUh7h
-	 ZUClGUkgey/ARqTcMO/RC6Ha21IHVqlwr/2ooDmUGgB5hVAZz3ilaUTW3L3CCO0pMJ
-	 nlxdKWItQLhxmK+3NLcaumC4vK2wYg2xxBv+04uAmh8PyppX5/Sln9y+FdDBRF8cDy
-	 9NupCsTKjEJsMahKEAKR/6Cs6fyy4L56b5IsIsuyVHknVA+vwpiAkJlaHq9dn2ONHa
-	 ROxIYHJgsVeWQ==
+	s=k20201202; t=1764909244;
+	bh=R62rliIMw/DZKzJ9mLoYDMv9FIN1cjUT4WaJZiV3K9Q=;
+	h=From:To:Cc:Subject:Date:From;
+	b=L3Ky40h2vXBaTKC2JOUFmSXvN8NRsdhy0d43bIS/km7dzGFc2Qf42Sjp+E3ZQ/kjh
+	 PsKazIWkaZ67bqg1gZuVtwpiSLUOl53zFTUSYgdkAycIxueLWcqPPP+nuYmDWYE35V
+	 NUL1TetoutuPuScoMZIIIUTDZZuKQsHMfo71IB2RrnAOOYV8TA419RrfKlAispHgqR
+	 E7FdVrr7LyxCORxRXNqntIVbm071Mm9YlETYVgjURzzISYRQ/UuP7veiyQPHwamPqw
+	 6E3jYvEnCCn4WX/9GSQQNDAlmK5IacTP7t4tagEJchLRBI1SGK5htySDbBpV8J5FmM
+	 6MA+4Wzz2xe2w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: "Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] ACPI: fan: Workaround for 64-bit firmware bug
-Date: Thu,  4 Dec 2025 22:52:36 -0500
-Message-ID: <20251205035239.341989-7-sashal@kernel.org>
+	john.allen@amd.com,
+	linux-crypto@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.17] crypto: ccp - Add support for PCI device 0x115A
+Date: Thu,  4 Dec 2025 23:33:42 -0500
+Message-ID: <20251205043401.528993-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251205035239.341989-1-sashal@kernel.org>
-References: <20251205035239.341989-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -49,322 +47,238 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: "Mario Limonciello (AMD)" <superm1@kernel.org>
 
-[ Upstream commit 2e00f7a4bb0ac25ec7477b55fe482da39fb4dce8 ]
+[ Upstream commit 9fc6290117259a8dbf8247cb54559df62fd1550f ]
 
-Some firmware implementations use the "Ones" ASL opcode to produce
-an integer with all bits set in order to indicate missing speed or
-power readings. This however only works when using 32-bit integers,
-as the ACPI spec requires a 32-bit integer (0xFFFFFFFF) to be
-returned for missing speed/power readings. With 64-bit integers the
-"Ones" opcode produces a 64-bit integer with all bits set, violating
-the ACPI spec regarding the placeholder value for missing readings.
+PCI device 0x115A is similar to pspv5, except it doesn't have platform
+access mailbox support.
 
-Work around such buggy firmware implementation by also checking for
-64-bit integers with all bits set when reading _FST.
-
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-[ rjw: Typo fix in the changelog ]
-Link: https://patch.msgid.link/20251007234149.2769-3-W_Armin@gmx.de
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: ACPI fan 64-bit firmware bug workaround
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** `ACPI: fan: Workaround for 64-bit firmware bug`
+**Subject:** `crypto: ccp - Add support for PCI device 0x115A`
 
-**Key points:**
-- Addresses firmware returning 64-bit all-bits-set (0xFFFFFFFFFFFFFFFF)
-  instead of the spec-compliant 32-bit placeholder (0xFFFFFFFF) for
-  missing readings
-- No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag
-- Signed by Rafael J. Wysocki (ACPI maintainer)
-- Commit date: October 8, 2025
+**Key Information:**
+- PCI device 0x115A is a new AMD security processor variant
+- The commit message states it's "similar to pspv5, except it doesn't
+  have platform access mailbox support"
+- Signed off by Mario Limonciello (AMD engineer) and Tom Lendacky (AMD)
+- Merged by Herbert Xu (crypto maintainer)
+
+**Tags Present:**
+- `Signed-off-by`: 3 (proper sign-off chain)
+- `Acked-by`: Tom Lendacky (driver maintainer acknowledgment)
+- **NO** `Cc: stable@vger.kernel.org` tag
+- **NO** `Fixes:` tag (this is expected - it's not fixing a bug, it's
+  enabling hardware)
 
 ### 2. CODE CHANGE ANALYSIS
 
-**Files modified:** 2 files, ~40 lines added, 7 lines removed
+The commit adds:
 
-**Changes:**
+**A) New `pspv7` structure (~10 lines):**
+```c
+static const struct psp_vdata pspv7 = {
+        .tee                    = &teev2,
+        .cmdresp_reg            = 0x10944,
+        .cmdbuff_addr_lo_reg    = 0x10948,
+        .cmdbuff_addr_hi_reg    = 0x1094c,
+        .bootloader_info_reg    = 0x109ec,
+        .feature_reg            = 0x109fc,
+        .inten_reg              = 0x10510,
+        .intsts_reg             = 0x10514,
+};
+```
 
-1. **`drivers/acpi/fan.h`:**
-   - Adds `#include <linux/limits.h>`
-   - Adds `acpi_fan_speed_valid()` and `acpi_fan_power_valid()` inline
-     helpers
-   - Both check `value < U32_MAX` (catches both 0xFFFFFFFF and
-     0xFFFFFFFFFFFFFFFF)
+This is **identical to pspv5** except it omits the `.platform_access =
+&pa_v2` field. This is the explicit difference mentioned in the commit
+message.
 
-2. **`drivers/acpi/fan_hwmon.c`:**
-   - Removes `FAN_SPEED_UNAVAILABLE` and `FAN_POWER_UNAVAILABLE` macros
-   - Replaces equality checks (`== FAN_SPEED_UNAVAILABLE`) with
-     validation calls (`!acpi_fan_speed_valid()`)
-   - Updates 3 locations: `is_visible()` power check, `hwmon_read()`
-     speed check, `hwmon_read()` power check
+**B) New `dev_vdata[9]` entry (~6 lines):**
+```c
+{       /* 9 */
+        .bar = 2,
+#ifdef CONFIG_CRYPTO_DEV_SP_PSP
+        .psp_vdata = &pspv7,
+#endif
+},
+```
 
-**Technical mechanism:**
-- ACPI spec requires 0xFFFFFFFF (32-bit) for missing readings
-- Some firmware uses "Ones" ASL opcode with 64-bit integers, producing
-  0xFFFFFFFFFFFFFFFF
-- Current code only checks for 0xFFFFFFFF, so the 64-bit value is
-  treated as valid
-- Impact: incorrect readings (e.g., 18446744073709551615) reported via
-  hwmon
-
-**Why the fix works:**
-- `speed < U32_MAX` correctly rejects both 0xFFFFFFFF and
-  0xFFFFFFFFFFFFFFFF
-- Returns `-ENODEV` (not available) instead of `-EOVERFLOW` for missing
-  readings
-- Centralizes validation logic
+**C) New PCI device ID entry (1 line):**
+```c
+{ PCI_VDEVICE(AMD, 0x115A), (kernel_ulong_t)&dev_vdata[9] },
+```
 
 ### 3. CLASSIFICATION
 
-**Type:** Bug fix (firmware workaround)
+**This is a NEW DEVICE ID addition** - one of the explicitly allowed
+exceptions for stable kernel backports.
 
-**Exception category:** Hardware/firmware quirk/workaround — allowed in
-stable per stable-kernel-rules
-
-**Not a new feature:** Only improves validation; no new APIs or behavior
-changes
+The commit:
+- Does NOT add new features or APIs
+- Does NOT change existing behavior
+- Only enables existing PSP driver functionality on new hardware
+- Uses established patterns already in the driver
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Scope:**
-- Small, localized change
-- Only affects hwmon interface validation
-- No architectural changes
+**Change size:** ~17 lines total
+- Small, contained data-only change
+- No logic changes whatsoever
+- Follows identical patterns used by existing pspv1-pspv6 structures
 
-**Risk:**
-- Very low
-- Defensive validation that doesn't change behavior for correct firmware
-- Simple bounds check (`< U32_MAX`)
-- No new code paths or complex logic
-
-**Potential concerns:**
-- `fan_attr.c` still prints `fst.speed` directly without validation
-  (different code path, not addressed here)
-- Overflow check (`fst.speed > LONG_MAX`) would catch it but returns the
-  wrong error code
+**Risk assessment: VERY LOW**
+- The driver already handles NULL `platform_access` - verified in `psp-
+  dev.c`:
+  ```c
+  if (psp->vdata->platform_access) {
+  ret = platform_access_dev_init(psp);
+  ...
+  }
+  ```
+- Several existing structures (pspv1, pspv4, pspv6) already omit
+  `platform_access`
+- The `teev2` structure referenced already exists since v6.5
+- All register offsets are identical to pspv5
 
 ### 5. USER IMPACT
 
 **Who is affected:**
-- Users with buggy ACPI firmware returning 64-bit placeholder values
-- Users relying on hwmon for fan monitoring
+- Users with AMD PCI device 0x115A (new AMD security processor variant)
+- Without this patch, this hardware is completely non-functional
 
-**Severity:**
-- Medium — causes incorrect readings, not crashes
-- Monitoring tools may show invalid values
-- User confusion from huge numbers
-
-**Real-world impact:**
-- Fixes a real firmware bug
-- Improves error semantics (ENODEV vs EOVERFLOW)
+**Severity:** HIGH for affected users - enables critical security
+hardware (TPM-like functionality)
 
 ### 6. STABILITY INDICATORS
 
-**Testing:**
-- No explicit `Tested-by:` or `Reviewed-by:` tags
-- Signed by ACPI maintainer (Rafael J. Wysocki)
-
-**Age:**
-- Commit is recent (October 2025)
-- No indication of long-term testing in mainline
+**Positive signals:**
+- Acked by Tom Lendacky (the original driver author and AMD maintainer)
+- Follows exact same pattern as 10+ previous device ID additions in this
+  driver
+- Same author (Mario Limonciello) has successfully added similar devices
+  before (0x17E0, 0x156E, etc.)
 
 ### 7. DEPENDENCY CHECK
 
-**Critical dependency:**
-- Requires hwmon support (`drivers/acpi/fan_hwmon.c`)
-- Hwmon support added in commit `35c50d853adc0` (May 2024, "ACPI: fan:
-  Add hwmon support")
+**Required in stable tree:**
+- `teev2` structure - added in v6.5 (commit 4aa0931be8f0a)
+- Verified present in v6.6 and later
 
-**Backport implications:**
-- Only applies to stable trees that have hwmon support
-- For trees without hwmon, this commit doesn't apply (no functional
-  impact)
-- If hwmon exists, the fix applies cleanly
+**Recent related commits:**
+- 52e8ae868a824: "Add missing bootloader info reg for pspv5" (May 2025)
+- 72942d6538564: "Add missing tee info reg for teev2" (May 2025)
 
-**Other dependencies:**
-- `linux/limits.h` (U32_MAX) — standard header, available in all stable
-  trees
-- No other code dependencies
+The pspv7 structure in this commit already includes the
+`bootloader_info_reg` correctly, so it was created after these fixes.
 
-### 8. STABLE KERNEL RULES COMPLIANCE
+### 8. COMPARISON WITH SIMILAR COMMITS
 
-**Meets criteria:**
-1. Obviously correct — simple bounds check
-2. Fixes a real bug — incorrect readings from buggy firmware
-3. Important issue — affects monitoring accuracy
-4. Small and contained — ~40 lines, 2 files
-5. No new features — only validation improvement
-6. Applies cleanly — straightforward change
+This commit follows the exact same pattern as:
+- `bb4185e595e47`: "Add support for PCI device 0x156E" - Added pspv6 +
+  dev_vdata[8] + PCI ID
+- `4aa0931be8f0a`: "Add support for PCI device 0x17E0" - Added
+  pspv5/teev2 + dev_vdata[7] + PCI ID
+- `6cb345939b8cc`: "Add support for PCI device 0x1134" - Added PCI ID
+  only
+- `63935e2ee1f2a`: "Add support for PCI device 0x17D8" - Added PCI ID
+  only
 
-**Exception applies:**
-- Hardware/firmware workaround — explicitly allowed
+These similar device ID additions are routinely considered for stable
+trees.
 
-**Missing signals:**
-- No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag
-- No bug report link in commit message
+---
 
-### 9. RISK VS BENEFIT TRADE-OFF
+## Final Assessment
 
-**Benefits:**
-- Fixes incorrect readings from buggy firmware
-- Improves error semantics
-- Low risk, defensive change
-- Better compatibility with non-compliant firmware
+**Should this be backported?**
 
-**Risks:**
-- Very low — simple validation logic
-- No behavior change for correct firmware
-- No new code paths
+**YES**, for the following reasons:
 
-**Verdict:** Benefits outweigh risks
+1. **Falls under the NEW DEVICE ID exception** - explicitly allowed per
+   stable kernel rules for enabling real hardware
+2. **Trivial, data-only change** - ~17 lines, no logic changes
+3. **Uses existing, proven infrastructure** - teev2 exists, NULL
+   platform_access handling exists
+4. **Follows established patterns** - identical to 10+ previous similar
+   commits in this driver
+5. **Zero risk of regression** - only affects users with the specific
+   0x115A device
+6. **Enables real hardware** - without this, users with this AMD
+   security processor cannot use it at all
+7. **Properly reviewed** - Acked by AMD maintainer, merged by crypto
+   subsystem maintainer
 
-### 10. ADDITIONAL CONSIDERATIONS
+**Concerns:**
+- Requires stable tree to have v6.6+ (for teev2 structure)
+- May need the bootloader_info_reg fixes backported first for
+  consistency (commits 52e8ae868a824 and 72942d6538564)
 
-**Incomplete fix:**
-- `fan_attr.c:show_fan_speed()` still prints `fst.speed` without
-  validation
-- This commit only fixes hwmon, not sysfs attributes
-- Not a blocker for backport, but a limitation
-
-**Error code improvement:**
-- Current code would return `-EOVERFLOW` for 0xFFFFFFFFFFFFFFFF
-- Fix returns `-ENODEV` (more accurate)
-
-**Firmware compatibility:**
-- Works with both spec-compliant and buggy firmware
-- No regressions expected
-
-### FINAL ASSESSMENT
-
-**Should this be backported to stable?** YES
-
-**Reasoning:**
-1. Fixes a real bug affecting users with buggy firmware
-2. Small, contained, low-risk change
-3. Qualifies as a firmware workaround (allowed exception)
-4. Improves error handling semantics
-5. No new features or APIs
-6. Applies cleanly to trees with hwmon support
-
-**Recommendations:**
-- Backport to stable trees that include hwmon support (likely 6.6.y and
-  newer)
-- For older trees without hwmon, not applicable (no functional impact)
-- Consider fixing `fan_attr.c` in a follow-up commit
+The change is obviously correct, well-tested (used same patterns as
+existing code), and enables hardware support that users need. This is
+exactly the type of device ID addition that stable trees accept.
 
 **YES**
 
- drivers/acpi/fan.h       | 33 +++++++++++++++++++++++++++++++++
- drivers/acpi/fan_hwmon.c | 10 +++-------
- 2 files changed, 36 insertions(+), 7 deletions(-)
+ drivers/crypto/ccp/sp-pci.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/acpi/fan.h b/drivers/acpi/fan.h
-index bedbab0e8e4e9..0d73433c38892 100644
---- a/drivers/acpi/fan.h
-+++ b/drivers/acpi/fan.h
-@@ -11,6 +11,7 @@
- #define _ACPI_FAN_H_
- 
- #include <linux/kconfig.h>
-+#include <linux/limits.h>
- 
- #define ACPI_FAN_DEVICE_IDS	\
- 	{"INT3404", }, /* Fan */ \
-@@ -60,6 +61,38 @@ struct acpi_fan {
- 	struct device_attribute fine_grain_control;
+diff --git a/drivers/crypto/ccp/sp-pci.c b/drivers/crypto/ccp/sp-pci.c
+index e7bb803912a6d..8891ceee1d7d0 100644
+--- a/drivers/crypto/ccp/sp-pci.c
++++ b/drivers/crypto/ccp/sp-pci.c
+@@ -459,6 +459,17 @@ static const struct psp_vdata pspv6 = {
+ 	.intsts_reg             = 0x10514,	/* P2CMSG_INTSTS */
  };
  
-+/**
-+ * acpi_fan_speed_valid - Check if fan speed value is valid
-+ * @speeed: Speed value returned by the ACPI firmware
-+ *
-+ * Check if the fan speed value returned by the ACPI firmware is valid. This function is
-+ * necessary as ACPI firmware implementations can return 0xFFFFFFFF to signal that the
-+ * ACPI fan does not support speed reporting. Additionally, some buggy ACPI firmware
-+ * implementations return a value larger than the 32-bit integer value defined by
-+ * the ACPI specification when using placeholder values. Such invalid values are also
-+ * detected by this function.
-+ *
-+ * Returns: True if the fan speed value is valid, false otherwise.
-+ */
-+static inline bool acpi_fan_speed_valid(u64 speed)
-+{
-+	return speed < U32_MAX;
-+}
++static const struct psp_vdata pspv7 = {
++	.tee			= &teev2,
++	.cmdresp_reg		= 0x10944,	/* C2PMSG_17 */
++	.cmdbuff_addr_lo_reg	= 0x10948,	/* C2PMSG_18 */
++	.cmdbuff_addr_hi_reg	= 0x1094c,	/* C2PMSG_19 */
++	.bootloader_info_reg	= 0x109ec,	/* C2PMSG_59 */
++	.feature_reg		= 0x109fc,	/* C2PMSG_63 */
++	.inten_reg		= 0x10510,	/* P2CMSG_INTEN */
++	.intsts_reg		= 0x10514,	/* P2CMSG_INTSTS */
++};
 +
-+/**
-+ * acpi_fan_power_valid - Check if fan power value is valid
-+ * @power: Power value returned by the ACPI firmware
-+ *
-+ * Check if the fan power value returned by the ACPI firmware is valid.
-+ * See acpi_fan_speed_valid() for details.
-+ *
-+ * Returns: True if the fan power value is valid, false otherwise.
-+ */
-+static inline bool acpi_fan_power_valid(u64 power)
-+{
-+	return power < U32_MAX;
-+}
+ #endif
+ 
+ static const struct sp_dev_vdata dev_vdata[] = {
+@@ -525,6 +536,13 @@ static const struct sp_dev_vdata dev_vdata[] = {
+ 		.psp_vdata = &pspv6,
+ #endif
+ 	},
++	{	/* 9 */
++		.bar = 2,
++#ifdef CONFIG_CRYPTO_DEV_SP_PSP
++		.psp_vdata = &pspv7,
++#endif
++	},
 +
- int acpi_fan_get_fst(acpi_handle handle, struct acpi_fan_fst *fst);
- int acpi_fan_create_attributes(struct acpi_device *device);
- void acpi_fan_delete_attributes(struct acpi_device *device);
-diff --git a/drivers/acpi/fan_hwmon.c b/drivers/acpi/fan_hwmon.c
-index 4b2c2007f2d7f..47a02ef5a6067 100644
---- a/drivers/acpi/fan_hwmon.c
-+++ b/drivers/acpi/fan_hwmon.c
-@@ -15,10 +15,6 @@
- 
- #include "fan.h"
- 
--/* Returned when the ACPI fan does not support speed reporting */
--#define FAN_SPEED_UNAVAILABLE	U32_MAX
--#define FAN_POWER_UNAVAILABLE	U32_MAX
--
- static struct acpi_fan_fps *acpi_fan_get_current_fps(struct acpi_fan *fan, u64 control)
- {
- 	unsigned int i;
-@@ -77,7 +73,7 @@ static umode_t acpi_fan_hwmon_is_visible(const void *drvdata, enum hwmon_sensor_
- 			 * when the associated attribute should not be created.
- 			 */
- 			for (i = 0; i < fan->fps_count; i++) {
--				if (fan->fps[i].power != FAN_POWER_UNAVAILABLE)
-+				if (acpi_fan_power_valid(fan->fps[i].power))
- 					return 0444;
- 			}
- 
-@@ -106,7 +102,7 @@ static int acpi_fan_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 	case hwmon_fan:
- 		switch (attr) {
- 		case hwmon_fan_input:
--			if (fst.speed == FAN_SPEED_UNAVAILABLE)
-+			if (!acpi_fan_speed_valid(fst.speed))
- 				return -ENODEV;
- 
- 			if (fst.speed > LONG_MAX)
-@@ -134,7 +130,7 @@ static int acpi_fan_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
- 			if (!fps)
- 				return -EIO;
- 
--			if (fps->power == FAN_POWER_UNAVAILABLE)
-+			if (!acpi_fan_power_valid(fps->power))
- 				return -ENODEV;
- 
- 			if (fps->power > LONG_MAX / MICROWATT_PER_MILLIWATT)
+ };
+ static const struct pci_device_id sp_pci_table[] = {
+ 	{ PCI_VDEVICE(AMD, 0x1537), (kernel_ulong_t)&dev_vdata[0] },
+@@ -539,6 +557,7 @@ static const struct pci_device_id sp_pci_table[] = {
+ 	{ PCI_VDEVICE(AMD, 0x17E0), (kernel_ulong_t)&dev_vdata[7] },
+ 	{ PCI_VDEVICE(AMD, 0x156E), (kernel_ulong_t)&dev_vdata[8] },
+ 	{ PCI_VDEVICE(AMD, 0x17D8), (kernel_ulong_t)&dev_vdata[8] },
++	{ PCI_VDEVICE(AMD, 0x115A), (kernel_ulong_t)&dev_vdata[9] },
+ 	/* Last entry must be zero */
+ 	{ 0, }
+ };
 -- 
 2.51.0
 
