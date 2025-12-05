@@ -1,268 +1,192 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010020.outbound.protection.outlook.com [52.101.61.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3C22D5C95
-	for <patches@lists.linux.dev>; Fri,  5 Dec 2025 18:31:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764959474; cv=none; b=XyOFLRxYxVUqKFwL+5I+TY3e4sfPSvDmCBWTHL1Zk+vELu+uTuXHWYKArDpfJAlj/6LNFM1LuG8NHjDysSjckly3Q0cP1S4+eaVgfd7eFxVz7Fsona/LdFrY3FVbhvua+/ApetPXJ8/WO505L2mVkCPBpw2c5kLvigvAkMuK+I8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764959474; c=relaxed/simple;
-	bh=LCY3koqg2u7jowBM5k33ePRJWePYoAlDRvP/RuvXPhc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jJInMWiX1SlluQISqKBK3TZLqWQ1zdDNyrYIzB2Bl543Kz0bzJx4xHTsfFMYJI9g7p4NUKSODKdAca5Snx+yQNvFXeUNtLY0ElB3MkOte9hMEdbbEMEJSwupCOkPk7Mg0mf3MVZm52l5F4Y+CUy5tJ8eT/2CA1eKDd+ch/Cq2WU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SkX7P/5j; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7A6325700;
+	Fri,  5 Dec 2025 19:46:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764963996; cv=fail; b=L8q4lcxs2GB+e478zW4PIhK9rZSX/I1xbzoglvNH5GOJIIFXneH8GywqpGfLx9HeEhTYxV3Qbmgc4V/c9fiy8ls2YYYY8GeT4gaQbrlQ2iAjWdI1HCSVYRsW9euFEJ/DYOgc665eQu5UBzKv2VbK+zfmvh8P+HjSz5Va1Cjk4ik=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764963996; c=relaxed/simple;
+	bh=o4B3D2WvYuh/r/u5yYX/bqoBEITP7vPTjspB6Nq58RE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=DiQH3hwu8QigJro2zxHycJwsEs8cnL427phRyx0xCFeJq8YF5fRoOKKByks9ZCeWtqb69ZwHSg0/MF63RD3p3mfSDmAsDTAnXNx02jX1Vmlg/UVb3030IBUWXw4PaygxELKHAlE1o0go843jYs76z2R1MrZ8y9cZXIPrvsJZTJ4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=NNfAB/da; arc=fail smtp.client-ip=52.101.61.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SkX7P/5j"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-343f52d15efso2233588a91.3
-        for <patches@lists.linux.dev>; Fri, 05 Dec 2025 10:31:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764959472; x=1765564272; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=IgRj/IQDtMSmr2ovjaWEc5HS9CyqexEqyPnjpiwmnyo=;
-        b=SkX7P/5jhhddY362XfnouigIuJT0L8DHTw9L3V819fFiWk0qLilSEnLqocahHtEhM3
-         m/h+FKvFOkQZuYpO+vbz3Q15+uV+hEvXHzwjANVyZo9mr6YkgDGZ/pC9u3PT8dBcVxU1
-         qg5xSbHpUN5fggD6VerKCej6Ecz7/pTXaz8PsQ0rxoMs9ABkAcAy+r8D8sTdZnc46I1t
-         GAokHCbeGEGIJFUHoII/vXQKB3MeT6RSPeLfRb+k0/B7s9l5Jx9E/xvOXZianK+Qft8a
-         TuKxE04nS8kDdqfuXtfZxb1VMrWEcRLc6FJnKHYwltIk5wSrMsJOhnqIZ7R4MY+Eegwi
-         ORHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764959472; x=1765564272;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IgRj/IQDtMSmr2ovjaWEc5HS9CyqexEqyPnjpiwmnyo=;
-        b=QBmEhrwGEe0yzkUBWGRvZqQNlr+RJ4hhHbXLKfTO34Xpz9yWacJvX0ngZDx0LHXa17
-         B0zgZkGVt29nOWrw+mrTnWrGkk5NXyu9moImJFMMRRbh8cyYr9cE7hgEM2CD9jBotdl1
-         jr7F5aoT5c8UMebIqysFZIyZrWNEwnqCIAfxTk1Jyrb9ckjMKl7kVJskBDYZExOL1EbB
-         ih81RUR/MXbaICC0FZqTQItVjJ+JVWSOVW17evdNisXSZd7f9dYChYZTP6AP2fgnpBMK
-         rupy9PDCtwrUSZ8aOZDShLcEVSaYIXHy5xiUi8nkIu5ew0knxXoV+bBuern+c09l6qeh
-         Bo1w==
-X-Forwarded-Encrypted: i=1; AJvYcCUkmQT+goPfAeijcBX4U3QT4YVWniz3ZIYQd87oCyMZsZnWeOFUFbYPu/HSHRzqGs1WxOs7QOfR@lists.linux.dev
-X-Gm-Message-State: AOJu0YwFLssfg0wi2Z4gU7d0cJCjWMuWr5OfPxmsogN6v3Fr1M1qLHIX
-	KhdH+1Gi7OXkh5cT7K+6Whvcqfinv4QwMECs1Tv9wsm8dQyar+OEtYH3
-X-Gm-Gg: ASbGncuMX73TEoKz6ZiQv2pnB++IAZvWhezz57RN5wpINJUbIjWxW0cqxoy0mx6PAGW
-	Nwl/QVcKo4HQy0ZwZLqj/pLTasZNVQFVTLGlj+pc15j5bmp46ihiZY89trjg7CKxjM3UoCoUEvW
-	qic9A1Stb/PHlVklow0wrJDtq0ylThIRN8Vxh6NXEjeeu5Sylv+hvprIi5Q8GfgetRS9qaA756n
-	UgIo/BwGDHOGXefAJJ6Nsydt1tpIA1YbIxFsgc7wnapgb1B7PSoZVyHVlANhuYyK1pm5q1Jea1r
-	ko4LmzvipqROT1bnXdoB1HVVqhRD29W7JQtlsojZVB+I7hxHB1beywWrey3ZGIxTdAZSohUL/FS
-	xw/FdpLNFIFMbzX3BiAV2QgonOTHIPxBynQs4v/1hj15EDU0ar9V3sScYIr3OjpNvbWZWcWaWmM
-	tPqk7Wvzt253O6Oiy2x19GIIIA1eWfpgdkgUokBcUaeo2mnFMQsT8N1eD+JeIsdBIXIULwKA==
-X-Google-Smtp-Source: AGHT+IGlyMD+eZf71lYXG/sxk4oLsZRo4oayCLBVN3LTZ61M2cjddDqa6AtbMXtdKuTM2Am+cZqDMA==
-X-Received: by 2002:a17:90b:3c0e:b0:340:a5b2:c305 with SMTP id 98e67ed59e1d1-349a24d9203mr38527a91.2.1764959471719;
-        Fri, 05 Dec 2025 10:31:11 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5? ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3494e84f446sm5348048a91.5.2025.12.05.10.31.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Dec 2025 10:31:10 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <ca278e55-1691-45a7-9c67-b810eacb916d@roeck-us.net>
-Date: Fri, 5 Dec 2025 10:31:08 -0800
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="NNfAB/da"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yPKrFE9uxZNUF9XffVoJUkzYit262B5y9ypWDzampYa5DSyzz1Cij/vd88q2t6DcivYL6Xjxixp2oTGjn9cx5dh7GkBI3xUTAR8+vTPwcgq1ZV3vvtvf50g8IhLuFxkho/CFTflPU5I4ZgPK20MrXalXAY1sxXN4VWagp4+w+6LzEntUpcsrriAGfQA+yLWcJOC44kX6AZVZciDyK3eUMBILO9NkWrqd+VngcT925icpjec647lWsmtGuGDcKT5dy0XiKq+eDMJo5pqk/+EQc7CY3Ilaeq2+nLrtBXXl9L/HWEp54gybHF4i/ZjhgFrRn4BzeH16H1btDHj9rWQ1/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9fR1oB6PQPaVuw2PREXNtVVjDcozg6+Wpt5oG1lfe0o=;
+ b=AGEBzMZjVOQZ5PJ0//ZCLg7t5af2wyQ+jFcu2fHIhfJjV//9KgjFUpWRCQNOXV9ZC7gTkgU2qZeHhwqo6YYmjfsE1l7ZEroK0eYORcwBWTji7+sq6EAzzPFq92Ox4aSQx6N3z3d5MNz5eYkOjLSVa3fhkjoUfTBeoe6BR57RiKwzudty4UTGEUkW5yCYYcu5c3Km/PnwATUh3lnaLrdPq3YSLbaQcvXEJ0JINwjPIgE9SymKAR63VTUxVuXR6qHxD5Re+yhlyEJHuAqUfjWiXOXUUvHUS2AuH2UFF43Ad4C24g0zxVPGZpRDlIrOCaz1imZQP2iyBtZyBLhJdqOvHA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9fR1oB6PQPaVuw2PREXNtVVjDcozg6+Wpt5oG1lfe0o=;
+ b=NNfAB/daOFfRO9gQSM4xdCpzrtLoHjpnhHvdppcbxdpcGwpULv+WRGuj0MxsBznHOBEb6/6A/75vLBptxLDAJADLWSgtGdK/9Zbx9WC469J2Nh0DpDXn0sqFdMJ2OL3D1VJgIFyOM/oZttJT2qgA23X+kIK/VLjNvhW755eipW3ydDt1rB/yo3VlnWOkxd+nW/M0TI9MQWOOVJ8a9f8YvpZ48xihC0ZDZUueQAqAXrX341JufoniaIxHwk1VbKBGHjXJpipXsKA6baP5hAPGokhHAPWuKjXLdUA94+1NUWV/DSzp7mlXg5fiNtnKePSDf7Awz9wry1hvFrh8MfAMbw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by IA1PR12MB6210.namprd12.prod.outlook.com (2603:10b6:208:3e6::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9366.17; Fri, 5 Dec
+ 2025 19:46:31 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9388.003; Fri, 5 Dec 2025
+ 19:46:31 +0000
+Date: Fri, 5 Dec 2025 15:46:30 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Lai, Yi" <yi1.lai@linux.intel.com>
+Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>,
+	Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>,
+	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+	Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org,
+	linux-kselftest@vger.kernel.org, linux-riscv@lists.infradead.org,
+	llvm@lists.linux.dev, Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	James Gowans <jgowans@amazon.com>,
+	Kevin Tian <kevin.tian@intel.com>,
+	Michael Roth <michael.roth@amd.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Vasant Hegde <vasant.hegde@amd.com>, yi1.lai@intel.com,
+	syzkaller-bugs@googlegroups.com
+Subject: Re: [PATCH v8 13/15] iommu/amd: Use the generic iommu page table
+Message-ID: <20251205194630.GC1219718@nvidia.com>
+References: <0-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
+ <13-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
+ <aTJGMaqwQK0ASj0G@ly-workstation>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aTJGMaqwQK0ASj0G@ly-workstation>
+X-ClientProxiedBy: BN9PR03CA0597.namprd03.prod.outlook.com
+ (2603:10b6:408:10d::32) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.15 000/387] 5.15.197-rc2 review
-To: Nathan Chancellor <nathan@kernel.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>,
- Ben Copeland <benjamin.copeland@linaro.org>
-References: <20251204163821.402208337@linuxfoundation.org>
- <CA+G9fYvz4R6SRM0ZZ6xDtnFcHo-RdQkrE3b9WTM0RCgWNiuieQ@mail.gmail.com>
- <2025120553-sulphate-cancel-0f77@gregkh> <20251205173947.GA2484770@ax162>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <20251205173947.GA2484770@ax162>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|IA1PR12MB6210:EE_
+X-MS-Office365-Filtering-Correlation-Id: f6475958-d1b5-441a-46af-08de3436fd24
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?EV3h4WDarpi2qgk9+SW8Mbugk3VbZY2Ps+fLso3tTl6MM821w9Jk6LeJ1djw?=
+ =?us-ascii?Q?Lhjvr28zy7wFDSbN+DoWoOQKVasgf9PrrCRYsCEFmK5g//9UQaCYXm2R4+aE?=
+ =?us-ascii?Q?cBwkjxcWmEltmJ862zbmNtZcFk4vNgLzY7pS5EJ9t5Aw12Pv79+eG9Kd7SSe?=
+ =?us-ascii?Q?WbC+d/iIQRn/x33TYj4N9Do0v62j5//a13vTL2whK7pVQJ5VF3gOjEsJtaxf?=
+ =?us-ascii?Q?7r7GBYnDrm1Zu7laK9SkXYx3Cufwh5lkKIy5GZckmcQqnVH8NB2fsvVc0S1r?=
+ =?us-ascii?Q?zilHkVbSpYtbFoBeUSsCWyyhKV//Efe9JCkmkgvi3852abyus1wkG2Yn//Ya?=
+ =?us-ascii?Q?cFrqcGy/QslVLbTNSySgsVUh4mdGhgaI545AHVhL0eNln4gsnldFZCX/satB?=
+ =?us-ascii?Q?IQ0ATYKiQ5LtQOv3w3EKZNZLKfydmDFfTpA7bWP3oUIv5qdefMFDpSWB9whS?=
+ =?us-ascii?Q?+6qA1NleIdEs2ryVCEDp0BO+cUXk9Uh957p5e7gZJLXHDDRVW4wco92BvYdj?=
+ =?us-ascii?Q?COQckILuSIyKJn3J4kZUmhJ3OrFCUYOzajMpk/FfWAldP12OxYHsBRgNHWdg?=
+ =?us-ascii?Q?bBV+Ksdt8Hz/N8dq0pKvIVh5luNTE5hh0DDXTXkXhs5alOwtNNsbiAcuPwzb?=
+ =?us-ascii?Q?xHIhTqMd4PGvqiWTFm6uEJ27SkIbopkQyYy8qXI8P+X00AgJ3tRcZAayBaID?=
+ =?us-ascii?Q?rD5KHcTggaNSNTJOCksMqcA6xJFLCWP5RYXrwwjb/DoEj+Cwy6iX2G0NUYDE?=
+ =?us-ascii?Q?uG2CTyhYI2luEr3T6yeLs2GmocUXwBj/r7k+r8EFoayxMpsHs+WDo7+GLxsM?=
+ =?us-ascii?Q?3/SG6mR1ASbfNTB8wyPtt3aibBqW58HECLCIs9YMH9UouWUQyT70I6rjQARI?=
+ =?us-ascii?Q?az4M/q/EYOVeZ1FqvPut47j/NYRUdoeKg209/B8wU9vo/EjFI2Qb/sOg9Kbq?=
+ =?us-ascii?Q?Iz72yPz3BVD4eYH/z80D3SYxb+g+fHLEBfU5VupeCk2emQ70337eqLjbz73Z?=
+ =?us-ascii?Q?o5/L9HvIcboQDpLXlDrTSwWMR8JzSPulqkDm4CghkDn8v6MDWw+d9z6jXjN5?=
+ =?us-ascii?Q?r2zToTFOZZ25xKP7kpc+w7bSXt/hBiJXrvulvjGdAbFwECPdLwCpCikiJVPI?=
+ =?us-ascii?Q?nnuqML7iOy0+7Rylp2Sdr/VUPUPjxtDL26Clw3PpDGOkotGRY4YPQ/LywqaA?=
+ =?us-ascii?Q?+ec1X7KU8teOtVn/Inhtz4odx1KeT8D0BXTFqLwnDNhHMXUlw9epkcWKX5kv?=
+ =?us-ascii?Q?OVEmYs3U7F5HepTlvQoGSzbUwq/Qyzxa+EWW2mLMvk2kmS5/BSqs3TNDj6nk?=
+ =?us-ascii?Q?F5SRqgYy8hLThy22yFui1CDF2Z15UfvHB4dpjKDMd88UHPnKlY2mqoOymcsi?=
+ =?us-ascii?Q?cWgpb4CsV1bdQ0/mFYZmWT5UoX0DOFd8eioAR6MYslrRCw2XDZO5tqGpkgdY?=
+ =?us-ascii?Q?h1ZX3gFekIi+dGdfJqrv4bEMZI0QnURm?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?AD92K9YLrFaRuSyQFxXGanMAXjVBuGFVzUqPbwT566xXH85fxOYv2Igk1mp0?=
+ =?us-ascii?Q?okwga5t5igjgU3Zc8HZUA5nGkkLCIdA1NdzeEm28JMOHSC9oVhjkdEiBwSDa?=
+ =?us-ascii?Q?noAenUdv4nf4Iq8UwZs50NnAG0izcvtWk4RHfztEUBp4fZl1rFPztzCIZZcQ?=
+ =?us-ascii?Q?+v4j1yNO9sLO6eX2o3OtzEWVYULLW3/LJu6hn27kcTCQjaj4vETkSPDMhYo3?=
+ =?us-ascii?Q?kpdsxGgZVIOhEkHKOsnHxEQ+75eXct2axTqQPyAcPXi4TtlNiDQw3EPSQosO?=
+ =?us-ascii?Q?TA9+zYOUXbNVHK9fd3m7MP0/jf55E4tu5mvVNn+I1ukZgC4Z9SPCPQ471S3f?=
+ =?us-ascii?Q?24HFVs9Zcj21TmAHRTkJ7XpWSX1O4xo/SCvahlxvhlZJqK/Szz4SDgzlD3nn?=
+ =?us-ascii?Q?g9w8dZt07McLIRgyKxbEjauvTTZTjvvUSOnmwZUPtydADZcaysFfSjYRB/fl?=
+ =?us-ascii?Q?qb80edoJd3AQVrOzor8Ucc2O2xIpLrPBWvQzdd0CEyrI6UibLf1tp8QkMgHa?=
+ =?us-ascii?Q?mDfmwGtgq/pGGmLl+lkaC8eWej4RkNN3/VU7VUYnO+ydF4QKdXUXrbI8aDWD?=
+ =?us-ascii?Q?k4L8JzMLxm0NZxbuElNKJBvuU0TqRJEMD8k8GMom9uDj0yKYY68T8qh1z6a7?=
+ =?us-ascii?Q?/x45e0N1jSRwjn6J9PVA9Cc4p7kqH2OoG15XRXAj75d8bBnjvLns5Wyi9o5j?=
+ =?us-ascii?Q?fJPJVoWtAgyLgfi1bM1S29aqB4mm3upHkAKTJuydL+kTxw5OjQ2tFBb3UbiP?=
+ =?us-ascii?Q?LS78tgxE5pAw8tQw9ShYfTw2dDbEgcO+dNfN4QGp2BGVouZ/G8IoEtBir5KH?=
+ =?us-ascii?Q?tOP3lJWlPjrihhGoU6eD+aMqRawZxN2CxnkGeJhOFXC+zy2DfBSmp8W/Iud9?=
+ =?us-ascii?Q?1LhM7VJXLt0ukjBTDLo6kO52jI3pmNYLvr+wpNBv4vwMk4/rhZI8myIj2YKa?=
+ =?us-ascii?Q?CkTTS2Q4GEPmEXwEVGDBUoPZonTtNewNhFHZSci9R1ThSzDNq96KTwSDX3xq?=
+ =?us-ascii?Q?ZUJWAwg38EWWAKFqYY6v9YWTeL5FQ1QtSHsdYh7lM2A3mWWcEIqXO9GwtFlF?=
+ =?us-ascii?Q?0QYKyXBxqYgROugseaRsnqfI47m1tm4XWsQTYhplWLueKiS0CaepRqR4mO0c?=
+ =?us-ascii?Q?tbPNw6hzV5U/kMfW9jc4eUaUjQjU34rzYB5hCZlU0xpqu7YKTXOu8K1YxeAt?=
+ =?us-ascii?Q?rPl4rgm5LvBJF2QxQDi5+Cwr+PHi5aOY5jXqttMeyN25tqnD8eElpkjY+Cfi?=
+ =?us-ascii?Q?m3Xm0MmiwjJAnrgyKfuZUvdIRZIReXh+zPzIBXrBMPaHsGSO4SVzpNHypxda?=
+ =?us-ascii?Q?FmNgqjyJNhpXxO8ZVkjLzd3pNO0zoYrp79jPh8xWggDQZx/i3fd8yaiLKtOc?=
+ =?us-ascii?Q?iVImmlvzefWZRJWdh8lqpt/tBvBW6v+U4wFhqjDplrVPqvAgIvAvR1janZmi?=
+ =?us-ascii?Q?m7jfLQAk/d+/5+4o1NAbjeINTKQub7TVkCr1pjWxN5aJgcq/08LmUo435/1B?=
+ =?us-ascii?Q?vUvas1MidCc3NuDp3qin5YQo6HT+BePtCPPVQOe1Wk12mBUHhPMsWoDFXjhj?=
+ =?us-ascii?Q?kwoz5hTbnafOjp83wqU=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f6475958-d1b5-441a-46af-08de3436fd24
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Dec 2025 19:46:31.4961
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: QIzWYyAYWJCzn7GM6nUODef5IomQz4gPyoS66eVtLuvld+9UBcDd/+7XZeNtWi4G
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6210
 
-On 12/5/25 09:39, Nathan Chancellor wrote:
-> On Fri, Dec 05, 2025 at 05:33:19PM +0100, Greg Kroah-Hartman wrote:
->> On Fri, Dec 05, 2025 at 12:59:37PM +0530, Naresh Kamboju wrote:
->>> On Thu, 4 Dec 2025 at 22:14, Greg Kroah-Hartman
->>> <gregkh@linuxfoundation.org> wrote:
->>>>
->>>> This is the start of the stable review cycle for the 5.15.197 release.
->>>> There are 387 patches in this series, all will be posted as a response
->>>> to this one.  If anyone has any issues with these being applied, please
->>>> let me know.
->>>>
->>>> Responses should be made by Sat, 06 Dec 2025 16:37:24 +0000.
->>>> Anything received after that time might be too late.
->>>>
->>>> The whole patch series can be found in one patch at:
->>>>          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.197-rc2.gz
->>>> or in the git tree and branch at:
->>>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->>>> and the diffstat can be found below.
->>>>
->>>> thanks,
->>>>
->>>> greg k-h
->>>
->>>
->>> The powerpc allnoconfig failed with gcc-8 but passed with gcc-12.
->>>
->>> Build regression: powerpc: allnoconfig: gcc-8: Inconsistent kallsyms data
->>>
->>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->>>
->>> ### Build error Powerpc
->>> Inconsistent kallsyms data
->>> Try make KALLSYMS_EXTRA_PASS=1 as a workaround
->>> make[1]: *** [Makefile:1244: vmlinux] Error 1
->>>
->>> ### Commit pointing to,
->>>    Makefile.compiler: replace cc-ifversion with compiler-specific macros
->>>    commit 88b61e3bff93f99712718db785b4aa0c1165f35c upstream.
->>>
->>> ### Build
->>>   - https://storage.tuxsuite.com/public/linaro/lkft/builds/36OCnVeYGpKUCXtxVdz6gezHjcQ/
->>>   - https://storage.tuxsuite.com/public/linaro/lkft/builds/36OCnVeYGpKUCXtxVdz6gezHjcQ/config
->>>
->>> ### Steps to reproduce
->>>   - tuxmake --runtime podman --target-arch powerpc --toolchain gcc-8
->>> --kconfig allnoconfig
->>
->> Odd, this works on 5.10 ok?  What is different about 5.15 that keeps
->> this from working?
+On Fri, Dec 05, 2025 at 10:40:49AM +0800, Lai, Yi wrote:
+> Hi Alejandro Jimenez,
 > 
-> This issue does reproduce for me locally but only with gcc-8 from TuxMake (i.e., a
-> version from Debian), not with GCC 8.5.0 from kernel.org.
+> Greetings!
 > 
->    $ git show -s --pretty=kernel
->    869807d760ee ("libbpf: Fix invalid return address register in s390")
+> I used Syzkaller and found that there is WARNING in iommufd_fops_release in linux-next next-20251203.
 > 
->    $ tuxmake -r podman -a powerpc -t gcc-8 -k allnoconfig default
->    ...
->    Inconsistent kallsyms data
->    Try make KALLSYMS_EXTRA_PASS=1 as a workaround
->    ...
-> 
-> However, reverting the backport of 88b61e3bff93 ("Makefile.compiler:
-> replace cc-ifversion with compiler-specific macros") does not resolve
-> the issue for me:
-> 
->    $ git revert --no-edit c8dad7eb1e6221e0363ee468dc46700bfbad6dd2
->    [detached HEAD 1669da6455e4] Revert "Makefile.compiler: replace cc-ifversion with compiler-specific macros"
->     Date: Fri Dec 5 10:30:10 2025 -0700
->     13 files changed, 30 insertions(+), 37 deletions(-)
-> 
->    $ tuxmake -r podman -a powerpc -t gcc-8 -k allnoconfig default
->    ...
->    Inconsistent kallsyms data
->    Try make KALLSYMS_EXTRA_PASS=1 as a workaround
->    ...
-> 
-> My bisect landed on the backport of 19de03b312d6 ("block: make
-> REQ_OP_ZONE_OPEN a write operation") and reverting that actually
-> resolves the error.
-> 
->    $ git bisect log
->    # bad: [869807d760eeef0e0132eed3f1be6be16d084401] libbpf: Fix invalid return address register in s390
->    # good: [cc5ec87693063acebb60f587e8a019ba9b94ae0e] Linux 5.15.196
->    git bisect start '869807d760eeef0e0132eed3f1be6be16d084401' 'cc5ec87693063acebb60f587e8a019ba9b94ae0e'
->    # bad: [ffd15ced026694355243064968a3b84269e0ee09] ARM: at91: pm: save and restore ACR during PLL disable/enable
->    git bisect bad ffd15ced026694355243064968a3b84269e0ee09
->    # bad: [1ba52b54e5f45e982d61b4eeabbf28d78a5f9e75] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
->    git bisect bad 1ba52b54e5f45e982d61b4eeabbf28d78a5f9e75
->    # good: [8966a057d07281a5e65eaa3225cb072713921b25] Revert "docs/process/howto: Replace C89 with C11"
->    git bisect good 8966a057d07281a5e65eaa3225cb072713921b25
->    # bad: [27df52e05f7dd606e18e869cb4f52ce1fbfe699f] tee: allow a driver to allocate a tee_device without a pool
->    git bisect bad 27df52e05f7dd606e18e869cb4f52ce1fbfe699f
->    # bad: [2b426fa49ef76bbe04671b3a861352b924a01b96] memstick: Add timeout to prevent indefinite waiting
->    git bisect bad 2b426fa49ef76bbe04671b3a861352b924a01b96
->    # bad: [c126c39dc662661531c96acbbf5fc129ed7f535a] soc: qcom: smem: Fix endian-unaware access of num_entries
->    git bisect bad c126c39dc662661531c96acbbf5fc129ed7f535a
->    # good: [c142f0d16766ab7189af4b9128a2c81c56f7a01f] drm/sysfb: Do not dereference NULL pointer in plane reset
->    git bisect good c142f0d16766ab7189af4b9128a2c81c56f7a01f
->    # bad: [02dc541fc61c3e2dabc3574fe46a19f554ea5d8c] soc: aspeed: socinfo: Add AST27xx silicon IDs
->    git bisect bad 02dc541fc61c3e2dabc3574fe46a19f554ea5d8c
->    # bad: [23e0fecb7be5010e96b2948490799ef59ac4bea6] block: make REQ_OP_ZONE_OPEN a write operation
->    git bisect bad 23e0fecb7be5010e96b2948490799ef59ac4bea6
->    # first bad commit: [23e0fecb7be5010e96b2948490799ef59ac4bea6] block: make REQ_OP_ZONE_OPEN a write operation
-> 
->    $ git revert --no-edit 23e0fecb7be5010e96b2948490799ef59ac4bea6
->    [detached HEAD ddf3a34910b0] Revert "block: make REQ_OP_ZONE_OPEN a write operation"
->     Date: Fri Dec 5 10:26:26 2025 -0700
->      1 file changed, 5 insertions(+), 5 deletions(-)
-> 
->    $ tuxmake -r podman -a powerpc -t gcc-8 -k allnoconfig default
->    ...
->    I: config: PASS in 0:00:01.410526
->    I: default: PASS in 0:00:04.933923
->    ...
-> 
-> No idea why that commit would cause such an issue... but it does not
-> appear to be 88b61e3bff93 so I guess I am off the hook ;)
-> 
+> After bisection and the first bad commit is:
+> "
+> 789a5913b29c iommu/amd: Use the generic iommu page table
+> "
 
-It doesn't. Problem is that code changes causes symbol addresses to shift,
-which causes the output of the kallsyms calculations to change. And each
-round of kallsyms data calculation changes it again. Dropping a commit
-will solve the problem for one compiler version but create it for others.
-There is nothing that can be done about it but to make kallsyms calculation
-more robust, but as I said in my other reply my attempt to do that was rejected.
+This bisect didn't work out, it is close, but the commit is
 
-Guenter
+e93d5945ed5b ("iommufd: Change the selftest to use iommupt instead of xarray")
 
+It is a refcount leak:
+
+@@ -1215,8 +1215,10 @@ static int iommufd_test_md_check_pa(struct iommufd_ucmd *ucmd,
+        page_size = 1 << __ffs(mock->domain.pgsize_bitmap);
+        if (iova % page_size || length % page_size ||
+            (uintptr_t)uptr % page_size ||
+-           check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end))
+-               return -EINVAL;
++           check_add_overflow((uintptr_t)uptr, (uintptr_t)length, &end)) {
++               rc = -EINVAL;
++               goto out_put;
++       }
+
+I'll send a patch, thanks
+
+Jason
