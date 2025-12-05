@@ -1,180 +1,111 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333043446D6;
-	Fri,  5 Dec 2025 17:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DCC2D3739
+	for <patches@lists.linux.dev>; Fri,  5 Dec 2025 17:56:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764956397; cv=none; b=ZGQKCR4pnNTb98R5USkv/qbVVDK2zp0k5vcOTQArIJBj58SVbMAduGdYBsUaiZvbnnoRsiP2/hJLc8Yukv+FMTgIvnsbGEuSsTLp2ckKvJU+4rW1GYDQcBYZbmA8S/E3SvRtKqwT5hEAXw+8WLfAjfqEGDJOS85Nhqhc2VWNPfs=
+	t=1764957388; cv=none; b=LF9Xnuh2FDCv8xGlaSYCXRPe1LirtKxQOQX6GbY/ZFQrhOv/h5h3suipMlBDe/jqmkmAAkLh9YAlIhK6k8vWONyc8QbD2AP3NOaxqyv5aYPmoyxVwh4D8MI7IPZzEqMzQbtVac9Yxk7hVxL+nEvzdaoTH/ajkS2NSWypI0vgQsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764956397; c=relaxed/simple;
-	bh=Slk8zzA2bYCWS+9onULjg8VD1m6TNKR6hA/Y9AbOGJE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VjHZv+KVBi49XrWBQ/TTkuvw6HFvsaRAHuKmlHOyaR8+0MLTd/TMqldmnpsQo3T3mO8MGT9+Jx3BtB6KPLSXkt1cNtZJjb8cFmoF8B+foXLpOEs75VuQF+Wn5LlF2sep1j5m5FNZ1CvmI6hSWQDGBTnKU+EnBqgYYQ6FWiaftGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ppQy1x0B; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1764957388; c=relaxed/simple;
+	bh=bmISz4wUHFCj2fNIPw8dlmlYdcyJ4m7YE6ev17DazPc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QcEptuenhLeCyFjtvTOSwXi4e6FvegFMlnjO/7u3oNeD+s5CeB7xRU3THaAXKysn55OLk8WR8t05XqNHR84BScaSMpuO6nHuxMCFD8o1uWZo+UnFxeI830bmEZz6S35wX0BBEwY8wJNR7B/3+GvGIzDuXnbXsRuPYQfpjmo7gIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mC5mQvKG; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ppQy1x0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5CEDC4CEF1;
-	Fri,  5 Dec 2025 17:39:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764956396;
-	bh=Slk8zzA2bYCWS+9onULjg8VD1m6TNKR6hA/Y9AbOGJE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ppQy1x0BLstyluS9Bsg47F/WBuRKrrsUvNI6WvPXuTJ7e1JWXX/J/48iJ9biO20hg
-	 RuTpwLBbo/hVI79cuza2sqxwgLZnFKB/5ZerUdZR0niGyjYAMe9yLQgexJ7t5bRyl2
-	 7k6Bmb/iz/ivjuzIqLpweyOu3G7r6oDeKThZbR5Ch68hWBlDjZhCF5ySyIxLh+askM
-	 0ecqRWKfRJ0oavAoWzAzOKZ3j/xd2ms4e4iMXUBUBoC7ikMzcjtB4RAMTnQsV8PJzd
-	 gCkS7Kp9/BhqRfCYkt6qsFMwrr13Hcxo+XUWAuOoUghR0UYAZ1cIq8xis6ccSoZvcF
-	 TL/TuL39SxHRw==
-Date: Fri, 5 Dec 2025 10:39:47 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
-	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
-	achill@achill.org, sr@sladewatkins.com,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Ben Copeland <benjamin.copeland@linaro.org>
-Subject: Re: [PATCH 5.15 000/387] 5.15.197-rc2 review
-Message-ID: <20251205173947.GA2484770@ax162>
-References: <20251204163821.402208337@linuxfoundation.org>
- <CA+G9fYvz4R6SRM0ZZ6xDtnFcHo-RdQkrE3b9WTM0RCgWNiuieQ@mail.gmail.com>
- <2025120553-sulphate-cancel-0f77@gregkh>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mC5mQvKG"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-42e2b80ab25so1140806f8f.1
+        for <patches@lists.linux.dev>; Fri, 05 Dec 2025 09:56:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1764957385; x=1765562185; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kEgKo/l9HOuNeryVXSYMwjnWbEw58DLyjo3pfWvSHQE=;
+        b=mC5mQvKGqAGiZoyXBCklsvqtU9wxULbRO/TjDn4d4bZH2SyeGEVY9u0g90na6thY+4
+         btX2arWFef2qUtXHQDN+0CFUAzz4GSjb57FpW7DEVWdR/2Du3CC6ZgcBxNXDoqLkGY62
+         RbzplVIhD9OStSaFQ4KGXFWL72651BhYs9aShhjleBJJ0QBnAHr+PMqE9PvjZuhPTnxW
+         m6ifobJE0OpizCMtEDq5XYkIJdNdT3DDRDnhRgFq1TbGKBqJWaJJ6AD88579a8T5nIc2
+         3g96laPAzqj2CBA3OHQn2ay4io/Mv2zBSbO3hKm0VzTTUykq+6zgR3RUTyvlaXWmqhAF
+         2OsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1764957385; x=1765562185;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kEgKo/l9HOuNeryVXSYMwjnWbEw58DLyjo3pfWvSHQE=;
+        b=ILid0TeahMdeBKf6qwQT8/du1F/YNJf9eDIgHhXxvpEzPJbkL6x4nUNqBebq850yFQ
+         9s/IvZZC0oMLrdXL57d2r4eN5Col4tKl0rxetHAbAY9Hzotly62UKHkoDId6YqCtJGlv
+         /u3g3uTILUumBQIxhoWdDhYXYyukpZx90Nl96W1OFP4Lo9wqzNf8XgHgVNTuM/4MySMY
+         cEF7z7eMM5ARkipSehOVQzE6yH38x81Jybbk4JfBcpX6BdXjee7A7ghC1bLhmoSpy5sZ
+         SX4m5Q1Te6UqRRn31hwXJu1i/ZJ3scRfy99WWBPjgeNZCPij7RHhyC4YE+C69hz6K6lk
+         y2BQ==
+X-Gm-Message-State: AOJu0Yw5p45bsQswxVWdcfMri6aHikR6QEtGjflAFuvo1u0wWagfSzyh
+	ejPDphk1KqIXh/ue2c8feVxndmluwppexTDFnWrhSAikYQgyaO0b0Iqd
+X-Gm-Gg: ASbGncu3IkkSLRu/MyBxjbPfm1wYS9nsKmik21cP5RIitqGtv9dp+j5meXc9Y/Vzqor
+	ys7H35x9MeA/9NeOF0ubUReWpHsVmZrWC2i5RoFA4KLXqbN9r0tuvK1+AZd2AEtdtfObjL9yDrp
+	sCm3pBJCHmj8RuzlWl/T4qQW1AzHOMDNYLk4Q7LoQMBpgvLDLEMsAamJFkSsEWOC9gQPbfwTKJ9
+	FWah8cGe4/Quq3Z+ZKHP4BF7GbS7OfHU6VFORJMDHIIsvJr7qo/r6qhuoO7LS6cqXCK0l3l2rv8
+	0MZ0ucg9WmWQxvDUUl1HYMskfMvaKPWx4cmNxtlXggwSweMlX6eW3KBjnIRMBv+tuu8ffMJBRk3
+	Lr0zFTrMaIAkDeH6X0g1x5rMAxD9tBFpo3tZ/aX+vEE1cRUZCAu4lJRxgBJHds1IsWfztqQEnSO
+	Ij09KqCheDUO3vwxhenP4G66Tgrj0YaCzWT7mDxSROtBimsbxW
+X-Google-Smtp-Source: AGHT+IENm9zx8V7Tz0VXVGQhR9hdKMItPaS3QDNcTYQiQgg6kiMV16jXfg5TmA44Yga6DhrQU/Zk5w==
+X-Received: by 2002:a05:6000:22c9:b0:42b:30d4:e3f0 with SMTP id ffacd0b85a97d-42f89f0e237mr49229f8f.22.1764957384592;
+        Fri, 05 Dec 2025 09:56:24 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-42f7d353be1sm9479087f8f.39.2025.12.05.09.56.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 05 Dec 2025 09:56:22 -0800 (PST)
+Message-ID: <198f8eb4-18a9-414b-bcec-fe44ea508e58@gmail.com>
+Date: Fri, 5 Dec 2025 09:56:17 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2025120553-sulphate-cancel-0f77@gregkh>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/567] 6.1.159-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <20251204163841.693429967@linuxfoundation.org>
+Content-Language: en-US, fr-FR
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20251204163841.693429967@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Dec 05, 2025 at 05:33:19PM +0100, Greg Kroah-Hartman wrote:
-> On Fri, Dec 05, 2025 at 12:59:37PM +0530, Naresh Kamboju wrote:
-> > On Thu, 4 Dec 2025 at 22:14, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 5.15.197 release.
-> > > There are 387 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Sat, 06 Dec 2025 16:37:24 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.197-rc2.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> > 
-> > 
-> > The powerpc allnoconfig failed with gcc-8 but passed with gcc-12.
-> > 
-> > Build regression: powerpc: allnoconfig: gcc-8: Inconsistent kallsyms data
-> > 
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > 
-> > ### Build error Powerpc
-> > Inconsistent kallsyms data
-> > Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-> > make[1]: *** [Makefile:1244: vmlinux] Error 1
-> > 
-> > ### Commit pointing to,
-> >   Makefile.compiler: replace cc-ifversion with compiler-specific macros
-> >   commit 88b61e3bff93f99712718db785b4aa0c1165f35c upstream.
-> > 
-> > ### Build
-> >  - https://storage.tuxsuite.com/public/linaro/lkft/builds/36OCnVeYGpKUCXtxVdz6gezHjcQ/
-> >  - https://storage.tuxsuite.com/public/linaro/lkft/builds/36OCnVeYGpKUCXtxVdz6gezHjcQ/config
-> > 
-> > ### Steps to reproduce
-> >  - tuxmake --runtime podman --target-arch powerpc --toolchain gcc-8
-> > --kconfig allnoconfig
+On 12/4/25 08:44, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.159 release.
+> There are 567 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Odd, this works on 5.10 ok?  What is different about 5.15 that keeps
-> this from working?
+> Responses should be made by Sat, 06 Dec 2025 16:37:18 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.159-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-This issue does reproduce for me locally but only with gcc-8 from TuxMake (i.e., a
-version from Debian), not with GCC 8.5.0 from kernel.org.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-  $ git show -s --pretty=kernel
-  869807d760ee ("libbpf: Fix invalid return address register in s390")
-
-  $ tuxmake -r podman -a powerpc -t gcc-8 -k allnoconfig default
-  ...
-  Inconsistent kallsyms data
-  Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-  ...
-
-However, reverting the backport of 88b61e3bff93 ("Makefile.compiler:
-replace cc-ifversion with compiler-specific macros") does not resolve
-the issue for me:
-
-  $ git revert --no-edit c8dad7eb1e6221e0363ee468dc46700bfbad6dd2
-  [detached HEAD 1669da6455e4] Revert "Makefile.compiler: replace cc-ifversion with compiler-specific macros"
-   Date: Fri Dec 5 10:30:10 2025 -0700
-   13 files changed, 30 insertions(+), 37 deletions(-)
-
-  $ tuxmake -r podman -a powerpc -t gcc-8 -k allnoconfig default
-  ...
-  Inconsistent kallsyms data
-  Try make KALLSYMS_EXTRA_PASS=1 as a workaround
-  ...
-
-My bisect landed on the backport of 19de03b312d6 ("block: make
-REQ_OP_ZONE_OPEN a write operation") and reverting that actually
-resolves the error.
-
-  $ git bisect log
-  # bad: [869807d760eeef0e0132eed3f1be6be16d084401] libbpf: Fix invalid return address register in s390
-  # good: [cc5ec87693063acebb60f587e8a019ba9b94ae0e] Linux 5.15.196
-  git bisect start '869807d760eeef0e0132eed3f1be6be16d084401' 'cc5ec87693063acebb60f587e8a019ba9b94ae0e'
-  # bad: [ffd15ced026694355243064968a3b84269e0ee09] ARM: at91: pm: save and restore ACR during PLL disable/enable
-  git bisect bad ffd15ced026694355243064968a3b84269e0ee09
-  # bad: [1ba52b54e5f45e982d61b4eeabbf28d78a5f9e75] drm/amdkfd: return -ENOTTY for unsupported IOCTLs
-  git bisect bad 1ba52b54e5f45e982d61b4eeabbf28d78a5f9e75
-  # good: [8966a057d07281a5e65eaa3225cb072713921b25] Revert "docs/process/howto: Replace C89 with C11"
-  git bisect good 8966a057d07281a5e65eaa3225cb072713921b25
-  # bad: [27df52e05f7dd606e18e869cb4f52ce1fbfe699f] tee: allow a driver to allocate a tee_device without a pool
-  git bisect bad 27df52e05f7dd606e18e869cb4f52ce1fbfe699f
-  # bad: [2b426fa49ef76bbe04671b3a861352b924a01b96] memstick: Add timeout to prevent indefinite waiting
-  git bisect bad 2b426fa49ef76bbe04671b3a861352b924a01b96
-  # bad: [c126c39dc662661531c96acbbf5fc129ed7f535a] soc: qcom: smem: Fix endian-unaware access of num_entries
-  git bisect bad c126c39dc662661531c96acbbf5fc129ed7f535a
-  # good: [c142f0d16766ab7189af4b9128a2c81c56f7a01f] drm/sysfb: Do not dereference NULL pointer in plane reset
-  git bisect good c142f0d16766ab7189af4b9128a2c81c56f7a01f
-  # bad: [02dc541fc61c3e2dabc3574fe46a19f554ea5d8c] soc: aspeed: socinfo: Add AST27xx silicon IDs
-  git bisect bad 02dc541fc61c3e2dabc3574fe46a19f554ea5d8c
-  # bad: [23e0fecb7be5010e96b2948490799ef59ac4bea6] block: make REQ_OP_ZONE_OPEN a write operation
-  git bisect bad 23e0fecb7be5010e96b2948490799ef59ac4bea6
-  # first bad commit: [23e0fecb7be5010e96b2948490799ef59ac4bea6] block: make REQ_OP_ZONE_OPEN a write operation
-
-  $ git revert --no-edit 23e0fecb7be5010e96b2948490799ef59ac4bea6
-  [detached HEAD ddf3a34910b0] Revert "block: make REQ_OP_ZONE_OPEN a write operation"
-   Date: Fri Dec 5 10:26:26 2025 -0700
-    1 file changed, 5 insertions(+), 5 deletions(-)
-
-  $ tuxmake -r podman -a powerpc -t gcc-8 -k allnoconfig default
-  ...
-  I: config: PASS in 0:00:01.410526
-  I: default: PASS in 0:00:04.933923
-  ...
-
-No idea why that commit would cause such an issue... but it does not
-appear to be 88b61e3bff93 so I guess I am off the hook ;)
-
-Cheers,
-Nathan
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+-- 
+Florian
