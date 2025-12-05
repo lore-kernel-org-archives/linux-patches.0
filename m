@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F9D7081E;
-	Fri,  5 Dec 2025 03:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4F1286D40;
+	Fri,  5 Dec 2025 03:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764906768; cv=none; b=cscctUroS+AmFuCrHHn16mAOtlZUV+k+gH4y772iRaXVtSVSYv4ZrWhxh7yI8Y8gZEb/MooTtE54U831GvSbOni2dOZ6mSrZicYjRo/i25bzwAldvNWm6i9+XY6SZSfeXvCuB266QqvtgQS7ISFuH/LF/0fnm+cruT26uAKCHjQ=
+	t=1764906770; cv=none; b=DWpNEt2Slez76miiiCbaopiskvfNFueiAbsc6K82ZQ4W64V28mach+YlNkujRCtjHkn+fSa8lwMs4QAmMAwfvaMDcc0DJqk/TAN4udoPT5YscB7nZLkbthpnNtIeZbHxNd7v1FImMQX6sYvVXzKayNv5feySuggdiUGrbpQaoVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764906768; c=relaxed/simple;
-	bh=MV/23AP5FsZ8LOx9H2Lc0pIfQ6DWxX91Yu2pkRk5kGo=;
+	s=arc-20240116; t=1764906770; c=relaxed/simple;
+	bh=Xw2tiDofM9huEod2qZ3ZtmwpWgJkbGH/y/kn7RzbcsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hTXBjcUQRN9OVm7j55cXilLoaHwfE0Q7aZygJMoa3NCBBbNPerTQF1ee46jlb6KzSScOwp/AxVAFuj/e2jX7wb4I9FAMI/8M/wvkBvvlwTllQ8hM87l7hf6N1ovHBTAlF/gGZSgJcvS2v45cxWUznqVly6mxuvCszz5c2lt+Tlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=asbtEe6F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fWrBvtaRReKB1GnmjBWmEiJfLgqnwj+33NUJANHnVwUBEbE6wKQ5MCiXsc1mrWuiKtHGsJ75Ba4oNZrSbyWTjviqgJHV15CnquIX5sCDntXAzk5+N3fIzK/KWhsFTa8qQ7llHVFibykymBcllkSk+8LbM8K0Ikc4sTqU4Pb1Efo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W5Wq7lbd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="asbtEe6F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B9D6C4CEF1;
-	Fri,  5 Dec 2025 03:52:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W5Wq7lbd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB96C16AAE;
+	Fri,  5 Dec 2025 03:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1764906768;
-	bh=MV/23AP5FsZ8LOx9H2Lc0pIfQ6DWxX91Yu2pkRk5kGo=;
+	s=k20201202; t=1764906770;
+	bh=Xw2tiDofM9huEod2qZ3ZtmwpWgJkbGH/y/kn7RzbcsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asbtEe6F/XfGCYWkqoHaZZw1SI8cq9GllwfDX80OJNAaDoTqYUcJaAhMfXeQHdzaY
-	 /danIh39QBmMuXGdabDyamlf5IEfiIIWRASLGsW5kW2Pin2wFTMu1v5Bedd201Bbiq
-	 whZ4mg0X3xAnNQ0NSmdCeN+kLI5KPSF9cyeHjF2EAWbGiVU3ilqzCiptSAiaoQ5nn0
-	 G0a0wQAje7NLOPyW7zEhJsNZRkG2c7OlBKlQuoKQQJ3tvK0DP4lafP9MPrbTOzAE/O
-	 M8FHv3c4Qel1GfcnzX9QL6rYoUocCmIfTHwTI6fFMoQ9Fpd+HxGvXVrYtD0SMHFUV1
-	 1trNaRfJsh3Rg==
+	b=W5Wq7lbd6dwAqgMW+F80V2Y4pGYci4cjTdX5k451CANMNP4Ys/RGlG7Gizm/S9KrL
+	 AbWiQgvBbsLvkTybsZAdusZKhQVBhHpjLgvDNUrWX6h4zudOSb9blxmXz1rgM6gYb/
+	 qANZq9l1OBkwadqdB1FRChspUXl6T21xqyrOuDuXwQVs+CUUVFMFkFu8yz7iPlUx4Q
+	 VU5P1asEKAsLc3xWWieJ2Ddo9inCDkgP+awTgkA9QJ5EUTZnIv2rLtbgw3hsfIVu5c
+	 8WUKczjTK4DWoxlxk/dSRha/VwPRzcijNWXU3ZNCC9gMoIfbcVGPj+PrgNufdBI1P9
+	 gR2RV3t4UvBVQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yu Peng <pengyu@kylinos.cn>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.18] x86/microcode: Mark early_parse_cmdline() as __init
-Date: Thu,  4 Dec 2025 22:52:32 -0500
-Message-ID: <20251205035239.341989-3-sashal@kernel.org>
+Cc: Hal Feng <hal.feng@starfivetech.com>,
+	Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Sasha Levin <sashal@kernel.org>,
+	rafael@kernel.org,
+	linux-pm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] cpufreq: dt-platdev: Add JH7110S SOC to the allowlist
+Date: Thu,  4 Dec 2025 22:52:33 -0500
+Message-ID: <20251205035239.341989-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251205035239.341989-1-sashal@kernel.org>
 References: <20251205035239.341989-1-sashal@kernel.org>
@@ -50,24 +53,16 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Peng <pengyu@kylinos.cn>
+From: Hal Feng <hal.feng@starfivetech.com>
 
-[ Upstream commit ca8313fd83399ea1d18e695c2ae9b259985c9e1f ]
+[ Upstream commit 6e7970cab51d01b8f7c56f120486c571c22e1b80 ]
 
-Fix section mismatch warning reported by modpost:
+Add the compatible strings for supporting the generic
+cpufreq driver on the StarFive JH7110S SoC.
 
-  .text:early_parse_cmdline() -> .init.data:boot_command_line
-
-The function early_parse_cmdline() is only called during init and accesses
-init data, so mark it __init to match its usage.
-
-  [ bp: This happens only when the toolchain fails to inline the function and
-    I haven't been able to reproduce it with any toolchain I'm using. Patch is
-    obviously correct regardless. ]
-
-Signed-off-by: Yu Peng <pengyu@kylinos.cn>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://patch.msgid.link/all/20251030123757.1410904-1-pengyu@kylinos.cn
+Signed-off-by: Hal Feng <hal.feng@starfivetech.com>
+Reviewed-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -77,193 +72,212 @@ LLM Generated explanations, may be completely bogus:
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: `x86/microcode: Mark early_parse_cmdline() as __init`
+**Subject**: `cpufreq: dt-platdev: Add JH7110S SOC to the allowlist`
 
-**Problem**: Fixes a modpost section mismatch warning:
-```
-.text:early_parse_cmdline() -> .init.data:boot_command_line
-```
-
-**Context**: The function is only called during init (from
-`load_ucode_bsp()` which is `__init`) and accesses `boot_command_line`
-(declared as `__initdata` in `.init.data`). The maintainer notes this
-occurs when the toolchain fails to inline the function, but the fix is
-correct regardless.
-
-**Signals**:
+**Key observations**:
+- Uses "Add" (new hardware support), not "Fix"
 - No "Cc: stable@vger.kernel.org" tag
 - No "Fixes:" tag
-- Signed-off by maintainer (Borislav Petkov)
+- No bug report references ("Reported-by:", "Link:")
+- Reviewed-by from Heinrich Schuchardt (Canonical)
+- Signed-off by Viresh Kumar (cpufreq maintainer)
+
+**Commit message**: Adds compatible strings to enable the generic
+cpufreq driver on StarFive JH7110S SoC.
 
 ### 2. CODE CHANGE ANALYSIS
 
-**Change**: Adds `__init` attribute to `early_parse_cmdline()`:
+**Files changed**: 1 file (`drivers/cpufreq/cpufreq-dt-platdev.c`)
+
+**Change**: Single line addition:
 ```c
--static void early_parse_cmdline(void)
-+static void __init early_parse_cmdline(void)
++       { .compatible = "starfive,jh7110s", },
 ```
 
-**Technical details**:
-- `__init` places the function in `.init.text` (discarded after boot)
-- `boot_command_line` is `__initdata` (in `.init.data`)
-- A function in `.text` accessing `.init.data` triggers a section
-  mismatch
-- Marking the function `__init` aligns it with its usage
+**Context**: Added to the `allowlist[]` array (line 90), right after
+`starfive,jh7110`.
 
-**Root cause**: Missing `__init` annotation on a function only used
-during initialization.
+**Code logic** (from `cpufreq_dt_platdev_init()`):
+1. If root node matches allowlist → create cpufreq-dt device
+2. Else if CPU0 has `operating-points-v2` and root node is not in
+   blocklist → create cpufreq-dt device
+3. Else → return -ENODEV
 
-**Correctness**: Correct. The function is only called from
-`load_ucode_bsp()` (line 172), which is `__init`, so marking it `__init`
-matches its usage.
+**Impact**: Adding `starfive,jh7110s` to the allowlist ensures the
+cpufreq-dt platform device is always created, regardless of operating-
+points version.
+
+**Root cause**: Without this entry, cpufreq-dt may not be created for
+jh7110s devices, breaking CPU frequency scaling.
 
 ### 3. CLASSIFICATION
 
-**Type**: Build fix (section mismatch)
+**Is this fixing a bug or adding a feature?**
 
-**Not**:
-- A new feature
-- A runtime bug fix
-- A security fix
-- A performance optimization
+- No explicit bug report or "Fixes:" tag
+- Enables hardware support for a new SoC variant
+- Similar to the jh7110 addition (commit `4b4c0d37164c2`, April 2023)
 
-**Is**:
-- A build error fix (modpost can fail builds)
-- A code organization fix (correct section placement)
+**Exception category check**:
 
-### 4. BUILD IMPACT ANALYSIS
+1. Device IDs/compatible strings: Yes — compatible strings are device
+   tree device IDs. Stable rules allow "just add a device ID"
+   (Documentation/process/stable-kernel-rules.rst line 15).
+2. Hardware quirks/workarounds: No
+3. Device tree updates: Related — enables DT-based cpufreq support
+4. Build fixes: No
+5. Documentation: No
 
-From `scripts/mod/modpost.c` (lines 2373-2375):
-```c
-if (sec_mismatch_count && !sec_mismatch_warn_only)
-    error("Section mismatches detected.\n"
-          "Set CONFIG_SECTION_MISMATCH_WARN_ONLY=y to allow them.\n");
-```
+**Classification**: Compatible string addition (device tree device ID),
+which stable rules explicitly allow.
 
-And `scripts/Makefile.modpost` (line 49):
-```makefile
-$(if $(CONFIG_SECTION_MISMATCH_WARN_ONLY),,-E)
-```
+### 4. SCOPE AND RISK ASSESSMENT
 
-**Impact**:
-- Section mismatches cause build failures unless
-  `CONFIG_SECTION_MISMATCH_WARN_ONLY=y`
-- This is a build error fix, which stable rules allow
-- Similar fixes have been backported (e.g., `b452d2c97eecc` for
-  clocksource driver)
+**Lines changed**: 1 line added, 0 removed
 
-### 5. SCOPE AND RISK ASSESSMENT
+**Complexity**: Trivial — single array entry
 
-**Lines changed**: 1 line (attribute addition)
+**Files touched**: 1 file
 
-**Files touched**: 1 file (`arch/x86/kernel/cpu/microcode/core.c`)
+**Subsystem**: `drivers/cpufreq` — mature, well-tested
 
-**Complexity**: Trivial — attribute addition only
+**Risk assessment**:
+- Low risk: no logic changes, only a list entry
+- No dependencies: standalone change
+- Driver exists in stable: `cpufreq-dt-platdev.c` added in 2016 (commit
+  `f56aad1d98f1c`)
+- Pattern matches existing entries (e.g., jh7110)
 
-**Risk**: Very low
-- No logic change
-- No runtime behavior change
-- Only affects section placement
-- Function already only used during init
+**Potential issues**:
+- None identified — this is a pure addition
 
-**Subsystem**: x86 microcode (mature, critical)
-
-### 6. USER IMPACT
+### 5. USER IMPACT
 
 **Who is affected**:
-- Users building kernels without `CONFIG_SECTION_MISMATCH_WARN_ONLY=y`
-- Distribution kernel builders
-- Anyone building with strict modpost checks
+- Users with StarFive JH7110S hardware running stable kernels
+- Without this, cpufreq may not initialize, disabling CPU frequency
+  scaling
 
-**Severity**: Build failure (prevents compilation)
+**Severity if bug hits**:
+- Medium — cpufreq not working means:
+  - No dynamic frequency scaling
+  - Potential performance/power impact
+  - Not a crash, but degraded functionality
 
-**Frequency**: Depends on toolchain inlining behavior; can be
-intermittent
+**Evidence of user impact**:
+- No bug reports found in the commit
+- No device tree files for jh7110s in the kernel tree
+- Commit is recent (October 2025)
 
-### 7. STABILITY INDICATORS
+**Assessment**: Enables hardware support; if jh7110s hardware exists on
+stable kernels, this fixes missing cpufreq functionality.
+
+### 6. STABILITY INDICATORS
 
 **Tested-by**: None
-**Reviewed-by**: None (maintainer signed off)
-**Age**: Very recent (Oct 30, 2025) — not yet in a released kernel
 
-### 8. DEPENDENCY CHECK
+**Reviewed-by**: Heinrich Schuchardt (Canonical) — positive signal
 
-**Parent commit**: `632ff61706473` ("x86/microcode: Add microcode=
-cmdline parsing") introduced `early_parse_cmdline()` on Aug 20, 2025,
-and is in v6.18.
+**Age in mainline**: Very recent (October 2025)
 
-**Dependency analysis**:
-- This fix only applies if the parent commit exists in the target stable
-  tree
-- If the function doesn't exist in stable, this fix isn't needed
-- If the feature is backported, this fix should be included
+**Maintainer sign-off**: Viresh Kumar (cpufreq maintainer)
 
-**Backport considerations**:
-- Applies cleanly if the parent commit is present
-- No API changes or complex dependencies
-- Self-contained
+### 7. DEPENDENCY CHECK
 
-### 9. STABLE KERNEL RULES EVALUATION
+**Prerequisites**: None — standalone change
 
-From `Documentation/process/stable-kernel-rules.rst`:
+**Code existence in stable**: Yes — `cpufreq-dt-platdev.c` exists in
+stable trees (added 2016)
 
-1. "It must be obviously correct and tested" — Yes, correct and
-   maintainer-approved
-2. "It must fix a real bug" — Yes, fixes a build error
-3. "It fixes a problem like... a build error" — Yes, explicitly allowed
-4. "It must be small and contained" — Yes, 1-line change
-5. "It must NOT introduce new features" — Correct, no new functionality
-6. "It must apply cleanly" — Yes, if parent commit exists
+**API dependencies**: None — only adds a compatible string
 
-**Conclusion**: Meets all criteria for stable inclusion.
+**Backport adjustments**: None — applies cleanly
 
-### 10. COMPARISON WITH SIMILAR COMMITS
+### 8. HISTORICAL CONTEXT
 
-Similar section mismatch fixes have been backported:
-- `b452d2c97eecc` ("clocksource/drivers/nxp-stm: Fix section
-  mismatches") includes `Cc: stable@vger.kernel.org # 6.16`
+**Similar commits**:
+- `4b4c0d37164c2` (April 2023): Added `starfive,jh7110` — same pattern,
+  no stable tag
+- Other SoC additions to allowlist follow the same pattern
 
-This commit follows the same pattern and should be treated similarly.
+**Pattern**: SoC additions to cpufreq allowlist typically do not include
+"Cc: stable" tags, but many are still acceptable for stable as device ID
+additions.
 
-### 11. FINAL ASSESSMENT
+### 9. STABLE KERNEL RULES COMPLIANCE
 
-**Should this be backported?** Yes, with a caveat.
+**Rule 1: Obviously correct and tested**
+- Yes — trivial, follows established pattern, maintainer sign-off
 
-**Rationale**:
-1. Fixes a build error (not just a warning)
-2. Obviously correct
-3. Minimal risk (attribute addition)
-4. Small and self-contained
-5. Meets stable kernel criteria
+**Rule 2: Fixes a real bug**
+- Borderline — enables hardware support; if hardware exists, fixes
+  broken cpufreq
 
-**Caveat**:
-- Only applicable if commit `632ff61706473` exists in the target stable
-  tree
-- If backporting the feature, include this fix
-- If the feature isn't in stable, this fix isn't needed
+**Rule 3: Fixes an important issue**
+- Medium importance — enables CPU frequency scaling
 
-**Recommendation**: Backport to stable trees that include the
-`early_parse_cmdline()` function (v6.18+ or if the feature was
-backported to older trees).
+**Rule 4: Small and contained**
+- Yes — 1 line addition
+
+**Rule 5: No new features**
+- Borderline — enables new hardware support, but compatible strings are
+  explicitly allowed as device IDs
+
+**Rule 6: Applies cleanly**
+- Yes — no conflicts expected
+
+**Exception applies**: Yes — compatible string additions are treated
+like device ID additions, which stable rules allow.
+
+### 10. FINAL ASSESSMENT
+
+**Arguments for YES**:
+1. Compatible strings are device tree device IDs; stable rules allow
+   device ID additions
+2. Very low risk — single line, no logic changes
+3. Follows established pattern (jh7110 precedent)
+4. Fixes broken cpufreq for jh7110s hardware on stable kernels
+5. Driver exists in stable trees
+6. No dependencies
+7. Maintainer sign-off
+
+**Arguments for NO**:
+1. No "Cc: stable" tag
+2. No explicit bug report
+3. Enables new hardware support rather than fixing a documented bug
+4. Very recent commit (limited testing time)
+
+**Decision rationale**:
+
+This is a compatible string addition, equivalent to a device ID
+addition. Stable rules explicitly allow "just add a device ID"
+(Documentation/process/stable-kernel-rules.rst line 15). The change is
+trivial, low-risk, and fixes broken cpufreq functionality for jh7110s
+hardware on stable kernels. The absence of a "Cc: stable" tag is not
+disqualifying; many device ID additions are backported without it.
+
+The commit enables hardware support, but compatible string additions are
+treated as device ID additions and are acceptable for stable trees. If
+jh7110s hardware exists and users run stable kernels, this fixes missing
+cpufreq support.
 
 **YES**
 
- arch/x86/kernel/cpu/microcode/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index f75c140906d00..539edd6d6dc8c 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -136,7 +136,7 @@ bool __init microcode_loader_disabled(void)
- 	return dis_ucode_ldr;
- }
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index cd1816a12bb99..dc11b62399ad5 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -87,6 +87,7 @@ static const struct of_device_id allowlist[] __initconst = {
+ 	{ .compatible = "st-ericsson,u9540", },
  
--static void early_parse_cmdline(void)
-+static void __init early_parse_cmdline(void)
- {
- 	char cmd_buf[64] = {};
- 	char *s, *p = cmd_buf;
+ 	{ .compatible = "starfive,jh7110", },
++	{ .compatible = "starfive,jh7110s", },
+ 
+ 	{ .compatible = "ti,omap2", },
+ 	{ .compatible = "ti,omap4", },
 -- 
 2.51.0
 
