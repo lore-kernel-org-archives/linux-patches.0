@@ -1,220 +1,250 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39331FCF41;
-	Fri,  5 Dec 2025 02:40:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE8B7081E;
+	Fri,  5 Dec 2025 03:52:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764902463; cv=none; b=FnvXsKu6N+nQ/EyDfRzTTcQu/WUrU4aoZNAJc1X2hrF28uD5Kr1bJv4fmuaaj1AE33Szp0UvmUySZ0XNHwCnKuoIDyNkpG79oFvMnnrnn0HDWDemXYoCrIMvxFrPWaZt6WM/lJjPdB1jcdWQS6Vtbd9sOHSz+fu78NABk5lYa7Q=
+	t=1764906763; cv=none; b=NhGQ3Fu/zmuWZGHA0Kz/f4FQjsrH2tTZS/3H7hOo51iBBrcf8eyq0v9jMM1MJRnURRMTmx3U9Hee4Raozn7GyhsY4dU/oxOE+g1kby9lMe3ungxxZbs6ityS8afp7UK5shhGpOu6hUWCA77mL0TBe8NGOp4Kx52bZzMmILwQnYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764902463; c=relaxed/simple;
-	bh=YWPgp6ETHw0rQCvXyVjOuRlG44uPU13fK/UDjtrYeoA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tw7gqm5RxRU5reVrODK6gHO3CchOQu2WtuJ7IAsfaHcm+8YRrQI6tseyPheoXWHSTHMBGDrS0W4DsvBFHesw5jikgF4T0ivEdjqDX1jI9qWvc4BX+HuSVxIqAxaXnAKQ6GwJ9cmAzooVLx+lSpB8idKsZz3PLKJv/+KZW/ZYp2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NqexNUvC; arc=none smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1764906763; c=relaxed/simple;
+	bh=uhAu0R4lnraS00WX9uVrJqv2qbPtIH5Aet9UvnWAK7E=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eFpYabtTNq+BjwacWcrMMm70QasUwW1vmS9KJaNZdx7HWoe/yNHoFG1/MpoLC7ht270OzVQHuEovvVKxzYA14yPl4Bs1bT+lG79iPSaYbEB3KABRZvAY3Kzotgj7wbvocJjGWc7floQHnv4PXQpzwI+j3PS5lLxla26CzAhatos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ftpDCE9P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NqexNUvC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1764902460; x=1796438460;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=YWPgp6ETHw0rQCvXyVjOuRlG44uPU13fK/UDjtrYeoA=;
-  b=NqexNUvCln6nDFVXaRLP9dr5mCusGVhqCYQVMRXqvwvJsIh7wCFItpMy
-   iLuq56ZpbY6prQiYOBj4s1jLZ+rSnL1XCrGEPnX37YTXZ31d0zYDuq4kM
-   T11+lLd/PtJvnQ3AhgyzFF2dhqo8ShNOyO6VSp/97DZt3F+V+bvxnn5UR
-   o5Fv5Ur1+XsaRLI/+fYaCPY2e1Ue26/HXMNKEfNQa6mwdaQbHDuzZlsdS
-   aSVyW9OyS+tNbT5KMeJPNRYVNwPV88Bngemhj7HC1Yf0U9RDmAbwIA7nM
-   fnpNOQGapR+5BDNDfB6v2Rx4I8eXcWizeyBGMyJLRggDwIPihkjkkcA18
-   w==;
-X-CSE-ConnectionGUID: ZGBnDRNiQ/yhyYpJ8TNAgw==
-X-CSE-MsgGUID: hOCmtWKRTKGoD4+y64tiGA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11632"; a="66657812"
-X-IronPort-AV: E=Sophos;i="6.20,250,1758610800"; 
-   d="scan'208";a="66657812"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2025 18:40:59 -0800
-X-CSE-ConnectionGUID: xyVrV1D0SiCC7UIVyZgz1w==
-X-CSE-MsgGUID: tBlcxB12S5qF4sHuSv34lg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,250,1758610800"; 
-   d="scan'208";a="199590264"
-Received: from ly-workstation.sh.intel.com (HELO ly-workstation) ([10.239.182.64])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2025 18:40:52 -0800
-Date: Fri, 5 Dec 2025 10:40:49 +0800
-From: "Lai, Yi" <yi1.lai@linux.intel.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Alexandre Ghiti <alex@ghiti.fr>, Anup Patel <anup@brainfault.org>,
-	Albert Ou <aou@eecs.berkeley.edu>, Jonathan Corbet <corbet@lwn.net>,
-	iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
-	Justin Stitt <justinstitt@google.com>, linux-doc@vger.kernel.org,
-	linux-kselftest@vger.kernel.org, linux-riscv@lists.infradead.org,
-	llvm@lists.linux.dev, Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Palmer Dabbelt <palmer@dabbelt.com>, Paul Walmsley <pjw@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>, Shuah Khan <shuah@kernel.org>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>, Alexey Kardashevskiy <aik@amd.com>,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	James Gowans <jgowans@amazon.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Michael Roth <michael.roth@amd.com>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
-	Samiullah Khawaja <skhawaja@google.com>,
-	Vasant Hegde <vasant.hegde@amd.com>, yi1.lai@intel.com,
-	syzkaller-bugs@googlegroups.com
-Subject: Re: [PATCH v8 13/15] iommu/amd: Use the generic iommu page table
-Message-ID: <aTJGMaqwQK0ASj0G@ly-workstation>
-References: <0-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
- <13-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ftpDCE9P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7481BC4CEF1;
+	Fri,  5 Dec 2025 03:52:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1764906763;
+	bh=uhAu0R4lnraS00WX9uVrJqv2qbPtIH5Aet9UvnWAK7E=;
+	h=From:To:Cc:Subject:Date:From;
+	b=ftpDCE9PVQs9TNhOb1A3Imxm2lyIunnW7YAWCuj2YMnRLH7aGqBfymQD6pGbHDBiB
+	 2iBzXkeW7HJeFjC+sYM7LZ01Wq7MPYhzA4e90PO2WGu6pA5xdPGd800OMkqzM4hnyz
+	 SMY5Y5aFd3rLi5c13hkk3EVmOcjINNLgaOim/n6cSsKkWzEOlyQzdgyjeSIKQ/mHDP
+	 87LNy9JSRBUYulYDR+aF7qNQT+SjJCqYA702ac6y4K7Jax+5bPwgu5Phv4LOWsJW6G
+	 LKFG4i/CqoUYjy4U4Ax+a0d9duAKOzreBlT/V1v/Bm49LAJvHU/y3edTemIxdbzbtI
+	 9ievSOIl3P+dQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	rafael@kernel.org,
+	linux-acpi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ACPI: property: Use ACPI functions in acpi_graph_get_next_endpoint() only
+Date: Thu,  4 Dec 2025 22:52:30 -0500
+Message-ID: <20251205035239.341989-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <13-v8-d50aeee4481d+55efb-iommu_pt_jgg@nvidia.com>
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Alejandro Jimenez,
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-Greetings!
+[ Upstream commit 5d010473cdeaabf6a2d3a9e2aed2186c1b73c213 ]
 
-I used Syzkaller and found that there is WARNING in iommufd_fops_release in linux-next next-20251203.
+Calling fwnode_get_next_child_node() in ACPI implementation of the fwnode
+property API is somewhat problematic as the latter is used in the
+impelementation of the former. Instead of using
+fwnode_get_next_child_node() in acpi_graph_get_next_endpoint(), call
+acpi_get_next_subnode() directly instead.
 
-After bisection and the first bad commit is:
-"
-789a5913b29c iommu/amd: Use the generic iommu page table
-"
-
-All detailed into can be found at:
-https://github.com/laifryiee/syzkaller_logs/tree/main/251204_120805_iommufd_fops_release
-Syzkaller repro code:
-https://github.com/laifryiee/syzkaller_logs/tree/main/251204_120805_iommufd_fops_release/repro.c
-Syzkaller repro syscall steps:
-https://github.com/laifryiee/syzkaller_logs/tree/main/251204_120805_iommufd_fops_release/repro.prog
-Syzkaller report:
-https://github.com/laifryiee/syzkaller_logs/tree/main/251204_120805_iommufd_fops_release/repro.report
-Kconfig(make olddefconfig):
-https://github.com/laifryiee/syzkaller_logs/tree/main/251204_120805_iommufd_fops_release/kconfig_origin
-Bisect info:
-https://github.com/laifryiee/syzkaller_logs/tree/main/251204_120805_iommufd_fops_release/bisect_info.log
-bzImage:
-https://github.com/laifryiee/syzkaller_logs/raw/refs/heads/main/251204_120805_iommufd_fops_release/bzImage_b2c27842ba853508b0da00187a7508eb3a96c8f7
-Issue dmesg:
-https://github.com/laifryiee/syzkaller_logs/blob/main/251204_120805_iommufd_fops_release/b2c27842ba853508b0da00187a7508eb3a96c8f7_dmesg.log
-
-"
-[   26.277988] ------------[ cut here ]------------
-[   26.278641] WARNING: drivers/iommu/iommufd/main.c:369 at iommufd_fops_release+0x385/0x430, CPU#1: repro/724
-[   26.280106] Modules linked in:
-[   26.280581] CPU: 1 UID: 0 PID: 724 Comm: repro Not tainted 6.18.0-next-20251203-b2c27842ba85 #1 PREEMPT(volun
-[   26.281901] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.q4
-[   26.283453] RIP: 0010:iommufd_fops_release+0x385/0x430
-[   26.284150] Code: 8b 45 d0 65 48 2b 05 82 16 78 05 75 7b 48 81 c4 88 00 00 00 31 c0 5b 41 5c 41 5d 41 5e 41 5e
-[   26.286461] RSP: 0018:ffff8880202efba8 EFLAGS: 00010293
-[   26.287290] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff83be6832
-[   26.288207] RDX: ffff888019104b00 RSI: ffffffff83be69a5 RDI: 0000000000000005
-[   26.289136] RBP: ffff8880202efc58 R08: 0000000000000001 R09: 0000000000000001
-[   26.290045] R10: 0000000000000000 R11: ffff888019105998 R12: 0000000000000000
-[   26.291071] R13: ffff888022d49008 R14: ffff8880202efbf0 R15: 0000000000000000
-[   26.292002] FS:  0000000000000000(0000) GS:ffff8880e31c0000(0000) knlGS:0000000000000000
-[   26.293036] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   26.293787] CR2: 00007fa6ab957000 CR3: 00000000138bb001 CR4: 0000000000770ef0
-[   26.294815] PKRU: 55555554
-[   26.295192] Call Trace:
-[   26.295539]  <TASK>
-[   26.295843]  ? locks_remove_file+0x3b4/0x5d0
-[   26.296451]  ? __pfx_iommufd_fops_release+0x10/0x10
-[   26.297104]  ? __sanitizer_cov_trace_const_cmp2+0x1c/0x30
-[   26.297841]  ? evm_file_release+0x140/0x220
-[   26.298439]  ? __pfx_iommufd_fops_release+0x10/0x10
-[   26.299193]  __fput+0x41f/0xb70
-[   26.299670]  ____fput+0x22/0x30
-[   26.300113]  task_work_run+0x19e/0x2b0
-[   26.300644]  ? __pfx_task_work_run+0x10/0x10
-[   26.301229]  ? __sanitizer_cov_trace_const_cmp4+0x1a/0x20
-[   26.301938]  ? switch_task_namespaces+0xdd/0x130
-[   26.302579]  do_exit+0x8a3/0x28a0
-[   26.303205]  ? do_group_exit+0x1d8/0x2c0
-[   26.303745]  ? __pfx_do_exit+0x10/0x10
-[   26.304256]  ? __this_cpu_preempt_check+0x21/0x30
-[   26.304915]  ? _raw_spin_unlock_irq+0x2c/0x60
-[   26.305515]  ? lockdep_hardirqs_on+0x85/0x110
-[   26.306099]  ? _raw_spin_unlock_irq+0x2c/0x60
-[   26.306796]  ? trace_hardirqs_on+0x26/0x130
-[   26.307388]  do_group_exit+0xe4/0x2c0
-[   26.307892]  __x64_sys_exit_group+0x4d/0x60
-[   26.308460]  x64_sys_call+0x21a2/0x21b0
-[   26.308993]  do_syscall_64+0x6d/0x1180
-[   26.309509]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   26.310174] RIP: 0033:0x7fa6ab718a4d
-[   26.310680] Code: Unable to access opcode bytes at 0x7fa6ab718a23.
-[   26.311595] RSP: 002b:00007ffdeee343f8 EFLAGS: 00000246 ORIG_RAX: 00000000000000e7
-[   26.312569] RAX: ffffffffffffffda RBX: 00007fa6ab7f69e0 RCX: 00007fa6ab718a4d
-[   26.313498] RDX: 00000000000000e7 RSI: ffffffffffffff80 RDI: 0000000000000000
-[   26.314442] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000020
-[   26.315466] R10: 00007ffdeee342a0 R11: 0000000000000246 R12: 00007fa6ab7f69e0
-[   26.316385] R13: 00007fa6ab7fbf00 R14: 0000000000000001 R15: 00007fa6ab7fbee8
-[   26.317323]  </TASK>
-[   26.317642] irq event stamp: 2083
-[   26.318092] hardirqs last  enabled at (2091): [<ffffffff81666d75>] __up_console_sem+0x95/0xb0
-[   26.319467] hardirqs last disabled at (2214): [<ffffffff81666d5a>] __up_console_sem+0x7a/0xb0
-[   26.320566] softirqs last  enabled at (2212): [<ffffffff8148a2fe>] __irq_exit_rcu+0x10e/0x170
-[   26.321679] softirqs last disabled at (2099): [<ffffffff8148a2fe>] __irq_exit_rcu+0x10e/0x170
-[   26.322880] ---[ end trace 0000000000000000 ]---
-"
-
-Hope this cound be insightful to you.
-
-Regards,
-Yi Lai
-
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20251001104320.1272752-3-sakari.ailus@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
-If you don't need the following environment to reproduce the problem or if you
-already have one reproduced environment, please ignore the following information.
+LLM Generated explanations, may be completely bogus:
 
-How to reproduce:
-git clone https://gitlab.com/xupengfe/repro_vm_env.git
-cd repro_vm_env
-tar -xvf repro_vm_env.tar.gz
-cd repro_vm_env; ./start3.sh  // it needs qemu-system-x86_64 and I used v7.1.0
-  // start3.sh will load bzImage_2241ab53cbb5cdb08a6b2d4688feb13971058f65 v6.2-rc5 kernel
-  // You could change the bzImage_xxx as you want
-  // Maybe you need to remove line "-drive if=pflash,format=raw,readonly=on,file=./OVMF_CODE.fd \" for different qemu version
-You could use below command to log in, there is no password for root.
-ssh -p 10023 root@localhost
+## Analysis
 
-After login vm(virtual machine) successfully, you could transfer reproduced
-binary to the vm by below way, and reproduce the problem in vm:
-gcc -pthread -o repro repro.c
-scp -P 10023 repro root@localhost:/root/
+### 1. COMMIT MESSAGE ANALYSIS
 
-Get the bzImage for target kernel:
-Please use target kconfig and copy it to kernel_src/.config
-make olddefconfig
-make -jx bzImage           //x should equal or less than cpu num your pc has
+The commit message states:
+- Problem: `acpi_graph_get_next_endpoint()` calls
+  `fwnode_get_next_child_node()`, which dispatches back to ACPI code,
+  creating unnecessary indirection.
+- Solution: Call `acpi_get_next_subnode()` directly instead.
 
-Fill the bzImage file into above start3.sh to load the target kernel in vm.
+No "Cc: stable@vger.kernel.org" tag, no "Fixes:" tag, no explicit bug
+report link. The message says "somewhat problematic," indicating an
+architectural issue rather than a critical bug.
 
+### 2. CODE CHANGE ANALYSIS
 
-Tips:
-If you already have qemu-system-x86_64, please ignore below info.
-If you want to install qemu v7.1.0 version:
-git clone https://github.com/qemu/qemu.git
-cd qemu
-git checkout -f v7.1.0
-mkdir build
-cd build
-yum install -y ninja-build.x86_64
-yum -y install libslirp-devel.x86_64
-../configure --target-list=x86_64-softmmu --enable-kvm --enable-vnc --enable-gtk --enable-sdl --enable-usb-redir --enable-slirp
-make
-make install 
+The diff shows 4 replacements in `acpi_graph_get_next_endpoint()`:
+- Line 1475: `fwnode_get_next_child_node(fwnode, port)` →
+  `acpi_get_next_subnode(fwnode, port)`
+- Line 1493: `fwnode_get_next_child_node(port, prev)` →
+  `acpi_get_next_subnode(port, prev)`
+- Line 1495: `fwnode_get_next_child_node(fwnode, port)` →
+  `acpi_get_next_subnode(fwnode, port)`
+- Line 1499: `fwnode_get_next_child_node(port, NULL)` →
+  `acpi_get_next_subnode(port, NULL)`
+
+Call chain:
+1. `fwnode_get_next_child_node()` dispatches via `fwnode_call_ptr_op()`
+   to the fwnode-specific implementation.
+2. For ACPI fwnodes, it calls `acpi_get_next_present_subnode()`
+   (registered at line 1747).
+3. `acpi_get_next_present_subnode()` filters non-present device nodes
+   and calls `acpi_get_next_subnode()`.
+
+Why the change is safe:
+- Graph endpoints are ACPI data nodes (checked by `is_acpi_graph_node()`
+  at line 1448: `is_acpi_data_node(fwnode)`).
+- `acpi_get_next_present_subnode()` only filters non-present device
+  nodes (lines 1407-1408), not data nodes.
+- Therefore, for graph endpoints, `acpi_get_next_subnode()` and
+  `fwnode_get_next_child_node()` behave the same.
+
+### 3. CLASSIFICATION
+
+This is a bug fix addressing an architectural issue:
+- Removes unnecessary indirection in ACPI-specific code.
+- Avoids a circular dependency pattern (ACPI → generic → ACPI).
+- Functionally equivalent for graph endpoints.
+
+Not a feature addition, not a new API, not a refactor.
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+- Scope: 4 lines changed in one function in one file.
+- Risk: Very low — same behavior for graph endpoints, cleaner
+  architecture.
+- Complexity: Low — direct function call replacement.
+
+### 5. USER IMPACT
+
+- Who is affected: Users of ACPI graph endpoints (e.g., camera/media
+  drivers, device tree-like ACPI usage).
+- Severity: Low — architectural improvement, not a visible bug fix.
+- Likelihood: The "somewhat problematic" wording suggests no immediate
+  user-visible issue.
+
+### 6. STABILITY INDICATORS
+
+- Reviewed-by: Laurent Pinchart, Jonathan Cameron
+- Signed-off-by: Rafael J. Wysocki (ACPI maintainer)
+- No "Tested-by:" tags
+- Commit date: October 1, 2025 (recent)
+
+### 7. DEPENDENCY CHECK
+
+- `acpi_get_next_subnode()` exists in the same file and has been present
+  for years.
+- No external dependencies introduced.
+- Should apply cleanly to stable trees that have this code.
+
+### 8. HISTORICAL CONTEXT
+
+Related commits:
+- `79389a83bc388`: Introduced `acpi_graph_get_next_endpoint()` with
+  `fwnode_get_next_child_node()` calls.
+- `48698e6cf44c3`: Introduced `acpi_get_next_present_subnode()` to
+  filter non-present devices.
+- `5d010473cdeaa` (this commit): Removes the indirection.
+
+The pattern existed since the function was introduced; this commit
+cleans it up.
+
+### 9. STABLE KERNEL CRITERIA EVALUATION
+
+- Obviously correct: Yes — direct call instead of indirection.
+- Fixes a real bug: Yes — architectural issue that could cause problems.
+- Important issue: Moderate — architectural improvement, not a critical
+  bug.
+- Small and contained: Yes — 4 lines, single function.
+- No new features: Yes — same behavior, cleaner code.
+- Applies cleanly: Yes — should apply without conflicts.
+
+### 10. RISK VS BENEFIT
+
+Benefits:
+- Removes unnecessary indirection.
+- Avoids circular dependency pattern.
+- Improves code clarity.
+- No functional change for graph endpoints.
+
+Risks:
+- Very low — functionally equivalent change.
+- No new code paths or logic changes.
+
+### 11. CONCERNS AND CONSIDERATIONS
+
+- No "Cc: stable" tag, but that alone doesn't disqualify.
+- Recent commit (Oct 2025) — hasn't been in mainline long.
+- No explicit bug report or user complaint mentioned.
+- Architectural improvement rather than a critical fix.
+
+### CONCLUSION
+
+This is a small, correct fix that removes unnecessary indirection in
+ACPI code. It fixes an architectural issue and is functionally
+equivalent for graph endpoints. It meets stable kernel criteria:
+correct, fixes a real issue, small scope, no new features, and should
+apply cleanly.
+
+However, it's an architectural improvement rather than a critical bug
+fix, and there's no explicit stable tag or user-visible bug report. The
+"somewhat problematic" wording suggests it may not cause immediate
+visible problems.
+
+Given the conservative nature of stable trees and the lack of evidence
+of user-visible impact, this is borderline but leans toward acceptable
+for stable backporting due to its correctness, small scope, and
+architectural benefit.
+
+**YES**
+
+ drivers/acpi/property.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/acpi/property.c b/drivers/acpi/property.c
+index 43d5e457814e1..76158b1399029 100644
+--- a/drivers/acpi/property.c
++++ b/drivers/acpi/property.c
+@@ -1472,7 +1472,7 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
+ 
+ 	if (!prev) {
+ 		do {
+-			port = fwnode_get_next_child_node(fwnode, port);
++			port = acpi_get_next_subnode(fwnode, port);
+ 			/*
+ 			 * The names of the port nodes begin with "port@"
+ 			 * followed by the number of the port node and they also
+@@ -1490,13 +1490,13 @@ static struct fwnode_handle *acpi_graph_get_next_endpoint(
+ 	if (!port)
+ 		return NULL;
+ 
+-	endpoint = fwnode_get_next_child_node(port, prev);
++	endpoint = acpi_get_next_subnode(port, prev);
+ 	while (!endpoint) {
+-		port = fwnode_get_next_child_node(fwnode, port);
++		port = acpi_get_next_subnode(fwnode, port);
+ 		if (!port)
+ 			break;
+ 		if (is_acpi_graph_node(port, "port"))
+-			endpoint = fwnode_get_next_child_node(port, NULL);
++			endpoint = acpi_get_next_subnode(port, NULL);
+ 	}
+ 
+ 	/*
+-- 
+2.51.0
 
