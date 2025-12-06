@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADEE2FE575;
-	Sat,  6 Dec 2025 14:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2AAF2FE56E;
+	Sat,  6 Dec 2025 14:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029785; cv=none; b=W+ikFIYcOcbBN7WB2jteEEszlB54oMQjwZiYkPURR9MUKUnvogTMEGMQ/az7d6gi5myzA/gJb1iQXwa4UT5bRTnSsnA/i98xnxYbJDQTRsu/IwgCB3THBAQSS5+otXa1hOiD0yyy2FHGnze4P5SljkM51ZP0k5FrSMd7yEesQiE=
+	t=1765029787; cv=none; b=mvhvbosAuH2DunD49qUuYWMjMncFBuix4boErECXP3U+OBORhUVDcb131P6r3/TBiYX4pCb5rLG2r6Yf1vRM8W4QvwWihFPUOUl758wS0kaJi2jH+1O6W08Pw37hh/e+Dtl32qkUdL4j9bM0SyE3XUjnHqEr3UApLaDjqJLpxIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029785; c=relaxed/simple;
-	bh=acnhzokXQFTn9Unxjt4+V60Qfn9zz+tC2Hkix+piSbs=;
+	s=arc-20240116; t=1765029787; c=relaxed/simple;
+	bh=Cv1rkLZwSfO1XqtszF2yVxBBqj1l4Zku5hCFCCY0NwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GE5i/9jFS1yCr2CmYbStD6LVHiTFTIRC9ySjTjX+AWauAx1lKx0kPvCzvd1Nb1kIFNg1Yq7AUMoBiqxS8W5mCH6lBBiT51tp3REYX7PbAPz66ozugtloYPw+on5sFCZesFzlSLSOGIbEzAVhBGYcYjyOwin+LBDSaaXaaG9n1Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YF23UqS/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YahB10cZD0zm59lwKo9ziXMaOuS3U95ECe+Vfr0FLBPGVC8QYyHcaFsztjI4QmaGb9GbMs1eO12uauvtbDfDnEiT5Vdo1njTVJCPgCp2tVC1SwlYic+CNdgGRrunXY4GiTRKMLB6CegaX6ixOGacMlxJ6Q+b8rXEIBGzW62AvMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GjoT4CXI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YF23UqS/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB79C4CEF5;
-	Sat,  6 Dec 2025 14:03:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GjoT4CXI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E72C4CEF5;
+	Sat,  6 Dec 2025 14:03:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029785;
-	bh=acnhzokXQFTn9Unxjt4+V60Qfn9zz+tC2Hkix+piSbs=;
+	s=k20201202; t=1765029787;
+	bh=Cv1rkLZwSfO1XqtszF2yVxBBqj1l4Zku5hCFCCY0NwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YF23UqS/o/kkbR3IElLE2ZQbKsXzlkfpXdtjitHWHgjAcqrFUhdyUPApl20p+jYkS
-	 LdOYOHWuSwVg5s+izEETUuihLW7aiVuEfD8j1R2/cbp0A1DJXCMeJyleKNDHxfsats
-	 3tff3UIiFxBHHBG490+wgqGaJOI9vyE2rBjxWaaGTvdBAQWYtlsIZz3hjRtfdVafDG
-	 LLCwdi9//5vWcLa1RTJPxw/wds4Gz7INuDkDvRXq6iO+aBcKCIs+M0VjgKmx985uND
-	 Z6GvmNnZSGoQY7aBeTLqeGHexFh7zWSo9ZrsiUfBk418Vf+bgxWYpqeLc/NYK61xoF
-	 YHu60LiBJx9UQ==
+	b=GjoT4CXIWDISJjpNHdODKMI7ORpeOM6JM50B7NlcekVvyq3TqvaHAvB/a7Zvv/Ymx
+	 RsEk+oVM7wcD7OmlVMfM8PZRkSe/doZE5A77rcmJcgqLzks7u83/ytqI+ZBU5nEXXF
+	 ubwEVrPSiCfzza7guhoAszU7xERkvugmxkG7jP5YRud2RxTWPQVSgLVF9x0JIiwokx
+	 iOZo7lF4whHR+3RV3j62m9NCJGTKQr5hcdT041NtVRZKC37KIvFWIbaj2+XAWTRZFF
+	 Zc3wPgE5nSr7ZHFWBatI5zwGfpfjSfmIssfBVtT9QT8UXR3+VtXOG3A/60oR3JbKAO
+	 tm5gukIXMD8gQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Max Chou <max.chou@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: Add new VID/PID 0x0489/0xE12F for RTL8852BE-VT
-Date: Sat,  6 Dec 2025 09:02:11 -0500
-Message-ID: <20251206140252.645973-6-sashal@kernel.org>
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] btrfs: scrub: always update btrfs_scrub_progress::last_physical
+Date: Sat,  6 Dec 2025 09:02:12 -0500
+Message-ID: <20251206140252.645973-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -52,47 +51,60 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
 Content-Transfer-Encoding: 8bit
 
-From: Max Chou <max.chou@realtek.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 32caa197b9b603e20f49fd3a0dffecd0cd620499 ]
+[ Upstream commit 54df8b80cc63aa0f22c4590cad11542731ed43ff ]
 
-Add the support ID(0x0489, 0xE12F) to usb_device_id table for
-Realtek RTL8852BE-VT.
+[BUG]
+When a scrub failed immediately without any byte scrubbed, the returned
+btrfs_scrub_progress::last_physical will always be 0, even if there is a
+non-zero @start passed into btrfs_scrub_dev() for resume cases.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+This will reset the progress and make later scrub resume start from the
+beginning.
 
-T:  Bus=04 Lev=02 Prnt=02 Port=05 Cnt=01 Dev#= 86 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e12f Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+[CAUSE]
+The function btrfs_scrub_dev() accepts a @progress parameter to copy its
+updated progress to the caller, there are cases where we either don't
+touch progress::last_physical at all or copy 0 into last_physical:
 
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+- last_physical not updated at all
+  If some error happened before scrubbing any super block or chunk, we
+  will not copy the progress, leaving the @last_physical untouched.
+
+  E.g. failed to allocate @sctx, scrubbing a missing device or even
+  there is already a running scrub and so on.
+
+  All those cases won't touch @progress at all, resulting the
+  last_physical untouched and will be left as 0 for most cases.
+
+- Error out before scrubbing any bytes
+  In those case we allocated @sctx, and sctx->stat.last_physical is all
+  zero (initialized by kvzalloc()).
+  Unfortunately some critical errors happened during
+  scrub_enumerate_chunks() or scrub_supers() before any stripe is really
+  scrubbed.
+
+  In that case although we will copy sctx->stat back to @progress, since
+  no byte is really scrubbed, last_physical will be overwritten to 0.
+
+[FIX]
+Make sure the parameter @progress always has its @last_physical member
+updated to @start parameter inside btrfs_scrub_dev().
+
+At the very beginning of the function, set @progress->last_physical to
+@start, so that even if we error out without doing progress copying,
+last_physical is still at @start.
+
+Then after we got @sctx allocated, set sctx->stat.last_physical to
+@start, this will make sure even if we didn't get any byte scrubbed, at
+the progress copying stage the @last_physical is not left as zero.
+
+This should resolve the resume progress reset problem.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -100,22 +112,32 @@ LLM Generated explanations, may be completely bogus:
 
 
 
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/btrfs/scrub.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index bd26a8db64096..b92bfd131567e 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -587,6 +587,8 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Realtek 8852BT/8852BE-VT Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x8520), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe12f), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index ba20d9286a340..cff67ed630196 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -3039,6 +3039,10 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	unsigned int nofs_flag;
+ 	bool need_commit = false;
  
- 	/* Realtek 8922AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x8922), .driver_info = BTUSB_REALTEK |
++	/* Set the basic fallback @last_physical before we got a sctx. */
++	if (progress)
++		progress->last_physical = start;
++
+ 	if (btrfs_fs_closing(fs_info))
+ 		return -EAGAIN;
+ 
+@@ -3057,6 +3061,7 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	sctx = scrub_setup_ctx(fs_info, is_dev_replace);
+ 	if (IS_ERR(sctx))
+ 		return PTR_ERR(sctx);
++	sctx->stat.last_physical = start;
+ 
+ 	ret = scrub_workers_get(fs_info);
+ 	if (ret)
 -- 
 2.51.0
 
