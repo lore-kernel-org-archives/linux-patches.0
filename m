@@ -1,127 +1,160 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DA027FD76
-	for <patches@lists.linux.dev>; Sat,  6 Dec 2025 10:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C96E2288E3;
+	Sat,  6 Dec 2025 14:02:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765018009; cv=none; b=YnKBFZKGrijRfbgMVEvIs1FS9Fx1iC4QEG+WsAHgGZfwZ3mZQM2/qoEOGRzF1SbgpA4OcmX+VK0S9bcBhl4pjeyMNYdXJqszL3EL4dGvcszYTqVT5hFb8cphwq/IuBxruuM9OlBzG5m5bALh+QBOYiysS6sDKS1ciQ+PWJn/4s8=
+	t=1765029777; cv=none; b=sBKhg0QD5C+urD/kco+RmnpE9RcSyIsRqqFUxL9IjAo5v/NmvnOIopzG62U08jrOZoOi5bBaNW3KyAcdtdA/ApqYzCeZg2mTxDQDeFE447SqHxvl0cbtUCsK+sdJXNjfxzRxUXVbL1YgpecmyG8Fg7/+BwV1iLTvr3HrhiHBUsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765018009; c=relaxed/simple;
-	bh=3Ne55HYvIGzsxE6lBs+J9kvbp/auKRJ4342PVym7TfI=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NeOHwPhoUVq6KafzYcKEsnC9V1wF4m6SVS6bubDc+CE+DVgmBiL7LODAfkniX1a95Jc4S5r8z5idC3MJzXz8t+luQ8pzCEl2a4niNlmMW2rkGqL0qUrNWozydOzyBc9/bJX6itr1Kn42SQshfAatU45lnX28jnzfCKJI67HKFkk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uGRRSX/c; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765029777; c=relaxed/simple;
+	bh=FQeuqPZ9ZuYejyixETsTXE9N5BCqnipWuGOsKpQT8/s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q6is65XVBIjGoZdUwpYi60IPkf5VxcF3kKqtBlV/ptgx3hkZvjHjSjWmBzZh6dWMu8clnS46eYbDSCnFT2vvZpd6P85JaqpUJr/ZYCznWHkOXSW/zZyrPhjbGUhXMoTin5e1LTKT0HwczarWtrcQuOSnmkHa+KKj4AO1FA7aC+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tq1NrON2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uGRRSX/c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1B2C19421
-	for <patches@lists.linux.dev>; Sat,  6 Dec 2025 10:46:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tq1NrON2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CA7C4CEF5;
+	Sat,  6 Dec 2025 14:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765018009;
-	bh=3Ne55HYvIGzsxE6lBs+J9kvbp/auKRJ4342PVym7TfI=;
-	h=From:In-Reply-To:References:Date:Subject:To:Cc:From;
-	b=uGRRSX/c/aOb4dI6VJNdlNlbmzU46hSBfEyJaA5zKbQKru9u/AoK2sOldX3gKjK9N
-	 d/KfMOwSXCaTGUf9BwsRg6SyXEbcUqUEzEC2L5FfgMhQjxfG4SAaoidfpKaDYL8kEh
-	 63upVZQzv6DZa1guZ7MRu89mjuVtgo/rNSDe3eSbWyH4sUjRMiEuGzyEfNArJLIU7o
-	 dNGTqvb7AUP50XvVBdDpDCDoTCv4sqWBimFVrIeXtZdqedNR3lgiK4Hu76aClV0juY
-	 MEO+dl7lRUWUPJrp9ig37qISGVezESFoIM8dkFMA4hg3fJZHJKdINZDNwMfuAJW4+l
-	 GWZh9oPB+vMLQ==
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-37ba5af5951so28317461fa.1
-        for <patches@lists.linux.dev>; Sat, 06 Dec 2025 02:46:48 -0800 (PST)
-X-Forwarded-Encrypted: i=1; AJvYcCU8eFeP8MUFZbIIN9cPlPt1TS70nprw01qVVsZbR1JK0e57YlEtvF+uRp3cR9aUVj9n5gPzvIi9@lists.linux.dev
-X-Gm-Message-State: AOJu0YxBWU4e+zO0LY5OFqZysEswmREN6J0TQ2CRUzW+TQNwG9JQZNbN
-	rbVtEkqE52vFWbPn+vazsU+6ij31TTLiefbu3nhsZDNRiBf1cR44iBrOg7xfMCInlSY7KUHUG9E
-	WakcCwWMjzTDb6Pxz4/OjUrnQ7yjaM2Ku0oFRfV1S1g==
-X-Google-Smtp-Source: AGHT+IHjoTCsoXdOpEYFwbC11jycFi+lPXHBD3lo6btqHsUrnQCOleubWzoKMCLteiJ+hJuRMdyLLJxIfO2MOTTbpPY=
-X-Received: by 2002:a05:6512:a96:b0:595:7e9c:ce00 with SMTP id
- 2adb3069b0e04-5987e8be416mr630010e87.25.1765018007594; Sat, 06 Dec 2025
- 02:46:47 -0800 (PST)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 6 Dec 2025 02:46:46 -0800
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Sat, 6 Dec 2025 02:46:46 -0800
-From: Bartosz Golaszewski <brgl@kernel.org>
-In-Reply-To: <20251205230724.2374682-1-safinaskar@gmail.com>
+	s=k20201202; t=1765029776;
+	bh=FQeuqPZ9ZuYejyixETsTXE9N5BCqnipWuGOsKpQT8/s=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Tq1NrON2BZP0O0neJ54/wZ0R6J73Ah1ADobrL070YVk57oH2OdTL3FoU7BF1RyEi2
+	 BtsCWZCT3pf+LRen+JVNfCt6Co/Xa9h9iizCa6c3GoSL211xE4+w1JLU84N6sib3f5
+	 vOsP30z99qVodDXN+iEOad5TDNoEnQllRvgyx1jGR4DVXWpFZ2RtdBUqryEtPvSMuH
+	 Qo9wPQOpUPB9AqxABRXBKg0mxquPuHgkQvcENr4LDBQ1v3iGCknWeFjtzBx2bVWsGb
+	 6q2axIdiyNUQ4GjhtJSw/ardcNhJShQVl+Yg2p/xbSOU0JNp15hAWVrwDTb0es00gz
+	 etUcfIp9rMjjw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Namjae Jeon <linkinjeon@kernel.org>,
+	Qianchang Zhao <pioooooooooip@gmail.com>,
+	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	smfrench@gmail.com,
+	alexandre.f.demers@gmail.com,
+	alexander.deucher@amd.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: fix use-after-free in ksmbd_tree_connect_put under concurrency
+Date: Sat,  6 Dec 2025 09:02:06 -0500
+Message-ID: <20251206140252.645973-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251205230724.2374682-1-safinaskar@gmail.com>
-Date: Sat, 6 Dec 2025 02:46:46 -0800
-X-Gmail-Original-Message-ID: <CAMRc=MfN_gak+b2hmaZQKno1ehCKPDrH0UvGcXDsdye-MjDVow@mail.gmail.com>
-X-Gm-Features: AQt7F2p5gAad-Rcjwp1NtHEEbD32fqDeg8j4vtF6lmcmVkYXUW6ISuG07Qo4dTw
-Message-ID: <CAMRc=MfN_gak+b2hmaZQKno1ehCKPDrH0UvGcXDsdye-MjDVow@mail.gmail.com>
-Subject: Re: [PATCH] gpiolib: acpi: Add quirk for Dell Precision 7780
-To: Askar Safin <safinaskar@gmail.com>
-Cc: Mika Westerberg <westeri@kernel.org>, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
-	Linus Walleij <linus.walleij@linaro.org>, Bartosz Golaszewski <brgl@kernel.org>, linux-gpio@vger.kernel.org, 
-	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	regressions@lists.linux.dev, Dell.Client.Kernel@dell.com, 
-	Mario Limonciello <superm1@kernel.org>, patches@lists.linux.dev, 
-	Askar Safin <safinaskar@zohomail.com>, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18
+Content-Transfer-Encoding: 8bit
 
-Hi!
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-Thanks for the patch.
+[ Upstream commit b39a1833cc4a2755b02603eec3a71a85e9dff926 ]
 
-On Fri, 5 Dec 2025 23:32:42 +0100, Askar Safin <safinaskar@gmail.com> said:
-> Dell Precision 7780 often wakes up on its own from suspend. Sometimes
-> wake up happens immediately (i. e. within 7 seconds), sometimes it happens
-> after, say, 30 minutes.
->
-> Fixes: 1796f808e4bb ("HID: i2c-hid: acpi: Stop setting wakeup_capable")
-> Reported-by: Askar Safin <safinaskar@zohomail.com>
-> Link: https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-> Cc: <stable@vger.kernel.org>
-> Tested-by: Askar Safin <safinaskar@gmail.com>
-> Signed-off-by: Askar Safin <safinaskar@gmail.com>
+Under high concurrency, A tree-connection object (tcon) is freed on
+a disconnect path while another path still holds a reference and later
+executes *_put()/write on it.
 
-Please don't add Tested-by, Reported-by, etc. if you're the author of the.
-Tested-by should be added by someone else who tested your patch, it doesn't
-make much sense otherwise because I sure do expect you test your changes if
-you have access to the right hardware. :)
+Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-> ---
->  drivers/gpio/gpiolib-acpi-quirks.c | 22 ++++++++++++++++++++++
->  1 file changed, 22 insertions(+)
->
-> diff --git a/drivers/gpio/gpiolib-acpi-quirks.c b/drivers/gpio/gpiolib-acpi-quirks.c
-> index 7b95d1b03361..a0116f004975 100644
-> --- a/drivers/gpio/gpiolib-acpi-quirks.c
-> +++ b/drivers/gpio/gpiolib-acpi-quirks.c
-> @@ -370,6 +370,28 @@ static const struct dmi_system_id gpiolib_acpi_quirks[] __initconst = {
->  			.ignore_wake = "ASCP1A00:00@8",
->  		},
->  	},
-> +	{
-> +		/*
-> +		 * Spurious wakeups, likely from touchpad controller
-> +		 * Dell Precision 7780
-> +		 * Found in BIOS 1.24.1
-> +		 *
-> +		 * Found in touchpad firmware, installed by Dell Touchpad Firmware Update Utility version 1160.4196.9, A01
-> +		 * ( Dell-Touchpad-Firmware-Update-Utility_VYGNN_WIN64_1160.4196.9_A00.EXE ),
-> +		 * released on 11 Jul 2024
-> +		 *
-> +		 * https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-> +		 */
-> +		.matches = {
-> +			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-> +			DMI_MATCH(DMI_PRODUCT_FAMILY, "Precision"),
-> +			DMI_MATCH(DMI_PRODUCT_NAME, "Precision 7780"),
-> +			DMI_MATCH(DMI_BOARD_NAME, "0C6JVW"),
-> +		},
-> +		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-> +			.ignore_wake = "VEN_0488:00@355",
-> +		},
-> +	},
->  	{} /* Terminating entry */
->  };
->
+LLM Generated explanations, may be completely bogus:
 
-Looks good to me, but I'll give GPIO ACPI maintainers time to chime in.
 
-Bart
+
+ fs/smb/server/mgmt/tree_connect.c | 18 ++++--------------
+ fs/smb/server/mgmt/tree_connect.h |  1 -
+ fs/smb/server/smb2pdu.c           |  3 ---
+ 3 files changed, 4 insertions(+), 18 deletions(-)
+
+diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
+index ecfc575086712..d3483d9c757c7 100644
+--- a/fs/smb/server/mgmt/tree_connect.c
++++ b/fs/smb/server/mgmt/tree_connect.c
+@@ -78,7 +78,6 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 	tree_conn->t_state = TREE_NEW;
+ 	status.tree_conn = tree_conn;
+ 	atomic_set(&tree_conn->refcount, 1);
+-	init_waitqueue_head(&tree_conn->refcount_q);
+ 
+ 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
+ 			      KSMBD_DEFAULT_GFP));
+@@ -100,14 +99,8 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
+ 
+ void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
+ {
+-	/*
+-	 * Checking waitqueue to releasing tree connect on
+-	 * tree disconnect. waitqueue_active is safe because it
+-	 * uses atomic operation for condition.
+-	 */
+-	if (!atomic_dec_return(&tcon->refcount) &&
+-	    waitqueue_active(&tcon->refcount_q))
+-		wake_up(&tcon->refcount_q);
++	if (atomic_dec_and_test(&tcon->refcount))
++		kfree(tcon);
+ }
+ 
+ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+@@ -119,14 +112,11 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
+ 	xa_erase(&sess->tree_conns, tree_conn->id);
+ 	write_unlock(&sess->tree_conns_lock);
+ 
+-	if (!atomic_dec_and_test(&tree_conn->refcount))
+-		wait_event(tree_conn->refcount_q,
+-			   atomic_read(&tree_conn->refcount) == 0);
+-
+ 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
+ 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
+ 	ksmbd_share_config_put(tree_conn->share_conf);
+-	kfree(tree_conn);
++	if (atomic_dec_and_test(&tree_conn->refcount))
++		kfree(tree_conn);
+ 	return ret;
+ }
+ 
+diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
+index a42cdd0510411..f0023d86716f2 100644
+--- a/fs/smb/server/mgmt/tree_connect.h
++++ b/fs/smb/server/mgmt/tree_connect.h
+@@ -33,7 +33,6 @@ struct ksmbd_tree_connect {
+ 	int				maximal_access;
+ 	bool				posix_extensions;
+ 	atomic_t			refcount;
+-	wait_queue_head_t		refcount_q;
+ 	unsigned int			t_state;
+ };
+ 
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index a2830ec67e782..dba29881debdc 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -2200,7 +2200,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
+ 		goto err_out;
+ 	}
+ 
+-	WARN_ON_ONCE(atomic_dec_and_test(&tcon->refcount));
+ 	tcon->t_state = TREE_DISCONNECTED;
+ 	write_unlock(&sess->tree_conns_lock);
+ 
+@@ -2210,8 +2209,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
+ 		goto err_out;
+ 	}
+ 
+-	work->tcon = NULL;
+-
+ 	rsp->StructureSize = cpu_to_le16(4);
+ 	err = ksmbd_iov_pin_rsp(work, rsp,
+ 				sizeof(struct smb2_tree_disconnect_rsp));
+-- 
+2.51.0
+
