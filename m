@@ -1,136 +1,200 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PH8PR06CU001.outbound.protection.outlook.com (mail-westus3azon11012016.outbound.protection.outlook.com [40.107.209.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD9A2D8391
-	for <patches@lists.linux.dev>; Fri,  5 Dec 2025 23:13:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1764976401; cv=none; b=MXVlc+H4eo4HeCmApmIOEZ9YSmX2X5AEyrOSldXn5AKHmBwrZZy+JhA/g3W8lI76hv5xe6o6tLH6NiVEsVroWXIHpKda1dXtYCQAyZS+EYtuDLXKHdLfdA78yj2UWIBcKn1vBIMllcKD/FSHWppDgDMHmr6QsmdGZhDkpOizA/4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1764976401; c=relaxed/simple;
-	bh=Z2TnggYnSPNTQQA0qeFMaIKiMc/QIExFwLuHda2smVU=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=lBc1t3vzi8VKWk/d4jNBTu4EvLDYYu/NJ/XAaihyZ8aVYn1pwtzhjohaB2XLlbw8FS2zcB22kF2VgmBLD1q5kkGz68XiiWeI7FqN6lY+LYadVEXXlkbD/n44MNZt2PSzwnoZgNG3m61Is+Hrm1w6p4gdBHBGnhWW53OBnTU3W1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P+pigfWi; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56B2B1E1DFC;
+	Sat,  6 Dec 2025 00:40:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.209.16
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1764981607; cv=fail; b=hwdgqIdnvs+XCZih5tfHJm22d+E5/hkGwhnFez/J6RUwc7niVqil8Y8J5sdEEvZq+Bm18Pax+3glNBKGiQfuBSb8RqWhDFzNy0dds3qvBjW8V/R2cQ+EHgiHZVIUpMpqdJ4jttwP68rLhHYqRZoQuhjVBY+aGtb3Kxflf4UhLhA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1764981607; c=relaxed/simple;
+	bh=Edyq5LWD7+vCnItrHe4jRGgOwy/Jz+aHv9oI9KBZLNo=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=awHr/kCu2jVDFSgPjmvipfgYD3qVXE9W5uuMlFVRiGcpm7wTAKVawWcH3o8YAL08GnrThJjte+R/MRvwoXWLXaSEeqUt+uGwqDuEce1cfMeHPjHPc6GYto+UQNZYhIMiNwKrSr7pBa+phfedT5JPDXSg6q592zNVEAJj87LntOE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=bOzlU7lZ; arc=fail smtp.client-ip=40.107.209.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P+pigfWi"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-59431f57bf6so3113673e87.3
-        for <patches@lists.linux.dev>; Fri, 05 Dec 2025 15:13:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1764976398; x=1765581198; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ok3XVC2kEB7d6LX2W7MFJKuf7Db93yAzAqWhVXvqPiI=;
-        b=P+pigfWiUPyM6cymwT1ik8fTBamVmorxmeT9l/BDQ3MIWpReZ9aJy5HBTRjuN99ueG
-         bCreYYhAmCpBCrc+JJid+YlKQjPjrHVsR71SM5JNxLmunr9BrwLtx3Mj/j5OTdVAPsJ+
-         rCiFB/fq6BZImfc0S+3lAAotVxDGsos0evan7gvcoR9nfyUL5T3vq5qP4kEMKg4aJ+EM
-         YeQMiT60SpyuVzGa/A2El3NDkurBk+Hc6B7MSjEwXnjaCroheKZJPMFH53S8GIZYKw6Z
-         KN41SKiJY3iH8tWHrHsmALtaMFNJ7xO8C06mrCP2ZwngTJm7HWyRi7oBVLJGVKP7ENQb
-         Np0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1764976398; x=1765581198;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ok3XVC2kEB7d6LX2W7MFJKuf7Db93yAzAqWhVXvqPiI=;
-        b=o5edL7c++7DWROnWu4ngodTqCFj3cq8FWftzDBit4He7ml3W5LEqDqheWXEzWv4qOD
-         HDHzWooLgya4lxPWPrtvrLPJlAB5FD+tc3vRdv/HXh3dwrZ/xxROv9E1AaNr9vlvHLbM
-         qsFY/sh9HxmZpHbYCmIG2A0se5zxl35+zwzANg/dDCYxfm4VbyIcbNdKW5VfSnmzlZUM
-         rVYNZtfhyObZdohNKXYDgYiwuIBAMCuhDbTv1TWHFLWt6iKUuYIz9/gyZRgQD5JYMuji
-         xIZvXI77VgO1/mb6TXP0uRk2jy3QeTOTx3WWj7y3Nm4WjNUJF0w+sqjJLc1UJ8f3+m9P
-         I6vA==
-X-Forwarded-Encrypted: i=1; AJvYcCWeONaenwz06e6MzQHekiJO+rWmI5AQ170OWCnHCHvq5Fum7Yw6cUInslRk3wpQMjCLoZdbeu83@lists.linux.dev
-X-Gm-Message-State: AOJu0YxrRj8VMXn39ueF2TT+nE+Gx5aYFct1PCR4kg4tXdjHJGFn3/fL
-	EPLDXLj2GcCPruyCRRnCE79II04FRQZ4efGTFN3U6bdkrISkZSI2Yccc
-X-Gm-Gg: ASbGncvTijPUcKwWXe5wboqs1pjc5p0HArabKjKJD2UCJ3DAJVlqi8uMI+hVlJj14zL
-	Ky6pctkEmWJnTIVfqwsKdPxC9qy8exKAbkzxX5jOKQfx8HZwVuavP3buaxNa5suAxz45qtmQoqt
-	Se6gewepTeU+wBVPZonOQcUmt30ELn3i7jOcgDCFqA3WP5AoP26fImRY1OFpDjZUs4c5VkGVwo8
-	3FcDJNLBMI0Eb755H9IUMUVcokEPdVFtsgiAYjybkACzSTppScwmmr18MQoTrQG9a9VnGhla7Hb
-	yRHAmwPaXSpClkg0z0iKtQDzwbI5m6lBSTysfAjj7RU2cqfMgP8xtprXRUzrEPxDGlW3kj+oRgU
-	UNd4P8rSIUagwGyLiQzw2LCtRu5Kgt06cd8nxPCVug8vTAQjBBtDfRnJZafvgjfaVH4sjXLt9eM
-	t6ikQsXCIvGn1tUz5v0dw=
-X-Google-Smtp-Source: AGHT+IHw+siol0Y/HCUauT594fFSjA/LYfEXRKCDELP7T7smqU9LZ6s7uqmUidrRDZEZmBY4flxMEA==
-X-Received: by 2002:a05:6512:2353:b0:595:8200:9f7e with SMTP id 2adb3069b0e04-5987e8af414mr145380e87.20.1764976397518;
-        Fri, 05 Dec 2025 15:13:17 -0800 (PST)
-Received: from localhost ([194.190.17.114])
-        by smtp.gmail.com with UTF8SMTPSA id 2adb3069b0e04-597d7c1e2efsm1918614e87.56.2025.12.05.15.13.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Dec 2025 15:13:17 -0800 (PST)
-From: Askar Safin <safinaskar@gmail.com>
-To: Mika Westerberg <westeri@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Bartosz Golaszewski <brgl@kernel.org>,
-	linux-gpio@vger.kernel.org,
-	linux-acpi@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: regressions@lists.linux.dev,
-	Dell.Client.Kernel@dell.com,
-	Mario Limonciello <superm1@kernel.org>,
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="bOzlU7lZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mITi4aYRl9z3gJQAZmC61tUFj6tzzS2mB3DI14SKQUHKbrk7OGxbR/Q1/exAL8QBUcXz2TwrrhiJmdzmi6muxfnnTna7AB0F9PtPRG+AxWh7KgenWJ2yeDyJ1t/GUXMaNlNr06ROICSjZcXYwJadwffdqk1cVL0Okgp6xJ1Gjt/IHinNkKsGb/OGo4cQBs7rFO9nOeLAeb2d/tSh58QEF6aiiIYBQMqFADUNawYuXhPR1jRinXgA49L/6ERcpaghe9gi/qh+VOK+nbVex/KZNvkkphdZ3iMuDC/xkmn0KRcOXeaCYqS4dg0ptsf/riU7iTIzKqKgU8YJxyIGN7dmpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hjgq+6SeND5Cff/GVHAGZqJhwmTvCZggtt1YpjnfES0=;
+ b=L/TWpLI3lP3h7DMfg2/60lLpQs41dZyYQ4NQXThXZIZ7TAZix+6GtmUIepRuN6JZIKc4EAGuJpy0Z1wEe92XB4FJ28pXh2V2mIcW9BOJhXogyDfrfA3fhQADYZB8qE7ufTsPVp2mAWMyPtKakWclOXXmRGipH4UP5DQEXCxrbPokyD5qOROpgvwqEfuHwV0D9Cbhv7HgevSG16bdVR0f4n/pzPBHQBsc1XTxPZXJ6slhiIYYqhzh0vcO6kHyc0zqOAOIVUmNmFHDw/PELoElijbYjBUmmtnL42wC1tGgYOoD/EFbfjK756oag7QPn0ilBnEUgrOgLR50e11wol2z0w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hjgq+6SeND5Cff/GVHAGZqJhwmTvCZggtt1YpjnfES0=;
+ b=bOzlU7lZwymOnKGRxJIr9rJe+gRaBbiHQaAG8Yp/mOn5KWslO27Z4SWNFlsUgIf18+rskIwLJwR6B5FR0kwY/h7FiI3C/f2OjAaR5eX+GwV7XPGDd7w3wogg+3vZ5NO160ufz8Z9wALu7xCaYo6h5N58yuB/619wZSoZNCdb12GkrBLu9RBFAPKlIctea/u7qKL0jPirsKl/JCPYhvu46SfS/3lliz6JXlAKoTB/fK2eU0G9a6POYAzbzFKhNIZp+VIBMsdDHvLNa92sa8Fbo4UYU0uiy9yR2QjCHY+f/Byfk5KmRfwjcLx3kRAGZlcjiw7h70IG/2HCMiFDyuPoeQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com (2603:10b6:208:c1::17)
+ by MW4PR12MB7119.namprd12.prod.outlook.com (2603:10b6:303:220::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.12; Sat, 6 Dec
+ 2025 00:40:00 +0000
+Received: from MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b]) by MN2PR12MB3613.namprd12.prod.outlook.com
+ ([fe80::1b3b:64f5:9211:608b%4]) with mapi id 15.20.9388.003; Sat, 6 Dec 2025
+ 00:40:00 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Kevin Tian <kevin.tian@intel.com>,
+	linux-kselftest@vger.kernel.org,
+	Shuah Khan <shuah@kernel.org>
+Cc: kernel test robot <lkp@intel.com>,
+	Nicolin Chen <nicolinc@nvidia.com>,
 	patches@lists.linux.dev,
-	Askar Safin <safinaskar@zohomail.com>,
-	stable@vger.kernel.org
-Subject: [PATCH] gpiolib: acpi: Add quirk for Dell Precision 7780
-Date: Fri,  5 Dec 2025 22:32:42 +0000
-Message-ID: <20251205230724.2374682-1-safinaskar@gmail.com>
-X-Mailer: git-send-email 2.47.3
+	Yi Liu <yi.l.liu@intel.com>
+Subject: [PATCH] iommufd/selftest: Make it clearer to gcc that the access is not out of bounds
+Date: Fri,  5 Dec 2025 20:39:59 -0400
+Message-ID: <0-v1-63a2cffb09da+4486-iommufd_gcc_bounds_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BL1PR13CA0240.namprd13.prod.outlook.com
+ (2603:10b6:208:2bf::35) To MN2PR12MB3613.namprd12.prod.outlook.com
+ (2603:10b6:208:c1::17)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN2PR12MB3613:EE_|MW4PR12MB7119:EE_
+X-MS-Office365-Filtering-Correlation-Id: 98f046de-ceb1-475f-76f6-08de345ffce7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?aQU0+7VsZ+RtP88/F1Hkvn2xygQzk1VLDSB52H1st0gHEkILgyuqaULj839/?=
+ =?us-ascii?Q?i+L6IE0vxXcVZPL/cJt3vmDQM1rgMJIBrUJDeG3bmWpkzdmu3kX7X/9np9jI?=
+ =?us-ascii?Q?xKyJmx1+ayxZDKflSsn10CP1zbLCUB3gwyKHv7heHFHbwdt6KE4G/bgvPY04?=
+ =?us-ascii?Q?Q+GaWb+e6oyfEudxgW4WkrttIPiVy8lc/QaB4lcPANY29mUL1Lml239nEiKR?=
+ =?us-ascii?Q?9+5QlbzNthM5D5s1jBk10afgZC9kv3TUJZK/6TQVAO90ru/FOSm3dxXv8bYO?=
+ =?us-ascii?Q?g+ypM9mFhgcY6lbdpSgP1Nn/i+KM4N8bh5klQB8jg63USinchz2QRho0DTFD?=
+ =?us-ascii?Q?bZrsYuZ47mK7jPTUynqGzDftoUn2ckxVsFBvKbIB6khk6q5lbsTpXUYyXWi7?=
+ =?us-ascii?Q?jvJhw2yrZODubBgJ33sEWnp8OhP391f8Np55dUH4S8fjylT6J2h+kXZ3HN18?=
+ =?us-ascii?Q?SVnOUwudl32nG0BGLHsBBsRR7WwcRKmUUDZQT402WA1POPVY4eDlx/7/u+3C?=
+ =?us-ascii?Q?uMcXpka7HH7oN7FMWpRjVjzYoLbN/WITwn8zzAA9y8//UlTo5Rz2cF0rFbVV?=
+ =?us-ascii?Q?WFhpAJL7I0qcEMHfE4I6AfHEUCJkGFRuFJmF2HJRUqN+k4I0dW6dbwkEa6vW?=
+ =?us-ascii?Q?jVyzCERpDKjhqgR+lhb6FetNWRz31C8ZB3STXIaKaY5ImcuqEt+Xk23ASHe9?=
+ =?us-ascii?Q?1ICGRGT31DnVKLBT7CGZFj5a/ZIeqP2VKbtGRI4XOeDDERdYasg8lB7s/xxm?=
+ =?us-ascii?Q?VOyub3oLE523jrQd2a9dhVPTehweK2a9CbEbIC7rEG3gLChGb5xsJ7iPaT6h?=
+ =?us-ascii?Q?ygARx1hoa/WLVz8FDPdlO4fy1YWvd6PQbV4blzE3z6gAH1esw0gV4qbZ0X/p?=
+ =?us-ascii?Q?cTNH2BVQ/jalGrXAs61xQhkMmnyvv3FfCKdLoSYf3aJcYwq/GnIAYteIXXXG?=
+ =?us-ascii?Q?IsYPCSQEIotfqgxFwoFhdO8unNv9X+gnFFuSR4jBYvvH86hRgGADszMbJcCV?=
+ =?us-ascii?Q?nThKlb2Rr5a2AjgVvxV+WWz1vQSUdp6T9DPwBP34hWWSl0GNJURNdYL1l1NW?=
+ =?us-ascii?Q?cB2gv2apTYMnNEB39ZrCOPysHP/WPavjTKIlv7R5jOg69QXYMrAaAWBtucTS?=
+ =?us-ascii?Q?NzYayJQPvtsdqLvZ4L9sUAoryCtxBVq434BvayBWfggVAXZLXBatRgfoz8FV?=
+ =?us-ascii?Q?I5hpgAhOTExov+y9Ir589oPyli71jEb5htkrfcvhI0pJx9BYPwDBsOCM5Rzf?=
+ =?us-ascii?Q?oZJxIt5orU1PSTn8aBdVVUbrgX//KMuZPsLwF5dwTShct8nwKDJEdon8cYL0?=
+ =?us-ascii?Q?rsF4L3BMGXNA+TWS/ohh64+BY4GzGRDnVy5PATx7jlCS7/Z2Pyt+QdgmhxNf?=
+ =?us-ascii?Q?eNZ5yxbc8RexT1Ls+w9EEKLh6dK1lyYc+4kO1ip+jnKIHJtdrtEJwI0xMYI4?=
+ =?us-ascii?Q?sxEMqNREd1Brek8UA6dDt8NQv+wY6HANKKix2UUx7eFiPtfRhaKpng=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3613.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?kVRxRZ2DjLwvVC+EDxD0CTCMzeiNNw+9GCI5S376RTaCbP5HthrOOaKUUSXM?=
+ =?us-ascii?Q?QlaH87aGZaxND2uLQ8jLYIe8zPL0rE1RvO5Xj8agcPh9J1RlUVDasz+hFnsd?=
+ =?us-ascii?Q?8jG2tpZ2gYHfEku+GJl6mc7ovJQqDAaSiUsuT+OI1+Ws07xa4qB9NZMSolWK?=
+ =?us-ascii?Q?KWrv15nc6kWqCckL3AbIsnk7TtYJuJWFU+MyuP9kQ5gN/Hzax+4PhQwGrLW/?=
+ =?us-ascii?Q?ItPPJSsbLnRpo+1HA3P/hdkGOxY1O5HwHKtAnI/EFu2XFEQbTv9HguUj02rE?=
+ =?us-ascii?Q?DsRwnye6FjKX1yaPrnOOVGHdK8wt12xF0CGOFFFtW676uVN8wKzKmKA1OMyg?=
+ =?us-ascii?Q?c/AtQxkVrDNZZf/v/udAvi205ADEjXb8sXo4QcbmbHWy01dlChgAjuPs1CZE?=
+ =?us-ascii?Q?oKDH2e/o//Rdz7DhVvjXOuS/ZSCtPWgNQ4YyDRyvFtcMtIZibWMZJg5cgnaE?=
+ =?us-ascii?Q?uLFmWgATLVC1sYR1n5NrDJPnk/mQl+t4MRpFWv2xYz+tyJF5WFARM5YC/bcj?=
+ =?us-ascii?Q?EgLzs6XYwdEilUOGCzYR4BSVDCPSs7iMQYvUZK9Zrj6UsiBYVQV66fYxeWyo?=
+ =?us-ascii?Q?LRpNDXOw6o+YHpFj50i5vhLxGypcOZLpYLPvfOepG1UDcdP0zwMCuibZxx+a?=
+ =?us-ascii?Q?lIvkSsGoEmt5VfTpFI5veBZ3CHwrr5k3ddJm+Q4Obi2v2HypzgSuUt+RqiQt?=
+ =?us-ascii?Q?Cxl2QbI0EYzixaKtEd9jcaG+3J0vHoDAoNvwCT7ng03vNOprrx9x31ydL7B6?=
+ =?us-ascii?Q?MQeYd6yLgCNAUP5TyxNj0siXnFhS4O+bBJR8niSagP9iTFdpHXYYpV5/Ul7q?=
+ =?us-ascii?Q?tcKiUpAvFmxKTlFBt3hX2gcKXShb4O/UNqdtxaq5r95uwKUGG0ko5kNj3qEq?=
+ =?us-ascii?Q?HpWCVkohW+2hWLV5CQoZB3iRgbxfzHjvNA4YZ68/ezXVjk9H296b6hQmhL3z?=
+ =?us-ascii?Q?6ctUd7g0Qp/XGuPkPg6bUDn2Q+YQIidJUdTZfPQ6clopjgWKJ2grUBBkvsG8?=
+ =?us-ascii?Q?0RFQBPZ8Z6G+c/pmg9I7A+i2D9J+RtUTU7OwLuM9Dqmx1tLzUtiAXMSn46V0?=
+ =?us-ascii?Q?xa//Xyo+NBQrkUa4xx+Qeu47xm7KahNs8jFbK+bBXerK4W/IEyXH0c2OtWXC?=
+ =?us-ascii?Q?fXZd6aT/VddRctwJHQ0AINj2sjVhzZJXY3WYtxI2vjin27je6bczuG7J0QPk?=
+ =?us-ascii?Q?zvCdJIeQqmot+K0m9AL/j/I8EgZbPbLFIhR9Rb0mOKsQ1vTwtEJ4RnQ5jcV9?=
+ =?us-ascii?Q?UOTI8hWx7GywieL3voCkGrQRKq6zTCMOt5EoODy6DwSm/L8DO1/BMW6rhTii?=
+ =?us-ascii?Q?YguTDh7fxlocL71mO1XznjTAQC2J7+4gDO12JLW1yLOltPyzphQ5VdCc2383?=
+ =?us-ascii?Q?3A7xNySdINn4HFDT2jZrhmchHK6RJNbl8hfB1d27n/LDRJOmb1iwxOGA6wRz?=
+ =?us-ascii?Q?GO78pTqnCTdcO2xuGxWJzFEdNhAd7QUsqDsosYT+hgfOKSG5L33NYwEoUma2?=
+ =?us-ascii?Q?Wi9zdmGKcEGntJHfTQxRI+8yfk31wn5FO2IaoBHu3YYgIR8YRgqJ0hT4Rqt0?=
+ =?us-ascii?Q?Ux6Nthj8nbrIrlExtZQ=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98f046de-ceb1-475f-76f6-08de345ffce7
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3613.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Dec 2025 00:40:00.4067
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RUZ4Uhd97QfFJ2K6VSqxbH9Y1np6HP7kMVtMSW8n6AVyHJvepdR38ao2sfLU11/K
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7119
 
-Dell Precision 7780 often wakes up on its own from suspend. Sometimes
-wake up happens immediately (i. e. within 7 seconds), sometimes it happens
-after, say, 30 minutes.
+GCC gets a bit confused and reports:
 
-Fixes: 1796f808e4bb ("HID: i2c-hid: acpi: Stop setting wakeup_capable")
-Reported-by: Askar Safin <safinaskar@zohomail.com>
-Link: https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-Cc: <stable@vger.kernel.org>
-Tested-by: Askar Safin <safinaskar@gmail.com>
-Signed-off-by: Askar Safin <safinaskar@gmail.com>
+   In function '_test_cmd_get_hw_info',
+       inlined from 'iommufd_ioas_get_hw_info' at iommufd.c:779:3,
+       inlined from 'wrapper_iommufd_ioas_get_hw_info' at iommufd.c:752:1:
+>> iommufd_utils.h:804:37: warning: array subscript 'struct iommu_test_hw_info[0]' is partly outside array bounds of 'struct iommu_test_hw_info_buffer_smaller[1]' [-Warray-bounds=]
+     804 |                         assert(!info->flags);
+         |                                 ~~~~^~~~~~~
+   iommufd.c: In function 'wrapper_iommufd_ioas_get_hw_info':
+   iommufd.c:761:11: note: object 'buffer_smaller' of size 4
+     761 |         } buffer_smaller;
+         |           ^~~~~~~~~~~~~~
+
+While it is true that "struct iommu_test_hw_info[0]" is partly out of
+bounds of the input pointer, it is not true that info->flags is out of
+bounds. Unclear why it warns on this.
+
+Reuse an existing properly sized stack buffer and pass a truncated length
+instead to test the same thing.
+
+Fixes: af4fde93c319 ("iommufd/selftest: Add coverage for IOMMU_GET_HW_INFO ioctl")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202512032344.kaAcKFIM-lkp@intel.com/
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/gpio/gpiolib-acpi-quirks.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ tools/testing/selftests/iommu/iommufd.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-acpi-quirks.c b/drivers/gpio/gpiolib-acpi-quirks.c
-index 7b95d1b03361..a0116f004975 100644
---- a/drivers/gpio/gpiolib-acpi-quirks.c
-+++ b/drivers/gpio/gpiolib-acpi-quirks.c
-@@ -370,6 +370,28 @@ static const struct dmi_system_id gpiolib_acpi_quirks[] __initconst = {
- 			.ignore_wake = "ASCP1A00:00@8",
- 		},
- 	},
-+	{
-+		/*
-+		 * Spurious wakeups, likely from touchpad controller
-+		 * Dell Precision 7780
-+		 * Found in BIOS 1.24.1
-+		 *
-+		 * Found in touchpad firmware, installed by Dell Touchpad Firmware Update Utility version 1160.4196.9, A01
-+		 * ( Dell-Touchpad-Firmware-Update-Utility_VYGNN_WIN64_1160.4196.9_A00.EXE ),
-+		 * released on 11 Jul 2024
-+		 *
-+		 * https://lore.kernel.org/linux-i2c/197ae95ffd8.dc819e60457077.7692120488609091556@zohomail.com/
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "Precision"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Precision 7780"),
-+			DMI_MATCH(DMI_BOARD_NAME, "0C6JVW"),
-+		},
-+		.driver_data = &(struct acpi_gpiolib_dmi_quirk) {
-+			.ignore_wake = "VEN_0488:00@355",
-+		},
-+	},
- 	{} /* Terminating entry */
- };
+diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
+index 10e051b6f592df..dadad277f4eb2e 100644
+--- a/tools/testing/selftests/iommu/iommufd.c
++++ b/tools/testing/selftests/iommu/iommufd.c
+@@ -755,9 +755,6 @@ TEST_F(iommufd_ioas, get_hw_info)
+ 		struct iommu_test_hw_info info;
+ 		uint64_t trailing_bytes;
+ 	} buffer_larger;
+-	struct iommu_test_hw_info_buffer_smaller {
+-		__u32 flags;
+-	} buffer_smaller;
  
-base-commit: 7d0a66e4bb9081d75c82ec4957c50034cb0ea449 (v6.18)
+ 	if (self->device_id) {
+ 		uint8_t max_pasid = 0;
+@@ -789,8 +786,9 @@ TEST_F(iommufd_ioas, get_hw_info)
+ 		 * the fields within the size range still gets updated.
+ 		 */
+ 		test_cmd_get_hw_info(self->device_id,
+-				     IOMMU_HW_INFO_TYPE_DEFAULT,
+-				     &buffer_smaller, sizeof(buffer_smaller));
++				     IOMMU_HW_INFO_TYPE_DEFAULT, &buffer_exact,
++				     offsetofend(struct iommu_test_hw_info,
++						 flags));
+ 		test_cmd_get_hw_info_pasid(self->device_id, &max_pasid);
+ 		ASSERT_EQ(0, max_pasid);
+ 		if (variant->pasid_capable) {
+
+base-commit: 93013488dd77dd2ea8bd23355a5587d9e6dac185
 -- 
-2.47.3
+2.43.0
 
