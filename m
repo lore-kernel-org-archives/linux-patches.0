@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C963B280A5A;
-	Sat,  6 Dec 2025 14:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1C42FE078;
+	Sat,  6 Dec 2025 14:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029791; cv=none; b=tcxGosUkY9tVQRszCY2ltFTO0iQ+2WAPdkY574lEOD2xG/u5jVzif/acNU2FYQiVPukWHIL216Q6/YzIIwc0M1O2ISQG1k7G7mLqpcQ+WPyxUfB/180x5hHz+pcKIgIPVC/LYkO7u/VDQSEA+F/qVgkNIgf+lo9EwbR9bNF4po4=
+	t=1765029794; cv=none; b=gFLLIrJ+S4T5bOROduQNSnoe+f4omf11egh96yrxHnSha6iDHwNt1SpwLj2N37ZgqrjEOF4wfT8mWTpCQ5mUa/Xh95OBMgeG+T+6X9thT5mEC3TM3m4ZCNmuayKQ6E4rxCkuhDdUIiKFJj3/v2vMxLrPTErfg/yPLx/uOKnn1f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029791; c=relaxed/simple;
-	bh=J36brxACthlA8xgCvyiTPbm15F2qICrwm1cIBW45Imc=;
+	s=arc-20240116; t=1765029794; c=relaxed/simple;
+	bh=1Fpchc91wXk1/AlXbcgklYrSreX/Ww/iPd7lHAbArEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAFQFEZQMEyiWDdlXcp4eGiqHtiubP+iRjA0Eq5/I3Z7HMuIkFLF82aGylSueiim1FD4JYZ6mLrOl2KCS6puGCfv4ZZ/4HY5HcIRYcUoxjbskym9o28wNSNqMzVumw7Oq93bCp1fu1q67kCg4VZMmkqgHIQ6T7LzigsvxuQst3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S5zOPW9t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uwiHGlImapEt39jYxGwK57zUMxOyKK87HR5t3+Lzt8Nakc157n9N5UbpbBP8253wAnp+svmlxfLKC4/5tjB3IdN35gwKQ0wC1QkzNaSH2aSu1WiHd16E4SKg2pGztSllGwoMfosZ54bb+Gz81JMekI1QSfwVmb+oiCZezzMcf0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yqqt7i1j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S5zOPW9t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663A5C4CEF5;
-	Sat,  6 Dec 2025 14:03:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yqqt7i1j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 284F9C113D0;
+	Sat,  6 Dec 2025 14:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029791;
-	bh=J36brxACthlA8xgCvyiTPbm15F2qICrwm1cIBW45Imc=;
+	s=k20201202; t=1765029794;
+	bh=1Fpchc91wXk1/AlXbcgklYrSreX/Ww/iPd7lHAbArEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S5zOPW9tEoT0WUYsJATMNPVWgoaJLJHuAZmGIPB0W2MoUc8J15ShGskS+lAEWoFlJ
-	 VeblxDonSIUrLMRkbfWLMm3mzRwHWD/ekoH1W7SzAkkguStmLUQIllw8Cl1UYM+kc5
-	 t0cB45sA+crzvWM3z33dvXcalHbX1RLOOhywwftDfXjVGHVGqJj1Y5nO9dwgUf5qiV
-	 Ipm9ybp94OgGh1ymAvw/CTdQMJnKr39iLxNaraWeogWUtMRA7jfSuD9KU8f5tR/VDr
-	 vzzxxktO0g+JnjxU0l2PkoCDQrUhhXaZeRqPhZtKIKsPU+JlucOnvWNwsL/H1U5wZH
-	 4oWfqmz84/sTw==
+	b=Yqqt7i1jMQoZp8ES9IBpNQp2GS80yMhB0vivzmdaa5PHkA9+CbpKCR4S9YDr9NrXx
+	 rRD2gnXo6WOYGwS2/f60n4eipXGdvVNcSm9P+6ZQXsYJrzGF/epa9EIbh0Yw0c5XSv
+	 G82GV9LTJCe3H8JQ3LoVJ8bXNFzK7hPA+v+xW/ZrMrn5w55TnkRd4NC5Ab11soUOEv
+	 lY+Ly/GjS19AviMgZqT3QTl3LdjJje1ZTzefS0ecKPraN/ry/AakZ7IaZJpgb0/i6R
+	 Xg+LLhhAszj3c7ddEwZfAw+gqW1xL3PijGIwaPrfLCir0tWmu2jfF04Qq5irEX7CeE
+	 91tyKEUM0xd7g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -41,9 +41,9 @@ Cc: Chris Lu <chris.lu@mediatek.com>,
 	linux-kernel@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: MT7920: Add VID/PID 0489/e135
-Date: Sat,  6 Dec 2025 09:02:14 -0500
-Message-ID: <20251206140252.645973-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: MT7922: Add VID/PID 0489/e170
+Date: Sat,  6 Dec 2025 09:02:15 -0500
+Message-ID: <20251206140252.645973-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -60,16 +60,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit c126f98c011f5796ba118ef2093122d02809d30d ]
+[ Upstream commit 5a6700a31c953af9a17a7e2681335f31d922614d ]
 
-Add VID 0489 & PID e135 for MediaTek MT7920 USB Bluetooth chip.
+Add VID 0489 & PID e170 for MediaTek MT7922 USB Bluetooth chip.
 
 The information in /sys/kernel/debug/usb/devices about the Bluetooth
 device is listed as the below.
 
 T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
 D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e135 Rev= 1.00
+P:  Vendor=0489 ProdID=e170 Rev= 1.00
 S:  Manufacturer=MediaTek Inc.
 S:  Product=Wireless_Device
 S:  SerialNumber=000000000
@@ -104,8 +104,8 @@ I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
 E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
 E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
 I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
 
 Signed-off-by: Chris Lu <chris.lu@mediatek.com>
 Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
@@ -121,18 +121,18 @@ LLM Generated explanations, may be completely bogus:
  1 file changed, 2 insertions(+)
 
 diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 36f18f2657ab8..cc03c8c38b16f 100644
+index c70e79e69be8d..36f18f2657ab8 100644
 --- a/drivers/bluetooth/btusb.c
 +++ b/drivers/bluetooth/btusb.c
-@@ -621,6 +621,8 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Additional MediaTek MT7920 Bluetooth devices */
- 	{ USB_DEVICE(0x0489, 0xe134), .driver_info = BTUSB_MEDIATEK |
+@@ -685,6 +685,8 @@ static const struct usb_device_id quirks_table[] = {
  						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe135), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x0489, 0xe153), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe170), .driver_info = BTUSB_MEDIATEK |
 +						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3620), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
  						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3621), .driver_info = BTUSB_MEDIATEK |
+ 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.51.0
 
