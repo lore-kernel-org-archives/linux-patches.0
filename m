@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A782868AD;
-	Sat,  6 Dec 2025 14:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0CE218EB1;
+	Sat,  6 Dec 2025 14:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029814; cv=none; b=TFBxhSCVnHvr+o6Pt8U2nfj4NFqa1pwK9+CYdKOsG2BFB38HF1AuiuBxsRJLmfaIYm/6NFk42yhrQNMdgcP/wB+GDbw4+c7MdicLhdFn0xfNvVtsx7zyv42zlIl+ZSlx3CqfprF1dS97CriPBU2iMjD7wmcIp31htZ+F3nx3Ouo=
+	t=1765029816; cv=none; b=Tlll7DlWhzi4P5RGuNDMy1XrJe9j1bTk3kmz/CAXfjVZLoOrgWLZDYoWRL3kRSPVmH8PqCZOjEMU6Zvz7aSh/aoTI9OW71TKvoBP8EU/8gq70CyFcxbx5J4PlI07sBmI/EfoaVFwqxRkEKhGKfGP51+xy1/6wE6IgV0Pu202Nr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029814; c=relaxed/simple;
-	bh=esmmoHRAL+cBqHWXCMkm+01u6+mMyXdKGYACpvN82nI=;
+	s=arc-20240116; t=1765029816; c=relaxed/simple;
+	bh=IeZgkpybZ0rIz1q+Gm3w9egLOf4sif3gjsDJ1W0YVoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IzpPDDIUjFmDDvcosxCpFtY0viiWVe81i9S+7E4eCKKiTKqAgXnRxPPwIotux42XV1SfZappqXMYw8Pb/O65PDu2/W1yDvPOf52FewPY5PhkoYfKbg51wa3ze858L17KGa0L709dBJ8D5meyQV6h+QkYPdjPjJwwnsPunWBMBso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EaxHT0Di; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=krbQG6vo/QwEz/UJ3WPtnHUTJFZx5cW6XwgIE0mHUUxViHnWFTlVK1LmsqLfJnjhtCEhZxKKGPSCXgFvPem4yMfbYQ1UJNZ8SqJSRaUJWwYzCIjwKlB6wF8VlWVySAtb4EKiyFVM7rs5KlBXNxx54i9aarU5ugRFRFEAZpMSS9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAOrnNKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EaxHT0Di"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B042C116D0;
-	Sat,  6 Dec 2025 14:03:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAOrnNKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FB4C4CEF5;
+	Sat,  6 Dec 2025 14:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029814;
-	bh=esmmoHRAL+cBqHWXCMkm+01u6+mMyXdKGYACpvN82nI=;
+	s=k20201202; t=1765029816;
+	bh=IeZgkpybZ0rIz1q+Gm3w9egLOf4sif3gjsDJ1W0YVoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EaxHT0DiNzHb3XJoX9++enviPbd/UBuuvLbVcRfo+MwPVVBKa8keudYGYyQLuc4r9
-	 +yRNhtsUWRO8hcgg49/EVVN92dqAbl7FzIwbOLRc4uJPVKMmSXMNtz9FXmsTZXZAV0
-	 tTVEIwV7qPbaOKv/zFSBURiXCRBSdeIh+IAvC3ZwYvGfGV/5IokEZiJ5ipiBkbSwLl
-	 R2IXPiWMCLdXGa6GvbIfN7hD5w3H+3JEOh8or1vYBX4v+OrbOCcQap2JNfPz/VU3JB
-	 Q/NrVniO38k7sl32CXflbOPH4T7eP0BkMSjeIeR5bx+jXK04+NPWjAw1T9NaN6XgsV
-	 gohaEi0wH9S4Q==
+	b=iAOrnNKvYXcdWMPHPBWyPDBmpOl29wGuLI9vH+iY4hVcYx+SJD/PgEta59N0Brwtj
+	 x90XQpRsiJwp4/dJJOTu3jvD/PVjZ5/Ek2a+7pXSFgKF2Bcntk8oJ0CBzvwWRC0DNA
+	 KiqxECGPpR1it+VXraTYJ6j4qa3DZQTMs2b/vX6Zf+MuAdx9Oi19lrQolAezHQ9qy0
+	 G5IzDpmVvR4c2gQE7AR4yaVXfe1nbFCdzUB3ZZPOiy8Aa/O1Oi829oM/S/RMml+fvz
+	 /+85XWo5ZSZuNtLiVqJzd+AioYVUKXFbIa2dAhrEGMcjbkIHIBq0W9sXx7WN4TdYgB
+	 2bkx0txkQafvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.18-5.10] hfsplus: fix volume corruption issue for generic/070
-Date: Sat,  6 Dec 2025 09:02:24 -0500
-Message-ID: <20251206140252.645973-19-sashal@kernel.org>
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>,
+	ntfs3@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-5.15] fs/ntfs3: Support timestamps prior to epoch
+Date: Sat,  6 Dec 2025 09:02:25 -0500
+Message-ID: <20251206140252.645973-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -52,189 +50,232 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
+[ Upstream commit 5180138604323895b5c291eca6aa7c20be494ade ]
 
-The xfstests' test-case generic/070 leaves HFS+ volume
-in corrupted state:
+Before it used an unsigned 64-bit type, which prevented proper handling
+of timestamps earlier than 1970-01-01. Switch to a signed 64-bit type to
+support pre-epoch timestamps. The issue was caught by xfstests.
 
-sudo ./check generic/070
-FSTYP -- hfsplus
-PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
-MKFS_OPTIONS -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
-(see xfstests-dev/results//generic/070.full for details)
-
-Ran: generic/070
-Failures: generic/070
-Failed 1 of 1 tests
-
-sudo fsck.hfsplus -d /dev/loop50
-** /dev/loop50
-Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-Executing fsck_hfs (version 540.1-Linux).
-** Checking non-journaled HFS Plus Volume.
-The volume name is test
-** Checking extents overflow file.
-Unused node is not erased (node = 1)
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
-CBTStat = 0x0000 CatStat = 0x00000000
-** Repairing volume.
-** Rechecking volume.
-** Checking non-journaled HFS Plus Volume.
-The volume name is test
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume test was repaired successfully.
-
-It is possible to see that fsck.hfsplus detected not
-erased and unused node for the case of extents overflow file.
-The HFS+ logic has special method that defines if the node
-should be erased:
-
-bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
-{
-	struct super_block *sb = tree->inode->i_sb;
-	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
-	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
-
-	return tree->cnid == HFSPLUS_CAT_CNID &&
-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
-}
-
-However, it is possible to see that this method works
-only for the case of catalog file. But debugging of the issue
-has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
-requested for the extents overflow file too:
-
-catalog file
-kernel: hfsplus: node 4, num_recs 0, flags 0x10
-kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
-
-extents overflow file
-kernel: hfsplus: node 1, num_recs 0, flags 0x10
-kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
-
-This patch modifies the hfs_bnode_need_zeroout() by checking
-only volume_attr but not the b-tree ID because node zeroing
-can be requested for all HFS+ b-tree types.
-
-sudo ./check generic/070
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/070 33s ...  34s
-Ran: generic/070
-Passed all 1 tests
-
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Final Assessment
+Now I have a complete understanding. Let me write the detailed analysis:
 
-### Summary of Findings
+## Detailed Analysis
 
-**Bug Type**: Filesystem corruption (data integrity issue)
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Technical Root Cause**: The `hfs_bnode_need_zeroout()` function
-incorrectly restricts unused node zeroing to only the catalog B-tree
-(HFSPLUS_CAT_CNID). However, when the volume attribute
-`HFSPLUS_VOL_UNUSED_NODE_FIX` is set, it applies to ALL HFS+ B-tree
-types including the extents overflow file. This causes fsck.hfsplus to
-detect corruption: "Unused node is not erased (node = 1)".
+**Subject:** `fs/ntfs3: Support timestamps prior to epoch`
 
-**The Fix**: Removes the catalog-only check, allowing node zeroing for
-all B-tree types when the volume attribute is set.
+**Commit Body:**
+- The commit explains that before this fix, the code used an **unsigned
+  64-bit type** (`u64`), which prevented proper handling of timestamps
+  earlier than 1970-01-01 (the Unix epoch).
+- The fix switches to a **signed 64-bit type** (`s64`) to support pre-
+  epoch timestamps.
+- The issue was caught by **xfstests test 258**, which specifically
+  tests for timestamps prior to the epoch.
 
-### Stable Kernel Criteria Evaluation
+**Tags:**
+- **No `Cc: stable@vger.kernel.org` tag** is present.
+- **No `Fixes:` tag** is present.
 
-| Criterion | Status |
-|-----------|--------|
-| Fixes real bug | ✅ Filesystem corruption verified by fsck |
-| Obviously correct | ✅ Simple condition removal, matches Apple spec |
-| Small and contained | ✅ 1 line change, single file |
-| No new features | ✅ No new functionality added |
-| Tested | ✅ xfstests generic/070 passes |
-| Exists in stable | ✅ Function introduced in kernel 3.16 (2014) |
+### 2. CODE CHANGE ANALYSIS
 
-### Risk vs Benefit
+#### The Bug:
 
-**Risk**: Very LOW
-- The change makes code more conservative (zeros more nodes, not fewer)
-- Only two call sites, both appropriately handle the result
-- No new code paths, just relaxing an incorrect restriction
+In the current code (before the patch):
 
-**Benefit**: HIGH
-- Fixes filesystem corruption that users can actually hit
-- Reproducible with standard xfstests suite
-- Prevents data integrity issues on HFS+ volumes
+```980:987:fs/ntfs3/ntfs_fs.h
+static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
+{
+        u64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
 
-### Concerns
+        // WARNING: do_div changes its first argument(!)
+        ts->tv_nsec = do_div(t, _100ns2seconds) * 100;
+        ts->tv_sec = t;
+}
+```
 
-1. **No explicit stable tags**: Missing "Cc: stable" and "Fixes:" tags.
-   However, filesystem corruption fixes are exactly what stable is for.
+The variable `t` is declared as `u64` (unsigned 64-bit integer). NTFS
+timestamps are stored as the number of 100-nanosecond intervals since
+January 1, 1601. After subtracting `SecondsToStartOf1970`
+(0x00000002B6109100), which represents the number of seconds between
+1601 and 1970, `t` represents a Unix timestamp.
 
-2. **Stale comment**: The comment still says "if this is the catalog
-   tree" but this is documentation debt, not a functional issue.
+**Problem:** When the NTFS timestamp represents a date before January 1,
+1970, the subtraction produces a **negative** result. But since `t` is
+unsigned (`u64`), the negative value wraps around to a very large
+positive value, resulting in a wrong (future) timestamp.
 
-3. **Limited user base**: HFS+ is less commonly used on Linux than other
-   filesystems, but users who do use it deserve working support.
+**The `do_div` macro** operates on unsigned integers and uses unsigned
+division, which doesn't handle negative values correctly.
 
-### Conclusion
+#### The Fix:
 
-This commit fixes a real, reproducible filesystem corruption issue with
-an extremely small, safe change. The fix is obviously correct - it
-aligns behavior with the HFS+ specification where
-`HFSPLUS_VOL_UNUSED_NODE_FIX` applies to all B-trees, not just the
-catalog. The change is conservative (does more work, not less)
-minimizing regression risk. The affected code has existed since kernel
-3.16, making it applicable to all active stable trees.
+The patch changes:
+1. `u64 t` → `s64 t` (signed 64-bit integer)
+2. `do_div(t, _100ns2seconds)` → `div_s64_rem(t, _100ns2seconds, &t32)`
+   (signed division)
+3. Introduces `s32 t32` to hold the remainder
 
-Despite the missing explicit stable tags, this is clearly appropriate
-stable material - a surgical fix for data corruption that meets all the
-technical criteria.
+The new code:
+```c
+static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
+{
+        s32 t32;
+        /* use signed 64 bit to support timestamps prior to epoch.
+xfstest 258. */
+        s64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
+
+        ts->tv_sec = div_s64_rem(t, _100ns2seconds, &t32);
+        ts->tv_nsec = t32 * 100;
+}
+```
+
+`div_s64_rem()` is designed for signed 64-bit division with a 32-bit
+divisor, properly handling negative values and returning the remainder
+through a pointer.
+
+**Root Cause:** Using unsigned arithmetic for a value that can be
+negative (pre-epoch timestamps).
+
+### 3. CLASSIFICATION
+
+- **Bug fix:** YES - This is fixing incorrect behavior with timestamps
+  before 1970.
+- **New feature:** NO - It doesn't add new functionality, only fixes
+  existing functionality.
+- **Security fix:** NO - No security implications.
+- **Exception category:** NO - Not a device ID, quirk, DT update, build
+  fix, or documentation fix.
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+**Lines Changed:** Very minimal - changes ~8 lines of code within a
+single inline function.
+
+**Files Touched:** 1 file (`fs/ntfs3/ntfs_fs.h`)
+
+**Subsystem Complexity:**
+- NTFS3 is a relatively new filesystem (added in 5.15)
+- The change is in a core time conversion function `nt2kernel()` that is
+  called whenever reading timestamps from disk
+- All file timestamps (creation, modification, access times) use this
+  function
+
+**Risk Assessment:**
+- **LOW RISK** - The change is small, surgical, and uses a well-
+  established kernel API (`div_s64_rem`)
+- The new code is mathematically equivalent to the old code for
+  timestamps after 1970
+- For timestamps before 1970, the new code produces correct results
+  (negative `tv_sec` values)
+- The `timespec64` structure's `tv_sec` field is `time64_t` which is
+  signed (`__s64`), so it can properly represent negative timestamps
+
+### 5. USER IMPACT
+
+**Who is affected?**
+- Users of NTFS3 filesystem
+- Users with NTFS volumes containing files with pre-1970 timestamps
+
+**How severe?**
+- The bug causes **data corruption** (incorrect timestamp
+  display/storage) for pre-epoch files
+- Without this fix, timestamps like January 1, 1960 would appear as some
+  date far in the future
+- This breaks file management tools and any software relying on correct
+  timestamps
+
+**Test Coverage:**
+- The fix was identified by **xfstests generic/258**, a standard
+  filesystem test that specifically validates pre-epoch timestamp
+  handling
+- This is a well-known and commonly run test suite
+
+### 6. STABILITY INDICATORS
+
+- **No `Tested-by:` tag** - However, xfstests is mentioned, implying the
+  fix was tested against this test suite
+- **No `Reviewed-by:` tag**
+- The commit is from the ntfs3 maintainer (Konstantin Komarov from
+  Paragon Software)
+
+### 7. DEPENDENCY CHECK
+
+- **No dependencies** - This is a standalone fix
+- Uses existing kernel APIs (`div_s64_rem`, `s64`, `s32`) that have been
+  available for a long time
+- The affected code (`nt2kernel` function) has existed since ntfs3 was
+  introduced in kernel 5.15
+
+### Summary
+
+**YES signals:**
+1. ✅ Fixes a **real bug** (incorrect timestamps for pre-epoch dates)
+2. ✅ **Small and surgical** change - only 8 lines changed in one
+   function
+3. ✅ **Obviously correct** - uses proper signed arithmetic for values
+   that can be negative
+4. ✅ No new features, no new APIs
+5. ✅ Caught by **xfstests**, a standard fs test suite (test 258)
+6. ✅ Applies to all stable kernels that have ntfs3 (5.15+)
+7. ✅ Zero risk of regression for post-epoch timestamps (mathematically
+   equivalent)
+8. ✅ Fixes **data integrity issue** (timestamp corruption)
+
+**NO signals:**
+1. ⚠️ No explicit `Cc: stable@vger.kernel.org` tag
+2. ⚠️ No `Fixes:` tag
+3. ⚠️ No `Tested-by:` or `Reviewed-by:` tags
+
+**Verdict:**
+
+This is a clear bug fix that addresses a real issue (incorrect pre-epoch
+timestamp handling) that affects NTFS3 users. The fix is small,
+surgical, uses well-tested kernel APIs, and is mathematically correct.
+While the commit lacks stable tags, the nature of the fix - correcting
+data integrity issues with timestamps - makes it appropriate for
+backporting. The bug has existed since ntfs3 was introduced (5.15), so
+all stable trees with ntfs3 would benefit from this fix.
+
+The lack of `Cc: stable` tag is likely an oversight since the fix
+clearly meets stable kernel criteria: it's a bug fix, small in scope,
+obviously correct, and fixes a real user-visible issue (incorrect file
+timestamps).
 
 **YES**
 
- fs/hfsplus/bnode.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/ntfs3/ntfs_fs.h | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index 63e652ad1e0de..edf7e27e1e375 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -704,6 +704,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
- 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
- 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
+diff --git a/fs/ntfs3/ntfs_fs.h b/fs/ntfs3/ntfs_fs.h
+index 630128716ea73..2649fbe16669d 100644
+--- a/fs/ntfs3/ntfs_fs.h
++++ b/fs/ntfs3/ntfs_fs.h
+@@ -979,11 +979,12 @@ static inline __le64 kernel2nt(const struct timespec64 *ts)
+  */
+ static inline void nt2kernel(const __le64 tm, struct timespec64 *ts)
+ {
+-	u64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
++	s32 t32;
++	/* use signed 64 bit to support timestamps prior to epoch. xfstest 258. */
++	s64 t = le64_to_cpu(tm) - _100ns2seconds * SecondsToStartOf1970;
  
--	return tree->cnid == HFSPLUS_CAT_CNID &&
--		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
-+	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
+-	// WARNING: do_div changes its first argument(!)
+-	ts->tv_nsec = do_div(t, _100ns2seconds) * 100;
+-	ts->tv_sec = t;
++	ts->tv_sec = div_s64_rem(t, _100ns2seconds, &t32);
++	ts->tv_nsec = t32 * 100;
  }
+ 
+ static inline struct ntfs_sb_info *ntfs_sb(struct super_block *sb)
 -- 
 2.51.0
 
