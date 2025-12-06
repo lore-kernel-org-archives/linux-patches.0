@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4024B2FE59A;
-	Sat,  6 Dec 2025 14:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126EA2FDC56;
+	Sat,  6 Dec 2025 14:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029796; cv=none; b=P7uxNk0Fb3rYdwlHOYF8El+en9Gp185pIGD6xqAKKhxXdE/zexSdUg4zA3lE1d7+rCqaMDBTHPWLTLZiJx10VD1+4QiagkDeewnKysPz66j9fHJfWtHI6S4bhDi77a7yh56KbySqnluHuvzQN9rGSy2iNq9GhrM0D+eTLc/usDg=
+	t=1765029800; cv=none; b=fXAWI5Us33vfD1vcllFIJS9WglmU2J/VQ9B0zwXS6zPvBoektH1Cnp4O/xzq6BrRJHOJfuarywdsZVu5BwJIRInalq+VOO8Fg53aaRFX8aWbB3z4Y94mlOBPdR5Cp20Uu9qLzH50NEvBg0lHqDCCjAzoP2BFXLZClkzatt8d9n8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029796; c=relaxed/simple;
-	bh=fRKZRaHkp8aMg8Nr3JzmFLHVN7MSCkbgKjCqGU+7OEk=;
+	s=arc-20240116; t=1765029800; c=relaxed/simple;
+	bh=NS4Xr1fGxL/eg6tHwlX4g6+yoClMCNZ2LkZ9ME2kvOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CndDP4j7odrvkmEKwLemNp8QgAwX0SQngWd4DYy6GjDCbCz9owQ5Wl0F5lSInvlP9IDzIPkXaOzvE2O1B6B6vkGTxL9iLAIRcSEllD/10NglAnsShKlUdxOtMaLomCeq4cdCwW1C5e5NcVx2Avbo2vhDyMotAhHpmLYcol5yd8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gSJqw7C9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B/DLez9OmwPxOHvAHAtLGgG7dqul27Q6tbelB1k0EGLSMWotZCRdxVcZQ4cMqvQc56YfvNoL+/fkdLWv6xB+ut+9vawqYYK8HClQ357uaBBrAsQ3a/SceTT5FAqCwe1jAC38uII5ll99KsiATEy4Fvwh4gxkVLR7vSpvsb3cG6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OTyhVDhy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gSJqw7C9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC77C4CEF5;
-	Sat,  6 Dec 2025 14:03:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OTyhVDhy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1784EC4CEF5;
+	Sat,  6 Dec 2025 14:03:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029796;
-	bh=fRKZRaHkp8aMg8Nr3JzmFLHVN7MSCkbgKjCqGU+7OEk=;
+	s=k20201202; t=1765029799;
+	bh=NS4Xr1fGxL/eg6tHwlX4g6+yoClMCNZ2LkZ9ME2kvOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSJqw7C9laszPiLKamkwjmy6QIRZ4oELO7ewIO1KP6EnvG4q2Lpuqh2oT6tjms9tI
-	 aBxxDpsFw3FR5PgFqoXD/WQnTninkN03+4cnqsqKMK0Nl0iuPR3bqNzyCpu+tH54O9
-	 M5pbX7/ZVHlyeFqvsW8TKJXEiFhjqmfEh+GkMBu0sQyprHAIDQ39Y8N23ho/BFasqJ
-	 ZT+/BdriVgvFB0k8aQZtphGMLgH5zvVTyxUquXMyzgv4/StndfxKU670P3xAVSqi8l
-	 YiT7ZHEjtopwU1+3RE8QMJhUoGgCgN+3f8mVr6P3o9qSkucxATEkoucG7lp+xuvXoy
-	 6da3obmFbyMsw==
+	b=OTyhVDhyWaHqQk7zszSMXVzz5etAqXDtW0y6hcdAn/GHnawxMnHCmEjl3czyaNjLx
+	 6qZFNjrTLiXGc0V0q6cvPoV0chhEigdTtpM2sgUI1QDsRRyVSznd4hcSBN+YVVlHpA
+	 iI9SP3NGq+tmTNGnHedVkAvbJeeEqOmyOmdnnGFhKny8m3BJTjTPsrXeY2vX6WkUfU
+	 eMkhxrPHgCUHVBMc4VcHixM4OxtQ+fz/jnRc4oesvKW9GAcR34XOnNw44L237U5rRJ
+	 qOmwtRei+o61+juSzAb3XifhA7LZldnA4IAY1fJSOpY9vv8LL41NGY2alLDnIsG+dc
+	 A0ABDNACEodHg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
+Cc: Mikhail Malyshev <mike.malyshev@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: cfg80211: use cfg80211_leave() in iftype change
-Date: Sat,  6 Dec 2025 09:02:16 -0500
-Message-ID: <20251206140252.645973-11-sashal@kernel.org>
+	alexandre.f.demers@gmail.com,
+	torsten.hilbrich@secunet.com,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] kbuild: Use objtree for module signing key path
+Date: Sat,  6 Dec 2025 09:02:17 -0500
+Message-ID: <20251206140252.645973-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -48,155 +51,239 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-[ Upstream commit 7a27b73943a70ee226fa125327101fb18e94701d ]
+[ Upstream commit af61da281f52aba0c5b090bafb3a31c5739850ff ]
 
-When changing the interface type, all activity on the interface has
-to be stopped first. This was done independent of existing code in
-cfg80211_leave(), so didn't handle e.g. background radar detection.
-Use cfg80211_leave() to handle it the same way.
+When building out-of-tree modules with CONFIG_MODULE_SIG_FORCE=y,
+module signing fails because the private key path uses $(srctree)
+while the public key path uses $(objtree). Since signing keys are
+generated in the build directory during kernel compilation, both
+paths should use $(objtree) for consistency.
 
-Note that cfg80211_leave() behaves slightly differently for IBSS in
-wireless extensions, it won't send an event in that case. We could
-handle that, but since nl80211 was used to change the type, IBSS is
-rare, and wext is already a corner case, it doesn't seem worth it.
+This causes SSL errors like:
+  SSL error:02001002:system library:fopen:No such file or directory
+  sign-file: /kernel-src/certs/signing_key.pem
 
-Link: https://patch.msgid.link/20251121174021.922ef48ce007.I970c8514252ef8a864a7fbdab9591b71031dee03@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The issue occurs because:
+- sig-key uses: $(srctree)/certs/signing_key.pem (source tree)
+- cmd_sign uses: $(objtree)/certs/signing_key.x509 (build tree)
+
+But both keys are generated in $(objtree) during the build.
+
+This complements commit 25ff08aa43e37 ("kbuild: Fix signing issue for
+external modules") which fixed the scripts path and public key path,
+but missed the private key path inconsistency.
+
+Fixes out-of-tree module signing for configurations with separate
+source and build directories (e.g., O=/kernel-out).
+
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20251015163452.3754286-1-mike.malyshev@gmail.com
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## 2. CODE CHANGE ANALYSIS
+Now I have the complete picture. All stable trees that contain commit
+13b25489b6f8 (v6.13+) have the incomplete fix and need this patch. Let
+me finalize my analysis:
 
-Looking at the diff and comparing with `cfg80211_leave()`:
+## Complete Analysis
 
-**Original inline switch did:**
-- AP/P2P_GO: `cfg80211_stop_ap()`
-- ADHOC: `cfg80211_leave_ibss(rdev, dev, false)` - note the `false`
-  parameter
-- STATION/P2P_CLIENT: `cfg80211_disconnect()`
-- MESH_POINT: **nothing** (just a comment "mesh should be handled?")
-- OCB: `cfg80211_leave_ocb()`
+### 1. COMMIT MESSAGE ANALYSIS
 
-**`cfg80211_leave()` additionally does:**
-1. `cfg80211_pmsr_wdev_down(wdev)` - **new cleanup**
-2. `cfg80211_stop_background_radar_detection(wdev)` - **mentioned bug
-   fix**
-3. For ADHOC: uses `true` instead of `false` (changes wext event
-   behavior)
-4. For STATION/P2P_CLIENT: stops scheduled scans + wext cleanup
-5. For MESH_POINT: `cfg80211_leave_mesh()` - **fixes the TODO bug**
+The commit message is clear and well-documented:
+- **Subject**: "kbuild: Use objtree for module signing key path" -
+  clearly states what it does
+- **Body**: Explains the problem with detailed error messages and root
+  cause analysis
+- **References**: Explicitly mentions commit 25ff08aa43e37 as the
+  incomplete fix it complements
+- **No Cc: stable@vger.kernel.org tag** - the maintainer did not
+  explicitly request stable backport
+- **No Fixes: tag** - However, logically this fixes the same issue as
+  25ff08aa43e37, which has `Fixes: 13b25489b6f8`
+- **Has Reviewed-by and Tested-by tags** from Nicolas Schier and Nathan
+  Chancellor
 
-## 3. CLASSIFICATION
+### 2. CODE CHANGE ANALYSIS
 
-This is primarily a **code refactoring/consolidation** that:
-- Fixes bugs: background radar detection not stopped, MESH_POINT not
-  handled
-- Changes behavior: IBSS wext event, additional scheduled scan cleanup,
-  pmsr cleanup
-- The author explicitly acknowledges behavioral differences but
-  considers them "not worth" fixing
+The change is a **single character change** (literally changing one
+word):
 
-## 4. SCOPE AND RISK ASSESSMENT
+```makefile
+# Before:
+sig-key := $(if $(wildcard
+$(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
 
-- **Lines:** Removes ~20 lines, replaces with single function call (net
-  negative)
-- **Files:** 1 file (net/wireless/util.c)
-- **Risk:** Medium - introduces behavioral changes beyond the stated bug
-  fixes
+# After:
+sig-key := $(if $(wildcard
+$(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
+```
 
-The behavioral differences acknowledged by the author are concerning for
-stable:
-- IBSS with wext will behave differently (no event sent)
-- Additional cleanup operations are now performed
+**Technical mechanism of the bug:**
+1. When building out-of-tree modules with `CONFIG_MODULE_SIG_FORCE=y`
+   and separate source/build directories (e.g., `O=/kernel-out`):
+   - `$(srctree)` points to the source tree (e.g., `/kernel-src`)
+   - `$(objtree)` points to the build tree (e.g., `/kernel-out`)
 
-## 5. USER IMPACT
+2. Module signing keys are **generated during kernel compilation** and
+   stored in `$(objtree)/certs/`:
+   - Private key: `$(objtree)/certs/signing_key.pem`
+   - Public key: `$(objtree)/certs/signing_key.x509`
 
-The bugs fixed (background radar detection, mesh point handling) are
-real but:
-- Not crashes or security issues
-- More like "incomplete state cleanup" issues
-- Impact is limited to users changing interface types
+3. After commit 25ff08aa43e37, `cmd_sign` correctly uses
+   `$(objtree)/certs/signing_key.x509` for the public key, but `sig-key`
+   still uses `$(srctree)/certs/signing_key.pem` for the private key.
 
-## 6. STABILITY INDICATORS
+4. This creates an **inconsistency**: The `sign-file` tool is called
+   with:
+   - Private key: `/kernel-src/certs/signing_key.pem` (WRONG - file
+     doesn't exist there)
+   - Public key: `/kernel-out/certs/signing_key.x509` (CORRECT)
 
-**Missing stable signals:**
-- No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag pointing to when bug was introduced
-- Author explicitly noted behavioral differences but chose not to
-  address them
+5. Result: `fopen()` fails with "No such file or directory" when trying
+   to open the private key.
 
-## 7. DEPENDENCY CHECK
+**Why the fix is correct:**
+- Both signing keys are generated in `$(objtree)`, so both paths should
+  reference `$(objtree)`
+- The fix is logically consistent with what commit 25ff08aa43e37 did for
+  the other paths
+- The conditional `$(if $(wildcard
+  $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)` only adds the prefix if the
+  key path is not absolute, which is correct behavior
 
-The change depends on `cfg80211_leave()` having the current
-implementation with all the necessary handlers.
+### 3. CLASSIFICATION
 
-## Summary
+- **Type**: Bug fix (not a feature)
+- **Category**: Build system fix
+- **Severity**: Causes complete failure of out-of-tree module signing
+  with CONFIG_MODULE_SIG_FORCE=y
+- **Security relevance**: Low (doesn't fix a security vulnerability per
+  se, but affects security feature - module signing)
+- **Exception category**: Build fix - these are explicitly allowed in
+  stable
 
-While this commit does fix real issues (background radar detection not
-stopped, MESH_POINT not handled), it's fundamentally a **code
-consolidation** that:
+### 4. SCOPE AND RISK ASSESSMENT
 
-1. **Introduces behavioral changes** beyond the bug fixes (IBSS wext
-   events, additional cleanup operations)
-2. **Lacks explicit stable request** from the maintainer (Johannes Berg)
-3. **Author acknowledged** behavioral differences but chose not to fix
-   them
-4. The bugs fixed are **not crashes, security issues, or data
-   corruption** - they're incomplete state cleanup issues
+- **Lines changed**: 1 line (trivial)
+- **Files touched**: 1 file (`scripts/Makefile.modinst`)
+- **Complexity**: Extremely simple - just changing `srctree` to
+  `objtree`
+- **Subsystem**: kbuild (build system)
+- **Risk level**: **VERY LOW**
+  - Only affects out-of-tree module signing with separate source/build
+    directories
+  - Only affects configurations with `CONFIG_MODULE_SIG_FORCE=y` or
+    `CONFIG_MODULE_SIG_ALL=y`
+  - The change is logically correct and consistent with the rest of the
+    code
+  - Cannot break anything that was working before
 
-The maintainer deliberately did not add a `Cc: stable` or `Fixes:` tag,
-suggesting this wasn't intended for backporting. The behavioral changes
-(IBSS wext, scheduled scan cleanup, pmsr cleanup) go beyond the stated
-bug fixes and could introduce unexpected regressions in stable trees.
+### 5. USER IMPACT
 
-This is code cleanup/improvement material, not targeted stable-critical
-bug fix material.
+- **Who is affected**:
+  - Users building out-of-tree modules (e.g., NVIDIA drivers,
+    VirtualBox, ZFS)
+  - With separate source and build directories (`O=/path/to/build`)
+  - With module signature enforcement enabled
+- **Severity**: HIGH for affected users - module signing completely
+  fails
+- **User reports**: The commit message shows this was reported as a real
+  user problem with specific error messages
+- **Prevalence**: Common scenario for distribution builders and
+  enterprise environments
 
-**NO**
+### 6. STABILITY INDICATORS
 
- net/wireless/util.c | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+- **Tested-by: Nicolas Schier** - the kbuild maintainer tested it
+- **Reviewed-by: Nathan Chancellor** - well-known kernel developer
+  reviewed it
+- **Link to patch discussion**: Shows proper review process
+- **Age in mainline**: This appears to be a recent commit (October 2025
+  in the patch date)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 56724b33af045..4eb028ad16836 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -1203,28 +1203,7 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
- 		dev->ieee80211_ptr->use_4addr = false;
- 		rdev_set_qos_map(rdev, dev, NULL);
- 
--		switch (otype) {
--		case NL80211_IFTYPE_AP:
--		case NL80211_IFTYPE_P2P_GO:
--			cfg80211_stop_ap(rdev, dev, -1, true);
--			break;
--		case NL80211_IFTYPE_ADHOC:
--			cfg80211_leave_ibss(rdev, dev, false);
--			break;
--		case NL80211_IFTYPE_STATION:
--		case NL80211_IFTYPE_P2P_CLIENT:
--			cfg80211_disconnect(rdev, dev,
--					    WLAN_REASON_DEAUTH_LEAVING, true);
--			break;
--		case NL80211_IFTYPE_MESH_POINT:
--			/* mesh should be handled? */
--			break;
--		case NL80211_IFTYPE_OCB:
--			cfg80211_leave_ocb(rdev, dev);
--			break;
--		default:
--			break;
--		}
-+		cfg80211_leave(rdev, dev->ieee80211_ptr);
- 
- 		cfg80211_process_rdev_events(rdev);
- 		cfg80211_mlme_purge_registrations(dev->ieee80211_ptr);
+### 7. DEPENDENCY CHECK
+
+**Critical finding**: This commit has a dependency:
+- It requires commit **25ff08aa43e37** ("kbuild: Fix signing issue for
+  external modules") to be present first
+- 25ff08aa43e37 requires commit **13b25489b6f8** ("kbuild: change
+  working directory to external module directory with M=")
+
+**Affected stable versions**:
+- v6.13.x: Has 13b25489b6f8 (the bug) and backported 25ff08aa43e37
+  (partial fix) → **NEEDS this patch**
+- v6.14.x: Has both 13b25489b6f8 and 25ff08aa43e37 → **NEEDS this
+  patch**
+- v6.15.x: Has both → **NEEDS this patch**
+- v6.16.x: Has both → **NEEDS this patch**
+- v6.17.x: Has both → **NEEDS this patch**
+- v6.6.x and older: Does NOT have 13b25489b6f8 → **Does NOT need this
+  patch** (and would break if applied)
+
+**Backport note**: This commit should ONLY be backported to stable trees
+that already have:
+1. Commit 13b25489b6f8 (the original behavior change)
+2. Commit 25ff08aa43e37 (the partial fix)
+
+This means v6.13+ stable trees only.
+
+### SUMMARY
+
+This commit is an **excellent candidate for stable backport** to kernel
+versions v6.13+:
+
+**Positive factors:**
+1. ✅ Fixes a real bug that causes complete failure of module signing
+2. ✅ Extremely small change (1 line, 1 word)
+3. ✅ Zero risk of regression (only fixes broken behavior)
+4. ✅ Properly reviewed and tested by kbuild maintainers
+5. ✅ Complements an existing fix that was already backported to stable
+6. ✅ Build fix category - explicitly allowed in stable rules
+7. ✅ Clear, well-documented commit message
+8. ✅ Affects users who follow best practices (separate build directory)
+
+**Concerns:**
+1. ⚠️ No explicit `Cc: stable@vger.kernel.org` tag (but the first fix
+   also didn't have one and was still backported)
+2. ⚠️ No explicit `Fixes:` tag (but logically fixes the same issue as
+   25ff08aa43e37)
+3. ⚠️ Must only be applied to v6.13+ stable trees (where 13b25489b6f8
+   exists)
+
+The commit passes all stable kernel criteria: it's obviously correct,
+fixes a real user-visible bug, is small and surgical, has no new
+features, and has been tested. The incomplete fix in stable trees is
+currently causing module signing to fail for users with separate
+source/build directories.
+
+**YES**
+
+ scripts/Makefile.modinst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/Makefile.modinst b/scripts/Makefile.modinst
+index 1628198f3e830..9ba45e5b32b18 100644
+--- a/scripts/Makefile.modinst
++++ b/scripts/Makefile.modinst
+@@ -100,7 +100,7 @@ endif
+ # Don't stop modules_install even if we can't sign external modules.
+ #
+ ifeq ($(filter pkcs11:%, $(CONFIG_MODULE_SIG_KEY)),)
+-sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
++sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
+ else
+ sig-key := $(CONFIG_MODULE_SIG_KEY)
+ endif
 -- 
 2.51.0
 
