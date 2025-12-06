@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435F92FE56B;
-	Sat,  6 Dec 2025 14:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513852FE58C;
+	Sat,  6 Dec 2025 14:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029832; cv=none; b=GCO6pbggUPlOgwXxGQquoVkCFT4wA32Tfk3+K6k3RT6DaX6LUVi/iuOjp29l/qBzd10pM74lyiWdlKTEhUYzivNwEjW2z1yk6Dahb+sGIYRq3C8T3xbVIjkc2StT3Zdi8f8Rnf6dlAY/S4zlSdq53MYelkBZUbaCHMsDt3MShAk=
+	t=1765029834; cv=none; b=oYoff0I2Dty98+hZF5bxymi4zZBioqV8ohOTkxuaTeOgK1RPvUHVd9hn5bSoMv+rx1c6vu0grZjugsKHaoW2CRRvz7Nlfc0UxIdJ7OZv4+lHyC1mY8jVopxB5fKS6O5VnzlAOMzMPlBOPjbSIYGov1lLl7C/vYf5i/YKBp6MuUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029832; c=relaxed/simple;
-	bh=EiKt/ZDPWmg3g7Z7DO4WMYfttGaNdqNZbbYR7m5egzs=;
+	s=arc-20240116; t=1765029834; c=relaxed/simple;
+	bh=X0iKf/mzWfXeAmjBbHV4DqH7woOS//wu71pCfbmSVjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DeVGJGOmYQm20pUQdLMwxS5xRm0thQCRTMUl/cy+76FAY2sCwKIcBgxr3IDjzUesru/07d0xjAlNGaKK1lMS0tgKXivdo2DsUEYgfdWZKiOB6hHMTBki51jUIy7MkLn8ruQKTqeJQkDZsaYx+R1BRVwKEBqqunYwc45w304yXWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/1IPNcC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mIVp8e6XQp1zKv1jTajsjaHj3fQ34NwM2f0oCBRCjteR3JE+o+4ABP4/f1ffXBG4hs3p9Y89OLqRgnN4MZYMdFIxbCg0RNjLTiTfdq5c7RBWORLkIKLKgdTTBO0GQkbwqzn62KhzUW3kXQiGQdfr8vIVZICwj5Oh9NFIjszO3nA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XbDKM5qs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/1IPNcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AEFC113D0;
-	Sat,  6 Dec 2025 14:03:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XbDKM5qs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49E7C113D0;
+	Sat,  6 Dec 2025 14:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029832;
-	bh=EiKt/ZDPWmg3g7Z7DO4WMYfttGaNdqNZbbYR7m5egzs=;
+	s=k20201202; t=1765029834;
+	bh=X0iKf/mzWfXeAmjBbHV4DqH7woOS//wu71pCfbmSVjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b/1IPNcCHCIotYdcYPDXkX2+vtJDlDMaK2zBth5zo6NX417xxLlkMcjLRva1mMQTU
-	 u4ioHMh0aExpCpkaGaFEmmA+p4EdRgqJtCe80fIll0ckZs2dXa4uIBWSfcQSxNgE6+
-	 mlU9AcBTZ1ylE94MXFFxOPG1QWJUktIthlWSgp1R/TDWiwpkdgdmSrWKGCD/v+qRCm
-	 /LQ7DHfwiGfQPQEzOBvftDBNZgchBxKgIiPJEcsPls3xrsx7XDtnLw2jY+/ziuUZkS
-	 VmZQALd6ZOrYcqASJMl8qii92n87QKZt+1cMfDXfohiAm0fKJNCGE+HHpL2tlmpIdl
-	 KFxPIynUGWVvA==
+	b=XbDKM5qsWGPeCQHtpBM3rxzCPiSJqo6dOlbMfIBYHlld1s0milSVnRO9ELTwge2W0
+	 /mzAs+v3e4V+x3mTM5SLuNLfr9SyKsxgCilkU3Cy1gnHhWphE4+X0+ZUZOyeRmSpAP
+	 +0YilCWUQ0dVTxY2FMS8nlSg8fkM60BtEA+auPcZaVfgnv2Q2vW+iB5i/vPg1jGv88
+	 etrGoJGK9JyLvbVaFtbqG1Wbtdr6Ap5VuJUhpvPUku7GhpVRkRaV7xWCVCI/Un52t7
+	 fiTz4nd3FsQDbBLFz5j5C8+iCwHW1Z4tei2ZXSM7B8NPzpzgN7yOqQR6XEbERZg40c
+	 hBYdw9NB3kXcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
+Cc: Qianchang Zhao <pioooooooooip@gmail.com>,
+	Zhitong Liu <liuzhitong1993@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: cfg80211: stop radar detection in cfg80211_leave()
-Date: Sat,  6 Dec 2025 09:02:31 -0500
-Message-ID: <20251206140252.645973-26-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] ksmbd: vfs: fix race on m_flags in vfs_cache
+Date: Sat,  6 Dec 2025 09:02:32 -0500
+Message-ID: <20251206140252.645973-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -50,149 +53,193 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Qianchang Zhao <pioooooooooip@gmail.com>
 
-[ Upstream commit 9f33477b9a31a1edfe2df9f1a0359cccb0e16b4c ]
+[ Upstream commit 991f8a79db99b14c48d20d2052c82d65b9186cad ]
 
-If an interface is set down or, per the previous patch, changes
-type, radar detection for it should be cancelled. This is done
-for AP mode in mac80211 (somewhat needlessly, since cfg80211 can
-do it, but didn't until now), but wasn't handled for mesh, so if
-radar detection was started and then the interface set down or
-its type switched (the latter sometimes happning in the hwsim
-test 'mesh_peer_connected_dfs'), radar detection would be around
-with the interface unknown to the driver, later leading to some
-warnings around chanctx usage.
+ksmbd maintains delete-on-close and pending-delete state in
+ksmbd_inode->m_flags. In vfs_cache.c this field is accessed under
+inconsistent locking: some paths read and modify m_flags under
+ci->m_lock while others do so without taking the lock at all.
 
-Link: https://patch.msgid.link/20251121174021.290120e419e3.I2a5650c9062e29c988992dd8ce0d8eb570d23267@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Examples:
+
+ - ksmbd_query_inode_status() and __ksmbd_inode_close() use
+   ci->m_lock when checking or updating m_flags.
+ - ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
+   ksmbd_clear_inode_pending_delete() and ksmbd_fd_set_delete_on_close()
+   used to read and modify m_flags without ci->m_lock.
+
+This creates a potential data race on m_flags when multiple threads
+open, close and delete the same file concurrently. In the worst case
+delete-on-close and pending-delete bits can be lost or observed in an
+inconsistent state, leading to confusing delete semantics (files that
+stay on disk after delete-on-close, or files that disappear while still
+in use).
+
+Fix it by:
+
+ - Making ksmbd_query_inode_status() look at m_flags under ci->m_lock
+   after dropping inode_hash_lock.
+ - Adding ci->m_lock protection to all helpers that read or modify
+   m_flags (ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
+   ksmbd_clear_inode_pending_delete(), ksmbd_fd_set_delete_on_close()).
+ - Keeping the existing ci->m_lock protection in __ksmbd_inode_close(),
+   and moving the actual unlink/xattr removal outside the lock.
+
+This unifies the locking around m_flags and removes the data race while
+preserving the existing delete-on-close behaviour.
+
+Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
+Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Summary and Analysis
 
-### What the Bug Fixes
-This commit fixes a cleanup issue where radar detection (DFS CAC) was
-not properly stopped when a mesh interface was brought down or changed
-type. This left residual radar detection state that caused warnings
-about chanctx (channel context) usage, since the driver thought radar
-detection was still active for an interface that no longer existed.
 
-### Technical Details
-The fix:
-1. Adds a new `cfg80211_stop_radar_detection()` function in `mlme.c`
-   that iterates through all valid links, ends CAC via `rdev_end_cac()`,
-   and sends `NL80211_RADAR_CAC_ABORTED` notification
-2. Calls this new function in `cfg80211_leave()` (the cleanup path when
-   interfaces go down)
+ fs/smb/server/vfs_cache.c | 88 +++++++++++++++++++++++++++------------
+ 1 file changed, 62 insertions(+), 26 deletions(-)
 
-### Critical Dependencies
-The code uses **per-link DFS infrastructure** that was introduced in:
-- **Commit 62c16f219a73c** ("wifi: cfg80211: move DFS related members to
-  links[] in wireless_dev") - September 2024, **first in v6.12**
-
-This commit accesses `wdev->links[link_id].cac_started` - this structure
-only exists in 6.12+. In older kernels (6.11 and earlier), `cac_started`
-was a simple top-level member of `wireless_dev`, not per-link.
-
-### Stable Backport Assessment
-
-**Against backporting:**
-1. **No `Cc: stable@vger.kernel.org`** - The maintainer (Johannes Berg)
-   did not request stable backporting
-2. **No `Fixes:` tag** - No specific commit is identified as introducing
-   the bug
-3. **Dependencies on recent code** - The per-link DFS infrastructure
-   only exists in kernel 6.12+
-4. **Cannot apply to LTS trees** - Would require substantial rework for
-   6.6.y, 6.1.y, 5.15.y, etc.
-5. **Not critical severity** - The bug causes kernel warnings, not
-   crashes, security issues, or data corruption
-6. **Niche use case** - Mesh networking combined with DFS channels is
-   relatively uncommon
-7. **Very new feature** - The affected MLO/per-link DFS code is only one
-   release old
-
-**Supporting backporting:**
-- Does fix a real bug that causes warnings
-- Small, localized change (~25 lines)
-- From a known/trusted maintainer
-
-### Conclusion
-
-This commit fixes a legitimate bug but does **not** meet stable kernel
-criteria:
-- The maintainer did not request stable backporting
-- The affected code only exists in kernel 6.12+, making it only relevant
-  to the most recent stable branch if any
-- The bug severity (warnings, not crashes/corruption/security) does not
-  warrant the backporting effort
-- It cannot be cleanly applied to most stable trees due to structural
-  code differences
-
-**NO**
-
- net/wireless/core.c |  1 +
- net/wireless/core.h |  1 +
- net/wireless/mlme.c | 19 +++++++++++++++++++
- 3 files changed, 21 insertions(+)
-
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 54a34d8d356e0..5e5c1bc380a89 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1365,6 +1365,7 @@ void cfg80211_leave(struct cfg80211_registered_device *rdev,
+diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
+index dfed6fce89049..6ef116585af64 100644
+--- a/fs/smb/server/vfs_cache.c
++++ b/fs/smb/server/vfs_cache.c
+@@ -112,40 +112,62 @@ int ksmbd_query_inode_status(struct dentry *dentry)
  
- 	cfg80211_pmsr_wdev_down(wdev);
- 
-+	cfg80211_stop_radar_detection(wdev);
- 	cfg80211_stop_background_radar_detection(wdev);
- 
- 	switch (wdev->iftype) {
-diff --git a/net/wireless/core.h b/net/wireless/core.h
-index b6bd7f4d6385a..d5d78752227af 100644
---- a/net/wireless/core.h
-+++ b/net/wireless/core.h
-@@ -489,6 +489,7 @@ cfg80211_start_background_radar_detection(struct cfg80211_registered_device *rde
- 					  struct wireless_dev *wdev,
- 					  struct cfg80211_chan_def *chandef);
- 
-+void cfg80211_stop_radar_detection(struct wireless_dev *wdev);
- void cfg80211_stop_background_radar_detection(struct wireless_dev *wdev);
- 
- void cfg80211_background_cac_done_wk(struct work_struct *work);
-diff --git a/net/wireless/mlme.c b/net/wireless/mlme.c
-index 46394eb2086f6..3fc175f9f8686 100644
---- a/net/wireless/mlme.c
-+++ b/net/wireless/mlme.c
-@@ -1295,6 +1295,25 @@ cfg80211_start_background_radar_detection(struct cfg80211_registered_device *rde
- 	return 0;
+ 	read_lock(&inode_hash_lock);
+ 	ci = __ksmbd_inode_lookup(dentry);
+-	if (ci) {
+-		ret = KSMBD_INODE_STATUS_OK;
+-		if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
+-			ret = KSMBD_INODE_STATUS_PENDING_DELETE;
+-		atomic_dec(&ci->m_count);
+-	}
+ 	read_unlock(&inode_hash_lock);
++	if (!ci)
++		return ret;
++
++	down_read(&ci->m_lock);
++	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
++		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
++	else
++		ret = KSMBD_INODE_STATUS_OK;
++	up_read(&ci->m_lock);
++
++	atomic_dec(&ci->m_count);
+ 	return ret;
  }
  
-+void cfg80211_stop_radar_detection(struct wireless_dev *wdev)
-+{
-+	struct wiphy *wiphy = wdev->wiphy;
-+	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
-+	int link_id;
-+
-+	for_each_valid_link(wdev, link_id) {
-+		struct cfg80211_chan_def chandef;
-+
-+		if (!wdev->links[link_id].cac_started)
-+			continue;
-+
-+		chandef = *wdev_chandef(wdev, link_id);
-+		rdev_end_cac(rdev, wdev->netdev, link_id);
-+		nl80211_radar_notify(rdev, &chandef, NL80211_RADAR_CAC_ABORTED,
-+				     wdev->netdev, GFP_KERNEL);
-+	}
-+}
-+
- void cfg80211_stop_background_radar_detection(struct wireless_dev *wdev)
+ bool ksmbd_inode_pending_delete(struct ksmbd_file *fp)
  {
- 	struct wiphy *wiphy = wdev->wiphy;
+-	return (fp->f_ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	struct ksmbd_inode *ci = fp->f_ci;
++	int ret;
++
++	down_read(&ci->m_lock);
++	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
++	up_read(&ci->m_lock);
++
++	return ret;
+ }
+ 
+ void ksmbd_set_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	fp->f_ci->m_flags |= S_DEL_PENDING;
++	struct ksmbd_inode *ci = fp->f_ci;
++
++	down_write(&ci->m_lock);
++	ci->m_flags |= S_DEL_PENDING;
++	up_write(&ci->m_lock);
+ }
+ 
+ void ksmbd_clear_inode_pending_delete(struct ksmbd_file *fp)
+ {
+-	fp->f_ci->m_flags &= ~S_DEL_PENDING;
++	struct ksmbd_inode *ci = fp->f_ci;
++
++	down_write(&ci->m_lock);
++	ci->m_flags &= ~S_DEL_PENDING;
++	up_write(&ci->m_lock);
+ }
+ 
+ void ksmbd_fd_set_delete_on_close(struct ksmbd_file *fp,
+ 				  int file_info)
+ {
+-	if (ksmbd_stream_fd(fp)) {
+-		fp->f_ci->m_flags |= S_DEL_ON_CLS_STREAM;
+-		return;
+-	}
++	struct ksmbd_inode *ci = fp->f_ci;
+ 
+-	fp->f_ci->m_flags |= S_DEL_ON_CLS;
++	down_write(&ci->m_lock);
++	if (ksmbd_stream_fd(fp))
++		ci->m_flags |= S_DEL_ON_CLS_STREAM;
++	else
++		ci->m_flags |= S_DEL_ON_CLS;
++	up_write(&ci->m_lock);
+ }
+ 
+ static void ksmbd_inode_hash(struct ksmbd_inode *ci)
+@@ -257,27 +279,41 @@ static void __ksmbd_inode_close(struct ksmbd_file *fp)
+ 	struct file *filp;
+ 
+ 	filp = fp->filp;
+-	if (ksmbd_stream_fd(fp) && (ci->m_flags & S_DEL_ON_CLS_STREAM)) {
+-		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
+-		err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
+-					     &filp->f_path,
+-					     fp->stream.name,
+-					     true);
+-		if (err)
+-			pr_err("remove xattr failed : %s\n",
+-			       fp->stream.name);
++
++	if (ksmbd_stream_fd(fp)) {
++		bool remove_stream_xattr = false;
++
++		down_write(&ci->m_lock);
++		if (ci->m_flags & S_DEL_ON_CLS_STREAM) {
++			ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
++			remove_stream_xattr = true;
++		}
++		up_write(&ci->m_lock);
++
++		if (remove_stream_xattr) {
++			err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
++						     &filp->f_path,
++						     fp->stream.name,
++						     true);
++			if (err)
++				pr_err("remove xattr failed : %s\n",
++				       fp->stream.name);
++		}
+ 	}
+ 
+ 	if (atomic_dec_and_test(&ci->m_count)) {
++		bool do_unlink = false;
++
+ 		down_write(&ci->m_lock);
+ 		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
+ 			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
+-			up_write(&ci->m_lock);
+-			ksmbd_vfs_unlink(filp);
+-			down_write(&ci->m_lock);
++			do_unlink = true;
+ 		}
+ 		up_write(&ci->m_lock);
+ 
++		if (do_unlink)
++			ksmbd_vfs_unlink(filp);
++
+ 		ksmbd_inode_free(ci);
+ 	}
+ }
 -- 
 2.51.0
 
