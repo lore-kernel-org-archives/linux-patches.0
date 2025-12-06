@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B146819F40B;
-	Sat,  6 Dec 2025 14:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29031F30A9;
+	Sat,  6 Dec 2025 14:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029803; cv=none; b=G9MoefA2IBaEiAfLjzqgYPDrMV4ZTohsenh3XiYk/r5sJQ0rMs98fv9D6jJY5cCtLOy2T6CavwKqU1NSlA07WEHt8TG4lY6bfecIT7yFIhoMNUOr3Cu5WLFqOsmwmirJ521ctJr8RdlhhYtNszbCdaIXJ1dTF5+ihHcYeJodazg=
+	t=1765029805; cv=none; b=WOjbMzT1fQrkz7gqIh5vxRrW0DGUUevTbRSiSzVGsBMeBpdoTMUnkJRjy8P6DHj2JMszny8nCz5Dl/U0aDCFDqrUG6lf7PhIEldDB0ALjE4lKxvi1/mfC2KMjJOiSWX6FTREp4fwevVybu9Zp9meqsi1pNjsl1Rtw71NOiI8h/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029803; c=relaxed/simple;
-	bh=DsxlSh+s7SLNpyrHOxgr0Wu9Nsi8eky7BBVL3tZ3kGo=;
+	s=arc-20240116; t=1765029805; c=relaxed/simple;
+	bh=Lelg716SCuCBRQsIrBzYR0/pjER/M5f4vAd3JX5ZAFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UayflZp4i2Qs0k31nBs+W16m47TN/31jaiaTiVWfLrwFxRZ+Ey/BvNubhxHPI/rYPqT5kCB1HjtMBO8OK3h4elIJU14onHHX4XTI2PjSd74TutoLB+XPuNoMPEOoZQRMdN/0lLjGHrRoaUPxhRDF4MgEXaaT+Q1uvqRaf12AzN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ostun3PS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=K0tuWrnF2DwBMxkCoW3tOxPAOlLVOX+OT3WHgMZ8uz+rEMX7xPIOhwJ3e3rwAKuVnzCYi7/JsobF/vyWFQ4aolnHbfPrwjbp456Ig5qlrge5CG9qWGlw7Tbi6jB1qUY+NzRcPEvRCcWOAkfmMhFwoPKcptbhTenOznIOogjoJZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7++xVIU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ostun3PS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDD6C113D0;
-	Sat,  6 Dec 2025 14:03:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7++xVIU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EE9C113D0;
+	Sat,  6 Dec 2025 14:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029803;
-	bh=DsxlSh+s7SLNpyrHOxgr0Wu9Nsi8eky7BBVL3tZ3kGo=;
+	s=k20201202; t=1765029805;
+	bh=Lelg716SCuCBRQsIrBzYR0/pjER/M5f4vAd3JX5ZAFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ostun3PSIp4Ribej8A7pc4dYYTswFnMKcn0//OyTnHprlAqGYdKrDKJ18ojbodSUt
-	 S2a5Rn0EQCUN42B3ckcaB8/biQ20cXSZ8JW4WU/rT+4+STvhBy7aqcA5D3+Vli4buD
-	 bp/XxnuKSMIVI7ogTuKjknAoOw4Kyfx/avP8p0KiSz9CT19D9Qygbp7hExViOGhlrF
-	 3U3BWHf2Kuu6Se3/KhmIDPLNbb/BCKwqHmR8fi5lxH740vzX5eoFqi6q6bMwMkoSo4
-	 Ac3gwWqTgihFwVVmacQ9y6Xq3x0GlWUnVKteavxL5GmHgKTzP0x1CDlcrTHXR01RIF
-	 AdniueqBQ37zw==
+	b=q7++xVIUfvzo63s2fpIcGn6cfaqfR019TIeCVTS0qY8mi6Rgo+duyjx5xrlHuhzpJ
+	 BYBVHOVRrSkaE4i+PtRp9aCGA/i+GRfVE8o9ss3ZtopXWHjZ1c9YfJwcWU/mQVMz7Y
+	 eSFzdf/ho+0Us5Eywx90mwvYPFkVXL/89TsbFg9QdX6F2iwTzmH2Fzk6uMPPj8aheQ
+	 ZKvtpQXNmPEZQGep6CoPTH84tRug4jLxW1aa3lB92MqDtUHdws5vVivvQc4vE+XMZs
+	 kyBWhuPps5shcFwHcLQ8aClmeQJZy/5Q3MUA93dOWJXazKHwo6kpf2f55ESyoNn/So
+	 brEkmh6RK2mdA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <hansg@kernel.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com
-Subject: [PATCH AUTOSEL 6.18-6.1] wifi: brcmfmac: Add DMI nvram filename quirk for Acer A1 840 tablet
-Date: Sat,  6 Dec 2025 09:02:18 -0500
-Message-ID: <20251206140252.645973-13-sashal@kernel.org>
+	frank.li@vivo.com,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] hfsplus: Verify inode mode when loading from disk
+Date: Sat,  6 Dec 2025 09:02:19 -0500
+Message-ID: <20251206140252.645973-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -50,170 +50,244 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hansg@kernel.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit a8e5a110c0c38e08e5dd66356cd1156e91cf88e1 ]
+[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
 
-The Acer A1 840 tablet contains quite generic names in the sys_vendor and
-product_name DMI strings, without this patch brcmfmac will try to load:
-brcmfmac43340-sdio.Insyde-BayTrail.txt as nvram file which is a bit
-too generic.
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
 
-Add a DMI quirk so that a unique and clearly identifiable nvram file name
-is used on the Acer A1 840 tablet.
+According to [1], the permissions field was treated as reserved in Mac OS
+8 and 9. According to [2], the reserved field was explicitly initialized
+with 0, and that field must remain 0 as long as reserved. Therefore, when
+the "mode" field is not 0 (i.e. no longer reserved), the file must be
+S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
+S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
 
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Hans de Goede <hansg@kernel.org>
-Link: https://patch.msgid.link/20251103100314.353826-1-hansg@kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit for Stable Backporting
+## Analysis of hfsplus: Verify inode mode when loading from disk
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** wifi: brcmfmac: Add DMI nvram filename quirk for Acer A1
-840 tablet
+**Key indicators:**
+- **Reported-by: syzbot** - This is a real bug found by automated
+  fuzzing
+- **Closes:** link to syzkaller bug report confirms this is a genuine
+  issue
+- **Reviewed-by:** present from the HFS+ maintainer (Viacheslav Dubeyko)
+- **No "Cc: stable@vger.kernel.org"** tag
+- **No "Fixes:" tag** - bug appears to exist since original HFS+
+  implementation
 
-**Key observations:**
-- No `Cc: stable@vger.kernel.org` tag present
-- No `Fixes:` tag pointing to a prior commit
-- The commit explains that the tablet has generic DMI strings ("Insyde"
-  / "BayTrail")
-- Without the patch, brcmfmac loads `brcmfmac43340-sdio.Insyde-
-  BayTrail.txt` which is "a bit too generic"
-
-The wording "a bit too generic" suggests this is more of an
-improvement/optimization rather than fixing broken functionality.
+The commit describes that corrupted S_IFMT bits in the on-disk "mode"
+field can cause inode->i_mode to become bogus when loaded from disk. The
+commit message references Apple technical documentation explaining the
+expected values for the mode field.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change adds:
-1. A new `brcmf_dmi_data` structure:
+The fix modifies `hfsplus_get_perms()` in two ways:
+
+**a) Adds validation logic (the core fix):**
 ```c
-static const struct brcmf_dmi_data acer_a1_840_data = {
-    BRCM_CC_43340_CHIP_ID, 2, "acer-a1-840"
-};
+if (dir) {
+    if (mode && !S_ISDIR(mode))
+        goto bad_type;
+} else if (mode) {
+    switch (mode & S_IFMT) {
+    case S_IFREG:
+    case S_IFLNK:
+    case S_IFCHR:
+    case S_IFBLK:
+    case S_IFIFO:
+    case S_IFSOCK:
+        break;
+    default:
+        goto bad_type;
+    }
+}
 ```
+This validates that:
+- For directories (`dir=1`): mode must be 0 or actually be a directory
+  type
+- For files (`dir=0`): mode must be 0 or one of the valid file types
+  (regular, symlink, char/block device, FIFO, socket)
 
-2. A DMI match entry with three match criteria (vendor, product, BIOS
-   date) to identify this specific tablet and associate it with the new
-   data structure.
+**b) Changes return type from `void` to `int`:**
+- Returns -EIO on invalid mode with an error message
+- Callers (`hfsplus_cat_read_inode`) now check the return value and
+  propagate errors
 
-**Technical nature:** Pure data addition - adds static const data and a
-DMI table entry using existing infrastructure.
+**Root cause:** The original code blindly trusted the mode field from
+disk without validating that the S_IFMT bits are consistent with the
+directory flag.
 
 ### 3. CLASSIFICATION
 
-This is a **hardware quirk** for DMI-based nvram filename selection.
-Hardware quirks are generally allowable in stable per the documented
-exceptions.
+- **Type:** Bug fix (input validation)
+- **Security relevance:** Yes - crafted filesystem images could trigger
+  this
+- **Category:** Filesystem robustness/hardening against corrupted data
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Size:** ~15 lines added, very small
-- **Files:** Single file (dmi.c)
-- **Risk:** Extremely low - only affects the specific Acer A1 840 tablet
-- **Pattern:** Follows identical pattern to ~15 other existing DMI
-  quirks in this file
+| Aspect | Assessment |
+|--------|------------|
+| Lines changed | ~30+ additions, moderate size |
+| Files touched | 1 file (fs/hfsplus/inode.c) |
+| Complexity | Low - straightforward validation logic |
+| Regression risk | **LOW** - only rejects clearly invalid data |
+
+The validation is conservative and follows Apple's official HFS+
+specification. It only rejects modes that are definitively wrong.
 
 ### 5. USER IMPACT
 
-- **Who is affected:** Only Acer Iconia One 8 A1-840 tablet owners
-- **Severity:** The commit message says the generic filename is "a bit
-  too generic" - not that WiFi is broken
-- **Nature:** This enables using a device-specific nvram file instead of
-  a generic one
+- **Affected users:** Those mounting HFS+ filesystems (macOS external
+  drives, dual-boot setups)
+- **Trigger:** Mounting a corrupted or maliciously crafted HFS+
+  filesystem image
+- **Impact of bug:** Bogus inode mode can lead to undefined kernel
+  behavior when processing the inode
+- **Impact of fix:** Graceful rejection with -EIO instead of corrupted
+  internal state
 
 ### 6. STABILITY INDICATORS
 
-- Acked by Broadcom maintainer (Arend van Spriel)
-- Hans de Goede is well-known for x86 tablet quirks
-- No explicit stable request from maintainers
+- Reviewed by subsystem maintainer ✓
+- Clean, standalone fix with no dependencies ✓
+- The modified functions exist in older stable kernels ✓
+- No unusual code patterns or risky constructs ✓
 
 ### 7. DEPENDENCY CHECK
 
-- Requires corresponding `brcmfmac43340-sdio.acer-a1-840.txt` file in
-  linux-firmware
-- No code dependencies on other kernel commits
-- DMI quirk infrastructure exists in all stable trees
+This is a standalone fix. The `hfsplus_get_perms` and
+`hfsplus_cat_read_inode` functions exist in all stable trees where HFS+
+is supported.
 
-### Decision Rationale
+---
 
-**Arguments for backporting:**
-- Falls under "hardware quirks" exception
-- Zero risk to other systems
-- Small, contained change
-- Uses existing infrastructure
+## Summary
 
-**Arguments against backporting:**
-1. **No stable tags:** The maintainers did not add `Cc:
-   stable@vger.kernel.org`, suggesting they don't consider this critical
-   for stable
-2. **Not fixing broken functionality:** The commit says the generic name
-   is "a bit too generic" - not that WiFi doesn't work. This is an
-   improvement, not a fix for completely broken hardware
-3. **Firmware dependency:** Requires a corresponding nvram file in
-   linux-firmware that may not be present in stable distributions
-4. **Enablement vs Fix:** This is adding device-specific customization
-   rather than fixing a bug. The generic nvram file path still works,
-   just isn't optimally specific
-5. **No reported bug:** No `Reported-by:` tag or link to a bug report
-   indicating users are affected
+**What it fixes:** Prevents corrupted or maliciously crafted HFS+
+filesystem images from causing bogus inode modes to be loaded into the
+kernel.
 
-### Conclusion
+**Why it matters for stable:** This is a defensive fix that prevents
+accepting corrupted data, which could lead to undefined behavior. syzbot
+found this bug, indicating it can be triggered by crafted input - a
+potential security concern.
 
-While hardware quirks are sometimes appropriate for stable, this
-particular quirk is more of an enhancement to use a more specific nvram
-filename rather than a fix for broken functionality. The maintainer's
-decision not to add stable tags, combined with the "a bit too generic"
-language (rather than "doesn't work"), indicates this is a quality-of-
-life improvement rather than a critical fix. Stable trees should focus
-on fixes for actual broken functionality, not optimizations for firmware
-filename selection.
+**Meets stable criteria:**
+- ✓ Obviously correct (validates according to Apple's HFS+
+  specification)
+- ✓ Fixes a real bug that affects users (syzbot found it with crafted
+  images)
+- ✓ Small and contained (single file, ~30 lines of validation)
+- ✓ Low regression risk (only rejects clearly invalid data)
+- ✗ No explicit stable tag (author didn't request it)
 
-**NO**
+**Risk vs Benefit:**
+- **Risk:** Very low - adds validation that only rejects invalid data
+- **Benefit:** Prevents kernel from operating on corrupted inode modes
+  from crafted/corrupted filesystems
 
- .../net/wireless/broadcom/brcm80211/brcmfmac/dmi.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+The lack of explicit stable tags suggests the author may not have
+intended this for stable, but the fix clearly meets stable criteria as a
+filesystem robustness fix against corrupted input. Filesystem fixes for
+handling crafted/corrupted data are generally appropriate for stable
+trees.
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
-index c3a602197662b..abe7f6501e5ed 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/dmi.c
-@@ -24,6 +24,10 @@ static const struct brcmf_dmi_data acepc_t8_data = {
- 	BRCM_CC_4345_CHIP_ID, 6, "acepc-t8"
+**YES**
+
+ fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
+
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index b51a411ecd237..e290e417ed3a7 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -180,13 +180,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
+ 	.d_compare    = hfsplus_compare_dentry,
  };
  
-+static const struct brcmf_dmi_data acer_a1_840_data = {
-+	BRCM_CC_43340_CHIP_ID, 2, "acer-a1-840"
-+};
-+
- /* The Chuwi Hi8 Pro uses the same Ampak AP6212 module as the Chuwi Vi8 Plus
-  * and the nvram for the Vi8 Plus is already in linux-firmware, so use that.
-  */
-@@ -91,6 +95,16 @@ static const struct dmi_system_id dmi_platform_data[] = {
- 		},
- 		.driver_data = (void *)&acepc_t8_data,
- 	},
-+	{
-+		/* Acer Iconia One 8 A1-840 (non FHD version) */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "BayTrail"),
-+			/* Above strings are too generic also match BIOS date */
-+			DMI_MATCH(DMI_BIOS_DATE, "04/01/2014"),
-+		},
-+		.driver_data = (void *)&acer_a1_840_data,
-+	},
- 	{
- 		/* Chuwi Hi8 Pro with D2D3_Hi8Pro.233 BIOS */
- 		.matches = {
+-static void hfsplus_get_perms(struct inode *inode,
+-		struct hfsplus_perm *perms, int dir)
++static int hfsplus_get_perms(struct inode *inode,
++			     struct hfsplus_perm *perms, int dir)
+ {
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
+ 	u16 mode;
+ 
+ 	mode = be16_to_cpu(perms->mode);
++	if (dir) {
++		if (mode && !S_ISDIR(mode))
++			goto bad_type;
++	} else if (mode) {
++		switch (mode & S_IFMT) {
++		case S_IFREG:
++		case S_IFLNK:
++		case S_IFCHR:
++		case S_IFBLK:
++		case S_IFIFO:
++		case S_IFSOCK:
++			break;
++		default:
++			goto bad_type;
++		}
++	}
+ 
+ 	i_uid_write(inode, be32_to_cpu(perms->owner));
+ 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
+@@ -212,6 +228,10 @@ static void hfsplus_get_perms(struct inode *inode,
+ 		inode->i_flags |= S_APPEND;
+ 	else
+ 		inode->i_flags &= ~S_APPEND;
++	return 0;
++bad_type:
++	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
++	return -EIO;
+ }
+ 
+ static int hfsplus_file_open(struct inode *inode, struct file *file)
+@@ -516,7 +536,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+-		hfsplus_get_perms(inode, &folder->permissions, 1);
++		res = hfsplus_get_perms(inode, &folder->permissions, 1);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		inode->i_size = 2 + be32_to_cpu(folder->valence);
+ 		inode_set_atime_to_ts(inode, hfsp_mt2ut(folder->access_date));
+@@ -545,7 +567,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 
+ 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
+ 					&file->rsrc_fork : &file->data_fork);
+-		hfsplus_get_perms(inode, &file->permissions, 0);
++		res = hfsplus_get_perms(inode, &file->permissions, 0);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		if (S_ISREG(inode->i_mode)) {
+ 			if (file->permissions.dev)
 -- 
 2.51.0
 
