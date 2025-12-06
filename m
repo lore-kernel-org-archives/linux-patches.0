@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C96E2288E3;
-	Sat,  6 Dec 2025 14:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942282FABE7;
+	Sat,  6 Dec 2025 14:02:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029777; cv=none; b=sBKhg0QD5C+urD/kco+RmnpE9RcSyIsRqqFUxL9IjAo5v/NmvnOIopzG62U08jrOZoOi5bBaNW3KyAcdtdA/ApqYzCeZg2mTxDQDeFE447SqHxvl0cbtUCsK+sdJXNjfxzRxUXVbL1YgpecmyG8Fg7/+BwV1iLTvr3HrhiHBUsI=
+	t=1765029778; cv=none; b=n/2S+4v3NLwnGhi3vpM6d7REKn1ZmlZ44Z8YiPJWr5EGFcFL/cN37gKfJmHAmuaSu99kNV1MmbIXGmcrhWIiSYQHSp2SxUnJzZJG3Xt7YFRTbUbx4a7sbeREENtxOtwy2VhhnUc4irGtu8Qewi0TMIY4mrOQjNaUf7+QQ7knOE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029777; c=relaxed/simple;
-	bh=FQeuqPZ9ZuYejyixETsTXE9N5BCqnipWuGOsKpQT8/s=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q6is65XVBIjGoZdUwpYi60IPkf5VxcF3kKqtBlV/ptgx3hkZvjHjSjWmBzZh6dWMu8clnS46eYbDSCnFT2vvZpd6P85JaqpUJr/ZYCznWHkOXSW/zZyrPhjbGUhXMoTin5e1LTKT0HwczarWtrcQuOSnmkHa+KKj4AO1FA7aC+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Tq1NrON2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765029778; c=relaxed/simple;
+	bh=cHLGrinxjH0Mob8lQc7FeiUHYQJExk2+7wmYKJZ8SNM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OUoIpbm/s0F5im3OcQ48QDiQcV3qRr8J2OkJ/o/ctWxPO2wxjESKlUeYoaC3FBFZybmN0/nAMc79DeowWvq9eNcD77Jwe2HReNzMbKylqlS70k6n1RLqK5oDnyYpJptno8QBSv9RzERKPUDzv/5HSsGTEPx9KF3jrc42fh4y7h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OCRPwW+T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Tq1NrON2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3CA7C4CEF5;
-	Sat,  6 Dec 2025 14:02:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OCRPwW+T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D818C116D0;
+	Sat,  6 Dec 2025 14:02:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029776;
-	bh=FQeuqPZ9ZuYejyixETsTXE9N5BCqnipWuGOsKpQT8/s=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Tq1NrON2BZP0O0neJ54/wZ0R6J73Ah1ADobrL070YVk57oH2OdTL3FoU7BF1RyEi2
-	 BtsCWZCT3pf+LRen+JVNfCt6Co/Xa9h9iizCa6c3GoSL211xE4+w1JLU84N6sib3f5
-	 vOsP30z99qVodDXN+iEOad5TDNoEnQllRvgyx1jGR4DVXWpFZ2RtdBUqryEtPvSMuH
-	 Qo9wPQOpUPB9AqxABRXBKg0mxquPuHgkQvcENr4LDBQ1v3iGCknWeFjtzBx2bVWsGb
-	 6q2axIdiyNUQ4GjhtJSw/ardcNhJShQVl+Yg2p/xbSOU0JNp15hAWVrwDTb0es00gz
-	 etUcfIp9rMjjw==
+	s=k20201202; t=1765029778;
+	bh=cHLGrinxjH0Mob8lQc7FeiUHYQJExk2+7wmYKJZ8SNM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=OCRPwW+TpRdcDdJ2tsQEbqgpyCualVAbPlLDjnd4/H2IM4ZxzwXgRVFqM3CaS+JKB
+	 Eo+IL7lAYNAu2sMNsm7l7TkCiH/QijRi4f0lDcZIVH/bDRtuRmlOcqySRZmRSNpjPP
+	 u7z3tyFuu6X6YWxpA7xLLVMvkY+U0CjT20b2yJFD27n1LZcVn1SV4xNDjx17Li+4m9
+	 v4A0gPFFtB4olTU1Nc/myvLyHWhZ1pJ5xIpSr/kcv4mm94fnCFYtszSkEcdzGLw5XO
+	 6vIp/iAoIqd8PAkYYookveT29cEMJviMfaHHdYgGyMMIasWCHFAihf9gLSWmU/M8WL
+	 uvEpBGSOJuVFg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namjae Jeon <linkinjeon@kernel.org>,
-	Qianchang Zhao <pioooooooooip@gmail.com>,
-	Zhitong Liu <liuzhitong1993@gmail.com>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	alexandre.f.demers@gmail.com,
-	alexander.deucher@amd.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] ksmbd: fix use-after-free in ksmbd_tree_connect_put under concurrency
-Date: Sat,  6 Dec 2025 09:02:06 -0500
-Message-ID: <20251206140252.645973-1-sashal@kernel.org>
+	ntfs3@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-6.12] fs/ntfs3: check for shutdown in fsync
+Date: Sat,  6 Dec 2025 09:02:07 -0500
+Message-ID: <20251206140252.645973-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
+References: <20251206140252.645973-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,109 +49,125 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit b39a1833cc4a2755b02603eec3a71a85e9dff926 ]
+[ Upstream commit 1b2ae190ea43bebb8c73d21f076addc8a8c71849 ]
 
-Under high concurrency, A tree-connection object (tcon) is freed on
-a disconnect path while another path still holds a reference and later
-executes *_put()/write on it.
+Ensure fsync() returns -EIO when the ntfs3 filesystem is in forced
+shutdown, instead of silently succeeding via generic_file_fsync().
 
-Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+## Analysis Summary
 
+### What the commit does:
+Adds a new wrapper function `ntfs_file_fsync()` that checks if the ntfs3
+filesystem is in forced shutdown state before calling
+`generic_file_fsync()`. If the filesystem is shutting down, it returns
+`-EIO` instead of silently succeeding.
 
- fs/smb/server/mgmt/tree_connect.c | 18 ++++--------------
- fs/smb/server/mgmt/tree_connect.h |  1 -
- fs/smb/server/smb2pdu.c           |  3 ---
- 3 files changed, 4 insertions(+), 18 deletions(-)
+### Technical mechanism:
+The fix is straightforward:
+1. Get the inode from the file
+2. Call `ntfs3_forced_shutdown(inode->i_sb)` to check if filesystem is
+   in error state
+3. Return `-EIO` if true, otherwise delegate to `generic_file_fsync()`
 
-diff --git a/fs/smb/server/mgmt/tree_connect.c b/fs/smb/server/mgmt/tree_connect.c
-index ecfc575086712..d3483d9c757c7 100644
---- a/fs/smb/server/mgmt/tree_connect.c
-+++ b/fs/smb/server/mgmt/tree_connect.c
-@@ -78,7 +78,6 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
- 	tree_conn->t_state = TREE_NEW;
- 	status.tree_conn = tree_conn;
- 	atomic_set(&tree_conn->refcount, 1);
--	init_waitqueue_head(&tree_conn->refcount_q);
- 
- 	ret = xa_err(xa_store(&sess->tree_conns, tree_conn->id, tree_conn,
- 			      KSMBD_DEFAULT_GFP));
-@@ -100,14 +99,8 @@ ksmbd_tree_conn_connect(struct ksmbd_work *work, const char *share_name)
- 
- void ksmbd_tree_connect_put(struct ksmbd_tree_connect *tcon)
- {
--	/*
--	 * Checking waitqueue to releasing tree connect on
--	 * tree disconnect. waitqueue_active is safe because it
--	 * uses atomic operation for condition.
--	 */
--	if (!atomic_dec_return(&tcon->refcount) &&
--	    waitqueue_active(&tcon->refcount_q))
--		wake_up(&tcon->refcount_q);
-+	if (atomic_dec_and_test(&tcon->refcount))
-+		kfree(tcon);
+### Is this a real bug fix?
+**Yes** - this fixes a data integrity semantics issue. When a filesystem
+is in forced shutdown (typically after critical I/O errors), fsync()
+should return an error to inform applications their data was not synced.
+Silently succeeding could cause data loss without applications knowing.
+
+### Stable kernel criteria evaluation:
+
+| Criteria | Assessment |
+|----------|------------|
+| Fixes real bug | Yes - data integrity semantics issue |
+| Small/contained | Yes - ~10 lines, single function |
+| Obviously correct | Yes - follows existing pattern in ntfs3 |
+| Stable tag | **NO** - maintainer didn't request stable |
+| Fixes: tag | **NO** - no indication of when bug was introduced |
+
+### Critical dependency issue:
+The `ntfs3_forced_shutdown()` function was introduced in **kernel 6.8**
+(commit 6c3684e703837). My verification shows:
+- **v6.6**: Does NOT have `ntfs3_forced_shutdown` (0 occurrences)
+- **v6.8+**: Has the shutdown infrastructure
+
+This means:
+- Stable trees **6.6.y**, **6.1.y**, **5.15.y**, etc. cannot use this
+  fix without first backporting the entire shutdown feature (~75 lines
+  across 7 files)
+- Only newer stable trees (if any exist based on 6.8+) would benefit
+
+### Risk vs Benefit:
+- **Benefit**: Correct fsync() error handling during filesystem shutdown
+- **Risk**: Low for applicable kernels - simple logic, well-tested
+  pattern
+- **Applicability**: Very limited - only affects recent kernels with
+  shutdown support
+
+### Conclusion:
+While this is a legitimate fix for a data integrity issue, several
+factors argue against backporting:
+
+1. **No maintainer request**: No "Cc: stable@vger.kernel.org" tag
+   indicates the maintainer didn't consider this critical for stable
+2. **Dependency on new feature**: Requires the shutdown infrastructure
+   from 6.8, which is not in most active stable trees (6.6.y, 6.1.y,
+   5.15.y)
+3. **Limited impact scope**: Only applies to the relatively recent
+   kernel versions that have the shutdown feature
+4. **The shutdown feature itself is new**: The forced shutdown
+   functionality only existed for a short time before this fix, meaning
+   the exposure window is small
+
+This fix would require significant infrastructure backporting to be
+useful in most stable trees, making it unsuitable as-is for stable
+backporting.
+
+**NO**
+
+ fs/ntfs3/file.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index 4c90ec2fa2eae..83f0072f0896c 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -1375,6 +1375,18 @@ static ssize_t ntfs_file_splice_write(struct pipe_inode_info *pipe,
+ 	return iter_file_splice_write(pipe, file, ppos, len, flags);
  }
  
- int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
-@@ -119,14 +112,11 @@ int ksmbd_tree_conn_disconnect(struct ksmbd_session *sess,
- 	xa_erase(&sess->tree_conns, tree_conn->id);
- 	write_unlock(&sess->tree_conns_lock);
- 
--	if (!atomic_dec_and_test(&tree_conn->refcount))
--		wait_event(tree_conn->refcount_q,
--			   atomic_read(&tree_conn->refcount) == 0);
--
- 	ret = ksmbd_ipc_tree_disconnect_request(sess->id, tree_conn->id);
- 	ksmbd_release_tree_conn_id(sess, tree_conn->id);
- 	ksmbd_share_config_put(tree_conn->share_conf);
--	kfree(tree_conn);
-+	if (atomic_dec_and_test(&tree_conn->refcount))
-+		kfree(tree_conn);
- 	return ret;
- }
- 
-diff --git a/fs/smb/server/mgmt/tree_connect.h b/fs/smb/server/mgmt/tree_connect.h
-index a42cdd0510411..f0023d86716f2 100644
---- a/fs/smb/server/mgmt/tree_connect.h
-+++ b/fs/smb/server/mgmt/tree_connect.h
-@@ -33,7 +33,6 @@ struct ksmbd_tree_connect {
- 	int				maximal_access;
- 	bool				posix_extensions;
- 	atomic_t			refcount;
--	wait_queue_head_t		refcount_q;
- 	unsigned int			t_state;
++/*
++ * ntfs_file_fsync - file_operations::fsync
++ */
++static int ntfs_file_fsync(struct file *file, loff_t start, loff_t end, int datasync)
++{
++	struct inode *inode = file_inode(file);
++	if (unlikely(ntfs3_forced_shutdown(inode->i_sb)))
++		return -EIO;
++
++	return generic_file_fsync(file, start, end, datasync);
++}
++
+ // clang-format off
+ const struct inode_operations ntfs_file_inode_operations = {
+ 	.getattr	= ntfs_getattr,
+@@ -1397,7 +1409,7 @@ const struct file_operations ntfs_file_operations = {
+ 	.splice_write	= ntfs_file_splice_write,
+ 	.mmap_prepare	= ntfs_file_mmap_prepare,
+ 	.open		= ntfs_file_open,
+-	.fsync		= generic_file_fsync,
++	.fsync		= ntfs_file_fsync,
+ 	.fallocate	= ntfs_fallocate,
+ 	.release	= ntfs_file_release,
  };
- 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index a2830ec67e782..dba29881debdc 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2200,7 +2200,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	WARN_ON_ONCE(atomic_dec_and_test(&tcon->refcount));
- 	tcon->t_state = TREE_DISCONNECTED;
- 	write_unlock(&sess->tree_conns_lock);
- 
-@@ -2210,8 +2209,6 @@ int smb2_tree_disconnect(struct ksmbd_work *work)
- 		goto err_out;
- 	}
- 
--	work->tcon = NULL;
--
- 	rsp->StructureSize = cpu_to_le16(4);
- 	err = ksmbd_iov_pin_rsp(work, rsp,
- 				sizeof(struct smb2_tree_disconnect_rsp));
 -- 
 2.51.0
 
