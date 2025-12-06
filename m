@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEE01A5B8A;
-	Sat,  6 Dec 2025 14:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2752A1A5B8A;
+	Sat,  6 Dec 2025 14:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765029818; cv=none; b=kScywCOeTjlG1bxPzBPL3oQColII/EnNiGPHL8PBfivZL8Qq3IZVPDSf28OlKUCOYjFfroxCzJ+w2w+0mV9ggRTv4sgm/HI9AabQ1lIOIi8ZvDIF33kYhip21JyrZJSI7+iaG/BLPg1emDU2+vjBnAAtcAVShCtcGAZxtSCccHs=
+	t=1765029820; cv=none; b=LSIaB2GjnsYkPZIjjPDxns5GYuT/orRjkZHRf5zeqeaAsUm0wLJZC9L6TQvUS/ya8vh9ZQyC4DC7r99e9cS2SyEyhSTvrCtxNz69K0UG5OCNX0GcswY8qzFlD/mh0Cx6JxTCzjxHT40cCPlD/AfDgAB4YwxRt67VarfYoHlg158=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765029818; c=relaxed/simple;
-	bh=PyQk4qB4DgzfMLkp2CBMJ+CY2Gaz2MGM5DhN34bq2Q4=;
+	s=arc-20240116; t=1765029820; c=relaxed/simple;
+	bh=kJAdqCXr4d3RnC2ag6980p/5Tk4kg1ToKyAzNT9irtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ftr20fB0PXfCqkYVKNTOUx19QxmWg7Cz9TGy1gY4Y6C9CpTtAqqE/+BPaog10HoKbc6qpqSzIVvdE0vo4G//3dM2Py4rNSnJaPUYZ0GOwivstvuu28rdzcfR4R9RFBIIueNB7anpRZNeO5/IQKsGdiFpLAlabI2a8Mgast70H7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OCXAFURW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kpqy0C7jfM1I/Z6y+QMwqKUecQ+Frc2b4hmPGzus5DJz6h5Q4YvYRWgIDuJtDtagY/yqOI201XnFzDtzej2+ruhZDgq6kgrV4wICWdXwDr4Re5ODEn0LjAb+uectKP83A107/mV3hiK5Zj4BWQgKuQ3Ys4/WiSalUB82Qz2K1c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VXn/Lgxm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OCXAFURW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9041CC116D0;
-	Sat,  6 Dec 2025 14:03:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VXn/Lgxm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BA70C113D0;
+	Sat,  6 Dec 2025 14:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765029817;
-	bh=PyQk4qB4DgzfMLkp2CBMJ+CY2Gaz2MGM5DhN34bq2Q4=;
+	s=k20201202; t=1765029819;
+	bh=kJAdqCXr4d3RnC2ag6980p/5Tk4kg1ToKyAzNT9irtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCXAFURWaqno+mNzJuf4DKZFVgkLsnjmNg4DMEINWZzuWSp16mj40+r4blVWUhrpp
-	 TfNDwsN7eRZAm2LyhvAXCAhFpiYdr+8gsFjwDGJPUJs0mMON40kCaD3Fcn8ttE6QJH
-	 x+tqKhfig60H6A9JuPrAOOikdq5aJ8bJnaXFL3Qddbv72kr4izel9xLcM/XpcngwiJ
-	 nlVk8QSmBpfb1TZo+HYN/yinUTjookF0UCYJnkeP8cs6W/cpVgPwD+9UXhhTxZ6VmA
-	 Bce8eJA6KxsOAje2floF7aKo04Eqe3s/rR8cwrwLU51wSTybIVtRXHLaxyyq0ouc24
-	 mQHQciQDfI31g==
+	b=VXn/Lgxmu6x1H4vOirfzlumAgzWOKXEHT5GKJJc2WowrvC3Cutbhrx5EwyDrADedQ
+	 K04NLntrmDuK0EDfbSMgHTVunaDnlNVXwNR2U5Phqw7DjYKfp0bjaQwlVTC1/jbFAk
+	 wKay5NWNnNlIbULPlCC10hvUutUOUZWpypAQG9u7ED4FvQQF37qERvY56aUFdy9xR9
+	 YsDP8Kp7HlQtbA7DX88JV9mGKCY1SZutuEduiYT4Vb0McM9TfrXYeQIJAdmWURYe0q
+	 BRvr3BJ4y5HQOB4bcwXX/1GuK4PN3LNrTZsBBkryPac99+RAr3wQxuZGmWBpWjly+2
+	 6uYy7GHedVmKw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chingbin Li <liqb365@163.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
+	syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] Bluetooth: btusb: Add new VID/PID 2b89/6275 for RTL8761BUV
-Date: Sat,  6 Dec 2025 09:02:26 -0500
-Message-ID: <20251206140252.645973-21-sashal@kernel.org>
+	ntfs3@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-6.6] ntfs: set dummy blocksize to read boot_block when mounting
+Date: Sat,  6 Dec 2025 09:02:27 -0500
+Message-ID: <20251206140252.645973-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251206140252.645973-1-sashal@kernel.org>
 References: <20251206140252.645973-1-sashal@kernel.org>
@@ -50,72 +49,154 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chingbin Li <liqb365@163.com>
+From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
 
-[ Upstream commit 8dbbb5423c0802ec21266765de80fd491868fab1 ]
+[ Upstream commit d1693a7d5a38acf6424235a6070bcf5b186a360d ]
 
-Add VID 2b89 & PID 6275 for Realtek RTL8761BUV USB Bluetooth chip.
+When mounting, sb->s_blocksize is used to read the boot_block without
+being defined or validated. Set a dummy blocksize before attempting to
+read the boot_block.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
+The issue can be triggered with the following syz reproducer:
 
-T:  Bus=01 Lev=01 Prnt=01 Port=02 Cnt=01 Dev#=  6 Spd=12   MxCh= 0
-D:  Ver= 1.10 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2b89 ProdID=6275 Rev= 2.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00E04C239987
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+  mkdirat(0xffffffffffffff9c, &(0x7f0000000080)='./file1\x00', 0x0)
+  r4 = openat$nullb(0xffffffffffffff9c, &(0x7f0000000040), 0x121403, 0x0)
+  ioctl$FS_IOC_SETFLAGS(r4, 0x40081271, &(0x7f0000000980)=0x4000)
+  mount(&(0x7f0000000140)=@nullb, &(0x7f0000000040)='./cgroup\x00',
+        &(0x7f0000000000)='ntfs3\x00', 0x2208004, 0x0)
+  syz_clone(0x88200200, 0x0, 0x0, 0x0, 0x0, 0x0)
 
-Signed-off-by: Chingbin Li <liqb365@163.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Here, the ioctl sets the bdev block size to 16384. During mount,
+get_tree_bdev_flags() calls sb_set_blocksize(sb, block_size(bdev)),
+but since block_size(bdev) > PAGE_SIZE, sb_set_blocksize() leaves
+sb->s_blocksize at zero.
+
+Later, ntfs_init_from_boot() attempts to read the boot_block while
+sb->s_blocksize is still zero, which triggers the bug.
+
+Reported-by: syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f4f84b57a01d6b8364ad
+Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+[almaz.alexandrovich@paragon-software.com: changed comment style, added
+return value handling]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I have a complete picture of the issue. Let me summarize my
+analysis:
 
+## Summary of Analysis
 
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+### The Bug
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index fa683bb7f0b49..c70e79e69be8d 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -781,6 +781,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x2b89, 0x8761), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x2b89, 0x6275), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+The commit fixes a bug in ntfs3's `ntfs_init_from_boot()` function where
+`ntfs_bread()` is called to read the boot block **before**
+`sb->s_blocksize` is properly set.
+
+### Root Cause Analysis
+
+1. **Mount Flow**: When mounting an ntfs3 filesystem:
+   - `get_tree_bdev()` calls `setup_bdev_super()` which calls
+     `sb_set_blocksize(sb, block_size(bdev))`
+   - If `block_size(bdev) > PAGE_SIZE` (which can happen via ioctl
+     `FS_IOC_SETFLAGS` setting bdev block size to 16384 as shown in the
+     reproducer), and the filesystem doesn't have `FS_LBS` flag,
+     `sb_set_blocksize()` returns 0 and leaves `sb->s_blocksize = 0`
+
+2. **The Crash Path**: In `ntfs_init_from_boot()`:
+  ```c
+  sbi->volume.blocks = dev_size >> PAGE_SHIFT;
+  // sb->s_blocksize is 0 here!
+  bh = ntfs_bread(sb, boot_block);  // Uses sb->s_blocksize = 0
+  ```
+
+3. **Cascade to Infinite Loop**:
+   - `ntfs_bread()` → `sb_bread_unmovable()` → `__bread_gfp()` with
+     size=0
+   - `bdev_getblk()` → `__getblk_slow()` → `grow_buffers()` →
+     `grow_dev_folio()` → `folio_alloc_buffers()`
+   - In `folio_alloc_buffers()`: `while ((offset -= size) >= 0)` with
+     size=0 causes infinite loop
+
+### The Fix
+
+The fix adds a call to `sb_min_blocksize(sb, PAGE_SIZE)` before
+attempting to read the boot block:
+
+```c
+/* Set dummy blocksize to read boot_block. */
+if (!sb_min_blocksize(sb, PAGE_SIZE)) {
+    return -EINVAL;
+}
+```
+
+This ensures:
+1. `sb->s_blocksize` is set to at least the device's logical block size,
+   capped at PAGE_SIZE
+2. If this fails, mount fails gracefully with `-EINVAL` instead of
+   hanging
+
+### Backport Assessment
+
+**STRONG YES signals:**
+1. ✅ **Fixes a real crash/hang** - System hangs due to infinite loop in
+   `folio_alloc_buffers()`
+2. ✅ **Syzbot reported** - Has syzkaller reproducer
+   (`f4f84b57a01d6b8364ad`)
+3. ✅ **Small, surgical fix** - Only 4 lines added
+4. ✅ **Clear, obvious fix** - Sets blocksize before using it for reads
+5. ✅ **Uses well-established API** - `sb_min_blocksize()` is a standard
+   helper used by many filesystems
+6. ✅ **Affects production users** - ntfs3 is widely used (included since
+   5.15)
+7. ✅ **Denial of Service potential** - A local user can trigger the hang
+
+**Risk Assessment:**
+- **Very Low Risk**: The fix adds a safety check before an I/O operation
+- **No behavioral change** for normal cases - the blocksize would have
+  been set to PAGE_SIZE anyway after successful boot read
+- **Graceful failure** if `sb_min_blocksize()` fails (which would be
+  very rare in practice)
+
+**Stable Trees Affected:**
+- All stable trees with ntfs3: 5.15.y, 6.1.y, 6.6.y, 6.10.y, 6.11.y,
+  etc.
+- The bug has existed since ntfs3 was introduced in v5.15
+- The recent `FS_LBS` change (March 2025) made it easier to trigger but
+  the underlying issue predates it
+
+**Dependencies:**
+- The fix is standalone and uses existing kernel APIs
+- No other patches required for backport
+- `sb_min_blocksize()` has been available since at least 2.6.x
+
+**YES**
+
+ fs/ntfs3/super.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index ddff94c091b8c..e6c0908e27c29 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -933,6 +933,11 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
  
- 	/* Additional Realtek 8821AE Bluetooth devices */
- 	{ USB_DEVICE(0x0b05, 0x17dc), .driver_info = BTUSB_REALTEK },
+ 	sbi->volume.blocks = dev_size >> PAGE_SHIFT;
+ 
++	/* Set dummy blocksize to read boot_block. */
++	if (!sb_min_blocksize(sb, PAGE_SIZE)) {
++		return -EINVAL;
++	}
++
+ read_boot:
+ 	bh = ntfs_bread(sb, boot_block);
+ 	if (!bh)
 -- 
 2.51.0
 
