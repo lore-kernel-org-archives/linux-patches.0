@@ -1,91 +1,80 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AED93B8D47;
-	Sat,  6 Dec 2025 22:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81D1F25783A
+	for <patches@lists.linux.dev>; Sun,  7 Dec 2025 07:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765061356; cv=none; b=bWvdrz0AG6ESNgwaAd4+mnOu0V6fEMlEbjN00Qb/G1ZeYyqagTzldPEaNwbsY1Ie7BQmncmgeIZK0uSOLO1dZLJUSy8q/4Yp5pbjPaB6r+ZHGJ/+kvo+wG81Moq8sVkGPd5/dKj2dK+aK0giqhdl35Nfu8BTKGJeyn4MqvYauQ8=
+	t=1765091546; cv=none; b=RIhoi/cMTj7bdNcxcZrfBfA4Ac4D3vvxSHGns7Y7zIj5SvuGsyYOegzpn79Bku36lVFz2M3eKQ1s73nba2nR/WQmiYC5CDysSUel9W1RtrTXQbgKKasXjpxghznbbzfAE3FujSf3sNxGqa1Q8j+c5IIGscpF5D0ZrOiv8poC+GU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765061356; c=relaxed/simple;
-	bh=IUQ/hH7VPF1SoDvn/Dyqq+wuxhvVp/0Hq1JPBziJA64=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YWp2pMbecs5zjYQ38xV6X2qCohNdXe21MUSOLDcevtSvHr64CJTE7+miHn+rohitlIkFkTM6Qdi1DY9q1zNMnhKPj3PR4omVjpVyfjo/saMKfLTKfPQ9DzazC8HTo7Dkj/vqLDfM2Z7cSzauxfhqs2iWY25nQG2n0sxFR00O0vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=st0ncobw; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765091546; c=relaxed/simple;
+	bh=K6FeuAm/mO+v9ibQ+qp/z1st3bgFBU83eGp0V676s0Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TiQ3h9G0BXfKetHzRsISrlbt8sOINE62JG55qNq/AfNhAQtw0ntauQzbQp21yB8iJp/qpVVa52LYzhxDhmbTWZcU22TgguEOv35aR5E1e8Ph4FYNfev7P3yH3+vvH+38rORxsNSTB+Iy+pl8X1Y3fIhopCiRo+v1uOg7zZQ7GXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ex4NWSYE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="st0ncobw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F34C4CEF5;
-	Sat,  6 Dec 2025 22:49:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ex4NWSYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A7FFC19424
+	for <patches@lists.linux.dev>; Sun,  7 Dec 2025 07:12:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765061354;
-	bh=IUQ/hH7VPF1SoDvn/Dyqq+wuxhvVp/0Hq1JPBziJA64=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=st0ncobwc9cpWYTuI681GcN0qL9NVK42wI1kCX+EEKjPXHicfDaJpQ1FYgTCaDiFd
-	 q7REefiCqYkRiOYCmbgEHqM6At2gI41sq1yhSdBMYP7UUaTsDUGBhkYuAJ2tx2Z2Mj
-	 z9ith9XjjVQ/xWnmxqvOGltgplW4Be/6hT+QySHUo8vcmwrfb/X5qUSAicn8wRCz1N
-	 ijlb5At7NNK4ghy3JONjoKxx4P/P/CQX0yOjg9abVhlWVe0gZEVpJ+sVVpUW+eibag
-	 /neNKNKwTc7TP2xQ3Z/7NPJrn/vGRV8boRCUUXHSoEhAaU7k3qxzkzrBXoazkCPRzQ
-	 tci6XN86GyL7Q==
-Date: Sat, 6 Dec 2025 17:49:12 -0500
-From: Sasha Levin <sashal@kernel.org>
-To: Johannes Berg <johannes@sipsolutions.net>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	linux-wireless@vger.kernel.org
-Subject: Re: [PATCH AUTOSEL 6.18-6.12] wifi: cfg80211: stop radar detection
- in cfg80211_leave()
-Message-ID: <aTSy6CoUlKZy_GSs@laps>
-References: <20251206140252.645973-1-sashal@kernel.org>
- <20251206140252.645973-26-sashal@kernel.org>
- <e883efe1f9e4bccb144400b82a35110c79451b37.camel@sipsolutions.net>
+	s=k20201202; t=1765091546;
+	bh=K6FeuAm/mO+v9ibQ+qp/z1st3bgFBU83eGp0V676s0Y=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ex4NWSYEnHhMsq6r8TidPeVwAPE0XKrkaYSrJGtp/tZZJDKgcEPzghYkczDR3BR/x
+	 KnqXa7f1mAHiGZocfq7YQAGhzkjYTWi8wxh7O0Rq+jTaVhqSvdKNoHy6+UFa209OAs
+	 7PKMhIYCF7uEw8Zh6gpbpmp6qFbvBIm7USXBpFWhH5ipMJjGisTKasLWZRyC3VAETJ
+	 pBIzeMzVP2+62Kseo6/LICseqcAuuGUvs16QglOY++zqSjgWkPOGqgj/bWIm90duSP
+	 gD5kys07tqIy9qNoCXLiZe/2ajE2kGx22RFH463FxwpCCAwPrpr2bMPXMvlapshjaI
+	 ZHUSGNtpmScSA==
+Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-37b9728a353so47700171fa.0
+        for <patches@lists.linux.dev>; Sat, 06 Dec 2025 23:12:26 -0800 (PST)
+X-Forwarded-Encrypted: i=1; AJvYcCXFRt/U6xPqT19rbf9k3wer/kPYfZX4Q1BY622vYONNfkrUC5mp2oiqutheX+3VvehtD5VRXrYN@lists.linux.dev
+X-Gm-Message-State: AOJu0Yzq9AawDbEU+Edv6xC/7Pw3fHMz9QhcCt8zuZE2L61uHOo+SFpa
+	YtqP4sswI527GvvNktGCn3+he9jb6yJPt8yxue37GsKUa5SJ+wGIelyDYnQU1jxW9A/tvy/gctQ
+	CDMfDa46v9oYmXTYSb4wXgHWMHSoW0gCO/sc0rVgBfA==
+X-Google-Smtp-Source: AGHT+IHUttufN04TX+XB2v0nOmX+t22Dxwuaj+k3gvEz9+koC25RuVv5nOSo4819NIVrwVOSN2atPSMlelCVlQoOaAY=
+X-Received: by 2002:a05:6512:3e0a:b0:595:9152:b90e with SMTP id
+ 2adb3069b0e04-598853ddf93mr1339182e87.44.1765091544827; Sat, 06 Dec 2025
+ 23:12:24 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <e883efe1f9e4bccb144400b82a35110c79451b37.camel@sipsolutions.net>
+References: <20251206180414.3183334-1-safinaskar@gmail.com>
+ <20251206180414.3183334-2-safinaskar@gmail.com> <aTSlgoK0PcE937l1@smile.fi.intel.com>
+In-Reply-To: <aTSlgoK0PcE937l1@smile.fi.intel.com>
+From: Bartosz Golaszewski <brgl@kernel.org>
+Date: Sun, 7 Dec 2025 08:12:13 +0100
+X-Gmail-Original-Message-ID: <CAMRc=Mca8oi7JpEiNajP+CbHhBhSb9fS4NqFz-aojcX1qmEzcA@mail.gmail.com>
+X-Gm-Features: AQt7F2qf48qgC5abnj9AO2dJG-JdHRcmEsnizopJoLSVxgbYQ23fiVmZ1lHXbrI
+Message-ID: <CAMRc=Mca8oi7JpEiNajP+CbHhBhSb9fS4NqFz-aojcX1qmEzcA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] gpiolib: acpi: Add quirk for Dell Precision 7780
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Askar Safin <safinaskar@gmail.com>, Mika Westerberg <westeri@kernel.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, linux-gpio@vger.kernel.org, 
+	linux-acpi@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	regressions@lists.linux.dev, Dell.Client.Kernel@dell.com, 
+	Mario Limonciello <superm1@kernel.org>, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Dec 06, 2025 at 03:55:37PM +0100, Johannes Berg wrote:
->On Sat, 2025-12-06 at 09:02 -0500, Sasha Levin wrote:
->>
->> ### Conclusion
->>
->> This commit fixes a legitimate bug but does **not** meet stable kernel
->> criteria:
->> - The maintainer did not request stable backporting
->> - The affected code only exists in kernel 6.12+, making it only relevant
->>   to the most recent stable branch if any
->> - The bug severity (warnings, not crashes/corruption/security) does not
->>   warrant the backporting effort
->> - It cannot be cleanly applied to most stable trees due to structural
->>   code differences
->>
->> **NO**
+On Sat, Dec 6, 2025 at 10:52=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
 >
->:)
+> On Sat, Dec 06, 2025 at 06:04:13PM +0000, Askar Safin wrote:
+> > Dell Precision 7780 often wakes up on its own from suspend. Sometimes
+> > wake up happens immediately (i. e. within 7 seconds), sometimes it happ=
+ens
+> > after, say, 30 minutes.
 >
->To be fair, it's kind of a corner case that happened mostly during tests
->as far as I know, when two mesh peers getting radar detection happen to
->pick two incompatible channels and then give up, causing wpa_s to bring
->down the interface.
+> Bart, up to you, if you want to take this. But I can do with a usual rout=
+e via
+> my tree.
 >
->The thing that makes this interesting is that they both detect radar at
->*precisely* the same time because they're actually simulated on a single
->Linux system, and our regulatory code tells each and every radio if any
->of them detects radar.
->
->Anyway, either way is reasonable, it's probably a much older issue than
->6.12 (then we just shuffled things around due to MLO), but the issue
->would've been around before that, and nobody really seems to have
->noticed outside this specific test.
 
-Commits still get a review after the LLM response, which something is (IMO)
-wrong :)
+I already have a bunch of fixes queued for next week so I guess it'll
+be less hassle and the fastest option if I take it.
 
-I'll keep it in, thanks!
-
--- 
-Thanks,
-Sasha
+Bartosz
