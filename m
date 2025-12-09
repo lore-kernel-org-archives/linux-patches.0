@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00E22FE07B;
-	Tue,  9 Dec 2025 00:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665532FE575;
+	Tue,  9 Dec 2025 00:18:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239502; cv=none; b=ZjykluCb68Ja4v289XrnPniLDsFkqRWFgyMLwK2Z/NlsEWrfIPngzdPYa+khOIUDkt/pcmgHv08VAoNztiaDAJatGbIlNh6xWNRHBg0NkyTTF8fYlREGh2MUKGrRhYHSDoEY4YFixVF5yttRVwtlIVA4SN2bhAv7l9NYm59r8C4=
+	t=1765239504; cv=none; b=UvOkOMjbEBUsONNBVrH/npnzjIU1F4JD/ZpkaiDPgaQjba+NhE+lzVenHSKc01Mm1rxpntoB55/RkV8s6aYS/oUK79VG6mPib81kxeN80RKG9iJCf34Xp20gbZ5iFlfDinRkD+Kagq2h+JyLH/x748xSa+P/wlJy+9YPb3fG5WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239502; c=relaxed/simple;
-	bh=19TLGicltIHZdV3evklZ7BqhPkkNRx+ucqkSBoq51Mg=;
+	s=arc-20240116; t=1765239504; c=relaxed/simple;
+	bh=XpKHAEixGzYXqzWImy4xf3ogx25ptVRFnWcBtm/70Vs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=SyehOHzXqi2fYQC1Syp4QfRC+VMR6bRdRedofOz0q/wH4slf5yhUfrsc8FTgz1Hx8snLruIEX0hlJEXzpaXZpdMtPAjrYsQmuSbCP6IIRbKvYUe9SRge/uYQx3LCHk6xw8vs5srFh5zgP+Wbc9DC/rvfyd1S6nNrF1BZV+5NYr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tFMsJS3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Bz+eU++BGeazAZS+I7BQLjY9IltgG+E8cX5DUvUmj/mH1PdJjD/qQOHR6UmspemHK1eSqJD3DArseOU1OZKCDPtK/3fkxdiA2a21D9SLg6rxP7I09waLsa5YpYgDYrhkwdTIK82qAErqFOUc8eE0bAmozm0mi0/FfbST1T7Ux/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cgl1NqBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tFMsJS3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11162C4CEF1;
-	Tue,  9 Dec 2025 00:18:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cgl1NqBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBF8C19421;
+	Tue,  9 Dec 2025 00:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239502;
-	bh=19TLGicltIHZdV3evklZ7BqhPkkNRx+ucqkSBoq51Mg=;
+	s=k20201202; t=1765239504;
+	bh=XpKHAEixGzYXqzWImy4xf3ogx25ptVRFnWcBtm/70Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tFMsJS3XoGR9rWM5NkulMmn6SxIHTyxgu5/JhFyfEJ8jxbmWAuIhnDAKFa9wE/k29
-	 Hadck4UrIp1KYfEcm0fq+YQVwxWZgB53E8X4d7LLqZJeROvYDW1/Oh2hZxCtZH21Tq
-	 kf89qL6acwfI61bkTSEZAK8kYoKoxnFF0xJI6qOz5wMUVECI1iGPYrXD6DP9dlYTv+
-	 dBRtLB0PgPoBW7uTbZZ30h4sQJx94wDKPCSzhd5RXeF0LUHJWBuZlB4zYfivMU+7f1
-	 20kdDEp4++Br+wiQRqV2Y/MD1tsqErnrICZEQsbXYc+GtQXvndcLlET2PGA8IDin7I
-	 3p1muxASQAVmA==
+	b=Cgl1NqBwSUVCa+qgh9WjTtbWF5vtPtO/5lGYYbXfP4jPojXEsEdu/CC9jODxC1bJq
+	 /iRVAwd85ImmAWBHdOLd71qBh/m9CuQyPrbv2UZEvZEGFZMM4B7DRK3I+hgQMrLrin
+	 TXvKZ+Zx5W7Yk+kZ8kHwvfYJBZBq8zxayEzQcnqrdAUDlTmtXYxWu8oAFfhFuXO+km
+	 rIKSzkIQaatabMrElp4/mfww3YKYQKZoBrisV1nLp2dtLxewV7gZENw5Qfp8YjZlWY
+	 NU/HxOZqMKvGXkvONu86JozAzzwk9nvPWqzj2tFh+rENmEy7KTT1O3z9ezhXv6+bd6
+	 w/Q5zeARW0I5A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Qianchang Zhao <pioooooooooip@gmail.com>,
-	Zhitong Liu <liuzhitong1993@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Chih-Kang Chang <gary.chang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	smfrench@gmail.com,
-	linux-cifs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] ksmbd: vfs: fix race on m_flags in vfs_cache
-Date: Mon,  8 Dec 2025 19:15:35 -0500
-Message-ID: <20251209001610.611575-43-sashal@kernel.org>
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] wifi: rtw89: flush TX queue before deleting key
+Date: Mon,  8 Dec 2025 19:15:36 -0500
+Message-ID: <20251209001610.611575-44-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -54,320 +51,127 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qianchang Zhao <pioooooooooip@gmail.com>
+From: Chih-Kang Chang <gary.chang@realtek.com>
 
-[ Upstream commit 991f8a79db99b14c48d20d2052c82d65b9186cad ]
+[ Upstream commit 3a12581fc292997f5ca6dafe3238afd39b77e798 ]
 
-ksmbd maintains delete-on-close and pending-delete state in
-ksmbd_inode->m_flags. In vfs_cache.c this field is accessed under
-inconsistent locking: some paths read and modify m_flags under
-ci->m_lock while others do so without taking the lock at all.
+In the wpa_supplicant rekey flow, it sends an EAPOL packet 4/4 through
+nl80211_tx_control_port() and triggers wake_tx_queue() in the driver.
+Then, it sends nl80211_new_key() to configure a new key in mac80211.
+However, in wake_tx_queue(), a workqueue is used to process the TX packet,
+which might cause the driver to process the EAPOL packet later than
+nl80211_new_key(). This results in the EAPOL packet 4/4 being transmitted
+with the new key and IV, causing it to be dropped by the AP. Therefore,
+needs to flush TX queue before deleting the old key to ensure that the
+EAPOL 4/4 packet is transmitted using the old key.
 
-Examples:
-
- - ksmbd_query_inode_status() and __ksmbd_inode_close() use
-   ci->m_lock when checking or updating m_flags.
- - ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
-   ksmbd_clear_inode_pending_delete() and ksmbd_fd_set_delete_on_close()
-   used to read and modify m_flags without ci->m_lock.
-
-This creates a potential data race on m_flags when multiple threads
-open, close and delete the same file concurrently. In the worst case
-delete-on-close and pending-delete bits can be lost or observed in an
-inconsistent state, leading to confusing delete semantics (files that
-stay on disk after delete-on-close, or files that disappear while still
-in use).
-
-Fix it by:
-
- - Making ksmbd_query_inode_status() look at m_flags under ci->m_lock
-   after dropping inode_hash_lock.
- - Adding ci->m_lock protection to all helpers that read or modify
-   m_flags (ksmbd_inode_pending_delete(), ksmbd_set_inode_pending_delete(),
-   ksmbd_clear_inode_pending_delete(), ksmbd_fd_set_delete_on_close()).
- - Keeping the existing ci->m_lock protection in __ksmbd_inode_close(),
-   and moving the actual unlink/xattr removal outside the lock.
-
-This unifies the locking around m_flags and removes the data race while
-preserving the existing delete-on-close behaviour.
-
-Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20251114060128.35363-2-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: ksmbd: vfs: fix race on m_flags in vfs_cache
+## 3. CLASSIFICATION
 
-### 1. Commit Message Analysis
+**Type:** Bug fix - Race condition in WPA rekey flow
 
-**Bug Description**: The commit fixes a data race on `m_flags` field in
-ksmbd's VFS cache. Multiple functions access/modify this field with
-inconsistent locking - some use `ci->m_lock`, others don't.
+**User Impact:** WPA rekeying failures, causing:
+- WiFi authentication failures
+- Connection drops during normal operation
+- Poor user experience on networks that perform rekeying
 
-**Keywords**: "race", "data race", "fix" - clear bug fix language
+This is a **functional bug**, not a security vulnerability - it causes
+legitimate authentication packets to be dropped.
 
-**Impact described**: "Delete-on-close and pending-delete bits can be
-lost or observed in an inconsistent state, leading to confusing delete
-semantics (files that stay on disk after delete-on-close, or files that
-disappear while still in use)"
+## 4. SCOPE AND RISK ASSESSMENT
 
-**Tags present**:
-- Two `Reported-by:` tags (Qianchang Zhao, Zhitong Liu) - indicates real
-  users hit this bug
-- `Acked-by:` from Namjae Jeon (ksmbd maintainer)
-- `Signed-off-by:` from Steve French (SMB maintainer)
+- **Lines changed:** 1 line added
+- **Files touched:** 1 file (mac80211.c)
+- **Complexity:** Very low
 
-**Tags missing**: No `Cc: stable@vger.kernel.org`, no `Fixes:` tag
+**Pattern already exists in the driver:**
+Looking at `ps.c:65`, the same `flush_work(&rtwdev->txq_work)` pattern
+is already used before power mode changes. This fix applies the same
+proven pattern to key deletion.
 
-### 2. Code Change Analysis
+**Risk:** Very low - the fix:
+- Uses well-understood kernel API (`flush_work()`)
+- Follows existing driver patterns
+- Only adds a synchronization point, doesn't change logic
 
-The fix is straightforward and mechanical - it adds proper locking
-around all `m_flags` accesses:
+## 5. DEPENDENCY CHECK
 
-| Function | Change |
-|----------|--------|
-| `ksmbd_query_inode_status()` | Moved m_flags check outside
-inode_hash_lock, added `down_read(&ci->m_lock)` |
-| `ksmbd_inode_pending_delete()` | Added read lock around flag check |
-| `ksmbd_set_inode_pending_delete()` | Added write lock around flag
-modification |
-| `ksmbd_clear_inode_pending_delete()` | Added write lock around flag
-modification |
-| `ksmbd_fd_set_delete_on_close()` | Added write lock around flag
-modification |
-| `__ksmbd_inode_close()` | Restructured to hold lock only during flag
-check/modify, moves I/O (unlink, xattr removal) outside the lock |
+- `txq_work` has existed since the rtw89 driver was first introduced
+  (commit e3ec7017f6a20 in October 2021, kernel 5.16)
+- The `set_key` function with the `DISABLE_KEY` path also exists since
+  driver inception
+- No dependencies on other commits
 
-The pattern is consistent: acquire lock → read/modify flags → release
-lock → perform any I/O operations outside lock.
+## 6. STABILITY INDICATORS
 
-### 3. Classification
+**Pros:**
+- Simple, obvious fix using well-established pattern
+- Clear understanding of the race condition
+- Signed off by Realtek developers who maintain this driver
 
-**Bug type**: Concurrency bug (data race)
-- NOT a feature addition
-- NOT adding new APIs
-- NOT a cleanup or optimization
-- This is a correctness fix for a real race condition
+**Cons:**
+- No `Cc: stable@vger.kernel.org` tag
+- No `Fixes:` tag
+- Relatively new commit (November 2025)
+- No Tested-by or Reviewed-by tags
 
-### 4. Scope and Risk Assessment
+## 7. SUMMARY
 
-**Scope**:
-- Single file changed: `fs/smb/server/vfs_cache.c`
-- ~60 lines of changes
-- All changes are adding locking around existing operations
+| Criteria | Assessment |
+|----------|------------|
+| Fixes real bug | ✅ Yes - WPA rekey failure causing connection issues |
+| Obviously correct | ✅ Yes - follows existing pattern, minimal change |
+| Small and contained | ✅ Yes - 1 line |
+| No new features | ✅ Yes - pure bug fix |
+| Stable tag | ❌ No explicit request from maintainer |
+| Fixes tag | ❌ Missing |
+| Risk | ✅ Very low |
+| Dependencies | ✅ None - uses existing infrastructure |
 
-**Risk**: LOW
-- Uses existing `ci->m_lock` rwsem that's already in the structure
-- No new locking primitives introduced
-- The restructuring in `__ksmbd_inode_close()` to move I/O outside the
-  lock is actually safer (avoids holding lock during I/O)
-- Pattern is well-understood: protect shared data with locks
+## CONCLUSION
 
-### 5. User Impact
+This commit **should be backported** to stable. Despite the lack of
+explicit stable tags, it meets all the technical criteria for stable
+inclusion:
 
-**Who is affected**: Users running ksmbd (in-kernel SMB3 server) with
-concurrent file access/deletion
+1. **Fixes a real, user-visible bug** - WPA rekeying failures cause
+   authentication problems
+2. **Extremely minimal change** - just one line that adds a
+   `flush_work()` call
+3. **Uses proven pattern** - identical pattern already exists in `ps.c`
+4. **Low risk** - synchronization-only change that cannot break existing
+   functionality
+5. **No dependencies** - the `txq_work` structure has existed since the
+   driver was introduced
 
-**Severity**: MEDIUM-HIGH
-- File deletion semantics are broken (files may not be deleted when they
-  should be, or disappear unexpectedly)
-- This affects data integrity expectations
-- Any ksmbd deployment with multiple concurrent clients could hit this
-
-### 6. Stability Indicators
-
-- Maintainer acks from both ksmbd maintainer (Namjae Jeon) and SMB
-  maintainer (Steve French)
-- Two independent reporters suggest this is a known/reproducible issue
-
-### 7. Dependencies Check
-
-The fix is self-contained:
-- Uses existing `ci->m_lock` (already present in `ksmbd_inode`
-  structure)
-- Uses standard kernel locking APIs (`down_read/up_read`,
-  `down_write/up_write`)
-- No dependency on other patches
-
-### 8. Stable Tree Applicability
-
-ksmbd was added in Linux 5.15, so this applies to 5.15.y, 6.1.y, 6.6.y,
-and later stable trees. The code structure appears stable enough that
-this should apply cleanly.
-
----
-
-## Summary
-
-**Should this be backported?**
-
-**YES** - This commit should be backported because:
-
-1. **Fixes a real bug**: Data race causing incorrect file deletion
-   behavior that users can actually hit
-2. **User-visible impact**: Files not deleted when they should be
-   (delete-on-close failing) or files disappearing unexpectedly
-3. **Has real bug reports**: Two Reported-by tags indicate real users
-   encountered this
-4. **Small and contained**: Single file, straightforward addition of
-   missing locking
-5. **Low regression risk**: Adds locking around existing operations
-   using existing infrastructure
-6. **Maintainer approved**: Acked by ksmbd maintainer, signed off by SMB
-   maintainer
-7. **Correct fix**: The approach (unify locking around m_flags) is
-   obviously correct
-
-The lack of explicit `Cc: stable` tag is not disqualifying - the nature
-of the bug (concurrency issue with data integrity implications) and the
-quality of the fix (mechanical addition of proper locking) make this
-appropriate stable material.
+The fix ensures EAPOL 4/4 packets are transmitted with the correct key
+during WPA rekeying, which is essential for proper WiFi operation. The
+change is surgical and follows established patterns in the driver.
 
 **YES**
 
- fs/smb/server/vfs_cache.c | 88 +++++++++++++++++++++++++++------------
- 1 file changed, 62 insertions(+), 26 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac80211.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/smb/server/vfs_cache.c b/fs/smb/server/vfs_cache.c
-index dfed6fce89049..6ef116585af64 100644
---- a/fs/smb/server/vfs_cache.c
-+++ b/fs/smb/server/vfs_cache.c
-@@ -112,40 +112,62 @@ int ksmbd_query_inode_status(struct dentry *dentry)
- 
- 	read_lock(&inode_hash_lock);
- 	ci = __ksmbd_inode_lookup(dentry);
--	if (ci) {
--		ret = KSMBD_INODE_STATUS_OK;
--		if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
--			ret = KSMBD_INODE_STATUS_PENDING_DELETE;
--		atomic_dec(&ci->m_count);
--	}
- 	read_unlock(&inode_hash_lock);
-+	if (!ci)
-+		return ret;
-+
-+	down_read(&ci->m_lock);
-+	if (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS))
-+		ret = KSMBD_INODE_STATUS_PENDING_DELETE;
-+	else
-+		ret = KSMBD_INODE_STATUS_OK;
-+	up_read(&ci->m_lock);
-+
-+	atomic_dec(&ci->m_count);
- 	return ret;
- }
- 
- bool ksmbd_inode_pending_delete(struct ksmbd_file *fp)
- {
--	return (fp->f_ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
-+	struct ksmbd_inode *ci = fp->f_ci;
-+	int ret;
-+
-+	down_read(&ci->m_lock);
-+	ret = (ci->m_flags & (S_DEL_PENDING | S_DEL_ON_CLS));
-+	up_read(&ci->m_lock);
-+
-+	return ret;
- }
- 
- void ksmbd_set_inode_pending_delete(struct ksmbd_file *fp)
- {
--	fp->f_ci->m_flags |= S_DEL_PENDING;
-+	struct ksmbd_inode *ci = fp->f_ci;
-+
-+	down_write(&ci->m_lock);
-+	ci->m_flags |= S_DEL_PENDING;
-+	up_write(&ci->m_lock);
- }
- 
- void ksmbd_clear_inode_pending_delete(struct ksmbd_file *fp)
- {
--	fp->f_ci->m_flags &= ~S_DEL_PENDING;
-+	struct ksmbd_inode *ci = fp->f_ci;
-+
-+	down_write(&ci->m_lock);
-+	ci->m_flags &= ~S_DEL_PENDING;
-+	up_write(&ci->m_lock);
- }
- 
- void ksmbd_fd_set_delete_on_close(struct ksmbd_file *fp,
- 				  int file_info)
- {
--	if (ksmbd_stream_fd(fp)) {
--		fp->f_ci->m_flags |= S_DEL_ON_CLS_STREAM;
--		return;
--	}
-+	struct ksmbd_inode *ci = fp->f_ci;
- 
--	fp->f_ci->m_flags |= S_DEL_ON_CLS;
-+	down_write(&ci->m_lock);
-+	if (ksmbd_stream_fd(fp))
-+		ci->m_flags |= S_DEL_ON_CLS_STREAM;
-+	else
-+		ci->m_flags |= S_DEL_ON_CLS;
-+	up_write(&ci->m_lock);
- }
- 
- static void ksmbd_inode_hash(struct ksmbd_inode *ci)
-@@ -257,27 +279,41 @@ static void __ksmbd_inode_close(struct ksmbd_file *fp)
- 	struct file *filp;
- 
- 	filp = fp->filp;
--	if (ksmbd_stream_fd(fp) && (ci->m_flags & S_DEL_ON_CLS_STREAM)) {
--		ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
--		err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
--					     &filp->f_path,
--					     fp->stream.name,
--					     true);
--		if (err)
--			pr_err("remove xattr failed : %s\n",
--			       fp->stream.name);
-+
-+	if (ksmbd_stream_fd(fp)) {
-+		bool remove_stream_xattr = false;
-+
-+		down_write(&ci->m_lock);
-+		if (ci->m_flags & S_DEL_ON_CLS_STREAM) {
-+			ci->m_flags &= ~S_DEL_ON_CLS_STREAM;
-+			remove_stream_xattr = true;
-+		}
-+		up_write(&ci->m_lock);
-+
-+		if (remove_stream_xattr) {
-+			err = ksmbd_vfs_remove_xattr(file_mnt_idmap(filp),
-+						     &filp->f_path,
-+						     fp->stream.name,
-+						     true);
-+			if (err)
-+				pr_err("remove xattr failed : %s\n",
-+				       fp->stream.name);
-+		}
- 	}
- 
- 	if (atomic_dec_and_test(&ci->m_count)) {
-+		bool do_unlink = false;
-+
- 		down_write(&ci->m_lock);
- 		if (ci->m_flags & (S_DEL_ON_CLS | S_DEL_PENDING)) {
- 			ci->m_flags &= ~(S_DEL_ON_CLS | S_DEL_PENDING);
--			up_write(&ci->m_lock);
--			ksmbd_vfs_unlink(filp);
--			down_write(&ci->m_lock);
-+			do_unlink = true;
+diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
+index 7b04183a3a5dd..064bae533bceb 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
+@@ -954,6 +954,7 @@ static int rtw89_ops_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
  		}
- 		up_write(&ci->m_lock);
- 
-+		if (do_unlink)
-+			ksmbd_vfs_unlink(filp);
-+
- 		ksmbd_inode_free(ci);
- 	}
- }
+ 		break;
+ 	case DISABLE_KEY:
++		flush_work(&rtwdev->txq_work);
+ 		rtw89_hci_flush_queues(rtwdev, BIT(rtwdev->hw->queues) - 1,
+ 				       false);
+ 		rtw89_mac_flush_txq(rtwdev, BIT(rtwdev->hw->queues) - 1, false);
 -- 
 2.51.0
 
