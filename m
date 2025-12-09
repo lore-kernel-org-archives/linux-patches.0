@@ -1,48 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7E51FF5E3;
-	Tue,  9 Dec 2025 00:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE57C222584;
+	Tue,  9 Dec 2025 00:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239418; cv=none; b=Bf1SBhu4bGKczMWal3TvNPGWaHP8/RIxb3fdNI0UTPV6H24Y4T08+odd9al3VBWs5bcr4xl+Z2weNCTqZrQF9LI3OfM/3CRTqaqtw5SKRtNKk+RjABMmSPBYsa12Q0UWL92Dym1qXhpe2jBxcg5zMoSi/hW4T5dfBO5DwQSKbIw=
+	t=1765239420; cv=none; b=G4cmFLwFDbI4347UusnzCaQShAp9P9brEmEHAekDlp2KljfGnS9Kr5CMPDjJxB4mTzrDPZa0U1QU+Rbn0ieEY4fUdnMTmhylStt2uul0e/l/xMoNwqnKoTgHw70Slv9ZHWHXTQMqlUHrtx7NIORuTMZx1wXMP271ez7eeetYMt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239418; c=relaxed/simple;
-	bh=CcoOduBaJKs+Vjdxjvqz8sl0XCzaN235phou1vX6Q7E=;
+	s=arc-20240116; t=1765239420; c=relaxed/simple;
+	bh=9PCMDr/x1UlkMwVh+lZ9ztd2Lo4ONhtYQKg+LmudZtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tZBA6S78DqSBmk+XuziIJa7eB857L4RNMzRECxD5y3w+6OIZOP/uAAp1XFhWZxWWCoDYab2VzLe+qMLx+CP+0AFJjUBx4XVKzQKmC7VKOQ1//H/TJE4HBw1LMV8SU9LpJV8eTFNX7Fgb1se4/ewCQIPvl0ppxXizRE2O34Sab6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZT0wrQAd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=S1LcHnWBZ+xqKjJWG9awlEWQE7XSCzKBNfR/H9f3Nx0uaW+K4w/LRvzdP8zoHwvY8uVKFaNJXGicKbuj8FvwvIRM+AH1GE+EvYGb0Bs+4UqC2/9sghu7np4Lt3IQq181s1alGxLG5SFLJ+pXPUkB4ZYxBSfnNstQodLNrYFjSPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lWlQG/oy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZT0wrQAd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13CDC113D0;
-	Tue,  9 Dec 2025 00:16:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lWlQG/oy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98965C4CEF1;
+	Tue,  9 Dec 2025 00:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239417;
-	bh=CcoOduBaJKs+Vjdxjvqz8sl0XCzaN235phou1vX6Q7E=;
+	s=k20201202; t=1765239419;
+	bh=9PCMDr/x1UlkMwVh+lZ9ztd2Lo4ONhtYQKg+LmudZtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZT0wrQAdlZg68BobiE6NmgGOvL0AYRawmqvssGrtTPwrbIxbHIW1cqe8Y1ajTOC2l
-	 z1RRJiwp25q3phSIkLGZjhKNAY7X1xPpoqr5o7WoHrz3loizZiSvz59yoc4WVy7NW6
-	 GmdoyTvlP2k7i2zF+wwgHynrQx1YwMEPHPOzRfs+7N2O2kBqug7THD2UihnbwuwKlF
-	 94bDAwsLJDBWKu1u/4xFKGSiYmK4JV0sakphOlwn/Ppm4UewRj6ld30liKdyutpkWW
-	 NbmO2lGoS6J7Vl404zaK3l9Uap8Tpb1Qf0/N7Ds7BF6bUMVSZGF2wL7WkMNUw4mVZF
-	 VIjdKki0s56Hw==
+	b=lWlQG/oyepOmxF5OCRRwF7x7y9Ijc/Euwk2mNjM2UTG6wjVMyaqaM9UIKjGhWsWO+
+	 3oO/1MpnQZH4stoLi0MSJoFm2G2fa3Xh15s9eVjuwxsEqgJXGHySS4yV03EfVPH4W1
+	 TmdjtYyb3yemh2OlvPgAT4bPXpzQsArBuFuxacxLfLLV2O9JjsfufNgrRmQrwWJOR2
+	 83M+QdZRDV5y8cArW/492yV4u0M/wGsNrFOIUqeP0hPQsQxtQADVPzhoviRcq7PP9f
+	 zFGjmGRC9kEThW+W9tVd9Dy2gsGAOwsihM+yaInBKeYP3clR/cyQc7hXkk74TO5kJq
+	 Nl9qFw9zVveyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Caleb James DeLisle <cjd@cjdns.fr>,
-	Felix Fietkau <nbd@nbd.name>,
+Cc: Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	lorenzo@kernel.org,
-	ryder.lee@mediatek.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-wireless@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mt76: mmio_*_copy fix byte order and alignment
-Date: Mon,  8 Dec 2025 19:15:04 -0500
-Message-ID: <20251209001610.611575-12-sashal@kernel.org>
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] btrfs: scrub: always update btrfs_scrub_progress::last_physical
+Date: Mon,  8 Dec 2025 19:15:05 -0500
+Message-ID: <20251209001610.611575-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -58,51 +52,60 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb James DeLisle <cjd@cjdns.fr>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 2df00805f7dbaa46b60c682aad0d76270b7ba266 ]
+[ Upstream commit 54df8b80cc63aa0f22c4590cad11542731ed43ff ]
 
-Update functions which copy to and from MMIO to load bytes as Little
-Endian, and also support unaligned buffers.
+[BUG]
+When a scrub failed immediately without any byte scrubbed, the returned
+btrfs_scrub_progress::last_physical will always be 0, even if there is a
+non-zero @start passed into btrfs_scrub_dev() for resume cases.
 
-PCI devices almost universally use Little Endian ordering for MMIO
-registers, mt76 is no exception. PCI hardware that is designed to work
-with Big Endian CPUs often (but not always) "helps" by transparently
-byte-swapping MMIO reads and writes on the wire. If this is enabled
-then it cannot be turned off for a single write. On hardware which does
-not support this, writel() does the swap in software. When we are
-transferring arbitrary bytes to MMIO space, we need them to arrive in
-the same order they were in memory, so when the hardware swaps them
-this is a problem. Rather than care about how our PCI host controller
-works, we instead load bytes as Little Endian - so on a Big Endian
-machine this will reverse them, then we use writel() which will put
-them back in the right order again. This way we do not make it our
-business whether the swapping is done in software or hardware.
+This will reset the progress and make later scrub resume start from the
+beginning.
 
-Furthermore, inspection of the code shows that these functions are
-often called with stack-allocated u8 arrays which have no alignment
-guarantees so we now use (get|put)_unaligned_le32().
+[CAUSE]
+The function btrfs_scrub_dev() accepts a @progress parameter to copy its
+updated progress to the caller, there are cases where we either don't
+touch progress::last_physical at all or copy 0 into last_physical:
 
-Fixes this issue:
-mt76x2e 0000:02:00.0: ROM patch build: 20141115060606a
-mt76x2e 0000:02:00.0: Firmware Version: 0.0.00
-mt76x2e 0000:02:00.0: Build: 1
-mt76x2e 0000:02:00.0: Build Time: 201607111443____
-mt76x2e 0000:02:00.0: Firmware failed to start
-mt76x2e 0000:02:00.0: probe with driver mt76x2e failed with error -145
+- last_physical not updated at all
+  If some error happened before scrubbing any super block or chunk, we
+  will not copy the progress, leaving the @last_physical untouched.
 
-Tested on:
-SmartFiber XP8421-B (Big Endian MIPS 34Kc)
-  - MT7612 -> 5g / ap / psk2
-  - MT7603 -> 2g / sta / psk2
-  - MT7603 -> 2g / ap / psk2
-TpLink Archer v1200v-v2 (Big Endian MIPS 34Kc)
-  - MT7613 -> 5g / ap / psk2
-  - MT7603 -> 2g / sta / psk2
+  E.g. failed to allocate @sctx, scrubbing a missing device or even
+  there is already a running scrub and so on.
 
-Signed-off-by: Caleb James DeLisle <cjd@cjdns.fr>
-Link: https://patch.msgid.link/20251029184143.3991388-1-cjd@cjdns.fr
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  All those cases won't touch @progress at all, resulting the
+  last_physical untouched and will be left as 0 for most cases.
+
+- Error out before scrubbing any bytes
+  In those case we allocated @sctx, and sctx->stat.last_physical is all
+  zero (initialized by kvzalloc()).
+  Unfortunately some critical errors happened during
+  scrub_enumerate_chunks() or scrub_supers() before any stripe is really
+  scrubbed.
+
+  In that case although we will copy sctx->stat back to @progress, since
+  no byte is really scrubbed, last_physical will be overwritten to 0.
+
+[FIX]
+Make sure the parameter @progress always has its @last_physical member
+updated to @start parameter inside btrfs_scrub_dev().
+
+At the very beginning of the function, set @progress->last_physical to
+@start, so that even if we error out without doing progress copying,
+last_physical is still at @start.
+
+Then after we got @sctx allocated, set sctx->stat.last_physical to
+@start, this will make sure even if we didn't get any byte scrubbed, at
+the progress copying stage the @last_physical is not left as zero.
+
+This should resolve the resume progress reset problem.
+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -110,147 +113,126 @@ LLM Generated explanations, may be completely bogus:
 
 ## ANALYSIS SUMMARY
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-**Bug Description:** The commit fixes two issues in mt76 WiFi driver's
-MMIO copy functions:
-1. **Byte order issue on Big Endian systems:** The original code uses
-   `__iowrite32_copy()` and `__ioread32_copy()` which internally use
-   `__raw_writel()`/`__raw_readl()` - these do NOT perform byte swapping
-2. **Unaligned buffer issue:** Stack-allocated u8 arrays may not be
-   4-byte aligned
+The commit describes a clear bug with well-structured [BUG], [CAUSE],
+and [FIX] sections:
+- **Bug**: When scrub fails early (before scrubbing any bytes),
+  `last_physical` is returned as 0 instead of the `start` parameter,
+  causing resume to restart from the beginning
+- **Root cause**: Either `last_physical` isn't touched at all (early
+  error paths) or it's left as 0 (kvzalloc zeroes sctx->stat)
+- **Notable**: No explicit "Cc: stable@vger.kernel.org" or "Fixes:" tag,
+  but has "Reviewed-by: David Sterba" (btrfs maintainer)
 
-**User-visible failure:** Complete driver probe failure with "Firmware
-failed to start" error -145 on Big Endian systems. WiFi is totally non-
-functional.
+### 2. Code Change Analysis
 
-**Testing:** Tested on real hardware - multiple MT76 devices on Big
-Endian MIPS platforms (SmartFiber, TP-Link Archer).
+The fix adds just **2 lines of code** (plus a comment):
 
-**Notable:** No `Fixes:` or `Cc: stable` tags present.
+```c
+/* Set the basic fallback @last_physical before we got a sctx. */
+if (progress)
+    progress->last_physical = start;
+```
 
-### 2. CODE CHANGE ANALYSIS
+And after `sctx` allocation:
+```c
+sctx->stat.last_physical = start;
+```
 
-**Root cause:** The generic `__iowrite32_copy()` function (in
-`lib/iomap_copy.c:20-28`) uses `__raw_writel()` which writes bytes in
-host order without endian conversion. On Big Endian systems, bytes
-arrive at the PCI device in the wrong order.
+**Technical mechanism**: The function `btrfs_scrub_dev()` takes a
+`start` parameter indicating where to begin (or resume) scrubbing. The
+`progress` struct is returned to userspace even on error (see
+`btrfs_ioctl_scrub()` comment: "Copy scrub args to user space even if
+btrfs_scrub_dev() returned an error...Later user space can...resume
+scrub from where it left off"). Without this fix, if scrub fails early,
+`last_physical` is 0, causing btrfs-progs to restart from the beginning.
 
-**The fix:**
-- Replaces `__iowrite32_copy()` with explicit loop using `writel()` +
-  `get_unaligned_le32()`
-- Replaces `__ioread32_copy()` with explicit loop using `readl()` +
-  `put_unaligned_le32()`
+### 3. Classification
 
-**Why it's correct:**
-1. `get_unaligned_le32()` reads 4 bytes interpreting them as little-
-   endian (safe for unaligned access)
-2. `writel()` handles endian conversion (host→LE for PCI wire format)
-3. Combined: bytes arrive at hardware in correct order regardless of
-   host endianness
-4. On Little Endian systems: behavior is functionally equivalent (no
-   regression risk)
+- **Bug fix**: Yes - fixes incorrect initialization of a progress
+  tracking field
+- **Not an exception category**: Regular bug fix, not device
+  IDs/quirks/DT
 
-**Header dependency:** `<linux/unaligned.h>` is included transitively
-via `mac80211.h` → `mt76.h` → `mmio.c`
+### 4. Scope and Risk Assessment
 
-### 3. CLASSIFICATION
+- **Scope**: 2 lines in 1 function (`btrfs_scrub_dev()`)
+- **Risk**: **EXTREMELY LOW** - just initializing a value to `start`
+  instead of leaving it as 0
+- The fix is purely additive and defensive; it doesn't change the normal
+  code path where scrubbing succeeds
+- If scrubbing proceeds normally, `last_physical` gets updated with
+  actual progress anyway
 
-- **Type:** Bug fix (not a feature)
-- **Severity:** HIGH - Complete driver failure on affected systems
-- **Scope:** mt76 WiFi devices on Big Endian architectures (MIPS
-  routers, embedded systems)
-- **Security:** Not a security issue
+### 5. User Impact
 
-### 4. SCOPE AND RISK ASSESSMENT
+- **Who**: Users with large btrfs filesystems who use scrub resume
+- **Severity**: Moderate usability issue - scrub on multi-TB filesystems
+  can take hours/days; restarting from 0 wastes significant time
+- **Real-world**: The ioctl is explicitly designed for resume
+  functionality (per the code comment), and btrfs-progs relies on this
 
-| Factor | Assessment |
-|--------|------------|
-| Lines changed | ~10 lines (very small) |
-| Files affected | 1 file (mmio.c) |
-| Complexity | Low - uses standard kernel APIs |
-| Risk of regression | Low - functionally equivalent on LE systems |
-| Self-contained | Yes - no dependencies on other commits |
+### 6. Stability Indicators
 
-### 5. USER IMPACT
+- ✅ **Reviewed-by**: David Sterba (btrfs maintainer)
+- ✅ **Signed-off-by**: David Sterba (btrfs maintainer)
+- The fix has been properly reviewed through the btrfs maintainer tree
 
-- **Affected users:** Big Endian systems with mt76 WiFi (OpenWrt
-  routers, embedded MIPS devices)
-- **Impact severity:** CRITICAL for affected users - WiFi doesn't work
-  at all
-- **Impact scope:** Minority use case (BE systems are uncommon)
+### 7. Dependency Check
 
-### 6. STABILITY INDICATORS
+- No dependencies on other commits
+- The affected code structure (`btrfs_scrub_dev`,
+  `btrfs_scrub_progress`, `start` parameter) has existed for many years
+  and is present in all stable kernels
 
-- ✅ Signed off by subsystem maintainer (Felix Fietkau)
-- ✅ Tested on multiple real hardware platforms
-- ✅ Uses well-established kernel primitives
-- ⚠️ No Reviewed-by tags from others
-- ⚠️ No explicit stable request
+## Verdict
 
-### 7. DEPENDENCY CHECK
+This commit is an excellent candidate for stable backport:
 
-- ✅ Self-contained patch
-- ✅ No prerequisite commits needed
-- ✅ Code path exists in all stable trees with mt76 (since 2019)
+1. **Fixes a real bug**: Scrub resume is broken when scrub fails early
+2. **Small and surgical**: Just 2 lines of initialization code
+3. **Obviously correct**: Setting `last_physical = start` is clearly the
+   right behavior
+4. **Low risk**: Cannot break anything - just ensures proper
+   initialization of a progress field
+5. **Benefits stable users**: Large filesystem users who rely on scrub
+   resume functionality
+6. **Maintainer reviewed**: Reviewed and signed off by btrfs maintainer
 
-## VERDICT
-
-**Arguments FOR backporting:**
-- Fixes a complete driver failure that makes WiFi unusable on Big Endian
-  systems
-- Small, surgical fix (~10 lines) with well-defined scope
-- Uses standard, well-tested kernel APIs (`writel`,
-  `get_unaligned_le32`)
-- Self-contained with no dependencies
-- Accepted by maintainer
-- Functionally equivalent on Little Endian systems (no regression risk)
-
-**Arguments AGAINST backporting:**
-- No explicit `Cc: stable` tag from maintainer
-- No `Fixes:` tag indicating when bug was introduced
-- Big Endian systems are a minority use case
-
-**Conclusion:** Despite the lack of explicit stable tagging, this commit
-fixes a severe, user-visible bug (complete driver failure) with a small,
-obviously correct fix using standard kernel patterns. The risk is low
-and the benefit is high for affected users. Big Endian MIPS platforms
-with mt76 WiFi (common in OpenWrt/embedded space) deserve working WiFi
-support.
+The lack of explicit "Cc: stable" tag appears to be an oversight - the
+bug clearly affects all kernels with scrub resume functionality, and the
+fix is exactly the type of small, safe bugfix appropriate for stable
+trees.
 
 **YES**
 
- drivers/net/wireless/mediatek/mt76/mmio.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/btrfs/scrub.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mmio.c b/drivers/net/wireless/mediatek/mt76/mmio.c
-index cd2e9737c3bf9..865ec910f05a4 100644
---- a/drivers/net/wireless/mediatek/mt76/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mmio.c
-@@ -33,13 +33,21 @@ static u32 mt76_mmio_rmw(struct mt76_dev *dev, u32 offset, u32 mask, u32 val)
- static void mt76_mmio_write_copy(struct mt76_dev *dev, u32 offset,
- 				 const void *data, int len)
- {
--	__iowrite32_copy(dev->mmio.regs + offset, data, DIV_ROUND_UP(len, 4));
-+	int i;
-+
-+	for (i = 0; i < ALIGN(len, 4); i += 4)
-+		writel(get_unaligned_le32(data + i),
-+		       dev->mmio.regs + offset + i);
- }
+diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
+index ba20d9286a340..cff67ed630196 100644
+--- a/fs/btrfs/scrub.c
++++ b/fs/btrfs/scrub.c
+@@ -3039,6 +3039,10 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	unsigned int nofs_flag;
+ 	bool need_commit = false;
  
- static void mt76_mmio_read_copy(struct mt76_dev *dev, u32 offset,
- 				void *data, int len)
- {
--	__ioread32_copy(data, dev->mmio.regs + offset, DIV_ROUND_UP(len, 4));
-+	int i;
++	/* Set the basic fallback @last_physical before we got a sctx. */
++	if (progress)
++		progress->last_physical = start;
 +
-+	for (i = 0; i < ALIGN(len, 4); i += 4)
-+		put_unaligned_le32(readl(dev->mmio.regs + offset + i),
-+				   data + i);
- }
+ 	if (btrfs_fs_closing(fs_info))
+ 		return -EAGAIN;
  
- static int mt76_mmio_wr_rp(struct mt76_dev *dev, u32 base,
+@@ -3057,6 +3061,7 @@ int btrfs_scrub_dev(struct btrfs_fs_info *fs_info, u64 devid, u64 start,
+ 	sctx = scrub_setup_ctx(fs_info, is_dev_replace);
+ 	if (IS_ERR(sctx))
+ 		return PTR_ERR(sctx);
++	sctx->stat.last_physical = start;
+ 
+ 	ret = scrub_workers_get(fs_info);
+ 	if (ret)
 -- 
 2.51.0
 
