@@ -1,49 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEF021FF55;
-	Tue,  9 Dec 2025 00:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F85822256B;
+	Tue,  9 Dec 2025 00:17:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239430; cv=none; b=aFcTanHsxQ1r8csV+eU9Adn0qrp7pn6GpGDD6u77Wn7O7UQnT71x80SKSWfnAkK7W70YbNpoZEmkdguGwy5a/G1GQu5QKqghpp6RfmI9vwn618/a8czKRcqPTU2fc9HniJfkLtOnG6ykW4vpggN6So+OrBkJl/ZYUJ8l0gXIq5M=
+	t=1765239432; cv=none; b=YXf5ZxXgrUiousg1dMFhkC3ejgig2wgh7JAjU+lslefFPCiFaxAWnvzXTasuxBhia5S9JWgpSeJpz9hlxJ9dBhIsLt9MjEMknUOIDZ+zXVRD74/oCg5iQbSnDAuwJwxnCLPiG7adYSOL+YSOaGWcGXhIpzmzAhr0Lzq6bVkNvj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239430; c=relaxed/simple;
-	bh=mA14ruNO3szL9g1X8tOTLj3a3VtsH9RLuJW+L+/RCmk=;
+	s=arc-20240116; t=1765239432; c=relaxed/simple;
+	bh=LWJ5PKBg/xFvkJoc9eCT1/JcOJDhRvKObYShTs+W9Kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqkY6Ar465sbn2suHbU8HGXCPjJLoVKjc5pgXV/UdpYk6dRzFDqCT/RffhXP92NVEVjoIioWbeBeTCZmvWNwAYrUP3rbqgpAbfWm4O10/TR0MGPPj2rTIVa61H+fhA7ITxVl+5IKugZlmZenRVSKCBm3jHRsCl8ISw+OqlrehuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olM3tFxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5g/Gh38sKYkSePsq48EAf9RjeBktHS7dx4nuets2z7sSQGkqEF9z+ICeQ9FKNdfPg2JVlZNhOytFwMvdsndW+JQc7SPu4GtwbsS5+WM6gB/qVmBIOssOQC2AZPVrD2+WP1I9zWqv4I0HK24hSMn7LDgRVALC4FZ2CvzDznfCIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+dz7wOJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olM3tFxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFB7C4CEF1;
-	Tue,  9 Dec 2025 00:17:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+dz7wOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2789C4CEF1;
+	Tue,  9 Dec 2025 00:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239430;
-	bh=mA14ruNO3szL9g1X8tOTLj3a3VtsH9RLuJW+L+/RCmk=;
+	s=k20201202; t=1765239432;
+	bh=LWJ5PKBg/xFvkJoc9eCT1/JcOJDhRvKObYShTs+W9Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olM3tFxnaoxotIvmzvIRirMGeZeIY+hJVnE9K0Xs6Wu8iHYYF5ix8icaFtiG9t8pr
-	 tCOC9kX/9iq/bvc5XYPr0YWoXmcIOLMPoLy5p1lnaxYYFKeAZINZC+OAv9ZhOBilWO
-	 VljPMTaNRXDZ6i4EEHbt14FFqobofcgnc6ycsR0bV7qZtgCJTkEhICDgk23VaNh3nZ
-	 by69/lUBQ68/Umz2lfVgjpUSG1UDXfdWzik1Zb8ND2KiNd/51sC9LsUV1aFcYhex72
-	 Aa0ajiFrmM/5SjCB6zNUMJ1HyfXExkGK1R6Kmtl0YQRzbIkC4mdjaTY8KS9qJQkR3P
-	 1gAFf3glEGn0A==
+	b=o+dz7wOJ4pUZW9lWTIoiUIPcjCpfCr1F+8nU9PiXeg1m5VRQJNTpErQomKluD9dQm
+	 vKyFysxT9lfzbJ6po2X7P+qFNeCnKtYGPPuyUj5t2v85Lh7z21+OpkHlAeWOfbR7xi
+	 2lnfffzK8qW2dXWKKKshD21I776t5yApyO4RnQp/hf+/eNvtKZmLp0jPMpyGuya19g
+	 PtwI54IIY5bxXPjs6A8OHY4AYtWmGDDoJOq8jAP7Wfviz8mT1fwVkla//CIAtNPrp+
+	 gSaWo68y+RDdemHVNJ4lbNBG7QGkNkoOCOjN7kluXd9bl0snBRT2Ve8+2rWeB7wNDy
+	 +6Z2Mb/eiz3lQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chris Lu <chris.lu@mediatek.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	matthias.bgg@gmail.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-bluetooth@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: MT7922: Add VID/PID 0489/e170
-Date: Mon,  8 Dec 2025 19:15:09 -0500
-Message-ID: <20251209001610.611575-17-sashal@kernel.org>
+	mst@redhat.com,
+	virtualization@lists.linux.dev,
+	linux-block@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] virtio_blk: NULL out vqs to avoid double free on failed resume
+Date: Mon,  8 Dec 2025 19:15:10 -0500
+Message-ID: <20251209001610.611575-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -58,179 +53,282 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
 Content-Transfer-Encoding: 8bit
 
-From: Chris Lu <chris.lu@mediatek.com>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit 5a6700a31c953af9a17a7e2681335f31d922614d ]
+[ Upstream commit 0739c2c6a015604a7c01506bea28200a2cc2e08c ]
 
-Add VID 0489 & PID e170 for MediaTek MT7922 USB Bluetooth chip.
+The vblk->vqs releases during freeze. If resume fails before vblk->vqs
+is allocated, later freeze/remove may attempt to free vqs again.
+Set vblk->vqs to NULL after freeing to avoid double free.
 
-The information in /sys/kernel/debug/usb/devices about the Bluetooth
-device is listed as the below.
-
-T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e170 Rev= 1.00
-S:  Manufacturer=MediaTek Inc.
-S:  Product=Wireless_Device
-S:  SerialNumber=000000000
-C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
-A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
-I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
-E:  Ad=8a(I) Atr=03(Int.) MxPS= 512 Ivl=125us
-E:  Ad=0a(O) Atr=03(Int.) MxPS= 512 Ivl=125us
-
-Signed-off-by: Chris Lu <chris.lu@mediatek.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: Bluetooth: btusb: MT7922: Add VID/PID 0489/e170
+Good. `kfree(NULL)` is safe - it does nothing. This is a well-known
+C/Linux convention.
+
+Now let me create my final comprehensive analysis:
+
+## COMPLETE ANALYSIS
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: Adding a new USB Vendor ID (VID) 0x0489 and Product ID
-(PID) 0xe170 for a MediaTek MT7922 Bluetooth chip.
+**Subject**: `virtio_blk: NULL out vqs to avoid double free on failed
+resume`
 
-**Key Tags**:
-- Signed-off-by: Chris Lu from MediaTek (the chip vendor)
-- Reviewed-by: Paul Menzel
-- Signed-off-by: Luiz Augusto von Dentz (Bluetooth maintainer)
+**Key points from commit message:**
+- The `vblk->vqs` is released during freeze
+- If resume fails before `vblk->vqs` is allocated, later freeze/remove
+  may attempt to free vqs again
+- Solution: Set `vblk->vqs` to NULL after freeing to avoid double free
 
-No explicit `Cc: stable@vger.kernel.org` tag, but this is common for
-device ID additions which are often handled implicitly.
+**Acks/Reviews:**
+- Acked-by: Jason Wang <jasowang@redhat.com> (virtio maintainer)
+- Signed-off-by: Jens Axboe <axboe@kernel.dk> (block subsystem
+  maintainer)
+
+**Missing tags:**
+- No `Cc: stable@vger.kernel.org` tag
+- No `Fixes:` tag explicitly pointing to the bug-introducing commit
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is a 2-line addition to the `quirks_table[]` array:
+**Changes made:** Two modifications in `drivers/block/virtio_blk.c`:
+
+#### Change 1: In `init_vq()` error path (lines 1029-1032)
+**Before:**
 ```c
-{ USB_DEVICE(0x0489, 0xe170), .driver_info = BTUSB_MEDIATEK |
-                                             BTUSB_WIDEBAND_SPEECH },
+if (err)
+    kfree(vblk->vqs);
+return err;
 ```
 
-This simply registers a new USB device ID with existing driver flags
-(`BTUSB_MEDIATEK` and `BTUSB_WIDEBAND_SPEECH`) that are already fully
-supported. The btusb driver already contains full MT7922 support - this
-just adds another VID/PID variant to the recognition table.
+**After:**
+```c
+if (err) {
+    kfree(vblk->vqs);
+    /*
+     - Set to NULL to prevent freeing vqs again during freezing.
+     */
+    vblk->vqs = NULL;
+}
+return err;
+```
 
-### 3. CLASSIFICATION
+#### Change 2: In `virtblk_freeze_priv()` (lines 1599-1600)
+**Before:**
+```c
+vdev->config->del_vqs(vdev);
+kfree(vblk->vqs);
 
-This is a **NEW DEVICE ID** addition - one of the explicitly allowed
-exception categories for stable backports:
-- Adding a USB VID/PID to an existing, well-tested driver
-- Trivial one-entry addition to a device table
-- The driver code for MT7922 already exists; only recognition is missing
+return 0;
+```
 
-### 4. SCOPE AND RISK ASSESSMENT
+**After:**
+```c
+vdev->config->del_vqs(vdev);
+kfree(vblk->vqs);
+/*
+ - Set to NULL to prevent freeing vqs again after a failed vqs
+ - allocation during resume. Note that kfree() already handles NULL
+ - pointers safely.
+ */
+vblk->vqs = NULL;
 
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | 2 |
-| Files touched | 1 |
-| Complexity | Minimal - static table entry |
-| Risk | **Extremely low** |
+return 0;
+```
 
-The change can only affect USB devices with VID=0x0489 and PID=0xe170.
-Users without this specific hardware are completely unaffected. This is
-about as low-risk as a kernel patch can be.
+### 3. BUG MECHANISM (Root Cause Analysis)
 
-### 5. USER IMPACT
+The double-free vulnerability occurs in the following scenario:
 
-- **Affected users**: Those with this specific MediaTek MT7922 Bluetooth
-  variant
-- **Severity without fix**: Bluetooth hardware is completely non-
-  functional (driver doesn't recognize the device)
-- **Impact**: HIGH for affected users - their Bluetooth doesn't work at
-  all
+**Trigger Sequence:**
+1. **virtblk_freeze_priv()** is called (suspend/PM freeze, or
+   reset_prepare via FLR)
+   - Frees `vblk->vqs` at line 1600
+   - `vblk->vqs` **still points to the freed memory** (dangling pointer)
 
-The commit includes detailed `/sys/kernel/debug/usb/devices` output
-showing real hardware, indicating this comes from actual user/vendor
-testing.
+2. **virtblk_restore_priv()** is called (resume/PM restore, or
+   reset_done)
+   - Calls `init_vq(vblk)` at line 1610
 
-### 6. STABILITY INDICATORS
+3. **init_vq()** fails (e.g., `kmalloc_array()` fails or
+   `virtio_find_vqs()` fails)
+   - `init_vq()` allocates `vblk->vqs` at line 993
+   - If allocation succeeds but later `virtio_find_vqs()` fails (line
+     1016), the error path at line 1030 calls `kfree(vblk->vqs)`
+   - But if allocation at line 993 fails, `vblk->vqs` is never
+     reassigned and still points to the OLD freed memory from step 1
+   - Error path at line 1030: `kfree(vblk->vqs)` - **FIRST FREE of the
+     OLD pointer**
 
-- Authored by MediaTek (chip vendor) with direct hardware knowledge
-- Reviewed by community member
-- Signed off by the Bluetooth subsystem maintainer
-- Follows established pattern of many similar MT7922 device ID entries
-  visible in the diff context
+4. **Second freeze/remove attempt:**
+   - If another freeze cycle or `virtblk_remove()` is called
+   - `kfree(vblk->vqs)` is called again - **SECOND FREE of the same
+     memory = DOUBLE FREE**
 
-### 7. DEPENDENCY CHECK
+**Alternative scenario:**
+- Even in `init_vq()` success path, if `vqs_info` or `vqs` temp
+  allocation fails before line 997-999, and the error `goto out` is hit,
+  the same dangling pointer issue occurs.
 
-- **No dependencies**: This is a self-contained table entry addition
-- **Existing support**: The BTUSB_MEDIATEK and BTUSB_WIDEBAND_SPEECH
-  flags and MT7922 support code exist in all recent stable trees
-- **Clean application**: Should apply cleanly to any stable tree that
-  has MT7922 support
+### 4. CLASSIFICATION
 
-### CONCLUSION
+- **Type**: Bug fix (memory safety - double-free vulnerability)
+- **Security relevance**: Potentially exploitable memory corruption bug
+- **Category**: Does NOT fall into exceptions (device IDs, quirks, DT,
+  build fixes)
+- **Impact area**: virtio-blk block device driver, PM suspend/resume and
+  transport reset recovery
 
-This commit is a textbook example of what SHOULD be backported to
-stable:
+### 5. SCOPE AND RISK ASSESSMENT
 
-1. **Falls under Device ID Exception**: Explicitly allowed category for
-   stable
-2. **Fixes Real User Problem**: Enables Bluetooth hardware that would
-   otherwise be completely non-functional
-3. **Minimal Risk**: 2-line table entry addition, cannot break anything
-   else
-4. **No New Features**: Just enables existing driver for new hardware
-   variant
-5. **Well-Reviewed**: Proper sign-offs from vendor and maintainer
-6. **Clear Benefit**: Users with this hardware get working Bluetooth
+**Lines changed**: ~10 lines (including comments)
+**Files touched**: 1 file (`drivers/block/virtio_blk.c`)
+**Complexity**: Very low - simple NULL assignment after kfree
 
-The lack of explicit stable tag is typical for device ID additions -
-stable maintainers routinely accept these. The benefit (enabling
-hardware) far outweighs the near-zero risk.
+**Subsystem**: virtio-blk - a mature, widely-used block device driver
+for virtual machines
+- Used in QEMU/KVM guests
+- Used in cloud VM instances (AWS, GCP, Azure etc.)
+- Used in container environments
+
+**Risk assessment**: **VERY LOW**
+- The fix is trivial: just setting pointer to NULL after free
+- `kfree(NULL)` is explicitly safe (no-op)
+- No behavioral change in normal operation
+- Only affects error recovery paths
+- Cannot introduce new bugs
+
+### 6. USER IMPACT
+
+**Who is affected:**
+- Users using virtio-blk devices in virtual machines
+- Systems that undergo suspend/resume cycles
+- Systems using PCI Function Level Reset (FLR) on virtio devices
+- Particularly affects systems with constrained memory where allocation
+  might fail
+
+**Severity if bug hits:**
+- Double-free can cause kernel panic/crash
+- Potential memory corruption
+- Potential security vulnerability (though exploitation would be
+  difficult)
+
+**Trigger conditions:**
+- Requires PM suspend/resume OR transport reset (FLR)
+- AND memory allocation failure during resume
+- Relatively rare in practice but can happen under memory pressure
+
+### 7. STABILITY INDICATORS
+
+**Positive indicators:**
+- Acked-by: Jason Wang (virtio maintainer)
+- Signed-off-by: Jens Axboe (block maintainer)
+- The fix is obviously correct and minimal
+- Follows the standard kernel pattern of NULLing after free
+
+**Negative indicators:**
+- No `Cc: stable@vger.kernel.org` tag
+- No `Fixes:` tag
+- No `Tested-by:` tag
+
+### 8. DEPENDENCY CHECK
+
+**Dependencies:**
+- Requires commit `5820a3b089879` ("virtio_blk: Add support for
+  transport error recovery") which introduced `virtblk_freeze_priv()`
+  and `virtblk_restore_priv()` as shared functions
+- This commit (`5820a3b089879`) was merged in v6.14-rc1
+
+**Earlier bug introduction:**
+- The original bug was introduced in `b71ba22e7c6c6` ("virtio-blk: Fix
+  memory leak among suspend/resume procedure") in v5.14-rc1
+- That commit added `kfree(vblk->vqs)` in freeze without NULLing it
+
+**For stable backport:**
+- For kernels v6.14+: should apply cleanly
+- For kernels v5.14 to v6.13: would need different backport (the code
+  structure is different)
+- The `virtblk_freeze_priv` function only exists starting from v6.14
+
+### 9. CONCLUSION
+
+**This commit SHOULD be backported to stable trees** because:
+
+1. **Fixes a real bug**: Double-free is a serious memory safety bug that
+   can cause crashes and potentially be exploited
+
+2. **Obvious correctness**: Setting pointer to NULL after free is the
+   standard kernel idiom and cannot introduce new bugs
+
+3. **Small and contained**: Only ~10 lines changed, very localized to
+   two specific error handling paths
+
+4. **No new features**: Pure bug fix with no behavioral changes in
+   normal operation
+
+5. **Affects important infrastructure**: virtio-blk is used extensively
+   in cloud/virtualization environments
+
+6. **Low risk**: The fix is trivial and follows standard patterns;
+   `kfree(NULL)` is explicitly safe
+
+**Caveats for backporting:**
+- The fix in its current form is ONLY applicable to v6.14+ kernels where
+  `virtblk_freeze_priv()` exists
+- For older stable kernels (v5.14 to v6.13), a different (simpler)
+  backport would be needed that just NULLs `vblk->vqs` in
+  `virtblk_freeze()` directly
+- The maintainers did not explicitly tag this for stable (`Cc:
+  stable@vger.kernel.org`), which might indicate they didn't consider
+  backporting, or the bug wasn't seen as critical
+
+The fix is small, surgical, obviously correct, and addresses a real
+memory safety bug. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/block/virtio_blk.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 595afeff4afb5..9b199da1c0d67 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -687,6 +687,8 @@ static const struct usb_device_id quirks_table[] = {
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe153), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe170), .driver_info = BTUSB_MEDIATEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x3804), .driver_info = BTUSB_MEDIATEK |
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x04ca, 0x38e4), .driver_info = BTUSB_MEDIATEK |
+diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
+index f061420dfb10c..746795066d7f5 100644
+--- a/drivers/block/virtio_blk.c
++++ b/drivers/block/virtio_blk.c
+@@ -1026,8 +1026,13 @@ static int init_vq(struct virtio_blk *vblk)
+ out:
+ 	kfree(vqs);
+ 	kfree(vqs_info);
+-	if (err)
++	if (err) {
+ 		kfree(vblk->vqs);
++		/*
++		 * Set to NULL to prevent freeing vqs again during freezing.
++		 */
++		vblk->vqs = NULL;
++	}
+ 	return err;
+ }
+ 
+@@ -1598,6 +1603,12 @@ static int virtblk_freeze_priv(struct virtio_device *vdev)
+ 
+ 	vdev->config->del_vqs(vdev);
+ 	kfree(vblk->vqs);
++	/*
++	 * Set to NULL to prevent freeing vqs again after a failed vqs
++	 * allocation during resume. Note that kfree() already handles NULL
++	 * pointers safely.
++	 */
++	vblk->vqs = NULL;
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
