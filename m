@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621D52153FB;
-	Tue,  9 Dec 2025 00:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F6E1FF5E3;
+	Tue,  9 Dec 2025 00:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239405; cv=none; b=ua4cPDOYPxLMzsLBLzSX0sN+TOFiDaSMG0MtffHeHBpBXmc5xLefUg5AdQwTQ2FbWWrhFvJMSqq6dcf8wVvhu0WgnRN1PRZE7VM5P01+zAZFCxBFMoKIj0N67TIcQOkAgBhh5XbD5QVsA5EDZ9Bn0PE9WOq4PlgBJ+Ub8GwxB+A=
+	t=1765239407; cv=none; b=NMTHUK+4WSfyKoFAbEqzAnAquLOxXqCZJAb1eBJxzJ8GGYzUJVvckaS7vxOawuMvtJFRkkhfGxxlnWHY2lbAOgLI3nm3wL9L9FSywplSsv2po+oCz73ccYQ2zdUBvX38gFtkSVRxqolFCwTWgKdtTcZL/C9hTDgzmH7xOZ+ahno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239405; c=relaxed/simple;
-	bh=OpNSX1v9idoEn+6GZ+Br/BSw8EWqZDVgpOB95jDvS00=;
+	s=arc-20240116; t=1765239407; c=relaxed/simple;
+	bh=Ea0sBalcDvFTyrYPkBNo4mKzsS73wAnYysjCCH3DnOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xddw/ZdiP8jmS3CgERPKldajEJh0CFI2iVIYNWKhE8IuRi0gRNfKW7C9mKVmnac+Hz4mxNpdau4U6z/cgOj9ATiMk1YYc1AMVsJkt97N4ciyx0BzV//y9lim4hqAn56WYiHzkEJtZR8I8BOzvoUIqTUEvGEd0750Bjn1Y8r7tvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SEV/vrr/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s+4RAwifAVw+Ms7SkpUTpRWUl8pmmoiU1W+1VjTeWDt1vQkhP6aBeiuq2mgSMfJiWUzslnmGyYXm1F9G58rJ9iJyRAMJYCNl91oqOAhzBIEkzmyvEvA0C+wtqoLtfD8KcXCAhdPrOqDmKS6lc4k8MD2wmolpRKglSRtCdfQXPvs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YMgOoV2T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SEV/vrr/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A168C4CEF1;
-	Tue,  9 Dec 2025 00:16:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YMgOoV2T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F3E2C113D0;
+	Tue,  9 Dec 2025 00:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239404;
-	bh=OpNSX1v9idoEn+6GZ+Br/BSw8EWqZDVgpOB95jDvS00=;
+	s=k20201202; t=1765239407;
+	bh=Ea0sBalcDvFTyrYPkBNo4mKzsS73wAnYysjCCH3DnOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SEV/vrr/bQK34Obzntn7eYxt/o1BYfMemoLPmHcej0OerVg0dm1xdYXhLlHPTM6/h
-	 c+zZQGSw+OvESLTLJdaNHiB/zIV/k35LX/F6jX/tyaTW1ObVKjWlu0di1n8JnF2VZ+
-	 Vkh/m/qT2rJyEQCzfVevKQTIfDebgbK2xSB8GUzg7f1LlmzXfNj+Dyjr3Co4FjH2/3
-	 opPGbdI7QRotaamZwVx98/4zfYSQgfMzSE51dsd/F1Db7NRbJknisgWD7hEhM7n9OJ
-	 IRfJOQKXbSeYc1rfc7rU5Hr6IAi4zKFB8bs41QDllzfjNcoa+Kd2NqxNVuMteC1JS8
-	 6p5CCy/KAyWxw==
+	b=YMgOoV2TeminFcnJ3we8wP734DQiZ+kX0iP7xD9ZqZWsa8eAhrssHveMQu50NEiUn
+	 e298POD76qtvQk75qmCDpw03T0FZfTl4kUmCYpRrsGGF3iBnPufnbs/lvJniEqhyD5
+	 PgJfMwkk/i0bFEXgeTvZl6wYpo1fNE3nsdlgWPhOP7j7qqDU3RxenrqqMoTu+ERYS6
+	 Hc6gmASxDDTUz5f1wOgBJHFHDq/qYKftldTMGASfT3h+ovricdq8Eq9ziuF9stY5IE
+	 lQJf5U1PEMgfd5FtJW2/FJ3u6UO73ZBiHL2HPOlqmk9wuRr7ZjfAcVulsXZIu2FqZl
+	 yyYoqpuR0ltWQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.6] btrfs: abort transaction on item count overflow in __push_leaf_left()
-Date: Mon,  8 Dec 2025 19:14:58 -0500
-Message-ID: <20251209001610.611575-6-sashal@kernel.org>
+	smfrench@gmail.com,
+	linux-cifs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] smb/server: fix return value of smb2_ioctl()
+Date: Mon,  8 Dec 2025 19:14:59 -0500
+Message-ID: <20251209001610.611575-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -50,182 +50,145 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 5d8222a50ad37c98455da08b33ce49fe6b726c72 ]
+[ Upstream commit 269df046c1e15ab34fa26fd90db9381f022a0963 ]
 
-If we try to push an item count from the right leaf that is greater than
-the number of items in the leaf, we just emit a warning. This should
-never happen but if it does we get an underflow in the new number of
-items in the right leaf and chaos follows from it. So replace the warning
-with proper error handling, by aborting the transaction and returning
--EUCLEAN, and proper logging by using btrfs_crit() instead of WARN(),
-which gives us proper formatting and information about the filesystem.
+__process_request() will not print error messages if smb2_ioctl()
+always returns 0.
 
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fix this by returning the correct value at the end of function.
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: btrfs: abort transaction on item count overflow in
-__push_leaf_left()
+## ANALYSIS SUMMARY
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Problem Being Fixed
 
-**Key points:**
-- Fixes an item count overflow condition where `push_items >
-  right_nritems`
-- Currently only emits a WARN() but continues execution
-- If triggered, causes "an underflow in the new number of items in the
-  right leaf and chaos follows"
-- Replaces warning with proper error handling (abort transaction, return
-  -EUCLEAN)
+The `smb2_ioctl()` function in ksmbd (the in-kernel SMB server) **always
+returns 0** even when errors occur. Looking at the caller
+`__process_request()` in `fs/smb/server/server.c:148-151`:
 
-**Tags:**
-- No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag
-- Has two `Reviewed-by:` tags (Qu Wenruo and David Sterba - btrfs
-  maintainer)
-
-### 2. CODE CHANGE ANALYSIS
-
-**Before (problematic):**
 ```c
-if (push_items > right_nritems)
-    WARN(1, KERN_CRIT "push items %d nr %u\n", push_items,
-right_nritems);
-// Continues execution despite the error!
+ret = cmds->proc(work);  // calls smb2_ioctl
+
+if (ret < 0)
+    ksmbd_debug(CONN, "Failed to process %u [%d]\n", command, ret);
 ```
 
-**After (fixed):**
-```c
-if (unlikely(push_items > right_nritems)) {
-    ret = -EUCLEAN;
-    btrfs_abort_transaction(trans, ret);
-    btrfs_crit(fs_info, "push items (%d) > right leaf items (%u)",
-               push_items, right_nritems);
-    goto out;
-}
-```
+Since `smb2_ioctl()` returns 0 on error paths, the debug message is
+never printed and errors are silently swallowed.
 
-**Technical mechanism of the bug:**
-- `__push_leaf_left()` pushes items from right leaf to left leaf in
-  btrfs B-tree
-- If `push_items > right_nritems`, later code does `right_nritems -=
-  push_items`
-- Since `right_nritems` is `u32`, this causes an **integer underflow**
-- The underflowed value is then set via `btrfs_set_header_nritems(right,
-  right_nritems)`
-- This corrupts the B-tree structure, leading to filesystem corruption
+### 2. Technical Analysis of the Fix
 
-### 3. CLASSIFICATION
+The fix makes three changes:
 
-- **Type:** Bug fix - upgrading inadequate error handling to proper
-  abort
-- **Not adding features:** Purely defensive error handling improvement
-- **Severity:** Prevents potential filesystem/data corruption
-- **Pattern:** Converts warn-and-continue to abort-and-return on
-  corruption detection
+1. **Line 8167**: Adds `ret = -EOPNOTSUPP` when `req->Flags !=
+   SMB2_0_IOCTL_IS_FSCTL` (was previously not setting ret)
 
-### 4. SCOPE AND RISK ASSESSMENT
+2. **Line 8187-8189**: For DFS referrals, adds `ret = -EOPNOTSUPP` and
+   uses new `out2` label to skip the ret-to-status translation (since
+   DFS needs specific STATUS_FS_DRIVER_REQUIRED)
 
-| Factor | Assessment |
-|--------|------------|
-| Lines changed | ~10 lines |
-| Files touched | 1 (fs/btrfs/ctree.c) |
-| Complexity | Very low |
-| Subsystem maturity | btrfs is mature and widely used |
-| Regression risk | **Near zero** - if condition never triggers,
-behavior unchanged; if it does, abort is safer than corruption |
+3. **Line 8479**: Changes `return 0;` to `return ret;`
 
-The change uses existing infrastructure (`btrfs_abort_transaction`,
-`goto out` path) that's already present and tested.
+The function's documentation says: "Return: 0 on success, otherwise
+error" - this fix makes the code match that contract.
 
-### 5. USER IMPACT
+### 3. Stable Kernel Criteria Assessment
 
-- **Affected users:** All btrfs users
-- **Code location:** Core B-tree code - fundamental to all btrfs
-  operations
-- **If bug triggers:** Filesystem corruption, potentially unmountable
-  filesystem
-- **Frequency:** Described as "should never happen" but defensive check
-  was already there
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct | ✅ YES - Function was documented to return errors
+but didn't |
+| Fixes real bug | ✅ YES - Error reporting/debugging was broken |
+| Small and contained | ✅ YES - ~10 lines changed in one function |
+| No new features | ✅ YES - Only corrects error return behavior |
+| Tested | ✅ YES - Acked by ksmbd maintainer (Namjae Jeon) |
 
-### 6. STABILITY INDICATORS
+### 4. Risk Assessment
 
-- Two reviewers from btrfs team
-- Signed off by btrfs maintainer (David Sterba)
-- Conservative, defensive fix with well-understood behavior
+**LOW RISK:**
+- The fix only affects the return value in error paths
+- Does not change the SMB protocol behavior or response status codes
+- The `out2` label is a minor structural change to preserve DFS-specific
+  status
+- ksmbd is self-contained; this won't affect other subsystems
+- Error logging/visibility improvement with zero functional risk
 
-### 7. DEPENDENCY CHECK
+### 5. Concerns
 
-- Self-contained fix with no dependencies
-- Uses existing error handling patterns present in all stable trees
-- This code has existed in btrfs for many years
+- **No explicit stable tags** (no `Cc: stable@vger.kernel.org`)
+- **No Fixes: tag** indicating when the bug was introduced
+- The bug has likely existed since ksmbd was added (v5.15), so affects
+  all stable branches with ksmbd
 
-### DECISION RATIONALE
+### 6. User Impact
 
-**For backporting:**
-1. **Prevents data corruption** - the most critical category of bugs for
-   filesystems
-2. **Minimal risk** - the fix cannot cause regression in normal
-   operation
-3. **Small and surgical** - ~10 lines, single file, obvious correctness
-4. **Well-reviewed** - two experienced btrfs developers signed off
-5. **Core subsystem** - btrfs is used in production by enterprise users
-   relying on stable trees
-6. **Integer underflow** - these are exactly the type of bugs stable
-   trees want fixed
+Users of ksmbd who encounter errors during IOCTL handling:
+- **Before**: Silent failures, no debug messages, harder to diagnose
+  issues
+- **After**: Proper error returns enabling logging and debugging
 
-**Against backporting:**
-1. No explicit `Cc: stable` tag
-2. No `Fixes:` tag
-3. Condition described as "should never happen"
+### Conclusion
 
-**Assessment:** While the maintainer didn't explicitly request stable
-backport, the fix meets all stable criteria:
-- Obviously correct (straightforward error handling)
-- Fixes a real bug (underflow leading to corruption)
-- Small and contained (10 lines, 1 file)
-- No new features
-
-The severity of the potential consequence (filesystem corruption)
-combined with the trivial risk of the fix makes this an appropriate
-stable candidate. Filesystems are exactly where defensive hardening
-matters most for stable users.
+This is a straightforward bug fix that corrects an obviously broken
+return value. The fix is small, surgical, and low-risk. It improves
+error visibility for ksmbd users and makes the code match its documented
+behavior. The maintainer Ack from Namjae Jeon adds confidence. Despite
+lacking explicit stable tags, it clearly meets all stable kernel
+criteria.
 
 **YES**
 
- fs/btrfs/ctree.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 561658aca018b..3acb3027584d7 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -3398,9 +3398,13 @@ static noinline int __push_leaf_left(struct btrfs_trans_handle *trans,
- 	btrfs_set_header_nritems(left, old_left_nritems + push_items);
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 8975b6f2f5800..447e76da44409 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -8164,7 +8164,7 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		id = req->VolatileFileId;
  
- 	/* fixup right node */
--	if (push_items > right_nritems)
--		WARN(1, KERN_CRIT "push items %d nr %u\n", push_items,
--		       right_nritems);
-+	if (unlikely(push_items > right_nritems)) {
-+		ret = -EUCLEAN;
-+		btrfs_abort_transaction(trans, ret);
-+		btrfs_crit(fs_info, "push items (%d) > right leaf items (%u)",
-+			   push_items, right_nritems);
-+		goto out;
-+	}
+ 	if (req->Flags != cpu_to_le32(SMB2_0_IOCTL_IS_FSCTL)) {
+-		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
++		ret = -EOPNOTSUPP;
+ 		goto out;
+ 	}
  
- 	if (push_items < right_nritems) {
- 		push_space = btrfs_item_offset(right, push_items - 1) -
+@@ -8184,8 +8184,9 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 	case FSCTL_DFS_GET_REFERRALS:
+ 	case FSCTL_DFS_GET_REFERRALS_EX:
+ 		/* Not support DFS yet */
++		ret = -EOPNOTSUPP;
+ 		rsp->hdr.Status = STATUS_FS_DRIVER_REQUIRED;
+-		goto out;
++		goto out2;
+ 	case FSCTL_CREATE_OR_GET_OBJECT_ID:
+ 	{
+ 		struct file_object_buf_type1_ioctl_rsp *obj_buf;
+@@ -8475,8 +8476,10 @@ int smb2_ioctl(struct ksmbd_work *work)
+ 		rsp->hdr.Status = STATUS_BUFFER_TOO_SMALL;
+ 	else if (ret < 0 || rsp->hdr.Status == 0)
+ 		rsp->hdr.Status = STATUS_INVALID_PARAMETER;
++
++out2:
+ 	smb2_set_err_rsp(work);
+-	return 0;
++	return ret;
+ }
+ 
+ /**
 -- 
 2.51.0
 
