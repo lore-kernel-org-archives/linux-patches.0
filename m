@@ -1,42 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C0F1FF5E3;
-	Tue,  9 Dec 2025 00:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AE921ABAA;
+	Tue,  9 Dec 2025 00:17:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239424; cv=none; b=Hg/lziWwXA/kBcsMQ170fycv/qcSmEywY+H92cdrydr1jAB3Q8hIHPhvbJ/q/6BYBhoBUuQQvh9lq9q0RJFMP9HyRfpy3GYumuSbhBkZ+hO3tGsUzo4SU19EIZOdF2vIoMZHyulPPpAMSlQBmCFwv2f9Yn5L/MTCN490puZVpjk=
+	t=1765239427; cv=none; b=XoDYcKQ4+Rn7hoWHU11DcFzwVbAxrbA7LV6c1sMy3fGzG8dJ4NozkhImnSATs1MaMS1uOrBkkzJRd9swfAbMxHxQ8NJEVN3IPDUAzcKdTDZH6Bp575uDkKFLXgu/qLXWiYiqREfI6z7CHMyEcng0Jf+mCXPMCJwmAEsYaNf20b8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239424; c=relaxed/simple;
-	bh=30B2IC5tghGWMMCtTTZEzIXfgSO6xlHFtZfDadBtLYQ=;
+	s=arc-20240116; t=1765239427; c=relaxed/simple;
+	bh=8rFURERxvZ4xQnlalZg2HWTgFJMfPc2HkJeCYPf7A+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osLbmwVdvRKn4id+uHACElNPluOixtsVkllKQ2GiSxe/groErDtAESTj34bf9lXSx6qxjzHOsAr9juWZjDcBtnpqWJUcah8ni2AeWpym4v3wnM0/L7GZkDGVkHX1V484PqZjyAJ05ywzmpHtFgKtNm+sjDRL7ypuA3HOcy63oJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RxRG0Ig8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aORR5bqDYMc+tDFn6dgLoOuVykaYr56hLczRV54a67/IIdNVm0Qd3Q4MfC/A9QZbIDZNQPpi6FI5aLaQqZVccRWsum5ocGrfOx6dPcT97e61caSG/RFjBehKx3PIfoSzTpwdoOm0bbLi0ERgRAF5gL5eFBNxaY/F21lxvkzA4Ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MkAKv8KW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RxRG0Ig8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA42C19422;
-	Tue,  9 Dec 2025 00:17:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MkAKv8KW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F049C113D0;
+	Tue,  9 Dec 2025 00:17:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239424;
-	bh=30B2IC5tghGWMMCtTTZEzIXfgSO6xlHFtZfDadBtLYQ=;
+	s=k20201202; t=1765239427;
+	bh=8rFURERxvZ4xQnlalZg2HWTgFJMfPc2HkJeCYPf7A+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxRG0Ig8ZNkoQHnHUIhv0jPEFQf5Ji5fGcpYcTbHMTjr5bB9DZiRpmB0J7f3BR6VH
-	 8zI8MwQWDvNDs+WvpAtcoJNi6IziDIaxkNb6/VJY6FMQtzP2W3ul1PHwdpJ2vgz1uu
-	 R0nx3N3Brxoi4A3RGYNia6sC2oM0sJGOV+60q5j3MBAGCyZ5jhjjLFsCUBnuIZqj8C
-	 u/uDJjLZ2Beai7BSfMtGlCZpvvLFa4HZUbQ/nFJSfGg08LdV0nn2NxtxlvtcIqOLAV
-	 dZSCRKPt70t/GRKhdtFXAcysCju6Wv6i2dsy1CqujKXeNDQyDZwERBRxDndtVG+I+E
-	 fvp50ALCBm+Rg==
+	b=MkAKv8KWxZUPkphtweZ3/vCEWKDLTvwQWGnwR49kJ024w+A1JT91G8c+pj9farzgf
+	 OG9E5DAFEFI7P03GcPoq3tInqyV0fSnsnqWQkC2jEMJwY+bVV7l5EpX6vSpQnPUnBT
+	 Ovjua/8tw4PofVy2tMGh31zNJCOUZOOwnVvzfWcC8ZmqPZuKvfblpeHbIsEEy1GC2Y
+	 djHqOny2z0x01C8qsfu15rb21ohNX1iwFlwauomc0azsG54z5/tVaXmg3fW5wQ3UR7
+	 sNjla4chrUFGIg5JRK4aI3641SoAHZka/IRoFEEfP4cfkXeYrd9XMV2+BlAvVpDBh1
+	 oAKyzHeuTWV/A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Chris Lu <chris.lu@mediatek.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Jes.Sorensen@gmail.com,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: rtl8xxxu: Fix HT40 channel config for RTL8192CU, RTL8723AU
-Date: Mon,  8 Dec 2025 19:15:07 -0500
-Message-ID: <20251209001610.611575-15-sashal@kernel.org>
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-bluetooth@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: MT7920: Add VID/PID 0489/e135
+Date: Mon,  8 Dec 2025 19:15:08 -0500
+Message-ID: <20251209001610.611575-16-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -49,198 +56,184 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Chris Lu <chris.lu@mediatek.com>
 
-[ Upstream commit 5511ba3de434892e5ef3594d6eabbd12b1629356 ]
+[ Upstream commit c126f98c011f5796ba118ef2093122d02809d30d ]
 
-Flip the response rate subchannel. It was backwards, causing low
-speeds when using 40 MHz channel width. "iw dev ... station dump"
-showed a low RX rate, 11M or less.
+Add VID 0489 & PID e135 for MediaTek MT7920 USB Bluetooth chip.
 
-Also fix the channel width field of RF6052_REG_MODE_AG.
+The information in /sys/kernel/debug/usb/devices about the Bluetooth
+device is listed as the below.
 
-Tested only with RTL8192CU, but these settings are identical for
-RTL8723AU.
+T:  Bus=06 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
+D:  Ver= 2.10 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e135 Rev= 1.00
+S:  Manufacturer=MediaTek Inc.
+S:  Product=Wireless_Device
+S:  SerialNumber=000000000
+C:* #Ifs= 3 Cfg#= 1 Atr=e0 MxPwr=100mA
+A:  FirstIf#= 0 IfCount= 3 Cls=e0(wlcon) Sub=01 Prot=01
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=125us
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+I:  If#= 1 Alt= 6 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  63 Ivl=1ms
+I:* If#= 2 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
+I:  If#= 2 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=(none)
+E:  Ad=8a(I) Atr=03(Int.) MxPS=  64 Ivl=125us
+E:  Ad=0a(O) Atr=03(Int.) MxPS=  64 Ivl=125us
 
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/1f46571d-855b-43e1-8bfc-abacceb96043@gmail.com
+Signed-off-by: Chris Lu <chris.lu@mediatek.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## COMPREHENSIVE ANALYSIS
+## Commit Analysis: Bluetooth btusb MT7920 VID/PID Addition
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** "wifi: rtl8xxxu: Fix HT40 channel config for RTL8192CU,
-RTL8723AU"
+**Subject:** Adding a new USB VID/PID (0489/e135) for MediaTek MT7920
+Bluetooth chip
 
-- Contains "Fix" keyword indicating a bug fix
-- Describes specific affected hardware: RTL8192CU, RTL8723AU USB WiFi
-  adapters
-- Explains user-visible symptom: "low speeds when using 40 MHz channel
-  width"
-- Provides diagnostic evidence: "`iw dev ... station dump` showed a low
-  RX rate, 11M or less"
-- **No** "Cc: stable@vger.kernel.org" tag
-- **No** "Fixes:" tag pointing to the original buggy commit
-- **Has** "Reviewed-by: Ping-Ke Shih" (Realtek's kernel maintainer)
-- **Has** "Tested only with RTL8192CU" - real-world testing performed
+**Key observations:**
+- No `Cc: stable@vger.kernel.org` tag (not unusual for device ID
+  additions)
+- No `Fixes:` tag (not applicable - this enables new hardware, doesn't
+  fix a bug)
+- Author is from MediaTek (hardware vendor)
+- Has `Reviewed-by` from Paul Menzel
+- Signed off by Bluetooth maintainer Luiz Augusto von Dentz
 
 ### 2. CODE CHANGE ANALYSIS
 
-**Two distinct bugs are fixed:**
-
-**Bug #1: RSR (Response Rate Set) subchannel configuration (lines
-1255-1258):**
+The change is minimal:
 ```c
-// BEFORE (buggy):
-if (sec_ch_above)
-    rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
-else
-    rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
-
-// AFTER (fixed):
-if (!sec_ch_above)
-    rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
-else
-    rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
++       { USB_DEVICE(0x0489, 0xe135), .driver_info = BTUSB_MEDIATEK |
++
+BTUSB_WIDEBAND_SPEECH },
 ```
-The logic was inverted - when secondary channel is above, LOWER should
-be set, not UPPER. Comparison with RTL8188E driver (8188e.c:462-465)
-confirms the fix matches the correct pattern.
 
-**Bug #2: RF6052_REG_MODE_AG bandwidth configuration (lines
-1322-1328):**
-```c
-// BEFORE (buggy):
-if (hw->conf.chandef.width == NL80211_CHAN_WIDTH_40)
-    val32 &= ~MODE_AG_CHANNEL_20MHZ;
-else
-    val32 |= MODE_AG_CHANNEL_20MHZ;
-
-// AFTER (fixed):
-val32 &= ~MODE_AG_BW_MASK;  // Clear both bits 10 and 11
-if (hw->conf.chandef.width != NL80211_CHAN_WIDTH_40)
-    val32 |= MODE_AG_CHANNEL_20MHZ;
-```
-Two issues: (1) Only cleared bit 10, not the full bandwidth mask (bits
-10-11), and (2) the logic flow was awkward - proper pattern is to clear
-mask first, then set appropriate bit only when needed.
-
-The gen2 driver (`rtl8xxxu_gen2_config_channel` at line 1446) already
-uses `MODE_AG_BW_MASK` correctly, confirming this is the right approach.
+This adds a single USB device ID entry to the `quirks_table[]` in
+`drivers/bluetooth/btusb.c`. The entry:
+- Uses VID 0x0489, PID 0xe135
+- Uses identical flags to the adjacent MT7920 entry (0x0489, 0xe134)
+- Follows the exact pattern of all other MediaTek device entries
 
 ### 3. CLASSIFICATION
 
-- **Bug Type:** Logic error causing severe performance degradation
-- **NOT a feature:** No new functionality added
-- **NOT a quirk/workaround:** This is fixing incorrect code logic
-- **Hardware affected:** RTL8192CU, RTL8723AU (older but still commonly
-  used USB WiFi adapters)
+This falls squarely into the **"NEW DEVICE IDs"** exception category for
+stable backports. Per the stable kernel rules:
+
+> Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers - These
+are trivial one-line additions that enable hardware support
+
+The btusb driver already fully supports MediaTek MT7920 devices; this
+just adds recognition for a new variant.
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-- **Lines changed:** ~8 lines modified
-- **Files touched:** 1 file (core.c)
-- **Complexity:** LOW - simple logic inversions and proper mask usage
-- **Scope:** Confined to `rtl8xxxu_gen1_config_channel()` function, only
-  affects 40MHz mode
-- **Risk of regression:** LOW - brings gen1 config in line with gen2 and
-  8188e implementations
-- **Dependencies:** `MODE_AG_BW_MASK` exists since 2016 (commit
-  c3f9506f2374), present in all stable kernels
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | 2 (effectively 1 entry) |
+| Files touched | 1 |
+| Complexity | Trivial |
+| Risk | Essentially zero |
+
+**Risk justification:** This only affects devices with exactly
+VID=0x0489 and PID=0xe135. It cannot cause regressions for any other
+hardware. The change is purely additive with no modification to existing
+functionality.
 
 ### 5. USER IMPACT
 
-- **Affected users:** Anyone using RTL8192CU or RTL8723AU USB WiFi
-  adapters with 40MHz channels
-- **Severity:** MODERATE-HIGH - WiFi functional but severely degraded
-  speeds (capped at 11M vs expected 40MHz HT speeds which could be
-  150-300Mbps)
-- **Impact scope:** These are common, inexpensive USB WiFi adapters;
-  many users in production environments
-- **Visibility:** Users would notice unusably slow WiFi and might
-  mistakenly blame their router or network
+**Without this patch:** Users with MT7920 Bluetooth USB adapters using
+this VID/PID combination have no Bluetooth functionality - the kernel
+doesn't recognize their device.
+
+**With this patch:** Bluetooth works normally using the mature, existing
+MediaTek btusb support.
+
+The USB device information in the commit message confirms this is real
+hardware that users possess.
 
 ### 6. STABILITY INDICATORS
 
-- Reviewed by Realtek's Linux kernel maintainer (Ping-Ke Shih)
-- Tested on actual hardware (RTL8192CU)
-- Consistent with how other chip variants in the same driver family
-  handle this
-- Small, surgical changes with clear correctness rationale
+- ✅ Reviewed by Paul Menzel
+- ✅ Signed off by Bluetooth subsystem maintainer
+- ✅ Author from hardware vendor (MediaTek)
+- ✅ Identical pattern to many existing entries
+- ✅ Same flags used as sister device (e134)
 
 ### 7. DEPENDENCY CHECK
 
-- `MODE_AG_BW_MASK` macro is defined in regs.h since 2016
-- No other commits needed for this fix to work
-- The affected function `rtl8xxxu_gen1_config_channel()` exists in all
-  stable kernels that have the rtl8xxxu driver
+- **No dependencies** on other commits
+- Uses existing macros (`USB_DEVICE`) and flags (`BTUSB_MEDIATEK`,
+  `BTUSB_WIDEBAND_SPEECH`)
+- The btusb driver with MediaTek MT7920 support exists in stable kernels
 
-### VERDICT
+### CONCLUSION
 
-**Positive factors:**
-- Fixes a real, user-visible performance bug (severely degraded WiFi
-  speeds)
-- Small, contained changes (8 lines)
-- Low regression risk - aligns with established patterns in related code
-- Reviewed and tested
-- No dependencies on other commits
-- Affects real hardware that users own
+This is a textbook stable-appropriate device ID addition:
 
-**Negative factors:**
-- No explicit "Cc: stable@" tag from maintainer
-- No "Fixes:" tag to trace original bug introduction
+1. **Trivial 2-line change** - lowest possible complexity
+2. **Zero regression risk** - only affects one specific hardware variant
+3. **Real user impact** - enables Bluetooth for users with this hardware
+4. **Well-reviewed** - proper sign-offs from maintainer and vendor
+5. **No new code** - leverages existing, mature MediaTek btusb support
+6. **No dependencies** - applies cleanly to any kernel with MT7920
+   support
 
-**Risk vs Benefit:**
-- Benefit: Restores proper HT40 performance for RTL8192CU/RTL8723AU
-  users
-- Risk: Very low - logic corrections that match other implementations in
-  the same driver
-
-This is a clear bug fix for user-visible performance degradation. The
-changes are minimal, well-understood, properly reviewed, and consistent
-with how other chip variants in the same driver family handle channel
-configuration. The lack of explicit stable tags appears to be an
-oversight rather than an intentional exclusion. Users with these common
-USB WiFi adapters would benefit significantly from this fix.
+Device ID additions like this are routinely backported to stable trees
+because they provide clear value (enabling hardware) with essentially no
+risk. The pattern is identical to dozens of similar entries in the same
+file.
 
 **YES**
 
- drivers/net/wireless/realtek/rtl8xxxu/core.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-index 3ded5952729fc..d2d3bbac2861f 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
-@@ -1252,7 +1252,7 @@ void rtl8xxxu_gen1_config_channel(struct ieee80211_hw *hw)
- 		opmode &= ~BW_OPMODE_20MHZ;
- 		rtl8xxxu_write8(priv, REG_BW_OPMODE, opmode);
- 		rsr &= ~RSR_RSC_BANDWIDTH_40M;
--		if (sec_ch_above)
-+		if (!sec_ch_above)
- 			rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
- 		else
- 			rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
-@@ -1321,9 +1321,8 @@ void rtl8xxxu_gen1_config_channel(struct ieee80211_hw *hw)
- 
- 	for (i = RF_A; i < priv->rf_paths; i++) {
- 		val32 = rtl8xxxu_read_rfreg(priv, i, RF6052_REG_MODE_AG);
--		if (hw->conf.chandef.width == NL80211_CHAN_WIDTH_40)
--			val32 &= ~MODE_AG_CHANNEL_20MHZ;
--		else
-+		val32 &= ~MODE_AG_BW_MASK;
-+		if (hw->conf.chandef.width != NL80211_CHAN_WIDTH_40)
- 			val32 |= MODE_AG_CHANNEL_20MHZ;
- 		rtl8xxxu_write_rfreg(priv, i, RF6052_REG_MODE_AG, val32);
- 	}
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index fa683bb7f0b49..595afeff4afb5 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -621,6 +621,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Additional MediaTek MT7920 Bluetooth devices */
+ 	{ USB_DEVICE(0x0489, 0xe134), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe135), .driver_info = BTUSB_MEDIATEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3620), .driver_info = BTUSB_MEDIATEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3621), .driver_info = BTUSB_MEDIATEK |
 -- 
 2.51.0
 
