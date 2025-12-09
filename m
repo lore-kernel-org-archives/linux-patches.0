@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B41C283683;
-	Tue,  9 Dec 2025 00:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF7F285C96;
+	Tue,  9 Dec 2025 00:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239469; cv=none; b=mswMfssVo4Jw9Go7o8sjLUmcVfPeczD5SEguaPluuQyVxKaWKQdPytFMEu8hpdeyHU8IneSrmOgotOliBP0tFaBHeR/eOk7qwxc1jIuuu+30PqQhwJERlbgZDKJMh4SCH547hkDMSLgyl9EIc4hBIgmfkrhqmzl4jrwFhQcvGa8=
+	t=1765239471; cv=none; b=dltPutERynzaskgJEovHfnuaSu0C3T+D0TRVxo56MfQsGLRaOyJrv1WIYaRXkiqqxWWoUQyRpVzwmd91xFOlMWKdg/8vV8u6K7coy8F4tD56p2ChOO2fDhMmr/+VappDkQlJgnO3ClbNMTbn3uxieeM53hHdyhTnBrGelN2UIGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239469; c=relaxed/simple;
-	bh=gud9IkW3b4vImZq0AZvIY1/XYW3RXkcue78EKo1eToc=;
+	s=arc-20240116; t=1765239471; c=relaxed/simple;
+	bh=hSj6yXL7v3dwQ1gzsPlEb+4UPWzryxVTATl+Oe5TMME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JMLL9ig9yma7W7jUGPGUtUjUtRBtrQXiaNGwEdqyYm+tW92caJU/3bma8/wYH18q9hekFEqq/W1RdeTMnZ5G+XYhH0O4Ylopk+RQdqDmvNB/C6FwhBcXRvPo71fkXEZ4Eq3uqHXbNPvtO6GFbRPc7R/blYHlsD8f0L91xxNpLMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=smGA6bCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mtIvvhl+zoWIUzhUCLgPfqPoVCkWtQE7nMQLuKfyNucG/Ksio3puKm71788maspMeRnWybJyzCBkgi7bMsUe+A08MhT0y0Cs1A4v6vMulwBJnCU3Fs+p3JmdxV9Y8s4OXvsF9l+ANDDHHpuEA1hpR+7gxlMrEy288l3EfcmCkag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c5FIbxKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="smGA6bCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D41C113D0;
-	Tue,  9 Dec 2025 00:17:48 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c5FIbxKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D5CC19422;
+	Tue,  9 Dec 2025 00:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239469;
-	bh=gud9IkW3b4vImZq0AZvIY1/XYW3RXkcue78EKo1eToc=;
+	s=k20201202; t=1765239471;
+	bh=hSj6yXL7v3dwQ1gzsPlEb+4UPWzryxVTATl+Oe5TMME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smGA6bCqf0jLGtpHGnl8cvQUiJCVfAi3vUqN6XAeMcQcKZm0Cr5LLEXRkP43IfG1g
-	 jh/6PGdhsOJwLoW5qwLi8DB9T+Hd1dXUlaUfvlw1Ba8eLCxGMRVtP8wihCgm+c5hU7
-	 1Dl9oPgGua8JZ1QPaynfXGq36aZOaxLYimBXm0tc1WYTm7pb8SYu2KirNJJIWqxE+P
-	 FvVqe2L+6sbg21JSTCeox9X1W2UidQki5jv/1zqam9n1ZPqrowM7CA9uWtIX6hag2d
-	 kVgPvxRnewHcOp/5ZakGc76g+5Q2tRcG33M+8PB+T/2dzeTZQm5hUE0QUHuqoGjE1j
-	 7/XrsJ0Dd8cHg==
+	b=c5FIbxKwK4tJLgWZ6q2gsV0CN60AWp1dH6xU+ICH6RBqQedXXjbydm8grZ0Y1EAXW
+	 cc9N+h15fYNEJfUHJGtATb+avhYywFobcHCsx2GMYNLeTdhpfMd+yXRxLvOVy31lN/
+	 cUzIcvRV9R8dPz/rutgglpBF2cwADJ1SFApmReONHSWSdByAijwOnRbHC9gwPTMyK9
+	 WmLXFq/rBAVHh+82VnrUfIexDgCJ0XnWc7mMIsZwAvQIIrGGAXWGwJcOiqRcPbp+up
+	 eOeeg+uQ0IWd9xPSsKeyrvP/gEoADYrPhoLtNi7gRTRBIaAuEXBLLVh5tMDD2Gy2fb
+	 rvkZhBxgaLvrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yangtao Li <frank.li@vivo.com>,
-	linux-fsdevel@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.18-5.10] hfsplus: fix volume corruption issue for generic/070
-Date: Mon,  8 Dec 2025 19:15:22 -0500
-Message-ID: <20251209001610.611575-30-sashal@kernel.org>
+Cc: Dan Hamik <dan@hamik.net>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.17] wifi: rtw89: rtw8852bu: Added dev id for ASUS AX57 NANO USB Wifi dongle
+Date: Mon,  8 Dec 2025 19:15:23 -0500
+Message-ID: <20251209001610.611575-31-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -52,189 +51,200 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viacheslav Dubeyko <slava@dubeyko.com>
+From: Dan Hamik <dan@hamik.net>
 
-[ Upstream commit ed490f36f439b877393c12a2113601e4145a5a56 ]
+[ Upstream commit ef42cf705ca32c07a58133817567ac06ef74dc19 ]
 
-The xfstests' test-case generic/070 leaves HFS+ volume
-in corrupted state:
+Add the USB device ID 0x0b05:0x1cb6 to the rtw8852bu driver to support the
+ASUS AX57 Nano WiFi 6 USB adapter.This device uses the same Realtek
+RTL8852BU chipset as other supported models.
 
-sudo ./check generic/070
-FSTYP -- hfsplus
-PLATFORM -- Linux/x86_64 hfsplus-testing-0001 6.17.0-rc1+ #4 SMP PREEMPT_DYNAMIC Wed Oct 1 15:02:44 PDT 2025
-MKFS_OPTIONS -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
+Tested on: Linux Mint 22 with kernel 6.8.0-87-generic.
+The adapter initializes successfully and connects to networks.
 
-generic/070 _check_generic_filesystem: filesystem on /dev/loop50 is inconsistent
-(see xfstests-dev/results//generic/070.full for details)
-
-Ran: generic/070
-Failures: generic/070
-Failed 1 of 1 tests
-
-sudo fsck.hfsplus -d /dev/loop50
-** /dev/loop50
-Using cacheBlockSize=32K cacheTotalBlock=1024 cacheSize=32768K.
-Executing fsck_hfs (version 540.1-Linux).
-** Checking non-journaled HFS Plus Volume.
-The volume name is test
-** Checking extents overflow file.
-Unused node is not erased (node = 1)
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-Verify Status: VIStat = 0x0000, ABTStat = 0x0000 EBTStat = 0x0004
-CBTStat = 0x0000 CatStat = 0x00000000
-** Repairing volume.
-** Rechecking volume.
-** Checking non-journaled HFS Plus Volume.
-The volume name is test
-** Checking extents overflow file.
-** Checking catalog file.
-** Checking multi-linked files.
-** Checking catalog hierarchy.
-** Checking extended attributes file.
-** Checking volume bitmap.
-** Checking volume information.
-** The volume test was repaired successfully.
-
-It is possible to see that fsck.hfsplus detected not
-erased and unused node for the case of extents overflow file.
-The HFS+ logic has special method that defines if the node
-should be erased:
-
-bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
-{
-	struct super_block *sb = tree->inode->i_sb;
-	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
-	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
-
-	return tree->cnid == HFSPLUS_CAT_CNID &&
-		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
-}
-
-However, it is possible to see that this method works
-only for the case of catalog file. But debugging of the issue
-has shown that HFSPLUS_VOL_UNUSED_NODE_FIX attribute has been
-requested for the extents overflow file too:
-
-catalog file
-kernel: hfsplus: node 4, num_recs 0, flags 0x10
-kernel: hfsplus: tree->cnid 4, volume_attr 0x80000800
-
-extents overflow file
-kernel: hfsplus: node 1, num_recs 0, flags 0x10
-kernel: hfsplus: tree->cnid 3, volume_attr 0x80000800
-
-This patch modifies the hfs_bnode_need_zeroout() by checking
-only volume_attr but not the b-tree ID because node zeroing
-can be requested for all HFS+ b-tree types.
-
-sudo ./check generic/070
-FSTYP         -- hfsplus
-PLATFORM      -- Linux/x86_64 hfsplus-testing-0001 6.18.0-rc3+ #79 SMP PREEMPT_DYNAMIC Fri Oct 31 16:07:42 PDT 2025
-MKFS_OPTIONS  -- /dev/loop51
-MOUNT_OPTIONS -- /dev/loop51 /mnt/scratch
-
-generic/070 33s ...  34s
-Ran: generic/070
-Passed all 1 tests
-
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-cc: Yangtao Li <frank.li@vivo.com>
-cc: linux-fsdevel@vger.kernel.org
-Link: https://lore.kernel.org/r/20251101001229.247432-1-slava@dubeyko.com
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Dan Hamik <dan@hamik.net>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/010f019a76e1a84b-0a6f5e9f-2a43-4a9d-9c30-de4ae6363011-000000@us-east-2.amazonses.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Final Assessment
+Now I have a complete picture of the situation. Let me summarize my
+analysis:
 
-### Summary of Findings
+## DETAILED ANALYSIS
 
-**Bug Type**: Filesystem corruption (data integrity issue)
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Technical Root Cause**: The `hfs_bnode_need_zeroout()` function
-incorrectly restricts unused node zeroing to only the catalog B-tree
-(HFSPLUS_CAT_CNID). However, when the volume attribute
-`HFSPLUS_VOL_UNUSED_NODE_FIX` is set, it applies to ALL HFS+ B-tree
-types including the extents overflow file. This causes fsck.hfsplus to
-detect corruption: "Unused node is not erased (node = 1)".
+The commit message states:
+- **Subject**: "wifi: rtw89: rtw8852bu: Added dev id for ASUS AX57 NANO
+  USB Wifi dongle"
+- **Purpose**: Add USB device ID `0x0b05:0x1cb6` for the ASUS AX57 Nano
+  WiFi 6 USB adapter
+- **Device**: Uses the Realtek RTL8852BU chipset (same as other
+  supported models)
+- **Testing**: Tested on Linux Mint 22 with kernel 6.8.0-87-generic
 
-**The Fix**: Removes the catalog-only check, allowing node zeroing for
-all B-tree types when the volume attribute is set.
+**Notable absences**:
+- No `Cc: stable@vger.kernel.org` tag
+- No `Fixes:` tag
+- This is a hardware enablement patch, not a bug fix
 
-### Stable Kernel Criteria Evaluation
+### 2. CODE CHANGE ANALYSIS
 
-| Criterion | Status |
-|-----------|--------|
-| Fixes real bug | ✅ Filesystem corruption verified by fsck |
-| Obviously correct | ✅ Simple condition removal, matches Apple spec |
-| Small and contained | ✅ 1 line change, single file |
-| No new features | ✅ No new functionality added |
-| Tested | ✅ xfstests generic/070 passes |
-| Exists in stable | ✅ Function introduced in kernel 3.16 (2014) |
+The diff shows a **trivial 2-line addition**:
+```c
++       { USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x1cb6, 0xff, 0xff,
+0xff),
++         .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+```
 
-### Risk vs Benefit
+This adds a new USB device ID entry to the `rtw_8852bu_id_table[]`
+array. The change:
+- Uses the standard `USB_DEVICE_AND_INTERFACE_INFO()` macro
+- References the existing `rtw89_8852bu_info` driver info structure
+- Is identical in pattern to all other entries in the table
+- Enables the existing driver to match and bind to the ASUS AX57 Nano
+  device
 
-**Risk**: Very LOW
-- The change makes code more conservative (zeros more nodes, not fewer)
-- Only two call sites, both appropriately handle the result
-- No new code paths, just relaxing an incorrect restriction
+The vendor ID `0x0b05` is ASUS (ASUSTeK Computer Inc.), and `0x1cb6` is
+the specific product ID for this adapter. There's already another ASUS
+device in the table (`0x0b05, 0x1a62`), confirming ASUS devices work
+with this driver.
 
-**Benefit**: HIGH
-- Fixes filesystem corruption that users can actually hit
-- Reproducible with standard xfstests suite
-- Prevents data integrity issues on HFS+ volumes
+### 3. CLASSIFICATION
 
-### Concerns
+**This is a NEW DEVICE ID addition** - one of the explicitly allowed
+exception categories for stable kernel backports.
 
-1. **No explicit stable tags**: Missing "Cc: stable" and "Fixes:" tags.
-   However, filesystem corruption fixes are exactly what stable is for.
+Per stable kernel rules:
+> "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers. These
+are trivial one-line additions that enable hardware support."
 
-2. **Stale comment**: The comment still says "if this is the catalog
-   tree" but this is documentation debt, not a functional issue.
+The commit:
+- Does NOT add new features
+- Does NOT change any driver logic
+- Does NOT add new APIs
+- Simply enables an existing, working driver to bind to a new USB device
+- The device uses the same RTL8852BU chipset that the driver already
+  supports
 
-3. **Limited user base**: HFS+ is less commonly used on Linux than other
-   filesystems, but users who do use it deserve working support.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### Conclusion
+**Scope**: Extremely minimal
+- Lines changed: 2 lines added
+- Files touched: 1 file
+- Complexity: Trivial (simple array element addition)
+- Subsystem: Wireless networking (rtw89 driver)
 
-This commit fixes a real, reproducible filesystem corruption issue with
-an extremely small, safe change. The fix is obviously correct - it
-aligns behavior with the HFS+ specification where
-`HFSPLUS_VOL_UNUSED_NODE_FIX` applies to all B-trees, not just the
-catalog. The change is conservative (does more work, not less)
-minimizing regression risk. The affected code has existed since kernel
-3.16, making it applicable to all active stable trees.
+**Risk**: Extremely LOW
+- The change cannot break existing functionality
+- It only adds a new USB ID to match
+- The driver infrastructure for RTL8852BU already exists and is tested
+- The device uses an identical chipset to other supported devices
+- Other ASUS devices already work with this driver
 
-Despite the missing explicit stable tags, this is clearly appropriate
-stable material - a surgical fix for data corruption that meets all the
-technical criteria.
+### 5. USER IMPACT
+
+**Who benefits**: Users who purchase the ASUS AX57 Nano WiFi 6 USB
+adapter
+- This is a real, commercially available product
+- Without this patch, the device won't be recognized by the kernel
+- The commit author tested it and confirmed it works
+
+**Severity**: Moderate for affected users
+- The device is completely non-functional without this ID
+- With the ID, full WiFi functionality is enabled
+
+### 6. STABILITY INDICATORS
+
+- **Tested by**: Dan Hamik (the patch author)
+- **Acked/Signed by**: Ping-Ke Shih (Realtek maintainer)
+- **Pattern**: Follows the exact same pattern as all other USB ID
+  additions in this driver
+
+### 7. DEPENDENCY CHECK - CRITICAL FINDING
+
+**The rtw8852bu.c driver file only exists starting from v6.17.**
+
+My investigation revealed:
+- The `rtw8852bu.c` file was first added in commit `0ed2a8b1a14e9` on
+  July 5, 2025
+- The rtw89 USB infrastructure (`usb.c`, `usb.h`) was added in commit
+  `2135c28be6a84` on June 30, 2025
+- Both commits first appeared in v6.17-rc1
+- **The driver does NOT exist in v6.16 or any earlier stable trees**
+  (confirmed by checking `git show
+  v6.16:drivers/net/wireless/realtek/rtw89/rtw8852bu.c` which returns
+  "fatal: path does not exist")
+
+Current stable trees and rtw8852bu.c availability:
+| Stable Tree | rtw8852bu.c Available? |
+|-------------|------------------------|
+| 6.12.y (LTS) | ❌ No |
+| 6.15.y | ❌ No |
+| 6.16.y | ❌ No |
+| 6.17.y | ✅ Yes |
+| 6.18 | ✅ Yes |
+
+### CONCLUSION
+
+While this commit **meets the typical criteria** for stable backporting
+(it's a trivial USB device ID addition that enables hardware support
+using existing, tested driver code), there is a **critical dependency
+issue**:
+
+**The rtw8852bu.c driver itself was only introduced in Linux 6.17
+(v6.17-rc1).** This means:
+
+1. For stable trees 6.17.y and later: The commit would be appropriate to
+   backport as it enables new hardware with zero risk.
+
+2. For stable trees earlier than 6.17 (6.16.y, 6.15.y, 6.12.y, 6.6.y,
+   6.1.y, etc.): The commit **cannot be backported** because the driver
+   file doesn't exist. Backporting would require first backporting the
+   entire rtw89 USB infrastructure (usb.c, usb.h) plus the rtw8852bu.c
+   driver file, which would be a massive undertaking involving new
+   functionality - NOT appropriate for stable.
+
+Given that:
+1. The primary purpose of stable backports is to bring fixes to LTS
+   kernels (6.12.y, 6.6.y, 6.1.y)
+2. This driver doesn't exist in any of those LTS trees
+3. For the only stable tree where it exists (6.17.y), this is a very new
+   kernel with limited user base compared to LTS
+4. The commit lacks explicit `Cc: stable` tag from the maintainer
+
+The practical utility of backporting is very limited. The only stable
+tree that could receive this is 6.17.y, which is not an LTS kernel.
+Users of actual LTS kernels (6.12, 6.6, 6.1) cannot benefit from this
+backport at all since the underlying driver doesn't exist there.
+
+**YES** - This commit **is appropriate for backporting** to stable trees
+**where the driver exists (6.17.y only)**. It's a textbook example of a
+safe device ID addition - trivial, low-risk, enables hardware support
+without any code changes. However, the practical scope is limited to the
+6.17.y stable tree only.
 
 **YES**
 
- fs/hfsplus/bnode.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/rtw8852bu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
-index 63768cf0cb1ba..482a6c5faa197 100644
---- a/fs/hfsplus/bnode.c
-+++ b/fs/hfsplus/bnode.c
-@@ -705,6 +705,5 @@ bool hfs_bnode_need_zeroout(struct hfs_btree *tree)
- 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(sb);
- 	const u32 volume_attr = be32_to_cpu(sbi->s_vhdr->attributes);
- 
--	return tree->cnid == HFSPLUS_CAT_CNID &&
--		volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
-+	return volume_attr & HFSPLUS_VOL_UNUSED_NODE_FIX;
- }
+diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+index 0694272f7ffae..83bdea040f40e 100644
+--- a/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
++++ b/drivers/net/wireless/realtek/rtw89/rtw8852bu.c
+@@ -28,6 +28,8 @@ static const struct usb_device_id rtw_8852bu_id_table[] = {
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x1a62, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
++	{ USB_DEVICE_AND_INTERFACE_INFO(0x0b05, 0x1cb6, 0xff, 0xff, 0xff),
++	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x0db0, 0x6931, 0xff, 0xff, 0xff),
+ 	  .driver_info = (kernel_ulong_t)&rtw89_8852bu_info },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3327, 0xff, 0xff, 0xff),
 -- 
 2.51.0
 
