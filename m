@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7D7219303;
-	Tue,  9 Dec 2025 00:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7E51FF5E3;
+	Tue,  9 Dec 2025 00:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239415; cv=none; b=eWuWAvnEKlNqJY6pkyCu0QyOmXZSOdN9j/toXPNg41/WmRmQV/DMEqGVHHZebM62MiWihWt2Mz+z00skJhD7i9TNmx/rkgttC3xGj3dEvwBxY92jtdCyw3SHZXjcQp5N155mJjGLLHPsuMY0Y6jL+KhbA8l/R5P14b6wj0RaGIA=
+	t=1765239418; cv=none; b=Bf1SBhu4bGKczMWal3TvNPGWaHP8/RIxb3fdNI0UTPV6H24Y4T08+odd9al3VBWs5bcr4xl+Z2weNCTqZrQF9LI3OfM/3CRTqaqtw5SKRtNKk+RjABMmSPBYsa12Q0UWL92Dym1qXhpe2jBxcg5zMoSi/hW4T5dfBO5DwQSKbIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239415; c=relaxed/simple;
-	bh=rPLCsJ7oKMNb8wOUeMVrIrmHBTliVFaFmmYP7IJbl4k=;
+	s=arc-20240116; t=1765239418; c=relaxed/simple;
+	bh=CcoOduBaJKs+Vjdxjvqz8sl0XCzaN235phou1vX6Q7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BT9+FhEIzy6WMqDxJp/iXY7JQ5B/cBsCEYBbumM77hchqML+I4Jmqtalsg91kWlU7Izv4OjKfAyvpUfjEpi6z70FsgcNl2H/WWH3VOOSfcTg9RdYJ9YRI7lrg2lVLxSx3FXdc5qI70jhDACCszu8yPuu7mqCD27NKw7fmAxYz4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kod4GpEQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tZBA6S78DqSBmk+XuziIJa7eB857L4RNMzRECxD5y3w+6OIZOP/uAAp1XFhWZxWWCoDYab2VzLe+qMLx+CP+0AFJjUBx4XVKzQKmC7VKOQ1//H/TJE4HBw1LMV8SU9LpJV8eTFNX7Fgb1se4/ewCQIPvl0ppxXizRE2O34Sab6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZT0wrQAd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kod4GpEQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88F9C113D0;
-	Tue,  9 Dec 2025 00:16:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZT0wrQAd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13CDC113D0;
+	Tue,  9 Dec 2025 00:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239415;
-	bh=rPLCsJ7oKMNb8wOUeMVrIrmHBTliVFaFmmYP7IJbl4k=;
+	s=k20201202; t=1765239417;
+	bh=CcoOduBaJKs+Vjdxjvqz8sl0XCzaN235phou1vX6Q7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kod4GpEQCNMOtOmx15GHmtUx4aicOw2FrRB3XzzQ35KeqEwyp9tl1LQzyoPNuaAJS
-	 AstgDWyJC+U+shbyNkSPCnTvd0WWafys9joUmcqzZWq2iB06HmvsfvMwrRM1swfd8Z
-	 xTgP32sKV+pUgFcwANRLxZPWVYdUhfKA/pGqjs0/lPLTlwbp4hFitQ2vyZsEM7fvbG
-	 1l1yi1Wi/2S7U+rE7SMl1Qkw9LW1JXWGyCwZTXhV2gCd/JoPKp0p/FDJXtiklwk8PU
-	 TZi5zORj5ZeRRQG+3cW2SEGn/cnpG9p3IocXEac11D4t1XPBOCleY5CYJ2PnZyL+CR
-	 quS3DsVJ+VUuw==
+	b=ZT0wrQAdlZg68BobiE6NmgGOvL0AYRawmqvssGrtTPwrbIxbHIW1cqe8Y1ajTOC2l
+	 z1RRJiwp25q3phSIkLGZjhKNAY7X1xPpoqr5o7WoHrz3loizZiSvz59yoc4WVy7NW6
+	 GmdoyTvlP2k7i2zF+wwgHynrQx1YwMEPHPOzRfs+7N2O2kBqug7THD2UihnbwuwKlF
+	 94bDAwsLJDBWKu1u/4xFKGSiYmK4JV0sakphOlwn/Ppm4UewRj6ld30liKdyutpkWW
+	 NbmO2lGoS6J7Vl404zaK3l9Uap8Tpb1Qf0/N7Ds7BF6bUMVSZGF2wL7WkMNUw4mVZF
+	 VIjdKki0s56Hw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Max Chou <max.chou@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Caleb James DeLisle <cjd@cjdns.fr>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: Add new VID/PID 0x0489/0xE12F for RTL8852BE-VT
-Date: Mon,  8 Dec 2025 19:15:03 -0500
-Message-ID: <20251209001610.611575-11-sashal@kernel.org>
+	lorenzo@kernel.org,
+	ryder.lee@mediatek.com,
+	matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com,
+	linux-wireless@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-5.10] wifi: mt76: mmio_*_copy fix byte order and alignment
+Date: Mon,  8 Dec 2025 19:15:04 -0500
+Message-ID: <20251209001610.611575-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -50,178 +55,202 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Chou <max.chou@realtek.com>
+From: Caleb James DeLisle <cjd@cjdns.fr>
 
-[ Upstream commit 32caa197b9b603e20f49fd3a0dffecd0cd620499 ]
+[ Upstream commit 2df00805f7dbaa46b60c682aad0d76270b7ba266 ]
 
-Add the support ID(0x0489, 0xE12F) to usb_device_id table for
-Realtek RTL8852BE-VT.
+Update functions which copy to and from MMIO to load bytes as Little
+Endian, and also support unaligned buffers.
 
-The device info from /sys/kernel/debug/usb/devices as below.
+PCI devices almost universally use Little Endian ordering for MMIO
+registers, mt76 is no exception. PCI hardware that is designed to work
+with Big Endian CPUs often (but not always) "helps" by transparently
+byte-swapping MMIO reads and writes on the wire. If this is enabled
+then it cannot be turned off for a single write. On hardware which does
+not support this, writel() does the swap in software. When we are
+transferring arbitrary bytes to MMIO space, we need them to arrive in
+the same order they were in memory, so when the hardware swaps them
+this is a problem. Rather than care about how our PCI host controller
+works, we instead load bytes as Little Endian - so on a Big Endian
+machine this will reverse them, then we use writel() which will put
+them back in the right order again. This way we do not make it our
+business whether the swapping is done in software or hardware.
 
-T:  Bus=04 Lev=02 Prnt=02 Port=05 Cnt=01 Dev#= 86 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e12f Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+Furthermore, inspection of the code shows that these functions are
+often called with stack-allocated u8 arrays which have no alignment
+guarantees so we now use (get|put)_unaligned_le32().
 
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes this issue:
+mt76x2e 0000:02:00.0: ROM patch build: 20141115060606a
+mt76x2e 0000:02:00.0: Firmware Version: 0.0.00
+mt76x2e 0000:02:00.0: Build: 1
+mt76x2e 0000:02:00.0: Build Time: 201607111443____
+mt76x2e 0000:02:00.0: Firmware failed to start
+mt76x2e 0000:02:00.0: probe with driver mt76x2e failed with error -145
+
+Tested on:
+SmartFiber XP8421-B (Big Endian MIPS 34Kc)
+  - MT7612 -> 5g / ap / psk2
+  - MT7603 -> 2g / sta / psk2
+  - MT7603 -> 2g / ap / psk2
+TpLink Archer v1200v-v2 (Big Endian MIPS 34Kc)
+  - MT7613 -> 5g / ap / psk2
+  - MT7603 -> 2g / sta / psk2
+
+Signed-off-by: Caleb James DeLisle <cjd@cjdns.fr>
+Link: https://patch.msgid.link/20251029184143.3991388-1-cjd@cjdns.fr
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: Bluetooth: btusb: Add new VID/PID 0x0489/0xE12F for
-RTL8852BE-VT
+## ANALYSIS SUMMARY
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-- **Subject**: Adding a new USB Vendor/Product ID for a Realtek
-  Bluetooth chip variant
-- **No "Cc: stable@vger.kernel.org"** tag present
-- **No "Fixes:"** tag present
-- Commit message includes detailed device info from
-  `/sys/kernel/debug/usb/devices`, confirming this is real hardware
-  that's been tested
-- Signed off by Realtek engineer (the hardware vendor) and Bluetooth
-  maintainer
+**Bug Description:** The commit fixes two issues in mt76 WiFi driver's
+MMIO copy functions:
+1. **Byte order issue on Big Endian systems:** The original code uses
+   `__iowrite32_copy()` and `__ioread32_copy()` which internally use
+   `__raw_writel()`/`__raw_readl()` - these do NOT perform byte swapping
+2. **Unaligned buffer issue:** Stack-allocated u8 arrays may not be
+   4-byte aligned
+
+**User-visible failure:** Complete driver probe failure with "Firmware
+failed to start" error -145 on Big Endian systems. WiFi is totally non-
+functional.
+
+**Testing:** Tested on real hardware - multiple MT76 devices on Big
+Endian MIPS platforms (SmartFiber, TP-Link Archer).
+
+**Notable:** No `Fixes:` or `Cc: stable` tags present.
 
 ### 2. CODE CHANGE ANALYSIS
 
-The diff is extremely simple:
-```c
-+       { USB_DEVICE(0x0489, 0xe12f), .driver_info = BTUSB_REALTEK |
-+
-BTUSB_WIDEBAND_SPEECH },
-```
+**Root cause:** The generic `__iowrite32_copy()` function (in
+`lib/iomap_copy.c:20-28`) uses `__raw_writel()` which writes bytes in
+host order without endian conversion. On Big Endian systems, bytes
+arrive at the PCI device in the wrong order.
 
-- **2 lines added** to the `quirks_table[]` static array
-- Uses identical `driver_info` flags as the existing RTL8852BE-VT entry
-  (`0x0bda, 0x8520`)
-- Placed in the appropriate "Realtek 8852BT/8852BE-VT Bluetooth devices"
-  section
-- No code logic changes whatsoever - just adding an entry to a USB
-  device ID table
+**The fix:**
+- Replaces `__iowrite32_copy()` with explicit loop using `writel()` +
+  `get_unaligned_le32()`
+- Replaces `__ioread32_copy()` with explicit loop using `readl()` +
+  `put_unaligned_le32()`
+
+**Why it's correct:**
+1. `get_unaligned_le32()` reads 4 bytes interpreting them as little-
+   endian (safe for unaligned access)
+2. `writel()` handles endian conversion (host→LE for PCI wire format)
+3. Combined: bytes arrive at hardware in correct order regardless of
+   host endianness
+4. On Little Endian systems: behavior is functionally equivalent (no
+   regression risk)
+
+**Header dependency:** `<linux/unaligned.h>` is included transitively
+via `mac80211.h` → `mt76.h` → `mmio.c`
 
 ### 3. CLASSIFICATION
 
-This falls squarely under the **NEW DEVICE IDs** exception, which is
-explicitly allowed in stable:
-
-> "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers - These
-are trivial one-line additions that enable hardware support"
-
-This is **not** a new feature. The btusb driver already fully supports
-RTL8852BE-VT devices. This simply registers another VID/PID combination
-for the same chipset.
+- **Type:** Bug fix (not a feature)
+- **Severity:** HIGH - Complete driver failure on affected systems
+- **Scope:** mt76 WiFi devices on Big Endian architectures (MIPS
+  routers, embedded systems)
+- **Security:** Not a security issue
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
 | Factor | Assessment |
 |--------|------------|
-| Lines changed | 2 (minimal) |
-| Files touched | 1 (`drivers/bluetooth/btusb.c`) |
-| Complexity | Trivial - static table entry |
-| Risk | **Extremely low** |
-
-- Change only affects devices matching VID 0x0489 / PID 0xe12f
-- Cannot regress any existing functionality
-- No behavioral changes to the driver code itself
+| Lines changed | ~10 lines (very small) |
+| Files affected | 1 file (mmio.c) |
+| Complexity | Low - uses standard kernel APIs |
+| Risk of regression | Low - functionally equivalent on LE systems |
+| Self-contained | Yes - no dependencies on other commits |
 
 ### 5. USER IMPACT
 
-- **Without this patch**: Users with this Bluetooth adapter have non-
-  functional hardware
-- **With this patch**: The adapter is recognized and works with existing
-  Realtek support
-- **Severity for affected users**: High - complete loss of Bluetooth
-  functionality
-- This is a real Realtek product (vendor confirmed via signoff)
+- **Affected users:** Big Endian systems with mt76 WiFi (OpenWrt
+  routers, embedded MIPS devices)
+- **Impact severity:** CRITICAL for affected users - WiFi doesn't work
+  at all
+- **Impact scope:** Minority use case (BE systems are uncommon)
 
 ### 6. STABILITY INDICATORS
 
-- Submitted by Realtek engineer (Max Chou) - hardware vendor
-- Merged by Bluetooth maintainer (Luiz von Dentz)
-- Device info in commit message demonstrates the device exists and was
-  tested
+- ✅ Signed off by subsystem maintainer (Felix Fietkau)
+- ✅ Tested on multiple real hardware platforms
+- ✅ Uses well-established kernel primitives
+- ⚠️ No Reviewed-by tags from others
+- ⚠️ No explicit stable request
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- The btusb driver with Realtek support (`BTUSB_REALTEK`) exists in all
-  stable trees
-- `BTUSB_WIDEBAND_SPEECH` flag is also well-established
+- ✅ Self-contained patch
+- ✅ No prerequisite commits needed
+- ✅ Code path exists in all stable trees with mt76 (since 2019)
 
----
+## VERDICT
 
-## Summary
+**Arguments FOR backporting:**
+- Fixes a complete driver failure that makes WiFi unusable on Big Endian
+  systems
+- Small, surgical fix (~10 lines) with well-defined scope
+- Uses standard, well-tested kernel APIs (`writel`,
+  `get_unaligned_le32`)
+- Self-contained with no dependencies
+- Accepted by maintainer
+- Functionally equivalent on Little Endian systems (no regression risk)
 
-This is a textbook example of a commit that should be backported to
-stable:
+**Arguments AGAINST backporting:**
+- No explicit `Cc: stable` tag from maintainer
+- No `Fixes:` tag indicating when bug was introduced
+- Big Endian systems are a minority use case
 
-**Benefits**:
-- Enables real hardware for real users
-- Zero risk of regression (only affects specific VID/PID)
-- Trivial 2-line data table addition
-- Obviously correct - follows exact same pattern as dozens of other
-  entries
-- Hardware vendor submitted the patch
-
-**Concerns**:
-- No explicit stable tags (common for device ID additions; maintainers
-  often omit these for routine changes)
-
-The absence of `Cc: stable` is not concerning for device ID additions -
-they're so routine that many maintainers don't bother tagging them, yet
-stable maintainers regularly pick them up. This enables users with this
-Bluetooth adapter to have working hardware on stable kernels without
-requiring a full kernel upgrade.
+**Conclusion:** Despite the lack of explicit stable tagging, this commit
+fixes a severe, user-visible bug (complete driver failure) with a small,
+obviously correct fix using standard kernel patterns. The risk is low
+and the benefit is high for affected users. Big Endian MIPS platforms
+with mt76 WiFi (common in OpenWrt/embedded space) deserve working WiFi
+support.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mmio.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index cc03c8c38b16f..a5b73e0d271f3 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -585,6 +585,8 @@ static const struct usb_device_id quirks_table[] = {
- 	/* Realtek 8852BT/8852BE-VT Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x8520), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe12f), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/net/wireless/mediatek/mt76/mmio.c b/drivers/net/wireless/mediatek/mt76/mmio.c
+index cd2e9737c3bf9..865ec910f05a4 100644
+--- a/drivers/net/wireless/mediatek/mt76/mmio.c
++++ b/drivers/net/wireless/mediatek/mt76/mmio.c
+@@ -33,13 +33,21 @@ static u32 mt76_mmio_rmw(struct mt76_dev *dev, u32 offset, u32 mask, u32 val)
+ static void mt76_mmio_write_copy(struct mt76_dev *dev, u32 offset,
+ 				 const void *data, int len)
+ {
+-	__iowrite32_copy(dev->mmio.regs + offset, data, DIV_ROUND_UP(len, 4));
++	int i;
++
++	for (i = 0; i < ALIGN(len, 4); i += 4)
++		writel(get_unaligned_le32(data + i),
++		       dev->mmio.regs + offset + i);
+ }
  
- 	/* Realtek 8922AE Bluetooth devices */
- 	{ USB_DEVICE(0x0bda, 0x8922), .driver_info = BTUSB_REALTEK |
+ static void mt76_mmio_read_copy(struct mt76_dev *dev, u32 offset,
+ 				void *data, int len)
+ {
+-	__ioread32_copy(data, dev->mmio.regs + offset, DIV_ROUND_UP(len, 4));
++	int i;
++
++	for (i = 0; i < ALIGN(len, 4); i += 4)
++		put_unaligned_le32(readl(dev->mmio.regs + offset + i),
++				   data + i);
+ }
+ 
+ static int mt76_mmio_wr_rp(struct mt76_dev *dev, u32 base,
 -- 
 2.51.0
 
