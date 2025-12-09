@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665532FE575;
-	Tue,  9 Dec 2025 00:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29932FF144;
+	Tue,  9 Dec 2025 00:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239504; cv=none; b=UvOkOMjbEBUsONNBVrH/npnzjIU1F4JD/ZpkaiDPgaQjba+NhE+lzVenHSKc01Mm1rxpntoB55/RkV8s6aYS/oUK79VG6mPib81kxeN80RKG9iJCf34Xp20gbZ5iFlfDinRkD+Kagq2h+JyLH/x748xSa+P/wlJy+9YPb3fG5WE=
+	t=1765239506; cv=none; b=FQTMowrobBP95lhRcyCYB4v99r7PNaUDbrfG7Su+1MSdYbsfYuamt7tBFVpwGPQGhkVlD9DJqNivoUxJcaDmpdH8XcheSE1z3vplKyymiamluut8aa2+6jTo/sOsnMZ4tQNTKzmZS18RvbxgCMTdW374SCimTlZ4Gj5utvK2J4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239504; c=relaxed/simple;
-	bh=XpKHAEixGzYXqzWImy4xf3ogx25ptVRFnWcBtm/70Vs=;
+	s=arc-20240116; t=1765239506; c=relaxed/simple;
+	bh=EufPrSd66MHCfd1hrq0mehvzOsgd2H5VurLuDRQXTLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bz+eU++BGeazAZS+I7BQLjY9IltgG+E8cX5DUvUmj/mH1PdJjD/qQOHR6UmspemHK1eSqJD3DArseOU1OZKCDPtK/3fkxdiA2a21D9SLg6rxP7I09waLsa5YpYgDYrhkwdTIK82qAErqFOUc8eE0bAmozm0mi0/FfbST1T7Ux/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Cgl1NqBw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZRYBn8nplQhrpqAtiJ3STkHiJ4tgnInIjj7nUTJSxBzdvnaNVrkJYlY0nQk2QSc7e92QRRdlwwhvnivVN/fi/pJlhhhPkYJ4nnKiV8/A0bPkC4Bv7ujtZiQSycBbmv2VUCpzeCkBP36TeRuNJENJBjby1o8OtgQWmkswceDmSTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dfog2eeo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Cgl1NqBw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBF8C19421;
-	Tue,  9 Dec 2025 00:18:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dfog2eeo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6781C113D0;
+	Tue,  9 Dec 2025 00:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239504;
-	bh=XpKHAEixGzYXqzWImy4xf3ogx25ptVRFnWcBtm/70Vs=;
+	s=k20201202; t=1765239506;
+	bh=EufPrSd66MHCfd1hrq0mehvzOsgd2H5VurLuDRQXTLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cgl1NqBwSUVCa+qgh9WjTtbWF5vtPtO/5lGYYbXfP4jPojXEsEdu/CC9jODxC1bJq
-	 /iRVAwd85ImmAWBHdOLd71qBh/m9CuQyPrbv2UZEvZEGFZMM4B7DRK3I+hgQMrLrin
-	 TXvKZ+Zx5W7Yk+kZ8kHwvfYJBZBq8zxayEzQcnqrdAUDlTmtXYxWu8oAFfhFuXO+km
-	 rIKSzkIQaatabMrElp4/mfww3YKYQKZoBrisV1nLp2dtLxewV7gZENw5Qfp8YjZlWY
-	 NU/HxOZqMKvGXkvONu86JozAzzwk9nvPWqzj2tFh+rENmEy7KTT1O3z9ezhXv6+bd6
-	 w/Q5zeARW0I5A==
+	b=dfog2eeozK2WKRx6xXtfXhffR8wdhEiSAYeT2NmI5qL/ZnRtnt7NCjx+2zT3mHjil
+	 Iwh/8eet2RJvj6LtkonSIhvETzr8E23Q57/y9UL9Of5jc6Iov4WlOC0ert1oGFEbto
+	 x6tcOJgM+kBWpoZqQFX7QjnibqeBS/Ba+rqcyK1LZKK4lXr6leKSI0uMg7GSbDDTlk
+	 qjn+D5K31p6WenRS5YA4cby+sajl89o9r67/54V/MlTlljI9gmQqCOeguJMizZOd7H
+	 jBZISK5WVmYNL8uVMogAjIzAp2bBpjH03sLvEDiN8oetNdbuQBtzwYCp8E7pTxBh6J
+	 4yKlKhLyRDa2Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chih-Kang Chang <gary.chang@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Simon Horman <horms@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] wifi: rtw89: flush TX queue before deleting key
-Date: Mon,  8 Dec 2025 19:15:36 -0500
-Message-ID: <20251209001610.611575-44-sashal@kernel.org>
+	przemyslaw.kitszel@intel.com,
+	intel-wired-lan@lists.osuosl.org
+Subject: [PATCH AUTOSEL 6.18-6.12] ice: Allow 100M speed for E825C SGMII device
+Date: Mon,  8 Dec 2025 19:15:37 -0500
+Message-ID: <20251209001610.611575-45-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -51,127 +56,240 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chih-Kang Chang <gary.chang@realtek.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 3a12581fc292997f5ca6dafe3238afd39b77e798 ]
+[ Upstream commit ba2807b869a16d36b8bc76efa774fe433b3c45de ]
 
-In the wpa_supplicant rekey flow, it sends an EAPOL packet 4/4 through
-nl80211_tx_control_port() and triggers wake_tx_queue() in the driver.
-Then, it sends nl80211_new_key() to configure a new key in mac80211.
-However, in wake_tx_queue(), a workqueue is used to process the TX packet,
-which might cause the driver to process the EAPOL packet later than
-nl80211_new_key(). This results in the EAPOL packet 4/4 being transmitted
-with the new key and IV, causing it to be dropped by the AP. Therefore,
-needs to flush TX queue before deleting the old key to ensure that the
-EAPOL 4/4 packet is transmitted using the old key.
+Add E825C 10GbE SGMII device to the list of devices supporting 100Mbit
+link mode. Without that change, 100Mbit link mode is ignored in ethtool
+interface. This change was missed while adding the support for E825C
+devices family.
 
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251114060128.35363-2-pkshih@realtek.com
+Testing hints (please note, for previous version, 100baseT/Full entry
+was missing):
+[root@localhost]# ethtool eth3
+Settings for eth3:
+        Supported ports: [ TP ]
+        Supported link modes:   100baseT/Full
+                                1000baseT/Full
+                                10000baseT/Full
+        Supported pause frame use: Symmetric
+        Supports auto-negotiation: Yes
+        Supported FEC modes: None
+        Advertised link modes:  100baseT/Full
+                                1000baseT/Full
+                                10000baseT/Full
+	...
+
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## 3. CLASSIFICATION
+Now I have a complete understanding. Let me summarize my analysis:
 
-**Type:** Bug fix - Race condition in WPA rekey flow
+## DETAILED ANALYSIS
 
-**User Impact:** WPA rekeying failures, causing:
-- WiFi authentication failures
-- Connection drops during normal operation
-- Poor user experience on networks that perform rekeying
+### 1. COMMIT MESSAGE ANALYSIS
 
-This is a **functional bug**, not a security vulnerability - it causes
-legitimate authentication packets to be dropped.
+**Subject:** `ice: Allow 100M speed for E825C SGMII device`
 
-## 4. SCOPE AND RISK ASSESSMENT
+**Key phrases in commit message:**
+- "This change was missed while adding the support for E825C devices
+  family" - This explicitly acknowledges this is a bug fix for a missed
+  case when E825C was introduced
+- "Without that change, 100Mbit link mode is ignored in ethtool
+  interface" - Describes the user-visible symptom
 
-- **Lines changed:** 1 line added
-- **Files touched:** 1 file (mac80211.c)
-- **Complexity:** Very low
-
-**Pattern already exists in the driver:**
-Looking at `ps.c:65`, the same `flush_work(&rtwdev->txq_work)` pattern
-is already used before power mode changes. This fix applies the same
-proven pattern to key deletion.
-
-**Risk:** Very low - the fix:
-- Uses well-understood kernel API (`flush_work()`)
-- Follows existing driver patterns
-- Only adds a synchronization point, doesn't change logic
-
-## 5. DEPENDENCY CHECK
-
-- `txq_work` has existed since the rtw89 driver was first introduced
-  (commit e3ec7017f6a20 in October 2021, kernel 5.16)
-- The `set_key` function with the `DISABLE_KEY` path also exists since
-  driver inception
-- No dependencies on other commits
-
-## 6. STABILITY INDICATORS
-
-**Pros:**
-- Simple, obvious fix using well-established pattern
-- Clear understanding of the race condition
-- Signed off by Realtek developers who maintain this driver
-
-**Cons:**
+**Missing tags:**
+- No `Fixes:` tag (should logically point to `f64e189442332` - "ice:
+  introduce new E825C devices family")
 - No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag
-- Relatively new commit (November 2025)
-- No Tested-by or Reviewed-by tags
 
-## 7. SUMMARY
+**Tags present:**
+- Multiple `Reviewed-by:` tags (3 reviewers including Simon Horman)
+- `Tested-by:` tag from Intel QA
 
-| Criteria | Assessment |
-|----------|------------|
-| Fixes real bug | ✅ Yes - WPA rekey failure causing connection issues |
-| Obviously correct | ✅ Yes - follows existing pattern, minimal change |
-| Small and contained | ✅ Yes - 1 line |
-| No new features | ✅ Yes - pure bug fix |
-| Stable tag | ❌ No explicit request from maintainer |
-| Fixes tag | ❌ Missing |
-| Risk | ✅ Very low |
-| Dependencies | ✅ None - uses existing infrastructure |
+### 2. CODE CHANGE ANALYSIS
 
-## CONCLUSION
+The change is extremely minimal - adding a single line to a switch
+statement:
 
-This commit **should be backported** to stable. Despite the lack of
-explicit stable tags, it meets all the technical criteria for stable
-inclusion:
+```c
+bool ice_is_100m_speed_supported(struct ice_hw *hw)
+{
+    switch (hw->device_id) {
+    case ICE_DEV_ID_E822C_SGMII:
+    case ICE_DEV_ID_E822L_SGMII:
+    case ICE_DEV_ID_E823L_1GBE:
+    case ICE_DEV_ID_E823C_SGMII:
++   case ICE_DEV_ID_E825C_SGMII:       // <-- NEW LINE ADDED
+        return true;
+    default:
+        return false;
+    }
+}
+```
 
-1. **Fixes a real, user-visible bug** - WPA rekeying failures cause
-   authentication problems
-2. **Extremely minimal change** - just one line that adds a
-   `flush_work()` call
-3. **Uses proven pattern** - identical pattern already exists in `ps.c`
-4. **Low risk** - synchronization-only change that cannot break existing
-   functionality
-5. **No dependencies** - the `txq_work` structure has existed since the
-   driver was introduced
+**Technical mechanism:**
+- The `ice_is_100m_speed_supported()` function is called by
+  `ice_mask_min_supported_speeds()` in `ice_ethtool.c`
+- This function is used to determine which link speeds to report to
+  ethtool as supported
+- When `ice_is_100m_speed_supported()` returns `false`, the code masks
+  off 100Mbit phy types (`ICE_PHY_TYPE_LOW_100BASE_TX` and
+  `ICE_PHY_TYPE_LOW_100M_SGMII`)
+- Without this fix, E825C SGMII devices (PCI ID 0x579F) cannot advertise
+  or use 100Mbit mode via ethtool, even though the hardware supports it
 
-The fix ensures EAPOL 4/4 packets are transmitted with the correct key
-during WPA rekeying, which is essential for proper WiFi operation. The
-change is surgical and follows established patterns in the driver.
+**Root cause:** When E825C support was added in commit `f64e189442332`,
+the developer forgot to also add `ICE_DEV_ID_E825C_SGMII` to the
+`ice_is_100m_speed_supported()` function. All other E8xx SGMII devices
+were already included.
+
+### 3. CLASSIFICATION
+
+**Type:** Bug fix - Missing device ID in a capability function
+
+**Category analysis:**
+- ✅ **Device ID addition to existing driver** - This is adding a device
+  ID to an existing whitelist function
+- ❌ Not a new feature - The 100M speed support exists, just missing one
+  device
+- ❌ Not a security fix
+- ✅ Hardware capability fix - Enables correct hardware capability
+  reporting
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+**Size:** 1 line added to 1 file
+
+**Risk level:** EXTREMELY LOW
+- The change adds a single `case` label to a switch statement
+- The function returns a boolean indicating device capability
+- No logic changes, no side effects, no behavior changes for any other
+  device
+- The E825C_SGMII device ID (0x579F) already exists and is used in other
+  places in the driver
+- Multiple reviewers including Simon Horman
+
+**Subsystem:** Intel ice network driver (mature, widely used, well-
+tested)
+
+### 5. USER IMPACT
+
+**Who is affected:**
+- Users with Intel E825-C SGMII network devices (PCI ID 0x579F)
+- These are specific embedded/enterprise networking devices
+
+**Symptom without fix:**
+- `ethtool` shows 100Mbit as NOT supported when it should be
+- Users cannot force 100Mbit link mode even if needed
+- Misleading capability reporting in network management tools
+
+**Severity:** Medium-Low
+- Not a crash, security issue, or data corruption
+- Affects device functionality/usability
+- Users with this specific hardware are affected
+
+### 6. STABILITY INDICATORS
+
+**Positive signals:**
+- `Reviewed-by: Simon Horman <horms@kernel.org>` (well-known networking
+  reviewer)
+- `Reviewed-by: Aleksandr Loktionov` (Intel)
+- `Reviewed-by: Paul Menzel`
+- `Tested-by: Rinitha S` (Intel QA)
+- Commit signed off by Intel maintainer Tony Nguyen
+
+### 7. DEPENDENCY CHECK
+
+**Dependencies:**
+- Requires E825C device support (introduced in v6.9-rc1 via
+  `f64e189442332`)
+- Requires `ice_is_100m_speed_supported()` function (introduced in
+  v6.1-rc1 via `39ed02a4ba527`)
+
+**Stable tree applicability:**
+- v6.6.y: ❌ No E825C support, commit NOT applicable
+- v6.10.y: ✅ Has E825C support and `ice_is_100m_speed_supported()`,
+  commit APPLICABLE
+- v6.11.y: ✅ APPLICABLE
+- v6.12.y: ✅ APPLICABLE
+
+### 8. STABLE KERNEL RULES ASSESSMENT
+
+| Rule | Assessment |
+|------|------------|
+| Obviously correct and tested | ✅ Yes - trivial addition, well-
+reviewed, tested |
+| Fixes real bug that affects users | ✅ Yes - 100Mbit mode not available
+on E825C SGMII |
+| Important issue | ⚠️ Moderate - not critical but affects device
+usability |
+| Small and contained | ✅ Yes - 1 line change |
+| No new features | ✅ Yes - enables existing functionality |
+| No new APIs | ✅ Yes |
+| Applies cleanly | ✅ Should apply cleanly to v6.10+ |
+
+### CONCERNS
+
+1. **No explicit stable markers:** The commit lacks `Cc:
+   stable@vger.kernel.org` and `Fixes:` tags, suggesting the
+   developer/maintainer didn't explicitly request backport
+
+2. **Only applies to kernels with E825C support:** This fix is ONLY
+   meaningful for kernels v6.10+ that have E825C device support.
+   Backporting to v6.6.y would be pointless since those kernels don't
+   have E825C at all.
+
+3. **Not a critical fix:** While it's a real bug, it's not a crash,
+   security issue, or data corruption - it's a feature parity/usability
+   issue.
+
+### RECOMMENDATION
+
+This commit **SHOULD be backported** to stable kernels that have E825C
+support (v6.10+, v6.11+, v6.12+) for the following reasons:
+
+1. **Clearly a bug fix:** The commit message explicitly states "This
+   change was missed while adding the support for E825C devices family"
+2. **Trivial and safe:** Single line addition to a capability whitelist
+   - minimal risk
+3. **Well-reviewed and tested:** Multiple reviewers and explicit testing
+4. **Follows the device ID exception:** Adding device IDs to existing
+   functions is a well-accepted stable practice
+5. **Fixes real user issue:** Users with E825C SGMII hardware cannot
+   configure 100Mbit mode
+
+The lack of explicit stable tags appears to be an oversight rather than
+a deliberate decision to not backport. The change is clearly in the
+category of "hardware quirks/device ID additions that enable proper
+hardware support."
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/mac80211.c | 1 +
+ drivers/net/ethernet/intel/ice/ice_common.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac80211.c b/drivers/net/wireless/realtek/rtw89/mac80211.c
-index 7b04183a3a5dd..064bae533bceb 100644
---- a/drivers/net/wireless/realtek/rtw89/mac80211.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac80211.c
-@@ -954,6 +954,7 @@ static int rtw89_ops_set_key(struct ieee80211_hw *hw, enum set_key_cmd cmd,
- 		}
- 		break;
- 	case DISABLE_KEY:
-+		flush_work(&rtwdev->txq_work);
- 		rtw89_hci_flush_queues(rtwdev, BIT(rtwdev->hw->queues) - 1,
- 				       false);
- 		rtw89_mac_flush_txq(rtwdev, BIT(rtwdev->hw->queues) - 1, false);
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index 2532b6f82e971..449418cf06c20 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -3389,6 +3389,7 @@ bool ice_is_100m_speed_supported(struct ice_hw *hw)
+ 	case ICE_DEV_ID_E822L_SGMII:
+ 	case ICE_DEV_ID_E823L_1GBE:
+ 	case ICE_DEV_ID_E823C_SGMII:
++	case ICE_DEV_ID_E825C_SGMII:
+ 		return true;
+ 	default:
+ 		return false;
 -- 
 2.51.0
 
