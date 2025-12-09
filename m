@@ -1,40 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD41D23C8C7;
-	Tue,  9 Dec 2025 00:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6516526529A;
+	Tue,  9 Dec 2025 00:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239445; cv=none; b=YrufaNBhGsshv//E7DZcQNTJrxlI6V9b6L+7qbRS6ZqAro54zm98qWydQstblkhpV2XaCZ3jt80o5di2OFB+W7dP5IRODgcqlebLRDOd2G15CHwqagXBbljQVrKJQe576iyNV8lwFo5rcbjclk5xv0v/r+XsXcqkwkFRKPp5v0c=
+	t=1765239447; cv=none; b=H/zP1C5MvS0fREvNbUu+03CPHaV8+dL95WIXnQa8X1fLvo9dfirY8uC03zJb13hRFPFrg/DRudUqpmrsQErRYwuLcLVaBFEIjULEzGQDTjKu0ZsoEzGN3fMApblrgYG8466pDU60e/yMdqkYrffZHmyYShoJTVPQjoVc3GtQdPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239445; c=relaxed/simple;
-	bh=zJDUZJLStca6AOH5tUlUpjNsJ+2vLrqieI6DgNVKTC0=;
+	s=arc-20240116; t=1765239447; c=relaxed/simple;
+	bh=NSvVx6PnzLFUc6PFMEvhuwqu/I7QZM68YLY7Ca8pH1M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iAxlcoItdiXFMN6ErdUpLo6wlxFYKs1eTujQThCIggbEXjz5y2sWv/esBCrBJGP5quVDvMj8OVoTKvb7fEXuzWnKRcmDLXmsFe6ik138nftfswWgnm2yciIr8aKmU2+aN3tzbP952EXCgEtuWvKFCnBfaJfTSe5x7YppiUBgLpA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKVBdvYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Cqx8IfsEfBWHm/Qqxgm8mSLdy0TBO5cGQ2FmC56YSiiyXtUdlJLKXa5+NpXx4Fr22P6NeayrOhhlqPrQnBNl0jvRoi2YEtsnWElPUsP1hLbjbKl0Jmy8gSwe+y6YmPvYwCQcVW7lrSqfUhDbfl0K6nDieui7jOhUAdrcFK8SW0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PIV1JXEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKVBdvYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93D2C19421;
-	Tue,  9 Dec 2025 00:17:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PIV1JXEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C05C19421;
+	Tue,  9 Dec 2025 00:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239444;
-	bh=zJDUZJLStca6AOH5tUlUpjNsJ+2vLrqieI6DgNVKTC0=;
+	s=k20201202; t=1765239447;
+	bh=NSvVx6PnzLFUc6PFMEvhuwqu/I7QZM68YLY7Ca8pH1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKVBdvYYoKYEWFRggfdzHmgI/xL7t3P0MB6mMukFv6exTK33gXmbRMZva96zmiPYS
-	 XK7TGbthkndzoRqQ6dBuAPdFCTCt66uHZiCTTuGq/aYA32DBwrSaq71v9sHcB5i4/5
-	 CBHQR4pYl26ey/+lTaVmbd3vK6y5QJixiuGmoQ7jyGJdvqFnK3jOliIxfieSR7pY8A
-	 FrNXZ2v3GCJ/p1VOuw+O8DmkWv4zuNsMnzWn6rKaFaxy/Xo2NZgPfI/DdI26jBSFUJ
-	 ionFY3sU4gIj6oEa8uN9ZkIE4i+LlCiUQD/tJ5GCXesOqvcNzyobFzhxuqQc7J/KrH
-	 CydU/NKY7ZoZg==
+	b=PIV1JXEWJpkWYe+78yXMcKOSkQQgkIohEzrUv/SfQ2PJp+dvRRFbte/ex52JeZk4P
+	 z5A9Q3oqSx62Lcqd0xDTajN//zer/WaW8UU1AcnxBc6sIc1kA5nblnxiLkKGT4iDrF
+	 D4nWw2FBLlybiFPO4MqaYXgaMzkdjRym4UOEQESbxWxhdb2iZu2Z1nfEE3kURvmJR0
+	 qI+z9fHKkvj/T3ArXC6n2jzmwRhW5JYgOztKOjF5+9A+ejDg3wdW1wrpEYwJUkCVB+
+	 rYOysTwtp44tPA2tcWUuhOiChyZmRjJ81w7K0G935Tq8IisrpfaQXLt55bpXLtbaTW
+	 +czV5dvAi//5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andreas Gruenbacher <agruenba@redhat.com>,
+Cc: Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Simon Horman <horms@kernel.org>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	gfs2@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18-6.6] gfs2: fix remote evict for read-only filesystems
-Date: Mon,  8 Dec 2025 19:15:15 -0500
-Message-ID: <20251209001610.611575-23-sashal@kernel.org>
+	linux@armlinux.org.uk,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] net: amd-xgbe: use EOPNOTSUPP instead of ENOTSUPP in xgbe_phy_mii_read_c45
+Date: Mon,  8 Dec 2025 19:15:16 -0500
+Message-ID: <20251209001610.611575-24-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -44,177 +48,248 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 64c10ed9274bc46416f502afea48b4ae11279669 ]
+[ Upstream commit bd853a59a87ecf9fc060dd54b10a3a94e9786182 ]
 
-When a node tries to delete an inode, it first requests exclusive access
-to the iopen glock.  This triggers demote requests on all remote nodes
-currently holding the iopen glock.  To satisfy those requests, the
-remote nodes evict the inode in question, or they poke the corresponding
-inode glock to signal that the inode is still in active use.
+The MDIO read callback xgbe_phy_mii_read_c45() can propagate its return
+value up through phylink_mii_ioctl() to user space via netdev ioctls such
+as SIOCGMIIREG. Returning ENOTSUPP results in user space seeing
+"Unknown error", since ENOTSUPP is not a standard errno value.
 
-This behavior doesn't depend on whether or not a filesystem is
-read-only, so remove the incorrect read-only check.
+Replace ENOTSUPP with EOPNOTSUPP to align with the MDIO core’s
+usage and ensure user space receives a proper "Operation not supported"
+error instead of an unknown code.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://patch.msgid.link/20251015025751.1532149-1-alok.a.tiwari@oracle.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: gfs2: fix remote evict for read-only filesystems
+Now I have all the information I need for a complete analysis. Let me
+compile my findings:
+
+## Complete Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** Uses "fix" keyword, indicating a bug fix
-**Description:** Explains a cluster coordination bug in GFS2 where the
-read-only check was incorrectly preventing remote inode eviction
-**Tags:**
-- Signed-off-by from Andreas Gruenbacher (GFS2 maintainer)
-- No explicit "Cc: stable@vger.kernel.org" tag
-- No "Fixes:" tag
+**Subject:** `net: amd-xgbe: use EOPNOTSUPP instead of ENOTSUPP in
+xgbe_phy_mii_read_c45`
+
+**Key points from the commit message:**
+- The MDIO read callback `xgbe_phy_mii_read_c45()` can propagate its
+  return value up through `phylink_mii_ioctl()` to **user space** via
+  netdev ioctls (SIOCGMIIREG)
+- Returning ENOTSUPP (error code 524) results in **user space seeing
+  "Unknown error"** since ENOTSUPP is not a standard errno value
+- The fix replaces ENOTSUPP (524, kernel-internal) with EOPNOTSUPP (95,
+  standard POSIX errno)
+
+**Tags present:**
+- `Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>`
+- `Reviewed-by: Simon Horman <horms@kernel.org>` - Important! This is a
+  well-known networking reviewer
+- `Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>` - AMD
+  maintainer acknowledgment
+- `Signed-off-by: Jakub Kicinski <kuba@kernel.org>` - Networking
+  maintainer
+
+**Missing tags:**
+- No `Cc: stable@vger.kernel.org`
+- No `Fixes:` tag (though one should have been added: `Fixes:
+  070f6186a2f1d ("amd-xgbe: Separate C22 and C45 transactions")`)
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is extremely minimal - removing a single condition from
-`iopen_go_callback()`:
-
-**Before:**
+**The diff (single line change):**
 ```c
-if (!remote || sb_rdonly(sdp->sd_vfs) ||
-    test_bit(SDF_KILL, &sdp->sd_flags))
-    return;
+- ret = -ENOTSUPP;
++               ret = -EOPNOTSUPP;
 ```
 
-**After:**
+**Location:** `drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c`, function
+`xgbe_phy_mii_read_c45()`
+
+**Context Analysis:**
+The function handles MII (Media Independent Interface) Clause 45 read
+operations:
+
 ```c
-if (!remote || test_bit(SDF_KILL, &sdp->sd_flags))
-    return;
+static int xgbe_phy_mii_read_c45(struct mii_bus *mii, int addr, int
+devad,
+                                 int reg)
+{
+        ...
+        if (phy_data->conn_type == XGBE_CONN_TYPE_SFP)
+                ret = -EOPNOTSUPP;   // Already correct
+        else if (phy_data->conn_type & XGBE_CONN_TYPE_MDIO)
+                ret = xgbe_phy_mdio_mii_read_c45(pdata, addr, devad,
+reg);
+        else
+                ret = -ENOTSUPP;     // BUG: should be -EOPNOTSUPP
 ```
 
-**Technical mechanism of the bug:**
-- GFS2 is a clustered filesystem where multiple nodes access shared
-  storage
-- When Node A wants to delete an inode, it requests exclusive access to
-  the iopen glock
-- This triggers demote requests to all remote nodes (Node B, C, etc.)
-  holding that glock
-- Remote nodes must respond by either evicting the inode or signaling
-  it's still in use
-- The bug: The `sb_rdonly()` check caused read-only mounted nodes to
-  skip this coordination entirely
-- This breaks cluster protocol because Node A waits for Node B to
-  release the glock, but Node B ignores the request
+**Root cause of the bug:**
+- Commit `070f6186a2f1d` ("amd-xgbe: Separate C22 and C45 transactions")
+  introduced this function in January 2023
+- Andrew Lunn correctly used `EOPNOTSUPP` for the SFP case
+- But **inconsistently/accidentally** used `ENOTSUPP` for the final else
+  branch
+- This is clearly an oversight/typo during the refactoring
 
-**Why the fix is correct:**
-Cluster coordination for glock demotes must work regardless of mount
-mode. A read-only node still participates in the cluster and must
-properly respond to glock callbacks. The read-only check was logically
-incorrect and could cause:
-- Stale inode issues across the cluster
-- Potential hangs where nodes wait indefinitely for glock release
-- Cluster coordination failures
+**Technical explanation of ENOTSUPP vs EOPNOTSUPP:**
+- `ENOTSUPP` (524): Defined in `include/linux/errno.h` as a **kernel-
+  internal error code** originally for NFSv3 protocol
+- `EOPNOTSUPP` (95): Defined in `include/uapi/asm-generic/errno.h` as a
+  **standard POSIX errno** "Operation not supported"
+- When kernel code returns errors through syscalls/ioctls, it must use
+  standard POSIX errno values
+- User-space `strerror()` doesn't know what errno 524 means → "Unknown
+  error 524"
 
 ### 3. CLASSIFICATION
 
-- **Bug type:** Logic error - incorrect early return preventing required
-  cluster coordination
-- **Not a feature:** Removing an incorrect check doesn't add
-  functionality
-- **Security impact:** Not directly security-related, but could cause
-  availability issues
+- **Type:** Bug fix (incorrect error code returned to userspace)
+- **NOT a feature addition**
+- **NOT a device ID, quirk, or DT update**
+- This is fixing **incorrect API behavior** - returning a non-standard
+  errno to userspace
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | 2 lines (trivial) |
-| Files touched | 1 file |
-| Complexity | Very low |
-| Subsystem | GFS2 (clustered filesystem) |
-| Regression risk | Very low |
+**Size:**
+- 1 line changed
+- 1 file touched
+- **Minimal scope**
 
-The change is extremely surgical - it only removes an erroneous
-condition. The remaining code path already exists and has been tested;
-this fix just ensures it executes when it should.
+**Risk:**
+- **EXTREMELY LOW** - This is a pure error code change
+- Cannot cause crashes, data corruption, or regressions
+- The error path itself is unchanged; only the error code returned
+  differs
+- Changes from an unknown error (524) to a proper descriptive error (95)
+
+**Similar precedents:**
+I found multiple similar fixes already merged:
+- `f82acf6fb4211` - ixgbe: use EOPNOTSUPP instead of ENOTSUPP
+- `21d08d1c4c29f` - igc: use EOPNOTSUPP instead of ENOTSUPP
+- `bc73c5885c606` - igb: use EOPNOTSUPP instead of ENOTSUPP
+- `ab15aabac028a` - mtd: rawnand: qcom: Use EOPNOTSUPP instead of
+  ENOTSUPP
+
+All these have `Fixes:` tags and address the same class of bug.
 
 ### 5. USER IMPACT
 
-- **Affected users:** GFS2 users in clustered environments with read-
-  only mounts
-- **Use case:** Enterprise clusters (Red Hat, etc.) that use GFS2
-- **Severity:** Could cause cluster coordination failures, stale inodes,
-  or hangs
-- **Frequency:** Affects all read-only GFS2 mounts in cluster mode
+**Who is affected:**
+- Users of AMD XGBE network devices (10Gb Ethernet)
+- Any tool or application using SIOCGMIIREG/SIOCGMIIPHY ioctls
+- Diagnostic tools like `mii-tool`, `ethtool`, or custom MDIO access
+  utilities
+
+**Severity:**
+- When the hardware connection type is neither SFP nor MDIO, the user
+  sees:
+  - **Before fix:** "Unknown error 524" - confusing, hard to debug
+  - **After fix:** "Operation not supported" - clear, standard message
+
+**Real-world impact:**
+- This is a **user-visible bug** affecting error reporting
+- While not a crash or data corruption, it degrades user experience
+- Makes debugging and troubleshooting harder
 
 ### 6. STABILITY INDICATORS
 
-- Written by Andreas Gruenbacher, the GFS2 maintainer who deeply
-  understands the subsystem
-- The fix logic is obviously correct based on the documented behavior
-- Small change means easy to verify correctness
+- `Reviewed-by: Simon Horman` - Very experienced networking reviewer
+- `Acked-by: Shyam Sundar S K` - AMD driver maintainer
+- `Signed-off-by: Jakub Kicinski` - Net maintainer
+- The change is trivially correct - single character difference in error
+  code
 
 ### 7. DEPENDENCY CHECK
 
-- No dependencies on other commits
-- The `iopen_go_callback()` function and `sb_rdonly()` exist in all
-  stable kernels with GFS2 support
-- Clean backport expected (simple line removal)
+**Dependencies:** None
+- The change is self-contained
+- No other commits are required
+- The affected code exists in all stable kernels from 6.3 onwards (where
+  `070f6186a2f1d` was merged)
 
-### Risk vs Benefit Analysis
+**Affected stable trees:**
+- 6.6.y: **Yes** - Contains the buggy commit, needs this fix
+- 6.10.y through 6.18.y: **Yes** - All affected
+- 6.1.y and earlier: **No** - The buggy code doesn't exist (function was
+  introduced in 6.3)
 
-**Benefits:**
-- Fixes a real bug affecting cluster coordination
-- Prevents potential hangs and stale inode issues
-- Restores correct cluster protocol behavior
+### FINAL ASSESSMENT
 
-**Risks:**
-- Extremely low - the change simply allows existing, tested code to run
-- Only affects GFS2, a specialized filesystem
-- The maintainer clearly understands the impact
+**Pros for backporting:**
+1. ✅ Fixes a **real user-visible bug** - users see "Unknown error"
+   messages
+2. ✅ **Extremely small and surgical** - single 1-line change
+3. ✅ **Obviously correct** - changing from kernel-internal errno to
+   standard POSIX errno
+4. ✅ **Zero risk** - cannot introduce regressions
+5. ✅ **Well reviewed** - by networking and AMD maintainers
+6. ✅ **Precedent exists** - similar fixes have been applied to stable
+   trees
+7. ✅ **No dependencies** - applies cleanly to all affected stable trees
 
-### Conclusion
+**Cons:**
+1. ⚠️ No `Cc: stable@vger.kernel.org` tag - author didn't explicitly
+   request stable backport
+2. ⚠️ No `Fixes:` tag - though it clearly should have had one pointing
+   to `070f6186a2f1d`
+3. ⚠️ Minor severity - not a crash or security issue
 
-Despite the lack of explicit "Cc: stable" tag, this commit:
-1. ✅ Is obviously correct (removing incorrect logic)
-2. ✅ Fixes a real bug affecting cluster coordination
-3. ✅ Is small and contained (2 lines)
-4. ✅ Does not introduce new features
-5. ✅ Will apply cleanly to stable trees
-6. ✅ Has minimal regression risk
+**Conclusion:**
 
-The fix addresses a genuine bug that can cause cluster coordination
-failures in GFS2. The change is trivially small, written by the
-subsystem maintainer, and the logic is clearly correct - read-only
-status should not prevent a node from properly responding to cluster
-glock demote requests.
+This commit fixes a clear bug where an incorrect kernel-internal error
+code (ENOTSUPP, 524) is returned to userspace instead of the proper
+POSIX errno (EOPNOTSUPP, 95). This causes user-space tools to display
+"Unknown error 524" instead of "Operation not supported", degrading user
+experience and making debugging harder.
+
+The fix is:
+- Trivially small (1 line)
+- Obviously correct
+- Zero risk of regression
+- Well-reviewed by subsystem experts
+- Has precedent with identical fixes in other drivers
+
+While the commit lacks explicit `Cc: stable` and `Fixes:` tags, it meets
+all the criteria from stable-kernel-rules.rst: it fixes "a real bug that
+bothers people", is small, obviously correct, and tested (reviewed by
+multiple maintainers).
 
 **YES**
 
- fs/gfs2/glops.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 0c0a80b3bacab..0c68ab4432b08 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -630,8 +630,7 @@ static void iopen_go_callback(struct gfs2_glock *gl, bool remote)
- 	struct gfs2_inode *ip = gl->gl_object;
- 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index a56efc1bee339..35a381a83647d 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -668,7 +668,7 @@ static int xgbe_phy_mii_read_c45(struct mii_bus *mii, int addr, int devad,
+ 	else if (phy_data->conn_type & XGBE_CONN_TYPE_MDIO)
+ 		ret = xgbe_phy_mdio_mii_read_c45(pdata, addr, devad, reg);
+ 	else
+-		ret = -ENOTSUPP;
++		ret = -EOPNOTSUPP;
  
--	if (!remote || sb_rdonly(sdp->sd_vfs) ||
--	    test_bit(SDF_KILL, &sdp->sd_flags))
-+	if (!remote || test_bit(SDF_KILL, &sdp->sd_flags))
- 		return;
+ 	xgbe_phy_put_comm_ownership(pdata);
  
- 	if (gl->gl_demote_state == LM_ST_UNLOCKED &&
 -- 
 2.51.0
 
