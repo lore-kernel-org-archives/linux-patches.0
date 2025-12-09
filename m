@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4E9221554;
-	Tue,  9 Dec 2025 00:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76C0F1FF5E3;
+	Tue,  9 Dec 2025 00:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239423; cv=none; b=Dh2OzDU+QkOYv99KXCE+PIocOxG+2AhBQSzvnboB9Kf9OzMXKouXwueq/dXY2DZ7MZn8nh9P6cOjd2l5inkIQlNMLsjUiUM14PsN2yE8H132uIGaou197wL1JCFK0ic+eEeBj6kPF9pcn9Pt2rpbP18RmPGEVt4sG9sfVLde5go=
+	t=1765239424; cv=none; b=Hg/lziWwXA/kBcsMQ170fycv/qcSmEywY+H92cdrydr1jAB3Q8hIHPhvbJ/q/6BYBhoBUuQQvh9lq9q0RJFMP9HyRfpy3GYumuSbhBkZ+hO3tGsUzo4SU19EIZOdF2vIoMZHyulPPpAMSlQBmCFwv2f9Yn5L/MTCN490puZVpjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239423; c=relaxed/simple;
-	bh=HQ0yU4ubZDH6sXSyIkS8w1UFtEGkWWNP/Gh2hOCim50=;
+	s=arc-20240116; t=1765239424; c=relaxed/simple;
+	bh=30B2IC5tghGWMMCtTTZEzIXfgSO6xlHFtZfDadBtLYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PX0eA7sE0KfhE9hkXevnb0nxS9aJDhVxcH7LDcrrA8O72Jf6lGTrnX7jaPgEAQEz6Rgxf+p4VtmLAxv5thHBdsVIQd2kglUJMsl783qyWxkBaoBjt6uns6Gagfg1f7NA5A4JDcDbQpN4DsPQMLkB44a69vCqoqci1/t5L06o0Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGC7K4TE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=osLbmwVdvRKn4id+uHACElNPluOixtsVkllKQ2GiSxe/groErDtAESTj34bf9lXSx6qxjzHOsAr9juWZjDcBtnpqWJUcah8ni2AeWpym4v3wnM0/L7GZkDGVkHX1V484PqZjyAJ05ywzmpHtFgKtNm+sjDRL7ypuA3HOcy63oJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RxRG0Ig8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGC7K4TE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9DDC19421;
-	Tue,  9 Dec 2025 00:17:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RxRG0Ig8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AA42C19422;
+	Tue,  9 Dec 2025 00:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239422;
-	bh=HQ0yU4ubZDH6sXSyIkS8w1UFtEGkWWNP/Gh2hOCim50=;
+	s=k20201202; t=1765239424;
+	bh=30B2IC5tghGWMMCtTTZEzIXfgSO6xlHFtZfDadBtLYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGC7K4TEL1Dp/vfnUmRwCjTaetBbIcjqtaNQp/p2p4wEsRYr5OErneOINfp++gUkr
-	 ZcEJhJOF7eOlev8dkyuNOfgvjHRtjq4AAR9RZJuX8dDmC1NJtmfY7Ub6kMw9SziIy+
-	 DpsShmtartMLziaajHas3BaZppGa/h/S7r/RpRJUi9u/EDvZLw4bgdHEofVo5TMPo0
-	 J0ra94stXqjvT51D0uHScrjqd6Q2RBohEBFcPNNbJHTOKJQXxv1BpUAtVwW2frpxTG
-	 xU4b7X6PR4M3bsuZiTelnPYJDmORFk64QXjSTySxO06k3Q2ampsPoWXRlms18yrxs5
-	 r7CEQJqHL4LwA==
+	b=RxRG0Ig8ZNkoQHnHUIhv0jPEFQf5Ji5fGcpYcTbHMTjr5bB9DZiRpmB0J7f3BR6VH
+	 8zI8MwQWDvNDs+WvpAtcoJNi6IziDIaxkNb6/VJY6FMQtzP2W3ul1PHwdpJ2vgz1uu
+	 R0nx3N3Brxoi4A3RGYNia6sC2oM0sJGOV+60q5j3MBAGCyZ5jhjjLFsCUBnuIZqj8C
+	 u/uDJjLZ2Beai7BSfMtGlCZpvvLFa4HZUbQ/nFJSfGg08LdV0nn2NxtxlvtcIqOLAV
+	 dZSCRKPt70t/GRKhdtFXAcysCju6Wv6i2dsy1CqujKXeNDQyDZwERBRxDndtVG+I+E
+	 fvp50ALCBm+Rg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: KaFai Wan <kafai.wan@linux.dev>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>,
-	daniel@iogearbox.net,
-	andrii@kernel.org,
-	bpf@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] bpf: Skip bounds adjustment for conditional jumps on same scalar register
-Date: Mon,  8 Dec 2025 19:15:06 -0500
-Message-ID: <20251209001610.611575-14-sashal@kernel.org>
+	Jes.Sorensen@gmail.com,
+	linux-wireless@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] wifi: rtl8xxxu: Fix HT40 channel config for RTL8192CU, RTL8723AU
+Date: Mon,  8 Dec 2025 19:15:07 -0500
+Message-ID: <20251209001610.611575-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -53,333 +49,198 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: KaFai Wan <kafai.wan@linux.dev>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit d43ad9da8052eda714caa38f243adbf32a8614cb ]
+[ Upstream commit 5511ba3de434892e5ef3594d6eabbd12b1629356 ]
 
-When conditional jumps are performed on the same scalar register
-(e.g., r0 <= r0, r0 > r0, r0 < r0), the BPF verifier incorrectly
-attempts to adjust the register's min/max bounds. This leads to
-invalid range bounds and triggers a BUG warning.
+Flip the response rate subchannel. It was backwards, causing low
+speeds when using 40 MHz channel width. "iw dev ... station dump"
+showed a low RX rate, 11M or less.
 
-The problematic BPF program:
-   0: call bpf_get_prandom_u32
-   1: w8 = 0x80000000
-   2: r0 &= r8
-   3: if r0 > r0 goto <exit>
+Also fix the channel width field of RF6052_REG_MODE_AG.
 
-The instruction 3 triggers kernel warning:
-   3: if r0 > r0 goto <exit>
-   true_reg1: range bounds violation u64=[0x1, 0x0] s64=[0x1, 0x0] u32=[0x1, 0x0] s32=[0x1, 0x0] var_off=(0x0, 0x0)
-   true_reg2: const tnum out of sync with range bounds u64=[0x0, 0xffffffffffffffff] s64=[0x8000000000000000, 0x7fffffffffffffff] var_off=(0x0, 0x0)
+Tested only with RTL8192CU, but these settings are identical for
+RTL8723AU.
 
-Comparing a register with itself should not change its bounds and
-for most comparison operations, comparing a register with itself has
-a known result (e.g., r0 == r0 is always true, r0 < r0 is always false).
-
-Fix this by:
-1. Enhance is_scalar_branch_taken() to properly handle branch direction
-   computation for same register comparisons across all BPF jump operations
-2. Adds early return in reg_set_min_max() to avoid bounds adjustment
-   for unknown branch directions (e.g., BPF_JSET) on the same register
-
-The fix ensures that unnecessary bounds adjustments are skipped, preventing
-the verifier bug while maintaining correct branch direction analysis.
-
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Closes: https://lore.kernel.org/all/1881f0f5.300df.199f2576a01.Coremail.kaiyanm@hust.edu.cn/
-Signed-off-by: KaFai Wan <kafai.wan@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20251103063108.1111764-2-kafai.wan@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/1f46571d-855b-43e1-8bfc-abacceb96043@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me do a comprehensive summary and
-analysis:
-
-## Complete Analysis
+## COMPREHENSIVE ANALYSIS
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** "bpf: Skip bounds adjustment for conditional jumps on same
-scalar register"
+**Subject:** "wifi: rtl8xxxu: Fix HT40 channel config for RTL8192CU,
+RTL8723AU"
 
-**Key indicators:**
-- **Fix keyword:** The commit message clearly describes a bug fix
-  ("incorrectly attempts", "invalid range bounds", "triggers a BUG
-  warning")
-- **No stable tag:** The commit does not have explicit "Cc:
-  stable@vger.kernel.org"
-- **No Fixes: tag:** No explicit Fixes: tag pointing to a prior commit
-- **Reported-by tags:** The commit has two "Reported-by:" tags and a
-  "Closes:" link to a lore.kernel.org bug report
-- **Acked-by:** Eduard Zingerman (BPF maintainer) acknowledged this fix
-- **Merged by:** Alexei Starovoitov (BPF maintainer) signed off
-
-The commit message describes:
-1. When comparing a register with itself (e.g., `r0 > r0`), the verifier
-   incorrectly adjusts bounds
-2. This leads to invalid range bounds (umin > umax, etc.)
-3. Triggers the `reg_bounds_sanity_check()` BUG warning
+- Contains "Fix" keyword indicating a bug fix
+- Describes specific affected hardware: RTL8192CU, RTL8723AU USB WiFi
+  adapters
+- Explains user-visible symptom: "low speeds when using 40 MHz channel
+  width"
+- Provides diagnostic evidence: "`iw dev ... station dump` showed a low
+  RX rate, 11M or less"
+- **No** "Cc: stable@vger.kernel.org" tag
+- **No** "Fixes:" tag pointing to the original buggy commit
+- **Has** "Reviewed-by: Ping-Ke Shih" (Realtek's kernel maintainer)
+- **Has** "Tested only with RTL8192CU" - real-world testing performed
 
 ### 2. CODE CHANGE ANALYSIS
 
-**Files changed:** 1 file (`kernel/bpf/verifier.c`)
+**Two distinct bugs are fixed:**
 
-**Two modifications:**
-
-**Modification 1 - `is_scalar_branch_taken()` (lines 15996-16020 in
-diff):**
-Adds a new code block at the beginning of the function to handle same-
-register comparisons:
-
+**Bug #1: RSR (Response Rate Set) subchannel configuration (lines
+1255-1258):**
 ```c
-if (reg1 == reg2) {
-    switch (opcode) {
-    case BPF_JGE:
-    case BPF_JLE:
-    case BPF_JSGE:
-    case BPF_JSLE:
-    case BPF_JEQ:
-        return 1;  /* Always true: r0 >= r0, r0 <= r0, r0 == r0 */
-    case BPF_JGT:
-    case BPF_JLT:
-    case BPF_JSGT:
-    case BPF_JSLT:
-    case BPF_JNE:
-        return 0;  /* Always false: r0 > r0, r0 < r0, r0 != r0 */
-    case BPF_JSET:
-        if (tnum_is_const(t1))
-            return t1.value != 0;
-        else
-            return (smin1 <= 0 && smax1 >= 0) ? -1 : 1;
-    default:
-        return -1;
-    }
-}
+// BEFORE (buggy):
+if (sec_ch_above)
+    rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
+else
+    rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
+
+// AFTER (fixed):
+if (!sec_ch_above)
+    rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
+else
+    rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
 ```
+The logic was inverted - when secondary channel is above, LOWER should
+be set, not UPPER. Comparison with RTL8188E driver (8188e.c:462-465)
+confirms the fix matches the correct pattern.
 
-This correctly determines branch direction for same-register
-comparisons:
-- `r0 == r0`, `r0 >= r0`, `r0 <= r0` are always true (return 1)
-- `r0 > r0`, `r0 < r0`, `r0 != r0` are always false (return 0)
-- `r0 JSET r0` depends on whether any bits are set
-
-**Modification 2 - `reg_set_min_max()` (lines 16446-16452 in diff):**
-Adds early return when both register arguments point to the same memory:
-
+**Bug #2: RF6052_REG_MODE_AG bandwidth configuration (lines
+1322-1328):**
 ```c
-/* We compute branch direction for same SCALAR_VALUE registers in
- - is_scalar_branch_taken(). For unknown branch directions (e.g.,
-   BPF_JSET)
- - on the same registers, we don't need to adjust the min/max values.
- */
-if (false_reg1 == false_reg2)
-    return 0;
+// BEFORE (buggy):
+if (hw->conf.chandef.width == NL80211_CHAN_WIDTH_40)
+    val32 &= ~MODE_AG_CHANNEL_20MHZ;
+else
+    val32 |= MODE_AG_CHANNEL_20MHZ;
+
+// AFTER (fixed):
+val32 &= ~MODE_AG_BW_MASK;  // Clear both bits 10 and 11
+if (hw->conf.chandef.width != NL80211_CHAN_WIDTH_40)
+    val32 |= MODE_AG_CHANNEL_20MHZ;
 ```
+Two issues: (1) Only cleared bit 10, not the full bandwidth mask (bits
+10-11), and (2) the logic flow was awkward - proper pattern is to clear
+mask first, then set appropriate bit only when needed.
 
-This prevents `regs_refine_cond_op()` from corrupting bounds when called
-with the same pointer for both registers.
+The gen2 driver (`rtl8xxxu_gen2_config_channel` at line 1446) already
+uses `MODE_AG_BW_MASK` correctly, confirming this is the right approach.
 
-### 3. ROOT CAUSE OF THE BUG
+### 3. CLASSIFICATION
 
-When a BPF program compares a register with itself (e.g., `if r0 > r0`):
+- **Bug Type:** Logic error causing severe performance degradation
+- **NOT a feature:** No new functionality added
+- **NOT a quirk/workaround:** This is fixing incorrect code logic
+- **Hardware affected:** RTL8192CU, RTL8723AU (older but still commonly
+  used USB WiFi adapters)
 
-1. In `check_cond_jmp_op()`, both `dst_reg` and `src_reg` point to the
-   same `bpf_reg_state` in memory because `&regs[insn->dst_reg] ==
-   &regs[insn->src_reg]`
+### 4. SCOPE AND RISK ASSESSMENT
 
-2. If `is_branch_taken()` returns -1 (unknown), `reg_set_min_max()` is
-   called
+- **Lines changed:** ~8 lines modified
+- **Files touched:** 1 file (core.c)
+- **Complexity:** LOW - simple logic inversions and proper mask usage
+- **Scope:** Confined to `rtl8xxxu_gen1_config_channel()` function, only
+  affects 40MHz mode
+- **Risk of regression:** LOW - brings gen1 config in line with gen2 and
+  8188e implementations
+- **Dependencies:** `MODE_AG_BW_MASK` exists since 2016 (commit
+  c3f9506f2374), present in all stable kernels
 
-3. `regs_refine_cond_op()` is then called with `reg1 == reg2` (same
-   pointer)
+### 5. USER IMPACT
 
-4. For `BPF_JGT` (which becomes `BPF_JLT` after `flip_opcode`), the code
-   does:
-  ```c
-  reg1->umax_value = min(reg1->umax_value, reg2->umax_value - 1);
-  reg2->umin_value = max(reg1->umin_value + 1, reg2->umin_value);
-  ```
+- **Affected users:** Anyone using RTL8192CU or RTL8723AU USB WiFi
+  adapters with 40MHz channels
+- **Severity:** MODERATE-HIGH - WiFi functional but severely degraded
+  speeds (capped at 11M vs expected 40MHz HT speeds which could be
+  150-300Mbps)
+- **Impact scope:** These are common, inexpensive USB WiFi adapters;
+  many users in production environments
+- **Visibility:** Users would notice unusably slow WiFi and might
+  mistakenly blame their router or network
 
-  Since `reg1 == reg2`, this becomes:
-   - First line: `reg->umax_value = reg->umax_value - 1` (decreases max)
-   - Second line reads the already-decreased `umax_value`, then:
-     `reg->umin_value = max(reg->umin_value + 1, reg->umin_value)`
-     (increases min)
+### 6. STABILITY INDICATORS
 
-5. This results in `umin_value > umax_value`, which is an invalid range!
+- Reviewed by Realtek's Linux kernel maintainer (Ping-Ke Shih)
+- Tested on actual hardware (RTL8192CU)
+- Consistent with how other chip variants in the same driver family
+  handle this
+- Small, surgical changes with clear correctness rationale
 
-6. `reg_bounds_sanity_check()` detects this and triggers a BUG warning
+### 7. DEPENDENCY CHECK
 
-### 4. CLASSIFICATION
+- `MODE_AG_BW_MASK` macro is defined in regs.h since 2016
+- No other commits needed for this fix to work
+- The affected function `rtl8xxxu_gen1_config_channel()` exists in all
+  stable kernels that have the rtl8xxxu driver
 
-- **Type:** Bug fix
-- **Security impact:** Not a CVE, but triggers BUG (kernel
-  warning/crash) - denial of service by unprivileged users (if
-  unprivileged BPF is enabled)
-- **Exception categories:** None (this is a straightforward bug fix, not
-  a device ID, quirk, DT update, or build fix)
+### VERDICT
 
-### 5. SCOPE AND RISK ASSESSMENT
+**Positive factors:**
+- Fixes a real, user-visible performance bug (severely degraded WiFi
+  speeds)
+- Small, contained changes (8 lines)
+- Low regression risk - aligns with established patterns in related code
+- Reviewed and tested
+- No dependencies on other commits
+- Affects real hardware that users own
 
-- **Lines changed:** ~30 new lines of code
-- **Files touched:** 1 file (`kernel/bpf/verifier.c`)
-- **Complexity:** Low - adds early return checks for pointer equality
-- **Subsystem:** BPF verifier (core BPF infrastructure)
-- **Risk of regression:** Low - the changes are defensive checks that
-  prevent invalid states
+**Negative factors:**
+- No explicit "Cc: stable@" tag from maintainer
+- No "Fixes:" tag to trace original bug introduction
 
-**Why low risk:**
-1. The `reg1 == reg2` check is a simple pointer comparison
-2. The logic for determining branch direction when comparing a register
-   with itself is mathematically correct
-3. The early return in `reg_set_min_max()` prevents unnecessary
-   processing, not actual verification
+**Risk vs Benefit:**
+- Benefit: Restores proper HT40 performance for RTL8192CU/RTL8723AU
+  users
+- Risk: Very low - logic corrections that match other implementations in
+  the same driver
 
-### 6. USER IMPACT
-
-**Who is affected:**
-- Any system running BPF programs that compare a register with itself
-- The triggering program is simple and can be crafted by any user with
-  BPF access
-- Systems with unprivileged BPF enabled are at higher risk (denial of
-  service)
-
-**Severity:**
-- Triggers kernel BUG warning (can cause system instability)
-- `reg_bounds_sanity_check()` calls `verifier_bug()` which prints
-  warnings and may affect system stability
-- The verifier marks the register as unbounded after the bug, which
-  could potentially lead to incorrect verification
-
-**Bug trigger:**
-The commit message shows a simple 4-instruction BPF program that
-triggers the bug:
-```
-0: call bpf_get_prandom_u32
-1: w8 = 0x80000000
-2: r0 &= r8
-3: if r0 > r0 goto <exit>
-```
-
-### 7. STABILITY INDICATORS
-
-- **Tested-by:** No explicit tested-by, but tested as part of the bug
-  report
-- **Reviewed/Acked-by:** Eduard Zingerman (BPF maintainer)
-- **Signed-off-by:** Alexei Starovoitov (BPF co-maintainer)
-- **Time in mainline:** This is a relatively new commit
-
-### 8. DEPENDENCY CHECK
-
-**Dependencies:**
-- The fix depends on `reg_bounds_sanity_check()` which was added in v6.8
-  (commit 5f99f312bd3be)
-- Without the sanity check, the bug would silently corrupt bounds
-  (worse!)
-- The underlying bug in `is_scalar_branch_taken()` and
-  `reg_set_min_max()` has existed since v5.0
-
-**Affected versions:**
-- The visible bug (BUG warning) affects kernels ≥ v6.8 (when sanity
-  check was added)
-- The silent bounds corruption affects all kernels since v5.0
-
-### 9. BACKPORT CONSIDERATIONS
-
-**Should be backported to:** v6.8, v6.6 (LTS), and later stable trees
-
-**Reasons:**
-1. Fixes a real, reproducible bug that triggers kernel warnings
-2. Small, surgical fix with clear scope
-3. Low regression risk
-4. Affects core BPF infrastructure used widely
-5. Easy to trigger with a simple BPF program
-6. Has maintainer acknowledgment
-
-**Backport notes:**
-- The patch should apply cleanly to v6.8+ where
-  `reg_bounds_sanity_check()` exists
-- For v6.6 LTS, need to verify if the sanity check was backported
-- For older stable trees (v5.15, v5.10, etc.), the sanity check doesn't
-  exist, so the bug manifests as silent bounds corruption which is
-  arguably worse but harder to detect
-
-### CONCLUSION
-
-This commit fixes a real BPF verifier bug that:
-1. Is easily reproducible with a simple BPF program
-2. Triggers kernel BUG warnings (denial of service potential)
-3. Has a small, well-contained fix
-4. Has been acknowledged by BPF maintainers
-5. Affects commonly-used infrastructure (BPF verifier)
-
-The fix is obviously correct - comparing a register with itself should
-have deterministic results (e.g., r0 == r0 is always true), and
-adjusting bounds based on such comparisons is logically wrong.
+This is a clear bug fix for user-visible performance degradation. The
+changes are minimal, well-understood, properly reviewed, and consistent
+with how other chip variants in the same driver family handle channel
+configuration. The lack of explicit stable tags appears to be an
+oversight rather than an intentional exclusion. Users with these common
+USB WiFi adapters would benefit significantly from this fix.
 
 **YES**
 
- kernel/bpf/verifier.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index fbe4bb91c564a..515e4d1807c92 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15950,6 +15950,30 @@ static int is_scalar_branch_taken(struct bpf_reg_state *reg1, struct bpf_reg_sta
- 	s64 smin2 = is_jmp32 ? (s64)reg2->s32_min_value : reg2->smin_value;
- 	s64 smax2 = is_jmp32 ? (s64)reg2->s32_max_value : reg2->smax_value;
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/core.c b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+index 3ded5952729fc..d2d3bbac2861f 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/core.c
+@@ -1252,7 +1252,7 @@ void rtl8xxxu_gen1_config_channel(struct ieee80211_hw *hw)
+ 		opmode &= ~BW_OPMODE_20MHZ;
+ 		rtl8xxxu_write8(priv, REG_BW_OPMODE, opmode);
+ 		rsr &= ~RSR_RSC_BANDWIDTH_40M;
+-		if (sec_ch_above)
++		if (!sec_ch_above)
+ 			rsr |= RSR_RSC_UPPER_SUB_CHANNEL;
+ 		else
+ 			rsr |= RSR_RSC_LOWER_SUB_CHANNEL;
+@@ -1321,9 +1321,8 @@ void rtl8xxxu_gen1_config_channel(struct ieee80211_hw *hw)
  
-+	if (reg1 == reg2) {
-+		switch (opcode) {
-+		case BPF_JGE:
-+		case BPF_JLE:
-+		case BPF_JSGE:
-+		case BPF_JSLE:
-+		case BPF_JEQ:
-+			return 1;
-+		case BPF_JGT:
-+		case BPF_JLT:
-+		case BPF_JSGT:
-+		case BPF_JSLT:
-+		case BPF_JNE:
-+			return 0;
-+		case BPF_JSET:
-+			if (tnum_is_const(t1))
-+				return t1.value != 0;
-+			else
-+				return (smin1 <= 0 && smax1 >= 0) ? -1 : 1;
-+		default:
-+			return -1;
-+		}
-+	}
-+
- 	switch (opcode) {
- 	case BPF_JEQ:
- 		/* constants, umin/umax and smin/smax checks would be
-@@ -16396,6 +16420,13 @@ static int reg_set_min_max(struct bpf_verifier_env *env,
- 	if (false_reg1->type != SCALAR_VALUE || false_reg2->type != SCALAR_VALUE)
- 		return 0;
- 
-+	/* We compute branch direction for same SCALAR_VALUE registers in
-+	 * is_scalar_branch_taken(). For unknown branch directions (e.g., BPF_JSET)
-+	 * on the same registers, we don't need to adjust the min/max values.
-+	 */
-+	if (false_reg1 == false_reg2)
-+		return 0;
-+
- 	/* fallthrough (FALSE) branch */
- 	regs_refine_cond_op(false_reg1, false_reg2, rev_opcode(opcode), is_jmp32);
- 	reg_bounds_sync(false_reg1);
+ 	for (i = RF_A; i < priv->rf_paths; i++) {
+ 		val32 = rtl8xxxu_read_rfreg(priv, i, RF6052_REG_MODE_AG);
+-		if (hw->conf.chandef.width == NL80211_CHAN_WIDTH_40)
+-			val32 &= ~MODE_AG_CHANNEL_20MHZ;
+-		else
++		val32 &= ~MODE_AG_BW_MASK;
++		if (hw->conf.chandef.width != NL80211_CHAN_WIDTH_40)
+ 			val32 |= MODE_AG_CHANNEL_20MHZ;
+ 		rtl8xxxu_write_rfreg(priv, i, RF6052_REG_MODE_AG, val32);
+ 	}
 -- 
 2.51.0
 
