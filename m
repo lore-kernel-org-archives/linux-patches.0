@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAAB1A9B46;
-	Tue,  9 Dec 2025 00:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621D52153FB;
+	Tue,  9 Dec 2025 00:16:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239403; cv=none; b=VL78H2BMFm6gXDZIxTfs5lQtCmfnTzugb08v6mNV89iQzqsggRFF/gRhDzdhSSICDxVfFgN9roV/LGfcQ2eP0ennuJ6fhU6rUUhwU64utaulaY2BrtL9nY1hQGl5rtmqoO9T8CD5ekLlJfvPF0DQAzPhP/drlgP5HQ/NZAAmlRk=
+	t=1765239405; cv=none; b=ua4cPDOYPxLMzsLBLzSX0sN+TOFiDaSMG0MtffHeHBpBXmc5xLefUg5AdQwTQ2FbWWrhFvJMSqq6dcf8wVvhu0WgnRN1PRZE7VM5P01+zAZFCxBFMoKIj0N67TIcQOkAgBhh5XbD5QVsA5EDZ9Bn0PE9WOq4PlgBJ+Ub8GwxB+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239403; c=relaxed/simple;
-	bh=rDKXhX40ReJRbywUnv8rG+cnHN9DentNd7Q3ZfvGmMs=;
+	s=arc-20240116; t=1765239405; c=relaxed/simple;
+	bh=OpNSX1v9idoEn+6GZ+Br/BSw8EWqZDVgpOB95jDvS00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ls2WmzYB4YYE6a/Bfn3nRn0c6H+pRUTT6xrfplOiYYhzGpejuvZlhaZzyHyio4bzeZOIUkG+0Tg7Ehm2vdPfIzyVZeInpn9TYRabSoQda8Fstm75ZF4Wl5C1nyRpH93chFuRW0xNLig6Aq6heIXLB0s1VubtnC6QKLIh+FaZIYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=atK5l4F5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xddw/ZdiP8jmS3CgERPKldajEJh0CFI2iVIYNWKhE8IuRi0gRNfKW7C9mKVmnac+Hz4mxNpdau4U6z/cgOj9ATiMk1YYc1AMVsJkt97N4ciyx0BzV//y9lim4hqAn56WYiHzkEJtZR8I8BOzvoUIqTUEvGEd0750Bjn1Y8r7tvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SEV/vrr/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="atK5l4F5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8D2C4CEF1;
-	Tue,  9 Dec 2025 00:16:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SEV/vrr/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A168C4CEF1;
+	Tue,  9 Dec 2025 00:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239402;
-	bh=rDKXhX40ReJRbywUnv8rG+cnHN9DentNd7Q3ZfvGmMs=;
+	s=k20201202; t=1765239404;
+	bh=OpNSX1v9idoEn+6GZ+Br/BSw8EWqZDVgpOB95jDvS00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=atK5l4F5LhjX3BcmDzjoNoKV73uyUCV4tyRwbKc/gA9nFtpzCEjjoBkxbrQA3WieP
-	 2l81RlDrporZBBwOYRi6pnp8UY77H2qGr+LFUdaAhntgoxcfqgRxyoDVjmpXwuGUNn
-	 Ddo0pZaivK1J5+jiLFHIZhARv563vr4WZKJ9AqjafERAekWsCWHpKU3qFpr+n9ZJ7Q
-	 +OF0Z1U09Ya6DpQlYO/hRX/gdg89l0d+hDA7ChC5YIbc1rZMMgHQ39wrO8cgyCJXXb
-	 hTWGUewOKTUaS5gtosHpXcfkJwlmV0b3fxnqKIkaTPrkqGTl2FvmmlltJHqD9EYxdm
-	 mjUfelrR9qKuQ==
+	b=SEV/vrr/bQK34Obzntn7eYxt/o1BYfMemoLPmHcej0OerVg0dm1xdYXhLlHPTM6/h
+	 c+zZQGSw+OvESLTLJdaNHiB/zIV/k35LX/F6jX/tyaTW1ObVKjWlu0di1n8JnF2VZ+
+	 Vkh/m/qT2rJyEQCzfVevKQTIfDebgbK2xSB8GUzg7f1LlmzXfNj+Dyjr3Co4FjH2/3
+	 opPGbdI7QRotaamZwVx98/4zfYSQgfMzSE51dsd/F1Db7NRbJknisgWD7hEhM7n9OJ
+	 IRfJOQKXbSeYc1rfc7rU5Hr6IAi4zKFB8bs41QDllzfjNcoa+Kd2NqxNVuMteC1JS8
+	 6p5CCy/KAyWxw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nirbhay Sharma <nirbhay.lkd@gmail.com>,
-	syzbot+83c9dd5c0dcf6184fdbf@syzkaller.appspotmail.com,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+Cc: Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	ntfs3@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18-6.6] fs/ntfs3: fix KMSAN uninit-value in ni_create_attr_list
-Date: Mon,  8 Dec 2025 19:14:57 -0500
-Message-ID: <20251209001610.611575-5-sashal@kernel.org>
+	clm@fb.com,
+	linux-btrfs@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] btrfs: abort transaction on item count overflow in __push_leaf_left()
+Date: Mon,  8 Dec 2025 19:14:58 -0500
+Message-ID: <20251209001610.611575-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -49,192 +50,182 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nirbhay Sharma <nirbhay.lkd@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5f33da04e6ceee849e76e6592cc283c72fef7af9 ]
+[ Upstream commit 5d8222a50ad37c98455da08b33ce49fe6b726c72 ]
 
-The call to kmalloc() to allocate the attribute list buffer is given a
-size of al_aligned(rs). This size can be larger than the data
-subsequently copied into the buffer, leaving trailing bytes uninitialized.
+If we try to push an item count from the right leaf that is greater than
+the number of items in the leaf, we just emit a warning. This should
+never happen but if it does we get an underflow in the new number of
+items in the right leaf and chaos follows from it. So replace the warning
+with proper error handling, by aborting the transaction and returning
+-EUCLEAN, and proper logging by using btrfs_crit() instead of WARN(),
+which gives us proper formatting and information about the filesystem.
 
-This can trigger a KMSAN "uninit-value" warning if that memory is
-later accessed.
-
-Fix this by using kzalloc() instead, which ensures the entire
-allocated buffer is zero-initialized, preventing the warning.
-
-Reported-by: syzbot+83c9dd5c0dcf6184fdbf@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=83c9dd5c0dcf6184fdbf
-Signed-off-by: Nirbhay Sharma <nirbhay.lkd@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete understanding. Let me summarize my analysis:
-
----
-
-## Detailed Analysis
+## Commit Analysis: btrfs: abort transaction on item count overflow in
+__push_leaf_left()
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: `fs/ntfs3: fix KMSAN uninit-value in ni_create_attr_list`
+**Key points:**
+- Fixes an item count overflow condition where `push_items >
+  right_nritems`
+- Currently only emits a WARN() but continues execution
+- If triggered, causes "an underflow in the new number of items in the
+  right leaf and chaos follows"
+- Replaces warning with proper error handling (abort transaction, return
+  -EUCLEAN)
 
-**Keywords identified**:
-- "fix" - clearly a bug fix
-- "KMSAN uninit-value" - refers to Kernel Memory Sanitizer detecting
-  uninitialized memory access
-
-**Tags present**:
-- `Reported-by: syzbot+83c9dd5c0dcf6184fdbf@syzkaller.appspotmail.com` -
-  bug was found by automated fuzzer syzkaller
-- `Closes: https://syzkaller.appspot.com/bug?extid=83c9dd5c0dcf6184fdbf`
-  - links to original bug report
-- `Signed-off-by`: Two sign-offs from the author and ntfs3 maintainer
-
-**Missing tags**:
-- No `Cc: stable@vger.kernel.org` tag (though this doesn't preclude
-  backporting)
-- No `Fixes:` tag pointing to the original buggy commit
+**Tags:**
+- No `Cc: stable@vger.kernel.org` tag
+- No `Fixes:` tag
+- Has two `Reviewed-by:` tags (Qu Wenruo and David Sterba - btrfs
+  maintainer)
 
 ### 2. CODE CHANGE ANALYSIS
 
-**The Bug**: In `ni_create_attr_list()` at line 770:
-
+**Before (problematic):**
 ```c
-le = kmalloc(al_aligned(rs), GFP_NOFS);
+if (push_items > right_nritems)
+    WARN(1, KERN_CRIT "push items %d nr %u\n", push_items,
+right_nritems);
+// Continues execution despite the error!
 ```
 
-**Problem mechanism**:
-1. `al_aligned(rs)` rounds up `rs` (record_size, typically 1024 or 4096
-   bytes) to the nearest 1024-byte boundary: `(size + 1023) & ~1023`
-2. The allocated buffer can be larger than the actual data populated
-   into it
-3. The loop copies attribute list entries into the buffer, and the
-   actual used size is computed as `lsize = PtrOffset(ni->attr_list.le,
-   le)`
-4. The trailing bytes between `lsize` and `al_aligned(rs)` remain
-   uninitialized
-5. KMSAN detects when these uninitialized bytes are later accessed (even
-   for comparison checks)
-
-**The Fix**:
+**After (fixed):**
 ```c
-le = kzalloc(al_aligned(rs), GFP_NOFS);
+if (unlikely(push_items > right_nritems)) {
+    ret = -EUCLEAN;
+    btrfs_abort_transaction(trans, ret);
+    btrfs_crit(fs_info, "push items (%d) > right leaf items (%u)",
+               push_items, right_nritems);
+    goto out;
+}
 ```
 
-This changes to `kzalloc()` which zero-initializes the entire buffer,
-eliminating any uninitialized memory concerns.
-
-**Why it works**: Zero-initialization ensures all bytes in the allocated
-buffer have known values, preventing KMSAN warnings even if the unused
-trailing bytes are accessed during boundary checks or other operations.
+**Technical mechanism of the bug:**
+- `__push_leaf_left()` pushes items from right leaf to left leaf in
+  btrfs B-tree
+- If `push_items > right_nritems`, later code does `right_nritems -=
+  push_items`
+- Since `right_nritems` is `u32`, this causes an **integer underflow**
+- The underflowed value is then set via `btrfs_set_header_nritems(right,
+  right_nritems)`
+- This corrupts the B-tree structure, leading to filesystem corruption
 
 ### 3. CLASSIFICATION
 
-- **Bug fix**: Yes, this fixes a real bug (KMSAN uninit-value warning)
-- **Device ID/quirk**: No
-- **Build fix**: No
-- **Security**: Not directly a security vulnerability, but uninitialized
-  memory issues can sometimes have security implications (information
-  disclosure)
+- **Type:** Bug fix - upgrading inadequate error handling to proper
+  abort
+- **Not adding features:** Purely defensive error handling improvement
+- **Severity:** Prevents potential filesystem/data corruption
+- **Pattern:** Converts warn-and-continue to abort-and-return on
+  corruption detection
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Lines changed**: 1 line
-**Files touched**: 1 file (`fs/ntfs3/frecord.c`)
-**Complexity**: Minimal - simple `kmalloc` → `kzalloc` change
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | ~10 lines |
+| Files touched | 1 (fs/btrfs/ctree.c) |
+| Complexity | Very low |
+| Subsystem maturity | btrfs is mature and widely used |
+| Regression risk | **Near zero** - if condition never triggers,
+behavior unchanged; if it does, abort is safer than corruption |
 
-**Subsystem**: NTFS3 filesystem driver
-- This is a relatively mature filesystem driver (introduced in v5.15)
-- Used for reading/writing NTFS-formatted storage devices
-
-**Risk assessment**: **VERY LOW**
-- The change only adds initialization, cannot introduce new bugs
-- `kzalloc()` is a standard, well-tested kernel API
-- Zero-initialization is always safe - at worst it's slightly slower
-  (negligible for this use case)
-- No functional changes to the logic
+The change uses existing infrastructure (`btrfs_abort_transaction`,
+`goto out` path) that's already present and tested.
 
 ### 5. USER IMPACT
 
-**Who is affected**:
-- Any user mounting NTFS filesystems
-- Operations that create attribute lists (complex NTFS files with many
-  attributes)
-
-**Severity of original bug**:
-- KMSAN warnings indicate potential undefined behavior
-- While this may not cause crashes in production (KMSAN is typically
-  only enabled in test builds), it indicates a code quality issue
-- Could potentially cause intermittent data corruption if the
-  uninitialized data is ever written to disk (though the code appears to
-  bound writes by `attr_list.size`)
-
-**Likelihood**:
-- Medium - attribute list creation is a common operation in NTFS
-- The bug was found by syzkaller fuzzing, indicating it's triggerable
+- **Affected users:** All btrfs users
+- **Code location:** Core B-tree code - fundamental to all btrfs
+  operations
+- **If bug triggers:** Filesystem corruption, potentially unmountable
+  filesystem
+- **Frequency:** Described as "should never happen" but defensive check
+  was already there
 
 ### 6. STABILITY INDICATORS
 
-- **Reported-by**: syzkaller (automated fuzzer with good track record)
-- **Maintainer Sign-off**: Yes, signed off by Konstantin Komarov (NTFS3
-  maintainer)
-- Commit has been in mainline since v6.18-rc1
+- Two reviewers from btrfs team
+- Signed off by btrfs maintainer (David Sterba)
+- Conservative, defensive fix with well-understood behavior
 
 ### 7. DEPENDENCY CHECK
 
-- **Dependencies**: None - this is a self-contained one-line fix
-- **Code exists in stable trees**: Yes, `ni_create_attr_list()` and the
-  `kmalloc()` call exist in all stable kernels since v5.15 (when ntfs3
-  was introduced)
-- **Clean backport**: Should apply cleanly to any kernel 5.15+
+- Self-contained fix with no dependencies
+- Uses existing error handling patterns present in all stable trees
+- This code has existed in btrfs for many years
 
-### Summary
+### DECISION RATIONALE
 
-This commit is an excellent candidate for stable backporting because:
+**For backporting:**
+1. **Prevents data corruption** - the most critical category of bugs for
+   filesystems
+2. **Minimal risk** - the fix cannot cause regression in normal
+   operation
+3. **Small and surgical** - ~10 lines, single file, obvious correctness
+4. **Well-reviewed** - two experienced btrfs developers signed off
+5. **Core subsystem** - btrfs is used in production by enterprise users
+   relying on stable trees
+6. **Integer underflow** - these are exactly the type of bugs stable
+   trees want fixed
 
-1. **Fixes a real bug**: KMSAN uninit-value warning triggered by
-   syzkaller
-2. **Minimal and surgical**: Single-line change from `kmalloc` to
-   `kzalloc`
-3. **Obviously correct**: Zero-initialization is always safe
-4. **Zero risk**: Cannot introduce regressions - only adds
-   initialization
-5. **Reported by automated testing**: syzkaller found this, indicating
-   it's triggerable
-6. **Maintainer approved**: Signed off by ntfs3 maintainer
-7. **Applicable to all stable trees**: The buggy code exists since ntfs3
-   was introduced in v5.15
-8. **No dependencies**: Completely self-contained fix
+**Against backporting:**
+1. No explicit `Cc: stable` tag
+2. No `Fixes:` tag
+3. Condition described as "should never happen"
 
-The only minor concern is the lack of an explicit `Cc: stable` tag and
-`Fixes:` tag, but this is not a hard requirement. The commit clearly
-fixes a bug in filesystem code that affects users mounting NTFS drives.
+**Assessment:** While the maintainer didn't explicitly request stable
+backport, the fix meets all stable criteria:
+- Obviously correct (straightforward error handling)
+- Fixes a real bug (underflow leading to corruption)
+- Small and contained (10 lines, 1 file)
+- No new features
+
+The severity of the potential consequence (filesystem corruption)
+combined with the trivial risk of the fix makes this an appropriate
+stable candidate. Filesystems are exactly where defensive hardening
+matters most for stable users.
 
 **YES**
 
- fs/ntfs3/frecord.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ctree.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 8f9fe1d7a6908..4fe8da7fc0343 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -767,7 +767,7 @@ int ni_create_attr_list(struct ntfs_inode *ni)
- 	 * Skip estimating exact memory requirement.
- 	 * Looks like one record_size is always enough.
- 	 */
--	le = kmalloc(al_aligned(rs), GFP_NOFS);
-+	le = kzalloc(al_aligned(rs), GFP_NOFS);
- 	if (!le)
- 		return -ENOMEM;
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 561658aca018b..3acb3027584d7 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -3398,9 +3398,13 @@ static noinline int __push_leaf_left(struct btrfs_trans_handle *trans,
+ 	btrfs_set_header_nritems(left, old_left_nritems + push_items);
  
+ 	/* fixup right node */
+-	if (push_items > right_nritems)
+-		WARN(1, KERN_CRIT "push items %d nr %u\n", push_items,
+-		       right_nritems);
++	if (unlikely(push_items > right_nritems)) {
++		ret = -EUCLEAN;
++		btrfs_abort_transaction(trans, ret);
++		btrfs_crit(fs_info, "push items (%d) > right leaf items (%u)",
++			   push_items, right_nritems);
++		goto out;
++	}
+ 
+ 	if (push_items < right_nritems) {
+ 		push_space = btrfs_item_offset(right, push_items - 1) -
 -- 
 2.51.0
 
