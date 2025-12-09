@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F85822256B;
-	Tue,  9 Dec 2025 00:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B235E221290;
+	Tue,  9 Dec 2025 00:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239432; cv=none; b=YXf5ZxXgrUiousg1dMFhkC3ejgig2wgh7JAjU+lslefFPCiFaxAWnvzXTasuxBhia5S9JWgpSeJpz9hlxJ9dBhIsLt9MjEMknUOIDZ+zXVRD74/oCg5iQbSnDAuwJwxnCLPiG7adYSOL+YSOaGWcGXhIpzmzAhr0Lzq6bVkNvj4=
+	t=1765239436; cv=none; b=P5i+QSVyrnlnoCCUSws74lPKxzOmcpWIDFjkRb20swWl7gFXaVoOc6Ka0raf1fuT5xvanXhsg7jtZKkkdLK6N/AoYfNsTV1EdceUJxIrmKfLUCb14zTDczqkFMPeMCk5XKU834+FnS1FOcHkJwW3W/l9dpyi8edJUVD6xS+jTLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239432; c=relaxed/simple;
-	bh=LWJ5PKBg/xFvkJoc9eCT1/JcOJDhRvKObYShTs+W9Kc=;
+	s=arc-20240116; t=1765239436; c=relaxed/simple;
+	bh=NS4Xr1fGxL/eg6tHwlX4g6+yoClMCNZ2LkZ9ME2kvOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5g/Gh38sKYkSePsq48EAf9RjeBktHS7dx4nuets2z7sSQGkqEF9z+ICeQ9FKNdfPg2JVlZNhOytFwMvdsndW+JQc7SPu4GtwbsS5+WM6gB/qVmBIOssOQC2AZPVrD2+WP1I9zWqv4I0HK24hSMn7LDgRVALC4FZ2CvzDznfCIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o+dz7wOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RGV1YdQftQ4eOyzFf9z+s9uBHP+itpBZEBnpMoyXrxGZIIAqaOOIABqgQ3t8YA8Z/48pgZsmkYWL1J29DMXYOt9GgmX1uOxO8HFTnsbeD8omEYYmuHI1HLkQvU/VoTqRmCRbpu31/dPbIdL+aSuClT3X5vy3/XndbDqtGRJZ81Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CIgrIV9v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o+dz7wOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2789C4CEF1;
-	Tue,  9 Dec 2025 00:17:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CIgrIV9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD725C4CEF1;
+	Tue,  9 Dec 2025 00:17:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239432;
-	bh=LWJ5PKBg/xFvkJoc9eCT1/JcOJDhRvKObYShTs+W9Kc=;
+	s=k20201202; t=1765239436;
+	bh=NS4Xr1fGxL/eg6tHwlX4g6+yoClMCNZ2LkZ9ME2kvOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+dz7wOJ4pUZW9lWTIoiUIPcjCpfCr1F+8nU9PiXeg1m5VRQJNTpErQomKluD9dQm
-	 vKyFysxT9lfzbJ6po2X7P+qFNeCnKtYGPPuyUj5t2v85Lh7z21+OpkHlAeWOfbR7xi
-	 2lnfffzK8qW2dXWKKKshD21I776t5yApyO4RnQp/hf+/eNvtKZmLp0jPMpyGuya19g
-	 PtwI54IIY5bxXPjs6A8OHY4AYtWmGDDoJOq8jAP7Wfviz8mT1fwVkla//CIAtNPrp+
-	 gSaWo68y+RDdemHVNJ4lbNBG7QGkNkoOCOjN7kluXd9bl0snBRT2Ve8+2rWeB7wNDy
-	 +6Z2Mb/eiz3lQ==
+	b=CIgrIV9vQX8afrj4mUkjJA+TrA1yc2u0iiyhoq+DPDymSm2N9J/8l6F/sVnzYNOle
+	 13cNCkwufpO3muD+G+mCkpVzlCa0Lys+LB6Pj8sJoPOd5ocHiKmBYXwNPe1QlX28Me
+	 9qvboGevIrlpf5l3VdYwkvzmN1ygpt5Wa6fjCiLl1VsQwa8kAnOi5nx5XOpJNcFzIy
+	 EDPrJmbp0GibfD0V6Wy4h7mPmfCscdmQDz1Q39kAAMqjFZChRefANIDukzKOTSmbAS
+	 vn+qkOsV0/U2B2G9EUOOR9YEpbpU/MubJkx0APDevinK5GvmEX8cqrxLR6S9ZhboIs
+	 c75+jCLbSMdug==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Mikhail Malyshev <mike.malyshev@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nsc@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mst@redhat.com,
-	virtualization@lists.linux.dev,
-	linux-block@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] virtio_blk: NULL out vqs to avoid double free on failed resume
-Date: Mon,  8 Dec 2025 19:15:10 -0500
-Message-ID: <20251209001610.611575-18-sashal@kernel.org>
+	masahiroy@kernel.org,
+	torsten.hilbrich@secunet.com,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] kbuild: Use objtree for module signing key path
+Date: Mon,  8 Dec 2025 19:15:11 -0500
+Message-ID: <20251209001610.611575-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -51,284 +51,239 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Mikhail Malyshev <mike.malyshev@gmail.com>
 
-[ Upstream commit 0739c2c6a015604a7c01506bea28200a2cc2e08c ]
+[ Upstream commit af61da281f52aba0c5b090bafb3a31c5739850ff ]
 
-The vblk->vqs releases during freeze. If resume fails before vblk->vqs
-is allocated, later freeze/remove may attempt to free vqs again.
-Set vblk->vqs to NULL after freeing to avoid double free.
+When building out-of-tree modules with CONFIG_MODULE_SIG_FORCE=y,
+module signing fails because the private key path uses $(srctree)
+while the public key path uses $(objtree). Since signing keys are
+generated in the build directory during kernel compilation, both
+paths should use $(objtree) for consistency.
 
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This causes SSL errors like:
+  SSL error:02001002:system library:fopen:No such file or directory
+  sign-file: /kernel-src/certs/signing_key.pem
+
+The issue occurs because:
+- sig-key uses: $(srctree)/certs/signing_key.pem (source tree)
+- cmd_sign uses: $(objtree)/certs/signing_key.x509 (build tree)
+
+But both keys are generated in $(objtree) during the build.
+
+This complements commit 25ff08aa43e37 ("kbuild: Fix signing issue for
+external modules") which fixed the scripts path and public key path,
+but missed the private key path inconsistency.
+
+Fixes out-of-tree module signing for configurations with separate
+source and build directories (e.g., O=/kernel-out).
+
+Signed-off-by: Mikhail Malyshev <mike.malyshev@gmail.com>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20251015163452.3754286-1-mike.malyshev@gmail.com
+Signed-off-by: Nicolas Schier <nsc@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Good. `kfree(NULL)` is safe - it does nothing. This is a well-known
-C/Linux convention.
+Now I have the complete picture. All stable trees that contain commit
+13b25489b6f8 (v6.13+) have the incomplete fix and need this patch. Let
+me finalize my analysis:
 
-Now let me create my final comprehensive analysis:
-
-## COMPLETE ANALYSIS
+## Complete Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: `virtio_blk: NULL out vqs to avoid double free on failed
-resume`
-
-**Key points from commit message:**
-- The `vblk->vqs` is released during freeze
-- If resume fails before `vblk->vqs` is allocated, later freeze/remove
-  may attempt to free vqs again
-- Solution: Set `vblk->vqs` to NULL after freeing to avoid double free
-
-**Acks/Reviews:**
-- Acked-by: Jason Wang <jasowang@redhat.com> (virtio maintainer)
-- Signed-off-by: Jens Axboe <axboe@kernel.dk> (block subsystem
-  maintainer)
-
-**Missing tags:**
-- No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag explicitly pointing to the bug-introducing commit
+The commit message is clear and well-documented:
+- **Subject**: "kbuild: Use objtree for module signing key path" -
+  clearly states what it does
+- **Body**: Explains the problem with detailed error messages and root
+  cause analysis
+- **References**: Explicitly mentions commit 25ff08aa43e37 as the
+  incomplete fix it complements
+- **No Cc: stable@vger.kernel.org tag** - the maintainer did not
+  explicitly request stable backport
+- **No Fixes: tag** - However, logically this fixes the same issue as
+  25ff08aa43e37, which has `Fixes: 13b25489b6f8`
+- **Has Reviewed-by and Tested-by tags** from Nicolas Schier and Nathan
+  Chancellor
 
 ### 2. CODE CHANGE ANALYSIS
 
-**Changes made:** Two modifications in `drivers/block/virtio_blk.c`:
+The change is a **single character change** (literally changing one
+word):
 
-#### Change 1: In `init_vq()` error path (lines 1029-1032)
-**Before:**
-```c
-if (err)
-    kfree(vblk->vqs);
-return err;
+```makefile
+# Before:
+sig-key := $(if $(wildcard
+$(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
+
+# After:
+sig-key := $(if $(wildcard
+$(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
 ```
 
-**After:**
-```c
-if (err) {
-    kfree(vblk->vqs);
-    /*
-     - Set to NULL to prevent freeing vqs again during freezing.
-     */
-    vblk->vqs = NULL;
-}
-return err;
-```
+**Technical mechanism of the bug:**
+1. When building out-of-tree modules with `CONFIG_MODULE_SIG_FORCE=y`
+   and separate source/build directories (e.g., `O=/kernel-out`):
+   - `$(srctree)` points to the source tree (e.g., `/kernel-src`)
+   - `$(objtree)` points to the build tree (e.g., `/kernel-out`)
 
-#### Change 2: In `virtblk_freeze_priv()` (lines 1599-1600)
-**Before:**
-```c
-vdev->config->del_vqs(vdev);
-kfree(vblk->vqs);
+2. Module signing keys are **generated during kernel compilation** and
+   stored in `$(objtree)/certs/`:
+   - Private key: `$(objtree)/certs/signing_key.pem`
+   - Public key: `$(objtree)/certs/signing_key.x509`
 
-return 0;
-```
+3. After commit 25ff08aa43e37, `cmd_sign` correctly uses
+   `$(objtree)/certs/signing_key.x509` for the public key, but `sig-key`
+   still uses `$(srctree)/certs/signing_key.pem` for the private key.
 
-**After:**
-```c
-vdev->config->del_vqs(vdev);
-kfree(vblk->vqs);
-/*
- - Set to NULL to prevent freeing vqs again after a failed vqs
- - allocation during resume. Note that kfree() already handles NULL
- - pointers safely.
- */
-vblk->vqs = NULL;
+4. This creates an **inconsistency**: The `sign-file` tool is called
+   with:
+   - Private key: `/kernel-src/certs/signing_key.pem` (WRONG - file
+     doesn't exist there)
+   - Public key: `/kernel-out/certs/signing_key.x509` (CORRECT)
 
-return 0;
-```
+5. Result: `fopen()` fails with "No such file or directory" when trying
+   to open the private key.
 
-### 3. BUG MECHANISM (Root Cause Analysis)
+**Why the fix is correct:**
+- Both signing keys are generated in `$(objtree)`, so both paths should
+  reference `$(objtree)`
+- The fix is logically consistent with what commit 25ff08aa43e37 did for
+  the other paths
+- The conditional `$(if $(wildcard
+  $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)` only adds the prefix if the
+  key path is not absolute, which is correct behavior
 
-The double-free vulnerability occurs in the following scenario:
+### 3. CLASSIFICATION
 
-**Trigger Sequence:**
-1. **virtblk_freeze_priv()** is called (suspend/PM freeze, or
-   reset_prepare via FLR)
-   - Frees `vblk->vqs` at line 1600
-   - `vblk->vqs` **still points to the freed memory** (dangling pointer)
+- **Type**: Bug fix (not a feature)
+- **Category**: Build system fix
+- **Severity**: Causes complete failure of out-of-tree module signing
+  with CONFIG_MODULE_SIG_FORCE=y
+- **Security relevance**: Low (doesn't fix a security vulnerability per
+  se, but affects security feature - module signing)
+- **Exception category**: Build fix - these are explicitly allowed in
+  stable
 
-2. **virtblk_restore_priv()** is called (resume/PM restore, or
-   reset_done)
-   - Calls `init_vq(vblk)` at line 1610
+### 4. SCOPE AND RISK ASSESSMENT
 
-3. **init_vq()** fails (e.g., `kmalloc_array()` fails or
-   `virtio_find_vqs()` fails)
-   - `init_vq()` allocates `vblk->vqs` at line 993
-   - If allocation succeeds but later `virtio_find_vqs()` fails (line
-     1016), the error path at line 1030 calls `kfree(vblk->vqs)`
-   - But if allocation at line 993 fails, `vblk->vqs` is never
-     reassigned and still points to the OLD freed memory from step 1
-   - Error path at line 1030: `kfree(vblk->vqs)` - **FIRST FREE of the
-     OLD pointer**
+- **Lines changed**: 1 line (trivial)
+- **Files touched**: 1 file (`scripts/Makefile.modinst`)
+- **Complexity**: Extremely simple - just changing `srctree` to
+  `objtree`
+- **Subsystem**: kbuild (build system)
+- **Risk level**: **VERY LOW**
+  - Only affects out-of-tree module signing with separate source/build
+    directories
+  - Only affects configurations with `CONFIG_MODULE_SIG_FORCE=y` or
+    `CONFIG_MODULE_SIG_ALL=y`
+  - The change is logically correct and consistent with the rest of the
+    code
+  - Cannot break anything that was working before
 
-4. **Second freeze/remove attempt:**
-   - If another freeze cycle or `virtblk_remove()` is called
-   - `kfree(vblk->vqs)` is called again - **SECOND FREE of the same
-     memory = DOUBLE FREE**
+### 5. USER IMPACT
 
-**Alternative scenario:**
-- Even in `init_vq()` success path, if `vqs_info` or `vqs` temp
-  allocation fails before line 997-999, and the error `goto out` is hit,
-  the same dangling pointer issue occurs.
+- **Who is affected**:
+  - Users building out-of-tree modules (e.g., NVIDIA drivers,
+    VirtualBox, ZFS)
+  - With separate source and build directories (`O=/path/to/build`)
+  - With module signature enforcement enabled
+- **Severity**: HIGH for affected users - module signing completely
+  fails
+- **User reports**: The commit message shows this was reported as a real
+  user problem with specific error messages
+- **Prevalence**: Common scenario for distribution builders and
+  enterprise environments
 
-### 4. CLASSIFICATION
+### 6. STABILITY INDICATORS
 
-- **Type**: Bug fix (memory safety - double-free vulnerability)
-- **Security relevance**: Potentially exploitable memory corruption bug
-- **Category**: Does NOT fall into exceptions (device IDs, quirks, DT,
-  build fixes)
-- **Impact area**: virtio-blk block device driver, PM suspend/resume and
-  transport reset recovery
+- **Tested-by: Nicolas Schier** - the kbuild maintainer tested it
+- **Reviewed-by: Nathan Chancellor** - well-known kernel developer
+  reviewed it
+- **Link to patch discussion**: Shows proper review process
+- **Age in mainline**: This appears to be a recent commit (October 2025
+  in the patch date)
 
-### 5. SCOPE AND RISK ASSESSMENT
+### 7. DEPENDENCY CHECK
 
-**Lines changed**: ~10 lines (including comments)
-**Files touched**: 1 file (`drivers/block/virtio_blk.c`)
-**Complexity**: Very low - simple NULL assignment after kfree
+**Critical finding**: This commit has a dependency:
+- It requires commit **25ff08aa43e37** ("kbuild: Fix signing issue for
+  external modules") to be present first
+- 25ff08aa43e37 requires commit **13b25489b6f8** ("kbuild: change
+  working directory to external module directory with M=")
 
-**Subsystem**: virtio-blk - a mature, widely-used block device driver
-for virtual machines
-- Used in QEMU/KVM guests
-- Used in cloud VM instances (AWS, GCP, Azure etc.)
-- Used in container environments
+**Affected stable versions**:
+- v6.13.x: Has 13b25489b6f8 (the bug) and backported 25ff08aa43e37
+  (partial fix) → **NEEDS this patch**
+- v6.14.x: Has both 13b25489b6f8 and 25ff08aa43e37 → **NEEDS this
+  patch**
+- v6.15.x: Has both → **NEEDS this patch**
+- v6.16.x: Has both → **NEEDS this patch**
+- v6.17.x: Has both → **NEEDS this patch**
+- v6.6.x and older: Does NOT have 13b25489b6f8 → **Does NOT need this
+  patch** (and would break if applied)
 
-**Risk assessment**: **VERY LOW**
-- The fix is trivial: just setting pointer to NULL after free
-- `kfree(NULL)` is explicitly safe (no-op)
-- No behavioral change in normal operation
-- Only affects error recovery paths
-- Cannot introduce new bugs
+**Backport note**: This commit should ONLY be backported to stable trees
+that already have:
+1. Commit 13b25489b6f8 (the original behavior change)
+2. Commit 25ff08aa43e37 (the partial fix)
 
-### 6. USER IMPACT
+This means v6.13+ stable trees only.
 
-**Who is affected:**
-- Users using virtio-blk devices in virtual machines
-- Systems that undergo suspend/resume cycles
-- Systems using PCI Function Level Reset (FLR) on virtio devices
-- Particularly affects systems with constrained memory where allocation
-  might fail
+### SUMMARY
 
-**Severity if bug hits:**
-- Double-free can cause kernel panic/crash
-- Potential memory corruption
-- Potential security vulnerability (though exploitation would be
-  difficult)
+This commit is an **excellent candidate for stable backport** to kernel
+versions v6.13+:
 
-**Trigger conditions:**
-- Requires PM suspend/resume OR transport reset (FLR)
-- AND memory allocation failure during resume
-- Relatively rare in practice but can happen under memory pressure
+**Positive factors:**
+1. ✅ Fixes a real bug that causes complete failure of module signing
+2. ✅ Extremely small change (1 line, 1 word)
+3. ✅ Zero risk of regression (only fixes broken behavior)
+4. ✅ Properly reviewed and tested by kbuild maintainers
+5. ✅ Complements an existing fix that was already backported to stable
+6. ✅ Build fix category - explicitly allowed in stable rules
+7. ✅ Clear, well-documented commit message
+8. ✅ Affects users who follow best practices (separate build directory)
 
-### 7. STABILITY INDICATORS
+**Concerns:**
+1. ⚠️ No explicit `Cc: stable@vger.kernel.org` tag (but the first fix
+   also didn't have one and was still backported)
+2. ⚠️ No explicit `Fixes:` tag (but logically fixes the same issue as
+   25ff08aa43e37)
+3. ⚠️ Must only be applied to v6.13+ stable trees (where 13b25489b6f8
+   exists)
 
-**Positive indicators:**
-- Acked-by: Jason Wang (virtio maintainer)
-- Signed-off-by: Jens Axboe (block maintainer)
-- The fix is obviously correct and minimal
-- Follows the standard kernel pattern of NULLing after free
-
-**Negative indicators:**
-- No `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag
-- No `Tested-by:` tag
-
-### 8. DEPENDENCY CHECK
-
-**Dependencies:**
-- Requires commit `5820a3b089879` ("virtio_blk: Add support for
-  transport error recovery") which introduced `virtblk_freeze_priv()`
-  and `virtblk_restore_priv()` as shared functions
-- This commit (`5820a3b089879`) was merged in v6.14-rc1
-
-**Earlier bug introduction:**
-- The original bug was introduced in `b71ba22e7c6c6` ("virtio-blk: Fix
-  memory leak among suspend/resume procedure") in v5.14-rc1
-- That commit added `kfree(vblk->vqs)` in freeze without NULLing it
-
-**For stable backport:**
-- For kernels v6.14+: should apply cleanly
-- For kernels v5.14 to v6.13: would need different backport (the code
-  structure is different)
-- The `virtblk_freeze_priv` function only exists starting from v6.14
-
-### 9. CONCLUSION
-
-**This commit SHOULD be backported to stable trees** because:
-
-1. **Fixes a real bug**: Double-free is a serious memory safety bug that
-   can cause crashes and potentially be exploited
-
-2. **Obvious correctness**: Setting pointer to NULL after free is the
-   standard kernel idiom and cannot introduce new bugs
-
-3. **Small and contained**: Only ~10 lines changed, very localized to
-   two specific error handling paths
-
-4. **No new features**: Pure bug fix with no behavioral changes in
-   normal operation
-
-5. **Affects important infrastructure**: virtio-blk is used extensively
-   in cloud/virtualization environments
-
-6. **Low risk**: The fix is trivial and follows standard patterns;
-   `kfree(NULL)` is explicitly safe
-
-**Caveats for backporting:**
-- The fix in its current form is ONLY applicable to v6.14+ kernels where
-  `virtblk_freeze_priv()` exists
-- For older stable kernels (v5.14 to v6.13), a different (simpler)
-  backport would be needed that just NULLs `vblk->vqs` in
-  `virtblk_freeze()` directly
-- The maintainers did not explicitly tag this for stable (`Cc:
-  stable@vger.kernel.org`), which might indicate they didn't consider
-  backporting, or the bug wasn't seen as critical
-
-The fix is small, surgical, obviously correct, and addresses a real
-memory safety bug. It meets all stable kernel criteria.
+The commit passes all stable kernel criteria: it's obviously correct,
+fixes a real user-visible bug, is small and surgical, has no new
+features, and has been tested. The incomplete fix in stable trees is
+currently causing module signing to fail for users with separate
+source/build directories.
 
 **YES**
 
- drivers/block/virtio_blk.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ scripts/Makefile.modinst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index f061420dfb10c..746795066d7f5 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -1026,8 +1026,13 @@ static int init_vq(struct virtio_blk *vblk)
- out:
- 	kfree(vqs);
- 	kfree(vqs_info);
--	if (err)
-+	if (err) {
- 		kfree(vblk->vqs);
-+		/*
-+		 * Set to NULL to prevent freeing vqs again during freezing.
-+		 */
-+		vblk->vqs = NULL;
-+	}
- 	return err;
- }
- 
-@@ -1598,6 +1603,12 @@ static int virtblk_freeze_priv(struct virtio_device *vdev)
- 
- 	vdev->config->del_vqs(vdev);
- 	kfree(vblk->vqs);
-+	/*
-+	 * Set to NULL to prevent freeing vqs again after a failed vqs
-+	 * allocation during resume. Note that kfree() already handles NULL
-+	 * pointers safely.
-+	 */
-+	vblk->vqs = NULL;
- 
- 	return 0;
- }
+diff --git a/scripts/Makefile.modinst b/scripts/Makefile.modinst
+index 1628198f3e830..9ba45e5b32b18 100644
+--- a/scripts/Makefile.modinst
++++ b/scripts/Makefile.modinst
+@@ -100,7 +100,7 @@ endif
+ # Don't stop modules_install even if we can't sign external modules.
+ #
+ ifeq ($(filter pkcs11:%, $(CONFIG_MODULE_SIG_KEY)),)
+-sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(srctree)/)$(CONFIG_MODULE_SIG_KEY)
++sig-key := $(if $(wildcard $(CONFIG_MODULE_SIG_KEY)),,$(objtree)/)$(CONFIG_MODULE_SIG_KEY)
+ else
+ sig-key := $(CONFIG_MODULE_SIG_KEY)
+ endif
 -- 
 2.51.0
 
