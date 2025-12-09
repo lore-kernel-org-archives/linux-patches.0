@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCA3237180;
-	Tue,  9 Dec 2025 00:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81EE23C8C7;
+	Tue,  9 Dec 2025 00:17:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239441; cv=none; b=hD6MvT+HS5ZyUJOAStTlYd+mOtVuPibQj4ZzLOlGEbjg3Ej+VemDUXXTyhiUw3LkD4i4d6ORt/p3EPfTgm1+EvBSAzX66aC2jUvMmtKRkAQa87UCzm7I6mNFCyxSS5CBGqiwRlS+0yKZKfio6L0lxY+mljZSNFKLRXrJIo/L7fo=
+	t=1765239443; cv=none; b=OUveOBMNzcdOdvHKXHhcBXthFeVmdF/bLmnbg9C78EMSazpHalXfLFe4Act8kp8icfy6zihfOiR1DasVKCxHHn//ntLRsRZkTJR3SuZQGSH7ZkS/AAqZD68i7rUeF8oDbC7AU9EAhccWQ5S+CiEZBgRzm1aAT0rJPTW1sYdaoFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239441; c=relaxed/simple;
-	bh=JlT8U3xNRuoWRB25hd8k8Cu8Y1NyvjF/bcNo0Q8/3rk=;
+	s=arc-20240116; t=1765239443; c=relaxed/simple;
+	bh=Lelg716SCuCBRQsIrBzYR0/pjER/M5f4vAd3JX5ZAFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=q0A4kn/Y5Nsg5JHyhf8H1A2pqeG0saAC08E1iTIqQSw18rUlYimKRLSQi7y/fBElAs4XaXXXmzG6DXqx3dB4m2wAnF9krMqVIl2cetjnM3rmLmF3lH/gtqhfYAG0Uo9uUgY9/hPk/c3wEAf40CnpXOLjki8W2ojyYHagFexfl3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lnv07pq/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WPiQEwUk34va2E5THGDCDRzlIba/3YZQyd4WmRSNb/yw9kvZTKZ9/dpNlcq2Ch2mQmkI1MJpunm3bF06OX6tJcpuqdpsyaKrgpA48CxFEq+w9tVUvKX4qD9NuAzwGAQdLBdm8ZsqkTlJGUhKsHn2NxE8fM5Xrde+MvPsyB1mWHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZEaOhwwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lnv07pq/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5168FC4CEF1;
-	Tue,  9 Dec 2025 00:17:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZEaOhwwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87DCC4CEF1;
+	Tue,  9 Dec 2025 00:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239441;
-	bh=JlT8U3xNRuoWRB25hd8k8Cu8Y1NyvjF/bcNo0Q8/3rk=;
+	s=k20201202; t=1765239443;
+	bh=Lelg716SCuCBRQsIrBzYR0/pjER/M5f4vAd3JX5ZAFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lnv07pq/7WQR3Huw9gFJq3IaTeaWDXN/7qD3OpnzhM2edlYbV/W1q3wlBNo2qGIUm
-	 K8jnuzVInT5R5pcLUM4bXBqABpSE9Oqk3COeW3H2bNAWKRqNN8Yf3vY6bicmcIFYcK
-	 QDSF08xXTrraorxjPq3Cj9RVHSNnKC2zOv7DwZ5QeHdvS/9ysB7WCUHasHyP0VFXrU
-	 42+A/9UvXnUu9elw0njvaryAHSog+Q13YeVTtPu+kS/zHh4sE3RbKpKbffwLo24LNU
-	 ZWuifQAGoHY8iAxJVTx3SQB9/3KLoW5l65tVZ7zPpWsxB5j7TQTSe3pnpVFRYCbTEu
-	 rHYrtzs+tPWvg==
+	b=ZEaOhwwgeORzGhDVMKzC7F9iHJ3wOtrZgcjclzlGh+4KHCxRqhlx8jj0EjVEttwGL
+	 UpK13aMef6J7xSxwdBisiEtrrIi3AxmyJBuyYuLwyi+mKptDLFUbuyiX8TeWExRzY4
+	 fMMSTL1v707mj/eEVVE/lm3ztAhHI7aGSH1UBbhBKi9LgxDGjSqT/RXQarM9lQ5VhN
+	 2rNKSulLhtQ4EvkSYwiXXj1EkCmHu8deoW0S3U+K794kXTUhbnItXDD6saeJ8QZbjl
+	 +T7UuiTIIHmAmYjDlYcIxYrk5Ce5+ur4luraczhV6lUPXBtOMP1erq71CHYhIg0Cl0
+	 uqf3K+l6XOGhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuniyuki Iwashima <kuniyu@google.com>,
-	syzbot+87e1289a044fcd0c5f62@syzkaller.appspotmail.com,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>,
-	xiyou.wangcong@gmail.com,
-	jiri@resnulli.us,
-	netdev@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] net: sched: Don't use WARN_ON_ONCE() for -ENOMEM in tcf_classify().
-Date: Mon,  8 Dec 2025 19:15:13 -0500
-Message-ID: <20251209001610.611575-21-sashal@kernel.org>
+	frank.li@vivo.com,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] hfsplus: Verify inode mode when loading from disk
+Date: Mon,  8 Dec 2025 19:15:14 -0500
+Message-ID: <20251209001610.611575-22-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -55,278 +53,241 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit b8a7826e4b1aab3fabb29cbf0b73da9993d356de ]
+[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
 
-As demonstrated by syzbot, WARN_ON_ONCE() in tcf_classify() can
-be easily triggered by fault injection. [0]
+syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
+the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
 
-We should not use WARN_ON_ONCE() for the simple -ENOMEM case.
+According to [1], the permissions field was treated as reserved in Mac OS
+8 and 9. According to [2], the reserved field was explicitly initialized
+with 0, and that field must remain 0 as long as reserved. Therefore, when
+the "mode" field is not 0 (i.e. no longer reserved), the file must be
+S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
+S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
 
-Also, we provide SKB_DROP_REASON_NOMEM for the same error.
-
-Let's remove WARN_ON_ONCE() there.
-
-[0]:
-FAULT_INJECTION: forcing a failure.
-name failslab, interval 1, probability 0, space 0, times 0
-CPU: 0 UID: 0 PID: 31392 Comm: syz.8.7081 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-Call Trace:
- <TASK>
- dump_stack_lvl+0x189/0x250
- should_fail_ex+0x414/0x560
- should_failslab+0xa8/0x100
- kmem_cache_alloc_noprof+0x74/0x6e0
- skb_ext_add+0x148/0x8f0
- tcf_classify+0xeba/0x1140
- multiq_enqueue+0xfd/0x4c0 net/sched/sch_multiq.c:66
-...
-WARNING: CPU: 0 PID: 31392 at net/sched/cls_api.c:1869 tcf_classify+0xfd7/0x1140
-Modules linked in:
-CPU: 0 UID: 0 PID: 31392 Comm: syz.8.7081 Not tainted syzkaller #0 PREEMPT(full)
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/02/2025
-RIP: 0010:tcf_classify+0xfd7/0x1140
-Code: e8 03 42 0f b6 04 30 84 c0 0f 85 41 01 00 00 66 41 89 1f eb 05 e8 89 26 75 f8 bb ff ff ff ff e9 04 f9 ff ff e8 7a 26 75 f8 90 <0f> 0b 90 49 83 c5 44 4c 89 eb 49 c1 ed 03 43 0f b6 44 35 00 84 c0
-RSP: 0018:ffffc9000b7671f0 EFLAGS: 00010293
-RAX: ffffffff894addf6 RBX: 0000000000000002 RCX: ffff888025029e40
-RDX: 0000000000000000 RSI: ffffffff8bbf05c0 RDI: ffffffff8bbf0580
-RBP: 0000000000000000 R08: 00000000ffffffff R09: 1ffffffff1c0bfd6
-R10: dffffc0000000000 R11: fffffbfff1c0bfd7 R12: ffff88805a90de5c
-R13: ffff88805a90ddc0 R14: dffffc0000000000 R15: ffffc9000b7672c0
-FS:  00007f20739f66c0(0000) GS:ffff88812613e000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000110c2d2a80 CR3: 0000000024e36000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- multiq_classify net/sched/sch_multiq.c:39 [inline]
- multiq_enqueue+0xfd/0x4c0 net/sched/sch_multiq.c:66
- dev_qdisc_enqueue+0x4e/0x260 net/core/dev.c:4118
- __dev_xmit_skb net/core/dev.c:4214 [inline]
- __dev_queue_xmit+0xe83/0x3b50 net/core/dev.c:4729
- packet_snd net/packet/af_packet.c:3076 [inline]
- packet_sendmsg+0x3e33/0x5080 net/packet/af_packet.c:3108
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg+0x21c/0x270 net/socket.c:742
- ____sys_sendmsg+0x505/0x830 net/socket.c:2630
- ___sys_sendmsg+0x21f/0x2a0 net/socket.c:2684
- __sys_sendmsg net/socket.c:2716 [inline]
- __do_sys_sendmsg net/socket.c:2721 [inline]
- __se_sys_sendmsg net/socket.c:2719 [inline]
- __x64_sys_sendmsg+0x19b/0x260 net/socket.c:2719
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0xfa/0xfa0 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f207578efc9
-Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f20739f6038 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
-RAX: ffffffffffffffda RBX: 00007f20759e5fa0 RCX: 00007f207578efc9
-RDX: 0000000000000004 RSI: 00002000000000c0 RDI: 0000000000000008
-RBP: 00007f20739f6090 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-R13: 00007f20759e6038 R14: 00007f20759e5fa0 R15: 00007f2075b0fa28
- </TASK>
-
-Reported-by: syzbot+87e1289a044fcd0c5f62@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/netdev/69003e33.050a0220.32483.00e8.GAE@google.com/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20251028035859.2067690-1-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
+Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms that `SKB_DROP_REASON_NOMEM` is a valid, well-defined drop
-reason in the kernel. Now let me write my complete analysis:
-
-## Summary Analysis
+## Analysis of hfsplus: Verify inode mode when loading from disk
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: `net: sched: Don't use WARN_ON_ONCE() for -ENOMEM in
-tcf_classify().`
+**Key indicators:**
+- **Reported-by: syzbot** - This is a real bug found by automated
+  fuzzing
+- **Closes:** link to syzkaller bug report confirms this is a genuine
+  issue
+- **Reviewed-by:** present from the HFS+ maintainer (Viacheslav Dubeyko)
+- **No "Cc: stable@vger.kernel.org"** tag
+- **No "Fixes:" tag** - bug appears to exist since original HFS+
+  implementation
 
-**Key Details from the Commit Message**:
-- The commit addresses a **syzbot-reported issue** where
-  `WARN_ON_ONCE()` can be easily triggered by fault injection
-- The issue is that `WARN_ON_ONCE()` is inappropriate for simple
-  `-ENOMEM` (out-of-memory) cases
-- The code already uses `SKB_DROP_REASON_NOMEM` to handle this same
-  error, making the `WARN` redundant and noisy
-- No `Cc: stable@vger.kernel.org` tag is present
-- No `Fixes:` tag is present
-- Has `Reported-by: syzbot` and `Closes:` link to bug report
-- Has `Reviewed-by: Jamal Hadi Salim` (a TC subsystem maintainer)
+The commit describes that corrupted S_IFMT bits in the on-disk "mode"
+field can cause inode->i_mode to become bogus when loaded from disk. The
+commit message references Apple technical documentation explaining the
+expected values for the mode field.
 
 ### 2. CODE CHANGE ANALYSIS
 
-**The Change (1 line modification)**:
+The fix modifies `hfsplus_get_perms()` in two ways:
+
+**a) Adds validation logic (the core fix):**
 ```c
-// Before:
-if (WARN_ON_ONCE(!ext)) {
-// After:
-if (!ext) {
+if (dir) {
+    if (mode && !S_ISDIR(mode))
+        goto bad_type;
+} else if (mode) {
+    switch (mode & S_IFMT) {
+    case S_IFREG:
+    case S_IFLNK:
+    case S_IFCHR:
+    case S_IFBLK:
+    case S_IFIFO:
+    case S_IFSOCK:
+        break;
+    default:
+        goto bad_type;
+    }
+}
 ```
+This validates that:
+- For directories (`dir=1`): mode must be 0 or actually be a directory
+  type
+- For files (`dir=0`): mode must be 0 or one of the valid file types
+  (regular, symlink, char/block device, FIFO, socket)
 
-**Technical Analysis**:
+**b) Changes return type from `void` to `int`:**
+- Returns -EIO on invalid mode with an error message
+- Callers (`hfsplus_cat_read_inode`) now check the return value and
+  propagate errors
 
-The `tcf_classify()` function is the main traffic classifier function in
-the Linux kernel's TC (Traffic Control) subsystem. It's called from:
-- 16+ qdisc classifier functions (htb_classify, sfq_classify, etc.)
-- The core `tc_run()` function
-
-The problematic code path is:
-1. `tcf_classify()` calls `tc_skb_ext_alloc(skb)` which internally calls
-   `skb_ext_add(skb, TC_SKB_EXT)`
-2. `skb_ext_add()` uses `GFP_ATOMIC` allocation, which **can
-   legitimately fail** under memory pressure
-3. On failure, the code correctly handles it by:
-   - Setting `SKB_DROP_REASON_NOMEM`
-   - Returning `TC_ACT_SHOT` (drop the packet)
-
-**Why WARN_ON_ONCE is Wrong Here**:
-- `WARN_ON_ONCE()` is intended for situations that indicate a **bug** or
-  **should never happen**
-- Memory allocation failures are **expected** runtime behavior,
-  especially with `GFP_ATOMIC`
-- The kernel's fault injection framework (failslab) intentionally
-  triggers allocation failures for testing
-- Using `WARN_ON_ONCE()` for expected failures creates false alarms and
-  clutters logs
+**Root cause:** The original code blindly trusted the mode field from
+disk without validating that the S_IFMT bits are consistent with the
+directory flag.
 
 ### 3. CLASSIFICATION
 
-- **Type**: Bug fix (removing inappropriate WARN)
-- **Category**: Code correctness / warning cleanup
-- **NOT**: Feature addition, API change, security fix
+- **Type:** Bug fix (input validation)
+- **Security relevance:** Yes - crafted filesystem images could trigger
+  this
+- **Category:** Filesystem robustness/hardening against corrupted data
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-**Scope**:
-- **1 file** modified: `net/sched/cls_api.c`
-- **1 line** changed
-- Pure removal of `WARN_ON_ONCE` wrapper
+| Aspect | Assessment |
+|--------|------------|
+| Lines changed | ~30+ additions, moderate size |
+| Files touched | 1 file (fs/hfsplus/inode.c) |
+| Complexity | Low - straightforward validation logic |
+| Regression risk | **LOW** - only rejects clearly invalid data |
 
-**Risk**: **VERY LOW**
-- The error handling logic remains **completely unchanged**
-- The packet is still dropped with correct `SKB_DROP_REASON_NOMEM`
-- No functional behavior changes
-- The only difference is suppression of the spurious warning
+The validation is conservative and follows Apple's official HFS+
+specification. It only rejects modes that are definitively wrong.
 
 ### 5. USER IMPACT
 
-**Who is affected**:
-- Anyone using TC (Traffic Control) subsystem
-- Systems under memory pressure
-- Test systems using fault injection
-- Systems running syzbot or similar fuzzers
-
-**Severity of the bug**:
-- **Low-Medium**: The `WARN_ON_ONCE` produces kernel warning output
-  (dmesg spam)
-- It does NOT cause crashes or data corruption
-- Some systems may treat kernel warnings as events requiring
-  investigation/monitoring
-
-**Practical Impact**:
-- In production: Warnings in dmesg under memory pressure (rare but
-  possible)
-- In testing: Frequent warnings when using fault injection, polluting
-  logs
+- **Affected users:** Those mounting HFS+ filesystems (macOS external
+  drives, dual-boot setups)
+- **Trigger:** Mounting a corrupted or maliciously crafted HFS+
+  filesystem image
+- **Impact of bug:** Bogus inode mode can lead to undefined kernel
+  behavior when processing the inode
+- **Impact of fix:** Graceful rejection with -EIO instead of corrupted
+  internal state
 
 ### 6. STABILITY INDICATORS
 
-- **Reviewed-by: Jamal Hadi Salim** - TC subsystem expert
-- **Signed-off-by: Jakub Kicinski** - Network maintainer
-- **syzbot tested** - The issue was discovered and verified by the
-  fuzzing system
+- Reviewed by subsystem maintainer ✓
+- Clean, standalone fix with no dependencies ✓
+- The modified functions exist in older stable kernels ✓
+- No unusual code patterns or risky constructs ✓
 
 ### 7. DEPENDENCY CHECK
 
-**Code existence in stable trees**:
-- The `WARN_ON_ONCE(!ext)` exists in:
-  - 6.12.y (line 1869)
-  - 6.6.y (line 1797)
-  - 6.1.y (line 1644)
-  - 5.15.y (line 1624)
-  - 5.10.y (line 1631)
-  - 5.4.y (line 1595)
+This is a standalone fix. The `hfsplus_get_perms` and
+`hfsplus_cat_read_inode` functions exist in all stable trees where HFS+
+is supported.
 
-**Original introduction**:
-- The `WARN_ON_ONCE(!ext)` was introduced in commit `95a7233c452a5`
-  (v5.4-rc1)
+---
 
-**Dependencies**:
-- None - this is a standalone one-line fix
-- The fix applies cleanly to all affected stable versions
+## Summary
 
-### 8. HISTORICAL CONTEXT
+**What it fixes:** Prevents corrupted or maliciously crafted HFS+
+filesystem images from causing bogus inode modes to be loaded into the
+kernel.
 
-The `WARN_ON_ONCE` was originally added in v5.4-rc1 when the TC skb
-extension feature was introduced. At the time, the developer likely
-thought allocation failure was unexpected, but in reality:
-1. `GFP_ATOMIC` allocations can fail
-2. The `SKB_DROP_REASON_NOMEM` was later added (in commit
-   4cf24dc8934074) showing the failure is recognized as "memory
-   exhaustion"
-3. The warning serves no debugging purpose since the error is fully
-   handled
+**Why it matters for stable:** This is a defensive fix that prevents
+accepting corrupted data, which could lead to undefined behavior. syzbot
+found this bug, indicating it can be triggered by crafted input - a
+potential security concern.
 
-## CONCLUSION
+**Meets stable criteria:**
+- ✓ Obviously correct (validates according to Apple's HFS+
+  specification)
+- ✓ Fixes a real bug that affects users (syzbot found it with crafted
+  images)
+- ✓ Small and contained (single file, ~30 lines of validation)
+- ✓ Low regression risk (only rejects clearly invalid data)
+- ✗ No explicit stable tag (author didn't request it)
 
-**Should this be backported?**
+**Risk vs Benefit:**
+- **Risk:** Very low - adds validation that only rejects invalid data
+- **Benefit:** Prevents kernel from operating on corrupted inode modes
+  from crafted/corrupted filesystems
 
-**Arguments FOR backporting**:
-1. ✅ **Tiny, surgical fix** - 1 line change
-2. ✅ **Zero functional change** - Error handling remains identical
-3. ✅ **Fixes user-visible issue** - Removes spurious kernel warnings
-4. ✅ **No risk of regression** - Only removes unnecessary WARN
-5. ✅ **Applies cleanly** to all stable branches
-6. ✅ **Well-tested** - Reviewed by TC maintainer, triggered by syzbot
-
-**Arguments AGAINST backporting**:
-1. ⚠️ No explicit `Cc: stable` tag
-2. ⚠️ No `Fixes:` tag
-3. ⚠️ Not a security issue
-4. ⚠️ Not a crash or data corruption bug
-5. ⚠️ Warnings are "noise" rather than serious bugs
-
-**Verdict**:
-
-While this commit lacks explicit stable tags, it represents an extremely
-low-risk improvement that suppresses inappropriate kernel warnings. The
-change:
-- Is trivial (1 line)
-- Has zero risk of regression
-- Improves kernel log cleanliness under stress/testing
-- Follows proper Linux coding guidelines (WARN should be for bugs, not
-  expected conditions)
-
-The lack of `Cc: stable` may simply be an oversight, as this type of fix
-is commonly accepted in stable trees. The benefits (cleaner logs, proper
-handling) outweigh the minimal effort of backporting.
+The lack of explicit stable tags suggests the author may not have
+intended this for stable, but the fix clearly meets stable criteria as a
+filesystem robustness fix against corrupted input. Filesystem fixes for
+handling crafted/corrupted data are generally appropriate for stable
+trees.
 
 **YES**
 
- net/sched/cls_api.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
+ 1 file changed, 28 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
-index ecec0a1e1c1a0..f751cd5eeac8d 100644
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -1866,7 +1866,7 @@ int tcf_classify(struct sk_buff *skb,
- 			struct tc_skb_cb *cb = tc_skb_cb(skb);
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index b51a411ecd237..e290e417ed3a7 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -180,13 +180,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
+ 	.d_compare    = hfsplus_compare_dentry,
+ };
  
- 			ext = tc_skb_ext_alloc(skb);
--			if (WARN_ON_ONCE(!ext)) {
-+			if (!ext) {
- 				tcf_set_drop_reason(skb, SKB_DROP_REASON_NOMEM);
- 				return TC_ACT_SHOT;
- 			}
+-static void hfsplus_get_perms(struct inode *inode,
+-		struct hfsplus_perm *perms, int dir)
++static int hfsplus_get_perms(struct inode *inode,
++			     struct hfsplus_perm *perms, int dir)
+ {
+ 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
+ 	u16 mode;
+ 
+ 	mode = be16_to_cpu(perms->mode);
++	if (dir) {
++		if (mode && !S_ISDIR(mode))
++			goto bad_type;
++	} else if (mode) {
++		switch (mode & S_IFMT) {
++		case S_IFREG:
++		case S_IFLNK:
++		case S_IFCHR:
++		case S_IFBLK:
++		case S_IFIFO:
++		case S_IFSOCK:
++			break;
++		default:
++			goto bad_type;
++		}
++	}
+ 
+ 	i_uid_write(inode, be32_to_cpu(perms->owner));
+ 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
+@@ -212,6 +228,10 @@ static void hfsplus_get_perms(struct inode *inode,
+ 		inode->i_flags |= S_APPEND;
+ 	else
+ 		inode->i_flags &= ~S_APPEND;
++	return 0;
++bad_type:
++	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
++	return -EIO;
+ }
+ 
+ static int hfsplus_file_open(struct inode *inode, struct file *file)
+@@ -516,7 +536,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+-		hfsplus_get_perms(inode, &folder->permissions, 1);
++		res = hfsplus_get_perms(inode, &folder->permissions, 1);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		inode->i_size = 2 + be32_to_cpu(folder->valence);
+ 		inode_set_atime_to_ts(inode, hfsp_mt2ut(folder->access_date));
+@@ -545,7 +567,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 
+ 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
+ 					&file->rsrc_fork : &file->data_fork);
+-		hfsplus_get_perms(inode, &file->permissions, 0);
++		res = hfsplus_get_perms(inode, &file->permissions, 0);
++		if (res)
++			goto out;
+ 		set_nlink(inode, 1);
+ 		if (S_ISREG(inode->i_mode)) {
+ 			if (file->permissions.dev)
 -- 
 2.51.0
 
