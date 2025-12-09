@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81EE23C8C7;
-	Tue,  9 Dec 2025 00:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD41D23C8C7;
+	Tue,  9 Dec 2025 00:17:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239443; cv=none; b=OUveOBMNzcdOdvHKXHhcBXthFeVmdF/bLmnbg9C78EMSazpHalXfLFe4Act8kp8icfy6zihfOiR1DasVKCxHHn//ntLRsRZkTJR3SuZQGSH7ZkS/AAqZD68i7rUeF8oDbC7AU9EAhccWQ5S+CiEZBgRzm1aAT0rJPTW1sYdaoFc=
+	t=1765239445; cv=none; b=YrufaNBhGsshv//E7DZcQNTJrxlI6V9b6L+7qbRS6ZqAro54zm98qWydQstblkhpV2XaCZ3jt80o5di2OFB+W7dP5IRODgcqlebLRDOd2G15CHwqagXBbljQVrKJQe576iyNV8lwFo5rcbjclk5xv0v/r+XsXcqkwkFRKPp5v0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239443; c=relaxed/simple;
-	bh=Lelg716SCuCBRQsIrBzYR0/pjER/M5f4vAd3JX5ZAFA=;
+	s=arc-20240116; t=1765239445; c=relaxed/simple;
+	bh=zJDUZJLStca6AOH5tUlUpjNsJ+2vLrqieI6DgNVKTC0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WPiQEwUk34va2E5THGDCDRzlIba/3YZQyd4WmRSNb/yw9kvZTKZ9/dpNlcq2Ch2mQmkI1MJpunm3bF06OX6tJcpuqdpsyaKrgpA48CxFEq+w9tVUvKX4qD9NuAzwGAQdLBdm8ZsqkTlJGUhKsHn2NxE8fM5Xrde+MvPsyB1mWHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZEaOhwwg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iAxlcoItdiXFMN6ErdUpLo6wlxFYKs1eTujQThCIggbEXjz5y2sWv/esBCrBJGP5quVDvMj8OVoTKvb7fEXuzWnKRcmDLXmsFe6ik138nftfswWgnm2yciIr8aKmU2+aN3tzbP952EXCgEtuWvKFCnBfaJfTSe5x7YppiUBgLpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VKVBdvYY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZEaOhwwg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87DCC4CEF1;
-	Tue,  9 Dec 2025 00:17:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VKVBdvYY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C93D2C19421;
+	Tue,  9 Dec 2025 00:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239443;
-	bh=Lelg716SCuCBRQsIrBzYR0/pjER/M5f4vAd3JX5ZAFA=;
+	s=k20201202; t=1765239444;
+	bh=zJDUZJLStca6AOH5tUlUpjNsJ+2vLrqieI6DgNVKTC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZEaOhwwgeORzGhDVMKzC7F9iHJ3wOtrZgcjclzlGh+4KHCxRqhlx8jj0EjVEttwGL
-	 UpK13aMef6J7xSxwdBisiEtrrIi3AxmyJBuyYuLwyi+mKptDLFUbuyiX8TeWExRzY4
-	 fMMSTL1v707mj/eEVVE/lm3ztAhHI7aGSH1UBbhBKi9LgxDGjSqT/RXQarM9lQ5VhN
-	 2rNKSulLhtQ4EvkSYwiXXj1EkCmHu8deoW0S3U+K794kXTUhbnItXDD6saeJ8QZbjl
-	 +T7UuiTIIHmAmYjDlYcIxYrk5Ce5+ur4luraczhV6lUPXBtOMP1erq71CHYhIg0Cl0
-	 uqf3K+l6XOGhw==
+	b=VKVBdvYYoKYEWFRggfdzHmgI/xL7t3P0MB6mMukFv6exTK33gXmbRMZva96zmiPYS
+	 XK7TGbthkndzoRqQ6dBuAPdFCTCt66uHZiCTTuGq/aYA32DBwrSaq71v9sHcB5i4/5
+	 CBHQR4pYl26ey/+lTaVmbd3vK6y5QJixiuGmoQ7jyGJdvqFnK3jOliIxfieSR7pY8A
+	 FrNXZ2v3GCJ/p1VOuw+O8DmkWv4zuNsMnzWn6rKaFaxy/Xo2NZgPfI/DdI26jBSFUJ
+	 ionFY3sU4gIj6oEa8uN9ZkIE4i+LlCiUQD/tJ5GCXesOqvcNzyobFzhxuqQc7J/KrH
+	 CydU/NKY7ZoZg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+Cc: Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>,
-	frank.li@vivo.com,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] hfsplus: Verify inode mode when loading from disk
-Date: Mon,  8 Dec 2025 19:15:14 -0500
-Message-ID: <20251209001610.611575-22-sashal@kernel.org>
+	gfs2@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-6.6] gfs2: fix remote evict for read-only filesystems
+Date: Mon,  8 Dec 2025 19:15:15 -0500
+Message-ID: <20251209001610.611575-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -53,241 +50,171 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit 005d4b0d33f6b4a23d382b7930f7a96b95b01f39 ]
+[ Upstream commit 64c10ed9274bc46416f502afea48b4ae11279669 ]
 
-syzbot is reporting that S_IFMT bits of inode->i_mode can become bogus when
-the S_IFMT bits of the 16bits "mode" field loaded from disk are corrupted.
+When a node tries to delete an inode, it first requests exclusive access
+to the iopen glock.  This triggers demote requests on all remote nodes
+currently holding the iopen glock.  To satisfy those requests, the
+remote nodes evict the inode in question, or they poke the corresponding
+inode glock to signal that the inode is still in active use.
 
-According to [1], the permissions field was treated as reserved in Mac OS
-8 and 9. According to [2], the reserved field was explicitly initialized
-with 0, and that field must remain 0 as long as reserved. Therefore, when
-the "mode" field is not 0 (i.e. no longer reserved), the file must be
-S_IFDIR if dir == 1, and the file must be one of S_IFREG/S_IFLNK/S_IFCHR/
-S_IFBLK/S_IFIFO/S_IFSOCK if dir == 0.
+This behavior doesn't depend on whether or not a filesystem is
+read-only, so remove the incorrect read-only check.
 
-Reported-by: syzbot <syzbot+895c23f6917da440ed0d@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=895c23f6917da440ed0d
-Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#HFSPlusPermissions [1]
-Link: https://developer.apple.com/library/archive/technotes/tn/tn1150.html#ReservedAndPadFields [2]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Link: https://lore.kernel.org/r/04ded9f9-73fb-496c-bfa5-89c4f5d1d7bb@I-love.SAKURA.ne.jp
-Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of hfsplus: Verify inode mode when loading from disk
+## Analysis: gfs2: fix remote evict for read-only filesystems
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Key indicators:**
-- **Reported-by: syzbot** - This is a real bug found by automated
-  fuzzing
-- **Closes:** link to syzkaller bug report confirms this is a genuine
-  issue
-- **Reviewed-by:** present from the HFS+ maintainer (Viacheslav Dubeyko)
-- **No "Cc: stable@vger.kernel.org"** tag
-- **No "Fixes:" tag** - bug appears to exist since original HFS+
-  implementation
-
-The commit describes that corrupted S_IFMT bits in the on-disk "mode"
-field can cause inode->i_mode to become bogus when loaded from disk. The
-commit message references Apple technical documentation explaining the
-expected values for the mode field.
+**Subject:** Uses "fix" keyword, indicating a bug fix
+**Description:** Explains a cluster coordination bug in GFS2 where the
+read-only check was incorrectly preventing remote inode eviction
+**Tags:**
+- Signed-off-by from Andreas Gruenbacher (GFS2 maintainer)
+- No explicit "Cc: stable@vger.kernel.org" tag
+- No "Fixes:" tag
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix modifies `hfsplus_get_perms()` in two ways:
+The change is extremely minimal - removing a single condition from
+`iopen_go_callback()`:
 
-**a) Adds validation logic (the core fix):**
+**Before:**
 ```c
-if (dir) {
-    if (mode && !S_ISDIR(mode))
-        goto bad_type;
-} else if (mode) {
-    switch (mode & S_IFMT) {
-    case S_IFREG:
-    case S_IFLNK:
-    case S_IFCHR:
-    case S_IFBLK:
-    case S_IFIFO:
-    case S_IFSOCK:
-        break;
-    default:
-        goto bad_type;
-    }
-}
+if (!remote || sb_rdonly(sdp->sd_vfs) ||
+    test_bit(SDF_KILL, &sdp->sd_flags))
+    return;
 ```
-This validates that:
-- For directories (`dir=1`): mode must be 0 or actually be a directory
-  type
-- For files (`dir=0`): mode must be 0 or one of the valid file types
-  (regular, symlink, char/block device, FIFO, socket)
 
-**b) Changes return type from `void` to `int`:**
-- Returns -EIO on invalid mode with an error message
-- Callers (`hfsplus_cat_read_inode`) now check the return value and
-  propagate errors
+**After:**
+```c
+if (!remote || test_bit(SDF_KILL, &sdp->sd_flags))
+    return;
+```
 
-**Root cause:** The original code blindly trusted the mode field from
-disk without validating that the S_IFMT bits are consistent with the
-directory flag.
+**Technical mechanism of the bug:**
+- GFS2 is a clustered filesystem where multiple nodes access shared
+  storage
+- When Node A wants to delete an inode, it requests exclusive access to
+  the iopen glock
+- This triggers demote requests to all remote nodes (Node B, C, etc.)
+  holding that glock
+- Remote nodes must respond by either evicting the inode or signaling
+  it's still in use
+- The bug: The `sb_rdonly()` check caused read-only mounted nodes to
+  skip this coordination entirely
+- This breaks cluster protocol because Node A waits for Node B to
+  release the glock, but Node B ignores the request
+
+**Why the fix is correct:**
+Cluster coordination for glock demotes must work regardless of mount
+mode. A read-only node still participates in the cluster and must
+properly respond to glock callbacks. The read-only check was logically
+incorrect and could cause:
+- Stale inode issues across the cluster
+- Potential hangs where nodes wait indefinitely for glock release
+- Cluster coordination failures
 
 ### 3. CLASSIFICATION
 
-- **Type:** Bug fix (input validation)
-- **Security relevance:** Yes - crafted filesystem images could trigger
-  this
-- **Category:** Filesystem robustness/hardening against corrupted data
+- **Bug type:** Logic error - incorrect early return preventing required
+  cluster coordination
+- **Not a feature:** Removing an incorrect check doesn't add
+  functionality
+- **Security impact:** Not directly security-related, but could cause
+  availability issues
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
-| Aspect | Assessment |
+| Metric | Assessment |
 |--------|------------|
-| Lines changed | ~30+ additions, moderate size |
-| Files touched | 1 file (fs/hfsplus/inode.c) |
-| Complexity | Low - straightforward validation logic |
-| Regression risk | **LOW** - only rejects clearly invalid data |
+| Lines changed | 2 lines (trivial) |
+| Files touched | 1 file |
+| Complexity | Very low |
+| Subsystem | GFS2 (clustered filesystem) |
+| Regression risk | Very low |
 
-The validation is conservative and follows Apple's official HFS+
-specification. It only rejects modes that are definitively wrong.
+The change is extremely surgical - it only removes an erroneous
+condition. The remaining code path already exists and has been tested;
+this fix just ensures it executes when it should.
 
 ### 5. USER IMPACT
 
-- **Affected users:** Those mounting HFS+ filesystems (macOS external
-  drives, dual-boot setups)
-- **Trigger:** Mounting a corrupted or maliciously crafted HFS+
-  filesystem image
-- **Impact of bug:** Bogus inode mode can lead to undefined kernel
-  behavior when processing the inode
-- **Impact of fix:** Graceful rejection with -EIO instead of corrupted
-  internal state
+- **Affected users:** GFS2 users in clustered environments with read-
+  only mounts
+- **Use case:** Enterprise clusters (Red Hat, etc.) that use GFS2
+- **Severity:** Could cause cluster coordination failures, stale inodes,
+  or hangs
+- **Frequency:** Affects all read-only GFS2 mounts in cluster mode
 
 ### 6. STABILITY INDICATORS
 
-- Reviewed by subsystem maintainer ✓
-- Clean, standalone fix with no dependencies ✓
-- The modified functions exist in older stable kernels ✓
-- No unusual code patterns or risky constructs ✓
+- Written by Andreas Gruenbacher, the GFS2 maintainer who deeply
+  understands the subsystem
+- The fix logic is obviously correct based on the documented behavior
+- Small change means easy to verify correctness
 
 ### 7. DEPENDENCY CHECK
 
-This is a standalone fix. The `hfsplus_get_perms` and
-`hfsplus_cat_read_inode` functions exist in all stable trees where HFS+
-is supported.
+- No dependencies on other commits
+- The `iopen_go_callback()` function and `sb_rdonly()` exist in all
+  stable kernels with GFS2 support
+- Clean backport expected (simple line removal)
 
----
+### Risk vs Benefit Analysis
 
-## Summary
+**Benefits:**
+- Fixes a real bug affecting cluster coordination
+- Prevents potential hangs and stale inode issues
+- Restores correct cluster protocol behavior
 
-**What it fixes:** Prevents corrupted or maliciously crafted HFS+
-filesystem images from causing bogus inode modes to be loaded into the
-kernel.
+**Risks:**
+- Extremely low - the change simply allows existing, tested code to run
+- Only affects GFS2, a specialized filesystem
+- The maintainer clearly understands the impact
 
-**Why it matters for stable:** This is a defensive fix that prevents
-accepting corrupted data, which could lead to undefined behavior. syzbot
-found this bug, indicating it can be triggered by crafted input - a
-potential security concern.
+### Conclusion
 
-**Meets stable criteria:**
-- ✓ Obviously correct (validates according to Apple's HFS+
-  specification)
-- ✓ Fixes a real bug that affects users (syzbot found it with crafted
-  images)
-- ✓ Small and contained (single file, ~30 lines of validation)
-- ✓ Low regression risk (only rejects clearly invalid data)
-- ✗ No explicit stable tag (author didn't request it)
+Despite the lack of explicit "Cc: stable" tag, this commit:
+1. ✅ Is obviously correct (removing incorrect logic)
+2. ✅ Fixes a real bug affecting cluster coordination
+3. ✅ Is small and contained (2 lines)
+4. ✅ Does not introduce new features
+5. ✅ Will apply cleanly to stable trees
+6. ✅ Has minimal regression risk
 
-**Risk vs Benefit:**
-- **Risk:** Very low - adds validation that only rejects invalid data
-- **Benefit:** Prevents kernel from operating on corrupted inode modes
-  from crafted/corrupted filesystems
-
-The lack of explicit stable tags suggests the author may not have
-intended this for stable, but the fix clearly meets stable criteria as a
-filesystem robustness fix against corrupted input. Filesystem fixes for
-handling crafted/corrupted data are generally appropriate for stable
-trees.
+The fix addresses a genuine bug that can cause cluster coordination
+failures in GFS2. The change is trivially small, written by the
+subsystem maintainer, and the logic is clearly correct - read-only
+status should not prevent a node from properly responding to cluster
+glock demote requests.
 
 **YES**
 
- fs/hfsplus/inode.c | 32 ++++++++++++++++++++++++++++----
- 1 file changed, 28 insertions(+), 4 deletions(-)
+ fs/gfs2/glops.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
-index b51a411ecd237..e290e417ed3a7 100644
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -180,13 +180,29 @@ const struct dentry_operations hfsplus_dentry_operations = {
- 	.d_compare    = hfsplus_compare_dentry,
- };
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 0c0a80b3bacab..0c68ab4432b08 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -630,8 +630,7 @@ static void iopen_go_callback(struct gfs2_glock *gl, bool remote)
+ 	struct gfs2_inode *ip = gl->gl_object;
+ 	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
  
--static void hfsplus_get_perms(struct inode *inode,
--		struct hfsplus_perm *perms, int dir)
-+static int hfsplus_get_perms(struct inode *inode,
-+			     struct hfsplus_perm *perms, int dir)
- {
- 	struct hfsplus_sb_info *sbi = HFSPLUS_SB(inode->i_sb);
- 	u16 mode;
+-	if (!remote || sb_rdonly(sdp->sd_vfs) ||
+-	    test_bit(SDF_KILL, &sdp->sd_flags))
++	if (!remote || test_bit(SDF_KILL, &sdp->sd_flags))
+ 		return;
  
- 	mode = be16_to_cpu(perms->mode);
-+	if (dir) {
-+		if (mode && !S_ISDIR(mode))
-+			goto bad_type;
-+	} else if (mode) {
-+		switch (mode & S_IFMT) {
-+		case S_IFREG:
-+		case S_IFLNK:
-+		case S_IFCHR:
-+		case S_IFBLK:
-+		case S_IFIFO:
-+		case S_IFSOCK:
-+			break;
-+		default:
-+			goto bad_type;
-+		}
-+	}
- 
- 	i_uid_write(inode, be32_to_cpu(perms->owner));
- 	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
-@@ -212,6 +228,10 @@ static void hfsplus_get_perms(struct inode *inode,
- 		inode->i_flags |= S_APPEND;
- 	else
- 		inode->i_flags &= ~S_APPEND;
-+	return 0;
-+bad_type:
-+	pr_err("invalid file type 0%04o for inode %lu\n", mode, inode->i_ino);
-+	return -EIO;
- }
- 
- static int hfsplus_file_open(struct inode *inode, struct file *file)
-@@ -516,7 +536,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 		}
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
--		hfsplus_get_perms(inode, &folder->permissions, 1);
-+		res = hfsplus_get_perms(inode, &folder->permissions, 1);
-+		if (res)
-+			goto out;
- 		set_nlink(inode, 1);
- 		inode->i_size = 2 + be32_to_cpu(folder->valence);
- 		inode_set_atime_to_ts(inode, hfsp_mt2ut(folder->access_date));
-@@ -545,7 +567,9 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
- 
- 		hfsplus_inode_read_fork(inode, HFSPLUS_IS_RSRC(inode) ?
- 					&file->rsrc_fork : &file->data_fork);
--		hfsplus_get_perms(inode, &file->permissions, 0);
-+		res = hfsplus_get_perms(inode, &file->permissions, 0);
-+		if (res)
-+			goto out;
- 		set_nlink(inode, 1);
- 		if (S_ISREG(inode->i_mode)) {
- 			if (file->permissions.dev)
+ 	if (gl->gl_demote_state == LM_ST_UNLOCKED &&
 -- 
 2.51.0
 
