@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318EE2153FB;
-	Tue,  9 Dec 2025 00:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7D7219303;
+	Tue,  9 Dec 2025 00:16:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239413; cv=none; b=TClSJnlONc4KGclrutW8HslcQg/G3frAxT3xak5khZR4+QoARYMXt2swZTevXUCldPNgeJe5jJxsRishNnixK6nKFKe14055S4BBUTKHMun25FQzc4OipY4sEhgzu27ZIdgcKcvzhzm3IUS5q/Kxq3kgSJ7p8vMinRuNgA8jY8E=
+	t=1765239415; cv=none; b=eWuWAvnEKlNqJY6pkyCu0QyOmXZSOdN9j/toXPNg41/WmRmQV/DMEqGVHHZebM62MiWihWt2Mz+z00skJhD7i9TNmx/rkgttC3xGj3dEvwBxY92jtdCyw3SHZXjcQp5N155mJjGLLHPsuMY0Y6jL+KhbA8l/R5P14b6wj0RaGIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239413; c=relaxed/simple;
-	bh=QPRP10VucOT7diTQb7MQ7N+PgDBlIwD51s7XelWZoGc=;
+	s=arc-20240116; t=1765239415; c=relaxed/simple;
+	bh=rPLCsJ7oKMNb8wOUeMVrIrmHBTliVFaFmmYP7IJbl4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=di+uV+nm75Y23nIa1caxBFQiEq+0OqEUtVfTqqkf8LBCuzc2ToZfhJEhm9Kn87vseEH5B1O9G7uUzPyj9YUWLYsMBAMyJhs5HWdmovQoYtjON/EeGWi4xSNMCrUoYOc90ya9WgGX987d4RJ3NKiOqepUj5zdoqUM/SYTHrTms2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nuyPzK+6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BT9+FhEIzy6WMqDxJp/iXY7JQ5B/cBsCEYBbumM77hchqML+I4Jmqtalsg91kWlU7Izv4OjKfAyvpUfjEpi6z70FsgcNl2H/WWH3VOOSfcTg9RdYJ9YRI7lrg2lVLxSx3FXdc5qI70jhDACCszu8yPuu7mqCD27NKw7fmAxYz4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kod4GpEQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nuyPzK+6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A43D7C19421;
-	Tue,  9 Dec 2025 00:16:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kod4GpEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88F9C113D0;
+	Tue,  9 Dec 2025 00:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239413;
-	bh=QPRP10VucOT7diTQb7MQ7N+PgDBlIwD51s7XelWZoGc=;
+	s=k20201202; t=1765239415;
+	bh=rPLCsJ7oKMNb8wOUeMVrIrmHBTliVFaFmmYP7IJbl4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuyPzK+6aqOKF5XAjX1uf10V2q162IiOCtxncUw5cBOSOm4AHkHwVomi8NY2YWq+Y
-	 y5cEyTFkf5vts90LRpHHQxf5tfHFKbq2/r9PX+mKXdXkYcCfLm/Q3rdNnPJKQrnd0F
-	 bERjhZDhnl9dnGUMBrHJ1psh0byAuMHV1mj179cxyEkizluEtRrxp/5DRf3Dj7AuM3
-	 /F0rhwknjdeiP5BvhEyKWPvIGkONvMHjdIEupvnCNyzn4sRdi1gHckUW2gvQSQOdXF
-	 cEcIzppqehU2ggjkieXpPuFEJP99NBYSzcwbE33iVVDIrH9mh3JgC2T58/+LXxHywP
-	 c//bqYZeEKEiw==
+	b=kod4GpEQCNMOtOmx15GHmtUx4aicOw2FrRB3XzzQ35KeqEwyp9tl1LQzyoPNuaAJS
+	 AstgDWyJC+U+shbyNkSPCnTvd0WWafys9joUmcqzZWq2iB06HmvsfvMwrRM1swfd8Z
+	 xTgP32sKV+pUgFcwANRLxZPWVYdUhfKA/pGqjs0/lPLTlwbp4hFitQ2vyZsEM7fvbG
+	 1l1yi1Wi/2S7U+rE7SMl1Qkw9LW1JXWGyCwZTXhV2gCd/JoPKp0p/FDJXtiklwk8PU
+	 TZi5zORj5ZeRRQG+3cW2SEGn/cnpG9p3IocXEac11D4t1XPBOCleY5CYJ2PnZyL+CR
+	 quS3DsVJ+VUuw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+Cc: Max Chou <max.chou@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	johannes@sipsolutions.net,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.12] wifi: mac80211: reset CRC valid after CSA
-Date: Mon,  8 Dec 2025 19:15:02 -0500
-Message-ID: <20251209001610.611575-10-sashal@kernel.org>
+	marcel@holtmann.org,
+	luiz.dentz@gmail.com,
+	linux-bluetooth@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] Bluetooth: btusb: Add new VID/PID 0x0489/0xE12F for RTL8852BE-VT
+Date: Mon,  8 Dec 2025 19:15:03 -0500
+Message-ID: <20251209001610.611575-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -50,206 +50,178 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Max Chou <max.chou@realtek.com>
 
-[ Upstream commit 8f24be708829854560e1db9f765c51305b046183 ]
+[ Upstream commit 32caa197b9b603e20f49fd3a0dffecd0cd620499 ]
 
-While waiting for a beacon after CSA, reset the CRC valid
-so that the next beacon is handled even if it happens to
-be identical the last one on the old channel. This is an
-AP bug either way, but it's better to disconnect cleanly
-than to have lingering CSA state.
+Add the support ID(0x0489, 0xE12F) to usb_device_id table for
+Realtek RTL8852BE-VT.
 
-In the iwlwifi instantiation of this problem, mac80211 is
-ignoring the beacon but the firmware creates a new CSA,
-and then crashes later because mac80211/driver didn't do
-anything about it.
+The device info from /sys/kernel/debug/usb/devices as below.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20251019115024.521ad9c6b87d.I86376900df3d3423185b75bf63358c29f33a5eb6@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+T:  Bus=04 Lev=02 Prnt=02 Port=05 Cnt=01 Dev#= 86 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e12f Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Max Chou <max.chou@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I understand the full picture! Let me put together the final
-analysis:
-
-## Summary Analysis
+## Commit Analysis: Bluetooth: btusb: Add new VID/PID 0x0489/0xE12F for
+RTL8852BE-VT
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** "wifi: mac80211: reset CRC valid after CSA"
-
-**Key points from commit message:**
-- Fixes a bug where the beacon CRC matching causes the first beacon
-  after CSA to be ignored
-- This happens when an AP (like Asus AXE11000) sends an identical beacon
-  after CSA
-- When ignored, mac80211 doesn't complete the CSA cleanup properly
-- In iwlwifi, this causes firmware to create a new CSA and eventually
-  crash
-
-**Tags:**
-- **NO** `Cc: stable@vger.kernel.org` tag - The maintainer did NOT
-  explicitly request stable backport
-- **NO** `Fixes:` tag - There's no explicit reference to a buggy commit
+- **Subject**: Adding a new USB Vendor/Product ID for a Realtek
+  Bluetooth chip variant
+- **No "Cc: stable@vger.kernel.org"** tag present
+- **No "Fixes:"** tag present
+- Commit message includes detailed device info from
+  `/sys/kernel/debug/usb/devices`, confirming this is real hardware
+  that's been tested
+- Signed off by Realtek engineer (the hardware vendor) and Bluetooth
+  maintainer
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix is extremely small - just **1 line of actual code** plus a
-**9-line comment**:
-
+The diff is extremely simple:
 ```c
-link->u.mgd.beacon_crc_valid = false;
++       { USB_DEVICE(0x0489, 0xe12f), .driver_info = BTUSB_REALTEK |
++
+BTUSB_WIDEBAND_SPEECH },
 ```
 
-This line is added at line 2509 in `ieee80211_csa_switch_work()`, right
-after:
-```c
-link->u.mgd.csa.waiting_bcn = true;
-```
+- **2 lines added** to the `quirks_table[]` static array
+- Uses identical `driver_info` flags as the existing RTL8852BE-VT entry
+  (`0x0bda, 0x8520`)
+- Placed in the appropriate "Realtek 8852BT/8852BE-VT Bluetooth devices"
+  section
+- No code logic changes whatsoever - just adding an entry to a USB
+  device ID table
 
-**Technical mechanism:**
-1. mac80211 uses a CRC mechanism to skip processing beacons that haven't
-   changed
-2. After CSA, the code sets `waiting_bcn = true` to wait for the first
-   beacon on the new channel
-3. The first beacon should normally be different (CSA IE removed), but
-   some buggy APs send identical beacons
-4. If the beacon CRC matches the last beacon on the old channel and
-   `beacon_crc_valid` is still true, mac80211 skips processing
-5. This leaves the CSA in a "waiting" state indefinitely
-6. The iwlwifi firmware sees the beacon, detects CSA state, and creates
-   a new CSA event, eventually crashing
+### 3. CLASSIFICATION
 
-**Root cause:** The `beacon_crc_valid` flag wasn't reset when entering
-the CSA waiting state.
+This falls squarely under the **NEW DEVICE IDs** exception, which is
+explicitly allowed in stable:
 
-### 3. HISTORICAL CONTEXT
+> "Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers - These
+are trivial one-line additions that enable hardware support"
 
-This is a **regression fix** from commit `f3dee30c6791e` "wifi:
-mac80211: mlme: unify CSA handling" (introduced in v6.9):
-- That commit removed `beacon_crc_valid = false` from
-  `ieee80211_chswitch_post_beacon()`
-- The rationale was "the CRC will change due to CSA/ECSA elements"
-- But this assumption was wrong for some buggy APs
+This is **not** a new feature. The btusb driver already fully supports
+RTL8852BE-VT devices. This simply registers another VID/PID combination
+for the same chipset.
 
-The original fix `d6843d1ee2831` "mac80211: clear the beacon's CRC after
-channel switch" (2021) recognized this need but was in a different
-location in the old code structure.
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 4. CLASSIFICATION
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | 2 (minimal) |
+| Files touched | 1 (`drivers/bluetooth/btusb.c`) |
+| Complexity | Trivial - static table entry |
+| Risk | **Extremely low** |
 
-- **Type:** Bug fix (not a feature)
-- **Category:** Crash fix / firmware hang fix
-- **Exception categories:** None (this is a pure bug fix)
-- **Security:** No CVE mentioned, not a security issue
+- Change only affects devices matching VID 0x0489 / PID 0xe12f
+- Cannot regress any existing functionality
+- No behavioral changes to the driver code itself
 
-### 5. SCOPE AND RISK ASSESSMENT
+### 5. USER IMPACT
 
-- **Lines changed:** ~10 lines (1 functional, 9 comment)
-- **Files touched:** 1 (net/mac80211/mlme.c)
-- **Complexity:** Very low - single boolean assignment
-- **Risk:** Very low - the change is conservative (invalidating CRC
-  forces re-processing)
-- **Worst case if fix is wrong:** Slightly more beacon processing work
-  (negligible)
-- **Subsystem:** WiFi mac80211 - mature, well-tested
+- **Without this patch**: Users with this Bluetooth adapter have non-
+  functional hardware
+- **With this patch**: The adapter is recognized and works with existing
+  Realtek support
+- **Severity for affected users**: High - complete loss of Bluetooth
+  functionality
+- This is a real Realtek product (vendor confirmed via signoff)
 
-### 6. USER IMPACT
+### 6. STABILITY INDICATORS
 
-- **Who is affected:** Users with Intel WiFi (iwlwifi) connecting to
-  certain APs (like Asus AXE11000)
-- **Severity:** HIGH - causes firmware crash
-- **Reproducibility:** Specific AP behavior needed, but real-world bug
-- **Trigger:** CSA (Channel Switch Announcement) - common in enterprise
-  environments
+- Submitted by Realtek engineer (Max Chou) - hardware vendor
+- Merged by Bluetooth maintainer (Luiz von Dentz)
+- Device info in commit message demonstrates the device exists and was
+  tested
 
-### 7. STABILITY INDICATORS
+### 7. DEPENDENCY CHECK
 
-- **Tested-by:** Not present
-- **Reviewed-by:** Emmanuel Grumbach (Intel WiFi maintainer) ✓
-- **Author:** Johannes Berg (mac80211 maintainer) - highly trusted
-- **Time in mainline:** Recent (Oct 2025) - not much soak time
+- No dependencies on other commits
+- The btusb driver with Realtek support (`BTUSB_REALTEK`) exists in all
+  stable trees
+- `BTUSB_WIDEBAND_SPEECH` flag is also well-established
 
-### 8. DEPENDENCY CHECK
+---
 
-**CRITICAL:** This fix requires commit `f3dee30c6791e` "wifi: mac80211:
-mlme: unify CSA handling" which:
-- Is present in v6.9+
-- Is present in stable/linux-6.9.y, 6.10.y, 6.11.y, 6.12.y, etc.
-- Is **NOT** present in stable/linux-6.6.y (LTS) or stable/linux-6.1.y
-  (LTS)
+## Summary
 
-For older stable trees (6.6.y, 6.1.y), this fix doesn't apply because:
-1. The code structure is completely different
-2. The original `beacon_crc_valid = false` is still in
-   `ieee80211_chswitch_post_beacon()`
-3. The bug was introduced by `f3dee30c6791e` which isn't in those trees
+This is a textbook example of a commit that should be backported to
+stable:
 
-### VERDICT
+**Benefits**:
+- Enables real hardware for real users
+- Zero risk of regression (only affects specific VID/PID)
+- Trivial 2-line data table addition
+- Obviously correct - follows exact same pattern as dozens of other
+  entries
+- Hardware vendor submitted the patch
 
-**Arguments FOR backporting:**
-1. Fixes a real firmware crash that affects users
-2. Small, surgical fix - single line of actual code
-3. Low risk - conservative change (invalidating CRC is safe)
-4. Written by mac80211 maintainer, reviewed by iwlwifi maintainer
-5. Fixes a regression from `f3dee30c6791e`
+**Concerns**:
+- No explicit stable tags (common for device ID additions; maintainers
+  often omit these for routine changes)
 
-**Arguments AGAINST backporting:**
-1. No `Cc: stable` tag - maintainer didn't request it
-2. No `Fixes:` tag
-3. Only applies to kernels 6.9+ (those with the prerequisite commit)
-4. Relatively new commit (limited soak time)
-5. Requires specific buggy AP to trigger
-
-**Risk vs Benefit:**
-- Risk: Very low (trivial change, conservative behavior)
-- Benefit: Medium-high (prevents firmware crashes for users with
-  affected APs)
-
-The commit fixes a real crash scenario in iwlwifi with certain APs, is
-extremely small and low-risk, and was reviewed by the relevant
-maintainers. The lack of `Cc: stable` tag might be an oversight given
-the fix's nature. However, it only applies to kernels 6.9+ where the
-prerequisite CSA refactoring exists.
-
-For stable trees 6.9+, 6.10+, 6.11+, 6.12+, this should be backported as
-it fixes a real user-visible crash with very low risk.
+The absence of `Cc: stable` is not concerning for device ID additions -
+they're so routine that many maintainers don't bother tagging them, yet
+stable maintainers regularly pick them up. This enables users with this
+Bluetooth adapter to have working hardware on stable kernels without
+requiring a full kernel upgrade.
 
 **YES**
 
- net/mac80211/mlme.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/bluetooth/btusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index f3138d1585353..a231e8661e39d 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -2508,6 +2508,16 @@ static void ieee80211_csa_switch_work(struct wiphy *wiphy,
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index cc03c8c38b16f..a5b73e0d271f3 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -585,6 +585,8 @@ static const struct usb_device_id quirks_table[] = {
+ 	/* Realtek 8852BT/8852BE-VT Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x8520), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe12f), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- 	link->u.mgd.csa.waiting_bcn = true;
- 
-+	/*
-+	 * The next beacon really should always be different, so this should
-+	 * have no effect whatsoever. However, some APs (we observed this in
-+	 * an Asus AXE11000), the beacon after the CSA might be identical to
-+	 * the last beacon on the old channel - in this case we'd ignore it.
-+	 * Resetting the CRC will lead us to handle it better (albeit with a
-+	 * disconnect, but clearly the AP is broken.)
-+	 */
-+	link->u.mgd.beacon_crc_valid = false;
-+
- 	/* apply new TPE restrictions immediately on the new channel */
- 	if (link->u.mgd.csa.ap_chandef.chan->band == NL80211_BAND_6GHZ &&
- 	    link->u.mgd.conn.mode >= IEEE80211_CONN_MODE_HE) {
+ 	/* Realtek 8922AE Bluetooth devices */
+ 	{ USB_DEVICE(0x0bda, 0x8922), .driver_info = BTUSB_REALTEK |
 -- 
 2.51.0
 
