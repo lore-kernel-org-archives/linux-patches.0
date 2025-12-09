@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696231A9B46;
-	Tue,  9 Dec 2025 00:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00101A9B46;
+	Tue,  9 Dec 2025 00:16:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239396; cv=none; b=Uz0YU6grXmLqo5RjBGamlcI611UHLwTFnmRQVYuP9ppP4umgVWWW7H0N2XPWuhkYd/i0Pu8+JyuGwa3je6PPABpDSvJNeSlI8I0fBCDg78NSXn16tyKaxJpbHI64kL26Q+kfKrG4Ht4i5Xo+nGqqfAAxoIP2PtJlIqqZDBylKxw=
+	t=1765239398; cv=none; b=ErI5MXTRn6+FVjnmc8big2KB8f1prDXRzzr0ZukkRZZ6o6LGyvomtuipHoGYBkGUzmylpLd0ikIaSL+BFYAfsMTmxBD3+5A+aCYvS/sWXYPZhomF4jCCVImNBEEaooIJ4ShhhXg5hUVr7QKTIar8+qX33PR6gwLb8XQ0YmI1CiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239396; c=relaxed/simple;
-	bh=3WeGAEZa8Aq5I0z4SfJDUYehCDb10tX39TFwjnnYEI8=;
+	s=arc-20240116; t=1765239398; c=relaxed/simple;
+	bh=wiRysEFUkuhH+VlDpC3sA3h+zQjzRcu4gDivr+e3HQs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eAmuIECFUo4W7Vc9CH9cXDqLNdjkhpxHxGBUNG2xSi6jskr6rhW6I26ZEvJEmSt/ieDHZuQCl21LIGtRJ4fzCenUphws1O7ZAAaboAx0gOK/3xH/bk5RMdNx0YiSUeorjvY5+WIuwJkQBTo95HuF3mRnYefSYE8v35bUq/ikT4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=e1L6WM0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iSuHo8oI7iT/iPOYmt15ydDV3HyWiGMAWx9WURJMnHBJfRUHTrY4lTypBIbW0jJ1PGKpSymd71iWgm+9dYEvFAOM2ouYyX3yMIPikz4bu7u7qoS0znLjAM8K+9+Qah5dBv1HVVjfI92QlU0/IgPZQk1XrUcZ2USDO1hokbyVcCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WUj2ROSN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="e1L6WM0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68FFC19421;
-	Tue,  9 Dec 2025 00:16:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WUj2ROSN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3ED6C4CEF1;
+	Tue,  9 Dec 2025 00:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239395;
-	bh=3WeGAEZa8Aq5I0z4SfJDUYehCDb10tX39TFwjnnYEI8=;
+	s=k20201202; t=1765239398;
+	bh=wiRysEFUkuhH+VlDpC3sA3h+zQjzRcu4gDivr+e3HQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1L6WM0cIQ/OXkTqSofiCQjCyHzWj+nu2R9iPOlOdqzBddM8eag1BfBGq9m2SqPGZ
-	 T/xBzFD+LpKwqhwkjFHcjp3ZKAeryPi0PTPc7fCIsts0E2r9sysn70cBuUMbV92ILt
-	 Xmnde/cs+vC1p7Blv+MAAyBzo2AvYLmdgtK5DQu053rIc009fmJrXKAdq8f5p1D10N
-	 9DbciOay0aBWEkCst2hrMBgg+8ovYlPZFWx60TAkNhzERRnwKJZ3KnJSE5PphwjVLV
-	 vVP5GVLZ+BMMzN7YHwUbzZZ3cwKZkjKR/mHQ4zWF9P58hIzkObosqqDu0ZZGZYOFNA
-	 CzMyp2OYEtIFg==
+	b=WUj2ROSNIFLuS5zziufvGbzRJ33rQ6Ko5lMvZWb4H9vZdGbDAhKBIn82hq7CLjVuL
+	 tAEUruA69S3eqq2lUhzJfw+6Fo1i5IlQ4INz7nIZIaNiiwJUjw41ABhHbE9GxZgQut
+	 hfv0+8ZiHu7tH2lmVQEEEnPXBaMtJKrHtIQBs9kN6HyLYaeR+OLjWSYYaDqcF9Qn1G
+	 455nMlwAzqanpWBD1VX3+5WnZs7g9SVIOW/OKiArSxibDt8nvVDvQ0kRYj7Kt/wYrk
+	 atjfRtl719Yi2yddGcX2ccAL+5nZN/aHarzyeIkuVnVhSufmzHx4ZKX8N9BDfPKa1q
+	 lI1YfZs0PfNLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Jakub Kicinski <kuba@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Ido Schimmel <idosch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.17] wifi: rtw89: use skb_dequeue() for queued ROC packets to prevent racing
-Date: Mon,  8 Dec 2025 19:14:54 -0500
-Message-ID: <20251209001610.611575-2-sashal@kernel.org>
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	netdev@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] ipv6: clean up routes when manually removing address with a lifetime
+Date: Mon,  8 Dec 2025 19:14:55 -0500
+Message-ID: <20251209001610.611575-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -49,95 +54,232 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f44a9b14a78f1e2e2c57dbc1f1e93889ad2f6ac0 ]
+[ Upstream commit c7dc5b5228822d2389e6e441f10169e460bcc67a ]
 
-TX task can enqueue ROC skb, but other tasks dequeue the skb. Using
-skb_queue_walk_safe() without locking will cause potential racing.
-Use skb_dequeue() with lock instead.
+When an IPv6 address with a finite lifetime (configured with valid_lft
+and preferred_lft) is manually deleted, the kernel does not clean up the
+associated prefix route. This results in orphaned routes (marked "proto
+kernel") remaining in the routing table even after their corresponding
+address has been deleted.
 
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251021133402.15467-3-pkshih@realtek.com
+This is particularly problematic on networks using combination of SLAAC
+and bridges.
+
+1. Machine comes up and performs RA on eth0.
+2. User creates a bridge
+   - does an ip -6 addr flush dev eth0;
+   - adds the eth0 under the bridge.
+3. SLAAC happens on br0.
+
+Even tho the address has "moved" to br0 there will still be a route
+pointing to eth0, but eth0 is not usable for IP any more.
+
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20251113031700.3736285-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Conclusion
+# Analysis of Commit: ipv6: clean up routes when manually removing
+address with a lifetime
 
-This commit is a **legitimate bug fix** for a race condition in the
-rtw89 WiFi driver's ROC (Remain On Channel) packet handling. The race
-occurs because `skb_queue_walk_safe()` traverses the queue without
-holding the queue's internal lock, while concurrently the TX task may
-add packets via `skb_queue_tail()`.
+## 1. COMMIT MESSAGE ANALYSIS
 
-**The fix:**
-- Replaces the unlocked iteration + separate unlink pattern with atomic
-  `skb_dequeue()`
-- Is small (net -8 lines), contained, and obviously correct
-- Uses standard kernel idioms that are well-tested
-- Has minimal regression risk
+**Subject:** Fixes route cleanup when IPv6 addresses with finite
+lifetimes are deleted manually
 
-**Stable tree applicability:**
-- Applies to kernel versions 6.4+ where the ROC functionality exists
-- Does NOT apply to 6.1.y LTS (code doesn't exist)
-- Code is identical in 6.6.y LTS and later versions
+**Key Problem Described:**
+- When an IPv6 address configured with `valid_lft` and `preferred_lft`
+  is manually deleted, the kernel fails to clean up the associated
+  prefix route
+- Results in orphaned routes (marked "proto kernel") remaining in the
+  routing table
+- Particularly problematic with SLAAC + bridges (a real-world scenario)
 
-**Why YES despite missing stable tags:**
-The fix meets all the technical criteria for stable backporting: it
-fixes a real bug (race condition that could cause crashes), is small and
-surgical, doesn't add features, and has very low regression risk. While
-the maintainer didn't explicitly request stable backport, the bug is
-clearly real and the fix is clearly correct. The absence of a `Cc:
-stable` tag may simply indicate it wasn't considered urgent, not that it
-shouldn't be backported.
+**Tags:**
+- `Reviewed-by: David Ahern` (network subsystem maintainer)
+- `Reviewed-by: Ido Schimmel` (networking contributor)
+- `Signed-off-by: Jakub Kicinski` (Linux networking maintainer)
+
+**Notable Missing Tags:**
+- No `Cc: stable@vger.kernel.org`
+- No `Fixes:` tag
+
+## 2. CODE CHANGE ANALYSIS
+
+The core fix is extremely minimal - a single condition change in
+`net/ipv6/addrconf.c`:
+
+**Before:**
+```c
+if (ifp->flags & IFA_F_PERMANENT && !(ifp->flags & IFA_F_NOPREFIXROUTE))
+```
+
+**After:**
+```c
+if (!(ifp->flags & IFA_F_NOPREFIXROUTE))
+```
+
+**Technical Mechanism:**
+- `IFA_F_PERMANENT` flag is set for addresses WITHOUT a finite lifetime
+- Addresses with `valid_lft`/`preferred_lft` set do NOT have
+  `IFA_F_PERMANENT`
+- The old code only cleaned up prefix routes for permanent (infinite
+  lifetime) addresses
+- Non-permanent addresses (those with lifetimes) would have their routes
+  orphaned on manual deletion
+- The fix removes the overly-restrictive `IFA_F_PERMANENT` check,
+  ensuring route cleanup for ALL addresses that don't have
+  `IFA_F_NOPREFIXROUTE`
+
+**Root Cause:** Logic error - the condition was too restrictive, failing
+to clean up routes for addresses with finite lifetimes.
+
+## 3. CLASSIFICATION
+
+- **Bug Fix:** Yes - fixes route leakage/orphaning
+- **New Feature:** No - corrects existing cleanup behavior
+- **Security:** No explicit security issue, but orphaned routes can
+  cause routing problems
+
+## 4. SCOPE AND RISK ASSESSMENT
+
+**Lines Changed:**
+- Core fix: 1 line modified (condition simplification)
+- Test: ~20 lines added to selftest
+
+**Risk Level: LOW**
+- The `check_cleanup_prefix_route()` and `cleanup_prefix_route()`
+  functions already exist and are tested
+- The fix EXTENDS existing cleanup to more cases (non-permanent
+  addresses)
+- No new code paths introduced, just removes an unnecessary condition
+- Well-reviewed by multiple networking maintainers
+
+## 5. USER IMPACT
+
+**Affected Users:**
+- Anyone using IPv6 with finite address lifetimes (SLAAC, DHCPv6)
+- Users managing bridges with IPv6 addresses
+- Enterprise/data center environments with complex networking
+
+**Severity:** Medium
+- Orphaned routes can cause routing confusion and network connectivity
+  issues
+- The SLAAC + bridge scenario is common in real-world deployments
+- Routes pointing to unusable interfaces cause operational problems
+
+## 6. STABILITY INDICATORS
+
+**Positive:**
+- Three experienced networking maintainers involved (Kicinski, Ahern,
+  Schimmel)
+- Includes selftest (`kci_test_addrlft_route_cleanup`) for regression
+  testing
+- Simple, surgical change with clear intent
+
+## 7. DEPENDENCY CHECK
+
+- Self-contained fix with no dependencies on other commits
+- The affected functions (`check_cleanup_prefix_route`, etc.) have
+  existed for a long time
+- Should apply cleanly to recent stable kernels
+
+## ASSESSMENT SUMMARY
+
+**Pros:**
+1. Fixes a real, user-visible bug (orphaned routes)
+2. Extremely minimal change (removes one condition)
+3. Strong review from key networking maintainers
+4. Low regression risk - extends existing behavior to more cases
+5. Includes regression test
+6. Addresses a practical scenario (SLAAC + bridges)
+
+**Cons/Considerations:**
+1. No explicit `Cc: stable@vger.kernel.org` tag - maintainers didn't
+   request backport
+2. No `Fixes:` tag - unknown when bug was introduced (likely long-
+   standing)
+3. The bug has workarounds (routes eventually expire, or can be manually
+   deleted)
+
+## VERDICT
+
+This commit is a good candidate for stable backporting. It is:
+- **Obviously correct:** The `IFA_F_PERMANENT` check makes no logical
+  sense for route cleanup
+- **Fixes a real bug:** Orphaned routes are a tangible problem affecting
+  real users
+- **Small and contained:** Single condition change in one file
+- **Low risk:** Extends existing cleanup mechanism to more cases
+- **Well-tested:** Reviewed by maintainers and includes regression test
+
+The lack of stable tags is notable but not disqualifying. The fix is
+clearly beneficial and the risk is minimal. Stable tree users dealing
+with IPv6 address lifetimes and bridges would benefit from this fix.
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/core.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ net/ipv6/addrconf.c                      |  2 +-
+ tools/testing/selftests/net/rtnetlink.sh | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index 917b2adede61d..8b40cada4149e 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -3632,12 +3632,10 @@ void rtw89_core_free_sta_pending_roc_tx(struct rtw89_dev *rtwdev,
- 					struct ieee80211_sta *sta)
- {
- 	struct rtw89_sta *rtwsta = sta_to_rtwsta(sta);
--	struct sk_buff *skb, *tmp;
-+	struct sk_buff *skb;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 40e9c336f6c55..b66217d1b2f82 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1324,7 +1324,7 @@ static void ipv6_del_addr(struct inet6_ifaddr *ifp)
+ 		__in6_ifa_put(ifp);
+ 	}
  
--	skb_queue_walk_safe(&rtwsta->roc_queue, skb, tmp) {
--		skb_unlink(skb, &rtwsta->roc_queue);
-+	while ((skb = skb_dequeue(&rtwsta->roc_queue)))
- 		dev_kfree_skb_any(skb);
--	}
+-	if (ifp->flags & IFA_F_PERMANENT && !(ifp->flags & IFA_F_NOPREFIXROUTE))
++	if (!(ifp->flags & IFA_F_NOPREFIXROUTE))
+ 		action = check_cleanup_prefix_route(ifp, &expires);
+ 
+ 	list_del_rcu(&ifp->if_list);
+diff --git a/tools/testing/selftests/net/rtnetlink.sh b/tools/testing/selftests/net/rtnetlink.sh
+index 163a084d525d5..248c2b91fe42b 100755
+--- a/tools/testing/selftests/net/rtnetlink.sh
++++ b/tools/testing/selftests/net/rtnetlink.sh
+@@ -8,6 +8,7 @@ ALL_TESTS="
+ 	kci_test_polrouting
+ 	kci_test_route_get
+ 	kci_test_addrlft
++	kci_test_addrlft_route_cleanup
+ 	kci_test_promote_secondaries
+ 	kci_test_tc
+ 	kci_test_gre
+@@ -323,6 +324,25 @@ kci_test_addrlft()
+ 	end_test "PASS: preferred_lft addresses have expired"
  }
  
- static void rtw89_core_stop_tx_ba_session(struct rtw89_dev *rtwdev,
-@@ -3881,8 +3879,8 @@ static void rtw89_core_sta_pending_tx_iter(void *data,
- 	struct ieee80211_vif *vif = rtwvif_to_vif(rtwvif);
- 	struct rtw89_vif_link *target = data;
- 	struct rtw89_vif_link *rtwvif_link;
--	struct sk_buff *skb, *tmp;
- 	unsigned int link_id;
-+	struct sk_buff *skb;
- 	int qsel, ret;
- 
- 	rtw89_vif_for_each_link(rtwvif, rtwvif_link, link_id)
-@@ -3895,9 +3893,7 @@ static void rtw89_core_sta_pending_tx_iter(void *data,
- 	if (skb_queue_len(&rtwsta->roc_queue) == 0)
- 		return;
- 
--	skb_queue_walk_safe(&rtwsta->roc_queue, skb, tmp) {
--		skb_unlink(skb, &rtwsta->roc_queue);
--
-+	while ((skb = skb_dequeue(&rtwsta->roc_queue))) {
- 		ret = rtw89_core_tx_write(rtwdev, vif, sta, skb, &qsel);
- 		if (ret) {
- 			rtw89_warn(rtwdev, "pending tx failed with %d\n", ret);
++kci_test_addrlft_route_cleanup()
++{
++	local ret=0
++	local test_addr="2001:db8:99::1/64"
++	local test_prefix="2001:db8:99::/64"
++
++	run_cmd ip -6 addr add $test_addr dev "$devdummy" valid_lft 300 preferred_lft 300
++	run_cmd_grep "$test_prefix proto kernel" ip -6 route show dev "$devdummy"
++	run_cmd ip -6 addr del $test_addr dev "$devdummy"
++	run_cmd_grep_fail "$test_prefix" ip -6 route show dev "$devdummy"
++
++	if [ $ret -ne 0 ]; then
++		end_test "FAIL: route not cleaned up when address with valid_lft deleted"
++		return 1
++	fi
++
++	end_test "PASS: route cleaned up when address with valid_lft deleted"
++}
++
+ kci_test_promote_secondaries()
+ {
+ 	run_cmd ifconfig "$devdummy"
 -- 
 2.51.0
 
