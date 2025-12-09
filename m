@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E28D2E370E;
-	Tue,  9 Dec 2025 00:18:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BDE2E8B7E;
+	Tue,  9 Dec 2025 00:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239487; cv=none; b=L5GIVAXfutHJLBG3UDumvjeTJ4OXSTmVqxTZfiyN3h/28VS7k8PCkIjiyB8++bQSdULHKU9R8OrjScEPArM5Su5pjyrwqTOimwOxkaTUgrUBKxJLbsekdQHzwe0HUKOqrhdEdRBgrBRHqt9MiDFH1coVnizQltVqF289eKL2XFA=
+	t=1765239489; cv=none; b=cXRaE/OS+7zWlocKdPCrD7bX3czgYUI4cmksKaPP+gRZUtBauzJBuC8RXo2w4n2ygvgVHdFaGnkOAIPsrTEppje7Y7fimn9uMIzlxdB4u1y8FIej28UKcPRPtVnd2gPLxQ1nWl22GjNGuNlNVoIQqZDXnOAStwtUcAq/uiAbRYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239487; c=relaxed/simple;
-	bh=1E52SU0XhxhmH0LjX9ze5vyc45B8H7RL6W44/GdTtww=;
+	s=arc-20240116; t=1765239489; c=relaxed/simple;
+	bh=kJAdqCXr4d3RnC2ag6980p/5Tk4kg1ToKyAzNT9irtc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZcTpxttDv4fucfN4YCRedi3MJCG9RkAjFCw1+J1iDQZ1dyDBX02PDfovJ6S8Yt0AkdAr+7BT0MZCWeL/D0JrSReeD3EjJUu33HtNuqEALM9p8IDUrkp9aL9+P8M7oXaFX8/cRT+gLJBui/nub0kZHwW8EVS1krW2t+tt5DOMV9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kD9LfDi+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rgi6ZJLLLAeW9TJ3dDcMgIdSDesnxeOuemQakPARYOUv1/asQHvpJVE4ohLhlROqEjzHZ72dc1gMorvsTXZnN3guXBMUhCj0wf1896pxXFwVyjqDfVYaNMlFLZklG0AtjI0vMqkXwu8WFfH+tJ8dA7g8YS04bsPhd2zL5vg5Wm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fXZenXE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kD9LfDi+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA4FC19421;
-	Tue,  9 Dec 2025 00:18:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fXZenXE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7B3C19421;
+	Tue,  9 Dec 2025 00:18:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239487;
-	bh=1E52SU0XhxhmH0LjX9ze5vyc45B8H7RL6W44/GdTtww=;
+	s=k20201202; t=1765239489;
+	bh=kJAdqCXr4d3RnC2ag6980p/5Tk4kg1ToKyAzNT9irtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kD9LfDi++dWHhMcJbPhseMz577o4fZIhMtmgbP8mi+NsYhCJLwViFJqj9hMoFLAPE
-	 n9xrz5tdFho8tCIU+e/d0KimIqaJWa9UDE9zHbg71tp7t8MTJgwsz2f7GvqsjI2BbI
-	 LCflxMFIQ18u/M/UNNY4efIeeuh9Jzqr9OSOqJnNA9p59nz72pMeq0EvBma9mW3ne4
-	 PUiTHQHifr+rr8b5gEfgy7ellhS9X2Me6R6QvCHXlDUfL86AW6/Y+Y90kxukcfZutf
-	 RxnNJZC8bAN6mU3KyrRabmet120V4YFumoSDMyybvgooLvXhXrHyo1nAFnQKGX3Tf9
-	 iRSHtwXLKhKIA==
+	b=fXZenXE4Eyl8DW9b/XyINswx2mwHO4gXbbKR3QfLwsI6+E1aX29SdTSF9W0acAHQt
+	 APIOoc1cvA3Fqxiu7UQbGM3QsFgvB1pV2mhdcpyoAwI5PJQOaRgC936Cy1JuO+HqkH
+	 8+fq5Tc7gWDBTEtvfZC/Tim2DbWfg1aAaxaKAmaEw51bKxtaC0+8ToHFOpyV1MWyRb
+	 PRH6d06F9/re30QsHEJsrTE+c3HKDmvqTfQipkKAjeheO//k39SA2IX5IK+Qv2HdPo
+	 FcPnTKwZyFFoO95zRr0OkgUSttoumI97YeEjtk4HbrCdB5bYZpdQkJlrumHeDGi4Yh
+	 WQZh4DJpnTfDw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuan-Chung Chen <damon.chen@realtek.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+Cc: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>,
+	syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-wireless@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.1] wifi: rtw89: phy: fix out-of-bounds access in rtw89_phy_read_txpwr_limit()
-Date: Mon,  8 Dec 2025 19:15:30 -0500
-Message-ID: <20251209001610.611575-38-sashal@kernel.org>
+	ntfs3@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-6.6] ntfs: set dummy blocksize to read boot_block when mounting
+Date: Mon,  8 Dec 2025 19:15:31 -0500
+Message-ID: <20251209001610.611575-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -48,178 +49,154 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Chung Chen <damon.chen@realtek.com>
+From: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
 
-[ Upstream commit 1dd7e743dd37361c8c1ac89355a8da738e2b81fb ]
+[ Upstream commit d1693a7d5a38acf6424235a6070bcf5b186a360d ]
 
-Coverity reported a potential out-of-bounds access when 'bw' exceeds the
-valid range for the specified band. Add a helper `rtw89_bw_is_valid()`
-to check bandwidth validity for each band before accessing limit tables.
+When mounting, sb->s_blocksize is used to read the boot_block without
+being defined or validated. Set a dummy blocksize before attempting to
+read the boot_block.
 
-Addresses-Coverity-ID: 1598844 ("Out-of-bounds access")
-Addresses-Coverity-ID: 1598896 ("Out-of-bounds access")
+The issue can be triggered with the following syz reproducer:
 
-Signed-off-by: Kuan-Chung Chen <damon.chen@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251111022452.28093-6-pkshih@realtek.com
+  mkdirat(0xffffffffffffff9c, &(0x7f0000000080)='./file1\x00', 0x0)
+  r4 = openat$nullb(0xffffffffffffff9c, &(0x7f0000000040), 0x121403, 0x0)
+  ioctl$FS_IOC_SETFLAGS(r4, 0x40081271, &(0x7f0000000980)=0x4000)
+  mount(&(0x7f0000000140)=@nullb, &(0x7f0000000040)='./cgroup\x00',
+        &(0x7f0000000000)='ntfs3\x00', 0x2208004, 0x0)
+  syz_clone(0x88200200, 0x0, 0x0, 0x0, 0x0, 0x0)
+
+Here, the ioctl sets the bdev block size to 16384. During mount,
+get_tree_bdev_flags() calls sb_set_blocksize(sb, block_size(bdev)),
+but since block_size(bdev) > PAGE_SIZE, sb_set_blocksize() leaves
+sb->s_blocksize at zero.
+
+Later, ntfs_init_from_boot() attempts to read the boot_block while
+sb->s_blocksize is still zero, which triggers the bug.
+
+Reported-by: syzbot+f4f84b57a01d6b8364ad@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f4f84b57a01d6b8364ad
+Signed-off-by: Pedro Demarchi Gomes <pedrodemargomes@gmail.com>
+[almaz.alexandrovich@paragon-software.com: changed comment style, added
+return value handling]
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit for Stable Backport
+Now I have a complete picture of the issue. Let me summarize my
+analysis:
 
-### 1. COMMIT MESSAGE ANALYSIS
+## Summary of Analysis
 
-- **Subject:** Clearly indicates a bug fix - "fix out-of-bounds access"
-- **Bug Type:** Out-of-bounds array access (memory safety issue)
-- **Source:** Coverity static analysis (IDs 1598844, 1598896)
-- **No "Cc: stable@vger.kernel.org"** tag present
-- **No "Fixes:" tag** pointing to original buggy commit
+### The Bug
 
-### 2. CODE CHANGE ANALYSIS
+The commit fixes a bug in ntfs3's `ntfs_init_from_boot()` function where
+`ntfs_bread()` is called to read the boot block **before**
+`sb->s_blocksize` is properly set.
 
-**The Bug:**
-The function `rtw89_phy_read_txpwr_limit()` uses the `bw` (bandwidth)
-parameter as an array index in expressions like:
+### Root Cause Analysis
+
+1. **Mount Flow**: When mounting an ntfs3 filesystem:
+   - `get_tree_bdev()` calls `setup_bdev_super()` which calls
+     `sb_set_blocksize(sb, block_size(bdev))`
+   - If `block_size(bdev) > PAGE_SIZE` (which can happen via ioctl
+     `FS_IOC_SETFLAGS` setting bdev block size to 16384 as shown in the
+     reproducer), and the filesystem doesn't have `FS_LBS` flag,
+     `sb_set_blocksize()` returns 0 and leaves `sb->s_blocksize = 0`
+
+2. **The Crash Path**: In `ntfs_init_from_boot()`:
+  ```c
+  sbi->volume.blocks = dev_size >> PAGE_SHIFT;
+  // sb->s_blocksize is 0 here!
+  bh = ntfs_bread(sb, boot_block);  // Uses sb->s_blocksize = 0
+  ```
+
+3. **Cascade to Infinite Loop**:
+   - `ntfs_bread()` → `sb_bread_unmovable()` → `__bread_gfp()` with
+     size=0
+   - `bdev_getblk()` → `__getblk_slow()` → `grow_buffers()` →
+     `grow_dev_folio()` → `folio_alloc_buffers()`
+   - In `folio_alloc_buffers()`: `while ((offset -= size) >= 0)` with
+     size=0 causes infinite loop
+
+### The Fix
+
+The fix adds a call to `sb_min_blocksize(sb, PAGE_SIZE)` before
+attempting to read the boot block:
+
 ```c
-da_lmt = (*rule_da_2ghz->lmt)[bw][ntx][rs][bf][regd][ch_idx];
-lmt = (*rule_2ghz->lmt)[bw][ntx][rs][bf][regd][ch_idx];
+/* Set dummy blocksize to read boot_block. */
+if (!sb_min_blocksize(sb, PAGE_SIZE)) {
+    return -EINVAL;
+}
 ```
 
-Different bands (2G, 5G, 6G) have different valid bandwidth ranges
-(`RTW89_2G_BW_NUM`, `RTW89_5G_BW_NUM`, `RTW89_6G_BW_NUM`). If `bw`
-exceeds the valid range for the specified band, an out-of-bounds array
-read occurs.
+This ensures:
+1. `sb->s_blocksize` is set to at least the device's logical block size,
+   capped at PAGE_SIZE
+2. If this fails, mount fails gracefully with `-EINVAL` instead of
+   hanging
 
-**The Fix:**
-1. Adds a new helper function `rtw89_phy_validate_txpwr_limit_bw()` that
-   validates bandwidth against band-specific limits
-2. Adds a validation check at the beginning of
-   `rtw89_phy_read_txpwr_limit()` that returns 0 (safe default) if
-   validation fails
+### Backport Assessment
 
-**Technical Correctness:**
-The fix is straightforward - validate input before using it as array
-index. This is a defensive programming pattern that prevents OOB access.
+**STRONG YES signals:**
+1. ✅ **Fixes a real crash/hang** - System hangs due to infinite loop in
+   `folio_alloc_buffers()`
+2. ✅ **Syzbot reported** - Has syzkaller reproducer
+   (`f4f84b57a01d6b8364ad`)
+3. ✅ **Small, surgical fix** - Only 4 lines added
+4. ✅ **Clear, obvious fix** - Sets blocksize before using it for reads
+5. ✅ **Uses well-established API** - `sb_min_blocksize()` is a standard
+   helper used by many filesystems
+6. ✅ **Affects production users** - ntfs3 is widely used (included since
+   5.15)
+7. ✅ **Denial of Service potential** - A local user can trigger the hang
 
-### 3. CLASSIFICATION
+**Risk Assessment:**
+- **Very Low Risk**: The fix adds a safety check before an I/O operation
+- **No behavioral change** for normal cases - the blocksize would have
+  been set to PAGE_SIZE anyway after successful boot read
+- **Graceful failure** if `sb_min_blocksize()` fails (which would be
+  very rare in practice)
 
-- **Bug fix:** Yes - fixes memory safety bug (OOB read)
-- **Feature addition:** No
-- **Security relevant:** Potentially - OOB access can cause crashes,
-  kernel panics, or information leaks
+**Stable Trees Affected:**
+- All stable trees with ntfs3: 5.15.y, 6.1.y, 6.6.y, 6.10.y, 6.11.y,
+  etc.
+- The bug has existed since ntfs3 was introduced in v5.15
+- The recent `FS_LBS` change (March 2025) made it easier to trigger but
+  the underlying issue predates it
 
-### 4. SCOPE AND RISK ASSESSMENT
-
-| Factor | Assessment |
-|--------|------------|
-| Lines changed | ~20 lines added |
-| Files touched | 1 file (phy.c) |
-| Complexity | Low - simple validation check |
-| Regression risk | Very low - only adds validation, no behavioral
-change for valid inputs |
-| Subsystem | rtw89 WiFi driver (Realtek 802.11ax) |
-
-The change is **small and surgical**. It only adds bounds checking and
-returns a safe default (0) for invalid inputs. Normal operation is
-completely unaffected.
-
-### 5. USER IMPACT
-
-- **Affected users:** Users with Realtek rtw89 WiFi hardware
-- **Severity if triggered:** Kernel crash/oops or potential information
-  leak
-- **Trigger conditions:** Invalid `bw` value exceeding band-specific
-  limits
-- **Real-world likelihood:** Uncertain - could be triggered by malformed
-  firmware/hardware responses or bugs elsewhere in the driver
-
-### 6. STABILITY INDICATORS
-
-- Signed-off by Realtek engineers (maintainer-level confidence)
-- No explicit tested-by or reviewed-by tags visible
-- Has proper patch link for traceability
-
-### 7. DEPENDENCY CHECK
-
-The fix uses existing constants (`RTW89_*_BW_NUM`) that should exist in
-any stable kernel with the rtw89 driver. The rtw89 driver was introduced
-in kernel 5.16, so this applies to 6.1.y, 6.6.y, and newer stable
-branches.
-
-### DECISION RATIONALE
-
-**For backporting:**
-- Fixes a genuine memory safety bug (OOB array access)
-- Small, self-contained fix with minimal regression risk
-- Defensive in nature - only affects invalid input handling
-- OOB access bugs can have security implications
-
-**Against backporting:**
-- No explicit "Cc: stable" tag from maintainers
-- Coverity-found vs user-reported (no evidence of actual crashes in the
-  wild)
-- No "Fixes:" tag to identify the original buggy commit
-
-**Verdict:**
-Despite the lack of explicit stable tags, this is a legitimate memory
-safety fix that:
-1. Is obviously correct and small
-2. Fixes a real bug (OOB access)
-3. Has no risk of regression for valid code paths
-4. Could prevent crashes or security issues
-
-The fix meets stable kernel criteria: it's a small, self-contained bug
-fix that addresses a real memory safety issue without changing normal
-behavior. Out-of-bounds access bugs are the type of issues stable trees
-should protect against.
+**Dependencies:**
+- The fix is standalone and uses existing kernel APIs
+- No other patches required for backport
+- `sb_min_blocksize()` has been available since at least 2.6.x
 
 **YES**
 
- drivers/net/wireless/realtek/rtw89/phy.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ fs/ntfs3/super.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
-index ba7feadd75828..e8960fbcb72db 100644
---- a/drivers/net/wireless/realtek/rtw89/phy.c
-+++ b/drivers/net/wireless/realtek/rtw89/phy.c
-@@ -2339,6 +2339,21 @@ static u8 rtw89_channel_to_idx(struct rtw89_dev *rtwdev, u8 band, u8 channel)
- 	}
- }
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index ddff94c091b8c..e6c0908e27c29 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -933,6 +933,11 @@ static int ntfs_init_from_boot(struct super_block *sb, u32 sector_size,
  
-+static bool rtw89_phy_validate_txpwr_limit_bw(struct rtw89_dev *rtwdev,
-+					      u8 band, u8 bw)
-+{
-+	switch (band) {
-+	case RTW89_BAND_2G:
-+		return bw < RTW89_2G_BW_NUM;
-+	case RTW89_BAND_5G:
-+		return bw < RTW89_5G_BW_NUM;
-+	case RTW89_BAND_6G:
-+		return bw < RTW89_6G_BW_NUM;
-+	default:
-+		return false;
-+	}
-+}
-+
- s8 rtw89_phy_read_txpwr_limit(struct rtw89_dev *rtwdev, u8 band,
- 			      u8 bw, u8 ntx, u8 rs, u8 bf, u8 ch)
- {
-@@ -2363,6 +2378,11 @@ s8 rtw89_phy_read_txpwr_limit(struct rtw89_dev *rtwdev, u8 band,
- 	};
- 	s8 cstr;
+ 	sbi->volume.blocks = dev_size >> PAGE_SHIFT;
  
-+	if (!rtw89_phy_validate_txpwr_limit_bw(rtwdev, band, bw)) {
-+		rtw89_warn(rtwdev, "invalid band %u bandwidth %u\n", band, bw);
-+		return 0;
++	/* Set dummy blocksize to read boot_block. */
++	if (!sb_min_blocksize(sb, PAGE_SIZE)) {
++		return -EINVAL;
 +	}
 +
- 	switch (band) {
- 	case RTW89_BAND_2G:
- 		if (has_ant_gain)
+ read_boot:
+ 	bh = ntfs_bread(sb, boot_block);
+ 	if (!bh)
 -- 
 2.51.0
 
