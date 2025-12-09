@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687B8274FF5;
-	Tue,  9 Dec 2025 00:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE703278779;
+	Tue,  9 Dec 2025 00:17:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765239454; cv=none; b=dWhWZex6H5or4nFNmkf1E/RWjSiLNz2lrB57sM32s/UmkwP1BXpNgEzkrhOPmFrglDQbFkVe2PhWScsOJ8HHepmaSLO/GNSk3pNirB2tKeSuK4B6WvEC526lG7fXc/cGvVz9pABX+3dLzClMw1fSMFUko4/Go/LAcNd7IWrkpSs=
+	t=1765239456; cv=none; b=KVw48/e1GmZRiVMHHyLn8yJHPvcOsTYmhGmIcJ8VhnwqLqEbZQkml4rSk7R3seZf1vKClEP3LSQhojIXMXzdAhfLG7RWDDMtw5lgonWeoRAGVEWLuWg+mhFS6fKvgr5yN+ajWQG/spWhwZ4dDeaZ9LixVGog2NrNj9rLGEUsyNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765239454; c=relaxed/simple;
-	bh=tNId2viZ0EA1M0gDDU3hMYtdyi9yanQqyDZcD/xdLKI=;
+	s=arc-20240116; t=1765239456; c=relaxed/simple;
+	bh=admMQtYCVz6g90Ou1lb7Q8ggJA+uThCwY4OsdYTSnH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lN1NK1QrgCsj3XZABQuPszSdsyU1FzAR8v5pt/L9yAhtGWQzKdBbLTxDo0BYGeozq4cUCXanIA6PrYGeRUjZz5a7ytzEoV2mj8qArKhmqs5fgGQ1g/069mnFSRel6FzyrjBXhO4trT8MsFLGeZcG+336acHfg/WZY30ve6AH0Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iew6E5A8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s7grMA70QuBqzD0F+9lAOFgiaee+G53HuiUP0AOFhYH5gikYbqx9Kah9Kq3BZYf4Bodye+t/yE9/WJjWW/WOkJaJYbpue+cnWNjDgohgKfYEX83HRX7Z6DfK0jhn5oQg89r8t7WeJwd47jfgoJoZ5lj/nifEIe0abfoe0PcmEbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUFD0ToG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iew6E5A8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2F00C4CEF1;
-	Tue,  9 Dec 2025 00:17:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUFD0ToG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065F0C4CEF1;
+	Tue,  9 Dec 2025 00:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765239454;
-	bh=tNId2viZ0EA1M0gDDU3hMYtdyi9yanQqyDZcD/xdLKI=;
+	s=k20201202; t=1765239456;
+	bh=admMQtYCVz6g90Ou1lb7Q8ggJA+uThCwY4OsdYTSnH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iew6E5A8f8aanCn6QwS5bGtCvnDxKpZKmvEHVlC8gLng7n+9KFu0ydvPVdSgEE5wx
-	 PX+cIAoprJmTXwcmuQALut4lSEExNS2K8s228C85d8k9lPf+q/ihiHa0z/qMHrTIZw
-	 ZOxGvmb6jcuUO9s/J1vwq5l0lojbpLqw75rvLDIK1FcxeNV/Qsh4Lly0llkSg0WpYd
-	 qpn+ENiQOr/c87Vug4Zq5u53i9516alx8qtBAuyPr7WEXiqpatSFtg/I9brqhZT6fR
-	 mql8xliM+KvefMTjv2JjZLCKnp3HICfKZn1BpzKhWoxwSk6kchNQtZrcsIc6I8Fph9
-	 VGxU9NHVaR2/Q==
+	b=eUFD0ToGqW1o/lm6So+fpjskd9jhA8/dUkOqzV23LT2yhtNi2dga2TokR+WbRx/ls
+	 XGtBhGDrauhOB6au+l5ZyCGZZIwPniDs6WxmAk5uw1JX9jBGL8OTgkOnJZwdZsEZwI
+	 xsAIQMwXJrhdDeoWnUWPP7ovCPWFcN5/+yiKnU/s/ZVU4mpGyDaYf4Ow5idoFTYwIL
+	 Uk2/APEpw/y0snaWjJa+cNFunn3RoOIPROOJKfg0Fup/1haw1ShGrdHXrGRF0s+4Rv
+	 dR49JMIjv96yBquZeh7JxdyY11Vs519P07FGVDXb2EyAWw70hrbmEeT9DOC4suO9D7
+	 /gXIJVM4lAtuA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuai Zhang <quic_shuaz@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Yang Chenzhi <yang.chenzhi@vivo.com>,
+	syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
 	Sasha Levin <sashal@kernel.org>,
-	marcel@holtmann.org,
-	luiz.dentz@gmail.com,
-	linux-bluetooth@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.17] Bluetooth: btusb: add new custom firmwares
-Date: Mon,  8 Dec 2025 19:15:18 -0500
-Message-ID: <20251209001610.611575-26-sashal@kernel.org>
+	frank.li@vivo.com,
+	linux-fsdevel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] hfsplus: fix missing hfs_bnode_get() in __hfs_bnode_create
+Date: Mon,  8 Dec 2025 19:15:19 -0500
+Message-ID: <20251209001610.611575-27-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251209001610.611575-1-sashal@kernel.org>
 References: <20251209001610.611575-1-sashal@kernel.org>
@@ -51,83 +50,198 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuai Zhang <quic_shuaz@quicinc.com>
+From: Yang Chenzhi <yang.chenzhi@vivo.com>
 
-[ Upstream commit a8b38d19857d42a1f2e90c9d9b0f74de2500acd7 ]
+[ Upstream commit 152af114287851583cf7e0abc10129941f19466a ]
 
-The new platform uses the QCA2066 chip along with a new board ID, which
-requires a dedicated firmware file to ensure proper initialization.
-Without this entry, the driver cannot locate and load the correct
-firmware, resulting in Bluetooth bring-up failure.
+When sync() and link() are called concurrently, both threads may
+enter hfs_bnode_find() without finding the node in the hash table
+and proceed to create it.
 
-This patch adds a new entry to the firmware table for QCA2066 so that
-the driver can correctly identify the board ID and load the appropriate
-firmware from 'qca/QCA2066/' in the linux-firmware repository.
+Thread A:
+  hfsplus_write_inode()
+    -> hfsplus_write_system_inode()
+      -> hfs_btree_write()
+        -> hfs_bnode_find(tree, 0)
+          -> __hfs_bnode_create(tree, 0)
 
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Thread B:
+  hfsplus_create_cat()
+    -> hfs_brec_insert()
+      -> hfs_bnode_split()
+        -> hfs_bmap_alloc()
+          -> hfs_bnode_find(tree, 0)
+            -> __hfs_bnode_create(tree, 0)
+
+In this case, thread A creates the bnode, sets refcnt=1, and hashes it.
+Thread B also tries to create the same bnode, notices it has already
+been inserted, drops its own instance, and uses the hashed one without
+getting the node.
+
+```
+
+	node2 = hfs_bnode_findhash(tree, cnid);
+	if (!node2) {                                 <- Thread A
+		hash = hfs_bnode_hash(cnid);
+		node->next_hash = tree->node_hash[hash];
+		tree->node_hash[hash] = node;
+		tree->node_hash_cnt++;
+	} else {                                      <- Thread B
+		spin_unlock(&tree->hash_lock);
+		kfree(node);
+		wait_event(node2->lock_wq,
+			!test_bit(HFS_BNODE_NEW, &node2->flags));
+		return node2;
+	}
+```
+
+However, hfs_bnode_find() requires each call to take a reference.
+Here both threads end up setting refcnt=1. When they later put the node,
+this triggers:
+
+BUG_ON(!atomic_read(&node->refcnt))
+
+In this scenario, Thread B in fact finds the node in the hash table
+rather than creating a new one, and thus must take a reference.
+
+Fix this by calling hfs_bnode_get() when reusing a bnode newly created by
+another thread to ensure the refcount is updated correctly.
+
+A similar bug was fixed in HFS long ago in commit
+a9dc087fd3c4 ("fix missing hfs_bnode_get() in __hfs_bnode_create")
+but the same issue remained in HFS+ until now.
+
+Reported-by: syzbot+005d2a9ecd9fbf525f6a@syzkaller.appspotmail.com
+Signed-off-by: Yang Chenzhi <yang.chenzhi@vivo.com>
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Link: https://lore.kernel.org/r/20250829093912.611853-1-yang.chenzhi@vivo.com
+Signed-off-by: Viacheslav Dubeyko <slava@dubeyko.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Backport Considerations
+## Analysis Summary
 
-The prerequisite QCA2066 support was introduced in v6.17 (commit
-a3f9f6dd047af). This means:
-- Only 6.17.y stable tree would benefit from this backport
-- Earlier LTS trees (6.12.y, 6.6.y, 6.1.y, 5.15.y) don't have the
-  required infrastructure
+### 1. COMMIT MESSAGE ANALYSIS
 
-## Summary
+**Subject:** "hfsplus: fix missing hfs_bnode_get() in
+__hfs_bnode_create"
 
-| Criterion | Assessment |
-|-----------|------------|
-| Bug fix? | ✅ Fixes Bluetooth bring-up failure |
-| Obviously correct? | ✅ Single table entry matching existing pattern |
-| Small and contained? | ✅ 1 line, 1 file |
-| Tested? | ✅ Acked by Qualcomm developer, signed by maintainer |
-| Risk? | ✅ Extremely low - isolated hardware variant |
-| User impact? | ✅ Complete Bluetooth loss without fix |
-| Exception category? | ✅ NEW DEVICE IDs (board_id addition) |
+**Key signals:**
+- Clear "fix" keyword indicating bug fix
+- Reported-by syzbot - reproducible crash bug
+- Detailed race condition explanation with call stacks
+- References identical HFS fix from 2022 (commit a9dc087fd3c4)
+- No explicit `Cc: stable` tag, but no `Fixes:` tag either since the bug
+  exists from the file's creation
 
-**Conclusion:**
+### 2. CODE CHANGE ANALYSIS
 
-This is a textbook example of the "NEW DEVICE IDs" stable exception. It
-adds a single board_id entry to an existing firmware lookup table to
-enable Bluetooth on a new hardware variant. The change:
-- Fixes a real user problem (non-working Bluetooth)
-- Is trivially small and obviously correct
-- Has essentially zero regression risk
-- Only affects new hardware that wouldn't work otherwise
+**The Bug:** When `sync()` and `link()` are called concurrently, both
+threads may race into `__hfs_bnode_create()`:
+- Thread A creates a bnode with `refcnt=1` and inserts it into the hash
+  table
+- Thread B finds the hash table entry, but returns the node **without
+  incrementing refcnt**
+- Both threads believe they own a reference, but only one reference
+  exists
+- When both call `hfs_bnode_put()`, the second call triggers:
+  `BUG_ON(!atomic_read(&node->refcnt))`
 
-While it lacks explicit stable tags, this type of hardware enablement is
-routinely accepted for stable backporting because it matches the pattern
-of USB/PCI ID additions. The only limitation is that backporting only
-applies to 6.17.y since the QCA2066 infrastructure doesn't exist in
-earlier kernels.
+**The Fix:** Single line addition at `fs/hfsplus/bnode.c:484`:
+```c
+} else {
++    hfs_bnode_get(node2);   // <-- Missing refcount increment added
+     spin_unlock(&tree->hash_lock);
+     kfree(node);
+```
+
+**Why it's correct:** `hfs_bnode_get()` simply does
+`atomic_inc(&node->refcnt)` (line 658), ensuring correct reference
+counting when reusing a shared bnode.
+
+### 3. CLASSIFICATION
+
+- **Bug fix:** YES - fixes a crash (BUG_ON kernel panic)
+- **Feature addition:** NO
+- **Security consideration:** Crash can be triggered by normal
+  operations - potential DoS vector
+
+### 4. SCOPE AND RISK ASSESSMENT
+
+| Metric | Value |
+|--------|-------|
+| Lines changed | 1 |
+| Files touched | 1 |
+| Complexity | Very low |
+| Subsystem | HFS+ filesystem |
+| Regression risk | Very low |
+
+The fix is a **single function call** that mirrors a proven fix from HFS
+(commit a9dc087fd3c4) that has been stable since December 2022.
+
+### 5. USER IMPACT
+
+- **Affected users:** Anyone using HFS+ filesystems (common for Mac disk
+  compatibility, external drives, dual-boot systems)
+- **Trigger condition:** Concurrent sync() and link() operations - can
+  occur in normal workloads
+- **Severity:** **KERNEL CRASH** (BUG_ON triggers panic)
+
+### 6. STABILITY INDICATORS
+
+- **syzbot reported:** Bug is reproducible
+- **Maintainer signed:** Yes (Viacheslav Dubeyko, HFS+ maintainer)
+- **LKML link:** Present
+- **Precedent:** Identical fix applied to HFS in 2022 with no
+  regressions
+
+### 7. DEPENDENCY CHECK
+
+- **Dependencies:** None - completely self-contained
+- **Applies to stable:** The affected code pattern has existed unchanged
+  for many years in stable trees
+
+## Final Assessment
+
+**This commit should be backported to stable kernels.**
+
+**Rationale:**
+1. **Fixes a real crash** - BUG_ON triggers kernel panic in a
+   reproducible race condition
+2. **Minimal and surgical** - Single line change adding one function
+   call
+3. **Obviously correct** - Adds missing reference count increment,
+   matching HFS pattern
+4. **Proven safe** - Identical fix in HFS has been stable for 2+ years
+5. **No dependencies** - Will apply cleanly to all stable kernels
+6. **Real user impact** - HFS+ is commonly used for Mac disk
+   compatibility
+
+The lack of explicit `Cc: stable` tag does not preclude backporting when
+all other stable criteria are clearly met. This is a textbook case of a
+small, obviously correct fix for a real crash bug.
 
 **YES**
 
- drivers/bluetooth/btusb.c | 1 +
+ fs/hfsplus/bnode.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index a5b73e0d271f3..9a923918bf741 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3269,6 +3269,7 @@ static const struct qca_device_info qca_devices_table[] = {
- 
- static const struct qca_custom_firmware qca_custom_btfws[] = {
- 	{ 0x00130201, 0x030A, "QCA2066" },
-+	{ 0x00130201, 0x030B, "QCA2066" },
- 	{ },
- };
- 
+diff --git a/fs/hfsplus/bnode.c b/fs/hfsplus/bnode.c
+index 63e652ad1e0de..63768cf0cb1ba 100644
+--- a/fs/hfsplus/bnode.c
++++ b/fs/hfsplus/bnode.c
+@@ -481,6 +481,7 @@ static struct hfs_bnode *__hfs_bnode_create(struct hfs_btree *tree, u32 cnid)
+ 		tree->node_hash[hash] = node;
+ 		tree->node_hash_cnt++;
+ 	} else {
++		hfs_bnode_get(node2);
+ 		spin_unlock(&tree->hash_lock);
+ 		kfree(node);
+ 		wait_event(node2->lock_wq,
 -- 
 2.51.0
 
