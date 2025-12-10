@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749473019C7;
-	Wed, 10 Dec 2025 07:35:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86635C613;
+	Wed, 10 Dec 2025 07:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352146; cv=none; b=LRmaNwdQEesQxpJLiJMEmf+O8zybHfFf61WcVivstcmaqZehEZ9QXbrCWFqtRSIECS5fwtxiEba5+2WV9hu4G49iESCPhPBo7vph1jSDktkXFgxTT3W0/iuVDb00FSzFcaQHRqzu9fP2CnN/ah2hFsTBzt110BveZi+56Gq56Cg=
+	t=1765352148; cv=none; b=soP0g7OGSDSycyi8YU42Zz6i+7sdaYn3uucFN8ay+ghYFkv1QyqP/hNa8b1PF/8rU5FWQ5Dh1Xs59hi1Z++hFQ5+ppWeIz10rie3IxfCzrUwtQTEfxmWMNvitItpflXO30dJf4/XE3yb8Xh5/2WjpReB23i6A8ltbiV+waqF/iI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352146; c=relaxed/simple;
-	bh=KExl2soMVGC8VaTlhkAaPPeWCKCj0xDbznCHKCzxyYA=;
+	s=arc-20240116; t=1765352148; c=relaxed/simple;
+	bh=Lr36qJ5I/9Si14Rg0GRMkmC3Yee7KvGilMp7N196LcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BGGbqxuriIXdycuaooCySjrhzeWa7tvtdINI5IghHoD5K8aMGfCURo2fPAt3n6hI0EoTl9/crzz3/BsOIk10LLlhQVA6J0+8lOVYpOeyoT8tC9xK7Vxg3bnprmlI2HqNHQlltSHEGVrrdFCzxwny9Kp0macw1MqVVi/xHyjq7vw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwJuGGpf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=inHnHO7wNkxdO/pWetlnbmFOzpnbeA0QruC6faDI8AMt6XDBFmqfxVRwtT/dGrml9eZN1XXe7yIZkqyhCNq3tJjEaoRozNK0Au6t40EyIHnXAyRIC9dLvGfv2/Mvx4qXN7Yhsd8a25UIcnnu3fHlq3L+YpCf7aFKhrNoRHMMbas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dncS8vP1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwJuGGpf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B28C4CEF1;
-	Wed, 10 Dec 2025 07:35:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dncS8vP1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70F41C4CEF1;
+	Wed, 10 Dec 2025 07:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352146;
-	bh=KExl2soMVGC8VaTlhkAaPPeWCKCj0xDbznCHKCzxyYA=;
+	s=korg; t=1765352148;
+	bh=Lr36qJ5I/9Si14Rg0GRMkmC3Yee7KvGilMp7N196LcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AwJuGGpfGbueVGnMa8Ifoid6l0e4el1Zbkl7BLvJ63qAc/OKrydxnWKIJYR4iDzZq
-	 zGq/oLKu1y4zbEan1VLoHflE7MKw82ePwY1EchSTOAgL0Fkq4M+mpCau2LekcUy9zS
-	 frZZ8hVZWpZsIjln6uRAg/X7PSkLyBA2KFLG7+jk=
+	b=dncS8vP14D/AlrB4kBaQLA5pBYGMog4RbX2cWgiMj1oX0joV3AbI3QhWS/R6iYbyf
+	 Bb5pSekzUpaJXT8mLbOzw0YgQyRI8XsrHk+z8HuZb7nbXn0ifP4izqK9+ozPXl/4br
+	 8M0jVZ91HO2BbDrUnteQHf/18Ps1SoJ8Zm682Qjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Ston Jia <ston.jia@outlook.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 49/60] samples: work around glibc redefining some of our defines wrong
-Date: Wed, 10 Dec 2025 16:30:19 +0900
-Message-ID: <20251210072949.087523486@linuxfoundation.org>
+Subject: [PATCH 6.17 40/60] platform/x86: huawei-wmi: add keys for HONOR models
+Date: Wed, 10 Dec 2025 16:30:10 +0900
+Message-ID: <20251210072948.862495188@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -44,98 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jia Ston <ston.jia@outlook.com>
 
-[ Upstream commit a48f822908982353c3256e35a089e9e7d0d61580 ]
+[ Upstream commit 5c72329716d0858621021193330594d5d26bf44d ]
 
-Apparently as of version 2.42, glibc headers define AT_RENAME_NOREPLACE
-and some of the other flags for renameat2() and friends in <stdio.h>.
+HONOR MagicBook X16/X14 models produced in 2025 cannot use the Print
+Screen and YOYO keys properly, with the system reporting them as
+unknown key presses (codes: 0x028b and 0x028e).
 
-Which would all be fine, except for inexplicable reasons glibc decided
-to define them _differently_ from the kernel definitions, which then
-makes some of our sample code that includes both kernel headers and user
-space headers unhappy, because the compiler will (correctly) complain
-about redefining things.
+To resolve this, a key_entry is added for both the HONOR Print Screen
+key and the HONOR YOYO key, ensuring they function correctly on these
+models.
 
-Now, mixing kernel headers and user space headers is always a somewhat
-iffy proposition due to namespacing issues, but it's kind of inevitable
-in our sample and selftest code.  And this is just glibc being stupid.
-
-Those defines come from the kernel, glibc is exposing the kernel
-interfaces, and glibc shouldn't make up some random new expressions for
-these values.
-
-It's not like glibc headers changed the actual result values, but they
-arbitrarily just decided to use a different expression to describe those
-values.  The kernel just does
-
-    #define AT_RENAME_NOREPLACE  0x0001
-
-while glibc does
-
-    # define RENAME_NOREPLACE (1 << 0)
-    # define AT_RENAME_NOREPLACE RENAME_NOREPLACE
-
-instead.  Same value in the end, but very different macro definition.
-
-For absolutely no reason.
-
-This has since been fixed in the glibc development tree, so eventually
-we'll end up with the canonical expressions and no clashes.  But in the
-meantime the broken headers are in the glibc-2.42 release and have made
-it out into distributions.
-
-Do a minimal work-around to make the samples build cleanly by just
-undefining the affected macros in between the user space header include
-and the kernel header includes.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Ston Jia <ston.jia@outlook.com>
+Link: https://patch.msgid.link/20251029051804.220111-1-ston.jia@outlook.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/vfs/test-statx.c         | 6 ++++++
- samples/watch_queue/watch_test.c | 6 ++++++
- 2 files changed, 12 insertions(+)
+ drivers/platform/x86/huawei-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/samples/vfs/test-statx.c b/samples/vfs/test-statx.c
-index 49c7a46cee073..424a6fa15723c 100644
---- a/samples/vfs/test-statx.c
-+++ b/samples/vfs/test-statx.c
-@@ -19,6 +19,12 @@
- #include <time.h>
- #include <sys/syscall.h>
- #include <sys/types.h>
-+
-+// Work around glibc header silliness
-+#undef AT_RENAME_NOREPLACE
-+#undef AT_RENAME_EXCHANGE
-+#undef AT_RENAME_WHITEOUT
-+
- #include <linux/stat.h>
- #include <linux/fcntl.h>
- #define statx foo
-diff --git a/samples/watch_queue/watch_test.c b/samples/watch_queue/watch_test.c
-index 8c6cb57d5cfc5..24cf7d7a19725 100644
---- a/samples/watch_queue/watch_test.c
-+++ b/samples/watch_queue/watch_test.c
-@@ -16,6 +16,12 @@
- #include <errno.h>
- #include <sys/ioctl.h>
- #include <limits.h>
-+
-+// Work around glibc header silliness
-+#undef AT_RENAME_NOREPLACE
-+#undef AT_RENAME_EXCHANGE
-+#undef AT_RENAME_WHITEOUT
-+
- #include <linux/watch_queue.h>
- #include <linux/unistd.h>
- #include <linux/keyctl.h>
+diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
+index c3772df34679f..8a4c54089ace3 100644
+--- a/drivers/platform/x86/huawei-wmi.c
++++ b/drivers/platform/x86/huawei-wmi.c
+@@ -81,6 +81,10 @@ static const struct key_entry huawei_wmi_keymap[] = {
+ 	{ KE_KEY,    0x289, { KEY_WLAN } },
+ 	// Huawei |M| key
+ 	{ KE_KEY,    0x28a, { KEY_CONFIG } },
++	// HONOR YOYO key
++	{ KE_KEY,    0x28b, { KEY_NOTIFICATION_CENTER } },
++	// HONOR print screen
++	{ KE_KEY,    0x28e, { KEY_PRINT } },
+ 	// Keyboard backlit
+ 	{ KE_IGNORE, 0x293, { KEY_KBDILLUMTOGGLE } },
+ 	{ KE_IGNORE, 0x294, { KEY_KBDILLUMUP } },
 -- 
 2.51.0
 
