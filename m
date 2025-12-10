@@ -1,50 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6685B226CF1;
-	Wed, 10 Dec 2025 03:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91C9226CF1;
+	Wed, 10 Dec 2025 03:49:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338589; cv=none; b=lqIeW0EqDWTUgIp7BIAnbAS0DeIJezbWwR/mPKn/vaR4LFxPrknUE8fTcRsTVQ05Jg61tuUsIpHJ/6LExu2gLxIK/b0PS2AitgiBDsLV1v+TEzpNwU+8bvNBsGlr5SRVFqBegru7WOz0rn5mt6aIROge8EaYPmB4d0VQ42HVEtE=
+	t=1765338590; cv=none; b=aFIwC8sDMnr3sBuX4+5ImP63aOOdmXncqOvNDSrGVWMTyGUc/gvuXfCrXCebsixUQ/Iu+QoJH1mBYAUEBHdNEcBGHs7o1i7H49OO/+6Ybg5JKeNSu+J0uUzA5GJ/SQT9HoFT3/bKBbNbPPxCw0UTBqyFygjzmVbeQWVxbHZtkG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338589; c=relaxed/simple;
-	bh=26AMDGw3CTHSl9i+ijQwfW3FKagYLiKq4TVjFXs4w+k=;
+	s=arc-20240116; t=1765338590; c=relaxed/simple;
+	bh=+UuWZKvk/MU/uqpH+jr+xgi75P8oE2L7PIimsMZL3qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fLzp5pm4hu3qJx2zudJ4n3sfVPn561CT7skcjkgs9akbFLYIgqviaDx+o4HZtENMpP/HWNJEjrIr5oWdTfuaResOYrwvSSxB+6E6Z8aZ7aEVSvMBwGihNMvzVBJFSoj5DIxcpC4p3JiE2/UFL5JOUV4nNWWiNzQZ0XwTXw5VV4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dickmjH0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZyU+TEoK3Pp3QjyatxwgMA9VB3KOFjLHngejafHKQGk4ZSPa0wMCxxfwCHWam/jUsGtkfNGBN5+DepvQ+H1wfd+7cnU2yVDa3aEC8V13bFVPpKM7RfrwJitb13mKkbgJOq9eldnfoi2XQgiyOXdB3IkBsnrjWarHLFsUeXmtET4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ls3FJadt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dickmjH0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B08A2C4CEF1;
-	Wed, 10 Dec 2025 03:49:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ls3FJadt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84A6BC116B1;
+	Wed, 10 Dec 2025 03:49:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338588;
-	bh=26AMDGw3CTHSl9i+ijQwfW3FKagYLiKq4TVjFXs4w+k=;
+	s=k20201202; t=1765338589;
+	bh=+UuWZKvk/MU/uqpH+jr+xgi75P8oE2L7PIimsMZL3qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dickmjH0jr60i2oD3Po0u8zuC7MeQ4S/xqdj6Y48veTZdVaQlUKK+h0dMQFQjWsAi
-	 BLQv6Re/vR4MBrQIuZ/ZT5Du//CywSf8r8q+8fn2OdOblQxViaC//hNCZdJHE7KCb1
-	 V9J9i4J6Hr1BWb3wrwzDzW9is3OWaGNO0dkWDBkGiZ2e1gtpsQ3E/w2eCNmWoaNaCe
-	 3FF38zowZaAZoTx5aQQkFJ+ZM5MzOmMSB2I9V0wJijHnoG0KgZ3/VhHPqNr20LXsYX
-	 nVp06ALqk4Uue+FxudJA0QEX43G5xARWYooaUEg0P8dFs5KPP6U/Y3YzB/QnQYKSeY
-	 x8Id4djh1pOzg==
+	b=Ls3FJadtbSmIms673RZHACwdBzY4CKdIf8qPUtTpfgmzzwWG+bNF8rLnxYwlk3ij+
+	 18Z2xu15PbjH/PB8D6WRVzRLGbsI2GryEfFb8Su+79+8ei3UZoZyISzs8BqOa1KzXR
+	 VsgUktr7/oGZLBazqQo3A4e5Gf9uqIwJULic5+Ptn2FdYT7RIOi6CrQ98bBwS9ZDqo
+	 BUB4h5LqwzE0Ok0sTOE7sC2XNANjer1g1Kgedi47SImOTqTU9pC2mzbAOuW2xp0bfU
+	 zHk86YqKJ2QkRopcEtSR9ti9yUaU1SoO2JGH/IjKKaUavnFOxSeVnjLcYQGbUpRsat
+	 /65LIIYhRfcYw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	tiwei.btw@antgroup.com,
-	andreas@gaisler.com,
-	richard@nod.at,
-	schuster.simon@siemens-energy.com,
-	thomas.weissschuh@linutronix.de,
-	benjamin.berg@intel.com,
-	rppt@kernel.org,
-	dave.hansen@linux.intel.com,
-	akpm@linux-foundation.org,
-	ethan@ethancedwards.com,
-	mingo@kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.17] um: init cpu_tasks[] earlier
-Date: Tue,  9 Dec 2025 22:48:54 -0500
-Message-ID: <20251210034915.2268617-13-sashal@kernel.org>
+Cc: Encrow Thorne <jyc0019@gmail.com>,
+	Troy Mitchell <troy.mitchell@linux.dev>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.18-5.10] reset: fix BIT macro reference
+Date: Tue,  9 Dec 2025 22:48:55 -0500
+Message-ID: <20251210034915.2268617-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
 References: <20251210034915.2268617-1-sashal@kernel.org>
@@ -60,132 +51,101 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Encrow Thorne <jyc0019@gmail.com>
 
-[ Upstream commit 7b5d4416964c07c902163822a30a622111172b01 ]
+[ Upstream commit f3d8b64ee46c9b4b0b82b1a4642027728bac95b8 ]
 
-This is currently done in uml_finishsetup(), but e.g. with
-KCOV enabled we'll crash because some init code can call
-into e.g. memparse(), which has coverage annotations, and
-then the checks in check_kcov_mode() crash because current
-is NULL.
+RESET_CONTROL_FLAGS_BIT_* macros use BIT(), but reset.h does not
+include bits.h. This causes compilation errors when including
+reset.h standalone.
 
-Simply initialize the cpu_tasks[] array statically, which
-fixes the crash. For the later SMP work, it seems to have
-not really caused any problems yet, but initialize all of
-the entries anyway.
+Include bits.h to make reset.h self-contained.
 
-Link: https://patch.msgid.link/20250924113214.c76cd74d0583.I974f691ebb1a2b47915bd2b04cc38e5263b9447f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Suggested-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: Troy Mitchell <troy.mitchell@linux.dev>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Signed-off-by: Encrow Thorne <jyc0019@gmail.com>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+## Summary of Findings
 
-### Bug Mechanism
+### Bug Introduction
+The bug was introduced by commit `dad35f7d2fc14` ("reset: replace
+boolean parameters with flags parameter") which added the
+`RESET_CONTROL_FLAGS_BIT_*` macros using `BIT()`. This was merged in
+**v6.13-rc1** (October 2024).
 
-This commit fixes a **boot crash** in User Mode Linux (UML) when KCOV
-(kernel code coverage) is enabled:
+### Affected Stable Trees
+- **6.13.x stable**: YES - affected, needs this fix
+- **6.12.x and earlier**: NO - the `RESET_CONTROL_FLAGS_BIT_*` macros
+  don't exist in these trees
 
-1. **Root cause**: In UML, `current` is defined as `cpu_tasks[0]` (see
-   `arch/um/include/asm/current.h:15`)
-2. **Problem**: `cpu_tasks[]` was uninitialized (NULL) until
-   `uml_finishsetup()` was called late in boot
-3. **Trigger**: With KCOV enabled, early init code calls coverage-
-   annotated functions like `memparse()`
-4. **Crash path**: KCOV's `__sanitizer_cov_trace_pc` →
-   `check_kcov_mode(current)` → dereferences NULL `current` → crash
+### Stable Kernel Criteria Assessment
 
-### The Fix
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct? | ✅ YES - adding a missing include is trivially
+correct |
+| Fixes real bug? | ✅ YES - compilation error when including reset.h
+standalone |
+| Important issue? | ✅ YES - build failures are hard blockers |
+| Small and contained? | ✅ YES - 1 line change |
+| No new features? | ✅ YES - only fixes missing dependency |
+| Low risk? | ✅ YES - zero runtime risk, cannot cause regressions |
 
-The fix is elegantly simple:
-- **Before**: `struct task_struct *cpu_tasks[NR_CPUS];` (zero-
-  initialized, i.e., NULL)
-- **After**: `struct task_struct *cpu_tasks[NR_CPUS] = { [0 ... NR_CPUS
-  - 1] = &init_task };`
+### Why This Should Be Backported
 
-This ensures `current` is valid (`&init_task`) from the very start of
-kernel execution. The runtime initialization in `uml_finishsetup()` is
-removed since it's now redundant.
+1. **Build Fix Exception**: Build fixes are explicitly allowed in stable
+   per `Documentation/process/stable-kernel-rules.rst` - this is an
+   "include file fix" that makes the header self-contained.
 
-### Stable Criteria Assessment
+2. **Zero Risk**: Adding a required include cannot cause runtime
+   regressions. The `bits.h` header is universally available.
 
-| Criteria | Assessment |
-|----------|------------|
-| Fixes a real bug? | **YES** - Boot crash with KCOV enabled |
-| Obviously correct? | **YES** - Same value (`&init_task`), just
-initialized earlier |
-| Small and contained? | **YES** - 2 files, +3/-3 lines, net -1 |
-| No new features? | **YES** - Pure bug fix |
-| Low regression risk? | **YES** - Identical initialization, just at
-compile time |
-| Self-contained? | **YES** - No dependencies on other patches |
+3. **Real Bug**: The compilation error is real - the header uses `BIT()`
+   macro without including its definition.
 
-### Risk Assessment
+4. **Reviewed by Maintainer**: Philipp Zabel (reset subsystem
+   maintainer) reviewed and signed off, providing confidence in the fix.
 
-- **Risk**: Very low. The initialization value is exactly what was done
-  before in `uml_finishsetup()`, just done statically at compile time
-  instead of at runtime.
-- **Scope**: Limited to UML architecture only
-- **Impact**: Fixes complete boot failure for UML+KCOV users
+5. **Minimal Change**: Single line addition - the smallest possible fix.
 
 ### Concerns
 
-- No explicit `Cc: stable@vger.kernel.org` tag
-- No `Fixes:` tag to identify when bug was introduced
-- Affects only UML users (niche architecture, but important for kernel
-  testing/development)
+- No explicit `Cc: stable@vger.kernel.org` or `Fixes:` tag from
+  maintainer, but this appears to be an oversight given the clear build-
+  fix nature
+- Only applicable to 6.13.x stable (older trees don't have the affected
+  code)
 
 ### Conclusion
 
-This is a textbook stable backport candidate:
-- Fixes a real, reproducible crash (not theoretical)
-- The fix is minimal, surgical, and obviously correct
-- Zero risk of introducing regressions since the same value is used,
-  just initialized earlier
-- The infrastructure (`init_task`, `cpu_tasks[]`) has existed in stable
-  trees for years
-
-The lack of explicit stable tags appears to be an oversight. The fix is
-appropriate for any stable tree that has both UML support and KCOV
-support.
+This is a textbook example of a stable-appropriate build fix: minimal,
+zero-risk, fixes a real compilation error, and makes the header properly
+self-contained. The fix should be backported to the 6.13.x stable tree
+where the bug exists.
 
 **YES**
 
- arch/um/kernel/process.c | 4 +++-
- arch/um/kernel/um_arch.c | 2 --
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ include/linux/reset.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/um/kernel/process.c b/arch/um/kernel/process.c
-index 9c9c66dc45f05..13d461712c997 100644
---- a/arch/um/kernel/process.c
-+++ b/arch/um/kernel/process.c
-@@ -43,7 +43,9 @@
-  * cares about its entry, so it's OK if another processor is modifying its
-  * entry.
-  */
--struct task_struct *cpu_tasks[NR_CPUS];
-+struct task_struct *cpu_tasks[NR_CPUS] = {
-+	[0 ... NR_CPUS - 1] = &init_task,
-+};
- EXPORT_SYMBOL(cpu_tasks);
+diff --git a/include/linux/reset.h b/include/linux/reset.h
+index 840d75d172f62..44f9e3415f92c 100644
+--- a/include/linux/reset.h
++++ b/include/linux/reset.h
+@@ -2,6 +2,7 @@
+ #ifndef _LINUX_RESET_H_
+ #define _LINUX_RESET_H_
  
- void free_stack(unsigned long stack, int order)
-diff --git a/arch/um/kernel/um_arch.c b/arch/um/kernel/um_arch.c
-index cfbbbf8500c34..ed2f67848a50e 100644
---- a/arch/um/kernel/um_arch.c
-+++ b/arch/um/kernel/um_arch.c
-@@ -239,8 +239,6 @@ static struct notifier_block panic_exit_notifier = {
- 
- void uml_finishsetup(void)
- {
--	cpu_tasks[0] = &init_task;
--
- 	atomic_notifier_chain_register(&panic_notifier_list,
- 				       &panic_exit_notifier);
- 
++#include <linux/bits.h>
+ #include <linux/err.h>
+ #include <linux/errno.h>
+ #include <linux/types.h>
 -- 
 2.51.0
 
