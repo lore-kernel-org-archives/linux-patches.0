@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A2F302141;
-	Wed, 10 Dec 2025 07:33:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A861F301702;
+	Wed, 10 Dec 2025 07:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352032; cv=none; b=JJjuOcmkFqMr9wSP4ujaeiB5/CX5ZQm1Wykz5R/4PYvayUlvrxxwH1sGnvgQS/U1W4856hFpR0v2r6/LCVbZ22ubScCuu6ZxHF0D6H8Zq5x3NZeaFPFnSZtYZ79SjDcZSlu/3PeaVSKoKy5AWsW295Mlqjkg87gKURcjCSf6NA8=
+	t=1765352035; cv=none; b=QyrR4RDLOLeCKQBHuJ6CG+rixoSIaOpF+Ri5OnyLMV2XT7gewezi4ARpNhyeHje4BRJK5F4gMRWMAHZbGwTcTiqpXFogoTemp9L732u8aAw3DmE9ZXgs1SsS8/6bsNJoZMyw+Vhhv/5QGO4fZk7GZRxPgKEe5ioUSkRnGcbt2Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352032; c=relaxed/simple;
-	bh=iC5lIlYHYHV/QRKsslny/vBotFZugJAqPe8RytEuNcU=;
+	s=arc-20240116; t=1765352035; c=relaxed/simple;
+	bh=9au1OswdeyviRUuJ4KEHQCPSed5fosWdkiS6E69BveI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hu0r2g7sMUEw/PcrmLTNZ/xNuZwXkTlQCAdZpm5QD+q5ZI2WdL+7tOC1d5hx+sn3/Advg1rTEtrEnh9lMdyEIkbb+CY+5QnANYfYDs/EfqZZI4trlR5qoNo09yyG4l2cxvGBOTgS4afYlqy4Jit3t1mNfS0dKsVj2lTR2Iwk0ZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dASFNOQL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pt63DZN/k7RcPHryjYRA2xc+5UswLNRuLbXPmmyDHLNfuxtwfKSEX8hAja08P9OXC3I7dMGt+8tNSrmd2xFAXTlPXWBgVHVFZLre1zfBzbUDeJFy/kMthssFkYls0C8QdbNTJJP29m0edM4VdEq/95/2ob/u8PsXEKnZhWqMQRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=drKS7are; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dASFNOQL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF2BC4CEF1;
-	Wed, 10 Dec 2025 07:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="drKS7are"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFA50C4CEF1;
+	Wed, 10 Dec 2025 07:33:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352032;
-	bh=iC5lIlYHYHV/QRKsslny/vBotFZugJAqPe8RytEuNcU=;
+	s=korg; t=1765352035;
+	bh=9au1OswdeyviRUuJ4KEHQCPSed5fosWdkiS6E69BveI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dASFNOQL8hYyu+QMOIcH2du1A+FxgCGH+vI5+Eb59lttWlnP75pkds47cuiDcgXWU
-	 xWDvCAq3cY0ypx5WUSt4nKygBznkOPEjfl4e2tS30sIukCERRpvTnbC8PZCQ0mERfR
-	 sPlglV27hgPowqbwtu+UAt8+qomkIUTwlvzVGwB0=
+	b=drKS7are9CtjGw2GPoCrvGW8fWJXW7XRBO0arvEjICDsQoefeGjJ2rXe3pupX7Ck3
+	 cgoYCgXzQ0qHpy/ZJmVdiS0qRZkT8U2tGL/jnTwSblmer6yDyAgPjVgFX2H5vi67/U
+	 xKzPeaxhJhPi9q1/ffdeLMPWgilZygbucP+7Hp0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hilda Wu <hildawu@realtek.com>,
+	Nial Ni <niall_ni@realsil.com.cn>,
+	Max Chou <max.chou@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 25/60] ALSA: hda/tas2781: Add new quirk for HP new projects
-Date: Wed, 10 Dec 2025 16:29:55 +0900
-Message-ID: <20251210072948.456533829@linuxfoundation.org>
+Subject: [PATCH 6.17 26/60] Bluetooth: btrtl: Avoid loading the config file on security chips
+Date: Wed, 10 Dec 2025 16:29:56 +0900
+Message-ID: <20251210072948.481641719@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -51,40 +53,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Max Chou <max.chou@realtek.com>
 
-[ Upstream commit 7a39c723b7472b8aaa2e0a67d2b6c7cf1c45cafb ]
+[ Upstream commit cd8dbd9ef600435439bb0e70af0a1d9e2193aecb ]
 
-Add new vendor_id and subsystem_id in quirk for HP new projects.
+For chips with security enabled, it's only possible to load firmware
+with a valid signature pattern.
+If key_id is not zero, it indicates a security chip, and the driver will
+not load the config file.
 
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20251108142325.2563-1-baojun.xu@ti.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+- Example log for a security chip.
+
+Bluetooth: hci0: RTL: examining hci_ver=0c hci_rev=000a
+  lmp_ver=0c lmp_subver=8922
+Bluetooth: hci0: RTL: rom_version status=0 version=1
+Bluetooth: hci0: RTL: btrtl_initialize: key id 1
+Bluetooth: hci0: RTL: loading rtl_bt/rtl8922au_fw.bin
+Bluetooth: hci0: RTL: cfg_sz 0, total sz 71301
+Bluetooth: hci0: RTL: fw version 0x41c0c905
+
+- Example log for a normal chip.
+
+Bluetooth: hci0: RTL: examining hci_ver=0c hci_rev=000a
+  lmp_ver=0c lmp_subver=8922
+Bluetooth: hci0: RTL: rom_version status=0 version=1
+Bluetooth: hci0: RTL: btrtl_initialize: key id 0
+Bluetooth: hci0: RTL: loading rtl_bt/rtl8922au_fw.bin
+Bluetooth: hci0: RTL: loading rtl_bt/rtl8922au_config.bin
+Bluetooth: hci0: RTL: cfg_sz 6, total sz 71307
+Bluetooth: hci0: RTL: fw version 0x41c0c905
+
+Tested-by: Hilda Wu <hildawu@realtek.com>
+Signed-off-by: Nial Ni <niall_ni@realsil.com.cn>
+Signed-off-by: Max Chou <max.chou@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/bluetooth/btrtl.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index 796f555dd381d..5e0c0f1e231b8 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6685,6 +6685,15 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8e60, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e61, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x103c, 0x8e62, "HP Trekker ", ALC287_FIXUP_CS35L41_I2C_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed5, "HP Merino13X", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed6, "HP Merino13", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed7, "HP Merino14", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed8, "HP Merino16", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8ed9, "HP Merino14W", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8eda, "HP Merino16W", ALC245_FIXUP_TAS2781_SPI_2),
-+	SND_PCI_QUIRK(0x103c, 0x8f40, "HP Lampas14", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x103c, 0x8f41, "HP Lampas16", ALC287_FIXUP_TAS2781_I2C),
-+	SND_PCI_QUIRK(0x103c, 0x8f42, "HP LampasW14", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x1032, "ASUS VivoBook X513EA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1034, "ASUS GU605C", ALC285_FIXUP_ASUS_GU605_SPI_SPEAKER2_TO_DAC1),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 1d4a7887abccf..52794db2739bf 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -50,7 +50,7 @@
+ 
+ #define	RTL_CHIP_SUBVER (&(struct rtl_vendor_cmd) {{0x10, 0x38, 0x04, 0x28, 0x80}})
+ #define	RTL_CHIP_REV    (&(struct rtl_vendor_cmd) {{0x10, 0x3A, 0x04, 0x28, 0x80}})
+-#define	RTL_SEC_PROJ    (&(struct rtl_vendor_cmd) {{0x10, 0xA4, 0x0D, 0x00, 0xb0}})
++#define	RTL_SEC_PROJ    (&(struct rtl_vendor_cmd) {{0x10, 0xA4, 0xAD, 0x00, 0xb0}})
+ 
+ #define RTL_PATCH_SNIPPETS		0x01
+ #define RTL_PATCH_DUMMY_HEADER		0x02
+@@ -534,7 +534,6 @@ static int rtlbt_parse_firmware_v2(struct hci_dev *hdev,
+ {
+ 	struct rtl_epatch_header_v2 *hdr;
+ 	int rc;
+-	u8 reg_val[2];
+ 	u8 key_id;
+ 	u32 num_sections;
+ 	struct rtl_section *section;
+@@ -549,14 +548,7 @@ static int rtlbt_parse_firmware_v2(struct hci_dev *hdev,
+ 		.len  = btrtl_dev->fw_len - 7, /* Cut the tail */
+ 	};
+ 
+-	rc = btrtl_vendor_read_reg16(hdev, RTL_SEC_PROJ, reg_val);
+-	if (rc < 0)
+-		return -EIO;
+-	key_id = reg_val[0];
+-
+-	rtl_dev_dbg(hdev, "%s: key id %u", __func__, key_id);
+-
+-	btrtl_dev->key_id = key_id;
++	key_id = btrtl_dev->key_id;
+ 
+ 	hdr = rtl_iov_pull_data(&iov, sizeof(*hdr));
+ 	if (!hdr)
+@@ -1070,6 +1062,8 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 	u16 hci_rev, lmp_subver;
+ 	u8 hci_ver, lmp_ver, chip_type = 0;
+ 	int ret;
++	int rc;
++	u8 key_id;
+ 	u8 reg_val[2];
+ 
+ 	btrtl_dev = kzalloc(sizeof(*btrtl_dev), GFP_KERNEL);
+@@ -1180,6 +1174,14 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 		goto err_free;
+ 	}
+ 
++	rc = btrtl_vendor_read_reg16(hdev, RTL_SEC_PROJ, reg_val);
++	if (rc < 0)
++		goto err_free;
++
++	key_id = reg_val[0];
++	btrtl_dev->key_id = key_id;
++	rtl_dev_info(hdev, "%s: key id %u", __func__, key_id);
++
+ 	btrtl_dev->fw_len = -EIO;
+ 	if (lmp_subver == RTL_ROM_LMP_8852A && hci_rev == 0x000c) {
+ 		snprintf(fw_name, sizeof(fw_name), "%s_v2.bin",
+@@ -1202,7 +1204,7 @@ struct btrtl_device_info *btrtl_initialize(struct hci_dev *hdev,
+ 		goto err_free;
+ 	}
+ 
+-	if (btrtl_dev->ic_info->cfg_name) {
++	if (btrtl_dev->ic_info->cfg_name && !btrtl_dev->key_id) {
+ 		if (postfix) {
+ 			snprintf(cfg_name, sizeof(cfg_name), "%s-%s.bin",
+ 				 btrtl_dev->ic_info->cfg_name, postfix);
 -- 
 2.51.0
 
