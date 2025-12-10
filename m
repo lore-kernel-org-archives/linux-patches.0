@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F414C2459FD;
-	Wed, 10 Dec 2025 06:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FA32765ED;
+	Wed, 10 Dec 2025 06:35:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765348497; cv=none; b=SLWw4AD2BDcGCVsGGDl5axiIqdStAEDmXESaeWrEb28KRE5+jio4S5RTr2R/Ze4+8RWVh6g3CDXj6B6ua/qGcGxUlOodCa9EwYAX8b6c/2QkTeGrQfC2gDIqUPg79ABXbYdAenXauibC/NiE2wEdddQkED/c/HQp1u+L88n93Mw=
+	t=1765348502; cv=none; b=PXlKeItwSWoXMzCTN4DnvCZlvyPmRBK7l4cfpN+SOTl9ywMMlS7v+O8VGi/os9xCmh8Qjiv8wqZ3osQllVbUNQMdHQaFLL5cvIAu9Ws9+TnfaJ9tB/nHlUunrV/H529z3xcVlizsThVkvrit3qhjZSVx1x0MpH/0k9yQg7Pk3M8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765348497; c=relaxed/simple;
-	bh=TZPfipY2YRgInQIq7dJfTqGYciLPLHLpk+aHQkkH5ks=;
+	s=arc-20240116; t=1765348502; c=relaxed/simple;
+	bh=q3MraarYR5fzjH9a8NaRW0+Um6sF9oejd2RwlWgRH3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F80wv70l5mHzpHzn0nedOhsi9BiIkdjDSGnC9RVSc25sjCGog4QZGnQ2T+pVju3D0TUs6U0w4A6v/xlYTInUM+dEQ74ENqBwHQfP64JwAb3Hz1RWLkOYLVTchqwE4hRrQRPsWD9qU+b5MYN+TwdyuKPtLvOhw+nRr9f+ev7nJdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q47fh9t1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=um3qIiazEvJtthJqTU9HeoTD64/hwINNKIXPr4RRIcG8pRGULWhSspSWwbu6Kvx59W3d/cyy4cIOeJ83pAeYoAu4LMwhPuF4/zuOxx5OsQ4zsY92azfg++eIEtVk7cXJq/i44Im2c1yJzgKkPCFsQPs4s+UjBzVfi0dEIAM0oX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jVjhOZ6n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q47fh9t1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 732BAC16AAE;
-	Wed, 10 Dec 2025 06:34:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jVjhOZ6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17555C116B1;
+	Wed, 10 Dec 2025 06:34:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765348496;
-	bh=TZPfipY2YRgInQIq7dJfTqGYciLPLHLpk+aHQkkH5ks=;
+	s=k20201202; t=1765348501;
+	bh=q3MraarYR5fzjH9a8NaRW0+Um6sF9oejd2RwlWgRH3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q47fh9t1eiIk0sebWNBEE/+AnNP9fBMEqA2i84ci5jlPOwo9qp3dN2txf8ZWCXVf4
-	 sl/smh6aDm+8NxPp9gCuNvJW4xA903M2FEVUArKkaB+2ACJ3KAX2HQgPQ0YM4DW/pV
-	 PcodReRYipScfJAA4uQR5uWK+9INRPlPtvPtZemRPheagjlITcw/daDItLLY2vlku3
-	 AeAiHvS2jvNUpc/kIiHLF928fa3BPCd0v8n5KtAXA/YPB2VlzWkPYc67NQwJVVvmii
-	 KwM+RVa2L0eOwxqLJMa9SGgKcndg9UwHIl52Fes+e6k96jD6XLH9vm2WJ14/jhCFJD
-	 p94TbPWrdzDZw==
+	b=jVjhOZ6noBRlLPzxfJl+o3XJKaNr3gJY5zHcD6wzpoI4rDhyEs723ZfaHlXo310nh
+	 C8ckheohVRR64EXCLoMQKLGSl9mHaQp2OrUQGQPD2iyznWwk7SyTI3Oah6ZjZctQ/2
+	 UArJSEMWsP3tniVv9zjEtAUx77VzzTYk3ZEACOy8tXYQbp4V6AQy5ylV+zhuBmxGfW
+	 Tts9Ezaj5zyZ4gGu/+8KlgLmo0LFijAGUL6WSc5JWiMxPUTE2wCxdZoLGJ3cdcieFI
+	 dL4r29GwcB1hlrc1Z8H0+E8ainvIYUPO7NcALC/sHWsC9fT0y+XmwUsskG29XmGASG
+	 /gD92BrMQM1Sw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hongyu Xie <xiehongyu1@kylinos.cn>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+Cc: Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] usb: xhci: limit run_graceperiod for only usb 3.0 devices
-Date: Wed, 10 Dec 2025 01:34:31 -0500
-Message-ID: <20251210063446.2513466-2-sashal@kernel.org>
+	dmitry.baryshkov@oss.qualcomm.com,
+	boddah8794@gmail.com,
+	venkat.jayaraman@intel.com,
+	akuchynski@chromium.org,
+	pooja.katiyar@intel.com,
+	jthies@google.com,
+	abel.vesa@linaro.org,
+	lk@c--e.de
+Subject: [PATCH AUTOSEL 6.18-5.10] usb: typec: ucsi: Handle incorrect num_connectors capability
+Date: Wed, 10 Dec 2025 01:34:32 -0500
+Message-ID: <20251210063446.2513466-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210063446.2513466-1-sashal@kernel.org>
 References: <20251210063446.2513466-1-sashal@kernel.org>
@@ -50,169 +56,200 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hongyu Xie <xiehongyu1@kylinos.cn>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-[ Upstream commit 8d34983720155b8f05de765f0183d9b0e1345cc0 ]
+[ Upstream commit 30cd2cb1abf4c4acdb1ddb468c946f68939819fb ]
 
-run_graceperiod blocks usb 2.0 devices from auto suspending after
-xhci_start for 500ms.
+The UCSI spec states that the num_connectors field is 7 bits, and the
+8th bit is reserved and should be set to zero.
+Some buggy FW has been known to set this bit, and it can lead to a
+system not booting.
+Flag that the FW is not behaving correctly, and auto-fix the value
+so that the system boots correctly.
 
-Log shows:
-[   13.387170] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.387177] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.387182] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.387188] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.387191] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
-[   13.387193] hcd_bus_resume:2303: usb usb7: usb auto-resume
-[   13.387296] hub_event:5779: hub 3-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.393343] handle_port_status:2034: xhci-hcd PNP0D10:02: handle_port_status: starting usb5 port polling.
-[   13.393353] xhci_hub_control:1271: xhci-hcd PNP0D10:02: Get port status 5-1 read: 0x206e1, return 0x10101
-[   13.400047] hub_suspend:3903: hub 3-0:1.0: hub_suspend
-[   13.403077] hub_resume:3948: hub 7-0:1.0: hub_resume
-[   13.403080] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.403085] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.403087] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.403090] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.403093] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
-[   13.403095] hcd_bus_resume:2303: usb usb7: usb auto-resume
-[   13.405002] handle_port_status:1913: xhci-hcd PNP0D10:04: Port change event, 9-1, id 1, portsc: 0x6e1
-[   13.405016] hub_activate:1169: usb usb5-port1: status 0101 change 0001
-[   13.405026] xhci_clear_port_change_bit:658: xhci-hcd PNP0D10:02: clear port1 connect change, portsc: 0x6e1
-[   13.413275] hcd_bus_suspend:2250: usb usb3: bus auto-suspend, wakeup 1
-[   13.419081] hub_resume:3948: hub 7-0:1.0: hub_resume
-[   13.419086] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.419095] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.419100] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.419106] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.419110] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
-[   13.419112] hcd_bus_resume:2303: usb usb7: usb auto-resume
-[   13.420455] handle_port_status:2034: xhci-hcd PNP0D10:04: handle_port_status: starting usb9 port polling.
-[   13.420493] handle_port_status:1913: xhci-hcd PNP0D10:05: Port change event, 10-1, id 1, portsc: 0x6e1
-[   13.425332] hcd_bus_suspend:2279: usb usb3: suspend raced with wakeup event
-[   13.431931] handle_port_status:2034: xhci-hcd PNP0D10:05: handle_port_status: starting usb10 port polling.
-[   13.435080] hub_resume:3948: hub 7-0:1.0: hub_resume
-[   13.435084] xhci_hub_control:1271: xhci-hcd PNP0D10:03: Get port status 7-1 read: 0x2a0, return 0x100
-[   13.435092] hub_event:5779: hub 7-0:1.0: state 7 ports 1 chg 0000 evt 0000
-[   13.435096] hub_suspend:3903: hub 7-0:1.0: hub_suspend
-[   13.435102] hcd_bus_suspend:2250: usb usb7: bus auto-suspend, wakeup 1
-[   13.435106] hcd_bus_suspend:2279: usb usb7: suspend raced with wakeup event
+Found on Lenovo P1 G8 during Linux enablement program. The FW will
+be fixed, but seemed worth addressing in case it hit platforms that
+aren't officially Linux supported.
 
-usb7 and other usb 2.0 root hub were rapidly toggling between suspend
-and resume states. More, "suspend raced with wakeup event" confuses people.
-
-So, limit run_graceperiod for only usb 3.0 devices
-
-Signed-off-by: Hongyu Xie <xiehongyu1@kylinos.cn>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251119142417.2820519-2-mathias.nyman@linux.intel.com
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20250821185319.2585023-1-mpearson-lenovo@squebb.ca
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+## Commit Analysis: usb: typec: ucsi: Handle incorrect num_connectors
+capability
 
 ### 1. COMMIT MESSAGE ANALYSIS
-- **Problem**: The `run_graceperiod` mechanism (500ms delay after xHC
-  start) was incorrectly blocking USB 2.0 devices from auto-suspending
-- **Symptom**: USB 2.0 root hubs rapidly toggling between suspend and
-  resume, causing "suspend raced with wakeup event" log spam
-- **No Cc: stable tag** or **Fixes: tag** present, but this is fixing a
-  bug in code that WAS marked for stable
+
+**Subject:** Indicates this handles incorrect/buggy firmware behavior
+for UCSI (USB Type-C Connector System Software Interface).
+
+**Key points:**
+- UCSI spec defines `num_connectors` as 7 bits with reserved 8th bit
+  (should be zero)
+- Buggy firmware sets the reserved bit, leading to **system not
+  booting**
+- Found on real hardware: Lenovo P1 G8 during Linux enablement
+- Maintainer expects this may hit other platforms not officially Linux-
+  supported
+
+**Tags present:**
+- `Reviewed-by: Heikki Krogerus` (Intel UCSI maintainer)
+- `Signed-off-by: Greg Kroah-Hartman` (USB maintainer)
+- Link to LKML discussion
+
+**Tags missing:**
+- No `Cc: stable@vger.kernel.org`
+- No `Fixes:` tag (this is a workaround for firmware, not fixing a
+  kernel bug)
 
 ### 2. CODE CHANGE ANALYSIS
-The change is a minimal one-line addition:
+
+The fix adds 6 lines:
 ```c
-- if (xhci->run_graceperiod) {
-+ if (hcd->speed >= HCD_USB3 && xhci->run_graceperiod) {
+/* Check if reserved bit set. This is out of spec but happens in buggy
+FW */
+if (ucsi->cap.num_connectors & 0x80) {
+    dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy
+FW\n",
+             ucsi->cap.num_connectors);
+    ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
+}
 ```
 
-**Root cause**: The original commit 33e321586e37b ("xhci: Add grace
-period after xHC start to prevent premature runtime suspend") introduced
-`run_graceperiod` in August 2022 (v6.0-rc4). The code comment explicitly
-states: "SS devices are only visible to roothub after link training
-completes" - SS means SuperSpeed (USB 3.0). However, the implementation
-didn't actually check for USB 3.0, applying the grace period to ALL
-devices incorrectly.
+**Technical mechanism of the bug:**
+- `num_connectors` is returned from firmware via `UCSI_GET_CAPABILITY`
+  command
+- With bit 7 set, the value becomes >= 128 instead of the real value
+  (likely 1-2)
+- This corrupted value is used for:
+  - Memory allocation: `kcalloc(ucsi->cap.num_connectors + 1,
+    sizeof(*connector), GFP_KERNEL)`
+  - Loop iteration: `for (i = 0; i < ucsi->cap.num_connectors; i++)`
+- Result: trying to allocate/register 128+ connectors, causing boot
+  failure
 
-**Why it matters**: USB 2.0 devices don't require link training delays.
-The 500ms grace period prevents them from suspending when they should be
-able to, causing the rapid suspend/resume cycling shown in the logs.
+**The fix:**
+- Detects if reserved bit 7 is set
+- Logs a warning about buggy firmware
+- Clears the bit to get the correct connector count
+- System can then boot normally
 
 ### 3. CLASSIFICATION
-- **Bug fix**: YES - corrects behavior to match documented intent
-- **Feature addition**: NO
-- **Security**: NO
+
+This is a **hardware/firmware quirk workaround** - one of the explicit
+exceptions allowed in stable kernels:
+- Not a new feature or API
+- Not code cleanup or refactoring
+- Handles non-compliant firmware (similar to USB quirks, PCI quirks)
+- Enables hardware to work correctly with the existing driver
 
 ### 4. SCOPE AND RISK ASSESSMENT
-- **Lines changed**: 1
-- **Files touched**: 1 (drivers/usb/host/xhci-hub.c)
-- **Pattern used**: `hcd->speed >= HCD_USB3` is used 20+ times in xhci-
-  hub.c and xhci.c - this is a well-established pattern
-- **Risk**: VERY LOW - trivial change using existing idiom
+
+| Metric | Assessment |
+|--------|------------|
+| Lines changed | 6 lines added |
+| Files touched | 1 file |
+| Complexity | Very low - simple bit check and mask |
+| Risk | **Very low** |
+
+**Risk reasoning:**
+- If firmware is compliant (bit not set): no change in behavior
+- If firmware is buggy (bit set): corrects the value to what it should
+  be
+- Cannot break working systems
+- No side effects possible
 
 ### 5. USER IMPACT
-- **Affected users**: All systems with xHCI USB controllers (most modern
-  systems)
-- **Severity**: Medium - not a crash, but affects power management and
-  creates confusing log messages
-- **Visibility**: Users see rapid suspend/resume cycles and log spam
+
+**Severity:** **HIGH** - prevents system from booting
+
+**Who is affected:**
+- Confirmed: Lenovo P1 G8 users
+- Potential: Other systems with buggy UCSI firmware
+- Type-C/UCSI is common on modern laptops
+
+**Real-world validation:**
+- Found during actual hardware testing/enablement
+- Not a theoretical bug - causes real boot failures
 
 ### 6. STABILITY INDICATORS
-- Signed-off-by Mathias Nyman (Intel xHCI maintainer)
-- Signed-off-by Greg Kroah-Hartman (Linux USB/stable maintainer)
-- Follows existing code patterns extensively used in the same file
+
+- Reviewed by Heikki Krogerus (Intel, UCSI domain expert)
+- Signed off by Greg Kroah-Hartman (USB maintainer)
+- Small, obvious fix with clear rationale
+- The fix is self-contained and well-understood
 
 ### 7. DEPENDENCY CHECK
-- **Dependencies**: None - the fix uses existing variables and macros
-- **Original commit**: 33e321586e37b was marked `Cc:
-  stable@vger.kernel.org`, so stable kernels v6.0+ have the buggy code
-- The fix should be backported to all stable branches that have the
-  original commit
 
-### Key Points
+- Standalone fix with no dependencies on other commits
+- UCSI driver exists in all relevant stable trees
+- Should apply cleanly to stable kernels
 
-**Why this should be backported:**
-1. Fixes a bug in code that was explicitly backported to stable
-   (33e321586e37b had Cc: stable)
-2. The fix aligns implementation with documented intent (comment says
-   "SS devices")
-3. Minimal, surgical change with near-zero regression risk
-4. Uses well-established pattern (`hcd->speed >= HCD_USB3`) used
-   throughout the driver
-5. Fixes real user-visible issue: power consumption and log spam
-6. Maintained by the same author (Mathias Nyman) who wrote the original
+---
 
-**Risk vs Benefit**:
-- **Benefit**: Fixes USB 2.0 power management regression, eliminates
-  confusing logs
-- **Risk**: Extremely low - single conditional check using existing
-  infrastructure
+## Summary
 
-The absence of explicit `Cc: stable` and `Fixes:` tags is likely an
-oversight since this clearly fixes a bug in stable-destined code.
+**What this fixes:** Boot failure on systems with buggy UCSI firmware
+that incorrectly sets a reserved bit in the connector count capability
+field.
+
+**Why it meets stable criteria:**
+1. ✅ **Fixes a real bug affecting users** - confirmed boot failure on
+   Lenovo P1 G8
+2. ✅ **Obviously correct** - simple bit mask operation, spec-compliant
+   behavior
+3. ✅ **Small and contained** - 6 lines in one file, no side effects
+4. ✅ **Falls under "hardware quirk" exception** - workaround for non-
+   compliant firmware
+5. ✅ **High impact** - system won't boot without this fix
+6. ✅ **Low risk** - cannot break working systems
+7. ✅ **Well-reviewed** - by domain experts including USB maintainer
+
+**Why missing stable tags isn't disqualifying:**
+- Hardware quirks often lack explicit stable tags
+- The nature of the fix (workaround for boot failure) clearly warrants
+  backporting
+- Greg Kroah-Hartman signed off, who is also a stable tree maintainer
+
+**Risk vs Benefit:**
+- Risk: Essentially zero - the code path is only taken for buggy
+  firmware
+- Benefit: Systems with buggy firmware can boot
+
+This is a textbook example of a hardware quirk/workaround that belongs
+in stable trees. It's a small, safe, well-reviewed fix that prevents
+boot failures on real hardware.
 
 **YES**
 
- drivers/usb/host/xhci-hub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/usb/host/xhci-hub.c b/drivers/usb/host/xhci-hub.c
-index b3a59ce1b3f41..5e1442e91743d 100644
---- a/drivers/usb/host/xhci-hub.c
-+++ b/drivers/usb/host/xhci-hub.c
-@@ -1671,7 +1671,7 @@ int xhci_hub_status_data(struct usb_hcd *hcd, char *buf)
- 	 * SS devices are only visible to roothub after link training completes.
- 	 * Keep polling roothubs for a grace period after xHC start
- 	 */
--	if (xhci->run_graceperiod) {
-+	if (hcd->speed >= HCD_USB3 && xhci->run_graceperiod) {
- 		if (time_before(jiffies, xhci->run_graceperiod))
- 			status = 1;
- 		else
+diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
+index 3f568f790f39b..3995483a0aa09 100644
+--- a/drivers/usb/typec/ucsi/ucsi.c
++++ b/drivers/usb/typec/ucsi/ucsi.c
+@@ -1807,6 +1807,12 @@ static int ucsi_init(struct ucsi *ucsi)
+ 		ret = -ENODEV;
+ 		goto err_reset;
+ 	}
++	/* Check if reserved bit set. This is out of spec but happens in buggy FW */
++	if (ucsi->cap.num_connectors & 0x80) {
++		dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy FW\n",
++			 ucsi->cap.num_connectors);
++		ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
++	}
+ 
+ 	/* Allocate the connectors. Released in ucsi_unregister() */
+ 	connector = kcalloc(ucsi->cap.num_connectors + 1, sizeof(*connector), GFP_KERNEL);
 -- 
 2.51.0
 
