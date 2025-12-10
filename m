@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943BD72618;
-	Wed, 10 Dec 2025 03:49:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B46772618;
+	Wed, 10 Dec 2025 03:49:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338561; cv=none; b=JPvNaGLcJx9eTuQ2adJ5PYz2zbsk7w/4aYg82hdIIHDpsAT/nwSQ5dgByg0vgEbmOzguh5CUX/boVtO6jBo2m5SS1ipG4ya7YBLwgB9zS0sKgLhoWf+nDZZRJGUncdVDBxcQIeyg2m4mu3+woRHbgpwyqsnjscC2uuAnPpHZZkw=
+	t=1765338563; cv=none; b=F/prHDOdUu40u826ZHWIUXSJlaJyj3XWq4/rtNHU5ROrZ8C2X1CiwjKuon33wrxBwsNM/RcuJgIeTMBHDR4OVYRCSdO3ubuIkDOnN+jpdIXyVWVo/WnSezr5HhDiXR5HNEafuJJj2voJa6VCQtflUjD5PoKfHqFTbWiD16BhDrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338561; c=relaxed/simple;
-	bh=GCAGigYbU/y6QsjzNHVaS/eon7khpFveieDFJ9HwyMI=;
+	s=arc-20240116; t=1765338563; c=relaxed/simple;
+	bh=2duEGX3dZSI2y/mcqGLpjVGeIwAQ6krssuhwn+x9ar8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WFfCVoqrpTPNkqNvM6346RUFit678mGxT+AYwW+m5bS/HZkcqrrbOU02KHjFR40lAoKMfwvvw9OenIWeyepXXugjjUFZ1oZBWhKj/PYefErTwdD+pUep3hy5+r2QgSZj3WbuGKPscmMeqZqum3tMy+qMX4TdIkroPPhnaq/H3rQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WA90qH0G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=llZn5WJUPzvDfORN67Nwgx+oQSQXSk7lZ+KiECtYJikgYyHu+CABgZi5MxtFQjIBmck3cYUN72Jbag+K4Yt+np8WOxoSMaJZfIFRolirYzMCEBq0y7r/ni8icRiQV0lRcrCjyTzKiG+lDBu44w9cDSlR1/jc4WSoy7N+nkVVAGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D1qsaeZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WA90qH0G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE098C4CEF1;
-	Wed, 10 Dec 2025 03:49:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D1qsaeZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BD0C19422;
+	Wed, 10 Dec 2025 03:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338561;
-	bh=GCAGigYbU/y6QsjzNHVaS/eon7khpFveieDFJ9HwyMI=;
+	s=k20201202; t=1765338562;
+	bh=2duEGX3dZSI2y/mcqGLpjVGeIwAQ6krssuhwn+x9ar8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WA90qH0G9aAclgyzLBtLhzpXq8MWnPTYC4r9K6TEEJMxIP+4qBLxcIOfr9PtPq1uS
-	 BQq1cbaAaZpkrlSIvJKfIx4RqPS7hm2OhOOa4dsvrfs1Emp+ZzntRQJnaNM5rvQdwG
-	 1bEp8Gp36ZDDxgXnIVsgyEuxrh4DKM+FdjKDkm+DEnbQ0ZFZ854fUTWpSuI0mCU3eF
-	 np5BdniV/Cc17yEnZJ59qz3cteB3+MonVEK8gu+akp/Wz1A4KQlNFxzJTf+DbWlihx
-	 ZTjXXZpGZ7ZRilqABYChOqKciec7MGIE3VEbM23921QJ3xIByl3iFJvxNA/1cWEouT
-	 nseHSaczMQgaw==
+	b=D1qsaeZoK0RF2+TU8Mrd4EbqQ03vQ+rtJWHEJIhsaevZgJ/Vu8rXy9040C4klPJsv
+	 hlb7c0X+rvYWNTPWSvzrLYx6fW0sTzg10uhJhrcq3t34ChGOiCHiyIBhxtY6mpD7De
+	 pAyEJOb8LPC2TTd4jaO6cOTqN5dgkn22d49xAxscjGen4dryivEJ9IcNi0lKKJNuDO
+	 NZWLx1gE8wcgyrPgHS1hu8NIgjzIj8c04MVNwiQ6G43DqgVWRtxGJ0CiU6ZE0DB7P5
+	 5qxwl4enZpJelundQdA1VkWp/+Oh6laRUSpTyhootO2oe+ENwSU8IOcjod0C7dYTKM
+	 rSCOW3cqfhUmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tony Battersby <tonyb@cybernetics.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Li Qiang <liqiang01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>,
-	njavali@marvell.com,
-	GR-QLogic-Storage-Upstream@marvell.com,
-	linux-scsi@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] scsi: qla2xxx: Use reinit_completion on mbx_intr_comp
-Date: Tue,  9 Dec 2025 22:48:43 -0500
-Message-ID: <20251210034915.2268617-2-sashal@kernel.org>
+	linux-watchdog@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] via_wdt: fix critical boot hang due to unnamed resource allocation
+Date: Tue,  9 Dec 2025 22:48:44 -0500
+Message-ID: <20251210034915.2268617-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
 References: <20251210034915.2268617-1-sashal@kernel.org>
@@ -53,150 +52,161 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Battersby <tonyb@cybernetics.com>
+From: Li Qiang <liqiang01@kylinos.cn>
 
-[ Upstream commit 957aa5974989fba4ae4f807ebcb27f12796edd4d ]
+[ Upstream commit 7aa31ee9ec92915926e74731378c009c9cc04928 ]
 
-If a mailbox command completes immediately after
-wait_for_completion_timeout() times out, ha->mbx_intr_comp could be left
-in an inconsistent state, causing the next mailbox command not to wait
-for the hardware.  Fix by reinitializing the completion before use.
+The VIA watchdog driver uses allocate_resource() to reserve a MMIO
+region for the watchdog control register. However, the allocated
+resource was not given a name, which causes the kernel resource tree
+to contain an entry marked as "<BAD>" under /proc/iomem on x86
+platforms.
 
-Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
-Link: https://patch.msgid.link/11b6485e-0bfd-4784-8f99-c06a196dad94@cybernetics.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+During boot, this unnamed resource can lead to a critical hang because
+subsequent resource lookups and conflict checks fail to handle the
+invalid entry properly.
+
+Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Comprehensive Analysis
+## Analysis Summary
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-The commit message clearly describes a race condition:
-- **Bug:** If a mailbox command completes immediately **after**
-  `wait_for_completion_timeout()` times out, `ha->mbx_intr_comp` is left
-  in an inconsistent (completed) state
-- **Impact:** The next mailbox command will not wait for hardware
-- **Fix:** Reinitialize the completion before use
+**Subject:** "via_wdt: fix critical boot hang due to unnamed resource
+allocation"
+- Uses "fix" language indicating a bug fix
+- Claims "critical boot hang" - a severe user-impacting issue
+- Affects VIA chipset watchdog driver
 
-**Notable:** No "Cc: stable@vger.kernel.org" or "Fixes:" tag, but the
-bug description is clear and the fix is obviously correct.
+**Tags analysis:**
+- **Missing:** No "Cc: stable@vger.kernel.org" tag
+- **Missing:** No "Fixes:" tag
+- **Present:** Reviewed-by: Guenter Roeck (well-respected watchdog/hwmon
+  maintainer)
+- **Present:** Signed-off by both watchdog maintainers (Guenter Roeck
+  and Wim Van Sebroeck)
 
 ### 2. CODE CHANGE ANALYSIS
 
-**The Race Condition:**
-1. Thread calls `wait_for_completion_timeout(&ha->mbx_intr_comp, ...)`
-2. Timeout expires → returns 0
-3. Meanwhile, hardware interrupt fires and
-   `qla2x00_handle_mbx_completion()` calls
-   `complete(&ha->mbx_intr_comp)` (at `qla_inline.h:271`)
-4. Completion is now in "done" state
-5. Next mailbox command: `wait_for_completion_timeout()` returns
-   immediately without waiting
-6. Driver proceeds before hardware is ready → potential malfunction
+The fix is a **single line addition**:
+```c
+wdt_res.name = "via_wdt";
+```
 
-**The Fix (2 lines added):**
-- `reinit_completion(&ha->mbx_intr_comp)` before starting to wait
-  (ensures clean initial state)
-- `reinit_completion(&ha->mbx_intr_comp)` after timeout (clears any
-  stale completion that raced)
+**The bug mechanism:**
+1. `wdt_res` is declared as a static `struct resource` without
+   initialization at line 67
+2. `allocate_resource()` is called without the resource having a name
+   set
+3. This results in a NULL `name` field, shown as `<BAD>` in
+   `/proc/iomem`
+4. The kernel's resource code in `kernel/resource.c:141` shows: `r->name
+   ? r->name : "<BAD>"`
 
-This is a **standard kernel pattern** for handling completion/timeout
-races (similar fix in `csiostor` - commit 3e3f5a8a0f03e).
+**Why this is needed:**
+- Other watchdog drivers (e.g., `f71808e_wdt.c`) properly set
+  `wdt_res.name = "superio port"`
+- `struct resource` has a `name` field that should always be populated
 
 ### 3. CLASSIFICATION
 
-- **Type:** Bug fix for a real race condition
-- **Not:** Feature addition, new API, cleanup, or optimization
-- **Category:** Driver reliability fix
+- **Type:** Bug fix (not new feature)
+- **Severity:** The commit claims "critical boot hang" - though the
+  exact mechanism isn't fully clear from code inspection, unnamed
+  resources can cause problems in resource lookup/conflict resolution
+  paths
+- **Scope:** Single driver, single line
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
 | Factor | Assessment |
 |--------|------------|
-| Lines changed | +2 lines (minimal) |
-| Files touched | 1 file |
-| API used | `reinit_completion()` - standard kernel API, stable for
-years |
-| Complexity | Very low - straightforward pattern |
-| Risk of regression | Very low - just resets completion state |
+| Lines changed | 1 |
+| Files touched | 1 |
+| Complexity | Extremely low |
+| Risk of regression | **Zero** - adding a name to a resource cannot
+cause problems |
+| Self-contained | Yes, no dependencies |
 
 ### 5. USER IMPACT
 
-- **Affected users:** Anyone with QLogic Fibre Channel HBAs (qla2xxx
-  driver)
-- **Deployment:** Enterprise storage systems, SANs, data centers
-- **Severity:** If triggered, could cause:
-  - Mailbox commands proceeding before hardware ready
-  - Corrupted command sequences
-  - I/O failures or potential data corruption
-- **Frequency:** Race condition, but in storage path - critical when it
-  hits
-- **Callers:** 99 functions call `qla2x00_mailbox_command` - this is the
-  core firmware communication path
+- **Affected users:** VIA chipset hardware with watchdog (relatively
+  rare, older hardware)
+- **Severity if bug hits:** Boot hang (critical)
+- **Bug age:** Present since driver was introduced in 2011
+  (`dc3c56b703dad`)
 
 ### 6. STABILITY INDICATORS
 
-- Signed-off-by: Tony Battersby (author)
-- Signed-off-by: Martin K. Petersen (SCSI maintainer)
-- Proper patch submission via Link: to patch.msgid.link
+- **Reviewed-by:** Guenter Roeck - respected maintainer
+- **Correctness:** Obviously correct - other drivers do the same thing
+- **Testing:** Implied through maintainer review
 
 ### 7. DEPENDENCY CHECK
 
-- Uses only `reinit_completion()` - standard kernel API available in all
-  stable trees
-- No dependencies on other commits
-- The affected code path exists in all stable trees where qla2xxx driver
-  is present
+- **No dependencies** - completely self-contained
+- **Driver exists in all stable trees** - since 2011
 
-### Summary
+## Risk vs Benefit Analysis
 
-**Meets all stable kernel criteria:**
-1. ✅ **Obviously correct** - standard pattern for completion timeout
-   races
-2. ✅ **Fixes real bug** - race condition affecting hardware
-   synchronization
-3. ✅ **Small and contained** - only 2 lines, single file
-4. ✅ **No new features** - purely a bug fix
-5. ✅ **Tested** - accepted by SCSI maintainer
-6. ✅ **User impact** - affects enterprise storage users
+**Benefits:**
+- Fixes potential boot hang for affected users
+- Fixes incorrect `/proc/iomem` display (`<BAD>` entries)
+- Brings via_wdt in line with other watchdog drivers
 
-**Risk vs Benefit:**
-- Risk: Negligible - `reinit_completion()` is well-understood and safe
-- Benefit: Prevents potential storage I/O issues from race condition
+**Risks:**
+- **None** - setting a resource name is a standard, safe operation
 
-The only missing element is an explicit "Cc: stable" tag, but this
-commit clearly qualifies as a proper stable backport candidate. It's a
-small, surgical fix for a real race condition in a production SCSI
-driver used in enterprise storage environments.
+## Concerns
+
+1. **No explicit stable request:** The maintainers didn't add `Cc:
+   stable@vger.kernel.org`
+2. **Boot hang claim verification:** The exact mechanism for the boot
+   hang isn't easily traced in code, though I trust the
+   reporter/maintainers' assessment
+3. **Limited scope:** Only affects VIA chipset users (small population)
+
+## Conclusion
+
+This commit **should be backported** to stable kernels. Despite the
+missing stable tag, it meets all stable criteria:
+
+1. ✅ **Obviously correct** - trivial one-line fix matching other
+   drivers' patterns
+2. ✅ **Fixes a real bug** - unnamed resources are incorrect and can
+   cause issues
+3. ✅ **Small and contained** - one line in one file
+4. ✅ **No new features** - just fixing existing code
+5. ✅ **Zero regression risk** - adding a name cannot break anything
+6. ✅ **Maintainer reviewed** - Guenter Roeck reviewed
+
+The fix is so trivially safe that even if the boot hang is rare, there
+is no downside to including it in stable.
 
 **YES**
 
- drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/watchdog/via_wdt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
-index 32eb0ce8b170d..1f01576f044b8 100644
---- a/drivers/scsi/qla2xxx/qla_mbx.c
-+++ b/drivers/scsi/qla2xxx/qla_mbx.c
-@@ -253,6 +253,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
- 	/* Issue set host interrupt command to send cmd out. */
- 	ha->flags.mbox_int = 0;
- 	clear_bit(MBX_INTERRUPT, &ha->mbx_cmd_flags);
-+	reinit_completion(&ha->mbx_intr_comp);
+diff --git a/drivers/watchdog/via_wdt.c b/drivers/watchdog/via_wdt.c
+index d647923d68fed..f555763926518 100644
+--- a/drivers/watchdog/via_wdt.c
++++ b/drivers/watchdog/via_wdt.c
+@@ -165,6 +165,7 @@ static int wdt_probe(struct pci_dev *pdev,
+ 		dev_err(&pdev->dev, "cannot enable PCI device\n");
+ 		return -ENODEV;
+ 	}
++	wdt_res.name = "via_wdt";
  
- 	/* Unlock mbx registers and wait for interrupt */
- 	ql_dbg(ql_dbg_mbx, vha, 0x100f,
-@@ -279,6 +280,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
- 			    "cmd=%x Timeout.\n", command);
- 			spin_lock_irqsave(&ha->hardware_lock, flags);
- 			clear_bit(MBX_INTR_WAIT, &ha->mbx_cmd_flags);
-+			reinit_completion(&ha->mbx_intr_comp);
- 			spin_unlock_irqrestore(&ha->hardware_lock, flags);
- 
- 			if (chip_reset != ha->chip_reset) {
+ 	/*
+ 	 * Allocate a MMIO region which contains watchdog control register
 -- 
 2.51.0
 
