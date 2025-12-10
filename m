@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762322765ED;
-	Wed, 10 Dec 2025 06:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689DF28FFF6;
+	Wed, 10 Dec 2025 06:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765348512; cv=none; b=fvaj10z5ip1YqwpKBRxDdek3eh8ihZB+m6BJ4d0hvaNs66zq9qg704n59QegKi75syHnc3plV4HFT/PBJcbIoF72Akw3zqscKvgk1YbOyHKZv0x/tRnaW1bOQ1Sen3G+jGFP9hBN1Xv8ZsSsZlYn3frA1yrgIZTxwRVIRZ1A4k8=
+	t=1765348515; cv=none; b=MJQDvEL8eYdyKM2fDbbu8aLqd94hkdoHUEQq2Nr2kJNZIREcIsP3o7cmF/VYU2yd0q76MOrHQx32igkarfumDbMQw5U9/8tA9tNJfjQdXHJmTJcq0nHxF8zuv6+R7N2kJq0llu/cQ2OTuVSmYGNC2icJpg4wvO7NHDZVrmzH5c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765348512; c=relaxed/simple;
-	bh=rgFkTHqO82auohP6XdbN3mzAXw0NxrdMgjtUOuJNaGk=;
+	s=arc-20240116; t=1765348515; c=relaxed/simple;
+	bh=vpqBjFxS2tCn1qmGhUgdhnHKuO1yGyehv0knWmhmibs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Gt970jJ5m6AlXSvWPPXMEorMefVH3QH3oF753lVWfZ/B6VXS10Pqfpmh/4DVJZrCUacnhyU3hv7zMV3gUJwWwfWIfJyaA+hlQUlIpq3XB+0VGUTA8ojR8FQStz33hMYnZW3+bk6tUqzcL/UEO4ceJmkEDKGfMTcqiOOHcVu6zEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBPpplOz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rtzQDjgp9iDolv3Br/sxFgWJw7Y7EhQuaXW42m/kr543Btg360KNITE72RWN3WPSfFaXYiiRlzggf+hlmRgX00kT6WtYg3zIP4qYQ8SF1cNIXwkC9JSAI6H6ALpH4/9ptxT1AL+I1V2xRjzoj7WH8QBEMSpyTI4cIST9qFW0nrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iV/JvpFI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBPpplOz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C92A4C4CEF1;
-	Wed, 10 Dec 2025 06:35:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iV/JvpFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E226EC4CEF1;
+	Wed, 10 Dec 2025 06:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765348512;
-	bh=rgFkTHqO82auohP6XdbN3mzAXw0NxrdMgjtUOuJNaGk=;
+	s=k20201202; t=1765348514;
+	bh=vpqBjFxS2tCn1qmGhUgdhnHKuO1yGyehv0knWmhmibs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBPpplOzvwr2+he2d7OW/hvbfaWqD9K8262Lv8nKVpHbFHTWzqXTvbKEeKZJqSzsx
-	 5rPf67FLuuDo+7tWTMVjLarL3/8a+/MGOiv9yduMvl2qDA2yHvCAiShWPEWtQTvD1O
-	 sb9/9D9PcR8iZpvaNQclJGMg/eSGDBPaf99lR8cJYvPuYy/Dr8jSh+s78arGYOZD/2
-	 tHqI43nP8B0cBnu4+Y22y7HsmLmjdTSAu9uioMOV4queosxS2Kizyu/D+yhSyCUMIg
-	 26h0VKG8Ukl5R0BBxSem8B5rNJ1KxY5VGAX4+APn8g79AhZQBS+oxOtIGM4RK23aWO
-	 +bS3QAGgauKoA==
+	b=iV/JvpFI/RbwQ6NTqWsvgwbkrRHEZbLGU3a4g4R6vLcTs79Zzg5kXSam2TS/WsUzD
+	 /CexocqD6u02rukHD9Sc2lYYFgke5+4k5nQDVe6dCgDhpC4qE5JQ8oyzzK9+pfOkn8
+	 A5Q30kHh0Ayidz9GJVZ9nt51SImiqlhUFIIGCoCMKQS7WFzO5TmN5RfFjEz+8ZpdxZ
+	 mYX/4FG60tg5C9t27JzmpdeXH9+KvoyG3R0qSjdGYEwESZHSbwqwYx3nenaY1UCRz+
+	 OcA3WmLajviXcMf0daOXNa0dPEWUQQLwuJIM0RTY0uzvLyR/pLnYWXIveJ6x2IrzV2
+	 H/wy2rsGMNloA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michal Pecio <michal.pecio@gmail.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mathias.nyman@intel.com,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.17] usb: xhci: Don't unchain link TRBs on quirky HCs
-Date: Wed, 10 Dec 2025 01:34:35 -0500
-Message-ID: <20251210063446.2513466-6-sashal@kernel.org>
+	peterz@infradead.org,
+	mingo@redhat.com,
+	acme@kernel.org,
+	linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.6] libperf cpumap: Fix perf_cpu_map__max for an empty/NULL map
+Date: Wed, 10 Dec 2025 01:34:36 -0500
+Message-ID: <20251210063446.2513466-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210063446.2513466-1-sashal@kernel.org>
 References: <20251210063446.2513466-1-sashal@kernel.org>
@@ -53,252 +57,169 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit e6aec6d9f5794e85d2312497a5d81296d885090e ]
+[ Upstream commit a0a4173631bfcfd3520192c0a61cf911d6a52c3a ]
 
-Some old HCs ignore transfer ring link TRBs whose chain bit is unset.
-This breaks endpoint operation and sometimes makes it execute other
-ring's TDs, which may corrupt their buffers or cause unwanted device
-action. We avoid this by chaining all link TRBs on affected rings.
+Passing an empty map to perf_cpu_map__max triggered a SEGV. Explicitly
+test for the empty map.
 
-Fix an omission which allows them to be unchained by cancelling TDs.
-
-The patch was tested by reproducing this condition on an isochronous
-endpoint (non-power-of-two TDs are sometimes split not to cross 64K)
-and printing link TRBs in trb_to_noop() on good and buggy HCs.
-
-Actual hardware malfunction is rare since it requires Missed Service
-Error shortly before the unchained link TRB, at least on NEC and AMD.
-I have never seen it after commit bb0ba4cb1065 ("usb: xhci: Apply the
-link chain quirk on NEC isoc endpoints"), but it's Russian roulette
-and I can't test all affected hosts and workloads. Fairly often MSEs
-happen after cancellation because the endpoint was stopped.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20251119142417.2820519-11-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Ingo Molnar <mingo@kernel.org>
+Closes: https://lore.kernel.org/linux-perf-users/aSwt7yzFjVJCEmVp@gmail.com/
+Tested-by: Ingo Molnar <mingo@kernel.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Comprehensive Analysis
+## Commit Analysis: libperf cpumap: Fix perf_cpu_map__max for an
+empty/NULL map
 
-### 1. Commit Message Analysis
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject**: "usb: xhci: Don't unchain link TRBs on quirky HCs"
+- **Subject**: Clearly indicates a bug fix for `perf_cpu_map__max()`
+- **Bug type**: SEGV (segmentation fault / crash) - a severe issue
+- **Tags present**:
+  - `Reported-by: Ingo Molnar` - reported by a prominent kernel
+    developer
+  - `Closes:` link to mailing list bug report
+  - `Tested-by:` from two people (Ingo Molnar and Thomas Richter)
+  - `Signed-off-by:` from maintainers
+- **Missing tags**: No explicit `Cc: stable@vger.kernel.org` or `Fixes:`
+  tag
 
-The commit message clearly describes a **hardware bug fix**:
-- Some old xHCI HCs "ignore transfer ring link TRBs whose chain bit is
-  unset"
-- This "breaks endpoint operation and sometimes makes it execute other
-  ring's TDs"
-- Can "corrupt their buffers or cause unwanted device action"
+### 2. CODE CHANGE ANALYSIS
 
-**Key signals**:
-- ❌ No `Cc: stable@vger.kernel.org` tag
-- ❌ No explicit `Fixes:` tag
-- ✅ References related fix commit `bb0ba4cb1065` for context
-- ✅ Well-documented testing methodology
-- ✅ Sign-offs from xHCI maintainer (Mathias Nyman) and USB maintainer
-  (Greg Kroah-Hartman)
+**Before the fix:**
+```c
+return __perf_cpu_map__nr(map) > 0
+    ? __perf_cpu_map__cpu(map, __perf_cpu_map__nr(map) - 1)
+    : result;
+```
 
-### 2. Code Change Analysis
+**After the fix:**
+```c
+if (!map)
+    return result;
 
-The change is **small and surgical**:
+// The CPUs are always sorted and nr is always > 0 as 0 length map is
+// encoded as NULL.
+return __perf_cpu_map__cpu(map, __perf_cpu_map__nr(map) - 1);
+```
 
-1. **`trb_to_noop()` modification**: Adds an `unchain_links` parameter -
-   only unchain link TRBs when `unchain_links=true`
+**The Bug Mechanism:**
+The old code attempted to check `__perf_cpu_map__nr(map) > 0` before
+accessing the map, but this check **itself** dereferences the `map`
+pointer. When `map` is NULL, calling `__perf_cpu_map__nr(map)` results
+in a NULL pointer dereference, causing a SEGV.
 
-2. **`td_to_noop()` modification**:
-   - Now takes `xhci` and `ep` parameters
-   - Checks `xhci_link_chain_quirk()` to determine if unchaining is safe
-   - Only unchains on HCs without the quirk
+**The Fix:**
+- Adds an explicit NULL check at the function entry point
+- Returns the default result (`cpu = -1`) for NULL maps
+- Simplifies the logic based on the invariant that a 0-length map is
+  encoded as NULL (so if map is non-NULL, it has at least one entry)
 
-3. **Call sites updated**: 5 call sites properly pass the new parameters
+### 3. CLASSIFICATION
 
-**Technical mechanism**: On quirky HCs, when TDs are cancelled and
-converted to no-ops, link TRBs were being unchained unconditionally. The
-quirky HCs then ignored these unchained link TRBs, causing the HC to
-continue past the segment boundary and potentially execute other rings'
-TRBs.
+- **Type**: Bug fix (NULL pointer dereference causing crash)
+- **Not a feature**: Doesn't add new functionality
+- **Not a quirk/device ID**: Pure crash fix in existing code
 
-### 3. Dependency Analysis
+### 4. SCOPE AND RISK ASSESSMENT
 
-**Critical dependency**: The fix uses `xhci_link_chain_quirk()`:
-- Introduced in commit 7476a2215c077 (June 2024)
-- First available in **v6.11** and later
-
-This limits clean backporting to **6.11+ stable trees** only. Older LTS
-trees (6.6.y, 6.1.y, 5.15.y) would require adaptation.
-
-### 4. Scope and Risk Assessment
-
-| Factor | Assessment |
+| Metric | Assessment |
 |--------|------------|
-| Lines changed | ~30 net lines in one file |
-| Files touched | 1 (drivers/usb/host/xhci-ring.c) |
-| Complexity | Low - adds conditional check |
-| Regression risk | **Very Low** - only affects HCs with quirk |
+| Lines changed | ~10 (very small) |
+| Files touched | 1 file |
+| Complexity | Very low - simple NULL check |
+| Subsystem | tools/lib/perf (perf userspace tooling) |
+| Risk level | **Very low** |
 
-### 5. User Impact
+The fix is defensive - adding a NULL check cannot break anything that
+was previously working.
 
-- **Affected hardware**: Older NEC, AMD 0x96 xHCI controllers
-- **Severity**: Data corruption, endpoint malfunction
-- **Trigger**: TD cancellation (relatively common operation)
-- **Author's note**: "Actual hardware malfunction is rare" but
-  acknowledges "it's Russian roulette"
+### 5. USER IMPACT
 
-### 6. Classification
+- **Affected users**: Anyone using perf tooling
+- **Trigger condition**: Passing an empty/NULL cpu map to
+  `perf_cpu_map__max()`
+- **Severity**: Crash (SEGV) - high severity
+- **Reproducibility**: Reliably reproducible per the bug report
 
-- ✅ Bug fix (hardware quirk handling omission)
-- ✅ Not a new feature
-- ✅ Uses existing quirk infrastructure
-- ✅ Affects specific hardware with known quirks
+### 6. STABILITY INDICATORS
 
-### 7. Stable Criteria Evaluation
+- ✅ Tested by Ingo Molnar (original reporter)
+- ✅ Tested by Thomas Richter (IBM)
+- ✅ Signed off by maintainer Namhyung Kim
+- ✅ Simple, obviously correct fix
+- ✅ Well-documented reasoning in updated comment
+
+### 7. DEPENDENCY CHECK
+
+- Self-contained fix - no dependencies on other commits
+- Uses existing internal functions (`__perf_cpu_map__nr`,
+  `__perf_cpu_map__cpu`) that would exist in stable trees
+- Should apply cleanly to stable trees
+
+### STABLE CRITERIA EVALUATION
 
 | Criterion | Met? |
 |-----------|------|
-| Obviously correct | ✅ Uses existing quirk logic correctly |
-| Fixes real bug | ✅ Data corruption/hardware malfunction |
-| Small scope | ✅ One file, surgical change |
-| No new features | ✅ Fixes existing functionality |
-| Already in mainline | ✅ Yes |
-| Testable | ✅ Author tested on good/buggy HCs |
+| Obviously correct | ✅ Yes - simple NULL check |
+| Fixes real bug | ✅ Yes - SEGV crash |
+| Important issue | ✅ Yes - crash in widely-used tool |
+| Small and contained | ✅ Yes - few lines, one function |
+| No new features | ✅ Yes - purely defensive |
+| No new APIs | ✅ Yes |
 
-### Risk vs Benefit
+### CONCLUSION
 
-**Benefits**:
-- Prevents data corruption on quirky HCs
-- Prevents USB endpoint malfunction
-- Low regression risk (only affects quirky HCs)
+This commit is an excellent candidate for stable backport:
 
-**Risks**:
-- Minimal - change is conditional
-- No explicit stable tag from maintainers
+1. **Fixes a real crash**: SEGV when passing NULL/empty map is a serious
+   bug that users can hit
+2. **Obviously correct**: Simple NULL check at function entry is
+   textbook defensive programming
+3. **Minimal risk**: Cannot cause regressions - only affects the
+   previously-broken case
+4. **Well tested**: Multiple test acknowledgments from respected
+   developers
+5. **Small and surgical**: Touches only one function in one file
+6. **No dependencies**: Self-contained fix
 
-### Concerns
-
-1. **No stable tag**: The maintainers didn't explicitly request stable
-   backport, possibly:
-   - Oversight
-   - Wanting it to bake in mainline first
-   - Considering the bug "rare" enough
-
-2. **Dependency on 6.11+ infrastructure**: Clean backport limited to
-   6.11+ stable trees
-
-### Conclusion
-
-This commit fixes a legitimate hardware bug that can cause **data
-corruption** and **USB endpoint malfunction** on older xHCI controllers.
-The fix is:
-- Small and surgical
-- Uses existing, tested quirk infrastructure
-- Low risk of regression
-- Well-tested by the author
-- Properly reviewed and signed off by maintainers
-
-The lack of explicit stable tags is concerning but doesn't disqualify it
-- the fix clearly addresses a real hardware issue. For stable trees 6.11
-and later where the helper function exists, this is a good backport
-candidate.
+The missing `Cc: stable` tag appears to be an oversight rather than an
+indication the fix isn't appropriate for stable. The perf tooling is
+widely used, and crash fixes in it are important for stable users.
 
 **YES**
 
- drivers/usb/host/xhci-ring.c | 27 ++++++++++++++++-----------
- 1 file changed, 16 insertions(+), 11 deletions(-)
+ tools/lib/perf/cpumap.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 5bdcf9ab2b99d..25185552287c0 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -128,11 +128,11 @@ static void inc_td_cnt(struct urb *urb)
- 	urb_priv->num_tds_done++;
+diff --git a/tools/lib/perf/cpumap.c b/tools/lib/perf/cpumap.c
+index b20a5280f2b33..2bbbe1c782b8a 100644
+--- a/tools/lib/perf/cpumap.c
++++ b/tools/lib/perf/cpumap.c
+@@ -368,10 +368,12 @@ struct perf_cpu perf_cpu_map__max(const struct perf_cpu_map *map)
+ 		.cpu = -1
+ 	};
+ 
+-	// cpu_map__trim_new() qsort()s it, cpu_map__default_new() sorts it as well.
+-	return __perf_cpu_map__nr(map) > 0
+-		? __perf_cpu_map__cpu(map, __perf_cpu_map__nr(map) - 1)
+-		: result;
++	if (!map)
++		return result;
++
++	// The CPUs are always sorted and nr is always > 0 as 0 length map is
++	// encoded as NULL.
++	return __perf_cpu_map__cpu(map, __perf_cpu_map__nr(map) - 1);
  }
  
--static void trb_to_noop(union xhci_trb *trb, u32 noop_type)
-+static void trb_to_noop(union xhci_trb *trb, u32 noop_type, bool unchain_links)
- {
- 	if (trb_is_link(trb)) {
--		/* unchain chained link TRBs */
--		trb->link.control &= cpu_to_le32(~TRB_CHAIN);
-+		if (unchain_links)
-+			trb->link.control &= cpu_to_le32(~TRB_CHAIN);
- 	} else {
- 		trb->generic.field[0] = 0;
- 		trb->generic.field[1] = 0;
-@@ -465,7 +465,7 @@ static void xhci_handle_stopped_cmd_ring(struct xhci_hcd *xhci,
- 		xhci_dbg(xhci, "Turn aborted command %p to no-op\n",
- 			 i_cmd->command_trb);
- 
--		trb_to_noop(i_cmd->command_trb, TRB_CMD_NOOP);
-+		trb_to_noop(i_cmd->command_trb, TRB_CMD_NOOP, false);
- 
- 		/*
- 		 * caller waiting for completion is called when command
-@@ -797,13 +797,18 @@ static int xhci_move_dequeue_past_td(struct xhci_hcd *xhci,
-  * (The last TRB actually points to the ring enqueue pointer, which is not part
-  * of this TD.)  This is used to remove partially enqueued isoc TDs from a ring.
-  */
--static void td_to_noop(struct xhci_td *td, bool flip_cycle)
-+static void td_to_noop(struct xhci_hcd *xhci, struct xhci_virt_ep *ep,
-+			struct xhci_td *td, bool flip_cycle)
- {
-+	bool unchain_links;
- 	struct xhci_segment *seg	= td->start_seg;
- 	union xhci_trb *trb		= td->start_trb;
- 
-+	/* link TRBs should now be unchained, but some old HCs expect otherwise */
-+	unchain_links = !xhci_link_chain_quirk(xhci, ep->ring ? ep->ring->type : TYPE_STREAM);
-+
- 	while (1) {
--		trb_to_noop(trb, TRB_TR_NOOP);
-+		trb_to_noop(trb, TRB_TR_NOOP, unchain_links);
- 
- 		/* flip cycle if asked to */
- 		if (flip_cycle && trb != td->start_trb && trb != td->end_trb)
-@@ -1091,16 +1096,16 @@ static int xhci_invalidate_cancelled_tds(struct xhci_virt_ep *ep)
- 						  "Found multiple active URBs %p and %p in stream %u?\n",
- 						  td->urb, cached_td->urb,
- 						  td->urb->stream_id);
--					td_to_noop(cached_td, false);
-+					td_to_noop(xhci, ep, cached_td, false);
- 					cached_td->cancel_status = TD_CLEARED;
- 				}
--				td_to_noop(td, false);
-+				td_to_noop(xhci, ep, td, false);
- 				td->cancel_status = TD_CLEARING_CACHE;
- 				cached_td = td;
- 				break;
- 			}
- 		} else {
--			td_to_noop(td, false);
-+			td_to_noop(xhci, ep, td, false);
- 			td->cancel_status = TD_CLEARED;
- 		}
- 	}
-@@ -1125,7 +1130,7 @@ static int xhci_invalidate_cancelled_tds(struct xhci_virt_ep *ep)
- 				continue;
- 			xhci_warn(xhci, "Failed to clear cancelled cached URB %p, mark clear anyway\n",
- 				  td->urb);
--			td_to_noop(td, false);
-+			td_to_noop(xhci, ep, td, false);
- 			td->cancel_status = TD_CLEARED;
- 		}
- 	}
-@@ -4273,7 +4278,7 @@ static int xhci_queue_isoc_tx(struct xhci_hcd *xhci, gfp_t mem_flags,
- 	 */
- 	urb_priv->td[0].end_trb = ep_ring->enqueue;
- 	/* Every TRB except the first & last will have its cycle bit flipped. */
--	td_to_noop(&urb_priv->td[0], true);
-+	td_to_noop(xhci, xep, &urb_priv->td[0], true);
- 
- 	/* Reset the ring enqueue back to the first TRB and its cycle bit. */
- 	ep_ring->enqueue = urb_priv->td[0].start_trb;
+ /** Is 'b' a subset of 'a'. */
 -- 
 2.51.0
 
