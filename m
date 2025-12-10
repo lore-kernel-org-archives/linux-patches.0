@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C041DD0EF;
-	Wed, 10 Dec 2025 07:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2BB1DD0EF;
+	Wed, 10 Dec 2025 07:32:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765351929; cv=none; b=uThSkZmbJUvzZKGx8MTL1PiH7lJIo+SMTiBcPkjjrVnei3UcCW1iQzQgz+MqLvY+/30kPT+SnDEp7+gxM1z9rpOy0W5Wx3ygQ3Mevbu7Gz76ORFF+N69wbFF7rasFYTvoShKClN6xcVW7UMd/IrFA7UminI1ld51ZUZ9WgaBZ6A=
+	t=1765351934; cv=none; b=aVV8M3kwSvJufXzZGWFvKVo59tDFGmtdJ4ftbk1+BPlukvoRtk6bJrRJS41wDY9KSvCfZFBrb0eQ9UcSCAYILpO8aZEgq5zF20XNqpTxcOeEAopYtOV4hB40IGVJ7xa10MNOxrzPJukBXvVV26EhYPyl8X+q4gq6vc4aIppStG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765351929; c=relaxed/simple;
-	bh=3qKBrTsbqmmF3AezLJLnkICD9dnAtv36qbR8U7PV/Ng=;
+	s=arc-20240116; t=1765351934; c=relaxed/simple;
+	bh=pAzztpPNS8jucRURTcamD3jqsKvv3EJDrr3kai1FDv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dmnUws1KVj/bzoIwdZ87OCOFRMZGO2rTD6s940suPhv6+c23frVW54Yo+IDtDEdN5bVu2ZL5LlMmiTXkTqRsXHYj6DIxVQUAAtv9J1Zsr3M5gTYyFiQIk4+9acqB8I1cylXW9KsArxZVO8/nE6NBoHaODFmNWUVOUYyv+L+7MnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OYlMcGnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OIM67sUurndvy1AifzeTExipnppbW6gOsT9K9JR3tXfElr427+iTfZtBnwgFqGiERXHWzB1xDUkYELvVd4QWW61mViNeGxj1/CY2oQdY4YMpHTKYSkwXDjOzjaebULbe2qwLhLcPEkfTVccKKUCDRmDfyz3TF4kKGdLgE8x6qGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NOYE2d88; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OYlMcGnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23B3C4CEF1;
-	Wed, 10 Dec 2025 07:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NOYE2d88"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44362C4CEF1;
+	Wed, 10 Dec 2025 07:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765351929;
-	bh=3qKBrTsbqmmF3AezLJLnkICD9dnAtv36qbR8U7PV/Ng=;
+	s=korg; t=1765351933;
+	bh=pAzztpPNS8jucRURTcamD3jqsKvv3EJDrr3kai1FDv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OYlMcGnbGpT9Td9VfYHJnj4+709XoGWCgN2HPz+f6aSN8uuc3RJtcue8ByPALTh9p
-	 8rKwy2dS6rWwAmCQa1UPJeGVOQ5k1qYJtdU1JqCk3aWkICmzgdXMeRDQrn6+8ClMTJ
-	 Jun5JmcnMay3Yaz/rOWkv6f6noC7n1VynD5qI5BU=
+	b=NOYE2d88CMjsS+7HBwh8227E3KCZ9e7smOXrTECrOZ/ELvZQ0Gqjy8kRBXHQ/goAH
+	 LE8HnFMGw/PdCI2GaCzLc451NFyor0u5fHzTb/5rHYIXT3CPJVBaY9tjNxEKvj4qPv
+	 gPGLha8+bEBXYI0/+GyOP27a6ceX6ETJEYt6e4Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magne Bruno <magne.bruno@addi-data.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 17/49] serial: add support of CPCI cards
-Date: Wed, 10 Dec 2025 16:29:47 +0900
-Message-ID: <20251210072948.552426333@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 35/49] platform/x86/amd: pmc: Add Lenovo Legion Go 2 to pmc quirk list
+Date: Wed, 10 Dec 2025 16:30:05 +0900
+Message-ID: <20251210072949.038004651@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
 References: <20251210072948.125620687@linuxfoundation.org>
@@ -44,80 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Magne Bruno <magne.bruno@addi-data.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 0e5a99e0e5f50353b86939ff6e424800d769c818 upstream.
+[ Upstream commit f945afe01c6768dcfed7868c671a26e1164c2284 ]
 
-Addi-Data GmbH is manufacturing multi-serial ports cards supporting CompactPCI (known as CPCI).
-Those cards are identified with different DeviceIds. Those cards integrating standard UARTs
-work the same way as PCI/PCIe models already supported in the serial driver.
+The Lenovo Legion Go 2 takes a long time to resume from suspend.
+This is due to it having an nvme resume handler that interferes
+with IOMMU mappings. It is a common issue with older Lenovo
+laptops. Adding it to that quirk list fixes this issue.
 
-Signed-off-by: Magne Bruno <magne.bruno@addi-data.com>
-Link: https://patch.msgid.link/20251110162456.341029-1-magne.bruno@addi-data.com
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4618
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20251008135057.731928-1-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -95,6 +95,11 @@
- #define PCI_DEVICE_ID_MOXA_CP138E_A	0x1381
- #define PCI_DEVICE_ID_MOXA_CP168EL_A	0x1683
- 
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7500        0x7003
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG     0x7024
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG     0x7025
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG     0x7026
-+
- /* Unknown vendors/cards - this should not be in linux/pci_ids.h */
- #define PCI_SUBDEVICE_ID_UNKNOWN_0x1584	0x1584
- #define PCI_SUBDEVICE_ID_UNKNOWN_0x1588	0x1588
-@@ -5956,6 +5961,38 @@ static const struct pci_device_id serial
- 		0,
- 		pbn_ADDIDATA_PCIe_8_3906250 },
- 
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7500,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_4_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_4_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_2_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_1_115200 },
-+
- 	{	PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9835,
- 		PCI_VENDOR_ID_IBM, 0x0299,
- 		0, 0, pbn_b0_bt_2_115200 },
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index 9fd2829ee2ab4..271cbeaa59af3 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -198,6 +198,23 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
+ 		}
+ 	},
++	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4618 */
++	{
++		.ident = "Lenovo Legion Go 2",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N0"),
++		}
++	},
++	{
++		.ident = "Lenovo Legion Go 2",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N1"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
+ 	{
+ 		.ident = "HP Laptop 15s-eq2xxx",
+-- 
+2.51.0
+
 
 
