@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEC62FF16C;
-	Wed, 10 Dec 2025 07:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E33A2FF16C;
+	Wed, 10 Dec 2025 07:36:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352163; cv=none; b=pycbLux4k7RAiOTaHG6FvyJHMIgJvNWTjCrbSy7WGhOuku1xJ7WG/uQhNyTo+H275/4ba6Q2R7adEeScdRrrKbLwiK0OSpiZXG1buaVN1TlpdLQOcwxzPHyAoWEmZdiyyu0vRNE81tf0IrrREGliBohrRSACunaTuc02u7dBJgA=
+	t=1765352165; cv=none; b=OCeery5vdsE2Bx2XeiOgrtSIwzVZrM7o6hNmv5iPZG0LGOEGR5IBYKkmIHY32LyFC0ujcfPdH9viqNhdEwWJEEKSUHpAtF6zRrY3U9P51R9QxH+kN1z74nb93SbxtST+ZkaOw7TH+93381cRFqpPnd44xWvq57RjTOcX7armFUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352163; c=relaxed/simple;
-	bh=ekPyhSUzDrvz4KRBkNTx+0j2+2Im1+eNtSKUM/CTiwg=;
+	s=arc-20240116; t=1765352165; c=relaxed/simple;
+	bh=3qiUfsu2U5VIJm41nz/6ueqaV353xWjM4BR3cqEW2UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRMwq5RsxGTQ2Ay9caRzyoZn2+F+0W3Yg7WEnEL7C/fOBmmFEeMmHkHNq3O1zq2zOXcDIphhlIVEQcmre5WPOQhHSt8K1gYWwWLXH6DRGLGttx8bZWcIPA9FWpiGPHL0FjUvHtdPZV3pcNPGKwAy/dI7BULBAGIp9Rn8a9F5rxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjp0QkzQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ae7x5MzmkK7CwXBYYkHgX7/XEkRY1O6n7I2spRCbiTNdJW3bGKiwjjfFGf5MsNtpU4AO/TiGX6RUmyPEdeB43e+M1RxmJ+BDYoMV9Bw+T8OjQWmfLtDCTKie2BDZDVlRzfo2ixbl8Vck14P46V6GdaQc611EP3ah85er6liOZCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERKn/Brr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjp0QkzQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42294C4CEF1;
-	Wed, 10 Dec 2025 07:36:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERKn/Brr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473C3C4CEF1;
+	Wed, 10 Dec 2025 07:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352163;
-	bh=ekPyhSUzDrvz4KRBkNTx+0j2+2Im1+eNtSKUM/CTiwg=;
+	s=korg; t=1765352165;
+	bh=3qiUfsu2U5VIJm41nz/6ueqaV353xWjM4BR3cqEW2UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjp0QkzQssOveq89Qgayw8LlouZt/oVJQCIP7eLsgFi2g/NSv885gGQ2L/OmlB4T8
-	 dZ2H+W342vUby7aFSHlQOM35NbhhXfuvYLdGHlPFaPoVVwqIgCUZzdxi1cZETRHSC6
-	 QOjzvsCMAKFkfCctqJklfuJwDKKi0DZG0SRcf9Rs=
+	b=ERKn/BrrhKhsRtrJNR92NKRxDFcBSixiHIIjM9FYPdumkIIGoVr5Xg4mu5/Q/5nAj
+	 RykJnvCz7ag50EaowYIKvGctKZjITIeio6mlkySKV0f8NxKIN55ed9/0niCANDDBGv
+	 7ivSgefm22lORjMA3rEfHsFciR0y9i9nQ+8ZrMvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.18 06/29] crypto: zstd - fix double-free in per-CPU stream cleanup
-Date: Wed, 10 Dec 2025 16:30:16 +0900
-Message-ID: <20251210072944.542909790@linuxfoundation.org>
+	Alexey Nepomnyashih <sdl@nppct.ru>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.18 07/29] ext4: add i_data_sem protection in ext4_destroy_inline_data_nolock()
+Date: Wed, 10 Dec 2025 16:30:17 +0900
+Message-ID: <20251210072944.570249810@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -51,84 +50,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+From: Alexey Nepomnyashih <sdl@nppct.ru>
 
-commit 48bc9da3c97c15f1ea24934bcb3b736acd30163d upstream.
+commit 0cd8feea8777f8d9b9a862b89c688b049a5c8475 upstream.
 
-The crypto/zstd module has a double-free bug that occurs when multiple
-tfms are allocated and freed.
+Fix a race between inline data destruction and block mapping.
 
-The issue happens because zstd_streams (per-CPU contexts) are freed in
-zstd_exit() during every tfm destruction, rather than being managed at
-the module level.  When multiple tfms exist, each tfm exit attempts to
-free the same shared per-CPU streams, resulting in a double-free.
+The function ext4_destroy_inline_data_nolock() changes the inode data
+layout by clearing EXT4_INODE_INLINE_DATA and setting EXT4_INODE_EXTENTS.
+At the same time, another thread may execute ext4_map_blocks(), which
+tests EXT4_INODE_EXTENTS to decide whether to call ext4_ext_map_blocks()
+or ext4_ind_map_blocks().
 
-This leads to a stack trace similar to:
+Without i_data_sem protection, ext4_ind_map_blocks() may receive inode
+with EXT4_INODE_EXTENTS flag and triggering assert.
 
-  BUG: Bad page state in process kworker/u16:1  pfn:106fd93
-  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x106fd93
-  flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
-  page_type: 0xffffffff()
-  raw: 0017ffffc0000000 dead000000000100 dead000000000122 0000000000000000
-  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
-  page dumped because: nonzero entire_mapcount
-  Modules linked in: ...
-  CPU: 3 UID: 0 PID: 2506 Comm: kworker/u16:1 Kdump: loaded Tainted: G    B
-  Hardware name: ...
-  Workqueue: btrfs-delalloc btrfs_work_helper
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x5d/0x80
-   bad_page+0x71/0xd0
-   free_unref_page_prepare+0x24e/0x490
-   free_unref_page+0x60/0x170
-   crypto_acomp_free_streams+0x5d/0xc0
-   crypto_acomp_exit_tfm+0x23/0x50
-   crypto_destroy_tfm+0x60/0xc0
-   ...
+kernel BUG at fs/ext4/indirect.c:546!
+EXT4-fs (loop2): unmounting filesystem.
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+RIP: 0010:ext4_ind_map_blocks.cold+0x2b/0x5a fs/ext4/indirect.c:546
 
-Change the lifecycle management of zstd_streams to free the streams only
-once during module cleanup.
+Call Trace:
+ <TASK>
+ ext4_map_blocks+0xb9b/0x16f0 fs/ext4/inode.c:681
+ _ext4_get_block+0x242/0x590 fs/ext4/inode.c:822
+ ext4_block_write_begin+0x48b/0x12c0 fs/ext4/inode.c:1124
+ ext4_write_begin+0x598/0xef0 fs/ext4/inode.c:1255
+ ext4_da_write_begin+0x21e/0x9c0 fs/ext4/inode.c:3000
+ generic_perform_write+0x259/0x5d0 mm/filemap.c:3846
+ ext4_buffered_write_iter+0x15b/0x470 fs/ext4/file.c:285
+ ext4_file_write_iter+0x8e0/0x17f0 fs/ext4/file.c:679
+ call_write_iter include/linux/fs.h:2271 [inline]
+ do_iter_readv_writev+0x212/0x3c0 fs/read_write.c:735
+ do_iter_write+0x186/0x710 fs/read_write.c:861
+ vfs_iter_write+0x70/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
+ do_splice_from fs/splice.c:763 [inline]
+ direct_splice_actor+0x10f/0x170 fs/splice.c:950
+ splice_direct_to_actor+0x33a/0xa10 fs/splice.c:896
+ do_splice_direct+0x1a9/0x280 fs/splice.c:1002
+ do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-Fixes: f5ad93ffb541 ("crypto: zstd - convert to acomp")
-Cc: stable@vger.kernel.org
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Reviewed-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c755e251357a ("ext4: fix deadlock between inline_data and ext4_expand_extra_isize_ea()")
+Cc: stable@vger.kernel.org # v4.11+
+Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
+Message-ID: <20251104093326.697381-1-sdl@nppct.ru>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/zstd.c |    7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ fs/ext4/inline.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/crypto/zstd.c
-+++ b/crypto/zstd.c
-@@ -75,11 +75,6 @@ static int zstd_init(struct crypto_acomp
- 	return ret;
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -451,9 +451,13 @@ static int ext4_destroy_inline_data_nolo
+ 	if (!ei->i_inline_off)
+ 		return 0;
+ 
++	down_write(&ei->i_data_sem);
++
+ 	error = ext4_get_inode_loc(inode, &is.iloc);
+-	if (error)
++	if (error) {
++		up_write(&ei->i_data_sem);
+ 		return error;
++	}
+ 
+ 	error = ext4_xattr_ibody_find(inode, &i, &is);
+ 	if (error)
+@@ -492,6 +496,7 @@ out:
+ 	brelse(is.iloc.bh);
+ 	if (error == -ENODATA)
+ 		error = 0;
++	up_write(&ei->i_data_sem);
+ 	return error;
  }
  
--static void zstd_exit(struct crypto_acomp *acomp_tfm)
--{
--	crypto_acomp_free_streams(&zstd_streams);
--}
--
- static int zstd_compress_one(struct acomp_req *req, struct zstd_ctx *ctx,
- 			     const void *src, void *dst, unsigned int *dlen)
- {
-@@ -297,7 +292,6 @@ static struct acomp_alg zstd_acomp = {
- 		.cra_module = THIS_MODULE,
- 	},
- 	.init = zstd_init,
--	.exit = zstd_exit,
- 	.compress = zstd_compress,
- 	.decompress = zstd_decompress,
- };
-@@ -310,6 +304,7 @@ static int __init zstd_mod_init(void)
- static void __exit zstd_mod_fini(void)
- {
- 	crypto_unregister_acomp(&zstd_acomp);
-+	crypto_acomp_free_streams(&zstd_streams);
- }
- 
- module_init(zstd_mod_init);
 
 
