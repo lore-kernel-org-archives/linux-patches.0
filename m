@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74D8221721;
-	Wed, 10 Dec 2025 07:31:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B41221F2F;
+	Wed, 10 Dec 2025 07:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765351869; cv=none; b=mEUBjDltn78FTKL9pg/FXmaNd49QNjSVN4tPYSVAcOJBazxKehTU95S5ZG3xDwn6rnXE5ciPbKDlV8pRYnAQec1fv9cG/nc4/FxAZt0kcZF3KTTVph3uaBtA8QGnkbnoDyzTfu7HASrZqcxD1A4sMkE6HUcciuCxzKYzzoxlals=
+	t=1765351874; cv=none; b=oc/qP1dzvtkNPjl4PcYqH831v6dozNO+LN70Fnt7IfxbU05+C8E27vxPg+8pUnVbNfO6asRFe0nNlDLG0tGzFMCP3waANTZFBKBUFe0kLe7WjHa0BgONawj0Dyj0wGu//W+Vl1rJCW1ENBmi0ZvSRr12Dfs05oXy+Jsp1VxrcJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765351869; c=relaxed/simple;
-	bh=7WKXxyWZUcafNV5wt2amGajlyE6pu09e2E2CPIeOiwk=;
+	s=arc-20240116; t=1765351874; c=relaxed/simple;
+	bh=sl65M3D11cv126D2iIGHVdHIZC6W4WuFxeZlKUDto6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ho2Lfv2NgPBKfYq6dlAceRmF3Sye19ST8tl2aTd0usrUBNkuh/t8MxDZ2T8B/kmS6z0CyBAHqT7g78XcDCpfPhYl1G5vnKLmKoTs6mKM8gddkiO8vCWG6ZEDOCLl9a5k+0kEzFEyRs3G77/r1J3vpFfUq6bSy0nsyEBcvsq1Zb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ylmKiwBa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LdRvt2sW650BhqJYVKJopK7w6ErY6t96WdyJuzo3DxxDJx5fdZoQAAiRD5iqrj4XxegN/eQnCNGrP1zFAdnOGomAgR/813tKdODAvuaTPY7SjXzweDNJUGHYJyfEBLtESW1RhnD147waCz+mJi6V1P/v6N+CCLhHtEL/vGzTRMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KqYmU4p8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ylmKiwBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36B5C4CEF1;
-	Wed, 10 Dec 2025 07:31:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KqYmU4p8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E07C4CEF1;
+	Wed, 10 Dec 2025 07:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765351869;
-	bh=7WKXxyWZUcafNV5wt2amGajlyE6pu09e2E2CPIeOiwk=;
+	s=korg; t=1765351873;
+	bh=sl65M3D11cv126D2iIGHVdHIZC6W4WuFxeZlKUDto6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylmKiwBaRBnwSTn9ULZ6bi/UZ5599kL4ubTCex5k0hcoKIyyuZBiX6PlRZSS6oDlr
-	 +fDIjPsnNXcSrnkkvsa3bLaH8RbP5Gvi3DvqYOahHwfLNjl95lyBpAFhYpRTfzKBei
-	 rw8z/rouCh0zJzKqCcg+O89tBjNwMb/WCmnVS1vk=
+	b=KqYmU4p8jyu35Q2ey08nLOMqq9vmVQOo5dbxAukDB/Xl+5tgR4gyyZCNAOntJr4A/
+	 F+LM0phlyqYMd/8wmZ+jjE/JOU29TXmDSmu9bFESrv0yzCXDtrnhquBWWONl+2WfeS
+	 GkEleSCN1X+H/GsbRYsjlDB+erygZsBnuwcLad6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Omar Sandoval <osandov@fb.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.12 12/49] KVM: SVM: Dont skip unrelated instruction if INT3/INTO is replaced
-Date: Wed, 10 Dec 2025 16:29:42 +0900
-Message-ID: <20251210072948.432859012@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 13/49] USB: serial: option: add Foxconn T99W760
+Date: Wed, 10 Dec 2025 16:29:43 +0900
+Message-ID: <20251210072948.455899809@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
 References: <20251210072948.125620687@linuxfoundation.org>
@@ -50,198 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Omar Sandoval <osandov@fb.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit 4da3768e1820cf15cced390242d8789aed34f54d upstream.
+commit 7970b4969c4c99bcdaf105f9f39c6d2021f6d244 upstream.
 
-When re-injecting a soft interrupt from an INT3, INT0, or (select) INTn
-instruction, discard the exception and retry the instruction if the code
-stream is changed (e.g. by a different vCPU) between when the CPU
-executes the instruction and when KVM decodes the instruction to get the
-next RIP.
+T99W760 is designed based on Qualcomm SDX35 (5G redcap) chip. There are
+three serial ports to be enumerated: Modem, NMEA and Diag.
 
-As effectively predicted by commit 6ef88d6e36c2 ("KVM: SVM: Re-inject
-INT3/INTO instead of retrying the instruction"), failure to verify that
-the correct INTn instruction was decoded can effectively clobber guest
-state due to decoding the wrong instruction and thus specifying the
-wrong next RIP.
+test evidence as below:
+T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000  MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e123 Rev=05.15
+S:  Manufacturer=QCOM
+S:  Product=SDXBAAGHA-IDP _SN:39A8D3E4
+S:  SerialNumber=39a8d3e4
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-The bug most often manifests as "Oops: int3" panics on static branch
-checks in Linux guests.  Enabling or disabling a static branch in Linux
-uses the kernel's "text poke" code patching mechanism.  To modify code
-while other CPUs may be executing that code, Linux (temporarily)
-replaces the first byte of the original instruction with an int3 (opcode
-0xcc), then patches in the new code stream except for the first byte,
-and finally replaces the int3 with the first byte of the new code
-stream.  If a CPU hits the int3, i.e. executes the code while it's being
-modified, then the guest kernel must look up the RIP to determine how to
-handle the #BP, e.g. by emulating the new instruction.  If the RIP is
-incorrect, then this lookup fails and the guest kernel panics.
+0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
 
-The bug reproduces almost instantly by hacking the guest kernel to
-repeatedly check a static branch[1] while running a drgn script[2] on
-the host to constantly swap out the memory containing the guest's TSS.
-
-[1]: https://gist.github.com/osandov/44d17c51c28c0ac998ea0334edf90b5a
-[2]: https://gist.github.com/osandov/10e45e45afa29b11e0c7209247afc00b
-
-Fixes: 6ef88d6e36c2 ("KVM: SVM: Re-inject INT3/INTO instead of retrying the instruction")
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
 Cc: stable@vger.kernel.org
-Co-developed-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Omar Sandoval <osandov@fb.com>
-Link: https://patch.msgid.link/1cc6dcdf36e3add7ee7c8d90ad58414eeb6c3d34.1762278762.git.osandov@fb.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    9 +++++++++
- arch/x86/kvm/svm/svm.c          |   24 +++++++++++++-----------
- arch/x86/kvm/x86.c              |   21 +++++++++++++++++++++
- 3 files changed, 43 insertions(+), 11 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -2059,6 +2059,11 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
-  *			     the gfn, i.e. retrying the instruction will hit a
-  *			     !PRESENT fault, which results in a new shadow page
-  *			     and sends KVM back to square one.
-+ *
-+ * EMULTYPE_SKIP_SOFT_INT - Set in combination with EMULTYPE_SKIP to only skip
-+ *                          an instruction if it could generate a given software
-+ *                          interrupt, which must be encoded via
-+ *                          EMULTYPE_SET_SOFT_INT_VECTOR().
-  */
- #define EMULTYPE_NO_DECODE	    (1 << 0)
- #define EMULTYPE_TRAP_UD	    (1 << 1)
-@@ -2069,6 +2074,10 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
- #define EMULTYPE_PF		    (1 << 6)
- #define EMULTYPE_COMPLETE_USER_EXIT (1 << 7)
- #define EMULTYPE_WRITE_PF_TO_SP	    (1 << 8)
-+#define EMULTYPE_SKIP_SOFT_INT	    (1 << 9)
-+
-+#define EMULTYPE_SET_SOFT_INT_VECTOR(v)	((u32)((v) & 0xff) << 16)
-+#define EMULTYPE_GET_SOFT_INT_VECTOR(e)	(((e) >> 16) & 0xff)
- 
- int kvm_emulate_instruction(struct kvm_vcpu *vcpu, int emulation_type);
- int kvm_emulate_instruction_from_buffer(struct kvm_vcpu *vcpu,
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -369,6 +369,7 @@ static void svm_set_interrupt_shadow(str
- }
- 
- static int __svm_skip_emulated_instruction(struct kvm_vcpu *vcpu,
-+					   int emul_type,
- 					   bool commit_side_effects)
- {
- 	struct vcpu_svm *svm = to_svm(vcpu);
-@@ -390,7 +391,7 @@ static int __svm_skip_emulated_instructi
- 		if (unlikely(!commit_side_effects))
- 			old_rflags = svm->vmcb->save.rflags;
- 
--		if (!kvm_emulate_instruction(vcpu, EMULTYPE_SKIP))
-+		if (!kvm_emulate_instruction(vcpu, emul_type))
- 			return 0;
- 
- 		if (unlikely(!commit_side_effects))
-@@ -408,11 +409,13 @@ done:
- 
- static int svm_skip_emulated_instruction(struct kvm_vcpu *vcpu)
- {
--	return __svm_skip_emulated_instruction(vcpu, true);
-+	return __svm_skip_emulated_instruction(vcpu, EMULTYPE_SKIP, true);
- }
- 
--static int svm_update_soft_interrupt_rip(struct kvm_vcpu *vcpu)
-+static int svm_update_soft_interrupt_rip(struct kvm_vcpu *vcpu, u8 vector)
- {
-+	const int emul_type = EMULTYPE_SKIP | EMULTYPE_SKIP_SOFT_INT |
-+			      EMULTYPE_SET_SOFT_INT_VECTOR(vector);
- 	unsigned long rip, old_rip = kvm_rip_read(vcpu);
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 
-@@ -428,7 +431,7 @@ static int svm_update_soft_interrupt_rip
- 	 * in use, the skip must not commit any side effects such as clearing
- 	 * the interrupt shadow or RFLAGS.RF.
- 	 */
--	if (!__svm_skip_emulated_instruction(vcpu, !nrips))
-+	if (!__svm_skip_emulated_instruction(vcpu, emul_type, !nrips))
- 		return -EIO;
- 
- 	rip = kvm_rip_read(vcpu);
-@@ -464,7 +467,7 @@ static void svm_inject_exception(struct
- 	kvm_deliver_exception_payload(vcpu, ex);
- 
- 	if (kvm_exception_is_soft(ex->vector) &&
--	    svm_update_soft_interrupt_rip(vcpu))
-+	    svm_update_soft_interrupt_rip(vcpu, ex->vector))
- 		return;
- 
- 	svm->vmcb->control.event_inj = ex->vector
-@@ -3743,11 +3746,12 @@ static bool svm_set_vnmi_pending(struct
- 
- static void svm_inject_irq(struct kvm_vcpu *vcpu, bool reinjected)
- {
-+	struct kvm_queued_interrupt *intr = &vcpu->arch.interrupt;
- 	struct vcpu_svm *svm = to_svm(vcpu);
- 	u32 type;
- 
--	if (vcpu->arch.interrupt.soft) {
--		if (svm_update_soft_interrupt_rip(vcpu))
-+	if (intr->soft) {
-+		if (svm_update_soft_interrupt_rip(vcpu, intr->nr))
- 			return;
- 
- 		type = SVM_EVTINJ_TYPE_SOFT;
-@@ -3755,12 +3759,10 @@ static void svm_inject_irq(struct kvm_vc
- 		type = SVM_EVTINJ_TYPE_INTR;
- 	}
- 
--	trace_kvm_inj_virq(vcpu->arch.interrupt.nr,
--			   vcpu->arch.interrupt.soft, reinjected);
-+	trace_kvm_inj_virq(intr->nr, intr->soft, reinjected);
- 	++vcpu->stat.irq_injections;
- 
--	svm->vmcb->control.event_inj = vcpu->arch.interrupt.nr |
--				       SVM_EVTINJ_VALID | type;
-+	svm->vmcb->control.event_inj = intr->nr | SVM_EVTINJ_VALID | type;
- }
- 
- void svm_complete_interrupt_delivery(struct kvm_vcpu *vcpu, int delivery_mode,
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -9055,6 +9055,23 @@ static bool is_vmware_backdoor_opcode(st
- 	return false;
- }
- 
-+static bool is_soft_int_instruction(struct x86_emulate_ctxt *ctxt,
-+				    int emulation_type)
-+{
-+	u8 vector = EMULTYPE_GET_SOFT_INT_VECTOR(emulation_type);
-+
-+	switch (ctxt->b) {
-+	case 0xcc:
-+		return vector == BP_VECTOR;
-+	case 0xcd:
-+		return vector == ctxt->src.val;
-+	case 0xce:
-+		return vector == OF_VECTOR;
-+	default:
-+		return false;
-+	}
-+}
-+
- /*
-  * Decode an instruction for emulation.  The caller is responsible for handling
-  * code breakpoints.  Note, manually detecting code breakpoints is unnecessary
-@@ -9156,6 +9173,10 @@ int x86_emulate_instruction(struct kvm_v
- 	 * injecting single-step #DBs.
- 	 */
- 	if (emulation_type & EMULTYPE_SKIP) {
-+		if (emulation_type & EMULTYPE_SKIP_SOFT_INT &&
-+		    !is_soft_int_instruction(ctxt, emulation_type))
-+			return 0;
-+
- 		if (ctxt->mode != X86EMUL_MODE_PROT64)
- 			ctxt->eip = (u32)ctxt->_eip;
- 		else
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2376,6 +2376,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0f0, 0xff),			/* Foxconn T99W373 MBIM */
+ 	  .driver_info = RSVD(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe123, 0xff),			/* Foxconn T99W760 MBIM */
++	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
 
 
