@@ -1,137 +1,229 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E33A2FF16C;
-	Wed, 10 Dec 2025 07:36:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F752FF16C;
+	Wed, 10 Dec 2025 07:36:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352165; cv=none; b=OCeery5vdsE2Bx2XeiOgrtSIwzVZrM7o6hNmv5iPZG0LGOEGR5IBYKkmIHY32LyFC0ujcfPdH9viqNhdEwWJEEKSUHpAtF6zRrY3U9P51R9QxH+kN1z74nb93SbxtST+ZkaOw7TH+93381cRFqpPnd44xWvq57RjTOcX7armFUU=
+	t=1765352168; cv=none; b=aqwls8+Eb6GQ6b/cliFuvnt4Wk3x9nXgunODUWv7kx3Pdxll0NhHqhDLgEip+fU+tLD0buE2Bf2TTwyNTxYDLIeyTV9ov7UjqtQvoeKKGf4ikIFQPypDVOP5i7OC+PBidwEqOQWQqkuxGxViLGoWYDfw8uEjgLSyBAGBE/mOo8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352165; c=relaxed/simple;
-	bh=3qiUfsu2U5VIJm41nz/6ueqaV353xWjM4BR3cqEW2UM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ae7x5MzmkK7CwXBYYkHgX7/XEkRY1O6n7I2spRCbiTNdJW3bGKiwjjfFGf5MsNtpU4AO/TiGX6RUmyPEdeB43e+M1RxmJ+BDYoMV9Bw+T8OjQWmfLtDCTKie2BDZDVlRzfo2ixbl8Vck14P46V6GdaQc611EP3ah85er6liOZCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERKn/Brr; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765352168; c=relaxed/simple;
+	bh=Qyj65oagwPZw4EirhXXN9lPBZR8mwRWQrnTYZ4z1Bfg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ePL8B7V/fatSsRGNphAaCfOiO2/ELcFpxtaau2QNji5BV8TxdEOIaE2s+PKQUgGaUdAJSfYcdz5qMzV53X5r5+hA4x/W13uLz4OJQnnt7yx9k6sObF4m13Qs7bnhoWEBJgBwlyTzpDqkJ4WeT6p9B7/9ZBRO29dgRe+3yl9GdCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VCa8LTQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERKn/Brr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473C3C4CEF1;
-	Wed, 10 Dec 2025 07:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VCa8LTQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A739C4CEF1;
+	Wed, 10 Dec 2025 07:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352165;
-	bh=3qiUfsu2U5VIJm41nz/6ueqaV353xWjM4BR3cqEW2UM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERKn/BrrhKhsRtrJNR92NKRxDFcBSixiHIIjM9FYPdumkIIGoVr5Xg4mu5/Q/5nAj
-	 RykJnvCz7ag50EaowYIKvGctKZjITIeio6mlkySKV0f8NxKIN55ed9/0niCANDDBGv
-	 7ivSgefm22lORjMA3rEfHsFciR0y9i9nQ+8ZrMvo=
+	s=korg; t=1765352167;
+	bh=Qyj65oagwPZw4EirhXXN9lPBZR8mwRWQrnTYZ4z1Bfg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=VCa8LTQcKUJxWLE6A4w1qm7/uwkm1YacfYf4Ee5Pp38hKVX0ulcsZhhFLWLXAwmYP
+	 KsSeLucXpq3Bf2FF3rXSj3JW6Rj4QxS8yPQpOl8crBb09vywgUfQiGAlVuIZ+laqKY
+	 X5QKhPDR83cBCX7yw5V/9APxQ/Ihc6iK8DZjnzXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Nepomnyashih <sdl@nppct.ru>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.18 07/29] ext4: add i_data_sem protection in ext4_destroy_inline_data_nolock()
-Date: Wed, 10 Dec 2025 16:30:17 +0900
-Message-ID: <20251210072944.570249810@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com
+Subject: [PATCH 6.18 00/29] 6.18.1-rc1 review
+Date: Wed, 10 Dec 2025 16:30:10 +0900
+Message-ID: <20251210072944.363788552@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
-References: <20251210072944.363788552@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.1-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.18.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.18.1-rc1
+X-KernelTest-Deadline: 2025-12-12T07:29+00:00
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.18.1 release.
+There are 29 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Fri, 12 Dec 2025 07:29:36 +0000.
+Anything received after that time might be too late.
 
-From: Alexey Nepomnyashih <sdl@nppct.ru>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.1-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
+and the diffstat can be found below.
 
-commit 0cd8feea8777f8d9b9a862b89c688b049a5c8475 upstream.
+thanks,
 
-Fix a race between inline data destruction and block mapping.
+greg k-h
 
-The function ext4_destroy_inline_data_nolock() changes the inode data
-layout by clearing EXT4_INODE_INLINE_DATA and setting EXT4_INODE_EXTENTS.
-At the same time, another thread may execute ext4_map_blocks(), which
-tests EXT4_INODE_EXTENTS to decide whether to call ext4_ext_map_blocks()
-or ext4_ind_map_blocks().
+-------------
+Pseudo-Shortlog of commits:
 
-Without i_data_sem protection, ext4_ind_map_blocks() may receive inode
-with EXT4_INODE_EXTENTS flag and triggering assert.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.18.1-rc1
 
-kernel BUG at fs/ext4/indirect.c:546!
-EXT4-fs (loop2): unmounting filesystem.
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN NOPTI
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-RIP: 0010:ext4_ind_map_blocks.cold+0x2b/0x5a fs/ext4/indirect.c:546
+Navaneeth K <knavaneeth786@gmail.com>
+    staging: rtl8723bs: fix out-of-bounds read in OnBeacon ESR IE parsing
 
-Call Trace:
- <TASK>
- ext4_map_blocks+0xb9b/0x16f0 fs/ext4/inode.c:681
- _ext4_get_block+0x242/0x590 fs/ext4/inode.c:822
- ext4_block_write_begin+0x48b/0x12c0 fs/ext4/inode.c:1124
- ext4_write_begin+0x598/0xef0 fs/ext4/inode.c:1255
- ext4_da_write_begin+0x21e/0x9c0 fs/ext4/inode.c:3000
- generic_perform_write+0x259/0x5d0 mm/filemap.c:3846
- ext4_buffered_write_iter+0x15b/0x470 fs/ext4/file.c:285
- ext4_file_write_iter+0x8e0/0x17f0 fs/ext4/file.c:679
- call_write_iter include/linux/fs.h:2271 [inline]
- do_iter_readv_writev+0x212/0x3c0 fs/read_write.c:735
- do_iter_write+0x186/0x710 fs/read_write.c:861
- vfs_iter_write+0x70/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x73b/0xc90 fs/splice.c:685
- do_splice_from fs/splice.c:763 [inline]
- direct_splice_actor+0x10f/0x170 fs/splice.c:950
- splice_direct_to_actor+0x33a/0xa10 fs/splice.c:896
- do_splice_direct+0x1a9/0x280 fs/splice.c:1002
- do_sendfile+0xb13/0x12c0 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1cf/0x210 fs/read_write.c:1309
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:81
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Navaneeth K <knavaneeth786@gmail.com>
+    staging: rtl8723bs: fix stack buffer overflow in OnAssocReq IE parsing
 
-Fixes: c755e251357a ("ext4: fix deadlock between inline_data and ext4_expand_extra_isize_ea()")
-Cc: stable@vger.kernel.org # v4.11+
-Signed-off-by: Alexey Nepomnyashih <sdl@nppct.ru>
-Message-ID: <20251104093326.697381-1-sdl@nppct.ru>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/ext4/inline.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+Navaneeth K <knavaneeth786@gmail.com>
+    staging: rtl8723bs: fix out-of-bounds read in rtw_get_ie() parser
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -451,9 +451,13 @@ static int ext4_destroy_inline_data_nolo
- 	if (!ei->i_inline_off)
- 		return 0;
- 
-+	down_write(&ei->i_data_sem);
-+
- 	error = ext4_get_inode_loc(inode, &is.iloc);
--	if (error)
-+	if (error) {
-+		up_write(&ei->i_data_sem);
- 		return error;
-+	}
- 
- 	error = ext4_xattr_ibody_find(inode, &i, &is);
- 	if (error)
-@@ -492,6 +496,7 @@ out:
- 	brelse(is.iloc.bh);
- 	if (error == -ENODATA)
- 		error = 0;
-+	up_write(&ei->i_data_sem);
- 	return error;
- }
- 
+Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+    comedi: check device's attached status in compat ioctls
+
+Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+    comedi: multiq3: sanitize config options in multiq3_attach()
+
+Ian Abbott <abbotti@mev.co.uk>
+    comedi: c6xdigio: Fix invalid PNP driver unregistration
+
+Antoniu Miclaus <antoniu.miclaus@analog.com>
+    iio: adc: ad4080: fix chip identification
+
+Zenm Chen <zenmchen@gmail.com>
+    wifi: rtw88: Add USB ID 2001:3329 for D-Link AC13U rev. A1
+
+Zenm Chen <zenmchen@gmail.com>
+    wifi: rtl8xxxu: Add USB ID 2001:3328 for D-Link AN3U rev. A1
+
+Gopi Krishna Menon <krishnagopi487@gmail.com>
+    Documentation/rtla: rename common_xxx.rst files to common_xxx.txt
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: kobil_sct: fix TIOCMBIS and TIOCMBIC
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: belkin_sa: fix TIOCMBIS and TIOCMBIC
+
+Biju Das <biju.das.jz@bp.renesas.com>
+    serial: sh-sci: Fix deadlock during RSCI FIFO overrun error
+
+Biju Das <biju.das.jz@bp.renesas.com>
+    dt-bindings: serial: rsci: Drop "uart-has-rtscts: false"
+
+Magne Bruno <magne.bruno@addi-data.com>
+    serial: add support of CPCI cards
+
+Johan Hovold <johan@kernel.org>
+    USB: serial: ftdi_sio: match on interface number for jtag
+
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    USB: serial: option: move Telit 0x10c7 composition in the right place
+
+Fabio Porcedda <fabio.porcedda@gmail.com>
+    USB: serial: option: add Telit Cinterion FE910C04 new compositions
+
+Slark Xiao <slark_xiao@163.com>
+    USB: serial: option: add Foxconn T99W760
+
+Omar Sandoval <osandov@fb.com>
+    KVM: SVM: Don't skip unrelated instruction if INT3/INTO is replaced
+
+Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+    comedi: pcl818: fix null-ptr-deref in pcl818_ai_cancel()
+
+Alice Ryhl <aliceryhl@google.com>
+    rust_binder: fix race condition on death_list
+
+Alexey Nepomnyashih <sdl@nppct.ru>
+    ext4: add i_data_sem protection in ext4_destroy_inline_data_nolock()
+
+Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+    crypto: zstd - fix double-free in per-CPU stream cleanup
+
+Alexander Sverdlin <alexander.sverdlin@gmail.com>
+    locking/spinlock/debug: Fix data-race in do_raw_write_lock
+
+Qianchang Zhao <pioooooooooip@gmail.com>
+    ksmbd: ipc: fix use-after-free in ipc_msg_send_request
+
+Deepanshu Kartikey <kartikey406@gmail.com>
+    ext4: refresh inline data size before write operations
+
+Ye Bin <yebin10@huawei.com>
+    jbd2: avoid bug_on in jbd2_journal_get_create_access() when file system corrupted
+
+Bagas Sanjaya <bagasdotme@gmail.com>
+    Documentation: process: Also mention Sasha Levin as stable tree maintainer
+
+
+-------------
+
+Diffstat:
+
+ .../devicetree/bindings/serial/renesas,rsci.yaml   |  2 -
+ Documentation/process/2.Process.rst                |  6 +-
+ .../{common_appendix.rst => common_appendix.txt}   |  0
+ ...on_hist_options.rst => common_hist_options.txt} |  0
+ .../{common_options.rst => common_options.txt}     |  0
+ ...cription.rst => common_osnoise_description.txt} |  0
+ ...oise_options.rst => common_osnoise_options.txt} |  0
+ ...mmon_timerlat_aa.rst => common_timerlat_aa.txt} |  0
+ ...ription.rst => common_timerlat_description.txt} |  0
+ ...lat_options.rst => common_timerlat_options.txt} |  0
+ ...mmon_top_options.rst => common_top_options.txt} |  0
+ Documentation/tools/rtla/rtla-hwnoise.rst          |  8 +--
+ Documentation/tools/rtla/rtla-osnoise-hist.rst     | 10 +--
+ Documentation/tools/rtla/rtla-osnoise-top.rst      | 10 +--
+ Documentation/tools/rtla/rtla-osnoise.rst          |  4 +-
+ Documentation/tools/rtla/rtla-timerlat-hist.rst    | 12 ++--
+ Documentation/tools/rtla/rtla-timerlat-top.rst     | 12 ++--
+ Documentation/tools/rtla/rtla-timerlat.rst         |  4 +-
+ Documentation/tools/rtla/rtla.rst                  |  2 +-
+ Makefile                                           |  4 +-
+ arch/x86/include/asm/kvm_host.h                    |  9 +++
+ arch/x86/kvm/svm/svm.c                             | 24 ++++----
+ arch/x86/kvm/x86.c                                 | 21 +++++++
+ crypto/zstd.c                                      |  7 +--
+ drivers/android/binder/node.rs                     |  6 +-
+ drivers/comedi/comedi_fops.c                       | 42 +++++++++++--
+ drivers/comedi/drivers/c6xdigio.c                  | 46 ++++++++++----
+ drivers/comedi/drivers/multiq3.c                   |  9 +++
+ drivers/comedi/drivers/pcl818.c                    |  5 +-
+ drivers/iio/adc/ad4080.c                           |  9 ++-
+ drivers/net/wireless/realtek/rtl8xxxu/core.c       |  3 +
+ drivers/net/wireless/realtek/rtw88/rtw8822cu.c     |  2 +
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c     | 14 +++--
+ drivers/staging/rtl8723bs/core/rtw_mlme_ext.c      | 13 ++--
+ drivers/tty/serial/8250/8250_pci.c                 | 37 +++++++++++
+ drivers/tty/serial/sh-sci.c                        | 12 +++-
+ drivers/usb/serial/belkin_sa.c                     | 28 +++++----
+ drivers/usb/serial/ftdi_sio.c                      | 72 ++++++++--------------
+ drivers/usb/serial/kobil_sct.c                     | 18 +++---
+ drivers/usb/serial/option.c                        | 22 ++++++-
+ fs/ext4/inline.c                                   | 14 ++++-
+ fs/jbd2/transaction.c                              | 19 ++++--
+ fs/smb/server/transport_ipc.c                      |  7 ++-
+ kernel/locking/spinlock_debug.c                    |  4 +-
+ 44 files changed, 343 insertions(+), 174 deletions(-)
 
 
