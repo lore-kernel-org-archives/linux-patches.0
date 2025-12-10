@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB15D3054E6;
-	Wed, 10 Dec 2025 07:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1B73054DF;
+	Wed, 10 Dec 2025 07:36:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352176; cv=none; b=GKAvBhXnpL2CbDEilw9WojqJTbp6SD1pwMzl7l/euMGtRS2glDiwzpFR8gcKdVL0yERmRXJUYtz9RVvx3YtyLskNV/UM8y/Ft/KLm1UiOu5oLGGROn7pm15nPpAIAnX80tW9IZr37rr+WSEGlAkenkW3aEtVByBBe7mXkOz9oJA=
+	t=1765352178; cv=none; b=hMYmpjV/oyre1sFIo1EO7wn5KRs9Fp0fdAsVWbSOKmr0AicHx0eMHHW96D637RMxo3COdsCPUAKWXDvWNwatJiArEDUDxZwrUaDWHTIbJk+eIaUDONfXuvV5C7HJ2N96B/rfdsRxUquk3kxdrP+AVC7DOdi1qQeWwIt5Wdq0Cnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352176; c=relaxed/simple;
-	bh=Lt0+a+Fz9SRzdEd2WMjITQXTjhx6Nzb5Fq2M/2uzwtU=;
+	s=arc-20240116; t=1765352178; c=relaxed/simple;
+	bh=07R+RzgFxOZS6G7UXMFHdkOebDvcPCJ6PGp7alfJmpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qg2jxX+gH4V/lrSz+SSfFhJuw8ClRdewUUWjydA0NlgYk888vg1m0f8NpZ4fyk5uvtlS10SZvIdNU555Ljsw6v7h9H+gyrHrhL90b5lE9m9LGcavyX7yA/43wwdBgHWWr7VPhINoT5Qzw1XvszG7JSamcGCdOkMdUZ2jSbgtMrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKrnWhXE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tzUxYmyUTFFGTI4OQbvl+B/JPdOUdwdU0VHDkYGMZZtK+K4oBbBqPjnZ+BAxwXe9Y0kD1Js/Bej/RZWA0b94DzJCN7YYGT5MnK3/nLXfSleaUtN6Gp5CbQZEwB+zlksFpJmsbTaDc8M5TBuRg0PNtxH5YzdAeeqGd700jtMXdlQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4ga1mcf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKrnWhXE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552BEC4CEF1;
-	Wed, 10 Dec 2025 07:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4ga1mcf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D33C4CEF1;
+	Wed, 10 Dec 2025 07:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352176;
-	bh=Lt0+a+Fz9SRzdEd2WMjITQXTjhx6Nzb5Fq2M/2uzwtU=;
+	s=korg; t=1765352178;
+	bh=07R+RzgFxOZS6G7UXMFHdkOebDvcPCJ6PGp7alfJmpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKrnWhXEgnzki6+MRxC0/4K40zbsV950fWUvzAY0b74zT5xOliQG5zmR8AVHAIJ8U
-	 oVZ/d0gQ0DAnVKacaeovKg+LpTTxsxw131FVFnLzlP/q7pBRY/kjY+osAczSPs/J6d
-	 zdz8wqP3cqQwoKn8GqV8hCRZmu1KcvpSHBkkIhj0=
+	b=E4ga1mcfeS+1IeUa9BEMkc3BQnROWoZV688xV4pkOaSL2yT9BdE08SCy/4cATB3NY
+	 +c/QP+0y3pJMALtbGtRKn+YMPhCiTEj2XA9sRWLIhoUI195TXjTsmvF2sGMiz/LBxX
+	 PdBuJRtas/317MEdWkC7e6cask17CnjTdhnBoJtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.18 19/29] USB: serial: kobil_sct: fix TIOCMBIS and TIOCMBIC
-Date: Wed, 10 Dec 2025 16:30:29 +0900
-Message-ID: <20251210072944.887708437@linuxfoundation.org>
+	Tomas Glozar <tglozar@redhat.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Gopi Krishna Menon <krishnagopi487@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 6.18 20/29] Documentation/rtla: rename common_xxx.rst files to common_xxx.txt
+Date: Wed, 10 Dec 2025 16:30:30 +0900
+Message-ID: <20251210072944.914584221@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -49,78 +53,960 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Gopi Krishna Menon <krishnagopi487@gmail.com>
 
-commit d432df758f92c4c28aac409bc807fd1716167577 upstream.
+commit 96b546c241b11a97ba1247580208c554458e7866 upstream.
 
-Asserting or deasserting a modem control line using TIOCMBIS or TIOCMBIC
-should not deassert any lines that are not in the mask.
+Sphinx reports htmldocs errors:
 
-Fix this long-standing issue dating back to 2003 when the support for
-these ioctls was added with the introduction of the tiocmset() callback.
+Documentation/tools/rtla/common_options.rst:58: ERROR: Undefined substitution referenced: "threshold".
+Documentation/tools/rtla/common_options.rst:88: ERROR: Undefined substitution referenced: "tool".
+Documentation/tools/rtla/common_options.rst:88: ERROR: Undefined substitution referenced: "thresharg".
+Documentation/tools/rtla/common_options.rst:88: ERROR: Undefined substitution referenced: "tracer".
+Documentation/tools/rtla/common_options.rst:92: ERROR: Undefined substitution referenced: "tracer".
+Documentation/tools/rtla/common_options.rst:98: ERROR: Undefined substitution referenced: "actionsperf".
+Documentation/tools/rtla/common_options.rst:113: ERROR: Undefined substitution referenced: "tool".
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+common_*.rst files are snippets that are intended to be included by rtla
+docs (rtla*.rst). common_options.rst in particular contains
+substitutions which depend on other common_* includes, so building it
+independently as reST source results in above errors.
+
+Rename all common_*.rst files to common_*.txt to prevent Sphinx from
+building these snippets as standalone reST source and update all include
+references accordingly.
+
+Link: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#substitutions
+Suggested-by: Tomas Glozar <tglozar@redhat.com>
+Suggested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
+Reviewed-by: Tomas Glozar <tglozar@redhat.com>
+Fixes: 05b7e10687c6 ("tools/rtla: Add remaining support for osnoise actions")
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Link: https://lore.kernel.org/r/20251008184522.13201-1-krishnagopi487@gmail.com
+[Bagas: massage commit message and apply trailers]
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Tested-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Message-ID: <20251013092719.30780-2-bagasdotme@gmail.com>
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/kobil_sct.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ .../{common_appendix.rst => common_appendix.txt}     |  0
+ ...mmon_hist_options.rst => common_hist_options.txt} |  0
+ .../rtla/{common_options.rst => common_options.txt}  |  0
+ ...escription.rst => common_osnoise_description.txt} |  0
+ ...snoise_options.rst => common_osnoise_options.txt} |  0
+ ...common_timerlat_aa.rst => common_timerlat_aa.txt} |  0
+ ...scription.rst => common_timerlat_description.txt} |  0
+ ...erlat_options.rst => common_timerlat_options.txt} |  0
+ ...common_top_options.rst => common_top_options.txt} |  0
+ Documentation/tools/rtla/common_appendix.rst             |   24 ---
+ Documentation/tools/rtla/common_appendix.txt             |   24 +++
+ Documentation/tools/rtla/common_hist_options.rst         |   23 --
+ Documentation/tools/rtla/common_hist_options.txt         |   23 ++
+ Documentation/tools/rtla/common_options.rst              |  119 ---------------
+ Documentation/tools/rtla/common_options.txt              |  119 +++++++++++++++
+ Documentation/tools/rtla/common_osnoise_description.rst  |    8 -
+ Documentation/tools/rtla/common_osnoise_description.txt  |    8 +
+ Documentation/tools/rtla/common_osnoise_options.rst      |   39 ----
+ Documentation/tools/rtla/common_osnoise_options.txt      |   39 ++++
+ Documentation/tools/rtla/common_timerlat_aa.rst          |    7 
+ Documentation/tools/rtla/common_timerlat_aa.txt          |    7 
+ Documentation/tools/rtla/common_timerlat_description.rst |   18 --
+ Documentation/tools/rtla/common_timerlat_description.txt |   18 ++
+ Documentation/tools/rtla/common_timerlat_options.rst     |   67 --------
+ Documentation/tools/rtla/common_timerlat_options.txt     |   67 ++++++++
+ Documentation/tools/rtla/common_top_options.rst          |    3 
+ Documentation/tools/rtla/common_top_options.txt          |    3 
+ Documentation/tools/rtla/rtla-hwnoise.rst                |    8 -
+ Documentation/tools/rtla/rtla-osnoise-hist.rst           |   10 -
+ Documentation/tools/rtla/rtla-osnoise-top.rst            |   10 -
+ Documentation/tools/rtla/rtla-osnoise.rst                |    4 
+ Documentation/tools/rtla/rtla-timerlat-hist.rst          |   12 -
+ Documentation/tools/rtla/rtla-timerlat-top.rst           |   12 -
+ Documentation/tools/rtla/rtla-timerlat.rst               |    4 
+ Documentation/tools/rtla/rtla.rst                        |    2 
+ 26 files changed, 339 insertions(+), 339 deletions(-)
+ rename Documentation/tools/rtla/{common_appendix.rst => common_appendix.txt} (100%)
+ rename Documentation/tools/rtla/{common_hist_options.rst => common_hist_options.txt} (100%)
+ rename Documentation/tools/rtla/{common_options.rst => common_options.txt} (100%)
+ rename Documentation/tools/rtla/{common_osnoise_description.rst => common_osnoise_description.txt} (100%)
+ rename Documentation/tools/rtla/{common_osnoise_options.rst => common_osnoise_options.txt} (100%)
+ rename Documentation/tools/rtla/{common_timerlat_aa.rst => common_timerlat_aa.txt} (100%)
+ rename Documentation/tools/rtla/{common_timerlat_description.rst => common_timerlat_description.txt} (100%)
+ rename Documentation/tools/rtla/{common_timerlat_options.rst => common_timerlat_options.txt} (100%)
+ rename Documentation/tools/rtla/{common_top_options.rst => common_top_options.txt} (100%)
 
---- a/drivers/usb/serial/kobil_sct.c
-+++ b/drivers/usb/serial/kobil_sct.c
-@@ -418,7 +418,7 @@ static int kobil_tiocmset(struct tty_str
- 	struct usb_serial_port *port = tty->driver_data;
- 	struct device *dev = &port->dev;
- 	struct kobil_private *priv;
--	int result;
-+	int result = 0;
- 	int dtr = 0;
- 	int rts = 0;
+--- a/Documentation/tools/rtla/common_appendix.rst
++++ /dev/null
+@@ -1,24 +0,0 @@
+-.. SPDX-License-Identifier: GPL-2.0
+-
+-EXIT STATUS
+-===========
+-
+-::
+-
+- 0  Passed: the test did not hit the stop tracing condition
+- 1  Error: invalid argument
+- 2  Failed: the test hit the stop tracing condition
+-
+-REPORTING BUGS
+-==============
+-Report bugs to <linux-kernel@vger.kernel.org>
+-and <linux-trace-devel@vger.kernel.org>
+-
+-LICENSE
+-=======
+-**rtla** is Free Software licensed under the GNU GPLv2
+-
+-COPYING
+-=======
+-Copyright \(C) 2021 Red Hat, Inc. Free use of this software is granted under
+-the terms of the GNU Public License (GPL).
+--- /dev/null
++++ b/Documentation/tools/rtla/common_appendix.txt
+@@ -0,0 +1,24 @@
++.. SPDX-License-Identifier: GPL-2.0
++
++EXIT STATUS
++===========
++
++::
++
++ 0  Passed: the test did not hit the stop tracing condition
++ 1  Error: invalid argument
++ 2  Failed: the test hit the stop tracing condition
++
++REPORTING BUGS
++==============
++Report bugs to <linux-kernel@vger.kernel.org>
++and <linux-trace-devel@vger.kernel.org>
++
++LICENSE
++=======
++**rtla** is Free Software licensed under the GNU GPLv2
++
++COPYING
++=======
++Copyright \(C) 2021 Red Hat, Inc. Free use of this software is granted under
++the terms of the GNU Public License (GPL).
+--- a/Documentation/tools/rtla/common_hist_options.rst
++++ /dev/null
+@@ -1,23 +0,0 @@
+-**-b**, **--bucket-size** *N*
+-
+-        Set the histogram bucket size (default *1*).
+-
+-**-E**, **--entries** *N*
+-
+-        Set the number of entries of the histogram (default 256).
+-
+-**--no-header**
+-
+-        Do not print header.
+-
+-**--no-summary**
+-
+-        Do not print summary.
+-
+-**--no-index**
+-
+-        Do not print index.
+-
+-**--with-zeros**
+-
+-        Print zero only entries.
+--- /dev/null
++++ b/Documentation/tools/rtla/common_hist_options.txt
+@@ -0,0 +1,23 @@
++**-b**, **--bucket-size** *N*
++
++        Set the histogram bucket size (default *1*).
++
++**-E**, **--entries** *N*
++
++        Set the number of entries of the histogram (default 256).
++
++**--no-header**
++
++        Do not print header.
++
++**--no-summary**
++
++        Do not print summary.
++
++**--no-index**
++
++        Do not print index.
++
++**--with-zeros**
++
++        Print zero only entries.
+--- a/Documentation/tools/rtla/common_options.rst
++++ /dev/null
+@@ -1,119 +0,0 @@
+-**-c**, **--cpus** *cpu-list*
+-
+-        Set the osnoise tracer to run the sample threads in the cpu-list.
+-
+-**-H**, **--house-keeping** *cpu-list*
+-
+-        Run rtla control threads only on the given cpu-list.
+-
+-**-d**, **--duration** *time[s|m|h|d]*
+-
+-        Set the duration of the session.
+-
+-**-D**, **--debug**
+-
+-        Print debug info.
+-
+-**-e**, **--event** *sys:event*
+-
+-        Enable an event in the trace (**-t**) session. The argument can be a specific event, e.g., **-e** *sched:sched_switch*, or all events of a system group, e.g., **-e** *sched*. Multiple **-e** are allowed. It is only active when **-t** or **-a** are set.
+-
+-**--filter** *<filter>*
+-
+-        Filter the previous **-e** *sys:event* event with *<filter>*. For further information about event filtering see https://www.kernel.org/doc/html/latest/trace/events.html#event-filtering.
+-
+-**--trigger** *<trigger>*
+-        Enable a trace event trigger to the previous **-e** *sys:event*.
+-        If the *hist:* trigger is activated, the output histogram will be automatically saved to a file named *system_event_hist.txt*.
+-        For example, the command:
+-
+-        rtla <command> <mode> -t -e osnoise:irq_noise --trigger="hist:key=desc,duration/1000:sort=desc,duration/1000:vals=hitcount"
+-
+-        Will automatically save the content of the histogram associated to *osnoise:irq_noise* event in *osnoise_irq_noise_hist.txt*.
+-
+-        For further information about event trigger see https://www.kernel.org/doc/html/latest/trace/events.html#event-triggers.
+-
+-**-P**, **--priority** *o:prio|r:prio|f:prio|d:runtime:period*
+-
+-        Set scheduling parameters to the osnoise tracer threads, the format to set the priority are:
+-
+-        - *o:prio* - use SCHED_OTHER with *prio*;
+-        - *r:prio* - use SCHED_RR with *prio*;
+-        - *f:prio* - use SCHED_FIFO with *prio*;
+-        - *d:runtime[us|ms|s]:period[us|ms|s]* - use SCHED_DEADLINE with *runtime* and *period* in nanoseconds.
+-
+-**-C**, **--cgroup**\[*=cgroup*]
+-
+-        Set a *cgroup* to the tracer's threads. If the **-C** option is passed without arguments, the tracer's thread will inherit **rtla**'s *cgroup*. Otherwise, the threads will be placed on the *cgroup* passed to the option.
+-
+-**--warm-up** *s*
+-
+-        After starting the workload, let it run for *s* seconds before starting collecting the data, allowing the system to warm-up. Statistical data generated during warm-up is discarded.
+-
+-**--trace-buffer-size** *kB*
+-        Set the per-cpu trace buffer size in kB for the tracing output.
+-
+-**--on-threshold** *action*
+-
+-        Defines an action to be executed when tracing is stopped on a latency threshold
+-        specified by |threshold|.
+-
+-        Multiple --on-threshold actions may be specified, and they will be executed in
+-        the order they are provided. If any action fails, subsequent actions in the list
+-        will not be executed.
+-
+-        Supported actions are:
+-
+-        - *trace[,file=<filename>]*
+-
+-          Saves trace output, optionally taking a filename. Alternative to -t/--trace.
+-          Note that nlike -t/--trace, specifying this multiple times will result in
+-          the trace being saved multiple times.
+-
+-        - *signal,num=<sig>,pid=<pid>*
+-
+-          Sends signal to process. "parent" might be specified in place of pid to target
+-          the parent process of rtla.
+-
+-        - *shell,command=<command>*
+-
+-          Execute shell command.
+-
+-        - *continue*
+-
+-          Continue tracing after actions are executed instead of stopping.
+-
+-        Example:
+-
+-        $ rtla |tool| |thresharg| 20 --on-threshold trace
+-        --on-threshold shell,command="grep ipi_send |tracer|\_trace.txt"
+-        --on-threshold signal,num=2,pid=parent
+-
+-        This will save a trace with the default filename "|tracer|\_trace.txt", print its
+-        lines that contain the text "ipi_send" on standard output, and send signal 2
+-        (SIGINT) to the parent process.
+-
+-        Performance Considerations:
+-
+-        |actionsperf|
+-
+-**--on-end** *action*
+-
+-        Defines an action to be executed at the end of tracing.
+-
+-        Multiple --on-end actions can be specified, and they will be executed in the order
+-        they are provided. If any action fails, subsequent actions in the list will not be
+-        executed.
+-
+-        See the documentation for **--on-threshold** for the list of supported actions, with
+-        the exception that *continue* has no effect.
+-
+-        Example:
+-
+-        $ rtla |tool| -d 5s --on-end trace
+-
+-        This runs rtla with the default options, and saves trace output at the end.
+-
+-**-h**, **--help**
+-
+-        Print help menu.
+--- /dev/null
++++ b/Documentation/tools/rtla/common_options.txt
+@@ -0,0 +1,119 @@
++**-c**, **--cpus** *cpu-list*
++
++        Set the osnoise tracer to run the sample threads in the cpu-list.
++
++**-H**, **--house-keeping** *cpu-list*
++
++        Run rtla control threads only on the given cpu-list.
++
++**-d**, **--duration** *time[s|m|h|d]*
++
++        Set the duration of the session.
++
++**-D**, **--debug**
++
++        Print debug info.
++
++**-e**, **--event** *sys:event*
++
++        Enable an event in the trace (**-t**) session. The argument can be a specific event, e.g., **-e** *sched:sched_switch*, or all events of a system group, e.g., **-e** *sched*. Multiple **-e** are allowed. It is only active when **-t** or **-a** are set.
++
++**--filter** *<filter>*
++
++        Filter the previous **-e** *sys:event* event with *<filter>*. For further information about event filtering see https://www.kernel.org/doc/html/latest/trace/events.html#event-filtering.
++
++**--trigger** *<trigger>*
++        Enable a trace event trigger to the previous **-e** *sys:event*.
++        If the *hist:* trigger is activated, the output histogram will be automatically saved to a file named *system_event_hist.txt*.
++        For example, the command:
++
++        rtla <command> <mode> -t -e osnoise:irq_noise --trigger="hist:key=desc,duration/1000:sort=desc,duration/1000:vals=hitcount"
++
++        Will automatically save the content of the histogram associated to *osnoise:irq_noise* event in *osnoise_irq_noise_hist.txt*.
++
++        For further information about event trigger see https://www.kernel.org/doc/html/latest/trace/events.html#event-triggers.
++
++**-P**, **--priority** *o:prio|r:prio|f:prio|d:runtime:period*
++
++        Set scheduling parameters to the osnoise tracer threads, the format to set the priority are:
++
++        - *o:prio* - use SCHED_OTHER with *prio*;
++        - *r:prio* - use SCHED_RR with *prio*;
++        - *f:prio* - use SCHED_FIFO with *prio*;
++        - *d:runtime[us|ms|s]:period[us|ms|s]* - use SCHED_DEADLINE with *runtime* and *period* in nanoseconds.
++
++**-C**, **--cgroup**\[*=cgroup*]
++
++        Set a *cgroup* to the tracer's threads. If the **-C** option is passed without arguments, the tracer's thread will inherit **rtla**'s *cgroup*. Otherwise, the threads will be placed on the *cgroup* passed to the option.
++
++**--warm-up** *s*
++
++        After starting the workload, let it run for *s* seconds before starting collecting the data, allowing the system to warm-up. Statistical data generated during warm-up is discarded.
++
++**--trace-buffer-size** *kB*
++        Set the per-cpu trace buffer size in kB for the tracing output.
++
++**--on-threshold** *action*
++
++        Defines an action to be executed when tracing is stopped on a latency threshold
++        specified by |threshold|.
++
++        Multiple --on-threshold actions may be specified, and they will be executed in
++        the order they are provided. If any action fails, subsequent actions in the list
++        will not be executed.
++
++        Supported actions are:
++
++        - *trace[,file=<filename>]*
++
++          Saves trace output, optionally taking a filename. Alternative to -t/--trace.
++          Note that nlike -t/--trace, specifying this multiple times will result in
++          the trace being saved multiple times.
++
++        - *signal,num=<sig>,pid=<pid>*
++
++          Sends signal to process. "parent" might be specified in place of pid to target
++          the parent process of rtla.
++
++        - *shell,command=<command>*
++
++          Execute shell command.
++
++        - *continue*
++
++          Continue tracing after actions are executed instead of stopping.
++
++        Example:
++
++        $ rtla |tool| |thresharg| 20 --on-threshold trace
++        --on-threshold shell,command="grep ipi_send |tracer|\_trace.txt"
++        --on-threshold signal,num=2,pid=parent
++
++        This will save a trace with the default filename "|tracer|\_trace.txt", print its
++        lines that contain the text "ipi_send" on standard output, and send signal 2
++        (SIGINT) to the parent process.
++
++        Performance Considerations:
++
++        |actionsperf|
++
++**--on-end** *action*
++
++        Defines an action to be executed at the end of tracing.
++
++        Multiple --on-end actions can be specified, and they will be executed in the order
++        they are provided. If any action fails, subsequent actions in the list will not be
++        executed.
++
++        See the documentation for **--on-threshold** for the list of supported actions, with
++        the exception that *continue* has no effect.
++
++        Example:
++
++        $ rtla |tool| -d 5s --on-end trace
++
++        This runs rtla with the default options, and saves trace output at the end.
++
++**-h**, **--help**
++
++        Print help menu.
+--- a/Documentation/tools/rtla/common_osnoise_description.rst
++++ /dev/null
+@@ -1,8 +0,0 @@
+-The **rtla osnoise** tool is an interface for the *osnoise* tracer. The
+-*osnoise* tracer dispatches a kernel thread per-cpu. These threads read the
+-time in a loop while with preemption, softirq and IRQs enabled, thus
+-allowing all the sources of operating system noise during its execution.
+-The *osnoise*'s tracer threads take note of the delta between each time
+-read, along with an interference counter of all sources of interference.
+-At the end of each period, the *osnoise* tracer displays a summary of
+-the results.
+--- /dev/null
++++ b/Documentation/tools/rtla/common_osnoise_description.txt
+@@ -0,0 +1,8 @@
++The **rtla osnoise** tool is an interface for the *osnoise* tracer. The
++*osnoise* tracer dispatches a kernel thread per-cpu. These threads read the
++time in a loop while with preemption, softirq and IRQs enabled, thus
++allowing all the sources of operating system noise during its execution.
++The *osnoise*'s tracer threads take note of the delta between each time
++read, along with an interference counter of all sources of interference.
++At the end of each period, the *osnoise* tracer displays a summary of
++the results.
+--- a/Documentation/tools/rtla/common_osnoise_options.rst
++++ /dev/null
+@@ -1,39 +0,0 @@
+-.. |threshold|  replace:: **-a/--auto**, **-s/--stop**, or **-S/--stop-total**
+-.. |thresharg|  replace:: -s
+-.. |tracer|     replace:: osnoise
+-
+-.. |actionsperf| replace::
+-        Due to implementational limitations, actions might be delayed
+-        up to one second after tracing is stopped.
+-
+-**-a**, **--auto** *us*
+-
+-        Set the automatic trace mode. This mode sets some commonly used options
+-        while debugging the system. It is equivalent to use **-s** *us* **-T 1 -t**.
+-
+-**-p**, **--period** *us*
+-
+-        Set the *osnoise* tracer period in microseconds.
+-
+-**-r**, **--runtime** *us*
+-
+-        Set the *osnoise* tracer runtime in microseconds.
+-
+-**-s**, **--stop** *us*
+-
+-        Stop the trace if a single sample is higher than the argument in microseconds.
+-        If **-T** is set, it will also save the trace to the output.
+-
+-**-S**, **--stop-total** *us*
+-
+-        Stop the trace if the total sample is higher than the argument in microseconds.
+-        If **-T** is set, it will also save the trace to the output.
+-
+-**-T**, **--threshold** *us*
+-
+-        Specify the minimum delta between two time reads to be considered noise.
+-        The default threshold is *5 us*.
+-
+-**-t**, **--trace** \[*file*]
+-
+-        Save the stopped trace to [*file|osnoise_trace.txt*].
+--- /dev/null
++++ b/Documentation/tools/rtla/common_osnoise_options.txt
+@@ -0,0 +1,39 @@
++.. |threshold|  replace:: **-a/--auto**, **-s/--stop**, or **-S/--stop-total**
++.. |thresharg|  replace:: -s
++.. |tracer|     replace:: osnoise
++
++.. |actionsperf| replace::
++        Due to implementational limitations, actions might be delayed
++        up to one second after tracing is stopped.
++
++**-a**, **--auto** *us*
++
++        Set the automatic trace mode. This mode sets some commonly used options
++        while debugging the system. It is equivalent to use **-s** *us* **-T 1 -t**.
++
++**-p**, **--period** *us*
++
++        Set the *osnoise* tracer period in microseconds.
++
++**-r**, **--runtime** *us*
++
++        Set the *osnoise* tracer runtime in microseconds.
++
++**-s**, **--stop** *us*
++
++        Stop the trace if a single sample is higher than the argument in microseconds.
++        If **-T** is set, it will also save the trace to the output.
++
++**-S**, **--stop-total** *us*
++
++        Stop the trace if the total sample is higher than the argument in microseconds.
++        If **-T** is set, it will also save the trace to the output.
++
++**-T**, **--threshold** *us*
++
++        Specify the minimum delta between two time reads to be considered noise.
++        The default threshold is *5 us*.
++
++**-t**, **--trace** \[*file*]
++
++        Save the stopped trace to [*file|osnoise_trace.txt*].
+--- a/Documentation/tools/rtla/common_timerlat_aa.rst
++++ /dev/null
+@@ -1,7 +0,0 @@
+-**--dump-tasks**
+-
+-        prints the task running on all CPUs if stop conditions are met (depends on !--no-aa)
+-
+-**--no-aa**
+-
+-        disable auto-analysis, reducing rtla timerlat cpu usage
+--- /dev/null
++++ b/Documentation/tools/rtla/common_timerlat_aa.txt
+@@ -0,0 +1,7 @@
++**--dump-tasks**
++
++        prints the task running on all CPUs if stop conditions are met (depends on !--no-aa)
++
++**--no-aa**
++
++        disable auto-analysis, reducing rtla timerlat cpu usage
+--- a/Documentation/tools/rtla/common_timerlat_description.rst
++++ /dev/null
+@@ -1,18 +0,0 @@
+-The **rtla timerlat** tool is an interface for the *timerlat* tracer. The
+-*timerlat* tracer dispatches a kernel thread per-cpu. These threads
+-set a periodic timer to wake themselves up and go back to sleep. After
+-the wakeup, they collect and generate useful information for the
+-debugging of operating system timer latency.
+-
+-The *timerlat* tracer outputs information in two ways. It periodically
+-prints the timer latency at the timer *IRQ* handler and the *Thread*
+-handler. It also enables the trace of the most relevant information via
+-**osnoise:** tracepoints.
+-
+-The **rtla timerlat** tool sets the options of the *timerlat* tracer
+-and collects and displays a summary of the results. By default,
+-the collection is done synchronously in kernel space using a dedicated
+-BPF program attached to the *timerlat* tracer. If either BPF or
+-the **osnoise:timerlat_sample** tracepoint it attaches to is
+-unavailable, the **rtla timerlat** tool falls back to using tracefs to
+-process the data asynchronously in user space.
+--- /dev/null
++++ b/Documentation/tools/rtla/common_timerlat_description.txt
+@@ -0,0 +1,18 @@
++The **rtla timerlat** tool is an interface for the *timerlat* tracer. The
++*timerlat* tracer dispatches a kernel thread per-cpu. These threads
++set a periodic timer to wake themselves up and go back to sleep. After
++the wakeup, they collect and generate useful information for the
++debugging of operating system timer latency.
++
++The *timerlat* tracer outputs information in two ways. It periodically
++prints the timer latency at the timer *IRQ* handler and the *Thread*
++handler. It also enables the trace of the most relevant information via
++**osnoise:** tracepoints.
++
++The **rtla timerlat** tool sets the options of the *timerlat* tracer
++and collects and displays a summary of the results. By default,
++the collection is done synchronously in kernel space using a dedicated
++BPF program attached to the *timerlat* tracer. If either BPF or
++the **osnoise:timerlat_sample** tracepoint it attaches to is
++unavailable, the **rtla timerlat** tool falls back to using tracefs to
++process the data asynchronously in user space.
+--- a/Documentation/tools/rtla/common_timerlat_options.rst
++++ /dev/null
+@@ -1,67 +0,0 @@
+-.. |threshold|  replace:: **-a/--auto**, **-i/--irq**, or **-T/--thread**
+-.. |thresharg|  replace:: -T
+-.. |tracer|     replace:: timerlat
+-
+-.. |actionsperf| replace::
+-        For time-sensitive actions, it is recommended to run **rtla timerlat** with BPF
+-        support and RT priority. Note that due to implementational limitations, actions
+-        might be delayed up to one second after tracing is stopped if BPF mode is not
+-        available or disabled.
+-
+-**-a**, **--auto** *us*
+-
+-        Set the automatic trace mode. This mode sets some commonly used options
+-        while debugging the system. It is equivalent to use **-T** *us* **-s** *us*
+-        **-t**. By default, *timerlat* tracer uses FIFO:95 for *timerlat* threads,
+-        thus equilavent to **-P** *f:95*.
+-
+-**-p**, **--period** *us*
+-
+-        Set the *timerlat* tracer period in microseconds.
+-
+-**-i**, **--irq** *us*
+-
+-        Stop trace if the *IRQ* latency is higher than the argument in us.
+-
+-**-T**, **--thread** *us*
+-
+-        Stop trace if the *Thread* latency is higher than the argument in us.
+-
+-**-s**, **--stack** *us*
+-
+-        Save the stack trace at the *IRQ* if a *Thread* latency is higher than the
+-        argument in us.
+-
+-**-t**, **--trace** \[*file*]
+-
+-        Save the stopped trace to [*file|timerlat_trace.txt*].
+-
+-**--dma-latency** *us*
+-        Set the /dev/cpu_dma_latency to *us*, aiming to bound exit from idle latencies.
+-        *cyclictest* sets this value to *0* by default, use **--dma-latency** *0* to have
+-        similar results.
+-
+-**--deepest-idle-state** *n*
+-        Disable idle states higher than *n* for cpus that are running timerlat threads to
+-        reduce exit from idle latencies. If *n* is -1, all idle states are disabled.
+-        On exit from timerlat, the idle state setting is restored to its original state
+-        before running timerlat.
+-
+-        Requires rtla to be built with libcpupower.
+-
+-**-k**, **--kernel-threads**
+-
+-        Use timerlat kernel-space threads, in contrast of **-u**.
+-
+-**-u**, **--user-threads**
+-
+-        Set timerlat to run without a workload, and then dispatches user-space workloads
+-        to wait on the timerlat_fd. Once the workload is awakes, it goes to sleep again
+-        adding so the measurement for the kernel-to-user and user-to-kernel to the tracer
+-        output. **--user-threads** will be used unless the user specify **-k**.
+-
+-**-U**, **--user-load**
+-
+-        Set timerlat to run without workload, waiting for the user to dispatch a per-cpu
+-        task that waits for a new period on the tracing/osnoise/per_cpu/cpu$ID/timerlat_fd.
+-        See linux/tools/rtla/sample/timerlat_load.py for an example of user-load code.
+--- /dev/null
++++ b/Documentation/tools/rtla/common_timerlat_options.txt
+@@ -0,0 +1,67 @@
++.. |threshold|  replace:: **-a/--auto**, **-i/--irq**, or **-T/--thread**
++.. |thresharg|  replace:: -T
++.. |tracer|     replace:: timerlat
++
++.. |actionsperf| replace::
++        For time-sensitive actions, it is recommended to run **rtla timerlat** with BPF
++        support and RT priority. Note that due to implementational limitations, actions
++        might be delayed up to one second after tracing is stopped if BPF mode is not
++        available or disabled.
++
++**-a**, **--auto** *us*
++
++        Set the automatic trace mode. This mode sets some commonly used options
++        while debugging the system. It is equivalent to use **-T** *us* **-s** *us*
++        **-t**. By default, *timerlat* tracer uses FIFO:95 for *timerlat* threads,
++        thus equilavent to **-P** *f:95*.
++
++**-p**, **--period** *us*
++
++        Set the *timerlat* tracer period in microseconds.
++
++**-i**, **--irq** *us*
++
++        Stop trace if the *IRQ* latency is higher than the argument in us.
++
++**-T**, **--thread** *us*
++
++        Stop trace if the *Thread* latency is higher than the argument in us.
++
++**-s**, **--stack** *us*
++
++        Save the stack trace at the *IRQ* if a *Thread* latency is higher than the
++        argument in us.
++
++**-t**, **--trace** \[*file*]
++
++        Save the stopped trace to [*file|timerlat_trace.txt*].
++
++**--dma-latency** *us*
++        Set the /dev/cpu_dma_latency to *us*, aiming to bound exit from idle latencies.
++        *cyclictest* sets this value to *0* by default, use **--dma-latency** *0* to have
++        similar results.
++
++**--deepest-idle-state** *n*
++        Disable idle states higher than *n* for cpus that are running timerlat threads to
++        reduce exit from idle latencies. If *n* is -1, all idle states are disabled.
++        On exit from timerlat, the idle state setting is restored to its original state
++        before running timerlat.
++
++        Requires rtla to be built with libcpupower.
++
++**-k**, **--kernel-threads**
++
++        Use timerlat kernel-space threads, in contrast of **-u**.
++
++**-u**, **--user-threads**
++
++        Set timerlat to run without a workload, and then dispatches user-space workloads
++        to wait on the timerlat_fd. Once the workload is awakes, it goes to sleep again
++        adding so the measurement for the kernel-to-user and user-to-kernel to the tracer
++        output. **--user-threads** will be used unless the user specify **-k**.
++
++**-U**, **--user-load**
++
++        Set timerlat to run without workload, waiting for the user to dispatch a per-cpu
++        task that waits for a new period on the tracing/osnoise/per_cpu/cpu$ID/timerlat_fd.
++        See linux/tools/rtla/sample/timerlat_load.py for an example of user-load code.
+--- a/Documentation/tools/rtla/common_top_options.rst
++++ /dev/null
+@@ -1,3 +0,0 @@
+-**-q**, **--quiet**
+-
+-        Print only a summary at the end of the session.
+--- /dev/null
++++ b/Documentation/tools/rtla/common_top_options.txt
+@@ -0,0 +1,3 @@
++**-q**, **--quiet**
++
++        Print only a summary at the end of the session.
+--- a/Documentation/tools/rtla/rtla-hwnoise.rst
++++ b/Documentation/tools/rtla/rtla-hwnoise.rst
+@@ -29,11 +29,11 @@ collection of the tracer output.
  
-@@ -435,12 +435,12 @@ static int kobil_tiocmset(struct tty_str
- 	if (set & TIOCM_DTR)
- 		dtr = 1;
- 	if (clear & TIOCM_RTS)
--		rts = 0;
-+		rts = 1;
- 	if (clear & TIOCM_DTR)
--		dtr = 0;
-+		dtr = 1;
+ OPTIONS
+ =======
+-.. include:: common_osnoise_options.rst
++.. include:: common_osnoise_options.txt
  
--	if (priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID) {
--		if (dtr != 0)
-+	if (dtr && priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID) {
-+		if (set & TIOCM_DTR)
- 			dev_dbg(dev, "%s - Setting DTR\n", __func__);
- 		else
- 			dev_dbg(dev, "%s - Clearing DTR\n", __func__);
-@@ -448,13 +448,13 @@ static int kobil_tiocmset(struct tty_str
- 			  usb_sndctrlpipe(port->serial->dev, 0),
- 			  SUSBCRequest_SetStatusLinesOrQueues,
- 			  USB_TYPE_VENDOR | USB_RECIP_ENDPOINT | USB_DIR_OUT,
--			  ((dtr != 0) ? SUSBCR_SSL_SETDTR : SUSBCR_SSL_CLRDTR),
-+			  ((set & TIOCM_DTR) ? SUSBCR_SSL_SETDTR : SUSBCR_SSL_CLRDTR),
- 			  0,
- 			  NULL,
- 			  0,
- 			  KOBIL_TIMEOUT);
--	} else {
--		if (rts != 0)
-+	} else if (rts) {
-+		if (set & TIOCM_RTS)
- 			dev_dbg(dev, "%s - Setting RTS\n", __func__);
- 		else
- 			dev_dbg(dev, "%s - Clearing RTS\n", __func__);
-@@ -462,7 +462,7 @@ static int kobil_tiocmset(struct tty_str
- 			usb_sndctrlpipe(port->serial->dev, 0),
- 			SUSBCRequest_SetStatusLinesOrQueues,
- 			USB_TYPE_VENDOR | USB_RECIP_ENDPOINT | USB_DIR_OUT,
--			((rts != 0) ? SUSBCR_SSL_SETRTS : SUSBCR_SSL_CLRRTS),
-+			((set & TIOCM_RTS) ? SUSBCR_SSL_SETRTS : SUSBCR_SSL_CLRRTS),
- 			0,
- 			NULL,
- 			0,
+-.. include:: common_top_options.rst
++.. include:: common_top_options.txt
+ 
+-.. include:: common_options.rst
++.. include:: common_options.txt
+ 
+ EXAMPLE
+ =======
+@@ -106,4 +106,4 @@ AUTHOR
+ ======
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla-osnoise-hist.rst
++++ b/Documentation/tools/rtla/rtla-osnoise-hist.rst
+@@ -15,7 +15,7 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ ===========
+-.. include:: common_osnoise_description.rst
++.. include:: common_osnoise_description.txt
+ 
+ The **rtla osnoise hist** tool collects all **osnoise:sample_threshold**
+ occurrence in a histogram, displaying the results in a user-friendly way.
+@@ -24,11 +24,11 @@ collection of the tracer output.
+ 
+ OPTIONS
+ =======
+-.. include:: common_osnoise_options.rst
++.. include:: common_osnoise_options.txt
+ 
+-.. include:: common_hist_options.rst
++.. include:: common_hist_options.txt
+ 
+-.. include:: common_options.rst
++.. include:: common_options.txt
+ 
+ EXAMPLE
+ =======
+@@ -65,4 +65,4 @@ AUTHOR
+ ======
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla-osnoise-top.rst
++++ b/Documentation/tools/rtla/rtla-osnoise-top.rst
+@@ -15,7 +15,7 @@ SYNOPSIS
+ 
+ DESCRIPTION
+ ===========
+-.. include:: common_osnoise_description.rst
++.. include:: common_osnoise_description.txt
+ 
+ **rtla osnoise top** collects the periodic summary from the *osnoise* tracer,
+ including the counters of the occurrence of the interference source,
+@@ -26,11 +26,11 @@ collection of the tracer output.
+ 
+ OPTIONS
+ =======
+-.. include:: common_osnoise_options.rst
++.. include:: common_osnoise_options.txt
+ 
+-.. include:: common_top_options.rst
++.. include:: common_top_options.txt
+ 
+-.. include:: common_options.rst
++.. include:: common_options.txt
+ 
+ EXAMPLE
+ =======
+@@ -60,4 +60,4 @@ AUTHOR
+ ======
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla-osnoise.rst
++++ b/Documentation/tools/rtla/rtla-osnoise.rst
+@@ -14,7 +14,7 @@ SYNOPSIS
+ DESCRIPTION
+ ===========
+ 
+-.. include:: common_osnoise_description.rst
++.. include:: common_osnoise_description.txt
+ 
+ The *osnoise* tracer outputs information in two ways. It periodically prints
+ a summary of the noise of the operating system, including the counters of
+@@ -56,4 +56,4 @@ AUTHOR
+ ======
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla-timerlat-hist.rst
++++ b/Documentation/tools/rtla/rtla-timerlat-hist.rst
+@@ -16,7 +16,7 @@ SYNOPSIS
+ DESCRIPTION
+ ===========
+ 
+-.. include:: common_timerlat_description.rst
++.. include:: common_timerlat_description.txt
+ 
+ The **rtla timerlat hist** displays a histogram of each tracer event
+ occurrence. This tool uses the periodic information, and the
+@@ -25,13 +25,13 @@ occurrence. This tool uses the periodic
+ OPTIONS
+ =======
+ 
+-.. include:: common_timerlat_options.rst
++.. include:: common_timerlat_options.txt
+ 
+-.. include:: common_hist_options.rst
++.. include:: common_hist_options.txt
+ 
+-.. include:: common_options.rst
++.. include:: common_options.txt
+ 
+-.. include:: common_timerlat_aa.rst
++.. include:: common_timerlat_aa.txt
+ 
+ EXAMPLE
+ =======
+@@ -110,4 +110,4 @@ AUTHOR
+ ======
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla-timerlat-top.rst
++++ b/Documentation/tools/rtla/rtla-timerlat-top.rst
+@@ -16,7 +16,7 @@ SYNOPSIS
+ DESCRIPTION
+ ===========
+ 
+-.. include:: common_timerlat_description.rst
++.. include:: common_timerlat_description.txt
+ 
+ The **rtla timerlat top** displays a summary of the periodic output
+ from the *timerlat* tracer. It also provides information for each
+@@ -26,13 +26,13 @@ seem with the option **-T**.
+ OPTIONS
+ =======
+ 
+-.. include:: common_timerlat_options.rst
++.. include:: common_timerlat_options.txt
+ 
+-.. include:: common_top_options.rst
++.. include:: common_top_options.txt
+ 
+-.. include:: common_options.rst
++.. include:: common_options.txt
+ 
+-.. include:: common_timerlat_aa.rst
++.. include:: common_timerlat_aa.txt
+ 
+ **--aa-only** *us*
+ 
+@@ -133,4 +133,4 @@ AUTHOR
+ ------
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla-timerlat.rst
++++ b/Documentation/tools/rtla/rtla-timerlat.rst
+@@ -14,7 +14,7 @@ SYNOPSIS
+ DESCRIPTION
+ ===========
+ 
+-.. include:: common_timerlat_description.rst
++.. include:: common_timerlat_description.txt
+ 
+ The **rtla timerlat top** mode displays a summary of the periodic output
+ from the *timerlat* tracer. The **rtla timerlat hist** mode displays
+@@ -51,4 +51,4 @@ AUTHOR
+ ======
+ Written by Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
+--- a/Documentation/tools/rtla/rtla.rst
++++ b/Documentation/tools/rtla/rtla.rst
+@@ -45,4 +45,4 @@ AUTHOR
+ ======
+ Daniel Bristot de Oliveira <bristot@kernel.org>
+ 
+-.. include:: common_appendix.rst
++.. include:: common_appendix.txt
 
 
