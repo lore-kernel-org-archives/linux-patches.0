@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D5C2E92B4;
-	Wed, 10 Dec 2025 07:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76A83016FA;
+	Wed, 10 Dec 2025 07:34:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352039; cv=none; b=diaVpwhsJuFPoIkxDDJvMGAv0kCg6Zk3jvBcjlBTkOnbCa0bjG4HhzzDgn/ONAh4UdYa9f1nYeiCyMw4fWACAxcGyjlmSk6h7G1L+bFQS5q60c8gEy6coOW/Usmigsl6gSoIcdkRKDjy+ehi5vvyUBoHraCSsHGct2vSeutq+go=
+	t=1765352041; cv=none; b=RJHbQ7svzOHjjJzqhYkyI/GPZfkdqb7K+6amJCumx3Xk9bR9hT5TCjkIagMhWAoNA2itzrZZLl8WhK0LDjPrOgMMLlQRBzoPR6gu7f8yzDny6yetzAjSKqwl6fwyZq9yFo0toZ/t+Hke6t1qnQvFsbwOcxkrePKw5xrWbzEzVe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352039; c=relaxed/simple;
-	bh=jaDxfs2oiewgUEeYN6ok6QRhvutEJpRssJW20AUhvUE=;
+	s=arc-20240116; t=1765352041; c=relaxed/simple;
+	bh=4W1jR0NG5oJnP2Uz8DSJRUd+KnHrBfanwfKrb7J787g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXpfRwO558CnTZz9Mty3aotGMVCxOBR6QMEHM0qzsGSmaTPxmVzaQ5nlwVy6G6SpTviXfhW14+BJTrYTYHGm/JICyZlw4YS9Dcs8kaUxS9Kjh7E0i1LkwXiOdxFCW38LVaV9B/WBpmSfpTkR9Og9abyjvtoUga+G8yO3JKGdOUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIpvXFWB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmT54gUCwufrocXPrkxi0rXEDQSnfzTwzAN3VpehuASLxW3RPXTB9Dpg6uXF3k2Le7OikUGlnGp8W7qI4HHr7oJYZRaDAaF0yOIyvvYeFgF8gSY5ICmYJzvAv9RfjJ5zrNz/YGWT3eoJNJrhz62BDDn061ICyO9E/aP+drMrtfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5j9e82p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIpvXFWB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D16C4CEF1;
-	Wed, 10 Dec 2025 07:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5j9e82p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5E8C4CEF1;
+	Wed, 10 Dec 2025 07:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352038;
-	bh=jaDxfs2oiewgUEeYN6ok6QRhvutEJpRssJW20AUhvUE=;
+	s=korg; t=1765352041;
+	bh=4W1jR0NG5oJnP2Uz8DSJRUd+KnHrBfanwfKrb7J787g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIpvXFWBXhctrUe+jIbjsQJl1XKaKYlGJExRp5aqC6uEoTjQUjnoFMx7qMTyBfx3N
-	 WotN6dNEVkfWVRpsYqkPys3M8v51oxd2Qw3a9fDg9vMk0fqpXnt8Mu1/WNUomPQi6R
-	 JXSWYTDhhP6gul5/Gq4WcBa+/TgVvee9Mo/CHgjA=
+	b=y5j9e82pITl8Eosj/eIfjDBFn4dcx0CRFQ+4dpxXRe/+icgC848O0bUSanLvatOOO
+	 AdUKofnLYob0y4QdtE3JswZn/4HEjUcxHonpIgPe2MiXCmSA4ODxn79MoUVstBkkdE
+	 Ljok6mcHkp44BNGlQV0jP82EZVJMLgmc4FF84jZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niranjan H Y <niranjan.hy@ti.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 27/60] ASoC: SDCA: bug fix while parsing mipi-sdca-control-cn-list
-Date: Wed, 10 Dec 2025 16:29:57 +0900
-Message-ID: <20251210072948.505683412@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.17 10/60] USB: serial: option: add Foxconn T99W760
+Date: Wed, 10 Dec 2025 16:29:40 +0900
+Message-ID: <20251210072948.099363487@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -52,40 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niranjan H Y <niranjan.hy@ti.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-[ Upstream commit eb2d6774cc0d9d6ab8f924825695a85c14b2e0c2 ]
+commit 7970b4969c4c99bcdaf105f9f39c6d2021f6d244 upstream.
 
-"struct sdca_control" declares "values" field as integer array.
-But the memory allocated to it is of char array. This causes
-crash for sdca_parse_function API. This patch addresses the
-issue by allocating correct data size.
+T99W760 is designed based on Qualcomm SDX35 (5G redcap) chip. There are
+three serial ports to be enumerated: Modem, NMEA and Diag.
 
-Signed-off-by: Niranjan H Y <niranjan.hy@ti.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251110152646.192-1-niranjan.hy@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+test evidence as below:
+T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000  MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e123 Rev=05.15
+S:  Manufacturer=QCOM
+S:  Product=SDXBAAGHA-IDP _SN:39A8D3E4
+S:  SerialNumber=39a8d3e4
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+
+0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
+
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sdca/sdca_functions.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/sdca/sdca_functions.c b/sound/soc/sdca/sdca_functions.c
-index 13f68f7b6dd6a..0ccb6775f4de3 100644
---- a/sound/soc/sdca/sdca_functions.c
-+++ b/sound/soc/sdca/sdca_functions.c
-@@ -894,7 +894,8 @@ static int find_sdca_entity_control(struct device *dev, struct sdca_entity *enti
- 		return ret;
- 	}
- 
--	control->values = devm_kzalloc(dev, hweight64(control->cn_list), GFP_KERNEL);
-+	control->values = devm_kcalloc(dev, hweight64(control->cn_list),
-+				       sizeof(int), GFP_KERNEL);
- 	if (!control->values)
- 		return -ENOMEM;
- 
--- 
-2.51.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2376,6 +2376,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0f0, 0xff),			/* Foxconn T99W373 MBIM */
+ 	  .driver_info = RSVD(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe123, 0xff),			/* Foxconn T99W760 MBIM */
++	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
 
 
