@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866B22FDC22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A722EBB9E
 	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 23:14:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765408494; cv=none; b=uI+Mkuha9hGt4GwoE3ExSGDlSJLTnYmi2AunTr3BMA8sfnytFk0fE9SJlHBkQHBIvFusGFqeHAu2Tx5LE70an4RG2Ymlsph4N18FB26L43SPzb8EJ8A++BM3pOI4DbGukQ64txXUuMXjR+GXbRlvcmOuZf+FC9cT1VcQYMBj4So=
+	t=1765408495; cv=none; b=n0KwCmG/su6aTAnTTvoT1UNznqktZrFQkxrdi6aFTzzAMsUh4F23RNmoDbb7j2kjWHANAmWnbwLy/sia4d7eOtcYMx48QIbv4oxtn/6iRChAzA5e4+jY9ghM8NeLR0g9TihCsNaSfn/MfhigHrxjn2kvzz2VQhSdgao5889lIe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765408494; c=relaxed/simple;
-	bh=RG5IbjeIgi8phx4lID+dB0DRLoIge3eN62a4wy8w5Pk=;
+	s=arc-20240116; t=1765408495; c=relaxed/simple;
+	bh=vrL7JfY3s49csiMkieoQzxc27A+XOltjUvm7AN7IfJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WIZDBzbQwagqiSfoyViQ+I40K3/kA4Ra53QohKrXdED/B5JWsvnFx7tb4iLBuwKOzIAo+hhQ+PmuJV3jdJjDKwtwU+Hrlayy89Jd53yBpk2ab1QJKZO1sdxoejo8DszWiRhJA6REj+Jh8vJnI+WqXlBJi4YCUyANMohGQOPn58E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=RJbVY+28; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=DPo/g166x5ZRxJa9dnZ2Tdtn5FjLi+vl/HcHznW60gMO+6t8uJXwR8Td1439oneyn/Q7QyFhSh3eE8SzzK24h+jSAbXGyP85P0Qducu1IFqyjLovVUaQetIECZ1R07hw+NWnNScrpNiZhLZRb9S9866SPrC0/jWK/UQC6EbeTc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TpCfniad; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="RJbVY+28"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TpCfniad"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1765408490; x=1796944490;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=RG5IbjeIgi8phx4lID+dB0DRLoIge3eN62a4wy8w5Pk=;
-  b=RJbVY+28pCEmsbKKPgQpkiLBaFYUpCW0pw+R9WWggTqkHfcQqrdT2xCi
-   gs/wOLpIso70D4XdjMDehCdBX30BEApCFMD05M7WvB6eDiZura2iyHcYU
-   ky+y4NHrBANuj5RSX2NLkZi0DZ9orqgqET52O0NSx3jqFRZphcWyhfURR
-   TzBmoirPbwyB3vfbkY6mMcnbV98Ij10paeQ/Pjdzd/B4uEShX/zxvD9QW
-   3Xkyaz0y2Z72bxGZ84RJQZzOeu6IDdBanCldIu5rINcYkjgPuNvXYsSaG
-   Gx3P/v5rrHZbQ4o5jMMfW4sdEBer5/daJORXCIrbDnIm768/BBVMR+pnz
+  bh=vrL7JfY3s49csiMkieoQzxc27A+XOltjUvm7AN7IfJk=;
+  b=TpCfniadw4cD9mKUcahJVY4uOVmeLkrJmKFGGCO8S/bX/AE8PpilJlLE
+   OBdQrj6oPEn2RsaGlJaLFWriaGuWm8q9FMbTAoEBh3kt+GgjoUvene7kd
+   E3MYgocaJoXwUXXXXNBmKH90PA78YfuCXp0uLfC+mhkCIeDPsfOHPn48c
+   /G6sMHujM6/JvcTpd/rPtVio7kQGdQF0SNIomg0Ynz53xfWOPmwSa5OOQ
+   IntpBEWo60w91EJklNYi1QctKyBw6ExKM3f+0w7g0WJHqxG9654yByHox
+   Mu9hILZ60r9yplf6B6h6YnJPIsW9kpb6MfOFSvn6ohSWK/ZAPKrc4LiSu
    g==;
-X-CSE-ConnectionGUID: zl6D9vPDQ7aDeQO1xqqrlA==
-X-CSE-MsgGUID: vcAacefPTyimQjVxvrzCMw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="69973572"
+X-CSE-ConnectionGUID: m/sFO86dRhGt0PfiVsPuBg==
+X-CSE-MsgGUID: bFSOkug+SdGPCsqAk10SLQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="69973580"
 X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; 
-   d="scan'208";a="69973572"
+   d="scan'208";a="69973580"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
   by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:32 -0800
-X-CSE-ConnectionGUID: QHWGOoEEScCjC+SnOv+/Cg==
-X-CSE-MsgGUID: xTDoXdgCSoOsnBhdT0qMAw==
+X-CSE-ConnectionGUID: 1cbVZiJOSBqhEOPVUiHlUQ==
+X-CSE-MsgGUID: TFltrmcySruVY/IzgenFWw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; 
-   d="scan'208";a="227297073"
+   d="scan'208";a="227297076"
 Received: from daliomra-mobl3.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.254])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:31 -0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:32 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v16 12/32] x86,fs/resctrl: Support binary fixed point event counters
-Date: Wed, 10 Dec 2025 15:13:51 -0800
-Message-ID: <20251210231413.59102-13-tony.luck@intel.com>
+Subject: [PATCH v16 13/32] x86,fs/resctrl: Add an architectural hook called for each mount
+Date: Wed, 10 Dec 2025 15:13:52 -0800
+Message-ID: <20251210231413.59102-14-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251210231413.59102-1-tony.luck@intel.com>
 References: <20251210231413.59102-1-tony.luck@intel.com>
@@ -71,231 +71,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-resctrl assumes that all monitor events can be displayed as unsigned decimal
-integers.
+Enumeration of Intel telemetry events is an asynchronous process involving
+several mutually dependent drivers added as auxiliary devices during
+the device_initcall() phase of Linux boot. The process finishes after
+the probe functions of these drivers completes. But this happens after
+resctrl_arch_late_init() is executed.
 
-Hardware architecture counters may provide some telemetry events with greater
-precision where the event is not a simple count, but is a measurement of
-some sort (e.g. Joules for energy consumed).
+Tracing the enumeration process shows that it does complete a full seven
+seconds before the earliest possible mount of the resctrl file system (when
+included in /etc/fstab for automatic mount by systemd).
 
-Add a new argument to resctrl_enable_mon_event() for architecture code
-to inform the file system that the value for a counter is a fixed-point
-value with a specific number of binary places.
-Only allow architecture to use floating point format on events that the
-file system has marked with mon_evt::is_floating_point which reflects the
-contract with user space on how the event values are displayed.
+Add a hook at the beginning of the mount code that will be used to check
+for telemetry events and initialize if any are found.
 
-Display fixed point values with values rounded to ceil(binary_bits * log10(2))
-decimal places. Special case for zero binary bits to print "{value}.0".
+Call the hook on every attempted mount. Expectations are that most actions
+(like enumeration) will only need to be performed on the first call.
+
+resctrl filesystem calls the hook with no locks held. Architecture code is
+responsible for any required locking.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- include/linux/resctrl.h            |  3 +-
- fs/resctrl/internal.h              |  8 ++++
- arch/x86/kernel/cpu/resctrl/core.c |  6 +--
- fs/resctrl/ctrlmondata.c           | 74 ++++++++++++++++++++++++++++++
- fs/resctrl/monitor.c               | 10 +++-
- 5 files changed, 95 insertions(+), 6 deletions(-)
+ include/linux/resctrl.h            | 6 ++++++
+ arch/x86/kernel/cpu/resctrl/core.c | 9 +++++++++
+ fs/resctrl/rdtgroup.c              | 2 ++
+ 3 files changed, 17 insertions(+)
 
 diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 22c5d07fe9ff..c43526cdf304 100644
+index c43526cdf304..dc148b7feb71 100644
 --- a/include/linux/resctrl.h
 +++ b/include/linux/resctrl.h
-@@ -412,7 +412,8 @@ u32 resctrl_arch_get_num_closid(struct rdt_resource *r);
- u32 resctrl_arch_system_num_rmid_idx(void);
- int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid);
- 
--void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu);
-+void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu,
-+			      unsigned int binary_bits);
- 
- bool resctrl_is_mon_event_enabled(enum resctrl_event_id eventid);
- 
-diff --git a/fs/resctrl/internal.h b/fs/resctrl/internal.h
-index fb0b6e40d022..14e5a9ed1fbd 100644
---- a/fs/resctrl/internal.h
-+++ b/fs/resctrl/internal.h
-@@ -62,6 +62,9 @@ static inline struct rdt_fs_context *rdt_fc2context(struct fs_context *fc)
-  *			Only valid if @evtid is an MBM event.
-  * @configurable:	true if the event is configurable
-  * @any_cpu:		true if the event can be read from any CPU
-+ * @is_floating_point:	event values are displayed in floating point format
-+ * @binary_bits:	number of fixed-point binary bits from architecture,
-+ *			only valid if @is_floating_point is true
-  * @enabled:		true if the event is enabled
-  */
- struct mon_evt {
-@@ -71,6 +74,8 @@ struct mon_evt {
- 	u32			evt_cfg;
- 	bool			configurable;
- 	bool			any_cpu;
-+	bool			is_floating_point;
-+	unsigned int		binary_bits;
- 	bool			enabled;
- };
- 
-@@ -79,6 +84,9 @@ extern struct mon_evt mon_event_all[QOS_NUM_EVENTS];
- #define for_each_mon_event(mevt) for (mevt = &mon_event_all[QOS_FIRST_EVENT];	\
- 				      mevt < &mon_event_all[QOS_NUM_EVENTS]; mevt++)
- 
-+/* Limit for mon_evt::binary_bits */
-+#define MAX_BINARY_BITS	27
-+
- /**
-  * struct mon_data - Monitoring details for each event file.
-  * @list:            Member of the global @mon_data_kn_priv_list list.
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index bd4a98106153..9222eee7ce07 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -902,15 +902,15 @@ static __init bool get_rdt_mon_resources(void)
- 	bool ret = false;
- 
- 	if (rdt_cpu_has(X86_FEATURE_CQM_OCCUP_LLC)) {
--		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false);
-+		resctrl_enable_mon_event(QOS_L3_OCCUP_EVENT_ID, false, 0);
- 		ret = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_TOTAL)) {
--		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false);
-+		resctrl_enable_mon_event(QOS_L3_MBM_TOTAL_EVENT_ID, false, 0);
- 		ret = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_CQM_MBM_LOCAL)) {
--		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false);
-+		resctrl_enable_mon_event(QOS_L3_MBM_LOCAL_EVENT_ID, false, 0);
- 		ret = true;
- 	}
- 	if (rdt_cpu_has(X86_FEATURE_ABMC))
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index 2c69fcd70eeb..f319fd1a6de3 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -17,6 +17,7 @@
- 
- #include <linux/cpu.h>
- #include <linux/kernfs.h>
-+#include <linux/math.h>
- #include <linux/seq_file.h>
- #include <linux/slab.h>
- #include <linux/tick.h>
-@@ -601,6 +602,77 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
- 		resctrl_arch_mon_ctx_free(r, evt->evtid, rr->arch_mon_ctx);
- }
+@@ -514,6 +514,12 @@ void resctrl_offline_mon_domain(struct rdt_resource *r, struct rdt_domain_hdr *h
+ void resctrl_online_cpu(unsigned int cpu);
+ void resctrl_offline_cpu(unsigned int cpu);
  
 +/*
-+ * Decimal place precision to use for each number of fixed-point
-+ * binary bits computed from ceil(binary_bits * log10(2)) except
-+ * binary_bits == 0 which will print "value.0"
++ * Architecture hook called at beginning of each file system mount attempt.
++ * No locks are held.
 + */
-+static const unsigned int decplaces[MAX_BINARY_BITS + 1] = {
-+	[0]  =  1,
-+	[1]  =  1,
-+	[2]  =  1,
-+	[3]  =  1,
-+	[4]  =  2,
-+	[5]  =  2,
-+	[6]  =  2,
-+	[7]  =  3,
-+	[8]  =  3,
-+	[9]  =  3,
-+	[10] =  4,
-+	[11] =  4,
-+	[12] =  4,
-+	[13] =  4,
-+	[14] =  5,
-+	[15] =  5,
-+	[16] =  5,
-+	[17] =  6,
-+	[18] =  6,
-+	[19] =  6,
-+	[20] =  7,
-+	[21] =  7,
-+	[22] =  7,
-+	[23] =  7,
-+	[24] =  8,
-+	[25] =  8,
-+	[26] =  8,
-+	[27] =  9
-+};
++void resctrl_arch_pre_mount(void);
 +
-+static void print_event_value(struct seq_file *m, unsigned int binary_bits, u64 val)
-+{
-+	unsigned long long frac = 0;
-+
-+	if (binary_bits) {
-+		/* Mask off the integer part of the fixed-point value. */
-+		frac = val & GENMASK_ULL(binary_bits - 1, 0);
-+
-+		/*
-+		 * Multiply by 10^{desired decimal places}. The integer part of
-+		 * the fixed point value is now almost what is needed.
-+		 */
-+		frac *= int_pow(10ull, decplaces[binary_bits]);
-+
-+		/*
-+		 * Round to nearest by adding a value that would be a "1" in the
-+		 * binary_bits + 1 place.  Integer part of fixed point value is
-+		 * now the needed value.
-+		 */
-+		frac += 1ull << (binary_bits - 1);
-+
-+		/*
-+		 * Extract the integer part of the value. This is the decimal
-+		 * representation of the original fixed-point fractional value.
-+		 */
-+		frac >>= binary_bits;
-+	}
-+
-+	/*
-+	 * "frac" is now in the range [0 .. 10^decplaces).  I.e. string
-+	 * representation will fit into chosen number of decimal places.
-+	 */
-+	seq_printf(m, "%llu.%0*llu\n", val >> binary_bits, decplaces[binary_bits], frac);
-+}
-+
- int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- {
- 	struct kernfs_open_file *of = m->private;
-@@ -678,6 +750,8 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
- 		seq_puts(m, "Unavailable\n");
- 	else if (rr.err == -ENOENT)
- 		seq_puts(m, "Unassigned\n");
-+	else if (evt->is_floating_point)
-+		print_event_value(m, evt->binary_bits, rr.val);
- 	else
- 		seq_printf(m, "%llu\n", rr.val);
- 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 8c76ac133bca..844cf6875f60 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -988,16 +988,22 @@ struct mon_evt mon_event_all[QOS_NUM_EVENTS] = {
- 	},
- };
- 
--void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu)
-+void resctrl_enable_mon_event(enum resctrl_event_id eventid, bool any_cpu, unsigned int binary_bits)
- {
--	if (WARN_ON_ONCE(eventid < QOS_FIRST_EVENT || eventid >= QOS_NUM_EVENTS))
-+	if (WARN_ON_ONCE(eventid < QOS_FIRST_EVENT || eventid >= QOS_NUM_EVENTS ||
-+			 binary_bits > MAX_BINARY_BITS))
- 		return;
- 	if (mon_event_all[eventid].enabled) {
- 		pr_warn("Duplicate enable for event %d\n", eventid);
- 		return;
- 	}
-+	if (binary_bits && !mon_event_all[eventid].is_floating_point) {
-+		pr_warn("Event %d may not be floating point\n", eventid);
-+		return;
-+	}
- 
- 	mon_event_all[eventid].any_cpu = any_cpu;
-+	mon_event_all[eventid].binary_bits = binary_bits;
- 	mon_event_all[eventid].enabled = true;
+ /**
+  * resctrl_arch_rmid_read() - Read the eventid counter corresponding to rmid
+  *			      for this resource and domain.
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 9222eee7ce07..2dd48b59ba9b 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -726,6 +726,15 @@ static int resctrl_arch_offline_cpu(unsigned int cpu)
+ 	return 0;
  }
  
++void resctrl_arch_pre_mount(void)
++{
++	static atomic_t only_once = ATOMIC_INIT(0);
++	int old = 0;
++
++	if (!atomic_try_cmpxchg(&only_once, &old, 1))
++		return;
++}
++
+ enum {
+ 	RDT_FLAG_CMT,
+ 	RDT_FLAG_MBM_TOTAL,
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 771e40f02ba6..b20d104ea0c9 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -2785,6 +2785,8 @@ static int rdt_get_tree(struct fs_context *fc)
+ 	struct rdt_resource *r;
+ 	int ret;
+ 
++	resctrl_arch_pre_mount();
++
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
+ 	/*
 -- 
 2.51.1
 
