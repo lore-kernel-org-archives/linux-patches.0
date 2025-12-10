@@ -1,83 +1,61 @@
-Received: from mailout02.platinum-mail.de (mx02.platinum-mail.de [89.58.18.167])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8CF35958
-	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 12:47:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.18.167
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2B3E3594A;
+	Wed, 10 Dec 2025 12:47:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765370870; cv=none; b=M3rWiR+phX6bd6TrTias2J4BoKpGTXBI9imCOPEwjaJzUJMan0Numq5qHcAzQjq9i9YNF1bY2IdzRmfke0pZESLYTUn9fPOgarBiChPTywoWqrgnCXcVhp+eqQxqnvDncCl1MKB9wi0Iwv3Q+ADVTvnPjazeuALyuIOv6XB1H+U=
+	t=1765370878; cv=none; b=JjK4WWpsrzyo5z1Km9Iydrb240jGiAvsrKqwldZLcypEAY7yCEw1YogCR2UQ5yB6vSB2TxoQ1udE8zdx+VevC6pCuKDEBvAxmZpbYszliRpTxAJDBTXmemXTaXZkn7iddjxKQC8QPDEagkeskkW8XnA3sjh7jaHVwdgaZvL94UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765370870; c=relaxed/simple;
-	bh=349pdtQ78tNKS/+l5J9av1S8KNUHinldcziiqEFA3nM=;
-	h=Mime-Version:Date:Message-Id:Cc:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=Ge0JVqDvKBsKN3e+fPOeRwfJYn0QxbgBGfbKTZC3gbdz+jmvufvKC5fWc11txwaKhKc02SjCc8S0nGIjFZWlfPHeyl01WzqbwSPnQ5hCZ76KOqLoQCBkCAOs90ivFbhL9m2/JH3iHSYW3j+p+ggyNCJKtbOleMs5lGNPKHINB2I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=achill.org; spf=pass smtp.mailfrom=achill.org; dkim=pass (2048-bit key) header.d=achill.org header.i=@achill.org header.b=oHLQNqbU; arc=none smtp.client-ip=89.58.18.167
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=achill.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=achill.org
+	s=arc-20240116; t=1765370878; c=relaxed/simple;
+	bh=7W4zBoxyRYepE0lW9X0YLsHsRRlW4WsOr+d3EcIku+8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D+JJ12g9s2tD1gbDYn9/Lu88Zf/C80Ddl2wRFCWOFnqc7CpaQTvzxrvtyesr0B59OnWg7PZNpR/kpQrjBC7duOkMdTBwsY6+sOsDvriSTGkzR9nryu9duW2r4VSnXnXGtr7v3/zXFCERj9QXVDXnG2Ssi5RAshih89LnbKDWxhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q96j/QYI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=achill.org header.i=@achill.org header.b="oHLQNqbU"
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mailout02.platinum-mail.de (Mail Service) with ESMTPS id 7181D9A293B
-	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 12:47:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; d=achill.org; s=mail; c=relaxed/simple;
-	t=1765370861; h=date:message-id:subject:from:to;
-	bh=349pdtQ78tNKS/+l5J9av1S8KNUHinldcziiqEFA3nM=;
-	b=oHLQNqbUVPyPvPDgcciuxoznu295ZVHn06J/q82kQrY+zbFuLonDieBLTeeJ0FuQXwEyduDKY/D
-	kVgj+jrSl+LiKRLo7rckizxCecZJDb4YGfqhVnq5QBtPWg1Y1Do8LWK7AkMrfeOCZaHD2V8d2cIlH
-	q22RL4COSMV9zAYDuvlwD1gfemVztjcSssaipoisTEJVNYnkOFw8gymVQUkm2dytniDsFFBvxmDKE
-	7MSLr64DCgqhiVAOPcuUtg1ybJeq0bCbN7IyL/zdJwLP1v+FP6Er8pwETOI+95AvAInoIbSgFpNy5
-	InHi5t5Jta8h+m5eRFqbAMdJKldq4Vi+8vuA==
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q96j/QYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99DBC19423;
+	Wed, 10 Dec 2025 12:47:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1765370878;
+	bh=7W4zBoxyRYepE0lW9X0YLsHsRRlW4WsOr+d3EcIku+8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=q96j/QYI6bk39iMck8YfBKms6dMCFJoKq62BAmec0PmU1xj3BCQZlf9mLBiGCmhM/
+	 45EuTknZqb8QpWhr981HwrdOxEa7dOs6kyxeHE3Isa59VIIXTCoIxwlUtJYcHNhtrF
+	 JhWcjE4OIJeoYgMQGBfJmK0pOsUWd2Iliw3CvdnE=
+Date: Wed, 10 Dec 2025 21:47:55 +0900
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
+Message-ID: <2025121046-satchel-concise-1077@gregkh>
+References: <20251210072947.850479903@linuxfoundation.org>
+ <CAG=yYwm==BjqjJWtgc0+WzbiGTsKsHV3e4Lvk60fcartrrABDw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 10 Dec 2025 13:47:40 +0100
-Message-Id: <DEUJQPCLYOF0.1ZDLXUFC0IX88@achill.org>
-Cc: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
- <torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
- <linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
- <lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
- <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>,
- <conor@kernel.org>, <hargar@microsoft.com>, <broonie@kernel.org>,
- <achill@achill.org>, <sr@sladewatkins.com>
-Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
-From: "Achill Gilgenast" <achill@achill.org>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
- <stable@vger.kernel.org>
-X-Greeting: Hi mom! Look, I'm in somebodys mail client!
-X-Mailer: aerc 0.21.0
-References: <20251210072947.850479903@linuxfoundation.org>
-In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
-Content-Type: text/plain; charset=utf-8
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAG=yYwm==BjqjJWtgc0+WzbiGTsKsHV3e4Lvk60fcartrrABDw@mail.gmail.com>
 
-On Wed Dec 10, 2025 at 8:29 AM CET, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.17.12 release.
-> There are 60 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 12 Dec 2025 07:29:37 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.12=
--rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.17.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Wed, Dec 10, 2025 at 04:22:21PM +0530, Jeffrin Thalakkottoor wrote:
+>  compiled and booted 6.17.12-rc1+
+> Version: AMD A4-4000 APU with Radeon(tm) HD Graphics
+> 
+> sudo dmesg -l errr  shows  error
+> 
+> j$sudo dmesg -l err
+> [   39.915487] Error: Driver 'pcspkr' is already registered, aborting...
+> $
 
-Thank you! Build tested on all Alpine architectures and boot tested on
-x86_64.
-
-Tested-By: Achill Gilgenast <achill@achill.org>=
+Is ths new?  if so, can you bisect?
