@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76A83016FA;
-	Wed, 10 Dec 2025 07:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0787B30171F;
+	Wed, 10 Dec 2025 07:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352041; cv=none; b=RJHbQ7svzOHjjJzqhYkyI/GPZfkdqb7K+6amJCumx3Xk9bR9hT5TCjkIagMhWAoNA2itzrZZLl8WhK0LDjPrOgMMLlQRBzoPR6gu7f8yzDny6yetzAjSKqwl6fwyZq9yFo0toZ/t+Hke6t1qnQvFsbwOcxkrePKw5xrWbzEzVe4=
+	t=1765352044; cv=none; b=uGkf7F+gV3XxG5yETAsgTyOYy7ptzhnjhH//T2rL5/9Iiy27SOgwBjQt5rkmMjXPK99vzEt1y2feyQ0BrCUk+JynGJuMxqGyZBCJTLKx/2XgsBSMJ9QNmagTIlPxKKUkcP6mTeLTdGLUGrvYrwFia/xp1CkkSULdXBUoMT8nRhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352041; c=relaxed/simple;
-	bh=4W1jR0NG5oJnP2Uz8DSJRUd+KnHrBfanwfKrb7J787g=;
+	s=arc-20240116; t=1765352044; c=relaxed/simple;
+	bh=7X89bPJrSd6E88POrwI9XajM94MmPjQ+9FmptPHCcZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmT54gUCwufrocXPrkxi0rXEDQSnfzTwzAN3VpehuASLxW3RPXTB9Dpg6uXF3k2Le7OikUGlnGp8W7qI4HHr7oJYZRaDAaF0yOIyvvYeFgF8gSY5ICmYJzvAv9RfjJ5zrNz/YGWT3eoJNJrhz62BDDn061ICyO9E/aP+drMrtfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y5j9e82p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uj7biafjY/6N2dRYPDbNpDIPmgpfpvapxZIfNbxgSWd1cCAQZv1YEfJggI5xl2EvJxOJOqpPMathmqjtTiLms1odZ/AaNBT+KKnvwRZmHtnbWSzjFtuDePrvl5LIKaW/a+anNa94nBSQBNxUXktpOjW3HV9ml5LwOLzIMlbPgo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lC/qfi/+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y5j9e82p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A5E8C4CEF1;
-	Wed, 10 Dec 2025 07:34:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lC/qfi/+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE36C4CEF1;
+	Wed, 10 Dec 2025 07:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352041;
-	bh=4W1jR0NG5oJnP2Uz8DSJRUd+KnHrBfanwfKrb7J787g=;
+	s=korg; t=1765352043;
+	bh=7X89bPJrSd6E88POrwI9XajM94MmPjQ+9FmptPHCcZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y5j9e82pITl8Eosj/eIfjDBFn4dcx0CRFQ+4dpxXRe/+icgC848O0bUSanLvatOOO
-	 AdUKofnLYob0y4QdtE3JswZn/4HEjUcxHonpIgPe2MiXCmSA4ODxn79MoUVstBkkdE
-	 Ljok6mcHkp44BNGlQV0jP82EZVJMLgmc4FF84jZQ=
+	b=lC/qfi/+dHqhlvtkyK/o/T37jio53GH9oF88khvR0LNKM/OICKdoN97l7BnjckGxN
+	 a1o5MzUShwPF9UZXQr99SCc5nkSXHfgCGN7E7FC6eKnGEvXM4uxeVBJ1iw3twJs9pI
+	 0umPgD7gdWDTpmkO/go+RZ2QURN1fXHpshBKDCco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.17 10/60] USB: serial: option: add Foxconn T99W760
-Date: Wed, 10 Dec 2025 16:29:40 +0900
-Message-ID: <20251210072948.099363487@linuxfoundation.org>
+	Yiqi Sun <sunyiqixm@gmail.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 28/60] smb: fix invalid username check in smb3_fs_context_parse_param()
+Date: Wed, 10 Dec 2025 16:29:58 +0900
+Message-ID: <20251210072948.529868768@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -50,60 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Slark Xiao <slark_xiao@163.com>
+From: Yiqi Sun <sunyiqixm@gmail.com>
 
-commit 7970b4969c4c99bcdaf105f9f39c6d2021f6d244 upstream.
+[ Upstream commit ed6612165b74f09db00ef0abaf9831895ab28b7f ]
 
-T99W760 is designed based on Qualcomm SDX35 (5G redcap) chip. There are
-three serial ports to be enumerated: Modem, NMEA and Diag.
+Since the maximum return value of strnlen(..., CIFS_MAX_USERNAME_LEN)
+is CIFS_MAX_USERNAME_LEN, length check in smb3_fs_context_parse_param()
+is always FALSE and invalid.
 
-test evidence as below:
-T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000  MxCh= 0
-D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e123 Rev=05.15
-S:  Manufacturer=QCOM
-S:  Product=SDXBAAGHA-IDP _SN:39A8D3E4
-S:  SerialNumber=39a8d3e4
-C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+Fix the comparison in if statement.
 
-0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
-
-Signed-off-by: Slark Xiao <slark_xiao@163.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yiqi Sun <sunyiqixm@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/fs_context.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -2376,6 +2376,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0f0, 0xff),			/* Foxconn T99W373 MBIM */
- 	  .driver_info = RSVD(3) },
-+	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe123, 0xff),			/* Foxconn T99W760 MBIM */
-+	  .driver_info = RSVD(3) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
- 	  .driver_info = RSVD(5) | RSVD(6) },
- 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
+diff --git a/fs/smb/client/fs_context.c b/fs/smb/client/fs_context.c
+index c9cd00b96cde1..44dc5e24482e8 100644
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1472,7 +1472,7 @@ static int smb3_fs_context_parse_param(struct fs_context *fc,
+ 			break;
+ 		}
+ 
+-		if (strnlen(param->string, CIFS_MAX_USERNAME_LEN) >
++		if (strnlen(param->string, CIFS_MAX_USERNAME_LEN) ==
+ 		    CIFS_MAX_USERNAME_LEN) {
+ 			pr_warn("username too long\n");
+ 			goto cifs_parse_mount_err;
+-- 
+2.51.0
+
 
 
