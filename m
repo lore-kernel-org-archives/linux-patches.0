@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD65D2FE04C;
-	Wed, 10 Dec 2025 07:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01762FF16C;
+	Wed, 10 Dec 2025 07:35:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352138; cv=none; b=UBQM63GnDiZ5GwzQZVtEVCANKa97he0MIEm+aDIJ3gxz+ovjOu+KnLQqAuoFstFBAWN2W0Qdw7t4RTcE/fs9LKf/kHmqX2Rb612d/9nYLJzhDF80blcer5BqBfuCQyOHpLY+bMvAXgG3KhhR5ZKnMEt2otvSeHcb4qowdmTGj/s=
+	t=1765352140; cv=none; b=nwHRXilbql8SYl8FCTUA3XWkczLxyfgMFo/24ylWFtcHYnCD02iuqyDcQ9Y/gQJArDMWm5gGJStUVsB9Aomw1rp9gJm2SVMWIozho66BjhyEQes/rZOeoxbRsqjb6JlbWqXLmtB+2cFTerT08fLj7YKfnDFGefAvPrwmrfqyTXY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352138; c=relaxed/simple;
-	bh=FvkiRIsKijbKgnHK5OF/bkbLEyOCLadm9njnMsVx9kY=;
+	s=arc-20240116; t=1765352140; c=relaxed/simple;
+	bh=w3J+lvelb6Bkn/bv7QxQ+9r1agNo4xIcVeKghHjC2r4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9oIRIpbUaOorfdDgWjCojO8acPLZtiGt3YVKb0NigztI4VVVfWMcz5r1UOQJAKyd4OCCNk3NoXPIt9NJXCtg4NaojbTj/6cIF33FcvvVKX5CgSNPFJD5E+9ZPjLskSwCmhmg8GiQb3gaLlPMsfotQt2Mujjx2RdCx8oaE3VdV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H70eO8gF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERkq0ks4dl/nmlsWKKW87m/WVgia+XIj5tsaLhu8cb1B9eCOHX6c4Q8nmXOV2cPC3xuh7Wsb5I0dyYshyXaPWrzuD9VE7koyM3LEmDU/svoYJ5YLO10wn9iu3X/7D/yqxv20d/J1E/KRbtxjWYfvbyiRz98R+GQScNe4RXpyMLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjs8m2jk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H70eO8gF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D486C4CEF1;
-	Wed, 10 Dec 2025 07:35:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjs8m2jk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2822C4CEF1;
+	Wed, 10 Dec 2025 07:35:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352137;
-	bh=FvkiRIsKijbKgnHK5OF/bkbLEyOCLadm9njnMsVx9kY=;
+	s=korg; t=1765352140;
+	bh=w3J+lvelb6Bkn/bv7QxQ+9r1agNo4xIcVeKghHjC2r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H70eO8gFxsOrhT1vKGGcbByvlCQ1JAJGLahpIiL87h5d+ooO033LhS9hsYS2d3+7L
-	 oYHa+YEumoLbhKfDQt0309lIlhMvVWPmk97tnr5mNfN+dNAZAsZ1ow89iTJwzOrNTT
-	 Ci/Ln/jyytcZNdGiGeP81TsO4gVDHy3eMzPwQOe8=
+	b=gjs8m2jkI6eXLjESzTnOTR6iKZC740v2tDughtzIkmdBrzGtqQhrwSpms8MlOfwOQ
+	 1qrQaXGeXGNYTH21uvOBM/YeoOSDLRTSvbZ17faW+YfV/v31ac08qY11QEjqA2j2Od
+	 HdLBRQSZAU7JBgCDr1pTuXcnoIoG1D+/zWnhW7NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naoki Ueki <naoki25519@gmail.com>,
-	Jiri Kosina <jkosina@suse.com>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 46/60] HID: elecom: Add support for ELECOM M-XT3URBK (018F)
-Date: Wed, 10 Dec 2025 16:30:16 +0900
-Message-ID: <20251210072949.012094144@linuxfoundation.org>
+Subject: [PATCH 6.17 47/60] sched_ext: Use IRQ_WORK_INIT_HARD() to initialize rq->scx.kick_cpus_irq_work
+Date: Wed, 10 Dec 2025 16:30:17 +0900
+Message-ID: <20251210072949.035868693@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -51,78 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naoki Ueki <naoki25519@gmail.com>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit cdcbb8e8d10f656642380ee13516290437b52b36 ]
+[ Upstream commit 36c6f3c03d104faf1aa90922f2310549c175420f ]
 
-The ELECOM M-XT3URBK trackball has an additional device ID (0x018F), which
-shares the same report descriptor as the existing device (0x00FB). However,
-the driver does not currently recognize this new ID, resulting in only five
-buttons being functional.
+For PREEMPT_RT kernels, the kick_cpus_irq_workfn() be invoked in
+the per-cpu irq_work/* task context and there is no rcu-read critical
+section to protect. this commit therefore use IRQ_WORK_INIT_HARD() to
+initialize the per-cpu rq->scx.kick_cpus_irq_work in the
+init_sched_ext_class().
 
-This patch adds the new device ID so that all six buttons work properly.
-
-Signed-off-by: Naoki Ueki <naoki25519@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-elecom.c | 6 ++++--
- drivers/hid/hid-ids.h    | 3 ++-
- drivers/hid/hid-quirks.c | 3 ++-
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-elecom.c b/drivers/hid/hid-elecom.c
-index 69771fd350060..981d1b6e96589 100644
---- a/drivers/hid/hid-elecom.c
-+++ b/drivers/hid/hid-elecom.c
-@@ -75,7 +75,8 @@ static const __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		mouse_button_fixup(hdev, rdesc, *rsize, 20, 28, 22, 14, 8);
- 		break;
--	case USB_DEVICE_ID_ELECOM_M_XT3URBK:
-+	case USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB:
-+	case USB_DEVICE_ID_ELECOM_M_XT3URBK_018F:
- 	case USB_DEVICE_ID_ELECOM_M_XT3DRBK:
- 	case USB_DEVICE_ID_ELECOM_M_XT4DRBK:
- 		/*
-@@ -119,7 +120,8 @@ static const __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- static const struct hid_device_id elecom_devices[] = {
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 85db279baa72e..c4589075a5ed6 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -449,7 +449,8 @@
- #define USB_VENDOR_ID_ELECOM		0x056e
- #define USB_DEVICE_ID_ELECOM_BM084	0x0061
- #define USB_DEVICE_ID_ELECOM_M_XGL20DLBK	0x00e6
--#define USB_DEVICE_ID_ELECOM_M_XT3URBK	0x00fb
-+#define USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB	0x00fb
-+#define USB_DEVICE_ID_ELECOM_M_XT3URBK_018F	0x018f
- #define USB_DEVICE_ID_ELECOM_M_XT3DRBK	0x00fc
- #define USB_DEVICE_ID_ELECOM_M_XT4DRBK	0x00fd
- #define USB_DEVICE_ID_ELECOM_M_DT1URBK	0x00fe
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 22760ac50f2d9..c89a015686c07 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -410,7 +410,8 @@ static const struct hid_device_id hid_have_special_driver[] = {
- #if IS_ENABLED(CONFIG_HID_ELECOM)
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_BM084) },
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XGL20DLBK) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_00FB) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3URBK_018F) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT3DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_XT4DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 16a7ae9b29ae4..9592579db949d 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5378,7 +5378,7 @@ void __init init_sched_ext_class(void)
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
+ 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
+-		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
++		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
+ 
+ 		if (cpu_online(cpu))
+ 			cpu_rq(cpu)->scx.flags |= SCX_RQ_ONLINE;
 -- 
 2.51.0
 
