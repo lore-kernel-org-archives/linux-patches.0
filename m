@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A2D30595A;
-	Wed, 10 Dec 2025 07:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C467E305048;
+	Wed, 10 Dec 2025 07:36:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352192; cv=none; b=A0MHfMOul3o7UBmlf5K3mCOUrsuDuti642HqF314fjttfI3HHebV8W+THssfOCs7MPaLRXlm38tokdnkHkaffzik3a7dzrZhkQAUGsJo1B/tHHFA/2vKYxTmlCJWXHDDC4dQt9zn/NW/bCH28j6rao3JBLjBwbVWGybjg6CHjkQ=
+	t=1765352194; cv=none; b=CYxdXeff5llZ3zq/9OxKzPABhFHGiVt3yMNBOaTvRZ7O5EHdvQutLInFrWGbxPlEry3SKv/UsXu9WQ74DfJdrPbNdyfowI/rQZW+8/8CuFVClCDMJDlBIvds5GXYllETYPSmet2DORL+O7yILJhbO72s3Zaa85CcKBGhjoQz4+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352192; c=relaxed/simple;
-	bh=K3sbJlwwaBDUlsgEYoZIqnemFW8OmU/78Cj9/I90MmM=;
+	s=arc-20240116; t=1765352194; c=relaxed/simple;
+	bh=d9ws3uznEUlDx8onv/vZM9CIGbN/aKPRxh2ddYIUUFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kpxbQqiXAzVimWjhgg/VEBdsf+tLN8SJMc+NBZQxqBvBWK3jPbXRqiYlUpA8B3AP5piLKuouP7tW6A/rFpa6SZuEG8bVNrGLFAy1JMkpSW92SdOMzcNtbk6cDK7+xxfhxJGv8GiHA2fvry2rAa0UuX3EdHG4YaYSUq6p2DYD21Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qioePesG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CJP+daQqy1tyPJZ41hlgFBnJzU5apFS2CMofKw53rNhFP8caUVF58BFG60y2COrFtS0DwfJCSx5Um4VqzFRfyT68+EX7Kjwh0AsatgjWTXguF/uz17DKoiUp3iAgs4CPg/dIfrzh2C9txgA+XD38fj8A6M/hlVoMLuh74eN0xSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRUwNZ9Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qioePesG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38CFC4CEF1;
-	Wed, 10 Dec 2025 07:36:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRUwNZ9Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24EBC4CEF1;
+	Wed, 10 Dec 2025 07:36:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352192;
-	bh=K3sbJlwwaBDUlsgEYoZIqnemFW8OmU/78Cj9/I90MmM=;
+	s=korg; t=1765352194;
+	bh=d9ws3uznEUlDx8onv/vZM9CIGbN/aKPRxh2ddYIUUFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qioePesGuTsWxNYThoz5Cs3LKs7B+id8+/09cBM+ijpL9jcOK+NsaGUb+EFbXA1/U
-	 QGujgcyHoPSR0U+Pjf5VBsOgOqIqLRGySXOwMtR+frk86m5c3oKmBJdI+EkSXN50Rd
-	 5b8wSfFBbbq107t2f0TOdgIW+lFniNGug7fy6fGs=
+	b=WRUwNZ9YUqy4txELclsObzLuzvliV8EAL2hMPgjoYUcUAzPynnN1va0X5e90uyICS
+	 h+aW6jaXziYU+FM1j916UIj5rhTVAmof+VUEcKdDkdWfiwZagVYfEz6i8CnpwS+YqQ
+	 e3T2MApAy/iyrIQFswGYwNrPMH7+ooUnlBWKRsiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7811bb68a317954a0347@syzkaller.appspotmail.com,
+	syzbot+ab8008c24e84adee93ff@syzkaller.appspotmail.com,
 	stable <stable@kernel.org>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 6.18 25/29] comedi: multiq3: sanitize config options in multiq3_attach()
-Date: Wed, 10 Dec 2025 16:30:35 +0900
-Message-ID: <20251210072945.047419650@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Subject: [PATCH 6.18 26/29] comedi: check devices attached status in compat ioctls
+Date: Wed, 10 Dec 2025 16:30:36 +0900
+Message-ID: <20251210072945.076541811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -54,79 +54,144 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit f24c6e3a39fa355dabfb684c9ca82db579534e72 upstream.
+commit 0de7d9cd07a2671fa6089173bccc0b2afe6b93ee upstream.
 
-Syzbot identified an issue [1] in multiq3_attach() that induces a
-task timeout due to open() or COMEDI_DEVCONFIG ioctl operations,
-specifically, in the case of multiq3 driver.
+Syzbot identified an issue [1] that crashes kernel, seemingly due to
+unexistent callback dev->get_valid_routes(). By all means, this should
+not occur as said callback must always be set to
+get_zero_valid_routes() in __comedi_device_postconfig().
 
-This problem arose when syzkaller managed to craft weird configuration
-options used to specify the number of channels in encoder subdevice.
-If a particularly great number is passed to s->n_chan in
-multiq3_attach() via it->options[2], then multiple calls to
-multiq3_encoder_reset() at the end of driver-specific attach() method
-will be running for minutes, thus blocking tasks and affected devices
-as well.
+As the crash seems to appear exclusively in i386 kernels, at least,
+judging from [1] reports, the blame lies with compat versions
+of standard IOCTL handlers. Several of them are modified and
+do not use comedi_unlocked_ioctl(). While functionality of these
+ioctls essentially copy their original versions, they do not
+have required sanity check for device's attached status. This,
+in turn, leads to a possibility of calling select IOCTLs on a
+device that has not been properly setup, even via COMEDI_DEVCONFIG.
 
-While this issue is most likely not too dangerous for real-life
-devices, it still makes sense to sanitize configuration inputs. Enable
-a sensible limit on the number of encoder chips (4 chips max, each
-with 2 channels) to stop this behaviour from manifesting.
+Doing so on unconfigured devices means that several crucial steps
+are missed, for instance, specifying dev->get_valid_routes()
+callback.
 
-[1] Syzbot crash:
-INFO: task syz.2.19:6067 blocked for more than 143 seconds.
+Fix this somewhat crudely by ensuring device's attached status before
+performing any ioctls, improving logic consistency between modern
+and compat functions.
+
+[1] Syzbot report:
+BUG: kernel NULL pointer dereference, address: 0000000000000000
 ...
+CR2: ffffffffffffffd6 CR3: 000000006c717000 CR4: 0000000000352ef0
 Call Trace:
  <TASK>
- context_switch kernel/sched/core.c:5254 [inline]
- __schedule+0x17c4/0x4d60 kernel/sched/core.c:6862
- __schedule_loop kernel/sched/core.c:6944 [inline]
- schedule+0x165/0x360 kernel/sched/core.c:6959
- schedule_preempt_disabled+0x13/0x30 kernel/sched/core.c:7016
- __mutex_lock_common kernel/locking/mutex.c:676 [inline]
- __mutex_lock+0x7e6/0x1350 kernel/locking/mutex.c:760
- comedi_open+0xc0/0x590 drivers/comedi/comedi_fops.c:2868
- chrdev_open+0x4cc/0x5e0 fs/char_dev.c:414
- do_dentry_open+0x953/0x13f0 fs/open.c:965
- vfs_open+0x3b/0x340 fs/open.c:1097
+ get_valid_routes drivers/comedi/comedi_fops.c:1322 [inline]
+ parse_insn+0x78c/0x1970 drivers/comedi/comedi_fops.c:1401
+ do_insnlist_ioctl+0x272/0x700 drivers/comedi/comedi_fops.c:1594
+ compat_insnlist drivers/comedi/comedi_fops.c:3208 [inline]
+ comedi_compat_ioctl+0x810/0x990 drivers/comedi/comedi_fops.c:3273
+ __do_compat_sys_ioctl fs/ioctl.c:695 [inline]
+ __se_compat_sys_ioctl fs/ioctl.c:638 [inline]
+ __ia32_compat_sys_ioctl+0x242/0x370 fs/ioctl.c:638
+ do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
 ...
 
-Reported-by: syzbot+7811bb68a317954a0347@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7811bb68a317954a0347
-Fixes: 77e01cdbad51 ("Staging: comedi: add multiq3 driver")
+Reported-by: syzbot+ab8008c24e84adee93ff@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ab8008c24e84adee93ff
+Fixes: 3fbfd2223a27 ("comedi: get rid of compat_alloc_user_space() mess in COMEDI_CHANINFO compat")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://patch.msgid.link/20251023132205.395753-1-n.zhandarovich@fintech.ru
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Link: https://patch.msgid.link/20251023132234.395794-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/multiq3.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/comedi/comedi_fops.c |   42 ++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 36 insertions(+), 6 deletions(-)
 
---- a/drivers/comedi/drivers/multiq3.c
-+++ b/drivers/comedi/drivers/multiq3.c
-@@ -67,6 +67,11 @@
- #define MULTIQ3_TRSFRCNTR_OL		0x10	/* xfer CNTR to OL (x and y) */
- #define MULTIQ3_EFLAG_RESET		0x06	/* reset E bit of flag reg */
+--- a/drivers/comedi/comedi_fops.c
++++ b/drivers/comedi/comedi_fops.c
+@@ -3023,7 +3023,12 @@ static int compat_chaninfo(struct file *
+ 	chaninfo.rangelist = compat_ptr(chaninfo32.rangelist);
  
-+/*
-+ * Limit on the number of optional encoder channels
-+ */
-+#define MULTIQ3_MAX_ENC_CHANS		8
-+
- static void multiq3_set_ctrl(struct comedi_device *dev, unsigned int bits)
- {
- 	/*
-@@ -312,6 +317,10 @@ static int multiq3_attach(struct comedi_
- 	s->insn_read	= multiq3_encoder_insn_read;
- 	s->insn_config	= multiq3_encoder_insn_config;
+ 	mutex_lock(&dev->mutex);
+-	err = do_chaninfo_ioctl(dev, &chaninfo);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		err = -ENODEV;
++	} else {
++		err = do_chaninfo_ioctl(dev, &chaninfo);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	return err;
+ }
+@@ -3044,7 +3049,12 @@ static int compat_rangeinfo(struct file
+ 	rangeinfo.range_ptr = compat_ptr(rangeinfo32.range_ptr);
  
-+	/* sanity check for number of encoder channels */
-+	if (s->n_chan > MULTIQ3_MAX_ENC_CHANS)
-+		s->n_chan = MULTIQ3_MAX_ENC_CHANS;
-+
- 	for (i = 0; i < s->n_chan; i++)
- 		multiq3_encoder_reset(dev, i);
+ 	mutex_lock(&dev->mutex);
+-	err = do_rangeinfo_ioctl(dev, &rangeinfo);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		err = -ENODEV;
++	} else {
++		err = do_rangeinfo_ioctl(dev, &rangeinfo);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	return err;
+ }
+@@ -3120,7 +3130,12 @@ static int compat_cmd(struct file *file,
+ 		return rc;
  
+ 	mutex_lock(&dev->mutex);
+-	rc = do_cmd_ioctl(dev, &cmd, &copy, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_cmd_ioctl(dev, &cmd, &copy, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	if (copy) {
+ 		/* Special case: copy cmd back to user. */
+@@ -3145,7 +3160,12 @@ static int compat_cmdtest(struct file *f
+ 		return rc;
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_cmdtest_ioctl(dev, &cmd, &copy, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_cmdtest_ioctl(dev, &cmd, &copy, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	if (copy) {
+ 		err = put_compat_cmd(compat_ptr(arg), &cmd);
+@@ -3205,7 +3225,12 @@ static int compat_insnlist(struct file *
+ 	}
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_insnlist_ioctl(dev, insns, insnlist32.n_insns, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_insnlist_ioctl(dev, insns, insnlist32.n_insns, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	kfree(insns);
+ 	return rc;
+@@ -3224,7 +3249,12 @@ static int compat_insn(struct file *file
+ 		return rc;
+ 
+ 	mutex_lock(&dev->mutex);
+-	rc = do_insn_ioctl(dev, &insn, file);
++	if (!dev->attached) {
++		dev_dbg(dev->class_dev, "no driver attached\n");
++		rc = -ENODEV;
++	} else {
++		rc = do_insn_ioctl(dev, &insn, file);
++	}
+ 	mutex_unlock(&dev->mutex);
+ 	return rc;
+ }
 
 
