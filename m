@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B01762FF16C;
-	Wed, 10 Dec 2025 07:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6E735C613;
+	Wed, 10 Dec 2025 07:35:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352140; cv=none; b=nwHRXilbql8SYl8FCTUA3XWkczLxyfgMFo/24ylWFtcHYnCD02iuqyDcQ9Y/gQJArDMWm5gGJStUVsB9Aomw1rp9gJm2SVMWIozho66BjhyEQes/rZOeoxbRsqjb6JlbWqXLmtB+2cFTerT08fLj7YKfnDFGefAvPrwmrfqyTXY=
+	t=1765352143; cv=none; b=cvQxVjMw3vQ/Y+mOYdOD1gev4zCEuGprqRxhtTV+/AZzLEHpNYNOE5w3hVuAjjPYxM3fDlqwysnCfZWJmXrmekjALma72N2y957Q9tN0V08dypvQeqe6KKyTv/p+w9L1FC8hH1s43xWDXu0EhIY5u8niOu1AWQfBPD7OLs+XV0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352140; c=relaxed/simple;
-	bh=w3J+lvelb6Bkn/bv7QxQ+9r1agNo4xIcVeKghHjC2r4=;
+	s=arc-20240116; t=1765352143; c=relaxed/simple;
+	bh=UgZIIvUusjLGrYQSuFHVIQnhxwWukiEBZ0UF5ga6oAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERkq0ks4dl/nmlsWKKW87m/WVgia+XIj5tsaLhu8cb1B9eCOHX6c4Q8nmXOV2cPC3xuh7Wsb5I0dyYshyXaPWrzuD9VE7koyM3LEmDU/svoYJ5YLO10wn9iu3X/7D/yqxv20d/J1E/KRbtxjWYfvbyiRz98R+GQScNe4RXpyMLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gjs8m2jk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QHwFT3XzvMZ62FGwxAwU1W4y8/O/YXcCY1nUCVLUOR8HnmpjkLgzPV99EQBgEBh5xQCBGEc/SkIuBagbRqPG6DzSVqghm9ngi5QuS8g1v3wwr9W+0/ojG9Irlr7vIvmnyCiOekinXWOVbrKTVm4db49pSekDe9kjgQ/Wjykn0Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9ARcE9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gjs8m2jk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2822C4CEF1;
-	Wed, 10 Dec 2025 07:35:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9ARcE9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106E1C4CEF1;
+	Wed, 10 Dec 2025 07:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352140;
-	bh=w3J+lvelb6Bkn/bv7QxQ+9r1agNo4xIcVeKghHjC2r4=;
+	s=korg; t=1765352143;
+	bh=UgZIIvUusjLGrYQSuFHVIQnhxwWukiEBZ0UF5ga6oAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjs8m2jkI6eXLjESzTnOTR6iKZC740v2tDughtzIkmdBrzGtqQhrwSpms8MlOfwOQ
-	 1qrQaXGeXGNYTH21uvOBM/YeoOSDLRTSvbZ17faW+YfV/v31ac08qY11QEjqA2j2Od
-	 HdLBRQSZAU7JBgCDr1pTuXcnoIoG1D+/zWnhW7NM=
+	b=D9ARcE9LpH1h9ViVG/O/fQ4asYtaCAzUdb6/CbTzi1HODpDplg0oxptKxEng7fCh7
+	 4ToC1H5GnJQc5B7TO7VkWhzFNRR9+c03dcqHGGZ1JViIvy51aF4DCL7f75yyaLy7of
+	 mgteQZrBCxwPnN5i1E5DqbvYA4TB8KKvpOXemytM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Tianyang Zhang <zhangtianyang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 47/60] sched_ext: Use IRQ_WORK_INIT_HARD() to initialize rq->scx.kick_cpus_irq_work
-Date: Wed, 10 Dec 2025 16:30:17 +0900
-Message-ID: <20251210072949.035868693@linuxfoundation.org>
+Subject: [PATCH 6.17 48/60] LoongArch: Mask all interrupts during kexec/kdump
+Date: Wed, 10 Dec 2025 16:30:18 +0900
+Message-ID: <20251210072949.060774742@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -51,36 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 36c6f3c03d104faf1aa90922f2310549c175420f ]
+[ Upstream commit 863a320dc6fd7c855f47da4bb82a8de2d9102ea2 ]
 
-For PREEMPT_RT kernels, the kick_cpus_irq_workfn() be invoked in
-the per-cpu irq_work/* task context and there is no rcu-read critical
-section to protect. this commit therefore use IRQ_WORK_INIT_HARD() to
-initialize the per-cpu rq->scx.kick_cpus_irq_work in the
-init_sched_ext_class().
+If the default state of the interrupt controllers in the first kernel
+don't mask any interrupts, it may cause the second kernel to potentially
+receive interrupts (which were previously allocated by the first kernel)
+immediately after a CPU becomes online during its boot process. These
+interrupts cannot be properly routed, leading to bad IRQ issues.
 
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+This patch calls machine_kexec_mask_interrupts() to mask all interrupts
+during the kexec/kdump process.
+
+Signed-off-by: Tianyang Zhang <zhangtianyang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/loongarch/kernel/machine_kexec.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 16a7ae9b29ae4..9592579db949d 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5378,7 +5378,7 @@ void __init init_sched_ext_class(void)
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
- 		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
--		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
-+		rq->scx.kick_cpus_irq_work = IRQ_WORK_INIT_HARD(kick_cpus_irq_workfn);
+diff --git a/arch/loongarch/kernel/machine_kexec.c b/arch/loongarch/kernel/machine_kexec.c
+index f9381800e291c..8ef4e4595d61a 100644
+--- a/arch/loongarch/kernel/machine_kexec.c
++++ b/arch/loongarch/kernel/machine_kexec.c
+@@ -249,6 +249,7 @@ void machine_crash_shutdown(struct pt_regs *regs)
+ #ifdef CONFIG_SMP
+ 	crash_smp_send_stop();
+ #endif
++	machine_kexec_mask_interrupts();
+ 	cpumask_set_cpu(crashing_cpu, &cpus_in_crash);
  
- 		if (cpu_online(cpu))
- 			cpu_rq(cpu)->scx.flags |= SCX_RQ_ONLINE;
+ 	pr_info("Starting crashdump kernel...\n");
+@@ -286,6 +287,7 @@ void machine_kexec(struct kimage *image)
+ 
+ 	/* We do not want to be bothered. */
+ 	local_irq_disable();
++	machine_kexec_mask_interrupts();
+ 
+ 	pr_notice("EFI boot flag 0x%lx\n", efi_boot);
+ 	pr_notice("Command line at 0x%lx\n", cmdline_ptr);
 -- 
 2.51.0
 
