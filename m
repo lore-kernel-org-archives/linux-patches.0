@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF7D302CBD;
-	Wed, 10 Dec 2025 07:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BEC62FF16C;
+	Wed, 10 Dec 2025 07:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352161; cv=none; b=uYnqcmK7pN3JRsIoPYjqjRpt18Z6lx2ysFgNL6FK7Ax0Z1ULhIwThSEVdKDWhycc2TnmgJkSrfpODi2sIjmQnHxZ1+zdYFpiDtVgBTE5F4jJW7rLOEKhJOitP0zmgviowzf3DfVXV7IOkX3WfNUtdvfx1oLGjHkNE74/exhQaAo=
+	t=1765352163; cv=none; b=pycbLux4k7RAiOTaHG6FvyJHMIgJvNWTjCrbSy7WGhOuku1xJ7WG/uQhNyTo+H275/4ba6Q2R7adEeScdRrrKbLwiK0OSpiZXG1buaVN1TlpdLQOcwxzPHyAoWEmZdiyyu0vRNE81tf0IrrREGliBohrRSACunaTuc02u7dBJgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352161; c=relaxed/simple;
-	bh=Eysv9DBpgRoWd6vmegNNgYWJ5gRuvCGMrWkVB1u5DKY=;
+	s=arc-20240116; t=1765352163; c=relaxed/simple;
+	bh=ekPyhSUzDrvz4KRBkNTx+0j2+2Im1+eNtSKUM/CTiwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SdqsyhJmfdZk8wfMcD7b0npejmFtDAZ4dqmrRyxI50tmDtlw6ThkU3a0RwDrZ7X98E7L7FK1Vbb5V+O8b32TbsD5hh6UPEJ09uGX6hL4NdHSO8bChWaUhwmnZssXf/UFl+0damBb8RQ2vxp4anml39uppeiUVZVo9iV5WwKTlBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc/Jmprz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRMwq5RsxGTQ2Ay9caRzyoZn2+F+0W3Yg7WEnEL7C/fOBmmFEeMmHkHNq3O1zq2zOXcDIphhlIVEQcmre5WPOQhHSt8K1gYWwWLXH6DRGLGttx8bZWcIPA9FWpiGPHL0FjUvHtdPZV3pcNPGKwAy/dI7BULBAGIp9Rn8a9F5rxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zjp0QkzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc/Jmprz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EEAC4CEF1;
-	Wed, 10 Dec 2025 07:36:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zjp0QkzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42294C4CEF1;
+	Wed, 10 Dec 2025 07:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352161;
-	bh=Eysv9DBpgRoWd6vmegNNgYWJ5gRuvCGMrWkVB1u5DKY=;
+	s=korg; t=1765352163;
+	bh=ekPyhSUzDrvz4KRBkNTx+0j2+2Im1+eNtSKUM/CTiwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qc/JmprzxOrdyRpw8LiFl3rYzipTQr90rhJq1SFvJ1GLaayVNxOF5c8DjRbrsS3wP
-	 tkVKXFLIe/AEzb39W65mKkBfAr+iJgGk4wmw/DwJM7J9EzPg8tqd0hDvbqIDTQkiFW
-	 l6UPchCh/srEkBbR7uFC+lhVuAM32wqKN+OIkjd8=
+	b=zjp0QkzQssOveq89Qgayw8LlouZt/oVJQCIP7eLsgFi2g/NSv885gGQ2L/OmlB4T8
+	 dZ2H+W342vUby7aFSHlQOM35NbhhXfuvYLdGHlPFaPoVVwqIgCUZzdxi1cZETRHSC6
+	 QOjzvsCMAKFkfCctqJklfuJwDKKi0DZG0SRcf9Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Freihofer <adrian.freihofer@siemens.com>,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Waiman Long <longman@redhat.com>
-Subject: [PATCH 6.18 05/29] locking/spinlock/debug: Fix data-race in do_raw_write_lock
-Date: Wed, 10 Dec 2025 16:30:15 +0900
-Message-ID: <20251210072944.515624386@linuxfoundation.org>
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 06/29] crypto: zstd - fix double-free in per-CPU stream cleanup
+Date: Wed, 10 Dec 2025 16:30:16 +0900
+Message-ID: <20251210072944.542909790@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -54,65 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
 
-commit c14ecb555c3ee80eeb030a4e46d00e679537f03a upstream.
+commit 48bc9da3c97c15f1ea24934bcb3b736acd30163d upstream.
 
-KCSAN reports:
+The crypto/zstd module has a double-free bug that occurs when multiple
+tfms are allocated and freed.
 
-BUG: KCSAN: data-race in do_raw_write_lock / do_raw_write_lock
+The issue happens because zstd_streams (per-CPU contexts) are freed in
+zstd_exit() during every tfm destruction, rather than being managed at
+the module level.  When multiple tfms exist, each tfm exit attempts to
+free the same shared per-CPU streams, resulting in a double-free.
 
-write (marked) to 0xffff800009cf504c of 4 bytes by task 1102 on cpu 1:
- do_raw_write_lock+0x120/0x204
- _raw_write_lock_irq
- do_exit
- call_usermodehelper_exec_async
- ret_from_fork
+This leads to a stack trace similar to:
 
-read to 0xffff800009cf504c of 4 bytes by task 1103 on cpu 0:
- do_raw_write_lock+0x88/0x204
- _raw_write_lock_irq
- do_exit
- call_usermodehelper_exec_async
- ret_from_fork
+  BUG: Bad page state in process kworker/u16:1  pfn:106fd93
+  page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x106fd93
+  flags: 0x17ffffc0000000(node=0|zone=2|lastcpupid=0x1fffff)
+  page_type: 0xffffffff()
+  raw: 0017ffffc0000000 dead000000000100 dead000000000122 0000000000000000
+  raw: 0000000000000000 0000000000000000 00000000ffffffff 0000000000000000
+  page dumped because: nonzero entire_mapcount
+  Modules linked in: ...
+  CPU: 3 UID: 0 PID: 2506 Comm: kworker/u16:1 Kdump: loaded Tainted: G    B
+  Hardware name: ...
+  Workqueue: btrfs-delalloc btrfs_work_helper
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x5d/0x80
+   bad_page+0x71/0xd0
+   free_unref_page_prepare+0x24e/0x490
+   free_unref_page+0x60/0x170
+   crypto_acomp_free_streams+0x5d/0xc0
+   crypto_acomp_exit_tfm+0x23/0x50
+   crypto_destroy_tfm+0x60/0xc0
+   ...
 
-value changed: 0xffffffff -> 0x00000001
+Change the lifecycle management of zstd_streams to free the streams only
+once during module cleanup.
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 1103 Comm: kworker/u4:1 6.1.111
-
-Commit 1a365e822372 ("locking/spinlock/debug: Fix various data races") has
-adressed most of these races, but seems to be not consistent/not complete.
-
->From do_raw_write_lock() only debug_write_lock_after() part has been
-converted to WRITE_ONCE(), but not debug_write_lock_before() part.
-Do it now.
-
-Fixes: 1a365e822372 ("locking/spinlock/debug: Fix various data races")
-Reported-by: Adrian Freihofer <adrian.freihofer@siemens.com>
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: Waiman Long <longman@redhat.com>
+Fixes: f5ad93ffb541 ("crypto: zstd - convert to acomp")
 Cc: stable@vger.kernel.org
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Reviewed-by: Suman Kumar Chakraborty <suman.kumar.chakraborty@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/spinlock_debug.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ crypto/zstd.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
---- a/kernel/locking/spinlock_debug.c
-+++ b/kernel/locking/spinlock_debug.c
-@@ -184,8 +184,8 @@ void do_raw_read_unlock(rwlock_t *lock)
- static inline void debug_write_lock_before(rwlock_t *lock)
- {
- 	RWLOCK_BUG_ON(lock->magic != RWLOCK_MAGIC, lock, "bad magic");
--	RWLOCK_BUG_ON(lock->owner == current, lock, "recursion");
--	RWLOCK_BUG_ON(lock->owner_cpu == raw_smp_processor_id(),
-+	RWLOCK_BUG_ON(READ_ONCE(lock->owner) == current, lock, "recursion");
-+	RWLOCK_BUG_ON(READ_ONCE(lock->owner_cpu) == raw_smp_processor_id(),
- 							lock, "cpu recursion");
+--- a/crypto/zstd.c
++++ b/crypto/zstd.c
+@@ -75,11 +75,6 @@ static int zstd_init(struct crypto_acomp
+ 	return ret;
  }
  
+-static void zstd_exit(struct crypto_acomp *acomp_tfm)
+-{
+-	crypto_acomp_free_streams(&zstd_streams);
+-}
+-
+ static int zstd_compress_one(struct acomp_req *req, struct zstd_ctx *ctx,
+ 			     const void *src, void *dst, unsigned int *dlen)
+ {
+@@ -297,7 +292,6 @@ static struct acomp_alg zstd_acomp = {
+ 		.cra_module = THIS_MODULE,
+ 	},
+ 	.init = zstd_init,
+-	.exit = zstd_exit,
+ 	.compress = zstd_compress,
+ 	.decompress = zstd_decompress,
+ };
+@@ -310,6 +304,7 @@ static int __init zstd_mod_init(void)
+ static void __exit zstd_mod_fini(void)
+ {
+ 	crypto_unregister_acomp(&zstd_acomp);
++	crypto_acomp_free_streams(&zstd_streams);
+ }
+ 
+ module_init(zstd_mod_init);
 
 
