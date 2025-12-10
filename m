@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C69330595A;
-	Wed, 10 Dec 2025 07:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA2F303CB0;
+	Wed, 10 Dec 2025 07:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352183; cv=none; b=EtHTS7o3tzFOzQ/c7L/uhYoi52XIH6DVt7hdd+qLF5smq70fn/Y1YsSDHgfhnXw2L6r2pTIbU2HzGUYRpngTD0u47JhlsvzD3rr/bnQTHzkywYnOiFpoSDvM55hJWVLkXyj2MXlZaAETUhjtMHt6cpSH3BiP5Jst9UDIgQSdu/o=
+	t=1765352186; cv=none; b=W8dCoahG5c8OdPXeocjbTo9ujdD8egHes4srQ+3np9i7yNenXNqfqN21QUxrmOm8E24rceXQvcjL76UEBOiGz1yntfATCg03gJ5uWNzj4lbjiJI+tjLyKKngACTlRJITttLnLLNFeavBu3JKTcBAxGCiFjIdBLofXo7rkfk4/Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352183; c=relaxed/simple;
-	bh=gbp4msZhDFYoa5xb9shzt+xKI1E6A5pbodL8urVCl+Y=;
+	s=arc-20240116; t=1765352186; c=relaxed/simple;
+	bh=Ezr+KbQLWHtJ5xXsOK6AQvaxBBCNc1FXQ2coqRZIPRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTtpELFfQuHhofnXMVggHL+Tig+y9fki7tNX+Nn+X9ARaLurFcEQXKHMP5bnao+y71uXW9m4sLV1JFyFBSOfHd9kjceYC8W0+CFalnxal+dsfga4tzj1K84k1BK75koRtOl/lF5dlXXng/AbatQ56GFn16bAamHf+8Nqtaqk66I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bkswdz9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dufLCZXyoHG3BswT84wtyZGPGGzmwCxGU4JKMGQ/l3wqKS/eqr1sjF+xbN6S+EtctSDeezzb7SKo2i4lbK66ntA8iLWDeAFGSOVp36hERMW7cUUbjfspOgIqMdMOgeWAgMRK+0Gz5mUX/xD65x3s/m3GZ9pS+vaQgvkCalKVXN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=peibbrts; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bkswdz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0666C116B1;
-	Wed, 10 Dec 2025 07:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="peibbrts"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B746C4CEF1;
+	Wed, 10 Dec 2025 07:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352182;
-	bh=gbp4msZhDFYoa5xb9shzt+xKI1E6A5pbodL8urVCl+Y=;
+	s=korg; t=1765352186;
+	bh=Ezr+KbQLWHtJ5xXsOK6AQvaxBBCNc1FXQ2coqRZIPRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bkswdz9g9kmofv8vhsyk3xxfWEvNsux3gm2pDEznW8DhSU7t+ShutUvhSS4Ln6mg
-	 IDhuPbezv5AAt8hW/xNRdbKipYBOOuinPSHTHsLqECNQoQdzpo8VllOAVGf2mBL9y8
-	 cnAGpzEqSNmMiGGHCaEbgDaMPWcsvqB/ieiQnEV0=
+	b=peibbrts+5UDBMvrEtBPZU+B23klAbzZi9b1y0zqQeIWflAF7mudzYEsTBRJEWy07
+	 BKUOlSoBfCCFbGq2smPFBu1AlEwJBqRNGwf0v+KKSebI0b0c7MM4KKmlCFdydDPze6
+	 Nbk4TR93fkuiSVPWGBtAQZxJprql1DSVn32AHyhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zenm Chen <zenmchen@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.18 22/29] wifi: rtw88: Add USB ID 2001:3329 for D-Link AC13U rev. A1
-Date: Wed, 10 Dec 2025 16:30:32 +0900
-Message-ID: <20251210072944.965460143@linuxfoundation.org>
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.18 23/29] iio: adc: ad4080: fix chip identification
+Date: Wed, 10 Dec 2025 16:30:33 +0900
+Message-ID: <20251210072944.990167913@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -44,41 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zenm Chen <zenmchen@gmail.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit b377dcd9a286a6f81922ae442cd1c743bc4a2b35 upstream.
+commit b66cddc8be7278fd14650ff9182f3794397f8b31 upstream.
 
-Add USB ID 2001:3329 for D-Link AC13U rev. A1 which is a RTL8812CU-based
-Wi-Fi adapter.
+Fix AD4080 chip identification by using the correct 16-bit product ID
+(0x0050) instead of GENMASK(2, 0). Update the chip reading logic to
+use regmap_bulk_read to read both PRODUCT_ID_L and PRODUCT_ID_H
+registers and combine them into a 16-bit value.
 
-Compile tested only.
+The original implementation was incorrectly reading only 3 bits,
+which would not correctly identify the AD4080 chip.
 
-Cc: stable@vger.kernel.org # 6.6.x
-Signed-off-by: Zenm Chen <zenmchen@gmail.com>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20250929035719.6172-2-zenmchen@gmail.com
+Fixes: 6b31ba1811b6 ("iio: adc: ad4080: add driver support")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Nuno Sá <nuno.sa@analog.com>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8822cu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/adc/ad4080.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/rtw8822cu.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8822cu.c
-@@ -21,6 +21,8 @@ static const struct usb_device_id rtw_88
- 	  .driver_info = (kernel_ulong_t)&(rtw8822c_hw_spec) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x13b1, 0x0043, 0xff, 0xff, 0xff),
- 	  .driver_info = (kernel_ulong_t)&(rtw8822c_hw_spec) }, /* Alpha - Alpha */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x2001, 0x3329, 0xff, 0xff, 0xff),
-+	  .driver_info = (kernel_ulong_t)&(rtw8822c_hw_spec) }, /* D-Link AC13U rev. A1 */
- 	{},
- };
- MODULE_DEVICE_TABLE(usb, rtw_8822cu_id_table);
+--- a/drivers/iio/adc/ad4080.c
++++ b/drivers/iio/adc/ad4080.c
+@@ -125,7 +125,7 @@
+ 
+ /* Miscellaneous Definitions */
+ #define AD4080_SPI_READ						BIT(7)
+-#define AD4080_CHIP_ID						GENMASK(2, 0)
++#define AD4080_CHIP_ID						0x0050
+ 
+ #define AD4080_LVDS_CNV_CLK_CNT_MAX				7
+ 
+@@ -445,7 +445,8 @@ static int ad4080_setup(struct iio_dev *
+ {
+ 	struct ad4080_state *st = iio_priv(indio_dev);
+ 	struct device *dev = regmap_get_device(st->regmap);
+-	unsigned int id;
++	__le16 id_le;
++	u16 id;
+ 	int ret;
+ 
+ 	ret = regmap_write(st->regmap, AD4080_REG_INTERFACE_CONFIG_A,
+@@ -458,10 +459,12 @@ static int ad4080_setup(struct iio_dev *
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = regmap_read(st->regmap, AD4080_REG_CHIP_TYPE, &id);
++	ret = regmap_bulk_read(st->regmap, AD4080_REG_PRODUCT_ID_L, &id_le,
++			       sizeof(id_le));
+ 	if (ret)
+ 		return ret;
+ 
++	id = le16_to_cpu(id_le);
+ 	if (id != AD4080_CHIP_ID)
+ 		dev_info(dev, "Unrecognized CHIP_ID 0x%X\n", id);
+ 
 
 
