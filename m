@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D239919CD06;
-	Wed, 10 Dec 2025 07:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A975031355E;
+	Wed, 10 Dec 2025 07:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352205; cv=none; b=iuxIf++EW6S/uDBTqA9IMxXTURQ5cfzAfBsGBcVNzDcBpg53fAw4YWaEDAHOwlb+hZHVO+UsW3RR7XCzkkh3srLDhvr+e2/mDT/vIF3GG7tEfHYoql3hVW7bzx6UDjfSOS9apy2/tOcofujM2hKup3wyjno+sFcDkjTSat9Nfpo=
+	t=1765352207; cv=none; b=pTVCgCsr6jyKkIS8u7rPi5ZsVXMzk1K4q86r835TTy+mOlCW7MTMFfh78pUj+Njpzqaxfd7lPTjAe0dggvpvUhMZMECB4cuUyOUxWp58oNahsKOz4yAreCBSNRyE9b6zhb5FA5qJJD401weKaPD7ncubkstDI36pCHRu8AZUDOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352205; c=relaxed/simple;
-	bh=xxeRq2QW6ieDwPHugxiLGOOWLDzSTfGEgioc9Ez3ZFs=;
+	s=arc-20240116; t=1765352207; c=relaxed/simple;
+	bh=9o4wvrSnwhN1uuUjKMTeQcKG6uhBiPJaGd4sPpUy7J0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F9StfJYIk5ELSebyZ9TPXs7lOz+UOB5AjbylNP2pd48S4OcOcoTFsbPAbJ3y9ECu3CHb+B+Q+CdxIb7jAk8DZTsJTfeWhEQR7x2zSf3kKRKizVDxzRWws4olEDmpPMizAHq8vn8rseSY0tzrx8hfKMGgjw3RYZjnPdVRYxwZzDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WALMcHK9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tfm72vvD9ftpPfFkzNpjFIFdbqwjAIIyjTrRMdgninTjFp/1D+bwfCd80K2emVNd2et87mXAm2WZp/Go0F+LDVJ0yMxT+NxQ6BW4dDXsxujm/DcmDuJ4aop/A0WTvme68T26jGUdnAMLl54w/k/1yHjigafD6PN0LSVCKm197L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u0LVRLIn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WALMcHK9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B76D1C116B1;
-	Wed, 10 Dec 2025 07:36:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u0LVRLIn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115E9C4CEF1;
+	Wed, 10 Dec 2025 07:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352205;
-	bh=xxeRq2QW6ieDwPHugxiLGOOWLDzSTfGEgioc9Ez3ZFs=;
+	s=korg; t=1765352207;
+	bh=9o4wvrSnwhN1uuUjKMTeQcKG6uhBiPJaGd4sPpUy7J0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WALMcHK94keuzQF3W/oot5HbQU7JBzZTe0/OVeRGhtspD5GfCPCzJg0l/Lgma4r5C
-	 aoPUmnUnnK1cwOzNCsfWEYkt7w98mtsX0w/CJSqHnvlw/T161EGbnusJD8i4dQWMXT
-	 /h9JK9+0BUe7+pi//fqx0ylyMpc5iMXmWFknE1xM=
+	b=u0LVRLInk5GgAS00AepKaot4tOiaa5WCdpibhEPC1XgD2RnM7KP9hSa6XlFqAAkbn
+	 Mh5P+qYiwZLz/r0XfgYdaHnIYiTCfnjClLB8tJ3QM0cPaYFmI5c97ChsbUEKIxtqn3
+	 ThlgmmCspiuxjPmmCS3tfxraTO9Lcdg5ujvzqpXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navaneeth K <knavaneeth786@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 29/29] staging: rtl8723bs: fix out-of-bounds read in OnBeacon ESR IE parsing
-Date: Wed, 10 Dec 2025 16:30:39 +0900
-Message-ID: <20251210072945.155447575@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.18 11/29] USB: serial: option: add Foxconn T99W760
+Date: Wed, 10 Dec 2025 16:30:21 +0900
+Message-ID: <20251210072944.676768673@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -50,45 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Navaneeth K <knavaneeth786@gmail.com>
+From: Slark Xiao <slark_xiao@163.com>
 
-commit 502ddcc405b69fa92e0add6c1714d654504f6fd7 upstream.
+commit 7970b4969c4c99bcdaf105f9f39c6d2021f6d244 upstream.
 
-The Extended Supported Rates (ESR) IE handling in OnBeacon accessed
-*(p + 1 + ielen) and *(p + 2 + ielen) without verifying that these
-offsets lie within the received frame buffer. A malformed beacon with
-an ESR IE positioned at the end of the buffer could cause an
-out-of-bounds read, potentially triggering a kernel panic.
+T99W760 is designed based on Qualcomm SDX35 (5G redcap) chip. There are
+three serial ports to be enumerated: Modem, NMEA and Diag.
 
-Add a boundary check to ensure that the ESR IE body and the subsequent
-bytes are within the limits of the frame before attempting to access
-them.
+test evidence as below:
+T:  Bus=03 Lev=01 Prnt=01 Port=03 Cnt=01 Dev#=  4 Spd=5000  MxCh= 0
+D:  Ver= 3.20 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e123 Rev=05.15
+S:  Manufacturer=QCOM
+S:  Product=SDXBAAGHA-IDP _SN:39A8D3E4
+S:  SerialNumber=39a8d3e4
+C:  #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=896mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=82(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=01(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=85(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS=1024 Ivl=0ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS=1024 Ivl=0ms
 
-This prevents OOB reads caused by malformed beacon frames.
+0&1: MBIM, 2:Modem, 3:GNSS(non-serial port), 4: NMEA, 5:Diag
 
-Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
-Cc: stable <stable@kernel.org>
+Signed-off-by: Slark Xiao <slark_xiao@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -588,9 +588,11 @@ unsigned int OnBeacon(struct adapter *pa
- 
- 	p = rtw_get_ie(pframe + sizeof(struct ieee80211_hdr_3addr) + _BEACON_IE_OFFSET_, WLAN_EID_EXT_SUPP_RATES, &ielen, precv_frame->u.hdr.len - sizeof(struct ieee80211_hdr_3addr) - _BEACON_IE_OFFSET_);
- 	if (p && ielen > 0) {
--		if ((*(p + 1 + ielen) == 0x2D) && (*(p + 2 + ielen) != 0x2D))
--			/* Invalid value 0x2D is detected in Extended Supported Rates (ESR) IE. Try to fix the IE length to avoid failed Beacon parsing. */
--			*(p + 1) = ielen - 1;
-+		if (p + 2 + ielen < pframe + len) {
-+			if ((*(p + 1 + ielen) == 0x2D) && (*(p + 2 + ielen) != 0x2D))
-+				/* Invalid value 0x2D is detected in Extended Supported Rates (ESR) IE. Try to fix the IE length to avoid failed Beacon parsing. */
-+				*(p + 1) = ielen - 1;
-+		}
- 	}
- 
- 	if (pmlmeext->sitesurvey_res.state == SCAN_PROCESS) {
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -2376,6 +2376,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe0f0, 0xff),			/* Foxconn T99W373 MBIM */
+ 	  .driver_info = RSVD(3) },
++	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe123, 0xff),			/* Foxconn T99W760 MBIM */
++	  .driver_info = RSVD(3) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe145, 0xff),			/* Foxconn T99W651 RNDIS */
+ 	  .driver_info = RSVD(5) | RSVD(6) },
+ 	{ USB_DEVICE_INTERFACE_CLASS(0x0489, 0xe15f, 0xff),                     /* Foxconn T99W709 */
 
 
