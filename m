@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9693019C7;
-	Wed, 10 Dec 2025 07:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C05F5C613;
+	Wed, 10 Dec 2025 07:35:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352118; cv=none; b=Cnbp3aWputiOXWQCtMgLS0oETh2L2jWTV5bXZYhk4BgUjsTUltts7r0Y8s2wuWzbKmDOZwA+a853MVVX+B+kr1dPoZJ3DnIkvx+9ksMnZRab9EdFoj0uj/KlT7V3fyeRYZGUwtMvVD60szUX+8axg5evn6KNxVLrOoSM940HHoM=
+	t=1765352120; cv=none; b=gOLHLKiEA80vShWRrTvDKtHFMhxzsffqPAHT/LI4cYDm4YDU1HPAKUvF43k+8pzjZE4OrCS8XZDbYMUn5uMiLLh/xu1tgLGEDGDlZFc/oJIxsaF54JhEfjJKqDISy5tsgsJmenpJxhKi83CY0zAFYTfOO/nWyP4yCdupvhVrLww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352118; c=relaxed/simple;
-	bh=DuOGCUl8pB4dVkk/oOWnaesGVzscgVGcPoZPBQBtQVw=;
+	s=arc-20240116; t=1765352120; c=relaxed/simple;
+	bh=PZxr3vIxMybNEYdA5Fp3jUXh4Nxjz6nSlJVQyqDLeM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiuqgCshh/cTh2tMrOpewDsrLbb0pKULeVV6DA05Nt4aNxHjkbIeR7KppQUC5M7jwRSGgmXsmLjlHwpvykecUVSe5ZbHKjhsJ8JcbhtAzZQcT1qWEoKXSjxhxLelGKeixcFcErG4RGuBOKW4P67Q3VQLadobiU3weQ7Mm6+2Usk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vVYtd7kJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OB2uNM3y+7gdOW/72BrmpEvthFTBF68Bfqzu97y4x+1fJaT0pbYJFSIhQZioFehssC760JNY0LTJxnzhBMh50a8Gty3tDE1zsyQLGh5niCNfqLFQfbS3QSzA2a5ul73+u/1yimiFozZm8yqCv1HqVhwF987Ami4pRYkoqZeqGy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKBSVKg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vVYtd7kJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B7CC4CEF1;
-	Wed, 10 Dec 2025 07:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKBSVKg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF8BFC4CEF1;
+	Wed, 10 Dec 2025 07:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352117;
-	bh=DuOGCUl8pB4dVkk/oOWnaesGVzscgVGcPoZPBQBtQVw=;
+	s=korg; t=1765352120;
+	bh=PZxr3vIxMybNEYdA5Fp3jUXh4Nxjz6nSlJVQyqDLeM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVYtd7kJHDciiyoRGKPfEssoWNqw7YJYzFyeoyrf2qfwBBtqLCRsKAsYh4HQAV3q5
-	 Bq9cLldFKAPkWcHVrzRxJk5wwfItFnTUXplsS0XH4K5vkAyGT69iLDtB4rcNLXE6wf
-	 8sjfnBJ03uMhdkRFVM8eE3G21BSkFKaxR7bGCObk=
+	b=QKBSVKg1fo7M3NaqAwwUeWoa3nXWOIjd63m5a8tATXwLRqxeWmXH/r1mWNw+FaNhA
+	 8Kq1OazmRruETB7jkHHt8z1boIH7cZp2AgZmIaVDMVRaq+UeknkzoU8T7IVytFTkr/
+	 At2RFOA0y2X2TUOThSl8RVTaKQ7q4B0atyWWbR8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ab8008c24e84adee93ff@syzkaller.appspotmail.com,
-	stable <stable@kernel.org>,
-	Ian Abbott <abbotti@mev.co.uk>,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Subject: [PATCH 6.17 57/60] comedi: check devices attached status in compat ioctls
-Date: Wed, 10 Dec 2025 16:30:27 +0900
-Message-ID: <20251210072949.285803040@linuxfoundation.org>
+	Navaneeth K <knavaneeth786@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.17 58/60] staging: rtl8723bs: fix out-of-bounds read in rtw_get_ie() parser
+Date: Wed, 10 Dec 2025 16:30:28 +0900
+Message-ID: <20251210072949.310348149@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -52,146 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Navaneeth K <knavaneeth786@gmail.com>
 
-commit 0de7d9cd07a2671fa6089173bccc0b2afe6b93ee upstream.
+commit 154828bf9559b9c8421fc2f0d7f7f76b3683aaed upstream.
 
-Syzbot identified an issue [1] that crashes kernel, seemingly due to
-unexistent callback dev->get_valid_routes(). By all means, this should
-not occur as said callback must always be set to
-get_zero_valid_routes() in __comedi_device_postconfig().
+The Information Element (IE) parser rtw_get_ie() trusted the length
+byte of each IE without validating that the IE body (len bytes after
+the 2-byte header) fits inside the remaining frame buffer. A malformed
+frame can advertise an IE length larger than the available data, causing
+the parser to increment its pointer beyond the buffer end. This results
+in out-of-bounds reads or, depending on the pattern, an infinite loop.
 
-As the crash seems to appear exclusively in i386 kernels, at least,
-judging from [1] reports, the blame lies with compat versions
-of standard IOCTL handlers. Several of them are modified and
-do not use comedi_unlocked_ioctl(). While functionality of these
-ioctls essentially copy their original versions, they do not
-have required sanity check for device's attached status. This,
-in turn, leads to a possibility of calling select IOCTLs on a
-device that has not been properly setup, even via COMEDI_DEVCONFIG.
+Fix by validating that (offset + 2 + len) does not exceed the limit
+before accepting the IE or advancing to the next element.
 
-Doing so on unconfigured devices means that several crucial steps
-are missed, for instance, specifying dev->get_valid_routes()
-callback.
+This prevents OOB reads and ensures the parser terminates safely on
+malformed frames.
 
-Fix this somewhat crudely by ensuring device's attached status before
-performing any ioctls, improving logic consistency between modern
-and compat functions.
-
-[1] Syzbot report:
-BUG: kernel NULL pointer dereference, address: 0000000000000000
-...
-CR2: ffffffffffffffd6 CR3: 000000006c717000 CR4: 0000000000352ef0
-Call Trace:
- <TASK>
- get_valid_routes drivers/comedi/comedi_fops.c:1322 [inline]
- parse_insn+0x78c/0x1970 drivers/comedi/comedi_fops.c:1401
- do_insnlist_ioctl+0x272/0x700 drivers/comedi/comedi_fops.c:1594
- compat_insnlist drivers/comedi/comedi_fops.c:3208 [inline]
- comedi_compat_ioctl+0x810/0x990 drivers/comedi/comedi_fops.c:3273
- __do_compat_sys_ioctl fs/ioctl.c:695 [inline]
- __se_compat_sys_ioctl fs/ioctl.c:638 [inline]
- __ia32_compat_sys_ioctl+0x242/0x370 fs/ioctl.c:638
- do_syscall_32_irqs_on arch/x86/entry/syscall_32.c:83 [inline]
-...
-
-Reported-by: syzbot+ab8008c24e84adee93ff@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ab8008c24e84adee93ff
-Fixes: 3fbfd2223a27 ("comedi: get rid of compat_alloc_user_space() mess in COMEDI_CHANINFO compat")
+Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
 Cc: stable <stable@kernel.org>
-Reviewed-by: Ian Abbott <abbotti@mev.co.uk>
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://patch.msgid.link/20251023132234.395794-1-n.zhandarovich@fintech.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/comedi_fops.c |   42 ++++++++++++++++++++++++++++++++++++------
- 1 file changed, 36 insertions(+), 6 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/comedi/comedi_fops.c
-+++ b/drivers/comedi/comedi_fops.c
-@@ -3023,7 +3023,12 @@ static int compat_chaninfo(struct file *
- 	chaninfo.rangelist = compat_ptr(chaninfo32.rangelist);
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -140,22 +140,24 @@ u8 *rtw_get_ie(u8 *pbuf, signed int inde
+ 	signed int tmp, i;
+ 	u8 *p;
  
- 	mutex_lock(&dev->mutex);
--	err = do_chaninfo_ioctl(dev, &chaninfo);
-+	if (!dev->attached) {
-+		dev_dbg(dev->class_dev, "no driver attached\n");
-+		err = -ENODEV;
-+	} else {
-+		err = do_chaninfo_ioctl(dev, &chaninfo);
-+	}
- 	mutex_unlock(&dev->mutex);
- 	return err;
- }
-@@ -3044,7 +3049,12 @@ static int compat_rangeinfo(struct file
- 	rangeinfo.range_ptr = compat_ptr(rangeinfo32.range_ptr);
+-	if (limit < 1)
++	if (limit < 2)
+ 		return NULL;
  
- 	mutex_lock(&dev->mutex);
--	err = do_rangeinfo_ioctl(dev, &rangeinfo);
-+	if (!dev->attached) {
-+		dev_dbg(dev->class_dev, "no driver attached\n");
-+		err = -ENODEV;
-+	} else {
-+		err = do_rangeinfo_ioctl(dev, &rangeinfo);
-+	}
- 	mutex_unlock(&dev->mutex);
- 	return err;
- }
-@@ -3120,7 +3130,12 @@ static int compat_cmd(struct file *file,
- 		return rc;
- 
- 	mutex_lock(&dev->mutex);
--	rc = do_cmd_ioctl(dev, &cmd, &copy, file);
-+	if (!dev->attached) {
-+		dev_dbg(dev->class_dev, "no driver attached\n");
-+		rc = -ENODEV;
-+	} else {
-+		rc = do_cmd_ioctl(dev, &cmd, &copy, file);
-+	}
- 	mutex_unlock(&dev->mutex);
- 	if (copy) {
- 		/* Special case: copy cmd back to user. */
-@@ -3145,7 +3160,12 @@ static int compat_cmdtest(struct file *f
- 		return rc;
- 
- 	mutex_lock(&dev->mutex);
--	rc = do_cmdtest_ioctl(dev, &cmd, &copy, file);
-+	if (!dev->attached) {
-+		dev_dbg(dev->class_dev, "no driver attached\n");
-+		rc = -ENODEV;
-+	} else {
-+		rc = do_cmdtest_ioctl(dev, &cmd, &copy, file);
-+	}
- 	mutex_unlock(&dev->mutex);
- 	if (copy) {
- 		err = put_compat_cmd(compat_ptr(arg), &cmd);
-@@ -3205,7 +3225,12 @@ static int compat_insnlist(struct file *
+ 	p = pbuf;
+ 	i = 0;
+ 	*len = 0;
+-	while (1) {
++	while (i + 2 <= limit) {
++		tmp = *(p + 1);
++		if (i + 2 + tmp > limit)
++			break;
++
+ 		if (*p == index) {
+-			*len = *(p + 1);
++			*len = tmp;
+ 			return p;
+ 		}
+-		tmp = *(p + 1);
++
+ 		p += (tmp + 2);
+ 		i += (tmp + 2);
+-		if (i >= limit)
+-			break;
  	}
- 
- 	mutex_lock(&dev->mutex);
--	rc = do_insnlist_ioctl(dev, insns, insnlist32.n_insns, file);
-+	if (!dev->attached) {
-+		dev_dbg(dev->class_dev, "no driver attached\n");
-+		rc = -ENODEV;
-+	} else {
-+		rc = do_insnlist_ioctl(dev, insns, insnlist32.n_insns, file);
-+	}
- 	mutex_unlock(&dev->mutex);
- 	kfree(insns);
- 	return rc;
-@@ -3224,7 +3249,12 @@ static int compat_insn(struct file *file
- 		return rc;
- 
- 	mutex_lock(&dev->mutex);
--	rc = do_insn_ioctl(dev, &insn, file);
-+	if (!dev->attached) {
-+		dev_dbg(dev->class_dev, "no driver attached\n");
-+		rc = -ENODEV;
-+	} else {
-+		rc = do_insn_ioctl(dev, &insn, file);
-+	}
- 	mutex_unlock(&dev->mutex);
- 	return rc;
+ 	return NULL;
  }
 
 
