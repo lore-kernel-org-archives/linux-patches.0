@@ -1,340 +1,247 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE98922578D;
-	Wed, 10 Dec 2025 07:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0024C3016F3;
+	Wed, 10 Dec 2025 07:33:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352010; cv=none; b=Ee/VkcoX5taaAfBzHHNcMQ/KzMTsnVnLjX++gzLcyRsNt7bEIHu1c+X1IggC9u1Ixkqf/jg+nNw/hFKsl4EMivlnnmS/8+2KNpblpY/X03D4TsWN2KRzJ+918B/43KED74jynggKYYqt/IOV46KUnUE281yozJuAcV2j3t0dF+Y=
+	t=1765352013; cv=none; b=lXHe0j35Q5T0i+tgUe41Acd+2MIni0WPRx3t9Y/5Crb6IFyy2fETxdCFYJo6pvie5XAySoPV2Gq1FGAU3oz61S7ocNeVbnOx0Ey9UFqlxaJwDvLhObVvtTfZUvrrFL+j95jqVSzOQhDD64nzMEDtWO4pQCLUry2PY/hZ9EVLZdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352010; c=relaxed/simple;
-	bh=WaU8CB+keO7tGquzhNUmzKphso7QZVUTw0nW+6rRSOs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=NibCcdy1jH9ob62ePONbrQvbBWfGf8ZSCzR6Iiue86u5aSOZscNlwJpxIHB/xPX5yZFl+M1qfuLhrMO9icVN+rtuz+LH5kXoW1AKS0RlMefKJkCjnAbWJ/RmSGAXWWxZsr7VRVI1nHmzTrbHggbdZnsb1PenkO3sq3LlC2QxeaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Orf5B6M8; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765352013; c=relaxed/simple;
+	bh=plBNLf9J0XI30JkOyXwYUNM/jxN2KB2hD5KjSvLrIo4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=NdqVvs9sWowpYEs28oM2Nk1W3FxXhdxld+j8ueQaktveqAsPbIBlo9jZbMRraP/XGuL48iKK2sfH2goih2jegkaV9nHx7Iy9jRM1/5QWO6Eq3276nw5vH8C569LeVimSpivynTKezNJCEvdu+UvorVxkd7xVO7/i9jp2enDO8nc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j2NfBoZ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Orf5B6M8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67EBAC4CEF1;
-	Wed, 10 Dec 2025 07:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j2NfBoZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B163C4CEF1;
+	Wed, 10 Dec 2025 07:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352010;
-	bh=WaU8CB+keO7tGquzhNUmzKphso7QZVUTw0nW+6rRSOs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Orf5B6M8UV2k1Aur8J2k1VNvvOW9iBY7F+Y+zrJoLEtNNyVDhXMl3ZyfjkiZ5lMKM
-	 kTinYhx7tk0e8gxRuil1numjnDDllqurb96qkoswFXP3el7MYPCyc0sv49bBEAvrwn
-	 1LxZQZkyNLdGBe6YvWsnNAsyzIHT2IUOUdJrmSEA=
+	s=korg; t=1765352012;
+	bh=plBNLf9J0XI30JkOyXwYUNM/jxN2KB2hD5KjSvLrIo4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j2NfBoZ3ybJnixZvjSthXOpuaIc+UM0KPvbU5fcjKx9hamKxA4KNJ+pu6Qv/ithv7
+	 fdc9rG1fWPg/gxumq7OXxT2nRLh6/CPYOox06ZrRAzVPxS65dmLkduS09TRkVn0wsd
+	 dVp6Yivi90r/Oj4ihl9SbjI18VVtkShDJAoQD0iM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.17 00/60] 6.17.12-rc1 review
-Date: Wed, 10 Dec 2025 16:29:30 +0900
-Message-ID: <20251210072947.850479903@linuxfoundation.org>
+	Omar Sandoval <osandov@fb.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.17 09/60] KVM: SVM: Dont skip unrelated instruction if INT3/INTO is replaced
+Date: Wed, 10 Dec 2025 16:29:39 +0900
+Message-ID: <20251210072948.077073066@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
+References: <20251210072947.850479903@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.12-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.17.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.17.12-rc1
-X-KernelTest-Deadline: 2025-12-12T07:29+00:00
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.17.12 release.
-There are 60 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
-
-Responses should be made by Fri, 12 Dec 2025 07:29:37 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.17.12-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.17.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.17.12-rc1
-
-Navaneeth K <knavaneeth786@gmail.com>
-    staging: rtl8723bs: fix out-of-bounds read in OnBeacon ESR IE parsing
-
-Navaneeth K <knavaneeth786@gmail.com>
-    staging: rtl8723bs: fix stack buffer overflow in OnAssocReq IE parsing
-
-Navaneeth K <knavaneeth786@gmail.com>
-    staging: rtl8723bs: fix out-of-bounds read in rtw_get_ie() parser
-
-Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-    comedi: check device's attached status in compat ioctls
-
-Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-    comedi: multiq3: sanitize config options in multiq3_attach()
-
-Ian Abbott <abbotti@mev.co.uk>
-    comedi: c6xdigio: Fix invalid PNP driver unregistration
-
-Antoniu Miclaus <antoniu.miclaus@analog.com>
-    iio: adc: ad4080: fix chip identification
-
-Zenm Chen <zenmchen@gmail.com>
-    wifi: rtw88: Add USB ID 2001:3329 for D-Link AC13U rev. A1
-
-Zenm Chen <zenmchen@gmail.com>
-    wifi: rtl8xxxu: Add USB ID 2001:3328 for D-Link AN3U rev. A1
-
-Marcos Vega <marcosmola2@gmail.com>
-    platform/x86: hp-wmi: Add Omen MAX 16-ah0xx fan support and thermal profile
-
-Krishna Chomal <krishna.chomal108@gmail.com>
-    platform/x86: hp-wmi: Add Omen 16-wf1xxx fan support
-
-Linus Torvalds <torvalds@linux-foundation.org>
-    samples: work around glibc redefining some of our defines wrong
-
-Huacai Chen <chenhuacai@kernel.org>
-    LoongArch: Mask all interrupts during kexec/kdump
-
-Zqiang <qiang.zhang@linux.dev>
-    sched_ext: Use IRQ_WORK_INIT_HARD() to initialize rq->scx.kick_cpus_irq_work
-
-Naoki Ueki <naoki25519@gmail.com>
-    HID: elecom: Add support for ELECOM M-XT3URBK (018F)
-
-Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-    platform/x86/intel/hid: Add Nova Lake support
-
-Zqiang <qiang.zhang@linux.dev>
-    sched_ext: Fix possible deadlock in the deferred_irq_workfn()
-
-Antheas Kapenekakis <lkml@antheas.dev>
-    platform/x86/amd/pmc: Add spurious_8042 to Xbox Ally
-
-Antheas Kapenekakis <lkml@antheas.dev>
-    platform/x86/amd: pmc: Add Lenovo Legion Go 2 to pmc quirk list
-
-Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-    platform/x86: intel-uncore-freq: Add additional client processors
-
-Jia Ston <ston.jia@outlook.com>
-    platform/x86: huawei-wmi: add keys for HONOR models
-
-April Grimoire <april@aprilg.moe>
-    HID: apple: Add SONiX AK870 PRO to non_apple_keyboards quirk list
-
-Armin Wolf <W_Armin@gmx.de>
-    platform/x86: acer-wmi: Ignore backlight event
-
-Praveen Talari <praveen.talari@oss.qualcomm.com>
-    pinctrl: qcom: msm: Fix deadlock in pinmux configuration
-
-Keith Busch <kbusch@kernel.org>
-    nvme: fix admin request_queue lifetime
-
-Edip Hazuri <edip@medip.dev>
-    platform/x86: hp-wmi: mark Victus 16-r0 and 16-s0 for victus_s fan and thermal profile support
-
-Antheas Kapenekakis <lkml@antheas.dev>
-    platform/x86/amd/pmc: Add support for Van Gogh SoC
-
-Mario Limonciello (AMD) <superm1@kernel.org>
-    HID: hid-input: Extend Elan ignore battery quirk to USB
-
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    bfs: Reconstruct file type when loading from disk
-
-Lauri Tirkkonen <lauri@hacktheplanet.fi>
-    HID: lenovo: fixup Lenovo Yoga Slim 7x Keyboard rdesc
-
-Lushih Hsieh <bruce@mail.kh.edu.tw>
-    ALSA: usb-audio: Add native DSD quirks for PureAudio DAC series
-
-Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-    drm/amdkfd: Fix GPU mappings for APU after prefetch
-
-Yiqi Sun <sunyiqixm@gmail.com>
-    smb: fix invalid username check in smb3_fs_context_parse_param()
-
-Niranjan H Y <niranjan.hy@ti.com>
-    ASoC: SDCA: bug fix while parsing mipi-sdca-control-cn-list
-
-Max Chou <max.chou@realtek.com>
-    Bluetooth: btrtl: Avoid loading the config file on security chips
-
-Baojun Xu <baojun.xu@ti.com>
-    ALSA: hda/tas2781: Add new quirk for HP new projects
-
-Adrian Barnaś <abarnas@google.com>
-    arm64: Reject modules with internal alternative callbacks
-
-Ian Forbes <ian.forbes@broadcom.com>
-    drm/vmwgfx: Use kref in vmw_bo_dirty
-
-Kaushlendra Kumar <kaushlendra.kumar@intel.com>
-    ACPI: MRRM: Fix memory leaks and improve error handling
-
-Robin Gong <yibin.gong@nxp.com>
-    spi: imx: keep dma request disabled before dma transfer setup
-
-Alvaro Gamez Machado <alvaro.gamez@hazent.com>
-    spi: xilinx: increase number of retries before declaring stall
-
-Song Liu <song@kernel.org>
-    ftrace: bpf: Fix IPMODIFY + DIRECT in modify_ftrace_direct()
-
-Johan Hovold <johan@kernel.org>
-    USB: serial: kobil_sct: fix TIOCMBIS and TIOCMBIC
-
-Johan Hovold <johan@kernel.org>
-    USB: serial: belkin_sa: fix TIOCMBIS and TIOCMBIC
-
-Biju Das <biju.das.jz@bp.renesas.com>
-    serial: sh-sci: Fix deadlock during RSCI FIFO overrun error
-
-Biju Das <biju.das.jz@bp.renesas.com>
-    dt-bindings: serial: rsci: Drop "uart-has-rtscts: false"
-
-Magne Bruno <magne.bruno@addi-data.com>
-    serial: add support of CPCI cards
-
-Johan Hovold <johan@kernel.org>
-    USB: serial: ftdi_sio: match on interface number for jtag
-
-Fabio Porcedda <fabio.porcedda@gmail.com>
-    USB: serial: option: move Telit 0x10c7 composition in the right place
-
-Fabio Porcedda <fabio.porcedda@gmail.com>
-    USB: serial: option: add Telit Cinterion FE910C04 new compositions
-
-Slark Xiao <slark_xiao@163.com>
-    USB: serial: option: add Foxconn T99W760
-
-Omar Sandoval <osandov@fb.com>
-    KVM: SVM: Don't skip unrelated instruction if INT3/INTO is replaced
-
-Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-    comedi: pcl818: fix null-ptr-deref in pcl818_ai_cancel()
-
-Alexey Nepomnyashih <sdl@nppct.ru>
-    ext4: add i_data_sem protection in ext4_destroy_inline_data_nolock()
-
-Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-    crypto: zstd - fix double-free in per-CPU stream cleanup
-
-Alexander Sverdlin <alexander.sverdlin@gmail.com>
-    locking/spinlock/debug: Fix data-race in do_raw_write_lock
-
-Qianchang Zhao <pioooooooooip@gmail.com>
-    ksmbd: ipc: fix use-after-free in ipc_msg_send_request
-
-Deepanshu Kartikey <kartikey406@gmail.com>
-    ext4: refresh inline data size before write operations
-
-Ye Bin <yebin10@huawei.com>
-    jbd2: avoid bug_on in jbd2_journal_get_create_access() when file system corrupted
-
-Bagas Sanjaya <bagasdotme@gmail.com>
-    Documentation: process: Also mention Sasha Levin as stable tree maintainer
-
-
--------------
-
-Diffstat:
-
- .../devicetree/bindings/serial/renesas,rsci.yaml   |  2 -
- Documentation/process/2.Process.rst                |  6 +-
- Makefile                                           |  4 +-
- arch/arm64/include/asm/alternative.h               |  7 ++-
- arch/arm64/kernel/alternative.c                    | 19 +++---
- arch/arm64/kernel/module.c                         |  9 ++-
- arch/loongarch/kernel/machine_kexec.c              |  2 +
- arch/x86/include/asm/kvm_host.h                    |  9 +++
- arch/x86/kvm/svm/svm.c                             | 24 ++++----
- arch/x86/kvm/x86.c                                 | 21 +++++++
- crypto/zstd.c                                      |  7 +--
- drivers/acpi/acpi_mrrm.c                           | 51 ++++++++++-----
- drivers/bluetooth/btrtl.c                          | 24 ++++----
- drivers/comedi/comedi_fops.c                       | 42 +++++++++++--
- drivers/comedi/drivers/c6xdigio.c                  | 46 ++++++++++----
- drivers/comedi/drivers/multiq3.c                   |  9 +++
- drivers/comedi/drivers/pcl818.c                    |  5 +-
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c               |  2 +
- drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c         | 12 ++--
- drivers/hid/hid-apple.c                            |  1 +
- drivers/hid/hid-elecom.c                           |  6 +-
- drivers/hid/hid-ids.h                              |  4 +-
- drivers/hid/hid-input.c                            |  5 +-
- drivers/hid/hid-lenovo.c                           | 17 +++++
- drivers/hid/hid-quirks.c                           |  3 +-
- drivers/iio/adc/ad4080.c                           |  9 ++-
- drivers/net/wireless/realtek/rtl8xxxu/core.c       |  3 +
- drivers/net/wireless/realtek/rtw88/rtw8822cu.c     |  2 +
- drivers/nvme/host/core.c                           |  3 +-
- drivers/pinctrl/qcom/pinctrl-msm.c                 |  2 +-
- drivers/platform/x86/acer-wmi.c                    |  4 ++
- drivers/platform/x86/amd/pmc/pmc-quirks.c          | 25 ++++++++
- drivers/platform/x86/amd/pmc/pmc.c                 |  3 +
- drivers/platform/x86/amd/pmc/pmc.h                 |  1 +
- drivers/platform/x86/hp/hp-wmi.c                   |  6 +-
- drivers/platform/x86/huawei-wmi.c                  |  4 ++
- drivers/platform/x86/intel/hid.c                   |  1 +
- .../x86/intel/uncore-frequency/uncore-frequency.c  |  4 ++
- drivers/spi/spi-imx.c                              | 15 +++--
- drivers/spi/spi-xilinx.c                           |  2 +-
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c     | 14 +++--
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c      | 13 ++--
- drivers/tty/serial/8250/8250_pci.c                 | 37 +++++++++++
- drivers/tty/serial/sh-sci.c                        | 12 +++-
- drivers/usb/serial/belkin_sa.c                     | 28 +++++----
- drivers/usb/serial/ftdi_sio.c                      | 72 ++++++++--------------
- drivers/usb/serial/kobil_sct.c                     | 18 +++---
- drivers/usb/serial/option.c                        | 22 ++++++-
- fs/bfs/inode.c                                     | 19 +++++-
- fs/ext4/inline.c                                   | 14 ++++-
- fs/jbd2/transaction.c                              | 19 ++++--
- fs/smb/client/fs_context.c                         |  2 +-
- fs/smb/server/transport_ipc.c                      |  7 ++-
- kernel/locking/spinlock_debug.c                    |  4 +-
- kernel/sched/ext.c                                 |  4 +-
- kernel/trace/ftrace.c                              | 40 +++++++++---
- samples/vfs/test-statx.c                           |  6 ++
- samples/watch_queue/watch_test.c                   |  6 ++
- sound/hda/codecs/realtek/alc269.c                  |  9 +++
- sound/soc/sdca/sdca_functions.c                    |  3 +-
- sound/usb/quirks.c                                 |  6 ++
- 61 files changed, 564 insertions(+), 212 deletions(-)
+6.17-stable review patch.  If anyone has any objections, please let me know.
+
+------------------
+
+From: Omar Sandoval <osandov@fb.com>
+
+commit 4da3768e1820cf15cced390242d8789aed34f54d upstream.
+
+When re-injecting a soft interrupt from an INT3, INT0, or (select) INTn
+instruction, discard the exception and retry the instruction if the code
+stream is changed (e.g. by a different vCPU) between when the CPU
+executes the instruction and when KVM decodes the instruction to get the
+next RIP.
+
+As effectively predicted by commit 6ef88d6e36c2 ("KVM: SVM: Re-inject
+INT3/INTO instead of retrying the instruction"), failure to verify that
+the correct INTn instruction was decoded can effectively clobber guest
+state due to decoding the wrong instruction and thus specifying the
+wrong next RIP.
+
+The bug most often manifests as "Oops: int3" panics on static branch
+checks in Linux guests.  Enabling or disabling a static branch in Linux
+uses the kernel's "text poke" code patching mechanism.  To modify code
+while other CPUs may be executing that code, Linux (temporarily)
+replaces the first byte of the original instruction with an int3 (opcode
+0xcc), then patches in the new code stream except for the first byte,
+and finally replaces the int3 with the first byte of the new code
+stream.  If a CPU hits the int3, i.e. executes the code while it's being
+modified, then the guest kernel must look up the RIP to determine how to
+handle the #BP, e.g. by emulating the new instruction.  If the RIP is
+incorrect, then this lookup fails and the guest kernel panics.
+
+The bug reproduces almost instantly by hacking the guest kernel to
+repeatedly check a static branch[1] while running a drgn script[2] on
+the host to constantly swap out the memory containing the guest's TSS.
+
+[1]: https://gist.github.com/osandov/44d17c51c28c0ac998ea0334edf90b5a
+[2]: https://gist.github.com/osandov/10e45e45afa29b11e0c7209247afc00b
+
+Fixes: 6ef88d6e36c2 ("KVM: SVM: Re-inject INT3/INTO instead of retrying the instruction")
+Cc: stable@vger.kernel.org
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Omar Sandoval <osandov@fb.com>
+Link: https://patch.msgid.link/1cc6dcdf36e3add7ee7c8d90ad58414eeb6c3d34.1762278762.git.osandov@fb.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/x86/include/asm/kvm_host.h |    9 +++++++++
+ arch/x86/kvm/svm/svm.c          |   24 +++++++++++++-----------
+ arch/x86/kvm/x86.c              |   21 +++++++++++++++++++++
+ 3 files changed, 43 insertions(+), 11 deletions(-)
+
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -2123,6 +2123,11 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
+  *			     the gfn, i.e. retrying the instruction will hit a
+  *			     !PRESENT fault, which results in a new shadow page
+  *			     and sends KVM back to square one.
++ *
++ * EMULTYPE_SKIP_SOFT_INT - Set in combination with EMULTYPE_SKIP to only skip
++ *                          an instruction if it could generate a given software
++ *                          interrupt, which must be encoded via
++ *                          EMULTYPE_SET_SOFT_INT_VECTOR().
+  */
+ #define EMULTYPE_NO_DECODE	    (1 << 0)
+ #define EMULTYPE_TRAP_UD	    (1 << 1)
+@@ -2133,6 +2138,10 @@ u64 vcpu_tsc_khz(struct kvm_vcpu *vcpu);
+ #define EMULTYPE_PF		    (1 << 6)
+ #define EMULTYPE_COMPLETE_USER_EXIT (1 << 7)
+ #define EMULTYPE_WRITE_PF_TO_SP	    (1 << 8)
++#define EMULTYPE_SKIP_SOFT_INT	    (1 << 9)
++
++#define EMULTYPE_SET_SOFT_INT_VECTOR(v)	((u32)((v) & 0xff) << 16)
++#define EMULTYPE_GET_SOFT_INT_VECTOR(e)	(((e) >> 16) & 0xff)
+ 
+ static inline bool kvm_can_emulate_event_vectoring(int emul_type)
+ {
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -280,6 +280,7 @@ static void svm_set_interrupt_shadow(str
+ }
+ 
+ static int __svm_skip_emulated_instruction(struct kvm_vcpu *vcpu,
++					   int emul_type,
+ 					   bool commit_side_effects)
+ {
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+@@ -301,7 +302,7 @@ static int __svm_skip_emulated_instructi
+ 		if (unlikely(!commit_side_effects))
+ 			old_rflags = svm->vmcb->save.rflags;
+ 
+-		if (!kvm_emulate_instruction(vcpu, EMULTYPE_SKIP))
++		if (!kvm_emulate_instruction(vcpu, emul_type))
+ 			return 0;
+ 
+ 		if (unlikely(!commit_side_effects))
+@@ -319,11 +320,13 @@ done:
+ 
+ static int svm_skip_emulated_instruction(struct kvm_vcpu *vcpu)
+ {
+-	return __svm_skip_emulated_instruction(vcpu, true);
++	return __svm_skip_emulated_instruction(vcpu, EMULTYPE_SKIP, true);
+ }
+ 
+-static int svm_update_soft_interrupt_rip(struct kvm_vcpu *vcpu)
++static int svm_update_soft_interrupt_rip(struct kvm_vcpu *vcpu, u8 vector)
+ {
++	const int emul_type = EMULTYPE_SKIP | EMULTYPE_SKIP_SOFT_INT |
++			      EMULTYPE_SET_SOFT_INT_VECTOR(vector);
+ 	unsigned long rip, old_rip = kvm_rip_read(vcpu);
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 
+@@ -339,7 +342,7 @@ static int svm_update_soft_interrupt_rip
+ 	 * in use, the skip must not commit any side effects such as clearing
+ 	 * the interrupt shadow or RFLAGS.RF.
+ 	 */
+-	if (!__svm_skip_emulated_instruction(vcpu, !nrips))
++	if (!__svm_skip_emulated_instruction(vcpu, emul_type, !nrips))
+ 		return -EIO;
+ 
+ 	rip = kvm_rip_read(vcpu);
+@@ -375,7 +378,7 @@ static void svm_inject_exception(struct
+ 	kvm_deliver_exception_payload(vcpu, ex);
+ 
+ 	if (kvm_exception_is_soft(ex->vector) &&
+-	    svm_update_soft_interrupt_rip(vcpu))
++	    svm_update_soft_interrupt_rip(vcpu, ex->vector))
+ 		return;
+ 
+ 	svm->vmcb->control.event_inj = ex->vector
+@@ -3662,11 +3665,12 @@ static bool svm_set_vnmi_pending(struct
+ 
+ static void svm_inject_irq(struct kvm_vcpu *vcpu, bool reinjected)
+ {
++	struct kvm_queued_interrupt *intr = &vcpu->arch.interrupt;
+ 	struct vcpu_svm *svm = to_svm(vcpu);
+ 	u32 type;
+ 
+-	if (vcpu->arch.interrupt.soft) {
+-		if (svm_update_soft_interrupt_rip(vcpu))
++	if (intr->soft) {
++		if (svm_update_soft_interrupt_rip(vcpu, intr->nr))
+ 			return;
+ 
+ 		type = SVM_EVTINJ_TYPE_SOFT;
+@@ -3674,12 +3678,10 @@ static void svm_inject_irq(struct kvm_vc
+ 		type = SVM_EVTINJ_TYPE_INTR;
+ 	}
+ 
+-	trace_kvm_inj_virq(vcpu->arch.interrupt.nr,
+-			   vcpu->arch.interrupt.soft, reinjected);
++	trace_kvm_inj_virq(intr->nr, intr->soft, reinjected);
+ 	++vcpu->stat.irq_injections;
+ 
+-	svm->vmcb->control.event_inj = vcpu->arch.interrupt.nr |
+-				       SVM_EVTINJ_VALID | type;
++	svm->vmcb->control.event_inj = intr->nr | SVM_EVTINJ_VALID | type;
+ }
+ 
+ void svm_complete_interrupt_delivery(struct kvm_vcpu *vcpu, int delivery_mode,
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -9021,6 +9021,23 @@ static bool is_vmware_backdoor_opcode(st
+ 	return false;
+ }
+ 
++static bool is_soft_int_instruction(struct x86_emulate_ctxt *ctxt,
++				    int emulation_type)
++{
++	u8 vector = EMULTYPE_GET_SOFT_INT_VECTOR(emulation_type);
++
++	switch (ctxt->b) {
++	case 0xcc:
++		return vector == BP_VECTOR;
++	case 0xcd:
++		return vector == ctxt->src.val;
++	case 0xce:
++		return vector == OF_VECTOR;
++	default:
++		return false;
++	}
++}
++
+ /*
+  * Decode an instruction for emulation.  The caller is responsible for handling
+  * code breakpoints.  Note, manually detecting code breakpoints is unnecessary
+@@ -9131,6 +9148,10 @@ int x86_emulate_instruction(struct kvm_v
+ 	 * injecting single-step #DBs.
+ 	 */
+ 	if (emulation_type & EMULTYPE_SKIP) {
++		if (emulation_type & EMULTYPE_SKIP_SOFT_INT &&
++		    !is_soft_int_instruction(ctxt, emulation_type))
++			return 0;
++
+ 		if (ctxt->mode != X86EMUL_MODE_PROT64)
+ 			ctxt->eip = (u32)ctxt->_eip;
+ 		else
 
 
