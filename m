@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77255C613;
-	Wed, 10 Dec 2025 07:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A59C2FF16C;
+	Wed, 10 Dec 2025 07:34:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352083; cv=none; b=daPtu0+7UNL+A+126pOAvAGKlfDhXTs46h2DtTYmJM5HOAAfhyYqXLL/ayEZk+W7jPRLUIiBk2hGAshiStpUUhBSB5HqGrezz/bx0tAQsiuHH3S/OdkRFqRYSespqKbQmBDgTosN9/+S8ZIdyezT2Na/rDFyg0jvjh63neux8QY=
+	t=1765352086; cv=none; b=qzBCIsVcqOkc96kz7Muj0qD4qxH4X+swVFWsDmLQiMdetjKfP4iB6nf9prPd9RdwAKKRiPJiN0C1YRN4V+6tes3gXacezYP3DLDuaE6yP/5zLdhbk9IItOD1m1AWXtIX4DB4or2B/S3FJHH+gEAfV4kGZo0Tj0Tlh0+Lw8ii3SU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352083; c=relaxed/simple;
-	bh=WaRNHxYvDgk2Ti7IK6mJ0ELVkEejGQJog+NW0OxJFuo=;
+	s=arc-20240116; t=1765352086; c=relaxed/simple;
+	bh=mKv86J3aCkI386PkxxDgoDHpTjF3xccfCQ3shWdptdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtYNfB45bbjUuc5krSaCrBtIAmc1TovtZQYGYxi7N9F+l2+8dUhmjyPKJirlQ5w0X80fdUYXht1P62d/4e7f0caOUAIqapCHrGG4rJLbSnnnc/6gZTwL/MDGlqtOpA0uaAGkKlDr8RM01Z1NqBVGVheto1Jt5kz3CghwsHGkxfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEQdVjJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i33BWVKkvfvByfLKdLf15McWLW61+51HAw6pRVzKTpcm6U9wEvRJ9d1UxJV+J3BSKEJFMAQjxv+BgHvV6U25he6AIcWGzRHsEhWWuLJOU9CU4qms2ZpZsg/e0VyEGgNA9JU8gyslho6yFThAMDXgLvcMpnZiqNOtfxpGL/31cbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K+Kg2tbO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEQdVjJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E81FC4CEF1;
-	Wed, 10 Dec 2025 07:34:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K+Kg2tbO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8C7C4CEF1;
+	Wed, 10 Dec 2025 07:34:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352083;
-	bh=WaRNHxYvDgk2Ti7IK6mJ0ELVkEejGQJog+NW0OxJFuo=;
+	s=korg; t=1765352086;
+	bh=mKv86J3aCkI386PkxxDgoDHpTjF3xccfCQ3shWdptdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qEQdVjJwJN+e001u9OWdYawkbCN+fP22/B9uLqW3hcssS4+gfRVkEWoKp9GM6hfpB
-	 aY3Sl8bMgJAZQr9AhtUn/pMdDfuTtjeGCkLw0WW9uau8C+BmLHV4pUxf1kSdtyCyhw
-	 JgaOZGN9fTghXTryWp8f2VgLyYbQ+ovjmV1aspWQ=
+	b=K+Kg2tbONFpVhjWDEDxMbTcFxJqW3vIIGNu9TqHZ4rVqpPL51aYG/BSa5LsshmLF6
+	 ZHcFiOuN8EK31m3XK2cUfvO6J/6cQNrTvGXh7dwRFSzJ6bXvL768NlWz/jmtfYIazI
+	 hUQznWzRPdVEVLn/KxML5KwZbN8WgED/h6vLwI+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magne Bruno <magne.bruno@addi-data.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.17 14/60] serial: add support of CPCI cards
-Date: Wed, 10 Dec 2025 16:29:44 +0900
-Message-ID: <20251210072948.193724371@linuxfoundation.org>
+	stable@kernel.org,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Biju Das <biju.das.jz@bp.renesas.com>
+Subject: [PATCH 6.17 15/60] dt-bindings: serial: rsci: Drop "uart-has-rtscts: false"
+Date: Wed, 10 Dec 2025 16:29:45 +0900
+Message-ID: <20251210072948.216940888@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -50,74 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Magne Bruno <magne.bruno@addi-data.com>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 0e5a99e0e5f50353b86939ff6e424800d769c818 upstream.
+commit a6cdfd69ad38997108b862f9aafc547891506701 upstream.
 
-Addi-Data GmbH is manufacturing multi-serial ports cards supporting CompactPCI (known as CPCI).
-Those cards are identified with different DeviceIds. Those cards integrating standard UARTs
-work the same way as PCI/PCIe models already supported in the serial driver.
+Drop "uart-has-rtscts: false" from binding as the IP supports hardware
+flow control on all SoCs.
 
-Signed-off-by: Magne Bruno <magne.bruno@addi-data.com>
-Link: https://patch.msgid.link/20251110162456.341029-1-magne.bruno@addi-data.com
-Cc: stable <stable@kernel.org>
+Cc: stable@kernel.org
+Fixes: 25422e8f46c1 ("dt-bindings: serial: Add compatible for Renesas RZ/T2H SoC in sci")
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Link: https://patch.msgid.link/20251114101350.106699-2-biju.das.jz@bp.renesas.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ Documentation/devicetree/bindings/serial/renesas,rsci.yaml |    2 --
+ 1 file changed, 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -95,6 +95,11 @@
- #define PCI_DEVICE_ID_MOXA_CP138E_A	0x1381
- #define PCI_DEVICE_ID_MOXA_CP168EL_A	0x1683
+--- a/Documentation/devicetree/bindings/serial/renesas,rsci.yaml
++++ b/Documentation/devicetree/bindings/serial/renesas,rsci.yaml
+@@ -54,8 +54,6 @@ properties:
+   power-domains:
+     maxItems: 1
  
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7500        0x7003
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG     0x7024
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG     0x7025
-+#define PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG     0x7026
-+
- /* Unknown vendors/cards - this should not be in linux/pci_ids.h */
- #define PCI_SUBDEVICE_ID_UNKNOWN_0x1584	0x1584
- #define PCI_SUBDEVICE_ID_UNKNOWN_0x1588	0x1588
-@@ -5996,6 +6001,38 @@ static const struct pci_device_id serial
- 		0,
- 		pbn_ADDIDATA_PCIe_8_3906250 },
- 
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7500,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_4_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7500_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_4_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7420_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_2_115200 },
-+
-+	{	PCI_VENDOR_ID_ADDIDATA,
-+		PCI_DEVICE_ID_ADDIDATA_CPCI7300_NG,
-+		PCI_ANY_ID,
-+		PCI_ANY_ID,
-+		0,
-+		0,
-+		pbn_b0_1_115200 },
-+
- 	{	PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9835,
- 		PCI_VENDOR_ID_IBM, 0x0299,
- 		0, 0, pbn_b0_bt_2_115200 },
+-  uart-has-rtscts: false
+-
+ required:
+   - compatible
+   - reg
 
 
