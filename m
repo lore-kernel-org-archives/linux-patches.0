@@ -1,249 +1,280 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEA9032ED57
-	for <patches@lists.linux.dev>; Tue,  9 Dec 2025 21:31:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765315878; cv=fail; b=T+YumRidwvFygqnJtcaNPquVYWbeMra6F9r924OXqftUOsc4Y4BEbWlhSAWO8QT8z1jnKJy8SKVEFM7ju34TPMzj1Dm0+2KMzI45H4xvLKVJmAJkNiUQdFRO0sSk5jBtbkeugWviXTrAskWTtvlpJQaLAxv1hu7ucUpSLpmNzbA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765315878; c=relaxed/simple;
-	bh=W+eexPh451S82tvonKUVR0eO7A2IDuk8NoXwNXKr8eQ=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=DOYXjDCypk7i4UmmtGFdmY2aFqJNSq8xT6Pt8cRhPQheaIN/FJryetu8jPgWGz/aHRS98EyiuSE3u/Qxkih9BqpCKDV8ZSDLI2H1C6N88XpHj5FzoAs247k0xi7jKJEM2wU5/PamesME0gyEIehWlGExQAJMzI3RrfbjtOvWx+k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=QlQ/e7NI; arc=fail smtp.client-ip=192.198.163.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9E672618;
+	Wed, 10 Dec 2025 03:49:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765338559; cv=none; b=aKy6i2rcDzj7GjwSQt/R5aiiSHohZKs+gpcm08Lj569T41G+NHpYChaH0zlLjAFyeNv6bfbf6lPJAuKe9GdqjF9QgSC0Kz+a1R2MhME5hXtuystpHIjskYO8GmhyWkTEaEgO/+AMGTmlLP0YeM/0vx8NNJ7UDouN+Jpi0ObS+PA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765338559; c=relaxed/simple;
+	bh=EdoTQBVOSnfL3adtSB4OmKmM0oMbsG9LjOfOgavoKus=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AmZIzV0qXgLRec777DoAwYZ8MZTkOcmwcp7YDbWuGmIrsjVy7qnE5pH/XihX+OoIWaL3U38qYEyO1Pjqei7EqhkoDFDmhOx86SNHgGP9K7ovhilqRNkvlY1iLVE+P2qvMdk1H3RaqyYKs+JUj2a7xZcBaXpr9w2aAJL6bdoGoVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQ/tx/RA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="QlQ/e7NI"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765315877; x=1796851877;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=W+eexPh451S82tvonKUVR0eO7A2IDuk8NoXwNXKr8eQ=;
-  b=QlQ/e7NIUslxNJNaoma4fd6LdFcryYJ1K0oPkWaW1DU5XuF1d2sw3Qet
-   KKFHu9tO0Cc7FqUNuTE9kXrxGF9tsMauGSOLvbdTsdD7BaN6mRqzIjHKn
-   uOynYyVLgZJ97xqb/F+hmsjnNRRiSIiQ17MKm6w4eYzpuINl5VirGpI4J
-   ZkeGJ7r2oM3F6MhXIekGGoIYTxY3P7yXB5Z1s6/uirFuEz5gSpgokV7uE
-   g8cthSFDi15PGk4W1/E5zCk0yiZGC9Z2QkU8L1VAQ99A7WIb/B3UtrRah
-   95+5YtK1W7RCFpWbOAV9ibXvQsHGKf9Hx8q89MBmphi4E1GGVaHIUKhqz
-   g==;
-X-CSE-ConnectionGUID: L1KQSNenSUabnLE9f4LB6g==
-X-CSE-MsgGUID: UZOk0WFwTqyYKcyQTfmShw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11637"; a="67177779"
-X-IronPort-AV: E=Sophos;i="6.20,262,1758610800"; 
-   d="scan'208";a="67177779"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2025 13:31:16 -0800
-X-CSE-ConnectionGUID: x/+TZFrLTbmOqbXrEnS3jA==
-X-CSE-MsgGUID: 7A+QIFXBTyG+41muJPpCEw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.20,262,1758610800"; 
-   d="scan'208";a="196628516"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Dec 2025 13:31:16 -0800
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Tue, 9 Dec 2025 13:31:15 -0800
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29 via Frontend Transport; Tue, 9 Dec 2025 13:31:15 -0800
-Received: from BL2PR02CU003.outbound.protection.outlook.com (52.101.52.21) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.29; Tue, 9 Dec 2025 13:31:14 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=tEkw8As6aG7NHuBY3kRzTz0JPIDJfgpI0AKJzxjDSijIPA/TsM1+n7lzV2qRoLQ92m7nVWizuLasUdAt0G/vS81svx5lD3N2LXuIoKYrVRElh+hlhU1QyRCxWZ9hNfGiKehiZxBfcfdC783d0kM/qPrauA1GobLsWBdpPUecmM6NSpKZ0I5CzS+YpniRea2ocsfl9ND8bviZPUmdzF5H0+yODLBgfBqnJ37aiG4uo2FpA7dmDKUEwvxyS5UdnJ+UE1qpgaHM7I8RXnA1punm5Plow0QGYrqIIw+WdRhuJydPcXEw8X8K6bxwtDn98XDTGpEO1nkVcA/19oHR3NaNDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RrPKFF1i4xWBAT9+U4912pCaGFPdRpJC2Muc//9vmpk=;
- b=rzP+GpnCbpCeLYKMKKeWdsu9D33ZdRGw3tEUp740keCEiUGTE9K4J0P6bQtrMDSu7Ty6yWwz0An/ZTAiXqqxV2Xlg8rngg1+XKspHkirZnKMD0d7f4z0xGweyz7G4w9pi8zEOES50NrWYju1wgoPr+veAtKnm1ORr2f0Y44Q/k/EA8UCyAR3drmJqQ5R5fhXuWvqQ9YbD5Z4CtWvUM/OKjxaSScFR0psAOe50CLktcsfydLpHH6xfTc5rSqWjPeTskbqF21Y2IkJ3iSAg/iLUpP704GDpPBYvUe3XzPcpfj5rq/CeZh7EXCl4Gw0A3TfrpwGlNUQGOxjWwI6pQPhNQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com (2603:10b6:a03:4d2::10)
- by MW4PR11MB6617.namprd11.prod.outlook.com (2603:10b6:303:20d::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9388.9; Tue, 9 Dec
- 2025 21:31:11 +0000
-Received: from SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf]) by SJ2PR11MB7573.namprd11.prod.outlook.com
- ([fe80::61a:aa57:1d81:a9cf%3]) with mapi id 15.20.9412.005; Tue, 9 Dec 2025
- 21:31:11 +0000
-Message-ID: <33a2ada3-d523-4ed8-9313-74814daded0b@intel.com>
-Date: Tue, 9 Dec 2025 13:31:09 -0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 11/32] x86,fs/resctrl: Handle events that can be read
- from any CPU
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: Fenghua Yu <fenghuay@nvidia.com>, Maciej Wieczor-Retman
-	<maciej.wieczor-retman@intel.com>, Peter Newman <peternewman@google.com>,
-	James Morse <james.morse@arm.com>, Babu Moger <babu.moger@amd.com>, "Drew
- Fustini" <dfustini@baylibre.com>, Dave Martin <Dave.Martin@arm.com>, Chen Yu
-	<yu.c.chen@intel.com>, <x86@kernel.org>, <linux-kernel@vger.kernel.org>,
-	<patches@lists.linux.dev>
-References: <20251204205404.12763-1-tony.luck@intel.com>
- <20251204205404.12763-12-tony.luck@intel.com>
- <34dfe97d-3aa0-4fc5-8f1d-3da5066a0b6c@intel.com>
- <aTiIe6U6e5PlEyj5@agluck-desk3>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <aTiIe6U6e5PlEyj5@agluck-desk3>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0210.namprd04.prod.outlook.com
- (2603:10b6:303:86::35) To SJ2PR11MB7573.namprd11.prod.outlook.com
- (2603:10b6:a03:4d2::10)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQ/tx/RA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C0C4CEF1;
+	Wed, 10 Dec 2025 03:49:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765338559;
+	bh=EdoTQBVOSnfL3adtSB4OmKmM0oMbsG9LjOfOgavoKus=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BQ/tx/RAIthZ91x7MqIa5xHl+LjySTlxrhfZHOJ9E8wLFwOrBWcisF81MLCyP9I92
+	 LRdmEJ/CJgKxOsyNxJ7Y5m4JMlP3Yuvz5At2AHZC5itbSC7GA3Rc2lY0pUH4uuvN8O
+	 89zlVrv0ZmqXrfOMYo6HwqBtjL7T4WeyWPMN9acKC1E1du4JE7pM/BP6884ybMXAdV
+	 BM8/nNwDR+Tun1JLr+u0O29j21MbtcGYuJJ1Kr+8aCREkYQxYUKSUds8NktkRUzEdy
+	 mVlkrzZhs8xtUuU9yuIv56hhY7JNxeU3Gw+4NGAc0XhdG7UygY4mzX4uliR7ykqzui
+	 O1SQYN3qr9L/w==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	brauner@kernel.org,
+	ingo.rohloff@lauterbach.com,
+	nichen@iscas.ac.cn,
+	mjguzik@gmail.com,
+	guhuinan@xiaomi.com,
+	liangjie@lixiang.com,
+	akash.m5@samsung.com
+Subject: [PATCH AUTOSEL 6.18-6.17] functionfs: fix the open/removal races
+Date: Tue,  9 Dec 2025 22:48:42 -0500
+Message-ID: <20251210034915.2268617-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR11MB7573:EE_|MW4PR11MB6617:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7e1e0f3e-f125-4322-a770-08de376a460c
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SXdSZmptaitiYjY4U3JiRGxhL0cydkRVNEYxa2EreTZKNElBZllvNk02UVdn?=
- =?utf-8?B?Q083TFg2blJZbVg4UVg4MFEwcm1aMk9kci9RVEZuaFRPY0RHQ1Z5dG5kRmE4?=
- =?utf-8?B?T085TWVXa3c1WHVESFo2M1NxOVlBbUJyVTZYNjB2VDhEd1FiaHBPdkFnODNJ?=
- =?utf-8?B?aHFSZEkwMHZqc3dmRUd1N01ZNlRzNVZqV2orcmFTa2NQeUpoZWYrYVE2VXZq?=
- =?utf-8?B?TmVaOGMvdjNFaFBFYXdjbExIOTdIa3dKVEtOckZGcFpOWXFVLzg3UWNVem9s?=
- =?utf-8?B?VTk4YlFpT2N6T3UyS2xCZUYwanNEdzJBSUxyN1NJek1JTTZYczA5ZUVkUU82?=
- =?utf-8?B?NVVJcHRLcHZaYjhja2RrM3V3RjdMaE91UXJJcGRPOGdoT1BMdzd1MDB0MnRa?=
- =?utf-8?B?Vm5wRnhPV2tidXVpeWhOc1F0cElwblQ0NjlnUlpQaFJKdTA1ODYydVFVQ0l3?=
- =?utf-8?B?dXJ4aFRmVWVmSXJYRVBmaVkrUnE4d05FbGdTd3FEazZObzhyZlZnREFWN2RL?=
- =?utf-8?B?U251VG1iVkFYaHk3Si96dzVvWGtIVkJuQ3JJczluTmYzSUk0R3hBZU5ZU1RH?=
- =?utf-8?B?emtPb0diZHkvUVdhOFFOai9DT1MvU3NKSEZJWUxYYnBFeWk4cmp5MjdOVHpM?=
- =?utf-8?B?YUZEV2xvcWU3L3lEZFJ1eVJxTm1JeFFDTlJ5dXhDeVMyNmRaUjVHU3cvQnFE?=
- =?utf-8?B?YWtkcVl4T25uOWZMS2c3OXhhQjlXMk1QU3B4L0lXajdLL2hnbHRWL0NFcWZF?=
- =?utf-8?B?YWI2TXQwY3EreHpzc0VjZmlERjFiVCt5M2g3TFdlNVR6V1RyV0wvaEozeG82?=
- =?utf-8?B?MkhQOWxkM24yNzA5N1BBQ0ZhYWpYcG9Cd25FU3dZeHQ1djh4TGtmRjZybjY4?=
- =?utf-8?B?YjUvR1RUemlYTEs2VDY4aDdZY3JSUGVzREdjdTlpWVR3L2d4clhKUytnTFhG?=
- =?utf-8?B?OW5oMmlZOC9OTFNOaU9zUSsyTG0xRlBheUdvZ2lDTURCUFNpcFF5RXhuRkEz?=
- =?utf-8?B?eU1jQmF6TzFDM0QwcmlmM1hnUmcvNWdBMzF0dWxUOGNFclRId2l6S0VVT29j?=
- =?utf-8?B?bHdSQmZZY0FmSGpHdkxOVnR0UWkwMFFpUmRVQTlITmJZODVWV2hVNnY4dEZC?=
- =?utf-8?B?VGp5WFErNzBUN2tXdHdBVzd5TU5OeU5yOHBYbUhRZDJTci9tWWFKZi9MNG4z?=
- =?utf-8?B?N1dHeDh2ZlJxL2RnTHFpNC9xd2JoNll5UGNVMGJsNk9oQ0ZtUzRZZVVLWmtu?=
- =?utf-8?B?SndYdzBEcTZaZW1rT1YzblZPMHA5M0w0bzhnYThhQlNOcEsrUHBXTjJwVEV6?=
- =?utf-8?B?UE9ZNHMzaHFIb1U1SlRvdGNSU3QxZHhNZ2x2Y2JjYzVNUjVNMlo1RFdmOE8y?=
- =?utf-8?B?eXpRcy9SRksrVEs2UVl3RlluRVVCQUpsZDVjVGRHcHhhRUpqVkN3R2MzUUFI?=
- =?utf-8?B?ajJvK1h1c3pRN3FiSWJ5bVNVdUFmV01IRkEwbjlLd0VvdHFSekxhRG5JYkVk?=
- =?utf-8?B?QkV3bEtLQVZwMm1ncXZyalpkb2JXTnEwTXJUYy9tOUFqQStUeWUrd0RtVUk0?=
- =?utf-8?B?WStNbzF0TWpwWXVvYjd4ZEFxcFRLT09lOE52NmFjODlpdFpzem81SDlvZCt5?=
- =?utf-8?B?dlQzMWdmb3V4SXZPeEdFVk14M3VWbytueHZERTU3bEIxMW1DcWM4TVBxQW1I?=
- =?utf-8?B?KzNidFBVdjdSbEZEZEZvWU40WnJaY3NkMERiODBaMVduaUxBQXF4ZkdZOVpv?=
- =?utf-8?B?S0x1eUxlQnFVLzdlbGtWYmNXNGswVkpUKzFPN0tYaURDVzk1YUNkTDlpajNM?=
- =?utf-8?B?MUxCYWFtOWRwWGhMTGY4UmZ0LzN0T1lTcHF0Q3E4dEJKZmwweEw2eXJiNk9H?=
- =?utf-8?B?aFZ4elM2ak9WVXdOR3c4eC9yc3lXN2JnOHR0cm9YVGlxVFptdFJaNXB1RDVJ?=
- =?utf-8?Q?x9HwhqRhbWFQreVVV1JQDl4O1mCw/04k?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ2PR11MB7573.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N2NZQ1k2VjRxcE1INlpOTm4zNnlNVVJheU9aSUZibTlsZUdhbkZ1UGNpRTY0?=
- =?utf-8?B?bGNFMjh0K1EyeWZ0Q3pKUkFYK3pEOVFRMUtzb3paaHpodTY3b3hQZkd1YlI0?=
- =?utf-8?B?RWVuVkUyRHZFdmoyWlVOK0xwWXkxZlUyM2lLKzZ4eWt2dDBFWjNDWUdnekpv?=
- =?utf-8?B?SHU3MmQzWUIvMU5KRWpJZ245ajdIUlpyZHRsdU5WMEVPOGZNUW0zK0NaSlRE?=
- =?utf-8?B?N1RrMkVRTkNHK2tXUWsyWkhmSmwwandEcERKeDUvL0N6WmhySGNzY0ZMYnFY?=
- =?utf-8?B?VllNaTQwT0d6SzROMGtvZVdnRFU4Yk9SNk9SbmRLWHIzRnVtcmhtVWg2eEFr?=
- =?utf-8?B?RjRsWkUyaExEd1dIMklVRzJsV1lQd0JEZDBKY3YrZVdyYVJXYVY1KzFyZVBE?=
- =?utf-8?B?OE1VODF2bUZMZzk1VnlyTGxnL1ZFemxSSzBlZDZEK0xXVmtFdGJHcGpQU3R2?=
- =?utf-8?B?eklyVU1zZWc4SzV4OGpKRHVuRVNubWFXTHJsNlpxQUFSTk1xQVh5clkxUXE3?=
- =?utf-8?B?RGFRRHRLM1NMdDEvd2w2aFpuRlNXeDFIT0kraFYvem9iWnRNcXdobTRMUG9q?=
- =?utf-8?B?OHVGVzQ0UFFubFFlbUJuMlhQV0k0bGhOUWtwREJxdHp2SVhCQytZdVhWemRh?=
- =?utf-8?B?bDhmS096eEszaERvYXdKaHRFeXBiN2lieUZ5TzlDOHgrMnprOTBUN0p2WUhW?=
- =?utf-8?B?dXlxUCsyT1UzWjNzK3VMeEptNThack1id1ZKQ2dIS04vZENPQmZsS09mMy9Q?=
- =?utf-8?B?ZmhXK1RVaTJsRHFIN3FmV3BnS1JaU2o1OVJraTlaSi84c3dIV0VnNzBRRkVq?=
- =?utf-8?B?Qkl1UFVsdlFOR0tMY29uT1lQVGc3WngvVnBLVG1lSVY1RmZSU3dkY09helVk?=
- =?utf-8?B?VmlERlFEYjZYSThEcVkveWxYbHRNVDhuVm13SUdxMUtIc1NvTlZoZmo5UUNu?=
- =?utf-8?B?VHcra3p6ODFkUU1CcG00VlVzUGtEM1VVVXNzdWRnRUplZlBqeWNDZ2xBZ0d2?=
- =?utf-8?B?Z1puNUZNTWNySDU3S2dNUGpOTFkyWFJhcGRWTFczNHpDNjNVNEtPMVRMZ01B?=
- =?utf-8?B?KzExbDhtaUVJQzFqVnArMDRmYWdHRUNUdXFzZkY0YkRPcHFmZ0JvZ1EzL3BX?=
- =?utf-8?B?V2V5b1piS2R6bXJwYWE0Wmtjbm5jS3MwTGs5ek9DRFAwVDF6L2RzTStYb2FF?=
- =?utf-8?B?eDhXbVJNSEZoSm1HOTVsckl3MXFXWkMzTzRXdCtURHJRd0pxM0ZUaHlqb0Jr?=
- =?utf-8?B?cjR1dkVZeTJqWTZ1SXJVQ0ZZTTRzQWNudUxoVjNVUGJPTTJKOFFCL0FMSjFR?=
- =?utf-8?B?ZzJKdFoxV3RxK0tjaDJOVndEek5hWW52akR6WTZnZklyc21CZS9wNERKNDlx?=
- =?utf-8?B?SmgzeHNhd0JZNityTnVmZE1yREptdExDRlRKdVBKUHJlRHA3VzhwbGM3WUNo?=
- =?utf-8?B?dk9QS2R5RFJZRVVIVW8rdE1udURLaGZ1eWR1bzAwQ1hjWXB2VkhOM25jaG1x?=
- =?utf-8?B?dUxsK2hVdHgxSlZLRzdYQnhqMFlXTmx4Tk5MbklhbEtCUFlEb2t4VGZranNh?=
- =?utf-8?B?cjB4OG9RemFwN3E5aDhCazNQUWNVOWZuSE5kWGhMWXMvM3JhREZNQ0JQQ0F0?=
- =?utf-8?B?aGMzMDRPdjFETlVTZnBhcjdHZHpvS3JSRERodVRrT0lua0pEZ2hBOExyUzNq?=
- =?utf-8?B?ZVZZRjMxZXZ1eXE3Y1ZVNGxjUk1WZmZKV0J6YmJTUGZQdmZFaThPZnZrc09H?=
- =?utf-8?B?NVRaRjdwUFFHUU1jM1M0Z1h4VXZGSVZ0VEpWNGRPSnNFK2JySkpoVjVNNG9T?=
- =?utf-8?B?REc0ejZCdlBmMmFhOElCeUhWV2F0OE9kRS8yMldtUit1cWY2OWJDNHZLcEtu?=
- =?utf-8?B?bVgxaFdKWHAyUHEzL0RnOENJbzBPcnJPUmdkUWtpN0pudzhtTkZDNENrSks2?=
- =?utf-8?B?aHRWbnJqZ25Ca3BHYUtxelBHWDVVZUJVK3pTbUtJbUU5ZVpNK2xrVnFGaTRp?=
- =?utf-8?B?bHBWd0JITDROeDBJQWYxalduRHJaTG85cUM2aUlVZjBqYS9iN21PNXZQTEJ4?=
- =?utf-8?B?d0hrOTNaTmxBQmpqeUNaalJHZWRnV0FLS2FVVjdkRktXdGUzTE4zN2FiUmdp?=
- =?utf-8?B?anlmbjlMcHJ3cGt2bjEyWGZHZWJpbEZRMXdUUEFSOVI3QmMzWng0ZGc0cEd0?=
- =?utf-8?B?bmc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7e1e0f3e-f125-4322-a770-08de376a460c
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR11MB7573.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2025 21:31:11.6126
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vRuDc4eHreGpFQ1hVVau09i4HHGcxgjCuHTYIJw/XrK/Mh8y6nCcBE53xf4bBwvsTRJx+iIe/pQQm+ocgR97DSgcfr0p8As3WM2lOjIbMBw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR11MB6617
-X-OriginatorOrg: intel.com
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Tony,
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-On 12/9/25 12:37 PM, Luck, Tony wrote:
-> On Tue, Dec 09, 2025 at 11:39:56AM -0800, Reinette Chatre wrote:
->> Hi Tony,
->>
->> On 12/4/25 12:53 PM, Tony Luck wrote:
->>> resctrl assumes that monitor events can only be read from a CPU in the
->>> cpumask_t set of each domain.  This is true for x86 events accessed with an
->>> MSR interface, but may not be true for other access methods such as MMIO.
->>>
->>> Introduce and use flag mon_evt::any_cpu, settable by architecture, that
->>> indicates there are no restrictions on which CPU can read that event.
->>
->> I propose to append (something like): "This flag is not supported by the L3
->> event reading that requires to be run on a CPU that belongs to the L3
->> domain of the event being read."
-> 
-> Perahps simpler?
-> 
-> This flag is not supported for RDT_RESOURCE_L3 monitoring events.
+[ Upstream commit e5bf5ee266633cb18fff6f98f0b7d59a62819eee ]
 
-Simpler, but missing "why". The changelog starts by highlighting that it is x86 events
-accessed with an MSR interface that can "only be read from a CPU in the cpumask_t set
-of each domain" but worth highlighting is that __l3_mon_event_count()/__l3_mon_event_count_sum()
-is resctrl fs code that, independent from x86, requires to be run on a CPU that belongs to
-the L3 domain.
+ffs_epfile_open() can race with removal, ending up with file->private_data
+pointing to freed object.
 
-> 
->>
->>> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
->>> index 340b847ab397..081ff659b52c 100644
->>> --- a/fs/resctrl/monitor.c
->>> +++ b/fs/resctrl/monitor.c
->>> @@ -518,10 +518,12 @@ static int __mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
->>>  {
->>>  	switch (rr->r->rid) {
->>>  	case RDT_RESOURCE_L3:
->>> -		if (rr->hdr)
->>> +		if (rr->hdr) {
->>> +			WARN_ON_ONCE(rr->evt->any_cpu);
->>
->> I appreciate that this addresses the feedback from v13 but it needs to be adjusted for the
->> code changes made since then. This means that this warning applies to both
->> __l3_mon_event_count() and __l3_mon_event_count_sum() , no?
-> 
-> I'l move the WARN_ON_ONCE() before the "if"
+There is a total count of opened files on functionfs (both ep0 and
+dynamic ones) and when it hits zero, dynamic files get removed.
+Unfortunately, that removal can happen while another thread is
+in ffs_epfile_open(), but has not incremented the count yet.
+In that case open will succeed, leaving us with UAF on any subsequent
+read() or write().
 
-Thank you.
+The root cause is that ffs->opened is misused; atomic_dec_and_test() vs.
+atomic_add_return() is not a good idea, when object remains visible all
+along.
 
-Reinette
+To untangle that
+	* serialize openers on ffs->mutex (both for ep0 and for dynamic files)
+	* have dynamic ones use atomic_inc_not_zero() and fail if we had
+zero ->opened; in that case the file we are opening is doomed.
+	* have the inodes of dynamic files marked on removal (from the
+callback of simple_recursive_removal()) - clear ->i_private there.
+	* have open of dynamic ones verify they hadn't been already removed,
+along with checking that state is FFS_ACTIVE.
+
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+
+LLM Generated explanations, may be completely bogus:
+
+## Summary
+
+### What the Commit Fixes
+
+This commit fixes a **Use-After-Free (UAF)** vulnerability in USB gadget
+functionfs. The race condition occurs between `ffs_epfile_open()` and
+file removal:
+
+1. Thread A is in `ffs_epfile_open()` but hasn't incremented
+   `ffs->opened` yet
+2. Thread B closes the last file handle, triggering removal (since
+   `opened` is 0)
+3. Thread A's open succeeds with `file->private_data` pointing to freed
+   memory
+4. Subsequent `read()`/`write()` operations cause UAF
+
+### Fix Mechanism
+
+The fix implements proper synchronization:
+- Serializes openers using `ffs->mutex`
+- Uses `atomic_inc_not_zero()` to fail if counter already zero
+- Uses `smp_load_acquire()`/`smp_store_release()` for memory ordering
+- Clears `i_private` during removal via `simple_recursive_removal()`
+  callback
+- Uses `file->private_data` instead of `inode->i_private` in release
+  path
+
+### Stable Kernel Criteria Assessment
+
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct | ✅ Uses standard kernel primitives, proper locking
+patterns |
+| Fixes real bug | ✅ UAF vulnerability, security-relevant |
+| Important issue | ✅ Security bug, potential for crashes/exploitation |
+| Small and contained | ✅ Single file, +43/-10 lines, localized changes
+|
+| No new features | ✅ Pure bug fix, no new APIs |
+
+### Risk vs Benefit
+
+**Benefits:**
+- Fixes serious UAF vulnerability
+- USB gadget functionfs used in Android, embedded systems
+- Reviewed by Greg Kroah-Hartman (USB maintainer, stable maintainer)
+- Written by Al Viro (highly respected kernel developer)
+
+**Risks:**
+- Moderate complexity (changes locking behavior)
+- Recent commit (November 2025), limited mainline soak time
+- No explicit `Cc: stable@vger.kernel.org` tag
+
+### Dependencies
+
+- `ffs_mutex_lock()` - exists in functionfs since early versions
+- `simple_recursive_removal()` with callback - available since ~5.x
+  kernels
+- Standard kernel APIs (`atomic_inc_not_zero`, memory barriers) -
+  universally available
+
+### Concerns
+
+1. **No Fixes: tag** - Makes it harder to determine which stable trees
+   need this fix
+2. **No Cc: stable tag** - May indicate maintainers wanted soak time, or
+   an oversight given Greg KH reviewed it
+3. **Backport effort** - May need adjustment for older stable trees
+   depending on functionfs evolution
+
+### Conclusion
+
+This is a legitimate UAF security fix that affects real-world users
+(Android, embedded USB gadgets). Despite moderate complexity, the fix:
+- Addresses a serious vulnerability class (UAF)
+- Uses correct synchronization patterns
+- Has been reviewed by the appropriate maintainer who also maintains
+  stable trees
+- Is self-contained with no feature additions
+
+The lack of explicit stable tags appears to be an oversight given the
+security nature of the bug and Greg KH's review. UAF vulnerabilities
+typically warrant expedited backporting.
+
+**YES**
+
+ drivers/usb/gadget/function/f_fs.c | 53 ++++++++++++++++++++++++------
+ 1 file changed, 43 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index 47cfbe41fdff8..69f6e3c0f7e00 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -640,13 +640,22 @@ static ssize_t ffs_ep0_read(struct file *file, char __user *buf,
+ 
+ static int ffs_ep0_open(struct inode *inode, struct file *file)
+ {
+-	struct ffs_data *ffs = inode->i_private;
++	struct ffs_data *ffs = inode->i_sb->s_fs_info;
++	int ret;
+ 
+-	if (ffs->state == FFS_CLOSING)
+-		return -EBUSY;
++	/* Acquire mutex */
++	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
++	if (ret < 0)
++		return ret;
+ 
+-	file->private_data = ffs;
+ 	ffs_data_opened(ffs);
++	if (ffs->state == FFS_CLOSING) {
++		ffs_data_closed(ffs);
++		mutex_unlock(&ffs->mutex);
++		return -EBUSY;
++	}
++	mutex_unlock(&ffs->mutex);
++	file->private_data = ffs;
+ 
+ 	return stream_open(inode, file);
+ }
+@@ -1193,14 +1202,33 @@ static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
+ static int
+ ffs_epfile_open(struct inode *inode, struct file *file)
+ {
+-	struct ffs_epfile *epfile = inode->i_private;
++	struct ffs_data *ffs = inode->i_sb->s_fs_info;
++	struct ffs_epfile *epfile;
++	int ret;
+ 
+-	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
++	/* Acquire mutex */
++	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
++	if (ret < 0)
++		return ret;
++
++	if (!atomic_inc_not_zero(&ffs->opened)) {
++		mutex_unlock(&ffs->mutex);
++		return -ENODEV;
++	}
++	/*
++	 * we want the state to be FFS_ACTIVE; FFS_ACTIVE alone is
++	 * not enough, though - we might have been through FFS_CLOSING
++	 * and back to FFS_ACTIVE, with our file already removed.
++	 */
++	epfile = smp_load_acquire(&inode->i_private);
++	if (unlikely(ffs->state != FFS_ACTIVE || !epfile)) {
++		mutex_unlock(&ffs->mutex);
++		ffs_data_closed(ffs);
+ 		return -ENODEV;
++	}
++	mutex_unlock(&ffs->mutex);
+ 
+ 	file->private_data = epfile;
+-	ffs_data_opened(epfile->ffs);
+-
+ 	return stream_open(inode, file);
+ }
+ 
+@@ -1332,7 +1360,7 @@ static void ffs_dmabuf_put(struct dma_buf_attachment *attach)
+ static int
+ ffs_epfile_release(struct inode *inode, struct file *file)
+ {
+-	struct ffs_epfile *epfile = inode->i_private;
++	struct ffs_epfile *epfile = file->private_data;
+ 	struct ffs_dmabuf_priv *priv, *tmp;
+ 	struct ffs_data *ffs = epfile->ffs;
+ 
+@@ -2352,6 +2380,11 @@ static int ffs_epfiles_create(struct ffs_data *ffs)
+ 	return 0;
+ }
+ 
++static void clear_one(struct dentry *dentry)
++{
++	smp_store_release(&dentry->d_inode->i_private, NULL);
++}
++
+ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
+ {
+ 	struct ffs_epfile *epfile = epfiles;
+@@ -2359,7 +2392,7 @@ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
+ 	for (; count; --count, ++epfile) {
+ 		BUG_ON(mutex_is_locked(&epfile->mutex));
+ 		if (epfile->dentry) {
+-			simple_recursive_removal(epfile->dentry, NULL);
++			simple_recursive_removal(epfile->dentry, clear_one);
+ 			epfile->dentry = NULL;
+ 		}
+ 	}
+-- 
+2.51.0
+
