@@ -1,47 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9E672618;
-	Wed, 10 Dec 2025 03:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943BD72618;
+	Wed, 10 Dec 2025 03:49:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338559; cv=none; b=aKy6i2rcDzj7GjwSQt/R5aiiSHohZKs+gpcm08Lj569T41G+NHpYChaH0zlLjAFyeNv6bfbf6lPJAuKe9GdqjF9QgSC0Kz+a1R2MhME5hXtuystpHIjskYO8GmhyWkTEaEgO/+AMGTmlLP0YeM/0vx8NNJ7UDouN+Jpi0ObS+PA=
+	t=1765338561; cv=none; b=JPvNaGLcJx9eTuQ2adJ5PYz2zbsk7w/4aYg82hdIIHDpsAT/nwSQ5dgByg0vgEbmOzguh5CUX/boVtO6jBo2m5SS1ipG4ya7YBLwgB9zS0sKgLhoWf+nDZZRJGUncdVDBxcQIeyg2m4mu3+woRHbgpwyqsnjscC2uuAnPpHZZkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338559; c=relaxed/simple;
-	bh=EdoTQBVOSnfL3adtSB4OmKmM0oMbsG9LjOfOgavoKus=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=AmZIzV0qXgLRec777DoAwYZ8MZTkOcmwcp7YDbWuGmIrsjVy7qnE5pH/XihX+OoIWaL3U38qYEyO1Pjqei7EqhkoDFDmhOx86SNHgGP9K7ovhilqRNkvlY1iLVE+P2qvMdk1H3RaqyYKs+JUj2a7xZcBaXpr9w2aAJL6bdoGoVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BQ/tx/RA; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765338561; c=relaxed/simple;
+	bh=GCAGigYbU/y6QsjzNHVaS/eon7khpFveieDFJ9HwyMI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=WFfCVoqrpTPNkqNvM6346RUFit678mGxT+AYwW+m5bS/HZkcqrrbOU02KHjFR40lAoKMfwvvw9OenIWeyepXXugjjUFZ1oZBWhKj/PYefErTwdD+pUep3hy5+r2QgSZj3WbuGKPscmMeqZqum3tMy+qMX4TdIkroPPhnaq/H3rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WA90qH0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BQ/tx/RA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C0C4CEF1;
-	Wed, 10 Dec 2025 03:49:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WA90qH0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE098C4CEF1;
+	Wed, 10 Dec 2025 03:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338559;
-	bh=EdoTQBVOSnfL3adtSB4OmKmM0oMbsG9LjOfOgavoKus=;
-	h=From:To:Cc:Subject:Date:From;
-	b=BQ/tx/RAIthZ91x7MqIa5xHl+LjySTlxrhfZHOJ9E8wLFwOrBWcisF81MLCyP9I92
-	 LRdmEJ/CJgKxOsyNxJ7Y5m4JMlP3Yuvz5At2AHZC5itbSC7GA3Rc2lY0pUH4uuvN8O
-	 89zlVrv0ZmqXrfOMYo6HwqBtjL7T4WeyWPMN9acKC1E1du4JE7pM/BP6884ybMXAdV
-	 BM8/nNwDR+Tun1JLr+u0O29j21MbtcGYuJJ1Kr+8aCREkYQxYUKSUds8NktkRUzEdy
-	 mVlkrzZhs8xtUuU9yuIv56hhY7JNxeU3Gw+4NGAc0XhdG7UygY4mzX4uliR7ykqzui
-	 O1SQYN3qr9L/w==
+	s=k20201202; t=1765338561;
+	bh=GCAGigYbU/y6QsjzNHVaS/eon7khpFveieDFJ9HwyMI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WA90qH0G9aAclgyzLBtLhzpXq8MWnPTYC4r9K6TEEJMxIP+4qBLxcIOfr9PtPq1uS
+	 BQq1cbaAaZpkrlSIvJKfIx4RqPS7hm2OhOOa4dsvrfs1Emp+ZzntRQJnaNM5rvQdwG
+	 1bEp8Gp36ZDDxgXnIVsgyEuxrh4DKM+FdjKDkm+DEnbQ0ZFZ854fUTWpSuI0mCU3eF
+	 np5BdniV/Cc17yEnZJ59qz3cteB3+MonVEK8gu+akp/Wz1A4KQlNFxzJTf+DbWlihx
+	 ZTjXXZpGZ7ZRilqABYChOqKciec7MGIE3VEbM23921QJ3xIByl3iFJvxNA/1cWEouT
+	 nseHSaczMQgaw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Al Viro <viro@zeniv.linux.org.uk>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Tony Battersby <tonyb@cybernetics.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	brauner@kernel.org,
-	ingo.rohloff@lauterbach.com,
-	nichen@iscas.ac.cn,
-	mjguzik@gmail.com,
-	guhuinan@xiaomi.com,
-	liangjie@lixiang.com,
-	akash.m5@samsung.com
-Subject: [PATCH AUTOSEL 6.18-6.17] functionfs: fix the open/removal races
-Date: Tue,  9 Dec 2025 22:48:42 -0500
-Message-ID: <20251210034915.2268617-1-sashal@kernel.org>
+	njavali@marvell.com,
+	GR-QLogic-Storage-Upstream@marvell.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: qla2xxx: Use reinit_completion on mbx_intr_comp
+Date: Tue,  9 Dec 2025 22:48:43 -0500
+Message-ID: <20251210034915.2268617-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
+References: <20251210034915.2268617-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,227 +53,150 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit e5bf5ee266633cb18fff6f98f0b7d59a62819eee ]
+[ Upstream commit 957aa5974989fba4ae4f807ebcb27f12796edd4d ]
 
-ffs_epfile_open() can race with removal, ending up with file->private_data
-pointing to freed object.
+If a mailbox command completes immediately after
+wait_for_completion_timeout() times out, ha->mbx_intr_comp could be left
+in an inconsistent state, causing the next mailbox command not to wait
+for the hardware.  Fix by reinitializing the completion before use.
 
-There is a total count of opened files on functionfs (both ep0 and
-dynamic ones) and when it hits zero, dynamic files get removed.
-Unfortunately, that removal can happen while another thread is
-in ffs_epfile_open(), but has not incremented the count yet.
-In that case open will succeed, leaving us with UAF on any subsequent
-read() or write().
-
-The root cause is that ffs->opened is misused; atomic_dec_and_test() vs.
-atomic_add_return() is not a good idea, when object remains visible all
-along.
-
-To untangle that
-	* serialize openers on ffs->mutex (both for ep0 and for dynamic files)
-	* have dynamic ones use atomic_inc_not_zero() and fail if we had
-zero ->opened; in that case the file we are opening is doomed.
-	* have the inodes of dynamic files marked on removal (from the
-callback of simple_recursive_removal()) - clear ->i_private there.
-	* have open of dynamic ones verify they hadn't been already removed,
-along with checking that state is FFS_ACTIVE.
-
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Link: https://patch.msgid.link/11b6485e-0bfd-4784-8f99-c06a196dad94@cybernetics.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Summary
+## Comprehensive Analysis
 
-### What the Commit Fixes
+### 1. COMMIT MESSAGE ANALYSIS
 
-This commit fixes a **Use-After-Free (UAF)** vulnerability in USB gadget
-functionfs. The race condition occurs between `ffs_epfile_open()` and
-file removal:
+The commit message clearly describes a race condition:
+- **Bug:** If a mailbox command completes immediately **after**
+  `wait_for_completion_timeout()` times out, `ha->mbx_intr_comp` is left
+  in an inconsistent (completed) state
+- **Impact:** The next mailbox command will not wait for hardware
+- **Fix:** Reinitialize the completion before use
 
-1. Thread A is in `ffs_epfile_open()` but hasn't incremented
-   `ffs->opened` yet
-2. Thread B closes the last file handle, triggering removal (since
-   `opened` is 0)
-3. Thread A's open succeeds with `file->private_data` pointing to freed
-   memory
-4. Subsequent `read()`/`write()` operations cause UAF
+**Notable:** No "Cc: stable@vger.kernel.org" or "Fixes:" tag, but the
+bug description is clear and the fix is obviously correct.
 
-### Fix Mechanism
+### 2. CODE CHANGE ANALYSIS
 
-The fix implements proper synchronization:
-- Serializes openers using `ffs->mutex`
-- Uses `atomic_inc_not_zero()` to fail if counter already zero
-- Uses `smp_load_acquire()`/`smp_store_release()` for memory ordering
-- Clears `i_private` during removal via `simple_recursive_removal()`
-  callback
-- Uses `file->private_data` instead of `inode->i_private` in release
-  path
+**The Race Condition:**
+1. Thread calls `wait_for_completion_timeout(&ha->mbx_intr_comp, ...)`
+2. Timeout expires → returns 0
+3. Meanwhile, hardware interrupt fires and
+   `qla2x00_handle_mbx_completion()` calls
+   `complete(&ha->mbx_intr_comp)` (at `qla_inline.h:271`)
+4. Completion is now in "done" state
+5. Next mailbox command: `wait_for_completion_timeout()` returns
+   immediately without waiting
+6. Driver proceeds before hardware is ready → potential malfunction
 
-### Stable Kernel Criteria Assessment
+**The Fix (2 lines added):**
+- `reinit_completion(&ha->mbx_intr_comp)` before starting to wait
+  (ensures clean initial state)
+- `reinit_completion(&ha->mbx_intr_comp)` after timeout (clears any
+  stale completion that raced)
 
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Uses standard kernel primitives, proper locking
-patterns |
-| Fixes real bug | ✅ UAF vulnerability, security-relevant |
-| Important issue | ✅ Security bug, potential for crashes/exploitation |
-| Small and contained | ✅ Single file, +43/-10 lines, localized changes
-|
-| No new features | ✅ Pure bug fix, no new APIs |
+This is a **standard kernel pattern** for handling completion/timeout
+races (similar fix in `csiostor` - commit 3e3f5a8a0f03e).
 
-### Risk vs Benefit
+### 3. CLASSIFICATION
 
-**Benefits:**
-- Fixes serious UAF vulnerability
-- USB gadget functionfs used in Android, embedded systems
-- Reviewed by Greg Kroah-Hartman (USB maintainer, stable maintainer)
-- Written by Al Viro (highly respected kernel developer)
+- **Type:** Bug fix for a real race condition
+- **Not:** Feature addition, new API, cleanup, or optimization
+- **Category:** Driver reliability fix
 
-**Risks:**
-- Moderate complexity (changes locking behavior)
-- Recent commit (November 2025), limited mainline soak time
-- No explicit `Cc: stable@vger.kernel.org` tag
+### 4. SCOPE AND RISK ASSESSMENT
 
-### Dependencies
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | +2 lines (minimal) |
+| Files touched | 1 file |
+| API used | `reinit_completion()` - standard kernel API, stable for
+years |
+| Complexity | Very low - straightforward pattern |
+| Risk of regression | Very low - just resets completion state |
 
-- `ffs_mutex_lock()` - exists in functionfs since early versions
-- `simple_recursive_removal()` with callback - available since ~5.x
-  kernels
-- Standard kernel APIs (`atomic_inc_not_zero`, memory barriers) -
-  universally available
+### 5. USER IMPACT
 
-### Concerns
+- **Affected users:** Anyone with QLogic Fibre Channel HBAs (qla2xxx
+  driver)
+- **Deployment:** Enterprise storage systems, SANs, data centers
+- **Severity:** If triggered, could cause:
+  - Mailbox commands proceeding before hardware ready
+  - Corrupted command sequences
+  - I/O failures or potential data corruption
+- **Frequency:** Race condition, but in storage path - critical when it
+  hits
+- **Callers:** 99 functions call `qla2x00_mailbox_command` - this is the
+  core firmware communication path
 
-1. **No Fixes: tag** - Makes it harder to determine which stable trees
-   need this fix
-2. **No Cc: stable tag** - May indicate maintainers wanted soak time, or
-   an oversight given Greg KH reviewed it
-3. **Backport effort** - May need adjustment for older stable trees
-   depending on functionfs evolution
+### 6. STABILITY INDICATORS
 
-### Conclusion
+- Signed-off-by: Tony Battersby (author)
+- Signed-off-by: Martin K. Petersen (SCSI maintainer)
+- Proper patch submission via Link: to patch.msgid.link
 
-This is a legitimate UAF security fix that affects real-world users
-(Android, embedded USB gadgets). Despite moderate complexity, the fix:
-- Addresses a serious vulnerability class (UAF)
-- Uses correct synchronization patterns
-- Has been reviewed by the appropriate maintainer who also maintains
+### 7. DEPENDENCY CHECK
+
+- Uses only `reinit_completion()` - standard kernel API available in all
   stable trees
-- Is self-contained with no feature additions
+- No dependencies on other commits
+- The affected code path exists in all stable trees where qla2xxx driver
+  is present
 
-The lack of explicit stable tags appears to be an oversight given the
-security nature of the bug and Greg KH's review. UAF vulnerabilities
-typically warrant expedited backporting.
+### Summary
+
+**Meets all stable kernel criteria:**
+1. ✅ **Obviously correct** - standard pattern for completion timeout
+   races
+2. ✅ **Fixes real bug** - race condition affecting hardware
+   synchronization
+3. ✅ **Small and contained** - only 2 lines, single file
+4. ✅ **No new features** - purely a bug fix
+5. ✅ **Tested** - accepted by SCSI maintainer
+6. ✅ **User impact** - affects enterprise storage users
+
+**Risk vs Benefit:**
+- Risk: Negligible - `reinit_completion()` is well-understood and safe
+- Benefit: Prevents potential storage I/O issues from race condition
+
+The only missing element is an explicit "Cc: stable" tag, but this
+commit clearly qualifies as a proper stable backport candidate. It's a
+small, surgical fix for a real race condition in a production SCSI
+driver used in enterprise storage environments.
 
 **YES**
 
- drivers/usb/gadget/function/f_fs.c | 53 ++++++++++++++++++++++++------
- 1 file changed, 43 insertions(+), 10 deletions(-)
+ drivers/scsi/qla2xxx/qla_mbx.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 47cfbe41fdff8..69f6e3c0f7e00 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -640,13 +640,22 @@ static ssize_t ffs_ep0_read(struct file *file, char __user *buf,
+diff --git a/drivers/scsi/qla2xxx/qla_mbx.c b/drivers/scsi/qla2xxx/qla_mbx.c
+index 32eb0ce8b170d..1f01576f044b8 100644
+--- a/drivers/scsi/qla2xxx/qla_mbx.c
++++ b/drivers/scsi/qla2xxx/qla_mbx.c
+@@ -253,6 +253,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
+ 	/* Issue set host interrupt command to send cmd out. */
+ 	ha->flags.mbox_int = 0;
+ 	clear_bit(MBX_INTERRUPT, &ha->mbx_cmd_flags);
++	reinit_completion(&ha->mbx_intr_comp);
  
- static int ffs_ep0_open(struct inode *inode, struct file *file)
- {
--	struct ffs_data *ffs = inode->i_private;
-+	struct ffs_data *ffs = inode->i_sb->s_fs_info;
-+	int ret;
+ 	/* Unlock mbx registers and wait for interrupt */
+ 	ql_dbg(ql_dbg_mbx, vha, 0x100f,
+@@ -279,6 +280,7 @@ qla2x00_mailbox_command(scsi_qla_host_t *vha, mbx_cmd_t *mcp)
+ 			    "cmd=%x Timeout.\n", command);
+ 			spin_lock_irqsave(&ha->hardware_lock, flags);
+ 			clear_bit(MBX_INTR_WAIT, &ha->mbx_cmd_flags);
++			reinit_completion(&ha->mbx_intr_comp);
+ 			spin_unlock_irqrestore(&ha->hardware_lock, flags);
  
--	if (ffs->state == FFS_CLOSING)
--		return -EBUSY;
-+	/* Acquire mutex */
-+	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
-+	if (ret < 0)
-+		return ret;
- 
--	file->private_data = ffs;
- 	ffs_data_opened(ffs);
-+	if (ffs->state == FFS_CLOSING) {
-+		ffs_data_closed(ffs);
-+		mutex_unlock(&ffs->mutex);
-+		return -EBUSY;
-+	}
-+	mutex_unlock(&ffs->mutex);
-+	file->private_data = ffs;
- 
- 	return stream_open(inode, file);
- }
-@@ -1193,14 +1202,33 @@ static ssize_t ffs_epfile_io(struct file *file, struct ffs_io_data *io_data)
- static int
- ffs_epfile_open(struct inode *inode, struct file *file)
- {
--	struct ffs_epfile *epfile = inode->i_private;
-+	struct ffs_data *ffs = inode->i_sb->s_fs_info;
-+	struct ffs_epfile *epfile;
-+	int ret;
- 
--	if (WARN_ON(epfile->ffs->state != FFS_ACTIVE))
-+	/* Acquire mutex */
-+	ret = ffs_mutex_lock(&ffs->mutex, file->f_flags & O_NONBLOCK);
-+	if (ret < 0)
-+		return ret;
-+
-+	if (!atomic_inc_not_zero(&ffs->opened)) {
-+		mutex_unlock(&ffs->mutex);
-+		return -ENODEV;
-+	}
-+	/*
-+	 * we want the state to be FFS_ACTIVE; FFS_ACTIVE alone is
-+	 * not enough, though - we might have been through FFS_CLOSING
-+	 * and back to FFS_ACTIVE, with our file already removed.
-+	 */
-+	epfile = smp_load_acquire(&inode->i_private);
-+	if (unlikely(ffs->state != FFS_ACTIVE || !epfile)) {
-+		mutex_unlock(&ffs->mutex);
-+		ffs_data_closed(ffs);
- 		return -ENODEV;
-+	}
-+	mutex_unlock(&ffs->mutex);
- 
- 	file->private_data = epfile;
--	ffs_data_opened(epfile->ffs);
--
- 	return stream_open(inode, file);
- }
- 
-@@ -1332,7 +1360,7 @@ static void ffs_dmabuf_put(struct dma_buf_attachment *attach)
- static int
- ffs_epfile_release(struct inode *inode, struct file *file)
- {
--	struct ffs_epfile *epfile = inode->i_private;
-+	struct ffs_epfile *epfile = file->private_data;
- 	struct ffs_dmabuf_priv *priv, *tmp;
- 	struct ffs_data *ffs = epfile->ffs;
- 
-@@ -2352,6 +2380,11 @@ static int ffs_epfiles_create(struct ffs_data *ffs)
- 	return 0;
- }
- 
-+static void clear_one(struct dentry *dentry)
-+{
-+	smp_store_release(&dentry->d_inode->i_private, NULL);
-+}
-+
- static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
- {
- 	struct ffs_epfile *epfile = epfiles;
-@@ -2359,7 +2392,7 @@ static void ffs_epfiles_destroy(struct ffs_epfile *epfiles, unsigned count)
- 	for (; count; --count, ++epfile) {
- 		BUG_ON(mutex_is_locked(&epfile->mutex));
- 		if (epfile->dentry) {
--			simple_recursive_removal(epfile->dentry, NULL);
-+			simple_recursive_removal(epfile->dentry, clear_one);
- 			epfile->dentry = NULL;
- 		}
- 	}
+ 			if (chip_reset != ha->chip_reset) {
 -- 
 2.51.0
 
