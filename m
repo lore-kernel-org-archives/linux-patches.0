@@ -1,43 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE15275AE8;
-	Wed, 10 Dec 2025 07:37:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4982E62D1;
+	Wed, 10 Dec 2025 10:16:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352223; cv=none; b=MPlex2vfpbTe7iAB3WdT8keHrxvjizxSLmVLYT4e5+2lF80h+dJvwmPlEcrjFeTX1rCQmkHzjPNNPVDVHKKTVATuTUszGEz8MDbZlNi78UX3XL4UMavSYQbbc0+Itn+cepZ3eju+ukfl9E4jTguwcG0hzQKHnTgtp/o/jMNQ0RE=
+	t=1765361777; cv=none; b=rwKMOr9a95N4vT0FfnzZFs7s5bxiALuUelewKQOxN/zhQhqSeZ52CI8qa5I2O2CCH6kCesfVrU7mjK8QyNh9gkWCZi+X2fyxvV7lQuPBbMB8EFEzAIs/66+YRe3JwUYSlDHW9Vb6nNCqiVuJ8nzDkns1mmxttmZl8fITb/feQm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352223; c=relaxed/simple;
-	bh=SETMiaGJcNTN7LKOcS1vPbzGjRf+BDg7+Va6y1IofCY=;
+	s=arc-20240116; t=1765361777; c=relaxed/simple;
+	bh=X2SfEHH1j5zd+OXLvPgd9hoLwxS014te3hlaksuRcyE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sfwf+tLqyQrbQ5J6RFgkWlpl2kPHrbUGfZ3UJ/ABVtR1EgqXLFJCT+XObBcgU7dtp4Tjrz/m6jsCg8mNo8gawuMJCneCQyynX2dqwPGgWO1TJF3T0CUYiEkb6fMZLSKnYyYbhiG8z3PO4flkZCmOVzOA7jW2u3lkVV2wSiDukdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERlQtlgk; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERlQtlgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F8DC4CEF1;
-	Wed, 10 Dec 2025 07:37:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352223;
-	bh=SETMiaGJcNTN7LKOcS1vPbzGjRf+BDg7+Va6y1IofCY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERlQtlgk1Yc1cUfCMbQ7WuAPnvqkUxy2/iYWPdrmPE3ZRw4mZsBAMXQu+MmH+U/qR
-	 7PK/UHz/JVZs1QTYkeoL7BpFNpCqfxT1rFouAhyBRuxe82ur8ElPsKI+4yCr98B0AK
-	 kdJ/1EPeMvldnCImLIEKCH15XJoqPQ474fuWjZsY=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 MIME-Version; b=Z39gEjxN3b6EzUmtq4Re8Olz15/jGAALMVBdESRUO+HgfQeiru52yDvtYx9/CyyIMuNyQmx01DmGcuJYKzmOSzRRbTt70JxaCEviyjim//pbeDmuXQINfKbmMMU+QxZLZC9qF7r8u7Xua8ueRmE0yBPllz0fhz4B6TDvWd/7zSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 08/29] rust_binder: fix race condition on death_list
-Date: Wed, 10 Dec 2025 16:30:18 +0900
-Message-ID: <20251210072944.597295378@linuxfoundation.org>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
-References: <20251210072944.363788552@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.12 00/49] 6.12.62-rc1 review
+Date: Wed, 10 Dec 2025 10:15:39 +0000
+Message-ID: <20251210101544.2342-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.51.2
+In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
+References: <20251210072948.125620687@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,117 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Alice Ryhl <aliceryhl@google.com>
+CPU/kernel: Linux auntie 6.12.62-rc1-g4112049d7836 #1 SMP PREEMPT_DYNAMIC Wed Dec 10 10:07:46 -00 2025 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-commit 3e0ae02ba831da2b707905f4e602e43f8507b8cc upstream.
-
-Rust Binder contains the following unsafe operation:
-
-	// SAFETY: A `NodeDeath` is never inserted into the death list
-	// of any node other than its owner, so it is either in this
-	// death list or in no death list.
-	unsafe { node_inner.death_list.remove(self) };
-
-This operation is unsafe because when touching the prev/next pointers of
-a list element, we have to ensure that no other thread is also touching
-them in parallel. If the node is present in the list that `remove` is
-called on, then that is fine because we have exclusive access to that
-list. If the node is not in any list, then it's also ok. But if it's
-present in a different list that may be accessed in parallel, then that
-may be a data race on the prev/next pointers.
-
-And unfortunately that is exactly what is happening here. In
-Node::release, we:
-
- 1. Take the lock.
- 2. Move all items to a local list on the stack.
- 3. Drop the lock.
- 4. Iterate the local list on the stack.
-
-Combined with threads using the unsafe remove method on the original
-list, this leads to memory corruption of the prev/next pointers. This
-leads to crashes like this one:
-
-	Unable to handle kernel paging request at virtual address 000bb9841bcac70e
-	Mem abort info:
-	  ESR = 0x0000000096000044
-	  EC = 0x25: DABT (current EL), IL = 32 bits
-	  SET = 0, FnV = 0
-	  EA = 0, S1PTW = 0
-	  FSC = 0x04: level 0 translation fault
-	Data abort info:
-	  ISV = 0, ISS = 0x00000044, ISS2 = 0x00000000
-	  CM = 0, WnR = 1, TnD = 0, TagAccess = 0
-	  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-	[000bb9841bcac70e] address between user and kernel address ranges
-	Internal error: Oops: 0000000096000044 [#1] PREEMPT SMP
-	google-cdd 538c004.gcdd: context saved(CPU:1)
-	item - log_kevents is disabled
-	Modules linked in: ... rust_binder
-	CPU: 1 UID: 0 PID: 2092 Comm: kworker/1:178 Tainted: G S      W  OE      6.12.52-android16-5-g98debd5df505-4k #1 f94a6367396c5488d635708e43ee0c888d230b0b
-	Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-	Hardware name: MUSTANG PVT 1.0 based on LGA (DT)
-	Workqueue: events _RNvXs6_NtCsdfZWD8DztAw_6kernel9workqueueINtNtNtB7_4sync3arc3ArcNtNtCs8QPsHWIn21X_16rust_binder_main7process7ProcessEINtB5_15WorkItemPointerKy0_E3runB13_ [rust_binder]
-	pstate: 23400005 (nzCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-	pc : _RNvXs3_NtCs8QPsHWIn21X_16rust_binder_main7processNtB5_7ProcessNtNtCsdfZWD8DztAw_6kernel9workqueue8WorkItem3run+0x450/0x11f8 [rust_binder]
-	lr : _RNvXs3_NtCs8QPsHWIn21X_16rust_binder_main7processNtB5_7ProcessNtNtCsdfZWD8DztAw_6kernel9workqueue8WorkItem3run+0x464/0x11f8 [rust_binder]
-	sp : ffffffc09b433ac0
-	x29: ffffffc09b433d30 x28: ffffff8821690000 x27: ffffffd40cbaa448
-	x26: ffffff8821690000 x25: 00000000ffffffff x24: ffffff88d0376578
-	x23: 0000000000000001 x22: ffffffc09b433c78 x21: ffffff88e8f9bf40
-	x20: ffffff88e8f9bf40 x19: ffffff882692b000 x18: ffffffd40f10bf00
-	x17: 00000000c006287d x16: 00000000c006287d x15: 00000000000003b0
-	x14: 0000000000000100 x13: 000000201cb79ae0 x12: fffffffffffffff0
-	x11: 0000000000000000 x10: 0000000000000001 x9 : 0000000000000000
-	x8 : b80bb9841bcac706 x7 : 0000000000000001 x6 : fffffffebee63f30
-	x5 : 0000000000000000 x4 : 0000000000000001 x3 : 0000000000000000
-	x2 : 0000000000004c31 x1 : ffffff88216900c0 x0 : ffffff88e8f9bf00
-	Call trace:
-	 _RNvXs3_NtCs8QPsHWIn21X_16rust_binder_main7processNtB5_7ProcessNtNtCsdfZWD8DztAw_6kernel9workqueue8WorkItem3run+0x450/0x11f8 [rust_binder bbc172b53665bbc815363b22e97e3f7e3fe971fc]
-	 process_scheduled_works+0x1c4/0x45c
-	 worker_thread+0x32c/0x3e8
-	 kthread+0x11c/0x1c8
-	 ret_from_fork+0x10/0x20
-	Code: 94218d85 b4000155 a94026a8 d10102a0 (f9000509)
-	---[ end trace 0000000000000000 ]---
-
-Thus, modify Node::release to pop items directly off the original list.
-
-Cc: stable@vger.kernel.org
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://patch.msgid.link/20251111-binder-fix-list-remove-v1-1-8ed14a0da63d@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/android/binder/node.rs | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/android/binder/node.rs b/drivers/android/binder/node.rs
-index 08d362deaf61..c26d113ede96 100644
---- a/drivers/android/binder/node.rs
-+++ b/drivers/android/binder/node.rs
-@@ -541,10 +541,10 @@ pub(crate) fn release(&self) {
-             guard = self.owner.inner.lock();
-         }
- 
--        let death_list = core::mem::take(&mut self.inner.access_mut(&mut guard).death_list);
--        drop(guard);
--        for death in death_list {
-+        while let Some(death) = self.inner.access_mut(&mut guard).death_list.pop_front() {
-+            drop(guard);
-             death.into_arc().set_dead();
-+            guard = self.owner.inner.lock();
-         }
-     }
- 
--- 
-2.52.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
