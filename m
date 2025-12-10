@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B46772618;
-	Wed, 10 Dec 2025 03:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 993D826560D;
+	Wed, 10 Dec 2025 03:49:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338563; cv=none; b=F/prHDOdUu40u826ZHWIUXSJlaJyj3XWq4/rtNHU5ROrZ8C2X1CiwjKuon33wrxBwsNM/RcuJgIeTMBHDR4OVYRCSdO3ubuIkDOnN+jpdIXyVWVo/WnSezr5HhDiXR5HNEafuJJj2voJa6VCQtflUjD5PoKfHqFTbWiD16BhDrM=
+	t=1765338565; cv=none; b=jD8MDyjlwakDzfifYrhUhq3reaaeVNh30K20zjDkctDZcjq+cWFd//s57AabqMNlxpoObdo4VKZXptgVfsikJa1kM0Bo+zYbnW6Trtu7RY9eg+W2+7RQrUCBUXxDFSfahCuxOW6GLN9olxPba4IiUP6lOF+JEzO+xwvw5BOYDFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338563; c=relaxed/simple;
-	bh=2duEGX3dZSI2y/mcqGLpjVGeIwAQ6krssuhwn+x9ar8=;
+	s=arc-20240116; t=1765338565; c=relaxed/simple;
+	bh=T/FUqIYymG8r2tt74VYnJ73FamrE5okQj2rlbfsBCnw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=llZn5WJUPzvDfORN67Nwgx+oQSQXSk7lZ+KiECtYJikgYyHu+CABgZi5MxtFQjIBmck3cYUN72Jbag+K4Yt+np8WOxoSMaJZfIFRolirYzMCEBq0y7r/ni8icRiQV0lRcrCjyTzKiG+lDBu44w9cDSlR1/jc4WSoy7N+nkVVAGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D1qsaeZo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4OB5s/V/UNWEAtvDBT2Vg0Zk6LLoJDplUZeftI8arMQfFRUkWg8qDQHWNcAnZlTNNaJMHVBWPdzcLVbuj1MwZoSE6FPnRjoBCjJX2SJCOMWQMR74z+25II7DQnveH9LMZwHj2iBCo+rpe3+hxwDCMpj7mZYjFn6LTRSpqx8hfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GANpA89x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D1qsaeZo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4BD0C19422;
-	Wed, 10 Dec 2025 03:49:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GANpA89x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C063C4CEF1;
+	Wed, 10 Dec 2025 03:49:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338562;
-	bh=2duEGX3dZSI2y/mcqGLpjVGeIwAQ6krssuhwn+x9ar8=;
+	s=k20201202; t=1765338565;
+	bh=T/FUqIYymG8r2tt74VYnJ73FamrE5okQj2rlbfsBCnw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1qsaeZoK0RF2+TU8Mrd4EbqQ03vQ+rtJWHEJIhsaevZgJ/Vu8rXy9040C4klPJsv
-	 hlb7c0X+rvYWNTPWSvzrLYx6fW0sTzg10uhJhrcq3t34ChGOiCHiyIBhxtY6mpD7De
-	 pAyEJOb8LPC2TTd4jaO6cOTqN5dgkn22d49xAxscjGen4dryivEJ9IcNi0lKKJNuDO
-	 NZWLx1gE8wcgyrPgHS1hu8NIgjzIj8c04MVNwiQ6G43DqgVWRtxGJ0CiU6ZE0DB7P5
-	 5qxwl4enZpJelundQdA1VkWp/+Oh6laRUSpTyhootO2oe+ENwSU8IOcjod0C7dYTKM
-	 rSCOW3cqfhUmg==
+	b=GANpA89xDZ4e7tLWNe62xQrkwhzyP9WeKdqsylSA7sFPfm5BkXXBckCoEbjS0gt/C
+	 ObiIFoDkK/u9/eEktAY639s1G+3CnOSalQiyL7oiM2VBLs05byymPNPJKJqeyp+Eh3
+	 NV/TShTeRZ4KD5irgrqlAitmUy+WDKAKMtlxijYLZgjYwGX2NcCBfqTFEnIWgkdg95
+	 jnB4f9GrHLQr98oWa/j20lOp7drWs4szACLFkh9xcb5q+366A5zFZe1Pk2N4eAu7hb
+	 dYUIZYu5mx0m2WTnqKW5W7BweTtRe0JQs3KO34bbmyMIZ1pCrYJQq+OKCk1QlEJOQ0
+	 zQG17fGZSHyLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Qiang <liqiang01@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+Cc: Matthias Schiffer <matthias.schiffer@tq-group.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-watchdog@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] via_wdt: fix critical boot hang due to unnamed resource allocation
-Date: Tue,  9 Dec 2025 22:48:44 -0500
-Message-ID: <20251210034915.2268617-3-sashal@kernel.org>
+	aaro.koskinen@iki.fi,
+	andreas@kemnade.info,
+	rogerq@kernel.org,
+	tony@atomide.com,
+	linux-omap@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] ti-sysc: allow OMAP2 and OMAP4 timers to be reserved on AM33xx
+Date: Tue,  9 Dec 2025 22:48:45 -0500
+Message-ID: <20251210034915.2268617-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
 References: <20251210034915.2268617-1-sashal@kernel.org>
@@ -49,164 +53,170 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Qiang <liqiang01@kylinos.cn>
+From: Matthias Schiffer <matthias.schiffer@tq-group.com>
 
-[ Upstream commit 7aa31ee9ec92915926e74731378c009c9cc04928 ]
+[ Upstream commit 3f61783920504b2cf99330b372d82914bb004d8e ]
 
-The VIA watchdog driver uses allocate_resource() to reserve a MMIO
-region for the watchdog control register. However, the allocated
-resource was not given a name, which causes the kernel resource tree
-to contain an entry marked as "<BAD>" under /proc/iomem on x86
-platforms.
+am33xx.dtsi has the same clock setup as am35xx.dtsi, setting
+ti,no-reset-on-init and ti,no-idle on timer1_target and timer2_target,
+so AM33 needs the same workaround as AM35 to avoid ti-sysc probe
+failing on certain target modules.
 
-During boot, this unnamed resource can lead to a critical hang because
-subsequent resource lookups and conflict checks fail to handle the
-invalid entry properly.
-
-Signed-off-by: Li Qiang <liqiang01@kylinos.cn>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Signed-off-by: Matthias Schiffer <matthias.schiffer@tq-group.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20250825131114.2206804-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+# Commit Analysis: ti-sysc: allow OMAP2 and OMAP4 timers to be reserved
+on AM33xx
 
-### 1. COMMIT MESSAGE ANALYSIS
+## 1. Commit Message Analysis
 
-**Subject:** "via_wdt: fix critical boot hang due to unnamed resource
-allocation"
-- Uses "fix" language indicating a bug fix
-- Claims "critical boot hang" - a severe user-impacting issue
-- Affects VIA chipset watchdog driver
+**Subject/Body**: The commit addresses ti-sysc probe failures on AM33xx
+platforms (commonly used in BeagleBone and industrial embedded systems).
+The commit explains that AM33xx has the same clock setup as AM35xx (with
+`ti,no-reset-on-init` and `ti,no-idle` on timer targets), so it needs
+the same workaround.
 
-**Tags analysis:**
-- **Missing:** No "Cc: stable@vger.kernel.org" tag
-- **Missing:** No "Fixes:" tag
-- **Present:** Reviewed-by: Guenter Roeck (well-respected watchdog/hwmon
-  maintainer)
-- **Present:** Signed-off by both watchdog maintainers (Guenter Roeck
-  and Wim Van Sebroeck)
+**Notable absence**: No `Cc: stable@vger.kernel.org` or `Fixes:` tag.
+The maintainers didn't explicitly mark this for stable backporting.
 
-### 2. CODE CHANGE ANALYSIS
+## 2. Code Change Analysis
 
-The fix is a **single line addition**:
-```c
-wdt_res.name = "via_wdt";
-```
+The changes are minimal and well-contained:
 
-**The bug mechanism:**
-1. `wdt_res` is declared as a static `struct resource` without
-   initialization at line 67
-2. `allocate_resource()` is called without the resource having a name
-   set
-3. This results in a NULL `name` field, shown as `<BAD>` in
-   `/proc/iomem`
-4. The kernel's resource code in `kernel/resource.c:141` shows: `r->name
-   ? r->name : "<BAD>"`
+1. **New enum value**: Adds `SOC_AM33` to `enum sysc_soc` at
+   `drivers/bus/ti-sysc.c:51`
+2. **SoC detection**: Adds `SOC_FLAG("AM33*", SOC_AM33)` to
+   `sysc_soc_match[]`
+3. **Logic extension in `sysc_check_active_timer()`**:
+   - Converts if/else to switch statement
+   - Adds `SOC_AM33` case alongside existing `SOC_3430` and `SOC_AM35`
+     to return `-ENXIO`
 
-**Why this is needed:**
-- Other watchdog drivers (e.g., `f71808e_wdt.c`) properly set
-  `wdt_res.name = "superio port"`
-- `struct resource` has a `name` field that should always be populated
+**Technical mechanism**: When a timer has both
+`SYSC_QUIRK_NO_RESET_ON_INIT` and `SYSC_QUIRK_NO_IDLE` quirks set
+(indicating it's likely in use by the system timer driver), and the SoC
+is AM33/AM35/3430, the function returns `-ENXIO` allowing the timer to
+be "reserved" and preventing probe failure.
 
-### 3. CLASSIFICATION
+## 3. Classification
 
-- **Type:** Bug fix (not new feature)
-- **Severity:** The commit claims "critical boot hang" - though the
-  exact mechanism isn't fully clear from code inspection, unnamed
-  resources can cause problems in resource lookup/conflict resolution
-  paths
-- **Scope:** Single driver, single line
+This falls under the **QUIRKS and WORKAROUNDS** exception category:
+- Extends an existing hardware-specific workaround to similar hardware
+- Fixes probe failures on real devices
+- Follows an established pattern in the driver for handling SoC-specific
+  timer behavior
 
-### 4. SCOPE AND RISK ASSESSMENT
+## 4. Scope and Risk Assessment
 
-| Factor | Assessment |
-|--------|------------|
-| Lines changed | 1 |
-| Files touched | 1 |
-| Complexity | Extremely low |
-| Risk of regression | **Zero** - adding a name to a resource cannot
-cause problems |
-| Self-contained | Yes, no dependencies |
+**Size**: Very small (~20 lines, 1 file)
+**Subsystem**: ti-sysc bus driver (OMAP/TI platform-specific)
+**Complexity**: Low - straightforward extension of existing logic
+**Risk**: Very low - only affects AM33xx platforms, doesn't change
+behavior for any other SoC
 
-### 5. USER IMPACT
+The switch statement change is a cosmetic improvement that makes the
+code cleaner while adding the new case.
 
-- **Affected users:** VIA chipset hardware with watchdog (relatively
-  rare, older hardware)
-- **Severity if bug hits:** Boot hang (critical)
-- **Bug age:** Present since driver was introduced in 2011
-  (`dc3c56b703dad`)
+## 5. User Impact
 
-### 6. STABILITY INDICATORS
+**Who is affected**: Users of AM33xx-based systems (BeagleBone Black,
+industrial AM335x boards)
+**Severity**: Probe failures prevent proper hardware initialization,
+which can be significant for embedded systems
+**Prevalence**: AM33xx is a widely-deployed platform
 
-- **Reviewed-by:** Guenter Roeck - respected maintainer
-- **Correctness:** Obviously correct - other drivers do the same thing
-- **Testing:** Implied through maintainer review
+## 6. Stability Indicators
 
-### 7. DEPENDENCY CHECK
+- Multiple signed-off-by tags (Matthias Schiffer, Alexander Stein, Kevin
+  Hilman)
+- Proper review via lore.kernel.org
+- Follows established patterns in the codebase (SOC_AM35 workaround
+  already existed)
 
-- **No dependencies** - completely self-contained
-- **Driver exists in all stable trees** - since 2011
+## 7. Dependency Check
 
-## Risk vs Benefit Analysis
+The commit is self-contained. The required infrastructure (SOC detection
+mechanism, timer quirk handling) already exists in the driver. The only
+addition is a new enum value and extending the switch case.
 
-**Benefits:**
-- Fixes potential boot hang for affected users
-- Fixes incorrect `/proc/iomem` display (`<BAD>` entries)
-- Brings via_wdt in line with other watchdog drivers
+## Summary Assessment
 
-**Risks:**
-- **None** - setting a resource name is a standard, safe operation
+**Pros**:
+- Fixes real probe failures on commonly-used embedded platforms
+- Very small, contained change with low regression risk
+- Extends existing well-tested workaround to similar hardware
+- Falls under the "quirks/workarounds" exception for stable
 
-## Concerns
+**Cons**:
+- No explicit `Cc: stable` tag from maintainers
+- No `Fixes:` tag to identify when the bug was introduced
+- Adds new code (enum value) rather than purely fixing existing code
 
-1. **No explicit stable request:** The maintainers didn't add `Cc:
-   stable@vger.kernel.org`
-2. **Boot hang claim verification:** The exact mechanism for the boot
-   hang isn't easily traced in code, though I trust the
-   reporter/maintainers' assessment
-3. **Limited scope:** Only affects VIA chipset users (small population)
+**Risk vs Benefit**: The risk is very low (only affects AM33xx
+platforms, extends existing logic). The benefit is meaningful for AM33xx
+users who would otherwise hit probe failures. This type of platform-
+specific quirk extension is common and safe.
 
-## Conclusion
+## Verdict
 
-This commit **should be backported** to stable kernels. Despite the
-missing stable tag, it meets all stable criteria:
-
-1. ✅ **Obviously correct** - trivial one-line fix matching other
-   drivers' patterns
-2. ✅ **Fixes a real bug** - unnamed resources are incorrect and can
-   cause issues
-3. ✅ **Small and contained** - one line in one file
-4. ✅ **No new features** - just fixing existing code
-5. ✅ **Zero regression risk** - adding a name cannot break anything
-6. ✅ **Maintainer reviewed** - Guenter Roeck reviewed
-
-The fix is so trivially safe that even if the boot hang is rare, there
-is no downside to including it in stable.
+This is a small, well-contained fix that extends an existing hardware
+workaround to similar hardware (AM33xx). While it lacks explicit stable
+tags, it meets the criteria for the "quirks and workarounds" exception.
+The fix prevents probe failures on a widely-used embedded platform with
+minimal regression risk. The pattern of extending SoC-specific
+workarounds to similar SoCs is well-established and safe.
 
 **YES**
 
- drivers/watchdog/via_wdt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/bus/ti-sysc.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/via_wdt.c b/drivers/watchdog/via_wdt.c
-index d647923d68fed..f555763926518 100644
---- a/drivers/watchdog/via_wdt.c
-+++ b/drivers/watchdog/via_wdt.c
-@@ -165,6 +165,7 @@ static int wdt_probe(struct pci_dev *pdev,
- 		dev_err(&pdev->dev, "cannot enable PCI device\n");
- 		return -ENODEV;
- 	}
-+	wdt_res.name = "via_wdt";
+diff --git a/drivers/bus/ti-sysc.c b/drivers/bus/ti-sysc.c
+index 5566ad11399e7..610354ce7f8f0 100644
+--- a/drivers/bus/ti-sysc.c
++++ b/drivers/bus/ti-sysc.c
+@@ -48,6 +48,7 @@ enum sysc_soc {
+ 	SOC_UNKNOWN,
+ 	SOC_2420,
+ 	SOC_2430,
++	SOC_AM33,
+ 	SOC_3430,
+ 	SOC_AM35,
+ 	SOC_3630,
+@@ -2912,6 +2913,7 @@ static void ti_sysc_idle(struct work_struct *work)
+ static const struct soc_device_attribute sysc_soc_match[] = {
+ 	SOC_FLAG("OMAP242*", SOC_2420),
+ 	SOC_FLAG("OMAP243*", SOC_2430),
++	SOC_FLAG("AM33*", SOC_AM33),
+ 	SOC_FLAG("AM35*", SOC_AM35),
+ 	SOC_FLAG("OMAP3[45]*", SOC_3430),
+ 	SOC_FLAG("OMAP3[67]*", SOC_3630),
+@@ -3117,10 +3119,15 @@ static int sysc_check_active_timer(struct sysc *ddata)
+ 	 * can be dropped if we stop supporting old beagleboard revisions
+ 	 * A to B4 at some point.
+ 	 */
+-	if (sysc_soc->soc == SOC_3430 || sysc_soc->soc == SOC_AM35)
++	switch (sysc_soc->soc) {
++	case SOC_AM33:
++	case SOC_3430:
++	case SOC_AM35:
+ 		error = -ENXIO;
+-	else
++		break;
++	default:
+ 		error = -EBUSY;
++	}
  
- 	/*
- 	 * Allocate a MMIO region which contains watchdog control register
+ 	if ((ddata->cfg.quirks & SYSC_QUIRK_NO_RESET_ON_INIT) &&
+ 	    (ddata->cfg.quirks & SYSC_QUIRK_NO_IDLE))
 -- 
 2.51.0
 
