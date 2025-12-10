@@ -1,110 +1,83 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailout02.platinum-mail.de (mx02.platinum-mail.de [89.58.18.167])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE88D2D7DC3
-	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 13:44:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E363F2D94AC
+	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 14:01:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.58.18.167
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765374243; cv=none; b=G/1Q0tKgYXH3beSEPyaQYs2jcaTmjuX1NnXHeL8tS/riWxLlSMJ3+Vw0/uhdykwCPltITzH58teob67k9Sje6Z6r3UFE2bISN4Za68rtSP/HMgFCvHnpCm7IIYk/0MwEEninCQVDABBBe+BUW+74+6rcSYujHbc+qK1nXovk5IA=
+	t=1765375288; cv=none; b=kfvaMjm0+dWdjgUiBFC5EV2WZ8nBo/k9ZGzArK657YohWEFy72C+WOwWj2RxTtyT4cRENZf//zKngR7v7sWLTpzzb2/ICoRV3RMJF06YqyReoKtlWfhEHWnOkrlxKaEhwvbHpvDgGCCXaR/gJIkVHAhR7Jc4mRXPXW3YSKs9ZGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765374243; c=relaxed/simple;
-	bh=GuM+APiDPr9e48rTQmVrItBOFGVB3BXlHw611KTw/Zo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Wv8IOHffnDZweQG1Om/SmyuQrv1fXjy/QPjyo1CyxY5IO0P0csBG2KmFnUmSm7a8IuFZMEAljHWXSY8lUAU5jqIrzhe/4cDAf6ddmSWDc6HAli2+mlWku1aCEXRIWrX4mx72UPWpu8cQdqTO5MPkLVRC2u2uM2UttEVdh4NgouM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=zF7fnRLo; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	s=arc-20240116; t=1765375288; c=relaxed/simple;
+	bh=u42IODHUWqTOVJ/z9HXUeA7qPM3De+e11W0WYds3r/4=;
+	h=Mime-Version:Date:Message-Id:Cc:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=D43o8Ibo3QcY8eL1wdenayPYYJmqShvR/aDjYQY1KcRsPJymU+WN1At8ZybdK21AsP7gBiZCIxiznbWxKYrDdElgfSA0q6/09UoYFePH/05OpYhVMHq6v/xbnXcFJPjcPT+L7jY4pVcSIsJqpU1SEj4mpYXLkhEgZVV6p4SXMhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=achill.org; spf=pass smtp.mailfrom=achill.org; dkim=pass (2048-bit key) header.d=achill.org header.i=@achill.org header.b=o4rxD9o/; arc=none smtp.client-ip=89.58.18.167
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=achill.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=achill.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="zF7fnRLo"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b713c7096f9so1031279866b.3
-        for <patches@lists.linux.dev>; Wed, 10 Dec 2025 05:44:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1765374240; x=1765979040; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aTLaTmFVHHTzWGQ9T5qmByyocpfMgznjqq+AvfsV2LY=;
-        b=zF7fnRLobkkklBLAKOnIZUJ2Q1YVyB/ETR7hOMbyDr8Z2xAovxpvAidsqfOBHLBGkK
-         KJ0sQ6kZkLSCPN+hZs97x3ygVG5NlW4fKYWReAPoAAgVviAn0Nn8lIichLw673aVH4tI
-         6zqW7TVlS8WMFeOlsHMwa5rLC66FafCtXjDQxL3HBCK0ENOCJXz81g+UWvNMdMFSYa4N
-         eQYQEWMRaoONTdYtdSA2Xulmgc58ttteAAFVgStpD7EORZz+XZPgRJJt9ZQbVWYa9rot
-         wteH3cH+dWlRwMZbRceN64GInRErN5N5TRzb7FMc7PVR63Sxx9AyvWnngIBWv+jCdN2/
-         KWOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765374240; x=1765979040;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=aTLaTmFVHHTzWGQ9T5qmByyocpfMgznjqq+AvfsV2LY=;
-        b=a1v5C4ViG+wqyr7N26hH9vXpO5No9ZCMRMuDjl/YGM70ASeILDQQoDRuxZdXhEvaTW
-         VWAOezppzjZRV50jbZLvULfCvGQDU6JWNjaGmZMfPpps1gxDkpFODsyjHwgFqcNOANj2
-         EaO4rchdqmqTGtszie5/eAIv2reqnZziumB1QnHtwDDzcCy/Y9uXtDHOtqqPgnkvn/Rk
-         Cpd8sJKq0oJCDYF2ln6sG7+OX+uxJr8/8+I6cC6wvR89yijZLC2H2tam3Ik2aVEkJQsr
-         YVs96GjzSTzpLLjYd26VpFLyJ/aW+YaxhQ4RWIo+rrllBT+OA1C5Av5oN6yhQcm4pmr7
-         N0bA==
-X-Forwarded-Encrypted: i=1; AJvYcCWOXqnim+VfC2DsXNsqOEH6BwQ5w01QeQ62vqT4712xgFaYt60k3P3Risrax5057gKbi+IHHDsj@lists.linux.dev
-X-Gm-Message-State: AOJu0Yy8Y+s9SfFlbSG9L3kkg9VXYyjtlijb3JnYPcWWnWURP7Ugy06g
-	OdzWKhgiC6Eh5NC+n3DXQRbvHZ2792DSVDmBuDg2ZuFzTTugjL+eaJ0bAqQkNPSprm4l1gaWdBS
-	zE+uanlYcU+/xZ6X0mv3+LiSEwtrZEgVmzJBFLNzdUA==
-X-Gm-Gg: ASbGncvcGfv6/RQLSKV3hz9AfoEvxl9t8jz0Ttqizt0yFnY6cFA82y81FZcaU5ynldC
-	oNr13LIsNOm6Sz1GePR0Lrp2VC9zXW5zj+FwkPRDAlrkyVKH3599eIGv27BvFWmasgTE4wz6TXI
-	E1ah9Ja21Pts9oRoyals7QuNeXsdN+XAVJku24SAk55UE312h0nWOQXunURxl6aEpm9ZT5B0msH
-	N71RFbV4m3UjxWIPuyhYcJIYzcyEFbnj6H97WyiVL8che8srCYMxMCOxSo1xN5W0Nk9FlkwhhIE
-	cCiX9Q==
-X-Google-Smtp-Source: AGHT+IHvtVJSFJsmyCkxg0ppeP2eShf7CyJVRMpQ5SDFbZptqW8DOR5DKgVlDzllhxVIyhfcGmt25RM1UE/XUfN1RiY=
-X-Received: by 2002:a17:907:6e87:b0:b73:4fd4:814f with SMTP id
- a640c23a62f3a-b7ce82ddccfmr258496066b.21.1765374240128; Wed, 10 Dec 2025
- 05:44:00 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=achill.org header.i=@achill.org header.b="o4rxD9o/"
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mailout02.platinum-mail.de (Mail Service) with ESMTPS id A74AE9A2936
+	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 14:01:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; d=achill.org; s=mail; c=relaxed/simple;
+	t=1765375282; h=date:message-id:subject:from:to;
+	bh=u42IODHUWqTOVJ/z9HXUeA7qPM3De+e11W0WYds3r/4=;
+	b=o4rxD9o/xCzvf3cG1hMdxHlIJ/gc9nomAbRzLZZmILUdFiCY5M9hDpRwF0kjPUZDiSTi9e8v8YY
+	sBpJeLjTj8u085HUwUZvnPKHHO2mDazRN35yOUU6rxYR/PgjXvtSNJR84bgkjL7rJpslDKgX/29JB
+	oiBHd/xLGPy2kk4xWas334ljhuDl62T48dk8uRcmkRMY+YTxTZfmZqZtL0ASSMa4pn2pHn98nGkk+
+	xjKDVZxbUstWGn4T9/xBSmqFUn66wf2D7wGk/xq1vHeETFbgUWfmZlIJ7a0Osmp96EZIK+J6cffnb
+	O+kJYJlu5ljnybHrad7l7Vh7ZqzzxaCvoibg==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20251210072947.850479903@linuxfoundation.org> <CAG=yYwm==BjqjJWtgc0+WzbiGTsKsHV3e4Lvk60fcartrrABDw@mail.gmail.com>
- <2025121046-satchel-concise-1077@gregkh>
-In-Reply-To: <2025121046-satchel-concise-1077@gregkh>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Wed, 10 Dec 2025 19:13:22 +0530
-X-Gm-Features: AQt7F2pb70410bF1kPgvWIQ_0HFOxEQcZ1i1TWdb6R7HcLPx6dIeqDxvlH0vD6E
-Message-ID: <CAG=yYwm0bVzYoccKKcdheGOc-exuxVCPeXSftDixS68qZZ7W7w@mail.gmail.com>
-Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Date: Wed, 10 Dec 2025 15:01:19 +0100
+Message-Id: <DEULB39PC2JO.1BLSTXKOE0HRY@achill.org>
+Cc: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+ <torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+ <linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+ <lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+ <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>,
+ <conor@kernel.org>, <hargar@microsoft.com>, <broonie@kernel.org>,
+ <achill@achill.org>, <sr@sladewatkins.com>
+Subject: Re: [PATCH 6.18 00/29] 6.18.1-rc1 review
+From: "Achill Gilgenast" <achill@achill.org>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ <stable@vger.kernel.org>
+X-Greeting: Hi mom! Look, I'm in somebodys mail client!
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20251210072944.363788552@linuxfoundation.org>
+In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
 
-On Wed, Dec 10, 2025 at 6:17=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Wed Dec 10, 2025 at 8:30 AM CET, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.1 release.
+> There are 29 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> On Wed, Dec 10, 2025 at 04:22:21PM +0530, Jeffrin Thalakkottoor wrote:
-> >  compiled and booted 6.17.12-rc1+
-> > Version: AMD A4-4000 APU with Radeon(tm) HD Graphics
-> >
-> > sudo dmesg -l errr  shows  error
-> >
-> > j$sudo dmesg -l err
-> > [   39.915487] Error: Driver 'pcspkr' is already registered, aborting..=
-.
-> > $
+> Responses should be made by Fri, 12 Dec 2025 07:29:36 +0000.
+> Anything received after that time might be too late.
 >
-> Is ths new?  if so, can you bisect?
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.1-=
+rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.18.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-this is new related. Previous stable release err and warn disappeared
-(i think i changed  .config)
+Thanks! Build tested on all Alpine architectures & boot tested on
+x86_64.
 
-can you give me a  step by step tutorial  for git bisect
-
-
-t
-
-
---=20
-software engineer
-rajagiri school of engineering and technology
+Tested-By: Achill Gilgenast <achill@achill.org>=
