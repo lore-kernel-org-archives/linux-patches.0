@@ -1,72 +1,72 @@
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636082DA77D
-	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 11:22:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1DC277CBF
+	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 12:17:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765365765; cv=none; b=SejdUjFiabEwIpe3WWfH+XX5O2TuCyV8a5SKHTpASN79/kKJFWC4Nz9pEdnGncU57/urXjvIju6SdbXW7vBbpLgSRz5tDm2z+iRVHSc6s8+saOFzNwyM4IbZmzqTNh2TvNCKCnjjp7Fvz861rhN8HpYbO5nuORAUxzCOAgS1+eQ=
+	t=1765369041; cv=none; b=IGCmocPk24OFRUQFcM/wqI4HHU/iUe4sIc7C5/zmfmTmVj2/1eZyh/YaE809WxGMd3TI2hsGGvvs8gMTK2KdX6IxSHh0wJIMKLExeCe95TlTBRK6D0i3K8WLOUWL1aue07yRcLuAxATE001fCc6lg/eFnIE6ZsnY5eGJbfTu/2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765365765; c=relaxed/simple;
-	bh=RwJqEKrjOHmef3MWEP1ZSzKUDTRwliaRL3I4knFEl/g=;
+	s=arc-20240116; t=1765369041; c=relaxed/simple;
+	bh=CqddzwXfg+iqUA6B+bgarDhsZ2CwkeqjbcD6pMA7Ges=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RHrn9L3R+gubrjK4rRv8Ni/IQ7t06vvvSQ1/A+pRX77aIzBpC5k4P90Ug2tg1AKRDaqhb1iy7Y9eGe7pKloptArdY+NeFtu3zJvm34bO7R4ffZIfTsvvpSwWkXVxT955zpIoLUBELT6sBeCYDqCmqlscM/dtJvw9nHCY/YI+o4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=CC+ouIy2; arc=none smtp.client-ip=209.85.218.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	 To:Cc:Content-Type; b=OhR/sUPayO7wb178E4yCSLqo7H8pDtbW8jO1t4o8QYUfdgNlh1+bpJEiBkeBHHVkN2zVLQgIQePP4EUbSRYJ3GVK9fgBSVx+airFA/HySiraiSmbgZB5OxHWdvwRPnUnqD+phIxt05yOoT8VPIa7tHvjHEsUq/+expIVn0appYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=oTa5F6gg; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="CC+ouIy2"
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-b725ead5800so891050766b.1
-        for <patches@lists.linux.dev>; Wed, 10 Dec 2025 03:22:44 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="oTa5F6gg"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-bc29d64b39dso3941356a12.3
+        for <patches@lists.linux.dev>; Wed, 10 Dec 2025 04:17:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1765365763; x=1765970563; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y3fR6ViPsGqU8MfdXZ3Af4k0ImLkw2v66K7RQbWl7oE=;
-        b=CC+ouIy2S+rR6Z3JDKLc3tQZDTfLaNJxcWsyqhBblc8p/Y4CMfuitQsYGA9XvPjnRp
-         ny1B32sSKVjv8jyarZNvUJnMx4UbNb9clrTdEFk/st7OpCTMWXBrvv+M9swKtU5XtRPd
-         aVdfHkTnb0oyijF3T/q0czSVtG0D+yyd3GqVQRYj2JJrcZlC88opEUK425m+h5G4duYF
-         /XfL36EurXoJjX5jppvySmdpMVZZi3ChFn53LoFYkOUW1kYJz/Lw800bedviyFStGDCn
-         VHSBubWOM6cas230KCV9mokiyeZ4rTxXiO+G7+XhacoSI1A0SDC0pi76l8jWv19wMUrj
-         pIUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765365763; x=1765970563;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=futuring-girl.com; s=google; t=1765369039; x=1765973839; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y3fR6ViPsGqU8MfdXZ3Af4k0ImLkw2v66K7RQbWl7oE=;
-        b=drTb9E4s+f9FR6Rs7ARKsHP868dLKHDhZTCGeyg9kDXx6Ia1yK+yM6YIcDUsCqVp1+
-         pRlV+e2Hs5KbOIFY3Ix8a18X0EwBnkVDV6RfDLqy513s7coM+tCO0rQeuogk4zXXINId
-         owo67tyOwfv8ehVh1pujPnVU0d25ND/BtuwLgKiM/4fEvz27OJDu3cEQpy304JICzTiT
-         tjOkAUeXheCPyz9N34BaFKTAuOG52AgrOMTsTm1908icds8WGGkmmRTRJbK0Keql3Kge
-         XRobibF3eIOHgZ7DdPIFVehfU+O5dUh2ZqQ8BWo5VB4KjqxkL6CKgR7upGwxqhGDczb7
-         fjuw==
-X-Forwarded-Encrypted: i=1; AJvYcCX3m819ZUQ18t5i6ATSqMB9M5hVoeVNRiUbR+c8rwXeMZ8wnZR34eFGNzIA6bc6o3pc+8X1SyEJ@lists.linux.dev
-X-Gm-Message-State: AOJu0YwelH/ZUiNWQR4Jmk2fW+MDgp6uWNJl/VRr86VNNgWvIUDaeot0
-	KYQaI9QbM//hUDvEDp0Rk0qs9diyTho8EiPkJpFJL7tzA9bkHHsYMf1YHdk4Fad+671quRZzbIZ
-	ekzgB3bRFJoPTk8XlFG9jCg+IDOK/1qm6dn0ZTvVp9w==
-X-Gm-Gg: ASbGnctTzfcFJsowI/g+zLIkVC16AmFcIMVR0YghXPcx6s4st8f5aNrmm1rRgfFOu32
-	wMP0foPpBldkrmiiucUAqU2pMixFPeWiOdmbQR+0QNaj3CtlfYVhshgI2Rez8/TAb0JDZ50wqMl
-	ScNCty2KAFm5WjzeS9Q7UqPfDQitINRUJ26E8YrL0LtlbhiVqrpVzRMkOBaE8S6afL9t9m09Eas
-	ZLyLoRFa2DEEPVdwnXegYaWKGeOBH1r3N5Z3ugHDnBw9KrVIRGD2lw2Ag0LxcU3Xzqc7hvTy21a
-	MLQXJA==
-X-Google-Smtp-Source: AGHT+IGpkdTQkei/z+CfKPvwYo4nremFkFGY5G/hzKyLEiR07JwWYOd21PmvfRI5FQr2rguFgg0RpN/HWyzj145KWPo=
-X-Received: by 2002:a17:906:c103:b0:b73:4b22:19c5 with SMTP id
- a640c23a62f3a-b7ce851c42emr213067466b.44.1765365762765; Wed, 10 Dec 2025
- 03:22:42 -0800 (PST)
+        bh=O1xwdwbZyc6XmBBbHWBkpSZmTvfwzWj9ylDCyZwxUU0=;
+        b=oTa5F6gg17tWHY/rVqqhOP3ob1MLA6e7EVMYLhbmIXx6lOmT1jXOvEQILqKXjR0XYh
+         /P+BgkpQlJtAsXHghNHLfC8lUBOSKzW6G+gYCm1L446qFTzVYjXa5MQ2rAfZVxm9c5pk
+         gVOIQMlEvqL6GgAlwXkeBDcI8i2akYdEmIWy9H8HhpD0dzfmkXRP5Os78yVKEedRaNjx
+         NuzTK5vmCXyEwMdRbY+UgEvuvKRGUq9UiVGkEbO8Rz3XenGUMgg0kBkCiun81OZ7mOYK
+         02G3Zz1ze/WQR4T3WtnWkGooG7bZ9Z4SeRtq6HTQiLuRJXM0IZXC4gmfgBQirwfhsN6M
+         0r2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765369039; x=1765973839;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=O1xwdwbZyc6XmBBbHWBkpSZmTvfwzWj9ylDCyZwxUU0=;
+        b=nBuvmuRMgesJet+Dhq3C1dME67+mMrs8h5VAm37Rcrdqt+0TVb4PPmLn57olqQo8dp
+         YDjoNvKGmi0uAmT5eBrMCi3qdnHC1udNGyoN6OtIkjKjiGiThQ8Enlq0Ld7UyrDDqh15
+         ygB39AHFurlnxJclX4Ir4yV+jhtWNo1TndtRGNSjCPRO5g84PeeM1cYx/jLIEY+jXQw5
+         27n+dKBCLttHnuaD/aTllklJB0dPo71Mrk9/vGvO+bM3qNpWkCKT0ZPvD/FEsAfy60Pa
+         9l1C7PwQ/o0ewC4uO6/I2MVNfvJw0A5m7J0aXoBkeri5f78PrYNGyzWASbi/Uqw6NSJC
+         wzZw==
+X-Forwarded-Encrypted: i=1; AJvYcCWS0mAGbwLZvRPectg522cOV9drxcAq6ayTM50X8UETEPb+zaxZrxdfonn0HSj1lB+seIb5bhe1@lists.linux.dev
+X-Gm-Message-State: AOJu0YzTKC/69ZWz1RTkKwCNRkExPEVt1akEX77zXMoAG4/i7EURCbDr
+	W/7jXZsXTvE/uNS5jFlLOIyrXz/6qrn4ZywZilTFuPkjjYaIQlUz8kY4cAKAn5a7ElfaSc2wAgK
+	gYG1BLcT8pNVZJGJ3yx4iU6pt5Y7J3KWSWap5FO7z4w==
+X-Gm-Gg: ASbGncsyknn7RuL7FrGZmmCVoAZkqw+EBTKTaYotj7I3SzpQ9DCfmBZiIr9XUQH8/+a
+	Ba2eKfRIxN/PXdtCxs/ZpDXZwp22RdPy3+l/8oXwj5Q0OYHJMmHzyzJisy+1WjMRgYjImkfGLUs
+	0mqwinVrDZIofLFIDTNQf9ZNcy8RYPs9oS+UOg9wFdBDvldv/jQZxjbp9GhdYm4/S7bsqqNjAtm
+	LR0/yL+ewOOrAgDAzkGhiaBcWaVe8VTBP97+H8Wt4hOMvASJtCK1ufXEPDbWtwRr77XEx+08Q==
+X-Google-Smtp-Source: AGHT+IHBgz+FmtVPvJu3SCy7tALN1FAmhPzb18VCi3/4ZrVRGY+kOcv5Fz+irwsD+vLtWKOs0MzTStN2UBe7MMegzfo=
+X-Received: by 2002:a05:7022:4381:b0:11b:9386:825b with SMTP id
+ a92af1059eb24-11f296c4100mr1746123c88.48.1765369039130; Wed, 10 Dec 2025
+ 04:17:19 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251210072948.125620687@linuxfoundation.org>
-In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Wed, 10 Dec 2025 16:52:05 +0530
-X-Gm-Features: AQt7F2qBf88HbQYd-YGXwdQSek9eban_IwWQ9i4SEquMn5zl2qXNvQTqRH1acrk
-Message-ID: <CAG=yYwnRwG+uD0mS17X0cvzruY=nRUyK_HvQhtxJQCCmi1YF=A@mail.gmail.com>
-Subject: Re: [PATCH 6.12 00/49] 6.12.62-rc1 review
+References: <20251210072944.363788552@linuxfoundation.org>
+In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Wed, 10 Dec 2025 21:17:03 +0900
+X-Gm-Features: AQt7F2pTA2Cii6t8rtYmLN11BKTetwmg6gtStkBaVhUsG8qqSyx6V4L8IpnnnJY
+Message-ID: <CAKL4bV6LnoRjoyqss+5DBOC+SCa+bKbyyS4wCA6tTRaDpqUgWA@mail.gmail.com>
+Subject: Re: [PATCH 6.18 00/29] 6.18.1-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -76,14 +76,48 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
 	achill@achill.org, sr@sladewatkins.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
- compiled and booted  6.12.62-rc1+
-Version: AMD Ryzen 3 3250U with Radeon Graphics
+Hi Greg
 
-dmesg related  no  typical   regressions
+On Wed, Dec 10, 2025 at 4:36=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.18.1 release.
+> There are 29 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 12 Dec 2025 07:29:36 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.18.1-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.18.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+6.18.1-rc1 tested.
 
---
-software engineer
-rajagiri school of engineering and technology
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.18.1-rc1rv-g7d4c06f4000f
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20251112, GNU ld (GNU
+Binutils) 2.45.1) #1 SMP PREEMPT_DYNAMIC Wed Dec 10 20:19:12 JST 2025
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
