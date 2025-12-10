@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D2272618;
-	Wed, 10 Dec 2025 03:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D9D5223DD4;
+	Wed, 10 Dec 2025 06:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338603; cv=none; b=p/PaTzNJTEESkxwnAK67pQVDbMEQ/7UGpGKFSpnWRadlc6jJDDVynyfB22FtAiZc3+dstgusYli1fRBLhAaqPjCYY7F6BOkiF5LEfUauxCv8lMIvaR7rt5iX0DE7c0MCNFsI0JUo/gHau9CeKcPf+iDigh0Z3K486iKu6Ib0nvw=
+	t=1765348494; cv=none; b=GFdZ4/NXUvCiyiwsHwIh7jyHApQqRofeqqtTUAQrVvIGZ/q+KR6pbQiBVZanVjoV03Ls9wmE0aHs6XgLqyupQ0DvfUCc0HhSRHQSJVonsHt2sdih6Jrm6b9s79rg7WkbJ44vu4Ye9gAw++GBstXR1tjyyF3e5wsAqO1g+KrGIBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338603; c=relaxed/simple;
-	bh=OHfnrpfgygon8ZVld9NZYNgWEsAt15xFUVwowXAjx0Q=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g1X02HvxMdQOVtZBku1jHje24uuEvHF3dDPfK6PurVY1VxpGAUKISpGVTapj9SqhS2TtM6ml8LHfzGdwpJXF9ZgimTKlptM3vK8QAopwVONPSLv7EVY8MUPzImVjV3vE+RZI0PsXn93avf91+KbzbtQ+qGLgpuce2kd8G/bkjf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q2trdG7G; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765348494; c=relaxed/simple;
+	bh=ZH4YdGyQ7nSGgopFfMsrD+QsvtYlpA+/5hKuVaIbQjc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CUn34Nzez5Mq+/1n7Z5UN/C9H0RERQEFbxa6uK2+BD0tFe8N+dVVFz++ZNmkvY4VLETwXk1YDRcpubxeEOgiYbzn3HofEp79AO9kfkEjiI6qnO7PcxcaRKyiDN22ReDctElZIJG9JHI6xzfKL8PQgUhcB4P7r1OQMYv32xPsvgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OURO3F+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q2trdG7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930B7C4CEF1;
-	Wed, 10 Dec 2025 03:50:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OURO3F+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CE31C4CEF1;
+	Wed, 10 Dec 2025 06:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338602;
-	bh=OHfnrpfgygon8ZVld9NZYNgWEsAt15xFUVwowXAjx0Q=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2trdG7GOCV+xQ0BMuf+avVIvytjb5QdtEeLOFpwczGlCRD+p0frIbs9veQwHnYN2
-	 GrErt4I2oF8eYce1BRlNWnfvSlGq7HeN7Paik/uJGza1OyG9Df7LEoaQIKLifIaLZ3
-	 rethaVcxpBF7nQYz2zOt9XhkTBODuaFeEl1pfJ+H6yJVanU3fLw+mobz+CxwOIm8c8
-	 NnOgQrpAK+xv/DRp6xYLmWYgiQj8r11Gxp3iOW9XffZU1bFgXYS9mlCJyJsGPoMJk0
-	 ApV6nNVVwtH77Ty5zsS9CJjG5RPoXF7Vk3sv7uooZlwJqM9aGhko+zJvqpfNplIMQG
-	 lSVrS3mtoGavg==
+	s=k20201202; t=1765348493;
+	bh=ZH4YdGyQ7nSGgopFfMsrD+QsvtYlpA+/5hKuVaIbQjc=;
+	h=From:To:Cc:Subject:Date:From;
+	b=OURO3F+Hitl5MDc1daabAWKd9FahiWD/+6N1D8SkejzrYZBzYT0EsxPlotZneUuOu
+	 tQtXnp8o7EEfQoIf4yoaSNOU67PJYoAn3wGVu6++zds5mH2SGWfTLaD3OBC+CXnCXw
+	 CniC5+vf3HJOZQjukqtWNTLoCRCXncYzVELkaSCIY3oIJrYWhGmozRp3W6oVols7yL
+	 dWmXHIA4lPFk0EqyVqJr1bh6kcQlNYUs9FGTWJ498VCj42tMIZkKsmLWHThbbgat14
+	 olclaVXT55a7dW5w9SMqIf3j3vTDMRaUUtqbt6G1of8UwBnLOH/yOh51T/zlBc6IwT
+	 iBIDIxa4PLcGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jinhui Guo <guojinhui.liam@bytedance.com>,
-	Corey Minyard <corey@minyard.net>,
+Cc: Wenhua Lin <Wenhua.Lin@unisoc.com>,
+	Cixi Geng <cixi.geng@linux.dev>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	openipmi-developer@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.18-5.10] ipmi: Fix the race between __scan_channels() and deliver_response()
-Date: Tue,  9 Dec 2025 22:49:01 -0500
-Message-ID: <20251210034915.2268617-20-sashal@kernel.org>
+	orsonzhai@gmail.com
+Subject: [PATCH AUTOSEL 6.18-5.10] serial: sprd: Return -EPROBE_DEFER when uart clock is not ready
+Date: Wed, 10 Dec 2025 01:34:30 -0500
+Message-ID: <20251210063446.2513466-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
-References: <20251210034915.2268617-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,189 +49,192 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinhui Guo <guojinhui.liam@bytedance.com>
+From: Wenhua Lin <Wenhua.Lin@unisoc.com>
 
-[ Upstream commit 936750fdba4c45e13bbd17f261bb140dd55f5e93 ]
+[ Upstream commit 29e8a0c587e328ed458380a45d6028adf64d7487 ]
 
-The race window between __scan_channels() and deliver_response() causes
-the parameters of some channels to be set to 0.
+In sprd_clk_init(), when devm_clk_get() returns -EPROBE_DEFER
+for either uart or source clock, we should propagate the
+error instead of just warning and continuing with NULL clocks.
 
-1.[CPUA] __scan_channels() issues an IPMI request and waits with
-         wait_event() until all channels have been scanned.
-         wait_event() internally calls might_sleep(), which might
-         yield the CPU. (Moreover, an interrupt can preempt
-         wait_event() and force the task to yield the CPU.)
-2.[CPUB] deliver_response() is invoked when the CPU receives the
-         IPMI response. After processing a IPMI response,
-         deliver_response() directly assigns intf->wchannels to
-         intf->channel_list and sets intf->channels_ready to true.
-         However, not all channels are actually ready for use.
-3.[CPUA] Since intf->channels_ready is already true, wait_event()
-         never enters __wait_event(). __scan_channels() immediately
-         clears intf->null_user_handler and exits.
-4.[CPUB] Once intf->null_user_handler is set to NULL, deliver_response()
-         ignores further IPMI responses, leaving the remaining
-	 channels zero-initialized and unusable.
+Currently the driver only emits a warning when clock acquisition
+fails and proceeds with NULL clock pointers. This can lead to
+issues later when the clocks are actually needed. More importantly,
+when the clock provider is not ready yet and returns -EPROBE_DEFER,
+we should return this error to allow deferred probing.
 
-CPUA                             CPUB
--------------------------------  -----------------------------
-__scan_channels()
- intf->null_user_handler
-       = channel_handler;
- send_channel_info_cmd(intf,
-       0);
- wait_event(intf->waitq,
-       intf->channels_ready);
-  do {
-   might_sleep();
-                                 deliver_response()
-                                  channel_handler()
-                                   intf->channel_list =
-				         intf->wchannels + set;
-                                   intf->channels_ready = true;
-                                   send_channel_info_cmd(intf,
-                                         intf->curr_channel);
-   if (condition)
-    break;
-   __wait_event(wq_head,
-          condition);
-  } while(0)
- intf->null_user_handler
-       = NULL;
-                                 deliver_response()
-                                  if (!msg->user)
-                                   if (intf->null_user_handler)
-                                    rv = -EINVAL;
-                                  return rv;
--------------------------------  -----------------------------
+This change adds explicit checks for -EPROBE_DEFER after both:
+1. devm_clk_get(uport->dev, uart)
+2. devm_clk_get(uport->dev, source)
 
-Fix the race between __scan_channels() and deliver_response() by
-deferring both the assignment intf->channel_list = intf->wchannels
-and the flag intf->channels_ready = true until all channels have
-been successfully scanned or until the IPMI request has failed.
+When -EPROBE_DEFER is encountered, the function now returns
+-EPROBE_DEFER to let the driver framework retry probing
+later when the clock dependencies are resolved.
 
-Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Message-ID: <20250930074239.2353-2-guojinhui.liam@bytedance.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Wenhua Lin <Wenhua.Lin@unisoc.com>
+Link: https://patch.msgid.link/20251022030840.956589-1-Wenhua.Lin@unisoc.com
+Reviewed-by: Cixi Geng <cixi.geng@linux.dev>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Summary Analysis
+## Commit Analysis: serial: sprd: Return -EPROBE_DEFER when uart clock
+is not ready
 
-### 1. BUG MECHANISM
+### 1. COMMIT MESSAGE ANALYSIS
 
-This commit fixes a **race condition** between two IPMI functions:
+**Subject**: Fixes incorrect handling of `-EPROBE_DEFER` error from
+`devm_clk_get()`
 
-- `__scan_channels()`: Initiates channel scanning, sets
-  `null_user_handler = channel_handler`, then waits for `channels_ready`
-- `channel_handler()` (called via `deliver_response()`): Processes IPMI
-  responses for each channel
+**Key observations**:
+- No `Cc: stable@vger.kernel.org` tag present
+- No `Fixes:` tag pointing to when the bug was introduced
+- Has `Reviewed-by:` from Cixi Geng
+- Accepted by Greg Kroah-Hartman (serial subsystem maintainer)
 
-**The Bug** (introduced in commit 31b0b0730ad2a from September 2017):
+### 2. CODE CHANGE ANALYSIS
 
-In `channel_handler()`, after processing channel N's response (where N <
-IPMI_MAX_CHANNELS-1):
-1. Lines 3420-3421 set `channels_ready = true` **prematurely**
-2. Then sends request for channel N+1
-3. `__scan_channels()` may see `channels_ready == true` and exit the
-   wait loop early
-4. `__scan_channels()` sets `null_user_handler = NULL`
-5. Responses for channels N+1, N+2, etc. arrive but are **discarded**
-   because `null_user_handler` is NULL
-6. Remaining channels are **zero-initialized and unusable**
+The change adds two checks in `sprd_clk_init()`:
 
-### 2. THE FIX
+```c
+clk_uart = devm_clk_get(uport->dev, "uart");
+if (IS_ERR(clk_uart)) {
++    if (PTR_ERR(clk_uart) == -EPROBE_DEFER)
++        return -EPROBE_DEFER;
+    dev_warn(...);
+    clk_uart = NULL;
+}
 
-The fix simply **removes 2 lines** that prematurely set `channels_ready
-= true` in the `else` branch. After the fix, `channels_ready = true` is
-only set when:
-- All channels have been scanned (`curr_channel >= IPMI_MAX_CHANNELS`),
-  OR
-- An error occurs (`rv != 0`)
+clk_parent = devm_clk_get(uport->dev, "source");
+if (IS_ERR(clk_parent)) {
++    if (PTR_ERR(clk_parent) == -EPROBE_DEFER)
++        return -EPROBE_DEFER;
+    dev_warn(...);
+    clk_parent = NULL;
+}
+```
+
+**Technical bug mechanism**: When clock providers aren't ready yet,
+`devm_clk_get()` returns `-EPROBE_DEFER`. The existing code ignores this
+error, sets the clock pointer to NULL, and continues. This bypasses the
+kernel's deferred probing mechanism which exists precisely to handle
+this dependency ordering scenario.
+
+**Existing pattern**: The function already has identical handling for
+the "enable" clock (visible in the context lines). This fix makes the
+handling consistent for all three clocks.
 
 ### 3. CLASSIFICATION
 
-| Criteria | Assessment |
-|----------|------------|
-| Bug type | Race condition causing data corruption (zero-init channels)
-|
-| Impact | IPMI channels become unusable on affected systems |
-| Size | 2 lines removed - minimal and surgical |
-| Risk | Very LOW - only removes premature assignments |
-| Subsystem | IPMI - used for server management |
+**Type**: Bug fix (not a feature addition)
 
-### 4. STABLE BACKPORT CRITERIA
+This fixes incorrect error handling. The `-EPROBE_DEFER` mechanism is a
+fundamental kernel feature for handling driver load order dependencies.
+Not propagating this error is a bug.
 
-| Criterion | Status |
-|-----------|--------|
-| Obviously correct | ✅ Yes - simply delays setting flag until the right
-time |
-| Fixes real bug | ✅ Yes - race causes channels to be zero-initialized |
-| User impacting | ✅ Yes - affects IPMI hardware management |
-| Small and contained | ✅ Yes - 2 lines in single file |
-| No new features | ✅ Correct - pure bug fix |
-| No API changes | ✅ Correct - internal change only |
+### 4. SCOPE AND RISK ASSESSMENT
 
-### 5. SIGNALS
+- **Lines changed**: 6 lines added (two 3-line checks)
+- **Files touched**: 1 file (`drivers/tty/serial/sprd_serial.c`)
+- **Complexity**: Very low - follows identical pattern already in the
+  same function
+- **Subsystem**: Hardware-specific serial driver for Spreadtrum/Unisoc
+  UARTs
 
-**Positive signals:**
-- Fixes a real race condition with clear cause and effect
-- Minimal, surgical fix (2 lines removed)
-- Bug has existed since 2017 (31b0b0730ad2a) - affects all current LTS
-  kernels
-- IPMI maintainer (Corey Minyard) signed off
-- Detailed commit message explains the race with CPU timing diagram
+**Risk**: Very low
+- Pattern is already established and proven in the same function
+- Only affects error handling during probe
+- No changes to normal operation when clocks are available
+- Worst case: probe failure happens earlier/more explicitly
 
-**Missing signals:**
-- No explicit `Cc: stable@vger.kernel.org` tag
-- No explicit `Fixes: 31b0b0730ad2a` tag (though it should have one)
-- No Tested-by/Reviewed-by tags
+### 5. USER IMPACT
 
-### 6. RISK vs BENEFIT
+**Affected users**: Users of Spreadtrum/Unisoc UART hardware (embedded
+devices, some Android phones)
 
-- **Benefit**: Fixes a race condition that makes IPMI channels unusable
-  on servers
-- **Risk**: Extremely low - the fix only removes code that ran at the
-  wrong time; the correct code paths for setting `channels_ready` are
-  untouched
-- **Affected users**: Server/data center users relying on IPMI for
-  hardware management
+**Severity**: Medium-High for affected users - without this fix, the
+serial port may not work correctly on systems where clock providers load
+after the serial driver. This is common in embedded systems with device
+tree-based configurations.
 
-### 7. DEPENDENCIES
+**Real bug**: This is a practical issue in probe ordering scenarios. The
+driver would proceed with NULL clocks instead of waiting for
+dependencies to be ready.
 
-The fix is standalone and doesn't depend on other commits. The affected
-code has existed unchanged since 2017, so it should apply cleanly to all
-active stable kernels.
+### 6. STABILITY INDICATORS
 
-### CONCLUSION
+- Reviewed-by tag indicates code review
+- Maintainer accepted the change
+- Simple, straightforward change following existing code patterns
+- No complex logic introduced
 
-This is a clear backport candidate. The commit fixes a real race
-condition that causes IPMI channels to become unusable. The fix is
-minimal (2 lines removed), obviously correct (simply delays a flag until
-the right time), and carries virtually no regression risk. IPMI is
-critical infrastructure for server management, making this fix important
-for stable users.
+### 7. DEPENDENCY CHECK
+
+- **Dependencies**: None - self-contained fix
+- **Code existence in stable**: The sprd_serial driver has existed since
+  ~2015 (commit 3e1f2029a4b40), so it's present in all active stable
+  trees
+
+### SUMMARY
+
+**What it fixes**: Incorrect handling of `-EPROBE_DEFER` from
+`devm_clk_get()` for two clocks ("uart" and "source"), causing the
+driver to proceed with NULL clocks instead of deferring probe when clock
+providers aren't ready.
+
+**Stable kernel criteria**:
+- ✅ Obviously correct (follows identical pattern already in function)
+- ✅ Fixes a real bug (broken deferred probing)
+- ✅ Small and contained (6 lines, 1 file)
+- ✅ No new features
+- ✅ Low risk of regression
+
+**Concerns**:
+- No explicit `Cc: stable` tag (author/maintainer didn't flag for
+  stable)
+- Relatively niche driver (Spreadtrum hardware)
+
+**Risk vs Benefit**: The fix is minimal risk (identical pattern to
+existing code) and addresses a real bug that could leave serial hardware
+non-functional on embedded systems. The benefit outweighs the minimal
+risk.
+
+The lack of `Cc: stable` tag is notable but not determinative - this is
+a straightforward bug fix that meets all stable criteria. The fix is
+small, obviously correct, and addresses a real probe ordering issue that
+embedded system users could encounter.
 
 **YES**
 
- drivers/char/ipmi/ipmi_msghandler.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/tty/serial/sprd_serial.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 3700ab4eba3e7..d3f84deee4513 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3417,8 +3417,6 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
- 			intf->channels_ready = true;
- 			wake_up(&intf->waitq);
- 		} else {
--			intf->channel_list = intf->wchannels + set;
--			intf->channels_ready = true;
- 			rv = send_channel_info_cmd(intf, intf->curr_channel);
- 		}
+diff --git a/drivers/tty/serial/sprd_serial.c b/drivers/tty/serial/sprd_serial.c
+index 8c9366321f8e7..092755f356836 100644
+--- a/drivers/tty/serial/sprd_serial.c
++++ b/drivers/tty/serial/sprd_serial.c
+@@ -1133,6 +1133,9 @@ static int sprd_clk_init(struct uart_port *uport)
  
+ 	clk_uart = devm_clk_get(uport->dev, "uart");
+ 	if (IS_ERR(clk_uart)) {
++		if (PTR_ERR(clk_uart) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
++
+ 		dev_warn(uport->dev, "uart%d can't get uart clock\n",
+ 			 uport->line);
+ 		clk_uart = NULL;
+@@ -1140,6 +1143,9 @@ static int sprd_clk_init(struct uart_port *uport)
+ 
+ 	clk_parent = devm_clk_get(uport->dev, "source");
+ 	if (IS_ERR(clk_parent)) {
++		if (PTR_ERR(clk_parent) == -EPROBE_DEFER)
++			return -EPROBE_DEFER;
++
+ 		dev_warn(uport->dev, "uart%d can't get source clock\n",
+ 			 uport->line);
+ 		clk_parent = NULL;
 -- 
 2.51.0
 
