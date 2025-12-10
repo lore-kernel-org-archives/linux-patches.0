@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9246130F813
-	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 23:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F4E72C0274
+	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 23:15:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765408541; cv=none; b=TQlTKUCXZBqjrAqgeZc5GF/79GGzyuJxXCiC4t73+XrvnNiDGvFheg/R4H3Zwk8KH0Q7tmz10HQn36yAWqQGTR/yFO8iu4KHeOl+uQWlvZcNQ9qotfpc7LgyY1ZVAKEX5pd6Y7doOBp68xKLkox4bs/rDA4tmzzxZt0nmGaIf0c=
+	t=1765408542; cv=none; b=urROUHc7Hny15ARDvPdGqjMtzBreEvrJIzLqt9bysz+YlP9twCKmM6a+j0e3+jiRBap6QI5C7wMHcA3BSSuRQJMJOMYvWyM4zwfsaPft8l5fEKgj0ftCMTu2qSp5ft+3X0ScNvsR0vp9ODCtVx7W+qeYleWl3gkKqNPSOxxe5Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765408541; c=relaxed/simple;
-	bh=I4dI07NVNd0pJPyZ7K2u8kCryG0DQYp+v3VZZhkK6eE=;
+	s=arc-20240116; t=1765408542; c=relaxed/simple;
+	bh=a6GqSiYes3g1hfurapo7TsD5x6nKUzU6tpAj8OUBXbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bu5hcf8srdjXJqW+l0B/u2x8M2tQK6xPXg8uqgqfAt/a2whDU0bAoFk9ldw4vt2bghAwHLc+9bpOZ9SUsq9gMOD/eNh1hZ/vKv5qxZJVfo7C+FunHidDcB/igB2PgBsfbXqCPh+n9UjAxO++HXyuoA8IULIZfId0xhvzbognc2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gqVHPv1X; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=cu+1BWBjX5OFUuD7CTWOCdX9yODZMorboX81pbNvONuAULYm9ZTjmN6XTSu3LW9YRdLYg7plgibUFwXdE311plcy+iidwkmC7Yu+LT3AZBhRYVdD8XxmLklfv1uGmvtNjLQBWlIaxP+igkXwmICIkQE0XGHGs0SVxKrGjXoT7cQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=fail smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=gsvmEec0; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gqVHPv1X"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="gsvmEec0"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765408539; x=1796944539;
+  t=1765408534; x=1796944534;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=I4dI07NVNd0pJPyZ7K2u8kCryG0DQYp+v3VZZhkK6eE=;
-  b=gqVHPv1Xy0fmEFERxoOkSRI7JP4AxZL64uOTpQ2QbtpRtpPVQPNDlqDk
-   G2DofnUl3h00wUZQ6Mwc4eRfUXX0U88J3bB3PfaFBz0psjJUJhhm7PoKc
-   rZl3keD7szCZ6qeXn4Wfn72zfu5T7oDd5oKt/gL1WSWdw8RPoICENZo57
-   cpGcx9rz9KNzz9Q6sj7+Gb0dHZSNRqHGNYAlzvN6b7ckiQacsDUmSxYAK
-   Ophyq2ACHFvyO1imoPM1G57w2f9/D/XcEYo8WJWAehuyJ7Q506wT8yxuv
-   0qOyfZ0vyMPka8eusbtY2HsoCHK+pkILZ+iffiDNKMrOnLdnRuPZgy3W7
+  bh=a6GqSiYes3g1hfurapo7TsD5x6nKUzU6tpAj8OUBXbc=;
+  b=gsvmEec0OEllwDhEaTXYlFVV9xtSoQpTQ/4nhws94R+2/58Xf7JiDcu5
+   1bbabTOknb2wMicNiy9eW812AFBJko2e9E1y0BORRhN/IRqzrPLcy7iX6
+   W0rZf/nSVI/wtQyP/MbF3HEIdyhpgnizUzd8YIOK1bc6F++MLu5SGWHTI
+   rvh4chwkCZUMstJlp5lgBVPtaoT9AZsEEpArYl3Kvg+5i+MGzWyagVNsC
+   VKd938yk/kKTZxjCWVJNVpxTuxzbilKlVNB/zMC0sgvbUCsPQHBM4ntqJ
+   byGczNVRxzwza7ZuWPCQbNFHMJU6PgddEMgBcqJW09oF47h06In0BBkGA
    w==;
-X-CSE-ConnectionGUID: lwuQUAaxTiSFIp5hTrftIA==
-X-CSE-MsgGUID: 6B1e8sPAS8amAhZS7aM+vA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="69973734"
+X-CSE-ConnectionGUID: a41uMwxgTB2QeEUzGEccMQ==
+X-CSE-MsgGUID: y12+KvwnS3Gxfr1VXSxuqQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="69973726"
 X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; 
-   d="scan'208";a="69973734"
+   d="scan'208";a="69973726"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
   by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:45 -0800
-X-CSE-ConnectionGUID: jO5KDURdSOi34SugzkfjNg==
-X-CSE-MsgGUID: omGyjIYAT66Gm+CsfULIww==
+X-CSE-ConnectionGUID: 2kpcaM3ZTg+pj6CuVyfhXQ==
+X-CSE-MsgGUID: txepatvgR+mGQcj+1qIL7Q==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; 
-   d="scan'208";a="227297172"
+   d="scan'208";a="227297167"
 Received: from daliomra-mobl3.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.254])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:45 -0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:44 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v16 31/32] x86/resctrl: Add debugfs files to show telemetry aggregator status
-Date: Wed, 10 Dec 2025 15:14:10 -0800
-Message-ID: <20251210231413.59102-32-tony.luck@intel.com>
+Subject: [PATCH v16 30/32] fs/resctrl: Provide interface to create architecture specific debugfs area
+Date: Wed, 10 Dec 2025 15:14:09 -0800
+Message-ID: <20251210231413.59102-31-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251210231413.59102-1-tony.luck@intel.com>
 References: <20251210231413.59102-1-tony.luck@intel.com>
@@ -71,163 +71,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Each telemetry aggregator provides three status registers at the top end of
-MMIO space after all the per-RMID per-event counters:
+All files below /sys/fs/resctrl are considered user ABI.
 
-  data_loss_count: This counts the number of times that this aggregator
-  failed to accumulate a counter value supplied by a CPU core.
+This leaves no place for architectures to provide additional interfaces.
 
-  data_loss_timestamp: This is a "timestamp" from a free running
-  25MHz uncore timer indicating when the most recent data loss occurred.
+Add resctrl_debugfs_mon_info_arch_mkdir() which creates a directory in
+the debugfs file system for a monitoring resource. Naming follows the
+layout of the main resctrl hierarchy:
 
-  last_update_timestamp: Another 25MHz timestamp indicating when the
-  most recent counter update was successfully applied.
+	/sys/kernel/debug/resctrl/info/{resource}_MON/{arch}
 
-Create files in /sys/kernel/debug/resctrl/info/PERF_PKG_MON/x86_64/ to display
-the value of each of these status registers for each aggregator in each enabled
-event group. The prefix for each file name describes the type of aggregator,
-the guid, which package it is located on, and an opaque instance number to
-provide a unique file name when there are multiple aggregators on a package.
+The {arch} last level directory name matches the output of the user level
+"uname -m" command.
 
-The suffix is one of the three strings listed above. An example name is:
+Architecture code may use this directory for debug information, or for minor
+tuning of features. It must not be used for basic feature enabling as debugfs
+may not be configured/mounted on production systems.
 
-	energy_0x26696143_pkg0_agg2_data_loss_count
-
-These files are removed along with all other debugfs entries by the call to
-debugfs_remove_recursive() in resctrl_exit().
-
+Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h  |  2 +
- arch/x86/kernel/cpu/resctrl/core.c      |  2 +
- arch/x86/kernel/cpu/resctrl/intel_aet.c | 60 +++++++++++++++++++++++++
- 3 files changed, 64 insertions(+)
+ include/linux/resctrl.h | 10 ++++++++++
+ fs/resctrl/rdtgroup.c   | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index df09091f7c6c..e538174fe193 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -236,6 +236,7 @@ void __exit intel_aet_exit(void);
- int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
- void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 				struct list_head *add_pos);
-+void intel_aet_add_debugfs(void);
- bool intel_aet_option(bool force_off, char *tok);
- #else
- static inline bool intel_aet_get_events(void) { return false; }
-@@ -247,6 +248,7 @@ static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64
+diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
+index 8623e450619a..b862a9dd785b 100644
+--- a/include/linux/resctrl.h
++++ b/include/linux/resctrl.h
+@@ -702,6 +702,16 @@ bool resctrl_arch_get_io_alloc_enabled(struct rdt_resource *r);
+ extern unsigned int resctrl_rmid_realloc_threshold;
+ extern unsigned int resctrl_rmid_realloc_limit;
  
- static inline void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 					      struct list_head *add_pos) { }
-+static inline void intel_aet_add_debugfs(void) { }
- static inline bool intel_aet_option(bool force_off, char *tok) { return false; }
- #endif
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 829633bc54e5..62e96aad060d 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -788,6 +788,8 @@ void resctrl_arch_pre_mount(void)
- 		domain_add_cpu_mon(cpu, r);
- 	mutex_unlock(&domain_list_lock);
- 	cpus_read_unlock();
++/**
++ * resctrl_debugfs_mon_info_arch_mkdir() - Create a debugfs info directory.
++ *					   Removed by resctrl_exit().
++ * @r:	Resource (must be mon_capable).
++ *
++ * Return: NULL if resource is not monitoring capable,
++ * dentry pointer on success, or ERR_PTR(-ERROR) on failure.
++ */
++struct dentry *resctrl_debugfs_mon_info_arch_mkdir(struct rdt_resource *r);
 +
-+	intel_aet_add_debugfs();
- }
+ int resctrl_init(void);
+ void resctrl_exit(void);
  
- enum {
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index ea613e49d213..4071959b0d3e 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -15,8 +15,11 @@
- #include <linux/compiler_types.h>
- #include <linux/container_of.h>
- #include <linux/cpumask.h>
-+#include <linux/debugfs.h>
-+#include <linux/dcache.h>
- #include <linux/err.h>
- #include <linux/errno.h>
-+#include <linux/fs.h>
- #include <linux/gfp_types.h>
- #include <linux/init.h>
- #include <linux/intel_pmt_features.h>
-@@ -29,6 +32,7 @@
- #include <linux/resctrl.h>
- #include <linux/resctrl_types.h>
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index d49ffc56ea61..d13291d71adf 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -24,6 +24,7 @@
+ #include <linux/sched/task.h>
  #include <linux/slab.h>
-+#include <linux/sprintf.h>
- #include <linux/stddef.h>
- #include <linux/topology.h>
- #include <linux/types.h>
-@@ -228,6 +232,46 @@ static bool all_regions_have_sufficient_rmid(struct event_group *e, struct pmt_f
+ #include <linux/user_namespace.h>
++#include <linux/utsname.h>
+ 
+ #include <uapi/linux/magic.h>
+ 
+@@ -75,6 +76,8 @@ static void rdtgroup_destroy_root(void);
+ 
+ struct dentry *debugfs_resctrl;
+ 
++static struct dentry *debugfs_resctrl_info;
++
+ /*
+  * Memory bandwidth monitoring event to use for the default CTRL_MON group
+  * and each new CTRL_MON group created by the user.  Only relevant when
+@@ -4599,6 +4602,31 @@ int resctrl_init(void)
  	return ret;
  }
  
-+static int status_read(void *priv, u64 *val)
++/*
++ * Create /sys/kernel/debug/resctrl/info/{r->name}_MON/{arch} directory
++ * by request for architecture to use for debugging or minor tuning.
++ * Basic functionality of features must not be controlled by files
++ * added to this directory as debugfs may not be configured/mounted
++ * on production systems.
++ */
++struct dentry *resctrl_debugfs_mon_info_arch_mkdir(struct rdt_resource *r)
 +{
-+	void __iomem *info = (void __iomem *)priv;
++	struct dentry *moninfodir;
++	char name[32];
 +
-+	*val = readq(info);
++	if (!r->mon_capable)
++		return NULL;
 +
-+	return 0;
++	if (!debugfs_resctrl_info)
++		debugfs_resctrl_info = debugfs_create_dir("info", debugfs_resctrl);
++
++	sprintf(name, "%s_MON", r->name);
++
++	moninfodir = debugfs_create_dir(name, debugfs_resctrl_info);
++
++	return debugfs_create_dir(utsname()->machine, moninfodir);
 +}
 +
-+DEFINE_SIMPLE_ATTRIBUTE(status_fops, status_read, NULL, "%llu\n");
-+
-+static void make_status_files(struct dentry *dir, struct event_group *e, u8 pkg,
-+			      int instance, void *info_end)
-+{
-+	char name[80];
-+
-+	sprintf(name, "%s_0x%x_pkg%u_agg%d_data_loss_count", e->pfname, e->guid, pkg, instance);
-+	debugfs_create_file(name, 0400, dir, info_end - 24, &status_fops);
-+
-+	sprintf(name, "%s_0x%x_pkg%u_agg%d_data_loss_timestamp", e->pfname, e->guid, pkg, instance);
-+	debugfs_create_file(name, 0400, dir, info_end - 16, &status_fops);
-+
-+	sprintf(name, "%s_0x%x_pkg%u_agg%d_last_update_timestamp", e->pfname, e->guid, pkg, instance);
-+	debugfs_create_file(name, 0400, dir, info_end - 8, &status_fops);
-+}
-+
-+static void create_debug_event_status_files(struct dentry *dir, struct event_group *e)
-+{
-+	struct pmt_feature_group *p = e->pfg;
-+	void *info_end;
-+
-+	for (int i = 0; i < p->count; i++) {
-+		if (!p->regions[i].addr)
-+			continue;
-+		info_end = (void __force *)p->regions[i].addr + e->mmio_size;
-+		make_status_files(dir, e, p->regions[i].plat_info.package_id,
-+				  i, info_end);
-+	}
-+}
-+
- static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
+ static bool resctrl_online_domains_exist(void)
  {
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
-@@ -412,3 +456,19 @@ void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 		kfree(d);
- 	}
- }
-+
-+void intel_aet_add_debugfs(void)
-+{
-+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
-+	struct event_group **peg;
-+	struct dentry *infodir;
-+
-+	infodir = resctrl_debugfs_mon_info_arch_mkdir(r);
-+
-+	if (IS_ERR_OR_NULL(infodir))
-+		return;
-+
-+	for_each_event_group(peg)
-+		if ((*peg)->pfg)
-+			create_debug_event_status_files(infodir, *peg);
-+}
+ 	struct rdt_resource *r;
+@@ -4650,6 +4678,7 @@ void resctrl_exit(void)
+ 
+ 	debugfs_remove_recursive(debugfs_resctrl);
+ 	debugfs_resctrl = NULL;
++	debugfs_resctrl_info = NULL;
+ 	unregister_filesystem(&rdt_fs_type);
+ 
+ 	/*
 -- 
 2.51.1
 
