@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2034E27A47F;
-	Wed, 10 Dec 2025 07:32:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC6126A0A7;
+	Wed, 10 Dec 2025 07:32:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765351975; cv=none; b=fVwxThx9P2Q/hetiAFsp9NFhCe9Mr/xBJPW6L0usf3wImfmYejuvpuxMC6oWMCms2DaOr6CCiUjZ/1zrLgz/fYhMNun47Cy4vZgXZv9te5jTgdxbcc7/PVcRcAbx88unM9jloGC7s/GgCa1U314hHALUTw35FQeSzxowbwBACdM=
+	t=1765351978; cv=none; b=qPvAAAKzsNhEZI0i66LN+Lds8SgeCh1hjU4ANqfLXb2oP38yrRTpAP2vRluGJenA+xbciExz0u2LGSXI9KDUtXVBmk9MLJ4qmVixSI60F1hy5TVHhP9IcXAFHQVwzzIaRkGQLLXFtFYUDxhNhIXCxugrT2hlgO8K1GfLUjv+iMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765351975; c=relaxed/simple;
-	bh=wvbAgglQP9mHqmmNIY4tdsko6UzQjHeczrga5OOcTZM=;
+	s=arc-20240116; t=1765351978; c=relaxed/simple;
+	bh=ydm7EofrMjYIdqVmswDoQQlxQgFz9czY/bMphPYgMGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bhT1oE40gdcf1GGne36Sih5tZUWYiQOwuVCdAGja88nL1sTXfkM7ywO30jKUz3ZitU++2upPfYK2siNa3/bcpSBzyOnfQmAJ/p7cZB4HlTveJF0rrfUQ+XiJ9IxaXc5FPVJ9icPSUySvNHxowcw6aIH92KF7ZtMMLDrkgvWiD8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLCrnTiL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b6DW9nd39gLxAHwRc1ZOfI+uMZy5cvWmd8f7hCnllrvbC0dvlvZrE/cfvRd0f1RUapncDnaAFjBJPEF9OnhLAbFsnFYEd36oAjEIA6rgUEaOpImi4GZDjAEogqLypCCnKI0auCV0S8sv62Ke/xyi6RAEHhLPCHUvQ2mhr152uIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLAz3XIR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLCrnTiL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 813DCC4CEF1;
-	Wed, 10 Dec 2025 07:32:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLAz3XIR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C321FC4CEF1;
+	Wed, 10 Dec 2025 07:32:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765351975;
-	bh=wvbAgglQP9mHqmmNIY4tdsko6UzQjHeczrga5OOcTZM=;
+	s=korg; t=1765351978;
+	bh=ydm7EofrMjYIdqVmswDoQQlxQgFz9czY/bMphPYgMGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wLCrnTiLPSpxXi7xA+hyS5bThAza5C+X/VJmhx7/CxeneSx3uGsqCdIPflzs3MqR8
-	 GfdS8LPVk7kBD3iWU6vUwp0Z9CprjyJeLb/57V3AJO2ig1f4x7T7FAlftEiQ+3o/pn
-	 cb6Ao6WO8OnW4/STAiaEK6VozTXOgHHHoVz3f0rM=
+	b=bLAz3XIRH8kTgscnp3hhCh5kMXfFoRbyCaohNgFR6+HnRltaiTJyKBf2pUVTHopuV
+	 YwJYVQD2g9As0LC7InrA85vORwV4ecfDSq1LHCPG+xlC2T0bH4V5Lv9nwPnWLn6kTA
+	 RVUCEbUsoLcpCuBSDphVGcQ0rhgzztopOlzyRENM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Robin Gong <yibin.gong@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 22/49] spi: imx: keep dma request disabled before dma transfer setup
-Date: Wed, 10 Dec 2025 16:29:52 +0900
-Message-ID: <20251210072948.675275358@linuxfoundation.org>
+Subject: [PATCH 6.12 23/49] drm/vmwgfx: Use kref in vmw_bo_dirty
+Date: Wed, 10 Dec 2025 16:29:53 +0900
+Message-ID: <20251210072948.725394968@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
 References: <20251210072948.125620687@linuxfoundation.org>
@@ -52,67 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Robin Gong <yibin.gong@nxp.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit 86d57d9c07d54e8cb385ffe800930816ccdba0c1 ]
+[ Upstream commit c1962742ffff7e245f935903a4658eb6f94f6058 ]
 
-Since sdma hardware configure postpone to transfer phase, have to disable
-dma request before dma transfer setup because there is a hardware
-limitation on sdma event enable(ENBLn) as below:
+Rather than using an ad hoc reference count use kref which is atomic
+and has underflow warnings.
 
-"It is thus essential for the Arm platform to program them before any DMA
- request is triggered to the SDMA, otherwise an unpredictable combination
- of channels may be started."
-
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Signed-off-by: Robin Gong <yibin.gong@nxp.com>
-Link: https://patch.msgid.link/20251024055320.408482-1-carlos.song@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patch.msgid.link/20251030193640.153697-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 810541eed213e..94d0f7695d07a 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -503,9 +503,15 @@ static void mx51_ecspi_trigger(struct spi_imx_data *spi_imx)
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
+index 74ff2812d66a1..de2498749e276 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
+@@ -51,22 +51,22 @@ enum vmw_bo_dirty_method {
+ 
+ /**
+  * struct vmw_bo_dirty - Dirty information for buffer objects
++ * @ref_count: Reference count for this structure. Must be first member!
+  * @start: First currently dirty bit
+  * @end: Last currently dirty bit + 1
+  * @method: The currently used dirty method
+  * @change_count: Number of consecutive method change triggers
+- * @ref_count: Reference count for this structure
+  * @bitmap_size: The size of the bitmap in bits. Typically equal to the
+  * nuber of pages in the bo.
+  * @bitmap: A bitmap where each bit represents a page. A set bit means a
+  * dirty page.
+  */
+ struct vmw_bo_dirty {
++	struct   kref ref_count;
+ 	unsigned long start;
+ 	unsigned long end;
+ 	enum vmw_bo_dirty_method method;
+ 	unsigned int change_count;
+-	unsigned int ref_count;
+ 	unsigned long bitmap_size;
+ 	unsigned long bitmap[];
+ };
+@@ -235,7 +235,7 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
+ 	int ret;
+ 
+ 	if (dirty) {
+-		dirty->ref_count++;
++		kref_get(&dirty->ref_count);
+ 		return 0;
+ 	}
+ 
+@@ -249,7 +249,7 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
+ 	dirty->bitmap_size = num_pages;
+ 	dirty->start = dirty->bitmap_size;
+ 	dirty->end = 0;
+-	dirty->ref_count = 1;
++	kref_init(&dirty->ref_count);
+ 	if (num_pages < PAGE_SIZE / sizeof(pte_t)) {
+ 		dirty->method = VMW_BO_DIRTY_PAGETABLE;
+ 	} else {
+@@ -288,10 +288,8 @@ void vmw_bo_dirty_release(struct vmw_bo *vbo)
  {
- 	u32 reg;
+ 	struct vmw_bo_dirty *dirty = vbo->dirty;
  
--	reg = readl(spi_imx->base + MX51_ECSPI_CTRL);
--	reg |= MX51_ECSPI_CTRL_XCH;
--	writel(reg, spi_imx->base + MX51_ECSPI_CTRL);
-+	if (spi_imx->usedma) {
-+		reg = readl(spi_imx->base + MX51_ECSPI_DMA);
-+		reg |= MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN;
-+		writel(reg, spi_imx->base + MX51_ECSPI_DMA);
-+	} else {
-+		reg = readl(spi_imx->base + MX51_ECSPI_CTRL);
-+		reg |= MX51_ECSPI_CTRL_XCH;
-+		writel(reg, spi_imx->base + MX51_ECSPI_CTRL);
-+	}
+-	if (dirty && --dirty->ref_count == 0) {
+-		kvfree(dirty);
++	if (dirty && kref_put(&dirty->ref_count, (void *)kvfree))
+ 		vbo->dirty = NULL;
+-	}
  }
  
- static void mx51_ecspi_disable(struct spi_imx_data *spi_imx)
-@@ -699,7 +705,6 @@ static void mx51_setup_wml(struct spi_imx_data *spi_imx)
- 	writel(MX51_ECSPI_DMA_RX_WML(spi_imx->wml - 1) |
- 		MX51_ECSPI_DMA_TX_WML(tx_wml) |
- 		MX51_ECSPI_DMA_RXT_WML(spi_imx->wml) |
--		MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN |
- 		MX51_ECSPI_DMA_RXTDEN, spi_imx->base + MX51_ECSPI_DMA);
- }
- 
-@@ -1458,6 +1463,8 @@ static int spi_imx_dma_transfer(struct spi_imx_data *spi_imx,
- 	reinit_completion(&spi_imx->dma_tx_completion);
- 	dma_async_issue_pending(controller->dma_tx);
- 
-+	spi_imx->devtype_data->trigger(spi_imx);
-+
- 	transfer_timeout = spi_imx_calculate_timeout(spi_imx, transfer->len);
- 
- 	/* Wait SDMA to finish the data transfer.*/
+ /**
 -- 
 2.51.0
 
