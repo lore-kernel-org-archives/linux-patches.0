@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D358B1DD0EF;
-	Wed, 10 Dec 2025 07:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F652264DC;
+	Wed, 10 Dec 2025 07:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765351907; cv=none; b=eLVOsG3BDgtNzA1Wuv78wFAjWA3gXzTwyPYPv1j1ZpkEPwjgIT482LoNxm4KblMfzM2m+PKsOl1laGJIQHp2z+EdNglyG805DMKf9NdKomeBwCqIb0kk5aLszg4r24951QFHjK6I/Zats4SNFNqECti00KFyWalfe367WRrQSJU=
+	t=1765351910; cv=none; b=MquGg1Bzj3H0RzvERtJ55wSx//eeWOg/mn7JqVxf0yxTesHYki+PsoG3QxGtZVQYOIXMbGOvSuabAroq2tKb3C4t1D7c3lBPIgEqdjnHVdHkY4GDWzlCAUr981ZVaRUlp9uGafWbEt+h3cR0FD19qz3D2zPZvdcoV4V42SFQCAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765351907; c=relaxed/simple;
-	bh=HfsRtB3lA0a7zzXHmU5vRuRTXZ7+NfjLP9LYQ1AsHAM=;
+	s=arc-20240116; t=1765351910; c=relaxed/simple;
+	bh=4c3TxtF9BUwZPLzJ48k4AjFAZE3M3UjLaPhGEyqm9Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FdZPxmT7ouZYq24nYz9Z0L0Bi98s3h0NY5kmcjFCi/7SFIeIi6CiHW3PrEu0KGszSPllxqzkmp5HL+ylOuqDdup+w+F1aokonq3BdjbGHQgNnM3VNOLURwDry4JQcrvl5k8o0mm49yTyodHSPjZO04tMWyCMrNS9auXnqJlS+wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV8x2hzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HFebvbix6VFnY9ugmpd4mucvqkTTBUVPIrBcR3DtHnDccdhQQQ4/VaQpl81gXhCPYEyE4yIp05sYTAezdo2bYLyMMaQvCD5+8swdv8jibmEnkYxszLCg0VEdqTQ2t+foCAQxt4bbnvXvKNN3LR2liABCEIqzoWGlEjLnrgn+9Lk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iCDCR6tA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV8x2hzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18646C4CEF1;
-	Wed, 10 Dec 2025 07:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iCDCR6tA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E04C116B1;
+	Wed, 10 Dec 2025 07:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765351907;
-	bh=HfsRtB3lA0a7zzXHmU5vRuRTXZ7+NfjLP9LYQ1AsHAM=;
+	s=korg; t=1765351909;
+	bh=4c3TxtF9BUwZPLzJ48k4AjFAZE3M3UjLaPhGEyqm9Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nV8x2hzlx7hCfahAHeBa7iIsvmWmgCdUxJMQQz72tWOfE0lQJWcJ26yNLLivLqik5
-	 aTb5KVIRnNh5HiSmh3QtjdqLIfBYFhYyz+yjNS69wOUyuDnV7PZLHnXlp8rSMBXLk9
-	 ghInLSszJ/jqAXqFIY8ZavtebKUUEGLeTrO40pmE=
+	b=iCDCR6tAkQ2EMTT+wRGvZhWqzOs/jXeEQ7Wuz0L7rPonXO857O5skkPUOUnVAYBhH
+	 cn9I6E9G3NYEdKr26uLs2lmoJKL5WGiGwEACj3CyMbWB/qF+lcfTfmv7Yw/7A25iH5
+	 WHQdgFuicvYOlqvF1+0bIPx9G0eYJT1ZnYrARdbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Yang <Philip.Yang@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Felix Kuehling <felix.kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lushih Hsieh <bruce@mail.kh.edu.tw>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 26/49] drm/amdkfd: Fix GPU mappings for APU after prefetch
-Date: Wed, 10 Dec 2025 16:29:56 +0900
-Message-ID: <20251210072948.814639764@linuxfoundation.org>
+Subject: [PATCH 6.12 27/49] ALSA: usb-audio: Add native DSD quirks for PureAudio DAC series
+Date: Wed, 10 Dec 2025 16:29:57 +0900
+Message-ID: <20251210072948.837820663@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
 References: <20251210072948.125620687@linuxfoundation.org>
@@ -53,54 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+From: Lushih Hsieh <bruce@mail.kh.edu.tw>
 
-[ Upstream commit eac32ff42393efa6657efc821231b8d802c1d485 ]
+[ Upstream commit 21a9ab5b90b3716a631d559e62818029b4e7f5b7 ]
 
-Fix the following corner case:-
- Consider a 2M huge page SVM allocation, followed by prefetch call for
-the first 4K page. The whole range is initially mapped with single PTE.
-After the prefetch, this range gets split to first page + rest of the
-pages. Currently, the first page mapping is not updated on MI300A (APU)
-since page hasn't migrated. However, after range split PTE mapping it not
-valid.
+The PureAudio APA DAC and Lotus DAC5 series are USB Audio
+2.0 Class devices that support native Direct Stream Digital (DSD)
+playback via specific vendor protocols.
 
-Fix this by forcing page table update for the whole range when prefetch
-is called.  Calling prefetch on APU doesn't improve performance. If all
-it deteriotes. However, functionality has to be supported.
+Without these quirks, the devices may only function in standard
+PCM mode, or fail to correctly report their DSD format capabilities
+to the ALSA framework, preventing native DSD playback under Linux.
 
-v2: Use apu_prefer_gtt as this issue doesn't apply to APUs with carveout
-VRAM
+This commit adds new quirk entries for the mentioned DAC models
+based on their respective Vendor/Product IDs (VID:PID), for example:
+0x16d0:0x0ab1 (APA DAC), 0x16d0:0xeca1 (DAC5 series), etc.
 
-v3: Simplify by setting the flag for all ASICs as it doesn't affect dGPU
+The quirk ensures correct DSD format handling by setting the required
+SNDRV_PCM_FMTBIT_DSD_U32_BE format bit and defining the DSD-specific
+Audio Class 2.0 (AC2.0) endpoint configurations. This allows the ALSA
+DSD API to correctly address the device for high-bitrate DSD streams,
+bypassing the need for DoP (DSD over PCM).
 
-v4: Remove v2 and v3 changes. Force update_mapping when range is split
-at a size that is not aligned to prange granularity
+Test on APA DAC and Lotus DAC5 SE under Arch Linux.
 
-Suggested-by: Philip Yang <Philip.Yang@amd.com>
-Signed-off-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Reviewed-by: Philip Yang<Philip.Yang@amd.com>
-Reviewed-by: Felix Kuehling <felix.kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 076470b9f6f8d9c7c8ca73a9f054942a686f9ba7)
+Tested-by: Lushih Hsieh <bruce@mail.kh.edu.tw>
+Signed-off-by: Lushih Hsieh <bruce@mail.kh.edu.tw>
+Link: https://patch.msgid.link/20251114052053.54989-1-bruce@mail.kh.edu.tw
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_svm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/quirks.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-index 0d950a20741d8..99ce4fe5eb170 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_svm.c
-@@ -3675,6 +3675,8 @@ svm_range_set_attr(struct kfd_process *p, struct mm_struct *mm,
- 		svm_range_apply_attrs(p, prange, nattr, attrs, &update_mapping);
- 		/* TODO: unmap ranges from GPU that lost access */
- 	}
-+	update_mapping |= !p->xnack_enabled && !list_empty(&remap_list);
-+
- 	list_for_each_entry_safe(prange, next, &remove_list, update_list) {
- 		pr_debug("unlink old 0x%p prange 0x%p [0x%lx 0x%lx]\n",
- 			 prange->svms, prange, prange->start,
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 5ebd4670b4a06..a74bb3a2f9e03 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2022,6 +2022,8 @@ u64 snd_usb_interface_dsd_format_quirks(struct snd_usb_audio *chip,
+ 	case USB_ID(0x16d0, 0x09d8): /* NuPrime IDA-8 */
+ 	case USB_ID(0x16d0, 0x09db): /* NuPrime Audio DAC-9 */
+ 	case USB_ID(0x16d0, 0x09dd): /* Encore mDSD */
++	case USB_ID(0x16d0, 0x0ab1): /* PureAudio APA DAC */
++	case USB_ID(0x16d0, 0xeca1): /* PureAudio Lotus DAC5, DAC5 SE, DAC5 Pro */
+ 	case USB_ID(0x1db5, 0x0003): /* Bryston BDA3 */
+ 	case USB_ID(0x20a0, 0x4143): /* WaveIO USB Audio 2.0 */
+ 	case USB_ID(0x22e1, 0xca01): /* HDTA Serenade DSD */
+@@ -2289,6 +2291,10 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IGNORE_CLOCK_SOURCE),
+ 	DEVICE_FLG(0x1686, 0x00dd, /* Zoom R16/24 */
+ 		   QUIRK_FLAG_TX_LENGTH | QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x16d0, 0x0ab1, /* PureAudio APA DAC */
++		   QUIRK_FLAG_DSD_RAW),
++	DEVICE_FLG(0x16d0, 0xeca1, /* PureAudio Lotus DAC5, DAC5 SE and DAC5 Pro */
++		   QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x17aa, 0x1046, /* Lenovo ThinkStation P620 Rear Line-in, Line-out and Microphone */
+ 		   QUIRK_FLAG_DISABLE_AUTOSUSPEND),
+ 	DEVICE_FLG(0x17aa, 0x104d, /* Lenovo ThinkStation P620 Internal Speaker + Front Headset */
 -- 
 2.51.0
 
