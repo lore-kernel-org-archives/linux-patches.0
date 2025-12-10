@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0559E30EF82;
-	Wed, 10 Dec 2025 03:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B297723B63E;
+	Wed, 10 Dec 2025 03:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338581; cv=none; b=mayUK9S1dXwKmRZZbqAgoeK3ILk3xjOna+vZeBYc9KRXuGrwlnUILX+RuIqgBrD1B2Kv/asM0mJ6ytdbqVm8KaxhOfImYERvXWsOpCmhClSeLcuDbd45IVOuSlh0vZLNkR12BCYb2S8YXBh1Zdv1BBODIO1B1DdB0Zrb+ym1DZM=
+	t=1765338582; cv=none; b=pcnZcjTxOh4QUBmibqfD9jWxdJxiMD/7LuE16Ld6X3awioBkp6iFt+ui2Jbn9azNqOnfnEGlJE26FL9+8fjs0nnmS2Vc+NWddY2zU3rYYkTZZAlrK+qdQcl7E8Cq59mExUgJvVyc/WCPxAb3+RQVogrv5a7zZckp6i4Mvdp6OVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338581; c=relaxed/simple;
-	bh=Alrl3JLu37A805PoxAA6JkIgTa1/iH8zV6XBFvcIWyI=;
+	s=arc-20240116; t=1765338582; c=relaxed/simple;
+	bh=BoIQGh5EzY8W3fLzfxMITZ3Yj0nSKr3v+SMnzm2kt+E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CICGSKJCJ+t31H7IZe86FdWac0e50r4Ka0aiPNxAiSZ91zz0tP6aQdzvHncOHZNjFSR8UU60+QrN+H6lG+q5eY2TAY4CRvh3oWXy/IuPKPkjrWLONamEZFl/4eLDzs07u2rr7mHhdd72Bl3wK2z414jr8ODmDEF+hXCON94dkto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CYo/ck9g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oMunzl2FdVswkaJMc/ZyHDeECfeTc4fH0wjsU7TkSyjkbz5hlfr6geNFUQUl4Ra565pAPPETEjRv4lyN24mhI4jsSalNpRuQCpWwXX6z1KgSOzMDv+lf7boWxRpmp8SRz8ebdMdCKGAEvmqbusLf2wCmURD6DH+imzhJW/Td02s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tel8XAfo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CYo/ck9g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9C9C16AAE;
-	Wed, 10 Dec 2025 03:49:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tel8XAfo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10031C4CEF1;
+	Wed, 10 Dec 2025 03:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338580;
-	bh=Alrl3JLu37A805PoxAA6JkIgTa1/iH8zV6XBFvcIWyI=;
+	s=k20201202; t=1765338582;
+	bh=BoIQGh5EzY8W3fLzfxMITZ3Yj0nSKr3v+SMnzm2kt+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYo/ck9gav4BngyhivwEVGww50hmNF99oU25Xk9MKvwG3ftngM9mGh4auSW8bpXQz
-	 a6cY55Sj8PDQAXf1q/BzB8XMrRGTJYFqzfCBnuNn04cUbLLhGTWlYKKMghyHcMsc5o
-	 6fSibfJd8M3wDKEG+6i10XciPnHJsWx0kIfMVmQFVFssLsIVb+nday7azIR/yXxD8H
-	 c8RdVp9jHtnkYcU4VQ4Y33qYMMRLsHqOIRI0JkWUtHIlGJhcMDW4edEEyJ38PuflUa
-	 q40zNB9fmpzcemHPAGcAMeTgoHgsHoDNobXBQOfePBfHllisd/QjPKUWETejLJSq1x
-	 e6/jC2/It62Nw==
+	b=tel8XAfoqyIRIT0gDrCg81Zo1H1Wirs87W5xruh67FeUUmkerxGS2xaOyfcbpQ3SQ
+	 pZrFRQnh2HbSJ43E5vDjcmz/b2RHnmvheX1ufh8+Ft2GFkOPIVeS7MnU3o9Ix98uD2
+	 kuXRCYrYZnEErSdgm8Mjtxu4nxHpLT7vB/qOEE4sCJqnnDYEi7yTznSXtRdR7nNKlv
+	 dmfgNxWwr62Clza2rpcLcA4tEPiEFUCLkn7YuQ3ieBgOAoGJLLdcO+QsoKr9JBwRsk
+	 fZN/69HostWhFyxHoqDV/i/sw8perAGadtvDoHkjV0GHCYiLOhqSfn0kAIUTmlIdnY
+	 TQtqCWGBLm3Bw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jinhui Guo <guojinhui.liam@bytedance.com>,
-	Corey Minyard <corey@minyard.net>,
+Cc: Tony Battersby <tonyb@cybernetics.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	openipmi-developer@lists.sourceforge.net
-Subject: [PATCH AUTOSEL 6.18-5.10] ipmi: Fix __scan_channels() failing to rescan channels
-Date: Tue,  9 Dec 2025 22:48:52 -0500
-Message-ID: <20251210034915.2268617-11-sashal@kernel.org>
+	njavali@marvell.com,
+	GR-QLogic-Storage-Upstream@marvell.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.10] scsi: qla2xxx: Fix initiator mode with qlini_mode=exclusive
+Date: Tue,  9 Dec 2025 22:48:53 -0500
+Message-ID: <20251210034915.2268617-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
 References: <20251210034915.2268617-1-sashal@kernel.org>
@@ -50,219 +52,164 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
 Content-Transfer-Encoding: 8bit
 
-From: Jinhui Guo <guojinhui.liam@bytedance.com>
+From: Tony Battersby <tonyb@cybernetics.com>
 
-[ Upstream commit 6bd30d8fc523fb880b4be548e8501bc0fe8f42d4 ]
+[ Upstream commit 8f58fc64d559b5fda1b0a5e2a71422be61e79ab9 ]
 
-channel_handler() sets intf->channels_ready to true but never
-clears it, so __scan_channels() skips any rescan. When the BMC
-firmware changes a rescan is required. Allow it by clearing
-the flag before starting a new scan.
+When given the module parameter qlini_mode=exclusive, qla2xxx in
+initiator mode is initially unable to successfully send SCSI commands to
+devices it finds while scanning, resulting in an escalating series of
+resets until an adapter reset clears the issue.  Fix by checking the
+active mode instead of the module parameter.
 
-Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
-Message-ID: <20250930074239.2353-3-guojinhui.liam@bytedance.com>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Tony Battersby <tonyb@cybernetics.com>
+Link: https://patch.msgid.link/1715ec14-ba9a-45dc-9cf2-d41aa6b81b5e@cybernetics.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of IPMI Channel Rescan Fix
+## Complete Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. Commit Message Analysis
 
-**Subject:** "ipmi: Fix __scan_channels() failing to rescan channels" -
-clear bug fix indication.
+The commit describes a clear bug:
+- **Problem:** When using `qlini_mode=exclusive`, qla2xxx in initiator
+  mode fails to send SCSI commands to discovered devices
+- **Symptom:** Escalating series of resets until an adapter reset clears
+  the issue
+- **Fix:** Check the active mode instead of the module parameter
 
-**Problem described:**
-- `channel_handler()` sets `intf->channels_ready = true` but never
-  clears it
-- This causes `__scan_channels()` to skip rescans
-- When BMC firmware changes, a rescan is required but doesn't happen
+No `Cc: stable@vger.kernel.org` or `Fixes:` tags are present, but this
+doesn't preclude backporting if the fix clearly meets stable criteria.
 
-**Tags check:**
-- No "Cc: stable@vger.kernel.org" tag
-- No "Fixes:" tag
-- Signed off by IPMI maintainer Corey Minyard
+### 2. Code Change Analysis - The Bug
 
-### 2. CODE CHANGE ANALYSIS
-
-The fix adds a `bool rescan` parameter to `__scan_channels()`:
-
+**Buggy logic (lines 3446-3458):**
 ```c
-static int __scan_channels(struct ipmi_smi *intf,
-                           struct ipmi_device_id *id,
-                           bool rescan)
-{
-    if (rescan) {
-        /* Clear channels_ready to force channels rescan. */
-        intf->channels_ready = false;
-    }
-    ...
+if (ha->mqenable) {
+    bool startit = false;
+
+    if (QLA_TGT_MODE_ENABLED())
+        startit = false;
+
+    if (ql2x_ini_mode == QLA2XXX_INI_MODE_ENABLED)
+        startit = true;
+
+    for (i = 0; i < ha->max_qpairs; i++)
+        qla2xxx_create_qpair(base_vha, 5, 0, startit);
 }
 ```
 
-**Call site updates:**
-- `ipmi_add_smi()`: `__scan_channels(intf, &id, false)` - initial scan
-- `__bmc_get_device_id()` after BMC re-registration:
-  `__scan_channels(intf, &id, false)` - fresh state
-- `__bmc_get_device_id()` when version info changes:
-  `__scan_channels(intf, &bmc->fetch_id, true)` - rescan needed
+The mode values from `qla_target.h`:
+- `QLA2XXX_INI_MODE_EXCLUSIVE` = 0 (exclusive initiator mode - **an
+  initiator mode!**)
+- `QLA2XXX_INI_MODE_DISABLED` = 1
+- `QLA2XXX_INI_MODE_ENABLED` = 2 (standard initiator mode)
+- `QLA2XXX_INI_MODE_DUAL` = 3
 
-**Bug mechanism:** When BMC firmware changes and `__bmc_get_device_id()`
-detects version info differences, it calls `__scan_channels()` to update
-channel information. However, since `channels_ready` was already set
-`true` from the initial scan, the rescan logic is skipped, leaving stale
-channel information.
+**Root cause:** The code only checks for `QLA2XXX_INI_MODE_ENABLED`
+(value 2). When `qlini_mode=exclusive` is used, `ql2x_ini_mode` equals
+`QLA2XXX_INI_MODE_EXCLUSIVE` (value 0), so `startit` remains `false`.
+Queue pairs are never started for initiator traffic, causing SCSI
+commands to fail.
 
-### 3. CLASSIFICATION
+**The fix:**
+```c
+bool startit = !!(host->active_mode & MODE_INITIATOR);
+```
 
-- **Type:** Bug fix (not a feature)
-- **Category:** Functional bug in existing driver logic
-- **Security:** No security implications
+This uses the runtime `active_mode` flag which is already correctly set
+for all initiator modes elsewhere in the driver (see
+`qla_target.c:6493,6511,6515` - all set `active_mode = MODE_INITIATOR`
+for various initiator modes including "exclusive").
 
-### 4. SCOPE AND RISK ASSESSMENT
+### 3. Classification
 
-**Scope:**
-- 1 file changed: `drivers/char/ipmi/ipmi_msghandler.c`
-- ~15 lines of actual changes (mostly parameter additions)
-- Localized to the `__scan_channels()` function and its callers
+- **Type:** Bug fix (not a new feature)
+- **Severity:** HIGH - causes complete failure of SCSI command
+  processing
+- **Category:** Logic error in mode detection
 
-**Risk:** LOW
-- The logic is simple and obvious: clear a boolean flag before
-  rescanning
-- No complex interactions or side effects
-- The differentiation between initial scan (`false`) and rescan (`true`)
-  is well-reasoned
+### 4. Scope and Risk Assessment
 
-### 5. USER IMPACT
+| Factor | Assessment |
+|--------|------------|
+| Lines changed | -8 removed, +1 added (net simplification) |
+| Files touched | 1 (qla_os.c) |
+| Complexity | LOW - replaces complex logic with simple check |
+| Risk of regression | VERY LOW - uses existing tested pattern |
 
-**Affected users:**
-- Servers with IPMI/BMC interfaces (common in enterprise/datacenter
-  environments)
-- Users who update BMC firmware while the system is running
+### 5. User Impact
 
-**Impact without fix:**
-- After BMC firmware updates, IPMI channel information becomes stale
-- System management through IPMI may malfunction
-- Users must reboot to get correct channel information
+- **Who is affected:** Users of QLogic Fibre Channel HBAs (QLA2xxx) with
+  `qlini_mode=exclusive`
+- **Severity:** Complete functional failure - SCSI commands fail,
+  adapter resets repeatedly
+- **Impact area:** Enterprise storage - FC HBAs are common in data
+  centers
 
-**Severity:** Medium - affects functionality, not crashes or data
-corruption
+### 6. Stability Indicators
 
-### 6. STABILITY INDICATORS
+- Signed-off by the SCSI maintainer (Martin K. Petersen)
+- Uses `host->active_mode` pattern already proven throughout the driver
+- The fix simplifies the code, reducing bug surface area
 
-- Signed off by IPMI subsystem maintainer
-- The fix logic is straightforward and verifiable by inspection
-- No complex algorithmic changes
+### 7. Dependency Check
 
-### 7. DEPENDENCY CHECK
+- The `host->active_mode` field exists in all stable kernels (it's part
+  of `struct Scsi_Host` in `include/scsi/scsi_host.h`)
+- The `MODE_INITIATOR` constant (0x01) is standard
+- No dependencies on other commits
 
-- Self-contained fix with no dependencies on other commits
-- `ipmi_msghandler.c` exists in all stable trees (mature driver)
-- The affected functions (`__scan_channels`, `channel_handler`) exist in
-  stable kernels
+---
 
-### Risk vs Benefit Assessment
+## Conclusion
 
-**Benefits:**
-- Fixes real-world bug: BMC firmware updates are common maintenance
-  operations
-- Small, surgical fix with minimal code changes
-- IPMI is critical for server management in enterprise environments
+This commit should be backported to stable kernels because:
 
-**Risks:**
-- Very low - the change is obviously correct
-- Adding a parameter and clearing a flag is straightforward
-- No behavioral changes to working code paths (initial scan unchanged)
+1. **Fixes a real, serious bug:** Users with `qlini_mode=exclusive`
+   experience complete storage failure with escalating resets
+2. **Obviously correct:** The fix uses the authoritative runtime mode
+   (`host->active_mode`) instead of trying to derive it from module
+   parameters
+3. **Small and surgical:** Removes 8 lines of incorrect logic, adds 1
+   correct line
+4. **Low risk:** Uses existing, well-tested infrastructure that's
+   already used throughout the driver
+5. **No new features:** Pure bug fix that restores intended
+   functionality
+6. **Important hardware:** QLogic FC HBAs are widely deployed in
+   enterprise environments
 
-### Concerns
-
-1. **No Fixes: tag** - Cannot determine when bug was introduced, making
-   it harder to know which stable versions need it
-2. **No explicit Cc: stable** - Author didn't request backport
-3. **Specific scenario** - Only affects systems where BMC firmware
-   changes at runtime
-
-### Conclusion
-
-This commit fixes a legitimate functional bug where IPMI channel
-rescanning fails after BMC firmware changes. The fix is:
-- **Obviously correct**: Clear a "ready" flag before rescanning
-- **Small and contained**: ~15 lines in one file
-- **Fixes a real bug**: Users who update BMC firmware encounter this
-- **Low risk**: Simple boolean flag manipulation
-
-While it lacks explicit stable tags, the fix is valuable for enterprise
-users who rely on IPMI for server management. The change is minimal, the
-logic is clear, and it restores expected functionality without
-introducing new features.
+The lack of explicit `Cc: stable@` tag is not disqualifying when the fix
+clearly meets all stable kernel criteria.
 
 **YES**
 
- drivers/char/ipmi/ipmi_msghandler.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index d3f84deee4513..0a886399f9daf 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -599,7 +599,8 @@ static void __ipmi_bmc_unregister(struct ipmi_smi *intf);
- static int __ipmi_bmc_register(struct ipmi_smi *intf,
- 			       struct ipmi_device_id *id,
- 			       bool guid_set, guid_t *guid, int intf_num);
--static int __scan_channels(struct ipmi_smi *intf, struct ipmi_device_id *id);
-+static int __scan_channels(struct ipmi_smi *intf,
-+				struct ipmi_device_id *id, bool rescan);
+diff --git a/drivers/scsi/qla2xxx/qla_os.c b/drivers/scsi/qla2xxx/qla_os.c
+index 5ffd945866527..70c7143ce026c 100644
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -3444,13 +3444,7 @@ qla2x00_probe_one(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		ha->mqenable = 0;
  
- static void free_ipmi_user(struct kref *ref)
- {
-@@ -2668,7 +2669,7 @@ static int __bmc_get_device_id(struct ipmi_smi *intf, struct bmc_device *bmc,
- 		if (__ipmi_bmc_register(intf, &id, guid_set, &guid, intf_num))
- 			need_waiter(intf); /* Retry later on an error. */
- 		else
--			__scan_channels(intf, &id);
-+			__scan_channels(intf, &id, false);
+ 	if (ha->mqenable) {
+-		bool startit = false;
+-
+-		if (QLA_TGT_MODE_ENABLED())
+-			startit = false;
+-
+-		if (ql2x_ini_mode == QLA2XXX_INI_MODE_ENABLED)
+-			startit = true;
++		bool startit = !!(host->active_mode & MODE_INITIATOR);
  
- 
- 		if (!intf_set) {
-@@ -2688,7 +2689,7 @@ static int __bmc_get_device_id(struct ipmi_smi *intf, struct bmc_device *bmc,
- 		goto out_noprocessing;
- 	} else if (memcmp(&bmc->fetch_id, &bmc->id, sizeof(bmc->id)))
- 		/* Version info changes, scan the channels again. */
--		__scan_channels(intf, &bmc->fetch_id);
-+		__scan_channels(intf, &bmc->fetch_id, true);
- 
- 	bmc->dyn_id_expiry = jiffies + IPMI_DYN_DEV_ID_EXPIRY;
- 
-@@ -3438,10 +3439,17 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
- /*
-  * Must be holding intf->bmc_reg_mutex to call this.
-  */
--static int __scan_channels(struct ipmi_smi *intf, struct ipmi_device_id *id)
-+static int __scan_channels(struct ipmi_smi *intf,
-+				struct ipmi_device_id *id,
-+				bool rescan)
- {
- 	int rv;
- 
-+	if (rescan) {
-+		/* Clear channels_ready to force channels rescan. */
-+		intf->channels_ready = false;
-+	}
-+
- 	if (ipmi_version_major(id) > 1
- 			|| (ipmi_version_major(id) == 1
- 			    && ipmi_version_minor(id) >= 5)) {
-@@ -3656,7 +3664,7 @@ int ipmi_add_smi(struct module         *owner,
- 	}
- 
- 	mutex_lock(&intf->bmc_reg_mutex);
--	rv = __scan_channels(intf, &id);
-+	rv = __scan_channels(intf, &id, false);
- 	mutex_unlock(&intf->bmc_reg_mutex);
- 	if (rv)
- 		goto out_err_bmc_reg;
+ 		/* Create start of day qpairs for Block MQ */
+ 		for (i = 0; i < ha->max_qpairs; i++)
 -- 
 2.51.0
 
