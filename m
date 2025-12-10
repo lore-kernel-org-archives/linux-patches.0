@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6D4303C81;
-	Wed, 10 Dec 2025 07:35:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF7D302CBD;
+	Wed, 10 Dec 2025 07:36:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352159; cv=none; b=a7o+EYtw1JLk4wSeWkz8Wap3kmP4pzYCj98KvAoiY4lXLRoR0G4DvDpISh0JrOoLKzUabxFXvglC4HwhmznFQFP8Youi9HhlZVt8GNVVpq8rrEfyvEYItgosMF/AA3sZNcvJwFyTtEazY81rZ49Sr26VSNvFC2z2Homn5rwCkKc=
+	t=1765352161; cv=none; b=uYnqcmK7pN3JRsIoPYjqjRpt18Z6lx2ysFgNL6FK7Ax0Z1ULhIwThSEVdKDWhycc2TnmgJkSrfpODi2sIjmQnHxZ1+zdYFpiDtVgBTE5F4jJW7rLOEKhJOitP0zmgviowzf3DfVXV7IOkX3WfNUtdvfx1oLGjHkNE74/exhQaAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352159; c=relaxed/simple;
-	bh=5zysFCDzAt6873wtAewPic96DchaPhVyEN6KWMcTnk8=;
+	s=arc-20240116; t=1765352161; c=relaxed/simple;
+	bh=Eysv9DBpgRoWd6vmegNNgYWJ5gRuvCGMrWkVB1u5DKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sidZTjavu0KWWKtpJmhqVfCnRevAkJ5G3PuCsd8NHfEpI3N+AFvcJ0YcKN0fJqnclNayt5vi7vZcDZmw7Pd9hbYqBMqkAEQ/Z8lwsqKG0+bWs+XCKr92IQqSCiPz6+/7boHTbNqjt4G+jAAAeC4AQRXGbbDfDSO6YvvubmTerNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lxcAa4tg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SdqsyhJmfdZk8wfMcD7b0npejmFtDAZ4dqmrRyxI50tmDtlw6ThkU3a0RwDrZ7X98E7L7FK1Vbb5V+O8b32TbsD5hh6UPEJ09uGX6hL4NdHSO8bChWaUhwmnZssXf/UFl+0damBb8RQ2vxp4anml39uppeiUVZVo9iV5WwKTlBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qc/Jmprz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lxcAa4tg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE88C4CEF1;
-	Wed, 10 Dec 2025 07:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qc/Jmprz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EEAC4CEF1;
+	Wed, 10 Dec 2025 07:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352159;
-	bh=5zysFCDzAt6873wtAewPic96DchaPhVyEN6KWMcTnk8=;
+	s=korg; t=1765352161;
+	bh=Eysv9DBpgRoWd6vmegNNgYWJ5gRuvCGMrWkVB1u5DKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxcAa4tg8Kcu4HmFVma922x7WBEVkXrFCKRCSGXHGj3ZX9sTmzGf8P4r9rE1HSWtt
-	 gmr2dY0NgnreY0nZEO0wYjBFlP14bxJhf7c3a1LUnsCOSOxRkuS5OV6b9sCZmG6PJl
-	 6wur1QtJLFqMlTTp1/4jScRC5+IOxrAS2xGkYdtg=
+	b=qc/JmprzxOrdyRpw8LiFl3rYzipTQr90rhJq1SFvJ1GLaayVNxOF5c8DjRbrsS3wP
+	 tkVKXFLIe/AEzb39W65mKkBfAr+iJgGk4wmw/DwJM7J9EzPg8tqd0hDvbqIDTQkiFW
+	 l6UPchCh/srEkBbR7uFC+lhVuAM32wqKN+OIkjd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qianchang Zhao <pioooooooooip@gmail.com>,
-	Zhitong Liu <liuzhitong1993@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 04/29] ksmbd: ipc: fix use-after-free in ipc_msg_send_request
-Date: Wed, 10 Dec 2025 16:30:14 +0900
-Message-ID: <20251210072944.491410534@linuxfoundation.org>
+	Adrian Freihofer <adrian.freihofer@siemens.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Waiman Long <longman@redhat.com>
+Subject: [PATCH 6.18 05/29] locking/spinlock/debug: Fix data-race in do_raw_write_lock
+Date: Wed, 10 Dec 2025 16:30:15 +0900
+Message-ID: <20251210072944.515624386@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072944.363788552@linuxfoundation.org>
 References: <20251210072944.363788552@linuxfoundation.org>
@@ -52,80 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qianchang Zhao <pioooooooooip@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-commit 1fab1fa091f5aa97265648b53ea031deedd26235 upstream.
+commit c14ecb555c3ee80eeb030a4e46d00e679537f03a upstream.
 
-ipc_msg_send_request() waits for a generic netlink reply using an
-ipc_msg_table_entry on the stack. The generic netlink handler
-(handle_generic_event()/handle_response()) fills entry->response under
-ipc_msg_table_lock, but ipc_msg_send_request() used to validate and free
-entry->response without holding the same lock.
+KCSAN reports:
 
-Under high concurrency this allows a race where handle_response() is
-copying data into entry->response while ipc_msg_send_request() has just
-freed it, leading to a slab-use-after-free reported by KASAN in
-handle_generic_event():
+BUG: KCSAN: data-race in do_raw_write_lock / do_raw_write_lock
 
-  BUG: KASAN: slab-use-after-free in handle_generic_event+0x3c4/0x5f0 [ksmbd]
-  Write of size 12 at addr ffff888198ee6e20 by task pool/109349
-  ...
-  Freed by task:
-    kvfree
-    ipc_msg_send_request [ksmbd]
-    ksmbd_rpc_open -> ksmbd_session_rpc_open [ksmbd]
+write (marked) to 0xffff800009cf504c of 4 bytes by task 1102 on cpu 1:
+ do_raw_write_lock+0x120/0x204
+ _raw_write_lock_irq
+ do_exit
+ call_usermodehelper_exec_async
+ ret_from_fork
 
-Fix by:
-- Taking ipc_msg_table_lock in ipc_msg_send_request() while validating
-  entry->response, freeing it when invalid, and removing the entry from
-  ipc_msg_table.
-- Returning the final entry->response pointer to the caller only after
-  the hash entry is removed under the lock.
-- Returning NULL in the error path, preserving the original API
-  semantics.
+read to 0xffff800009cf504c of 4 bytes by task 1103 on cpu 0:
+ do_raw_write_lock+0x88/0x204
+ _raw_write_lock_irq
+ do_exit
+ call_usermodehelper_exec_async
+ ret_from_fork
 
-This makes all accesses to entry->response consistent with
-handle_response(), which already updates and fills the response buffer
-under ipc_msg_table_lock, and closes the race that allowed the UAF.
+value changed: 0xffffffff -> 0x00000001
 
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 1103 Comm: kworker/u4:1 6.1.111
+
+Commit 1a365e822372 ("locking/spinlock/debug: Fix various data races") has
+adressed most of these races, but seems to be not consistent/not complete.
+
+>From do_raw_write_lock() only debug_write_lock_after() part has been
+converted to WRITE_ONCE(), but not debug_write_lock_before() part.
+Do it now.
+
+Fixes: 1a365e822372 ("locking/spinlock/debug: Fix various data races")
+Reported-by: Adrian Freihofer <adrian.freihofer@siemens.com>
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Waiman Long <longman@redhat.com>
 Cc: stable@vger.kernel.org
-Reported-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Reported-by: Zhitong Liu <liuzhitong1993@gmail.com>
-Signed-off-by: Qianchang Zhao <pioooooooooip@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/transport_ipc.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ kernel/locking/spinlock_debug.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/transport_ipc.c
-+++ b/fs/smb/server/transport_ipc.c
-@@ -553,12 +553,16 @@ static void *ipc_msg_send_request(struct
- 	up_write(&ipc_msg_table_lock);
+--- a/kernel/locking/spinlock_debug.c
++++ b/kernel/locking/spinlock_debug.c
+@@ -184,8 +184,8 @@ void do_raw_read_unlock(rwlock_t *lock)
+ static inline void debug_write_lock_before(rwlock_t *lock)
+ {
+ 	RWLOCK_BUG_ON(lock->magic != RWLOCK_MAGIC, lock, "bad magic");
+-	RWLOCK_BUG_ON(lock->owner == current, lock, "recursion");
+-	RWLOCK_BUG_ON(lock->owner_cpu == raw_smp_processor_id(),
++	RWLOCK_BUG_ON(READ_ONCE(lock->owner) == current, lock, "recursion");
++	RWLOCK_BUG_ON(READ_ONCE(lock->owner_cpu) == raw_smp_processor_id(),
+ 							lock, "cpu recursion");
+ }
  
- 	ret = ipc_msg_send(msg);
--	if (ret)
-+	if (ret) {
-+		down_write(&ipc_msg_table_lock);
- 		goto out;
-+	}
- 
- 	ret = wait_event_interruptible_timeout(entry.wait,
- 					       entry.response != NULL,
- 					       IPC_WAIT_TIMEOUT);
-+
-+	down_write(&ipc_msg_table_lock);
- 	if (entry.response) {
- 		ret = ipc_validate_msg(&entry);
- 		if (ret) {
-@@ -567,7 +571,6 @@ static void *ipc_msg_send_request(struct
- 		}
- 	}
- out:
--	down_write(&ipc_msg_table_lock);
- 	hash_del(&entry.ipc_table_hlist);
- 	up_write(&ipc_msg_table_lock);
- 	return entry.response;
 
 
