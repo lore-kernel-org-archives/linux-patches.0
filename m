@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39373221F2F;
-	Wed, 10 Dec 2025 07:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3999221F2F;
+	Wed, 10 Dec 2025 07:32:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765351959; cv=none; b=JyQePphhq2ygJg2IaarYPDWUKk6lkI1G284kie+GcrvpiNeVMmmjPM+JYqQ0saqkrNXUNEegfMuxRCoJNa4e2on5MonyoVINt4EYZB3CGD4wbeDAGTg4k8dMLWB3ojYzp7/bcDuO8p3JneBaD8tCk9Xxh0cy4ydPsJ1kAQEI8pA=
+	t=1765351962; cv=none; b=h756XQR8s4/iOGTOD2iQ3VRMglF7qaK0P8gHbacrfG7DN2t6++1eJpYRaKr3ooDrGVrbjZ0MNW7cFKsKCS/f0slzvdUAZYn/YwQvNrOobTKmvRhLLi3VGcU+agLlj8ZXtOPLHLpWvCuWpHVTwb+eRwxe2x4bC2PwB2zGUVmd+ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765351959; c=relaxed/simple;
-	bh=EkBn5PJo+yNmz9gaaxip4yMu3TifRJTfoNwSeem2wPo=;
+	s=arc-20240116; t=1765351962; c=relaxed/simple;
+	bh=To7u7B92qt5SosqUisV3ywjVpPSNB+/6AP+JAx11P3U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GG1V6sN3b0SM8fTpu55x3ZIvl32rTkuZnaq4OTwMR6RdF/ed1m0hKRSwCeYJlHpIQ5FHE3hiPCcSygBLHERbQSfCNt3LPiq5usQGvbUqqHOAdqnNGp2BMk+ZuL6nJgVNKpzDJFjpPgOvKFUA824aVjDudU5+6ipE5Y45b4ICqlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YqpKDFss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TDLhz8w1EfLk74+vBRe69Tz+c+Bk/u3wlE/q17FEKz4R/4dgQmIbMUsnrrgubzxf0R8WO6myfJpdWl5EGvY/lpr6q7slVl1qkmNr87+k7CAZkwvHHArwMJZ2MjIWjbChdgKNrEV7fkfcHYsmiP0ck4SubCIE0vAi6tDbMloYhK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZwzYU7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YqpKDFss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 888D6C4CEF1;
-	Wed, 10 Dec 2025 07:32:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZwzYU7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E7CC4CEF1;
+	Wed, 10 Dec 2025 07:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765351958;
-	bh=EkBn5PJo+yNmz9gaaxip4yMu3TifRJTfoNwSeem2wPo=;
+	s=korg; t=1765351962;
+	bh=To7u7B92qt5SosqUisV3ywjVpPSNB+/6AP+JAx11P3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YqpKDFssipksnMftx6OMTbDocPHPR084ormO2pNs2DeB4Tjg8wQrSTe0xX0BUyL/W
-	 1nKeH9bpx2QqX52GO+MyoUaqwNN7iSk6lz1/tbq7vOafMQk4WqxS5NFfX/Qxx+hLyv
-	 pbmWTlWtMxW3GeiQWEHKs+PXjJ17yd/IHjV2UuPM=
+	b=eZwzYU7oH3VJ1ocpGZjj3khYJqcEjfugSy6nvxFEbbeHSNolTyHWA5P7ucRRTm/6Q
+	 j9wBuUxJHvphRwEhcr9kljJmMOymSa3IjscWfdIRwls+imES71Ha1U3uU6BVyf8jo+
+	 9Q0meHEbYiC5cAeRwUGtu3ULXO+xXhqTHF19A16Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 18/49] USB: serial: belkin_sa: fix TIOCMBIS and TIOCMBIC
-Date: Wed, 10 Dec 2025 16:29:48 +0900
-Message-ID: <20251210072948.576445467@linuxfoundation.org>
+	Navaneeth K <knavaneeth786@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 45/49] staging: rtl8723bs: fix out-of-bounds read in rtw_get_ie() parser
+Date: Wed, 10 Dec 2025 16:30:15 +0900
+Message-ID: <20251210072949.284753464@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
 References: <20251210072948.125620687@linuxfoundation.org>
@@ -49,78 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Navaneeth K <knavaneeth786@gmail.com>
 
-commit b6e0b3016187446ddef9edac03cd9d544ac63f11 upstream.
+commit 154828bf9559b9c8421fc2f0d7f7f76b3683aaed upstream.
 
-Asserting or deasserting a modem control line using TIOCMBIS or TIOCMBIC
-should not deassert any lines that are not in the mask.
+The Information Element (IE) parser rtw_get_ie() trusted the length
+byte of each IE without validating that the IE body (len bytes after
+the 2-byte header) fits inside the remaining frame buffer. A malformed
+frame can advertise an IE length larger than the available data, causing
+the parser to increment its pointer beyond the buffer end. This results
+in out-of-bounds reads or, depending on the pattern, an infinite loop.
 
-Fix this long-standing regression dating back to 2003 when the
-tiocmset() callback was introduced.
+Fix by validating that (offset + 2 + len) does not exceed the limit
+before accepting the IE or advancing to the next element.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+This prevents OOB reads and ensures the parser terminates safely on
+malformed frames.
+
+Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
+Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/belkin_sa.c |   28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/serial/belkin_sa.c
-+++ b/drivers/usb/serial/belkin_sa.c
-@@ -435,7 +435,7 @@ static int belkin_sa_tiocmset(struct tty
- 	struct belkin_sa_private *priv = usb_get_serial_port_data(port);
- 	unsigned long control_state;
- 	unsigned long flags;
--	int retval;
-+	int retval = 0;
- 	int rts = 0;
- 	int dtr = 0;
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -140,22 +140,24 @@ u8 *rtw_get_ie(u8 *pbuf, signed int inde
+ 	signed int tmp, i;
+ 	u8 *p;
  
-@@ -452,26 +452,32 @@ static int belkin_sa_tiocmset(struct tty
- 	}
- 	if (clear & TIOCM_RTS) {
- 		control_state &= ~TIOCM_RTS;
--		rts = 0;
-+		rts = 1;
- 	}
- 	if (clear & TIOCM_DTR) {
- 		control_state &= ~TIOCM_DTR;
--		dtr = 0;
-+		dtr = 1;
- 	}
+-	if (limit < 1)
++	if (limit < 2)
+ 		return NULL;
  
- 	priv->control_state = control_state;
- 	spin_unlock_irqrestore(&priv->lock, flags);
- 
--	retval = BSA_USB_CMD(BELKIN_SA_SET_RTS_REQUEST, rts);
--	if (retval < 0) {
--		dev_err(&port->dev, "Set RTS error %d\n", retval);
--		goto exit;
-+	if (rts) {
-+		retval = BSA_USB_CMD(BELKIN_SA_SET_RTS_REQUEST,
-+					!!(control_state & TIOCM_RTS));
-+		if (retval < 0) {
-+			dev_err(&port->dev, "Set RTS error %d\n", retval);
-+			goto exit;
-+		}
+ 	p = pbuf;
+ 	i = 0;
+ 	*len = 0;
+-	while (1) {
++	while (i + 2 <= limit) {
++		tmp = *(p + 1);
++		if (i + 2 + tmp > limit)
++			break;
++
+ 		if (*p == index) {
+-			*len = *(p + 1);
++			*len = tmp;
+ 			return p;
+ 		}
+-		tmp = *(p + 1);
++
+ 		p += (tmp + 2);
+ 		i += (tmp + 2);
+-		if (i >= limit)
+-			break;
  	}
- 
--	retval = BSA_USB_CMD(BELKIN_SA_SET_DTR_REQUEST, dtr);
--	if (retval < 0) {
--		dev_err(&port->dev, "Set DTR error %d\n", retval);
--		goto exit;
-+	if (dtr) {
-+		retval = BSA_USB_CMD(BELKIN_SA_SET_DTR_REQUEST,
-+					!!(control_state & TIOCM_DTR));
-+		if (retval < 0) {
-+			dev_err(&port->dev, "Set DTR error %d\n", retval);
-+			goto exit;
-+		}
- 	}
- exit:
- 	return retval;
+ 	return NULL;
+ }
 
 
