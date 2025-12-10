@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0855D221F2F;
-	Wed, 10 Dec 2025 07:32:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1B527B50C;
+	Wed, 10 Dec 2025 07:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765351968; cv=none; b=cdw4ErxDbDII3Sg0urNytN2wT3d+voceSkKGil5MpaYGcfzHaAm2sWkbSnS1md620ccSs8M6wsQcc4D8SM4/0YJKBCeoAJMDXD4df9lGmrim55pqmB2aROo3mYBHvlXsh1fNgqGwVLnZgwtQWaA8dx0q2FTQkFoMtptkdWgKpMo=
+	t=1765351970; cv=none; b=ClHGB1176uxXdEBtiPO3j3lK0kXgFtVW8bz4hVfhW+afuPm9qdYJNCNJotTuspLJ56rfGDnO1FAB/iN5cvzVGpUtSCqTvPO9Na9r/vhUks5Vnj5Htb8Kr27IQ98xmSOOuceHl7qes6QCMxp/6W+F0LZf7g4HMIJ3c3zRM1dbijo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765351968; c=relaxed/simple;
-	bh=n6XNPyVpBG0KgObwaB++6OLwUdrZ5tKAQmhbEFvU3K8=;
+	s=arc-20240116; t=1765351970; c=relaxed/simple;
+	bh=r+PeZ9KhJ/htbXFzOguER5RVk0GAL6sGq7Wff3xoQzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B3pB+gsmT7wtR6ytyV38wbw1Pln1UpfyGgmL0hrG29+DydTpn4uJb65a7noK+Zfp/C1UUV6zhrTQrmSxf8J7kCjtx3FbTMjkuKt2uzNjq/dIsSZNjSL+v6MdAujQOUb5U+RvObWHokFN4MxeNeoGniBdUuY5QeGQw2mi2NP/IgE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0u063yx0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BeCBp1oNwuFPKhdC0dBNoUpVrpwqHNLDilefrH4Rh0j9yAIQWzW93HYkC45yZxbvB5b3ue3IO6Y3HF7sScPiT5AD6YDqMcCqd7muemh6T3+gafXuZioff+InBPbR8eHgOHr3ZSVspM4flgHIR9PAgzY/BcL7G6GV/n8+EIuNqow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tW7/XPud; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0u063yx0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C2FC4CEF1;
-	Wed, 10 Dec 2025 07:32:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tW7/XPud"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 965A9C4CEF1;
+	Wed, 10 Dec 2025 07:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765351967;
-	bh=n6XNPyVpBG0KgObwaB++6OLwUdrZ5tKAQmhbEFvU3K8=;
+	s=korg; t=1765351969;
+	bh=r+PeZ9KhJ/htbXFzOguER5RVk0GAL6sGq7Wff3xoQzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0u063yx0ljjM9oQlMWixwdMPaDkF2d2fvRzFKuRc/JcIPNV5JPL+2VIF+ItjJfQcQ
-	 5mm6/4EWedYmjNgvM9ucvegT200HVfnbBgci0rxCpCQC1xopCBKk3oDbL/bGF+Jxxo
-	 A/RNeuOvY/Zcd+tKKOvmhdnKa4iGNObiqS9eKHpk=
+	b=tW7/XPudKjE8YaTRccJFqrTywr65yNTUBmg6DZrUlvwayOlQZvDb3N+U4Yr5DWLwX
+	 giEVLWDQ028+ejXtpMNUdkTOKa/TIWBmD2e60K6e6UQmUdciz6a0kSTzRymNdcbY9F
+	 8hgNFfreYYTHvwOPNUG6xsO+IUGSUgfz3vmHxUSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.12 19/49] USB: serial: kobil_sct: fix TIOCMBIS and TIOCMBIC
-Date: Wed, 10 Dec 2025 16:29:49 +0900
-Message-ID: <20251210072948.601086748@linuxfoundation.org>
+	Song Liu <song@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 20/49] ftrace: bpf: Fix IPMODIFY + DIRECT in modify_ftrace_direct()
+Date: Wed, 10 Dec 2025 16:29:50 +0900
+Message-ID: <20251210072948.625146250@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072948.125620687@linuxfoundation.org>
 References: <20251210072948.125620687@linuxfoundation.org>
@@ -49,78 +53,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Song Liu <song@kernel.org>
 
-commit d432df758f92c4c28aac409bc807fd1716167577 upstream.
+[ Upstream commit 3e9a18e1c3e931abecf501cbb23d28d69f85bb56 ]
 
-Asserting or deasserting a modem control line using TIOCMBIS or TIOCMBIC
-should not deassert any lines that are not in the mask.
+ftrace_hash_ipmodify_enable() checks IPMODIFY and DIRECT ftrace_ops on
+the same kernel function. When needed, ftrace_hash_ipmodify_enable()
+calls ops->ops_func() to prepare the direct ftrace (BPF trampoline) to
+share the same function as the IPMODIFY ftrace (livepatch).
 
-Fix this long-standing issue dating back to 2003 when the support for
-these ioctls was added with the introduction of the tiocmset() callback.
+ftrace_hash_ipmodify_enable() is called in register_ftrace_direct() path,
+but not called in modify_ftrace_direct() path. As a result, the following
+operations will break livepatch:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+1. Load livepatch to a kernel function;
+2. Attach fentry program to the kernel function;
+3. Attach fexit program to the kernel function.
+
+After 3, the kernel function being used will not be the livepatched
+version, but the original version.
+
+Fix this by adding __ftrace_hash_update_ipmodify() to
+__modify_ftrace_direct() and adjust some logic around the call.
+
+Signed-off-by: Song Liu <song@kernel.org>
+Reviewed-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20251027175023.1521602-3-song@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/serial/kobil_sct.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ kernel/trace/ftrace.c | 40 +++++++++++++++++++++++++++++++---------
+ 1 file changed, 31 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/serial/kobil_sct.c
-+++ b/drivers/usb/serial/kobil_sct.c
-@@ -418,7 +418,7 @@ static int kobil_tiocmset(struct tty_str
- 	struct usb_serial_port *port = tty->driver_data;
- 	struct device *dev = &port->dev;
- 	struct kobil_private *priv;
--	int result;
-+	int result = 0;
- 	int dtr = 0;
- 	int rts = 0;
+diff --git a/kernel/trace/ftrace.c b/kernel/trace/ftrace.c
+index 1f61b36bc4803..b2442aabccfd0 100644
+--- a/kernel/trace/ftrace.c
++++ b/kernel/trace/ftrace.c
+@@ -1969,7 +1969,8 @@ static void ftrace_hash_rec_enable_modify(struct ftrace_ops *ops)
+  */
+ static int __ftrace_hash_update_ipmodify(struct ftrace_ops *ops,
+ 					 struct ftrace_hash *old_hash,
+-					 struct ftrace_hash *new_hash)
++					 struct ftrace_hash *new_hash,
++					 bool update_target)
+ {
+ 	struct ftrace_page *pg;
+ 	struct dyn_ftrace *rec, *end = NULL;
+@@ -2004,10 +2005,13 @@ static int __ftrace_hash_update_ipmodify(struct ftrace_ops *ops,
+ 		if (rec->flags & FTRACE_FL_DISABLED)
+ 			continue;
  
-@@ -435,12 +435,12 @@ static int kobil_tiocmset(struct tty_str
- 	if (set & TIOCM_DTR)
- 		dtr = 1;
- 	if (clear & TIOCM_RTS)
--		rts = 0;
-+		rts = 1;
- 	if (clear & TIOCM_DTR)
--		dtr = 0;
-+		dtr = 1;
+-		/* We need to update only differences of filter_hash */
++		/*
++		 * Unless we are updating the target of a direct function,
++		 * we only need to update differences of filter_hash
++		 */
+ 		in_old = !!ftrace_lookup_ip(old_hash, rec->ip);
+ 		in_new = !!ftrace_lookup_ip(new_hash, rec->ip);
+-		if (in_old == in_new)
++		if (!update_target && (in_old == in_new))
+ 			continue;
  
--	if (priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID) {
--		if (dtr != 0)
-+	if (dtr && priv->device_type == KOBIL_ADAPTER_B_PRODUCT_ID) {
-+		if (set & TIOCM_DTR)
- 			dev_dbg(dev, "%s - Setting DTR\n", __func__);
- 		else
- 			dev_dbg(dev, "%s - Clearing DTR\n", __func__);
-@@ -448,13 +448,13 @@ static int kobil_tiocmset(struct tty_str
- 			  usb_sndctrlpipe(port->serial->dev, 0),
- 			  SUSBCRequest_SetStatusLinesOrQueues,
- 			  USB_TYPE_VENDOR | USB_RECIP_ENDPOINT | USB_DIR_OUT,
--			  ((dtr != 0) ? SUSBCR_SSL_SETDTR : SUSBCR_SSL_CLRDTR),
-+			  ((set & TIOCM_DTR) ? SUSBCR_SSL_SETDTR : SUSBCR_SSL_CLRDTR),
- 			  0,
- 			  NULL,
- 			  0,
- 			  KOBIL_TIMEOUT);
--	} else {
--		if (rts != 0)
-+	} else if (rts) {
-+		if (set & TIOCM_RTS)
- 			dev_dbg(dev, "%s - Setting RTS\n", __func__);
- 		else
- 			dev_dbg(dev, "%s - Clearing RTS\n", __func__);
-@@ -462,7 +462,7 @@ static int kobil_tiocmset(struct tty_str
- 			usb_sndctrlpipe(port->serial->dev, 0),
- 			SUSBCRequest_SetStatusLinesOrQueues,
- 			USB_TYPE_VENDOR | USB_RECIP_ENDPOINT | USB_DIR_OUT,
--			((rts != 0) ? SUSBCR_SSL_SETRTS : SUSBCR_SSL_CLRRTS),
-+			((set & TIOCM_RTS) ? SUSBCR_SSL_SETRTS : SUSBCR_SSL_CLRRTS),
- 			0,
- 			NULL,
- 			0,
+ 		if (in_new) {
+@@ -2018,7 +2022,16 @@ static int __ftrace_hash_update_ipmodify(struct ftrace_ops *ops,
+ 				if (is_ipmodify)
+ 					goto rollback;
+ 
+-				FTRACE_WARN_ON(rec->flags & FTRACE_FL_DIRECT);
++				/*
++				 * If this is called by __modify_ftrace_direct()
++				 * then it is only changing where the direct
++				 * pointer is jumping to, and the record already
++				 * points to a direct trampoline. If it isn't,
++				 * then it is a bug to update ipmodify on a direct
++				 * caller.
++				 */
++				FTRACE_WARN_ON(!update_target &&
++					       (rec->flags & FTRACE_FL_DIRECT));
+ 
+ 				/*
+ 				 * Another ops with IPMODIFY is already
+@@ -2075,7 +2088,7 @@ static int ftrace_hash_ipmodify_enable(struct ftrace_ops *ops)
+ 	if (ftrace_hash_empty(hash))
+ 		hash = NULL;
+ 
+-	return __ftrace_hash_update_ipmodify(ops, EMPTY_HASH, hash);
++	return __ftrace_hash_update_ipmodify(ops, EMPTY_HASH, hash, false);
+ }
+ 
+ /* Disabling always succeeds */
+@@ -2086,7 +2099,7 @@ static void ftrace_hash_ipmodify_disable(struct ftrace_ops *ops)
+ 	if (ftrace_hash_empty(hash))
+ 		hash = NULL;
+ 
+-	__ftrace_hash_update_ipmodify(ops, hash, EMPTY_HASH);
++	__ftrace_hash_update_ipmodify(ops, hash, EMPTY_HASH, false);
+ }
+ 
+ static int ftrace_hash_ipmodify_update(struct ftrace_ops *ops,
+@@ -2100,7 +2113,7 @@ static int ftrace_hash_ipmodify_update(struct ftrace_ops *ops,
+ 	if (ftrace_hash_empty(new_hash))
+ 		new_hash = NULL;
+ 
+-	return __ftrace_hash_update_ipmodify(ops, old_hash, new_hash);
++	return __ftrace_hash_update_ipmodify(ops, old_hash, new_hash, false);
+ }
+ 
+ static void print_ip_ins(const char *fmt, const unsigned char *p)
+@@ -6055,7 +6068,7 @@ EXPORT_SYMBOL_GPL(unregister_ftrace_direct);
+ static int
+ __modify_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
+ {
+-	struct ftrace_hash *hash;
++	struct ftrace_hash *hash = ops->func_hash->filter_hash;
+ 	struct ftrace_func_entry *entry, *iter;
+ 	static struct ftrace_ops tmp_ops = {
+ 		.func		= ftrace_stub,
+@@ -6075,13 +6088,21 @@ __modify_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
+ 	if (err)
+ 		return err;
+ 
++	/*
++	 * Call __ftrace_hash_update_ipmodify() here, so that we can call
++	 * ops->ops_func for the ops. This is needed because the above
++	 * register_ftrace_function_nolock() worked on tmp_ops.
++	 */
++	err = __ftrace_hash_update_ipmodify(ops, hash, hash, true);
++	if (err)
++		goto out;
++
+ 	/*
+ 	 * Now the ftrace_ops_list_func() is called to do the direct callers.
+ 	 * We can safely change the direct functions attached to each entry.
+ 	 */
+ 	mutex_lock(&ftrace_lock);
+ 
+-	hash = ops->func_hash->filter_hash;
+ 	size = 1 << hash->size_bits;
+ 	for (i = 0; i < size; i++) {
+ 		hlist_for_each_entry(iter, &hash->buckets[i], hlist) {
+@@ -6096,6 +6117,7 @@ __modify_ftrace_direct(struct ftrace_ops *ops, unsigned long addr)
+ 
+ 	mutex_unlock(&ftrace_lock);
+ 
++out:
+ 	/* Removing the tmp_ops will add the updated direct callers to the functions */
+ 	unregister_ftrace_function(&tmp_ops);
+ 
+-- 
+2.51.0
+
 
 
