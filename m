@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4E75C613;
-	Wed, 10 Dec 2025 07:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529543019C7;
+	Wed, 10 Dec 2025 07:35:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352131; cv=none; b=Cww+YVTihHLNfQ87bnrUdx7fcvea9qb4UjFqujT0dqzOdBN88/2opp7OwE/E1oMxDpLBTT/uiIb/WSpmcmbtWtoVAVFwYo6xD1tWb4oj9CzCkGxtAr8Wiu/jcT5rg3WzFbwjtdk6mh/s2AftykNYPfvxTMI0BEmsWHjUyAh2hPE=
+	t=1765352133; cv=none; b=Gp9bbfI6jq1x+Jd+dVHf479hTHer6YIkiltPsHWrXwe32lmuPX4Ryfo00gk8TXY4J4oD8QIR6rANpbkaR783IQVfwtX0yRR7P9YUUksbuFR5G6lu4PmYCzmSsr/aQlzIX1Q2jN+oaccB46QRziswUjb9cDl7EP6PsexKJpfPjXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352131; c=relaxed/simple;
-	bh=H0lnGXpFwzdL4yvn7ZWYRZOiGj9SHukd/+9ifpENOVI=;
+	s=arc-20240116; t=1765352133; c=relaxed/simple;
+	bh=d45qxoSJ8ljS6Wav8vwK6GCOM4u7dFBs9p6KXWC1gjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iP4WNyIhlXa2QwTYk9vPNZUUjOsYBybYq7gEF3KirOrX5ahSpiji6LKM+ClKmusP2CTT49BY9OVFWvqCqLBtaszR2iYoMLuBq+LtnDcHahqN5CaIFW5BcN9C3JgGsGEb7396pl7R9TO3ePBB09NRyn75VWZj73IkBbCB/gy9g5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ceusD6Aw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+asWwuPUJJVS3k7cZjITuVucNR1mvxtdhjkpRJA4uPdOJTSNM1NsWrnm+uLz56kuGAfENiqU3FdDBF19XPsXKMuaAuRg79gGWtS4xhZXRP2dyTCUmEyK82uKM0jweGOtjredIFJE+cChCX/ea8LjQDVhc/YqO8ETeuzJ7svJgo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbkejCWU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ceusD6Aw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162F4C4CEF1;
-	Wed, 10 Dec 2025 07:35:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbkejCWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF0DC4CEF1;
+	Wed, 10 Dec 2025 07:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352131;
-	bh=H0lnGXpFwzdL4yvn7ZWYRZOiGj9SHukd/+9ifpENOVI=;
+	s=korg; t=1765352133;
+	bh=d45qxoSJ8ljS6Wav8vwK6GCOM4u7dFBs9p6KXWC1gjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ceusD6AwpxQycKLfwEpFs4rnHHesq3fViwDPDG9N/wwNSjj/GN1v43LQiMmbA2tfB
-	 nlPlb2cO5xLQFz3NVqSv35lFLdJackyFDSCxtND7F3ea13yLc88B1UP8bT2dmpnGdj
-	 jX8t/VAs7ttbzgsUNPfnXZApn8kNSHyRZ8oAwQ2s=
+	b=QbkejCWUgSErcNC4tPxQK1S8JgfUYxXpvDabVd/iBoH3078M/WaoHBtRYwD4suSDf
+	 alLiUFwlv3aO6pNRpE0nO5SuiHW8OReUatq2vdxRsaCn1gMlE4jYIYb/UJ1Ny1wN8l
+	 jz06Vmy3L58U7Ggs/KMgxJa0UWeyW8nHSthJz76M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Zqiang <qiang.zhang@linux.dev>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 43/60] platform/x86/amd/pmc: Add spurious_8042 to Xbox Ally
-Date: Wed, 10 Dec 2025 16:30:13 +0900
-Message-ID: <20251210072948.935887118@linuxfoundation.org>
+Subject: [PATCH 6.17 44/60] sched_ext: Fix possible deadlock in the deferred_irq_workfn()
+Date: Wed, 10 Dec 2025 16:30:14 +0900
+Message-ID: <20251210072948.960218513@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -46,56 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Zqiang <qiang.zhang@linux.dev>
 
-[ Upstream commit c0ddc54016636dd8dedfaf1a3b482a95058e1db2 ]
+[ Upstream commit a257e974210320ede524f340ffe16bf4bf0dda1e ]
 
-The Xbox Ally features a Van Gogh SoC that has spurious interrupts
-during resume. We get the following logs:
+For PREEMPT_RT=y kernels, the deferred_irq_workfn() is executed in
+the per-cpu irq_work/* task context and not disable-irq, if the rq
+returned by container_of() is current CPU's rq, the following scenarios
+may occur:
 
-atkbd_receive_byte: 20 callbacks suppressed
-atkbd serio0: Spurious ACK on isa0060/serio0. Some program might be trying to access hardware directly.
+lock(&rq->__lock);
+<Interrupt>
+  lock(&rq->__lock);
 
-So, add the spurious_8042 quirk for it. It does not have a keyboard, so
-this does not result in any functional loss.
+This commit use IRQ_WORK_INIT_HARD() to replace init_irq_work() to
+initialize rq->scx.deferred_irq_work, make the deferred_irq_workfn()
+is always invoked in hard-irq context.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Link: https://patch.msgid.link/20251024152152.3981721-3-lkml@antheas.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Zqiang <qiang.zhang@linux.dev>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc/pmc-quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-index 0fadcf5f288ac..404e62ad293a9 100644
---- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
-+++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
-@@ -122,6 +122,14 @@ static const struct dmi_system_id fwbug_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21A1"),
- 		}
- 	},
-+	{
-+		.ident = "ROG Xbox Ally RC73YA",
-+		.driver_data = &quirk_spurious_8042,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "RC73YA"),
-+		}
-+	},
- 	/* https://bugzilla.kernel.org/show_bug.cgi?id=218024 */
- 	{
- 		.ident = "V14 G4 AMN",
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 1e4740de66c28..16a7ae9b29ae4 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -5377,7 +5377,7 @@ void __init init_sched_ext_class(void)
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
+ 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
+-		init_irq_work(&rq->scx.deferred_irq_work, deferred_irq_workfn);
++		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
+ 		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
+ 
+ 		if (cpu_online(cpu))
 -- 
 2.51.0
 
