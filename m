@@ -1,48 +1,48 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F4930C618
-	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 23:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EED2FFF92
+	for <patches@lists.linux.dev>; Wed, 10 Dec 2025 23:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765408523; cv=none; b=KipaAA8ryuLkCNijVA9WuuwfIMIcw8I4I8OYrmwC8GDOvbcFoxFXXftd3/pcIdP6OeBlJnxy4Ouziekl+uKdeYuZFkQ2QZbeOE34m4fwiU052xH2dPgkRpSzoPIj2XERWhINBgDOVhSf1ueLsGB1dP/WtKngC7s9wYkwEnuSAT8=
+	t=1765408532; cv=none; b=BjExLCGOayZpcGFZwsQ0qh9nQMvDDIHM/5PPOD9BUNT+v4i+dszpr1tJNDgAKBrenh4/hGT0QKksIBNlTM2Pt67FNFAAHJRHVTdbMi5Jk2xuYsGGqhsVbcNonBfFRNNBMPWYjjLcd5abGVoHORpnsYLRn5TXWDx/TL74gPtZPZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765408523; c=relaxed/simple;
-	bh=Iq+khrH84RR1qQPndfNyfQcjfBndGjwEGwQ1TgErAtw=;
+	s=arc-20240116; t=1765408532; c=relaxed/simple;
+	bh=CGFEj4tvfooKXhbfegsNmka6gSziOv51Ou9GZK5vcwI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W3qGZAIYs570mFTpiLNwhWLy6q+4k3EkT5reOisqljbMXTLhSG1rhHk4xNn7kkO1ugLO15ijS2irHAHOM5v2f8dzh6VsVE1QWJUJfCb9OR9JENzr8IvcG54xZup1JPhMCj+Sxs9MWLUckuFgEA10SlHMUXK08rPyM0HGJmJOC7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EXl3b1Av; arc=none smtp.client-ip=192.198.163.13
+	 MIME-Version; b=g6JxV72IJGDBI+CkIZwjIJA88vGCcxjNCFWLz6RnJxtCTbPjEbZWo7Z1pYkoC9n7R6+6mZ8fDFxP9vtFCDUuemt1VrmdgwW8g35z9HLr9nh36XPpym4xb5bxNyWljFbNmYGaDDFHxZo/vzcRshl+uF1QbjRP+PXyf9gpc3bVjfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YWgMNiZf; arc=none smtp.client-ip=192.198.163.13
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EXl3b1Av"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YWgMNiZf"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1765408516; x=1796944516;
+  t=1765408523; x=1796944523;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=Iq+khrH84RR1qQPndfNyfQcjfBndGjwEGwQ1TgErAtw=;
-  b=EXl3b1AvLpGJ6Ut5q6nZQbVhfadQfTc+195s5ZeL0xfcGBz8sLo4dba5
-   WXHjN48d46k2ARPD1T8a63AQ/h0Vl9sckAZ030cNVgCfhN2IE/K6M75Qs
-   0cfR2ayQCymzVRZSTM6tkubd1lmuL4hZDQDgWvIqJkupjBvwpDOwGg9Dw
-   8v+AAc2q2B0IAonnMYDy2TxwoKfsoHZ/d+cjAFWTHuyVL4R+bKxzs0QjW
-   p7sbBI6wGjmb8fPN42zubBqb00Juko8k9aeoy8fBUD9e+fJexpZ3AUdl7
-   0cby/iWsjQAKTv5J/lueB3lrVW/nBTcWyep8LwHVP3T0KGoYrHdHOTr61
+  bh=CGFEj4tvfooKXhbfegsNmka6gSziOv51Ou9GZK5vcwI=;
+  b=YWgMNiZfWWsYPsZsDa4rwnczDEE4tH1QIYe30WVdHHs0ZawhgXCcr831
+   U5okP0e62TnVSJBwKRo1YA3cNB8a15Q7IHvv8TTMK0FKXerFqwhheqT3T
+   j63jAMvIFF9CXIHZIu4xix4h9JfsQqkjwxLzD4NPSt9c+66lNZX6cug8D
+   QHFGIjDJxVyj8H6lrBMJcH91HMHWuVvSN7h+iuJ2Olgct63plKmUUaQ2c
+   hjxUM/Bryl7JdQO6ajMK0a8iA5JSHvh0Nuos7dyyZVhS5NuGbk9LJU6du
+   txfek3+xGMgFn0OoQBOIBBzxpCleCDK/UHTL008VSI3FvH7/SoGpdfWy8
    Q==;
-X-CSE-ConnectionGUID: ZIixHdEcSduBJs90jaS3Tw==
-X-CSE-MsgGUID: QdPfwvcgTFCCW4FLSZM18w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="69973673"
+X-CSE-ConnectionGUID: cPsfr4/TSZyJ9lzOklmZFw==
+X-CSE-MsgGUID: A7kwynu5Q1qcN9BPhPbYwg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11638"; a="69973692"
 X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; 
-   d="scan'208";a="69973673"
+   d="scan'208";a="69973692"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:40 -0800
-X-CSE-ConnectionGUID: HRopHPBUQvGgeYu2WlqiEQ==
-X-CSE-MsgGUID: MDRVIbjSTzmgvOzmytzNEQ==
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:42 -0800
+X-CSE-ConnectionGUID: lq6VEEjjTrqjOudrPjJN4g==
+X-CSE-MsgGUID: OHKHhwzjT7euxFd0b1xWGQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.20,265,1758610800"; 
-   d="scan'208";a="227297131"
+   d="scan'208";a="227297138"
 Received: from daliomra-mobl3.amr.corp.intel.com (HELO agluck-desk3.intel.com) ([10.124.221.254])
-  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:40 -0800
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Dec 2025 15:14:41 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghuay@nvidia.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -57,9 +57,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH v16 24/32] x86/resctrl: Add energy/perf choices to rdt boot option
-Date: Wed, 10 Dec 2025 15:14:03 -0800
-Message-ID: <20251210231413.59102-25-tony.luck@intel.com>
+Subject: [PATCH v16 26/32] fs/resctrl: Move allocation/free of closid_num_dirty_rmid[]
+Date: Wed, 10 Dec 2025 15:14:05 -0800
+Message-ID: <20251210231413.59102-27-tony.luck@intel.com>
 X-Mailer: git-send-email 2.51.1
 In-Reply-To: <20251210231413.59102-1-tony.luck@intel.com>
 References: <20251210231413.59102-1-tony.luck@intel.com>
@@ -71,157 +71,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Legacy resctrl features are enumerated by X86_FEATURE_* flags. These may be
-overridden by quirks to disable features in the case of errata.  Users can
-use kernel command line options to either disable a feature, or to force
-enable a feature that was disabled by a quirk.
+closid_num_dirty_rmid[] and rmid_ptrs[] are allocated together during resctrl
+initialization and freed together during resctrl exit.
 
-A different approach is needed for hardware features that do not have an
-X86_FEATURE_* flag.
+Telemetry events are enumerated on resctrl mount so only at resctrl mount
+will the number of RMID supported by all monitoring resources and needed as
+size for rmid_ptrs[] be known.
 
-Update parsing of the "rdt=" boot parameter to call the telemetry driver
-directly to handle new "perf" and "energy" options that controls activation
-of telemetry monitoring of the named type. By itself a "perf" or "energy" option
-controls the forced enabling or disabling (with ! prefix) of all event groups of
-the named type. A ":guid" suffix allows for fine grain control per event group.
+Separate closid_num_dirty_rmid[] and rmid_ptrs[] allocation and free in
+preparation for rmid_ptrs[] to be allocated on resctrl mount.
+
+Keep the rdtgroup_mutex protection around the allocation and free of
+closid_num_dirty_rmid[] as ARM needs this to guarantee memory ordering.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- .../admin-guide/kernel-parameters.txt         |  7 +++-
- arch/x86/kernel/cpu/resctrl/internal.h        |  2 +
- arch/x86/kernel/cpu/resctrl/core.c            |  2 +
- arch/x86/kernel/cpu/resctrl/intel_aet.c       | 38 +++++++++++++++++++
- 4 files changed, 48 insertions(+), 1 deletion(-)
+ fs/resctrl/monitor.c | 79 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 51 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index 2b465eab41a1..cc9d2800abeb 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -6217,9 +6217,14 @@
- 	rdt=		[HW,X86,RDT]
- 			Turn on/off individual RDT features. List is:
- 			cmt, mbmtotal, mbmlocal, l3cat, l3cdp, l2cat, l2cdp,
--			mba, smba, bmec, abmc, sdciae.
-+			mba, smba, bmec, abmc, sdciae, energy[:guid],
-+			perf[:guid].
- 			E.g. to turn on cmt and turn off mba use:
- 				rdt=cmt,!mba
-+			To turn off all energy telemetry monitoring and ensure that
-+			perf telemetry monitoring associated with guid 0x12345
-+			is enabled use:
-+				rdt=!energy,perf:0x12345
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 8a4c2ae72740..bbf8c9037887 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -906,36 +906,14 @@ void mbm_setup_overflow_handler(struct rdt_l3_mon_domain *dom, unsigned long del
+ static int dom_data_init(struct rdt_resource *r)
+ {
+ 	u32 idx_limit = resctrl_arch_system_num_rmid_idx();
+-	u32 num_closid = resctrl_arch_get_num_closid(r);
+ 	struct rmid_entry *entry = NULL;
+ 	int err = 0, i;
+ 	u32 idx;
  
- 	reboot=		[KNL]
- 			Format (x86 or x86_64):
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 3b228b241fb2..df09091f7c6c 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -236,6 +236,7 @@ void __exit intel_aet_exit(void);
- int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64 *val);
- void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 				struct list_head *add_pos);
-+bool intel_aet_option(bool force_off, char *tok);
- #else
- static inline bool intel_aet_get_events(void) { return false; }
- static inline void __exit intel_aet_exit(void) { }
-@@ -246,6 +247,7 @@ static inline int intel_aet_read_event(int domid, u32 rmid, void *arch_priv, u64
+ 	mutex_lock(&rdtgroup_mutex);
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+-		u32 *tmp;
+-
+-		/*
+-		 * If the architecture hasn't provided a sanitised value here,
+-		 * this may result in larger arrays than necessary. Resctrl will
+-		 * use a smaller system wide value based on the resources in
+-		 * use.
+-		 */
+-		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
+-		if (!tmp) {
+-			err = -ENOMEM;
+-			goto out_unlock;
+-		}
+-
+-		closid_num_dirty_rmid = tmp;
+-	}
  
- static inline void intel_aet_mon_domain_setup(int cpu, int id, struct rdt_resource *r,
- 					      struct list_head *add_pos) { }
-+static inline bool intel_aet_option(bool force_off, char *tok) { return false; }
- #endif
+ 	rmid_ptrs = kcalloc(idx_limit, sizeof(struct rmid_entry), GFP_KERNEL);
+ 	if (!rmid_ptrs) {
+-		if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+-			kfree(closid_num_dirty_rmid);
+-			closid_num_dirty_rmid = NULL;
+-		}
+ 		err = -ENOMEM;
+ 		goto out_unlock;
+ 	}
+@@ -971,11 +949,6 @@ static void dom_data_exit(struct rdt_resource *r)
+ 	if (!r->mon_capable)
+ 		goto out_unlock;
  
- #endif /* _ASM_X86_RESCTRL_INTERNAL_H */
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 283d653002a2..960974ffa866 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -820,6 +820,8 @@ static int __init set_rdt_options(char *str)
- 		force_off = *tok == '!';
- 		if (force_off)
- 			tok++;
-+		if (intel_aet_option(force_off, tok))
-+			continue;
- 		for (o = rdt_options; o < &rdt_options[NUM_RDT_OPTIONS]; o++) {
- 			if (strcmp(tok, o->name) == 0) {
- 				if (force_off)
-diff --git a/arch/x86/kernel/cpu/resctrl/intel_aet.c b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-index 35761d6cd55b..df91e1ea4a7b 100644
---- a/arch/x86/kernel/cpu/resctrl/intel_aet.c
-+++ b/arch/x86/kernel/cpu/resctrl/intel_aet.c
-@@ -52,12 +52,17 @@ struct pmt_event {
- /**
-  * struct event_group - Events with the same feature type ("energy" or "perf") and guid.
-  * @pfname:		PMT feature name ("energy" or "perf") of this event group.
-+ *			Used by boot rdt= option.
-  * @pfg:		Points to the aggregated telemetry space information
-  *			returned by the intel_pmt_get_regions_by_feature()
-  *			call to the INTEL_PMT_TELEMETRY driver that contains
-  *			data for all telemetry regions of type @pfname.
-  *			Valid if the system supports the event group,
-  *			NULL otherwise.
-+ * @force_off:		True when "rdt" command line or architecture code disables
-+ *			this event group.
-+ * @force_on:		True when "rdt" command line overrides disable of this
-+ *			event group.
-  * @guid:		Unique number per XML description file.
-  * @mmio_size:		Number of bytes of MMIO registers for this group.
-  * @num_events:		Number of events in this group.
-@@ -67,6 +72,7 @@ struct event_group {
- 	/* Data fields for additional structures to manage this group. */
- 	const char			*pfname;
- 	struct pmt_feature_group	*pfg;
-+	bool				force_off, force_on;
+-	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
+-		kfree(closid_num_dirty_rmid);
+-		closid_num_dirty_rmid = NULL;
+-	}
+-
+ 	kfree(rmid_ptrs);
+ 	rmid_ptrs = NULL;
  
- 	/* Remaining fields initialized from XML file. */
- 	u32				guid;
-@@ -121,6 +127,35 @@ static struct event_group *known_event_groups[] = {
- 	     _peg < &known_event_groups[ARRAY_SIZE(known_event_groups)];	\
- 	     _peg++)
+@@ -1814,6 +1787,45 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
+ 	return ret ?: nbytes;
+ }
  
-+bool intel_aet_option(bool force_off, char *tok)
++static int closid_num_dirty_rmid_alloc(struct rdt_resource *r)
 +{
-+	struct event_group **peg;
-+	bool ret = false;
-+	u32 guid = 0;
-+	char *name;
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++		u32 num_closid = resctrl_arch_get_num_closid(r);
++		u32 *tmp;
 +
-+	if (!tok)
-+		return false;
++		/* For ARM memory ordering access to closid_num_dirty_rmid */
++		mutex_lock(&rdtgroup_mutex);
 +
-+	name = strsep(&tok, ":");
-+	if (tok && kstrtou32(tok, 16, &guid))
-+		return false;
++		/*
++		 * If the architecture hasn't provided a sanitised value here,
++		 * this may result in larger arrays than necessary. Resctrl will
++		 * use a smaller system wide value based on the resources in
++		 * use.
++		 */
++		tmp = kcalloc(num_closid, sizeof(*tmp), GFP_KERNEL);
++		if (!tmp) {
++			mutex_unlock(&rdtgroup_mutex);
++			return -ENOMEM;
++		}
 +
-+	for_each_event_group(peg) {
-+		if (strcmp(name, (*peg)->pfname))
-+			continue;
-+		if (guid && (*peg)->guid != guid)
-+			continue;
-+		if (force_off)
-+			(*peg)->force_off = true;
-+		else
-+			(*peg)->force_on = true;
-+		ret = true;
++		closid_num_dirty_rmid = tmp;
++
++		mutex_unlock(&rdtgroup_mutex);
 +	}
 +
-+	return ret;
++	return 0;
 +}
 +
- /*
-  * Clear the address field of regions that did not pass the checks in
-  * skip_telem_region() so they will not be used by intel_aet_read_event().
-@@ -172,6 +207,9 @@ static bool enable_events(struct event_group *e, struct pmt_feature_group *p)
- 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_PERF_PKG].r_resctrl;
- 	int skipped_events = 0;
- 
-+	if (e->force_off)
-+		return false;
++static void closid_num_dirty_rmid_free(void)
++{
++	if (IS_ENABLED(CONFIG_RESCTRL_RMID_DEPENDS_ON_CLOSID)) {
++		mutex_lock(&rdtgroup_mutex);
++		kfree(closid_num_dirty_rmid);
++		closid_num_dirty_rmid = NULL;
++		mutex_unlock(&rdtgroup_mutex);
++	}
++}
 +
- 	if (!group_has_usable_regions(e, p))
- 		return false;
+ /**
+  * resctrl_l3_mon_resource_init() - Initialise global monitoring structures.
+  *
+@@ -1834,10 +1846,16 @@ int resctrl_l3_mon_resource_init(void)
+ 	if (!r->mon_capable)
+ 		return 0;
  
+-	ret = dom_data_init(r);
++	ret = closid_num_dirty_rmid_alloc(r);
+ 	if (ret)
+ 		return ret;
+ 
++	ret = dom_data_init(r);
++	if (ret) {
++		closid_num_dirty_rmid_free();
++		return ret;
++	}
++
+ 	if (resctrl_arch_is_evt_configurable(QOS_L3_MBM_TOTAL_EVENT_ID)) {
+ 		mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID].configurable = true;
+ 		resctrl_file_fflags_init("mbm_total_bytes_config",
+@@ -1880,5 +1898,10 @@ void resctrl_l3_mon_resource_exit(void)
+ {
+ 	struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+ 
++	if (!r->mon_capable)
++		return;
++
++	closid_num_dirty_rmid_free();
++
+ 	dom_data_exit(r);
+ }
 -- 
 2.51.1
 
