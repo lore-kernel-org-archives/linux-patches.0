@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713E727FB2E;
-	Wed, 10 Dec 2025 07:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D22327A47F;
+	Wed, 10 Dec 2025 07:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352063; cv=none; b=MqcSQtNv8DzbxbQizSFNojz76ZEEOiN+e1lGOCLZyREpoZymbsS/qmZylD+k3+omC2OfztFTWm3nO8aVQwpTwwbxve0ki+j/5cQsKor50zbGw//kZZQ5FXG5C0OdnXXD5M9HzF9ia+lMTE905z4k0TLINqR26gMb9/w+xLEkR0Q=
+	t=1765352066; cv=none; b=khZHH2Gpec1eNia0HGwwdZn0H9exRUJrimzY7ad1u6b7sOK6v4l/iImM9xUenpHDha5rG1heEACuh5cC6m+Nh5E1Zx/47yThwoVLA9xduAgQh111AfZW8Su8dTj3DkFWYfRov3F3kAtDUJy0YArMPsx/NP4l5McF/sCaW/XpmJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352063; c=relaxed/simple;
-	bh=H4JkXgK5DNhb84wfkk4yq8WwJfgvCsOQX+avdPa6HdE=;
+	s=arc-20240116; t=1765352066; c=relaxed/simple;
+	bh=sc0hFifiwaK1+uvrGRO6J6DpsU8lA4RqVeh5BQ/UDgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ukvfqCxQu4kTDYeUtcAkeg9wJV6vtY8vvnTWy1piYGQCkoIeoa+iVLu1fnPThNb7uwZkxPsm/e6oe1vUSP2KdWuzZe8f9H5LYGrjW+VBWHWakZTNgDcK8ROB51MCYON7ntgvjK6pzAWA2GzxwwgEVKTICH/hUUpJPLh/3WWtd18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CrjVLtgG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OvDFe7Ma0FnZl4q35qTYGuJvHLMRIsNt9BXn4mHB/yZP5xpdtW3YMXgeFoKFUUV5gvDxlNS0U8mnSY3wYmHrPYr7U61YzcteKp14oVwE1hSTz1imlIiGplzuGOk66jnM0YiTBVsbrAJ29SQxSjCP9Ii6Lrajh5U7SOHRa8RlH/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rV/cDJzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CrjVLtgG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C571CC4CEF1;
-	Wed, 10 Dec 2025 07:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rV/cDJzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2B0C4CEF1;
+	Wed, 10 Dec 2025 07:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352063;
-	bh=H4JkXgK5DNhb84wfkk4yq8WwJfgvCsOQX+avdPa6HdE=;
+	s=korg; t=1765352066;
+	bh=sc0hFifiwaK1+uvrGRO6J6DpsU8lA4RqVeh5BQ/UDgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrjVLtgGcOzFiFCg80nl75TlGp6nkYwv+aSysn4bjmdLIWEo8AgAGKKaQaxCayEk1
-	 lIKhjPmP9eVeBmDHx8AXwSMJglom2qz9pbS+YtfMKrHmVea2J9y0B6L1zI0qR2+LPJ
-	 m4MS6UcgqeWuoPsOqnPN+8IgNPOw4B63nSlbQu7s=
+	b=rV/cDJzzyjhESbvo4+Evrjj0AcnjKdYDt2bAXIUnNFmOTo+doDWhJMcDr2PMjgXXM
+	 pT3hDEsInLti9aMtiig8xUCv1mGgBFesFyHcqEEspNfpdlk4b8Vx27QEhjt5+k7Xgi
+	 LE8eZa1uvzLL5kWmwRCe8qj/+Q154riKuVUQ4PLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edip Hazuri <edip@medip.dev>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Casey Chen <cachen@purestorage.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Hannes Reinecke <hare@suse.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 35/60] platform/x86: hp-wmi: mark Victus 16-r0 and 16-s0 for victus_s fan and thermal profile support
-Date: Wed, 10 Dec 2025 16:30:05 +0900
-Message-ID: <20251210072948.725649051@linuxfoundation.org>
+Subject: [PATCH 6.17 36/60] nvme: fix admin request_queue lifetime
+Date: Wed, 10 Dec 2025 16:30:06 +0900
+Message-ID: <20251210072948.763845767@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -45,44 +49,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edip Hazuri <edip@medip.dev>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit 54afb047cd7eb40149f3fc42d69fd4ddde2be9f0 ]
+[ Upstream commit 03b3bcd319b3ab5182bc9aaa0421351572c78ac0 ]
 
-This patch adds Victus 16-r0 (8bbe) and Victus 16-s0(8bd4, 8bd5) laptop
-DMI board name into existing list
+The namespaces can access the controller's admin request_queue, and
+stale references on the namespaces may exist after tearing down the
+controller. Ensure the admin request_queue is active by moving the
+controller's 'put' to after all controller references have been released
+to ensure no one is can access the request_queue. This fixes a reported
+use-after-free bug:
 
-Signed-off-by: Edip Hazuri <edip@medip.dev>
-Link: https://patch.msgid.link/20251015181042.23961-3-edip@medip.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  BUG: KASAN: slab-use-after-free in blk_queue_enter+0x41c/0x4a0
+  Read of size 8 at addr ffff88c0a53819f8 by task nvme/3287
+  CPU: 67 UID: 0 PID: 3287 Comm: nvme Tainted: G            E       6.13.2-ga1582f1a031e #15
+  Tainted: [E]=UNSIGNED_MODULE
+  Hardware name: Jabil /EGS 2S MB1, BIOS 1.00 06/18/2025
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x4f/0x60
+   print_report+0xc4/0x620
+   ? _raw_spin_lock_irqsave+0x70/0xb0
+   ? _raw_read_unlock_irqrestore+0x30/0x30
+   ? blk_queue_enter+0x41c/0x4a0
+   kasan_report+0xab/0xe0
+   ? blk_queue_enter+0x41c/0x4a0
+   blk_queue_enter+0x41c/0x4a0
+   ? __irq_work_queue_local+0x75/0x1d0
+   ? blk_queue_start_drain+0x70/0x70
+   ? irq_work_queue+0x18/0x20
+   ? vprintk_emit.part.0+0x1cc/0x350
+   ? wake_up_klogd_work_func+0x60/0x60
+   blk_mq_alloc_request+0x2b7/0x6b0
+   ? __blk_mq_alloc_requests+0x1060/0x1060
+   ? __switch_to+0x5b7/0x1060
+   nvme_submit_user_cmd+0xa9/0x330
+   nvme_user_cmd.isra.0+0x240/0x3f0
+   ? force_sigsegv+0xe0/0xe0
+   ? nvme_user_cmd64+0x400/0x400
+   ? vfs_fileattr_set+0x9b0/0x9b0
+   ? cgroup_update_frozen_flag+0x24/0x1c0
+   ? cgroup_leave_frozen+0x204/0x330
+   ? nvme_ioctl+0x7c/0x2c0
+   blkdev_ioctl+0x1a8/0x4d0
+   ? blkdev_common_ioctl+0x1930/0x1930
+   ? fdget+0x54/0x380
+   __x64_sys_ioctl+0x129/0x190
+   do_syscall_64+0x5b/0x160
+   entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  RIP: 0033:0x7f765f703b0b
+  Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d dd 52 0f 00 f7 d8 64 89 01 48
+  RSP: 002b:00007ffe2cefe808 EFLAGS: 00000202 ORIG_RAX: 0000000000000010
+  RAX: ffffffffffffffda RBX: 00007ffe2cefe860 RCX: 00007f765f703b0b
+  RDX: 00007ffe2cefe860 RSI: 00000000c0484e41 RDI: 0000000000000003
+  RBP: 0000000000000000 R08: 0000000000000003 R09: 0000000000000000
+  R10: 00007f765f611d50 R11: 0000000000000202 R12: 0000000000000003
+  R13: 00000000c0484e41 R14: 0000000000000001 R15: 00007ffe2cefea60
+   </TASK>
+
+Reported-by: Casey Chen <cachen@purestorage.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/hp/hp-wmi.c | 3 ++-
+ drivers/nvme/host/core.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 8b3533d6ba091..9a668e2587952 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -92,8 +92,9 @@ static const char * const victus_thermal_profile_boards[] = {
- 	"8A25"
- };
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 5714d49932822..28c598008124c 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4896,7 +4896,6 @@ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
+ 	 */
+ 	nvme_stop_keep_alive(ctrl);
+ 	blk_mq_destroy_queue(ctrl->admin_q);
+-	blk_put_queue(ctrl->admin_q);
+ 	if (ctrl->ops->flags & NVME_F_FABRICS) {
+ 		blk_mq_destroy_queue(ctrl->fabrics_q);
+ 		blk_put_queue(ctrl->fabrics_q);
+@@ -5040,6 +5039,8 @@ static void nvme_free_ctrl(struct device *dev)
+ 		container_of(dev, struct nvme_ctrl, ctrl_device);
+ 	struct nvme_subsystem *subsys = ctrl->subsys;
  
--/* DMI Board names of Victus 16-r1000 and Victus 16-s1000 laptops */
-+/* DMI Board names of Victus 16-r and Victus 16-s laptops */
- static const char * const victus_s_thermal_profile_boards[] = {
-+	"8BBE", "8BD4", "8BD5",
- 	"8C99", "8C9C"
- };
- 
++	if (ctrl->admin_q)
++		blk_put_queue(ctrl->admin_q);
+ 	if (!subsys || ctrl->instance != subsys->instance)
+ 		ida_free(&nvme_instance_ida, ctrl->instance);
+ 	nvme_free_cels(ctrl);
 -- 
 2.51.0
 
