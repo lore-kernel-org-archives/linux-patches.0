@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E2630F7EA;
-	Wed, 10 Dec 2025 03:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D2272618;
+	Wed, 10 Dec 2025 03:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765338601; cv=none; b=mkRYhDEDpNYwgx7Yl8xw2CX38y0Lo4MgkiKzillhgTRiJdGe1F9xks49t1Naf/u9GLyYErJNGJeWv+t1pMxBs0jX06w54EjiFwFB2PCLureAbcZX3dUCxh8OS9e3XQdbqNJ/8nBrQM4N4S9+k9fBfYBo5rWSl4p88N8f0e2Ro9M=
+	t=1765338603; cv=none; b=p/PaTzNJTEESkxwnAK67pQVDbMEQ/7UGpGKFSpnWRadlc6jJDDVynyfB22FtAiZc3+dstgusYli1fRBLhAaqPjCYY7F6BOkiF5LEfUauxCv8lMIvaR7rt5iX0DE7c0MCNFsI0JUo/gHau9CeKcPf+iDigh0Z3K486iKu6Ib0nvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765338601; c=relaxed/simple;
-	bh=dtBe4ZIWbdUoOjPy9kYiz1klL3x1V5OPTh9KCCye5sc=;
+	s=arc-20240116; t=1765338603; c=relaxed/simple;
+	bh=OHfnrpfgygon8ZVld9NZYNgWEsAt15xFUVwowXAjx0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sWc7VwqOGej9EBRkFF/rtVSoPss7jrxSC050v4z4v+FdDCyoVnBZuwHgbMivxlIDrLjzl3gLSMG2kYx8rqiTT/ryns1ZVBvslyyW4z5klTA5DAbMJEZQtWMnAy2qy54EQaSpFZ4IsPgWh484z5Vcoc8fxDs2fXv7GZ/sEzsDcrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p6HQufDj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g1X02HvxMdQOVtZBku1jHje24uuEvHF3dDPfK6PurVY1VxpGAUKISpGVTapj9SqhS2TtM6ml8LHfzGdwpJXF9ZgimTKlptM3vK8QAopwVONPSLv7EVY8MUPzImVjV3vE+RZI0PsXn93avf91+KbzbtQ+qGLgpuce2kd8G/bkjf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q2trdG7G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p6HQufDj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59F65C4CEF1;
-	Wed, 10 Dec 2025 03:49:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q2trdG7G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 930B7C4CEF1;
+	Wed, 10 Dec 2025 03:50:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765338601;
-	bh=dtBe4ZIWbdUoOjPy9kYiz1klL3x1V5OPTh9KCCye5sc=;
+	s=k20201202; t=1765338602;
+	bh=OHfnrpfgygon8ZVld9NZYNgWEsAt15xFUVwowXAjx0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6HQufDjvfHY6fBuFO6bymPEm8S6QZSqBKvBmgw/7nkfr3jeidckFP0t0BKT7INYh
-	 AJuPGgTcD1029ufTbl244MuyjoI57wE82ekWGlMqC2yXgjsPj67t7flVkGAhx/+mqG
-	 fyZMHEsiVDX6AxZLthmJ0U0E784C52U87uhdAuXATMSp96AD2pNou+vEu26a6w1sQu
-	 UWBkMDFVW3nPohGSRE+L1/UdcR4ofsuOr/o6Nt4HvKf6YYMwaZLe/naElQa/rbjjJ4
-	 E8oozIBJi0+B3n830TlpP46FEkMctB5BlUZb4iS3G3JcJRc2Vxd7X6q1a97Bhu6b6m
-	 A12SoLoxrmF2g==
+	b=q2trdG7GOCV+xQ0BMuf+avVIvytjb5QdtEeLOFpwczGlCRD+p0frIbs9veQwHnYN2
+	 GrErt4I2oF8eYce1BRlNWnfvSlGq7HeN7Paik/uJGza1OyG9Df7LEoaQIKLifIaLZ3
+	 rethaVcxpBF7nQYz2zOt9XhkTBODuaFeEl1pfJ+H6yJVanU3fLw+mobz+CxwOIm8c8
+	 NnOgQrpAK+xv/DRp6xYLmWYgiQj8r11Gxp3iOW9XffZU1bFgXYS9mlCJyJsGPoMJk0
+	 ApV6nNVVwtH77Ty5zsS9CJjG5RPoXF7Vk3sv7uooZlwJqM9aGhko+zJvqpfNplIMQG
+	 lSVrS3mtoGavg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yuezhang Mo <Yuezhang.Mo@sony.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+Cc: Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Corey Minyard <corey@minyard.net>,
 	Sasha Levin <sashal@kernel.org>,
-	sj1557.seo@samsung.com,
-	linux-fsdevel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] exfat: fix remount failure in different process environments
-Date: Tue,  9 Dec 2025 22:49:00 -0500
-Message-ID: <20251210034915.2268617-19-sashal@kernel.org>
+	openipmi-developer@lists.sourceforge.net
+Subject: [PATCH AUTOSEL 6.18-5.10] ipmi: Fix the race between __scan_channels() and deliver_response()
+Date: Tue,  9 Dec 2025 22:49:01 -0500
+Message-ID: <20251210034915.2268617-20-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210034915.2268617-1-sashal@kernel.org>
 References: <20251210034915.2268617-1-sashal@kernel.org>
@@ -53,197 +51,189 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuezhang Mo <Yuezhang.Mo@sony.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit 51fc7b4ce10ccab8ea5e4876bcdc42cf5202a0ef ]
+[ Upstream commit 936750fdba4c45e13bbd17f261bb140dd55f5e93 ]
 
-The kernel test robot reported that the exFAT remount operation
-failed. The reason for the failure was that the process's umask
-is different between mount and remount, causing fs_fmask and
-fs_dmask are changed.
+The race window between __scan_channels() and deliver_response() causes
+the parameters of some channels to be set to 0.
 
-Potentially, both gid and uid may also be changed. Therefore, when
-initializing fs_context for remount, inherit these mount options
-from the options used during mount.
+1.[CPUA] __scan_channels() issues an IPMI request and waits with
+         wait_event() until all channels have been scanned.
+         wait_event() internally calls might_sleep(), which might
+         yield the CPU. (Moreover, an interrupt can preempt
+         wait_event() and force the task to yield the CPU.)
+2.[CPUB] deliver_response() is invoked when the CPU receives the
+         IPMI response. After processing a IPMI response,
+         deliver_response() directly assigns intf->wchannels to
+         intf->channel_list and sets intf->channels_ready to true.
+         However, not all channels are actually ready for use.
+3.[CPUA] Since intf->channels_ready is already true, wait_event()
+         never enters __wait_event(). __scan_channels() immediately
+         clears intf->null_user_handler and exits.
+4.[CPUB] Once intf->null_user_handler is set to NULL, deliver_response()
+         ignores further IPMI responses, leaving the remaining
+	 channels zero-initialized and unusable.
 
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Closes: https://lore.kernel.org/oe-lkp/202511251637.81670f5c-lkp@intel.com
-Signed-off-by: Yuezhang Mo <Yuezhang.Mo@sony.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+CPUA                             CPUB
+-------------------------------  -----------------------------
+__scan_channels()
+ intf->null_user_handler
+       = channel_handler;
+ send_channel_info_cmd(intf,
+       0);
+ wait_event(intf->waitq,
+       intf->channels_ready);
+  do {
+   might_sleep();
+                                 deliver_response()
+                                  channel_handler()
+                                   intf->channel_list =
+				         intf->wchannels + set;
+                                   intf->channels_ready = true;
+                                   send_channel_info_cmd(intf,
+                                         intf->curr_channel);
+   if (condition)
+    break;
+   __wait_event(wq_head,
+          condition);
+  } while(0)
+ intf->null_user_handler
+       = NULL;
+                                 deliver_response()
+                                  if (!msg->user)
+                                   if (intf->null_user_handler)
+                                    rv = -EINVAL;
+                                  return rv;
+-------------------------------  -----------------------------
+
+Fix the race between __scan_channels() and deliver_response() by
+deferring both the assignment intf->channel_list = intf->wchannels
+and the flag intf->channels_ready = true until all channels have
+been successfully scanned or until the IPMI request has failed.
+
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Message-ID: <20250930074239.2353-2-guojinhui.liam@bytedance.com>
+Signed-off-by: Corey Minyard <corey@minyard.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: exfat: fix remount failure in different process
-environments
+## Summary Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
+### 1. BUG MECHANISM
 
-**Subject**: Contains "fix" keyword indicating a bug fix for remount
-failures.
+This commit fixes a **race condition** between two IPMI functions:
 
-**Key details from message**:
-- Reported by kernel test robot - this is a real, reproducible issue
-- Root cause: When remounting, the process's umask may differ from the
-  original mount, causing `fs_fmask` and `fs_dmask` to unexpectedly
-  change
-- The same issue applies to `gid` and `uid`
-- Has `Closes:` link to the bug report
+- `__scan_channels()`: Initiates channel scanning, sets
+  `null_user_handler = channel_handler`, then waits for `channels_ready`
+- `channel_handler()` (called via `deliver_response()`): Processes IPMI
+  responses for each channel
 
-**Missing tags**:
-- No `Cc: stable@vger.kernel.org`
-- No `Fixes:` tag indicating when the bug was introduced
+**The Bug** (introduced in commit 31b0b0730ad2a from September 2017):
 
-### 2. CODE CHANGE ANALYSIS
+In `channel_handler()`, after processing channel N's response (where N <
+IPMI_MAX_CHANNELS-1):
+1. Lines 3420-3421 set `channels_ready = true` **prematurely**
+2. Then sends request for channel N+1
+3. `__scan_channels()` may see `channels_ready == true` and exit the
+   wait loop early
+4. `__scan_channels()` sets `null_user_handler = NULL`
+5. Responses for channels N+1, N+2, etc. arrive but are **discarded**
+   because `null_user_handler` is NULL
+6. Remaining channels are **zero-initialized and unusable**
 
-**The Bug**:
-```c
-// BEFORE: Always uses current process values
-sbi->options.fs_uid = current_uid();
-sbi->options.fs_gid = current_gid();
-sbi->options.fs_fmask = current->fs->umask;
-sbi->options.fs_dmask = current->fs->umask;
-```
+### 2. THE FIX
 
-When `exfat_init_fs_context()` is called for a remount operation, it was
-incorrectly initializing uid/gid/fmask/dmask from the **current
-process** rather than preserving the existing mount options. If the
-process performing the remount has a different umask (or runs as a
-different user), the options change unexpectedly, causing remount
-validation failures.
-
-**The Fix**:
-```c
-// AFTER: Check if this is a remount and inherit existing options
-if (fc->purpose == FS_CONTEXT_FOR_RECONFIGURE && fc->root) {
-    struct super_block *sb = fc->root->d_sb;
-    struct exfat_mount_options *cur_opts = &EXFAT_SB(sb)->options;
-
-    sbi->options.fs_uid = cur_opts->fs_uid;
-    sbi->options.fs_gid = cur_opts->fs_gid;
-    sbi->options.fs_fmask = cur_opts->fs_fmask;
-    sbi->options.fs_dmask = cur_opts->fs_dmask;
-} else {
-    // Original behavior for initial mount
-    ...
-}
-```
-
-This is the correct behavior - remount should preserve existing mount
-options unless explicitly overridden by the user.
+The fix simply **removes 2 lines** that prematurely set `channels_ready
+= true` in the `else` branch. After the fix, `channels_ready = true` is
+only set when:
+- All channels have been scanned (`curr_channel >= IPMI_MAX_CHANNELS`),
+  OR
+- An error occurs (`rv != 0`)
 
 ### 3. CLASSIFICATION
 
-- **Type**: Bug fix (not a feature)
-- **Category**: Filesystem correctness issue
-- **Security**: Not a security issue
+| Criteria | Assessment |
+|----------|------------|
+| Bug type | Race condition causing data corruption (zero-init channels)
+|
+| Impact | IPMI channels become unusable on affected systems |
+| Size | 2 lines removed - minimal and surgical |
+| Risk | Very LOW - only removes premature assignments |
+| Subsystem | IPMI - used for server management |
 
-### 4. SCOPE AND RISK ASSESSMENT
+### 4. STABLE BACKPORT CRITERIA
 
-| Metric | Value |
-|--------|-------|
-| Lines changed | ~15 (net +11) |
-| Files touched | 1 (fs/exfat/super.c) |
-| Complexity | Low - simple conditional logic |
-| Risk | Low - uses well-established fs_context patterns |
+| Criterion | Status |
+|-----------|--------|
+| Obviously correct | ✅ Yes - simply delays setting flag until the right
+time |
+| Fixes real bug | ✅ Yes - race causes channels to be zero-initialized |
+| User impacting | ✅ Yes - affects IPMI hardware management |
+| Small and contained | ✅ Yes - 2 lines in single file |
+| No new features | ✅ Correct - pure bug fix |
+| No API changes | ✅ Correct - internal change only |
 
-The fix is surgically targeted at `exfat_init_fs_context()` and uses
-standard fs_context APIs (`fc->purpose`, `fc->root`,
-`FS_CONTEXT_FOR_RECONFIGURE`) that other filesystems use identically.
+### 5. SIGNALS
 
-### 5. USER IMPACT
+**Positive signals:**
+- Fixes a real race condition with clear cause and effect
+- Minimal, surgical fix (2 lines removed)
+- Bug has existed since 2017 (31b0b0730ad2a) - affects all current LTS
+  kernels
+- IPMI maintainer (Corey Minyard) signed off
+- Detailed commit message explains the race with CPU timing diagram
 
-- **Affected users**: Anyone using exFAT filesystems who performs
-  remount operations
-- **Scenario**: Common when system scripts, systemd units, or root user
-  (with different umask) remount a filesystem
-- **Severity**: Medium - causes remount failures, but not data
-  corruption
-- **Real-world impact**: Yes - kernel test robot found this in automated
-  testing
+**Missing signals:**
+- No explicit `Cc: stable@vger.kernel.org` tag
+- No explicit `Fixes: 31b0b0730ad2a` tag (though it should have one)
+- No Tested-by/Reviewed-by tags
 
-### 6. STABILITY INDICATORS
+### 6. RISK vs BENEFIT
 
-- Signed-off by exFAT maintainer (Namjae Jeon)
-- Triggered by automated kernel testing
-- Logic is straightforward and follows established patterns used by
-  other filesystems
+- **Benefit**: Fixes a race condition that makes IPMI channels unusable
+  on servers
+- **Risk**: Extremely low - the fix only removes code that ran at the
+  wrong time; the correct code paths for setting `channels_ready` are
+  untouched
+- **Affected users**: Server/data center users relying on IPMI for
+  hardware management
 
-### 7. DEPENDENCY CHECK
+### 7. DEPENDENCIES
 
-The fix relies on:
-- `fc->purpose` and `fc->root` - standard fs_context fields available
-  since the fs_context API conversion
-- `EXFAT_SB()` macro - existing exFAT infrastructure
-- `FS_CONTEXT_FOR_RECONFIGURE` - standard kernel constant
+The fix is standalone and doesn't depend on other commits. The affected
+code has existed unchanged since 2017, so it should apply cleanly to all
+active stable kernels.
 
-No additional dependencies required. The fix applies to any kernel with
-exFAT's fs_context implementation.
+### CONCLUSION
 
-### STABLE KERNEL CRITERIA EVALUATION
-
-| Criterion | Met? |
-|-----------|------|
-| Obviously correct | ✅ Yes - straightforward logic |
-| Fixes real bug | ✅ Yes - reported by kernel test robot |
-| Small and contained | ✅ Yes - single function, ~15 lines |
-| No new features | ✅ Yes - corrects existing behavior |
-| No new APIs | ✅ Yes - uses existing fs_context APIs |
-
-### VERDICT
-
-This commit fixes a genuine bug where exFAT remount operations fail when
-the remounting process has a different umask than the original mounting
-process. The fix is:
-
-1. **Small and localized** - modifies one function in one file
-2. **Obviously correct** - follows the same pattern other filesystems
-   use for handling remount context initialization
-3. **Low risk** - no architectural changes, just proper option
-   inheritance
-4. **User-impacting** - remount failures are a real usability issue
-
-While the commit lacks explicit `Cc: stable` and `Fixes:` tags, the
-nature of the fix (correcting filesystem remount behavior) and its
-minimal footprint make it appropriate for stable backporting. The risk-
-benefit ratio strongly favors inclusion.
+This is a clear backport candidate. The commit fixes a real race
+condition that causes IPMI channels to become unusable. The fix is
+minimal (2 lines removed), obviously correct (simply delays a flag until
+the right time), and carries virtually no regression risk. IPMI is
+critical infrastructure for server management, making this fix important
+for stable users.
 
 **YES**
 
- fs/exfat/super.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/exfat/super.c b/fs/exfat/super.c
-index 74d451f732c73..581754001128b 100644
---- a/fs/exfat/super.c
-+++ b/fs/exfat/super.c
-@@ -813,10 +813,21 @@ static int exfat_init_fs_context(struct fs_context *fc)
- 	ratelimit_state_init(&sbi->ratelimit, DEFAULT_RATELIMIT_INTERVAL,
- 			DEFAULT_RATELIMIT_BURST);
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 3700ab4eba3e7..d3f84deee4513 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3417,8 +3417,6 @@ channel_handler(struct ipmi_smi *intf, struct ipmi_recv_msg *msg)
+ 			intf->channels_ready = true;
+ 			wake_up(&intf->waitq);
+ 		} else {
+-			intf->channel_list = intf->wchannels + set;
+-			intf->channels_ready = true;
+ 			rv = send_channel_info_cmd(intf, intf->curr_channel);
+ 		}
  
--	sbi->options.fs_uid = current_uid();
--	sbi->options.fs_gid = current_gid();
--	sbi->options.fs_fmask = current->fs->umask;
--	sbi->options.fs_dmask = current->fs->umask;
-+	if (fc->purpose == FS_CONTEXT_FOR_RECONFIGURE && fc->root) {
-+		struct super_block *sb = fc->root->d_sb;
-+		struct exfat_mount_options *cur_opts = &EXFAT_SB(sb)->options;
-+
-+		sbi->options.fs_uid = cur_opts->fs_uid;
-+		sbi->options.fs_gid = cur_opts->fs_gid;
-+		sbi->options.fs_fmask = cur_opts->fs_fmask;
-+		sbi->options.fs_dmask = cur_opts->fs_dmask;
-+	} else {
-+		sbi->options.fs_uid = current_uid();
-+		sbi->options.fs_gid = current_gid();
-+		sbi->options.fs_fmask = current->fs->umask;
-+		sbi->options.fs_dmask = current->fs->umask;
-+	}
-+
- 	sbi->options.allow_utime = -1;
- 	sbi->options.errors = EXFAT_ERRORS_RO;
- 	exfat_set_iocharset(&sbi->options, exfat_default_iocharset);
 -- 
 2.51.0
 
