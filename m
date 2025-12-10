@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D22327A47F;
-	Wed, 10 Dec 2025 07:34:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F8B27FB2E;
+	Wed, 10 Dec 2025 07:34:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352066; cv=none; b=khZHH2Gpec1eNia0HGwwdZn0H9exRUJrimzY7ad1u6b7sOK6v4l/iImM9xUenpHDha5rG1heEACuh5cC6m+Nh5E1Zx/47yThwoVLA9xduAgQh111AfZW8Su8dTj3DkFWYfRov3F3kAtDUJy0YArMPsx/NP4l5McF/sCaW/XpmJs=
+	t=1765352069; cv=none; b=qxK/Z8NAWSX0Crcrfve5ErM/P6J/DL1BLKpymbYKyzpMF/TUclm7faUxG1k8fVuZ/Phdh8WYj9H68zsa9XC4c6SngY9XiScCcVPigMv8WbtWoroNRXajZLnUra6lO6cLPgbHcPMuEWiOMexusK3QUL0Kpq9GgdW0UqDec4PE44o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352066; c=relaxed/simple;
-	bh=sc0hFifiwaK1+uvrGRO6J6DpsU8lA4RqVeh5BQ/UDgE=;
+	s=arc-20240116; t=1765352069; c=relaxed/simple;
+	bh=z8dq8wmUzcB9TAc0VUn/s+D2/9A+abTKjIbb5Jl/llM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OvDFe7Ma0FnZl4q35qTYGuJvHLMRIsNt9BXn4mHB/yZP5xpdtW3YMXgeFoKFUUV5gvDxlNS0U8mnSY3wYmHrPYr7U61YzcteKp14oVwE1hSTz1imlIiGplzuGOk66jnM0YiTBVsbrAJ29SQxSjCP9Ii6Lrajh5U7SOHRa8RlH/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rV/cDJzz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JwOAZvjLQaEdjtgmtpI9l7Kic3hBQ/Lc2QtQMBOnIJESyLznFYoqSGgpdqzUNz80524g/799pnnVoeGzajRpN+PnU8hs/E2oaCpwLRs3MlrB02rTgsa5QQ0+tylu6aK1VyvLVHWtUU3yizBIm/Kd7N3f74imds3EPGx5uBCM9M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjsC2bAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rV/cDJzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E2B0C4CEF1;
-	Wed, 10 Dec 2025 07:34:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjsC2bAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0CA6C4CEF1;
+	Wed, 10 Dec 2025 07:34:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352066;
-	bh=sc0hFifiwaK1+uvrGRO6J6DpsU8lA4RqVeh5BQ/UDgE=;
+	s=korg; t=1765352069;
+	bh=z8dq8wmUzcB9TAc0VUn/s+D2/9A+abTKjIbb5Jl/llM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rV/cDJzzyjhESbvo4+Evrjj0AcnjKdYDt2bAXIUnNFmOTo+doDWhJMcDr2PMjgXXM
-	 pT3hDEsInLti9aMtiig8xUCv1mGgBFesFyHcqEEspNfpdlk4b8Vx27QEhjt5+k7Xgi
-	 LE8eZa1uvzLL5kWmwRCe8qj/+Q154riKuVUQ4PLM=
+	b=YjsC2bASiKgkIV7AmM9c+V7vHkZHZfwMNpR/gKUc+5nZSNCEqgIXVT/k/1gD3+i4x
+	 LkXq4kxsp/njnHWItcblqZ6E0s1j9WKrl1SdSLYGkoLBIkFd6hFnMMSlBSh8yHQldD
+	 it+oA+d0i/mXHDswSyD7a1smXRJj1P2lpTFIQXP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Chen <cachen@purestorage.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>,
+	Praveen Talari <praveen.talari@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 36/60] nvme: fix admin request_queue lifetime
-Date: Wed, 10 Dec 2025 16:30:06 +0900
-Message-ID: <20251210072948.763845767@linuxfoundation.org>
+Subject: [PATCH 6.17 37/60] pinctrl: qcom: msm: Fix deadlock in pinmux configuration
+Date: Wed, 10 Dec 2025 16:30:07 +0900
+Message-ID: <20251210072948.791059932@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -55,96 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-[ Upstream commit 03b3bcd319b3ab5182bc9aaa0421351572c78ac0 ]
+[ Upstream commit 1c2e70397b4125022dba80f6111271a37fb36bae ]
 
-The namespaces can access the controller's admin request_queue, and
-stale references on the namespaces may exist after tearing down the
-controller. Ensure the admin request_queue is active by moving the
-controller's 'put' to after all controller references have been released
-to ensure no one is can access the request_queue. This fixes a reported
-use-after-free bug:
+Replace disable_irq() with disable_irq_nosync() in msm_pinmux_set_mux()
+to prevent deadlock when wakeup IRQ is triggered on the same
+GPIO being reconfigured.
 
-  BUG: KASAN: slab-use-after-free in blk_queue_enter+0x41c/0x4a0
-  Read of size 8 at addr ffff88c0a53819f8 by task nvme/3287
-  CPU: 67 UID: 0 PID: 3287 Comm: nvme Tainted: G            E       6.13.2-ga1582f1a031e #15
-  Tainted: [E]=UNSIGNED_MODULE
-  Hardware name: Jabil /EGS 2S MB1, BIOS 1.00 06/18/2025
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x4f/0x60
-   print_report+0xc4/0x620
-   ? _raw_spin_lock_irqsave+0x70/0xb0
-   ? _raw_read_unlock_irqrestore+0x30/0x30
-   ? blk_queue_enter+0x41c/0x4a0
-   kasan_report+0xab/0xe0
-   ? blk_queue_enter+0x41c/0x4a0
-   blk_queue_enter+0x41c/0x4a0
-   ? __irq_work_queue_local+0x75/0x1d0
-   ? blk_queue_start_drain+0x70/0x70
-   ? irq_work_queue+0x18/0x20
-   ? vprintk_emit.part.0+0x1cc/0x350
-   ? wake_up_klogd_work_func+0x60/0x60
-   blk_mq_alloc_request+0x2b7/0x6b0
-   ? __blk_mq_alloc_requests+0x1060/0x1060
-   ? __switch_to+0x5b7/0x1060
-   nvme_submit_user_cmd+0xa9/0x330
-   nvme_user_cmd.isra.0+0x240/0x3f0
-   ? force_sigsegv+0xe0/0xe0
-   ? nvme_user_cmd64+0x400/0x400
-   ? vfs_fileattr_set+0x9b0/0x9b0
-   ? cgroup_update_frozen_flag+0x24/0x1c0
-   ? cgroup_leave_frozen+0x204/0x330
-   ? nvme_ioctl+0x7c/0x2c0
-   blkdev_ioctl+0x1a8/0x4d0
-   ? blkdev_common_ioctl+0x1930/0x1930
-   ? fdget+0x54/0x380
-   __x64_sys_ioctl+0x129/0x190
-   do_syscall_64+0x5b/0x160
-   entry_SYSCALL_64_after_hwframe+0x4b/0x53
-  RIP: 0033:0x7f765f703b0b
-  Code: ff ff ff 85 c0 79 9b 49 c7 c4 ff ff ff ff 5b 5d 4c 89 e0 41 5c c3 66 0f 1f 84 00 00 00 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d dd 52 0f 00 f7 d8 64 89 01 48
-  RSP: 002b:00007ffe2cefe808 EFLAGS: 00000202 ORIG_RAX: 0000000000000010
-  RAX: ffffffffffffffda RBX: 00007ffe2cefe860 RCX: 00007f765f703b0b
-  RDX: 00007ffe2cefe860 RSI: 00000000c0484e41 RDI: 0000000000000003
-  RBP: 0000000000000000 R08: 0000000000000003 R09: 0000000000000000
-  R10: 00007f765f611d50 R11: 0000000000000202 R12: 0000000000000003
-  R13: 00000000c0484e41 R14: 0000000000000001 R15: 00007ffe2cefea60
-   </TASK>
+The issue occurs when a wakeup IRQ is triggered on a GPIO and the IRQ
+handler attempts to reconfigure the same GPIO's pinmux. In this scenario,
+msm_pinmux_set_mux() calls disable_irq() which waits for the currently
+running IRQ handler to complete, creating a circular dependency that
+results in deadlock.
 
-Reported-by: Casey Chen <cachen@purestorage.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Using disable_irq_nosync() avoids waiting for the IRQ handler to
+complete, preventing the deadlock condition while still properly
+disabling the interrupt during pinmux reconfiguration.
+
+Suggested-by: Prasad Sodagudi <prasad.sodagudi@oss.qualcomm.com>
+Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 5714d49932822..28c598008124c 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4896,7 +4896,6 @@ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 83eb075b6bfa1..3d6601dc6fcc5 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -215,7 +215,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
  	 */
- 	nvme_stop_keep_alive(ctrl);
- 	blk_mq_destroy_queue(ctrl->admin_q);
--	blk_put_queue(ctrl->admin_q);
- 	if (ctrl->ops->flags & NVME_F_FABRICS) {
- 		blk_mq_destroy_queue(ctrl->fabrics_q);
- 		blk_put_queue(ctrl->fabrics_q);
-@@ -5040,6 +5039,8 @@ static void nvme_free_ctrl(struct device *dev)
- 		container_of(dev, struct nvme_ctrl, ctrl_device);
- 	struct nvme_subsystem *subsys = ctrl->subsys;
+ 	if (d && i != gpio_func &&
+ 	    !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
+-		disable_irq(irq);
++		disable_irq_nosync(irq);
  
-+	if (ctrl->admin_q)
-+		blk_put_queue(ctrl->admin_q);
- 	if (!subsys || ctrl->instance != subsys->instance)
- 		ida_free(&nvme_instance_ida, ctrl->instance);
- 	nvme_free_cels(ctrl);
+ 	raw_spin_lock_irqsave(&pctrl->lock, flags);
+ 
 -- 
 2.51.0
 
