@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529543019C7;
-	Wed, 10 Dec 2025 07:35:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF64302CC0;
+	Wed, 10 Dec 2025 07:35:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352133; cv=none; b=Gp9bbfI6jq1x+Jd+dVHf479hTHer6YIkiltPsHWrXwe32lmuPX4Ryfo00gk8TXY4J4oD8QIR6rANpbkaR783IQVfwtX0yRR7P9YUUksbuFR5G6lu4PmYCzmSsr/aQlzIX1Q2jN+oaccB46QRziswUjb9cDl7EP6PsexKJpfPjXI=
+	t=1765352135; cv=none; b=XBERPoicIpbuDL2oH6DvvycBWnGL9kSnQLbRUxt4MvzKMUgeiMdBIu7w1GzioepnzKGBlWC24STCAYbF0WOn4biEBaNd4Oxiq3bYeBnihCYGR+yPmhYwwACDsLd5jwtbOrrGQMvfb3Z43wn12GxxGIlePQ1zxD9LheNT2KuQfc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352133; c=relaxed/simple;
-	bh=d45qxoSJ8ljS6Wav8vwK6GCOM4u7dFBs9p6KXWC1gjw=;
+	s=arc-20240116; t=1765352135; c=relaxed/simple;
+	bh=casnYKAum16yEH39nX7746zwUGQxwwdOKN8iljmn/4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+asWwuPUJJVS3k7cZjITuVucNR1mvxtdhjkpRJA4uPdOJTSNM1NsWrnm+uLz56kuGAfENiqU3FdDBF19XPsXKMuaAuRg79gGWtS4xhZXRP2dyTCUmEyK82uKM0jweGOtjredIFJE+cChCX/ea8LjQDVhc/YqO8ETeuzJ7svJgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbkejCWU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=g6VhdSAykKaaMBMu7tTMLrw8d5VWXJ1wCnhar+U+zfnVWx9rrrVxgCsuCt7IxPFM6DujfO3znzVico9I+ahQnTlDEJjAONyVSX1ZuGYYx2Ey6BhMYQE4YttVK8gzq0hVyQIyYCFS9+6ngYOpfSCerjR1hXMbaVao/M+rlvwKbCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMhT4mR+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbkejCWU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF0DC4CEF1;
-	Wed, 10 Dec 2025 07:35:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMhT4mR+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24979C4CEF1;
+	Wed, 10 Dec 2025 07:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352133;
-	bh=d45qxoSJ8ljS6Wav8vwK6GCOM4u7dFBs9p6KXWC1gjw=;
+	s=korg; t=1765352135;
+	bh=casnYKAum16yEH39nX7746zwUGQxwwdOKN8iljmn/4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbkejCWUgSErcNC4tPxQK1S8JgfUYxXpvDabVd/iBoH3078M/WaoHBtRYwD4suSDf
-	 alLiUFwlv3aO6pNRpE0nO5SuiHW8OReUatq2vdxRsaCn1gMlE4jYIYb/UJ1Ny1wN8l
-	 jz06Vmy3L58U7Ggs/KMgxJa0UWeyW8nHSthJz76M=
+	b=oMhT4mR+vuHy07SADg33ggVPJqLuDMhJS1ncgogEH5UQuEqVSAwl47yntOtRsqXzM
+	 6gC5Y2LMlz9Td8uEf6hIkL0WjZeahyUzIwn5Bd4x0wvEcxnFsWRJ8OD9skGF5l3bKi
+	 T7JH0UnKr8TAmLobvBKsEPusWYDIIpcGE5qhAktw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang@linux.dev>,
-	Tejun Heo <tj@kernel.org>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 44/60] sched_ext: Fix possible deadlock in the deferred_irq_workfn()
-Date: Wed, 10 Dec 2025 16:30:14 +0900
-Message-ID: <20251210072948.960218513@linuxfoundation.org>
+Subject: [PATCH 6.17 45/60] platform/x86/intel/hid: Add Nova Lake support
+Date: Wed, 10 Dec 2025 16:30:15 +0900
+Message-ID: <20251210072948.984310073@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -45,49 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zqiang <qiang.zhang@linux.dev>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-[ Upstream commit a257e974210320ede524f340ffe16bf4bf0dda1e ]
+[ Upstream commit ddf5ffff3a5fe95bed178f5554596b93c52afbc9 ]
 
-For PREEMPT_RT=y kernels, the deferred_irq_workfn() is executed in
-the per-cpu irq_work/* task context and not disable-irq, if the rq
-returned by container_of() is current CPU's rq, the following scenarios
-may occur:
+Add ACPI ID for Nova Lake.
 
-lock(&rq->__lock);
-<Interrupt>
-  lock(&rq->__lock);
-
-This commit use IRQ_WORK_INIT_HARD() to replace init_irq_work() to
-initialize rq->scx.deferred_irq_work, make the deferred_irq_workfn()
-is always invoked in hard-irq context.
-
-Signed-off-by: Zqiang <qiang.zhang@linux.dev>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Link: https://patch.msgid.link/20251110235041.123685-1-srinivas.pandruvada@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/intel/hid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
-index 1e4740de66c28..16a7ae9b29ae4 100644
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -5377,7 +5377,7 @@ void __init init_sched_ext_class(void)
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_kick_if_idle, GFP_KERNEL, n));
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_preempt, GFP_KERNEL, n));
- 		BUG_ON(!zalloc_cpumask_var_node(&rq->scx.cpus_to_wait, GFP_KERNEL, n));
--		init_irq_work(&rq->scx.deferred_irq_work, deferred_irq_workfn);
-+		rq->scx.deferred_irq_work = IRQ_WORK_INIT_HARD(deferred_irq_workfn);
- 		init_irq_work(&rq->scx.kick_cpus_irq_work, kick_cpus_irq_workfn);
- 
- 		if (cpu_online(cpu))
+diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
+index f25a427cccdac..9c07a7faf18fe 100644
+--- a/drivers/platform/x86/intel/hid.c
++++ b/drivers/platform/x86/intel/hid.c
+@@ -55,6 +55,7 @@ static const struct acpi_device_id intel_hid_ids[] = {
+ 	{ "INTC10CB" },
+ 	{ "INTC10CC" },
+ 	{ "INTC10F1" },
++	{ "INTC10F2" },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(acpi, intel_hid_ids);
 -- 
 2.51.0
 
