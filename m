@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FA32765ED;
-	Wed, 10 Dec 2025 06:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CA22765ED;
+	Wed, 10 Dec 2025 06:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765348502; cv=none; b=PXlKeItwSWoXMzCTN4DnvCZlvyPmRBK7l4cfpN+SOTl9ywMMlS7v+O8VGi/os9xCmh8Qjiv8wqZ3osQllVbUNQMdHQaFLL5cvIAu9Ws9+TnfaJ9tB/nHlUunrV/H529z3xcVlizsThVkvrit3qhjZSVx1x0MpH/0k9yQg7Pk3M8=
+	t=1765348508; cv=none; b=UcdvsCzut1TXNJfCo9iEjokYPeB3nDcZq/rLRrlluD5Y4j3Xu5i0TpuO/+bDa0pgIUJvM2FWErS7Kv0jijD/VZR0Q2m9FnlMmtKfXmMh7gpbGERzIqqKZekjWV7px+bVs2aGJdQ/if9Vy/0j1SnsY3GfrLlfx7EyogE/0FzhkJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765348502; c=relaxed/simple;
-	bh=q3MraarYR5fzjH9a8NaRW0+Um6sF9oejd2RwlWgRH3c=;
+	s=arc-20240116; t=1765348508; c=relaxed/simple;
+	bh=2abPAY+96Y1qNcmycm/yEHvcX3RLzB0mV1G58gCEx1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=um3qIiazEvJtthJqTU9HeoTD64/hwINNKIXPr4RRIcG8pRGULWhSspSWwbu6Kvx59W3d/cyy4cIOeJ83pAeYoAu4LMwhPuF4/zuOxx5OsQ4zsY92azfg++eIEtVk7cXJq/i44Im2c1yJzgKkPCFsQPs4s+UjBzVfi0dEIAM0oX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jVjhOZ6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T2JlvqKZTvjMvcDvNbxtz0e3Yv33/LfYncxXoreUIcjRHGYGF/G3dxXLCOsrCQa5uhgWZ5U7lUx0X2I0fFaWB7XephDUIp1YqT7BZvogh/xCYx0/MEFXQRXNfYOTf21jQ5OQvLMTu3XnW9x6EAPD2WAS+veEa11tQRJ9oA9tdxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MQLJ3ytI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jVjhOZ6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17555C116B1;
-	Wed, 10 Dec 2025 06:34:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MQLJ3ytI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E387FC4CEF1;
+	Wed, 10 Dec 2025 06:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765348501;
-	bh=q3MraarYR5fzjH9a8NaRW0+Um6sF9oejd2RwlWgRH3c=;
+	s=k20201202; t=1765348505;
+	bh=2abPAY+96Y1qNcmycm/yEHvcX3RLzB0mV1G58gCEx1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVjhOZ6noBRlLPzxfJl+o3XJKaNr3gJY5zHcD6wzpoI4rDhyEs723ZfaHlXo310nh
-	 C8ckheohVRR64EXCLoMQKLGSl9mHaQp2OrUQGQPD2iyznWwk7SyTI3Oah6ZjZctQ/2
-	 UArJSEMWsP3tniVv9zjEtAUx77VzzTYk3ZEACOy8tXYQbp4V6AQy5ylV+zhuBmxGfW
-	 Tts9Ezaj5zyZ4gGu/+8KlgLmo0LFijAGUL6WSc5JWiMxPUTE2wCxdZoLGJ3cdcieFI
-	 dL4r29GwcB1hlrc1Z8H0+E8ainvIYUPO7NcALC/sHWsC9fT0y+XmwUsskG29XmGASG
-	 /gD92BrMQM1Sw==
+	b=MQLJ3ytIRVomsTQnMpfVWoZpUmR34enoP3tOgAyK5cG2rFwh8yb5FBtj5SJYWy/1w
+	 I8Tx1Ak1kd+8QHd1BaedtAC2FnBqBtJmyfII9MgTLVW8I/OD3Tk+SqAkD0fderATxZ
+	 MoRDOfL5i+C8sqvnZbAQ4lax9Yw6ZyCwfWhFGbFMN/gs8B+G1wM7ASjC2yPzN/LeJG
+	 WYrXWKenHCp36vVuiTggA0Ucj6+0C4fiUAFn2XlJNuUZkv50lI2MsRAmL2qwZ7G6ig
+	 PCUKN6dX4/L8qvWDagz89uWlSspiEdxPg8r2KYAtRQGwpkoNLAskZ7lwpamIo9MO7w
+	 gaLBFVri23QSw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Pei Xiao <xiaopei01@kylinos.cn>,
+	kernel test robot <lkp@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>,
-	dmitry.baryshkov@oss.qualcomm.com,
-	boddah8794@gmail.com,
-	venkat.jayaraman@intel.com,
-	akuchynski@chromium.org,
-	pooja.katiyar@intel.com,
-	jthies@google.com,
-	abel.vesa@linaro.org,
-	lk@c--e.de
-Subject: [PATCH AUTOSEL 6.18-5.10] usb: typec: ucsi: Handle incorrect num_connectors capability
-Date: Wed, 10 Dec 2025 01:34:32 -0500
-Message-ID: <20251210063446.2513466-3-sashal@kernel.org>
+	dixitparmar19@gmail.com
+Subject: [PATCH AUTOSEL 6.18-6.1] iio: adc: ti_am335x_adc: Limit step_avg to valid range for gcc complains
+Date: Wed, 10 Dec 2025 01:34:33 -0500
+Message-ID: <20251210063446.2513466-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251210063446.2513466-1-sashal@kernel.org>
 References: <20251210063446.2513466-1-sashal@kernel.org>
@@ -59,197 +52,115 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 30cd2cb1abf4c4acdb1ddb468c946f68939819fb ]
+[ Upstream commit c9fb952360d0c78bbe98239bd6b702f05c2dbb31 ]
 
-The UCSI spec states that the num_connectors field is 7 bits, and the
-8th bit is reserved and should be set to zero.
-Some buggy FW has been known to set this bit, and it can lead to a
-system not booting.
-Flag that the FW is not behaving correctly, and auto-fix the value
-so that the system boots correctly.
+FIELD_PREP() checks that a value fits into the available bitfield, add a
+check for step_avg to fix gcc complains.
 
-Found on Lenovo P1 G8 during Linux enablement program. The FW will
-be fixed, but seemed worth addressing in case it hit platforms that
-aren't officially Linux supported.
+which gcc complains about:
+  drivers/iio/adc/ti_am335x_adc.c: In function 'tiadc_step_config':
+  include/linux/compiler_types.h:572:38: error: call to
+'__compiletime_assert_491' declared with attribute error: FIELD_PREP: value
+too large for the field include/linux/mfd/ti_am335x_tscadc.h:58:29: note:
+in expansion of macro 'FIELD_PREP'
+    #define STEPCONFIG_AVG(val) FIELD_PREP(GENMASK(4, 2), (val))
+                                ^~~~~~~~~~
+drivers/iio/adc/ti_am335x_adc.c:127:17: note: in expansion of macro 'STEPCONFIG_AVG'
+	stepconfig = STEPCONFIG_AVG(ffs(adc_dev->step_avg[i]) - 1)
 
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20250821185319.2585023-1-mpearson-lenovo@squebb.ca
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202510102117.Jqxrw1vF-lkp@intel.com/
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: usb: typec: ucsi: Handle incorrect num_connectors
-capability
+Now I understand the full context:
 
-### 1. COMMIT MESSAGE ANALYSIS
+**Key findings:**
+- `STEPCONFIG_AVG(val)` uses `FIELD_PREP(GENMASK(4, 2), (val))` - a
+  3-bit field
+- `STEPCONFIG_AVG_16` = `STEPCONFIG_AVG(4)` = 16 (the register value)
+- `step_avg[i]` stores the number of samples (1, 2, 4, 8, 16)
+- The comparison `step_avg[i] <= STEPCONFIG_AVG_16` bounds step_avg to ≤
+  16
 
-**Subject:** Indicates this handles incorrect/buggy firmware behavior
-for UCSI (USB Type-C Connector System Software Interface).
+### SUMMARY
 
-**Key points:**
-- UCSI spec defines `num_connectors` as 7 bits with reserved 8th bit
-  (should be zero)
-- Buggy firmware sets the reserved bit, leading to **system not
-  booting**
-- Found on real hardware: Lenovo P1 G8 during Linux enablement
-- Maintainer expects this may hit other platforms not officially Linux-
-  supported
+| Criterion | Assessment |
+|-----------|------------|
+| **Type of fix** | BUILD FIX - compile error |
+| **Size** | 1 line change |
+| **Risk** | Very Low |
+| **User impact** | Prevents kernel compilation failure |
+| **Subsystem** | TI AM335x ADC (BeagleBone, embedded systems) |
+| **Cc: stable** | No |
+| **Fixes: tag** | No |
+| **Reported-by** | Yes (kernel test robot) |
 
-**Tags present:**
-- `Reviewed-by: Heikki Krogerus` (Intel UCSI maintainer)
-- `Signed-off-by: Greg Kroah-Hartman` (USB maintainer)
-- Link to LKML discussion
+### ASSESSMENT
 
-**Tags missing:**
-- No `Cc: stable@vger.kernel.org`
-- No `Fixes:` tag (this is a workaround for firmware, not fixing a
-  kernel bug)
+**Why this should be backported:**
 
-### 2. CODE CHANGE ANALYSIS
+1. **Build Fix Category**: This explicitly fixes a GCC compilation
+   error. Build fixes are one of the allowed exception categories for
+   stable trees because they prevent users from being able to compile
+   the kernel at all.
 
-The fix adds 6 lines:
-```c
-/* Check if reserved bit set. This is out of spec but happens in buggy
-FW */
-if (ucsi->cap.num_connectors & 0x80) {
-    dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy
-FW\n",
-             ucsi->cap.num_connectors);
-    ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
-}
-```
+2. **The Error is a Hard Failure**: The gcc error `error: call to
+   '__compiletime_assert_491' declared with attribute error: FIELD_PREP:
+   value too large for the field` is a hard compilation failure, not
+   just a warning. Users with certain GCC versions/configurations cannot
+   build the kernel with this driver enabled.
 
-**Technical mechanism of the bug:**
-- `num_connectors` is returned from firmware via `UCSI_GET_CAPABILITY`
-  command
-- With bit 7 set, the value becomes >= 128 instead of the real value
-  (likely 1-2)
-- This corrupted value is used for:
-  - Memory allocation: `kcalloc(ucsi->cap.num_connectors + 1,
-    sizeof(*connector), GFP_KERNEL)`
-  - Loop iteration: `for (i = 0; i < ucsi->cap.num_connectors; i++)`
-- Result: trying to allocate/register 128+ connectors, causing boot
-  failure
+3. **Minimal Risk**: The fix simply adds a bounds check (`&&
+   adc_dev->step_avg[i] <= STEPCONFIG_AVG_16`) to an existing condition.
+   Invalid values now fall through to the else branch (default
+   behavior), which is safe.
 
-**The fix:**
-- Detects if reserved bit 7 is set
-- Logs a warning about buggy firmware
-- Clears the bit to get the correct connector count
-- System can then boot normally
+4. **No Functional Change for Valid Inputs**: For valid step_avg values
+   (1, 2, 4, 8, 16), the behavior is identical. Only theoretically
+   invalid values are now handled differently.
 
-### 3. CLASSIFICATION
+5. **Driver Exists in All Stable Trees**: The TI AM335x ADC driver has
+   been in the kernel for years and exists in all active stable
+   branches.
 
-This is a **hardware/firmware quirk workaround** - one of the explicit
-exceptions allowed in stable kernels:
-- Not a new feature or API
-- Not code cleanup or refactoring
-- Handles non-compliant firmware (similar to USB quirks, PCI quirks)
-- Enables hardware to work correctly with the existing driver
+**Concerns:**
+- No explicit `Cc: stable` tag
+- No `Fixes:` tag
+- The maintainer didn't specifically request backporting
 
-### 4. SCOPE AND RISK ASSESSMENT
+However, the absence of these tags doesn't disqualify a build fix. Build
+fixes are essential for kernel buildability and are routinely
+backported.
 
-| Metric | Assessment |
-|--------|------------|
-| Lines changed | 6 lines added |
-| Files touched | 1 file |
-| Complexity | Very low - simple bit check and mask |
-| Risk | **Very low** |
-
-**Risk reasoning:**
-- If firmware is compliant (bit not set): no change in behavior
-- If firmware is buggy (bit set): corrects the value to what it should
-  be
-- Cannot break working systems
-- No side effects possible
-
-### 5. USER IMPACT
-
-**Severity:** **HIGH** - prevents system from booting
-
-**Who is affected:**
-- Confirmed: Lenovo P1 G8 users
-- Potential: Other systems with buggy UCSI firmware
-- Type-C/UCSI is common on modern laptops
-
-**Real-world validation:**
-- Found during actual hardware testing/enablement
-- Not a theoretical bug - causes real boot failures
-
-### 6. STABILITY INDICATORS
-
-- Reviewed by Heikki Krogerus (Intel, UCSI domain expert)
-- Signed off by Greg Kroah-Hartman (USB maintainer)
-- Small, obvious fix with clear rationale
-- The fix is self-contained and well-understood
-
-### 7. DEPENDENCY CHECK
-
-- Standalone fix with no dependencies on other commits
-- UCSI driver exists in all relevant stable trees
-- Should apply cleanly to stable kernels
-
----
-
-## Summary
-
-**What this fixes:** Boot failure on systems with buggy UCSI firmware
-that incorrectly sets a reserved bit in the connector count capability
-field.
-
-**Why it meets stable criteria:**
-1. ✅ **Fixes a real bug affecting users** - confirmed boot failure on
-   Lenovo P1 G8
-2. ✅ **Obviously correct** - simple bit mask operation, spec-compliant
-   behavior
-3. ✅ **Small and contained** - 6 lines in one file, no side effects
-4. ✅ **Falls under "hardware quirk" exception** - workaround for non-
-   compliant firmware
-5. ✅ **High impact** - system won't boot without this fix
-6. ✅ **Low risk** - cannot break working systems
-7. ✅ **Well-reviewed** - by domain experts including USB maintainer
-
-**Why missing stable tags isn't disqualifying:**
-- Hardware quirks often lack explicit stable tags
-- The nature of the fix (workaround for boot failure) clearly warrants
-  backporting
-- Greg Kroah-Hartman signed off, who is also a stable tree maintainer
-
-**Risk vs Benefit:**
-- Risk: Essentially zero - the code path is only taken for buggy
-  firmware
-- Benefit: Systems with buggy firmware can boot
-
-This is a textbook example of a hardware quirk/workaround that belongs
-in stable trees. It's a small, safe, well-reviewed fix that prevents
-boot failures on real hardware.
+The fix is obviously correct, small, contained, and addresses a real
+build failure reported by the kernel test robot infrastructure. It meets
+the stable kernel criteria for a build fix.
 
 **YES**
 
- drivers/usb/typec/ucsi/ucsi.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/adc/ti_am335x_adc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi.c b/drivers/usb/typec/ucsi/ucsi.c
-index 3f568f790f39b..3995483a0aa09 100644
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1807,6 +1807,12 @@ static int ucsi_init(struct ucsi *ucsi)
- 		ret = -ENODEV;
- 		goto err_reset;
- 	}
-+	/* Check if reserved bit set. This is out of spec but happens in buggy FW */
-+	if (ucsi->cap.num_connectors & 0x80) {
-+		dev_warn(ucsi->dev, "UCSI: Invalid num_connectors %d. Likely buggy FW\n",
-+			 ucsi->cap.num_connectors);
-+		ucsi->cap.num_connectors &= 0x7f; // clear bit and carry on
-+	}
+diff --git a/drivers/iio/adc/ti_am335x_adc.c b/drivers/iio/adc/ti_am335x_adc.c
+index 99f274adc870d..a1a28584de930 100644
+--- a/drivers/iio/adc/ti_am335x_adc.c
++++ b/drivers/iio/adc/ti_am335x_adc.c
+@@ -123,7 +123,7 @@ static void tiadc_step_config(struct iio_dev *indio_dev)
  
- 	/* Allocate the connectors. Released in ucsi_unregister() */
- 	connector = kcalloc(ucsi->cap.num_connectors + 1, sizeof(*connector), GFP_KERNEL);
+ 		chan = adc_dev->channel_line[i];
+ 
+-		if (adc_dev->step_avg[i])
++		if (adc_dev->step_avg[i] && adc_dev->step_avg[i] <= STEPCONFIG_AVG_16)
+ 			stepconfig = STEPCONFIG_AVG(ffs(adc_dev->step_avg[i]) - 1) |
+ 				     STEPCONFIG_FIFO1;
+ 		else
 -- 
 2.51.0
 
