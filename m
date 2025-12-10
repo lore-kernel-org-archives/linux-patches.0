@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE38302CCD;
-	Wed, 10 Dec 2025 07:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E245C613;
+	Wed, 10 Dec 2025 07:35:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352123; cv=none; b=IbaB+i5TMxFeL8GKb4sSQ/vcMjd3R2Azn4Rc1hS/XmZ04xIdEDJmWEVbGoW38uHRAncyuhimIrlMM+wAEL1iC208gPsELsigDL9xWnNDuTgXVjY3YOHr6yOrpJYzIf9pvJeUVLv2HdyI2+dsItarYxq55TjkUFJ7C72xfBDi6r0=
+	t=1765352124; cv=none; b=dGFmnG517IkxBaW439tij8zPR7hW0a5evEfIXsHR3AJw4DmsIJtesNf1mEUilOZ6DtDwpnNDSf2X1VBwkE3XOHuyb41P7bG7033KIWTD0FjPBGz09n9QiFxaZNvmdEjO1IdM0pQ7fhBzLokGxFdj3KwsOHqPAcvn8nU47YPB0ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352123; c=relaxed/simple;
-	bh=MBQN3zAPEJOslfYtb7P3sJ0dcCHSCcBKZ1DkBPjUNjI=;
+	s=arc-20240116; t=1765352124; c=relaxed/simple;
+	bh=jsBFkMDlBh8o8/OESQPOmc9Epn3KmyLAHeV8BrPQFoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZsffEKkWYUED1uOcCPt6KNz57OQJVIHwfdnk8FwV8lkcg5QZAC8kJwiC7eCIiITjinMsuDHmlxe98A3yJjRypjkI8s/v17Owmf0bjokLeoIzzQV3XSY6QfbERLVWFIQVVsn6Sd0eeEnTdEiVn47qkH+YLMrannyPcgyfSsQaqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjbMuF7k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=lCeOMY1peyeUatPQI7w3O1t039Jgx4z3YKnzs9wRJ9MBosvu3CYheWUx0ev9lOYpgnIoytqX54T1K/L3LFp2GiInSbyp3hH3piSLR4hmw52VWPivVe8hhmTUp9ZUNC9Dq5aJT5Fm/+XrHY6eVDiVWGU4uLC5Cmi9fy0/Fqp0dfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZSnf9qeS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjbMuF7k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A1CC4CEF1;
-	Wed, 10 Dec 2025 07:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZSnf9qeS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA57C4CEF1;
+	Wed, 10 Dec 2025 07:35:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352122;
-	bh=MBQN3zAPEJOslfYtb7P3sJ0dcCHSCcBKZ1DkBPjUNjI=;
+	s=korg; t=1765352124;
+	bh=jsBFkMDlBh8o8/OESQPOmc9Epn3KmyLAHeV8BrPQFoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjbMuF7kz6DVJHTJw/Q8ExjMt1YWgMPUCFEZk/C5l0Xb6cUNaN+3AF0sN26whZLi5
-	 gfSbl7l46neoP57yzUwHvQ6XPaVzJlgcJlVe/Zyam3dSmQ36Ww0XmudnfGwjBpF0Lh
-	 f1MXCyC7vCCneLBwYhQXOKn59/ElIPsLKa1EsWB8=
+	b=ZSnf9qeSg6UKwxsmvaupzr+yJq2naE4e1MBVG8aymkop1rDf1mL0Q18+u6Tk0la1I
+	 14QNKNAPIk9vM8wNta6Pu5cMJSPBFWybL2CWnDxzy/mQ139fI4MuNVqv9IuUzA1cFk
+	 VT1HDELa1fy9iMhAOkehITyfr480Nd/zRkycHo/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Navaneeth K <knavaneeth786@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.17 59/60] staging: rtl8723bs: fix stack buffer overflow in OnAssocReq IE parsing
-Date: Wed, 10 Dec 2025 16:30:29 +0900
-Message-ID: <20251210072949.334782839@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.17 42/60] platform/x86/amd: pmc: Add Lenovo Legion Go 2 to pmc quirk list
+Date: Wed, 10 Dec 2025 16:30:12 +0900
+Message-ID: <20251210072948.910954949@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -44,55 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Navaneeth K <knavaneeth786@gmail.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 6ef0e1c10455927867cac8f0ed6b49f328f8cf95 upstream.
+[ Upstream commit f945afe01c6768dcfed7868c671a26e1164c2284 ]
 
-The Supported Rates IE length from an incoming Association Request frame
-was used directly as the memcpy() length when copying into a fixed-size
-16-byte stack buffer (supportRate). A malicious station can advertise an
-IE length larger than 16 bytes, causing a stack buffer overflow.
+The Lenovo Legion Go 2 takes a long time to resume from suspend.
+This is due to it having an nvme resume handler that interferes
+with IOMMU mappings. It is a common issue with older Lenovo
+laptops. Adding it to that quirk list fixes this issue.
 
-Clamp ie_len to the buffer size before copying the Supported Rates IE,
-and correct the bounds check when merging Extended Supported Rates to
-prevent a second potential overflow.
-
-This prevents kernel stack corruption triggered by malformed association
-requests.
-
-Signed-off-by: Navaneeth K <knavaneeth786@gmail.com>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4618
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Link: https://patch.msgid.link/20251008135057.731928-1-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme_ext.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc/pmc-quirks.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme_ext.c
-@@ -1033,6 +1033,9 @@ unsigned int OnAssocReq(struct adapter *
- 		status = WLAN_STATUS_CHALLENGE_FAIL;
- 		goto OnAssocReqFail;
- 	} else {
-+		if (ie_len > sizeof(supportRate))
-+			ie_len = sizeof(supportRate);
-+
- 		memcpy(supportRate, p+2, ie_len);
- 		supportRateNum = ie_len;
- 
-@@ -1040,7 +1043,7 @@ unsigned int OnAssocReq(struct adapter *
- 				pkt_len - WLAN_HDR_A3_LEN - ie_offset);
- 		if (p) {
- 
--			if (supportRateNum <= sizeof(supportRate)) {
-+			if (supportRateNum + ie_len <= sizeof(supportRate)) {
- 				memcpy(supportRate+supportRateNum, p+2, ie_len);
- 				supportRateNum += ie_len;
- 			}
+diff --git a/drivers/platform/x86/amd/pmc/pmc-quirks.c b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+index d63aaad7ef599..0fadcf5f288ac 100644
+--- a/drivers/platform/x86/amd/pmc/pmc-quirks.c
++++ b/drivers/platform/x86/amd/pmc/pmc-quirks.c
+@@ -204,6 +204,23 @@ static const struct dmi_system_id fwbug_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82ND"),
+ 		}
+ 	},
++	/* https://gitlab.freedesktop.org/drm/amd/-/issues/4618 */
++	{
++		.ident = "Lenovo Legion Go 2",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N0"),
++		}
++	},
++	{
++		.ident = "Lenovo Legion Go 2",
++		.driver_data = &quirk_s2idle_bug,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "83N1"),
++		}
++	},
+ 	/* https://gitlab.freedesktop.org/drm/amd/-/issues/2684 */
+ 	{
+ 		.ident = "HP Laptop 15s-eq2xxx",
+-- 
+2.51.0
+
 
 
