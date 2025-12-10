@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167DF302CBD;
-	Wed, 10 Dec 2025 07:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1146427FB2E;
+	Wed, 10 Dec 2025 07:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765352058; cv=none; b=G6tTKrLYomhpYvgd4bP44kEV1NbIZy+2J2aRXp0zlMGwrNZQdrmhywq3GzcKGXtlKqr+J6Gq/aNFadK0fdB/w0L9mpvGdZy9FaD0ReATOrZh+FlXuA2lx/a6gvOasxVb80CZR/LKVdc0E+LI5FrgWDYjekx2pg+wjciaaqyHjDw=
+	t=1765352061; cv=none; b=HNmuko/S6I62RJ1JLB+WBRh3sNbFNxrhrDoP9tmr/oICn5Qs0k+DqW5yYX4QWc7coxMMyn7vs6gj/o0yJSNEJzCHjhu3Z3zSJZJQ3vJ7AJTgypaCgz8DrIVcmamJLhEmnsi4IsGvwyd6VJd3cBBA7kiIG45vGLY1dFwYiZXmVXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765352058; c=relaxed/simple;
-	bh=dE76XS3AKDBd7s7cQisW6e5eY6MsqPIz+8IZtheSOk0=;
+	s=arc-20240116; t=1765352061; c=relaxed/simple;
+	bh=CFHGmP8SXwuz7aEnc+8mkdtW+fkoWztad9dgAIWOplM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tgmvfH7NCuV2wfq/YJpLlfZhKHb5hW4Dh1oTjKDe68vugTvm07adDvkuVfQw4re5wErwI0jtJcZCFMENKI+ya3seO0QAKbjU089vQjA6YX4B5AgtzpUjg+f37dPCiZ5jZB/X7yiK01nGEAEwcc3lCtO/kpjmXyOxh2ym1y39YDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ks9sM/St; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iYVzsQDH48auVMHFcZYc2gE6KfCRggJQ7E+0kzl7lUhOi4QUqTM5TEK3GrPDRHfO2atV3BIMmEKQIC80cFIpHWLh5iU2JRm6OVDXMZV3Fs5peMEqZr6gIGsBmzPcfl1cLy2mwcdtrBuCHlcHcIFdGJJRKVn2vD0dPfE21zSlcJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iT5DOFly; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ks9sM/St"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF6BFC4CEF1;
-	Wed, 10 Dec 2025 07:34:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iT5DOFly"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB98C4CEF1;
+	Wed, 10 Dec 2025 07:34:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765352058;
-	bh=dE76XS3AKDBd7s7cQisW6e5eY6MsqPIz+8IZtheSOk0=;
+	s=korg; t=1765352060;
+	bh=CFHGmP8SXwuz7aEnc+8mkdtW+fkoWztad9dgAIWOplM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ks9sM/StF5mWIAKSzYb+rJH7OKaIkRwAxEW0epC9L5TrxDYdCsbcP+Vajs/IVs9Tk
-	 uDDt/+rrUhzvnZ7thSDhQ5MPm9Dl5U5iU0Cvy1638FIQs8J58lbXUHP9erXXUpnUAB
-	 zOzioivrPPYs3P6pXpvhVJapx9AnloxZdhXkzT6s=
+	b=iT5DOFlyFjQ8cmhW+RdK/x0+RenQQzf3VG6li0VJ0mUlfTXetJUVRzuIERG9YO6uN
+	 r1OTJPLEAOjVPCU5D6D67lNM+ksKgop2SJtxbVNNLTgy4HOlbq0U0oPeQcTrFb2w84
+	 A99o9nt1EOyabw4JpN730J25gYP/gL+CNEDFeo5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hansg@kernel.org>,
-	=?UTF-8?q?Andr=C3=A9=20Barata?= <andretiagob@protonmail.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Jiri Kosina <jkosina@suse.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 33/60] HID: hid-input: Extend Elan ignore battery quirk to USB
-Date: Wed, 10 Dec 2025 16:30:03 +0900
-Message-ID: <20251210072948.649915759@linuxfoundation.org>
+Subject: [PATCH 6.17 34/60] platform/x86/amd/pmc: Add support for Van Gogh SoC
+Date: Wed, 10 Dec 2025 16:30:04 +0900
+Message-ID: <20251210072948.675028399@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
 References: <20251210072947.850479903@linuxfoundation.org>
@@ -54,41 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello (AMD) <superm1@kernel.org>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 534ca75e8e3b713514b3f2da85dab96831cf5b2a ]
+[ Upstream commit db4a3f0fbedb0398f77b9047e8b8bb2b49f355bb ]
 
-USB Elan devices have the same problem as the I2C ones with a fake
-battery device showing up.
+The ROG Xbox Ally (non-X) SoC features a similar architecture to the
+Steam Deck. While the Steam Deck supports S3 (s2idle causes a crash),
+this support was dropped by the Xbox Ally which only S0ix suspend.
 
-Reviewed-by: Hans de Goede <hansg@kernel.org>
-Reported-by: André Barata <andretiagob@protonmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220722
-Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Since the handler is missing here, this causes the device to not suspend
+and the AMD GPU driver to crash while trying to resume afterwards due to
+a power hang.
+
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://patch.msgid.link/20251024152152.3981721-2-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c | 3 +++
+ drivers/platform/x86/amd/pmc/pmc.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 2c743e35c1d33..bc7de9ef45ecd 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -386,10 +386,11 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_CHROMEBOOK_TROGDOR_POMPOM),
- 	  HID_BATTERY_QUIRK_AVOID_QUERY },
- 	/*
--	 * Elan I2C-HID touchscreens seem to all report a non present battery,
--	 * set HID_BATTERY_QUIRK_IGNORE for all Elan I2C-HID devices.
-+	 * Elan HID touchscreens seem to all report a non present battery,
-+	 * set HID_BATTERY_QUIRK_IGNORE for all Elan I2C and USB HID devices.
- 	 */
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, HID_ANY_ID), HID_BATTERY_QUIRK_IGNORE },
- 	{}
- };
- 
+diff --git a/drivers/platform/x86/amd/pmc/pmc.c b/drivers/platform/x86/amd/pmc/pmc.c
+index bd318fd02ccf4..cae3fcafd4d7b 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -106,6 +106,7 @@ static void amd_pmc_get_ip_info(struct amd_pmc_dev *dev)
+ 	switch (dev->cpu_id) {
+ 	case AMD_CPU_ID_PCO:
+ 	case AMD_CPU_ID_RN:
++	case AMD_CPU_ID_VG:
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 		dev->num_ips = 12;
+@@ -517,6 +518,7 @@ static int amd_pmc_get_os_hint(struct amd_pmc_dev *dev)
+ 	case AMD_CPU_ID_PCO:
+ 		return MSG_OS_HINT_PCO;
+ 	case AMD_CPU_ID_RN:
++	case AMD_CPU_ID_VG:
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 	case AMD_CPU_ID_PS:
+@@ -717,6 +719,7 @@ static const struct pci_device_id pmc_pci_ids[] = {
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_RV) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SP) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SHP) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_VG) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M20H_ROOT) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M60H_ROOT) },
+ 	{ }
+diff --git a/drivers/platform/x86/amd/pmc/pmc.h b/drivers/platform/x86/amd/pmc/pmc.h
+index 62f3e51020fdf..fe3f53eb59558 100644
+--- a/drivers/platform/x86/amd/pmc/pmc.h
++++ b/drivers/platform/x86/amd/pmc/pmc.h
+@@ -156,6 +156,7 @@ void amd_mp2_stb_deinit(struct amd_pmc_dev *dev);
+ #define AMD_CPU_ID_RN			0x1630
+ #define AMD_CPU_ID_PCO			AMD_CPU_ID_RV
+ #define AMD_CPU_ID_CZN			AMD_CPU_ID_RN
++#define AMD_CPU_ID_VG			0x1645
+ #define AMD_CPU_ID_YC			0x14B5
+ #define AMD_CPU_ID_CB			0x14D8
+ #define AMD_CPU_ID_PS			0x14E8
 -- 
 2.51.0
 
