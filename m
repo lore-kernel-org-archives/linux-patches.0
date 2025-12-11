@@ -1,59 +1,59 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A90C2773F
-	for <patches@lists.linux.dev>; Thu, 11 Dec 2025 17:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673933271F5
+	for <patches@lists.linux.dev>; Thu, 11 Dec 2025 17:37:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765473155; cv=none; b=C3IyWxck+HVEt1tvc/9IzMizyUVk0M3ls3SvgUrDapbn0N8sPuWIL0EsN76AtxC2S1+8ISFD/nTgghomU4MTNpJ3SEiVJgg7PIeviwul/L+4jC9jjDoSnvox4V6+1/+PZ/wZ4IbReLu2V7Sfy+CHv7XEx4M2DvpdE3NTQO49s78=
+	t=1765474649; cv=none; b=Nk/ES/qDlMHumkPOJuBerf0RDWLs9PBllaj3d+SCqCVQ4B+FDgsHtUk/arhwyrFqGLbdcvB/ZxOZuRsFNqFklN96MqNsP6LMT5CxAwFdEqHOt7viUVUYJxF39EThF67Q+Tef7Es+pv/nsFnpkcXJreLwM1ExGpnma2Lefsf8Uaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765473155; c=relaxed/simple;
-	bh=LCBArnabRQFMZVjlBsPXwG8CAa4MoJfM1+Gbv0GxRhE=;
+	s=arc-20240116; t=1765474649; c=relaxed/simple;
+	bh=o17sRyxm7UIDmprl4aZGfoSnq3QhFyWV1enFXSD4gps=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VBM/ajtSOo/soMlupi1Uku8mzj8BdvhfETcBlzMsp7m433STlrN5vYZTVP0fXeobbaQ2GSRTvBJQePQVCjOqvK07racb+879cn8YbAqkdwb7J+s7Va3x5NqTvKiMr20UYg/l1hChfl+6yxsh95dpan4k+xpRz5CkEi6LcX8Iwns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=TSOfUMDs; arc=none smtp.client-ip=209.85.218.42
+	 To:Cc:Content-Type; b=Xn2os7OF45m/sUNEj25STi8YbUpM6kIjJUnEhx9dwVh0OOVR63+ZLWYnGdsf7B7Sld+Ym5os8xPqJq8K6qVXaDN522zPQV4hFfdVNwumcuasdrpt0rlC3HN0K90JeYofxWEuAtek9TZDgddBHw/W5N4vADJ8CZMELYRswo9KSSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=jXunKdqQ; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="TSOfUMDs"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-b7a72874af1so56477666b.3
-        for <patches@lists.linux.dev>; Thu, 11 Dec 2025 09:12:33 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="jXunKdqQ"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b736d883ac4so69357866b.2
+        for <patches@lists.linux.dev>; Thu, 11 Dec 2025 09:37:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1765473152; x=1766077952; darn=lists.linux.dev;
+        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1765474646; x=1766079446; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YluR+HMy8tJ6YWi/6IjZPi5ROhpB0HU8qs5yyDUOcKk=;
-        b=TSOfUMDsjDVDykWZHloPNHAs+vx3CPnPE3V/rA9VO/QP75F8FiK0ULzqct4lWi60+u
-         b8/4ABaEEAIPt0Vm6kU0jNeEVE3h7+UKCeA0Mzw754PNyVjqm7WKCnFKyDphKYTeE0iQ
-         oipE225hU3WvEr4a4yEvRtryuIKbsQ2iGWwgfhL7hYgRDLktB9H51eHVwpCMvqbZG51g
-         K3Ugt+O77gw8bAncH7rMe4ID7L1iiGGO3MqDdHZBVTL+W/SrGhP9+JdzByBMwClJFbIi
-         wlpCul5EPNp7c7SdNPXLVj434xc4Ssf7XTm9QS9jMP2YYV+4m5FgChIJlBwpXAog5kri
-         oJ1A==
+        bh=E1yff4bc0T45kril10BQxgoSw39c1NrtcFM6PjLf2Ls=;
+        b=jXunKdqQkYvl72EWntXguW0hWvaqIm1Qlly5DWnv3C+auQMH3PZ7KI7CuL+E4aV/EK
+         0Nk6ualcbojaIhKKOC2GPXgK2802VRBxrhNTdsIxunmk4CTj8sTkXrV7bzfyav5fn0hu
+         K/BVO2dca1p2lpja5z7kZub02n3UXzPDkL3/moEjGB6WESAHLP8qWWmAZYne/EFLcAB0
+         E0oBmNVDgH03i1s2GHVn4nIUmXbya45AhW3roMaugUZAYT6znx6f2gF1eaPWwdIKdBe+
+         4sV3I/ZU+/Bu0CPvlzOlDL3oq7sTyeN41gBxTn3rdL+r4n5rp4pm5YiXukCrPm/Ofj7S
+         sMWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765473152; x=1766077952;
+        d=1e100.net; s=20230601; t=1765474646; x=1766079446;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=YluR+HMy8tJ6YWi/6IjZPi5ROhpB0HU8qs5yyDUOcKk=;
-        b=Anpu52Do/Tcpmrm34GtNZUmxgCfh09gTXGGAPKUZg4vTcs/mdTdDXhu25FG3cUhdFF
-         VcejSFBCBHoaT3Vcf6y665WkQJPZ3kVbXW17SaSytHd3+UAl5o7YS6bHHWqYCnEh3Cra
-         TBjZN/3LZkSo1Tm+KFyFHjRzABusSXgc5cDcbl9Q9oQteh7ho7/XtTQFQ4U63yC/9gB0
-         KjSS/I8hl87HQFb8cpqWb+OxCt0bEHXdA/253Sk5Ucc1HXaSR9rDH8mNpjc+Si6/DBDF
-         O9qM61If9Nkz3wYbcqS4RWQzXPrejSuKzeWGiws/AfxAp+7iKV2nD3+IOyx4FkleXCYj
-         K6HQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW4VMiTKd93vNSQ3jwVFm35+EqGmcRXd/cWjXWvBKzfD+b4xRTk7UFV5wym7RL85fHw75iTydBN@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz1gWL1YPhqRhb+S+o3jHAFKjCkXwTsTi7Dd84mMrGEArteA6/z
-	vPfeySKnWFPfj/s3nMnqE9z505R/YMji3NKBjPBGo6bzluYQS/EhgyCy5dXQ3RQNm71pt20aBcR
-	i0yvUP+5Y/8+wnnPWuaFkqtIZQutYDujFbsXVHpd2nw==
-X-Gm-Gg: AY/fxX6idULjakJK1GGG1YZXW3xWgyLO8KR9lfAouLFTYmITshhc+/B6h2AHlfy4Rjb
-	XOPboZ7heXQtOQuOzA/aBxz4+3UBYiFzoT7qbdjCTphircYWyzJffV9yomRi1rfy6KuvHQIJlbJ
-	F8FLZzpf6KE84zti4FAea6OdsP6SXUL7Tcro1XgdVkys1CBOpd1pq8kSJLQHZjFP1vYKgzBs4aR
-	A/yOygkueKqknvKLMyE/2S9fccMKrWxxZV7SP5ujenN+s0PYAzNydZRdhx+u2/x/k8W85ZX
-X-Google-Smtp-Source: AGHT+IHxujA97LFKbJtJbuGheZkwmUxCCwGNJTvfmx+MVC6q9VIKG4ivl+R79GTx2IchlThH9PpjBCAb5t2jcFPjKRc=
-X-Received: by 2002:a17:907:3e11:b0:b6d:3fc9:e60c with SMTP id
- a640c23a62f3a-b7ce8348a1cmr847912766b.20.1765473151939; Thu, 11 Dec 2025
- 09:12:31 -0800 (PST)
+        bh=E1yff4bc0T45kril10BQxgoSw39c1NrtcFM6PjLf2Ls=;
+        b=FpP3Qo7MiM+xLOfZyVxBfgwhNUGEmtkE/WSXgTa4Lf1jWl2pycymOACN3LCQWfyGy6
+         H1zF3Dl99oRlK+DqR08BK3NNGX1BbntsbUGuSWyd7HpzOobP+NUrZHKnoK0Nj/MgOeaV
+         XhSqaDpBQgfHUm4dWtht4pnBc0w8/0cK3Cueyh7SIRC9I4j8uhjCQI3UqLBhvPemUb8F
+         XSNBcB/mdR5dW+2JZlFpNmFltReYHtjqJrBU+kSkgUy9RbaiKcfrPJ33ZuzPYyy2MC25
+         /6metzFeuzbdTA/hMo2gIr767dppFbH/fA/0aTTi0KQq9QJtQXBa5PEXQhyMaEy4PQyI
+         2BMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVDgMor3A1VqyuNjyKn5vBUXlLlt1agVUFNEW78kjOcgJwhPgt0pES+8MpdkAX/+JdIkXMO2n5s@lists.linux.dev
+X-Gm-Message-State: AOJu0Yz5fmTHqATSQs0F8t4o3wUAp4oPQz6O/ClsoYxU3f+6dlUTxbV8
+	Pc+WY44F3yko3BIGjild1G+9xyvryqPF9KF7mPUplth18SUBFyejmDL+YYw1UuzFEtVxYxRJcw8
+	n5jTXkbokuT6n8b0kkpr7MYvG6fKvI+fHr2CRMFZEyw==
+X-Gm-Gg: AY/fxX4Un0xr5upyh2UGmIF25h4ReO4AWJEbPUIINjFRlaW45S/XC2v9kfH2/ymaYHJ
+	xupBjoUqNVOVL7BnqWu+bnvE081WkOXZ5Eb5lxE9yaditcGySxkAIFJOQU+v22ILnpXboDs6Kfr
+	PhjAQ0cPoC5y87lFIZkLpdx6aW74RqPitzn1THlzP5SlMV4kiFBmTWDhfnBDJ0GQw97Qm6VW8Dy
+	jAipfVLBB03yWXNG3nag09eBYGX3xAMtgzJ77ah3hcXh+ao+alTKr9YQhz3h34qbyDAvW+Z
+X-Google-Smtp-Source: AGHT+IHmdQwa8POPlNPzaUDlA7ppJ6M8JtOU+WZGPZOtTvMBOBTTwYlrmIuWhcAfLkYTxf70odorGU+gj0Q9+QZGFl4=
+X-Received: by 2002:a17:906:6a09:b0:b7a:1be3:a582 with SMTP id
+ a640c23a62f3a-b7ce84d135bmr722249266b.63.1765474645609; Thu, 11 Dec 2025
+ 09:37:25 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,9 +66,9 @@ References: <20251210072947.850479903@linuxfoundation.org> <CAG=yYwm==BjqjJWtgc0
  <aTr0NpEHWSCrGNTS@auntie>
 In-Reply-To: <aTr0NpEHWSCrGNTS@auntie>
 From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Thu, 11 Dec 2025 22:41:54 +0530
-X-Gm-Features: AQt7F2oxX7qofuTdMKfB-KdQYtphHJCDKdH8cG92r0Z36jIIutp4FudW9w5kxD8
-Message-ID: <CAG=yYwmoUfdV1yR5j6Q6pmENagwFWpP9nn2FX-QKnrgUepHyTg@mail.gmail.com>
+Date: Thu, 11 Dec 2025 23:06:48 +0530
+X-Gm-Features: AQt7F2req17RppecxU0d8GIiJFE8Wcg_BugBfal6e-qcSTyFvfx5VN8m8i6sM7w
+Message-ID: <CAG=yYwmqMSV7xQrL_Nrx06QO_f_61MigB-2eL1kiDO4Mt=4uew@mail.gmail.com>
 Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
 To: Brett A C Sheffield <bacs@librecast.net>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
@@ -208,11 +208,13 @@ d try
 >
 > Brett
 >
-Now i  have a much clearer vision. Thanks a  ton  !
+
+I do not see that error anymore. may be  i have made changes in configurati=
+on.
+THANKS
 
 
 
-
---=20
+--
 software engineer
 rajagiri school of engineering and technology
