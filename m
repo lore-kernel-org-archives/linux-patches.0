@@ -1,84 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9677285C8C;
-	Thu, 11 Dec 2025 09:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68609279784
+	for <patches@lists.linux.dev>; Thu, 11 Dec 2025 10:02:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765444321; cv=none; b=PJyn5q6JxjJmFiTfIU2YXPkDBOFS70GvFiB5sTRng9PhmHOf8qU5njeIAMKhQvemxPHg/ESUfjLckaDlHmyNBK1i7A8hRYhS/zcGgQLVVT8JvBdpVtjtI9qXq/RstvUuMOc6X3b1yn8VhbuFqbnos33V+f+n4bz7Y5j8Hnd9Wyk=
+	t=1765447372; cv=none; b=kac2PVPmhsdmIX5ICm0tybN0CWTZzbTjCrfrG0yHre0zQsPTtWFDzKii+l63r+Qjy/8qHP+hHVzqYWuK3OutqyFIlyacaEvUarSZboagdjhXMKzXjpwfGSEBdbR7bN8f0pioidvfgJ+VzDmjLWidP21G+fgVt1tzUEvHZHXgz+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765444321; c=relaxed/simple;
-	bh=m3Iy9Q3QOWrZpxPlnD75vk6J0hXoLUMOeqZgiVVxM2w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JzfBvWb+8RYnHDid3LRAlLVLKrA04//TUqAUwm85F4NfjUpyT35Fp+8CIUuheJe8HV3Sfs+h0MTNfCSmXFkEd/0XgfFbCItC0L+loscjxdRx5Uj0f+rd7Yq0M3FR2C0bbiZdG6qwz7jk0bbtc/YE/lKXDexS5Pvtg2Jm3M7Q/2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O0Ar+Ya4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765447372; c=relaxed/simple;
+	bh=dXaw93R+o/MRj9zr+K8C4AeIIxYVXalR0ZpE/LV15N0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VeVCZ/LV/TDvy018tY53VWnz08M3BIIFuifMxfCJSfBspa1c9tkxKSQWzoDUQDnCQPq0PcLgXbsBXNQUz6OkqF0nQmpjzab+g4BvBI/oBxZSK1IoS6L2FhK7oAoWD1hdY/hGSxJYMWE5zTwnZ8WX8P/tZi4Gnm918yaa3Pm1l5Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nSDF8yGh; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O0Ar+Ya4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08BBC4CEF7;
-	Thu, 11 Dec 2025 09:11:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765444320;
-	bh=m3Iy9Q3QOWrZpxPlnD75vk6J0hXoLUMOeqZgiVVxM2w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O0Ar+Ya4AeuBgUWCy4Jpv0yUutWMgrPNjaP37pbHy6IhcHbB31BmB6BinGR/j9Z5J
-	 5xth4sEBPXTkwhjmaF/+ZFzVY1SvqLb7HIQUST8k0NnYkrgH4BctCoLHRyT2wkbo0Z
-	 I0GstJ/NZGSXJMb+bZLmUo+NC2uas/GK4IMYlDunAkYh7B1RuISZdZlFW73yqZ/WUW
-	 ZU35XlSNVDUFXgXQ7Nte1P8D3tj7j0o2ORZ/RCzApNqbhahYu96aQ2CVF+wlUZXrzn
-	 nTwtSSF3oyifbW5LIWGe/bL2UKaZmg/C8H5YkWGzS3CI51eLO0jMsrjqunK2k2PXJM
-	 VGg8lFg3WfDZg==
-Received: by finisterre.sirena.org.uk (Postfix, from userid 1000)
-	id C67281ACB974; Thu, 11 Dec 2025 09:11:56 +0000 (GMT)
-Date: Thu, 11 Dec 2025 18:11:56 +0900
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
-Message-ID: <aTqK3DSr78oRd4wd@sirena.co.uk>
-References: <20251210072947.850479903@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nSDF8yGh"
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-594330147efso756522e87.2
+        for <patches@lists.linux.dev>; Thu, 11 Dec 2025 02:02:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1765447368; x=1766052168; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V4W+SY0l9++XGnbu/FMYs0nB91d5urXymPiJIGdOaOQ=;
+        b=nSDF8yGh2uejuh2LOcSbKDkhHF7lXiydLjNBvyqV+GsDC3jAw/KtY0VObjN9R+kU5O
+         gyJvxy4ZwkG7pzkpAvw8lgIbpVkizTT4VbyO5SH01t+bgpThBCpX6DdCystbbgN3kdF2
+         +6uiBNaHs1XwdYY85ZKsdos10U/TLKl9Yb9Iu1epG8YqF4zS0dkv2hUl05auS6wZwRkG
+         58c9kkz8MGRDPaDhWOIBN//gY83afkJc2fbjzG1C4bzDFIJvGLSk57jjgcUv3HtHDk4M
+         Mq4QEpiu3drgQGJ57sa9Lil+XSHFEQ8XgVBjZt3HaEI9HeoK0ZZJhdPUKEvL6AHDpqrY
+         35ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1765447368; x=1766052168;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=V4W+SY0l9++XGnbu/FMYs0nB91d5urXymPiJIGdOaOQ=;
+        b=JsRJmBzT8xBkGnky1DWt8ezDvSiENh2T+5z0Zm26wQ+Qn3Mf1+ZeZMniPA4xvqDTkn
+         J8Gg78cxnDuMYlATrVs9hpJAo0Xjl/jlGkAkc3YLN2CCtj3DUDuw2pwa53LIg2e/DFqF
+         Y5n3biQU1PU4iL6BuQOthDZ1rAHE7CdFLztjGLRdxx0lRFKEbIrHfBHfB1xsJ8KGPyQ4
+         LzN8KIL3qiVDpIb2A8Z2XZd2Xw+OGGCHSfoc6J08Wm/59QYk0nIPWiAQn334uKLSjpnk
+         uQlU+COFq0v2irh2xVZ6o8pItxFDUD0m6NUv76BS4b2gZGn/dO6s+3ePw4/02aseORYe
+         mNRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVTb3d8u4FBZetbCYABDS/ivr3JTQ1v1reYdGBHIRyXttb6DwGx34asuDXEcS+X3l9xFab8Y9zV@lists.linux.dev
+X-Gm-Message-State: AOJu0Yxt04n7nvf/hFa+gKxR5pqf14NaIv+PSUemerSXlklAPszZWpEx
+	AGgaAuQppA0NCvY1t1pPzi4JzRD281lsItMppyJz6G+N6QcCyG6edJ/hRG7vHbs789cvVoNizAo
+	H+gQuGuvtBcGB2/802wINUTXWK5KPkmTxM29y
+X-Gm-Gg: AY/fxX46WW0juv+PHN2FLAgRzUj+qBHJH3KqoCTmR6EZaQ5s8n/oztBucNrpJniqEcZ
+	2TM2WpMfsHcvgj0zpbNl3BkDWdIpHBpPC6H+2A1yEFQgRABRzhdc/uhKrMBEUsAxvFjy0L8FRMI
+	xlamg6XSy9ZuRR2Adz1w6sC96MKCTNcYv6zuHKJJzvoweRuMKBN4DNbxLnzaHVd69CxAt0WPoce
+	P+ejAJJ6pU7U1RVQ3ES6JZgQQRkpWLucb7tTcdDav1nEHbViwNAIJXWxSEcN+r4LHXLVXVh52QZ
+	OUEZlLf4UfSIJxPr/u5UaGXi4bOCy4BrHMTN+lx5
+X-Google-Smtp-Source: AGHT+IFIlPAKzLFZDPIpgnt0sLPNEYBWRYuk5a0n+3NKzujEjvPba1ZFRDRDx5s1nzLXH2bRjLyNmsVwJKpuoHx4iOw=
+X-Received: by 2002:a05:6512:154a:b0:598:ee5f:82a8 with SMTP id
+ 2adb3069b0e04-598ee5f8378mr1509180e87.0.1765447368155; Thu, 11 Dec 2025
+ 02:02:48 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="cscb7idF/I/Urmmb"
-Content-Disposition: inline
+References: <20251210072947.850479903@linuxfoundation.org>
 In-Reply-To: <20251210072947.850479903@linuxfoundation.org>
-X-Cookie: It's clever, but is it art?
+From: Dileep malepu <dileep.debian@gmail.com>
+Date: Thu, 11 Dec 2025 15:32:35 +0530
+X-Gm-Features: AQt7F2qrOVU3vTssdHqmPCZo_HyxgtJqiWoQWtPxVkOk8fQOa9WGH63jzLbcpJE
+Message-ID: <CAC-m1rrpPDjF=kCXQfAaB7BVOAyRRJSCs54GFffxzhs_g7M-8Q@mail.gmail.com>
+Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-
---cscb7idF/I/Urmmb
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Wed, Dec 10, 2025 at 04:29:30PM +0900, Greg Kroah-Hartman wrote:
+On Wed, Dec 10, 2025 at 1:05=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.17.12 release.
 > There are 60 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Fri, 12 Dec 2025 07:29:37 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.17.12-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.17.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Build and Boot Report for 6.17.12-rc1
 
---cscb7idF/I/Urmmb
-Content-Type: application/pgp-signature; name="signature.asc"
+The kernel version 6.17.12 was built and boot-tested using qemu-x86_64
+and qemu-arm64 with the default configuration (defconfig). The build and bo=
+ot
+processes completed successfully, and the kernel operated as expected
+in the virtualized environments without any issues.
+No dmesg regressions found.
 
------BEGIN PGP SIGNATURE-----
+Build Details :
+Builds : arm64, x86_64
+Kernel Version: 6.17.12
+Configuration : defconfig
+Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git
+Commit : e7c0ca6d291c41a8a9648a5016ce9b73e492aa3d
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmk6itkACgkQJNaLcl1U
-h9CXIgf/bZQApCqEpMM0wlH9aASXAJw7Su0OYDZ+brPCeLtMbB5GqJrHA7RUahAn
-6aj+j9mvd6+uODuO3SaNvFdR+Z6p/0yu723dxnZoKGbjU7YxGWIo2MyirvtDs/2Q
-z1liZW5kbI+l6T48OoeGnR55tTg6YK09nQql8NDsIgA+RltllfcAHjdoXUqjcDvr
-3QDsHE4o4u2LyPASb9ALDOwXFdIbPHirxpioFPtSqXcFgg0eSmNJDnMzeX+NI88j
-7xCEpo7V8PUMv0pdgqDyIBgclBI5PHNYNcIf6GYFrgDDg2Yq5W9e8v87VAlOSB6j
-x/Q1MMaSu0v2yO8twRhUQ907sc3jpw==
-=WvpB
------END PGP SIGNATURE-----
+Tested-by: Dileep Malepu <dileep.debian@gmail.com>
 
---cscb7idF/I/Urmmb--
+Best regards,
+Dileep Malepu
