@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D03A27702E;
-	Fri, 12 Dec 2025 02:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 052702737E3;
+	Fri, 12 Dec 2025 02:09:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765505351; cv=none; b=MOaiuQE2bMox/RvNFNTUUSB3/bmYnfrRk5e35kCVEuATef1kz1zljBhGwcKK8K2Br1PWkJQ+A9jj8s3pUdB4jodzsbt7PY+lrdWnKZwrrn0A/Q7Melxsll3t9NGPoKczHUpprv4VgdQ2nsf7zzIMzWj2aNuoZOCsvnz3KhV66+Y=
+	t=1765505353; cv=none; b=pyA5/DemqXrpVi0vdnnNczH63lYQM+u0T95tzjtSShXOGNRoh2XqyFILrx+Z4O6fLLpzU0ePXOrLa0TihnknVNGZfmk5MuP7wmnHs3xZQzxKGyyttPu0/sH/XOD6yAc5/dzd7ZVbIdGVlf/VmclZSxGk7XQL0J89OvJSKtMTGl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765505351; c=relaxed/simple;
-	bh=KnJsrnXdPjvwLRxT8xQ5io/nClckJO+dlwBTKMBT3Y4=;
+	s=arc-20240116; t=1765505353; c=relaxed/simple;
+	bh=ma7GRHnW2rCG8r0VcpM29zdyDjKXGfA3aainbPmyopQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FUr0WdynZJhwvt1IG8yht6EL8p/OFBSr5qfqm50IAkSGNI5lDiZ5muJSFv+ra+CRbioB+kzmTgiwzxZ8yjjrJAUd9dZthlkjDoAfHZNvySNiIFIKWKNoKBuIPLqjDVg+8a39rPAUoJiY+7Y8r6wI8mPsh/5b+/ZgpfRtQuNgoHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lKV934mD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H0yrob2JS9MC/B7D84XavSf0LWTWm2blguhqMuHcpUjtRYQx4e0YWtTdOAQ/BMa2HKkMgU9OG1vdD9t99w5e38rV5c6qW4AdVETqbVHKH9Yz5VrZ2PlpiLWvHaFHLGlA8cps3MYxXl1kiLhU45vD8MUlr4CfqKD/RQ4wLz3voMM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N4h37Gzp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lKV934mD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69871C4CEF7;
-	Fri, 12 Dec 2025 02:09:08 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N4h37Gzp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B927C4CEF7;
+	Fri, 12 Dec 2025 02:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765505350;
-	bh=KnJsrnXdPjvwLRxT8xQ5io/nClckJO+dlwBTKMBT3Y4=;
+	s=k20201202; t=1765505352;
+	bh=ma7GRHnW2rCG8r0VcpM29zdyDjKXGfA3aainbPmyopQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKV934mDOq1WnJ/cD/czLvDSDtA666xFoywI75Z9YBxboMrHsy+mwhFjZA3wgwWDX
-	 udaJWVXp0E0aS2lOuGdcC6XeZwt2CxgqtViFI0bwSj68eumWMdRiJds1vGl4wPPRb3
-	 AUgbXA9bKA6iJUnd0Z06+Tji1xIPthfArXvQZRk3BAhQ5M7tjvzuI/Q7tfAmDS79NJ
-	 MN5ryI3jytYy+8cnJM/3l4hWzKtU4cLRWnyqEeZsM8ai66rLEozYg2YyQ2XrPfWYbu
-	 O/XNkPyDW88tOKBrNxhr1BjAts0vX0yRRJOatusgiJfNZo91+76u+z6ByiWOqGgsp+
-	 s58emRBA4SVww==
+	b=N4h37Gzpml7g1PBRXDRBdB7D8DRTedEmgQ1Rt0ulk/ESx8ZLuiIh/2YcmhdqLNOQ0
+	 GJSphZlN2FfcDO99m1MKZzpvArisztCApZrN9ZRaL+3idPbmCwtdvh2sFM1IgRVA9e
+	 As3iMgbWSAFsHB/gOnLLGdFmDHbWoKlNp/DQXYql529Q/6AKba+yz+0WIHPMC4mmcp
+	 iTTQc9TYkBnyZGRxjmvewATI7dImwDAfh1RauOwGamp43FfKaBDKQIrDF0UP8/Rwr/
+	 84tm3Oj3WZJECZGAAQqV83A87dv5Yp5Wdsax/dkUpbYBguTx3vket7dbJiI0eaO+gT
+	 +O2WFYwi/dnJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Wagner <wagi@kernel.org>,
-	Justin Tee <justin.tee@broadcom.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Pei Xiao <xiaopei01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	nareshgottumukkala83@gmail.com,
-	paul.ely@broadcom.com,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org
-Subject: [PATCH AUTOSEL 6.18-5.10] nvme-fc: don't hold rport lock when putting ctrl
-Date: Thu, 11 Dec 2025 21:08:54 -0500
-Message-ID: <20251212020903.4153935-2-sashal@kernel.org>
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.17] hwmon: (emc2305) fix double put in emc2305_probe_childs_from_dt
+Date: Thu, 11 Dec 2025 21:08:55 -0500
+Message-ID: <20251212020903.4153935-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251212020903.4153935-1-sashal@kernel.org>
 References: <20251212020903.4153935-1-sashal@kernel.org>
@@ -56,118 +51,108 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Wagner <wagi@kernel.org>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit b71cbcf7d170e51148d5467820ae8a72febcb651 ]
+[ Upstream commit 541dfb49dcb80c2509e030842de77adfb77820f5 ]
 
-nvme_fc_ctrl_put can acquire the rport lock when freeing the
-ctrl object:
+./drivers/hwmon/emc2305.c:597:4-15: ERROR: probable double put
 
-nvme_fc_ctrl_put
-  nvme_fc_ctrl_free
-    spin_lock_irqsave(rport->lock)
+Device node iterators put the previous value of the index variable, so an
+explicit put causes a double put.
 
-Thus we can't hold the rport lock when calling nvme_fc_ctrl_put.
-
-Justin suggested use the safe list iterator variant because
-nvme_fc_ctrl_put will also modify the rport->list.
-
-Cc: Justin Tee <justin.tee@broadcom.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daniel Wagner <wagi@kernel.org>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/tencent_CD373F952BE48697C949E39CB5EB77841D06@qq.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This shows the affected function was introduced in v5.8-rc1
-(`14fd1e98afafc`), meaning this deadlock bug has existed since **Linux
-5.8** and affects all stable kernels from 5.8 onwards (5.10.y, 5.15.y,
-6.1.y, 6.6.y, etc.).
+## Analysis Summary
 
-### SUMMARY
+### What the Bug Is
+This commit fixes a **double reference count decrement (double put)** on
+a device_node structure in the `emc2305_probe_childs_from_dt()`
+function.
 
-**What the commit fixes:**
-A **deadlock bug** in the NVMe-FC (Fibre Channel) driver where
-`nvme_fc_match_disconn_ls()` holds `rport->lock` while calling
-`nvme_fc_ctrl_put()`. When the reference count hits zero,
-`nvme_fc_ctrl_free()` tries to acquire the same lock, causing a
-deadlock.
+**Technical explanation:**
+1. The `for_each_child_of_node()` macro uses `of_get_next_child()`
+   internally for iteration
+2. As confirmed in the kernel documentation, `of_get_next_child()`
+   "**Decrements the refcount of prev**" automatically when advancing to
+   the next child
+3. The buggy code explicitly calls `of_node_put(child)` before
+   `continue`
+4. When the loop continues, `of_get_next_child()` decrements the
+   refcount again → **double put**
 
-**Stable kernel criteria:**
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Uses canonical lock drop/reacquire pattern |
-| Fixes real bug | ✅ Deadlock - system hang |
-| Important issue | ✅ Deadlocks in storage paths are critical |
-| Small and contained | ✅ ~6 lines in one function |
-| No new features | ✅ Pure bug fix |
-| Expert reviewed | ✅ Christoph Hellwig |
+**Impact:** Double put causes reference count underflow which can lead
+to:
+- Use-after-free vulnerabilities
+- Memory corruption
+- Kernel crashes/instability
 
-**Risk vs Benefit:**
-- **Risk:** LOW - The fix uses a well-established kernel pattern
-  (`list_for_each_entry_safe` + lock release/reacquire)
-- **Benefit:** HIGH - Prevents deadlock in NVMe-FC storage driver used
-  in enterprise environments
+### Stable Tree Criteria Evaluation
 
-**Concerns:**
-- No explicit `Cc: stable` tag, but this is not required for obvious bug
-  fixes
-- No `Fixes:` tag, but we've identified the bug exists since v5.8
-- The fix should apply cleanly to any kernel with the affected function
-  (5.8+)
+| Criteria | Met? | Details |
+|----------|------|---------|
+| Obviously correct | ✅ | Standard DT iterator pattern fix |
+| Fixes real bug | ✅ | Reference counting bug confirmed |
+| Important issue | ✅ | Potential UAF/memory corruption |
+| Small and contained | ✅ | Removes 4 lines in one function |
+| No new features | ✅ | Pure bug fix |
+| Tested | ✅ | Signed-off by hwmon maintainer |
 
-### CONCLUSION
+### Risk Assessment
+- **Risk**: Very low - the fix simply removes incorrect `of_node_put()`
+  calls
+- **Scope**: Single function, single driver (emc2305 hwmon)
+- **Backport complexity**: None - straightforward removal of lines
 
-This commit fixes a clear deadlock bug in the NVMe-FC driver that has
-existed since Linux 5.8. The fix is:
-- Small and surgical (only ~6 lines changed)
-- Uses well-understood, standard kernel locking patterns
-- Has been reviewed by a respected kernel developer (Christoph Hellwig)
-- Signed off by the NVMe maintainer (Keith Busch)
-- Affects enterprise storage users who rely on NVMe over Fibre Channel
+### Version Analysis
+The buggy code was introduced in commit `2ed4db7a1d07b` which first
+appeared in **v6.17-rc1**. This means:
+- Only kernels 6.17+ have this bug
+- Older stable trees (6.12.y, 6.6.y, 6.1.y, etc.) do **NOT** have this
+  code
 
-Deadlocks in storage drivers are serious issues that warrant stable
-backporting. The minimal scope and established fix pattern make this a
-low-risk, high-value backport.
+### Concerns
+- No explicit "Cc: stable@vger.kernel.org" tag
+- No "Fixes:" tag pointing to the introducing commit
+- However, the bug and fix are clearly documented and understood
+
+### Verdict
+This is a legitimate bug fix that corrects an obvious reference counting
+error. The fix is:
+- Trivially correct (well-known DT iterator pattern)
+- Very low risk
+- Fixes a real bug that can cause memory corruption
+
+While the affected code only exists in 6.17+, this is still a valid
+stable backport candidate for the 6.17.y stable branch and should be
+backported to ensure stable users don't hit this reference counting bug.
 
 **YES**
 
- drivers/nvme/host/fc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/hwmon/emc2305.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 2c903729b0b90..8324230c53719 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -1468,14 +1468,14 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
- {
- 	struct fcnvme_ls_disconnect_assoc_rqst *rqst =
- 					&lsop->rqstbuf->rq_dis_assoc;
--	struct nvme_fc_ctrl *ctrl, *ret = NULL;
-+	struct nvme_fc_ctrl *ctrl, *tmp, *ret = NULL;
- 	struct nvmefc_ls_rcv_op *oldls = NULL;
- 	u64 association_id = be64_to_cpu(rqst->associd.association_id);
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&rport->lock, flags);
- 
--	list_for_each_entry(ctrl, &rport->ctrl_list, ctrl_list) {
-+	list_for_each_entry_safe(ctrl, tmp, &rport->ctrl_list, ctrl_list) {
- 		if (!nvme_fc_ctrl_get(ctrl))
- 			continue;
- 		spin_lock(&ctrl->lock);
-@@ -1488,7 +1488,9 @@ nvme_fc_match_disconn_ls(struct nvme_fc_rport *rport,
- 		if (ret)
- 			/* leave the ctrl get reference */
- 			break;
-+		spin_unlock_irqrestore(&rport->lock, flags);
- 		nvme_fc_ctrl_put(ctrl);
-+		spin_lock_irqsave(&rport->lock, flags);
+diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
+index 84cb9b72cb6c2..ceae96c07ac45 100644
+--- a/drivers/hwmon/emc2305.c
++++ b/drivers/hwmon/emc2305.c
+@@ -593,10 +593,8 @@ static int emc2305_probe_childs_from_dt(struct device *dev)
+ 	for_each_child_of_node(dev->of_node, child) {
+ 		if (of_property_present(child, "reg")) {
+ 			ret = emc2305_of_parse_pwm_child(dev, child, data);
+-			if (ret) {
+-				of_node_put(child);
++			if (ret)
+ 				continue;
+-			}
+ 			count++;
+ 		}
  	}
- 
- 	spin_unlock_irqrestore(&rport->lock, flags);
 -- 
 2.51.0
 
