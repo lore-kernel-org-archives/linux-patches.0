@@ -1,42 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE57D30E0EF;
-	Fri, 12 Dec 2025 06:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C1B30E0EB;
+	Fri, 12 Dec 2025 06:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765519956; cv=none; b=KQo7gLYX5bkBguigYUvZQ9f2ffI2DglK4U3Fg1xBGEo/I1yCC8IhZuTVdBbUT7hQyU8o7SAFhT/ZvBwTZP4dz6elRddCuSZu8ITZaLxrZukkgTNwJ0MHNm+7/qPEtU+fx+Nb846lnBnNcLNiWJqTKTg59oisJS8nhm1iHW3mkV4=
+	t=1765519959; cv=none; b=e5ibbflbJVs9U1n5Q6U7OCU6sCvel+IzgFz2T1W3tkhi1dJ9bB3hm7sxLOmq6Zbe1tVV4HFASlgbWJF0ieNrs+Fa03/wUcO0ZmG1S7A2Xc+8U8e3SK5r1m6drmM8kmuBe4jfwe6jOycLI8WNFBSIgJ3b6NbzUBTDq/Crhid8p0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765519956; c=relaxed/simple;
-	bh=QKnyW1kaqGZM3cl5GXRxkv7auxKfqIJI2/A7d7lKwu4=;
+	s=arc-20240116; t=1765519959; c=relaxed/simple;
+	bh=05xYo20/GHTIaq4/s7wjhs+/FWTiMvP8O5HV5Ohd5RE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ygf0a8rdj77X1NkafJoaP6T+ImV8oKx/5CEdQXZClwxrx/HkKd8eV6hH0NCIpDJr1ovvK+7WYAIdip87ZH4zCwwHH/pi2of6QbrzYMqKdnAxdMPEZWkluTRg8D4H1K5Nt8JABC1GClsyedQ3KFjsdFrYJKMELCjRCX+U/KOk/R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V+7pp50S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WWx/jiRdeoqecseF4cGCwZRdG5gt0hgG8QW75hSGkh7F7RyYhlIgTaJ6UgfKActt7kceWz1bIUWi4McvRmfvsEn3k4m4VMjwb2lW8OujL6AZWXdBW/qFkU0eyfM3Csf4oeekTDsQtHhpS3aQ/xCbZrJQKuN1tZ7KEQun/8bTrnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rA8II03q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V+7pp50S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4C0C116B1;
-	Fri, 12 Dec 2025 06:12:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rA8II03q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B069C4CEF1;
+	Fri, 12 Dec 2025 06:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765519955;
-	bh=QKnyW1kaqGZM3cl5GXRxkv7auxKfqIJI2/A7d7lKwu4=;
+	s=k20201202; t=1765519958;
+	bh=05xYo20/GHTIaq4/s7wjhs+/FWTiMvP8O5HV5Ohd5RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+7pp50Salcbdb/Sn4ifc2dyoQ8FMKZ+0NRksvj1m2Q2A0pRu25kVvqEbQAZpcD24
-	 UD9d8qQ8jReLsyJQSJLyhq00nAp8hCNIhM9s+1LLEyBx1dUxbjjZ/uJn25KEIUirmc
-	 bGTtca7HQRzGSuLPG+e3ucG8dsg+BLpLTcW2tuvuK4FiIWKY0uGpFXGJp6/bA15p1l
-	 cDq4all0cW9kR7To22p2ZZqoYB+V4NEnAIKEBg3OgmkvAL4Ik9GtKKZ7CQRPJ3t7qP
-	 FqK+0UmCMWjOvo4ZxRupX3ZgrKiFYdk1PSxiJZse2fniYzHVBW1OLiAF6Bcap4t6oi
-	 nJolenhQ2VjzQ==
+	b=rA8II03qD8BpKqF1AvjxVaFzWwJ9HWlgMzbAQN0shHaT+fJK6cAIAtHLNMZ+EITmB
+	 LjzjwBAGgh23xFidjiqhRJw6V5wqOeHhPe6jmVOGEibAgCU9b3mas+aj/Lig2VhM52
+	 15NUwapW4FDO6Wy0H1HmzCYFisM7hKbI/oQwteRlvPYTOt214HBzFfTp3FVhVYCOu5
+	 eWsmD30Y3avJ7Ar0JdoiHqm36e0j71SnVpukZ2+ZCDvlOGHoH6YWBcroPtsTuPRPq2
+	 VW27AeNEd/CHlua0xVq16Nj+poFTz3EhU8ZrROVhPKF+ttaxG7p8nDcUBtDhwCIdho
+	 z6lRIuRArCihg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Yang Li <yang.li85200@gmail.com>,
-	Guo Ren <guoren@kernel.org>,
+Cc: Mikulas Patocka <mpatocka@redhat.com>,
+	Jiping Ma <jiping.ma2@windriver.com>,
 	Sasha Levin <sashal@kernel.org>,
-	viro@zeniv.linux.org.uk,
-	linux-csky@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.15] csky: fix csky_cmpxchg_fixup not working
-Date: Fri, 12 Dec 2025 01:12:13 -0500
-Message-ID: <20251212061223.305139-3-sashal@kernel.org>
+	agk@redhat.com,
+	snitzer@kernel.org,
+	bmarzins@redhat.com,
+	bigeasy@linutronix.de,
+	clrkwllms@kernel.org,
+	rostedt@goodmis.org,
+	dm-devel@lists.linux.dev,
+	linux-rt-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-6.6] dm-snapshot: fix 'scheduling while atomic' on real-time kernels
+Date: Fri, 12 Dec 2025 01:12:14 -0500
+Message-ID: <20251212061223.305139-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251212061223.305139-1-sashal@kernel.org>
 References: <20251212061223.305139-1-sashal@kernel.org>
@@ -49,151 +55,288 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Li <yang.li85200@gmail.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 809ef03d6d21d5fea016bbf6babeec462e37e68c ]
+[ Upstream commit 8581b19eb2c5ccf06c195d3b5468c3c9d17a5020 ]
 
-In the csky_cmpxchg_fixup function, it is incorrect to use the global
-variable csky_cmpxchg_stw to determine the address where the exception
-occurred.The global variable csky_cmpxchg_stw stores the opcode at the
-time of the exception, while &csky_cmpxchg_stw shows the address where
-the exception occurred.
+There is reported 'scheduling while atomic' bug when using dm-snapshot on
+real-time kernels. The reason for the bug is that the hlist_bl code does
+preempt_disable() when taking the lock and the kernel attempts to take
+other spinlocks while holding the hlist_bl lock.
 
-Signed-off-by: Yang Li <yang.li85200@gmail.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
+Fix this by converting a hlist_bl spinlock into a regular spinlock.
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Jiping Ma <jiping.ma2@windriver.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of csky: fix csky_cmpxchg_fixup not working
+### Summary
 
-### 1. COMMIT MESSAGE ANALYSIS
+**Bug Analysis:**
+The commit fixes a genuine runtime bug on PREEMPT_RT kernels. The
+`hlist_bl` implementation uses bit spinlocks with `preempt_disable()`,
+creating an atomic context. When dm-snapshot code then tries to take
+other spinlocks (which on RT kernels are sleeping locks/rt_mutexes), it
+triggers "scheduling while atomic" warnings.
 
-**Subject**: "csky: fix csky_cmpxchg_fixup not working" - clearly
-indicates a bug fix
+**Historical Context:**
+The buggy code (using `hlist_bl` in dm-snapshot) was introduced in
+commit `f79ae415b64c35` ("dm snapshot: Make exception tables scalable")
+which landed in **v5.2**. This means all current stable/LTS trees
+(5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y) contain the vulnerable
+code.
 
-**Key issue explained**: The commit message describes a fundamental
-semantic error - the code was using the **value** of `csky_cmpxchg_stw`
-(which contains an opcode) when it should have been using the
-**address** of `csky_cmpxchg_stw` (where the instruction is located).
+**Risk vs Benefit:**
 
-**Missing tags**: No "Cc: stable@vger.kernel.org" or "Fixes:" tag, but
-this doesn't preclude backporting if the fix is clearly warranted.
+| Factor | Assessment |
+|--------|------------|
+| Bug severity | HIGH - causes kernel BUG on RT systems |
+| Fix correctness | HIGH - straightforward lock type conversion |
+| Code scope | CONTAINED - dm-snapshot only |
+| Regression risk | LOW - semantically equivalent locking |
+| User impact | RT kernel users with dm-snapshot |
 
-### 2. CODE CHANGE ANALYSIS
+**Stable Criteria Checklist:**
+- ✅ Fixes a real bug (scheduling while atomic)
+- ✅ Obviously correct (converts bit spinlock to regular spinlock)
+- ✅ Small and contained (within dm-snapshot subsystem)
+- ✅ No new features or APIs
+- ✅ Authored by subsystem maintainer (Mikulas Patocka)
+- ✅ Has Reported-by indicating real user impact
+- ⚠️ No explicit `Cc: stable` tag (but this isn't required)
 
-The change is extremely surgical - only 2 lines modified:
-
-```c
-- if (instruction_pointer(regs) == csky_cmpxchg_stw)
-- instruction_pointer_set(regs, csky_cmpxchg_ldw);
-+       if (instruction_pointer(regs) == (unsigned
-long)&csky_cmpxchg_stw)
-+               instruction_pointer_set(regs, (unsigned
-long)&csky_cmpxchg_ldw);
-```
-
-**Technical explanation**:
-- `csky_cmpxchg_ldw` and `csky_cmpxchg_stw` are external symbols
-  declared as `extern unsigned long` - they represent labels/addresses
-  in the cmpxchg assembly implementation
-- The **value** stored at these symbols is the opcode of the instruction
-- The **address** (`&csky_cmpxchg_stw`) is where the instruction resides
-  in memory
-- The code compares against `instruction_pointer(regs)` which is an
-  address, so it must compare against an address, not an opcode value
-
-**Root cause**: Simple semantic error - using value instead of address
-
-**Why the bug is severe**: This function handles TLB modification faults
-during compare-and-exchange operations. When such a fault occurs at the
-store instruction, the handler should redirect execution back to the
-load instruction to retry the operation. With the bug, the comparison
-`instruction_pointer(regs) == csky_cmpxchg_stw` would almost never match
-(comparing an address to an opcode), so the fixup **never worked**.
-
-### 3. CLASSIFICATION
-
-- **Bug fix**: Yes, clearly fixing broken functionality
-- **Security impact**: Potentially - broken cmpxchg can lead to race
-  conditions
-- **Data corruption risk**: Yes - atomic operations that don't work
-  correctly can cause data races
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-- **Lines changed**: 2 lines
-- **Files touched**: 1 file (arch/csky/mm/fault.c)
-- **Subsystem**: CSKY architecture-specific code
-- **Complexity**: Minimal - straightforward address-of fix
-- **Risk**: Very low - the fix is obviously correct and architecture-
-  specific
-
-### 5. USER IMPACT
-
-- **Affected users**: CSKY systems without LDSTEX instructions (when
-  `CONFIG_CPU_HAS_LDSTEX` is not defined)
-- **Severity**: High - broken compare-and-exchange atomic operations can
-  cause:
-  - Race conditions in concurrent code
-  - Data corruption
-  - Deadlocks
-  - Unpredictable behavior in any code using cmpxchg
-
-### 6. STABILITY INDICATORS
-
-- Signed-off by maintainer Guo Ren (CSKY maintainer)
-- The fix is logically obvious once understood
-
-### 7. DEPENDENCY CHECK
-
-- No dependencies on other commits
-- The affected code has existed since CSKY was added to the kernel
-- Should apply cleanly to stable trees that have CSKY support
-
-### CONCLUSION
-
-This commit clearly meets all stable kernel criteria:
-
-1. **Obviously correct**: The fix is a textbook case of using
-   `&variable` (address) instead of `variable` (value) when comparing
-   against an instruction pointer
-2. **Fixes a real bug**: The cmpxchg fixup mechanism was completely non-
-   functional
-3. **Important issue**: Broken atomic operations can cause data
-   corruption, race conditions, and system instability
-4. **Small and contained**: Only 2 lines changed in one file,
-   architecture-specific
-5. **No new features**: Just fixing existing functionality to actually
-   work
-
-The absence of stable tags appears to be an oversight. This is a
-critical fix for CSKY platforms - without it, the entire cmpxchg fixup
-path is dead code that never triggers when it should.
+**Conclusion:**
+This commit is an excellent stable backport candidate. It fixes a real,
+reported bug that causes kernel warnings and potential instability on
+PREEMPT_RT kernels when using dm-snapshot. The fix is well-understood,
+uses standard kernel primitives, and is authored by the DM subsystem
+maintainer. The change is self-contained and poses low regression risk
+since it maintains the same locking semantics while fixing RT
+compatibility.
 
 **YES**
 
- arch/csky/mm/fault.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-exception-store.h |  2 +-
+ drivers/md/dm-snap.c            | 73 +++++++++++++++------------------
+ 2 files changed, 35 insertions(+), 40 deletions(-)
 
-diff --git a/arch/csky/mm/fault.c b/arch/csky/mm/fault.c
-index a6ca7dff42153..7ff4011089850 100644
---- a/arch/csky/mm/fault.c
-+++ b/arch/csky/mm/fault.c
-@@ -45,8 +45,8 @@ static inline void csky_cmpxchg_fixup(struct pt_regs *regs)
- 	if (trap_no(regs) != VEC_TLBMODIFIED)
- 		return;
+diff --git a/drivers/md/dm-exception-store.h b/drivers/md/dm-exception-store.h
+index b679766375381..061b4d3108132 100644
+--- a/drivers/md/dm-exception-store.h
++++ b/drivers/md/dm-exception-store.h
+@@ -29,7 +29,7 @@ typedef sector_t chunk_t;
+  * chunk within the device.
+  */
+ struct dm_exception {
+-	struct hlist_bl_node hash_list;
++	struct hlist_node hash_list;
  
--	if (instruction_pointer(regs) == csky_cmpxchg_stw)
--		instruction_pointer_set(regs, csky_cmpxchg_ldw);
-+	if (instruction_pointer(regs) == (unsigned long)&csky_cmpxchg_stw)
-+		instruction_pointer_set(regs, (unsigned long)&csky_cmpxchg_ldw);
- 	return;
+ 	chunk_t old_chunk;
+ 	chunk_t new_chunk;
+diff --git a/drivers/md/dm-snap.c b/drivers/md/dm-snap.c
+index f40c18da40000..dbd148967de42 100644
+--- a/drivers/md/dm-snap.c
++++ b/drivers/md/dm-snap.c
+@@ -40,10 +40,15 @@ static const char dm_snapshot_merge_target_name[] = "snapshot-merge";
+ #define DM_TRACKED_CHUNK_HASH(x)	((unsigned long)(x) & \
+ 					 (DM_TRACKED_CHUNK_HASH_SIZE - 1))
+ 
++struct dm_hlist_head {
++	struct hlist_head head;
++	spinlock_t lock;
++};
++
+ struct dm_exception_table {
+ 	uint32_t hash_mask;
+ 	unsigned int hash_shift;
+-	struct hlist_bl_head *table;
++	struct dm_hlist_head *table;
+ };
+ 
+ struct dm_snapshot {
+@@ -628,8 +633,8 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk);
+ 
+ /* Lock to protect access to the completed and pending exception hash tables. */
+ struct dm_exception_table_lock {
+-	struct hlist_bl_head *complete_slot;
+-	struct hlist_bl_head *pending_slot;
++	spinlock_t *complete_slot;
++	spinlock_t *pending_slot;
+ };
+ 
+ static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
+@@ -638,20 +643,20 @@ static void dm_exception_table_lock_init(struct dm_snapshot *s, chunk_t chunk,
+ 	struct dm_exception_table *complete = &s->complete;
+ 	struct dm_exception_table *pending = &s->pending;
+ 
+-	lock->complete_slot = &complete->table[exception_hash(complete, chunk)];
+-	lock->pending_slot = &pending->table[exception_hash(pending, chunk)];
++	lock->complete_slot = &complete->table[exception_hash(complete, chunk)].lock;
++	lock->pending_slot = &pending->table[exception_hash(pending, chunk)].lock;
  }
- #endif
+ 
+ static void dm_exception_table_lock(struct dm_exception_table_lock *lock)
+ {
+-	hlist_bl_lock(lock->complete_slot);
+-	hlist_bl_lock(lock->pending_slot);
++	spin_lock_nested(lock->complete_slot, 1);
++	spin_lock_nested(lock->pending_slot, 2);
+ }
+ 
+ static void dm_exception_table_unlock(struct dm_exception_table_lock *lock)
+ {
+-	hlist_bl_unlock(lock->pending_slot);
+-	hlist_bl_unlock(lock->complete_slot);
++	spin_unlock(lock->pending_slot);
++	spin_unlock(lock->complete_slot);
+ }
+ 
+ static int dm_exception_table_init(struct dm_exception_table *et,
+@@ -661,13 +666,15 @@ static int dm_exception_table_init(struct dm_exception_table *et,
+ 
+ 	et->hash_shift = hash_shift;
+ 	et->hash_mask = size - 1;
+-	et->table = kvmalloc_array(size, sizeof(struct hlist_bl_head),
++	et->table = kvmalloc_array(size, sizeof(struct dm_hlist_head),
+ 				   GFP_KERNEL);
+ 	if (!et->table)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < size; i++)
+-		INIT_HLIST_BL_HEAD(et->table + i);
++	for (i = 0; i < size; i++) {
++		INIT_HLIST_HEAD(&et->table[i].head);
++		spin_lock_init(&et->table[i].lock);
++	}
+ 
+ 	return 0;
+ }
+@@ -675,16 +682,17 @@ static int dm_exception_table_init(struct dm_exception_table *et,
+ static void dm_exception_table_exit(struct dm_exception_table *et,
+ 				    struct kmem_cache *mem)
+ {
+-	struct hlist_bl_head *slot;
++	struct dm_hlist_head *slot;
+ 	struct dm_exception *ex;
+-	struct hlist_bl_node *pos, *n;
++	struct hlist_node *pos;
+ 	int i, size;
+ 
+ 	size = et->hash_mask + 1;
+ 	for (i = 0; i < size; i++) {
+ 		slot = et->table + i;
+ 
+-		hlist_bl_for_each_entry_safe(ex, pos, n, slot, hash_list) {
++		hlist_for_each_entry_safe(ex, pos, &slot->head, hash_list) {
++			hlist_del(&ex->hash_list);
+ 			kmem_cache_free(mem, ex);
+ 			cond_resched();
+ 		}
+@@ -700,7 +708,7 @@ static uint32_t exception_hash(struct dm_exception_table *et, chunk_t chunk)
+ 
+ static void dm_remove_exception(struct dm_exception *e)
+ {
+-	hlist_bl_del(&e->hash_list);
++	hlist_del(&e->hash_list);
+ }
+ 
+ /*
+@@ -710,12 +718,11 @@ static void dm_remove_exception(struct dm_exception *e)
+ static struct dm_exception *dm_lookup_exception(struct dm_exception_table *et,
+ 						chunk_t chunk)
+ {
+-	struct hlist_bl_head *slot;
+-	struct hlist_bl_node *pos;
++	struct hlist_head *slot;
+ 	struct dm_exception *e;
+ 
+-	slot = &et->table[exception_hash(et, chunk)];
+-	hlist_bl_for_each_entry(e, pos, slot, hash_list)
++	slot = &et->table[exception_hash(et, chunk)].head;
++	hlist_for_each_entry(e, slot, hash_list)
+ 		if (chunk >= e->old_chunk &&
+ 		    chunk <= e->old_chunk + dm_consecutive_chunk_count(e))
+ 			return e;
+@@ -762,18 +769,17 @@ static void free_pending_exception(struct dm_snap_pending_exception *pe)
+ static void dm_insert_exception(struct dm_exception_table *eh,
+ 				struct dm_exception *new_e)
+ {
+-	struct hlist_bl_head *l;
+-	struct hlist_bl_node *pos;
++	struct hlist_head *l;
+ 	struct dm_exception *e = NULL;
+ 
+-	l = &eh->table[exception_hash(eh, new_e->old_chunk)];
++	l = &eh->table[exception_hash(eh, new_e->old_chunk)].head;
+ 
+ 	/* Add immediately if this table doesn't support consecutive chunks */
+ 	if (!eh->hash_shift)
+ 		goto out;
+ 
+ 	/* List is ordered by old_chunk */
+-	hlist_bl_for_each_entry(e, pos, l, hash_list) {
++	hlist_for_each_entry(e, l, hash_list) {
+ 		/* Insert after an existing chunk? */
+ 		if (new_e->old_chunk == (e->old_chunk +
+ 					 dm_consecutive_chunk_count(e) + 1) &&
+@@ -804,13 +810,13 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+ 		 * Either the table doesn't support consecutive chunks or slot
+ 		 * l is empty.
+ 		 */
+-		hlist_bl_add_head(&new_e->hash_list, l);
++		hlist_add_head(&new_e->hash_list, l);
+ 	} else if (new_e->old_chunk < e->old_chunk) {
+ 		/* Add before an existing exception */
+-		hlist_bl_add_before(&new_e->hash_list, &e->hash_list);
++		hlist_add_before(&new_e->hash_list, &e->hash_list);
+ 	} else {
+ 		/* Add to l's tail: e is the last exception in this slot */
+-		hlist_bl_add_behind(&new_e->hash_list, &e->hash_list);
++		hlist_add_behind(&new_e->hash_list, &e->hash_list);
+ 	}
+ }
+ 
+@@ -820,7 +826,6 @@ static void dm_insert_exception(struct dm_exception_table *eh,
+  */
+ static int dm_add_exception(void *context, chunk_t old, chunk_t new)
+ {
+-	struct dm_exception_table_lock lock;
+ 	struct dm_snapshot *s = context;
+ 	struct dm_exception *e;
+ 
+@@ -833,17 +838,7 @@ static int dm_add_exception(void *context, chunk_t old, chunk_t new)
+ 	/* Consecutive_count is implicitly initialised to zero */
+ 	e->new_chunk = new;
+ 
+-	/*
+-	 * Although there is no need to lock access to the exception tables
+-	 * here, if we don't then hlist_bl_add_head(), called by
+-	 * dm_insert_exception(), will complain about accessing the
+-	 * corresponding list without locking it first.
+-	 */
+-	dm_exception_table_lock_init(s, old, &lock);
+-
+-	dm_exception_table_lock(&lock);
+ 	dm_insert_exception(&s->complete, e);
+-	dm_exception_table_unlock(&lock);
+ 
+ 	return 0;
+ }
+@@ -873,7 +868,7 @@ static int calc_max_buckets(void)
+ 	/* use a fixed size of 2MB */
+ 	unsigned long mem = 2 * 1024 * 1024;
+ 
+-	mem /= sizeof(struct hlist_bl_head);
++	mem /= sizeof(struct dm_hlist_head);
+ 
+ 	return mem;
+ }
 -- 
 2.51.0
 
