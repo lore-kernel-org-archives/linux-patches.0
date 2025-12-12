@@ -1,220 +1,136 @@
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 673933271F5
-	for <patches@lists.linux.dev>; Thu, 11 Dec 2025 17:37:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09E901990C7;
+	Fri, 12 Dec 2025 02:08:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765474649; cv=none; b=Nk/ES/qDlMHumkPOJuBerf0RDWLs9PBllaj3d+SCqCVQ4B+FDgsHtUk/arhwyrFqGLbdcvB/ZxOZuRsFNqFklN96MqNsP6LMT5CxAwFdEqHOt7viUVUYJxF39EThF67Q+Tef7Es+pv/nsFnpkcXJreLwM1ExGpnma2Lefsf8Uaw=
+	t=1765505296; cv=none; b=VBtntxHNP+bEywE6icQx8Gq2G2s3ucSGEiFEUMdVqMoKnSSK3QG8RP1gHxlCwlmVoL2OOhlBEOu2poNWJgJV1JU1Oqyl/IMy8qk+mZ7algfIv/50LS5iSEZZ/nwxtVb1L1AmCuxQ3vNU3YsEqfcXQdLJrED19ZY4Ft2z0Wr9A3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765474649; c=relaxed/simple;
-	bh=o17sRyxm7UIDmprl4aZGfoSnq3QhFyWV1enFXSD4gps=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Xn2os7OF45m/sUNEj25STi8YbUpM6kIjJUnEhx9dwVh0OOVR63+ZLWYnGdsf7B7Sld+Ym5os8xPqJq8K6qVXaDN522zPQV4hFfdVNwumcuasdrpt0rlC3HN0K90JeYofxWEuAtek9TZDgddBHw/W5N4vADJ8CZMELYRswo9KSSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=jXunKdqQ; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	s=arc-20240116; t=1765505296; c=relaxed/simple;
+	bh=a0/1EY4VStKzIBoErYHqrL5pDfaSE0HuDVFh5XOPuhE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=REKBYCqwBtRxSDEduEkao9Y6MtBKPgUOzaqD1+zZUAZyvP+vBUAYPyM3ZRYC6+1IEH2Kpmc/6DZcmFq09khBCs1h4bwcOtZZ8Jbow7iNMMSCeDl6YWTAIFdspfEwpVncgC33R12NpYtr2BkYtuwI/1ofnJkpU038d0yxPkfABTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mP5r74DD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="jXunKdqQ"
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b736d883ac4so69357866b.2
-        for <patches@lists.linux.dev>; Thu, 11 Dec 2025 09:37:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1765474646; x=1766079446; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E1yff4bc0T45kril10BQxgoSw39c1NrtcFM6PjLf2Ls=;
-        b=jXunKdqQkYvl72EWntXguW0hWvaqIm1Qlly5DWnv3C+auQMH3PZ7KI7CuL+E4aV/EK
-         0Nk6ualcbojaIhKKOC2GPXgK2802VRBxrhNTdsIxunmk4CTj8sTkXrV7bzfyav5fn0hu
-         K/BVO2dca1p2lpja5z7kZub02n3UXzPDkL3/moEjGB6WESAHLP8qWWmAZYne/EFLcAB0
-         E0oBmNVDgH03i1s2GHVn4nIUmXbya45AhW3roMaugUZAYT6znx6f2gF1eaPWwdIKdBe+
-         4sV3I/ZU+/Bu0CPvlzOlDL3oq7sTyeN41gBxTn3rdL+r4n5rp4pm5YiXukCrPm/Ofj7S
-         sMWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765474646; x=1766079446;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=E1yff4bc0T45kril10BQxgoSw39c1NrtcFM6PjLf2Ls=;
-        b=FpP3Qo7MiM+xLOfZyVxBfgwhNUGEmtkE/WSXgTa4Lf1jWl2pycymOACN3LCQWfyGy6
-         H1zF3Dl99oRlK+DqR08BK3NNGX1BbntsbUGuSWyd7HpzOobP+NUrZHKnoK0Nj/MgOeaV
-         XhSqaDpBQgfHUm4dWtht4pnBc0w8/0cK3Cueyh7SIRC9I4j8uhjCQI3UqLBhvPemUb8F
-         XSNBcB/mdR5dW+2JZlFpNmFltReYHtjqJrBU+kSkgUy9RbaiKcfrPJ33ZuzPYyy2MC25
-         /6metzFeuzbdTA/hMo2gIr767dppFbH/fA/0aTTi0KQq9QJtQXBa5PEXQhyMaEy4PQyI
-         2BMQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVDgMor3A1VqyuNjyKn5vBUXlLlt1agVUFNEW78kjOcgJwhPgt0pES+8MpdkAX/+JdIkXMO2n5s@lists.linux.dev
-X-Gm-Message-State: AOJu0Yz5fmTHqATSQs0F8t4o3wUAp4oPQz6O/ClsoYxU3f+6dlUTxbV8
-	Pc+WY44F3yko3BIGjild1G+9xyvryqPF9KF7mPUplth18SUBFyejmDL+YYw1UuzFEtVxYxRJcw8
-	n5jTXkbokuT6n8b0kkpr7MYvG6fKvI+fHr2CRMFZEyw==
-X-Gm-Gg: AY/fxX4Un0xr5upyh2UGmIF25h4ReO4AWJEbPUIINjFRlaW45S/XC2v9kfH2/ymaYHJ
-	xupBjoUqNVOVL7BnqWu+bnvE081WkOXZ5Eb5lxE9yaditcGySxkAIFJOQU+v22ILnpXboDs6Kfr
-	PhjAQ0cPoC5y87lFIZkLpdx6aW74RqPitzn1THlzP5SlMV4kiFBmTWDhfnBDJ0GQw97Qm6VW8Dy
-	jAipfVLBB03yWXNG3nag09eBYGX3xAMtgzJ77ah3hcXh+ao+alTKr9YQhz3h34qbyDAvW+Z
-X-Google-Smtp-Source: AGHT+IHmdQwa8POPlNPzaUDlA7ppJ6M8JtOU+WZGPZOtTvMBOBTTwYlrmIuWhcAfLkYTxf70odorGU+gj0Q9+QZGFl4=
-X-Received: by 2002:a17:906:6a09:b0:b7a:1be3:a582 with SMTP id
- a640c23a62f3a-b7ce84d135bmr722249266b.63.1765474645609; Thu, 11 Dec 2025
- 09:37:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mP5r74DD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D6AC4CEF7;
+	Fri, 12 Dec 2025 02:08:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1765505295;
+	bh=a0/1EY4VStKzIBoErYHqrL5pDfaSE0HuDVFh5XOPuhE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=mP5r74DDRf35AErWYYisduSvezaiQuPRHUPupsL/OTh+ctDZI7reGr/ZezPw+iRfR
+	 3PfgTa1/e/Hgbi9aQR04jXFqE3sFHGUmKXLUuaqfCOSOMDoG90ZQS4NRRgc4dPH8QT
+	 sVD6fWp0ZF8rqqGRRTISMCL3Q7mnlfxpi/WMcvauuWwZID7IDYbXPBv0tZk8fFVdHN
+	 +AKZbQ+hASzE9vFmvUzBBO0leXtDyq73MylLv9EKR0/lNiBWDVOb4rH6fc54lG7nHZ
+	 AGT2gx7zPYVKqsYTb6GYZYDVnABAbtWpvhq4anfmvJCy67ATxDTRpdvtQE4kDeo23l
+	 O7gu+iezCKzyA==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Jens Reidel <adrian@mainlining.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.12] clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk0_clk_src
+Date: Thu, 11 Dec 2025 21:08:11 -0500
+Message-ID: <20251212020812.4153432-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251210072947.850479903@linuxfoundation.org> <CAG=yYwm==BjqjJWtgc0+WzbiGTsKsHV3e4Lvk60fcartrrABDw@mail.gmail.com>
- <2025121046-satchel-concise-1077@gregkh> <CAG=yYwm0bVzYoccKKcdheGOc-exuxVCPeXSftDixS68qZZ7W7w@mail.gmail.com>
- <aTnET5C2PGiKsW_2@auntie> <CAG=yYwnYgw-MYea3yEfwSRiLL+PsKPdQdejotyFTpme0LXc-Pg@mail.gmail.com>
- <aTr0NpEHWSCrGNTS@auntie>
-In-Reply-To: <aTr0NpEHWSCrGNTS@auntie>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Thu, 11 Dec 2025 23:06:48 +0530
-X-Gm-Features: AQt7F2req17RppecxU0d8GIiJFE8Wcg_BugBfal6e-qcSTyFvfx5VN8m8i6sM7w
-Message-ID: <CAG=yYwmqMSV7xQrL_Nrx06QO_f_61MigB-2eL1kiDO4Mt=4uew@mail.gmail.com>
-Subject: Re: [PATCH 6.17 00/60] 6.17.12-rc1 review
-To: Brett A C Sheffield <bacs@librecast.net>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
-	sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.18
+Content-Transfer-Encoding: 8bit
 
-On Thu, Dec 11, 2025 at 10:11=E2=80=AFPM Brett A C Sheffield <bacs@librecas=
-t.net> wrote:
->
-> On 2025-12-11 21:09, Jeffrin Thalakkottoor wrote:
-> > On Thu, Dec 11, 2025 at 12:35=E2=80=AFAM Brett A C Sheffield <bacs@libr=
-ecast.net> wrote:
-> > >
-> > > On 2025-12-10 19:13, Jeffrin Thalakkottoor wrote:
-> > > > On Wed, Dec 10, 2025 at 6:17=E2=80=AFPM Greg Kroah-Hartman
-> > > > <gregkh@linuxfoundation.org> wrote:
-> > > > >
-> > > > > On Wed, Dec 10, 2025 at 04:22:21PM +0530, Jeffrin Thalakkottoor w=
-rote:
-> > > > > >  compiled and booted 6.17.12-rc1+
-> > > > > > Version: AMD A4-4000 APU with Radeon(tm) HD Graphics
-> > > > > >
-> > > > > > sudo dmesg -l errr  shows  error
-> > > > > >
-> > > > > > j$sudo dmesg -l err
-> > > > > > [   39.915487] Error: Driver 'pcspkr' is already registered, ab=
-orting...
-> > > > > > $
-> > > > >
-> > > > > Is ths new?  if so, can you bisect?
-> > > >
-> > > > this is new related. Previous stable release err and warn disappear=
-ed
-> > > > (i think i changed  .config)
-> > > >
-> > > > can you give me a  step by step tutorial  for git bisect
-> > >
-> > > 1) cd to wherever you have your kernel checked out
-> > >
-> > > 2) `git bisect start`
-> > >
-> > > 3) if you're already on a known-bad commit, then mark it as such:
-> > >
-> > >   `git bisect bad`
-> > >
-> > > 4) Mark the last known good commit as such:
-> > >
-> > >   `git bisect good <commit / tag>`
-> > >
-> > > git bisect will choose a commit to test.
-> > >
-> > > 5) Build, install and boot your kernel as you usually do
-> > >
-> > > 6) Run whatever test you need to determine if the booted kernel is go=
-od or bad
-> > > (check dmesg in this case)
-> > >
-> > > 7) Mark the commit as good or bad. Git will choose another commit for=
- you.
-> > >
-> > > 8) Goto 5.
-> > >
-> > > `git help bisect` will give you more information.
-> > >
-> > > At the end of the process git will tell you the first bad commit foun=
-d.  You can
-> > > dump the bisection log with:
-> > >
-> > > `git bisect log`
-> > >
-> > > which you can reply here with.
-> > >
-> > > HTH.
-> > >
-> > > Cheers,
-> > >
-> > >
-> > > Brett
-> > Thnaks for the tutorial  :)
-> > 1. should i start with the bad commit first ?
->
-> You start by marking one good (past) commit and one bad commit. It doesn'=
-t
-> matter what order.
->
-> You have at least one "bad" commit you know of: 4112049d7836ad4233321c3d2=
-b6853db1627c49c
->
-> This is the 6.12.62-rc1 commit that you reported had the error.
->
-> So, in your kernel worktree:
->
-> `git bisect start`
-> `git bisect bad 4112049d7836ad4233321c3d2b6853db1627c49c`
->
-> Now we need to tell git bisect the most recent "good" commit we know of (=
-where
-> the error didn't occur).
->
-> If you already know the commit or tag of a previous version where you did=
- not get the
-> error, mark that as good. If not, pick a previous release, check it out, =
-and go
-> to step 5.
->
-> > 2. how to move forward or backward in commits ?
->
-> git bisect will do that for you as soon as you mark a good and bad commit=
-. If
-> you want to manually test a specific commit, just `git checkout <ref>` as=
- usual, and
-> continue at step 5 in the instructions I gave you.
->
-> > 3. what is the point in re-compiling the kernel  if it cannot narrow
-> > down and  test news lines of code
->
-> We're narrowing down the error to a specific kernel commit. Once we know =
-which
-> specific commit introduced the error, we can look at the lines changed an=
-d try
-> to understand why.  We need your help to find that commit, because it's
-> happening on your system.
->
-> Please do read `git help bisect` (man 1 git-bisect). It explains all this=
- better
-> than I can.
->
-> Thanks for testing and good luck!
->
->
-> Brett
->
+From: Jens Reidel <adrian@mainlining.org>
 
-I do not see that error anymore. may be  i have made changes in configurati=
-on.
-THANKS
+[ Upstream commit e3c13e0caa8ceb7dec1a7c4fcfd9dbef56a69fbe ]
 
+Set CLK_OPS_PARENT_ENABLE to ensure the parent gets prepared and enabled
+when switching to it, fixing an "rcg didn't update its configuration"
+warning.
 
+Signed-off-by: Jens Reidel <adrian@mainlining.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250919-sm7150-dispcc-fixes-v1-3-308ad47c5fce@mainlining.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
---
-software engineer
-rajagiri school of engineering and technology
+LLM Generated explanations, may be completely bogus:
+
+### 3. Technical Understanding
+
+The `CLK_OPS_PARENT_ENABLE` flag (BIT(12) in clk-provider.h) ensures
+that "parents need enable during gate/ungate, set rate and re-parent."
+Without this flag, when the pixel clock source tries to switch to a new
+parent clock, the parent might not be enabled, causing the RCG (Root
+Clock Generator) to fail to update its configuration.
+
+This is a well-known pattern in Qualcomm clock drivers - pixel clocks
+dynamically switch parents during display panel initialization, and the
+parent must be running for the configuration switch to complete.
+
+### 4. Scope and Risk Assessment
+- **Lines changed**: 1 line (adding a single flag)
+- **Files touched**: 1 file
+- **Complexity**: Very low
+- **Risk**: Very low - this is an established pattern used across many
+  Qualcomm dispcc/gcc drivers
+
+### 5. User Impact
+- Affects SM7150-based devices (mobile phones)
+- The warning indicates clock configuration issues that could affect
+  display initialization
+- Limited scope - only SM7150 platform users
+
+### 6. Stable Tree Applicability
+- Driver was added in **v6.11** (commit 3829c412197e1)
+- Only applicable to v6.11.y, v6.12.y, and newer stable trees
+- NOT applicable to LTS kernels: 6.6.y, 6.1.y, 5.15.y (driver doesn't
+  exist)
+
+### 7. Key Observations
+
+**Against backporting:**
+1. **No "Cc: stable@vger.kernel.org" tag** - The maintainers did not
+   request stable backport
+2. **No "Fixes:" tag** - Doesn't reference the original commit where the
+   bug was introduced
+3. **Very new driver** - SM7150 dispcc was added in v6.11, limiting
+   stable applicability
+4. **Not a critical issue** - A warning message, not a crash, panic, or
+   data corruption
+5. **Mobile SoC** - Users running stable kernels rarely use cutting-edge
+   mobile phone support
+
+**For backporting:**
+1. Valid bug fix with proven pattern
+2. Extremely small and low-risk change
+3. Has proper review from Qualcomm clock maintainers
+
+ drivers/clk/qcom/dispcc-sm7150.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/clk/qcom/dispcc-sm7150.c b/drivers/clk/qcom/dispcc-sm7150.c
+index bdfff246ed3fe..ddc7230b8aea7 100644
+--- a/drivers/clk/qcom/dispcc-sm7150.c
++++ b/drivers/clk/qcom/dispcc-sm7150.c
+@@ -356,7 +356,7 @@ static struct clk_rcg2 dispcc_mdss_pclk0_clk_src = {
+ 		.name = "dispcc_mdss_pclk0_clk_src",
+ 		.parent_data = dispcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(dispcc_parent_data_4),
+-		.flags = CLK_SET_RATE_PARENT,
++		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+ 		.ops = &clk_pixel_ops,
+ 	},
+ };
+-- 
+2.51.0
+
