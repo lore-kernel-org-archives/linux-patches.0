@@ -1,40 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AA730E0EE;
-	Fri, 12 Dec 2025 06:12:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D80872618;
+	Fri, 12 Dec 2025 06:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765519946; cv=none; b=b2VJFqpjxfDKKkEFNaJMwjYNkN+asl866KpnUKLaZ2AZlKwYQn/4elKBl+3FKv9lLBoRTcfkTJfZG8fCcTmVIEKthsQo/LqMW/R7V4q3+6dWNlGCz1W0bw0tOKG7ciBiiluoZZczYXV0p4GA0oHx6bii1pWD+GM80lKiQ0mofyY=
+	t=1765519952; cv=none; b=Dp5CkZvBSdmhr1AIJ1HBGOGtF1L5YA1IsHqY7gC1NYzZZAZdoheSsVM7SFWWcsZZLmRSxaPGjJkO3N+LkohuLWoYQVFlHYQkp+35TVIWCmHyOMDHC3cvmH8n5tDW4y5O0oiqMTf8ckhK718CfRwconxlBAeDHUznKZLgAueo9Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765519946; c=relaxed/simple;
-	bh=3/74Qr7EVIIQir0V3rtgwB12WXIr61WFooRVftKwk0U=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=b1F5gESnKZWa3dXJZmDlZ9zUPh935h9quFEzkArkqGRrDTomwjopjnMU4psCTGCaPkQnDN2uB4FLssMQXQ6A879LOdBcjDVExfNWvp6W32xzst1mFt++XacqClEqRPeoXL3rXfpVYRya3HMuTq5awBHycWAmiDoNjNsLrzHt53Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=olEIp0eO; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765519952; c=relaxed/simple;
+	bh=tu35v5JnahKDsmp5vWzJfU95RMwm0sPSKcmBSUpkSDs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=lK4sVeWkyPSmhVyHm82muYG2JhH1/nHgnswiW9WHJQNoJCntjZLhhtzSLSpYLJ3R1r5fT83pCvSiQj5J9uHSu7SeCFR6kxRf9asoS+BQ4BEYjonIUKaniQ25zuObt6cVSsXP/dn+6QU3rONM+U0NsCeGoHXGcc7BEg31L4UW2uU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Szdrq9GD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="olEIp0eO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6469DC116B1;
-	Fri, 12 Dec 2025 06:12:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Szdrq9GD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9964CC16AAE;
+	Fri, 12 Dec 2025 06:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765519946;
-	bh=3/74Qr7EVIIQir0V3rtgwB12WXIr61WFooRVftKwk0U=;
-	h=From:To:Cc:Subject:Date:From;
-	b=olEIp0eOcsMIRR1Wt/Nll9Wsbl0MdrvRbBw2BW5qFQnkKx8TAQxLyFaduDdmEicuY
-	 kalp9HRlqD65ZGhpCYP3o/Wk3jHKudNRQ4sMDER0uxrJeJfzz240/aKtSWTL91/yBj
-	 xy2Iuxnr2iXvf85u9ijtpbwJnNzQ4PzzAqsNr6xfQ9vepPlyseSDenBvdV/EUaXUVb
-	 dNVA/Uj3gFeE8fzBxs+iEWdcniaj7HZiszbneRwRdD4mw8P9r5iK1xwjPmB+Fd1TAf
-	 NxcdrX03oMyEzcRjMTYhkY1g+hrRulSdG9BKNZN5TKpzSaZhy+kMdnILHNxxmV101I
-	 dlqTyJsrxuyCg==
+	s=k20201202; t=1765519952;
+	bh=tu35v5JnahKDsmp5vWzJfU95RMwm0sPSKcmBSUpkSDs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Szdrq9GDzcfXkTz1z+U+6vV8FIPOGzAfB01ToY0aURn2Eqmimse2bmGIiuHu9i6fZ
+	 jPdpVxBN2O5t9+uT3j1gdpDRQZQZ+tAuqGdPrKrCaTCFTLomVvogf6x5myDGhBhKO7
+	 6qhV6yNRgnZ6/NCpE4fiFWVwpKRZc7S/BfrQZQYITFzeIMEERG3TYrwsMnJTQqR98k
+	 jJFvZuwRYVhjsSklsVmrbEfb0LWxxaYs02uTYnTM6rXxYPyaOGyShTPWFLMhzN53Jx
+	 tFqp/3Gak1U44YAiDTbMJZB60eVjI6ASl1i7EZnKnX+qVpM2VfEept5Nw5F1kZtns5
+	 YJDDUN+dIcHoA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sam James <sam@gentoo.org>,
-	Magnus Lindholm <linmag7@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH AUTOSEL 6.18-5.10] alpha: don't reference obsolete termio struct for TC* constants
-Date: Fri, 12 Dec 2025 01:12:11 -0500
-Message-ID: <20251212061223.305139-1-sashal@kernel.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Sasha Levin <sashal@kernel.org>,
+	linux@armlinux.org.uk,
+	clrkwllms@kernel.org,
+	rostedt@goodmis.org,
+	nathan@kernel.org,
+	kees@kernel.org,
+	peterz@infradead.org,
+	lumag@kernel.org,
+	richard@nod.at,
+	chrisi.schrefl@gmail.com,
+	lukas.bulwahn@redhat.com,
+	afd@ti.com,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rt-devel@lists.linux.dev
+Subject: [PATCH AUTOSEL 6.18-5.10] ARM: 9461/1: Disable HIGHPTE on PREEMPT_RT kernels
+Date: Fri, 12 Dec 2025 01:12:12 -0500
+Message-ID: <20251212061223.305139-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251212061223.305139-1-sashal@kernel.org>
+References: <20251212061223.305139-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,154 +65,180 @@ X-stable-base: Linux 6.18
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sam James <sam@gentoo.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 9aeed9041929812a10a6d693af050846942a1d16 ]
+[ Upstream commit fedadc4137234c3d00c4785eeed3e747fe9036ae ]
 
-Similar in nature to ab107276607af90b13a5994997e19b7b9731e251. glibc-2.42
-drops the legacy termio struct, but the ioctls.h header still defines some
-TC* constants in terms of termio (via sizeof). Hardcode the values instead.
+gup_pgd_range() is invoked with disabled interrupts and invokes
+__kmap_local_page_prot() via pte_offset_map(), gup_p4d_range().
+With HIGHPTE enabled, __kmap_local_page_prot() invokes kmap_high_get()
+which uses a spinlock_t via lock_kmap_any(). This leads to an
+sleeping-while-atomic error on PREEMPT_RT because spinlock_t becomes a
+sleeping lock and must not be acquired in atomic context.
 
-This fixes building Python for example, which falls over like:
-  ./Modules/termios.c:1119:16: error: invalid application of 'sizeof' to incomplete type 'struct termio'
+The loop in map_new_virtual() uses wait_queue_head_t for wake up which
+also is using a spinlock_t.
 
-Link: https://bugs.gentoo.org/961769
-Link: https://bugs.gentoo.org/962600
-Signed-off-by: Sam James <sam@gentoo.org>
-Reviewed-by: Magnus Lindholm <linmag7@gmail.com>
-Link: https://lore.kernel.org/r/6ebd3451908785cad53b50ca6bc46cfe9d6bc03c.1764922497.git.sam@gentoo.org
-Signed-off-by: Magnus Lindholm <linmag7@gmail.com>
+Since HIGHPTE is rarely needed at all, turn it off for PREEMPT_RT
+to allow the use of get_user_pages_fast().
+
+[arnd: rework patch to turn off HIGHPTE instead of HAVE_PAST_GUP]
+
+Co-developed-by: Arnd Bergmann <arnd@arndb.de>
+
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+# Commit Analysis: ARM: 9461/1: Disable HIGHPTE on PREEMPT_RT kernels
 
-### 1. COMMIT MESSAGE ANALYSIS
+## 1. COMMIT MESSAGE ANALYSIS
 
-This commit addresses a **userspace build failure** caused by glibc-2.42
-removing the legacy `struct termio` definition. The kernel's uapi header
-`arch/alpha/include/uapi/asm/ioctls.h` uses `sizeof(struct termio)` in
-macro expansions, which fails when that struct is undefined.
+**Problem identified**: The commit addresses a "sleeping-while-atomic"
+bug on PREEMPT_RT ARM kernels. The issue occurs because:
+- `gup_pgd_range()` runs with interrupts disabled (atomic context)
+- With HIGHPTE enabled, the code path calls `kmap_high_get()` which
+  acquires a `spinlock_t` via `lock_kmap_any()`
+- On PREEMPT_RT, `spinlock_t` becomes a sleeping lock (mutex)
+- Attempting to acquire a sleeping lock in atomic context is a bug
 
-**Key signals:**
-- Links to two real bug reports (Gentoo bugs #961769 and #962600)
-- References a prior fix (ab107276607af) for powerpc with the exact same
-  issue
-- Has `Reviewed-by:` tag
-- Demonstrates real-world impact: Python build failure
+**Tags present**:
+- Acked-by: Linus Walleij (ARM/pinctrl maintainer)
+- Reviewed-by: Arnd Bergmann (major ARM contributor)
+- Signed-off-by: Sebastian Andrzej Siewior (PREEMPT_RT maintainer)
+- Signed-off-by: Russell King (ARM maintainer)
 
-### 2. CODE CHANGE ANALYSIS
+**Missing tags**: No `Cc: stable@vger.kernel.org` or `Fixes:` tag.
 
-**What the change does:**
-```c
-// Before: Uses sizeof(struct termio) in macro expansion
-#define TCGETA          _IOR('t', 23, struct termio)
-// After: Pre-computed constant
-#define TCGETA          0x40127417
+## 2. CODE CHANGE ANALYSIS
+
+The change is a single-line Kconfig modification:
+
+```diff
+- depends on HIGHMEM
++       depends on HIGHMEM && !PREEMPT_RT
 ```
 
-**Verification of the hardcoded values:**
-Looking at `arch/alpha/include/uapi/asm/ioctl.h`, the ioctl encoding on
-alpha is:
-- `_IOC_SIZESHIFT` = 16, `_IOC_DIRSHIFT` = 29
-- `_IOC_READ` = 2, `_IOC_WRITE` = 4
+This simply prevents the `HIGHPTE` configuration option from being
+selected when `PREEMPT_RT` is enabled. The technical mechanism of the
+bug is clear:
 
-For `TCGETA = _IOR('t', 23, struct termio)`:
-- dir=2, type=0x74, nr=0x17, size=18(0x12)
-- Result: `(2<<29)|(0x74<<8)|(0x17)|(0x12<<16)` = **0x40127417** ✓
+1. `get_user_pages_fast()` → `gup_pgd_range()` (runs with interrupts
+   disabled)
+2. → `pte_offset_map()` → `__kmap_local_page_prot()` → `kmap_high_get()`
+3. `kmap_high_get()` calls `lock_kmap_any()` which uses `spinlock_t`
+4. On PREEMPT_RT: `spinlock_t` = sleeping lock → BUG in atomic context
 
-The hardcoded values are mathematically correct.
+The commit message notes that "HIGHPTE is rarely needed at all" - it's
+an optimization to put page tables in high memory, which is typically
+unnecessary on modern systems.
 
-### 3. CLASSIFICATION
+## 3. CLASSIFICATION
 
-**Category: BUILD FIX**
+- **Bug type**: Runtime crash/BUG (sleeping-while-atomic violation)
+- **Not a new feature**: Disables a problematic configuration
+  combination
+- **Not a security fix**: No CVE or security-sensitive code
+- **Build fix category**: No, this is a runtime issue
 
-This falls under the **build fixes** exception category - it's critical
-for users who need to build userspace software with modern glibc. Other
-architectures (powerpc, sh, xtensa) already have identical fixes in the
-tree.
+## 4. SCOPE AND RISK ASSESSMENT
 
-### 4. SCOPE AND RISK ASSESSMENT
+**Scope**:
+- 1 file changed (`arch/arm/Kconfig`)
+- 1 line modified
+- Affects only ARM + PREEMPT_RT + HIGHMEM configurations
 
-- **Lines changed:** 4
-- **Files touched:** 1 (alpha-specific uapi header)
-- **Risk: EXTREMELY LOW**
-  - No runtime behavior change - only affects compilation
-  - The ioctl numbers are identical (pre-computed vs macro-computed)
-  - Pattern already established in other architectures
+**Risk**: **Very low**
+- This is a Kconfig dependency change only
+- Users who previously had HIGHPTE enabled will now have it disabled on
+  PREEMPT_RT
+- The workaround is conservative (disable the problematic feature rather
+  than complex code fixes)
+- Cannot introduce regressions in other code paths
 
-### 5. USER IMPACT
+## 5. USER IMPACT
 
-- **Affected users:** Anyone on alpha using glibc 2.42+ (e.g., Gentoo
-  users)
-- **Severity:** Critical for affected users - cannot build Python, and
-  potentially many other programs that use termios
-- **Scope:** Limited to alpha architecture, but complete blocker for
-  those users
+**Affected users**: ARM systems running PREEMPT_RT kernels with HIGHMEM
+(systems with >~800MB RAM on 32-bit ARM)
 
-### 6. STABILITY INDICATORS
+**Severity**: High for affected users
+- `get_user_pages_fast()` is a commonly used path for I/O and memory
+  management
+- Without this fix, users would hit kernel warnings/crashes when GUP
+  fast path is used
+- This completely breaks PREEMPT_RT usability on affected configurations
 
-- Has `Reviewed-by:` tag
-- Same pattern accepted for powerpc (commit ab107276607af)
-- Documented with actual bug reports showing real users affected
-- No runtime changes - purely compile-time fix
+## 6. STABILITY INDICATORS
 
-### 7. DEPENDENCY CHECK
+**Review chain is strong**:
+- Sebastian Andrzej Siewior (PREEMPT_RT maintainer) developed this
+- Arnd Bergmann reworked and reviewed it
+- Linus Walleij acked it
+- Russell King (ARM maintainer) accepted it
 
-- **No dependencies** - standalone fix
-- The affected file exists in all stable trees (uapi header)
-- Clean application expected
+## 7. DEPENDENCY CHECK
 
-### Final Assessment
+This is a standalone Kconfig change. Dependencies:
+- `PREEMPT_RT` must exist in the kernel - PREEMPT_RT was merged into
+  mainline in kernel 6.12
+- `HIGHPTE` and `HIGHMEM` options exist on ARM in all relevant kernel
+  versions
 
-**Pros:**
-- Fixes a real, documented build breakage with modern glibc
-- Extremely small and localized (4 lines, 1 file)
-- Zero runtime risk - mathematically equivalent values
-- Established precedent with powerpc fix
-- Has review tag and bug report links
+The fix should apply cleanly to any stable tree with PREEMPT_RT support.
 
-**Cons:**
-- No explicit `Cc: stable@vger.kernel.org` tag
-- Alpha is a niche architecture
+## STABLE KERNEL CRITERIA EVALUATION
 
-**Verdict:** This is textbook stable material. It's a build fix that:
-1. Is obviously correct (values are mathematically equivalent)
-2. Fixes a real bug (complete build failure)
-3. Is small and contained (4 lines)
-4. Has no runtime risk whatsoever
-5. Follows established precedent from other architectures
+| Criterion | Assessment |
+|-----------|------------|
+| Obviously correct | ✅ Yes - disables problematic config combination |
+| Fixes real bug | ✅ Yes - sleeping-while-atomic crash |
+| Important issue | ✅ Yes - crashes on PREEMPT_RT systems |
+| Small and contained | ✅ Yes - 1 line Kconfig change |
+| No new features | ✅ Yes - only disables an option |
+| Clean application | ✅ Yes - simple dependency addition |
 
-The lack of a stable tag is not disqualifying - many valid stable
-patches don't have it. Build compatibility with modern toolchains is
-exactly what stable trees need to maintain.
+## CONCERNS
+
+1. **No explicit stable request**: Maintainers didn't add `Cc: stable`.
+   However, the fix is clearly appropriate for stable.
+2. **PREEMPT_RT availability**: Only relevant for kernels 6.12+ where
+   PREEMPT_RT was merged into mainline.
+
+## CONCLUSION
+
+This commit fixes a real, reproducible crash on ARM PREEMPT_RT systems.
+The fix is minimal (1 line), obviously correct (disables problematic
+feature combination), well-reviewed by relevant maintainers (ARM, RT),
+and carries essentially zero risk. While there's no explicit stable tag,
+the technical merits strongly support backporting.
+
+The sleeping-while-atomic bug would make `get_user_pages_fast()`
+unusable on affected configurations, which is a serious correctness
+issue for PREEMPT_RT users who require deterministic behavior.
 
 **YES**
 
- arch/alpha/include/uapi/asm/ioctls.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/alpha/include/uapi/asm/ioctls.h b/arch/alpha/include/uapi/asm/ioctls.h
-index 971311605288f..a09d04b49cc65 100644
---- a/arch/alpha/include/uapi/asm/ioctls.h
-+++ b/arch/alpha/include/uapi/asm/ioctls.h
-@@ -23,10 +23,10 @@
- #define TCSETSW		_IOW('t', 21, struct termios)
- #define TCSETSF		_IOW('t', 22, struct termios)
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index 4fb985b76e97f..70cd3b5b5a059 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1215,7 +1215,7 @@ config HIGHMEM
  
--#define TCGETA		_IOR('t', 23, struct termio)
--#define TCSETA		_IOW('t', 24, struct termio)
--#define TCSETAW		_IOW('t', 25, struct termio)
--#define TCSETAF		_IOW('t', 28, struct termio)
-+#define TCGETA          0x40127417
-+#define TCSETA          0x80127418
-+#define TCSETAW         0x80127419
-+#define TCSETAF         0x8012741c
- 
- #define TCSBRK		_IO('t', 29)
- #define TCXONC		_IO('t', 30)
+ config HIGHPTE
+ 	bool "Allocate 2nd-level pagetables from highmem" if EXPERT
+-	depends on HIGHMEM
++	depends on HIGHMEM && !PREEMPT_RT
+ 	default y
+ 	help
+ 	  The VM uses one page of physical memory for each page table.
 -- 
 2.51.0
 
