@@ -1,55 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D80872618;
-	Fri, 12 Dec 2025 06:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE57D30E0EF;
+	Fri, 12 Dec 2025 06:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765519952; cv=none; b=Dp5CkZvBSdmhr1AIJ1HBGOGtF1L5YA1IsHqY7gC1NYzZZAZdoheSsVM7SFWWcsZZLmRSxaPGjJkO3N+LkohuLWoYQVFlHYQkp+35TVIWCmHyOMDHC3cvmH8n5tDW4y5O0oiqMTf8ckhK718CfRwconxlBAeDHUznKZLgAueo9Z4=
+	t=1765519956; cv=none; b=KQo7gLYX5bkBguigYUvZQ9f2ffI2DglK4U3Fg1xBGEo/I1yCC8IhZuTVdBbUT7hQyU8o7SAFhT/ZvBwTZP4dz6elRddCuSZu8ITZaLxrZukkgTNwJ0MHNm+7/qPEtU+fx+Nb846lnBnNcLNiWJqTKTg59oisJS8nhm1iHW3mkV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765519952; c=relaxed/simple;
-	bh=tu35v5JnahKDsmp5vWzJfU95RMwm0sPSKcmBSUpkSDs=;
+	s=arc-20240116; t=1765519956; c=relaxed/simple;
+	bh=QKnyW1kaqGZM3cl5GXRxkv7auxKfqIJI2/A7d7lKwu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lK4sVeWkyPSmhVyHm82muYG2JhH1/nHgnswiW9WHJQNoJCntjZLhhtzSLSpYLJ3R1r5fT83pCvSiQj5J9uHSu7SeCFR6kxRf9asoS+BQ4BEYjonIUKaniQ25zuObt6cVSsXP/dn+6QU3rONM+U0NsCeGoHXGcc7BEg31L4UW2uU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Szdrq9GD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ygf0a8rdj77X1NkafJoaP6T+ImV8oKx/5CEdQXZClwxrx/HkKd8eV6hH0NCIpDJr1ovvK+7WYAIdip87ZH4zCwwHH/pi2of6QbrzYMqKdnAxdMPEZWkluTRg8D4H1K5Nt8JABC1GClsyedQ3KFjsdFrYJKMELCjRCX+U/KOk/R4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V+7pp50S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Szdrq9GD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9964CC16AAE;
-	Fri, 12 Dec 2025 06:12:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V+7pp50S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4C0C116B1;
+	Fri, 12 Dec 2025 06:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765519952;
-	bh=tu35v5JnahKDsmp5vWzJfU95RMwm0sPSKcmBSUpkSDs=;
+	s=k20201202; t=1765519955;
+	bh=QKnyW1kaqGZM3cl5GXRxkv7auxKfqIJI2/A7d7lKwu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Szdrq9GDzcfXkTz1z+U+6vV8FIPOGzAfB01ToY0aURn2Eqmimse2bmGIiuHu9i6fZ
-	 jPdpVxBN2O5t9+uT3j1gdpDRQZQZ+tAuqGdPrKrCaTCFTLomVvogf6x5myDGhBhKO7
-	 6qhV6yNRgnZ6/NCpE4fiFWVwpKRZc7S/BfrQZQYITFzeIMEERG3TYrwsMnJTQqR98k
-	 jJFvZuwRYVhjsSklsVmrbEfb0LWxxaYs02uTYnTM6rXxYPyaOGyShTPWFLMhzN53Jx
-	 tFqp/3Gak1U44YAiDTbMJZB60eVjI6ASl1i7EZnKnX+qVpM2VfEept5Nw5F1kZtns5
-	 YJDDUN+dIcHoA==
+	b=V+7pp50Salcbdb/Sn4ifc2dyoQ8FMKZ+0NRksvj1m2Q2A0pRu25kVvqEbQAZpcD24
+	 UD9d8qQ8jReLsyJQSJLyhq00nAp8hCNIhM9s+1LLEyBx1dUxbjjZ/uJn25KEIUirmc
+	 bGTtca7HQRzGSuLPG+e3ucG8dsg+BLpLTcW2tuvuK4FiIWKY0uGpFXGJp6/bA15p1l
+	 cDq4all0cW9kR7To22p2ZZqoYB+V4NEnAIKEBg3OgmkvAL4Ik9GtKKZ7CQRPJ3t7qP
+	 FqK+0UmCMWjOvo4ZxRupX3ZgrKiFYdk1PSxiJZse2fniYzHVBW1OLiAF6Bcap4t6oi
+	 nJolenhQ2VjzQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+Cc: Yang Li <yang.li85200@gmail.com>,
+	Guo Ren <guoren@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux@armlinux.org.uk,
-	clrkwllms@kernel.org,
-	rostedt@goodmis.org,
-	nathan@kernel.org,
-	kees@kernel.org,
-	peterz@infradead.org,
-	lumag@kernel.org,
-	richard@nod.at,
-	chrisi.schrefl@gmail.com,
-	lukas.bulwahn@redhat.com,
-	afd@ti.com,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rt-devel@lists.linux.dev
-Subject: [PATCH AUTOSEL 6.18-5.10] ARM: 9461/1: Disable HIGHPTE on PREEMPT_RT kernels
-Date: Fri, 12 Dec 2025 01:12:12 -0500
-Message-ID: <20251212061223.305139-2-sashal@kernel.org>
+	viro@zeniv.linux.org.uk,
+	linux-csky@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-5.15] csky: fix csky_cmpxchg_fixup not working
+Date: Fri, 12 Dec 2025 01:12:13 -0500
+Message-ID: <20251212061223.305139-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251212061223.305139-1-sashal@kernel.org>
 References: <20251212061223.305139-1-sashal@kernel.org>
@@ -62,183 +49,151 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Yang Li <yang.li85200@gmail.com>
 
-[ Upstream commit fedadc4137234c3d00c4785eeed3e747fe9036ae ]
+[ Upstream commit 809ef03d6d21d5fea016bbf6babeec462e37e68c ]
 
-gup_pgd_range() is invoked with disabled interrupts and invokes
-__kmap_local_page_prot() via pte_offset_map(), gup_p4d_range().
-With HIGHPTE enabled, __kmap_local_page_prot() invokes kmap_high_get()
-which uses a spinlock_t via lock_kmap_any(). This leads to an
-sleeping-while-atomic error on PREEMPT_RT because spinlock_t becomes a
-sleeping lock and must not be acquired in atomic context.
+In the csky_cmpxchg_fixup function, it is incorrect to use the global
+variable csky_cmpxchg_stw to determine the address where the exception
+occurred.The global variable csky_cmpxchg_stw stores the opcode at the
+time of the exception, while &csky_cmpxchg_stw shows the address where
+the exception occurred.
 
-The loop in map_new_virtual() uses wait_queue_head_t for wake up which
-also is using a spinlock_t.
-
-Since HIGHPTE is rarely needed at all, turn it off for PREEMPT_RT
-to allow the use of get_user_pages_fast().
-
-[arnd: rework patch to turn off HIGHPTE instead of HAVE_PAST_GUP]
-
-Co-developed-by: Arnd Bergmann <arnd@arndb.de>
-
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Yang Li <yang.li85200@gmail.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-# Commit Analysis: ARM: 9461/1: Disable HIGHPTE on PREEMPT_RT kernels
+## Analysis of csky: fix csky_cmpxchg_fixup not working
 
-## 1. COMMIT MESSAGE ANALYSIS
+### 1. COMMIT MESSAGE ANALYSIS
 
-**Problem identified**: The commit addresses a "sleeping-while-atomic"
-bug on PREEMPT_RT ARM kernels. The issue occurs because:
-- `gup_pgd_range()` runs with interrupts disabled (atomic context)
-- With HIGHPTE enabled, the code path calls `kmap_high_get()` which
-  acquires a `spinlock_t` via `lock_kmap_any()`
-- On PREEMPT_RT, `spinlock_t` becomes a sleeping lock (mutex)
-- Attempting to acquire a sleeping lock in atomic context is a bug
+**Subject**: "csky: fix csky_cmpxchg_fixup not working" - clearly
+indicates a bug fix
 
-**Tags present**:
-- Acked-by: Linus Walleij (ARM/pinctrl maintainer)
-- Reviewed-by: Arnd Bergmann (major ARM contributor)
-- Signed-off-by: Sebastian Andrzej Siewior (PREEMPT_RT maintainer)
-- Signed-off-by: Russell King (ARM maintainer)
+**Key issue explained**: The commit message describes a fundamental
+semantic error - the code was using the **value** of `csky_cmpxchg_stw`
+(which contains an opcode) when it should have been using the
+**address** of `csky_cmpxchg_stw` (where the instruction is located).
 
-**Missing tags**: No `Cc: stable@vger.kernel.org` or `Fixes:` tag.
+**Missing tags**: No "Cc: stable@vger.kernel.org" or "Fixes:" tag, but
+this doesn't preclude backporting if the fix is clearly warranted.
 
-## 2. CODE CHANGE ANALYSIS
+### 2. CODE CHANGE ANALYSIS
 
-The change is a single-line Kconfig modification:
+The change is extremely surgical - only 2 lines modified:
 
-```diff
-- depends on HIGHMEM
-+       depends on HIGHMEM && !PREEMPT_RT
+```c
+- if (instruction_pointer(regs) == csky_cmpxchg_stw)
+- instruction_pointer_set(regs, csky_cmpxchg_ldw);
++       if (instruction_pointer(regs) == (unsigned
+long)&csky_cmpxchg_stw)
++               instruction_pointer_set(regs, (unsigned
+long)&csky_cmpxchg_ldw);
 ```
 
-This simply prevents the `HIGHPTE` configuration option from being
-selected when `PREEMPT_RT` is enabled. The technical mechanism of the
-bug is clear:
+**Technical explanation**:
+- `csky_cmpxchg_ldw` and `csky_cmpxchg_stw` are external symbols
+  declared as `extern unsigned long` - they represent labels/addresses
+  in the cmpxchg assembly implementation
+- The **value** stored at these symbols is the opcode of the instruction
+- The **address** (`&csky_cmpxchg_stw`) is where the instruction resides
+  in memory
+- The code compares against `instruction_pointer(regs)` which is an
+  address, so it must compare against an address, not an opcode value
 
-1. `get_user_pages_fast()` → `gup_pgd_range()` (runs with interrupts
-   disabled)
-2. → `pte_offset_map()` → `__kmap_local_page_prot()` → `kmap_high_get()`
-3. `kmap_high_get()` calls `lock_kmap_any()` which uses `spinlock_t`
-4. On PREEMPT_RT: `spinlock_t` = sleeping lock → BUG in atomic context
+**Root cause**: Simple semantic error - using value instead of address
 
-The commit message notes that "HIGHPTE is rarely needed at all" - it's
-an optimization to put page tables in high memory, which is typically
-unnecessary on modern systems.
+**Why the bug is severe**: This function handles TLB modification faults
+during compare-and-exchange operations. When such a fault occurs at the
+store instruction, the handler should redirect execution back to the
+load instruction to retry the operation. With the bug, the comparison
+`instruction_pointer(regs) == csky_cmpxchg_stw` would almost never match
+(comparing an address to an opcode), so the fixup **never worked**.
 
-## 3. CLASSIFICATION
+### 3. CLASSIFICATION
 
-- **Bug type**: Runtime crash/BUG (sleeping-while-atomic violation)
-- **Not a new feature**: Disables a problematic configuration
-  combination
-- **Not a security fix**: No CVE or security-sensitive code
-- **Build fix category**: No, this is a runtime issue
+- **Bug fix**: Yes, clearly fixing broken functionality
+- **Security impact**: Potentially - broken cmpxchg can lead to race
+  conditions
+- **Data corruption risk**: Yes - atomic operations that don't work
+  correctly can cause data races
 
-## 4. SCOPE AND RISK ASSESSMENT
+### 4. SCOPE AND RISK ASSESSMENT
 
-**Scope**:
-- 1 file changed (`arch/arm/Kconfig`)
-- 1 line modified
-- Affects only ARM + PREEMPT_RT + HIGHMEM configurations
+- **Lines changed**: 2 lines
+- **Files touched**: 1 file (arch/csky/mm/fault.c)
+- **Subsystem**: CSKY architecture-specific code
+- **Complexity**: Minimal - straightforward address-of fix
+- **Risk**: Very low - the fix is obviously correct and architecture-
+  specific
 
-**Risk**: **Very low**
-- This is a Kconfig dependency change only
-- Users who previously had HIGHPTE enabled will now have it disabled on
-  PREEMPT_RT
-- The workaround is conservative (disable the problematic feature rather
-  than complex code fixes)
-- Cannot introduce regressions in other code paths
+### 5. USER IMPACT
 
-## 5. USER IMPACT
+- **Affected users**: CSKY systems without LDSTEX instructions (when
+  `CONFIG_CPU_HAS_LDSTEX` is not defined)
+- **Severity**: High - broken compare-and-exchange atomic operations can
+  cause:
+  - Race conditions in concurrent code
+  - Data corruption
+  - Deadlocks
+  - Unpredictable behavior in any code using cmpxchg
 
-**Affected users**: ARM systems running PREEMPT_RT kernels with HIGHMEM
-(systems with >~800MB RAM on 32-bit ARM)
+### 6. STABILITY INDICATORS
 
-**Severity**: High for affected users
-- `get_user_pages_fast()` is a commonly used path for I/O and memory
-  management
-- Without this fix, users would hit kernel warnings/crashes when GUP
-  fast path is used
-- This completely breaks PREEMPT_RT usability on affected configurations
+- Signed-off by maintainer Guo Ren (CSKY maintainer)
+- The fix is logically obvious once understood
 
-## 6. STABILITY INDICATORS
+### 7. DEPENDENCY CHECK
 
-**Review chain is strong**:
-- Sebastian Andrzej Siewior (PREEMPT_RT maintainer) developed this
-- Arnd Bergmann reworked and reviewed it
-- Linus Walleij acked it
-- Russell King (ARM maintainer) accepted it
+- No dependencies on other commits
+- The affected code has existed since CSKY was added to the kernel
+- Should apply cleanly to stable trees that have CSKY support
 
-## 7. DEPENDENCY CHECK
+### CONCLUSION
 
-This is a standalone Kconfig change. Dependencies:
-- `PREEMPT_RT` must exist in the kernel - PREEMPT_RT was merged into
-  mainline in kernel 6.12
-- `HIGHPTE` and `HIGHMEM` options exist on ARM in all relevant kernel
-  versions
+This commit clearly meets all stable kernel criteria:
 
-The fix should apply cleanly to any stable tree with PREEMPT_RT support.
+1. **Obviously correct**: The fix is a textbook case of using
+   `&variable` (address) instead of `variable` (value) when comparing
+   against an instruction pointer
+2. **Fixes a real bug**: The cmpxchg fixup mechanism was completely non-
+   functional
+3. **Important issue**: Broken atomic operations can cause data
+   corruption, race conditions, and system instability
+4. **Small and contained**: Only 2 lines changed in one file,
+   architecture-specific
+5. **No new features**: Just fixing existing functionality to actually
+   work
 
-## STABLE KERNEL CRITERIA EVALUATION
-
-| Criterion | Assessment |
-|-----------|------------|
-| Obviously correct | ✅ Yes - disables problematic config combination |
-| Fixes real bug | ✅ Yes - sleeping-while-atomic crash |
-| Important issue | ✅ Yes - crashes on PREEMPT_RT systems |
-| Small and contained | ✅ Yes - 1 line Kconfig change |
-| No new features | ✅ Yes - only disables an option |
-| Clean application | ✅ Yes - simple dependency addition |
-
-## CONCERNS
-
-1. **No explicit stable request**: Maintainers didn't add `Cc: stable`.
-   However, the fix is clearly appropriate for stable.
-2. **PREEMPT_RT availability**: Only relevant for kernels 6.12+ where
-   PREEMPT_RT was merged into mainline.
-
-## CONCLUSION
-
-This commit fixes a real, reproducible crash on ARM PREEMPT_RT systems.
-The fix is minimal (1 line), obviously correct (disables problematic
-feature combination), well-reviewed by relevant maintainers (ARM, RT),
-and carries essentially zero risk. While there's no explicit stable tag,
-the technical merits strongly support backporting.
-
-The sleeping-while-atomic bug would make `get_user_pages_fast()`
-unusable on affected configurations, which is a serious correctness
-issue for PREEMPT_RT users who require deterministic behavior.
+The absence of stable tags appears to be an oversight. This is a
+critical fix for CSKY platforms - without it, the entire cmpxchg fixup
+path is dead code that never triggers when it should.
 
 **YES**
 
- arch/arm/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/csky/mm/fault.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 4fb985b76e97f..70cd3b5b5a059 100644
---- a/arch/arm/Kconfig
-+++ b/arch/arm/Kconfig
-@@ -1215,7 +1215,7 @@ config HIGHMEM
+diff --git a/arch/csky/mm/fault.c b/arch/csky/mm/fault.c
+index a6ca7dff42153..7ff4011089850 100644
+--- a/arch/csky/mm/fault.c
++++ b/arch/csky/mm/fault.c
+@@ -45,8 +45,8 @@ static inline void csky_cmpxchg_fixup(struct pt_regs *regs)
+ 	if (trap_no(regs) != VEC_TLBMODIFIED)
+ 		return;
  
- config HIGHPTE
- 	bool "Allocate 2nd-level pagetables from highmem" if EXPERT
--	depends on HIGHMEM
-+	depends on HIGHMEM && !PREEMPT_RT
- 	default y
- 	help
- 	  The VM uses one page of physical memory for each page table.
+-	if (instruction_pointer(regs) == csky_cmpxchg_stw)
+-		instruction_pointer_set(regs, csky_cmpxchg_ldw);
++	if (instruction_pointer(regs) == (unsigned long)&csky_cmpxchg_stw)
++		instruction_pointer_set(regs, (unsigned long)&csky_cmpxchg_ldw);
+ 	return;
+ }
+ #endif
 -- 
 2.51.0
 
