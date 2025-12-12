@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD31286D64;
-	Fri, 12 Dec 2025 02:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27454279795;
+	Fri, 12 Dec 2025 02:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765505356; cv=none; b=pfF4twE89Gp57AJgVERKYkXGMi67QVAcmhS7B+hmo99TH9/+lCWnmevm7FTBmXB6vMSNpzAIlvunSWjcEg2DwfK14lkNi1rj8eORZh8MS5K53eVMcUwu5pzxJ8GsTWDcNX0dRg/U2XGKuzuW2uEmxD6uuiBQjjL3/Q35hFz0ZDs=
+	t=1765505359; cv=none; b=lNNZVs9UKrlw4N5q+m4q2wTIdlKmkwnOXXERgDh0b4E28PwxLFGnO6eYEVRriVgoOwyiDz+2X1NZzZbOXROATcf3mczLVbCYCg+mmqBAG4FCS/TVPolL/TvdAQIJa9Gs7RlRQ+gQbuG53sfWZyDbPzEVZCT7rpxuKL7gHF/kLQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765505356; c=relaxed/simple;
-	bh=z4MspZqRvGzpBRzvUPz4xOgqwSvyivGgFgRcTxqDEGk=;
+	s=arc-20240116; t=1765505359; c=relaxed/simple;
+	bh=Pr9ZqcgkhMbKEi6u0ojDh7ueS1n1UgUm4OBdvVYogOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QDPFKaqutXLnr5qS7ysJsXYxa2hDmo6il4TZJrsweyRNYTOGViudA3FP4NivkjwdahnI8XISZ+YdBkyz4pkHOr7Nk3MSvyp3ZO0r6U+9COUnDbzXXstoKWf6cFvd0mgzI6mo7MTWMyt6FOCUUI1ylgRcToQnACHTyc0wjbEYbPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLJM5eD2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ebuG1IFWp8bFTx7e8I5edTZrgXwwjJvkCxZTLvAXH/yj7gH2HN9az1Z+GHmPoQ0Ru9fBtc44wR+ENiaMqoWnUU8oMGIac8aLlHwv2XWolLBoGimpd6qqTE2yWJcPYh4bWN1oG3p9uRO9MDb2Es7PmZoCSECXtrIfF+CsiAiuqnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FrmR7j6P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLJM5eD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6884FC113D0;
-	Fri, 12 Dec 2025 02:09:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FrmR7j6P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4946CC4CEF7;
+	Fri, 12 Dec 2025 02:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765505356;
-	bh=z4MspZqRvGzpBRzvUPz4xOgqwSvyivGgFgRcTxqDEGk=;
+	s=k20201202; t=1765505358;
+	bh=Pr9ZqcgkhMbKEi6u0ojDh7ueS1n1UgUm4OBdvVYogOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLJM5eD2DHGyJ/EfzeuotB6JK0GwweZC6Z2HDC15g/SD85gRQXbNbPYJMtcHlp7/A
-	 Qj7PmnElfTSxuL/bYTwPS9p7vNGA93VInF+aJrinRLkTRpk49YYmqRuQISzlIqSfhv
-	 UD3a7+j/6JTvaQbktTLJXbMUnLNmk9auVskUohhZ0K9Z+2/oUONHnTew8Ta2cZta9R
-	 /ZqRJMmuGZBRhcGOX5n4Lxhh2M4fI3pkW6wfej2pgPENBXAM+xGtpUSP3TXtmV6ynz
-	 M53NGaBvbS3jW93/zsWBa7+PyqVs7mAZrsrh/TsGb0JhhuiZdo883Hu+qCuFI3GMPM
-	 meGbfn2rXa3gg==
+	b=FrmR7j6PV0p9nGIgTFJ1HRRwCRBCXqsvtP/ao8kAuurXEJNFKcGY6Le/E3HGFNZRE
+	 ggP2azQQHBmOGiEpvgF2DwPlf+QfPoyl3CMOOuUulQULlo4oT4wBvcoldC/wn9bKwy
+	 FiZg40wEohHEFIO080maMnoDIa8SfOujU0uZDTK4Kq0gc+IF9Hs7zr1K7XTgGKsy0X
+	 imjZYsBqGjDqVBkoVSbwElBsKy4grbazDRiG93aezA4qj4QyoD7pTO6zA9dEPayoek
+	 dqT1fB416W2IDUXB9rgsPDybNpZiW8PK/X3aJwbPGr+QN1kn9DRt140ayU0ppLPPLg
+	 mZ24QL6qgpAmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pei Xiao <xiaopei01@kylinos.cn>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Justin Tee <justintee8345@gmail.com>,
+	Daniel Wagner <wagi@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-hwmon@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.17] hwmon: (emc2305) fix device node refcount leak in error path
-Date: Thu, 11 Dec 2025 21:08:57 -0500
-Message-ID: <20251212020903.4153935-5-sashal@kernel.org>
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org
+Subject: [PATCH AUTOSEL 6.18-6.12] nvme-fabrics: add ENOKEY to no retry criteria for authentication failures
+Date: Thu, 11 Dec 2025 21:08:58 -0500
+Message-ID: <20251212020903.4153935-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251212020903.4153935-1-sashal@kernel.org>
 References: <20251212020903.4153935-1-sashal@kernel.org>
@@ -48,191 +51,143 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pei Xiao <xiaopei01@kylinos.cn>
+From: Justin Tee <justintee8345@gmail.com>
 
-[ Upstream commit 4910da6b36b122db50a27fabf6ab7f8611b60bf8 ]
+[ Upstream commit 13989207ee29c40501e719512e8dc90768325895 ]
 
-The for_each_child_of_node() macro automatically manages device node
-reference counts during normal iteration. However, when breaking out
-of the loop early with return, the current iteration's node is not
-automatically released, leading to a reference count leak.
+With authentication, in addition to EKEYREJECTED there is also no point in
+retrying reconnects when status is ENOKEY.  Thus, add -ENOKEY as another
+criteria to determine when to stop retries.
 
-Fix this by adding of_node_put(child) before returning from the loop
-when emc2305_set_single_tz() fails.
-
-This issue could lead to memory leaks over multiple probe cycles.
-
-Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
-Link: https://lore.kernel.org/r/tencent_5CDC08544C901D5ECA270573D5AEE3117108@qq.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: Daniel Wagner <wagi@kernel.org>
+Cc: Hannes Reinecke <hare@suse.de>
+Closes: https://lore.kernel.org/linux-nvme/20250829-nvme-fc-sync-v3-0-d69c87e63aee@kernel.org/
+Signed-off-by: Justin Tee <justintee8345@gmail.com>
+Tested-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Daniel Wagner <wagi@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: hwmon: (emc2305) fix device node refcount leak in
-error path
+## Comprehensive Analysis
 
 ### 1. COMMIT MESSAGE ANALYSIS
-
-**Subject:** Clear "fix" language indicates a bug fix targeting a
-"refcount leak" in an "error path"
-
-**Body explanation:**
-- The `for_each_child_of_node()` macro manages device node reference
-  counts internally
-- When breaking out of the loop early with `return`, the current node's
-  reference is NOT automatically released
-- This causes a reference count leak leading to memory leaks over
-  multiple probe cycles
-
-**Tags present:**
-- `Signed-off-by` from author and maintainer (Guenter Roeck)
-- `Link:` to mailing list discussion
-
-**Tags missing:**
-- No `Cc: stable@vger.kernel.org`
-- No `Fixes:` tag
+- **Purpose**: Add `-ENOKEY` to prevent pointless reconnect retries when
+  authentication key is missing
+- **Tags**: `Tested-by` (Daniel Wagner), `Reviewed-by` (Daniel Wagner,
+  Hannes Reinecke), `Closes:` (lore link)
+- **Missing**: No explicit `Cc: stable@vger.kernel.org` or `Fixes:` tag
+- **Maintainer signoff**: Keith Busch (NVMe maintainer)
 
 ### 2. CODE CHANGE ANALYSIS
 
-The fix is extremely small and surgical:
-
+The change is minimal - single line modification:
 ```c
-for_each_child_of_node(dev->of_node, child) {
-    ret = emc2305_set_single_tz(dev, child, i);
-- if (ret != 0)
-+   if (ret != 0) {
-+       of_node_put(child);
-        return ret;
-+   }
-    i++;
-}
+- if (status == -EKEYREJECTED)
++       if (status == -EKEYREJECTED || status == -ENOKEY)
 ```
 
-**Technical mechanism:**
-- `for_each_child_of_node()` calls `of_node_get()` on each child
-  internally
-- On normal loop completion, the macro decrements the refcount
-- On early exit (return/break), the caller must manually call
-  `of_node_put()` to release the reference
-- Without this, each failed probe leaves an unreleased reference →
-  memory leak
+**Where `-ENOKEY` is returned:**
+- `drivers/nvme/host/auth.c:720` - No session key negotiated
+- `drivers/nvme/host/auth.c:973` - No host key (`ctrl->host_key` is
+  NULL)
+- `drivers/nvme/host/auth.c:978` - Controller key configured but invalid
+- `drivers/nvme/host/tcp.c:1698,2080,2112,2121` - Various TLS/PSK key
+  failures
 
-**Root cause:** Missing required cleanup call when breaking out of
-device tree iterator macro
+All these represent "key does not exist" scenarios where retrying cannot
+help.
 
-**Why fix is correct:** This is the standard, well-documented pattern in
-the Linux kernel for handling early exits from
-`for_each_child_of_node()`. Adding `of_node_put(child)` before return is
-textbook correct.
+**Function impact:** `nvmf_should_reconnect()` is called by all three
+NVMe fabric transports (TCP, FC, RDMA) via
+`nvme_tcp_reconnect_or_remove()`, `nvme_fc_reconnect_or_delete()`, and
+`nvme_rdma_reconnect_or_remove()`.
 
 ### 3. CLASSIFICATION
-
-- **Bug type:** Resource leak (reference count / memory leak)
-- **Category:** Standard bug fix
-- **Security:** Not a security issue
-- **New features:** None
+- **Bug fix**: Yes - fixes futile retry behavior
+- **New feature**: No - extends existing error handling pattern
+- **Follows established pattern**: The `-EKEYREJECTED` check was added
+  in v6.10 (commit 0e34bd9605f6c) with identical logic
 
 ### 4. SCOPE AND RISK ASSESSMENT
-
-| Metric | Value |
-|--------|-------|
-| Lines changed | 3 (effectively +1 functional line) |
-| Files touched | 1 |
-| Complexity | Very low |
-| Risk | Near zero |
-
-**Risk analysis:**
-- The fix only adds a cleanup call in an error path that already returns
-  immediately
-- Cannot possibly affect normal operation
-- The `of_node_put()` function is well-tested core kernel infrastructure
-- Adding required cleanup where it was missing cannot cause regression
+- **Lines changed**: 1
+- **Files touched**: 1
+- **Complexity**: Trivial
+- **Risk**: Extremely low - change only affects reconnect decision for
+  an already-failed authentication
+- **Regression potential**: Near zero - the code path only executes when
+  authentication already failed
 
 ### 5. USER IMPACT
-
-**Affected users:** Those with EMC2305 fan controller hardware using
-device tree
-
-**Trigger conditions:**
-1. Device must have child nodes in device tree
-2. `emc2305_set_single_tz()` must fail
-3. Must happen repeatedly over time
-
-**Severity:** Low to medium - memory leak that accumulates over multiple
-failed probe cycles. Not a crash or security issue, but can eventually
-exhaust memory on long-running systems.
+- **Who is affected**: Users of NVMe Fabrics (TCP/RDMA/FC) with
+  authentication enabled
+- **Severity without fix**: Wasteful reconnect retries, potential log
+  spam, resource consumption
+- **Not a crash/data corruption**: This is a behavioral improvement, not
+  a critical fix
 
 ### 6. STABILITY INDICATORS
-
-- Accepted by hwmon subsystem maintainer (Guenter Roeck)
-- Simple, well-understood fix pattern
-- No complex interactions possible
+- Tested by Daniel Wagner (NVMe developer)
+- Reviewed by Daniel Wagner and Hannes Reinecke (both storage/NVMe
+  experts)
+- Clean, simple change with clear semantics
 
 ### 7. DEPENDENCY CHECK
+- Requires commit `0e34bd9605f6c` ("nvme: do not retry authentication
+  failures") from v6.10
+- NVMe authentication feature itself was added in v6.1 (`f50fff73d620c`)
+- Backport applies cleanly to trees with the `-EKEYREJECTED` check
 
-- No dependencies on other commits
-- `for_each_child_of_node()` and `of_node_put()` are long-standing
-  kernel APIs
-- The emc2305 driver must exist in the target stable tree
+### Decision Rationale
 
----
+**Pros for backporting:**
+- Trivial one-line change with zero regression risk
+- Fixes real wasteful behavior (pointless retries that can never
+  succeed)
+- Follows existing code pattern already established
+- Reviewed and tested by domain experts
+- Semantically correct: `-ENOKEY` means "no key available" - retry won't
+  create one
 
-## Summary
+**Cons for backporting:**
+- No explicit `Cc: stable@vger.kernel.org` tag from maintainers
+- Not a crash, security bug, or data corruption fix
+- NVMe authentication is a relatively niche feature
+- Bug impact is resource waste, not functional failure
 
-**What the commit fixes:** A device node reference count leak in the
-emc2305 hwmon driver that occurs when `emc2305_set_single_tz()` fails
-during probe. This can lead to memory leaks over multiple probe cycles.
-
-**Stable kernel rules assessment:**
-1. ✅ **Obviously correct:** Standard kernel pattern, textbook fix
-2. ✅ **Fixes real bug:** Yes, reference count leak causing memory leak
-3. ⚠️ **Important issue:** Moderate severity - memory leak in error path
-4. ✅ **Small and contained:** 3 lines changed in 1 file
-5. ✅ **No new features:** Pure bug fix
-6. ✅ **Clean application:** Should apply cleanly
-
-**Risk vs Benefit:**
-- **Risk:** Essentially zero - adds required cleanup in error path
-- **Benefit:** Prevents memory leak on systems using this hardware
-
-**Concerns:**
-- No explicit `Cc: stable` tag from maintainer
-- Bug requires specific error condition to trigger
-- Affects only specific hardware
-
-**Verdict:** Despite the lack of explicit stable tagging, this fix is a
-textbook example of a safe backport candidate. The fix is trivially
-correct, follows a well-established kernel pattern, has zero risk of
-regression, and fixes a real (if low-severity) resource leak. Similar
-`for_each_child_of_node()` refcount leak fixes are regularly backported
-to stable trees.
+**Conclusion:**
+This is a low-risk, obviously correct bug fix that prevents wasteful
+behavior. While it lacks explicit stable tags and isn't fixing a
+critical bug, the change is so simple and safe that the benefit-to-risk
+ratio strongly favors inclusion. The fix completes the authentication
+error handling that was started with the `-EKEYREJECTED` check, making
+it a natural complement to that existing code. Stable kernel users with
+NVMe authentication would benefit from not having pointless reconnection
+storms when their keys are missing.
 
 **YES**
 
- drivers/hwmon/emc2305.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/fabrics.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
-index 60809289f8169..84cb9b72cb6c2 100644
---- a/drivers/hwmon/emc2305.c
-+++ b/drivers/hwmon/emc2305.c
-@@ -685,8 +685,10 @@ static int emc2305_probe(struct i2c_client *client)
- 			i = 0;
- 			for_each_child_of_node(dev->of_node, child) {
- 				ret = emc2305_set_single_tz(dev, child, i);
--				if (ret != 0)
-+				if (ret != 0) {
-+					of_node_put(child);
- 					return ret;
-+				}
- 				i++;
- 			}
- 		} else {
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index 2e58a7ce10905..55a8afd2efd50 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -592,7 +592,7 @@ bool nvmf_should_reconnect(struct nvme_ctrl *ctrl, int status)
+ 	if (status > 0 && (status & NVME_STATUS_DNR))
+ 		return false;
+ 
+-	if (status == -EKEYREJECTED)
++	if (status == -EKEYREJECTED || status == -ENOKEY)
+ 		return false;
+ 
+ 	if (ctrl->opts->max_reconnects == -1 ||
 -- 
 2.51.0
 
