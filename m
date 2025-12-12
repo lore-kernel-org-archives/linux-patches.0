@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5661990C7;
-	Fri, 12 Dec 2025 02:09:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD31286D64;
+	Fri, 12 Dec 2025 02:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765505355; cv=none; b=lpsSh0JAg7Pc+ueiy9jZeUcT8+ppu3H4u1Gt2o06qtsioiEJyBdLDZbmS6IbjBcYyJND5LFF/0udVeFD4Y4g9Wh0blBYaxNvMZZ+Q7f1OY+zU0jMR44Qlt+iDVIsJS8QE6YwUfy7qasbgHcCiyVRb1jqoQlBV2/mL7m/21YTjf4=
+	t=1765505356; cv=none; b=pfF4twE89Gp57AJgVERKYkXGMi67QVAcmhS7B+hmo99TH9/+lCWnmevm7FTBmXB6vMSNpzAIlvunSWjcEg2DwfK14lkNi1rj8eORZh8MS5K53eVMcUwu5pzxJ8GsTWDcNX0dRg/U2XGKuzuW2uEmxD6uuiBQjjL3/Q35hFz0ZDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765505355; c=relaxed/simple;
-	bh=Q0zPclX8sDJjPyfg/Ub1RrRNa1FZeWqxEeqLAcXePMU=;
+	s=arc-20240116; t=1765505356; c=relaxed/simple;
+	bh=z4MspZqRvGzpBRzvUPz4xOgqwSvyivGgFgRcTxqDEGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DC+P+9xi+PUPo/6B+Q5JFqwfslt3erFBEc1oJ61h6ogBE4qjXHebY6Z/84Pi8oc7si/7Y03kiqnuRKSErczfA4h7WAjwmaL1Q0HP/AtmhRxyUj4cWB3Z/TJ7CCMlY7b+DdN+q2dBNE8BmJjmNaY3Kdjv9I+vn9Jh+a0iabAFiaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZBtahSZX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QDPFKaqutXLnr5qS7ysJsXYxa2hDmo6il4TZJrsweyRNYTOGViudA3FP4NivkjwdahnI8XISZ+YdBkyz4pkHOr7Nk3MSvyp3ZO0r6U+9COUnDbzXXstoKWf6cFvd0mgzI6mo7MTWMyt6FOCUUI1ylgRcToQnACHTyc0wjbEYbPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RLJM5eD2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZBtahSZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4044FC19421;
-	Fri, 12 Dec 2025 02:09:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RLJM5eD2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6884FC113D0;
+	Fri, 12 Dec 2025 02:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765505354;
-	bh=Q0zPclX8sDJjPyfg/Ub1RrRNa1FZeWqxEeqLAcXePMU=;
+	s=k20201202; t=1765505356;
+	bh=z4MspZqRvGzpBRzvUPz4xOgqwSvyivGgFgRcTxqDEGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBtahSZXikRp4sHZ8WUpliESIkwhaHmjMgkOXsDYieCqQN5aSiYFKPW2deH3kY9QW
-	 gZ2izzUIUpHyXvwf+mKGGwOQYzOcCya3i0bTvrLFwFKUUdO0RvtONnsdu7CPppQkxS
-	 jIGpu8mYuM2VB0lPFedmazPBAhSk3ZkbrPHwtbOCh0veDLM7VPvbQX56JcoE2DGD5h
-	 ovNi+qUt0Ii+LpTtepkF+/5IwZKRH0Zzw12MgNU4d9k3aU8btpqaIZ4s6ZZGegdVTh
-	 Y+csX4vaa2sGw6baTTYPHxaqSFssG/S0ln1xh0J4eVryUdeCX7G+HA9aIJ2BOqxBaJ
-	 v2NXlNQE1wjyw==
+	b=RLJM5eD2DHGyJ/EfzeuotB6JK0GwweZC6Z2HDC15g/SD85gRQXbNbPYJMtcHlp7/A
+	 Qj7PmnElfTSxuL/bYTwPS9p7vNGA93VInF+aJrinRLkTRpk49YYmqRuQISzlIqSfhv
+	 UD3a7+j/6JTvaQbktTLJXbMUnLNmk9auVskUohhZ0K9Z+2/oUONHnTew8Ta2cZta9R
+	 /ZqRJMmuGZBRhcGOX5n4Lxhh2M4fI3pkW6wfej2pgPENBXAM+xGtpUSP3TXtmV6ynz
+	 M53NGaBvbS3jW93/zsWBa7+PyqVs7mAZrsrh/TsGb0JhhuiZdo883Hu+qCuFI3GMPM
+	 meGbfn2rXa3gg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
-	Armin Wolf <W_Armin@gmx.de>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Pei Xiao <xiaopei01@kylinos.cn>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>,
-	platform-driver-x86@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-6.17] platform/x86: wmi-gamezone: Add Legion Go 2 Quirks
-Date: Thu, 11 Dec 2025 21:08:56 -0500
-Message-ID: <20251212020903.4153935-4-sashal@kernel.org>
+	linux-hwmon@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.17] hwmon: (emc2305) fix device node refcount leak in error path
+Date: Thu, 11 Dec 2025 21:08:57 -0500
+Message-ID: <20251212020903.4153935-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251212020903.4153935-1-sashal@kernel.org>
 References: <20251212020903.4153935-1-sashal@kernel.org>
@@ -47,177 +45,194 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Derek J. Clark" <derekjohn.clark@gmail.com>
+From: Pei Xiao <xiaopei01@kylinos.cn>
 
-[ Upstream commit 55715d7ad5e772d621c3201da3895f250591bce8 ]
+[ Upstream commit 4910da6b36b122db50a27fabf6ab7f8611b60bf8 ]
 
-Add Legion Go 2 SKU's to the Extreme Mode quirks table.
+The for_each_child_of_node() macro automatically manages device node
+reference counts during normal iteration. However, when breaking out
+of the loop early with return, the current iteration's node is not
+automatically released, leading to a reference count leak.
 
-Signed-off-by: Derek J. Clark <derekjohn.clark@gmail.com>
-Reviewed-by: Armin Wolf <W_Armin@gmx.de>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/20251127151605.1018026-4-derekjohn.clark@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fix this by adding of_node_put(child) before returning from the loop
+when emc2305_set_single_tz() fails.
+
+This issue could lead to memory leaks over multiple probe cycles.
+
+Signed-off-by: Pei Xiao <xiaopei01@kylinos.cn>
+Link: https://lore.kernel.org/r/tencent_5CDC08544C901D5ECA270573D5AEE3117108@qq.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: platform/x86: wmi-gamezone: Add Legion Go 2
-Quirks
+## Analysis of Commit: hwmon: (emc2305) fix device node refcount leak in
+error path
 
 ### 1. COMMIT MESSAGE ANALYSIS
 
-**Subject:** Adds Legion Go 2 SKUs to the Extreme Mode quirks table
+**Subject:** Clear "fix" language indicates a bug fix targeting a
+"refcount leak" in an "error path"
+
+**Body explanation:**
+- The `for_each_child_of_node()` macro manages device node reference
+  counts internally
+- When breaking out of the loop early with `return`, the current node's
+  reference is NOT automatically released
+- This causes a reference count leak leading to memory leaks over
+  multiple probe cycles
 
 **Tags present:**
-- Multiple Reviewed-by tags (3 reviewers: Armin Wolf, Mark Pearson, Ilpo
-  Järvinen)
-- Signed-off-by tags
+- `Signed-off-by` from author and maintainer (Guenter Roeck)
+- `Link:` to mailing list discussion
 
-**Tags absent:**
+**Tags missing:**
 - No `Cc: stable@vger.kernel.org`
 - No `Fixes:` tag
 
 ### 2. CODE CHANGE ANALYSIS
 
-The change is minimal and mechanical:
-- Adds two new DMI entries to the existing `fwbug_list[]` table
-- New entries: "Legion Go 8ASP2" and "Legion Go 8AHP2" (Legion Go 2
-  variants)
-- Both use the same `&quirk_no_extreme_bug` quirk as existing Legion Go
-  devices
-- Also removes a stray blank line (cleanup)
+The fix is extremely small and surgical:
 
-The structure is identical to existing entries - DMI vendor/product
-matching to apply a known quirk.
+```c
+for_each_child_of_node(dev->of_node, child) {
+    ret = emc2305_set_single_tz(dev, child, i);
+- if (ret != 0)
++   if (ret != 0) {
++       of_node_put(child);
+        return ret;
++   }
+    i++;
+}
+```
 
-### 3. CLASSIFICATION: QUIRK/DEVICE-ID ADDITION
+**Technical mechanism:**
+- `for_each_child_of_node()` calls `of_node_get()` on each child
+  internally
+- On normal loop completion, the macro decrements the refcount
+- On early exit (return/break), the caller must manually call
+  `of_node_put()` to release the reference
+- Without this, each failed probe leaves an unreleased reference →
+  memory leak
 
-This falls into **two explicit exception categories** for stable:
+**Root cause:** Missing required cleanup call when breaking out of
+device tree iterator macro
 
-1. **Device ID Addition:** Adding DMI identifiers to an existing driver
-   to enable hardware support
-2. **Hardware Quirk:** The `quirk_no_extreme_bug` works around firmware
-   bugs where devices falsely report extreme thermal mode support
+**Why fix is correct:** This is the standard, well-documented pattern in
+the Linux kernel for handling early exits from
+`for_each_child_of_node()`. Adding `of_node_put(child)` before return is
+textbook correct.
 
-Without this quirk, the driver would attempt to enable "extreme mode" on
-Legion Go 2 devices that have incomplete BIOS implementations,
-potentially causing thermal management issues.
+### 3. CLASSIFICATION
+
+- **Bug type:** Resource leak (reference count / memory leak)
+- **Category:** Standard bug fix
+- **Security:** Not a security issue
+- **New features:** None
 
 ### 4. SCOPE AND RISK ASSESSMENT
 
 | Metric | Value |
 |--------|-------|
-| Lines added | ~14 (two DMI table entries) |
-| Files changed | 1 |
+| Lines changed | 3 (effectively +1 functional line) |
+| Files touched | 1 |
 | Complexity | Very low |
-| Risk | Minimal |
+| Risk | Near zero |
 
 **Risk analysis:**
-- Change only affects Legion Go 2 hardware (DMI matching ensures
-  isolation)
-- Uses exact same quirk mechanism proven with existing Legion Go devices
-- No new code paths introduced
-- Pattern identical to existing well-tested entries
+- The fix only adds a cleanup call in an error path that already returns
+  immediately
+- Cannot possibly affect normal operation
+- The `of_node_put()` function is well-tested core kernel infrastructure
+- Adding required cleanup where it was missing cannot cause regression
 
 ### 5. USER IMPACT
 
-**Affected users:** Legion Go 2 (8ASP2/8AHP2) owners
+**Affected users:** Those with EMC2305 fan controller hardware using
+device tree
 
-**Without this fix:** These devices might have their thermal
-profiles/extreme mode misconfigured due to firmware bugs, potentially
-causing:
-- Unexpected platform profile behavior
-- Incorrect thermal mode settings
+**Trigger conditions:**
+1. Device must have child nodes in device tree
+2. `emc2305_set_single_tz()` must fail
+3. Must happen repeatedly over time
 
-**Severity:** Moderate - hardware usability issue
+**Severity:** Low to medium - memory leak that accumulates over multiple
+failed probe cycles. Not a crash or security issue, but can eventually
+exhaust memory on long-running systems.
 
 ### 6. STABILITY INDICATORS
 
-- **3 Reviewed-by tags** from different reviewers (strong review
-  coverage)
-- Pattern is well-established in the driver
-- Mechanical, predictable change
+- Accepted by hwmon subsystem maintainer (Guenter Roeck)
+- Simple, well-understood fix pattern
+- No complex interactions possible
 
 ### 7. DEPENDENCY CHECK
 
-The wmi-gamezone driver needs to exist in the target stable tree. This
-is a relatively new driver (for Legion Go devices released ~2023), so it
-may only exist in recent stable branches (6.6+). If the driver doesn't
-exist in older stables, the patch simply won't apply.
+- No dependencies on other commits
+- `for_each_child_of_node()` and `of_node_put()` are long-standing
+  kernel APIs
+- The emc2305 driver must exist in the target stable tree
 
-### DECISION RATIONALE
+---
 
-**Arguments FOR backporting:**
-1. Classic quirk addition - explicitly allowed exception in stable rules
-2. Equivalent to device ID addition for new hardware SKUs
-3. Very small, surgical change with minimal risk
-4. Uses existing infrastructure and proven quirk
-5. Well-reviewed (3 reviewers)
-6. Fixes real hardware behavior issues (firmware bugs)
-7. DMI matching isolates impact to specific hardware only
+## Summary
 
-**Arguments AGAINST:**
-1. No explicit `Cc: stable` tag from maintainer
-2. Adds support for new hardware (could be viewed as feature)
-3. Driver may not exist in older stable trees
+**What the commit fixes:** A device node reference count leak in the
+emc2305 hwmon driver that occurs when `emc2305_set_single_tz()` fails
+during probe. This can lead to memory leaks over multiple probe cycles.
 
-**Conclusion:**
+**Stable kernel rules assessment:**
+1. ✅ **Obviously correct:** Standard kernel pattern, textbook fix
+2. ✅ **Fixes real bug:** Yes, reference count leak causing memory leak
+3. ⚠️ **Important issue:** Moderate severity - memory leak in error path
+4. ✅ **Small and contained:** 3 lines changed in 1 file
+5. ✅ **No new features:** Pure bug fix
+6. ✅ **Clean application:** Should apply cleanly
 
-This commit is a textbook example of a hardware quirk addition that's
-appropriate for stable backporting. The stable kernel documentation
-explicitly allows:
-- Adding device IDs to existing drivers
-- Adding hardware quirks/workarounds for buggy devices
+**Risk vs Benefit:**
+- **Risk:** Essentially zero - adds required cleanup in error path
+- **Benefit:** Prevents memory leak on systems using this hardware
 
-The change is small (~14 lines), low risk (DMI-isolated to specific
-hardware), uses existing proven mechanisms, and fixes real hardware
-issues. The lack of an explicit stable tag isn't disqualifying - many
-valid stable patches don't include it. Stable maintainers can determine
-applicability based on whether the driver exists in their trees.
+**Concerns:**
+- No explicit `Cc: stable` tag from maintainer
+- Bug requires specific error condition to trigger
+- Affects only specific hardware
+
+**Verdict:** Despite the lack of explicit stable tagging, this fix is a
+textbook example of a safe backport candidate. The fix is trivially
+correct, follows a well-established kernel pattern, has zero risk of
+regression, and fixes a real (if low-severity) resource leak. Similar
+`for_each_child_of_node()` refcount leak fixes are regularly backported
+to stable trees.
 
 **YES**
 
- drivers/platform/x86/lenovo/wmi-gamezone.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/hwmon/emc2305.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/lenovo/wmi-gamezone.c b/drivers/platform/x86/lenovo/wmi-gamezone.c
-index 0eb7fe8222f4a..b26806b37d960 100644
---- a/drivers/platform/x86/lenovo/wmi-gamezone.c
-+++ b/drivers/platform/x86/lenovo/wmi-gamezone.c
-@@ -274,8 +274,23 @@ static const struct dmi_system_id fwbug_list[] = {
- 		},
- 		.driver_data = &quirk_no_extreme_bug,
- 	},
-+	{
-+		.ident = "Legion Go 8ASP2",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Legion Go 8ASP2"),
-+		},
-+		.driver_data = &quirk_no_extreme_bug,
-+	},
-+	{
-+		.ident = "Legion Go 8AHP2",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Legion Go 8AHP2"),
-+		},
-+		.driver_data = &quirk_no_extreme_bug,
-+	},
- 	{},
--
- };
- 
- /**
+diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
+index 60809289f8169..84cb9b72cb6c2 100644
+--- a/drivers/hwmon/emc2305.c
++++ b/drivers/hwmon/emc2305.c
+@@ -685,8 +685,10 @@ static int emc2305_probe(struct i2c_client *client)
+ 			i = 0;
+ 			for_each_child_of_node(dev->of_node, child) {
+ 				ret = emc2305_set_single_tz(dev, child, i);
+-				if (ret != 0)
++				if (ret != 0) {
++					of_node_put(child);
+ 					return ret;
++				}
+ 				i++;
+ 			}
+ 		} else {
 -- 
 2.51.0
 
