@@ -1,33 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1282B2D7;
-	Sat, 13 Dec 2025 06:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D9A301007;
+	Sat, 13 Dec 2025 10:58:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765606615; cv=none; b=I2atECHwt4qKgDNI3lNhkzKV12Klh4PsRO/rXQFf5L0797Ht6COf4XQocvIZ2Pc1ipIZbjgSGzDlic38lwUn62C+k1D/vfXa0zqn1/KwRl0Ph0Erk2Ws1wGFz975ypcRKgLJl0CzSoAx+aJEsKvPai/iUWA3qj8LtLjRoJW2hfc=
+	t=1765623508; cv=none; b=DN1dcXJZ+ATJfS1dbIAs/y1RhaJ0c+yyP6P70L51jxtY6FtIVuiMeFHLU35Ks2GJ/ssdNx71GSMMdnb8XX+GAJiwl67Eh9Yc4oBh4u5+MfZAvy303q2dI3uOQbHGw81BymdeDIvb9gK2zbyIcwUYGEzCNVDRaamQqJ8ZDyiZJKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765606615; c=relaxed/simple;
-	bh=sTK1YGj6eKx5Gicnu8MwLR39ZdM9m/hCqbZOnP6BLvM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=s8Oja+85iyP7G2fc9NpU4Eyd1Q5713g3SWroX8EjJd602o/lR/lRZ8y4PSqcIq7hx/HXdtle//oYaK54OL49O3424BMUShKLqb1CSQKtAulH/x1PAPHlibno1g92zg44iFlyvkr1ErGYK5Oqe39ne/51GWAPRsgRzwvY8ZWNL4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BCx/DiFY; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765623508; c=relaxed/simple;
+	bh=Ucl3OPnHpTM6oU8v9dwhOz9vILAPPYr9o2OmUxvb5Qc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=gSA35H5wWUppv4C322dk5vWDNksJ1vuaVnXK7sOpHnlE8bdhVbCmc+fGvhAi8WhfZ+BOQRJASwgrL53RPyLQ3AKF0uF5LJ1Q9Yx8ZQJ0l5mVmXmpo3cD8AKFgGbbjT8b3ei2UAgWqN3QMUJl21rlhgZ6ViiNzjAbsM8uBYmr4dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SU7c01Fj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BCx/DiFY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C77AC4CEF7;
-	Sat, 13 Dec 2025 06:16:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SU7c01Fj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B50DC4CEF7;
+	Sat, 13 Dec 2025 10:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765606615;
-	bh=sTK1YGj6eKx5Gicnu8MwLR39ZdM9m/hCqbZOnP6BLvM=;
-	h=From:Date:Subject:To:Cc:From;
-	b=BCx/DiFYF0Cm+b/S0kXjjRkkvo7nUgLni7sz1Z8q4nAO4dHe4aymGHirPoVsfPcEK
-	 146Wlgo2YKVlbuzIDt50IlKYLStuex/MK15b6StglIhZlmxiuKQ84XDr7ofatk0Ui3
-	 5+gc3Fl7JzOzKJxpTmAKes4J8V015wxnqfUq4WEQDpYCGPHKH8C7nxP6QeDtlM9FsN
-	 voVTajLQs7mjwEUsJIYTrxr5NFzPZQGSH9UdJTmee6tVTYegHEgHaIo5/inzqzFTs9
-	 mSWPWSZW/FdFeWLmZHO7lifEl5MzxtgeZb9KIE5IdjJRFgON/RXn42/0bjyXodpX/o
-	 PsBbsqacRwS/g==
+	s=k20201202; t=1765623508;
+	bh=Ucl3OPnHpTM6oU8v9dwhOz9vILAPPYr9o2OmUxvb5Qc=;
+	h=From:Subject:Date:To:Cc:From;
+	b=SU7c01FjXKiM+eeefYYCv06yZ59yc2IkIf9mMec5Ya3pUfS1QOkb0I37fwLJ0xSFs
+	 73IzHqHT8egUpSInuUP7b+4v0GMd9X2Ke1Waieub8mHNNkRqUw6cHIMqzVQKjG1aDW
+	 RmpoBZDkHNI0PVBDczktGs856V8g+bceox75iTfaYD+8ze78smKGdmxBdYlBygOM9d
+	 7gziIc8GXjsV1az4zMaYkVPg+sRgtxlkSIEUlHPextvUhy3Pw2/PpVGd2W+ApcJlZe
+	 ouTZn7K8h/BFanlbXohAOaNtqlnpNT90VjCShVZMX4rvw1lIRVxWwFrqlECvulIUsF
+	 yfsfxbdHHzlUA==
 From: Nathan Chancellor <nathan@kernel.org>
-Date: Sat, 13 Dec 2025 15:16:43 +0900
-Subject: [PATCH] drm/amd/display: Apply e4479aecf658 to dml
+Subject: [PATCH 0/2] drm/amd/display: Address -Wframe-larger-than with
+ clang-22
+Date: Sat, 13 Dec 2025 19:58:09 +0900
+Message-Id: <20251213-dml-dcn30-avoid-clang-frame-larger-than-v1-0-dd3d74b76a17@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,11 +38,10 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251213-dml-bump-frame-warn-clang-sanitizers-v1-1-0e91608db9eb@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAMoEPWkC/yXN0QrCMAyF4VcZuTawdiroq4gXWZdqZK0j2XRs7
- N2tevnB4T8rGKuwwblaQfklJs9c4HYVhDvlG6N0xeBrf3DeNdilHtspDRiVEuObNGPoyxKNsoy
- ysBrW1OxjOLkjcYCSGpSjzL+by/Vvm9oHh/Hbhm37AH/qiS+IAAAA
-X-Change-ID: 20251213-dml-bump-frame-warn-clang-sanitizers-0a34fc916aec
+X-B4-Tracking: v=1; b=H4sIAMFGPWkC/yWNywrCMBBFf6XM2oE8VKi/Ii6myaSOpKlMahFK/
+ 92oywPnnrtBZRWucOk2UF6lylwa2EMH4U5lZJTYGJxxJ+usxzhljKF4g7TOEjHkZmFSmhgz6ci
+ KSxuiP1OK/tjb3gzQak/lJO/f0/X25/oaHhyWbx72/QNqdHdMiwAAAA==
+X-Change-ID: 20251213-dml-dcn30-avoid-clang-frame-larger-than-36afd349190b
 To: Austin Zheng <austin.zheng@amd.com>, Jun Lei <jun.lei@amd.com>, 
  Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
  Rodrigo Siqueira <siqueira@igalia.com>, 
@@ -49,69 +50,41 @@ To: Austin Zheng <austin.zheng@amd.com>, Jun Lei <jun.lei@amd.com>,
 Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, 
  Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>, 
  amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
  Nathan Chancellor <nathan@kernel.org>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2441; i=nathan@kernel.org;
- h=from:subject:message-id; bh=sTK1YGj6eKx5Gicnu8MwLR39ZdM9m/hCqbZOnP6BLvM=;
- b=owGbwMvMwCUmm602sfCA1DTG02pJDJm2LJcNlgga6tv4uJbunheUZOjHWdZe2RBQy2h6XND96
- AG39CsdpSwMYlwMsmKKLNWPVY8bGs45y3jj1CSYOaxMIEMYuDgFYCJLmRgZ1upuvF7lKNurrav6
- erL81lcOC06rLTWp5L9pKKk+/9Xxq4wMvTditv5aGH/ntGScz1xrW7Omm5vCdVokrSzipt+88aK
- THwA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1158; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=Ucl3OPnHpTM6oU8v9dwhOz9vILAPPYr9o2OmUxvb5Qc=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJm2bhccWGtvP/5seSEpl0M4+qX73BSetX2ddftnW8htM
+ otKv8LRUcrCIMbFICumyFL9WPW4oeGcs4w3Tk2CmcPKBDKEgYtTACZibMfIsPL35r1KElxeVo1K
+ HKxyz000jicIFYndiJrY2rBSrCVmMcM/o0r+8y68svN4mtLE/73Qlp0362VNx9flrwKnRxV6G29
+ iBwA=
 X-Developer-Key: i=nathan@kernel.org; a=openpgp;
  fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-After an innocuous optimization change in clang-22, allmodconfig (which
-enables CONFIG_KASAN and CONFIG_WERROR) breaks with:
+Hi all,
 
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.c:1724:6: error: stack frame size (3144) exceeds limit (3072) in 'dml32_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
-   1724 | void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
-        |      ^
+This series addresses a new instance of -Wframe-larger-than in
+drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c with
+clang-22 (current main). This is similar to previous fixes that I have
+done in other dml folders such as:
 
-With clang-21, this function was already pretty close to the existing
-limit of 3072 bytes.
+  a3fef74b1d48 ("drm/amd/display: Reduce number of arguments of dml32_CalculatePrefetchSchedule()")
+  c4be0ac987f2 ("drm/amd/display: Reduce number of arguments of dml32_CalculateWatermarksMALLUseAndDRAMSpeedChangeSupport()")
 
-  drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.c:1724:6: error: stack frame size (2904) exceeds limit (2048) in 'dml32_ModeSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
-   1724 | void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_lib)
-        |      ^
+This was done fairly mechanically, so let me know if there are any
+issues, as it has only been build tested.
 
-A similar situation occurred in dml2, which was resolved by
-commit e4479aecf658 ("drm/amd/display: Increase sanitizer frame larger
-than limit when compile testing with clang") by increasing the limit for
-clang when compile testing with certain sanitizer enabled, so that
-allmodconfig (an easy testing target) continues to work.
-
-Apply that same change to the dml folder to clear up the warning for
-allmodconfig, unbreaking the build.
-
-Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2135
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/Makefile | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Nathan Chancellor (2):
+      drm/amd/display: Reduce number of arguments of dcn30's CalculatePrefetchSchedule()
+      drm/amd/display: Reduce number of arguments of dcn30's CalculateWatermarksAndDRAMSpeedChangeSupport()
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-index b357683b4255..268b5fbdb48b 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-@@ -30,7 +30,11 @@ dml_rcflags := $(CC_FLAGS_NO_FPU)
- 
- ifneq ($(CONFIG_FRAME_WARN),0)
-     ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
--        frame_warn_limit := 3072
-+        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
-+            frame_warn_limit := 4096
-+        else
-+            frame_warn_limit := 3072
-+        endif
-     else
-         frame_warn_limit := 2048
-     endif
-
+ .../amd/display/dc/dml/dcn30/display_mode_vba_30.c | 545 ++++++---------------
+ 1 file changed, 139 insertions(+), 406 deletions(-)
 ---
 base-commit: f24e96d69f5b9eb0f3b9c49e53c385c50729edfd
-change-id: 20251213-dml-bump-frame-warn-clang-sanitizers-0a34fc916aec
+change-id: 20251213-dml-dcn30-avoid-clang-frame-larger-than-36afd349190b
 
 Best regards,
 --  
