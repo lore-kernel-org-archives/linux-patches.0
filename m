@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30E22F83B0;
-	Mon, 15 Dec 2025 00:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D5A2F83B0;
+	Mon, 15 Dec 2025 00:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765759309; cv=none; b=Ytr7688yc94JFyASxQBN83TkLlvIcTxm8aISTttKU5Rn2+/f8RVB6mHLQ/SSfE56bi7ArbZ+1CQhjJwDCTRQU8F966lhaHPzg70NsE4NvESk5nIk7jiz77Xixj5R5X/XykgM+U/o0R4PgU3Vkur0MfcbU7HYfSCQMThLq6xs/WI=
+	t=1765759310; cv=none; b=EYQsFsNE1+87pU0kRpWKWolz2GBSl+Ufb+fLTZw/DSKQKv2lFMKh7+dfDgRjbr7aZR9EAO8QgHSi8LMUw5VjqJv86G/6GfdtNNYyO3SGe0GjTXaHTzjmrieGOVosWqozVVL0B9LTQnHKiwfoLMA797hCp7S5OwQ+dowCQDjWd0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765759309; c=relaxed/simple;
-	bh=bZpoNcqV+EuYPAa9lowON2hHYQ4jAVfPjQilz2Ki4ao=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ILNe2EHjEBpi2jS3UcVSPPF0Cxjaq2sD7gdf2uft80YhydzL4Aa/i3vtyMKJbKCv8ZyRmnNwbSz0EZ65YDDMFhB9SmHE18dTiz6okhzgi/YjU/wrngz3YBzjiYEhvGPfNIVgyO2OIpKZqR4PRdicsUWmHUBXvJeSe3AXeP1Y1gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pm6Hcbjt; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765759310; c=relaxed/simple;
+	bh=l6PLGSrfAr2bnC3zFhkGdV6nRMZEaikE9zMrnkeSBLM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=MOka6A3aBwNM7iqGZdSn2VzaSp+FqFwuCiLQj6NnKOa7eK/GUdO6FRt9X7NlqCexWPXb8uJajtNs4JJbsmpJQk9xTLeo9dgKE7otf9KA0533b5GLBc0UZ9KzmXy7RjD9sa6Q/J4sKvhVbSIOofAhNm0EiB5PVteGf9vyZMSnjBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AzsV5G92; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pm6Hcbjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D0FC4CEFB;
-	Mon, 15 Dec 2025 00:41:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AzsV5G92"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC12C4CEFB;
+	Mon, 15 Dec 2025 00:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765759308;
-	bh=bZpoNcqV+EuYPAa9lowON2hHYQ4jAVfPjQilz2Ki4ao=;
-	h=From:To:Cc:Subject:Date:From;
-	b=pm6HcbjtzWJdPcZ+jsQvrrS4F6MTbsp1o9xBS6FqSQ6Gyc3XZKXshF7vQO2w/KdNQ
-	 o0d2ij0L1cMfbUlsrieOR4ScjCJK6lsAl1uIaKUrPJiSjC85WaV3T1yDwnN/odQ4I0
-	 T1LU6MFeMq57xs1FBwLJbmZ7aCNCnycJ2TXAKgcTg83sDOCKcHK9+nGn5q+wJ49MEm
-	 +gXHPZ8GGagwSdFUWcZWNLpXCTNRqmn6VtjwP8udsX8kO1FtRb9VRA9uSV9Bl7xAvA
-	 YlIJA9GTzga5DAOyiVI8sre1GvHi5RLwOa2X4zaUCAkwKT7A04Yh9eGaYuH1VPbQQN
-	 Q8swDmC871wMQ==
+	s=k20201202; t=1765759310;
+	bh=l6PLGSrfAr2bnC3zFhkGdV6nRMZEaikE9zMrnkeSBLM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=AzsV5G925o4R4rkqCHz6wpIwXSx+NjO4NVIvJ9wQa+mdo/A8XUmMRSwzHjHACzBMD
+	 wmDKxBNgQM1n9W6AMJ+YINDrrMi+Y0FDA2PjbOLEj5n/CNU2iVkgtFTpR8Lv7vGnVp
+	 gblZv4fXRZahKTShOos1UTWGRewE8yDtF6rr6yGP17RkcpjqpdylBZLxGNMNTRkAa3
+	 BRQFuuSuof8KHmZjpc6r4eoayprBVDwk2veVTOV1WUkJw2L7YWLdrTSOP6nloULfNj
+	 p1BrQwMTHuIFhbZQtCOFfF12snSUAUh0jyinV0xFFa9prW2tJgeiiCwKYYccAAr+XV
+	 n+iYw89zRsHbg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: ChenXiaoSong <chenxiaosong@kylinos.cn>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>,
-	kailang@realtek.com,
-	chris.chiu@canonical.com,
-	edip@medip.dev
-Subject: [PATCH AUTOSEL 6.18-6.17] ALSA: hda/realtek: Add support for ASUS UM3406GA
-Date: Sun, 14 Dec 2025 19:41:18 -0500
-Message-ID: <20251215004145.2760442-1-sashal@kernel.org>
+	sfrench@samba.org,
+	linux-cifs@vger.kernel.org,
+	samba-technical@lists.samba.org
+Subject: [PATCH AUTOSEL 6.18-6.1] smb/client: fix NT_STATUS_NO_DATA_DETECTED value
+Date: Sun, 14 Dec 2025 19:41:19 -0500
+Message-ID: <20251215004145.2760442-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20251215004145.2760442-1-sashal@kernel.org>
+References: <20251215004145.2760442-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,129 +51,130 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: ChenXiaoSong <chenxiaosong@kylinos.cn>
 
-[ Upstream commit 826c0b1ed09e5335abcae07292440ce72346e578 ]
+[ Upstream commit a1237c203f1757480dc2f3b930608ee00072d3cc ]
 
-Laptops use 2 CS35L41 Amps with HDA, using External boost, with I2C
+This was reported by the KUnit tests in the later patches.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251205150614.49590-3-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+See MS-ERREF 2.3.1 STATUS_NO_DATA_DETECTED. Keep it consistent with the
+value in the documentation.
+
+Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: ALSA: hda/realtek: Add support for ASUS UM3406GA
+## Analysis of Commit: smb/client: fix NT_STATUS_NO_DATA_DETECTED value
 
 ### 1. COMMIT MESSAGE ANALYSIS
-
-The commit message is straightforward: it adds support for a specific
-ASUS laptop model (UM3406GA) that uses 2 CS35L41 amplifiers connected
-via I2C with external boost. The message describes the hardware
-configuration, which is standard for such device ID additions.
-
-No Fixes: or Cc: stable tags are present, but as noted, this is expected
-for commits requiring manual review.
+- Subject clearly states "fix" indicating a bug fix
+- References MS-ERREF 2.3.1 (Microsoft's official NTSTATUS
+  documentation) as the authoritative source
+- Bug was discovered through KUnit tests
+- Has Acked-by from Paulo Alcantara (Red Hat SMB maintainer) and Signed-
+  off-by from Steve French (primary SMB/CIFS maintainer)
 
 ### 2. CODE CHANGE ANALYSIS
 
-The entire change is a single line addition:
+The change is a single-line fix in a header file:
 ```c
-SND_PCI_QUIRK(0x1043, 0x1584, "ASUS UM3406GA ",
-ALC287_FIXUP_CS35L41_I2C_2),
+-#define NT_STATUS_NO_DATA_DETECTED 0x8000001c
++#define NT_STATUS_NO_DATA_DETECTED 0x80000022
 ```
 
-This adds:
-- Vendor ID: 0x1043 (ASUS)
-- Device/Subsystem ID: 0x1584 (ASUS UM3406GA)
-- Fixup: `ALC287_FIXUP_CS35L41_I2C_2` (an **existing** fixup already
-  used by many other ASUS models)
+**Critical bug identified**: The OLD value `0x8000001c` was
+**duplicated** with another constant defined just a few lines above:
+```c
+#define NT_STATUS_MEDIA_CHANGED    0x8000001c
+```
 
-Looking at the surrounding code, multiple other ASUS laptops use the
-same fixup:
-- ASUS PM3406CKA (0x1454)
-- ASUS G513PI/PU/PV (0x14e3)
-- ASUS G733PY/PZ/PZV/PYV (0x1503)
-- ASUS GV302XA/XJ/XQ/XU/XV/XI (0x1533)
-- ASUS UM3402YAR (0x1683)
+This is clearly a bug - two distinct Windows NT error status codes were
+sharing the same numeric value. This would cause:
+- Incorrect error code interpretation when servers return
+  STATUS_NO_DATA_DETECTED (0x80000022)
+- Potential confusion between STATUS_MEDIA_CHANGED and
+  STATUS_NO_DATA_DETECTED
+
+The new value `0x80000022` matches the official Microsoft MS-ERREF
+specification for STATUS_NO_DATA_DETECTED.
 
 ### 3. CLASSIFICATION
-
-This is a **NEW DEVICE ID** addition - explicitly listed as an exception
-that IS appropriate for stable backporting. The driver infrastructure
-and fixup code already exist; this merely adds an ID to enable the
-existing fix for new hardware.
+- **Bug fix**: Yes - corrects a provably incorrect constant value
+- **Feature addition**: No
+- **New API**: No
+- **Specification compliance fix**: Aligns with official Microsoft
+  documentation
 
 ### 4. SCOPE AND RISK ASSESSMENT
+- **Size**: 1 line changed
+- **Files**: 1 header file
+- **Risk**: Extremely low - simply correcting a wrong numeric constant
+- **Subsystem**: SMB client (commonly used for network file sharing)
 
-- **Lines changed**: 1 line
-- **Files touched**: 1 file
-- **Complexity**: Zero - table entry addition only
-- **Risk**: Extremely low - this cannot affect any other hardware
-- **No new code paths**: Uses pre-existing `ALC287_FIXUP_CS35L41_I2C_2`
-  fixup
+This is about as low-risk as a fix can get - it's correcting a single
+constant value to match official documentation. The previous value was
+demonstrably wrong (duplicate of another constant).
 
 ### 5. USER IMPACT
-
-- **Who is affected**: Owners of ASUS UM3406GA laptops
-- **Problem without fix**: Audio (specifically the CS35L41 amplifiers)
-  won't function properly
-- **Severity**: Non-working audio is a significant user-facing issue for
-  laptop users
+SMB is widely used for file sharing across networks. Having correct
+error status codes is important for proper error handling. While the
+practical impact depends on how this constant is used, having correct
+protocol constants is essential for interoperability.
 
 ### 6. STABILITY INDICATORS
-
-- Signed-off by Takashi Iwai (ALSA maintainer at SUSE)
-- Standard quirk addition pattern used extensively throughout this file
-- Follows exact same format as dozens of other ASUS quirk entries
+- Acked by Red Hat's SMB maintainer
+- Signed off by the primary CIFS/SMB maintainer (Steve French)
+- KUnit tests caught this issue, indicating testing coverage
 
 ### 7. DEPENDENCY CHECK
+- No dependencies on other commits
+- Standalone fix to a header constant
+- SMB client code exists in stable trees
 
-- The fixup `ALC287_FIXUP_CS35L41_I2C_2` has been in the kernel for some
-  time, supporting multiple other ASUS models
-- No other commits are required for this to work
-- This should apply cleanly to stable trees that have the CS35L41
-  support infrastructure
+### Summary
 
-### CONCLUSION
+**Meets stable criteria:**
+- ✅ Obviously correct (matches official MS-ERREF documentation)
+- ✅ Fixes a real bug (duplicate constant value)
+- ✅ Extremely small and contained (single line change)
+- ✅ No new features or APIs
+- ✅ Low risk (just correcting a constant value)
 
-This commit is a textbook example of what should be backported to stable
-trees:
+**Risk vs Benefit:**
+- Risk: Minimal - changing a constant to its documented correct value
+- Benefit: Correct SMB error handling, protocol compliance
 
-1. **Falls under explicit exception**: Adding device IDs to existing
-   drivers is explicitly allowed
-2. **Minimal change**: Single line, single table entry
-3. **Zero regression risk**: Cannot affect any hardware except the
-   targeted laptop
-4. **Uses existing infrastructure**: The fixup is already well-tested on
-   similar ASUS models
-5. **Fixes real user problem**: Enables audio on a production laptop
-6. **Obviously correct**: Identical pattern to surrounding entries
-
-The risk-benefit analysis strongly favors backporting: virtually zero
-risk with clear user benefit (working audio on a specific laptop model).
+This is a textbook example of a safe stable backport candidate: an
+obviously wrong value is corrected to match official documentation, the
+change is tiny, and there's no possibility of regression since the old
+value was demonstrably incorrect (it was a duplicate of
+NT_STATUS_MEDIA_CHANGED).
 
 **YES**
 
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/nterr.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index b45fcc9a3785e..008bf9d5148e1 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6752,6 +6752,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x1517, "Asus Zenbook UX31A", ALC269VB_FIXUP_ASUS_ZENBOOK_UX31A),
- 	SND_PCI_QUIRK(0x1043, 0x1533, "ASUS GV302XA/XJ/XQ/XU/XV/XI", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1573, "ASUS GZ301VV/VQ/VU/VJ/VA/VC/VE/VVC/VQC/VUC/VJC/VEC/VCC", ALC285_FIXUP_ASUS_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1584, "ASUS UM3406GA ", ALC287_FIXUP_CS35L41_I2C_2),
- 	SND_PCI_QUIRK(0x1043, 0x1652, "ASUS ROG Zephyrus Do 15 SE", ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1662, "ASUS GV301QH", ALC294_FIXUP_ASUS_DUAL_SPK),
- 	SND_PCI_QUIRK(0x1043, 0x1663, "ASUS GU603ZI/ZJ/ZQ/ZU/ZV", ALC285_FIXUP_ASUS_HEADSET_MIC),
+diff --git a/fs/smb/client/nterr.h b/fs/smb/client/nterr.h
+index b3516c71cff77..09263c91d07a4 100644
+--- a/fs/smb/client/nterr.h
++++ b/fs/smb/client/nterr.h
+@@ -41,7 +41,7 @@ extern const struct nt_err_code_struct nt_errs[];
+ #define NT_STATUS_MEDIA_CHANGED    0x8000001c
+ #define NT_STATUS_END_OF_MEDIA     0x8000001e
+ #define NT_STATUS_MEDIA_CHECK      0x80000020
+-#define NT_STATUS_NO_DATA_DETECTED 0x8000001c
++#define NT_STATUS_NO_DATA_DETECTED 0x80000022
+ #define NT_STATUS_STOPPED_ON_SYMLINK 0x8000002d
+ #define NT_STATUS_DEVICE_REQUIRES_CLEANING 0x80000288
+ #define NT_STATUS_DEVICE_DOOR_OPEN 0x80000289
 -- 
 2.51.0
 
