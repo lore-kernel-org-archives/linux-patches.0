@@ -1,52 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 545FE2FD684;
-	Mon, 15 Dec 2025 00:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BAD313525;
+	Mon, 15 Dec 2025 08:55:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765759331; cv=none; b=cNppXqAOfRuPFniISRoWXsk0ZKWdHy9w/9+Dqe5rfZ+H+563qZI8wx2RWUxyN+yvhXqyV1vIjizT4MmUk3UZ5/01w7pktx6R3UxNR1qjKb3phQvElnpOPO2AnoPV8iSXkZlcc5hyxjalc8vJzXGBjElOw2frNHTDp7y39IoNzcs=
+	t=1765788939; cv=none; b=JYA/wAoBvcdhKmWZFPS8pmbVBXGkbZFF68ceoA66oX0/z+v9Fmtc3HlChA0+orra8ylG00ZH9nVSpaOafDjQA+fQxnqtc9XFd4gLhZwM+2kqf0iGc5oZqseKdDMR6i1zAO5AUvpTfrEKwEZLtGjAsXDVrep4vDjw+JIcskM9B/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765759331; c=relaxed/simple;
-	bh=kuWJhXAe9SCj/OWGFt8enynHLN+ZYtr4H1zNXLrgJ6U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=i3lD+hasPn3C8xMT0CZGJ2vXWAi1fIbZzt6gQqIlc3UrrRtnmgvZY9sIjsHZXQeJ4byr7NtkTJE2UR856mD4woOjRpT5AW/IxTep8v/0s9N3DdXNvQkgNcNNJ05+aEKMe2eufKVKDg4FZ6KsFz92Ye8MirX+ky2wpMb9dWa/N64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lwkcj2+J; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1765788939; c=relaxed/simple;
+	bh=mKOVBT8Z5U1vkTW9JyaQUhTZ30gcz6nEmR1z2tTAagI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Eg8RuM935yhDE88TbAnEzBGey6kAqSkMjZ1xotrEmw+xsXcSarKpez+96HRutfw9ckBkF4yIrW38woBv0EagjBk9oZfAUZkVG5xhB5zL46RY9SmarDWzeZgnDktW4x7pjCWeuaaEUEhUrkV2wX0Qns7G3g2aurmZq8UvaO76YlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m6bhVDck; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lwkcj2+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2617AC4CEFB;
-	Mon, 15 Dec 2025 00:42:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m6bhVDck"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C506C4CEF5;
+	Mon, 15 Dec 2025 08:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765759331;
-	bh=kuWJhXAe9SCj/OWGFt8enynHLN+ZYtr4H1zNXLrgJ6U=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lwkcj2+J8GayBKYflfBuBuE5czrsEaMfaXy9bvIz5OL3vQXju3EzguKtAOk8oM3Yi
-	 btZWaoP3/goRlGdTae3VXPY2F/l+UgKvpi7+VoR3cfWS3N5PnBbQ+WtGD+/SoOcYsF
-	 tB9R3QKBOGLIFwSejPyLH4kSc2a0Z4hHYt49gAbZ2ONB9alRU7q2boQmIZof7QDTuT
-	 hSF9ifUZYYfI50pLjF1RbyRPqEy39x842JED8Wh2jahzn7FiYZrUNdhPu34ebSw6ZX
-	 EHKivPaXoIPPwISPZhuLCY0mhYxNRNlpjYQJpOLJo7GrY5sH2ksv/CJF4zKLt5n3N4
-	 TUMMyNgA8yFIg==
+	s=k20201202; t=1765788939;
+	bh=mKOVBT8Z5U1vkTW9JyaQUhTZ30gcz6nEmR1z2tTAagI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=m6bhVDckaMDPuIlebKz7bfXbIJIdsSjSONNCvFbWZQPxJPgvzOIRDxPto+y8z+8PL
+	 A+Xh15qmxWU4NV246DsBCWTnSH3/Zin+25Ofqbw5K2IC0+LgIm9wP5FLleM65/yZPE
+	 vF5DAwFclhQ5HadzKSTgqJGBPcZx0G6PVWJPXeLT3d2xZw3LshfffFGt6g7CUT6V3r
+	 ICmirxwpb+F4P8HZAm1WE0iqDL8+9Kug+ALhD6lajxVC/G82nkXtI8UIKzBQnLBfkP
+	 feAfFpGD/c/7hZCz9cu6YvODoUopCaLT0pB5Na5Kq+ZQn20s/2PIoiLuOvAV7soO0a
+	 qF42+VFV7APeQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Rosen Penev <rosenp@gmail.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Suganath Prabu S <suganath-prabu.subramani@broadcom.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	Charlene.Liu@amd.com,
-	aurabindo.pillai@amd.com,
-	alvin.lee2@amd.com,
-	timur.kristof@gmail.com,
-	Ausef.Yousof@amd.com,
-	Zhongwei.Zhang@amd.com,
-	Martin.Leung@amd.com,
-	srinivasan.shanmugam@amd.com
-Subject: [PATCH AUTOSEL 6.18-6.12] drm/amd/display: shrink struct members
-Date: Sun, 14 Dec 2025 19:41:27 -0500
-Message-ID: <20251215004145.2760442-10-sashal@kernel.org>
+	sathya.prakash@broadcom.com,
+	kashyap.desai@broadcom.com,
+	sumit.saxena@broadcom.com,
+	sreekanth.reddy@broadcom.com,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	linux-scsi@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18] scsi: mpi3mr: Prevent duplicate SAS/SATA device entries in channel 1
+Date: Mon, 15 Dec 2025 03:55:24 -0500
+Message-ID: <20251215085533.2931615-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251215004145.2760442-1-sashal@kernel.org>
-References: <20251215004145.2760442-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,202 +54,105 @@ X-stable-base: Linux 6.18.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rosen Penev <rosenp@gmail.com>
+From: Suganath Prabu S <suganath-prabu.subramani@broadcom.com>
 
-[ Upstream commit 7329417fc9ac128729c3a092b006c8f1fd0d04a6 ]
+[ Upstream commit 4588e65cfd66fc8bbd9969ea730db39b60a36a30 ]
 
-On a 32-bit ARM system, the audio_decoder struct ends up being too large
-for dp_retrain_link_dp_test.
+Avoid scanning SAS/SATA devices in channel 1 when SAS transport is
+enabled, as the SAS/SATA devices are exposed through channel 0.
 
-link_dp_cts.c:157:1: error: the frame size of 1328 bytes is larger than
-1280 bytes [-Werror=frame-larger-than=]
-
-This is mitigated by shrinking the members of the struct and avoids
-having to deal with dynamic allocation.
-
-feed_back_divider is assigned but otherwise unused. Remove both.
-
-pixel_repetition looks like it should be a bool since it's only ever
-assigned to 1. But there are checks for 2 and 4. Reduce to uint8_t.
-
-Remove ss_percentage_divider. Unused.
-
-Shrink refresh_rate as it gets assigned to at most a 3 digit integer
-value.
-
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 3849efdc7888d537f09c3dcfaea4b3cd377a102e)
+Signed-off-by: Suganath Prabu S <suganath-prabu.subramani@broadcom.com>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/stable/20251120071955.463475-1-suganath-prabu.subramani%40broadcom.com
+Link: https://patch.msgid.link/20251120071955.463475-1-suganath-prabu.subramani@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Commit Analysis: drm/amd/display: shrink struct members
+### DEPENDENCY VERIFICATION
 
-### 1. COMMIT MESSAGE ANALYSIS
+The `non_stl` field and `sas_transport_enabled` were both introduced in
+commit c4723e68a0d81 ("scsi: mpi3mr: Enable STL on HBAs where multipath
+is disabled") from August 2022 (Linux 6.0 cycle).
 
-The commit addresses a **build failure** on 32-bit ARM systems:
-```
-link_dp_cts.c:157:1: error: the frame size of 1328 bytes is larger than
-1280 bytes [-Werror=frame-larger-than=]
-```
+This means the patch is only applicable to stable kernels 6.1.y and
+later (not 5.15.y).
 
-The fix shrinks struct members to reduce stack frame size. Key changes:
-- Remove `feed_back_divider` (assigned but never read - write-only)
-- Remove `ss_percentage_divider` (completely unused)
-- Shrink `pixel_repetition` from `uint32_t` to `uint8_t` (only assigned
-  1, checked for 2,4 - all fit in uint8_t)
-- Shrink `refresh_rate` from `uint32_t` to `uint16_t` ("at most 3 digit
-  integer")
+### SUMMARY
 
-The commit is already marked as "(cherry picked from commit
-3849efdc7888...)" indicating it was deemed important for another tree.
+**Bug being fixed**: Duplicate SAS/SATA device entries appearing in both
+channel 0 (SAS transport) and channel 1 (generic SCSI) when SAS
+transport is enabled, causing user confusion and management issues.
 
-### 2. CODE CHANGE ANALYSIS
+**Stable kernel criteria assessment**:
+- ✅ **Obviously correct**: Simple conditional checks with clear logic
+- ✅ **Fixes a real bug**: Duplicate device enumeration is a real user-
+  visible issue
+- ✅ **Small and contained**: Only 4 lines of actual code change
+- ✅ **No new features**: Just corrects existing device enumeration logic
+- ✅ **Tested**: Merged through maintainer tree with proper sign-offs
+- ✅ **Intentional stable submission**: Link to stable mailing list
+  present
 
-**In `dce110_hwseq.c`:**
-- Removes one assignment: `audio_output->pll_info.feed_back_divider =
-  pipe_ctx->pll_settings.feedback_divider;`
-- This was a write to an unused field - safe to remove
+**Risk vs Benefit**:
+- **Risk**: Very low - simple conditional check, worst case is device
+  visibility issue
+- **Benefit**: Fixes confusing duplicate device entries for MPI3MR users
+  with SAS transport
 
-**In `audio_types.h`:**
-- `struct audio_crtc_info`: Type changes and reordering for better
-  packing
-- `struct audio_pll_info`: Removes two unused fields, reorders remaining
-  members
+**Concerns**:
+1. Requires commit c4723e68a0d81 to be present (6.1.y and later only)
+2. Version bump in header should be stripped for stable backport
 
-These are **internal kernel structures** used within the AMD display
-driver - not part of any userspace ABI.
-
-### 3. CLASSIFICATION
-
-This is a **BUILD FIX** - one of the explicitly allowed exception
-categories for stable trees. The `-Werror=frame-larger-than=` flag is
-commonly enabled in kernel builds, especially on embedded/ARM systems,
-and this causes a hard compilation failure.
-
-### 4. SCOPE AND RISK ASSESSMENT
-
-**Lines changed:** Small - 2 files, ~20 lines modified
-**Subsystem:** AMD display driver (DCE110 hardware sequencer, audio
-types)
-
-**Risk factors:**
-- Struct layout changes - LOW risk since these are internal driver
-  structures
-- Removing unused fields - VERY LOW risk (can't break what's not used)
-- Type narrowing (uint32_t → uint16_t/uint8_t) - LOW risk as values
-  confirmed to fit
-
-**Risk mitigation:**
-- Reviewed by Alex Hung (AMD developer)
-- Signed off by Alex Deucher (AMD display maintainer)
-- Already cherry-picked to another tree
-
-### 5. USER IMPACT
-
-- **Affected users:** Anyone building Linux kernel on 32-bit ARM systems
-  with AMD display support
-- **Severity:** Build fails completely - users cannot compile the kernel
-- **Scope:** Primarily embedded ARM systems running AMD GPUs
-
-### 6. STABILITY INDICATORS
-
-- `Reviewed-by: Alex Hung <alex.hung@amd.com>` ✓
-- `Signed-off-by: Alex Deucher <alexander.deucher@amd.com>` (maintainer)
-  ✓
-- Already cherry-picked (deemed important) ✓
-
-### 7. DEPENDENCY CHECK
-
-The commit is self-contained. It only removes unused code and shrinks
-types - no dependencies on other commits. The affected code (AMD
-display, DCE110 HWSEQ, audio_types.h) exists in stable trees.
-
-### Summary
-
-**Pros:**
-- Fixes a real build failure (compile error, not just warning)
-- Build fixes are explicitly allowed in stable rules
-- Small, contained changes
-- Removes unused/dead code (lowest risk category)
-- Type changes are provably safe (values fit)
-- Reviewed and signed-off by AMD maintainers
-- Already cherry-picked
-
-**Cons:**
-- Struct layout changes require careful consideration
-- Only affects 32-bit ARM with specific kernel config
-
-### Verdict
-
-This is a legitimate **build fix** - one of the explicit exceptions in
-stable kernel rules. The changes are low-risk: removing unused struct
-members and narrowing types to values that demonstrably fit. The build
-error affects real users on 32-bit ARM platforms. The fix has been
-properly reviewed by AMD maintainers and already cherry-picked,
-indicating it's deemed important. The risk of runtime regression is
-minimal since unused code is being removed.
+The explicit submission to the stable mailing list, the small surgical
+nature of the fix, and the clear bug it addresses make this a valid
+stable backport candidate for kernels 6.1.y and newer.
 
 **YES**
 
- .../drm/amd/display/dc/hwss/dce110/dce110_hwseq.c    |  3 ---
- drivers/gpu/drm/amd/display/include/audio_types.h    | 12 +++++-------
- 2 files changed, 5 insertions(+), 10 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr.h    | 4 ++--
+ drivers/scsi/mpi3mr/mpi3mr_os.c | 4 +++-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-index ebc220b29d142..b94fec8347400 100644
---- a/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dce110/dce110_hwseq.c
-@@ -1458,9 +1458,6 @@ void build_audio_output(
- 						state->clk_mgr);
- 	}
+diff --git a/drivers/scsi/mpi3mr/mpi3mr.h b/drivers/scsi/mpi3mr/mpi3mr.h
+index 6742684e2990a..31d68c151b207 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr.h
++++ b/drivers/scsi/mpi3mr/mpi3mr.h
+@@ -56,8 +56,8 @@ extern struct list_head mrioc_list;
+ extern int prot_mask;
+ extern atomic64_t event_counter;
  
--	audio_output->pll_info.feed_back_divider =
--			pipe_ctx->pll_settings.feedback_divider;
--
- 	audio_output->pll_info.dto_source =
- 		translate_to_dto_source(
- 			pipe_ctx->stream_res.tg->inst + 1);
-diff --git a/drivers/gpu/drm/amd/display/include/audio_types.h b/drivers/gpu/drm/amd/display/include/audio_types.h
-index e4a26143f14c9..6699ad4fa825e 100644
---- a/drivers/gpu/drm/amd/display/include/audio_types.h
-+++ b/drivers/gpu/drm/amd/display/include/audio_types.h
-@@ -47,15 +47,15 @@ struct audio_crtc_info {
- 	uint32_t h_total;
- 	uint32_t h_active;
- 	uint32_t v_active;
--	uint32_t pixel_repetition;
- 	uint32_t requested_pixel_clock_100Hz; /* in 100Hz */
- 	uint32_t calculated_pixel_clock_100Hz; /* in 100Hz */
--	uint32_t refresh_rate;
-+	uint32_t dsc_bits_per_pixel;
-+	uint32_t dsc_num_slices;
- 	enum dc_color_depth color_depth;
- 	enum dc_pixel_encoding pixel_encoding;
-+	uint16_t refresh_rate;
-+	uint8_t pixel_repetition;
- 	bool interlaced;
--	uint32_t dsc_bits_per_pixel;
--	uint32_t dsc_num_slices;
- };
- struct azalia_clock_info {
- 	uint32_t pixel_clock_in_10khz;
-@@ -78,11 +78,9 @@ enum audio_dto_source {
+-#define MPI3MR_DRIVER_VERSION	"8.15.0.5.50"
+-#define MPI3MR_DRIVER_RELDATE	"12-August-2025"
++#define MPI3MR_DRIVER_VERSION	"8.15.0.5.51"
++#define MPI3MR_DRIVER_RELDATE	"18-November-2025"
  
- struct audio_pll_info {
- 	uint32_t audio_dto_source_clock_in_khz;
--	uint32_t feed_back_divider;
-+	uint32_t ss_percentage;
- 	enum audio_dto_source dto_source;
- 	bool ss_enabled;
--	uint32_t ss_percentage;
--	uint32_t ss_percentage_divider;
- };
+ #define MPI3MR_DRIVER_NAME	"mpi3mr"
+ #define MPI3MR_DRIVER_LICENSE	"GPL"
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_os.c b/drivers/scsi/mpi3mr/mpi3mr_os.c
+index b88633e1efe27..d4ca878d08869 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_os.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
+@@ -1184,6 +1184,8 @@ static void mpi3mr_update_tgtdev(struct mpi3mr_ioc *mrioc,
+ 	if (is_added == true)
+ 		tgtdev->io_throttle_enabled =
+ 		    (flags & MPI3_DEVICE0_FLAGS_IO_THROTTLING_REQUIRED) ? 1 : 0;
++	if (!mrioc->sas_transport_enabled)
++		tgtdev->non_stl = 1;
  
- struct audio_channel_associate_info {
+ 	switch (flags & MPI3_DEVICE0_FLAGS_MAX_WRITE_SAME_MASK) {
+ 	case MPI3_DEVICE0_FLAGS_MAX_WRITE_SAME_256_LB:
+@@ -4844,7 +4846,7 @@ static int mpi3mr_target_alloc(struct scsi_target *starget)
+ 	spin_lock_irqsave(&mrioc->tgtdev_lock, flags);
+ 	if (starget->channel == mrioc->scsi_device_channel) {
+ 		tgt_dev = __mpi3mr_get_tgtdev_by_perst_id(mrioc, starget->id);
+-		if (tgt_dev && !tgt_dev->is_hidden) {
++		if (tgt_dev && !tgt_dev->is_hidden && tgt_dev->non_stl) {
+ 			scsi_tgt_priv_data->starget = starget;
+ 			scsi_tgt_priv_data->dev_handle = tgt_dev->dev_handle;
+ 			scsi_tgt_priv_data->perst_id = tgt_dev->perst_id;
 -- 
 2.51.0
 
