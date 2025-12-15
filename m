@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D5A2F83B0;
-	Mon, 15 Dec 2025 00:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F982FD7BA;
+	Mon, 15 Dec 2025 00:41:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765759310; cv=none; b=EYQsFsNE1+87pU0kRpWKWolz2GBSl+Ufb+fLTZw/DSKQKv2lFMKh7+dfDgRjbr7aZR9EAO8QgHSi8LMUw5VjqJv86G/6GfdtNNYyO3SGe0GjTXaHTzjmrieGOVosWqozVVL0B9LTQnHKiwfoLMA797hCp7S5OwQ+dowCQDjWd0k=
+	t=1765759315; cv=none; b=C60gjxgPLGVpljA2GpcT13t9nTbw7hkVmaW9Y8MiUsaW4d9+cs5OAQ6BMnfth4lM1qsWfKRlHH3x5j8ykEELdlSNfw+4ijPbDICdmPJkInQFH158BgjM92FnCj3R2F8L8FdhuzmNHUDd1HcIpHM+3QWWcfODcKS6Bz82m/cy9YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765759310; c=relaxed/simple;
-	bh=l6PLGSrfAr2bnC3zFhkGdV6nRMZEaikE9zMrnkeSBLM=;
+	s=arc-20240116; t=1765759315; c=relaxed/simple;
+	bh=ke6qqVjdfFE556uVIaXQme1UHZfTLMZdFnPlanCbopg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MOka6A3aBwNM7iqGZdSn2VzaSp+FqFwuCiLQj6NnKOa7eK/GUdO6FRt9X7NlqCexWPXb8uJajtNs4JJbsmpJQk9xTLeo9dgKE7otf9KA0533b5GLBc0UZ9KzmXy7RjD9sa6Q/J4sKvhVbSIOofAhNm0EiB5PVteGf9vyZMSnjBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AzsV5G92; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nQOTO3fcplFiMpc5/IiAsZiXkkt3MeKI8Qd/+CyQKeamSSTqs0SW1U1A8I6Z25JxGXl/+a47vl0J2WMlatfIGpcQB04jq5Epl7fP35eu4945XX/NeCSkDdmdsEpB9eJTenbSUdFFpQzfLjki6nM5bUvhASAlqxQOd8DFH170Z1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CybgRLjN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AzsV5G92"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC12C4CEFB;
-	Mon, 15 Dec 2025 00:41:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CybgRLjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D991C4CEFB;
+	Mon, 15 Dec 2025 00:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765759310;
-	bh=l6PLGSrfAr2bnC3zFhkGdV6nRMZEaikE9zMrnkeSBLM=;
+	s=k20201202; t=1765759315;
+	bh=ke6qqVjdfFE556uVIaXQme1UHZfTLMZdFnPlanCbopg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzsV5G925o4R4rkqCHz6wpIwXSx+NjO4NVIvJ9wQa+mdo/A8XUmMRSwzHjHACzBMD
-	 wmDKxBNgQM1n9W6AMJ+YINDrrMi+Y0FDA2PjbOLEj5n/CNU2iVkgtFTpR8Lv7vGnVp
-	 gblZv4fXRZahKTShOos1UTWGRewE8yDtF6rr6yGP17RkcpjqpdylBZLxGNMNTRkAa3
-	 BRQFuuSuof8KHmZjpc6r4eoayprBVDwk2veVTOV1WUkJw2L7YWLdrTSOP6nloULfNj
-	 p1BrQwMTHuIFhbZQtCOFfF12snSUAUh0jyinV0xFFa9prW2tJgeiiCwKYYccAAr+XV
-	 n+iYw89zRsHbg==
+	b=CybgRLjNPjkBsZJIpqnpQ8y340lF9xdB4Gf1JhwcI+YPcSK58oavmiWyiXqDPOpKB
+	 1XEJ85Y0ZeBOAFtp7cygbavQ6MAJrUHvxMZlWOs/8IBSW/xcTDVbMzA/QEl0UZeVcx
+	 eHtRFmpJs6j84L9Nh8fQxKFlTmp3asZGl6y31zzKnu9Sc8sZqYKLrBlDG2aDPE07A9
+	 oDWqZ1k442m+IbO1boDPhdcSfNRt4IgS1W58wB4dB6Ke8lWrhQbl5ZJNhLSk0O1X0S
+	 JjN/RQWFPQfQ+opTyfci7rtoJ/qYZF2fa4Ey4WEUxvSC0/cXLTh8wznMTRSwdcdnUx
+	 Mt7pC+ze2Ztqg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
+	Askar Safin <safinaskar@gmail.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sfrench@samba.org,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org
-Subject: [PATCH AUTOSEL 6.18-6.1] smb/client: fix NT_STATUS_NO_DATA_DETECTED value
-Date: Sun, 14 Dec 2025 19:41:19 -0500
-Message-ID: <20251215004145.2760442-2-sashal@kernel.org>
+	kai.vehmanen@linux.intel.com,
+	cezary.rojewski@intel.com,
+	ranjani.sridharan@linux.intel.com,
+	rf@opensource.cirrus.com,
+	bradynorander@gmail.com
+Subject: [PATCH AUTOSEL 6.18-6.17] ALSA: hda: intel-dsp-config: Prefer legacy driver as fallback
+Date: Sun, 14 Dec 2025 19:41:20 -0500
+Message-ID: <20251215004145.2760442-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251215004145.2760442-1-sashal@kernel.org>
 References: <20251215004145.2760442-1-sashal@kernel.org>
@@ -54,127 +56,173 @@ X-stable-base: Linux 6.18.1
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChenXiaoSong <chenxiaosong@kylinos.cn>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a1237c203f1757480dc2f3b930608ee00072d3cc ]
+[ Upstream commit 161a0c617ab172bbcda7ce61803addeb2124dbff ]
 
-This was reported by the KUnit tests in the later patches.
+When config table entries don't match with the device to be probed,
+currently we fall back to SND_INTEL_DSP_DRIVER_ANY, which means to
+allow any drivers to bind with it.
 
-See MS-ERREF 2.3.1 STATUS_NO_DATA_DETECTED. Keep it consistent with the
-value in the documentation.
+This was set so with the assumption (or hope) that all controller
+drivers should cover the devices generally, but in practice, this
+caused a problem as reported recently.  Namely, when a specific
+kconfig for SOF isn't set for the modern Intel chips like Alderlake,
+a wrong driver (AVS) got probed and failed.  This is because we have
+entries like:
 
-Signed-off-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ #if IS_ENABLED(CONFIG_SND_SOC_SOF_ALDERLAKE)
+ /* Alder Lake / Raptor Lake */
+ 	{
+ 		.flags = FLAG_SOF | FLAG_SOF_ONLY_IF_DMIC_OR_SOUNDWIRE,
+ 		.device = PCI_DEVICE_ID_INTEL_HDA_ADL_S,
+ 	},
+ ....
+ #endif
+
+so this entry is effective only when CONFIG_SND_SOC_SOF_ALDERLAKE is
+set.  If not set, there is no matching entry, hence it returns
+SND_INTEL_DSP_DRIVER_ANY as fallback.  OTOH, if the kconfig is set, it
+explicitly falls back to SND_INTEL_DSP_DRIVER_LEGACY when no DMIC or
+SoundWire is found -- that was the working scenario.  That being said,
+the current setup may be broken for modern Intel chips that are
+supposed to work with either SOF or legacy driver when the
+corresponding kconfig were missing.
+
+For addressing the problem above, this patch changes the fallback
+driver to the legacy driver, i.e. return SND_INTEL_DSP_DRIVER_LEGACY
+type as much as possible.  When CONFIG_SND_HDA_INTEL is also disabled,
+the fallback is set to SND_INTEL_DSP_DRIVER_ANY type, just to be sure.
+
+Reported-by: Askar Safin <safinaskar@gmail.com>
+Closes: https://lore.kernel.org/all/20251014034156.4480-1-safinaskar@gmail.com/
+Tested-by: Askar Safin <safinaskar@gmail.com>
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251210131553.184404-1-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis of Commit: smb/client: fix NT_STATUS_NO_DATA_DETECTED value
+## Comprehensive Analysis
 
-### 1. COMMIT MESSAGE ANALYSIS
-- Subject clearly states "fix" indicating a bug fix
-- References MS-ERREF 2.3.1 (Microsoft's official NTSTATUS
-  documentation) as the authoritative source
-- Bug was discovered through KUnit tests
-- Has Acked-by from Paulo Alcantara (Red Hat SMB maintainer) and Signed-
-  off-by from Steve French (primary SMB/CIFS maintainer)
+### 1. Commit Message Analysis
 
-### 2. CODE CHANGE ANALYSIS
+**Keywords**: "problem", "wrong driver", "failed", "broken"
 
-The change is a single-line fix in a header file:
+**Strong positive indicators**:
+- `Reported-by: Askar Safin` - Real user encountered this bug
+- `Closes:` link - References actual bug report
+- `Tested-by: Askar Safin` - Reporter verified the fix works
+- `Reviewed-by: Peter Ujfalusi` - Intel audio engineer review
+- `Signed-off-by: Takashi Iwai` - ALSA maintainer
+
+### 2. Code Change Analysis
+
+The change is minimal - only 2-3 lines:
+
 ```c
--#define NT_STATUS_NO_DATA_DETECTED 0x8000001c
-+#define NT_STATUS_NO_DATA_DETECTED 0x80000022
+// Before:
+if (!cfg)
+    return SND_INTEL_DSP_DRIVER_ANY;
+
+// After:
+if (!cfg)
+    return IS_ENABLED(CONFIG_SND_HDA_INTEL) ?
+        SND_INTEL_DSP_DRIVER_LEGACY : SND_INTEL_DSP_DRIVER_ANY;
 ```
 
-**Critical bug identified**: The OLD value `0x8000001c` was
-**duplicated** with another constant defined just a few lines above:
-```c
-#define NT_STATUS_MEDIA_CHANGED    0x8000001c
-```
+**Technical mechanism of the bug**:
+1. Config table entries for Alderlake chips are wrapped in `#if
+   IS_ENABLED(CONFIG_SND_SOC_SOF_ALDERLAKE)`
+2. When that Kconfig is not set, entries are compiled out
+3. `snd_intel_dsp_find_config()` returns NULL (no match)
+4. Code returns `SND_INTEL_DSP_DRIVER_ANY` - letting any driver bind
+5. AVS driver may bind first and fail, leaving no working audio
 
-This is clearly a bug - two distinct Windows NT error status codes were
-sharing the same numeric value. This would cause:
-- Incorrect error code interpretation when servers return
-  STATUS_NO_DATA_DETECTED (0x80000022)
-- Potential confusion between STATUS_MEDIA_CHANGED and
-  STATUS_NO_DATA_DETECTED
+**Why the fix works**:
+- Returns `SND_INTEL_DSP_DRIVER_LEGACY` when `CONFIG_SND_HDA_INTEL` is
+  enabled
+- The legacy HDA Intel driver then probes successfully
+- This matches the behavior at the end of the function (line 742) when
+  config entries exist but don't match conditions
 
-The new value `0x80000022` matches the official Microsoft MS-ERREF
-specification for STATUS_NO_DATA_DETECTED.
+### 3. Classification
 
-### 3. CLASSIFICATION
-- **Bug fix**: Yes - corrects a provably incorrect constant value
-- **Feature addition**: No
-- **New API**: No
-- **Specification compliance fix**: Aligns with official Microsoft
-  documentation
+This is clearly a **bug fix**:
+- Fixes wrong driver selection leading to broken audio
+- Does not add new features or APIs
+- Uses compile-time conditional - zero runtime overhead
 
-### 4. SCOPE AND RISK ASSESSMENT
-- **Size**: 1 line changed
-- **Files**: 1 header file
-- **Risk**: Extremely low - simply correcting a wrong numeric constant
-- **Subsystem**: SMB client (commonly used for network file sharing)
+### 4. Scope and Risk Assessment
 
-This is about as low-risk as a fix can get - it's correcting a single
-constant value to match official documentation. The previous value was
-demonstrably wrong (duplicate of another constant).
+- **Lines changed**: 2-3 lines
+- **Files affected**: 1 file
+- **Complexity**: Very low - single compile-time conditional
+- **Risk**: Very low
+  - Uses `IS_ENABLED()` which is compile-time evaluation
+  - Preserves original behavior when `CONFIG_SND_HDA_INTEL` is disabled
+  - The legacy driver is the conservative/safe fallback
 
-### 5. USER IMPACT
-SMB is widely used for file sharing across networks. Having correct
-error status codes is important for proper error handling. While the
-practical impact depends on how this constant is used, having correct
-protocol constants is essential for interoperability.
+### 5. User Impact
 
-### 6. STABILITY INDICATORS
-- Acked by Red Hat's SMB maintainer
-- Signed off by the primary CIFS/SMB maintainer (Steve French)
-- KUnit tests caught this issue, indicating testing coverage
+- **Severity**: High - audio completely broken
+- **Who is affected**: Users with modern Intel chips (Alderlake, Raptor
+  Lake, etc.) without `CONFIG_SND_SOC_SOF_ALDERLAKE` enabled
+- **Real-world**: This is a realistic scenario for distribution kernels
 
-### 7. DEPENDENCY CHECK
+### 6. Stability Indicators
+
+- ✓ `Tested-by:` from reporter
+- ✓ `Reviewed-by:` from Intel engineer
+- ✓ Author is Takashi Iwai (ALSA maintainer - highly experienced)
+
+### 7. Dependency Check
+
+**Stable tree compatibility verified**:
+- File exists at `sound/hda/intel-dsp-config.c` in v6.6 and v6.12 stable
+- The exact code being modified (`if (!cfg) return
+  SND_INTEL_DSP_DRIVER_ANY;`) exists in all active stable kernels
+- File was recently moved to `sound/hda/core/intel-dsp-config.c` in
+  mainline - stable backport needs path adjustment
 - No dependencies on other commits
-- Standalone fix to a header constant
-- SMB client code exists in stable trees
 
-### Summary
+### Conclusion
 
-**Meets stable criteria:**
-- ✅ Obviously correct (matches official MS-ERREF documentation)
-- ✅ Fixes a real bug (duplicate constant value)
-- ✅ Extremely small and contained (single line change)
-- ✅ No new features or APIs
-- ✅ Low risk (just correcting a constant value)
+This commit meets all stable kernel criteria:
+- ✓ Fixes a real, user-reported bug (broken audio)
+- ✓ Obviously correct (uses same logic already present elsewhere in the
+  function)
+- ✓ Small and contained (2-3 lines in one file)
+- ✓ No new features or APIs
+- ✓ Well-tested (reporter verified)
+- ✓ Properly reviewed (Intel engineer + ALSA maintainer)
+- ✓ Applies to stable trees (with path adjustment for file location)
 
-**Risk vs Benefit:**
-- Risk: Minimal - changing a constant to its documented correct value
-- Benefit: Correct SMB error handling, protocol compliance
-
-This is a textbook example of a safe stable backport candidate: an
-obviously wrong value is corrected to match official documentation, the
-change is tiny, and there's no possibility of regression since the old
-value was demonstrably incorrect (it was a duplicate of
-NT_STATUS_MEDIA_CHANGED).
+The bug causes complete audio failure on modern Intel systems with
+certain kernel configurations. The fix is minimal, low-risk, and uses a
+compile-time conditional that preserves old behavior as a fallback.
 
 **YES**
 
- fs/smb/client/nterr.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/core/intel-dsp-config.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/nterr.h b/fs/smb/client/nterr.h
-index b3516c71cff77..09263c91d07a4 100644
---- a/fs/smb/client/nterr.h
-+++ b/fs/smb/client/nterr.h
-@@ -41,7 +41,7 @@ extern const struct nt_err_code_struct nt_errs[];
- #define NT_STATUS_MEDIA_CHANGED    0x8000001c
- #define NT_STATUS_END_OF_MEDIA     0x8000001e
- #define NT_STATUS_MEDIA_CHECK      0x80000020
--#define NT_STATUS_NO_DATA_DETECTED 0x8000001c
-+#define NT_STATUS_NO_DATA_DETECTED 0x80000022
- #define NT_STATUS_STOPPED_ON_SYMLINK 0x8000002d
- #define NT_STATUS_DEVICE_REQUIRES_CLEANING 0x80000288
- #define NT_STATUS_DEVICE_DOOR_OPEN 0x80000289
+diff --git a/sound/hda/core/intel-dsp-config.c b/sound/hda/core/intel-dsp-config.c
+index 2a9e35cddcf7c..ddb349bc46bbd 100644
+--- a/sound/hda/core/intel-dsp-config.c
++++ b/sound/hda/core/intel-dsp-config.c
+@@ -710,7 +710,8 @@ int snd_intel_dsp_driver_probe(struct pci_dev *pci)
+ 	/* find the configuration for the specific device */
+ 	cfg = snd_intel_dsp_find_config(pci, config_table, ARRAY_SIZE(config_table));
+ 	if (!cfg)
+-		return SND_INTEL_DSP_DRIVER_ANY;
++		return IS_ENABLED(CONFIG_SND_HDA_INTEL) ?
++			SND_INTEL_DSP_DRIVER_LEGACY : SND_INTEL_DSP_DRIVER_ANY;
+ 
+ 	if (cfg->flags & FLAG_SOF) {
+ 		if (cfg->flags & FLAG_SOF_ONLY_IF_SOUNDWIRE &&
 -- 
 2.51.0
 
