@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C13E2FD68C;
-	Mon, 15 Dec 2025 00:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF3B2FD679;
+	Mon, 15 Dec 2025 00:42:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765759319; cv=none; b=ujPovaH21LSR41SiebhJ6tgRoDMJqhaExjnTM12MkDVchwQ09AIj2PH19KikF0O/+cNm6AxEWcmVJeej/5Jw51wxdCYDGSxCnUiCXiewmnfZmprkW9Z+2GdqJ5Y5JcoKQkrmW3aqyzaVkanvTuEHeUOqkRZkY7yF8zKKkJCP+Sc=
+	t=1765759321; cv=none; b=LUNpEA/YC+D80CHwJOHtDrcbIcO/acm/2d75URAZIJxaL/NMFct9Lrh08iAu0/oRBw/7xYM/R9NAZKULVo8SYuG49nlY+fH/obmmbozSVMh88PdNdwb8qsHV77IUrN/a+9hBK2g48nfnrxjfGRL8uqoNWiu7snvdr1GopYu0gQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765759319; c=relaxed/simple;
-	bh=WpWGK7xo7vKEXjgTvG50bsSN74/F8ouuUYpJCId6ql4=;
+	s=arc-20240116; t=1765759321; c=relaxed/simple;
+	bh=3Qj265UrbssCIwX1v5j+Fo9Ll7BNWo0kYrEq6sI6/NM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fYO++68CHOB7HKMbuIjmqVwDkVrsAxUyw4GCSL/R+hS85xelYufkykisCqzKGc25w94p4ZTu3F86V2Fls1bwbOs2rzjKvyF+JE4jzp6Y7s9HzOwBcxCp4/Oz/xM4tEWiP8dRovi8URLbW7Tc02dw1wWkLyqiIwW0gTjgXVOpGeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MGZRz1/C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oVA9P3jcsfCnruMrgwXeqzi4/SdnDuBM3wi/zKQ6WNyV6rsC+h0AGHEWF47b8vrkorJIzgGH2KvXPkIZTwSRKB7youbG8jN6QBmQc+vRWaK8AEO4J3x85BOAs9cYO1jMQQPYCt1N1VLhrlHKjoy51z4bh4vwtQYBPRTmmiXpz9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZYqolXH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MGZRz1/C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85232C4CEFB;
-	Mon, 15 Dec 2025 00:41:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZYqolXH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A55C19421;
+	Mon, 15 Dec 2025 00:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1765759318;
-	bh=WpWGK7xo7vKEXjgTvG50bsSN74/F8ouuUYpJCId6ql4=;
+	s=k20201202; t=1765759320;
+	bh=3Qj265UrbssCIwX1v5j+Fo9Ll7BNWo0kYrEq6sI6/NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGZRz1/Cc2/egHvgPDdJP4t900D+F51zWa6HS4BEFUyJa4vi0U8A1emnMhlaXcS4J
-	 SM/SkRWZxQqWGOTSHrGDKCiXhNCLZAkT9fsrK3LmjNm+alX1FCKLnlKRgCQSpZXca7
-	 bQkk9tsnJoJoUYIYAEfVQc31sCv0o09D/RALknao5jx+v0F6BmzgL5Ilbe2jXmv3oj
-	 eNjeuStZ+Wo2sOQF/v4gp1VuSsnCiRp8DmbYl9KYPuqxn3Yeh8fhKMb5JD6aWjzfOS
-	 muOxb7TSIfydegpVl3Vrd0AXJsdKIu73NpoHTZJjW3HmcjkK276hk1VcVzcArMhUZt
-	 w11xWGC2EzK3Q==
+	b=lZYqolXHce2YC5DIE+5XzOcKxM34pb/xAicTuZvvhveZDWFRD9iHIDnqaB8rosg5e
+	 LzFpiM2oj4ye5E+tBoDV+QEnRvXx66yd1mGOsmV4LQVa208AKhRSigWuadRXunu+9H
+	 VZwYt/ALv3X9HZcXeyCr1/El0LfJpIYxrRB1CzMGGd0fX39W2Z2aI58ttrkBeHGkcG
+	 Uo2UkaaCVKb65NuObTZqaBsqfWGInIVPrRUYhL+9z8LL6Vrc4scWNvSDgDO/afQTAL
+	 8WQZ3zrc+afBje2cCmbOr7S4gHIgDX+WP+gDjjnOltrVgcgI45ffK/q/ouqGFLFJBG
+	 pmF8FfWSPmw1g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Scott Mayhew <smayhew@redhat.com>,
-	Benjamin Coddington <bcodding@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+Cc: Shida Zhang <zhangshida@kylinos.cn>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>,
-	trondmy@kernel.org,
-	anna@kernel.org,
-	linux-nfs@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.18-5.10] NFSv4: ensure the open stateid seqid doesn't go backwards
-Date: Sun, 14 Dec 2025 19:41:22 -0500
-Message-ID: <20251215004145.2760442-5-sashal@kernel.org>
+	colyli@fnnas.com,
+	kent.overstreet@linux.dev,
+	linux-bcache@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.18-6.1] bcache: fix improper use of bi_end_io
+Date: Sun, 14 Dec 2025 19:41:23 -0500
+Message-ID: <20251215004145.2760442-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20251215004145.2760442-1-sashal@kernel.org>
 References: <20251215004145.2760442-1-sashal@kernel.org>
@@ -51,159 +52,177 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.18.1
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Scott Mayhew <smayhew@redhat.com>
+From: Shida Zhang <zhangshida@kylinos.cn>
 
-[ Upstream commit 2e47c3cc64b44b0b06cd68c2801db92ff143f2b2 ]
+[ Upstream commit 53280e398471f0bddbb17b798a63d41264651325 ]
 
-We have observed an NFSv4 client receiving a LOCK reply with a status of
-NFS4ERR_OLD_STATEID and subsequently retrying the LOCK request with an
-earlier seqid value in the stateid.  As this was for a new lockowner,
-that would imply that nfs_set_open_stateid_locked() had updated the open
-stateid seqid with an earlier value.
+Don't call bio->bi_end_io() directly. Use the bio_endio() helper
+function instead, which handles completion more safely and uniformly.
 
-Looking at nfs_set_open_stateid_locked(), if the incoming seqid is out
-of sequence, the task will sleep on the state->waitq for up to 5
-seconds.  If the task waits for the full 5 seconds, then after finishing
-the wait it'll update the open stateid seqid with whatever value the
-incoming seqid has.  If there are multiple waiters in this scenario,
-then the last one to perform said update may not be the one with the
-highest seqid.
-
-Add a check to ensure that the seqid can only be incremented, and add a
-tracepoint to indicate when old seqids are skipped.
-
-Signed-off-by: Scott Mayhew <smayhew@redhat.com>
-Reviewed-by: Benjamin Coddington <bcodding@hammerspace.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Shida Zhang <zhangshida@kylinos.cn>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis Summary
+## Analysis of bcache commit: "fix improper use of bi_end_io"
 
-### 3. Bug Classification and Severity
+### 1. COMMIT MESSAGE ANALYSIS
 
-**This is clearly a BUG FIX**, not a feature addition:
-- **Observed production issue**: NFS4ERR_OLD_STATEID errors
-- **Race condition bug**: Multiple waiters can corrupt stateid ordering
-- **Protocol compliance**: Client violates NFSv4 protocol by using stale
-  seqids
-- **Potential data integrity risk**: Lock failures can lead to data
-  corruption in concurrent access scenarios
+The commit message clearly indicates this is a **bug fix** addressing
+improper use of the block I/O completion API. Key signals:
+- Subject explicitly says "fix improper use"
+- Body explains the correct API (`bio_endio()`) should be used instead
+  of direct `bi_end_io()` calls
+- Suggested and Reviewed by Christoph Hellwig - one of the most
+  respected Linux kernel developers, particularly in block layer code
 
-**The root cause explained:**
-When `nfs_set_open_stateid_locked()` detects an out-of-sequence stateid,
-it waits up to 5 seconds on `state->waitq`. If multiple waiters all
-timeout (status = -EAGAIN), they all proceed to update the stateid. The
-last one wins, but it may have an **older** seqid than an earlier
-updater. This causes seqid to go backwards.
+### 2. CODE CHANGE ANALYSIS
 
-**The fix:**
-Before allowing the update after a timeout, check if the incoming
-stateid is actually newer than the current one using
-`nfs4_stateid_is_newer()`. If not, skip the update entirely and return
-early.
+The commit makes three changes in `drivers/md/bcache/request.c`:
 
-### 4. Scope and Risk Assessment
+**Change 1** (detached_dev_end_io, line 1107):
+```c
+- bio->bi_end_io(bio);
++       bio_endio(bio);
+```
+After restoring the original `bi_end_io`, uses proper API for
+completion.
 
-| Aspect | Assessment |
+**Change 2** (detached_dev_do_request error path, line 1122):
+```c
+- bio->bi_end_io(bio);
++       bio_endio(bio);
+```
+Error path when `kzalloc` fails - uses proper API.
+
+**Change 3** (detached_dev_do_request discard handling, line 1139):
+```c
+- bio->bi_end_io(bio);
++       detached_dev_end_io(bio);
+```
+**This is the most critical fix.** At this point, `bio->bi_end_io` has
+already been reassigned to `detached_dev_end_io`. The old code was
+calling the *saved* original handler directly, completely bypassing the
+accounting and cleanup in `detached_dev_end_io()`. This could cause:
+- Missing I/O accounting (`bio_end_io_acct_remapped` never called)
+- Memory leak (ddip structure never freed)
+- Incorrect error handling for backing device
+
+### 3. WHY THIS IS A BUG
+
+`bio_endio()` does more than just calling `bi_end_io()`:
+- Handles bio chaining/splitting properly
+- Manages completion accounting
+- Ensures proper memory barriers
+- Provides unified completion path expected by block layer
+
+Bypassing this function can cause:
+- Incorrect I/O statistics
+- Race conditions in bio completion
+- Potential memory issues
+- Missing cleanup (especially Change 3)
+
+### 4. CLASSIFICATION
+
+- **Bug fix**: Yes - corrects improper API usage
+- **Feature addition**: No
+- **Security**: Not explicitly, but improper completion could lead to
+  memory issues
+
+### 5. SCOPE AND RISK ASSESSMENT
+
+| Factor | Assessment |
 |--------|------------|
-| Lines changed | ~15 lines in core logic |
-| Files touched | 2 (nfs4proc.c, nfs4trace.h) |
-| Dependencies | Uses existing helpers from 2019 |
-| New APIs | None |
-| Risk | LOW - adds a missing safety check |
+| Lines changed | 3 lines |
+| Files touched | 1 file |
+| Complexity | Very low - simple API call substitution |
+| Subsystem | bcache (mature, stable subsystem) |
+| Risk | Very low - using proper API is strictly safer |
 
-The tracepoint addition (`nfs4_open_stateid_update_skip`) uses an
-existing event class - it's purely diagnostic.
+### 6. USER IMPACT
 
-### 5. Stable Criteria Checklist
+- **Affected users**: bcache users (SSD caching in front of HDDs)
+- **Severity**: Medium - Change 3 especially could cause I/O accounting
+  issues and memory leaks for discards on devices without discard
+  support
+- **Visibility**: Subtle issues that may manifest as accounting bugs or
+  resource leaks
 
-- ✅ **Obviously correct**: Simple check using well-established helper
-  functions
-- ✅ **Fixes real bug**: Observed NFS4ERR_OLD_STATEID in production
-- ✅ **Important issue**: I/O failures, potential data integrity issues
-- ✅ **Small and contained**: ~15 lines, single function fix
-- ✅ **No new features**: Pure bug fix with diagnostic tracepoint
-- ✅ **No new APIs**: Uses existing nfs4_stateid_* helpers from 2019
-- ✅ **Reviewed**: By Benjamin Coddington (NFS expert)
-- ✅ **Signed-off**: By Trond Myklebust (primary NFS maintainer)
+### 7. STABILITY INDICATORS
 
-### 6. User Impact
+- **Reviewed-by: Christoph Hellwig** - block layer maintainer provides
+  high confidence
+- **Suggested-by: Christoph Hellwig** - issue identified by expert
+  during code review
+- `bio_endio()` is a fundamental, long-standing block layer API - no
+  dependency concerns
 
-- **Who is affected**: Any NFSv4 user with concurrent file access
-  patterns
-- **Severity**: Medium-High - can cause I/O failures, lock errors, and
-  potential data corruption
-- **Enterprise impact**: NFS is heavily used in enterprise environments;
-  this is an important fix
+### 8. DEPENDENCY CHECK
 
-### 7. Dependencies Check
+- `bio_endio()` has existed for many years in all stable kernels
+- bcache has been in mainline since ~3.10
+- No dependencies on other commits
+- Should apply cleanly to any stable tree with bcache
 
-The helper functions used (`nfs4_stateid_match_other`,
-`nfs4_stateid_is_newer`) have been in the kernel since 2019 and are used
-by 24 and 11 callers respectively. They will exist in all active stable
-trees (6.1.y, 6.6.y, etc.).
+### CONCLUSION
 
-### Conclusion
+This commit meets all stable kernel criteria:
 
-This is an excellent stable backport candidate:
-- Fixes a real, observed bug that causes protocol violations and I/O
-  failures
-- Small, surgical fix with clear logic
-- Uses existing infrastructure - no dependency issues
-- Reviewed and signed-off by NFS maintainers
-- Low risk of regression - it adds a missing safety check
+1. **Obviously correct**: Uses the documented, proper block layer API
+2. **Fixes real bugs**: Third change especially fixes missing
+   cleanup/accounting
+3. **Small and contained**: Only 3 one-line changes
+4. **Reviewed by expert**: Christoph Hellwig's review carries
+   significant weight
+5. **No new features**: Pure correctness fix
+6. **Low risk**: Switching to proper API cannot introduce new bugs
 
-The fix prevents NFSv4 stateid seqid from going backwards, which is a
-correctness issue that can impact production NFS users.
+The fix is surgical, addresses genuine API misuse that causes real
+issues (particularly the discard path), has top-tier review, and carries
+essentially no regression risk.
 
 **YES**
 
- fs/nfs/nfs4proc.c  | 13 +++++++++++--
- fs/nfs/nfs4trace.h |  1 +
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/md/bcache/request.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 93c6ce04332b8..d1ad2ef2ee6f9 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -1780,8 +1780,17 @@ static void nfs_set_open_stateid_locked(struct nfs4_state *state,
- 		if (nfs_stateid_is_sequential(state, stateid))
- 			break;
+diff --git a/drivers/md/bcache/request.c b/drivers/md/bcache/request.c
+index af345dc6fde14..82fdea7dea7aa 100644
+--- a/drivers/md/bcache/request.c
++++ b/drivers/md/bcache/request.c
+@@ -1104,7 +1104,7 @@ static void detached_dev_end_io(struct bio *bio)
+ 	}
  
--		if (status)
--			break;
-+		if (status) {
-+			if (nfs4_stateid_match_other(stateid, &state->open_stateid) &&
-+			    !nfs4_stateid_is_newer(stateid, &state->open_stateid)) {
-+				trace_nfs4_open_stateid_update_skip(state->inode,
-+								    stateid, status);
-+				return;
-+			} else {
-+				break;
-+			}
-+		}
-+
- 		/* Rely on seqids for serialisation with NFSv4.0 */
- 		if (!nfs4_has_session(NFS_SERVER(state->inode)->nfs_client))
- 			break;
-diff --git a/fs/nfs/nfs4trace.h b/fs/nfs/nfs4trace.h
-index 9776d220cec33..6285128e631a5 100644
---- a/fs/nfs/nfs4trace.h
-+++ b/fs/nfs/nfs4trace.h
-@@ -1353,6 +1353,7 @@ DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_setattr);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_delegreturn);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_wait);
-+DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_open_stateid_update_skip);
- DEFINE_NFS4_INODE_STATEID_EVENT(nfs4_close_stateid_update_wait);
+ 	kfree(ddip);
+-	bio->bi_end_io(bio);
++	bio_endio(bio);
+ }
  
- DECLARE_EVENT_CLASS(nfs4_getattr_event,
+ static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
+@@ -1121,7 +1121,7 @@ static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
+ 	ddip = kzalloc(sizeof(struct detached_dev_io_private), GFP_NOIO);
+ 	if (!ddip) {
+ 		bio->bi_status = BLK_STS_RESOURCE;
+-		bio->bi_end_io(bio);
++		bio_endio(bio);
+ 		return;
+ 	}
+ 
+@@ -1136,7 +1136,7 @@ static void detached_dev_do_request(struct bcache_device *d, struct bio *bio,
+ 
+ 	if ((bio_op(bio) == REQ_OP_DISCARD) &&
+ 	    !bdev_max_discard_sectors(dc->bdev))
+-		bio->bi_end_io(bio);
++		detached_dev_end_io(bio);
+ 	else
+ 		submit_bio_noacct(bio);
+ }
 -- 
 2.51.0
 
