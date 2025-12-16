@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98D0347BAF;
-	Tue, 16 Dec 2025 12:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7AB3570CD;
+	Tue, 16 Dec 2025 12:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888146; cv=none; b=mOFoJVA1ue0t80MRQcIOx9iPwvXEETqvIzk1PbPky2ZOlS+mJzs+lVp1xPlBgqmqg2Of6BzGnePzVoAL/IqJxbBu5OjlYPlWb0rIqAOyK7520LpbetQzKzy+qZwSZl0IQcp1hJZX6Lvrq1iqK0SkC4PkvXoCZrFwWKUWkyUzStc=
+	t=1765888149; cv=none; b=u/G5K9wwZMRbrzK1T+QiFlUVfqbSCQO04WIctaQ2Nas+wufQ2KejGu9i9WtU1E/Ke+DTWwF652LdNxToP+VF00rNKZwkQr+XgzZ/ePxKLW/SCJOOby8ja6mDOuKhWfne4eZ8bk3Ewvy61GZ22bvC5AvWaKO10l1wcIb69ZX4QVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888146; c=relaxed/simple;
-	bh=djGzGkf9YbDFb0FeoO22OGSGUY79xAHvZdLlzJMuULM=;
+	s=arc-20240116; t=1765888149; c=relaxed/simple;
+	bh=puQp9YOQ/DJip3AOF60lovAXQC9bAoTss44CBIeVRMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tr2+qFpGwjCviEwRW8z4nqzWaImhVT6GJcn98bZOoXU2PHaPaX+lIzivd3WtQbnjRxqsUVGkv5mkQY/lTKKp0Y/APVLWlu1TkBg16BVblmSyxeXuX5lYc7OAFhY1S9oXdhjQv/FaJMuNKza2Ov+Dumbi3QS/MAaK/ntu24KApR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=exv4QKc7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0zdwiD65msWf5vqeq0Gr5IXp6s30GE3BRobfM8Opp3LZnay6/tid2lmQXgRdSiNKOOIIwnUPnM206/LKAkUg7QsqP3sKSDavs8bur7keCGVEACvH1Y5jnsBWLxf3qK5atCmOiRSD8HrCDGoY8121cudyiWzc35gDE0DxTty7nw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KW0htVtX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="exv4QKc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29752C4CEF1;
-	Tue, 16 Dec 2025 12:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KW0htVtX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF90BC4CEF1;
+	Tue, 16 Dec 2025 12:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888146;
-	bh=djGzGkf9YbDFb0FeoO22OGSGUY79xAHvZdLlzJMuULM=;
+	s=korg; t=1765888149;
+	bh=puQp9YOQ/DJip3AOF60lovAXQC9bAoTss44CBIeVRMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=exv4QKc7vrIz+2E6m55nSUVj62UFXV6DmxBHuKwRzE22rVh/w4tFI9e8kuGPMuPmd
-	 LdPlTDUFDEw83LdOmQ76Eq6Klf6UxKy1w7UPAVfmLYEQAtqaZr0C6b093kvJMigGUF
-	 iMqddFGiWvaeLr3MaOUYfpYH04IxV0tjdYH7N96s=
+	b=KW0htVtXra7jhNCjy666fOJ+rfj1T6ed6Al2UY/zTnRVnhA02i5mVGTQS7gTFHJDu
+	 +xyoqWFa5Bms71ls6ilRRQwGh1nc48zrui8CaJLp4Ixb5vNFUvOqqfqUiEjFl3QeYc
+	 +PtZmLTJbeYRA2GZMiMchhJKGJFy8P2BhOSQ02XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andrea della Porta <andrea.porta@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 419/614] backlight: lp855x: Fix lp855x.h kernel-doc warnings
-Date: Tue, 16 Dec 2025 12:13:06 +0100
-Message-ID: <20251216111416.552270761@linuxfoundation.org>
+Subject: [PATCH 6.18 446/614] misc: rp1: Fix an error handling path in rp1_probe()
+Date: Tue, 16 Dec 2025 12:13:33 +0100
+Message-ID: <20251216111417.532237198@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,48 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 2d45db63260c6ae3cf007361e04a1c41bd265084 ]
+[ Upstream commit 43cd4b634ef90c4e2ff75eaeb361786fa04c8874 ]
 
-Add a missing struct short description and a missing leading " *" to
-lp855x.h to avoid kernel-doc warnings:
+When DT is used to get the reference of 'rp1_node', it should be released
+when not needed anymore, otherwise it is leaking.
 
-Warning: include/linux/platform_data/lp855x.h:126 missing initial short
- description on line:
- * struct lp855x_platform_data
-Warning: include/linux/platform_data/lp855x.h:131 bad line:
-   Only valid when mode is PWM_BASED.
+In such a case, add the missing of_node_put() call at the end of the probe,
+as already done in the error handling path.
 
-Fixes: 7be865ab8634 ("backlight: new backlight driver for LP855x devices")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
-Link: https://patch.msgid.link/20251111060916.1995920-1-rdunlap@infradead.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: 49d63971f963 ("misc: rp1: RaspberryPi RP1 misc driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Andrea della Porta <andrea.porta@suse.com>
+Link: https://patch.msgid.link/9bc1206de787fa86384f3e5ba0a8027947bc00ff.1762585959.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/platform_data/lp855x.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/misc/rp1/rp1_pci.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/platform_data/lp855x.h b/include/linux/platform_data/lp855x.h
-index ab222dd05bbc2..3b4a891acefe9 100644
---- a/include/linux/platform_data/lp855x.h
-+++ b/include/linux/platform_data/lp855x.h
-@@ -124,12 +124,12 @@ struct lp855x_rom_data {
- };
+diff --git a/drivers/misc/rp1/rp1_pci.c b/drivers/misc/rp1/rp1_pci.c
+index 803832006ec87..a342bcc6164bb 100644
+--- a/drivers/misc/rp1/rp1_pci.c
++++ b/drivers/misc/rp1/rp1_pci.c
+@@ -289,6 +289,9 @@ static int rp1_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 		goto err_unload_overlay;
+ 	}
  
- /**
-- * struct lp855x_platform_data
-+ * struct lp855x_platform_data - lp855 platform-specific data
-  * @name : Backlight driver name. If it is not defined, default name is set.
-  * @device_control : value of DEVICE CONTROL register
-  * @initial_brightness : initial value of backlight brightness
-  * @period_ns : platform specific pwm period value. unit is nano.
--		Only valid when mode is PWM_BASED.
-+ *		Only valid when mode is PWM_BASED.
-  * @size_program : total size of lp855x_rom_data
-  * @rom_data : list of new eeprom/eprom registers
-  */
++	if (skip_ovl)
++		of_node_put(rp1_node);
++
+ 	return 0;
+ 
+ err_unload_overlay:
 -- 
 2.51.0
 
