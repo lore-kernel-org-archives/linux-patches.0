@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C373596EC;
-	Tue, 16 Dec 2025 12:04:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C941359701;
+	Tue, 16 Dec 2025 12:04:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886657; cv=none; b=JaozvouBoMtmK565gBtb9klUzCAxeNykqEq24iPWrw6w13DbOCu0SEplyJobZxZlxB7378xMrhz2MUDs66TLFhn4iSizNGyWH8M1xlBbGFinoeWcqWq3I6jM/uWfOGd09Qvqoib+9CzeNMDXyzGgGNwyX+Fg4G7iIq8fylnWLNE=
+	t=1765886660; cv=none; b=pr7hpZ+F30redUxJ4udf3RrFnekt5NFjMYJr6fGIfxBcJcYxNOYG/WeG+LDKgcTYR8h5WFF1HF/DbCZ0eMtyx88oo2kFx41lrn7BZiXyWCRxP6sqCD0Un8tASJEYV72xc4K6meYQCFBylxwdwwsuRcDHX0pHJIJcJGucGg0ccqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886657; c=relaxed/simple;
-	bh=m/Q+bg8x9Z9mnDF4n9b6qg41dKL/+mt48r/LOiganVk=;
+	s=arc-20240116; t=1765886660; c=relaxed/simple;
+	bh=TwlqX//9DuVX/gRJOIml89Wwfndn7L7fLyvnDEYJUFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tpq/ivzbNloexpyvcoDAKXp+zZQRCwV0W8DMVuMykB+KQzTDAy4hlva5HW2SNF5K+a5aQuujiUt1VY5rHUb2+mxZEiCcESogobiiOdwRoZ+kdce0zB1Szx7VEnXRetzPIamQtxCdM8uSdcy0fwelMMeScmT+vgO/V1APfMfh1Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=URAi4g0a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sCB6rXF0u7hkFZyyptVssQC6d6CfoQxaqpMYvNJOjqjew2KYhoPZDcHL5iVmiEL1fIDuk0JPRL+9oTIKKtrWW0IS9vh9yaMMrKUEpGPf3VFyUl2M6m6tJ316R4iB8VHnTcEEAMk6sjv87yBuq17QBN6qYJK5V/JtE45F2PxDd6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KQ8koqCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="URAi4g0a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79320C4CEF1;
-	Tue, 16 Dec 2025 12:04:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KQ8koqCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1E3C4CEF1;
+	Tue, 16 Dec 2025 12:04:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886656;
-	bh=m/Q+bg8x9Z9mnDF4n9b6qg41dKL/+mt48r/LOiganVk=;
+	s=korg; t=1765886660;
+	bh=TwlqX//9DuVX/gRJOIml89Wwfndn7L7fLyvnDEYJUFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=URAi4g0aX4+5MLLEbGOomeJBYQ7BEkhP6V0dssvcM750btgM9zagT22u5L3I9Uh4N
-	 1c8D5sE29A+WBf79UcuT3MzkQNsdntaj40V9OH4WEGlEyWXSPMpxcDG8/DZPCpfwB3
-	 1LfL+oyOjFaYPrj8Wqq90gN07pRiTVOa59S4evtc=
+	b=KQ8koqCh0SLZBCUmbwoGQSnElA9wKYD2cnV71tz2NXJ8QRYP/k1J+xZNHX1a45jSi
+	 V3WY7Up5JEbggZNUEKdvRZ6Cm0vIm8ke/mqeTU+gx9/64Xgkj3TAPpj12cmGIfQ1U6
+	 1AOmk3QZRwI5rw50Wt/dXuiXyI6AkDG/4/HUNlUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Neal Gompa <neal@gompa.dev>,
-	Sven Peter <sven@kernel.org>
-Subject: [PATCH 6.17 502/507] usb: dwc3: dwc3_power_off_all_roothub_ports: Use ioremap_np when required
-Date: Tue, 16 Dec 2025 12:15:43 +0100
-Message-ID: <20251216111403.624369763@linuxfoundation.org>
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.17 503/507] ALSA: dice: fix buffer overflow in detect_stream_formats()
+Date: Tue, 16 Dec 2025 12:15:44 +0100
+Message-ID: <20251216111403.660188858@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,39 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sven Peter <sven@kernel.org>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 5ed9cc71432a8adf3c42223c935f714aac29901b upstream.
+commit 324f3e03e8a85931ce0880654e3c3eb38b0f0bba upstream.
 
-On Apple Silicon machines we can't use ioremap() / Device-nGnRE to map most
-regions but must use ioremap_np() / Device-nGnRnE whenever
-IORESOURCE_MEM_NONPOSTED is set. Make sure this is also done inside
-dwc3_power_off_all_roothub_ports to prevent SErrors.
+The function detect_stream_formats() reads the stream_count value directly
+from a FireWire device without validating it. This can lead to
+out-of-bounds writes when a malicious device provides a stream_count value
+greater than MAX_STREAMS.
 
-Fixes: 2d2a3349521d ("usb: dwc3: Add workaround for host mode VBUS glitch when boot")
-Cc: stable@kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Reviewed-by: Neal Gompa <neal@gompa.dev>
-Signed-off-by: Sven Peter <sven@kernel.org>
-Link: https://patch.msgid.link/20251015-b4-aplpe-dwc3-v2-2-cbd65a2d511a@kernel.org
+Fix by applying the same validation to both TX and RX stream counts in
+detect_stream_formats().
+
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
+Reported-by: Junrui Luo <moonafterrain@outlook.com>
+Fixes: 58579c056c1c ("ALSA: dice: use extended protocol to detect available stream formats")
+Cc: stable@vger.kernel.org
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB7881B043FC68B4C0DA40B73DAFDCA@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/host.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/firewire/dice/dice-extension.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/host.c
-+++ b/drivers/usb/dwc3/host.c
-@@ -37,7 +37,10 @@ static void dwc3_power_off_all_roothub_p
+--- a/sound/firewire/dice/dice-extension.c
++++ b/sound/firewire/dice/dice-extension.c
+@@ -116,7 +116,7 @@ static int detect_stream_formats(struct
+ 			break;
  
- 	/* xhci regs are not mapped yet, do it temporarily here */
- 	if (dwc->xhci_resources[0].start) {
--		xhci_regs = ioremap(dwc->xhci_resources[0].start, DWC3_XHCI_REGS_END);
-+		if (dwc->xhci_resources[0].flags & IORESOURCE_MEM_NONPOSTED)
-+			xhci_regs = ioremap_np(dwc->xhci_resources[0].start, DWC3_XHCI_REGS_END);
-+		else
-+			xhci_regs = ioremap(dwc->xhci_resources[0].start, DWC3_XHCI_REGS_END);
- 		if (!xhci_regs) {
- 			dev_err(dwc->dev, "Failed to ioremap xhci_regs\n");
- 			return;
+ 		base_offset += EXT_APP_STREAM_ENTRIES;
+-		stream_count = be32_to_cpu(reg[0]);
++		stream_count = min_t(unsigned int, be32_to_cpu(reg[0]), MAX_STREAMS);
+ 		err = read_stream_entries(dice, section_addr, base_offset,
+ 					  stream_count, mode,
+ 					  dice->tx_pcm_chs,
+@@ -125,7 +125,7 @@ static int detect_stream_formats(struct
+ 			break;
+ 
+ 		base_offset += stream_count * EXT_APP_STREAM_ENTRY_SIZE;
+-		stream_count = be32_to_cpu(reg[1]);
++		stream_count = min_t(unsigned int, be32_to_cpu(reg[1]), MAX_STREAMS);
+ 		err = read_stream_entries(dice, section_addr, base_offset,
+ 					  stream_count,
+ 					  mode, dice->rx_pcm_chs,
 
 
