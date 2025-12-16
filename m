@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CBD34EF08;
-	Tue, 16 Dec 2025 12:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234FA34EF0A;
+	Tue, 16 Dec 2025 12:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887850; cv=none; b=H1lFcR5Ct8QZK+d3wDbil/FSSPThY1ISx/rx6s8KH+/cav5M8pjuuOLK7bAXTG6S9bjipBWlaQNMDixWp/3HctdS+6BWwMgILFnRFZPJCcRzvbuTWgb4Od/iHGBJrzBoNgi+kEiCMnQ9Nce7e2izdQiA9woQOXRPk2s2I5zXfbs=
+	t=1765887853; cv=none; b=gzjRRwH4ojfDgSfZEjA+VXJxXDNi323oOzzaY8KYsYpCpZKbQPIgY2ijVsSdEWYwp87P4Le7Rvm/l9cDrZbCu+o0J/+6DctHj4v62m5VYDGKyULu++0nMlUy6absijSKcmIgAsas9+PjPUYdcnSWby94WARZSobM+5CKqqVGMN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887850; c=relaxed/simple;
-	bh=+0ORCyiFXp8in2I3wlMRj+2jRskgdWUThPtzaRUeRaE=;
+	s=arc-20240116; t=1765887853; c=relaxed/simple;
+	bh=gd5bl14FfRjXtDkrz3Fi5vchbOUzpEV2hpae6LLBzfw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvTq1q30DX9MWfdIR/VtHBYrcfWZAJRPbpKd8JX2jTXdrdenmO2RPAqF4rH6UtUbozZDrAwVj+52TDvahwqllEci3b2Gsz4OlSg7SCdf+P9pvnk4WRqk86TqJV3k+7mWYmZO+4GAStkVBX45iwDmnTYVOcJYP8ERqKku/qoPZi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ol+6Hnsj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jyRInZq/vbQ4wFmrV14ESUikL/k8Z3VIiArv/WrXQIFvEwEmsyv+jBXx3hpKqehIfkGEwonebo/7L+wlXiShmK29C+UhFD7zUClsGpThNeboUo1b1OnQtaKSrjcStiFNFpMvrezf8jmXOE/ED4muTq7QYySYRXmqfBl58Queq8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wMBAOFJ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ol+6Hnsj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC53C4CEF1;
-	Tue, 16 Dec 2025 12:24:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wMBAOFJ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D85C4CEF1;
+	Tue, 16 Dec 2025 12:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887849;
-	bh=+0ORCyiFXp8in2I3wlMRj+2jRskgdWUThPtzaRUeRaE=;
+	s=korg; t=1765887853;
+	bh=gd5bl14FfRjXtDkrz3Fi5vchbOUzpEV2hpae6LLBzfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ol+6HnsjNe+U3k5JOufYqLsOxmMF4NCDtyj8Atf/Oof3/5AMO0M5PfUlOZJuueViG
-	 aYVKocP9UfRlABMXDINy9SwOi6LRM/pu93kv6gE1GU33tESiGGux++Omk9pdxJDcnJ
-	 McCzzJUbigIl989p6hMxkwlASHr2C9sNvvE30h/A=
+	b=wMBAOFJ82b92pFvB4m4kn7/Gb6ublVSwaWXjVpHoHrmsgH3Vs8I6pq87I4YYZld96
+	 LiOgDERu//DtfYVWCtFBNA0NBKhqAuwB/T7GiDjUTmUfHrt6xCn/arweA54XeZ0Co+
+	 y+2ax4m3U/hKPc7soEWABzEJ9kiRaXNFZSALTUTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Tian <jason@os.amperecomputing.com>,
-	Shengwei Luo <luoshengwei@huawei.com>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Shiju Jose <shiju.jose@huawei.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Daniel Ferguson <danielf@os.amperecomputing.com>
-Subject: [PATCH 6.18 357/614] RAS: Report all ARM processor CPER information to userspace
-Date: Tue, 16 Dec 2025 12:12:04 +0100
-Message-ID: <20251216111414.295027088@linuxfoundation.org>
+	Wander Lairson Costa <wander@redhat.com>,
+	Tomas Glozar <tglozar@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 358/614] rtla/tests: Extend action tests to 5s
+Date: Tue, 16 Dec 2025 12:12:05 +0100
+Message-ID: <20251216111414.332434252@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -57,306 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Tian <jason@os.amperecomputing.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit 05954511b73e748d0370549ad9dd9cd95297d97a ]
+[ Upstream commit d649e9f04cb0224817dac8190461ef1674e32b37 ]
 
-The ARM processor CPER record was added in UEFI v2.6 and remained
-unchanged up to v2.10.
+In non-BPF mode, it takes up to 1 second for RTLA to notice that tracing
+has been stopped. That means that action tests cannot have a 1 second
+duration, as the SIGALRM will be racing with the threshold overflow.
 
-Yet, the original arm_event trace code added by
+Previously, non-BPF mode actions were buggy and always executed
+the action, even when stopping on duration or SIGINT, preventing
+this issue from manifesting. Now that this has been fixed, the tests
+have become flaky, and this has to be adjusted.
 
-  e9279e83ad1f ("trace, ras: add ARM processor error trace event")
-
-is incomplete, as it only traces some fields of UAPI 2.6 table N.16, not
-exporting any information from tables N.17 to N.29 of the record.
-
-This is not enough for the user to be able to figure out what has
-exactly happened or to take appropriate action.
-
-According to the UEFI v2.9 specification chapter N2.4.4, the ARM
-processor error section includes:
-
-- several (ERR_INFO_NUM) ARM processor error information structures
-  (Tables N.17 to N.20);
-- several (CONTEXT_INFO_NUM) ARM processor context information
-  structures (Tables N.21 to N.29);
-- several vendor specific error information structures. The
-  size is given by Section Length minus the size of the other
-  fields.
-
-In addition, it also exports two fields that are parsed by the GHES
-driver when firmware reports it, e.g.:
-
-- error severity
-- CPU logical index
-
-Report all of these information to userspace via a the ARM tracepoint so
-that userspace can properly record the error and take decisions related
-to CPU core isolation according to error severity and other info.
-
-The updated ARM trace event now contains the following fields:
-
-======================================  =============================
-UEFI field on table N.16                ARM Processor trace fields
-======================================  =============================
-Validation                              handled when filling data for
-                                        affinity MPIDR and running
-                                        state.
-ERR_INFO_NUM                            pei_len
-CONTEXT_INFO_NUM                        ctx_len
-Section Length                          indirectly reported by
-                                        pei_len, ctx_len and oem_len
-Error affinity level                    affinity
-MPIDR_EL1                               mpidr
-MIDR_EL1                                midr
-Running State                           running_state
-PSCI State                              psci_state
-Processor Error Information Structure   pei_err - count at pei_len
-Processor Context                       ctx_err- count at ctx_len
-Vendor Specific Error Info              oem - count at oem_len
-======================================  =============================
-
-It should be noted that decoding of tables N.17 to N.29, if needed, will
-be handled in userspace. That gives more flexibility, as there won't be
-any need to flood the kernel with micro-architecture specific error
-decoding.
-
-Also, decoding the other fields require a complex logic, and should be
-done for each of the several values inside the record field.  So, let
-userspace daemons like rasdaemon decode them, parsing such tables and
-having vendor-specific micro-architecture-specific decoders.
-
- [mchehab: modified description, solved merge conflicts and fixed coding style]
-
-Signed-off-by: Jason Tian <jason@os.amperecomputing.com>
-Co-developed-by: Shengwei Luo <luoshengwei@huawei.com>
-Signed-off-by: Shengwei Luo <luoshengwei@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Signed-off-by: Daniel Ferguson <danielf@os.amperecomputing.com> # rebased
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Tested-by: Shiju Jose <shiju.jose@huawei.com>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Fixes: e9279e83ad1f ("trace, ras: add ARM processor error trace event")
-Link: https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-section
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 4e26f84abfbb ("rtla/tests: Add tests for actions")
+Fixes: 05b7e10687c6 ("tools/rtla: Add remaining support for osnoise actions")
+Reviewed-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20251007095341.186923-2-tglozar@redhat.com
+Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/ghes.c | 11 ++++-----
- drivers/ras/ras.c        | 40 ++++++++++++++++++++++++++++++--
- include/linux/ras.h      | 16 ++++++++++---
- include/ras/ras_event.h  | 49 ++++++++++++++++++++++++++++++++++++----
- 4 files changed, 99 insertions(+), 17 deletions(-)
+ tools/tracing/rtla/tests/osnoise.t  | 4 ++--
+ tools/tracing/rtla/tests/timerlat.t | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
-index 97ee19f2cae06..7d2466b515046 100644
---- a/drivers/acpi/apei/ghes.c
-+++ b/drivers/acpi/apei/ghes.c
-@@ -552,7 +552,7 @@ static bool ghes_handle_memory_failure(struct acpi_hest_generic_data *gdata,
- }
- 
- static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
--				       int sev, bool sync)
-+				     int sev, bool sync)
- {
- 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
- 	int flags = sync ? MF_ACTION_REQUIRED : 0;
-@@ -560,9 +560,8 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
- 	int sec_sev, i;
- 	char *p;
- 
--	log_arm_hw_error(err);
--
- 	sec_sev = ghes_severity(gdata->error_severity);
-+	log_arm_hw_error(err, sec_sev);
- 	if (sev != GHES_SEV_RECOVERABLE || sec_sev != GHES_SEV_RECOVERABLE)
- 		return false;
- 
-@@ -895,11 +894,9 @@ static void ghes_do_proc(struct ghes *ghes,
- 
- 			arch_apei_report_mem_error(sev, mem_err);
- 			queued = ghes_handle_memory_failure(gdata, sev, sync);
--		}
--		else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
-+		} else if (guid_equal(sec_type, &CPER_SEC_PCIE)) {
- 			ghes_handle_aer(gdata);
--		}
--		else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
-+		} else if (guid_equal(sec_type, &CPER_SEC_PROC_ARM)) {
- 			queued = ghes_handle_arm_hw_error(gdata, sev, sync);
- 		} else if (guid_equal(sec_type, &CPER_SEC_CXL_PROT_ERR)) {
- 			struct cxl_cper_sec_prot_err *prot_err = acpi_hest_get_payload(gdata);
-diff --git a/drivers/ras/ras.c b/drivers/ras/ras.c
-index ac0e132ccc3eb..2a5b5a9fdcb36 100644
---- a/drivers/ras/ras.c
-+++ b/drivers/ras/ras.c
-@@ -53,9 +53,45 @@ void log_non_standard_event(const guid_t *sec_type, const guid_t *fru_id,
- }
- EXPORT_SYMBOL_GPL(log_non_standard_event);
- 
--void log_arm_hw_error(struct cper_sec_proc_arm *err)
-+void log_arm_hw_error(struct cper_sec_proc_arm *err, const u8 sev)
- {
--	trace_arm_event(err);
-+	struct cper_arm_err_info *err_info;
-+	struct cper_arm_ctx_info *ctx_info;
-+	u8 *ven_err_data;
-+	u32 ctx_len = 0;
-+	int n, sz, cpu;
-+	s32 vsei_len;
-+	u32 pei_len;
-+	u8 *pei_err, *ctx_err;
-+
-+	pei_len = sizeof(struct cper_arm_err_info) * err->err_info_num;
-+	pei_err = (u8 *)(err + 1);
-+
-+	err_info = (struct cper_arm_err_info *)(err + 1);
-+	ctx_info = (struct cper_arm_ctx_info *)(err_info + err->err_info_num);
-+	ctx_err = (u8 *)ctx_info;
-+
-+	for (n = 0; n < err->context_info_num; n++) {
-+		sz = sizeof(struct cper_arm_ctx_info) + ctx_info->size;
-+		ctx_info = (struct cper_arm_ctx_info *)((long)ctx_info + sz);
-+		ctx_len += sz;
-+	}
-+
-+	vsei_len = err->section_length - (sizeof(struct cper_sec_proc_arm) + pei_len + ctx_len);
-+	if (vsei_len < 0) {
-+		pr_warn(FW_BUG "section length: %d\n", err->section_length);
-+		pr_warn(FW_BUG "section length is too small\n");
-+		pr_warn(FW_BUG "firmware-generated error record is incorrect\n");
-+		vsei_len = 0;
-+	}
-+	ven_err_data = (u8 *)ctx_info;
-+
-+	cpu = GET_LOGICAL_INDEX(err->mpidr);
-+	if (cpu < 0)
-+		cpu = -1;
-+
-+	trace_arm_event(err, pei_err, pei_len, ctx_err, ctx_len,
-+			ven_err_data, (u32)vsei_len, sev, cpu);
- }
- 
- static int __init ras_init(void)
-diff --git a/include/linux/ras.h b/include/linux/ras.h
-index a64182bc72ad3..468941bfe855f 100644
---- a/include/linux/ras.h
-+++ b/include/linux/ras.h
-@@ -24,8 +24,7 @@ int __init parse_cec_param(char *str);
- void log_non_standard_event(const guid_t *sec_type,
- 			    const guid_t *fru_id, const char *fru_text,
- 			    const u8 sev, const u8 *err, const u32 len);
--void log_arm_hw_error(struct cper_sec_proc_arm *err);
--
-+void log_arm_hw_error(struct cper_sec_proc_arm *err, const u8 sev);
- #else
- static inline void
- log_non_standard_event(const guid_t *sec_type,
-@@ -33,7 +32,7 @@ log_non_standard_event(const guid_t *sec_type,
- 		       const u8 sev, const u8 *err, const u32 len)
- { return; }
- static inline void
--log_arm_hw_error(struct cper_sec_proc_arm *err) { return; }
-+log_arm_hw_error(struct cper_sec_proc_arm *err, const u8 sev) { return; }
- #endif
- 
- struct atl_err {
-@@ -53,4 +52,15 @@ static inline unsigned long
- amd_convert_umc_mca_addr_to_sys_addr(struct atl_err *err) { return -EINVAL; }
- #endif /* CONFIG_AMD_ATL */
- 
-+#if defined(CONFIG_ARM) || defined(CONFIG_ARM64)
-+#include <asm/smp_plat.h>
-+/*
-+ * Include ARM-specific SMP header which provides a function mapping mpidr to
-+ * CPU logical index.
-+ */
-+#define GET_LOGICAL_INDEX(mpidr) get_logical_index(mpidr & MPIDR_HWID_BITMASK)
-+#else
-+#define GET_LOGICAL_INDEX(mpidr) -EINVAL
-+#endif /* CONFIG_ARM || CONFIG_ARM64 */
-+
- #endif /* __RAS_H__ */
-diff --git a/include/ras/ras_event.h b/include/ras/ras_event.h
-index c8cd0f00c8454..c9f0b1018bcce 100644
---- a/include/ras/ras_event.h
-+++ b/include/ras/ras_event.h
-@@ -168,11 +168,25 @@ TRACE_EVENT(mc_event,
-  * This event is generated when hardware detects an ARM processor error
-  * has occurred. UEFI 2.6 spec section N.2.4.4.
-  */
-+#define APEIL "ARM Processor Err Info data len"
-+#define APEID "ARM Processor Err Info raw data"
-+#define APECIL "ARM Processor Err Context Info data len"
-+#define APECID "ARM Processor Err Context Info raw data"
-+#define VSEIL "Vendor Specific Err Info data len"
-+#define VSEID "Vendor Specific Err Info raw data"
- TRACE_EVENT(arm_event,
- 
--	TP_PROTO(const struct cper_sec_proc_arm *proc),
-+	TP_PROTO(const struct cper_sec_proc_arm *proc,
-+		 const u8 *pei_err,
-+		 const u32 pei_len,
-+		 const u8 *ctx_err,
-+		 const u32 ctx_len,
-+		 const u8 *oem,
-+		 const u32 oem_len,
-+		 u8 sev,
-+		 int cpu),
- 
--	TP_ARGS(proc),
-+	TP_ARGS(proc, pei_err, pei_len, ctx_err, ctx_len, oem, oem_len, sev, cpu),
- 
- 	TP_STRUCT__entry(
- 		__field(u64, mpidr)
-@@ -180,6 +194,14 @@ TRACE_EVENT(arm_event,
- 		__field(u32, running_state)
- 		__field(u32, psci_state)
- 		__field(u8, affinity)
-+		__field(u32, pei_len)
-+		__dynamic_array(u8, pei_buf, pei_len)
-+		__field(u32, ctx_len)
-+		__dynamic_array(u8, ctx_buf, ctx_len)
-+		__field(u32, oem_len)
-+		__dynamic_array(u8, oem_buf, oem_len)
-+		__field(u8, sev)
-+		__field(int, cpu)
- 	),
- 
- 	TP_fast_assign(
-@@ -199,12 +221,29 @@ TRACE_EVENT(arm_event,
- 			__entry->running_state = ~0;
- 			__entry->psci_state = ~0;
- 		}
-+		__entry->pei_len = pei_len;
-+		memcpy(__get_dynamic_array(pei_buf), pei_err, pei_len);
-+		__entry->ctx_len = ctx_len;
-+		memcpy(__get_dynamic_array(ctx_buf), ctx_err, ctx_len);
-+		__entry->oem_len = oem_len;
-+		memcpy(__get_dynamic_array(oem_buf), oem, oem_len);
-+		__entry->sev = sev;
-+		__entry->cpu = cpu;
- 	),
- 
--	TP_printk("affinity level: %d; MPIDR: %016llx; MIDR: %016llx; "
--		  "running state: %d; PSCI state: %d",
-+	TP_printk("cpu: %d; error: %d; affinity level: %d; MPIDR: %016llx; MIDR: %016llx; "
-+		  "running state: %d; PSCI state: %d; "
-+		  "%s: %d; %s: %s; %s: %d; %s: %s; %s: %d; %s: %s",
-+		  __entry->cpu,
-+		  __entry->sev,
- 		  __entry->affinity, __entry->mpidr, __entry->midr,
--		  __entry->running_state, __entry->psci_state)
-+		  __entry->running_state, __entry->psci_state,
-+		  APEIL, __entry->pei_len, APEID,
-+		  __print_hex(__get_dynamic_array(pei_buf), __entry->pei_len),
-+		  APECIL, __entry->ctx_len, APECID,
-+		  __print_hex(__get_dynamic_array(ctx_buf), __entry->ctx_len),
-+		  VSEIL, __entry->oem_len, VSEID,
-+		  __print_hex(__get_dynamic_array(oem_buf), __entry->oem_len))
- );
- 
- /*
+diff --git a/tools/tracing/rtla/tests/osnoise.t b/tools/tracing/rtla/tests/osnoise.t
+index e3c89d45a6bb0..08196443fef16 100644
+--- a/tools/tracing/rtla/tests/osnoise.t
++++ b/tools/tracing/rtla/tests/osnoise.t
+@@ -39,9 +39,9 @@ check "hist stop at failed action" \
+ check "top stop at failed action" \
+ 	"timerlat top -T 2 --on-threshold shell,command='echo -n abc; false' --on-threshold shell,command='echo -n defgh'" 2 "^abc" "defgh"
+ check "hist with continue" \
+-	"osnoise hist -S 2 -d 1s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
++	"osnoise hist -S 2 -d 5s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
+ check "top with continue" \
+-	"osnoise top -q -S 2 -d 1s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
++	"osnoise top -q -S 2 -d 5s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
+ check "hist with trace output at end" \
+ 	"osnoise hist -d 1s --on-end trace" 0 "^  Saving trace to osnoise_trace.txt$"
+ check "top with trace output at end" \
+diff --git a/tools/tracing/rtla/tests/timerlat.t b/tools/tracing/rtla/tests/timerlat.t
+index b5d1e7260a9be..b550a6ae24456 100644
+--- a/tools/tracing/rtla/tests/timerlat.t
++++ b/tools/tracing/rtla/tests/timerlat.t
+@@ -60,9 +60,9 @@ check "hist stop at failed action" \
+ check "top stop at failed action" \
+ 	"timerlat top -T 2 --on-threshold shell,command='echo -n 1; false' --on-threshold shell,command='echo -n 2'" 2 "^1ALL"
+ check "hist with continue" \
+-	"timerlat hist -T 2 -d 1s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
++	"timerlat hist -T 2 -d 5s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
+ check "top with continue" \
+-	"timerlat top -q -T 2 -d 1s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
++	"timerlat top -q -T 2 -d 5s --on-threshold shell,command='echo TestOutput' --on-threshold continue" 0 "^TestOutput$"
+ check "hist with trace output at end" \
+ 	"timerlat hist -d 1s --on-end trace" 0 "^  Saving trace to timerlat_trace.txt$"
+ check "top with trace output at end" \
 -- 
 2.51.0
 
