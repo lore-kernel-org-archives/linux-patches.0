@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865F3341645;
-	Tue, 16 Dec 2025 11:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF57341648;
+	Tue, 16 Dec 2025 11:25:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884329; cv=none; b=osgxBZNSy9VFK2ptfJPuTb92/oDIEmfKWhCogQ9L7EUPFyQdyfVqOouZHthUXHqSBG2CRugPuDbAEgt60Gx4qiEAzUTBIAArpyyNbljqteU8uYiOz3jLwuyKPTDujtkkIICT9Td4LRJH9BCLAD+RO1Aj3X+hVjFPH/E/fC/NLPs=
+	t=1765884333; cv=none; b=Sg4S4qU026RjgVVhKCzaw7+hIvkUn/HG5uzP1uYuRpNe8eofrN/hE6aQpCI5Wy56xBMx93S+w5h9RNDYOQRO6yZlQvt1VRdn1QeZfejy4ipRgXqf21ukC5mmHOsVgVdCZVK6Tl0+MMmFbXZxo1xLWBaIJhmOW4H8XJ0DsuKptUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884329; c=relaxed/simple;
-	bh=8WWcHjrhqb12owofp7MEgb9c7rHIc4zCYYwDwlF0boA=;
+	s=arc-20240116; t=1765884333; c=relaxed/simple;
+	bh=NwZU/tz6lH71gCHlN50XCms6u9QmIvonDhQu0wtfPNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YXJdzVl1zYpod3R3e/wzyin7HpEdh6/AbKLOPdCSJpbb6Sml/P40cv7A04T1mVhUlh9JamPZAzvO6KyBZWGFlv9uj7oCY+4+RAgEgdMwEDJEXckGe59OqiXY++hUBgjo5pFpe6MlTlqj8HdonpgUv3+1zyGHQzRB/5ZPme/SNj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xVgamN9S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7coKXY3dx6DBpJ6ssAYbMwvHs8ZhcbYOH6rocE3yEPXoYAklpuZexK5W3zNLmLyzjLa4hBlYID2mcNmKOYtITazoIpvfucTrLm3ViyAjKBS/pxR3vwkOf6E/TObzYEjCLLGjloRuaRh979enWcTFRqOwOj2xY94yipsGw5nQ70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8yveVLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xVgamN9S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09DEC4CEF1;
-	Tue, 16 Dec 2025 11:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8yveVLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947F9C4CEF1;
+	Tue, 16 Dec 2025 11:25:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884329;
-	bh=8WWcHjrhqb12owofp7MEgb9c7rHIc4zCYYwDwlF0boA=;
+	s=korg; t=1765884333;
+	bh=NwZU/tz6lH71gCHlN50XCms6u9QmIvonDhQu0wtfPNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xVgamN9SKRwbIe2dx+G9arF6sU8VcBZtoZSBbOUvHpV44Ty8fb2OXcZmmPdP6tztT
-	 glswqGQ2GqRgLqyHJpaXi9/wMj2EXRNa+6UHZxlBWeMMIv/5OBpRQGCb3fhJkw8hD2
-	 /HB5mKh1BjRTjcasSvIq0hMbCNirwT07x14W6VOw=
+	b=D8yveVLwflw/yz0KorY6hYwqVQGsBEhm4+iNh63FsHP3ZpNp1xmFmiwmhBDjAd50J
+	 A5O1I3yXgmkcu3qbqIGG9LkmKiSziRBwZK0/wZkTSxofnd4xlN6qVwS9kb0QlnLZGd
+	 TQin81rNwTBozgR50FpLsrIrlyqTp3CbtrM5V2dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 160/354] crypto: iaa - Fix incorrect return value in save_iaa_wq()
-Date: Tue, 16 Dec 2025 12:12:07 +0100
-Message-ID: <20251216111326.710805957@linuxfoundation.org>
+Subject: [PATCH 6.12 161/354] s390/fpu: Fix false-positive kmsan report in fpu_vstl()
+Date: Tue, 16 Dec 2025 12:12:08 +0100
+Message-ID: <20251216111326.746206595@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,38 +51,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
 
-[ Upstream commit 76ce17f6f7f78ab79b9741388bdb4dafa985b4e9 ]
+[ Upstream commit 14e4e4175b64dd9216b522f6ece8af6997d063b2 ]
 
-The save_iaa_wq() function unconditionally returns 0, even when an error
-is encountered. This prevents the error code from being propagated to the
-caller.
+A false-positive kmsan report is detected when running ping command.
 
-Fix this by returning the 'ret' variable, which holds the actual status
-of the operations within the function.
+An inline assembly instruction 'vstl' can write varied amount of bytes
+depending on value of 'index' argument. If 'index' > 0, 'vstl' writes
+at least 2 bytes.
 
-Fixes: ea7a5cbb43696 ("crypto: iaa - Add Intel IAA Compression Accelerator crypto driver core")
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+clang generates kmsan write helper call depending on inline assembly
+constraints. Constraints are evaluated compile-time, but value of
+'index' argument is known only at runtime.
+
+clang currently generates call to __msan_instrument_asm_store with 1 byte
+as size. Manually call kmsan function to indicate correct amount of bytes
+written and fix false-positive report.
+
+This change fixes following kmsan reports:
+
+[   36.563119] =====================================================
+[   36.563594] BUG: KMSAN: uninit-value in virtqueue_add+0x35c6/0x7c70
+[   36.563852]  virtqueue_add+0x35c6/0x7c70
+[   36.564016]  virtqueue_add_outbuf+0xa0/0xb0
+[   36.564266]  start_xmit+0x288c/0x4a20
+[   36.564460]  dev_hard_start_xmit+0x302/0x900
+[   36.564649]  sch_direct_xmit+0x340/0xea0
+[   36.564894]  __dev_queue_xmit+0x2e94/0x59b0
+[   36.565058]  neigh_resolve_output+0x936/0xb40
+[   36.565278]  __neigh_update+0x2f66/0x3a60
+[   36.565499]  neigh_update+0x52/0x60
+[   36.565683]  arp_process+0x1588/0x2de0
+[   36.565916]  NF_HOOK+0x1da/0x240
+[   36.566087]  arp_rcv+0x3e4/0x6e0
+[   36.566306]  __netif_receive_skb_list_core+0x1374/0x15a0
+[   36.566527]  netif_receive_skb_list_internal+0x1116/0x17d0
+[   36.566710]  napi_complete_done+0x376/0x740
+[   36.566918]  virtnet_poll+0x1bae/0x2910
+[   36.567130]  __napi_poll+0xf4/0x830
+[   36.567294]  net_rx_action+0x97c/0x1ed0
+[   36.567556]  handle_softirqs+0x306/0xe10
+[   36.567731]  irq_exit_rcu+0x14c/0x2e0
+[   36.567910]  do_io_irq+0xd4/0x120
+[   36.568139]  io_int_handler+0xc2/0xe8
+[   36.568299]  arch_cpu_idle+0xb0/0xc0
+[   36.568540]  arch_cpu_idle+0x76/0xc0
+[   36.568726]  default_idle_call+0x40/0x70
+[   36.568953]  do_idle+0x1d6/0x390
+[   36.569486]  cpu_startup_entry+0x9a/0xb0
+[   36.569745]  rest_init+0x1ea/0x290
+[   36.570029]  start_kernel+0x95e/0xb90
+[   36.570348]  startup_continue+0x2e/0x40
+[   36.570703]
+[   36.570798] Uninit was created at:
+[   36.571002]  kmem_cache_alloc_node_noprof+0x9e8/0x10e0
+[   36.571261]  kmalloc_reserve+0x12a/0x470
+[   36.571553]  __alloc_skb+0x310/0x860
+[   36.571844]  __ip_append_data+0x483e/0x6a30
+[   36.572170]  ip_append_data+0x11c/0x1e0
+[   36.572477]  raw_sendmsg+0x1c8c/0x2180
+[   36.572818]  inet_sendmsg+0xe6/0x190
+[   36.573142]  __sys_sendto+0x55e/0x8e0
+[   36.573392]  __s390x_sys_socketcall+0x19ae/0x2ba0
+[   36.573571]  __do_syscall+0x12e/0x240
+[   36.573823]  system_call+0x6e/0x90
+[   36.573976]
+[   36.574017] Byte 35 of 98 is uninitialized
+[   36.574082] Memory access of size 98 starts at 0000000007aa0012
+[   36.574218]
+[   36.574325] CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Tainted: G    B            N  6.17.0-dirty #16 NONE
+[   36.574541] Tainted: [B]=BAD_PAGE, [N]=TEST
+[   36.574617] Hardware name: IBM 3931 A01 703 (KVM/Linux)
+[   36.574755] =====================================================
+
+[   63.532541] =====================================================
+[   63.533639] BUG: KMSAN: uninit-value in virtqueue_add+0x35c6/0x7c70
+[   63.533989]  virtqueue_add+0x35c6/0x7c70
+[   63.534940]  virtqueue_add_outbuf+0xa0/0xb0
+[   63.535861]  start_xmit+0x288c/0x4a20
+[   63.536708]  dev_hard_start_xmit+0x302/0x900
+[   63.537020]  sch_direct_xmit+0x340/0xea0
+[   63.537997]  __dev_queue_xmit+0x2e94/0x59b0
+[   63.538819]  neigh_resolve_output+0x936/0xb40
+[   63.539793]  ip_finish_output2+0x1ee2/0x2200
+[   63.540784]  __ip_finish_output+0x272/0x7a0
+[   63.541765]  ip_finish_output+0x4e/0x5e0
+[   63.542791]  ip_output+0x166/0x410
+[   63.543771]  ip_push_pending_frames+0x1a2/0x470
+[   63.544753]  raw_sendmsg+0x1f06/0x2180
+[   63.545033]  inet_sendmsg+0xe6/0x190
+[   63.546006]  __sys_sendto+0x55e/0x8e0
+[   63.546859]  __s390x_sys_socketcall+0x19ae/0x2ba0
+[   63.547730]  __do_syscall+0x12e/0x240
+[   63.548019]  system_call+0x6e/0x90
+[   63.548989]
+[   63.549779] Uninit was created at:
+[   63.550691]  kmem_cache_alloc_node_noprof+0x9e8/0x10e0
+[   63.550975]  kmalloc_reserve+0x12a/0x470
+[   63.551969]  __alloc_skb+0x310/0x860
+[   63.552949]  __ip_append_data+0x483e/0x6a30
+[   63.553902]  ip_append_data+0x11c/0x1e0
+[   63.554912]  raw_sendmsg+0x1c8c/0x2180
+[   63.556719]  inet_sendmsg+0xe6/0x190
+[   63.557534]  __sys_sendto+0x55e/0x8e0
+[   63.557875]  __s390x_sys_socketcall+0x19ae/0x2ba0
+[   63.558869]  __do_syscall+0x12e/0x240
+[   63.559832]  system_call+0x6e/0x90
+[   63.560780]
+[   63.560972] Byte 35 of 98 is uninitialized
+[   63.561741] Memory access of size 98 starts at 0000000005704312
+[   63.561950]
+[   63.562824] CPU: 3 UID: 0 PID: 192 Comm: ping Tainted: G    B            N  6.17.0-dirty #16 NONE
+[   63.563868] Tainted: [B]=BAD_PAGE, [N]=TEST
+[   63.564751] Hardware name: IBM 3931 A01 703 (KVM/Linux)
+[   63.564986] =====================================================
+
+Fixes: dcd3e1de9d17 ("s390/checksum: provide csum_partial_copy_nocheck()")
+Signed-off-by: Aleksei Nikiforov <aleksei.nikiforov@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/intel/iaa/iaa_crypto_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/include/asm/fpu-insn.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/intel/iaa/iaa_crypto_main.c b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-index df2728cccf8b3..e9391cf2c397c 100644
---- a/drivers/crypto/intel/iaa/iaa_crypto_main.c
-+++ b/drivers/crypto/intel/iaa/iaa_crypto_main.c
-@@ -807,7 +807,7 @@ static int save_iaa_wq(struct idxd_wq *wq)
- 	if (!cpus_per_iaa)
- 		cpus_per_iaa = 1;
- out:
--	return 0;
-+	return ret;
+diff --git a/arch/s390/include/asm/fpu-insn.h b/arch/s390/include/asm/fpu-insn.h
+index a4c9b4db62ff5..c74c6056087fe 100644
+--- a/arch/s390/include/asm/fpu-insn.h
++++ b/arch/s390/include/asm/fpu-insn.h
+@@ -12,6 +12,7 @@
+ #ifndef __ASSEMBLY__
+ 
+ #include <linux/instrumented.h>
++#include <linux/kmsan.h>
+ #include <asm/asm-extable.h>
+ 
+ asm(".include \"asm/fpu-insn-asm.h\"\n");
+@@ -377,6 +378,7 @@ static __always_inline void fpu_vst(u8 v1, const void *vxr)
+ 		     : [vxr] "=Q" (*(__vector128 *)vxr)
+ 		     : [v1] "I" (v1)
+ 		     : "memory");
++	kmsan_unpoison_memory(vxr, size);
  }
  
- static void remove_iaa_wq(struct idxd_wq *wq)
+ #endif /* CONFIG_CC_IS_CLANG */
+@@ -395,6 +397,7 @@ static __always_inline void fpu_vstl(u8 v1, u32 index, const void *vxr)
+ 		: [vxr] "=R" (*(u8 *)vxr)
+ 		: [index] "d" (index), [v1] "I" (v1)
+ 		: "memory", "1");
++	kmsan_unpoison_memory(vxr, size);
+ }
+ 
+ #else /* CONFIG_CC_IS_CLANG */
 -- 
 2.51.0
 
