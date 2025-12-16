@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6161C219A8E;
-	Tue, 16 Dec 2025 11:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C919A342CBD;
+	Tue, 16 Dec 2025 11:33:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884828; cv=none; b=BRC82IoP+QESCvy8akhHdhuTS8r/tejWzEnDcHwnIS60qBwTxYNrvxIf8i9JwGaNMarnkrnhfmb5e8ztRREDe+eTC4A4wHcoN9akih+waN2bQp2vi+Y+XHT2oquUNy3M6IIdWp75vTtMViODw+k27iFgZgg51/Be4UK0KPwaxuk=
+	t=1765884831; cv=none; b=ZFIVPdSbJFsE6JPCXmFvYW/239cOIp27rNEWcQrDw9KroO1wpyXbQh0kIImFq4f/CL9HXw2bNCCoTwVuxalAN5Yq4ZFrbMQ1P07lJLmebCzCgRkO6KujaLFGcsMhUv4FRgDmhx2uTj/QWpPu0a3FAJSNaRVlxt07KI8TAymXmc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884828; c=relaxed/simple;
-	bh=xYjsP45h2wYkxbfxthsYVrsgz7JlWat7AiOs4Rhp/VQ=;
+	s=arc-20240116; t=1765884831; c=relaxed/simple;
+	bh=wxi7rLnlqV7CjoSR1VeKMqesOg09nAn/YbwTkutBTBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iXfcPZ6QbpEk2j0hyaHgCVQa8J1w0eNxpQWfugjrAf0P+KA0WvMDOWNR1x0/bCKO8mN5px2KQGlrFcZhNDaCR5ubw455mInZgdjCOP78WxGfGE4TB1gDyh5x0THX3lB+v36JwQE1X13DMaQZvdOKiulVIoGy2HMCRcXfyyHRYMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u09MYKI0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qH5aJ8+NiFQRuS0PosqlxBTMy7yTjP6Edb9/uzk+5KDWzxnnr9ViJLj6pQyLL02c/t+k1uWhxIle1/LfF2LF0aA0tFIQv7d3Qc4Wy5kOMwj7ZzPWBbxxIzbTjysDJ+pkzxMvSiMPfr34OoDhN90xG7Efdaw9hxzZXAfrQW2UH8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sznTRQNH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u09MYKI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EFDC4CEF1;
-	Tue, 16 Dec 2025 11:33:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sznTRQNH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32179C4CEF1;
+	Tue, 16 Dec 2025 11:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884828;
-	bh=xYjsP45h2wYkxbfxthsYVrsgz7JlWat7AiOs4Rhp/VQ=;
+	s=korg; t=1765884831;
+	bh=wxi7rLnlqV7CjoSR1VeKMqesOg09nAn/YbwTkutBTBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u09MYKI0V9Fk8RhHdKJCX4ojMdO5VDuiD4IcYJWwCCltvev0DI8GENv3FHFR/j/9S
-	 MVxZBPhnZm1v35WLOXleQm3ej/7XS7Pe6ZBDImqfFJMNf2ZddfSPTo5Wa7zdhC3WSL
-	 8ZJNeCLsYzs2OSYD0/8IBx+rn5ZjMGj+MZj25vjU=
+	b=sznTRQNHCGZOZWr6JFtFXHMkciFKytyPtsErrey967+0Rh0xsmBQYAPstEmRxBSnb
+	 20/SSoLR/dCgukNmN40n1Mr3+c3A3Qg8gNI99pUayTXXeadeWDhgpUEplDBxcwHfSv
+	 nXU4goo/emeoDbALnYklJDLTxJh54DzklV/dvqAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Li Lingfeng <lilingfeng3@huawei.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 310/354] Revert "nfs: clear SB_RDONLY before getting superblock"
-Date: Tue, 16 Dec 2025 12:14:37 +0100
-Message-ID: <20251216111332.142757795@linuxfoundation.org>
+Subject: [PATCH 6.12 311/354] Revert "nfs: ignore SB_RDONLY when mounting nfs"
+Date: Tue, 16 Dec 2025 12:14:38 +0100
+Message-ID: <20251216111332.178766528@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,44 +54,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit d216b698d44e33417ad4cc796cb04ccddbb8c0ee ]
+[ Upstream commit d4a26d34f1946142f9d32e540490e4926ae9a46b ]
 
-This reverts commit 8cd9b785943c57a136536250da80ba1eb6f8eb18.
+This reverts commit 52cb7f8f177878b4f22397b9c4d2c8f743766be3.
 
 Silently ignoring the "ro" and "rw" mount options causes user confusion,
 and regressions.
 
 Reported-by: Alkis Georgopoulos<alkisg@gmail.com>
 Cc: Li Lingfeng <lilingfeng3@huawei.com>
-Fixes: 8cd9b785943c ("nfs: clear SB_RDONLY before getting superblock")
+Fixes: 52cb7f8f1778 ("nfs: ignore SB_RDONLY when mounting nfs")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/super.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ fs/nfs/internal.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/super.c b/fs/nfs/super.c
-index 44e5cb00e2ccf..ae5c5e39afa03 100644
---- a/fs/nfs/super.c
-+++ b/fs/nfs/super.c
-@@ -1303,17 +1303,8 @@ int nfs_get_tree_common(struct fs_context *fc)
- 	if (IS_ERR(server))
- 		return PTR_ERR(server);
+diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
+index 456b423402814..63ee469d6c8f7 100644
+--- a/fs/nfs/internal.h
++++ b/fs/nfs/internal.h
+@@ -13,7 +13,7 @@
+ #include <linux/nfslocalio.h>
+ #include <linux/wait_bit.h>
  
--	/*
--	 * When NFS_MOUNT_UNSHARED is not set, NFS forces the sharing of a
--	 * superblock among each filesystem that mounts sub-directories
--	 * belonging to a single exported root path.
--	 * To prevent interference between different filesystems, the
--	 * SB_RDONLY flag should be removed from the superblock.
--	 */
- 	if (server->flags & NFS_MOUNT_UNSHARED)
- 		compare_super = NULL;
--	else
--		fc->sb_flags &= ~SB_RDONLY;
+-#define NFS_SB_MASK (SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
++#define NFS_SB_MASK (SB_RDONLY|SB_NOSUID|SB_NODEV|SB_NOEXEC|SB_SYNCHRONOUS)
  
- 	/* -o noac implies -o sync */
- 	if (server->flags & NFS_MOUNT_NOAC)
+ extern const struct export_operations nfs_export_ops;
+ 
 -- 
 2.51.0
 
