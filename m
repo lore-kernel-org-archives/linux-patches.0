@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E4E346790;
-	Tue, 16 Dec 2025 12:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49F735505A;
+	Tue, 16 Dec 2025 12:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887704; cv=none; b=fsOwIzYpFSDDNbrBbsnR48lR8+CwQqOsql3aaHN1iGXrUZj0rGyP1lBXQ1i6FZQHzT88bs60ORJF5rwXmJ05lhPvCqMAf1Q1Xys1C20ma1KjWAt6f4p5y38Op0qNz/MsoqDcKmx+4qygIUQ6addRQCpK7ha7Ng4SyjaDnbzgNA4=
+	t=1765887707; cv=none; b=mfPdRY/KaoIhWafUDMuR9fleZwUF0r1XugYQecu4NCpINe32fAvck3nfqTy9q659uhuOeG5AdrB53JtonoxCEZ65Nxg2o/EO25NsvbsZa2hCeQURofHluKU9t1DiC1Ooyei5DVpQ5aGhevrt0tKeK76dSrJbWdjp+7lv6gNul2Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887704; c=relaxed/simple;
-	bh=3dyb/gjf9kcTVsg/+NKA9uUmFqfEAx0/1NsuCP5+8g8=;
+	s=arc-20240116; t=1765887707; c=relaxed/simple;
+	bh=WJL80oa9Sos26e96UI3OALJZqtHjlWatO1D3kkMq6DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qoSxeikK9Qr87jzYjekNnqnTqk5ADxrTA2AJR4ns8ZYYtngM+xrfx8DmmauTuEF20um+lZbC06N0qfSFN8Lo141tz0e6LYTWd588r9q+X5BCm8x3fETIlP+nRPTHwfDXOez6GbpQ3c+dBlW9Xf7yzbl3ZSONE4Cjo9hD3m7FOPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ksf9XyNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bGIa/WO1ytCp+OMhFul/AhjMUE/kt+PeMwiguhmh8yjxDGlvqVTWyUK6lV5hg+2O2ceAWMfi+Mq6CXHv5BVgF9ZNQb5YncAT2yN5PGu1fx9jkY/PO9LXb7KZqZfbzMLvsxyBeQGjGfUHuUd3KaNc9oeSFSi4fxA7R+HOvh2Od0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jBM5QgZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ksf9XyNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE45C4CEF1;
-	Tue, 16 Dec 2025 12:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jBM5QgZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21774C4CEF1;
+	Tue, 16 Dec 2025 12:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887704;
-	bh=3dyb/gjf9kcTVsg/+NKA9uUmFqfEAx0/1NsuCP5+8g8=;
+	s=korg; t=1765887707;
+	bh=WJL80oa9Sos26e96UI3OALJZqtHjlWatO1D3kkMq6DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksf9XyNnTj0jw8OJ1KXOveSC+pNXNXXI4lv3oSAQCpPew7bv4QgCy/FnhMz0eCHBY
-	 CW1wXKqfLq5+0+bT5H7r/huZklNbbpNTUCX59mYm82cV/7LfakfFSjPKI5PE8cH6eS
-	 qWJGXucnSPl/EXlgpLfD8+lfPVK3jZULVzdPe7Rg=
+	b=1jBM5QgZJ+mqhX4o5h1rc1nxT73tt2KtyDsV8o257/lSo/wgdePCepnTcdAzwMprJ
+	 deXgVaheg669N2LBRG3eGAErwmWXoIPheGIfxdmKv+khz/apjyqjhM7bufo7mZNhew
+	 dVVpabbrwJsGQsW/ryukqrNyY9YPX5u5xidd2PlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	FUKAUMI Naoki <naoki@radxa.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 279/614] arm64: dts: rockchip: Add eeprom vcc-supply for Radxa ROCK 3C
-Date: Tue, 16 Dec 2025 12:10:46 +0100
-Message-ID: <20251216111411.483940233@linuxfoundation.org>
+Subject: [PATCH 6.18 280/614] perf vendor metrics s390: Avoid has_event(INSTRUCTIONS)
+Date: Tue, 16 Dec 2025 12:10:47 +0100
+Message-ID: <20251216111411.519418812@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,36 +52,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: FUKAUMI Naoki <naoki@radxa.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 260316d35cf8f8606c5ed7a349cc92e1e71d8150 ]
+[ Upstream commit c1932fb85af8e51ac9f6bd9947145b06c716106e ]
 
-The VCC supply for the BL24C16 EEPROM chip found on Radxa ROCK 3C is
-vcca1v8_pmu. [1] Describe this supply.
+The instructions event is now provided in json meaning the has_event
+test always succeeds. Switch to using non-legacy event names in the
+affected metrics.
 
-[1] https://dl.radxa.com/rock3/docs/hw/3c/v1400/radxa_rock_3c_v1400_schematic.pdf p.13
-
-Fixes: ee219017ddb50 ("arm64: dts: rockchip: Add Radxa ROCK 3C")
-Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
-Link: https://patch.msgid.link/20251112035133.28753-4-naoki@radxa.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Reported-by: Thomas Richter <tmricht@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-perf-users/3e80f453-f015-4f4f-93d3-8df6bb6b3c95@linux.ibm.com/
+Fixes: 0012e0fa221b ("perf jevents: Add legacy-hardware and legacy-cache json")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Thomas Richter <tmricht@linux.ibm.com>
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/pmu-events/arch/s390/cf_z16/transaction.json | 8 ++++----
+ tools/perf/pmu-events/arch/s390/cf_z17/transaction.json | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts b/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
-index 6224d72813e59..80ac40555e023 100644
---- a/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3566-rock-3c.dts
-@@ -466,6 +466,7 @@ eeprom: eeprom@50 {
- 		compatible = "belling,bl24c16a", "atmel,24c16";
- 		reg = <0x50>;
- 		pagesize = <16>;
-+		vcc-supply = <&vcca1v8_pmu>;
- 	};
- };
- 
+diff --git a/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json b/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json
+index 3ab1d3a6638c4..57b785307a85f 100644
+--- a/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json
++++ b/tools/perf/pmu-events/arch/s390/cf_z16/transaction.json
+@@ -7,17 +7,17 @@
+   {
+     "BriefDescription": "Cycles per Instruction",
+     "MetricName": "cpi",
+-    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(CPU_CYCLES) else 0"
+   },
+   {
+     "BriefDescription": "Problem State Instruction Ratio",
+     "MetricName": "prbstate",
+-    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(PROBLEM_STATE_INSTRUCTIONS) else 0"
+   },
+   {
+     "BriefDescription": "Level One Miss per 100 Instructions",
+     "MetricName": "l1mp",
+-    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(L1I_DIR_WRITES) else 0"
+   },
+   {
+     "BriefDescription": "Percentage sourced from Level 2 cache",
+@@ -52,7 +52,7 @@
+   {
+     "BriefDescription": "Estimated Instruction Complexity CPI infinite Level 1",
+     "MetricName": "est_cpi",
+-    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(CPU_CYCLES) else 0"
+   },
+   {
+     "BriefDescription": "Estimated Sourcing Cycles per Level 1 Miss",
+diff --git a/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json b/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json
+index 74df533c8b6fa..7ded6a5a76c0f 100644
+--- a/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json
++++ b/tools/perf/pmu-events/arch/s390/cf_z17/transaction.json
+@@ -7,17 +7,17 @@
+   {
+     "BriefDescription": "Cycles per Instruction",
+     "MetricName": "cpi",
+-    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "CPU_CYCLES / INSTRUCTIONS if has_event(CPU_CYCLES) else 0"
+   },
+   {
+     "BriefDescription": "Problem State Instruction Ratio",
+     "MetricName": "prbstate",
+-    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "(PROBLEM_STATE_INSTRUCTIONS / INSTRUCTIONS) * 100 if has_event(PROBLEM_STATE_INSTRUCTIONS) else 0"
+   },
+   {
+     "BriefDescription": "Level One Miss per 100 Instructions",
+     "MetricName": "l1mp",
+-    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "((L1I_DIR_WRITES + L1D_DIR_WRITES) / INSTRUCTIONS) * 100 if has_event(L1I_DIR_WRITES) else 0"
+   },
+   {
+     "BriefDescription": "Percentage sourced from Level 2 cache",
+@@ -52,7 +52,7 @@
+   {
+     "BriefDescription": "Estimated Instruction Complexity CPI infinite Level 1",
+     "MetricName": "est_cpi",
+-    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(INSTRUCTIONS) else 0"
++    "MetricExpr": "(CPU_CYCLES / INSTRUCTIONS) - (L1C_TLB2_MISSES / INSTRUCTIONS) if has_event(L1C_TLB2_MISSES) else 0"
+   },
+   {
+     "BriefDescription": "Estimated Sourcing Cycles per Level 1 Miss",
 -- 
 2.51.0
 
