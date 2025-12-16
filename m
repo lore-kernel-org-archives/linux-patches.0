@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDCA34F49F;
-	Tue, 16 Dec 2025 11:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECAA34FF44;
+	Tue, 16 Dec 2025 11:55:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886156; cv=none; b=dAnkMwFB0gjZczGejw4b8k14j3uzNNqh7SUAlCO29i6dAk9rlxED22lWbHEe0HzNgYp8pmsASy/iEcLRFTyxwuGLHcaehr1/CNhx0Ykt7d+XuMXEb7vIy5Sq/mWqCMrfYR39tlEnzUlyhktbem8ntcRCqxdVwQCzl4gxbHaPIxg=
+	t=1765886159; cv=none; b=iFhuMEl5afQVU7MT4tGz5GgcV5Zf/qjEeVCTv/hrE2K/hUj0JKlgLITejdOkV7lZHgai7JQ9g8A8i4luxU4ctj7ZRwuLogZ/53TjJ1fjrQn8Pjhu4fUGD6ZqAO9VXl3mvqpL2it/2qWZXitkyHZjtkaaBCfP6/VeWCdqjJ4VwUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886156; c=relaxed/simple;
-	bh=n12f45r9xq46BwI8crqu5bOdjUlIJsm5Rlb+LuB1dSc=;
+	s=arc-20240116; t=1765886159; c=relaxed/simple;
+	bh=7PNEEBGQuOFpnAoIAbtNVFdN7AwRUyv9VYwuPdHRv3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O08KktGb/HX7eOr1sZoR6ZjDhTf0340HidmS7HS+hKKxLH/GVcohs3/lMak1hKNWAi0ztVLNgy9FpXcPvLVuv38sdW94don/8HBe24MFVHY7LyoQvg/Z5axdtt1lWqObayrgr8KooBn0nTjMGom6e0mKOxnXPBoV5gM70vnX9zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dokTi+Jc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GK6UgV/2RX0pLE7qqbXTmHTjEjKzOspkANtmGUjySpy03HPUzZyEvLBJb3yir2mJeTAL+RGnYrbCSi1Mt6wduIOAmdpHJu7KAbLMUa2VdmFkKfs0TccBMlz9WBzBdkmKEyRXebNy+QPmg3qp+xK9sFgfRa9ABAyxc735itGe05c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnp60gDq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dokTi+Jc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FF3C4CEF1;
-	Tue, 16 Dec 2025 11:55:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnp60gDq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8337C4CEF1;
+	Tue, 16 Dec 2025 11:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886156;
-	bh=n12f45r9xq46BwI8crqu5bOdjUlIJsm5Rlb+LuB1dSc=;
+	s=korg; t=1765886159;
+	bh=7PNEEBGQuOFpnAoIAbtNVFdN7AwRUyv9VYwuPdHRv3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dokTi+Jc6w0GUBu8HuqkJSIkN8ZuY40QoepWMqEMAgFA+F9EuRkis2C+3DvtTP9FF
-	 ZyXkP53eqxWJibrivUGAGgWEXCcg2hcpB7foskKoEVJRwYCFKoN4VBNeKVT9syWAUX
-	 BfIhaWrQAYJZekQEY2lZJIk2M7Jf8UnHmwxvz1fk=
+	b=nnp60gDqeblUec6bX9QKBzsar/nuYSdaTdwk5DvFegcrx9TnMknBJ4qHEryh01uhV
+	 k6BxULUJ2S2g1JyomYboCAyFipvnOJ05pEb4PcwL0GaTyW1MdifHg412SFf6aWNNZ6
+	 cnkzIkxKxXgnwRNPZuHuXMie5Ij/GIwfo6oqlvUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Pengjie Zhang <zhangpengjie2@huawei.com>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 322/507] wifi: mt76: mt7996: fix null pointer deref in mt7996_conf_tx()
-Date: Tue, 16 Dec 2025 12:12:43 +0100
-Message-ID: <20251216111357.132574675@linuxfoundation.org>
+Subject: [PATCH 6.17 313/507] PM / devfreq: hisi: Fix potential UAF in OPP handling
+Date: Tue, 16 Dec 2025 12:12:34 +0100
+Message-ID: <20251216111356.807983077@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,100 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Pengjie Zhang <zhangpengjie2@huawei.com>
 
-[ Upstream commit 79277f8ad15ec5f255ed0e1427c7a8a3e94e7f52 ]
+[ Upstream commit 26dd44a40096468396b6438985d8e44e0743f64c ]
 
-If a link does not have an assigned channel yet, mt7996_vif_link returns
-NULL. We still need to store the updated queue settings in that case, and
-apply them later.
-Move the location of the queue params to within struct mt7996_vif_link.
+Ensure all required data is acquired before calling dev_pm_opp_put(opp)
+to maintain correct resource acquisition and release order.
 
-Fixes: c0df2f0caa8d ("wifi: mt76: mt7996: prepare mt7996_mcu_set_tx for MLO support")
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20250929111723.52486-1-nbd@nbd.name
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 7da2fdaaa1e6 ("PM / devfreq: Add HiSilicon uncore frequency scaling driver")
+Signed-off-by: Pengjie Zhang <zhangpengjie2@huawei.com>
+Reviewed-by: Jie Zhan <zhanjie9@hisilicon.com>
+Acked-by: Chanwoo Choi <cw00.choi@samsung.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Link: https://patchwork.kernel.org/project/linux-pm/patch/20250915062135.748653-1-zhangpengjie2@huawei.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c   | 6 +++---
- drivers/net/wireless/mediatek/mt76/mt7996/mcu.c    | 5 ++++-
- drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h | 7 ++++++-
- 3 files changed, 13 insertions(+), 5 deletions(-)
+ drivers/devfreq/hisi_uncore_freq.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 4693d376e64ee..016b7e02d969d 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -650,8 +650,8 @@ mt7996_conf_tx(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	       unsigned int link_id, u16 queue,
- 	       const struct ieee80211_tx_queue_params *params)
- {
--	struct mt7996_dev *dev = mt7996_hw_dev(hw);
--	struct mt7996_vif_link *mlink = mt7996_vif_link(dev, vif, link_id);
-+	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
-+	struct mt7996_vif_link_info *link_info = &mvif->link_info[link_id];
- 	static const u8 mq_to_aci[] = {
- 		[IEEE80211_AC_VO] = 3,
- 		[IEEE80211_AC_VI] = 2,
-@@ -660,7 +660,7 @@ mt7996_conf_tx(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 	};
+diff --git a/drivers/devfreq/hisi_uncore_freq.c b/drivers/devfreq/hisi_uncore_freq.c
+index 96d1815059e32..c1ed70fa0a400 100644
+--- a/drivers/devfreq/hisi_uncore_freq.c
++++ b/drivers/devfreq/hisi_uncore_freq.c
+@@ -265,10 +265,11 @@ static int hisi_uncore_target(struct device *dev, unsigned long *freq,
+ 		dev_err(dev, "Failed to get opp for freq %lu hz\n", *freq);
+ 		return PTR_ERR(opp);
+ 	}
+-	dev_pm_opp_put(opp);
  
- 	/* firmware uses access class index */
--	mlink->queue_params[mq_to_aci[queue]] = *params;
-+	link_info->queue_params[mq_to_aci[queue]] = *params;
- 	/* no need to update right away, we'll get BSS_CHANGED_QOS */
+ 	data = (u32)(dev_pm_opp_get_freq(opp) / HZ_PER_MHZ);
  
- 	return 0;
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-index 0d688ec5a8163..07b962e235850 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
-@@ -3438,6 +3438,9 @@ int mt7996_mcu_set_tx(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- #define WMM_PARAM_SET		(WMM_AIFS_SET | WMM_CW_MIN_SET | \
- 				 WMM_CW_MAX_SET | WMM_TXOP_SET)
- 	struct mt7996_vif_link *link = mt7996_vif_conf_link(dev, vif, link_conf);
-+	struct mt7996_vif *mvif = (struct mt7996_vif *)vif->drv_priv;
-+	unsigned int link_id = link_conf->link_id;
-+	struct mt7996_vif_link_info *link_info = &mvif->link_info[link_id];
- 	struct {
- 		u8 bss_idx;
- 		u8 __rsv[3];
-@@ -3455,7 +3458,7 @@ int mt7996_mcu_set_tx(struct mt7996_dev *dev, struct ieee80211_vif *vif,
- 	skb_put_data(skb, &hdr, sizeof(hdr));
- 
- 	for (ac = 0; ac < IEEE80211_NUM_ACS; ac++) {
--		struct ieee80211_tx_queue_params *q = &link->queue_params[ac];
-+		struct ieee80211_tx_queue_params *q = &link_info->queue_params[ac];
- 		struct edca *e;
- 		struct tlv *tlv;
- 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-index 048d9a9898c6e..498a2eefd7a8a 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
-@@ -246,16 +246,21 @@ struct mt7996_vif_link {
- 	struct mt7996_sta_link msta_link;
- 	struct mt7996_phy *phy;
- 
--	struct ieee80211_tx_queue_params queue_params[IEEE80211_NUM_ACS];
- 	struct cfg80211_bitrate_mask bitrate_mask;
- 
- 	u8 mld_idx;
- };
- 
-+struct mt7996_vif_link_info {
-+	struct ieee80211_tx_queue_params queue_params[IEEE80211_NUM_ACS];
-+};
++	dev_pm_opp_put(opp);
 +
- struct mt7996_vif {
- 	struct mt7996_vif_link deflink; /* must be first */
- 	struct mt76_vif_data mt76;
+ 	return hisi_uncore_cmd_send(uncore, HUCF_PCC_CMD_SET_FREQ, &data);
+ }
  
-+	struct mt7996_vif_link_info link_info[IEEE80211_MLD_MAX_NUM_LINKS];
-+
- 	u8 mld_group_idx;
- 	u8 mld_remap_idx;
- };
 -- 
 2.51.0
 
