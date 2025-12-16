@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D28F343D77;
-	Tue, 16 Dec 2025 11:34:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F60E342C9E;
+	Tue, 16 Dec 2025 11:34:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884886; cv=none; b=HrsXlLkNjD1kb69CLETSHSTq9tDwRMweh+WENjr/uQrIW6wlaN04rqgmwV0V4sDJ6yRyhvdg7ly5GMk+25Tbh1a33p7OMYSh5oKG3Rk7QGQ0ArMDN2F5bX8VHC0JmiNWa5EGgfiyfsMAwmJKrhhtXEFAnIgaytKriGvVDgmf4Co=
+	t=1765884889; cv=none; b=nCz7GbzfUzTFuclt9VjGaIjSxGzVtfDsFKFOauKFuS94MYipU9au3UxXI4apqdkNlV5vPI/nUA8aCU8Vq1r/BfCEULgKYY20R8taicrGUkG7lu9Tboupab6qYyU87s8kKOo6fdFV66byDYcCelrfONw0k5fmmO1PXAAufhl8ojU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884886; c=relaxed/simple;
-	bh=ZLysyEpGGiL94v1UgxY8U18rXPp20TTeJd/YP0jB8b4=;
+	s=arc-20240116; t=1765884889; c=relaxed/simple;
+	bh=dU0p12wom2untaYCBQU9Vl5v+Ehq0ORSluDC35VG0RI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fsd+krZKKQQQkZdBZDfJAvhkjkzb2Naf/wSaaJu9AJNbW8Q6/Fo5x+qdTClSIbNpWoA+kStpv05P+O6PI+fkaXIFNOvUnTR0EoN3jQc4VDxAxr+OP56qIVz/vzIS00XRmLRwROHgmrJhDRonwK+OOWgB026cvulv0lM/FZlBUdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztqofUyM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rdg0pMJ38kslRZyM/UOGGwgbet8eL9aI70zXffux6JqLA2Ire4CUKGhjF4s+zIM/Fj+VajduxJjPZZcrQYvoc1FSDZBkes5WCmyofDs6vffdbsYB63ykZHqQuZOYrX6Fmp6DbhmGISjSmTjTZyuDTyPTRJaHD2HXL5PCZF4xSxA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6NBnsT4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztqofUyM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F25BC4CEF1;
-	Tue, 16 Dec 2025 11:34:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6NBnsT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD912C4CEF1;
+	Tue, 16 Dec 2025 11:34:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884886;
-	bh=ZLysyEpGGiL94v1UgxY8U18rXPp20TTeJd/YP0jB8b4=;
+	s=korg; t=1765884889;
+	bh=dU0p12wom2untaYCBQU9Vl5v+Ehq0ORSluDC35VG0RI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ztqofUyM8alK1n2XUaRZXQnc9BQrM7dlc7Uc1417ZwPCbQMFMyAM1uUa/YXkB3T9E
-	 SUt93K3gZ/4bXOS5bUdJL1NLd/XSDAkdwnxX7MooQpoMIFeEcgFS35/cPA2q3Ru+gV
-	 m3SX4+eoSNQWBNt5VealSrkJqCaSeL/F/1AfCSQQ=
+	b=T6NBnsT4uwtXEAeqpif0EkTjKeyyISmFZ3oB0Y7GV94EZM8OVlghaJaa01uMjFOL+
+	 AAwOmySJGfalcv/s/HmUgK5flKp/o6N3iOmTzdcr817gDN7qyErhYfwoa3vWDJCBhU
+	 9rei4alSSurc3GNNRlXi/4AJP/KaFrXGdHPmiaxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kathara Sasikumar <katharasasikumar007@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 329/354] docs: hwmon: fix link to g762 devicetree binding
-Date: Tue, 16 Dec 2025 12:14:56 +0100
-Message-ID: <20251216111332.829111773@linuxfoundation.org>
+Subject: [PATCH 6.12 330/354] dma/pool: eliminate alloc_pages warning in atomic_pool_expand
+Date: Tue, 16 Dec 2025 12:14:57 +0100
+Message-ID: <20251216111332.865528424@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,35 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kathara Sasikumar <katharasasikumar007@gmail.com>
+From: Dave Kleikamp <dave.kleikamp@oracle.com>
 
-[ Upstream commit 08bfcf4ff9d39228150a757803fc02dffce84ab0 ]
+[ Upstream commit 463d439becb81383f3a5a5d840800131f265a09c ]
 
-The devicetree binding for g762 was converted to YAML to match vendor
-prefix conventions. Update the reference accordingly.
+atomic_pool_expand iteratively tries the allocation while decrementing
+the page order. There is no need to issue a warning if an attempted
+allocation fails.
 
-Signed-off-by: Kathara Sasikumar <katharasasikumar007@gmail.com>
-Link: https://lore.kernel.org/r/20251205215835.783273-1-katharasasikumar007@gmail.com
-Fixes: 3d8e25372417 ("dt-bindings: hwmon: g762: Convert to yaml schema")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Fixes: d7e673ec2c8e ("dma-pool: Only allocate from CMA when in same memory zone")
+[mszyprow: fixed typo]
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Link: https://lore.kernel.org/r/20251202152810.142370-1-dave.kleikamp@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/g762.rst | 2 +-
+ kernel/dma/pool.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/hwmon/g762.rst b/Documentation/hwmon/g762.rst
-index 0371b3365c48c..f224552a2d3cc 100644
---- a/Documentation/hwmon/g762.rst
-+++ b/Documentation/hwmon/g762.rst
-@@ -17,7 +17,7 @@ done via a userland daemon like fancontrol.
- Note that those entries do not provide ways to setup the specific
- hardware characteristics of the system (reference clock, pulses per
- fan revolution, ...); Those can be modified via devicetree bindings
--documented in Documentation/devicetree/bindings/hwmon/g762.txt or
-+documented in Documentation/devicetree/bindings/hwmon/gmt,g762.yaml or
- using a specific platform_data structure in board initialization
- file (see include/linux/platform_data/g762.h).
- 
+diff --git a/kernel/dma/pool.c b/kernel/dma/pool.c
+index ee45dee33d491..26392badc36b0 100644
+--- a/kernel/dma/pool.c
++++ b/kernel/dma/pool.c
+@@ -93,7 +93,7 @@ static int atomic_pool_expand(struct gen_pool *pool, size_t pool_size,
+ 			page = dma_alloc_from_contiguous(NULL, 1 << order,
+ 							 order, false);
+ 		if (!page)
+-			page = alloc_pages(gfp, order);
++			page = alloc_pages(gfp | __GFP_NOWARN, order);
+ 	} while (!page && order-- > 0);
+ 	if (!page)
+ 		goto out;
 -- 
 2.51.0
 
