@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FAF35F8AD;
-	Tue, 16 Dec 2025 12:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2521F35F8D4;
+	Tue, 16 Dec 2025 12:15:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887340; cv=none; b=pIHkl1FGeKBGIaGke11hX97PPyV+Nqglfop+G+s2TyNE5OaCiW1W6Zj7LV41YYs0bZCQ3bFXf7l65rjZq2OgxIfjO6VzKPDZ/7AttLA9eOLbCDdXpAorf8/IV1UYCi/rpngRopPd/QQoc9zXT2VtVlA1JFhVuWWXZcxB7Nae95I=
+	t=1765887344; cv=none; b=st5j/sH2dpAVkCZbIZYLwLodsLYaqRkXmcPrr916helHo5+AsRzJpOLbnW92NUNKkdjfW9wqLvLfbGEjwTiZN6wnlFrNBL8UEZfNjUhEWEs098Emj99ftVlVJ/BXRD6M7Mbz4KPnNMjB3SieV4NqpNWsYwqnDWrxh83Yk4ET7hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887340; c=relaxed/simple;
-	bh=1XiS0S2XIfTs/1Acyqrsn7+if0R0RUgHDMjpm86vXMY=;
+	s=arc-20240116; t=1765887344; c=relaxed/simple;
+	bh=ogPPyU9qZrWfV9sKIJXlYzYTi5S0nXkdrNXZYaSHH94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYyp/UoqcX5RwDPws8UDBSOHukW6OL+YpXs7ZpQss0Fat4B1jnz1e4RWziqJlAxKFm0T1irT7Q+Vchn7BxyG+LXeHDSzZwHwBxJiQL+HRB0FuCewsJdL9UeZtnfLsr5K8Fse/6RNIsLdcCwJeifcoRJUsdv8OHdySx9aPofsIic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIxElQue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VvBnyfKHyipoLQ1gS2nktjTasToQCGYzheVB25AekqGT0g9yQ9r97geJjHemV7+CKVkWfaoZjNGtUKiAO+N+/zszO905QtgDO0BTufLdvhGaqmkhcDskHBaDljSrqCEzijFgzNaW8uX/wowTbp0yaJ0WQT13/Uk3h0XdKeb+h0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iUo2ase; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIxElQue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D4AC4CEF1;
-	Tue, 16 Dec 2025 12:15:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iUo2ase"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5ED6DC4CEF1;
+	Tue, 16 Dec 2025 12:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887340;
-	bh=1XiS0S2XIfTs/1Acyqrsn7+if0R0RUgHDMjpm86vXMY=;
+	s=korg; t=1765887343;
+	bh=ogPPyU9qZrWfV9sKIJXlYzYTi5S0nXkdrNXZYaSHH94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIxElQueuSSCDzS+1xgyNnYGX4a3stIc6GaRV3EB3y7iKESynbhe9/YluSHixWZwn
-	 ML1uQ/WiBpY3g8U8kt55t8cqk918T2/waofP/MhW6Kt/63/x9PAaF/REVHDDm3oRuq
-	 EtEvcpk8JQuVaBVwu07VO1UdmIeaPgeIwN0dGZds=
+	b=0iUo2asepqdown2SOLvWdN+bs9YL0bUZ69Sqc5X5vQjh6Pef+3cNX6CB/HnRaBWuB
+	 QKTC1vV1aR2tGzkPsN++rRmTizCQxYDit1X7niglJqmi87NvF6inqYW44kkppStU0R
+	 G78Bm58gLituKJOKYfDghhxBaNaJQN4kMrj5wmmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Christian Brauner <brauner@kernel.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 199/614] cleanup: fix scoped_class()
-Date: Tue, 16 Dec 2025 12:09:26 +0100
-Message-ID: <20251216111408.589206300@linuxfoundation.org>
+Subject: [PATCH 6.18 200/614] drm/xe: Enforce correct user fence signaling order using
+Date: Tue, 16 Dec 2025 12:09:27 +0100
+Message-ID: <20251216111408.624748288@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -45,61 +45,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 4e97bae1b412cd6ed8053b3d8a242122952985cc ]
+[ Upstream commit adda4e855ab6409a3edaa585293f1f2069ab7299 ]
 
-This is a class, not a guard so why on earth is it checking for guard
-pointers or conditional lock acquisition? None of it makes any sense at
-all.
+Prevent application hangs caused by out-of-order fence signaling when
+user fences are attached. Use drm_syncobj (via dma-fence-chain) to
+guarantee that each user fence signals in order, regardless of the
+signaling order of the attached fences. Ensure user fence writebacks to
+user space occur in the correct sequence.
 
-I'm not sure what happened back then. Maybe I had a brief psychedelic
-period that I completely forgot about and spaced out into a zone where
-that initial macro implementation made any sense at all.
+v7:
+ - Skip drm_syncbj create of error (CI)
 
-Link: https://patch.msgid.link/20251103-work-creds-init_cred-v1-1-cb3ec8711a6a@kernel.org
-Fixes: 5c21c5f22d07 ("cleanup: add a scoped version of CLASS()")
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Link: https://patch.msgid.link/20251031234050.3043507-2-matthew.brost@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/cleanup.h | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/xe/xe_exec_queue.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/cleanup.h b/include/linux/cleanup.h
-index 2573585b7f068..19c7e475d3a4d 100644
---- a/include/linux/cleanup.h
-+++ b/include/linux/cleanup.h
-@@ -290,15 +290,16 @@ static inline class_##_name##_t class_##_name##ext##_constructor(_init_args) \
- 	class_##_name##_t var __cleanup(class_##_name##_destructor) =	\
- 		class_##_name##_constructor
+diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
+index cb5f204c08ed6..a6efe4e8ab556 100644
+--- a/drivers/gpu/drm/xe/xe_exec_queue.c
++++ b/drivers/gpu/drm/xe/xe_exec_queue.c
+@@ -344,6 +344,9 @@ void xe_exec_queue_destroy(struct kref *ref)
+ 	struct xe_exec_queue *q = container_of(ref, struct xe_exec_queue, refcount);
+ 	struct xe_exec_queue *eq, *next;
  
--#define scoped_class(_name, var, args)                          \
--	for (CLASS(_name, var)(args);                           \
--	     __guard_ptr(_name)(&var) || !__is_cond_ptr(_name); \
--	     ({ goto _label; }))                                \
--		if (0) {                                        \
--_label:                                                         \
--			break;                                  \
-+#define __scoped_class(_name, var, _label, args...)        \
-+	for (CLASS(_name, var)(args); ; ({ goto _label; })) \
-+		if (0) {                                   \
-+_label:                                                    \
-+			break;                             \
- 		} else
- 
-+#define scoped_class(_name, var, args...) \
-+	__scoped_class(_name, var, __UNIQUE_ID(label), args)
++	if (q->ufence_syncobj)
++		drm_syncobj_put(q->ufence_syncobj);
 +
- /*
-  * DEFINE_GUARD(name, type, lock, unlock):
-  *	trivial wrapper around DEFINE_CLASS() above specifically
+ 	if (q->ufence_syncobj)
+ 		drm_syncobj_put(q->ufence_syncobj);
+ 
 -- 
 2.51.0
 
