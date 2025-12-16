@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC682341065;
-	Tue, 16 Dec 2025 11:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A613446B1;
+	Tue, 16 Dec 2025 11:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886317; cv=none; b=LxfBAeJ3JR1EAEyGNDYo+Lgs0r1g0/C0msRZGHSy35GVXxVOdCmMsr7/v1LmsheEuX0YHcbtDQHAljIWDpoUvQu4VH5C9bgCCbyqAGxeI8tsRjJE99CKA+B3G4KA9MFqCHv/Q6zqBo5Ze6Dp1/3rKbgeU1d49qqbLgdNood03+o=
+	t=1765886320; cv=none; b=BycG6h2mXCH53YfaR13yQrrvlDfVW0brdhZgJo/5El4cdP3kcOFXL9Eyf8gSg/5Yk/je/wH1WUhcVtDiogQwcrgt1ElVLlY0sYhGPeic9pIGo9t/k939Hf8JQE4mDlOywxZ/Y9Qh23Sorz2sGMtrUanZVNaFcrOrViZmzC8KMwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886317; c=relaxed/simple;
-	bh=d6fXh+5DfEBM0Wcu8FY4iC4xRAaGEX1TZupRPE5O4Hg=;
+	s=arc-20240116; t=1765886320; c=relaxed/simple;
+	bh=JAY2M6y8kQ7Q3rkm4H1RcxrAq6ezwWTmjX+njYFWfYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxMAHEzB1dS1nSJhBh+NS53fO5CujkS+E0VtnuWvj7/kGD6XiYzF/jW0qTC6BnBFVJyL8aTMOxP2iBpJKpoSq968KjvZ/BzZg+62zZYwu80MH0zG95tnZpjwuQ9ZnkdWT0MHlDSqeP452vzR+IZI7c6HP1xzhbxe6gP7ngGQ80I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muDCRbzl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H5jmjmJ71oeL4eE0fEzX6oc8quknXBc0HP8Z1/Dx6VQ6PjefS7MrYdLoVA5bTvLVHI4OFZN+DVMlRZzhUaQrPrxYqnl1JS9+avM2Cxn5ym/wsjHUgKSxuAXT+wsaftcaBswyurswdfbhjLn9889gyicFgRnoIEorYP7GLlKHLvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTFT9SH3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muDCRbzl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC10C4CEF1;
-	Tue, 16 Dec 2025 11:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTFT9SH3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7858BC16AAE;
+	Tue, 16 Dec 2025 11:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886316;
-	bh=d6fXh+5DfEBM0Wcu8FY4iC4xRAaGEX1TZupRPE5O4Hg=;
+	s=korg; t=1765886319;
+	bh=JAY2M6y8kQ7Q3rkm4H1RcxrAq6ezwWTmjX+njYFWfYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=muDCRbzlBACMDh7Kpef9kZLD0Y6vofXGliVRNri/yHTQ4sZYCUR7ICg2UUopj+DNN
-	 F1a4MSA5oW8RX2uZAjuIc4LvMPmqBwcOufvAzL8PwPCS1KdQnOKY5mcYN5oKNIAbQq
-	 PvvQ+zZnASTqpnLZHKlI3wOxKqzXTlLBcwQ1+fiI=
+	b=iTFT9SH39Snwn9LHh+T0S+3KzFlANSvb/Nma4UlH6wC/4804fifmet9NUPG+wuzm5
+	 bvddyBvu2wpwyoZWmDo+QJmpHQhFyrv2jpBbOgIepDneehGo7ZXY7iGSSDN7WBY7cW
+	 zw4L/u+HUnXvW7GQlFx0lE8dcdT1Z87W+C9+hYqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ivan Stepchenko <sid@itb.spb.ru>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 402/507] net: netpoll: initialize work queue before error checks
-Date: Tue, 16 Dec 2025 12:14:03 +0100
-Message-ID: <20251216111400.017630632@linuxfoundation.org>
+Subject: [PATCH 6.17 403/507] mtd: lpddr_cmds: fix signed shifts in lpddr_cmds
+Date: Tue, 16 Dec 2025 12:14:04 +0100
+Message-ID: <20251216111400.053507568@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,54 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ivan Stepchenko <sid@itb.spb.ru>
 
-[ Upstream commit e5235eb6cfe02a51256013a78f7b28779a7740d5 ]
+[ Upstream commit c909fec69f84b39e63876c69b9df2c178c6b76ba ]
 
-Prevent a kernel warning when netconsole setup fails on devices with
-IFF_DISABLE_NETPOLL flag. The warning (at kernel/workqueue.c:4242 in
-__flush_work) occurs because the cleanup path tries to cancel an
-uninitialized work queue.
+There are several places where a value of type 'int' is shifted by
+lpddr->chipshift. lpddr->chipshift is derived from QINFO geometry and
+might reach 31 when QINFO reports a 2 GiB size - the maximum supported by
+LPDDR(1) compliant chips. This may cause unexpected sign-extensions when
+casting the integer value to the type of 'unsigned long'.
 
-When __netpoll_setup() encounters a device with IFF_DISABLE_NETPOLL,
-it fails early and calls skb_pool_flush() for cleanup. This function
-calls cancel_work_sync(&np->refill_wq), but refill_wq hasn't been
-initialized yet, triggering the warning.
+Use '1UL << lpddr->chipshift' and cast 'j' to unsigned long before
+shifting so the computation is performed at the destination width.
 
-Move INIT_WORK() to the beginning of __netpoll_setup(), ensuring the
-work queue is properly initialized before any potential failure points.
-This allows the cleanup path to safely cancel the work queue regardless
-of where the setup fails.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 248f6571fd4c5 ("netpoll: Optimize skb refilling on critical path")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Link: https://patch.msgid.link/20251127-netpoll_fix_init_work-v1-1-65c07806d736@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c68264711ca6 ("[MTD] LPDDR Command set driver")
+Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/netpoll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/lpddr/lpddr_cmds.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index be5658ff74ee2..27f573d2c5e36 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -554,6 +554,7 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
- 	int err;
+diff --git a/drivers/mtd/lpddr/lpddr_cmds.c b/drivers/mtd/lpddr/lpddr_cmds.c
+index 14e36ae71958f..bd76479b90e4a 100644
+--- a/drivers/mtd/lpddr/lpddr_cmds.c
++++ b/drivers/mtd/lpddr/lpddr_cmds.c
+@@ -79,7 +79,7 @@ struct mtd_info *lpddr_cmdset(struct map_info *map)
+ 		mutex_init(&shared[i].lock);
+ 		for (j = 0; j < lpddr->qinfo->HWPartsNum; j++) {
+ 			*chip = lpddr->chips[i];
+-			chip->start += j << lpddr->chipshift;
++			chip->start += (unsigned long)j << lpddr->chipshift;
+ 			chip->oldstate = chip->state = FL_READY;
+ 			chip->priv = &shared[i];
+ 			/* those should be reset too since
+@@ -559,7 +559,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
+ 			break;
  
- 	skb_queue_head_init(&np->skb_pool);
-+	INIT_WORK(&np->refill_wq, refill_skbs_work_handler);
+ 		if ((len + ofs - 1) >> lpddr->chipshift)
+-			thislen = (1<<lpddr->chipshift) - ofs;
++			thislen = (1UL << lpddr->chipshift) - ofs;
+ 		else
+ 			thislen = len;
+ 		/* get the chip */
+@@ -575,7 +575,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
+ 		len -= thislen;
  
- 	if (ndev->priv_flags & IFF_DISABLE_NETPOLL) {
- 		np_err(np, "%s doesn't support polling, aborting\n",
-@@ -592,7 +593,6 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 		ofs = 0;
+-		last_end += 1 << lpddr->chipshift;
++		last_end += 1UL << lpddr->chipshift;
+ 		chipnum++;
+ 		chip = &lpddr->chips[chipnum];
+ 	}
+@@ -601,7 +601,7 @@ static int lpddr_unpoint (struct mtd_info *mtd, loff_t adr, size_t len)
+ 			break;
  
- 	/* fill up the skb queue */
- 	refill_skbs(np);
--	INIT_WORK(&np->refill_wq, refill_skbs_work_handler);
+ 		if ((len + ofs - 1) >> lpddr->chipshift)
+-			thislen = (1<<lpddr->chipshift) - ofs;
++			thislen = (1UL << lpddr->chipshift) - ofs;
+ 		else
+ 			thislen = len;
  
- 	/* last thing to do is link it to the net device structure */
- 	rcu_assign_pointer(ndev->npinfo, npinfo);
 -- 
 2.51.0
 
