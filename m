@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41836341069;
-	Tue, 16 Dec 2025 11:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC67356B81;
+	Tue, 16 Dec 2025 11:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884127; cv=none; b=SfgAc8fer/PvqNu6a+2pLesQaXB+VFATq9qkndvtpbYx5rOsaTCvMO7qI2ML9YulwRGxUdUU2f2BlkSCNZP4uAypo45RWDlL/t9BcU+CFpGWqOythKFv/LPOVThLTDjtAfgZLGl5XAdJ1xY+9xXqwqXmhnclH6LVlNC038moD1c=
+	t=1765884131; cv=none; b=eQGg5Lfih/y9L4hxVXoz62fQi186FEXbnkGvYG0mxAJ5hl0V7OWyGkeVJe+4lY8Lb9WaasphHitEvKH8U3oBlBNM9REm3hUKwFYXJy3aDMFNIhWzw+viI4xX5QyURec/3mh9sC2iUaFyQiiZRtIpti/2moys0tzLfUYJ7Rr0O6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884127; c=relaxed/simple;
-	bh=IT/z3bc3Z9z4S4KLm082v3ab4J/LVhn/L2DphjBDZRQ=;
+	s=arc-20240116; t=1765884131; c=relaxed/simple;
+	bh=OPQ9gSipo5fKfETWiCnyx8iJen4NkgilBHasUw4ipks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXVPobNhYKVmq9OWdSPyVqTdNjW4ywba3l0S8ej+ifq5siCsJU0XGZ9a+McHN0ujGI875qG3vmMS/yzUzXO7KVriKqRiunoBNKAVskEihouDYfC0E35dkQpC+3CS/K/pQWAY9v0XhwIgN7MKe2GngcuaLjvXK2+b1/5jFdpkynQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vGIgVBKp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdLc4k0AC2MrovET2pKKO34iF3PfzLxdebt1BZA57OxFuZwCZEflH793U8MLE6V12APELLL1MaN5UIqHq+B0HRuOMaiVLnRN42y0NBLwaFZ3R4Sh5VEtSxQzhisk68bEf3n1z/DgzmAkUkl6KrOCbPSW8pEDvbJFyDmsZKL3cig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBKAB9Zk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vGIgVBKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD32C4CEF1;
-	Tue, 16 Dec 2025 11:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBKAB9Zk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB5DC4CEF1;
+	Tue, 16 Dec 2025 11:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884127;
-	bh=IT/z3bc3Z9z4S4KLm082v3ab4J/LVhn/L2DphjBDZRQ=;
+	s=korg; t=1765884130;
+	bh=OPQ9gSipo5fKfETWiCnyx8iJen4NkgilBHasUw4ipks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGIgVBKp05wXmF10DT2Bzcej7sQD3hv0UaQMRyBM3ZFSUttSHNxk3a01WdNkrmFHK
-	 gXJfAzOpbEu9XY08y03L+wWlzuJDLqNfsP+j5wMwmzk73Nltp479kMWEX37EgXgU0d
-	 7lCWO6ZDQ14ZmdgBFPjicYrP5s3qcyLC1vHREzcM=
+	b=FBKAB9ZkSNfElGxzzlD295gwxzzdRpYq1lqexVOCpFTNXBcJ4C0CixYcZVCNvnIXC
+	 7hOlckNqm+X14bdvU+0Ta8EiTel5IT+yynirxwVwGlChvy/T8uffriuURjAzBl/2Mc
+	 jII0uY1thGlhXfkOrPNYj+ct2GM0QA06EszRdkxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/354] arm64: dts: qcom: msm8996: add interconnect paths to USB2 controller
-Date: Tue, 16 Dec 2025 12:11:05 +0100
-Message-ID: <20251216111324.471946454@linuxfoundation.org>
+Subject: [PATCH 6.12 067/354] wifi: ath11k: fix peer HE MCS assignment
+Date: Tue, 16 Dec 2025 12:10:34 +0100
+Message-ID: <20251216111323.353468277@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,38 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 242f7558e7bf54cb63c06506f7b0630dd67d45a4 ]
+[ Upstream commit 4a013ca2d490c73c40588d62712ffaa432046a04 ]
 
-Add the missing interconnects to the USB2 host. The Fixes tag points to
-the commit which broke probing of the USB host on that platform.
+In ath11k_wmi_send_peer_assoc_cmd(), peer's transmit MCS is sent to
+firmware as receive MCS while peer's receive MCS sent as transmit MCS,
+which goes against firmwire's definition.
 
-Fixes: 130733a10079 ("interconnect: qcom: msm8996: Promote to core_initcall")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Acked-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20251002-fix-msm8996-icc-v1-2-a36a05d1f869@oss.qualcomm.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+While connecting to a misbehaved AP that advertises 0xffff (meaning not
+supported) for 160 MHz transmit MCS map, firmware crashes due to 0xffff
+is assigned to he_mcs->rx_mcs_set field.
+
+	Ext Tag: HE Capabilities
+	    [...]
+	    Supported HE-MCS and NSS Set
+		[...]
+	        Rx and Tx MCS Maps 160 MHz
+		    [...]
+	            Tx HE-MCS Map 160 MHz: 0xffff
+
+Swap the assignment to fix this issue.
+
+As the HE rate control mask is meant to limit our own transmit MCS, it
+needs to go via he_mcs->rx_mcs_set field. With the aforementioned swapping
+done, change is needed as well to apply it to the peer's receive MCS.
+
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: 61fe43e7216d ("ath11k: add support for setting fixed HE rate/gi/ltf")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017-ath11k-mcs-assignment-v1-2-da40825c1783@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath11k/mac.c | 4 ++--
+ drivers/net/wireless/ath/ath11k/wmi.c | 7 +++++--
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 0a8884145865d..932994f65b250 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3449,6 +3449,9 @@ usb2: usb@76f8800 {
- 					  <&gcc GCC_USB20_MASTER_CLK>;
- 			assigned-clock-rates = <19200000>, <60000000>;
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 9521fcb2c11ce..dd5690a4996f3 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -2512,10 +2512,10 @@ static void ath11k_peer_assoc_h_he(struct ath11k *ar,
+ 			he_tx_mcs = v;
+ 		}
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_160);
++		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_rx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_160] = v;
  
-+			interconnects = <&pnoc MASTER_USB_HS &bimc SLAVE_EBI_CH0>,
-+					<&bimc MASTER_AMPSS_M0 &pnoc SLAVE_USB_HS>;
-+			interconnect-names = "usb-ddr", "apps-usb";
- 			power-domains = <&gcc USB30_GDSC>;
- 			qcom,select-utmi-as-pipe-clk;
- 			status = "disabled";
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.tx_mcs_160);
+-		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_tx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_160] = v;
+ 
+ 		arg->peer_he_mcs_count++;
+@@ -2525,10 +2525,10 @@ static void ath11k_peer_assoc_h_he(struct ath11k *ar,
+ 
+ 	default:
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_80);
++		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_rx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_80] = v;
+ 
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.tx_mcs_80);
+-		v = ath11k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_tx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_80] = v;
+ 
+ 		arg->peer_he_mcs_count++;
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index 6f1fd7d661a89..3b41bc5b125f4 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -2091,8 +2091,11 @@ int ath11k_wmi_send_peer_assoc_cmd(struct ath11k *ar,
+ 				     FIELD_PREP(WMI_TLV_LEN,
+ 						sizeof(*he_mcs) - TLV_HDR_SIZE);
+ 
+-		he_mcs->rx_mcs_set = param->peer_he_tx_mcs_set[i];
+-		he_mcs->tx_mcs_set = param->peer_he_rx_mcs_set[i];
++		/* firmware interprets mcs->rx_mcs_set field as peer's
++		 * RX capability
++		 */
++		he_mcs->rx_mcs_set = param->peer_he_rx_mcs_set[i];
++		he_mcs->tx_mcs_set = param->peer_he_tx_mcs_set[i];
+ 		ptr += sizeof(*he_mcs);
+ 	}
+ 
 -- 
 2.51.0
 
