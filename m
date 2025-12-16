@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 923183233EE;
-	Tue, 16 Dec 2025 11:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8F8261B9D;
+	Tue, 16 Dec 2025 11:28:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884499; cv=none; b=L4pB4oDJr0Kd9PXATPrRTN6Uiz9jIAOSACCtJ8FHmcJ+BFbScYX02TwoA9/e/ies3KqP2aLWcvTeXCPo8GnB/fj/CcHn8G3oUGK61z83c8NtYPSH8lIHV3a+isIy2aDN9Xmkyw65em45iXTwBfrwmHE8FyA4OuuMOfpssh1CF60=
+	t=1765884502; cv=none; b=PpuYVkOA7GT6IMh1B8iaFZWU1SzTgBxfinAa6Qu2/VMSepfsw8CmaDeQ1EOkzNOgNSGOd5ZAzqD4qxLjFoO5PP2gSBOCAUR9MaM7hcfzxfkOghc8kORReyxLGlvd/SkdJNO4hTLzJh8f7kqMUr62uVC0cAq0xy38ZBbuqHc0Lyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884499; c=relaxed/simple;
-	bh=Qm37MQaeQvA2+7mlhceBg5qCj862313AN5b/Pc9JJF4=;
+	s=arc-20240116; t=1765884502; c=relaxed/simple;
+	bh=RkTiHZVHGKQHrna7OUtPevSgHue2SeiaD7qcq73HnAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKJ7S3EcwWbFUjzUGGyXD5S54gY4NaiazTDKRGxS4wNkXU6QBab4ojnuf04q7MQNjB+I16UNPuZZr6InrTMUxkGkSuyN+jVLrgYUo1GU/YlNtDkANSu0zxpr4oxupkTa80ma4BYR0p13aHwephgVAN/vHMpmqimWp0JNcaYNBLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOQwTRwu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4rFGSVVSRBOmF2O/LEk19xWM7naYdrrI6HLQVouMrmypmao+QRfYath2Zdx6lcKewbkt0S5KOHhHRHtiygcyyrqmOUkUKy4c0YrSgTGQFSK4Nle+t76ijSDko0K9zE+VqiXasi7E3TNJ/6hoevAeJ3nlg1tIrjAo0d9z7IEbV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v0eNRXPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOQwTRwu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0427CC4CEF1;
-	Tue, 16 Dec 2025 11:28:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v0eNRXPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6534BC4CEF1;
+	Tue, 16 Dec 2025 11:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884499;
-	bh=Qm37MQaeQvA2+7mlhceBg5qCj862313AN5b/Pc9JJF4=;
+	s=korg; t=1765884502;
+	bh=RkTiHZVHGKQHrna7OUtPevSgHue2SeiaD7qcq73HnAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOQwTRwuJ53SbetKHX6MofrTMdd4VCIQ5984bJsutDvWfOEl1IjRjp1CZXb+RNdPa
-	 5aH0FqbTzeK0NlQuy3wDE5TadVWHE+xuZcD5OlSnriZ5w2XhcNPJ8NXqUicTdlpjgA
-	 h6EleIpkc8Xs78K2UJgljuDSwCM1RUS/LyUk6lRM=
+	b=v0eNRXPEyBYtCYvkeL4V+9MiWEHmxChfuvgP908inpHyf9KEybzJdPiHzOrjBnXWh
+	 7GvtvprDNwnBkdLHT3l9kGRzHXZT8c0yBTKDhLlDSd+SVnXhxianG+BXVjDIXJrQQe
+	 CrU/3tQQHKSdJckRhr33ypuNq2W/4fSOIWMSHbz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jay Liu <jay.liu@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 179/354] drm/mediatek: Fix CCORR mtk_ctm_s31_32_to_s1_n function issue
-Date: Tue, 16 Dec 2025 12:12:26 +0100
-Message-ID: <20251216111327.398061535@linuxfoundation.org>
+Subject: [PATCH 6.12 180/354] drm/msm/a6xx: Flush LRZ cache before PT switch
+Date: Tue, 16 Dec 2025 12:12:27 +0100
+Message-ID: <20251216111327.434438476@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,69 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Liu <jay.liu@mediatek.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit 20ac36b71c53b8c36c6903b5ca87c75226700a97 ]
+[ Upstream commit 180349b8407f3b268b2ceac0e590b8199e043081 ]
 
-if matrixbit is 11,
-The range of color matrix is from 0 to (BIT(12) - 1).
-Values from 0 to (BIT(11) - 1) represent positive numbers,
-values from BIT(11) to (BIT(12) - 1) represent negative numbers.
-For example, -1 need converted to 8191.
-so convert S31.32 to HW Q2.11 format by drm_color_ctm_s31_32_to_qm_n,
-and set int_bits to 2.
+As per the recommendation, A7x and newer GPUs should flush the LRZ cache
+before switching the pagetable. Update a6xx_set_pagetable() to do this.
+While we are at it, sync both BV and BR before issuing  a
+CP_RESET_CONTEXT_STATE command, to match the downstream sequence.
 
-Fixes: 738ed4156fba ("drm/mediatek: Add matrix_bits private data for ccorr")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jay Liu <jay.liu@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20250921055416.25588-2-jay.liu@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: af66706accdf ("drm/msm/a6xx: Add skeleton A7xx support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688995/
+Message-ID: <20251118-kaana-gpu-support-v4-2-86eeb8e93fb6@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_disp_ccorr.c | 23 +----------------------
- 1 file changed, 1 insertion(+), 22 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c b/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
-index 9b75727e0861c..cb6d829d93db1 100644
---- a/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
-+++ b/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
-@@ -80,27 +80,6 @@ void mtk_ccorr_stop(struct device *dev)
- 	writel_relaxed(0x0, ccorr->regs + DISP_CCORR_EN);
- }
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 29d39b2bd86e0..2407140508d8a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -125,7 +125,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+ 		OUT_RING(ring, submit->seqno - 1);
  
--/* Converts a DRM S31.32 value to the HW S1.n format. */
--static u16 mtk_ctm_s31_32_to_s1_n(u64 in, u32 n)
--{
--	u16 r;
--
--	/* Sign bit. */
--	r = in & BIT_ULL(63) ? BIT(n + 1) : 0;
--
--	if ((in & GENMASK_ULL(62, 33)) > 0) {
--		/* identity value 0x100000000 -> 0x400(mt8183), */
--		/* identity value 0x100000000 -> 0x800(mt8192), */
--		/* if bigger this, set it to max 0x7ff. */
--		r |= GENMASK(n, 0);
--	} else {
--		/* take the n+1 most important bits. */
--		r |= (in >> (32 - n)) & GENMASK(n, 0);
--	}
--
--	return r;
--}
--
- void mtk_ccorr_ctm_set(struct device *dev, struct drm_crtc_state *state)
- {
- 	struct mtk_disp_ccorr *ccorr = dev_get_drvdata(dev);
-@@ -119,7 +98,7 @@ void mtk_ccorr_ctm_set(struct device *dev, struct drm_crtc_state *state)
- 	input = ctm->matrix;
+ 		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
+-		OUT_RING(ring, CP_SET_THREAD_BOTH);
++		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BOTH);
  
- 	for (i = 0; i < ARRAY_SIZE(coeffs); i++)
--		coeffs[i] = mtk_ctm_s31_32_to_s1_n(input[i], matrix_bits);
-+		coeffs[i] = drm_color_ctm_s31_32_to_qm_n(input[i], 2, matrix_bits);
+ 		/* Reset state used to synchronize BR and BV */
+ 		OUT_PKT7(ring, CP_RESET_CONTEXT_STATE, 1);
+@@ -136,7 +136,13 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+ 			 CP_RESET_CONTEXT_STATE_0_RESET_GLOBAL_LOCAL_TS);
  
- 	mtk_ddp_write(cmdq_pkt, coeffs[0] << 16 | coeffs[1],
- 		      &ccorr->cmdq_reg, ccorr->regs, DISP_CCORR_COEF_0);
+ 		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
+-		OUT_RING(ring, CP_SET_THREAD_BR);
++		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BOTH);
++
++		OUT_PKT7(ring, CP_EVENT_WRITE, 1);
++		OUT_RING(ring, LRZ_FLUSH);
++
++		OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
++		OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);
+ 	}
+ 
+ 	if (!sysprof) {
 -- 
 2.51.0
 
