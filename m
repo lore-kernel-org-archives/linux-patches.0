@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A4B36D4F8;
-	Tue, 16 Dec 2025 12:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A72636D4F8;
+	Tue, 16 Dec 2025 12:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887493; cv=none; b=YtTuqwe2OxnfdSlaJOj7z4pkzA97PctzNQYusZCz//15otedI7fmKmWEpaiRIbtgIigDPL6sO9jMFWk2Tlr2yVseejTWpO6kVBwaYNlHrWwDbSzwGQYN0JtfyQ3nRJldgBS7REPWUVCl+aoJmdXdHM7qj1/AyX5jA51AKIUq918=
+	t=1765887498; cv=none; b=ZwGzBZ9m3JkqoADZkgf93y/NHA3dEbc8qSBibng88Ie24ZmlLkj0IS66eNaM7qD1Jjr5D7UMHI2s93sfDSLLmrun/0duYW6iIIgHv0sq3UX41ZtecfciuYFjh/1WHlpSZhJO/Cv1yW2atTEY2kY8P1DyQrWuSLu8vGGB+DQ5UAI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887493; c=relaxed/simple;
-	bh=IPlPEpWc1DdCAGP9Q8c6ySsOCjcoQccVixHP2SCFgMM=;
+	s=arc-20240116; t=1765887498; c=relaxed/simple;
+	bh=NDxrnmDtiwquoOqqq801htBjphgoFayhj9MjfolWUzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=blF2BnDy07DhcYX+UzKOZilK5defCMrsxEuGzl/wWzfxnDeNVCJ4cMkpCDOKMkPl9woZ0CBA0zRE1BdwUAjxKz1wgKDjQ225c9QpfHZjPxIQytXzlgIqQ8Ci/qJmh5lglkG6Is6ZKMjtfVeOU3ehHVupTCUw7ZgBetVXSeQ026c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=amtdl5XU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S6gzUut0cft21V232j4Gly1229hQ5gRg61d4wq3ZwlNdXgCcifoiD3HL9Yk79D8Xve1THtZzMvkSBRSNbFHtWA0bCsCYWvaaykItIxdCqG3jzz+APUpvB5/Prf8ZXT/AARccImgnY2vXcUhRiv7ZwKdJ6Cr348PLfdc59iMUp1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJRF+UdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="amtdl5XU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC41C4CEF1;
-	Tue, 16 Dec 2025 12:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJRF+UdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA3EC4CEF1;
+	Tue, 16 Dec 2025 12:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887493;
-	bh=IPlPEpWc1DdCAGP9Q8c6ySsOCjcoQccVixHP2SCFgMM=;
+	s=korg; t=1765887497;
+	bh=NDxrnmDtiwquoOqqq801htBjphgoFayhj9MjfolWUzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=amtdl5XUgsryNhcZjwUwksNZbRX6Dn6jh/bTzqSOAt3GLK1Al2M3BgpSaZjn0Ryrp
-	 UGNoEue69XyXtZPAjT0m0kzsKebyCY+cVaMX4mmoKCr6oVF4fFPEf9ZTLw1RE/itM9
-	 2yOkWmY4URdXM6jUY8u8FPVenEN3wZCF/XkBzgEc=
+	b=BJRF+UdGTb+9uE2x9I5aKZSuAWYdT7xSAklIgU7nnSkwwevWt4yULxxm+qtUKwKL2
+	 rNHJCx6egbRg8yy4KpPTupJtGiaWK79M5DZ7seL4y6RSUbvsYQBoVDv/12Yl/hXins
+	 i/f2UOCtiFajeiGYJgQWomfuEgY2GJkmDRCi3WKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avri Altman <avri.altman@sandisk.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Bean Huo <beanhuo@micron.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	David Wei <dw@davidwei.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 240/614] scsi: ufs: core: fix incorrect buffer duplication in ufshcd_read_string_desc()
-Date: Tue, 16 Dec 2025 12:10:07 +0100
-Message-ID: <20251216111410.063450573@linuxfoundation.org>
+Subject: [PATCH 6.18 249/614] net: export netdev_get_by_index_lock()
+Date: Tue, 16 Dec 2025 12:10:16 +0100
+Message-ID: <20251216111410.397527855@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,43 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bean Huo <beanhuo@micron.com>
+From: David Wei <dw@davidwei.uk>
 
-[ Upstream commit d794b499f948801f54d67ddbc34a6eac5a6d150a ]
+[ Upstream commit c07a491c1b735e0c27454ea5c27a446d43401b1e ]
 
-The function ufshcd_read_string_desc() was duplicating memory starting
-from the beginning of struct uc_string_id, which included the length and
-type fields. As a result, the allocated buffer contained unwanted
-metadata in addition to the string itself.
+Need to call netdev_get_by_index_lock() from io_uring/zcrx.c, but it is
+currently private to net. Export the function in linux/netdevice.h.
 
-The correct behavior is to duplicate only the Unicode character array in
-the structure. Update the code so that only the actual string content is
-copied into the new buffer.
-
-Fixes: 5f57704dbcfe ("scsi: ufs: Use kmemdup in ufshcd_read_string_desc()")
-Reviewed-by: Avri Altman <avri.altman@sandisk.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Bean Huo <beanhuo@micron.com>
-Link: https://patch.msgid.link/20251107230518.4060231-3-beanhuo@iokpp.de
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: David Wei <dw@davidwei.uk>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: b6c5f9454ef3 ("io_uring/zcrx: call netdev_queue_get_dma_dev() under instance lock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netdevice.h | 1 +
+ net/core/dev.h            | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index d6a060a724618..12f5a7a973128 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -3837,7 +3837,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
- 		str[ret++] = '\0';
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index d1a687444b275..77c46a2823eca 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -3401,6 +3401,7 @@ struct net_device *dev_get_by_index(struct net *net, int ifindex);
+ struct net_device *__dev_get_by_index(struct net *net, int ifindex);
+ struct net_device *netdev_get_by_index(struct net *net, int ifindex,
+ 				       netdevice_tracker *tracker, gfp_t gfp);
++struct net_device *netdev_get_by_index_lock(struct net *net, int ifindex);
+ struct net_device *netdev_get_by_name(struct net *net, const char *name,
+ 				      netdevice_tracker *tracker, gfp_t gfp);
+ struct net_device *netdev_get_by_flags_rcu(struct net *net, netdevice_tracker *tracker,
+diff --git a/net/core/dev.h b/net/core/dev.h
+index 900880e8b5b4b..df8a90fe89f8f 100644
+--- a/net/core/dev.h
++++ b/net/core/dev.h
+@@ -29,7 +29,6 @@ struct napi_struct *
+ netdev_napi_by_id_lock(struct net *net, unsigned int napi_id);
+ struct net_device *dev_get_by_napi_id(unsigned int napi_id);
  
- 	} else {
--		str = kmemdup(uc_str, uc_str->len, GFP_KERNEL);
-+		str = kmemdup(uc_str->uc, uc_str->len, GFP_KERNEL);
- 		if (!str) {
- 			ret = -ENOMEM;
- 			goto out;
+-struct net_device *netdev_get_by_index_lock(struct net *net, int ifindex);
+ struct net_device *__netdev_put_lock(struct net_device *dev, struct net *net);
+ struct net_device *
+ netdev_xa_find_lock(struct net *net, struct net_device *dev,
 -- 
 2.51.0
 
