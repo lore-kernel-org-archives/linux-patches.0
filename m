@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6306834F270;
-	Tue, 16 Dec 2025 11:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C5334F270;
+	Tue, 16 Dec 2025 11:47:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885655; cv=none; b=IgAAnaeD71QbBXuOtI9Ycwbx0416YQ2U1D+gYVgU12/qeIrxmVErgGSOrExxTQh8c9aJwIvuqr/pApZjZiYHokvhRJeeOwGqskkE5cWBG9y55u/IRRSG3BmpeGU+CZ9yCqOudK/uAlY+ZrLZzi047S5FlFBGfVEjjGYms/JIP0g=
+	t=1765885658; cv=none; b=pg1e8iuYN7PafxY7xHDKBaeSc9TpsmIcuNRn+MOeFvqKC1ceHhohFBtB7bSnef0dAfLhoKBOhUkZJuKQ3k7W9OA7D16kdE+0/ONE8TUg9+SKlrE1JWLwvNdtLyo72wCgeEXQpe9UwvnbcnzIv/AtU2W9Q8Lefm6IRdpHhdmAofA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885655; c=relaxed/simple;
-	bh=z0+xDRTkrBLxdRi+Ujk7E7a5Vx1MNhmn6WqfkWcm3QU=;
+	s=arc-20240116; t=1765885658; c=relaxed/simple;
+	bh=YuUQnVRQ0Lxzm9jwmr+SwL8Rkg2VgKl86RAeBjK2aXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kkg7D4ZUyvNtRg9exJo6jPDp2sH+DIUPun9/Dc6detpbZCs07N+FylHVAS6oJgrGPcocVKQeWN4ztrKImSoSnDKz5GtUxvw7ZCkVWRk5NjKGKmh5RuLlg06ExXC+9lD9Ly8XcEwr0+/mJQKOunrPClJFF36KGmspHZu46eC8e6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pYyMVF/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CfEUNgKtvyN1gff1rubKVS4X9NDPnGZe/HsC53hA+lNaBdpxJXMeWLmIj/mPTJCP+I/5SMzbAHKGget7HGxPKoDNMogTDz8okqjlm+BF6TSWBCxJaQHl/iK4ujLSkIwpnMKqt+SXjna2rTlNIR/+Eup8aBqNKBC+LH7Xn+FWocs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W2xF2xY/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pYyMVF/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3000C4CEF1;
-	Tue, 16 Dec 2025 11:47:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W2xF2xY/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0BBC4CEF1;
+	Tue, 16 Dec 2025 11:47:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885655;
-	bh=z0+xDRTkrBLxdRi+Ujk7E7a5Vx1MNhmn6WqfkWcm3QU=;
+	s=korg; t=1765885658;
+	bh=YuUQnVRQ0Lxzm9jwmr+SwL8Rkg2VgKl86RAeBjK2aXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pYyMVF/A56cyUgmynDBQsJlfH0CXVS9vIRl9U4BDuIMfu9tXYZCfvMd0Y17aMPPcu
-	 zbTzp52G6UwaClcIH+cdaJG3iA69LpqR3uhlJf7MkN5nlvOu6i8X3l9BDOypY+IZaB
-	 yEDu+OEKw2JJOryAorcN7wx2sF8x6IZsWEgBD+m0=
+	b=W2xF2xY/7FxtS/JHnTUU+HYkvm8sZtpJlZlyHYHVNXUCMyCAr2mXsA/qWOKLyNmBe
+	 PsUsuSgNkaH8A1dL0HsOai+47tA8RysmGKF+A3JrwNCAtpyuFDh0nHOhXwjECueJ7f
+	 czV5Kr05Zc18FTFX/LSe83/1UBo6PMi35IS1Ehk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Goel <akash.goel@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Avri Altman <avri.altman@sandisk.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Bean Huo <beanhuo@micron.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 203/507] drm/panthor: Fix potential memleak of vma structure
-Date: Tue, 16 Dec 2025 12:10:44 +0100
-Message-ID: <20251216111352.866683634@linuxfoundation.org>
+Subject: [PATCH 6.17 204/507] scsi: ufs: core: fix incorrect buffer duplication in ufshcd_read_string_desc()
+Date: Tue, 16 Dec 2025 12:10:45 +0100
+Message-ID: <20251216111352.902503290@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,67 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: Bean Huo <beanhuo@micron.com>
 
-[ Upstream commit 4492d54d59872bb72e119ff9f77969ab4d8a0e6b ]
+[ Upstream commit d794b499f948801f54d67ddbc34a6eac5a6d150a ]
 
-This commit addresses a memleak issue of panthor_vma (or drm_gpuva)
-structure in Panthor driver, that can happen if the GPU page table
-update operation to map the pages fail.
-The issue is very unlikely to occur in practice.
+The function ufshcd_read_string_desc() was duplicating memory starting
+from the beginning of struct uc_string_id, which included the length and
+type fields. As a result, the allocated buffer contained unwanted
+metadata in addition to the string itself.
 
-v2: Add panthor_vm_op_ctx_return_vma() helper (Boris)
+The correct behavior is to duplicate only the Unicode character array in
+the structure. Update the code so that only the actual string content is
+copied into the new buffer.
 
-v3: Add WARN_ON_ONCE (Boris)
-
-Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
-Signed-off-by: Akash Goel <akash.goel@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Signed-off-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251021081042.1377406-1-akash.goel@arm.com
+Fixes: 5f57704dbcfe ("scsi: ufs: Use kmemdup in ufshcd_read_string_desc()")
+Reviewed-by: Avri Altman <avri.altman@sandisk.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Bean Huo <beanhuo@micron.com>
+Link: https://patch.msgid.link/20251107230518.4060231-3-beanhuo@iokpp.de
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_mmu.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
-index de6ec324c8efc..3d356a08695ab 100644
---- a/drivers/gpu/drm/panthor/panthor_mmu.c
-+++ b/drivers/gpu/drm/panthor/panthor_mmu.c
-@@ -1118,6 +1118,20 @@ static void panthor_vm_cleanup_op_ctx(struct panthor_vm_op_ctx *op_ctx,
- 	}
- }
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index f69a237262353..9331ee3599050 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3831,7 +3831,7 @@ int ufshcd_read_string_desc(struct ufs_hba *hba, u8 desc_index,
+ 		str[ret++] = '\0';
  
-+static void
-+panthor_vm_op_ctx_return_vma(struct panthor_vm_op_ctx *op_ctx,
-+			     struct panthor_vma *vma)
-+{
-+	for (u32 i = 0; i < ARRAY_SIZE(op_ctx->preallocated_vmas); i++) {
-+		if (!op_ctx->preallocated_vmas[i]) {
-+			op_ctx->preallocated_vmas[i] = vma;
-+			return;
-+		}
-+	}
-+
-+	WARN_ON_ONCE(1);
-+}
-+
- static struct panthor_vma *
- panthor_vm_op_ctx_get_vma(struct panthor_vm_op_ctx *op_ctx)
- {
-@@ -2057,8 +2071,10 @@ static int panthor_gpuva_sm_step_map(struct drm_gpuva_op *op, void *priv)
- 	ret = panthor_vm_map_pages(vm, op->map.va.addr, flags_to_prot(vma->flags),
- 				   op_ctx->map.sgt, op->map.gem.offset,
- 				   op->map.va.range);
--	if (ret)
-+	if (ret) {
-+		panthor_vm_op_ctx_return_vma(op_ctx, vma);
- 		return ret;
-+	}
- 
- 	/* Ref owned by the mapping now, clear the obj field so we don't release the
- 	 * pinning/obj ref behind GPUVA's back.
+ 	} else {
+-		str = kmemdup(uc_str, uc_str->len, GFP_KERNEL);
++		str = kmemdup(uc_str->uc, uc_str->len, GFP_KERNEL);
+ 		if (!str) {
+ 			ret = -ENOMEM;
+ 			goto out;
 -- 
 2.51.0
 
