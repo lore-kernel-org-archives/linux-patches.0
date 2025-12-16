@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17CA03164C3;
-	Tue, 16 Dec 2025 11:31:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F5633B966;
+	Tue, 16 Dec 2025 11:31:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884683; cv=none; b=FJVba86QGn2qzkMCXaWfXH+8QqYp4KBTPVb0i6KYqRheaDR4lqWxysRiLPrnDI4BmNLxM0fCAUQ+YWzMzj0DAu5XN4GP+v6mkvq118EJBhalUYKRR4hXjTtRmuJ+Xxn4y0QAavIbBIECrGMnzUCMrpZi2pUxJ2XXrnWOtv/EvpY=
+	t=1765884686; cv=none; b=TPnZRWPc+G8NdmDuwxcy7WzqvktbpAeROEwC+D1yB9ZMmTxolJOPHKahK4vKgFLZb29CoKeiClxQnXddxES72A4iLCAuiOd0wg6Z+AL0j+uc5Mp9T1/qxdwK0tk7Cnx4/cWaMOat+x1HHWM0zorGgW0SPcUIZpH+kIAaSsGH9Xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884683; c=relaxed/simple;
-	bh=QnhcoUM4VQFdHCtVi++O6FhInFd8jtfAGYI9uDSM9SY=;
+	s=arc-20240116; t=1765884686; c=relaxed/simple;
+	bh=Dj6b/5lpHPzwjHLtXoWmMXqmfJsirs1G0iJw5EaR7bU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHr3R5eZvZDzc1YXOSsnt2qPgEtk2kjkqcVCgaGzRE1MDWGCA7Oxn5oTux6cxjTTFu+uS3LmY8JaVvk0nNolZiDD181R4VXnhc+y9SLnOFKYvVKm6kHmjUaSWVTIY9W7q8O6l0HZHcWm+ie/GUDrB78xjYK/op38VCgjX9VJpaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UQmeIM8i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A4tty9vJugj9i0vVFRMEzVaBAplaJ5zVmyIAGdQ0bxlL34eOEeyUUM2YDA5N/32K8HFEocyJ5kyKMtE+1/F0Su//DI3XwSS/xa8mDxMjPBj3GRw1SdScxhJuHH90nGWS2oqJ0oVHSzq6I4D7+ldUmZKv0Vp7bECJOdHutyQkDEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAF+P5bQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UQmeIM8i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85CDAC4CEF1;
-	Tue, 16 Dec 2025 11:31:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAF+P5bQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3FDC4CEF1;
+	Tue, 16 Dec 2025 11:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884683;
-	bh=QnhcoUM4VQFdHCtVi++O6FhInFd8jtfAGYI9uDSM9SY=;
+	s=korg; t=1765884686;
+	bh=Dj6b/5lpHPzwjHLtXoWmMXqmfJsirs1G0iJw5EaR7bU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQmeIM8izXbpBBfjLr9oPgyD/6afGWg+6YzFje9q0/Euh8fOwgKNnjIijliUZpsYn
-	 5n64owBGUP4So4F8ylgG6gilG6/suSALb+ovbdL8W5uZqrkIUCCYqw3dFyJKEZ5nGD
-	 KTAP5RgKeWMDSCoRomxxu8ir6+hUFrs5TI3FnVHs=
+	b=mAF+P5bQ05DoIsoqVVJ38Rg+2PxdiDOWipoh3uCRVRInpFE9PlzKWdNnqbIzJb59f
+	 TmtI0uxFS8inOrow19rA8CCp/2WM4zpFh/XetaFWznaQuLVs3O51+Vf5LJ0AymzM3H
+	 AEsz3tPD87mot4Bc8pyW9eKXCNEnp4Cpk5YZVlSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/354] netfilter: nft_connlimit: update the count if add was skipped
-Date: Tue, 16 Dec 2025 12:13:54 +0100
-Message-ID: <20251216111330.589340215@linuxfoundation.org>
+Subject: [PATCH 6.12 268/354] net: stmmac: fix rx limit check in stmmac_rx_zc()
+Date: Tue, 16 Dec 2025 12:13:55 +0100
+Message-ID: <20251216111330.625335168@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,103 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
 
-[ Upstream commit 69894e5b4c5e28cda5f32af33d4a92b7a4b93b0e ]
+[ Upstream commit 8048168df56e225c94e50b04cb7b0514135d7a1c ]
 
-Connlimit expression can be used for all kind of packets and not only
-for packets with connection state new. See this ruleset as example:
+The extra "count >= limit" check in stmmac_rx_zc() is redundant and
+has no effect because the value of "count" doesn't change after the
+while condition at this point.
 
-table ip filter {
-        chain input {
-                type filter hook input priority filter; policy accept;
-                tcp dport 22 ct count over 4 counter
-        }
-}
+However, it can change after "read_again:" label:
 
-Currently, if the connection count goes over the limit the counter will
-count the packets. When a connection is closed, the connection count
-won't decrement as it should because it is only updated for new
-connections due to an optimization on __nf_conncount_add() that prevents
-updating the list if the connection is duplicated.
+        while (count < limit) {
+            ...
 
-To solve this problem, check whether the connection was skipped and if
-so, update the list. Adjust count_tree() too so the same fix is applied
-for xt_connlimit.
+            if (count >= limit)
+                break;
+    read_again:
+            ...
+            /* XSK pool expects RX frame 1:1 mapped to XSK buffer */
+            if (likely(status & rx_not_ls)) {
+                xsk_buff_free(buf->xdp);
+                buf->xdp = NULL;
+                dirty++;
+                count++;
+                goto read_again;
+            }
+            ...
 
-Fixes: 976afca1ceba ("netfilter: nf_conncount: Early exit in nf_conncount_lookup() and cleanup")
-Closes: https://lore.kernel.org/netfilter/trinity-85c72a88-d762-46c3-be97-36f10e5d9796-1761173693813@3c-app-mailcom-bs12/
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+This patch addresses the same issue previously resolved in stmmac_rx()
+by commit fa02de9e7588 ("net: stmmac: fix rx budget limit check").
+The fix is the same: move the check after the label to ensure that it
+bounds the goto loop.
+
+Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
+Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/20251126104327.175590-1-aleksei.kodanev@bell-sw.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conncount.c  | 12 ++++++++----
- net/netfilter/nft_connlimit.c | 13 +++++++++++--
- 2 files changed, 19 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
-index 0ffc5ff78a714..b84cfb5616df4 100644
---- a/net/netfilter/nf_conncount.c
-+++ b/net/netfilter/nf_conncount.c
-@@ -179,7 +179,7 @@ static int __nf_conncount_add(struct net *net,
- 	if (ct && nf_ct_is_confirmed(ct)) {
- 		if (refcounted)
- 			nf_ct_put(ct);
--		return 0;
-+		return -EEXIST;
- 	}
- 
- 	if ((u32)jiffies == list->last_gc)
-@@ -398,7 +398,7 @@ insert_tree(struct net *net,
- 			int ret;
- 
- 			ret = nf_conncount_add_skb(net, skb, l3num, &rbconn->list);
--			if (ret)
-+			if (ret && ret != -EEXIST)
- 				count = 0; /* hotdrop */
- 			else
- 				count = rbconn->list.count;
-@@ -501,10 +501,14 @@ count_tree(struct net *net,
- 			/* same source network -> be counted! */
- 			ret = __nf_conncount_add(net, skb, l3num, &rbconn->list);
- 			spin_unlock_bh(&rbconn->list.list_lock);
--			if (ret)
-+			if (ret && ret != -EEXIST) {
- 				return 0; /* hotdrop */
--			else
-+			} else {
-+				/* -EEXIST means add was skipped, update the list */
-+				if (ret == -EEXIST)
-+					nf_conncount_gc_list(net, &rbconn->list);
- 				return rbconn->list.count;
-+			}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 04bacb04770fa..ce35a6f126793 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -5268,10 +5268,10 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+ 			len = 0;
  		}
- 	}
  
-diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
-index d998e27713ac7..83a7d5769396c 100644
---- a/net/netfilter/nft_connlimit.c
-+++ b/net/netfilter/nft_connlimit.c
-@@ -29,8 +29,17 @@ static inline void nft_connlimit_do_eval(struct nft_connlimit *priv,
++read_again:
+ 		if (count >= limit)
+ 			break;
  
- 	err = nf_conncount_add_skb(nft_net(pkt), pkt->skb, nft_pf(pkt), priv->list);
- 	if (err) {
--		regs->verdict.code = NF_DROP;
--		return;
-+		if (err == -EEXIST) {
-+			/* Call gc to update the list count if any connection has
-+			 * been closed already. This is useful for softlimit
-+			 * connections like limiting bandwidth based on a number
-+			 * of open connections.
-+			 */
-+			nf_conncount_gc_list(nft_net(pkt), priv->list);
-+		} else {
-+			regs->verdict.code = NF_DROP;
-+			return;
-+		}
- 	}
- 
- 	count = priv->list->count;
+-read_again:
+ 		buf1_len = 0;
+ 		entry = next_entry;
+ 		buf = &rx_q->buf_pool[entry];
 -- 
 2.51.0
 
