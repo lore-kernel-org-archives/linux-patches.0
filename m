@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1E12459D7;
-	Tue, 16 Dec 2025 11:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE192459D7;
+	Tue, 16 Dec 2025 11:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883900; cv=none; b=r3l62WqVgpix3rSe5CvghcEEzw7zKRpe+OfNsVaYjgN/uxQUfmhu6mtH+wzT9DV6/n1Jsk+RZMXCT+sDwX2HgOpxcwS4CtONksw7/JN5YQBszPO8791Sk+CidGYK4Qg53J9bJOrA0PfD8XcVGjcN8xGb+YBnPO4Y05YLSuX0taw=
+	t=1765883903; cv=none; b=UAD4LYzOcqXGbgc7b5AkPhRbk+R8VRMEFTVjARZqG7tT0Gj0Zvix6ukSrFmbg8KAajlmLyI0RNWSwalqo4F7T4d6la40CE84e/h+VXbhjEHXsqtv4HsQIwkDk08gbD5yCuilwpy19jWKOXkmMadsGrfIrkduniH9e2dxK5ImaQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883900; c=relaxed/simple;
-	bh=ItmpYF5GJsBmyMxm25QTtrhuuxmg8OL2HTZNlyUS2Gg=;
+	s=arc-20240116; t=1765883903; c=relaxed/simple;
+	bh=walC798u8t73ZlOBW1Od45heY4+NKLndeLIc0wDH6e0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mFLvhkBHOxY+P6iwPSgXujK4Nx15R/MIlPKutM52T5D/UycXAjsw7SCLNKyGeWRNyyl10ilisZk6gWKOwlGdfvUcQrMBpV8942jsAFp+QZgjuZV8jiIa1J8EUZe8NhXfr8C2lRC5kU0TZ4a8CH+QhKvhKW/kLaf2xp8mq2fYptw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1W69JCF5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YRiUzR/QM7BhzC8cYkRlDuVby3qxjLgo1HeD8hsCVBRQcmRC9Et3Lxb0KmFYcfYcVQV4mXqXvNy2ZvQDf8FxjaT6cKYxSgwPyr320nryVYPkd3Bz6CuvJ61Rv+I0qAIaoArDjGawwmGX7oCAHBqiv4mZhaud4A2j0+CZmwTBzug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j+/OF1/7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1W69JCF5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88B6C4CEF1;
-	Tue, 16 Dec 2025 11:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j+/OF1/7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E50BC4CEF1;
+	Tue, 16 Dec 2025 11:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883900;
-	bh=ItmpYF5GJsBmyMxm25QTtrhuuxmg8OL2HTZNlyUS2Gg=;
+	s=korg; t=1765883903;
+	bh=walC798u8t73ZlOBW1Od45heY4+NKLndeLIc0wDH6e0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1W69JCF57G4+u3Re/lwvUhzUiqGP6JUeMXEoMnrbQEYBHfW7HVKdXBtEAcC2NWvl7
-	 oHJFJvwn7MBg8wotE9tOeKOnN5oFFVx9ttsfB/Mj5vRYEZVpLwq8B43np1hKD+qzbA
-	 PO+vv0+9W9iQGVVux2WiWyiyEAzZuwolKITj0Seo=
+	b=j+/OF1/7usCEDsVtmsv6RaaIq3vWWw4ZlmY+b/ziDXsXwc8fKlw991T4qxORm/WEN
+	 HuB37S/PHTfP5qCy4SgmQAxw3eh3OFpjfU2Vp1bO+acyzrsnHodgtqITEgLt7VtDrI
+	 6vqDR8a5QvhwsvHQUZW6fcEooXIylabxA4GfGwks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Andreev <andreev@swemel.ru>,
-	Casey Schaufler <casey@schaufler-ca.com>,
+	Mainak Sen <msen@nvidia.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 007/354] smack: fix bug: setting task label silently ignores input garbage
-Date: Tue, 16 Dec 2025 12:09:34 +0100
-Message-ID: <20251216111321.173219357@linuxfoundation.org>
+Subject: [PATCH 6.12 008/354] gpu: host1x: Fix race in syncpt alloc/free
+Date: Tue, 16 Dec 2025 12:09:35 +0100
+Message-ID: <20251216111321.209171481@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,461 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Andreev <andreev@swemel.ru>
+From: Mainak Sen <msen@nvidia.com>
 
-[ Upstream commit 674e2b24791cbe8fd5dc8a0aed4cb4404fcd2028 ]
+[ Upstream commit c7d393267c497502fa737607f435f05dfe6e3d9b ]
 
-This command:
-    # echo foo/bar >/proc/$$/attr/smack/current
+Fix race condition between host1x_syncpt_alloc()
+and host1x_syncpt_put() by using kref_put_mutex()
+instead of kref_put() + manual mutex locking.
 
-gives the task a label 'foo' w/o indication
-that label does not match input.
-Setting the label with lsm_set_self_attr() syscall
-behaves identically.
+This ensures no thread can acquire the
+syncpt_mutex after the refcount drops to zero
+but before syncpt_release acquires it.
+This prevents races where syncpoints could
+be allocated while still being cleaned up
+from a previous release.
 
-This occures because:
+Remove explicit mutex locking in syncpt_release
+as kref_put_mutex() handles this atomically.
 
-1) smk_parse_smack() is used to convert input to a label
-2) smk_parse_smack() takes only that part from the
-   beginning of the input that looks like a label.
-3) `/' is prohibited in labels, so only "foo" is taken.
-
-(2) is by design, because smk_parse_smack() is used
-for parsing strings which are more than just a label.
-
-Silent failure is not a good thing, and there are two
-indicators that this was not done intentionally:
-
-    (size >= SMK_LONGLABEL) ~> invalid
-
-clause at the beginning of the do_setattr() and the
-"Returns the length of the smack label" claim
-in the do_setattr() description.
-
-So I fixed this by adding one tiny check:
-the taken label length == input length.
-
-Since input length is now strictly controlled,
-I changed the two ways of setting label
-
-   smack_setselfattr(): lsm_set_self_attr() syscall
-   smack_setprocattr(): > /proc/.../current
-
-to accommodate the divergence in
-what they understand by "input length":
-
-  smack_setselfattr counts mandatory \0 into input length,
-  smack_setprocattr does not.
-
-  smack_setprocattr allows various trailers after label
-
-Related changes:
-
-* fixed description for smk_parse_smack
-
-* allow unprivileged tasks validate label syntax.
-
-* extract smk_parse_label_len() from smk_parse_smack()
-  so parsing may be done w/o string allocation.
-
-* extract smk_import_valid_label() from smk_import_entry()
-  to avoid repeated parsing.
-
-* smk_parse_smack(): scan null-terminated strings
-  for no more than SMK_LONGLABEL(256) characters
-
-* smack_setselfattr(): require struct lsm_ctx . flags == 0
-  to reserve them for future.
-
-Fixes: e114e473771c ("Smack: Simplified Mandatory Access Control Kernel")
-Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
-Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Signed-off-by: Mainak Sen <msen@nvidia.com>
+Fixes: f5ba33fb9690 ("gpu: host1x: Reserve VBLANK syncpoints at initialization")
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20250707-host1x-syncpt-race-fix-v1-1-28b0776e70bc@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/LSM/Smack.rst |  11 ++-
- security/smack/smack.h                  |   3 +
- security/smack/smack_access.c           |  93 ++++++++++++++-----
- security/smack/smack_lsm.c              | 115 +++++++++++++++---------
- 4 files changed, 156 insertions(+), 66 deletions(-)
+ drivers/gpu/host1x/syncpt.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/Documentation/admin-guide/LSM/Smack.rst b/Documentation/admin-guide/LSM/Smack.rst
-index 1b554b5bf98e6..c5ed775f2d107 100644
---- a/Documentation/admin-guide/LSM/Smack.rst
-+++ b/Documentation/admin-guide/LSM/Smack.rst
-@@ -601,10 +601,15 @@ specification.
- Task Attribute
- ~~~~~~~~~~~~~~
+diff --git a/drivers/gpu/host1x/syncpt.c b/drivers/gpu/host1x/syncpt.c
+index f63d14a57a1d9..acc7d82e0585e 100644
+--- a/drivers/gpu/host1x/syncpt.c
++++ b/drivers/gpu/host1x/syncpt.c
+@@ -345,8 +345,6 @@ static void syncpt_release(struct kref *ref)
  
--The Smack label of a process can be read from /proc/<pid>/attr/current. A
--process can read its own Smack label from /proc/self/attr/current. A
-+The Smack label of a process can be read from ``/proc/<pid>/attr/current``. A
-+process can read its own Smack label from ``/proc/self/attr/current``. A
- privileged process can change its own Smack label by writing to
--/proc/self/attr/current but not the label of another process.
-+``/proc/self/attr/current`` but not the label of another process.
-+
-+Format of writing is : only the label or the label followed by one of the
-+3 trailers: ``\n`` (by common agreement for ``/proc/...`` interfaces),
-+``\0`` (because some applications incorrectly include it),
-+``\n\0`` (because we think some applications may incorrectly include it).
+ 	sp->locked = false;
  
- File Attribute
- ~~~~~~~~~~~~~~
-diff --git a/security/smack/smack.h b/security/smack/smack.h
-index 1c3656b5e3b91..deb2ef31b63a4 100644
---- a/security/smack/smack.h
-+++ b/security/smack/smack.h
-@@ -285,9 +285,12 @@ int smk_tskacc(struct task_smack *, struct smack_known *,
- 	       u32, struct smk_audit_info *);
- int smk_curacc(struct smack_known *, u32, struct smk_audit_info *);
- struct smack_known *smack_from_secid(const u32);
-+int smk_parse_label_len(const char *string, int len);
- char *smk_parse_smack(const char *string, int len);
- int smk_netlbl_mls(int, char *, struct netlbl_lsm_secattr *, int);
- struct smack_known *smk_import_entry(const char *, int);
-+struct smack_known *smk_import_valid_label(const char *label, int label_len,
-+					   gfp_t gfp);
- void smk_insert_entry(struct smack_known *skp);
- struct smack_known *smk_find_entry(const char *);
- bool smack_privileged(int cap);
-diff --git a/security/smack/smack_access.c b/security/smack/smack_access.c
-index 585e5e35710b2..37a185ebf5da8 100644
---- a/security/smack/smack_access.c
-+++ b/security/smack/smack_access.c
-@@ -435,19 +435,19 @@ struct smack_known *smk_find_entry(const char *string)
- }
- 
- /**
-- * smk_parse_smack - parse smack label from a text string
-- * @string: a text string that might contain a Smack label
-- * @len: the maximum size, or zero if it is NULL terminated.
-+ * smk_parse_label_len - calculate the length of the starting segment
-+ *                       in the string that constitutes a valid smack label
-+ * @string: a text string that might contain a Smack label at the beginning
-+ * @len: the maximum size to look into, may be zero if string is null-terminated
-  *
-- * Returns a pointer to the clean label or an error code.
-+ * Returns the length of the segment (0 < L < SMK_LONGLABEL) or an error code.
-  */
--char *smk_parse_smack(const char *string, int len)
-+int smk_parse_label_len(const char *string, int len)
- {
--	char *smack;
- 	int i;
- 
--	if (len <= 0)
--		len = strlen(string) + 1;
-+	if (len <= 0 || len > SMK_LONGLABEL)
-+		len = SMK_LONGLABEL;
- 
- 	/*
- 	 * Reserve a leading '-' as an indicator that
-@@ -455,7 +455,7 @@ char *smk_parse_smack(const char *string, int len)
- 	 * including /smack/cipso and /smack/cipso2
- 	 */
- 	if (string[0] == '-')
--		return ERR_PTR(-EINVAL);
-+		return -EINVAL;
- 
- 	for (i = 0; i < len; i++)
- 		if (string[i] > '~' || string[i] <= ' ' || string[i] == '/' ||
-@@ -463,6 +463,25 @@ char *smk_parse_smack(const char *string, int len)
- 			break;
- 
- 	if (i == 0 || i >= SMK_LONGLABEL)
-+		return -EINVAL;
-+
-+	return i;
-+}
-+
-+/**
-+ * smk_parse_smack - copy the starting segment in the string
-+ *                   that constitutes a valid smack label
-+ * @string: a text string that might contain a Smack label at the beginning
-+ * @len: the maximum size to look into, may be zero if string is null-terminated
-+ *
-+ * Returns a pointer to the copy of the label or an error code.
-+ */
-+char *smk_parse_smack(const char *string, int len)
-+{
-+	char *smack;
-+	int i = smk_parse_label_len(string, len);
-+
-+	if (i < 0)
- 		return ERR_PTR(-EINVAL);
- 
- 	smack = kstrndup(string, i, GFP_NOFS);
-@@ -546,31 +565,25 @@ int smack_populate_secattr(struct smack_known *skp)
- }
- 
- /**
-- * smk_import_entry - import a label, return the list entry
-- * @string: a text string that might be a Smack label
-- * @len: the maximum size, or zero if it is NULL terminated.
-+ * smk_import_valid_allocated_label - import a label, return the list entry
-+ * @smack: a text string that is a valid Smack label and may be kfree()ed.
-+ *         It is consumed: either becomes a part of the entry or kfree'ed.
-  *
-- * Returns a pointer to the entry in the label list that
-- * matches the passed string, adding it if necessary,
-- * or an error code.
-+ * Returns: see description of smk_import_entry()
-  */
--struct smack_known *smk_import_entry(const char *string, int len)
-+static struct smack_known *
-+smk_import_allocated_label(char *smack, gfp_t gfp)
- {
- 	struct smack_known *skp;
--	char *smack;
- 	int rc;
- 
--	smack = smk_parse_smack(string, len);
--	if (IS_ERR(smack))
--		return ERR_CAST(smack);
+-	mutex_lock(&sp->host->syncpt_mutex);
 -
- 	mutex_lock(&smack_known_lock);
+ 	host1x_syncpt_base_free(sp->base);
+ 	kfree(sp->name);
+ 	sp->base = NULL;
+@@ -369,7 +367,7 @@ void host1x_syncpt_put(struct host1x_syncpt *sp)
+ 	if (!sp)
+ 		return;
  
- 	skp = smk_find_entry(smack);
- 	if (skp != NULL)
- 		goto freeout;
- 
--	skp = kzalloc(sizeof(*skp), GFP_NOFS);
-+	skp = kzalloc(sizeof(*skp), gfp);
- 	if (skp == NULL) {
- 		skp = ERR_PTR(-ENOMEM);
- 		goto freeout;
-@@ -600,6 +613,42 @@ struct smack_known *smk_import_entry(const char *string, int len)
- 	return skp;
+-	kref_put(&sp->ref, syncpt_release);
++	kref_put_mutex(&sp->ref, syncpt_release, &sp->host->syncpt_mutex);
  }
+ EXPORT_SYMBOL(host1x_syncpt_put);
  
-+/**
-+ * smk_import_entry - import a label, return the list entry
-+ * @string: a text string that might contain a Smack label at the beginning
-+ * @len: the maximum size to look into, may be zero if string is null-terminated
-+ *
-+ * Returns a pointer to the entry in the label list that
-+ * matches the passed string, adding it if necessary,
-+ * or an error code.
-+ */
-+struct smack_known *smk_import_entry(const char *string, int len)
-+{
-+	char *smack = smk_parse_smack(string, len);
-+
-+	if (IS_ERR(smack))
-+		return ERR_CAST(smack);
-+
-+	return smk_import_allocated_label(smack, GFP_NOFS);
-+}
-+
-+/**
-+ * smk_import_valid_label - import a label, return the list entry
-+ * @label a text string that is a valid Smack label, not null-terminated
-+ *
-+ * Returns: see description of smk_import_entry()
-+ */
-+struct smack_known *
-+smk_import_valid_label(const char *label, int label_len, gfp_t gfp)
-+{
-+	char *smack = kstrndup(label, label_len, gfp);
-+
-+	if  (!smack)
-+		return ERR_PTR(-ENOMEM);
-+
-+	return smk_import_allocated_label(smack, gfp);
-+}
-+
- /**
-  * smack_from_secid - find the Smack label associated with a secid
-  * @secid: an integer that might be associated with a Smack label
-diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
-index ce63e1439edbd..c243adb137402 100644
---- a/security/smack/smack_lsm.c
-+++ b/security/smack/smack_lsm.c
-@@ -3718,7 +3718,7 @@ static void smack_d_instantiate(struct dentry *opt_dentry, struct inode *inode)
-  * @attr: which attribute to fetch
-  * @ctx: buffer to receive the result
-  * @size: available size in, actual size out
-- * @flags: unused
-+ * @flags: reserved, currently zero
-  *
-  * Fill the passed user space @ctx with the details of the requested
-  * attribute.
-@@ -3779,57 +3779,52 @@ static int smack_getprocattr(struct task_struct *p, const char *name, char **val
-  * Sets the Smack value of the task. Only setting self
-  * is permitted and only with privilege
-  *
-- * Returns the length of the smack label or an error code
-+ * Returns zero on success or an error code
-  */
--static int do_setattr(u64 attr, void *value, size_t size)
-+static int do_setattr(unsigned int attr, void *value, size_t size)
- {
- 	struct task_smack *tsp = smack_cred(current_cred());
- 	struct cred *new;
- 	struct smack_known *skp;
--	char *labelstr;
--	int rc = 0;
--
--	if (!smack_privileged(CAP_MAC_ADMIN) && list_empty(&tsp->smk_relabel))
--		return -EPERM;
-+	int label_len;
- 
-+	/*
-+	 * let unprivileged user validate input, check permissions later
-+	 */
- 	if (value == NULL || size == 0 || size >= SMK_LONGLABEL)
- 		return -EINVAL;
- 
--	if (attr != LSM_ATTR_CURRENT)
--		return -EOPNOTSUPP;
--
--	labelstr = smk_parse_smack(value, size);
--	if (IS_ERR(labelstr))
--		return PTR_ERR(labelstr);
-+	label_len = smk_parse_label_len(value, size);
-+	if (label_len < 0 || label_len != size)
-+		return -EINVAL;
- 
- 	/*
- 	 * No process is ever allowed the web ("@") label
- 	 * and the star ("*") label.
- 	 */
--	if (labelstr[1] == '\0' /* '@', '*' */) {
--		const char c = labelstr[0];
-+	if (label_len == 1 /* '@', '*' */) {
-+		const char c = *(const char *)value;
- 
- 		if (c == *smack_known_web.smk_known ||
--		    c == *smack_known_star.smk_known) {
--			rc = -EPERM;
--			goto free_labelstr;
--		}
-+		    c == *smack_known_star.smk_known)
-+			return -EPERM;
- 	}
- 
- 	if (!smack_privileged(CAP_MAC_ADMIN)) {
- 		const struct smack_known_list_elem *sklep;
--		list_for_each_entry(sklep, &tsp->smk_relabel, list)
--			if (strcmp(sklep->smk_label->smk_known, labelstr) == 0)
--				goto free_labelstr;
--		rc = -EPERM;
--	}
-+		list_for_each_entry(sklep, &tsp->smk_relabel, list) {
-+			const char *cp = sklep->smk_label->smk_known;
- 
--free_labelstr:
--	kfree(labelstr);
--	if (rc)
-+			if (strlen(cp) == label_len &&
-+			    strncmp(cp, value, label_len) == 0)
-+				goto in_relabel;
-+		}
- 		return -EPERM;
-+in_relabel:
-+		;
-+	}
- 
--	skp = smk_import_entry(value, size);
-+	skp = smk_import_valid_label(value, label_len, GFP_KERNEL);
- 	if (IS_ERR(skp))
- 		return PTR_ERR(skp);
- 
-@@ -3845,7 +3840,7 @@ static int do_setattr(u64 attr, void *value, size_t size)
- 	smk_destroy_label_list(&tsp->smk_relabel);
- 
- 	commit_creds(new);
--	return size;
-+	return 0;
- }
- 
- /**
-@@ -3853,7 +3848,7 @@ static int do_setattr(u64 attr, void *value, size_t size)
-  * @attr: which attribute to set
-  * @ctx: buffer containing the data
-  * @size: size of @ctx
-- * @flags: unused
-+ * @flags: reserved, must be zero
-  *
-  * Fill the passed user space @ctx with the details of the requested
-  * attribute.
-@@ -3863,12 +3858,26 @@ static int do_setattr(u64 attr, void *value, size_t size)
- static int smack_setselfattr(unsigned int attr, struct lsm_ctx *ctx,
- 			     u32 size, u32 flags)
- {
--	int rc;
-+	if (attr != LSM_ATTR_CURRENT)
-+		return -EOPNOTSUPP;
- 
--	rc = do_setattr(attr, ctx->ctx, ctx->ctx_len);
--	if (rc > 0)
--		return 0;
--	return rc;
-+	if (ctx->flags)
-+		return -EINVAL;
-+	/*
-+	 * string must have \0 terminator, included in ctx->ctx
-+	 * (see description of struct lsm_ctx)
-+	 */
-+	if (ctx->ctx_len == 0)
-+		return -EINVAL;
-+
-+	if (ctx->ctx[ctx->ctx_len - 1] != '\0')
-+		return -EINVAL;
-+	/*
-+	 * other do_setattr() caller, smack_setprocattr(),
-+	 * does not count \0 into size, so
-+	 * decreasing length by 1 to accommodate the divergence.
-+	 */
-+	return do_setattr(attr, ctx->ctx, ctx->ctx_len - 1);
- }
- 
- /**
-@@ -3880,15 +3889,39 @@ static int smack_setselfattr(unsigned int attr, struct lsm_ctx *ctx,
-  * Sets the Smack value of the task. Only setting self
-  * is permitted and only with privilege
-  *
-- * Returns the length of the smack label or an error code
-+ * Returns the size of the input value or an error code
-  */
- static int smack_setprocattr(const char *name, void *value, size_t size)
- {
--	int attr = lsm_name_to_attr(name);
-+	size_t realsize = size;
-+	unsigned int attr = lsm_name_to_attr(name);
- 
--	if (attr != LSM_ATTR_UNDEF)
--		return do_setattr(attr, value, size);
--	return -EINVAL;
-+	switch (attr) {
-+	case LSM_ATTR_UNDEF:   return -EINVAL;
-+	default:               return -EOPNOTSUPP;
-+	case LSM_ATTR_CURRENT:
-+		;
-+	}
-+
-+	/*
-+	 * The value for the "current" attribute is the label
-+	 * followed by one of the 4 trailers: none, \0, \n, \n\0
-+	 *
-+	 * I.e. following inputs are accepted as 3-characters long label "foo":
-+	 *
-+	 *   "foo"     (3 characters)
-+	 *   "foo\0"   (4 characters)
-+	 *   "foo\n"   (4 characters)
-+	 *   "foo\n\0" (5 characters)
-+	 */
-+
-+	if (realsize && (((const char *)value)[realsize - 1] == '\0'))
-+		--realsize;
-+
-+	if (realsize && (((const char *)value)[realsize - 1] == '\n'))
-+		--realsize;
-+
-+	return do_setattr(attr, value, realsize) ? : size;
- }
- 
- /**
 -- 
 2.51.0
 
