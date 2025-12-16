@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE76355026;
-	Tue, 16 Dec 2025 11:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C093C355027;
+	Tue, 16 Dec 2025 11:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885892; cv=none; b=oE28vJ1rZ1Aja3f4Moc1rLOq7Nran4J7PaNInnY+HWsukbp6Xy16oT/yaG5kXMVixZIClLCxpIe3w3L5QatEV+lOXxoYYkEwCkhPklz8uy1vXt4kIw7t2COBvHsxJQwxHMdxZW4ytBBxmCNhhqnaXc1e19A9ppoQ2l8IZlbgnRk=
+	t=1765885895; cv=none; b=qU+csZxznYbzlqaa5chgbaNheTfmIl6cl8/8r93H6Dj5mDPSd3t2nI2O8i+VGs2HwuaCuZUJjBnft3k8c0+z5M/QWKVMNazDfjnuBD+hDLOePiGMUfpW1zjgbGDWjlWcM9m8jU6oD2K0FRmZzuGc7V5bM7Abndv1fK/rAfKxI0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885892; c=relaxed/simple;
-	bh=hpIBVDQMi2/bVOZ6Tta2ZX4nivgOzY/gybPQg0lyeN0=;
+	s=arc-20240116; t=1765885895; c=relaxed/simple;
+	bh=g7v6QniTIUoW2C7yiIwxuqD2IvVy+478n+SH3VD3FXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCaZV+YDjmaqGY8X0VmofsOjONWImap7eiZxZUJTXF/z/gzGOiRiCIMVcI/LmvsMA37Me1aeXB/3CLYGnHZOl2mvPEOcJro8pCtilx9UlxHuZzqaSdF1FzbspOPebu9+seo5JoQofWVCUMOK+rtjgkA3k7OSmmm7NIuiSPZ34WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQX7w5Zy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HR83IqOTtHfYgUK2GyfNCsCziKCLj40QoA7AWuX/EXy9h9ek5GE2j1y2PYFNloo5wm/Z9IIc2X7q9IMGbyn4BEb/6xVW+dg3T00EdPx8oU31oYREfN30oaxFJxjogJbPvz6uV5MZZ8hJqmy3GtPSiJRQsUD32CpdqIN1RuukXGA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ILFbP162; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQX7w5Zy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8479C4CEF1;
-	Tue, 16 Dec 2025 11:51:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ILFbP162"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B9DC4CEF1;
+	Tue, 16 Dec 2025 11:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885892;
-	bh=hpIBVDQMi2/bVOZ6Tta2ZX4nivgOzY/gybPQg0lyeN0=;
+	s=korg; t=1765885895;
+	bh=g7v6QniTIUoW2C7yiIwxuqD2IvVy+478n+SH3VD3FXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQX7w5ZyzsMYQ2QQn796HRWXu0+s4yl2CBpjx940SXCdSxCax0TbiJhbLYPl/cCLU
-	 rlqV7mZ/L48JOXGKeDYzWqDKTxP1tEXOQyLHtiHEqr0Ji4HMzD8Kdk1KsvwctnyDnp
-	 rO7lP4sEzy/n7jAxMkE2Qs6/01kXzGWGc6bzFyKY=
+	b=ILFbP162mKP6W4hCj/c7sa+OaXCuBA3d5pHP1fT8E4ky+SXCUjmpt+TzvssWOWVfa
+	 OrJbcI3YEk3ntToC0brpU0ecPmMZ/5iHuTpNiGpfCyIHZPZH+Mguaq6XcloSCAs333
+	 NA+XJ36nUwCDFwxjPmCKeGLEZJ1/1PXIHG0WjRoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Longbin Li <looong.bin@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 274/507] drm/msm/a6xx: Improve MX rail fallback in RPMH vote init
-Date: Tue, 16 Dec 2025 12:11:55 +0100
-Message-ID: <20251216111355.410370445@linuxfoundation.org>
+Subject: [PATCH 6.17 275/507] spi: sophgo: Fix incorrect use of bus width value macros
+Date: Tue, 16 Dec 2025 12:11:56 +0100
+Message-ID: <20251216111355.446168902@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,90 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+From: Longbin Li <looong.bin@gmail.com>
 
-[ Upstream commit ca04ce7a2f22652fdf6489fa7e02e7d2c08698f4 ]
+[ Upstream commit d9813cd23d5a7b254cc1b1c1ea042634d8da62e6 ]
 
-Current logic assumes that the voltage corners in both MxG and MxA are
-always same. This is not true for recent targets. So, rework the rpmh init
-sequence to probe and calculate the votes with the respective rails, ie,
-GX rails should use MxG as secondary rail and Cx rail should use MxA as
-the secondary rail.
+The previous code initialized the 'reg' value with specific bus-width
+values (BUS_WIDTH_2_BIT and BUS_WIDTH_4_BIT), which introduces ambiguity.
+Replace them with BUS_WIDTH_MASK to express the intention clearly.
 
-Fixes: d6225e0cd096 ("drm/msm/adreno: Add support for X185 GPU")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/689014/
-Message-ID: <20251118-kaana-gpu-support-v4-12-86eeb8e93fb6@oss.qualcomm.com>
-Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+Fixes: de16c322eefb ("spi: sophgo: add SG2044 SPI NOR controller driver")
+Signed-off-by: Longbin Li <looong.bin@gmail.com>
+Link: https://patch.msgid.link/20251117090559.78288-1-looong.bin@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 26 +++++++++++++++-----------
- 1 file changed, 15 insertions(+), 11 deletions(-)
+ drivers/spi/spi-sg2044-nor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index bc7e111c46f96..4f6e68c86b586 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1459,13 +1459,14 @@ static unsigned int a6xx_gmu_get_arc_level(struct device *dev,
- }
- 
- static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
--		unsigned long *freqs, int freqs_count, const char *id)
-+		unsigned long *freqs, int freqs_count,
-+		const char *pri_id, const char *sec_id)
- {
- 	int i, j;
- 	const u16 *pri, *sec;
- 	size_t pri_count, sec_count;
- 
--	pri = cmd_db_read_aux_data(id, &pri_count);
-+	pri = cmd_db_read_aux_data(pri_id, &pri_count);
- 	if (IS_ERR(pri))
- 		return PTR_ERR(pri);
- 	/*
-@@ -1476,13 +1477,7 @@ static int a6xx_gmu_rpmh_arc_votes_init(struct device *dev, u32 *votes,
- 	if (!pri_count)
- 		return -EINVAL;
- 
--	/*
--	 * Some targets have a separate gfx mxc rail. So try to read that first and then fall back
--	 * to regular mx rail if it is missing
--	 */
--	sec = cmd_db_read_aux_data("gmxc.lvl", &sec_count);
--	if (IS_ERR(sec) && sec != ERR_PTR(-EPROBE_DEFER))
--		sec = cmd_db_read_aux_data("mx.lvl", &sec_count);
-+	sec = cmd_db_read_aux_data(sec_id, &sec_count);
- 	if (IS_ERR(sec))
- 		return PTR_ERR(sec);
- 
-@@ -1550,15 +1545,24 @@ static int a6xx_gmu_rpmh_votes_init(struct a6xx_gmu *gmu)
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
- 	const struct a6xx_info *info = adreno_gpu->info->a6xx;
- 	struct msm_gpu *gpu = &adreno_gpu->base;
-+	const char *sec_id;
-+	const u16 *gmxc;
- 	int ret;
- 
-+	gmxc = cmd_db_read_aux_data("gmxc.lvl", NULL);
-+	if (gmxc == ERR_PTR(-EPROBE_DEFER))
-+		return -EPROBE_DEFER;
-+
-+	/* If GMxC is present, prefer that as secondary rail for GX votes */
-+	sec_id = IS_ERR_OR_NULL(gmxc) ? "mx.lvl" : "gmxc.lvl";
-+
- 	/* Build the GX votes */
- 	ret = a6xx_gmu_rpmh_arc_votes_init(&gpu->pdev->dev, gmu->gx_arc_votes,
--		gmu->gpu_freqs, gmu->nr_gpu_freqs, "gfx.lvl");
-+		gmu->gpu_freqs, gmu->nr_gpu_freqs, "gfx.lvl", sec_id);
- 
- 	/* Build the CX votes */
- 	ret |= a6xx_gmu_rpmh_arc_votes_init(gmu->dev, gmu->cx_arc_votes,
--		gmu->gmu_freqs, gmu->nr_gmu_freqs, "cx.lvl");
-+		gmu->gmu_freqs, gmu->nr_gmu_freqs, "cx.lvl", "mx.lvl");
- 
- 	/* Build the interconnect votes */
- 	if (info->bcms && gmu->nr_gpu_bws > 1)
+diff --git a/drivers/spi/spi-sg2044-nor.c b/drivers/spi/spi-sg2044-nor.c
+index af48b1fcda930..37f1cfe10be46 100644
+--- a/drivers/spi/spi-sg2044-nor.c
++++ b/drivers/spi/spi-sg2044-nor.c
+@@ -42,6 +42,7 @@
+ #define SPIFMC_TRAN_CSR_TRAN_MODE_RX		BIT(0)
+ #define SPIFMC_TRAN_CSR_TRAN_MODE_TX		BIT(1)
+ #define SPIFMC_TRAN_CSR_FAST_MODE		BIT(3)
++#define SPIFMC_TRAN_CSR_BUS_WIDTH_MASK		GENMASK(5, 4)
+ #define SPIFMC_TRAN_CSR_BUS_WIDTH_1_BIT		(0x00 << 4)
+ #define SPIFMC_TRAN_CSR_BUS_WIDTH_2_BIT		(0x01 << 4)
+ #define SPIFMC_TRAN_CSR_BUS_WIDTH_4_BIT		(0x02 << 4)
+@@ -122,8 +123,7 @@ static u32 sg2044_spifmc_init_reg(struct sg2044_spifmc *spifmc)
+ 	reg = readl(spifmc->io_base + SPIFMC_TRAN_CSR);
+ 	reg &= ~(SPIFMC_TRAN_CSR_TRAN_MODE_MASK |
+ 		 SPIFMC_TRAN_CSR_FAST_MODE |
+-		 SPIFMC_TRAN_CSR_BUS_WIDTH_2_BIT |
+-		 SPIFMC_TRAN_CSR_BUS_WIDTH_4_BIT |
++		 SPIFMC_TRAN_CSR_BUS_WIDTH_MASK |
+ 		 SPIFMC_TRAN_CSR_DMA_EN |
+ 		 SPIFMC_TRAN_CSR_ADDR_BYTES_MASK |
+ 		 SPIFMC_TRAN_CSR_WITH_CMD |
 -- 
 2.51.0
 
