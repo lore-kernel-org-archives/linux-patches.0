@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5DB34888F;
-	Tue, 16 Dec 2025 11:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A201A3491CF;
+	Tue, 16 Dec 2025 11:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885158; cv=none; b=o0BGVr5092nMNRxodfHu8e+7CgO5aCyAI5AE5+sOd5U7EKUCbUmnX3WKz1Spw3xNG9ziFaXqMgveSfuGIpKgd9EmcPBGaIbKdUcuMke01ND3RAn6LhcMi7Dl1YK2yA0i6UStSx+v1h9ZMd8Ps6/OzpxdsaSF5oTontQVVENyUcA=
+	t=1765885161; cv=none; b=m64cxVT4exrrabzonBemfpy+a7TsF48ze9UDyqC/qwrMOApMfL13Qw+8APda5L0ajz4jOAtncFPAA1ws9EL40nOt7Lwslvy2lkoa2aMg4wViU6YW/CT7Wjza+qSNiz/orcYBCPPKdRZIF/ewa3tLZoi0Ql51X1du9szhu3R3NLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885158; c=relaxed/simple;
-	bh=oQTxL2ijJwtDjmvRWG1utDaVI//vy9yNohG7f5O5T1Q=;
+	s=arc-20240116; t=1765885161; c=relaxed/simple;
+	bh=xmJcuaMufgc3GYvM+u3Xey4Yc7N2xXBeRLpEikD0cHs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jtJzLzoUW3DEyECs88JIMVzP//ME/TRTls4mfPM0y9csJ7D2cjhqLirtxNaxGC7jmoHpWCRxZyLQc8uz+vDuXl8boML482tZ0OKfSSmKE02sEEo4ZgiEqlIYhplxE/oCKquBE/I/JZ8qR2GS2++DeMv6L3/R6qSxLgukvGDIWj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2xvi736; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFAxVRgmnIGJDuGsZ/zB4dd/+rW7MB+vIFIuIIEMwBk/8FROZa+otj9HpyZP8cJLXpxs2sP3r9xTXrrDBtfBaFZ4UyeS1yaauoqGbH/p58zoeYPS7NVMxcPih4DQE5Nte7Fb+5yRnJYY9DgjsmWrqW9FhHd0ogUkei4BfcieYuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QEcq0o1E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2xvi736"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23A8C4CEF1;
-	Tue, 16 Dec 2025 11:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QEcq0o1E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9586C4CEF1;
+	Tue, 16 Dec 2025 11:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885158;
-	bh=oQTxL2ijJwtDjmvRWG1utDaVI//vy9yNohG7f5O5T1Q=;
+	s=korg; t=1765885161;
+	bh=xmJcuaMufgc3GYvM+u3Xey4Yc7N2xXBeRLpEikD0cHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2xvi736WbklyDhV1tUT/iVtvQ1pi54rfzL4bOYjGVf7IcgyIVslv5tQfEn5M/UnW
-	 /IPu57Ix2fgkan+8tZvi+VQECxJXBp2r2834YkgTj+MWLl4zxtdHgHyz98nbJNt5Wr
-	 UJgNpXJPUTHCP9sSoGTPMgvgxAeUER1wW6dFpH9U=
+	b=QEcq0o1EwdFWBTRgD9LR3eK2oWaQkCfu3uSzmrlSdvwZITVda3gFuKl9a74SgqTsx
+	 yWesfs5djEGheMydAmEzEHl7wC9Dv2WP1faj/MwX9Viyd3KH12S+6whC5FM2iQnbA9
+	 dLZYwhm0kMdj34AYHIJeaveKSo8GYqJLhY31ELbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Hatch <dylanbhatch@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Francesco Lavra <flavra@baylibre.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 028/507] objtool: Fix standalone --hacks=jump_label
-Date: Tue, 16 Dec 2025 12:07:49 +0100
-Message-ID: <20251216111346.557894656@linuxfoundation.org>
+Subject: [PATCH 6.17 055/507] iio: imu: st_lsm6dsx: Fix measurement unit for odr struct member
+Date: Tue, 16 Dec 2025 12:08:16 +0100
+Message-ID: <20251216111347.537063043@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,42 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dylan Hatch <dylanbhatch@google.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-[ Upstream commit be8374a5ba7cbab6b97df94b4ffe0b92f5c8a6d2 ]
+[ Upstream commit c6d702f2b77194b62fb2098c63bb7f2a87da142d ]
 
-The objtool command line 'objtool --hacks=jump_label foo.o' on its own
-should be expected to rewrite jump labels to NOPs. This means the
-add_special_section_alts() code path needs to run when only this option
-is provided.
+The `odr` field in struct st_lsm6dsx_sensor contains a data rate
+value expressed in mHz, not in Hz.
 
-This is mainly relevant in certain debugging situations, but could
-potentially also fix kernel builds in which objtool is run with
---hacks=jump_label but without --orc, --stackval, --uaccess, or
---hacks=noinstr.
-
-Fixes: de6fbcedf5ab ("objtool: Read special sections with alts only when specific options are selected")
-Signed-off-by: Dylan Hatch <dylanbhatch@google.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: f8710f0357bc3 ("iio: imu: st_lsm6dsx: express odr in mHZ")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index d23fefcb15d38..ac2b8813c4a0a 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2563,7 +2563,8 @@ static int decode_sections(struct objtool_file *file)
- 	 * Must be before add_jump_destinations(), which depends on 'func'
- 	 * being set for alternatives, to enable proper sibling call detection.
- 	 */
--	if (opts.stackval || opts.orc || opts.uaccess || opts.noinstr) {
-+	if (opts.stackval || opts.orc || opts.uaccess || opts.noinstr ||
-+	    opts.hack_jump_label) {
- 		ret = add_special_section_alts(file);
- 		if (ret)
- 			return ret;
+diff --git a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
+index 381b016fa5243..56244d49ab2fc 100644
+--- a/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
++++ b/drivers/iio/imu/st_lsm6dsx/st_lsm6dsx.h
+@@ -383,7 +383,7 @@ enum st_lsm6dsx_fifo_mode {
+  * @id: Sensor identifier.
+  * @hw: Pointer to instance of struct st_lsm6dsx_hw.
+  * @gain: Configured sensor sensitivity.
+- * @odr: Output data rate of the sensor [Hz].
++ * @odr: Output data rate of the sensor [mHz].
+  * @samples_to_discard: Number of samples to discard for filters settling time.
+  * @watermark: Sensor watermark level.
+  * @decimator: Sensor decimation factor.
 -- 
 2.51.0
 
