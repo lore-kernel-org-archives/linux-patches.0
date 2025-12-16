@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9259347FE1;
-	Tue, 16 Dec 2025 11:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD51A34D3B8;
+	Tue, 16 Dec 2025 11:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885374; cv=none; b=S6sOKjTmGaAFTACPXzbBMMyqlO8m4SSHg00H+/weQuqxMSua2XEM23ZzzP+iKqDsiupE9o88q0xmOzb9kUAES1w0W4/5IJBJkkQ1VO493EHpTjoN7WQEJWPPEPVkV6ampSlx9nEWxDXnj4dMTxu9j9POIiNPp4tR5SOkoeuorkU=
+	t=1765885377; cv=none; b=T4lpWmzPgunHWY3N09lxMXm+WvoLqbwHP2I+ooAgKHW2xTWmKZnx0YFux+lhga3WkM4iHgJQ5EcHf0E098XjK4X2JDMinFadG9qomc1AOeh9YNPD+m+k03cPgGtbe4duxyYeNjQyIpEk5tIAS3dHD1DwC+AqV9YPTKQ++5fwrw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885374; c=relaxed/simple;
-	bh=ojd4RUv+K9/BGUHoBIOvl4nFbQNVyn8wiJmC9DNfyx0=;
+	s=arc-20240116; t=1765885377; c=relaxed/simple;
+	bh=va6neb/QgmqkcpvMi27UD9xBjZWyIP7THwi8HADA3uY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fHsHv8zf1SQIerUTI8Fa5a7dGw9VQjwPSM9zRT3iJuYdwhtQHQS2J+qSt3PXavfSORcgkNqH5/cwiGNqEuKjTgRegpkZQJdOYp+NIcGx3XWjw6id6ffqFzDkSTWCBTsvDZfHQarhZxFaWHNkrcw9NDWocySeazC7i9IuWn2/AFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CY9j+vEj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1DMvz9NHkl54Dx6PLGjlBYikM+ZENLeB6m3Za4sPBmsQUQ0krhxpuvQ0qOadodM1lOWawJUcuZW6H1iqLY3+3OuDWNYWnPCe3EWhWKslKcKynOtbP+oku3BeGodud6URko27pCnQsMolnYUDbpHsiClPJSBMqJJtQ9yCiuF6Ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UH5zGWzL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CY9j+vEj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8289AC4CEF5;
-	Tue, 16 Dec 2025 11:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UH5zGWzL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A5EC4CEF1;
+	Tue, 16 Dec 2025 11:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885374;
-	bh=ojd4RUv+K9/BGUHoBIOvl4nFbQNVyn8wiJmC9DNfyx0=;
+	s=korg; t=1765885377;
+	bh=va6neb/QgmqkcpvMi27UD9xBjZWyIP7THwi8HADA3uY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CY9j+vEjsfS0hC4t8/OrV0sIrWqlfMCrZoprR9iz903jJ2kbNMeh3DueYSY3h/7jA
-	 RhuwDo5aOqEIQPWWtPNR+2TrY4wEjtUPJtCwkpz3MUm5Kb/ySK9/tjt74/x4xY8gX9
-	 2BYHX0AwhaCoeHgXnM2VZIONy2qg0MaBWkG+PDzc=
+	b=UH5zGWzLvqZEcUp+j7xCtfHNPVukUveqE3TFkja0KMEY09nv1iFXQ8idaKKL6e2kL
+	 5hCeo2PRK/l2Kuk46cKdV538wiVh+4uZHaUu+yCZkVUo5l4gk/XmLYCBBCwH/GEa3M
+	 ufdvCvAqFBh3AAJyKgCMNrfwIFIbdU+tLaqrihwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
 	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 120/507] task_work: Fix NMI race condition
-Date: Tue, 16 Dec 2025 12:09:21 +0100
-Message-ID: <20251216111349.880530040@linuxfoundation.org>
+Subject: [PATCH 6.17 121/507] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
+Date: Tue, 16 Dec 2025 12:09:22 +0100
+Message-ID: <20251216111349.916938371@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,60 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit ef1ea98c8fffe227e5319215d84a53fa2a4bcebc ]
+[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
 
-  __schedule()
-  // disable irqs
-      <NMI>
-	  task_work_add(current, work, TWA_NMI_CURRENT);
-      </NMI>
-  // current = next;
-  // enable irqs
-      <IRQ>
-	  task_work_set_notify_irq()
-	  test_and_set_tsk_thread_flag(current,
-                                       TIF_NOTIFY_RESUME); // wrong task!
-      </IRQ>
-  // original task skips task work on its next return to user (or exit!)
+When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
+KASAN may report false-positive out-of-bounds access:
 
-Fixes: 466e4d801cd4 ("task_work: Add TWA_NMI_CURRENT as an additional notify mode.")
-Reported-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://patch.msgid.link/20250924080118.425949403@infradead.org
+  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
+  Call Trace:
+    dump_stack_lvl
+    print_address_description.constprop.0
+    print_report
+    __show_regs
+    show_trace_log_lvl
+    sched_show_task
+    show_state_filter
+    sysrq_handle_showstate
+    __handle_sysrq
+    write_sysrq_trigger
+    proc_reg_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
+
+The issue occurs as follows:
+
+  Task A (walk other tasks' stacks)           Task B (running)
+  1. echo t > /proc/sysrq-trigger
+  show_trace_log_lvl
+    regs = unwind_get_entry_regs()
+    show_regs_if_on_stack(regs)
+                                              2. The stack value pointed by
+                                                 `regs` keeps changing, and
+                                                 so are the tags in its
+                                                 KASAN shadow region.
+      __show_regs(regs)
+        regs->ax, regs->bx, ...
+          3. hit KASAN redzones, OOB
+
+When task A walks task B's stack without suspending it, the continuous changes
+in task B's stack (and corresponding KASAN shadow tags) may cause task A to
+hit KASAN redzones when accessing obsolete values on the stack, resulting in
+false positive reports.
+
+Simply stopping the task before unwinding is not a viable fix, as it would
+alter the state intended to inspect. This is especially true for diagnosing
+misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
+the root cause by changing the call stack.
+
+Therefore, fix this by disabling KASAN checks during asynchronous stack
+unwinding, which is identified when the unwinding task does not match the
+current task (task != current).
+
+  [ bp: Align arguments on function's opening brace. ]
+
+Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/task_work.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/task_work.c b/kernel/task_work.c
-index d1efec571a4a4..0f7519f8e7c93 100644
---- a/kernel/task_work.c
-+++ b/kernel/task_work.c
-@@ -9,7 +9,12 @@ static struct callback_head work_exited; /* all we need is ->next == NULL */
- #ifdef CONFIG_IRQ_WORK
- static void task_work_set_notify_irq(struct irq_work *entry)
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index 71ee20102a8af..b10684dedc589 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -181,8 +181,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
+  * in false positive reports. Disable instrumentation to avoid those.
+  */
+ __no_kmsan_checks
+-static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+-			unsigned long *stack, const char *log_lvl)
++static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++				 unsigned long *stack, const char *log_lvl)
  {
--	test_and_set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
-+	/*
-+	 * no-op IPI
-+	 *
-+	 * TWA_NMI_CURRENT will already have set the TIF flag, all
-+	 * this interrupt does it tickle the return-to-user path.
-+	 */
+ 	struct unwind_state state;
+ 	struct stack_info stack_info = {0};
+@@ -303,6 +303,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	}
  }
- static DEFINE_PER_CPU(struct irq_work, irq_work_NMI_resume) =
- 	IRQ_WORK_INIT_HARD(task_work_set_notify_irq);
-@@ -86,6 +91,7 @@ int task_work_add(struct task_struct *task, struct callback_head *work,
- 		break;
- #ifdef CONFIG_IRQ_WORK
- 	case TWA_NMI_CURRENT:
-+		set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
- 		irq_work_queue(this_cpu_ptr(&irq_work_NMI_resume));
- 		break;
- #endif
+ 
++static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++			       unsigned long *stack, const char *log_lvl)
++{
++	/*
++	 * Disable KASAN to avoid false positives during walking another
++	 * task's stacks, as values on these stacks may change concurrently
++	 * with task execution.
++	 */
++	bool disable_kasan = task && task != current;
++
++	if (disable_kasan)
++		kasan_disable_current();
++
++	__show_trace_log_lvl(task, regs, stack, log_lvl);
++
++	if (disable_kasan)
++		kasan_enable_current();
++}
++
+ void show_stack(struct task_struct *task, unsigned long *sp,
+ 		       const char *loglvl)
+ {
 -- 
 2.51.0
 
