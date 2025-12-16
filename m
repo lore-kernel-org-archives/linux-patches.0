@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882AA39BEB8;
-	Tue, 16 Dec 2025 12:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E1D39BEAF;
+	Tue, 16 Dec 2025 12:38:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888691; cv=none; b=ld7zfv0P2nbsLEkdxuUeyf8WIw//wkHfhB+AJnRdgoQN43e11zypwZnkU0fWDGjOMmh2soiQ+jhT0mxupY9jJ0g0JVXuNWdkozACW7e7iF/KnO8aQQmjJH/91JjKiuu0Bu1qATHpf6gA4S3EzGO08xPSNVJMes8UPVDl6yRxvBw=
+	t=1765888694; cv=none; b=XL189pootUGEfflbYyfx+JW9TGzYAjcPUa1gs6S1FzkXVuiyJsqxhNN3e40RC+tAebTBI1JRw3iZbkVbp1vFH0XpqJeecKvUMqd++zAlAEM7NKg6H760ATXqMOp6yd21wp5e0NSG+yIlN8KIcdPghP/hHB6Rd8hNE6TBfc0LdCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888691; c=relaxed/simple;
-	bh=YFXm6zA9GQkIzeo4lT8qUt7rqZqOTEd/YF/iQXJTZlo=;
+	s=arc-20240116; t=1765888694; c=relaxed/simple;
+	bh=3WMfy1A1Um2424b5Us4XU18ZryJ7PeyskhxVHnCPGw0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQBXfraHdrtmCLseop7dKUpAgDyj+JDCBw0hPHddn6E6gmq4UezE5jVNPPBZb2K0ms+9wP91jbGCnuVZhJFUG3tI0VFvIJdr051Ih5CjS+AaR8DBpkxTHfItdrsg97QfIt5eAgFIHKoPXtuAUzCjT9Pbt1e2tcsxwO+eha5zzec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wx1Dp9tB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b9f59SX5U5UAT5luXKGZJEtXmfXMZqsL6vgwJ5em0uYiKc1HmoipCXd7iIiy7e8+ntOmB/rN8YRIkBURFokK/sw68YoGGQDfZ21QrXVrpWEKYlLaPP0M9yI4keac4XhQvVb2+7UDmjtZnR4kb4OnSdq3sgLv//lnBYsIDA6NQPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y6QfOyPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wx1Dp9tB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3544C4CEF1;
-	Tue, 16 Dec 2025 12:38:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y6QfOyPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A8B7C4CEF1;
+	Tue, 16 Dec 2025 12:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888691;
-	bh=YFXm6zA9GQkIzeo4lT8qUt7rqZqOTEd/YF/iQXJTZlo=;
+	s=korg; t=1765888694;
+	bh=3WMfy1A1Um2424b5Us4XU18ZryJ7PeyskhxVHnCPGw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wx1Dp9tBFPxSxjmNj/BdtLnd8ljEoLWHiD90r2h4eD4K2zLiQqQ8tGqjEh+i0uhqC
-	 In9hmUfdgvE5T5v1TnI4sJaacbskrOz2mO07pfdjbTOnVj05hnCE5wpeo8aZm15Fdy
-	 uVObaInFTLVdBDQIOQTumw1FEon3gQjVwrzfStMI=
+	b=Y6QfOyPjCFRRpEBVT49cyx5GIoKJsUHkItwBX5eSnD0ePDO+zxiUrWnZzm1+1hmP5
+	 ztKLxm8pWZbCW3cpikRf05KsIGJje0Q0hnA94o4lVkcYDWu/qCfrq3bRDA7LIb3hEL
+	 mcefyjFnleMDjGNGCGPUpDPWRSgI+1Ua+w9umpj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Antheas Kapenekakis <lkml@antheas.dev>,
+	Baojun Xu <baojun.xu@ti.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 610/614] ALSA: hda/realtek: Add match for ASUS Xbox Ally projects
-Date: Tue, 16 Dec 2025 12:16:17 +0100
-Message-ID: <20251216111423.498050557@linuxfoundation.org>
+Subject: [PATCH 6.18 611/614] ALSA: hda/tas2781: fix speaker id retrieval for multiple probes
+Date: Tue, 16 Dec 2025 12:16:18 +0100
+Message-ID: <20251216111423.535337903@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,31 +53,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 18a4895370a79a3efb4a53ccd1efffef6c5b634e upstream.
+commit 945865a0ddf3e3950aea32e23e10d815ee9b21bc upstream.
 
-Bind the realtek codec to TAS2781 I2C audio amps on ASUS Xbox Ally
-projects. While these projects work without a quirk, adding it increases
-the output volume significantly.
+Currently, on ASUS projects, the TAS2781 codec attaches the speaker GPIO
+to the first tasdevice_priv instance using devm. This causes
+tas2781_read_acpi to fail on subsequent probes since the GPIO is already
+managed by the first device. This causes a failure on Xbox Ally X,
+because it has two amplifiers, and prevents us from quirking both the
+Xbox Ally and Xbox Ally X in the realtek codec driver.
 
+It is unnecessary to attach the GPIO to a device as it is static.
+Therefore, instead of attaching it and then reading it when loading the
+firmware, read its value directly in tas2781_read_acpi and store it in
+the private data structure. Then, make reading the value non-fatal so
+that ASUS projects that miss a speaker pin can still work, perhaps using
+fallback firmware.
+
+Fixes: 4e7035a75da9 ("ALSA: hda/tas2781: Add speaker id check for ASUS projects")
 Cc: stable@vger.kernel.org # 6.17
 Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Baojun Xu <baojun.xu@ti.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20251026191635.2447593-2-lkml@antheas.dev
+Link: https://patch.msgid.link/20251026191635.2447593-1-lkml@antheas.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c |    2 ++
- 1 file changed, 2 insertions(+)
+ include/sound/tas2781.h                        |    2 -
+ sound/hda/codecs/side-codecs/tas2781_hda_i2c.c |   44 ++++++++++++++-----------
+ 2 files changed, 26 insertions(+), 20 deletions(-)
 
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -6736,6 +6736,8 @@ static const struct hda_quirk alc269_fix
- 	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1314, "ASUS GA605K", ALC285_FIXUP_ASUS_GA605K_HEADSET_MIC),
-+	SND_PCI_QUIRK(0x1043, 0x1384, "ASUS RC73XA", ALC287_FIXUP_TXNW2781_I2C),
-+	SND_PCI_QUIRK(0x1043, 0x1394, "ASUS RC73YA", ALC287_FIXUP_TXNW2781_I2C),
- 	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
- 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650PY/PZ/PV/PU/PYV/PZV/PIV/PVV", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
+--- a/include/sound/tas2781.h
++++ b/include/sound/tas2781.h
+@@ -197,7 +197,6 @@ struct tasdevice_priv {
+ 	struct acoustic_data acou_data;
+ #endif
+ 	struct tasdevice_fw *fmw;
+-	struct gpio_desc *speaker_id;
+ 	struct gpio_desc *reset;
+ 	struct mutex codec_lock;
+ 	struct regmap *regmap;
+@@ -215,6 +214,7 @@ struct tasdevice_priv {
+ 	unsigned int magic_num;
+ 	unsigned int chip_id;
+ 	unsigned int sysclk;
++	int speaker_id;
+ 
+ 	int irq;
+ 	int cur_prog;
+--- a/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
++++ b/sound/hda/codecs/side-codecs/tas2781_hda_i2c.c
+@@ -87,6 +87,7 @@ static const struct acpi_gpio_mapping ta
+ 
+ static int tas2781_read_acpi(struct tasdevice_priv *p, const char *hid)
+ {
++	struct gpio_desc *speaker_id;
+ 	struct acpi_device *adev;
+ 	struct device *physdev;
+ 	LIST_HEAD(resources);
+@@ -119,19 +120,31 @@ static int tas2781_read_acpi(struct tasd
+ 	/* Speaker id was needed for ASUS projects. */
+ 	ret = kstrtou32(sub, 16, &subid);
+ 	if (!ret && upper_16_bits(subid) == PCI_VENDOR_ID_ASUSTEK) {
+-		ret = devm_acpi_dev_add_driver_gpios(p->dev,
+-			tas2781_speaker_id_gpios);
+-		if (ret < 0)
++		ret = acpi_dev_add_driver_gpios(adev, tas2781_speaker_id_gpios);
++		if (ret < 0) {
+ 			dev_err(p->dev, "Failed to add driver gpio %d.\n",
+ 				ret);
+-		p->speaker_id = devm_gpiod_get(p->dev, "speakerid", GPIOD_IN);
+-		if (IS_ERR(p->speaker_id)) {
+-			dev_err(p->dev, "Failed to get Speaker id.\n");
+-			ret = PTR_ERR(p->speaker_id);
+-			goto err;
++			p->speaker_id = -1;
++			goto end_2563;
++		}
++
++		speaker_id = fwnode_gpiod_get_index(acpi_fwnode_handle(adev),
++			"speakerid", 0, GPIOD_IN, NULL);
++		if (!IS_ERR(speaker_id)) {
++			p->speaker_id = gpiod_get_value_cansleep(speaker_id);
++			dev_dbg(p->dev, "Got speaker id gpio from ACPI: %d.\n",
++				p->speaker_id);
++			gpiod_put(speaker_id);
++		} else {
++			p->speaker_id = -1;
++			ret = PTR_ERR(speaker_id);
++			dev_err(p->dev, "Get speaker id gpio failed %d.\n",
++				ret);
+ 		}
++
++		acpi_dev_remove_driver_gpios(adev);
+ 	} else {
+-		p->speaker_id = NULL;
++		p->speaker_id = -1;
+ 	}
+ 
+ end_2563:
+@@ -432,23 +445,16 @@ static void tasdevice_dspfw_init(void *c
+ 	struct tas2781_hda *tas_hda = dev_get_drvdata(tas_priv->dev);
+ 	struct tas2781_hda_i2c_priv *hda_priv = tas_hda->hda_priv;
+ 	struct hda_codec *codec = tas_priv->codec;
+-	int ret, spk_id;
++	int ret;
+ 
+ 	tasdevice_dsp_remove(tas_priv);
+ 	tas_priv->fw_state = TASDEVICE_DSP_FW_PENDING;
+-	if (tas_priv->speaker_id != NULL) {
+-		// Speaker id need to be checked for ASUS only.
+-		spk_id = gpiod_get_value(tas_priv->speaker_id);
+-		if (spk_id < 0) {
+-			// Speaker id is not valid, use default.
+-			dev_dbg(tas_priv->dev, "Wrong spk_id = %d\n", spk_id);
+-			spk_id = 0;
+-		}
++	if (tas_priv->speaker_id >= 0) {
+ 		snprintf(tas_priv->coef_binaryname,
+ 			  sizeof(tas_priv->coef_binaryname),
+ 			  "TAS2XXX%04X%d.bin",
+ 			  lower_16_bits(codec->core.subsystem_id),
+-			  spk_id);
++			  tas_priv->speaker_id);
+ 	} else {
+ 		snprintf(tas_priv->coef_binaryname,
+ 			  sizeof(tas_priv->coef_binaryname),
 
 
