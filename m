@@ -1,38 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771AE3596E6;
-	Tue, 16 Dec 2025 12:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CAE3596F3;
+	Tue, 16 Dec 2025 12:04:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886680; cv=none; b=Zw76HPRhewZlAs6ij8ABw5rBiT0myI6rLXTfXVlTBFa80+lJa2eyM7ZiJEjPuJhtyPyqroKWaSgvtT+FaTQohc5JuZwceQxNU5TGstosj79j8/PBIXh3oTYLJOasZNVthjsfuswVg9317wMUVTvjUJxPxzbjhbQV2Bgixxs3qlA=
+	t=1765886684; cv=none; b=TVLEnzvK/WIKX4XQ4bXH77u7VnxtFeMhZDszHg+jbbktyIW0fBwB+nAGYDRoTlauZaXO3U1vwtpGyOw19LohM8CFQip5AfBpHNkbToBht59/84y27mu4gxh1WmkKtMkdSv78kdkagOMHabkKp66etxTyUEaJDLb6fWpJMl0sjuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886680; c=relaxed/simple;
-	bh=Gl5Vc1GKFDMTAqErdhDChfrOnDCZxOjgbhyekghnK+4=;
+	s=arc-20240116; t=1765886684; c=relaxed/simple;
+	bh=s9LupDkbAUwTr3IR//EwvMGd0Ro/3n09NGKz/7ACza4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K02VxvNXkwTk0SaSWTt/XuCzUn4QbxVEX8mjwFGxN5yng+fAq5nUl/9mceLUfdp87L6G+1oalOuIm9uS8eyifc4EZgK4G83/nfDQ5E5mejZEyMYJN2N+7kN0WujG/j0V/PjHP64blu1JZ7M2lzKd/vwm7wgAjbjzAJnAtRfyFVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/J+Vce5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hrAPt9f3dOD0ksLs8j4ZC5iG3pGjpjUT2l8TSZIvNgU6RQBXlyXkk0sYaLzkj2u+KQaVC9iMe8eg6eBqaYoMVTTVNE9+DIsaFioMFmPaYnNTtv43Iu5i/mAUgqgRKsBg6pA0j2T7gE09rts0RziEgaI+feoGlDnA57eYhaEKMvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gy4iJV2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/J+Vce5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0167AC4CEF1;
-	Tue, 16 Dec 2025 12:04:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gy4iJV2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08769C4CEF1;
+	Tue, 16 Dec 2025 12:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886680;
-	bh=Gl5Vc1GKFDMTAqErdhDChfrOnDCZxOjgbhyekghnK+4=;
+	s=korg; t=1765886683;
+	bh=s9LupDkbAUwTr3IR//EwvMGd0Ro/3n09NGKz/7ACza4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/J+Vce5Sh3OYllkNWTK7T3g5LisCKt4XWX1foqnu4A2hyBwSC1BlchaQgpQ8u+d4
-	 peLW7x1HhRfvRrIqyopO915siebVoKhVa4+R+ASApYgO151ywjjfKC7Qfk5lEZVMRS
-	 OvQCBWA2iYRygmTLtZGqdtk7yCnU8aIJtY7+JAHc=
+	b=Gy4iJV2c47vbXtSU/Rq9T9CwB0i3dooRLTz4Y4kJICqe4cc0wPr1JWua0UrFTsrpY
+	 7lcPqIGV5x7kFzW3jen6/Yua2a/sTEhO0HI5yuzGO9IyoGlBcNfN3YS6NHSApIeVl1
+	 7nU+3qF+OA1xN4KbTaNWAjguDVlH6ZG53YdqyZC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 495/507] cpu: Make atomic hotplug callbacks run with interrupts disabled on UP
-Date: Tue, 16 Dec 2025 12:15:36 +0100
-Message-ID: <20251216111403.372397208@linuxfoundation.org>
+Subject: [PATCH 6.17 496/507] ocfs2: fix memory leak in ocfs2_merge_rec_left()
+Date: Tue, 16 Dec 2025 12:15:37 +0100
+Message-ID: <20251216111403.408916819@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,84 +59,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit c94291914b200e10c72cef23c8e4c67eb4fdbcd9 ]
+[ Upstream commit 2214ec4bf89d0fd27717322d3983a2f3b469c7f3 ]
 
-On SMP systems the CPU hotplug callbacks in the "starting" range are
-invoked while the CPU is brought up and interrupts are still
-disabled. Callbacks which are added later are invoked via the
-hotplug-thread on the target CPU and interrupts are explicitly disabled.
+In 'ocfs2_merge_rec_left()', do not reset 'left_path' to NULL after
+move, thus allowing 'ocfs2_free_path()' to free it before return.
 
-In the UP case callbacks which are added later are invoked directly without
-the thread indirection. This is in principle okay since there is just one
-CPU but those callbacks are invoked with interrupt disabled code. That's
-incorrect as those callbacks assume interrupt disabled context.
-
-Disable interrupts before invoking the callbacks on UP if the state is
-atomic and interrupts are expected to be disabled.  The "save" part is
-required because this is also invoked early in the boot process while
-interrupts are disabled and must not be enabled prematurely.
-
-Fixes: 06ddd17521bf1 ("sched/smp: Always define is_percpu_thread() and scheduler_ipi()")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20251127144723.ev9DuXXR@linutronix.de
+Link: https://lkml.kernel.org/r/20251205065159.392749-1-dmantipov@yandex.ru
+Fixes: 677b975282e4 ("ocfs2: Add support for cross extent block")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Reported-by: syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=cfc7cab3bb6eaa7c4de2
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ fs/ocfs2/alloc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index db9f6c539b28c..15000c7abc659 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -249,6 +249,14 @@ static int cpuhp_invoke_callback(unsigned int cpu, enum cpuhp_state state,
- 	return ret;
- }
- 
-+/*
-+ * The former STARTING/DYING states, ran with IRQs disabled and must not fail.
-+ */
-+static bool cpuhp_is_atomic_state(enum cpuhp_state state)
-+{
-+	return CPUHP_AP_IDLE_DEAD <= state && state < CPUHP_AP_ONLINE;
-+}
-+
- #ifdef CONFIG_SMP
- static bool cpuhp_is_ap_state(enum cpuhp_state state)
- {
-@@ -271,14 +279,6 @@ static inline void complete_ap_thread(struct cpuhp_cpu_state *st, bool bringup)
- 	complete(done);
- }
- 
--/*
-- * The former STARTING/DYING states, ran with IRQs disabled and must not fail.
-- */
--static bool cpuhp_is_atomic_state(enum cpuhp_state state)
--{
--	return CPUHP_AP_IDLE_DEAD <= state && state < CPUHP_AP_ONLINE;
--}
--
- /* Synchronization state management */
- enum cpuhp_sync_state {
- 	SYNC_STATE_DEAD,
-@@ -2364,7 +2364,14 @@ static int cpuhp_issue_call(int cpu, enum cpuhp_state state, bool bringup,
- 	else
- 		ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
- #else
--	ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
-+	if (cpuhp_is_atomic_state(state)) {
-+		guard(irqsave)();
-+		ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
-+		/* STARTING/DYING must not fail! */
-+		WARN_ON_ONCE(ret);
-+	} else {
-+		ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
-+	}
- #endif
- 	BUG_ON(ret && !bringup);
- 	return ret;
+diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
+index 821cb7874685e..b23eb63dc838b 100644
+--- a/fs/ocfs2/alloc.c
++++ b/fs/ocfs2/alloc.c
+@@ -3654,7 +3654,6 @@ static int ocfs2_merge_rec_left(struct ocfs2_path *right_path,
+ 			 * So we use the new rightmost path.
+ 			 */
+ 			ocfs2_mv_path(right_path, left_path);
+-			left_path = NULL;
+ 		} else
+ 			ocfs2_complete_edge_insert(handle, left_path,
+ 						   right_path, subtree_index);
 -- 
 2.51.0
 
