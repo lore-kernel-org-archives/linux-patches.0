@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D2A3644BD;
-	Tue, 16 Dec 2025 12:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376E73644CB;
+	Tue, 16 Dec 2025 12:09:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886966; cv=none; b=mJqziw8ypnAbTx0j0NRpiB3EBrD1uvkeqmmfP2UsszWr7bAB8ZTEPaniRIKcnJcTLksBb/fKFN4giQGxhpenhNTuH32puwxcgB5C6pYlBsdQiANOmehXGUzQTT+EkSjZjQ9y7CdJm9nSKjLptFKm+qmJZEeLBzfgCO52G++x1KY=
+	t=1765886969; cv=none; b=CZfYQ+PtE6UF0Sjsd6CYufuynsiZElhf/HmhOfBAnENvmh1IF94wfaOB/MQqX/A/0s5jXocN4iqPVG29d7pMC3YtbTHeQgLOoRUZls7z8Cs34cKeMgjepvtCthDUy/SzqZcDJ0TazUjgk8ZKQyGjuaLE93hY5pzW0fpdTsMqOZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886966; c=relaxed/simple;
-	bh=WJG49EBU+nxohv4oOtcvuTYGBqu7NA2OFzj67IBrPdA=;
+	s=arc-20240116; t=1765886969; c=relaxed/simple;
+	bh=emF6TvkpEjSebWXPiPI2renPbVvaY3lmjFT0gLdK5R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HrOKnWE2tEtZFbu1xi4nzow+Wyn3eaYitDwiDXIKacKnMlp6Qgl/d/jw0Hao4ByqF2XTaCArUFvCX7JWanQaFb73EiUdVheZkesFwoChw/8Qum11YGhAzFGgs99JLAYJBh3/zOUm/9ALAkvmt/XEyOfx/Ik0UTAT3ULsznaYzsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZH+F98h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHMcIy1W/jIlBW1V+dBAjjZcN0LYrEH9rZ7N6vFDynPkWyqdToh+WUL0vxgvHnzh/xKk1e08BMrbSFPhCbBmUgwucllwW9vQKo5deu1h3tnP2SiRemoJn/YL99P3AfOCzsRD8ejDEOLyv5ZVOhW3J+iSrfo02XKEWfdE1lWhn80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y+qs92pr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZH+F98h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB56C4CEF1;
-	Tue, 16 Dec 2025 12:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y+qs92pr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3FBC4CEF1;
+	Tue, 16 Dec 2025 12:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886965;
-	bh=WJG49EBU+nxohv4oOtcvuTYGBqu7NA2OFzj67IBrPdA=;
+	s=korg; t=1765886969;
+	bh=emF6TvkpEjSebWXPiPI2renPbVvaY3lmjFT0gLdK5R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZH+F98hU8Hg2A7R7HqMg3oB/9x/02GkvH7W/NYfD3kLGsXYCST8xFLOzOUqxRiP5
-	 jCPnL4RdTLFiOvDrZekyLiGQOp3QdTt7DqOe6CdLITeucbbaEwcBV0VmMIkyo+Vo11
-	 +kAEN+kMhqEDZx0XFhP4cuLvmTCP3zTk5NQKVDvQ=
+	b=Y+qs92pr5Ni294UPYHkDtmIwtBq8hHbaCGt8c699zfXSxtiDC9xgFOAt6N9nmuBHc
+	 DQeAZnMx7mEGT+rUWlcHO3m7TFZ6TsKGzlmU6zuiEs7c79mdWYHNm+TwlVh+J0nww8
+	 Ut0o/09xN0vrpW1vOp/Q65v3BKsJmPI+6yxptOcI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 086/614] clk: qcom: camcc-sm7150: Fix PLL config of PLL2
-Date: Tue, 16 Dec 2025 12:07:33 +0100
-Message-ID: <20251216111404.438820417@linuxfoundation.org>
+Subject: [PATCH 6.18 087/614] soc: qcom: gsbi: fix double disable caused by devm
+Date: Tue, 16 Dec 2025 12:07:34 +0100
+Message-ID: <20251216111404.474716962@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,48 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 415aad75c7e5cdb72e0672dc1159be1a99535ecd ]
+[ Upstream commit 2286e18e3937c69cc103308a8c1d4898d8a7b04f ]
 
-The 'Agera' PLLs (with clk_agera_pll_configure) do not take some of the
-parameters that are provided in the vendor driver. Instead the upstream
-configuration should provide the final user_ctl value that is written to
-the USER_CTL register.
+In the commit referenced by the Fixes tag, devm_clk_get_enabled() was
+introduced to replace devm_clk_get() and clk_prepare_enable(). While
+the clk_disable_unprepare() call in the error path was correctly
+removed, the one in the remove function was overlooked, leading to a
+double disable issue.
 
-Fix the config so that the PLL is configured correctly.
+Remove the redundant clk_disable_unprepare() call from gsbi_remove()
+to fix this issue. Since all resources are now managed by devres
+and will be automatically released, the remove function serves no purpose
+and can be deleted entirely.
 
-Fixes: 9f0532da4226 ("clk: qcom: Add Camera Clock Controller driver for SM7150")
-Suggested-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251021-agera-pll-fixups-v1-2-8c1d8aff4afc@fairphone.com
+Fixes: 489d7a8cc286 ("soc: qcom: use devm_clk_get_enabled() in gsbi_probe()")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/stable/20251020160215.523-1-vulab%40iscas.ac.cn
+Link: https://lore.kernel.org/r/20251020160215.523-1-vulab@iscas.ac.cn
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sm7150.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/soc/qcom/qcom_gsbi.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sm7150.c b/drivers/clk/qcom/camcc-sm7150.c
-index 4a3baf5d8e858..590548cac45bf 100644
---- a/drivers/clk/qcom/camcc-sm7150.c
-+++ b/drivers/clk/qcom/camcc-sm7150.c
-@@ -139,13 +139,9 @@ static struct clk_fixed_factor camcc_pll1_out_even = {
- /* 1920MHz configuration */
- static const struct alpha_pll_config camcc_pll2_config = {
- 	.l = 0x64,
--	.post_div_val = 0x3 << 8,
--	.post_div_mask = 0x3 << 8,
--	.early_output_mask = BIT(3),
--	.aux_output_mask = BIT(1),
--	.main_output_mask = BIT(0),
- 	.config_ctl_hi_val = 0x400003d6,
- 	.config_ctl_val = 0x20000954,
-+	.user_ctl_val = 0x0000030b,
+diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
+index 8f1158e0c6313..a25d1de592f06 100644
+--- a/drivers/soc/qcom/qcom_gsbi.c
++++ b/drivers/soc/qcom/qcom_gsbi.c
+@@ -212,13 +212,6 @@ static int gsbi_probe(struct platform_device *pdev)
+ 	return of_platform_populate(node, NULL, NULL, &pdev->dev);
+ }
+ 
+-static void gsbi_remove(struct platform_device *pdev)
+-{
+-	struct gsbi_info *gsbi = platform_get_drvdata(pdev);
+-
+-	clk_disable_unprepare(gsbi->hclk);
+-}
+-
+ static const struct of_device_id gsbi_dt_match[] = {
+ 	{ .compatible = "qcom,gsbi-v1.0.0", },
+ 	{ },
+@@ -232,7 +225,6 @@ static struct platform_driver gsbi_driver = {
+ 		.of_match_table	= gsbi_dt_match,
+ 	},
+ 	.probe = gsbi_probe,
+-	.remove = gsbi_remove,
  };
  
- static struct clk_alpha_pll camcc_pll2 = {
+ module_platform_driver(gsbi_driver);
 -- 
 2.51.0
 
