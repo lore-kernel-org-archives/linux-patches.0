@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11DF43659EA;
-	Tue, 16 Dec 2025 12:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EC731A7F5;
+	Tue, 16 Dec 2025 12:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887066; cv=none; b=YNaA1ckfW9nGH3f1JzxNpOx+0eJ0GIx6DBhgTs083uvw0JDY/tSqsae9UPZSu4fg8vIzLjj9mqTYhBDMcOEuCLsNxDjZz5h7/klScOxbwXBkxfHlBg4xV2U2wGgBZ8vUkqFkuaK7QphM1iCIc78l+zsGV59yc6FywiqcLhjAisg=
+	t=1765887069; cv=none; b=sehnzppB6zsNHAF7Iv8o7owex2oBicIBS0xzqjXWbgyUvB8S7lc42awVnDXp0Tsk9jpERT7o4Vcq6qYdpj9VndGc6iEK2gZtXlVjJnDDlvupQaU/gQ11+sl3sdEBTTLcnMaWwIvNvMm2BgjfsipR6i6eq1clPH8SAd8MYhwHEHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887066; c=relaxed/simple;
-	bh=EjWyinrpYO74XPKo+CLh0LSA/E0QX1s5P9bkHUNENHc=;
+	s=arc-20240116; t=1765887069; c=relaxed/simple;
+	bh=sZ+3EwiW0ROiatbwtbsawFtpPcB0FDIQU0lJ2LnUmqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xai/MljE+FTmZ+c2O6gZqeBdsII/ssuzqRwdgPh/Ernby64mENllzPZp3PwUmI6UXokJ4NAdtKPQ1adRMtE7F7L10yHVOtABoCI/VTOMkMnjemyYoJAXnV0U1uQdNdXRhKJiJwuVYt80G4TgaCVRtcwro+iPF51hcXVSKY11rAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ozpLBHGO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WharFmke/V8whqNFaBW9PQi5k9BWopZg9/BuNU4ByGkHNqGDUPHz6+fpSqmxNW/jcl7zMv+QYVTZLg87sibKy4TLNDHAz4WP/fAvKGsYOywEk4HPqtfpbUzUytJteSzCcQ45CdyoWUOiiisbs9Cc+nlSPnmraO/6/KGQpM7BVg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wILheR1P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ozpLBHGO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FCEC4CEF1;
-	Tue, 16 Dec 2025 12:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wILheR1P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13250C4CEF1;
+	Tue, 16 Dec 2025 12:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887065;
-	bh=EjWyinrpYO74XPKo+CLh0LSA/E0QX1s5P9bkHUNENHc=;
+	s=korg; t=1765887069;
+	bh=sZ+3EwiW0ROiatbwtbsawFtpPcB0FDIQU0lJ2LnUmqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozpLBHGOJPQIWKI4j4OmVjIgPHCaDT0QahiZ34J0BlL+Fxn162GdMRG0m89g/DlI/
-	 RrVBnV1F2osmfzyg+GTD0M1t0A7lC2NUgSjaMpz5DEDKVsoubLKhvZjBecjUu9j1pO
-	 IzkrFmbR1LK8G/a1zXtAcSqBuwik0zRp+UWWh8D8=
+	b=wILheR1P4OOYvWSrh4vsY9Doa1+3ZGAFrLUBM+eXHybpjujdyBkQn51J4/+eNFHkM
+	 BhWLmuSSb1/0JYu39Z88NNsG8SxOkbs9tKHfyWE1aMJbIGjB/jVOU9FrmxMKtoaEUu
+	 tEazBkhwg43fkVVEf/52X2fTLFBq/rqchZQkNsY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	David Heidelberg <david@ixit.cz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 116/614] arm64: dts: qcom: sdm845-oneplus: Correct gpio used for slider
-Date: Tue, 16 Dec 2025 12:08:03 +0100
-Message-ID: <20251216111405.539241656@linuxfoundation.org>
+Subject: [PATCH 6.18 117/614] arm64: dts: qcom: qcm6490-fairphone-fp5: Add supplies to simple-fb node
+Date: Tue, 16 Dec 2025 12:08:04 +0100
+Message-ID: <20251216111405.576637341@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,39 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit d7ec7d34237498fab7a6afed8da4b7139b0e387c ]
+[ Upstream commit 3d4142cac46b4dde4e60908c509c4cf107067114 ]
 
-The previous GPIO numbers were wrong. Update them to the correct
-ones and fix the label.
+Add the OLED power supplies to the simple-framebuffer node, so that
+the regulators don't get turned off while the simple-fb is being used.
 
-Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250927-slider-correct-v1-1-fb8cc7fdcedf@ixit.cz
+Fixes: c365a026155c ("arm64: dts: qcom: qcm6490-fairphone-fp5: Enable display")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250930-sc7280-dts-misc-v1-1-5a45923ef705@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index dcfffb271fcf3..51a9a276399ac 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -803,8 +803,8 @@ hall_sensor_default: hall-sensor-default-state {
- 		bias-disable;
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+index 519e458e1a890..36d5750584831 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+@@ -47,6 +47,8 @@ framebuffer0: framebuffer@a000000 {
+ 			stride = <(1224 * 4)>;
+ 			format = "a8r8g8b8";
+ 			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
++			vci-supply = <&vreg_oled_vci>;
++			dvdd-supply = <&vreg_oled_dvdd>;
+ 		};
  	};
  
--	tri_state_key_default: tri-state-key-default-state {
--		pins = "gpio40", "gpio42", "gpio26";
-+	alert_slider_default: alert-slider-default-state {
-+		pins = "gpio126", "gpio52", "gpio24";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
 -- 
 2.51.0
 
