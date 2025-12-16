@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0342C33DED4;
-	Tue, 16 Dec 2025 11:18:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7942B3358A8;
+	Tue, 16 Dec 2025 11:18:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883936; cv=none; b=MRknHmJySC2Iyl+hYIs/a0YQAyEjJSaytsDuQkDubzhqJQwtUMUxASkRaSa1hVXKdC6lJq4+6oOg3gErNB+f8/20OUT8t1z+DxiMBi4MIE1YwBMoLJ9dbF5s3CmG9DYqEkxix+B98Jo/dVwhJnU42bWZNK3Q4jgR6mWXG369AfI=
+	t=1765883939; cv=none; b=EeLwNhvu0PmkEuLev7oJ4/7uw6jvn/Hc2i9JuvNKppxfO6KpkPNjtCuB1dPPCaEM+PM7ntaQcE4yu+a5uWwY3LE9639083/uXMAInH++FcXkgxN+2FtIUD0DZ6GV+Ha4Dr7RC1ZRQimqIaeOqdJwytbsFwTimNYMjWVQMBOA+X0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883936; c=relaxed/simple;
-	bh=6ggzAjdfLtSzS5MKm1liwgbDVUihRMPB3JPuc0u2fsE=;
+	s=arc-20240116; t=1765883939; c=relaxed/simple;
+	bh=qUr7ierVOsdzCfr3Q5dYpYxtCBLeUHbC/J6AD1sJfhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULhBUKKBho3Ltd8J4b8JGCbgBVH4Ga/qD7/fOS4OCn+Mxza0YPMI+CI8SIj3A1gv8JW7/34BKAoLG60lwDdB/ujk6K8OJ/+xto5ZlRrszg3Pyo/bApxnl8z4gzHqJWoGZhdXn4spNojSjwrRiY+moU9H3Fnn57q2nfZ1gkqmatk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tCYKWwwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jSLGsvbevZiSeKvvtsI1U0hpa+TkPItCe+n0OX97O/CKhk9NYAo6Wz5IuLm82Mk5xaekanO5bQsb26SncvEMJ4jE6Tbct2f1juk0bxXsFwxEt4J6ila0iwevzYo+52efXTUdgkU+Q2/drtYXdsrQ+yAcNbrwAOrLwcWbNoZQywc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0N5Qcf8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tCYKWwwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B722C4CEF1;
-	Tue, 16 Dec 2025 11:18:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0N5Qcf8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6558C4CEF1;
+	Tue, 16 Dec 2025 11:18:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883935;
-	bh=6ggzAjdfLtSzS5MKm1liwgbDVUihRMPB3JPuc0u2fsE=;
+	s=korg; t=1765883939;
+	bh=qUr7ierVOsdzCfr3Q5dYpYxtCBLeUHbC/J6AD1sJfhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tCYKWwwYA1rQZMY44YO5m/zxK5XDaDa7NphJpZomSkhfIZQX75sBIaS8j1sHuQOBn
-	 bqthQOVZV4rDmZkGcEqOrXchJny0WjcwBieho3OfXKF8rEMZTorFJCjhl+IPzvc4W1
-	 l2FlIEBWGqI3iz2yIqKi7JSNY9hqmhHtdvBBVF14=
+	b=f0N5Qcf8twlfNmw2bHpRGCQcxhzISulSNkwNMoFqHYD1Ntx6v1sQNrIk+P4Hl76YL
+	 gZobqVIf2DUse1cPLqAsgkHWMEbja478Xh0HFAr/sHYiv17fsfbyrAqy7Xp9BnutlP
+	 Lqygkvt8UitbH2GwXH72p4cvclOJe0zFLiNYdPvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kuniyuki Iwashima <kuniyu@google.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
 	Xuanqiang Luo <luoxuanqiang@kylinos.cn>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 043/354] rculist: Add hlist_nulls_replace_rcu() and hlist_nulls_replace_init_rcu()
-Date: Tue, 16 Dec 2025 12:10:10 +0100
-Message-ID: <20251216111322.476187127@linuxfoundation.org>
+Subject: [PATCH 6.12 044/354] inet: Avoid ehash lookup race in inet_ehash_insert()
+Date: Tue, 16 Dec 2025 12:10:11 +0100
+Message-ID: <20251216111322.512764396@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -56,106 +56,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 9c4609225ec1cb551006d6a03c7c4ad8cb5584c0 ]
+[ Upstream commit 1532ed0d0753c83e72595f785f82b48c28bbe5dc ]
 
-Add two functions to atomically replace RCU-protected hlist_nulls entries.
+Since ehash lookups are lockless, if one CPU performs a lookup while
+another concurrently deletes and inserts (removing reqsk and inserting sk),
+the lookup may fail to find the socket, an RST may be sent.
 
-Keep using WRITE_ONCE() to assign values to ->next and ->pprev, as
-mentioned in the patch below:
-commit efd04f8a8b45 ("rcu: Use WRITE_ONCE() for assignments to ->next for
-rculist_nulls")
-commit 860c8802ace1 ("rcu: Use WRITE_ONCE() for assignments to ->pprev for
-hlist_nulls")
+The call trace map is drawn as follows:
+   CPU 0                           CPU 1
+   -----                           -----
+				inet_ehash_insert()
+                                spin_lock()
+                                sk_nulls_del_node_init_rcu(osk)
+__inet_lookup_established()
+	(lookup failed)
+                                __sk_nulls_add_node_rcu(sk, list)
+                                spin_unlock()
 
+As both deletion and insertion operate on the same ehash chain, this patch
+introduces a new sk_nulls_replace_node_init_rcu() helper functions to
+implement atomic replacement.
+
+Fixes: 5e0724d027f0 ("tcp/dccp: fix hashdance race for passive sessions")
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
-Link: https://patch.msgid.link/20251015020236.431822-2-xuanqiang.luo@linux.dev
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20251015020236.431822-3-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1532ed0d0753 ("inet: Avoid ehash lookup race in inet_ehash_insert()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/rculist_nulls.h | 59 +++++++++++++++++++++++++++++++++++
- 1 file changed, 59 insertions(+)
+ include/net/sock.h         | 13 +++++++++++++
+ net/ipv4/inet_hashtables.c |  8 ++++++--
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/rculist_nulls.h b/include/linux/rculist_nulls.h
-index 89186c499dd47..c26cb83ca0711 100644
---- a/include/linux/rculist_nulls.h
-+++ b/include/linux/rculist_nulls.h
-@@ -52,6 +52,13 @@ static inline void hlist_nulls_del_init_rcu(struct hlist_nulls_node *n)
- #define hlist_nulls_next_rcu(node) \
- 	(*((struct hlist_nulls_node __rcu __force **)&(node)->next))
- 
-+/**
-+ * hlist_nulls_pprev_rcu - returns the dereferenced pprev of @node.
-+ * @node: element of the list.
-+ */
-+#define hlist_nulls_pprev_rcu(node) \
-+	(*((struct hlist_nulls_node __rcu __force **)(node)->pprev))
-+
- /**
-  * hlist_nulls_del_rcu - deletes entry from hash list without re-initialization
-  * @n: the element to delete from the hash list.
-@@ -152,6 +159,58 @@ static inline void hlist_nulls_add_fake(struct hlist_nulls_node *n)
- 	n->next = (struct hlist_nulls_node *)NULLS_MARKER(NULL);
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 722f409cccd35..6edd9cac50067 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -829,6 +829,19 @@ static inline bool sk_nulls_del_node_init_rcu(struct sock *sk)
+ 	return rc;
  }
  
-+/**
-+ * hlist_nulls_replace_rcu - replace an old entry by a new one
-+ * @old: the element to be replaced
-+ * @new: the new element to insert
-+ *
-+ * Description:
-+ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
-+ * permitting racing traversals.
-+ *
-+ * The caller must take whatever precautions are necessary (such as holding
-+ * appropriate locks) to avoid racing with another list-mutation primitive, such
-+ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
-+ * list.  However, it is perfectly legal to run concurrently with the _rcu
-+ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
-+ */
-+static inline void hlist_nulls_replace_rcu(struct hlist_nulls_node *old,
-+					   struct hlist_nulls_node *new)
++static inline bool sk_nulls_replace_node_init_rcu(struct sock *old,
++						  struct sock *new)
 +{
-+	struct hlist_nulls_node *next = old->next;
++	if (sk_hashed(old)) {
++		hlist_nulls_replace_init_rcu(&old->sk_nulls_node,
++					     &new->sk_nulls_node);
++		__sock_put(old);
++		return true;
++	}
 +
-+	WRITE_ONCE(new->next, next);
-+	WRITE_ONCE(new->pprev, old->pprev);
-+	rcu_assign_pointer(hlist_nulls_pprev_rcu(new), new);
-+	if (!is_a_nulls(next))
-+		WRITE_ONCE(next->pprev, &new->next);
++	return false;
 +}
 +
-+/**
-+ * hlist_nulls_replace_init_rcu - replace an old entry by a new one and
-+ * initialize the old
-+ * @old: the element to be replaced
-+ * @new: the new element to insert
-+ *
-+ * Description:
-+ * Replace the old entry with the new one in a RCU-protected hlist_nulls, while
-+ * permitting racing traversals, and reinitialize the old entry.
-+ *
-+ * Note: @old must be hashed.
-+ *
-+ * The caller must take whatever precautions are necessary (such as holding
-+ * appropriate locks) to avoid racing with another list-mutation primitive, such
-+ * as hlist_nulls_add_head_rcu() or hlist_nulls_del_rcu(), running on this same
-+ * list. However, it is perfectly legal to run concurrently with the _rcu
-+ * list-traversal primitives, such as hlist_nulls_for_each_entry_rcu().
-+ */
-+static inline void hlist_nulls_replace_init_rcu(struct hlist_nulls_node *old,
-+						struct hlist_nulls_node *new)
-+{
-+	hlist_nulls_replace_rcu(old, new);
-+	WRITE_ONCE(old->pprev, NULL);
-+}
+ static inline void __sk_add_node(struct sock *sk, struct hlist_head *list)
+ {
+ 	hlist_add_head(&sk->sk_node, list);
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 2b4a588247639..37a6acff537e6 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -671,8 +671,11 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	spin_lock(lock);
+ 	if (osk) {
+ 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
+-		ret = sk_nulls_del_node_init_rcu(osk);
+-	} else if (found_dup_sk) {
++		ret = sk_nulls_replace_node_init_rcu(osk, sk);
++		goto unlock;
++	}
 +
- /**
-  * hlist_nulls_for_each_entry_rcu - iterate over rcu list of given type
-  * @tpos:	the type * to use as a loop cursor.
++	if (found_dup_sk) {
+ 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
+ 		if (*found_dup_sk)
+ 			ret = false;
+@@ -681,6 +684,7 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	if (ret)
+ 		__sk_nulls_add_node_rcu(sk, list);
+ 
++unlock:
+ 	spin_unlock(lock);
+ 
+ 	return ret;
 -- 
 2.51.0
 
