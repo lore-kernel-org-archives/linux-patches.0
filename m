@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3BE3271F2;
-	Tue, 16 Dec 2025 12:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B3A35503A;
+	Tue, 16 Dec 2025 12:14:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887279; cv=none; b=NCWtaueJFxeQJsHOYFm1DpPNS2pgpNJ4feUKtxGTYim0q3lsA8PFcSirS8RFKPbZ+9JFihtsvzwXaL775kn7Kh7gdfn1kzgYF8HH32Zl8UERe1gOWJeMs70Lcs7ly8CQyPPBi4mz2Y/T4AniOg2PMU/Usv7KlAubcAh/2JdzVWc=
+	t=1765887282; cv=none; b=bRz6qQucsrgqXeid5khqrzjgQZTlrG/626//92L81ueHrCSncfGlOni1bxBFEasBiMQPNP0RXLlTyt3WP7jdX4IKSaUhT1k1PJNBE9b1qMczTVahL2QZ30FZ89yJX+vCLqWxgjtF46ERJG+S5xNLl1e9J3qx6PmCURi8Nlv/UZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887279; c=relaxed/simple;
-	bh=n+l/fY09RAauq6eaN/WHkmCLiJfjsgh3UZSES7ghFww=;
+	s=arc-20240116; t=1765887282; c=relaxed/simple;
+	bh=QnplSGF5q2bmvtRviEvPoMAakfxQRCRnuwZJ1oPpc/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G5W/d20QTESLeOCpTkvd9/+8k2wnu42ixGAW9UjKFZy6Gw7fUjsu6xU3uAx7bXi/Kkyu30JaJB2S8v7W/Eyxgh7SOBbYux84E94QBgX0SwxSgVfN3OBNuqhFOkN3RBn30Sx/KOpZN1jo2nU+IPW2b1Nq2LC7lYmerG8MjxlzjLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNdcwa4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kAuOzFAi64S63a+mDvr7Ou+3MlYsEzfm7in1bLPKzJz+yOJqHcCZV/glIRuxnDFeR+0iZTjE5VEtUQSFD8o5AR2/oj9gzZXbZRpUgdc9R/ZGHFnacgcNYqLEckoOZg/UwpUh9px9C3HPl3dUVFYDjOrPHSHsBxm1c+5yNeqPcbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KtIGzcgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNdcwa4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7747EC4CEF5;
-	Tue, 16 Dec 2025 12:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KtIGzcgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B70C4CEF5;
+	Tue, 16 Dec 2025 12:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887278;
-	bh=n+l/fY09RAauq6eaN/WHkmCLiJfjsgh3UZSES7ghFww=;
+	s=korg; t=1765887282;
+	bh=QnplSGF5q2bmvtRviEvPoMAakfxQRCRnuwZJ1oPpc/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNdcwa4zIrzooBbax3LA2BkcZVRUMegA0DgQ7xbMSvqBTrSy897o8BaCVJEX47beo
-	 hHi+5H6lyx2j76R/hOUshNLBbsUanWF3M608lnE3ZDh0hU98Ah4Clj6VLhLhpxrkaE
-	 a8jfmfimzYbaBOdHAulVsrTZ5XJuFAU9CULNUX/4=
+	b=KtIGzcgLtDR2U+BulBlYIqnHXoqZ9KC6Hr+YwH2vqAJngcvXLYfqg0aSkyADlU699
+	 OJDGYYS1oq6v7evd3Wc818GRn/dCg60vVW0VQgMx0Y72tzjv+103Zfv6XuSLEsJltn
+	 jMTxKTactole6Lc0ZxJQ6Pmd4Lrnd7p5JSnohZXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Murad Masimov <m.masimov@mt-integration.ru>,
+	Ivan Abramov <i.abramov@mt-integration.ru>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 182/614] power: supply: rt9467: Prevent using uninitialized local variable in rt9467_set_value_from_ranges()
-Date: Tue, 16 Dec 2025 12:09:09 +0100
-Message-ID: <20251216111407.967470854@linuxfoundation.org>
+Subject: [PATCH 6.18 183/614] power: supply: wm831x: Check wm831x_set_bits() return value
+Date: Tue, 16 Dec 2025 12:09:10 +0100
+Message-ID: <20251216111408.003968026@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,37 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Murad Masimov <m.masimov@mt-integration.ru>
+From: Ivan Abramov <i.abramov@mt-integration.ru>
 
-[ Upstream commit 15aca30cc6c69806054b896a2ccf7577239cb878 ]
+[ Upstream commit ea14bae6df18942bccb467fcf5ff33ca677b8253 ]
 
-There is a typo in rt9467_set_value_from_ranges() that can cause leaving local
-variable sel with an undefined value which is then used in regmap_field_write().
+Since wm831x_set_bits() may return error, log failure and exit from
+wm831x_usb_limit_change() in such case.
 
 Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 6f7f70e3a8dd ("power: supply: rt9467: Add Richtek RT9467 charger driver")
-Signed-off-by: Murad Masimov <m.masimov@mt-integration.ru>
-Link: https://patch.msgid.link/20251009145308.1830893-1-m.masimov@mt-integration.ru
+Fixes: 626b6cd5f52e ("power: wm831x_power: Support USB charger current limit management")
+Signed-off-by: Ivan Abramov <i.abramov@mt-integration.ru>
+Link: https://patch.msgid.link/20251009170553.566561-1-i.abramov@mt-integration.ru
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rt9467-charger.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/wm831x_power.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/rt9467-charger.c b/drivers/power/supply/rt9467-charger.c
-index b4917514bd701..44c26fb37a775 100644
---- a/drivers/power/supply/rt9467-charger.c
-+++ b/drivers/power/supply/rt9467-charger.c
-@@ -376,7 +376,7 @@ static int rt9467_set_value_from_ranges(struct rt9467_chg_data *data,
- 	if (rsel == RT9467_RANGE_VMIVR) {
- 		ret = linear_range_get_selector_high(range, value, &sel, &found);
- 		if (ret)
--			value = range->max_sel;
-+			sel = range->max_sel;
- 	} else {
- 		linear_range_get_selector_within(range, value, &sel);
- 	}
+diff --git a/drivers/power/supply/wm831x_power.c b/drivers/power/supply/wm831x_power.c
+index 6acdba7885ca5..78fa0573ef25c 100644
+--- a/drivers/power/supply/wm831x_power.c
++++ b/drivers/power/supply/wm831x_power.c
+@@ -144,6 +144,7 @@ static int wm831x_usb_limit_change(struct notifier_block *nb,
+ 							 struct wm831x_power,
+ 							 usb_notify);
+ 	unsigned int i, best;
++	int ret;
+ 
+ 	/* Find the highest supported limit */
+ 	best = 0;
+@@ -156,8 +157,13 @@ static int wm831x_usb_limit_change(struct notifier_block *nb,
+ 	dev_dbg(wm831x_power->wm831x->dev,
+ 		"Limiting USB current to %umA", wm831x_usb_limits[best]);
+ 
+-	wm831x_set_bits(wm831x_power->wm831x, WM831X_POWER_STATE,
+-		        WM831X_USB_ILIM_MASK, best);
++	ret = wm831x_set_bits(wm831x_power->wm831x, WM831X_POWER_STATE,
++			      WM831X_USB_ILIM_MASK, best);
++	if (ret < 0) {
++		dev_err(wm831x_power->wm831x->dev,
++			"Failed to set USB current limit: %d\n", ret);
++		return ret;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
