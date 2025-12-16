@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EC4358D02;
-	Tue, 16 Dec 2025 12:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631F334A76F;
+	Tue, 16 Dec 2025 12:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888131; cv=none; b=sACakPJ95lGdr0D/FG1uOVgn8IMp9J8/sNtHRPc/BMeiU90HlzW33Q5wFHxVl3PNHtpFniLK1y8XYaUFQyCaJnfiH6a7PEf3lyZp2fdmv9xP0zIPti2y0kGvclcItKBOXUuatDE8WudMbCmjOX8LqkDLeXWkm6dzFh8Eku+L1gg=
+	t=1765888134; cv=none; b=TOkFXYvxT0fzLD/auJW8c8xunUqChuxwVYe/rZWbhomn/9PPf9E+aKxZiWBWum6qh5PROvBaoADZbWiGi4UIUz9C8GxgkgyJUqhPcOL86jPlp2yPMDASmhvLwOaU5iyNJiRVPbJHZpg4Mt11wyDDFnhhR8HEKUHwBSYQfn/Zub0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888131; c=relaxed/simple;
-	bh=DaT+H4WO65guA/rUoJ6NlojCyOgnhts2xY/HwDsANLg=;
+	s=arc-20240116; t=1765888134; c=relaxed/simple;
+	bh=pcPseGgdHXZUjI2sMU0VvljUH5/NXCvZePUut7PXCMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGlg2Aew0cjLZvLjb79VPhv2XL1w7HW6HWqTo0MITFViyPxDAHDnUWu+jeM5OolIepxT8aBXn7Fr39Vrktu1STOiSa9P6g0C75t7aOcfICMZhcTulDL+xSFuvdggDiEIjQJe7/woAB7itB6t7lysIPEZfMk5T01shCXYPSIaUsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RhIQAOpW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZGQODitLnroTSRAzHSsu+TfgEJC2UAVHID19+Jyd0frueeX46UrW+LN8dknArqXrdrVt3ogJ8TA16puPLbrUhhO+MdZrUITg7L/nlxRn8uXyNAzKjYS+B097kJJiGqK2YNnqrUelJ9HVKtnKoQmQ3BL2Qd16sSR7m2vGE13aUWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGRTR9Rr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RhIQAOpW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DCAC4CEF1;
-	Tue, 16 Dec 2025 12:28:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGRTR9Rr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC683C4CEF1;
+	Tue, 16 Dec 2025 12:28:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888131;
-	bh=DaT+H4WO65guA/rUoJ6NlojCyOgnhts2xY/HwDsANLg=;
+	s=korg; t=1765888134;
+	bh=pcPseGgdHXZUjI2sMU0VvljUH5/NXCvZePUut7PXCMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhIQAOpW6yJ7N+qBotPWdf2W0e+xeO6VR05+GzWpyGQBhKeamiVtHei0JoSN+c73U
-	 MmLg38ZknkFIThG+QRGAGpzi/DjNC5qBZVYGkvu56TwZcDG9af0kWp1rJIR8B4Pzmz
-	 rB+c85i9vi3uvdOfO2jylrATKINY36eLEYWeU2sc=
+	b=zGRTR9RrZPX8RJOt92IE94sdwAcZzqmlzOgIdzffvNjhkMdNafXqn7yFufilHZ2rl
+	 8VAAWV/XZMxxa14qbXlGGuaCSE+2VhS0PtaYQKrJK6JR6CrTpsBx5LkMOe4/sNsANV
+	 OzvfTsUqh22Pa4e1z/29RjaFm3rZezisyYr/qj60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexandre Courbot <acourbot@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 441/614] ASoC: fsl_xcvr: clear the channel status control memory
-Date: Tue, 16 Dec 2025 12:13:28 +0100
-Message-ID: <20251216111417.350792641@linuxfoundation.org>
+Subject: [PATCH 6.18 442/614] firmware_loader: make RUST_FW_LOADER_ABSTRACTIONS select FW_LOADER
+Date: Tue, 16 Dec 2025 12:13:29 +0100
+Message-ID: <20251216111417.386743916@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,37 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit 73b97d46dde64fa184d47865d4a532d818c3a007 ]
+[ Upstream commit 9906efa545d1d2cf25a614eeb219d3f8d5a302cd ]
 
-memset_io() writes memory byte by byte with __raw_writeb() on the arm
-platform if the size is word. but XCVR data RAM memory can't be accessed
-with byte address, so with memset_io() the channel status control memory
-is not really cleared, use writel_relaxed() instead.
+The use of firmware_loader is an implementation detail of drivers rather
+than a dependency. FW_LOADER is typically selected rather than depended
+on; the Rust abstractions should do the same thing.
 
-Fixes: 28564486866f ("ASoC: fsl_xcvr: Add XCVR ASoC CPU DAI driver")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/20251126064509.1900974-1-shengjiu.wang@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: de6582833db0 ("rust: add firmware abstractions")
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Link: https://patch.msgid.link/20251106-b4-select-rust-fw-v3-1-771172257755@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 2 +-
+ drivers/base/firmware_loader/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index 5d804860f7d8c..58db4906a01d5 100644
---- a/sound/soc/fsl/fsl_xcvr.c
-+++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -1421,7 +1421,7 @@ static irqreturn_t irq0_isr(int irq, void *devid)
- 						bitrev32(val);
- 				}
- 				/* clear CS control register */
--				memset_io(reg_ctrl, 0, sizeof(val));
-+				writel_relaxed(0, reg_ctrl);
- 			}
- 		} else {
- 			regmap_read(xcvr->regmap, FSL_XCVR_RX_CS_DATA_0,
+diff --git a/drivers/base/firmware_loader/Kconfig b/drivers/base/firmware_loader/Kconfig
+index 752b9a9bea038..15eff8a4b5053 100644
+--- a/drivers/base/firmware_loader/Kconfig
++++ b/drivers/base/firmware_loader/Kconfig
+@@ -38,7 +38,7 @@ config FW_LOADER_DEBUG
+ config RUST_FW_LOADER_ABSTRACTIONS
+ 	bool "Rust Firmware Loader abstractions"
+ 	depends on RUST
+-	depends on FW_LOADER=y
++	select FW_LOADER
+ 	help
+ 	  This enables the Rust abstractions for the firmware loader API.
+ 
 -- 
 2.51.0
 
