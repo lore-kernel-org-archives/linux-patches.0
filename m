@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11EF7341645;
-	Tue, 16 Dec 2025 11:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B29341645;
+	Tue, 16 Dec 2025 11:25:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884340; cv=none; b=uUSxwUxidlzOes3zI2bJOOxDhbIyndqfZN+TTB/9xYTCcBykuA3DybzA6Aqqu7n01ji6FkRIodJsHRaVGhfQkMgI5uZInQjhJ0dyNmiKqc+SAfy627kM6tP/SyQrZ9t0CPW5bV0uCOZcnlETvoGHn9EmL9G5xpPTLzKzoNvTP/c=
+	t=1765884343; cv=none; b=r0hAwV0b47V43JAfgkqFLMUbODXqGsH7XR/QzwEP8WTN/xXMO0NACQc0hdGMw3WBXefcV2UaWNzo5Z/KYPXhaz1YCw0Aiyi2Cou5IGQ0TS6e9e9viZH+FaWOvkOfyTnQDo+AhWsZVSpG+aGL1TrVBwuSFXNy3TULDNiLuJniTTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884340; c=relaxed/simple;
-	bh=xYrmLVJJGFuBTMJd4ezGGWnQyrQfDj988KFx33Nz4TY=;
+	s=arc-20240116; t=1765884343; c=relaxed/simple;
+	bh=qWKT4iT2+dzKoOS9pP1E9Kr9TpwmGsmA3Ty+rADnBd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NTdKFAXEqLBJTXaiDAnugcpYtQuBn/u3FrHnk7/erGCN4hbwlkDvMDqAaXp3zYN/S6jvsodg/6aoJfCKqqTz7FkmiFQfXfQr9R6GJwdnAukDQDyIWkHVZYTBfh2mmIoaQATamXGQeks7WuWbUUIxSTN2EFJ6dRM2mw6SHyJU2to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0begbL+A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hE3tNZGyhQp7raarJYeZKuGMAox4xh5MR+0FYBHlvLWi+YYWZdEiCpAqwmaz8vUeqdgwwe06OzfmFKO+r6VHcOk/yFFehBDtVJKCqxUHiieLkNPYStugg1a0kE4yQyFfg+NPqz4XYd4XtYxhRskBblsqjNMGuq9O58DRN/PaaYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPL4Aogu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0begbL+A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CFAAC4CEF1;
-	Tue, 16 Dec 2025 11:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPL4Aogu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE8C9C4CEF1;
+	Tue, 16 Dec 2025 11:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884339;
-	bh=xYrmLVJJGFuBTMJd4ezGGWnQyrQfDj988KFx33Nz4TY=;
+	s=korg; t=1765884343;
+	bh=qWKT4iT2+dzKoOS9pP1E9Kr9TpwmGsmA3Ty+rADnBd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0begbL+A7yEy1gAwzbiOXqqucLe7lQc/4664M74fNarNWWpRBgxm16IfwAtmwuVgY
-	 2bqIyI5wTRLiBGRqzSPOyAo0ic9KbAclqNdYqmr42h+edgg1mfrTHnJ9tt79+biJAm
-	 THNUlQBYiTAM6vKPM2tH3p4176pJ/AVZrBcpBZN8=
+	b=KPL4AoguVthL+wKeelUBNrnYnbq9cXl5wVpj1WHZJe0UbWx6tQgLN5Ma3ouI/vO4K
+	 oqmJcFyCvFiqf8BH1Bsvu+2UaZip5vWvEVRsSQJWhDixurKFzVir451TiCGjbf/mRB
+	 KNP3IaevtFw1+Sp559ietfxeQ5M6EkK4inoUsCnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Menglong Dong <dongml2@chinatelecom.cn>,
+	Song Liu <song@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 163/354] ps3disk: use memcpy_{from,to}_bvec index
-Date: Tue, 16 Dec 2025 12:12:10 +0100
-Message-ID: <20251216111326.819737731@linuxfoundation.org>
+Subject: [PATCH 6.12 164/354] bpf: Handle return value of ftrace_set_filter_ip in register_fentry
+Date: Tue, 16 Dec 2025 12:12:11 +0100
+Message-ID: <20251216111326.855517166@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -46,50 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rene Rebe <rene@exactco.de>
+From: Menglong Dong <menglong8.dong@gmail.com>
 
-[ Upstream commit 79bd8c9814a273fa7ba43399e1c07adec3fc95db ]
+[ Upstream commit fea3f5e83c5cd80a76d97343023a2f2e6bd862bf ]
 
-With 6e0a48552b8c (ps3disk: use memcpy_{from,to}_bvec) converting
-ps3disk to new bvec helpers, incrementing the offset was accidently
-lost, corrupting consecutive buffers. Restore index for non-corrupted
-data transfers.
+The error that returned by ftrace_set_filter_ip() in register_fentry() is
+not handled properly. Just fix it.
 
-Fixes: 6e0a48552b8c (ps3disk: use memcpy_{from,to}_bvec)
-Signed-off-by: René Rebe <rene@exactco.de>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 00963a2e75a8 ("bpf: Support bpf_trampoline on functions with IPMODIFY (e.g. livepatch)")
+Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
+Acked-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20251110120705.1553694-1-dongml2@chinatelecom.cn
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ps3disk.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ kernel/bpf/trampoline.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/ps3disk.c b/drivers/block/ps3disk.c
-index 226ffc743238e..b5b00021fe37d 100644
---- a/drivers/block/ps3disk.c
-+++ b/drivers/block/ps3disk.c
-@@ -85,10 +85,14 @@ static void ps3disk_scatter_gather(struct ps3_storage_device *dev,
- 	struct bio_vec bvec;
- 
- 	rq_for_each_segment(bvec, req, iter) {
-+		dev_dbg(&dev->sbd.core, "%s:%u: %u sectors from %llu\n",
-+			__func__, __LINE__, bio_sectors(iter.bio),
-+			iter.bio->bi_iter.bi_sector);
- 		if (gather)
- 			memcpy_from_bvec(dev->bounce_buf + offset, &bvec);
- 		else
- 			memcpy_to_bvec(&bvec, dev->bounce_buf + offset);
-+		offset += bvec.bv_len;
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index fabc8d2fc80e6..dbe7754b4f4e1 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -220,7 +220,9 @@ static int register_fentry(struct bpf_trampoline *tr, void *new_addr)
  	}
- }
  
+ 	if (tr->func.ftrace_managed) {
+-		ftrace_set_filter_ip(tr->fops, (unsigned long)ip, 0, 1);
++		ret = ftrace_set_filter_ip(tr->fops, (unsigned long)ip, 0, 1);
++		if (ret)
++			return ret;
+ 		ret = register_ftrace_direct(tr->fops, (long)new_addr);
+ 	} else {
+ 		ret = bpf_arch_text_poke(ip, BPF_MOD_CALL, NULL, new_addr);
 -- 
 2.51.0
 
