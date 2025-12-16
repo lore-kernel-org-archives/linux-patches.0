@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B047363C79;
-	Tue, 16 Dec 2025 12:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C4A2364021;
+	Tue, 16 Dec 2025 12:22:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887760; cv=none; b=bfgjrW2TlGMmj88A1MhYAAScjuaxNfVrpb0MVPwhC1s4Wc4RqS7zeNeFveQ9TYLUrbfcvZY3vZk/ZFPojYyZODGNfZb0wJ1iV1L3DpOcIVu+lXC+RUcRVo3g0PCmlxcmVfbxOme10C356H/02kbheQplIYEjIDviHOQWPR/MDjo=
+	t=1765887763; cv=none; b=o2X1L4FDYaHTNpQHguJ6hWHEzmABzqw/QKJPZgKKb2d37Hj1JIIRC8N20u4315/92yNfBZx7sBAzeZX2kzDWBYI31qN8TKHJlMJADBEY6WquBLsjQYDwjPH2LH/WdakQf3T2ILJOPFZuWbhrs80ZjYJ5qDlWstfSQD3D6A/f2ao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887760; c=relaxed/simple;
-	bh=hw9XPCFc8aLgL+4qr2CUuj9XVWEa4sfDMBR6BfL9yG4=;
+	s=arc-20240116; t=1765887763; c=relaxed/simple;
+	bh=2oxMnqPSgM+Wuhx+wjhDJT+3hSLWlMnCX9IuwFGt57M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qxt24/DQZTPGfyHykksFdveObPYlAlawoZJk3uBRSzrYvT2gJ4u/r9T+bNcIlpg4qNzTHo0AcEF8BhdFQCTDyG2rqXhOgiZU/O0TneDN59UMczsPTnCJ4f16qGZCobjLNhAbdsdHviaTiUXZ3yMfJvD9dWRTh7kEJ3EpWpgDYwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNxG0djY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHCeAPO9ckhPRhBLHG6BMW6vxGHla4qbPcIMhilruC/bMj4dHVeP6E0n7L//9PR9Pe6z8jyTbUOJqk6RNLSJjdgmNCPmudqcbBo8A0PatRnEweSrHBoG7LSOFSTM3etqhUCTU6jKSha3dwgZvidJjkeJLtRI7szAY+ZyaWJodS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZ3ZHAjc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNxG0djY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB950C4CEF1;
-	Tue, 16 Dec 2025 12:22:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZ3ZHAjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FF3C4CEF1;
+	Tue, 16 Dec 2025 12:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887760;
-	bh=hw9XPCFc8aLgL+4qr2CUuj9XVWEa4sfDMBR6BfL9yG4=;
+	s=korg; t=1765887763;
+	bh=2oxMnqPSgM+Wuhx+wjhDJT+3hSLWlMnCX9IuwFGt57M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNxG0djYUWuXcFvWRjf3q9IzkUCWrgntU1tZVl3EiREyN4NAjuJemNpf8dlFIxwsj
-	 gFy3St2QIiAOFml2eggSLG7saZD5QFN0zbp/hdbXxmUZdTwmPFtDBT3VBis0kF2fnu
-	 5b0mm0ddp3JNDA2nQT/Y+TV7mmGiLbnxGw/2zWqc=
+	b=AZ3ZHAjciKGyTkd91+ht1e7kify2yOcYlilZTVh2WuU8+U2vAyvIdVT5D6ya3F+C2
+	 P1Rl7ISrlLhiKteU2pOgR18jc3c57HyKZeqtMA4gY40Zp/IBeH6oGE/Ks7L27jleI0
+	 CK8inTiwbCxTfJcpon9sG02ObuuwnMJdCtYMOc90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Zilin Guan <zilin@seu.edu.cn>,
+	Himanshu Madhani <hmadhani2024@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 312/614] wifi: rtl818x: Fix potential memory leaks in rtl8180_init_rx_ring()
-Date: Tue, 16 Dec 2025 12:11:19 +0100
-Message-ID: <20251216111412.672098134@linuxfoundation.org>
+Subject: [PATCH 6.18 330/614] scsi: qla2xxx: Fix improper freeing of purex item
+Date: Tue, 16 Dec 2025 12:11:37 +0100
+Message-ID: <20251216111413.321851525@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,63 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 9b5b9c042b30befc5b37e4539ace95af70843473 ]
+[ Upstream commit 78b1a242fe612a755f2158fd206ee6bb577d18ca ]
 
-In rtl8180_init_rx_ring(), memory is allocated for skb packets and DMA
-allocations in a loop. When an allocation fails, the previously
-successful allocations are not freed on exit.
+In qla2xxx_process_purls_iocb(), an item is allocated via
+qla27xx_copy_multiple_pkt(), which internally calls
+qla24xx_alloc_purex_item().
 
-Fix that by jumping to err_free_rings label on error, which calls
-rtl8180_free_rx_ring() to free the allocations. Remove the free of
-rx_ring in rtl8180_init_rx_ring() error path, and set the freed
-priv->rx_buf entry to null, to avoid double free.
+The qla24xx_alloc_purex_item() function may return a pre-allocated item
+from a per-adapter pool for small allocations, instead of dynamically
+allocating memory with kzalloc().
 
-Fixes: f653211197f3 ("Add rtl8180 wireless driver")
-Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251114094527.79842-1-nihaal@cse.iitm.ac.in
+An error handling path in qla2xxx_process_purls_iocb() incorrectly uses
+kfree() to release the item. If the item was from the pre-allocated
+pool, calling kfree() on it is a bug that can lead to memory corruption.
+
+Fix this by using the correct deallocation function,
+qla24xx_free_purex_item(), which properly handles both dynamically
+allocated and pre-allocated items.
+
+Fixes: 875386b98857 ("scsi: qla2xxx: Add Unsolicited LS Request and Response Support for NVMe")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Himanshu Madhani <hmadhani2024@gmail.com>
+Link: https://patch.msgid.link/20251113151246.762510-1-zilin@seu.edu.cn
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_nvme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-index 2905baea62390..070c0431c4821 100644
---- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-+++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
-@@ -1023,9 +1023,6 @@ static int rtl8180_init_rx_ring(struct ieee80211_hw *dev)
- 		dma_addr_t *mapping;
- 		entry = priv->rx_ring + priv->rx_ring_sz*i;
- 		if (!skb) {
--			dma_free_coherent(&priv->pdev->dev,
--					  priv->rx_ring_sz * 32,
--					  priv->rx_ring, priv->rx_ring_dma);
- 			wiphy_err(dev->wiphy, "Cannot allocate RX skb\n");
- 			return -ENOMEM;
- 		}
-@@ -1037,9 +1034,7 @@ static int rtl8180_init_rx_ring(struct ieee80211_hw *dev)
+diff --git a/drivers/scsi/qla2xxx/qla_nvme.c b/drivers/scsi/qla2xxx/qla_nvme.c
+index 316594aa40cc5..42eb65a62f1f3 100644
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -1292,7 +1292,7 @@ void qla2xxx_process_purls_iocb(void **pkt, struct rsp_que **rsp)
+ 		a.reason = FCNVME_RJT_RC_LOGIC;
+ 		a.explanation = FCNVME_RJT_EXP_NONE;
+ 		xmt_reject = true;
+-		kfree(item);
++		qla24xx_free_purex_item(item);
+ 		goto out;
+ 	}
  
- 		if (dma_mapping_error(&priv->pdev->dev, *mapping)) {
- 			kfree_skb(skb);
--			dma_free_coherent(&priv->pdev->dev,
--					  priv->rx_ring_sz * 32,
--					  priv->rx_ring, priv->rx_ring_dma);
-+			priv->rx_buf[i] = NULL;
- 			wiphy_err(dev->wiphy, "Cannot map DMA for RX skb\n");
- 			return -ENOMEM;
- 		}
-@@ -1130,7 +1125,7 @@ static int rtl8180_start(struct ieee80211_hw *dev)
- 
- 	ret = rtl8180_init_rx_ring(dev);
- 	if (ret)
--		return ret;
-+		goto err_free_rings;
- 
- 	for (i = 0; i < (dev->queues + 1); i++)
- 		if ((ret = rtl8180_init_tx_ring(dev, i, 16)))
 -- 
 2.51.0
 
