@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4695322527;
-	Tue, 16 Dec 2025 12:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43779350288;
+	Tue, 16 Dec 2025 12:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887859; cv=none; b=gdYFipQpmTK5+JAkhMJF9oI8wOCdNDkxch+avunQrP6TReets+GeJj3OhcPKU448bPow/iSS+1nz1ymsj4SQ02UDUmzojKFC2js12iRtisT9DeGIRLCxSWZghHnONbUydaBcWB/p/Mt0OwiE7lxR0XDlYpqkzSSHkt35OFEGIrA=
+	t=1765887863; cv=none; b=jNZc6FMdrZs3E69x+u7F67swLgfpWy/IeR3u0/QngN8V4egjcIkvLn7QtmU3vi6Rl+duj1Ax+CiAGbDz9vJW43QbJ2cnNhJhKCfqu77YH0mW+laCzi4WJzqap0eXP0oSzPuOklj5g6DBxfPmyhm+1BTrACEi2FvII6wM3bnGLbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887859; c=relaxed/simple;
-	bh=aW4feubJ6uF/7KfOe3/wJgjz+AyOEcITwprtQ/UunSQ=;
+	s=arc-20240116; t=1765887863; c=relaxed/simple;
+	bh=vEj8HztgG13lA5bdHguP/H3pPfPyG3e+PNyKRcKz8mI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dASTpwrxjgx0Fxm83rXl36XSLfn9Fa0Yj2d0qQkmu6WMHf9qUDImBySgzdfEbDfG+4En1XBwGjGT6CXhwhfp107yUYvc6rq9dpTrYxgwMtroZ3cHFRnnOYao8SucDbm/ifYwvu0zoy92r0cJjb5pSDM25xqrpFqpyEVRVlS3e4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GFriu64s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qoz9jA5E0Q2Y5cfNUhyRzdM40hsw+cyPD2iWHjee4qlwqHHXuKbdGAfDXpX6DN/7nQzHI19LlTMU12WUdhHS2FauFQsJxUQKCwfzaYBzsq3fADW6MncPqSvg2NE+bJCzn0rmdlEzFVBhVqxoVopStUbdkhrW0wdfFX7N3VVSN1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zdZcvzfv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GFriu64s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2DB4C4CEF1;
-	Tue, 16 Dec 2025 12:24:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zdZcvzfv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75008C4CEF1;
+	Tue, 16 Dec 2025 12:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887859;
-	bh=aW4feubJ6uF/7KfOe3/wJgjz+AyOEcITwprtQ/UunSQ=;
+	s=korg; t=1765887862;
+	bh=vEj8HztgG13lA5bdHguP/H3pPfPyG3e+PNyKRcKz8mI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFriu64sPGnQg3DpIcB//rJMG9Ygvmy68ZiASGOaw96nCEG3qGUxf0NHj1Cafh8W1
-	 WpnhMeB384oHwCdBT3w8x8wTvElbY2tUJid5aGr5ZXOSZLLlZx7wVBk5pt0FrzW8pc
-	 2XZMIS+W5pI5PZcEQaZi41Ubt9c7cFNM/Mp9fghI=
+	b=zdZcvzfvhTbqt6RqowfDISL0Cv6CT5HlulqwpekptwXwJSstBhjIvLKYg7MvNP3ew
+	 LoK9iDXU9tfHabPM8aWesc22huqHbgEPnX5hyp3vKJeo5o38dhGoPXgvLEOVRgc1UR
+	 vq9vghUAiUXyNDTMKm+Cg2imAXL+A2af30jUnLes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Pravdin <ipravdin.official@gmail.com>,
-	Tomas Glozar <tglozar@redhat.com>,
+	Zhao Yipeng <zhaoyipeng5@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 360/614] rtla: Fix -a overriding -t argument
-Date: Tue, 16 Dec 2025 12:12:07 +0100
-Message-ID: <20251216111414.404909470@linuxfoundation.org>
+Subject: [PATCH 6.18 361/614] ima: Handle error code returned by ima_filter_rule_match()
+Date: Tue, 16 Dec 2025 12:12:08 +0100
+Message-ID: <20251216111414.440560998@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,90 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Pravdin <ipravdin.official@gmail.com>
+From: Zhao Yipeng <zhaoyipeng5@huawei.com>
 
-[ Upstream commit ddb6e42494e5c48c17e64f29b7674b9add486a19 ]
+[ Upstream commit 738c9738e690f5cea24a3ad6fd2d9a323cf614f6 ]
 
-When running rtla as
+In ima_match_rules(), if ima_filter_rule_match() returns -ENOENT due to
+the rule being NULL, the function incorrectly skips the 'if (!rc)' check
+and sets 'result = true'. The LSM rule is considered a match, causing
+extra files to be measured by IMA.
 
-    `rtla <timerlat|osnoise> <top|hist> -t custom_file.txt -a 100`
+This issue can be reproduced in the following scenario:
+After unloading the SELinux policy module via 'semodule -d', if an IMA
+measurement is triggered before ima_lsm_rules is updated,
+in ima_match_rules(), the first call to ima_filter_rule_match() returns
+-ESTALE. This causes the code to enter the 'if (rc == -ESTALE &&
+!rule_reinitialized)' block, perform ima_lsm_copy_rule() and retry. In
+ima_lsm_copy_rule(), since the SELinux module has been removed, the rule
+becomes NULL, and the second call to ima_filter_rule_match() returns
+-ENOENT. This bypasses the 'if (!rc)' check and results in a false match.
 
--a options override trace output filename specified by -t option.
-Running the command above will create <timerlat|osnoise>_trace.txt file
-instead of custom_file.txt. Fix this by making sure that -a option does
-not override trace output filename even if it's passed after trace
-output filename is specified.
+Call trace:
+  selinux_audit_rule_match+0x310/0x3b8
+  security_audit_rule_match+0x60/0xa0
+  ima_match_rules+0x2e4/0x4a0
+  ima_match_policy+0x9c/0x1e8
+  ima_get_action+0x48/0x60
+  process_measurement+0xf8/0xa98
+  ima_bprm_check+0x98/0xd8
+  security_bprm_check+0x5c/0x78
+  search_binary_handler+0x6c/0x318
+  exec_binprm+0x58/0x1b8
+  bprm_execve+0xb8/0x130
+  do_execveat_common.isra.0+0x1a8/0x258
+  __arm64_sys_execve+0x48/0x68
+  invoke_syscall+0x50/0x128
+  el0_svc_common.constprop.0+0xc8/0xf0
+  do_el0_svc+0x24/0x38
+  el0_svc+0x44/0x200
+  el0t_64_sync_handler+0x100/0x130
+  el0t_64_sync+0x3c8/0x3d0
 
-Fixes: 173a3b014827 ("rtla/timerlat: Add the automatic trace option")
-Signed-off-by: Ivan Pravdin <ipravdin.official@gmail.com>
-Reviewed-by: Tomas Glozar <tglozar@redhat.com>
-Link: https://lore.kernel.org/r/b6ae60424050b2c1c8709e18759adead6012b971.1762186418.git.ipravdin.official@gmail.com
-[ use capital letter in subject, as required by tracing subsystem ]
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Fix this by changing 'if (!rc)' to 'if (rc <= 0)' to ensure that error
+codes like -ENOENT do not bypass the check and accidentally result in a
+successful match.
+
+Fixes: 4af4662fa4a9d ("integrity: IMA policy")
+Signed-off-by: Zhao Yipeng <zhaoyipeng5@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/osnoise_hist.c  | 3 ++-
- tools/tracing/rtla/src/osnoise_top.c   | 3 ++-
- tools/tracing/rtla/src/timerlat_hist.c | 3 ++-
- tools/tracing/rtla/src/timerlat_top.c  | 3 ++-
- 4 files changed, 8 insertions(+), 4 deletions(-)
+ security/integrity/ima/ima_policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/tracing/rtla/src/osnoise_hist.c b/tools/tracing/rtla/src/osnoise_hist.c
-index dffb6d0a98d7d..d22feb4d6cc9d 100644
---- a/tools/tracing/rtla/src/osnoise_hist.c
-+++ b/tools/tracing/rtla/src/osnoise_hist.c
-@@ -557,7 +557,8 @@ static struct common_params
- 			params->threshold = 1;
- 
- 			/* set trace */
--			trace_output = "osnoise_trace.txt";
-+			if (!trace_output)
-+				trace_output = "osnoise_trace.txt";
- 
- 			break;
- 		case 'b':
-diff --git a/tools/tracing/rtla/src/osnoise_top.c b/tools/tracing/rtla/src/osnoise_top.c
-index 95418f7ecc961..a8d31030c4122 100644
---- a/tools/tracing/rtla/src/osnoise_top.c
-+++ b/tools/tracing/rtla/src/osnoise_top.c
-@@ -397,7 +397,8 @@ struct common_params *osnoise_top_parse_args(int argc, char **argv)
- 			params->threshold = 1;
- 
- 			/* set trace */
--			trace_output = "osnoise_trace.txt";
-+			if (!trace_output)
-+				trace_output = "osnoise_trace.txt";
- 
- 			break;
- 		case 'c':
-diff --git a/tools/tracing/rtla/src/timerlat_hist.c b/tools/tracing/rtla/src/timerlat_hist.c
-index 606c1688057b2..3d56df3d5fa0d 100644
---- a/tools/tracing/rtla/src/timerlat_hist.c
-+++ b/tools/tracing/rtla/src/timerlat_hist.c
-@@ -878,7 +878,8 @@ static struct common_params
- 			params->print_stack = auto_thresh;
- 
- 			/* set trace */
--			trace_output = "timerlat_trace.txt";
-+			if (!trace_output)
-+				trace_output = "timerlat_trace.txt";
- 
- 			break;
- 		case 'c':
-diff --git a/tools/tracing/rtla/src/timerlat_top.c b/tools/tracing/rtla/src/timerlat_top.c
-index fc479a0dcb597..6cc9a3607c665 100644
---- a/tools/tracing/rtla/src/timerlat_top.c
-+++ b/tools/tracing/rtla/src/timerlat_top.c
-@@ -628,7 +628,8 @@ static struct common_params
- 			params->print_stack = auto_thresh;
- 
- 			/* set trace */
--			trace_output = "timerlat_trace.txt";
-+			if (!trace_output)
-+				trace_output = "timerlat_trace.txt";
- 
- 			break;
- 		case '5':
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index 128fab8979308..db6d55af5a80b 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -674,7 +674,7 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 				goto retry;
+ 			}
+ 		}
+-		if (!rc) {
++		if (rc <= 0) {
+ 			result = false;
+ 			goto out;
+ 		}
 -- 
 2.51.0
 
