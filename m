@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BFCB17BA2;
-	Tue, 16 Dec 2025 12:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5E2450FE;
+	Tue, 16 Dec 2025 12:38:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888711; cv=none; b=MQCdpfd1iZ/+4/JyE67GRpSoTMr7ezq8r29Vr3w9X3lJAc3oG0PykpWJ4JnTFiAuynkCYE9er4gwaM0Fb3CDrGv2llQGHJvlrmAZgw1J6rg4+hLQ7zktYnlfiqA1DHgAvQx26k6ARP/z4jI5UVxRWNpRNaeCgVZB+PLN4ZINo8U=
+	t=1765888715; cv=none; b=Bt3q9M3G18WSPN5a8lCtwOfT+2kAynayaN4EbqLWtlLFrpuikpycyo6AhAXpVcsYpHdtbDQcMnKHcEWHCQmwUrwArU26X9llrDR/XF//uEwXslJrDdkuACb+ggOX1LEYknwrgw3ffBaodcfK2Ts2uIVZjq431roGcibnV2ipGno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888711; c=relaxed/simple;
-	bh=N80jDzvewwjLOHS3XdNKGUYv8RqlVy5lO1TQ8DhuCWA=;
+	s=arc-20240116; t=1765888715; c=relaxed/simple;
+	bh=+ZZkIIz1logkQvhADNQboLj3DbVD7aHEjjy1MKbFgdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2YkqLT1fnf6g+VHIQnsZ651xTAzxYO2y7hD2nkDOL4XWgab8YMNX94dFt+NyDuyW3D8mckyuMlVTDqtnEgTeyPwar+XE8L0SdWpQZeWbB6A+oNJY5CTNNx38gemDN1hYRz+L8/P3OO4JrpoB4AjKDIQ1YpWUMbGp2H+Hs1d7tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMQ3asj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OhZoRH4sZTNuM2cCAujQ6YN50PV9RNI2sZMb/6ssvOMbFdhtYmidhDJJqjDKS1sbGPGzXQLVbxUlNzCZ8L8aEijl2yOLXbV47sEk2xct14x5yv7OvAX5GaRND6bvJhj4IN6AWy0JLEPRSaFlAZD4XUWRxqo6S3waEAhY7tpAF+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+nf2GTu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMQ3asj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D68FC4CEF5;
-	Tue, 16 Dec 2025 12:38:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+nf2GTu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B05C4CEF1;
+	Tue, 16 Dec 2025 12:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888711;
-	bh=N80jDzvewwjLOHS3XdNKGUYv8RqlVy5lO1TQ8DhuCWA=;
+	s=korg; t=1765888715;
+	bh=+ZZkIIz1logkQvhADNQboLj3DbVD7aHEjjy1MKbFgdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMQ3asj8vsAxnw5YWTYCgWb1fRlt67l0Qh/4B93u+gZwTMLMTw++06uojrfbVwkhm
-	 lL5oPjZz9iOEz0kacwc9A1l8kVw1JZU8zc/E6yQMYFrRCVmCViK3/tUMkxq0uhuN4z
-	 WiIMQpnNr0UlF2sDE44kvV7gAT7rEiahbo0rrCtU=
+	b=R+nf2GTuxAuHEAfxMGz/sPeTmyjYkgmWPtxAqjRKpZat+VwnWZFUFLmH6f+qd0o1T
+	 TMzAFDHa25E5EeIS9Q7UyZAWIn42VFuKPpRyHFygnlOUyGnaMU08HLHQHf+EpRkhN9
+	 J8Rs5XX5URmx1ZqBkYxKYIaSrfet4NaJ3HQatTaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kitta <kitta@linux.alibaba.com>,
+	Evan Li <evan.li@linux.alibaba.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 599/614] ocfs2: fix memory leak in ocfs2_merge_rec_left()
-Date: Tue, 16 Dec 2025 12:16:06 +0100
-Message-ID: <20251216111423.096049260@linuxfoundation.org>
+Subject: [PATCH 6.18 600/614] perf/x86/intel: Fix NULL event dereference crash in handle_pmi_common()
+Date: Tue, 16 Dec 2025 12:16:07 +0100
+Message-ID: <20251216111423.132398654@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -59,43 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Evan Li <evan.li@linux.alibaba.com>
 
-[ Upstream commit 2214ec4bf89d0fd27717322d3983a2f3b469c7f3 ]
+[ Upstream commit 9415f749d34b926b9e4853da1462f4d941f89a0d ]
 
-In 'ocfs2_merge_rec_left()', do not reset 'left_path' to NULL after
-move, thus allowing 'ocfs2_free_path()' to free it before return.
+handle_pmi_common() may observe an active bit set in cpuc->active_mask
+while the corresponding cpuc->events[] entry has already been cleared,
+which leads to a NULL pointer dereference.
 
-Link: https://lkml.kernel.org/r/20251205065159.392749-1-dmantipov@yandex.ru
-Fixes: 677b975282e4 ("ocfs2: Add support for cross extent block")
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Reported-by: syzbot+cfc7cab3bb6eaa7c4de2@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=cfc7cab3bb6eaa7c4de2
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This can happen when interrupt throttling stops all events in a group
+while PEBS processing is still in progress. perf_event_overflow() can
+trigger perf_event_throttle_group(), which stops the group and clears
+the cpuc->events[] entry, but the active bit may still be set when
+handle_pmi_common() iterates over the events.
+
+The following recent fix:
+
+  7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
+
+moved the cpuc->events[] clearing from x86_pmu_stop() to x86_pmu_del() and
+relied on cpuc->active_mask/pebs_enabled checks. However,
+handle_pmi_common() can still encounter a NULL cpuc->events[] entry
+despite the active bit being set.
+
+Add an explicit NULL check on the event pointer before using it,
+to cover this legitimate scenario and avoid the NULL dereference crash.
+
+Fixes: 7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
+Reported-by: kitta <kitta@linux.alibaba.com>
+Co-developed-by: kitta <kitta@linux.alibaba.com>
+Signed-off-by: Evan Li <evan.li@linux.alibaba.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/20251212084943.2124787-1-evan.li@linux.alibaba.com
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220855
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/alloc.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/events/intel/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ocfs2/alloc.c b/fs/ocfs2/alloc.c
-index 162711cc5b201..a0ced11e0c24a 100644
---- a/fs/ocfs2/alloc.c
-+++ b/fs/ocfs2/alloc.c
-@@ -3654,7 +3654,6 @@ static int ocfs2_merge_rec_left(struct ocfs2_path *right_path,
- 			 * So we use the new rightmost path.
- 			 */
- 			ocfs2_mv_path(right_path, left_path);
--			left_path = NULL;
- 		} else
- 			ocfs2_complete_edge_insert(handle, left_path,
- 						   right_path, subtree_index);
+diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
+index 9b824ed6fc1de..32d551f2646a7 100644
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -3249,6 +3249,9 @@ static int handle_pmi_common(struct pt_regs *regs, u64 status)
+ 
+ 		if (!test_bit(bit, cpuc->active_mask))
+ 			continue;
++		/* Event may have already been cleared: */
++		if (!event)
++			continue;
+ 
+ 		/*
+ 		 * There may be unprocessed PEBS records in the PEBS buffer,
 -- 
 2.51.0
 
