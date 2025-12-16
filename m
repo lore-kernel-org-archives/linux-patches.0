@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030CF33A036;
-	Tue, 16 Dec 2025 12:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D3E34253D;
+	Tue, 16 Dec 2025 12:12:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887119; cv=none; b=TFnqmywkcSTcIiu9piaj1sjxaHmf5N4C/pPzIBsAXpspUzRJDJNPD/+xoDdLlewWEYdXWYNhZzxFAFg4uZLL1/lAa55LIHVAzfMjwr0aDcxNQAW3WQIkCEwEXjHHzajZqFC9mZebI+NPbf6Jf9VICWUOH8BkAR5b6GQUn5xRCeg=
+	t=1765887122; cv=none; b=moifEK90mTR8tFdF9BDgjxa2ypAdTLoUO6yJfmRPhWTMHEBsfK7CRsa61gtb9ga2m1KUwUEnJaslhKmUkhcvec///ou3ugzTordmbHWUFd/Q8WJFJyPlC0+RbnTFNe3bT8YKmdNX+Tu3QfKbsYBKtfzmDAOcvDwy9uc9pMqmR/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887119; c=relaxed/simple;
-	bh=eoGDjfCjFtP+KGE34vq2h12rkedTspdLcsLIjnuWXtw=;
+	s=arc-20240116; t=1765887122; c=relaxed/simple;
+	bh=FXC5K0JwnnDgWZHCgWQXuRu4v2Rpeso8V7dhnQrT5/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CLBT+W4tcNXQUxHTZaSITJhuLc6bQYTBKykoIPKvPQ0zn+cr1YZF/Y9ETVmtHJM80OHq5QnVbnUCBYHhKrJkHPZ82T0+dny6f8vPHowJ9qU+8X78+Tpj7vQSZmuTAclHd0w7MCW4KdqRBkCkVIVbWoX9kKTE+xv3Gyd60bjU5S0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bp/m5pa9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o1rPws9p2+WoJ6x7g+6scFX/FYPBWDjYOXA8XNgS2vOCtOr/qjlKqDR4Z9mUKlAWTe1vz6ay0PCokLdxlNQRzeKpseKE47ZME1IaQhx75p0maVVIYN0tI2qv8IeP7rhoOxw6TsrLSV719Kbb46tbIcq8innTrgvdSTG2rYFJsCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jmbuVjVf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bp/m5pa9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 653D6C4CEF1;
-	Tue, 16 Dec 2025 12:11:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jmbuVjVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7950C4CEF1;
+	Tue, 16 Dec 2025 12:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887118;
-	bh=eoGDjfCjFtP+KGE34vq2h12rkedTspdLcsLIjnuWXtw=;
+	s=korg; t=1765887122;
+	bh=FXC5K0JwnnDgWZHCgWQXuRu4v2Rpeso8V7dhnQrT5/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bp/m5pa9NqUOmFxVuCf8XvGwoGWcQ5X+JrS9yAUn2v9v3yq/vAno/KwIprcKe6l51
-	 29AjUBmBjo2dWqY/ChsxvF9W7tY5x2llhahHxTlhxu4u1zCvX4EjTcCf0XoIgCuBXh
-	 o5R9wXSieifJ0cuDh/wkqAFP5PSlOcubS67/gNyw=
+	b=jmbuVjVfy+xTcQ/HYpsplPBLzh0VhLKcEUysh26XbTMgZbPQrj6qKny0/+Wp5VDXq
+	 kaHU1ZgP2JejFT0lntaQfMFF29An5EpVdmqlwP1IpiEsb2ykFHC/TbSjVQ889LDfFM
+	 lafUL4qTLQ/51f/vUse3oIAYI2NbqNx+SkfkSiZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 099/614] ice: move ice_init_interrupt_scheme() prior ice_init_pf()
-Date: Tue, 16 Dec 2025 12:07:46 +0100
-Message-ID: <20251216111404.908220361@linuxfoundation.org>
+Subject: [PATCH 6.18 100/614] ice: ice_init_pf: destroy mutexes and xarrays on memory alloc failure
+Date: Tue, 16 Dec 2025 12:07:47 +0100
+Message-ID: <20251216111404.946692977@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -55,18 +55,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit 2fe18288fce6b421f1dc585bcb9dd3afa32d3ad9 ]
+[ Upstream commit 71430451f81bd6550e46d89b69103a111fc42982 ]
 
-Move ice_init_interrupt_scheme() prior ice_init_pf().
-To enable the move ice_set_pf_caps() was moved out from ice_init_pf()
-to the caller (ice_init_dev()), and placed prior to the irq scheme init.
-
-The move makes deinit order of ice_deinit_dev() and failure-path of
-ice_init_pf() match (at least in terms of not calling
-ice_clear_interrupt_scheme() and ice_deinit_pf() in opposite ways).
-
-The new order aligns with findings made by Jakub Buchocki in
-the commit 24b454bc354a ("ice: Fix ice module unload").
+Unroll actions of ice_init_pf() when it fails.
+ice_deinit_pf() happens to be perfect to call here.
 
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
@@ -75,77 +67,66 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: 1390b8b3d2be ("ice: remove duplicate call to ice_deinit_hw() on error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 25 ++++++++++-------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 31 +++++++++--------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 41c2f0d52ce0d..13db83fb383e6 100644
+index 13db83fb383e6..80349aed1f9d6 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -4043,8 +4043,6 @@ void ice_start_service_task(struct ice_pf *pf)
+@@ -3951,6 +3951,8 @@ u16 ice_get_avail_rxq_count(struct ice_pf *pf)
   */
- static int ice_init_pf(struct ice_pf *pf)
+ static void ice_deinit_pf(struct ice_pf *pf)
  {
--	ice_set_pf_caps(pf);
--
- 	mutex_init(&pf->sw_mutex);
- 	mutex_init(&pf->tc_mutex);
- 	mutex_init(&pf->adev_mutex);
-@@ -4746,11 +4744,18 @@ int ice_init_dev(struct ice_pf *pf)
- 		ice_set_safe_mode_caps(hw);
- 	}
- 
-+	ice_set_pf_caps(pf);
-+	err = ice_init_interrupt_scheme(pf);
-+	if (err) {
-+		dev_err(dev, "ice_init_interrupt_scheme failed: %d\n", err);
-+		return -EIO;
-+	}
++	/* note that we unroll also on ice_init_pf() failure here */
 +
- 	ice_start_service_task(pf);
- 	err = ice_init_pf(pf);
- 	if (err) {
- 		dev_err(dev, "ice_init_pf failed: %d\n", err);
--		return err;
-+		goto unroll_irq_scheme_init;
- 	}
+ 	mutex_destroy(&pf->lag_mutex);
+ 	mutex_destroy(&pf->adev_mutex);
+ 	mutex_destroy(&pf->sw_mutex);
+@@ -4055,25 +4057,6 @@ static int ice_init_pf(struct ice_pf *pf)
+ 	init_waitqueue_head(&pf->reset_wait_queue);
  
- 	pf->hw.udp_tunnel_nic.set_port = ice_udp_tunnel_set_port;
-@@ -4768,14 +4773,6 @@ int ice_init_dev(struct ice_pf *pf)
- 		pf->hw.udp_tunnel_nic.tables[1].tunnel_types =
- 			UDP_TUNNEL_TYPE_GENEVE;
- 	}
+ 	mutex_init(&pf->avail_q_mutex);
+-	pf->avail_txqs = bitmap_zalloc(pf->max_pf_txqs, GFP_KERNEL);
+-	if (!pf->avail_txqs)
+-		return -ENOMEM;
 -
--	err = ice_init_interrupt_scheme(pf);
--	if (err) {
--		dev_err(dev, "ice_init_interrupt_scheme failed: %d\n", err);
--		err = -EIO;
--		goto unroll_pf_init;
+-	pf->avail_rxqs = bitmap_zalloc(pf->max_pf_rxqs, GFP_KERNEL);
+-	if (!pf->avail_rxqs) {
+-		bitmap_free(pf->avail_txqs);
+-		pf->avail_txqs = NULL;
+-		return -ENOMEM;
 -	}
 -
- 	/* In case of MSIX we are going to setup the misc vector right here
- 	 * to handle admin queue events etc. In case of legacy and MSI
- 	 * the misc functionality and queue processing is combined in
-@@ -4784,16 +4781,16 @@ int ice_init_dev(struct ice_pf *pf)
- 	err = ice_req_irq_msix_misc(pf);
- 	if (err) {
- 		dev_err(dev, "setup of misc vector failed: %d\n", err);
--		goto unroll_irq_scheme_init;
-+		goto unroll_pf_init;
- 	}
+-	pf->txtime_txqs = bitmap_zalloc(pf->max_pf_txqs, GFP_KERNEL);
+-	if (!pf->txtime_txqs) {
+-		bitmap_free(pf->avail_txqs);
+-		pf->avail_txqs = NULL;
+-		bitmap_free(pf->avail_rxqs);
+-		pf->avail_rxqs = NULL;
+-		return -ENOMEM;
+-	}
  
+ 	mutex_init(&pf->vfs.table_lock);
+ 	hash_init(pf->vfs.table);
+@@ -4086,7 +4069,17 @@ static int ice_init_pf(struct ice_pf *pf)
+ 	xa_init(&pf->dyn_ports);
+ 	xa_init(&pf->sf_nums);
+ 
++	pf->avail_txqs = bitmap_zalloc(pf->max_pf_txqs, GFP_KERNEL);
++	pf->avail_rxqs = bitmap_zalloc(pf->max_pf_rxqs, GFP_KERNEL);
++	pf->txtime_txqs = bitmap_zalloc(pf->max_pf_txqs, GFP_KERNEL);
++	if (!pf->avail_txqs || !pf->avail_rxqs || !pf->txtime_txqs)
++		goto undo_init;
++
  	return 0;
- 
--unroll_irq_scheme_init:
--	ice_clear_interrupt_scheme(pf);
- unroll_pf_init:
- 	ice_deinit_pf(pf);
-+unroll_irq_scheme_init:
- 	ice_service_task_stop(pf);
-+	ice_clear_interrupt_scheme(pf);
- 	return err;
++undo_init:
++	/* deinit handles half-initialized pf just fine */
++	ice_deinit_pf(pf);
++	return -ENOMEM;
  }
  
+ /**
 -- 
 2.51.0
 
