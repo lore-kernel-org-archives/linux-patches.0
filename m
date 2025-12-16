@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14E834D4E4;
-	Tue, 16 Dec 2025 11:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA1034D903;
+	Tue, 16 Dec 2025 11:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885580; cv=none; b=oyXUcbPUG+cBZrR/D/qHzhPR794Z5v6H4HH93az/11XGrsUlpTwoVZUOfCckQJKYSQOfU8IIIFcuVnZRHDPjuV+aTPF+s/7MfiCsOn1mR+FSla9r5LSkGBq/tAAIagrsJdyQrEiNBzVmMOvdvIflfM+plxncuovzqnNMDKViQ6I=
+	t=1765885583; cv=none; b=ZeyOJvTOMEnrNpOCu4MIB0AeWGS5marYTiB8O7YV9OEPp1Ip7BOBhuJ3f7SKS0YtBQ0ffWEVejYCjBNYvjcYcPznob+WVWP9Xu6cyuk2S9Xx2KyRor9Q1ZC0Xbt0bHZ3SGN+tr1GUfWs8CSZP4JsmfBgWyJphPx/2r8GHcghjBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885580; c=relaxed/simple;
-	bh=cJCBAu4Xsd7YHC3MdAhW40lmf8oOS+ely9pbpFVahLY=;
+	s=arc-20240116; t=1765885583; c=relaxed/simple;
+	bh=atcNpFlFvhjLRiqYLVhlOZeWy+6bavROg/7J+Alxe9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OC8OZ+U6z/iHgakiACrR5EXiRU21FvFy50Dp7/DNAwbOG1ApL0HmN3vggJc2ihCyzZpNY4aobynU45/QaJzDwl458ZBQTG7xUlxJMuDe5vhvPTCFAL4n7uAf5aZlr/5Ej3I07B+MS+7T7K5eEUq8WjbqOvmgwbXKJtAS02hsFsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLEg2Dj/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uCrZFg6HxPOBwE8K18W1gjYS4VMVIGMQQWywO1vHJENpeMSBZ2goHI/oLRCSKGze0TWnEQU7qU8s20ko9o9L95YmDpzxO6HZACH2RPxmRRtExaocKKwRAbAxGkXFN5A6jqdSbc0pX4h0ucZdr0qVG/y1cReUn1uwLw+MaZewFBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Utxb7mJR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLEg2Dj/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F25C4CEF1;
-	Tue, 16 Dec 2025 11:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Utxb7mJR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93FCC4CEF1;
+	Tue, 16 Dec 2025 11:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885579;
-	bh=cJCBAu4Xsd7YHC3MdAhW40lmf8oOS+ely9pbpFVahLY=;
+	s=korg; t=1765885583;
+	bh=atcNpFlFvhjLRiqYLVhlOZeWy+6bavROg/7J+Alxe9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLEg2Dj/OY8ZE1DmTS7LoZLLcAThhcgHG8DV70uknHulfABpcBi1mHJ1TGvCur2Fe
-	 6UejrWOaBa1XYJvkyqNG+U928hSfucOfRSYbz8cQ7eVUDhpnFdkGklfbOtRbWhtf7E
-	 K2OglUcY+eYqk11HQafoshTk9c6foOZIIrEnfdOI=
+	b=Utxb7mJRaq+NP4t0MLPPp4k6KcE6H1CaMkbvIIwUZTgNuzT0Vee6wTTBc+Cim3KHC
+	 fY35RZ+xUWsZKVRLEcfpo4R+4lErDCie1WXrbKc1UmlQ2yjTTFMu+W7RvoiN2R0S5k
+	 S5IlcA/hpSbyNz1bB/T1PBsFgQZM5i46fgavINSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Lee Jones <lee@kernel.org>,
+	Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 182/507] mfd: da9055: Fix missing regmap_del_irq_chip() in error path
-Date: Tue, 16 Dec 2025 12:10:23 +0100
-Message-ID: <20251216111352.109505105@linuxfoundation.org>
+Subject: [PATCH 6.17 183/507] wifi: ath12k: Fix timeout error during beacon stats retrieval
+Date: Tue, 16 Dec 2025 12:10:24 +0100
+Message-ID: <20251216111352.145380811@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,37 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
 
-[ Upstream commit 1b58acfd067ca16116b9234cd6b2d30cc8ab7502 ]
+[ Upstream commit 2977567b244f056d86658160659f06cd6c78ba3d ]
 
-When da9055_device_init() fails after regmap_add_irq_chip()
-succeeds but mfd_add_devices() fails, the error handling path
-only calls mfd_remove_devices() but forgets to call
-regmap_del_irq_chip(). This results in a resource leak.
+Currently, for beacon_stats, ath12k_mac_get_fw_stats() is called
+for each started BSS on the specified hardware.
+ath12k_mac_get_fw_stats() will wait for the fw_stats_done completion
+after fetching the requested data from firmware. For the beacon_stats,
+fw_stats_done completion will be set only when stats are received for
+all BSSes. However, for other stats like vdev_stats or pdev_stats, there
+is one request to the firmware for all enabled BSSes. Since beacon_stats
+is fetched individually for all BSSes enabled in that pdev, waiting for
+the completion event results in a timeout error when multiple BSSes are
+enabled.
 
-Fix this by adding regmap_del_irq_chip() to the error path so
-that resources are released properly.
+Avoid this by completing the fw_stats_done immediately after
+updating the requested BSS's beacon stats in the list. Subsequently,
+this list will be used to display the beacon stats for all enabled
+BSSes in the requested pdev.
 
-Fixes: 2896434cf272 ("mfd: DA9055 core driver")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Link: https://patch.msgid.link/20251010011737.1078-1-vulab@iscas.ac.cn
-Signed-off-by: Lee Jones <lee@kernel.org>
+Additionally, remove 'num_bcn_recvd' from the ath12k_fw_stats struct
+as it is no longer needed.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: 9fe4669ae919 ("wifi: ath12k: Request beacon stats from firmware")
+Signed-off-by: Manish Dharanenthiran <manish.dharanenthiran@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251031-beacon_stats-v1-2-f52fce7b03ac@qti.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/da9055-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/ath/ath12k/core.c |  2 --
+ drivers/net/wireless/ath/ath12k/core.h |  1 -
+ drivers/net/wireless/ath/ath12k/wmi.c  | 10 +---------
+ 3 files changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/drivers/mfd/da9055-core.c b/drivers/mfd/da9055-core.c
-index 1f727ef60d638..8c989b74f924e 100644
---- a/drivers/mfd/da9055-core.c
-+++ b/drivers/mfd/da9055-core.c
-@@ -388,6 +388,7 @@ int da9055_device_init(struct da9055 *da9055)
+diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
+index a2137b363c2fe..cc352eef19399 100644
+--- a/drivers/net/wireless/ath/ath12k/core.c
++++ b/drivers/net/wireless/ath/ath12k/core.c
+@@ -1,7 +1,6 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
- err:
- 	mfd_remove_devices(da9055->dev);
-+	regmap_del_irq_chip(da9055->chip_irq, da9055->irq_data);
- 	return ret;
+@@ -1250,7 +1249,6 @@ void ath12k_fw_stats_reset(struct ath12k *ar)
+ 	spin_lock_bh(&ar->data_lock);
+ 	ath12k_fw_stats_free(&ar->fw_stats);
+ 	ar->fw_stats.num_vdev_recvd = 0;
+-	ar->fw_stats.num_bcn_recvd = 0;
+ 	spin_unlock_bh(&ar->data_lock);
+ }
+ 
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index 519f826f56c8e..65b75cae1fb99 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -640,7 +640,6 @@ struct ath12k_fw_stats {
+ 	struct list_head vdevs;
+ 	struct list_head bcn;
+ 	u32 num_vdev_recvd;
+-	u32 num_bcn_recvd;
+ };
+ 
+ struct ath12k_dbg_htt_stats {
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index c69be688e189c..82d0773b0380d 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -8298,18 +8298,10 @@ static void ath12k_wmi_fw_stats_process(struct ath12k *ar,
+ 			ath12k_warn(ab, "empty beacon stats");
+ 			return;
+ 		}
+-		/* Mark end until we reached the count of all started VDEVs
+-		 * within the PDEV
+-		 */
+-		if (ar->num_started_vdevs)
+-			is_end = ((++ar->fw_stats.num_bcn_recvd) ==
+-				  ar->num_started_vdevs);
+ 
+ 		list_splice_tail_init(&stats->bcn,
+ 				      &ar->fw_stats.bcn);
+-
+-		if (is_end)
+-			complete(&ar->fw_stats_done);
++		complete(&ar->fw_stats_done);
+ 	}
  }
  
 -- 
