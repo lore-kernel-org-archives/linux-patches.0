@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F7F3355029;
-	Tue, 16 Dec 2025 11:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900DC35502F;
+	Tue, 16 Dec 2025 11:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885968; cv=none; b=s7pWlJmCvALKtUbdatVE78wceq3/Kt1sZ401WfSIMI8Nf2h0wGAvGyepqvosMZlrM0idSDJInEJiBvH8UWuZ+NcsYnHrD2LmsjvrPXiMbKl2EbZCmNDoBhy0SpXUdhBeLfT8+8eAWEcJdFu4T7d1YY9kSTRW5xybzh8tWDR4x0k=
+	t=1765885971; cv=none; b=lU3h9a5eOYBZQ6+YU0FvnZaMQH8HdhcMqV0Ml0CdMkikcoke/Ym9kgzIhuL0qProaTlLOpqP/W2NQ29Nacc/VzoJsuEQBGR9DCxzUKyecZQLDdUhUuxtPkY8TbI0CLzPWXk579onciSgElcKCOPrdgjvp7zJ6bs2+dLNRRBhT78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885968; c=relaxed/simple;
-	bh=j61JN4bg2v4rwWEUChzl+wu8Pi0QYIcn6+TEPVYVuak=;
+	s=arc-20240116; t=1765885971; c=relaxed/simple;
+	bh=wTmyDeEiDvXNSdK8TlfUfgvpUPmkm8/v8OX/e8Y0Hsw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sy/FQi288bCmIhzX9LDM/L4Ve9oIve41jWZh8WiXN07EVZCmbaBYBjvCH5c2uGVKfZ9VQN6+xUeDn1Z/r0Ao82qFHB1yWFeqaU2v3VUlEC4hfhDdJglgoydbN4gci91XvzA5esk4zCuGXQA1rsqnnddQt/TiTUm1T7IO9t3SO7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wjOIuNQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AvGXECCKaCb3jAJ7MgMXKAGVMYPbKIhS/zReYg8pXfIpG+Sd4Jv9zFsrwLsRKd/A5uYuVFbTXYbT15fPwoy1xHuj1zkr/6P/eXk+XSKUSZzlxu4yGkZAWd2FLUzOyIjhpQYoMH32IW6O7SFAGEPMWSGWQFb0z5MozbKBwba1f/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RtEAl+lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wjOIuNQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9404DC4CEF1;
-	Tue, 16 Dec 2025 11:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RtEAl+lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9D8C4CEF1;
+	Tue, 16 Dec 2025 11:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885968;
-	bh=j61JN4bg2v4rwWEUChzl+wu8Pi0QYIcn6+TEPVYVuak=;
+	s=korg; t=1765885971;
+	bh=wTmyDeEiDvXNSdK8TlfUfgvpUPmkm8/v8OX/e8Y0Hsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjOIuNQFqyJHv71bhS8K1MtEiqTPb72sxDrh5vMb0+bhCDKFm9C//bpopo28VILEs
-	 z4YFn+TE6vcgse3knlRV9ehqNH9VdhQHYldNZ8SAOmnGKrb4yVNKVMvkj/z67YwubF
-	 GQKRWo3EAMsC4q5101eOJfWVxUzAF0tCgkYr6fKs=
+	b=RtEAl+lhECT0ayIJ1jo+PBa8JDBgdXOTadnEqYvbIMRBEuOu778cyHn0TuoxH4hOF
+	 Di8jH/95u9pjyWKWc5t1jsX5oC0KWKghqdwz4FZTBpOrH8rgR6nQbDsPwjPxScOFp9
+	 frZA9zhPVyJ8eRdS1TWcwABDDRN+R2pLvEXqx4dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Dahl <ada@thorsis.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Ridong <chenridong@huawei.com>,
+	Waiman Long <longman@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 298/507] net: phy: adin1100: Fix software power-down ready condition
-Date: Tue, 16 Dec 2025 12:12:19 +0100
-Message-ID: <20251216111356.270840765@linuxfoundation.org>
+Subject: [PATCH 6.17 299/507] cpuset: Treat cpusets in attaching as populated
+Date: Tue, 16 Dec 2025 12:12:20 +0100
+Message-ID: <20251216111356.306602722@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -47,56 +46,119 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Dahl <ada@thorsis.com>
+From: Chen Ridong <chenridong@huawei.com>
 
-[ Upstream commit bccaf1fe08f2c9f96f6bc38391d41e67f6bf38e3 ]
+[ Upstream commit b1bcaed1e39a9e0dfbe324a15d2ca4253deda316 ]
 
-Value CRSM_SFT_PD written to Software Power-Down Control Register
-(CRSM_SFT_PD_CNTRL) is 0x01 and therefor different to value
-CRSM_SFT_PD_RDY (0x02) read from System Status Register (CRSM_STAT) for
-confirmation powerdown has been reached.
+Currently, the check for whether a partition is populated does not
+account for tasks in the cpuset of attaching. This is a corner case
+that can leave a task stuck in a partition with no effective CPUs.
 
-The condition could have only worked when disabling powerdown
-(both 0x00), but never when enabling it (0x01 != 0x02).
+The race condition occurs as follows:
 
-Result is a timeout, like so:
+cpu0				cpu1
+				//cpuset A  with cpu N
+migrate task p to A
+cpuset_can_attach
+// with effective cpus
+// check ok
 
-    $ ifdown eth0
-    macb f802c000.ethernet eth0: Link is Down
-    ADIN1100 f802c000.ethernet-ffffffff:01: adin_set_powerdown_mode failed: -110
-    ADIN1100 f802c000.ethernet-ffffffff:01: adin_set_powerdown_mode failed: -110
+// cpuset_mutex is not held	// clear cpuset.cpus.exclusive
+				// making effective cpus empty
+				update_exclusive_cpumask
+				// tasks_nocpu_error check ok
+				// empty effective cpus, partition valid
+cpuset_attach
+...
+// task p stays in A, with non-effective cpus.
 
-Fixes: 7eaf9132996a ("net: phy: adin1100: Add initial support for ADIN1100 industrial PHY")
-Signed-off-by: Alexander Dahl <ada@thorsis.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Acked-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20251119124737.280939-2-ada@thorsis.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+To fix this issue, this patch introduces cs_is_populated, which considers
+tasks in the attaching cpuset. This new helper is used in validate_change
+and partition_is_populated.
+
+Fixes: e2d59900d936 ("cgroup/cpuset: Allow no-task partition to have empty cpuset.cpus.effective")
+Signed-off-by: Chen Ridong <chenridong@huawei.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/adin1100.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cgroup/cpuset.c | 35 +++++++++++++++++++++++++++--------
+ 1 file changed, 27 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/phy/adin1100.c b/drivers/net/phy/adin1100.c
-index bd7a47a903aca..10b796c2daee7 100644
---- a/drivers/net/phy/adin1100.c
-+++ b/drivers/net/phy/adin1100.c
-@@ -201,7 +201,7 @@ static int adin_set_powerdown_mode(struct phy_device *phydev, bool en)
- 		return ret;
- 
- 	return phy_read_mmd_poll_timeout(phydev, MDIO_MMD_VEND1, ADIN_CRSM_STAT, ret,
--					 (ret & ADIN_CRSM_SFT_PD_RDY) == val,
-+					 !!(ret & ADIN_CRSM_SFT_PD_RDY) == en,
- 					 1000, 30000, true);
+diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
+index fd890b34a8403..06a58f62be58c 100644
+--- a/kernel/cgroup/cpuset.c
++++ b/kernel/cgroup/cpuset.c
+@@ -327,6 +327,15 @@ static inline bool is_in_v2_mode(void)
+ 	      (cpuset_cgrp_subsys.root->flags & CGRP_ROOT_CPUSET_V2_MODE);
  }
  
++static inline bool cpuset_is_populated(struct cpuset *cs)
++{
++	lockdep_assert_held(&cpuset_mutex);
++
++	/* Cpusets in the process of attaching should be considered as populated */
++	return cgroup_is_populated(cs->css.cgroup) ||
++		cs->attach_in_progress;
++}
++
+ /**
+  * partition_is_populated - check if partition has tasks
+  * @cs: partition root to be checked
+@@ -339,21 +348,31 @@ static inline bool is_in_v2_mode(void)
+ static inline bool partition_is_populated(struct cpuset *cs,
+ 					  struct cpuset *excluded_child)
+ {
+-	struct cgroup_subsys_state *css;
+-	struct cpuset *child;
++	struct cpuset *cp;
++	struct cgroup_subsys_state *pos_css;
+ 
+-	if (cs->css.cgroup->nr_populated_csets)
++	/*
++	 * We cannot call cs_is_populated(cs) directly, as
++	 * nr_populated_domain_children may include populated
++	 * csets from descendants that are partitions.
++	 */
++	if (cs->css.cgroup->nr_populated_csets ||
++	    cs->attach_in_progress)
+ 		return true;
+ 	if (!excluded_child && !cs->nr_subparts)
+ 		return cgroup_is_populated(cs->css.cgroup);
+ 
+ 	rcu_read_lock();
+-	cpuset_for_each_child(child, css, cs) {
+-		if (child == excluded_child)
++	cpuset_for_each_descendant_pre(cp, pos_css, cs) {
++		if (cp == cs || cp == excluded_child)
+ 			continue;
+-		if (is_partition_valid(child))
++
++		if (is_partition_valid(cp)) {
++			pos_css = css_rightmost_descendant(pos_css);
+ 			continue;
+-		if (cgroup_is_populated(child->css.cgroup)) {
++		}
++
++		if (cpuset_is_populated(cp)) {
+ 			rcu_read_unlock();
+ 			return true;
+ 		}
+@@ -584,7 +603,7 @@ static int validate_change(struct cpuset *cur, struct cpuset *trial)
+ 	 * be changed to have empty cpus_allowed or mems_allowed.
+ 	 */
+ 	ret = -ENOSPC;
+-	if ((cgroup_is_populated(cur->css.cgroup) || cur->attach_in_progress)) {
++	if (cpuset_is_populated(cur)) {
+ 		if (!cpumask_empty(cur->cpus_allowed) &&
+ 		    cpumask_empty(trial->cpus_allowed))
+ 			goto out;
 -- 
 2.51.0
 
