@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A6234B661;
-	Tue, 16 Dec 2025 11:59:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2102F34B424;
+	Tue, 16 Dec 2025 11:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886393; cv=none; b=WOr3b2FTXBctqcIjIyKodAQRe/se1oX9yUohvvD88O8ojvGglh5R0lLlRIkyWDUlTugsYdycAYMYk4YLQ+fF7ynxoxPE1iRhtPu6jN8F4sfgd7Kax1Y8PlW2oNo1+lXWAA4GMRMR0n33X52el89WQCmRaEYPglKiSE5ZqD51BWA=
+	t=1765886397; cv=none; b=iQvKl67nXBGoJOnK8kpAlFCsNfnbBsNwcp4THCsL+932bvPweNZDOU2zoQFkxB3rx2XOX7ltRUotdS6WrhwJbIWNXO1H08zJdQswpwSaHOZBYxvKwy/ZEbmjb6vj0k0W2UIOKMzV6DTFMw06uT2Q8NA88hkCGdgEyiDmsd7XGLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886393; c=relaxed/simple;
-	bh=OjsVD60L6VO/gIP0WAzk9c99NYrta/jy7EnX9vdhDno=;
+	s=arc-20240116; t=1765886397; c=relaxed/simple;
+	bh=kCMBEz/zifnymArVKK7DVJYnN0hfvrl84aZFA1IJUIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JU6uaiE66FFFtoGIH+fg5M49UT42qLh5XeU0WMUSTfIkHIIHVKwvBanXjP8aTo4djp2n81HGVoWLxZzOzOzszo0OJzmxoDyeDk7o5MqX4wo54wr1XZi6ufc3+UORFjhEOgNxGIyMPqbKfzZj5kQx7VrC/Hccv11vNdvNSSu1CiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0W/edI7U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dLARqkyC7pw0pbWLDLbsTIAWbRj18jhZpK3aL3yL5gdNchPkzJ38bhXAY0g1ZFf9RIBd5XeQxyNEY/SHNQBqdQ+HDHGT6+UOepcrpYjBVXNMQ3uY/pwxo3Pxviz+ToSIFf/UhnzxDdLkGbHfoeP1sLN8ZOre8iUVpZuXIwJvBmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcsEf1Yv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0W/edI7U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06389C4CEF1;
-	Tue, 16 Dec 2025 11:59:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcsEf1Yv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B885C4CEF1;
+	Tue, 16 Dec 2025 11:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886393;
-	bh=OjsVD60L6VO/gIP0WAzk9c99NYrta/jy7EnX9vdhDno=;
+	s=korg; t=1765886397;
+	bh=kCMBEz/zifnymArVKK7DVJYnN0hfvrl84aZFA1IJUIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0W/edI7U2ia5LvUs1Tm51L6uP2ymZ0jSRJ0kK0Gt9bokp4j9BVf/WEmpP9SkVNWxC
-	 8rLZV0DJ6QMQE5BgDtbFkUBBZ+jBhdHi5wk0NI11K38ConTTSwPjd+HCiKRjw4r+KU
-	 NmjCVXro6VRR80EgaAmLa1OuJw6QwRQWvSOlYQio=
+	b=dcsEf1Yvu7sAolL5Oa1CkQNI55u8fSpg8ngubqduJU+7tq8njhhhh+jblD2Te/RXf
+	 FpLV+QYGIX+xBOZo+OFtHI3vvClFkCOnjzaT8QJEWc8+qDWatureSv4xVb+VwaYBSi
+	 rk3wMaPrUmmgHJFEAz6NPoci/WnBWVVMrJDC3F30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sparkhuang <huangshaobo3@xiaomi.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ilias Stamatis <ilstam@amazon.com>,
+	"David Hildenbrand (Red Hat)" <david@kernel.org>,
+	Andriy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Baoquan He <bhe@redhat.com>,
+	"Huang, Ying" <huang.ying.caritas@gmail.com>,
+	Nadav Amit <nadav.amit@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 390/507] regulator: core: Protect regulator_supply_alias_list with regulator_list_mutex
-Date: Tue, 16 Dec 2025 12:13:51 +0100
-Message-ID: <20251216111359.584165555@linuxfoundation.org>
+Subject: [PATCH 6.17 391/507] Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"
+Date: Tue, 16 Dec 2025 12:13:52 +0100
+Message-ID: <20251216111359.619860822@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -46,111 +50,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: sparkhuang <huangshaobo3@xiaomi.com>
+From: Ilias Stamatis <ilstam@amazon.com>
 
-[ Upstream commit 0cc15a10c3b4ab14cd71b779fd5c9ca0cb2bc30d ]
+[ Upstream commit 6fb3acdebf65a72df0a95f9fd2c901ff2bc9a3a2 ]
 
-regulator_supply_alias_list was accessed without any locking in
-regulator_supply_alias(), regulator_register_supply_alias(), and
-regulator_unregister_supply_alias(). Concurrent registration,
-unregistration and lookups can race, leading to:
+Commit 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only
+logic") removed an optimization introduced by commit 756398750e11
+("resource: avoid unnecessary lookups in find_next_iomem_res()").  That
+was not called out in the message of the first commit explicitly so it's
+not entirely clear whether removing the optimization happened
+inadvertently or not.
 
-1 use-after-free if an alias entry is removed while being read,
-2 duplicate entries when two threads register the same alias,
-3 inconsistent alias mappings observed by consumers.
+As the original commit message of the optimization explains there is no
+point considering the children of a subtree in find_next_iomem_res() if
+the top level range does not match.
 
-Protect all traversals, insertions and deletions on
-regulator_supply_alias_list with the existing regulator_list_mutex.
+Reinstating the optimization results in performance improvements in
+systems where /proc/iomem is ~5k lines long.  Calling mmap() on /dev/mem
+in such platforms takes 700-1500μs without the optimisation and 10-50μs
+with the optimisation.
 
-Fixes: a06ccd9c3785f ("regulator: core: Add ability to create a lookup alias for supply")
-Signed-off-by: sparkhuang <huangshaobo3@xiaomi.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251127025716.5440-1-huangshaobo3@xiaomi.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Note that even though commit 97523a4edb7b removed the 'sibling_only'
+parameter from next_resource(), newer kernels have basically reinstated it
+under the name 'skip_children'.
+
+Link: https://lore.kernel.org/all/20251124165349.3377826-1-ilstam@amazon.com/T/#u
+Fixes: 97523a4edb7b ("kernel/resource: remove first_lvl / siblings_only logic")
+Signed-off-by: Ilias Stamatis <ilstam@amazon.com>
+Acked-by: David Hildenbrand (Red Hat) <david@kernel.org>
+Cc: Andriy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: "Huang, Ying" <huang.ying.caritas@gmail.com>
+Cc: Nadav Amit <nadav.amit@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ kernel/resource.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 80d3e7dbe4bc3..8d3d6085f0ad8 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1947,6 +1947,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
+diff --git a/kernel/resource.c b/kernel/resource.c
+index f9bb5481501a3..ff00e563ecead 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -341,6 +341,8 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
+ 			       unsigned long flags, unsigned long desc,
+ 			       struct resource *res)
  {
- 	struct regulator_supply_alias *map;
++	/* Skip children until we find a top level range that matches */
++	bool skip_children = true;
+ 	struct resource *p;
  
-+	mutex_lock(&regulator_list_mutex);
- 	map = regulator_find_supply_alias(*dev, *supply);
- 	if (map) {
- 		dev_dbg(*dev, "Mapping supply %s to %s,%s\n",
-@@ -1955,6 +1956,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
- 		*dev = map->alias_dev;
- 		*supply = map->alias_supply;
- 	}
-+	mutex_unlock(&regulator_list_mutex);
- }
+ 	if (!res)
+@@ -351,7 +353,7 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
  
- static int regulator_match(struct device *dev, const void *data)
-@@ -2497,22 +2499,26 @@ int regulator_register_supply_alias(struct device *dev, const char *id,
- 				    const char *alias_id)
- {
- 	struct regulator_supply_alias *map;
-+	struct regulator_supply_alias *new_map;
+ 	read_lock(&resource_lock);
  
--	map = regulator_find_supply_alias(dev, id);
--	if (map)
--		return -EEXIST;
--
--	map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
--	if (!map)
-+	new_map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
-+	if (!new_map)
- 		return -ENOMEM;
+-	for_each_resource(&iomem_resource, p, false) {
++	for_each_resource(&iomem_resource, p, skip_children) {
+ 		/* If we passed the resource we are looking for, stop */
+ 		if (p->start > end) {
+ 			p = NULL;
+@@ -362,6 +364,12 @@ static int find_next_iomem_res(resource_size_t start, resource_size_t end,
+ 		if (p->end < start)
+ 			continue;
  
--	map->src_dev = dev;
--	map->src_supply = id;
--	map->alias_dev = alias_dev;
--	map->alias_supply = alias_id;
--
--	list_add(&map->list, &regulator_supply_alias_list);
-+	mutex_lock(&regulator_list_mutex);
-+	map = regulator_find_supply_alias(dev, id);
-+	if (map) {
-+		mutex_unlock(&regulator_list_mutex);
-+		kfree(new_map);
-+		return -EEXIST;
-+	}
- 
-+	new_map->src_dev = dev;
-+	new_map->src_supply = id;
-+	new_map->alias_dev = alias_dev;
-+	new_map->alias_supply = alias_id;
-+	list_add(&new_map->list, &regulator_supply_alias_list);
-+	mutex_unlock(&regulator_list_mutex);
- 	pr_info("Adding alias for supply %s,%s -> %s,%s\n",
- 		id, dev_name(dev), alias_id, dev_name(alias_dev));
- 
-@@ -2532,11 +2538,13 @@ void regulator_unregister_supply_alias(struct device *dev, const char *id)
- {
- 	struct regulator_supply_alias *map;
- 
-+	mutex_lock(&regulator_list_mutex);
- 	map = regulator_find_supply_alias(dev, id);
- 	if (map) {
- 		list_del(&map->list);
- 		kfree(map);
- 	}
-+	mutex_unlock(&regulator_list_mutex);
- }
- EXPORT_SYMBOL_GPL(regulator_unregister_supply_alias);
- 
++		/*
++		 * We found a top level range that matches what we are looking
++		 * for. Time to start checking children too.
++		 */
++		skip_children = false;
++
+ 		/* Found a match, break */
+ 		if (is_type_match(p, flags, desc))
+ 			break;
 -- 
 2.51.0
 
