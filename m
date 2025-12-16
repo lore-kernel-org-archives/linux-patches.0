@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABB235CBCF;
-	Tue, 16 Dec 2025 12:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1BF35E53F;
+	Tue, 16 Dec 2025 12:15:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887325; cv=none; b=NZlx8sF0Sgpdh6GMhKH4pgK0CbrkNJxwmwgzx9mWB68UGQ1K9jD7tc0AOwVmJtTUExQJBI6G7u341zHBzWZlISwHPJKG9W6CgckJGXz70huZKM5ugd927jxHxRpoYaVoPwL/bXBAm/01bKUWf1+lTyMLrSNW6gWMbu8h/7bh4jk=
+	t=1765887328; cv=none; b=iO1/+kFSAFtZs9FsmQPe27Yauzrd2ZLjvFaZtWzz+WitfrkUIu3e3iPRmOKOhLum4xTFuFF93Tyac80oRt18MNNa+E61MMbqx1b4LFeKT8Az91bhQ3uweapgNzmtRaZt+mr6dphvH3pJAP0VdSBadWWyLFcgfmaV54+i1ffYUQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887325; c=relaxed/simple;
-	bh=k1gm23oBa45U3/QtLmX+ThVse+3mnzUm9B/p1Eqhn2o=;
+	s=arc-20240116; t=1765887328; c=relaxed/simple;
+	bh=QvG8sCUz37MjSQ7L/sB1qy3Py5jx103Dta3cGmOia0I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NtyCc6G//YRzE4H0h2fCHEdLQBpz3J3Z2dtz8BIMyjwG6xsCG1o920+vmhL7ZuawzgfPrZT0s0tJ9l3sSk24FqvnRUaXD+klDUeuTHA4uBRBgb5jBkZanuszjhYLfCoKe4QqgI1ltIk3YqYB58GyPYuuSpIGPyFqDtFKFD7Izo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p5gO3ZvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q9zK+b5Ng/awVtEKU6OvFQBOVVe7W5c8VxYdzM0ZCfSHmiLqapSzpwdqQkHS3yM9IcHbTVxCq/5j5vUN7nk+nawBj+UfcFa+MjTyGECR8DhTFCdjKUhdqeWQ3Y1JpPe5yZ+cXyCLPj2HAVzRNwXJg1FkPJ9SjuSUy5aC+txCsu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqOXm1B9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p5gO3ZvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40739C4CEF1;
-	Tue, 16 Dec 2025 12:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqOXm1B9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F54C4CEF1;
+	Tue, 16 Dec 2025 12:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887324;
-	bh=k1gm23oBa45U3/QtLmX+ThVse+3mnzUm9B/p1Eqhn2o=;
+	s=korg; t=1765887328;
+	bh=QvG8sCUz37MjSQ7L/sB1qy3Py5jx103Dta3cGmOia0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5gO3ZvLHIKqjeBPL9kCmYQrdEzCfof2+YyRfI/wDA4LHm0Z2v+vj0aAyMLdCqQTa
-	 oCie8FrYaWJK+6lYH3xYcHGYzASgf7K8HXRvVTgvYmgNWwZQfs0NC8B0TP41zW3Di3
-	 Anmh3w3TsB62C53g7MlkKjt7POEyo1VoD1Y8xJBk=
+	b=yqOXm1B9wMTfywJpYzC/cIvbuHF/lvBv/3xcZ8Dqv176m4MOfIwMygkGbPi7GBUJd
+	 cPztMatb1rjP3o+m/w3R7OJyoj5NJ+KstVjVxK7rsxyoD7U4DeH3OuZlDsp53wrkWw
+	 GnFd7EEUS1f9hcwUmT6YQFM3EniOeaGheWlcYipo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Thomas Richard (TI.com)" <thomas.richard@bootlin.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Nishanth Menon <nm@ti.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/614] firmware: ti_sci: Set IO Isolation only if the firmware is capable
-Date: Tue, 16 Dec 2025 12:09:22 +0100
-Message-ID: <20251216111408.442328570@linuxfoundation.org>
+Subject: [PATCH 6.18 196/614] ns: add NS_COMMON_INIT()
+Date: Tue, 16 Dec 2025 12:09:23 +0100
+Message-ID: <20251216111408.479312979@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,98 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 999e9bc953e321651d69556fdd5dfd178f96f128 ]
+[ Upstream commit d915fe20e5cba4bd50e41e792a32dcddc7490e25 ]
 
-Prevent calling ti_sci_cmd_set_io_isolation() on firmware
-that does not support the IO_ISOLATION capability. Add the
-MSG_FLAG_CAPS_IO_ISOLATION capability flag and check it before
-attempting to set IO isolation during suspend/resume operations.
+Add an initializer that can be used for the ns common initialization for
+static namespace such as most init namespaces.
 
-Without this check, systems with older firmware may experience
-undefined behavior or errors when entering/exiting suspend states.
-
-Fixes: ec24643bdd62 ("firmware: ti_sci: Add system suspend and resume call")
-Signed-off-by: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://patch.msgid.link/20251031-ti-sci-io-isolation-v2-1-60d826b65949@bootlin.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Suggested-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://patch.msgid.link/87ecqhy2y5.ffs@tglx
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 3dd50c58664e ("ns: initialize ns_list_node for initial namespaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 21 +++++++++++++--------
- drivers/firmware/ti_sci.h |  2 ++
- 2 files changed, 15 insertions(+), 8 deletions(-)
+ include/linux/ns_common.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 49fd2ae01055d..8d96a3c12b36a 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -3751,9 +3751,11 @@ static int __maybe_unused ti_sci_suspend_noirq(struct device *dev)
- 	struct ti_sci_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
+diff --git a/include/linux/ns_common.h b/include/linux/ns_common.h
+index f5b68b8abb543..3a72c3f81eca4 100644
+--- a/include/linux/ns_common.h
++++ b/include/linux/ns_common.h
+@@ -119,6 +119,16 @@ void __ns_common_free(struct ns_common *ns);
+ 		struct user_namespace *:   CLONE_NEWUSER,   \
+ 		struct uts_namespace *:    CLONE_NEWUTS)
  
--	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
--	if (ret)
--		return ret;
-+	if (info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION) {
-+		ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	return 0;
- }
-@@ -3767,9 +3769,11 @@ static int __maybe_unused ti_sci_resume_noirq(struct device *dev)
- 	u8 pin;
- 	u8 mode;
- 
--	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_DISABLE);
--	if (ret)
--		return ret;
-+	if (info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION) {
-+		ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_DISABLE);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = ti_sci_msg_cmd_lpm_wake_reason(&info->handle, &source, &time, &pin, &mode);
- 	/* Do not fail to resume on error as the wake reason is not critical */
-@@ -3928,11 +3932,12 @@ static int ti_sci_probe(struct platform_device *pdev)
- 	}
- 
- 	ti_sci_msg_cmd_query_fw_caps(&info->handle, &info->fw_caps);
--	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s\n",
-+	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s%s\n",
- 		info->fw_caps & MSG_FLAG_CAPS_GENERIC ? "Generic" : "",
- 		info->fw_caps & MSG_FLAG_CAPS_LPM_PARTIAL_IO ? " Partial-IO" : "",
- 		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : "",
--		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : ""
-+		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : "",
-+		info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION ? " IO-Isolation" : ""
- 	);
- 
- 	ti_sci_setup_ops(info);
-diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
-index 701c416b2e78f..7559cde17b6cc 100644
---- a/drivers/firmware/ti_sci.h
-+++ b/drivers/firmware/ti_sci.h
-@@ -149,6 +149,7 @@ struct ti_sci_msg_req_reboot {
-  *		MSG_FLAG_CAPS_LPM_PARTIAL_IO: Partial IO in LPM
-  *		MSG_FLAG_CAPS_LPM_DM_MANAGED: LPM can be managed by DM
-  *		MSG_FLAG_CAPS_LPM_ABORT: Abort entry to LPM
-+ *		MSG_FLAG_CAPS_IO_ISOLATION: IO Isolation support
-  *
-  * Response to a generic message with message type TI_SCI_MSG_QUERY_FW_CAPS
-  * providing currently available SOC/firmware capabilities. SoC that don't
-@@ -160,6 +161,7 @@ struct ti_sci_msg_resp_query_fw_caps {
- #define MSG_FLAG_CAPS_LPM_PARTIAL_IO	TI_SCI_MSG_FLAG(4)
- #define MSG_FLAG_CAPS_LPM_DM_MANAGED	TI_SCI_MSG_FLAG(5)
- #define MSG_FLAG_CAPS_LPM_ABORT		TI_SCI_MSG_FLAG(9)
-+#define MSG_FLAG_CAPS_IO_ISOLATION	TI_SCI_MSG_FLAG(7)
- #define MSG_MASK_CAPS_LPM		GENMASK_ULL(4, 1)
- 	u64 fw_caps;
- } __packed;
++#define NS_COMMON_INIT(nsname, refs)							\
++{											\
++	.ns_type		= ns_common_type(&nsname),				\
++	.ns_id			= 0,							\
++	.inum			= ns_init_inum(&nsname),				\
++	.ops			= to_ns_operations(&nsname),				\
++	.stashed		= NULL,							\
++	.__ns_ref		= REFCOUNT_INIT(refs),					\
++}
++
+ #define ns_common_init(__ns)                     \
+ 	__ns_common_init(to_ns_common(__ns),     \
+ 			 ns_common_type(__ns),   \
 -- 
 2.51.0
 
