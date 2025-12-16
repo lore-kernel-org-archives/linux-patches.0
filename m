@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E3234EEFD;
-	Tue, 16 Dec 2025 11:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331A334EF04;
+	Tue, 16 Dec 2025 11:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886126; cv=none; b=b5QSQzK6E59pNfVKSGHUw12l+70wfX3eufF28nmuqvw01Hk3h6pB7ZNu7bhKd7QF3ZnSA2arbNTzZJ9SQp0/6GruhEhpHAeeXwo/PFTbDtCbnBiS7ygp+P00UFjlw0basSclC/uWHToqKuHt7zTAKSgFnIVZjQ4JoixnJTqLYug=
+	t=1765886129; cv=none; b=W2SGne0OufCIPTp5Zjt3SphUnl9LUzjRxW0mkvGm8f876nCMd9nXoeI5O2ejXRzbQqZxoqqf5SNvj+/tey38ukLzQyShFZ3Txr0PuxDEFZqnJfdLupceI09NmE05dxXHQLdZBb4HdovBKXr5oYLgJs6JzjeEmrfIyqe0SrXsqJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886126; c=relaxed/simple;
-	bh=4+gdgvTFhGKxsztQxiaBmliI9R1tI5b0vdDpzHms3YA=;
+	s=arc-20240116; t=1765886129; c=relaxed/simple;
+	bh=YqDfpA1WdO1XSY8F2lu5naDYKo/x4eBlzHe6ob+9ScM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CIDB7jSWpOX/DcT63fW69PIMQiv1UPtC1+q7JzbFgCf+wBalMB+Rfnh4CgeGGTg3A5SqQb3B7+urtDaaVI7hRsz4gxXQ62/ngQxYkv/NUtGRlK77aFx7lnki8HLjoApWsTFBlENYqe7ISfYkU93xwvy4UhJMD8FaTzjPEVIEbR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgz2gbX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bkEFT7lU6So7BVG48sozFKjyXB9ISV4fe1wHHXjfaBkDTbYhkr4G4gbu70oBR5Y91z2ViUmdSMYAVIrz2ftuw6+ekYexVlAcqh7cdtSQeNiHmq0Ws8hg74zdsr30sRNS1IAdJWpDSxHSQ9Q+phJmrnLjQAY3NP+VkUZlL6pvmU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsM1kC7Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgz2gbX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C03C4CEF1;
-	Tue, 16 Dec 2025 11:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsM1kC7Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94400C4CEF1;
+	Tue, 16 Dec 2025 11:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886125;
-	bh=4+gdgvTFhGKxsztQxiaBmliI9R1tI5b0vdDpzHms3YA=;
+	s=korg; t=1765886129;
+	bh=YqDfpA1WdO1XSY8F2lu5naDYKo/x4eBlzHe6ob+9ScM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgz2gbX5HamMuVF4mt4ZrtS09gJvl6YZOeagAfRy341jZt15aC9FDX8ATWyTmLfQQ
-	 FhvA0cS4aj/bVU79sgeU1e/vjfHJPEAwngIbtt/YOG0vmgTq3TVIA0/AowGSgrHDJv
-	 jc4DviMQlSO9bIh9sjpD3VDFdTZ+D7LRXLcaeL54=
+	b=fsM1kC7Ztay6vUQ23XQkS5JM6Ajlx1M9Hux15qyEvySDGcqgDp/JIWWtqvx7F05RP
+	 2alBnY4EvvDwErDsS58dcrT90MOn6ga+/YwU/pMpfYpBdrucFXurA0tDodW6nohSW7
+	 AQNeMlz49pJYABZamAm0FxQ0BeDWeoEpBOPnA9mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Timur Tabi <ttabi@nvidia.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 344/507] PCI: dwc: Fix wrong PORT_LOGIC_LTSSM_STATE_MASK definition
-Date: Tue, 16 Dec 2025 12:13:05 +0100
-Message-ID: <20251216111357.922348497@linuxfoundation.org>
+Subject: [PATCH 6.17 345/507] drm/nouveau: restrict the flush page to a 32-bit address
+Date: Tue, 16 Dec 2025 12:13:06 +0100
+Message-ID: <20251216111357.959430014@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,42 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Timur Tabi <ttabi@nvidia.com>
 
-[ Upstream commit bcc9a4a0bca3aee4303fa4a20302e57b24ac8f68 ]
+[ Upstream commit 04d98b3452331fa53ec3b698b66273af6ef73288 ]
 
-As per DesignWare Cores PCI Express Controller Databook, section 5.50,
-SII: Debug Signals, cxpl_debug_info[63:0]:
+The flush page DMA address is stored in a special register that is not
+associated with the GPU's standard DMA range.  For example, on Turing,
+the GPU's MMU can handle 47-bit addresses, but the flush page address
+register is limited to 40 bits.
 
-  [5:0] smlh_ltssm_state: LTSSM current state. Encoding is same as the
-  dedicated smlh_ltssm_state output.
+At the point during device initialization when the flush page is
+allocated, the DMA mask is still at its default of 32 bits.  So even
+though it's unlikely that the flush page could exist above a 40-bit
+address, the dma_map_page() call could fail, e.g. if IOMMU is disabled
+and the address is above 32 bits.  The simplest way to achieve all
+constraints is to allocate the page in the DMA32 zone.  Since the flush
+page is literally just a page, this is an acceptable limitation.  The
+alternative is to temporarily set the DMA mask to 40 (or 52 for Hopper
+and later) bits, but that could have unforseen side effects.
 
-The mask should be 6 bits, from 0 to 5. Hence, fix the mask definition.
+In situations where the flush page is allocated above 32 bits and IOMMU
+is disabled, you will get an error like this:
 
-Fixes: 23fe5bd4be90 ("PCI: keystone: Cleanup ks_pcie_link_up()")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-[mani: reworded description]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/1763122140-203068-1-git-send-email-shawn.lin@rock-chips.com
+nouveau 0000:65:00.0: DMA addr 0x0000000107c56000+4096 overflow (mask ffffffff, bus limit 0).
+
+Fixes: 5728d064190e ("drm/nouveau/fb: handle sysmem flush page from common code")
+Signed-off-by: Timur Tabi <ttabi@nvidia.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251113230323.1271726-1-ttabi@nvidia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.h | 2 +-
+ drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index cc71a2d90cd48..509e08e58b692 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -95,7 +95,7 @@
- #define PORT_LANE_SKEW_INSERT_MASK	GENMASK(23, 0)
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c
+index 8a286a9349ac6..7ce1b65e2c1c2 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c
+@@ -279,7 +279,7 @@ nvkm_fb_ctor(const struct nvkm_fb_func *func, struct nvkm_device *device,
+ 	mutex_init(&fb->tags.mutex);
  
- #define PCIE_PORT_DEBUG0		0x728
--#define PORT_LOGIC_LTSSM_STATE_MASK	0x1f
-+#define PORT_LOGIC_LTSSM_STATE_MASK	0x3f
- #define PORT_LOGIC_LTSSM_STATE_L0	0x11
- #define PCIE_PORT_DEBUG1		0x72C
- #define PCIE_PORT_DEBUG1_LINK_UP		BIT(4)
+ 	if (func->sysmem.flush_page_init) {
+-		fb->sysmem.flush_page = alloc_page(GFP_KERNEL | __GFP_ZERO);
++		fb->sysmem.flush_page = alloc_page(GFP_KERNEL | GFP_DMA32 | __GFP_ZERO);
+ 		if (!fb->sysmem.flush_page)
+ 			return -ENOMEM;
+ 
 -- 
 2.51.0
 
