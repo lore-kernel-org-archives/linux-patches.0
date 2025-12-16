@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06662357718;
-	Tue, 16 Dec 2025 12:02:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD461357718;
+	Tue, 16 Dec 2025 12:02:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886577; cv=none; b=bSFbBucG9JPBRdPExcm3YBekQ5cINPH/mDn7kYSYmOVMFLSYYqJEBXV5Q5l1ALooRNbeocRaOF2SpDE0JeHENKEH1RMUFv4a9nvn2FPva/uNoeD9DKGOhuddIS61lQNBBUNyvukWN1T7ouXAl9lBGCWTU2aorPQOafV/SdBugbg=
+	t=1765886579; cv=none; b=Yg3FY4TMw6eF07MsowXJLgbtBbdXhz45og660pQLUqTn8ujanYTzhalDbediUHORqaMrsxtZAg/lI/Dx7MgBQ66G1Nj5wIqfg87lon5dwArc7ru/Iuf76kV8OT6RNhDKFKuQ2PGGoyMRDn2mRZa5Cxxq30RpTBoidjlsbEnUtXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886577; c=relaxed/simple;
-	bh=F2cIlpW7P/Co9QPc/wFFFuHU9GpoEug+50UVUf3WckU=;
+	s=arc-20240116; t=1765886579; c=relaxed/simple;
+	bh=g6Y6U/zF4D6WRFSyCFZXLFYTvAclhbX6sSDcptmqJuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JzWfHpPC3eIyybfkfbPlIl7AgHEqYK1rvB6oqS2FJ5o5KBXSCb9n7eHsDkf6sYSvqQsn0/Ox/qjd8YcZ/iVk0jhbmJIEsuuiqLzOlW+WVIdjkKTw/UC7Y/TkUsDd8fxjtGnRQZuys+5ibg9EoGUh0EfokfOfF8CE4hffkc3gD6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTuAN8gv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PA2gF2SSgFky7I+SAfJCqM17cM1aD+/nIpR0gZx1AHAb09H+i+CU8ZCOBR4EU4Aa65cf35tWBYfIeOR/xpxK8vMMPI2VqlMoOsKcYRK7NsKArwnK+FlHU+qSOpucz/dHa6NDRAQDN+8K6eMITIDxl9tkXgloK0Icdr2bw6CZVnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogdWi+nf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTuAN8gv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1889BC4CEF1;
-	Tue, 16 Dec 2025 12:02:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogdWi+nf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2AFC4CEF1;
+	Tue, 16 Dec 2025 12:02:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886576;
-	bh=F2cIlpW7P/Co9QPc/wFFFuHU9GpoEug+50UVUf3WckU=;
+	s=korg; t=1765886579;
+	bh=g6Y6U/zF4D6WRFSyCFZXLFYTvAclhbX6sSDcptmqJuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTuAN8gv8hHpDQ/wdTfkETHNg8d2w8Ieeg6w7Ugsy4oyG005WTPjifXQ1Sam0L02I
-	 1qvWRQuq4dMpx0BV/HXWdQMVJ9nbhUAbF2FW22xFb3ovVhJxm/xrw/Botub+gP8vjB
-	 AnljvXlOYH8Mmlo7R69fqSllcy56p71GNpVbhElI=
+	b=ogdWi+nffSqp3vTmmi2UuA4ARDyjkCbbE1f/EQU/1Hnba1otdv2kmy7cWpo4K52Zc
+	 t0QWNXVzw1HbqDzYo8dj4jW+0QBTZIw24/6bAOLZhAvIdBAkIUr75hV0aY+YeEWPO2
+	 or4D7SnbiIlTp182xaCE6cZ+jeckG1H3Fzd5Fvao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Junrui Luo <moonafterrain@outlook.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 477/507] rtc: max31335: Fix ignored return value in set_alarm
-Date: Tue, 16 Dec 2025 12:15:18 +0100
-Message-ID: <20251216111402.723737254@linuxfoundation.org>
+Subject: [PATCH 6.17 478/507] ALSA: firewire-motu: add bounds check in put_user loop for DSP events
+Date: Tue, 16 Dec 2025 12:15:19 +0100
+Message-ID: <20251216111402.760045257@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -45,46 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-[ Upstream commit f07640f9fb8df2158199da1da1f8282948385a84 ]
+[ Upstream commit 298e753880b6ea99ac30df34959a7a03b0878eed ]
 
-Return the result from regmap_update_bits() instead of ignoring it
-and always returning 0.
+In the DSP event handling code, a put_user() loop copies event data.
+When the user buffer size is not aligned to 4 bytes, it could overwrite
+beyond the buffer boundary.
 
-Fixes: dedaf03b99d6 ("rtc: max31335: add driver support")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://patch.msgid.link/20251128-max31335-handler-error-v1-1-6b6f7f78dbda@analog.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fix by adding a bounds check before put_user().
+
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 634ec0b2906e ("ALSA: firewire-motu: notify event for parameter change in register DSP model")
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Link: https://patch.msgid.link/SYBPR01MB788112C72AF8A1C8C448B4B8AFA3A@SYBPR01MB7881.ausprd01.prod.outlook.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-max31335.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ sound/firewire/motu/motu-hwdep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-max31335.c b/drivers/rtc/rtc-max31335.c
-index dfb5bad3a3691..23b7bf16b4cd5 100644
---- a/drivers/rtc/rtc-max31335.c
-+++ b/drivers/rtc/rtc-max31335.c
-@@ -391,10 +391,8 @@ static int max31335_set_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 	if (ret)
- 		return ret;
- 
--	ret = regmap_update_bits(max31335->regmap, max31335->chip->int_status_reg,
--				 MAX31335_STATUS1_A1F, 0);
--
--	return 0;
-+	return regmap_update_bits(max31335->regmap, max31335->chip->int_status_reg,
-+				  MAX31335_STATUS1_A1F, 0);
- }
- 
- static int max31335_alarm_irq_enable(struct device *dev, unsigned int enabled)
+diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
+index e594765747d5b..38807dd7a766b 100644
+--- a/sound/firewire/motu/motu-hwdep.c
++++ b/sound/firewire/motu/motu-hwdep.c
+@@ -75,7 +75,7 @@ static long hwdep_read(struct snd_hwdep *hwdep, char __user *buf, long count,
+ 		while (consumed < count &&
+ 		       snd_motu_register_dsp_message_parser_copy_event(motu, &ev)) {
+ 			ptr = (u32 __user *)(buf + consumed);
+-			if (put_user(ev, ptr))
++			if (consumed + sizeof(ev) > count || put_user(ev, ptr))
+ 				return -EFAULT;
+ 			consumed += sizeof(ev);
+ 		}
 -- 
 2.51.0
 
