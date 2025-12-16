@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C2F35FF4D;
-	Tue, 16 Dec 2025 12:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579B13612C3;
+	Tue, 16 Dec 2025 12:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887347; cv=none; b=KhnDU54sokCXX2xGhLMVMA0KwLD+3u7SpAjomMhOyYx4pH5IH1MSDVWCuXNW76RENe6CF+wBfqjKt4rLODL8d9kaM3VSxOQ9JHRhtNBbo5a8zIqZoxHJAKuQe/DZih6QrYtBI0+pzvWYtvfsNE+x8doUGcdoNHbDUm0M9IVg2RQ=
+	t=1765887351; cv=none; b=jai3yRA4zngqqOIq/KT2zC5514SSTYYb44T0Hz92xhuxrIuBKGMGSm1N6zDlgzHhQjgIIQdcmtp2ABzdQu+7CpLMdAiFyD5V5gHoIAOLK08bsWMJw9UngcYTyvRGKyyRJMTrhQ0B//l+IgL8GzHNMDqjbgnhIBgMpac8+Ll91ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887347; c=relaxed/simple;
-	bh=XE179lnjuQRl7oeXJw0VraoCH473v2owFc9WfaG6uRo=;
+	s=arc-20240116; t=1765887351; c=relaxed/simple;
+	bh=W9daYxmC5ZnB3zk7zQ8V5IvG70Kut7maljihI3ZpPvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0uKBapwYGaQMfQ/vorDaKijL6ulAwMfGf1q9MMUejnWxDexGWfD2AyeNAk29bf0vCEfr8rjBgWNvVjWF9Obu1wgedn+19E3PPev1lMuQETKn63lmJnGURZtDTWiOLM/E8HAFw5ztdi/SDig1xlfrmRsZjmnfC4FPGhRYvfHt/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNPzIq5b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f2VKqCqBEJGtLfcV0CjtDRiuv6ZVh/WY9Z/eEU5UXf9fcSnAWCWMo4IVQa9q9oiwVwuwwt/TRUFH22iXcNGFGRzn91uMCqc/f97xzWmbID9vNQS+NMexBFawd262pHg8Kf30VywyUUyO4duzk7wCaZKA5Er6PFptjtFABVqiiqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWHLFRIY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNPzIq5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719B4C4CEF1;
-	Tue, 16 Dec 2025 12:15:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWHLFRIY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8975BC4CEF1;
+	Tue, 16 Dec 2025 12:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887346;
-	bh=XE179lnjuQRl7oeXJw0VraoCH473v2owFc9WfaG6uRo=;
+	s=korg; t=1765887351;
+	bh=W9daYxmC5ZnB3zk7zQ8V5IvG70Kut7maljihI3ZpPvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNPzIq5bOYpNFaKUQx9SwTX6osP265HM4qDXB0wqD0KurYFDPpfbZ0rIn6QHYuZIC
-	 0h2+LjHKxql+d8n5BHSu5OttG8DmY7EpW2M0OJIbGi0DYOIScYLsC7RiuqbQKOdgDL
-	 7wdFgk3r/VuVLnOmIMN6Iv1BXaWMCjtRNczq9a+Y=
+	b=IWHLFRIYD3bo73u/s5KCuDVZxM5PlGrvdkAOKTsjRArehySBGak/NwS8mg4xTuQCv
+	 I8Z+BkI7NlFK3bvXii83AG/Yj0+d5GsWzN+OHYq1H5Max/JE0K6h9cocOKesTE8Qtb
+	 8okIWWhlpnKbjRr9MBKTks8pTCePLs7c3f3G3Ud4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Vishwaroop A <va@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 201/614] spi: tegra210-quad: Fix timeout handling
-Date: Tue, 16 Dec 2025 12:09:28 +0100
-Message-ID: <20251216111408.661364329@linuxfoundation.org>
+Subject: [PATCH 6.18 202/614] libbpf: Fix parsing of multi-split BTF
+Date: Tue, 16 Dec 2025 12:09:29 +0100
+Message-ID: <20251216111408.697435313@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,115 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishwaroop A <va@nvidia.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit b4e002d8a7cee3b1d70efad0e222567f92a73000 ]
+[ Upstream commit 4f596acc260e691a2e348f64230392f3472feea3 ]
 
-When the CPU that the QSPI interrupt handler runs on (typically CPU 0)
-is excessively busy, it can lead to rare cases of the IRQ thread not
-running before the transfer timeout is reached.
+When creating multi-split BTF we correctly set the start string offset
+to be the size of the base string section plus the base BTF start
+string offset; the latter is needed for multi-split BTF since the
+offset is non-zero there.
 
-While handling the timeouts, any pending transfers are cleaned up and
-the message that they correspond to is marked as failed, which leaves
-the curr_xfer field pointing at stale memory.
+Unfortunately the BTF parsing case needed that logic and it was
+missed.
 
-To avoid this, clear curr_xfer to NULL upon timeout and check for this
-condition when the IRQ thread is finally run.
-
-While at it, also make sure to clear interrupts on failure so that new
-interrupts can be run.
-
-A better, more involved, fix would move the interrupt clearing into a
-hard IRQ handler. Ideally we would also want to signal that the IRQ
-thread no longer needs to be run after the timeout is hit to avoid the
-extra check for a valid transfer.
-
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Vishwaroop A <va@nvidia.com>
-Link: https://patch.msgid.link/20251028155703.4151791-2-va@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4e29128a9ace ("libbpf/btf: Fix string handling to support multi-split BTF")
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20251104203309.318429-2-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ tools/lib/bpf/btf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 3be7499db21ec..d9ca3d7b082f2 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1024,8 +1024,10 @@ static void tegra_qspi_handle_error(struct tegra_qspi *tqspi)
- 	dev_err(tqspi->dev, "error in transfer, fifo status 0x%08x\n", tqspi->status_reg);
- 	tegra_qspi_dump_regs(tqspi);
- 	tegra_qspi_flush_fifos(tqspi, true);
--	if (device_reset(tqspi->dev) < 0)
-+	if (device_reset(tqspi->dev) < 0) {
- 		dev_warn_once(tqspi->dev, "device reset failed\n");
-+		tegra_qspi_mask_clear_irq(tqspi);
-+	}
- }
- 
- static void tegra_qspi_transfer_end(struct spi_device *spi)
-@@ -1176,9 +1178,11 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 				}
- 
- 				/* Reset controller if timeout happens */
--				if (device_reset(tqspi->dev) < 0)
-+				if (device_reset(tqspi->dev) < 0) {
- 					dev_warn_once(tqspi->dev,
- 						      "device reset failed\n");
-+					tegra_qspi_mask_clear_irq(tqspi);
-+				}
- 				ret = -EIO;
- 				goto exit;
- 			}
-@@ -1200,11 +1204,13 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 			tegra_qspi_transfer_end(spi);
- 			spi_transfer_delay_exec(xfer);
- 		}
-+		tqspi->curr_xfer = NULL;
- 		transfer_phase++;
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index 18907f0fcf9f0..9f141395c074e 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -1061,7 +1061,7 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf, b
+ 	if (base_btf) {
+ 		btf->base_btf = base_btf;
+ 		btf->start_id = btf__type_cnt(base_btf);
+-		btf->start_str_off = base_btf->hdr->str_len;
++		btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
  	}
- 	ret = 0;
  
- exit:
-+	tqspi->curr_xfer = NULL;
- 	msg->status = ret;
- 
- 	return ret;
-@@ -1290,6 +1296,8 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
- 		msg->actual_length += xfer->len + dummy_bytes;
- 
- complete_xfer:
-+		tqspi->curr_xfer = NULL;
-+
- 		if (ret < 0) {
- 			tegra_qspi_transfer_end(spi);
- 			spi_transfer_delay_exec(xfer);
-@@ -1395,6 +1403,7 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- 	tegra_qspi_calculate_curr_xfer_param(tqspi, t);
- 	tegra_qspi_start_cpu_based_transfer(tqspi, t);
- exit:
-+	tqspi->curr_xfer = NULL;
- 	spin_unlock_irqrestore(&tqspi->lock, flags);
- 	return IRQ_HANDLED;
- }
-@@ -1480,6 +1489,15 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
+ 	if (is_mmap) {
+@@ -5818,7 +5818,7 @@ void btf_set_base_btf(struct btf *btf, const struct btf *base_btf)
  {
- 	struct tegra_qspi *tqspi = context_data;
+ 	btf->base_btf = (struct btf *)base_btf;
+ 	btf->start_id = btf__type_cnt(base_btf);
+-	btf->start_str_off = base_btf->hdr->str_len;
++	btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
+ }
  
-+	/*
-+	 * Occasionally the IRQ thread takes a long time to wake up (usually
-+	 * when the CPU that it's running on is excessively busy) and we have
-+	 * already reached the timeout before and cleaned up the timed out
-+	 * transfer. Avoid any processing in that case and bail out early.
-+	 */
-+	if (!tqspi->curr_xfer)
-+		return IRQ_NONE;
-+
- 	tqspi->status_reg = tegra_qspi_readl(tqspi, QSPI_FIFO_STATUS);
- 
- 	if (tqspi->cur_direction & DATA_DIR_TX)
+ int btf__relocate(struct btf *btf, const struct btf *base_btf)
 -- 
 2.51.0
 
