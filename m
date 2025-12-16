@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5E2450FE;
-	Tue, 16 Dec 2025 12:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8315929CB24;
+	Tue, 16 Dec 2025 12:38:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888715; cv=none; b=Bt3q9M3G18WSPN5a8lCtwOfT+2kAynayaN4EbqLWtlLFrpuikpycyo6AhAXpVcsYpHdtbDQcMnKHcEWHCQmwUrwArU26X9llrDR/XF//uEwXslJrDdkuACb+ggOX1LEYknwrgw3ffBaodcfK2Ts2uIVZjq431roGcibnV2ipGno=
+	t=1765888718; cv=none; b=pt81Mo0M6kkYvuKjI7CFR9gYkvn0taTljdcLCepquDiYyRIPYxP0QgMzv8VFbMDPyo6HKl2NbvCPJfgfG+vCSEWr9bCtAT8y7EqCer8kIgDh8+CP3Z37hF7OXFVivfQbjqcrNpQqw0PZeLyZJvaLsxNEBfz5bZ0TP+uRyDwV01Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888715; c=relaxed/simple;
-	bh=+ZZkIIz1logkQvhADNQboLj3DbVD7aHEjjy1MKbFgdE=;
+	s=arc-20240116; t=1765888718; c=relaxed/simple;
+	bh=vNTZ4IRN0S0gAKlFgZwq+V0qlAXCVs51+bBbt6m7VKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhZoRH4sZTNuM2cCAujQ6YN50PV9RNI2sZMb/6ssvOMbFdhtYmidhDJJqjDKS1sbGPGzXQLVbxUlNzCZ8L8aEijl2yOLXbV47sEk2xct14x5yv7OvAX5GaRND6bvJhj4IN6AWy0JLEPRSaFlAZD4XUWRxqo6S3waEAhY7tpAF+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R+nf2GTu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UfWNhFeajfGI4BDHf43nwZ/5eUzsTp0bPPXfFR2BkJfV0ej3WjIlDFTX2wtuLIej22O1gMYtSPdPjulHyNF2ifLduDOf5Qp1lkBIrvMQT5qv5Vw1iJYAja7n3nJG+tPVlwL9RZufcfgjklk3SBzQGJUwctUIUxWjedh6ouPp6lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMIYHc68; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R+nf2GTu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74B05C4CEF1;
-	Tue, 16 Dec 2025 12:38:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMIYHc68"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3FD5C4CEF1;
+	Tue, 16 Dec 2025 12:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888715;
-	bh=+ZZkIIz1logkQvhADNQboLj3DbVD7aHEjjy1MKbFgdE=;
+	s=korg; t=1765888718;
+	bh=vNTZ4IRN0S0gAKlFgZwq+V0qlAXCVs51+bBbt6m7VKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+nf2GTuxAuHEAfxMGz/sPeTmyjYkgmWPtxAqjRKpZat+VwnWZFUFLmH6f+qd0o1T
-	 TMzAFDHa25E5EeIS9Q7UyZAWIn42VFuKPpRyHFygnlOUyGnaMU08HLHQHf+EpRkhN9
-	 J8Rs5XX5URmx1ZqBkYxKYIaSrfet4NaJ3HQatTaQ=
+	b=OMIYHc68L1xShvf7n98JDCIQZeOitlKpainy/LtFy1aHDw00QvXESwG6DIT8dafGP
+	 kEdvNQVzbrBlqJAfV2PA/JFB55LRJc9CWDaGQvWQEpMJy4J7ItigAZBOR2Y0V9OEbw
+	 R7RelpFJMrHpSJjneDo8Bcp1yMnO1xkiXmI2g5BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kitta <kitta@linux.alibaba.com>,
-	Evan Li <evan.li@linux.alibaba.com>,
-	Ingo Molnar <mingo@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 600/614] perf/x86/intel: Fix NULL event dereference crash in handle_pmi_common()
-Date: Tue, 16 Dec 2025 12:16:07 +0100
-Message-ID: <20251216111423.132398654@linuxfoundation.org>
+Subject: [PATCH 6.18 601/614] efi/cper: Add a new helper function to print bitmasks
+Date: Tue, 16 Dec 2025 12:16:08 +0100
+Message-ID: <20251216111423.169588800@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,58 +53,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evan Li <evan.li@linux.alibaba.com>
+From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 9415f749d34b926b9e4853da1462f4d941f89a0d ]
+[ Upstream commit a976d790f49499ccaa0f991788ad8ebf92e7fd5c ]
 
-handle_pmi_common() may observe an active bit set in cpuc->active_mask
-while the corresponding cpuc->events[] entry has already been cleared,
-which leads to a NULL pointer dereference.
+Add a helper function to print a string with names associated
+to each bit field.
 
-This can happen when interrupt throttling stops all events in a group
-while PEBS processing is still in progress. perf_event_overflow() can
-trigger perf_event_throttle_group(), which stops the group and clears
-the cpuc->events[] entry, but the active bit may still be set when
-handle_pmi_common() iterates over the events.
+A typical example is:
 
-The following recent fix:
+	const char * const bits[] = {
+		"bit 3 name",
+		"bit 4 name",
+		"bit 5 name",
+	};
+	char str[120];
+        unsigned int bitmask = BIT(3) | BIT(5);
 
-  7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
+	#define MASK  GENMASK(5,3)
 
-moved the cpuc->events[] clearing from x86_pmu_stop() to x86_pmu_del() and
-relied on cpuc->active_mask/pebs_enabled checks. However,
-handle_pmi_common() can still encounter a NULL cpuc->events[] entry
-despite the active bit being set.
+	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
+			 bits, ARRAY_SIZE(bits));
 
-Add an explicit NULL check on the event pointer before using it,
-to cover this legitimate scenario and avoid the NULL dereference crash.
+The above code fills string "str" with "bit 3 name|bit 5 name".
 
-Fixes: 7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
-Reported-by: kitta <kitta@linux.alibaba.com>
-Co-developed-by: kitta <kitta@linux.alibaba.com>
-Signed-off-by: Evan Li <evan.li@linux.alibaba.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20251212084943.2124787-1-evan.li@linux.alibaba.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220855
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/firmware/efi/cper.c | 60 +++++++++++++++++++++++++++++++++++++
+ include/linux/cper.h        |  2 ++
+ 2 files changed, 62 insertions(+)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 9b824ed6fc1de..32d551f2646a7 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3249,6 +3249,9 @@ static int handle_pmi_common(struct pt_regs *regs, u64 status)
+diff --git a/drivers/firmware/efi/cper.c b/drivers/firmware/efi/cper.c
+index 928409199a1a4..79ba688a64f8d 100644
+--- a/drivers/firmware/efi/cper.c
++++ b/drivers/firmware/efi/cper.c
+@@ -12,6 +12,7 @@
+  * Specification version 2.4.
+  */
  
- 		if (!test_bit(bit, cpuc->active_mask))
- 			continue;
-+		/* Event may have already been cleared: */
-+		if (!event)
++#include <linux/bitmap.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/time.h>
+@@ -106,6 +107,65 @@ void cper_print_bits(const char *pfx, unsigned int bits,
+ 		printk("%s\n", buf);
+ }
+ 
++/**
++ * cper_bits_to_str - return a string for set bits
++ * @buf: buffer to store the output string
++ * @buf_size: size of the output string buffer
++ * @bits: bit mask
++ * @strs: string array, indexed by bit position
++ * @strs_size: size of the string array: @strs
++ *
++ * Add to @buf the bitmask in hexadecimal. Then, for each set bit in @bits,
++ * add the corresponding string describing the bit in @strs to @buf.
++ *
++ * A typical example is::
++ *
++ *	const char * const bits[] = {
++ *		"bit 3 name",
++ *		"bit 4 name",
++ *		"bit 5 name",
++ *	};
++ *	char str[120];
++ *	unsigned int bitmask = BIT(3) | BIT(5);
++ *	#define MASK GENMASK(5,3)
++ *
++ *	cper_bits_to_str(str, sizeof(str), FIELD_GET(MASK, bitmask),
++ *			 bits, ARRAY_SIZE(bits));
++ *
++ * The above code fills the string ``str`` with ``bit 3 name|bit 5 name``.
++ *
++ * Return: number of bytes stored or an error code if lower than zero.
++ */
++int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
++		     const char * const strs[], unsigned int strs_size)
++{
++	int len = buf_size;
++	char *str = buf;
++	int i, size;
++
++	*buf = '\0';
++
++	for_each_set_bit(i, &bits, strs_size) {
++		if (!(bits & BIT_ULL(i)))
 +			continue;
- 
- 		/*
- 		 * There may be unprocessed PEBS records in the PEBS buffer,
++
++		if (*buf && len > 0) {
++			*str = '|';
++			len--;
++			str++;
++		}
++
++		size = strscpy(str, strs[i], len);
++		if (size < 0)
++			return size;
++
++		len -= size;
++		str += size;
++	}
++	return len - buf_size;
++}
++EXPORT_SYMBOL_GPL(cper_bits_to_str);
++
+ static const char * const proc_type_strs[] = {
+ 	"IA32/X64",
+ 	"IA64",
+diff --git a/include/linux/cper.h b/include/linux/cper.h
+index 0ed60a91eca9d..58f40477c824e 100644
+--- a/include/linux/cper.h
++++ b/include/linux/cper.h
+@@ -588,6 +588,8 @@ const char *cper_mem_err_type_str(unsigned int);
+ const char *cper_mem_err_status_str(u64 status);
+ void cper_print_bits(const char *prefix, unsigned int bits,
+ 		     const char * const strs[], unsigned int strs_size);
++int cper_bits_to_str(char *buf, int buf_size, unsigned long bits,
++		     const char * const strs[], unsigned int strs_size);
+ void cper_mem_err_pack(const struct cper_sec_mem_err *,
+ 		       struct cper_mem_err_compact *);
+ const char *cper_mem_err_unpack(struct trace_seq *,
 -- 
 2.51.0
 
