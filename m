@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F4D35CB7D;
-	Tue, 16 Dec 2025 12:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD53364EBB;
+	Tue, 16 Dec 2025 12:10:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887021; cv=none; b=N2ThH4OtsUoHOA1G+B2Qv0DquswV62k0hWUScxKE2km0APHQAhKE02DVf1eiC85Vn9dLFS7g7VUzl6obrMmZmPvxV7jSVDCT77dZZcZsxFxUsMoqvDNcJuF94oGGVTjxXi6M/YgxgpbzVuIOUZcPyrl0ESgpyGpqD5HKEmRtM0o=
+	t=1765887024; cv=none; b=gVH8SWpZm8DaR8M5YiXUPZIVpclWV+heWvzK2GSRyK3JcoWmFf18H30dymI4euQXXJM27So0lV5XlR7Lpvs/bLvy547uLfeHaEm8WLZRbECVBgm2UtIxsqo2fmtKIAQh0dAXAs7JGW6l6aB5ANPQA3W1M456r63AWUyyKCrUrdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887021; c=relaxed/simple;
-	bh=M7iNPnfhtrj+xcer/j4jJ3bWmu3pxvIZgP+1iFYlaW0=;
+	s=arc-20240116; t=1765887024; c=relaxed/simple;
+	bh=GzvTFH3FB58w8S9/DCzkrC3EI9J98HidOONCQiRZNJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0aJv4st2D8qNbTY8bYYigAM1R0MePi/BF3r+DASzvYY36szc5+jIC3s6PpS+6MZSmQD3DcQ5i8uuQvxp0aPLCRbI8LsOrSHKGfCP8a0BVtt8L88O16wbsZnrRP5fOVH4JdlAbsPhIILOkvcCA3vBtxliqF9NwMFQPig8qVvxG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N9flkoB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j8w4xUIyvMuFkmPPjAj6GkfO5rZ+oe6glbWW3fLEEKLBipcwr2z3QmmnyKnR7gO1HIwYwqZyCB5Jqsctb6M+aUw9kEhV92TA8Amy/kIJ/7Nfar6Pa3/2/uc6pPciZosGKTRlK6Wx1YCvtJPgyozPULCoKOxrRq3F5yCxZ94VhqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kAh0YdpY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N9flkoB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B297C4CEF1;
-	Tue, 16 Dec 2025 12:10:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kAh0YdpY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39465C4CEF1;
+	Tue, 16 Dec 2025 12:10:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887021;
-	bh=M7iNPnfhtrj+xcer/j4jJ3bWmu3pxvIZgP+1iFYlaW0=;
+	s=korg; t=1765887024;
+	bh=GzvTFH3FB58w8S9/DCzkrC3EI9J98HidOONCQiRZNJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N9flkoB5HpiazGsAuW5gFDwc6zOWNjTMYphH2L4WkfjuyquEN9SrfcY9/KfzMhGZa
-	 tdhXrLbmxEU9TIS7HbEtwYUMwus7olCgP79Ko6nv0WLvgEVU8fqDHPeREg8EpUf/JQ
-	 5rVvrjSbEiIBvtm8RUVsDay0epWM2uGRVz8pJ50c=
+	b=kAh0YdpYijK8iO0ML8zqDjDqVHX18PzYtF3aef3K0cuIMTKTzKV596BAH06IKAgnm
+	 j5FlD16ov8z4JYyrgBDVcmu0oTKbX9n1fFUnyN8M4l140xMYAFYWUmFxgPBGmMoFGB
+	 /8QN/q2nRfhsvetZL60I0W6O/luwH27JTul/zZpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 096/614] wifi: ath12k: restore register window after global reset
-Date: Tue, 16 Dec 2025 12:07:43 +0100
-Message-ID: <20251216111404.798101371@linuxfoundation.org>
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 105/614] ice: remove duplicate call to ice_deinit_hw() on error paths
+Date: Tue, 16 Dec 2025 12:07:52 +0100
+Message-ID: <20251216111405.140281583@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,89 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit a41281f6518e485220d180a6031d302a736fc463 ]
+[ Upstream commit 1390b8b3d2bef9bfbb852fc735430798bfca36e7 ]
 
-Hardware target implements an address space larger than that PCI BAR can
-map. In order to be able to access the whole target address space, the
-BAR space is split into 4 segments, of which the last 3, called windows,
-can be dynamically mapped to the desired area. This is achieved by
-updating WINDOW_REG_ADDRESS register with appropriate window value.
-Currently each time when accessing a register that beyond WINDOW_START,
-host calculates the window value and caches it after window update,
-this way next time when accessing a register falling in the same window,
-host knows that the window is already good hence no additional update
-needed.
+Current unwinding code on error paths of ice_devlink_reinit_up() and
+ice_probe() have manual call to ice_deinit_hw() (which is good, as there
+is also manual call to ice_hw_init() there), which is then duplicated
+(and was prior current series) in ice_deinit_dev().
 
-However this mechanism breaks after global reset is triggered in
-ath12k_pci_soc_global_reset(), because with global reset hardware resets
-WINDOW_REG_ADDRESS register hence the window is not properly mapped any
-more. Current host does nothing about this, as a result a subsequent
-register access may not work as expected if it falls in a window same as
-before.
+Fix the above by removing ice_deinit_hw() from ice_deinit_dev().
+Add a (now missing) call in ice_remove().
 
-Although there is no obvious issue seen now, better to fix it to avoid
-future problem. The fix is done by restoring the window register after
-global reset.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284.1-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251017-ath12k-reset-window-cache-v1-1-29e0e751deed@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Reported-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/intel-wired-lan/20250717-jk-ddp-safe-mode-issue-v1-1-e113b2baed79@intel.com/
+Fixes: 4d3f59bfa2cd ("ice: split ice_init_hw() out from ice_init_dev()")
+Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/pci.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
-index c729d5526c753..60b8f7361b7f6 100644
---- a/drivers/net/wireless/ath/ath12k/pci.c
-+++ b/drivers/net/wireless/ath/ath12k/pci.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2019-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index f1ebdb7dbdc73..b0f8a96c13b47 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -4784,7 +4784,6 @@ int ice_init_dev(struct ice_pf *pf)
  
- #include <linux/module.h>
-@@ -218,6 +218,19 @@ static inline bool ath12k_pci_is_offset_within_mhi_region(u32 offset)
- 	return (offset >= PCI_MHIREGLEN_REG && offset <= PCI_MHI_REGION_END);
- }
- 
-+static void ath12k_pci_restore_window(struct ath12k_base *ab)
-+{
-+	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
-+
-+	spin_lock_bh(&ab_pci->window_lock);
-+
-+	iowrite32(WINDOW_ENABLE_BIT | ab_pci->register_window,
-+		  ab->mem + WINDOW_REG_ADDRESS);
-+	ioread32(ab->mem + WINDOW_REG_ADDRESS);
-+
-+	spin_unlock_bh(&ab_pci->window_lock);
-+}
-+
- static void ath12k_pci_soc_global_reset(struct ath12k_base *ab)
+ void ice_deinit_dev(struct ice_pf *pf)
  {
- 	u32 val, delay;
-@@ -242,6 +255,11 @@ static void ath12k_pci_soc_global_reset(struct ath12k_base *ab)
- 	val = ath12k_pci_read32(ab, PCIE_SOC_GLOBAL_RESET);
- 	if (val == 0xffffffff)
- 		ath12k_warn(ab, "link down error during global reset\n");
-+
-+	/* Restore window register as its content is cleared during
-+	 * hardware global reset, such that it aligns with host cache.
-+	 */
-+	ath12k_pci_restore_window(ab);
- }
+-	ice_deinit_hw(&pf->hw);
+ 	ice_service_task_stop(pf);
  
- static void ath12k_pci_clear_dbg_registers(struct ath12k_base *ab)
+ 	/* Service task is already stopped, so call reset directly. */
+@@ -5466,6 +5465,7 @@ static void ice_remove(struct pci_dev *pdev)
+ 	ice_set_wake(pf);
+ 
+ 	ice_adapter_put(pdev);
++	ice_deinit_hw(&pf->hw);
+ 
+ 	ice_deinit_dev(pf);
+ 	ice_aq_cancel_waiting_tasks(pf);
 -- 
 2.51.0
 
