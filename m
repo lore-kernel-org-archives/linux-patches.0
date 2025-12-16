@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2907345CDF;
-	Tue, 16 Dec 2025 12:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E91834DB48;
+	Tue, 16 Dec 2025 12:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886602; cv=none; b=cC/B4h+53ASGieTAxp1eQO4PjGs+f98M4rXsaXs6oiy4yzgsdl42eDMoBpFB5BzpUbU7mrpDowwWn7nwBRoSWLS9ArjTuHejQDUrEHkvXa8zXCTG8LhLV/EaaqIGtKTIsdJF4jLYDcmSDJye4qo51KDQQ2j/hAc504cMT3zrLtA=
+	t=1765886606; cv=none; b=KbHrHu8c6Mc+hR2bnbXEztEpSJ8VAFsPuP+GY+VRzN8lWWI20W0tq92kn6TEbL7pGHArNyGAKn7lh006EqBLWAMuWbWEN0Fhag9JE+Sry4kpCeAIH4+u8dp1p+1VMSijr2c/bgqeaVV+I0ezUbaW04JBX3cNyJbb4J/j1vzWRRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886602; c=relaxed/simple;
-	bh=7NMje4O1K4K6M6xy6HOUkD677UQzIE3u1apiD4eyH28=;
+	s=arc-20240116; t=1765886606; c=relaxed/simple;
+	bh=BoybBx5ys4ujcStz8908JoyOiqadRxTjuXqQ+0IKmK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r6vV9PiMr9PgdgjczAqE1vtjCzkXinkcnTEVEmH2UmthZyxS4eErOyLovOepCxpBaCCOdXFl69fMIoWPMOgvwHODKkSg8+JtwuvS1gVng7k4T5TqJ+pVLz21c5oUqUpp8UFvpOXBV7MUFP/+kresoedPTO4RpKolGC79jrs47p8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xEEvqg0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f7oPCfjZsopLsayjZy6t+6UcELC/ZMOSo4mFLaIj0EuECMGBO+p8RvJ24Z8pN/aG8oPQeX8kFkaUkZ3I9CHsS9GegIVMEyDAW7hVCRtOT45mJ6D7I8pAFVVnkUhtTQ0QAXL3FzEIbwH3Lf/MAHngrp37QjA489NtkGIbJ6LWt+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EF4X25z5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xEEvqg0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A74C19422;
-	Tue, 16 Dec 2025 12:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EF4X25z5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EAA8C4CEF5;
+	Tue, 16 Dec 2025 12:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886602;
-	bh=7NMje4O1K4K6M6xy6HOUkD677UQzIE3u1apiD4eyH28=;
+	s=korg; t=1765886606;
+	bh=BoybBx5ys4ujcStz8908JoyOiqadRxTjuXqQ+0IKmK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEEvqg0xRY+4FqvPmO4TaFfSQJGfAvTz3Ysimm6xevfjutWYKCZV6W8jCIAFhbFh5
-	 Y0BYhcBQT6TqbTUZVyTdDo7oEYIc9njSESSM+y8lcsOYX/m1pZw0rK+8pImB/26rOy
-	 CJRDH2dKeOCgiKO7ge8OPPkfFSbCHSKDl3cd28hg=
+	b=EF4X25z5/5PpQnvr3V6L5bROSPGV9Sui1BE/tEejmFkHbZbHt8a6ofVIHsxTTfYax
+	 6j4G1Fwh9GuD8lZiUPynDHxBIjtJFWHxgU3LT026KWETg8ghwOnJh7xKSbdJ9VAX+n
+	 KUDh6TgPGQRbafavD2jI4vNsvFXSQX/nw/7Iwg6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohamed Khalfella <mkhalfella@purestorage.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 485/507] block: Use RCU in blk_mq_[un]quiesce_tagset() instead of set->tag_list_lock
-Date: Tue, 16 Dec 2025 12:15:26 +0100
-Message-ID: <20251216111403.012415329@linuxfoundation.org>
+Subject: [PATCH 6.17 459/507] f2fs: revert summary entry count from 2048 to 512 in 16kb block support
+Date: Tue, 16 Dec 2025 12:15:00 +0100
+Message-ID: <20251216111402.077483442@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,166 +52,453 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mohamed Khalfella <mkhalfella@purestorage.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 59e25ef2b413c72da6686d431e7759302cfccafa ]
+[ Upstream commit 7ee8bc3942f20964ad730871b885688ea3a2961a ]
 
-blk_mq_{add,del}_queue_tag_set() functions add and remove queues from
-tagset, the functions make sure that tagset and queues are marked as
-shared when two or more queues are attached to the same tagset.
-Initially a tagset starts as unshared and when the number of added
-queues reaches two, blk_mq_add_queue_tag_set() marks it as shared along
-with all the queues attached to it. When the number of attached queues
-drops to 1 blk_mq_del_queue_tag_set() need to mark both the tagset and
-the remaining queues as unshared.
+The recent increase in the number of Segment Summary Area (SSA) entries
+from 512 to 2048 was an unintentional change in logic of 16kb block
+support. This commit corrects the issue.
 
-Both functions need to freeze current queues in tagset before setting on
-unsetting BLK_MQ_F_TAG_QUEUE_SHARED flag. While doing so, both functions
-hold set->tag_list_lock mutex, which makes sense as we do not want
-queues to be added or deleted in the process. This used to work fine
-until commit 98d81f0df70c ("nvme: use blk_mq_[un]quiesce_tagset")
-made the nvme driver quiesce tagset instead of quiscing individual
-queues. blk_mq_quiesce_tagset() does the job and quiesce the queues in
-set->tag_list while holding set->tag_list_lock also.
+To better utilize the space available from the erroneous 2048-entry
+calculation, we are implementing a solution to share the currently
+unused SSA space with neighboring segments. This enhances overall
+SSA utilization without impacting the established 8MB segment size.
 
-This results in deadlock between two threads with these stacktraces:
-
-  __schedule+0x47c/0xbb0
-  ? timerqueue_add+0x66/0xb0
-  schedule+0x1c/0xa0
-  schedule_preempt_disabled+0xa/0x10
-  __mutex_lock.constprop.0+0x271/0x600
-  blk_mq_quiesce_tagset+0x25/0xc0
-  nvme_dev_disable+0x9c/0x250
-  nvme_timeout+0x1fc/0x520
-  blk_mq_handle_expired+0x5c/0x90
-  bt_iter+0x7e/0x90
-  blk_mq_queue_tag_busy_iter+0x27e/0x550
-  ? __blk_mq_complete_request_remote+0x10/0x10
-  ? __blk_mq_complete_request_remote+0x10/0x10
-  ? __call_rcu_common.constprop.0+0x1c0/0x210
-  blk_mq_timeout_work+0x12d/0x170
-  process_one_work+0x12e/0x2d0
-  worker_thread+0x288/0x3a0
-  ? rescuer_thread+0x480/0x480
-  kthread+0xb8/0xe0
-  ? kthread_park+0x80/0x80
-  ret_from_fork+0x2d/0x50
-  ? kthread_park+0x80/0x80
-  ret_from_fork_asm+0x11/0x20
-
-  __schedule+0x47c/0xbb0
-  ? xas_find+0x161/0x1a0
-  schedule+0x1c/0xa0
-  blk_mq_freeze_queue_wait+0x3d/0x70
-  ? destroy_sched_domains_rcu+0x30/0x30
-  blk_mq_update_tag_set_shared+0x44/0x80
-  blk_mq_exit_queue+0x141/0x150
-  del_gendisk+0x25a/0x2d0
-  nvme_ns_remove+0xc9/0x170
-  nvme_remove_namespaces+0xc7/0x100
-  nvme_remove+0x62/0x150
-  pci_device_remove+0x23/0x60
-  device_release_driver_internal+0x159/0x200
-  unbind_store+0x99/0xa0
-  kernfs_fop_write_iter+0x112/0x1e0
-  vfs_write+0x2b1/0x3d0
-  ksys_write+0x4e/0xb0
-  do_syscall_64+0x5b/0x160
-  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-
-The top stacktrace is showing nvme_timeout() called to handle nvme
-command timeout. timeout handler is trying to disable the controller and
-as a first step, it needs to blk_mq_quiesce_tagset() to tell blk-mq not
-to call queue callback handlers. The thread is stuck waiting for
-set->tag_list_lock as it tries to walk the queues in set->tag_list.
-
-The lock is held by the second thread in the bottom stack which is
-waiting for one of queues to be frozen. The queue usage counter will
-drop to zero after nvme_timeout() finishes, and this will not happen
-because the thread will wait for this mutex forever.
-
-Given that [un]quiescing queue is an operation that does not need to
-sleep, update blk_mq_[un]quiesce_tagset() to use RCU instead of taking
-set->tag_list_lock, update blk_mq_{add,del}_queue_tag_set() to use RCU
-safe list operations. Also, delete INIT_LIST_HEAD(&q->tag_set_list)
-in blk_mq_del_queue_tag_set() because we can not re-initialize it while
-the list is being traversed under RCU. The deleted queue will not be
-added/deleted to/from a tagset and it will be freed in blk_free_queue()
-after the end of RCU grace period.
-
-Signed-off-by: Mohamed Khalfella <mkhalfella@purestorage.com>
-Fixes: 98d81f0df70c ("nvme: use blk_mq_[un]quiesce_tagset")
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: d7e9a9037de2 ("f2fs: Support Block Size == Page Size")
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ fs/f2fs/f2fs.h          |   2 +
+ fs/f2fs/gc.c            | 117 +++++++++++++++++++++++-----------------
+ fs/f2fs/recovery.c      |   2 +-
+ fs/f2fs/segment.c       |  38 +++++++++----
+ fs/f2fs/segment.h       |   8 ++-
+ fs/f2fs/super.c         |  14 +++++
+ fs/f2fs/sysfs.c         |   7 +++
+ include/linux/f2fs_fs.h |   5 +-
+ 8 files changed, 130 insertions(+), 63 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 3e9f82c9a89d2..77261fba50900 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -336,12 +336,12 @@ void blk_mq_quiesce_tagset(struct blk_mq_tag_set *set)
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index dac7d44885e47..ca2f640c03871 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -230,6 +230,7 @@ struct f2fs_mount_info {
+ #define F2FS_FEATURE_COMPRESSION		0x00002000
+ #define F2FS_FEATURE_RO				0x00004000
+ #define F2FS_FEATURE_DEVICE_ALIAS		0x00008000
++#define F2FS_FEATURE_PACKED_SSA			0x00010000
+ 
+ #define __F2FS_HAS_FEATURE(raw_super, mask)				\
+ 	((raw_super->feature & cpu_to_le32(mask)) != 0)
+@@ -4648,6 +4649,7 @@ F2FS_FEATURE_FUNCS(casefold, CASEFOLD);
+ F2FS_FEATURE_FUNCS(compression, COMPRESSION);
+ F2FS_FEATURE_FUNCS(readonly, RO);
+ F2FS_FEATURE_FUNCS(device_alias, DEVICE_ALIAS);
++F2FS_FEATURE_FUNCS(packed_ssa, PACKED_SSA);
+ 
+ #ifdef CONFIG_BLK_DEV_ZONED
+ static inline bool f2fs_zone_is_seq(struct f2fs_sb_info *sbi, int devi,
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 5a300f2bc85b4..57dd50d83cbb9 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1732,7 +1732,7 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 	unsigned char type = IS_DATASEG(get_seg_entry(sbi, segno)->type) ?
+ 						SUM_TYPE_DATA : SUM_TYPE_NODE;
+ 	unsigned char data_type = (type == SUM_TYPE_DATA) ? DATA : NODE;
+-	int submitted = 0;
++	int submitted = 0, sum_blk_cnt;
+ 
+ 	if (__is_large_section(sbi)) {
+ 		sec_end_segno = rounddown(end_segno, SEGS_PER_SEC(sbi));
+@@ -1766,22 +1766,28 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 
+ 	sanity_check_seg_type(sbi, get_seg_entry(sbi, segno)->type);
+ 
++	segno = rounddown(segno, SUMS_PER_BLOCK);
++	sum_blk_cnt = DIV_ROUND_UP(end_segno - segno, SUMS_PER_BLOCK);
+ 	/* readahead multi ssa blocks those have contiguous address */
+ 	if (__is_large_section(sbi))
+ 		f2fs_ra_meta_pages(sbi, GET_SUM_BLOCK(sbi, segno),
+-					end_segno - segno, META_SSA, true);
++					sum_blk_cnt, META_SSA, true);
+ 
+ 	/* reference all summary page */
+ 	while (segno < end_segno) {
+-		struct folio *sum_folio = f2fs_get_sum_folio(sbi, segno++);
++		struct folio *sum_folio = f2fs_get_sum_folio(sbi, segno);
++
++		segno += SUMS_PER_BLOCK;
+ 		if (IS_ERR(sum_folio)) {
+ 			int err = PTR_ERR(sum_folio);
+ 
+-			end_segno = segno - 1;
+-			for (segno = start_segno; segno < end_segno; segno++) {
++			end_segno = segno - SUMS_PER_BLOCK;
++			segno = rounddown(start_segno, SUMS_PER_BLOCK);
++			while (segno < end_segno) {
+ 				sum_folio = filemap_get_folio(META_MAPPING(sbi),
+ 						GET_SUM_BLOCK(sbi, segno));
+ 				folio_put_refs(sum_folio, 2);
++				segno += SUMS_PER_BLOCK;
+ 			}
+ 			return err;
+ 		}
+@@ -1790,68 +1796,83 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 
+ 	blk_start_plug(&plug);
+ 
+-	for (segno = start_segno; segno < end_segno; segno++) {
+-		struct f2fs_summary_block *sum;
++	segno = start_segno;
++	while (segno < end_segno) {
++		unsigned int cur_segno;
+ 
+ 		/* find segment summary of victim */
+ 		struct folio *sum_folio = filemap_get_folio(META_MAPPING(sbi),
+ 					GET_SUM_BLOCK(sbi, segno));
++		unsigned int block_end_segno = rounddown(segno, SUMS_PER_BLOCK)
++					+ SUMS_PER_BLOCK;
++
++		if (block_end_segno > end_segno)
++			block_end_segno = end_segno;
+ 
+ 		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno))) {
+ 			f2fs_err(sbi, "%s: segment %u is used by log",
+ 							__func__, segno);
+ 			f2fs_bug_on(sbi, 1);
+-			goto skip;
++			goto next_block;
+ 		}
+ 
+-		if (get_valid_blocks(sbi, segno, false) == 0)
+-			goto freed;
+-		if (gc_type == BG_GC && __is_large_section(sbi) &&
+-				migrated >= sbi->migration_granularity)
+-			goto skip;
+ 		if (!folio_test_uptodate(sum_folio) ||
+ 		    unlikely(f2fs_cp_error(sbi)))
+-			goto skip;
++			goto next_block;
+ 
+-		sum = folio_address(sum_folio);
+-		if (type != GET_SUM_TYPE((&sum->footer))) {
+-			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SIT and SSA",
+-				 segno, type, GET_SUM_TYPE((&sum->footer)));
+-			f2fs_stop_checkpoint(sbi, false,
+-				STOP_CP_REASON_CORRUPTED_SUMMARY);
+-			goto skip;
+-		}
++		for (cur_segno = segno; cur_segno < block_end_segno;
++				cur_segno++) {
++			struct f2fs_summary_block *sum;
+ 
+-		/*
+-		 * this is to avoid deadlock:
+-		 * - lock_page(sum_page)         - f2fs_replace_block
+-		 *  - check_valid_map()            - down_write(sentry_lock)
+-		 *   - down_read(sentry_lock)     - change_curseg()
+-		 *                                  - lock_page(sum_page)
+-		 */
+-		if (type == SUM_TYPE_NODE)
+-			submitted += gc_node_segment(sbi, sum->entries, segno,
+-								gc_type);
+-		else
+-			submitted += gc_data_segment(sbi, sum->entries, gc_list,
+-							segno, gc_type,
+-							force_migrate);
++			if (get_valid_blocks(sbi, cur_segno, false) == 0)
++				goto freed;
++			if (gc_type == BG_GC && __is_large_section(sbi) &&
++					migrated >= sbi->migration_granularity)
++				continue;
+ 
+-		stat_inc_gc_seg_count(sbi, data_type, gc_type);
+-		sbi->gc_reclaimed_segs[sbi->gc_mode]++;
+-		migrated++;
++			sum = SUM_BLK_PAGE_ADDR(sum_folio, cur_segno);
++			if (type != GET_SUM_TYPE((&sum->footer))) {
++				f2fs_err(sbi, "Inconsistent segment (%u) type "
++						"[%d, %d] in SSA and SIT",
++						cur_segno, type,
++						GET_SUM_TYPE((&sum->footer)));
++				f2fs_stop_checkpoint(sbi, false,
++						STOP_CP_REASON_CORRUPTED_SUMMARY);
++				continue;
++			}
+ 
+-freed:
+-		if (gc_type == FG_GC &&
+-				get_valid_blocks(sbi, segno, false) == 0)
+-			seg_freed++;
++			/*
++			 * this is to avoid deadlock:
++			 *  - lock_page(sum_page)     - f2fs_replace_block
++			 *   - check_valid_map()        - down_write(sentry_lock)
++			 *    - down_read(sentry_lock) - change_curseg()
++			 *                               - lock_page(sum_page)
++			 */
++			if (type == SUM_TYPE_NODE)
++				submitted += gc_node_segment(sbi, sum->entries,
++						cur_segno, gc_type);
++			else
++				submitted += gc_data_segment(sbi, sum->entries,
++						gc_list, cur_segno,
++						gc_type, force_migrate);
+ 
+-		if (__is_large_section(sbi))
+-			sbi->next_victim_seg[gc_type] =
+-				(segno + 1 < sec_end_segno) ?
+-					segno + 1 : NULL_SEGNO;
+-skip:
++			stat_inc_gc_seg_count(sbi, data_type, gc_type);
++			sbi->gc_reclaimed_segs[sbi->gc_mode]++;
++			migrated++;
++
++freed:
++			if (gc_type == FG_GC &&
++					get_valid_blocks(sbi, cur_segno, false) == 0)
++				seg_freed++;
++
++			if (__is_large_section(sbi))
++				sbi->next_victim_seg[gc_type] =
++					(cur_segno + 1 < sec_end_segno) ?
++					cur_segno + 1 : NULL_SEGNO;
++		}
++next_block:
+ 		folio_put_refs(sum_folio, 2);
++		segno = block_end_segno;
+ 	}
+ 
+ 	if (submitted)
+diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
+index 215e442db72c8..af72309b9bfc6 100644
+--- a/fs/f2fs/recovery.c
++++ b/fs/f2fs/recovery.c
+@@ -519,7 +519,7 @@ static int check_index_in_prev_nodes(struct f2fs_sb_info *sbi,
+ 	sum_folio = f2fs_get_sum_folio(sbi, segno);
+ 	if (IS_ERR(sum_folio))
+ 		return PTR_ERR(sum_folio);
+-	sum_node = folio_address(sum_folio);
++	sum_node = SUM_BLK_PAGE_ADDR(sum_folio, segno);
+ 	sum = sum_node->entries[blkoff];
+ 	f2fs_folio_put(sum_folio, true);
+ got_it:
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index cc82d42ef14c5..3ffb796d0d070 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -2712,7 +2712,15 @@ struct folio *f2fs_get_sum_folio(struct f2fs_sb_info *sbi, unsigned int segno)
+ void f2fs_update_meta_page(struct f2fs_sb_info *sbi,
+ 					void *src, block_t blk_addr)
  {
- 	struct request_queue *q;
+-	struct folio *folio = f2fs_grab_meta_folio(sbi, blk_addr);
++	struct folio *folio;
++
++	if (SUMS_PER_BLOCK == 1)
++		folio = f2fs_grab_meta_folio(sbi, blk_addr);
++	else
++		folio = f2fs_get_meta_folio_retry(sbi, blk_addr);
++
++	if (IS_ERR(folio))
++		return;
  
--	mutex_lock(&set->tag_list_lock);
--	list_for_each_entry(q, &set->tag_list, tag_set_list) {
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(q, &set->tag_list, tag_set_list) {
- 		if (!blk_queue_skip_tagset_quiesce(q))
- 			blk_mq_quiesce_queue_nowait(q);
- 	}
--	mutex_unlock(&set->tag_list_lock);
-+	rcu_read_unlock();
- 
- 	blk_mq_wait_quiesce_done(set);
+ 	memcpy(folio_address(folio), src, PAGE_SIZE);
+ 	folio_mark_dirty(folio);
+@@ -2720,9 +2728,21 @@ void f2fs_update_meta_page(struct f2fs_sb_info *sbi,
  }
-@@ -351,12 +351,12 @@ void blk_mq_unquiesce_tagset(struct blk_mq_tag_set *set)
+ 
+ static void write_sum_page(struct f2fs_sb_info *sbi,
+-			struct f2fs_summary_block *sum_blk, block_t blk_addr)
++		struct f2fs_summary_block *sum_blk, unsigned int segno)
  {
- 	struct request_queue *q;
- 
--	mutex_lock(&set->tag_list_lock);
--	list_for_each_entry(q, &set->tag_list, tag_set_list) {
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(q, &set->tag_list, tag_set_list) {
- 		if (!blk_queue_skip_tagset_quiesce(q))
- 			blk_mq_unquiesce_queue(q);
- 	}
--	mutex_unlock(&set->tag_list_lock);
-+	rcu_read_unlock();
- }
- EXPORT_SYMBOL_GPL(blk_mq_unquiesce_tagset);
- 
-@@ -4317,7 +4317,7 @@ static void blk_mq_del_queue_tag_set(struct request_queue *q)
- 	struct blk_mq_tag_set *set = q->tag_set;
- 
- 	mutex_lock(&set->tag_list_lock);
--	list_del(&q->tag_set_list);
-+	list_del_rcu(&q->tag_set_list);
- 	if (list_is_singular(&set->tag_list)) {
- 		/* just transitioned to unshared */
- 		set->flags &= ~BLK_MQ_F_TAG_QUEUE_SHARED;
-@@ -4325,7 +4325,6 @@ static void blk_mq_del_queue_tag_set(struct request_queue *q)
- 		blk_mq_update_tag_set_shared(set, false);
- 	}
- 	mutex_unlock(&set->tag_list_lock);
--	INIT_LIST_HEAD(&q->tag_set_list);
+-	f2fs_update_meta_page(sbi, (void *)sum_blk, blk_addr);
++	struct folio *folio;
++
++	if (SUMS_PER_BLOCK == 1)
++		return f2fs_update_meta_page(sbi, (void *)sum_blk,
++				GET_SUM_BLOCK(sbi, segno));
++
++	folio = f2fs_get_sum_folio(sbi, segno);
++	if (IS_ERR(folio))
++		return;
++
++	memcpy(SUM_BLK_PAGE_ADDR(folio, segno), sum_blk, sizeof(*sum_blk));
++	folio_mark_dirty(folio);
++	f2fs_folio_put(folio, true);
  }
  
- static void blk_mq_add_queue_tag_set(struct blk_mq_tag_set *set,
-@@ -4344,7 +4343,7 @@ static void blk_mq_add_queue_tag_set(struct blk_mq_tag_set *set,
- 	}
- 	if (set->flags & BLK_MQ_F_TAG_QUEUE_SHARED)
- 		queue_set_hctx_shared(q, true);
--	list_add_tail(&q->tag_set_list, &set->tag_list);
-+	list_add_tail_rcu(&q->tag_set_list, &set->tag_list);
+ static void write_current_sum_page(struct f2fs_sb_info *sbi,
+@@ -2970,7 +2990,7 @@ static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
+ 	int ret;
  
- 	mutex_unlock(&set->tag_list_lock);
+ 	if (curseg->inited)
+-		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, segno));
++		write_sum_page(sbi, curseg->sum_blk, segno);
+ 
+ 	segno = __get_next_segno(sbi, type);
+ 	ret = get_new_segment(sbi, &segno, new_sec, pinning);
+@@ -3029,7 +3049,7 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
+ 	struct folio *sum_folio;
+ 
+ 	if (curseg->inited)
+-		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
++		write_sum_page(sbi, curseg->sum_blk, curseg->segno);
+ 
+ 	__set_test_and_inuse(sbi, new_segno);
+ 
+@@ -3048,7 +3068,7 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
+ 		memset(curseg->sum_blk, 0, SUM_ENTRY_SIZE);
+ 		return PTR_ERR(sum_folio);
+ 	}
+-	sum_node = folio_address(sum_folio);
++	sum_node = SUM_BLK_PAGE_ADDR(sum_folio, new_segno);
+ 	memcpy(curseg->sum_blk, sum_node, SUM_ENTRY_SIZE);
+ 	f2fs_folio_put(sum_folio, true);
+ 	return 0;
+@@ -3137,8 +3157,7 @@ static void __f2fs_save_inmem_curseg(struct f2fs_sb_info *sbi, int type)
+ 		goto out;
+ 
+ 	if (get_valid_blocks(sbi, curseg->segno, false)) {
+-		write_sum_page(sbi, curseg->sum_blk,
+-				GET_SUM_BLOCK(sbi, curseg->segno));
++		write_sum_page(sbi, curseg->sum_blk, curseg->segno);
+ 	} else {
+ 		mutex_lock(&DIRTY_I(sbi)->seglist_lock);
+ 		__set_test_and_free(sbi, curseg->segno, true);
+@@ -3815,8 +3834,7 @@ int f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct folio *folio,
+ 	if (segment_full) {
+ 		if (type == CURSEG_COLD_DATA_PINNED &&
+ 		    !((curseg->segno + 1) % sbi->segs_per_sec)) {
+-			write_sum_page(sbi, curseg->sum_blk,
+-					GET_SUM_BLOCK(sbi, curseg->segno));
++			write_sum_page(sbi, curseg->sum_blk, curseg->segno);
+ 			reset_curseg_fields(curseg);
+ 			goto skip_new_segment;
+ 		}
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 5e2ee5c686b12..5104876696104 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -85,8 +85,12 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
+ #define GET_ZONE_FROM_SEG(sbi, segno)				\
+ 	GET_ZONE_FROM_SEC(sbi, GET_SEC_FROM_SEG(sbi, segno))
+ 
+-#define GET_SUM_BLOCK(sbi, segno)				\
+-	((sbi)->sm_info->ssa_blkaddr + (segno))
++#define SUMS_PER_BLOCK (F2FS_BLKSIZE / F2FS_SUM_BLKSIZE)
++#define GET_SUM_BLOCK(sbi, segno)	\
++	(SM_I(sbi)->ssa_blkaddr + (segno / SUMS_PER_BLOCK))
++#define GET_SUM_BLKOFF(segno) (segno % SUMS_PER_BLOCK)
++#define SUM_BLK_PAGE_ADDR(folio, segno)	\
++	(folio_address(folio) + GET_SUM_BLKOFF(segno) * F2FS_SUM_BLKSIZE)
+ 
+ #define GET_SUM_TYPE(footer) ((footer)->entry_type)
+ #define SET_SUM_TYPE(footer, type) ((footer)->entry_type = (type))
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 8086a3456e4d3..f47e2689d7fbf 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3965,6 +3965,20 @@ static int sanity_check_raw_super(struct f2fs_sb_info *sbi,
+ 	if (sanity_check_area_boundary(sbi, folio, index))
+ 		return -EFSCORRUPTED;
+ 
++	/*
++	 * Check for legacy summary layout on 16KB+ block devices.
++	 * Modern f2fs-tools packs multiple 4KB summary areas into one block,
++	 * whereas legacy versions used one block per summary, leading
++	 * to a much larger SSA.
++	 */
++	if (SUMS_PER_BLOCK > 1 &&
++		    !(__F2FS_HAS_FEATURE(raw_super, F2FS_FEATURE_PACKED_SSA))) {
++		f2fs_info(sbi, "Error: Device formatted with a legacy version. "
++			"Please reformat with a tool supporting the packed ssa "
++			"feature for block sizes larger than 4kb.");
++		return -EOPNOTSUPP;
++	}
++
+ 	return 0;
  }
+ 
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index 902ffb3faa1ff..0dee87b90e007 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -235,6 +235,9 @@ static ssize_t features_show(struct f2fs_attr *a,
+ 	if (f2fs_sb_has_compression(sbi))
+ 		len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "compression");
++	if (f2fs_sb_has_packed_ssa(sbi))
++		len += sysfs_emit_at(buf, len, "%s%s",
++				len ? ", " : "", "packed_ssa");
+ 	len += sysfs_emit_at(buf, len, "%s%s",
+ 				len ? ", " : "", "pin_file");
+ 	len += sysfs_emit_at(buf, len, "\n");
+@@ -1255,6 +1258,7 @@ F2FS_FEATURE_RO_ATTR(pin_file);
+ #ifdef CONFIG_UNICODE
+ F2FS_FEATURE_RO_ATTR(linear_lookup);
+ #endif
++F2FS_FEATURE_RO_ATTR(packed_ssa);
+ 
+ #define ATTR_LIST(name) (&f2fs_attr_##name.attr)
+ static struct attribute *f2fs_attrs[] = {
+@@ -1410,6 +1414,7 @@ static struct attribute *f2fs_feat_attrs[] = {
+ #ifdef CONFIG_UNICODE
+ 	BASE_ATTR_LIST(linear_lookup),
+ #endif
++	BASE_ATTR_LIST(packed_ssa),
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(f2fs_feat);
+@@ -1445,6 +1450,7 @@ F2FS_SB_FEATURE_RO_ATTR(casefold, CASEFOLD);
+ F2FS_SB_FEATURE_RO_ATTR(compression, COMPRESSION);
+ F2FS_SB_FEATURE_RO_ATTR(readonly, RO);
+ F2FS_SB_FEATURE_RO_ATTR(device_alias, DEVICE_ALIAS);
++F2FS_SB_FEATURE_RO_ATTR(packed_ssa, PACKED_SSA);
+ 
+ static struct attribute *f2fs_sb_feat_attrs[] = {
+ 	ATTR_LIST(sb_encryption),
+@@ -1462,6 +1468,7 @@ static struct attribute *f2fs_sb_feat_attrs[] = {
+ 	ATTR_LIST(sb_compression),
+ 	ATTR_LIST(sb_readonly),
+ 	ATTR_LIST(sb_device_alias),
++	ATTR_LIST(sb_packed_ssa),
+ 	NULL,
+ };
+ ATTRIBUTE_GROUPS(f2fs_sb_feat);
+diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
+index 6afb4a13b81d6..a7880787cad36 100644
+--- a/include/linux/f2fs_fs.h
++++ b/include/linux/f2fs_fs.h
+@@ -17,6 +17,7 @@
+ #define F2FS_LOG_SECTORS_PER_BLOCK	(PAGE_SHIFT - 9) /* log number for sector/blk */
+ #define F2FS_BLKSIZE			PAGE_SIZE /* support only block == page */
+ #define F2FS_BLKSIZE_BITS		PAGE_SHIFT /* bits for F2FS_BLKSIZE */
++#define F2FS_SUM_BLKSIZE		4096	/* only support 4096 byte sum block */
+ #define F2FS_MAX_EXTENSION		64	/* # of extension entries */
+ #define F2FS_EXTENSION_LEN		8	/* max size of extension */
+ 
+@@ -441,7 +442,7 @@ struct f2fs_sit_block {
+  * from node's page's beginning to get a data block address.
+  * ex) data_blkaddr = (block_t)(nodepage_start_address + ofs_in_node)
+  */
+-#define ENTRIES_IN_SUM		(F2FS_BLKSIZE / 8)
++#define ENTRIES_IN_SUM		(F2FS_SUM_BLKSIZE / 8)
+ #define	SUMMARY_SIZE		(7)	/* sizeof(struct f2fs_summary) */
+ #define	SUM_FOOTER_SIZE		(5)	/* sizeof(struct summary_footer) */
+ #define SUM_ENTRY_SIZE		(SUMMARY_SIZE * ENTRIES_IN_SUM)
+@@ -467,7 +468,7 @@ struct summary_footer {
+ 	__le32 check_sum;		/* summary checksum */
+ } __packed;
+ 
+-#define SUM_JOURNAL_SIZE	(F2FS_BLKSIZE - SUM_FOOTER_SIZE -\
++#define SUM_JOURNAL_SIZE	(F2FS_SUM_BLKSIZE - SUM_FOOTER_SIZE -\
+ 				SUM_ENTRY_SIZE)
+ #define NAT_JOURNAL_ENTRIES	((SUM_JOURNAL_SIZE - 2) /\
+ 				sizeof(struct nat_journal_entry))
 -- 
 2.51.0
 
