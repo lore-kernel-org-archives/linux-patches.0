@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9FC34E76A;
-	Tue, 16 Dec 2025 11:46:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBE4C34E779;
+	Tue, 16 Dec 2025 11:46:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885606; cv=none; b=W2s9/u4T+gUvD+p8cXzTWIbUthiKXAvHNuGbIyi5BZuyP3xd57xjQ1DQ6FkAkmWPRkvQQ5eUZmTZhtcCCEQMDKAq3dVn5CShaALcmi7Pu54Pt3Dl9fIM75cBF/5DdYbC/jlbhnCw8dNsS0GbIug+I2+tOIl7BeXdXwJUMn6fwv8=
+	t=1765885609; cv=none; b=sbNVxF2AbIfFcmFasixAL35twrRvi0OQtkOa+GPKmgGuPZtm2HmVIvI+3614GlqP8dDdnc+PWGlMEAHbSa8wXs9FLq21yeviek/bbsfiebVZX4+PDA2OPl6GgpgS0ag/R5pD0vVX+aeGdS4DRDf9EE/LVqiWDm2OC9sT2IXyTGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885606; c=relaxed/simple;
-	bh=DywOI/VO29UZ0ppLlpYUYDu6qFWvyuNxp0TPJi2xOzA=;
+	s=arc-20240116; t=1765885609; c=relaxed/simple;
+	bh=9oEkU3ua0R4xbSocXnKhRT2fEC9h1en037XXxr+6oUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VzC2UKSrER0+/lE3tsVwnRsVB3GQ1Eu9to7NKFGwwTH/Fqkg3WTP0MwDuj75id+byRW3N4LJx0OzVk6auDNLIse8UKOr+UMz2dquClL62jz1KC2pHqXNum38gdzMqTjQTTApVz4Lpph8InpduC9D97SAPRh84YOaVmyehzFHgro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AeMbpKrY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1VZ747wK7Qe+QFnVeiV8jfae4qfOODLoYTwmQ8m37tLidSVsRbG/oI9C1cb/UC24yBh3Zn+ech+1KIrCV4qIzRbwSiecYCSzHotg7+AxzY0hkBavXlW0WFDJqvYQHdO3khr0agmSe8JrKafT9GiseaAcuBK+6xI3UEXst+b+To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cFmoAnxQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AeMbpKrY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B67C4C4CEF1;
-	Tue, 16 Dec 2025 11:46:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cFmoAnxQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E18D3C4CEF1;
+	Tue, 16 Dec 2025 11:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885606;
-	bh=DywOI/VO29UZ0ppLlpYUYDu6qFWvyuNxp0TPJi2xOzA=;
+	s=korg; t=1765885609;
+	bh=9oEkU3ua0R4xbSocXnKhRT2fEC9h1en037XXxr+6oUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AeMbpKrYvc0zrNt4B3bt2a0b2BlkGyaZNv3nZs5PWYSr/Gdv0Hbdmz+cdk4fz2eTz
-	 0bSDjZPTBme4xe38xLl95DCe6qoT5RRh7QRMlEFeva/4f3CISliOT4/AqzELAbKhmH
-	 qZEyMRpD+E7rU8/HjETl/LXX7SMEJ9zGEkkpIADQ=
+	b=cFmoAnxQvcrn3tFJLWUi1HpVWWGzBvKk5bci/K/8bb/rzpIMPVhNur6Iw0QQMDeyU
+	 Oc8P7zUkmbGCV1Ame15bmJSaZYZlrBr5HoT2K+46RM2HSQ6jeBQ7ZPPu7qrakqyPgG
+	 JhIvSfgennJ8E7lIbFlRbLzDTSfodMnvA/klvNgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Xiao Ni <xni@redhat.com>,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 189/507] regulator: core: disable supply if enabling main regulator fails
-Date: Tue, 16 Dec 2025 12:10:30 +0100
-Message-ID: <20251216111352.359506713@linuxfoundation.org>
+Subject: [PATCH 6.17 190/507] md: delete mddev kobj before deleting gendisk kobj
+Date: Tue, 16 Dec 2025 12:10:31 +0100
+Message-ID: <20251216111352.395465597@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,77 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Xiao Ni <xni@redhat.com>
 
-[ Upstream commit fb1ebb10468da414d57153ddebaab29c38ef1a78 ]
+[ Upstream commit cc394b94dc40b661efc9895665abf03640ffff2d ]
 
-For 'always-on' and 'boot-on' regulators, the set_machine_constraints()
-may enable supply before enabling the main regulator, however if the
-latter fails, the function returns with an error but the supply remains
-enabled.
+In sync del gendisk path, it deletes gendisk first and the directory
+/sys/block/md is removed. Then it releases mddev kobj in a delayed work.
+If we enable debug log in sysfs_remove_group, we can see the debug log
+'sysfs group bitmap not found for kobject md'. It's the reason that the
+parent kobj has been deleted, so it can't find parent directory.
 
-When this happens, the regulator_register() function continues on the
-error path where it puts the supply regulator. Since enabling the supply
-is not balanced with a disable call, a warning similar to the following
-gets issued from _regulator_put():
+In creating path, it allocs gendisk first, then adds mddev kobj. So it
+should delete mddev kobj before deleting gendisk.
 
-    [    1.603889] WARNING: CPU: 2 PID: 44 at _regulator_put+0x8c/0xa0
-    [    1.603908] Modules linked in:
-    [    1.603926] CPU: 2 UID: 0 PID: 44 Comm: kworker/u16:3 Not tainted 6.18.0-rc4 #0 NONE
-    [    1.603938] Hardware name: Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C7 (DT)
-    [    1.603945] Workqueue: async async_run_entry_fn
-    [    1.603958] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-    [    1.603967] pc : _regulator_put+0x8c/0xa0
-    [    1.603976] lr : _regulator_put+0x7c/0xa0
-    ...
-    [    1.604140] Call trace:
-    [    1.604145]  _regulator_put+0x8c/0xa0 (P)
-    [    1.604156]  regulator_register+0x2ec/0xbf0
-    [    1.604166]  devm_regulator_register+0x60/0xb0
-    [    1.604178]  rpm_reg_probe+0x120/0x208
-    [    1.604187]  platform_probe+0x64/0xa8
-    ...
+Before commit 9e59d609763f ("md: call del_gendisk in control path"), it
+releases mddev kobj first. If the kobj hasn't been deleted, it does clean
+job and deletes the kobj. Then it calls del_gendisk and releases gendisk
+kobj. So it doesn't need to call kobject_del to delete mddev kobj. After
+this patch, in sync del gendisk path, the sequence changes. So it needs
+to call kobject_del to delete mddev kobj.
 
-In order to avoid this, change the set_machine_constraints() function to
-disable the supply if enabling the main regulator fails.
+After this patch, the sequence is:
+1. kobject del mddev kobj
+2. del_gendisk deletes gendisk kobj
+3. mddev_delayed_delete releases mddev kobj
+4. md_kobj_release releases gendisk kobj
 
-Fixes: 05f224ca6693 ("regulator: core: Clean enabling always-on regulators + their supplies")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Link: https://patch.msgid.link/20251107-regulator-disable-supply-v1-1-c95f0536f1b5@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-raid/20250928012424.61370-1-xni@redhat.com
+Fixes: 9e59d609763f ("md: call del_gendisk in control path")
+Signed-off-by: Xiao Ni <xni@redhat.com>
+Reviewed-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/md/md.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 554d83c4af0c1..80d3e7dbe4bc3 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1618,6 +1618,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
- 	 * and we have control then make sure it is enabled.
- 	 */
- 	if (rdev->constraints->always_on || rdev->constraints->boot_on) {
-+		bool supply_enabled = false;
-+
- 		/* If we want to enable this regulator, make sure that we know
- 		 * the supplying regulator.
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 4e033c26fdd46..07e48faa87e0b 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -887,8 +887,10 @@ void mddev_unlock(struct mddev *mddev)
+ 		 * do_md_stop. dm raid only uses md_stop to stop. So dm raid
+ 		 * doesn't need to check MD_DELETED when getting reconfig lock
  		 */
-@@ -1637,11 +1639,14 @@ static int set_machine_constraints(struct regulator_dev *rdev)
- 				rdev->supply = NULL;
- 				return ret;
- 			}
-+			supply_enabled = true;
- 		}
- 
- 		ret = _regulator_do_enable(rdev);
- 		if (ret < 0 && ret != -EINVAL) {
- 			rdev_err(rdev, "failed to enable: %pe\n", ERR_PTR(ret));
-+			if (supply_enabled)
-+				regulator_disable(rdev->supply);
- 			return ret;
- 		}
- 
+-		if (test_bit(MD_DELETED, &mddev->flags))
++		if (test_bit(MD_DELETED, &mddev->flags)) {
++			kobject_del(&mddev->kobj);
+ 			del_gendisk(mddev->gendisk);
++		}
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(mddev_unlock);
 -- 
 2.51.0
 
