@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6009B343D92;
-	Tue, 16 Dec 2025 12:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92F8343D8F;
+	Tue, 16 Dec 2025 12:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888729; cv=none; b=VOUmOoH7SNlALgs4kXhW+FzmTu+iEubQRZ9NRxw8YZEsLM9Oma1e6blep36pXCF+GVIDI9B2msj7g47QoZdVQpcQKHCv2AgbJKZkcNSmFxmH4HSldX8q7K9RulQDSOabptoshOwRao6sfbAtjkMSLGFmYuPDtui6xAqxiVo9/kQ=
+	t=1765888732; cv=none; b=sdF3VOIcP+RezfZQ8Pf9pZsl8Qnbq7IlaKnjhOTduH/ftO9xftel/nDRMmYwOCC1g2N0PQG1KQ6Qty2+xeX88WEDPUCm/GgW6Ls+AhVakOsTrQCjj4qAYo+pW6EP48dNvImr35VKk0SJHOPMelkcr0BHHMT5Twogs2gXiKK2Fgw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888729; c=relaxed/simple;
-	bh=9mtMaHycE5zqvcvULg7Winhym/3clsQyLDatkFhBRVQ=;
+	s=arc-20240116; t=1765888732; c=relaxed/simple;
+	bh=84cMPjpYZqXR8RAyacawY0rrTMqjEEjICIbM70Sgqkc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJFgOSLdc4RxHldTGdLVaibtoUCgO7RChgmh1nfr37Rn2U8CslxXTHABS/+mgW8MmpMipScu/Urc9/y8LRyz3kEt92NBqH4Do0B1cGe/wYMvvHlx/Ft/E0wsCUkunnyZ4eUTYG1Hi4xairTPzy8WjjjnEB3rh+oUx1gs7k6zK7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cdvf1N+n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBuahAkosPYsRIGvypzI6/14fOg643R4q/wCcDg8v9WldLmd7yMDJZqav6q3AH+3cdvVdhE1FXFpcAVwgJkKABJjNS15DO+NURWd8OLiAhAvNjqYwQhNPDKDJullXomgfg5EOPj2xHT4jUBOll6jy8ynwvTdW10I2bKOEY/ze/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nC+4adjN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cdvf1N+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DA8C4CEF1;
-	Tue, 16 Dec 2025 12:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nC+4adjN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D523C4CEF1;
+	Tue, 16 Dec 2025 12:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888729;
-	bh=9mtMaHycE5zqvcvULg7Winhym/3clsQyLDatkFhBRVQ=;
+	s=korg; t=1765888732;
+	bh=84cMPjpYZqXR8RAyacawY0rrTMqjEEjICIbM70Sgqkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cdvf1N+na5WvAvMbI4AbzVO7ELex9rPxl1+97B5gTqgheDlq/jPzePN3sWrlaT6P0
-	 ktlcgqKnANaFrJ1VCmlngoD146QvPyux4jf7cMlIJDDZmk7Wl0L3BV+2a7qJbSdOhi
-	 hN9aYTKppVOuWWsFpt7yJSlbM+4lYNPsDX2kn2F0=
+	b=nC+4adjNITYB6tHUYpfApkYxJ1ZjC2f8vDCdDlx2sGpjjw9CyLxjl4sKDgQdAzPlu
+	 4t/wJeseQOgzMJUgGzN5TifhsW1HU4nmuzgwxJRzmUB2UVKfZfAHX+VeZRlrhHO8cG
+	 tddLA6RgvzRHs0MHmQN22TK01Y1K9/5BT8ezCZTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Haotien Hsu <haotienh@nvidia.com>,
-	Wayne Chang <waynec@nvidia.com>
-Subject: [PATCH 6.18 604/614] usb: gadget: tegra-xudc: Always reinitialize data toggle when clear halt
-Date: Tue, 16 Dec 2025 12:16:11 +0100
-Message-ID: <20251216111423.278659488@linuxfoundation.org>
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>
+Subject: [PATCH 6.18 605/614] usb: typec: ucsi: fix probe failure in gaokun_ucsi_probe()
+Date: Tue, 16 Dec 2025 12:16:12 +0100
+Message-ID: <20251216111423.314968202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,48 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotien Hsu <haotienh@nvidia.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-commit 2585973c7f9ee31d21e5848c996fab2521fd383d upstream.
+commit 6b120ef99fbcba9e413783561f8cc160719db589 upstream.
 
-The driver previously skipped handling ClearFeature(ENDPOINT_HALT)
-when the endpoint was already not halted. This prevented the
-controller from resetting the data sequence number and reinitializing
-the endpoint state.
+The gaokun_ucsi_probe() uses ucsi_create() to allocate a UCSI instance.
+The ucsi_create() validates whether ops->poll_cci is defined, and if not,
+it directly returns -EINVAL. However, the gaokun_ucsi_ops structure does
+not define the poll_cci, causing ucsi_create() always fail with -EINVAL.
+This issue can be observed in the kernel log with the following error:
 
-According to USB 3.2 specification Rev. 1.1, section 9.4.5,
-ClearFeature(ENDPOINT_HALT) must always reset the data sequence and
-set the stream state machine to Disabled, regardless of whether the
-endpoint was halted.
+ucsi_huawei_gaokun.ucsi huawei_gaokun_ec.ucsi.0: probe with driver
+ucsi_huawei_gaokun.ucsi failed with error -22
 
-Remove the early return so that ClearFeature(ENDPOINT_HALT) always
-resets the endpoint sequence state as required by the specification.
+Fix the issue by adding the missing poll_cci callback to gaokun_ucsi_ops.
 
-Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
+Fixes: 00327d7f2c8c ("usb: typec: ucsi: add Huawei Matebook E Go ucsi driver")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
-Signed-off-by: Wayne Chang <waynec@nvidia.com>
-Link: https://patch.msgid.link/20251127033540.2287517-1-waynec@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Pengyu Luo <mitltlatltl@gmail.com>
+Link: https://patch.msgid.link/4d077d6439d728be68646bb8c8678436a3a0885e.1764065838.git.duoming@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -1558,12 +1558,6 @@ static int __tegra_xudc_ep_set_halt(stru
- 		return -ENOTSUPP;
- 	}
- 
--	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
--		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
--			halt ? "halted" : "not halted");
--		return 0;
--	}
--
- 	if (halt) {
- 		ep_halt(xudc, ep->index);
- 	} else {
+--- a/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
++++ b/drivers/usb/typec/ucsi/ucsi_huawei_gaokun.c
+@@ -196,6 +196,7 @@ static void gaokun_ucsi_connector_status
+ const struct ucsi_operations gaokun_ucsi_ops = {
+ 	.read_version = gaokun_ucsi_read_version,
+ 	.read_cci = gaokun_ucsi_read_cci,
++	.poll_cci = gaokun_ucsi_read_cci,
+ 	.read_message_in = gaokun_ucsi_read_message_in,
+ 	.sync_control = ucsi_sync_control_common,
+ 	.async_control = gaokun_ucsi_async_control,
 
 
