@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AC8364024;
-	Tue, 16 Dec 2025 12:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41928364032;
+	Tue, 16 Dec 2025 12:23:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887783; cv=none; b=f3Dsygec85paa9ijzwAO1t/IaGeNZUJyk/hKp0bxoQnSzyhJijdtjemtjc+qHcr0gxxIgvOiIDpaRWvEMBJD8eg/1Q6j3I1N9BALZeqby8K/Y62YI7iAj0AbAstzepOHXYaGLpmFkA2qrYGhjZivjacQzhetMRl/FHCLpryvkT4=
+	t=1765887786; cv=none; b=IFr+RjIfie5MYZHIMezpRfIo/UHqOs7wLw3AAZHAImGouTu+mmYG45X21w5xgVNuOwqdDaxxyxKaJyYcsaeblPHsv06BHnwyhdi0ITmpnUn6fEaR5m0hrYJPJNeyiRCkAG+i/GPSLUAn68tDeJgFDrRwLtwJmNjT0t7FaB3u9Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887783; c=relaxed/simple;
-	bh=RHVwxkYpkLjdEIOWTRzH8MQtpIotqrGoq+aeK/JRfJA=;
+	s=arc-20240116; t=1765887786; c=relaxed/simple;
+	bh=pWP1H+tnWBUX4Voil8UqUaq7y2WDBAiteANoKm3kP7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uis7KNCWEiuVNdnMSB2AQcNNaQB2kJG+qOPK2UQMIie5Rf2TJxpCj2LInzmbSvuNT+A8H02NNEyJQUF2WAcJzMQmFQxk45ct+5Y4SMuAJxWWM4EjiEdxIVIfj3xcpT0EoV6MzJc8jC42XWuJRz7opLZ4dYhOBJlqJYFk6H3Fzhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4D4r6pR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bcss422/R8dLsDtdDvcjrFDbwGpW7eYIbj7A+0bZCKW3J24XmoD8eet4cOzV7ETLDuWfDOjfFcSBTv7IeNuuWDjBt+MsFQxLeGHfBm9GyhzcnkQ/RZVjwfJsQn+XPXgIF/6O+KuHJ9JlfjRHFmeKwOS7J5PZNfOD5COEt2cjxfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PW/Pdrbv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4D4r6pR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC007C4CEF1;
-	Tue, 16 Dec 2025 12:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PW/Pdrbv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E8EC4CEF1;
+	Tue, 16 Dec 2025 12:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887783;
-	bh=RHVwxkYpkLjdEIOWTRzH8MQtpIotqrGoq+aeK/JRfJA=;
+	s=korg; t=1765887786;
+	bh=pWP1H+tnWBUX4Voil8UqUaq7y2WDBAiteANoKm3kP7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4D4r6pRpHkHlRfdecdLh/H7XaLyFff7+BBZ8K6tts/z1hiSfKOBvi8yWqCNlwhkI
-	 0FDCVGx7NcSTkkOr/DVjEN0pxKMagSj4XiYs9vzMNxK+GlQ7tvyQWvqW5/zFp0azpM
-	 xsB0qxu9eLB7g8s1u/ay6OcfnG8yc6BlagwJmzhg=
+	b=PW/PdrbvWEv5+2rmGIERPESKeQtg23qoqB7J+ljOyxVCau1kN2p49hVN/G+gy5X1h
+	 p7oH4bz2TNKoiJoLW++zPWjZsjVZvOvyzQn3VkQEtbU7QKCGzptbN8kgA7SKbZ74lW
+	 uRCNjR8Yu0EHGtHuOGwPKGKVzz8gLyxeWwOg/KnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Crystal Wood <crwood@redhat.com>,
-	Wander Lairson Costa <wander@redhat.com>,
-	Tomas Glozar <tglozar@redhat.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 336/614] tools/rtla: Fix --on-threshold always triggering
-Date: Tue, 16 Dec 2025 12:11:43 +0100
-Message-ID: <20251216111413.538618151@linuxfoundation.org>
+Subject: [PATCH 6.18 337/614] mfd: mt6397-irq: Fix missing irq_domain_remove() in error path
+Date: Tue, 16 Dec 2025 12:11:44 +0100
+Message-ID: <20251216111413.574066700@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,84 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Glozar <tglozar@redhat.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 417bd0d502f90a2e785e7299dae4f248b5ac0292 ]
+[ Upstream commit b4b1bd1f330fdd13706382be6c90ce9f58cee3f5 ]
 
-Commit 8d933d5c89e8 ("rtla/timerlat: Add continue action") moved the
-code performing on-threshold actions (enabled through --on-threshold
-option) to inside the RTLA main loop.
+If devm_request_threaded_irq() fails after irq_domain_create_linear()
+succeeds in mt6397_irq_init(), the function returns without removing
+the created IRQ domain, leading to a resource leak.
 
-The condition in the loop does not check whether the threshold was
-actually exceeded or if stop tracing was requested by the user through
-SIGINT or duration. This leads to a bug where on-threshold actions are
-always performed, even when the threshold was not hit.
+Call irq_domain_remove() in the error path after a successful
+irq_domain_create_linear() to properly release the IRQ domain.
 
-(BPF mode is not affected, since it uses a different condition in the
-while loop.)
-
-Add a condition that checks for !stop_tracing before executing the
-actions. Also, fix incorrect brackets in hist_main_loop to match the
-semantics of top_main_loop.
-
-Fixes: 8d933d5c89e8 ("rtla/timerlat: Add continue action")
-Fixes: 2f3172f9dd58 ("tools/rtla: Consolidate code between osnoise/timerlat and hist/top")
-Reviewed-by: Crystal Wood <crwood@redhat.com>
-Reviewed-by: Wander Lairson Costa <wander@redhat.com>
-Link: https://lore.kernel.org/r/20251007095341.186923-1-tglozar@redhat.com
-Signed-off-by: Tomas Glozar <tglozar@redhat.com>
+Fixes: a4872e80ce7d ("mfd: mt6397: Extract IRQ related code from core driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251118121500.605-1-vulab@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/src/common.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/mfd/mt6397-irq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
-index 2e6e3dac1897f..b197037fc58b3 100644
---- a/tools/tracing/rtla/src/common.c
-+++ b/tools/tracing/rtla/src/common.c
-@@ -268,6 +268,10 @@ int top_main_loop(struct osnoise_tool *tool)
- 			tool->ops->print_stats(tool);
+diff --git a/drivers/mfd/mt6397-irq.c b/drivers/mfd/mt6397-irq.c
+index 0e463026c5a91..5d2e5459f7444 100644
+--- a/drivers/mfd/mt6397-irq.c
++++ b/drivers/mfd/mt6397-irq.c
+@@ -229,6 +229,7 @@ int mt6397_irq_init(struct mt6397_chip *chip)
+ 	if (ret) {
+ 		dev_err(chip->dev, "failed to register irq=%d; err: %d\n",
+ 			chip->irq, ret);
++		irq_domain_remove(chip->irq_domain);
+ 		return ret;
+ 	}
  
- 		if (osnoise_trace_is_off(tool, record)) {
-+			if (stop_tracing)
-+				/* stop tracing requested, do not perform actions */
-+				return 0;
-+
- 			actions_perform(&params->threshold_actions);
- 
- 			if (!params->threshold_actions.continue_flag)
-@@ -315,20 +319,22 @@ int hist_main_loop(struct osnoise_tool *tool)
- 		}
- 
- 		if (osnoise_trace_is_off(tool, tool->record)) {
-+			if (stop_tracing)
-+				/* stop tracing requested, do not perform actions */
-+				break;
-+
- 			actions_perform(&params->threshold_actions);
- 
--			if (!params->threshold_actions.continue_flag) {
-+			if (!params->threshold_actions.continue_flag)
- 				/* continue flag not set, break */
- 				break;
- 
--				/* continue action reached, re-enable tracing */
--				if (tool->record)
--					trace_instance_start(&tool->record->trace);
--				if (tool->aa)
--					trace_instance_start(&tool->aa->trace);
--				trace_instance_start(&tool->trace);
--			}
--			break;
-+			/* continue action reached, re-enable tracing */
-+			if (tool->record)
-+				trace_instance_start(&tool->record->trace);
-+			if (tool->aa)
-+				trace_instance_start(&tool->aa->trace);
-+			trace_instance_start(&tool->trace);
- 		}
- 
- 		/* is there still any user-threads ? */
 -- 
 2.51.0
 
