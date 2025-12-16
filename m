@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860423277AF;
-	Tue, 16 Dec 2025 11:45:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB2D3148B3;
+	Tue, 16 Dec 2025 11:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885536; cv=none; b=Y/EopXaZuHM7M6LW1CAUS1vhAqNEV0zhHxj4JYFulyR0tc81eIdyifTGbEQDacL6iRz+PvpMt3KFIKOHIK4M+j3ilkXwC3+hFzSIIx94JRL4eiiM0r0eVvk8+ia64cxKCIKo5g8JkLUUKp7/EWu/6QxP5P6NkqvhJdP2FVfJYx8=
+	t=1765885539; cv=none; b=llT/ukN4jNE1D3B52Xjrf4P8ztHWPaTB/mGHFU6bWYQ0u6vxhyvZMOApsCqOvko3b6LyqLbDzc1X/yzdQ8ULidpHl1E1XCmKj+Fs8DXVVgx4OsOYNLZfXKf7oa/JJq5qKAbeHRnNGApTK4XVHlvRf202ejFFvjbkXWZ3k+l2DbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885536; c=relaxed/simple;
-	bh=3XZwB1t+0GuyBIXRgnNUcAy834maW9B057xMI4DO9lg=;
+	s=arc-20240116; t=1765885539; c=relaxed/simple;
+	bh=xpglEzNQof+bReeL75Nv/IuaY2ckSVoRuLsMTie1I1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O2NzOB2UzVz24V3tnVAFvVl2MZn0vy12KG/73Enjed7dkh4h7i2rWgjwGpJFmhsAIKf9lukufrXE4DnspRjqR40bmK/Cn7NB42YdbuKV+HE58MguReXnmeCLjoA+usu/r0lbrB1aLYrfu3f4RHJ/+V4vcl2x6cAClNBHEDSnLec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wuLdYcrA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pdLoZ0s1Yg7G5suohzAS44kSHJiAWdmUva9+jGB6UOGYBShBfSlT2ad69TVzUodaQrDle2G1Ul9eLfZSfE9ZpETcbFxIEpMXtMkrhu7ZrKkT+iEdHtPEvQLat2FO8a7FwEXPaAY3zqei07TJ/WJid0UpFFdNSWQMSIJTAYRG0po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eddGp4Pr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wuLdYcrA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD605C4CEF1;
-	Tue, 16 Dec 2025 11:45:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eddGp4Pr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D3A2C4CEF1;
+	Tue, 16 Dec 2025 11:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885536;
-	bh=3XZwB1t+0GuyBIXRgnNUcAy834maW9B057xMI4DO9lg=;
+	s=korg; t=1765885539;
+	bh=xpglEzNQof+bReeL75Nv/IuaY2ckSVoRuLsMTie1I1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wuLdYcrA1Ss8vlfmU5jRRZyW3tTylYfkPpQpwKmITT4nhaV8GxmzgbYYlUt09A06k
-	 k0IKg7lIRmg9CPcaKO/I9NJ3Yv5EnUDRJhPnqdAGu2MFT5LhXlBj2OjjuoapqgAWry
-	 eeOH2IwNYvTjCLWVoZaW+bqNZgDhkOwbSWerzAj4=
+	b=eddGp4Pr4vNXi5niafhibQFmMlYo923M7d7hJjyUrPc1OI8Gp+UTQM12oyOBlMs/m
+	 eOwHOUF1hZhr3e67ZxeGxA87bajFcM/GU0NYVup00T3jEd2tfCIYJtk3tXc1sOeDsU
+	 V0Gd29dy3Or5vrlzDCXMA7j1K9E6FiLsWEvRi2lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Thomas Richard (TI.com)" <thomas.richard@bootlin.com>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Nishanth Menon <nm@ti.com>,
+	Songtang Liu <liusongtang@bytedance.com>,
+	Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 167/507] firmware: ti_sci: Set IO Isolation only if the firmware is capable
-Date: Tue, 16 Dec 2025 12:10:08 +0100
-Message-ID: <20251216111351.569176549@linuxfoundation.org>
+Subject: [PATCH 6.17 168/507] iommu/amd: Fix potential out-of-bounds read in iommu_mmio_show
+Date: Tue, 16 Dec 2025 12:10:09 +0100
+Message-ID: <20251216111351.605312202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,98 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
+From: Songtang Liu <liusongtang@bytedance.com>
 
-[ Upstream commit 999e9bc953e321651d69556fdd5dfd178f96f128 ]
+[ Upstream commit a0c7005333f9a968abb058b1d77bbcd7fb7fd1e7 ]
 
-Prevent calling ti_sci_cmd_set_io_isolation() on firmware
-that does not support the IO_ISOLATION capability. Add the
-MSG_FLAG_CAPS_IO_ISOLATION capability flag and check it before
-attempting to set IO isolation during suspend/resume operations.
+In iommu_mmio_write(), it validates the user-provided offset with the
+check: `iommu->dbg_mmio_offset > iommu->mmio_phys_end - 4`.
+This assumes a 4-byte access. However, the corresponding
+show handler, iommu_mmio_show(), uses readq() to perform an 8-byte
+(64-bit) read.
 
-Without this check, systems with older firmware may experience
-undefined behavior or errors when entering/exiting suspend states.
+If a user provides an offset equal to `mmio_phys_end - 4`, the check
+passes, and will lead to a 4-byte out-of-bounds read.
 
-Fixes: ec24643bdd62 ("firmware: ti_sci: Add system suspend and resume call")
-Signed-off-by: Thomas Richard (TI.com) <thomas.richard@bootlin.com>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://patch.msgid.link/20251031-ti-sci-io-isolation-v2-1-60d826b65949@bootlin.com
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Fix this by adjusting the boundary check to use sizeof(u64), which
+corresponds to the size of the readq() operation.
+
+Fixes: 7a4ee419e8c1 ("iommu/amd: Add debugfs support to dump IOMMU MMIO registers")
+Signed-off-by: Songtang Liu <liusongtang@bytedance.com>
+Reviewed-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/ti_sci.c | 21 +++++++++++++--------
- drivers/firmware/ti_sci.h |  2 ++
- 2 files changed, 15 insertions(+), 8 deletions(-)
+ drivers/iommu/amd/debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/ti_sci.c b/drivers/firmware/ti_sci.c
-index 49fd2ae01055d..8d96a3c12b36a 100644
---- a/drivers/firmware/ti_sci.c
-+++ b/drivers/firmware/ti_sci.c
-@@ -3751,9 +3751,11 @@ static int __maybe_unused ti_sci_suspend_noirq(struct device *dev)
- 	struct ti_sci_info *info = dev_get_drvdata(dev);
- 	int ret = 0;
+diff --git a/drivers/iommu/amd/debugfs.c b/drivers/iommu/amd/debugfs.c
+index 10fa217a71199..20b04996441d6 100644
+--- a/drivers/iommu/amd/debugfs.c
++++ b/drivers/iommu/amd/debugfs.c
+@@ -37,7 +37,7 @@ static ssize_t iommu_mmio_write(struct file *filp, const char __user *ubuf,
+ 	if (ret)
+ 		return ret;
  
--	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
--	if (ret)
--		return ret;
-+	if (info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION) {
-+		ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_ENABLE);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	return 0;
- }
-@@ -3767,9 +3769,11 @@ static int __maybe_unused ti_sci_resume_noirq(struct device *dev)
- 	u8 pin;
- 	u8 mode;
- 
--	ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_DISABLE);
--	if (ret)
--		return ret;
-+	if (info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION) {
-+		ret = ti_sci_cmd_set_io_isolation(&info->handle, TISCI_MSG_VALUE_IO_DISABLE);
-+		if (ret)
-+			return ret;
-+	}
- 
- 	ret = ti_sci_msg_cmd_lpm_wake_reason(&info->handle, &source, &time, &pin, &mode);
- 	/* Do not fail to resume on error as the wake reason is not critical */
-@@ -3928,11 +3932,12 @@ static int ti_sci_probe(struct platform_device *pdev)
+-	if (iommu->dbg_mmio_offset > iommu->mmio_phys_end - 4) {
++	if (iommu->dbg_mmio_offset > iommu->mmio_phys_end - sizeof(u64)) {
+ 		iommu->dbg_mmio_offset = -1;
+ 		return  -EINVAL;
  	}
- 
- 	ti_sci_msg_cmd_query_fw_caps(&info->handle, &info->fw_caps);
--	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s\n",
-+	dev_dbg(dev, "Detected firmware capabilities: %s%s%s%s%s\n",
- 		info->fw_caps & MSG_FLAG_CAPS_GENERIC ? "Generic" : "",
- 		info->fw_caps & MSG_FLAG_CAPS_LPM_PARTIAL_IO ? " Partial-IO" : "",
- 		info->fw_caps & MSG_FLAG_CAPS_LPM_DM_MANAGED ? " DM-Managed" : "",
--		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : ""
-+		info->fw_caps & MSG_FLAG_CAPS_LPM_ABORT ? " LPM-Abort" : "",
-+		info->fw_caps & MSG_FLAG_CAPS_IO_ISOLATION ? " IO-Isolation" : ""
- 	);
- 
- 	ti_sci_setup_ops(info);
-diff --git a/drivers/firmware/ti_sci.h b/drivers/firmware/ti_sci.h
-index 701c416b2e78f..7559cde17b6cc 100644
---- a/drivers/firmware/ti_sci.h
-+++ b/drivers/firmware/ti_sci.h
-@@ -149,6 +149,7 @@ struct ti_sci_msg_req_reboot {
-  *		MSG_FLAG_CAPS_LPM_PARTIAL_IO: Partial IO in LPM
-  *		MSG_FLAG_CAPS_LPM_DM_MANAGED: LPM can be managed by DM
-  *		MSG_FLAG_CAPS_LPM_ABORT: Abort entry to LPM
-+ *		MSG_FLAG_CAPS_IO_ISOLATION: IO Isolation support
-  *
-  * Response to a generic message with message type TI_SCI_MSG_QUERY_FW_CAPS
-  * providing currently available SOC/firmware capabilities. SoC that don't
-@@ -160,6 +161,7 @@ struct ti_sci_msg_resp_query_fw_caps {
- #define MSG_FLAG_CAPS_LPM_PARTIAL_IO	TI_SCI_MSG_FLAG(4)
- #define MSG_FLAG_CAPS_LPM_DM_MANAGED	TI_SCI_MSG_FLAG(5)
- #define MSG_FLAG_CAPS_LPM_ABORT		TI_SCI_MSG_FLAG(9)
-+#define MSG_FLAG_CAPS_IO_ISOLATION	TI_SCI_MSG_FLAG(7)
- #define MSG_MASK_CAPS_LPM		GENMASK_ULL(4, 1)
- 	u64 fw_caps;
- } __packed;
 -- 
 2.51.0
 
