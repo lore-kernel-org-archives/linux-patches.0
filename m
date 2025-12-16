@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BBB224AEF;
-	Tue, 16 Dec 2025 12:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46EDD224AEF;
+	Tue, 16 Dec 2025 12:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887426; cv=none; b=pGxFzBUBXAMztV7cCXDgOYARIkjb9YRKTJz+jdmIVOWS+GaGpSmRLFISTT0cU6uXqInb2XUizXUQrqsWiZ+8XncmFFnqKkFb0wmACR3BDNKObdFYYecvK3h36QZ/N6trMxgkVD1FmwpRO0qkpcchhZK93Mj79DfB+p/VJ7nd7b0=
+	t=1765887429; cv=none; b=sX2oAq8JCKBU7ZDC3emKWcRIU+5imYkHyrD0Z91OxIhL+BkNQBdOb9UUEqzjhg8IY1kL+UOMgMidin5imTq/uiQiL3aIaa4sLe7pCZGzdXIb9ZR5hfvDy6fj4bEcjsrHu2j6hUaqA0OhZPhtiFxcDbMM1g3qsfYijvsmVOHJ6ww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887426; c=relaxed/simple;
-	bh=JR+7uvxOIkdkyMXMkLJgsaSjFYTo64O35z2JSj3Ilbc=;
+	s=arc-20240116; t=1765887429; c=relaxed/simple;
+	bh=Ri6dfGBzClu17ia9cEZzADDKotRJA0/n5PuBZS0shjI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=afus3a4lZxqyS8ALdVbwopuy6BhSrw2ZLGRLOb5006Jakk8wvl451xBvh/FI/MT2jTXNvUtmjP/TZEXHdLuPunuDEmtuPh56gKfouYVFDJ5e4WmrYu3de5C5F6aNGjHtT+Cy0sBfgKZywKq4zrC1btK0MORno7MaXSm79hvaERM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oG+1IEzJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fV3GrgnI8icnhDTKoNQvnn8tkO4Yk6lEoo2nHzov3od3fKep3pqJ1qSPL7RLaHb7iw4yWIg2BOgq0vSWry9dfAYV8qgqAmbx3WnTfWXmr/An+LIta21wSDuzCkRpcbtSy7sOzjeKXpdYXRaD55RBa1EGr+/J0l4K3IRSvt9une8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jx9Blsh0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oG+1IEzJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A05C4CEF1;
-	Tue, 16 Dec 2025 12:17:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jx9Blsh0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE99C4CEF1;
+	Tue, 16 Dec 2025 12:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887426;
-	bh=JR+7uvxOIkdkyMXMkLJgsaSjFYTo64O35z2JSj3Ilbc=;
+	s=korg; t=1765887429;
+	bh=Ri6dfGBzClu17ia9cEZzADDKotRJA0/n5PuBZS0shjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oG+1IEzJz9xZSxruWB7zPDNYa0ZxlxPYDe3YATK3GM1seKd8oEoAnP+xXkLZxMrKj
-	 ajIMNTMvkozy7D8wKPhpNkT7MMfXoXXJ+vRQzU17ule7MLkp+LVOkQq6GxMGNFvrx1
-	 xEF1iR/ht0qRnMXVDuJ8PUWLmIyDfwzb50QIxp+k=
+	b=Jx9Blsh0Z/bSwPxbdnZ8rc28k95+WDDMPWU/+MrtEmTT5Bc/h28ee9b19nhIzsYU4
+	 b3f/ewpT2ruNW3N6pHbQ47FyytHol1kh+stm/Eb5URVQQ4wR3C3YDvVNCKSdyMjoRe
+	 I6TK9K7bbVMahX6DoeDUArD1hI881Ad5R3lY4xRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiao Ni <xni@redhat.com>,
+	Yun Zhou <yun.zhou@windriver.com>,
 	Li Nan <linan122@huawei.com>,
 	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 226/614] md: delete mddev kobj before deleting gendisk kobj
-Date: Tue, 16 Dec 2025 12:09:53 +0100
-Message-ID: <20251216111409.561000679@linuxfoundation.org>
+Subject: [PATCH 6.18 227/614] md: fix rcu protection in md_wakeup_thread
+Date: Tue, 16 Dec 2025 12:09:54 +0100
+Message-ID: <20251216111409.597113634@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,58 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiao Ni <xni@redhat.com>
+From: Yun Zhou <yun.zhou@windriver.com>
 
-[ Upstream commit cc394b94dc40b661efc9895665abf03640ffff2d ]
+[ Upstream commit 0dc76205549b4c25705e54345f211b9f66e018a0 ]
 
-In sync del gendisk path, it deletes gendisk first and the directory
-/sys/block/md is removed. Then it releases mddev kobj in a delayed work.
-If we enable debug log in sysfs_remove_group, we can see the debug log
-'sysfs group bitmap not found for kobject md'. It's the reason that the
-parent kobj has been deleted, so it can't find parent directory.
+We attempted to use RCU to protect the pointer 'thread', but directly
+passed the value when calling md_wakeup_thread(). This means that the
+RCU pointer has been acquired before rcu_read_lock(), which renders
+rcu_read_lock() ineffective and could lead to a use-after-free.
 
-In creating path, it allocs gendisk first, then adds mddev kobj. So it
-should delete mddev kobj before deleting gendisk.
-
-Before commit 9e59d609763f ("md: call del_gendisk in control path"), it
-releases mddev kobj first. If the kobj hasn't been deleted, it does clean
-job and deletes the kobj. Then it calls del_gendisk and releases gendisk
-kobj. So it doesn't need to call kobject_del to delete mddev kobj. After
-this patch, in sync del gendisk path, the sequence changes. So it needs
-to call kobject_del to delete mddev kobj.
-
-After this patch, the sequence is:
-1. kobject del mddev kobj
-2. del_gendisk deletes gendisk kobj
-3. mddev_delayed_delete releases mddev kobj
-4. md_kobj_release releases gendisk kobj
-
-Link: https://lore.kernel.org/linux-raid/20250928012424.61370-1-xni@redhat.com
-Fixes: 9e59d609763f ("md: call del_gendisk in control path")
-Signed-off-by: Xiao Ni <xni@redhat.com>
+Link: https://lore.kernel.org/linux-raid/20251015083227.1079009-1-yun.zhou@windriver.com
+Fixes: 446931543982 ("md: protect md_thread with rcu")
+Signed-off-by: Yun Zhou <yun.zhou@windriver.com>
 Reviewed-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/md.c | 14 ++++++--------
+ drivers/md/md.h |  8 +++++++-
+ 2 files changed, 13 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 41c476b40c7a3..8128c8839a082 100644
+index 8128c8839a082..6062e0deb6160 100644
 --- a/drivers/md/md.c
 +++ b/drivers/md/md.c
-@@ -941,8 +941,10 @@ void mddev_unlock(struct mddev *mddev)
- 		 * do_md_stop. dm raid only uses md_stop to stop. So dm raid
- 		 * doesn't need to check MD_DELETED when getting reconfig lock
- 		 */
--		if (test_bit(MD_DELETED, &mddev->flags))
-+		if (test_bit(MD_DELETED, &mddev->flags)) {
-+			kobject_del(&mddev->kobj);
- 			del_gendisk(mddev->gendisk);
-+		}
- 	}
+@@ -99,7 +99,7 @@ static int remove_and_add_spares(struct mddev *mddev,
+ 				 struct md_rdev *this);
+ static void mddev_detach(struct mddev *mddev);
+ static void export_rdev(struct md_rdev *rdev, struct mddev *mddev);
+-static void md_wakeup_thread_directly(struct md_thread __rcu *thread);
++static void md_wakeup_thread_directly(struct md_thread __rcu **thread);
+ 
+ /*
+  * Default number of read corrections we'll attempt on an rdev
+@@ -5136,7 +5136,7 @@ static void stop_sync_thread(struct mddev *mddev, bool locked)
+ 	 * Thread might be blocked waiting for metadata update which will now
+ 	 * never happen
+ 	 */
+-	md_wakeup_thread_directly(mddev->sync_thread);
++	md_wakeup_thread_directly(&mddev->sync_thread);
+ 	if (work_pending(&mddev->sync_work))
+ 		flush_work(&mddev->sync_work);
+ 
+@@ -8375,22 +8375,21 @@ static int md_thread(void *arg)
+ 	return 0;
  }
- EXPORT_SYMBOL_GPL(mddev_unlock);
+ 
+-static void md_wakeup_thread_directly(struct md_thread __rcu *thread)
++static void md_wakeup_thread_directly(struct md_thread __rcu **thread)
+ {
+ 	struct md_thread *t;
+ 
+ 	rcu_read_lock();
+-	t = rcu_dereference(thread);
++	t = rcu_dereference(*thread);
+ 	if (t)
+ 		wake_up_process(t->tsk);
+ 	rcu_read_unlock();
+ }
+ 
+-void md_wakeup_thread(struct md_thread __rcu *thread)
++void __md_wakeup_thread(struct md_thread __rcu *thread)
+ {
+ 	struct md_thread *t;
+ 
+-	rcu_read_lock();
+ 	t = rcu_dereference(thread);
+ 	if (t) {
+ 		pr_debug("md: waking up MD thread %s.\n", t->tsk->comm);
+@@ -8398,9 +8397,8 @@ void md_wakeup_thread(struct md_thread __rcu *thread)
+ 		if (wq_has_sleeper(&t->wqueue))
+ 			wake_up(&t->wqueue);
+ 	}
+-	rcu_read_unlock();
+ }
+-EXPORT_SYMBOL(md_wakeup_thread);
++EXPORT_SYMBOL(__md_wakeup_thread);
+ 
+ struct md_thread *md_register_thread(void (*run) (struct md_thread *),
+ 		struct mddev *mddev, const char *name)
+diff --git a/drivers/md/md.h b/drivers/md/md.h
+index 1979c2d4fe89e..5d5f780b84477 100644
+--- a/drivers/md/md.h
++++ b/drivers/md/md.h
+@@ -882,6 +882,12 @@ struct md_io_clone {
+ 
+ #define THREAD_WAKEUP  0
+ 
++#define md_wakeup_thread(thread) do {   \
++	rcu_read_lock();                    \
++	__md_wakeup_thread(thread);         \
++	rcu_read_unlock();                  \
++} while (0)
++
+ static inline void safe_put_page(struct page *p)
+ {
+ 	if (p) put_page(p);
+@@ -895,7 +901,7 @@ extern struct md_thread *md_register_thread(
+ 	struct mddev *mddev,
+ 	const char *name);
+ extern void md_unregister_thread(struct mddev *mddev, struct md_thread __rcu **threadp);
+-extern void md_wakeup_thread(struct md_thread __rcu *thread);
++extern void __md_wakeup_thread(struct md_thread __rcu *thread);
+ extern void md_check_recovery(struct mddev *mddev);
+ extern void md_reap_sync_thread(struct mddev *mddev);
+ extern enum sync_action md_sync_action(struct mddev *mddev);
 -- 
 2.51.0
 
