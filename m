@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5B22367D1;
-	Tue, 16 Dec 2025 12:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE9D34F250;
+	Tue, 16 Dec 2025 12:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887219; cv=none; b=qTYUdxhtqfZJ6I30PQh86p8FsQ9ysKEWqy9c079LdDXF1Rhun+l5F354400hR+js/Dtf4h3wk7ubme+cFqTdtSunICRq6dya5twuuhMQPiO3FTd5NvUpi7RfPMAtP7Q+BhB5i/knFBXdaGUR4cj/8thA61bwgDpkRYf1SyHUcrQ=
+	t=1765887222; cv=none; b=gzNJG4v6hJziPriwuCfov1lgkEIaJ1zEF1+wqfhbAW0jG0h+5Linkz//bxQ1fT/EwG6pXFUyYlgs8qmXopC+c4I0ET0fQMGhNvyxpnxfxRMBu4fXHR+Y+WKebWKlF9ZFaRcAYVFTvCKHzSBXTGKq9A2wsq0KdvVWvmyYs+2DXZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887219; c=relaxed/simple;
-	bh=WsD0qq6KuD5A6bvRzqqe1ybQ9yoZTNA5cLSrUjY7ZzM=;
+	s=arc-20240116; t=1765887222; c=relaxed/simple;
+	bh=BFg1+nRWeYzKjq81wm7C7Rg4TkA13rnPigBIGNCrmh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ISaJJHDc2n1J8ila1KjkuplVeoAeoPYWw/SOUbbPKEcYiL6bl05HQ8NGEFjr1qRRX407vvb+c3s+TSChp01appij4eYgutrJtwxPpJKDlTEGjs32gS5AADaVuMmZ4lPVxr2FnvxQ/1pBt7GDxNV9AEfM0VKsGEKO9+pMkR8q0po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzkYFhNq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k4sZKM1kmUAALOsqlA/mS40YJ1mwJyUPMz1BJ2kZ7eLC+X3RhuYXBpsCuSUZcliOCqIMzCI3Lpxst6hDIsRCktPqcUfUovAg3Tr7gnYkYeua+94jF9I68DDrYZDVFFNRIjmVjKeNDXpT3HeuVRy8KBSb2oYHp9KbSkJOQsh0B0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGla1tgw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzkYFhNq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A793BC4CEF1;
-	Tue, 16 Dec 2025 12:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGla1tgw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBDFC4CEF1;
+	Tue, 16 Dec 2025 12:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887219;
-	bh=WsD0qq6KuD5A6bvRzqqe1ybQ9yoZTNA5cLSrUjY7ZzM=;
+	s=korg; t=1765887221;
+	bh=BFg1+nRWeYzKjq81wm7C7Rg4TkA13rnPigBIGNCrmh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzkYFhNq1KE0y3TrJsWYk9tGw1MZCLOKtjuX/lN02z+oIJjoGIZnYU1UIalUVC/GO
-	 Mm4J1I/3kp6ujqy72pwlWQ+SIlclbVGSxk5wIHsubqk4Pcz0kL5Yf7+KcQhXsaFU7u
-	 DmU1TZIACDY2plk5OdEWvPWkAtqXiF32kdPTG4HE=
+	b=CGla1tgw2T4TTL6NQgrdnyCCPKzeI9XYVTFuHg6Hd7B2f68rCwBx9ZKX8M9SPlEHW
+	 8PoZuhYYSTRvlYiwB/uD9zFfmoOipn7bRyRlEcvJwGxx+I9uZwIQ6exhefTc94PMul
+	 PujJXCBx7uAlw5lYiuUfOkRgrloJHYskVqnmP+cA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	a-development <a-development@posteo.de>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 162/614] wifi: ath12k: fix error handling in creating hardware group
-Date: Tue, 16 Dec 2025 12:08:49 +0100
-Message-ID: <20251216111407.205918249@linuxfoundation.org>
+Subject: [PATCH 6.18 163/614] wifi: ath12k: enforce vdev limit in ath12k_mac_vdev_create()
+Date: Tue, 16 Dec 2025 12:08:50 +0100
+Message-ID: <20251216111407.242056923@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,113 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 
-[ Upstream commit 088a099690e4c0d291db505013317ab5dd58b4d5 ]
+[ Upstream commit 448bf7b51426bcca54b5ac1ddd1045a36c9d1dea ]
 
-In ath12k_core_init() when ath12k_core_hw_group_create() fails,
-ath12k_core_hw_group_destroy() is called where for each device below
-path would get executed
+Currently, vdev limit check is performed only in
+ath12k_mac_assign_vif_to_vdev(). If the host has already created
+maximum number of vdevs for the radio (ar) and a scan request
+arrives for the same radio, ath12k_mac_initiate_hw_scan() attempts
+to create a vdev without checking the limit, causing firmware asserts.
 
-	ath12k_core_soc_destroy()
-		ath12k_qmi_deinit_service()
-			qmi_handle_release()
+Centralize the vdev limit guard by moving the check into
+ath12k_mac_vdev_create() so that all callers obey the limit.
+While doing this, update the condition from
+`num_created_vdevs > (TARGET_NUM_VDEVS(ab) - 1)` to
+`num_created_vdevs >= TARGET_NUM_VDEVS(ab)` for clarity and to
+eliminate unnecessary arithmetic.
 
-This results in kernel crash in case one of the device fails at
-qmi_handle_init() when creating hardware group:
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
 
-ath12k_pci 0000:10:00.0: failed to initialize qmi handle
-ath12k_pci 0000:10:00.0: failed to initialize qmi :-517
-ath12k_pci 0000:10:00.0: failed to create soc core: -517
-ath12k_pci 0000:10:00.0: unable to create hw group
-BUG: unable to handle page fault for address: ffffffffffffffb7
-RIP: 0010:qmi_handle_release
-Call Trace:
- <TASK>
- ath12k_qmi_deinit_service
- ath12k_core_hw_group_destroy
- ath12k_core_init
- ath12k_pci_probe
-
-The detailed reason is, when qmi_handle_init() fails for a device
-ab->qmi.handle is not correctly initialized. Then
-ath12k_core_hw_group_create() returns failure, since error handing
-is done for all device, eventually qmi_handle_release() is called for the
-issue device and finally kernel crashes due to the uninitialized
-ab->qmi.handle.
-
-Fix this by moving error handling to ath12k_core_hw_group_create(), this
-way the issue device can be skipped.
-
-Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284.1-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: 6f245ea0ec6c ("wifi: ath12k: introduce device group abstraction")
-Link: https://lore.kernel.org/ath12k/fabc97122016d1a66a53ddedd965d134@posteo.net
-Reported-by: a-development <a-development@posteo.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220518
-Tested-by: a-development <a-development@posteo.de>
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Fixes: 0d6e6736ed9f ("wifi: ath12k: scan statemachine changes for single wiphy")
+Fixes: 4938ba733ee2 ("wifi: ath12k: modify remain on channel for single wiphy")
+Signed-off-by: Rameshkumar Sundaram <rameshkumar.sundaram@oss.qualcomm.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251030-fix-hw-group-create-err-handling-v1-1-0659e4d15fb9@oss.qualcomm.com
+Link: https://patch.msgid.link/20251026182254.1399650-2-rameshkumar.sundaram@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/core.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 5d494c5cdc0da..a2137b363c2fe 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -2106,14 +2106,27 @@ static int ath12k_core_hw_group_create(struct ath12k_hw_group *ag)
- 		ret = ath12k_core_soc_create(ab);
- 		if (ret) {
- 			mutex_unlock(&ab->core_lock);
--			ath12k_err(ab, "failed to create soc core: %d\n", ret);
--			return ret;
-+			ath12k_err(ab, "failed to create soc %d core: %d\n", i, ret);
-+			goto destroy;
- 		}
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index 0cec6c47fca29..8f139505019c4 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -9687,6 +9687,12 @@ int ath12k_mac_vdev_create(struct ath12k *ar, struct ath12k_link_vif *arvif)
+ 	if (vif->type == NL80211_IFTYPE_MONITOR && ar->monitor_vdev_created)
+ 		return -EINVAL;
  
- 		mutex_unlock(&ab->core_lock);
- 	}
- 
- 	return 0;
-+
-+destroy:
-+	for (i--; i >= 0; i--) {
-+		ab = ag->ab[i];
-+		if (!ab)
-+			continue;
-+
-+		mutex_lock(&ab->core_lock);
-+		ath12k_core_soc_destroy(ab);
-+		mutex_unlock(&ab->core_lock);
++	if (ar->num_created_vdevs >= TARGET_NUM_VDEVS(ab)) {
++		ath12k_warn(ab, "failed to create vdev, reached max vdev limit %d\n",
++			    TARGET_NUM_VDEVS(ab));
++		return -ENOSPC;
 +	}
 +
-+	return ret;
- }
+ 	link_id = arvif->link_id;
  
- void ath12k_core_hw_group_set_mlo_capable(struct ath12k_hw_group *ag)
-@@ -2188,7 +2201,7 @@ int ath12k_core_init(struct ath12k_base *ab)
- 		if (ret) {
- 			mutex_unlock(&ag->mutex);
- 			ath12k_warn(ab, "unable to create hw group\n");
--			goto err_destroy_hw_group;
-+			goto err_unassign_hw_group;
- 		}
- 	}
+ 	if (link_id < IEEE80211_MLD_MAX_NUM_LINKS) {
+@@ -10046,12 +10052,6 @@ static struct ath12k *ath12k_mac_assign_vif_to_vdev(struct ieee80211_hw *hw,
+ 	if (arvif->is_created)
+ 		goto flush;
  
-@@ -2196,8 +2209,7 @@ int ath12k_core_init(struct ath12k_base *ab)
- 
- 	return 0;
- 
--err_destroy_hw_group:
--	ath12k_core_hw_group_destroy(ab->ag);
-+err_unassign_hw_group:
- 	ath12k_core_hw_group_unassign(ab);
- err_unregister_notifier:
- 	ath12k_core_panic_notifier_unregister(ab);
+-	if (ar->num_created_vdevs > (TARGET_NUM_VDEVS(ab) - 1)) {
+-		ath12k_warn(ab, "failed to create vdev, reached max vdev limit %d\n",
+-			    TARGET_NUM_VDEVS(ab));
+-		goto unlock;
+-	}
+-
+ 	ret = ath12k_mac_vdev_create(ar, arvif);
+ 	if (ret) {
+ 		ath12k_warn(ab, "failed to create vdev %pM ret %d", vif->addr, ret);
 -- 
 2.51.0
 
