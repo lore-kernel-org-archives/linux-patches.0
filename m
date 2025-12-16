@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853C532862F;
-	Tue, 16 Dec 2025 11:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D16213233EE;
+	Tue, 16 Dec 2025 11:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883994; cv=none; b=fEXB/4GjUd32MFqhX1EjUBjdGQ9QK5aPy4Oqwqf4WlFbu1q3NdKv/EkI/XoD8Sscp3skRVnWjNeVqa5Y70LlG0MJ/JqtarCkHy6idZnIQNXtluXacwp165vQvtug+W8+gc6FDkt3nDRlk4u8W6Z78SWUxIYMBPkm0yYOSSKvrAE=
+	t=1765883997; cv=none; b=vFbpJBIpa9OytKTd8qHL71eQem9vDTQhzj2/lWbtjuvXEwTqFH+UYnnLZv2BjWaJdTYPOHcbKJ0VbeuCuKKIeXgHt48e+TvMAxGJoPgkUoe4zaGnzug4WJTmTSQu0JJ32okdyNKN+fYmKfssXLZ7byPZtP6HnaiEzN7V+0BTqfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883994; c=relaxed/simple;
-	bh=RSnW1nYiaa12KpJ0tToNnGJOxzmDNSAjP19o1PGSs1I=;
+	s=arc-20240116; t=1765883997; c=relaxed/simple;
+	bh=FmBCAYbOSsq0TDZqV5wRcRICqVhS6shirKlBVPQV2+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lykMFrUUK+xmF4F6NJuX1bDOk/Op7Dddbm8yu8W8Gkmm5V2bj95uPCzHc8cOdHgIhOvP3GS//0jhEL28ayyAziADv2XneAhcxKsRGHfvk+a8PumGJ2jiYRq8F79AAXv7qM9s2gVhAH/KbJx2piQLd3OFauNUbGZO2AEKHQ3JzH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVUKZNHi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y314lLI4GSDXs9UO+LXSm198OT4VVQj75bVDGaA9leqxRztal74qpemqwCgQB5M3Trqskx8ZzBCYJCSkwMwb4kAbSY4GKjA9gsqi9KE+PhUFn5rNW/j0GK+jxAEKgPv/PQYqPOuwOL5/LIS/hbKGhfxPxba+QpRzYyXKmq+Npco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gqvws/A1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVUKZNHi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DBCC4CEF1;
-	Tue, 16 Dec 2025 11:19:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gqvws/A1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51481C4CEF1;
+	Tue, 16 Dec 2025 11:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883994;
-	bh=RSnW1nYiaa12KpJ0tToNnGJOxzmDNSAjP19o1PGSs1I=;
+	s=korg; t=1765883997;
+	bh=FmBCAYbOSsq0TDZqV5wRcRICqVhS6shirKlBVPQV2+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVUKZNHiVG/0dhKNndw7h+My4ny3KVTShfRUNsFteFquf9Z29eintjy5C/kl1Xohl
-	 I+eF5v0heWFuc+JtmoVSvQ9CVn2O6pHxyhS3vIA52wfoIBVZ+R1JoKpPGnllvluj7N
-	 dZKvoXC55xPl51Clg1+9mjnU4rUaBV6qDAsZjCs4=
+	b=gqvws/A1cuPgw1tun1dUOsTAktSPI3u0o3PvpHJR+emqYmqndBBF+fv3733y1fc+I
+	 fZVQu5xIaIAMuseHw+6TNCqYsOHbU51QzHt8q+Jdsu8LXx0jrX4e72y/zgAgSetEWs
+	 V/8nEYiQwKAPdgVHoukErQCuJf/5P6SurrYma61I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Taniya Das <taniya.das@oss.qualcomm.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 059/354] clk: qcom: camcc-sm6350: Specify Titan GDSC power domain as a parent to other
-Date: Tue, 16 Dec 2025 12:10:26 +0100
-Message-ID: <20251216111323.057333198@linuxfoundation.org>
+Subject: [PATCH 6.12 060/354] clk: qcom: camcc-sm6350: Fix PLL config of PLL2
+Date: Tue, 16 Dec 2025 12:10:27 +0100
+Message-ID: <20251216111323.093910157@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,86 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit a76ce61d7225934b0a52c8172a8cd944002a8c6f ]
+[ Upstream commit ab0e13141d679fdffdd3463a272c5c1b10be1794 ]
 
-When a consumer turns on/off a power domain dependent on another power
-domain in hardware, the parent power domain shall be turned on/off by
-the power domain provider as well, and to get it the power domain hardware
-hierarchy shall be described in the CAMCC driver.
+The 'Agera' PLLs (with clk_agera_pll_configure) do not take some of the
+parameters that are provided in the vendor driver. Instead the upstream
+configuration should provide the final user_ctl value that is written to
+the USER_CTL register.
 
-Establish the power domain hierarchy with a Titan GDSC set as a parent of
-all other GDSC power domains provided by the SM6350 camera clock controller
-to enforce a correct sequence of enabling and disabling power domains by
-the consumers, this fixes the CAMCC as a supplier of power domains to CAMSS
-IP and its driver.
+Fix the config so that the PLL is configured correctly, and fixes
+CAMCC_MCLK* being stuck off.
 
 Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Link: https://lore.kernel.org/r/20251021234450.2271279-3-vladimir.zapolskiy@linaro.org
+Suggested-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251021-agera-pll-fixups-v1-1-8c1d8aff4afc@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sm6350.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/clk/qcom/camcc-sm6350.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
-index 418668184ec35..454763425f611 100644
+index 454763425f611..9a62228c314c1 100644
 --- a/drivers/clk/qcom/camcc-sm6350.c
 +++ b/drivers/clk/qcom/camcc-sm6350.c
-@@ -1692,6 +1692,8 @@ static struct clk_branch camcc_sys_tmr_clk = {
- 	},
+@@ -144,15 +144,11 @@ static struct clk_alpha_pll_postdiv camcc_pll1_out_even = {
+ static const struct alpha_pll_config camcc_pll2_config = {
+ 	.l = 0x64,
+ 	.alpha = 0x0,
+-	.post_div_val = 0x3 << 8,
+-	.post_div_mask = 0x3 << 8,
+-	.aux_output_mask = BIT(1),
+-	.main_output_mask = BIT(0),
+-	.early_output_mask = BIT(3),
+ 	.config_ctl_val = 0x20000800,
+ 	.config_ctl_hi_val = 0x400003d2,
+ 	.test_ctl_val = 0x04000400,
+ 	.test_ctl_hi_val = 0x00004000,
++	.user_ctl_val = 0x0000030b,
  };
  
-+static struct gdsc titan_top_gdsc;
-+
- static struct gdsc bps_gdsc = {
- 	.gdscr = 0x6004,
- 	.en_rest_wait_val = 0x2,
-@@ -1701,6 +1703,7 @@ static struct gdsc bps_gdsc = {
- 		.name = "bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- 	.flags = VOTABLE,
- };
- 
-@@ -1713,6 +1716,7 @@ static struct gdsc ipe_0_gdsc = {
- 		.name = "ipe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- 	.flags = VOTABLE,
- };
- 
-@@ -1725,6 +1729,7 @@ static struct gdsc ife_0_gdsc = {
- 		.name = "ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
- 
- static struct gdsc ife_1_gdsc = {
-@@ -1736,6 +1741,7 @@ static struct gdsc ife_1_gdsc = {
- 		.name = "ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
- 
- static struct gdsc ife_2_gdsc = {
-@@ -1747,6 +1753,7 @@ static struct gdsc ife_2_gdsc = {
- 		.name = "ife_2_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &titan_top_gdsc.pd,
- };
- 
- static struct gdsc titan_top_gdsc = {
+ static struct clk_alpha_pll camcc_pll2 = {
 -- 
 2.51.0
 
