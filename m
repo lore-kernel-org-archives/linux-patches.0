@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8896342151;
-	Tue, 16 Dec 2025 11:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26714341AD7;
+	Tue, 16 Dec 2025 11:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884146; cv=none; b=RlMDwZiD8fWnQH4chJQfs4sUvNvOtSM60aQnCYrQ/KCWyD8hG/XYOQ8kcfhdPTa7ZVG0OO5W8cmJ9VuN22WPFVd6SsuB7H3ehARcAkPlxnO1LRkC9R7vCtfF3dpivTPO8EPF4lKCMF/NEKaNtn7JGVTXOYvn+okiIhVclfQXvn0=
+	t=1765884150; cv=none; b=nZNNw3tN4oZTc8CSy3EDaR4zxyfR36xRq4EzBYFnnLKrWqnjI2WAXA3BmOHpyfChou537jEPVR5q8WfWWU1xR3FjH3YcCdodfZn8zmyIDUUfweXFlprD31iNgNv0I2pi9yI6hftZtFRRRJiQIl0PAiQZQbFF9pSinNy1D96/IQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884146; c=relaxed/simple;
-	bh=QWX9aCT5rl+vCTGk9vXb4A5NE6j/Tj/u1SU+C6gC3mo=;
+	s=arc-20240116; t=1765884150; c=relaxed/simple;
+	bh=1ZCRWvZOPQ+/6BLNgUpYLKvktERM3pXlVjko89a6M1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dEluWrwchcdqVbRy+4j5Mn1WOtoad4rxd7P+pRarXZy5LreY5BECvTi5hS4m41aCM4eJCuooPMzuu23DF3B8Q3zPxFWWuAfl+gbkcOcpeGr1WpQKW8lLvLeddGXcap8jf1/794e5HgDxvCxK3N8oZ/s4rwTwiGzi3gi4VWAlzMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCvQv6PE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H3ElnkaMFpeq6zPADAlY2funPvu9Xp+pIcv9HKakdVw6HEEvZ1JLfg15Ag/TZ1/BgUrLrSlJawUmRi1Ibvwx7KVj9mQC/lvDppBxIXlh0ffBtC6i2cVPTACQVr30Ojc2cU9VF0R5QWLPD/Q8Xb1t7rofaX+7/DQfF+qXZJ+YVss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gO3V+Jkt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCvQv6PE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39856C4CEF5;
-	Tue, 16 Dec 2025 11:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gO3V+Jkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9609BC4CEF1;
+	Tue, 16 Dec 2025 11:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884146;
-	bh=QWX9aCT5rl+vCTGk9vXb4A5NE6j/Tj/u1SU+C6gC3mo=;
+	s=korg; t=1765884150;
+	bh=1ZCRWvZOPQ+/6BLNgUpYLKvktERM3pXlVjko89a6M1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCvQv6PEkn2oHZIbfTWKMafsFk+Yxbq4xFuHhwQm2X2kRQVD87DgN3uZnc2YeNw8v
-	 fphmlWFQ56WsV8nDHhiTvs+kdb/qeCDOi+58P42EZdZ5U0h54RqaX89qYI5ZuqRO/X
-	 UeDO/RYAf3rh2yxQAEVKVrgZ9/6GEqIq+ZRwHjTA=
+	b=gO3V+JktR7CuO/+/Sn/75bx39kipLaWSzFGX0gxKv5XXv6uiJsEzq7b3C6PJ2HlRu
+	 CXBsk341cyRdIpCz7rXeK5AT91NPUy2wacV3SCZnC82/sO+9PlkgC3enKnIdoQK2CF
+	 VhgLaJZUkARHog+XimGUGfBj44GSDFNaHASB04dU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/354] arm64: dts: qcom: x1e80100: Fix compile warnings for USB HS controller
-Date: Tue, 16 Dec 2025 12:10:39 +0100
-Message-ID: <20251216111323.533501245@linuxfoundation.org>
+Subject: [PATCH 6.12 063/354] soc: qcom: gsbi: fix double disable caused by devm
+Date: Tue, 16 Dec 2025 12:10:30 +0100
+Message-ID: <20251216111323.209876239@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,50 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 0dab10c38282e6ef87ef88efb99d4106cce7ed33 ]
+[ Upstream commit 2286e18e3937c69cc103308a8c1d4898d8a7b04f ]
 
-With W=1, the following error comes up:
+In the commit referenced by the Fixes tag, devm_clk_get_enabled() was
+introduced to replace devm_clk_get() and clk_prepare_enable(). While
+the clk_disable_unprepare() call in the error path was correctly
+removed, the one in the remove function was overlooked, leading to a
+double disable issue.
 
-Warning (graph_child_address): /soc@0/usb@a2f8800/usb@a200000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary
+Remove the redundant clk_disable_unprepare() call from gsbi_remove()
+to fix this issue. Since all resources are now managed by devres
+and will be automatically released, the remove function serves no purpose
+and can be deleted entirely.
 
-This could be since the controller is only HS capable and only one port
-node is added.
-
-Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
-Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Fixes: 489d7a8cc286 ("soc: qcom: use devm_clk_get_enabled() in gsbi_probe()")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251019115630.2222720-1-krishna.kurapati@oss.qualcomm.com
+Link: https://lore.kernel.org/stable/20251020160215.523-1-vulab%40iscas.ac.cn
+Link: https://lore.kernel.org/r/20251020160215.523-1-vulab@iscas.ac.cn
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/soc/qcom/qcom_gsbi.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-index 5082ecb32089b..b03f3ce250dbc 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-@@ -4287,15 +4287,8 @@ usb_2_dwc3: usb@a200000 {
+diff --git a/drivers/soc/qcom/qcom_gsbi.c b/drivers/soc/qcom/qcom_gsbi.c
+index 8f1158e0c6313..a25d1de592f06 100644
+--- a/drivers/soc/qcom/qcom_gsbi.c
++++ b/drivers/soc/qcom/qcom_gsbi.c
+@@ -212,13 +212,6 @@ static int gsbi_probe(struct platform_device *pdev)
+ 	return of_platform_populate(node, NULL, NULL, &pdev->dev);
+ }
  
- 				dma-coherent;
+-static void gsbi_remove(struct platform_device *pdev)
+-{
+-	struct gsbi_info *gsbi = platform_get_drvdata(pdev);
+-
+-	clk_disable_unprepare(gsbi->hclk);
+-}
+-
+ static const struct of_device_id gsbi_dt_match[] = {
+ 	{ .compatible = "qcom,gsbi-v1.0.0", },
+ 	{ },
+@@ -232,7 +225,6 @@ static struct platform_driver gsbi_driver = {
+ 		.of_match_table	= gsbi_dt_match,
+ 	},
+ 	.probe = gsbi_probe,
+-	.remove = gsbi_remove,
+ };
  
--				ports {
--					#address-cells = <1>;
--					#size-cells = <0>;
--
--					port@0 {
--						reg = <0>;
--
--						usb_2_dwc3_hs: endpoint {
--						};
-+				port {
-+					usb_2_dwc3_hs: endpoint {
- 					};
- 				};
- 			};
+ module_platform_driver(gsbi_driver);
 -- 
 2.51.0
 
