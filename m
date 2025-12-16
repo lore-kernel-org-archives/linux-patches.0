@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7052134251D;
-	Tue, 16 Dec 2025 11:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5356343D6C;
+	Tue, 16 Dec 2025 11:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884392; cv=none; b=R+aoSIbgjA6PypFGvOPW+hoQYXUoZM/EzDbxQEGVpG8I14OgdJUZuin1lVtDzCYs+vZwpCayTWL4OqMkBB7mnG6UrT/L1kXzTo7SE0szhqNIePb4Xo7bwy9xvPhd4kN9LBdofYjdrpOKi6kU+VXRbXoChwUWf7FSzIU4ICbYgvE=
+	t=1765884395; cv=none; b=QJs1E0AlAjvlLE8RPhr/VYZtCBrxEBg8tDDKw/hMiON7VAD+eK0FWj2H3zsQrEDU8yuZ7VXDQFqHnhKD3FczhMkBiO41zRXN0qbLGUQVh04PVg+wd2V6zNOsbzhMGoFMBhtw7BNn6uhHdX4zwDcbvxB/b3tdmSFee5y65ZkFB4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884392; c=relaxed/simple;
-	bh=PDH60vx+Sp36RQ27USId3ZTjx6m4edFBrVQ/Yf4kVm0=;
+	s=arc-20240116; t=1765884395; c=relaxed/simple;
+	bh=E/VBXHJDWVRyxzUJCZxqYjNh9D+KHxewoJQsMc4/S3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JErPu2+0rsvV4PcvvTqY+ma3m9CmYNN43+18OpX52r1lTZZEbKxOHayOPRiAet/T1CfTUhVjgYE+kZWKxtTRTceu6XzWTZJwcOPlmCqZpioPKCdgqCMOfwchn2/Lro5k4kIbuaIVOv0o0T7grHvavPN7AT6l7MEtif2OYxTudFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBPuM6bB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nZzylCpVy1TU9OSQ0cY3GkCF0HK2zvbColUQ7xAtWZ1+VofK3NP21y1qyg2LMQutr+5j+b+qSddOOoJvEpC8G+f9KJxqV7z2zO1acUoToXBZTOp/RUfFpP5jMo3gxlJ1k4EWYpWZIiWRs15vsiaw/NLkRwzkdXbkWuNrzYIwvyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vyZaIf8/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBPuM6bB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB75CC19422;
-	Tue, 16 Dec 2025 11:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vyZaIf8/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26E86C16AAE;
+	Tue, 16 Dec 2025 11:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884392;
-	bh=PDH60vx+Sp36RQ27USId3ZTjx6m4edFBrVQ/Yf4kVm0=;
+	s=korg; t=1765884395;
+	bh=E/VBXHJDWVRyxzUJCZxqYjNh9D+KHxewoJQsMc4/S3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBPuM6bB1HLuYUq7cn6LrQ/BJTS/QMV1YGOeaOQ2zIWPVhH1L/Or+tTq0R0/9nw9L
-	 Ekxo7IksPORelRs5c1bnQHjEuGbTCKA5aEpY334np9V2ZLmr1zEEHT7Fo1IZ4Lz6e8
-	 cIT5bZvORb68TIxBrbd5Y86GQ6+qsI7P+VAnzU+o=
+	b=vyZaIf8/IIBlhO9rDsrHhrMOn6qIPBxGhRz+48ogfzaYSSa00M8aZE5yOGZ6cLbMH
+	 5gZItwi9xM0ByGgu/W84R9i0vrsdpQ9PnPCFI9Sf9ZNfJBiHm42w6tuz3qngU8Wfu9
+	 vgaqMrieU13PbnGcqkPHMGegmmEOZkA3V66Gdnnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 172/354] drm/msm/a2xx: stop over-complaining about the legacy firmware
-Date: Tue, 16 Dec 2025 12:12:19 +0100
-Message-ID: <20251216111327.145634011@linuxfoundation.org>
+Subject: [PATCH 6.12 181/354] drm/msm/a6xx: Fix the gemnoc workaround
+Date: Tue, 16 Dec 2025 12:12:28 +0100
+Message-ID: <20251216111327.469863965@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,40 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit a3a22373fce576560757f5616eb48dbf85891d9c ]
+[ Upstream commit ff7a6de043fce21ea5891311746b16121b385c59 ]
 
-If the rootfs have a legacy A200 firmware, currently the driver will
-complain each time the hw is reinited (which can happen a lot). E.g.
-with GL testsuite the hw is reinited after each test, spamming the
-console.
+Correct the register offset and enable this workaround for all A7x
+and newer GPUs to match the recommendation. Also, downstream does this
+w/a after moving the fence to allow mode. So do the same.
 
-Make sure that the message is printed only once: when we detect the
-firmware that doesn't support protection.
-
-Fixes: 302295070d3c ("drm/msm/a2xx: support loading legacy (iMX) firmware")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/688098/
+Fixes: dbfbb376b50c ("drm/msm/a6xx: Add A621 support")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688997/
+Message-ID: <20251118-kaana-gpu-support-v4-3-86eeb8e93fb6@oss.qualcomm.com>
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-index 0dc255ddf5ceb..2e25af3462ab6 100644
---- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
-@@ -234,7 +234,7 @@ static int a2xx_hw_init(struct msm_gpu *gpu)
- 	 * word (0x20xxxx for A200, 0x220xxx for A220, 0x225xxx for A225).
- 	 * Older firmware files, which lack protection support, have 0 instead.
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index bfb1225a47c50..e2ea50862a413 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -435,8 +435,9 @@ static void a6xx_gemnoc_workaround(struct a6xx_gmu *gmu)
+ 	 * in the power down sequence not being fully executed. That in turn can
+ 	 * prevent CX_GDSC from collapsing. Assert Qactive to avoid this.
  	 */
--	if (ptr[1] == 0) {
-+	if (ptr[1] == 0 && !a2xx_gpu->protection_disabled) {
- 		dev_warn(gpu->dev->dev,
- 			 "Legacy firmware detected, disabling protection support\n");
- 		a2xx_gpu->protection_disabled = true;
+-	if (adreno_is_a621(adreno_gpu) || adreno_is_7c3(adreno_gpu))
+-		gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, BIT(0));
++	if (adreno_is_a7xx(adreno_gpu) || (adreno_is_a621(adreno_gpu) ||
++				adreno_is_7c3(adreno_gpu)))
++		gmu_write(gmu, REG_A6XX_GPU_GMU_CX_GMU_CX_FALNEXT_INTF, BIT(0));
+ }
+ 
+ /* Let the GMU know that we are about to go into slumber */
+@@ -472,10 +473,9 @@ static int a6xx_gmu_notify_slumber(struct a6xx_gmu *gmu)
+ 	}
+ 
+ out:
+-	a6xx_gemnoc_workaround(gmu);
+-
+ 	/* Put fence into allow mode */
+ 	gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
++	a6xx_gemnoc_workaround(gmu);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
