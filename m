@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA85365A01;
-	Tue, 16 Dec 2025 12:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAB10365A02;
+	Tue, 16 Dec 2025 12:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887106; cv=none; b=JLE2kJ9tXl++VwSv49aCG5YjvmmN8SOH7QPYW6JHlLFuAciTPDyxbvCbVT7MXo8n8+lozFhSfn4jf/g/s2nxjEGAQ+zRcVqmw4ZIn7Vu4/2qoscQLt9l42KB8J5BVEuZl6rU6pK5PyFK6ZjVfsuCWrHlic4Tc0wKfJz9Xq1IG/I=
+	t=1765887109; cv=none; b=oxB7jFnV+tjOpbkGngNCbUXp5gh1eAPXwG2EiZuukk5wH/2i8KjCFFmocNtug+SFI1rgzxjHk12nUVIVbverBei27Kz5GKMU+6PrM3LEOASs846SflaRCqjQDFYjg8l1Eumnq/xjCmY1pbG5CGK9OIJchbSySkckJAI6hI15Dy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887106; c=relaxed/simple;
-	bh=tljLxp1Rgia3/yqsB2WB1ugpWNeH76GKqbBtvGBzrKo=;
+	s=arc-20240116; t=1765887109; c=relaxed/simple;
+	bh=CJ91sMMbbx2Ot6BmhHJwBzWz3XXoL2I/rBBsyAdgb9A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lCQblhqfo60+fyn7gxtJ/li7JJg4T+O9ioUSvFFzn6I/IlxDCd19Pw+p5xKcEtSGiwkqBmNFo7Wu/Y3Y0RMS91x7OTVMDuOgbt0o4+ctn/tRuDWT6GwXtGOQeAesv7buwiXuMjoJfFf31vN4WjGOt/SK6iNZi2vu3/M5slfgXUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CV7VfFox; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZbDWlwZA0tioI3x8jhsrBtFTMklGmBk9jMLvOlOEwANEtnJS/qv/41i4ob0V310rqX0Fw5MoVoZmcIITJqAfhYeVJNCm9ibahY/igE8GXDJIjovKCxMEe459Jd3kfevgIGXSTczpHX0LVvCFqPVRTB9fAgHLxDnCxcLHREtnZ2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClZh5jev; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CV7VfFox"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06149C4CEF1;
-	Tue, 16 Dec 2025 12:11:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClZh5jev"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA14C4CEF1;
+	Tue, 16 Dec 2025 12:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887106;
-	bh=tljLxp1Rgia3/yqsB2WB1ugpWNeH76GKqbBtvGBzrKo=;
+	s=korg; t=1765887109;
+	bh=CJ91sMMbbx2Ot6BmhHJwBzWz3XXoL2I/rBBsyAdgb9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CV7VfFoxRk3XqwJNxy3u5j0weIepTSS4a4O2OAp3OVw/23ehMWdPFaXLfxEbz9ox3
-	 n463Li01zAltHI4hHQWjfMGVMtI3xD7GzxdRtVEiQLoKG0LO6kBaKvCO4+KGJvY94K
-	 Yr+s3u2q3bHiTlbE8ytpSfJnEfsk9Qb+8s/Pher0=
+	b=ClZh5jeviw/KQUlFlP2gf+nUm4ASqfIW8rQo3qqtXgKBO8O/kn1Za3T58cV8szUmM
+	 bT/EYfGiw2rdMPVnpAXeunFFE2x/UdcsLkPcjZD7eU7OaMAEQ/CIOCFwrC6JcsciJV
+	 sT5R+/2U1uNfKkxF8twTXa/4Bbi9d9RxaUY+ewUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/614] phy: mscc: Fix PTP for VSC8574 and VSC8572
-Date: Tue, 16 Dec 2025 12:08:14 +0100
-Message-ID: <20251216111405.937706043@linuxfoundation.org>
+Subject: [PATCH 6.18 128/614] sctp: Defer SCTP_DBG_OBJCNT_DEC() to sctp_destroy_sock().
+Date: Tue, 16 Dec 2025 12:08:15 +0100
+Message-ID: <20251216111405.974427633@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,62 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit ea5df88aeca112aac69e6c32e3dd1433a113b0c9 ]
+[ Upstream commit 622e8838a29845316668ec2e7648428878df7f9a ]
 
-The PTP initialization is two-step. First part are the function
-vsc8584_ptp_probe_once() and vsc8584_ptp_probe() at probe time which
-initialize the locks, queues, creates the PTP device. The second part is
-the function vsc8584_ptp_init() at config_init() time which initialize
-PTP in the HW.
+SCTP_DBG_OBJCNT_INC() is called only when sctp_init_sock()
+returns 0 after successfully allocating sctp_sk(sk)->ep.
 
-For VSC8574 and VSC8572, the PTP initialization is incomplete. It is
-missing the first part but it makes the second part. Meaning that the
-ptp_clock_register() is never called.
+OTOH, SCTP_DBG_OBJCNT_DEC() is called in sctp_close().
 
-There is no crash without the first part when enabling PTP but this is
-unexpected because some PHys have PTP functionality exposed by the
-driver and some don't even though they share the same PTP clock PTP.
+The code seems to expect that the socket is always exposed
+to userspace once SCTP_DBG_OBJCNT_INC() is incremented, but
+there is a path where the assumption is not true.
 
-Fixes: 774626fa440e ("net: phy: mscc: Add PTP support for 2 more VSC PHYs")
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://patch.msgid.link/20251023191350.190940-3-horatiu.vultur@microchip.com
+In sctp_accept(), sctp_sock_migrate() could fail after
+sctp_init_sock().
+
+Then, sk_common_release() does not call inet_release() nor
+sctp_close().  Instead, it calls sk->sk_prot->destroy().
+
+Let's move SCTP_DBG_OBJCNT_DEC() from sctp_close() to
+sctp_destroy_sock().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20251023231751.4168390-2-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/mscc/mscc_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/sctp/socket.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/mscc/mscc_main.c b/drivers/net/phy/mscc/mscc_main.c
-index ef0ef1570d392..48d43f60b8ff8 100644
---- a/drivers/net/phy/mscc/mscc_main.c
-+++ b/drivers/net/phy/mscc/mscc_main.c
-@@ -2625,7 +2625,7 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
- 	.remove		= &vsc85xx_remove,
--	.probe		= &vsc8574_probe,
-+	.probe		= &vsc8584_probe,
- 	.set_wol	= &vsc85xx_wol_set,
- 	.get_wol	= &vsc85xx_wol_get,
- 	.get_tunable	= &vsc85xx_get_tunable,
-@@ -2648,12 +2648,12 @@ static struct phy_driver vsc85xx_driver[] = {
- 	.config_aneg    = &vsc85xx_config_aneg,
- 	.aneg_done	= &genphy_aneg_done,
- 	.read_status	= &vsc85xx_read_status,
--	.handle_interrupt = vsc85xx_handle_interrupt,
-+	.handle_interrupt = vsc8584_handle_interrupt,
- 	.config_intr    = &vsc85xx_config_intr,
- 	.suspend	= &genphy_suspend,
- 	.resume		= &genphy_resume,
- 	.remove		= &vsc85xx_remove,
--	.probe		= &vsc8574_probe,
-+	.probe		= &vsc8584_probe,
- 	.set_wol	= &vsc85xx_wol_set,
- 	.get_wol	= &vsc85xx_wol_get,
- 	.get_tunable	= &vsc85xx_get_tunable,
+diff --git a/net/sctp/socket.c b/net/sctp/socket.c
+index ed8293a342402..d190e75e46454 100644
+--- a/net/sctp/socket.c
++++ b/net/sctp/socket.c
+@@ -1553,8 +1553,6 @@ static void sctp_close(struct sock *sk, long timeout)
+ 	spin_unlock_bh(&net->sctp.addr_wq_lock);
+ 
+ 	sock_put(sk);
+-
+-	SCTP_DBG_OBJCNT_DEC(sock);
+ }
+ 
+ /* Handle EPIPE error. */
+@@ -5109,9 +5107,12 @@ static void sctp_destroy_sock(struct sock *sk)
+ 		sp->do_auto_asconf = 0;
+ 		list_del(&sp->auto_asconf_list);
+ 	}
++
+ 	sctp_endpoint_free(sp->ep);
++
+ 	sk_sockets_allocated_dec(sk);
+ 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
++	SCTP_DBG_OBJCNT_DEC(sock);
+ }
+ 
+ static void sctp_destruct_sock(struct sock *sk)
 -- 
 2.51.0
 
