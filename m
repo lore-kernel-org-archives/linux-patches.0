@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3C53446BE;
-	Tue, 16 Dec 2025 12:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E948345732;
+	Tue, 16 Dec 2025 12:19:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887583; cv=none; b=MEekE8NEYL7/iiPWoPGHgqtkPZ+6azN1PJ4PMuTQveCganB2qyDwBCkHJK8g3PyTMX3lHw5KVHz3RX3IArN9jB2JBHvA1Va3T/A+eAwm60Pl0V+ZPh4M9RD04XwOWLaD3DWOpQF6WcqP1eD82X4Df+zDBdLwGPZRkF0elPGu8M4=
+	t=1765887586; cv=none; b=raxeeyO8J7Oi/Yrp/eghldwZAGMOUzGRUGnyp58v5f81XK3BFyM+NirmNjkAWCyfLuoCSnlAfpeR9oupKz4bcdD9YanS6mIlXt2mXXkKXhSzQZQlEi4SG2uOnOltXXYMw5TUkDdpoXujQ5fhkkDYQW2t+wdd4vJKwG7uiQC5wa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887583; c=relaxed/simple;
-	bh=gbqYZV8HSYrDrWeCW9fZxtAJttOQU/dx1/S6G3wllAg=;
+	s=arc-20240116; t=1765887586; c=relaxed/simple;
+	bh=EF/UC+FEQrVBKXJVbcLHi9Omcfj4c2kGYFM0lVv7q/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cNSPV+YdcvTO/VjgUjBrWyDSj4LYdSfyMWm68PtCy5+x2PcsRTggcYp7TqAFjAca5PHCf51xuJgNH6k8Pw4VXQmeGf2i3FNTNjVA0Z/pHk/7lSf3qy8YJKNj2JbpyWo9vbdxZySe10+D0NVkKbX8KWSxSMBPcdGvsJc1R38mHtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Lop231F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QIe4fYYmZY13KcOZYwFcbS7tzZJwV53mJO6uALj3Zt8qsPSYe2JSSnYp7vqqrF/SY1wqDWFFJrJquDSVyMXkgkOGDA4fGaWfVsdoZGPL5GYGOri6OKf6q+sH0t4hYkU3tfRIVF/xpMdaBifk3Opi6o7vtb/UBvfkr7oOIZ+PNXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=02/+Fxng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Lop231F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C75AC4CEF1;
-	Tue, 16 Dec 2025 12:19:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="02/+Fxng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FDAC4CEF1;
+	Tue, 16 Dec 2025 12:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887582;
-	bh=gbqYZV8HSYrDrWeCW9fZxtAJttOQU/dx1/S6G3wllAg=;
+	s=korg; t=1765887585;
+	bh=EF/UC+FEQrVBKXJVbcLHi9Omcfj4c2kGYFM0lVv7q/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Lop231FgEet6UCEP2vLwTuoMWsyvGuJGCeptbh9/vSN96hxOWIfEWBlPQsAT1XoN
-	 ndhO8YnGfoCaARNMhyYQ0zgnmBWhaO6BYIXTQFtAYdX1o7dyc7zIU3/ICI+ywWYf+n
-	 TIHioiV7iMhnSY8tvcD4rgBGCxxFNL+EtHE806Nw=
+	b=02/+Fxngn7ebNzsLtLukithFlZRQsQz7estJYp7TozzZwW+iDukVYLjfh9uTiU1MM
+	 6Z/uKxtR66B/vlHypfztIy/6w4GHZJek49pEwPESicECWrndcrJFcZVGPoIC496CjP
+	 CF2kbtYYBsMeJ8V7swmVG7vjo4ikk7BhAhMkAPAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Hwang <leon.hwang@linux.dev>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Alexei Starovoitov <ast@kernel.org>,
+	"Mario Limonciello (AMD) (kernel.org)" <superm1@kernel.org>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 273/614] bpf: Free special fields when update [lru_,]percpu_hash maps
-Date: Tue, 16 Dec 2025 12:10:40 +0100
-Message-ID: <20251216111411.266721671@linuxfoundation.org>
+Subject: [PATCH 6.18 243/614] cpufreq/amd-pstate: Call cppc_set_auto_sel() only for online CPUs
+Date: Tue, 16 Dec 2025 12:10:10 +0100
+Message-ID: <20251216111410.170664363@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,56 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leon Hwang <leon.hwang@linux.dev>
+From: Gautham R. Shenoy <gautham.shenoy@amd.com>
 
-[ Upstream commit 6af6e49a76c9af7d42eb923703e7648cb2bf401a ]
+[ Upstream commit bb31fef0d03ed17d587b40e3458786be408fb9df ]
 
-As [lru_,]percpu_hash maps support BPF_KPTR_{REF,PERCPU}, missing
-calls to 'bpf_obj_free_fields()' in 'pcpu_copy_value()' could cause the
-memory referenced by BPF_KPTR_{REF,PERCPU} fields to be held until the
-map gets freed.
+amd_pstate_change_mode_without_dvr_change() calls cppc_set_auto_sel()
+for all the present CPUs.
 
-Fix this by calling 'bpf_obj_free_fields()' after
-'copy_map_value[,_long]()' in 'pcpu_copy_value()'.
+However, this callpath eventually calls cppc_set_reg_val() which
+accesses the per-cpu cpc_desc_ptr object. This object is initialized
+only for online CPUs via acpi_soft_cpu_online() -->
+__acpi_processor_start() --> acpi_cppc_processor_probe().
 
-Fixes: 65334e64a493 ("bpf: Support kptrs in percpu hashmap and percpu LRU hashmap")
-Signed-off-by: Leon Hwang <leon.hwang@linux.dev>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Link: https://lore.kernel.org/r/20251105151407.12723-2-leon.hwang@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Hence, restrict calling cppc_set_auto_sel() to only the online CPUs.
+
+Fixes: 3ca7bc818d8c ("cpufreq: amd-pstate: Add guided mode control support via sysfs")
+Suggested-by: Mario Limonciello (AMD) (kernel.org) <superm1@kernel.org>
+Signed-off-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Signed-off-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/hashtab.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
-index c2fcd0cd51e51..e7721f0776c72 100644
---- a/kernel/bpf/hashtab.c
-+++ b/kernel/bpf/hashtab.c
-@@ -947,15 +947,21 @@ static void free_htab_elem(struct bpf_htab *htab, struct htab_elem *l)
- static void pcpu_copy_value(struct bpf_htab *htab, void __percpu *pptr,
- 			    void *value, bool onallcpus)
- {
-+	void *ptr;
-+
- 	if (!onallcpus) {
- 		/* copy true value_size bytes */
--		copy_map_value(&htab->map, this_cpu_ptr(pptr), value);
-+		ptr = this_cpu_ptr(pptr);
-+		copy_map_value(&htab->map, ptr, value);
-+		bpf_obj_free_fields(htab->map.record, ptr);
- 	} else {
- 		u32 size = round_up(htab->map.value_size, 8);
- 		int off = 0, cpu;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index b44f0f7a5ba1c..602e4fa81d6c5 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1282,7 +1282,7 @@ static int amd_pstate_change_mode_without_dvr_change(int mode)
+ 	if (cpu_feature_enabled(X86_FEATURE_CPPC) || cppc_state == AMD_PSTATE_ACTIVE)
+ 		return 0;
  
- 		for_each_possible_cpu(cpu) {
--			copy_map_value_long(&htab->map, per_cpu_ptr(pptr, cpu), value + off);
-+			ptr = per_cpu_ptr(pptr, cpu);
-+			copy_map_value_long(&htab->map, ptr, value + off);
-+			bpf_obj_free_fields(htab->map.record, ptr);
- 			off += size;
- 		}
+-	for_each_present_cpu(cpu) {
++	for_each_online_cpu(cpu) {
+ 		cppc_set_auto_sel(cpu, (cppc_state == AMD_PSTATE_PASSIVE) ? 0 : 1);
  	}
+ 
 -- 
 2.51.0
 
