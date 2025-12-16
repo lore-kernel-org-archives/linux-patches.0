@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 354CF347FD0;
-	Tue, 16 Dec 2025 11:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29BD9346E59;
+	Tue, 16 Dec 2025 11:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886102; cv=none; b=RqQF6UYqUNZsqbiudyGqdWaY0FZQnOiTA5/2fPJ40DZjjry2uI2QKcCmT2krqSxcuGs3aB41en6mIQWXDvidv2U5T7N2qIq4uYVCP4gD/sGTA20+jshH7yta9Qm06MXLcxATsjjtO0bkFc5YybaWGWIPFE8LofJIs+tMI7XCTuk=
+	t=1765886106; cv=none; b=XoFF1dh1STmDd1ogw6QordAKe8jaJFw3EdI0m3HDKEXVmDq05wbWu1dwiv3a1Ov98ssZdCMlF6JCPfAUl9WMYHxksbQR5ZEHRWSlN/4tpxdOKLb+VTYbUG0SuSbthfzQso+OXWK9ZpIW4HBIRqqSXYtEX2rIllCD9yvOUL32jsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886102; c=relaxed/simple;
-	bh=eHQEWqLf61PCfFmTMMmKjDbFnvkKtfaKLAMYoBrvqos=;
+	s=arc-20240116; t=1765886106; c=relaxed/simple;
+	bh=9fHe4/GalohifQHsATqSyCAVu4X5sgy2f55TonlJXQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AeJwR5eAz4BeKdb5RX6ZkZHSxmA/wsqEZC9578Xgwh7sCha5H8b3AqxdlZHCMB4H3netCvIaFLwVlHbxuigQ0FuhCBMQ9JdPaRokADpkopdfCUZ29YF7EJpsoe8GL+ITBLJz/qwEhcwOmmm8uqbdZ4ClDEeivYxXoocUOaTMOSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEzByTqn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GRcYDzrKC6y0j+n0muy0qrK1dFiGGChIV77rpr+x/DsM91mv5Ogi5Nf7uX5zYExe/UMS1Mi3dSAT06S+nTs7oMyMWKU84QVkKt0wIXb+sCGFSDbtCzD9feT78kzOkzVZH8VfgUq2WkoHNlAO35VgYsTUoTzWKzLkQtJVDofUMtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTG75cqT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEzByTqn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54D4C4CEF1;
-	Tue, 16 Dec 2025 11:55:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTG75cqT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126F9C4CEF1;
+	Tue, 16 Dec 2025 11:55:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886102;
-	bh=eHQEWqLf61PCfFmTMMmKjDbFnvkKtfaKLAMYoBrvqos=;
+	s=korg; t=1765886105;
+	bh=9fHe4/GalohifQHsATqSyCAVu4X5sgy2f55TonlJXQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEzByTqngCEeNRXMe/xWx8kTxW5ecdiiVagHO5NE5qexURlPuN4UCcjoNQ2mfcgsu
-	 2BojhdxgL4Stq65au4yqVaYld1J7qNQEmR6siyDrxYS+2g78vhFYPiSG/4Cfve/gi3
-	 LqL+aW6SZxPr3woxmTpUUb7lH/CdudzvS5CcWtz4=
+	b=yTG75cqT5vHjAflxQELL25EPyiOIwOcK9AlcpAZpGHWlxfCmk7hSAmmoNvvjFfL58
+	 XlZUyUKBnIWMnXkoc/XIRbFXkTSQoe5MIzJPmkm+qz+kKmZ+W9vtRUP4VKuYa/AvQJ
+	 ov1UgcSGl1NY1TRce9vEDoxmjURY9qvRNTXykZZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	Dinh Nguyen <dinguyen@kernel.org>,
+	Jianglei Nie <niejianglei2021@163.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Abdun Nihaal <abdun.nihaal@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 338/507] firmware: stratix10-svc: fix make htmldocs warning for stratix10_svc
-Date: Tue, 16 Dec 2025 12:12:59 +0100
-Message-ID: <20251216111357.708032586@linuxfoundation.org>
+Subject: [PATCH 6.17 339/507] staging: fbtft: core: fix potential memory leak in fbtft_probe_common()
+Date: Tue, 16 Dec 2025 12:13:00 +0100
+Message-ID: <20251216111357.743409205@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,38 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dinh Nguyen <dinguyen@kernel.org>
+From: Jianglei Nie <niejianglei2021@163.com>
 
-[ Upstream commit 377441d53a2df61b105e823b335010cd4f1a6e56 ]
+[ Upstream commit 47d3949a9b04cbcb0e10abae30c2b53e98706e11 ]
 
-Fix this warning that was generated from "make htmldocs":
+fbtft_probe_common() allocates a memory chunk for "info" with
+fbtft_framebuffer_alloc(). When "display->buswidth == 0" is true, the
+function returns without releasing the "info", which will lead to a
+memory leak.
 
-WARNING: drivers/firmware/stratix10-svc.c:58 struct member 'intel_svc_fcs'
-not described in 'stratix10_svc'
+Fix it by calling fbtft_framebuffer_release() when "display->buswidth
+== 0" is true.
 
-Fixes: e6281c26674e ("firmware: stratix10-svc: Add support for FCS")
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Closes: https://lore.kernel.org/linux-next/20251106145941.37920e97@canb.auug.org.au/
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
-Link: https://patch.msgid.link/20251114185815.358423-1-dinguyen@kernel.org
+Fixes: c296d5f9957c ("staging: fbtft: core support")
+Signed-off-by: Jianglei Nie <niejianglei2021@163.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Link: https://patch.msgid.link/20251112192235.2088654-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/stratix10-svc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/fbtft/fbtft-core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 00f58e27f6de5..deee0e7be34bd 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -52,6 +52,7 @@ struct stratix10_svc_chan;
- /**
-  * struct stratix10_svc - svc private data
-  * @stratix10_svc_rsu: pointer to stratix10 RSU device
-+ * @intel_svc_fcs: pointer to the FCS device
-  */
- struct stratix10_svc {
- 	struct platform_device *stratix10_svc_rsu;
+diff --git a/drivers/staging/fbtft/fbtft-core.c b/drivers/staging/fbtft/fbtft-core.c
+index 9e7b84071174c..8a5ccc8ae0a18 100644
+--- a/drivers/staging/fbtft/fbtft-core.c
++++ b/drivers/staging/fbtft/fbtft-core.c
+@@ -1171,8 +1171,8 @@ int fbtft_probe_common(struct fbtft_display *display,
+ 	par->pdev = pdev;
+ 
+ 	if (display->buswidth == 0) {
+-		dev_err(dev, "buswidth is not set\n");
+-		return -EINVAL;
++		ret = dev_err_probe(dev, -EINVAL, "buswidth is not set\n");
++		goto out_release;
+ 	}
+ 
+ 	/* write register functions */
 -- 
 2.51.0
 
