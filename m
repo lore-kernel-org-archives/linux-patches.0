@@ -1,75 +1,74 @@
-Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CA62F49F1
-	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 16:51:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2D32F49F1
+	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 16:52:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765903887; cv=none; b=aftygtJ1MMrYYVbsiPgf9r35GELWmNhBBviaY31ZekZ0QTZd2L2+CTzE2qkQylvVfW99DM8ZTic7JSTQS/avtgU1GeFl5DApb2aU/HhzF8SqMyQ9Hl1tfHA6/AbkD2z2KknMFhZe34UgARG8F8DNAG9TZ98T3yDMtb+2caEEGws=
+	t=1765903934; cv=none; b=Zgjjx0OxmbiVynXeT/Dxz5e2k1ZRVNMuJYf98591X6DGcjqxkA9zLtkZa8nz2XAAbzdaFyyAQfJoabGxxZeeXX1qvljEdRR2qZmkMectKPYuHhvm06zOoLUvLXlQ6CVmzPcwtn+3hcCUhf5oAFuQSa+hHGOnzfH+m3OkEXCKuV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765903887; c=relaxed/simple;
-	bh=6EAWakK9hGEZFnjMpke9BtV0raNAkYiS4u+8cjGBWPg=;
+	s=arc-20240116; t=1765903934; c=relaxed/simple;
+	bh=FwjdDS1Sox44VxEqtfgWxa7v8a0DK1bpiJ12VqO95CM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aKxJfz5cStSHt7Lr58JYnmGyKTwPjfF4rrogdyVJP+/k6XBjJI6YpJzWCwHDmKTLQkwdJ7Bsyu/vdyZ2n7v/vwDl2uZq4nL9nlhc6c53xfVF2tpZq/YKaaKcFpoSL3AjMIsHzFojL+/TlxnjA9WZUyfl9uGTGnKaD4UAyeazjNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asu.edu; spf=pass smtp.mailfrom=asu.edu; dkim=pass (2048-bit key) header.d=asu.edu header.i=@asu.edu header.b=rdO5ducF; arc=none smtp.client-ip=209.85.215.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=EacHr4BDKTThgp9deGop0R/muxGzDUEwsKyaIAIAtRakiK0Y4z4y7CNqu05Mq75qggfOZTehzL6IlJK8LN4ToXB4UVA7dda5EYNldImP4sjR3rz7moBCdbgOr1IrI0ULhhvj0xSheNbRL1t4VHXZeO5axYL/qXNDm4ApPSk3Ot0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asu.edu; spf=pass smtp.mailfrom=asu.edu; dkim=pass (2048-bit key) header.d=asu.edu header.i=@asu.edu header.b=eoWJuz0i; arc=none smtp.client-ip=209.85.214.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=asu.edu
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=asu.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=asu.edu header.i=@asu.edu header.b="rdO5ducF"
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-bc17d39ccd2so3011689a12.3
-        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 08:51:25 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=asu.edu header.i=@asu.edu header.b="eoWJuz0i"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-29f102b013fso58909365ad.2
+        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 08:52:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=asu.edu; s=google; t=1765903884; x=1766508684; darn=lists.linux.dev;
+        d=asu.edu; s=google; t=1765903931; x=1766508731; darn=lists.linux.dev;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bXFLxPfMdRy0hynFOSJMIIvcmXhnhbLzVRVWvbqAVjc=;
-        b=rdO5ducFFkLpHoQMyihA7l0MUW5f7RiIPXLDVBnweDtpRhVYpNjeiiOLMClrzhMQhG
-         xXy7oeArl5fMyJLJHWpoe3RUhhByNVAEiCQ8qb8HP3qiED0J4Br75jJmiuawq8PiB6pK
-         Iu2eZUY4wYNkqEJl++HKEbgS5ea+AUi7fH4APm4lOs9oeYmO+r07cYNh7NNVAlY1wfWY
-         LI3Y46ArqYXC6yusk5SCdOxObQV31cTKm3A8g7s974enH/uiYRx4ZGblnBxWPojZR4OP
-         5ZavYUd60aVXr+jMU9p7PeZ1WM8dpHY4oXkRmA1RHLP/s3bejVWDolD+eUgNADMLQeU0
-         MLmQ==
+        bh=044jJ5OZga77MHiu5HO2sauTgRDM/5MaBSigPsMPKDw=;
+        b=eoWJuz0iZTUNG3P1H1sfKfeJKHUHOkhROZDXP7XWyM10qLYbkJklL1ODOEtSsWs4yU
+         tccIhHejNO4TFDEs/mSvXFVu3c7laROpOQ/wsY2OnjX9B/ufUQHQNgu0/rzaez6vvNsn
+         oM7GyzSKJR4d7xWw51YrjutKlr5pdA9G4vv2pnvhB6R6gVeZKzggCaxY82s4xr6xVaeF
+         CrI7egF9O2uQ+lSqSHEViTAaCL5nGQngvSNFOOdWDIiuJHICJzk1MnJ6PDlR9p7ISC/d
+         +R4KnqwtJaJzcDoJ9TOxgRpZch7sXNOg2kGcxQHhX2joE0AMqfKMMPq0T0PVBpBsvpaD
+         gVuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765903884; x=1766508684;
+        d=1e100.net; s=20230601; t=1765903931; x=1766508731;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bXFLxPfMdRy0hynFOSJMIIvcmXhnhbLzVRVWvbqAVjc=;
-        b=bTad8t+zB3G/tBjPexV5O5vz9BUmWZsOPpLHL4wOJDyE5RvJuU2q0r3lyN1l3peNgu
-         Ew16suVx4lzNduZILkDhwQVg/BQQFhyL97CyEMh22RyaeDkDILigN2CjuQ5AO8t4+4zl
-         zrGLl7mVlgeHPVUCHB6itY3Xn9R2QYEocA9vPeuivCG2aOWTqwLpklayDvM9KoXYVtnR
-         NESLQkqnsMb2TjLXfvBlvgzkzj+k6D1584F/2m6fA4MovuiGEOVUeINeSSUWwyBm+1yp
-         shlEn6TTZNHSFoA5CdkoJBl6ma0GUZgsK4WuZwcfaplMrsgrJlLA6LJQo4SSMdotCbo7
-         kydg==
-X-Forwarded-Encrypted: i=1; AJvYcCWQJvRd805X4CbzXODQGvRXR67kclR6hE9PQ49o6ZYFN17PD/dlHTMB+0dzzveLHL8lu/eCGYvf@lists.linux.dev
-X-Gm-Message-State: AOJu0YyRfCWRz1Yc+yooJbArETkdCL9yPPtMfjcwkSK2/+V72FV0dtp+
-	WzrHwVkU7Ihb3qgvVlGBsYs2QCg/GaqDI7JKr2cDxbxx69MeHW/v+kuuzVKh0GFVVyBxt8suolh
-	R6Zs=
-X-Gm-Gg: AY/fxX4ptLZlNMV+xzstKpB93bJHHxrBY1jPMrsNqI1S60BQ0/jEA+WlsTU03nnkKEK
-	xus3fck99BHHoj1xXP73UWU5kIZUv5DnwUFE6obqLfvzKn75LtUVqP8F9djZcotFzZbtA5csYXA
-	vxMgWVMhFre45R91+SMdB1hoOB+PlUGFBwXGlRbZNrjrKyQeYeC7cblARwUqVkMU5Z8C6rbiQ6H
-	G7cAsvZ8FM1tIONfZkn2Dq4ulqosR4wHpN/pT7WqTkPRSpAvDE5EQK/rxLmIQaTxVSY6GD3L67j
-	obGkPnSpdIDR7Kj98iC/CZnIE35G/24ytVtANCizCrKEm7ptzH4XYzW1exYC9Mf+gRRcNzNudFp
-	0XLMuFwZSROcDTrgPFb2YEdYLdcEwFfqzs/HQOrabzVChc0O/OzM8Oj2M6ZLcGMhR204rp1Vue/
-	y3wZbmpEhjKW+lU5xJwnlskgY41wveEnZ4
-X-Google-Smtp-Source: AGHT+IEi4jiQdLnZmUxhb2opMxb7EKOqLnq+4SA7fRFnDdACEZ44RjFv4wK+1gwMTFXSt5R/mFB3yw==
-X-Received: by 2002:a05:693c:838d:20b0:2ae:55f2:ad57 with SMTP id 5a478bee46e88-2ae55f2ae09mr893197eec.29.1765903884437;
-        Tue, 16 Dec 2025 08:51:24 -0800 (PST)
+        bh=044jJ5OZga77MHiu5HO2sauTgRDM/5MaBSigPsMPKDw=;
+        b=nncB0wIQqCdAMRbn5laUc4w7daMw2N7lSrHUb2T8AQRQhsIsFRKTOQMO6RfGopAPUu
+         W2Vm9ynJfR9l3lU1eQH5+SXTFRmyUIDXCJh6yppG56UmqH9d+EJHBRerRgMu4y/2P/rv
+         /rFhKv9ORbZ2KOhc0FUtLUzza4AJj2AuDulftbzLMXkBbqKmLpkhlQQVXobcsmwTN9/W
+         lb8cnPVpPi4+VbtacSpwRqC73NQUvQen6+wkLwHehCoKo9NesBT4/7kjjwtpLumLUo7a
+         OqHvbbjxNWOdGHgVPVnhzi6dGazcg99BHAFhEng9loRokFbW+396y4cigyIORyKP2K5X
+         /mgQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXp5UxmuP0gRv/kQwy1UWJC3QNN7+UGQWMaorRLrnzBximFhEuVvJXv+GB7ZOzv9P3IEzlS+AFm@lists.linux.dev
+X-Gm-Message-State: AOJu0YwP1qZJ0IgpKrecbAJORjtzCIo0qTf9tXaJ5M3UyXQ6YyWJSD/s
+	7yi7Nl2hslXd2Y5dKcjUfn1NCX9709LdXk9/kj5m76dFLxk+MFNj0G0uvGFZSGZNug==
+X-Gm-Gg: AY/fxX72SU4mlwquZoVLcXPQpeF82FvvJEXJFpdpojzpZiLKZAlmaftFlhN9vz8QFEJ
+	WCB3+UkDpF82yZOabHjVDd6zOUI7zSJqfhr4qCTChnbFJBP/jtiTM0A+4dsMF04kSTwRV9Radhc
+	5km53wVV0fBbFJGmI7TvaNvfuEktXKAbxeavZsMc6qRaMG66Vz0DbtHYp7CelF1KduoY8uOo1P9
+	90Zn1YIMQ2NZZish8hZMzIzUK0hXLbxu7aOxW/npoIUvXmKoOkY0/398eSfoMqcUxRxQJMeG2eQ
+	2DhA2PqFBB4MeCGLjoivaGN27Fp5eR0H4uggxxcE+Cy+BXdEOAMia4co1f23OAb6QtRhsfRgTO+
+	4DAz03xPWD11Pzf2rmQ97k5wsCfTXxvZBDWWpcP2qCFI8znM2h1fUSMxxDWrffy3+7B7LWRsYx4
+	HuIDMwBbxaBOzAhl4L9MQk0a7JSUpMe+e4
+X-Google-Smtp-Source: AGHT+IEpWCbeLGHpAd3C/0Y1ZbY5B1k0NJpI5pCZS9qiA4FHSv0ZUXZnpihKTE1T/asTYZyHKQFkMQ==
+X-Received: by 2002:a05:701a:ca88:b0:119:e569:f620 with SMTP id a92af1059eb24-11f34bfac4cmr12209335c88.25.1765903930546;
+        Tue, 16 Dec 2025 08:52:10 -0800 (PST)
 Received: from gmail.com (ip72-200-102-19.tc.ph.cox.net. [72.200.102.19])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f446460c8sm18015041c88.10.2025.12.16.08.51.23
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f392500cdsm37342761c88.7.2025.12.16.08.52.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 08:51:24 -0800 (PST)
-Date: Tue, 16 Dec 2025 09:51:22 -0700
+        Tue, 16 Dec 2025 08:52:10 -0800 (PST)
+Date: Tue, 16 Dec 2025 09:52:08 -0700
 From: Will Rosenberg <whrosenb@asu.edu>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	Oliver Rosenberg <olrose55@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.17 367/507] kernfs: fix memory leak of kernfs_iattrs in
+Subject: Re: [PATCH 6.18 447/614] kernfs: fix memory leak of kernfs_iattrs in
  __kernfs_new_node
-Message-ID: <aUGOCq2MaJsZ0cwp@gmail.com>
-References: <20251216111345.522190956@linuxfoundation.org>
- <20251216111358.754182559@linuxfoundation.org>
+Message-ID: <aUGOOLGP84wGy6cM@gmail.com>
+References: <20251216111401.280873349@linuxfoundation.org>
+ <20251216111417.567991274@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -78,9 +77,9 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20251216111358.754182559@linuxfoundation.org>
+In-Reply-To: <20251216111417.567991274@linuxfoundation.org>
 
-On Tue, Dec 16, 2025 at 12:13:28PM +0100, Greg Kroah-Hartman wrote:
-> 6.17-stable review patch.  If anyone has any objections, please let me know.
+On Tue, Dec 16, 2025 at 12:13:34PM +0100, Greg Kroah-Hartman wrote:
+> 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 Please see https://lkml.org/lkml/2025/12/16/1248.
