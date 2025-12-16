@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA02F9E8;
-	Tue, 16 Dec 2025 12:00:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C74B33E366;
+	Tue, 16 Dec 2025 12:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886431; cv=none; b=AwwoeZaS6cNaolV4pXLgbNZzCXXuxnVKU4TZB1KZecvw/OXiHFqgh6lHHBoYnYqsnIbZlQAd40WhdlLbmzeaHjB7CEg90Ge3bGjv9xlvXk33d20p+eL5l2ZE7TFFe3Et6hT399gnSzjzcyL9/LWABZgKqmGqXXZwttYlTtRXezs=
+	t=1765886435; cv=none; b=U61jnVe6v4XgmIDpTS12gRbDup3n4FNXH2fBxMrh5CVwTH8MBQmJ7TIwgXGR1+820i0fe+0QL4fic5z0xIVtvs8a7oCn4vuWbYkBa07R2LYjQ8tDqNP/i789udKgxUSKILU/g+pLNiCBV2DohWB/CJoObYbyOFXZMC5OmbezHaA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886431; c=relaxed/simple;
-	bh=iNDzERgkvFfOKdxh8XCMgx6yU52DdDtHAv41Zn5ViE4=;
+	s=arc-20240116; t=1765886435; c=relaxed/simple;
+	bh=UfQ83/rNqCnHmQXB+UjWeEjUHfvHwYhrhesu1u3+gV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=t2s+iXIFRbZ+Dj1ZB/33pAJAeZNi2ixs3WmRJeyNtV9l4uY2i7QF8fctkqaE/llXECPPGgw14SB98PweRA6welcSvoi7C6e/Izmr32qOM1LhJCC//W0rnAfKNaUldAbb5fjuPgeb3YLQpuat2h7AxJ6cJ7KawbUiX32a838hbuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=db9D8sjq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTk2/SU+Bj7Yy4HTeG7GQrccsYcorMIRf6wbh71MNsaHH6dbWmaYjOfPNhBeqsNJRsym2l8eI0vaytHzl4zXEPi/BPnAHNMXAiAChiAiWFFzpWCjtZGh4JOrnCWirUIfQVhZYC6U92gaOB87ipG0enuHsq3IjE7238WFhKnvmng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXonR/Tr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="db9D8sjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB4CDC4CEF1;
-	Tue, 16 Dec 2025 12:00:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXonR/Tr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 631D9C4CEF1;
+	Tue, 16 Dec 2025 12:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886431;
-	bh=iNDzERgkvFfOKdxh8XCMgx6yU52DdDtHAv41Zn5ViE4=;
+	s=korg; t=1765886434;
+	bh=UfQ83/rNqCnHmQXB+UjWeEjUHfvHwYhrhesu1u3+gV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=db9D8sjq8mXozJm6YtAeBbD12ge8QFqM34xI4mXKMRi7KZRzKdNNlEzQ51o27wD+B
-	 p/q0rD18d+7qzKakWnNg/6xyANht1erTQL0x/IdEcb7Ok32pi5Yc90v+hUqBiOmNG0
-	 IvHoP+GFOUbtO6AT5mLQ4Bs2YxYgWM2UVfEFD0sg=
+	b=nXonR/TrWFe/pRW6nLK96wo5rVKPwJCXlgLNb4U/W19wJXx74tMleeFuenXwScYBi
+	 Fn9DK50Y3rzlJnTbm0iZzt6qaJZtcSGifumCrMIyavYZOlKSHWUe4i4RgGkTM4BTL9
+	 aFQzZCMC0axFchu7adDM+Ar/oKXkI+cEZd01M2/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	Xi Pardee <xi.pardee@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 435/507] platform/x86:intel/pmc: Update Arrow Lake telemetry GUID
-Date: Tue, 16 Dec 2025 12:14:36 +0100
-Message-ID: <20251216111401.217723443@linuxfoundation.org>
+Subject: [PATCH 6.17 436/507] f2fs: maintain one time GC mode is enabled during whole zoned GC cycle
+Date: Tue, 16 Dec 2025 12:14:37 +0100
+Message-ID: <20251216111401.253690799@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -46,46 +46,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xi Pardee <xi.pardee@linux.intel.com>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 644ab3bc98ee386f178d5209ae8170b3fac591aa ]
+[ Upstream commit e462fc48ceb8224811c3224650afed05cb7f0872 ]
 
-Update ARL_PMT_DMU_GUID value. Arrow Lake PMT DMU GUID has been updated
-after it was add to the driver. This updates ensures that the die C6
-value is available in the debug filesystem.
+The current version missed setting one time GC for normal zoned GC
+cycle. So, valid threshold control is not working. Need to fix it to
+prevent excessive GC for zoned devices.
 
-Bugzilla Link: https://bugzilla.kernel.org/show_bug.cgi?id=220421
-Fixes: 83f168a1a437 ("platform/x86/intel/pmc: Add Arrow Lake S support to intel_pmc_core driver")
-Tested-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Signed-off-by: Xi Pardee <xi.pardee@linux.intel.com>
-Link: https://patch.msgid.link/20251014214548.629023-2-xi.pardee@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: e791d00bd06c ("f2fs: add valid block ratio not to do excessive GC for one time GC")
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/pmc/core.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/gc.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/pmc/core.h b/drivers/platform/x86/intel/pmc/core.h
-index 4a94a4ee031e6..24139617eef61 100644
---- a/drivers/platform/x86/intel/pmc/core.h
-+++ b/drivers/platform/x86/intel/pmc/core.h
-@@ -282,7 +282,7 @@ enum ppfear_regs {
- /* Die C6 from PUNIT telemetry */
- #define MTL_PMT_DMU_DIE_C6_OFFSET		15
- #define MTL_PMT_DMU_GUID			0x1A067102
--#define ARL_PMT_DMU_GUID			0x1A06A000
-+#define ARL_PMT_DMU_GUID			0x1A06A102
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 5734e03864685..5a300f2bc85b4 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -38,13 +38,14 @@ static int gc_thread_func(void *data)
+ 	struct f2fs_gc_control gc_control = {
+ 		.victim_segno = NULL_SEGNO,
+ 		.should_migrate_blocks = false,
+-		.err_gc_skipped = false };
++		.err_gc_skipped = false,
++		.one_time = false };
  
- #define LNL_PMC_MMIO_REG_LEN			0x2708
- #define LNL_PMC_LTR_OSSE			0x1B88
+ 	wait_ms = gc_th->min_sleep_time;
+ 
+ 	set_freezable();
+ 	do {
+-		bool sync_mode, foreground = false;
++		bool sync_mode, foreground = false, gc_boost = false;
+ 
+ 		wait_event_freezable_timeout(*wq,
+ 				kthread_should_stop() ||
+@@ -52,8 +53,12 @@ static int gc_thread_func(void *data)
+ 				gc_th->gc_wake,
+ 				msecs_to_jiffies(wait_ms));
+ 
+-		if (test_opt(sbi, GC_MERGE) && waitqueue_active(fggc_wq))
++		if (test_opt(sbi, GC_MERGE) && waitqueue_active(fggc_wq)) {
+ 			foreground = true;
++			gc_control.one_time = false;
++		} else if (f2fs_sb_has_blkzoned(sbi)) {
++			gc_control.one_time = true;
++		}
+ 
+ 		/* give it a try one time */
+ 		if (gc_th->gc_wake)
+@@ -81,8 +86,6 @@ static int gc_thread_func(void *data)
+ 			continue;
+ 		}
+ 
+-		gc_control.one_time = false;
+-
+ 		/*
+ 		 * [GC triggering condition]
+ 		 * 0. GC is not conducted currently.
+@@ -132,7 +135,7 @@ static int gc_thread_func(void *data)
+ 		if (need_to_boost_gc(sbi)) {
+ 			decrease_sleep_time(gc_th, &wait_ms);
+ 			if (f2fs_sb_has_blkzoned(sbi))
+-				gc_control.one_time = true;
++				gc_boost = true;
+ 		} else {
+ 			increase_sleep_time(gc_th, &wait_ms);
+ 		}
+@@ -141,7 +144,7 @@ static int gc_thread_func(void *data)
+ 					FOREGROUND : BACKGROUND);
+ 
+ 		sync_mode = (F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_SYNC) ||
+-			(gc_control.one_time && gc_th->boost_gc_greedy);
++			(gc_boost && gc_th->boost_gc_greedy);
+ 
+ 		/* foreground GC was been triggered via f2fs_balance_fs() */
+ 		if (foreground && !f2fs_sb_has_blkzoned(sbi))
 -- 
 2.51.0
 
