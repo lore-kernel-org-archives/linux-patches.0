@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C478732BF22;
-	Tue, 16 Dec 2025 11:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856B313E13;
+	Tue, 16 Dec 2025 11:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884267; cv=none; b=eaBPmEUP1eOhISJueFkn+Rl/fqUyMpbkUfvS0Dm4LhqX3hIHy5H0viV5tFWqGE/5Qpqy/cPKcl5TuVMeRkBj5zybOFLF+ZnykAyAnClklaIvPFPNd3tQGDdepVYPpqvyyoSPki+9ZcdAou66OrxnFneM4hIZL79d7vG59rTksi8=
+	t=1765884271; cv=none; b=Tt5Cc8fezz5vgFlIkPr8/Gfr/ZASLM8dIKDTg923o6gpstjohwreWu7WHv85kqyhhdamW+W8GG05Se80eoB3aBrXc1lO+Mlo4c8Wi7ItR+6JECOnm/2X2CN8WzU5d4XZcl7UMPjFTQDlhTdW16KIxcHdByNabJanShNygJWXxQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884267; c=relaxed/simple;
-	bh=4GealN+wwMvQBDvvVnofCro4T79IxBsuVo26tGjq0RY=;
+	s=arc-20240116; t=1765884271; c=relaxed/simple;
+	bh=KuuqJi34dtXvCft24GJNUOrItS+NnItBgmDAw7V7lPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vABU0FtRiN23kJt8u4gP+vXIhT2mOkg13kNOjPZsIyeehmcjhEdsNkvOAPK4BaSypKO23hbEitQ+tuuYfS47jd2EPdDFKBA51Et/fcpqttoX1RARLEdTl95/85JSfgE07CRbfTYndlkkkAPgkCtsyDFjEvuyfQg+mnlBwr1/hqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rcxdfgm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FwhIIo3Lo+8nFPXfdpDzMuC28jXOzGYT+TQyZtNRvGaEEIOtV2JRdTb5PLEZIrwor5A3GZ3/6nrloWAE8yZH3k7Z4hWTZVIeVhmlJlhsSnxSz1P/ymd6kIj7hhwXocQjOchKHbqIzhRifrP0xPCuLMpDMJxcfeThxLdHjvVF9Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqEdndJQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rcxdfgm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2989CC4CEF1;
-	Tue, 16 Dec 2025 11:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqEdndJQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18C2C4CEF1;
+	Tue, 16 Dec 2025 11:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884267;
-	bh=4GealN+wwMvQBDvvVnofCro4T79IxBsuVo26tGjq0RY=;
+	s=korg; t=1765884271;
+	bh=KuuqJi34dtXvCft24GJNUOrItS+NnItBgmDAw7V7lPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcxdfgm/gSkVZKJBJNXellX58pBgzW/F8ImGLlwSxuaDX0v8jr6oOnqN/boghW3wz
-	 f2xQoH46ftm8Yqr0TS+3s94jR/hY4+QuARlTKcKfGwm/Hz5Nh0H3Ky2LKgHLaV2vdA
-	 5MMv7iqzqsqgCC89BVl4Hel9QqJDB+eyroc7V0ks=
+	b=mqEdndJQ+nEAzt13nHvrpSo71FQjd5iFhwgf+OEtFdarMxbq3utLmKAOrxqW6awXq
+	 kZF9IKkc4F7rL+LprSvN2LgDhPV2baKb6QfhcBVATSiU4Ea6C9NsLVSG41XBf8GPcv
+	 Y7gOtbwNIDdhEzBnj/vf1fQi9LffXg0gNkJCk6uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	Georgi Djakov <djakov@kernel.org>,
+	syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/354] interconnect: debugfs: Fix incorrect error handling for NULL path
-Date: Tue, 16 Dec 2025 12:11:06 +0100
-Message-ID: <20251216111324.507915847@linuxfoundation.org>
+Subject: [PATCH 6.12 136/354] ntfs3: init run lock for extend inode
+Date: Tue, 16 Dec 2025 12:11:43 +0100
+Message-ID: <20251216111325.846517128@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,51 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 6bfe104fd0f94d0248af22c256ce725ee087157b ]
+[ Upstream commit be99c62ac7e7af514e4b13f83c891a3cccefaa48 ]
 
-The icc_commit_set() function, used by the debugfs interface, checks
-the validity of the global cur_path pointer using IS_ERR_OR_NULL().
-However, in the specific case where cur_path is NULL, while
-IS_ERR_OR_NULL(NULL) correctly evaluates to true, the subsequent call
-to PTR_ERR(NULL) returns 0.
+After setting the inode mode of $Extend to a regular file, executing the
+truncate system call will enter the do_truncate() routine, causing the
+run_lock uninitialized error reported by syzbot.
 
-This causes the function to return a success code (0) instead of an
-error, misleading the user into believing their bandwidth request was
-successfully committed when, in fact, no operation was performed.
+Prior to patch 4e8011ffec79, if the inode mode of $Extend was not set to
+a regular file, the do_truncate() routine would not be entered.
 
-Fix this by adding an explicit check to return -EINVAL if cur_path is
-NULL. This prevents silent failures and ensures that an invalid
-operational sequence is immediately and clearly reported as an error.
+Add the run_lock initialization when loading $Extend.
 
-Fixes: 770c69f037c1 ("interconnect: Add debugfs test client")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Link: https://lore.kernel.org/r/20251010151447.2289779-1-visitorckw@gmail.com
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+syzbot reported:
+INFO: trying to register non-static key.
+Call Trace:
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ assign_lock_key+0x133/0x150 kernel/locking/lockdep.c:984
+ register_lock_class+0x105/0x320 kernel/locking/lockdep.c:1299
+ __lock_acquire+0x99/0xd20 kernel/locking/lockdep.c:5112
+ lock_acquire+0x120/0x360 kernel/locking/lockdep.c:5868
+ down_write+0x96/0x1f0 kernel/locking/rwsem.c:1590
+ ntfs_set_size+0x140/0x200 fs/ntfs3/inode.c:860
+ ntfs_extend+0x1d9/0x970 fs/ntfs3/file.c:387
+ ntfs_setattr+0x2e8/0xbe0 fs/ntfs3/file.c:808
+
+Fixes: 4e8011ffec79 ("ntfs3: pretend $Extend records as regular files")
+Reported-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=bdeb22a4b9a09ab9aa45
+Tested-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/debugfs-client.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/interconnect/debugfs-client.c b/drivers/interconnect/debugfs-client.c
-index bc3fd8a7b9eb4..778deeb4a7e8a 100644
---- a/drivers/interconnect/debugfs-client.c
-+++ b/drivers/interconnect/debugfs-client.c
-@@ -117,7 +117,12 @@ static int icc_commit_set(void *data, u64 val)
- 
- 	mutex_lock(&debugfs_lock);
- 
--	if (IS_ERR_OR_NULL(cur_path)) {
-+	if (!cur_path) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	if (IS_ERR(cur_path)) {
- 		ret = PTR_ERR(cur_path);
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 44fbd9156a30f..8a9c11083e6e6 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -472,6 +472,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		/* Records in $Extend are not a files or general directories. */
+ 		inode->i_op = &ntfs_file_inode_operations;
+ 		mode = S_IFREG;
++		init_rwsem(&ni->file.run_lock);
+ 	} else {
+ 		err = -EINVAL;
  		goto out;
- 	}
 -- 
 2.51.0
 
