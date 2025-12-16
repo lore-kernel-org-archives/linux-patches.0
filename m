@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0132D34A3D8;
-	Tue, 16 Dec 2025 11:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD6334A767;
+	Tue, 16 Dec 2025 11:39:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885195; cv=none; b=gFp3XoaUEAfcEMW+35/N3cH+SRN7ykOwdMn9Z1jPGTKaERnFNflDYOqL2rtaQW8YXx2BcTejw9wPWAkVb9kq1I9efj0Hymk/32taHe7qiPksCjQVjq8T72k0FnzItezNlcwp54y3mC6wok5ZC2JAxDJSPBVJssSNgoKS0OEf5Gk=
+	t=1765885198; cv=none; b=mnlAiYnCW3GTDHd/v50ne4qtz3ZAAGw3nfbAF/0vXOQtXI2UikvEiuW4RkhgAtHECDQtMcYYXLn9fsYWIJxmmRUBdeF6zfpsXW9AfQoGQLodPP6CWX9VtRIWGsmtqccuKcPIwuZjkhrIP+A6fzxkzywlwh4xoiWpO03NGgSYu80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885195; c=relaxed/simple;
-	bh=RkySe3zeeo6U8ASdW4A+D3z63blb6qrTycpZyJBSZts=;
+	s=arc-20240116; t=1765885198; c=relaxed/simple;
+	bh=E/xzWk4AxEVWFfOANImUq+fN/tVJPu1Uebbk8wRQzEY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TEzRi4Xoz+inTGisHsTOvMqc/dDXTWMqUAQ22gvOn+ypmL/q6G94hRZDE5Iz8DNFyUCWM4BPw/X0L7346TTE1cqOXOpjLGZDuuu9TWwceP7LBVCHEXYABs1VQox4E52RE/UOeAR+hQ/5WABoJFclLV448L02KPuwA/FxJNbbNFg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txgoPWTc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJ5WYy3Rk2sZe0zOVveP44I+cBHgoQF1cgjGWiFzLX4sfYULq86xMO4RT7FmpexTSp1yUGXMY3CHIQWSRogdPvhjZhBVYk3hvd98YtRzVSiP7niDNEkoSpASShINDynq6PZtbWZtgejlnA2LUfMdvZusxNqT97l8XVn3OwA5TWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsZXxNHP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txgoPWTc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70462C4CEF1;
-	Tue, 16 Dec 2025 11:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsZXxNHP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D84C4CEF1;
+	Tue, 16 Dec 2025 11:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885194;
-	bh=RkySe3zeeo6U8ASdW4A+D3z63blb6qrTycpZyJBSZts=;
+	s=korg; t=1765885198;
+	bh=E/xzWk4AxEVWFfOANImUq+fN/tVJPu1Uebbk8wRQzEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txgoPWTce9i9O3f4PxT1TNw2uZLuFkG0Gie6a9lmpgR/IlnxoNHa8Ohqd+lZ19yBv
-	 aiFobuHs+2boIIQ7tYjdlvt9NrAQtwO19RC18CMHfiuO0g6/D5WWfMN1Kinn4Kpbxe
-	 bh6PyFmfDQAUSrI10clzuFNRyZ0QNS64ti1ufDg8=
+	b=EsZXxNHPgXQlEG04BIqszyLxjKyGUX+3bFp4ezsBvCuBArd5MnKndtJZKGu4XsRTK
+	 blPPBnnOMePjrYZJLspEmTShehITsVnuAvIDZgvHRP302mHzpdENVoKwUPpPYKTLSr
+	 mqLag18T1HT3FCzIWx9cshcSPdc73dh5CCn2QcNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sarika Sharma <sarika.sharma@oss.qualcomm.com>,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
-	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
-	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Cyrille Pitchen <cyrille.pitchen@microchip.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Manikandan Muralidharan <manikandan.m@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 034/507] wifi: ath12k: Fix MSDU buffer types handling in RX error path
-Date: Tue, 16 Dec 2025 12:07:55 +0100
-Message-ID: <20251216111346.774562977@linuxfoundation.org>
+Subject: [PATCH 6.17 025/507] drm: atmel-hlcdc: fix atmel_xlcdc_plane_setup_scaler()
+Date: Tue, 16 Dec 2025 12:07:46 +0100
+Message-ID: <20251216111346.448097895@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,180 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
+From: Cyrille Pitchen <cyrille.pitchen@microchip.com>
 
-[ Upstream commit 36f9edbb9d0fc36c865c74f3c1ad8e1261ad3981 ]
+[ Upstream commit a312acdcec57b3955fbf1f3057c13a6d38e4aa2a ]
 
-Currently, packets received on the REO exception ring from
-unassociated peers are of MSDU buffer type, while the driver expects
-link descriptor type packets. These packets are not parsed further due
-to a return check on packet type in ath12k_hal_desc_reo_parse_err(),
-but the associated skb is not freed. This may lead to kernel
-crashes and buffer leaks.
+On SoCs, like the SAM9X75, which embed the XLCDC ip, the registers that
+configure the unified scaling engine were not filled with proper values.
 
-Hence to fix, update the RX error handler to explicitly drop
-MSDU buffer type packets received on the REO exception ring.
-This prevents further processing of invalid packets and ensures
-stability in the RX error handling path.
+Indeed, for YCbCr formats, the VXSCFACT bitfield of the HEOCFG25
+register and the HXSCFACT bitfield of the HEOCFG27 register were
+incorrect.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+For 4:2:0 formats, both vertical and horizontal factors for
+chroma chanels should be divided by 2 from the factors for the luma
+channel. Hence:
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Sarika Sharma <sarika.sharma@oss.qualcomm.com>
-Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250930091551.3305312-2-sarika.sharma@oss.qualcomm.com
-Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+HEOCFG24.VXSYFACT = VFACTOR
+HEOCFG25.VSXCFACT = VFACTOR / 2
+HEOCFG26.HXSYFACT = HFACTOR
+HEOCFG27.HXSCFACT = HFACTOR / 2
+
+However, for 4:2:2 formats, only the horizontal factor for chroma
+chanels should be divided by 2 from the factor for the luma channel;
+the vertical factor is the same for all the luma and chroma channels.
+Hence:
+
+HEOCFG24.VXSYFACT = VFACTOR
+HEOCFG25.VXSCFACT = VFACTOR
+HEOCFG26.HXSYFACT = HFACTOR
+HEOCFG27.HXSCFACT = HFACTOR / 2
+
+Fixes: d498771b0b83 ("drm: atmel_hlcdc: Add support for XLCDC using IP specific driver ops")
+Signed-off-by: Cyrille Pitchen <cyrille.pitchen@microchip.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20241014094942.325211-1-manikandan.m@microchip.com
+Signed-off-by: Manikandan Muralidharan <manikandan.m@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c  | 70 ++++++++++++++++++++++--
- drivers/net/wireless/ath/ath12k/hal_rx.c | 10 +---
- 2 files changed, 66 insertions(+), 14 deletions(-)
+ .../gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c   | 27 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 9048818984f19..0be911b4f3166 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
+diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+index 4a7ba0918eca1..3787db014501e 100644
+--- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
++++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+@@ -365,13 +365,34 @@ void atmel_xlcdc_plane_setup_scaler(struct atmel_hlcdc_plane *plane,
+ 				    xfactor);
  
- #include <linux/ieee80211.h>
-@@ -3690,6 +3690,48 @@ ath12k_dp_process_rx_err_buf(struct ath12k *ar, struct hal_reo_dest_ring *desc,
- 	return 0;
- }
- 
-+static int ath12k_dp_h_msdu_buffer_type(struct ath12k_base *ab,
-+					struct list_head *list,
-+					struct hal_reo_dest_ring *desc)
-+{
-+	struct ath12k_rx_desc_info *desc_info;
-+	struct ath12k_skb_rxcb *rxcb;
-+	struct sk_buff *msdu;
-+	u64 desc_va;
+ 	/*
+-	 * With YCbCr 4:2:2 and YCbYcr 4:2:0 window resampling, configuration
+-	 * register LCDC_HEOCFG25.VXSCFACT and LCDC_HEOCFG27.HXSCFACT is half
++	 * With YCbCr 4:2:0 window resampling, configuration register
++	 * LCDC_HEOCFG25.VXSCFACT and LCDC_HEOCFG27.HXSCFACT values are half
+ 	 * the value of yfactor and xfactor.
++	 *
++	 * On the other hand, with YCbCr 4:2:2 window resampling, only the
++	 * configuration register LCDC_HEOCFG27.HXSCFACT value is half the value
++	 * of the xfactor; the value of LCDC_HEOCFG25.VXSCFACT is yfactor (no
++	 * division by 2).
+ 	 */
+-	if (state->base.fb->format->format == DRM_FORMAT_YUV420) {
++	switch (state->base.fb->format->format) {
++	/* YCbCr 4:2:2 */
++	case DRM_FORMAT_YUYV:
++	case DRM_FORMAT_UYVY:
++	case DRM_FORMAT_YVYU:
++	case DRM_FORMAT_VYUY:
++	case DRM_FORMAT_YUV422:
++	case DRM_FORMAT_NV61:
++		xfactor /= 2;
++		break;
 +
-+	desc_va = (u64)le32_to_cpu(desc->buf_va_hi) << 32 |
-+		  le32_to_cpu(desc->buf_va_lo);
-+	desc_info = (struct ath12k_rx_desc_info *)(uintptr_t)desc_va;
-+	if (!desc_info) {
-+		u32 cookie;
-+
-+		cookie = le32_get_bits(desc->buf_addr_info.info1,
-+				       BUFFER_ADDR_INFO1_SW_COOKIE);
-+		desc_info = ath12k_dp_get_rx_desc(ab, cookie);
-+		if (!desc_info) {
-+			ath12k_warn(ab, "Invalid cookie in manual descriptor retrieval: 0x%x\n",
-+				    cookie);
-+			return -EINVAL;
-+		}
-+	}
-+
-+	if (desc_info->magic != ATH12K_DP_RX_DESC_MAGIC) {
-+		ath12k_warn(ab, "rx exception, magic check failed with value: %u\n",
-+			    desc_info->magic);
-+		return -EINVAL;
-+	}
-+
-+	msdu = desc_info->skb;
-+	desc_info->skb = NULL;
-+	list_add_tail(&desc_info->list, list);
-+	rxcb = ATH12K_SKB_RXCB(msdu);
-+	dma_unmap_single(ab->dev, rxcb->paddr, msdu->len + skb_tailroom(msdu),
-+			 DMA_FROM_DEVICE);
-+	dev_kfree_skb_any(msdu);
-+
-+	return 0;
-+}
-+
- int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			     int budget)
- {
-@@ -3734,6 +3776,26 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 		drop = false;
- 		ab->device_stats.err_ring_pkts++;
- 
-+		hw_link_id = le32_get_bits(reo_desc->info0,
-+					   HAL_REO_DEST_RING_INFO0_SRC_LINK_ID);
-+		device_id = hw_links[hw_link_id].device_id;
-+		partner_ab = ath12k_ag_to_ab(ag, device_id);
-+
-+		/* Below case is added to handle data packet from un-associated clients.
-+		 * As it is expected that AST lookup will fail for
-+		 * un-associated station's data packets.
-+		 */
-+		if (le32_get_bits(reo_desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE) ==
-+		    HAL_REO_DEST_RING_BUFFER_TYPE_MSDU) {
-+			if (!ath12k_dp_h_msdu_buffer_type(partner_ab,
-+							  &rx_desc_used_list[device_id],
-+							  reo_desc)) {
-+				num_buffs_reaped[device_id]++;
-+				tot_n_bufs_reaped++;
-+			}
-+			goto next_desc;
-+		}
-+
- 		ret = ath12k_hal_desc_reo_parse_err(ab, reo_desc, &paddr,
- 						    &desc_bank);
- 		if (ret) {
-@@ -3742,11 +3804,6 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			continue;
- 		}
- 
--		hw_link_id = le32_get_bits(reo_desc->info0,
--					   HAL_REO_DEST_RING_INFO0_SRC_LINK_ID);
--		device_id = hw_links[hw_link_id].device_id;
--		partner_ab = ath12k_ag_to_ab(ag, device_id);
--
- 		pdev_id = ath12k_hw_mac_id_to_pdev_id(partner_ab->hw_params,
- 						      hw_links[hw_link_id].pdev_idx);
- 		ar = partner_ab->pdevs[pdev_id].ar;
-@@ -3795,6 +3852,7 @@ int ath12k_dp_rx_process_err(struct ath12k_base *ab, struct napi_struct *napi,
- 			}
- 		}
- 
-+next_desc:
- 		if (tot_n_bufs_reaped >= quota) {
- 			tot_n_bufs_reaped = quota;
- 			goto exit;
-diff --git a/drivers/net/wireless/ath/ath12k/hal_rx.c b/drivers/net/wireless/ath/ath12k/hal_rx.c
-index 48aa48c48606a..805c31e4243db 100644
---- a/drivers/net/wireless/ath/ath12k/hal_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/hal_rx.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- 
- #include "debug.h"
-@@ -320,7 +320,7 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- {
- 	enum hal_reo_dest_ring_push_reason push_reason;
- 	enum hal_reo_dest_ring_error_code err_code;
--	u32 cookie, val;
-+	u32 cookie;
- 
- 	push_reason = le32_get_bits(desc->info0,
- 				    HAL_REO_DEST_RING_INFO0_PUSH_REASON);
-@@ -335,12 +335,6 @@ int ath12k_hal_desc_reo_parse_err(struct ath12k_base *ab,
- 		return -EINVAL;
++	/* YCbCr 4:2:0 */
++	case DRM_FORMAT_YUV420:
++	case DRM_FORMAT_NV21:
+ 		yfactor /= 2;
+ 		xfactor /= 2;
++		break;
++	default:
++		break;
  	}
  
--	val = le32_get_bits(desc->info0, HAL_REO_DEST_RING_INFO0_BUFFER_TYPE);
--	if (val != HAL_REO_DEST_RING_BUFFER_TYPE_LINK_DESC) {
--		ath12k_warn(ab, "expected buffer type link_desc");
--		return -EINVAL;
--	}
--
- 	ath12k_hal_rx_reo_ent_paddr_get(ab, &desc->buf_addr_info, paddr, &cookie);
- 	*desc_bank = u32_get_bits(cookie, DP_LINK_DESC_BANK_MASK);
- 
+ 	atmel_hlcdc_layer_write_cfg(&plane->layer, desc->layout.scaler_config + 2,
 -- 
 2.51.0
 
