@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF63357704;
-	Tue, 16 Dec 2025 12:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A14D35771A;
+	Tue, 16 Dec 2025 12:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887252; cv=none; b=hf4NogCxLY0UFzSD1+iM4zAJXgsrnCJaQpMsieSIh8v2zCpcQpVjtP9nfICO0XgiJIrBMC0E1wAtyaseGXg/d6byYTJ7a0E0lGzApq775ollIbiRDzKUT4wfdAJVmeaccHTop8cQH8JBMoWQmJy1O9vESIqNJfzV0ubP9UFwWfM=
+	t=1765887255; cv=none; b=uMfqEVmSvwh4up/Chz8EntnBj6WJz6/JtMu3dJVzWQ+ZOsZkzuwI2ugcK1XMgAfSz7CD094fqiJIzBDwwrzbWdGwkP9DplRp6mCrGLGX/dF3E9woM4/8cNkxEdetskSNayT6b5CIsXz4URxaf8X2rYfX8X5GIO9285+iI1MbfS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887252; c=relaxed/simple;
-	bh=dB5Yuubj1APxhSpU1LFd1fF+EUDym56HDgsO9HMjLK4=;
+	s=arc-20240116; t=1765887255; c=relaxed/simple;
+	bh=ZOyuIJ1xZCRkjyMq6AVA09XPRV+xMMxzvOc7N8TtTts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ej+LzQOIL7QjJkic7VvLkoR6fcT8NJhsUDUXTN3BbWA0okp5lcyh4mfS6XIP/skVSJKzcp1MnwRvuH1cBQYCg2p0zZWZO4ZLTVaPNrTmDduyvsKGA9Rg7jqPR0Zur9n08pARj9IqB/S5GiXqS2n9/cRFtfQaLIArylEDE4YP6FE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfi0pZk1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ins4+0ohL7p0pVxzNLgVffat2r7hFm4B8N/Ymh/IaQm0j2sh705eJU9LVKkriaHJIhfJob14u0lNnERYlkorNiDPYeJ1cLy4O6JAkpqhLEZ628ch4N7lSZaXkmSTSzvP4QPJR4AY1swny7FBdoMuqarfGWsnbwnk1Y+0YzTLRmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CP74uH6Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfi0pZk1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B13C4CEF1;
-	Tue, 16 Dec 2025 12:14:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CP74uH6Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1913C4CEF1;
+	Tue, 16 Dec 2025 12:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887252;
-	bh=dB5Yuubj1APxhSpU1LFd1fF+EUDym56HDgsO9HMjLK4=;
+	s=korg; t=1765887255;
+	bh=ZOyuIJ1xZCRkjyMq6AVA09XPRV+xMMxzvOc7N8TtTts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfi0pZk11KI0osRLNCDYkx+yQWuiDlO1W8Qiw/7pSPHLLZtY9wECFrIBLZ16KwnoF
-	 9k6FOERfai0BMovLbFqG+enGpgH5sCaQt3pzeK3ZmVod0sp/iP1ijAtXbik0lMclnm
-	 Klw+EydZl21hAT28JzVMGuEA9iEISrTmoUD2MkKo=
+	b=CP74uH6YQqpeXjcZVzFmRaf26onJvsPmrS+gi90q7YDG40DiKItik3pFjuVOA4MiY
+	 ghrCT6d6Cy415n1BfWDAqibY0NQ9JcyPdLko0OYMFjeme9PoQnH/+AL/0/+YRnG9kC
+	 c+KVHo2dzUDe6J/z1dFvF00RFyNFtlqsbgvA8cCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c9b724fbb41cf2538b7b@syzkaller.appspotmail.com,
-	Arnaud Lecomte <contact@arnaud-lcm.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Song Liu <song@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 140/614] bpf: Fix stackmap overflow check in __bpf_get_stackid()
-Date: Tue, 16 Dec 2025 12:08:27 +0100
-Message-ID: <20251216111406.406397404@linuxfoundation.org>
+Subject: [PATCH 6.18 131/614] ARM: dts: renesas: gose: Remove superfluous port property
+Date: Tue, 16 Dec 2025 12:08:18 +0100
+Message-ID: <20251216111406.082202380@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,81 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaud Lecomte <contact@arnaud-lcm.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 23f852daa4bab4d579110e034e4d513f7d490846 ]
+[ Upstream commit 00df14f34615630f92f97c9d6790bd9d25c4242d ]
 
-Syzkaller reported a KASAN slab-out-of-bounds write in __bpf_get_stackid()
-when copying stack trace data. The issue occurs when the perf trace
- contains more stack entries than the stack map bucket can hold,
- leading to an out-of-bounds write in the bucket's data array.
+'bus-width' is defined for the corresponding vin input port already.
+No need to declare it in the output port again. Fixes:
 
-Fixes: ee2a098851bf ("bpf: Adjust BPF stack helper functions to accommodate skip > 0")
-Reported-by: syzbot+c9b724fbb41cf2538b7b@syzkaller.appspotmail.com
-Signed-off-by: Arnaud Lecomte <contact@arnaud-lcm.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/bpf/20251025192941.1500-1-contact@arnaud-lcm.com
+    arch/arm/boot/dts/renesas/r8a7793-gose.dtb: composite-in@20 (adi,adv7180cp): ports:port@3:endpoint: Unevaluated properties are not allowed ('bus-width' was unexpected)
+    from schema $id: http://devicetree.org/schemas/media/i2c/adi,adv7180.yaml#
 
-Closes: https://syzkaller.appspot.com/bug?extid=c9b724fbb41cf2538b7b
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250929093616.17679-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/stackmap.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/renesas/r8a7793-gose.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
-index 5e9ad050333c2..2365541c81dd1 100644
---- a/kernel/bpf/stackmap.c
-+++ b/kernel/bpf/stackmap.c
-@@ -251,8 +251,8 @@ static long __bpf_get_stackid(struct bpf_map *map,
- {
- 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
- 	struct stack_map_bucket *bucket, *new_bucket, *old_bucket;
-+	u32 hash, id, trace_nr, trace_len, i, max_depth;
- 	u32 skip = flags & BPF_F_SKIP_FIELD_MASK;
--	u32 hash, id, trace_nr, trace_len, i;
- 	bool user = flags & BPF_F_USER_STACK;
- 	u64 *ips;
- 	bool hash_matches;
-@@ -261,7 +261,8 @@ static long __bpf_get_stackid(struct bpf_map *map,
- 		/* skipping more than usable stack trace */
- 		return -EFAULT;
- 
--	trace_nr = trace->nr - skip;
-+	max_depth = stack_map_calculate_max_depth(map->value_size, stack_map_data_size(map), flags);
-+	trace_nr = min_t(u32, trace->nr - skip, max_depth - skip);
- 	trace_len = trace_nr * sizeof(u64);
- 	ips = trace->ip + skip;
- 	hash = jhash2((u32 *)ips, trace_len / sizeof(u32), 0);
-@@ -390,15 +391,11 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 		return -EFAULT;
- 
- 	nr_kernel = count_kernel_ip(trace);
-+	__u64 nr = trace->nr; /* save original */
- 
- 	if (kernel) {
--		__u64 nr = trace->nr;
--
- 		trace->nr = nr_kernel;
- 		ret = __bpf_get_stackid(map, trace, flags);
--
--		/* restore nr */
--		trace->nr = nr;
- 	} else { /* user */
- 		u64 skip = flags & BPF_F_SKIP_FIELD_MASK;
- 
-@@ -409,6 +406,10 @@ BPF_CALL_3(bpf_get_stackid_pe, struct bpf_perf_event_data_kern *, ctx,
- 		flags = (flags & ~BPF_F_SKIP_FIELD_MASK) | skip;
- 		ret = __bpf_get_stackid(map, trace, flags);
- 	}
-+
-+	/* restore nr */
-+	trace->nr = nr;
-+
- 	return ret;
- }
- 
+diff --git a/arch/arm/boot/dts/renesas/r8a7793-gose.dts b/arch/arm/boot/dts/renesas/r8a7793-gose.dts
+index 45b267ec26794..5c6928c941aca 100644
+--- a/arch/arm/boot/dts/renesas/r8a7793-gose.dts
++++ b/arch/arm/boot/dts/renesas/r8a7793-gose.dts
+@@ -373,7 +373,6 @@ adv7180_in: endpoint {
+ 				port@3 {
+ 					reg = <3>;
+ 					adv7180_out: endpoint {
+-						bus-width = <8>;
+ 						remote-endpoint = <&vin1ep>;
+ 					};
+ 				};
 -- 
 2.51.0
 
