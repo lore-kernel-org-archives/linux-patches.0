@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E5B341AB8;
-	Tue, 16 Dec 2025 11:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA8E341AD8;
+	Tue, 16 Dec 2025 11:33:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884786; cv=none; b=RpbObwzOolfAyz92SqxrD93AaZpAsf7FDg8Kil2xnBliaOUedivx5tjUaq29lmBkLgY68jGJ+gFqpCesG0MLCmJUHSNg434NnS3nX4D9dDqfCY3uk3TUByOu3s0mZAuWL2KXyt5fQy4Vq1dE1I5d2fyifcoZjW4nV9byEy59Nn0=
+	t=1765884789; cv=none; b=gvmk5ntIAS3biC19lYONheCxY1+tgs9UO1G8gJLG+tyQzdn4gYAXv+WlmD2tPzqNR9vYhTAHxYGi51cjj4uWY3tFaBSOM5yN6bezpdPmZeiR0+olWdQjLufTTLBm+bYTq0IlibebAVpOtEEO8x4slmCkuiWH8xN8L5pZH2ffXek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884786; c=relaxed/simple;
-	bh=bY0wXpbjzTRYHVk9MRUi6GGskesI2nTZkVLwL5N/ibo=;
+	s=arc-20240116; t=1765884789; c=relaxed/simple;
+	bh=OvSdUnkO26ewMkmRjhftKdMlUEmzVobmDXn/t+VrXFo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJPy8enKNx2jT9yUtpiqJS8ERkty/A9EMFHuB5xE6HKoozQfHfo5KV791MyNa28Pk/WL6RZbhyJh6u6c8Tg5y2HHLuBK2694HS3Ig2a51SKwvLmSGNzHP9bo/H0UVI1goXIQHo4X3iU9ErDhzt71Hij4jN2KfZ/fijveEVKBDGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X66HTMw5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBkouPaclHK1bMBQlbn+zk8ugKNHXBimhu9P34FVZHMP7sj/gGe2lQHFzdx9XSJuto3urtRq2bbO2uuQvXVPU/CaikVJRuAe8YjZyrPMttXbBvH+oYI51BHp5+SftBmcWCVGEMT5iOS1NFbZaNhGYEg+QnnNZOqhnB0KZsk51A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lo2SbSs/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X66HTMw5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E93C4CEF1;
-	Tue, 16 Dec 2025 11:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lo2SbSs/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B198C4CEF1;
+	Tue, 16 Dec 2025 11:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884786;
-	bh=bY0wXpbjzTRYHVk9MRUi6GGskesI2nTZkVLwL5N/ibo=;
+	s=korg; t=1765884789;
+	bh=OvSdUnkO26ewMkmRjhftKdMlUEmzVobmDXn/t+VrXFo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X66HTMw5/+KHEJp7SFQTuu9IRs69cqVzjuo4klW13ke/6y15H8jkKLXs/KU8ArJ+U
-	 G94ygBEEil0s1Mjru7K1mdjblxZa33enn/bNlySSD/FmUHTHlFD69APEsimt+TX0mL
-	 NTech4V5CdipAsXqyHx+rto1rryRX/tx1CDDFTWQ=
+	b=Lo2SbSs/2vvjVEc+KnCEkTjqAbSqGU8MWCjxDMlBkfE+iIS1fnQIq6K/Ulnva5uXb
+	 mrqpONjXDfKrIoNfSIAtes2lZLtk1cJoXfeQgZZe+02igoTZVpCG4i05KAjOmwOi+E
+	 Jvfr1j5RbJyL29vu5v4TNOvT6weAzTcca338pvI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Daeho Jeong <daehojeong@google.com>,
 	Chao Yu <chao@kernel.org>,
-	wangzijie <wangzijie1@honor.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 298/354] f2fs: introduce reserved_pin_section sysfs entry
-Date: Tue, 16 Dec 2025 12:14:25 +0100
-Message-ID: <20251216111331.707828968@linuxfoundation.org>
+Subject: [PATCH 6.12 299/354] f2fs: add gc_boost_gc_multiple sysfs node
+Date: Tue, 16 Dec 2025 12:14:26 +0100
+Message-ID: <20251216111331.744676016@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,124 +52,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit 59c1c89e9ba8cefff05aa982dd9e6719f25e8ec5 ]
+[ Upstream commit 1d4c5dbba1a53aeaf2c6cc84e7ba94c436d18852 ]
 
-This patch introduces /sys/fs/f2fs/<dev>/reserved_pin_section for tuning
-@needed parameter of has_not_enough_free_secs(), if we configure it w/
-zero, it can avoid f2fs_gc() as much as possible while fallocating on
-pinned file.
+Add a sysfs knob to set a multiplier for the background GC migration
+window when F2FS Garbage Collection is boosted.
 
-Signed-off-by: Chao Yu <chao@kernel.org>
-Reviewed-by: wangzijie <wangzijie1@honor.com>
+Signed-off-by: Daeho Jeong <daehojeong@google.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Stable-dep-of: e462fc48ceb8 ("f2fs: maintain one time GC mode is enabled during whole zoned GC cycle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-f2fs | 9 +++++++++
- fs/f2fs/f2fs.h                          | 3 +++
- fs/f2fs/file.c                          | 5 ++---
- fs/f2fs/super.c                         | 4 ++++
+ Documentation/ABI/testing/sysfs-fs-f2fs | 7 +++++++
+ fs/f2fs/gc.c                            | 3 ++-
+ fs/f2fs/gc.h                            | 1 +
  fs/f2fs/sysfs.c                         | 9 +++++++++
- 5 files changed, 27 insertions(+), 3 deletions(-)
+ 4 files changed, 19 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/ABI/testing/sysfs-fs-f2fs b/Documentation/ABI/testing/sysfs-fs-f2fs
-index 87b32ca7f3a46..ade7da6352de6 100644
+index ade7da6352de6..e5ec2a7982eef 100644
 --- a/Documentation/ABI/testing/sysfs-fs-f2fs
 +++ b/Documentation/ABI/testing/sysfs-fs-f2fs
-@@ -858,3 +858,12 @@ Description:	This is a read-only entry to show the value of sb.s_encoding_flags,
- 		SB_ENC_STRICT_MODE_FL            0x00000001
- 		SB_ENC_NO_COMPAT_FALLBACK_FL     0x00000002
- 		============================     ==========
+@@ -867,3 +867,10 @@ Description:	This threshold is used to control triggering garbage collection whi
+ 		reserved section before preallocating on pinned file.
+ 		By default, the value is ovp_sections, especially, for zoned ufs, the
+ 		value is 1.
 +
-+What:		/sys/fs/f2fs/<disk>/reserved_pin_section
++What:		/sys/fs/f2fs/<disk>/gc_boost_gc_multiple
 +Date:		June 2025
-+Contact:	"Chao Yu" <chao@kernel.org>
-+Description:	This threshold is used to control triggering garbage collection while
-+		fallocating on pinned file, so, it can guarantee there is enough free
-+		reserved section before preallocating on pinned file.
-+		By default, the value is ovp_sections, especially, for zoned ufs, the
-+		value is 1.
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 08bab3de5c50d..695f74875b8f1 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1702,6 +1702,9 @@ struct f2fs_sb_info {
- 	/* for skip statistic */
- 	unsigned long long skipped_gc_rwsem;		/* FG_GC only */
++Contact:	"Daeho Jeong" <daehojeong@google.com>
++Description:	Set a multiplier for the background GC migration window when F2FS GC is
++		boosted. The range should be from 1 to the segment count in a section.
++		Default: 5
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index c0e43d6056a0a..2cc7e16f76659 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -197,6 +197,7 @@ int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
  
-+	/* free sections reserved for pinned file */
-+	unsigned int reserved_pin_section;
-+
- 	/* threshold for gc trials on pinned files */
- 	unsigned short gc_pin_file_threshold;
- 	struct f2fs_rwsem pin_sem;
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index be32f672497d6..67053bf6ca3ec 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -1850,9 +1850,8 @@ static int f2fs_expand_inode_data(struct inode *inode, loff_t offset,
- 			}
+ 	gc_th->urgent_sleep_time = DEF_GC_THREAD_URGENT_SLEEP_TIME;
+ 	gc_th->valid_thresh_ratio = DEF_GC_THREAD_VALID_THRESH_RATIO;
++	gc_th->boost_gc_multiple = BOOST_GC_MULTIPLE;
+ 
+ 	if (f2fs_sb_has_blkzoned(sbi)) {
+ 		gc_th->min_sleep_time = DEF_GC_THREAD_MIN_SLEEP_TIME_ZONED;
+@@ -1757,7 +1758,7 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 					!has_enough_free_blocks(sbi,
+ 					sbi->gc_thread->boost_zoned_gc_percent))
+ 				window_granularity *=
+-					BOOST_GC_MULTIPLE;
++					sbi->gc_thread->boost_gc_multiple;
+ 
+ 			end_segno = start_segno + window_granularity;
  		}
+diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
+index 5c1eaf55e1277..efa1968810a06 100644
+--- a/fs/f2fs/gc.h
++++ b/fs/f2fs/gc.h
+@@ -68,6 +68,7 @@ struct f2fs_gc_kthread {
+ 	unsigned int no_zoned_gc_percent;
+ 	unsigned int boost_zoned_gc_percent;
+ 	unsigned int valid_thresh_ratio;
++	unsigned int boost_gc_multiple;
+ };
  
--		if (has_not_enough_free_secs(sbi, 0, f2fs_sb_has_blkzoned(sbi) ?
--			ZONED_PIN_SEC_REQUIRED_COUNT :
--			GET_SEC_FROM_SEG(sbi, overprovision_segments(sbi)))) {
-+		if (has_not_enough_free_secs(sbi, 0,
-+				sbi->reserved_pin_section)) {
- 			f2fs_down_write(&sbi->gc_lock);
- 			stat_inc_gc_call_count(sbi, FOREGROUND);
- 			err = f2fs_gc(sbi, &gc_control);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index ee8352246ce47..ae72639544040 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4705,6 +4705,10 @@ static int f2fs_fill_super(struct super_block *sb, void *data, int silent)
- 	/* get segno of first zoned block device */
- 	sbi->first_seq_zone_segno = get_first_seq_zone_segno(sbi);
- 
-+	sbi->reserved_pin_section = f2fs_sb_has_blkzoned(sbi) ?
-+			ZONED_PIN_SEC_REQUIRED_COUNT :
-+			GET_SEC_FROM_SEG(sbi, overprovision_segments(sbi));
-+
- 	/* Read accumulated write IO statistics if exists */
- 	seg_i = CURSEG_I(sbi, CURSEG_HOT_NODE);
- 	if (__exist_node_summaries(sbi))
+ struct gc_inode_list {
 diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index 309b73421dd92..624ce79f08fd2 100644
+index 624ce79f08fd2..dce3ef405832e 100644
 --- a/fs/f2fs/sysfs.c
 +++ b/fs/f2fs/sysfs.c
-@@ -847,6 +847,13 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+@@ -854,6 +854,13 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
  		return count;
  	}
  
-+	if (!strcmp(a->attr.name, "reserved_pin_section")) {
-+		if (t > GET_SEC_FROM_SEG(sbi, overprovision_segments(sbi)))
++	if (!strcmp(a->attr.name, "gc_boost_gc_multiple")) {
++		if (t < 1 || t > SEGS_PER_SEC(sbi))
 +			return -EINVAL;
-+		*ui = (unsigned int)t;
++		sbi->gc_thread->boost_gc_multiple = (unsigned int)t;
 +		return count;
 +	}
 +
  	*ui = (unsigned int)t;
  
  	return count;
-@@ -1153,6 +1160,7 @@ F2FS_SBI_GENERAL_RO_ATTR(unusable_blocks_per_sec);
- F2FS_SBI_GENERAL_RW_ATTR(blkzone_alloc_policy);
- #endif
- F2FS_SBI_GENERAL_RW_ATTR(carve_out);
-+F2FS_SBI_GENERAL_RW_ATTR(reserved_pin_section);
+@@ -1080,6 +1087,7 @@ GC_THREAD_RW_ATTR(gc_no_gc_sleep_time, no_gc_sleep_time);
+ GC_THREAD_RW_ATTR(gc_no_zoned_gc_percent, no_zoned_gc_percent);
+ GC_THREAD_RW_ATTR(gc_boost_zoned_gc_percent, boost_zoned_gc_percent);
+ GC_THREAD_RW_ATTR(gc_valid_thresh_ratio, valid_thresh_ratio);
++GC_THREAD_RW_ATTR(gc_boost_gc_multiple, boost_gc_multiple);
  
- /* STAT_INFO ATTR */
- #ifdef CONFIG_F2FS_STAT_FS
-@@ -1343,6 +1351,7 @@ static struct attribute *f2fs_attrs[] = {
- 	ATTR_LIST(last_age_weight),
- 	ATTR_LIST(max_read_extent_count),
- 	ATTR_LIST(carve_out),
-+	ATTR_LIST(reserved_pin_section),
- 	NULL,
- };
- ATTRIBUTE_GROUPS(f2fs);
+ /* SM_INFO ATTR */
+ SM_INFO_RW_ATTR(reclaim_segments, rec_prefree_segments);
+@@ -1248,6 +1256,7 @@ static struct attribute *f2fs_attrs[] = {
+ 	ATTR_LIST(gc_no_zoned_gc_percent),
+ 	ATTR_LIST(gc_boost_zoned_gc_percent),
+ 	ATTR_LIST(gc_valid_thresh_ratio),
++	ATTR_LIST(gc_boost_gc_multiple),
+ 	ATTR_LIST(gc_idle),
+ 	ATTR_LIST(gc_urgent),
+ 	ATTR_LIST(reclaim_segments),
 -- 
 2.51.0
 
