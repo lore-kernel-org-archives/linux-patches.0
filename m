@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C715234B197;
-	Tue, 16 Dec 2025 11:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9F434B1B4;
+	Tue, 16 Dec 2025 11:40:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885235; cv=none; b=BSXFZ1BHIg34VN5kQkSULLPlkLAF5qmB3Cg0VPBDhjKlAIq60CFGMn4hFWHt0gwm/WpOpt0YdNjpeFDzqjY3+DoW4K4I9BWxXJGEOzguO5bWQYgUuNU5EEfHJcm4HNTij1Z1jv9MbiAJXVGDZ3Jd6EsYRuArLEEhocRU/hbO7/U=
+	t=1765885239; cv=none; b=XgCOmffySqhvvv1GH7YhYJb+KyOPIGB+WVZDwtf9mUdciLHeJv4/1q8VD8EWaRc4/nN4dqAceWPmq1ikSIhCIlumNJ9Q5ctXlmmWGtEAaEoUBj/qD1u0b5fYkjiSa8yVUQdKm2e1etO1XV1su8EEo4Rx/zLnySswYTou3QR6D4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885235; c=relaxed/simple;
-	bh=W+y4C1srKr9Cq/KjFjV3P0FGiUiRkXCYhYazVkek7/0=;
+	s=arc-20240116; t=1765885239; c=relaxed/simple;
+	bh=/ZYo1U1Yb1GuDgIc0Dz8iOoyM5BvkxIdQcPI8CuSUmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rjgU6Iqc5vYoZp3e1Ubjy8clO/TU8XHuiJKbsdq/LJ3snMbVYz6bWnJ5jrDzUG/+uPrN0O+p2dojviAQOtusMgfvS0fHohRtXSFUD4uPypemMd9M94JNWNTmZC1Aoy4Y6haO4XXVVbrglBQI7X3FxvfrAgwzedwmRdgG6sMUMvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8g4vicW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sOvAEQyDy5rglQsxhcWuY8kXn8soHTa7Y1Hm9qXisTq1PDSesgMx8TcW7HaAo702FPy/ETxe2edcSCiL03N//chOi1QPLn3SMwshphVuRxLvGijODyv+65LxBXA0rQ1xkj2HPJawbTPKdf9aryLG9KVQWFLgLp/wxuFZiCq7cFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHH6s+Am; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8g4vicW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2991FC16AAE;
-	Tue, 16 Dec 2025 11:40:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHH6s+Am"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A071FC4CEF5;
+	Tue, 16 Dec 2025 11:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885235;
-	bh=W+y4C1srKr9Cq/KjFjV3P0FGiUiRkXCYhYazVkek7/0=;
+	s=korg; t=1765885239;
+	bh=/ZYo1U1Yb1GuDgIc0Dz8iOoyM5BvkxIdQcPI8CuSUmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8g4vicWE7sD7XoRPihlsld3U/aNPO27wflAJgvNC0rSQysgX758EL7HtpgO+Bdkh
-	 Q96yXGvfRbkDUF2ofba+hOWHcCT6Qs7YoSlBvnaO18O6RdL9bREVFSQtCrvZMaQVyh
-	 SzMUojkymHwg+T+Mj8Q47pY6U1bfxs51U0GHn0pc=
+	b=EHH6s+AmCJxkS44tcIy85eC0z0s8z65bDWW9AR3YehQqUVoii9YML8V6/yLXrPdpc
+	 588MpnXHPTREANeM2iLs7Lz/Rp99yYdMvOyJn88BVQcChP2QLi6K5FeF02GyU7v7HZ
+	 XldiioPyz9t+Z2dasIDhpGxrmf8kcJwi7EGuKlGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lukas Wunner <lukas@wunner.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 079/507] crypto: asymmetric_keys - prevent overflow in asymmetric_key_generate_id
-Date: Tue, 16 Dec 2025 12:08:40 +0100
-Message-ID: <20251216111348.404321946@linuxfoundation.org>
+Subject: [PATCH 6.17 062/507] arm64: dts: imx8mp-venice-gw702x: remove off-board uart
+Date: Tue, 16 Dec 2025 12:08:23 +0100
+Message-ID: <20251216111347.789813288@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,60 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit df0845cf447ae1556c3440b8b155de0926cbaa56 ]
+[ Upstream commit effe98060f70eb96e142f656e750d6af275ceac3 ]
 
-Use check_add_overflow() to guard against potential integer overflows
-when adding the binary blob lengths and the size of an asymmetric_key_id
-structure and return ERR_PTR(-EOVERFLOW) accordingly. This prevents a
-possible buffer overflow when copying data from potentially malicious
-X.509 certificate fields that can be arbitrarily large, such as ASN.1
-INTEGER serial numbers, issuer names, etc.
+UART1 and UART3 go to a connector for use on a baseboard and as such are
+defined in the baseboard device-trees. Remove them from the gw702x SOM
+device-tree.
 
-Fixes: 7901c1a8effb ("KEYS: Implement binary asymmetric key ID handling")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 0d5b288c2110 ("arm64: dts: freescale: Add imx8mp-venice-gw7905-2x")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/asymmetric_type.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ .../dts/freescale/imx8mp-venice-gw702x.dtsi   | 28 -------------------
+ 1 file changed, 28 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/asymmetric_type.c b/crypto/asymmetric_keys/asymmetric_type.c
-index ba2d9d1ea235a..348966ea2175c 100644
---- a/crypto/asymmetric_keys/asymmetric_type.c
-+++ b/crypto/asymmetric_keys/asymmetric_type.c
-@@ -11,6 +11,7 @@
- #include <crypto/public_key.h>
- #include <linux/seq_file.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/ctype.h>
- #include <keys/system_keyring.h>
-@@ -141,12 +142,17 @@ struct asymmetric_key_id *asymmetric_key_generate_id(const void *val_1,
- 						     size_t len_2)
- {
- 	struct asymmetric_key_id *kid;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+index 303995a8adce8..086ee4510cd83 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+@@ -395,13 +395,6 @@ &i2c3 {
+ 	status = "okay";
+ };
+ 
+-/* off-board header */
+-&uart1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart1>;
+-	status = "okay";
+-};
 -
--	kid = kmalloc(sizeof(struct asymmetric_key_id) + len_1 + len_2,
--		      GFP_KERNEL);
-+	size_t kid_sz;
-+	size_t len;
-+
-+	if (check_add_overflow(len_1, len_2, &len))
-+		return ERR_PTR(-EOVERFLOW);
-+	if (check_add_overflow(sizeof(struct asymmetric_key_id), len, &kid_sz))
-+		return ERR_PTR(-EOVERFLOW);
-+	kid = kmalloc(kid_sz, GFP_KERNEL);
- 	if (!kid)
- 		return ERR_PTR(-ENOMEM);
--	kid->len = len_1 + len_2;
-+	kid->len = len;
- 	memcpy(kid->data, val_1, len_1);
- 	memcpy(kid->data + len_1, val_2, len_2);
- 	return kid;
+ /* console */
+ &uart2 {
+ 	pinctrl-names = "default";
+@@ -409,13 +402,6 @@ &uart2 {
+ 	status = "okay";
+ };
+ 
+-/* off-board header */
+-&uart3 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_uart3>;
+-	status = "okay";
+-};
+-
+ /* off-board */
+ &usdhc1 {
+ 	pinctrl-names = "default";
+@@ -520,13 +506,6 @@ MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19	0x400001c2
+ 		>;
+ 	};
+ 
+-	pinctrl_uart1: uart1grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_UART1_RXD__UART1_DCE_RX	0x140
+-			MX8MP_IOMUXC_UART1_TXD__UART1_DCE_TX	0x140
+-		>;
+-	};
+-
+ 	pinctrl_uart2: uart2grp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_UART2_RXD__UART2_DCE_RX	0x140
+@@ -534,13 +513,6 @@ MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX	0x140
+ 		>;
+ 	};
+ 
+-	pinctrl_uart3: uart3grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_UART3_RXD__UART3_DCE_RX	0x140
+-			MX8MP_IOMUXC_UART3_TXD__UART3_DCE_TX	0x140
+-		>;
+-	};
+-
+ 	pinctrl_usdhc1: usdhc1grp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_SD1_CLK__USDHC1_CLK	0x190
 -- 
 2.51.0
 
