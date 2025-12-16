@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F7C376BD7;
-	Tue, 16 Dec 2025 12:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D80376BE8;
+	Tue, 16 Dec 2025 12:27:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888072; cv=none; b=utY0VxUM/oEnTxn7go0Y+OLzVi8Qcc7FId+JaHtrM0YCWlMQLxPgbK2FwHWKnEA96swxK98E/8jSKnuMNOUqwuwecBZ1Jh+aZlZDz6QrnR08XCZl7De9FaSv7AHugze0+8x3JqKnoaS+Y8I4BNLlTnb/Ae/ZHfDHl8q0xGwy5PM=
+	t=1765888075; cv=none; b=nXFbMZhZPzN0VMQYNft6KzYfbydn9kjF5rd3qQn6BnXEJejymGJZ1ekGUcql2BGIrXi7WQ5pAdG7YMq6XxUpEkRL6dA31qLTSit0q56l4ZvIX4SsGAuGe62lzcJhXarBRyY7numB+v5vt4ZM9WppbhFoj0dy0WWasJBr2S2ncDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888072; c=relaxed/simple;
-	bh=fj3Ub7TqAL2NBqURLQnsYtlGdW+2/uwxUihztGEHd+E=;
+	s=arc-20240116; t=1765888075; c=relaxed/simple;
+	bh=Xsx6Yss8PvMqK98fqPn8svVK0afpa2trf9fzLtq/U+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E9kdN93aZMAkbTUOJsfZo8x2CWMjK/tgZVMMKQ7ArTT9qY6TC/IEYkHCbL2LX61dv4KiteJ6DRAP9UX0QCfvm+1k2oPL1cldGmmgL7+H2GaPRW2pBZXp/0PD+B5WOtPy55the5bdF0x+Q5/R3j53VPNqkXFFTcKkP0n0qHXDv4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QSDQ4l+n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2wzE9vi0Cg/y0X3HPTnvu5hqmBTZVXvyvSaEL7WeZ3Kfvrbm6tOf+YqrqVxU4Ls7enEHllgHjhUau0Cta2hUKwL7MIauKSuguajIEJES3temOoYx9m43iQ2YtpphVB+Kxh94eLdxECZGvSNhGNQFcHcycfoZ37liUyXtMHmWAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PwwzKlc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QSDQ4l+n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A859FC4CEF1;
-	Tue, 16 Dec 2025 12:27:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PwwzKlc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EB1FC4CEF1;
+	Tue, 16 Dec 2025 12:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888072;
-	bh=fj3Ub7TqAL2NBqURLQnsYtlGdW+2/uwxUihztGEHd+E=;
+	s=korg; t=1765888075;
+	bh=Xsx6Yss8PvMqK98fqPn8svVK0afpa2trf9fzLtq/U+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSDQ4l+nka5PfI9+HqgaYI4TEETYnu1EmL5MtmRj4XUUpV0469q9hQQ3U5c7jbhcL
-	 Q9PusXcmse9u1Bbe7ke6f6bZlZVH7nbSPY8InzP4jjMtSIZmLEfwuEM8dC6h85BvPC
-	 HKNb/jOpQJQC/H+BvkxM0yjbQ+DQ7Qqs0LZ7A11k=
+	b=PwwzKlc7Hki5RivUvyhV2hCpWEYsEL7j/tw1pWsIlhoKTZ5QyL1gItas3ky7IEbXd
+	 7fjU/s3uy5cB65QuKDZwNEiTXHjh7itnPXC/lXC5YqTVZb2ouXAkhwfoC4+psoujuQ
+	 FUi1NG3BL44fYNGbNjHgGIu7d96Lrc5L0JGv1npw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baojun Xu <baojun.xu@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ria Thomas <ria.thomas@morsemicro.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 381/614] ASoC: tas2781: Correct the wrong chip ID for reset variable check
-Date: Tue, 16 Dec 2025 12:12:28 +0100
-Message-ID: <20251216111415.165798074@linuxfoundation.org>
+Subject: [PATCH 6.18 417/614] wifi: ieee80211: correct FILS status codes
+Date: Tue, 16 Dec 2025 12:13:04 +0100
+Message-ID: <20251216111416.480068302@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,36 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baojun Xu <baojun.xu@ti.com>
+From: Ria Thomas <ria.thomas@morsemicro.com>
 
-[ Upstream commit 34b78ddd78428e66a7f08f71763258723eae2306 ]
+[ Upstream commit 24d4da5c2565313c2ad3c43449937a9351a64407 ]
 
-The new variable of reset was added for TAS58XX on TAS5825 first.
-And TAS5802/5815... was added later, so this reset variable check
-should be changed to lowest chip of TAS58XX.
+The FILS status codes are set to 108/109, but the IEEE 802.11-2020
+spec defines them as 112/113. Update the enum so it matches the
+specification and keeps the kernel consistent with standard values.
 
-Fixes: 53a3c6e22283 ("ASoC: tas2781: Support more newly-released amplifiers tas58xx in the driver")
-Signed-off-by: Baojun Xu <baojun.xu@ti.com>
-Link: https://patch.msgid.link/20251124031542.2793-1-baojun.xu@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a3caf7440ded ("cfg80211: Add support for FILS shared key authentication offload")
+Signed-off-by: Ria Thomas <ria.thomas@morsemicro.com>
+Reviewed-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251124125637.3936154-1-ria.thomas@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/tas2781-comlib-i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ieee80211.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/tas2781-comlib-i2c.c b/sound/soc/codecs/tas2781-comlib-i2c.c
-index b3fd7350143bd..e24d56a14cfda 100644
---- a/sound/soc/codecs/tas2781-comlib-i2c.c
-+++ b/sound/soc/codecs/tas2781-comlib-i2c.c
-@@ -320,7 +320,7 @@ void tasdevice_reset(struct tasdevice_priv *tas_dev)
- 		for (i = 0; i < tas_dev->ndev; i++) {
- 			ret = tasdevice_dev_write(tas_dev, i,
- 				TASDEVICE_REG_SWRESET,
--				tas_dev->chip_id >= TAS5825 ?
-+				tas_dev->chip_id >= TAS5802 ?
- 				TAS5825_REG_SWRESET_RESET :
- 				TASDEVICE_REG_SWRESET_RESET);
- 			if (ret < 0)
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index ddff9102f6332..1f4679092e69d 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -3594,8 +3594,8 @@ enum ieee80211_statuscode {
+ 	WLAN_STATUS_DENIED_WITH_SUGGESTED_BAND_AND_CHANNEL = 99,
+ 	WLAN_STATUS_DENIED_DUE_TO_SPECTRUM_MANAGEMENT = 103,
+ 	/* 802.11ai */
+-	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 108,
+-	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 109,
++	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 112,
++	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 113,
+ 	WLAN_STATUS_SAE_HASH_TO_ELEMENT = 126,
+ 	WLAN_STATUS_SAE_PK = 127,
+ 	WLAN_STATUS_DENIED_TID_TO_LINK_MAPPING = 133,
 -- 
 2.51.0
 
