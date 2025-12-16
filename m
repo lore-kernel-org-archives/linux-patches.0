@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F0434F491;
-	Tue, 16 Dec 2025 11:55:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D7434F476;
+	Tue, 16 Dec 2025 11:55:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886146; cv=none; b=YWqODIj5U8nvnL4pdPYjUHPR3oahZoqhDuBnZ5DuAB5ljzcgUHSmdvlbBiGcTWLdQFHhXf6wrC0znaUfeFRo1/ovxmzZySFOSO/SmYXaTpFB7l22C20o0qfSeooqTNvJ8grAcn9k6/XfPWeDYzMz2PGiBapMXHt0dfk+adxqmqQ=
+	t=1765886149; cv=none; b=Wcp7wGEJOhSF9dxkKPqt7W4yJFXIXvTRTSETCnm4GZAo+qZa0QNY7zwkghCdMMcHmkJ+1m04sJdFFt/Xlmg5djWBgAlnn+K0GSRVYZcarZKuoeopUViHi6BWGq/XGcfknEP2PKvrBe5pRL/UdI+mtX1MfCI9jzPtkPwbsAYeinA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886146; c=relaxed/simple;
-	bh=8cTtQkS/hOW7dGCEn6ZAM7cyuzqdb+kspKs4RnXGImo=;
+	s=arc-20240116; t=1765886149; c=relaxed/simple;
+	bh=l7bXfy8y5r9+e1R6ULGO2HZa6zuZZsXa9S6OP4RUCzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9hMqGUQTd3sAzMRnLS0KCglZn5IEHMEWwJcce2GQkUFrHjcSd5dk60kbNWqmQSm/kwW/K27xvGKuveZTtdviz5sIo5COEyci2uDEsRGyEo9FTNDXFrNFiktjVSU/3zC1nZ1M97oOdoUtBcrjhNEY/W1lloebKa6nOErZkdWUeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3+3w2QF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GwiESrldHLE/GZYMyMUkvB3/w0m5Fqtv6XW1Yvs0tPGHMMYOfZifP5Ot0kg1IS6lpijhP9aem2rQsRwy9wKasfrMfuSEqUzwfeEVioaDfPqMiIQoVTKNSfywkFKRnUc7V+FLkWRJHQ0Hlnk+HA7Yq/9708EbAKZPj5x6m/Otc7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=11DWY20y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3+3w2QF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B13F6C4CEF1;
-	Tue, 16 Dec 2025 11:55:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="11DWY20y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E002AC4CEF1;
+	Tue, 16 Dec 2025 11:55:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886146;
-	bh=8cTtQkS/hOW7dGCEn6ZAM7cyuzqdb+kspKs4RnXGImo=;
+	s=korg; t=1765886149;
+	bh=l7bXfy8y5r9+e1R6ULGO2HZa6zuZZsXa9S6OP4RUCzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3+3w2QFZGrtczdaXXcjDVGuIutRX6ZtHdT4hpnRlshxvWR+dpjUmPAXsu2DwvMmA
-	 7AotMizTeegDOCZAdiGjhnjPtje/GwCZ8AMeol779ynVatREvTKgtwZjpkENYErx8Z
-	 e4nKqbiIA1esoSjKzebHr7lVlmvW48O9pX4t4DIo=
+	b=11DWY20yksS6XaSjNzb+b/BhotHW2Oq6s8saoIj8GHQsyRqMdywHgKQbB3ZvPN9gs
+	 vFCtaBDpIg9zBWqc0R11mC0tHNZryvQ6svP8Goa9hT9GcOdQjwuG41tuLpW2k8n4Tb
+	 1FQvYj3M7lxglV0T2j6zl8ibVVmKs6jK7MUkOl3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	T Pratham <t-pratham@ti.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 319/507] crypto: ahash - Fix crypto_ahash_import with partial block data
-Date: Tue, 16 Dec 2025 12:12:40 +0100
-Message-ID: <20251216111357.025468584@linuxfoundation.org>
+Subject: [PATCH 6.17 320/507] crypto: ahash - Zero positive err value in ahash_update_finish
+Date: Tue, 16 Dec 2025 12:12:41 +0100
+Message-ID: <20251216111357.061242912@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,13 +53,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit b0356b75f42fde15d4be268c5891f2cee6eb65bf ]
+[ Upstream commit ebbdf6466b30e3b37f3b360826efd21f0633fb9e ]
 
-Restore the partial block buffer in crypto_ahash_import by copying
-it.  Check whether the partial block buffer exceeds the maximum
-size and return -EOVERFLOW if it does.
+The partial block length returned by a block-only driver should
+not be passed up to the caller since ahash itself deals with the
+partial block data.
 
-Zero the partial block buffer in crypto_ahash_import_core.
+Set err to zero in ahash_update_finish if it was positive.
 
 Reported-by: T Pratham <t-pratham@ti.com>
 Tested-by: T Pratham <t-pratham@ti.com>
@@ -67,42 +67,26 @@ Fixes: 9d7a0ab1c753 ("crypto: ahash - Handle partial blocks in API")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ahash.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ crypto/ahash.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/crypto/ahash.c b/crypto/ahash.c
-index a227793d2c5b5..5248aab939ca7 100644
+index 5248aab939ca7..09a02ed4c4a09 100644
 --- a/crypto/ahash.c
 +++ b/crypto/ahash.c
-@@ -661,6 +661,12 @@ int crypto_ahash_import_core(struct ahash_request *req, const void *in)
- 						in);
- 	if (crypto_ahash_get_flags(tfm) & CRYPTO_TFM_NEED_KEY)
- 		return -ENOKEY;
-+	if (crypto_ahash_block_only(tfm)) {
-+		unsigned int reqsize = crypto_ahash_reqsize(tfm);
-+		u8 *buf = ahash_request_ctx(req);
-+
-+		buf[reqsize - 1] = 0;
-+	}
- 	return crypto_ahash_alg(tfm)->import_core(req, in);
- }
- EXPORT_SYMBOL_GPL(crypto_ahash_import_core);
-@@ -674,10 +680,14 @@ int crypto_ahash_import(struct ahash_request *req, const void *in)
- 	if (crypto_ahash_get_flags(tfm) & CRYPTO_TFM_NEED_KEY)
- 		return -ENOKEY;
- 	if (crypto_ahash_block_only(tfm)) {
-+		unsigned int plen = crypto_ahash_blocksize(tfm) + 1;
- 		unsigned int reqsize = crypto_ahash_reqsize(tfm);
-+		unsigned int ss = crypto_ahash_statesize(tfm);
- 		u8 *buf = ahash_request_ctx(req);
+@@ -423,7 +423,11 @@ static int ahash_update_finish(struct ahash_request *req, int err)
  
--		buf[reqsize - 1] = 0;
-+		memcpy(buf + reqsize - plen, in + ss - plen, plen);
-+		if (buf[reqsize - 1] >= plen)
-+			return -EOVERFLOW;
- 	}
- 	return crypto_ahash_alg(tfm)->import(req, in);
- }
+ 	req->nbytes += nonzero - blen;
+ 
+-	blen = err < 0 ? 0 : err + nonzero;
++	blen = 0;
++	if (err >= 0) {
++		blen = err + nonzero;
++		err = 0;
++	}
+ 	if (ahash_request_isvirt(req))
+ 		memcpy(buf, req->svirt + req->nbytes - blen, blen);
+ 	else
 -- 
 2.51.0
 
