@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC83C34D3BA;
-	Tue, 16 Dec 2025 11:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2FA34D3BB;
+	Tue, 16 Dec 2025 11:42:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885329; cv=none; b=GNcki+dQ9TjGBPsCVv7wH4/rRAQsjfx4Pz08VhKxyuIlqEh3yvUoWxXpRW/kxLzUBhkFnOaslB9DDwUqEfGQ5uqzBUFvhETas1KDblndABpYbD0RM1F4Oe9qgkLY9lvZ4VdVkv0/w5ZOIAGhCa1HFgakzfn1MpDsNYD4pmHY7w8=
+	t=1765885332; cv=none; b=m9Gx8SnReR9IF3DaMCWpxgHxfApbbdRnL2I7PFRQQxYRQPW70BTKmTJUAW4WKJw1/Yp5lefxMzdBW0QNkqTGc19ApjciNEHjnBTkReTDrCOl0v6/cNM4bSF2jXP4zhpj1MokJAd5eMduUUcl2dqc9pNEj9gwgjw1nb91SdOzbyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885329; c=relaxed/simple;
-	bh=x0CfzFRzLWrRoXJOJpp5bFvR5SZNFhe7VFYn/Au5PMM=;
+	s=arc-20240116; t=1765885332; c=relaxed/simple;
+	bh=6OuTUaDVuq6lvOvaMnDftPuEvaAzdZP0bDW2E0lVaug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZEyRURrzaC1f6mbuj7RCBUsrFoiZ/oqgJvLHHyghIIGxLiXRSDb/OK401kXxoxtj+x8H8TIzsv/+jBrYrZ1nPntnqIvungU7h7VxDtwBxXa6cgiaArzgYX8AdKIDsUQUx9DYTpuNHct4lVphGlaqldiRDRAe5h5F9x4+5KqaoE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYZnc5RR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vtdf0cGHivTkPv9Lo2CDhNb77/5sD0wrqdrmR9BXW/ZkoPUqFPgF5uUX4ZaaNTZyVHAm30eYXEwHc+ijtxusBK87Jv9GEuY9/5KImacj7vXJR46GJu1saweM3tJeuNgIFuiI8W4A6wCqVm7ab/5pDxIc6leE0uyDajieGIecQOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuslF8iW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYZnc5RR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075DCC4CEF1;
-	Tue, 16 Dec 2025 11:42:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuslF8iW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EC45C4CEF5;
+	Tue, 16 Dec 2025 11:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885328;
-	bh=x0CfzFRzLWrRoXJOJpp5bFvR5SZNFhe7VFYn/Au5PMM=;
+	s=korg; t=1765885331;
+	bh=6OuTUaDVuq6lvOvaMnDftPuEvaAzdZP0bDW2E0lVaug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYZnc5RRTb38N1V3S6/g6k9F/Frs9cJmlY7sxH4fHq7ixLh2ljH1b5KXFD9HfTvmS
-	 20NXlL0PTh94VwvDhmlDlKcK3yboNZi7tis5mMKpOHJjg10p8CYEwTh/3vKFoLciSH
-	 UEFPfUaenQcCXUD7cUnBEfQ/3ZRBWx2rXQNGhEbk=
+	b=SuslF8iWnqd/JZn2Nt4UgX2cWeM8XKwiQmXhIrd+jPQ33hEXCPgbMPsI8eXGBr54H
+	 DnELE5395MjOwxOo9lL7iakmKmxBW1ZpoBAr0sycu4EpWcm1eLrp8vaIWij/ePiZ27
+	 808DTRZdOhPJbaLwta2q6PcIG5cJ3tsKPmsc7HMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Yi <asatsuyu.liu@gmail.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 107/507] RDMA/rxe: Fix null deref on srq->rq.queue after resize failure
-Date: Tue, 16 Dec 2025 12:09:08 +0100
-Message-ID: <20251216111349.413125947@linuxfoundation.org>
+Subject: [PATCH 6.17 108/507] ARM: dts: renesas: gose: Remove superfluous port property
+Date: Tue, 16 Dec 2025 12:09:09 +0100
+Message-ID: <20251216111349.449484759@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,92 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhu Yanjun <yanjun.zhu@linux.dev>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 503a5e4690ae14c18570141bc0dcf7501a8419b0 ]
+[ Upstream commit 00df14f34615630f92f97c9d6790bd9d25c4242d ]
 
-A NULL pointer dereference can occur in rxe_srq_chk_attr() when
-ibv_modify_srq() is invoked twice in succession under certain error
-conditions. The first call may fail in rxe_queue_resize(), which leads
-rxe_srq_from_attr() to set srq->rq.queue = NULL. The second call then
-triggers a crash (null deref) when accessing
-srq->rq.queue->buf->index_mask.
+'bus-width' is defined for the corresponding vin input port already.
+No need to declare it in the output port again. Fixes:
 
-Call Trace:
-<TASK>
-rxe_modify_srq+0x170/0x480 [rdma_rxe]
-? __pfx_rxe_modify_srq+0x10/0x10 [rdma_rxe]
-? uverbs_try_lock_object+0x4f/0xa0 [ib_uverbs]
-? rdma_lookup_get_uobject+0x1f0/0x380 [ib_uverbs]
-ib_uverbs_modify_srq+0x204/0x290 [ib_uverbs]
-? __pfx_ib_uverbs_modify_srq+0x10/0x10 [ib_uverbs]
-? tryinc_node_nr_active+0xe6/0x150
-? uverbs_fill_udata+0xed/0x4f0 [ib_uverbs]
-ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x2c0/0x470 [ib_uverbs]
-? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
-? uverbs_fill_udata+0xed/0x4f0 [ib_uverbs]
-ib_uverbs_run_method+0x55a/0x6e0 [ib_uverbs]
-? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
-ib_uverbs_cmd_verbs+0x54d/0x800 [ib_uverbs]
-? __pfx_ib_uverbs_cmd_verbs+0x10/0x10 [ib_uverbs]
-? __pfx___raw_spin_lock_irqsave+0x10/0x10
-? __pfx_do_vfs_ioctl+0x10/0x10
-? ioctl_has_perm.constprop.0.isra.0+0x2c7/0x4c0
-? __pfx_ioctl_has_perm.constprop.0.isra.0+0x10/0x10
-ib_uverbs_ioctl+0x13e/0x220 [ib_uverbs]
-? __pfx_ib_uverbs_ioctl+0x10/0x10 [ib_uverbs]
-__x64_sys_ioctl+0x138/0x1c0
-do_syscall_64+0x82/0x250
-? fdget_pos+0x58/0x4c0
-? ksys_write+0xf3/0x1c0
-? __pfx_ksys_write+0x10/0x10
-? do_syscall_64+0xc8/0x250
-? __pfx_vm_mmap_pgoff+0x10/0x10
-? fget+0x173/0x230
-? fput+0x2a/0x80
-? ksys_mmap_pgoff+0x224/0x4c0
-? do_syscall_64+0xc8/0x250
-? do_user_addr_fault+0x37b/0xfe0
-? clear_bhb_loop+0x50/0xa0
-? clear_bhb_loop+0x50/0xa0
-? clear_bhb_loop+0x50/0xa0
-entry_SYSCALL_64_after_hwframe+0x76/0x7e
+    arch/arm/boot/dts/renesas/r8a7793-gose.dtb: composite-in@20 (adi,adv7180cp): ports:port@3:endpoint: Unevaluated properties are not allowed ('bus-width' was unexpected)
+    from schema $id: http://devicetree.org/schemas/media/i2c/adi,adv7180.yaml#
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Tested-by: Liu Yi <asatsuyu.liu@gmail.com>
-Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Link: https://patch.msgid.link/20251027215203.1321-1-yanjun.zhu@linux.dev
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250929093616.17679-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_srq.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ arch/arm/boot/dts/renesas/r8a7793-gose.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
-index 3661cb627d28a..2a234f26ac104 100644
---- a/drivers/infiniband/sw/rxe/rxe_srq.c
-+++ b/drivers/infiniband/sw/rxe/rxe_srq.c
-@@ -171,7 +171,7 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
- 				       udata, mi, &srq->rq.producer_lock,
- 				       &srq->rq.consumer_lock);
- 		if (err)
--			goto err_free;
-+			return err;
- 
- 		srq->rq.max_wr = attr->max_wr;
- 	}
-@@ -180,11 +180,6 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
- 		srq->limit = attr->srq_limit;
- 
- 	return 0;
--
--err_free:
--	rxe_queue_cleanup(q);
--	srq->rq.queue = NULL;
--	return err;
- }
- 
- void rxe_srq_cleanup(struct rxe_pool_elem *elem)
+diff --git a/arch/arm/boot/dts/renesas/r8a7793-gose.dts b/arch/arm/boot/dts/renesas/r8a7793-gose.dts
+index 45b267ec26794..5c6928c941aca 100644
+--- a/arch/arm/boot/dts/renesas/r8a7793-gose.dts
++++ b/arch/arm/boot/dts/renesas/r8a7793-gose.dts
+@@ -373,7 +373,6 @@ adv7180_in: endpoint {
+ 				port@3 {
+ 					reg = <3>;
+ 					adv7180_out: endpoint {
+-						bus-width = <8>;
+ 						remote-endpoint = <&vin1ep>;
+ 					};
+ 				};
 -- 
 2.51.0
 
