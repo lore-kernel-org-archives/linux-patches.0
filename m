@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5532C34B69B;
-	Tue, 16 Dec 2025 11:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE2634BA34;
+	Tue, 16 Dec 2025 11:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885272; cv=none; b=gIsptLQoP5BGIP5+/gQwBz0BO2UHrRpviW3kw1yTYLXHUn94xbcNc8BJ9nX31mpD+T8l7cfzT88UgUP2P+0FpnNNP3PjfRNIcMsJxlzlWeb25YOLNejMTtcykyJ/tpFEydSdogyb8/RTr2VLsSKs8pCJPP3ot+dSzld1qC7sS9I=
+	t=1765885276; cv=none; b=q3KjShsmTZNhKVC7+guDr4N9nFZCxg/GYiIXKaNow6xFxEsDePndA00BBJoSbNBdUb5M8pbnYIY3aL00Jtn7kwxcPatKtF+Mj3apOszq9ma13RhnRIBI+YCxecspg3GA1uamawaLxaXpRwSeDegOFJ67VAsZy3lkJvhD+Z6efbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885272; c=relaxed/simple;
-	bh=4ir7KOqc+TqjEw+zjYwXcGBt3x1SmJSZlA+wqvJ1s8k=;
+	s=arc-20240116; t=1765885276; c=relaxed/simple;
+	bh=0rDGy4OuHk1Xt+bdmbX02o01lMU4fC9tV2CwtoiCVSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPzUn8SAIfme1yo+WdxWL9EKIBlM5unQblUWCtwkhPS/4SuUSOb6762dw0Imks1+cuixaUU+UVSLit4M0g9oBxbKsL0pqxhp/silJyDy9Qvna1SZJEt7gPMUg7OuuxRpqNjyKyLSsN2MCCXZZAj+rC4aKZiXwts71AOUJGSHU1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Khrxf5e+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KAeALyqJbgAiaPl7pstuBUyqNCLm/icWLv1ydCzpjT/YLZxGcii9BuyTmDHS2irX6UCGAjTzCDIYMGtI+ryZt+XRcwI8aVrCT3bWtMr4yTRvsIshoWWWzbT5P85EtiXOhmU2kzIqWFTPP0IEZ/4aZKcpwdGz/j5AerqWU361+os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZXPF0FQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Khrxf5e+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE864C4CEF1;
-	Tue, 16 Dec 2025 11:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZXPF0FQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E997C4CEF1;
+	Tue, 16 Dec 2025 11:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885272;
-	bh=4ir7KOqc+TqjEw+zjYwXcGBt3x1SmJSZlA+wqvJ1s8k=;
+	s=korg; t=1765885275;
+	bh=0rDGy4OuHk1Xt+bdmbX02o01lMU4fC9tV2CwtoiCVSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Khrxf5e+2j78+xsaqQeoRb/rgKr6RTnOVRIZfP7Bz6zEXa/GRnUwPPlJJapZrK5lg
-	 JExBw58h3R4RlLp3odLJfOxvydiACfXk5ZA6AII/TjiiBb5dy4/jx58nfFfCzNSXkM
-	 4FNBmwIXgHFC4Y81gQ1IE+xEAs0PRbPS7VU7dp28=
+	b=ZXPF0FQq3nKkWaAw2qdRb1JR4R/PSWwiC7mO1asBpUoftTrBlH16vDJMW2Lh8Cz/u
+	 EeUjb0fB7RexS4WPzfmShS/CBjHwWwhYf8FjG4NxLbGPtqJKlbriFn/0ud6bvnRoB0
+	 yChZO7+jhI3/SfRzTOIVpGYYbw2fJ24jVP//ouqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 089/507] PCI: endpoint: pci-epf-test: Fix sleeping function being called from atomic context
-Date: Tue, 16 Dec 2025 12:08:50 +0100
-Message-ID: <20251216111348.763138680@linuxfoundation.org>
+Subject: [PATCH 6.17 063/507] arm64: dts: imx8mp-venice-gw702x: remove off-board sdhc1
+Date: Tue, 16 Dec 2025 12:08:24 +0100
+Message-ID: <20251216111347.825731663@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,59 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit 25423cda145f9ed6ee4a72d9f2603ac2a4685e74 ]
+[ Upstream commit 9db04b310ef99b546e4240c55842e81b06b78579 ]
 
-When Root Complex (RC) triggers a Doorbell interrupt to Endpoint (EP), it
-triggers the below warning in the EP:
+SDHC1 on the GW702x SOM routes to a connector for use on a baseboard
+and as such are defined in the baseboard device-trees.
 
- BUG: sleeping function called from invalid context at kernel/locking/mutex.c:271
- Call trace:
-  __might_resched+0x130/0x158
-  __might_sleep+0x70/0x88
-  mutex_lock+0x2c/0x80
-  pci_epc_get_msi+0x78/0xd8
-  pci_epf_test_raise_irq.isra.0+0x74/0x138
-  pci_epf_test_doorbell_handler+0x34/0x50
+Remove it from the gw702x SOM device-tree.
 
-The BUG arises because the EP's pci_epf_test_doorbell_handler() which is
-running in the hard IRQ context is making an indirect call to
-pci_epc_get_msi(), which uses mutex inside.
-
-To fix the issue, convert the hard IRQ handler to a threaded IRQ handler to
-allow it to call functions that can sleep during bottom half execution.
-Also, register the threaded IRQ handler with IRQF_ONESHOT to keep the
-interrupt line disabled until the threaded IRQ handler completes execution.
-
-Fixes: eff0c286aa91 ("PCI: endpoint: pci-epf-test: Add doorbell test support")
-Signed-off-by: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
-[mani: reworded description a bit]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20251014024109.42287-1-bhanuseshukumar@gmail.com
+Fixes: 0d5b288c2110 ("arm64: dts: freescale: Add imx8mp-venice-gw7905-2x")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ .../dts/freescale/imx8mp-venice-gw702x.dtsi   | 20 -------------------
+ .../dts/freescale/imx8mp-venice-gw72xx.dtsi   | 11 ----------
+ 2 files changed, 31 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 31617772ad516..b05e8db575c35 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -730,8 +730,9 @@ static void pci_epf_test_enable_doorbell(struct pci_epf_test *epf_test,
- 	if (bar < BAR_0)
- 		goto err_doorbell_cleanup;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+index 086ee4510cd83..fb159199b39de 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
+@@ -402,15 +402,6 @@ &uart2 {
+ 	status = "okay";
+ };
  
--	ret = request_irq(epf->db_msg[0].virq, pci_epf_test_doorbell_handler, 0,
--			  "pci-ep-test-doorbell", epf_test);
-+	ret = request_threaded_irq(epf->db_msg[0].virq, NULL,
-+				   pci_epf_test_doorbell_handler, IRQF_ONESHOT,
-+				   "pci-ep-test-doorbell", epf_test);
- 	if (ret) {
- 		dev_err(&epf->dev,
- 			"Failed to request doorbell IRQ: %d\n",
+-/* off-board */
+-&usdhc1 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_usdhc1>;
+-	bus-width = <4>;
+-	non-removable;
+-	status = "okay";
+-};
+-
+ /* eMMC */
+ &usdhc3 {
+ 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
+@@ -513,17 +504,6 @@ MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX	0x140
+ 		>;
+ 	};
+ 
+-	pinctrl_usdhc1: usdhc1grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_SD1_CLK__USDHC1_CLK	0x190
+-			MX8MP_IOMUXC_SD1_CMD__USDHC1_CMD	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA0__USDHC1_DATA0	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA1__USDHC1_DATA1	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA2__USDHC1_DATA2	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA3__USDHC1_DATA3	0x1d0
+-		>;
+-	};
+-
+ 	pinctrl_usdhc3: usdhc3grp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_NAND_WE_B__USDHC3_CLK	0x190
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi
+index cf747ec6fa16e..76020ef89bf3e 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw72xx.dtsi
+@@ -365,17 +365,6 @@ MX8MP_IOMUXC_UART4_TXD__UART4_DCE_TX	0x140
+ 		>;
+ 	};
+ 
+-	pinctrl_usdhc1: usdhc1grp {
+-		fsl,pins = <
+-			MX8MP_IOMUXC_SD1_CLK__USDHC1_CLK	0x190
+-			MX8MP_IOMUXC_SD1_CMD__USDHC1_CMD	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA0__USDHC1_DATA0	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA1__USDHC1_DATA1	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA2__USDHC1_DATA2	0x1d0
+-			MX8MP_IOMUXC_SD1_DATA3__USDHC1_DATA3	0x1d0
+-		>;
+-	};
+-
+ 	pinctrl_usdhc2: usdhc2grp {
+ 		fsl,pins = <
+ 			MX8MP_IOMUXC_SD2_CLK__USDHC2_CLK	0x190
 -- 
 2.51.0
 
