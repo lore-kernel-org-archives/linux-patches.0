@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84A23557E8;
-	Tue, 16 Dec 2025 11:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5666355805;
+	Tue, 16 Dec 2025 11:57:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886237; cv=none; b=esuASA9L04t6eqwLdI1pPMG3bNs6o30w4VJDgDn4h6t7RSV4VLz9/YyjYrWFiVZy/8gkh+zm7sB8lXbfFwqzU9wpwrOkLtTTZfAVylhC02v1jnWYS70mZwx8Ax2WkwEm5AnryhA9oyd+UwR9P3YXMYJW2rgM8wCuCNdLUnDHKS0=
+	t=1765886239; cv=none; b=S+ZGOAG447Ixn4lR4Xziwhm5eg3+oi6HMuwNxGQCvr3427kXjrFV1d5zJ3/vHfztXd3wedzKCE1Wn0US7p1HAHUBtpoYZkM/EkGzjbrCGbolQPO/nq0fHl0UDKUVM9rNiRPVle9i2BIlg6AEC3/eZeIMueQNUyKMApNkT2ZVMts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886237; c=relaxed/simple;
-	bh=zZJmAVKxlSgYLkQBtn36OYh/HRTC/aqIpXIGCMM7XV8=;
+	s=arc-20240116; t=1765886239; c=relaxed/simple;
+	bh=7ApV+VoahW9oQNLpv9TysniJ+eOPILeCRuM8BqL4ngM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hDD1k9YJx+SEztTXVK+hJUlcwmfTZ13X9IRNSZJaqGbLqFOx3EhWdSBezxGXTRHrwM7pfwZIiIszbbzXo/olzF8ubSornlLybhOrbHwJTqURXDjGUjKoTautkqJif0pGwIm4AvgNvF9PaQqBcEUZoFTnEiHMphvCKpK/FVwlKyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ya+Bsp23; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/aF9dMHyJ5/HPDRRwg8/V32p3IBLpNQ8l7izfGCVWOiPZ9BH84Ad5qa85fCfzWwwYqWze8FBz9YgTYxM4wh3ACRvQGSsUjNtCvCaO3Q42EJce+r1OEM/Zm7BnKg6s6kXGjJszN1O0+TxPfpv7BoJP4jI9a3RfPh/jUDDf/UXek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHj7ETT+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ya+Bsp23"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5781BC4CEF1;
-	Tue, 16 Dec 2025 11:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHj7ETT+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64447C4CEF1;
+	Tue, 16 Dec 2025 11:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886236;
-	bh=zZJmAVKxlSgYLkQBtn36OYh/HRTC/aqIpXIGCMM7XV8=;
+	s=korg; t=1765886239;
+	bh=7ApV+VoahW9oQNLpv9TysniJ+eOPILeCRuM8BqL4ngM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ya+Bsp23woZR5s2tmBA5MGEFVLhEiBK+7wI3DO7DxPIJ7jf45PdQ8w3FVfEFg1k0q
-	 rtaxJSnwQYMzzPyH0US3sXUfn+XazVZW7iS7PXboeSYdU1hKYz8rngMBlAl2DunaKG
-	 ftvNOUj2JWULXQZCXpW6FTDmBg256IwO6vEW/FDs=
+	b=SHj7ETT+wFGof6GBxvyRWUmtIFKgvVfSctmtdrCnLFAWvc8cjzsuzlj/ZG6ECJJoM
+	 p5fa7G6M+ymhbfV3u7HKD9HVl9A4InlSiqWdm4JhRU7qo2zUyG+tb8NKv4hnZzWhsR
+	 jYqLjpt4m0LVyP+YFEW00N15KWSG9pcmtU0rVQus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 377/507] virtio: fix whitespace in virtio_config_ops
-Date: Tue, 16 Dec 2025 12:13:38 +0100
-Message-ID: <20251216111359.118507575@linuxfoundation.org>
+Subject: [PATCH 6.17 351/507] iommu/arm-smmu-qcom: Enable use of all SMR groups when running bare-metal
+Date: Tue, 16 Dec 2025 12:13:12 +0100
+Message-ID: <20251216111358.174977476@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,35 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
 
-[ Upstream commit 7831791e77a1cd29528d4dc336ce14466aef5ba6 ]
+[ Upstream commit 5583a55e074b33ccd88ac0542fd7cd656a7e2c8c ]
 
-The finalize_features documentation uses a tab between words.
-Use space instead.
+Some platforms (e.g. SC8280XP and X1E) support more than 128 stream
+matching groups. This is more than what is defined as maximum by the ARM
+SMMU architecture specification. Commit 122611347326 ("iommu/arm-smmu-qcom:
+Limit the SMR groups to 128") disabled use of the additional groups because
+they don't exhibit the same behavior as the architecture supported ones.
 
-Fixes: d16c0cd27331 ("docs: driver-api: virtio: virtio on Linux")
-Message-Id: <39d7685c82848dc6a876d175e33a1407f6ab3fc1.1763026134.git.mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+It seems like this is just another quirk of the hypervisor: When running
+bare-metal without the hypervisor, the additional groups appear to behave
+just like all others. The boot firmware uses some of the additional groups,
+so ignoring them in this situation leads to stream match conflicts whenever
+we allocate a new SMR group for the same SID.
+
+The workaround exists primarily because the bypass quirk detection fails
+when using a S2CR register from the additional matching groups, so let's
+perform the test with the last reliable S2CR (127) and then limit the
+number of SMR groups only if we detect that we are running below the
+hypervisor (because of the bypass quirk).
+
+Fixes: 122611347326 ("iommu/arm-smmu-qcom: Limit the SMR groups to 128")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_config.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 27 ++++++++++++++--------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/include/linux/virtio_config.h b/include/linux/virtio_config.h
-index 148dc5056002f..f8a00a780a44d 100644
---- a/include/linux/virtio_config.h
-+++ b/include/linux/virtio_config.h
-@@ -86,7 +86,7 @@ struct virtqueue_info {
-  *	vdev: the virtio_device
-  *	This sends the driver feature bits to the device: it can change
-  *	the dev->feature bits if it wants.
-- *	Note that despite the name this	can be called any number of
-+ *	Note that despite the name this can be called any number of
-  *	times.
-  *	Returns 0 on success or error status
-  * @bus_name: return the bus name associated with the device (optional)
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 57c097e876130..c939d0856b719 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -431,17 +431,19 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 
+ 	/*
+ 	 * Some platforms support more than the Arm SMMU architected maximum of
+-	 * 128 stream matching groups. For unknown reasons, the additional
+-	 * groups don't exhibit the same behavior as the architected registers,
+-	 * so limit the groups to 128 until the behavior is fixed for the other
+-	 * groups.
++	 * 128 stream matching groups. The additional registers appear to have
++	 * the same behavior as the architected registers in the hardware.
++	 * However, on some firmware versions, the hypervisor does not
++	 * correctly trap and emulate accesses to the additional registers,
++	 * resulting in unexpected behavior.
++	 *
++	 * If there are more than 128 groups, use the last reliable group to
++	 * detect if we need to apply the bypass quirk.
+ 	 */
+-	if (smmu->num_mapping_groups > 128) {
+-		dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
+-		smmu->num_mapping_groups = 128;
+-	}
+-
+-	last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
++	if (smmu->num_mapping_groups > 128)
++		last_s2cr = ARM_SMMU_GR0_S2CR(127);
++	else
++		last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
+ 
+ 	/*
+ 	 * With some firmware versions writes to S2CR of type FAULT are
+@@ -464,6 +466,11 @@ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ 
+ 		reg = FIELD_PREP(ARM_SMMU_CBAR_TYPE, CBAR_TYPE_S1_TRANS_S2_BYPASS);
+ 		arm_smmu_gr1_write(smmu, ARM_SMMU_GR1_CBAR(qsmmu->bypass_cbndx), reg);
++
++		if (smmu->num_mapping_groups > 128) {
++			dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
++			smmu->num_mapping_groups = 128;
++		}
+ 	}
+ 
+ 	for (i = 0; i < smmu->num_mapping_groups; i++) {
 -- 
 2.51.0
 
