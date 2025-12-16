@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22CA939BEA3;
-	Tue, 16 Dec 2025 12:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882AA39BEB8;
+	Tue, 16 Dec 2025 12:38:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888688; cv=none; b=igguWUjNhmqOSLdWspyu+LGTslcwHydwuRzJNCSVwNa/gn+Gt3I6AdpeO8r6IH9IchiJ9aUmp0iRExCST0ma9QciA78TqBz0U0IxGHYzTUdGRGWgmuZZLDS2RdBfje7E9ur6y+bQgtgfNrj0CuyyVPMVE/ItwDkKeGgbF3qomvo=
+	t=1765888691; cv=none; b=ld7zfv0P2nbsLEkdxuUeyf8WIw//wkHfhB+AJnRdgoQN43e11zypwZnkU0fWDGjOMmh2soiQ+jhT0mxupY9jJ0g0JVXuNWdkozACW7e7iF/KnO8aQQmjJH/91JjKiuu0Bu1qATHpf6gA4S3EzGO08xPSNVJMes8UPVDl6yRxvBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888688; c=relaxed/simple;
-	bh=/KCA5SoRgNL3w26AVHoqUYlm7QJFr7/Yg2HVUs9gEk4=;
+	s=arc-20240116; t=1765888691; c=relaxed/simple;
+	bh=YFXm6zA9GQkIzeo4lT8qUt7rqZqOTEd/YF/iQXJTZlo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mfM/Erpwh+iWnttvt2gROaoEEnL/yCBXtXxgVX3OJU25Bllr+tzWa0AeMXUpE7U7y68SrUVgyI73MFK/M9U1Cyg5zsRmB01cbdhg92MP1Hfw8HfG1Pda7frQ7AhUSRr0R8DsWKfS1FABBae/YD4t/Mqu8c6J37CmILZNHO5Kxt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2wawq8RN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQBXfraHdrtmCLseop7dKUpAgDyj+JDCBw0hPHddn6E6gmq4UezE5jVNPPBZb2K0ms+9wP91jbGCnuVZhJFUG3tI0VFvIJdr051Ih5CjS+AaR8DBpkxTHfItdrsg97QfIt5eAgFIHKoPXtuAUzCjT9Pbt1e2tcsxwO+eha5zzec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wx1Dp9tB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2wawq8RN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A690BC4CEF1;
-	Tue, 16 Dec 2025 12:38:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wx1Dp9tB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3544C4CEF1;
+	Tue, 16 Dec 2025 12:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888688;
-	bh=/KCA5SoRgNL3w26AVHoqUYlm7QJFr7/Yg2HVUs9gEk4=;
+	s=korg; t=1765888691;
+	bh=YFXm6zA9GQkIzeo4lT8qUt7rqZqOTEd/YF/iQXJTZlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2wawq8RN2paLfkyq/ZuEfpRf5/qZy2MPvGlz7mEM5BnF2W+URUw+excixgBAsOYdr
-	 IwabS6iWIQ5+eJNEduiRAhAzVc8DMMdUpGNEPLStf99ti4N9U0TqUvM+69aEcyRPEz
-	 FIRH+UL0pElqXcyAwz9xGU7vC5Ocu9VJdx7bBANc=
+	b=Wx1Dp9tBFPxSxjmNj/BdtLnd8ljEoLWHiD90r2h4eD4K2zLiQqQ8tGqjEh+i0uhqC
+	 In9hmUfdgvE5T5v1TnI4sJaacbskrOz2mO07pfdjbTOnVj05hnCE5wpeo8aZm15Fdy
+	 uVObaInFTLVdBDQIOQTumw1FEon3gQjVwrzfStMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.18 609/614] ALSA: dice: fix buffer overflow in detect_stream_formats()
-Date: Tue, 16 Dec 2025 12:16:16 +0100
-Message-ID: <20251216111423.461011050@linuxfoundation.org>
+Subject: [PATCH 6.18 610/614] ALSA: hda/realtek: Add match for ASUS Xbox Ally projects
+Date: Tue, 16 Dec 2025 12:16:17 +0100
+Message-ID: <20251216111423.498050557@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,50 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-commit 324f3e03e8a85931ce0880654e3c3eb38b0f0bba upstream.
+commit 18a4895370a79a3efb4a53ccd1efffef6c5b634e upstream.
 
-The function detect_stream_formats() reads the stream_count value directly
-from a FireWire device without validating it. This can lead to
-out-of-bounds writes when a malicious device provides a stream_count value
-greater than MAX_STREAMS.
+Bind the realtek codec to TAS2781 I2C audio amps on ASUS Xbox Ally
+projects. While these projects work without a quirk, adding it increases
+the output volume significantly.
 
-Fix by applying the same validation to both TX and RX stream counts in
-detect_stream_formats().
-
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 58579c056c1c ("ALSA: dice: use extended protocol to detect available stream formats")
-Cc: stable@vger.kernel.org
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB7881B043FC68B4C0DA40B73DAFDCA@SYBPR01MB7881.ausprd01.prod.outlook.com
+Cc: stable@vger.kernel.org # 6.17
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20251026191635.2447593-2-lkml@antheas.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/dice/dice-extension.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/hda/codecs/realtek/alc269.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/firewire/dice/dice-extension.c
-+++ b/sound/firewire/dice/dice-extension.c
-@@ -116,7 +116,7 @@ static int detect_stream_formats(struct
- 			break;
- 
- 		base_offset += EXT_APP_STREAM_ENTRIES;
--		stream_count = be32_to_cpu(reg[0]);
-+		stream_count = min_t(unsigned int, be32_to_cpu(reg[0]), MAX_STREAMS);
- 		err = read_stream_entries(dice, section_addr, base_offset,
- 					  stream_count, mode,
- 					  dice->tx_pcm_chs,
-@@ -125,7 +125,7 @@ static int detect_stream_formats(struct
- 			break;
- 
- 		base_offset += stream_count * EXT_APP_STREAM_ENTRY_SIZE;
--		stream_count = be32_to_cpu(reg[1]);
-+		stream_count = min_t(unsigned int, be32_to_cpu(reg[1]), MAX_STREAMS);
- 		err = read_stream_entries(dice, section_addr, base_offset,
- 					  stream_count,
- 					  mode, dice->rx_pcm_chs,
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -6736,6 +6736,8 @@ static const struct hda_quirk alc269_fix
+ 	SND_PCI_QUIRK(0x1043, 0x12f0, "ASUS X541UV", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1313, "Asus K42JZ", ALC269VB_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1314, "ASUS GA605K", ALC285_FIXUP_ASUS_GA605K_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1043, 0x1384, "ASUS RC73XA", ALC287_FIXUP_TXNW2781_I2C),
++	SND_PCI_QUIRK(0x1043, 0x1394, "ASUS RC73YA", ALC287_FIXUP_TXNW2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x13b0, "ASUS Z550SA", ALC256_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1427, "Asus Zenbook UX31E", ALC269VB_FIXUP_ASUS_ZENBOOK),
+ 	SND_PCI_QUIRK(0x1043, 0x1433, "ASUS GX650PY/PZ/PV/PU/PYV/PZV/PIV/PVV", ALC285_FIXUP_ASUS_I2C_HEADSET_MIC),
 
 
