@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E1F396DBF;
-	Tue, 16 Dec 2025 12:32:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32208396DD3;
+	Tue, 16 Dec 2025 12:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888334; cv=none; b=HbgHhdib81LfYsmSnQn5RlJUkTfrZXzNmwUTnzGsDXEvHytucBKGCQwxYZ+fUAYyV2jWS0ZJjXdyCRgK0dkkp/RlxShGEhK0EoMkP6r4qjbkPX12dB0k6tBhBDd11zNu9z7TJzof6gQViw2lNJiT3mNa2SQ94/TFQxSCUrKoOjk=
+	t=1765888338; cv=none; b=TAb4SqOmmmcN13pdD/49FctQMz9wuI8SV4IWZm5Uw2w9hFWrr7VhH6CRlW5vMGZPaxFsxI/ipdaJJw0bIWlTJBcSb+xvGQSMP6NG1i8qwHmZRvzIYyyRh76nVGDmDVd/VnBVqTpGnbj7lU+mq8fv4Et64oCxHZ2Oe1sIQCIGFWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888334; c=relaxed/simple;
-	bh=+4C4a8vE4ua7RpataKP9rXbB4e7CwcJPyNokpBoX87k=;
+	s=arc-20240116; t=1765888338; c=relaxed/simple;
+	bh=o8ZncKbH1pVdpKl2Aiydc+8hE5VKQ2IA+6Eg4bF3eEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uFi+pCs6Byq+Kem21SJU+pR8x8uk5IOHQ9zK/7kY1n0ZwRpWOXtgScG7jGEJz80jVtdwTUprBHRx+kiLRdMXFCcxZacTopMDtYh5CdI/Y3qN/vWzYjZQD1eA61zhjKYViuk4RYJWR7dtzOqeEo4RjP9mWjfws0Jd8S9xbqiGUzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIzgGcQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hOdmC/VPOWN+oKOJtp5J3/s2/3uXU34VYWbw7RWcxgI4oK8MaLTIe33cowK1CU8rm+z3WePt2W1qubbl+PSjeZ5Muwfp5JQFlNHah68HIe+JV6lvgvlo7Zex6wShPsjomWKYKD1Cf006NxveiI0lYyl1lbb3v0ACrtcFj28+6ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c54YgJeX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIzgGcQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23905C4CEF1;
-	Tue, 16 Dec 2025 12:32:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c54YgJeX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D78AC4CEF1;
+	Tue, 16 Dec 2025 12:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888334;
-	bh=+4C4a8vE4ua7RpataKP9rXbB4e7CwcJPyNokpBoX87k=;
+	s=korg; t=1765888337;
+	bh=o8ZncKbH1pVdpKl2Aiydc+8hE5VKQ2IA+6Eg4bF3eEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oIzgGcQmz0A2S6r5P5o7YPZlsAittHgmqYDIa8/YhnGMlaFqxr21znDUmR4yrZTQM
-	 hZ/I8OPKtsO6MXfk9z6scGUTh9gZEHLzLxb+YQriKTFaG6gMl4+11/HNtiyMUkRzIk
-	 7NGMdtjlzSpf7m4OLNeb/nu/2eP51ZAQPcJ8lkBY=
+	b=c54YgJeX0hE1sDb3te7MWw65JVwoG7iGLknydjvs4Rc2ImBSfJxtuF6Dgx4WS8XVs
+	 UJnW8IwTe48UG2yZc8XIMbtk0G3/t79pVxC3ilVeK/XssG9BedHK6mWf2UlIptBOBn
+	 KWmWncLuJz0RzN1/HyFVc4m4fy8D/8m5RW+pGC4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <smfrench@gmail.com>,
-	Tom Talpey <tom@talpey.com>,
-	Long Li <longli@microsoft.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Paulo Alcantara <pc@manguebit.org>,
-	linux-cifs@vger.kernel.org,
-	samba-technical@lists.samba.org,
-	Stefan Metzmacher <metze@samba.org>,
-	Steve French <stfrench@microsoft.com>,
+	kernel test robot <lkp@intel.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 504/614] smb: client: relax WARN_ON_ONCE(SMBDIRECT_SOCKET_*) checks in recv_done() and smbd_conn_upcall()
-Date: Tue, 16 Dec 2025 12:14:31 +0100
-Message-ID: <20251216111419.631079731@linuxfoundation.org>
+Subject: [PATCH 6.18 505/614] um: Disable KASAN_INLINE when STATIC_LINK is selected
+Date: Tue, 16 Dec 2025 12:14:32 +0100
+Message-ID: <20251216111419.667263494@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -58,161 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Metzmacher <metze@samba.org>
+From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 
-[ Upstream commit dc10cf1368af8cb816dcaa2502ba7d44fff20612 ]
+[ Upstream commit a3209bb94b36351f11e0d9e72ac44e5dd777a069 ]
 
-sc->first_error might already be set and sc->status
-is thus unexpected, so this should avoid the WARN[_ON]_ONCE()
-if sc->first_error is already set and have a usable error path.
+um doesn't support KASAN_INLINE together with STATIC_LINK.
 
-While there set sc->first_error as soon as possible.
+Instead of failing the build, disable KASAN_INLINE when
+STATIC_LINK is selected.
 
-This is done based on a problem seen in similar places on
-the server. And there it was already very useful in order
-to find the problem when we have a meaningful WARN_ONCE()
-that prints details about the connection.
-
-This is much more useful:
-
-[  309.560973] expected[NEGOTIATE_NEEDED] != RDMA_CONNECT_RUNNING
-first_error=0 local=192.168.0.200:445 remote=192.168.0.100:60445
-[  309.561034] WARNING: CPU: 2 PID: 78 at transport_rdma.c:643
-recv_done+0x2fa/0x3d0 [ksmbd]
-
-than what we had before (only):
-
-[  894.140316] WARNING: CPU: 1 PID: 116 at
-fs/smb/server/transport_rdma.c:642 recv_done+0x308/0x360 [ksmbd]
-
-Fixes: 58dfba8a2d4e ("smb: client/smbdirect: replace SMBDIRECT_SOCKET_CONNECTING with more detailed states")
-Cc: Steve French <smfrench@gmail.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: Long Li <longli@microsoft.com>
-Cc: Namjae Jeon <linkinjeon@kernel.org>
-Cc: Paulo Alcantara <pc@manguebit.org>
-Cc: linux-cifs@vger.kernel.org
-Cc: samba-technical@lists.samba.org
-Signed-off-by: Stefan Metzmacher <metze@samba.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511290451.x9GZVJ1l-lkp@intel.com/
+Fixes: 1e338f4d99e6 ("kasan: introduce ARCH_DEFER_KASAN and unify static key across modes")
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Link: https://patch.msgid.link/2620ab0bbba640b6237c50b9c0dca1c7d1142f5d.1764410067.git.chleroy@kernel.org
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smbdirect.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ arch/um/Kconfig             | 1 +
+ arch/um/include/asm/kasan.h | 4 ----
+ 2 files changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/fs/smb/client/smbdirect.c b/fs/smb/client/smbdirect.c
-index c6c428c2e08dd..788a0670c4a8d 100644
---- a/fs/smb/client/smbdirect.c
-+++ b/fs/smb/client/smbdirect.c
-@@ -7,6 +7,7 @@
- #include <linux/module.h>
- #include <linux/highmem.h>
- #include <linux/folio_queue.h>
-+#define __SMBDIRECT_SOCKET_DISCONNECT(__sc) smbd_disconnect_rdma_connection(__sc)
- #include "../common/smbdirect/smbdirect_pdu.h"
- #include "smbdirect.h"
- #include "cifs_debug.h"
-@@ -186,6 +187,9 @@ static void smbd_disconnect_rdma_work(struct work_struct *work)
- 	struct smbdirect_socket *sc =
- 		container_of(work, struct smbdirect_socket, disconnect_work);
+diff --git a/arch/um/Kconfig b/arch/um/Kconfig
+index 49781bee79058..93ed850d508ed 100644
+--- a/arch/um/Kconfig
++++ b/arch/um/Kconfig
+@@ -5,6 +5,7 @@ menu "UML-specific options"
+ config UML
+ 	bool
+ 	default y
++	select ARCH_DISABLE_KASAN_INLINE if STATIC_LINK
+ 	select ARCH_NEEDS_DEFER_KASAN if STATIC_LINK
+ 	select ARCH_WANTS_DYNAMIC_TASK_STRUCT
+ 	select ARCH_HAS_CACHE_LINE_SIZE
+diff --git a/arch/um/include/asm/kasan.h b/arch/um/include/asm/kasan.h
+index b54a4e937fd12..81bcdc0f962e6 100644
+--- a/arch/um/include/asm/kasan.h
++++ b/arch/um/include/asm/kasan.h
+@@ -24,10 +24,6 @@
  
-+	if (sc->first_error == 0)
-+		sc->first_error = -ECONNABORTED;
-+
- 	/*
- 	 * make sure this and other work is not queued again
- 	 * but here we don't block and avoid
-@@ -197,9 +201,6 @@ static void smbd_disconnect_rdma_work(struct work_struct *work)
- 	disable_work(&sc->idle.immediate_work);
- 	disable_delayed_work(&sc->idle.timer_work);
- 
--	if (sc->first_error == 0)
--		sc->first_error = -ECONNABORTED;
+ #ifdef CONFIG_KASAN
+ void kasan_init(void);
 -
- 	switch (sc->status) {
- 	case SMBDIRECT_SOCKET_NEGOTIATE_NEEDED:
- 	case SMBDIRECT_SOCKET_NEGOTIATE_RUNNING:
-@@ -242,6 +243,9 @@ static void smbd_disconnect_rdma_work(struct work_struct *work)
- 
- static void smbd_disconnect_rdma_connection(struct smbdirect_socket *sc)
- {
-+	if (sc->first_error == 0)
-+		sc->first_error = -ECONNABORTED;
-+
- 	/*
- 	 * make sure other work (than disconnect_work) is
- 	 * not queued again but here we don't block and avoid
-@@ -252,9 +256,6 @@ static void smbd_disconnect_rdma_connection(struct smbdirect_socket *sc)
- 	disable_work(&sc->idle.immediate_work);
- 	disable_delayed_work(&sc->idle.timer_work);
- 
--	if (sc->first_error == 0)
--		sc->first_error = -ECONNABORTED;
--
- 	switch (sc->status) {
- 	case SMBDIRECT_SOCKET_RESOLVE_ADDR_FAILED:
- 	case SMBDIRECT_SOCKET_RESOLVE_ROUTE_FAILED:
-@@ -322,27 +323,27 @@ static int smbd_conn_upcall(
- 
- 	switch (event->event) {
- 	case RDMA_CM_EVENT_ADDR_RESOLVED:
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_RESOLVE_ADDR_RUNNING);
-+		if (SMBDIRECT_CHECK_STATUS_DISCONNECT(sc, SMBDIRECT_SOCKET_RESOLVE_ADDR_RUNNING))
-+			break;
- 		sc->status = SMBDIRECT_SOCKET_RESOLVE_ROUTE_NEEDED;
- 		wake_up(&sc->status_wait);
- 		break;
- 
- 	case RDMA_CM_EVENT_ROUTE_RESOLVED:
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_RESOLVE_ROUTE_RUNNING);
-+		if (SMBDIRECT_CHECK_STATUS_DISCONNECT(sc, SMBDIRECT_SOCKET_RESOLVE_ROUTE_RUNNING))
-+			break;
- 		sc->status = SMBDIRECT_SOCKET_RDMA_CONNECT_NEEDED;
- 		wake_up(&sc->status_wait);
- 		break;
- 
- 	case RDMA_CM_EVENT_ADDR_ERROR:
- 		log_rdma_event(ERR, "connecting failed event=%s\n", event_name);
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_RESOLVE_ADDR_RUNNING);
- 		sc->status = SMBDIRECT_SOCKET_RESOLVE_ADDR_FAILED;
- 		smbd_disconnect_rdma_work(&sc->disconnect_work);
- 		break;
- 
- 	case RDMA_CM_EVENT_ROUTE_ERROR:
- 		log_rdma_event(ERR, "connecting failed event=%s\n", event_name);
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_RESOLVE_ROUTE_RUNNING);
- 		sc->status = SMBDIRECT_SOCKET_RESOLVE_ROUTE_FAILED;
- 		smbd_disconnect_rdma_work(&sc->disconnect_work);
- 		break;
-@@ -428,7 +429,8 @@ static int smbd_conn_upcall(
- 					min_t(u8, sp->responder_resources,
- 					      peer_responder_resources);
- 
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_RDMA_CONNECT_RUNNING);
-+		if (SMBDIRECT_CHECK_STATUS_DISCONNECT(sc, SMBDIRECT_SOCKET_RDMA_CONNECT_RUNNING))
-+			break;
- 		sc->status = SMBDIRECT_SOCKET_NEGOTIATE_NEEDED;
- 		wake_up(&sc->status_wait);
- 		break;
-@@ -437,7 +439,6 @@ static int smbd_conn_upcall(
- 	case RDMA_CM_EVENT_UNREACHABLE:
- 	case RDMA_CM_EVENT_REJECTED:
- 		log_rdma_event(ERR, "connecting failed event=%s\n", event_name);
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_RDMA_CONNECT_RUNNING);
- 		sc->status = SMBDIRECT_SOCKET_RDMA_CONNECT_FAILED;
- 		smbd_disconnect_rdma_work(&sc->disconnect_work);
- 		break;
-@@ -699,7 +700,8 @@ static void recv_done(struct ib_cq *cq, struct ib_wc *wc)
- 		negotiate_done =
- 			process_negotiation_response(response, wc->byte_len);
- 		put_receive_buffer(sc, response);
--		WARN_ON_ONCE(sc->status != SMBDIRECT_SOCKET_NEGOTIATE_RUNNING);
-+		if (SMBDIRECT_CHECK_STATUS_WARN(sc, SMBDIRECT_SOCKET_NEGOTIATE_RUNNING))
-+			negotiate_done = false;
- 		if (!negotiate_done) {
- 			sc->status = SMBDIRECT_SOCKET_NEGOTIATE_FAILED;
- 			smbd_disconnect_rdma_connection(sc);
+-#if defined(CONFIG_STATIC_LINK) && defined(CONFIG_KASAN_INLINE)
+-#error UML does not work in KASAN_INLINE mode with STATIC_LINK enabled!
+-#endif
+ #else
+ static inline void kasan_init(void) { }
+ #endif /* CONFIG_KASAN */
 -- 
 2.51.0
 
