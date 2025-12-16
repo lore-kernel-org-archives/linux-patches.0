@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD8235BDD4;
-	Tue, 16 Dec 2025 12:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C26135CB79;
+	Tue, 16 Dec 2025 12:15:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887306; cv=none; b=MooSt/R0YavoC9TB1rPNggo6zmj3ISWMuQgUQRbBgWri47Ti3PiD5Yw4iU4mtbXAcCCJEKQjpekrIAIbvixTVIq1KQTVGb4Gf44f/1LD3tLjAEG8zNQfBMFZVLmKEmeudABbeZAP0f6C5yGhBQeP21Aj0V9k6jxFQ+LBafA5OPg=
+	t=1765887308; cv=none; b=BLUjy9Ok69xeOgVH8MHNr6NouS8dgkvxEfPHb4NXtebDZ/VrrkqDIctH0lRhTm/WSyu3tPEeHY9p+ynGhsNkjNf25w25JiWSN4OpQPqKclPoRiPHyp9WJSiSQxyZSa0MeEtOXI07Dgk7QW2xoHntJfLDRTb3ZirQin8mv49bQWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887306; c=relaxed/simple;
-	bh=2gTm9/o5ejhp+EJK8jKi3H5j8MhMBOYaPJnvOSV4hQI=;
+	s=arc-20240116; t=1765887308; c=relaxed/simple;
+	bh=Sa6fPRSuGD/EgfKABfUFCek1eUrFJ0hzEcxAEDzW1x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KDgZEnq+XIH/Q8w6amOA6L3x+FjJB0dtf+ZsYCm+055y8BpwRvFPviV9FMEmJwrDvLvGhJeaHYgqd+uyYBByaeo2d4WXyPWUjZmIhWiDPrpWeB2zr+sI5WWU5mYjgrjpM86yHzlwwoD4x4UhClGfZeitNLlUmkpcgWM82g64dls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9coue4x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ufk/8jVLNggAyfTCteCmJwoSnhdWiEOS4wTDjmuNAkpDLMCzyncyKxSYikldAcSNxRbs1zo4SJgmHRWga4yg323INk8wfdgVYpOY8+j0DiFTagByMTULEIKN8PHNPea7SqGwkJ1jgITo1QZX9AwGY3U0pZwFz1g/hATNL6s7PCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVwsp5B9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9coue4x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041A2C4CEF1;
-	Tue, 16 Dec 2025 12:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVwsp5B9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B67C4CEF1;
+	Tue, 16 Dec 2025 12:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887304;
-	bh=2gTm9/o5ejhp+EJK8jKi3H5j8MhMBOYaPJnvOSV4hQI=;
+	s=korg; t=1765887307;
+	bh=Sa6fPRSuGD/EgfKABfUFCek1eUrFJ0hzEcxAEDzW1x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V9coue4xm9QAKPiCqdFgnVfcjK2C42EXPgC3KfnQK5ZYcheK838l4GTyVLB0UahCd
-	 ec5DxJ7qlV7O6xBIW40+cMk79XEWuCBalw/+y5U9sRZafCoQj4hPs3je6GkSya94ft
-	 vkFcjTuAH9tLercGdDpM8tY3fPdEeQbhXlibQHI0=
+	b=rVwsp5B9EUTUoJI7+jOtevhXX5MeFDL7hP9ua4doyckwgIQawWs6jMkhN3I8+LIwQ
+	 Kpctt5o29IH4Xq6h2xU3YEv3+ndUqw0Q7G/ccap2BvGNp4mR5YrbnSrmVFovg49I7G
+	 7rCdu5+0W69Tmxkb4lnBt2vUAmNkCLyd4kWkevvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tingmao Wang <m@maowtm.org>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 189/614] fs/9p: Dont open remote file with APPEND mode when writeback cache is used
-Date: Tue, 16 Dec 2025 12:09:16 +0100
-Message-ID: <20251216111408.220806991@linuxfoundation.org>
+Subject: [PATCH 6.18 190/614] drm/panthor: Handle errors returned by drm_sched_entity_init()
+Date: Tue, 16 Dec 2025 12:09:17 +0100
+Message-ID: <20251216111408.256198620@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,101 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tingmao Wang <m@maowtm.org>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit a63dd8fd137933551bfd9aeeeaa942f04c7aad65 ]
+[ Upstream commit bb7939e332c64c4ef33974a0eae4f3841acfa8eb ]
 
-When page cache is used, writebacks are done on a page granularity, and it
-is expected that the underlying filesystem (such as v9fs) should respect
-the write position.  However, currently v9fs will passthrough O_APPEND to
-the server even on cached mode.  This causes data corruption if a sync or
-fstat gets between two writes to the same file.
+In practice it's not going to fail because we're passing the current
+sanity checks done by drm_sched_entity_init(), and that's the only
+reason it would return an error, but better safe than sorry.
 
-This patch removes the APPEND flag from the open request we send to the
-server when writeback caching is involved.  I believe keeping server-side
-APPEND is probably fine for uncached mode (even if two fds are opened, one
-without O_APPEND and one with it, this should still be fine since they
-would use separate fid for the writes).
-
-Signed-off-by: Tingmao Wang <m@maowtm.org>
-Fixes: 4eb3117888a9 ("fs/9p: Rework cache modes and add new options to Documentation")
-Message-ID: <20251102235631.8724-1-m@maowtm.org>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: de8548813824 ("drm/panthor: Add the scheduler logical block")
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Link: https://patch.msgid.link/20251031160318.832427-1-boris.brezillon@collabora.com
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/vfs_file.c       | 11 ++++++++---
- fs/9p/vfs_inode.c      |  3 +--
- fs/9p/vfs_inode_dotl.c |  2 +-
- 3 files changed, 10 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/9p/vfs_file.c b/fs/9p/vfs_file.c
-index eb0b083da269b..d1db03093d4c3 100644
---- a/fs/9p/vfs_file.c
-+++ b/fs/9p/vfs_file.c
-@@ -43,14 +43,18 @@ int v9fs_file_open(struct inode *inode, struct file *file)
- 	struct v9fs_session_info *v9ses;
- 	struct p9_fid *fid;
- 	int omode;
-+	int o_append;
+diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
+index 3d1f57e3990f4..85ef9a7acc147 100644
+--- a/drivers/gpu/drm/panthor/panthor_sched.c
++++ b/drivers/gpu/drm/panthor/panthor_sched.c
+@@ -3403,6 +3403,8 @@ group_create_queue(struct panthor_group *group,
  
- 	p9_debug(P9_DEBUG_VFS, "inode: %p file: %p\n", inode, file);
- 	v9ses = v9fs_inode2v9ses(inode);
--	if (v9fs_proto_dotl(v9ses))
-+	if (v9fs_proto_dotl(v9ses)) {
- 		omode = v9fs_open_to_dotl_flags(file->f_flags);
--	else
-+		o_append = P9_DOTL_APPEND;
-+	} else {
- 		omode = v9fs_uflags2omode(file->f_flags,
- 					v9fs_proto_dotu(v9ses));
-+		o_append = P9_OAPPEND;
-+	}
- 	fid = file->private_data;
- 	if (!fid) {
- 		fid = v9fs_fid_clone(file_dentry(file));
-@@ -58,9 +62,10 @@ int v9fs_file_open(struct inode *inode, struct file *file)
- 			return PTR_ERR(fid);
+ 	drm_sched = &queue->scheduler;
+ 	ret = drm_sched_entity_init(&queue->entity, 0, &drm_sched, 1, NULL);
++	if (ret)
++		goto err_free_queue;
  
- 		if ((v9ses->cache & CACHE_WRITEBACK) && (omode & P9_OWRITE)) {
--			int writeback_omode = (omode & ~P9_OWRITE) | P9_ORDWR;
-+			int writeback_omode = (omode & ~(P9_OWRITE | o_append)) | P9_ORDWR;
+ 	return queue;
  
- 			p9_debug(P9_DEBUG_CACHE, "write-only file with writeback enabled, try opening O_RDWR\n");
-+
- 			err = p9_client_open(fid, writeback_omode);
- 			if (err < 0) {
- 				p9_debug(P9_DEBUG_CACHE, "could not open O_RDWR, disabling caches\n");
-diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
-index d0c77ec31b1dd..0f3189a0a516a 100644
---- a/fs/9p/vfs_inode.c
-+++ b/fs/9p/vfs_inode.c
-@@ -786,7 +786,7 @@ v9fs_vfs_atomic_open(struct inode *dir, struct dentry *dentry,
- 	p9_omode = v9fs_uflags2omode(flags, v9fs_proto_dotu(v9ses));
- 
- 	if ((v9ses->cache & CACHE_WRITEBACK) && (p9_omode & P9_OWRITE)) {
--		p9_omode = (p9_omode & ~P9_OWRITE) | P9_ORDWR;
-+		p9_omode = (p9_omode & ~(P9_OWRITE | P9_OAPPEND)) | P9_ORDWR;
- 		p9_debug(P9_DEBUG_CACHE,
- 			"write-only file with writeback enabled, creating w/ O_RDWR\n");
- 	}
-@@ -1393,4 +1393,3 @@ static const struct inode_operations v9fs_symlink_inode_operations = {
- 	.getattr = v9fs_vfs_getattr,
- 	.setattr = v9fs_vfs_setattr,
- };
--
-diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
-index be297e3354688..6312b3590f743 100644
---- a/fs/9p/vfs_inode_dotl.c
-+++ b/fs/9p/vfs_inode_dotl.c
-@@ -282,7 +282,7 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
- 	}
- 
- 	if ((v9ses->cache & CACHE_WRITEBACK) && (p9_omode & P9_OWRITE)) {
--		p9_omode = (p9_omode & ~P9_OWRITE) | P9_ORDWR;
-+		p9_omode = (p9_omode & ~(P9_OWRITE | P9_DOTL_APPEND)) | P9_ORDWR;
- 		p9_debug(P9_DEBUG_CACHE,
- 			"write-only file with writeback enabled, creating w/ O_RDWR\n");
- 	}
 -- 
 2.51.0
 
