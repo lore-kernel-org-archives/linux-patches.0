@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6244C3596F7;
-	Tue, 16 Dec 2025 12:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771AE3596E6;
+	Tue, 16 Dec 2025 12:04:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886677; cv=none; b=b40aIjxXbzJlyy+UFTO3sMSXPkn8nphja0gIxLHg5AjuE/9FPwa/wmATlOewhDlV5ldqw3iGnZ+HECweRWQ3wggtOaA/fEgA8HSaOO5yOoDTqpR48fCqNmbsgJYqBAqXzEVWvtAqWKynzJ03PcoygWxLEHiPqIgC6Z5Dfe7OrS8=
+	t=1765886680; cv=none; b=Zw76HPRhewZlAs6ij8ABw5rBiT0myI6rLXTfXVlTBFa80+lJa2eyM7ZiJEjPuJhtyPyqroKWaSgvtT+FaTQohc5JuZwceQxNU5TGstosj79j8/PBIXh3oTYLJOasZNVthjsfuswVg9317wMUVTvjUJxPxzbjhbQV2Bgixxs3qlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886677; c=relaxed/simple;
-	bh=b3FWn0jr1yTRsuGLXAN8ktmMVDnAOBLCuM4TSRq59L4=;
+	s=arc-20240116; t=1765886680; c=relaxed/simple;
+	bh=Gl5Vc1GKFDMTAqErdhDChfrOnDCZxOjgbhyekghnK+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nNYk5L0KKorrufrwHM3GcCNyghzwrl44bHGp7Qbk4anPoCd8HjeTIM8/3gvSR0/GGJ/KgFimj9odcAsW2mD1w+dWt7AxG2LgEx5BGVnum1dlzzo7UsGlZA/KkaArL4ua+4xm37CUb3cMVgbeJCy6jQZw6DwaykJFC5yIsSEG9lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2nQcwI0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K02VxvNXkwTk0SaSWTt/XuCzUn4QbxVEX8mjwFGxN5yng+fAq5nUl/9mceLUfdp87L6G+1oalOuIm9uS8eyifc4EZgK4G83/nfDQ5E5mejZEyMYJN2N+7kN0WujG/j0V/PjHP64blu1JZ7M2lzKd/vwm7wgAjbjzAJnAtRfyFVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/J+Vce5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2nQcwI0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7493CC4CEF1;
-	Tue, 16 Dec 2025 12:04:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/J+Vce5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0167AC4CEF1;
+	Tue, 16 Dec 2025 12:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886677;
-	bh=b3FWn0jr1yTRsuGLXAN8ktmMVDnAOBLCuM4TSRq59L4=;
+	s=korg; t=1765886680;
+	bh=Gl5Vc1GKFDMTAqErdhDChfrOnDCZxOjgbhyekghnK+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2nQcwI081FIfxHzKyMjluVAzxrEWPqHkXbx98dKd5kTCZhCV1SBRsV+xcIXZZrJP
-	 9nIbCgLov3IdD90TBi/dryjEe4LLF7xxXMPITMdpKY3H60Q/mAuIGbNIbjZDXGGmGS
-	 RM/mT3Om0uxlIDfQhzgt2UPe5o0QPs9qCWzvaLfU=
+	b=i/J+Vce5Sh3OYllkNWTK7T3g5LisCKt4XWX1foqnu4A2hyBwSC1BlchaQgpQ8u+d4
+	 peLW7x1HhRfvRrIqyopO915siebVoKhVa4+R+ASApYgO151ywjjfKC7Qfk5lEZVMRS
+	 OvQCBWA2iYRygmTLtZGqdtk7yCnU8aIJtY7+JAHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 494/507] irqchip/mchp-eic: Fix error code in mchp_eic_domain_alloc()
-Date: Tue, 16 Dec 2025 12:15:35 +0100
-Message-ID: <20251216111403.337268217@linuxfoundation.org>
+Subject: [PATCH 6.17 495/507] cpu: Make atomic hotplug callbacks run with interrupts disabled on UP
+Date: Tue, 16 Dec 2025 12:15:36 +0100
+Message-ID: <20251216111403.372397208@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,39 +51,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 7dbc0d40d8347bd9de55c904f59ea44bcc8dedb7 ]
+[ Upstream commit c94291914b200e10c72cef23c8e4c67eb4fdbcd9 ]
 
-If irq_domain_translate_twocell() sets "hwirq" to >= MCHP_EIC_NIRQ (2) then
-it results in an out of bounds access.
+On SMP systems the CPU hotplug callbacks in the "starting" range are
+invoked while the CPU is brought up and interrupts are still
+disabled. Callbacks which are added later are invoked via the
+hotplug-thread on the target CPU and interrupts are explicitly disabled.
 
-The code checks for invalid values, but doesn't set the error code.  Return
--EINVAL in that case, instead of returning success.
+In the UP case callbacks which are added later are invoked directly without
+the thread indirection. This is in principle okay since there is just one
+CPU but those callbacks are invoked with interrupt disabled code. That's
+incorrect as those callbacks assume interrupt disabled context.
 
-Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Disable interrupts before invoking the callbacks on UP if the state is
+atomic and interrupts are expected to be disabled.  The "save" part is
+required because this is also invoked early in the boot process while
+interrupts are disabled and must not be enabled prematurely.
+
+Fixes: 06ddd17521bf1 ("sched/smp: Always define is_percpu_thread() and scheduler_ipi()")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Link: https://patch.msgid.link/aTfHmOz6IBpTIPU5@stanley.mountain
+Link: https://patch.msgid.link/20251127144723.ev9DuXXR@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mchp-eic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cpu.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
-index 516a3a0e359cc..c6b5529e17f1a 100644
---- a/drivers/irqchip/irq-mchp-eic.c
-+++ b/drivers/irqchip/irq-mchp-eic.c
-@@ -166,7 +166,7 @@ static int mchp_eic_domain_alloc(struct irq_domain *domain, unsigned int virq,
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index db9f6c539b28c..15000c7abc659 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -249,6 +249,14 @@ static int cpuhp_invoke_callback(unsigned int cpu, enum cpuhp_state state,
+ 	return ret;
+ }
  
- 	ret = irq_domain_translate_twocell(domain, fwspec, &hwirq, &type);
- 	if (ret || hwirq >= MCHP_EIC_NIRQ)
--		return ret;
-+		return ret ?: -EINVAL;
++/*
++ * The former STARTING/DYING states, ran with IRQs disabled and must not fail.
++ */
++static bool cpuhp_is_atomic_state(enum cpuhp_state state)
++{
++	return CPUHP_AP_IDLE_DEAD <= state && state < CPUHP_AP_ONLINE;
++}
++
+ #ifdef CONFIG_SMP
+ static bool cpuhp_is_ap_state(enum cpuhp_state state)
+ {
+@@ -271,14 +279,6 @@ static inline void complete_ap_thread(struct cpuhp_cpu_state *st, bool bringup)
+ 	complete(done);
+ }
  
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
+-/*
+- * The former STARTING/DYING states, ran with IRQs disabled and must not fail.
+- */
+-static bool cpuhp_is_atomic_state(enum cpuhp_state state)
+-{
+-	return CPUHP_AP_IDLE_DEAD <= state && state < CPUHP_AP_ONLINE;
+-}
+-
+ /* Synchronization state management */
+ enum cpuhp_sync_state {
+ 	SYNC_STATE_DEAD,
+@@ -2364,7 +2364,14 @@ static int cpuhp_issue_call(int cpu, enum cpuhp_state state, bool bringup,
+ 	else
+ 		ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
+ #else
+-	ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
++	if (cpuhp_is_atomic_state(state)) {
++		guard(irqsave)();
++		ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
++		/* STARTING/DYING must not fail! */
++		WARN_ON_ONCE(ret);
++	} else {
++		ret = cpuhp_invoke_callback(cpu, state, bringup, node, NULL);
++	}
+ #endif
+ 	BUG_ON(ret && !bringup);
+ 	return ret;
 -- 
 2.51.0
 
