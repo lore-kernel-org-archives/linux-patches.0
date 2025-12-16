@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8715A39656B;
-	Tue, 16 Dec 2025 12:31:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0D6396573;
+	Tue, 16 Dec 2025 12:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888318; cv=none; b=ec1PQytcUBQSvmqhRJGQ4gXPsCDWG40q0gb7bBgy7a/NsCGuOsBIseEXBzpA8PEsfkKuT+beBpggv8Gpevs29JfBDerYnH5jt0Mwgzou6O+0PcYeZOUfGGQQTQFvgFYfAsL6+6lboDiqAgnZ8lhXlUs7vunw9Rxo+WVTLSo2xoA=
+	t=1765888322; cv=none; b=mJC+ArFrOc8O5Aaz44DRZKvOrEa7rFbkeqOiUC57mpW63WFphknZc0m+pcyKWrz2ivcEQ3Lz7TOCENKQsc7tHeN1sgWd21XUZwzq09GrEl2x2Pv8noAFQcLMpx82sFQUkwL68DKiGUw/kLe9fiio3tGevnWNWNox6++gwKwbMU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888318; c=relaxed/simple;
-	bh=lyoglxECy02AR0O2KOrjHKTxrU7klFHmrEqPU5lRy7c=;
+	s=arc-20240116; t=1765888322; c=relaxed/simple;
+	bh=qiFabA/5MrvwfUOTBw0XKa8tYvMRtD0oX0mN3EcrV8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jyx4ch3be8pTD/aTMQuVsG75Pn5467bb9T7BWv4KM754YTsRAtsll/YYv3IQUemXXsdo6UhKsn21EYv7aYpTG7vJtNAl0njdfGUTvWVAbO8Dazr79LmPCYAIf+//YvYFmEHkY1xMva8UmaxU58Ut6yQCl07lv9otUgjlScZBNTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jVkMLS6T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S1FN3r5QQtMC/pxi/9n4h2WfFANPTeJ8BjoJUmBEDwkHsIptyoiKdXdQu/0VgCDlNnpReClAeqpwl1y3hmtStyWYiMm3ttmOpF1qPTgdFVm4dG5aUW+lNvGR9r4uJW1zeSMxLKL2KJ1Jtt8mcumzf6/kmSWKZWj6CM+u9rLPdDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DX6dSIZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jVkMLS6T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDAD2C4CEF1;
-	Tue, 16 Dec 2025 12:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DX6dSIZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D03C4CEF1;
+	Tue, 16 Dec 2025 12:32:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888318;
-	bh=lyoglxECy02AR0O2KOrjHKTxrU7klFHmrEqPU5lRy7c=;
+	s=korg; t=1765888322;
+	bh=qiFabA/5MrvwfUOTBw0XKa8tYvMRtD0oX0mN3EcrV8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jVkMLS6TGvQw6Y2TaRzFzcq+90QgcQFF3LkGSXzVfD1bYajRo6e2HFKCyufauRGre
-	 m/bwIwVLXwAJFhNxieMUdLDVP1y5bI7M91oWPNcZMpDsM7cgri70ECS5vsN9x5dEfz
-	 FEoNHHou7rsC5wUY+8RWzw7spSWCSyO+L0fhvFyA=
+	b=DX6dSIZHI9oftLvnGzo/Z7a/Pb8sTcSNwC7KzhMw7gNQJoBURcLE0aFXQYtPVByPa
+	 a49+cUJqWAOk71XFGpssuL14qHwlH4LJYGQoAL4IuvtQv0hNT0Uvtjc8kdMilt5E3D
+	 pDHxqvf0vOZWxiCnI4Crr/xtC514dU/+OcYeyrik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai@fnnas.com>,
-	Li Nan <linan122@huawei.com>,
+	Johan Hovold <johan@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 499/614] md/raid5: fix IO hang when array is broken with IO inflight
-Date: Tue, 16 Dec 2025 12:14:26 +0100
-Message-ID: <20251216111419.449371626@linuxfoundation.org>
+Subject: [PATCH 6.18 500/614] clk: keystone: fix compile testing
+Date: Tue, 16 Dec 2025 12:14:27 +0100
+Message-ID: <20251216111419.485470440@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,97 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai@fnnas.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit a913d1f6a7f607c110aeef8b58c8988f47a4b24e ]
+[ Upstream commit b276445e98fe28609688fb85b89a81b803910e63 ]
 
-Following test can cause IO hang:
+Some keystone clock drivers can be selected when COMPILE_TEST is
+enabled but since commit b745c0794e2f ("clk: keystone: Add sci-clk
+driver support") they are never actually built.
 
-mdadm -CvR /dev/md0 -l10 -n4 /dev/sd[abcd] --assume-clean --chunk=64K --bitmap=none
-sleep 5
-echo 1 > /sys/block/sda/device/delete
-echo 1 > /sys/block/sdb/device/delete
-echo 1 > /sys/block/sdc/device/delete
-echo 1 > /sys/block/sdd/device/delete
+Enable compile testing by allowing the build system to process the
+keystone drivers.
 
-dd if=/dev/md0 of=/dev/null bs=8k count=1 iflag=direct
-
-Root cause:
-
-1) all disks removed, however all rdevs in the array is still in sync,
-IO will be issued normally.
-
-2) IO failure from sda, and set badblocks failed, sda will be faulty
-and MD_SB_CHANGING_PENDING will be set.
-
-3) error recovery try to recover this IO from other disks, IO will be
-issued to sdb, sdc, and sdd.
-
-4) IO failure from sdb, and set badblocks failed again, now array is
-broken and will become read-only.
-
-5) IO failure from sdc and sdd, however, stripe can't be handled anymore
-because MD_SB_CHANGING_PENDING is set:
-
-handle_stripe
- handle_stripe
- if (test_bit MD_SB_CHANGING_PENDING)
-  set_bit STRIPE_HANDLE
-  goto finish
-  // skip handling failed stripe
-
-release_stripe
- if (test_bit STRIPE_HANDLE)
-  list_add_tail conf->hand_list
-
-6) later raid5d can't handle failed stripe as well:
-
-raid5d
- md_check_recovery
-  md_update_sb
-   if (!md_is_rdwr())
-    // can't clear pending bit
-    return
- if (test_bit MD_SB_CHANGING_PENDING)
-  break;
-  // can't handle failed stripe
-
-Since MD_SB_CHANGING_PENDING can never be cleared for read-only array,
-fix this problem by skip this checking for read-only array.
-
-Link: https://lore.kernel.org/linux-raid/20251117085557.770572-3-yukuai@fnnas.com
-Fixes: d87f064f5874 ("md: never update metadata when array is read-only.")
-Signed-off-by: Yu Kuai <yukuai@fnnas.com>
-Reviewed-by: Li Nan <linan122@huawei.com>
+Fixes: b745c0794e2f ("clk: keystone: Add sci-clk driver support")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/clk/Makefile | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 24b32a0c95b40..8b5f8a12d4179 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -4956,7 +4956,8 @@ static void handle_stripe(struct stripe_head *sh)
- 		goto finish;
- 
- 	if (s.handle_bad_blocks ||
--	    test_bit(MD_SB_CHANGE_PENDING, &conf->mddev->sb_flags)) {
-+	    (md_is_rdwr(conf->mddev) &&
-+	     test_bit(MD_SB_CHANGE_PENDING, &conf->mddev->sb_flags))) {
- 		set_bit(STRIPE_HANDLE, &sh->state);
- 		goto finish;
- 	}
-@@ -6768,7 +6769,8 @@ static void raid5d(struct md_thread *thread)
- 		int batch_size, released;
- 		unsigned int offset;
- 
--		if (test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
-+		if (md_is_rdwr(mddev) &&
-+		    test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags))
- 			break;
- 
- 		released = release_stripe_list(conf, conf->temp_inactive_list);
+diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+index b74a1767ca278..61ec08404442b 100644
+--- a/drivers/clk/Makefile
++++ b/drivers/clk/Makefile
+@@ -125,8 +125,7 @@ obj-$(CONFIG_ARCH_HISI)			+= hisilicon/
+ obj-y					+= imgtec/
+ obj-y					+= imx/
+ obj-y					+= ingenic/
+-obj-$(CONFIG_ARCH_K3)			+= keystone/
+-obj-$(CONFIG_ARCH_KEYSTONE)		+= keystone/
++obj-y					+= keystone/
+ obj-y					+= mediatek/
+ obj-$(CONFIG_ARCH_MESON)		+= meson/
+ obj-y					+= microchip/
 -- 
 2.51.0
 
