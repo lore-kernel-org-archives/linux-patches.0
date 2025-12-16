@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30AB335CBB2;
-	Tue, 16 Dec 2025 12:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B518935BDD4;
+	Tue, 16 Dec 2025 12:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887318; cv=none; b=uufXCu/CUz5pXfRLjVws/nBmIrigQd8Rgj0V9oyGvoDw++Nr/AzXMTz8XhZZLiDZ5YhXJw6UHwYLkTzB8i6JTDuwyGjZ3zd8uSMRn/0jHX6TJnadaA0Qb7Mg+3BqFDnI60wGHcavo5F3GoS30mfX5xN92qC5WKQ/O5kQkMnyC0g=
+	t=1765887322; cv=none; b=l+J8vCX3c2nFp79o+EwIPEmD81fWLw5uAUdzKwHdEUET+NLzQvmBXxCAhnPyfHwYrVqso2rT9BcMMg+x40vX0rboLailrVmJ6F3CR9YBTlFmLJnhXH2oSKN2zqH/nkmmGayV8SOmFp/CKbREWG0vsl5KU0y4VdiiwFleksu9HNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887318; c=relaxed/simple;
-	bh=R9UJ24gZ5AK6CROSITZymQm1wHhZuDzMOJDVkUjD0DU=;
+	s=arc-20240116; t=1765887322; c=relaxed/simple;
+	bh=0P5TH3Ql91VnPvIg+V23ILPzGaz3FwnFkQHOKhJPYMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NKISpnU42ifn2O758aFUfs6Ke6Kh97UEM0WnDXrio2muHcqFQxM5HUfNfynPuBU821o72ZPNJVdMuhRwqolYnOuFQoEOn9vwiFpd18B+yebEAxHCB0MEJhyhF65/1yWa096pFdLaFFs/q61r3g4hVslgi8qq9uqnBY13Cpwl68c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hbgxex0b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AqSzsoGlYGDY3AqCHcLBMZjalIW1Q5nbsfQu6KJYbk+cal53lg150T6o1m9xlT/onbLr53xbK8oJ10nEVvOHH7uW3KZ4y+CuG9UOi0cO52RZm1SPTJ+3n2TJa+FKKFbWDKJCKnXy1SB54IwPEmFeIIB0zzQw1NMAmQU2+CVI764=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vCIOMwaU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hbgxex0b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913E5C4CEF1;
-	Tue, 16 Dec 2025 12:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vCIOMwaU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CBFC4CEF1;
+	Tue, 16 Dec 2025 12:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887318;
-	bh=R9UJ24gZ5AK6CROSITZymQm1wHhZuDzMOJDVkUjD0DU=;
+	s=korg; t=1765887321;
+	bh=0P5TH3Ql91VnPvIg+V23ILPzGaz3FwnFkQHOKhJPYMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbgxex0bMGBCDz4jIgfSi7N0N+1ZSLLuckl34i/DXX/SqcrZHAyu9u/FYq6/Bf7a6
-	 PxdItrVzTHeDhbAiobEhnC85L1g7Gs1YrZa/fZ2MU4mhDSDQNJJAPib1kHJvFqSguq
-	 sZAPlkjQxkdRVWEhKruBUDjXZsXSVfgTz9bRn7+8=
+	b=vCIOMwaU/I9kJ3SE/okQaPjNzoPECqVGKnnO3undpxKpcGPYFWSRm1yL0igtnL024
+	 dIlAGySj3sP5xVLeBBOKWfbhtnLFWq17Rs/QItIaoLBnDgqZzp0FGdYStZE0FKfiOi
+	 bD6mXtkLJHE0ckTAky79mCAZR5QBslb8a3Ioox5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ketil Johnsen <ketil.johnsen@arm.com>,
+	Lars-Ivar Hesselberg Simonsen <lars-ivar.simonsen@arm.com>,
 	Boris Brezillon <boris.brezillon@collabora.com>,
 	Liviu Dudau <liviu.dudau@arm.com>,
-	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 193/614] drm/panthor: Fix race with suspend during unplug
-Date: Tue, 16 Dec 2025 12:09:20 +0100
-Message-ID: <20251216111408.363520520@linuxfoundation.org>
+Subject: [PATCH 6.18 194/614] drm/panthor: Fix UAF on kernel BO VA nodes
+Date: Tue, 16 Dec 2025 12:09:21 +0100
+Message-ID: <20251216111408.400018272@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,56 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ketil Johnsen <ketil.johnsen@arm.com>
+From: Boris Brezillon <boris.brezillon@collabora.com>
 
-[ Upstream commit 08be57e6e8aa20ea5a6dd2552e38ac168d6a9b11 ]
+[ Upstream commit 98dd5143447af0ee33551776d8b2560c35d0bc4a ]
 
-There is a race between panthor_device_unplug() and
-panthor_device_suspend() which can lead to IRQ handlers running on a
-powered down GPU. This is how it can happen:
-- unplug routine calls drm_dev_unplug()
-- panthor_device_suspend() can now execute, and will skip a lot of
-  important work because the device is currently marked as unplugged.
-- IRQs will remain active in this case and IRQ handlers can therefore
-  try to access a powered down GPU.
+If the MMU is down, panthor_vm_unmap_range() might return an error.
+We expect the page table to be updated still, and if the MMU is blocked,
+the rest of the GPU should be blocked too, so no risk of accessing
+physical memory returned to the system (which the current code doesn't
+cover for anyway).
 
-The fix is simply to take the PM ref in panthor_device_unplug() a
-little bit earlier, before drm_dev_unplug().
+Proceed with the rest of the cleanup instead of bailing out and leaving
+the va_node inserted in the drm_mm, which leads to UAF when other
+adjacent nodes are removed from the drm_mm tree.
 
-Signed-off-by: Ketil Johnsen <ketil.johnsen@arm.com>
-Fixes: 5fe909cae118a ("drm/panthor: Add the device logical block")
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reported-by: Lars-Ivar Hesselberg Simonsen <lars-ivar.simonsen@arm.com>
+Closes: https://gitlab.freedesktop.org/panfrost/linux/-/issues/57
+Fixes: 8a1cc07578bf ("drm/panthor: Add GEM logical block")
+Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
 Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251022103242.1083311-1-ketil.johnsen@arm.com
+Link: https://patch.msgid.link/20251031154818.821054-2-boris.brezillon@collabora.com
 Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_device.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panthor/panthor_gem.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_device.c b/drivers/gpu/drm/panthor/panthor_device.c
-index 81df49880bd87..962a10e00848e 100644
---- a/drivers/gpu/drm/panthor/panthor_device.c
-+++ b/drivers/gpu/drm/panthor/panthor_device.c
-@@ -83,6 +83,8 @@ void panthor_device_unplug(struct panthor_device *ptdev)
+diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
+index 3f43686f01958..14ed09d700f2f 100644
+--- a/drivers/gpu/drm/panthor/panthor_gem.c
++++ b/drivers/gpu/drm/panthor/panthor_gem.c
+@@ -86,7 +86,6 @@ static void panthor_gem_free_object(struct drm_gem_object *obj)
+ void panthor_kernel_bo_destroy(struct panthor_kernel_bo *bo)
+ {
+ 	struct panthor_vm *vm;
+-	int ret;
+ 
+ 	if (IS_ERR_OR_NULL(bo))
  		return;
- 	}
+@@ -94,18 +93,11 @@ void panthor_kernel_bo_destroy(struct panthor_kernel_bo *bo)
+ 	vm = bo->vm;
+ 	panthor_kernel_bo_vunmap(bo);
  
-+	drm_WARN_ON(&ptdev->base, pm_runtime_get_sync(ptdev->base.dev) < 0);
-+
- 	/* Call drm_dev_unplug() so any access to HW blocks happening after
- 	 * that point get rejected.
- 	 */
-@@ -93,8 +95,6 @@ void panthor_device_unplug(struct panthor_device *ptdev)
- 	 */
- 	mutex_unlock(&ptdev->unplug.lock);
- 
--	drm_WARN_ON(&ptdev->base, pm_runtime_get_sync(ptdev->base.dev) < 0);
+-	if (drm_WARN_ON(bo->obj->dev,
+-			to_panthor_bo(bo->obj)->exclusive_vm_root_gem != panthor_vm_root_gem(vm)))
+-		goto out_free_bo;
 -
- 	/* Now, try to cleanly shutdown the GPU before the device resources
- 	 * get reclaimed.
- 	 */
+-	ret = panthor_vm_unmap_range(vm, bo->va_node.start, bo->va_node.size);
+-	if (ret)
+-		goto out_free_bo;
+-
++	drm_WARN_ON(bo->obj->dev,
++		    to_panthor_bo(bo->obj)->exclusive_vm_root_gem != panthor_vm_root_gem(vm));
++	panthor_vm_unmap_range(vm, bo->va_node.start, bo->va_node.size);
+ 	panthor_vm_free_va(vm, &bo->va_node);
+ 	drm_gem_object_put(bo->obj);
+-
+-out_free_bo:
+ 	panthor_vm_put(vm);
+ 	kfree(bo);
+ }
 -- 
 2.51.0
 
