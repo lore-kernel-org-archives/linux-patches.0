@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A408D34B1BE;
-	Tue, 16 Dec 2025 12:20:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECBC34C14C;
+	Tue, 16 Dec 2025 12:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887628; cv=none; b=bztGlBrU80Rk4a9+5j9zhpKRnmizERr0WnoweTLdVcY/Q9mlN9sy8hlhFIDbl4wttWQKZrb/08wdM9zkiOHVTF3oxeaOpBMN9w6Jtvf2pN13Pwfe7cOe9diWoat/fgNhoE9u7tai1VRqZG6lSzTc1fl7GgTEZKpcgTBt+OE/qEY=
+	t=1765887631; cv=none; b=jnze5UVBKLQ8SKOE93frKvpDkLZ00qeWFS8beIDzr8NUcYrG+170E96DTAFd3ZT8/YV/3KV6l/+jurdgpUUD/eZJLLTcxgX80iSgvBDcDyXpAI3NT00eJ53Egwo54HpoR9a1qnAY6RRNTEEdCiAP3lb7up/MyDsMLokBBDoJgPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887628; c=relaxed/simple;
-	bh=NWaFInxXgXVDH4n1Ouh/BRGieONpq2ruUMFnT2BxhYg=;
+	s=arc-20240116; t=1765887631; c=relaxed/simple;
+	bh=boAQcO+JropKPwhiRk9ebMDNspOOhPiltJU8jsIt0+4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=a2WFzrd5vDDQeIUGgF2/Nx05i5u3+pa6wsvoRvTj9JYiEaB/Ti0/FEbJ8KPfmVaLg6XU6DZMrjZ/VNxpDuL9pmpF4ECQKplcfmA5KUJrq41t9BqlrOU+syVlS52cJpp7hkzaBa3x87o21nmQ83Pfr2uK5qGzWMC3d86Py9HeVPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8AIQVcA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OLHiG2pnzRuFdP5DrIBhXWKSXrOTdfOwYKtmG9C1PoODer0/81QWQezdJqHy2MQSEHSaYVPkNuiQANhdz/A9+QOXQ8a5lyvpCBR0FUCQAzBTAV5JdsPDUqnbpfKTnruzqMNa+LYn/5CFxV168TcdVxA3UdUVTajas3TC1jXy7vM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSHgPin7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8AIQVcA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C432C4CEF1;
-	Tue, 16 Dec 2025 12:20:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSHgPin7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23E5AC4CEF1;
+	Tue, 16 Dec 2025 12:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887628;
-	bh=NWaFInxXgXVDH4n1Ouh/BRGieONpq2ruUMFnT2BxhYg=;
+	s=korg; t=1765887631;
+	bh=boAQcO+JropKPwhiRk9ebMDNspOOhPiltJU8jsIt0+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8AIQVcAyAs2yc68R22F40l73qSbapfXie4+23s9hHTCDcyIBEmVrLJPyqPe/ekmy
-	 gSxUU7zrH9mXZY5P+cT71l49ct467BD/frNfYv/496YK+NrPW3InRnjsnqCB0DVhbc
-	 wyhv0rsk1o3w1e1/R1TPFtN8lUMpYnC4owAGyg7I=
+	b=PSHgPin7/BFPFf6oV+pzQGXBxcRi+7ZEPcvZz963WT+49BRvzUbC7Zj2JlDkL8Gem
+	 fQN4tL+jFGfjiv1Nw2qXsKsFhxrDgp0smGC08zhwUizHAqdcx8zkdpVz2DPid+x/mP
+	 0Y8Y6fGp2YGnG7ZTzWv5ip7+Xah5nOm9k8NLkICc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	syzbot+b0cff308140f79a9c4cb@syzkaller.appspotmail.com,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Sahil Chandna <chandna.sahil@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 290/614] kbuild: dont enable CC_CAN_LINK if the dummy program generates warnings
-Date: Tue, 16 Dec 2025 12:10:57 +0100
-Message-ID: <20251216111411.879366724@linuxfoundation.org>
+Subject: [PATCH 6.18 291/614] bpf: Prevent nesting overflow in bpf_try_get_buffers
+Date: Tue, 16 Dec 2025 12:10:58 +0100
+Message-ID: <20251216111411.915453348@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -46,58 +48,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Sahil Chandna <chandna.sahil@gmail.com>
 
-[ Upstream commit d81d9d389b9b73acd68f300c8889c7fa1acd4977 ]
+[ Upstream commit c1da3df7191f1b4df9256bcd30d78f78201e1d17 ]
 
-It is possible that the kernel toolchain generates warnings when used
-together with the system toolchain. This happens for example when the
-older kernel toolchain does not handle new versions of sframe debug
-information. While these warnings where ignored during the evaluation
-of CC_CAN_LINK, together with CONFIG_WERROR the actual userprog build
-will later fail.
+bpf_try_get_buffers() returns one of multiple per-CPU buffers based on a
+per-CPU nesting counter. This mechanism expects that buffers are not
+endlessly acquired before being returned. migrate_disable() ensures that a
+task remains on the same CPU, but it does not prevent the task from being
+preempted by another task on that CPU.
 
-Example warning:
+Without disabled preemption, a task may be preempted while holding a
+buffer, allowing another task to run on same CPU and acquire an
+additional buffer. Several such preemptions can cause the per-CPU
+nest counter to exceed MAX_BPRINTF_NEST_LEVEL and trigger the warning in
+bpf_try_get_buffers(). Adding preempt_disable()/preempt_enable() around
+buffer acquisition and release prevents this task preemption and
+preserves the intended bounded nesting behavior.
 
-.../x86_64-linux/13.2.0/../../../../x86_64-linux/bin/ld:
-error in /lib/../lib64/crt1.o(.sframe); no .sframe will be created
-collect2: error: ld returned 1 exit status
-
-Make sure that the very simple example program does not generate
-warnings already to avoid breaking the userprog compilations.
-
-Fixes: ec4a3992bc0b ("kbuild: respect CONFIG_WERROR for linker and assembler")
-Fixes: 3f0ff4cc6ffb ("kbuild: respect CONFIG_WERROR for userprogs")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://patch.msgid.link/20251114-kbuild-userprogs-bits-v3-1-4dee0d74d439@linutronix.de
-Signed-off-by: Nicolas Schier <nsc@kernel.org>
+Reported-by: syzbot+b0cff308140f79a9c4cb@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68f6a4c8.050a0220.1be48.0011.GAE@google.com/
+Fixes: 4223bf833c849 ("bpf: Remove preempt_disable in bpf_try_get_buffers")
+Suggested-by: Yonghong Song <yonghong.song@linux.dev>
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Sahil Chandna <chandna.sahil@gmail.com>
+Link: https://lore.kernel.org/r/20251114064922.11650-1-chandna.sahil@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/cc-can-link.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/helpers.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/scripts/cc-can-link.sh b/scripts/cc-can-link.sh
-index 6efcead319898..e67fd8d7b6841 100755
---- a/scripts/cc-can-link.sh
-+++ b/scripts/cc-can-link.sh
-@@ -1,7 +1,7 @@
- #!/bin/sh
- # SPDX-License-Identifier: GPL-2.0
- 
--cat << "END" | $@ -x c - -o /dev/null >/dev/null 2>&1
-+cat << "END" | $@ -Werror -Wl,--fatal-warnings -x c - -o /dev/null >/dev/null 2>&1
- #include <stdio.h>
- int main(void)
+diff --git a/kernel/bpf/helpers.c b/kernel/bpf/helpers.c
+index e4007fea49091..81ef159ef89bd 100644
+--- a/kernel/bpf/helpers.c
++++ b/kernel/bpf/helpers.c
+@@ -777,9 +777,11 @@ int bpf_try_get_buffers(struct bpf_bprintf_buffers **bufs)
  {
+ 	int nest_level;
+ 
++	preempt_disable();
+ 	nest_level = this_cpu_inc_return(bpf_bprintf_nest_level);
+ 	if (WARN_ON_ONCE(nest_level > MAX_BPRINTF_NEST_LEVEL)) {
+ 		this_cpu_dec(bpf_bprintf_nest_level);
++		preempt_enable();
+ 		return -EBUSY;
+ 	}
+ 	*bufs = this_cpu_ptr(&bpf_bprintf_bufs[nest_level - 1]);
+@@ -792,6 +794,7 @@ void bpf_put_buffers(void)
+ 	if (WARN_ON_ONCE(this_cpu_read(bpf_bprintf_nest_level) == 0))
+ 		return;
+ 	this_cpu_dec(bpf_bprintf_nest_level);
++	preempt_enable();
+ }
+ 
+ void bpf_bprintf_cleanup(struct bpf_bprintf_data *data)
 -- 
 2.51.0
 
