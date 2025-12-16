@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E131355026;
-	Tue, 16 Dec 2025 11:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D41E355029;
+	Tue, 16 Dec 2025 11:50:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885834; cv=none; b=LxU1VyGoeNYWs+3OqSU/YAD4vhkwY4Oyx/ZEiqFVgCcNqXYjOXG4FEASLCr7n3M6DSI++amo/wfFp+WZXX66AwYyxDwz1C5zPvsL3xYB0xr03CgGV2sg0cUwjCkWB2fxTA7aUJMMkJjuXB9MdOMseLkoUNl1AN4tQZnyD4tJttU=
+	t=1765885837; cv=none; b=YMIgjwiYAXK1Pl6eyeSZ1SmIuWfFTSu+J6v5TVb8z6qDZu0Jdw37viQLQ9t10AvxIVRTQ/2dbxLb0MF597YkDa3zr81k5YnwVbtjqwfb1HA6rEGQEad57RcFTMIAF1EUpOymzlIWN9cqHkaHqnTYYQCzNA+5zBvZZF4EPej3Mcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885834; c=relaxed/simple;
-	bh=M9vL8820d+naSEvLxwZOjOeHcr1S//+zWn1JbysWRSk=;
+	s=arc-20240116; t=1765885837; c=relaxed/simple;
+	bh=VmyFyjD9lrbuDlYD8A99+8O4b0FCNYalAEXOGWdnxV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bN0t3jMWDyZXCzM8NA5tTRlwGIFflLfbdiGCUmpmIokkPb0UiA/7jYCoJ2L3TNKMYlRHz6kv4nkSHI+GyhS7bSxuulUR8kzhQXFHjU3gYBT9ays+s2XgxCiwR4iheC0kDuppZ7Sii9nxrkeciOp9H69593EuY/xTV4kjoOZQxJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vmj2mSIl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeiR5EJxZ3JVCOt0gqAS8zMqV8uiw3C+Eg+v7UNfXIu/tHtDbIClxEmFd7tiLcN6W+N/YR6pc1zLkFdvvLBfUgVy0/m3FVLdL9bWo9uVocvrrSMq3nH19lhFN2lgl59BYdYVUdvDe7wYMJKJpQVy/ui6r5xpTP98BdkKp3wW4H4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iHNGUvB/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vmj2mSIl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD730C4CEF1;
-	Tue, 16 Dec 2025 11:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iHNGUvB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB055C4CEF1;
+	Tue, 16 Dec 2025 11:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885834;
-	bh=M9vL8820d+naSEvLxwZOjOeHcr1S//+zWn1JbysWRSk=;
+	s=korg; t=1765885837;
+	bh=VmyFyjD9lrbuDlYD8A99+8O4b0FCNYalAEXOGWdnxV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vmj2mSIlEkUMrMstJELe3ohhaSV028SzqPmhYLkRO8h2pj3RkEc+YGdd9LRPVHaVk
-	 7nxY05tdJHlitnaj8WdCh+otJ70MDV1L8BQyspqQ2tpTo2VP5OXDUodoPcKIadl1TO
-	 W+gNu82HK7I4WfaEUXSfe6wNoGm7HWUtU8l1sh8A=
+	b=iHNGUvB/beVc1xn72g/j+qWc5tlUJMmtyouf5zKsUO/KxfjCKwFdZB/WbUEG4Jg4w
+	 /8fNuXVzqywCrqsdd6BwdrQ6+IPUEQipiU0OWA6iX2B4hIBZYfQugJ/DmAfcaj0g7W
+	 Zat33atM1LtTHlpNI4tby9nxJl/UFwJ2rxYNvyrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Huiwen He <hehuiwen@kylinos.cn>,
 	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 259/507] drm/msm: Fix NULL pointer dereference in crashstate_get_vm_logs()
-Date: Tue, 16 Dec 2025 12:11:40 +0100
-Message-ID: <20251216111354.872612549@linuxfoundation.org>
+Subject: [PATCH 6.17 260/507] drm/msm: fix missing NULL check after kcalloc in crashstate_get_bos()
+Date: Tue, 16 Dec 2025 12:11:41 +0100
+Message-ID: <20251216111354.908699523@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,40 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Huiwen He <hehuiwen@kylinos.cn>
 
-[ Upstream commit 3099e0247e3217e1b39c1c61766e06ec3d13835f ]
+[ Upstream commit 3065e6a4d3594b42dae6176b3e2c0c3563cf94b8 ]
 
-crashstate_get_vm_logs() did not check the return value of
-kmalloc_array(). In low-memory situations, kmalloc_array() may return
-NULL, leading to a NULL pointer dereference when the function later
-accesses state->vm_logs.
+The crashstate_get_bos() function allocates memory for `state->bos`
+using kcalloc(), but the vmbind path does not check for allocation
+failure before dereferencing it in the following drm_gpuvm_for_each_va()
+loop. This could lead to a NULL pointer dereference if memory allocation
+fails.
 
-Fix this by checking the return value of kmalloc_array() and setting
-state->nr_vm_logs to 0 if allocation fails.
+Fix this by wrapping the drm_gpuvm_for_each_va() loop with a NULL check
+on state->bos, similar to the safety check in the non-vmbind path.
 
-Fixes: 9edc52967cc7 ("drm/msm: Add VM logging for VM_BIND updates")
+Fixes: af9aa6f316b3d ("drm/msm: Crashdump support for sparse")
 Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Patchwork: https://patchwork.freedesktop.org/patch/687555/
+Patchwork: https://patchwork.freedesktop.org/patch/687556/
 Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/msm/msm_gpu.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 26c5ce897cbbd..8f933c1fe4bfa 100644
+index 8f933c1fe4bfa..d5f8df3110cef 100644
 --- a/drivers/gpu/drm/msm/msm_gpu.c
 +++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -348,6 +348,10 @@ static void crashstate_get_vm_logs(struct msm_gpu_state *state, struct msm_gem_v
+@@ -287,16 +287,17 @@ static void crashstate_get_bos(struct msm_gpu_state *state, struct msm_gem_submi
  
- 	state->vm_logs = kmalloc_array(
- 		state->nr_vm_logs, sizeof(vm->log[0]), GFP_KERNEL);
-+	if (!state->vm_logs) {
-+		state->nr_vm_logs = 0;
-+	}
-+
- 	for (int i = 0; i < state->nr_vm_logs; i++) {
- 		int idx = (i + first) & vm_log_mask;
+ 		state->bos = kcalloc(cnt, sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
  
+-		drm_gpuvm_for_each_va (vma, submit->vm) {
+-			bool dump = rd_full || (vma->flags & MSM_VMA_DUMP);
++		if (state->bos)
++			drm_gpuvm_for_each_va(vma, submit->vm) {
++				bool dump = rd_full || (vma->flags & MSM_VMA_DUMP);
+ 
+-			/* Skip MAP_NULL/PRR VMAs: */
+-			if (!vma->gem.obj)
+-				continue;
++				/* Skip MAP_NULL/PRR VMAs: */
++				if (!vma->gem.obj)
++					continue;
+ 
+-			msm_gpu_crashstate_get_bo(state, vma->gem.obj, vma->va.addr,
+-						  dump, vma->gem.offset, vma->va.range);
+-		}
++				msm_gpu_crashstate_get_bo(state, vma->gem.obj, vma->va.addr,
++							  dump, vma->gem.offset, vma->va.range);
++			}
+ 
+ 		drm_exec_fini(&exec);
+ 	} else {
 -- 
 2.51.0
 
