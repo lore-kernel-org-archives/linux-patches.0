@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B946736A032;
-	Tue, 16 Dec 2025 12:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9760B36B055;
+	Tue, 16 Dec 2025 12:16:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887410; cv=none; b=axOskbs6vGFPNEQloPFbtg/o39ThDXbutoVO8sp3mg+RLAfQhl5BoGQbQXjMrCNl0uDWpzpy9p2R+pvgrE833k/EAfv22YNj0iVghXGdXe3Cef8EaIHKiF3hau19zxANlOICAdKfMM2dyrC4bT9JhFOKppYix4pS6PTduTLQW0A=
+	t=1765887413; cv=none; b=e1p2+xBAAfx5Kik+j6v+R91KvBRuTg/KpWf+gDvqRY4ZNvRgQXXDwtKjEqYOam5AQUYLRdqNQe5TTJs/hWhtlJtY6A5UUe5ApL/lRhBpKrP7Yi9hkH2jaz1wx1Ig+jcmFRya6bJHEtd6/uW5w6uW7szIl8t3HkeD6N1BrlcigQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887410; c=relaxed/simple;
-	bh=xknIK75LFhSshsmJoSKP+5oT5sTmBlHExy6KsTeYPMs=;
+	s=arc-20240116; t=1765887413; c=relaxed/simple;
+	bh=nEWIP8PNlGncgQdyVplK9tfpkxYO4pngZPGiReLIecU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uhoTmEQzHb3NfLUwbyuumrekZpRf2exGbndSX2xLfT7WNL6Z/m2nCkosE72SKdaeqcNSXvC2VsULs9Mw7RL1FJ9XZIxqrzBPb8br1onuxQpXM1Inr6LsbhvFqLtv0boR6Tp7V4BZAjdRBLq98tE1fJMuAFTFQKvR2SeDtFCXjcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kFCGouWa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Otwh+BC/6bz6IgzoXTJyiUG760B3PM2iopEbyOfc1FReiOXWlmlCuGocVK4Cm7N7mR19p6nKpbYOPy9kyBiFxKJHPTtfgyck6t92+rnoTpcl0mDgmDlJOG5ZQJFEXNBDCsY03j6WDjh/oUxfTt3o70BTLnE88uLG3Qg7sca2tRo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uq/h6i0C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kFCGouWa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FD3C4CEF1;
-	Tue, 16 Dec 2025 12:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uq/h6i0C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 077D9C4CEF1;
+	Tue, 16 Dec 2025 12:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887410;
-	bh=xknIK75LFhSshsmJoSKP+5oT5sTmBlHExy6KsTeYPMs=;
+	s=korg; t=1765887413;
+	bh=nEWIP8PNlGncgQdyVplK9tfpkxYO4pngZPGiReLIecU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kFCGouWa/te56lCf6bYp7Pqhutny4HUAhXqmd3k0udrsMDtOYDkVdfeWyqLIVh11o
-	 is5rGtiyIx5GfpD8OzBmyOzi4lPTXBtI/cYy1Ey0iAyNyf3A09r1QXEDsMkbH+twCa
-	 yNTv1f34uqgoVL8N6TT8kdmBmkV4I/fCH2/Hq+bY=
+	b=Uq/h6i0CHNbzpT/zvZRFuJRvATtYxG4Z//2Hkm4evxenW88Z8lYby1YfEJE/+ZH29
+	 J0dBqWtFcgSeG6zoQJ1Yn4Y7ILdm6BMV9ZRIuVF9n7PI1LOoCxz2Oo499ShVipKN0E
+	 JIxmm2r5tOOQ+qHg6f+gd8Z8Udpefc9mKkjVfSr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
+	Kevin Hilman <khilman@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 222/614] io_uring: use WRITE_ONCE for user shared memory
-Date: Tue, 16 Dec 2025 12:09:49 +0100
-Message-ID: <20251216111409.417049379@linuxfoundation.org>
+Subject: [PATCH 6.18 205/614] ARM: dts: omap3: beagle-xm: Correct obsolete TWL4030 power compatible
+Date: Tue, 16 Dec 2025 12:09:32 +0100
+Message-ID: <20251216111408.804433856@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,50 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
 
-[ Upstream commit 93e197e524b14d185d011813b72773a1a49d932d ]
+[ Upstream commit f7f3bc18300a230e0f1bfb17fc8889435c1e47f5 ]
 
-IORING_SETUP_NO_MMAP rings remain user accessible even before the ctx
-setup is finalised, so use WRITE_ONCE consistently when initialising
-rings.
+The "ti,twl4030-power-beagleboard-xm" compatible string is obsolete and
+is not supported by any in-kernel driver. Currently, the kernel falls
+back to the second entry, "ti,twl4030-power-idle-osc-off", to bind a
+driver to this node.
 
-Fixes: 03d89a2de25bb ("io_uring: support for user allocated memory for rings/sqes")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Make this fallback explicit by removing the obsolete board-specific
+compatible. This preserves the existing functionality while making the
+DTS compliant with the new, stricter 'ti,twl.yaml' binding.
+
+Fixes: 9188883fd66e9 ("ARM: dts: Enable twl4030 off-idle configuration for selected omaps")
+Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+Link: https://lore.kernel.org/r/20250914192516.164629-3-jihed.chaibi.dev@gmail.com
+Signed-off-by: Kevin Hilman <khilman@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/ti/omap/omap3-beagle-xm.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 02339b74ba8d4..765abec2571f0 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3623,10 +3623,6 @@ static __cold int io_allocate_scq_urings(struct io_ring_ctx *ctx,
+diff --git a/arch/arm/boot/dts/ti/omap/omap3-beagle-xm.dts b/arch/arm/boot/dts/ti/omap/omap3-beagle-xm.dts
+index 08ee0f8ea68fd..71b39a923d37c 100644
+--- a/arch/arm/boot/dts/ti/omap/omap3-beagle-xm.dts
++++ b/arch/arm/boot/dts/ti/omap/omap3-beagle-xm.dts
+@@ -291,7 +291,7 @@ codec {
+ 		};
  
- 	if (!(ctx->flags & IORING_SETUP_NO_SQARRAY))
- 		ctx->sq_array = (u32 *)((char *)rings + sq_array_offset);
--	rings->sq_ring_mask = p->sq_entries - 1;
--	rings->cq_ring_mask = p->cq_entries - 1;
--	rings->sq_ring_entries = p->sq_entries;
--	rings->cq_ring_entries = p->cq_entries;
- 
- 	if (p->flags & IORING_SETUP_SQE128)
- 		size = array_size(2 * sizeof(struct io_uring_sqe), p->sq_entries);
-@@ -3649,6 +3645,12 @@ static __cold int io_allocate_scq_urings(struct io_ring_ctx *ctx,
- 		return ret;
- 	}
- 	ctx->sq_sqes = io_region_get_ptr(&ctx->sq_region);
-+
-+	memset(rings, 0, sizeof(*rings));
-+	WRITE_ONCE(rings->sq_ring_mask, ctx->sq_entries - 1);
-+	WRITE_ONCE(rings->cq_ring_mask, ctx->cq_entries - 1);
-+	WRITE_ONCE(rings->sq_ring_entries, ctx->sq_entries);
-+	WRITE_ONCE(rings->cq_ring_entries, ctx->cq_entries);
- 	return 0;
- }
- 
+ 		twl_power: power {
+-			compatible = "ti,twl4030-power-beagleboard-xm", "ti,twl4030-power-idle-osc-off";
++			compatible = "ti,twl4030-power-idle-osc-off";
+ 			ti,use_poweroff;
+ 		};
+ 	};
 -- 
 2.51.0
 
