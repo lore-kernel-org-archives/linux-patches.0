@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F6935F8A3;
-	Tue, 16 Dec 2025 12:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63ABF35F8A5;
+	Tue, 16 Dec 2025 12:15:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887331; cv=none; b=ReXOBrkwN/MkyEoQ1w8l6kXzgY0s31IvEz8vTRj769LbFMFMpaA4Ct1fa2wveyZXPuPfCnLyJ7qB0ZTlqsqHGU0k2ElK1ZXV2lyBLSojrGusSj0jmgiOq3RXnz+Q6ZqW+si0mOe9cOg8Ewf7X0FlhCceDthiqXFdj1vaxN/dguo=
+	t=1765887334; cv=none; b=ZfuLh+RHymiMGO5lVszjjI+UIfjUfJEFgrFKLQRF6YuDY7N483Fk2/dQuNBUYDf43n1fZVf/zfTOSme8Mg79TU6NH7iMYpXpDvLZLL/Kuj7K8Ryl4CxWEh8qAdU3PbEvU5RCQUWzdJsSttJA9kXCytLghtGeY064UadGEaXgHPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887331; c=relaxed/simple;
-	bh=WTkHMGCouxfVCFy/tTV7PQRWhjJAQqaaIinBf7KrM9E=;
+	s=arc-20240116; t=1765887334; c=relaxed/simple;
+	bh=s0VFVUDT//ekYxEneh0erJd+WMQFKwRjAdDu7GqewF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d+501pTUP4C4lrBKer8n2TQk6PZGUkM4rIUXRO8NWku+4ZwBECWobjN536/KuNhWhaUJPrJtAdIVoL53RTYdYcqFH1gJSjYodMrzSHr3BYrS0pjwAxAnxx3AiMexsXG5M8ku6mrPK/h00sVzKNNWrgAs25xIgOetB4t46SJsWMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MT7QcEA+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ToQQ+8hEK89oDC1f8vsX9ds0Kaf4/a+4U/e8o5TgtTBIERxCeVekAG/we5ZKuxqzXXaltuL+zdtjvmJTVa9syG8o0aT4s01jCETHFnhYzVQZtfYdBVnLugq5QqYM6RgbFyTEcec6qx9EDXKyVfN6hZQTy2uSc2A7TzK3uXZjngg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vlj7Gmja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MT7QcEA+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB53AC4CEF5;
-	Tue, 16 Dec 2025 12:15:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vlj7Gmja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A26A4C4CEF1;
+	Tue, 16 Dec 2025 12:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887331;
-	bh=WTkHMGCouxfVCFy/tTV7PQRWhjJAQqaaIinBf7KrM9E=;
+	s=korg; t=1765887334;
+	bh=s0VFVUDT//ekYxEneh0erJd+WMQFKwRjAdDu7GqewF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MT7QcEA+Tyd+pC91NwYbcE3yujnKE9sQLTXpVfjKAYXJy3I3Vdr9mQJEhkglS26HP
-	 tIu9gvzBUmWhFUjdG/TFZWUY79B2tDjkirz79NjGwvaYGna1u4gzN+OgkjR1bcrwhO
-	 PFTIw5oEREmNxktRgcK+oHhEjUDtEcA/FGfgWe0Y=
+	b=vlj7Gmjax554Nb8mP4wADTcvbKqkwPScQVZHpuCvjHpZzfRQjMt3gMnSkvLZ/0pA+
+	 600ppf06/vgeVU089puXR1USARPs9dhv8ukyUvo2p6wl2FaoaRcrpAQSquaQVtNIAC
+	 71jYIdGxo826Dx93F6qmOCChyTx9t+rE+U8+3Ohc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 170/614] cgroup: add cgroup namespace to tree after owner is set
-Date: Tue, 16 Dec 2025 12:08:57 +0100
-Message-ID: <20251216111407.508992138@linuxfoundation.org>
+Subject: [PATCH 6.18 197/614] ns: initialize ns_list_node for initial namespaces
+Date: Tue, 16 Dec 2025 12:09:24 +0100
+Message-ID: <20251216111408.516043338@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,40 +54,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 768b1565d9d1e1eebf7567f477f7f46c05a98a4d ]
+[ Upstream commit 3dd50c58664e2684bd610a57bf3ab713cbb0ea91 ]
 
-Otherwise we trip VFS_WARN_ON_ONC() in __ns_tree_add_raw().
+Make sure that the list is always initialized for initial namespaces.
 
-Link: https://patch.msgid.link/20251029-work-namespace-nstree-listns-v4-6-2e6f823ebdc0@kernel.org
-Fixes: 7c6059398533 ("cgroup: support ns lookup")
+Link: https://patch.msgid.link/20251029-work-namespace-nstree-listns-v4-8-2e6f823ebdc0@kernel.org
+Fixes: 885fc8ac0a4d ("nstree: make iterator generic")
 Tested-by: syzbot@syzkaller.appspotmail.com
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/ns_common.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/cgroup/namespace.c b/kernel/cgroup/namespace.c
-index fdbe57578e688..db9617556dd70 100644
---- a/kernel/cgroup/namespace.c
-+++ b/kernel/cgroup/namespace.c
-@@ -30,7 +30,6 @@ static struct cgroup_namespace *alloc_cgroup_ns(void)
- 	ret = ns_common_init(new_ns);
- 	if (ret)
- 		return ERR_PTR(ret);
--	ns_tree_add(new_ns);
- 	return no_free_ptr(new_ns);
+diff --git a/include/linux/ns_common.h b/include/linux/ns_common.h
+index 3a72c3f81eca4..71a5e28344d11 100644
+--- a/include/linux/ns_common.h
++++ b/include/linux/ns_common.h
+@@ -127,6 +127,7 @@ void __ns_common_free(struct ns_common *ns);
+ 	.ops			= to_ns_operations(&nsname),				\
+ 	.stashed		= NULL,							\
+ 	.__ns_ref		= REFCOUNT_INIT(refs),					\
++	.ns_list_node		= LIST_HEAD_INIT(nsname.ns.ns_list_node),		\
  }
  
-@@ -86,6 +85,7 @@ struct cgroup_namespace *copy_cgroup_ns(u64 flags,
- 	new_ns->ucounts = ucounts;
- 	new_ns->root_cset = cset;
- 
-+	ns_tree_add(new_ns);
- 	return new_ns;
- }
- 
+ #define ns_common_init(__ns)                     \
 -- 
 2.51.0
 
