@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A7434C13D;
-	Tue, 16 Dec 2025 12:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2843734C13D;
+	Tue, 16 Dec 2025 12:11:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887084; cv=none; b=iyxSZYZi9XsOCxSE320zPSrEPw2i50+FcTDaNfOHUktHu4NSjt5XdCxIe1p5ZW7hBtaRBQRw0MsaeElU2/h0DwYD0jQ8S0YQDfp26VGCGcfGZiPfIky8Ff1PpKvx8+7TO5q9MF7Wos+ooaWloZohqqvB2fm21n4QoFmEAfED6Fs=
+	t=1765887087; cv=none; b=bhX4v5+xTA9j4z/11ipT6nEHUVxPTOa0rHdTKf72HDBZKZGc30r0AQS7ZzdthE2TWjCjBHzCHimssWK1oC8fcZP76Lq5nyvR5TpfeOHFT95OeR+Qtb2TvTpY327Npp3HGPtYuvLt7kTbg5GbhgjKdCTbM0JFe0XNTT9GqSbXDO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887084; c=relaxed/simple;
-	bh=HlIwq5Y1V2G0ClfPxSAtGWUmtAIoFbqoY+hMxQsJftw=;
+	s=arc-20240116; t=1765887087; c=relaxed/simple;
+	bh=xeh3o3HL5iVkBL0FPXBOvNBoLh4Mx8PSZ4Antlgrwog=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L2OG0kKuta4wzXc7pGSWZPz8cexXIx5fghH0smeua4o1IOayKHLjoHWFjIumz7EzqvUWdl+2xURSNkF2l2DPfusdDuAD7p/xB5mQYMjon653kiqrThJ9iYG/elmXD2S8kXbLVQQ+NDlCW8X+Y1owiUnliF1EQDsUNMEtO7AGc6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wD2sw0Dc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t2mNydTtRPwNWQPX2Qn0fL9/vfeHlTPLVg1dpZ9qW3fxjkkug/ns/Oj3YlU2OOtCvBYG0tudue8okTCTPZ4i1Jmvg2MXxXzPQ0bf8JeW3w25jimOPdjtLqUeYcjHoWkMC7gQkaeMbCAlBlBfGHK+3ltSvMxb62jpH53AoaC0um0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PllEeBtV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wD2sw0Dc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA24C4CEF1;
-	Tue, 16 Dec 2025 12:11:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PllEeBtV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDB4C4CEF1;
+	Tue, 16 Dec 2025 12:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887083;
-	bh=HlIwq5Y1V2G0ClfPxSAtGWUmtAIoFbqoY+hMxQsJftw=;
+	s=korg; t=1765887087;
+	bh=xeh3o3HL5iVkBL0FPXBOvNBoLh4Mx8PSZ4Antlgrwog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wD2sw0DcrpnG0kDYzDsjjOjK069+g+Digwf9GGsvsIlG/DIgRqPGXtVBQHLzSRMQX
-	 i2ieUbSzCCG8OG840j0JCuZXuVDRojSQH/5h2MzKgwzDwY79c6gSslWB9YoEXfx/Jt
-	 2wHPxv8aJCgUQQFs62gwvAemoRNP7BM7eZjuwn3s=
+	b=PllEeBtVMUmhl6QymIzRjXT6LdPbC3SDVN10QlhZZ+0DYlljHXBGGsWLC2xilUezM
+	 8sDICGdhD9AEIH+QGb9SPcyiDhNrx6Uf9E+24sfltxhNIKimVjIp5qeY3cazTbyP4J
+	 D7p7CgYq2qKuM1O8cQ4svDveW6EqKYIyT52ltsFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Val Packett <val@packett.cool>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/614] arm64: dts: qcom: x1-dell-thena: Add missing pinctrl for eDP HPD
-Date: Tue, 16 Dec 2025 12:08:08 +0100
-Message-ID: <20251216111405.720178104@linuxfoundation.org>
+Subject: [PATCH 6.18 122/614] arm64: dts: qcom: x1-dell-thena: remove dp data-lanes
+Date: Tue, 16 Dec 2025 12:08:09 +0100
+Message-ID: <20251216111405.755688403@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,39 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Val Packett <val@packett.cool>
 
-[ Upstream commit 1bdfe3edd4c862f97ac65b60da1db999981fc52a ]
+[ Upstream commit 147d5eefab8f0e17e9951fb5e0c4c77bada34558 ]
 
-The commit a41d23142d87 ("arm64: dts: qcom: x1e80100-dell-xps13-9345:
-Add missing pinctrl for eDP HPD") has applied this change to a very
-similar machine, so apply it here too.
+The commit 458de584248a ("arm64: dts: qcom: x1e80100: move dp0/1/2
+data-lanes to SoC dtsi") has landed before this file was added, so
+the data-lanes lines here remained.
 
-This allows us not to rely on the boot firmware to set up the pinctrl
-for the eDP HPD line of the internal display.
+Remove them to enable 4-lane DP on the X1E Dell Inspiron/Latitude.
 
 Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Signed-off-by: Val Packett <val@packett.cool>
-Link: https://lore.kernel.org/r/20251012224706.14311-1-val@packett.cool
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251012224909.14988-1-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-index cc64558ed5e6f..9df66295660c3 100644
+index 9df66295660c3..847b678f040c0 100644
 --- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
 +++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-@@ -1039,6 +1039,9 @@ &mdss_dp1_out {
- &mdss_dp3 {
- 	/delete-property/ #sound-dai-cells;
+@@ -1023,7 +1023,6 @@ &mdss_dp0 {
+ };
  
-+	pinctrl-0 = <&edp0_hpd_default>;
-+	pinctrl-names = "default";
-+
- 	status = "okay";
+ &mdss_dp0_out {
+-	data-lanes = <0 1>;
+ 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+ };
  
- 	aux-bus {
+@@ -1032,7 +1031,6 @@ &mdss_dp1 {
+ };
+ 
+ &mdss_dp1_out {
+-	data-lanes = <0 1>;
+ 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+ };
+ 
 -- 
 2.51.0
 
