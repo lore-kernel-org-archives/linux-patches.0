@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B5534B434;
-	Tue, 16 Dec 2025 11:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04CA34B683;
+	Tue, 16 Dec 2025 11:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885262; cv=none; b=G8fX+LOTYlE96bjC9HUZl9iXhWNOrhYTm1fre4dl0i//2rBeqFuQZmgfsICfqjou9mRyEKj6jB+DPNUITe3oNu7Zgvh61/cI9WDm3JW5tLTj468oGFZm9Zgq6NcZtrdQqmVt7oXdPVwRe3++OLg3ABw0ZwTy88bNXOXdaAKbIso=
+	t=1765885265; cv=none; b=Zdp7lL5b81SMrBYxk2n2O+jMl3GZPBHSFM3QUfkwZCTCpdP4N/NvH55HNihwIjwUnggcn0+4xzPeYHZCOandu4PHCMbSB0h0Vnq82h9OXhmBpvz5MNUN6mP80UKqSQxX0xNmMNTTuvU0eEjYzpGQsirnpDQzqXlOfmdpqqEqWsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885262; c=relaxed/simple;
-	bh=mAX2t1LpXlYXBWxvdOE2MCz4qpD5/4WIRSk4INdNXCg=;
+	s=arc-20240116; t=1765885265; c=relaxed/simple;
+	bh=54Pqh2u1ZIviqCp4BocKOCR66Qlas7Ia7nlbITkSfuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L5Q8aoO/U08XGD9wDiHwtbcj/Iyw9bXMVbjGgsq6drDboZTdMivzkIBl2Kwuyb1LJZmoePsaUY86sXa75hHSvBzLj+fhaxyFHuvzSFLG//spL6EI3a9qr+EwI+0zauk0+yc0Pe3npuh+7e64rIMGS5ByeYLkstXrmJcMW9p4LPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OtG2d45p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tjfy86j+t+afPFIBa8NM6QHDC2fvKa1DFHqHZ2sOqDxFveNFTsBfH5HnrMW8UDav8BqJt7kIIUjhQ7uPZJWTKdPxLiFQbmi+1MBOR3QbkxXPTl+iXA16r4Yx8SGbECLKmjZeVnU5UGyN16xKqaeaYlLN79yINl1wkQ490S7XNa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQcE4ADC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OtG2d45p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165B4C4CEF1;
-	Tue, 16 Dec 2025 11:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQcE4ADC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AE1C4CEF1;
+	Tue, 16 Dec 2025 11:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885262;
-	bh=mAX2t1LpXlYXBWxvdOE2MCz4qpD5/4WIRSk4INdNXCg=;
+	s=korg; t=1765885265;
+	bh=54Pqh2u1ZIviqCp4BocKOCR66Qlas7Ia7nlbITkSfuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OtG2d45p5dQd4OJR5zmvuUS/dbO428fhThaxgiw24E7i5S27m1gVaWga1hR6GZ9+Q
-	 ZOU0Vzp2daYFvjO+bjLsuBbm1dw1nDcVOwlESz0k2iuZ895yNzS+/YocinSznBQaMr
-	 aFoQnyi24fECNrkDcUe+FD6fMKagyzj7zACdRrRU=
+	b=xQcE4ADC74AsPYHY1p16HwTCcFd1pz4zTH1dfUWM1nOsxiw5jKngsL6NxxZffyufE
+	 vY5DbNajr63ICu0GT0YS8tTPO1W+ZNL5zPzhJWeBb2QofapOOoSjzRX4BSM8k6jhcg
+	 cjoXPmEw994zzvqPVCL5t5PERSFCNqsNpqN4L7aQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrej Tkalcec <andrej.tkalcec@intel.com>,
-	Len Brown <len.brown@intel.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 086/507] tools/power turbostat: Regression fix Uncore MHz printed in hex
-Date: Tue, 16 Dec 2025 12:08:47 +0100
-Message-ID: <20251216111348.654695240@linuxfoundation.org>
+Subject: [PATCH 6.17 087/507] wifi: ath12k: restore register window after global reset
+Date: Tue, 16 Dec 2025 12:08:48 +0100
+Message-ID: <20251216111348.690549595@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,75 +52,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Len Brown <len.brown@intel.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit 92664f2e6ab2228a3330734fc72dabeaf8a49ee1 ]
+[ Upstream commit a41281f6518e485220d180a6031d302a736fc463 ]
 
-A patch to allow specifying FORMAT_AVERAGE to added counters...
-broke the internally added counter for Cluster Uncore MHz -- printing it in HEX.
+Hardware target implements an address space larger than that PCI BAR can
+map. In order to be able to access the whole target address space, the
+BAR space is split into 4 segments, of which the last 3, called windows,
+can be dynamically mapped to the desired area. This is achieved by
+updating WINDOW_REG_ADDRESS register with appropriate window value.
+Currently each time when accessing a register that beyond WINDOW_START,
+host calculates the window value and caches it after window update,
+this way next time when accessing a register falling in the same window,
+host knows that the window is already good hence no additional update
+needed.
 
-Fixes: dcd1c379b0f1 ("tools/power turbostat: add format "average" for external attributes")
-Reported-by: Andrej Tkalcec <andrej.tkalcec@intel.com>
-Signed-off-by: Len Brown <len.brown@intel.com>
+However this mechanism breaks after global reset is triggered in
+ath12k_pci_soc_global_reset(), because with global reset hardware resets
+WINDOW_REG_ADDRESS register hence the window is not properly mapped any
+more. Current host does nothing about this, as a result a subsequent
+register access may not work as expected if it falls in a window same as
+before.
+
+Although there is no obvious issue seen now, better to fix it to avoid
+future problem. The fix is done by restoring the window register after
+global reset.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00284.1-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017-ath12k-reset-window-cache-v1-1-29e0e751deed@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/x86/turbostat/turbostat.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath12k/pci.c | 20 +++++++++++++++++++-
+ 1 file changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/x86/turbostat/turbostat.c b/tools/power/x86/turbostat/turbostat.c
-index 931bad99277fe..405b13b690ba5 100644
---- a/tools/power/x86/turbostat/turbostat.c
-+++ b/tools/power/x86/turbostat/turbostat.c
-@@ -3285,13 +3285,13 @@ int format_counters(PER_THREAD_PARAMS)
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index c729d5526c753..60b8f7361b7f6 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2019-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
- 	/* Added counters */
- 	for (i = 0, mp = sys.tp; mp; i++, mp = mp->next) {
--		if (mp->format == FORMAT_RAW || mp->format == FORMAT_AVERAGE) {
-+		if (mp->format == FORMAT_RAW) {
- 			if (mp->width == 32)
- 				outp +=
- 				    sprintf(outp, "%s0x%08x", (printed++ ? delim : ""), (unsigned int)t->counter[i]);
- 			else
- 				outp += sprintf(outp, "%s0x%016llx", (printed++ ? delim : ""), t->counter[i]);
--		} else if (mp->format == FORMAT_DELTA) {
-+		} else if (mp->format == FORMAT_DELTA || mp->format == FORMAT_AVERAGE) {
- 			if ((mp->type == COUNTER_ITEMS) && sums_need_wide_columns)
- 				outp += sprintf(outp, "%s%8lld", (printed++ ? delim : ""), t->counter[i]);
- 			else
-@@ -3382,13 +3382,13 @@ int format_counters(PER_THREAD_PARAMS)
- 		outp += sprintf(outp, "%s%lld", (printed++ ? delim : ""), c->core_throt_cnt);
+ #include <linux/module.h>
+@@ -218,6 +218,19 @@ static inline bool ath12k_pci_is_offset_within_mhi_region(u32 offset)
+ 	return (offset >= PCI_MHIREGLEN_REG && offset <= PCI_MHI_REGION_END);
+ }
  
- 	for (i = 0, mp = sys.cp; mp; i++, mp = mp->next) {
--		if (mp->format == FORMAT_RAW || mp->format == FORMAT_AVERAGE) {
-+		if (mp->format == FORMAT_RAW) {
- 			if (mp->width == 32)
- 				outp +=
- 				    sprintf(outp, "%s0x%08x", (printed++ ? delim : ""), (unsigned int)c->counter[i]);
- 			else
- 				outp += sprintf(outp, "%s0x%016llx", (printed++ ? delim : ""), c->counter[i]);
--		} else if (mp->format == FORMAT_DELTA) {
-+		} else if (mp->format == FORMAT_DELTA || mp->format == FORMAT_AVERAGE) {
- 			if ((mp->type == COUNTER_ITEMS) && sums_need_wide_columns)
- 				outp += sprintf(outp, "%s%8lld", (printed++ ? delim : ""), c->counter[i]);
- 			else
-@@ -3581,7 +3581,7 @@ int format_counters(PER_THREAD_PARAMS)
- 		outp += sprintf(outp, "%s%d", (printed++ ? delim : ""), p->uncore_mhz);
++static void ath12k_pci_restore_window(struct ath12k_base *ab)
++{
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
++
++	spin_lock_bh(&ab_pci->window_lock);
++
++	iowrite32(WINDOW_ENABLE_BIT | ab_pci->register_window,
++		  ab->mem + WINDOW_REG_ADDRESS);
++	ioread32(ab->mem + WINDOW_REG_ADDRESS);
++
++	spin_unlock_bh(&ab_pci->window_lock);
++}
++
+ static void ath12k_pci_soc_global_reset(struct ath12k_base *ab)
+ {
+ 	u32 val, delay;
+@@ -242,6 +255,11 @@ static void ath12k_pci_soc_global_reset(struct ath12k_base *ab)
+ 	val = ath12k_pci_read32(ab, PCIE_SOC_GLOBAL_RESET);
+ 	if (val == 0xffffffff)
+ 		ath12k_warn(ab, "link down error during global reset\n");
++
++	/* Restore window register as its content is cleared during
++	 * hardware global reset, such that it aligns with host cache.
++	 */
++	ath12k_pci_restore_window(ab);
+ }
  
- 	for (i = 0, mp = sys.pp; mp; i++, mp = mp->next) {
--		if (mp->format == FORMAT_RAW || mp->format == FORMAT_AVERAGE) {
-+		if (mp->format == FORMAT_RAW) {
- 			if (mp->width == 32)
- 				outp +=
- 				    sprintf(outp, "%s0x%08x", (printed++ ? delim : ""), (unsigned int)p->counter[i]);
-@@ -3758,7 +3758,7 @@ int delta_package(struct pkg_data *new, struct pkg_data *old)
- 	    new->rapl_dram_perf_status.raw_value - old->rapl_dram_perf_status.raw_value;
- 
- 	for (i = 0, mp = sys.pp; mp; i++, mp = mp->next) {
--		if (mp->format == FORMAT_RAW || mp->format == FORMAT_AVERAGE)
-+		if (mp->format == FORMAT_RAW)
- 			old->counter[i] = new->counter[i];
- 		else if (mp->format == FORMAT_AVERAGE)
- 			old->counter[i] = new->counter[i];
+ static void ath12k_pci_clear_dbg_registers(struct ath12k_base *ab)
 -- 
 2.51.0
 
