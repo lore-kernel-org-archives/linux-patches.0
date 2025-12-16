@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011F234E74D;
-	Tue, 16 Dec 2025 11:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403CA34E74D;
+	Tue, 16 Dec 2025 11:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886133; cv=none; b=l9DBayfiSiTiroHQ2YzJPQ5JjV/mAhSuUn2IeA/cosF7Re+6iufQhqGKwrIht9w093oS8GLBmdhQnNwwIGIZsXOWqAACVhXEmksNLnWVn+eEc+ial0VDRvHNBVLYCGsJzBZBnbKtx1vVqeb4ga/BEAA9BSv8Xtmn9AWbMXMqaBE=
+	t=1765886136; cv=none; b=STnxPISHwKYW+qlU8LWrf6pTao8gS0xXFUwyGcLC7DlVtKBuO/kuE0BaPmEJxcsWpsdeqONN+OdWMySs+SkGzabABSJyUT/1Cebscffn5TjKT1OT67J4Po8AhR50sBeVGtFMSAH4Jc9tDkI9xQ6qFbGaFS7l8ySy5xAO1/qLeg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886133; c=relaxed/simple;
-	bh=m1SCMItgHMIjkMVkMfu42YBELuVMTbH+iWIaVF3sQB4=;
+	s=arc-20240116; t=1765886136; c=relaxed/simple;
+	bh=yCQTXJbDMT6shHYGVJd9Ak5PP9eTZBnZl8rhHnBj0Wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nep1LUGe/twNmTMhG+z4pSEhTUXOqx7GncS/lcyfbsuOyDqarKWW/YJyGjgNHZ6tYgkfM8gbQ1hm16inTXf9ngzccV089diaoZouPYKhDUJ7jpICeJKE/omwy5cfH1Qg+coEgx+KYYdIiMEdAGrcs0/cd5N3MLIjNV2PEuYUn6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UntyU1gK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pVDTWhvLy2loiIetVOmkjTEf21gnkDekb9Jpr4Ehq8w64uNtneOTLPfZVfchcPCZipQRjaCbhcyAGMFQM7dl4/uUYSA54ymI52qvik0mNYveZX0ovucz5h/eNVEmd9A8heD048oUMIWwHzBkvwqoINDhesC3Iwl6rfUYbZoZbsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c00wTjaK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UntyU1gK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B479C4CEF1;
-	Tue, 16 Dec 2025 11:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c00wTjaK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF609C4CEF1;
+	Tue, 16 Dec 2025 11:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886132;
-	bh=m1SCMItgHMIjkMVkMfu42YBELuVMTbH+iWIaVF3sQB4=;
+	s=korg; t=1765886136;
+	bh=yCQTXJbDMT6shHYGVJd9Ak5PP9eTZBnZl8rhHnBj0Wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UntyU1gKI2uUIEWS2UdHmCveICAZ/MPLTGDFIrReCBaOZHE74AMHbDt/7hUXg/DsF
-	 cRFfjXaJDMsEC7cx+yxtAYed6GwnqjoVrCpXeVfc8b3xMIpVWuKkzLrhosuF2F3tEb
-	 UH89dLV9/MITt1YdM0rTRDiP9BPBEvTS5O1FSn/0=
+	b=c00wTjaKg6Dtty9tBCcWEi5bwfdyW/4wPe++W7+ri0+u0ykIxJRxtCk/KvJP27ei5
+	 JkhP/E2UcrQpfcTf9KZNO29aAhy6dmQfALwZZvPhoE+Mvhu3/X6zl11Tjw+nChLKZE
+	 crq+lGnNTM3JevCfHQ+ZCHthKQIXToHQM2PWIJg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 346/507] um: Dont rename vmap to kernel_vmap
-Date: Tue, 16 Dec 2025 12:13:07 +0100
-Message-ID: <20251216111357.995309639@linuxfoundation.org>
+Subject: [PATCH 6.17 347/507] iomap: always run error completions in user context
+Date: Tue, 16 Dec 2025 12:13:08 +0100
+Message-ID: <20251216111358.031523432@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,68 +53,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <davidgow@google.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a74b6c0e53a6df8e8a096b50c06c4f872906368a ]
+[ Upstream commit ddb4873286e03e193c5a3bebb5fc6fa820e9ee3a ]
 
-In order to work around the existence of a vmap symbol in libpcap, the
-UML makefile unconditionally redefines vmap to kernel_vmap. However,
-this not only affects the actual vmap symbol, but also anything else
-named vmap, including a number of struct members in DRM.
+At least zonefs expects error completions to be able to sleep.  Because
+error completions aren't performance critical, just defer them to workqueue
+context unconditionally.
 
-This would not be too much of a problem, since all uses are also
-updated, except we now have Rust DRM bindings, which expect the
-corresponding Rust structs to have 'vmap' names. Since the redefinition
-applies in bindgen, but not to Rust code, we end up with errors such as:
-
-error[E0560]: struct `drm_gem_object_funcs` has no fields named `vmap`
-  --> rust/kernel/drm/gem/mod.rs:210:9
-
-Since libpcap support was removed in commit 12b8e7e69aa7 ("um: Remove
-obsolete pcap driver"), remove the, now unnecessary, define as well.
-
-We also take this opportunity to update the comment.
-
-Signed-off-by: David Gow <davidgow@google.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://patch.msgid.link/20251122083213.3996586-1-davidgow@google.com
-Fixes: 12b8e7e69aa7 ("um: Remove obsolete pcap driver")
-[adjust commmit message a bit]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 8dcc1a9d90c1 ("fs: New zonefs file system")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20251113170633.1453259-3-hch@lst.de
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/Makefile | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ fs/iomap/direct-io.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/um/Makefile b/arch/um/Makefile
-index 7be0143b5ba35..721b652ffb658 100644
---- a/arch/um/Makefile
-+++ b/arch/um/Makefile
-@@ -46,19 +46,17 @@ ARCH_INCLUDE	:= -I$(srctree)/$(SHARED_HEADERS)
- ARCH_INCLUDE	+= -I$(srctree)/$(HOST_DIR)/um/shared
- KBUILD_CPPFLAGS += -I$(srctree)/$(HOST_DIR)/um
+diff --git a/fs/iomap/direct-io.c b/fs/iomap/direct-io.c
+index 46aa85af13dc5..97c40e7df7215 100644
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -179,7 +179,18 @@ static void iomap_dio_done(struct iomap_dio *dio)
  
--# -Dvmap=kernel_vmap prevents anything from referencing the libpcap.o symbol so
--# named - it's a common symbol in libpcap, so we get a binary which crashes.
--#
--# Same things for in6addr_loopback and mktime - found in libc. For these two we
--# only get link-time error, luckily.
-+# -Dstrrchr=kernel_strrchr (as well as the various in6addr symbols) prevents
-+#  anything from referencing
-+# libc symbols with the same name, which can cause a linker error.
- #
- # -Dlongjmp=kernel_longjmp prevents anything from referencing the libpthread.a
- # embedded copy of longjmp, same thing for setjmp.
- #
--# These apply to USER_CFLAGS to.
-+# These apply to USER_CFLAGS too.
- 
- KBUILD_CFLAGS += $(CFLAGS) $(CFLAGS-y) -D__arch_um__ \
--	$(ARCH_INCLUDE) $(MODE_INCLUDE) -Dvmap=kernel_vmap	\
-+	$(ARCH_INCLUDE) $(MODE_INCLUDE)	\
- 	-Dlongjmp=kernel_longjmp -Dsetjmp=kernel_setjmp \
- 	-Din6addr_loopback=kernel_in6addr_loopback \
- 	-Din6addr_any=kernel_in6addr_any -Dstrrchr=kernel_strrchr \
+ 		WRITE_ONCE(dio->submit.waiter, NULL);
+ 		blk_wake_io_task(waiter);
+-	} else if (dio->flags & IOMAP_DIO_INLINE_COMP) {
++		return;
++	}
++
++	/*
++	 * Always run error completions in user context.  These are not
++	 * performance critical and some code relies on taking sleeping locks
++	 * for error handling.
++	 */
++	if (dio->error)
++		dio->flags &= ~IOMAP_DIO_INLINE_COMP;
++
++	if (dio->flags & IOMAP_DIO_INLINE_COMP) {
+ 		WRITE_ONCE(iocb->private, NULL);
+ 		iomap_dio_complete_work(&dio->aio.work);
+ 	} else if (dio->flags & IOMAP_DIO_CALLER_COMP) {
 -- 
 2.51.0
 
