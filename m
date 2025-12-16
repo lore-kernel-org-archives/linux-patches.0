@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D554361DB1;
-	Tue, 16 Dec 2025 12:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF05D361DB3;
+	Tue, 16 Dec 2025 12:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887727; cv=none; b=n0Qx7sJI2U8kkk/UwE5bIPcbG89EkTzKw9MJF9dSZslqEJCf86vFW37/UwJmmLBKeF0iULpAp5xuzvSOdrnpO7UYZ56aDUGRMGkriIYnXNGMgTYyPiBiY1k0sTTQQyqxE6ddNWZh8d5lhGPPt49F/CoioQIuc98qyvPCufpu/9o=
+	t=1765887731; cv=none; b=ZISjFu6syzd766W0PqFLougZuDMXiPw8LnFkQKcjJj0yAG7iqhxA+glzRrwQcz+c5mubiBbj7qDGfCqUpxzXLusHS9U2cMhbnVoAvbAVUZLzDDoou9hLqlRv3KRzAVJjpRz8Z7wSCsrR3UI0Hoyzw0fFGBtRdeKgXIL9ar5g9RI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887727; c=relaxed/simple;
-	bh=Q3dPeIRW5uinqTR6k+ukb173R6QzaPYSqez3+r8QhNY=;
+	s=arc-20240116; t=1765887731; c=relaxed/simple;
+	bh=bMseVb0J5jWHBZxG3lktL5AWHbWky0f6ER9LXZzsydk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okji/7XgJYXYo00CdbaQ5mRi81prXLq5Cr/TQ1eaocPnf60jzMirl8bEioDvcCYJwGjb1ucjtqoY36ArLcnQiI+sNNG5J4/tj9l7UUstbI7vYdNZ4FFQqnhL3W+2izDeGLLqvbOHynG85XgEJl9ZJYT3dwVz1iAi/fmdoYsO4oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRl1G5re; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AtK6CGj/pv8JKa1ikykxzi4OUWMe8HKil40Qah2Cz4Y/DAIMf4Naa0rpXZ4NPwGzK1MeJZcBIDcgd00A+m1eYuV0lZn1BkCMmgCH7Hc4JMq5M0XoPpYt9raTbXOZPxIHpfC2fbWAVADDiUUxsy8Xu6FR1y6VzWl6nCbnwPINbns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5LhwlTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRl1G5re"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA7F4C4CEF1;
-	Tue, 16 Dec 2025 12:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5LhwlTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C14BC4CEF1;
+	Tue, 16 Dec 2025 12:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887727;
-	bh=Q3dPeIRW5uinqTR6k+ukb173R6QzaPYSqez3+r8QhNY=;
+	s=korg; t=1765887730;
+	bh=bMseVb0J5jWHBZxG3lktL5AWHbWky0f6ER9LXZzsydk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRl1G5re3dVHP9UYX7+JUGnXUYKRDDkDoFu/BSjwPl2CMr1rZ1qNttg+ZR67ZLdN0
-	 YZb2TK5aWZId3FUQotmsoOQXR1bMtRYR75DfpqQT8HaLjU9bOLISzY7Olc+TdOtlVK
-	 6vJFta3uOHylfSFzyRtMa7Yf7YPtV65wsAnchUZw=
+	b=g5LhwlTHOkGanTrv4AvuqxyPCVhxQUzGz/LPseDiHGjtmW7eH/Oh7kQ6q2g5fZL1q
+	 LgIgELL7kQCp/DqeezjQgWMnxA3VgJSlNpGXFSU5PWMQTcm/sMr++UHlAJ+2nCIJWc
+	 yVeplT7G+lAFEs5e3fyuibsPT6JR/8ziJswfbz9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+3932ccb896e06f7414c9@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jay Liu <jay.liu@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 320/614] fs/ntfs3: Prevent memory leaks in add sub record
-Date: Tue, 16 Dec 2025 12:11:27 +0100
-Message-ID: <20251216111412.958621776@linuxfoundation.org>
+Subject: [PATCH 6.18 321/614] drm/mediatek: Fix CCORR mtk_ctm_s31_32_to_s1_n function issue
+Date: Tue, 16 Dec 2025 12:11:28 +0100
+Message-ID: <20251216111412.994565211@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,57 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Jay Liu <jay.liu@mediatek.com>
 
-[ Upstream commit ccc4e86d1c24260c18ae94541198c3711c140da6 ]
+[ Upstream commit 20ac36b71c53b8c36c6903b5ca87c75226700a97 ]
 
-If a rb node with the same ino already exists in the rb tree, the newly
-alloced mft_inode in ni_add_subrecord() will not have its memory cleaned
-up, which leads to the memory leak issue reported by syzbot.
+if matrixbit is 11,
+The range of color matrix is from 0 to (BIT(12) - 1).
+Values from 0 to (BIT(11) - 1) represent positive numbers,
+values from BIT(11) to (BIT(12) - 1) represent negative numbers.
+For example, -1 need converted to 8191.
+so convert S31.32 to HW Q2.11 format by drm_color_ctm_s31_32_to_qm_n,
+and set int_bits to 2.
 
-The best option to avoid this issue is to put the newly alloced mft node
-when a rb node with the same ino already exists in the rb tree and return
-the rb node found in the rb tree to the parent layer.
-
-syzbot reported:
-BUG: memory leak
-unreferenced object 0xffff888110bef280 (size 128):
-  backtrace (crc 126a088f):
-    ni_add_subrecord+0x31/0x180 fs/ntfs3/frecord.c:317
-    ntfs_look_free_mft+0xf0/0x790 fs/ntfs3/fsntfs.c:715
-
-BUG: memory leak
-unreferenced object 0xffff888109093400 (size 1024):
-  backtrace (crc 7197c55e):
-    mi_init+0x2b/0x50 fs/ntfs3/record.c:105
-    mi_format_new+0x40/0x220 fs/ntfs3/record.c:422
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: syzbot+3932ccb896e06f7414c9@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 738ed4156fba ("drm/mediatek: Add matrix_bits private data for ccorr")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jay Liu <jay.liu@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20250921055416.25588-2-jay.liu@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_disp_ccorr.c | 23 +----------------------
+ 1 file changed, 1 insertion(+), 22 deletions(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index a557e3ec0d4c4..e5a005d216f31 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -325,8 +325,10 @@ bool ni_add_subrecord(struct ntfs_inode *ni, CLST rno, struct mft_inode **mi)
- 
- 	mi_get_ref(&ni->mi, &m->mrec->parent_ref);
- 
--	ni_add_mi(ni, m);
--	*mi = m;
-+	*mi = ni_ins_mi(ni, &ni->mi_tree, m->rno, &m->node);
-+	if (*mi != m)
-+		mi_put(m);
-+
- 	return true;
+diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c b/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
+index 10d60d2c2a568..6d7bf4afa78d3 100644
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ccorr.c
+@@ -80,27 +80,6 @@ void mtk_ccorr_stop(struct device *dev)
+ 	writel_relaxed(0x0, ccorr->regs + DISP_CCORR_EN);
  }
  
+-/* Converts a DRM S31.32 value to the HW S1.n format. */
+-static u16 mtk_ctm_s31_32_to_s1_n(u64 in, u32 n)
+-{
+-	u16 r;
+-
+-	/* Sign bit. */
+-	r = in & BIT_ULL(63) ? BIT(n + 1) : 0;
+-
+-	if ((in & GENMASK_ULL(62, 33)) > 0) {
+-		/* identity value 0x100000000 -> 0x400(mt8183), */
+-		/* identity value 0x100000000 -> 0x800(mt8192), */
+-		/* if bigger this, set it to max 0x7ff. */
+-		r |= GENMASK(n, 0);
+-	} else {
+-		/* take the n+1 most important bits. */
+-		r |= (in >> (32 - n)) & GENMASK(n, 0);
+-	}
+-
+-	return r;
+-}
+-
+ void mtk_ccorr_ctm_set(struct device *dev, struct drm_crtc_state *state)
+ {
+ 	struct mtk_disp_ccorr *ccorr = dev_get_drvdata(dev);
+@@ -119,7 +98,7 @@ void mtk_ccorr_ctm_set(struct device *dev, struct drm_crtc_state *state)
+ 	input = ctm->matrix;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(coeffs); i++)
+-		coeffs[i] = mtk_ctm_s31_32_to_s1_n(input[i], matrix_bits);
++		coeffs[i] = drm_color_ctm_s31_32_to_qm_n(input[i], 2, matrix_bits);
+ 
+ 	mtk_ddp_write(cmdq_pkt, coeffs[0] << 16 | coeffs[1],
+ 		      &ccorr->cmdq_reg, ccorr->regs, DISP_CCORR_COEF_0);
 -- 
 2.51.0
 
