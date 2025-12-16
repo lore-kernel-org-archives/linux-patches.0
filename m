@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7E535CBA8;
-	Tue, 16 Dec 2025 12:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B1735E551;
+	Tue, 16 Dec 2025 12:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886818; cv=none; b=K9iYGqTC2b6SUYZS9sBS18FiPWpN5fg5UFedZwJDpMXFCiAoD9lWDk6ODZ+yl3w2uITwrsQjVnRYLvPUE5EUqxhFZuq2miyq4HVpLAOoPm7ByC5Ie2e+gmF8+CDlXlg1oa7BCnh6OSKTSRVog1szV7syYFbQkTfTsJV3mGw3G48=
+	t=1765886821; cv=none; b=Kx22QCllb9pS9mWQ8togGHVmMFnAnw7C0WqpcFmlS9AC+h/vfpQE26v/+CUokcubQ3ixEOCVfju8ys+AoKk+A//VR+bpNeQ1h7BMIS8HUT8YGt2rle62iHVq+LCKBRBvRnQWDye/gCV1xdVQV/jbf/G0uiW9VHleoe6bY2XhGkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886818; c=relaxed/simple;
-	bh=kWYzX0yxtJsmApebuPej7SRR3jmS6GLHs19Tp+qbWcE=;
+	s=arc-20240116; t=1765886821; c=relaxed/simple;
+	bh=BvhpLlEJbRIYkjrAZB37u3vgkAoiO40e5DNTDQYBKIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t1boxF4kePxDWJ8SkhhHtysHOSQXsvDehWldiSAi0GeHElyFQtevFp0omWY1KOgE5hRtxS3Jq3+5P2xEdjUUvpMjbCRv0lWuxH/4O/O/pxjKAn4L2VT0vKCBwjI8SNxHiBIygD9ppj4cwnz3hm7Hh15h83WL1/S7W5IHDsUB4Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCcm5lsP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Za/YZxwBpdNJptzlti9V6vjBqpDinuyBqTS5mkdGbTnocsdL1rI/6j6Fzx1smLNT9adeuon/esnePFqUcuUnux9zacRvHDhtAZLFofy/HSWli9Rh9JfwSLOteqN4hjsr/d1BjfZ38yiRUtncltZsDK22zZZPDgLrNU/hxStguoI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dq7svPuo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCcm5lsP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E242C4CEF1;
-	Tue, 16 Dec 2025 12:06:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dq7svPuo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B1DC4CEF1;
+	Tue, 16 Dec 2025 12:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886817;
-	bh=kWYzX0yxtJsmApebuPej7SRR3jmS6GLHs19Tp+qbWcE=;
+	s=korg; t=1765886820;
+	bh=BvhpLlEJbRIYkjrAZB37u3vgkAoiO40e5DNTDQYBKIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCcm5lsPDahtx3E76Ny3vy1ZmGzTylBrNfX28KbhdMyRptR2aBRrZqqrcqbe2T1rT
-	 KMLQW705Jfhr9dbuf4/X/G4IuMWGpOBv+Ai3lRwCv+POWj2FLkFbitQeN4OQay/1QV
-	 KdoBwIdwMs01+PchCoR6DzNd87bQ0px/Pvklc2I0=
+	b=dq7svPuooS5W+dLGK+QuGmlmbUzWN6IPLdvWKp+jMbrt41aKsdMIpbZZb31Le+mpK
+	 E3bbarSPgTqAMBm8Kr4jzDCn2R8Cbe+aTAPjFE+BExeHyJw5xYO0NGwhDq3e7h2Kpy
+	 3vBA7ZL145qwRlTr6VDlze9X5i24PsxCwfCCWoHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>,
 	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/614] wifi: ath12k: fix VHT MCS assignment
-Date: Tue, 16 Dec 2025 12:06:49 +0100
-Message-ID: <20251216111402.833803584@linuxfoundation.org>
+Subject: [PATCH 6.18 043/614] wifi: ath12k: fix TX and RX MCS rate configurations in HE mode
+Date: Tue, 16 Dec 2025 12:06:50 +0100
+Message-ID: <20251216111402.870052896@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,112 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+From: Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>
 
-[ Upstream commit 8c21b32c2cc82224c7fc1a9f67318f3b1199744b ]
+[ Upstream commit 9c5f229b1312a31aff762b2111f6751e4e3722fe ]
 
-While associating, firmware needs the peer's receive capability
-to calculate its own VHT transmit MCS. Currently, the host
-sends this information via mcs->rx_mcs_set field, but firmware
-actually reads it from mcs->tx_mcs_set field. This mismatch is
-incorrect.
-
-This issue has not caused failures so far because most peers
-advertise identical TX and RX capabilities. Fix this by
-assigning the value to tx_mcs_set as expected.
-
-Additionally, the rate control mask is intended to limit our
-transmit MCS, so it should also apply to the peer's receive
-capability. Update the logic accordingly.
+Currently, the TX and RX MCS rate configurations per peer are
+reversed when sent to the firmware. As a result, RX MCS rates
+are configured for TX, and vice versa. This commit rectifies
+the configuration to match what the firmware expects.
 
 Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
 Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 Signed-off-by: Pradeep Kumar Chitrapu <quic_pradeepc@quicinc.com>
 Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
 Reviewed-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251009211656.2386085-2-quic_pradeepc@quicinc.com
+Link: https://patch.msgid.link/20251009211656.2386085-3-quic_pradeepc@quicinc.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c |  7 +++----
- drivers/net/wireless/ath/ath12k/wmi.c | 13 ++++++++-----
- drivers/net/wireless/ath/ath12k/wmi.h |  2 ++
- 3 files changed, 13 insertions(+), 9 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index db351c9220181..4e6d136433202 100644
+index 4e6d136433202..0cec6c47fca29 100644
 --- a/drivers/net/wireless/ath/ath12k/mac.c
 +++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -2249,7 +2249,6 @@ static void ath12k_peer_assoc_h_vht(struct ath12k *ar,
- 	struct cfg80211_chan_def def;
- 	enum nl80211_band band;
- 	u16 *vht_mcs_mask;
--	u16 tx_mcs_map;
- 	u8 ampdu_factor;
- 	u8 max_nss, vht_mcs;
- 	int i, vht_nss, nss_idx;
-@@ -2340,10 +2339,10 @@ static void ath12k_peer_assoc_h_vht(struct ath12k *ar,
- 	arg->peer_nss = min(link_sta->rx_nss, max_nss);
- 	arg->rx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.rx_highest);
- 	arg->rx_mcs_set = __le16_to_cpu(vht_cap->vht_mcs.rx_mcs_map);
--	arg->tx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.tx_highest);
-+	arg->rx_mcs_set = ath12k_peer_assoc_h_vht_limit(arg->rx_mcs_set, vht_mcs_mask);
+@@ -2624,9 +2624,10 @@ static void ath12k_peer_assoc_h_he(struct ath12k *ar,
+ 	switch (link_sta->bandwidth) {
+ 	case IEEE80211_STA_RX_BW_160:
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_160);
++		v = ath12k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_rx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_160] = v;
  
--	tx_mcs_map = __le16_to_cpu(vht_cap->vht_mcs.tx_mcs_map);
--	arg->tx_mcs_set = ath12k_peer_assoc_h_vht_limit(tx_mcs_map, vht_mcs_mask);
-+	arg->tx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.tx_highest);
-+	arg->tx_mcs_set = __le16_to_cpu(vht_cap->vht_mcs.tx_mcs_map);
+-		v = ath12k_peer_assoc_h_he_limit(v, he_mcs_mask);
++		v = le16_to_cpu(he_cap->he_mcs_nss_supp.tx_mcs_160);
+ 		arg->peer_he_tx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_160] = v;
  
- 	/* In QCN9274 platform, VHT MCS rate 10 and 11 is enabled by default.
- 	 * VHT MCS rate 10 and 11 is not supported in 11ac standard.
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
-index ff6b3d4ea8208..e76275bd6916f 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.c
-+++ b/drivers/net/wireless/ath/ath12k/wmi.c
-@@ -1,7 +1,7 @@
- // SPDX-License-Identifier: BSD-3-Clause-Clear
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- #include <linux/skbuff.h>
- #include <linux/ctype.h>
-@@ -2367,10 +2367,13 @@ int ath12k_wmi_send_peer_assoc_cmd(struct ath12k *ar,
- 	cmd->peer_bw_rxnss_override |= cpu_to_le32(arg->peer_bw_rxnss_override);
+ 		arg->peer_he_mcs_count++;
+@@ -2636,10 +2637,10 @@ static void ath12k_peer_assoc_h_he(struct ath12k *ar,
  
- 	if (arg->vht_capable) {
--		mcs->rx_max_rate = cpu_to_le32(arg->rx_max_rate);
--		mcs->rx_mcs_set = cpu_to_le32(arg->rx_mcs_set);
--		mcs->tx_max_rate = cpu_to_le32(arg->tx_max_rate);
--		mcs->tx_mcs_set = cpu_to_le32(arg->tx_mcs_set);
-+		/* Firmware interprets mcs->tx_mcs_set field as peer's
-+		 * RX capability
-+		 */
-+		mcs->rx_max_rate = cpu_to_le32(arg->tx_max_rate);
-+		mcs->rx_mcs_set = cpu_to_le32(arg->tx_mcs_set);
-+		mcs->tx_max_rate = cpu_to_le32(arg->rx_max_rate);
-+		mcs->tx_mcs_set = cpu_to_le32(arg->rx_mcs_set);
- 	}
+ 	default:
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.rx_mcs_80);
++		v = ath12k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_rx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_80] = v;
  
- 	/* HE Rates */
-diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
-index a8c3190e8ad95..6d9c645e3d5d0 100644
---- a/drivers/net/wireless/ath/ath12k/wmi.h
-+++ b/drivers/net/wireless/ath/ath12k/wmi.h
-@@ -4218,8 +4218,10 @@ struct wmi_unit_test_cmd {
- struct ath12k_wmi_vht_rate_set_params {
- 	__le32 tlv_header;
- 	__le32 rx_max_rate;
-+	/* MCS at which the peer can transmit */
- 	__le32 rx_mcs_set;
- 	__le32 tx_max_rate;
-+	/* MCS at which the peer can receive */
- 	__le32 tx_mcs_set;
- 	__le32 tx_max_mcs_nss;
- } __packed;
+ 		v = le16_to_cpu(he_cap->he_mcs_nss_supp.tx_mcs_80);
+-		v = ath12k_peer_assoc_h_he_limit(v, he_mcs_mask);
+ 		arg->peer_he_tx_mcs_set[WMI_HECAP_TXRX_MCS_NSS_IDX_80] = v;
+ 
+ 		arg->peer_he_mcs_count++;
 -- 
 2.51.0
 
