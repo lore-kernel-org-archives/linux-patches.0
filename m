@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BD6334A767;
-	Tue, 16 Dec 2025 11:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8E834A76E;
+	Tue, 16 Dec 2025 11:40:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885198; cv=none; b=mnlAiYnCW3GTDHd/v50ne4qtz3ZAAGw3nfbAF/0vXOQtXI2UikvEiuW4RkhgAtHECDQtMcYYXLn9fsYWIJxmmRUBdeF6zfpsXW9AfQoGQLodPP6CWX9VtRIWGsmtqccuKcPIwuZjkhrIP+A6fzxkzywlwh4xoiWpO03NGgSYu80=
+	t=1765885201; cv=none; b=RsB9JIn4js8+yj50IYvmVfDmiJRp9+pY97UKqUGVgm4WOS4GZWrXrkeuYIyhXZNY2Qujn1CXqLCdpo8bJNjAvV1V/QAwG8ne6OsRI6e8qw+k/ERJyx541pGndQhU0c5NUYedWglDdLopuAnSCTSL+wns90nI59sA9wPBE/QbVmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885198; c=relaxed/simple;
-	bh=E/xzWk4AxEVWFfOANImUq+fN/tVJPu1Uebbk8wRQzEY=;
+	s=arc-20240116; t=1765885201; c=relaxed/simple;
+	bh=BVE7BLl0Jr+QR5+1lrttWKMgqdYZmQkIRyZFAFqJUKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HJ5WYy3Rk2sZe0zOVveP44I+cBHgoQF1cgjGWiFzLX4sfYULq86xMO4RT7FmpexTSp1yUGXMY3CHIQWSRogdPvhjZhBVYk3hvd98YtRzVSiP7niDNEkoSpASShINDynq6PZtbWZtgejlnA2LUfMdvZusxNqT97l8XVn3OwA5TWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EsZXxNHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCeSCqNcsMO/OyhcbYkxa9Vv+acEdS43yfTWGeo5tblv6zl/Hcm+LjkSkxfUa2fJcBv41ZQm7kzM5qzKuirrRArSJFBfInXc248p4d8xJ/b8nnBbWpL3Q3lhKYy2bI+Ux39ZFIKW7OkUB0KfRLcOYEK4U3JekNLwxvegbn4B/9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0lR48Pu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EsZXxNHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1D84C4CEF1;
-	Tue, 16 Dec 2025 11:39:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0lR48Pu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFCCC4CEF1;
+	Tue, 16 Dec 2025 11:40:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885198;
-	bh=E/xzWk4AxEVWFfOANImUq+fN/tVJPu1Uebbk8wRQzEY=;
+	s=korg; t=1765885201;
+	bh=BVE7BLl0Jr+QR5+1lrttWKMgqdYZmQkIRyZFAFqJUKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EsZXxNHPgXQlEG04BIqszyLxjKyGUX+3bFp4ezsBvCuBArd5MnKndtJZKGu4XsRTK
-	 blPPBnnOMePjrYZJLspEmTShehITsVnuAvIDZgvHRP302mHzpdENVoKwUPpPYKTLSr
-	 mqLag18T1HT3FCzIWx9cshcSPdc73dh5CCn2QcNE=
+	b=X0lR48PupqsIVJILaDAQw/dKtuPIeJTjd84EmaFtQkGS+J1jd/APYk9irJzQWWfe8
+	 RezQPapHuvJ0SClRzGXLlyqsnRZPinAQ2KNoKT4s+SqepZ7O9L/qncX8yk8C+OVmf+
+	 N0lXlvKdFrbHZR3h2Wo7ZHiBEGUSFZUNjnHSEwRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cyrille Pitchen <cyrille.pitchen@microchip.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Manikandan Muralidharan <manikandan.m@microchip.com>,
+	Tim Harvey <tharvey@gateworks.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 025/507] drm: atmel-hlcdc: fix atmel_xlcdc_plane_setup_scaler()
-Date: Tue, 16 Dec 2025 12:07:46 +0100
-Message-ID: <20251216111346.448097895@linuxfoundation.org>
+Subject: [PATCH 6.17 061/507] arm64: dts: imx8mm-venice-gw72xx: remove unused sdhc1 pinctrl
+Date: Tue, 16 Dec 2025 12:08:22 +0100
+Message-ID: <20251216111347.754072202@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,89 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cyrille Pitchen <cyrille.pitchen@microchip.com>
+From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit a312acdcec57b3955fbf1f3057c13a6d38e4aa2a ]
+[ Upstream commit d949b8d12d6e8fa119bca10d3157cd42e810f6f7 ]
 
-On SoCs, like the SAM9X75, which embed the XLCDC ip, the registers that
-configure the unified scaling engine were not filled with proper values.
+The SDHC1 interface is not used on the imx8mm-venice-gw72xx. Remove the
+unused pinctrl_usdhc1 iomux node.
 
-Indeed, for YCbCr formats, the VXSCFACT bitfield of the HEOCFG25
-register and the HXSCFACT bitfield of the HEOCFG27 register were
-incorrect.
-
-For 4:2:0 formats, both vertical and horizontal factors for
-chroma chanels should be divided by 2 from the factors for the luma
-channel. Hence:
-
-HEOCFG24.VXSYFACT = VFACTOR
-HEOCFG25.VSXCFACT = VFACTOR / 2
-HEOCFG26.HXSYFACT = HFACTOR
-HEOCFG27.HXSCFACT = HFACTOR / 2
-
-However, for 4:2:2 formats, only the horizontal factor for chroma
-chanels should be divided by 2 from the factor for the luma channel;
-the vertical factor is the same for all the luma and chroma channels.
-Hence:
-
-HEOCFG24.VXSYFACT = VFACTOR
-HEOCFG25.VXSCFACT = VFACTOR
-HEOCFG26.HXSYFACT = HFACTOR
-HEOCFG27.HXSCFACT = HFACTOR / 2
-
-Fixes: d498771b0b83 ("drm: atmel_hlcdc: Add support for XLCDC using IP specific driver ops")
-Signed-off-by: Cyrille Pitchen <cyrille.pitchen@microchip.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
-Link: https://lore.kernel.org/r/20241014094942.325211-1-manikandan.m@microchip.com
-Signed-off-by: Manikandan Muralidharan <manikandan.m@microchip.com>
+Fixes: 6f30b27c5ef5 ("arm64: dts: imx8mm: Add Gateworks i.MX 8M Mini Development Kits")
+Signed-off-by: Tim Harvey <tharvey@gateworks.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c   | 27 ++++++++++++++++---
- 1 file changed, 24 insertions(+), 3 deletions(-)
+ .../boot/dts/freescale/imx8mm-venice-gw72xx.dtsi      | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-index 4a7ba0918eca1..3787db014501e 100644
---- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-+++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
-@@ -365,13 +365,34 @@ void atmel_xlcdc_plane_setup_scaler(struct atmel_hlcdc_plane *plane,
- 				    xfactor);
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
+index 752caa38eb03b..266038fbbef97 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
+@@ -351,17 +351,6 @@ MX8MM_IOMUXC_UART4_TXD_UART4_DCE_TX	0x140
+ 		>;
+ 	};
  
- 	/*
--	 * With YCbCr 4:2:2 and YCbYcr 4:2:0 window resampling, configuration
--	 * register LCDC_HEOCFG25.VXSCFACT and LCDC_HEOCFG27.HXSCFACT is half
-+	 * With YCbCr 4:2:0 window resampling, configuration register
-+	 * LCDC_HEOCFG25.VXSCFACT and LCDC_HEOCFG27.HXSCFACT values are half
- 	 * the value of yfactor and xfactor.
-+	 *
-+	 * On the other hand, with YCbCr 4:2:2 window resampling, only the
-+	 * configuration register LCDC_HEOCFG27.HXSCFACT value is half the value
-+	 * of the xfactor; the value of LCDC_HEOCFG25.VXSCFACT is yfactor (no
-+	 * division by 2).
- 	 */
--	if (state->base.fb->format->format == DRM_FORMAT_YUV420) {
-+	switch (state->base.fb->format->format) {
-+	/* YCbCr 4:2:2 */
-+	case DRM_FORMAT_YUYV:
-+	case DRM_FORMAT_UYVY:
-+	case DRM_FORMAT_YVYU:
-+	case DRM_FORMAT_VYUY:
-+	case DRM_FORMAT_YUV422:
-+	case DRM_FORMAT_NV61:
-+		xfactor /= 2;
-+		break;
-+
-+	/* YCbCr 4:2:0 */
-+	case DRM_FORMAT_YUV420:
-+	case DRM_FORMAT_NV21:
- 		yfactor /= 2;
- 		xfactor /= 2;
-+		break;
-+	default:
-+		break;
- 	}
- 
- 	atmel_hlcdc_layer_write_cfg(&plane->layer, desc->layout.scaler_config + 2,
+-	pinctrl_usdhc1: usdhc1grp {
+-		fsl,pins = <
+-			MX8MM_IOMUXC_SD1_CLK_USDHC1_CLK		0x190
+-			MX8MM_IOMUXC_SD1_CMD_USDHC1_CMD		0x1d0
+-			MX8MM_IOMUXC_SD1_DATA0_USDHC1_DATA0	0x1d0
+-			MX8MM_IOMUXC_SD1_DATA1_USDHC1_DATA1	0x1d0
+-			MX8MM_IOMUXC_SD1_DATA2_USDHC1_DATA2	0x1d0
+-			MX8MM_IOMUXC_SD1_DATA3_USDHC1_DATA3	0x1d0
+-		>;
+-	};
+-
+ 	pinctrl_usdhc2: usdhc2grp {
+ 		fsl,pins = <
+ 			MX8MM_IOMUXC_SD2_CLK_USDHC2_CLK		0x190
 -- 
 2.51.0
 
