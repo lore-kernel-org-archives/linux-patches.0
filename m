@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57CF1364E8C;
-	Tue, 16 Dec 2025 12:09:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6DB364E9B;
+	Tue, 16 Dec 2025 12:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886979; cv=none; b=jrOfMnLrmUXsS6WiMT3DtMvG23HmSslKC75No3XWzcZkgclFjxLAFtJiQEiqRpxvQ5tBwc+tOTG6zEDAuTyFagNdGMlpWb2hfSzFjpIHtmz4QUW6liFCd/KlyWHvfZMYvoezLoKGZOqJssOWlO+pWUKqeeO045NG8bFi+tUlJZ8=
+	t=1765886982; cv=none; b=AESXi8M2zPqIm0pSXKVk1TC7lAMuMJVgFLSy3T4eESxruLkXJ+BOYlwDDl2OLxPiMeOc9aMcBN+rc84go7Wb88Yzahm106bSpfar8tmxNpwafF+iNjautzqAjCxkQL1QOV7Nv3izvnLBC4ilOnc6aI2E4nz+lXe8nssWlWPt2Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886979; c=relaxed/simple;
-	bh=9+LZGRMPqQLTwvyiWchMMIjmtmJSbIXFH17GBNgYOc0=;
+	s=arc-20240116; t=1765886982; c=relaxed/simple;
+	bh=Eec7RjljN39iOxmDUsSrFPQvjIo7IPclFy/quESvG7I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prHe/kQ1AiZrIFujlvrb0Fk7ERiIQKb51/XtG8gAVmGqri5zcAERJLL6Q2eJOyym/skHjTOeOXV4Ij/ZWVivs9jA1tu0uqLUKiVxv2CT3DwVMjWs+e2SOSBBgChKkEc6eM/C0y6ZI26o1+oUaPgMYINcjkdxB2dUMKhFfC8MgMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1zU/0PT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mWcRgTzcibeHevZtvwHkw13V5JcgHv0Zm4+HcE393dNbldyV8m/1j66QQKiO8du645xmd4a0/06KM15YNKwmD1XORaofWiMtqDaaPyAxM6QNnsDCpHnmbOv3Rf6L4UiRh0MNZOcLuYksfa55Yc69MHY0AFwpzK73QBHmT+luYW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kT1gVNje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1zU/0PT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA93DC4CEF1;
-	Tue, 16 Dec 2025 12:09:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kT1gVNje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DB5C4CEF1;
+	Tue, 16 Dec 2025 12:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886979;
-	bh=9+LZGRMPqQLTwvyiWchMMIjmtmJSbIXFH17GBNgYOc0=;
+	s=korg; t=1765886982;
+	bh=Eec7RjljN39iOxmDUsSrFPQvjIo7IPclFy/quESvG7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1zU/0PTospmccGpUScoZMdjx+UKZfr2HtfU6Qf8kUVjCJg2XxRcIETcuOWVwY/1a
-	 wIdsqX6SE/DB2cVLcAkIEcp+qk0QQiT6p9ZAbE0Es6BuPGZPn763+45mq9qmPK/kW5
-	 gafwriRW8uHPFTas9124LmBwNL5HQ9eDGn7GKR1Y=
+	b=kT1gVNjeKBRSQQ/StGPGiMOlm0873hAplNOphHxUduUXTr3+bR5ZYOHJeMlsClfTI
+	 UQTEsXwC6cKTd1WdKNjarv+9xXdFNvgCeHa6Tbq4N4zUZ5N+BUl1dgF9WgRMKK98HV
+	 XhbpXMIhh07jySb8Jnzi07X7qAyRVNfymHZvZ6rA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	nieweiqiang <nieweiqiang@huawei.com>,
-	Chenghai Huang <huangchenghai2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 089/614] crypto: hisilicon/qm - restore original qos values
-Date: Tue, 16 Dec 2025 12:07:36 +0100
-Message-ID: <20251216111404.546381635@linuxfoundation.org>
+Subject: [PATCH 6.18 090/614] wifi: ath11k: fix VHT MCS assignment
+Date: Tue, 16 Dec 2025 12:07:37 +0100
+Message-ID: <20251216111404.582104021@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,65 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: nieweiqiang <nieweiqiang@huawei.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit e7066160f5b4187ad9869b712fa7a35d3d5be6b9 ]
+[ Upstream commit 47d0cd6bccb4604192633cc8d29511e85d811fc0 ]
 
-When the new qos valus setting fails, restore to
-the original qos values.
+While associating, firmware needs to know peer's receive capability to
+calculate its own VHT transmit MCS, currently host sends this information
+to firmware via mcs->rx_mcs_set field, this is wrong as firmware actually
+takes it from mcs->tx_mcs_set field. Till now there is no failure seen
+due to this, most likely because almost all peers are advertising the
+same capability for both transmit and receive. Swap the assignment to
+fix it.
 
-Fixes: 72b010dc33b9 ("crypto: hisilicon/qm - supports writing QoS int the host")
-Signed-off-by: nieweiqiang <nieweiqiang@huawei.com>
-Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Besides, rate control mask is meant to limit our own transmit MCS, hence
+need to go via mcs->tx_mcs_set field. With the aforementioned swapping
+done, change is needed as well to apply it to the peer's receive
+capability rather than transmit capability.
+
+Tested-on: WCN6855 hw2.1 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.41
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.4.1-00199-QCAHKSWPL_SILICONZ-1
+
+Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251017-ath11k-mcs-assignment-v1-1-da40825c1783@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath11k/mac.c |  4 ++--
+ drivers/net/wireless/ath/ath11k/wmi.c | 13 ++++++++-----
+ drivers/net/wireless/ath/ath11k/wmi.h |  2 ++
+ 3 files changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 3b391a1466353..0968304c0cb51 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -3678,6 +3678,7 @@ static void qm_clear_vft_config(struct hisi_qm *qm)
- static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
- {
- 	struct device *dev = &qm->pdev->dev;
-+	struct qm_shaper_factor t_factor;
- 	u32 ir = qos * QM_QOS_RATE;
- 	int ret, total_vfs, i;
+diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
+index 0e41b5a91d66d..49c639d73d58d 100644
+--- a/drivers/net/wireless/ath/ath11k/mac.c
++++ b/drivers/net/wireless/ath/ath11k/mac.c
+@@ -2235,9 +2235,9 @@ static void ath11k_peer_assoc_h_vht(struct ath11k *ar,
+ 	arg->peer_nss = min(sta->deflink.rx_nss, max_nss);
+ 	arg->rx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.rx_highest);
+ 	arg->rx_mcs_set = __le16_to_cpu(vht_cap->vht_mcs.rx_mcs_map);
++	arg->rx_mcs_set = ath11k_peer_assoc_h_vht_limit(arg->rx_mcs_set, vht_mcs_mask);
+ 	arg->tx_max_rate = __le16_to_cpu(vht_cap->vht_mcs.tx_highest);
+-	arg->tx_mcs_set = ath11k_peer_assoc_h_vht_limit(
+-		__le16_to_cpu(vht_cap->vht_mcs.tx_mcs_map), vht_mcs_mask);
++	arg->tx_mcs_set = __le16_to_cpu(vht_cap->vht_mcs.tx_mcs_map);
  
-@@ -3685,6 +3686,7 @@ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
- 	if (fun_index > total_vfs)
- 		return -EINVAL;
+ 	/* In IPQ8074 platform, VHT mcs rate 10 and 11 is enabled by default.
+ 	 * VHT mcs rate 10 and 11 is not supported in 11ac standard.
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.c b/drivers/net/wireless/ath/ath11k/wmi.c
+index e3b444333deed..649839d243293 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.c
++++ b/drivers/net/wireless/ath/ath11k/wmi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ #include <linux/skbuff.h>
+ #include <linux/ctype.h>
+@@ -2061,10 +2061,13 @@ int ath11k_wmi_send_peer_assoc_cmd(struct ath11k *ar,
+ 	cmd->peer_bw_rxnss_override |= param->peer_bw_rxnss_override;
  
-+	memcpy(&t_factor, &qm->factor[fun_index], sizeof(t_factor));
- 	qm->factor[fun_index].func_qos = qos;
- 
- 	ret = qm_get_shaper_para(ir, &qm->factor[fun_index]);
-@@ -3698,11 +3700,21 @@ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
- 		ret = qm_set_vft_common(qm, SHAPER_VFT, fun_index, i, 1);
- 		if (ret) {
- 			dev_err(dev, "type: %d, failed to set shaper vft!\n", i);
--			return -EINVAL;
-+			goto back_func_qos;
- 		}
+ 	if (param->vht_capable) {
+-		mcs->rx_max_rate = param->rx_max_rate;
+-		mcs->rx_mcs_set = param->rx_mcs_set;
+-		mcs->tx_max_rate = param->tx_max_rate;
+-		mcs->tx_mcs_set = param->tx_mcs_set;
++		/* firmware interprets mcs->tx_mcs_set field as peer's
++		 * RX capability
++		 */
++		mcs->tx_max_rate = param->rx_max_rate;
++		mcs->tx_mcs_set = param->rx_mcs_set;
++		mcs->rx_max_rate = param->tx_max_rate;
++		mcs->rx_mcs_set = param->tx_mcs_set;
  	}
  
- 	return 0;
-+
-+back_func_qos:
-+	memcpy(&qm->factor[fun_index], &t_factor, sizeof(t_factor));
-+	for (i--; i >= ALG_TYPE_0; i--) {
-+		ret = qm_set_vft_common(qm, SHAPER_VFT, fun_index, i, 1);
-+		if (ret)
-+			dev_err(dev, "failed to restore shaper vft during rollback!\n");
-+	}
-+
-+	return -EINVAL;
- }
- 
- static u32 qm_get_shaper_vft_qos(struct hisi_qm *qm, u32 fun_index)
+ 	/* HE Rates */
+diff --git a/drivers/net/wireless/ath/ath11k/wmi.h b/drivers/net/wireless/ath/ath11k/wmi.h
+index 9fcffaa2f383c..6e9354297e71d 100644
+--- a/drivers/net/wireless/ath/ath11k/wmi.h
++++ b/drivers/net/wireless/ath/ath11k/wmi.h
+@@ -4133,8 +4133,10 @@ struct wmi_rate_set {
+ struct wmi_vht_rate_set {
+ 	u32 tlv_header;
+ 	u32 rx_max_rate;
++	/* MCS at which the peer can transmit */
+ 	u32 rx_mcs_set;
+ 	u32 tx_max_rate;
++	/* MCS at which the peer can receive */
+ 	u32 tx_mcs_set;
+ 	u32 tx_max_mcs_nss;
+ } __packed;
 -- 
 2.51.0
 
