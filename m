@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB9835FF58;
-	Tue, 16 Dec 2025 12:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A5C35FF58;
+	Tue, 16 Dec 2025 12:08:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886877; cv=none; b=lGehGqG28MyTKUrloMYBHCz2RSQoqvwyPIaxfk/ZUk9CbUIYYVoCBmQW4+59lcucmQUnoReHOnmEC3s5SCmE1KyMINQ4FxhpiqXruDF+AaU+1KEYlttUplSIZdQb/JF2EzXfaCDVTszWCXUiiv/QWQI1CJohrgtfL3dJjjSwBSU=
+	t=1765886880; cv=none; b=NfA0r8qJHqymx+mnqoPO2F8IZiKHJPg6PKBvPNr6S8ezU7ypBbT4hU6etPcyWe6tA1h6yIo6nWR/x3ywamvhyT0MpShC/l2QyVLVokq08Y4rH3U0WvPJN2SGhtvMJfT+qpJM2o5LZ7UY9p/YDFAfTwngslzL3ts9ZY+7VpIL1wY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886877; c=relaxed/simple;
-	bh=HpmlNLqqGSbKG05pZIm0+32dqKCGY/zRMc3gvT54qgM=;
+	s=arc-20240116; t=1765886880; c=relaxed/simple;
+	bh=8JUVcza+tSbSqQiuSsVq+YJcR0KHijgE/6S6GH6Fexo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bGdSoFmMeI1SyopFgGKybr7elsexQwh4RX/zfYz2PBKDPGTNaeEZhRPd2xo/tq4UhagEQWoR+S8btDnMv4OkWeszN4G4rO9ixGkvAmtFi6v4awB0ggFA9K23Y5e5yHoJvcW7RGV+Fc4aTCbzqJ6EAzL7w8O40o+3HjFM9VdSqNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q4Mmxcyc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/FmqNh4UjAmsz44dxT5OQlFavuO3//XcW/a/9qRYNtCrdMxumLfGdVDzU3pT1duECRWdgWx+NyeCLN9I89e2qrMDnMiiOTsL9Fvio5wHW8yx05ykHnTBtMHLIbsKPdds8UUv6k0gvB3diNYcASasQPzKp4oKN9g1RtVn/qJmOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jf9ouohI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q4Mmxcyc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A515CC4CEF1;
-	Tue, 16 Dec 2025 12:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jf9ouohI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA621C4CEF1;
+	Tue, 16 Dec 2025 12:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886877;
-	bh=HpmlNLqqGSbKG05pZIm0+32dqKCGY/zRMc3gvT54qgM=;
+	s=korg; t=1765886880;
+	bh=8JUVcza+tSbSqQiuSsVq+YJcR0KHijgE/6S6GH6Fexo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q4MmxcyciZZmfsXEr/shIYRM2OWMJEw12+xNullFR6/68MvZ1gefuvcXxcwowJwO2
-	 A9hbOOGXNLa7SrQMJs+LETKXLXXhM3p/NYlSzMX7jqhP424dWYv2ilmJeGhUxhuTxT
-	 W2nyWZKes1m3+I1dfiN1amwOPmJJtUasnRLQmLIk=
+	b=jf9ouohIA/PapTzFYpXv/pdz9I1g64NoKej6CRnQAmEIXp1wglTCqqMNsBc9WU3jS
+	 CgZ057w9k4BzIk5JLn1bvsqlAukkUXKXPe5bHPfwwzpLCIokJkYXdJQVd2K5brMrs9
+	 zvUQkJxZZcdkYP4qsgTKrMPyBSXhQ93Hqx8Yx6Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
-	Sidharth Seela <sidharthseela@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/614] ntfs3: Fix uninit buffer allocated by __getname()
-Date: Tue, 16 Dec 2025 12:07:05 +0100
-Message-ID: <20251216111403.413478045@linuxfoundation.org>
+Subject: [PATCH 6.18 028/614] clk: renesas: cpg-mssr: Add missing 1ms delay into reset toggle callback
+Date: Tue, 16 Dec 2025 12:06:35 +0100
+Message-ID: <20251216111402.328852442@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,34 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sidharth Seela <sidharthseela@gmail.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 9948dcb2f7b5a1bf8e8710eafaf6016e00be3ad6 ]
+[ Upstream commit 62abfd7bedc2b3d86d4209a4146f9d2b5ae21fab ]
 
-Fix uninit errors caused after buffer allocation given to 'de'; by
-initializing the buffer with zeroes. The fix was found by using KMSAN.
+R-Car V4H Reference Manual R19UH0186EJ0130 Rev.1.30 Apr. 21, 2025 page
+583 Figure 9.3.1(a) Software Reset flow (A) as well as flow (B) / (C)
+indicate after reset has been asserted by writing a matching reset bit
+into register SRCR, it is mandatory to wait 1ms.
 
-Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
-Fixes: 78ab59fee07f2 ("fs/ntfs3: Rework file operations")
-Signed-off-by: Sidharth Seela <sidharthseela@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+This 1ms delay is documented on R-Car V4H and V4M, it is currently
+unclear whether S4 is affected as well.  This patch does apply the extra
+delay on R-Car S4 as well.
+
+Fix the reset driver to respect the additional delay when toggling
+resets.  Drivers which use separate reset_control_(de)assert() must
+assure matching delay in their driver code.
+
+Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20250918030552.331389-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/renesas/renesas-cpg-mssr.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 3959f23c487a2..3a0676871bade 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -1722,6 +1722,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
- 	de = __getname();
- 	if (!de)
- 		return -ENOMEM;
-+	memset(de, 0, PATH_MAX);
+diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
+index de1cf7ba45b78..7063d896249ea 100644
+--- a/drivers/clk/renesas/renesas-cpg-mssr.c
++++ b/drivers/clk/renesas/renesas-cpg-mssr.c
+@@ -689,8 +689,15 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
+ 	/* Reset module */
+ 	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
  
- 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
- 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
+-	/* Wait for at least one cycle of the RCLK clock (@ ca. 32 kHz) */
+-	udelay(35);
++	/*
++	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
++	 * On older SoCs, delay after SRCR has been written is 35us
++	 * (one cycle of the RCLK clock @ ca. 32 kHz).
++	 */
++	if (priv->reg_layout == CLK_REG_LAYOUT_RCAR_GEN4)
++		usleep_range(1000, 2000);
++	else
++		usleep_range(35, 1000);
+ 
+ 	/* Release module from reset state */
+ 	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
 -- 
 2.51.0
 
