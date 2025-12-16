@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FB6A33ADB9;
-	Tue, 16 Dec 2025 11:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D2B341AC3;
+	Tue, 16 Dec 2025 11:33:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884799; cv=none; b=ZtZ2dedL7r9mRxVpFUDK0wCFkKxy5S401O/j2q3fYECIHQddN7BQPKx3F6j9+aTUtXSRRWGbKN96//H2k200sTtvptmyqXhI0zfARi2Pt6TT7uhmcd3IOcNP1/ZxB/9oNpF02gJRcAuNZhgtezLh04zqaYKpYq+qgGuDmi4e0KM=
+	t=1765884802; cv=none; b=k8jQj0IxkRMEsQM2pvFX7LCweJ6FbeKW4T9DsYYAresGifR+wVrKEdk/JQboqqXeHV6jxxGP2tOTvrxX0bQyFMw/U50gLhPfq82wgPO00EF/rLJ0kv1Lb51SW4HPjGDERbQ7az9yLOSwzboPqys2W/emexwBCV4lZAw8j8ecBhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884799; c=relaxed/simple;
-	bh=u071OTc6YZ1CJ3SjpvlRiTLbQjM1bO8FnypEaHOlchc=;
+	s=arc-20240116; t=1765884802; c=relaxed/simple;
+	bh=XKCXpiRw27t+PePNG8B70mYH2Wa00M4DG7FmcH0uG9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KXxTABK6Eau3YDj43UOyHbhw/uaiVIBuhe1A2OmIm1Pe/KrzmTX6uWgj6qtAt/NxCq6ahPc00XbLiU+4BHxWDHBvZwrAeD3UMiSPPnNImUWe/DRsnUhIiWNCMeZex3VJYWQx5dJvxi/Jjq0nRV9/+39CfV0EI88DWCjGul9oLgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eyS6T067; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s5PlFZclmL30FvMZjB1RPigHa3g9j5Epe731pGm73k59fRwZn4dr97TzhiDnyoXxV3W2g4v7rfjnl3zD+iN0a3UAZ0hntDWBAtMEz9bGYaj04JTG6Lw/x4qdGcHoGi1Tcg5f2czeA6gGVz31qROjMmIHB7yQThfW8uIT1ctaYLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QeQPuw6n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eyS6T067"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E56BCC4CEF5;
-	Tue, 16 Dec 2025 11:33:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QeQPuw6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00885C4CEF5;
+	Tue, 16 Dec 2025 11:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884799;
-	bh=u071OTc6YZ1CJ3SjpvlRiTLbQjM1bO8FnypEaHOlchc=;
+	s=korg; t=1765884802;
+	bh=XKCXpiRw27t+PePNG8B70mYH2Wa00M4DG7FmcH0uG9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eyS6T067tLVUo6EY99s3JqAZT7BwUCb4HO95NZglcnmHiYNF6YV6hkATCWku521wI
-	 2NOmhQjAq9F9YUDrD9hO6RBBh9rjzNkobaR5lQM9059zEBPkZ57oKC3NDR318u5R/p
-	 vWbPU0yOIZmL6Y4WTOq30PuzAjJb28WyFfO5otL4=
+	b=QeQPuw6nmUsAbp3nJ6lS3rkMh499Kbjf9ydZSD2ZXwy7uP0wD55RuUeRziqnGEIh7
+	 1bPaV9g6KKftKVeVeFtCLKppPRupyYpG3RLxZEa4Bq/ZAuy+dHD/GEBG1f5F+seiba
+	 WQOXBRp3azPDSxwjESXp/4+3USPHoVkWUOJA6GxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aiden Lambert <alambert48@gatech.edu>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 302/354] NFS: Avoid changing nlink when file removes and attribute updates race
-Date: Tue, 16 Dec 2025 12:14:29 +0100
-Message-ID: <20251216111331.853895919@linuxfoundation.org>
+Subject: [PATCH 6.12 303/354] fs/nls: Fix utf16 to utf8 conversion
+Date: Tue, 16 Dec 2025 12:14:30 +0100
+Message-ID: <20251216111331.889661035@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -45,100 +45,83 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit bd4928ec799b31c492eb63f9f4a0c1e0bb4bb3f7 ]
+[ Upstream commit 25524b6190295577e4918c689644451365e6466d ]
 
-If a file removal races with another operation that updates its
-attributes, then skip the change to nlink, and just mark the attributes
-as being stale.
+Currently the function responsible for converting between utf16 and
+utf8 strings will ignore any characters that cannot be converted. This
+however also includes multi-byte characters that do not fit into the
+provided string buffer.
 
-Reported-by: Aiden Lambert <alambert48@gatech.edu>
-Fixes: 59a707b0d42e ("NFS: Ensure we revalidate the inode correctly after remove or rename")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+This can cause problems if such a multi-byte character is followed by
+a single-byte character. In such a case the multi-byte character might
+be ignored when the provided string buffer is too small, but the
+single-byte character might fit and is thus still copied into the
+resulting string.
+
+Fix this by stop filling the provided string buffer once a character
+does not fit. In order to be able to do this extend utf32_to_utf8()
+to return useful errno codes instead of -1.
+
+Fixes: 74675a58507e ("NLS: update handling of Unicode")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Link: https://patch.msgid.link/20251111131125.3379-2-W_Armin@gmx.de
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/dir.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ fs/nls/nls_base.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
-index 048ce25ebfb70..01af2bb8a7216 100644
---- a/fs/nfs/dir.c
-+++ b/fs/nfs/dir.c
-@@ -1903,13 +1903,15 @@ static int nfs_dentry_delete(const struct dentry *dentry)
- }
+diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
+index 18d597e49a194..d434c4463a8f7 100644
+--- a/fs/nls/nls_base.c
++++ b/fs/nls/nls_base.c
+@@ -94,7 +94,7 @@ int utf32_to_utf8(unicode_t u, u8 *s, int maxout)
  
- /* Ensure that we revalidate inode->i_nlink */
--static void nfs_drop_nlink(struct inode *inode)
-+static void nfs_drop_nlink(struct inode *inode, unsigned long gencount)
- {
-+	struct nfs_inode *nfsi = NFS_I(inode);
-+
- 	spin_lock(&inode->i_lock);
- 	/* drop the inode if we're reasonably sure this is the last link */
--	if (inode->i_nlink > 0)
-+	if (inode->i_nlink > 0 && gencount == nfsi->attr_gencount)
- 		drop_nlink(inode);
--	NFS_I(inode)->attr_gencount = nfs_inc_attr_generation_counter();
-+	nfsi->attr_gencount = nfs_inc_attr_generation_counter();
- 	nfs_set_cache_invalid(
- 		inode, NFS_INO_INVALID_CHANGE | NFS_INO_INVALID_CTIME |
- 			       NFS_INO_INVALID_NLINK);
-@@ -1923,8 +1925,9 @@ static void nfs_drop_nlink(struct inode *inode)
- static void nfs_dentry_iput(struct dentry *dentry, struct inode *inode)
- {
- 	if (dentry->d_flags & DCACHE_NFSFS_RENAMED) {
-+		unsigned long gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
- 		nfs_complete_unlink(dentry, inode);
--		nfs_drop_nlink(inode);
-+		nfs_drop_nlink(inode, gencount);
- 	}
- 	iput(inode);
- }
-@@ -2523,9 +2526,11 @@ static int nfs_safe_remove(struct dentry *dentry)
+ 	l = u;
+ 	if (l > UNICODE_MAX || (l & SURROGATE_MASK) == SURROGATE_PAIR)
+-		return -1;
++		return -EILSEQ;
  
- 	trace_nfs_remove_enter(dir, dentry);
- 	if (inode != NULL) {
-+		unsigned long gencount = READ_ONCE(NFS_I(inode)->attr_gencount);
-+
- 		error = NFS_PROTO(dir)->remove(dir, dentry);
- 		if (error == 0)
--			nfs_drop_nlink(inode);
-+			nfs_drop_nlink(inode, gencount);
- 	} else
- 		error = NFS_PROTO(dir)->remove(dir, dentry);
- 	if (error == -ENOENT)
-@@ -2725,6 +2730,7 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- {
- 	struct inode *old_inode = d_inode(old_dentry);
- 	struct inode *new_inode = d_inode(new_dentry);
-+	unsigned long new_gencount = 0;
- 	struct dentry *dentry = NULL;
- 	struct rpc_task *task;
- 	bool must_unblock = false;
-@@ -2777,6 +2783,7 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 		} else {
- 			block_revalidate(new_dentry);
- 			must_unblock = true;
-+			new_gencount = NFS_I(new_inode)->attr_gencount;
- 			spin_unlock(&new_dentry->d_lock);
+ 	nc = 0;
+ 	for (t = utf8_table; t->cmask && maxout; t++, maxout--) {
+@@ -110,7 +110,7 @@ int utf32_to_utf8(unicode_t u, u8 *s, int maxout)
+ 			return nc;
  		}
+ 	}
+-	return -1;
++	return -EOVERFLOW;
+ }
+ EXPORT_SYMBOL(utf32_to_utf8);
  
-@@ -2816,7 +2823,7 @@ int nfs_rename(struct mnt_idmap *idmap, struct inode *old_dir,
- 			new_dir, new_dentry, error);
- 	if (!error) {
- 		if (new_inode != NULL)
--			nfs_drop_nlink(new_inode);
-+			nfs_drop_nlink(new_inode, new_gencount);
- 		/*
- 		 * The d_move() should be here instead of in an async RPC completion
- 		 * handler because we need the proper locks to move the dentry.  If
+@@ -217,8 +217,16 @@ int utf16s_to_utf8s(const wchar_t *pwcs, int inlen, enum utf16_endian endian,
+ 				inlen--;
+ 			}
+ 			size = utf32_to_utf8(u, op, maxout);
+-			if (size == -1) {
+-				/* Ignore character and move on */
++			if (size < 0) {
++				if (size == -EILSEQ) {
++					/* Ignore character and move on */
++					continue;
++				}
++				/*
++				 * Stop filling the buffer with data once a character
++				 * does not fit anymore.
++				 */
++				break;
+ 			} else {
+ 				op += size;
+ 				maxout -= size;
 -- 
 2.51.0
 
