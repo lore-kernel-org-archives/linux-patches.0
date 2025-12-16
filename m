@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E404F2BE7B2;
-	Tue, 16 Dec 2025 11:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BDB2BE7B2;
+	Tue, 16 Dec 2025 11:31:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884659; cv=none; b=u7xWEnRP0x9So7z1SzuIuX6W8o/Tvkh35auR480OhpmV3gB4ATa7h6p+ssUgV+jsa5ebsKIXyyF1Jx/SJbTJjzfyTJxu64Gdrv9KBB58gOzSBx2gzIx/WPTBt+6zqn1Gtb2b1Ai5X2LSFf6+LRjYPeiIbPNDa0fKQt6dWSD1qxI=
+	t=1765884662; cv=none; b=eztcW9yO9Y1TJlccochn4EfKhEFpa8DFvNeQvQrUolBLBE1drKznJoSnLcet2EJS1WbzzPA9gifwsagF/XXIvyp+YP4I5ihbT3e2cz1zj5kOddsrnlMZWpI5IJP2S7ttBM/ZRWtsZNkW0vUIZmmFCg44dctQD7XJz8dy6Kkg6wo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884659; c=relaxed/simple;
-	bh=f8YMryeWm4FNPFr3v6drlCo+OcgIOiN6fHtlX39qKw0=;
+	s=arc-20240116; t=1765884662; c=relaxed/simple;
+	bh=2Qva6ZPd2jGJf+eAQR0ZFe10lF3nylBx6iHS2gpSaPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwCZTODxDhv95Wf5bJBTIee8pM1XU+jyqgZJSi+Nu3CmbT1OW58kr10YQje8Vg62czyjdXkI5U6ZJ1PZs1ZjZTCL/5JpbS4oE14NtgWIkukJonmOfjRZNOkoNm1+e6DuHVHq78m7aOk3wJ4cbcCW7MujRsL5q7jGCVBndj9CAzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wDt4KVgI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IXHFO1HvaLaYV+pi8OI8yR9bcGw6+UXkp58MmBRZq94O4vw0kamLtXIB9qMP8zXmyHj+wL8yAR0zUBz5XRtspnl/KHcyEFx1eALaIChDxxKNJCw7wU+q/jIPRl7N+KsbF1sPuU4k9pwKo9hkQ3h8VxkQoFfaeF02KlxqPqtuxlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HeHsWQT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wDt4KVgI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69591C4CEF1;
-	Tue, 16 Dec 2025 11:30:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HeHsWQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684CFC4CEF1;
+	Tue, 16 Dec 2025 11:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884658;
-	bh=f8YMryeWm4FNPFr3v6drlCo+OcgIOiN6fHtlX39qKw0=;
+	s=korg; t=1765884661;
+	bh=2Qva6ZPd2jGJf+eAQR0ZFe10lF3nylBx6iHS2gpSaPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDt4KVgIcYZhjA4yGHb+vKzSUsU0jHCnY+CaFQY/AI67iymKOHXIR8PSsSBZUWq53
-	 YE7ADNEzHdeIcQYN9g9DUJPQXfNobhIOCP4M2aCJtX4IbfJKc6XJVCqBDRGlVvO33s
-	 E8HFJNFPtersWz6xJ8dyoS2BhN8sGlnm/9kzguME=
+	b=2HeHsWQT5lEn4/EZHtw3a58aDodBZJRjxwAY+743E76EB7BTvUR/kfFCLvd/bwzy/
+	 ngBdkJKZg0yITuelkn789gx+1XNi6I5P9VjY7zhP0VOLUyZHF1qn4rBHvODMcVmTm+
+	 lfq61xt/qQkPIyR2Y5/5ILbBIUhvZetQjduzSd5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sparkhuang <huangshaobo3@xiaomi.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Caleb Sander Mateos <csander@purestorage.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 261/354] regulator: core: Protect regulator_supply_alias_list with regulator_list_mutex
-Date: Tue, 16 Dec 2025 12:13:48 +0100
-Message-ID: <20251216111330.373661149@linuxfoundation.org>
+Subject: [PATCH 6.12 244/354] ublk: prevent invalid access with DEBUG
+Date: Tue, 16 Dec 2025 12:13:31 +0100
+Message-ID: <20251216111329.753424412@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,104 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sparkhuang <huangshaobo3@xiaomi.com>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
 
-[ Upstream commit 0cc15a10c3b4ab14cd71b779fd5c9ca0cb2bc30d ]
+[ Upstream commit c6a45ee7607de3a350008630f4369b1b5ac80884 ]
 
-regulator_supply_alias_list was accessed without any locking in
-regulator_supply_alias(), regulator_register_supply_alias(), and
-regulator_unregister_supply_alias(). Concurrent registration,
-unregistration and lookups can race, leading to:
+ublk_ch_uring_cmd_local() may jump to the out label before
+initialising the io pointer. This will cause trouble if DEBUG is
+defined, because the pr_devel() call dereferences io. Clang reports:
 
-1 use-after-free if an alias entry is removed while being read,
-2 duplicate entries when two threads register the same alias,
-3 inconsistent alias mappings observed by consumers.
+drivers/block/ublk_drv.c:2403:6: error: variable 'io' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
+ 2403 |         if (tag >= ub->dev_info.queue_depth)
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/block/ublk_drv.c:2492:32: note: uninitialized use occurs here
+ 2492 |                         __func__, cmd_op, tag, ret, io->flags);
+      |
 
-Protect all traversals, insertions and deletions on
-regulator_supply_alias_list with the existing regulator_list_mutex.
+Fix this by initialising io to NULL and checking it before
+dereferencing it.
 
-Fixes: a06ccd9c3785f ("regulator: core: Add ability to create a lookup alias for supply")
-Signed-off-by: sparkhuang <huangshaobo3@xiaomi.com>
-Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20251127025716.5440-1-huangshaobo3@xiaomi.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 32 ++++++++++++++++++++------------
- 1 file changed, 20 insertions(+), 12 deletions(-)
+ drivers/block/ublk_drv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index be9704d34c015..1c0748fee6846 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1914,6 +1914,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index defcc964ecab6..b874cb84bad95 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1768,7 +1768,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
  {
- 	struct regulator_supply_alias *map;
+ 	struct ublk_device *ub = cmd->file->private_data;
+ 	struct ublk_queue *ubq;
+-	struct ublk_io *io;
++	struct ublk_io *io = NULL;
+ 	u32 cmd_op = cmd->cmd_op;
+ 	unsigned tag = ub_cmd->tag;
+ 	int ret = -EINVAL;
+@@ -1882,7 +1882,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
  
-+	mutex_lock(&regulator_list_mutex);
- 	map = regulator_find_supply_alias(*dev, *supply);
- 	if (map) {
- 		dev_dbg(*dev, "Mapping supply %s to %s,%s\n",
-@@ -1922,6 +1923,7 @@ static void regulator_supply_alias(struct device **dev, const char **supply)
- 		*dev = map->alias_dev;
- 		*supply = map->alias_supply;
- 	}
-+	mutex_unlock(&regulator_list_mutex);
+  out:
+ 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
+-			__func__, cmd_op, tag, ret, io->flags);
++			__func__, cmd_op, tag, ret, io ? io->flags : 0);
+ 	return ret;
  }
- 
- static int regulator_match(struct device *dev, const void *data)
-@@ -2442,22 +2444,26 @@ int regulator_register_supply_alias(struct device *dev, const char *id,
- 				    const char *alias_id)
- {
- 	struct regulator_supply_alias *map;
-+	struct regulator_supply_alias *new_map;
- 
--	map = regulator_find_supply_alias(dev, id);
--	if (map)
--		return -EEXIST;
--
--	map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
--	if (!map)
-+	new_map = kzalloc(sizeof(struct regulator_supply_alias), GFP_KERNEL);
-+	if (!new_map)
- 		return -ENOMEM;
- 
--	map->src_dev = dev;
--	map->src_supply = id;
--	map->alias_dev = alias_dev;
--	map->alias_supply = alias_id;
--
--	list_add(&map->list, &regulator_supply_alias_list);
-+	mutex_lock(&regulator_list_mutex);
-+	map = regulator_find_supply_alias(dev, id);
-+	if (map) {
-+		mutex_unlock(&regulator_list_mutex);
-+		kfree(new_map);
-+		return -EEXIST;
-+	}
- 
-+	new_map->src_dev = dev;
-+	new_map->src_supply = id;
-+	new_map->alias_dev = alias_dev;
-+	new_map->alias_supply = alias_id;
-+	list_add(&new_map->list, &regulator_supply_alias_list);
-+	mutex_unlock(&regulator_list_mutex);
- 	pr_info("Adding alias for supply %s,%s -> %s,%s\n",
- 		id, dev_name(dev), alias_id, dev_name(alias_dev));
- 
-@@ -2477,11 +2483,13 @@ void regulator_unregister_supply_alias(struct device *dev, const char *id)
- {
- 	struct regulator_supply_alias *map;
- 
-+	mutex_lock(&regulator_list_mutex);
- 	map = regulator_find_supply_alias(dev, id);
- 	if (map) {
- 		list_del(&map->list);
- 		kfree(map);
- 	}
-+	mutex_unlock(&regulator_list_mutex);
- }
- EXPORT_SYMBOL_GPL(regulator_unregister_supply_alias);
  
 -- 
 2.51.0
