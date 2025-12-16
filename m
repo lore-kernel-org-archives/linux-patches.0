@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234A239B6DD;
-	Tue, 16 Dec 2025 12:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D15939B6DC;
+	Tue, 16 Dec 2025 12:37:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888668; cv=none; b=TxB+a1cLVYop74HlaWuQLmtgeRH3txXGaEdisI6/vATaNjzUP9RXG1LlP6eI/wp/iH0l9EYxsQ4+9GvuHkRZ2fjB2uluTemZ7KkW1sszjsPbqacvCByp3P5LIb1bvIgofQNbGfUmjryhVI8AuMh5aQKsarCQJP6sx3orkmKpoYE=
+	t=1765888671; cv=none; b=oB/7p/4UYILzYAS6vw/wOYBNIlXuYHxNbplYsnnCn81RQ+1P+dlXE6tBg9jdVDA+5BM8x1RPEO822Xr3W9RKhx2aS0d2LkNS+6qJWYiJfQpN/CpyORzLwUVJOifFfg4n1m1SDizrpfNAG3Lp4GW0u3BCFtSPQIY/eyZ8LImE9qc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888668; c=relaxed/simple;
-	bh=6qzA9vag92CN11wpYgDnS5B9RuDeGeX5xPOQ6xdS9mo=;
+	s=arc-20240116; t=1765888671; c=relaxed/simple;
+	bh=LHDLUN/UG06xuBscLgVCHuSa/6K9LaghPdzC9WvztxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=S9elEBJ3UJQEzn/M+vFhQO/T5WH1rZTzAtgbrttH+4OJRc2A6HhC7paY3PwFiMW58hXGN989vl8SefGACOyp2bYk1W2+oObL4PMCwxh+ZlNQk3qfOZCAzXZhBekm+QflLCVtwBke7R2x+/6MiWDTIOg0x5T59s/DnTUGks30Esc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DU49iBjR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHAQU8bC9Xwk/5yoiCnqNrrFB06ZQ4PTHwUzQsBNyYYJnMm6X4ZgI2KwrBsIsIYLDSoG3hHeKpYqQsct0+zifxS5GMz55zUX5yhCAbnTsWBSrksTz8ML2N7E/x84olRKQ5qqcFHo6P87rVkQGq2WBeFsicGQFQ1qs11RWA9qN/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TP4tAx2X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DU49iBjR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92434C4CEF1;
-	Tue, 16 Dec 2025 12:37:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TP4tAx2X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF124C4CEF1;
+	Tue, 16 Dec 2025 12:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888668;
-	bh=6qzA9vag92CN11wpYgDnS5B9RuDeGeX5xPOQ6xdS9mo=;
+	s=korg; t=1765888671;
+	bh=LHDLUN/UG06xuBscLgVCHuSa/6K9LaghPdzC9WvztxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DU49iBjRZYCLTWn/Ouh1u9+fysqh/70+jAxwpqJI3B2LFtCPGP/6Pun2i4fQsoQfI
-	 3pB3yIxlTDMh3Wzj6cOsvVMnrshwIsM45L+msuf10ZcTcySNpT6eea7edD3/UJ0PON
-	 WyWXRNQoXgkjCbF8+Pw89hYb1zfg7Yt8zSSPz6xE=
+	b=TP4tAx2XxNuGZ63nFH4sa5ZV0DckEQcyf0h/nzKeUJbKH6KDtPBQ3ByERwJNRBnO5
+	 4H1p08K1DW4wEAvVNZ5n+g4vyuYrlf93UkV8opTjXD0+7VQZWJwOcaU7HSynG7o4cb
+	 dY8GkxVQY9iTJY+4G5oLHtNT2Ut8YmiLJF2LINaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ren=C3=A9=20Rebe?= <rene@exactco.de>,
-	Lyude Paul <lyude@redhat.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 569/614] drm/nouveau: fix circular dep oops from vendored i2c encoder
-Date: Tue, 16 Dec 2025 12:15:36 +0100
-Message-ID: <20251216111422.000891236@linuxfoundation.org>
+Subject: [PATCH 6.18 560/614] drm/panel: novatek-nt35560: avoid on-stack device structure
+Date: Tue, 16 Dec 2025 12:15:27 +0100
+Message-ID: <20251216111421.669981918@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -45,161 +45,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: René Rebe <rene@exactco.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit d84e47edf156a953ed340ba6a202dcd3ea39ba0a ]
+[ Upstream commit 1a7a7b80a22448dff55e1ad69a4681fd8b760b85 ]
 
-Since commit a73583107af9 ("drm/nouveau: vendor in drm_encoder_slave API")
-nouveau appears to be broken for all dispnv04 GPUs (before NV50). Depending
-on the kernel version, either having no display output and hanging in
-kernel for a long time, or even oopsing in the cleanup path like:
+A cleanup patch apparently by accident used a local device structure
+instead of a pointer to one in the nt35560_read_id() function, causing
+a warning about stack usage:
 
-Hardware name: PowerMac11,2 PPC970MP 0x440101 PowerMac
-...
-nouveau 0000:0a:00.0: drm: 0x14C5: Parsing digital output script table
-BUG: Unable to handle kernel data access on read at 0x00041520
-Faulting instruction address: 0xc0003d0001be0844
-Oops: Kernel access of bad area, sig: 11 [#1]
-BE PAGE_SIZE=4K MMU=Hash  SMP NR_CPUS=8 NUMA PowerMac
-Modules linked in: windfarm_cpufreq_clamp windfarm_smu_sensors windfarm_smu_controls windfarm_pm112 snd_aoa_codec_onyx snd_aoa_fabric_layout snd_aoa windfarm_pid jo
- apple_mfi_fastcharge rndis_host cdc_ether usbnet mii snd_aoa_i2sbus snd_aoa_soundbus snd_pcm snd_timer snd soundcore rack_meter windfarm_smu_sat windfarm_max6690_s
-m75_sensor windfarm_core gpu_sched drm_gpuvm drm_exec drm_client_lib drm_ttm_helper ttm drm_display_helper drm_kms_helper drm drm_panel_orientation_quirks syscopyar
-_sys_fops i2c_algo_bit backlight uio_pdrv_genirq uio uninorth_agp agpgart zram dm_mod dax ipv6 nfsv4 dns_resolver nfs lockd grace sunrpc offb cfbfillrect cfbimgblt
-ont input_leds sr_mod cdrom sd_mod uas ata_generic hid_apple hid_generic usbhid hid usb_storage pata_macio sata_svw libata firewire_ohci scsi_mod firewire_core ohci
-ehci_pci ehci_hcd tg3 ohci_hcd libphy usbcore usb_common nls_base
- led_class
-CPU: 0 UID: 0 PID: 245 Comm: (udev-worker) Not tainted 6.14.0-09584-g7d06015d936c #7 PREEMPTLAZY
-Hardware name: PowerMac11,2 PPC970MP 0x440101 PowerMac
-NIP:  c0003d0001be0844 LR: c0003d0001be0830 CTR: 0000000000000000
-REGS: c0000000053f70e0 TRAP: 0300   Not tainted  (6.14.0-09584-g7d06015d936c)
-MSR:  9000000000009032 <SF,HV,EE,ME,IR,DR,RI>  CR: 24222220  XER: 00000000
-DAR: 0000000000041520 DSISR: 40000000 IRQMASK: 0 \x0aGPR00: c0003d0001be0830 c0000000053f7380 c0003d0000911900 c000000007bc6800 \x0aGPR04: 0000000000000000 0000000000000000 c000000007bc6e70 0000000000000001 \x0aGPR08: 01f3040000000000 0000000000041520 0000000000000000 c0003d0000813958 \x0aGPR12: c000000000071a48 c000000000e28000 0000000000000020 0000000000000000 \x0aGPR16: 0000000000000000 0000000000f52630 0000000000000000 0000000000000000 \x0aGPR20: 0000000000000000 0000000000000000 0000000000000001 c0003d0000928528 \x0aGPR24: c0003d0000928598 0000000000000000 c000000007025480 c000000007025480 \x0aGPR28: c0000000010b4000 0000000000000000 c000000007bc1800 c000000007bc6800
-NIP [c0003d0001be0844] nv_crtc_destroy+0x44/0xd4 [nouveau]
-LR [c0003d0001be0830] nv_crtc_destroy+0x30/0xd4 [nouveau]
-Call Trace:
-[c0000000053f7380] [c0003d0001be0830] nv_crtc_destroy+0x30/0xd4 [nouveau] (unreliable)
-[c0000000053f73c0] [c0003d00007f7bf4] drm_mode_config_cleanup+0x27c/0x30c [drm]
-[c0000000053f7490] [c0003d0001bdea50] nouveau_display_create+0x1cc/0x550 [nouveau]
-[c0000000053f7500] [c0003d0001bcc29c] nouveau_drm_device_init+0x1c8/0x844 [nouveau]
-[c0000000053f75e0] [c0003d0001bcc9ec] nouveau_drm_probe+0xd4/0x1e0 [nouveau]
-[c0000000053f7670] [c000000000557d24] local_pci_probe+0x50/0xa8
-[c0000000053f76f0] [c000000000557fa8] pci_device_probe+0x22c/0x240
-[c0000000053f7760] [c0000000005fff3c] really_probe+0x188/0x31c
-[c0000000053f77e0] [c000000000600204] __driver_probe_device+0x134/0x13c
-[c0000000053f7860] [c0000000006002c0] driver_probe_device+0x3c/0xb4
-[c0000000053f78a0] [c000000000600534] __driver_attach+0x118/0x128
-[c0000000053f78e0] [c0000000005fe038] bus_for_each_dev+0xa8/0xf4
-[c0000000053f7950] [c0000000005ff460] driver_attach+0x2c/0x40
-[c0000000053f7970] [c0000000005fea68] bus_add_driver+0x130/0x278
-[c0000000053f7a00] [c00000000060117c] driver_register+0x9c/0x1a0
-[c0000000053f7a80] [c00000000055623c] __pci_register_driver+0x5c/0x70
-[c0000000053f7aa0] [c0003d0001c058a0] nouveau_drm_init+0x254/0x278 [nouveau]
-[c0000000053f7b10] [c00000000000e9bc] do_one_initcall+0x84/0x268
-[c0000000053f7bf0] [c0000000001a0ba0] do_init_module+0x70/0x2d8
-[c0000000053f7c70] [c0000000001a42bc] init_module_from_file+0xb4/0x108
-[c0000000053f7d50] [c0000000001a4504] sys_finit_module+0x1ac/0x478
-[c0000000053f7e10] [c000000000023230] system_call_exception+0x1a4/0x20c
-[c0000000053f7e50] [c00000000000c554] system_call_common+0xf4/0x258
- --- interrupt: c00 at 0xfd5f988
-NIP:  000000000fd5f988 LR: 000000000ff9b148 CTR: 0000000000000000
-REGS: c0000000053f7e80 TRAP: 0c00   Not tainted  (6.14.0-09584-g7d06015d936c)
-MSR:  100000000000d032 <HV,EE,PR,ME,IR,DR,RI>  CR: 28222244  XER: 00000000
-IRQMASK: 0 \x0aGPR00: 0000000000000161 00000000ffcdc2d0 00000000405db160 0000000000000020 \x0aGPR04: 000000000ffa2c9c 0000000000000000 000000000000001f 0000000000000045 \x0aGPR08: 0000000011a13770 0000000000000000 0000000000000000 0000000000000000 \x0aGPR12: 0000000000000000 0000000010249d8c 0000000000000020 0000000000000000 \x0aGPR16: 0000000000000000 0000000000f52630 0000000000000000 0000000000000000 \x0aGPR20: 0000000000000000 0000000000000000 0000000000000000 0000000011a11a70 \x0aGPR24: 0000000011a13580 0000000011a11950 0000000011a11a70 0000000000020000 \x0aGPR28: 000000000ffa2c9c 0000000000000000 000000000ffafc40 0000000011a11a70
-NIP [000000000fd5f988] 0xfd5f988
-LR [000000000ff9b148] 0xff9b148
- --- interrupt: c00
-Code: f821ffc1 418200ac e93f0000 e9290038 e9291468 eba90000 48026c0d e8410018 e93f06aa 3d290001 392982a4 79291f24 <7fdd482a> 2c3e0000 41820030 7fc3f378
- ---[ end trace 0000000000000000 ]---
+drivers/gpu/drm/panel/panel-novatek-nt35560.c: In function 'nt35560_read_id':
+drivers/gpu/drm/panel/panel-novatek-nt35560.c:249:1: error: the frame size of 1296 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
 
-This is caused by the i2c encoder modules vendored into nouveau/ now
-depending on the equally vendored nouveau_i2c_encoder_destroy
-function. Trying to auto-load this modules hangs on nouveau
-initialization until timeout, and nouveau continues without i2c video
-encoders.
+Change this to a pointer as was liley intended here.
 
-Fix by avoiding nouveau dependency by __always_inlining that helper
-functions into those i2c video encoder modules.
-
-Fixes: a73583107af9 ("drm/nouveau: vendor in drm_encoder_slave API")
-Signed-off-by: René Rebe <rene@exactco.de>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-[Lyude: fixed commit reference in description]
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20251202.164952.2216481867721531616.rene@exactco.de
+Fixes: 5fbc0dbb92d6 ("drm/panel: novatek-nt35560: Clean up driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20251204094550.1030506-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../nouveau/dispnv04/nouveau_i2c_encoder.c    | 20 -------------------
- .../include/dispnv04/i2c/encoder_i2c.h        | 19 +++++++++++++++++-
- 2 files changed, 18 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/panel/panel-novatek-nt35560.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/dispnv04/nouveau_i2c_encoder.c b/drivers/gpu/drm/nouveau/dispnv04/nouveau_i2c_encoder.c
-index e2bf99c433366..a60209097a20a 100644
---- a/drivers/gpu/drm/nouveau/dispnv04/nouveau_i2c_encoder.c
-+++ b/drivers/gpu/drm/nouveau/dispnv04/nouveau_i2c_encoder.c
-@@ -94,26 +94,6 @@ int nouveau_i2c_encoder_init(struct drm_device *dev,
- 	return err;
- }
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35560.c b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
+index 561e6643dcbb6..6e5173f98a226 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35560.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
+@@ -213,7 +213,7 @@ static const struct backlight_properties nt35560_bl_props = {
  
--/**
-- * nouveau_i2c_encoder_destroy - Unregister the I2C device backing an encoder
-- * @drm_encoder:	Encoder to be unregistered.
-- *
-- * This should be called from the @destroy method of an I2C slave
-- * encoder driver once I2C access is no longer needed.
-- */
--void nouveau_i2c_encoder_destroy(struct drm_encoder *drm_encoder)
--{
--	struct nouveau_i2c_encoder *encoder = to_encoder_i2c(drm_encoder);
--	struct i2c_client *client = nouveau_i2c_encoder_get_client(drm_encoder);
--	struct module *module = client->dev.driver->owner;
--
--	i2c_unregister_device(client);
--	encoder->i2c_client = NULL;
--
--	module_put(module);
--}
--EXPORT_SYMBOL(nouveau_i2c_encoder_destroy);
--
- /*
-  * Wrapper fxns which can be plugged in to drm_encoder_helper_funcs:
-  */
-diff --git a/drivers/gpu/drm/nouveau/include/dispnv04/i2c/encoder_i2c.h b/drivers/gpu/drm/nouveau/include/dispnv04/i2c/encoder_i2c.h
-index 31334aa90781b..869820701a56e 100644
---- a/drivers/gpu/drm/nouveau/include/dispnv04/i2c/encoder_i2c.h
-+++ b/drivers/gpu/drm/nouveau/include/dispnv04/i2c/encoder_i2c.h
-@@ -202,7 +202,24 @@ static inline struct i2c_client *nouveau_i2c_encoder_get_client(struct drm_encod
- 	return to_encoder_i2c(encoder)->i2c_client;
- }
+ static void nt35560_read_id(struct mipi_dsi_multi_context *dsi_ctx)
+ {
+-	struct device dev = dsi_ctx->dsi->dev;
++	struct device *dev = &dsi_ctx->dsi->dev;
+ 	u8 vendor, version, panel;
+ 	u16 val;
  
--void nouveau_i2c_encoder_destroy(struct drm_encoder *encoder);
-+/**
-+ * nouveau_i2c_encoder_destroy - Unregister the I2C device backing an encoder
-+ * @drm_encoder:        Encoder to be unregistered.
-+ *
-+ * This should be called from the @destroy method of an I2C slave
-+ * encoder driver once I2C access is no longer needed.
-+ */
-+static __always_inline void nouveau_i2c_encoder_destroy(struct drm_encoder *drm_encoder)
-+{
-+	struct nouveau_i2c_encoder *encoder = to_encoder_i2c(drm_encoder);
-+	struct i2c_client *client = nouveau_i2c_encoder_get_client(drm_encoder);
-+	struct module *module = client->dev.driver->owner;
-+
-+	i2c_unregister_device(client);
-+	encoder->i2c_client = NULL;
-+
-+	module_put(module);
-+}
+@@ -225,7 +225,7 @@ static void nt35560_read_id(struct mipi_dsi_multi_context *dsi_ctx)
+ 		return;
  
- /*
-  * Wrapper fxns which can be plugged in to drm_encoder_helper_funcs:
+ 	if (vendor == 0x00) {
+-		dev_err(&dev, "device vendor ID is zero\n");
++		dev_err(dev, "device vendor ID is zero\n");
+ 		dsi_ctx->accum_err = -ENODEV;
+ 		return;
+ 	}
+@@ -236,12 +236,12 @@ static void nt35560_read_id(struct mipi_dsi_multi_context *dsi_ctx)
+ 	case DISPLAY_SONY_ACX424AKP_ID2:
+ 	case DISPLAY_SONY_ACX424AKP_ID3:
+ 	case DISPLAY_SONY_ACX424AKP_ID4:
+-		dev_info(&dev,
++		dev_info(dev,
+ 			 "MTP vendor: %02x, version: %02x, panel: %02x\n",
+ 			 vendor, version, panel);
+ 		break;
+ 	default:
+-		dev_info(&dev,
++		dev_info(dev,
+ 			 "unknown vendor: %02x, version: %02x, panel: %02x\n",
+ 			 vendor, version, panel);
+ 		break;
 -- 
 2.51.0
 
