@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 968A4359F9D;
-	Tue, 16 Dec 2025 12:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B30359FA3;
+	Tue, 16 Dec 2025 12:05:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886704; cv=none; b=CBo2SfKogGdITzgo9yA5XP+CjiAwZHzVd+ALEs50RGgfdvjUoh5iQwETOI2YsWshbLOjsi7OmXu8PhcLXg03dV/SlkJfQl1xSR/dNiOMey9gk1PlcKEjmQON9T+hMYOzbNfNT9jxTKRQsc32hO7op0OL4mCU6K1IuDFrSpu9QZo=
+	t=1765886707; cv=none; b=mKlEYV1SRc1iKGIWApFl3luKA7v8zhozyV6Nf1mwjsp9zf0zRxq7U3soqA5Vn2V0eVI+UulULGA9viI9dhH3t9gD/quWHwegQFJiYDDZH3uDj45aRus2y1Ijl/Rj25gb5Fn8S/PShTE6IOMIV+8Hn/8xjg3MtU6xpvzBNahEqfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886704; c=relaxed/simple;
-	bh=gHQHSIRIuXx4IUX+aDkJm27DJE5yW7qTPfX2USZBRq0=;
+	s=arc-20240116; t=1765886707; c=relaxed/simple;
+	bh=p6g24h3QY2JSG29R/zwep/n2vOUtrtsHCfpU4kvNubI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=my3NZjbuUuD/xgPhcg242k6QUvySw2PmrCSPLEPxT8VqwAjFv+F06WmK6q/b4AibKsnjaaibUdLvYad8pLsPnzTZACfTAfJF0Juf4ktdUeLKcABTcuLUY+TZ+hI6MSmF6D1sS0X0qWzJjBHICCVT+HtmWxF9/Qs1EVlKJYcvwfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M3d7z8IH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZiDyDTtFK2yoRLlBevUIf6DHtDozkqeUvrp81KYUZOEsvh4JMb0qTHbub2VXJGUoTkfdC3kDTxuVZpPS8RibrUEM7bUyUMrHD7JgCKtP8rqCD3WPY6nYm7DFpMQ/AzELtnQ8qbICnAg0ycAz3yU/9Wn5iD2pIyX1T5Nxpk/CF/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6EvLZvr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M3d7z8IH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4BCC4CEF5;
-	Tue, 16 Dec 2025 12:05:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6EvLZvr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 573A0C4CEF1;
+	Tue, 16 Dec 2025 12:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886704;
-	bh=gHQHSIRIuXx4IUX+aDkJm27DJE5yW7qTPfX2USZBRq0=;
+	s=korg; t=1765886707;
+	bh=p6g24h3QY2JSG29R/zwep/n2vOUtrtsHCfpU4kvNubI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M3d7z8IHaP99r2ln/CvcvaJxhj6J+8a3+O8cPrlpiM/pJDCtEF18udDZFYYGK5OIu
-	 5k0jDR7ZU9TAgbO5/ZCmxtewTt1br8lVPSCYO/3yo18JtTDX5snvIh77DJ6P1WyCUq
-	 FNPYUIZdOwzWoBGIgkeUdBPq4VDFs6xJScpqoKJI=
+	b=M6EvLZvrcRsZcu0vPCVn175niw7jpy9RCWa9JI8hSWnztw/GmnL5MoSjEbRtTb9uI
+	 i4dQFQBnMRtI5TSiQB8lsUYKKHZ5VaSfxR/xEaB963yKqfjr51xFNGELKg+G+ipThc
+	 qCErZxY43DiIemGtGTZB4VwDvAmh7jbrLheOE7FY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 492/507] scsi: imm: Fix use-after-free bug caused by unfinished delayed work
-Date: Tue, 16 Dec 2025 12:15:33 +0100
-Message-ID: <20251216111403.264133605@linuxfoundation.org>
+Subject: [PATCH 6.18 001/614] smack: fix bug: SMACK64TRANSMUTE set on non-directory
+Date: Tue, 16 Dec 2025 12:06:08 +0100
+Message-ID: <20251216111401.343136940@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
-References: <20251216111345.522190956@linuxfoundation.org>
+In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
+References: <20251216111401.280873349@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +47,83 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.17-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit ab58153ec64fa3fc9aea09ca09dc9322e0b54a7c ]
+[ Upstream commit 195da3ff244deff119c3f5244b464b2236ea1725 ]
 
-The delayed work item 'imm_tq' is initialized in imm_attach() and
-scheduled via imm_queuecommand() for processing SCSI commands.  When the
-IMM parallel port SCSI host adapter is detached through imm_detach(),
-the imm_struct device instance is deallocated.
+When a new file system object is created
+and the conditions for label transmutation are met,
+the SMACK64TRANSMUTE extended attribute is set
+on the object regardless of its type:
+file, pipe, socket, symlink, or directory.
 
-However, the delayed work might still be pending or executing
-when imm_detach() is called, leading to use-after-free bugs
-when the work function imm_interrupt() accesses the already
-freed imm_struct memory.
+However,
+SMACK64TRANSMUTE may only be set on directories.
 
-The race condition can occur as follows:
+This bug is a combined effect of the commits [1] and [2]
+which both transfer functionality
+from smack_d_instantiate() to smack_inode_init_security(),
+but only in part.
 
-CPU 0(detach thread)   | CPU 1
-                       | imm_queuecommand()
-                       |   imm_queuecommand_lck()
-imm_detach()           |     schedule_delayed_work()
-  kfree(dev) //FREE    | imm_interrupt()
-                       |   dev = container_of(...) //USE
-                           dev-> //USE
+Commit [1] set blank  SMACK64TRANSMUTE on improper object types.
+Commit [2] set "TRUE" SMACK64TRANSMUTE on improper object types.
 
-Add disable_delayed_work_sync() in imm_detach() to guarantee proper
-cancellation of the delayed work item before imm_struct is deallocated.
+[1] 2023-06-10,
+Fixes: baed456a6a2f ("smack: Set the SMACK64TRANSMUTE xattr in smack_inode_init_security()")
+Link: https://lore.kernel.org/linux-security-module/20230610075738.3273764-3-roberto.sassu@huaweicloud.com/
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20251028100149.40721-1-duoming@zju.edu.cn
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[2] 2023-11-16,
+Fixes: e63d86b8b764 ("smack: Initialize the in-memory inode in smack_inode_init_security()")
+Link: https://lore.kernel.org/linux-security-module/20231116090125.187209-5-roberto.sassu@huaweicloud.com/
+
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/imm.c | 1 +
- 1 file changed, 1 insertion(+)
+ security/smack/smack_lsm.c | 26 ++++++++++++++------------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/scsi/imm.c b/drivers/scsi/imm.c
-index 0821cf994b986..8a099bc27e06c 100644
---- a/drivers/scsi/imm.c
-+++ b/drivers/scsi/imm.c
-@@ -1260,6 +1260,7 @@ static void imm_detach(struct parport *pb)
- 	imm_struct *dev;
- 	list_for_each_entry(dev, &imm_hosts, list) {
- 		if (dev->dev->port == pb) {
-+			disable_delayed_work_sync(&dev->imm_tq);
- 			list_del_init(&dev->list);
- 			scsi_remove_host(dev->host);
- 			scsi_host_put(dev->host);
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index af986587841d8..39a4caeb6bc8e 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -1015,18 +1015,20 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 		if (tsp->smk_task != tsp->smk_transmuted)
+ 			isp = issp->smk_inode = dsp;
+ 
+-		issp->smk_flags |= SMK_INODE_TRANSMUTE;
+-		xattr_transmute = lsm_get_xattr_slot(xattrs,
+-						     xattr_count);
+-		if (xattr_transmute) {
+-			xattr_transmute->value = kmemdup(TRANS_TRUE,
+-							 TRANS_TRUE_SIZE,
+-							 GFP_NOFS);
+-			if (!xattr_transmute->value)
+-				return -ENOMEM;
+-
+-			xattr_transmute->value_len = TRANS_TRUE_SIZE;
+-			xattr_transmute->name = XATTR_SMACK_TRANSMUTE;
++		if (S_ISDIR(inode->i_mode)) {
++			issp->smk_flags |= SMK_INODE_TRANSMUTE;
++			xattr_transmute = lsm_get_xattr_slot(xattrs,
++							     xattr_count);
++			if (xattr_transmute) {
++				xattr_transmute->value = kmemdup(TRANS_TRUE,
++								 TRANS_TRUE_SIZE,
++								 GFP_NOFS);
++				if (!xattr_transmute->value)
++					return -ENOMEM;
++
++				xattr_transmute->value_len = TRANS_TRUE_SIZE;
++				xattr_transmute->name = XATTR_SMACK_TRANSMUTE;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
