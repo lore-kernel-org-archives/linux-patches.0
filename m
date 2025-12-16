@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F383396E4;
-	Tue, 16 Dec 2025 11:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AF8338F25;
+	Tue, 16 Dec 2025 11:31:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884714; cv=none; b=TQa2zPZPLvvokVaM94bXNpLIrcXvEXlHOz1qP5Hl44tURxMz70J1G39h1SZxkE6wsOo2RWpAXsQxjzZfo3sPCGD0CjaGMAW3VVM8l/AC+I7Fgr8OaYDN1bilOZXuhoC0cL8wj4P/2NuWrE7Q37GbgRswFNIYJjaHlSeuJJnBesI=
+	t=1765884717; cv=none; b=sp86zxzZN8tiN+CMXzqNyUK3urnHi8YZdL3TBaM6pdaxgEFcD8fy1Dk0P8yY4U+PnlsCqeAX1UC2U0E1eQGRD6RdWYs9/M3A8wt80rt/tDDuk53w7Gnwjl/raOUesRIg2fmwYmAt60Uy2sujqhg1iKSg/ZVOVqvuT1ef5uj59ms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884714; c=relaxed/simple;
-	bh=KsJVfQlqoaBQwOIW5fcYL4oRBBGlDpgMeDduK+2i5Pg=;
+	s=arc-20240116; t=1765884717; c=relaxed/simple;
+	bh=8Pbgt+VOOFEAUniPS+AtJL/JHLSMBwFbAjwXAHcgqh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZ+v8kakNHZki1fukuXu2NM/yvJ26i2JLhl/VJRzpU4KRCegF/gPxHkGlZr8X8p1pf00w/w5WQDuzO2XLDBpg9DDOGqMz0LGMkU9UtGD2e/tZYMSYZyxa78Fh9oGIKgzouBIDSTRpRrmKhQrW7tqJb0hHcxmzNSe+VWuUiTJOdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWZuslm/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bY4+Zw6fnqQLaRiXm3MEqMhkKiO9Y3ipNhgdJrujEDsk+suwKaZRwVKYN6Jm90bo4BwfA+OSlMpoUBpF1LjspopUHl+47UXqTJDtIdEENG7aYnaNPpL3uDWVJvapEcwebNHJiICDhrSt4dzTH4s5IotPu8Hd9rzRCWYKU1Sx2Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rj2MX96Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWZuslm/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528BFC4CEF1;
-	Tue, 16 Dec 2025 11:31:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rj2MX96Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5E6C4CEF1;
+	Tue, 16 Dec 2025 11:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884713;
-	bh=KsJVfQlqoaBQwOIW5fcYL4oRBBGlDpgMeDduK+2i5Pg=;
+	s=korg; t=1765884717;
+	bh=8Pbgt+VOOFEAUniPS+AtJL/JHLSMBwFbAjwXAHcgqh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GWZuslm/doAvVuvjoSgASDotSjq8y1geaAz+KbVrx0ROhR8FurwlGLkn4Wt05EYGO
-	 OWZ/3eQoikMqL/ufFi+GFJ8X1M/lfVK8LzdzY/gZTh/KskFbyMgrqqzBbFzz0Kq9Tu
-	 hTkDZBzjPYg9to6gqAcC1FRm+9+N9JFRHWFeaJLM=
+	b=rj2MX96Qkk/lVnooZz4HtM/x2/LLZCrMlBfEAAejswyql33Fqw4uy9XqsLPQQ3AjZ
+	 YvQPkXgMotIhPbPcvMmAGLO5520EZJy1Z2meVGz08+Je0snOu69p3C4hEkpNDwMBSe
+	 mZAuAoZNjmvO70GfBb5CdSxBok2ovDDtUOgKKb4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Stepchenko <sid@itb.spb.ru>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Alexandru Gagniuc <mr.nuke.me@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 275/354] mtd: lpddr_cmds: fix signed shifts in lpddr_cmds
-Date: Tue, 16 Dec 2025 12:14:02 +0100
-Message-ID: <20251216111330.877652283@linuxfoundation.org>
+Subject: [PATCH 6.12 276/354] remoteproc: qcom_q6v5_wcss: fix parsing of qcom,halt-regs
+Date: Tue, 16 Dec 2025 12:14:03 +0100
+Message-ID: <20251216111330.914126114@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,69 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Stepchenko <sid@itb.spb.ru>
+From: Alexandru Gagniuc <mr.nuke.me@gmail.com>
 
-[ Upstream commit c909fec69f84b39e63876c69b9df2c178c6b76ba ]
+[ Upstream commit 7e81fa8d809ed1e67ae9ecd52d20a20c2c65d877 ]
 
-There are several places where a value of type 'int' is shifted by
-lpddr->chipshift. lpddr->chipshift is derived from QINFO geometry and
-might reach 31 when QINFO reports a 2 GiB size - the maximum supported by
-LPDDR(1) compliant chips. This may cause unexpected sign-extensions when
-casting the integer value to the type of 'unsigned long'.
+The "qcom,halt-regs" consists of a phandle reference followed by the
+three offsets within syscon for halt registers. Thus, we need to
+request 4 integers from of_property_read_variable_u32_array(), with
+the halt_reg ofsets at indexes 1, 2, and 3. Offset 0 is the phandle.
 
-Use '1UL << lpddr->chipshift' and cast 'j' to unsigned long before
-shifting so the computation is performed at the destination width.
+With MAX_HALT_REG at 3, of_property_read_variable_u32_array() returns
+-EOVERFLOW, causing .probe() to fail.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Increase MAX_HALT_REG to 4, and update the indexes accordingly.
 
-Fixes: c68264711ca6 ("[MTD] LPDDR Command set driver")
-Signed-off-by: Ivan Stepchenko <sid@itb.spb.ru>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
+Signed-off-by: Alexandru Gagniuc <mr.nuke.me@gmail.com>
+Link: https://lore.kernel.org/r/20251129013207.3981517-1-mr.nuke.me@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/lpddr/lpddr_cmds.c | 8 ++++----
+ drivers/remoteproc/qcom_q6v5_wcss.c | 8 ++++----
  1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/lpddr/lpddr_cmds.c b/drivers/mtd/lpddr/lpddr_cmds.c
-index 14e36ae71958f..bd76479b90e4a 100644
---- a/drivers/mtd/lpddr/lpddr_cmds.c
-+++ b/drivers/mtd/lpddr/lpddr_cmds.c
-@@ -79,7 +79,7 @@ struct mtd_info *lpddr_cmdset(struct map_info *map)
- 		mutex_init(&shared[i].lock);
- 		for (j = 0; j < lpddr->qinfo->HWPartsNum; j++) {
- 			*chip = lpddr->chips[i];
--			chip->start += j << lpddr->chipshift;
-+			chip->start += (unsigned long)j << lpddr->chipshift;
- 			chip->oldstate = chip->state = FL_READY;
- 			chip->priv = &shared[i];
- 			/* those should be reset too since
-@@ -559,7 +559,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
- 			break;
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index e913dabae9924..c560b81b72631 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -85,7 +85,7 @@
+ #define TCSR_WCSS_CLK_MASK	0x1F
+ #define TCSR_WCSS_CLK_ENABLE	0x14
  
- 		if ((len + ofs - 1) >> lpddr->chipshift)
--			thislen = (1<<lpddr->chipshift) - ofs;
-+			thislen = (1UL << lpddr->chipshift) - ofs;
- 		else
- 			thislen = len;
- 		/* get the chip */
-@@ -575,7 +575,7 @@ static int lpddr_point(struct mtd_info *mtd, loff_t adr, size_t len,
- 		len -= thislen;
- 
- 		ofs = 0;
--		last_end += 1 << lpddr->chipshift;
-+		last_end += 1UL << lpddr->chipshift;
- 		chipnum++;
- 		chip = &lpddr->chips[chipnum];
+-#define MAX_HALT_REG		3
++#define MAX_HALT_REG		4
+ enum {
+ 	WCSS_IPQ8074,
+ 	WCSS_QCS404,
+@@ -864,9 +864,9 @@ static int q6v5_wcss_init_mmio(struct q6v5_wcss *wcss,
+ 		return -EINVAL;
  	}
-@@ -601,7 +601,7 @@ static int lpddr_unpoint (struct mtd_info *mtd, loff_t adr, size_t len)
- 			break;
  
- 		if ((len + ofs - 1) >> lpddr->chipshift)
--			thislen = (1<<lpddr->chipshift) - ofs;
-+			thislen = (1UL << lpddr->chipshift) - ofs;
- 		else
- 			thislen = len;
+-	wcss->halt_q6 = halt_reg[0];
+-	wcss->halt_wcss = halt_reg[1];
+-	wcss->halt_nc = halt_reg[2];
++	wcss->halt_q6 = halt_reg[1];
++	wcss->halt_wcss = halt_reg[2];
++	wcss->halt_nc = halt_reg[3];
  
+ 	return 0;
+ }
 -- 
 2.51.0
 
