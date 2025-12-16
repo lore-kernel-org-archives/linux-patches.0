@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2334167B;
-	Tue, 16 Dec 2025 12:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1035B346791;
+	Tue, 16 Dec 2025 12:33:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888430; cv=none; b=kck/S8p6tT+Nfh+psbhqdgOV0Op+NOtuEvQVsOQ2pEWv8i+ecLgIJM2nuIyKJyW+bExhACFxnTVsyZQgjPASkW8FOpKaTcebx97E1jUbECpbDuAxnsBAUxRaaQ4D++uDiTog0dwtcWdAYun+8Ut3m52jzWuCEfMsNpZ+aqIKc+M=
+	t=1765888434; cv=none; b=E8tXaFj1djtjQB94VUrK/Y/LttaFqSL7kxc/hpvm7+uwqpQYBJI/mhmUXtPDWh0P6lvYFY8eB1ypxXUqVTw6HlUOYRCHQCmyVlVsLmVBqMkSyByMKhUmotrsXHBViDcALNw3jGf5hIworARGjOdB33oV2pqdNpRdgeU2gjPPbtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888430; c=relaxed/simple;
-	bh=JpBgv/w2jiHxZLqQ/EIwgwyGFkHyu4q35xsUVTjwyOk=;
+	s=arc-20240116; t=1765888434; c=relaxed/simple;
+	bh=D1wgWFI+ap8r2vXv2wkqzs194vQA1NRPchbZKQD5vLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKhN8kWibRbg2ZcGSK7BiC6IDP71XtELMMJj+olWlWAC4ABsxCHoBB8a38TH+Z6aKZIXaMFaFzH8S5dQFcUpooFELGrBn9o6HAINTIifbiAWwKvs7xb93AnjzGGWcjdv9DuqBEroXW4qCu8mINDkG0cOxfmufA95yEfLOZtsMjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ggkdF2Fw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foE3JnmkxudCq7WM4PjJo7EjQmYxC3Vl1ZOFTg7JA/B2L2F5wGbLuyMx4IzsM9jT15sXSdqC5VI7Jgok0bgiSyUdVhP72U0LgSTvjBSlThmoGC5aNn8ZzZCp+ayQpOAGqoCM+EKGembPRLGlq6j83Vz8i/DsxRxbgYAtXDbtP8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQ4+RUrZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ggkdF2Fw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0125CC4CEF1;
-	Tue, 16 Dec 2025 12:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQ4+RUrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710D4C4CEF1;
+	Tue, 16 Dec 2025 12:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888430;
-	bh=JpBgv/w2jiHxZLqQ/EIwgwyGFkHyu4q35xsUVTjwyOk=;
+	s=korg; t=1765888433;
+	bh=D1wgWFI+ap8r2vXv2wkqzs194vQA1NRPchbZKQD5vLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ggkdF2Fwvu1j++4ehtgrSKu1G+H+XRgPeZpD6gCb/w5/k9HSvBTFpfS82UHKZiNp8
-	 qlixBoE88CwE0tsFUQG4dTXkE2QBiTLrnuF/4cC1hf/pEcB3oo3GizcYpJ2j8t+tg6
-	 OccE+pO2y5wqed2nGaTLou4tWKjosiJtLXSE0BEs=
+	b=ZQ4+RUrZmdRoZ0mPNy+FyQxSKLrd0x2n9lfITB10g1UquZniw41tN7Bh6LMAXs2ln
+	 bE4q66A8A1VNhhasIleyj2hGyYiwe1w/+J5bK6/zfmXHlzB4wBftFjgOhIOHH5CRnv
+	 L0BHH+/85ntqS+kj+nV164Ue/DUrSFHjFb2fF4M0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaming Zhang <r772577952@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
+	xupengbo <xupengbo@oppo.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Aaron Lu <ziqianlu@bytedance.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 525/614] exfat: fix divide-by-zero in exfat_allocate_bitmap
-Date: Tue, 16 Dec 2025 12:14:52 +0100
-Message-ID: <20251216111420.397652317@linuxfoundation.org>
+Subject: [PATCH 6.18 534/614] sched/fair: Fix unfairness caused by stalled tg_load_avg_contrib when the last task migrates out
+Date: Tue, 16 Dec 2025 12:15:01 +0100
+Message-ID: <20251216111420.726282032@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,37 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: xupengbo <xupengbo@oppo.com>
 
-[ Upstream commit d70a5804c563b5e34825353ba9927509df709651 ]
+[ Upstream commit ca125231dd29fc0678dd3622e9cdea80a51dffe4 ]
 
-The variable max_ra_count can be 0 in exfat_allocate_bitmap(),
-which causes a divide-by-zero error in the subsequent modulo operation
-(i % max_ra_count), leading to a system crash.
-When max_ra_count is 0, it means that readahead is not used. This patch
-load the bitmap without readahead.
+When a task is migrated out, there is a probability that the tg->load_avg
+value will become abnormal. The reason is as follows:
 
-Fixes: 9fd688678dd8 ("exfat: optimize allocation bitmap loading time")
-Reported-by: Jiaming Zhang <r772577952@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+1. Due to the 1ms update period limitation in update_tg_load_avg(), there
+   is a possibility that the reduced load_avg is not updated to tg->load_avg
+   when a task migrates out.
+
+2. Even though __update_blocked_fair() traverses the leaf_cfs_rq_list and
+   calls update_tg_load_avg() for cfs_rqs that are not fully decayed, the key
+   function cfs_rq_is_decayed() does not check whether
+   cfs->tg_load_avg_contrib is null. Consequently, in some cases,
+   __update_blocked_fair() removes cfs_rqs whose avg.load_avg has not been
+   updated to tg->load_avg.
+
+Add a check of cfs_rq->tg_load_avg_contrib in cfs_rq_is_decayed(),
+which fixes the case (2.) mentioned above.
+
+Fixes: 1528c661c24b ("sched/fair: Ratelimit update to tg->load_avg")
+Signed-off-by: xupengbo <xupengbo@oppo.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Aaron Lu <ziqianlu@bytedance.com>
+Link: https://patch.msgid.link/20250827022208.14487-1-xupengbo@oppo.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/balloc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/exfat/balloc.c b/fs/exfat/balloc.c
-index 2d2d510f2372c..0b6466b3490a0 100644
---- a/fs/exfat/balloc.c
-+++ b/fs/exfat/balloc.c
-@@ -106,7 +106,7 @@ static int exfat_allocate_bitmap(struct super_block *sb,
- 		(PAGE_SHIFT - sb->s_blocksize_bits);
- 	for (i = 0; i < sbi->map_sectors; i++) {
- 		/* Trigger the next readahead in advance. */
--		if (0 == (i % max_ra_count)) {
-+		if (max_ra_count && 0 == (i % max_ra_count)) {
- 			blk_start_plug(&plug);
- 			for (j = i; j < min(max_ra_count, sbi->map_sectors - i) + i; j++)
- 				sb_breadahead(sb, sector + j);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 2a4a1c6e25da0..71d3f4125b0e7 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4059,6 +4059,9 @@ static inline bool cfs_rq_is_decayed(struct cfs_rq *cfs_rq)
+ 	if (child_cfs_rq_on_list(cfs_rq))
+ 		return false;
+ 
++	if (cfs_rq->tg_load_avg_contrib)
++		return false;
++
+ 	return true;
+ }
+ 
 -- 
 2.51.0
 
