@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81FAC364036;
-	Tue, 16 Dec 2025 12:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AC8364024;
+	Tue, 16 Dec 2025 12:23:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887780; cv=none; b=mi80oqTEILpEjF/Jie9fDX4L7ufVLIGgWREtWJwieECJ/iyzA9iWAiWePf21u0rcPn6fKe2AhY7KSAqf4WYFVbWGjpU1HkdjZHlkHmrGWFNAtIjxX384kfGKIH1ey8VBC9hO8uEmhp/kkCxK0VT6ZgubpkUy5QXxSRENPwgU/fI=
+	t=1765887783; cv=none; b=f3Dsygec85paa9ijzwAO1t/IaGeNZUJyk/hKp0bxoQnSzyhJijdtjemtjc+qHcr0gxxIgvOiIDpaRWvEMBJD8eg/1Q6j3I1N9BALZeqby8K/Y62YI7iAj0AbAstzepOHXYaGLpmFkA2qrYGhjZivjacQzhetMRl/FHCLpryvkT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887780; c=relaxed/simple;
-	bh=irMPozeV6/ocbQUHh1/Vz3ILUoON3zHoylHzzHTs9GI=;
+	s=arc-20240116; t=1765887783; c=relaxed/simple;
+	bh=RHVwxkYpkLjdEIOWTRzH8MQtpIotqrGoq+aeK/JRfJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=czBbIi9m+35mrOjvHutjqZa8XRFTxRT0zj5yM9pfs9KcTBIX1L3KrxCxL0YIhR5aCIy8z8Hu7YgVtCQ5yzh98YvII71dmxBVnt0dWPFe/bDq/MaqH0pLwC9mJ1jHya1s4sGezwjd9E3wOnp4jgIA/zcsgkdbDWq5XcQr8LwO6aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPBhiSHb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uis7KNCWEiuVNdnMSB2AQcNNaQB2kJG+qOPK2UQMIie5Rf2TJxpCj2LInzmbSvuNT+A8H02NNEyJQUF2WAcJzMQmFQxk45ct+5Y4SMuAJxWWM4EjiEdxIVIfj3xcpT0EoV6MzJc8jC42XWuJRz7opLZ4dYhOBJlqJYFk6H3Fzhw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4D4r6pR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPBhiSHb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2B2C4CEF1;
-	Tue, 16 Dec 2025 12:22:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4D4r6pR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC007C4CEF1;
+	Tue, 16 Dec 2025 12:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887780;
-	bh=irMPozeV6/ocbQUHh1/Vz3ILUoON3zHoylHzzHTs9GI=;
+	s=korg; t=1765887783;
+	bh=RHVwxkYpkLjdEIOWTRzH8MQtpIotqrGoq+aeK/JRfJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPBhiSHbOjUad8+CZHbCi1kAPsXHV5EHpvOHT/nMROyHSL8dl+++OKf3BqbaWp48L
-	 gFrts/mJwvy4sApWPtzeSrqynENSz55zXDyUPGOcFa8XBaI3+tEhhT6/73K2mggvi/
-	 9P5TCZR6k/YvcTp6ouG2u01ITcEtE3JN0649Baas=
+	b=m4D4r6pRpHkHlRfdecdLh/H7XaLyFff7+BBZ8K6tts/z1hiSfKOBvi8yWqCNlwhkI
+	 0FDCVGx7NcSTkkOr/DVjEN0pxKMagSj4XiYs9vzMNxK+GlQ7tvyQWvqW5/zFp0azpM
+	 xsB0qxu9eLB7g8s1u/ay6OcfnG8yc6BlagwJmzhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Costa Shulyupin <costa.shul@redhat.com>,
+	Crystal Wood <crwood@redhat.com>,
+	Wander Lairson Costa <wander@redhat.com>,
 	Tomas Glozar <tglozar@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 335/614] tools/rtla: Fix unassigned nr_cpus
-Date: Tue, 16 Dec 2025 12:11:42 +0100
-Message-ID: <20251216111413.502577065@linuxfoundation.org>
+Subject: [PATCH 6.18 336/614] tools/rtla: Fix --on-threshold always triggering
+Date: Tue, 16 Dec 2025 12:11:43 +0100
+Message-ID: <20251216111413.538618151@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,55 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Costa Shulyupin <costa.shul@redhat.com>
+From: Tomas Glozar <tglozar@redhat.com>
 
-[ Upstream commit b4275b23010df719ec6508ddbc84951dcd24adce ]
+[ Upstream commit 417bd0d502f90a2e785e7299dae4f248b5ac0292 ]
 
-In recently introduced timerlat_free(),
-the variable 'nr_cpus' is not assigned.
+Commit 8d933d5c89e8 ("rtla/timerlat: Add continue action") moved the
+code performing on-threshold actions (enabled through --on-threshold
+option) to inside the RTLA main loop.
 
-Assign it with sysconf(_SC_NPROCESSORS_CONF) as done elsewhere.
-Remove the culprit: -Wno-maybe-uninitialized. The rest of the
-code is clean.
+The condition in the loop does not check whether the threshold was
+actually exceeded or if stop tracing was requested by the user through
+SIGINT or duration. This leads to a bug where on-threshold actions are
+always performed, even when the threshold was not hit.
 
-Signed-off-by: Costa Shulyupin <costa.shul@redhat.com>
-Reviewed-by: Tomas Glozar <tglozar@redhat.com>
+(BPF mode is not affected, since it uses a different condition in the
+while loop.)
+
+Add a condition that checks for !stop_tracing before executing the
+actions. Also, fix incorrect brackets in hist_main_loop to match the
+semantics of top_main_loop.
+
+Fixes: 8d933d5c89e8 ("rtla/timerlat: Add continue action")
 Fixes: 2f3172f9dd58 ("tools/rtla: Consolidate code between osnoise/timerlat and hist/top")
-Link: https://lore.kernel.org/r/20251002170846.437888-1-costa.shul@redhat.com
+Reviewed-by: Crystal Wood <crwood@redhat.com>
+Reviewed-by: Wander Lairson Costa <wander@redhat.com>
+Link: https://lore.kernel.org/r/20251007095341.186923-1-tglozar@redhat.com
 Signed-off-by: Tomas Glozar <tglozar@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/tracing/rtla/Makefile.rtla  | 2 +-
- tools/tracing/rtla/src/timerlat.c | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ tools/tracing/rtla/src/common.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/tools/tracing/rtla/Makefile.rtla b/tools/tracing/rtla/Makefile.rtla
-index 08c1b40883d3a..1743d91829d46 100644
---- a/tools/tracing/rtla/Makefile.rtla
-+++ b/tools/tracing/rtla/Makefile.rtla
-@@ -18,7 +18,7 @@ export CC AR STRIP PKG_CONFIG LD_SO_CONF_PATH LDCONFIG
- FOPTS		:= -flto=auto -ffat-lto-objects -fexceptions -fstack-protector-strong	\
- 		-fasynchronous-unwind-tables -fstack-clash-protection
- WOPTS		:= -O -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2		\
--		-Wp,-D_GLIBCXX_ASSERTIONS -Wno-maybe-uninitialized
-+		-Wp,-D_GLIBCXX_ASSERTIONS
+diff --git a/tools/tracing/rtla/src/common.c b/tools/tracing/rtla/src/common.c
+index 2e6e3dac1897f..b197037fc58b3 100644
+--- a/tools/tracing/rtla/src/common.c
++++ b/tools/tracing/rtla/src/common.c
+@@ -268,6 +268,10 @@ int top_main_loop(struct osnoise_tool *tool)
+ 			tool->ops->print_stats(tool);
  
- ifeq ($(CC),clang)
-   FOPTS		:= $(filter-out -flto=auto -ffat-lto-objects, $(FOPTS))
-diff --git a/tools/tracing/rtla/src/timerlat.c b/tools/tracing/rtla/src/timerlat.c
-index b692128741279..11ad447a8dd78 100644
---- a/tools/tracing/rtla/src/timerlat.c
-+++ b/tools/tracing/rtla/src/timerlat.c
-@@ -215,7 +215,8 @@ void timerlat_analyze(struct osnoise_tool *tool, bool stopped)
- void timerlat_free(struct osnoise_tool *tool)
- {
- 	struct timerlat_params *params = to_timerlat_params(tool->params);
--	int nr_cpus, i;
-+	int nr_cpus = sysconf(_SC_NPROCESSORS_CONF);
-+	int i;
+ 		if (osnoise_trace_is_off(tool, record)) {
++			if (stop_tracing)
++				/* stop tracing requested, do not perform actions */
++				return 0;
++
+ 			actions_perform(&params->threshold_actions);
  
- 	timerlat_aa_destroy();
- 	if (dma_latency_fd >= 0)
+ 			if (!params->threshold_actions.continue_flag)
+@@ -315,20 +319,22 @@ int hist_main_loop(struct osnoise_tool *tool)
+ 		}
+ 
+ 		if (osnoise_trace_is_off(tool, tool->record)) {
++			if (stop_tracing)
++				/* stop tracing requested, do not perform actions */
++				break;
++
+ 			actions_perform(&params->threshold_actions);
+ 
+-			if (!params->threshold_actions.continue_flag) {
++			if (!params->threshold_actions.continue_flag)
+ 				/* continue flag not set, break */
+ 				break;
+ 
+-				/* continue action reached, re-enable tracing */
+-				if (tool->record)
+-					trace_instance_start(&tool->record->trace);
+-				if (tool->aa)
+-					trace_instance_start(&tool->aa->trace);
+-				trace_instance_start(&tool->trace);
+-			}
+-			break;
++			/* continue action reached, re-enable tracing */
++			if (tool->record)
++				trace_instance_start(&tool->record->trace);
++			if (tool->aa)
++				trace_instance_start(&tool->aa->trace);
++			trace_instance_start(&tool->trace);
+ 		}
+ 
+ 		/* is there still any user-threads ? */
 -- 
 2.51.0
 
