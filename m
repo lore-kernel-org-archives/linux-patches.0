@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2843734C13D;
-	Tue, 16 Dec 2025 12:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5844531A7F5;
+	Tue, 16 Dec 2025 12:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887087; cv=none; b=bhX4v5+xTA9j4z/11ipT6nEHUVxPTOa0rHdTKf72HDBZKZGc30r0AQS7ZzdthE2TWjCjBHzCHimssWK1oC8fcZP76Lq5nyvR5TpfeOHFT95OeR+Qtb2TvTpY327Npp3HGPtYuvLt7kTbg5GbhgjKdCTbM0JFe0XNTT9GqSbXDO0=
+	t=1765887090; cv=none; b=JV6jdFV4zMYmXddLTvYERfVyIBZEbC7opQ8PBu6UgBoI9EXagEAFaX8GAmMHcsLMxut8t7dWwT3neigELn5fbgCIK+KfdeZqBA2rtAc4rYJ4/PfWsIxJHWwd1P4THq041G7wUqTWQ//y4s66VmT7www/Sw0+bw7CNs8ouLyJHno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887087; c=relaxed/simple;
-	bh=xeh3o3HL5iVkBL0FPXBOvNBoLh4Mx8PSZ4Antlgrwog=;
+	s=arc-20240116; t=1765887090; c=relaxed/simple;
+	bh=+6m3Poco6imHcpj+h40obUK1bPL5bOXdCyJIwV9Gjps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t2mNydTtRPwNWQPX2Qn0fL9/vfeHlTPLVg1dpZ9qW3fxjkkug/ns/Oj3YlU2OOtCvBYG0tudue8okTCTPZ4i1Jmvg2MXxXzPQ0bf8JeW3w25jimOPdjtLqUeYcjHoWkMC7gQkaeMbCAlBlBfGHK+3ltSvMxb62jpH53AoaC0um0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PllEeBtV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VGdFuEKG9hSADycEkPh2N88FOe2xqBblYcBvkrOyJG3qtMyezWMH2p5iyVgD/t45bJcexX4w32CrmiGSmPZpY6vS/0DNRQEz8iuYwc0FBtxox1Qq6gfbKf59V3WsHpMSUoRqsQvKF81f4/kvVfsUyr6Hd6YROmsDs2heZGGUxCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gw2IebRe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PllEeBtV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BDB4C4CEF1;
-	Tue, 16 Dec 2025 12:11:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gw2IebRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B636AC4CEF1;
+	Tue, 16 Dec 2025 12:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887087;
-	bh=xeh3o3HL5iVkBL0FPXBOvNBoLh4Mx8PSZ4Antlgrwog=;
+	s=korg; t=1765887090;
+	bh=+6m3Poco6imHcpj+h40obUK1bPL5bOXdCyJIwV9Gjps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PllEeBtVMUmhl6QymIzRjXT6LdPbC3SDVN10QlhZZ+0DYlljHXBGGsWLC2xilUezM
-	 8sDICGdhD9AEIH+QGb9SPcyiDhNrx6Uf9E+24sfltxhNIKimVjIp5qeY3cazTbyP4J
-	 D7p7CgYq2qKuM1O8cQ4svDveW6EqKYIyT52ltsFk=
+	b=gw2IebRe/UWvRzoS2Zo5NrwCn6joevkxz1W2kCttCWxykaxQ1MM6tFDqaFyuCvvPj
+	 rJ3SfuAJM2+JZd6BspuVvu3yqLHjfdc5R1x84/Mr/xKSUv/54uq+stVkOR3R/zNF5V
+	 Kbv0hhltAP2fMxMiCA6gHo7ElQQIJQvf6nS/QsUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Val Packett <val@packett.cool>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
 	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/614] arm64: dts: qcom: x1-dell-thena: remove dp data-lanes
-Date: Tue, 16 Dec 2025 12:08:09 +0100
-Message-ID: <20251216111405.755688403@linuxfoundation.org>
+Subject: [PATCH 6.18 123/614] arm64: dts: qcom: sc8280xp: Fix shifted GPI DMA channels
+Date: Tue, 16 Dec 2025 12:08:10 +0100
+Message-ID: <20251216111405.791681618@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,46 +52,500 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Val Packett <val@packett.cool>
+From: Pengyu Luo <mitltlatltl@gmail.com>
 
-[ Upstream commit 147d5eefab8f0e17e9951fb5e0c4c77bada34558 ]
+[ Upstream commit fb48d3f3abba9a7bca2814fa2e9db8ac5b9e16b9 ]
 
-The commit 458de584248a ("arm64: dts: qcom: x1e80100: move dp0/1/2
-data-lanes to SoC dtsi") has landed before this file was added, so
-the data-lanes lines here remained.
+The GPI DMA channels in sc8280xp.dtsi are wrong. Let's fix it.
 
-Remove them to enable 4-lane DP on the X1E Dell Inspiron/Latitude.
+Origianl patch was rebased to the linux-next and formated to a new
+patch again later, then it got the GPI DMA channels in the new patch
+shifted.
 
-Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Val Packett <val@packett.cool>
+Fixes: 71b12166a2be ("arm64: dts: qcom: sc8280xp: Describe GPI DMA controller nodes")
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251012224909.14988-1-val@packett.cool
+Link: https://lore.kernel.org/r/20251013115506.103649-1-mitltlatltl@gmail.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 170 ++++++++++++-------------
+ 1 file changed, 85 insertions(+), 85 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-index 9df66295660c3..847b678f040c0 100644
---- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
-@@ -1023,7 +1023,6 @@ &mdss_dp0 {
- };
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 279e5e6beae20..963ce2362a52e 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -967,8 +967,8 @@ i2c16: i2c@880000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
  
- &mdss_dp0_out {
--	data-lanes = <0 1>;
- 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
- };
+-				dmas = <&gpi_dma2 0 6 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 6 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 0 QCOM_GPI_I2C>,
++				       <&gpi_dma2 1 0 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
  
-@@ -1032,7 +1031,6 @@ &mdss_dp1 {
- };
+@@ -989,8 +989,8 @@ spi16: spi@880000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
  
- &mdss_dp1_out {
--	data-lanes = <0 1>;
- 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
- };
+-				dmas = <&gpi_dma2 0 0 QCOM_GPI_I2C>,
+-				       <&gpi_dma2 1 0 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma2 0 0 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 0 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1011,8 +1011,8 @@ i2c17: i2c@884000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 0 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 0 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 1 QCOM_GPI_I2C>,
++				       <&gpi_dma2 1 1 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1033,8 +1033,8 @@ spi17: spi@884000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 1 QCOM_GPI_I2C>,
+-				       <&gpi_dma2 1 1 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma2 0 1 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 1 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1069,8 +1069,8 @@ i2c18: i2c@888000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 1 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 1 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 2 QCOM_GPI_I2C>,
++				       <&gpi_dma2 1 2 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1091,8 +1091,8 @@ spi18: spi@888000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 2 QCOM_GPI_I2C>,
+-				       <&gpi_dma2 1 2 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma2 0 2 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 2 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1131,8 +1131,8 @@ i2c19: i2c@88c000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 2 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 2 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 3 QCOM_GPI_I2C>,
++				       <&gpi_dma2 1 3 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1153,8 +1153,8 @@ spi19: spi@88c000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 3 QCOM_GPI_I2C>,
+-				       <&gpi_dma2 1 3 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma2 0 3 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 3 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1175,8 +1175,8 @@ i2c20: i2c@890000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 3 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 3 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 4 QCOM_GPI_I2C>,
++				       <&gpi_dma2 1 4 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1197,8 +1197,8 @@ spi20: spi@890000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 4 QCOM_GPI_I2C>,
+-				       <&gpi_dma2 1 4 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma2 0 4 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 4 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1241,8 +1241,8 @@ spi21: spi@894000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 4 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 4 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 5 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 5 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1285,8 +1285,8 @@ spi22: spi@898000 {
+ 				                <&aggre1_noc MASTER_QUP_2 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma2 0 5 QCOM_GPI_SPI>,
+-				       <&gpi_dma2 1 5 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma2 0 6 QCOM_GPI_SPI>,
++				       <&gpi_dma2 1 6 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1338,7 +1338,7 @@ spi23: spi@89c000 {
+ 			};
+ 		};
+ 
+-		gpi_dma0: dma-controller@900000  {
++		gpi_dma0: dma-controller@900000 {
+ 			compatible = "qcom,sc8280xp-gpi-dma", "qcom,sm6350-gpi-dma";
+ 			reg = <0 0x00900000 0 0x60000>;
+ 
+@@ -1393,8 +1393,8 @@ i2c0: i2c@980000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 7 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 7 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1415,8 +1415,8 @@ spi0: spi@980000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 0 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 0 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1437,8 +1437,8 @@ i2c1: i2c@984000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 0 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 0 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1459,8 +1459,8 @@ spi1: spi@984000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 1 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1481,8 +1481,8 @@ i2c2: i2c@988000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 1 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1503,8 +1503,8 @@ spi2: spi@988000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 2 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 2 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1539,8 +1539,8 @@ i2c3: i2c@98c000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 2 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 2 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1561,8 +1561,8 @@ spi3: spi@98c000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 3 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 3 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1583,8 +1583,8 @@ i2c4: i2c@990000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 3 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 3 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1605,8 +1605,8 @@ spi4: spi@990000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 4 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 4 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1627,8 +1627,8 @@ i2c5: i2c@994000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 4 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 4 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1649,8 +1649,8 @@ spi5: spi@994000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 5 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 5 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1671,8 +1671,8 @@ i2c6: i2c@998000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 5 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 5 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1693,8 +1693,8 @@ spi6: spi@998000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
+-				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma0 0 6 QCOM_GPI_SPI>,
++				       <&gpi_dma0 1 6 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1715,8 +1715,8 @@ i2c7: i2c@99c000 {
+ 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma0 0 6 QCOM_GPI_SPI>,
+-				       <&gpi_dma0 1 6 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma0 0 7 QCOM_GPI_I2C>,
++				       <&gpi_dma0 1 7 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1800,8 +1800,8 @@ i2c8: i2c@a80000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 7 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 7 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1822,8 +1822,8 @@ spi8: spi@a80000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 0 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 0 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1844,8 +1844,8 @@ i2c9: i2c@a84000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 0 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 0 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1866,8 +1866,8 @@ spi9: spi@a84000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 1 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 1 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1888,8 +1888,8 @@ i2c10: i2c@a88000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 1 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 1 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1910,8 +1910,8 @@ spi10: spi@a88000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 2 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 2 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1932,8 +1932,8 @@ i2c11: i2c@a8c000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 2 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 2 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1954,8 +1954,8 @@ spi11: spi@a8c000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 3 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 3 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1976,8 +1976,8 @@ i2c12: i2c@a90000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 3 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 3 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -1998,8 +1998,8 @@ spi12: spi@a90000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 4 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 4 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -2020,8 +2020,8 @@ i2c13: i2c@a94000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 4 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 4 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -2042,8 +2042,8 @@ spi13: spi@a94000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 5 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 5 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -2064,8 +2064,8 @@ i2c14: i2c@a98000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 5 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 5 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -2086,8 +2086,8 @@ spi14: spi@a98000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 6 QCOM_GPI_I2C>,
+-				       <&gpi_dma1 1 6 QCOM_GPI_I2C>;
++				dmas = <&gpi_dma1 0 6 QCOM_GPI_SPI>,
++				       <&gpi_dma1 1 6 QCOM_GPI_SPI>;
+ 				dma-names = "tx",
+ 					    "rx";
+ 
+@@ -2108,8 +2108,8 @@ i2c15: i2c@a9c000 {
+ 				                <&aggre1_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
+ 				interconnect-names = "qup-core", "qup-config", "qup-memory";
+ 
+-				dmas = <&gpi_dma1 0 6 QCOM_GPI_SPI>,
+-				       <&gpi_dma1 1 6 QCOM_GPI_SPI>;
++				dmas = <&gpi_dma1 0 7 QCOM_GPI_I2C>,
++				       <&gpi_dma1 1 7 QCOM_GPI_I2C>;
+ 				dma-names = "tx",
+ 					    "rx";
  
 -- 
 2.51.0
