@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB1D34D4E7;
-	Tue, 16 Dec 2025 12:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E46341056;
+	Tue, 16 Dec 2025 12:34:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888445; cv=none; b=Or7SPI43pVep60KAqr2n/u1gGa51HHkSEytRuXuJMg8Zoe0O5WGejRAfAYO4LEZGTLgaqkaL02t2EFctMkZSb5018HP8K+TF2IuubLHsJ4n2xiG2lMVuHLBNevlg/RoMmTRQrJKxAGl5MldM/f4mIjXQ8zuggUJLQe/uy8OTRPM=
+	t=1765888448; cv=none; b=UhC2/+oH42VcS2dtBI0ifsWBROVavjeX4TMVFYxAzOiOOm7eiYaYjvv1onZpRKj48IDUC1Nq3s/QjwnjFAPUvHQCy0zQHm3p11iwjC98lyxT3t5YiyjCiv5eFW3XtXhz1qQaEMEpqVlssdnj5m9NmjQrK7fiqAUMrbTSD2HX9aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888445; c=relaxed/simple;
-	bh=vAePhrvbSsl8tAcnSIo6jSoJMQ2xwoWsN5ippSz3FUI=;
+	s=arc-20240116; t=1765888448; c=relaxed/simple;
+	bh=fkQQ+Q5CYVNtgN5vzHv+4z+qD9j+WblbsCe3Q0DYNoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eL5g5c4n1K0fNtHtaeCXw94fvrqo3nhL1ivTSHBQenY1Iw6XC8u5zZ0kIqXSE/Z31tnn7HKSma0LzXDQK2wg91K20KqPtxw+uJmYB402g5zIrheI27zwBYTnrr23GzYijhtBdxarjBFm5jbD1gxAZQEOB1j0Mqs1OUNt/+KN0t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DubnlQFk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gxlh0a/f7UBId/g23zaH5zZ0JYqjeMcDYcTxzI8WdECibrS+GJbJpDfDGBDyHDADilf12yTYT/Arm7YO9zQIP+yUbs7QyQFCCz8nwAAhwVeRw7bQ+SZYYQd3SbQyCzt0Q2p6OzhN/1FolYRssSCZViOV28GsVYs9rgBiIQXTAsI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcGowOEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DubnlQFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0CDC4CEF1;
-	Tue, 16 Dec 2025 12:34:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcGowOEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6644C4CEF5;
+	Tue, 16 Dec 2025 12:34:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888445;
-	bh=vAePhrvbSsl8tAcnSIo6jSoJMQ2xwoWsN5ippSz3FUI=;
+	s=korg; t=1765888448;
+	bh=fkQQ+Q5CYVNtgN5vzHv+4z+qD9j+WblbsCe3Q0DYNoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DubnlQFkOasuwhCGqjSlTlKUqXOn0kaloOK/o74abITNUiTbf/gZBXTUI+leinO1U
-	 U5VPnZ7fdh9QD0moGmIfk80Grx/9W00s7LuDnh4dhZEFxh14iYX9ux2963HDW96MsO
-	 CNj5rjXEyTPDJoGLPAdO79lByXAmawtm4QUMQDLU=
+	b=wcGowOEE1Qy1fcrQKUsh/ZHVk7bwTNkds9GERUzFIziMF9gZfxlXolmp5ZPZG+c3k
+	 1ZjnqQJuL6YfPnjDFR4Xeio1yuW5yKIjEuu4b7wben5XlZp21UMC8uitmP7SdWnDu0
+	 Avt6Zpu/GEppgiwYwUyrum6oRRAUtmnyco2qwn6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 537/614] f2fs: maintain one time GC mode is enabled during whole zoned GC cycle
-Date: Tue, 16 Dec 2025 12:15:04 +0100
-Message-ID: <20251216111420.835901186@linuxfoundation.org>
+Subject: [PATCH 6.18 538/614] rtc: amlogic-a4: fix double free caused by devm
+Date: Tue, 16 Dec 2025 12:15:05 +0100
+Message-ID: <20251216111420.872328238@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,85 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit e462fc48ceb8224811c3224650afed05cb7f0872 ]
+[ Upstream commit 384150d7a5b60c1086790a8ee07b0629f906cca2 ]
 
-The current version missed setting one time GC for normal zoned GC
-cycle. So, valid threshold control is not working. Need to fix it to
-prevent excessive GC for zoned devices.
+The clock obtained via devm_clk_get_enabled() is automatically managed
+by devres and will be disabled and freed on driver detach. Manually
+calling clk_disable_unprepare() in error path and remove function
+causes double free.
 
-Fixes: e791d00bd06c ("f2fs: add valid block ratio not to do excessive GC for one time GC")
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Remove the redundant clk_disable_unprepare() calls from the probe
+error path and aml_rtc_remove(), allowing the devm framework to
+automatically manage the clock lifecycle.
+
+Fixes: c89ac9182ee2 ("rtc: support for the Amlogic on-chip RTC")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Link: https://patch.msgid.link/20251021103559.1903-1-vulab@iscas.ac.cn
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/rtc/rtc-amlogic-a4.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index a7708cf80c04e..8abf521530ff3 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -38,13 +38,14 @@ static int gc_thread_func(void *data)
- 	struct f2fs_gc_control gc_control = {
- 		.victim_segno = NULL_SEGNO,
- 		.should_migrate_blocks = false,
--		.err_gc_skipped = false };
-+		.err_gc_skipped = false,
-+		.one_time = false };
+diff --git a/drivers/rtc/rtc-amlogic-a4.c b/drivers/rtc/rtc-amlogic-a4.c
+index 1928b29c10454..a993d35e1d6b0 100644
+--- a/drivers/rtc/rtc-amlogic-a4.c
++++ b/drivers/rtc/rtc-amlogic-a4.c
+@@ -390,7 +390,6 @@ static int aml_rtc_probe(struct platform_device *pdev)
  
- 	wait_ms = gc_th->min_sleep_time;
+ 	return 0;
+ err_clk:
+-	clk_disable_unprepare(rtc->sys_clk);
+ 	device_init_wakeup(dev, false);
  
- 	set_freezable();
- 	do {
--		bool sync_mode, foreground = false;
-+		bool sync_mode, foreground = false, gc_boost = false;
+ 	return ret;
+@@ -423,9 +422,6 @@ static SIMPLE_DEV_PM_OPS(aml_rtc_pm_ops,
  
- 		wait_event_freezable_timeout(*wq,
- 				kthread_should_stop() ||
-@@ -52,8 +53,12 @@ static int gc_thread_func(void *data)
- 				gc_th->gc_wake,
- 				msecs_to_jiffies(wait_ms));
- 
--		if (test_opt(sbi, GC_MERGE) && waitqueue_active(fggc_wq))
-+		if (test_opt(sbi, GC_MERGE) && waitqueue_active(fggc_wq)) {
- 			foreground = true;
-+			gc_control.one_time = false;
-+		} else if (f2fs_sb_has_blkzoned(sbi)) {
-+			gc_control.one_time = true;
-+		}
- 
- 		/* give it a try one time */
- 		if (gc_th->gc_wake)
-@@ -81,8 +86,6 @@ static int gc_thread_func(void *data)
- 			continue;
- 		}
- 
--		gc_control.one_time = false;
+ static void aml_rtc_remove(struct platform_device *pdev)
+ {
+-	struct aml_rtc_data *rtc = dev_get_drvdata(&pdev->dev);
 -
- 		/*
- 		 * [GC triggering condition]
- 		 * 0. GC is not conducted currently.
-@@ -132,7 +135,7 @@ static int gc_thread_func(void *data)
- 		if (need_to_boost_gc(sbi)) {
- 			decrease_sleep_time(gc_th, &wait_ms);
- 			if (f2fs_sb_has_blkzoned(sbi))
--				gc_control.one_time = true;
-+				gc_boost = true;
- 		} else {
- 			increase_sleep_time(gc_th, &wait_ms);
- 		}
-@@ -141,7 +144,7 @@ static int gc_thread_func(void *data)
- 					FOREGROUND : BACKGROUND);
+-	clk_disable_unprepare(rtc->sys_clk);
+ 	device_init_wakeup(&pdev->dev, false);
+ }
  
- 		sync_mode = (F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_SYNC) ||
--			(gc_control.one_time && gc_th->boost_gc_greedy);
-+			(gc_boost && gc_th->boost_gc_greedy);
- 
- 		/* foreground GC was been triggered via f2fs_balance_fs() */
- 		if (foreground && !f2fs_sb_has_blkzoned(sbi))
 -- 
 2.51.0
 
