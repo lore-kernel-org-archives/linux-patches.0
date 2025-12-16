@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C415C34AAEA;
-	Tue, 16 Dec 2025 11:59:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FA534A76F;
+	Tue, 16 Dec 2025 11:59:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886375; cv=none; b=dKk3Q54lUyzQlLh8jv1rHhPDLr+kvE4YRyjLnZv7ZjB0/gffPj88LwSk5qnq87fY4FdEIRfbeRnFE16hVkLelAJ7A7dZSiIQL0Da/ZgOLL/tvAadAqkF8FTSwzI6v5Tw2WWE/wYxAjVNAMA+I4+CEe7K80J8sHXHneAxpsBoyYE=
+	t=1765886379; cv=none; b=reoTc7uoenesV/5f71xJJuQyibvyIT70sz2ve7k+H9zJ7QtG0LOIhcd8UPTRSw5oJOx/YkTSN5faVgrNEgsu79uVFVCPRGGI6NAdhc64a5a2xcL1HOO9Uk8Y8D0AX71J1MRnsY3ZZcMugG1Xc+uwrIlZTxcg7wRoJ7WTGbFMYCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886375; c=relaxed/simple;
-	bh=AKQZ2Q1gy+tfEayyqXsbO+sH5r8Wg8DAl78w3oJmJJA=;
+	s=arc-20240116; t=1765886379; c=relaxed/simple;
+	bh=Fr1QEZwFbQLRtk0w3g/dh5gFTcLXsq5y077fyPEGdpE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bS/CWbnKDvMsfgntGXquCC0qRHTB+RvvXuqhetV9vRI7GSjjfcGwRCmDBbyKRk/5NHQX9pbaIG9KO1jSgaR/vjnYnwZmzBp9mGY/XlgMZAl/+A1NJVaEvG2mB4eKHRyXL/aix966iuMasYA0lsSBd0pzGIrPdYnMGU0L3ouC3sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mBd82h4J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iLYbSSOlZGKXMBEHbYT0n6xb5kX5JZmdrJn2YmW3982hG61rF/j+raTT6x173p1qBjjEJbtnMbbSQBJZV1x3aHGUWCw7zoGOJj/aP03gTQvsALS5N20L28zL10U3dN8OAB/L9YAh4Fwr4GrCj3NByF57xpmFRKVAB6WEwuKxZYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D25hMXdY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mBd82h4J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A90C4CEF1;
-	Tue, 16 Dec 2025 11:59:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D25hMXdY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86E5C16AAE;
+	Tue, 16 Dec 2025 11:59:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886375;
-	bh=AKQZ2Q1gy+tfEayyqXsbO+sH5r8Wg8DAl78w3oJmJJA=;
+	s=korg; t=1765886379;
+	bh=Fr1QEZwFbQLRtk0w3g/dh5gFTcLXsq5y077fyPEGdpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBd82h4JB9lA/oU5kkKAJGiHg9N9NVYa+bvAGSvZbgbhqLb3wv1r3xQ9CU5FH4A2m
-	 2wEWjkf5wpDkQ/EJcO4XlGkAzEZqE3KQ6mR2/MsYJPm10x5NKLtktxxupjgi3xB4LC
-	 64k/yDV2/k1pJnlnxl4ecNlC3bN5zzjbmFkP01gs=
+	b=D25hMXdYS5jAYDXPR8UIyroZBh5S8NHuY2neYW9DZacY77XFESjxSxAJYHd6PucWm
+	 hgQf05NJujmQ8KcBkmTsAdozAz1nIFo/NVlkLU8ILDWmU5q2IrGdusCVGwNWpsK4gm
+	 o3fqF5+P6wbO3SVFRImgG94aWRKOjd3M/4dvdM3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 417/507] net: dsa: b53: add support for 5389/5397/5398 ARL entry format
-Date: Tue, 16 Dec 2025 12:14:18 +0100
-Message-ID: <20251216111400.568892402@linuxfoundation.org>
+Subject: [PATCH 6.17 418/507] net: dsa: b53: use same ARL search result offset for BCM5325/65
+Date: Tue, 16 Dec 2025 12:14:19 +0100
+Message-ID: <20251216111400.605149435@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -46,6 +47,7 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
@@ -54,231 +56,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 300f78e8b6b7be17c2c78afeded75be68acb1aa7 ]
+[ Upstream commit 8e46aacea4264bcb8d4265fb07577afff58ae78d ]
 
-BCM5389, BCM5397 and BCM5398 use a different ARL entry format with just
-a 16 bit fwdentry register, as well as different search control and data
-offsets.
+BCM5365's search result is at the same offset as BCM5325's search
+result, and they (mostly) share the same format, so switch BCM5365 to
+BCM5325's arl ops.
 
-So add appropriate ops for them and switch those chips to use them.
-
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Fixes: c45655386e53 ("net: dsa: b53: add support for FDB operations on 5325/5365")
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251107080749.26936-8-jonas.gorski@gmail.com
+Tested-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20251128080625.27181-4-jonas.gorski@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 8e46aacea426 ("net: dsa: b53: use same ARL search result offset for BCM5325/65")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 53 ++++++++++++++++++++++++++++++--
- drivers/net/dsa/b53/b53_priv.h   | 26 ++++++++++++++++
- drivers/net/dsa/b53/b53_regs.h   | 13 ++++++++
- 3 files changed, 89 insertions(+), 3 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 18 +-----------------
+ drivers/net/dsa/b53/b53_regs.h   |  4 +---
+ 2 files changed, 2 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 50ed9b7157197..dedbd53412871 100644
+index dedbd53412871..68e9162087ab4 100644
 --- a/drivers/net/dsa/b53/b53_common.c
 +++ b/drivers/net/dsa/b53/b53_common.c
-@@ -1850,6 +1850,31 @@ static void b53_arl_write_entry_25(struct b53_device *dev,
- 		    mac_vid);
- }
- 
-+static void b53_arl_read_entry_89(struct b53_device *dev,
-+				  struct b53_arl_entry *ent, u8 idx)
-+{
-+	u64 mac_vid;
-+	u16 fwd_entry;
-+
-+	b53_read64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
-+		   &mac_vid);
-+	b53_read16(dev, B53_ARLIO_PAGE, B53_ARLTBL_DATA_ENTRY(idx), &fwd_entry);
-+	b53_arl_to_entry_89(ent, mac_vid, fwd_entry);
-+}
-+
-+static void b53_arl_write_entry_89(struct b53_device *dev,
-+				   const struct b53_arl_entry *ent, u8 idx)
-+{
-+	u32 fwd_entry;
-+	u64 mac_vid;
-+
-+	b53_arl_from_entry_89(&mac_vid, &fwd_entry, ent);
-+	b53_write64(dev, B53_ARLIO_PAGE,
-+		    B53_ARLTBL_MAC_VID_ENTRY(idx), mac_vid);
-+	b53_write16(dev, B53_ARLIO_PAGE,
-+		    B53_ARLTBL_DATA_ENTRY(idx), fwd_entry);
-+}
-+
- static void b53_arl_read_entry_95(struct b53_device *dev,
- 				  struct b53_arl_entry *ent, u8 idx)
- {
-@@ -2017,6 +2042,8 @@ static void b53_read_arl_srch_ctl(struct b53_device *dev, u8 *val)
- 
- 	if (is5325(dev) || is5365(dev))
- 		offset = B53_ARL_SRCH_CTL_25;
-+	else if (dev->chip_id == BCM5389_DEVICE_ID || is5397_98(dev))
-+		offset = B53_ARL_SRCH_CTL_89;
- 	else
- 		offset = B53_ARL_SRCH_CTL;
- 
-@@ -2029,6 +2056,8 @@ static void b53_write_arl_srch_ctl(struct b53_device *dev, u8 val)
- 
- 	if (is5325(dev) || is5365(dev))
- 		offset = B53_ARL_SRCH_CTL_25;
-+	else if (dev->chip_id == BCM5389_DEVICE_ID || is5397_98(dev))
-+		offset = B53_ARL_SRCH_CTL_89;
- 	else
- 		offset = B53_ARL_SRCH_CTL;
- 
-@@ -2074,6 +2103,18 @@ static void b53_arl_search_read_65(struct b53_device *dev, u8 idx,
+@@ -2093,16 +2093,6 @@ static void b53_arl_search_read_25(struct b53_device *dev, u8 idx,
  	b53_arl_to_entry_25(ent, mac_vid);
  }
  
-+static void b53_arl_search_read_89(struct b53_device *dev, u8 idx,
-+				   struct b53_arl_entry *ent)
-+{
-+	u16 fwd_entry;
-+	u64 mac_vid;
-+
-+	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSLT_MACVID_89,
-+		   &mac_vid);
-+	b53_read16(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSLT_89, &fwd_entry);
-+	b53_arl_to_entry_89(ent, mac_vid, fwd_entry);
-+}
-+
- static void b53_arl_search_read_95(struct b53_device *dev, u8 idx,
+-static void b53_arl_search_read_65(struct b53_device *dev, u8 idx,
+-				   struct b53_arl_entry *ent)
+-{
+-	u64 mac_vid;
+-
+-	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSTL_0_MACVID_65,
+-		   &mac_vid);
+-	b53_arl_to_entry_25(ent, mac_vid);
+-}
+-
+ static void b53_arl_search_read_89(struct b53_device *dev, u8 idx,
  				   struct b53_arl_entry *ent)
  {
-@@ -2664,6 +2705,12 @@ static const struct b53_arl_ops b53_arl_ops_65 = {
- 	.arl_search_read = b53_arl_search_read_65,
+@@ -2699,12 +2689,6 @@ static const struct b53_arl_ops b53_arl_ops_25 = {
+ 	.arl_search_read = b53_arl_search_read_25,
  };
  
-+static const struct b53_arl_ops b53_arl_ops_89 = {
-+	.arl_read_entry = b53_arl_read_entry_89,
-+	.arl_write_entry = b53_arl_write_entry_89,
-+	.arl_search_read = b53_arl_search_read_89,
-+};
-+
- static const struct b53_arl_ops b53_arl_ops_95 = {
- 	.arl_read_entry = b53_arl_read_entry_95,
- 	.arl_write_entry = b53_arl_write_entry_95,
-@@ -2728,7 +2775,7 @@ static const struct b53_chip_data b53_switch_chips[] = {
- 		.duplex_reg = B53_DUPLEX_STAT_GE,
- 		.jumbo_pm_reg = B53_JUMBO_PORT_MASK,
- 		.jumbo_size_reg = B53_JUMBO_MAX_SIZE,
--		.arl_ops = &b53_arl_ops_95,
-+		.arl_ops = &b53_arl_ops_89,
+-static const struct b53_arl_ops b53_arl_ops_65 = {
+-	.arl_read_entry = b53_arl_read_entry_25,
+-	.arl_write_entry = b53_arl_write_entry_25,
+-	.arl_search_read = b53_arl_search_read_65,
+-};
+-
+ static const struct b53_arl_ops b53_arl_ops_89 = {
+ 	.arl_read_entry = b53_arl_read_entry_89,
+ 	.arl_write_entry = b53_arl_write_entry_89,
+@@ -2761,7 +2745,7 @@ static const struct b53_chip_data b53_switch_chips[] = {
+ 		.arl_buckets = 1024,
+ 		.imp_port = 5,
+ 		.duplex_reg = B53_DUPLEX_STAT_FE,
+-		.arl_ops = &b53_arl_ops_65,
++		.arl_ops = &b53_arl_ops_25,
  	},
  	{
- 		.chip_id = BCM5395_DEVICE_ID,
-@@ -2756,7 +2803,7 @@ static const struct b53_chip_data b53_switch_chips[] = {
- 		.duplex_reg = B53_DUPLEX_STAT_GE,
- 		.jumbo_pm_reg = B53_JUMBO_PORT_MASK,
- 		.jumbo_size_reg = B53_JUMBO_MAX_SIZE,
--		.arl_ops = &b53_arl_ops_95,
-+		.arl_ops = &b53_arl_ops_89,
- 	},
- 	{
- 		.chip_id = BCM5398_DEVICE_ID,
-@@ -2770,7 +2817,7 @@ static const struct b53_chip_data b53_switch_chips[] = {
- 		.duplex_reg = B53_DUPLEX_STAT_GE,
- 		.jumbo_pm_reg = B53_JUMBO_PORT_MASK,
- 		.jumbo_size_reg = B53_JUMBO_MAX_SIZE,
--		.arl_ops = &b53_arl_ops_95,
-+		.arl_ops = &b53_arl_ops_89,
- 	},
- 	{
- 		.chip_id = BCM53101_DEVICE_ID,
-diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
-index c6e2d5e41c758..127ce7f6b16ba 100644
---- a/drivers/net/dsa/b53/b53_priv.h
-+++ b/drivers/net/dsa/b53/b53_priv.h
-@@ -353,6 +353,18 @@ static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
- 	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
- }
- 
-+static inline void b53_arl_to_entry_89(struct b53_arl_entry *ent,
-+				       u64 mac_vid, u16 fwd_entry)
-+{
-+	memset(ent, 0, sizeof(*ent));
-+	ent->port = fwd_entry & ARLTBL_DATA_PORT_ID_MASK_89;
-+	ent->is_valid = !!(fwd_entry & ARLTBL_VALID_89);
-+	ent->is_age = !!(fwd_entry & ARLTBL_AGE_89);
-+	ent->is_static = !!(fwd_entry & ARLTBL_STATIC_89);
-+	u64_to_ether_addr(mac_vid, ent->mac);
-+	ent->vid = mac_vid >> ARLTBL_VID_S;
-+}
-+
- static inline void b53_arl_from_entry(u64 *mac_vid, u32 *fwd_entry,
- 				      const struct b53_arl_entry *ent)
- {
-@@ -383,6 +395,20 @@ static inline void b53_arl_from_entry_25(u64 *mac_vid,
- 		*mac_vid |= ARLTBL_AGE_25;
- }
- 
-+static inline void b53_arl_from_entry_89(u64 *mac_vid, u32 *fwd_entry,
-+					 const struct b53_arl_entry *ent)
-+{
-+	*mac_vid = ether_addr_to_u64(ent->mac);
-+	*mac_vid |= (u64)(ent->vid & ARLTBL_VID_MASK) << ARLTBL_VID_S;
-+	*fwd_entry = ent->port & ARLTBL_DATA_PORT_ID_MASK_89;
-+	if (ent->is_valid)
-+		*fwd_entry |= ARLTBL_VALID_89;
-+	if (ent->is_static)
-+		*fwd_entry |= ARLTBL_STATIC_89;
-+	if (ent->is_age)
-+		*fwd_entry |= ARLTBL_AGE_89;
-+}
-+
- static inline void b53_arl_read_entry(struct b53_device *dev,
- 				      struct b53_arl_entry *ent, u8 idx)
- {
+ 		.chip_id = BCM5389_DEVICE_ID,
 diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index 8ce1ce72e9385..d9026cf865549 100644
+index d9026cf865549..f2a3696d122fa 100644
 --- a/drivers/net/dsa/b53/b53_regs.h
 +++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -342,12 +342,20 @@
- #define   ARLTBL_STATIC			BIT(15)
- #define   ARLTBL_VALID			BIT(16)
- 
-+/* BCM5389 ARL Table Data Entry N Register format (16 bit) */
-+#define   ARLTBL_DATA_PORT_ID_MASK_89	GENMASK(8, 0)
-+#define   ARLTBL_TC_MASK_89		GENMASK(12, 10)
-+#define   ARLTBL_AGE_89			BIT(13)
-+#define   ARLTBL_STATIC_89		BIT(14)
-+#define   ARLTBL_VALID_89		BIT(15)
-+
- /* Maximum number of bin entries in the ARL for all switches */
- #define B53_ARLTBL_MAX_BIN_ENTRIES	4
- 
- /* ARL Search Control Register (8 bit) */
- #define B53_ARL_SRCH_CTL		0x50
- #define B53_ARL_SRCH_CTL_25		0x20
-+#define B53_ARL_SRCH_CTL_89		0x30
- #define   ARL_SRCH_VLID			BIT(0)
- #define   ARL_SRCH_STDN			BIT(7)
- 
-@@ -355,10 +363,12 @@
- #define B53_ARL_SRCH_ADDR		0x51
- #define B53_ARL_SRCH_ADDR_25		0x22
- #define B53_ARL_SRCH_ADDR_65		0x24
-+#define B53_ARL_SRCH_ADDR_89		0x31
- #define  ARL_ADDR_MASK			GENMASK(14, 0)
- 
- /* ARL Search MAC/VID Result (64 bit) */
+@@ -370,10 +370,8 @@
  #define B53_ARL_SRCH_RSTL_0_MACVID	0x60
-+#define B53_ARL_SRCH_RSLT_MACVID_89	0x33
+ #define B53_ARL_SRCH_RSLT_MACVID_89	0x33
  
- /* Single register search result on 5325 */
+-/* Single register search result on 5325 */
++/* Single register search result on 5325/5365 */
  #define B53_ARL_SRCH_RSTL_0_MACVID_25	0x24
-@@ -368,6 +378,9 @@
+-/* Single register search result on 5365 */
+-#define B53_ARL_SRCH_RSTL_0_MACVID_65	0x30
+ 
  /* ARL Search Data Result (32 bit) */
  #define B53_ARL_SRCH_RSTL_0		0x68
- 
-+/* BCM5389 ARL Search Data Result (16 bit) */
-+#define B53_ARL_SRCH_RSLT_89		0x3b
-+
- #define B53_ARL_SRCH_RSTL_MACVID(x)	(B53_ARL_SRCH_RSTL_0_MACVID + ((x) * 0x10))
- #define B53_ARL_SRCH_RSTL(x)		(B53_ARL_SRCH_RSTL_0 + ((x) * 0x10))
- 
 -- 
 2.51.0
 
