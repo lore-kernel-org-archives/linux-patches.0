@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D15939B6DC;
-	Tue, 16 Dec 2025 12:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40C63845C4;
+	Tue, 16 Dec 2025 12:37:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888671; cv=none; b=oB/7p/4UYILzYAS6vw/wOYBNIlXuYHxNbplYsnnCn81RQ+1P+dlXE6tBg9jdVDA+5BM8x1RPEO822Xr3W9RKhx2aS0d2LkNS+6qJWYiJfQpN/CpyORzLwUVJOifFfg4n1m1SDizrpfNAG3Lp4GW0u3BCFtSPQIY/eyZ8LImE9qc=
+	t=1765888674; cv=none; b=biafvQkRCz0aW8/dKBInIcS5q502YJiWidTL8iBTTmtjKvsfFnBz+EOYFtcpARfg32uBJcFqQnnJyEgxOKYjgM4Eav/0InCqf1dwO6s9wJCR/qXkN7z2l87v/LcjxCK1Du8++xk7SbaTlnLJIDyGYRVHlPHW8L4HFVeiZWBmbUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888671; c=relaxed/simple;
-	bh=LHDLUN/UG06xuBscLgVCHuSa/6K9LaghPdzC9WvztxE=;
+	s=arc-20240116; t=1765888674; c=relaxed/simple;
+	bh=+Ud7VeeukAHNJuxkM7GLYEA6sLbFAlGRgpKJRZaCrfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHAQU8bC9Xwk/5yoiCnqNrrFB06ZQ4PTHwUzQsBNyYYJnMm6X4ZgI2KwrBsIsIYLDSoG3hHeKpYqQsct0+zifxS5GMz55zUX5yhCAbnTsWBSrksTz8ML2N7E/x84olRKQ5qqcFHo6P87rVkQGq2WBeFsicGQFQ1qs11RWA9qN/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TP4tAx2X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FycIAyiElzSJKo0Di7pzykWl4pqNAAgZ14KWFksEJOL++LI6JKae9XyQibuQ1P1zgKFEdire/7YXSIFpVHAkJWvyNaNn6ZKQiBWjX+rQblOG/A0ymRIIblOV4hYGDfPvXzlsd4xgmin7lT5HqEnuFFCiHf6xHTuV4wr1pmGR5KE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wzl48i0e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TP4tAx2X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF124C4CEF1;
-	Tue, 16 Dec 2025 12:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wzl48i0e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184B1C4CEF1;
+	Tue, 16 Dec 2025 12:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888671;
-	bh=LHDLUN/UG06xuBscLgVCHuSa/6K9LaghPdzC9WvztxE=;
+	s=korg; t=1765888674;
+	bh=+Ud7VeeukAHNJuxkM7GLYEA6sLbFAlGRgpKJRZaCrfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TP4tAx2XxNuGZ63nFH4sa5ZV0DckEQcyf0h/nzKeUJbKH6KDtPBQ3ByERwJNRBnO5
-	 4H1p08K1DW4wEAvVNZ5n+g4vyuYrlf93UkV8opTjXD0+7VQZWJwOcaU7HSynG7o4cb
-	 dY8GkxVQY9iTJY+4G5oLHtNT2Ut8YmiLJF2LINaw=
+	b=Wzl48i0eSj9Avv9sP/huJBVVnzyg3f25IDQVWrfCYUJ4MFcVTPkIRZxbKvvjwH8p9
+	 lurvvJW+vUqquLk+Rr59cQrSWgzNAlo5VoRBpaRgDU/IByFI/bXu5tbfVs8LMNF2Hp
+	 Z9wBy/Ylhuf8mU6VT7Qr62VKONw8BpQqrSBccnGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Douglas Anderson <dianders@chromium.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 560/614] drm/panel: novatek-nt35560: avoid on-stack device structure
-Date: Tue, 16 Dec 2025 12:15:27 +0100
-Message-ID: <20251216111421.669981918@linuxfoundation.org>
+Subject: [PATCH 6.18 597/614] irqchip/mchp-eic: Fix error code in mchp_eic_domain_alloc()
+Date: Tue, 16 Dec 2025 12:16:04 +0100
+Message-ID: <20251216111423.023052227@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,66 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 1a7a7b80a22448dff55e1ad69a4681fd8b760b85 ]
+[ Upstream commit 7dbc0d40d8347bd9de55c904f59ea44bcc8dedb7 ]
 
-A cleanup patch apparently by accident used a local device structure
-instead of a pointer to one in the nt35560_read_id() function, causing
-a warning about stack usage:
+If irq_domain_translate_twocell() sets "hwirq" to >= MCHP_EIC_NIRQ (2) then
+it results in an out of bounds access.
 
-drivers/gpu/drm/panel/panel-novatek-nt35560.c: In function 'nt35560_read_id':
-drivers/gpu/drm/panel/panel-novatek-nt35560.c:249:1: error: the frame size of 1296 bytes is larger than 1280 bytes [-Werror=frame-larger-than=]
+The code checks for invalid values, but doesn't set the error code.  Return
+-EINVAL in that case, instead of returning success.
 
-Change this to a pointer as was liley intended here.
-
-Fixes: 5fbc0dbb92d6 ("drm/panel: novatek-nt35560: Clean up driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20251204094550.1030506-1-arnd@kernel.org
+Fixes: 00fa3461c86d ("irqchip/mchp-eic: Add support for the Microchip EIC")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Link: https://patch.msgid.link/aTfHmOz6IBpTIPU5@stanley.mountain
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-novatek-nt35560.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/irqchip/irq-mchp-eic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35560.c b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-index 561e6643dcbb6..6e5173f98a226 100644
---- a/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-+++ b/drivers/gpu/drm/panel/panel-novatek-nt35560.c
-@@ -213,7 +213,7 @@ static const struct backlight_properties nt35560_bl_props = {
+diff --git a/drivers/irqchip/irq-mchp-eic.c b/drivers/irqchip/irq-mchp-eic.c
+index b513a899c0853..979bb86929f8e 100644
+--- a/drivers/irqchip/irq-mchp-eic.c
++++ b/drivers/irqchip/irq-mchp-eic.c
+@@ -166,7 +166,7 @@ static int mchp_eic_domain_alloc(struct irq_domain *domain, unsigned int virq,
  
- static void nt35560_read_id(struct mipi_dsi_multi_context *dsi_ctx)
- {
--	struct device dev = dsi_ctx->dsi->dev;
-+	struct device *dev = &dsi_ctx->dsi->dev;
- 	u8 vendor, version, panel;
- 	u16 val;
+ 	ret = irq_domain_translate_twocell(domain, fwspec, &hwirq, &type);
+ 	if (ret || hwirq >= MCHP_EIC_NIRQ)
+-		return ret;
++		return ret ?: -EINVAL;
  
-@@ -225,7 +225,7 @@ static void nt35560_read_id(struct mipi_dsi_multi_context *dsi_ctx)
- 		return;
- 
- 	if (vendor == 0x00) {
--		dev_err(&dev, "device vendor ID is zero\n");
-+		dev_err(dev, "device vendor ID is zero\n");
- 		dsi_ctx->accum_err = -ENODEV;
- 		return;
- 	}
-@@ -236,12 +236,12 @@ static void nt35560_read_id(struct mipi_dsi_multi_context *dsi_ctx)
- 	case DISPLAY_SONY_ACX424AKP_ID2:
- 	case DISPLAY_SONY_ACX424AKP_ID3:
- 	case DISPLAY_SONY_ACX424AKP_ID4:
--		dev_info(&dev,
-+		dev_info(dev,
- 			 "MTP vendor: %02x, version: %02x, panel: %02x\n",
- 			 vendor, version, panel);
- 		break;
- 	default:
--		dev_info(&dev,
-+		dev_info(dev,
- 			 "unknown vendor: %02x, version: %02x, panel: %02x\n",
- 			 vendor, version, panel);
- 		break;
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
 -- 
 2.51.0
 
