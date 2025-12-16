@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8C534104B;
-	Tue, 16 Dec 2025 11:20:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17EC33E37C;
+	Tue, 16 Dec 2025 11:20:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884049; cv=none; b=VNdu/tyR8yxA7ygjnywBz6gGTPZ5oJqX2uaS3EJByhMXk1Zzt6yTvSfSG7HeAGNilaEJVhATqoIhrUW9WCwiyv0bYS9NXq1tvI6IUI0tDqR+yd1/W/rDQvpChqxZIiNi14eTAJt/VVKEWsq257gMbN+UbvxEiD2R7Fyu/UZ/5bA=
+	t=1765884053; cv=none; b=eYn7jmk1VNEGiTLNfC7lOCZZPVKBMeAtGne+4uYQSvi9dv/11EzBpLfx8mR6bYEl9lzJ6eIFL/ZO+ZDPNcQWuT5sRZWetIh/FUrWKgKaGa8X0fHqeihqBrjM1YOBsUWUShFeeVtPrryuMo4OX2RIzh+KiJ5LDClzYzraTvsYJzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884049; c=relaxed/simple;
-	bh=yavK9OLnosTymexrC0YSQiNr/n75mRmOeN3e2+q7L9s=;
+	s=arc-20240116; t=1765884053; c=relaxed/simple;
+	bh=wAUUYojT6yUUlQz/iTtcA6BHDaSkuPWynlrgS/xFg6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SVEB9cjnhK7C2SQzCRz9LYpJJL+dozo2+pix8jdk9+Et4SChymAb4PcE2PpNdJUos76ynZcl+mA498LUQYaKixvRGjWptV6PzSNhwKU6akWkJxG58svJPH1dH0mDLBz5VcyaLdcFtlTAUI1q6v/a3Y6o7AQVIKJAO5G2iye+Kgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LUpzpHDS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lWAE7HbYNpSWbWnoQ4WHZQaoRXhd6OLXSl6Cx/qZUhhePswLBe10csuGSGkyHUBIyw1j8PKaV+2GQznmRNURIsFdUQpnetf5YHEkoHpe+jjpapRKOkLHcxB3qjYO0xCUsK1tfPSG1vnTd5Tyi8q3gCnxYRAaFYXEH2yl9b5ARfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ORoPxFqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LUpzpHDS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F11C4CEF1;
-	Tue, 16 Dec 2025 11:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ORoPxFqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75A5AC16AAE;
+	Tue, 16 Dec 2025 11:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884049;
-	bh=yavK9OLnosTymexrC0YSQiNr/n75mRmOeN3e2+q7L9s=;
+	s=korg; t=1765884052;
+	bh=wAUUYojT6yUUlQz/iTtcA6BHDaSkuPWynlrgS/xFg6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LUpzpHDSI9ZLDkZfQmGPwU2d+2U32F5JopK1MYYMKY4Di9a3Y6WOCXe7JvoWtQyHb
-	 cenx0yORStnPCNgs3+nOt7EwRTKrt4Ic/StZYnAMwuHheRCmLlW1f016pA2lQj8rtC
-	 XL1xCMzr7nlWQJNuLhYTn1PVj9l4Cw76BI6tM07s=
+	b=ORoPxFqozGXsPHpuzh8XipszLv10cqXtzqFOb0MYhWEAl8TS7VNfenHQOEtFGV4Mg
+	 PcOABEaRteT9lAzwpM0stxdeRNoIJTvPKfg/LiK/FtEy/b0B2MKr/w4nGi6Wku/+Fq
+	 xauyTvBzmSFszetwvb7Ts1kV3SNaXRaz0TioaRdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liu Yi <asatsuyu.liu@gmail.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 078/354] sctp: Defer SCTP_DBG_OBJCNT_DEC() to sctp_destroy_sock().
-Date: Tue, 16 Dec 2025 12:10:45 +0100
-Message-ID: <20251216111323.750767958@linuxfoundation.org>
+Subject: [PATCH 6.12 079/354] RDMA/rxe: Fix null deref on srq->rq.queue after resize failure
+Date: Tue, 16 Dec 2025 12:10:46 +0100
+Message-ID: <20251216111323.787068300@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,64 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 622e8838a29845316668ec2e7648428878df7f9a ]
+[ Upstream commit 503a5e4690ae14c18570141bc0dcf7501a8419b0 ]
 
-SCTP_DBG_OBJCNT_INC() is called only when sctp_init_sock()
-returns 0 after successfully allocating sctp_sk(sk)->ep.
+A NULL pointer dereference can occur in rxe_srq_chk_attr() when
+ibv_modify_srq() is invoked twice in succession under certain error
+conditions. The first call may fail in rxe_queue_resize(), which leads
+rxe_srq_from_attr() to set srq->rq.queue = NULL. The second call then
+triggers a crash (null deref) when accessing
+srq->rq.queue->buf->index_mask.
 
-OTOH, SCTP_DBG_OBJCNT_DEC() is called in sctp_close().
+Call Trace:
+<TASK>
+rxe_modify_srq+0x170/0x480 [rdma_rxe]
+? __pfx_rxe_modify_srq+0x10/0x10 [rdma_rxe]
+? uverbs_try_lock_object+0x4f/0xa0 [ib_uverbs]
+? rdma_lookup_get_uobject+0x1f0/0x380 [ib_uverbs]
+ib_uverbs_modify_srq+0x204/0x290 [ib_uverbs]
+? __pfx_ib_uverbs_modify_srq+0x10/0x10 [ib_uverbs]
+? tryinc_node_nr_active+0xe6/0x150
+? uverbs_fill_udata+0xed/0x4f0 [ib_uverbs]
+ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x2c0/0x470 [ib_uverbs]
+? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
+? uverbs_fill_udata+0xed/0x4f0 [ib_uverbs]
+ib_uverbs_run_method+0x55a/0x6e0 [ib_uverbs]
+? __pfx_ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x10/0x10 [ib_uverbs]
+ib_uverbs_cmd_verbs+0x54d/0x800 [ib_uverbs]
+? __pfx_ib_uverbs_cmd_verbs+0x10/0x10 [ib_uverbs]
+? __pfx___raw_spin_lock_irqsave+0x10/0x10
+? __pfx_do_vfs_ioctl+0x10/0x10
+? ioctl_has_perm.constprop.0.isra.0+0x2c7/0x4c0
+? __pfx_ioctl_has_perm.constprop.0.isra.0+0x10/0x10
+ib_uverbs_ioctl+0x13e/0x220 [ib_uverbs]
+? __pfx_ib_uverbs_ioctl+0x10/0x10 [ib_uverbs]
+__x64_sys_ioctl+0x138/0x1c0
+do_syscall_64+0x82/0x250
+? fdget_pos+0x58/0x4c0
+? ksys_write+0xf3/0x1c0
+? __pfx_ksys_write+0x10/0x10
+? do_syscall_64+0xc8/0x250
+? __pfx_vm_mmap_pgoff+0x10/0x10
+? fget+0x173/0x230
+? fput+0x2a/0x80
+? ksys_mmap_pgoff+0x224/0x4c0
+? do_syscall_64+0xc8/0x250
+? do_user_addr_fault+0x37b/0xfe0
+? clear_bhb_loop+0x50/0xa0
+? clear_bhb_loop+0x50/0xa0
+? clear_bhb_loop+0x50/0xa0
+entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The code seems to expect that the socket is always exposed
-to userspace once SCTP_DBG_OBJCNT_INC() is incremented, but
-there is a path where the assumption is not true.
-
-In sctp_accept(), sctp_sock_migrate() could fail after
-sctp_init_sock().
-
-Then, sk_common_release() does not call inet_release() nor
-sctp_close().  Instead, it calls sk->sk_prot->destroy().
-
-Let's move SCTP_DBG_OBJCNT_DEC() from sctp_close() to
-sctp_destroy_sock().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20251023231751.4168390-2-kuniyu@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Tested-by: Liu Yi <asatsuyu.liu@gmail.com>
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://patch.msgid.link/20251027215203.1321-1-yanjun.zhu@linux.dev
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/socket.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_srq.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/net/sctp/socket.c b/net/sctp/socket.c
-index b301d64d9d80f..b6956b25b33d3 100644
---- a/net/sctp/socket.c
-+++ b/net/sctp/socket.c
-@@ -1554,8 +1554,6 @@ static void sctp_close(struct sock *sk, long timeout)
- 	spin_unlock_bh(&net->sctp.addr_wq_lock);
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 3661cb627d28a..2a234f26ac104 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -171,7 +171,7 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 				       udata, mi, &srq->rq.producer_lock,
+ 				       &srq->rq.consumer_lock);
+ 		if (err)
+-			goto err_free;
++			return err;
  
- 	sock_put(sk);
--
--	SCTP_DBG_OBJCNT_DEC(sock);
- }
- 
- /* Handle EPIPE error. */
-@@ -5112,9 +5110,12 @@ static void sctp_destroy_sock(struct sock *sk)
- 		sp->do_auto_asconf = 0;
- 		list_del(&sp->auto_asconf_list);
+ 		srq->rq.max_wr = attr->max_wr;
  	}
-+
- 	sctp_endpoint_free(sp->ep);
-+
- 	sk_sockets_allocated_dec(sk);
- 	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
-+	SCTP_DBG_OBJCNT_DEC(sock);
+@@ -180,11 +180,6 @@ int rxe_srq_from_attr(struct rxe_dev *rxe, struct rxe_srq *srq,
+ 		srq->limit = attr->srq_limit;
+ 
+ 	return 0;
+-
+-err_free:
+-	rxe_queue_cleanup(q);
+-	srq->rq.queue = NULL;
+-	return err;
  }
  
- /* Triggered when there are no references on the socket anymore */
+ void rxe_srq_cleanup(struct rxe_pool_elem *elem)
 -- 
 2.51.0
 
