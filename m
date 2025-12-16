@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C78344039;
-	Tue, 16 Dec 2025 11:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABDA314B6D;
+	Tue, 16 Dec 2025 11:54:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886042; cv=none; b=rIbcW/rowZDJwsZ5iQ2k+loFTxptGOvPOr4zSqtH4MJZrec32DdV26EW/7SctY9zcSUy06sml1/zRcwzf4zQS6SSi7UC97RxEuWp0D5hhbTTR0xYMLIL6ITgnkunQdYKXDeC1x70IYCtUMq8wAZTy6SYYl6Eotkv125IQO8+M88=
+	t=1765886045; cv=none; b=eg0M+LhxtNAMM5JYXCjvNpFqi8hNETOwLdZErXb3Cvv86SA7PrIo53Yj7698I9QirEkDNP3VDxhjhRGG1wIRRQtX5RskmHEKWJ68oCCHeaob9NekSs+a2Q1QQtwdr+/wQA3iNTJy1AL8iy7D69ZLzcND/+ttOlFyFdRCILhzJQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886042; c=relaxed/simple;
-	bh=FXpvU0qqf//RUsFYBGvYwPeURkaAWu2XRK1ndvdQr1c=;
+	s=arc-20240116; t=1765886045; c=relaxed/simple;
+	bh=XSJdBnwQEhHVDyeR1j/qOzDaxPrA1/hNnPEApXngFJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JgNPAjdXOiC41GDoZ1rfE0x6T6PXIQgR738kU9fCWupgCxyOoDlTUs2l76sT8zKF2V+B5BH929UnyyVxJqodeJye+WmrL67zjPHjYSOQssdVr9iBD9oeddtl5gsk+nsgPlmDke9PsLGuS3OAxhBaGd3/2fkbU69Vxr50ML9EMIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hdOa/ib1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uVJqdSMfSgx9uPA4Yv81N7mHFoWPsoodIH5xMw9sltH7wHK8j1dp8YlQm+67Xz7fDsis5HW0lqVjAUN6NIFcHgjtlufhPqJj12tkbQR/QwJa4LsebP7Su7Akf38eOI1OjZcDRPW1IwWogKKjVNpRHeNrBVLAYWO2YggwruUYYUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8aTNRPC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hdOa/ib1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B623C4CEF1;
-	Tue, 16 Dec 2025 11:54:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8aTNRPC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF9CC4CEF1;
+	Tue, 16 Dec 2025 11:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886042;
-	bh=FXpvU0qqf//RUsFYBGvYwPeURkaAWu2XRK1ndvdQr1c=;
+	s=korg; t=1765886045;
+	bh=XSJdBnwQEhHVDyeR1j/qOzDaxPrA1/hNnPEApXngFJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hdOa/ib1i2uy9rv5mpfetbN4amPnk1W51XXDKcFcxYJwRVULfVrNveygOJMRJOXzz
-	 PmcBLitkIpS3WVqtdcFY1fcBU7TqsrjVIJMYmnLAjt7uYjdEofTKoqAlB6kutruPlr
-	 fqa8nmFtwfC7PH4Ro+F5EwV3kyJ/YbMGIMQic31Y=
+	b=A8aTNRPCjuenjbLs41TL2MduRNISXbjrLJ+QTINs9lGeZk0CiF1qOyUxxnHu8EmOM
+	 6Nuao46O/qdPZBzRExIwTMK9IOKQTrOIRVw2ox6ktePZ5MrATHISnm1zk2rV6bibbA
+	 Il2Hf8k7lUnjdz0TbopBiZOcKORNMLCVd35S41RY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	James Clark <james.clark@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Fangyu Yu <fangyu.yu@linux.alibaba.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 277/507] perf arm_spe: Fix memset subclass in operation
-Date: Tue, 16 Dec 2025 12:11:58 +0100
-Message-ID: <20251216111355.518125482@linuxfoundation.org>
+Subject: [PATCH 6.17 314/507] RISC-V: KVM: Fix guest page fault within HLV* instructions
+Date: Tue, 16 Dec 2025 12:12:35 +0100
+Message-ID: <20251216111356.843998592@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,97 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Fangyu Yu <fangyu.yu@linux.alibaba.com>
 
-[ Upstream commit 33e1fffea492b7158a168914dc0da6aedf78d08e ]
+[ Upstream commit 974555d6e417974e63444266e495a06d06c23af5 ]
 
-The operation subclass is extracted from bits [7..1] of the payload.
-Since bit [0] is not parsed, there is no chance to match the memset type
-(0x25). As a result, the memset payload is never parsed successfully.
+When executing HLV* instructions at the HS mode, a guest page fault
+may occur when a g-stage page table migration between triggering the
+virtual instruction exception and executing the HLV* instruction.
 
-Instead of extracting a unified bit field, change to extract the
-specific bits for each operation subclass.
+This may be a corner case, and one simpler way to handle this is to
+re-execute the instruction where the virtual  instruction exception
+occurred, and the guest page fault will be automatically handled.
 
-Fixes: 34fb60400e32 ("perf arm-spe: Add raw decoding for SPEv1.3 MTE and MOPS load/store")
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Reviewed-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: b91f0e4cb8a3 ("RISC-V: KVM: Factor-out instruction emulation into separate sources")
+Signed-off-by: Fangyu Yu <fangyu.yu@linux.alibaba.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://lore.kernel.org/r/20251121133543.46822-1-fangyu.yu@linux.alibaba.com
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../arm-spe-decoder/arm-spe-pkt-decoder.c     | 25 ++++++-------------
- .../arm-spe-decoder/arm-spe-pkt-decoder.h     | 15 ++++++-----
- 2 files changed, 14 insertions(+), 26 deletions(-)
+ arch/riscv/kvm/vcpu_insn.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c
-index 13cadb2f1ceac..3c4ef5381c76c 100644
---- a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c
-+++ b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.c
-@@ -357,31 +357,20 @@ static int arm_spe_pkt_desc_op_type(const struct arm_spe_pkt *packet,
- 				arm_spe_pkt_out_string(&err, &buf, &buf_len, " AR");
- 		}
+diff --git a/arch/riscv/kvm/vcpu_insn.c b/arch/riscv/kvm/vcpu_insn.c
+index 97dec18e69892..3dbd6a09d4825 100644
+--- a/arch/riscv/kvm/vcpu_insn.c
++++ b/arch/riscv/kvm/vcpu_insn.c
+@@ -424,6 +424,22 @@ static int system_opcode_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 	return (rc <= 0) ? rc : 1;
+ }
  
--		switch (SPE_OP_PKT_LDST_SUBCLASS_GET(payload)) {
--		case SPE_OP_PKT_LDST_SUBCLASS_SIMD_FP:
-+		if (SPE_OP_PKT_LDST_SUBCLASS_SIMD_FP(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " SIMD-FP");
--			break;
--		case SPE_OP_PKT_LDST_SUBCLASS_GP_REG:
-+		else if (SPE_OP_PKT_LDST_SUBCLASS_GP_REG(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " GP-REG");
--			break;
--		case SPE_OP_PKT_LDST_SUBCLASS_UNSPEC_REG:
-+		else if (SPE_OP_PKT_LDST_SUBCLASS_UNSPEC_REG(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " UNSPEC-REG");
--			break;
--		case SPE_OP_PKT_LDST_SUBCLASS_NV_SYSREG:
-+		else if (SPE_OP_PKT_LDST_SUBCLASS_NV_SYSREG(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " NV-SYSREG");
--			break;
--		case SPE_OP_PKT_LDST_SUBCLASS_MTE_TAG:
-+		else if (SPE_OP_PKT_LDST_SUBCLASS_MTE_TAG(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " MTE-TAG");
--			break;
--		case SPE_OP_PKT_LDST_SUBCLASS_MEMCPY:
-+		else if (SPE_OP_PKT_LDST_SUBCLASS_MEMCPY(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " MEMCPY");
--			break;
--		case SPE_OP_PKT_LDST_SUBCLASS_MEMSET:
-+		else if (SPE_OP_PKT_LDST_SUBCLASS_MEMSET(payload))
- 			arm_spe_pkt_out_string(&err, &buf, &buf_len, " MEMSET");
--			break;
--		default:
--			break;
--		}
- 
- 		if (SPE_OP_PKT_IS_LDST_SVE(payload)) {
- 			/* SVE effective vector length */
-diff --git a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h
-index 2cdf9f6da2681..51d5d038f620f 100644
---- a/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h
-+++ b/tools/perf/util/arm-spe-decoder/arm-spe-pkt-decoder.h
-@@ -118,14 +118,13 @@ enum arm_spe_events {
- 
- #define SPE_OP_PKT_IS_OTHER_SVE_OP(v)		(((v) & (BIT(7) | BIT(3) | BIT(0))) == 0x8)
- 
--#define SPE_OP_PKT_LDST_SUBCLASS_GET(v)		((v) & GENMASK_ULL(7, 1))
--#define SPE_OP_PKT_LDST_SUBCLASS_GP_REG		0x0
--#define SPE_OP_PKT_LDST_SUBCLASS_SIMD_FP	0x4
--#define SPE_OP_PKT_LDST_SUBCLASS_UNSPEC_REG	0x10
--#define SPE_OP_PKT_LDST_SUBCLASS_NV_SYSREG	0x30
--#define SPE_OP_PKT_LDST_SUBCLASS_MTE_TAG	0x14
--#define SPE_OP_PKT_LDST_SUBCLASS_MEMCPY		0x20
--#define SPE_OP_PKT_LDST_SUBCLASS_MEMSET		0x25
-+#define SPE_OP_PKT_LDST_SUBCLASS_GP_REG(v)	(((v) & GENMASK_ULL(7, 1)) == 0x0)
-+#define SPE_OP_PKT_LDST_SUBCLASS_SIMD_FP(v)	(((v) & GENMASK_ULL(7, 1)) == 0x4)
-+#define SPE_OP_PKT_LDST_SUBCLASS_UNSPEC_REG(v)	(((v) & GENMASK_ULL(7, 1)) == 0x10)
-+#define SPE_OP_PKT_LDST_SUBCLASS_NV_SYSREG(v)	(((v) & GENMASK_ULL(7, 1)) == 0x30)
-+#define SPE_OP_PKT_LDST_SUBCLASS_MTE_TAG(v)	(((v) & GENMASK_ULL(7, 1)) == 0x14)
-+#define SPE_OP_PKT_LDST_SUBCLASS_MEMCPY(v)	(((v) & GENMASK_ULL(7, 1)) == 0x20)
-+#define SPE_OP_PKT_LDST_SUBCLASS_MEMSET(v)	(((v) & GENMASK_ULL(7, 0)) == 0x25)
- 
- #define SPE_OP_PKT_IS_LDST_ATOMIC(v)		(((v) & (GENMASK_ULL(7, 5) | BIT(1))) == 0x2)
- 
++static bool is_load_guest_page_fault(unsigned long scause)
++{
++	/**
++	 * If a g-stage page fault occurs, the direct approach
++	 * is to let the g-stage page fault handler handle it
++	 * naturally, however, calling the g-stage page fault
++	 * handler here seems rather strange.
++	 * Considering this is a corner case, we can directly
++	 * return to the guest and re-execute the same PC, this
++	 * will trigger a g-stage page fault again and then the
++	 * regular g-stage page fault handler will populate
++	 * g-stage page table.
++	 */
++	return (scause == EXC_LOAD_GUEST_PAGE_FAULT);
++}
++
+ /**
+  * kvm_riscv_vcpu_virtual_insn -- Handle virtual instruction trap
+  *
+@@ -449,6 +465,8 @@ int kvm_riscv_vcpu_virtual_insn(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 							  ct->sepc,
+ 							  &utrap);
+ 			if (utrap.scause) {
++				if (is_load_guest_page_fault(utrap.scause))
++					return 1;
+ 				utrap.sepc = ct->sepc;
+ 				kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
+ 				return 1;
+@@ -504,6 +522,8 @@ int kvm_riscv_vcpu_mmio_load(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
+ 						  &utrap);
+ 		if (utrap.scause) {
++			if (is_load_guest_page_fault(utrap.scause))
++				return 1;
+ 			/* Redirect trap if we failed to read instruction */
+ 			utrap.sepc = ct->sepc;
+ 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
+@@ -630,6 +650,8 @@ int kvm_riscv_vcpu_mmio_store(struct kvm_vcpu *vcpu, struct kvm_run *run,
+ 		insn = kvm_riscv_vcpu_unpriv_read(vcpu, true, ct->sepc,
+ 						  &utrap);
+ 		if (utrap.scause) {
++			if (is_load_guest_page_fault(utrap.scause))
++				return 1;
+ 			/* Redirect trap if we failed to read instruction */
+ 			utrap.sepc = ct->sepc;
+ 			kvm_riscv_vcpu_trap_redirect(vcpu, &utrap);
 -- 
 2.51.0
 
