@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC78E35C1B4;
-	Tue, 16 Dec 2025 12:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95DEA348890;
+	Tue, 16 Dec 2025 12:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886757; cv=none; b=VgbAfIoimdy6HZOSWyXCkacTJB2c9yOtFM9NV9gZLsbE1iPVJ3pvrzFg5e44mIDd609NElw4pinGYkMNZ9yUFDZrVmtsjOOxCuY5fLJM0HFH2oLB20SnykamjaQZG5vYdtxH/zXNNIAvriKC9R38gEz5LQ1CmRvZD9qkaQkBQzY=
+	t=1765886761; cv=none; b=PExwIQ91e3J8n328BwZFdzjYJuKf/G2ylvWVBN0BRq1Wj43kOj1mLoN/s9KrMq+i9qepxseRdBLrfhJDFtI4ft71V4DpGg8Sj7OTti0e3Mx1lkz/tRicrLwlhQRh+lcMOQojxtBKkQuBJs6R/Z0OWTlrzRhrEjEwcAVj4sAhUAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886757; c=relaxed/simple;
-	bh=EXe8TyD2/HkhUAcFvQ106kH8INsC+gLrkJZXYP5WtLk=;
+	s=arc-20240116; t=1765886761; c=relaxed/simple;
+	bh=PRFh+XzLBasfIsE4x2mkZ0IuRJvDngppwCk/EZi11Ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORx8H4E755W/pY1SkhDDr/gUxvGmtgHOOiJfjvF+p3jHHzHAYPASi+7OPDgXn5VviFJz+gkLbfL2ZG9PzhXFuKQkrTUzEqbZd7LlCknRMqkuIr+r3xDo6rOi97XnfSmPtaK6BuJVTlttcHe7DhWINAfW3bR7gvdRo46ia/6d8ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fkO1oLPT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rEIskivXQXt3o+EMbTNJaAFul3JwyJrvhr9m/iGtF9N1DQpYbo+2AmAuDNjkiBnGV6JbtvhUyl5w5Cs+nyPqk7MthYlwfUtrrk0COYJ4nyFmTAPI3Va+dfZcWgoZYragJFqm6Qwn1OxzfiTgj6AT9qD//Hu09dtZ41ADEWw7Eys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jchGNAkG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fkO1oLPT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD90C4CEF1;
-	Tue, 16 Dec 2025 12:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jchGNAkG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B061C4CEF1;
+	Tue, 16 Dec 2025 12:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886757;
-	bh=EXe8TyD2/HkhUAcFvQ106kH8INsC+gLrkJZXYP5WtLk=;
+	s=korg; t=1765886761;
+	bh=PRFh+XzLBasfIsE4x2mkZ0IuRJvDngppwCk/EZi11Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fkO1oLPTsBv/nF7ZJcpNOCPTGXuUBCF4nesG5FE2CEvt8zBf3Lv0sLGtx8Oc2oz0b
-	 z1+mjBcxQ+uaQ02s0hSYPjrZxBUPs4PFPYJqX3AlZQ3OzkiOJtMBaV/nM6LiKUBeMo
-	 zLiI+6oefI18Ly/b7VUh8VxtSH4MMS01W3wSuioc=
+	b=jchGNAkGHFBMWMHtats8ZJ4J5puKRlQibV3J7gO8R4Slg71BQJWVGA7SIbnCo0xcT
+	 67CR2Z+970+dXS6iyH2CltY3ytD6zW/GzSN5B/vEfWSBhkUcq4zRVKNSW1F1Tlka/W
+	 RsUjN+4tBt88saMQqQ582FuObRkTzGJhngaeFT4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/614] perf bpf_counter: Fix opening of "any"(-1) CPU events
-Date: Tue, 16 Dec 2025 12:06:30 +0100
-Message-ID: <20251216111402.144230281@linuxfoundation.org>
+Subject: [PATCH 6.18 003/614] smack: deduplicate xattr setting in smack_inode_init_security()
+Date: Tue, 16 Dec 2025 12:06:10 +0100
+Message-ID: <20251216111401.415787175@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,82 +51,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Rogers <irogers@google.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit 2a67955de13624ec17d1c2504d2c9eeb37933b77 ]
+[ Upstream commit 8e5d9f916a9678e2dcbed2289b87efd453e4e052 ]
 
-The bperf BPF counter code doesn't handle "any"(-1) CPU events, always
-wanting to aggregate a count against a CPU, which avoids the need for
-atomics so let's not change that. Force evsels used for BPF counters
-to require a CPU when not in system-wide mode so that the "any"(-1)
-value isn't used during map propagation and evsel's CPU map matches
-that of the PMU.
-
-Fixes: b91917c0c6fa ("perf bpf_counter: Fix handling of cpumap fixing hybrid")
-Signed-off-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Stable-dep-of: 78fc6a94be25 ("smack: fix bug: invalid label of unix socket file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c     | 13 +++++++++++++
- tools/perf/util/bpf_counter.c |  7 ++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ security/smack/smack_lsm.c | 56 ++++++++++++++++++++------------------
+ 1 file changed, 29 insertions(+), 27 deletions(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 7006f848f87a6..f1c9d6c94fc50 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -2540,6 +2540,7 @@ int cmd_stat(int argc, const char **argv)
- 	unsigned int interval, timeout;
- 	const char * const stat_subcommands[] = { "record", "report" };
- 	char errbuf[BUFSIZ];
-+	struct evsel *counter;
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index a005f5afb8e0d..9eefb5cfccba5 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -980,6 +980,24 @@ smk_rule_transmutes(struct smack_known *subject,
+ 	return (may > 0) && (may & MAY_TRANSMUTE);
+ }
  
- 	setlocale(LC_ALL, "");
- 
-@@ -2797,6 +2798,18 @@ int cmd_stat(int argc, const char **argv)
- 
- 	evlist__warn_user_requested_cpus(evsel_list, target.cpu_list);
- 
-+	evlist__for_each_entry(evsel_list, counter) {
-+		/*
-+		 * Setup BPF counters to require CPUs as any(-1) isn't
-+		 * supported. evlist__create_maps below will propagate this
-+		 * information to the evsels. Note, evsel__is_bperf isn't yet
-+		 * set up, and this change must happen early, so directly use
-+		 * the bpf_counter variable and target information.
-+		 */
-+		if ((counter->bpf_counter || target.use_bpf) && !target__has_cpu(&target))
-+			counter->core.requires_cpu = true;
-+	}
++static int
++xattr_dupval(struct xattr *xattrs, int *xattr_count,
++	     const char *name, const void *value, unsigned int vallen)
++{
++	struct xattr * const xattr = lsm_get_xattr_slot(xattrs, xattr_count);
 +
- 	if (evlist__create_maps(evsel_list, &target) < 0) {
- 		if (target__has_task(&target)) {
- 			pr_err("Problems finding threads of monitor\n");
-diff --git a/tools/perf/util/bpf_counter.c b/tools/perf/util/bpf_counter.c
-index ca5d01b9017db..a5882b5822057 100644
---- a/tools/perf/util/bpf_counter.c
-+++ b/tools/perf/util/bpf_counter.c
-@@ -460,6 +460,7 @@ static int bperf_reload_leader_program(struct evsel *evsel, int attr_map_fd,
- 	struct bperf_leader_bpf *skel = bperf_leader_bpf__open();
- 	int link_fd, diff_map_fd, err;
- 	struct bpf_link *link = NULL;
-+	struct perf_thread_map *threads;
++	if (!xattr)
++		return 0;
++
++	xattr->value = kmemdup(value, vallen, GFP_NOFS);
++	if (!xattr->value)
++		return -ENOMEM;
++
++	xattr->value_len = vallen;
++	xattr->name = name;
++	return 0;
++}
++
+ /**
+  * smack_inode_init_security - copy out the smack from an inode
+  * @inode: the newly created inode
+@@ -997,7 +1015,6 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 	struct task_smack *tsp = smack_cred(current_cred());
+ 	struct inode_smack * const issp = smack_inode(inode);
+ 	struct smack_known *dsp = smk_of_inode(dir);
+-	struct xattr *xattr = lsm_get_xattr_slot(xattrs, xattr_count);
+ 	bool trans_cred;
+ 	bool trans_rule;
  
- 	if (!skel) {
- 		pr_err("Failed to open leader skeleton\n");
-@@ -495,7 +496,11 @@ static int bperf_reload_leader_program(struct evsel *evsel, int attr_map_fd,
- 	 * following evsel__open_per_cpu call
+@@ -1016,8 +1033,6 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 	 * Mark the inode as changed.
  	 */
- 	evsel->leader_skel = skel;
--	evsel__open(evsel, evsel->core.cpus, evsel->core.threads);
-+	assert(!perf_cpu_map__has_any_cpu_or_is_empty(evsel->core.cpus));
-+	/* Always open system wide. */
-+	threads = thread_map__new_by_tid(-1);
-+	evsel__open(evsel, evsel->core.cpus, threads);
-+	perf_thread_map__put(threads);
+ 	if (trans_cred || (trans_rule && smk_inode_transmutable(dir))) {
+-		struct xattr *xattr_transmute;
+-
+ 		/*
+ 		 * The caller of smack_dentry_create_files_as()
+ 		 * should have overridden the current cred, so the
+@@ -1029,35 +1044,22 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
  
- out:
- 	bperf_leader_bpf__destroy(skel);
+ 		if (S_ISDIR(inode->i_mode)) {
+ 			issp->smk_flags |= SMK_INODE_TRANSMUTE;
+-			xattr_transmute = lsm_get_xattr_slot(xattrs,
+-							     xattr_count);
+-			if (xattr_transmute) {
+-				xattr_transmute->value = kmemdup(TRANS_TRUE,
+-								 TRANS_TRUE_SIZE,
+-								 GFP_NOFS);
+-				if (!xattr_transmute->value)
+-					return -ENOMEM;
+-
+-				xattr_transmute->value_len = TRANS_TRUE_SIZE;
+-				xattr_transmute->name = XATTR_SMACK_TRANSMUTE;
+-			}
++
++			if (xattr_dupval(xattrs, xattr_count,
++				XATTR_SMACK_TRANSMUTE,
++				TRANS_TRUE,
++				TRANS_TRUE_SIZE
++			))
++				return -ENOMEM;
+ 		}
+ 	}
+ 
+ 	issp->smk_flags |= SMK_INODE_INSTANT;
+ 
+-	if (xattr) {
+-		const char *inode_label = issp->smk_inode->smk_known;
+-
+-		xattr->value = kstrdup(inode_label, GFP_NOFS);
+-		if (!xattr->value)
+-			return -ENOMEM;
+-
+-		xattr->value_len = strlen(inode_label);
+-		xattr->name = XATTR_SMACK_SUFFIX;
+-	}
+-
+-	return 0;
++	return xattr_dupval(xattrs, xattr_count,
++			    XATTR_SMACK_SUFFIX,
++			    issp->smk_inode->smk_known,
++		     strlen(issp->smk_inode->smk_known));
+ }
+ 
+ /**
 -- 
 2.51.0
 
