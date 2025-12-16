@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9125E341AC3;
-	Tue, 16 Dec 2025 11:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92ADB341AD7;
+	Tue, 16 Dec 2025 11:33:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884793; cv=none; b=cA6CImOrcOJM9SlvkToxFLaQFzJVxQ3uxh62rMSjLSnE7rQN2GRfP7194eqjITM01cWutZvxew1cChgdRLvgAs0oIal36pI4CW3Gck8N66aklPNG7fI/qRJb4ChtQpoVARosth8lvShJ69LE/q0m+7RWLEbl15Y4oNtyb3UWlio=
+	t=1765884796; cv=none; b=j9ndqDCCE3dc9Oq7Ub8DtZ0jjGkVDqI6YEMMFwGK7+Oq2qzTNs+JEALer+wfRwo1ZX7QI3UVKqiCrXHxvfQgw6Fd1YJq6YXScKYyQrZPkJBOmGZh8xtLy6blkKcw4DaHSJsXx4KU1gJViunFeTSYF2W1YoUX3KPxwPlu57qKIdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884793; c=relaxed/simple;
-	bh=lNKtSKzk9KyHRS2fmeREY/YypbQ1MOOrPfuLAwdCNAo=;
+	s=arc-20240116; t=1765884796; c=relaxed/simple;
+	bh=LbH3yyFUdl2meuW0YEkkg+DprbsOJ8URSAAl+ZmHC7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mpdOJK7i6X2J5WZBNKoMqmjSIoTWCGhjEAc4VFpEqtkZjqjP4iWINXVuT8woQZqzKQsO1pq3w3kRiZnda2sGCEBXvP4QkMWg+B7Rgc7bXssXE0pMx1hN5vFt5ed3o7Pfli76OtXs9nWslae48gOponD9m8qQfwOAXA+b6bri8A4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LjrIBSi4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RtbuKHLXUi8Sx+sJT7B/gYG645OTv4wNbX1DbjGd8XPW+LStoTDFw+npTMANIicC/6uUpfkHjG++KJtiDLIC98WM94MUZKbRQed/PvxGk3Xc3Sd+gsxgBHBMmPOvM7jr3ZxH3sefU+ZZ9dVz8sMJ9p3DlytBM3n47d3T5hGYbAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrLutzD+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LjrIBSi4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6A32C4CEF5;
-	Tue, 16 Dec 2025 11:33:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrLutzD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED11BC4CEF1;
+	Tue, 16 Dec 2025 11:33:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884793;
-	bh=lNKtSKzk9KyHRS2fmeREY/YypbQ1MOOrPfuLAwdCNAo=;
+	s=korg; t=1765884796;
+	bh=LbH3yyFUdl2meuW0YEkkg+DprbsOJ8URSAAl+ZmHC7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LjrIBSi4vLC9PZ4qzf12JjWgDDF2fuEFONgTU72fPPsatkJNlWgUDqMVhCZNfrOJd
-	 Sm8qdnm9ewEAC8mBs2qtoECORE61d3hP5fukaP8CVddy35Vq6hy7VghkXtin4nAuQe
-	 ZgMhTIQol4knoYZ++Lg96wN9yvhCu3/H6acVufNg=
+	b=TrLutzD+E2BhokVBd57pdJ/fo1bCBZgNR4b2m9VzSq9oeiBe/Pu03zofD4BibSeSF
+	 qM4d0Ms1oyV4XZITIWtpZR0yWd+JIrLbY09GvmU/0/LkhHT1p/9nZd+j6WYvIBv1uk
+	 s4CY+0gVJkou8uYTJPIWgerAMP1C18iksiZuDkbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 300/354] f2fs: add gc_boost_gc_greedy sysfs node
-Date: Tue, 16 Dec 2025 12:14:27 +0100
-Message-ID: <20251216111331.780427602@linuxfoundation.org>
+Subject: [PATCH 6.12 301/354] f2fs: maintain one time GC mode is enabled during whole zoned GC cycle
+Date: Tue, 16 Dec 2025 12:14:28 +0100
+Message-ID: <20251216111331.816743824@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,103 +54,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Daeho Jeong <daehojeong@google.com>
 
-[ Upstream commit c8705cefce44fbe85ca3b180dee0e0b5f3d51dc5 ]
+[ Upstream commit e462fc48ceb8224811c3224650afed05cb7f0872 ]
 
-Add this to control GC algorithm for boost GC.
+The current version missed setting one time GC for normal zoned GC
+cycle. So, valid threshold control is not working. Need to fix it to
+prevent excessive GC for zoned devices.
 
+Fixes: e791d00bd06c ("f2fs: add valid block ratio not to do excessive GC for one time GC")
 Signed-off-by: Daeho Jeong <daehojeong@google.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: e462fc48ceb8 ("f2fs: maintain one time GC mode is enabled during whole zoned GC cycle")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-fs-f2fs | 6 ++++++
- fs/f2fs/gc.c                            | 3 ++-
- fs/f2fs/gc.h                            | 1 +
- fs/f2fs/sysfs.c                         | 9 +++++++++
- 4 files changed, 18 insertions(+), 1 deletion(-)
+ fs/f2fs/gc.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-fs-f2fs b/Documentation/ABI/testing/sysfs-fs-f2fs
-index e5ec2a7982eef..912d6e8628081 100644
---- a/Documentation/ABI/testing/sysfs-fs-f2fs
-+++ b/Documentation/ABI/testing/sysfs-fs-f2fs
-@@ -874,3 +874,9 @@ Contact:	"Daeho Jeong" <daehojeong@google.com>
- Description:	Set a multiplier for the background GC migration window when F2FS GC is
- 		boosted. The range should be from 1 to the segment count in a section.
- 		Default: 5
-+
-+What:		/sys/fs/f2fs/<disk>/gc_boost_gc_greedy
-+Date:		June 2025
-+Contact:	"Daeho Jeong" <daehojeong@google.com>
-+Description:	Control GC algorithm for boost GC. 0: cost benefit, 1: greedy
-+		Default: 1
 diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 2cc7e16f76659..12737dfba5efb 100644
+index 12737dfba5efb..2dda8f23c0b99 100644
 --- a/fs/f2fs/gc.c
 +++ b/fs/f2fs/gc.c
-@@ -141,7 +141,7 @@ static int gc_thread_func(void *data)
+@@ -38,13 +38,14 @@ static int gc_thread_func(void *data)
+ 	struct f2fs_gc_control gc_control = {
+ 		.victim_segno = NULL_SEGNO,
+ 		.should_migrate_blocks = false,
+-		.err_gc_skipped = false };
++		.err_gc_skipped = false,
++		.one_time = false };
+ 
+ 	wait_ms = gc_th->min_sleep_time;
+ 
+ 	set_freezable();
+ 	do {
+-		bool sync_mode, foreground = false;
++		bool sync_mode, foreground = false, gc_boost = false;
+ 
+ 		wait_event_freezable_timeout(*wq,
+ 				kthread_should_stop() ||
+@@ -52,8 +53,12 @@ static int gc_thread_func(void *data)
+ 				gc_th->gc_wake,
+ 				msecs_to_jiffies(wait_ms));
+ 
+-		if (test_opt(sbi, GC_MERGE) && waitqueue_active(fggc_wq))
++		if (test_opt(sbi, GC_MERGE) && waitqueue_active(fggc_wq)) {
+ 			foreground = true;
++			gc_control.one_time = false;
++		} else if (f2fs_sb_has_blkzoned(sbi)) {
++			gc_control.one_time = true;
++		}
+ 
+ 		/* give it a try one time */
+ 		if (gc_th->gc_wake)
+@@ -81,8 +86,6 @@ static int gc_thread_func(void *data)
+ 			continue;
+ 		}
+ 
+-		gc_control.one_time = false;
+-
+ 		/*
+ 		 * [GC triggering condition]
+ 		 * 0. GC is not conducted currently.
+@@ -132,7 +135,7 @@ static int gc_thread_func(void *data)
+ 		if (need_to_boost_gc(sbi)) {
+ 			decrease_sleep_time(gc_th, &wait_ms);
+ 			if (f2fs_sb_has_blkzoned(sbi))
+-				gc_control.one_time = true;
++				gc_boost = true;
+ 		} else {
+ 			increase_sleep_time(gc_th, &wait_ms);
+ 		}
+@@ -141,7 +144,7 @@ static int gc_thread_func(void *data)
  					FOREGROUND : BACKGROUND);
  
  		sync_mode = (F2FS_OPTION(sbi).bggc_mode == BGGC_MODE_SYNC) ||
--				gc_control.one_time;
-+			(gc_control.one_time && gc_th->boost_gc_greedy);
+-			(gc_control.one_time && gc_th->boost_gc_greedy);
++			(gc_boost && gc_th->boost_gc_greedy);
  
  		/* foreground GC was been triggered via f2fs_balance_fs() */
  		if (foreground)
-@@ -198,6 +198,7 @@ int f2fs_start_gc_thread(struct f2fs_sb_info *sbi)
- 	gc_th->urgent_sleep_time = DEF_GC_THREAD_URGENT_SLEEP_TIME;
- 	gc_th->valid_thresh_ratio = DEF_GC_THREAD_VALID_THRESH_RATIO;
- 	gc_th->boost_gc_multiple = BOOST_GC_MULTIPLE;
-+	gc_th->boost_gc_greedy = GC_GREEDY;
- 
- 	if (f2fs_sb_has_blkzoned(sbi)) {
- 		gc_th->min_sleep_time = DEF_GC_THREAD_MIN_SLEEP_TIME_ZONED;
-diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
-index efa1968810a06..1a2e7a84b59f1 100644
---- a/fs/f2fs/gc.h
-+++ b/fs/f2fs/gc.h
-@@ -69,6 +69,7 @@ struct f2fs_gc_kthread {
- 	unsigned int boost_zoned_gc_percent;
- 	unsigned int valid_thresh_ratio;
- 	unsigned int boost_gc_multiple;
-+	unsigned int boost_gc_greedy;
- };
- 
- struct gc_inode_list {
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index dce3ef405832e..0c1e9683316e6 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -861,6 +861,13 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
- 		return count;
- 	}
- 
-+	if (!strcmp(a->attr.name, "gc_boost_gc_greedy")) {
-+		if (t > GC_GREEDY)
-+			return -EINVAL;
-+		sbi->gc_thread->boost_gc_greedy = (unsigned int)t;
-+		return count;
-+	}
-+
- 	*ui = (unsigned int)t;
- 
- 	return count;
-@@ -1088,6 +1095,7 @@ GC_THREAD_RW_ATTR(gc_no_zoned_gc_percent, no_zoned_gc_percent);
- GC_THREAD_RW_ATTR(gc_boost_zoned_gc_percent, boost_zoned_gc_percent);
- GC_THREAD_RW_ATTR(gc_valid_thresh_ratio, valid_thresh_ratio);
- GC_THREAD_RW_ATTR(gc_boost_gc_multiple, boost_gc_multiple);
-+GC_THREAD_RW_ATTR(gc_boost_gc_greedy, boost_gc_greedy);
- 
- /* SM_INFO ATTR */
- SM_INFO_RW_ATTR(reclaim_segments, rec_prefree_segments);
-@@ -1257,6 +1265,7 @@ static struct attribute *f2fs_attrs[] = {
- 	ATTR_LIST(gc_boost_zoned_gc_percent),
- 	ATTR_LIST(gc_valid_thresh_ratio),
- 	ATTR_LIST(gc_boost_gc_multiple),
-+	ATTR_LIST(gc_boost_gc_greedy),
- 	ATTR_LIST(gc_idle),
- 	ATTR_LIST(gc_urgent),
- 	ATTR_LIST(reclaim_segments),
 -- 
 2.51.0
 
