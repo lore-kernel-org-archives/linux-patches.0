@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19C0344044;
-	Tue, 16 Dec 2025 12:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6D134D4F1;
+	Tue, 16 Dec 2025 12:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887679; cv=none; b=dbjR/lPJFc/Ixi9abxaXwx+WSbB8Wrl09a5xQkku95M1rBG9uJUNgvR5Kz/OEMrrXiFscyzbK2/4q5U8D+ghSlflwDiFIWE0i0/HiPRztTDPf9Q1lr/2AVtaO6/k7btoXV0ScpUaEqtOuxMQ9z67aOCKC2USJNw6vmiitrECMMg=
+	t=1765887683; cv=none; b=l5HsdoOQoMY21PxaTOCWpv/MablaSBEDsI5WQLBSaxcq2AlgP4LFrUkyiJZcB365t6LVJPIaXf1FmaTeHfA2kYxMW3uGNgJgaI2uD8Pg0IdYrkRSdsTHgtuZii7U0obkaQ1aROdCiqHMGz/wru3Lv93t76QD6RpOG3lt6AkXl3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887679; c=relaxed/simple;
-	bh=hciRxpFMjI+Y2jv8FsDC59SnjJEa7x84AvbCGFhvLJk=;
+	s=arc-20240116; t=1765887683; c=relaxed/simple;
+	bh=VlJTFW2o2K7P/FmjCVDi3WQDUQWoZcPRSJput8InFZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZpJHcoS+EGP4r8rDzMMdlxbIBElfeLnQrxd+7jw07JkkRJR3lr9vO5MALPErMZqZZgC0QNo3nXzCBRmlcbQ5Urrb7cj99/aA2JZeX8f4dGMvrsrJ+ZqxTbtVtcTTRRT2YkZGcAbPijOZlG+a3UtiJaiNptliBycmmFieCVpX8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgZqdHZ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYWl3BzBmrVRISTToaB5hPvsuKA9W8KK6092/13FSUVM6udwIe56S8SVHNu5xxvLW4b1aCMIi92MDMVbI+a4L1IbVGAgXTlVv7g4Dt9nJmB2+n3nDLc+56YADVxH2Bbs7PCL3bVlkLZxSVXM1U2bwuT337zk31mX6HAtZmZoEAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kOb3Nxjf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgZqdHZ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C03C4CEF1;
-	Tue, 16 Dec 2025 12:21:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kOb3Nxjf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF10C4CEF1;
+	Tue, 16 Dec 2025 12:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887679;
-	bh=hciRxpFMjI+Y2jv8FsDC59SnjJEa7x84AvbCGFhvLJk=;
+	s=korg; t=1765887683;
+	bh=VlJTFW2o2K7P/FmjCVDi3WQDUQWoZcPRSJput8InFZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgZqdHZ6inHFG9UDX7f5Vm4fNXEQIgdaOTA0Hylt7DBFqOl/LBhVl8IvSlRpGjd72
-	 5wd3N4Na529XXBEjOz5qbC8Fm2VmEVDBK9Qm45HpBLbAMnqnNAKZ5Tx6bSy6ydkTtq
-	 jVv+UMbg/vQSUTgDGySSxgJkoofqP+sUYBWTHrIU=
+	b=kOb3NxjfczW/piIwYDAUNT+8tao7hxHzIkria6YHFLbiY5lv3LtHMTW/c8T0PsoKI
+	 yUo0Rwfkc5VWp/PgrQ4Vbzxh4lLyUc8yVhZr7gQrGExWN8DE7GtgI5Yc1pDunxcw1i
+	 4mPI+CGlY2BVo+05dVF88KHLgzDYljuarF4/McD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Niebel <Markus.Niebel@ew.tq-group.com>,
 	Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 304/614] arm64: dts: imx95-tqma9596sa: fix TPM5 pinctrl node name
-Date: Tue, 16 Dec 2025 12:11:11 +0100
-Message-ID: <20251216111412.383322518@linuxfoundation.org>
+Subject: [PATCH 6.18 305/614] arm64: dts: imx95-tqma9596sa: reduce maximum FlexSPI frequency to 66MHz
+Date: Tue, 16 Dec 2025 12:11:12 +0100
+Message-ID: <20251216111412.419329482@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,14 +51,14 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Markus Niebel <Markus.Niebel@ew.tq-group.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 046cb64923e8c05a8fb656baffcd8c3fc67fb688 ]
+[ Upstream commit 461be3802562b2d41250b40868310579a32f32c1 ]
 
-tpm4grp will be overwritten. Fix node name
+66 MHz is the maximum FlexPI clock frequency in normal/overdrive mode
+when RXCLKSRC = 0 (Default)
 
 Fixes: 91d1ff322c47 ("arm64: dt: imx95: Add TQMa95xxSA")
-Signed-off-by: Markus Niebel <Markus.Niebel@ew.tq-group.com>
 Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
@@ -68,18 +67,18 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi b/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi
-index 180124cc5bce1..c3bb61ea67961 100644
+index c3bb61ea67961..16c40d11d3b5d 100644
 --- a/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi
 +++ b/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi
-@@ -617,7 +617,7 @@ pinctrl_tpm4: tpm4grp {
- 		fsl,pins = <IMX95_PAD_GPIO_IO05__TPM4_CH0			0x51e>;
- 	};
- 
--	pinctrl_tpm5: tpm4grp {
-+	pinctrl_tpm5: tpm5grp {
- 		fsl,pins = <IMX95_PAD_GPIO_IO06__TPM5_CH0			0x51e>;
- 	};
- 
+@@ -115,7 +115,7 @@ &flexspi1 {
+ 	flash0: flash@0 {
+ 		compatible = "jedec,spi-nor";
+ 		reg = <0>;
+-		spi-max-frequency = <80000000>;
++		spi-max-frequency = <66000000>;
+ 		spi-tx-bus-width = <4>;
+ 		spi-rx-bus-width = <4>;
+ 		vcc-supply = <&reg_1v8>;
 -- 
 2.51.0
 
