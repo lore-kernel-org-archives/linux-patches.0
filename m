@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB0333F378;
-	Tue, 16 Dec 2025 11:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0382BE7B2;
+	Tue, 16 Dec 2025 11:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884612; cv=none; b=F1kDAMJvp9ZK+gvx/YEp5EaV7ouxSv/rNF3jLMajGzUsf0c4nTdtiLa4OP8zNmajnFEBN1hCiZ4jdmrS0ZhrVx7vrPCNgw2XDK5Ppw41zQdYm0oM7NRpUPy35G1EzGtS9Tw8AWurAuDM0M6Yq/kGVc6FDR03DN85fedTTVDYSL0=
+	t=1765884615; cv=none; b=G8MnRvUqlSdWdPMsAqmLsp450J1JXiDpVXIzd6ZJxS1EQJs389YPuGJqIIr2AbmdhLjTIBgBriJ4sfuKzux+kw0ro762cPGwPlbZIEZeJcAq1MLst7IooSxeUzcIZqlaQ9N3dz1OGzAUPd7rAE3l3Ea/HEE+t8rn/eXDnVQPCGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884612; c=relaxed/simple;
-	bh=h/bBiaVBjhVk94G/T0mBcj4Z17tSpRDv1WpqsSU7zv0=;
+	s=arc-20240116; t=1765884615; c=relaxed/simple;
+	bh=P1jytPO3CrdUXnDEbzydeO0rQ709vAkL5R9/ENqOnOk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qnT/OBCDc0k267bqvD1FxxOxTbAot8bIhmnpoO8Hd/DVY08xx/SAwgujYOHzEX1YiJRzijEQ+zo25ZMp44V0MHKQPUsgxp/9idtatX5kL72tIW6sySC/WWeDdKBI7LU9CWlJ6jJmNU9DjT405XYz4yJL7au9cLWV9bmjyLBmKw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pmZNAEWD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kZsGaNH0ESMM0pVn214k3vN8uGxwZtjaKqBI/yjcYysRBeN8nRidZjXzLkOenoeAIdsM9fZr2+UPYqlkQVD4OfMBV53n423vlsbCQw+NzoaxrgW4f0bHfjgM7Sw1u7MLHOQQduFEsTcfut76qQsaWkY3QPyL8Sd3Wi6/6XkMOYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1PZCMOiM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pmZNAEWD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9D1C4CEF1;
-	Tue, 16 Dec 2025 11:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1PZCMOiM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04449C4CEF1;
+	Tue, 16 Dec 2025 11:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884612;
-	bh=h/bBiaVBjhVk94G/T0mBcj4Z17tSpRDv1WpqsSU7zv0=;
+	s=korg; t=1765884615;
+	bh=P1jytPO3CrdUXnDEbzydeO0rQ709vAkL5R9/ENqOnOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmZNAEWDG1T7XG5NlfmUet2FGaHCd1kDPhsl61g4e1dSZ7ZHr+Gg1Y+lNKyd5i4Pq
-	 wTwn1NJlxlYxc4xXOo42zHpd9bGygbrP1x3oQCJ8L9xoxbi6Ht3A/N/Xb+6A0tpSmJ
-	 x+YQIsVRv0rEkoA3WgnAtjmlKoU1XmcldpFgb8cg=
+	b=1PZCMOiMtL+7aItOLo01mNT9AFyfULk1fB01fEZEvVb44ubZAsyUSjqiuCmtFCVWo
+	 pPgUCTLMfC3rLjtRByKln+5eHSEZrKLMAn1jL39x1PRktTYaLqiGJj5eEcQrinWvbN
+	 yt6AXvfTNQgCY/PwpLPKHB8vhTt5kKugr+9uZjJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Shenghao Ding <shenghao-ding@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 214/354] RDMA/bnxt_re: Pass correct flag for dma mr creation
-Date: Tue, 16 Dec 2025 12:13:01 +0100
-Message-ID: <20251216111328.673139779@linuxfoundation.org>
+Subject: [PATCH 6.12 215/354] ASoC: tas2781: correct the wrong period
+Date: Tue, 16 Dec 2025 12:13:02 +0100
+Message-ID: <20251216111328.708528037@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -46,113 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Shenghao Ding <shenghao-ding@ti.com>
 
-[ Upstream commit a26c4c7cdb50247b8486f1caa1ea8ab5e5c37edf ]
+[ Upstream commit 950167a99dfd27eeaf177092908c598a31c79a7e ]
 
-DMA MR doesn't use the unified MR model. So the lkey passed
-on to the reg_mr command to FW should contain the correct
-lkey. Driver is incorrectly over writing the lkey with pdid
-and firmware commands fails due to this.
+A wrong preiod at the end of the sentence was reported by one of my
+customers. Their thorough code review is greatly appreciated.
 
-Avoid passing the wrong key for cases where the unified MR
-registration is not used.
-
-Fixes: f786eebbbefa ("RDMA/bnxt_re: Avoid an extra hwrm per MR creation")
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1763624215-10382-2-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 49e2e353fb0d ("ASoC: tas2781: Add Calibration Kcontrols for Chromebook")
+Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Link: https://patch.msgid.link/20251121234427.402-1-shenghao-ding@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 +++++---
- drivers/infiniband/hw/bnxt_re/qplib_sp.c | 6 +++---
- drivers/infiniband/hw/bnxt_re/qplib_sp.h | 2 +-
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ sound/soc/codecs/tas2781-i2c.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index b222bf4f38e1c..c2abf2bb80264 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -541,7 +541,8 @@ static int bnxt_re_create_fence_mr(struct bnxt_re_pd *pd)
- 	mr->qplib_mr.va = (u64)(unsigned long)fence->va;
- 	mr->qplib_mr.total_size = BNXT_RE_FENCE_BYTES;
- 	rc = bnxt_qplib_reg_mr(&rdev->qplib_res, &mr->qplib_mr, NULL,
--			       BNXT_RE_FENCE_PBL_SIZE, PAGE_SIZE);
-+			       BNXT_RE_FENCE_PBL_SIZE, PAGE_SIZE,
-+			       _is_alloc_mr_unified(rdev->dev_attr->dev_cap_flags));
- 	if (rc) {
- 		ibdev_err(&rdev->ibdev, "Failed to register fence-MR\n");
- 		goto fail;
-@@ -3916,7 +3917,7 @@ struct ib_mr *bnxt_re_get_dma_mr(struct ib_pd *ib_pd, int mr_access_flags)
- 	mr->qplib_mr.hwq.level = PBL_LVL_MAX;
- 	mr->qplib_mr.total_size = -1; /* Infinte length */
- 	rc = bnxt_qplib_reg_mr(&rdev->qplib_res, &mr->qplib_mr, NULL, 0,
--			       PAGE_SIZE);
-+			       PAGE_SIZE, false);
- 	if (rc)
- 		goto fail_mr;
+diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
+index 2f100cbfdc41f..282907b035064 100644
+--- a/sound/soc/codecs/tas2781-i2c.c
++++ b/sound/soc/codecs/tas2781-i2c.c
+@@ -1258,7 +1258,7 @@ static int tasdevice_create_cali_ctrls(struct tasdevice_priv *priv)
  
-@@ -4146,7 +4147,8 @@ static struct ib_mr *__bnxt_re_user_reg_mr(struct ib_pd *ib_pd, u64 length, u64
- 
- 	umem_pgs = ib_umem_num_dma_blocks(umem, page_size);
- 	rc = bnxt_qplib_reg_mr(&rdev->qplib_res, &mr->qplib_mr, umem,
--			       umem_pgs, page_size);
-+			       umem_pgs, page_size,
-+			       _is_alloc_mr_unified(rdev->dev_attr->dev_cap_flags));
- 	if (rc) {
- 		ibdev_err(&rdev->ibdev, "Failed to register user MR - rc = %d\n", rc);
- 		rc = -EIO;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index 59093d78062d3..b09ac66e64466 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -612,7 +612,7 @@ int bnxt_qplib_dereg_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mrw,
- }
- 
- int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
--		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size)
-+		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size, bool unified_mr)
- {
- 	struct bnxt_qplib_rcfw *rcfw = res->rcfw;
- 	struct bnxt_qplib_hwq_attr hwq_attr = {};
-@@ -674,7 +674,7 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 	req.access = (mr->access_flags & 0xFFFF);
- 	req.va = cpu_to_le64(mr->va);
- 	req.key = cpu_to_le32(mr->lkey);
--	if (_is_alloc_mr_unified(res->dattr->dev_cap_flags))
-+	if (unified_mr)
- 		req.key = cpu_to_le32(mr->pd->id);
- 	req.flags = cpu_to_le16(mr->flags);
- 	req.mr_size = cpu_to_le64(mr->total_size);
-@@ -685,7 +685,7 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 	if (rc)
- 		goto fail;
- 
--	if (_is_alloc_mr_unified(res->dattr->dev_cap_flags)) {
-+	if (unified_mr) {
- 		mr->lkey = le32_to_cpu(resp.xid);
- 		mr->rkey = mr->lkey;
- 	}
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-index de959b3c28e01..fcfef5cbb38d4 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-@@ -338,7 +338,7 @@ int bnxt_qplib_alloc_mrw(struct bnxt_qplib_res *res,
- int bnxt_qplib_dereg_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mrw,
- 			 bool block);
- int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
--		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size);
-+		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size, bool unified_mr);
- int bnxt_qplib_free_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr);
- int bnxt_qplib_alloc_fast_reg_mr(struct bnxt_qplib_res *res,
- 				 struct bnxt_qplib_mrw *mr, int max);
+ 	/*
+ 	 * Alloc kcontrol via devm_kzalloc(), which don't manually
+-	 * free the kcontrol。
++	 * free the kcontrol.
+ 	 */
+ 	cali_ctrls = devm_kcalloc(priv->dev, nctrls,
+ 		sizeof(cali_ctrls[0]), GFP_KERNEL);
 -- 
 2.51.0
 
