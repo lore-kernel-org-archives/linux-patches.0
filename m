@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBA9350A16;
-	Tue, 16 Dec 2025 11:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7464C3502BF;
+	Tue, 16 Dec 2025 11:56:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886197; cv=none; b=FvIhtjzFaicT/Wbv3F3btWslVZa328Aox255eKDJnWDNzz9117nLVW78ztO9ICzIf3g4w8cQVOg6FZ7SOOzzO9sflpOg+vK9W4+Mg9lc+SU2WXnXGUV0y57SPpN/qc7/YHN7cUIo3Q2kTK8Z6rsimd1KoLaGjPWfw7hQ8EU7bHk=
+	t=1765886202; cv=none; b=GCecPgbP9/Cc/JhpE2v4WaD0kaKVqMcwxq01vdjeEBnIb2hMBElN9Y4b/dg4yq+SvLSoBwhJ5avSvmlztPT1oSFum7Jf94Zrc/l0P8YKnUGkQp84xtvP/7gu+RvvxGcbxtMzwH4Og6BJFPSNadrAxDCVMb2Ydv7Wn3VdKjoTsMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886197; c=relaxed/simple;
-	bh=/emM/ADLYByNQ/++KkY5p8U6a8prWyOU2glwlZvHMog=;
+	s=arc-20240116; t=1765886202; c=relaxed/simple;
+	bh=xwgruAQw6mLaayEZkZUcxiNF34MJggAuYkiQDZXysU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s7pJr+rU/bx5MTzG7HDOjFrhtWv26zGr+v9ZzhM2JLPDf6Uz3sAPcqaIkM1RwqLRppSOkzUQEQigoOjJurPflrXNtA9k0p/FiCDmfdX/gb3lJx45UoQ11JwiZBW3u4v3UZNfRE7LoueqhVkJ6Mugdbqf3UKizWfbWNzyGADA5to=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NLsJ5x5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uVtXVizd5J8VTUUR4uBVbEnmwzCdq174iKurh8f0lXjzkcrrbbBGzjSJqkF829hnElYwu73A9KxIFvnP7FyFbXVnNk3n7kEwgfeoA0vVf0ram6ajEjul0pq3M9V8mhSfOCS+aNEiByAVupJT/RafsOqQPNfpUltPFWkQaws9P8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UOtuVoBU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NLsJ5x5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24EBC4CEF1;
-	Tue, 16 Dec 2025 11:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UOtuVoBU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD88EC4CEF1;
+	Tue, 16 Dec 2025 11:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886197;
-	bh=/emM/ADLYByNQ/++KkY5p8U6a8prWyOU2glwlZvHMog=;
+	s=korg; t=1765886202;
+	bh=xwgruAQw6mLaayEZkZUcxiNF34MJggAuYkiQDZXysU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLsJ5x5YItRelwcvqV3JdSk3EP4YYydeBbjXUajAXbDm60/oZorg1XaUcfKAm56rA
-	 mMTCE6zFQ2Lcc0oeoZlPXhPlQ/io4GfiPiIV5D8zjBHDoYMMk11rAm1zRzdVKOe8Rf
-	 VWmXVjNz/mtc4g3fMFv012bv2uKo/MPZReq3LnJA=
+	b=UOtuVoBURyDnTX/YeLk7A3lhGWko73JAcMp4w3JkCkWlfJIVcZeUvgaw3Jr9l9LTY
+	 POnqMsmzncF9GMLEdT5gmRGRyEk4moQecr2zfOUJBuJEt3uJDtck4BgWYq4b93+HhU
+	 e/BKA3auAYXia3wARPuVgEKNrs836F1izTsSQPkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Rosenberg <olrose55@gmail.com>,
-	Will Rosenberg <whrosenb@asu.edu>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Daniel Thompson (RISCstar)" <danielt@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 367/507] kernfs: fix memory leak of kernfs_iattrs in __kernfs_new_node
-Date: Tue, 16 Dec 2025 12:13:28 +0100
-Message-ID: <20251216111358.754182559@linuxfoundation.org>
+Subject: [PATCH 6.17 350/507] backlight: lp855x: Fix lp855x.h kernel-doc warnings
+Date: Tue, 16 Dec 2025 12:13:11 +0100
+Message-ID: <20251216111358.139053441@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Rosenberg <whrosenb@asu.edu>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 382b1e8f30f779af8d6d33268e53df7de579ef3c ]
+[ Upstream commit 2d45db63260c6ae3cf007361e04a1c41bd265084 ]
 
-There exists a memory leak of kernfs_iattrs contained as an element
-of kernfs_node allocated in __kernfs_new_node(). __kernfs_setattr()
-allocates kernfs_iattrs as a sub-object, and the LSM security check
-incorrectly errors out and does not free the kernfs_iattrs sub-object.
+Add a missing struct short description and a missing leading " *" to
+lp855x.h to avoid kernel-doc warnings:
 
-Make an additional error out case that properly frees kernfs_iattrs if
-security_kernfs_init_security() fails.
+Warning: include/linux/platform_data/lp855x.h:126 missing initial short
+ description on line:
+ * struct lp855x_platform_data
+Warning: include/linux/platform_data/lp855x.h:131 bad line:
+   Only valid when mode is PWM_BASED.
 
-Fixes: e19dfdc83b60 ("kernfs: initialize security of newly created nodes")
-Co-developed-by: Oliver Rosenberg <olrose55@gmail.com>
-Signed-off-by: Oliver Rosenberg <olrose55@gmail.com>
-Signed-off-by: Will Rosenberg <whrosenb@asu.edu>
-Link: https://patch.msgid.link/20251125151332.2010687-1-whrosenb@asu.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7be865ab8634 ("backlight: new backlight driver for LP855x devices")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Daniel Thompson (RISCstar) <danielt@kernel.org>
+Link: https://patch.msgid.link/20251111060916.1995920-1-rdunlap@infradead.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ include/linux/platform_data/lp855x.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index a670ba3e565e0..5c0efd6b239f6 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -675,11 +675,14 @@ static struct kernfs_node *__kernfs_new_node(struct kernfs_root *root,
- 	if (parent) {
- 		ret = security_kernfs_init_security(parent, kn);
- 		if (ret)
--			goto err_out3;
-+			goto err_out4;
- 	}
+diff --git a/include/linux/platform_data/lp855x.h b/include/linux/platform_data/lp855x.h
+index ab222dd05bbc2..3b4a891acefe9 100644
+--- a/include/linux/platform_data/lp855x.h
++++ b/include/linux/platform_data/lp855x.h
+@@ -124,12 +124,12 @@ struct lp855x_rom_data {
+ };
  
- 	return kn;
- 
-+ err_out4:
-+	simple_xattrs_free(&kn->iattr->xattrs, NULL);
-+	kmem_cache_free(kernfs_iattrs_cache, kn->iattr);
-  err_out3:
- 	spin_lock(&root->kernfs_idr_lock);
- 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
+ /**
+- * struct lp855x_platform_data
++ * struct lp855x_platform_data - lp855 platform-specific data
+  * @name : Backlight driver name. If it is not defined, default name is set.
+  * @device_control : value of DEVICE CONTROL register
+  * @initial_brightness : initial value of backlight brightness
+  * @period_ns : platform specific pwm period value. unit is nano.
+-		Only valid when mode is PWM_BASED.
++ *		Only valid when mode is PWM_BASED.
+  * @size_program : total size of lp855x_rom_data
+  * @rom_data : list of new eeprom/eprom registers
+  */
 -- 
 2.51.0
 
