@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C7C313E13;
-	Tue, 16 Dec 2025 11:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFB732BF22;
+	Tue, 16 Dec 2025 11:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884316; cv=none; b=gn6YrFT1Rv6deAXD8i+9h+Nb3igSZ4FpI1c4Ir6x5hjFw8BVDuaxrTxR1YO162ooQLiO4wh/XemzYLWyG+fxigYryzXe0ZBZVre8ugaruZ0G45da8XPbRPb26WzQhYFFZFDsT4kjfMHy3VCjoRBa0GWwsWMpRyZ0W5pHlLGc7iY=
+	t=1765884319; cv=none; b=k+waP3pcTOnsGMgLAEyd44bJNyu6UDou3UgyJnbD6cJrAaaZ8KKAbcGdi+fsIK8MfdTJvsiH0WrAIWgaxiAEUpqfjc8Ec5b25WiXuO3I2lVO042BhLyTq1BZdMBy9Y/IynvgwUxccYSC+5EdJV0vlWfoz5IuNDcds9Me/wrjCzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884316; c=relaxed/simple;
-	bh=wr0oJk0GriS2Uzy5rBPEBk5AmOTEEu05cElB42kWu/k=;
+	s=arc-20240116; t=1765884319; c=relaxed/simple;
+	bh=NnT67Ls8N+b6FQeBFsKmzyzk4gzg48XynVeC5gYPjWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFpC6F1JG6yZNauQ5jQu6g+oN3eWb+AEiYipxzMkInNh9e0moeCmS80l8qBUqBpX95BpO+SQZp4efij+qzvePTYSxQmisNdeZHmy94M006tRBllswwVzJrMHOyWr79SVAFO28gB4voTrbtBflLLpMGvz3808s6unFjN7sQ9v9f8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0bBYMgi5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhokb93ZmWsN3h9CKOWcdjHwR/UDmRB8SHsML6aUheHY6iygdzlANa/VY112kx/sQ22L3XmfhJH6XZzdLIzTPfLlvwe0ILDQj5vG/ylMapo8X6f48cvnxGCTRhrJQRaNrrc9ux7tJ3Mr04Qv2R81s++wn1ZB/YULacdRe/I9ys8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rRZQWMCQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0bBYMgi5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953CDC4CEF5;
-	Tue, 16 Dec 2025 11:25:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rRZQWMCQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3BBC4CEF5;
+	Tue, 16 Dec 2025 11:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884316;
-	bh=wr0oJk0GriS2Uzy5rBPEBk5AmOTEEu05cElB42kWu/k=;
+	s=korg; t=1765884319;
+	bh=NnT67Ls8N+b6FQeBFsKmzyzk4gzg48XynVeC5gYPjWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bBYMgi5eobIgTQxbPf2yRqtgu6stlGpyTGwCrXia7I+ZEcP4qA7V7/lfajtnsvPp
-	 qmIZ0/gmAqkSL5oWzKLXTbM9/mw36+ytj2JqJeyNdk9Mh+6zza5EdMdM5jkujx3Efp
-	 M2JERlzxqgi9SQGe7xTLxMLHQmM6cNq807XgnwR8=
+	b=rRZQWMCQ5Xh6qKu101HCCaBgMUe9yFUJiZUpQOF9455xbUY/qUXPCRO5TmbeGqcYe
+	 DkibGWpjC88ZMmjXew1IIBPhp5Fx7hGZ9WgpX6YY9W+Y1ABA9pN1QAjTu6AUVQ0++A
+	 EZL/531voHPQbSi7+eYcNEMV0n6U/yDb53EaMdgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	FUKAUMI Naoki <naoki@radxa.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 156/354] PCI: keystone: Exit ks_pcie_probe() for invalid mode
-Date: Tue, 16 Dec 2025 12:12:03 +0100
-Message-ID: <20251216111326.567238238@linuxfoundation.org>
+Subject: [PATCH 6.12 157/354] arm64: dts: rockchip: Move the EEPROM to correct I2C bus on Radxa ROCK 5A
+Date: Tue, 16 Dec 2025 12:12:04 +0100
+Message-ID: <20251216111326.602982644@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,44 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: FUKAUMI Naoki <naoki@radxa.com>
 
-[ Upstream commit 95d9c3f0e4546eaec0977f3b387549a8463cd49f ]
+[ Upstream commit 92e6e0b0e595afdda6296c760551ad3ffe9d5231 ]
 
-Commit under Fixes introduced support for PCIe EP mode on AM654x platforms.
-When the mode happens to be either "DW_PCIE_RC_TYPE" or "DW_PCIE_EP_TYPE",
-the PCIe Controller is configured accordingly. However, when the mode is
-neither of them, an error message is displayed, but the driver probe
-succeeds. Since this "invalid" mode is not associated with a functional
-PCIe Controller, the probe should fail.
+The BL24C16 EEPROM chip found on Radxa ROCK 5A is connected to the
+i2c0 bus, [1] so move the eeprom node from the i2c2 bus to the i2c0
+bus.
 
-Fix the behavior by exiting "ks_pcie_probe()" with the return value of
-"-EINVAL" in addition to displaying the existing error message when the
-mode is invalid.
+[1] Link: https://dl.radxa.com/rock5/5a/docs/hw/radxa_rock5a_V1.1_sch.pdf p.19
 
-Fixes: 23284ad677a9 ("PCI: keystone: Add support for PCIe EP in AM654x Platforms")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251029080547.1253757-4-s-vadapalli@ti.com
+Fixes: 89c880808cff8 ("arm64: dts: rockchip: add I2C EEPROM to rock-5a")
+Signed-off-by: FUKAUMI Naoki <naoki@radxa.com>
+Link: https://patch.msgid.link/20251112035133.28753-2-naoki@radxa.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-index 4f75d13fe1dee..1c34ea8e7c61e 100644
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -1339,6 +1339,8 @@ static int ks_pcie_probe(struct platform_device *pdev)
- 		break;
- 	default:
- 		dev_err(dev, "INVALID device type %d\n", mode);
-+		ret = -EINVAL;
-+		goto err_get_sync;
- 	}
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
+index 294b99dd50da2..7813984086b38 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-rock-5a.dts
+@@ -204,6 +204,12 @@ regulator-state-mem {
+ 			regulator-off-in-suspend;
+ 		};
+ 	};
++
++	eeprom: eeprom@50 {
++		compatible = "belling,bl24c16a", "atmel,24c16";
++		reg = <0x50>;
++		pagesize = <16>;
++	};
+ };
  
- 	ks_pcie_enable_error_irq(ks_pcie);
+ &i2c2 {
+@@ -225,12 +231,6 @@ regulator-state-mem {
+ 			regulator-off-in-suspend;
+ 		};
+ 	};
+-
+-	eeprom: eeprom@50 {
+-		compatible = "belling,bl24c16a", "atmel,24c16";
+-		reg = <0x50>;
+-		pagesize = <16>;
+-	};
+ };
+ 
+ &i2c3 {
 -- 
 2.51.0
 
