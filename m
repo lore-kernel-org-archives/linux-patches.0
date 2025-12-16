@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFA1347FE1;
-	Tue, 16 Dec 2025 11:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3207434D3BD;
+	Tue, 16 Dec 2025 11:43:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885387; cv=none; b=VufewVqiEc73wVlJMy3bGqCs6CARyVdHf5r//dI6gR+BBsej3q3xV4fQ3NlaFcDKu2GZ3Oax5E7ghUahtMhlHb4jMpup+bJ00O/hd94JSZiTirvI7km+fdsmfafOiMDl4wa2L46W9/Yy1HHVYJ671Axe+9VrQhSRt25DC/xOfvE=
+	t=1765885391; cv=none; b=WRjvfW9dzNn73flrdU7Nj8WxF//2Ebgx0an8GCfhwjMwgXqx9DQXtYcuLpGmdvyP2uJBQbtSJEurky+qB0Fo8IG6tZe5REMmGLQiIZZjauigKe+RKEoj/XlVvQUOBv2rwj+vUC4UQ8WE18F5PuCLSv73f9gvo7asVsbD+j3L75U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885387; c=relaxed/simple;
-	bh=44r30ZvOVnJR1qoDfDh+lGUahtu0Ap4Qqn+SaBgBN8U=;
+	s=arc-20240116; t=1765885391; c=relaxed/simple;
+	bh=h4TD0yuoOWZslL8g/vl0dbsi6E7oB84ufrzaFTsFwO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=r+0eEub8qtNJ7RbxajsuxglNX1Aw69iIpDQi6UyK576QF7sp6VKazqm5D2GuNlKAlCSAqHalrbfqPYOYZ+UJaWTBPVj/HnANP+oEBQJ5B9T7LRDoXoqvCB/eQWZb+/2HRB4zORhmpXcTzckPD6FPyED0Yanf11Aq8VVN1bOkyHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XzWdocbK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=PVdl1X/jYqIXi9o3A2F7owjhBnk3mzeKJIGR+WFdbvvUJd1YayEr32AJ16UIVo9VFT9YZtXyzrceveXvWqbaOgLsnxUUz9oOzCL9HFl2l5DzE4xIcwFoQ/9uA9TWPtncT3VX/ZVJ4MzcpMO4nTs32E4mAE7vMSErm/MIOZSVzfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdgyfCf5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XzWdocbK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20F15C4CEF5;
-	Tue, 16 Dec 2025 11:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdgyfCf5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7581C4CEF1;
+	Tue, 16 Dec 2025 11:43:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885387;
-	bh=44r30ZvOVnJR1qoDfDh+lGUahtu0Ap4Qqn+SaBgBN8U=;
+	s=korg; t=1765885391;
+	bh=h4TD0yuoOWZslL8g/vl0dbsi6E7oB84ufrzaFTsFwO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XzWdocbKF5703hsCqA0BUqyTVnaAljhrvZHDT9zncj+NO9zLoRhP9vNPdKzYCg142
-	 2tYoBtbMYIJA0pPLdn8qgBpmvIAZrQKbHVnlFYDVynwgqyqW0d5+aL+RpTTUjF/Ze8
-	 TBV9oYWY4OipBygO6PuELroMbW8K+595/qzd7Qgg=
+	b=PdgyfCf5PlnHcmHST6xT9JroMy9a7U16ti/8qXL7/PrTE79jwvGqD9D7UJ0WIyJTt
+	 4p7zOCBXqVsdTkyu8dOD636cismn/YZ4OnfHAoj3x0ULhyLHz4yTLZVLzdiEDQDz/o
+	 Z88vqenZbmwl3K2VaRMOttB2So7U5NW5JKGCQdd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Benjamin Berg <benjamin.berg@intel.com>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 124/507] tools/nolibc/stdio: let perror work when NOLIBC_IGNORE_ERRNO is set
-Date: Tue, 16 Dec 2025 12:09:25 +0100
-Message-ID: <20251216111350.024474258@linuxfoundation.org>
+Subject: [PATCH 6.17 125/507] tools/nolibc/dirent: avoid errno in readdir_r
+Date: Tue, 16 Dec 2025 12:09:26 +0100
+Message-ID: <20251216111350.060590242@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -54,36 +54,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Berg <benjamin.berg@intel.com>
 
-[ Upstream commit c485ca3aff2442adea4c08ceb5183e671ebed22a ]
+[ Upstream commit 4ada5679f18dbbe92d87c37a842c3368e6ab5e4a ]
 
-There is no errno variable when NOLIBC_IGNORE_ERRNO is defined. As such,
-simply print the message with "unknown error" rather than the integer
-value of errno.
+Using errno is not possible when NOLIBC_IGNORE_ERRNO is set. Use
+sys_lseek instead of lseek as that avoids using errno.
 
-Fixes: acab7bcdb1bc ("tools/nolibc/stdio: add perror() to report the errno value")
+Fixes: 665fa8dea90d ("tools/nolibc: add support for directory access")
 Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/stdio.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/include/nolibc/dirent.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/include/nolibc/stdio.h b/tools/include/nolibc/stdio.h
-index 7630234408c58..724d05ce69624 100644
---- a/tools/include/nolibc/stdio.h
-+++ b/tools/include/nolibc/stdio.h
-@@ -600,7 +600,11 @@ int sscanf(const char *str, const char *format, ...)
- static __attribute__((unused))
- void perror(const char *msg)
- {
-+#ifdef NOLIBC_IGNORE_ERRNO
-+	fprintf(stderr, "%s%sunknown error\n", (msg && *msg) ? msg : "", (msg && *msg) ? ": " : "");
-+#else
- 	fprintf(stderr, "%s%serrno=%d\n", (msg && *msg) ? msg : "", (msg && *msg) ? ": " : "", errno);
-+#endif
- }
+diff --git a/tools/include/nolibc/dirent.h b/tools/include/nolibc/dirent.h
+index 758b95c48e7a4..61a122a60327d 100644
+--- a/tools/include/nolibc/dirent.h
++++ b/tools/include/nolibc/dirent.h
+@@ -86,9 +86,9 @@ int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
+ 	 * readdir() can only return one entry at a time.
+ 	 * Make sure the non-returned ones are not skipped.
+ 	 */
+-	ret = lseek(fd, ldir->d_off, SEEK_SET);
+-	if (ret == -1)
+-		return errno;
++	ret = sys_lseek(fd, ldir->d_off, SEEK_SET);
++	if (ret < 0)
++		return -ret;
  
- static __attribute__((unused))
+ 	entry->d_ino = ldir->d_ino;
+ 	/* the destination should always be big enough */
 -- 
 2.51.0
 
