@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CABD3644DC;
-	Tue, 16 Dec 2025 12:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5229364E90;
+	Tue, 16 Dec 2025 12:09:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886972; cv=none; b=WqxaEJ8yw37/Spjdk/ZPV6UWILn69fp3iaSlZWluP8eJlg2TvA8tEj7qzJrgRq2cU0LHbzBZMU+pHJk0M1xmdd3zjdrVI1jDqmf31ThgJAYUH4SQnsgIHn6vFAobPyldQ9wnICvX/lcmHJAW/nbtZ63Pxp+ZHSRqHeE19sN892c=
+	t=1765886975; cv=none; b=pxiiZAxptmBkv3G6hFwt1tClKXsM5p0ujjWI9GwJIvKYyVP4dep+PVmz1dTS0V7isjRwhQVZBIUXZVRWNZc126zpIMtsXITR7lD+QPCAI48uho4vas4KaAkukX8cJwYOoiW9r2UWnZo1N7AUyW2iGjKMmOnOLG2flY9u1GmVSTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886972; c=relaxed/simple;
-	bh=Cy+LEyNuYLZSL7ZK0AS21fCDD3qYjzGC7Eihqe08mWo=;
+	s=arc-20240116; t=1765886975; c=relaxed/simple;
+	bh=lizUcHPdmsNvyBH82nTRQEoRiKN37r9S/wWnnRImjJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Me0dow4Ag++q0/qj7J/lA77Vplo3KqFUsOkJWk7to1DL/Fmq1zulspvKgybl1ptsL/BQFv7Oui/+C8GZUHltC3OOLGetKdO3e9skSud1eWxiZj5lP5ExfX1InME1lgYhkw8w+2Q1HSJ6p785qIKwylLwW31H8Tt3P/6OKzlnMw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gcr3lOXO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Df7B4wHPFKlMIP7kzwXRXu4LOza8h4rxspKhl3QZsmXDrDcqPGvfTyt29Yv5dZGYJu/eijpLni5UgBfBq/SJP/54FtAQSIYbUk/aEDIsLBS9J1PbIxgrJoJSjcpPAL4cDY9PVQCj12xca7v6ia7u4Ht60/i6xDREsg5C6Zz4l8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lo3IqPvm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gcr3lOXO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87A9C4CEF1;
-	Tue, 16 Dec 2025 12:09:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lo3IqPvm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 445EFC4CEF1;
+	Tue, 16 Dec 2025 12:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886972;
-	bh=Cy+LEyNuYLZSL7ZK0AS21fCDD3qYjzGC7Eihqe08mWo=;
+	s=korg; t=1765886975;
+	bh=lizUcHPdmsNvyBH82nTRQEoRiKN37r9S/wWnnRImjJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcr3lOXOnSBJ0IOkwVbxEX+NhvaXmk8VHvyeH0ufk+sE/z/Slr3zd0YfBsfvIS1yY
-	 pMcPH9YW8iIwDDMIkE6TQzn0lfWfzxKufMzA+95oiLUVo7btJ2LEq/GhrAHLgtNH5N
-	 SDb1hwQ868LR+aHoWlTieRTO+gIYUiPgIhwaxyrs=
+	b=lo3IqPvmVYsNLPmGrzhamr97UygCl3IEcFIZQ5xhQNtEBAGCA0fI3HRQeuyZcEGxv
+	 lZQQ1JjAouBG9EfhH26IVdiCyGHkYEoUVkeAIxnCpM8De+0h10ep0lzXlpHxIK2rK8
+	 MVu0D3DbU6SdB7QQgMBuMuBzQ80t+uuIl/THvesc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Lukas Wunner <lukas@wunner.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 088/614] crypto: asymmetric_keys - prevent overflow in asymmetric_key_generate_id
-Date: Tue, 16 Dec 2025 12:07:35 +0100
-Message-ID: <20251216111404.510780477@linuxfoundation.org>
+Subject: [PATCH 6.18 062/614] perf parse-events: Make X modifier more respectful of groups
+Date: Tue, 16 Dec 2025 12:07:09 +0100
+Message-ID: <20251216111403.558949875@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,60 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit df0845cf447ae1556c3440b8b155de0926cbaa56 ]
+[ Upstream commit 800201997a509c298e74696da3586d82b1a2b6f4 ]
 
-Use check_add_overflow() to guard against potential integer overflows
-when adding the binary blob lengths and the size of an asymmetric_key_id
-structure and return ERR_PTR(-EOVERFLOW) accordingly. This prevents a
-possible buffer overflow when copying data from potentially malicious
-X.509 certificate fields that can be arbitrarily large, such as ASN.1
-INTEGER serial numbers, issuer names, etc.
+Events with an X modifier were reordered within a group, for example
+slots was made the leader in:
+```
+$ perf record -e '{cpu/mem-stores/ppu,cpu/slots/uX}' -- sleep 1
+```
 
-Fixes: 7901c1a8effb ("KEYS: Implement binary asymmetric key ID handling")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix by making `dont_regroup` evsels always use their index for
+sorting. Make the cur_leader, when fixing the groups, be that of
+`dont_regroup` evsel so that the `dont_regroup` evsel doesn't become a
+leader.
+
+On a tigerlake this patch corrects this and meets expectations in:
+```
+$ perf stat -e '{cpu/mem-stores/,cpu/slots/uX}' -a -- sleep 0.1
+
+ Performance counter stats for 'system wide':
+
+        83,458,652      cpu/mem-stores/
+     2,720,854,880      cpu/slots/uX
+
+       0.103780587 seconds time elapsed
+
+$ perf stat -e 'slots,slots:X' -a -- sleep 0.1
+
+ Performance counter stats for 'system wide':
+
+       732,042,247      slots                (48.96%)
+       643,288,155      slots:X              (51.04%)
+
+       0.102731018 seconds time elapsed
+```
+
+Closes: https://lore.kernel.org/lkml/18f20d38-070c-4e17-bc90-cf7102e1e53d@linux.intel.com/
+Fixes: 035c17893082 ("perf parse-events: Add 'X' modifier to exclude an event from being regrouped")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/asymmetric_keys/asymmetric_type.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ tools/perf/util/parse-events.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/crypto/asymmetric_keys/asymmetric_type.c b/crypto/asymmetric_keys/asymmetric_type.c
-index ba2d9d1ea235a..348966ea2175c 100644
---- a/crypto/asymmetric_keys/asymmetric_type.c
-+++ b/crypto/asymmetric_keys/asymmetric_type.c
-@@ -11,6 +11,7 @@
- #include <crypto/public_key.h>
- #include <linux/seq_file.h>
- #include <linux/module.h>
-+#include <linux/overflow.h>
- #include <linux/slab.h>
- #include <linux/ctype.h>
- #include <keys/system_keyring.h>
-@@ -141,12 +142,17 @@ struct asymmetric_key_id *asymmetric_key_generate_id(const void *val_1,
- 						     size_t len_2)
- {
- 	struct asymmetric_key_id *kid;
--
--	kid = kmalloc(sizeof(struct asymmetric_key_id) + len_1 + len_2,
--		      GFP_KERNEL);
-+	size_t kid_sz;
-+	size_t len;
-+
-+	if (check_add_overflow(len_1, len_2, &len))
-+		return ERR_PTR(-EOVERFLOW);
-+	if (check_add_overflow(sizeof(struct asymmetric_key_id), len, &kid_sz))
-+		return ERR_PTR(-EOVERFLOW);
-+	kid = kmalloc(kid_sz, GFP_KERNEL);
- 	if (!kid)
- 		return ERR_PTR(-ENOMEM);
--	kid->len = len_1 + len_2;
-+	kid->len = len;
- 	memcpy(kid->data, val_1, len_1);
- 	memcpy(kid->data + len_1, val_2, len_2);
- 	return kid;
+diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
+index 90a765016f64f..cd9315d3ca117 100644
+--- a/tools/perf/util/parse-events.c
++++ b/tools/perf/util/parse-events.c
+@@ -2121,14 +2121,18 @@ static int evlist__cmp(void *_fg_idx, const struct list_head *l, const struct li
+ 	 * event's index is used. An index may be forced for events that
+ 	 * must be in the same group, namely Intel topdown events.
+ 	 */
+-	if (*force_grouped_idx != -1 && arch_evsel__must_be_in_group(lhs)) {
++	if (lhs->dont_regroup) {
++		lhs_sort_idx = lhs_core->idx;
++	} else if (*force_grouped_idx != -1 && arch_evsel__must_be_in_group(lhs)) {
+ 		lhs_sort_idx = *force_grouped_idx;
+ 	} else {
+ 		bool lhs_has_group = lhs_core->leader != lhs_core || lhs_core->nr_members > 1;
+ 
+ 		lhs_sort_idx = lhs_has_group ? lhs_core->leader->idx : lhs_core->idx;
+ 	}
+-	if (*force_grouped_idx != -1 && arch_evsel__must_be_in_group(rhs)) {
++	if (rhs->dont_regroup) {
++		rhs_sort_idx = rhs_core->idx;
++	} else if (*force_grouped_idx != -1 && arch_evsel__must_be_in_group(rhs)) {
+ 		rhs_sort_idx = *force_grouped_idx;
+ 	} else {
+ 		bool rhs_has_group = rhs_core->leader != rhs_core || rhs_core->nr_members > 1;
+@@ -2226,10 +2230,10 @@ static int parse_events__sort_events_and_fix_groups(struct list_head *list)
+ 	 */
+ 	idx = 0;
+ 	list_for_each_entry(pos, list, core.node) {
+-		const struct evsel *pos_leader = evsel__leader(pos);
++		struct evsel *pos_leader = evsel__leader(pos);
+ 		const char *pos_pmu_name = pos->group_pmu_name;
+ 		const char *cur_leader_pmu_name;
+-		bool pos_force_grouped = force_grouped_idx != -1 &&
++		bool pos_force_grouped = force_grouped_idx != -1 && !pos->dont_regroup &&
+ 			arch_evsel__must_be_in_group(pos);
+ 
+ 		/* Reset index and nr_members. */
+@@ -2243,8 +2247,8 @@ static int parse_events__sort_events_and_fix_groups(struct list_head *list)
+ 		 * groups can't span PMUs.
+ 		 */
+ 		if (!cur_leader || pos->dont_regroup) {
+-			cur_leader = pos;
+-			cur_leaders_grp = &pos->core;
++			cur_leader = pos->dont_regroup ? pos_leader : pos;
++			cur_leaders_grp = &cur_leader->core;
+ 			if (pos_force_grouped)
+ 				force_grouped_leader = pos;
+ 		}
 -- 
 2.51.0
 
