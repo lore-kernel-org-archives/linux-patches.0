@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3887E34D4C2;
-	Tue, 16 Dec 2025 11:42:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56E9F347FE1;
+	Tue, 16 Dec 2025 11:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885355; cv=none; b=fP4vhFiJCjVTUSzznR/9I4M0dzegletf2EnQlCmfiikdL2v2cMzFgukdX9Mtazj6E8n6aPyEF/ISISpRuZep6HFX5sLiJS6srZb4eouJ/6DZw6aAbgVZB3bsJzoLrSgLyZZXvRACDuytBKrLiL04LIt5iP4dWl0lygseXdf0i2k=
+	t=1765885358; cv=none; b=Oyo3KIXl5Diwin6qWEGN93UnT2oy51dYurELbIggWgXB2wPYPYnTc9O640z/FxomJIB61parQYP0JhuQlyoZtD4QVyuvbchLzOTul6YpCgwRrB9vXTwfi/PU97+hV6b5KW6IDAhi/J6A9MWSKgqQ/98nGvJvgSNG33tQdmnDRTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885355; c=relaxed/simple;
-	bh=uuO7BOFkTYozJOmRhEkAPQ4bjhQajXYdhGoli34Zm3w=;
+	s=arc-20240116; t=1765885358; c=relaxed/simple;
+	bh=RAFeLvM2FNMMC5sYh6CDpu7j/UL7S/fjjMrvAz5fK28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y13e4AMN0Fwaiw1b7nDxUHOazrRJL8oDQI6kHdTkVmKCsQEoq1QCd7iX5Ig8K0sFjCzJII15uffkjn9mHQ8mBsy+gDgFA70/voXq0Cb6iydMYOa7wUkBmHrz49gbZUScIwX7747oMBiGt1YSN8Bjv7lPOgP0RPIab6/wczaGR8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eF2O0mPk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X7cXciXNL1QAJBCpBPDHzJpLwMI7N7w0YEkzoUNpAlP6sKfY9YDGMHcycGKtJqxHOmipl8tPDkJ/tl7mPGEesqt8QItFxdHN8jA9Mx1FaLXGAW5yCEm42+9t9i+1Er66o8iS7P0gj9Uyc7hzObWOtU3AC46flEL7FdN+12kxhZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=19clTIML; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eF2O0mPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFC4C4CEF1;
-	Tue, 16 Dec 2025 11:42:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="19clTIML"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A594C4CEF5;
+	Tue, 16 Dec 2025 11:42:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885354;
-	bh=uuO7BOFkTYozJOmRhEkAPQ4bjhQajXYdhGoli34Zm3w=;
+	s=korg; t=1765885357;
+	bh=RAFeLvM2FNMMC5sYh6CDpu7j/UL7S/fjjMrvAz5fK28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eF2O0mPkqw8tQuHXZd6E10wteIrg5sL9kYRuHouE6tBao8G9fePcF4FJjpO+aDuky
-	 uGzxhGw91znHz/rjZvhEi5o6fziU1FM89px6njUhQW+K9I+k4UzrZMo+mpWMe42/AN
-	 2PPr95MKv0fA+sJwKqWatH3I771ae0pRfwyjmcf0=
+	b=19clTIMLDVrW5lEX7Q+Y3qZ2X3R6RF4o+gv2ZOOz3R5QwOoqFl5s0GdMWuZem962K
+	 RXA/HTQPukhP2aFC/FvDW23p9TYd/RhQcE4MIYB/NdeQHIfZzybJ834NIob6Yz8ogj
+	 c0jC2rH5UKr+zJNvB7SWvgqA4yrl8qn/w45rZ3U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 115/507] mtd: rawnand: lpc32xx_slc: fix GPIO descriptor leak on probe error and remove
-Date: Tue, 16 Dec 2025 12:09:16 +0100
-Message-ID: <20251216111349.701143133@linuxfoundation.org>
+Subject: [PATCH 6.17 098/507] arm64: dts: qcom: qcm6490-fairphone-fp5: Add supplies to simple-fb node
+Date: Tue, 16 Dec 2025 12:08:59 +0100
+Message-ID: <20251216111349.090730204@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,47 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit cdf44f1add4ec9ee80569d5a43e6e9bba0d74c7a ]
+[ Upstream commit 3d4142cac46b4dde4e60908c509c4cf107067114 ]
 
-The driver calls gpiod_get_optional() in the probe function but
-never calls gpiod_put() in the remove function or in the probe
-error path. This leads to a GPIO descriptor resource leak.
-The lpc32xx_mlc.c driver in the same directory handles this
-correctly by calling gpiod_put() on both paths.
+Add the OLED power supplies to the simple-framebuffer node, so that
+the regulators don't get turned off while the simple-fb is being used.
 
-Add gpiod_put() in the remove function and in the probe error path
-to fix the resource leak.
-
-Fixes: 6b923db2867c ("mtd: rawnand: lpc32xx_slc: switch to using gpiod API")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Fixes: c365a026155c ("arm64: dts: qcom: qcm6490-fairphone-fp5: Enable display")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20250930-sc7280-dts-misc-v1-1-5a45923ef705@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/lpc32xx_slc.c | 2 ++
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/lpc32xx_slc.c b/drivers/mtd/nand/raw/lpc32xx_slc.c
-index b54d76547ffb2..fea3705a21386 100644
---- a/drivers/mtd/nand/raw/lpc32xx_slc.c
-+++ b/drivers/mtd/nand/raw/lpc32xx_slc.c
-@@ -937,6 +937,7 @@ static int lpc32xx_nand_probe(struct platform_device *pdev)
- 	dma_release_channel(host->dma_chan);
- enable_wp:
- 	lpc32xx_wp_enable(host);
-+	gpiod_put(host->wp_gpio);
+diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+index e115b6a52b299..82494b41bd9ac 100644
+--- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
++++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
+@@ -47,6 +47,8 @@ framebuffer0: framebuffer@a000000 {
+ 			stride = <(1224 * 4)>;
+ 			format = "a8r8g8b8";
+ 			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
++			vci-supply = <&vreg_oled_vci>;
++			dvdd-supply = <&vreg_oled_dvdd>;
+ 		};
+ 	};
  
- 	return res;
- }
-@@ -962,6 +963,7 @@ static void lpc32xx_nand_remove(struct platform_device *pdev)
- 	writel(tmp, SLC_CTRL(host->io_base));
- 
- 	lpc32xx_wp_enable(host);
-+	gpiod_put(host->wp_gpio);
- }
- 
- static int lpc32xx_nand_resume(struct platform_device *pdev)
 -- 
 2.51.0
 
