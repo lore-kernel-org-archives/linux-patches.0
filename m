@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C4B354AC0;
-	Tue, 16 Dec 2025 11:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEBD9354ACF;
+	Tue, 16 Dec 2025 11:49:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885787; cv=none; b=Br/G41RU+kff2XEmeQR77aOOUUvQnBWt80FkQj2acX10LK0sYGHRaum4Xndyrb3K/ZJb/RYWnIMo04245pqWcoo82x4vxu+dVxJ9bky85OBoPAhdv0L5JB1ah/gOS63fDA80xmA0dHbV68scLSqtBzraiub6vNXxtKy2vnawLEM=
+	t=1765885791; cv=none; b=BhpoK5u5gVUh5rqtiKxK8ig/ewsEdMxOnBYYBlav+6LN1ymlDGQDS4XfRL6PmaHBtvkVpGb54NYoCA6qHSyVCKCgk3F6oRHITCgUWssCS+injpM1PRZR9cHpZKcCYkdEtp6dXqK7F7T90wOMlWfDyGb67W6v7WH/i8r5C6t8EHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885787; c=relaxed/simple;
-	bh=UMhG7d9F7pjv7GIRSyk0U02a7mm+qnF/E5baoqEItnk=;
+	s=arc-20240116; t=1765885791; c=relaxed/simple;
+	bh=/0TV/RWSK1uFq9xkToiJU9uonJsK5b2VFLpeHljE0FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e6zVZMe8QIO2HvNBF7rYtWPDa0MBTwP4q2DwiJgTo+7MdcezOpnNC3vktaYdeuQQUcfAA+/fhGVFK64thbZ2Li3Co9vWLq6EBsynQCdQEapQF0IoUmZaxbaou5gnWcBmRkxTWXwARDPGz4vYz4loFFYOTUvkP8Iya/ZPZrXpzPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BnuwBQ13; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o7sRGk72Ovrb88uoG8FKN4bKIUyn6/fwN4msO06yBDWk54D5QmdrIGVXat0BekCVPReGXxSW4KrBrkJSUwwGHRB9ECVkEZuvG/kODz2KQIz8TVhy4qaxSlPy91AU1rHxXH5P2cyD+vTkRlBMroHQvjGe+dwI5VTeWOHKdqQTVQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZReaoUTj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BnuwBQ13"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774F5C4CEF5;
-	Tue, 16 Dec 2025 11:49:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZReaoUTj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13481C4CEF1;
+	Tue, 16 Dec 2025 11:49:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885787;
-	bh=UMhG7d9F7pjv7GIRSyk0U02a7mm+qnF/E5baoqEItnk=;
+	s=korg; t=1765885790;
+	bh=/0TV/RWSK1uFq9xkToiJU9uonJsK5b2VFLpeHljE0FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BnuwBQ13XqE//1X1FOFMaAEMXY9kEjTbn52o47TiKCfN6ia5aOcTz2LFyHXGU8fEk
-	 xP4lL6VlTuj8poJoewJg7peP8wZCjNHgiKohnrhCgctr2b2l8iS9H4HdCPfD1SpQvq
-	 EiACaq88csAB24wdkz5oMNw6mNWjL2llmo9LUT7I=
+	b=ZReaoUTjHot9Bo6zqjdPoDFuVJVeIK6WwvE+L70p5+smJIF/D6puf1ZlBRVrYcDVZ
+	 9K7nikTwUGppagd3nhkayAQOFIKXmg3CRk5tMRCRWjWuiJmzYDsippxYwdbp9DuYrZ
+	 rwqMg5wOXRgAXSgGNc8QuyFXMl6ta2bopdb1L1Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 211/507] nbd: defer config unlock in nbd_genl_connect
-Date: Tue, 16 Dec 2025 12:10:52 +0100
-Message-ID: <20251216111353.152309758@linuxfoundation.org>
+Subject: [PATCH 6.17 212/507] coresight: Change device mode to atomic type
+Date: Tue, 16 Dec 2025 12:10:53 +0100
+Message-ID: <20251216111353.188227513@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,70 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit 1649714b930f9ea6233ce0810ba885999da3b5d4 ]
+[ Upstream commit 693d1eaca940f277af24c74873ef2313816ff444 ]
 
-There is one use-after-free warning when running NBD_CMD_CONNECT and
-NBD_CLEAR_SOCK:
+The device mode is defined as local type. This type cannot promise
+SMP-safe access.
 
-nbd_genl_connect
-  nbd_alloc_and_init_config // config_refs=1
-  nbd_start_device // config_refs=2
-  set NBD_RT_HAS_CONFIG_REF			open nbd // config_refs=3
-  recv_work done // config_refs=2
-						NBD_CLEAR_SOCK // config_refs=1
-						close nbd // config_refs=0
-  refcount_inc -> uaf
+Change to atomic type and impose relax ordering, which ensures the
+SMP-safe synchronisation and the ordering between the mode setting and
+relevant operations.
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 24 PID: 1014 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x290
- nbd_genl_connect+0x16d0/0x1ab0
- genl_family_rcv_msg_doit+0x1f3/0x310
- genl_rcv_msg+0x44a/0x790
-
-The issue can be easily reproduced by adding a small delay before
-refcount_inc(&nbd->config_refs) in nbd_genl_connect():
-
-        mutex_unlock(&nbd->config_lock);
-        if (!ret) {
-                set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
-+               printk("before sleep\n");
-+               mdelay(5 * 1000);
-+               printk("after sleep\n");
-                refcount_inc(&nbd->config_refs);
-                nbd_connect_reply(info, nbd->index);
-        }
-
-Fixes: e46c7287b1c2 ("nbd: add a basic netlink interface")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 22fd532eaa0c ("coresight: etm3x: adding operation mode for etm_enable()")
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-1-f55553b6c8b3@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/coresight.h | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 7a1e61cc47357..9ba4b20b80ba2 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -2241,12 +2241,13 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
- 
- 	ret = nbd_start_device(nbd);
- out:
--	mutex_unlock(&nbd->config_lock);
- 	if (!ret) {
- 		set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
- 		refcount_inc(&nbd->config_refs);
- 		nbd_connect_reply(info, nbd->index);
- 	}
-+	mutex_unlock(&nbd->config_lock);
+diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+index ead03818d7d75..b2b7f09ac3823 100644
+--- a/include/linux/coresight.h
++++ b/include/linux/coresight.h
+@@ -252,15 +252,11 @@ struct coresight_trace_id_map {
+  *		by @coresight_ops.
+  * @access:	Device i/o access abstraction for this device.
+  * @dev:	The device entity associated to this component.
+- * @mode:	This tracer's mode, i.e sysFS, Perf or disabled. This is
+- *		actually an 'enum cs_mode', but is stored in an atomic type.
+- *		This is always accessed through local_read() and local_set(),
+- *		but wherever it's done from within the Coresight device's lock,
+- *		a non-atomic read would also work. This is the main point of
+- *		synchronisation between code happening inside the sysfs mode's
+- *		coresight_mutex and outside when running in Perf mode. A compare
+- *		and exchange swap is done to atomically claim one mode or the
+- *		other.
++ * @mode:	The device mode, i.e sysFS, Perf or disabled. This is actually
++ *		an 'enum cs_mode' but stored in an atomic type. Access is always
++ *		through atomic APIs, ensuring SMP-safe synchronisation between
++ *		racing from sysFS and Perf mode. A compare-and-exchange
++ *		operation is done to atomically claim one mode or the other.
+  * @refcnt:	keep track of what is in use. Only access this outside of the
+  *		device's spinlock when the coresight_mutex held and mode ==
+  *		CS_MODE_SYSFS. Otherwise it must be accessed from inside the
+@@ -289,7 +285,7 @@ struct coresight_device {
+ 	const struct coresight_ops *ops;
+ 	struct csdev_access access;
+ 	struct device dev;
+-	local_t	mode;
++	atomic_t mode;
+ 	int refcnt;
+ 	bool orphan;
+ 	/* sink specific fields */
+@@ -651,13 +647,14 @@ static inline bool coresight_is_percpu_sink(struct coresight_device *csdev)
+ static inline bool coresight_take_mode(struct coresight_device *csdev,
+ 				       enum cs_mode new_mode)
+ {
+-	return local_cmpxchg(&csdev->mode, CS_MODE_DISABLED, new_mode) ==
+-	       CS_MODE_DISABLED;
++	int curr = CS_MODE_DISABLED;
 +
- 	nbd_config_put(nbd);
- 	if (put_dev)
- 		nbd_put(nbd);
++	return atomic_try_cmpxchg_acquire(&csdev->mode, &curr, new_mode);
+ }
+ 
+ static inline enum cs_mode coresight_get_mode(struct coresight_device *csdev)
+ {
+-	return local_read(&csdev->mode);
++	return atomic_read_acquire(&csdev->mode);
+ }
+ 
+ static inline void coresight_set_mode(struct coresight_device *csdev,
+@@ -673,7 +670,7 @@ static inline void coresight_set_mode(struct coresight_device *csdev,
+ 	WARN(new_mode != CS_MODE_DISABLED && current_mode != CS_MODE_DISABLED &&
+ 	     current_mode != new_mode, "Device already in use\n");
+ 
+-	local_set(&csdev->mode, new_mode);
++	atomic_set_release(&csdev->mode, new_mode);
+ }
+ 
+ struct coresight_device *coresight_register(struct coresight_desc *desc);
 -- 
 2.51.0
 
