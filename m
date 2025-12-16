@@ -1,73 +1,72 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AF533065F
-	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 15:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13F8359F96
+	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 15:16:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765897750; cv=none; b=u5xRARO24ftCTUuTF+KoyzYVMOCWsFnV/orn5uRrhwAyLmYId73UIsYPY/SluOjdMpyXl8OFiniusrPBdtQtFXcKfbURrZKstVyz/dtdFGcrKQawyVAV5nE4nSZiNyOrhOdsLnndGRsfh32gElQoslNqtx4r0WBxIUDDTYnzJcc=
+	t=1765898184; cv=none; b=VA2wi5EpjC+jhZmZtvbu7C34cYr84HeAUN9CJk15WkCjup17deywERdnsSYWCrBzk0RKlMoDMicMc+nxNmY1cjeJdVUiKqLF80qu+I4Qupqr7ZDwIAh7Se6DMAZLj1q63wyd/4oKuy5lnajAREt1/zQqNI51CDIYlRCH4GlzWQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765897750; c=relaxed/simple;
-	bh=kaCnNQu10IecAEcgUBVksPSpUHP7s0XUXmn3lqVr7io=;
+	s=arc-20240116; t=1765898184; c=relaxed/simple;
+	bh=XydU0zYPi34+6gSjQxNPZvQ3IrEKTjskKmZnjkotDnA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=thR2RBXXkZKJcohfl/KzgQgKDQoJ6+Hr1vDguo8WixJmFMzp97YUp8+BDo4VwxCxAcagCcBYh38hY3gJgHyIwbAFrv9pwQ9DCxuAJW4mkM6AXzZqKfR0E0XjI26o8RMNidREp5lzciAE5jbwtsHiNJN7Oy92/7aU8HNEpL+LNVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hz1ySY+I; arc=none smtp.client-ip=209.85.214.171
+	 To:Cc:Content-Type; b=bNGfGJEVrykUzEpp/pplV3oWAt4xeYJTpuzbZIBZpx9LHNtC6dn8z45V4J2d81IhneSvnLqP+auAOdw2czSvQugDy+NFFVTl3bzHsTUsm3mTDTrBMgP9S6+ez66Z/M686MszDgl31gbZ+3hbSU9V8DVDGaP8ksaVvCBNoWO6li0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QgUxIads; arc=none smtp.client-ip=209.85.215.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hz1ySY+I"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2a110548f10so4191595ad.1
-        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 07:09:07 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QgUxIads"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-c0e7f4920aeso139416a12.2
+        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 07:16:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1765897747; x=1766502547; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1765898181; x=1766502981; darn=lists.linux.dev;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TBQ+KEKtZFBQW9f8fhCsIZyeGJB9EoLToMD3vA7Aj08=;
-        b=Hz1ySY+IcEV+DUW7qnHPOGzFfPWOPTQxX2ilMqbM9ZjdoRwwCOYDSuKJOYnuj4xt9n
-         YtafYYbBTW4oqJbjCdzrjDxNFSAhtj7WYCBh7/b2Ap5LuwnOknTXU90Fqw11XYoUIvpX
-         tRyTrgyQ4Dv722EehaDnalqEuYD4zLBT5j9FBGlXG6wvxOIg3SzbxGsLFIFm36H68L0j
-         Nle6HrUmN9535FXUhuyHBLN7/4/Ru31+ZvEtQNk3653buAC2uME9XXoLY+YizkYBa9ed
-         K9QiOZBHuSFZ/xv6zgslukdr0TkG+RZTRasWt021j9na7k4Pp7g+NBycjU6+cnn6QX/3
-         rFgw==
+        bh=Prk++bNPBbw7llSvdyWuyKrdatVuaHMUXvtiIeDQebI=;
+        b=QgUxIads2TrBzccDXsBRGXf+sOdsHDqJTqM+wAb1+cUNhoxxNQQhwY1jZroUthNNlA
+         zJEC6ioFq47n539GP0GXmWqfXgauBp0VQUitOYYUuZcoov4AHCOQ08HGIv/6NGszCjID
+         d/ldOmVJfP6CFb1hX0zHtto7FYNfia4fzPwO1l7jRYI3f7EpMFq+qKQ64AI0QsIEZq39
+         b4DzFzGuBQloiZBJ/Blh9iG/TZsoCT9lB1ggAwdCQZVyS05BFoSAvJLhdf++ULvGcLuW
+         sVRJmez+cm9NAy+Q6hogN/8uCiIJI2JYJkB8MZQBM5MGUXWCXajcW0LjnOTzSu080QvI
+         CHwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765897747; x=1766502547;
+        d=1e100.net; s=20230601; t=1765898181; x=1766502981;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=TBQ+KEKtZFBQW9f8fhCsIZyeGJB9EoLToMD3vA7Aj08=;
-        b=lGhcV5LOnlSNn17ymBFl7ewWEkZCJ7dQ6sdG3wIvFKuad8JqqBUNFpd1MIO2eQOcUf
-         JI/CFhG4SsevuHj46j6BiIw0FYvgVfBaC6N2oytfEPdrq1yElAYcyCENdHto6o5B9Hm/
-         N3or3xzEgpifBXK2+MlOzAaUULCZMMK9ASaTYEKBNuM681t0w3hZl3LYDAVAkHdoAbiW
-         d7ZVgAl2MLZJDoUCJRfJGgSlki/Q0YcEKLmXrnCCcZrx9+xHhOtHr4RnneJt16g7xal1
-         7Z99DOwDryZ2GgX21kk9CWJzUkyKYSy/YnqK9/oM1A+vBMcOUwtAJixPUCN4WoyLhJ6z
-         9oSQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU+kfrx64Sun/bOxwpAnNjls8NUnbAa/eQ7t+hgNdSyCk4Ln34VpCaSIAjsRNoPGDBOoiQPctgW@lists.linux.dev
-X-Gm-Message-State: AOJu0YwgkjhNkRcA460W9xygEwHAZ5F8H+Kui1Irev/30mec9FEy9TEg
-	9LOKVCXr76ecbrix98mX6mZKX07ifZUL7f/5XOs017Z9VSVZKR18JfAVQ4h9vzbvhs04ZfDR533
-	ltm0yS7n7jD0b4wrYF8LuQacJwZJGTLE=
-X-Gm-Gg: AY/fxX5StBeOccddAtl5QNbe3WvfhlF8EG4CPmhMateDLgMe0sle2dpWS6MHRxvk02W
-	+pGIIXf6FPUcTvr6VkB+FG0vVOWakHNTqbpY9Sdgtcp74Eq0E4TdTBQLbXf6YCXJoi3+91MysOW
-	wHvbftuNnuzTHJ0GnZ06r1JaQrgmO6xGA4iwJr06XlgvxQG1pDugPA2IYwWHGgAbaFmw+lcatke
-	5LdD9iOkWvk+BXpldk/8gKpblMxeCS6DN45SSZ8wdv2Hw3kSYBVW4+mQovcpwuGv4SKSfQG8xVL
-	I6ajgrQ=
-X-Google-Smtp-Source: AGHT+IE06XFlmMgvXerznAhzoCBIgwCI6cVyUE2Vj6xD/o7J8s5VveIDQEUmJl1xe3ToLTKUn/phA5QKg6FpsbGtWOw=
-X-Received: by 2002:a05:7022:fa2:b0:11b:862d:8031 with SMTP id
- a92af1059eb24-11f34874285mr6126769c88.0.1765897746571; Tue, 16 Dec 2025
- 07:09:06 -0800 (PST)
+        bh=Prk++bNPBbw7llSvdyWuyKrdatVuaHMUXvtiIeDQebI=;
+        b=J1YDYZoqyTo02MTeLNIVdQkyJKUG1yIbY83z9hi6uSf+nIXKliwldoPN18KlFUtnzQ
+         IV+89mSQVTFwGldRc4TG08eKg8x32RRi2GktEa5AckPqBNy1WCTlKaXVBoCikpjRGH1G
+         HeToHkFkqjMQEdz4EdURGkp7PKeNsyE7D58ARH+mnSo4eEAthrTD8ylaqqhuOOwub2/X
+         WeX/B5CMSruQjsT3clI9wPcx0i1RobRQp7cnRplR8aQhutveItz0pkHsorGbSR4Kt1Hq
+         iXRksp2eqGNzMjoDNpEScc48ibxcbxyHCy5p4QWljaO82DIuubjo8Kua8GbxYDaxgqlg
+         Jdeg==
+X-Forwarded-Encrypted: i=1; AJvYcCXvrDN1GfgIyDAX2CjElfOltaVsaI0sDZl/Lar7DDQw7/QX5e30RfoQqPSKzQvIdE14f7FtfHDg@lists.linux.dev
+X-Gm-Message-State: AOJu0YxhAsA/W5OJh2ifk0zIKI/d7j7rQKKPoiX0R8fkLjeRHqL0Y6+G
+	RZef3wt3pbquQXV9Sj1NYkgPe4t9GnvRmaCKDEP9inwVx4hay4p0kudpXaL3pNg0xsH/0Ikj2vN
+	yJO4VCWfOUWgga7pZaQdLbcuNer3L70U=
+X-Gm-Gg: AY/fxX7cQiNocrr3E2K+OYCyqqDibnoZ7FBDblpHGZFzoIHc0Mz+18ITYv/WTvgm0w4
+	DuBm8Kqn4gFdhelOs3N5VerfSWlfvVX41LsiAy3Buyh1ZToFdsJoczDe1pf/TwSlC8tUYuHR/CP
+	PeT9pVs3j3mfCuVKwf5rY6yU13RlphzQBDcyfDd+JRE+q9tflHErkzux6yyGrM1oEYldBWpUViN
+	lumeBYXIUVX3ScLM0mwCN5Q1fLD/Kewnx00yiWRonWYiivrJNYqSZ0Rg0QyCuVCSLkCMVsq
+X-Google-Smtp-Source: AGHT+IExL4bbWd8dGz3R1du6C5PQxAQFN3higbgXbHR2p3Vd8GWbSJj78l5nGqz1hyDQKAFC7gD/XLUbhsxrspplMLo=
+X-Received: by 2002:a05:7022:698f:b0:119:e56b:c3f1 with SMTP id
+ a92af1059eb24-11f34bd3d6cmr7088129c88.1.1765898180806; Tue, 16 Dec 2025
+ 07:16:20 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20251213-dml-bump-frame-warn-clang-sanitizers-v1-1-0e91608db9eb@kernel.org>
-In-Reply-To: <20251213-dml-bump-frame-warn-clang-sanitizers-v1-1-0e91608db9eb@kernel.org>
+References: <20251213-dml-dcn30-avoid-clang-frame-larger-than-v1-0-dd3d74b76a17@kernel.org>
+In-Reply-To: <20251213-dml-dcn30-avoid-clang-frame-larger-than-v1-0-dd3d74b76a17@kernel.org>
 From: Alex Deucher <alexdeucher@gmail.com>
-Date: Tue, 16 Dec 2025 10:08:55 -0500
-X-Gm-Features: AQt7F2qcbLgX7_41oZokd-Bui00GaFx0PuQiAfWWLBHHuXsoZHZJuKEIq9MvOX0
-Message-ID: <CADnq5_OHj3Vz1uVKer8AKH+h3jthM=FE+hCJ=M=xFox65sxcHw@mail.gmail.com>
-Subject: Re: [PATCH] drm/amd/display: Apply e4479aecf658 to dml
+Date: Tue, 16 Dec 2025 10:16:09 -0500
+X-Gm-Features: AQt7F2o9ouuY7f1i8nUGZF2nlb34bshqvLmZP02ymrNXjm02AX6gvFlIqpRP0n0
+Message-ID: <CADnq5_PLd_v9n=dHFmAdPcWY2NbbyCocOtE-9CoMX4D1H4sL+w@mail.gmail.com>
+Subject: Re: [PATCH 0/2] drm/amd/display: Address -Wframe-larger-than with clang-22
 To: Nathan Chancellor <nathan@kernel.org>
 Cc: Austin Zheng <austin.zheng@amd.com>, Jun Lei <jun.lei@amd.com>, 
 	Harry Wentland <harry.wentland@amd.com>, Leo Li <sunpeng.li@amd.com>, 
@@ -76,73 +75,48 @@ Cc: Austin Zheng <austin.zheng@amd.com>, Jun Lei <jun.lei@amd.com>,
 	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>, Bill Wendling <morbo@google.com>, 
 	Justin Stitt <justinstitt@google.com>, amd-gfx@lists.freedesktop.org, 
 	dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev, stable@vger.kernel.org
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Applied.  Thanks!
-
-On Sat, Dec 13, 2025 at 1:16=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
+On Sat, Dec 13, 2025 at 6:04=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
 g> wrote:
 >
-> After an innocuous optimization change in clang-22, allmodconfig (which
-> enables CONFIG_KASAN and CONFIG_WERROR) breaks with:
+> Hi all,
 >
->   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.=
-c:1724:6: error: stack frame size (3144) exceeds limit (3072) in 'dml32_Mod=
-eSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
->    1724 | void dml32_ModeSupportAndSystemConfigurationFull(struct display=
-_mode_lib *mode_lib)
->         |      ^
+> This series addresses a new instance of -Wframe-larger-than in
+> drivers/gpu/drm/amd/display/dc/dml/dcn30/display_mode_vba_30.c with
+> clang-22 (current main). This is similar to previous fixes that I have
+> done in other dml folders such as:
 >
-> With clang-21, this function was already pretty close to the existing
-> limit of 3072 bytes.
+>   a3fef74b1d48 ("drm/amd/display: Reduce number of arguments of dml32_Cal=
+culatePrefetchSchedule()")
+>   c4be0ac987f2 ("drm/amd/display: Reduce number of arguments of dml32_Cal=
+culateWatermarksMALLUseAndDRAMSpeedChangeSupport()")
 >
->   drivers/gpu/drm/amd/amdgpu/../display/dc/dml/dcn32/display_mode_vba_32.=
-c:1724:6: error: stack frame size (2904) exceeds limit (2048) in 'dml32_Mod=
-eSupportAndSystemConfigurationFull' [-Werror,-Wframe-larger-than]
->    1724 | void dml32_ModeSupportAndSystemConfigurationFull(struct display=
-_mode_lib *mode_lib)
->         |      ^
+> This was done fairly mechanically, so let me know if there are any
+> issues, as it has only been build tested.
+
+I'll run the patches through CI and if they pass, I'll apply them.
+
+Thanks!
+
+Alex
+
 >
-> A similar situation occurred in dml2, which was resolved by
-> commit e4479aecf658 ("drm/amd/display: Increase sanitizer frame larger
-> than limit when compile testing with clang") by increasing the limit for
-> clang when compile testing with certain sanitizer enabled, so that
-> allmodconfig (an easy testing target) continues to work.
->
-> Apply that same change to the dml folder to clear up the warning for
-> allmodconfig, unbreaking the build.
->
-> Cc: stable@vger.kernel.org
-> Closes: https://github.com/ClangBuiltLinux/linux/issues/2135
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 > ---
->  drivers/gpu/drm/amd/display/dc/dml/Makefile | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+> Nathan Chancellor (2):
+>       drm/amd/display: Reduce number of arguments of dcn30's CalculatePre=
+fetchSchedule()
+>       drm/amd/display: Reduce number of arguments of dcn30's CalculateWat=
+ermarksAndDRAMSpeedChangeSupport()
 >
-> diff --git a/drivers/gpu/drm/amd/display/dc/dml/Makefile b/drivers/gpu/dr=
-m/amd/display/dc/dml/Makefile
-> index b357683b4255..268b5fbdb48b 100644
-> --- a/drivers/gpu/drm/amd/display/dc/dml/Makefile
-> +++ b/drivers/gpu/drm/amd/display/dc/dml/Makefile
-> @@ -30,7 +30,11 @@ dml_rcflags :=3D $(CC_FLAGS_NO_FPU)
->
->  ifneq ($(CONFIG_FRAME_WARN),0)
->      ifeq ($(filter y,$(CONFIG_KASAN)$(CONFIG_KCSAN)),y)
-> -        frame_warn_limit :=3D 3072
-> +        ifeq ($(CONFIG_CC_IS_CLANG)$(CONFIG_COMPILE_TEST),yy)
-> +            frame_warn_limit :=3D 4096
-> +        else
-> +            frame_warn_limit :=3D 3072
-> +        endif
->      else
->          frame_warn_limit :=3D 2048
->      endif
->
+>  .../amd/display/dc/dml/dcn30/display_mode_vba_30.c | 545 ++++++---------=
+------
+>  1 file changed, 139 insertions(+), 406 deletions(-)
 > ---
 > base-commit: f24e96d69f5b9eb0f3b9c49e53c385c50729edfd
-> change-id: 20251213-dml-bump-frame-warn-clang-sanitizers-0a34fc916aec
+> change-id: 20251213-dml-dcn30-avoid-clang-frame-larger-than-36afd349190b
 >
 > Best regards,
 > --
