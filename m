@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2339734DB4B;
-	Tue, 16 Dec 2025 12:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F8D32D0F3;
+	Tue, 16 Dec 2025 12:24:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887840; cv=none; b=XtH+Mwrvey+42Ro8jv0zSPB6OpHVE8cBSD6mRnHR6+HCjxagDPBKdwPD3+uAhBhFzZ6GRZnwUiXRZDZ1gN6BiPHnKFNMgqkEjz0g7yBqCOAHx2FKq9QaSecSHolw+jjHJIg86w7Jovun6xbUD+6GngDWIuhqK6UKmADLrrlqCIg=
+	t=1765887843; cv=none; b=bl4bMfnzze3YrbTuJysVEiQQQOpHhVT2yS1ip/rTGEcvoQe++Wz+v60S8rwXBtXfYKGU8BPMx/VVl7BWGcXR5pCjS92tQOyASbVCzCgW3Gh12uv3tJzZUIOpMjcADhHFFL8qHdverspMkEmhkKhc7+fflCIQuFvVOXm8ye7rd8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887840; c=relaxed/simple;
-	bh=sEIZgSgInW4ErWYpQfbHmZKvlmBmdoGEScBr4pw1QLU=;
+	s=arc-20240116; t=1765887843; c=relaxed/simple;
+	bh=QF8MGJ4mOvJdAW1ir/PfTdpUTP2DekdrBMdqy65iVrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NhQZWSLqkt1VYqctXgLbW39XWfa95IBGusAaIC4uzqEgZJbHr2zbwZYkB+NnBz4OiE2u5gcpKiKoFaRSoXnhPrUC5y6vzuQGzIutWAZNL2znErErZOsNxIsZKeaORK8YeaKUMmnPnlyeAta9zgpgsasb5iU76TCEFCZu+Tv4juo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ES2XsV+j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDpvj8eGIX3jv3PbHJvjMiyzkeJ9H9ACkT+uBHD9Q494bJTkKPqK7B3IJT5JxRc16jCWG+eBKgHjQMN6d6x0v6SvFtjXsX7FRiXXRSIY68xaERYh3FLKCFhTZXk/ZMFsDZ7Sp1SFF8grsbMZJ71qIinJ8BvulYI799COzzXm/U8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVy4Y6sk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ES2XsV+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB87C4CEF1;
-	Tue, 16 Dec 2025 12:23:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVy4Y6sk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA28C4CEF1;
+	Tue, 16 Dec 2025 12:24:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887840;
-	bh=sEIZgSgInW4ErWYpQfbHmZKvlmBmdoGEScBr4pw1QLU=;
+	s=korg; t=1765887843;
+	bh=QF8MGJ4mOvJdAW1ir/PfTdpUTP2DekdrBMdqy65iVrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ES2XsV+jRofHv46rSWNLqRoXnlxvF7Caxgg4DoXKvdbnBdR/CZgo+8P7+gyi7azdd
-	 DZTFNTuR8GIrSgQE8lEtYeNHAjwDYHuW+eiIwdk8m98wk+gfXf6a3ActntLx9ipN85
-	 8hZq/DAo0lZFd3wdq+EA/jo85lMwZm6Cihw9Njc0=
+	b=VVy4Y6skduK1VIWs2U0bglK+rZ0yhvTOGjO1xpQSzDnncZtpWj+cU+YqluiyosJJe
+	 Ti6WGw74s+Fa6x9dgbMfNtmOHLF/2ekM0X16coE+lnwawVn0HxANgnrtUJfuLVnlMo
+	 VsluTVcuZkNmooF8omqkDjVs1fbulgK5kN11VIuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Bruel <christian.bruel@foss.st.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Xiaolei Wang <xiaolei.wang@windriver.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 310/614] PCI: stm32: Fix LTSSM EP race with start link
-Date: Tue, 16 Dec 2025 12:11:17 +0100
-Message-ID: <20251216111412.600390521@linuxfoundation.org>
+Subject: [PATCH 6.18 347/614] phy: freescale: Initialize priv->lock
+Date: Tue, 16 Dec 2025 12:11:54 +0100
+Message-ID: <20251216111413.935364583@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,105 +53,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Bruel <christian.bruel@foss.st.com>
+From: Xiaolei Wang <xiaolei.wang@windriver.com>
 
-[ Upstream commit fa81d6099007728cae39c6f937d83903bbddab5e ]
+[ Upstream commit 95e5905698983df94069e185f9eb3c67c7cf75d5 ]
 
-If the host has deasserted PERST# and started link training before the link
-is started on EP side, enabling LTSSM before the endpoint registers are
-initialized in the perst_irq handler results in probing incorrect values.
+Initialize priv->lock to fix the following warning.
 
-Thus, wait for the PERST# level-triggered interrupt to start link training
-at the end of initialization and cleanup the stm32_pcie_[start stop]_link
-functions.
+WARNING: CPU: 0 PID: 12 at kernel/locking/mutex.c:577 __mutex_lock+0x70c/0x8b8
+ Modules linked in:
+ Hardware name: Freescale i.MX8QM MEK (DT)
+ Call trace:
+  __mutex_lock+0x70c/0x8b8 (P)
+  mutex_lock_nested+0x24/0x30
+  imx_hsio_power_on+0x4c/0x764
+  phy_power_on+0x7c/0x12c
+  imx_pcie_host_init+0x1d0/0x4d4
+  dw_pcie_host_init+0x188/0x4b0
+  imx_pcie_probe+0x324/0x6f4
+  platform_probe+0x5c/0x98
+  really_probe+0xbc/0x29c
+  __driver_probe_device+0x78/0x12c
+  driver_probe_device+0xd8/0x160
+  __device_attach_driver+0xb8/0x138
+  bus_for_each_drv+0x84/0xe4
+  __device_attach_async_helper+0xb8/0xdc
+  async_run_entry_fn+0x34/0xe0
+  process_one_work+0x220/0x694
+  worker_thread+0x1c0/0x36c
+  kthread+0x14c/0x224
 
-Fixes: 151f3d29baf4 ("PCI: stm32-ep: Add PCIe Endpoint support for STM32MP25")
-Signed-off-by: Christian Bruel <christian.bruel@foss.st.com>
-[mani: added fixes tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-[bhelgaas: wrap line]
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Link: https://patch.msgid.link/20251114-perst_ep-v1-1-e7976317a890@foss.st.com
+Fixes: 82c56b6dd24f ("phy: freescale: imx8qm-hsio: Add i.MX8QM HSIO PHY driver support")
+Signed-off-by: Xiaolei Wang <xiaolei.wang@windriver.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20250925013806.569658-1-xiaolei.wang@windriver.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-stm32-ep.c | 39 +++++-----------------
- 1 file changed, 8 insertions(+), 31 deletions(-)
+ drivers/phy/freescale/phy-fsl-imx8qm-hsio.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-stm32-ep.c b/drivers/pci/controller/dwc/pcie-stm32-ep.c
-index 3400c7cd2d88a..faa6433a784f3 100644
---- a/drivers/pci/controller/dwc/pcie-stm32-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-stm32-ep.c
-@@ -37,36 +37,9 @@ static void stm32_pcie_ep_init(struct dw_pcie_ep *ep)
- 		dw_pcie_ep_reset_bar(pci, bar);
- }
+diff --git a/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c b/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
+index 5dca93cd325c8..977d21d753a59 100644
+--- a/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
++++ b/drivers/phy/freescale/phy-fsl-imx8qm-hsio.c
+@@ -533,7 +533,7 @@ static struct phy *imx_hsio_xlate(struct device *dev,
  
--static int stm32_pcie_enable_link(struct dw_pcie *pci)
--{
--	struct stm32_pcie *stm32_pcie = to_stm32_pcie(pci);
--
--	regmap_update_bits(stm32_pcie->regmap, SYSCFG_PCIECR,
--			   STM32MP25_PCIECR_LTSSM_EN,
--			   STM32MP25_PCIECR_LTSSM_EN);
--
--	return dw_pcie_wait_for_link(pci);
--}
--
--static void stm32_pcie_disable_link(struct dw_pcie *pci)
--{
--	struct stm32_pcie *stm32_pcie = to_stm32_pcie(pci);
--
--	regmap_update_bits(stm32_pcie->regmap, SYSCFG_PCIECR, STM32MP25_PCIECR_LTSSM_EN, 0);
--}
--
- static int stm32_pcie_start_link(struct dw_pcie *pci)
+ static int imx_hsio_probe(struct platform_device *pdev)
  {
- 	struct stm32_pcie *stm32_pcie = to_stm32_pcie(pci);
--	int ret;
--
--	dev_dbg(pci->dev, "Enable link\n");
--
--	ret = stm32_pcie_enable_link(pci);
--	if (ret) {
--		dev_err(pci->dev, "PCIe cannot establish link: %d\n", ret);
--		return ret;
--	}
+-	int i;
++	int i, ret;
+ 	void __iomem *off;
+ 	struct device *dev = &pdev->dev;
+ 	struct device_node *np = dev->of_node;
+@@ -545,6 +545,9 @@ static int imx_hsio_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 	priv->dev = &pdev->dev;
+ 	priv->drvdata = of_device_get_match_data(dev);
++	ret = devm_mutex_init(dev, &priv->lock);
++	if (ret)
++		return ret;
  
- 	enable_irq(stm32_pcie->perst_irq);
- 
-@@ -77,11 +50,7 @@ static void stm32_pcie_stop_link(struct dw_pcie *pci)
- {
- 	struct stm32_pcie *stm32_pcie = to_stm32_pcie(pci);
- 
--	dev_dbg(pci->dev, "Disable link\n");
--
- 	disable_irq(stm32_pcie->perst_irq);
--
--	stm32_pcie_disable_link(pci);
- }
- 
- static int stm32_pcie_raise_irq(struct dw_pcie_ep *ep, u8 func_no,
-@@ -152,6 +121,9 @@ static void stm32_pcie_perst_assert(struct dw_pcie *pci)
- 
- 	dev_dbg(dev, "PERST asserted by host\n");
- 
-+	regmap_update_bits(stm32_pcie->regmap, SYSCFG_PCIECR,
-+			   STM32MP25_PCIECR_LTSSM_EN, 0);
-+
- 	pci_epc_deinit_notify(ep->epc);
- 
- 	stm32_pcie_disable_resources(stm32_pcie);
-@@ -192,6 +164,11 @@ static void stm32_pcie_perst_deassert(struct dw_pcie *pci)
- 
- 	pci_epc_init_notify(ep->epc);
- 
-+	/* Enable link training */
-+	regmap_update_bits(stm32_pcie->regmap, SYSCFG_PCIECR,
-+			   STM32MP25_PCIECR_LTSSM_EN,
-+			   STM32MP25_PCIECR_LTSSM_EN);
-+
- 	return;
- 
- err_disable_resources:
+ 	/* Get HSIO configuration mode */
+ 	if (of_property_read_string(np, "fsl,hsio-cfg", &priv->hsio_cfg))
 -- 
 2.51.0
 
