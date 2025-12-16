@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244DA3446DB;
-	Tue, 16 Dec 2025 11:54:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5411F3446C0;
+	Tue, 16 Dec 2025 11:54:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886049; cv=none; b=Y9loYBhZEaVJB04Wz+I6CvT129oPrw2j4puCrd3P6jJGnEIIMfvWgMCyNN1V8A3RLjV+MCOEx9DGYJiavy25250ERbWQ/HZkHkz8I9tRaWbnqCJxJ0bjWHI56IF+CjnUucwgye3SUbBZXjxRSomfWzGAB7v/yIjIgBz1yNJsJws=
+	t=1765886052; cv=none; b=uZznOv1QOPZOBdPnxvpHk6Y3jyeZSccAFg/Y1damUhvXBOEAEXZMjjgO+b9iu+HXt33ionpDeA7QizgoKeCQVy0GOpaPVDoXUianQ5VJSx2ByJcApUj5CfIYoKbdR15LLxNRnWcOs4GubnAoSbp4Ned/WHRt68Tuq7NYxJ7Ez4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886049; c=relaxed/simple;
-	bh=6E6NIm0NWnmsksnwU0hQe6Om/fvsyAtLyukrZXJZr6w=;
+	s=arc-20240116; t=1765886052; c=relaxed/simple;
+	bh=bxCnYt5/wyIzlJ6OysRwX/koE3km/p2ALd9Ia3xAz3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SlS05KxWGaJQuxnQZRRkXNl2lieceyHO2x09mcKECPsXzJ8C1EFQ4zUmu+JUYF2yGJYhKyfUrMV0hghqtv5YPYJlGlX7k/u6ms2swGVyBEpzNGxUMZRjwSdKiQ5tN6aMXHtdOvDDxolG86dtA4arVOHRG9wBj2Vcg4YACB7Vrys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NhuWUf3z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMXhwdVtuNvUHKjX3MvXTawGJhP0KJvotAT+fXebtstAksPlwLfKh0MOJdPJozCaTPz/nABTgxkC1sHn4YB+jLas0mHuFncCXOdQuDnCi5Qi4R04ZMZbind7CpqFTSnLZlT1TVPsZC5LEEgNfBCORaBjE3/4lN4rQuJYyCJpKQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTSeyRK3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NhuWUf3z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 227FEC4CEF1;
-	Tue, 16 Dec 2025 11:54:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTSeyRK3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6005AC4CEF1;
+	Tue, 16 Dec 2025 11:54:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886048;
-	bh=6E6NIm0NWnmsksnwU0hQe6Om/fvsyAtLyukrZXJZr6w=;
+	s=korg; t=1765886051;
+	bh=bxCnYt5/wyIzlJ6OysRwX/koE3km/p2ALd9Ia3xAz3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NhuWUf3zBmhZk+KBBvh81CHPxrynFA006caCxYLeAbmCsij5kTfyOLGMwnB7Ufh1p
-	 Jv6MAsCpfM5lCuFt8yPUITPO6UorN8djJ4FjreoGqcmestdlr8yhULgKsSACHYbyxf
-	 DzhLMX4N+cR1bbVyMX0TVuAIO/TMnWk089XENdLY=
+	b=hTSeyRK3brlhanGJdjpOgNpNie7HuJq7gE0/puKyQOvxj0hYqXOO0VUqyQ+CxhdMV
+	 y1VH1NF4WxJzBy/gRoYNMJ4euauQoxsbpkp/KAB1G6osI1y1RzuHf96/MxhyeyJHss
+	 QvcRxlrCIxivgnJCN/Ii25eIxCvVwECMpcjBjU2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Pawlik <pawlik.dan@gmail.com>,
-	Matteo Croce <teknoraver@meta.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 323/507] wifi: mt76: wed: use proper wed reference in mt76 wed driver callabacks
-Date: Tue, 16 Dec 2025 12:12:44 +0100
-Message-ID: <20251216111357.168250682@linuxfoundation.org>
+Subject: [PATCH 6.17 324/507] wifi: mt76: mt7925: add MBSSID support
+Date: Tue, 16 Dec 2025 12:12:45 +0100
+Message-ID: <20251216111357.203862300@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,172 +51,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 385aab8fccd7a8746b9f1a17f3c1e38498a14bc7 ]
+[ Upstream commit 74e756b9e28af3ee94a7ea480bb39694be5fbd96 ]
 
-MT7996 driver can use both wed and wed_hif2 devices to offload traffic
-from/to the wireless NIC. In the current codebase we assume to always
-use the primary wed device in wed callbacks resulting in the following
-crash if the hw runs wed_hif2 (e.g. 6GHz link).
+Enable MBSSID support for MT7925 by setting the
+appropriate capability to the firmware.
 
-[  297.455876] Unable to handle kernel read from unreadable memory at virtual address 000000000000080a
-[  297.464928] Mem abort info:
-[  297.467722]   ESR = 0x0000000096000005
-[  297.471461]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  297.476766]   SET = 0, FnV = 0
-[  297.479809]   EA = 0, S1PTW = 0
-[  297.482940]   FSC = 0x05: level 1 translation fault
-[  297.487809] Data abort info:
-[  297.490679]   ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-[  297.496156]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[  297.501196]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[  297.506500] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000107480000
-[  297.512927] [000000000000080a] pgd=08000001097fb003, p4d=08000001097fb003, pud=08000001097fb003, pmd=0000000000000000
-[  297.523532] Internal error: Oops: 0000000096000005 [#1] SMP
-[  297.715393] CPU: 2 UID: 0 PID: 45 Comm: kworker/u16:2 Tainted: G           O       6.12.50 #0
-[  297.723908] Tainted: [O]=OOT_MODULE
-[  297.727384] Hardware name: Banana Pi BPI-R4 (2x SFP+) (DT)
-[  297.732857] Workqueue: nf_ft_offload_del nf_flow_rule_route_ipv6 [nf_flow_table]
-[  297.740254] pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  297.747205] pc : mt76_wed_offload_disable+0x64/0xa0 [mt76]
-[  297.752688] lr : mtk_wed_flow_remove+0x58/0x80
-[  297.757126] sp : ffffffc080fe3ae0
-[  297.760430] x29: ffffffc080fe3ae0 x28: ffffffc080fe3be0 x27: 00000000deadbef7
-[  297.767557] x26: ffffff80c5ebca00 x25: 0000000000000001 x24: ffffff80c85f4c00
-[  297.774683] x23: ffffff80c1875b78 x22: ffffffc080d42cd0 x21: ffffffc080660018
-[  297.781809] x20: ffffff80c6a076d0 x19: ffffff80c6a043c8 x18: 0000000000000000
-[  297.788935] x17: 0000000000000000 x16: 0000000000000001 x15: 0000000000000000
-[  297.796060] x14: 0000000000000019 x13: ffffff80c0ad8ec0 x12: 00000000fa83b2da
-[  297.803185] x11: ffffff80c02700c0 x10: ffffff80c0ad8ec0 x9 : ffffff81fef96200
-[  297.810311] x8 : ffffff80c02700c0 x7 : ffffff80c02700d0 x6 : 0000000000000002
-[  297.817435] x5 : 0000000000000400 x4 : 0000000000000000 x3 : 0000000000000000
-[  297.824561] x2 : 0000000000000001 x1 : 0000000000000800 x0 : ffffff80c6a063c8
-[  297.831686] Call trace:
-[  297.834123]  mt76_wed_offload_disable+0x64/0xa0 [mt76]
-[  297.839254]  mtk_wed_flow_remove+0x58/0x80
-[  297.843342]  mtk_flow_offload_cmd+0x434/0x574
-[  297.847689]  mtk_wed_setup_tc_block_cb+0x30/0x40
-[  297.852295]  nf_flow_offload_ipv6_hook+0x7f4/0x964 [nf_flow_table]
-[  297.858466]  nf_flow_rule_route_ipv6+0x438/0x4a4 [nf_flow_table]
-[  297.864463]  process_one_work+0x174/0x300
-[  297.868465]  worker_thread+0x278/0x430
-[  297.872204]  kthread+0xd8/0xdc
-[  297.875251]  ret_from_fork+0x10/0x20
-[  297.878820] Code: 928b5ae0 8b000273 91400a60 f943fa61 (79401421)
-[  297.884901] ---[ end trace 0000000000000000 ]---
-
-Fix the issue detecting the proper wed reference to use running wed
-callabacks.
-
-Fixes: 83eafc9251d6 ("wifi: mt76: mt7996: add wed tx support")
-Tested-by: Daniel Pawlik <pawlik.dan@gmail.com>
-Tested-by: Matteo Croce <teknoraver@meta.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251008-wed-fixes-v1-1-8f7678583385@kernel.org
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Link: https://patch.msgid.link/20250729084932.264155-1-mingyen.hsieh@mediatek.com
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: cdb2941a516c ("Revert "wifi: mt76: mt792x: improve monitor interface handling"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76.h        |  9 +++++++++
- drivers/net/wireless/mediatek/mt76/mt7996/mmio.c |  1 +
- drivers/net/wireless/mediatek/mt76/wed.c         | 10 +++++-----
- include/linux/soc/mediatek/mtk_wed.h             |  1 +
- 4 files changed, 16 insertions(+), 5 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7925/main.c  |  1 +
+ .../net/wireless/mediatek/mt76/mt7925/mcu.c   | 23 ++++++++++++++++++-
+ .../net/wireless/mediatek/mt76/mt792x_core.c  |  7 +++++-
+ 3 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
-index 47c143e6a79af..eba26875aded6 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt76.h
-@@ -1226,6 +1226,15 @@ static inline int mt76_wed_dma_setup(struct mt76_dev *dev, struct mt76_queue *q,
- #define mt76_dereference(p, dev) \
- 	rcu_dereference_protected(p, lockdep_is_held(&(dev)->mutex))
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/main.c b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+index b0e053b152273..c7903972b1d59 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/main.c
+@@ -240,6 +240,7 @@ int mt7925_init_mlo_caps(struct mt792x_phy *phy)
+ {
+ 	struct wiphy *wiphy = phy->mt76->hw->wiphy;
+ 	static const u8 ext_capa_sta[] = {
++		[2] = WLAN_EXT_CAPA3_MULTI_BSSID_SUPPORT,
+ 		[7] = WLAN_EXT_CAPA8_OPMODE_NOTIF,
+ 	};
+ 	static struct wiphy_iftype_ext_capab ext_capab[] = {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+index cd457be26523e..10d68d241ba1f 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7925/mcu.c
+@@ -2621,6 +2621,25 @@ mt7925_mcu_bss_qos_tlv(struct sk_buff *skb, struct ieee80211_bss_conf *link_conf
+ 	qos->qos = link_conf->qos;
+ }
  
-+static inline struct mt76_dev *mt76_wed_to_dev(struct mtk_wed_device *wed)
++static void
++mt7925_mcu_bss_mbssid_tlv(struct sk_buff *skb, struct ieee80211_bss_conf *link_conf,
++			  bool enable)
 +{
-+#ifdef CONFIG_NET_MEDIATEK_SOC_WED
-+	if (wed->wlan.hif2)
-+		return container_of(wed, struct mt76_dev, mmio.wed_hif2);
-+#endif /* CONFIG_NET_MEDIATEK_SOC_WED */
-+	return container_of(wed, struct mt76_dev, mmio.wed);
++	struct bss_info_uni_mbssid *mbssid;
++	struct tlv *tlv;
++
++	if (!enable && !link_conf->bssid_indicator)
++		return;
++
++	tlv = mt76_connac_mcu_add_tlv(skb, UNI_BSS_INFO_11V_MBSSID,
++				      sizeof(*mbssid));
++
++	mbssid = (struct bss_info_uni_mbssid *)tlv;
++	mbssid->max_indicator = link_conf->bssid_indicator;
++	mbssid->mbss_idx = link_conf->bssid_index;
++	mbssid->tx_bss_omac_idx = 0;
 +}
 +
- static inline struct mt76_wcid *
- __mt76_wcid_ptr(struct mt76_dev *dev, u16 idx)
- {
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-index 30b40f4a91be8..b2af25aef762b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mmio.c
-@@ -562,6 +562,7 @@ int mt7996_mmio_wed_init(struct mt7996_dev *dev, void *pdev_ptr,
+ static void
+ mt7925_mcu_bss_he_tlv(struct sk_buff *skb, struct ieee80211_bss_conf *link_conf,
+ 		      struct mt792x_phy *phy)
+@@ -2787,8 +2806,10 @@ int mt7925_mcu_add_bss_info(struct mt792x_phy *phy,
+ 		mt7925_mcu_bss_color_tlv(skb, link_conf, enable);
+ 	}
  
- 	wed->wlan.nbuf = MT7996_HW_TOKEN_SIZE;
- 	wed->wlan.token_start = MT7996_TOKEN_SIZE - wed->wlan.nbuf;
-+	wed->wlan.hif2 = hif2;
+-	if (enable)
++	if (enable) {
+ 		mt7925_mcu_bss_rlm_tlv(skb, phy->mt76, link_conf, ctx);
++		mt7925_mcu_bss_mbssid_tlv(skb, link_conf, enable);
++	}
  
- 	wed->wlan.amsdu_max_subframes = 8;
- 	wed->wlan.amsdu_max_len = 1536;
-diff --git a/drivers/net/wireless/mediatek/mt76/wed.c b/drivers/net/wireless/mediatek/mt76/wed.c
-index 63f69e152b1cb..3ff547e0b2504 100644
---- a/drivers/net/wireless/mediatek/mt76/wed.c
-+++ b/drivers/net/wireless/mediatek/mt76/wed.c
-@@ -8,7 +8,7 @@
+ 	return mt76_mcu_skb_send_msg(&dev->mt76, skb,
+ 				     MCU_UNI_CMD(BSS_INFO_UPDATE), true);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt792x_core.c b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+index e3a703398b30c..44378f7394e8d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt792x_core.c
++++ b/drivers/net/wireless/mediatek/mt76/mt792x_core.c
+@@ -689,8 +689,13 @@ int mt792x_init_wiphy(struct ieee80211_hw *hw)
+ 	ieee80211_hw_set(hw, SUPPORTS_VHT_EXT_NSS_BW);
+ 	ieee80211_hw_set(hw, CONNECTION_MONITOR);
+ 	ieee80211_hw_set(hw, NO_VIRTUAL_MONITOR);
+-	if (is_mt7921(&dev->mt76))
++
++	if (is_mt7921(&dev->mt76)) {
+ 		ieee80211_hw_set(hw, CHANCTX_STA_CSA);
++	} else {
++		ieee80211_hw_set(hw, SUPPORTS_MULTI_BSSID);
++		ieee80211_hw_set(hw, SUPPORTS_ONLY_HE_MULTI_BSSID);
++	}
  
- void mt76_wed_release_rx_buf(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 	int i;
- 
- 	for (i = 0; i < dev->rx_token_size; i++) {
-@@ -31,8 +31,8 @@ EXPORT_SYMBOL_GPL(mt76_wed_release_rx_buf);
- #ifdef CONFIG_NET_MEDIATEK_SOC_WED
- u32 mt76_wed_init_rx_buf(struct mtk_wed_device *wed, int size)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
- 	struct mtk_wed_bm_desc *desc = wed->rx_buf_ring.desc;
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 	struct mt76_queue *q = &dev->q_rx[MT_RXQ_MAIN];
- 	struct mt76_txwi_cache *t = NULL;
- 	int i;
-@@ -80,7 +80,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_init_rx_buf);
- 
- int mt76_wed_offload_enable(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 
- 	spin_lock_bh(&dev->token_lock);
- 	dev->token_size = wed->wlan.token_start;
-@@ -164,7 +164,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_dma_setup);
- 
- void mt76_wed_offload_disable(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 
- 	spin_lock_bh(&dev->token_lock);
- 	dev->token_size = dev->drv->token_size;
-@@ -174,7 +174,7 @@ EXPORT_SYMBOL_GPL(mt76_wed_offload_disable);
- 
- void mt76_wed_reset_complete(struct mtk_wed_device *wed)
- {
--	struct mt76_dev *dev = container_of(wed, struct mt76_dev, mmio.wed);
-+	struct mt76_dev *dev = mt76_wed_to_dev(wed);
- 
- 	complete(&dev->mmio.wed_reset_complete);
- }
-diff --git a/include/linux/soc/mediatek/mtk_wed.h b/include/linux/soc/mediatek/mtk_wed.h
-index d8949a4ed0dc9..8d34bee714e8c 100644
---- a/include/linux/soc/mediatek/mtk_wed.h
-+++ b/include/linux/soc/mediatek/mtk_wed.h
-@@ -154,6 +154,7 @@ struct mtk_wed_device {
- 		bool wcid_512;
- 		bool hw_rro;
- 		bool msi;
-+		bool hif2;
- 
- 		u16 token_start;
- 		unsigned int nbuf;
+ 	if (dev->pm.enable)
+ 		ieee80211_hw_set(hw, CONNECTION_MONITOR);
 -- 
 2.51.0
 
