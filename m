@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31C03451DB;
-	Tue, 16 Dec 2025 11:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3006F346A05;
+	Tue, 16 Dec 2025 11:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886279; cv=none; b=p/AxOh05eO5NqIxsZL9+A8BaoLrpsEMxd6EZe1FkZSo/LUcVMG8IDGDlV4wbhJR7dw3yCgkKtom6MMuLo0SAxzjxL1ckFzOn01NcjarR0ZNt5kL3ivejua+mZfXLoL2noFeCnqU4i486QfQHDc88WnzDu+SW9C6JzFTl8eXF0as=
+	t=1765886282; cv=none; b=TIZZgR1Hc3pSHCm769B2nkUetQrcK4JoIM75q/yBJdPPv1THoBGS6JZMaUof5X2fAgGR0YBuHFyUqcd7qGCOh4JXIaf4oh6TVMcnvg49NikL7PoDWAc5I1U8W6ErzKsgezUMQJK8wcSXLxIy2PcUuuIGJ3vyP3QElgn+2/Xr99E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886279; c=relaxed/simple;
-	bh=BgqUDm6cFOTAimTqgJmCLeCVGPgSWY+1GTSpGKQrJD0=;
+	s=arc-20240116; t=1765886282; c=relaxed/simple;
+	bh=cdPFOWdOetvGWS+qDKnlRHlPS+Oaks2RAuhJw2sgUUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B5gxQfgsOMmaQQ+NOoIKtPGY8PeGGVRybjkfvV03fIiUG8elxaKa6cSA6bLJkKrHYxEWj8CGOMBNUEvp9ZUfkndpHROo+tgmYJqsWYCb1OhkUHhIyxj7TGbBRaxHVRxlpt0W+RcZ640YsxGQMfFja9VzNaYFdViApksV0YnLhxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeqwnKY5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cov/W28NvG/3fnoizsnfeyFXld8fyIGdPPVXp2Rr4UAVDeytHS1o3KDZGUgdvb9lt0Dm35UYbvYO3wLbSyhGFdn7afw+V6pkg5e3DzivF0fnbSgeQEbvcNKM/kRYnt54Nk35YGpN5zTD1kYaiEmTdoEGGRM5LJSiPv8R1XwmhO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R5dtpf/n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeqwnKY5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 522E7C4CEF1;
-	Tue, 16 Dec 2025 11:57:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R5dtpf/n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97BCC4CEF5;
+	Tue, 16 Dec 2025 11:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886278;
-	bh=BgqUDm6cFOTAimTqgJmCLeCVGPgSWY+1GTSpGKQrJD0=;
+	s=korg; t=1765886282;
+	bh=cdPFOWdOetvGWS+qDKnlRHlPS+Oaks2RAuhJw2sgUUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WeqwnKY5G/SdOJFsmWqrqDoHVDc3jQknVOuwE+f2p3/cVBkuYeoGQLEIioeOdKgg4
-	 256K/yjOaJBbKzsf/hUf7As6R6Rd523bIIR6L00+p7N0sf5cKSvJ/8V0VXFDnC/yQr
-	 ZMfy6IJG3OXTqZH1xhoosKHo9Zy9cJSQ5/di8MZ0=
+	b=R5dtpf/nhKnq5UtZL8q4u3MPmxlcB/OEgdCknAxYElRPPGa/KeI/WlzV7VWFayHIb
+	 H/DNpKFogObvS27akWdJyXMZaOP9vWKO38EfIEbBlC93773N+zB+9778JiyC1FBT0e
+	 Tkh/A/VlJG/qBIbT6UJWEq+xFqFv+2nFohW87Oxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Ria Thomas <ria.thomas@morsemicro.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 357/507] clocksource/drivers/stm: Fix double deregistration on probe failure
-Date: Tue, 16 Dec 2025 12:13:18 +0100
-Message-ID: <20251216111358.389555775@linuxfoundation.org>
+Subject: [PATCH 6.17 348/507] wifi: ieee80211: correct FILS status codes
+Date: Tue, 16 Dec 2025 12:13:09 +0100
+Message-ID: <20251216111358.066729733@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,40 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Ria Thomas <ria.thomas@morsemicro.com>
 
-[ Upstream commit 6b38a8b31e2c5c2c3fd5f9848850788c190f216d ]
+[ Upstream commit 24d4da5c2565313c2ad3c43449937a9351a64407 ]
 
-The purpose of the devm_add_action_or_reset() helper is to call the
-action function in case adding an action ever fails so drop the clock
-source deregistration from the error path to avoid deregistering twice.
+The FILS status codes are set to 108/109, but the IEEE 802.11-2020
+spec defines them as 112/113. Update the enum so it matches the
+specification and keeps the kernel consistent with standard values.
 
-Fixes: cec32ac75827 ("clocksource/drivers/nxp-timer: Add the System Timer Module for the s32gx platforms")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20251017055039.7307-1-johan@kernel.org
+Fixes: a3caf7440ded ("cfg80211: Add support for FILS shared key authentication offload")
+Signed-off-by: Ria Thomas <ria.thomas@morsemicro.com>
+Reviewed-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251124125637.3936154-1-ria.thomas@morsemicro.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-nxp-stm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/linux/ieee80211.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clocksource/timer-nxp-stm.c b/drivers/clocksource/timer-nxp-stm.c
-index d7ccf90017298..8bca183abe8f2 100644
---- a/drivers/clocksource/timer-nxp-stm.c
-+++ b/drivers/clocksource/timer-nxp-stm.c
-@@ -207,10 +207,8 @@ static int __init nxp_stm_clocksource_init(struct device *dev, struct stm_timer
- 		return ret;
- 
- 	ret = devm_add_action_or_reset(dev, devm_clocksource_unregister, stm_timer);
--	if (ret) {
--		clocksource_unregister(&stm_timer->cs);
-+	if (ret)
- 		return ret;
--	}
- 
- 	stm_sched_clock = stm_timer;
- 
+diff --git a/include/linux/ieee80211.h b/include/linux/ieee80211.h
+index e5a2096e022ef..e3562770ffff3 100644
+--- a/include/linux/ieee80211.h
++++ b/include/linux/ieee80211.h
+@@ -3572,8 +3572,8 @@ enum ieee80211_statuscode {
+ 	WLAN_STATUS_DENIED_WITH_SUGGESTED_BAND_AND_CHANNEL = 99,
+ 	WLAN_STATUS_DENIED_DUE_TO_SPECTRUM_MANAGEMENT = 103,
+ 	/* 802.11ai */
+-	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 108,
+-	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 109,
++	WLAN_STATUS_FILS_AUTHENTICATION_FAILURE = 112,
++	WLAN_STATUS_UNKNOWN_AUTHENTICATION_SERVER = 113,
+ 	WLAN_STATUS_SAE_HASH_TO_ELEMENT = 126,
+ 	WLAN_STATUS_SAE_PK = 127,
+ 	WLAN_STATUS_DENIED_TID_TO_LINK_MAPPING = 133,
 -- 
 2.51.0
 
