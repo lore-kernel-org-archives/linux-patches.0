@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7856B313E13;
-	Tue, 16 Dec 2025 11:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95471313E13;
+	Tue, 16 Dec 2025 11:24:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884271; cv=none; b=Tt5Cc8fezz5vgFlIkPr8/Gfr/ZASLM8dIKDTg923o6gpstjohwreWu7WHv85kqyhhdamW+W8GG05Se80eoB3aBrXc1lO+Mlo4c8Wi7ItR+6JECOnm/2X2CN8WzU5d4XZcl7UMPjFTQDlhTdW16KIxcHdByNabJanShNygJWXxQA=
+	t=1765884274; cv=none; b=TmCfYpWe2WUYkqVtEXxfpbACxjv7vfdwkqmBs2QV7pnF6I1E+HmyRs4twOpHENuV5ryEEBdl+hd6hF4DAlh4q4n2MbP45uAbcTKrb05MixLe3Cj2EtMI4ENqpEARGvcQ+4dA81O2+4vrnntYYZWXLdfr06CXXed8YKfY0X9feKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884271; c=relaxed/simple;
-	bh=KuuqJi34dtXvCft24GJNUOrItS+NnItBgmDAw7V7lPg=;
+	s=arc-20240116; t=1765884274; c=relaxed/simple;
+	bh=asazDP7T7C/4OaEg8B8GAo8FOI6af5xLEw91expF0KA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FwhIIo3Lo+8nFPXfdpDzMuC28jXOzGYT+TQyZtNRvGaEEIOtV2JRdTb5PLEZIrwor5A3GZ3/6nrloWAE8yZH3k7Z4hWTZVIeVhmlJlhsSnxSz1P/ymd6kIj7hhwXocQjOchKHbqIzhRifrP0xPCuLMpDMJxcfeThxLdHjvVF9Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqEdndJQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d7T4Zo04o0wNL7yRsoPVLvKIyQphvkCQwMLlmM6DwQw2oG9aQo25KER69Vby6wSX/miPldgHVtidGRn0H+DUfPaDrLvz6yLW7uKo8xJ48QyJQfMOCfs19guXMqpURyMyMJMcdkwwbt3uc7jilhUgHMfGcJm31lfgaRktAa7fu5Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JoN8wQSM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqEdndJQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18C2C4CEF1;
-	Tue, 16 Dec 2025 11:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JoN8wQSM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 135E2C4CEF1;
+	Tue, 16 Dec 2025 11:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884271;
-	bh=KuuqJi34dtXvCft24GJNUOrItS+NnItBgmDAw7V7lPg=;
+	s=korg; t=1765884274;
+	bh=asazDP7T7C/4OaEg8B8GAo8FOI6af5xLEw91expF0KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqEdndJQ+nEAzt13nHvrpSo71FQjd5iFhwgf+OEtFdarMxbq3utLmKAOrxqW6awXq
-	 kZF9IKkc4F7rL+LprSvN2LgDhPV2baKb6QfhcBVATSiU4Ea6C9NsLVSG41XBf8GPcv
-	 Y7gOtbwNIDdhEzBnj/vf1fQi9LffXg0gNkJCk6uY=
+	b=JoN8wQSMzYOWQHuGflfyKyWxjVM2Rd5RTQpezP77OfoMjFug/jl6xRaNXCnE591YG
+	 rVRLYQzS+bf6P3SdOdwdpqFYl8g/HIK+NufZUHf0cVGL4HhLH6+p+ZJheAhz9rv5vh
+	 2rk+q1LZBSCdE9xPaOe0fmSxp/s5NInMDma8wSZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>,
+	Leo Yan <leo.yan@arm.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 136/354] ntfs3: init run lock for extend inode
-Date: Tue, 16 Dec 2025 12:11:43 +0100
-Message-ID: <20251216111325.846517128@linuxfoundation.org>
+Subject: [PATCH 6.12 145/354] coresight: Change device mode to atomic type
+Date: Tue, 16 Dec 2025 12:11:52 +0100
+Message-ID: <20251216111326.170079685@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,55 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Leo Yan <leo.yan@arm.com>
 
-[ Upstream commit be99c62ac7e7af514e4b13f83c891a3cccefaa48 ]
+[ Upstream commit 693d1eaca940f277af24c74873ef2313816ff444 ]
 
-After setting the inode mode of $Extend to a regular file, executing the
-truncate system call will enter the do_truncate() routine, causing the
-run_lock uninitialized error reported by syzbot.
+The device mode is defined as local type. This type cannot promise
+SMP-safe access.
 
-Prior to patch 4e8011ffec79, if the inode mode of $Extend was not set to
-a regular file, the do_truncate() routine would not be entered.
+Change to atomic type and impose relax ordering, which ensures the
+SMP-safe synchronisation and the ordering between the mode setting and
+relevant operations.
 
-Add the run_lock initialization when loading $Extend.
-
-syzbot reported:
-INFO: trying to register non-static key.
-Call Trace:
- dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
- assign_lock_key+0x133/0x150 kernel/locking/lockdep.c:984
- register_lock_class+0x105/0x320 kernel/locking/lockdep.c:1299
- __lock_acquire+0x99/0xd20 kernel/locking/lockdep.c:5112
- lock_acquire+0x120/0x360 kernel/locking/lockdep.c:5868
- down_write+0x96/0x1f0 kernel/locking/rwsem.c:1590
- ntfs_set_size+0x140/0x200 fs/ntfs3/inode.c:860
- ntfs_extend+0x1d9/0x970 fs/ntfs3/file.c:387
- ntfs_setattr+0x2e8/0xbe0 fs/ntfs3/file.c:808
-
-Fixes: 4e8011ffec79 ("ntfs3: pretend $Extend records as regular files")
-Reported-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=bdeb22a4b9a09ab9aa45
-Tested-by: syzbot+bdeb22a4b9a09ab9aa45@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 22fd532eaa0c ("coresight: etm3x: adding operation mode for etm_enable()")
+Reviewed-by: Mike Leach <mike.leach@linaro.org>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@arm.com>
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-1-f55553b6c8b3@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/coresight.h | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 44fbd9156a30f..8a9c11083e6e6 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -472,6 +472,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		/* Records in $Extend are not a files or general directories. */
- 		inode->i_op = &ntfs_file_inode_operations;
- 		mode = S_IFREG;
-+		init_rwsem(&ni->file.run_lock);
- 	} else {
- 		err = -EINVAL;
- 		goto out;
+diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+index 59f99b7da43f5..0165a0b403cb9 100644
+--- a/include/linux/coresight.h
++++ b/include/linux/coresight.h
+@@ -245,15 +245,11 @@ struct coresight_trace_id_map {
+  *		by @coresight_ops.
+  * @access:	Device i/o access abstraction for this device.
+  * @dev:	The device entity associated to this component.
+- * @mode:	This tracer's mode, i.e sysFS, Perf or disabled. This is
+- *		actually an 'enum cs_mode', but is stored in an atomic type.
+- *		This is always accessed through local_read() and local_set(),
+- *		but wherever it's done from within the Coresight device's lock,
+- *		a non-atomic read would also work. This is the main point of
+- *		synchronisation between code happening inside the sysfs mode's
+- *		coresight_mutex and outside when running in Perf mode. A compare
+- *		and exchange swap is done to atomically claim one mode or the
+- *		other.
++ * @mode:	The device mode, i.e sysFS, Perf or disabled. This is actually
++ *		an 'enum cs_mode' but stored in an atomic type. Access is always
++ *		through atomic APIs, ensuring SMP-safe synchronisation between
++ *		racing from sysFS and Perf mode. A compare-and-exchange
++ *		operation is done to atomically claim one mode or the other.
+  * @refcnt:	keep track of what is in use. Only access this outside of the
+  *		device's spinlock when the coresight_mutex held and mode ==
+  *		CS_MODE_SYSFS. Otherwise it must be accessed from inside the
+@@ -282,7 +278,7 @@ struct coresight_device {
+ 	const struct coresight_ops *ops;
+ 	struct csdev_access access;
+ 	struct device dev;
+-	local_t	mode;
++	atomic_t mode;
+ 	int refcnt;
+ 	bool orphan;
+ 	/* sink specific fields */
+@@ -607,13 +603,14 @@ static inline bool coresight_is_percpu_sink(struct coresight_device *csdev)
+ static inline bool coresight_take_mode(struct coresight_device *csdev,
+ 				       enum cs_mode new_mode)
+ {
+-	return local_cmpxchg(&csdev->mode, CS_MODE_DISABLED, new_mode) ==
+-	       CS_MODE_DISABLED;
++	int curr = CS_MODE_DISABLED;
++
++	return atomic_try_cmpxchg_acquire(&csdev->mode, &curr, new_mode);
+ }
+ 
+ static inline enum cs_mode coresight_get_mode(struct coresight_device *csdev)
+ {
+-	return local_read(&csdev->mode);
++	return atomic_read_acquire(&csdev->mode);
+ }
+ 
+ static inline void coresight_set_mode(struct coresight_device *csdev,
+@@ -629,7 +626,7 @@ static inline void coresight_set_mode(struct coresight_device *csdev,
+ 	WARN(new_mode != CS_MODE_DISABLED && current_mode != CS_MODE_DISABLED &&
+ 	     current_mode != new_mode, "Device already in use\n");
+ 
+-	local_set(&csdev->mode, new_mode);
++	atomic_set_release(&csdev->mode, new_mode);
+ }
+ 
+ extern struct coresight_device *
 -- 
 2.51.0
 
