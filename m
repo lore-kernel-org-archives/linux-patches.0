@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA8A363C70;
-	Tue, 16 Dec 2025 12:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B047363C79;
+	Tue, 16 Dec 2025 12:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887757; cv=none; b=Y4AXgZ78lmmoWF5Km9UIiB5X54zQR32pYVmjABWPI1SpHT5QYj1BZFw4e+TnwGVKM+PTKWCnWRywb6htS5bWxERwCOiOploLm7K4qugIvrNRlwCaHWf5lCbqE8kUhgoALE++LwtF0x+ytwOdshZFDvU3uH476/tKxgkw7tVRx94=
+	t=1765887760; cv=none; b=bfgjrW2TlGMmj88A1MhYAAScjuaxNfVrpb0MVPwhC1s4Wc4RqS7zeNeFveQ9TYLUrbfcvZY3vZk/ZFPojYyZODGNfZb0wJ1iV1L3DpOcIVu+lXC+RUcRVo3g0PCmlxcmVfbxOme10C356H/02kbheQplIYEjIDviHOQWPR/MDjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887757; c=relaxed/simple;
-	bh=8/XcvrO77IIY9Cmp6UBbkpNcUV0Bj2wwtuLk+uh7Rt0=;
+	s=arc-20240116; t=1765887760; c=relaxed/simple;
+	bh=hw9XPCFc8aLgL+4qr2CUuj9XVWEa4sfDMBR6BfL9yG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BVhvYHdhVnoYBOTPXhB+s2iE+V1W6ilpC1KMEAAY2WxcXuyxwsRgnN+/qRPMJgQv+mwjl1iUOmYBWRl5p/FC14GrExE7dnN5g2xoayxC0iKidnrdir6aAvz9YSjtZx/waTmofrmy8Md43b6hebP4wMlaR+5gdpnPj/gi31T4PUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqKleGU5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxt24/DQZTPGfyHykksFdveObPYlAlawoZJk3uBRSzrYvT2gJ4u/r9T+bNcIlpg4qNzTHo0AcEF8BhdFQCTDyG2rqXhOgiZU/O0TneDN59UMczsPTnCJ4f16qGZCobjLNhAbdsdHviaTiUXZ3yMfJvD9dWRTh7kEJ3EpWpgDYwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNxG0djY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqKleGU5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B439C4CEF1;
-	Tue, 16 Dec 2025 12:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNxG0djY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB950C4CEF1;
+	Tue, 16 Dec 2025 12:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887757;
-	bh=8/XcvrO77IIY9Cmp6UBbkpNcUV0Bj2wwtuLk+uh7Rt0=;
+	s=korg; t=1765887760;
+	bh=hw9XPCFc8aLgL+4qr2CUuj9XVWEa4sfDMBR6BfL9yG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cqKleGU5UBkMNZKP7813eWSjsscGDSVN0EaxssCD9tbkat3xrQ5FgDOGNyDzFFkIP
-	 y4D2ppgZFcvCw93cCg6uk/PlVnmbhWV3qWNUyAznVdOwOH28UFvzlorhnloZHl3rUG
-	 QqGMasBkuiRDVnqHEDN1g2+UCnrqKbZekDRJBgEE=
+	b=bNxG0djYUWuXcFvWRjf3q9IzkUCWrgntU1tZVl3EiREyN4NAjuJemNpf8dlFIxwsj
+	 gFy3St2QIiAOFml2eggSLG7saZD5QFN0zbp/hdbXxmUZdTwmPFtDBT3VBis0kF2fnu
+	 5b0mm0ddp3JNDA2nQT/Y+TV7mmGiLbnxGw/2zWqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Abdun Nihaal <nihaal@cse.iitm.ac.in>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 329/614] scsi: ufs: rockchip: Reset controller on PRE_CHANGE of hce enable notify
-Date: Tue, 16 Dec 2025 12:11:36 +0100
-Message-ID: <20251216111413.286408305@linuxfoundation.org>
+Subject: [PATCH 6.18 312/614] wifi: rtl818x: Fix potential memory leaks in rtl8180_init_rx_ring()
+Date: Tue, 16 Dec 2025 12:11:19 +0100
+Message-ID: <20251216111412.672098134@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,84 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Abdun Nihaal <nihaal@cse.iitm.ac.in>
 
-[ Upstream commit b0ee72db9132bd19b1b80152b35e0cf6a6cbd9f2 ]
+[ Upstream commit 9b5b9c042b30befc5b37e4539ace95af70843473 ]
 
-This fixes the dme-reset failed when doing recovery. Because device
-reset is not enough, we could occasionally see the error below:
+In rtl8180_init_rx_ring(), memory is allocated for skb packets and DMA
+allocations in a loop. When an allocation fails, the previously
+successful allocations are not freed on exit.
 
-ufshcd-rockchip 2a2d0000.ufs: uic cmd 0x14 with arg3 0x0 completion timeout
-ufshcd-rockchip 2a2d0000.ufs: dme-reset: error code -110
-ufshcd-rockchip 2a2d0000.ufs: DME_RESET failed
-ufshcd-rockchip 2a2d0000.ufs: ufshcd_host_reset_and_restore: Host init failed -110
+Fix that by jumping to err_free_rings label on error, which calls
+rtl8180_free_rx_ring() to free the allocations. Remove the free of
+rx_ring in rtl8180_init_rx_ring() error path, and set the freed
+priv->rx_buf entry to null, to avoid double free.
 
-Fix this by resetting the controller on PRE_CHANGE stage of hce enable
-notify.
-
-Fixes: d3cbe455d6eb ("scsi: ufs: rockchip: Initial support for UFS")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/1763009575-237552-1-git-send-email-shawn.lin@rock-chips.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f653211197f3 ("Add rtl8180 wireless driver")
+Signed-off-by: Abdun Nihaal <nihaal@cse.iitm.ac.in>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20251114094527.79842-1-nihaal@cse.iitm.ac.in
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufs-rockchip.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/ufs/host/ufs-rockchip.c b/drivers/ufs/host/ufs-rockchip.c
-index 8754085dd0ccf..8cecb28cdce41 100644
---- a/drivers/ufs/host/ufs-rockchip.c
-+++ b/drivers/ufs/host/ufs-rockchip.c
-@@ -20,9 +20,17 @@
- #include "ufshcd-pltfrm.h"
- #include "ufs-rockchip.h"
+diff --git a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
+index 2905baea62390..070c0431c4821 100644
+--- a/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
++++ b/drivers/net/wireless/realtek/rtl818x/rtl8180/dev.c
+@@ -1023,9 +1023,6 @@ static int rtl8180_init_rx_ring(struct ieee80211_hw *dev)
+ 		dma_addr_t *mapping;
+ 		entry = priv->rx_ring + priv->rx_ring_sz*i;
+ 		if (!skb) {
+-			dma_free_coherent(&priv->pdev->dev,
+-					  priv->rx_ring_sz * 32,
+-					  priv->rx_ring, priv->rx_ring_dma);
+ 			wiphy_err(dev->wiphy, "Cannot allocate RX skb\n");
+ 			return -ENOMEM;
+ 		}
+@@ -1037,9 +1034,7 @@ static int rtl8180_init_rx_ring(struct ieee80211_hw *dev)
  
-+static void ufs_rockchip_controller_reset(struct ufs_rockchip_host *host)
-+{
-+	reset_control_assert(host->rst);
-+	udelay(1);
-+	reset_control_deassert(host->rst);
-+}
-+
- static int ufs_rockchip_hce_enable_notify(struct ufs_hba *hba,
- 					 enum ufs_notify_change_status status)
- {
-+	struct ufs_rockchip_host *host = ufshcd_get_variant(hba);
- 	int err = 0;
+ 		if (dma_mapping_error(&priv->pdev->dev, *mapping)) {
+ 			kfree_skb(skb);
+-			dma_free_coherent(&priv->pdev->dev,
+-					  priv->rx_ring_sz * 32,
+-					  priv->rx_ring, priv->rx_ring_dma);
++			priv->rx_buf[i] = NULL;
+ 			wiphy_err(dev->wiphy, "Cannot map DMA for RX skb\n");
+ 			return -ENOMEM;
+ 		}
+@@ -1130,7 +1125,7 @@ static int rtl8180_start(struct ieee80211_hw *dev)
  
- 	if (status == POST_CHANGE) {
-@@ -37,6 +45,9 @@ static int ufs_rockchip_hce_enable_notify(struct ufs_hba *hba,
- 		return ufshcd_vops_phy_initialization(hba);
- 	}
+ 	ret = rtl8180_init_rx_ring(dev);
+ 	if (ret)
+-		return ret;
++		goto err_free_rings;
  
-+	/* PRE_CHANGE */
-+	ufs_rockchip_controller_reset(host);
-+
- 	return 0;
- }
- 
-@@ -156,9 +167,7 @@ static int ufs_rockchip_common_init(struct ufs_hba *hba)
- 		return dev_err_probe(dev, PTR_ERR(host->rst),
- 				"failed to get reset control\n");
- 
--	reset_control_assert(host->rst);
--	udelay(1);
--	reset_control_deassert(host->rst);
-+	ufs_rockchip_controller_reset(host);
- 
- 	host->ref_out_clk = devm_clk_get_enabled(dev, "ref_out");
- 	if (IS_ERR(host->ref_out_clk))
-@@ -282,9 +291,7 @@ static int ufs_rockchip_runtime_resume(struct device *dev)
- 		return err;
- 	}
- 
--	reset_control_assert(host->rst);
--	udelay(1);
--	reset_control_deassert(host->rst);
-+	ufs_rockchip_controller_reset(host);
- 
- 	return ufshcd_runtime_resume(dev);
- }
+ 	for (i = 0; i < (dev->queues + 1); i++)
+ 		if ((ret = rtl8180_init_tx_ring(dev, i, 16)))
 -- 
 2.51.0
 
