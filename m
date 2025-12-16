@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DEB9315786;
-	Tue, 16 Dec 2025 11:29:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E4D33EB1A;
+	Tue, 16 Dec 2025 11:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884559; cv=none; b=rJ/IRqIyZREIevc71aqIxwaGgAutafSbNcZ+IYdwrGeH575ABksdXWfnG/7eUfGa3I/4ACF/kvgdhLrvJCtjYa8Shm+TDrllV/IyYNTOd94oOJ3U0A+HE5efscAstr4MEajTtz6Yb3l3/MEAQK55PJeO0S222vIal6Lu4WXyCrg=
+	t=1765884562; cv=none; b=tMu8JFBQoXXnFE6tqs99aFyc/eQe1Sz9NCFlmxyJ0rflQKa8nYIbs/X0qGtXZQlUQ/5t9mxZsAXra+mSKOJZ08s5k20UxL7QRiUj6iCq6tNNiMJ3HPkZlN96BV+ujRqX+ezNvV6+5zeaBgWQlCQz//NqZ9oemrBs53eZ1QTmX+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884559; c=relaxed/simple;
-	bh=/MGKrzlRsXFOmRuMu4EnaA4y+2KSZIwUKfvjfJZMfNs=;
+	s=arc-20240116; t=1765884562; c=relaxed/simple;
+	bh=ScS8xO6gaPDgN+zNvjwKbri+JazVTvwb6tGgO83rUSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrzFQO2f+HhOd2363g+pqCQpbECJaJ7RbydhZKyxovXjbBibmtcvD2ULETRQgzdsjZP6XZXMg3UUKzTYTh2ZdHU6s005U7lvxGnoNROa3JX6YTvWMm4qOODVPYYJ6ldiBLqKNbj0weMuH2Ka7DXXVEDEXVIW8EKWm6J/cYXQMlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNDeG/gH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SFoGVGijVoEFJ77wV7rBuiMzKQsFxneDLREhvP5oDPUFUQtGJrK34f+6GKfj4iIutr1u8YoMXEgFMWbI+KzCVv302hYSJQn6gW0k28qDuUzi2ilDgA7VbS41iC10zDvQae+wYON3hhDilzGgfJxpJ22quohXTFB6Up25YlQ7vcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO8zPhgt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNDeG/gH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A596C4CEF1;
-	Tue, 16 Dec 2025 11:29:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO8zPhgt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BE4C4CEF1;
+	Tue, 16 Dec 2025 11:29:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884558;
-	bh=/MGKrzlRsXFOmRuMu4EnaA4y+2KSZIwUKfvjfJZMfNs=;
+	s=korg; t=1765884562;
+	bh=ScS8xO6gaPDgN+zNvjwKbri+JazVTvwb6tGgO83rUSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNDeG/gHbFyPjEQ79EoIOq2riRrOClrhM94Bw+N24fJRo8EI6n6SsOcGFE6hPdONs
-	 XplvUTUx3q1GOzN+M6gbGtpjnQ6OTeP7+mlLX2vMIS7NaMi28m+BH5Nv5ecpQixf6L
-	 fNW1peXMopWKNpaZPuJU3+88IGVfGSWeOD6GHGpg=
+	b=NO8zPhgtWTG3IcKIa2aKRNanWHHN70+KG7+1kjI/4EwJhTmKBl+rrAUwEu4xMiXy6
+	 xtJHafhb4LhU3QwHIXscBhaulV/ki2u4Fe742bxR/aRKWXzkSKBajlO9/luRIYeeqe
+	 8eIRK3N5rlQXVyb5Enm1beSUDl8B1ChXV6Oc1d0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 230/354] RDMA/irdma: Fix data race in irdma_sc_ccq_arm
-Date: Tue, 16 Dec 2025 12:13:17 +0100
-Message-ID: <20251216111329.250616620@linuxfoundation.org>
+Subject: [PATCH 6.12 231/354] RDMA/irdma: Fix data race in irdma_free_pble
+Date: Tue, 16 Dec 2025 12:13:18 +0100
+Message-ID: <20251216111329.286070187@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,74 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
 
-[ Upstream commit a521928164433de44fed5aaf5f49aeb3f1fb96f5 ]
+[ Upstream commit 81f44409fb4f027d1e6d54edbeba5156ad94b214 ]
 
-Adds a lock around irdma_sc_ccq_arm body to prevent inter-thread data race.
-Fixes data race in irdma_sc_ccq_arm() reported by KCSAN:
+Protects pble_rsrc counters with mutex to prevent data race.
+Fixes the following data race in irdma_free_pble reported by KCSAN:
 
-BUG: KCSAN: data-race in irdma_sc_ccq_arm [irdma] / irdma_sc_ccq_arm [irdma]
+BUG: KCSAN: data-race in irdma_free_pble [irdma] / irdma_free_pble [irdma]
 
-read to 0xffff9d51b4034220 of 8 bytes by task 255 on cpu 11:
- irdma_sc_ccq_arm+0x36/0xd0 [irdma]
- irdma_cqp_ce_handler+0x300/0x310 [irdma]
- cqp_compl_worker+0x2a/0x40 [irdma]
- process_one_work+0x402/0x7e0
- worker_thread+0xb3/0x6d0
- kthread+0x178/0x1a0
- ret_from_fork+0x2c/0x50
+write to 0xffff91430baa0078 of 8 bytes by task 16956 on cpu 5:
+ irdma_free_pble+0x3b/0xb0 [irdma]
+ irdma_dereg_mr+0x108/0x110 [irdma]
+ ib_dereg_mr_user+0x74/0x160 [ib_core]
+ uverbs_free_mr+0x26/0x30 [ib_uverbs]
+ destroy_hw_idr_uobject+0x4a/0x90 [ib_uverbs]
+ uverbs_destroy_uobject+0x7b/0x330 [ib_uverbs]
+ uobj_destroy+0x61/0xb0 [ib_uverbs]
+ ib_uverbs_run_method+0x1f2/0x380 [ib_uverbs]
+ ib_uverbs_cmd_verbs+0x365/0x440 [ib_uverbs]
+ ib_uverbs_ioctl+0x111/0x190 [ib_uverbs]
+ __x64_sys_ioctl+0xc9/0x100
+ do_syscall_64+0x44/0xa0
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-write to 0xffff9d51b4034220 of 8 bytes by task 89 on cpu 3:
- irdma_sc_ccq_arm+0x7e/0xd0 [irdma]
- irdma_cqp_ce_handler+0x300/0x310 [irdma]
- irdma_wait_event+0xd4/0x3e0 [irdma]
- irdma_handle_cqp_op+0xa5/0x220 [irdma]
- irdma_hw_flush_wqes+0xb1/0x300 [irdma]
- irdma_flush_wqes+0x22e/0x3a0 [irdma]
- irdma_cm_disconn_true+0x4c7/0x5d0 [irdma]
- irdma_disconnect_worker+0x35/0x50 [irdma]
- process_one_work+0x402/0x7e0
- worker_thread+0xb3/0x6d0
- kthread+0x178/0x1a0
- ret_from_fork+0x2c/0x50
+read to 0xffff91430baa0078 of 8 bytes by task 16953 on cpu 2:
+ irdma_free_pble+0x23/0xb0 [irdma]
+ irdma_dereg_mr+0x108/0x110 [irdma]
+ ib_dereg_mr_user+0x74/0x160 [ib_core]
+ uverbs_free_mr+0x26/0x30 [ib_uverbs]
+ destroy_hw_idr_uobject+0x4a/0x90 [ib_uverbs]
+ uverbs_destroy_uobject+0x7b/0x330 [ib_uverbs]
+ uobj_destroy+0x61/0xb0 [ib_uverbs]
+ ib_uverbs_run_method+0x1f2/0x380 [ib_uverbs]
+ ib_uverbs_cmd_verbs+0x365/0x440 [ib_uverbs]
+ ib_uverbs_ioctl+0x111/0x190 [ib_uverbs]
+ __x64_sys_ioctl+0xc9/0x100
+ do_syscall_64+0x44/0xa0
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-value changed: 0x0000000000024000 -> 0x0000000000034000
+value changed: 0x0000000000005a62 -> 0x0000000000005a68
 
-Fixes: 3f49d6842569 ("RDMA/irdma: Implement HW Admin Queue OPs")
+Fixes: e8c4dbc2fcac ("RDMA/irdma: Add PBLE resource manager")
 Signed-off-by: Krzysztof Czurylo <krzysztof.czurylo@intel.com>
 Signed-off-by: Tatyana Nikolova <tatyana.e.nikolova@intel.com>
-Link: https://patch.msgid.link/20251125025350.180-2-tatyana.e.nikolova@intel.com
+Link: https://patch.msgid.link/20251125025350.180-3-tatyana.e.nikolova@intel.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/ctrl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/irdma/pble.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/ctrl.c b/drivers/infiniband/hw/irdma/ctrl.c
-index 6aed6169c07d7..de1bd2b57414a 100644
---- a/drivers/infiniband/hw/irdma/ctrl.c
-+++ b/drivers/infiniband/hw/irdma/ctrl.c
-@@ -3316,11 +3316,13 @@ int irdma_sc_cqp_destroy(struct irdma_sc_cqp *cqp)
-  */
- void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
+diff --git a/drivers/infiniband/hw/irdma/pble.c b/drivers/infiniband/hw/irdma/pble.c
+index f381b8d51f532..bd9e7b7f6ca34 100644
+--- a/drivers/infiniband/hw/irdma/pble.c
++++ b/drivers/infiniband/hw/irdma/pble.c
+@@ -498,12 +498,14 @@ int irdma_get_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
+ void irdma_free_pble(struct irdma_hmc_pble_rsrc *pble_rsrc,
+ 		     struct irdma_pble_alloc *palloc)
  {
-+	unsigned long flags;
- 	u64 temp_val;
- 	u16 sw_cq_sel;
- 	u8 arm_next_se;
- 	u8 arm_seq_num;
- 
-+	spin_lock_irqsave(&ccq->dev->cqp_lock, flags);
- 	get_64bit_val(ccq->cq_uk.shadow_area, 32, &temp_val);
- 	sw_cq_sel = (u16)FIELD_GET(IRDMA_CQ_DBSA_SW_CQ_SELECT, temp_val);
- 	arm_next_se = (u8)FIELD_GET(IRDMA_CQ_DBSA_ARM_NEXT_SE, temp_val);
-@@ -3331,6 +3333,7 @@ void irdma_sc_ccq_arm(struct irdma_sc_cq *ccq)
- 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT_SE, arm_next_se) |
- 		   FIELD_PREP(IRDMA_CQ_DBSA_ARM_NEXT, 1);
- 	set_64bit_val(ccq->cq_uk.shadow_area, 32, temp_val);
-+	spin_unlock_irqrestore(&ccq->dev->cqp_lock, flags);
- 
- 	dma_wmb(); /* make sure shadow area is updated before arming */
- 
+-	pble_rsrc->freedpbles += palloc->total_cnt;
+-
+ 	if (palloc->level == PBLE_LEVEL_2)
+ 		free_lvl2(pble_rsrc, palloc);
+ 	else
+ 		irdma_prm_return_pbles(&pble_rsrc->pinfo,
+ 				       &palloc->level1.chunkinfo);
++
++	mutex_lock(&pble_rsrc->pble_mutex_lock);
++	pble_rsrc->freedpbles += palloc->total_cnt;
+ 	pble_rsrc->stats_alloc_freed++;
++	mutex_unlock(&pble_rsrc->pble_mutex_lock);
+ }
 -- 
 2.51.0
 
