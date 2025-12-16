@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0819233F374;
-	Tue, 16 Dec 2025 11:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AC533D6F5;
+	Tue, 16 Dec 2025 11:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884569; cv=none; b=VJYvqu18n7nBk/VlyEaIY95j7YB0w/QZrFpauPMB5vwAZZ4RcXcD3hfJUJSKci7INgIIHdzh4eVC+H/sPPHU2s3xDb1AmxB4EfynV1idYvT1x82ZdwZjuWdfMqkjLY/1nNBkcXghaK4QBz9Mc1V13uUCwfbZcE0pa8F4GTlqn5E=
+	t=1765884572; cv=none; b=kMNMn1CQ8w2dm9UO6bd13WOHykFtTW8CsPMA+GzPqt/2mJ51jf5Quiv2lgHq7XBXzG/OhPtv0C5dq2y3Lma+rxIe2kOn+WQg52AX41w/bwFPigUyli7RZfp8jKUofVHjUM5TlPw5MN0DtPeKGGeKufQc4G/b1U4zfCnByODfy3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884569; c=relaxed/simple;
-	bh=yo6g/z5e4SBVAJfCOwaVwcacoELU16SnKmB0Nj07SDs=;
+	s=arc-20240116; t=1765884572; c=relaxed/simple;
+	bh=D+f8UZTqw79aSrgWxWNReDC2JQ1xZkdYyydeb2cdk28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aHBYssPohexx4PsDG3BCe8LxUEtcXnsEB4qwNQG6GwED+PRn95P4yC7xZzZ6j5b3ml8+JEbidDBXja9husqr4qoGYhnN+T/FhWl4U4l5wN6DaoxDiF7txQsAo4f5iLSphlWWHrvT1+cMXeoqN1LQ6NgXLHimjCvtVu0h1CVKASg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NXsahXmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qp77sb0foaBwZlDZcvQeGB8uo7F0FG/tmIqYsp2MFod2Z2uKoF4xU8ZKN+KxlRF5IvvGQV3XtlPzkNwIVoiuXDdphgFBb8ZXuAL5lBcxgfMD7JbGkAGKhDS7BEL56SycUuN0TgSfbuYie0QTJS4gvu27cNHDHsLkwxWkhxIAioc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLsWXu+8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NXsahXmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B196C4CEF1;
-	Tue, 16 Dec 2025 11:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLsWXu+8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8682C4CEF1;
+	Tue, 16 Dec 2025 11:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884568;
-	bh=yo6g/z5e4SBVAJfCOwaVwcacoELU16SnKmB0Nj07SDs=;
+	s=korg; t=1765884572;
+	bh=D+f8UZTqw79aSrgWxWNReDC2JQ1xZkdYyydeb2cdk28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXsahXmJ5Q+N0H0JbdzsalxpYyTZBgHn4luZOxeb18klZ5VEJ0HoK+VdeLoVMYXqw
-	 2yVP0NU9dgageE4aCntm7RF8KW0jouNMCv9KkLAkuwT8E9BWcwbPAKCJf2zVQFYs/c
-	 ZemBeBO4iClZ/byCrNkiaPZkbIw00Xs2MRGKSzUw=
+	b=DLsWXu+8VfXHBQg5ZMSD15kScUwA6OCWnhgBhbYzl/a9hoPlNGwr2NqLQYITQTcLE
+	 152aQq2gstlE6aAyi+LA7OqC2ncILDQQNKWJhzaRlvKbmqHUgxbxt8swK8jzcvhL5f
+	 hvgwBMJKaFlM4OydSGfHe72tyXDzNVshoeXC0kpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akash Goel <akash.goel@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	Steven Price <steven.price@arm.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 233/354] drm/panthor: Avoid adding of kernel BOs to extobj list
-Date: Tue, 16 Dec 2025 12:13:20 +0100
-Message-ID: <20251216111329.357607398@linuxfoundation.org>
+Subject: [PATCH 6.12 234/354] ASoC: nau8325: use simple i2c probe function
+Date: Tue, 16 Dec 2025 12:13:21 +0100
+Message-ID: <20251216111329.393236905@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,62 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Akash Goel <akash.goel@arm.com>
+From: Jaroslav Kysela <perex@perex.cz>
 
-[ Upstream commit ce04ec03a9c2c4f3e60e26f21311b25d5a478208 ]
+[ Upstream commit b4d072c98e47c562834f2a050ca98a1c709ef4f9 ]
 
-The kernel BOs unnecessarily got added to the external objects list
-of drm_gpuvm, when mapping to GPU, which would have resulted in few
-extra CPU cycles being spent at the time of job submission as
-drm_exec_until_all_locked() loop iterates over all external objects.
+The i2c probe functions here don't use the id information provided in
+their second argument, so the single-parameter i2c probe function
+("probe_new") can be used instead.
 
-Kernel BOs are private to a VM and so they share the dma_resv object of
-the dummy GEM object created for a VM. Use of DRM_EXEC_IGNORE_DUPLICATES
-flag ensured the recursive locking of the dummy GEM object was ignored.
-Also no extra space got allocated to add fences to the dma_resv object
-of dummy GEM object. So no other impact apart from few extra CPU cycles.
+This avoids scanning the identifier tables during probes.
 
-This commit sets the pointer to dma_resv object of GEM object of
-kernel BOs before they are mapped to GPU, to prevent them from
-being added to external objects list.
-
-v2: Add R-bs and fixes tags
-
-Fixes: 8a1cc07578bf ("drm/panthor: Add GEM logical block")
-Signed-off-by: Akash Goel <akash.goel@arm.com>
-Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Link: https://patch.msgid.link/20251120172118.2741724-1-akash.goel@arm.com
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://patch.msgid.link/20251126091759.2490019-2-perex@perex.cz
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: cd41d3420ef6 ("ASoC: nau8325: add missing build config")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_gem.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/nau8325.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_gem.c b/drivers/gpu/drm/panthor/panthor_gem.c
-index 8387a075150bd..0438b80a6434b 100644
---- a/drivers/gpu/drm/panthor/panthor_gem.c
-+++ b/drivers/gpu/drm/panthor/panthor_gem.c
-@@ -88,6 +88,9 @@ panthor_kernel_bo_create(struct panthor_device *ptdev, struct panthor_vm *vm,
- 	bo = to_panthor_bo(&obj->base);
- 	kbo->obj = &obj->base;
- 	bo->flags = bo_flags;
-+	bo->exclusive_vm_root_gem = panthor_vm_root_gem(vm);
-+	drm_gem_object_get(bo->exclusive_vm_root_gem);
-+	bo->base.base.resv = bo->exclusive_vm_root_gem->resv;
+diff --git a/sound/soc/codecs/nau8325.c b/sound/soc/codecs/nau8325.c
+index 2266f320a8f22..5b3115b0a7e58 100644
+--- a/sound/soc/codecs/nau8325.c
++++ b/sound/soc/codecs/nau8325.c
+@@ -829,8 +829,7 @@ static int nau8325_read_device_properties(struct device *dev,
+ 	return 0;
+ }
  
- 	/* The system and GPU MMU page size might differ, which becomes a
- 	 * problem for FW sections that need to be mapped at explicit address
-@@ -105,9 +108,6 @@ panthor_kernel_bo_create(struct panthor_device *ptdev, struct panthor_vm *vm,
- 		goto err_free_va;
- 
- 	kbo->vm = panthor_vm_get(vm);
--	bo->exclusive_vm_root_gem = panthor_vm_root_gem(vm);
--	drm_gem_object_get(bo->exclusive_vm_root_gem);
--	bo->base.base.resv = bo->exclusive_vm_root_gem->resv;
- 	return kbo;
- 
- err_free_va:
+-static int nau8325_i2c_probe(struct i2c_client *i2c,
+-			     const struct i2c_device_id *id)
++static int nau8325_i2c_probe(struct i2c_client *i2c)
+ {
+ 	struct device *dev = &i2c->dev;
+ 	struct nau8325 *nau8325 = dev_get_platdata(dev);
 -- 
 2.51.0
 
