@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D67B3469F3;
-	Tue, 16 Dec 2025 12:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1618F3451A6;
+	Tue, 16 Dec 2025 12:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887602; cv=none; b=uA75C6TL+m6RY7hMWXy+RYij0SjMeFryh8Xe3jTAHIoiQ8BXumAIaqo4NbimGuGO/rz1BuUt6T1RMvSRg0oiWJ19YINz1N3o7KDmPqy5fXsusJmVr+OTtEuv1Y1mdNKui+rLpJbiQ88eZxKSfx5cHfDwBONN0yoDpAGP2+w9SHo=
+	t=1765887605; cv=none; b=MArjzSSBjFh9ZVFACCeBQIzr1a1htvx4xzZ+BJmIRQ0HnbAaz6UeGV4r5xVshG6ExHgCALOZv4k6KoHy4Wk2Si9OI249fkp9ARU4/K0hWIdW51QCIWjCVvgS8RCwH0/YmV0NODw4hnhUD8H1D+DQO1y7NqyLY3ooZmPmC0qZaug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887602; c=relaxed/simple;
-	bh=o2gHrrbfQTUDzSbtmSPORRc3GcCn86faWtdK2ceV54g=;
+	s=arc-20240116; t=1765887605; c=relaxed/simple;
+	bh=+PkCffZ6hiJ3r+LlBKdNzVCib0rqxjrMQh1llP3g5p8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DwXD3V+COWJBHZlbHH/ixWkpvjJCC1AIfhimHSDsaMLSZyKB+RnjZn0zMK7zdYCgba4hlznykFxJP9f+TrPCV0tFrei2RsKH7NRAUx1/vH6VCo89ySNAqP4rtug54b3TSBNhR/wTjr0BCDIp0iYZo7L19wVdVAjGxl45LsKeCQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBWoEoqM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NHeCLdFfts7Kir58wNagNgxQ4FRkD0Row8hDE+CxHWjViWWKgu2KVkEIWfKjdxznvNH6+Qvj4ytRXFafj3FHm7/BOSlOUPafOz2MGK/OHpZ+k+Y1ncL6ffD0RkipekY1f9c/3xV8GKPELF0RvRE8Gmo5moU1VA1z4uXhpZxc3mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVyzY4QS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBWoEoqM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE05EC4CEF5;
-	Tue, 16 Dec 2025 12:20:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVyzY4QS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC7BC4CEF1;
+	Tue, 16 Dec 2025 12:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887602;
-	bh=o2gHrrbfQTUDzSbtmSPORRc3GcCn86faWtdK2ceV54g=;
+	s=korg; t=1765887605;
+	bh=+PkCffZ6hiJ3r+LlBKdNzVCib0rqxjrMQh1llP3g5p8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBWoEoqMLEnW2s4JJF0ABuxcqx+RrF0YDWaHbRJtG45WwsKVP9rAC6HbWYpodN+4q
-	 Uj1G8uWh7c33hB+sTw2GnJw4zXMQ9zjBr3mu6jSMoE1S6UBp8XjUcKjQcBoiG33ZXC
-	 jXpzqu0tOAa3CXa8fRcjvu0POhVqx7DVAqPf5krE=
+	b=dVyzY4QSGrLIV7/EHjBF+78aNagx3skqZNfQNauq9q+37XKLxmyH6Ck7IyfHkvxqz
+	 4II2j8T7+I+yzxpLV4LozkFippBBAXlPc+9UwlTrYzN/Lnz5Tu3qkJGA/KKQdJZDRN
+	 +fEn+JaW6joqq5l1Wp/bkwKkg2S6G77l7DAzwZvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Qixing <zhengqixing@huawei.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Akash Goel <akash.goel@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 248/614] nbd: defer config unlock in nbd_genl_connect
-Date: Tue, 16 Dec 2025 12:10:15 +0100
-Message-ID: <20251216111410.362260514@linuxfoundation.org>
+Subject: [PATCH 6.18 239/614] drm/panthor: Fix potential memleak of vma structure
+Date: Tue, 16 Dec 2025 12:10:06 +0100
+Message-ID: <20251216111410.027178940@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,70 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Qixing <zhengqixing@huawei.com>
+From: Akash Goel <akash.goel@arm.com>
 
-[ Upstream commit 1649714b930f9ea6233ce0810ba885999da3b5d4 ]
+[ Upstream commit 4492d54d59872bb72e119ff9f77969ab4d8a0e6b ]
 
-There is one use-after-free warning when running NBD_CMD_CONNECT and
-NBD_CLEAR_SOCK:
+This commit addresses a memleak issue of panthor_vma (or drm_gpuva)
+structure in Panthor driver, that can happen if the GPU page table
+update operation to map the pages fail.
+The issue is very unlikely to occur in practice.
 
-nbd_genl_connect
-  nbd_alloc_and_init_config // config_refs=1
-  nbd_start_device // config_refs=2
-  set NBD_RT_HAS_CONFIG_REF			open nbd // config_refs=3
-  recv_work done // config_refs=2
-						NBD_CLEAR_SOCK // config_refs=1
-						close nbd // config_refs=0
-  refcount_inc -> uaf
+v2: Add panthor_vm_op_ctx_return_vma() helper (Boris)
 
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 24 PID: 1014 at lib/refcount.c:25 refcount_warn_saturate+0x12e/0x290
- nbd_genl_connect+0x16d0/0x1ab0
- genl_family_rcv_msg_doit+0x1f3/0x310
- genl_rcv_msg+0x44a/0x790
+v3: Add WARN_ON_ONCE (Boris)
 
-The issue can be easily reproduced by adding a small delay before
-refcount_inc(&nbd->config_refs) in nbd_genl_connect():
-
-        mutex_unlock(&nbd->config_lock);
-        if (!ret) {
-                set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
-+               printk("before sleep\n");
-+               mdelay(5 * 1000);
-+               printk("after sleep\n");
-                refcount_inc(&nbd->config_refs);
-                nbd_connect_reply(info, nbd->index);
-        }
-
-Fixes: e46c7287b1c2 ("nbd: add a basic netlink interface")
-Signed-off-by: Zheng Qixing <zhengqixing@huawei.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 647810ec2476 ("drm/panthor: Add the MMU/VM logical block")
+Signed-off-by: Akash Goel <akash.goel@arm.com>
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20251021081042.1377406-1-akash.goel@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_mmu.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 215fc18115b78..a05ff68e58d06 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -2241,12 +2241,13 @@ static int nbd_genl_connect(struct sk_buff *skb, struct genl_info *info)
- 
- 	ret = nbd_start_device(nbd);
- out:
--	mutex_unlock(&nbd->config_lock);
- 	if (!ret) {
- 		set_bit(NBD_RT_HAS_CONFIG_REF, &config->runtime_flags);
- 		refcount_inc(&nbd->config_refs);
- 		nbd_connect_reply(info, nbd->index);
+diff --git a/drivers/gpu/drm/panthor/panthor_mmu.c b/drivers/gpu/drm/panthor/panthor_mmu.c
+index 7870e7dbaa5d4..15961629872e1 100644
+--- a/drivers/gpu/drm/panthor/panthor_mmu.c
++++ b/drivers/gpu/drm/panthor/panthor_mmu.c
+@@ -1146,6 +1146,20 @@ static void panthor_vm_cleanup_op_ctx(struct panthor_vm_op_ctx *op_ctx,
  	}
-+	mutex_unlock(&nbd->config_lock);
+ }
+ 
++static void
++panthor_vm_op_ctx_return_vma(struct panthor_vm_op_ctx *op_ctx,
++			     struct panthor_vma *vma)
++{
++	for (u32 i = 0; i < ARRAY_SIZE(op_ctx->preallocated_vmas); i++) {
++		if (!op_ctx->preallocated_vmas[i]) {
++			op_ctx->preallocated_vmas[i] = vma;
++			return;
++		}
++	}
 +
- 	nbd_config_put(nbd);
- 	if (put_dev)
- 		nbd_put(nbd);
++	WARN_ON_ONCE(1);
++}
++
+ static struct panthor_vma *
+ panthor_vm_op_ctx_get_vma(struct panthor_vm_op_ctx *op_ctx)
+ {
+@@ -2085,8 +2099,10 @@ static int panthor_gpuva_sm_step_map(struct drm_gpuva_op *op, void *priv)
+ 	ret = panthor_vm_map_pages(vm, op->map.va.addr, flags_to_prot(vma->flags),
+ 				   op_ctx->map.sgt, op->map.gem.offset,
+ 				   op->map.va.range);
+-	if (ret)
++	if (ret) {
++		panthor_vm_op_ctx_return_vma(op_ctx, vma);
+ 		return ret;
++	}
+ 
+ 	/* Ref owned by the mapping now, clear the obj field so we don't release the
+ 	 * pinning/obj ref behind GPUVA's back.
 -- 
 2.51.0
 
