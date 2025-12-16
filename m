@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B34F033066D;
-	Tue, 16 Dec 2025 12:30:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8A0378302;
+	Tue, 16 Dec 2025 12:30:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888238; cv=none; b=Kmi41e55PgtmO2yeZN31SCoSbGuA+LcbawT6b2F/dVPe56W8U1m8D4jRi1CY1MYrfbQ7gwO+IXVpGAplm99h/HEkcYpmfXk+bV8im5nM6wWAIbRt/QkQwwcgYnVSw+94eT3T7pxhczNDvy4M6QRR8npAR0qcixMYMPxBai+ibKI=
+	t=1765888242; cv=none; b=AJfGp10dBrNbqHJuceZdrSq8LIhhTAGAiCpQuTE2lensaj3N1x0tUvrT3qAR9Rvi6ihuYhP5vamGTDfEtBdApr8qfOzjFURSKFEr9ZnQMcSa/cg4fPnecWU7HTmOb65O0dSWLv9XFRDPt/Thanwaw9QrP5JRrb5+Zk13sChHQZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888238; c=relaxed/simple;
-	bh=VotkHHEI0qIzWyn9UF6H+VgqkXP0mKhz8aq7C6xVQ9I=;
+	s=arc-20240116; t=1765888242; c=relaxed/simple;
+	bh=GMAVTshxLwT9FDwRkCWkO95rFidctVXNHrg/tIidjJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ScTR/cFvAYLUIX7A88NckLuDC+PacyHxtp+chePFBeXi8ipEcItou121vXSC4oqbL3v5OWcHR5NOr1jCkB5/3Ke0/KB93NDzzMEs/DM+cGPsZfE+4rprofDGdnDaOjsJZpg/iEP2B1U91qR+1t3koKjyIQOpXAp5RmXcRroL4ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OnsP5mLo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fD2plJWF2DKha/1SzjrQA/dUNN3SnVW/EbOP0agPpisEtTLtUfbMjKtehRq7qyrca4/l95KxV/9+ahjeeRqSMNcIBHs5R+EVBh28i5Z/+1xjGZcwkwhXzaH2K1k+sa6oGelJtM1fglNhUs1uaAZTpbEq6e5V5/u2GC4cg4eCXYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RLb2ainr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OnsP5mLo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D69FEC4CEF1;
-	Tue, 16 Dec 2025 12:30:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RLb2ainr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3254AC4CEF1;
+	Tue, 16 Dec 2025 12:30:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888238;
-	bh=VotkHHEI0qIzWyn9UF6H+VgqkXP0mKhz8aq7C6xVQ9I=;
+	s=korg; t=1765888241;
+	bh=GMAVTshxLwT9FDwRkCWkO95rFidctVXNHrg/tIidjJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OnsP5mLoB5VnJZq72Rjr5fNjHJw/00TGRFuI5z8YTaQP0uYwXDICvYz+cbl8b5rig
-	 hnQ1gOP49X60GpGjfRaM5pftWDUQjb+ofasuWCRNzu+brnDlCDUzT8Hr/FRFBFkz1D
-	 hTTeTnypp4bMi7o03y/PI1F2khKofgCzdy08qf2E=
+	b=RLb2ainrGvonEO1A1CSvp0/fFsdeKvEMpdam01YoRMRbgRINitPdcNPyWIj1FQI28
+	 87/BHFbWnadc+ENw80dQ/Sqraj2raDuZcA/hu9gwwRBGgwlRpPoHJqnAFPrME4JWDa
+	 CcUPvpwJNZPdy9ONG6Qd6e9aSW5hadGaTnwWQD7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Marek Szyprowski <m.szyprowski@samsung.com>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 473/614] soc: samsung: exynos-pmu: Fix structure initialization
-Date: Tue, 16 Dec 2025 12:14:00 +0100
-Message-ID: <20251216111418.507630038@linuxfoundation.org>
+Subject: [PATCH 6.18 474/614] ARM: dts: samsung: universal_c210: turn off SDIO WLAN chip during system suspend
+Date: Tue, 16 Dec 2025 12:14:01 +0100
+Message-ID: <20251216111418.543253435@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,67 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 2224ea67c75d0a0b9eaf803d0dfdab8d0c601c35 ]
+[ Upstream commit 97aee67e2406ea381408915e606c5f86448f3949 ]
 
-Commit 78b72897a5c8 ("soc: samsung: exynos-pmu: Enable CPU Idle for
-gs101") added system wide suspend/resume callbacks to Exynos PMU driver,
-but some items used by these callbacks are initialized only on
-GS101-compatible boards. Move that initialization to exynos_pmu_probe()
-to avoid potential lockdep warnings like below observed during system
-suspend/resume cycle:
+Commit 8c3170628a9c ("wifi: brcmfmac: keep power during suspend if board
+requires it") changed default behavior of the BRCMFMAC driver, which now
+keeps SDIO card powered during system suspend to enable optional support
+for WOWL. This feature is not supported by the legacy Exynos4 based
+boards and leads to WLAN disfunction after system suspend/resume cycle.
+Fix this by annotating SDIO host used by WLAN chip with
+'cap-power-off-card' property, which should have been there from the
+beginning.
 
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 0 UID: 0 PID: 2134 Comm: rtcwake Not tainted 6.18.0-rc7-next-20251126-00039-g1d656a1af243 #11794 PREEMPT
-Hardware name: Samsung Exynos (Flattened Device Tree)
-Call trace:
- unwind_backtrace from show_stack+0x10/0x14
- show_stack from dump_stack_lvl+0x68/0x88
- dump_stack_lvl from register_lock_class+0x970/0x988
- register_lock_class from __lock_acquire+0xc8/0x29ec
- __lock_acquire from lock_acquire+0x134/0x39c
- lock_acquire from _raw_spin_lock+0x38/0x48
- _raw_spin_lock from exynos_cpupm_suspend_noirq+0x18/0x34
- exynos_cpupm_suspend_noirq from dpm_run_callback+0x98/0x2b8
- dpm_run_callback from device_suspend_noirq+0x8c/0x310
-
-Fixes: 78b72897a5c8 ("soc: samsung: exynos-pmu: Enable CPU Idle for gs101")
+Fixes: f1b0ffaa686f ("ARM: dts: exynos: Enable WLAN support for the UniversalC210 board")
 Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Link: https://patch.msgid.link/20251126110038.3326768-1-m.szyprowski@samsung.com
-[krzk: include calltrace into commit msg]
+Link: https://patch.msgid.link/20251126102618.3103517-2-m.szyprowski@samsung.com
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/samsung/exynos-pmu.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/samsung/exynos4210-universal_c210.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/samsung/exynos-pmu.c b/drivers/soc/samsung/exynos-pmu.c
-index 22c50ca2aa79b..df5b1f299a260 100644
---- a/drivers/soc/samsung/exynos-pmu.c
-+++ b/drivers/soc/samsung/exynos-pmu.c
-@@ -585,10 +585,6 @@ static int setup_cpuhp_and_cpuidle(struct device *dev)
- 	if (!pmu_context->in_cpuhp)
- 		return -ENOMEM;
+diff --git a/arch/arm/boot/dts/samsung/exynos4210-universal_c210.dts b/arch/arm/boot/dts/samsung/exynos4210-universal_c210.dts
+index bdc30f8cf748f..91490693432b6 100644
+--- a/arch/arm/boot/dts/samsung/exynos4210-universal_c210.dts
++++ b/arch/arm/boot/dts/samsung/exynos4210-universal_c210.dts
+@@ -610,6 +610,7 @@ &sdhci_3 {
+ 	#size-cells = <0>;
  
--	raw_spin_lock_init(&pmu_context->cpupm_lock);
--	pmu_context->sys_inreboot = false;
--	pmu_context->sys_insuspend = false;
--
- 	/* set PMU to power on */
- 	for_each_online_cpu(cpu)
- 		gs101_cpuhp_pmu_online(cpu);
-@@ -657,6 +653,9 @@ static int exynos_pmu_probe(struct platform_device *pdev)
- 
- 	pmu_context->pmureg = regmap;
- 	pmu_context->dev = dev;
-+	raw_spin_lock_init(&pmu_context->cpupm_lock);
-+	pmu_context->sys_inreboot = false;
-+	pmu_context->sys_insuspend = false;
- 
- 	if (pmu_context->pmu_data && pmu_context->pmu_data->pmu_cpuhp) {
- 		ret = setup_cpuhp_and_cpuidle(dev);
+ 	non-removable;
++	cap-power-off-card;
+ 	bus-width = <4>;
+ 	mmc-pwrseq = <&wlan_pwrseq>;
+ 	vmmc-supply = <&ldo5_reg>;
 -- 
 2.51.0
 
