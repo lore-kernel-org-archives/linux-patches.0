@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8AE495E5;
-	Tue, 16 Dec 2025 11:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFB233D6E8;
+	Tue, 16 Dec 2025 11:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883876; cv=none; b=AS0qKErEAoWn5LfMaPTX3RsU5Q3xSAc0542GQo+5HiGh8Il//G38p07feF73b5fA7xA+oUylhuyP3v8ECs323wCf9DZENIRylWdheIeUHB7rVEfEpjQRr4fHik58oLpRcE1vzTpYqcy8vcXU3Ut1rXszjzGQb8XoHaamAnMO5sY=
+	t=1765883879; cv=none; b=ULYwndsVFi0b1zLdzygJp+3VvdErLUJW3O1dIN1nUnz+kO+Ooaz2rAnycSRManDXOoCNJEV2F0uTZqAj1BMCQWI2/QCmTC9g2Zzk1Rr3p/7Lo0ZnNvLKzQyQUt489iwkwrtwqTLKQribKMxec0eSZzhNc76ndUtPBHocvRLK11M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883876; c=relaxed/simple;
-	bh=EyNKUZk84DIhs5InZGbNBzSa9vzQVdYxuJSBlPIoMyo=;
+	s=arc-20240116; t=1765883879; c=relaxed/simple;
+	bh=0ZYuTlHn0W5RwUkP1q3+G1V8IjhfGUx56P3Lex35QEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9qwu/2bQl9hMiHfrnhMXc43UGqdfZ5m813ztcyGi9mJ3Z3KTa94VeiyCpIFrqNKVDyrbD7HWkbdEvQlm1jz+ZeXI/uQuGCZXR/gsqGvaC27sccxnBK0JdZX/wo4JwXLs7gX09fmkze0EI+rjBC7UeW1be6YG1akA/F9uZiYgfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vY+OvTHC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EkdUry+qmLLlmc4HI3sOz+x8nqn+2USHaWZ5vrps+WhVXOfIcsGWnOEeeHo7SyvPaXA5O1oLRSDaTTxuuVMWDj/J4GMcRQSRsjUhwyvuPUGLjBjxqSqihFkij8oXomyGRUL/4ICT4SRPO1rs+w5fxxhiPq2OADD3A7rwvYyz0Ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFVUecN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vY+OvTHC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C20C4CEF5;
-	Tue, 16 Dec 2025 11:17:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFVUecN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDD4C4CEF5;
+	Tue, 16 Dec 2025 11:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883876;
-	bh=EyNKUZk84DIhs5InZGbNBzSa9vzQVdYxuJSBlPIoMyo=;
+	s=korg; t=1765883879;
+	bh=0ZYuTlHn0W5RwUkP1q3+G1V8IjhfGUx56P3Lex35QEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vY+OvTHC6qCmJSw4aBgcYchY/VMQM6xwM0vExHccwaddwmzcxgWnclojDEd8nlmk1
-	 FhCSx+5FCeX1Dzq/B/toGB0p2O306PwSHcCr4ixKTxQoJTdAJRYNpsuMM+PtO4NztW
-	 0pp4XPfCLdYSXzlNsISrK9eJ5Zl4gJ+8QXD/moVY=
+	b=bFVUecN+agZlyS+j2WhagGxsLPvLzQFcC9yK17HljwqcaHWPrP+6E0o/bXwKp9q0X
+	 WjGvpdtiMTJU6nKf4TKtfzO1f7IR0Gd7ZmiPk6tLjrW0pGWRKPMEEf9gd+1+IOn58W
+	 N8Kj8j+WFZpWUaSho41S/Iej4XgCIe75LbgmsO3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
 	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 025/354] wifi: ath10k: Avoid vdev delete timeout when firmware is already down
-Date: Tue, 16 Dec 2025 12:09:52 +0100
-Message-ID: <20251216111321.823012249@linuxfoundation.org>
+Subject: [PATCH 6.12 026/354] wifi: ath10k: Add missing include of export.h
+Date: Tue, 16 Dec 2025 12:09:53 +0100
+Message-ID: <20251216111321.858318208@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,104 +51,199 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 
-[ Upstream commit dc9c4252fe0d7a7f1ee904405ea91534277305bf ]
+[ Upstream commit 32c3a0f8894311c743b2a6a15b50b13d01411ce1 ]
 
-In some scenarios, the firmware may be stopped before the interface is
-removed, either due to a crash or because the remoteproc (e.g., MPSS)
-is shut down early during system reboot or shutdown.
+Commit a934a57a42f6 ("scripts/misc-check: check missing #include
+<linux/export.h> when W=1") introduced a new check that is producing
+the following warnings:
 
-This leads to a delay during interface teardown, as the driver waits for
-a vdev delete response that never arrives, eventually timing out.
+drivers/net/wireless/ath/ath10k/bmi.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/ce.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/core.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/coredump.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/debug.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/htc.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/htt_rx.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/htt_tx.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/mac.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
+drivers/net/wireless/ath/ath10k/trace.c: warning: EXPORT_SYMBOL() is used, but #include <linux/export.h> is missing
 
-Example (SNOC):
-$ echo stop > /sys/class/remoteproc/remoteproc0/state
-[ 71.64] remoteproc remoteproc0: stopped remote processor modem
-$ reboot
-[ 74.84] ath10k_snoc c800000.wifi: failed to transmit packet, dropping: -108
-[ 74.84] ath10k_snoc c800000.wifi: failed to submit frame: -108
-[...]
-[ 82.39] ath10k_snoc c800000.wifi: Timeout in receiving vdev delete response
+Add the missing #include to satisfy the check.
 
-To avoid this, skip waiting for the vdev delete response if the firmware is
-already marked as unreachable (`ATH10K_FLAG_CRASH_FLUSH`), similar to how
-`ath10k_mac_wait_tx_complete()` and `ath10k_vdev_setup_sync()` handle this case.
-
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Link: https://patch.msgid.link/20250522131704.612206-1-loic.poulain@oss.qualcomm.com
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20250611-ath-unused-export-v1-3-c36819df7e7b@oss.qualcomm.com
 Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Stable-dep-of: f35a07a4842a ("wifi: ath10k: move recovery check logic into a new work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/mac.c | 33 ++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 8 deletions(-)
+ drivers/net/wireless/ath/ath10k/bmi.c      | 2 ++
+ drivers/net/wireless/ath/ath10k/ce.c       | 2 ++
+ drivers/net/wireless/ath/ath10k/core.c     | 2 ++
+ drivers/net/wireless/ath/ath10k/coredump.c | 2 ++
+ drivers/net/wireless/ath/ath10k/debug.c    | 2 ++
+ drivers/net/wireless/ath/ath10k/htc.c      | 3 +++
+ drivers/net/wireless/ath/ath10k/htt_rx.c   | 3 +++
+ drivers/net/wireless/ath/ath10k/htt_tx.c   | 2 ++
+ drivers/net/wireless/ath/ath10k/mac.c      | 1 +
+ drivers/net/wireless/ath/ath10k/trace.c    | 2 ++
+ 10 files changed, 21 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
-index 74ee3c4f7a6a2..68d049289359b 100644
---- a/drivers/net/wireless/ath/ath10k/mac.c
-+++ b/drivers/net/wireless/ath/ath10k/mac.c
-@@ -4,6 +4,7 @@
+diff --git a/drivers/net/wireless/ath/ath10k/bmi.c b/drivers/net/wireless/ath/ath10k/bmi.c
+index 9a4f8e815412c..6f4ac47d0e6f2 100644
+--- a/drivers/net/wireless/ath/ath10k/bmi.c
++++ b/drivers/net/wireless/ath/ath10k/bmi.c
+@@ -3,8 +3,10 @@
+  * Copyright (c) 2005-2011 Atheros Communications Inc.
+  * Copyright (c) 2011-2014,2016-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
++#include <linux/export.h>
+ #include "bmi.h"
+ #include "hif.h"
+ #include "debug.h"
+diff --git a/drivers/net/wireless/ath/ath10k/ce.c b/drivers/net/wireless/ath/ath10k/ce.c
+index afae4a8027f83..ac7a470fc3e1f 100644
+--- a/drivers/net/wireless/ath/ath10k/ce.c
++++ b/drivers/net/wireless/ath/ath10k/ce.c
+@@ -4,8 +4,10 @@
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2018 The Linux Foundation. All rights reserved.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
++#include <linux/export.h>
+ #include "hif.h"
+ #include "ce.h"
+ #include "debug.h"
+diff --git a/drivers/net/wireless/ath/ath10k/core.c b/drivers/net/wireless/ath/ath10k/core.c
+index 7b6812909ab31..d13acb9e70009 100644
+--- a/drivers/net/wireless/ath/ath10k/core.c
++++ b/drivers/net/wireless/ath/ath10k/core.c
+@@ -4,8 +4,10 @@
   * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
   * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
   * Copyright (c) 2021-2024 Qualcomm Innovation Center, Inc. All rights reserved.
 + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
   */
  
++#include <linux/export.h>
+ #include <linux/module.h>
+ #include <linux/firmware.h>
+ #include <linux/of.h>
+diff --git a/drivers/net/wireless/ath/ath10k/coredump.c b/drivers/net/wireless/ath/ath10k/coredump.c
+index bb3a276b7ed58..50d0c4213ecfd 100644
+--- a/drivers/net/wireless/ath/ath10k/coredump.c
++++ b/drivers/net/wireless/ath/ath10k/coredump.c
+@@ -3,11 +3,13 @@
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
+ #include "coredump.h"
+ 
+ #include <linux/devcoredump.h>
++#include <linux/export.h>
+ #include <linux/kernel.h>
+ #include <linux/types.h>
+ #include <linux/utsname.h>
+diff --git a/drivers/net/wireless/ath/ath10k/debug.c b/drivers/net/wireless/ath/ath10k/debug.c
+index 35bfe7232e95e..e45ea59e3e42d 100644
+--- a/drivers/net/wireless/ath/ath10k/debug.c
++++ b/drivers/net/wireless/ath/ath10k/debug.c
+@@ -4,10 +4,12 @@
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
+ #include <linux/module.h>
+ #include <linux/debugfs.h>
++#include <linux/export.h>
+ #include <linux/vmalloc.h>
+ #include <linux/crc32.h>
+ #include <linux/firmware.h>
+diff --git a/drivers/net/wireless/ath/ath10k/htc.c b/drivers/net/wireless/ath/ath10k/htc.c
+index a6e21ce90bad6..cd0917d3ef0e0 100644
+--- a/drivers/net/wireless/ath/ath10k/htc.c
++++ b/drivers/net/wireless/ath/ath10k/htc.c
+@@ -3,8 +3,11 @@
+  * Copyright (c) 2005-2011 Atheros Communications Inc.
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
++#include <linux/export.h>
++
+ #include "core.h"
+ #include "hif.h"
+ #include "debug.h"
+diff --git a/drivers/net/wireless/ath/ath10k/htt_rx.c b/drivers/net/wireless/ath/ath10k/htt_rx.c
+index 7d28ae5453cf8..42b75961cb962 100644
+--- a/drivers/net/wireless/ath/ath10k/htt_rx.c
++++ b/drivers/net/wireless/ath/ath10k/htt_rx.c
+@@ -4,8 +4,11 @@
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
++#include <linux/export.h>
++
+ #include "core.h"
+ #include "htc.h"
+ #include "htt.h"
+diff --git a/drivers/net/wireless/ath/ath10k/htt_tx.c b/drivers/net/wireless/ath/ath10k/htt_tx.c
+index 9725feecefd6f..c1ddd761af3e9 100644
+--- a/drivers/net/wireless/ath/ath10k/htt_tx.c
++++ b/drivers/net/wireless/ath/ath10k/htt_tx.c
+@@ -3,8 +3,10 @@
+  * Copyright (c) 2005-2011 Atheros Communications Inc.
+  * Copyright (c) 2011-2017 Qualcomm Atheros, Inc.
+  * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
++#include <linux/export.h>
+ #include <linux/etherdevice.h>
+ #include "htt.h"
  #include "mac.h"
-@@ -1030,6 +1031,26 @@ static inline int ath10k_vdev_setup_sync(struct ath10k *ar)
- 	return ar->last_wmi_vdev_start_status;
- }
+diff --git a/drivers/net/wireless/ath/ath10k/mac.c b/drivers/net/wireless/ath/ath10k/mac.c
+index 68d049289359b..935923c290e1f 100644
+--- a/drivers/net/wireless/ath/ath10k/mac.c
++++ b/drivers/net/wireless/ath/ath10k/mac.c
+@@ -9,6 +9,7 @@
  
-+static inline int ath10k_vdev_delete_sync(struct ath10k *ar)
-+{
-+	unsigned long time_left;
-+
-+	lockdep_assert_held(&ar->conf_mutex);
-+
-+	if (!test_bit(WMI_SERVICE_SYNC_DELETE_CMDS, ar->wmi.svc_map))
-+		return 0;
-+
-+	if (test_bit(ATH10K_FLAG_CRASH_FLUSH, &ar->dev_flags))
-+		return -ESHUTDOWN;
-+
-+	time_left = wait_for_completion_timeout(&ar->vdev_delete_done,
-+						ATH10K_VDEV_DELETE_TIMEOUT_HZ);
-+	if (time_left == 0)
-+		return -ETIMEDOUT;
-+
-+	return 0;
-+}
-+
- static int ath10k_monitor_vdev_start(struct ath10k *ar, int vdev_id)
- {
- 	struct cfg80211_chan_def *chandef = NULL;
-@@ -5908,7 +5929,6 @@ static void ath10k_remove_interface(struct ieee80211_hw *hw,
- 	struct ath10k *ar = hw->priv;
- 	struct ath10k_vif *arvif = (void *)vif->drv_priv;
- 	struct ath10k_peer *peer;
--	unsigned long time_left;
- 	int ret;
- 	int i;
+ #include "mac.h"
  
-@@ -5948,13 +5968,10 @@ static void ath10k_remove_interface(struct ieee80211_hw *hw,
- 		ath10k_warn(ar, "failed to delete WMI vdev %i: %d\n",
- 			    arvif->vdev_id, ret);
++#include <linux/export.h>
+ #include <net/cfg80211.h>
+ #include <net/mac80211.h>
+ #include <linux/etherdevice.h>
+diff --git a/drivers/net/wireless/ath/ath10k/trace.c b/drivers/net/wireless/ath/ath10k/trace.c
+index c7d4c97e6079f..421ec47c59bdf 100644
+--- a/drivers/net/wireless/ath/ath10k/trace.c
++++ b/drivers/net/wireless/ath/ath10k/trace.c
+@@ -1,8 +1,10 @@
+ // SPDX-License-Identifier: ISC
+ /*
+  * Copyright (c) 2012 Qualcomm Atheros, Inc.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
--	if (test_bit(WMI_SERVICE_SYNC_DELETE_CMDS, ar->wmi.svc_map)) {
--		time_left = wait_for_completion_timeout(&ar->vdev_delete_done,
--							ATH10K_VDEV_DELETE_TIMEOUT_HZ);
--		if (time_left == 0) {
--			ath10k_warn(ar, "Timeout in receiving vdev delete response\n");
--			goto out;
--		}
-+	ret = ath10k_vdev_delete_sync(ar);
-+	if (ret) {
-+		ath10k_warn(ar, "Error in receiving vdev delete response: %d\n", ret);
-+		goto out;
- 	}
++#include <linux/export.h>
+ #include <linux/module.h>
  
- 	/* Some firmware revisions don't notify host about self-peer removal
+ #define CREATE_TRACE_POINTS
 -- 
 2.51.0
 
