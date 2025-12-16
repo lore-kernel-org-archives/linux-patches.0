@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3EC28314B;
-	Tue, 16 Dec 2025 12:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B92261B9C;
+	Tue, 16 Dec 2025 12:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887953; cv=none; b=B5ftQgdDCxUmODZiLnAxeAc5LCNRkAEzeeVnlQxmmxNJyo+j4TmeghJhHTmbPljl5PPsnPB5avP94UI1hhNTp4JbX5f9Fa9ZH9ibNgcRheO5tV0TpaEX92quGC5R3qQpgIsITQVhjtNc5HQ8lZjtqPvqE6oJlCTH9fmIsfgwPuE=
+	t=1765887956; cv=none; b=ICfulYo+d8Bvbf7apt8pNd38LcYP0KqhDC4Ngq8p+W4natQgaTTjMqK9Ob32994Zs+8Jqip8lgapJMmaAzXuypM6C79jWc6fdgz9KTYynF6roAg2HFy3bHCz5XjKzUt4xDBPCtjWraWEnq/OzKgBLZqM+fMKcrta7EBH5Cbgzn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887953; c=relaxed/simple;
-	bh=8TunygGGhgSDxUWNuieu7JzgID/5NHlfWUnMbRyUssA=;
+	s=arc-20240116; t=1765887956; c=relaxed/simple;
+	bh=SH431dr5Lb/OP22Z8uTTI2Pezg7ZNRsTqAxB8cuZndg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kv2xdiGY9FBna8TCBdBNbFL0UaL3Qbdn6i24HfAqlNWx5NJdKP+mlWCpv1blsFPkYRVlYJwu27oCFyshOH6A0+Rb5b6BuvOeY9tvA2ckKQiG/YU8zQTeGDhX8MOu/KGXWmQ0m+kRQ8Zk8Q6isK3siYTZ3rN/PdcXZb9qLaGIdPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bqqs1B89; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cmxzWpVEMbksKQ5FVd37m7BX9EAkrdMEgL/HTbgmJzZenOSlKb3LxkkuOACgv4P+oXB7IHXKyFNbWmf3XDKwFkoGh/QKA+/PLa01221AvFN5bExjiH88dfaVCK31RtkRUvO2ZoTEtGSepRSdFZoZ4+Py0bzCMr6E8wAo5Kziqag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U/xie+sH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bqqs1B89"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A59C4CEF1;
-	Tue, 16 Dec 2025 12:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U/xie+sH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BD3C4CEF1;
+	Tue, 16 Dec 2025 12:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887952;
-	bh=8TunygGGhgSDxUWNuieu7JzgID/5NHlfWUnMbRyUssA=;
+	s=korg; t=1765887955;
+	bh=SH431dr5Lb/OP22Z8uTTI2Pezg7ZNRsTqAxB8cuZndg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bqqs1B89sciiXjEPRbPKiXj0hDMOmrgWayREgYO/6J9WQ3jrlT00rMq6WKiCdoa0p
-	 z/H3O3R5ibdQqYwYfXtVu8VmmR+OBix7eVdlMSBSI0MicVKiBr4KjmkTsaOQh/+l18
-	 xAQRkfLK5o0+NBeiIjIzTaxaOFdW8gsI2RPg/AyI=
+	b=U/xie+sHW2ccxxPJL+eQYDJxKEAQQpm1L5LsZ4iJHky7d7VDZLz0+xzCUezpT4jst
+	 Cj/WWFhroFggPaDBLOPLsvMjrsH7tg4geI1iPBHI+2yKncjmDqpSnyDMEw5NN3lSe+
+	 5gR6YBiz9pQKjTi58e7OGeP0IdbeKAvRy4NZlVHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanko Kaneti <yaneti@declera.com>,
-	Charles Mirabile <cmirabil@redhat.com>,
-	Alex Elder <elder@riscstar.com>,
-	Troy Mitchell <troy.mitchell@linux.spacemit.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 355/614] clk: spacemit: Set clk_hw_onecell_data::num before using flex array
-Date: Tue, 16 Dec 2025 12:12:02 +0100
-Message-ID: <20251216111414.223898451@linuxfoundation.org>
+Subject: [PATCH 6.18 346/614] phy: rockchip: naneng-combphy: Fix PCIe L1ss support RK3562
+Date: Tue, 16 Dec 2025 12:11:53 +0100
+Message-ID: <20251216111413.899324518@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -55,86 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Charles Mirabile <cmirabil@redhat.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 23b2d2fb136959fd0a8e309c70be83d9b8841c7e ]
+[ Upstream commit be866e68966d20bcc4a73708093d577176f99c0c ]
 
-When booting with KASAN enabled the following splat is
-encountered during probe of the k1 clock driver:
+When PCIe link enters L1 PM substates, the PHY will turn off its
+PLL for power-saving. However, it turns off the PLL too fast which
+leads the PHY to be broken. According to the PHY document, we need
+to delay PLL turnoff time.
 
-UBSAN: array-index-out-of-bounds in drivers/clk/spacemit/ccu-k1.c:1044:16
-index 0 is out of range for type 'clk_hw *[*]'
-CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.18.0-rc5+ #1 PREEMPT(lazy)
-Hardware name: Unknown Unknown Product/Unknown Product, BIOS 2022.10spacemit 10/01/2022
-Call Trace:
-[<ffffffff8002b628>] dump_backtrace+0x28/0x38
-[<ffffffff800027d2>] show_stack+0x3a/0x50
-[<ffffffff800220c2>] dump_stack_lvl+0x5a/0x80
-[<ffffffff80022100>] dump_stack+0x18/0x20
-[<ffffffff800164b8>] ubsan_epilogue+0x10/0x48
-[<ffffffff8099034e>] __ubsan_handle_out_of_bounds+0xa6/0xa8
-[<ffffffff80acbfa6>] k1_ccu_probe+0x37e/0x420
-[<ffffffff80b79e6e>] platform_probe+0x56/0x98
-[<ffffffff80b76a7e>] really_probe+0x9e/0x350
-[<ffffffff80b76db0>] __driver_probe_device+0x80/0x138
-[<ffffffff80b76f52>] driver_probe_device+0x3a/0xd0
-[<ffffffff80b771c4>] __driver_attach+0xac/0x1b8
-[<ffffffff80b742fc>] bus_for_each_dev+0x6c/0xc8
-[<ffffffff80b76296>] driver_attach+0x26/0x38
-[<ffffffff80b759ae>] bus_add_driver+0x13e/0x268
-[<ffffffff80b7836a>] driver_register+0x52/0x100
-[<ffffffff80b79a78>] __platform_driver_register+0x28/0x38
-[<ffffffff814585da>] k1_ccu_driver_init+0x22/0x38
-[<ffffffff80023a8a>] do_one_initcall+0x62/0x2a0
-[<ffffffff81401c60>] do_initcalls+0x170/0x1a8
-[<ffffffff81401e7a>] kernel_init_freeable+0x16a/0x1e0
-[<ffffffff811f7534>] kernel_init+0x2c/0x180
-[<ffffffff80025f56>] ret_from_fork_kernel+0x16/0x1d8
-[<ffffffff81205336>] ret_from_fork_kernel_asm+0x16/0x18
----[ end trace ]---
-
-This is bogus and is simply a result of KASAN consulting the
-`.num` member of the struct for bounds information (as it should
-due to `__counted_by`) and finding 0 set by kzalloc() because it
-has not been initialized before the loop that fills in the array.
-The easy fix is to just move the line that sets `num` to before
-the loop that fills the array so that KASAN has the information
-it needs to accurately conclude that the access is valid.
-
-Fixes: 1b72c59db0add ("clk: spacemit: Add clock support for SpacemiT K1 SoC")
-Tested-by: Yanko Kaneti <yaneti@declera.com>
-Signed-off-by: Charles Mirabile <cmirabil@redhat.com>
-Reviewed-by: Alex Elder <elder@riscstar.com>
-Reviewed-by: Troy Mitchell <troy.mitchell@linux.spacemit.com>
-Reviewed-by: Yixun Lan <dlan@gentoo.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: f13bff25161b ("phy: rockchip-naneng-combo: Support rk3562")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/1763459526-35004-2-git-send-email-shawn.lin@rock-chips.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/spacemit/ccu-k1.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/phy/rockchip/phy-rockchip-naneng-combphy.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/clk/spacemit/ccu-k1.c b/drivers/clk/spacemit/ccu-k1.c
-index f5a9fe6ba1859..4761bc1e3b6e6 100644
---- a/drivers/clk/spacemit/ccu-k1.c
-+++ b/drivers/clk/spacemit/ccu-k1.c
-@@ -1018,6 +1018,8 @@ static int spacemit_ccu_register(struct device *dev,
- 	if (!clk_data)
- 		return -ENOMEM;
+diff --git a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
+index e303bec8a996f..7f8fc8e6d4890 100644
+--- a/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
++++ b/drivers/phy/rockchip/phy-rockchip-naneng-combphy.c
+@@ -106,6 +106,10 @@
+ #define RK3568_PHYREG18				0x44
+ #define RK3568_PHYREG18_PLL_LOOP		0x32
  
-+	clk_data->num = data->num;
++#define RK3568_PHYREG30				0x74
++#define RK3568_PHYREG30_GATE_TX_PCK_SEL         BIT(7)
++#define RK3568_PHYREG30_GATE_TX_PCK_DLY_PLL_OFF BIT(7)
 +
- 	for (i = 0; i < data->num; i++) {
- 		struct clk_hw *hw = data->hws[i];
- 		struct ccu_common *common;
-@@ -1044,8 +1046,6 @@ static int spacemit_ccu_register(struct device *dev,
- 		clk_data->hws[i] = hw;
- 	}
- 
--	clk_data->num = data->num;
--
- 	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get, clk_data);
- 	if (ret)
- 		dev_err(dev, "failed to add clock hardware provider (%d)\n", ret);
+ #define RK3568_PHYREG32				0x7C
+ #define RK3568_PHYREG32_SSC_MASK		GENMASK(7, 4)
+ #define RK3568_PHYREG32_SSC_DIR_MASK		GENMASK(5, 4)
+@@ -664,6 +668,10 @@ static int rk3562_combphy_cfg(struct rockchip_combphy_priv *priv)
+ 	case REF_CLOCK_100MHz:
+ 		rockchip_combphy_param_write(priv->phy_grf, &cfg->pipe_clk_100m, true);
+ 		if (priv->type == PHY_TYPE_PCIE) {
++			/* Gate_tx_pck_sel length select for L1ss support */
++			rockchip_combphy_updatel(priv, RK3568_PHYREG30_GATE_TX_PCK_SEL,
++						 RK3568_PHYREG30_GATE_TX_PCK_DLY_PLL_OFF,
++						 RK3568_PHYREG30);
+ 			/* PLL KVCO tuning fine */
+ 			val = FIELD_PREP(RK3568_PHYREG33_PLL_KVCO_MASK,
+ 					 RK3568_PHYREG33_PLL_KVCO_VALUE);
 -- 
 2.51.0
 
