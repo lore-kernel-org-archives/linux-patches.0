@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC302D2483;
-	Tue, 16 Dec 2025 11:59:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FE534844C;
+	Tue, 16 Dec 2025 11:59:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886341; cv=none; b=Y84Vlow4JG85Q78pvCQlZmuhbR5C+vHZE8cTxSgXpGfY0jCWFJ2NCMtzoMEZauBr9P8+glJ6GBNZHfcab/vqlX7JdOJQg5a7Yvwy7iDzLcmO3Xj6jVwXt1bzl3mR0e1ujJwG9LSSiftbQUZIr2FPdXdmBYsMNw//VrZU74+LmnM=
+	t=1765886345; cv=none; b=tJvbQJ6roa7Eq/eqEjCGl4stW8ImYvM/IyLBiOXFca9I3M8yJb4Wy/soI1ugkMQ1ha6OqWUw+CvZ4UeIU8WCUjxQ3G1wdpGyZqZAOQFT3SEinHCAH2zRf5hYg6Z+zHZG0P25Ne+JYs+FfCLpWZJ6w6nTNVa3UWS6arhjRA01kpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886341; c=relaxed/simple;
-	bh=uvpniry1LWCXolcrA62CURqXemUjO8OXfszET5OnZIw=;
+	s=arc-20240116; t=1765886345; c=relaxed/simple;
+	bh=jUAiEzkrjiD3BNAm4S5toS2wLLstAQl8nnBq7iFP+DU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZUoK4atF2qUuoqgAFB+PXxoGiVxZ2QH2Von0i8Lx0l5tfjNm/yZ0RIp40ghJyebjmlO2WnassZOqmGvlBjOFz98o+EX1XAjqKR33MuEg6DGeivDQugz+g4VnJVU5pBczHMaXVOAhZ60Eq9j9QAV6Q6+0Zawi4ofYUj5QgGZbNZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DMdwXbF1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WvdWJTLK8buf0mNnJuO/dMOOcIiTuJ2h0ROuCKrdSW7Ka1ec47YT3V2QEhl44M/wp9GghzGdLOVheDh70QP3TY/EAUpM265BzNEbIrMNuJRoArsh2xAYzbM38sL+XUqwcZV3cNUDi2FEEKi71cEHxUd6WhFIsVVdZIKVw+xLLa0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bc8P/RfO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DMdwXbF1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36DBC4CEF1;
-	Tue, 16 Dec 2025 11:59:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bc8P/RfO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F648C4CEF5;
+	Tue, 16 Dec 2025 11:59:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886341;
-	bh=uvpniry1LWCXolcrA62CURqXemUjO8OXfszET5OnZIw=;
+	s=korg; t=1765886344;
+	bh=jUAiEzkrjiD3BNAm4S5toS2wLLstAQl8nnBq7iFP+DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DMdwXbF120nU8rrkkADKZ5M4npZwuB6e6d7FE0IbpI90CxSIjO+TKaGR1+EZjeCqm
-	 GNeneaieJWalC/ZXmqhnMHjDMAdfdizTw7woFBlOy36xVN10HImiVVEYobopbHVl8j
-	 qJxi25pqUMz9uWCQc365uwclbJfpSuToGF2JWYMI=
+	b=bc8P/RfOeqUhRxyLHaRE1Lm71hkrykntUpuFk38tRLhHCAOVLt2z35Yf4mr8BcgsO
+	 6Fu6sGSqraVUw1lHJyR5J93XPeLBAZy4t16OV6p/W0fdknjVmZXQNsAWJOHRLEKKH6
+	 XdwB0mguv8vkD3sKZGRJviP8dT/U4JjmZ6BuZwCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 408/507] clk: keystone: fix compile testing
-Date: Tue, 16 Dec 2025 12:14:09 +0100
-Message-ID: <20251216111400.245304875@linuxfoundation.org>
+Subject: [PATCH 6.17 409/507] net: dsa: b53: fix VLAN_ID_IDX write size for BCM5325/65
+Date: Tue, 16 Dec 2025 12:14:10 +0100
+Message-ID: <20251216111400.281046213@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -45,45 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit b276445e98fe28609688fb85b89a81b803910e63 ]
+[ Upstream commit 6f268e275c74dae0536e0b61982a8db25bcf4f16 ]
 
-Some keystone clock drivers can be selected when COMPILE_TEST is
-enabled but since commit b745c0794e2f ("clk: keystone: Add sci-clk
-driver support") they are never actually built.
+Since BCM5325 and BCM5365 only support up to 256 VLANs, the VLAN_ID_IDX
+register is only 8 bit wide, not 16 bit, so use an appropriate accessor.
 
-Enable compile testing by allowing the build system to process the
-keystone drivers.
-
-Fixes: b745c0794e2f ("clk: keystone: Add sci-clk driver support")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: c45655386e53 ("net: dsa: b53: add support for FDB operations on 5325/5365")
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Tested-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Link: https://patch.msgid.link/20251128080625.27181-2-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/Makefile | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-index 18ed29cfdc113..12b4688131f11 100644
---- a/drivers/clk/Makefile
-+++ b/drivers/clk/Makefile
-@@ -124,8 +124,7 @@ obj-$(CONFIG_ARCH_HISI)			+= hisilicon/
- obj-y					+= imgtec/
- obj-y					+= imx/
- obj-y					+= ingenic/
--obj-$(CONFIG_ARCH_K3)			+= keystone/
--obj-$(CONFIG_ARCH_KEYSTONE)		+= keystone/
-+obj-y					+= keystone/
- obj-y					+= mediatek/
- obj-$(CONFIG_ARCH_MESON)		+= meson/
- obj-y					+= microchip/
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index eb767edc4c135..a09ed32dccc07 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1924,8 +1924,12 @@ static int b53_arl_op(struct b53_device *dev, int op, int port,
+ 
+ 	/* Perform a read for the given MAC and VID */
+ 	b53_write48(dev, B53_ARLIO_PAGE, B53_MAC_ADDR_IDX, mac);
+-	if (!is5325m(dev))
+-		b53_write16(dev, B53_ARLIO_PAGE, B53_VLAN_ID_IDX, vid);
++	if (!is5325m(dev)) {
++		if (is5325(dev) || is5365(dev))
++			b53_write8(dev, B53_ARLIO_PAGE, B53_VLAN_ID_IDX, vid);
++		else
++			b53_write16(dev, B53_ARLIO_PAGE, B53_VLAN_ID_IDX, vid);
++	}
+ 
+ 	/* Issue a read operation for this MAC */
+ 	ret = b53_arl_rw_op(dev, 1);
 -- 
 2.51.0
 
