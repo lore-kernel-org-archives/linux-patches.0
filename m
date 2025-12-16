@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C807934EEF0;
-	Tue, 16 Dec 2025 12:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA3934EEF0;
+	Tue, 16 Dec 2025 12:13:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887213; cv=none; b=uc0r18hxLxCEpqh7SlS92Gyjm8RFYaDgXxnu7zgj5CImEvg1D27V9gbwDf3E3V+/nZzGc8BHXbAIITg6dBxXNjG4XBga7rupquYmZfEuA+0GHKdgC02pvspiMJ66iA1UF6KYNYOOttb9z96qRqZwgJ9JZwbOJM/qJNtZ0nXgXik=
+	t=1765887217; cv=none; b=LOLIwIudhnbbULcs4pwp+hh/pC7in2qIzMwlX4ecUZbxIlMobqykyD4ZMEVhtkm3OS88Tk56eckX24HDlHWxHFsVpA908kjS+K0k9yoiVOMQOx4ts0ZozP+uuM1J1/2agbUvqPjC5/LyJek1qUahObmtz+qSL06uawMm6xac15k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887213; c=relaxed/simple;
-	bh=8bigxs6OLyZ3Mb+IJbvCXshuYhPPs5o9O84ImqFnGxw=;
+	s=arc-20240116; t=1765887217; c=relaxed/simple;
+	bh=ovHzXjeThtM0UpMuapJLnqnvcs/eXLsS9D3wS3DYiuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RaHKoLzDvm8dkaOJ91SLSNdprbTE2KEu7bIKWnyWhGXh0UdbB72nRQyLOjfuzwAJIWYVhUzC4jD/cUTF+Ui8k69Z3tjCSfRQ8XqO77l+RBHqPEvvcOsVn7oCLSNn8pp00FjGABeqz0FK8nhBwETWj513yIjwMshM4Pm4pSwQWnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OD+Ddi6o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QresP7sq+Br+tmbJ/mlvQgRTND8P1FTSXr53y3kVio44BHVxzUdZARldzjvrTxuY+KD1g0NcskxAzSjc66cSK095SGEsaorx6VdkCxEh0HUQcJyuzrZFXU4OvQIHi2jwZNGxniUsK4wDyeed/EvOx7mawaWiwu01wlVALWxsoTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QdPRU2Ty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OD+Ddi6o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4785CC4CEF5;
-	Tue, 16 Dec 2025 12:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QdPRU2Ty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE34BC4CEF1;
+	Tue, 16 Dec 2025 12:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887213;
-	bh=8bigxs6OLyZ3Mb+IJbvCXshuYhPPs5o9O84ImqFnGxw=;
+	s=korg; t=1765887216;
+	bh=ovHzXjeThtM0UpMuapJLnqnvcs/eXLsS9D3wS3DYiuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OD+Ddi6o0bMlrs6u2xRl/2lGvxwlhnnNTMIwDaIvd7Tre4+vk68oVX30b/MJbeANj
-	 Owwp8Xcjjf5flR7PFLOTZ91yHCKVViJPOkz3wJYtqDA0PvQ0rYMqFxWnz1V9GhRd3y
-	 J4y1PhvqqzEnczfwvoXCuE01MN6owdOh99aRxhN0=
+	b=QdPRU2Tygc8W4UivH/EKJcIH+182qscwX1FKd2R5XPCC9wGTzr56kQzdvWIOzC6h7
+	 2iv+qmMHdWx04ikku7yASsizJKk8jemft8rAoRWmcJEomApfJ/wtf5UxAJbnKGiHjH
+	 EbZmBXg4O06uVWSozKlcnFu3cj4+37aVAJxzGSc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Baochen Qiang <baochen.qiang@oss.qualcomm.com>,
+	Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>,
+	Jeff Johnson <jeff.johnson@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 134/614] drm/amdgpu/userq: fix SDMA and compute validation
-Date: Tue, 16 Dec 2025 12:08:21 +0100
-Message-ID: <20251216111406.191486876@linuxfoundation.org>
+Subject: [PATCH 6.18 161/614] wifi: ath12k: fix reusing m3 memory
+Date: Tue, 16 Dec 2025 12:08:48 +0100
+Message-ID: <20251216111407.169555946@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,89 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
 
-[ Upstream commit a0559012a18a5a6ad87516e982892765a403b8ab ]
+[ Upstream commit 00575bb44b2c2aa53d0a768de2b80c9c1af0174d ]
 
-The CSA and EOP buffers have different alignement requirements.
-Hardcode them for now as a bug fix.  A proper query will be added in
-a subsequent patch.
+During firmware recovery or suspend/resume, m3 memory could be reused if
+the size of the new m3 binary is equal to or less than that of the
+existing memory. There will be issues for the latter case, since
+m3_mem->size will be updated with a smaller value and this value is
+eventually used in the free path, where the original total size should be
+used instead.
 
-v2: verify gfx shadow helper callback (Prike)
+To fix it, add a new member in m3_mem_region structure to track the original
+memory size and use it in free path.
 
-Fixes: 9e46b8bb0539 ("drm/amdgpu: validate userq buffer virtual address and size")
-Reviewed-by: Prike Liang <Prike.Liang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.1.c5-00302-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.115823.3
+
+Fixes: 05090ae82f44 ("wifi: ath12k: check M3 buffer size as well whey trying to reuse it")
+Signed-off-by: Baochen Qiang <baochen.qiang@oss.qualcomm.com>
+Reviewed-by: Vasanthakumar Thiagarajan <vasanthakumar.thiagarajan@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251029-ath12k-fix-m3-reuse-v1-1-69225bacfc5d@oss.qualcomm.com
+Signed-off-by: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_userqueue.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/wireless/ath/ath12k/qmi.c | 11 +++++++----
+ drivers/net/wireless/ath/ath12k/qmi.h |  5 ++++-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-index 5c63480dda9c4..f5aa83ff57f35 100644
---- a/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_userqueue.c
-@@ -254,7 +254,6 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 	struct amdgpu_mqd *mqd_hw_default = &adev->mqds[queue->queue_type];
- 	struct drm_amdgpu_userq_in *mqd_user = args_in;
- 	struct amdgpu_mqd_prop *userq_props;
--	struct amdgpu_gfx_shadow_info shadow_info;
- 	int r;
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
+index 36325e62aa242..8de9aee2498ec 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.c
++++ b/drivers/net/wireless/ath/ath12k/qmi.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: BSD-3-Clause-Clear
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
- 	/* Structure to initialize MQD for userqueue using generic MQD init function */
-@@ -280,8 +279,6 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 	userq_props->doorbell_index = queue->doorbell_index;
- 	userq_props->fence_address = queue->fence_drv->gpu_addr;
+ #include <linux/elf.h>
+@@ -3114,9 +3114,10 @@ static void ath12k_qmi_m3_free(struct ath12k_base *ab)
+ 	if (!m3_mem->vaddr)
+ 		return;
  
--	if (adev->gfx.funcs->get_gfx_shadow_info)
--		adev->gfx.funcs->get_gfx_shadow_info(adev, &shadow_info, true);
- 	if (queue->queue_type == AMDGPU_HW_IP_COMPUTE) {
- 		struct drm_amdgpu_userq_mqd_compute_gfx11 *compute_mqd;
+-	dma_free_coherent(ab->dev, m3_mem->size,
++	dma_free_coherent(ab->dev, m3_mem->total_size,
+ 			  m3_mem->vaddr, m3_mem->paddr);
+ 	m3_mem->vaddr = NULL;
++	m3_mem->total_size = 0;
+ 	m3_mem->size = 0;
+ }
  
-@@ -299,7 +296,7 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 		}
+@@ -3152,7 +3153,7 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
  
- 		r = amdgpu_userq_input_va_validate(queue, compute_mqd->eop_va,
--						   max_t(u32, PAGE_SIZE, AMDGPU_GPU_PAGE_SIZE));
-+						   2048);
- 		if (r)
- 			goto free_mqd;
+ 	/* In recovery/resume cases, M3 buffer is not freed, try to reuse that */
+ 	if (m3_mem->vaddr) {
+-		if (m3_mem->size >= m3_len)
++		if (m3_mem->total_size >= m3_len)
+ 			goto skip_m3_alloc;
  
-@@ -312,6 +309,14 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 		kfree(compute_mqd);
- 	} else if (queue->queue_type == AMDGPU_HW_IP_GFX) {
- 		struct drm_amdgpu_userq_mqd_gfx11 *mqd_gfx_v11;
-+		struct amdgpu_gfx_shadow_info shadow_info;
+ 		/* Old buffer is too small, free and reallocate */
+@@ -3164,11 +3165,13 @@ static int ath12k_qmi_m3_load(struct ath12k_base *ab)
+ 					   GFP_KERNEL);
+ 	if (!m3_mem->vaddr) {
+ 		ath12k_err(ab, "failed to allocate memory for M3 with size %zu\n",
+-			   fw->size);
++			   m3_len);
+ 		ret = -ENOMEM;
+ 		goto out;
+ 	}
+ 
++	m3_mem->total_size = m3_len;
 +
-+		if (adev->gfx.funcs->get_gfx_shadow_info) {
-+			adev->gfx.funcs->get_gfx_shadow_info(adev, &shadow_info, true);
-+		} else {
-+			r = -EINVAL;
-+			goto free_mqd;
-+		}
+ skip_m3_alloc:
+ 	memcpy(m3_mem->vaddr, m3_data, m3_len);
+ 	m3_mem->size = m3_len;
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.h b/drivers/net/wireless/ath/ath12k/qmi.h
+index 4767d9a2e309e..7a88268aa1e9e 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.h
++++ b/drivers/net/wireless/ath/ath12k/qmi.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2025 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
  
- 		if (mqd_user->mqd_size != sizeof(*mqd_gfx_v11) || !mqd_user->mqd) {
- 			DRM_ERROR("Invalid GFX MQD\n");
-@@ -335,6 +340,10 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 						   shadow_info.shadow_size);
- 		if (r)
- 			goto free_mqd;
-+		r = amdgpu_userq_input_va_validate(queue, mqd_gfx_v11->csa_va,
-+						   shadow_info.csa_size);
-+		if (r)
-+			goto free_mqd;
+ #ifndef ATH12K_QMI_H
+@@ -120,6 +120,9 @@ struct target_info {
+ };
  
- 		kfree(mqd_gfx_v11);
- 	} else if (queue->queue_type == AMDGPU_HW_IP_DMA) {
-@@ -353,7 +362,7 @@ static int mes_userq_mqd_create(struct amdgpu_userq_mgr *uq_mgr,
- 			goto free_mqd;
- 		}
- 		r = amdgpu_userq_input_va_validate(queue, mqd_sdma_v11->csa_va,
--						   shadow_info.csa_size);
-+						   32);
- 		if (r)
- 			goto free_mqd;
- 
+ struct m3_mem_region {
++	/* total memory allocated */
++	u32 total_size;
++	/* actual memory being used */
+ 	u32 size;
+ 	dma_addr_t paddr;
+ 	void *vaddr;
 -- 
 2.51.0
 
