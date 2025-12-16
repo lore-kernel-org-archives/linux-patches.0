@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FB23644CA;
-	Tue, 16 Dec 2025 12:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20263644DE;
+	Tue, 16 Dec 2025 12:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887925; cv=none; b=PFpbr0sDDiO4jGd47mu5kHMJ9eUydyKgHF3JwJ6elHRxGX4Q9AwhCaxE5JikGLm99dYREqFsy/JXdfTpK0YyFJ9jLv3uhlQm4WQXhDSDsXNeGRpXTmwSkI9hqY2q+f9s0G7v6dkxA6ZPTZnrYC1SY8TrqH1KCEs0Fc9jXdhn4sE=
+	t=1765887928; cv=none; b=AdPWDlZXoUP0XVwPcuzZBxk/IuIvW8wi5XnmFlNelpdrIAXIkVHzYV4Oq5jwDLwgQChO8ITxorsGaTr3GNV2K9yqEwjE6bOizxc0qxxtJzXGaH/vQYwrkiMRqSrO4Y/tH3kZURLf75hlmHS2Y57MQNpogTK4h3jxS/sjBs+awVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887925; c=relaxed/simple;
-	bh=XyPpxYFwRz11DRcM8gm7t838tTVhnONW+53Z1EUyrKk=;
+	s=arc-20240116; t=1765887928; c=relaxed/simple;
+	bh=P9UB1EniCeihzb6XPdzyUzIYJzjyPLZQjHsVcnyow6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OvpZXS5vnUXgiBBRpgQao6mZE6emwHr5Mjq9lW4kIP4Uc4ZxS93Y+y7kOdA+A1qPKSzs0Jj5j25yk9Y7UEi+8YeMu70ATVhmR7dwXiM82erO/j9oyqicZccqYb+F4QmQiurCeoEWBvcWA7ZBdWcI7iMNK2EwJQjI7NNT0kSJIhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G72OwZbL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2/PARt2im74Fw7gCZta1O4O6lkfy85b0AgYpXIrbsoOFlv4zYtes0D2eLlo6+XYGu71jt6f0N55nC845LTctiodlO9ZJDh7Tuh7BKn1JGqV/zTkX2RwJx6ZYMfVb5w/R1It1Bwbqtmk0+P9NPBUyBCtqAMRFbrfuCopR59Vf0M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tp64vMaS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G72OwZbL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE18EC4CEF1;
-	Tue, 16 Dec 2025 12:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tp64vMaS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3359EC4CEF1;
+	Tue, 16 Dec 2025 12:25:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887925;
-	bh=XyPpxYFwRz11DRcM8gm7t838tTVhnONW+53Z1EUyrKk=;
+	s=korg; t=1765887928;
+	bh=P9UB1EniCeihzb6XPdzyUzIYJzjyPLZQjHsVcnyow6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G72OwZbL7ifdI50QiCM9s6Xs9I+y+hRYvNYLYYuju1/RUIs7MA2bfnCjIMLCcB3y4
-	 Bt1EfFSZUu1f4Dg6U9q4XD5jYX4jgL2vKeSlO9crJJcGgL21OjdS1+t94FplwTujVB
-	 P4GXxazSV93Y/bANlQh/B9R70uPbaEoXnOLhTQbQ=
+	b=tp64vMaSntS0qzgPQOJ2NLcIhWkZQupqTWY6P76PqvbK54/5z1cULriXkiw9L0QRw
+	 aJv+pZkbLiGjAkN2mC2Tw2y+3jv9KRreuTSf8IK0i/yDHr9up3p5t598kv/f0+6SKt
+	 IOG8E64yyUKT3bV3pf3aSw09X/M1sqWJFnEevbfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	T Pratham <t-pratham@ti.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 378/614] RDMA/bnxt_re: Pass correct flag for dma mr creation
-Date: Tue, 16 Dec 2025 12:12:25 +0100
-Message-ID: <20251216111415.057517912@linuxfoundation.org>
+Subject: [PATCH 6.18 379/614] crypto: ahash - Fix crypto_ahash_import with partial block data
+Date: Tue, 16 Dec 2025 12:12:26 +0100
+Message-ID: <20251216111415.092869111@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,107 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Selvin Xavier <selvin.xavier@broadcom.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit a26c4c7cdb50247b8486f1caa1ea8ab5e5c37edf ]
+[ Upstream commit b0356b75f42fde15d4be268c5891f2cee6eb65bf ]
 
-DMA MR doesn't use the unified MR model. So the lkey passed
-on to the reg_mr command to FW should contain the correct
-lkey. Driver is incorrectly over writing the lkey with pdid
-and firmware commands fails due to this.
+Restore the partial block buffer in crypto_ahash_import by copying
+it.  Check whether the partial block buffer exceeds the maximum
+size and return -EOVERFLOW if it does.
 
-Avoid passing the wrong key for cases where the unified MR
-registration is not used.
+Zero the partial block buffer in crypto_ahash_import_core.
 
-Fixes: f786eebbbefa ("RDMA/bnxt_re: Avoid an extra hwrm per MR creation")
-Signed-off-by: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>
-Signed-off-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Link: https://patch.msgid.link/1763624215-10382-2-git-send-email-selvin.xavier@broadcom.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reported-by: T Pratham <t-pratham@ti.com>
+Tested-by: T Pratham <t-pratham@ti.com>
+Fixes: 9d7a0ab1c753 ("crypto: ahash - Handle partial blocks in API")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 +++++---
- drivers/infiniband/hw/bnxt_re/qplib_sp.c | 6 +++---
- drivers/infiniband/hw/bnxt_re/qplib_sp.h | 2 +-
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ crypto/ahash.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index 84ce3fce2826b..f19b55c13d580 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -601,7 +601,8 @@ static int bnxt_re_create_fence_mr(struct bnxt_re_pd *pd)
- 	mr->qplib_mr.va = (u64)(unsigned long)fence->va;
- 	mr->qplib_mr.total_size = BNXT_RE_FENCE_BYTES;
- 	rc = bnxt_qplib_reg_mr(&rdev->qplib_res, &mr->qplib_mr, NULL,
--			       BNXT_RE_FENCE_PBL_SIZE, PAGE_SIZE);
-+			       BNXT_RE_FENCE_PBL_SIZE, PAGE_SIZE,
-+			       _is_alloc_mr_unified(rdev->dev_attr->dev_cap_flags));
- 	if (rc) {
- 		ibdev_err(&rdev->ibdev, "Failed to register fence-MR\n");
- 		goto fail;
-@@ -4027,7 +4028,7 @@ struct ib_mr *bnxt_re_get_dma_mr(struct ib_pd *ib_pd, int mr_access_flags)
- 	mr->qplib_mr.hwq.level = PBL_LVL_MAX;
- 	mr->qplib_mr.total_size = -1; /* Infinte length */
- 	rc = bnxt_qplib_reg_mr(&rdev->qplib_res, &mr->qplib_mr, NULL, 0,
--			       PAGE_SIZE);
-+			       PAGE_SIZE, false);
- 	if (rc)
- 		goto fail_mr;
- 
-@@ -4257,7 +4258,8 @@ static struct ib_mr *__bnxt_re_user_reg_mr(struct ib_pd *ib_pd, u64 length, u64
- 
- 	umem_pgs = ib_umem_num_dma_blocks(umem, page_size);
- 	rc = bnxt_qplib_reg_mr(&rdev->qplib_res, &mr->qplib_mr, umem,
--			       umem_pgs, page_size);
-+			       umem_pgs, page_size,
-+			       _is_alloc_mr_unified(rdev->dev_attr->dev_cap_flags));
- 	if (rc) {
- 		ibdev_err(&rdev->ibdev, "Failed to register user MR - rc = %d\n", rc);
- 		rc = -EIO;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.c b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-index a9afac2cbb7cf..408a34df26672 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.c
-@@ -578,7 +578,7 @@ int bnxt_qplib_dereg_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mrw,
+diff --git a/crypto/ahash.c b/crypto/ahash.c
+index dfb4f5476428f..819b484a1a003 100644
+--- a/crypto/ahash.c
++++ b/crypto/ahash.c
+@@ -661,6 +661,12 @@ int crypto_ahash_import_core(struct ahash_request *req, const void *in)
+ 						in);
+ 	if (crypto_ahash_get_flags(tfm) & CRYPTO_TFM_NEED_KEY)
+ 		return -ENOKEY;
++	if (crypto_ahash_block_only(tfm)) {
++		unsigned int reqsize = crypto_ahash_reqsize(tfm);
++		u8 *buf = ahash_request_ctx(req);
++
++		buf[reqsize - 1] = 0;
++	}
+ 	return crypto_ahash_alg(tfm)->import_core(req, in);
  }
+ EXPORT_SYMBOL_GPL(crypto_ahash_import_core);
+@@ -674,10 +680,14 @@ int crypto_ahash_import(struct ahash_request *req, const void *in)
+ 	if (crypto_ahash_get_flags(tfm) & CRYPTO_TFM_NEED_KEY)
+ 		return -ENOKEY;
+ 	if (crypto_ahash_block_only(tfm)) {
++		unsigned int plen = crypto_ahash_blocksize(tfm) + 1;
+ 		unsigned int reqsize = crypto_ahash_reqsize(tfm);
++		unsigned int ss = crypto_ahash_statesize(tfm);
+ 		u8 *buf = ahash_request_ctx(req);
  
- int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
--		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size)
-+		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size, bool unified_mr)
- {
- 	struct bnxt_qplib_rcfw *rcfw = res->rcfw;
- 	struct bnxt_qplib_hwq_attr hwq_attr = {};
-@@ -640,7 +640,7 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 	req.access = (mr->access_flags & BNXT_QPLIB_MR_ACCESS_MASK);
- 	req.va = cpu_to_le64(mr->va);
- 	req.key = cpu_to_le32(mr->lkey);
--	if (_is_alloc_mr_unified(res->dattr->dev_cap_flags))
-+	if (unified_mr)
- 		req.key = cpu_to_le32(mr->pd->id);
- 	req.flags = cpu_to_le16(mr->flags);
- 	req.mr_size = cpu_to_le64(mr->total_size);
-@@ -651,7 +651,7 @@ int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
- 	if (rc)
- 		goto fail;
- 
--	if (_is_alloc_mr_unified(res->dattr->dev_cap_flags)) {
-+	if (unified_mr) {
- 		mr->lkey = le32_to_cpu(resp.xid);
- 		mr->rkey = mr->lkey;
+-		buf[reqsize - 1] = 0;
++		memcpy(buf + reqsize - plen, in + ss - plen, plen);
++		if (buf[reqsize - 1] >= plen)
++			return -EOVERFLOW;
  	}
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_sp.h b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-index 147b5d9c03138..5a45c55c6464c 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_sp.h
-@@ -341,7 +341,7 @@ int bnxt_qplib_alloc_mrw(struct bnxt_qplib_res *res,
- int bnxt_qplib_dereg_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mrw,
- 			 bool block);
- int bnxt_qplib_reg_mr(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr,
--		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size);
-+		      struct ib_umem *umem, int num_pbls, u32 buf_pg_size, bool unified_mr);
- int bnxt_qplib_free_mrw(struct bnxt_qplib_res *res, struct bnxt_qplib_mrw *mr);
- int bnxt_qplib_alloc_fast_reg_mr(struct bnxt_qplib_res *res,
- 				 struct bnxt_qplib_mrw *mr, int max);
+ 	return crypto_ahash_alg(tfm)->import(req, in);
+ }
 -- 
 2.51.0
 
