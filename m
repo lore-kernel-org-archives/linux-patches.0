@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5147F2459D7;
-	Tue, 16 Dec 2025 11:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595563358A8;
+	Tue, 16 Dec 2025 11:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883988; cv=none; b=gqNtyPNi9odQa8MEFIl3ApvTh8/M3qxwUtcK1PAXPmPqVZL2Dqg1+YYyopqlpUJnnti6PxqVdqMq7l3BSbLSIjeCM0tyeZLzSaa1sh2s71UkT0yz0l7l7kmPzKwtZkYTydb7o4KaKjzEssOkqZhtBM5gQgjU6XvwIUJsVWFxWuQ=
+	t=1765883991; cv=none; b=DhLqtNAT4WVJeyzEJY82RRx0tonhlWc71KYAvNCBVlIScbSf71sp/edPZFxRQJZMVFGES7JKWKQMWs7jeMA7s8W1EvCmw/4PqIYGGmFqYaZv5DpW5KYHAvWGKSRY0Ju+ICPpKB6kAMv1kQDs08xSvnt1gGFWGEX+Nt9947un/9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883988; c=relaxed/simple;
-	bh=nfjhxd4AG3FFO3E6eacNEH6XEjTDDfqEuS0U09K5xgU=;
+	s=arc-20240116; t=1765883991; c=relaxed/simple;
+	bh=n3a7XkQ0SBqGo4BzLTOJNmM1sSujX+Lmt5BCraFqkFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V6cW9Bec2QdftzUXWk1iXvU7IGlyKSvIBHs7XS8pvW8pdGOHKGsU80dft14VYEL2KHi0hVTbg8+l5hhU6WO6u1bzyzCgo3xnyx5kwltqArW4P0W/f+/pvUB7icQwM6pWGVLF+ybtRZtWxVkBa8yWex4NHfbfQGdJLm38fr7Qk78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AnKSC5O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=acPamMX2Hff6+FsfgNH0q4kCuEhj/1I/+TzpYLrF/oFX7DOO4WMe8ntDYy7I8NwipX/cS/+ReZZ0xvZJjIi5Xl1qcyvpkaYTZwfJ+XBU6j+H7HXClG0gmxow9mTahTpsCS4VlIeWFEpUqKcQ18b7yGAFjxxXpnpq04LrtqsKwBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxM80Ikr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AnKSC5O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DFAC4CEF1;
-	Tue, 16 Dec 2025 11:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxM80Ikr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6F31C4CEF1;
+	Tue, 16 Dec 2025 11:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883988;
-	bh=nfjhxd4AG3FFO3E6eacNEH6XEjTDDfqEuS0U09K5xgU=;
+	s=korg; t=1765883991;
+	bh=n3a7XkQ0SBqGo4BzLTOJNmM1sSujX+Lmt5BCraFqkFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0AnKSC5OvHT3ve4qg5fFvVquaUdFXSNtAISu1Pvf7hDk7wChEQyNq0910WskcZTfQ
-	 wVbFOvhR+smjvSED1rJxEzFK+V1JNoeM/Y1Ze4wqLw1iv3t3/1w3z+cft4wemqcsiY
-	 VchGQ0FWtEn9zmF+ndrHV76aBETbhvUjNXV+6f5E=
+	b=dxM80IkrpZpvZP0qVCfjbwd6Op2bxg7sIkZF4sElIFvd+cUCQS1Id8oWS4NuSgKIY
+	 VLcqxLBlIaD/Nxap1Xao8dzvCYGf2ZNhSzC/+j3hS734M9IldVeMuVw2ey7vtl3aDm
+	 +BUvIGxp2HKBAz0+pwJqXYmx5K1MKBoUpRqxDh5k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Imran Shaik <imran.shaik@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 031/354] irqchip/irq-bcm7120-l2: Fix section mismatch
-Date: Tue, 16 Dec 2025 12:09:58 +0100
-Message-ID: <20251216111322.039422987@linuxfoundation.org>
+Subject: [PATCH 6.12 058/354] clk: qcom: camcc-sm8550: Specify Titan GDSC power domain as a parent to other
+Date: Tue, 16 Dec 2025 12:10:25 +0100
+Message-ID: <20251216111323.020509010@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,77 +54,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit bfc0c5beab1fde843677923cf008f41d583c980a ]
+[ Upstream commit d8f1121ebf4036884fc9ab1968f606523dd1c1fe ]
 
-Platform drivers can be probed after their init sections have been
-discarded so the irqchip init callbacks must not live in init.
+When a consumer turns on/off a power domain dependent on another power
+domain in hardware, the parent power domain shall be turned on/off by
+the power domain provider as well, and to get it the power domain hardware
+hierarchy shall be described in the CAMCC driver.
 
-Fixes: 3ac268d5ed22 ("irqchip/irq-bcm7120-l2: Switch to IRQCHIP_PLATFORM_DRIVER")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Establish the power domain hierarchy with a Titan GDSC set as a parent of
+all other GDSC power domains provided by the SM8550 camera clock controller
+to enforce a correct sequence of enabling and disabling power domains by
+the consumers, this fixes the CAMCC as a supplier of power domains to CAMSS
+IP and its driver.
+
+Fixes: ccc4e6a061a2 ("clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Link: https://lore.kernel.org/r/20251021234450.2271279-2-vladimir.zapolskiy@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-bcm7120-l2.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/clk/qcom/camcc-sm8550.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/irqchip/irq-bcm7120-l2.c b/drivers/irqchip/irq-bcm7120-l2.c
-index 1e9dab6e0d86f..bb6e56629e532 100644
---- a/drivers/irqchip/irq-bcm7120-l2.c
-+++ b/drivers/irqchip/irq-bcm7120-l2.c
-@@ -147,8 +147,7 @@ static int bcm7120_l2_intc_init_one(struct device_node *dn,
- 	return 0;
- }
+diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
+index eac850bb690a2..caf69526fd710 100644
+--- a/drivers/clk/qcom/camcc-sm8550.c
++++ b/drivers/clk/qcom/camcc-sm8550.c
+@@ -3192,6 +3192,8 @@ static struct clk_branch cam_cc_sfe_1_fast_ahb_clk = {
+ 	},
+ };
  
--static int __init bcm7120_l2_intc_iomap_7120(struct device_node *dn,
--					     struct bcm7120_l2_intc_data *data)
-+static int bcm7120_l2_intc_iomap_7120(struct device_node *dn, struct bcm7120_l2_intc_data *data)
- {
- 	int ret;
++static struct gdsc cam_cc_titan_top_gdsc;
++
+ static struct gdsc cam_cc_bps_gdsc = {
+ 	.gdscr = 0x10004,
+ 	.en_rest_wait_val = 0x2,
+@@ -3201,6 +3203,7 @@ static struct gdsc cam_cc_bps_gdsc = {
+ 		.name = "cam_cc_bps_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
-@@ -181,8 +180,7 @@ static int __init bcm7120_l2_intc_iomap_7120(struct device_node *dn,
- 	return 0;
- }
+@@ -3213,6 +3216,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
+ 		.name = "cam_cc_ife_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
--static int __init bcm7120_l2_intc_iomap_3380(struct device_node *dn,
--					     struct bcm7120_l2_intc_data *data)
-+static int bcm7120_l2_intc_iomap_3380(struct device_node *dn, struct bcm7120_l2_intc_data *data)
- {
- 	unsigned int gc_idx;
+@@ -3225,6 +3229,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
+ 		.name = "cam_cc_ife_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
-@@ -212,10 +210,9 @@ static int __init bcm7120_l2_intc_iomap_3380(struct device_node *dn,
- 	return 0;
- }
+@@ -3237,6 +3242,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
+ 		.name = "cam_cc_ife_2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
--static int __init bcm7120_l2_intc_probe(struct device_node *dn,
--				 struct device_node *parent,
-+static int bcm7120_l2_intc_probe(struct device_node *dn, struct device_node *parent,
- 				 int (*iomap_regs_fn)(struct device_node *,
--					struct bcm7120_l2_intc_data *),
-+						      struct bcm7120_l2_intc_data *),
- 				 const char *intc_name)
- {
- 	unsigned int clr = IRQ_NOREQUEST | IRQ_NOPROBE | IRQ_NOAUTOEN;
-@@ -343,15 +340,13 @@ static int __init bcm7120_l2_intc_probe(struct device_node *dn,
- 	return ret;
- }
+@@ -3249,6 +3255,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
+ 		.name = "cam_cc_ipe_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
--static int __init bcm7120_l2_intc_probe_7120(struct device_node *dn,
--					     struct device_node *parent)
-+static int bcm7120_l2_intc_probe_7120(struct device_node *dn, struct device_node *parent)
- {
- 	return bcm7120_l2_intc_probe(dn, parent, bcm7120_l2_intc_iomap_7120,
- 				     "BCM7120 L2");
- }
+@@ -3261,6 +3268,7 @@ static struct gdsc cam_cc_sbi_gdsc = {
+ 		.name = "cam_cc_sbi_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
  
--static int __init bcm7120_l2_intc_probe_3380(struct device_node *dn,
--					     struct device_node *parent)
-+static int bcm7120_l2_intc_probe_3380(struct device_node *dn, struct device_node *parent)
- {
- 	return bcm7120_l2_intc_probe(dn, parent, bcm7120_l2_intc_iomap_3380,
- 				     "BCM3380 L2");
+@@ -3273,6 +3281,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
+ 		.name = "cam_cc_sfe_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
+@@ -3285,6 +3294,7 @@ static struct gdsc cam_cc_sfe_1_gdsc = {
+ 		.name = "cam_cc_sfe_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
+ };
+ 
 -- 
 2.51.0
 
