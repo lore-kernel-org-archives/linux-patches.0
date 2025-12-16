@@ -1,251 +1,125 @@
-Received: from mail-pl1-f194.google.com (mail-pl1-f194.google.com [209.85.214.194])
+Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E5D28CF50
-	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 19:53:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE33632E74B
+	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 19:59:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765914784; cv=none; b=a6kpWNeYIJrLNIIof09ZrzA+pIM1hVj1/Odt+5p+oxKUDOw5oV84dkVzhrSbjwGESpXKMHPFpv2/ZY1pojipgLJmU4vQXSwubTrc8Mh4risgVcB/CmneyOD9kIwGACXNkdfpZCvS/kR5o0yMy/wJEkJcI1JEWErFuJ44HvYZFnE=
+	t=1765915177; cv=none; b=lOIYsW8Q3HreUHgYmbucqQIyhcsErS6NlMzJY1gGow5aGjgfvQUXggXovsjdB21ycF7HhsXI5M/kC7UR7zp4L12yiN5tjcxlV9LmiYTGLcUj7/GU3btrk+ZhkAIORj8/onGy/FEUbp+johaY+UIM5xxETxlB10MVSYboJbylw4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765914784; c=relaxed/simple;
-	bh=iyfpfta9T3ygezPPDfJaAAlV1FmCLLJlERf9Bqj3wl0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LZV+1PCC45JgIY0KEn0OGjpAkr/aqWjM8lVZ6pepg5ULUZcWJxr/EF7CWn+Kcgdsp66J/Z5QlWlfEuUUKAM1Jb5oCR598THdxvqGHRjYnflpj/kDDMZxvgrczTRR51i1tfK9TZtJObvX3xQEXJrtjbLMAV0wNaDQP5H0Eq9AxnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=My25HNut; arc=none smtp.client-ip=209.85.214.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1765915177; c=relaxed/simple;
+	bh=8d8vMlcuqrcetGiukAccRMJhujaTPxUi42V0eQLoMBM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XAYflDRDNjaAf4bMKvqCW25NFGWvvZBFryu0nKldHFJ7efUpxna9KxCPGJC/Kn1WuDWIyVHdpSW2QDAq0jhglWG7qCUwj/qfEghI/MycoCPLgx0jDTvzH/lR+++QMhO2DnF9G34NHfEDDpomQGsP1shzc+Q9517vfJ4zgQX0eVE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lATfafbb; arc=none smtp.client-ip=209.85.208.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="My25HNut"
-Received: by mail-pl1-f194.google.com with SMTP id d9443c01a7336-2a07f8dd9cdso36673205ad.1
-        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 11:53:02 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lATfafbb"
+Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-37b97e59520so39890021fa.2
+        for <patches@lists.linux.dev>; Tue, 16 Dec 2025 11:59:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1765914782; x=1766519582; darn=lists.linux.dev;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1765915174; x=1766519974; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pMv6aJNeWeKxyQePqdx7Y+0/5WaZPbWRmp5WC5tFCto=;
-        b=My25HNutXF0fE7SoPVquJ+5XxUFp36d/anOH0kCRShZWUrnFsbkj2sVBT2W2sifhVb
-         UKDvJiwTgRKteVHhl/s3lfS2DfiUpb+96Q6G05fl5BFnQzCkpWwkic37p3fq8xe1zQuG
-         mL8c0uI3ILAwYgG5H/5x8VkKguqdgO8k37wSR1jbHx+60e+wN5Oq7MP1WjpCHtcALeRy
-         OBaG2188EBPpY/p58HVbw1EjZRa++mKDWn8Sqf5oseE+w2f8n+WPefILvlemWWQIyfDi
-         X81Ny6/GUE+AzB16c5d7WUWM3V/2amqPh6ZG1SdEhLI7Oqenr2LvIVCNJ6U5K2ftmS61
-         W/Mg==
+        bh=jKP3/pV9HL8rJ89JiBKTKQm/pSwijNbQxYatjpzb6Ao=;
+        b=lATfafbb1Yj/okzmXJEgfTaDRo/9QhueWSzQxrMkEsYZqM+btxi7OdI89XFyyqv53/
+         rinPnoUbexb9lhYJKu5rvlALG0ZBnWU8rm+kYUBZULrmfGEWTCeH5zB+CF+9mTl2jB65
+         C/G/JoG+riKD3tRgzuMZaMLbACxPSpXErOUuV8FqDUDBdtqQXZhcbEZ5PqUMmYFF9gO5
+         iVQ5Uf8/g/ow6weDxI3/Rieabe7DygMi4qbC1tJl/A9vehakcirVJT7mm1LKoLzmfRwE
+         bIIWjTBgmYCIoPo1KW1oGoCb6EyYuDzAnozRyiSyPtf+Uh4/Ubl3XZ09RU3/aR78Bwuz
+         su1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765914782; x=1766519582;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1765915174; x=1766519974;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=pMv6aJNeWeKxyQePqdx7Y+0/5WaZPbWRmp5WC5tFCto=;
-        b=by2X/I5IF0rBhObbt9tmlr0qiPhwrVHX+kHoouie+LY1x3YTSRJ97JYD3HeW4eqWYB
-         au7faDZaVQFcxcNbiRlvx6NLdgYpsUPQU4obKx9GXiAwqMUjWT0JJCAIsAETCBsXkEWu
-         vYQzuWzyVBcMS8PuwWPzTWt4fmxtcBbFaDE6PxpzN3wQy8Gel70dk0LH7oi3nvwuxsTz
-         SSDV0Q+UOB+9rdpVpmE46rTEtQJ5oNC+gbZB0mFxvW7GUgB9DVBeDgvxbr4Dn8ym/1em
-         p0gP8/Knt+KxOtw+pW9Rbw/STkKHSR22pKgA5eN4911U5srHDeKaDWrvcRJIree0Tzia
-         BckA==
-X-Forwarded-Encrypted: i=1; AJvYcCVwGseQHhxuwLmSdbji16njaV0ksO5+RkTul1sMp1tHgzeE70ccowtUH7DUzfUE4iq8Q7ocw1hm@lists.linux.dev
-X-Gm-Message-State: AOJu0YwiwwA0NNLBH7uOycCSvggehO0X/UAMt0vARATO+Yf7i5mdcI17
-	nyauh4INUP+UI+ot2o4xY0ayih2+/Wc/QOoJDKb8KNYniAm8cwC8hnzHLg9KBQuc2Mk=
-X-Gm-Gg: AY/fxX7iTZ/fovcckrgf7k+PhCWl1CI4OYyACU12KUUsd694OpsbyIAyUOoLiEL65bA
-	cat6T1tszh7JcSBK9gv39/u49dusTAVDfY+BZRMM0OkfaqbJYk3BcmYbtNMRPLQrjtv2IlyaU0+
-	5lHDsd9kYRiDFo7FIGMCwEC6sekWStpjAnGjJC+4kYnIOHoAkcDzrKaZGAtoz8akID1Tb1i8/Kt
-	VUadWcKM2uvOES0Uf1IqizlU4dusG9mlKIl6RwezmBw5sD1jlMGlBJw51WMzU/CULB1XWhOt3tJ
-	9snNfZfjsU+1rGg4NibmQpcrpUAWaieGsAH31rKNLTYrWku2+eQNzAtac85EtexqtQKi+1bC/UC
-	xdMpHR/2freVXHbuR8gt8CeFGw63L066pHxVhZp8oURujJM3ZTo6z8qFKj9rcOIXX6AO4o+aVw0
-	gZYxWAy3/2/PL29eodFETGJwyjscUc
-X-Google-Smtp-Source: AGHT+IFa53l16N+qvvGO5QmppAyhTeWx1VKPEgvjQDDUEOhJfhKgosxMkNqOmyEm3dPYC+8Wd+jHsQ==
-X-Received: by 2002:a17:903:8cc:b0:297:f0a8:e84c with SMTP id d9443c01a7336-29f24386514mr158443655ad.52.1765914782008;
-        Tue, 16 Dec 2025 11:53:02 -0800 (PST)
-Received: from localhost ([2405:201:c00c:2854:178f:356c:b77b:cfc2])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2a13825b9a5sm33850025ad.9.2025.12.16.11.53.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Dec 2025 11:53:01 -0800 (PST)
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@denx.de,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	dan.carpenter@linaro.org,
-	nathan@kernel.org,
-	llvm@lists.linux.dev,
-	perex@perex.cz,
-	lgirdwood@gmail.com,
-	Linux Kernel Functional Testing <lkft@linaro.org>
-Subject: [PATCH 6.18 000/614] 6.18.2-rc1 review
-Date: Wed, 17 Dec 2025 01:22:55 +0530
-Message-ID: <20251216195255.172999-1-naresh.kamboju@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
-References: <20251216111401.280873349@linuxfoundation.org>
+        bh=jKP3/pV9HL8rJ89JiBKTKQm/pSwijNbQxYatjpzb6Ao=;
+        b=BclPkgf3bf5ZLxbd0BmKWNWwxAnoeB5VqTrXKNubxHfkhiAhjHyx5kY/5KLyRqYBzZ
+         RWTmdb1rhoL35b8FQO85Zhdg+Lbm6K0N5bw2UrJB+EBfLKSD3E+8GpPaDXU6M/qmc539
+         8rU1UzUlz7jXivP17WMvU/ID0CPZpT21NLWlmjnEINzHuRFjtnfo3E5jIWRVgpXSCBVr
+         GHnEZtthrloULS8M0Ezyrt4YI1HE9pqP/aeZBq7YbNd5+MNuxdjM9Y9CcYhqsRvjAziv
+         wobCl99POwIQ4KyNEMJL9vjq8muTXANX6MO2381ErMrfMOwpw50Od5wyMsekel4843ao
+         fsAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUqJ2lNwJYmqsv+z6Dgj5elUtnn8heNFbm6J5bA8pDDe3xO20GTt0+ngU9zWZwLjsRGCKBstpgh@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw89oEjkOcJZvAOlEKqnHfNJXi/wIPzA0VnBs49SyQm5+FA0f7H
+	F3kzkhVWxsrvbwDUhcD7vkOMMR7Zn9mrziB7tyoM/BcvkYQE9YiXE8fryaWOTO3ilLAEumUu5eL
+	r4dYQKwVMCq32ZuBN9S29FnyUwvb/5f0=
+X-Gm-Gg: AY/fxX7pisZHW1W2bxDWpFEFP7Vz31tzGKTyVZm4LI8Z/3OmgeqcjELBWG907dFaUvA
+	99SFXYnMMVRcJGV35GUn9lzxKCh1dG+KYyfFSynmKCvUCDPX4auLMw2LzdDwjLflPlTWv7o8deQ
+	cJ0KzlRYPkwp59/gkkkgc8xH1KQEbIX84jpgIlATVzVgOMNZ+Kw4UgmAkwMiGVXW16mp8OD5y5Z
+	ZNkccB4ehHJTO5SRBX956o2u6LPdj/pRingLs5h7tAmpNvMRScpyyO4rajBWRArubrRe2mXI9Ch
+	lbzs18jikIpVXV2proNI1V8jbTIF
+X-Google-Smtp-Source: AGHT+IEoOwx2O+UDgb2f0yIKh4N1D7Pr3XV6xfDNke54zDaPEw72IJS4jRqNFlBTPI0ntktOfvWQhWxSFoYmzXQrTsg=
+X-Received: by 2002:a05:651c:1c7:b0:37a:2b5d:e855 with SMTP id
+ 38308e7fff4ca-37fd08e94d1mr48591801fa.40.1765915173887; Tue, 16 Dec 2025
+ 11:59:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20251216111947.723989795@linuxfoundation.org>
+In-Reply-To: <20251216111947.723989795@linuxfoundation.org>
+From: Dileep malepu <dileep.debian@gmail.com>
+Date: Wed, 17 Dec 2025 01:29:22 +0530
+X-Gm-Features: AQt7F2oW5vTlzd7FXzKICbt4nLS9t6NSWyDjk-BuP4m6qMC0a_yiDrofInRso24
+Message-ID: <CAC-m1rq9fSvZf5cPy-zAj+vYk3=nODsfT4QL+rcuDeCdqbfctg@mail.gmail.com>
+Subject: Re: [PATCH 6.17 000/506] 6.17.13-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'm seeing the following allmodconfig and allyesconfig build
-failures on arm, arm64, riscv and x86_64.
+On Tue, Dec 16, 2025 at 6:40=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.17.13 release.
+> There are 506 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 18 Dec 2025 11:18:24 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.17.13-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.17.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-## Build error
-sound/soc/codecs/nau8325.c:430:13: error: variable 'n2_max' is uninitialized when used here [-Werror,-Wuninitialized]
-  430 |                 *n2_sel = n2_max;
-      |                           ^~~~~~
-sound/soc/codecs/nau8325.c:389:52: note: initialize the variable 'n2_max' to silence this warning
-  389 |         int i, j, mclk, mclk_max, ratio, ratio_sel, n2_max;
-      |                                                           ^
-      |                                                            = 0
-sound/soc/codecs/nau8325.c:431:11: error: variable 'ratio_sel' is uninitialized when used here [-Werror,-Wuninitialized]
-  431 |                 ratio = ratio_sel;
-      |                         ^~~~~~~~~
-sound/soc/codecs/nau8325.c:389:44: note: initialize the variable 'ratio_sel' to silence this warning
-  389 |         int i, j, mclk, mclk_max, ratio, ratio_sel, n2_max;
-      |                                                   ^
-      |                                                    = 0
-2 errors generated.
-make[6]: *** [scripts/Makefile.build:287: sound/soc/codecs/nau8325.o] Error 1
+Build and Boot Report for 6.17.13-rc2
 
-First seen on 6.18.2-rc1
-Good: 6.18.1-rc1
-Bad:  6.18.2-rc1
+The kernel version 6.17.13 was built and boot-tested using qemu-x86_64
+and qemu-arm64 with the default configuration (defconfig). The build and bo=
+ot
+processes completed successfully, and the kernel operated as expected
+in the virtualized environments without any issues.
+No dmesg regressions found.
 
-And these build regressions also seen on 6.17.13-rc2.
+Build Details :
+Builds : arm64, x86_64
+Kernel Version: 6.17.13
+Configuration : defconfig
+Source: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git
+Commit :
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Dileep Malepu <dileep.debian@gmail.com>
 
-## Build
-* kernel: 6.18.2-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 103c79e44ce7c81882928abab98b96517a8bce88
-* git describe: v6.18-645-g103c79e44ce7
-* test details: https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.18.y/build/v6.18-645-g103c79e44ce7
-
-## Test Regressions (compared to v6.18-30-g7d4c06f4000f)
-* Build,
-- clang-21-allmodconfig
-- clang-21-allyesconfig
-- clang-nightly-allyesconfig
-
-## Metric Regressions (compared to v6.18-30-g7d4c06f4000f)
-
-## Test Fixes (compared to v6.18-30-g7d4c06f4000f)
-
-## Metric Fixes (compared to v6.18-30-g7d4c06f4000f)
-
-## Test result summary
-total: 101371, pass: 83553, fail: 3486, skip: 14332, xfail: 0
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 139 total, 138 passed, 1 failed
-* arm64: 57 total, 51 passed, 6 failed
-* i386: 18 total, 18 passed, 0 failed
-* mips: 34 total, 33 passed, 1 failed
-* parisc: 4 total, 4 passed, 0 failed
-* powerpc: 40 total, 39 passed, 1 failed
-* riscv: 25 total, 24 passed, 1 failed
-* s390: 22 total, 21 passed, 1 failed
-* sh: 5 total, 5 passed, 0 failed
-* sparc: 4 total, 3 passed, 1 failed
-* x86_64: 49 total, 46 passed, 3 failed
-
-## Test suites summary
-* boot
-* commands
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mm
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-rust
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* lava
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-build-clang
-* log-parser-build-gcc
-* log-parser-test
-* ltp-capability
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-* rt-tests-cyclicdeadline
-* rt-tests-pi-stress
-* rt-tests-pmqtest
-* rt-tests-rt-migrate-test
-* rt-tests-signaltest
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Best regards,
+Dileep Malepu
