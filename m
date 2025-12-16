@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FC2361DD1;
-	Tue, 16 Dec 2025 12:35:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512C36214C;
+	Tue, 16 Dec 2025 12:35:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888522; cv=none; b=Jmm+7AzQTZz2m3raCyRMA7PBGsOzlamL6tfspwik9qWTyRb8A9aM98070lyMGe9n4bTnqsNaqMlCH9fywzKs4umxqt41T2Y4yuACuGuOs2UAdD4WWk4P7zduTk/I+DECnM9YJ65EjAEWOZRiXJOJ9Q8vOYMIhqowzq/Ugxkztrs=
+	t=1765888526; cv=none; b=LgbXXHKkwnxHeP7qZQAfZDqIJOvRv00GwONhS3OIjmqn9+eLK7E/wVPso7MKv+jqtWH4TO9JcIKx3CyYxB8snWfOY2Mh/tFv17BI4YQK1SXfbwNjVHw+Q9MjzotNTk8OZdvayNfnGJjd4jvDZTjkEtfyYOQBDa4ZrXuEtDzNRJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888522; c=relaxed/simple;
-	bh=sfoikDdgRv8JfeTMrSkTcyJsfiof8YT6C+YNPi/OXXw=;
+	s=arc-20240116; t=1765888526; c=relaxed/simple;
+	bh=BV2xmtabrf586P8PYiOEVUcQvlLfNznoeJg8iPcevWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q3MBWVg54H+78gsVcQU7RUlREV++0DlbVHWQY9VtblnrdVYCgrpdaPW9Uj/qfE1ZWahvD7ajQzHvk5HOv+F4hg0pFoTANqayrzom+vzduG9iwX/bgqsMYsQEIh0+/TchQYHL1XptBJpZljYr33E77moJ6jU4cRLA1i3G7fSJA6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNCbT759; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=StweRcEtGbKVroFtsVrv/ZDq7i6zEfxNA5dvcqg9SryqICKtb8nJiZgtl2ZfMQ/STmqDChwynO+aKi4AO5stJK01vBCxqDOHDnL/QBz35op4WQ41mtD18OgcwoELLBJvIoPr48BzhU7h+TretcTe4xg9862i1D87IyA2BSJESB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0OZiXPU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNCbT759"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93C74C4CEF1;
-	Tue, 16 Dec 2025 12:35:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0OZiXPU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F62C4CEF1;
+	Tue, 16 Dec 2025 12:35:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888522;
-	bh=sfoikDdgRv8JfeTMrSkTcyJsfiof8YT6C+YNPi/OXXw=;
+	s=korg; t=1765888526;
+	bh=BV2xmtabrf586P8PYiOEVUcQvlLfNznoeJg8iPcevWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNCbT759QteyNNorK//XGTj6K3mUeqSgaDdLDtsgxfaNgEcjvIvd143PTcBFxLBjS
-	 Uehdf9+1E8Y0Nu6VeBht/4Y43+bzLQZcyXYFH2yKdIzVZ5UymAYlPca9lb6NUZ2dU3
-	 PfruhSuMjt7l/LYsBkDvMYaM+5msYpVuKrBYmM1E=
+	b=g0OZiXPUWTfTZmblHk7t+LUHkJAiIIT4FkWTmScIC68j6JUQZj51M7ylaoV4mh4/L
+	 wPD5+ai8qzqkqpDHbAreg3HV1pJZ3rx/eAVtBEdhEMwnrKjSAEyDOsaD4Ecx1Sl6hM
+	 T3v63WnPRfhBIKNVeg0RGm5X2ciDkG4/pIBWHjyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Cong Zhang <cong.zhang@oss.qualcomm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 558/614] f2fs: revert summary entry count from 2048 to 512 in 16kb block support
-Date: Tue, 16 Dec 2025 12:15:25 +0100
-Message-ID: <20251216111421.597526760@linuxfoundation.org>
+Subject: [PATCH 6.18 559/614] blk-mq: Abort suspend when wakeup events are pending
+Date: Tue, 16 Dec 2025 12:15:26 +0100
+Message-ID: <20251216111421.634015562@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,453 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daeho Jeong <daehojeong@google.com>
+From: Cong Zhang <cong.zhang@oss.qualcomm.com>
 
-[ Upstream commit 7ee8bc3942f20964ad730871b885688ea3a2961a ]
+[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
 
-The recent increase in the number of Segment Summary Area (SSA) entries
-from 512 to 2048 was an unintentional change in logic of 16kb block
-support. This commit corrects the issue.
+During system suspend, wakeup capable IRQs for block device can be
+delayed, which can cause blk_mq_hctx_notify_offline() to hang
+indefinitely while waiting for pending request to complete.
+Skip the request waiting loop and abort suspend when wakeup events are
+pending to prevent the deadlock.
 
-To better utilize the space available from the erroneous 2048-entry
-calculation, we are implementing a solution to share the currently
-unused SSA space with neighboring segments. This enhances overall
-SSA utilization without impacting the established 8MB segment size.
-
-Fixes: d7e9a9037de2 ("f2fs: Support Block Size == Page Size")
-Signed-off-by: Daeho Jeong <daehojeong@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
+Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h          |   2 +
- fs/f2fs/gc.c            | 117 +++++++++++++++++++++++-----------------
- fs/f2fs/recovery.c      |   2 +-
- fs/f2fs/segment.c       |  38 +++++++++----
- fs/f2fs/segment.h       |   8 ++-
- fs/f2fs/super.c         |  14 +++++
- fs/f2fs/sysfs.c         |   7 +++
- include/linux/f2fs_fs.h |   5 +-
- 8 files changed, 130 insertions(+), 63 deletions(-)
+ block/blk-mq.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 5b4e9548a231f..5149f351f03d2 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -245,6 +245,7 @@ struct f2fs_mount_info {
- #define F2FS_FEATURE_COMPRESSION		0x00002000
- #define F2FS_FEATURE_RO				0x00004000
- #define F2FS_FEATURE_DEVICE_ALIAS		0x00008000
-+#define F2FS_FEATURE_PACKED_SSA			0x00010000
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index d626d32f6e576..33a0062f9e56d 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -23,6 +23,7 @@
+ #include <linux/cache.h>
+ #include <linux/sched/topology.h>
+ #include <linux/sched/signal.h>
++#include <linux/suspend.h>
+ #include <linux/delay.h>
+ #include <linux/crash_dump.h>
+ #include <linux/prefetch.h>
+@@ -3707,6 +3708,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ {
+ 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
+ 			struct blk_mq_hw_ctx, cpuhp_online);
++	int ret = 0;
  
- #define __F2FS_HAS_FEATURE(raw_super, mask)				\
- 	((raw_super->feature & cpu_to_le32(mask)) != 0)
-@@ -4710,6 +4711,7 @@ F2FS_FEATURE_FUNCS(casefold, CASEFOLD);
- F2FS_FEATURE_FUNCS(compression, COMPRESSION);
- F2FS_FEATURE_FUNCS(readonly, RO);
- F2FS_FEATURE_FUNCS(device_alias, DEVICE_ALIAS);
-+F2FS_FEATURE_FUNCS(packed_ssa, PACKED_SSA);
- 
- #ifdef CONFIG_BLK_DEV_ZONED
- static inline bool f2fs_zone_is_seq(struct f2fs_sb_info *sbi, int devi,
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 8abf521530ff3..af2f4d28462c0 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1732,7 +1732,7 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
- 	unsigned char type = IS_DATASEG(get_seg_entry(sbi, segno)->type) ?
- 						SUM_TYPE_DATA : SUM_TYPE_NODE;
- 	unsigned char data_type = (type == SUM_TYPE_DATA) ? DATA : NODE;
--	int submitted = 0;
-+	int submitted = 0, sum_blk_cnt;
- 
- 	if (__is_large_section(sbi)) {
- 		sec_end_segno = rounddown(end_segno, SEGS_PER_SEC(sbi));
-@@ -1766,22 +1766,28 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
- 
- 	sanity_check_seg_type(sbi, get_seg_entry(sbi, segno)->type);
- 
-+	segno = rounddown(segno, SUMS_PER_BLOCK);
-+	sum_blk_cnt = DIV_ROUND_UP(end_segno - segno, SUMS_PER_BLOCK);
- 	/* readahead multi ssa blocks those have contiguous address */
- 	if (__is_large_section(sbi))
- 		f2fs_ra_meta_pages(sbi, GET_SUM_BLOCK(sbi, segno),
--					end_segno - segno, META_SSA, true);
-+					sum_blk_cnt, META_SSA, true);
- 
- 	/* reference all summary page */
- 	while (segno < end_segno) {
--		struct folio *sum_folio = f2fs_get_sum_folio(sbi, segno++);
-+		struct folio *sum_folio = f2fs_get_sum_folio(sbi, segno);
-+
-+		segno += SUMS_PER_BLOCK;
- 		if (IS_ERR(sum_folio)) {
- 			int err = PTR_ERR(sum_folio);
- 
--			end_segno = segno - 1;
--			for (segno = start_segno; segno < end_segno; segno++) {
-+			end_segno = segno - SUMS_PER_BLOCK;
-+			segno = rounddown(start_segno, SUMS_PER_BLOCK);
-+			while (segno < end_segno) {
- 				sum_folio = filemap_get_folio(META_MAPPING(sbi),
- 						GET_SUM_BLOCK(sbi, segno));
- 				folio_put_refs(sum_folio, 2);
-+				segno += SUMS_PER_BLOCK;
- 			}
- 			return err;
- 		}
-@@ -1790,68 +1796,83 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
- 
- 	blk_start_plug(&plug);
- 
--	for (segno = start_segno; segno < end_segno; segno++) {
--		struct f2fs_summary_block *sum;
-+	segno = start_segno;
-+	while (segno < end_segno) {
-+		unsigned int cur_segno;
- 
- 		/* find segment summary of victim */
- 		struct folio *sum_folio = filemap_get_folio(META_MAPPING(sbi),
- 					GET_SUM_BLOCK(sbi, segno));
-+		unsigned int block_end_segno = rounddown(segno, SUMS_PER_BLOCK)
-+					+ SUMS_PER_BLOCK;
-+
-+		if (block_end_segno > end_segno)
-+			block_end_segno = end_segno;
- 
- 		if (is_cursec(sbi, GET_SEC_FROM_SEG(sbi, segno))) {
- 			f2fs_err(sbi, "%s: segment %u is used by log",
- 							__func__, segno);
- 			f2fs_bug_on(sbi, 1);
--			goto skip;
-+			goto next_block;
- 		}
- 
--		if (get_valid_blocks(sbi, segno, false) == 0)
--			goto freed;
--		if (gc_type == BG_GC && __is_large_section(sbi) &&
--				migrated >= sbi->migration_granularity)
--			goto skip;
- 		if (!folio_test_uptodate(sum_folio) ||
- 		    unlikely(f2fs_cp_error(sbi)))
--			goto skip;
-+			goto next_block;
- 
--		sum = folio_address(sum_folio);
--		if (type != GET_SUM_TYPE((&sum->footer))) {
--			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SIT and SSA",
--				 segno, type, GET_SUM_TYPE((&sum->footer)));
--			f2fs_stop_checkpoint(sbi, false,
--				STOP_CP_REASON_CORRUPTED_SUMMARY);
--			goto skip;
--		}
-+		for (cur_segno = segno; cur_segno < block_end_segno;
-+				cur_segno++) {
-+			struct f2fs_summary_block *sum;
- 
--		/*
--		 * this is to avoid deadlock:
--		 * - lock_page(sum_page)         - f2fs_replace_block
--		 *  - check_valid_map()            - down_write(sentry_lock)
--		 *   - down_read(sentry_lock)     - change_curseg()
--		 *                                  - lock_page(sum_page)
--		 */
--		if (type == SUM_TYPE_NODE)
--			submitted += gc_node_segment(sbi, sum->entries, segno,
--								gc_type);
--		else
--			submitted += gc_data_segment(sbi, sum->entries, gc_list,
--							segno, gc_type,
--							force_migrate);
-+			if (get_valid_blocks(sbi, cur_segno, false) == 0)
-+				goto freed;
-+			if (gc_type == BG_GC && __is_large_section(sbi) &&
-+					migrated >= sbi->migration_granularity)
-+				continue;
- 
--		stat_inc_gc_seg_count(sbi, data_type, gc_type);
--		sbi->gc_reclaimed_segs[sbi->gc_mode]++;
--		migrated++;
-+			sum = SUM_BLK_PAGE_ADDR(sum_folio, cur_segno);
-+			if (type != GET_SUM_TYPE((&sum->footer))) {
-+				f2fs_err(sbi, "Inconsistent segment (%u) type "
-+						"[%d, %d] in SSA and SIT",
-+						cur_segno, type,
-+						GET_SUM_TYPE((&sum->footer)));
-+				f2fs_stop_checkpoint(sbi, false,
-+						STOP_CP_REASON_CORRUPTED_SUMMARY);
-+				continue;
-+			}
- 
--freed:
--		if (gc_type == FG_GC &&
--				get_valid_blocks(sbi, segno, false) == 0)
--			seg_freed++;
+ 	if (blk_mq_hctx_has_online_cpu(hctx, cpu))
+ 		return 0;
+@@ -3727,12 +3729,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
+ 	 * frozen and there are no requests.
+ 	 */
+ 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
+-		while (blk_mq_hctx_has_requests(hctx))
++		while (blk_mq_hctx_has_requests(hctx)) {
 +			/*
-+			 * this is to avoid deadlock:
-+			 *  - lock_page(sum_page)     - f2fs_replace_block
-+			 *   - check_valid_map()        - down_write(sentry_lock)
-+			 *    - down_read(sentry_lock) - change_curseg()
-+			 *                               - lock_page(sum_page)
++			 * The wakeup capable IRQ handler of block device is
++			 * not called during suspend. Skip the loop by checking
++			 * pm_wakeup_pending to prevent the deadlock and improve
++			 * suspend latency.
 +			 */
-+			if (type == SUM_TYPE_NODE)
-+				submitted += gc_node_segment(sbi, sum->entries,
-+						cur_segno, gc_type);
-+			else
-+				submitted += gc_data_segment(sbi, sum->entries,
-+						gc_list, cur_segno,
-+						gc_type, force_migrate);
- 
--		if (__is_large_section(sbi))
--			sbi->next_victim_seg[gc_type] =
--				(segno + 1 < sec_end_segno) ?
--					segno + 1 : NULL_SEGNO;
--skip:
-+			stat_inc_gc_seg_count(sbi, data_type, gc_type);
-+			sbi->gc_reclaimed_segs[sbi->gc_mode]++;
-+			migrated++;
-+
-+freed:
-+			if (gc_type == FG_GC &&
-+					get_valid_blocks(sbi, cur_segno, false) == 0)
-+				seg_freed++;
-+
-+			if (__is_large_section(sbi))
-+				sbi->next_victim_seg[gc_type] =
-+					(cur_segno + 1 < sec_end_segno) ?
-+					cur_segno + 1 : NULL_SEGNO;
++			if (pm_wakeup_pending()) {
++				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
++				ret = -EBUSY;
++				break;
++			}
+ 			msleep(5);
 +		}
-+next_block:
- 		folio_put_refs(sum_folio, 2);
-+		segno = block_end_segno;
+ 		percpu_ref_put(&hctx->queue->q_usage_counter);
  	}
  
- 	if (submitted)
-diff --git a/fs/f2fs/recovery.c b/fs/f2fs/recovery.c
-index 215e442db72c8..af72309b9bfc6 100644
---- a/fs/f2fs/recovery.c
-+++ b/fs/f2fs/recovery.c
-@@ -519,7 +519,7 @@ static int check_index_in_prev_nodes(struct f2fs_sb_info *sbi,
- 	sum_folio = f2fs_get_sum_folio(sbi, segno);
- 	if (IS_ERR(sum_folio))
- 		return PTR_ERR(sum_folio);
--	sum_node = folio_address(sum_folio);
-+	sum_node = SUM_BLK_PAGE_ADDR(sum_folio, segno);
- 	sum = sum_node->entries[blkoff];
- 	f2fs_folio_put(sum_folio, true);
- got_it:
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index b45eace879d74..ac84559dc2693 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2712,7 +2712,15 @@ struct folio *f2fs_get_sum_folio(struct f2fs_sb_info *sbi, unsigned int segno)
- void f2fs_update_meta_page(struct f2fs_sb_info *sbi,
- 					void *src, block_t blk_addr)
- {
--	struct folio *folio = f2fs_grab_meta_folio(sbi, blk_addr);
-+	struct folio *folio;
-+
-+	if (SUMS_PER_BLOCK == 1)
-+		folio = f2fs_grab_meta_folio(sbi, blk_addr);
-+	else
-+		folio = f2fs_get_meta_folio_retry(sbi, blk_addr);
-+
-+	if (IS_ERR(folio))
-+		return;
- 
- 	memcpy(folio_address(folio), src, PAGE_SIZE);
- 	folio_mark_dirty(folio);
-@@ -2720,9 +2728,21 @@ void f2fs_update_meta_page(struct f2fs_sb_info *sbi,
+-	return 0;
++	return ret;
  }
  
- static void write_sum_page(struct f2fs_sb_info *sbi,
--			struct f2fs_summary_block *sum_blk, block_t blk_addr)
-+		struct f2fs_summary_block *sum_blk, unsigned int segno)
- {
--	f2fs_update_meta_page(sbi, (void *)sum_blk, blk_addr);
-+	struct folio *folio;
-+
-+	if (SUMS_PER_BLOCK == 1)
-+		return f2fs_update_meta_page(sbi, (void *)sum_blk,
-+				GET_SUM_BLOCK(sbi, segno));
-+
-+	folio = f2fs_get_sum_folio(sbi, segno);
-+	if (IS_ERR(folio))
-+		return;
-+
-+	memcpy(SUM_BLK_PAGE_ADDR(folio, segno), sum_blk, sizeof(*sum_blk));
-+	folio_mark_dirty(folio);
-+	f2fs_folio_put(folio, true);
- }
- 
- static void write_current_sum_page(struct f2fs_sb_info *sbi,
-@@ -2987,7 +3007,7 @@ static int new_curseg(struct f2fs_sb_info *sbi, int type, bool new_sec)
- 	int ret;
- 
- 	if (curseg->inited)
--		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, segno));
-+		write_sum_page(sbi, curseg->sum_blk, segno);
- 
- 	segno = __get_next_segno(sbi, type);
- 	ret = get_new_segment(sbi, &segno, new_sec, pinning);
-@@ -3046,7 +3066,7 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
- 	struct folio *sum_folio;
- 
- 	if (curseg->inited)
--		write_sum_page(sbi, curseg->sum_blk, GET_SUM_BLOCK(sbi, curseg->segno));
-+		write_sum_page(sbi, curseg->sum_blk, curseg->segno);
- 
- 	__set_test_and_inuse(sbi, new_segno);
- 
-@@ -3065,7 +3085,7 @@ static int change_curseg(struct f2fs_sb_info *sbi, int type)
- 		memset(curseg->sum_blk, 0, SUM_ENTRY_SIZE);
- 		return PTR_ERR(sum_folio);
- 	}
--	sum_node = folio_address(sum_folio);
-+	sum_node = SUM_BLK_PAGE_ADDR(sum_folio, new_segno);
- 	memcpy(curseg->sum_blk, sum_node, SUM_ENTRY_SIZE);
- 	f2fs_folio_put(sum_folio, true);
- 	return 0;
-@@ -3154,8 +3174,7 @@ static void __f2fs_save_inmem_curseg(struct f2fs_sb_info *sbi, int type)
- 		goto out;
- 
- 	if (get_valid_blocks(sbi, curseg->segno, false)) {
--		write_sum_page(sbi, curseg->sum_blk,
--				GET_SUM_BLOCK(sbi, curseg->segno));
-+		write_sum_page(sbi, curseg->sum_blk, curseg->segno);
- 	} else {
- 		mutex_lock(&DIRTY_I(sbi)->seglist_lock);
- 		__set_test_and_free(sbi, curseg->segno, true);
-@@ -3833,8 +3852,7 @@ int f2fs_allocate_data_block(struct f2fs_sb_info *sbi, struct folio *folio,
- 	if (segment_full) {
- 		if (type == CURSEG_COLD_DATA_PINNED &&
- 		    !((curseg->segno + 1) % sbi->segs_per_sec)) {
--			write_sum_page(sbi, curseg->sum_blk,
--					GET_SUM_BLOCK(sbi, curseg->segno));
-+			write_sum_page(sbi, curseg->sum_blk, curseg->segno);
- 			reset_curseg_fields(curseg);
- 			goto skip_new_segment;
- 		}
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index 1ce2c8abaf488..e883f14c228f2 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -85,8 +85,12 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
- #define GET_ZONE_FROM_SEG(sbi, segno)				\
- 	GET_ZONE_FROM_SEC(sbi, GET_SEC_FROM_SEG(sbi, segno))
- 
--#define GET_SUM_BLOCK(sbi, segno)				\
--	((sbi)->sm_info->ssa_blkaddr + (segno))
-+#define SUMS_PER_BLOCK (F2FS_BLKSIZE / F2FS_SUM_BLKSIZE)
-+#define GET_SUM_BLOCK(sbi, segno)	\
-+	(SM_I(sbi)->ssa_blkaddr + (segno / SUMS_PER_BLOCK))
-+#define GET_SUM_BLKOFF(segno) (segno % SUMS_PER_BLOCK)
-+#define SUM_BLK_PAGE_ADDR(folio, segno)	\
-+	(folio_address(folio) + GET_SUM_BLKOFF(segno) * F2FS_SUM_BLKSIZE)
- 
- #define GET_SUM_TYPE(footer) ((footer)->entry_type)
- #define SET_SUM_TYPE(footer, type) ((footer)->entry_type = (type))
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index db7afb8064115..9085b4a511a48 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -4051,6 +4051,20 @@ static int sanity_check_raw_super(struct f2fs_sb_info *sbi,
- 	if (sanity_check_area_boundary(sbi, folio, index))
- 		return -EFSCORRUPTED;
- 
-+	/*
-+	 * Check for legacy summary layout on 16KB+ block devices.
-+	 * Modern f2fs-tools packs multiple 4KB summary areas into one block,
-+	 * whereas legacy versions used one block per summary, leading
-+	 * to a much larger SSA.
-+	 */
-+	if (SUMS_PER_BLOCK > 1 &&
-+		    !(__F2FS_HAS_FEATURE(raw_super, F2FS_FEATURE_PACKED_SSA))) {
-+		f2fs_info(sbi, "Error: Device formatted with a legacy version. "
-+			"Please reformat with a tool supporting the packed ssa "
-+			"feature for block sizes larger than 4kb.");
-+		return -EOPNOTSUPP;
-+	}
-+
- 	return 0;
- }
- 
-diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
-index 6d2a4fba68a29..5685b454bfd12 100644
---- a/fs/f2fs/sysfs.c
-+++ b/fs/f2fs/sysfs.c
-@@ -235,6 +235,9 @@ static ssize_t features_show(struct f2fs_attr *a,
- 	if (f2fs_sb_has_compression(sbi))
- 		len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "compression");
-+	if (f2fs_sb_has_packed_ssa(sbi))
-+		len += sysfs_emit_at(buf, len, "%s%s",
-+				len ? ", " : "", "packed_ssa");
- 	len += sysfs_emit_at(buf, len, "%s%s",
- 				len ? ", " : "", "pin_file");
- 	len += sysfs_emit_at(buf, len, "\n");
-@@ -1296,6 +1299,7 @@ F2FS_FEATURE_RO_ATTR(pin_file);
- #ifdef CONFIG_UNICODE
- F2FS_FEATURE_RO_ATTR(linear_lookup);
- #endif
-+F2FS_FEATURE_RO_ATTR(packed_ssa);
- 
- #define ATTR_LIST(name) (&f2fs_attr_##name.attr)
- static struct attribute *f2fs_attrs[] = {
-@@ -1455,6 +1459,7 @@ static struct attribute *f2fs_feat_attrs[] = {
- #ifdef CONFIG_UNICODE
- 	BASE_ATTR_LIST(linear_lookup),
- #endif
-+	BASE_ATTR_LIST(packed_ssa),
- 	NULL,
- };
- ATTRIBUTE_GROUPS(f2fs_feat);
-@@ -1490,6 +1495,7 @@ F2FS_SB_FEATURE_RO_ATTR(casefold, CASEFOLD);
- F2FS_SB_FEATURE_RO_ATTR(compression, COMPRESSION);
- F2FS_SB_FEATURE_RO_ATTR(readonly, RO);
- F2FS_SB_FEATURE_RO_ATTR(device_alias, DEVICE_ALIAS);
-+F2FS_SB_FEATURE_RO_ATTR(packed_ssa, PACKED_SSA);
- 
- static struct attribute *f2fs_sb_feat_attrs[] = {
- 	ATTR_LIST(sb_encryption),
-@@ -1507,6 +1513,7 @@ static struct attribute *f2fs_sb_feat_attrs[] = {
- 	ATTR_LIST(sb_compression),
- 	ATTR_LIST(sb_readonly),
- 	ATTR_LIST(sb_device_alias),
-+	ATTR_LIST(sb_packed_ssa),
- 	NULL,
- };
- ATTRIBUTE_GROUPS(f2fs_sb_feat);
-diff --git a/include/linux/f2fs_fs.h b/include/linux/f2fs_fs.h
-index 6afb4a13b81d6..a7880787cad36 100644
---- a/include/linux/f2fs_fs.h
-+++ b/include/linux/f2fs_fs.h
-@@ -17,6 +17,7 @@
- #define F2FS_LOG_SECTORS_PER_BLOCK	(PAGE_SHIFT - 9) /* log number for sector/blk */
- #define F2FS_BLKSIZE			PAGE_SIZE /* support only block == page */
- #define F2FS_BLKSIZE_BITS		PAGE_SHIFT /* bits for F2FS_BLKSIZE */
-+#define F2FS_SUM_BLKSIZE		4096	/* only support 4096 byte sum block */
- #define F2FS_MAX_EXTENSION		64	/* # of extension entries */
- #define F2FS_EXTENSION_LEN		8	/* max size of extension */
- 
-@@ -441,7 +442,7 @@ struct f2fs_sit_block {
-  * from node's page's beginning to get a data block address.
-  * ex) data_blkaddr = (block_t)(nodepage_start_address + ofs_in_node)
-  */
--#define ENTRIES_IN_SUM		(F2FS_BLKSIZE / 8)
-+#define ENTRIES_IN_SUM		(F2FS_SUM_BLKSIZE / 8)
- #define	SUMMARY_SIZE		(7)	/* sizeof(struct f2fs_summary) */
- #define	SUM_FOOTER_SIZE		(5)	/* sizeof(struct summary_footer) */
- #define SUM_ENTRY_SIZE		(SUMMARY_SIZE * ENTRIES_IN_SUM)
-@@ -467,7 +468,7 @@ struct summary_footer {
- 	__le32 check_sum;		/* summary checksum */
- } __packed;
- 
--#define SUM_JOURNAL_SIZE	(F2FS_BLKSIZE - SUM_FOOTER_SIZE -\
-+#define SUM_JOURNAL_SIZE	(F2FS_SUM_BLKSIZE - SUM_FOOTER_SIZE -\
- 				SUM_ENTRY_SIZE)
- #define NAT_JOURNAL_ENTRIES	((SUM_JOURNAL_SIZE - 2) /\
- 				sizeof(struct nat_journal_entry))
+ /*
 -- 
 2.51.0
 
