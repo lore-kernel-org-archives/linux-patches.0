@@ -1,38 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22726313E13;
-	Tue, 16 Dec 2025 11:24:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3538E32BF22;
+	Tue, 16 Dec 2025 11:24:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884293; cv=none; b=kZRTSFjynKBiu+ji9iO/UmevD2zdFgi9AgjJdJMJY0wE1QV5epYUn26YKXlrOEl40mtxJ1p7sGRZXyLS2x/et2WJbZmC3FBQPB69MXhcJg6Ydvr1s1Da1e+2Zp63hYLL2++Kvnx9IGuQa1QRoGwZ/ZqePq9gw0FNBHg7AmcDIsU=
+	t=1765884296; cv=none; b=ZyogFSvbFwbXkQnphODXIttXp8KZbk4ZeX6rcHaK9Q/h1i/asdSE1K4X4u3hEtYkbhSsZfFRWZgbAGtPtFg5TwHVTkDHtyv5ykauosrKxy47FYhJjDaLEFpk7MkgjJckopauk/LZTDJ3kO90s0Mx90WSa2E5speOwoGephvIQ8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884293; c=relaxed/simple;
-	bh=N6r2JJNKMqaPWBpBB9FgHWg62B6XHZQEVNfbOLhBxbA=;
+	s=arc-20240116; t=1765884296; c=relaxed/simple;
+	bh=fs9kGNy6z3fZxu1KDFy0sBDNELh9n2jZCZT3sRHOpnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gDG10BXmQfZTqyO4IFDXTosm16cz3Hzn0nlBiVYPJYZVLTJ0uldrZnbe+LqNKh9yvFCkn2H6tYSMEwCLcOBhMy75o6uJRRS6BeGnv37Q43QHM71l37XKCONu37FJhE2MrAnjPjeGKiCwMUAnEXMVdOoIr6dEcR8ZKB81XInWM24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4X8YNbn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMi9WgiEni0PA1iC8oFe6Rhd8BQz2V2SGg/Q9+NxoGxNGb4FncVrQztu9OAg8aI3nfWzU2KtC2S5e13mbPmhe6IxGN9nqVDuoHKuyiu7tl/vxYb4n4LFM6XU4rIlNTUSIpd1FigtFBXGYGZp7eEhzqHt9RVMBzkmGnkIvpYomg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1S2dT4O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4X8YNbn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8676BC4CEF1;
-	Tue, 16 Dec 2025 11:24:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1S2dT4O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8572FC4CEF1;
+	Tue, 16 Dec 2025 11:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884293;
-	bh=N6r2JJNKMqaPWBpBB9FgHWg62B6XHZQEVNfbOLhBxbA=;
+	s=korg; t=1765884296;
+	bh=fs9kGNy6z3fZxu1KDFy0sBDNELh9n2jZCZT3sRHOpnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4X8YNbnVn9ZXwSfteGtFi4ZSKp59xCmKRO0M4u7PM/eE2P/QppLuUEYEEq2alAxe
-	 Ef1VO67gRmeifbcVd5XccEInvuDqYNLn7+In8biWYR2abIUQSshAEEt62OFiIjhk+9
-	 yhIT6N2Uj7mRQMRq0Pjn4ga2sehkh7zpB/e3x4R8=
+	b=Z1S2dT4O52rwHJroTMyVH84+GXP9rA2ICVYl6AvKeWT3gad99mGvjxsW5gkgnOZDZ
+	 IG/GSTjkUW6y/H5r2X0yBmg8JsLBXi8O9iRssRcyrY1sEIRjbIQLizKz8bYlXrEiiO
+	 4lfeyIva1NJkt0oWZimMZ+0df+qW6lggDAWZf0IQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Petr Mladek <pmladek@suse.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	syzbot+727d161855d11d81e411@syzkaller.appspotmail.com,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 150/354] lib/vsprintf: Check pointer before dereferencing in time_and_date()
-Date: Tue, 16 Dec 2025 12:11:57 +0100
-Message-ID: <20251216111326.350440062@linuxfoundation.org>
+Subject: [PATCH 6.12 151/354] ocfs2: relax BUG() to ocfs2_error() in __ocfs2_move_extent()
+Date: Tue, 16 Dec 2025 12:11:58 +0100
+Message-ID: <20251216111326.386599904@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,49 +58,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 372a12bd5df0199aa234eaf8ef31ed7ecd61d40f ]
+[ Upstream commit 8a7d58845fae061c62b50bc5eeb9bae4a1dedc3d ]
 
-The pointer may be invalid when gets to the printf(). In particular
-the time_and_date() dereferencing it in some cases without checking.
+In '__ocfs2_move_extent()', relax 'BUG()' to 'ocfs2_error()' just
+to avoid crashing the whole kernel due to a filesystem corruption.
 
-Move the check from rtc_str() to time_and_date() to cover all cases.
-
-Fixes: 7daac5b2fdf8 ("lib/vsprintf: Print time64_t in human readable format")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-Link: https://patch.msgid.link/20251110132118.4113976-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Petr Mladek <pmladek@suse.com>
+Fixes: 8f603e567aa7 ("Ocfs2/move_extents: move a range of extent.")
+Link: https://lkml.kernel.org/r/20251009102349.181126-2-dmantipov@yandex.ru
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Closes: https://syzkaller.appspot.com/bug?extid=727d161855d11d81e411
+Reported-by: syzbot+727d161855d11d81e411@syzkaller.appspotmail.com
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/vsprintf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ocfs2/move_extents.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/lib/vsprintf.c b/lib/vsprintf.c
-index a69e71a1ca55e..511c55d7b3abf 100644
---- a/lib/vsprintf.c
-+++ b/lib/vsprintf.c
-@@ -1860,9 +1860,6 @@ char *rtc_str(char *buf, char *end, const struct rtc_time *tm,
- 	bool found = true;
- 	int count = 2;
+diff --git a/fs/ocfs2/move_extents.c b/fs/ocfs2/move_extents.c
+index aa595cd1ab6fe..6fcaaeece6666 100644
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -98,7 +98,13 @@ static int __ocfs2_move_extent(handle_t *handle,
  
--	if (check_pointer(&buf, end, tm, spec))
--		return buf;
--
- 	switch (fmt[count]) {
- 	case 'd':
- 		have_t = false;
-@@ -1928,6 +1925,9 @@ static noinline_for_stack
- char *time_and_date(char *buf, char *end, void *ptr, struct printf_spec spec,
- 		    const char *fmt)
- {
-+	if (check_pointer(&buf, end, ptr, spec))
-+		return buf;
+ 	rec = &el->l_recs[index];
+ 
+-	BUG_ON(ext_flags != rec->e_flags);
++	if (ext_flags != rec->e_flags) {
++		ret = ocfs2_error(inode->i_sb,
++				  "Inode %llu has corrupted extent %d with flags 0x%x at cpos %u\n",
++				  (unsigned long long)ino, index, rec->e_flags, cpos);
++		goto out;
++	}
 +
- 	switch (fmt[1]) {
- 	case 'R':
- 		return rtc_str(buf, end, (const struct rtc_time *)ptr, spec, fmt);
+ 	/*
+ 	 * after moving/defraging to new location, the extent is not going
+ 	 * to be refcounted anymore.
 -- 
 2.51.0
 
