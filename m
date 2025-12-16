@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3207434D3BD;
-	Tue, 16 Dec 2025 11:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4B0F322B83;
+	Tue, 16 Dec 2025 11:43:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885391; cv=none; b=WRjvfW9dzNn73flrdU7Nj8WxF//2Ebgx0an8GCfhwjMwgXqx9DQXtYcuLpGmdvyP2uJBQbtSJEurky+qB0Fo8IG6tZe5REMmGLQiIZZjauigKe+RKEoj/XlVvQUOBv2rwj+vUC4UQ8WE18F5PuCLSv73f9gvo7asVsbD+j3L75U=
+	t=1765885394; cv=none; b=G35SgmRaMkVmBkujneOd41CKtHfRjwnnGNs6YhkPv7YajTf1uQi5hPQe6tbLVdH7ECSijXUTLR9l4TAV24IHG+KF3sGrJ9MyDv3Nf70lrveT33gJvMc+jR6R+6yI7Se/WqgrJ1wrvEGd5b46hqhQhlNpQ9t8gwjlErEA1QQV6+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885391; c=relaxed/simple;
-	bh=h4TD0yuoOWZslL8g/vl0dbsi6E7oB84ufrzaFTsFwO4=;
+	s=arc-20240116; t=1765885394; c=relaxed/simple;
+	bh=N4+cLqfe3ZSgOk9vdQz5zjrA7L2169BdaCSNlf7qg1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PVdl1X/jYqIXi9o3A2F7owjhBnk3mzeKJIGR+WFdbvvUJd1YayEr32AJ16UIVo9VFT9YZtXyzrceveXvWqbaOgLsnxUUz9oOzCL9HFl2l5DzE4xIcwFoQ/9uA9TWPtncT3VX/ZVJ4MzcpMO4nTs32E4mAE7vMSErm/MIOZSVzfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdgyfCf5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Czf9MnX9ut2054X3E4E0wZBvgRFQgToSL3qGC7IbeON/bMYdHTBVK2/xrXU6MuIcxYLW6jgq78gT+T2EnY6/XbCoqBzPy+T9HNeffCuQHIcjBjqkKhBcxSUTqXqPUVXLgn2kHdlVEYEldR0ApyjyGrANHp0dHUgt3SOZdQfScPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSZqzkid; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdgyfCf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7581C4CEF1;
-	Tue, 16 Dec 2025 11:43:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSZqzkid"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C30C4CEF1;
+	Tue, 16 Dec 2025 11:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885391;
-	bh=h4TD0yuoOWZslL8g/vl0dbsi6E7oB84ufrzaFTsFwO4=;
+	s=korg; t=1765885394;
+	bh=N4+cLqfe3ZSgOk9vdQz5zjrA7L2169BdaCSNlf7qg1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdgyfCf5PlnHcmHST6xT9JroMy9a7U16ti/8qXL7/PrTE79jwvGqD9D7UJ0WIyJTt
-	 4p7zOCBXqVsdTkyu8dOD636cismn/YZ4OnfHAoj3x0ULhyLHz4yTLZVLzdiEDQDz/o
-	 Z88vqenZbmwl3K2VaRMOttB2So7U5NW5JKGCQdd0=
+	b=nSZqzkid5yx3AX3dEgygjOfPXnP4R873hl+NxVuHlLitZ5exCZNuQfztVL/de/v+n
+	 hMKI/eQoiY0gv05KpDmOm8MPhiCCI2OwLcxvNAhd5sjRnPwK3CjWiU0S4OCibPr4cA
+	 /YUYvdczh8fg20XO555KGsC4Ej2S/YAwpsMq1AlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Berg <benjamin.berg@intel.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 125/507] tools/nolibc/dirent: avoid errno in readdir_r
-Date: Tue, 16 Dec 2025 12:09:26 +0100
-Message-ID: <20251216111350.060590242@linuxfoundation.org>
+Subject: [PATCH 6.17 099/507] arm64: dts: qcom: sm8650: set ufs as dma coherent
+Date: Tue, 16 Dec 2025 12:09:00 +0100
+Message-ID: <20251216111349.126942707@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -45,45 +47,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Berg <benjamin.berg@intel.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 4ada5679f18dbbe92d87c37a842c3368e6ab5e4a ]
+[ Upstream commit c2703c90161b45bca5b65f362adbae02ed71fcc1 ]
 
-Using errno is not possible when NOLIBC_IGNORE_ERRNO is set. Use
-sys_lseek instead of lseek as that avoids using errno.
+The UFS device is ovbiously dma coherent like the other IOMMU devices
+like usb, mmc, ... let's fix this by adding the flag.
 
-Fixes: 665fa8dea90d ("tools/nolibc: add support for directory access")
-Signed-off-by: Benjamin Berg <benjamin.berg@intel.com>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+To be sure an extensive test has been performed to be sure it's
+safe, as downstream uses this flag for UFS as well.
+
+As an experiment, I checked how the dma-coherent could impact
+the UFS bandwidth, and it happens the max bandwidth on cached
+write is slighly highter (up to 10%) while using less cpu time
+since cache sync/flush is skipped.
+
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/dirent.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/include/nolibc/dirent.h b/tools/include/nolibc/dirent.h
-index 758b95c48e7a4..61a122a60327d 100644
---- a/tools/include/nolibc/dirent.h
-+++ b/tools/include/nolibc/dirent.h
-@@ -86,9 +86,9 @@ int readdir_r(DIR *dirp, struct dirent *entry, struct dirent **result)
- 	 * readdir() can only return one entry at a time.
- 	 * Make sure the non-returned ones are not skipped.
- 	 */
--	ret = lseek(fd, ldir->d_off, SEEK_SET);
--	if (ret == -1)
--		return errno;
-+	ret = sys_lseek(fd, ldir->d_off, SEEK_SET);
-+	if (ret < 0)
-+		return -ret;
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index e14d3d778b71b..d7ed45027ff45 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -4020,6 +4020,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 	entry->d_ino = ldir->d_ino;
- 	/* the destination should always be big enough */
+ 			iommus = <&apps_smmu 0x60 0>;
+ 
++			dma-coherent;
++
+ 			lanes-per-direction = <2>;
+ 			qcom,ice = <&ice>;
+ 
 -- 
 2.51.0
 
