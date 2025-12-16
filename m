@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D5D342CB1;
-	Tue, 16 Dec 2025 11:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7052134251D;
+	Tue, 16 Dec 2025 11:26:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884389; cv=none; b=WhOtsDxOlHGOLdAe/ETdUFXntXZ8pP9ChPNgoqThGyaDSh0rlwH6FRT9Ke+S9ClKDyZ3XHER5UdFBHHGjn13NM/KSs8AI5HsdYqZN1/dAX6EA+lOLUIpkvk+spqqX9lDl5hdIV7wNDnRszD2Kqs/upRaY0Kvl4xAWXbC6e2t0fs=
+	t=1765884392; cv=none; b=R+aoSIbgjA6PypFGvOPW+hoQYXUoZM/EzDbxQEGVpG8I14OgdJUZuin1lVtDzCYs+vZwpCayTWL4OqMkBB7mnG6UrT/L1kXzTo7SE0szhqNIePb4Xo7bwy9xvPhd4kN9LBdofYjdrpOKi6kU+VXRbXoChwUWf7FSzIU4ICbYgvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884389; c=relaxed/simple;
-	bh=lhcNmKgTU3BHxfsR7PcGc2GPRqUBQ8sPdlXDvLaNUbw=;
+	s=arc-20240116; t=1765884392; c=relaxed/simple;
+	bh=PDH60vx+Sp36RQ27USId3ZTjx6m4edFBrVQ/Yf4kVm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTdn8FgM95G69KqA8hCJA3RsNbmLGaICWo7VQxNMo8znTYJrBQqK34KEygOjxgM2lIm+DK7llPWcACyrBkUWuoQz537HkUapd0/L4mfRukVut3QrtLo1NQfmPk+kszR5UBG5PnCEP+RfotC51kADEdpBCGOnNLLLpn2p2u4Mwys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1a5aNHfe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JErPu2+0rsvV4PcvvTqY+ma3m9CmYNN43+18OpX52r1lTZZEbKxOHayOPRiAet/T1CfTUhVjgYE+kZWKxtTRTceu6XzWTZJwcOPlmCqZpioPKCdgqCMOfwchn2/Lro5k4kIbuaIVOv0o0T7grHvavPN7AT6l7MEtif2OYxTudFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBPuM6bB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1a5aNHfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6755DC4CEF1;
-	Tue, 16 Dec 2025 11:26:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBPuM6bB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB75CC19422;
+	Tue, 16 Dec 2025 11:26:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884388;
-	bh=lhcNmKgTU3BHxfsR7PcGc2GPRqUBQ8sPdlXDvLaNUbw=;
+	s=korg; t=1765884392;
+	bh=PDH60vx+Sp36RQ27USId3ZTjx6m4edFBrVQ/Yf4kVm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1a5aNHfedCGnsx4qV/5Bwz1AumV1TI2aOLMLqtR32vWrqcvjrANdV9M/DFIpKLx8X
-	 ODiIPp+EC9zIs9hBPGFIpPeGVN0MmvgA4OShU7STJUQ90B3bdRs807evDpET9qNlLw
-	 ot+X0xi+fibDTFCiZ2xWpwFZ4FlnWbvGXRkiYvto=
+	b=uBPuM6bB1HLuYUq7cn6LrQ/BJTS/QMV1YGOeaOQ2zIWPVhH1L/Or+tTq0R0/9nw9L
+	 Ekxo7IksPORelRs5c1bnQHjEuGbTCKA5aEpY334np9V2ZLmr1zEEHT7Fo1IZ4Lz6e8
+	 cIT5bZvORb68TIxBrbd5Y86GQ6+qsI7P+VAnzU+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 135/354] ARM: dts: stm32: stm32mp157c-phycore: Fix STMPE811 touchscreen node properties
-Date: Tue, 16 Dec 2025 12:11:42 +0100
-Message-ID: <20251216111325.810582364@linuxfoundation.org>
+Subject: [PATCH 6.12 172/354] drm/msm/a2xx: stop over-complaining about the legacy firmware
+Date: Tue, 16 Dec 2025 12:12:19 +0100
+Message-ID: <20251216111327.145634011@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,47 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit e40b061cd379f4897e705d17cf1b4572ad0f3963 ]
+[ Upstream commit a3a22373fce576560757f5616eb48dbf85891d9c ]
 
-Move st,adc-freq, st,mod-12b, st,ref-sel, and st,sample-time properties
-from the touchscreen subnode to the parent touch@44 node. These properties
-are defined in the st,stmpe.yaml schema for the parent node, not the
-touchscreen subnode, resolving the validation error about unevaluated
-properties.
+If the rootfs have a legacy A200 firmware, currently the driver will
+complain each time the hw is reinited (which can happen a lot). E.g.
+with GL testsuite the hw is reinited after each test, spamming the
+console.
 
-Fixes: 27538a18a4fcc ("ARM: dts: stm32: add STM32MP1-based Phytec SoM")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Link: https://lore.kernel.org/r/20250915224611.169980-1-jihed.chaibi.dev@gmail.com
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Make sure that the message is printed only once: when we detect the
+firmware that doesn't support protection.
+
+Fixes: 302295070d3c ("drm/msm/a2xx: support loading legacy (iMX) firmware")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688098/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi    | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi b/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi
-index bf0c32027baf7..370b2afbf15bf 100644
---- a/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp157c-phycore-stm32mp15-som.dtsi
-@@ -185,13 +185,13 @@ touch@44 {
- 		interrupt-parent = <&gpioi>;
- 		vio-supply = <&v3v3>;
- 		vcc-supply = <&v3v3>;
-+		st,sample-time = <4>;
-+		st,mod-12b = <1>;
-+		st,ref-sel = <0>;
-+		st,adc-freq = <1>;
- 
- 		touchscreen {
- 			compatible = "st,stmpe-ts";
--			st,sample-time = <4>;
--			st,mod-12b = <1>;
--			st,ref-sel = <0>;
--			st,adc-freq = <1>;
- 			st,ave-ctrl = <1>;
- 			st,touch-det-delay = <2>;
- 			st,settling = <2>;
+diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+index 0dc255ddf5ceb..2e25af3462ab6 100644
+--- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+@@ -234,7 +234,7 @@ static int a2xx_hw_init(struct msm_gpu *gpu)
+ 	 * word (0x20xxxx for A200, 0x220xxx for A220, 0x225xxx for A225).
+ 	 * Older firmware files, which lack protection support, have 0 instead.
+ 	 */
+-	if (ptr[1] == 0) {
++	if (ptr[1] == 0 && !a2xx_gpu->protection_disabled) {
+ 		dev_warn(gpu->dev->dev,
+ 			 "Legacy firmware detected, disabling protection support\n");
+ 		a2xx_gpu->protection_disabled = true;
 -- 
 2.51.0
 
