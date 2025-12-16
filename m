@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F421835970D;
-	Tue, 16 Dec 2025 12:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7523596F8;
+	Tue, 16 Dec 2025 12:04:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886687; cv=none; b=P6DBbLQyYXkmpcGk7Oq67UqTEmYhClztLXDBunUV2bhvRI/hLPCmDBN6w5SBmMR6JE8jjd214xn0kvW3epEV/6KrE1dBqgIqbDh5/4jByk4UALEBPGof0ajGhP3DRtBbzkshj8M0r3AK1BZ7EI0wEdaLuHIp49w5c1kZ0ocNa44=
+	t=1765886690; cv=none; b=mjAeQEZPWxuBK3KNoGGdIoAjAyfpY2ERGb7QFhxi+adhVkiYLRmFUQmcJLJ7eQ/iIg7IcAGfzikC2xwCoEso5p4pvUpy4cHohyAnT3KzewAwPK19Z23/6ppI5wiJ1qtLrA6eIih55i4a/2WT4VhBYUgPgkUmiUWO5rXEX12bSqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886687; c=relaxed/simple;
-	bh=gvx3IIxl54o/IK2IjtWIy2KvCEgiFwvGmk8bG5qmhF8=;
+	s=arc-20240116; t=1765886690; c=relaxed/simple;
+	bh=FqaTvmCTd33Frp9diy3FdsPvShLveskKrQ9l9pXHp+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ogqka+SgLOVNMaSUAT4n5IePuWFljCT1S9c4I9b6RrWfEanrXpN65ehvLCQP8svA5bqqF7GYPWmNRDz/Ts4Bo5DojP6KLm0R/l4wFlVnsMOzV4HceVidFIVqILovBLLJz6Ca5gemLFYkTvHSU/Ht2Dk/Wf7ggjFND/43+2ThtTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIdWoVoG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rzkTP1qDEi6+w3UC3cjGKitf0QbgIlGvhE5pu4r/Ni3c2+rh4JoFU+H2SYGbe/mBwsJOIAjskrLXsvDhvI+DkxXtdiX4gsDZKxDxi2qpC4q7j0jla3j4PB19z8tBgHlyB1rxJmal+JZPtqj1iPZ4vL5MewTZ0UHF+q9sDZzD/qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHJFLZFI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIdWoVoG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60132C4CEF5;
-	Tue, 16 Dec 2025 12:04:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHJFLZFI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE36C4CEF1;
+	Tue, 16 Dec 2025 12:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886686;
-	bh=gvx3IIxl54o/IK2IjtWIy2KvCEgiFwvGmk8bG5qmhF8=;
+	s=korg; t=1765886690;
+	bh=FqaTvmCTd33Frp9diy3FdsPvShLveskKrQ9l9pXHp+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eIdWoVoGeG1q/fAchq6XyzMwtHuWXVcQV9YF0ogNqlvjfWxgqzI0+N0a5vxGOS8WU
-	 JpDRpBuW98U2a/NL3HsA0vDKD7jnbDd+Ju5Mb3Tz2yOQQFo2r7/YhOYvoNCkhwDSvI
-	 4GY1tIRI34wjz7hiJuxpFsvRu0Bk0C+psDsrFENY=
+	b=eHJFLZFIa3t9j/EJbCNSG/uYL7MVx4BDjMvNj+J7PZpvyCWZu0scIEPAifIhT4e7p
+	 bgwsoEWgzts1zqtHsIqXovcHoD1Rdh3fUCf4jXlY0G51X+B5F3wM3Xr+o6EYBB0EbR
+	 YHxCc4EipYTqUxcWSSRUYTunHHfc93zIVqkO6dic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kitta <kitta@linux.alibaba.com>,
-	Evan Li <evan.li@linux.alibaba.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 497/507] perf/x86/intel: Fix NULL event dereference crash in handle_pmi_common()
-Date: Tue, 16 Dec 2025 12:15:38 +0100
-Message-ID: <20251216111403.445060892@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Haotien Hsu <haotienh@nvidia.com>,
+	Wayne Chang <waynec@nvidia.com>
+Subject: [PATCH 6.17 498/507] usb: gadget: tegra-xudc: Always reinitialize data toggle when clear halt
+Date: Tue, 16 Dec 2025 12:15:39 +0100
+Message-ID: <20251216111403.481446016@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,60 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Evan Li <evan.li@linux.alibaba.com>
+From: Haotien Hsu <haotienh@nvidia.com>
 
-[ Upstream commit 9415f749d34b926b9e4853da1462f4d941f89a0d ]
+commit 2585973c7f9ee31d21e5848c996fab2521fd383d upstream.
 
-handle_pmi_common() may observe an active bit set in cpuc->active_mask
-while the corresponding cpuc->events[] entry has already been cleared,
-which leads to a NULL pointer dereference.
+The driver previously skipped handling ClearFeature(ENDPOINT_HALT)
+when the endpoint was already not halted. This prevented the
+controller from resetting the data sequence number and reinitializing
+the endpoint state.
 
-This can happen when interrupt throttling stops all events in a group
-while PEBS processing is still in progress. perf_event_overflow() can
-trigger perf_event_throttle_group(), which stops the group and clears
-the cpuc->events[] entry, but the active bit may still be set when
-handle_pmi_common() iterates over the events.
+According to USB 3.2 specification Rev. 1.1, section 9.4.5,
+ClearFeature(ENDPOINT_HALT) must always reset the data sequence and
+set the stream state machine to Disabled, regardless of whether the
+endpoint was halted.
 
-The following recent fix:
+Remove the early return so that ClearFeature(ENDPOINT_HALT) always
+resets the endpoint sequence state as required by the specification.
 
-  7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
-
-moved the cpuc->events[] clearing from x86_pmu_stop() to x86_pmu_del() and
-relied on cpuc->active_mask/pebs_enabled checks. However,
-handle_pmi_common() can still encounter a NULL cpuc->events[] entry
-despite the active bit being set.
-
-Add an explicit NULL check on the event pointer before using it,
-to cover this legitimate scenario and avoid the NULL dereference crash.
-
-Fixes: 7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
-Reported-by: kitta <kitta@linux.alibaba.com>
-Co-developed-by: kitta <kitta@linux.alibaba.com>
-Signed-off-by: Evan Li <evan.li@linux.alibaba.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20251212084943.2124787-1-evan.li@linux.alibaba.com
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220855
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 49db427232fe ("usb: gadget: Add UDC driver for tegra XUSB device mode controller")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Haotien Hsu <haotienh@nvidia.com>
+Signed-off-by: Wayne Chang <waynec@nvidia.com>
+Link: https://patch.msgid.link/20251127033540.2287517-1-waynec@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/gadget/udc/tegra-xudc.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 52270268144c2..76cd840e33e30 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -3249,6 +3249,9 @@ static int handle_pmi_common(struct pt_regs *regs, u64 status)
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -1559,12 +1559,6 @@ static int __tegra_xudc_ep_set_halt(stru
+ 		return -ENOTSUPP;
+ 	}
  
- 		if (!test_bit(bit, cpuc->active_mask))
- 			continue;
-+		/* Event may have already been cleared: */
-+		if (!event)
-+			continue;
- 
- 		/*
- 		 * There may be unprocessed PEBS records in the PEBS buffer,
--- 
-2.51.0
-
+-	if (!!(xudc_readl(xudc, EP_HALT) & BIT(ep->index)) == halt) {
+-		dev_dbg(xudc->dev, "EP %u already %s\n", ep->index,
+-			halt ? "halted" : "not halted");
+-		return 0;
+-	}
+-
+ 	if (halt) {
+ 		ep_halt(xudc, ep->index);
+ 	} else {
 
 
