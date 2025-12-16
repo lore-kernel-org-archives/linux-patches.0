@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89160344059;
-	Tue, 16 Dec 2025 12:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C54358D38;
+	Tue, 16 Dec 2025 12:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888155; cv=none; b=kEv1y1RY8ew66aB7tLv843tndavxw8U1FAl7Ai5ft/AGMppVJ6vB9rNrzsNSyhJCzb9yFnSP5Vp7hON6XYFF4TR/BWvnGA106XIXt6L+tcVVuPO6DrxXl3HfHUynFgAulN44nZgwI7xCwOk5YHrEFl3AJxG+GpR+5eZWRanJV9g=
+	t=1765888159; cv=none; b=RxR/IGw1lCgIyEtBDQqkXb8sU/TSfyL0cI88gCUbsQJe81RA01yLO7EFnlyhwdyLTjjn4/TFcyfwj0lxaWHdFQDyb6jtH13r8lp5vPbUXrQqbYnZ+YsFAC541AOMdt7DwgAqnI6KwOKb7moHeFBp/zCvvOZXn4kx4kISoGOgHLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888155; c=relaxed/simple;
-	bh=tdFbnjFbo/bnLJ9vFnASuRDNK6tM5nyKl3SXTl8DZBE=;
+	s=arc-20240116; t=1765888159; c=relaxed/simple;
+	bh=TaRDtmoi91IKI+dVjVCezzXpzhM1kLhNjgtI9PPnsa0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FXVA+PMYcf6pibBQlyFm9/xPqFd7VAo5O9iQa1M8lydU245gBxrlTcUeqaZ2ya02jsXCYTHhRQ6FuYlDT2vwmayfHRJi4FuKBDm9rDAoB8GhUKr+IQ4ecXXkfnnwKoIrMgAI1i9QvbFpSNNEg0YEQYm+yh0m1/HuquYANWUJvCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2u0ugc2d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OJZh5o3VqUEZQHfOOA37lua9v1cp/9FNqjzeLkF6umBWU9IU2buGYf8u/2dSqI4VkCF04twgzXOIXjH9KVzhhhAodFfWXUJ2YxDgSsPJ9rDSVONQ+BrOspcP+iQI8CGA+DZVKv6J0DGgw78c0gIhIGO40sFcef/H/oP9zVU3s1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvAAT7So; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2u0ugc2d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D7D9C4CEF1;
-	Tue, 16 Dec 2025 12:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvAAT7So"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6DAC4CEF5;
+	Tue, 16 Dec 2025 12:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888155;
-	bh=tdFbnjFbo/bnLJ9vFnASuRDNK6tM5nyKl3SXTl8DZBE=;
+	s=korg; t=1765888159;
+	bh=TaRDtmoi91IKI+dVjVCezzXpzhM1kLhNjgtI9PPnsa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2u0ugc2d7swFzVR10uS5Qa/nNPrUVBipbGSDPJDdXm1zedS8wzAhU2UspNNUuTc5q
-	 3zH74I69KSNMgwETOn+Us4VhVp/asndH/CMUL0dcUnarzZKyLG7oMIZ2DeuW7ZLkKw
-	 35ZBZ9Q1OjFhk/TmovHWVXRCt2GLgosEBGWB2ekI=
+	b=UvAAT7SovkJmBebWvilg9UQ3k60cQbqBxXxk4c01NVkJMGaM/xQBuRakfDDl2kWfn
+	 VCvq3lxEUq4TtkgZlSK1o8kACe/I7mM2pmkxAPkYAnaKZV3Pjx4VLPdA0zMWjbhA4k
+	 7W72r0XhAkXEsfh/7cN0H9Mq0MAf99y3r2uaUG6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alex Hung <alex.hung@amd.com>,
+	Eric Huang <jinhuieric.huang@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 448/614] drm/amd/display: Fix logical vs bitwise bug in get_embedded_panel_info_v2_1()
-Date: Tue, 16 Dec 2025 12:13:35 +0100
-Message-ID: <20251216111417.603845621@linuxfoundation.org>
+Subject: [PATCH 6.18 449/614] drm/amdkfd: assign AID to uuid in topology for SPX mode
+Date: Tue, 16 Dec 2025 12:13:36 +0100
+Message-ID: <20251216111417.638619314@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,48 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Eric Huang <jinhuieric.huang@amd.com>
 
-[ Upstream commit 1a79482699b4d1e43948d14f0c7193dc1dcad858 ]
+[ Upstream commit 089702632f1dd38fadc9af13816485d6aa518dbb ]
 
-The .H_SYNC_POLARITY and .V_SYNC_POLARITY variables are 1 bit bitfields
-of a u32.  The ATOM_HSYNC_POLARITY define is 0x2 and the
-ATOM_VSYNC_POLARITY is 0x4.  When we do a bitwise negate of 0, 2, or 4
-then the last bit is always 1 so this code always sets .H_SYNC_POLARITY
-and .V_SYNC_POLARITY to true.
+XCD id is assigned to uuid, which causes some performance
+drop in SPX mode, assigning AID back will resolve the
+issue.
 
-This code is instead intended to check if the ATOM_HSYNC_POLARITY or
-ATOM_VSYNC_POLARITY flags are set and reverse the result.  In other
-words, it's supposed to be a logical negate instead of a bitwise negate.
-
-Fixes: ae79c310b1a6 ("drm/amd/display: Add DCE12 bios parser support")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Fixes: 3a75edf93aae ("drm/amdkfd: set uuid for each partition in topology")
+Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-index 04eb647acc4e1..550a9f1d03f82 100644
---- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-+++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
-@@ -1480,10 +1480,10 @@ static enum bp_result get_embedded_panel_info_v2_1(
- 	/* not provided by VBIOS */
- 	info->lcd_timing.misc_info.HORIZONTAL_CUT_OFF = 0;
- 
--	info->lcd_timing.misc_info.H_SYNC_POLARITY = ~(uint32_t) (lvds->lcd_timing.miscinfo
--			& ATOM_HSYNC_POLARITY);
--	info->lcd_timing.misc_info.V_SYNC_POLARITY = ~(uint32_t) (lvds->lcd_timing.miscinfo
--			& ATOM_VSYNC_POLARITY);
-+	info->lcd_timing.misc_info.H_SYNC_POLARITY = !(lvds->lcd_timing.miscinfo &
-+						       ATOM_HSYNC_POLARITY);
-+	info->lcd_timing.misc_info.V_SYNC_POLARITY = !(lvds->lcd_timing.miscinfo &
-+						       ATOM_VSYNC_POLARITY);
- 
- 	/* not provided by VBIOS */
- 	info->lcd_timing.misc_info.VERTICAL_CUT_OFF = 0;
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+index 5c98746eb72df..811636af14eaa 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -530,7 +530,9 @@ static ssize_t node_show(struct kobject *kobj, struct attribute *attr,
+ 		sysfs_show_32bit_prop(buffer, offs, "sdma_fw_version",
+ 				      dev->gpu->kfd->sdma_fw_version);
+ 		sysfs_show_64bit_prop(buffer, offs, "unique_id",
+-				      dev->gpu->xcp ?
++				      dev->gpu->xcp &&
++				      (dev->gpu->xcp->xcp_mgr->mode !=
++				       AMDGPU_SPX_PARTITION_MODE) ?
+ 				      dev->gpu->xcp->unique_id :
+ 				      dev->gpu->adev->unique_id);
+ 		sysfs_show_32bit_prop(buffer, offs, "num_xcc",
 -- 
 2.51.0
 
