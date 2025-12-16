@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E763935C191;
-	Tue, 16 Dec 2025 12:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4893235C1A0;
+	Tue, 16 Dec 2025 12:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886741; cv=none; b=Hi32T6KgCBg8aJE/fn1WRfMqG3UlefpnpJlKXNnuP+Cns10TT2+JUw5luyBQlM2Xy7N5uzijO4XP4eZHWoEK3YUpG6Ae2fz6zPhJSZeJwPddn9Pri1LkyhluQmQdvdoMLNjwkveIaDkCONHWiv1vlBaYIVreclcPg6lIUY3VLnY=
+	t=1765886744; cv=none; b=rVZ/jlovqkbQfUeahW+CCClI1Juy2eE3LPoBXbS9wXFvGfQmvt1vq2NJf09QIfCl6xIfYUQWD+a7gHxnv3av2zuCwdkZPMyDOjW/P8Ugrss0m44snGa38LDvukOfsfRfqqVPcmT7XCt4wWJwBy/u55KjK6iVpx7ymA5Ym+v7Pc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886741; c=relaxed/simple;
-	bh=7C6MZHZqFKXCMqOpXdpPhH18QlEp2HRJfhRQVRWk8q8=;
+	s=arc-20240116; t=1765886744; c=relaxed/simple;
+	bh=XCdzSuNnk76+9hEwcKwsMhthWMPJOpbmcntQrJH7QuY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSmiwm9JsvoaQ9UcIYjcmOIUFBwQQegeAsj4DL2EJBvAUIZ/KhMtl6SKdhPAj+fLi0q6fsvA+zPI9lRZyyW9MQRv/Pt4ZcOvsmcgAzRqvyikKEEDdQhLgv/sp+7hHPv9s6jAD6QRmCARZA7oorP0HV7+EB/jBu1uYZ7qcUHgQgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gCuJiihQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N5IVuc1W0g/iGR60i0RiSg0fSHnHKiNoM0/MJf0ejXa4nY9TvlwPqVWp2jSf/pm6Wr4y06JwnFiPf7w7IsB0397lGVCsWT6QMAGIvU0+h1pNh7tvDAcHykozF0emftemEPeTDgpqQ8Hzy0Hz+ytMmLU6FJuMUc5L6QGPDD/DrAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d5thTAo6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gCuJiihQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08698C4CEF1;
-	Tue, 16 Dec 2025 12:05:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d5thTAo6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D904C4CEF1;
+	Tue, 16 Dec 2025 12:05:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886740;
-	bh=7C6MZHZqFKXCMqOpXdpPhH18QlEp2HRJfhRQVRWk8q8=;
+	s=korg; t=1765886743;
+	bh=XCdzSuNnk76+9hEwcKwsMhthWMPJOpbmcntQrJH7QuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCuJiihQq48yYC6/12VYeQV/zEh3To0MY1rDzgfBb2Dt6bvXAPmr+WinkyTAtr6fT
-	 1DK8KoO8xv9RaYAIj2pWLJaHCRHPuFyifGolq3gpigWOYTWf6vZ1INguz/6yYojK/E
-	 eeYUkss6t79kAtfzCzzdAQ6HKataNe6hxsaeUmsc=
+	b=d5thTAo6sQmpXroTOSi9MluxEy+FP0t6w4qPh9PQIeEFwzMH24XPJ2RaLvbT66N+x
+	 EgP7dkNNC8TJcsYTYqyTdpOF3zrjWbdzWoXCEOIraPz+NcuRAg+rLXF0sofOIh2a9l
+	 a+208v/OWMuUngjB2vyHKBH+JqV0sTMxu+2kVdyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Konstantin Andreev <andreev@swemel.ru>,
+	Casey Schaufler <casey@schaufler-ca.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 019/614] bpf: Fix sleepable context for async callbacks
-Date: Tue, 16 Dec 2025 12:06:26 +0100
-Message-ID: <20251216111402.000186331@linuxfoundation.org>
+Subject: [PATCH 6.18 002/614] smack: deduplicate "does access rule request transmutation"
+Date: Tue, 16 Dec 2025 12:06:09 +0100
+Message-ID: <20251216111401.379511902@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,197 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Konstantin Andreev <andreev@swemel.ru>
 
-[ Upstream commit 469d638d1520a9332cd0d034690e75e845610a51 ]
+[ Upstream commit 635a01da8385fc00a144ec24684100bd1aa9db11 ]
 
-Fix the BPF verifier to correctly determine the sleepable context of
-async callbacks based on the async primitive type rather than the arming
-program's context.
-
-The bug is in in_sleepable() which uses OR logic to check if the current
-execution context is sleepable. When a sleepable program arms a timer
-callback, the callback's state correctly has in_sleepable=false, but
-in_sleepable() would still return true due to env->prog->sleepable being
-true. This incorrectly allows sleepable helpers like
-bpf_copy_from_user() inside timer callbacks when armed from sleepable
-programs, even though timer callbacks always execute in non-sleepable
-context.
-
-Fix in_sleepable() to rely solely on env->cur_state->in_sleepable, and
-initialize state->in_sleepable to env->prog->sleepable in
-do_check_common() for the main program entry. This ensures the sleepable
-context is properly tracked per verification state rather than being
-overridden by the program's sleepability.
-
-The env->cur_state NULL check in in_sleepable() was only needed for
-do_misc_fixups() which runs after verification when env->cur_state is
-set to NULL. Update do_misc_fixups() to use env->prog->sleepable
-directly for the storage_get_function check, and remove the redundant
-NULL check from in_sleepable().
-
-Introduce is_async_cb_sleepable() helper to explicitly determine async
-callback sleepability based on the primitive type:
-  - bpf_timer callbacks are never sleepable
-  - bpf_wq and bpf_task_work callbacks are always sleepable
-
-Add verifier_bug() check to catch unhandled async callback types,
-ensuring future additions cannot be silently mishandled. Move the
-is_task_work_add_kfunc() forward declaration to the top alongside other
-callback-related helpers. We update push_async_cb() to adjust to the new
-changes.
-
-At the same time, while simplifying in_sleepable(), we notice a problem
-in do_misc_fixups. Fix storage_get helpers to use GFP_ATOMIC when called
-from non-sleepable contexts within sleepable programs, such as bpf_timer
-callbacks.
-
-Currently, the check in do_misc_fixups assumes that env->prog->sleepable,
-previously in_sleepable(env) which only resolved to this check before
-last commit, holds across the program's execution, but that is not true.
-Instead, the func_atomic bit must be set whenever we see the function
-being called in an atomic context. Previously, this is being done when
-the helper is invoked in atomic contexts in sleepable programs, we can
-simply just set the value to true without doing an in_sleepable() check.
-
-We must also do a standalone in_sleepable() check to handle cases where
-the async callback itself is armed from a sleepable program, but is
-itself non-sleepable (e.g., timer callback) and invokes such a helper,
-thus needing the func_atomic bit to be true for the said call.
-
-Adjust do_misc_fixups() to drop any checks regarding sleepable nature of
-the program, and just depend on the func_atomic bit to decide which GFP
-flag to pass.
-
-Fixes: 81f1d7a583fa ("bpf: wq: add bpf_wq_set_callback_impl")
-Fixes: b00fa38a9c1c ("bpf: Enable non-atomic allocations in local storage")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20251007220349.3852807-2-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Konstantin Andreev <andreev@swemel.ru>
+Signed-off-by: Casey Schaufler <casey@schaufler-ca.com>
+Stable-dep-of: 78fc6a94be25 ("smack: fix bug: invalid label of unix socket file")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 41 ++++++++++++++++++++++++++++++-----------
- 1 file changed, 30 insertions(+), 11 deletions(-)
+ security/smack/smack_lsm.c | 57 +++++++++++++++++++++-----------------
+ 1 file changed, 32 insertions(+), 25 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index fbe4bb91c564a..460107b0449fe 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -515,6 +515,7 @@ static bool is_callback_calling_kfunc(u32 btf_id);
- static bool is_bpf_throw_kfunc(struct bpf_insn *insn);
- 
- static bool is_bpf_wq_set_callback_impl_kfunc(u32 btf_id);
-+static bool is_task_work_add_kfunc(u32 func_id);
- 
- static bool is_sync_callback_calling_function(enum bpf_func_id func_id)
- {
-@@ -547,6 +548,21 @@ static bool is_async_callback_calling_insn(struct bpf_insn *insn)
- 	       (bpf_pseudo_kfunc_call(insn) && is_async_callback_calling_kfunc(insn->imm));
+diff --git a/security/smack/smack_lsm.c b/security/smack/smack_lsm.c
+index 39a4caeb6bc8e..a005f5afb8e0d 100644
+--- a/security/smack/smack_lsm.c
++++ b/security/smack/smack_lsm.c
+@@ -962,6 +962,24 @@ static int smack_inode_alloc_security(struct inode *inode)
+ 	return 0;
  }
  
-+static bool is_async_cb_sleepable(struct bpf_verifier_env *env, struct bpf_insn *insn)
++/**
++ * smk_rule_transmutes - does access rule for (subject,object) contain 't'?
++ * @subject: a pointer to the subject's Smack label entry
++ * @object: a pointer to the object's Smack label entry
++ */
++static bool
++smk_rule_transmutes(struct smack_known *subject,
++	      const struct smack_known *object)
 +{
-+	/* bpf_timer callbacks are never sleepable. */
-+	if (bpf_helper_call(insn) && insn->imm == BPF_FUNC_timer_set_callback)
-+		return false;
++	int may;
 +
-+	/* bpf_wq and bpf_task_work callbacks are always sleepable. */
-+	if (bpf_pseudo_kfunc_call(insn) && insn->off == 0 &&
-+	    (is_bpf_wq_set_callback_impl_kfunc(insn->imm) || is_task_work_add_kfunc(insn->imm)))
-+		return true;
-+
-+	verifier_bug(env, "unhandled async callback in is_async_cb_sleepable");
-+	return false;
++	rcu_read_lock();
++	may = smk_access_entry(subject->smk_known, object->smk_known,
++			       &subject->smk_rules);
++	rcu_read_unlock();
++	return (may > 0) && (may & MAY_TRANSMUTE);
 +}
 +
- static bool is_may_goto_insn(struct bpf_insn *insn)
+ /**
+  * smack_inode_init_security - copy out the smack from an inode
+  * @inode: the newly created inode
+@@ -977,23 +995,19 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 				     struct xattr *xattrs, int *xattr_count)
  {
- 	return insn->code == (BPF_JMP | BPF_JCOND) && insn->src_reg == BPF_MAY_GOTO;
-@@ -5826,8 +5842,7 @@ static int map_kptr_match_type(struct bpf_verifier_env *env,
+ 	struct task_smack *tsp = smack_cred(current_cred());
+-	struct inode_smack *issp = smack_inode(inode);
+-	struct smack_known *skp = smk_of_task(tsp);
+-	struct smack_known *isp = smk_of_inode(inode);
++	struct inode_smack * const issp = smack_inode(inode);
+ 	struct smack_known *dsp = smk_of_inode(dir);
+ 	struct xattr *xattr = lsm_get_xattr_slot(xattrs, xattr_count);
+-	int may;
++	bool trans_cred;
++	bool trans_rule;
  
- static bool in_sleepable(struct bpf_verifier_env *env)
- {
--	return env->prog->sleepable ||
--	       (env->cur_state && env->cur_state->in_sleepable);
-+	return env->cur_state->in_sleepable;
- }
+ 	/*
+ 	 * If equal, transmuting already occurred in
+ 	 * smack_dentry_create_files_as(). No need to check again.
+ 	 */
+-	if (tsp->smk_task != tsp->smk_transmuted) {
+-		rcu_read_lock();
+-		may = smk_access_entry(skp->smk_known, dsp->smk_known,
+-				       &skp->smk_rules);
+-		rcu_read_unlock();
+-	}
++	trans_cred = (tsp->smk_task == tsp->smk_transmuted);
++	if (!trans_cred)
++		trans_rule = smk_rule_transmutes(smk_of_task(tsp), dsp);
  
- /* The non-sleepable programs and sleepable programs with explicit bpf_rcu_read_lock()
-@@ -10368,8 +10383,6 @@ typedef int (*set_callee_state_fn)(struct bpf_verifier_env *env,
- 				   struct bpf_func_state *callee,
- 				   int insn_idx);
+ 	/*
+ 	 * In addition to having smk_task equal to smk_transmuted,
+@@ -1001,9 +1015,7 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 	 * requests transmutation then by all means transmute.
+ 	 * Mark the inode as changed.
+ 	 */
+-	if ((tsp->smk_task == tsp->smk_transmuted) ||
+-	    (may > 0 && ((may & MAY_TRANSMUTE) != 0) &&
+-	     smk_inode_transmutable(dir))) {
++	if (trans_cred || (trans_rule && smk_inode_transmutable(dir))) {
+ 		struct xattr *xattr_transmute;
  
--static bool is_task_work_add_kfunc(u32 func_id);
--
- static int set_callee_state(struct bpf_verifier_env *env,
- 			    struct bpf_func_state *caller,
- 			    struct bpf_func_state *callee, int insn_idx);
-@@ -10588,8 +10601,7 @@ static int push_callback_call(struct bpf_verifier_env *env, struct bpf_insn *ins
- 		env->subprog_info[subprog].is_async_cb = true;
- 		async_cb = push_async_cb(env, env->subprog_info[subprog].start,
- 					 insn_idx, subprog,
--					 is_bpf_wq_set_callback_impl_kfunc(insn->imm) ||
--					 is_task_work_add_kfunc(insn->imm));
-+					 is_async_cb_sleepable(env, insn));
- 		if (!async_cb)
- 			return -EFAULT;
- 		callee = async_cb->frame[0];
-@@ -11428,7 +11440,7 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 			return -EINVAL;
- 		}
+ 		/*
+@@ -1012,8 +1024,8 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 		 * inode label was already set correctly in
+ 		 * smack_inode_alloc_security().
+ 		 */
+-		if (tsp->smk_task != tsp->smk_transmuted)
+-			isp = issp->smk_inode = dsp;
++		if (!trans_cred)
++			issp->smk_inode = dsp;
  
--		if (in_sleepable(env) && is_storage_get_function(func_id))
-+		if (is_storage_get_function(func_id))
- 			env->insn_aux_data[insn_idx].storage_get_func_atomic = true;
- 	}
+ 		if (S_ISDIR(inode->i_mode)) {
+ 			issp->smk_flags |= SMK_INODE_TRANSMUTE;
+@@ -1035,11 +1047,13 @@ static int smack_inode_init_security(struct inode *inode, struct inode *dir,
+ 	issp->smk_flags |= SMK_INODE_INSTANT;
  
-@@ -11439,7 +11451,7 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 			return -EINVAL;
- 		}
- 
--		if (in_sleepable(env) && is_storage_get_function(func_id))
-+		if (is_storage_get_function(func_id))
- 			env->insn_aux_data[insn_idx].storage_get_func_atomic = true;
- 	}
- 
-@@ -11450,10 +11462,17 @@ static int check_helper_call(struct bpf_verifier_env *env, struct bpf_insn *insn
- 			return -EINVAL;
- 		}
- 
--		if (in_sleepable(env) && is_storage_get_function(func_id))
-+		if (is_storage_get_function(func_id))
- 			env->insn_aux_data[insn_idx].storage_get_func_atomic = true;
- 	}
- 
-+	/*
-+	 * Non-sleepable contexts in sleepable programs (e.g., timer callbacks)
-+	 * are atomic and must use GFP_ATOMIC for storage_get helpers.
-+	 */
-+	if (!in_sleepable(env) && is_storage_get_function(func_id))
-+		env->insn_aux_data[insn_idx].storage_get_func_atomic = true;
+ 	if (xattr) {
+-		xattr->value = kstrdup(isp->smk_known, GFP_NOFS);
++		const char *inode_label = issp->smk_inode->smk_known;
 +
- 	meta.func_id = func_id;
- 	/* check args */
- 	for (i = 0; i < MAX_BPF_FUNC_REG_ARGS; i++) {
-@@ -22485,8 +22504,7 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
- 		}
++		xattr->value = kstrdup(inode_label, GFP_NOFS);
+ 		if (!xattr->value)
+ 			return -ENOMEM;
  
- 		if (is_storage_get_function(insn->imm)) {
--			if (!in_sleepable(env) ||
--			    env->insn_aux_data[i + delta].storage_get_func_atomic)
-+			if (env->insn_aux_data[i + delta].storage_get_func_atomic)
- 				insn_buf[0] = BPF_MOV64_IMM(BPF_REG_5, (__force __s32)GFP_ATOMIC);
- 			else
- 				insn_buf[0] = BPF_MOV64_IMM(BPF_REG_5, (__force __s32)GFP_KERNEL);
-@@ -23156,6 +23174,7 @@ static int do_check_common(struct bpf_verifier_env *env, int subprog)
- 	state->curframe = 0;
- 	state->speculative = false;
- 	state->branches = 1;
-+	state->in_sleepable = env->prog->sleepable;
- 	state->frame[0] = kzalloc(sizeof(struct bpf_func_state), GFP_KERNEL_ACCOUNT);
- 	if (!state->frame[0]) {
- 		kfree(state);
+-		xattr->value_len = strlen(isp->smk_known);
++		xattr->value_len = strlen(inode_label);
+ 		xattr->name = XATTR_SMACK_SUFFIX;
+ 	}
+ 
+@@ -4917,7 +4931,6 @@ static int smack_dentry_create_files_as(struct dentry *dentry, int mode,
+ 	struct task_smack *otsp = smack_cred(old);
+ 	struct task_smack *ntsp = smack_cred(new);
+ 	struct inode_smack *isp;
+-	int may;
+ 
+ 	/*
+ 	 * Use the process credential unless all of
+@@ -4931,18 +4944,12 @@ static int smack_dentry_create_files_as(struct dentry *dentry, int mode,
+ 	isp = smack_inode(d_inode(dentry->d_parent));
+ 
+ 	if (isp->smk_flags & SMK_INODE_TRANSMUTE) {
+-		rcu_read_lock();
+-		may = smk_access_entry(otsp->smk_task->smk_known,
+-				       isp->smk_inode->smk_known,
+-				       &otsp->smk_task->smk_rules);
+-		rcu_read_unlock();
+-
+ 		/*
+ 		 * If the directory is transmuting and the rule
+ 		 * providing access is transmuting use the containing
+ 		 * directory label instead of the process label.
+ 		 */
+-		if (may > 0 && (may & MAY_TRANSMUTE)) {
++		if (smk_rule_transmutes(otsp->smk_task, isp->smk_inode)) {
+ 			ntsp->smk_task = isp->smk_inode;
+ 			ntsp->smk_transmuted = ntsp->smk_task;
+ 		}
 -- 
 2.51.0
 
