@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2EC731A7F5;
-	Tue, 16 Dec 2025 12:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6DC3659E5;
+	Tue, 16 Dec 2025 12:11:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887069; cv=none; b=sehnzppB6zsNHAF7Iv8o7owex2oBicIBS0xzqjXWbgyUvB8S7lc42awVnDXp0Tsk9jpERT7o4Vcq6qYdpj9VndGc6iEK2gZtXlVjJnDDlvupQaU/gQ11+sl3sdEBTTLcnMaWwIvNvMm2BgjfsipR6i6eq1clPH8SAd8MYhwHEHE=
+	t=1765887073; cv=none; b=FMzDd2vYdzNxOAsBs9NNY/uSJTCfP6jBlsfJX7yDfGIlqdkgxDTTrXo+nZMdqs5D55MjJi8zIp1lZktxV1rEep8zlzuuQEx+p3viaHggLIc16BmsIVKJkZrB8D4fVDfnIlb0zw9xM0Mniz5p3FPaH8YTeBiiVOBLWfQ9ecgtuMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887069; c=relaxed/simple;
-	bh=sZ+3EwiW0ROiatbwtbsawFtpPcB0FDIQU0lJ2LnUmqQ=;
+	s=arc-20240116; t=1765887073; c=relaxed/simple;
+	bh=X2Rp/aknV+weuF4FuvRRvlnnKJwwHOmO+N3ucfa+YZw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WharFmke/V8whqNFaBW9PQi5k9BWopZg9/BuNU4ByGkHNqGDUPHz6+fpSqmxNW/jcl7zMv+QYVTZLg87sibKy4TLNDHAz4WP/fAvKGsYOywEk4HPqtfpbUzUytJteSzCcQ45CdyoWUOiiisbs9Cc+nlSPnmraO/6/KGQpM7BVg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wILheR1P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WS+mlW5kqPh2yvlvB0Ra0eQkCnQ5zSoaZE6y5ii6wHbrvxvctjx0N4l2VN58DvEA65FWIwgpeQpsyFD4hQcy4GlpmuySmOa6kOSRkNyn/93qIdevZlsMzv5AQjfYFjGYvzCdIQYRBbeb9tSoGPqUB1nod9SU0JBa9y+eMAaForw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6xRAdiz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wILheR1P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13250C4CEF1;
-	Tue, 16 Dec 2025 12:11:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6xRAdiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52674C4CEF1;
+	Tue, 16 Dec 2025 12:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887069;
-	bh=sZ+3EwiW0ROiatbwtbsawFtpPcB0FDIQU0lJ2LnUmqQ=;
+	s=korg; t=1765887072;
+	bh=X2Rp/aknV+weuF4FuvRRvlnnKJwwHOmO+N3ucfa+YZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wILheR1P4OOYvWSrh4vsY9Doa1+3ZGAFrLUBM+eXHybpjujdyBkQn51J4/+eNFHkM
-	 BhWLmuSSb1/0JYu39Z88NNsG8SxOkbs9tKHfyWE1aMJbIGjB/jVOU9FrmxMKtoaEUu
-	 tEazBkhwg43fkVVEf/52X2fTLFBq/rqchZQkNsY8=
+	b=G6xRAdizZhnH0QlQroWArGcvkaxAFLlXludA1UPrfiQv0OzzbhG/agTxVyQAD1Ook
+	 Ut/ebuBR75lMJi09cpc6mZX4/jKQfsVCKGFxMWOrjc5Q9cSMEzS2d9FpVwUyv0FAnr
+	 qdDdAJSlvhm+fbTCTSv8QoW2ezL1aMbtraPbmAG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 117/614] arm64: dts: qcom: qcm6490-fairphone-fp5: Add supplies to simple-fb node
-Date: Tue, 16 Dec 2025 12:08:04 +0100
-Message-ID: <20251216111405.576637341@linuxfoundation.org>
+Subject: [PATCH 6.18 118/614] arm64: dts: qcom: sm8650: set ufs as dma coherent
+Date: Tue, 16 Dec 2025 12:08:05 +0100
+Message-ID: <20251216111405.612887894@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,35 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 3d4142cac46b4dde4e60908c509c4cf107067114 ]
+[ Upstream commit c2703c90161b45bca5b65f362adbae02ed71fcc1 ]
 
-Add the OLED power supplies to the simple-framebuffer node, so that
-the regulators don't get turned off while the simple-fb is being used.
+The UFS device is ovbiously dma coherent like the other IOMMU devices
+like usb, mmc, ... let's fix this by adding the flag.
 
-Fixes: c365a026155c ("arm64: dts: qcom: qcm6490-fairphone-fp5: Enable display")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+To be sure an extensive test has been performed to be sure it's
+safe, as downstream uses this flag for UFS as well.
+
+As an experiment, I checked how the dma-coherent could impact
+the UFS bandwidth, and it happens the max bandwidth on cached
+write is slighly highter (up to 10%) while using less cpu time
+since cache sync/flush is skipped.
+
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250930-sc7280-dts-misc-v1-1-5a45923ef705@fairphone.com
+Link: https://lore.kernel.org/r/20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 2 ++
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index 519e458e1a890..36d5750584831 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -47,6 +47,8 @@ framebuffer0: framebuffer@a000000 {
- 			stride = <(1224 * 4)>;
- 			format = "a8r8g8b8";
- 			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-+			vci-supply = <&vreg_oled_vci>;
-+			dvdd-supply = <&vreg_oled_dvdd>;
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index ebf1971b1bfbe..3b03c13539386 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -3988,6 +3988,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+ 
+ 			iommus = <&apps_smmu 0x60 0>;
+ 
++			dma-coherent;
++
+ 			lanes-per-direction = <2>;
+ 			qcom,ice = <&ice>;
  
 -- 
 2.51.0
