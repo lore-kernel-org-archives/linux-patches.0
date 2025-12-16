@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579B13612C3;
-	Tue, 16 Dec 2025 12:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A69CE3612F2;
+	Tue, 16 Dec 2025 12:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887351; cv=none; b=jai3yRA4zngqqOIq/KT2zC5514SSTYYb44T0Hz92xhuxrIuBKGMGSm1N6zDlgzHhQjgIIQdcmtp2ABzdQu+7CpLMdAiFyD5V5gHoIAOLK08bsWMJw9UngcYTyvRGKyyRJMTrhQ0B//l+IgL8GzHNMDqjbgnhIBgMpac8+Ll91ew=
+	t=1765887354; cv=none; b=O2Hp2LTHeB2ITg9e/5CQBu2atc5+EjMa8fCZaEWe5sIcY/o8OwxSlUGNES8g8vF4TmgbJJiw1CU26g9jtl+K+lGfBcjT3PEFvF6cc4MgoCXqcLsthyEvxYHVniacTlcxuPSPP2WlvrDRIqaE227ey60DcxqjeQMpg9RbPNwpa1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887351; c=relaxed/simple;
-	bh=W9daYxmC5ZnB3zk7zQ8V5IvG70Kut7maljihI3ZpPvo=;
+	s=arc-20240116; t=1765887354; c=relaxed/simple;
+	bh=WKvMVEYS5Vy/osMSFFgCc9FdU5qLAPZthLXwsxEARJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2VKqCqBEJGtLfcV0CjtDRiuv6ZVh/WY9Z/eEU5UXf9fcSnAWCWMo4IVQa9q9oiwVwuwwt/TRUFH22iXcNGFGRzn91uMCqc/f97xzWmbID9vNQS+NMexBFawd262pHg8Kf30VywyUUyO4duzk7wCaZKA5Er6PFptjtFABVqiiqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IWHLFRIY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P0RC5WA1i1pTLfqAu6f2RRXHArXX6p9O2bEqY44q5CJ9G+k77TwqOOktDVZtoIKCitf9DeRTGbH+JQv4FNGTOay0S3C7B7jQqi+kATSCcSlHMk04ztd3+6qJsAnYMCdhIetnKsusc2Rvlqd8DQ9oLZy/Gdo7x1Mybdv6bO/Yy1o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bfrW9tng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IWHLFRIY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8975BC4CEF1;
-	Tue, 16 Dec 2025 12:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bfrW9tng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5235C4CEF1;
+	Tue, 16 Dec 2025 12:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887351;
-	bh=W9daYxmC5ZnB3zk7zQ8V5IvG70Kut7maljihI3ZpPvo=;
+	s=korg; t=1765887354;
+	bh=WKvMVEYS5Vy/osMSFFgCc9FdU5qLAPZthLXwsxEARJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWHLFRIYD3bo73u/s5KCuDVZxM5PlGrvdkAOKTsjRArehySBGak/NwS8mg4xTuQCv
-	 I8Z+BkI7NlFK3bvXii83AG/Yj0+d5GsWzN+OHYq1H5Max/JE0K6h9cocOKesTE8Qtb
-	 8okIWWhlpnKbjRr9MBKTks8pTCePLs7c3f3G3Ud4=
+	b=bfrW9tngjiPSFWTkv94BEkj6KrQ6WwF1+XJ7XTUl1XnsOWaihj3FAYkSFibH2XvDo
+	 WV5fzFsHBHCJuX25GzR+CC4UTcUE/MxIGsnxqv/HJUWOR615OpAOC0bDqDJbPyydGn
+	 CdDPW0S4q6Df6tw+u3kqAhyRBBj/OYJsg1+ciVvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Matt Coster <matt.coster@imgtec.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/614] libbpf: Fix parsing of multi-split BTF
-Date: Tue, 16 Dec 2025 12:09:29 +0100
-Message-ID: <20251216111408.697435313@linuxfoundation.org>
+Subject: [PATCH 6.18 171/614] drm/imagination: Fix reference to devm_platform_get_and_ioremap_resource()
+Date: Tue, 16 Dec 2025 12:08:58 +0100
+Message-ID: <20251216111407.545611909@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,49 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 4f596acc260e691a2e348f64230392f3472feea3 ]
+[ Upstream commit f1aa93005d0d6fb3293ca9c3eb08d1d1557117bf ]
 
-When creating multi-split BTF we correctly set the start string offset
-to be the size of the base string section plus the base BTF start
-string offset; the latter is needed for multi-split BTF since the
-offset is non-zero there.
+The call to devm_platform_ioremap_resource() was replaced by a call to
+devm_platform_get_and_ioremap_resource(), but the comment referring to
+the function's possible returned error codes was not updated.
 
-Unfortunately the BTF parsing case needed that logic and it was
-missed.
-
-Fixes: 4e29128a9ace ("libbpf/btf: Fix string handling to support multi-split BTF")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20251104203309.318429-2-alan.maguire@oracle.com
+Fixes: 927f3e0253c11276 ("drm/imagination: Implement MIPS firmware processor and MMU support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/2266514318480d17f52c7e5e67578dae6827914e.1761745586.git.geert+renesas@glider.be
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/imagination/pvr_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 18907f0fcf9f0..9f141395c074e 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -1061,7 +1061,7 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf, b
- 	if (base_btf) {
- 		btf->base_btf = base_btf;
- 		btf->start_id = btf__type_cnt(base_btf);
--		btf->start_str_off = base_btf->hdr->str_len;
-+		btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
- 	}
- 
- 	if (is_mmap) {
-@@ -5818,7 +5818,7 @@ void btf_set_base_btf(struct btf *btf, const struct btf *base_btf)
- {
- 	btf->base_btf = (struct btf *)base_btf;
- 	btf->start_id = btf__type_cnt(base_btf);
--	btf->start_str_off = base_btf->hdr->str_len;
-+	btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
- }
- 
- int btf__relocate(struct btf *btf, const struct btf *base_btf)
+diff --git a/drivers/gpu/drm/imagination/pvr_device.c b/drivers/gpu/drm/imagination/pvr_device.c
+index 294b6019b4155..78d6b8a0a4506 100644
+--- a/drivers/gpu/drm/imagination/pvr_device.c
++++ b/drivers/gpu/drm/imagination/pvr_device.c
+@@ -48,7 +48,7 @@
+  *
+  * Return:
+  *  * 0 on success, or
+- *  * Any error returned by devm_platform_ioremap_resource().
++ *  * Any error returned by devm_platform_get_and_ioremap_resource().
+  */
+ static int
+ pvr_device_reg_init(struct pvr_device *pvr_dev)
 -- 
 2.51.0
 
