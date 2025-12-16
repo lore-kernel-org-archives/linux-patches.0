@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79884299924;
-	Tue, 16 Dec 2025 12:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5F62DAFB0;
+	Tue, 16 Dec 2025 12:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886421; cv=none; b=qeo1PxIBirufQJCwiknUvVrptJbwcIdF0RbnyhbUMVpW/S3d/5I/k0b3inEGE3gG0M5qtxFyvzjY/vAAfWv7ydhEZ/Kep3CI6SZomf1rebW915CsU5k9ajHtPoaH2jHvEuCBuJLt2vxx3lP9pnz1J0Rbbw9ZKk+U5SDiHbWAKqA=
+	t=1765886425; cv=none; b=FPn1cWjT4sbpI5KgjKxWlgSvgFujA2nXTwTJhZ3Oln5rUOPGCqcinRoovjyslKY9re5uAXHBfpQN8tzGq1LnsPIpMaTbJjj+k76DPOA8LjL6YKpn/CrV7ckXzXxZQBIV34cet53pIDnVHemlBwAOfS+OoeNaEfRzraAFou4u5RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886421; c=relaxed/simple;
-	bh=vuiah4HXM923FYPg5KdN/V3QouTFYkQ3C410sWSysQA=;
+	s=arc-20240116; t=1765886425; c=relaxed/simple;
+	bh=tmliHKG+Atnpj1IfhKH/DnJUEk9m5F71Zs/wt0uiZGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYdhYCPfDxLI7nQarCxYaezq+kmATxOQ6uvNte69uyxcUPikRIsj7QmW+VVb5yf5j0LIulyPinXDNUN81k2QEEXiIFXkZxtwsjj4T2Vugh7DsgOq4eWU8D6JcEBQggqocAGlRo8S+TNtje+V5DOrEuUOEGDnz7TnLs5KozEjR08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKGBnxxf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c9KVFa72B/jvGVaaz5fiV+AjLxfc+EvNuXOGsIau0X/E/ujbANJMMl1SIb6PgFInyhXLkHMrI1GArNIbTtOdfSxSmHqXWwM8z/gEqPiaHeIMcIVDjEji3WIarxkmoaFQNZdaFUjlvRNE0QBkXDLHQPcvMu5mJoAwt8SiDDTOgtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zv0eLGPj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKGBnxxf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D05C4CEF1;
-	Tue, 16 Dec 2025 12:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zv0eLGPj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CEA1C4CEF1;
+	Tue, 16 Dec 2025 12:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886421;
-	bh=vuiah4HXM923FYPg5KdN/V3QouTFYkQ3C410sWSysQA=;
+	s=korg; t=1765886424;
+	bh=tmliHKG+Atnpj1IfhKH/DnJUEk9m5F71Zs/wt0uiZGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKGBnxxfFkaBzotvj2IdOcxo3KxiHa8EmePZplAQjo4DPLCpdDS7KauyyAEQ2ywwL
-	 Pu529WFQBLWgcV3krJEE7q1/Xht8gh+0x9IsEb6jT8wQ4LmtatyHgiWmwTuvQum5rk
-	 aQylC+ONPptHsiAK5vyWUlHOft8ktkQ3Jxyah/bI=
+	b=zv0eLGPjNfTeGpCedaf2cqt5fr511Khf4T6Y5DUZVuT8UO44suoHIb7skZq5LXLLN
+	 N/8TwKl4BSa27qTgn2+FdhWNQwPs3wtt47BG2svwAkT/OCG8tf8qQqC2zyISyHsZYg
+	 V0BkjrC2J2lVNcTvsDies0svqYJdxGdi3nrASObo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Remi Pommarel <repk@triplefau.lt>,
-	Dominique Martinet <asmadeus@codewreck.org>,
+	xupengbo <xupengbo@oppo.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ingo Molnar <mingo@kernel.org>,
+	Aaron Lu <ziqianlu@bytedance.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 432/507] 9p: fix cache/debug options printing in v9fs_show_options
-Date: Tue, 16 Dec 2025 12:14:33 +0100
-Message-ID: <20251216111401.110259035@linuxfoundation.org>
+Subject: [PATCH 6.17 433/507] sched/fair: Fix unfairness caused by stalled tg_load_avg_contrib when the last task migrates out
+Date: Tue, 16 Dec 2025 12:14:34 +0100
+Message-ID: <20251216111401.145992602@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,58 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: xupengbo <xupengbo@oppo.com>
 
-[ Upstream commit f0445613314f474c1a0ec6fa8a5cd153a618f1b6 ]
+[ Upstream commit ca125231dd29fc0678dd3622e9cdea80a51dffe4 ]
 
-commit 4eb3117888a92 changed the cache= option to accept either string
-shortcuts or bitfield values. It also changed /proc/mounts to emit the
-option as the hexadecimal numeric value rather than the shortcut string.
+When a task is migrated out, there is a probability that the tg->load_avg
+value will become abnormal. The reason is as follows:
 
-However, by printing "cache=%x" without the leading 0x, shortcuts such
-as "cache=loose" will emit "cache=f" and 'f' is not a string that is
-parseable by kstrtoint(), so remounting may fail if a remount with
-"cache=f" is attempted.
+1. Due to the 1ms update period limitation in update_tg_load_avg(), there
+   is a possibility that the reduced load_avg is not updated to tg->load_avg
+   when a task migrates out.
 
-debug=%x has had the same problem since options have been displayed in
-c4fac9100456 ("9p: Implement show_options")
+2. Even though __update_blocked_fair() traverses the leaf_cfs_rq_list and
+   calls update_tg_load_avg() for cfs_rqs that are not fully decayed, the key
+   function cfs_rq_is_decayed() does not check whether
+   cfs->tg_load_avg_contrib is null. Consequently, in some cases,
+   __update_blocked_fair() removes cfs_rqs whose avg.load_avg has not been
+   updated to tg->load_avg.
 
-Fix these by adding the 0x prefix to the hexadecimal value shown in
-/proc/mounts.
+Add a check of cfs_rq->tg_load_avg_contrib in cfs_rq_is_decayed(),
+which fixes the case (2.) mentioned above.
 
-Fixes: 4eb3117888a92 ("fs/9p: Rework cache modes and add new options to Documentation")
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Message-ID: <54b93378-dcf1-4b04-922d-c8b4393da299@redhat.com>
-[Dominique: use %#x at Al Viro's suggestion, also handle debug]
-Tested-by: Remi Pommarel <repk@triplefau.lt>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Fixes: 1528c661c24b ("sched/fair: Ratelimit update to tg->load_avg")
+Signed-off-by: xupengbo <xupengbo@oppo.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Aaron Lu <ziqianlu@bytedance.com>
+Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Aaron Lu <ziqianlu@bytedance.com>
+Link: https://patch.msgid.link/20250827022208.14487-1-xupengbo@oppo.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/9p/v9fs.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/sched/fair.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/9p/v9fs.c b/fs/9p/v9fs.c
-index a59c26cc3c7d9..9e2f8f0f82644 100644
---- a/fs/9p/v9fs.c
-+++ b/fs/9p/v9fs.c
-@@ -101,7 +101,7 @@ int v9fs_show_options(struct seq_file *m, struct dentry *root)
- 	struct v9fs_session_info *v9ses = root->d_sb->s_fs_info;
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 35b98cad06515..434df3fb6c443 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4062,6 +4062,9 @@ static inline bool cfs_rq_is_decayed(struct cfs_rq *cfs_rq)
+ 	if (child_cfs_rq_on_list(cfs_rq))
+ 		return false;
  
- 	if (v9ses->debug)
--		seq_printf(m, ",debug=%x", v9ses->debug);
-+		seq_printf(m, ",debug=%#x", v9ses->debug);
- 	if (!uid_eq(v9ses->dfltuid, V9FS_DEFUID))
- 		seq_printf(m, ",dfltuid=%u",
- 			   from_kuid_munged(&init_user_ns, v9ses->dfltuid));
-@@ -117,7 +117,7 @@ int v9fs_show_options(struct seq_file *m, struct dentry *root)
- 	if (v9ses->nodev)
- 		seq_puts(m, ",nodevmap");
- 	if (v9ses->cache)
--		seq_printf(m, ",cache=%x", v9ses->cache);
-+		seq_printf(m, ",cache=%#x", v9ses->cache);
- #ifdef CONFIG_9P_FSCACHE
- 	if (v9ses->cachetag && (v9ses->cache & CACHE_FSCACHE))
- 		seq_printf(m, ",cachetag=%s", v9ses->cachetag);
++	if (cfs_rq->tg_load_avg_contrib)
++		return false;
++
+ 	return true;
+ }
+ 
 -- 
 2.51.0
 
