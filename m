@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D3439B6AA;
-	Tue, 16 Dec 2025 12:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2813739B6AA;
+	Tue, 16 Dec 2025 12:37:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888662; cv=none; b=Hexr4a/jCY95Ko1yBiwfgMIJ3rGCs0Q9rCOqL3V69NY8RPCMMOfKQtwZmIUPiVXscrf7ykoFqxBhLV/fFkFumwjSrlfW3/0Vy74QoZsEFqGIX7OwyZelWd4MsyCbjehSOWVhcPqtmLQQQqnAsbMVl1kbtQhUeCFNUUVjNgRyccQ=
+	t=1765888665; cv=none; b=bs6zP379jzk8uSRvw+vmDzI+9OjzwjHrSG7LMBYGE8WMAB3KGEb+7jYNW6H+xstJNVxV64Xz+o3pQ4zNAz2wpUw88wbsmqOYv/jqgM/19+Zjowcq0s9ZtH0qnLJOh73HeAXxP3eevgnuwbJrdHsi6LXPGVqekh7UNRCLylED5V0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888662; c=relaxed/simple;
-	bh=Tj6uZZHt3hDOGUFegeWtf61yyIyx6pgNvJBg06fhV3M=;
+	s=arc-20240116; t=1765888665; c=relaxed/simple;
+	bh=XAqe8G9i0i+c5fpAhZDe7ITHHLF+4zez6Lx3h6wQj4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OOKnqIROts0wwL1gDSOOS2YLyrdk3ZuDGgNU/vRZzUUOlSjUOFNBkwQRtptwuxHB7bEPDsDVVHWoi+pK2VyFa6X8k8brcCvO5F02Rq6ALVmGS+VUsfHga/ZpBE/wGQKlIKWvlV7Yyi7e2dJ4A5+1R/aZB1tEXoNfv4m6DSaacB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6bo3YZd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RxoI/ovjvCBwhdd/BVT2kKGaSD3rSfKFF08b1aIVh5it7Nv0mFr0AA3FeTBHMrtpPXX70YLxKOcr/y9MrOOyp9PKDqhDNEfXg3upVw18KlY/XQhrBt3D9MkXA5HUxBMDx4s1DkzgbNyjiLggmFCnree0sa7CL1CqTas454Iwbq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eTjn94Ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6bo3YZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8320DC4CEF1;
-	Tue, 16 Dec 2025 12:37:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eTjn94Ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84E9C4CEF1;
+	Tue, 16 Dec 2025 12:37:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888661;
-	bh=Tj6uZZHt3hDOGUFegeWtf61yyIyx6pgNvJBg06fhV3M=;
+	s=korg; t=1765888665;
+	bh=XAqe8G9i0i+c5fpAhZDe7ITHHLF+4zez6Lx3h6wQj4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6bo3YZd6pSUVv11Nyrsy0a4bNgCT2nUrKAMBDr9F4fbHZY2cK9NIQXjnEXI99+CQ
-	 zXptgHH2IfG0H2BH3tiO6GwYAEPmCYMhNYNDEU6yLIF16u3Ff18PoUWdROtneoLcTi
-	 codc4u62GeBabE0kO7IEVJtSW6k+1oC3Nm/Y+WmA=
+	b=eTjn94AiuteJdJcXG8+X/duqy6oRsYqfm2X1fc7gz5PYefyomfrGbBKXav/vN9mnW
+	 Ul5x4h8NIZpAILg47WU+gDP0eoXCFQJ3c0Fe0EhSfMPkwN/J2nH8RXx/O+rNDRluux
+	 RIjRP2JJ1n+VOfDIOZXNTzDA/HtNKwNlLS8wYYaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Madhur Kumar <madhurkumar004@gmail.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 567/614] ALSA: firewire-motu: fix buffer overflow in hwdep read for DSP events
-Date: Tue, 16 Dec 2025 12:15:34 +0100
-Message-ID: <20251216111421.928220410@linuxfoundation.org>
+Subject: [PATCH 6.18 568/614] drm/nouveau: refactor deprecated strcpy
+Date: Tue, 16 Dec 2025 12:15:35 +0100
+Message-ID: <20251216111421.964352544@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,46 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Madhur Kumar <madhurkumar004@gmail.com>
 
-[ Upstream commit 210d77cca3d0494ed30a5c628b20c1d95fa04fb1 ]
+[ Upstream commit 2bdc2c0e12fac56e41ec05fb771ead986ea6dac0 ]
 
-The DSP event handling code in hwdep_read() could write more bytes to
-the user buffer than requested, when a user provides a buffer smaller
-than the event header size (8 bytes).
+strcpy() has been deprecated because it performs no bounds checking on the
+destination buffer, which can lead to buffer overflows. Use the safer
+strscpy() instead.
 
-Fix by using min_t() to clamp the copy size, This ensures we never copy
-more than the user requested.
-
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Reported-by: Junrui Luo <moonafterrain@outlook.com>
-Fixes: 634ec0b2906e ("ALSA: firewire-motu: notify event for parameter change in register DSP model")
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Link: https://patch.msgid.link/SYBPR01MB78810656377E79E58350D951AFD9A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Madhur Kumar <madhurkumar004@gmail.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Fixes: 15a996bbb697 ("drm/nouveau: assign fence_chan->name correctly")
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patch.msgid.link/20251204120822.17502-1-madhurkumar004@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/firewire/motu/motu-hwdep.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_fence.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/firewire/motu/motu-hwdep.c b/sound/firewire/motu/motu-hwdep.c
-index 981c19430cb0f..6675b23aad69e 100644
---- a/sound/firewire/motu/motu-hwdep.c
-+++ b/sound/firewire/motu/motu-hwdep.c
-@@ -83,10 +83,11 @@ static long hwdep_read(struct snd_hwdep *hwdep, char __user *buf, long count,
- 		event.motu_register_dsp_change.type = SNDRV_FIREWIRE_EVENT_MOTU_REGISTER_DSP_CHANGE;
- 		event.motu_register_dsp_change.count =
- 			(consumed - sizeof(event.motu_register_dsp_change)) / 4;
--		if (copy_to_user(buf, &event, sizeof(event.motu_register_dsp_change)))
-+		if (copy_to_user(buf, &event,
-+				 min_t(long, count, sizeof(event.motu_register_dsp_change))))
- 			return -EFAULT;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_fence.c b/drivers/gpu/drm/nouveau/nouveau_fence.c
+index 869d4335c0f45..4a193b7d6d9e4 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_fence.c
++++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
+@@ -183,11 +183,11 @@ nouveau_fence_context_new(struct nouveau_channel *chan, struct nouveau_fence_cha
+ 	fctx->context = drm->runl[chan->runlist].context_base + chan->chid;
  
--		count = consumed;
-+		count = min_t(long, count, consumed);
- 	} else {
- 		spin_unlock_irq(&motu->lock);
+ 	if (chan == drm->cechan)
+-		strcpy(fctx->name, "copy engine channel");
++		strscpy(fctx->name, "copy engine channel");
+ 	else if (chan == drm->channel)
+-		strcpy(fctx->name, "generic kernel channel");
++		strscpy(fctx->name, "generic kernel channel");
+ 	else
+-		strcpy(fctx->name, cli->name);
++		strscpy(fctx->name, cli->name);
  
+ 	kref_init(&fctx->fence_ref);
+ 	if (!priv->uevent)
 -- 
 2.51.0
 
