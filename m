@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49EE299924;
-	Tue, 16 Dec 2025 12:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F9133EAE4;
+	Tue, 16 Dec 2025 12:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886438; cv=none; b=ULqRIvhd+LA4E3EfEpFzU/u6+CZX94yfZsfrA6HOyn6rN1tv34aospAjJaA3CA0blJJFwwkos8iWImg3zx7E71IIXfwlcLipNdePMgGsVsWqJqQpxtXFHOcwbqHTe2wpYnGkC3dh9thrPUdXpm42ZVzeemEAND1KvtjJKprUWpU=
+	t=1765886441; cv=none; b=CSrrFOdIP29HV1lg7G3YYPEGa4+Z3OLTsPeB2/Lgg+lkA/1OuhVmaq+dVz1caODJE/H4jbiwupBpODgPBGrNJKMXtZxiOkFW2Yh9N7XgA91solDIy/nPyL3cXwRS7GRn4WPNVz0ui483bdQpWb420w+K1fnnrR/seaZKVFGmonY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886438; c=relaxed/simple;
-	bh=jo1ONWgoRolVFVlXpD2yJ51T0eCyvHWJG+gyeHLOi2U=;
+	s=arc-20240116; t=1765886441; c=relaxed/simple;
+	bh=zcwXyp1bU7e64VqmZOJvaHz3ZY7hqlaMu5p3dDS4ouk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/dB4OZD98nfB9SNKqCM3V9xwXIu/HHN4nFzojMaeplx+7iNl/uxqxJDFnvliKoiiQxCB0bhpGBRYm1qjcwH9rtOyp6QeG39deIO9fzMmTStL2QxKAIoh+hegLRNoK4Qzd8sSzfzIp27QHLmggPiIi8fJZ+d9q9R2Oo7nU8vv7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSiEtcD9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qiASuc0kEb2J+MkuhudpxCwdmp6f0OLkO+PYUSDov6Ozh36V5GtyHJj4Iio7PYEkVI0FHFHNi9NHs954Pd2k1VwrLRZgSTpcRf5Q6Quyky9pMUD1PZuNSiGnXGAqNfhg+cJG+qynChbHksAWoRQL4sL86xQn58SahXOgmiqU2B4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RkfYAkl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSiEtcD9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1E6C4CEF1;
-	Tue, 16 Dec 2025 12:00:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RkfYAkl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E3AC4CEF1;
+	Tue, 16 Dec 2025 12:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886438;
-	bh=jo1ONWgoRolVFVlXpD2yJ51T0eCyvHWJG+gyeHLOi2U=;
+	s=korg; t=1765886441;
+	bh=zcwXyp1bU7e64VqmZOJvaHz3ZY7hqlaMu5p3dDS4ouk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSiEtcD9J6Ee6UfUeR6eFOLWQQdKC5CpEmfQtCYEfXg1v5aZ5JNGzgy61wrlwdggp
-	 t5UBmkGEaX/yvwGOq/pP9kEzlSCdO/udfNyEYhe9Rs3TicpXY/Cs5/8v/87KqqFh5Z
-	 jKZcngz3w/Fl6IM+0+anJSwCXMIVQX3Zt5vPQG/M=
+	b=1RkfYAklirJzwUNIRkeiJlDz4z/ePoFQnbfRLvQRB1qG8u/XJrJxduydvXb2hdsq+
+	 fP2w+RRmbjGPtkM9OdtPXvpUCbh1lO72Y3ypp4LwXF4QxwOmj4DUYQgcP62qbD5oaP
+	 fVJG3HvOaXrUJA2UjScj/SJyocu+ZUHq32+pDrrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Xianwei Zhao <xianwei.zhao@amlogic.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	James Le Cuirot <chewi@gentoo.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 437/507] rtc: amlogic-a4: fix double free caused by devm
-Date: Tue, 16 Dec 2025 12:14:38 +0100
-Message-ID: <20251216111401.290197290@linuxfoundation.org>
+Subject: [PATCH 6.17 438/507] kbuild: install-extmod-build: Fix when given dir outside the build dir
+Date: Tue, 16 Dec 2025 12:14:39 +0100
+Message-ID: <20251216111401.326093175@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: James Le Cuirot <chewi@gentoo.org>
 
-[ Upstream commit 384150d7a5b60c1086790a8ee07b0629f906cca2 ]
+[ Upstream commit 5ff90d427ef841fa48608d0c19a81c48d6126d46 ]
 
-The clock obtained via devm_clk_get_enabled() is automatically managed
-by devres and will be disabled and freed on driver detach. Manually
-calling clk_disable_unprepare() in error path and remove function
-causes double free.
+Commit b5e395653546 ("kbuild: install-extmod-build: Fix build when
+specifying KBUILD_OUTPUT") tried to address the "build" variable
+expecting a relative path by using `realpath --relative-base=.`, but
+this only works when the given directory is below the current directory.
+`realpath --relative-to=.` will return a relative path in all cases.
 
-Remove the redundant clk_disable_unprepare() calls from the probe
-error path and aml_rtc_remove(), allowing the devm framework to
-automatically manage the clock lifecycle.
-
-Fixes: c89ac9182ee2 ("rtc: support for the Amlogic on-chip RTC")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
-Link: https://patch.msgid.link/20251021103559.1903-1-vulab@iscas.ac.cn
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: b5e395653546 ("kbuild: install-extmod-build: Fix build when specifying KBUILD_OUTPUT")
+Signed-off-by: James Le Cuirot <chewi@gentoo.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20251016091417.9985-1-chewi@gentoo.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Stable-dep-of: 4ab2ee307983 ("kbuild: install-extmod-build: Properly fix CC expansion when ccache is used")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-amlogic-a4.c | 4 ----
- 1 file changed, 4 deletions(-)
+ scripts/package/install-extmod-build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-amlogic-a4.c b/drivers/rtc/rtc-amlogic-a4.c
-index 09d78c2cc6918..c3cac29d96f07 100644
---- a/drivers/rtc/rtc-amlogic-a4.c
-+++ b/drivers/rtc/rtc-amlogic-a4.c
-@@ -390,7 +390,6 @@ static int aml_rtc_probe(struct platform_device *pdev)
+diff --git a/scripts/package/install-extmod-build b/scripts/package/install-extmod-build
+index b96538787f3d9..054fdf45cc37a 100755
+--- a/scripts/package/install-extmod-build
++++ b/scripts/package/install-extmod-build
+@@ -63,7 +63,7 @@ if [ "${CC}" != "${HOSTCC}" ]; then
+ 	# Clear VPATH and srcroot because the source files reside in the output
+ 	# directory.
+ 	# shellcheck disable=SC2016 # $(MAKE) and $(build) will be expanded by Make
+-	"${MAKE}" run-command KBUILD_RUN_COMMAND='+$(MAKE) HOSTCC='"${CC}"' VPATH= srcroot=. $(build)='"$(realpath --relative-base=. "${destdir}")"/scripts
++	"${MAKE}" run-command KBUILD_RUN_COMMAND='+$(MAKE) HOSTCC='"${CC}"' VPATH= srcroot=. $(build)='"$(realpath --relative-to=. "${destdir}")"/scripts
  
- 	return 0;
- err_clk:
--	clk_disable_unprepare(rtc->sys_clk);
- 	device_init_wakeup(dev, false);
- 
- 	return ret;
-@@ -423,9 +422,6 @@ static SIMPLE_DEV_PM_OPS(aml_rtc_pm_ops,
- 
- static void aml_rtc_remove(struct platform_device *pdev)
- {
--	struct aml_rtc_data *rtc = dev_get_drvdata(&pdev->dev);
--
--	clk_disable_unprepare(rtc->sys_clk);
- 	device_init_wakeup(&pdev->dev, false);
- }
- 
+ 	rm -f "${destdir}/scripts/Kbuild"
+ fi
 -- 
 2.51.0
 
