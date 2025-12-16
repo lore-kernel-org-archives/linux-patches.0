@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE90532862F;
-	Tue, 16 Dec 2025 11:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D853358A8;
+	Tue, 16 Dec 2025 11:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884012; cv=none; b=XCqdp2AgLGmHrPWewfZEtMHflpivp+RHBpRvHy+CnnTbRsMpLcdafg30evlPCK+qbJikJCs0gB1Wdl2o75228mmNq1XnTqMFbnGpV6R38wAxXbtHXwEBr2M2kGbUQ8DqNFjITeqckrSSnQ/bCUfwwxXMWVJmmyoCaFWDv8auifo=
+	t=1765884015; cv=none; b=HmWf39Eqf1slOicS77aLfxHxhfuDRzxI+0GmWTYRqlCjmkJrhB1o0nwh1H7BL/4mT6HUhhCIYp3ev8750PtRcAoyssNb1fle8N4UaYyKIfYeatSunl0hIoAyJbMR1YGKfMorV25tihEEPnkS5gaYZEeEat7N82k00HvwPcFiadM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884012; c=relaxed/simple;
-	bh=Sls7WTI28KgdVbJbsAR84khPW0HBzaVIKgBG+1RABpE=;
+	s=arc-20240116; t=1765884015; c=relaxed/simple;
+	bh=U+46lR4LBPHA5uEgxk0y5ukYx/VgjemVyOk5W6Z6POU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZ5GDhRdtCm/k+VKtYqzVZeDTS+AGBgGFl/ejvK8jDOYhilmbKhc4OQbuuNwdwe/8wNC1xy7aBRKUB8UTK2I2TfYtoi/9CvDQRK0UTNz2bZSkX8svZSrxABCaPiL3Oc/jCCN9NRnLBnJUk83FsyiXi/f/fHX1Le3ujccfGBxYtM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjSF0efl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Riym9zh5Pilrx7kGr4JV0Pc1vEQtb60c8NUuQzc1DBzs5/4mnZ2CLu5LO4Vb4qaPJ3EYf2curKfhVJFKJyu86ChI9DwwXq4aFY3BrgGk6/BKt9jpzaTJa17D7OM9gE8c9KTWcpQCpbf0x6Tbw5lJKEPKQ6ArOyYIjUtX0CBV4LM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV8lUPPh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjSF0efl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF33C4CEF1;
-	Tue, 16 Dec 2025 11:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV8lUPPh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A8C2C4CEF1;
+	Tue, 16 Dec 2025 11:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884011;
-	bh=Sls7WTI28KgdVbJbsAR84khPW0HBzaVIKgBG+1RABpE=;
+	s=korg; t=1765884014;
+	bh=U+46lR4LBPHA5uEgxk0y5ukYx/VgjemVyOk5W6Z6POU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjSF0eflEoFWf2FJJlTVpuT+awZpYP4D34lZY4SwUCzm4SeZjovhHQrHDnhiVlisZ
-	 g0C4RoqubginO2OHC7FI7MPG/1DY85L9L5bJINStmtDFphQBA9Z0q/c9islrywHqMf
-	 WG7DceBGQg3wtiqAx+bHjFR8CFJjvpSU5oOoReGk=
+	b=nV8lUPPh9TvPjWZ3/BZvCEhHOt1hG8fydfCAXyBpA9hW9zQOkfgPyeKk4yP2rUptY
+	 /O61P7US5tF9GsehOCkW7LIAoCdmgu0d+6aZyBA3cNRIh/5A2aJutrTj0Sn+KeT936
+	 UYnCxoGX/zZpS9Nc9ROS0AHybLN7cSbYKInoyzTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 033/354] irqchip/imx-mu-msi: Fix section mismatch
-Date: Tue, 16 Dec 2025 12:10:00 +0100
-Message-ID: <20251216111322.112287899@linuxfoundation.org>
+Subject: [PATCH 6.12 034/354] irqchip/renesas-rzg2l: Fix section mismatch
+Date: Tue, 16 Dec 2025 12:10:01 +0100
+Message-ID: <20251216111322.149082177@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,58 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 64acfd8e680ff8992c101fe19aadb112ce551072 ]
+[ Upstream commit 5b338fbb2b5b21d61a9eaba14dcf43108de30258 ]
 
 Platform drivers can be probed after their init sections have been
 discarded so the irqchip init callbacks must not live in init.
 
-Fixes: 70afdab904d2 ("irqchip: Add IMX MU MSI controller driver")
+Fixes: d011c022efe27579 ("irqchip/renesas-rzg2l: Add support for RZ/Five SoC")
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imx-mu-msi.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/irqchip/irq-renesas-rzg2l.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/irqchip/irq-imx-mu-msi.c b/drivers/irqchip/irq-imx-mu-msi.c
-index 4342a21de1eb0..b14b2e6db0b5c 100644
---- a/drivers/irqchip/irq-imx-mu-msi.c
-+++ b/drivers/irqchip/irq-imx-mu-msi.c
-@@ -295,9 +295,8 @@ static const struct imx_mu_dcfg imx_mu_cfg_imx8ulp = {
- 		  },
- };
- 
--static int __init imx_mu_of_init(struct device_node *dn,
--				 struct device_node *parent,
--				 const struct imx_mu_dcfg *cfg)
-+static int imx_mu_of_init(struct device_node *dn, struct device_node *parent,
-+			  const struct imx_mu_dcfg *cfg)
- {
- 	struct platform_device *pdev = of_find_device_by_node(dn);
- 	struct device_link *pd_link_a;
-@@ -415,20 +414,17 @@ static const struct dev_pm_ops imx_mu_pm_ops = {
- 			   imx_mu_runtime_resume, NULL)
- };
- 
--static int __init imx_mu_imx7ulp_of_init(struct device_node *dn,
--					 struct device_node *parent)
-+static int imx_mu_imx7ulp_of_init(struct device_node *dn, struct device_node *parent)
- {
- 	return imx_mu_of_init(dn, parent, &imx_mu_cfg_imx7ulp);
+diff --git a/drivers/irqchip/irq-renesas-rzg2l.c b/drivers/irqchip/irq-renesas-rzg2l.c
+index 99e27e01b0b19..d83dfc10ff49e 100644
+--- a/drivers/irqchip/irq-renesas-rzg2l.c
++++ b/drivers/irqchip/irq-renesas-rzg2l.c
+@@ -613,14 +613,12 @@ static int rzg2l_irqc_common_init(struct device_node *node, struct device_node *
+ 	return ret;
  }
  
--static int __init imx_mu_imx6sx_of_init(struct device_node *dn,
--					struct device_node *parent)
-+static int imx_mu_imx6sx_of_init(struct device_node *dn, struct device_node *parent)
+-static int __init rzg2l_irqc_init(struct device_node *node,
+-				  struct device_node *parent)
++static int rzg2l_irqc_init(struct device_node *node, struct device_node *parent)
  {
- 	return imx_mu_of_init(dn, parent, &imx_mu_cfg_imx6sx);
+ 	return rzg2l_irqc_common_init(node, parent, &rzg2l_irqc_chip);
  }
  
--static int __init imx_mu_imx8ulp_of_init(struct device_node *dn,
--					 struct device_node *parent)
-+static int imx_mu_imx8ulp_of_init(struct device_node *dn, struct device_node *parent)
+-static int __init rzfive_irqc_init(struct device_node *node,
+-				   struct device_node *parent)
++static int rzfive_irqc_init(struct device_node *node, struct device_node *parent)
  {
- 	return imx_mu_of_init(dn, parent, &imx_mu_cfg_imx8ulp);
+ 	return rzg2l_irqc_common_init(node, parent, &rzfive_irqc_chip);
  }
 -- 
 2.51.0
