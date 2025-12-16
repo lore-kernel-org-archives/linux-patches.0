@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B99342511;
-	Tue, 16 Dec 2025 11:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80C734214A;
+	Tue, 16 Dec 2025 11:26:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884373; cv=none; b=YHA1DTNUV2ty2a554ONK/S4jSi+F0/sR/ZOYVNHpxxcLU+uTTzpGUHI9wo9EU3wZW3WDVdU+C7tU7xbGHsMUxROU+u9wi/lV9R/mEiKRt78IYhADsxAAUbQlk3gsCyDMKEsD6D2yaylNuc0qYg8OVWJzxEMWWk4YVmSZhTCSNpU=
+	t=1765884376; cv=none; b=qqeT/dhA/tYw7z4fUuK9+5rDIySd9iSHd5Ab3cP56IM2K6QM5hUo74+Bgnic+beLn8tEXGRTqo7MCrl29QmcOHvkCyD7nqJjymPp5Z5T0UmG2Lx47mp4Vs3B6TCFN1uBJCJcvDjpH91IhpTnKP42QdvNe3Hp9z6RqXNlLVEJeR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884373; c=relaxed/simple;
-	bh=A1bDk/qeD5meMJpC0KYtVayuDN9VME5SR3Hw6XIqhq4=;
+	s=arc-20240116; t=1765884376; c=relaxed/simple;
+	bh=zz0kv/qbLYbw3mxmQa4/vgKw+6sX+Cmbsq+9PtCPIMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VqgoCBOLFiwA3HGzfWpVCTWwynMaIC4bOEoNdCFT5WohclZ9FkBW1BHO/Quv9HTXeIbO49GkeNxFDBiUXId4tN7Ce4PlbVDtc6d/7WDyislCfNUpH28VncYufl03cqZB80cMK0beuXtUa+knBDTTQx8eD8JlrudLScr0qSbJdNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYJdASob; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8UIUb9WgH0rmjpePcoCFnPr983vgfmm2gCQZETL9FZ1ptuW6gEXiYG2DD5nCPfW7dNWMFaTp4jUjUDC9DgCALUqe0qg0X6+ppFC1O6ZVEBrJBn16fqpmoae9XO/hWOi9+Mxf6IhuYBuio7fB7bos9E+ZWCVg78nxj5pwv1kPI4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EnTffPJ/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYJdASob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C0B3C4CEF5;
-	Tue, 16 Dec 2025 11:26:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EnTffPJ/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C486BC4CEF1;
+	Tue, 16 Dec 2025 11:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884372;
-	bh=A1bDk/qeD5meMJpC0KYtVayuDN9VME5SR3Hw6XIqhq4=;
+	s=korg; t=1765884376;
+	bh=zz0kv/qbLYbw3mxmQa4/vgKw+6sX+Cmbsq+9PtCPIMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oYJdASobGojDZ5Hzq8NVMUvxrxVBes34+mpkY1wnGXrxxC93ZxQdrARjyfJDFK9jz
-	 QW8feV/N9puJgZb8XjNagFnlKePHEcXmnD0mMo5S+75QaqgEveFOYvO7IRQ6EvmAse
-	 aLME6H3c609jOgymtIVwRnNN9GPMvZIvxAMo9cSc=
+	b=EnTffPJ//GToe61z40dkIXdXG6qeZz5OAwRstT0gTKSf5Vy3ZLzhH6Ck8sA6jpN/N
+	 qA4Xa/HJhaU4Wt6S3KFUQg5doF9Y3rCrZ+Cey2R0v0ITiW+jkljK9TgKnAolaxfD3n
+	 twHeKYO7A9n72EjE+G+AKb1SH/diEuvX7sbCn51g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shirisha G <shirisha@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 140/354] powerpc/kdump: Fix size calculation for hot-removed memory ranges
-Date: Tue, 16 Dec 2025 12:11:47 +0100
-Message-ID: <20251216111325.990359074@linuxfoundation.org>
+Subject: [PATCH 6.12 141/354] powerpc/32: Fix unpaired stwcx. on interrupt exit
+Date: Tue, 16 Dec 2025 12:11:48 +0100
+Message-ID: <20251216111326.026920164@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,81 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 7afe2383eff05f76f4ce2cfda658b7889c89f101 ]
+[ Upstream commit 10e1c77c3636d815db802ceef588522c2d2d947c ]
 
-The elfcorehdr segment in the kdump image stores information about the
-memory regions (called crash memory ranges) that the kdump kernel must
-capture.
+Commit b96bae3ae2cb ("powerpc/32: Replace ASM exception exit by C
+exception exit from ppc64") erroneouly copied to powerpc/32 the logic
+from powerpc/64 based on feature CPU_FTR_STCX_CHECKS_ADDRESS which is
+always 0 on powerpc/32.
 
-When a memory hot-remove event occurs, the kernel regenerates the
-elfcorehdr for the currently loaded kdump image to remove the
-hot-removed memory from the crash memory ranges.
+Re-instate the logic implemented by commit b64f87c16f3c ("[POWERPC]
+Avoid unpaired stwcx. on some processors") which is based on
+CPU_FTR_NEED_PAIRED_STWCX feature.
 
-Call chain:
-remove_mem_range()
-update_crash_elfcorehdr()
-arch_crash_handle_hotplug_event()
-crash_handle_hotplug_event()
-
-While removing the hot-removed memory from the crash memory ranges in
-remove_mem_range(), if the removed memory lies within an existing crash
-range, that range is split into two. During this split, the size of the
-second range was being calculated incorrectly.
-
-This leads to dump capture failure with makedumpfile with below error:
-
-$ makedumpfile -l -d 31 /proc/vmcore /tmp/vmcore
-
-readpage_elf: Attempt to read non-existent page at 0xbbdab0000.
-readmem: type_addr: 0, addr:c000000bbdab7f00, size:16
-validate_mem_section: Can't read mem_section array.
-readpage_elf: Attempt to read non-existent page at 0xbbdab0000.
-readmem: type_addr: 0, addr:c000000bbdab7f00, size:8
-get_mm_sparsemem: Can't get the address of mem_section.
-
-The updated crash memory range in PT_LOAD entry is holding incorrect
-data (checkout FileSiz and MemSiz):
-
-readelf -a /proc/vmcore
-<snip...>
-  Type           Offset             VirtAddr           PhysAddr
-                 FileSiz            MemSiz              Flags  Align
-  LOAD           0x0000000b013d0000 0xc000000b80000000 0x0000000b80000000
-                 0xffffffffc0000000 0xffffffffc0000000  RWE    0x0
-<snip...>
-
-Update the size calculation for the new crash memory range to fix this
-issue.
-
-Note: This problem will not occur if the kdump kernel is loaded or
-reloaded after a memory hot-remove operation.
-
-Fixes: 849599b702ef ("powerpc/crash: add crash memory hotplug support")
-Reported-by: Shirisha G <shirisha@linux.ibm.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Fixes: b96bae3ae2cb ("powerpc/32: Replace ASM exception exit by C exception exit from ppc64")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251105033941.1752287-1-sourabhjain@linux.ibm.com
+Link: https://patch.msgid.link/6040b5dbcf5cdaa1cd919fcf0790f12974ea6e5a.1757666244.git.christophe.leroy@csgroup.eu
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/ranges.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/entry_32.S | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/kexec/ranges.c b/arch/powerpc/kexec/ranges.c
-index 3702b0bdab141..426bdca4667e7 100644
---- a/arch/powerpc/kexec/ranges.c
-+++ b/arch/powerpc/kexec/ranges.c
-@@ -697,8 +697,8 @@ int remove_mem_range(struct crash_mem **mem_ranges, u64 base, u64 size)
- 		 * two half.
- 		 */
- 		else {
-+			size = mem_rngs->ranges[i].end - end + 1;
- 			mem_rngs->ranges[i].end = base - 1;
--			size = mem_rngs->ranges[i].end - end;
- 			ret = add_mem_range(mem_ranges, end + 1, size);
- 		}
- 	}
+diff --git a/arch/powerpc/kernel/entry_32.S b/arch/powerpc/kernel/entry_32.S
+index f4a8c98772491..1beb578c64114 100644
+--- a/arch/powerpc/kernel/entry_32.S
++++ b/arch/powerpc/kernel/entry_32.S
+@@ -263,10 +263,9 @@ interrupt_return:
+ 	mtspr	SPRN_SRR1,r12
+ 
+ BEGIN_FTR_SECTION
++	lwarx   r0,0,r1
++END_FTR_SECTION_IFSET(CPU_FTR_NEED_PAIRED_STWCX)
+ 	stwcx.	r0,0,r1		/* to clear the reservation */
+-FTR_SECTION_ELSE
+-	lwarx	r0,0,r1
+-ALT_FTR_SECTION_END_IFCLR(CPU_FTR_STCX_CHECKS_ADDRESS)
+ 
+ 	lwz	r3,_CCR(r1)
+ 	lwz	r4,_LINK(r1)
+@@ -306,10 +305,9 @@ ALT_FTR_SECTION_END_IFCLR(CPU_FTR_STCX_CHECKS_ADDRESS)
+ 	mtspr	SPRN_SRR1,r12
+ 
+ BEGIN_FTR_SECTION
++	lwarx   r0,0,r1
++END_FTR_SECTION_IFSET(CPU_FTR_NEED_PAIRED_STWCX)
+ 	stwcx.	r0,0,r1		/* to clear the reservation */
+-FTR_SECTION_ELSE
+-	lwarx	r0,0,r1
+-ALT_FTR_SECTION_END_IFCLR(CPU_FTR_STCX_CHECKS_ADDRESS)
+ 
+ 	lwz	r3,_LINK(r1)
+ 	lwz	r4,_CTR(r1)
 -- 
 2.51.0
 
