@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5992B749C;
-	Tue, 16 Dec 2025 12:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FBA749C;
+	Tue, 16 Dec 2025 12:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887152; cv=none; b=ikmNQFKAi5uPeoy9NKR7sDePWpfDTd0D99gHlE9fOeQiPyKbrI82jZLfK6duZGHzeyW7/9CjGIDZs5TMBfalJ+ZCP6VoRlBuSdir4g9lG3xA3RFpVA+LmzS0l0udcattzzwzX/LniBnWpsgOpSmwI0B7Rv2TCRvXCvX8CfmUwfQ=
+	t=1765887155; cv=none; b=k59qgZxnOXQIvCnNHRXxpwyCXI0kzlecCyBr6ltE0pK2/EegtZsY0suISroAK6DoOwuVnhilt8w8vbtCaXMlXy/iPOpiJ3jqCaasPB2c4tywcqXYnuxu2N0asm7h5Xxgb7ZoYuvFoT9RBAAW09xC4yeDmIw5EPFSNc1TXnybrVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887152; c=relaxed/simple;
-	bh=2njQImmUuqr//3tK1SMhvb/odYYGusP3xbgcXQKkUbU=;
+	s=arc-20240116; t=1765887155; c=relaxed/simple;
+	bh=+uQ6QU0j8wUp/Z/PvplUHjsMXZInzM3xVnlr+5q+6u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2t/C0tHELSZtOOsPT+H0ht4AoONWXa/2iguV7q4sEZI78/fzFBAbVkga1oRg4ftYFZEjDPIg9uzLQ45XRjO0VfopuAk0VIdfycOioQOiFuhnyZ0qWCRgflTDmWtgHZCn5iqQ0D5WfUFRbh33CYZA5bDHsurQqxjJwVN26/3ogU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m2l5Myqz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XvJJxd7l2v3XFQli1ua+FNEmaIeT/Dj8/L9jkWGkYK2TIspJHhFLqhSfKTt8aUj0oSaKAMvqtvBDNUObo0cn+EWccHOHXIcSbaXUavB+E5Cw9KpM1qvZ6Ijmi1EjiTzoIeeIII9TfgNp3Yn1r1u4Zj0vJtax9to4+QmftovksJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dO0fW53c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m2l5Myqz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18A9C4CEF5;
-	Tue, 16 Dec 2025 12:12:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dO0fW53c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9842C4CEF1;
+	Tue, 16 Dec 2025 12:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887152;
-	bh=2njQImmUuqr//3tK1SMhvb/odYYGusP3xbgcXQKkUbU=;
+	s=korg; t=1765887155;
+	bh=+uQ6QU0j8wUp/Z/PvplUHjsMXZInzM3xVnlr+5q+6u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2l5Myqz8BLQaQuHHFCnEkaRTre9xSASdP8omQXDpiPRH1gNdYuabJFcrnGbEmy8R
-	 tScKkmIhYgKzTvBB57rpXVuIJK4qf6Zr4DHRhE0KOgtVfqPOa0IGs4MtHLWOyB1roR
-	 UIfnDeMU+CZtt7EULRrt/zBnTrmK+iExfpbOAnwc=
+	b=dO0fW53cZ2N9wEVog+oCsG7IZDovJm6cA2SdaDpvpi8bbfrfXIIT3mR/WhdIj2TDt
+	 ASbnuYFuI1JweyqqEUA1BwFH0SqZuW+BlZL/v0s419PZ5gmc0mLuqzemwKGUIsBAXY
+	 rQRmO/SfdscQ1hTZvAniOBJpbrzhGpdCVmn30aWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 143/614] drm/rcar-du: dsi: Fix missing parameter in RXSETR_...EN macros
-Date: Tue, 16 Dec 2025 12:08:30 +0100
-Message-ID: <20251216111406.516777981@linuxfoundation.org>
+Subject: [PATCH 6.18 144/614] x86/dumpstack: Prevent KASAN false positive warnings in __show_regs()
+Date: Tue, 16 Dec 2025 12:08:31 +0100
+Message-ID: <20251216111406.554689262@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,41 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 42bbf82b73bda18bbc3e158cb6fda040bb586feb ]
+[ Upstream commit ced37e9ceae50e4cb6cd058963bd315ec9afa651 ]
 
-The RXSETR_CRCEN(n) and RXSETR_ECCEN(n) macros both take parameter (n),
-add the missing macro parameter. Neither of those macros is used by the
-driver, so for now the bug is harmless.
+When triggering a stack dump via sysrq (echo t > /proc/sysrq-trigger),
+KASAN may report false-positive out-of-bounds access:
 
-Fixes: 685e8dae19df ("drm/rcar-du: dsi: Implement DSI command support")
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen+renesas@ideasonboard.com>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reported-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Link: https://patch.msgid.link/20251028232959.109936-2-marek.vasut+renesas@mailbox.org
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+  BUG: KASAN: out-of-bounds in __show_regs+0x4b/0x340
+  Call Trace:
+    dump_stack_lvl
+    print_address_description.constprop.0
+    print_report
+    __show_regs
+    show_trace_log_lvl
+    sched_show_task
+    show_state_filter
+    sysrq_handle_showstate
+    __handle_sysrq
+    write_sysrq_trigger
+    proc_reg_write
+    vfs_write
+    ksys_write
+    do_syscall_64
+    entry_SYSCALL_64_after_hwframe
+
+The issue occurs as follows:
+
+  Task A (walk other tasks' stacks)           Task B (running)
+  1. echo t > /proc/sysrq-trigger
+  show_trace_log_lvl
+    regs = unwind_get_entry_regs()
+    show_regs_if_on_stack(regs)
+                                              2. The stack value pointed by
+                                                 `regs` keeps changing, and
+                                                 so are the tags in its
+                                                 KASAN shadow region.
+      __show_regs(regs)
+        regs->ax, regs->bx, ...
+          3. hit KASAN redzones, OOB
+
+When task A walks task B's stack without suspending it, the continuous changes
+in task B's stack (and corresponding KASAN shadow tags) may cause task A to
+hit KASAN redzones when accessing obsolete values on the stack, resulting in
+false positive reports.
+
+Simply stopping the task before unwinding is not a viable fix, as it would
+alter the state intended to inspect. This is especially true for diagnosing
+misbehaving tasks (e.g., in a hard lockup), where stopping might fail or hide
+the root cause by changing the call stack.
+
+Therefore, fix this by disabling KASAN checks during asynchronous stack
+unwinding, which is identified when the unwinding task does not match the
+current task (task != current).
+
+  [ bp: Align arguments on function's opening brace. ]
+
+Fixes: 3b3fa11bc700 ("x86/dumpstack: Print any pt_regs found on the stack")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://patch.msgid.link/all/20251023090632.269121-1-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/dumpstack.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
-index 76521276e2af8..dd871e17dcf53 100644
---- a/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
-+++ b/drivers/gpu/drm/renesas/rcar-du/rcar_mipi_dsi_regs.h
-@@ -50,8 +50,8 @@
- #define TXCMPPD3R			0x16c
+diff --git a/arch/x86/kernel/dumpstack.c b/arch/x86/kernel/dumpstack.c
+index 71ee20102a8af..b10684dedc589 100644
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -181,8 +181,8 @@ static void show_regs_if_on_stack(struct stack_info *info, struct pt_regs *regs,
+  * in false positive reports. Disable instrumentation to avoid those.
+  */
+ __no_kmsan_checks
+-static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+-			unsigned long *stack, const char *log_lvl)
++static void __show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++				 unsigned long *stack, const char *log_lvl)
+ {
+ 	struct unwind_state state;
+ 	struct stack_info stack_info = {0};
+@@ -303,6 +303,25 @@ static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
+ 	}
+ }
  
- #define RXSETR				0x200
--#define RXSETR_CRCEN			(((n) & 0xf) << 24)
--#define RXSETR_ECCEN			(((n) & 0xf) << 16)
-+#define RXSETR_CRCEN(n)			(((n) & 0xf) << 24)
-+#define RXSETR_ECCEN(n)			(((n) & 0xf) << 16)
- #define RXPSETR				0x210
- #define RXPSETR_LPPDACC			(1 << 0)
- #define RXPSR				0x220
++static void show_trace_log_lvl(struct task_struct *task, struct pt_regs *regs,
++			       unsigned long *stack, const char *log_lvl)
++{
++	/*
++	 * Disable KASAN to avoid false positives during walking another
++	 * task's stacks, as values on these stacks may change concurrently
++	 * with task execution.
++	 */
++	bool disable_kasan = task && task != current;
++
++	if (disable_kasan)
++		kasan_disable_current();
++
++	__show_trace_log_lvl(task, regs, stack, log_lvl);
++
++	if (disable_kasan)
++		kasan_enable_current();
++}
++
+ void show_stack(struct task_struct *task, unsigned long *sp,
+ 		       const char *loglvl)
+ {
 -- 
 2.51.0
 
