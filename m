@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D4034D4E4;
-	Tue, 16 Dec 2025 11:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14E834D4E4;
+	Tue, 16 Dec 2025 11:46:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885576; cv=none; b=BbjrvCjQWKQYEXNjtmak6EhTOnK/DyeuGydLMcl1Q91x7E+rkwKaB3bxDdHjT670ebk+hB4LuDDcZNNezagEUqDDB4Qkm3vIKvxurNMfIMn1LIaDo9vhTlXldX9i0tJb//ZP/fBAXbzsrQ3YH7y1r8ogiuDHpOSlNboYhFZeWUc=
+	t=1765885580; cv=none; b=oyXUcbPUG+cBZrR/D/qHzhPR794Z5v6H4HH93az/11XGrsUlpTwoVZUOfCckQJKYSQOfU8IIIFcuVnZRHDPjuV+aTPF+s/7MfiCsOn1mR+FSla9r5LSkGBq/tAAIagrsJdyQrEiNBzVmMOvdvIflfM+plxncuovzqnNMDKViQ6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885576; c=relaxed/simple;
-	bh=CIJUhA6ZG2XOIgOZoknzMWQIidIKFqrvQqNROXnxYtM=;
+	s=arc-20240116; t=1765885580; c=relaxed/simple;
+	bh=cJCBAu4Xsd7YHC3MdAhW40lmf8oOS+ely9pbpFVahLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jc2P8PHzEXWaSX7ybOv4sN7HtIO5zT+Gv5CWcU8W8TJSqRaneDkRtzqZdp5UucGNhwgD60w3bfBN3scTojI/RIkxfBKhq0KBO1XELqQq6g1AuF1G8l/y98ayaACzBsExJb9MjqNgdutEliXZtjS4y11n+tSXMAKRFpQP59ahxIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDZVhN6l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OC8OZ+U6z/iHgakiACrR5EXiRU21FvFy50Dp7/DNAwbOG1ApL0HmN3vggJc2ihCyzZpNY4aobynU45/QaJzDwl458ZBQTG7xUlxJMuDe5vhvPTCFAL4n7uAf5aZlr/5Ej3I07B+MS+7T7K5eEUq8WjbqOvmgwbXKJtAS02hsFsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YLEg2Dj/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDZVhN6l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB447C4CEF1;
-	Tue, 16 Dec 2025 11:46:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YLEg2Dj/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F25C4CEF1;
+	Tue, 16 Dec 2025 11:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885576;
-	bh=CIJUhA6ZG2XOIgOZoknzMWQIidIKFqrvQqNROXnxYtM=;
+	s=korg; t=1765885579;
+	bh=cJCBAu4Xsd7YHC3MdAhW40lmf8oOS+ely9pbpFVahLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDZVhN6lkzjubvVfhBFdYDxgdl3zwDXenCRDGfpiGyX7yKPe4X5F91+ChMkS6oOFJ
-	 OhywRuItXeOl6ltobDnuElrJqmN5UbW3zpHj+kXKHeK8UZS48OdGXD+jrfjuqq/Xq+
-	 ZfwYyoPsSHFUVJkYc5m/lMfr68DYepjwWwgov6Wg=
+	b=YLEg2Dj/OY8ZE1DmTS7LoZLLcAThhcgHG8DV70uknHulfABpcBi1mHJ1TGvCur2Fe
+	 6UejrWOaBa1XYJvkyqNG+U928hSfucOfRSYbz8cQ7eVUDhpnFdkGklfbOtRbWhtf7E
+	 K2OglUcY+eYqk11HQafoshTk9c6foOZIIrEnfdOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 181/507] wifi: rtw89: usb: fix leak in rtw89_usb_write_port()
-Date: Tue, 16 Dec 2025 12:10:22 +0100
-Message-ID: <20251216111352.073218223@linuxfoundation.org>
+Subject: [PATCH 6.17 182/507] mfd: da9055: Fix missing regmap_del_irq_chip() in error path
+Date: Tue, 16 Dec 2025 12:10:23 +0100
+Message-ID: <20251216111352.109505105@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,52 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 7543818e97d5d54b3b2f75f1c4dedee298d7d914 ]
+[ Upstream commit 1b58acfd067ca16116b9234cd6b2d30cc8ab7502 ]
 
-When there is an attempt to write data and RTW89_FLAG_UNPLUGGED is set,
-this means device is disconnected and no urb is submitted.  Return
-appropriate error code to the caller to properly free the allocated
-resources.
+When da9055_device_init() fails after regmap_add_irq_chip()
+succeeds but mfd_add_devices() fails, the error handling path
+only calls mfd_remove_devices() but forgets to call
+regmap_del_irq_chip(). This results in a resource leak.
 
-Found by Linux Verification Center (linuxtesting.org).
+Fix this by adding regmap_del_irq_chip() to the error path so
+that resources are released properly.
 
-Fixes: 2135c28be6a8 ("wifi: rtw89: Add usb.{c,h}")
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20251104135720.321110-3-pchelkin@ispras.ru
+Fixes: 2896434cf272 ("mfd: DA9055 core driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251010011737.1078-1-vulab@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/usb.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/mfd/da9055-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/usb.c b/drivers/net/wireless/realtek/rtw89/usb.c
-index e8e064cf7e0ad..512a46dd9d06a 100644
---- a/drivers/net/wireless/realtek/rtw89/usb.c
-+++ b/drivers/net/wireless/realtek/rtw89/usb.c
-@@ -256,7 +256,7 @@ static int rtw89_usb_write_port(struct rtw89_dev *rtwdev, u8 ch_dma,
- 	int ret;
+diff --git a/drivers/mfd/da9055-core.c b/drivers/mfd/da9055-core.c
+index 1f727ef60d638..8c989b74f924e 100644
+--- a/drivers/mfd/da9055-core.c
++++ b/drivers/mfd/da9055-core.c
+@@ -388,6 +388,7 @@ int da9055_device_init(struct da9055 *da9055)
  
- 	if (test_bit(RTW89_FLAG_UNPLUGGED, rtwdev->flags))
--		return 0;
-+		return -ENODEV;
+ err:
+ 	mfd_remove_devices(da9055->dev);
++	regmap_del_irq_chip(da9055->chip_irq, da9055->irq_data);
+ 	return ret;
+ }
  
- 	urb = usb_alloc_urb(0, GFP_ATOMIC);
- 	if (!urb)
-@@ -305,8 +305,9 @@ static void rtw89_usb_ops_tx_kick_off(struct rtw89_dev *rtwdev, u8 txch)
- 		ret = rtw89_usb_write_port(rtwdev, txch, skb->data, skb->len,
- 					   txcb);
- 		if (ret) {
--			rtw89_err(rtwdev, "write port txch %d failed: %d\n",
--				  txch, ret);
-+			if (ret != -ENODEV)
-+				rtw89_err(rtwdev, "write port txch %d failed: %d\n",
-+					  txch, ret);
- 
- 			skb_dequeue(&txcb->tx_ack_queue);
- 			kfree(txcb);
 -- 
 2.51.0
 
