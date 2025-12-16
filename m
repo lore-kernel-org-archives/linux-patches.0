@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30D634573C;
-	Tue, 16 Dec 2025 12:00:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E9C134D3A9;
+	Tue, 16 Dec 2025 12:00:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886444; cv=none; b=um7bdMN4d/RfVuGrV3yCUn+CjxtK5bHHnExlYOfWWUQpUxCylMhhjKE5CxBJq+LDKET/C3iNJBExhF26Qxf695elFrdKCYfGBgjJ8DCgQwSk9Tya/gNFJq8m6iSa5eYJWKJv31a6XEld0d96fmfYekmsHuEpf/+/dg5VQvZiL7M=
+	t=1765886448; cv=none; b=bUlATpVSQl6+vh1ijTckqCMBh48bWjzKynUCxd8fBg7BzcZ6msVlkcfXgXljoMM/qHNaDAuv40m+jlZZfdmrw/Pe+hwITkJPixLQlwE6gfMw03D4tNGARCKnGcHUoQQdaEFmT5XW9pZf4Rp7+f5WcQlZbYsMDb/5HLqfOqF+B3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886444; c=relaxed/simple;
-	bh=cA6rF+Nbqcro8MVyhjkktINb/eeplvIkingLnggH2/8=;
+	s=arc-20240116; t=1765886448; c=relaxed/simple;
+	bh=buE5xxSXQ5mHn7q88oS7FweCkHNoeWnxkYMeQWz7JeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RgFWqKXDjKlt2tKv0Qp9b94rzcDUWy/bE+n57bLFm6u0fKcyD4ljcwE5lH9oUT7V6W3C0UlAkGF0lU5miCVlDo0VCnwcZz5Gwf1VkzXzRtfyFcpHLa/Hipt6FTQ73dJe8P7VACar7+bE3EtBNN536NH5louUYdW9+Uxvzi82gbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0puYEQZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqCI3mzS1ZCNCKYNiv9pJ/suoVKX8ei7ECZoRNriIdBrcH2IwmBRO2Okfv6E9Y6cVrN9bpu97UbrNF7nBCK4h6y/OPbTB7fSK5GpwXoQT0Fqt3tDZ0OHwJ1IPsEdzAlSU9cUkKAduy/4m8CvyipWoGIYXzzZ7fWiANklbsTeIgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSpLdOoS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0puYEQZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45CD8C4CEF1;
-	Tue, 16 Dec 2025 12:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSpLdOoS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 774CDC4CEF1;
+	Tue, 16 Dec 2025 12:00:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886444;
-	bh=cA6rF+Nbqcro8MVyhjkktINb/eeplvIkingLnggH2/8=;
+	s=korg; t=1765886447;
+	bh=buE5xxSXQ5mHn7q88oS7FweCkHNoeWnxkYMeQWz7JeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0puYEQZx/rNm42GFHvGggRZLWqMPI7/7qix0yO6Vz/XESLGS66fHzm0sNfo2yoSk/
-	 +nqRjPshu8e8c2WG7JcCO8+vNksuJeudF/W5f8WatsrCjyr8cWOKHhuGnERL7Edoha
-	 IElPaw6w2tGkOjI8g0zwWr9mA2LjeJX/E5SgbYQI=
+	b=lSpLdOoSbFFEKUcDnIIiraME0cc8RCABjmke3otAh/Fv/pqXearehY2K8mAX+XNkI
+	 S/E6Fqhz0ZKz5DH+AnQwqmBN3bvLMOiw/Wcdo5cHkpGu9Wjd+1jzYVsHzniCEOfTro
+	 sPCXi8B+nvND/hXe67PCGUWuLOXYeF9ZHsxRRJKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 439/507] kbuild: install-extmod-build: Properly fix CC expansion when ccache is used
-Date: Tue, 16 Dec 2025 12:14:40 +0100
-Message-ID: <20251216111401.361829783@linuxfoundation.org>
+Subject: [PATCH 6.17 422/507] net: dsa: b53: fix BCM5325/65 ARL entry VIDs
+Date: Tue, 16 Dec 2025 12:14:23 +0100
+Message-ID: <20251216111400.749824850@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,48 +52,152 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Jonas Gorski <jonas.gorski@gmail.com>
 
-[ Upstream commit 4ab2ee307983548b29ddaab0ecaef82d526cf4c9 ]
+[ Upstream commit d39514e6a2d14f57830d649e2bf03b49612c2f73 ]
 
-Currently, when cross-compiling and ccache is used, the expanding of CC
-turns out to be without any quotes, leading to the following error:
+BCM5325/65's ARL entry registers do not contain the VID, only the search
+result register does. ARL entries have a separate VID entry register for
+the index into the VLAN table.
 
-make[4]: *** No rule to make target 'aarch64-linux-gnu-gcc'.  Stop.
-make[3]: *** [Makefile:2164: run-command] Error 2
+So make ARL entry accessors use the VID entry registers instead, and
+move the VLAN ID field definition to the search register definition.
 
-And it makes sense, because after expansion it ends up like this:
-
-make run-command KBUILD_RUN_COMMAND=+$(MAKE) \
-HOSTCC=ccache aarch64-linux-gnu-gcc VPATH= srcroot=. $(build)= ...
-
-So add another set of double quotes to surround whatever CC expands to
-to make sure the aarch64-linux-gnu-gcc isn't expanded to something that
-looks like an entirely separate target.
-
-Fixes: 140332b6ed72 ("kbuild: fix linux-headers package build when $(CC) cannot link userspace")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20251111-kbuild-install-extmod-build-fix-cc-expand-third-try-v2-1-15ba1b37e71a@linaro.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: c45655386e53 ("net: dsa: b53: add support for FDB operations on 5325/5365")
+Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20251128080625.27181-7-jonas.gorski@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/package/install-extmod-build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/b53/b53_common.c |  9 +++++++--
+ drivers/net/dsa/b53/b53_priv.h   | 12 ++++++------
+ drivers/net/dsa/b53/b53_regs.h   |  7 +++++--
+ 3 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/scripts/package/install-extmod-build b/scripts/package/install-extmod-build
-index 054fdf45cc37a..2576cf7902dbb 100755
---- a/scripts/package/install-extmod-build
-+++ b/scripts/package/install-extmod-build
-@@ -63,7 +63,7 @@ if [ "${CC}" != "${HOSTCC}" ]; then
- 	# Clear VPATH and srcroot because the source files reside in the output
- 	# directory.
- 	# shellcheck disable=SC2016 # $(MAKE) and $(build) will be expanded by Make
--	"${MAKE}" run-command KBUILD_RUN_COMMAND='+$(MAKE) HOSTCC='"${CC}"' VPATH= srcroot=. $(build)='"$(realpath --relative-to=. "${destdir}")"/scripts
-+	"${MAKE}" run-command KBUILD_RUN_COMMAND='+$(MAKE) HOSTCC="'"${CC}"'" VPATH= srcroot=. $(build)='"$(realpath --relative-to=. "${destdir}")"/scripts
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 5544e8e9c6446..62cafced758e7 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -1833,19 +1833,24 @@ static int b53_arl_rw_op(struct b53_device *dev, unsigned int op)
+ static void b53_arl_read_entry_25(struct b53_device *dev,
+ 				  struct b53_arl_entry *ent, u8 idx)
+ {
++	u8 vid_entry;
+ 	u64 mac_vid;
  
- 	rm -f "${destdir}/scripts/Kbuild"
- fi
++	b53_read8(dev, B53_ARLIO_PAGE, B53_ARLTBL_VID_ENTRY_25(idx),
++		  &vid_entry);
+ 	b53_read64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
+ 		   &mac_vid);
+-	b53_arl_to_entry_25(ent, mac_vid);
++	b53_arl_to_entry_25(ent, mac_vid, vid_entry);
+ }
+ 
+ static void b53_arl_write_entry_25(struct b53_device *dev,
+ 				   const struct b53_arl_entry *ent, u8 idx)
+ {
++	u8 vid_entry;
+ 	u64 mac_vid;
+ 
+-	b53_arl_from_entry_25(&mac_vid, ent);
++	b53_arl_from_entry_25(&mac_vid, &vid_entry, ent);
++	b53_write8(dev, B53_ARLIO_PAGE, B53_ARLTBL_VID_ENTRY_25(idx), vid_entry);
+ 	b53_write64(dev, B53_ARLIO_PAGE, B53_ARLTBL_MAC_VID_ENTRY(idx),
+ 		    mac_vid);
+ }
+diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
+index f4afbfcc345e6..bd6849e5bb939 100644
+--- a/drivers/net/dsa/b53/b53_priv.h
++++ b/drivers/net/dsa/b53/b53_priv.h
+@@ -341,7 +341,7 @@ static inline void b53_arl_to_entry(struct b53_arl_entry *ent,
+ }
+ 
+ static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
+-				       u64 mac_vid)
++				       u64 mac_vid, u8 vid_entry)
+ {
+ 	memset(ent, 0, sizeof(*ent));
+ 	ent->is_valid = !!(mac_vid & ARLTBL_VALID_25);
+@@ -352,7 +352,7 @@ static inline void b53_arl_to_entry_25(struct b53_arl_entry *ent,
+ 		     ARLTBL_DATA_PORT_ID_S_25;
+ 	if (is_unicast_ether_addr(ent->mac) && ent->port == B53_CPU_PORT)
+ 		ent->port = B53_CPU_PORT_25;
+-	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
++	ent->vid = vid_entry;
+ }
+ 
+ static inline void b53_arl_to_entry_89(struct b53_arl_entry *ent,
+@@ -381,7 +381,7 @@ static inline void b53_arl_from_entry(u64 *mac_vid, u32 *fwd_entry,
+ 		*fwd_entry |= ARLTBL_AGE;
+ }
+ 
+-static inline void b53_arl_from_entry_25(u64 *mac_vid,
++static inline void b53_arl_from_entry_25(u64 *mac_vid, u8 *vid_entry,
+ 					 const struct b53_arl_entry *ent)
+ {
+ 	*mac_vid = ether_addr_to_u64(ent->mac);
+@@ -390,14 +390,13 @@ static inline void b53_arl_from_entry_25(u64 *mac_vid,
+ 	else
+ 		*mac_vid |= ((u64)ent->port << ARLTBL_DATA_PORT_ID_S_25) &
+ 			    ARLTBL_DATA_PORT_ID_MASK_25;
+-	*mac_vid |= (u64)(ent->vid & ARLTBL_VID_MASK_25) <<
+-			  ARLTBL_VID_S_65;
+ 	if (ent->is_valid)
+ 		*mac_vid |= ARLTBL_VALID_25;
+ 	if (ent->is_static)
+ 		*mac_vid |= ARLTBL_STATIC_25;
+ 	if (ent->is_age)
+ 		*mac_vid |= ARLTBL_AGE_25;
++	*vid_entry = ent->vid;
+ }
+ 
+ static inline void b53_arl_from_entry_89(u64 *mac_vid, u32 *fwd_entry,
+@@ -422,7 +421,8 @@ static inline void b53_arl_search_to_entry_25(struct b53_arl_entry *ent,
+ 	ent->is_age = !!(mac_vid & ARLTBL_AGE_25);
+ 	ent->is_static = !!(mac_vid & ARLTBL_STATIC_25);
+ 	u64_to_ether_addr(mac_vid, ent->mac);
+-	ent->vid = (mac_vid >> ARLTBL_VID_S_65) & ARLTBL_VID_MASK_25;
++	ent->vid = (mac_vid & ARL_SRCH_RSLT_VID_MASK_25) >>
++		   ARL_SRCH_RSLT_VID_S_25;
+ 	ent->port = (mac_vid & ARL_SRCH_RSLT_PORT_ID_MASK_25) >>
+ 		    ARL_SRCH_RSLT_PORT_ID_S_25;
+ 	if (is_multicast_ether_addr(ent->mac) && (ext & ARL_SRCH_RSLT_EXT_MC_MII))
+diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
+index e0379e70900b7..b6fe7d207a2c1 100644
+--- a/drivers/net/dsa/b53/b53_regs.h
++++ b/drivers/net/dsa/b53/b53_regs.h
+@@ -325,11 +325,9 @@
+ #define B53_ARLTBL_MAC_VID_ENTRY(n)	((0x10 * (n)) + 0x10)
+ #define   ARLTBL_MAC_MASK		0xffffffffffffULL
+ #define   ARLTBL_VID_S			48
+-#define   ARLTBL_VID_MASK_25		0xff
+ #define   ARLTBL_VID_MASK		0xfff
+ #define   ARLTBL_DATA_PORT_ID_S_25	48
+ #define   ARLTBL_DATA_PORT_ID_MASK_25	GENMASK_ULL(53, 48)
+-#define   ARLTBL_VID_S_65		53
+ #define   ARLTBL_AGE_25			BIT_ULL(61)
+ #define   ARLTBL_STATIC_25		BIT_ULL(62)
+ #define   ARLTBL_VALID_25		BIT_ULL(63)
+@@ -349,6 +347,9 @@
+ #define   ARLTBL_STATIC_89		BIT(14)
+ #define   ARLTBL_VALID_89		BIT(15)
+ 
++/* BCM5325/BCM565 ARL Table VID Entry N Registers (8 bit) */
++#define B53_ARLTBL_VID_ENTRY_25(n)	((0x2 * (n)) + 0x30)
++
+ /* Maximum number of bin entries in the ARL for all switches */
+ #define B53_ARLTBL_MAX_BIN_ENTRIES	4
+ 
+@@ -376,6 +377,8 @@
+ #define B53_ARL_SRCH_RSTL_0_MACVID_25	0x24
+ #define   ARL_SRCH_RSLT_PORT_ID_S_25	48
+ #define   ARL_SRCH_RSLT_PORT_ID_MASK_25	GENMASK_ULL(52, 48)
++#define   ARL_SRCH_RSLT_VID_S_25	53
++#define   ARL_SRCH_RSLT_VID_MASK_25	GENMASK_ULL(60, 53)
+ 
+ /* BCM5325/5365 Search result extend register (8 bit) */
+ #define B53_ARL_SRCH_RSLT_EXT_25	0x2c
 -- 
 2.51.0
 
