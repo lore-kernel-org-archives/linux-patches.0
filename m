@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F5633B966;
-	Tue, 16 Dec 2025 11:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F3033F374;
+	Tue, 16 Dec 2025 11:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884686; cv=none; b=TPnZRWPc+G8NdmDuwxcy7WzqvktbpAeROEwC+D1yB9ZMmTxolJOPHKahK4vKgFLZb29CoKeiClxQnXddxES72A4iLCAuiOd0wg6Z+AL0j+uc5Mp9T1/qxdwK0tk7Cnx4/cWaMOat+x1HHWM0zorGgW0SPcUIZpH+kIAaSsGH9Xg=
+	t=1765884690; cv=none; b=IuPbcTuEhLkxOfqKsXsMLBCUYufWG/L2YeiH2lqVxEUv5v2aTecQIR4Hvk6RXYm48Y0mZhwTrZn9S6+g3bD3r2CxKGPOnnTWqXnSFDZjEBxdT50S8hVASG0gMA77l6gDjCPYtU5yG/fHCK5LY3sQ5t5jpBBjX67aPqQhuIajHU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884686; c=relaxed/simple;
-	bh=Dj6b/5lpHPzwjHLtXoWmMXqmfJsirs1G0iJw5EaR7bU=;
+	s=arc-20240116; t=1765884690; c=relaxed/simple;
+	bh=T7vjcAX/D0BRFVfu0QpJhIywVsnbr1yczI9GmNZM+cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4tty9vJugj9i0vVFRMEzVaBAplaJ5zVmyIAGdQ0bxlL34eOEeyUUM2YDA5N/32K8HFEocyJ5kyKMtE+1/F0Su//DI3XwSS/xa8mDxMjPBj3GRw1SdScxhJuHH90nGWS2oqJ0oVHSzq6I4D7+ldUmZKv0Vp7bECJOdHutyQkDEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mAF+P5bQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RaMEgymfMwcVz5FDEWHE9GwAEEzLH4d8mkbQrc2/wwlSA6F5hm2BJr7lk9hFYPcXxx+fgn4J15G/jH1xnXGZ/Y5xdCx4r5HTh8aVCq2ZCinVowGuSxysrcQYPH2zmRD+Km5j8odrc/C2ioO/rfmNpDyCd6O3vPTfWAZVta6XGS4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YizocMin; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mAF+P5bQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3FDC4CEF1;
-	Tue, 16 Dec 2025 11:31:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YizocMin"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BADBC4CEF1;
+	Tue, 16 Dec 2025 11:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884686;
-	bh=Dj6b/5lpHPzwjHLtXoWmMXqmfJsirs1G0iJw5EaR7bU=;
+	s=korg; t=1765884689;
+	bh=T7vjcAX/D0BRFVfu0QpJhIywVsnbr1yczI9GmNZM+cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mAF+P5bQ05DoIsoqVVJ38Rg+2PxdiDOWipoh3uCRVRInpFE9PlzKWdNnqbIzJb59f
-	 TmtI0uxFS8inOrow19rA8CCp/2WM4zpFh/XetaFWznaQuLVs3O51+Vf5LJ0AymzM3H
-	 AEsz3tPD87mot4Bc8pyW9eKXCNEnp4Cpk5YZVlSQ=
+	b=YizocMinJo2XiShVNa2WGkskHjBBxL9W6+qGPc46G+lgXJ3LHlccMt0lSbC24u8Pa
+	 4JlCTHICz+iFh6uwm0lmMAffEWPJSZ6brOllG5qfjO7YXKAe80fGO502MspGXLqlyd
+	 +vVq0DJnbyETfChjSuqoFAYQsxp4lJ2PuX1pLlys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 268/354] net: stmmac: fix rx limit check in stmmac_rx_zc()
-Date: Tue, 16 Dec 2025 12:13:55 +0100
-Message-ID: <20251216111330.625335168@linuxfoundation.org>
+Subject: [PATCH 6.12 269/354] mtd: rawnand: renesas: Handle devm_pm_runtime_enable() errors
+Date: Tue, 16 Dec 2025 12:13:56 +0100
+Message-ID: <20251216111330.662189396@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,64 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 8048168df56e225c94e50b04cb7b0514135d7a1c ]
+[ Upstream commit a3623e1ae1ed6be4d49b2ccb9996a9d2b65c1828 ]
 
-The extra "count >= limit" check in stmmac_rx_zc() is redundant and
-has no effect because the value of "count" doesn't change after the
-while condition at this point.
+devm_pm_runtime_enable() can fail due to memory allocation failures.
+The current code ignores its return value and proceeds with
+pm_runtime_resume_and_get(), which may operate on incorrectly
+initialized runtime PM state.
 
-However, it can change after "read_again:" label:
+Check the return value of devm_pm_runtime_enable() and return the
+error code if it fails.
 
-        while (count < limit) {
-            ...
-
-            if (count >= limit)
-                break;
-    read_again:
-            ...
-            /* XSK pool expects RX frame 1:1 mapped to XSK buffer */
-            if (likely(status & rx_not_ls)) {
-                xsk_buff_free(buf->xdp);
-                buf->xdp = NULL;
-                dirty++;
-                count++;
-                goto read_again;
-            }
-            ...
-
-This patch addresses the same issue previously resolved in stmmac_rx()
-by commit fa02de9e7588 ("net: stmmac: fix rx budget limit check").
-The fix is the same: move the check after the label to ensure that it
-bounds the goto loop.
-
-Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/20251126104327.175590-1-aleksei.kodanev@bell-sw.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6a2277a0ebe7 ("mtd: rawnand: renesas: Use runtime PM instead of the raw clock API")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/nand/raw/renesas-nand-controller.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 04bacb04770fa..ce35a6f126793 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -5268,10 +5268,10 @@ static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
- 			len = 0;
- 		}
+diff --git a/drivers/mtd/nand/raw/renesas-nand-controller.c b/drivers/mtd/nand/raw/renesas-nand-controller.c
+index ed45d0add3e96..efb19cc298ade 100644
+--- a/drivers/mtd/nand/raw/renesas-nand-controller.c
++++ b/drivers/mtd/nand/raw/renesas-nand-controller.c
+@@ -1336,7 +1336,10 @@ static int rnandc_probe(struct platform_device *pdev)
+ 	if (IS_ERR(rnandc->regs))
+ 		return PTR_ERR(rnandc->regs);
  
-+read_again:
- 		if (count >= limit)
- 			break;
- 
--read_again:
- 		buf1_len = 0;
- 		entry = next_entry;
- 		buf = &rx_q->buf_pool[entry];
+-	devm_pm_runtime_enable(&pdev->dev);
++	ret = devm_pm_runtime_enable(&pdev->dev);
++	if (ret)
++		return ret;
++
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0)
+ 		return ret;
 -- 
 2.51.0
 
