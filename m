@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97903358A8;
-	Tue, 16 Dec 2025 11:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8810332862F;
+	Tue, 16 Dec 2025 11:19:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883952; cv=none; b=TqSo9YGTQmEnfcpx0CtUCTFl4E11bH0Ipi2N3DQ7Za4qs6xjwpOrIiqkLaFzx4k6fp2ZoXCyCHroqmhy1j55U/4x+aqcP6oBkA/aKtDIc2yj77kYotXlEaCZAEQWhAPHmtIVWhqF4i3YZS1CvoG46/5IjhUKLjr9GpMunhhpqck=
+	t=1765883955; cv=none; b=ZS3FeaJUVLka3vxi2tTi6rWM9cxK5+8vd960Domc0uNddNwT/UchVprWr6bgyQkmYZu3ML/VC+c7OcP+A1baCVwkNCPj4R91DFrPzLmcx74ex1cDCCqNxyS3d3Igtv/VpH4ylRuKnNVoAM8hXzWfyx8or+/UCfowy3+aKcxMBkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883952; c=relaxed/simple;
-	bh=Sdr39YP4efgF6Hp056dleLYk4j8kF666Dakq1bgxlAo=;
+	s=arc-20240116; t=1765883955; c=relaxed/simple;
+	bh=/zW/neIqwbJ1ZLSfB/tiQjASYBar30J5SRbPMkUBKz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R0oe4M/ulu5w4XV7dGml/5d11ZQ+j3IN4hKWSX1KKFKeAeYHVLxqXWzHBuISJU44Hxb0XEVWU934W9fD/EduXPiSMGUiAZ2oppmK55zsdBGutzramb2dY+jrsKELkvcdkpDsX3RsUOa1dRuytTD0msQNDSAmLyd51tTgsnIOA0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugfNH4pb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiPJyvUgKeJoWh8xY6Qbc7JmhYS07rpaMjph8lMrJNHo8Rumy5QbbJr6MG6QRf6V8buhEgFpg533948/26KithltT0KxONPq21D4Tj9mBS5062Bt3kwyKuEXvo7dCgasN7j85HQR9elpwNS6x+/XbjEI5ELiU5wt02ifI+u7mOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEsdnxNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugfNH4pb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 080B8C4CEF1;
-	Tue, 16 Dec 2025 11:19:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEsdnxNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A60CC4CEF1;
+	Tue, 16 Dec 2025 11:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883952;
-	bh=Sdr39YP4efgF6Hp056dleLYk4j8kF666Dakq1bgxlAo=;
+	s=korg; t=1765883955;
+	bh=/zW/neIqwbJ1ZLSfB/tiQjASYBar30J5SRbPMkUBKz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ugfNH4pb5wKN06Pr8Q6dXEpR51TfWzVH6Oma7MOGJXDKIPALeDrc8HYgAQpdsZg6i
-	 GICtKBdeifwVS1zhvW9oVANj8VXOz4KJ8sLIcVjGKcSMBzrOhhO3wFk7rOZiDILOxf
-	 N9+LeSQeVNh3Jc/tzybPbIC97JiJd+I5mihh2Qc8=
+	b=YEsdnxNyrkVQ9V/33UBin+GubuX3kZz2xt3kB+pJTAydUOipxIC+lSOmTFX72lrDT
+	 9P1cHB+YdNWEZbAfiFcBreFiLrNH2WI/qUFAgw0DWYmUXtFzu0qrL1YvtzWV0p59Eh
+	 1UN/nhdHTZgD3ms0PxPPsg9/8TkbgjZrkiM/apWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Yu Kuai <yukuai@kernel.org>,
+	chengkaitao <chengkaitao@kylinos.cn>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 030/354] irqchip/irq-bcm7038-l1: Fix section mismatch
-Date: Tue, 16 Dec 2025 12:09:57 +0100
-Message-ID: <20251216111322.002747079@linuxfoundation.org>
+Subject: [PATCH 6.12 048/354] block/mq-deadline: Introduce dd_start_request()
+Date: Tue, 16 Dec 2025 12:10:15 +0100
+Message-ID: <20251216111322.657588344@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,48 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit e9db5332caaf4789ae3bafe72f61ad8e6e0c2d81 ]
+[ Upstream commit 93a358af59c6e8ab00b57cfdb1c437516a4948ca ]
 
-Platform drivers can be probed after their init sections have been
-discarded so the irqchip init callback must not live in init.
+Prepare for adding a second caller of this function. No functionality
+has been changed.
 
-Fixes: c057c799e379 ("irqchip/irq-bcm7038-l1: Switch to IRQCHIP_PLATFORM_DRIVER")
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Damien Le Moal <dlemoal@kernel.org>
+Cc: Yu Kuai <yukuai@kernel.org>
+Cc: chengkaitao <chengkaitao@kylinos.cn>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d60055cf5270 ("block/mq-deadline: Switch back to a single dispatch list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-bcm7038-l1.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ block/mq-deadline.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/irqchip/irq-bcm7038-l1.c b/drivers/irqchip/irq-bcm7038-l1.c
-index 36e71af054e97..bca43fa99c8f2 100644
---- a/drivers/irqchip/irq-bcm7038-l1.c
-+++ b/drivers/irqchip/irq-bcm7038-l1.c
-@@ -219,9 +219,8 @@ static int bcm7038_l1_set_affinity(struct irq_data *d,
+diff --git a/block/mq-deadline.c b/block/mq-deadline.c
+index 19473a9b50440..690b51587301d 100644
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -310,6 +310,19 @@ static bool started_after(struct deadline_data *dd, struct request *rq,
+ 	return time_after(start_time, latest_start);
  }
- #endif
  
--static int __init bcm7038_l1_init_one(struct device_node *dn,
--				      unsigned int idx,
--				      struct bcm7038_l1_chip *intc)
-+static int bcm7038_l1_init_one(struct device_node *dn, unsigned int idx,
-+			       struct bcm7038_l1_chip *intc)
++static struct request *dd_start_request(struct deadline_data *dd,
++					enum dd_data_dir data_dir,
++					struct request *rq)
++{
++	u8 ioprio_class = dd_rq_ioclass(rq);
++	enum dd_prio prio = ioprio_class_to_prio[ioprio_class];
++
++	dd->per_prio[prio].latest_pos[data_dir] = blk_rq_pos(rq);
++	dd->per_prio[prio].stats.dispatched++;
++	rq->rq_flags |= RQF_STARTED;
++	return rq;
++}
++
+ /*
+  * deadline_dispatch_requests selects the best request according to
+  * read/write expire, fifo_batch, etc and with a start time <= @latest_start.
+@@ -320,8 +333,6 @@ static struct request *__dd_dispatch_request(struct deadline_data *dd,
  {
- 	struct resource res;
- 	resource_size_t sz;
-@@ -395,8 +394,7 @@ static const struct irq_domain_ops bcm7038_l1_domain_ops = {
- 	.map			= bcm7038_l1_map,
- };
+ 	struct request *rq, *next_rq;
+ 	enum dd_data_dir data_dir;
+-	enum dd_prio prio;
+-	u8 ioprio_class;
  
--static int __init bcm7038_l1_of_init(struct device_node *dn,
--			      struct device_node *parent)
-+static int bcm7038_l1_of_init(struct device_node *dn, struct device_node *parent)
- {
- 	struct bcm7038_l1_chip *intc;
- 	int idx, ret;
+ 	lockdep_assert_held(&dd->lock);
+ 
+@@ -415,12 +426,7 @@ static struct request *__dd_dispatch_request(struct deadline_data *dd,
+ 	dd->batching++;
+ 	deadline_move_request(dd, per_prio, rq);
+ done:
+-	ioprio_class = dd_rq_ioclass(rq);
+-	prio = ioprio_class_to_prio[ioprio_class];
+-	dd->per_prio[prio].latest_pos[data_dir] = blk_rq_pos(rq);
+-	dd->per_prio[prio].stats.dispatched++;
+-	rq->rq_flags |= RQF_STARTED;
+-	return rq;
++	return dd_start_request(dd, data_dir, rq);
+ }
+ 
+ /*
 -- 
 2.51.0
 
