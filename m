@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111D0385CD4;
-	Tue, 16 Dec 2025 12:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DACD385CAD;
+	Tue, 16 Dec 2025 12:37:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888636; cv=none; b=gbQ8OCegADvxiWl+nli0qoxQIK07tDsL+DSr8+8ccs7upPtHMZ6yGDMr13Fkyw1nKyKflrcm1Sulb65gZw6y1drT3LFLqxZt22hbFlqWpqS/oKsSsKrfBN66T/5Ra1gHlYkadZAsxy8aeZWhkEVsuLmRj0VnlJgfqIEkm7xztdY=
+	t=1765888639; cv=none; b=UbF2pMbBzt1eHDC7z18C5Vh7AzqtpasYwPgX1kXR7iG4/qJKBys1mFORPnCmZxsSRPJ01je0Dc/xzTHHB8cab3551AOLrLT8rDWDNZ2YyFLNHa9oRruEfUN4LsRaly0yeqT0R97NNytzZObQ/fisrisEfM4coSAZDi/21LhlyGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888636; c=relaxed/simple;
-	bh=dIrPZ+fYXHEokWeoewKN3qYgFqOUEKgbxzKHalxoosM=;
+	s=arc-20240116; t=1765888639; c=relaxed/simple;
+	bh=undE32b2AvgnwABSdFae6laubAIdYSztWmiXAP0k8gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NoSumn0AIezk/cFRDnwBb1iE9ToZ0A3h8iaWgDDrJjem+WjphpZvBlY2cD6qr+eEBWsUpqFfgjIAIMZTBL3C2wrqLaca0dpFH04T0Jzoe0GAjaUyy3W25QNd/4d95mCAYL+Wpm3R7MY2nooTKB0aX5qL8NSF0U/0BT2OCV+sBmA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTrVn28w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y+yFR/jHIFbz+iAcinFIXdoaCBUqrjiVlnjLaVf6UnBnslhXhBHWkMhAb60HHs7MLbDB1hRWSBeYuo595Z6n6BSYwv8cPTQx6+Aej0dqOuoVf8uF1B5Diq+7HD0w0ZliHlHdgRrmxTjkMBWpMeM+D9QPduSfcnrYmFdmuOgf5Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O/iN+XlG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTrVn28w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F21CC4CEF1;
-	Tue, 16 Dec 2025 12:37:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O/iN+XlG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 023ADC4CEF1;
+	Tue, 16 Dec 2025 12:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888635;
-	bh=dIrPZ+fYXHEokWeoewKN3qYgFqOUEKgbxzKHalxoosM=;
+	s=korg; t=1765888639;
+	bh=undE32b2AvgnwABSdFae6laubAIdYSztWmiXAP0k8gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTrVn28wO5in0khrNCwnmMfAwbaqtbt8iSW8MOleGraiu64mSGvOHlvbhhu5YyQ3E
-	 eSQetocs2tFLtuEFm8c63E4qfpmNDNBUgCLGDLZXXfKLiC9QsnizizsO9cwVCTkSYs
-	 XKaZegUuad2EPynuOHIk/amUGvk9BwljtyFr+RJ0=
+	b=O/iN+XlG0UU0VolQv5A3bdFV/JmGUIJivkjnNHR4sITQ2MyonTVAx3ZxGmjhWLoet
+	 iaw5wFabpV9aBUP9rxD3br2bDfDZkM6qi4OsjKevIg3vrskBz6DBy2JDTffU7N9rsp
+	 YBaj72XK7nxJQmtgVv+dtzrhXcO1BRy+JBtMOMBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hemalatha Pinnamreddy <hemalatha.pinnamreddy2@amd.com>,
-	Raghavendra Prasad Mallela <raghavendraprasad.mallela@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alexey Simakov <bigalex934@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 591/614] ASoC: amd: acp: update tdm channels for specific DAI
-Date: Tue, 16 Dec 2025 12:15:58 +0100
-Message-ID: <20251216111422.803197122@linuxfoundation.org>
+Subject: [PATCH 6.18 592/614] dm-raid: fix possible NULL dereference with undefined raid type
+Date: Tue, 16 Dec 2025 12:15:59 +0100
+Message-ID: <20251216111422.839711903@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,39 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hemalatha Pinnamreddy <hemalatha.pinnamreddy2@amd.com>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit f34836a8ddf9216ff919927cddb705022bf30aab ]
+[ Upstream commit 2f6cfd6d7cb165a7af8877b838a9f6aab4159324 ]
 
-TDM channel updates were applied to all DAIs, causing configurations
-to overwrite for unrelated streams. The logic is modified to update
-channels only for targeted DAI. This prevents corruption of other DAI
-settings and resolves audio issues observed during system suspend and
-resume cycles.
+rs->raid_type is assigned from get_raid_type_by_ll(), which may return
+NULL. This NULL value could be dereferenced later in the condition
+'if (!(rs_is_raid10(rs) && rt_is_raid0(rs->raid_type)))'.
 
-Fixes: 12229b7e50cf ("ASoC: amd: acp: Add TDM support for acp i2s stream")
-Signed-off-by: Hemalatha Pinnamreddy <hemalatha.pinnamreddy2@amd.com>
-Signed-off-by: Raghavendra Prasad Mallela <raghavendraprasad.mallela@amd.com>
-Link: https://patch.msgid.link/20251203120136.2591395-1-raghavendraprasad.mallela@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Add a fail-fast check to return early with an error if raid_type is NULL,
+similar to other uses of this function.
+
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 33e53f06850f ("dm raid: introduce extended superblock and new raid types to support takeover/reshaping")
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-i2s.c | 2 ++
+ drivers/md/dm-raid.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/amd/acp/acp-i2s.c b/sound/soc/amd/acp/acp-i2s.c
-index 4ba0a66981ea9..283a674c7e2c3 100644
---- a/sound/soc/amd/acp/acp-i2s.c
-+++ b/sound/soc/amd/acp/acp-i2s.c
-@@ -157,6 +157,8 @@ static int acp_i2s_set_tdm_slot(struct snd_soc_dai *dai, u32 tx_mask, u32 rx_mas
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index c6f7129e43d34..4bacdc499984b 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -2287,6 +2287,8 @@ static int super_init_validation(struct raid_set *rs, struct md_rdev *rdev)
  
- 	spin_lock_irq(&chip->acp_lock);
- 	list_for_each_entry(stream, &chip->stream_list, list) {
-+		if (dai->id != stream->dai_id)
-+			continue;
- 		switch (chip->acp_rev) {
- 		case ACP_RN_PCI_ID:
- 		case ACP_RMB_PCI_ID:
+ 			mddev->reshape_position = le64_to_cpu(sb->reshape_position);
+ 			rs->raid_type = get_raid_type_by_ll(mddev->level, mddev->layout);
++			if (!rs->raid_type)
++				return -EINVAL;
+ 		}
+ 
+ 	} else {
 -- 
 2.51.0
 
