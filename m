@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C875355027;
-	Tue, 16 Dec 2025 11:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DAF355026;
+	Tue, 16 Dec 2025 11:50:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885841; cv=none; b=VFxzL2MkT3kALupk4Pml0iGHY+iG+qGwhZW7DVmHaZYEeBYLlw335XtRzgWWPJ7/0u9XvScMwBi2o/YwgVhQvboQ0Yj0iA1+LcqmMxpOdyYM28ClPGByzkUeMXqfGHhlCgKekeHUkUe4lGaXwBB7U/Oj481H9gNd5Xe0u/VPoNY=
+	t=1765885844; cv=none; b=ZJdRcXvxYgyHT8RBEw0Sa5ADFVYxY1WOsMe+P/rCJkVE6ORetT3/XnROXA+7QyCTiROH8GIg/md3roydo4op47a0r3PSA3kWXDWI8OxyhKJ5Ghc9ojEtcCOwcxVLPIUp0LcHaUyrofs7HgRMEamVMOvvzGLUj9MtL5JS4d8jCto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885841; c=relaxed/simple;
-	bh=xLS/X9pZ2E7XsezUXH1ora0aQiX/XAIGxpOJvIYeKAs=;
+	s=arc-20240116; t=1765885844; c=relaxed/simple;
+	bh=FrUbSom7Z0WMLXdlAatOLADiVPmI3f4bUGZHxia1oK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qgbPqcQpxtSakiU4KZ12r3joW+d8YUH5CBS+Aku6vEvtPJdDrvImmhDk5rcp4TrcIQ0Cx5yQU+DUzlymrlvnXF1fdvB4NTKf//wqt2IkNo9JeTqpjMTgO4wyjC+MolI+hc6nYt4r8QcgJcqIkWLW6bjlZyMToTAcadOcBDr/9dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GdIVui9h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CcC2MEh1P+jXgBk+eOAd7eWwca2FZASVZsv0eDe0ju00pyE9ALOMj/q6yw4u7iE8xBygvwhRjuEfMfFGtY7ApsXr/LoOzY1GeymFXvnQ9quVNa18bXIPm1AKlWDnqXIOHjjsU4Vn/91e+KNv7sQpHhaNkbIyyzpNsdCou5GU3X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qbq10O5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GdIVui9h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40915C4CEF1;
-	Tue, 16 Dec 2025 11:50:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qbq10O5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B155CC4CEF1;
+	Tue, 16 Dec 2025 11:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885840;
-	bh=xLS/X9pZ2E7XsezUXH1ora0aQiX/XAIGxpOJvIYeKAs=;
+	s=korg; t=1765885844;
+	bh=FrUbSom7Z0WMLXdlAatOLADiVPmI3f4bUGZHxia1oK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdIVui9hShCaYCUDX7o0Av1foXrUd2eYG5EeRdBR8OlGZ1PXwK7rkFUAe5bnlMNKJ
-	 g9GoLMN8zTdj++nyqST70Vse0TL6vqOmiwhDHyjkFmNIl+7k1H/7pNEsTLiy61X2nE
-	 stQotSbPjw0IVL9TOZkWhHpqBZo1FSCzIxMCpZz4=
+	b=qbq10O5lyno30tNxHsyYByo0DRokiy7eijGr4Rv042uAnOO8JrZfl3JJxzHsMkT4/
+	 9vxaX7UL/R3ir0PcFVhBb7PxOUBEoghT/oFM2rSdhEtU2ir7FsYw5Ck6U7jM0L3NpI
+	 4fzmTQibb4TCrlZpx6hacGFXQBqyQ+m7WJYsUR7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Song Liu <song@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 243/507] bpf: Handle return value of ftrace_set_filter_ip in register_fentry
-Date: Tue, 16 Dec 2025 12:11:24 +0100
-Message-ID: <20251216111354.301447838@linuxfoundation.org>
+Subject: [PATCH 6.17 261/507] drm/msm/a2xx: stop over-complaining about the legacy firmware
+Date: Tue, 16 Dec 2025 12:11:42 +0100
+Message-ID: <20251216111354.943949423@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit fea3f5e83c5cd80a76d97343023a2f2e6bd862bf ]
+[ Upstream commit a3a22373fce576560757f5616eb48dbf85891d9c ]
 
-The error that returned by ftrace_set_filter_ip() in register_fentry() is
-not handled properly. Just fix it.
+If the rootfs have a legacy A200 firmware, currently the driver will
+complain each time the hw is reinited (which can happen a lot). E.g.
+with GL testsuite the hw is reinited after each test, spamming the
+console.
 
-Fixes: 00963a2e75a8 ("bpf: Support bpf_trampoline on functions with IPMODIFY (e.g. livepatch)")
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20251110120705.1553694-1-dongml2@chinatelecom.cn
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Make sure that the message is printed only once: when we detect the
+firmware that doesn't support protection.
+
+Fixes: 302295070d3c ("drm/msm/a2xx: support loading legacy (iMX) firmware")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/688098/
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/trampoline.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a2xx_gpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
-index 0db5673812108..1ce8696f6f6d9 100644
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -220,7 +220,9 @@ static int register_fentry(struct bpf_trampoline *tr, void *new_addr)
- 	}
- 
- 	if (tr->func.ftrace_managed) {
--		ftrace_set_filter_ip(tr->fops, (unsigned long)ip, 0, 1);
-+		ret = ftrace_set_filter_ip(tr->fops, (unsigned long)ip, 0, 1);
-+		if (ret)
-+			return ret;
- 		ret = register_ftrace_direct(tr->fops, (long)new_addr);
- 	} else {
- 		ret = bpf_arch_text_poke(ip, BPF_MOD_CALL, NULL, new_addr);
+diff --git a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+index ec38db45d8a36..963c0f669ee50 100644
+--- a/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a2xx_gpu.c
+@@ -234,7 +234,7 @@ static int a2xx_hw_init(struct msm_gpu *gpu)
+ 	 * word (0x20xxxx for A200, 0x220xxx for A220, 0x225xxx for A225).
+ 	 * Older firmware files, which lack protection support, have 0 instead.
+ 	 */
+-	if (ptr[1] == 0) {
++	if (ptr[1] == 0 && !a2xx_gpu->protection_disabled) {
+ 		dev_warn(gpu->dev->dev,
+ 			 "Legacy firmware detected, disabling protection support\n");
+ 		a2xx_gpu->protection_disabled = true;
 -- 
 2.51.0
 
