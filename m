@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D051F354AF7;
-	Tue, 16 Dec 2025 11:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51300355020;
+	Tue, 16 Dec 2025 11:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885810; cv=none; b=o+hSuFLc1ovzp56E8b0mDy3wSGETs6ltFHTfjMxLcxP56Z7KLjVcA9aoN0dxWEpQCYk3LvCSlpDAe/2oeznq9BaYPlJ7RjwSYKOB0Qdxi5t+g3ojX2c9EszDwSDUzlilvchAqaJMPalocqXteDmaUgIloLUkL6AW2w6nnwjEZyA=
+	t=1765885814; cv=none; b=bYDfPGp6gIxTn9iAMvtcnGOYfe7mT4k/WhBxglg2rBI8FI3sWZNh/A+kQz8laT6B9xoGCWvYj6OWGxqqME2RYx/jGl3GC6P64FOUV9Sl2IX06YLQYc9V1MNftikKXEhc9ygzlsXcKK7xHFdIiloNREjYQIpaPejGk3Qh6eZk8yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885810; c=relaxed/simple;
-	bh=+7IhLtaLbvMH58cudiz4LzxJp9VI9qT3lfjn83pmges=;
+	s=arc-20240116; t=1765885814; c=relaxed/simple;
+	bh=i/bhMN3c2YAWcI8oXCJNGWZra2IShMthmG4YiWSBT7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OJ/oU/XYpydeJuamK+5HwHmuaboMJdgj+DPyKqIh9JPzPVpiEmKKc9/5e3a2yovl+lZ+uCYg+nyTlcjp5EY7AxTelw1dIlQbHHhghkb9cfkSebBmYlr9K6mrVExZjHXaoWLLbBfUpeyc1i+SSVAp7GK+/Iz+WALE7lXQtTIuOz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/kvCURq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAyA8+xAbfcyRMzLKrNslevx72OWez07vzhySPCxZZ7Gshr7/+m0TpihKdcLHsYWpavH/G77+rtih9izzQ8fBxDIdsnOeioi0WyXe3Znv5wWMFKDW+WivIGW+bLXaAkoJ20FKmSiHxa9kwe+2LxU1/AarZlXzhVT+oNg1MuSi0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zBiYSUOy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/kvCURq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B43C4CEF1;
-	Tue, 16 Dec 2025 11:50:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zBiYSUOy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B15EC4CEF1;
+	Tue, 16 Dec 2025 11:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885810;
-	bh=+7IhLtaLbvMH58cudiz4LzxJp9VI9qT3lfjn83pmges=;
+	s=korg; t=1765885814;
+	bh=i/bhMN3c2YAWcI8oXCJNGWZra2IShMthmG4YiWSBT7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/kvCURqJGBirsfXbde45TdYDhLOVxc6q8rF4QPhKzrzFqhBqNGTS8Ere/NQyF2Zz
-	 G1Dz83scD9uqxBDFLIITP7kcC+eRC5E32IeaF3PmzSHK8OXvijHK/6btRL6Xs8ss2m
-	 RIyW/8mPUbDpgL3slF42CRIVrQZejPD52D8j+A74=
+	b=zBiYSUOykKAczFDEK0U53oy/nLs57haHKh+OknfKH2Unhm4hjk4QudRlWW79PL+4m
+	 bTO1hnIaNUjnI47YOhhI0bi8c4OOL19qYKl99+SscMGHG3dKIcFZr1tNcy0sdmosgX
+	 Fcb/CLxaLU+vINbF9Ip/f2ZWeAYMOBTSHyW5Jtcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 252/507] watchdog: starfive: Fix resource leak in probe error path
-Date: Tue, 16 Dec 2025 12:11:33 +0100
-Message-ID: <20251216111354.622027586@linuxfoundation.org>
+Subject: [PATCH 6.17 253/507] fuse_ctl_add_conn(): fix nlink breakage in case of early failure
+Date: Tue, 16 Dec 2025 12:11:34 +0100
+Message-ID: <20251216111354.657895061@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,49 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 5bcc5786a0cfa9249ccbe539833040a6285d0de3 ]
+[ Upstream commit c460192aae197df1b4db1dca493c35ad529f1b64 ]
 
-If pm_runtime_put_sync() fails after watchdog_register_device()
-succeeds, the probe function jumps to err_exit without
-unregistering the watchdog device. This leaves the watchdog
-registered in the subsystem while the driver fails to load,
-resulting in a resource leak.
+fuse_ctl_remove_conn() used to decrement the link count of root
+manually; that got subsumed by simple_recursive_removal(), but
+in case when subdirectory creation has failed the latter won't
+get called.
 
-Add a new error label err_unregister_wdt to properly unregister
-the watchdog device.
+Just move the modification of parent's link count into
+fuse_ctl_add_dentry() to keep the things simple.  Allows to
+get rid of the nlink argument as well...
 
-Fixes: 8bc22a2f1bf0 ("watchdog: starfive: Check pm_runtime_enabled() before decrementing usage counter")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: fcaac5b42768 "fuse_ctl: use simple_recursive_removal()"
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/starfive-wdt.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/fuse/control.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/watchdog/starfive-wdt.c b/drivers/watchdog/starfive-wdt.c
-index 355918d62f63d..ed71d3960a0f2 100644
---- a/drivers/watchdog/starfive-wdt.c
-+++ b/drivers/watchdog/starfive-wdt.c
-@@ -500,12 +500,14 @@ static int starfive_wdt_probe(struct platform_device *pdev)
- 		if (pm_runtime_enabled(&pdev->dev)) {
- 			ret = pm_runtime_put_sync(&pdev->dev);
- 			if (ret)
--				goto err_exit;
-+				goto err_unregister_wdt;
- 		}
- 	}
+diff --git a/fs/fuse/control.c b/fs/fuse/control.c
+index bb407705603c2..5247df896c5d0 100644
+--- a/fs/fuse/control.c
++++ b/fs/fuse/control.c
+@@ -205,8 +205,7 @@ static const struct file_operations fuse_conn_congestion_threshold_ops = {
  
- 	return 0;
+ static struct dentry *fuse_ctl_add_dentry(struct dentry *parent,
+ 					  struct fuse_conn *fc,
+-					  const char *name,
+-					  int mode, int nlink,
++					  const char *name, int mode,
+ 					  const struct inode_operations *iop,
+ 					  const struct file_operations *fop)
+ {
+@@ -232,7 +231,10 @@ static struct dentry *fuse_ctl_add_dentry(struct dentry *parent,
+ 	if (iop)
+ 		inode->i_op = iop;
+ 	inode->i_fop = fop;
+-	set_nlink(inode, nlink);
++	if (S_ISDIR(mode)) {
++		inc_nlink(d_inode(parent));
++		inc_nlink(inode);
++	}
+ 	inode->i_private = fc;
+ 	d_add(dentry, inode);
  
-+err_unregister_wdt:
-+	watchdog_unregister_device(&wdt->wdd);
- err_exit:
- 	starfive_wdt_disable_clock(wdt);
- 	pm_runtime_disable(&pdev->dev);
+@@ -252,22 +254,21 @@ int fuse_ctl_add_conn(struct fuse_conn *fc)
+ 		return 0;
+ 
+ 	parent = fuse_control_sb->s_root;
+-	inc_nlink(d_inode(parent));
+ 	sprintf(name, "%u", fc->dev);
+-	parent = fuse_ctl_add_dentry(parent, fc, name, S_IFDIR | 0500, 2,
++	parent = fuse_ctl_add_dentry(parent, fc, name, S_IFDIR | 0500,
+ 				     &simple_dir_inode_operations,
+ 				     &simple_dir_operations);
+ 	if (!parent)
+ 		goto err;
+ 
+-	if (!fuse_ctl_add_dentry(parent, fc, "waiting", S_IFREG | 0400, 1,
++	if (!fuse_ctl_add_dentry(parent, fc, "waiting", S_IFREG | 0400,
+ 				 NULL, &fuse_ctl_waiting_ops) ||
+-	    !fuse_ctl_add_dentry(parent, fc, "abort", S_IFREG | 0200, 1,
++	    !fuse_ctl_add_dentry(parent, fc, "abort", S_IFREG | 0200,
+ 				 NULL, &fuse_ctl_abort_ops) ||
+ 	    !fuse_ctl_add_dentry(parent, fc, "max_background", S_IFREG | 0600,
+-				 1, NULL, &fuse_conn_max_background_ops) ||
++				 NULL, &fuse_conn_max_background_ops) ||
+ 	    !fuse_ctl_add_dentry(parent, fc, "congestion_threshold",
+-				 S_IFREG | 0600, 1, NULL,
++				 S_IFREG | 0600, NULL,
+ 				 &fuse_conn_congestion_threshold_ops))
+ 		goto err;
+ 
 -- 
 2.51.0
 
