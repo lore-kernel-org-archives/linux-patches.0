@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509CC396DD7;
-	Tue, 16 Dec 2025 12:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7473D396DD7;
+	Tue, 16 Dec 2025 12:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888394; cv=none; b=VPB2/BaJq5GuDjr6dVpklndPcz5nxzxvvp6uSlwHfFcJYVE9w8OyxKPLBftB+wajfu56xKXHdNBDaRgwXtRhlBV8cKkazNm/AdZtG+Yi6edbV6aWqMqY5MT2AXz22fRNzNA8/Mxd6Ys8Bk4g8Oain9nB0OGQA6i80GV6sLAtyvQ=
+	t=1765888397; cv=none; b=qzME5Ovv1et25NdgwYeXygWS6IQqksMCAvmBSZXAssteGoNVJtuWH84uzm5FYFSv5WI1dPD+9bRI5EPS0u/rP2K1uR7wKrKUHRhkugAOFjA3/0FM2cuPtYKxFPRrrzIPuA7TldoadwYL89Vsm7+dpsZ4oqUtKtmpA0SURQMqRJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888394; c=relaxed/simple;
-	bh=8Qvl/OWRxtm9+YXx2dcih/9wM8VeBmBa1CpNjbRNP+c=;
+	s=arc-20240116; t=1765888397; c=relaxed/simple;
+	bh=UvNBjFw5OdHlK4pKBum+cRP5F+8n5fDBRirJXYMzfug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=m81aG8SaoW+RqMBsukEke3pn9YYT3sYi4JxcQDsklEf6ZcBeaLbY2aKIeiyVdddWJ0CVLLMfx7YO/pvIHkl1aRlDqxBxY+9Aa2KkcuplhI0PP8BgH5paus1x8VEeIk/hk6UjVYJ7If7bl4wg9aMUUrGa5tlMsSE1VEB3PD/VS6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u++qQF+J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r+XfPMafTA01eHtCm/Zy7Qc4q+KZqQbqTBNoQH0BM2KDN7AWa5vcVPnGB7QqvSqIfp6HULpsO3FftbsbOCXGqo4ECphbKAio9HWJvW4866vIIJ0blgTE4tZ4OpJTL3EikBEf1owZzbyFV+iMol2sq9OkqvwujfAx1Lv5bCUuQw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kH+JIlPK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u++qQF+J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACC7C4CEF1;
-	Tue, 16 Dec 2025 12:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kH+JIlPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2B22C4CEF1;
+	Tue, 16 Dec 2025 12:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888394;
-	bh=8Qvl/OWRxtm9+YXx2dcih/9wM8VeBmBa1CpNjbRNP+c=;
+	s=korg; t=1765888397;
+	bh=UvNBjFw5OdHlK4pKBum+cRP5F+8n5fDBRirJXYMzfug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u++qQF+JAlklrwWGUvb3xObB5kgZYWyssCns2cevyM5KmFGPguIVJ2ZjoUwrUYH5A
-	 uSDzB+y1fUk+pCZAZe1DHtvHNnYK+dHdvMOVJbedfbuMuWNVi9nLb+IgorGPyXQQHp
-	 CqV+l64TYGyfoCEmI97we5jjeY5z0Wo9PDsac3NQ=
+	b=kH+JIlPKyC22MnGxx5MixvyTtqYChuZzP4p1x9Uso2ilt9I9WpquxRC5EWGQ7vuKL
+	 9vsEaN8JP6//UPzUnpV5CmpIoxuoHUi7Xx/+C2GgRT0XgyFuDkmJzxrfxK/0xSmCJf
+	 BD+fVYhJ8C7AJFT08C2cHHbbNGn0lcYLLBNimjbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Lukasz Majewski <lukma@denx.de>,
-	Xiaoliang Yang <xiaoliang.yang_1@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?=C5=81ukasz=20Majewski?= <lukma@nabladev.com>,
+	George McCollister <george.mccollister@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 520/614] net: hsr: create an API to get hsr port type
-Date: Tue, 16 Dec 2025 12:14:47 +0100
-Message-ID: <20251216111420.212006832@linuxfoundation.org>
+Subject: [PATCH 6.18 521/614] net: dsa: xrs700x: reject unsupported HSR configurations
+Date: Tue, 16 Dec 2025 12:14:48 +0100
+Message-ID: <20251216111420.248665361@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -49,137 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit a0244e76213980f3b9bb5d40b0b6705fcf24230d ]
+[ Upstream commit 30296ac7642652428396222e720718f2661e9425 ]
 
-Since the introduction of HSR_PT_INTERLINK in commit 5055cccfc2d1 ("net:
-hsr: Provide RedBox support (HSR-SAN)"), we see that different port
-types require different settings for hardware offload, which was not the
-case before when we only had HSR_PT_SLAVE_A and HSR_PT_SLAVE_B. But
-there is currently no way to know which port is which type, so create
-the hsr_get_port_type() API function and export it.
+As discussed here:
+https://lore.kernel.org/netdev/20240620090210.drop6jwh7e5qw556@skbuf/
 
-When hsr_get_port_type() is called from the device driver, the port can
-must be found in the HSR port list. An important use case is for this
-function to work from offloading drivers' NETDEV_CHANGEUPPER handler,
-which is triggered by hsr_portdev_setup() -> netdev_master_upper_dev_link().
-Therefore, we need to move the addition of the hsr_port to the HSR port
-list prior to calling hsr_portdev_setup(). This makes the error
-restoration path also more similar to hsr_del_port(), where
-kfree_rcu(port) is already used.
+the fact is that the xrs700x.c driver only supports offloading
+HSR_PT_SLAVE_A and HSR_PT_SLAVE_B (which were the only port types at the
+time the offload was written, _for this driver_).
 
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Up until now, the API did not explicitly tell offloading drivers what
+port has what role. So xrs700x can get confused and think that it can
+support a configuration which it actually can't. There was a table in
+the attached link which gave an example:
+
+$ ip link add name hsr0 type hsr slave1 swp0 slave2 swp1 \
+	interlink swp2 supervision 45 version 1
+
+        HSR_PT_SLAVE_A    HSR_PT_SLAVE_B      HSR_PT_INTERLINK
+ ----------------------------------------------------------------
+ user
+ space        0                 1                   2
+ requests
+ ----------------------------------------------------------------
+ XRS700X
+ driver       1                 2                   -
+ understands
+
+The switch would act as if the ring ports were swp1 and swp2.
+
+Now that we have explicit hsr_get_port_type() API, let's use that to
+work around the unintended semantical changes of the offloading API
+brought by the introduction of interlink ports in HSR.
+
+Fixes: 5055cccfc2d1 ("net: hsr: Provide RedBox support (HSR-SAN)")
 Cc: Lukasz Majewski <lukma@denx.de>
-Signed-off-by: Xiaoliang Yang <xiaoliang.yang_1@nxp.com>
 Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Łukasz Majewski <lukma@nabladev.com>
-Link: https://patch.msgid.link/20251130131657.65080-3-vladimir.oltean@nxp.com
+Reviewed-by: George McCollister <george.mccollister@gmail.com>
+Link: https://patch.msgid.link/20251130131657.65080-5-vladimir.oltean@nxp.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 30296ac76426 ("net: dsa: xrs700x: reject unsupported HSR configurations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/if_hsr.h |  9 +++++++++
- net/hsr/hsr_device.c   | 20 ++++++++++++++++++++
- net/hsr/hsr_slave.c    |  7 ++++---
- 3 files changed, 33 insertions(+), 3 deletions(-)
+ drivers/net/dsa/xrs700x/xrs700x.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/include/linux/if_hsr.h b/include/linux/if_hsr.h
-index d7941fd880329..f4cf2dd36d193 100644
---- a/include/linux/if_hsr.h
-+++ b/include/linux/if_hsr.h
-@@ -43,6 +43,8 @@ extern bool is_hsr_master(struct net_device *dev);
- extern int hsr_get_version(struct net_device *dev, enum hsr_version *ver);
- struct net_device *hsr_get_port_ndev(struct net_device *ndev,
- 				     enum hsr_port_type pt);
-+int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
-+		      enum hsr_port_type *type);
- #else
- static inline bool is_hsr_master(struct net_device *dev)
- {
-@@ -59,6 +61,13 @@ static inline struct net_device *hsr_get_port_ndev(struct net_device *ndev,
- {
- 	return ERR_PTR(-EINVAL);
- }
-+
-+static inline int hsr_get_port_type(struct net_device *hsr_dev,
-+				    struct net_device *dev,
-+				    enum hsr_port_type *type)
-+{
-+	return -EINVAL;
-+}
- #endif /* CONFIG_HSR */
+diff --git a/drivers/net/dsa/xrs700x/xrs700x.c b/drivers/net/dsa/xrs700x/xrs700x.c
+index 4dbcc49a9e526..0a05f4156ef4d 100644
+--- a/drivers/net/dsa/xrs700x/xrs700x.c
++++ b/drivers/net/dsa/xrs700x/xrs700x.c
+@@ -566,6 +566,7 @@ static int xrs700x_hsr_join(struct dsa_switch *ds, int port,
+ 	struct xrs700x *priv = ds->priv;
+ 	struct net_device *user;
+ 	int ret, i, hsr_pair[2];
++	enum hsr_port_type type;
+ 	enum hsr_version ver;
+ 	bool fwd = false;
  
- #endif /*_LINUX_IF_HSR_H_*/
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 492cbc78ab75a..d1bfc49b5f017 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -690,6 +690,26 @@ struct net_device *hsr_get_port_ndev(struct net_device *ndev,
- }
- EXPORT_SYMBOL(hsr_get_port_ndev);
- 
-+int hsr_get_port_type(struct net_device *hsr_dev, struct net_device *dev,
-+		      enum hsr_port_type *type)
-+{
-+	struct hsr_priv *hsr = netdev_priv(hsr_dev);
-+	struct hsr_port *port;
-+
-+	rcu_read_lock();
-+	hsr_for_each_port(hsr, port) {
-+		if (port->dev == dev) {
-+			*type = port->type;
-+			rcu_read_unlock();
-+			return 0;
-+		}
-+	}
-+	rcu_read_unlock();
-+
-+	return -EINVAL;
-+}
-+EXPORT_SYMBOL(hsr_get_port_type);
-+
- /* Default multicast address for HSR Supervision frames */
- static const unsigned char def_multicast_addr[ETH_ALEN] __aligned(2) = {
- 	0x01, 0x15, 0x4e, 0x00, 0x01, 0x00
-diff --git a/net/hsr/hsr_slave.c b/net/hsr/hsr_slave.c
-index 8177ac6c2d26d..afe06ba00ea44 100644
---- a/net/hsr/hsr_slave.c
-+++ b/net/hsr/hsr_slave.c
-@@ -207,14 +207,14 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
- 	port->type = type;
- 	ether_addr_copy(port->original_macaddress, dev->dev_addr);
- 
-+	list_add_tail_rcu(&port->port_list, &hsr->ports);
-+
- 	if (type != HSR_PT_MASTER) {
- 		res = hsr_portdev_setup(hsr, dev, port, extack);
- 		if (res)
- 			goto fail_dev_setup;
+@@ -589,6 +590,16 @@ static int xrs700x_hsr_join(struct dsa_switch *ds, int port,
+ 		return -EOPNOTSUPP;
  	}
  
--	list_add_tail_rcu(&port->port_list, &hsr->ports);
--
- 	master = hsr_port_get_hsr(hsr, HSR_PT_MASTER);
- 	netdev_update_features(master->dev);
- 	dev_set_mtu(master->dev, hsr_get_max_mtu(hsr));
-@@ -222,7 +222,8 @@ int hsr_add_port(struct hsr_priv *hsr, struct net_device *dev,
- 	return 0;
- 
- fail_dev_setup:
--	kfree(port);
-+	list_del_rcu(&port->port_list);
-+	kfree_rcu(port, rcu);
- 	return res;
- }
- 
++	ret = hsr_get_port_type(hsr, dsa_to_port(ds, port)->user, &type);
++	if (ret)
++		return ret;
++
++	if (type != HSR_PT_SLAVE_A && type != HSR_PT_SLAVE_B) {
++		NL_SET_ERR_MSG_MOD(extack,
++				   "Only HSR slave ports can be offloaded");
++		return -EOPNOTSUPP;
++	}
++
+ 	dsa_hsr_foreach_port(dp, ds, hsr) {
+ 		if (dp->index != port) {
+ 			partner = dp;
 -- 
 2.51.0
 
