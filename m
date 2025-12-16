@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CA9345CAB;
-	Tue, 16 Dec 2025 11:54:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBB9345CCB;
+	Tue, 16 Dec 2025 11:54:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886092; cv=none; b=INIgli7gTzMSZbIBOIs1xKAjloQACyKZNraoAQEq1tbwNoTcf9B9GFF2eVS9OXu97/xWTVd19dIJ/kc6eIpIhDlF+yPEWGRMSm31ihBl1cZJaqmFh93L+3b3juqD07b6XKhCvEQlPCIKuS3Fds9CC4Gi8cYVEwbsMx5Bn8YaKQE=
+	t=1765886095; cv=none; b=ShO5U2AK6sHfTN9d5fr4GnmRFZW9j+6+l4MwwJkGLK9/uLpGrUit6igz/Oe8AVdKks3ElqiZ4jTtW9pUcD+f7pKeoXUEYCZrgK8T/anL37GpZItCfvPxkZ6FtCKEjo9edKfMtDExcTTieBXVp86ADMPLTzOzsm3+tF0/Gi2FG20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886092; c=relaxed/simple;
-	bh=+IPoJbWpHFDJCtW/DtCNwLlwTYLUynfPL91LrRe2vm0=;
+	s=arc-20240116; t=1765886095; c=relaxed/simple;
+	bh=Vox0+3yn1+b/itjMQEzv3uaow+fg/tzExicVLD9HpYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWPPOYbsnQtQO4EGVbo9Gnk0gVjIIQuMyVib8iMxUhMYrk3WV4wTVu73Z2fvdJaPf9FQQ3SfcDjlKGV4MbPZyQTKt7UmKpKkuHyFeAVf16Ye2Dvzu1dA0j8DcKnHSO6gd/G9cCoo+07fHyqurqBiekgpQcjipGSZyDn9qKLtwTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z8LeH2iy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YLhMXR+8CU94l5LBSXD7l75DvECaPKWf9i1OcZx8ZiB6/2QDEMAD1jkkoU2TBJwhJCEOE+U9SkH0JqWgIkh92nyinJ3a8+YoWh4KDZV7/h/dM9JFCttQRfEaywKr5PghsXjVtpg8nGRaNRVA/jVkdziTLdaO9g2YYUQy1V7NTR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M5NyeBma; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z8LeH2iy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A051C4CEF1;
-	Tue, 16 Dec 2025 11:54:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M5NyeBma"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A3FC4CEF1;
+	Tue, 16 Dec 2025 11:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886092;
-	bh=+IPoJbWpHFDJCtW/DtCNwLlwTYLUynfPL91LrRe2vm0=;
+	s=korg; t=1765886095;
+	bh=Vox0+3yn1+b/itjMQEzv3uaow+fg/tzExicVLD9HpYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8LeH2iytm51FvJBQltS+cx3O2+sOcATQMdk1UCdi2/5283B/tH83Ipw0jZenVLys
-	 ihHZYjXgaDT/BymFsn0w1naFc/NdTvP82Es2wIxjCYRuw7KWPsXSjk75GFKnV+qDTJ
-	 pipeVyDNWKdJOcaYFn/5sVfP2RMr4uy7abtg7VFo=
+	b=M5NyeBmaA++qyV23+VJDmQqdVcEjp56FYnXEATR1d/y7TvR5Q5hXipyHPcY926Kej
+	 Wzg7yl2mIWWsShv/MtDLE8Q/Ya6hFfvhs+OcWDbgE+ni79zR7J76XIwYeuh5hHMfPR
+	 5Bw/RNxpBAlkFguTw1L1XvQRbrfvNAbhnGeo6t2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Ben Greear <greearb@candelatech.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 335/507] wifi: mt76: mt7996: skip deflink accounting for offchannel links
-Date: Tue, 16 Dec 2025 12:12:56 +0100
-Message-ID: <20251216111357.600657756@linuxfoundation.org>
+Subject: [PATCH 6.17 336/507] wifi: mt76: mt7996: Add missing locking in mt7996_mac_sta_rc_work()
+Date: Tue, 16 Dec 2025 12:12:57 +0100
+Message-ID: <20251216111357.636215935@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -54,44 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 4fe823b9ee0317b04ddc6d9e00fea892498aa0f2 ]
+[ Upstream commit 7545551631fa63101f97974f49ac0b564814f703 ]
 
-Do not take into account offchannel links for deflink accounting.
+Grab the mt76 mutex running mt7996_mac_sta_rc_work() since it is
+required by mt7996_mcu_add_rate_ctrl routine.
 
-Fixes: a3316d2fc669f ("wifi: mt76: mt7996: set vif default link_id adding/removing vif links")
+Fixes: 28d519d0d493a ("wifi: mt76: Move RCU section in mt7996_mcu_add_rate_ctrl_fixed()")
 Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Tested-by: Ben Greear <greearb@candelatech.com>
-Link: https://patch.msgid.link/20251114-mt76-fix-missing-mtx-v1-4-259ebf11f654@kernel.org
+Link: https://patch.msgid.link/20251118-mt7996-rc-work-missing-mtx-v1-1-0739c493a6cb@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/main.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-index 04b1d5f871376..1bd0214a01b0e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
-@@ -372,7 +372,8 @@ int mt7996_vif_link_add(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index b0092794f37c9..4662111ad064d 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -2338,6 +2338,8 @@ void mt7996_mac_sta_rc_work(struct work_struct *work)
+ 	LIST_HEAD(list);
+ 	u32 changed;
  
- 	ieee80211_iter_keys(mphy->hw, vif, mt7996_key_iter, NULL);
++	mutex_lock(&dev->mt76.mutex);
++
+ 	spin_lock_bh(&dev->mt76.sta_poll_lock);
+ 	list_splice_init(&dev->sta_rc_list, &list);
  
--	if (mvif->mt76.deflink_id == IEEE80211_LINK_UNSPECIFIED)
-+	if (!mlink->wcid->offchannel &&
-+	    mvif->mt76.deflink_id == IEEE80211_LINK_UNSPECIFIED)
- 		mvif->mt76.deflink_id = link_conf->link_id;
+@@ -2370,6 +2372,8 @@ void mt7996_mac_sta_rc_work(struct work_struct *work)
+ 	}
  
- 	return 0;
-@@ -397,7 +398,8 @@ void mt7996_vif_link_remove(struct mt76_phy *mphy, struct ieee80211_vif *vif,
+ 	spin_unlock_bh(&dev->mt76.sta_poll_lock);
++
++	mutex_unlock(&dev->mt76.mutex);
+ }
  
- 	rcu_assign_pointer(dev->mt76.wcid[idx], NULL);
- 
--	if (mvif->mt76.deflink_id == link_conf->link_id) {
-+	if (!mlink->wcid->offchannel &&
-+	    mvif->mt76.deflink_id == link_conf->link_id) {
- 		struct ieee80211_bss_conf *iter;
- 		unsigned int link_id;
- 
+ void mt7996_mac_work(struct work_struct *work)
 -- 
 2.51.0
 
