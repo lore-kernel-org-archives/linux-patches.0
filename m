@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36D522BD5A2;
-	Tue, 16 Dec 2025 12:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C20749C;
+	Tue, 16 Dec 2025 12:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887182; cv=none; b=kOA9W6AUnFXSCk6lPQlj84SC9v4KQNzgRscPgDxdx+k6RpE4jm7IDIvo/dKkh9yhK7IBvwLAN50oCvbKGrTEJ4qPpDFYwrbvCrT6XKHWPaVVhvRJpsXPU6ZnZ0PiPzkr94fstNlVigCDtBEL0Vykv7VaRdv0X0rho+Kd5TacCZw=
+	t=1765887185; cv=none; b=rg6/CSQwlcO5Wt9UYY2OrZHwm8NlyAtoVrsy6VEA++UXaT/8yHqT0Ajn9ip9rZQJmKZJ95txpPq0rpzGgWJkltZtN4Sc5WAqXP3nKGoIJMdV4AF0N60GX/pHOCzbpTbCZ8GHN99IeVF7KfesoaScpS8va2dZR02PqUjeyMr9ysE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887182; c=relaxed/simple;
-	bh=4JdbDHcJRDtNTrd6rREW6Fw0SJaE3HCpM6QAo6Bxh18=;
+	s=arc-20240116; t=1765887185; c=relaxed/simple;
+	bh=apt+mGEHvPBCCag+/kTv3DChvCf/i6wi1/4Kr3EBP8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sAR/Z6U6YHmQGreMqAp2RKgTqMuOA9kSi+F+vK3i8LrywaK0NB+mDCDYkU/XqiJ1Dfzp/d0MMfmJE5TGg2tUQLQo2z6/NwjPOa1ytTLOx7ElJ4XFSTZtea0czPuJY+RpguG4/9Z3xk9N3PtHZDXmpaulVEPkMggocPRWV5sG48w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGTeNc20; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGe1HVvgmrrcADNAdpD+Er4/SEhC0wkzXNmYSxmRWZJnIANImpcFmO773BBlrWXuJUCQG3Jrxw56ap3b0eAdizMcmtai9ktCiSqHXG4bAy6kbZznqwFqDY5F1vDckSqyV0k01XOKx0oG7kVpqQ2mrLYyxonuPApEmwJ+OqPr2/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZ4MaIlj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGTeNc20"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7EBC4CEF1;
-	Tue, 16 Dec 2025 12:13:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZ4MaIlj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1826C4CEF1;
+	Tue, 16 Dec 2025 12:13:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887182;
-	bh=4JdbDHcJRDtNTrd6rREW6Fw0SJaE3HCpM6QAo6Bxh18=;
+	s=korg; t=1765887185;
+	bh=apt+mGEHvPBCCag+/kTv3DChvCf/i6wi1/4Kr3EBP8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGTeNc20tZNh3SFKvQX3On4tgPWnw5HHS2RgMMrkAPKKlciXPWQ2wkdJMM5tcNRi7
-	 e5mzsGs9/24ROaBNHRfZMduGYwJpNZiPMNZqsl0IBJw9BZFFc3dTXnO5mgYE0e8rbA
-	 EA444jqSybN2P3qde01NH4OKVRqo7ANPoV9+SUTM=
+	b=MZ4MaIljLqT+yxuo20zbjOYX4cuGOXi/Zaj3eF9FeN59L/pgw5+bkUkpkTpLx6MGJ
+	 VU2AbCzNbq9klqS6h2ePSdXz8A3oGagM6AH+9k6JnCGfMZInSdgwkafYWskFduWslS
+	 lsrLqxBJBn+lI4ree8CI4I8YQQxqyMWZX0LpEYmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>,
+	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 151/614] drm: nova: select NOVA_CORE
-Date: Tue, 16 Dec 2025 12:08:38 +0100
-Message-ID: <20251216111406.805669045@linuxfoundation.org>
+Subject: [PATCH 6.18 152/614] accel/ivpu: Fix race condition when unbinding BOs
+Date: Tue, 16 Dec 2025 12:08:39 +0100
+Message-ID: <20251216111406.841662090@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,35 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
 
-[ Upstream commit 97ad568cd6a58804129ba071f3258b5c4782fb0d ]
+[ Upstream commit 00812636df370bedf4e44a0c81b86ea96bca8628 ]
 
-The nova-drm driver does not provide any value without nova-core being
-selected as well, hence select NOVA_CORE.
+Fix 'Memory manager not clean during takedown' warning that occurs
+when ivpu_gem_bo_free() removes the BO from the BOs list before it
+gets unmapped. Then file_priv_unbind() triggers a warning in
+drm_mm_takedown() during context teardown.
 
-Fixes: cdeaeb9dd762 ("drm: nova-drm: add initial driver skeleton")
-Reviewed-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Link: https://patch.msgid.link/20251028110058.340320-2-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Protect the unmapping sequence with bo_list_lock to ensure the BO is
+always fully unmapped when removed from the list. This ensures the BO
+is either fully unmapped at context teardown time or present on the
+list and unmapped by file_priv_unbind().
+
+Fixes: 48aea7f2a2ef ("accel/ivpu: Fix locking in ivpu_bo_remove_all_bos_from_context()")
+Signed-off-by: Tomasz Rusinowicz <tomasz.rusinowicz@intel.com>
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Link: https://patch.msgid.link/20251029071451.184243-1-karol.wachowski@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nova/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/accel/ivpu/ivpu_gem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nova/Kconfig b/drivers/gpu/drm/nova/Kconfig
-index cca6a3fea879b..bd1df08791911 100644
---- a/drivers/gpu/drm/nova/Kconfig
-+++ b/drivers/gpu/drm/nova/Kconfig
-@@ -4,6 +4,7 @@ config DRM_NOVA
- 	depends on PCI
- 	depends on RUST
- 	select AUXILIARY_BUS
-+	select NOVA_CORE
- 	default n
- 	help
- 	  Choose this if you want to build the Nova DRM driver for Nvidia
+diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
+index a38e41f9c7123..fda0a18e6d639 100644
+--- a/drivers/accel/ivpu/ivpu_gem.c
++++ b/drivers/accel/ivpu/ivpu_gem.c
+@@ -314,7 +314,6 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
+ 
+ 	mutex_lock(&vdev->bo_list_lock);
+ 	list_del(&bo->bo_list_node);
+-	mutex_unlock(&vdev->bo_list_lock);
+ 
+ 	drm_WARN_ON(&vdev->drm, !drm_gem_is_imported(&bo->base.base) &&
+ 		    !dma_resv_test_signaled(obj->resv, DMA_RESV_USAGE_READ));
+@@ -325,6 +324,8 @@ static void ivpu_gem_bo_free(struct drm_gem_object *obj)
+ 	ivpu_bo_unbind_locked(bo);
+ 	ivpu_bo_unlock(bo);
+ 
++	mutex_unlock(&vdev->bo_list_lock);
++
+ 	drm_WARN_ON(&vdev->drm, bo->mmu_mapped);
+ 	drm_WARN_ON(&vdev->drm, bo->ctx);
+ 
 -- 
 2.51.0
 
