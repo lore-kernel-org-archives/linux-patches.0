@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5595F28CF5E;
-	Tue, 16 Dec 2025 11:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E1315786;
+	Tue, 16 Dec 2025 11:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886303; cv=none; b=Vc4eikyupsr1iDwthMqwzZ6l+G6RxdHDDAB2/vTcSeypC+rYeni9djtCN3gyGrHriwX8l4ySyoloc/24Ltlpc7hpeq1F+YekNSyxx3+t7ZCXj7tYFGte+6AQO4ThVWL8zO3t8beTaLzqS65UD+aJe2Xgvmnl/3XvPTQS2CLM7RI=
+	t=1765886306; cv=none; b=Pzz74T+X4zZtKBWcdBDlDIzAqQrkMgyZzU2hA7KklOYXKJ3PQMsZV8aoEm7wz+uHFZLmT2W0dNSMGzoYnUbd/FS/jhw+nacXftnqIfGLg8AU7gCNGl/MJDfl8SmypgRkIqgpinyj08PUwNzGTvQQph185GlfmZB+Fcq822Nb6Jc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886303; c=relaxed/simple;
-	bh=6twb6plnL4wm62GwJ0BhnqQV+yKuZElM107XeRb2qbU=;
+	s=arc-20240116; t=1765886306; c=relaxed/simple;
+	bh=aN9QVzocaRR1Nzp4qj/RQxEpBAmd43Wldr6yCs6Dsj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mMKDmaVMVU41mmX1YE6pjBdned25hEH+KHYs8CGOGLWVjEiGSniVkXFGO766obEgT+Bb9oT9sfImNCa+FVVgcqC92xz5TLEv7pB55tHSTAB0GRPjyvN3cPGRqe6gl3chtQfQ541yeeVLShtBBG8ay9SQcsEYWXw38w9Fs7ef5Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ycetp2ge; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sLstV63Trgws+2VV9XRdI+I5nzFeqyUt4GALEF6NNq9FPB00pDuNwQVVzJxHaug3QxmvmUFTKl3jkkBImRimpHChq89ctep/Pw/38R2A5h0tw3dHC20NWkV4T8iBkElqmx686zCJ3iHMdhwZYEVBRttr8kCBlBzOZyLv2ytgty0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WDzcdhr3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ycetp2ge"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B34C4CEF1;
-	Tue, 16 Dec 2025 11:58:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WDzcdhr3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C1CC4CEF1;
+	Tue, 16 Dec 2025 11:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886303;
-	bh=6twb6plnL4wm62GwJ0BhnqQV+yKuZElM107XeRb2qbU=;
+	s=korg; t=1765886306;
+	bh=aN9QVzocaRR1Nzp4qj/RQxEpBAmd43Wldr6yCs6Dsj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ycetp2ge0sDNtegdl8lhkY2amqdTwtlBFc5MqAHzQ0Fvs5mJXn+nNanw3SvLjo3d8
-	 ifRa81UcvMfjF4EA7Uq+17viugmmwB0QeHTQAL+iTuZb668Q/F8uBFO/Ab/+zy8JJf
-	 VapNEg8eJ0oBQsvq/x9CbDHgG4pIZEJXvzZn5ZY0=
+	b=WDzcdhr3MYpVXrEQjSKvGLi0fDPM3Ft/ZYfhChrmvo/Eifgtt9UsYIw+gUHOpQWjr
+	 kRP34gLmkW6jlbqsyP7Mtq/O6nM3AaPz8t1czF3D+8/+3/YzpyrRhKOuo1pAxDk2No
+	 6bLHyRVWeyoZDQLjjtml8bohxNGjba2vpVJ9AF4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianchu Chen <flynnnchen@tencent.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Williamson <alex.williamson@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex@shazbot.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 398/507] spi: ch341: fix out-of-bounds memory access in ch341_transfer_one
-Date: Tue, 16 Dec 2025 12:13:59 +0100
-Message-ID: <20251216111359.872974778@linuxfoundation.org>
+Subject: [PATCH 6.17 399/507] vfio/pci: Use RCU for error/request triggers to avoid circular locking
+Date: Tue, 16 Dec 2025 12:14:00 +0100
+Message-ID: <20251216111359.909070721@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,48 +52,302 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tianchu Chen <flynnnchen@tencent.com>
+From: Alex Williamson <alex.williamson@nvidia.com>
 
-[ Upstream commit 545d1287e40a55242f6ab68bcc1ba3b74088b1bc ]
+[ Upstream commit 98693e0897f754e3f51ce6626ed5f785f625ba2b ]
 
-Discovered by Atuin - Automated Vulnerability Discovery Engine.
+Thanks to a device generating an ACS violation during bus reset,
+lockdep reported the following circular locking issue:
 
-The 'len' variable is calculated as 'min(32, trans->len + 1)',
-which includes the 1-byte command header.
+CPU0: SET_IRQS (MSI/X): holds igate, acquires memory_lock
+CPU1: HOT_RESET: holds memory_lock, acquires pci_bus_sem
+CPU2: AER: holds pci_bus_sem, acquires igate
 
-When copying data from 'trans->tx_buf' to 'ch341->tx_buf + 1', using 'len'
-as the length is incorrect because:
+This results in a potential 3-way deadlock.
 
-1. It causes an out-of-bounds read from 'trans->tx_buf' (which has size
-   'trans->len', i.e., 'len - 1' in this context).
-2. It can cause an out-of-bounds write to 'ch341->tx_buf' if 'len' is
-   CH341_PACKET_LENGTH (32). Writing 32 bytes to ch341->tx_buf + 1
-   overflows the buffer.
+Remove the pci_bus_sem->igate leg of the triangle by using RCU
+to peek at the eventfd rather than locking it with igate.
 
-Fix this by copying 'len - 1' bytes.
-
-Fixes: 8846739f52af ("spi: add ch341a usb2spi driver")
-Signed-off-by: Tianchu Chen <flynnnchen@tencent.com>
-Link: https://patch.msgid.link/20251128160630.0f922c45ec6084a46fb57099@linux.dev
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3be3a074cf5b ("vfio-pci: Don't use device_lock around AER interrupt setup")
+Signed-off-by: Alex Williamson <alex.williamson@nvidia.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20251124223623.2770706-1-alex@shazbot.org
+Signed-off-by: Alex Williamson <alex@shazbot.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-ch341.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vfio/pci/vfio_pci_core.c  | 68 ++++++++++++++++++++++---------
+ drivers/vfio/pci/vfio_pci_intrs.c | 52 ++++++++++++++---------
+ drivers/vfio/pci/vfio_pci_priv.h  |  4 ++
+ include/linux/vfio_pci_core.h     | 10 ++++-
+ 4 files changed, 93 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/spi/spi-ch341.c b/drivers/spi/spi-ch341.c
-index 46bc208f2d050..79d2f9ab4ef03 100644
---- a/drivers/spi/spi-ch341.c
-+++ b/drivers/spi/spi-ch341.c
-@@ -78,7 +78,7 @@ static int ch341_transfer_one(struct spi_controller *host,
+diff --git a/drivers/vfio/pci/vfio_pci_core.c b/drivers/vfio/pci/vfio_pci_core.c
+index 7dcf5439dedc9..5efe7535f41ed 100644
+--- a/drivers/vfio/pci/vfio_pci_core.c
++++ b/drivers/vfio/pci/vfio_pci_core.c
+@@ -41,6 +41,40 @@ static bool nointxmask;
+ static bool disable_vga;
+ static bool disable_idle_d3;
  
- 	ch341->tx_buf[0] = CH341A_CMD_SPI_STREAM;
++static void vfio_pci_eventfd_rcu_free(struct rcu_head *rcu)
++{
++	struct vfio_pci_eventfd *eventfd =
++		container_of(rcu, struct vfio_pci_eventfd, rcu);
++
++	eventfd_ctx_put(eventfd->ctx);
++	kfree(eventfd);
++}
++
++int vfio_pci_eventfd_replace_locked(struct vfio_pci_core_device *vdev,
++				    struct vfio_pci_eventfd __rcu **peventfd,
++				    struct eventfd_ctx *ctx)
++{
++	struct vfio_pci_eventfd *new = NULL;
++	struct vfio_pci_eventfd *old;
++
++	lockdep_assert_held(&vdev->igate);
++
++	if (ctx) {
++		new = kzalloc(sizeof(*new), GFP_KERNEL_ACCOUNT);
++		if (!new)
++			return -ENOMEM;
++
++		new->ctx = ctx;
++	}
++
++	old = rcu_replace_pointer(*peventfd, new,
++				  lockdep_is_held(&vdev->igate));
++	if (old)
++		call_rcu(&old->rcu, vfio_pci_eventfd_rcu_free);
++
++	return 0;
++}
++
+ /* List of PF's that vfio_pci_core_sriov_configure() has been called on */
+ static DEFINE_MUTEX(vfio_pci_sriov_pfs_mutex);
+ static LIST_HEAD(vfio_pci_sriov_pfs);
+@@ -696,14 +730,8 @@ void vfio_pci_core_close_device(struct vfio_device *core_vdev)
+ 	vfio_pci_core_disable(vdev);
  
--	memcpy(ch341->tx_buf + 1, trans->tx_buf, len);
-+	memcpy(ch341->tx_buf + 1, trans->tx_buf, len - 1);
+ 	mutex_lock(&vdev->igate);
+-	if (vdev->err_trigger) {
+-		eventfd_ctx_put(vdev->err_trigger);
+-		vdev->err_trigger = NULL;
+-	}
+-	if (vdev->req_trigger) {
+-		eventfd_ctx_put(vdev->req_trigger);
+-		vdev->req_trigger = NULL;
+-	}
++	vfio_pci_eventfd_replace_locked(vdev, &vdev->err_trigger, NULL);
++	vfio_pci_eventfd_replace_locked(vdev, &vdev->req_trigger, NULL);
+ 	mutex_unlock(&vdev->igate);
+ }
+ EXPORT_SYMBOL_GPL(vfio_pci_core_close_device);
+@@ -1800,21 +1828,21 @@ void vfio_pci_core_request(struct vfio_device *core_vdev, unsigned int count)
+ 	struct vfio_pci_core_device *vdev =
+ 		container_of(core_vdev, struct vfio_pci_core_device, vdev);
+ 	struct pci_dev *pdev = vdev->pdev;
++	struct vfio_pci_eventfd *eventfd;
  
- 	ret = usb_bulk_msg(ch341->udev, ch341->write_pipe, ch341->tx_buf, len,
- 			   NULL, CH341_DEFAULT_TIMEOUT);
+-	mutex_lock(&vdev->igate);
+-
+-	if (vdev->req_trigger) {
++	rcu_read_lock();
++	eventfd = rcu_dereference(vdev->req_trigger);
++	if (eventfd) {
+ 		if (!(count % 10))
+ 			pci_notice_ratelimited(pdev,
+ 				"Relaying device request to user (#%u)\n",
+ 				count);
+-		eventfd_signal(vdev->req_trigger);
++		eventfd_signal(eventfd->ctx);
+ 	} else if (count == 0) {
+ 		pci_warn(pdev,
+ 			"No device request channel registered, blocked until released by user\n");
+ 	}
+-
+-	mutex_unlock(&vdev->igate);
++	rcu_read_unlock();
+ }
+ EXPORT_SYMBOL_GPL(vfio_pci_core_request);
+ 
+@@ -2227,13 +2255,13 @@ pci_ers_result_t vfio_pci_core_aer_err_detected(struct pci_dev *pdev,
+ 						pci_channel_state_t state)
+ {
+ 	struct vfio_pci_core_device *vdev = dev_get_drvdata(&pdev->dev);
++	struct vfio_pci_eventfd *eventfd;
+ 
+-	mutex_lock(&vdev->igate);
+-
+-	if (vdev->err_trigger)
+-		eventfd_signal(vdev->err_trigger);
+-
+-	mutex_unlock(&vdev->igate);
++	rcu_read_lock();
++	eventfd = rcu_dereference(vdev->err_trigger);
++	if (eventfd)
++		eventfd_signal(eventfd->ctx);
++	rcu_read_unlock();
+ 
+ 	return PCI_ERS_RESULT_CAN_RECOVER;
+ }
+diff --git a/drivers/vfio/pci/vfio_pci_intrs.c b/drivers/vfio/pci/vfio_pci_intrs.c
+index 61d29f6b3730c..969e9342f9b1f 100644
+--- a/drivers/vfio/pci/vfio_pci_intrs.c
++++ b/drivers/vfio/pci/vfio_pci_intrs.c
+@@ -731,21 +731,27 @@ static int vfio_pci_set_msi_trigger(struct vfio_pci_core_device *vdev,
+ 	return 0;
+ }
+ 
+-static int vfio_pci_set_ctx_trigger_single(struct eventfd_ctx **ctx,
++static int vfio_pci_set_ctx_trigger_single(struct vfio_pci_core_device *vdev,
++					   struct vfio_pci_eventfd __rcu **peventfd,
+ 					   unsigned int count, uint32_t flags,
+ 					   void *data)
+ {
+ 	/* DATA_NONE/DATA_BOOL enables loopback testing */
+ 	if (flags & VFIO_IRQ_SET_DATA_NONE) {
+-		if (*ctx) {
+-			if (count) {
+-				eventfd_signal(*ctx);
+-			} else {
+-				eventfd_ctx_put(*ctx);
+-				*ctx = NULL;
+-			}
++		struct vfio_pci_eventfd *eventfd;
++
++		eventfd = rcu_dereference_protected(*peventfd,
++						lockdep_is_held(&vdev->igate));
++
++		if (!eventfd)
++			return -EINVAL;
++
++		if (count) {
++			eventfd_signal(eventfd->ctx);
+ 			return 0;
+ 		}
++
++		return vfio_pci_eventfd_replace_locked(vdev, peventfd, NULL);
+ 	} else if (flags & VFIO_IRQ_SET_DATA_BOOL) {
+ 		uint8_t trigger;
+ 
+@@ -753,8 +759,15 @@ static int vfio_pci_set_ctx_trigger_single(struct eventfd_ctx **ctx,
+ 			return -EINVAL;
+ 
+ 		trigger = *(uint8_t *)data;
+-		if (trigger && *ctx)
+-			eventfd_signal(*ctx);
++
++		if (trigger) {
++			struct vfio_pci_eventfd *eventfd =
++					rcu_dereference_protected(*peventfd,
++					lockdep_is_held(&vdev->igate));
++
++			if (eventfd)
++				eventfd_signal(eventfd->ctx);
++		}
+ 
+ 		return 0;
+ 	} else if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
+@@ -765,22 +778,23 @@ static int vfio_pci_set_ctx_trigger_single(struct eventfd_ctx **ctx,
+ 
+ 		fd = *(int32_t *)data;
+ 		if (fd == -1) {
+-			if (*ctx)
+-				eventfd_ctx_put(*ctx);
+-			*ctx = NULL;
++			return vfio_pci_eventfd_replace_locked(vdev,
++							       peventfd, NULL);
+ 		} else if (fd >= 0) {
+ 			struct eventfd_ctx *efdctx;
++			int ret;
+ 
+ 			efdctx = eventfd_ctx_fdget(fd);
+ 			if (IS_ERR(efdctx))
+ 				return PTR_ERR(efdctx);
+ 
+-			if (*ctx)
+-				eventfd_ctx_put(*ctx);
++			ret = vfio_pci_eventfd_replace_locked(vdev,
++							      peventfd, efdctx);
++			if (ret)
++				eventfd_ctx_put(efdctx);
+ 
+-			*ctx = efdctx;
++			return ret;
+ 		}
+-		return 0;
+ 	}
+ 
+ 	return -EINVAL;
+@@ -793,7 +807,7 @@ static int vfio_pci_set_err_trigger(struct vfio_pci_core_device *vdev,
+ 	if (index != VFIO_PCI_ERR_IRQ_INDEX || start != 0 || count > 1)
+ 		return -EINVAL;
+ 
+-	return vfio_pci_set_ctx_trigger_single(&vdev->err_trigger,
++	return vfio_pci_set_ctx_trigger_single(vdev, &vdev->err_trigger,
+ 					       count, flags, data);
+ }
+ 
+@@ -804,7 +818,7 @@ static int vfio_pci_set_req_trigger(struct vfio_pci_core_device *vdev,
+ 	if (index != VFIO_PCI_REQ_IRQ_INDEX || start != 0 || count > 1)
+ 		return -EINVAL;
+ 
+-	return vfio_pci_set_ctx_trigger_single(&vdev->req_trigger,
++	return vfio_pci_set_ctx_trigger_single(vdev, &vdev->req_trigger,
+ 					       count, flags, data);
+ }
+ 
+diff --git a/drivers/vfio/pci/vfio_pci_priv.h b/drivers/vfio/pci/vfio_pci_priv.h
+index a9972eacb2936..97d992c063229 100644
+--- a/drivers/vfio/pci/vfio_pci_priv.h
++++ b/drivers/vfio/pci/vfio_pci_priv.h
+@@ -26,6 +26,10 @@ struct vfio_pci_ioeventfd {
+ bool vfio_pci_intx_mask(struct vfio_pci_core_device *vdev);
+ void vfio_pci_intx_unmask(struct vfio_pci_core_device *vdev);
+ 
++int vfio_pci_eventfd_replace_locked(struct vfio_pci_core_device *vdev,
++				    struct vfio_pci_eventfd __rcu **peventfd,
++				    struct eventfd_ctx *ctx);
++
+ int vfio_pci_set_irqs_ioctl(struct vfio_pci_core_device *vdev, uint32_t flags,
+ 			    unsigned index, unsigned start, unsigned count,
+ 			    void *data);
+diff --git a/include/linux/vfio_pci_core.h b/include/linux/vfio_pci_core.h
+index f541044e42a2a..f5c93787f8e0b 100644
+--- a/include/linux/vfio_pci_core.h
++++ b/include/linux/vfio_pci_core.h
+@@ -12,6 +12,7 @@
+ #include <linux/pci.h>
+ #include <linux/vfio.h>
+ #include <linux/irqbypass.h>
++#include <linux/rcupdate.h>
+ #include <linux/types.h>
+ #include <linux/uuid.h>
+ #include <linux/notifier.h>
+@@ -27,6 +28,11 @@
+ struct vfio_pci_core_device;
+ struct vfio_pci_region;
+ 
++struct vfio_pci_eventfd {
++	struct eventfd_ctx	*ctx;
++	struct rcu_head		rcu;
++};
++
+ struct vfio_pci_regops {
+ 	ssize_t (*rw)(struct vfio_pci_core_device *vdev, char __user *buf,
+ 		      size_t count, loff_t *ppos, bool iswrite);
+@@ -83,8 +89,8 @@ struct vfio_pci_core_device {
+ 	struct pci_saved_state	*pci_saved_state;
+ 	struct pci_saved_state	*pm_save;
+ 	int			ioeventfds_nr;
+-	struct eventfd_ctx	*err_trigger;
+-	struct eventfd_ctx	*req_trigger;
++	struct vfio_pci_eventfd __rcu *err_trigger;
++	struct vfio_pci_eventfd __rcu *req_trigger;
+ 	struct eventfd_ctx	*pm_wake_eventfd_ctx;
+ 	struct list_head	dummy_resources_list;
+ 	struct mutex		ioeventfds_lock;
 -- 
 2.51.0
 
