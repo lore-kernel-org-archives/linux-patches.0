@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40141338F26;
-	Tue, 16 Dec 2025 12:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D769343D66;
+	Tue, 16 Dec 2025 12:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888410; cv=none; b=J8YA345lODTg3csYPmBdFSCXPdcYx1MsssLo8Ap4nDlrBwuScut09VNxHavjiCHBKb/3Mex0YSOsC4vxV0p14oBjtRYmGYnz4ZKXu+D4+4hnujpBDCIS56P9y++T/ChSMSkuMOQ69L5KVoML3Hmbhr749HXJXawRaPvaDO/0H4Q=
+	t=1765888413; cv=none; b=H6Q2NIW49GsgCEzMvrbRjp6TF2H6vRilZNnsM3MxKWusFwxGrWx7F/sGM+oYUz/YC+97Ra5s+9zx+NOIhF7vdTIxmXoeDoVXfW1cTjhoGAEiuOfovcqW/5XtahRchAcZVpEgknmdtRdd/tkvF1MxH1ZUKkIA8lZ6mcD0w+B0yH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888410; c=relaxed/simple;
-	bh=P6kx2nXwd8IfT6gQcNM778E9XiGlJkiE5WMVG6d/RUI=;
+	s=arc-20240116; t=1765888413; c=relaxed/simple;
+	bh=b/yJizK/X29lSlX3L1T3lxAzkji9b3SNqaRz2mwFGF8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zcb011Y6XJnRTS6wMeoDWGltGHARqzx27pxzLbqW/7OIoRBqN27cDHpZExlTglFaJN7UGDvBnMk/sj45MP2X7Eqw0Tjs/sk5WJ1Aht5iE7cCiPz4+F/+sb5KJ+qBlImP1ed1YAcV0wJ06vgfQ/W8i0Lafuvt62xd7B9ofHr8Tms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H5UEXUyo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a5DBs/rFTX8NOI6Kjq8wokei9ckYWLqvgGzIs8eBS4hZ/gibGbwzSzhtNhjxWKsWLuF1mna/QUuxzpQFlkt/GRlrrFNrbqqC/E34p+rjD4ahPpz/zSVedTdYSWIx0pagsDHEjCvxJb5I6bINi76Iqkk3zR0gr5ertFR2vPtBrHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hobFe8+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H5UEXUyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C04C4CEF1;
-	Tue, 16 Dec 2025 12:33:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hobFe8+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C29E2C4CEF1;
+	Tue, 16 Dec 2025 12:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888410;
-	bh=P6kx2nXwd8IfT6gQcNM778E9XiGlJkiE5WMVG6d/RUI=;
+	s=korg; t=1765888413;
+	bh=b/yJizK/X29lSlX3L1T3lxAzkji9b3SNqaRz2mwFGF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H5UEXUyo64WSWM2Ulj0U0B9lKTxQebBQ/jGywrznz5nWw7xiv+iRFKwayW1zLwgfe
-	 MfOoZtErDCmm221JccxAZUrPsP+apz8v83K7yONRNDNO7WA1C7qkHw8o3j6UfhUVCn
-	 e5+CbA3yINPY10NJzDQYrmgafc63eEzXz3+pdFZ0=
+	b=hobFe8+UAKk2C/2elvuKuaXVBy5WT7Z/GzYnamF6Cf0BlRDDF9mPi7WBuh47PR34m
+	 7qnptfV0AXJjG2Wetzuopsrf2oesexJUzYKQvAjaYe+P6p1fOXN358dMGbQLBxacjx
+	 2jUAAqpFl2+yhoyAe88quY53QiPB+nIs2fu7VmRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Breno Leitao <leitao@debian.org>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Hangbin Liu <liuhangbin@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 493/614] selftests: bonding: add delay before each xvlan_over_bond connectivity check
-Date: Tue, 16 Dec 2025 12:14:20 +0100
-Message-ID: <20251216111419.233352274@linuxfoundation.org>
+Subject: [PATCH 6.18 494/614] net: netpoll: initialize work queue before error checks
+Date: Tue, 16 Dec 2025 12:14:21 +0100
+Message-ID: <20251216111419.269443508@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,44 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 2c28ee720ad14f58eb88a97ec3efe7c5c315ea5d ]
+[ Upstream commit e5235eb6cfe02a51256013a78f7b28779a7740d5 ]
 
-Jakub reported increased flakiness in bond_macvlan_ipvlan.sh on regular
-kernel, while the tests consistently pass on a debug kernel. This suggests
-a timing-sensitive issue.
+Prevent a kernel warning when netconsole setup fails on devices with
+IFF_DISABLE_NETPOLL flag. The warning (at kernel/workqueue.c:4242 in
+__flush_work) occurs because the cleanup path tries to cancel an
+uninitialized work queue.
 
-To mitigate this, introduce a short sleep before each xvlan_over_bond
-connectivity check. The delay helps ensure neighbor and route cache
-have fully converged before verifying connectivity.
+When __netpoll_setup() encounters a device with IFF_DISABLE_NETPOLL,
+it fails early and calls skb_pool_flush() for cleanup. This function
+calls cancel_work_sync(&np->refill_wq), but refill_wq hasn't been
+initialized yet, triggering the warning.
 
-The sleep interval is kept minimal since check_connection() is invoked
-nearly 100 times during the test.
+Move INIT_WORK() to the beginning of __netpoll_setup(), ensuring the
+work queue is properly initialized before any potential failure points.
+This allows the cleanup path to safely cancel the work queue regardless
+of where the setup fails.
 
-Fixes: 246af950b940 ("selftests: bonding: add macvlan over bond testing")
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20251114082014.750edfad@kernel.org
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20251127143310.47740-1-liuhangbin@gmail.com
+Fixes: 248f6571fd4c5 ("netpoll: Optimize skb refilling on critical path")
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Link: https://patch.msgid.link/20251127-netpoll_fix_init_work-v1-1-65c07806d736@debian.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/netpoll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-index c4711272fe45d..559f300f965aa 100755
---- a/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-+++ b/tools/testing/selftests/drivers/net/bonding/bond_macvlan_ipvlan.sh
-@@ -30,6 +30,7 @@ check_connection()
- 	local message=${3}
- 	RET=0
+diff --git a/net/core/netpoll.c b/net/core/netpoll.c
+index 331764845e8fa..09f72f10813cc 100644
+--- a/net/core/netpoll.c
++++ b/net/core/netpoll.c
+@@ -554,6 +554,7 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 	int err;
  
-+	sleep 0.25
- 	ip netns exec ${ns} ping ${target} -c 4 -i 0.1 &>/dev/null
- 	check_err $? "ping failed"
- 	log_test "${bond_mode}/${xvlan_type}_${xvlan_mode}: ${message}"
+ 	skb_queue_head_init(&np->skb_pool);
++	INIT_WORK(&np->refill_wq, refill_skbs_work_handler);
+ 
+ 	if (ndev->priv_flags & IFF_DISABLE_NETPOLL) {
+ 		np_err(np, "%s doesn't support polling, aborting\n",
+@@ -591,7 +592,6 @@ int __netpoll_setup(struct netpoll *np, struct net_device *ndev)
+ 
+ 	/* fill up the skb queue */
+ 	refill_skbs(np);
+-	INIT_WORK(&np->refill_wq, refill_skbs_work_handler);
+ 
+ 	/* last thing to do is link it to the net device structure */
+ 	rcu_assign_pointer(ndev->npinfo, npinfo);
 -- 
 2.51.0
 
