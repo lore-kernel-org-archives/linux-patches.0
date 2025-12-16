@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47F733F378;
-	Tue, 16 Dec 2025 11:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6B2341048;
+	Tue, 16 Dec 2025 11:20:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884037; cv=none; b=au6Y33RmSeE6mdN/k8pEDf0RDqLzbQ7micEyENu0/hGUY3zMTYmWcAEnmMJ6hDGfR0r+TBJDYtgqrSkjgZIuv+6Bi+YPid40wNinzeLxZL0ov1u2kNCF3IQZe2xYMu0+Z9iTO81+H54d9cFPlwjGt/TvwqsHVg1d7qI9iQFkJ8w=
+	t=1765884040; cv=none; b=L9/G4TnhZRa9gNTrG7uA4VXMViUxOCmwWoClvWFnz2ULQG1o9mLRAiFq8UfHFIc1cIFbRCBrKy8n9UvUCQ1al9vsGrpZOA9LzRhM/xiJYzKz0kFY1JuPFkf46Xkcld8DlG57md8HsuLm8QTP5AMoZLPk8hCHtJlsCFeQBSGuHDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884037; c=relaxed/simple;
-	bh=stSdIohe07yS0CGdx9HahDRvrE5eZsZKj4wpLGiaO9E=;
+	s=arc-20240116; t=1765884040; c=relaxed/simple;
+	bh=4dZRL/SsFjM/OLLdIo8sNixgt4QqN9FWx8I/w7UA4Qk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CAbpwMs2yFVk9cR5yOjeZoMbdt107xM8SEeH3b1MQCS2QEbRkHnUS6e4BC+c3LnNEPCh0r5/MxOCml9PT6wLe5ysFaHcE9hW3tvbDdNao6HmBeo63SNqWsSCGswdRg113oJVMYuDtV/F7XVFc2kuXvpMYamjhTu8Edh4gnDE9EI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDff1ygq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bA42BIjO6j9l8+hdhofqRgF/kUY8dCCmfDVtAROwT8Z6BF31QxCRlIlUnqexATB9+vEkgPnWlWZCVFI9fxGQ+zK+018OobiA5Eu2qnpZnRhDzMzJFZmMvrHbC7dCs2Uw7G5CgrKXjYR3VaaidpBXcLYxRyv/9QHZtQrX88eXcJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1xbCF1AY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDff1ygq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CBDC4CEF1;
-	Tue, 16 Dec 2025 11:20:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1xbCF1AY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9721C4CEF1;
+	Tue, 16 Dec 2025 11:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884036;
-	bh=stSdIohe07yS0CGdx9HahDRvrE5eZsZKj4wpLGiaO9E=;
+	s=korg; t=1765884040;
+	bh=4dZRL/SsFjM/OLLdIo8sNixgt4QqN9FWx8I/w7UA4Qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDff1ygqbJWOUGAUAix1ii0CCkf9/AvB7CLHEn83E59OcfmgDZnRJpV6+qZ7UZU09
-	 2jiDbaJujRY8QdShdrwrM2g9+zg0oDknaSOcj/y1GsAle/MEpZXfQKLTPenDy6vJUS
-	 k4qHUiDfvqt1S+ikAcugN9RTg9qJMAFzRYltvDoU=
+	b=1xbCF1AY8PBcvvG0F5juAZ72fTpSK7jLqRovLjsG6CfobdN3FxMmNWGxbAf/0mIxl
+	 vbaTdnFEYxrm9dwnEcgJYIVSA3+TxCucGCxjHCc+viAssJthEGIQDgbHnyWcpNFxpy
+	 SdE5Ryt6GPMiwhxCBV9FwXPiUIys7y01P78G7jz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergo Koteles <soyer@irl.hu>,
-	David Heidelberg <david@ixit.cz>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 074/354] arm64: dts: qcom: sdm845-oneplus: Correct gpio used for slider
-Date: Tue, 16 Dec 2025 12:10:41 +0100
-Message-ID: <20251216111323.605377484@linuxfoundation.org>
+Subject: [PATCH 6.12 075/354] arm64: dts: qcom: sm8650: set ufs as dma coherent
+Date: Tue, 16 Dec 2025 12:10:42 +0100
+Message-ID: <20251216111323.640954690@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,39 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gergo Koteles <soyer@irl.hu>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit d7ec7d34237498fab7a6afed8da4b7139b0e387c ]
+[ Upstream commit c2703c90161b45bca5b65f362adbae02ed71fcc1 ]
 
-The previous GPIO numbers were wrong. Update them to the correct
-ones and fix the label.
+The UFS device is ovbiously dma coherent like the other IOMMU devices
+like usb, mmc, ... let's fix this by adding the flag.
 
-Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-Signed-off-by: Gergo Koteles <soyer@irl.hu>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20250927-slider-correct-v1-1-fb8cc7fdcedf@ixit.cz
+To be sure an extensive test has been performed to be sure it's
+safe, as downstream uses this flag for UFS as well.
+
+As an experiment, I checked how the dma-coherent could impact
+the UFS bandwidth, and it happens the max bandwidth on cached
+write is slighly highter (up to 10%) while using less cpu time
+since cache sync/flush is skipped.
+
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 46e25c53829ad..d0cbf9106a792 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -803,8 +803,8 @@ hall_sensor_default: hall-sensor-default-state {
- 		bias-disable;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index bd91624bd3bfc..6763c750f6801 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -2590,6 +2590,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
--	tri_state_key_default: tri-state-key-default-state {
--		pins = "gpio40", "gpio42", "gpio26";
-+	alert_slider_default: alert-slider-default-state {
-+		pins = "gpio126", "gpio52", "gpio24";
- 		function = "gpio";
- 		drive-strength = <2>;
- 		bias-disable;
+ 			iommus = <&apps_smmu 0x60 0>;
+ 
++			dma-coherent;
++
+ 			lanes-per-direction = <2>;
+ 			qcom,ice = <&ice>;
+ 
 -- 
 2.51.0
 
