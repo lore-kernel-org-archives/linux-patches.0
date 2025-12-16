@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D374F355812;
-	Tue, 16 Dec 2025 12:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A1B3563C1;
+	Tue, 16 Dec 2025 12:01:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886498; cv=none; b=dUYvSij8yax/o3rWbGi08x18WVC1FwaZ3iY28KjL/knAd6F3s5alZr2AVBAaMmdXpJUd6ghMr6aGCENBpp9jf8QEvMog9azFVJXHuVEvThpzrXRTQEvYRF6dnIwHJdOh8aNYJ+VzEZyd+yk058dNsx5vXDrAzl8iyb1g8EYlNfs=
+	t=1765886502; cv=none; b=jm6UOx+XhiTId2ydo0Pi7GHXnVN+1EQJjiYE2bhkU4cHLQjZWnniLdJbNi3Er2e61PRP8ZRVFAJUttdDOzp4wk6UH/IadkUSRnDr6t9GlHJt4SYMBv3QiJ061wmVHH4mSlJicpe8AaF3V1OJz2Q9ZY/S4uLsT0eJDcwL3lgNFUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886498; c=relaxed/simple;
-	bh=fpk2++iwsmHx35Gt2V1eLYpgwB3FWPw4odQ06ZDo9ds=;
+	s=arc-20240116; t=1765886502; c=relaxed/simple;
+	bh=dARL9Gh+Wjafu5EynDxSiVDWSLYgWn014Qic7J0GlO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZecH66khjY0Xtqszt7a7bpkbbpdAFFa5UE1QoJCx3cg7nnWRLmlx5e7p0WdUGclZZjoZsVbP+M9xlMfwOZ3IwhoB+BHNR5LfmoZW5Kjt+TJJ7wZVfYj+D5kKoDmoPhcr5dTjBLbl6jbbygaP7gWHXpIuoo4zayQVpQm8SnL3uhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qDX+GgLI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nHPrqiND/QiR1OUM58T4vtTAVjnfTTHgzLEPG8bzqrL+Fh2thNMlCEAwfbyNI2i6rZa46lxT4Hfkpn6RHEOPMYTcEYxuthBvqMPhlIPAa4OOCuGZnTF8AyNAQbg1vW1HxQGtXTc9mgXsB3LPNiJBi/O5xxslVrNKXoKjKJOxRVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rgrC1v4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qDX+GgLI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430D1C4CEF1;
-	Tue, 16 Dec 2025 12:01:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rgrC1v4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B9F4C4CEF1;
+	Tue, 16 Dec 2025 12:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886498;
-	bh=fpk2++iwsmHx35Gt2V1eLYpgwB3FWPw4odQ06ZDo9ds=;
+	s=korg; t=1765886502;
+	bh=dARL9Gh+Wjafu5EynDxSiVDWSLYgWn014Qic7J0GlO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qDX+GgLIj4+BDuuIt/GFzeuKNZ8fVa/o6mB/RKexGI0k2yn2rSfUeu8MRLG2ciNEK
-	 FoR04TCuG1AEK0aEkSozFe6cfQqGC5yQsidMwlpq9/baXHP98M/Ffefr/L4EQVUQbW
-	 NyB8XDZ05Trh16J6dQ9RUAsHuWiBk4llTQ+v0x+4=
+	b=rgrC1v4I3GocI1PDwlfaZXlAZ2o6UO0NrgsX2tZqIS+GrsCcB8EpeotN5nPe2USEt
+	 7U2vFI+HhbvOM3fE3jHF5NRUWB887CX6MgcTH503ftzX2UKtRKbq6dE8dcB3ajRjGI
+	 iapj5znQNHYWsQsnwpKDrO3SrvdUarHgwlg6sFS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Armin Wolf <W_Armin@gmx.de>,
+	Anton Khirnov <anton@khirnov.net>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Denis Benato <benato.denis96@gmail.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 453/507] fs/nls: Fix inconsistency between utf8_to_utf32() and utf32_to_utf8()
-Date: Tue, 16 Dec 2025 12:14:54 +0100
-Message-ID: <20251216111401.861746041@linuxfoundation.org>
+Subject: [PATCH 6.17 454/507] platform/x86: asus-wmi: use brightness_set_blocking() for kbd led
+Date: Tue, 16 Dec 2025 12:14:55 +0100
+Message-ID: <20251216111401.897696876@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,58 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Anton Khirnov <anton@khirnov.net>
 
-[ Upstream commit c36f9d7b2869a003a2f7d6ff2c6bac9e62fd7d68 ]
+[ Upstream commit ccb61a328321ba3f8567e350664c9ca7a42b6c70 ]
 
-After commit 25524b619029 ("fs/nls: Fix utf16 to utf8 conversion"),
-the return values of utf8_to_utf32() and utf32_to_utf8() are
-inconsistent when encountering an error: utf8_to_utf32() returns -1,
-while utf32_to_utf8() returns errno codes. Fix this inconsistency
-by modifying utf8_to_utf32() to return errno codes as well.
+kbd_led_set() can sleep, and so may not be used as the brightness_set()
+callback.
 
-Fixes: 25524b619029 ("fs/nls: Fix utf16 to utf8 conversion")
-Suggested-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Link: https://patch.msgid.link/20251129111535.8984-1-W_Armin@gmx.de
+Otherwise using this led with a trigger leads to system hangs
+accompanied by:
+BUG: scheduling while atomic: acpi_fakekeyd/2588/0x00000003
+CPU: 4 UID: 0 PID: 2588 Comm: acpi_fakekeyd Not tainted 6.17.9+deb14-amd64 #1 PREEMPT(lazy)  Debian 6.17.9-1
+Hardware name: ASUSTeK COMPUTER INC. ASUS EXPERTBOOK B9403CVAR/B9403CVAR, BIOS B9403CVAR.311 12/24/2024
+Call Trace:
+ <TASK>
+ [...]
+ schedule_timeout+0xbd/0x100
+ __down_common+0x175/0x290
+ down_timeout+0x67/0x70
+ acpi_os_wait_semaphore+0x57/0x90
+ [...]
+ asus_wmi_evaluate_method3+0x87/0x190 [asus_wmi]
+ led_trigger_event+0x3f/0x60
+ [...]
+
+Fixes: 9fe44fc98ce4 ("platform/x86: asus-wmi: Simplify the keyboard brightness updating process")
+Signed-off-by: Anton Khirnov <anton@khirnov.net>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Denis Benato <benato.denis96@gmail.com>
+Link: https://patch.msgid.link/20251129101307.18085-3-anton@khirnov.net
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nls/nls_base.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nls/nls_base.c b/fs/nls/nls_base.c
-index d434c4463a8f7..a5c3a9f1b8dc5 100644
---- a/fs/nls/nls_base.c
-+++ b/fs/nls/nls_base.c
-@@ -67,19 +67,22 @@ int utf8_to_utf32(const u8 *s, int inlen, unicode_t *pu)
- 			l &= t->lmask;
- 			if (l < t->lval || l > UNICODE_MAX ||
- 					(l & SURROGATE_MASK) == SURROGATE_PAIR)
--				return -1;
-+				return -EILSEQ;
-+
- 			*pu = (unicode_t) l;
- 			return nc;
- 		}
- 		if (inlen <= nc)
--			return -1;
-+			return -EOVERFLOW;
-+
- 		s++;
- 		c = (*s ^ 0x80) & 0xFF;
- 		if (c & 0xC0)
--			return -1;
-+			return -EILSEQ;
-+
- 		l = (l << 6) | c;
- 	}
--	return -1;
-+	return -EILSEQ;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index e72a2b5d158e9..8e3300f5c2943 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -1619,14 +1619,14 @@ static void do_kbd_led_set(struct led_classdev *led_cdev, int value)
+ 	kbd_led_update(asus);
  }
- EXPORT_SYMBOL(utf8_to_utf32);
+ 
+-static void kbd_led_set(struct led_classdev *led_cdev,
+-			enum led_brightness value)
++static int kbd_led_set(struct led_classdev *led_cdev, enum led_brightness value)
+ {
+ 	/* Prevent disabling keyboard backlight on module unregister */
+ 	if (led_cdev->flags & LED_UNREGISTERING)
+-		return;
++		return 0;
+ 
+ 	do_kbd_led_set(led_cdev, value);
++	return 0;
+ }
+ 
+ static void kbd_led_set_by_kbd(struct asus_wmi *asus, enum led_brightness value)
+@@ -1802,7 +1802,7 @@ static int asus_wmi_led_init(struct asus_wmi *asus)
+ 		asus->kbd_led_wk = led_val;
+ 		asus->kbd_led.name = "asus::kbd_backlight";
+ 		asus->kbd_led.flags = LED_BRIGHT_HW_CHANGED;
+-		asus->kbd_led.brightness_set = kbd_led_set;
++		asus->kbd_led.brightness_set_blocking = kbd_led_set;
+ 		asus->kbd_led.brightness_get = kbd_led_get;
+ 		asus->kbd_led.max_brightness = 3;
  
 -- 
 2.51.0
