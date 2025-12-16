@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956D734B191;
-	Tue, 16 Dec 2025 11:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF8A34B191;
+	Tue, 16 Dec 2025 11:40:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885225; cv=none; b=ezkCmkGA8xxbRHDMQSeJzo5YcAyGERhn+dIXFpgOEYTqMaCdMvcNu2kiwOyE4ZxV7Ypp0q0Eg1ruXzJRQtGFdsDpMRd3+Ms0HjWUbrk2PiH1MJ/oaiagUKwTT5eTGEvSEBaZhtK8kxy8ZNyPxehVhrvOTrPbNBk5TtCsPUoNO20=
+	t=1765885229; cv=none; b=B3MKDVKsAOCOoRx8JZodLpR8Xwnbz9y77YVd3TmCG459uE46nNf8Zse42eYB/HPJWd8H9KLOrqKMqLl+LWKGA5wcOZ8/mZ0KsjOVE43pX/ih+hBDIMC9tiWKJmd29QQRfVGQvXyg++1xHncvk+RY0Wh3xnA0FyniVQmzd+uTYgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885225; c=relaxed/simple;
-	bh=+xTASS8WZqkbXL/YlPLlke/OLrw5XyotfuL5Okr06RM=;
+	s=arc-20240116; t=1765885229; c=relaxed/simple;
+	bh=E6oIRX9V8E2EtBcnZ5vZ9vkjZ4n4OmgEj6S8ha84Q5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PTWDvJ5Mnk4K4ndTNJ/lEkBtDoRSEzcPf8xFZUaWAxjc4vx1UdNHKvEOuL75ZpQoqmvjr294hDvE1i74Ua4yGrZZCNwbhxJi3X+EcDLN+CAnlAVl0t/th1PwDp7PGZmk85/2aRf1d84GUqDDZGW/UKKQjx1vgf5lPaL5K1sOvXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1pYa4yhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSDkGFR7f03GcOn/mNunSjm2tgGce/vtKa0tLcmJzJND9TisNVrIh903TKANf1vgGKCvEK2fTjDdYWTkWafcGfsepPEomPfWJwTsbJEQaPubeqVHeA2dadxB3WLCKEsJEhLfu3sAeQawzzxdlMAjuyaFLTHmht1rDoBvrQl4gRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mSV8w7Fu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1pYa4yhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09ABBC4CEF1;
-	Tue, 16 Dec 2025 11:40:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mSV8w7Fu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993EFC4CEF1;
+	Tue, 16 Dec 2025 11:40:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885225;
-	bh=+xTASS8WZqkbXL/YlPLlke/OLrw5XyotfuL5Okr06RM=;
+	s=korg; t=1765885229;
+	bh=E6oIRX9V8E2EtBcnZ5vZ9vkjZ4n4OmgEj6S8ha84Q5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1pYa4yhUhjbgt099qfAQguJE9gAyrBNfqxerXpxY7XYNVna5k68hLKxq3fGx7V1gG
-	 H/pPWen4IGGHCdFuzsec9//Sn5oStn/pgBSueTkn3KMZx3X7/CO3OnuxjHQpUe574y
-	 Xc1u2ZKMX/83pOIMzJc8XVxDXX1HJmIbfJe4P8E0=
+	b=mSV8w7FuKQ6uYYUvj4EtKUWqh62iGSLmjGX75f51zteOuBMFAA0gPBjN3Xa7xm6Ij
+	 yf8awN9BBrh8oOxsYqlcip8g5jVZUsPkTYE9TR3CGjV9Mg4yWooDFOXuj682Fi27Cv
+	 A2OrtjH88uOLUKfdpDpeMP9eqaz1cw7NZoFGNCRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 076/507] clk: qcom: camcc-sm6350: Fix PLL config of PLL2
-Date: Tue, 16 Dec 2025 12:08:37 +0100
-Message-ID: <20251216111348.295123531@linuxfoundation.org>
+Subject: [PATCH 6.17 077/507] clk: qcom: camcc-sm7150: Fix PLL config of PLL2
+Date: Tue, 16 Dec 2025 12:08:38 +0100
+Message-ID: <20251216111348.331624772@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -55,45 +55,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit ab0e13141d679fdffdd3463a272c5c1b10be1794 ]
+[ Upstream commit 415aad75c7e5cdb72e0672dc1159be1a99535ecd ]
 
 The 'Agera' PLLs (with clk_agera_pll_configure) do not take some of the
 parameters that are provided in the vendor driver. Instead the upstream
 configuration should provide the final user_ctl value that is written to
 the USER_CTL register.
 
-Fix the config so that the PLL is configured correctly, and fixes
-CAMCC_MCLK* being stuck off.
+Fix the config so that the PLL is configured correctly.
 
-Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
+Fixes: 9f0532da4226 ("clk: qcom: Add Camera Clock Controller driver for SM7150")
 Suggested-by: Taniya Das <taniya.das@oss.qualcomm.com>
 Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 Reviewed-by: Taniya Das <taniya.das@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251021-agera-pll-fixups-v1-1-8c1d8aff4afc@fairphone.com
+Link: https://lore.kernel.org/r/20251021-agera-pll-fixups-v1-2-8c1d8aff4afc@fairphone.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sm6350.c | 6 +-----
+ drivers/clk/qcom/camcc-sm7150.c | 6 +-----
  1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
-index 6c272f7b07219..7df12c1311c68 100644
---- a/drivers/clk/qcom/camcc-sm6350.c
-+++ b/drivers/clk/qcom/camcc-sm6350.c
-@@ -145,15 +145,11 @@ static struct clk_alpha_pll_postdiv camcc_pll1_out_even = {
+diff --git a/drivers/clk/qcom/camcc-sm7150.c b/drivers/clk/qcom/camcc-sm7150.c
+index 4a3baf5d8e858..590548cac45bf 100644
+--- a/drivers/clk/qcom/camcc-sm7150.c
++++ b/drivers/clk/qcom/camcc-sm7150.c
+@@ -139,13 +139,9 @@ static struct clk_fixed_factor camcc_pll1_out_even = {
+ /* 1920MHz configuration */
  static const struct alpha_pll_config camcc_pll2_config = {
  	.l = 0x64,
- 	.alpha = 0x0,
 -	.post_div_val = 0x3 << 8,
 -	.post_div_mask = 0x3 << 8,
+-	.early_output_mask = BIT(3),
 -	.aux_output_mask = BIT(1),
 -	.main_output_mask = BIT(0),
--	.early_output_mask = BIT(3),
- 	.config_ctl_val = 0x20000800,
- 	.config_ctl_hi_val = 0x400003d2,
- 	.test_ctl_val = 0x04000400,
- 	.test_ctl_hi_val = 0x00004000,
+ 	.config_ctl_hi_val = 0x400003d6,
+ 	.config_ctl_val = 0x20000954,
 +	.user_ctl_val = 0x0000030b,
  };
  
