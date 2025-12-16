@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF5635FF58;
-	Tue, 16 Dec 2025 12:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1102D3612C2;
+	Tue, 16 Dec 2025 12:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886883; cv=none; b=i9OeoAX9dleM5bHc55vIqR7RvxNVPwUXlM4Zke2nXurhgXcuzxxUwmHvABOiVsHhVn6vZNmzFsxDvRfhcObqu+gudh1e7jvoA1ujR7RtrewehhacwTIU1yh9ZReLY0IOT+Ii8D2eWY4TVxMReSd880HwYHKl+RviY4HmfSth2mU=
+	t=1765886887; cv=none; b=al0u3Tjoo1IlXdR+LBy9FU6yaRuDdIqN2rqpLtVIeKkBzpTPiw1jFnH/DldlJTKQSy5cV1wXfTD7I8L93VikDlRll9eZgN0bZcTsmOJww+J8UgW4MIL8Ct4rIH2J3jRGol1ZAkZaMNUH/EAZO1ubaqRAvbo/dxwQggUY/wF6lFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886883; c=relaxed/simple;
-	bh=G9QZ7UBvRWfAOtAriJxyBQPAM/aV1PoSAdhWeaNMFzw=;
+	s=arc-20240116; t=1765886887; c=relaxed/simple;
+	bh=2RINV80KglDjGCuEFuXui0dHXFuXNDersyTVDCokYOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIrgHDnzcXdXoKLzC7vD4GCfZ9AYVMlfF+9MHnKS7P4Cd5C8+TQEppALzARWohi2j9LkB+Sj+k76JomtD8WTn97qlxuq72uxXltpBR2V8zRpJefwSMYdOoaea8FzFZ1rxqiGYPqmP1eiCVPhDbH2bEA5hURneZwzG+1v+MMo2Hk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UrPH1nfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NechDKwesynuSDYULw39+ul7NP1l3J3YcHqhzC/+txgvgyf4US1toGV9EwaBPjq9kF06hi14ANKdsKb07O4yRBaYp2N36BySGRNCYyNpafOnod3j080QvBZuYA6zcdIlxYOq/r9yWfVpaSmFzQSWLQnO1ekAafh5TMijonZgbFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dDKLLKeM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UrPH1nfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F215C4CEF1;
-	Tue, 16 Dec 2025 12:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dDKLLKeM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8904EC4CEF1;
+	Tue, 16 Dec 2025 12:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886883;
-	bh=G9QZ7UBvRWfAOtAriJxyBQPAM/aV1PoSAdhWeaNMFzw=;
+	s=korg; t=1765886886;
+	bh=2RINV80KglDjGCuEFuXui0dHXFuXNDersyTVDCokYOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrPH1nfXL9EETRaH6E7BhZdYWq1KXwcG8fPWhsN3mO2mgJnUkIaDX/oXHslywbwLA
-	 FKT9vofQBYl7fV/fcRzZKPeeAnFb9m4dFguH2j+jV42bm9w2AZ7/Q+r8ZVKVxYi7Tj
-	 LL5YKn1mdKm/Awhb9nXlIOJZX09kuUHw913oM4s0=
+	b=dDKLLKeMcokld2iUNvVsdq7tGAoqBq4L3HZd8Y28IyGSVzlE39iTDRy+Oq6oKSlg0
+	 LTVe5CsJtM1bggr9A10glLDRULqeLwpVk6yItnTh51SfXmRVo6GeqZHBBODNIe3cVR
+	 HYmzRnxKFBCtPqZlPj4zbZg8l4xUyHxBBQ/Ht/RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	Cyrille Pitchen <cyrille.pitchen@microchip.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Manikandan Muralidharan <manikandan.m@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/614] clk: renesas: cpg-mssr: Read back reset registers to assure values latched
-Date: Tue, 16 Dec 2025 12:06:36 +0100
-Message-ID: <20251216111402.365162634@linuxfoundation.org>
+Subject: [PATCH 6.18 030/614] drm: atmel-hlcdc: fix atmel_xlcdc_plane_setup_scaler()
+Date: Tue, 16 Dec 2025 12:06:37 +0100
+Message-ID: <20251216111402.401302428@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,121 +53,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marek Vasut <marek.vasut+renesas@mailbox.org>
+From: Cyrille Pitchen <cyrille.pitchen@microchip.com>
 
-[ Upstream commit b91401af6c00ffab003698bfabd4c166df30748b ]
+[ Upstream commit a312acdcec57b3955fbf1f3057c13a6d38e4aa2a ]
 
-On R-Car V4H, the PCIEC controller DBI read would generate an SError in
-case the controller reset is released by writing SRSTCLR register first,
-and immediately afterward reading some PCIEC controller DBI register.
-The issue triggers in rcar_gen4_pcie_additional_common_init() on
-dw_pcie_readl_dbi(dw, PCIE_PORT_LANE_SKEW), which on V4H is the first
-read after reset_control_deassert(dw->core_rsts[DW_PCIE_PWR_RST].rstc).
+On SoCs, like the SAM9X75, which embed the XLCDC ip, the registers that
+configure the unified scaling engine were not filled with proper values.
 
-The reset controller which contains the SRSTCLR register and the PCIEC
-controller which contains the DBI register share the same root access
-bus, but the bus then splits into separate segments before reaching each
-IP.  Even if the SRSTCLR write access was posted on the bus before the
-DBI read access, it seems the DBI read access may reach the PCIEC
-controller before the SRSTCLR write completed, and trigger the SError.
+Indeed, for YCbCr formats, the VXSCFACT bitfield of the HEOCFG25
+register and the HXSCFACT bitfield of the HEOCFG27 register were
+incorrect.
 
-Mitigate the issue by adding a dummy SRSTCLR read, which assures the
-SRSTCLR write completes fully and is latched into the reset controller,
-before the PCIEC DBI read access can occur.
+For 4:2:0 formats, both vertical and horizontal factors for
+chroma chanels should be divided by 2 from the factors for the luma
+channel. Hence:
 
-Fixes: 0ab55cf18341 ("clk: renesas: cpg-mssr: Add support for R-Car V4H")
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20250922162113.113223-1-marek.vasut+renesas@mailbox.org
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+HEOCFG24.VXSYFACT = VFACTOR
+HEOCFG25.VSXCFACT = VFACTOR / 2
+HEOCFG26.HXSYFACT = HFACTOR
+HEOCFG27.HXSCFACT = HFACTOR / 2
+
+However, for 4:2:2 formats, only the horizontal factor for chroma
+chanels should be divided by 2 from the factor for the luma channel;
+the vertical factor is the same for all the luma and chroma channels.
+Hence:
+
+HEOCFG24.VXSYFACT = VFACTOR
+HEOCFG25.VXSCFACT = VFACTOR
+HEOCFG26.HXSYFACT = HFACTOR
+HEOCFG27.HXSCFACT = HFACTOR / 2
+
+Fixes: d498771b0b83 ("drm: atmel_hlcdc: Add support for XLCDC using IP specific driver ops")
+Signed-off-by: Cyrille Pitchen <cyrille.pitchen@microchip.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Nicolas Ferre <nicolas.ferre@microchip.com>
+Link: https://lore.kernel.org/r/20241014094942.325211-1-manikandan.m@microchip.com
+Signed-off-by: Manikandan Muralidharan <manikandan.m@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/renesas-cpg-mssr.c | 46 ++++++++++++--------------
- 1 file changed, 21 insertions(+), 25 deletions(-)
+ .../gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c   | 27 ++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/renesas/renesas-cpg-mssr.c b/drivers/clk/renesas/renesas-cpg-mssr.c
-index 7063d896249ea..a0a68ec0490f7 100644
---- a/drivers/clk/renesas/renesas-cpg-mssr.c
-+++ b/drivers/clk/renesas/renesas-cpg-mssr.c
-@@ -676,18 +676,32 @@ static int __init cpg_mssr_add_clk_domain(struct device *dev,
- 
- #define rcdev_to_priv(x)	container_of(x, struct cpg_mssr_priv, rcdev)
- 
--static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
--			  unsigned long id)
-+static int cpg_mssr_reset_operate(struct reset_controller_dev *rcdev,
-+				  const char *func, bool set, unsigned long id)
- {
- 	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
- 	unsigned int reg = id / 32;
- 	unsigned int bit = id % 32;
-+	const u16 off = set ? priv->reset_regs[reg] : priv->reset_clear_regs[reg];
- 	u32 bitmask = BIT(bit);
- 
--	dev_dbg(priv->dev, "reset %u%02u\n", reg, bit);
-+	if (func)
-+		dev_dbg(priv->dev, "%s %u%02u\n", func, reg, bit);
-+
-+	writel(bitmask, priv->pub.base0 + off);
-+	readl(priv->pub.base0 + off);
-+	barrier_data(priv->pub.base0 + off);
-+
-+	return 0;
-+}
-+
-+static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
-+			  unsigned long id)
-+{
-+	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
- 
- 	/* Reset module */
--	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
-+	cpg_mssr_reset_operate(rcdev, "reset", true, id);
+diff --git a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+index 4a7ba0918eca1..3787db014501e 100644
+--- a/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
++++ b/drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c
+@@ -365,13 +365,34 @@ void atmel_xlcdc_plane_setup_scaler(struct atmel_hlcdc_plane *plane,
+ 				    xfactor);
  
  	/*
- 	 * On R-Car Gen4, delay after SRCR has been written is 1ms.
-@@ -700,36 +714,18 @@ static int cpg_mssr_reset(struct reset_controller_dev *rcdev,
- 		usleep_range(35, 1000);
+-	 * With YCbCr 4:2:2 and YCbYcr 4:2:0 window resampling, configuration
+-	 * register LCDC_HEOCFG25.VXSCFACT and LCDC_HEOCFG27.HXSCFACT is half
++	 * With YCbCr 4:2:0 window resampling, configuration register
++	 * LCDC_HEOCFG25.VXSCFACT and LCDC_HEOCFG27.HXSCFACT values are half
+ 	 * the value of yfactor and xfactor.
++	 *
++	 * On the other hand, with YCbCr 4:2:2 window resampling, only the
++	 * configuration register LCDC_HEOCFG27.HXSCFACT value is half the value
++	 * of the xfactor; the value of LCDC_HEOCFG25.VXSCFACT is yfactor (no
++	 * division by 2).
+ 	 */
+-	if (state->base.fb->format->format == DRM_FORMAT_YUV420) {
++	switch (state->base.fb->format->format) {
++	/* YCbCr 4:2:2 */
++	case DRM_FORMAT_YUYV:
++	case DRM_FORMAT_UYVY:
++	case DRM_FORMAT_YVYU:
++	case DRM_FORMAT_VYUY:
++	case DRM_FORMAT_YUV422:
++	case DRM_FORMAT_NV61:
++		xfactor /= 2;
++		break;
++
++	/* YCbCr 4:2:0 */
++	case DRM_FORMAT_YUV420:
++	case DRM_FORMAT_NV21:
+ 		yfactor /= 2;
+ 		xfactor /= 2;
++		break;
++	default:
++		break;
+ 	}
  
- 	/* Release module from reset state */
--	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
--
--	return 0;
-+	return cpg_mssr_reset_operate(rcdev, NULL, false, id);
- }
- 
- static int cpg_mssr_assert(struct reset_controller_dev *rcdev, unsigned long id)
- {
--	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
--	unsigned int reg = id / 32;
--	unsigned int bit = id % 32;
--	u32 bitmask = BIT(bit);
--
--	dev_dbg(priv->dev, "assert %u%02u\n", reg, bit);
--
--	writel(bitmask, priv->pub.base0 + priv->reset_regs[reg]);
--	return 0;
-+	return cpg_mssr_reset_operate(rcdev, "assert", true, id);
- }
- 
- static int cpg_mssr_deassert(struct reset_controller_dev *rcdev,
- 			     unsigned long id)
- {
--	struct cpg_mssr_priv *priv = rcdev_to_priv(rcdev);
--	unsigned int reg = id / 32;
--	unsigned int bit = id % 32;
--	u32 bitmask = BIT(bit);
--
--	dev_dbg(priv->dev, "deassert %u%02u\n", reg, bit);
--
--	writel(bitmask, priv->pub.base0 + priv->reset_clear_regs[reg]);
--	return 0;
-+	return cpg_mssr_reset_operate(rcdev, "deassert", false, id);
- }
- 
- static int cpg_mssr_status(struct reset_controller_dev *rcdev,
+ 	atmel_hlcdc_layer_write_cfg(&plane->layer, desc->layout.scaler_config + 2,
 -- 
 2.51.0
 
