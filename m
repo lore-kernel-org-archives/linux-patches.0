@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FFB3314B4;
-	Tue, 16 Dec 2025 11:35:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BB13314B4;
+	Tue, 16 Dec 2025 11:35:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884916; cv=none; b=dM4IPBYi/M96pZuc1BvO/E9aiVO9YagJWWvHjNlIlQCw0pmkDZf65lZveOxNQGB/5mLj3wgENE2qv3tp4Xgae1XhqlBQFq4EARbFYwMeZ2GsZbIhGDrRjP+fepCwSKUzjsTIUeVFECFKPqTedTKhYY2IjEUyB8Xsv3VBoqz7XLM=
+	t=1765884919; cv=none; b=rawZ1hFq5CQogqyWT+ymF9ApqfGoGHw+BmO5XCKmJdEocaLGDzacFMN6VkSgspvFXuABLAo6TUXek0+nAdF+d8Hyh8L7yP12g7tEcYOkXptQhoaMorMkiPd65xfbr/spYRgD7KXrkOlXPfuuz/DkQ/KZ6iaOFXExQsh8eo0zTv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884916; c=relaxed/simple;
-	bh=lZZdmZmW+77EILlD8BqNZCBfMvcuSHpMg5xgz6Dk/qU=;
+	s=arc-20240116; t=1765884919; c=relaxed/simple;
+	bh=MNi5h2zP5b2DIHtPlEPS8GFZU91RxEZY9E4BugzNGxc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oGNz3dsOO14+/ZIWnu8XOsP8nC9to74P6BoDyws5y/v1JdgjVnt/9h6zzAt23jlhdBs5oP0ARpMHv8iwz8vU14PupZ6njSLJkpzsJVP0Fr2+qhTgNertjr90HoGWtdc1FN7lDmEmdnx5li8y9NwfDDndrjOEs6k56sfofv8vxy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYP63Dlw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=swUjtByYWdrqZj1IyXpjyJudo7B8yFbQBsAefQKfXz3m4zuou60aqZn09IjKO6iJrOqr1RVBqLr2tVRNSWJOhNH8qaeVx4ytluhGB9/9ntxKyu2pjkmARspKG1iWVwDEM6PpHJWekcbsPILsQpc6uAwBnFlIYIVVxxXFViqPjpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZqRdcRL3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYP63Dlw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57696C4CEF1;
-	Tue, 16 Dec 2025 11:35:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZqRdcRL3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BF51C4CEF1;
+	Tue, 16 Dec 2025 11:35:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884915;
-	bh=lZZdmZmW+77EILlD8BqNZCBfMvcuSHpMg5xgz6Dk/qU=;
+	s=korg; t=1765884918;
+	bh=MNi5h2zP5b2DIHtPlEPS8GFZU91RxEZY9E4BugzNGxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hYP63Dlw3SvQ87sE5KDyIKgdL2rIyhLymcVRWnYntmsvhZaWiBypovYilUXUWD5m1
-	 toZM9Fk2GPMeM+eLqcq4V4kVnFQ2gH/cUZASIyveyotHtY44Ci4eDExZDslq2zEbNR
-	 HOS71Cxb+ySfs6qRldBJyqDoPb9NYhRJkYjopwOU=
+	b=ZqRdcRL3jIXoyFXP91J7Kh/JXucpxQOICxMfQdTmXkR5ZTr5jZxeZvdmd17SNp5kF
+	 YDDK4/zGxYK7U4geEeikdm2Cv1L1opfDRaio2NbjRW+GEtewz9qn/dWNXhReybOOj6
+	 YhrvIZLhIM5ViuM6/kjDrqfGjDw+PfH1sXfwXiso=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	John Garry <john.g.garry@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Alexey Simakov <bigalex934@gmail.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 337/354] block: return unsigned int from queue_dma_alignment
-Date: Tue, 16 Dec 2025 12:15:04 +0100
-Message-ID: <20251216111333.117339143@linuxfoundation.org>
+Subject: [PATCH 6.12 338/354] dm-raid: fix possible NULL dereference with undefined raid type
+Date: Tue, 16 Dec 2025 12:15:05 +0100
+Message-ID: <20251216111333.153513336@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,38 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Alexey Simakov <bigalex934@gmail.com>
 
-[ Upstream commit ed5db174cf39374215934f21b04639a7a1513023 ]
+[ Upstream commit 2f6cfd6d7cb165a7af8877b838a9f6aab4159324 ]
 
-The underlying limit is defined as an unsigned int, so return that from
-queue_dma_alignment as well.
+rs->raid_type is assigned from get_raid_type_by_ll(), which may return
+NULL. This NULL value could be dereferenced later in the condition
+'if (!(rs_is_raid10(rs) && rt_is_raid0(rs->raid_type)))'.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20241119160932.1327864-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 2c38ec934ddf ("block: fix cached zone reports on devices with native zone append")
+Add a fail-fast check to return early with an error if raid_type is NULL,
+similar to other uses of this function.
+
+Found by Linux Verification Center (linuxtesting.org) with Svace.
+
+Fixes: 33e53f06850f ("dm raid: introduce extended superblock and new raid types to support takeover/reshaping")
+Signed-off-by: Alexey Simakov <bigalex934@gmail.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/blkdev.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-raid.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
-index cd9c97f6f9484..11d0a1b8daa2c 100644
---- a/include/linux/blkdev.h
-+++ b/include/linux/blkdev.h
-@@ -1450,7 +1450,7 @@ static inline bool bdev_is_zone_start(struct block_device *bdev,
- int blk_zone_issue_zeroout(struct block_device *bdev, sector_t sector,
- 			   sector_t nr_sects, gfp_t gfp_mask);
+diff --git a/drivers/md/dm-raid.c b/drivers/md/dm-raid.c
+index c69696d2540ab..b7f1cd81ab056 100644
+--- a/drivers/md/dm-raid.c
++++ b/drivers/md/dm-raid.c
+@@ -2291,6 +2291,8 @@ static int super_init_validation(struct raid_set *rs, struct md_rdev *rdev)
  
--static inline int queue_dma_alignment(const struct request_queue *q)
-+static inline unsigned int queue_dma_alignment(const struct request_queue *q)
- {
- 	return q->limits.dma_alignment;
- }
+ 			mddev->reshape_position = le64_to_cpu(sb->reshape_position);
+ 			rs->raid_type = get_raid_type_by_ll(mddev->level, mddev->layout);
++			if (!rs->raid_type)
++				return -EINVAL;
+ 		}
+ 
+ 	} else {
 -- 
 2.51.0
 
