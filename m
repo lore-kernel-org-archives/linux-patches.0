@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 836B435502B;
-	Tue, 16 Dec 2025 11:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF54435502A;
+	Tue, 16 Dec 2025 11:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885827; cv=none; b=nqxnQC6XhaDlGUdP7GmhmtPqC6kDzDGgf86ZadH+K75LmSywlF9Euqupeb5BeSnLiJ4aEibRvJgkqLaFdSKIrfOBNDrWIF7W12nC6Zndv0EZAmngtD+Iyxy1sKy3jZKe/+BA35H1ShDVWcVB9UB8Tip4N+sdhxzjtf0/AmvyBQw=
+	t=1765885831; cv=none; b=pDseSYmFxu+NRf1tm1kMBiCEsX4dh+Hcti74L/Hu2MLcph9BcuMrzExy4kY4B3z3bzuGz5fEHgPJDvIvU5wCKPM2+QGblc8A2D71xz7P3NATK5npfmnmzJRF0VVNz0x/dfjkdj6o6C/SB0u+tyHGmlAR/Mp/zz6WqCT02b4oDrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885827; c=relaxed/simple;
-	bh=Xm7kZzjPA+glyvNa3Zyc2Gb2U1wWbaFadfCHYE8auL8=;
+	s=arc-20240116; t=1765885831; c=relaxed/simple;
+	bh=DhSsYpcT+RGeKU8feUCg/6vGL+gtMmyfPq22gkYZPcA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qdlS5ilqlMq8GLk6a5fVlqUKpY57QRGapQopov1W5+TT0ZFGMDQcJkkyv509QmDX0Ku3bm2kAfF9thdYgcVYLkvAuRbX4jOoNpQjhEVR815xgBGSzCqLXveSvaFXyigAzAbNBYLIqU6ajD+L8LoCw6B2DQF/96LEPThjaw2kWos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yq2edxsX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W1py/SH1yD9muQnPMQj4hK/npOb82cbgXTrj5KZq5wo65IyrUIxp8/TY1AcA2rC/xpn3upmU12m8wOM9CvnJp0rFshIXhSP76UhgZ/Jj9E+Gz4qcQn84UPRCMDAZJXf01AYZEaeEOvN5fPaA+sJrNoCUNbyk+nxOvk+UEceqgKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e1KbPaok; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yq2edxsX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F12C4CEF1;
-	Tue, 16 Dec 2025 11:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e1KbPaok"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C848C4CEF1;
+	Tue, 16 Dec 2025 11:50:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885827;
-	bh=Xm7kZzjPA+glyvNa3Zyc2Gb2U1wWbaFadfCHYE8auL8=;
+	s=korg; t=1765885830;
+	bh=DhSsYpcT+RGeKU8feUCg/6vGL+gtMmyfPq22gkYZPcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yq2edxsXggsut4FP1adiUK+ywPttatY7XWghUGt8WiFgBCI1dhGxchd64zmNdW7k8
-	 Vy42qW1VwLyi8SSFdCUU72EVCVJjsE6+cCPRJO3kIG6jKtdso0R3mUGPsw2F5pEUDY
-	 HDJSuuVEvf/HOGcVNgX0jdLn69sCWf53ayVddn3w=
+	b=e1KbPaok6+a8GDfH1JYrDTfhYTkhi1M2oWH4gp0rlxDjdPixDk1IvqnkObt+eZex/
+	 ikDC9xqgg9jjrlotjEDoNS6nlBJ0GXc0mEzMEGbI7blthaJi5IAroXogN1Xdemo4wr
+	 LgaqSGTmQnQ9iVU2q01RWSZOUsYr/oOtSt4agIUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Yu Kuai <yukuai@kernel.org>,
+	Tejun Heo <tj@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Khazhismel Kumykov <khazhy@google.com>,
+	Yu Kuai <yukuai@fnnas.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 257/507] arm64: dts: imx95-tqma9596sa: reduce maximum FlexSPI frequency to 66MHz
-Date: Tue, 16 Dec 2025 12:11:38 +0100
-Message-ID: <20251216111354.800774288@linuxfoundation.org>
+Subject: [PATCH 6.17 258/507] block/blk-throttle: Fix throttle slice time for SSDs
+Date: Tue, 16 Dec 2025 12:11:39 +0100
+Message-ID: <20251216111354.836793833@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,34 +55,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 461be3802562b2d41250b40868310579a32f32c1 ]
+[ Upstream commit f76581f9f1d29e32e120b0242974ba266e79de58 ]
 
-66 MHz is the maximum FlexPI clock frequency in normal/overdrive mode
-when RXCLKSRC = 0 (Default)
+Commit d61fcfa4bb18 ("blk-throttle: choose a small throtl_slice for SSD")
+introduced device type specific throttle slices if BLK_DEV_THROTTLING_LOW
+was enabled. Commit bf20ab538c81 ("blk-throttle: remove
+CONFIG_BLK_DEV_THROTTLING_LOW") removed support for BLK_DEV_THROTTLING_LOW,
+but left the device type specific throttle slices in place. This
+effectively changed throttling behavior on systems with SSD which now use
+a different and non-configurable slice time compared to non-SSD devices.
+Practical impact is that throughput tests with low configured throttle
+values (65536 bps) experience less than expected throughput on SSDs,
+presumably due to rounding errors associated with the small throttle slice
+time used for those devices. The same tests pass when setting the throttle
+values to 65536 * 4 = 262144 bps.
 
-Fixes: 91d1ff322c47 ("arm64: dt: imx95: Add TQMa95xxSA")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+The original code sets the throttle slice time to DFL_THROTL_SLICE_HD if
+CONFIG_BLK_DEV_THROTTLING_LOW is disabled. Restore that code to fix the
+problem. With that, DFL_THROTL_SLICE_SSD is no longer necessary. Revert to
+the original code and re-introduce DFL_THROTL_SLICE to replace both
+DFL_THROTL_SLICE_HD and DFL_THROTL_SLICE_SSD. This effectively reverts
+commit d61fcfa4bb18 ("blk-throttle: choose a small throtl_slice for SSD").
+
+While at it, also remove MAX_THROTL_SLICE since it is not used anymore.
+
+Fixes: bf20ab538c81 ("blk-throttle: remove CONFIG_BLK_DEV_THROTTLING_LOW")
+Cc: Yu Kuai <yukuai@kernel.org>
+Cc: Tejun Heo <tj@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
+Reviewed-by: Yu Kuai <yukuai@fnnas.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-throttle.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi b/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi
-index c3bb61ea67961..16c40d11d3b5d 100644
---- a/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx95-tqma9596sa.dtsi
-@@ -115,7 +115,7 @@ &flexspi1 {
- 	flash0: flash@0 {
- 		compatible = "jedec,spi-nor";
- 		reg = <0>;
--		spi-max-frequency = <80000000>;
-+		spi-max-frequency = <66000000>;
- 		spi-tx-bus-width = <4>;
- 		spi-rx-bus-width = <4>;
- 		vcc-supply = <&reg_1v8>;
+diff --git a/block/blk-throttle.c b/block/blk-throttle.c
+index 2c5b64b1a724a..c19d052a8f2f1 100644
+--- a/block/blk-throttle.c
++++ b/block/blk-throttle.c
+@@ -22,9 +22,7 @@
+ #define THROTL_QUANTUM 32
+ 
+ /* Throttling is performed over a slice and after that slice is renewed */
+-#define DFL_THROTL_SLICE_HD (HZ / 10)
+-#define DFL_THROTL_SLICE_SSD (HZ / 50)
+-#define MAX_THROTL_SLICE (HZ)
++#define DFL_THROTL_SLICE (HZ / 10)
+ 
+ /* A workqueue to queue throttle related work */
+ static struct workqueue_struct *kthrotld_workqueue;
+@@ -1341,10 +1339,7 @@ static int blk_throtl_init(struct gendisk *disk)
+ 		goto out;
+ 	}
+ 
+-	if (blk_queue_nonrot(q))
+-		td->throtl_slice = DFL_THROTL_SLICE_SSD;
+-	else
+-		td->throtl_slice = DFL_THROTL_SLICE_HD;
++	td->throtl_slice = DFL_THROTL_SLICE;
+ 	td->track_bio_latency = !queue_is_mq(q);
+ 	if (!td->track_bio_latency)
+ 		blk_stat_enable_accounting(q);
 -- 
 2.51.0
 
