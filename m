@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D7D341645;
-	Tue, 16 Dec 2025 11:22:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8896342151;
+	Tue, 16 Dec 2025 11:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884143; cv=none; b=it6WJtPydR49Q6dttDlcR3IPLOlr0rh+cn3m+sOYLz5yAQHwmWpgvGiaFvUNorjABZGNjbjUmVFS1N/GTBmOMqokuOMkr8cjDyEchJV3pcDa47rYWq/50LjisBM9Mz9CTpD+a5sybPr/lwLINPwW/ijljqzokavcAabSFttVKoM=
+	t=1765884146; cv=none; b=RlMDwZiD8fWnQH4chJQfs4sUvNvOtSM60aQnCYrQ/KCWyD8hG/XYOQ8kcfhdPTa7ZVG0OO5W8cmJ9VuN22WPFVd6SsuB7H3ehARcAkPlxnO1LRkC9R7vCtfF3dpivTPO8EPF4lKCMF/NEKaNtn7JGVTXOYvn+okiIhVclfQXvn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884143; c=relaxed/simple;
-	bh=QYpNl031yafH8MYfpRP6e7+UqXaZFVkPhCSdeb0BEuE=;
+	s=arc-20240116; t=1765884146; c=relaxed/simple;
+	bh=QWX9aCT5rl+vCTGk9vXb4A5NE6j/Tj/u1SU+C6gC3mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jodPd7UPZgUd7TainjOot7MNH9BFDP0UAy+AxfRe1lXr5jfVP2DVxTpkweFzZMiYiC0H3P629q55NEiDk85N6T+AbMr7D8hTFA5ft9pAQ1iPfL1rl0KfmvFZjYj9rO14T6rWM2Z2lJ4fgfWFtT/eIrOZdb0OqZj0oXMHknJ3wNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVV8LW2e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEluWrwchcdqVbRy+4j5Mn1WOtoad4rxd7P+pRarXZy5LreY5BECvTi5hS4m41aCM4eJCuooPMzuu23DF3B8Q3zPxFWWuAfl+gbkcOcpeGr1WpQKW8lLvLeddGXcap8jf1/794e5HgDxvCxK3N8oZ/s4rwTwiGzi3gi4VWAlzMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCvQv6PE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVV8LW2e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1196CC4CEF1;
-	Tue, 16 Dec 2025 11:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCvQv6PE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39856C4CEF5;
+	Tue, 16 Dec 2025 11:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884143;
-	bh=QYpNl031yafH8MYfpRP6e7+UqXaZFVkPhCSdeb0BEuE=;
+	s=korg; t=1765884146;
+	bh=QWX9aCT5rl+vCTGk9vXb4A5NE6j/Tj/u1SU+C6gC3mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVV8LW2eOZn9E2p9zEu56x8XQEvr2ZeB+xCuQsv71/OV9MleCdJwzYXAOLYj3e0FQ
-	 ynCYOZ573RSxYIjU7kF+9aT29MNXLT1jOHze3eMVr4G9BaiA5dA6TRvk9GV895ZKxM
-	 m6uK37q32jbEFQQrQTPRtjED+pTBO5hp2Ez/HgKI=
+	b=ZCvQv6PEkn2oHZIbfTWKMafsFk+Yxbq4xFuHhwQm2X2kRQVD87DgN3uZnc2YeNw8v
+	 fphmlWFQ56WsV8nDHhiTvs+kdb/qeCDOi+58P42EZdZ5U0h54RqaX89qYI5ZuqRO/X
+	 UeDO/RYAf3rh2yxQAEVKVrgZ9/6GEqIq+ZRwHjTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Li <Frank.Li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 071/354] firmware: imx: scu-irq: fix OF node leak in
-Date: Tue, 16 Dec 2025 12:10:38 +0100
-Message-ID: <20251216111323.497385802@linuxfoundation.org>
+Subject: [PATCH 6.12 072/354] arm64: dts: qcom: x1e80100: Fix compile warnings for USB HS controller
+Date: Tue, 16 Dec 2025 12:10:39 +0100
+Message-ID: <20251216111323.533501245@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,39 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
 
-[ Upstream commit ee67247843a2b62d1473cfa4df300e69b5190ccf ]
+[ Upstream commit 0dab10c38282e6ef87ef88efb99d4106cce7ed33 ]
 
-imx_scu_enable_general_irq_channel() calls of_parse_phandle_with_args(),
-but does not release the OF node reference. Add a of_node_put() call
-to release the reference.
+With W=1, the following error comes up:
 
-Fixes: 851826c7566e ("firmware: imx: enable imx scu general irq function")
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Warning (graph_child_address): /soc@0/usb@a2f8800/usb@a200000/ports: graph node has single child node 'port@0', #address-cells/#size-cells are not necessary
+
+This could be since the controller is only HS capable and only one port
+node is added.
+
+Fixes: 4af46b7bd66f ("arm64: dts: qcom: x1e80100: Add USB nodes")
+Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20251019115630.2222720-1-krishna.kurapati@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/imx/imx-scu-irq.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/firmware/imx/imx-scu-irq.c b/drivers/firmware/imx/imx-scu-irq.c
-index 6125cccc9ba79..f2b902e95b738 100644
---- a/drivers/firmware/imx/imx-scu-irq.c
-+++ b/drivers/firmware/imx/imx-scu-irq.c
-@@ -226,8 +226,10 @@ int imx_scu_enable_general_irq_channel(struct device *dev)
- 	INIT_WORK(&imx_sc_irq_work, imx_scu_irq_work_handler);
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+index 5082ecb32089b..b03f3ce250dbc 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
+@@ -4287,15 +4287,8 @@ usb_2_dwc3: usb@a200000 {
  
- 	if (!of_parse_phandle_with_args(dev->of_node, "mboxes",
--				       "#mbox-cells", 0, &spec))
-+				       "#mbox-cells", 0, &spec)) {
- 		i = of_alias_get_id(spec.np, "mu");
-+		of_node_put(spec.np);
-+	}
+ 				dma-coherent;
  
- 	/* use mu1 as general mu irq channel if failed */
- 	if (i < 0)
+-				ports {
+-					#address-cells = <1>;
+-					#size-cells = <0>;
+-
+-					port@0 {
+-						reg = <0>;
+-
+-						usb_2_dwc3_hs: endpoint {
+-						};
++				port {
++					usb_2_dwc3_hs: endpoint {
+ 					};
+ 				};
+ 			};
 -- 
 2.51.0
 
