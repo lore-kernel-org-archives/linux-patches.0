@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5568635CB7A;
-	Tue, 16 Dec 2025 12:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 699AE341AAF;
+	Tue, 16 Dec 2025 12:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886778; cv=none; b=GwZ+gmkpBx48P2W0Yc9LowrZYbFQb9CKJ97HPJLW6+arJMG+A/tyE05xTs1Pwaphn3Lu6Y4iJF0xb22SPzrx4Hii8wRxe4XZRLe0fGgb7Z04QT/7MK+0AZDcAmbTJg1EWEO+4v7e/BAkfEkzrEbKgvcHIwGrbzIzuPGvFCah/T0=
+	t=1765886781; cv=none; b=ayw+Ou4vTHidrROgVuY8YxltgkRk11Y9memgR11cGsx6gtKS28i9twwTZdSebAmS8ehAobygLkUcJwBTwAigmwLOO9oWUiw2NQzLeuW3gjJqutZH/EMveB425JRePsLV5iEoBFiXgtrN+ll3rnvYwr0vCS4Oz2UVr2niTYhROGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886778; c=relaxed/simple;
-	bh=LtNjQg4QKjf2rGDS2xKAIP7rtthKUMQtm8wLkzOYSlQ=;
+	s=arc-20240116; t=1765886781; c=relaxed/simple;
+	bh=u5v6wfc4ksiWF+NWZPJwBphEcGPSh82RZkyfWfEt744=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tT/0jQVCVUODh9yHFOEIkgRH5O0yio/mXn7qGEv6Wggp1nQ+QfpiOBzvtKEjXgfaqOgjF7SMgiwec6X56z9ruzL2OFljVSz8nv/FsmWSlYjcDt5dL3CuZ7FgG6OgixX8whrZTp/gYBqgkV2kyELmGxM/5ifjXwtjMqj+cDrCKFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bs3s7MMY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CVac9bwKRH2rj+gk+2p9S7ueQ9S3thDtqp+VuP3r0BAnz48HQbQCfpLwq8xC3cXL1t7zc1QIELr2m4do7qCHAjUXelNURIXnfaFbPIEeruHjV47ePDEZcs76FT9f3q9AAQkV8xXHt3QYnEybXwqTIX9rMwgovoLyQnwIl4msLqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FxLTSlrW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bs3s7MMY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B96EC4CEF1;
-	Tue, 16 Dec 2025 12:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FxLTSlrW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4424C4CEF1;
+	Tue, 16 Dec 2025 12:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886777;
-	bh=LtNjQg4QKjf2rGDS2xKAIP7rtthKUMQtm8wLkzOYSlQ=;
+	s=korg; t=1765886781;
+	bh=u5v6wfc4ksiWF+NWZPJwBphEcGPSh82RZkyfWfEt744=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bs3s7MMY8NBy1HTG/Iiz4H35aFtNjNmkIzC2dmVgMigVpHqyPBetbolj0UXQ2gdj4
-	 yVqsHwdpOyL7DBmD2MInlHNYex1bdJnu3DIR/VC8+7hV+E9d2Wl8mmId03ga73Ha39
-	 uz3TYebSPZHQTm6n312cXAK8C30/F04PFS/nQlSA=
+	b=FxLTSlrWEDUf9r6UNfrPk5gwGYL4xJLB/k8ZTybH8iyzFNc5sarFyK8/NvUOa/+tM
+	 AWXfpfB9TpT3iYQg8puo7yxhJBp/g2vXtN/mWD5uvcEpvD85AyZgt85mORZr1L6F8+
+	 NSSyXI3aVN5W6M2/VWP2OFgJEEIVoNjixZOq2g6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mainak Sen <msen@nvidia.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 008/614] gpu: host1x: Fix race in syncpt alloc/free
-Date: Tue, 16 Dec 2025 12:06:15 +0100
-Message-ID: <20251216111401.597308768@linuxfoundation.org>
+Subject: [PATCH 6.18 009/614] accel/amdxdna: Fix an integer overflow in aie2_query_ctx_status_array()
+Date: Tue, 16 Dec 2025 12:06:16 +0100
+Message-ID: <20251216111401.634173667@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,56 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mainak Sen <msen@nvidia.com>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit c7d393267c497502fa737607f435f05dfe6e3d9b ]
+[ Upstream commit 9e16c8bf9aebf629344cfd4cd5e3dc7d8c3f7d82 ]
 
-Fix race condition between host1x_syncpt_alloc()
-and host1x_syncpt_put() by using kref_put_mutex()
-instead of kref_put() + manual mutex locking.
+The unpublished smatch static checker reported a warning.
 
-This ensures no thread can acquire the
-syncpt_mutex after the refcount drops to zero
-but before syncpt_release acquires it.
-This prevents races where syncpoints could
-be allocated while still being cleaned up
-from a previous release.
+drivers/accel/amdxdna/aie2_pci.c:904 aie2_query_ctx_status_array()
+warn: potential user controlled sizeof overflow
+'args->num_element * args->element_size' '1-u32max(user) * 1-u32max(user)'
 
-Remove explicit mutex locking in syncpt_release
-as kref_put_mutex() handles this atomically.
+Even this will not cause a real issue, it is better to put a reasonable
+limitation for element_size and num_element. Add condition to make sure
+the input element_size <= 4K and num_element <= 1K.
 
-Signed-off-by: Mainak Sen <msen@nvidia.com>
-Fixes: f5ba33fb9690 ("gpu: host1x: Reserve VBLANK syncpoints at initialization")
-Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20250707-host1x-syncpt-race-fix-v1-1-28b0776e70bc@nvidia.com
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/dri-devel/aL56ZCLyl3tLQM1e@stanley.mountain/
+Fixes: 2f509fe6a42c ("accel/amdxdna: Add ioctl DRM_IOCTL_AMDXDNA_GET_ARRAY")
+Reviewed-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://lore.kernel.org/r/20250909154531.3469979-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/syncpt.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/accel/amdxdna/aie2_pci.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/host1x/syncpt.c b/drivers/gpu/host1x/syncpt.c
-index f63d14a57a1d9..acc7d82e0585e 100644
---- a/drivers/gpu/host1x/syncpt.c
-+++ b/drivers/gpu/host1x/syncpt.c
-@@ -345,8 +345,6 @@ static void syncpt_release(struct kref *ref)
+diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
+index 87c425e3d2b99..6e39c769bb6d8 100644
+--- a/drivers/accel/amdxdna/aie2_pci.c
++++ b/drivers/accel/amdxdna/aie2_pci.c
+@@ -898,6 +898,12 @@ static int aie2_query_ctx_status_array(struct amdxdna_client *client,
  
- 	sp->locked = false;
+ 	drm_WARN_ON(&xdna->ddev, !mutex_is_locked(&xdna->dev_lock));
  
--	mutex_lock(&sp->host->syncpt_mutex);
--
- 	host1x_syncpt_base_free(sp->base);
- 	kfree(sp->name);
- 	sp->base = NULL;
-@@ -369,7 +367,7 @@ void host1x_syncpt_put(struct host1x_syncpt *sp)
- 	if (!sp)
- 		return;
- 
--	kref_put(&sp->ref, syncpt_release);
-+	kref_put_mutex(&sp->ref, syncpt_release, &sp->host->syncpt_mutex);
- }
- EXPORT_SYMBOL(host1x_syncpt_put);
- 
++	if (args->element_size > SZ_4K || args->num_element > SZ_1K) {
++		XDNA_DBG(xdna, "Invalid element size %d or number of element %d",
++			 args->element_size, args->num_element);
++		return -EINVAL;
++	}
++
+ 	array_args.element_size = min(args->element_size,
+ 				      sizeof(struct amdxdna_drm_hwctx_entry));
+ 	array_args.buffer = args->buffer;
 -- 
 2.51.0
 
