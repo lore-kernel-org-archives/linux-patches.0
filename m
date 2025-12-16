@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6512C36214C;
-	Tue, 16 Dec 2025 12:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619CF3612EE;
+	Tue, 16 Dec 2025 12:35:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888526; cv=none; b=LgbXXHKkwnxHeP7qZQAfZDqIJOvRv00GwONhS3OIjmqn9+eLK7E/wVPso7MKv+jqtWH4TO9JcIKx3CyYxB8snWfOY2Mh/tFv17BI4YQK1SXfbwNjVHw+Q9MjzotNTk8OZdvayNfnGJjd4jvDZTjkEtfyYOQBDa4ZrXuEtDzNRJw=
+	t=1765888529; cv=none; b=Zpsxei7ADUDBImzBNTViDwlJCpn4t4S3ZPZnHA5IRV3ZBliF4pmr8NcpppQWEx3Lzb18kGACXuSI/FV8hBPm1HA+Q6aqseSbOPe6jtZLON8nb+w0o8fHNSma2Qp4Vzed9TOMZVTZNBObuAnPXtARxVh/qJXj1eDNLxzGSk5EXZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888526; c=relaxed/simple;
-	bh=BV2xmtabrf586P8PYiOEVUcQvlLfNznoeJg8iPcevWo=;
+	s=arc-20240116; t=1765888529; c=relaxed/simple;
+	bh=D+XLK5oz1R+g1QpxJNobX9cYLe2t/0mD/8CncoJG2pY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StweRcEtGbKVroFtsVrv/ZDq7i6zEfxNA5dvcqg9SryqICKtb8nJiZgtl2ZfMQ/STmqDChwynO+aKi4AO5stJK01vBCxqDOHDnL/QBz35op4WQ41mtD18OgcwoELLBJvIoPr48BzhU7h+TretcTe4xg9862i1D87IyA2BSJESB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g0OZiXPU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQhj1fGAz9z3OPGk/E5blNmc2WAckjEwol0outp0HF9vQ/l4pNc0jVfV6qv9oxdkNCPaOHzS8fzxcuetoDFIULrT9ikK/fsrZtEORlHlfFPq5oSA2lCJB+FNl35jR5VkCVMQgLbLWsMfVpDyWPVXfcn8q4iAzMVgTi+uOLSDb6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H8urwqN2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g0OZiXPU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F62C4CEF1;
-	Tue, 16 Dec 2025 12:35:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H8urwqN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C32EBC4CEF1;
+	Tue, 16 Dec 2025 12:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888526;
-	bh=BV2xmtabrf586P8PYiOEVUcQvlLfNznoeJg8iPcevWo=;
+	s=korg; t=1765888529;
+	bh=D+XLK5oz1R+g1QpxJNobX9cYLe2t/0mD/8CncoJG2pY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g0OZiXPUWTfTZmblHk7t+LUHkJAiIIT4FkWTmScIC68j6JUQZj51M7ylaoV4mh4/L
-	 wPD5+ai8qzqkqpDHbAreg3HV1pJZ3rx/eAVtBEdhEMwnrKjSAEyDOsaD4Ecx1Sl6hM
-	 T3v63WnPRfhBIKNVeg0RGm5X2ciDkG4/pIBWHjyM=
+	b=H8urwqN2IWpEInMSEUEhMc7yXsKJoBVVZL90UpvL/aYxeR1iK232TbCKWTZjoTXHm
+	 EY7MjSTpvV2PyO0WGHSWrYz4O7KZsYVvXG9AoMdWAhgq5jLmTgks3iiS500Tzy6GyN
+	 JA5bmq83ewM3yMdZX3RW0lWau5KLQOpl38swVgwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cong Zhang <cong.zhang@oss.qualcomm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ian Rogers <irogers@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 559/614] blk-mq: Abort suspend when wakeup events are pending
-Date: Tue, 16 Dec 2025 12:15:26 +0100
-Message-ID: <20251216111421.634015562@linuxfoundation.org>
+Subject: [PATCH 6.18 528/614] perf kvm: Fix debug assertion
+Date: Tue, 16 Dec 2025 12:14:55 +0100
+Message-ID: <20251216111420.508202394@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,71 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cong Zhang <cong.zhang@oss.qualcomm.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit c196bf43d706592d8801a7513603765080e495fb ]
+[ Upstream commit 27e711257902475097dea3f79cbdf241fe37ec00 ]
 
-During system suspend, wakeup capable IRQs for block device can be
-delayed, which can cause blk_mq_hctx_notify_offline() to hang
-indefinitely while waiting for pending request to complete.
-Skip the request waiting loop and abort suspend when wakeup events are
-pending to prevent the deadlock.
+There are 2 slots left for kvm_add_default_arch_event, fix the
+assertion so that debug builds don't fail the assert and to agree with
+the comment.
 
-Fixes: bf0beec0607d ("blk-mq: drain I/O when all CPUs in a hctx are offline")
-Signed-off-by: Cong Zhang <cong.zhang@oss.qualcomm.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 45ff39f6e70aa55d0 ("perf tools kvm: Fix the potential out of range memory access issue")
+Signed-off-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ tools/perf/builtin-kvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index d626d32f6e576..33a0062f9e56d 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -23,6 +23,7 @@
- #include <linux/cache.h>
- #include <linux/sched/topology.h>
- #include <linux/sched/signal.h>
-+#include <linux/suspend.h>
- #include <linux/delay.h>
- #include <linux/crash_dump.h>
- #include <linux/prefetch.h>
-@@ -3707,6 +3708,7 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- {
- 	struct blk_mq_hw_ctx *hctx = hlist_entry_safe(node,
- 			struct blk_mq_hw_ctx, cpuhp_online);
-+	int ret = 0;
+diff --git a/tools/perf/builtin-kvm.c b/tools/perf/builtin-kvm.c
+index f0f285763f190..c61369d54dd9d 100644
+--- a/tools/perf/builtin-kvm.c
++++ b/tools/perf/builtin-kvm.c
+@@ -2014,7 +2014,7 @@ static int __cmd_record(const char *file_name, int argc, const char **argv)
+ 	for (j = 1; j < argc; j++, i++)
+ 		rec_argv[i] = STRDUP_FAIL_EXIT(argv[j]);
  
- 	if (blk_mq_hctx_has_online_cpu(hctx, cpu))
- 		return 0;
-@@ -3727,12 +3729,24 @@ static int blk_mq_hctx_notify_offline(unsigned int cpu, struct hlist_node *node)
- 	 * frozen and there are no requests.
- 	 */
- 	if (percpu_ref_tryget(&hctx->queue->q_usage_counter)) {
--		while (blk_mq_hctx_has_requests(hctx))
-+		while (blk_mq_hctx_has_requests(hctx)) {
-+			/*
-+			 * The wakeup capable IRQ handler of block device is
-+			 * not called during suspend. Skip the loop by checking
-+			 * pm_wakeup_pending to prevent the deadlock and improve
-+			 * suspend latency.
-+			 */
-+			if (pm_wakeup_pending()) {
-+				clear_bit(BLK_MQ_S_INACTIVE, &hctx->state);
-+				ret = -EBUSY;
-+				break;
-+			}
- 			msleep(5);
-+		}
- 		percpu_ref_put(&hctx->queue->q_usage_counter);
- 	}
+-	BUG_ON(i != rec_argc);
++	BUG_ON(i + 2 != rec_argc);
  
--	return 0;
-+	return ret;
- }
- 
- /*
+ 	ret = kvm_add_default_arch_event(&i, rec_argv);
+ 	if (ret)
 -- 
 2.51.0
 
