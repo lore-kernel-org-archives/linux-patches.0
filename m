@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDC734E765;
-	Tue, 16 Dec 2025 11:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E3234EEFD;
+	Tue, 16 Dec 2025 11:55:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886122; cv=none; b=fVlV/H+qp9xIr/Ms7xBb1+CqVVfxGM715ibZxguQAPrcVUmWjMY+ljRYyjnt/r+C1XVi0oivl2GPKvWjQ8ttU6nLFtw1QQyCLQIDSHUrOpf6k2wmVi8jQbVJ6slDwpmfoNVyc6sM5EfmNm959WBVB1ATUSybbYW2rOb7ZJTv3EY=
+	t=1765886126; cv=none; b=b5QSQzK6E59pNfVKSGHUw12l+70wfX3eufF28nmuqvw01Hk3h6pB7ZNu7bhKd7QF3ZnSA2arbNTzZJ9SQp0/6GruhEhpHAeeXwo/PFTbDtCbnBiS7ygp+P00UFjlw0basSclC/uWHToqKuHt7zTAKSgFnIVZjQ4JoixnJTqLYug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886122; c=relaxed/simple;
-	bh=ohH+PWaRBGr/TJYXDUqcgyBRKoHy8LWVgbRaEcywoFk=;
+	s=arc-20240116; t=1765886126; c=relaxed/simple;
+	bh=4+gdgvTFhGKxsztQxiaBmliI9R1tI5b0vdDpzHms3YA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=afxW9I/iQxzFAaMkzLwhGhrisbFpc6Cm7x5r+GW3QRa/7h4vGSafd6EQMM/V87fEZwa2c4x27f28lKSIw5XgFN60+5KNrMjO3OhIIERUA11oVYZGzgIENZ3e5JYrQ8V1lrr63lW1mAWPjykdk//TZuSAkvdjIUbfv8ISgsmzacg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVn85dvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CIDB7jSWpOX/DcT63fW69PIMQiv1UPtC1+q7JzbFgCf+wBalMB+Rfnh4CgeGGTg3A5SqQb3B7+urtDaaVI7hRsz4gxXQ62/ngQxYkv/NUtGRlK77aFx7lnki8HLjoApWsTFBlENYqe7ISfYkU93xwvy4UhJMD8FaTzjPEVIEbR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tgz2gbX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVn85dvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6650C4CEF1;
-	Tue, 16 Dec 2025 11:55:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tgz2gbX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C03C4CEF1;
+	Tue, 16 Dec 2025 11:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886122;
-	bh=ohH+PWaRBGr/TJYXDUqcgyBRKoHy8LWVgbRaEcywoFk=;
+	s=korg; t=1765886125;
+	bh=4+gdgvTFhGKxsztQxiaBmliI9R1tI5b0vdDpzHms3YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVn85dvq1Tw6+0B2emaFOflpO53L9CSam+fGSPLR35THGkz95P+mCMvpH2iOdrojD
-	 CFLWX7rDm8ijoStVbD8v4sOCLluBEA+vVn9S7m1zAfLTjarHwBLsuKuhTFcFox4rq7
-	 tIIMbLxOUG7k13dvqhsuMzXp7XhLMIM0WrDq95mI=
+	b=tgz2gbX5HamMuVF4mt4ZrtS09gJvl6YZOeagAfRy341jZt15aC9FDX8ATWyTmLfQQ
+	 FhvA0cS4aj/bVU79sgeU1e/vjfHJPEAwngIbtt/YOG0vmgTq3TVIA0/AowGSgrHDJv
+	 jc4DviMQlSO9bIh9sjpD3VDFdTZ+D7LRXLcaeL54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 343/507] btrfs: fix leaf leak in an error path in btrfs_del_items()
-Date: Tue, 16 Dec 2025 12:13:04 +0100
-Message-ID: <20251216111357.886721819@linuxfoundation.org>
+Subject: [PATCH 6.17 344/507] PCI: dwc: Fix wrong PORT_LOGIC_LTSSM_STATE_MASK definition
+Date: Tue, 16 Dec 2025 12:13:05 +0100
+Message-ID: <20251216111357.922348497@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,39 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit e7dd1182fcedee7c6097c9f49eba8de94a4364e3 ]
+[ Upstream commit bcc9a4a0bca3aee4303fa4a20302e57b24ac8f68 ]
 
-If the call to btrfs_del_leaf() fails we return without decrementing the
-extra ref we took on the leaf, therefore leaking it. Fix this by ensuring
-we drop the ref count before returning the error.
+As per DesignWare Cores PCI Express Controller Databook, section 5.50,
+SII: Debug Signals, cxpl_debug_info[63:0]:
 
-Fixes: 751a27615dda ("btrfs: do not BUG_ON() on tree mod log failures at btrfs_del_ptr()")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+  [5:0] smlh_ltssm_state: LTSSM current state. Encoding is same as the
+  dedicated smlh_ltssm_state output.
+
+The mask should be 6 bits, from 0 to 5. Hence, fix the mask definition.
+
+Fixes: 23fe5bd4be90 ("PCI: keystone: Cleanup ks_pcie_link_up()")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+[mani: reworded description]
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/1763122140-203068-1-git-send-email-shawn.lin@rock-chips.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.c | 2 +-
+ drivers/pci/controller/dwc/pcie-designware.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
-index 74e6d7f3d2660..47776c4487bcd 100644
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -4557,9 +4557,9 @@ int btrfs_del_items(struct btrfs_trans_handle *trans, struct btrfs_root *root,
- 			if (btrfs_header_nritems(leaf) == 0) {
- 				path->slots[1] = slot;
- 				ret = btrfs_del_leaf(trans, root, path, leaf);
-+				free_extent_buffer(leaf);
- 				if (ret < 0)
- 					return ret;
--				free_extent_buffer(leaf);
- 				ret = 0;
- 			} else {
- 				/* if we're still in the path, make sure
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index cc71a2d90cd48..509e08e58b692 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -95,7 +95,7 @@
+ #define PORT_LANE_SKEW_INSERT_MASK	GENMASK(23, 0)
+ 
+ #define PCIE_PORT_DEBUG0		0x728
+-#define PORT_LOGIC_LTSSM_STATE_MASK	0x1f
++#define PORT_LOGIC_LTSSM_STATE_MASK	0x3f
+ #define PORT_LOGIC_LTSSM_STATE_L0	0x11
+ #define PCIE_PORT_DEBUG1		0x72C
+ #define PCIE_PORT_DEBUG1_LINK_UP		BIT(4)
 -- 
 2.51.0
 
