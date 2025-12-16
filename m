@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E55365A01;
-	Tue, 16 Dec 2025 12:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3E8328638;
+	Tue, 16 Dec 2025 12:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887129; cv=none; b=NDvFkPfpYGaF/qZvJWdJ58reZ1p4WKYPJ01lgekWNn0ubnC0MkB1J+naCptbHtRbr/yABCzDWEqXzBscgO1b4aIxvRzJVgN/ecf4pVm8Wo0pcqDn26xpdOBgz82xkJNfA38UQWys/M9pzyYH/rUsFghYO3Fn6tVZu7rbdi80HRw=
+	t=1765887132; cv=none; b=lQDBuzsjGcX8+V0SzlMqjCN2XnaaNlZ8J3Igclofc2mFVlqjtP+3qridHmUL7lLdpGEb328nfNlzJi6ahdIG3aRcmZflrpoptywt4Rn8+dzY+kgzZdwRNmrt08i1m3jrYDWxiM48sKRzbE9BoI0MmmpjMKxdsW15xq7QdAF3Ii0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887129; c=relaxed/simple;
-	bh=vZvKB/DtzagWtsPWE/woWMsunhUEs2PvbBzrlv9eWiA=;
+	s=arc-20240116; t=1765887132; c=relaxed/simple;
+	bh=UggNJ5xMNJDC3KwbBMEEBfHfUAf5E2ywQQfV77bSo6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=La/tfmRLCu8MTFNNKG2882KRe6Fs7S7441KLyyNWZRpxbiP8oUM+E+6HOKEP8zqtkCvUK/bagZ6Ny13HWcX1wO7/pMKqaXPYZFrNsRJfF9OQM6HV7mNdzaRGKkiAEDj+TGXRfaETs7cYvGEOf4DVecSzgF/yXE8hAEJCAxNnxPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bBpscCtC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzFBL5C4PSj2PeIGHB2Zxw/q/0iT2qaUmhR8KNTGWxa8QOisis0AsNDAOnCsu5/8lg+TSRB8bBZ2yJo1UMfdZiz7wJ3bjxtl/ZSAD8Bp3/Dh/twMIGhC2nAx+tl6X42g8FP4y89n8Tk0wvgi8/IM87oIQtFYKZ5gtIVneitBpQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OJsIEUah; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bBpscCtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4BD5C4CEF1;
-	Tue, 16 Dec 2025 12:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OJsIEUah"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF540C4CEF1;
+	Tue, 16 Dec 2025 12:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887129;
-	bh=vZvKB/DtzagWtsPWE/woWMsunhUEs2PvbBzrlv9eWiA=;
+	s=korg; t=1765887132;
+	bh=UggNJ5xMNJDC3KwbBMEEBfHfUAf5E2ywQQfV77bSo6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBpscCtCSJINsbscUZhGsQiQTOAn8UUNwaA7WJ1quIyD+ApL9lZwwY1bdCjTQDByH
-	 +7IJA/BfA3hCNnQuZrKv9wsbm052UkKWnjzBc3q/vlJMXwJ1TiohyOo8O7XAUMt0XX
-	 WSS+SzP9KGVQ5kDWggjDCnOHR3kTBT5Jke/Dd21U=
+	b=OJsIEUahniGJCzT6dsuFfXyR86Uo9Myxd9GeLrqy2foOUFvNPjmrJcQCvAbVxh7T/
+	 ANtYoHriUkiBgXbhL8UQM7+CXU4LHxCqiYbecT8a0CoW6nm0VLgq1XqnyV8m2nJJzz
+	 KLac38pcckpm/IxExgPTTt+I+qPBIidjSjgbHazM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 102/614] ice: move ice_init_pf() out of ice_init_dev()
-Date: Tue, 16 Dec 2025 12:07:49 +0100
-Message-ID: <20251216111405.023635161@linuxfoundation.org>
+Subject: [PATCH 6.18 103/614] ice: extract ice_init_dev() from ice_init()
+Date: Tue, 16 Dec 2025 12:07:50 +0100
+Message-ID: <20251216111405.061283795@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -55,10 +55,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 
-[ Upstream commit ef825bdb4605742c4efc03f67d930e80c42f33cb ]
+[ Upstream commit c2fb9398f73d41cb2b5da74ff505578525ee3fd8 ]
 
-Move ice_init_pf() out of ice_init_dev().
-Do the same for deinit counterpart.
+Extract ice_init_dev() from ice_init(), to allow service task and IRQ
+scheme teardown to be put after clearing SW constructs in the subsequent
+commit.
 
 Signed-off-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
@@ -67,180 +68,79 @@ Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Stable-dep-of: 1390b8b3d2be ("ice: remove duplicate call to ice_deinit_hw() on error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/ice/devlink/devlink.c  | 16 ++++++++--
- drivers/net/ethernet/intel/ice/ice.h          |  2 ++
- drivers/net/ethernet/intel/ice/ice_main.c     | 32 +++++++++----------
- 3 files changed, 31 insertions(+), 19 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-index fb2de521731ae..c354a03c950cd 100644
---- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
-+++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-@@ -459,6 +459,7 @@ static void ice_devlink_reinit_down(struct ice_pf *pf)
- 	rtnl_lock();
- 	ice_vsi_decfg(ice_get_main_vsi(pf));
- 	rtnl_unlock();
-+	ice_deinit_pf(pf);
- 	ice_deinit_dev(pf);
- }
- 
-@@ -1231,11 +1232,12 @@ static void ice_set_min_max_msix(struct ice_pf *pf)
- static int ice_devlink_reinit_up(struct ice_pf *pf)
- {
- 	struct ice_vsi *vsi = ice_get_main_vsi(pf);
-+	struct device *dev = ice_pf_to_dev(pf);
- 	int err;
- 
- 	err = ice_init_hw(&pf->hw);
- 	if (err) {
--		dev_err(ice_pf_to_dev(pf), "ice_init_hw failed: %d\n", err);
-+		dev_err(dev, "ice_init_hw failed: %d\n", err);
- 		return err;
- 	}
- 
-@@ -1246,13 +1248,19 @@ static int ice_devlink_reinit_up(struct ice_pf *pf)
- 	if (err)
- 		goto unroll_hw_init;
- 
-+	err = ice_init_pf(pf);
-+	if (err) {
-+		dev_err(dev, "ice_init_pf failed: %d\n", err);
-+		goto unroll_dev_init;
-+	}
-+
- 	vsi->flags = ICE_VSI_FLAG_INIT;
- 
- 	rtnl_lock();
- 	err = ice_vsi_cfg(vsi);
- 	rtnl_unlock();
- 	if (err)
--		goto err_vsi_cfg;
-+		goto unroll_pf_init;
- 
- 	/* No need to take devl_lock, it's already taken by devlink API */
- 	err = ice_load(pf);
-@@ -1265,7 +1273,9 @@ static int ice_devlink_reinit_up(struct ice_pf *pf)
- 	rtnl_lock();
- 	ice_vsi_decfg(vsi);
- 	rtnl_unlock();
--err_vsi_cfg:
-+unroll_pf_init:
-+	ice_deinit_pf(pf);
-+unroll_dev_init:
- 	ice_deinit_dev(pf);
- unroll_hw_init:
- 	ice_deinit_hw(&pf->hw);
-diff --git a/drivers/net/ethernet/intel/ice/ice.h b/drivers/net/ethernet/intel/ice/ice.h
-index 0e58a58c23eb3..9a1abd4573372 100644
---- a/drivers/net/ethernet/intel/ice/ice.h
-+++ b/drivers/net/ethernet/intel/ice/ice.h
-@@ -1035,6 +1035,8 @@ void ice_unload(struct ice_pf *pf);
- void ice_adv_lnk_speed_maps_init(void);
- int ice_init_dev(struct ice_pf *pf);
- void ice_deinit_dev(struct ice_pf *pf);
-+int ice_init_pf(struct ice_pf *pf);
-+void ice_deinit_pf(struct ice_pf *pf);
- int ice_change_mtu(struct net_device *netdev, int new_mtu);
- void ice_tx_timeout(struct net_device *netdev, unsigned int txqueue);
- int ice_xdp(struct net_device *dev, struct netdev_bpf *xdp);
 diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 6773b918daffc..6b3d941f419b3 100644
+index 6b3d941f419b3..a12dcc733e041 100644
 --- a/drivers/net/ethernet/intel/ice/ice_main.c
 +++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -3949,7 +3949,7 @@ u16 ice_get_avail_rxq_count(struct ice_pf *pf)
-  * ice_deinit_pf - Unrolls initialziations done by ice_init_pf
-  * @pf: board private structure to initialize
-  */
--static void ice_deinit_pf(struct ice_pf *pf)
-+void ice_deinit_pf(struct ice_pf *pf)
- {
- 	/* note that we unroll also on ice_init_pf() failure here */
- 
-@@ -4045,8 +4045,9 @@ void ice_start_service_task(struct ice_pf *pf)
- /**
-  * ice_init_pf - Initialize general software structures (struct ice_pf)
-  * @pf: board private structure to initialize
-+ * Return: 0 on success, negative errno otherwise.
-  */
--static int ice_init_pf(struct ice_pf *pf)
-+int ice_init_pf(struct ice_pf *pf)
- {
- 	struct udp_tunnel_nic_info *udp_tunnel_nic = &pf->hw.udp_tunnel_nic;
+@@ -5023,14 +5023,10 @@ static int ice_init(struct ice_pf *pf)
  	struct device *dev = ice_pf_to_dev(pf);
-@@ -4772,23 +4773,12 @@ int ice_init_dev(struct ice_pf *pf)
- 	}
- 
- 	ice_start_service_task(pf);
--	err = ice_init_pf(pf);
--	if (err) {
--		dev_err(dev, "ice_init_pf failed: %d\n", err);
--		goto unroll_irq_scheme_init;
--	}
- 
- 	return 0;
--
--unroll_irq_scheme_init:
--	ice_service_task_stop(pf);
--	ice_clear_interrupt_scheme(pf);
--	return err;
- }
- 
- void ice_deinit_dev(struct ice_pf *pf)
- {
--	ice_deinit_pf(pf);
- 	ice_deinit_hw(&pf->hw);
- 	ice_service_task_stop(pf);
- 
-@@ -5030,21 +5020,28 @@ static void ice_deinit_devlink(struct ice_pf *pf)
- 
- static int ice_init(struct ice_pf *pf)
- {
-+	struct device *dev = ice_pf_to_dev(pf);
  	int err;
  
- 	err = ice_init_dev(pf);
- 	if (err)
- 		return err;
- 
-+	err = ice_init_pf(pf);
-+	if (err) {
-+		dev_err(dev, "ice_init_pf failed: %d\n", err);
-+		goto unroll_dev_init;
-+	}
-+
- 	if (pf->hw.mac_type == ICE_MAC_E830) {
- 		err = pci_enable_ptm(pf->pdev, NULL);
- 		if (err)
--			dev_dbg(ice_pf_to_dev(pf), "PCIe PTM not supported by PCIe bus/controller\n");
-+			dev_dbg(dev, "PCIe PTM not supported by PCIe bus/controller\n");
+-	err = ice_init_dev(pf);
+-	if (err)
+-		return err;
+-
+ 	err = ice_init_pf(pf);
+ 	if (err) {
+ 		dev_err(dev, "ice_init_pf failed: %d\n", err);
+-		goto unroll_dev_init;
++		return err;
  	}
  
- 	err = ice_alloc_vsis(pf);
- 	if (err)
--		goto err_alloc_vsis;
-+		goto unroll_pf_init;
- 
- 	err = ice_init_pf_sw(pf);
- 	if (err)
-@@ -5081,7 +5078,9 @@ static int ice_init(struct ice_pf *pf)
- 	ice_deinit_pf_sw(pf);
- err_init_pf_sw:
+ 	if (pf->hw.mac_type == ICE_MAC_E830) {
+@@ -5080,8 +5076,6 @@ static int ice_init(struct ice_pf *pf)
  	ice_dealloc_vsis(pf);
--err_alloc_vsis:
-+unroll_pf_init:
-+	ice_deinit_pf(pf);
-+unroll_dev_init:
- 	ice_deinit_dev(pf);
+ unroll_pf_init:
+ 	ice_deinit_pf(pf);
+-unroll_dev_init:
+-	ice_deinit_dev(pf);
  	return err;
  }
-@@ -5093,6 +5092,7 @@ static void ice_deinit(struct ice_pf *pf)
  
+@@ -5093,7 +5087,6 @@ static void ice_deinit(struct ice_pf *pf)
  	ice_deinit_pf_sw(pf);
  	ice_dealloc_vsis(pf);
-+	ice_deinit_pf(pf);
- 	ice_deinit_dev(pf);
+ 	ice_deinit_pf(pf);
+-	ice_deinit_dev(pf);
  }
  
+ /**
+@@ -5323,10 +5316,14 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
+ 	}
+ 	pf->adapter = adapter;
+ 
+-	err = ice_init(pf);
++	err = ice_init_dev(pf);
+ 	if (err)
+ 		goto unroll_adapter;
+ 
++	err = ice_init(pf);
++	if (err)
++		goto unroll_dev_init;
++
+ 	devl_lock(priv_to_devlink(pf));
+ 	err = ice_load(pf);
+ 	if (err)
+@@ -5344,6 +5341,8 @@ ice_probe(struct pci_dev *pdev, const struct pci_device_id __always_unused *ent)
+ unroll_init:
+ 	devl_unlock(priv_to_devlink(pf));
+ 	ice_deinit(pf);
++unroll_dev_init:
++	ice_deinit_dev(pf);
+ unroll_adapter:
+ 	ice_adapter_put(pdev);
+ unroll_hw_init:
+@@ -5457,6 +5456,7 @@ static void ice_remove(struct pci_dev *pdev)
+ 	devl_unlock(priv_to_devlink(pf));
+ 
+ 	ice_deinit(pf);
++	ice_deinit_dev(pf);
+ 	ice_vsi_release_all(pf);
+ 
+ 	ice_setup_mc_magic_wake(pf);
 -- 
 2.51.0
 
