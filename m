@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8912E363C7D;
-	Tue, 16 Dec 2025 12:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6BE36403C;
+	Tue, 16 Dec 2025 12:22:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887766; cv=none; b=UtvvCgFbdm449K0rx4Sj+9BBZ2RMnayty9Pt/jr2wZiQ4/wZPKJjCn+nYFPnhcU97K08RNPSSmRCiCO65Af9+bN4r7MUczCJeTHD4jgkvvAkupj0O23BYXcp9yx7srX1WkvK5XIUSfIW6LaJ1MfbyZnHX1aiP0gFg5XzKXZc0Gc=
+	t=1765887770; cv=none; b=AffDP8kzMpc5CMuc9MTPHB02pEHXjvdVcWz55XJq55zVNHolusTqIyhYYSp3OIm4VNryGHQ+BApck2M6XYHGZiK627jiTpmbSti41KQGQ/BrjZeUPwn23Ck3IzaKgAPkZdp7ursMLqqV5fKYKj3hO8iYD6rGc35tBN8MnjcnjME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887766; c=relaxed/simple;
-	bh=jDhyj9QHCYrwqBgmw+7OrEQzQGQmsfnNWkc8QK2e37Y=;
+	s=arc-20240116; t=1765887770; c=relaxed/simple;
+	bh=K7A9gzEHXKFvasfWiI6R3YNUmqHZs82ShIAOjyFPisU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TpNs6Mhsp9l0wq0ImQgL7BFrODzUZih90ma4YACz56aYdluG6+P5ATzM2yUxXK7mqIJXrydBNilRGBQvYmXVglwRoMByeGtSjMTeACcYgnuTGl0Ne4CEiqqq1vNBnvCTuDW9pp9OuC46Nee5SnZfrDiaJALqHigz0UyeYsjgUro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MHVHMqdq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nv+tqq0jfjghIbKNQMlVbhE0Rupuvb2riKjIFAQBZ/cRNwJdaxkEQ+TbcHCMx5F9UiokrjkYTCpmLrBX/Hh5I/xRGldIq6e/sQiUzHpkSs0bBk44lkTCiMckZxZuuZQekOYgJc31thHlM1h2Po4nSaY7MhXzOExrqDyOMrdS5ns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vgr73qNx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MHVHMqdq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FA3C4CEF1;
-	Tue, 16 Dec 2025 12:22:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vgr73qNx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21DD1C4CEF1;
+	Tue, 16 Dec 2025 12:22:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887766;
-	bh=jDhyj9QHCYrwqBgmw+7OrEQzQGQmsfnNWkc8QK2e37Y=;
+	s=korg; t=1765887769;
+	bh=K7A9gzEHXKFvasfWiI6R3YNUmqHZs82ShIAOjyFPisU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MHVHMqdq5869W0RjHzC/pjBg4viBzFBu0DD8NzoLUAQkZn0rWJYoHBvt9AfALD0Ss
-	 PGVOv97ONM475eisiAhgKgqOVYFXPIH1a81uuxRJB1yfzV76h/H7ZBDEa6HzseO6EY
-	 XxeA8zcZTnuHBEYPhx9Q4JXtiMq+NzqElOOddqy4=
+	b=Vgr73qNx/wa5bNOw51xxi3tAnaU0Oz7Rfs5DII4kTfAUFCmgqj+VO05nzviBfhv6u
+	 2/Kc2WVNwc/bzxCFiu3F+SGmUBT4On4odAENBpk98CqhnK9QW0CP73RwPGgk/ONiPs
+	 bbWFq1+yYfSIoOW1qEGlXTpAS/Dl6dRpFfe9kGzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Vineeth Pillai (Google)" <vineeth@bitbyteword.org>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 331/614] net: phy: realtek: create rtl8211f_config_rgmii_delay()
-Date: Tue, 16 Dec 2025 12:11:38 +0100
-Message-ID: <20251216111413.358349536@linuxfoundation.org>
+Subject: [PATCH 6.18 332/614] iommu/vt-d: Set INTEL_IOMMU_FLOPPY_WA depend on BLK_DEV_FD
+Date: Tue, 16 Dec 2025 12:11:39 +0100
+Message-ID: <20251216111413.394766469@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,136 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
 
-[ Upstream commit 8e982441ba601d982dd0739972115d85ae01d99b ]
+[ Upstream commit cb3db5a39e2a6b6396df1780d39a250f649d2e3a ]
 
-The control flow in rtl8211f_config_init() has some pitfalls which were
-probably unintended. Specifically it has an early return:
+INTEL_IOMMU_FLOPPY_WA workaround was introduced to create direct mappings
+for first 16MB for floppy devices as the floppy drivers were not using
+dma apis. We need not do this direct map if floppy driver is not
+enabled.
 
-	switch (phydev->interface) {
-	...
-	default: /* the rest of the modes imply leaving delay as is. */
-		return 0;
-	}
+INTEL_IOMMU_FLOPPY_WA is generally not a good idea. Iommu will be
+mapping pages in this address range while kernel would also be
+allocating from this range(mostly on memory stress). A misbehaving
+device using this domain will have access to the pages that the
+kernel might be actively using. We noticed this while running a test
+that was trying to figure out if any pages used by kernel is in iommu
+page tables.
 
-which exits the entire config_init() function. This means it also skips
-doing things such as disabling CLKOUT or disabling PHY-mode EEE.
+This patch reduces the scope of the above issue by disabling the
+workaround when floppy driver is not enabled. But we would still need to
+fix the floppy driver to use dma apis so that we need not do direct map
+without reserving the pages. Or the other option is to reserve this
+memory range in firmware so that kernel will not use the pages.
 
-For the RTL8211FS, which uses PHY_INTERFACE_MODE_SGMII, this might be a
-problem. However, I don't know that it is, so there is no Fixes: tag.
-The issue was observed through code inspection.
-
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20251117234033.345679-2-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d850c2ee5fe2 ("iommu/vt-d: Expose ISA direct mapping region via iommu_get_resv_regions")
+Fixes: 49a0429e53f2 ("Intel IOMMU: Iommu floppy workaround")
+Signed-off-by: Vineeth Pillai (Google) <vineeth@bitbyteword.org>
+Link: https://lore.kernel.org/r/20251002161625.1155133-1-vineeth@bitbyteword.org
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek/realtek_main.c | 65 +++++++++++++++-----------
- 1 file changed, 39 insertions(+), 26 deletions(-)
+ drivers/iommu/intel/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/realtek/realtek_main.c b/drivers/net/phy/realtek/realtek_main.c
-index 16a347084293e..b26f4d1c6bbfa 100644
---- a/drivers/net/phy/realtek/realtek_main.c
-+++ b/drivers/net/phy/realtek/realtek_main.c
-@@ -560,22 +560,11 @@ static int rtl8211c_config_init(struct phy_device *phydev)
- 			    CTL1000_ENABLE_MASTER | CTL1000_AS_MASTER);
- }
+diff --git a/drivers/iommu/intel/Kconfig b/drivers/iommu/intel/Kconfig
+index f2f538c706503..17a91f881b2e9 100644
+--- a/drivers/iommu/intel/Kconfig
++++ b/drivers/iommu/intel/Kconfig
+@@ -66,7 +66,7 @@ config INTEL_IOMMU_DEFAULT_ON
  
--static int rtl8211f_config_init(struct phy_device *phydev)
-+static int rtl8211f_config_rgmii_delay(struct phy_device *phydev)
- {
--	struct rtl821x_priv *priv = phydev->priv;
--	struct device *dev = &phydev->mdio.dev;
- 	u16 val_txdly, val_rxdly;
- 	int ret;
- 
--	ret = phy_modify_paged_changed(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1,
--				       RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF,
--				       priv->phycr1);
--	if (ret < 0) {
--		dev_err(dev, "aldps mode  configuration failed: %pe\n",
--			ERR_PTR(ret));
--		return ret;
--	}
--
- 	switch (phydev->interface) {
- 	case PHY_INTERFACE_MODE_RGMII:
- 		val_txdly = 0;
-@@ -605,34 +594,58 @@ static int rtl8211f_config_init(struct phy_device *phydev)
- 				       RTL8211F_TXCR, RTL8211F_TX_DELAY,
- 				       val_txdly);
- 	if (ret < 0) {
--		dev_err(dev, "Failed to update the TX delay register\n");
-+		phydev_err(phydev, "Failed to update the TX delay register: %pe\n",
-+			   ERR_PTR(ret));
- 		return ret;
- 	} else if (ret) {
--		dev_dbg(dev,
--			"%s 2ns TX delay (and changing the value from pin-strapping RXD1 or the bootloader)\n",
--			str_enable_disable(val_txdly));
-+		phydev_dbg(phydev,
-+			   "%s 2ns TX delay (and changing the value from pin-strapping RXD1 or the bootloader)\n",
-+			   str_enable_disable(val_txdly));
- 	} else {
--		dev_dbg(dev,
--			"2ns TX delay was already %s (by pin-strapping RXD1 or bootloader configuration)\n",
--			str_enabled_disabled(val_txdly));
-+		phydev_dbg(phydev,
-+			   "2ns TX delay was already %s (by pin-strapping RXD1 or bootloader configuration)\n",
-+			   str_enabled_disabled(val_txdly));
- 	}
- 
- 	ret = phy_modify_paged_changed(phydev, RTL8211F_RGMII_PAGE,
- 				       RTL8211F_RXCR, RTL8211F_RX_DELAY,
- 				       val_rxdly);
- 	if (ret < 0) {
--		dev_err(dev, "Failed to update the RX delay register\n");
-+		phydev_err(phydev, "Failed to update the RX delay register: %pe\n",
-+			   ERR_PTR(ret));
- 		return ret;
- 	} else if (ret) {
--		dev_dbg(dev,
--			"%s 2ns RX delay (and changing the value from pin-strapping RXD0 or the bootloader)\n",
--			str_enable_disable(val_rxdly));
-+		phydev_dbg(phydev,
-+			   "%s 2ns RX delay (and changing the value from pin-strapping RXD0 or the bootloader)\n",
-+			   str_enable_disable(val_rxdly));
- 	} else {
--		dev_dbg(dev,
--			"2ns RX delay was already %s (by pin-strapping RXD0 or bootloader configuration)\n",
--			str_enabled_disabled(val_rxdly));
-+		phydev_dbg(phydev,
-+			   "2ns RX delay was already %s (by pin-strapping RXD0 or bootloader configuration)\n",
-+			   str_enabled_disabled(val_rxdly));
- 	}
- 
-+	return 0;
-+}
-+
-+static int rtl8211f_config_init(struct phy_device *phydev)
-+{
-+	struct rtl821x_priv *priv = phydev->priv;
-+	struct device *dev = &phydev->mdio.dev;
-+	int ret;
-+
-+	ret = phy_modify_paged_changed(phydev, RTL8211F_PHYCR_PAGE, RTL8211F_PHYCR1,
-+				       RTL8211F_ALDPS_PLL_OFF | RTL8211F_ALDPS_ENABLE | RTL8211F_ALDPS_XTAL_OFF,
-+				       priv->phycr1);
-+	if (ret < 0) {
-+		dev_err(dev, "aldps mode  configuration failed: %pe\n",
-+			ERR_PTR(ret));
-+		return ret;
-+	}
-+
-+	ret = rtl8211f_config_rgmii_delay(phydev);
-+	if (ret)
-+		return ret;
-+
- 	if (!priv->has_phycr2)
- 		return 0;
- 
+ config INTEL_IOMMU_FLOPPY_WA
+ 	def_bool y
+-	depends on X86
++	depends on X86 && BLK_DEV_FD
+ 	help
+ 	  Floppy disk drivers are known to bypass DMA API calls
+ 	  thereby failing to work when IOMMU is enabled. This
 -- 
 2.51.0
 
