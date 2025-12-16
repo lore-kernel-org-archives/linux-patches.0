@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38648364E9C;
-	Tue, 16 Dec 2025 12:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753ED3659E1;
+	Tue, 16 Dec 2025 12:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887932; cv=none; b=Xp0IPpYURd1n0fyf6H+qXWztL4AE7T24rsK1NIKVvzhdMhlx4ABqt+PLGetkuCIiI5XD0/RtPPrRlDgLKAF71srCBauSvYnG449u1LKc47LHZpaZKrnHsiXgxMUN7Znz3OLt3rMIGRkvubGgGq9bdL+v2vq7s3JmWcJBoSmSG0k=
+	t=1765887935; cv=none; b=NcIPvw4BWbwtAiM6ScvyaurrxRwzw1rUJfn2hTk9Mp+bbpe07cOrlP/UU2TaHc6velvzktpDFIEgweLb+LriFSVb8ra+df2t2pBFHmykagZoUfaKaZ8+qaX0mQhvAkg0qfSEvEVFchCE6Wrb+pmba9ms48Ndc8aN1+FvOhTAfh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887932; c=relaxed/simple;
-	bh=1kpP5EZZ8u3f/1oif/fBBKuhKoYc4Rc/uL7Fa+4BUR0=;
+	s=arc-20240116; t=1765887935; c=relaxed/simple;
+	bh=8FOq1rLTvXTiQFyyM85f8eCfEES8HggyiU0898R3ZOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fCqgjB/Atn8iwOJT+Y0YzCClXYOepYqqACbigrPi4FgoO2qjllRD+3BwypRoYke5ZIziKqXeog9wtaNgGF3yV0K1nNusFEv3olFTY9TzIznrsnoG8YN7qRj61XH4Lh04SSsLERanhdQ+pIJTOp2iCcL6JTmiHGgxH96NTFbkDcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc5oa1tg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RLJHBNqThkELWkE2Ch/cDy3/2n0GF6CzmhQO1gplN1Y3LNo9QQxfMdxcrDS33VdKfvR5hh4n9iuqucsaaUEc0cHzCOJhZRTAUV1daziCoWD+LWb28ATMh95CPDLWYmKv5/b5giGMSu8TDLd/Wf4rxKYMaFb4KP3HiLhrxDFsxz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S4HIkQiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc5oa1tg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0782C4CEF5;
-	Tue, 16 Dec 2025 12:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S4HIkQiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9892C4CEF1;
+	Tue, 16 Dec 2025 12:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887932;
-	bh=1kpP5EZZ8u3f/1oif/fBBKuhKoYc4Rc/uL7Fa+4BUR0=;
+	s=korg; t=1765887935;
+	bh=8FOq1rLTvXTiQFyyM85f8eCfEES8HggyiU0898R3ZOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cc5oa1tgYjekrjVgfp9nRLzfYEBhupZ30XKisupQoCtpt2rhlqH121OTGVmN8hj0x
-	 vZrZFEg4fuYQujmcaCr6QQ2Y0kQvo+pCIc2UbGVN67aLvwkIKSkMtdfPwzo6DW8PIa
-	 XoxA4zNkoThhmPVzagpvW+HOmu6EITserthvQVyo=
+	b=S4HIkQiq75ko1zDGfnNqnST1Yg/3FaV5kjolU33L03rAVIeygMAshPblOym2X64D9
+	 DV3Taz6uqUil/Mxqet/tFHMq8B2rrh9VfbsuYFj+6n97/uJOl3646hQ3LMhsLnDaK0
+	 cyRT9SD+Mlp+dvgRPXqQVq+CHh7GtOPtStDxHR9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	T Pratham <t-pratham@ti.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Algea Cao <algea.cao@rock-chips.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 380/614] crypto: ahash - Zero positive err value in ahash_update_finish
-Date: Tue, 16 Dec 2025 12:12:27 +0100
-Message-ID: <20251216111415.130258057@linuxfoundation.org>
+Subject: [PATCH 6.18 350/614] phy: rockchip: samsung-hdptx: Prevent Inter-Pair Skew from exceeding the limits
+Date: Tue, 16 Dec 2025 12:11:57 +0100
+Message-ID: <20251216111414.044530940@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,42 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit ebbdf6466b30e3b37f3b360826efd21f0633fb9e ]
+[ Upstream commit 51023cf6cc5db3423dea6620746d9087e336e024 ]
 
-The partial block length returned by a block-only driver should
-not be passed up to the caller since ahash itself deals with the
-partial block data.
+Fixup PHY deskew FIFO to prevent the phase of D2 lane going ahead of
+other lanes.  It's worth noting this might only happen when dealing with
+HDMI 2.0 rates.
 
-Set err to zero in ahash_update_finish if it was positive.
-
-Reported-by: T Pratham <t-pratham@ti.com>
-Tested-by: T Pratham <t-pratham@ti.com>
-Fixes: 9d7a0ab1c753 ("crypto: ahash - Handle partial blocks in API")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 553be2830c5f ("phy: rockchip: Add Samsung HDMI/eDP Combo PHY driver")
+Co-developed-by: Algea Cao <algea.cao@rock-chips.com>
+Signed-off-by: Algea Cao <algea.cao@rock-chips.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20251028-phy-hdptx-fixes-v1-3-ecc642a59d94@collabora.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/ahash.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/crypto/ahash.c b/crypto/ahash.c
-index 819b484a1a003..66492ae75fcfb 100644
---- a/crypto/ahash.c
-+++ b/crypto/ahash.c
-@@ -423,7 +423,11 @@ static int ahash_update_finish(struct ahash_request *req, int err)
+diff --git a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+index 8ba9b53c2309b..29de2f7bdae8a 100644
+--- a/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
++++ b/drivers/phy/rockchip/phy-rockchip-samsung-hdptx.c
+@@ -668,13 +668,9 @@ static const struct reg_sequence rk_hdtpx_common_lane_init_seq[] = {
  
- 	req->nbytes += nonzero - blen;
+ static const struct reg_sequence rk_hdtpx_tmds_lane_init_seq[] = {
+ 	REG_SEQ0(LANE_REG(0312), 0x00),
+-	REG_SEQ0(LANE_REG(031e), 0x00),
+ 	REG_SEQ0(LANE_REG(0412), 0x00),
+-	REG_SEQ0(LANE_REG(041e), 0x00),
+ 	REG_SEQ0(LANE_REG(0512), 0x00),
+-	REG_SEQ0(LANE_REG(051e), 0x00),
+ 	REG_SEQ0(LANE_REG(0612), 0x00),
+-	REG_SEQ0(LANE_REG(061e), 0x08),
+ 	REG_SEQ0(LANE_REG(0303), 0x2f),
+ 	REG_SEQ0(LANE_REG(0403), 0x2f),
+ 	REG_SEQ0(LANE_REG(0503), 0x2f),
+@@ -687,6 +683,11 @@ static const struct reg_sequence rk_hdtpx_tmds_lane_init_seq[] = {
+ 	REG_SEQ0(LANE_REG(0406), 0x1c),
+ 	REG_SEQ0(LANE_REG(0506), 0x1c),
+ 	REG_SEQ0(LANE_REG(0606), 0x1c),
++	/* Keep Inter-Pair Skew in the limits */
++	REG_SEQ0(LANE_REG(031e), 0x02),
++	REG_SEQ0(LANE_REG(041e), 0x02),
++	REG_SEQ0(LANE_REG(051e), 0x02),
++	REG_SEQ0(LANE_REG(061e), 0x0a),
+ };
  
--	blen = err < 0 ? 0 : err + nonzero;
-+	blen = 0;
-+	if (err >= 0) {
-+		blen = err + nonzero;
-+		err = 0;
-+	}
- 	if (ahash_request_isvirt(req))
- 		memcpy(buf, req->svirt + req->nbytes - blen, blen);
- 	else
+ static struct tx_drv_ctrl tx_drv_ctrl_rbr[4][4] = {
 -- 
 2.51.0
 
