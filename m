@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C505034E74D;
-	Tue, 16 Dec 2025 11:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C2A34E75D;
+	Tue, 16 Dec 2025 11:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885599; cv=none; b=hkan/AIPycs47hO/C1IsIT9W2PT4iZIeNJnsfkBzWqDl+WwkCYSxvOyZk2SrB4CwX2dT3ojBrDTUgkiV1YCZJFHTRkYIN4vtKg8Uv1Px7Hqyb5YqeTUDbN9Ypr0abQKMR/mMjYmt62f9AYT/hIDpftNv73Kj0SV/jfgyrq/eC9o=
+	t=1765885603; cv=none; b=QAdCglrOuAwAbyVGovyh9G8z/RE7+t3m7HWUkR8bpooSnDbc9RoS1B/femQl6GtBgx7gfEwBYszlqvMeP4G4/tzGoWkucscWNtT2QlFdnEyEupZ0IlaohskO8hnxCIukqZ/99yrliIJoopDkwFmIKuqt/gScbPhjasLqAO8/sb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885599; c=relaxed/simple;
-	bh=3lhOmgW5VDUijR1psTpGI5O5xC3xULAH36/6BWuAFS4=;
+	s=arc-20240116; t=1765885603; c=relaxed/simple;
+	bh=S5w4xo/ogjz52YSVSfBC2K0YGxM+jz8mv6ou7UGDqhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMI5l+7ij7oTd4YNVzzAmyDdBS0SoKXRil6N9y1R98zgGgjx8mgAQvyux0LigoNh8NPpk7mRvw7Rh2Y71/T5jrFsGxMhDPdx9DXZuY+T/KALsklfMciAz11NjM690LsLbzkKVLgdUvTv+4eTredfaWTvFMRKYLnOPcrRvogaf1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErJLxMu5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bXuRgcnn/IpCeodt4mLLIGPybt7lBf4dD57iRVbb0o6FeSOtpOy1uKfgxiia0ynMpyvcsN34oyE73BIQ0bvlKN2PlT9e4lqaX6uO9m7O8h7AYdQa/k9T/dJzkt+XaNQEuXuFJdV2jm18mbF0e9o9wMTSpX7hIiKDT7bSgdoZVEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KqT8Opy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErJLxMu5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E0C6C4CEF1;
-	Tue, 16 Dec 2025 11:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KqT8Opy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8799C4CEF1;
+	Tue, 16 Dec 2025 11:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885599;
-	bh=3lhOmgW5VDUijR1psTpGI5O5xC3xULAH36/6BWuAFS4=;
+	s=korg; t=1765885603;
+	bh=S5w4xo/ogjz52YSVSfBC2K0YGxM+jz8mv6ou7UGDqhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErJLxMu5RoQLA0IvKQA7VyJOmdhXHYF30DCJTZ3IpfQb+4FMTpsfPQy35MdIihtPR
-	 h1fxQXPJcArvVjUwnTCEP05RhhDI2zLpdT2rc1//HXHyzxQHZfbiDa6k6pWep2Ey48
-	 fngMOSyfJr0tmOAI0hsNWNXhCNkrKU8+d+tTk5xA=
+	b=2KqT8Opy9s8bJ7TdJ10gYEyEQ7bpykQSL1Y4PuaYiAj05h41NDfAETOMmSzxXtxCa
+	 VllkjbGn6rDWcFY+cwq2cXI1NUIThogYRJI1K/j6/9H1PRGf8OretR+iYaRuDqus+r
+	 G0pWpoNpgKwS/WAQ5Uhdh1bcqRNGIpx7Qn+FmV4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 188/507] perf/x86/intel: Correct large PEBS flag check
-Date: Tue, 16 Dec 2025 12:10:29 +0100
-Message-ID: <20251216111352.323441548@linuxfoundation.org>
+Subject: [PATCH 6.17 171/507] libbpf: Fix parsing of multi-split BTF
+Date: Tue, 16 Dec 2025 12:10:12 +0100
+Message-ID: <20251216111351.713300006@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,44 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 5e4e355ae7cdeb0fef5dbe908866e1f895abfacc ]
+[ Upstream commit 4f596acc260e691a2e348f64230392f3472feea3 ]
 
-current large PEBS flag check only checks if sample_regs_user contains
-unsupported GPRs but doesn't check if sample_regs_intr contains
-unsupported GPRs.
+When creating multi-split BTF we correctly set the start string offset
+to be the size of the base string section plus the base BTF start
+string offset; the latter is needed for multi-split BTF since the
+offset is non-zero there.
 
-Of course, currently PEBS HW supports to sample all perf supported GPRs,
-the missed check doesn't cause real issue. But it won't be true any more
-after the subsequent patches support to sample SSP register. SSP
-sampling is not supported by adaptive PEBS HW and it would be supported
-until arch-PEBS HW. So correct this issue.
+Unfortunately the BTF parsing case needed that logic and it was
+missed.
 
-Fixes: a47ba4d77e12 ("perf/x86: Enable free running PEBS for REGS_USER/INTR")
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20251029102136.61364-5-dapeng1.mi@linux.intel.com
+Fixes: 4e29128a9ace ("libbpf/btf: Fix string handling to support multi-split BTF")
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20251104203309.318429-2-alan.maguire@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/lib/bpf/btf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 046d12281fd94..52270268144c2 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4029,7 +4029,9 @@ static unsigned long intel_pmu_large_pebs_flags(struct perf_event *event)
- 	if (!event->attr.exclude_kernel)
- 		flags &= ~PERF_SAMPLE_REGS_USER;
- 	if (event->attr.sample_regs_user & ~PEBS_GP_REGS)
--		flags &= ~(PERF_SAMPLE_REGS_USER | PERF_SAMPLE_REGS_INTR);
-+		flags &= ~PERF_SAMPLE_REGS_USER;
-+	if (event->attr.sample_regs_intr & ~PEBS_GP_REGS)
-+		flags &= ~PERF_SAMPLE_REGS_INTR;
- 	return flags;
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index 37682908cb0f3..ea9f3311bbac6 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -1062,7 +1062,7 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf, b
+ 	if (base_btf) {
+ 		btf->base_btf = base_btf;
+ 		btf->start_id = btf__type_cnt(base_btf);
+-		btf->start_str_off = base_btf->hdr->str_len;
++		btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
+ 	}
+ 
+ 	if (is_mmap) {
+@@ -5819,7 +5819,7 @@ void btf_set_base_btf(struct btf *btf, const struct btf *base_btf)
+ {
+ 	btf->base_btf = (struct btf *)base_btf;
+ 	btf->start_id = btf__type_cnt(base_btf);
+-	btf->start_str_off = base_btf->hdr->str_len;
++	btf->start_str_off = base_btf->hdr->str_len + base_btf->start_str_off;
  }
  
+ int btf__relocate(struct btf *btf, const struct btf *base_btf)
 -- 
 2.51.0
 
