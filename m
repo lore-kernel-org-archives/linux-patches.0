@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08FB63314B4;
-	Tue, 16 Dec 2025 11:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 555B3342CB8;
+	Tue, 16 Dec 2025 11:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884929; cv=none; b=m09LEDmqPaNvCXb9gRAm1Ug0C/3hOCObaLeR64U6tSuzWDQl1ePl47vA3H1zkoOT0NwKzk9upxPWqXOc794xlbFYcAQMY8nSOx9JQr3aVpE/HcDIrNzl5wG2Msp0Naz8pPh3qrUixhYkEbDRvtRktW2U1/ex2R8Icjw14fGESAk=
+	t=1765884932; cv=none; b=eYqsQEgf8j/to9NqvtXeGsUKnr+JxUHMP8pQGCvSMSPcAaf7fEeEfcDYlv99pAXMguLOiudIFyVenoZGdfqN3D7zICK6CUVKJiXbcRM9wZkXQ8exyGr2APFK6g002yDRQ9uRWVLWQv/V7aEky8K5ZT0T6mApolGxtMA+sy4cvkk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884929; c=relaxed/simple;
-	bh=qcCA7QgOG9ZRnKm34GSbxtUaBii+tRnO4vpkNoz2zLI=;
+	s=arc-20240116; t=1765884932; c=relaxed/simple;
+	bh=CGVKAsJFakRoDI4mDjLx+WqZmn1t8a9j7K7/Q2n8Mxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eST1HJt8Ru+eOQWlGhodB6jMmmbJ+sB1trXyB4MYTrYJ+CWV+nHsDPf9bj6E5k3tJjuqKhn4yDoj25k9wOXVjWoxn4kFxjyCGdbwMn1OwmXx1DQr9nS0LkTULM44hoIdMoMFDNMANKGNTZpTZJOGisXBddYDzd13eKyeaOajyjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HaHoLxqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bKkNYvUkClEEDUIFfGU4uXUi53r1Rpt8jnYehAGBHxsfhe2DzYpjTtAboCAqulVCBIjwnGwfKZ6iyUENd7yfErqxNq8NVa+frUTgtXyjnrcPc2dwpRXnQP6hl2TFBsSv3zBeaWN/n41mhAENTIyoba6V5gXWIkDlVV1A5HWptlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S6DhGvkd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HaHoLxqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A01C4CEF1;
-	Tue, 16 Dec 2025 11:35:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S6DhGvkd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0577C4CEF1;
+	Tue, 16 Dec 2025 11:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884928;
-	bh=qcCA7QgOG9ZRnKm34GSbxtUaBii+tRnO4vpkNoz2zLI=;
+	s=korg; t=1765884932;
+	bh=CGVKAsJFakRoDI4mDjLx+WqZmn1t8a9j7K7/Q2n8Mxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HaHoLxqy4jjpZerYF8V9E8icGTvnEKRGrEo29kDgPe/0peTqINhSW1XBQITvT5Xyw
-	 vtoEJgqUfmzaFnurxDUbyaJ8XcbPA+lpsCHNVzYwwYuTK8zib1T2C2iS6elD7zPLSX
-	 SqKuWzowMgYsKgK2whk7Sx5tJ1x9xB2qCsy3FGT0=
+	b=S6DhGvkdogSo0GtXfTRk2FL2xnxCZFTDJc3m/FJvuNCXbipdVs87DKUpkKFlOafdw
+	 LZgAj9NTucIaUgPc75VCoHKOy/imjgcyr6ULdjUUTZpaN/ml4T/kSHjPQnTOLsfr1V
+	 V5Cm1x9Bur1tKvtcRGI0Dm04Rd8SAVUX8Xk3YaR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 341/354] efi/cper: Adjust infopfx size to accept an extra space
-Date: Tue, 16 Dec 2025 12:15:08 +0100
-Message-ID: <20251216111333.259729881@linuxfoundation.org>
+Subject: [PATCH 6.12 342/354] efi/cper: align ARM CPER type with UEFI 2.9A/2.10 specs
+Date: Tue, 16 Dec 2025 12:15:09 +0100
+Message-ID: <20251216111333.295718905@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -47,7 +47,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -56,43 +55,226 @@ Content-Transfer-Encoding: 8bit
 
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 
-[ Upstream commit 8ad2c72e21efb3dc76c5b14089fa7984cdd87898 ]
+[ Upstream commit 96b010536ee020e716d28d9b359a4bcd18800aeb ]
 
-Compiling with W=1 with werror enabled produces an error:
+Up to UEFI spec 2.9, the type byte of CPER struct for ARM processor
+was defined simply as:
 
-drivers/firmware/efi/cper-arm.c: In function ‘cper_print_proc_arm’:
-drivers/firmware/efi/cper-arm.c:298:64: error: ‘snprintf’ output may be truncated before the last format character [-Werror=format-truncation=]
-  298 |                         snprintf(infopfx, sizeof(infopfx), "%s ", newpfx);
-      |                                                                ^
-drivers/firmware/efi/cper-arm.c:298:25: note: ‘snprintf’ output between 2 and 65 bytes into a destination of size 64
-  298 |                         snprintf(infopfx, sizeof(infopfx), "%s ", newpfx);
-      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Type at byte offset 4:
 
-As the logic there adds an space at the end of infopx buffer.
-Add an extra space to avoid such warning.
+	- Cache error
+	- TLB Error
+	- Bus Error
+	- Micro-architectural Error
+	All other values are reserved
 
+Yet, there was no information about how this would be encoded.
+
+Spec 2.9A errata corrected it by defining:
+
+	- Bit 1 - Cache Error
+	- Bit 2 - TLB Error
+	- Bit 3 - Bus Error
+	- Bit 4 - Micro-architectural Error
+	All other values are reserved
+
+That actually aligns with the values already defined on older
+versions at N.2.4.1. Generic Processor Error Section.
+
+Spec 2.10 also preserve the same encoding as 2.9A.
+
+Adjust CPER and GHES handling code for both generic and ARM
+processors to properly handle UEFI 2.9A and 2.10 encoding.
+
+Link: https://uefi.org/specs/UEFI/2.10/Apx_N_Common_Platform_Error_Record.html#arm-processor-error-information
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/cper-arm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/apei/ghes.c        | 16 +++++++----
+ drivers/firmware/efi/cper-arm.c | 50 ++++++++++++++++-----------------
+ include/linux/cper.h            | 10 +++----
+ 3 files changed, 39 insertions(+), 37 deletions(-)
 
+diff --git a/drivers/acpi/apei/ghes.c b/drivers/acpi/apei/ghes.c
+index 99659478e0bd0..45fa2510e4cf5 100644
+--- a/drivers/acpi/apei/ghes.c
++++ b/drivers/acpi/apei/ghes.c
+@@ -22,6 +22,7 @@
+ #include <linux/moduleparam.h>
+ #include <linux/init.h>
+ #include <linux/acpi.h>
++#include <linux/bitfield.h>
+ #include <linux/io.h>
+ #include <linux/interrupt.h>
+ #include <linux/timer.h>
+@@ -531,6 +532,7 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+ {
+ 	struct cper_sec_proc_arm *err = acpi_hest_get_payload(gdata);
+ 	int flags = sync ? MF_ACTION_REQUIRED : 0;
++	char error_type[120];
+ 	bool queued = false;
+ 	int sec_sev, i;
+ 	char *p;
+@@ -543,9 +545,8 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+ 	p = (char *)(err + 1);
+ 	for (i = 0; i < err->err_info_num; i++) {
+ 		struct cper_arm_err_info *err_info = (struct cper_arm_err_info *)p;
+-		bool is_cache = (err_info->type == CPER_ARM_CACHE_ERROR);
++		bool is_cache = err_info->type & CPER_ARM_CACHE_ERROR;
+ 		bool has_pa = (err_info->validation_bits & CPER_ARM_INFO_VALID_PHYSICAL_ADDR);
+-		const char *error_type = "unknown error";
+ 
+ 		/*
+ 		 * The field (err_info->error_info & BIT(26)) is fixed to set to
+@@ -559,12 +560,15 @@ static bool ghes_handle_arm_hw_error(struct acpi_hest_generic_data *gdata,
+ 			continue;
+ 		}
+ 
+-		if (err_info->type < ARRAY_SIZE(cper_proc_error_type_strs))
+-			error_type = cper_proc_error_type_strs[err_info->type];
++		cper_bits_to_str(error_type, sizeof(error_type),
++				 FIELD_GET(CPER_ARM_ERR_TYPE_MASK, err_info->type),
++				 cper_proc_error_type_strs,
++				 ARRAY_SIZE(cper_proc_error_type_strs));
+ 
+ 		pr_warn_ratelimited(FW_WARN GHES_PFX
+-				    "Unhandled processor error type: %s\n",
+-				    error_type);
++				    "Unhandled processor error type 0x%02x: %s%s\n",
++				    err_info->type, error_type,
++				    (err_info->type & ~CPER_ARM_ERR_TYPE_MASK) ? " with reserved bit(s)" : "");
+ 		p += err_info->length;
+ 	}
+ 
 diff --git a/drivers/firmware/efi/cper-arm.c b/drivers/firmware/efi/cper-arm.c
-index fa9c1c3bf168b..eb7ee6af55f23 100644
+index eb7ee6af55f23..52d18490b59e3 100644
 --- a/drivers/firmware/efi/cper-arm.c
 +++ b/drivers/firmware/efi/cper-arm.c
-@@ -240,7 +240,7 @@ void cper_print_proc_arm(const char *pfx,
- 	int i, len, max_ctx_type;
+@@ -93,15 +93,11 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
+ 	bool proc_context_corrupt, corrected, precise_pc, restartable_pc;
+ 	bool time_out, access_mode;
+ 
+-	/* If the type is unknown, bail. */
+-	if (type > CPER_ARM_MAX_TYPE)
+-		return;
+-
+ 	/*
+ 	 * Vendor type errors have error information values that are vendor
+ 	 * specific.
+ 	 */
+-	if (type == CPER_ARM_VENDOR_ERROR)
++	if (type & CPER_ARM_VENDOR_ERROR)
+ 		return;
+ 
+ 	if (error_info & CPER_ARM_ERR_VALID_TRANSACTION_TYPE) {
+@@ -116,43 +112,38 @@ static void cper_print_arm_err_info(const char *pfx, u32 type,
+ 	if (error_info & CPER_ARM_ERR_VALID_OPERATION_TYPE) {
+ 		op_type = ((error_info >> CPER_ARM_ERR_OPERATION_SHIFT)
+ 			   & CPER_ARM_ERR_OPERATION_MASK);
+-		switch (type) {
+-		case CPER_ARM_CACHE_ERROR:
++		if (type & CPER_ARM_CACHE_ERROR) {
+ 			if (op_type < ARRAY_SIZE(arm_cache_err_op_strs)) {
+-				printk("%soperation type: %s\n", pfx,
++				printk("%scache error, operation type: %s\n", pfx,
+ 				       arm_cache_err_op_strs[op_type]);
+ 			}
+-			break;
+-		case CPER_ARM_TLB_ERROR:
++		}
++		if (type & CPER_ARM_TLB_ERROR) {
+ 			if (op_type < ARRAY_SIZE(arm_tlb_err_op_strs)) {
+-				printk("%soperation type: %s\n", pfx,
++				printk("%sTLB error, operation type: %s\n", pfx,
+ 				       arm_tlb_err_op_strs[op_type]);
+ 			}
+-			break;
+-		case CPER_ARM_BUS_ERROR:
++		}
++		if (type & CPER_ARM_BUS_ERROR) {
+ 			if (op_type < ARRAY_SIZE(arm_bus_err_op_strs)) {
+-				printk("%soperation type: %s\n", pfx,
++				printk("%sbus error, operation type: %s\n", pfx,
+ 				       arm_bus_err_op_strs[op_type]);
+ 			}
+-			break;
+ 		}
+ 	}
+ 
+ 	if (error_info & CPER_ARM_ERR_VALID_LEVEL) {
+ 		level = ((error_info >> CPER_ARM_ERR_LEVEL_SHIFT)
+ 			 & CPER_ARM_ERR_LEVEL_MASK);
+-		switch (type) {
+-		case CPER_ARM_CACHE_ERROR:
++		if (type & CPER_ARM_CACHE_ERROR)
+ 			printk("%scache level: %d\n", pfx, level);
+-			break;
+-		case CPER_ARM_TLB_ERROR:
++
++		if (type & CPER_ARM_TLB_ERROR)
+ 			printk("%sTLB level: %d\n", pfx, level);
+-			break;
+-		case CPER_ARM_BUS_ERROR:
++
++		if (type & CPER_ARM_BUS_ERROR)
+ 			printk("%saffinity level at which the bus error occurred: %d\n",
+ 			       pfx, level);
+-			break;
+-		}
+ 	}
+ 
+ 	if (error_info & CPER_ARM_ERR_VALID_PROC_CONTEXT_CORRUPT) {
+@@ -241,6 +232,7 @@ void cper_print_proc_arm(const char *pfx,
  	struct cper_arm_err_info *err_info;
  	struct cper_arm_ctx_info *ctx_info;
--	char newpfx[64], infopfx[64];
-+	char newpfx[64], infopfx[ARRAY_SIZE(newpfx) + 1];
+ 	char newpfx[64], infopfx[ARRAY_SIZE(newpfx) + 1];
++	char error_type[120];
  
  	printk("%sMIDR: 0x%016llx\n", pfx, proc->midr);
  
+@@ -289,9 +281,15 @@ void cper_print_proc_arm(const char *pfx,
+ 				       newpfx);
+ 		}
+ 
+-		printk("%serror_type: %d, %s\n", newpfx, err_info->type,
+-			err_info->type < ARRAY_SIZE(cper_proc_error_type_strs) ?
+-			cper_proc_error_type_strs[err_info->type] : "unknown");
++		cper_bits_to_str(error_type, sizeof(error_type),
++				 FIELD_GET(CPER_ARM_ERR_TYPE_MASK, err_info->type),
++				 cper_proc_error_type_strs,
++				 ARRAY_SIZE(cper_proc_error_type_strs));
++
++		printk("%serror_type: 0x%02x: %s%s\n", newpfx, err_info->type,
++		       error_type,
++		       (err_info->type & ~CPER_ARM_ERR_TYPE_MASK) ? " with reserved bit(s)" : "");
++
+ 		if (err_info->validation_bits & CPER_ARM_INFO_VALID_ERR_INFO) {
+ 			printk("%serror_info: 0x%016llx\n", newpfx,
+ 			       err_info->error_info);
+diff --git a/include/linux/cper.h b/include/linux/cper.h
+index 25858a7608b7d..3670b866ac119 100644
+--- a/include/linux/cper.h
++++ b/include/linux/cper.h
+@@ -293,11 +293,11 @@ enum {
+ #define CPER_ARM_INFO_FLAGS_PROPAGATED		BIT(2)
+ #define CPER_ARM_INFO_FLAGS_OVERFLOW		BIT(3)
+ 
+-#define CPER_ARM_CACHE_ERROR			0
+-#define CPER_ARM_TLB_ERROR			1
+-#define CPER_ARM_BUS_ERROR			2
+-#define CPER_ARM_VENDOR_ERROR			3
+-#define CPER_ARM_MAX_TYPE			CPER_ARM_VENDOR_ERROR
++#define CPER_ARM_ERR_TYPE_MASK			GENMASK(4,1)
++#define CPER_ARM_CACHE_ERROR			BIT(1)
++#define CPER_ARM_TLB_ERROR			BIT(2)
++#define CPER_ARM_BUS_ERROR			BIT(3)
++#define CPER_ARM_VENDOR_ERROR			BIT(4)
+ 
+ #define CPER_ARM_ERR_VALID_TRANSACTION_TYPE	BIT(0)
+ #define CPER_ARM_ERR_VALID_OPERATION_TYPE	BIT(1)
 -- 
 2.51.0
 
