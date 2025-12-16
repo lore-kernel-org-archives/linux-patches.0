@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0C92D97B8;
-	Tue, 16 Dec 2025 11:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5413451CF;
+	Tue, 16 Dec 2025 11:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885015; cv=none; b=UIMrOQ0ImgPCmevx2zhPSXdzZmpUL1fM8TOnugwkVZEsbealA/r7Mw0NnKuxc7tmsiykCvHQ7r6YfJ8bb3A6uXjNyyhIoBcKpK4m4JqoYm3Fs6S67GP9mnK2NFZvpBHkmdEPPu2zRg+51oXlWIjJJvmgL+KOCMCVuZJNDlDIw+k=
+	t=1765885018; cv=none; b=pYpIKli9uYupkvQC0f86Y+a/GcKjdZDW5vxvirNobMfECf1K//qO7hD3cYjppjzTts9KwR5a7l9ilrfmdlAJr6YYodZa9HU25hS60sKXAEGWsumw7L/RwBMd95B11JMUwBNmAgJuwCDs/2K1491zY3jYE08iKs3c1G6LZ0Alx2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885015; c=relaxed/simple;
-	bh=Yf2QO+B26TOUMwUkrmy7G715BN0Q0e03HqWVshnRBhA=;
+	s=arc-20240116; t=1765885018; c=relaxed/simple;
+	bh=0KGgH2kZLZxr1yZkSf1mPDwlAwKZRAaXEGtP1FHF5E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQwOlLEAHctm3JyHtR+4Rd4Lh2NF67+fspw1Ys91tFLOsM46ukeWOuYD6IUcHcAGYMK0dda8xUuCPgmfpFyKpQx+7f0GIe621uZv29N98VBCcUZN6as2+JCz1o56SEPaVtAEtbMCb0HOCLJ+kzWxMHCgkBNGjhkBC4ze7GRZb64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m/CaN+Tn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qVRtJEGCVKk2o1iM2lvz92d10pnSfDqEGs98zIpKpzq/tQgv0RU+JGQBnK/V7OIaj/+3ofvm8Go56VJJ5F110yQzPzG0lOf+bJpVBpUsHdk3Icxw52xcaDuzuweAEi6rcT3NNq8Ds+T1LYMCWdvuJbtfgUlNZYYvXSMEAOfk1vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BYO1s/tP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m/CaN+Tn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBE4C4CEF1;
-	Tue, 16 Dec 2025 11:36:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BYO1s/tP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D371EC4CEF5;
+	Tue, 16 Dec 2025 11:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885015;
-	bh=Yf2QO+B26TOUMwUkrmy7G715BN0Q0e03HqWVshnRBhA=;
+	s=korg; t=1765885018;
+	bh=0KGgH2kZLZxr1yZkSf1mPDwlAwKZRAaXEGtP1FHF5E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/CaN+TnKw7ZLA6+JU4TnkIMTBKiw+Em4gIEJiUm3cJR8e7JSAPPJid4ksesw2aJC
-	 31TBdlTJes6Ka5nnV3sI+XyLOMINr3V/M6nTSZ8rZXVFYvHfGJzKQWm0P9k17HxH+K
-	 tbRNWJ50WrSHgsbBhXG0wGrxaMB7DjLji7dIyC6w=
+	b=BYO1s/tPIFgiYoo7LNRzUwKW8QiIMXtFDZOkBXliEyih9Atz3EPoYolA3f8YPXBFB
+	 6FCGCGSnTucd0T2zEPMRA+LX0iX0Ik8Wk3isAxhmFZt3KQV+nJsn9eZzQoUsbsUB5a
+	 jS9YYFq3MF2pVQKOEgo7SfqT4zQMOfi8DyLpR2P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lizhi Hou <lizhi.hou@amd.com>,
 	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
-	Maciej Falkowski <maciej.falkowski@linux.intel.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 013/507] accel/ivpu: Fix page fault in ivpu_bo_unbind_all_bos_from_context()
-Date: Tue, 16 Dec 2025 12:07:34 +0100
-Message-ID: <20251216111346.015437518@linuxfoundation.org>
+Subject: [PATCH 6.17 014/507] accel/ivpu: Make function parameter names consistent
+Date: Tue, 16 Dec 2025 12:07:35 +0100
+Message-ID: <20251216111346.051714079@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -54,87 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
 
-[ Upstream commit 8b694b405a84696f1d964f6da7cf9721e68c4714 ]
+[ Upstream commit cf87f93847dea607e8a35983cb006ef8493f8065 ]
 
-Don't add BO to the vdev->bo_list in ivpu_gem_create_object().
-When failure happens inside drm_gem_shmem_create(), the BO is not
-fully created and ivpu_gem_bo_free() callback will not be called
-causing a deleted BO to be left on the list.
+Make ivpu_hw_btrs_dct_set_status() and ivpu_fw_boot_params_setup()
+declaration and definition parameter names consistent.
 
-Fixes: 8d88e4cdce4f ("accel/ivpu: Use GEM shmem helper for all buffers")
+Reviewed-by: Lizhi Hou <lizhi.hou@amd.com>
 Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
-Signed-off-by: Maciej Falkowski <maciej.falkowski@linux.intel.com>
-Reviewed-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://lore.kernel.org/r/20250925145114.1446283-1-maciej.falkowski@linux.intel.com
+Link: https://lore.kernel.org/r/20250808111014.328607-1-jacek.lawrynowicz@linux.intel.com
+Stable-dep-of: aa1c2b073ad2 ("accel/ivpu: Fix DCT active percent format")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/accel/ivpu/ivpu_fw.h      | 2 +-
+ drivers/accel/ivpu/ivpu_hw_btrs.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index dc6d0d15cda9c..171e809575ad6 100644
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -193,7 +193,6 @@ void ivpu_bo_unbind_all_bos_from_context(struct ivpu_device *vdev, struct ivpu_m
+diff --git a/drivers/accel/ivpu/ivpu_fw.h b/drivers/accel/ivpu/ivpu_fw.h
+index 9a3935be1c057..7081913fb0dde 100644
+--- a/drivers/accel/ivpu/ivpu_fw.h
++++ b/drivers/accel/ivpu/ivpu_fw.h
+@@ -45,7 +45,7 @@ struct ivpu_fw_info {
+ int ivpu_fw_init(struct ivpu_device *vdev);
+ void ivpu_fw_fini(struct ivpu_device *vdev);
+ void ivpu_fw_load(struct ivpu_device *vdev);
+-void ivpu_fw_boot_params_setup(struct ivpu_device *vdev, struct vpu_boot_params *bp);
++void ivpu_fw_boot_params_setup(struct ivpu_device *vdev, struct vpu_boot_params *boot_params);
  
- struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t size)
+ static inline bool ivpu_fw_is_cold_boot(struct ivpu_device *vdev)
  {
--	struct ivpu_device *vdev = to_ivpu_device(dev);
- 	struct ivpu_bo *bo;
- 
- 	if (size == 0 || !PAGE_ALIGNED(size))
-@@ -208,20 +207,17 @@ struct drm_gem_object *ivpu_gem_create_object(struct drm_device *dev, size_t siz
- 
- 	INIT_LIST_HEAD(&bo->bo_list_node);
- 
--	mutex_lock(&vdev->bo_list_lock);
--	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
--	mutex_unlock(&vdev->bo_list_lock);
--
--	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9zu\n", bo, size);
- 	return &bo->base.base;
- }
- 
- struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 					     struct dma_buf *dma_buf)
- {
-+	struct ivpu_device *vdev = to_ivpu_device(dev);
- 	struct device *attach_dev = dev->dev;
- 	struct dma_buf_attachment *attach;
- 	struct drm_gem_object *obj;
-+	struct ivpu_bo *bo;
- 	int ret;
- 
- 	attach = dma_buf_attach(dma_buf, attach_dev);
-@@ -239,6 +235,14 @@ struct drm_gem_object *ivpu_gem_prime_import(struct drm_device *dev,
- 	obj->import_attach = attach;
- 	obj->resv = dma_buf->resv;
- 
-+	bo = to_ivpu_bo(obj);
-+
-+	mutex_lock(&vdev->bo_list_lock);
-+	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
-+	mutex_unlock(&vdev->bo_list_lock);
-+
-+	ivpu_dbg(vdev, BO, "import: bo %8p size %9zu\n", bo, ivpu_bo_size(bo));
-+
- 	return obj;
- 
- fail_detach:
-@@ -269,6 +273,12 @@ static struct ivpu_bo *ivpu_bo_alloc(struct ivpu_device *vdev, u64 size, u32 fla
- 	bo->base.map_wc = flags & DRM_IVPU_BO_WC;
- 	bo->flags = flags;
- 
-+	mutex_lock(&vdev->bo_list_lock);
-+	list_add_tail(&bo->bo_list_node, &vdev->bo_list);
-+	mutex_unlock(&vdev->bo_list_lock);
-+
-+	ivpu_dbg(vdev, BO, " alloc: bo %8p size %9llu\n", bo, size);
-+
- 	return bo;
- }
- 
+diff --git a/drivers/accel/ivpu/ivpu_hw_btrs.h b/drivers/accel/ivpu/ivpu_hw_btrs.h
+index d2d82651976d1..032c384ac3d4d 100644
+--- a/drivers/accel/ivpu/ivpu_hw_btrs.h
++++ b/drivers/accel/ivpu/ivpu_hw_btrs.h
+@@ -36,7 +36,7 @@ u32 ivpu_hw_btrs_dpu_freq_get(struct ivpu_device *vdev);
+ bool ivpu_hw_btrs_irq_handler_mtl(struct ivpu_device *vdev, int irq);
+ bool ivpu_hw_btrs_irq_handler_lnl(struct ivpu_device *vdev, int irq);
+ int ivpu_hw_btrs_dct_get_request(struct ivpu_device *vdev, bool *enable);
+-void ivpu_hw_btrs_dct_set_status(struct ivpu_device *vdev, bool enable, u32 dct_percent);
++void ivpu_hw_btrs_dct_set_status(struct ivpu_device *vdev, bool enable, u32 active_percent);
+ u32 ivpu_hw_btrs_telemetry_offset_get(struct ivpu_device *vdev);
+ u32 ivpu_hw_btrs_telemetry_size_get(struct ivpu_device *vdev);
+ u32 ivpu_hw_btrs_telemetry_enable_get(struct ivpu_device *vdev);
 -- 
 2.51.0
 
