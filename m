@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5A11354ADA;
-	Tue, 16 Dec 2025 11:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52390354AE5;
+	Tue, 16 Dec 2025 11:50:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885797; cv=none; b=Dtn524Wjbx/HRcrTZczVfZac69H10WFt7GxNqdzoS9NcgzcQl/1VfWA8UMH62lSPhB0C95206kMAacZjzX2hLMtmfm2ILCdpVuI4lkIMbMmaK5WPPy07x0F6j4LlDGRIAbGn9MuD0QWkBAgzoIOxLb/b40KCHECyIz4c874NkkU=
+	t=1765885801; cv=none; b=mSg0UY6hpXmTv8zQsNggmNAyOPGf/YCuE2eGomjpkxXQA57grZFr//BIcpDWTfbrNUkknkmVmbpOj0sWvXK7/wrygCUBqMpA8whVK8wm8KTIY893CXCLBFcNXFi9VTIeCh11kWZyUi0hTkpNVxbmPyL8HLJR66RrucOyKJ9x8tE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885797; c=relaxed/simple;
-	bh=7LX2lUUXELWLiI28dMylPPuNIQ1/sa5JIDTwg6yZVBw=;
+	s=arc-20240116; t=1765885801; c=relaxed/simple;
+	bh=VAilaR8j69FOwIWcCulwM8ZF1tQMzxAgtczS+tGwtuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLNxMAgVAa7pEvayTkrivObtOuP1Nn2Zhx8HIJ+hVsFnsIfTMB2pecIPIbO4QdWOk5Mbq9hN6s1QnReWkZxsJcdcK435YR3YlwXhFf6sBan99zKNew4eAQAcdZI+MB5+MWZ59M5/4cgBBiLG4pKsbJo2PRJZDU1GDM7gu/DFI4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vt2JDpNe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lYoU1zstZO+cVUCtjgyP6+4tLyFbNn09X/HPhLKg4kmEHerZ+CJxBLpI0zNeoFhqXa7W8A0/ZS9Ljgj5ZpS5D8FR8sgqHD8qaLwVbtCoANtLw/R8K/QaXIL0rXmOG0hRLePrwGf02fEmM3RCLR/LoLUeBSp/IAzTNgkgGXfiZGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OyhvaSmI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vt2JDpNe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E12C4CEF1;
-	Tue, 16 Dec 2025 11:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OyhvaSmI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADFFAC4CEF1;
+	Tue, 16 Dec 2025 11:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885797;
-	bh=7LX2lUUXELWLiI28dMylPPuNIQ1/sa5JIDTwg6yZVBw=;
+	s=korg; t=1765885801;
+	bh=VAilaR8j69FOwIWcCulwM8ZF1tQMzxAgtczS+tGwtuU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vt2JDpNekqO6yppXvqrsHk+CU4mocVkRR5UTiQZkinHTLLP/xs4lUeO5usBQbtYdn
-	 MYgD/u02SdxOc+mvH5h1VvgaOkMqM0k3kVal9856XItcSTfPjhyCGQ6jgSzA0I7fp8
-	 BashfwaeCd/lsn4ZRpVSYtj2s5xQArtvhtVzdvv8=
+	b=OyhvaSmIFQA2PU3OR/m+2uq/ECBQm9R8qNrpPrCXRcLJ8E3CKzkEvgbvgeErTEZqo
+	 XKKv2BvycyiBvnquG8mMEnJ9KLF6c7ZcyVQqVVVpT7xx/G49WAzf6UDbN6sR+F/99b
+	 eTkMI31xv1REsLlfRJWFLAPIxTm4+dOM1Qljvo4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>,
-	Leo Yan <leo.yan@arm.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Li Nan <linan122@huawei.com>,
+	Xiao Ni <xni@redhat.com>,
+	Yu Kuai <yukuai@fnnas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 214/507] coresight: etm3x: Always set tracers device mode on target CPU
-Date: Tue, 16 Dec 2025 12:10:55 +0100
-Message-ID: <20251216111353.260677489@linuxfoundation.org>
+Subject: [PATCH 6.17 205/507] md: delete md_redundancy_group when array is becoming inactive
+Date: Tue, 16 Dec 2025 12:10:46 +0100
+Message-ID: <20251216111352.938547974@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,174 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Leo Yan <leo.yan@arm.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit ab3fde32afe6a77e5cc60f868e44e6e09424752b ]
+[ Upstream commit 0ce112d9171ad766d4c6716951e73f91a0bfc184 ]
 
-The ETMv3 driver shares the same issue as ETMv4 regarding race
-conditions when accessing the device mode.
+'md_redundancy_group' are created in md_run() and deleted in del_gendisk(),
+but these are not paired. Writing inactive/active to sysfs array_state can
+trigger md_run() multiple times without del_gendisk(), leading to
+duplicate creation as below:
 
-This commit applies the same fix: ensuring that the device mode is
-modified only by the target CPU to eliminate race conditions across
-CPUs.
+ sysfs: cannot create duplicate filename '/devices/virtual/block/md0/md/sync_action'
+ Call Trace:
+  dump_stack_lvl+0x9f/0x120
+  dump_stack+0x14/0x20
+  sysfs_warn_dup+0x96/0xc0
+  sysfs_add_file_mode_ns+0x19c/0x1b0
+  internal_create_group+0x213/0x830
+  sysfs_create_group+0x17/0x20
+  md_run+0x856/0xe60
+  ? __x64_sys_openat+0x23/0x30
+  do_md_run+0x26/0x1d0
+  array_state_store+0x559/0x760
+  md_attr_store+0xc9/0x1e0
+  sysfs_kf_write+0x6f/0xa0
+  kernfs_fop_write_iter+0x141/0x2a0
+  vfs_write+0x1fc/0x5a0
+  ksys_write+0x79/0x180
+  __x64_sys_write+0x1d/0x30
+  x64_sys_call+0x2818/0x2880
+  do_syscall_64+0xa9/0x580
+  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+ md: cannot register extra attributes for md0
 
-Fixes: 22fd532eaa0c ("coresight: etm3x: adding operation mode for etm_enable()")
-Reviewed-by: Mike Leach <mike.leach@linaro.org>
-Tested-by: James Clark <james.clark@linaro.org>
-Signed-off-by: Leo Yan <leo.yan@arm.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20251111-arm_coresight_power_management_fix-v6-3-f55553b6c8b3@arm.com
+Creation of it depends on 'pers', its lifecycle cannot be aligned with
+gendisk. So fix this issue by triggering 'md_redundancy_group' deletion
+when the array is becoming inactive.
+
+Link: https://lore.kernel.org/linux-raid/20251103125757.1405796-2-linan666@huaweicloud.com
+Fixes: 790abe4d77af ("md: remove/add redundancy group only in level change")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Xiao Ni <xni@redhat.com>
+Signed-off-by: Yu Kuai <yukuai@fnnas.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../coresight/coresight-etm3x-core.c          | 59 +++++++++++++------
- 1 file changed, 40 insertions(+), 19 deletions(-)
+ drivers/md/md.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm3x-core.c b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-index baba2245b1dfb..602648eb33ec5 100644
---- a/drivers/hwtracing/coresight/coresight-etm3x-core.c
-+++ b/drivers/hwtracing/coresight/coresight-etm3x-core.c
-@@ -439,13 +439,26 @@ struct etm_enable_arg {
- 	int rc;
- };
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 209ca3eade260..48345082d2eb3 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -6696,6 +6696,10 @@ static int do_md_stop(struct mddev *mddev, int mode)
+ 		if (!md_is_rdwr(mddev))
+ 			set_disk_ro(disk, 0);
  
--static void etm_enable_hw_smp_call(void *info)
-+static void etm_enable_sysfs_smp_call(void *info)
- {
- 	struct etm_enable_arg *arg = info;
-+	struct coresight_device *csdev;
- 
- 	if (WARN_ON(!arg))
- 		return;
++		if (mode == 2 && mddev->pers->sync_request &&
++		    mddev->to_remove == NULL)
++			mddev->to_remove = &md_redundancy_group;
 +
-+	csdev = arg->drvdata->csdev;
-+	if (!coresight_take_mode(csdev, CS_MODE_SYSFS)) {
-+		/* Someone is already using the tracer */
-+		arg->rc = -EBUSY;
-+		return;
-+	}
-+
- 	arg->rc = etm_enable_hw(arg->drvdata);
-+
-+	/* The tracer didn't start */
-+	if (arg->rc)
-+		coresight_set_mode(csdev, CS_MODE_DISABLED);
- }
+ 		__md_stop_writes(mddev);
+ 		__md_stop(mddev);
  
- static int etm_cpu_id(struct coresight_device *csdev)
-@@ -465,16 +478,26 @@ static int etm_enable_perf(struct coresight_device *csdev,
- 			   struct coresight_path *path)
- {
- 	struct etm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-+	int ret;
- 
- 	if (WARN_ON_ONCE(drvdata->cpu != smp_processor_id()))
- 		return -EINVAL;
- 
-+	if (!coresight_take_mode(csdev, CS_MODE_PERF))
-+		return -EBUSY;
-+
- 	/* Configure the tracer based on the session's specifics */
- 	etm_parse_event_config(drvdata, event);
- 	drvdata->traceid = path->trace_id;
- 
- 	/* And enable it */
--	return etm_enable_hw(drvdata);
-+	ret = etm_enable_hw(drvdata);
-+
-+	/* Failed to start tracer; roll back to DISABLED mode */
-+	if (ret)
-+		coresight_set_mode(csdev, CS_MODE_DISABLED);
-+
-+	return ret;
- }
- 
- static int etm_enable_sysfs(struct coresight_device *csdev, struct coresight_path *path)
-@@ -494,7 +517,7 @@ static int etm_enable_sysfs(struct coresight_device *csdev, struct coresight_pat
- 	if (cpu_online(drvdata->cpu)) {
- 		arg.drvdata = drvdata;
- 		ret = smp_call_function_single(drvdata->cpu,
--					       etm_enable_hw_smp_call, &arg, 1);
-+					       etm_enable_sysfs_smp_call, &arg, 1);
- 		if (!ret)
- 			ret = arg.rc;
- 		if (!ret)
-@@ -517,12 +540,6 @@ static int etm_enable(struct coresight_device *csdev, struct perf_event *event,
- 		      enum cs_mode mode, struct coresight_path *path)
- {
- 	int ret;
--	struct etm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
--
--	if (!coresight_take_mode(csdev, mode)) {
--		/* Someone is already using the tracer */
--		return -EBUSY;
--	}
- 
- 	switch (mode) {
- 	case CS_MODE_SYSFS:
-@@ -535,17 +552,12 @@ static int etm_enable(struct coresight_device *csdev, struct perf_event *event,
- 		ret = -EINVAL;
- 	}
- 
--	/* The tracer didn't start */
--	if (ret)
--		coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
--
- 	return ret;
- }
- 
--static void etm_disable_hw(void *info)
-+static void etm_disable_hw(struct etm_drvdata *drvdata)
- {
- 	int i;
--	struct etm_drvdata *drvdata = info;
- 	struct etm_config *config = &drvdata->config;
- 	struct coresight_device *csdev = drvdata->csdev;
- 
-@@ -567,6 +579,15 @@ static void etm_disable_hw(void *info)
- 		"cpu: %d disable smp call done\n", drvdata->cpu);
- }
- 
-+static void etm_disable_sysfs_smp_call(void *info)
-+{
-+	struct etm_drvdata *drvdata = info;
-+
-+	etm_disable_hw(drvdata);
-+
-+	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
-+}
-+
- static void etm_disable_perf(struct coresight_device *csdev)
- {
- 	struct etm_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-@@ -588,6 +609,8 @@ static void etm_disable_perf(struct coresight_device *csdev)
- 
- 	CS_LOCK(drvdata->csa.base);
- 
-+	coresight_set_mode(drvdata->csdev, CS_MODE_DISABLED);
-+
- 	/*
- 	 * perf will release trace ids when _free_aux()
- 	 * is called at the end of the session
-@@ -612,7 +635,8 @@ static void etm_disable_sysfs(struct coresight_device *csdev)
- 	 * Executing etm_disable_hw on the cpu whose ETM is being disabled
- 	 * ensures that register writes occur when cpu is powered.
- 	 */
--	smp_call_function_single(drvdata->cpu, etm_disable_hw, drvdata, 1);
-+	smp_call_function_single(drvdata->cpu, etm_disable_sysfs_smp_call,
-+				 drvdata, 1);
- 
- 	spin_unlock(&drvdata->spinlock);
- 	cpus_read_unlock();
-@@ -652,9 +676,6 @@ static void etm_disable(struct coresight_device *csdev,
- 		WARN_ON_ONCE(mode);
- 		return;
- 	}
--
--	if (mode)
--		coresight_set_mode(csdev, CS_MODE_DISABLED);
- }
- 
- static const struct coresight_ops_source etm_source_ops = {
 -- 
 2.51.0
 
