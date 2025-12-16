@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B9E355026;
-	Tue, 16 Dec 2025 11:51:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA2E355026;
+	Tue, 16 Dec 2025 11:51:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885902; cv=none; b=hhiVtBB95clC0eUngqmh1IZdBZJtrTOWutbGTCXTHu3O4H+MQovclpnMcwU2BiY4s9NTZc7C/1+BkoA2gARlZfBc3ZqDKsX8oIHrKW8cOudJwQnLFMeRLn/RNiMvvDngRNcA/Zbk0lWd5O/4ebAYXQvXhz+JZ7jhn6IlqdkZJ7U=
+	t=1765885905; cv=none; b=X9SjhC3xL3akDDo8MNFR/2jJZm7NPAhTFrgbfmd8tctUU9XY99N2JQfhjKHgygvaOr4AZEPx/GSxuv1HQu0NVvItsg92yY5SLJ7fBtlRZP1c0dqKY/fnaz+1+cWDYesDn97eLNzM6jYrCbaRhRRcyY4gqKacbDXjtagdOaZeh88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885902; c=relaxed/simple;
-	bh=mMMMQXR1uit5zSwFfzr3/n1V+XfbTcHByhBpTMLi15c=;
+	s=arc-20240116; t=1765885905; c=relaxed/simple;
+	bh=FCCWh2MQPIE4it4UTGdBhIGkIRC0tk1ItktYFFWLpIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxNB9y9LBJ6vQ56lzlNaSNIuu4vkCQ3w2IvfNzz+J4RFs2Bw/5wvGrHaFpGT1hkP/n6bcSkec2GL4S9k0sbgR2mSxH38WWpQ1GmpwcYQwOiPd0p0hVlrecxdzDFUIjjN20U1uT+xihXFs91g7mTfHXyQEEXdg+xC4zLpPGnuRPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E9H+ObgY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XtuOqm77MIfrhL6HyVJHu7ZwV/J1WPrSsnvNCsLkWcMU0TSAIqRZigoLlEVfSBvGi9x70fvpgLYaLAdzJqs0Z+60YEX3jDGEtWZGrl4K5OBydc7INFjmjAHjTCO2xnFkzcd+nOXqggYcHURXL3GjdHrfVP3Alpc0W7SKxqXbYy8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utJd542I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E9H+ObgY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62363C4CEF1;
-	Tue, 16 Dec 2025 11:51:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utJd542I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15A3C4CEF1;
+	Tue, 16 Dec 2025 11:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885901;
-	bh=mMMMQXR1uit5zSwFfzr3/n1V+XfbTcHByhBpTMLi15c=;
+	s=korg; t=1765885905;
+	bh=FCCWh2MQPIE4it4UTGdBhIGkIRC0tk1ItktYFFWLpIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9H+ObgYg2dkUAQPfrxRTGqu7NpcVPM3IfXUafwnLL0t28moN7x7atpeBxs5Njjhp
-	 Z4f69QyL4SF9ZTg0RIBCDwXjfD8mObXAwdqepl4d8mNMcY/fipXoPbOR/AGo2ix86a
-	 +n4uaWsE9YfJnXR4NHCLaXkTS2tE+L7gA4e8IG2g=
+	b=utJd542IU36UNP9G7mo3g7A2wCqpMtNLz8pWHPp49zgoHt8qqSFWMZ/2FqTXK11zW
+	 6vdocn5OAz3VaHGoNDorydPj0g6cfIb593Cn9XspA0MO+sP4Ahu7vigNg11w++HbRe
+	 wm1Fh5iEAGOeCkg5UWaKsPo6c56+zRYnDA463S0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesper Dangaard Brouer <hawk@kernel.org>,
-	Kaiyan Mei <M202472210@hust.edu.cn>,
-	Yinhao Hu <dddddd@hust.edu.cn>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 245/507] bpf: Check skb->transport_header is set in bpf_skb_check_mtu
-Date: Tue, 16 Dec 2025 12:11:26 +0100
-Message-ID: <20251216111354.372695964@linuxfoundation.org>
+Subject: [PATCH 6.17 246/507] mshv: Fix deposit memory in MSHV_ROOT_HVCALL
+Date: Tue, 16 Dec 2025 12:11:27 +0100
+Message-ID: <20251216111354.408070503@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -54,67 +52,169 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
 
-[ Upstream commit d946f3c98328171fa50ddb908593cf833587f725 ]
+[ Upstream commit 4cc1aa469cd6b714adc958547a4866247bfd60a9 ]
 
-The bpf_skb_check_mtu helper needs to use skb->transport_header when
-the BPF_MTU_CHK_SEGS flag is used:
+When the MSHV_ROOT_HVCALL ioctl is executing a hypercall, and gets
+HV_STATUS_INSUFFICIENT_MEMORY, it deposits memory and then returns
+-EAGAIN to userspace. The expectation is that the VMM will retry.
 
-	bpf_skb_check_mtu(skb, ifindex, &mtu_len, 0, BPF_MTU_CHK_SEGS)
+However, some VMM code in the wild doesn't do this and simply fails.
+Rather than force the VMM to retry, change the ioctl to deposit
+memory on demand and immediately retry the hypercall as is done with
+all the other hypercall helper functions.
 
-The transport_header is not always set. There is a WARN_ON_ONCE
-report when CONFIG_DEBUG_NET is enabled + skb->gso_size is set +
-bpf_prog_test_run is used:
+In addition to making the ioctl easier to use, removing the need for
+multiple syscalls improves performance.
 
-WARNING: CPU: 1 PID: 2216 at ./include/linux/skbuff.h:3071
- skb_gso_validate_network_len
- bpf_skb_check_mtu
- bpf_prog_3920e25740a41171_tc_chk_segs_flag # A test in the next patch
- bpf_test_run
- bpf_prog_test_run_skb
+There is a complication: unlike the other hypercall helper functions,
+in MSHV_ROOT_HVCALL the input is opaque to the kernel. This is
+problematic for rep hypercalls, because the next part of the input
+list can't be copied on each loop after depositing pages (this was
+the original reason for returning -EAGAIN in this case).
 
-For a normal ingress skb (not test_run), skb_reset_transport_header
-is performed but there is plan to avoid setting it as described in
-commit 2170a1f09148 ("net: no longer reset transport_header in __netif_receive_skb_core()").
+Introduce hv_do_rep_hypercall_ex(), which adds a 'rep_start'
+parameter. This solves the issue, allowing the deposit loop in
+MSHV_ROOT_HVCALL to restart a rep hypercall after depositing pages
+partway through.
 
-This patch fixes the bpf helper by checking
-skb_transport_header_was_set(). The check is done just before
-skb->transport_header is used, to avoid breaking the existing bpf prog.
-The WARN_ON_ONCE is limited to bpf_prog_test_run, so targeting bpf-next.
-
-Fixes: 34b2021cc616 ("bpf: Add BPF-helper for MTU checking")
-Cc: Jesper Dangaard Brouer <hawk@kernel.org>
-Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
-Reported-by: Yinhao Hu <dddddd@hust.edu.cn>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20251112232331.1566074-1-martin.lau@linux.dev
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 621191d709b1 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
+Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/hv/mshv_root_main.c    | 58 ++++++++++++++++++----------------
+ include/asm-generic/mshyperv.h | 17 ++++++++--
+ 2 files changed, 44 insertions(+), 31 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index b20d5fecdbc95..47366ec94e589 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -6414,9 +6414,12 @@ BPF_CALL_5(bpf_skb_check_mtu, struct sk_buff *, skb,
+diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
+index cad09ff5f94dc..618cac041441a 100644
+--- a/drivers/hv/mshv_root_main.c
++++ b/drivers/hv/mshv_root_main.c
+@@ -164,6 +164,7 @@ static int mshv_ioctl_passthru_hvcall(struct mshv_partition *partition,
+ 	unsigned int pages_order;
+ 	void *input_pg = NULL;
+ 	void *output_pg = NULL;
++	u16 reps_completed;
+ 
+ 	if (copy_from_user(&args, user_args, sizeof(args)))
+ 		return -EFAULT;
+@@ -215,41 +216,42 @@ static int mshv_ioctl_passthru_hvcall(struct mshv_partition *partition,
  	 */
- 	if (skb_is_gso(skb)) {
- 		ret = BPF_MTU_CHK_RET_SUCCESS;
--		if (flags & BPF_MTU_CHK_SEGS &&
--		    !skb_gso_validate_network_len(skb, mtu))
--			ret = BPF_MTU_CHK_RET_SEGS_TOOBIG;
-+		if (flags & BPF_MTU_CHK_SEGS) {
-+			if (!skb_transport_header_was_set(skb))
-+				return -EINVAL;
-+			if (!skb_gso_validate_network_len(skb, mtu))
-+				ret = BPF_MTU_CHK_RET_SEGS_TOOBIG;
+ 	*(u64 *)input_pg = partition->pt_id;
+ 
+-	if (args.reps)
+-		status = hv_do_rep_hypercall(args.code, args.reps, 0,
+-					     input_pg, output_pg);
+-	else
+-		status = hv_do_hypercall(args.code, input_pg, output_pg);
+-
+-	if (hv_result(status) == HV_STATUS_CALL_PENDING) {
+-		if (is_async) {
+-			mshv_async_hvcall_handler(partition, &status);
+-		} else { /* Paranoia check. This shouldn't happen! */
+-			ret = -EBADFD;
+-			goto free_pages_out;
++	reps_completed = 0;
++	do {
++		if (args.reps) {
++			status = hv_do_rep_hypercall_ex(args.code, args.reps,
++							0, reps_completed,
++							input_pg, output_pg);
++			reps_completed = hv_repcomp(status);
++		} else {
++			status = hv_do_hypercall(args.code, input_pg, output_pg);
+ 		}
+-	}
+ 
+-	if (hv_result(status) == HV_STATUS_INSUFFICIENT_MEMORY) {
+-		ret = hv_call_deposit_pages(NUMA_NO_NODE, partition->pt_id, 1);
+-		if (!ret)
+-			ret = -EAGAIN;
+-	} else if (!hv_result_success(status)) {
+-		ret = hv_result_to_errno(status);
+-	}
++		if (hv_result(status) == HV_STATUS_CALL_PENDING) {
++			if (is_async) {
++				mshv_async_hvcall_handler(partition, &status);
++			} else { /* Paranoia check. This shouldn't happen! */
++				ret = -EBADFD;
++				goto free_pages_out;
++			}
 +		}
- 	}
- out:
- 	*mtu_len = mtu;
++
++		if (hv_result_success(status))
++			break;
++
++		if (hv_result(status) != HV_STATUS_INSUFFICIENT_MEMORY)
++			ret = hv_result_to_errno(status);
++		else
++			ret = hv_call_deposit_pages(NUMA_NO_NODE,
++						    partition->pt_id, 1);
++	} while (!ret);
+ 
+-	/*
+-	 * Always return the status and output data regardless of result.
+-	 * The VMM may need it to determine how to proceed. E.g. the status may
+-	 * contain the number of reps completed if a rep hypercall partially
+-	 * succeeded.
+-	 */
+ 	args.status = hv_result(status);
+-	args.reps = args.reps ? hv_repcomp(status) : 0;
++	args.reps = reps_completed;
+ 	if (copy_to_user(user_args, &args, sizeof(args)))
+ 		ret = -EFAULT;
+ 
+-	if (output_pg &&
++	if (!ret && output_pg &&
+ 	    copy_to_user((void __user *)args.out_ptr, output_pg, args.out_sz))
+ 		ret = -EFAULT;
+ 
+diff --git a/include/asm-generic/mshyperv.h b/include/asm-generic/mshyperv.h
+index a729b77983fab..18ee23174da03 100644
+--- a/include/asm-generic/mshyperv.h
++++ b/include/asm-generic/mshyperv.h
+@@ -123,10 +123,12 @@ static inline unsigned int hv_repcomp(u64 status)
+ 
+ /*
+  * Rep hypercalls. Callers of this functions are supposed to ensure that
+- * rep_count and varhead_size comply with Hyper-V hypercall definition.
++ * rep_count, varhead_size, and rep_start comply with Hyper-V hypercall
++ * definition.
+  */
+-static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
+-				      void *input, void *output)
++static inline u64 hv_do_rep_hypercall_ex(u16 code, u16 rep_count,
++					 u16 varhead_size, u16 rep_start,
++					 void *input, void *output)
+ {
+ 	u64 control = code;
+ 	u64 status;
+@@ -134,6 +136,7 @@ static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
+ 
+ 	control |= (u64)varhead_size << HV_HYPERCALL_VARHEAD_OFFSET;
+ 	control |= (u64)rep_count << HV_HYPERCALL_REP_COMP_OFFSET;
++	control |= (u64)rep_start << HV_HYPERCALL_REP_START_OFFSET;
+ 
+ 	do {
+ 		status = hv_do_hypercall(control, input, output);
+@@ -151,6 +154,14 @@ static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
+ 	return status;
+ }
+ 
++/* For the typical case where rep_start is 0 */
++static inline u64 hv_do_rep_hypercall(u16 code, u16 rep_count, u16 varhead_size,
++				      void *input, void *output)
++{
++	return hv_do_rep_hypercall_ex(code, rep_count, varhead_size, 0,
++				      input, output);
++}
++
+ /* Generate the guest OS identifier as described in the Hyper-V TLFS */
+ static inline u64 hv_generate_guest_id(u64 kernel_version)
+ {
 -- 
 2.51.0
 
