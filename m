@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2348D32BF22;
-	Tue, 16 Dec 2025 11:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35894313E13;
+	Tue, 16 Dec 2025 11:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884242; cv=none; b=kOuNiQBdQgXKQu1bvlgJtbcqVm9KemwN05DF6JHVkWU1U4mS9ez0F0r3cF+ZiVrPAXas5e07y7GFxhr5+Sz0/D1/oTZYiRjYG8LxXmMplf+uGkXqpf+RpMg4jlR2upnq4DfgIn2jlWRbieFuR6jVCKJeX7HG5SxVd2V9TidyNFI=
+	t=1765884245; cv=none; b=dhqfYMeOMeIB2a18RFevJb82t9fAyfkx5DNqv6psD5TojRJrs2VnfM8MvWJkb3C542Zv84jcxbrGV/FuGFR5dJqE/7q3STvLVN4I7fIaHUvunt2Xoawe4f6hpujXY05IBt+nIBuj4xCwAxjeQZq3dEyMEanQKt/jr43/QLp8Z+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884242; c=relaxed/simple;
-	bh=vQCMLM88mqKwxJDXWeS0ryxOZy7iVh+5O6yiyrEIOGM=;
+	s=arc-20240116; t=1765884245; c=relaxed/simple;
+	bh=2oEC1Gjmmlw2fIG4OOhMOPqCISVXzJ//twW6/ld4/MU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nksP88aQmCAyNKkSecDptv5Fq3tGX8ruGCM88i/R5+oIVjqOWWxx1tfRIzV7NbJUaktAiIUMKfRZMFI8+bA7kaefhoB00h4tfdG2Obm1zUjVC45lSvMMZLvGrBkwMck+GJ+Gu8rW7PoaCjc1MxbMhKfUB8lxjwdBDl8JxCnSmLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmwLURFx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xn9eoq0vKVaoM/V9SCYTuMYMCCkDhdW7KkdfmkmKDua2HTt1Qbuk74Mw6/exruxcnWHumtqKAUkHjOkgWaOxv4kAK71lSjb626aM6NdbCS6c/pcaVBUqqxkR3hCOv4llCGGwRyOmKNLfPffJros7RKs3K5tW7UMBgCql9qxP6QE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K1AO7Hcd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmwLURFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F963C4CEF1;
-	Tue, 16 Dec 2025 11:24:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K1AO7Hcd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CC8C4CEF1;
+	Tue, 16 Dec 2025 11:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884242;
-	bh=vQCMLM88mqKwxJDXWeS0ryxOZy7iVh+5O6yiyrEIOGM=;
+	s=korg; t=1765884245;
+	bh=2oEC1Gjmmlw2fIG4OOhMOPqCISVXzJ//twW6/ld4/MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EmwLURFxVFqVmi0YLUPxlSL4NMAWcCr24gR2YIse9Tq0vP9oKqAUyH1ea44Z5hvGz
-	 P0L2Hi2m7w5rmaoABVTzFvOvNugvztwdLv6TrTWOXViHnMC72OAGpTfQmtE5/wCZXZ
-	 Dp27bNEBZFuFQ1XjsOAoMUpSSNyrtcSfygxQeFJ0=
+	b=K1AO7HcdG5WwBJeI77J6t+liNuwJRvw03C7axB23mCVUzy6Mwz6+vFvadYMdXdr1v
+	 3IEF9X80vG6A1+otTH3zhkOEHdSXYDSDEcvPNn6HlPjbKA0HIEIBrKJWCuWV3wmCwU
+	 mpe1YY/fL35BIMIGFR2KhyW52yOvtgEjSn1nYsfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/354] dt-bindings: PCI: amlogic: Fix the register name of the DBI region
-Date: Tue, 16 Dec 2025 12:11:40 +0100
-Message-ID: <20251216111325.739156982@linuxfoundation.org>
+Subject: [PATCH 6.12 134/354] RDMA/rtrs: server: Fix error handling in get_or_create_srv
+Date: Tue, 16 Dec 2025 12:11:41 +0100
+Message-ID: <20251216111325.774998996@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,55 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 4813dea9e272ba0a57c50b8d51d440dd8e3ccdd7 ]
+[ Upstream commit a338d6e849ab31f32c08b4fcac11c0c72afbb150 ]
 
-Binding incorrectly specifies the 'DBI' region as 'ELBI'. DBI is a must
-have region for DWC controllers as it has the Root Port and controller
-specific registers, while ELBI has optional registers.
+After device_initialize() is called, use put_device() to release the
+device according to kernel device management rules. While direct
+kfree() work in this case, using put_device() is more correct.
 
-Hence, fix the binding. Though this is an ABI break, this change is needed
-to accurately describe the PCI memory map.
+Found by code review.
 
-Fixes: 7cd210391101 ("dt-bindings: PCI: meson: add DT bindings for Amlogic Meson PCIe controller")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251101-pci-meson-fix-v1-1-c50dcc56ed6a@oss.qualcomm.com
+Fixes: 9cb837480424 ("RDMA/rtrs: server: main functionality")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Link: https://patch.msgid.link/20251110005158.13394-1-make24@iscas.ac.cn
+Acked-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-srv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
-index 79a21ba0f9fd6..c8258ef403283 100644
---- a/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/amlogic,axg-pcie.yaml
-@@ -36,13 +36,13 @@ properties:
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-srv.c b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+index ef4abdea3c2d2..9ecc6343455d6 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-srv.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-srv.c
+@@ -1450,7 +1450,7 @@ static struct rtrs_srv_sess *get_or_create_srv(struct rtrs_srv_ctx *ctx,
+ 	kfree(srv->chunks);
  
-   reg:
-     items:
--      - description: External local bus interface registers
-+      - description: Data Bus Interface registers
-       - description: Meson designed configuration registers
-       - description: PCIe configuration space
+ err_free_srv:
+-	kfree(srv);
++	put_device(&srv->dev);
+ 	return ERR_PTR(-ENOMEM);
+ }
  
-   reg-names:
-     items:
--      - const: elbi
-+      - const: dbi
-       - const: cfg
-       - const: config
- 
-@@ -113,7 +113,7 @@ examples:
-     pcie: pcie@f9800000 {
-         compatible = "amlogic,axg-pcie", "snps,dw-pcie";
-         reg = <0xf9800000 0x400000>, <0xff646000 0x2000>, <0xf9f00000 0x100000>;
--        reg-names = "elbi", "cfg", "config";
-+        reg-names = "dbi", "cfg", "config";
-         interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
-         clocks = <&pclk>, <&clk_port>, <&clk_phy>;
-         clock-names = "pclk", "port", "general";
 -- 
 2.51.0
 
