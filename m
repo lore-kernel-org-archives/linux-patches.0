@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF362773E5;
-	Tue, 16 Dec 2025 11:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0FF344028;
+	Tue, 16 Dec 2025 11:44:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885472; cv=none; b=oFl86zQ36Mo2Z7HwXy1SrHQb3+UTijP+HBh30M/4QnxQ3YQKpMvNdzrAn5gilHYl5mWz1Dpum0DkgqzuPddshEBHbHtuHwaImClRcwaemosn/F5yEZnutIw8KuK2KZzrxxqmlZuNrmkba5RbuGovqvb6sCJy5X2N7YOK8zwMDj0=
+	t=1765885476; cv=none; b=UDrpXDlDl4D4TdmAY+WzbuX/1Ndmsv+Q4lABp05nvokLQOxkBW0gIOWiCUd0CQJn0zy0ztjjdofvafHi5eoqAmZoZNI1E3KwqwX8lc+kum5xoE5L5k5+SM/bEu/5g93y9NBOzHEwUaBF1vqK0bccysT+pfyJXUMsmagzCWoOfIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885472; c=relaxed/simple;
-	bh=HfVwX4DT1Y7vkfQCUPL0Z+OVyHa4HmsDYwSB8aoeAQE=;
+	s=arc-20240116; t=1765885476; c=relaxed/simple;
+	bh=CiHnTDufjhfjc48dpDkXm0eixJY21eRAz/aniLN1A68=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pCDwyH4Hu9rM61CAjc7le/lloLDk3GzfpDUawSAYA1tCuX1+thUcdcq3D42Tur/hJ0cGjaw+21/mqiFAXHvMi452HdGlv3pouimrC4if7NfK+HDBIcybXLLeUc8pb4MtrooLJe+rMq9Secp4wmR/iuXGjGj1rtN0+4PeQfiVvYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBkhyHfO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvZvB19TYm6B6IL5t8FgNbNrB6xsdISARlrQ5Q8NT8cQxEiLB8k/P/wkkhP030762NstsDiN6IyPLBmUTEf+6faa96WWHPXw6SoaZ18qoeQjan7cHDF2IlW/XIb3TNSd79GvmTI1QpzKN7kHP5ajupAsrGtMu44Fx8noTv5WCOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gg95OGU6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBkhyHfO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51741C4CEF5;
-	Tue, 16 Dec 2025 11:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gg95OGU6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE978C4CEF1;
+	Tue, 16 Dec 2025 11:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885472;
-	bh=HfVwX4DT1Y7vkfQCUPL0Z+OVyHa4HmsDYwSB8aoeAQE=;
+	s=korg; t=1765885476;
+	bh=CiHnTDufjhfjc48dpDkXm0eixJY21eRAz/aniLN1A68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBkhyHfOanjilF+6OWYlKLv/F40kpG+dliQtAYTSenJDnOL0j3vAUI1gZYAVWxbG9
-	 XGevks1mu3NHPr/KksK7NGI74416X9t133NawDVjNN7JHlAkM3u8nXoOXQkuCvDuEX
-	 ZuCt0A1ES7IWM1/63JlYvVPQAzlnDbmHC2o29cWw=
+	b=gg95OGU6FBUkWqu+WaQc2qBex/uP5b7rDOaxgxuqk3Ks/CU4keFahbtX1JkkqlQsl
+	 d1fQXK+ByODp4VygsYADkQSujMxd9KF9oStoUBmVk68CLYBVvS2WoP9Tswu1p5BpVP
+	 Xzrr94vYyfxAh0IO2WK4PrlP1l7Buag84GHEWo18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Frederic Weisbecker <frederic@kernel.org>,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 150/507] timers/migration: Remove locking on group connection
-Date: Tue, 16 Dec 2025 12:09:51 +0100
-Message-ID: <20251216111350.960592316@linuxfoundation.org>
+Subject: [PATCH 6.17 151/507] timers/migration: Fix imbalanced NUMA trees
+Date: Tue, 16 Dec 2025 12:09:52 +0100
+Message-ID: <20251216111350.996101434@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,89 +53,437 @@ Content-Transfer-Encoding: 8bit
 
 From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit fa9620355d4192200f15cb3d97c6eb9c02442249 ]
+[ Upstream commit 5eb579dfd46b4949117ecb0f1ba2f12d3dc9a6f2 ]
 
-Initializing the tmc's group, the group's number of children and the
-group's parent can all be done without locking because:
+When a CPU from a new node boots, the old root may happen to be
+connected to the new root even if their node mismatch, as depicted in
+the following scenario:
 
-  1) Reading the group's parent and its group mask is done locklessly.
+1) CPU 0 boots and creates the first group for node 0.
 
-  2) The connections prepared for a given CPU hierarchy are visible to the
-     target CPU once online, thanks to the CPU hotplug enforced memory
-     ordering.
+   [GRP0:0]
+    node 0
+      |
+    CPU 0
 
-  3) In case of a newly created upper level, the new root and its
-     connections and initialization are made visible by the CPU which made
-     the connections. When that CPUs goes idle in the future, the new link
-     is published by tmigr_inactive_up() through the atomic RmW on
-     ->migr_state.
+2) CPU 1 from node 1 boots and creates a new top that corresponds to
+   node 1, but it also connects the old root from node 0 to the new root
+   from node 1 by mistake.
 
-  4) If CPUs were still walking up the active hierarchy, they could observe
-     the new root earlier. In this case the ordering is enforced by an
-     early initialization of the group mask and by barriers that maintain
-     address dependency as explained in:
+             [GRP1:0]
+              node 1
+            /        \
+           /          \
+   [GRP0:0]             [GRP0:1]
+    node 0               node 1
+      |                    |
+    CPU 0                CPU 1
 
-     b729cc1ec21a ("timers/migration: Fix another race between hotplug and idle entry/exit")
-     de3ced72a792 ("timers/migration: Enforce group initialization visibility to tree walkers")
+3) This eventually leads to an imbalanced tree where some node 0 CPUs
+   migrate node 1 timers (and vice versa) way before reaching the
+   crossnode groups, resulting in more frequent remote memory accesses
+   than expected.
 
-  5) Timers are propagated by a chain of group locking from the bottom to
-     the top. And while doing so, the tree also propagates groups links
-     and initialization. Therefore remote expiration, which also relies
-     on group locking, will observe those links and initialization while
-     holding the root lock before walking the tree remotely and update
-     remote timers. This is especially important for migrators in the
-     active hierarchy that may observe the new root early.
+                      [GRP2:0]
+                      NUMA_NO_NODE
+                     /             \
+             [GRP1:0]              [GRP1:1]
+              node 1               node 0
+            /        \                |
+           /          \             [...]
+   [GRP0:0]             [GRP0:1]
+    node 0               node 1
+      |                    |
+    CPU 0...              CPU 1...
 
-Therefore the locking is unnecessary at initialization. If anything, it
-just brings confusion. Remove it.
+A balanced tree should only contain groups having children that belong
+to the same node:
 
+                      [GRP2:0]
+                      NUMA_NO_NODE
+                     /             \
+             [GRP1:0]              [GRP1:0]
+              node 0               node 1
+            /        \             /      \
+           /          \           /        \
+   [GRP0:0]          [...]      [...]    [GRP0:1]
+    node 0                                node 1
+      |                                     |
+    CPU 0...                              CPU 1...
+
+In order to fix this, the hierarchy must be unfolded up to the crossnode
+level as soon as a node mismatch is detected. For example the stage 2
+above should lead to this layout:
+
+                      [GRP2:0]
+                      NUMA_NO_NODE
+                     /             \
+             [GRP1:0]              [GRP1:1]
+              node 0               node 1
+              /                         \
+             /                           \
+        [GRP0:0]                        [GRP0:1]
+        node 0                           node 1
+          |                                |
+       CPU 0                             CPU 1
+
+This means that not only GRP1:0 must be created but also GRP1:1 and
+GRP2:0 in order to prepare a balanced tree for next CPUs to boot.
+
+Fixes: 7ee988770326 ("timers: Implement the hierarchical pull model")
 Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/20251024132536.39841-3-frederic@kernel.org
-Stable-dep-of: 5eb579dfd46b ("timers/migration: Fix imbalanced NUMA trees")
+Link: https://patch.msgid.link/20251024132536.39841-4-frederic@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timer_migration.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ kernel/time/timer_migration.c | 231 +++++++++++++++++++---------------
+ 1 file changed, 127 insertions(+), 104 deletions(-)
 
 diff --git a/kernel/time/timer_migration.c b/kernel/time/timer_migration.c
-index 1e371f1fdc86c..5f8aef94ca0f7 100644
+index 5f8aef94ca0f7..49635a2b7ee28 100644
 --- a/kernel/time/timer_migration.c
 +++ b/kernel/time/timer_migration.c
-@@ -1573,9 +1573,6 @@ static void tmigr_connect_child_parent(struct tmigr_group *child,
- {
- 	struct tmigr_walk data;
+@@ -420,6 +420,8 @@ static struct list_head *tmigr_level_list __read_mostly;
+ static unsigned int tmigr_hierarchy_levels __read_mostly;
+ static unsigned int tmigr_crossnode_level __read_mostly;
  
--	raw_spin_lock_irq(&child->lock);
--	raw_spin_lock_nested(&parent->lock, SINGLE_DEPTH_NESTING);
++static struct tmigr_group *tmigr_root;
++
+ static DEFINE_PER_CPU(struct tmigr_cpu, tmigr_cpu);
+ 
+ #define TMIGR_NONE	0xFF
+@@ -522,11 +524,9 @@ struct tmigr_walk {
+ 
+ typedef bool (*up_f)(struct tmigr_group *, struct tmigr_group *, struct tmigr_walk *);
+ 
+-static void __walk_groups(up_f up, struct tmigr_walk *data,
+-			  struct tmigr_cpu *tmc)
++static void __walk_groups_from(up_f up, struct tmigr_walk *data,
++			       struct tmigr_group *child, struct tmigr_group *group)
+ {
+-	struct tmigr_group *child = NULL, *group = tmc->tmgroup;
 -
- 	if (activate) {
+ 	do {
+ 		WARN_ON_ONCE(group->level >= tmigr_hierarchy_levels);
+ 
+@@ -544,6 +544,12 @@ static void __walk_groups(up_f up, struct tmigr_walk *data,
+ 	} while (group);
+ }
+ 
++static void __walk_groups(up_f up, struct tmigr_walk *data,
++			  struct tmigr_cpu *tmc)
++{
++	__walk_groups_from(up, data, NULL, tmc->tmgroup);
++}
++
+ static void walk_groups(up_f up, struct tmigr_walk *data, struct tmigr_cpu *tmc)
+ {
+ 	lockdep_assert_held(&tmc->lock);
+@@ -1498,21 +1504,6 @@ static void tmigr_init_group(struct tmigr_group *group, unsigned int lvl,
+ 	s.seq = 0;
+ 	atomic_set(&group->migr_state, s.state);
+ 
+-	/*
+-	 * If this is a new top-level, prepare its groupmask in advance.
+-	 * This avoids accidents where yet another new top-level is
+-	 * created in the future and made visible before the current groupmask.
+-	 */
+-	if (list_empty(&tmigr_level_list[lvl])) {
+-		group->groupmask = BIT(0);
+-		/*
+-		 * The previous top level has prepared its groupmask already,
+-		 * simply account it as the first child.
+-		 */
+-		if (lvl > 0)
+-			group->num_children = 1;
+-	}
+-
+ 	timerqueue_init_head(&group->events);
+ 	timerqueue_init(&group->groupevt.nextevt);
+ 	group->groupevt.nextevt.expires = KTIME_MAX;
+@@ -1567,22 +1558,51 @@ static struct tmigr_group *tmigr_get_group(unsigned int cpu, int node,
+ 	return group;
+ }
+ 
++static bool tmigr_init_root(struct tmigr_group *group, bool activate)
++{
++	if (!group->parent && group != tmigr_root) {
++		/*
++		 * This is the new top-level, prepare its groupmask in advance
++		 * to avoid accidents where yet another new top-level is
++		 * created in the future and made visible before this groupmask.
++		 */
++		group->groupmask = BIT(0);
++		WARN_ON_ONCE(activate);
++
++		return true;
++	}
++
++	return false;
++
++}
++
+ static void tmigr_connect_child_parent(struct tmigr_group *child,
+ 				       struct tmigr_group *parent,
+ 				       bool activate)
+ {
+-	struct tmigr_walk data;
++	if (tmigr_init_root(parent, activate)) {
++		/*
++		 * The previous top level had prepared its groupmask already,
++		 * simply account it in advance as the first child. If some groups
++		 * have been created between the old and new root due to node
++		 * mismatch, the new root's child will be intialized accordingly.
++		 */
++		parent->num_children = 1;
++	}
+ 
+-	if (activate) {
++	/* Connecting old root to new root ? */
++	if (!parent->parent && activate) {
  		/*
- 		 * @child is the old top and @parent the new one. In this
-@@ -1596,9 +1593,6 @@ static void tmigr_connect_child_parent(struct tmigr_group *child,
- 	 */
+-		 * @child is the old top and @parent the new one. In this
+-		 * case groupmask is pre-initialized and @child already
+-		 * accounted, along with its new sibling corresponding to the
+-		 * CPU going up.
++		 * @child is the old top, or in case of node mismatch, some
++		 * intermediate group between the old top and the new one in
++		 * @parent. In this case the @child must be pre-accounted above
++		 * as the first child. Its new inactive sibling corresponding
++		 * to the CPU going up has been accounted as the second child.
+ 		 */
+-		WARN_ON_ONCE(child->groupmask != BIT(0) || parent->num_children != 2);
++		WARN_ON_ONCE(parent->num_children != 2);
++		child->groupmask = BIT(0);
+ 	} else {
+-		/* Adding @child for the CPU going up to @parent. */
++		/* Common case adding @child for the CPU going up to @parent. */
+ 		child->groupmask = BIT(parent->num_children++);
+ 	}
+ 
+@@ -1594,56 +1614,28 @@ static void tmigr_connect_child_parent(struct tmigr_group *child,
  	smp_store_release(&child->parent, parent);
  
--	raw_spin_unlock(&parent->lock);
--	raw_spin_unlock_irq(&child->lock);
--
  	trace_tmigr_connect_child_parent(child);
- 
- 	if (!activate)
-@@ -1695,13 +1689,9 @@ static int tmigr_setup_groups(unsigned int cpu, unsigned int node)
- 		if (i == 0) {
- 			struct tmigr_cpu *tmc = per_cpu_ptr(&tmigr_cpu, cpu);
- 
--			raw_spin_lock_irq(&group->lock);
 -
+-	if (!activate)
+-		return;
+-
+-	/*
+-	 * To prevent inconsistent states, active children need to be active in
+-	 * the new parent as well. Inactive children are already marked inactive
+-	 * in the parent group:
+-	 *
+-	 * * When new groups were created by tmigr_setup_groups() starting from
+-	 *   the lowest level (and not higher then one level below the current
+-	 *   top level), then they are not active. They will be set active when
+-	 *   the new online CPU comes active.
+-	 *
+-	 * * But if a new group above the current top level is required, it is
+-	 *   mandatory to propagate the active state of the already existing
+-	 *   child to the new parent. So tmigr_connect_child_parent() is
+-	 *   executed with the formerly top level group (child) and the newly
+-	 *   created group (parent).
+-	 *
+-	 * * It is ensured that the child is active, as this setup path is
+-	 *   executed in hotplug prepare callback. This is exectued by an
+-	 *   already connected and !idle CPU. Even if all other CPUs go idle,
+-	 *   the CPU executing the setup will be responsible up to current top
+-	 *   level group. And the next time it goes inactive, it will release
+-	 *   the new childmask and parent to subsequent walkers through this
+-	 *   @child. Therefore propagate active state unconditionally.
+-	 */
+-	data.childmask = child->groupmask;
+-
+-	/*
+-	 * There is only one new level per time (which is protected by
+-	 * tmigr_mutex). When connecting the child and the parent and set the
+-	 * child active when the parent is inactive, the parent needs to be the
+-	 * uppermost level. Otherwise there went something wrong!
+-	 */
+-	WARN_ON(!tmigr_active_up(parent, child, &data) && parent->parent);
+ }
+ 
+-static int tmigr_setup_groups(unsigned int cpu, unsigned int node)
++static int tmigr_setup_groups(unsigned int cpu, unsigned int node,
++			      struct tmigr_group *start, bool activate)
+ {
+ 	struct tmigr_group *group, *child, **stack;
+-	int i, top = 0, err = 0;
+-	struct list_head *lvllist;
++	int i, top = 0, err = 0, start_lvl = 0;
++	bool root_mismatch = false;
+ 
+ 	stack = kcalloc(tmigr_hierarchy_levels, sizeof(*stack), GFP_KERNEL);
+ 	if (!stack)
+ 		return -ENOMEM;
+ 
+-	for (i = 0; i < tmigr_hierarchy_levels; i++) {
++	if (start) {
++		stack[start->level] = start;
++		start_lvl = start->level + 1;
++	}
++
++	if (tmigr_root)
++		root_mismatch = tmigr_root->numa_node != node;
++
++	for (i = start_lvl; i < tmigr_hierarchy_levels; i++) {
+ 		group = tmigr_get_group(cpu, node, i);
+ 		if (IS_ERR(group)) {
+ 			err = PTR_ERR(group);
+@@ -1656,23 +1648,25 @@ static int tmigr_setup_groups(unsigned int cpu, unsigned int node)
+ 
+ 		/*
+ 		 * When booting only less CPUs of a system than CPUs are
+-		 * available, not all calculated hierarchy levels are required.
++		 * available, not all calculated hierarchy levels are required,
++		 * unless a node mismatch is detected.
+ 		 *
+ 		 * The loop is aborted as soon as the highest level, which might
+ 		 * be different from tmigr_hierarchy_levels, contains only a
+-		 * single group.
++		 * single group, unless the nodes mismatch below tmigr_crossnode_level
+ 		 */
+-		if (group->parent || list_is_singular(&tmigr_level_list[i]))
++		if (group->parent)
++			break;
++		if ((!root_mismatch || i >= tmigr_crossnode_level) &&
++		    list_is_singular(&tmigr_level_list[i]))
+ 			break;
+ 	}
+ 
+ 	/* Assert single root without parent */
+ 	if (WARN_ON_ONCE(i >= tmigr_hierarchy_levels))
+ 		return -EINVAL;
+-	if (WARN_ON_ONCE(!err && !group->parent && !list_is_singular(&tmigr_level_list[top])))
+-		return -EINVAL;
+ 
+-	for (; i >= 0; i--) {
++	for (; i >= start_lvl; i--) {
+ 		group = stack[i];
+ 
+ 		if (err < 0) {
+@@ -1692,48 +1686,63 @@ static int tmigr_setup_groups(unsigned int cpu, unsigned int node)
  			tmc->tmgroup = group;
  			tmc->groupmask = BIT(group->num_children++);
  
--			raw_spin_unlock_irq(&group->lock);
--
++			tmigr_init_root(group, activate);
++
  			trace_tmigr_connect_cpu_parent(tmc);
  
  			/* There are no children that need to be connected */
+ 			continue;
+ 		} else {
+ 			child = stack[i - 1];
+-			/* Will be activated at online time */
+-			tmigr_connect_child_parent(child, group, false);
++			tmigr_connect_child_parent(child, group, activate);
+ 		}
++	}
+ 
+-		/* check if uppermost level was newly created */
+-		if (top != i)
+-			continue;
+-
+-		WARN_ON_ONCE(top == 0);
++	if (err < 0)
++		goto out;
+ 
+-		lvllist = &tmigr_level_list[top];
++	if (activate) {
++		struct tmigr_walk data;
+ 
+ 		/*
+-		 * Newly created root level should have accounted the upcoming
+-		 * CPU's child group and pre-accounted the old root.
++		 * To prevent inconsistent states, active children need to be active in
++		 * the new parent as well. Inactive children are already marked inactive
++		 * in the parent group:
++		 *
++		 * * When new groups were created by tmigr_setup_groups() starting from
++		 *   the lowest level, then they are not active. They will be set active
++		 *   when the new online CPU comes active.
++		 *
++		 * * But if new groups above the current top level are required, it is
++		 *   mandatory to propagate the active state of the already existing
++		 *   child to the new parents. So tmigr_active_up() activates the
++		 *   new parents while walking up from the old root to the new.
++		 *
++		 * * It is ensured that @start is active, as this setup path is
++		 *   executed in hotplug prepare callback. This is executed by an
++		 *   already connected and !idle CPU. Even if all other CPUs go idle,
++		 *   the CPU executing the setup will be responsible up to current top
++		 *   level group. And the next time it goes inactive, it will release
++		 *   the new childmask and parent to subsequent walkers through this
++		 *   @child. Therefore propagate active state unconditionally.
+ 		 */
+-		if (group->num_children == 2 && list_is_singular(lvllist)) {
+-			/*
+-			 * The target CPU must never do the prepare work, except
+-			 * on early boot when the boot CPU is the target. Otherwise
+-			 * it may spuriously activate the old top level group inside
+-			 * the new one (nevertheless whether old top level group is
+-			 * active or not) and/or release an uninitialized childmask.
+-			 */
+-			WARN_ON_ONCE(cpu == raw_smp_processor_id());
+-
+-			lvllist = &tmigr_level_list[top - 1];
+-			list_for_each_entry(child, lvllist, list) {
+-				if (child->parent)
+-					continue;
++		WARN_ON_ONCE(!start->parent);
++		data.childmask = start->groupmask;
++		__walk_groups_from(tmigr_active_up, &data, start, start->parent);
++	}
+ 
+-				tmigr_connect_child_parent(child, group, true);
+-			}
++	/* Root update */
++	if (list_is_singular(&tmigr_level_list[top])) {
++		group = list_first_entry(&tmigr_level_list[top],
++					 typeof(*group), list);
++		WARN_ON_ONCE(group->parent);
++		if (tmigr_root) {
++			/* Old root should be the same or below */
++			WARN_ON_ONCE(tmigr_root->level > top);
+ 		}
++		tmigr_root = group;
+ 	}
+-
++out:
+ 	kfree(stack);
+ 
+ 	return err;
+@@ -1741,12 +1750,26 @@ static int tmigr_setup_groups(unsigned int cpu, unsigned int node)
+ 
+ static int tmigr_add_cpu(unsigned int cpu)
+ {
++	struct tmigr_group *old_root = tmigr_root;
+ 	int node = cpu_to_node(cpu);
+ 	int ret;
+ 
+-	mutex_lock(&tmigr_mutex);
+-	ret = tmigr_setup_groups(cpu, node);
+-	mutex_unlock(&tmigr_mutex);
++	guard(mutex)(&tmigr_mutex);
++
++	ret = tmigr_setup_groups(cpu, node, NULL, false);
++
++	/* Root has changed? Connect the old one to the new */
++	if (ret >= 0 && old_root && old_root != tmigr_root) {
++		/*
++		 * The target CPU must never do the prepare work, except
++		 * on early boot when the boot CPU is the target. Otherwise
++		 * it may spuriously activate the old top level group inside
++		 * the new one (nevertheless whether old top level group is
++		 * active or not) and/or release an uninitialized childmask.
++		 */
++		WARN_ON_ONCE(cpu == raw_smp_processor_id());
++		ret = tmigr_setup_groups(-1, old_root->numa_node, old_root, true);
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.51.0
 
