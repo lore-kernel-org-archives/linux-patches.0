@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01A73659E4;
-	Tue, 16 Dec 2025 12:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 268CC3659E5;
+	Tue, 16 Dec 2025 12:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887031; cv=none; b=bcwK7Dw3a5LoF/xHf4p2Iyvg7U8FTSMU55dvEQ4McTrWJBNxn3SzuuOU1Xi/aobviwhxONaMIW7wGB1N0rAehTEcvCVGBBM93H9la3uH8I3mjRnLkCsj0GILOW5Hyj4ERvRfWG+kUEaL6Ob00j3RHNX0OVKvjvVZsFUNjn2Im1s=
+	t=1765887035; cv=none; b=ZhLN5dc3G+XsS7bvWbtJtRJRQNVll6UOay8KBTPUC2SfKn2rDPS992rC+FZINd9SiE0M2jg4FDJNhhSpzZNBuG+jNswx5rD5QoNw5plsgF5RbOtfqsiWFEN63lo7RY6AKglqLheGbBLpqlFRVfj4NwzRO0oJmyuA/jQGiPLKsGY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887031; c=relaxed/simple;
-	bh=yaoPFBE+uP0yjnUDdOU2tHOkXFes4T9R8WWgtTQT4Wo=;
+	s=arc-20240116; t=1765887035; c=relaxed/simple;
+	bh=4IiCX5V29VzA70ytlGfBvBHeiV2CY33zDJJBGwQ9djY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjG1zitMylv3Hh6U+YbYL103n+PvOmcHw4D25UolrMSLa0k2yb58Sj5b3f3K4sd7BpeIp6puKJYBf5YuXpSVfvFuYSu/plasmzr3jn7WYEEC37r7b5PuRB8uMBecjePSQ8pRy73Fge8knGuhhkcS9jpDZa0MOL4pxmtGovfXoXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Stv5gKt/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lr1g0+e6Hv9QDqPyMn7Tozcab7E5qjWmxnMBgT5KU1y4KTe6naPmKm1mp2sUGOae7iKyPlBsAEFPDTRUt3OtxeJHA6Ll9Y6NW4O1u18YQ1WNrP39V3rNmgXyEGfOCMibzgjZcl9t3Xr3uieCXN2mMShHKEvqcC1MN7670G3A6rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EFctP0js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Stv5gKt/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF99C4CEF5;
-	Tue, 16 Dec 2025 12:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EFctP0js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C014C4CEF1;
+	Tue, 16 Dec 2025 12:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887031;
-	bh=yaoPFBE+uP0yjnUDdOU2tHOkXFes4T9R8WWgtTQT4Wo=;
+	s=korg; t=1765887035;
+	bh=4IiCX5V29VzA70ytlGfBvBHeiV2CY33zDJJBGwQ9djY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Stv5gKt/6NSZA6JJ1vS30b2ZoIgl+KyjWTCTheN+SCZ6AZAm5WDZOD6qHwDkKBRlS
-	 OqcG74NQYjuqeUW0wrZkTZPT9hR6VKshU84mpOd0fqtSBb70CkaHLZ70/00RaoslMP
-	 SRQo1Iq1w+mXHBGW28ygI18GSX163C1xbjIGwZ4k=
+	b=EFctP0jsDXfMv/BY7/2Q+jZ/XFny3SAsgKeujFHQtVAPRe0NHmPNHqyJpheagBC6B
+	 P3whTSCmYU9adWJoEkv0kCVR5UxCHFByRw4li46FRLUMOR3kTp7mP42XuJSeNg1HFH
+	 5zVhh3i7p2vTpFYHpSb7V+T1uN9OtgbXxrqk+TEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Frank Li <Frank.Li@nxp.com>,
+	Randolph Sapp <rs@ti.com>,
+	Michael Walle <mwalle@kernel.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 107/614] PCI: endpoint: pci-epf-test: Fix sleeping function being called from atomic context
-Date: Tue, 16 Dec 2025 12:07:54 +0100
-Message-ID: <20251216111405.213657242@linuxfoundation.org>
+Subject: [PATCH 6.18 108/614] arm64: dts: ti: k3-am62p: Fix memory ranges for GPU
+Date: Tue, 16 Dec 2025 12:07:55 +0100
+Message-ID: <20251216111405.249537449@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,59 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
+From: Randolph Sapp <rs@ti.com>
 
-[ Upstream commit 25423cda145f9ed6ee4a72d9f2603ac2a4685e74 ]
+[ Upstream commit 76546090b1726118cd6fb3db7159fc2a3fdda8a0 ]
 
-When Root Complex (RC) triggers a Doorbell interrupt to Endpoint (EP), it
-triggers the below warning in the EP:
+Update the memory region listed in the k3-am62p.dtsi for the BXS-4-64
+GPU to match the Main Memory Map described in the TRM [1].
 
- BUG: sleeping function called from invalid context at kernel/locking/mutex.c:271
- Call trace:
-  __might_resched+0x130/0x158
-  __might_sleep+0x70/0x88
-  mutex_lock+0x2c/0x80
-  pci_epc_get_msi+0x78/0xd8
-  pci_epf_test_raise_irq.isra.0+0x74/0x138
-  pci_epf_test_doorbell_handler+0x34/0x50
+[1] https://www.ti.com/lit/ug/spruj83b/spruj83b.pdf
 
-The BUG arises because the EP's pci_epf_test_doorbell_handler() which is
-running in the hard IRQ context is making an indirect call to
-pci_epc_get_msi(), which uses mutex inside.
-
-To fix the issue, convert the hard IRQ handler to a threaded IRQ handler to
-allow it to call functions that can sleep during bottom half execution.
-Also, register the threaded IRQ handler with IRQF_ONESHOT to keep the
-interrupt line disabled until the threaded IRQ handler completes execution.
-
-Fixes: eff0c286aa91 ("PCI: endpoint: pci-epf-test: Add doorbell test support")
-Signed-off-by: Bhanu Seshu Kumar Valluri <bhanuseshukumar@gmail.com>
-[mani: reworded description a bit]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20251014024109.42287-1-bhanuseshukumar@gmail.com
+Fixes: 29075cc09f43 ("arm64: dts: ti: Introduce AM62P5 family of SoCs")
+Signed-off-by: Randolph Sapp <rs@ti.com>
+Reviewed-by: Michael Walle <mwalle@kernel.org>
+Link: https://patch.msgid.link/20250919193341.707660-2-rs@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62p.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 31617772ad516..b05e8db575c35 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -730,8 +730,9 @@ static void pci_epf_test_enable_doorbell(struct pci_epf_test *epf_test,
- 	if (bar < BAR_0)
- 		goto err_doorbell_cleanup;
- 
--	ret = request_irq(epf->db_msg[0].virq, pci_epf_test_doorbell_handler, 0,
--			  "pci-ep-test-doorbell", epf_test);
-+	ret = request_threaded_irq(epf->db_msg[0].virq, NULL,
-+				   pci_epf_test_doorbell_handler, IRQF_ONESHOT,
-+				   "pci-ep-test-doorbell", epf_test);
- 	if (ret) {
- 		dev_err(&epf->dev,
- 			"Failed to request doorbell IRQ: %d\n",
+diff --git a/arch/arm64/boot/dts/ti/k3-am62p.dtsi b/arch/arm64/boot/dts/ti/k3-am62p.dtsi
+index 75a15c368c11b..dd24c40c7965d 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62p.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62p.dtsi
+@@ -59,7 +59,7 @@ cbass_main: bus@f0000 {
+ 			 <0x00 0x01000000 0x00 0x01000000 0x00 0x01b28400>, /* First peripheral window */
+ 			 <0x00 0x08000000 0x00 0x08000000 0x00 0x00200000>, /* Main CPSW */
+ 			 <0x00 0x0e000000 0x00 0x0e000000 0x00 0x01d20000>, /* Second peripheral window */
+-			 <0x00 0x0fd00000 0x00 0x0fd00000 0x00 0x00020000>, /* GPU */
++			 <0x00 0x0fd80000 0x00 0x0fd80000 0x00 0x00080000>, /* GPU */
+ 			 <0x00 0x20000000 0x00 0x20000000 0x00 0x0a008000>, /* Third peripheral window */
+ 			 <0x00 0x30040000 0x00 0x30040000 0x00 0x00080000>, /* PRUSS-M */
+ 			 <0x00 0x30101000 0x00 0x30101000 0x00 0x00010100>, /* CSI window */
 -- 
 2.51.0
 
