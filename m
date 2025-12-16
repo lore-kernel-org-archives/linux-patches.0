@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7957234253B;
-	Tue, 16 Dec 2025 11:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2CB341AC5;
+	Tue, 16 Dec 2025 11:34:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884879; cv=none; b=tjG+QtiD9pYHJcNzpRxKKXrzd6g+n4qq5/3Peg5+D6lm1+VfzGZWpqnPR3eqgej8og9/Hi9jOwVHimUqe/HP9pLFYSFvptg6tO2rhylJ4EOVRBb3S/VHaCaIUZ99ACOO8YXz40u9BqQfyTqbLeKNPvrAivPQfl4cX6j2hINfetg=
+	t=1765884882; cv=none; b=XFHPgTgDA+ocTUUm8iLOiRJsWYiaBd/EmzW9Y7qZmot19XwqBPfKuLNnJJ1fyQWO/e+VuXajTFcarWpiCMKX1WqvZ0HnUtPOw3s9GccgnK2VUNyDtTgoEETz9PRZKQ0yuNqAsE2uv9MXTaVxOR8IlRTqZeq8P1HKL3GlFrv3jgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884879; c=relaxed/simple;
-	bh=14SMYHbR1enNPsOpkAYXzdGq5j3o+8wBcIueWZZE5V4=;
+	s=arc-20240116; t=1765884882; c=relaxed/simple;
+	bh=Yka1063WsBDL5EBUQSy5YiyHqs00dVg0CEw0JGL1uN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSlvWZXOZgiodA9Y4Vo+EfvENCaei+IeR8WbE3MjamgFK+ptFaoEvgbhD/mlENYUTYc5nqBWz9FhkLiNs1vRcn4EEM9x3xcmJh2JB7Gi+ijIowcIBy4uAe1UTbTro0COVbvhoXh4QgLx0qHIihgiIQCSoqKuuXAQrQyYaLXJem0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lDLribe0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pKz6rUn+OJXoEyCmGY2M1EwlGbTdU9Z/ZCuWHbKaa3hwqph/scF3C4cxdFzldqZkWkTeaJ5V5CYDXnUgejG0Klih+3a9JOF7ySIrjUsmri6A//zP99tdPvx2h5EORnMLQSoXltUwp3wuxxd4kaTW2xgEP8MRV3ZZormc7dFKYrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qy4ekxbn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lDLribe0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E23C4CEF1;
-	Tue, 16 Dec 2025 11:34:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qy4ekxbn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C82C4CEF1;
+	Tue, 16 Dec 2025 11:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884879;
-	bh=14SMYHbR1enNPsOpkAYXzdGq5j3o+8wBcIueWZZE5V4=;
+	s=korg; t=1765884882;
+	bh=Yka1063WsBDL5EBUQSy5YiyHqs00dVg0CEw0JGL1uN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lDLribe0AnZLJZnggoJh7vTACfB4df6FUREDrYSSz/1v22rxqggw9YlRD0p8l73VL
-	 WIFTL/wHGZOnzbYtuVlStYRp0VQfb0XZ/AHrKI50XivCMAXN9Q9CSCaqn4vCbT+CRf
-	 ypNMpDG8Gi1N093HOhAT9sFzpLFW29PSAOzkUbho=
+	b=Qy4ekxbnNBg3DisQuYWm/6a0OjnIU/cxSSbtUrWb4t0XnxQs6o9UTkCysv7zCn6pV
+	 2RE3wHvvWYv4nzY0Bt3MnkVyDMiJ6M3Qk1dJxsrCclgnKLKy9NYKMwlbAMjIkCr7Wi
+	 RQt4AbpYvwfoUzSUeFvKt2PlCjuJZ+ZrYlXyFvHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhur Kumar <madhurkumar004@gmail.com>,
-	Lyude Paul <lyude@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 327/354] drm/nouveau: refactor deprecated strcpy
-Date: Tue, 16 Dec 2025 12:14:54 +0100
-Message-ID: <20251216111332.756552169@linuxfoundation.org>
+Subject: [PATCH 6.12 328/354] cifs: Fix handling of a beyond-EOF DIO/unbuffered read over SMB2
+Date: Tue, 16 Dec 2025 12:14:55 +0100
+Message-ID: <20251216111332.792869420@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,43 +56,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Madhur Kumar <madhurkumar004@gmail.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 2bdc2c0e12fac56e41ec05fb771ead986ea6dac0 ]
+[ Upstream commit 4ae4dde6f34a4124c65468ae4fa1f915fb40f900 ]
 
-strcpy() has been deprecated because it performs no bounds checking on the
-destination buffer, which can lead to buffer overflows. Use the safer
-strscpy() instead.
+If a DIO read or an unbuffered read request extends beyond the EOF, the
+server will return a short read and a status code indicating that EOF was
+hit, which gets translated to -ENODATA.  Note that the client does not cap
+the request at i_size, but asks for the amount requested in case there's a
+race on the server with a third party.
 
-Signed-off-by: Madhur Kumar <madhurkumar004@gmail.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Fixes: 15a996bbb697 ("drm/nouveau: assign fence_chan->name correctly")
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20251204120822.17502-1-madhurkumar004@gmail.com
+Now, on the client side, the request will get split into multiple
+subrequests if rsize is smaller than the full request size.  A subrequest
+that starts before or at the EOF and returns short data up to the EOF will
+be correctly handled, with the NETFS_SREQ_HIT_EOF flag being set,
+indicating to netfslib that we can't read more.
+
+If a subrequest, however, starts after the EOF and not at it, HIT_EOF will
+not be flagged, its error will be set to -ENODATA and it will be abandoned.
+This will cause the request as a whole to fail with -ENODATA.
+
+Fix this by setting NETFS_SREQ_HIT_EOF on any subrequest that lies beyond
+the EOF marker.
+
+Fixes: 1da29f2c39b6 ("netfs, cifs: Fix handling of short DIO read")
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+cc: Shyam Prasad N <sprasad@microsoft.com>
+cc: linux-cifs@vger.kernel.org
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_fence.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/smb/client/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_fence.c b/drivers/gpu/drm/nouveau/nouveau_fence.c
-index edddfc036c6d1..65b7974defa10 100644
---- a/drivers/gpu/drm/nouveau/nouveau_fence.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_fence.c
-@@ -197,11 +197,11 @@ nouveau_fence_context_new(struct nouveau_channel *chan, struct nouveau_fence_cha
- 	fctx->context = drm->runl[chan->runlist].context_base + chan->chid;
- 
- 	if (chan == drm->cechan)
--		strcpy(fctx->name, "copy engine channel");
-+		strscpy(fctx->name, "copy engine channel");
- 	else if (chan == drm->channel)
--		strcpy(fctx->name, "generic kernel channel");
-+		strscpy(fctx->name, "generic kernel channel");
- 	else
--		strcpy(fctx->name, cli->name);
-+		strscpy(fctx->name, cli->name);
- 
- 	kref_init(&fctx->fence_ref);
- 	if (!priv->uevent)
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 7aa87908e0ff1..b0ff9f7e8cea8 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -4634,7 +4634,7 @@ smb2_readv_callback(struct mid_q_entry *mid)
+ 	} else {
+ 		size_t trans = rdata->subreq.transferred + rdata->got_bytes;
+ 		if (trans < rdata->subreq.len &&
+-		    rdata->subreq.start + trans == ictx->remote_i_size) {
++		    rdata->subreq.start + trans >= ictx->remote_i_size) {
+ 			__set_bit(NETFS_SREQ_HIT_EOF, &rdata->subreq.flags);
+ 			rdata->result = 0;
+ 		}
 -- 
 2.51.0
 
