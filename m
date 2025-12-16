@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3E2234D4D7;
-	Tue, 16 Dec 2025 11:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335A4346E51;
+	Tue, 16 Dec 2025 11:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885566; cv=none; b=fHyHvTnl0dJplopYcuRnTP2/79OTa6Z9ioVncidAhHay7zjR/doyBcVmt9h7Q2sWN9PcQrxW/G40I33C5e/uHnxYhSvymxgrSZtwhnWIgWlxOKfmxc5olr42lWSK+rSsLXY94LDufpJ/HpIEAxBZkVdxz2XZEeWrToYViai35g8=
+	t=1765885571; cv=none; b=E2WXpJT37MOFCwGZjdN2ZGx7iIYFt4JuRQlzUf8LZpuDB9/V010bS5ws0FUkl+CFLdOBKf8d0F8bhLyIe/gRuI78dN2xNeVele4Vo3YqfIhXtzgjv0JwyQbfOG2T8K3cE7zdrFxo9X6sT26Ksl8RaeKzCQ4LOj7RmW9BItZvXM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885566; c=relaxed/simple;
-	bh=RN9BYux6HlDJHd1B2T3W7RT18hcjjOuV9szZqsSDIyQ=;
+	s=arc-20240116; t=1765885571; c=relaxed/simple;
+	bh=L6ukmDBDI2DkpyMuNFMg/KxOtLkMxtPEwjrTsJOsRj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lknBDinUmfBNZOLpkG9t3+KEcaHXz+2Vpgk0vu8LX/0L5NjpVpGzulqsApOgHyldJpQbnG/mykZTCGQA95YK2a9cfPPDrD0blEuZ+QAsW78TTouSOtUDs6fo13nMXip6CpoPVRbbo7cXmvbiVwQVPC9fzXAtznoHFzOO4ZRSQ+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Cyglz3g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mz0IMBgbf7nSQ5hf0Xi7E1RN6cWIJ4x9ut2+zJkkEUfAJED9i+hUETLkPtfw6jUhtdNoM2X8k0MGHuD+/POWODC/tralUA1FkwKuNYTJd75ze2+6NyuoA0Pq7wuaoau3Kv9QSGagH/DNhX8VbwmuHlRvNlYP/05UfrP+HYcOcB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xua7ruSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Cyglz3g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034EEC4CEF1;
-	Tue, 16 Dec 2025 11:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xua7ruSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CB5C4CEF1;
+	Tue, 16 Dec 2025 11:46:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885566;
-	bh=RN9BYux6HlDJHd1B2T3W7RT18hcjjOuV9szZqsSDIyQ=;
+	s=korg; t=1765885570;
+	bh=L6ukmDBDI2DkpyMuNFMg/KxOtLkMxtPEwjrTsJOsRj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Cyglz3gy/nakPy3wXC1gamT/246DUfGeujYSS5thUQVg0h5aXHZmpzwFgUdegxb+
-	 TNJRmd08dequ2oaUcn8m0riBOQ1J8SepYclg+SsVBclEmE6sTFaIuFi1M9B8GPwL6W
-	 oeJ50zOKo+fYPhaAI5npVLeRwlz2jsHBWGEs5q5k=
+	b=Xua7ruSP4L+71E9zV9vh6FZr+D1gDHIBjlHGp81ktHBIup3nQCr6AvQeMMJWRGJ1Z
+	 PqDMQZufHah7B8tnIweCq+I28OUUZoWldepLqrJBeKfVsGqPjcNuTWGjGrEDiSvzQ6
+	 4aQGhRi4D9MAe5gDA2eBNBqXVrP5rLxe4H2n5Yy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Vishwaroop A <va@nvidia.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Wang Liang <wangliang74@huawei.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 170/507] spi: tegra210-quad: Fix timeout handling
-Date: Tue, 16 Dec 2025 12:10:11 +0100
-Message-ID: <20251216111351.677165442@linuxfoundation.org>
+Subject: [PATCH 6.17 179/507] locktorture: Fix memory leak in param_set_cpumask()
+Date: Tue, 16 Dec 2025 12:10:20 +0100
+Message-ID: <20251216111352.001094335@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,115 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vishwaroop A <va@nvidia.com>
+From: Wang Liang <wangliang74@huawei.com>
 
-[ Upstream commit b4e002d8a7cee3b1d70efad0e222567f92a73000 ]
+[ Upstream commit e52b43883d084a9af263c573f2a1bd1ca5088389 ]
 
-When the CPU that the QSPI interrupt handler runs on (typically CPU 0)
-is excessively busy, it can lead to rare cases of the IRQ thread not
-running before the transfer timeout is reached.
+With CONFIG_CPUMASK_OFFSTACK=y, the 'bind_writers' buffer is allocated via
+alloc_cpumask_var() in param_set_cpumask(). But it is not freed, when
+setting the module parameter multiple times by sysfs interface or removing
+module.
 
-While handling the timeouts, any pending transfers are cleaned up and
-the message that they correspond to is marked as failed, which leaves
-the curr_xfer field pointing at stale memory.
+Below kmemleak trace is seen for this issue:
 
-To avoid this, clear curr_xfer to NULL upon timeout and check for this
-condition when the IRQ thread is finally run.
+unreferenced object 0xffff888100aabff8 (size 8):
+  comm "bash", pid 323, jiffies 4295059233
+  hex dump (first 8 bytes):
+    07 00 00 00 00 00 00 00                          ........
+  backtrace (crc ac50919):
+    __kmalloc_node_noprof+0x2e5/0x420
+    alloc_cpumask_var_node+0x1f/0x30
+    param_set_cpumask+0x26/0xb0 [locktorture]
+    param_attr_store+0x93/0x100
+    module_attr_store+0x1b/0x30
+    kernfs_fop_write_iter+0x114/0x1b0
+    vfs_write+0x300/0x410
+    ksys_write+0x60/0xd0
+    do_syscall_64+0xa4/0x260
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-While at it, also make sure to clear interrupts on failure so that new
-interrupts can be run.
+This issue can be reproduced by:
+  insmod locktorture.ko bind_writers=1
+  rmmod locktorture
 
-A better, more involved, fix would move the interrupt clearing into a
-hard IRQ handler. Ideally we would also want to signal that the IRQ
-thread no longer needs to be run after the timeout is hit to avoid the
-extra check for a valid transfer.
+or:
+  insmod locktorture.ko bind_writers=1
+  echo 2 > /sys/module/locktorture/parameters/bind_writers
 
-Fixes: 921fc1838fb0 ("spi: tegra210-quad: Add support for Tegra210 QSPI controller")
-Signed-off-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Vishwaroop A <va@nvidia.com>
-Link: https://patch.msgid.link/20251028155703.4151791-2-va@nvidia.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Considering that setting the module parameter 'bind_writers' or
+'bind_readers' by sysfs interface has no real effect, set the parameter
+permissions to 0444. To fix the memory leak when removing module, free
+'bind_writers' and 'bind_readers' memory in lock_torture_cleanup().
+
+Fixes: 73e341242483 ("locktorture: Add readers_bind and writers_bind module parameters")
+Suggested-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Signed-off-by: Wang Liang <wangliang74@huawei.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-tegra210-quad.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ kernel/locking/locktorture.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index 3be7499db21ec..d9ca3d7b082f2 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1024,8 +1024,10 @@ static void tegra_qspi_handle_error(struct tegra_qspi *tqspi)
- 	dev_err(tqspi->dev, "error in transfer, fifo status 0x%08x\n", tqspi->status_reg);
- 	tegra_qspi_dump_regs(tqspi);
- 	tegra_qspi_flush_fifos(tqspi, true);
--	if (device_reset(tqspi->dev) < 0)
-+	if (device_reset(tqspi->dev) < 0) {
- 		dev_warn_once(tqspi->dev, "device reset failed\n");
-+		tegra_qspi_mask_clear_irq(tqspi);
-+	}
- }
+diff --git a/kernel/locking/locktorture.c b/kernel/locking/locktorture.c
+index ce0362f0a8719..6567e5eeacc0e 100644
+--- a/kernel/locking/locktorture.c
++++ b/kernel/locking/locktorture.c
+@@ -103,8 +103,8 @@ static const struct kernel_param_ops lt_bind_ops = {
+ 	.get = param_get_cpumask,
+ };
  
- static void tegra_qspi_transfer_end(struct spi_device *spi)
-@@ -1176,9 +1178,11 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 				}
+-module_param_cb(bind_readers, &lt_bind_ops, &bind_readers, 0644);
+-module_param_cb(bind_writers, &lt_bind_ops, &bind_writers, 0644);
++module_param_cb(bind_readers, &lt_bind_ops, &bind_readers, 0444);
++module_param_cb(bind_writers, &lt_bind_ops, &bind_writers, 0444);
  
- 				/* Reset controller if timeout happens */
--				if (device_reset(tqspi->dev) < 0)
-+				if (device_reset(tqspi->dev) < 0) {
- 					dev_warn_once(tqspi->dev,
- 						      "device reset failed\n");
-+					tegra_qspi_mask_clear_irq(tqspi);
-+				}
- 				ret = -EIO;
- 				goto exit;
- 			}
-@@ -1200,11 +1204,13 @@ static int tegra_qspi_combined_seq_xfer(struct tegra_qspi *tqspi,
- 			tegra_qspi_transfer_end(spi);
- 			spi_transfer_delay_exec(xfer);
- 		}
-+		tqspi->curr_xfer = NULL;
- 		transfer_phase++;
+ long torture_sched_setaffinity(pid_t pid, const struct cpumask *in_mask, bool dowarn);
+ 
+@@ -1211,6 +1211,10 @@ static void lock_torture_cleanup(void)
+ 			cxt.cur_ops->exit();
+ 		cxt.init_called = false;
  	}
- 	ret = 0;
- 
- exit:
-+	tqspi->curr_xfer = NULL;
- 	msg->status = ret;
- 
- 	return ret;
-@@ -1290,6 +1296,8 @@ static int tegra_qspi_non_combined_seq_xfer(struct tegra_qspi *tqspi,
- 		msg->actual_length += xfer->len + dummy_bytes;
- 
- complete_xfer:
-+		tqspi->curr_xfer = NULL;
 +
- 		if (ret < 0) {
- 			tegra_qspi_transfer_end(spi);
- 			spi_transfer_delay_exec(xfer);
-@@ -1395,6 +1403,7 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- 	tegra_qspi_calculate_curr_xfer_param(tqspi, t);
- 	tegra_qspi_start_cpu_based_transfer(tqspi, t);
- exit:
-+	tqspi->curr_xfer = NULL;
- 	spin_unlock_irqrestore(&tqspi->lock, flags);
- 	return IRQ_HANDLED;
++	free_cpumask_var(bind_readers);
++	free_cpumask_var(bind_writers);
++
+ 	torture_cleanup_end();
  }
-@@ -1480,6 +1489,15 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- {
- 	struct tegra_qspi *tqspi = context_data;
  
-+	/*
-+	 * Occasionally the IRQ thread takes a long time to wake up (usually
-+	 * when the CPU that it's running on is excessively busy) and we have
-+	 * already reached the timeout before and cleaned up the timed out
-+	 * transfer. Avoid any processing in that case and bail out early.
-+	 */
-+	if (!tqspi->curr_xfer)
-+		return IRQ_NONE;
-+
- 	tqspi->status_reg = tegra_qspi_readl(tqspi, QSPI_FIFO_STATUS);
- 
- 	if (tqspi->cur_direction & DATA_DIR_TX)
 -- 
 2.51.0
 
