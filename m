@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4CF314A74;
-	Tue, 16 Dec 2025 12:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265EA25CC40;
+	Tue, 16 Dec 2025 12:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888104; cv=none; b=Zw6v54+Xaa40fTkaajzrgervul92ZzaTqqS8qwBn9O+AWNBzIAg/NoPy4WJJZRzqnylBy8VJ6yKhrk4J26hD+HcKxOLgKi4mH+CGpzoRgmlGtvWX34STEYDOjMQ0+Zc2BoFS7YV94iqhybW0S+QnNxbKmzW8opBBcMUnvFSr7D8=
+	t=1765888108; cv=none; b=EdFOlzjhuz6m/O96KcjzjcXIzd7ggYhewO/wfOljuylCL3sPSqY0uY9bkOxKiZbwjuKHT7SpvBJKVXa5P+R7rPPmZyyDIQyffiQqWLRLFOKohMH1hOA/KeWN4fRQnuLwVIiClS9glBrp6mRfKg2h0SHD4wErdfJJEqWulUufPqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888104; c=relaxed/simple;
-	bh=xkcnf5IE1R+362j4q5qy3NywqS8VcXd593LXtOTfqDE=;
+	s=arc-20240116; t=1765888108; c=relaxed/simple;
+	bh=PnAGG4HJq3yz7LfEr55nI74CHq9ghrhXtEVli+E62zA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z7T3CrdglQuivxK9Qdxgei7/+o6nOyruo3Sr2qZaM9nDENPS3lQ3s9W9EyG/xETmeOgXXTWXo6dBQwKozlGjuIKbfuWQPlto13hsReESnM0WPlLNH44nEUaRKhlN66EvE5Xay0ETmu92B1VGhZV0DER7xRSK3ecWVbe9QnyOJUg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BhwBpLi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dfRDLtMw21MCq2Xyb28LOtXeu8QC1FWv7Hyheg3Sfka8eQ8o7eShq8wSawHv3Xf6t+iAXPXYMHLtXzcjz9wqF1PdCyAiQhG4mQZU4BAOX1HS2q0XNdhztA4LOCfCZtUwbCTZEwTS+3bZFohJJvj2Pswep7n21F5jmWB7pImbgaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uc6rTAPv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BhwBpLi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6CAC4CEF1;
-	Tue, 16 Dec 2025 12:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uc6rTAPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EF41C4CEF1;
+	Tue, 16 Dec 2025 12:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888104;
-	bh=xkcnf5IE1R+362j4q5qy3NywqS8VcXd593LXtOTfqDE=;
+	s=korg; t=1765888108;
+	bh=PnAGG4HJq3yz7LfEr55nI74CHq9ghrhXtEVli+E62zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BhwBpLiJBaMHWK88yifpk86igBMRHKndranGhjsJH5Xe7I8GD8eWB27G1/WJKle1
-	 EraqutYS56b7/wm9lg68Nblx5Fcu8xi71NIYmEkoh0f+Y7ATpVONnz2xiO/Dt+sdDy
-	 Y1k4Qgl9gVF1YHZ271jyRoXBW2gehi0h/uuY+K48=
+	b=uc6rTAPvKCo8p9/2KPUC2TKKga0RZS2vNVQ89AulCd3WNua2j3o2nsFlG7qRP+StE
+	 2mGRalb+sGhVDVjGoFU1lXoGEo8OGbOVlxXMK//drpe+yclSpEc6VbQS9cEMw/wNEv
+	 +JdsazRjgxFdtUIQS11y2r6pMTHPNUhzzDEP8WpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 434/614] clocksource/drivers/arm_arch_timer_mmio: Prevent driver unbind
-Date: Tue, 16 Dec 2025 12:13:21 +0100
-Message-ID: <20251216111417.098130728@linuxfoundation.org>
+Subject: [PATCH 6.18 435/614] clocksource/drivers/nxp-pit: Prevent driver unbind
+Date: Tue, 16 Dec 2025 12:13:22 +0100
+Message-ID: <20251216111417.133900325@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,42 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 6aa10f0e2ef9eba1955be6a9d0a8eaecf6bdb7ae ]
+[ Upstream commit e25f964cf414dafa6bee5c9c2c0b1d1fb041dc92 ]
 
-Clockevents cannot be deregistered so suppress the bind attributes to
-prevent the driver from being unbound and releasing the underlying
-resources after registration.
+The driver does not support unbinding (e.g. as clockevents cannot be
+deregistered) so suppress the bind attributes to prevent the driver from
+being unbound and rebound after registration (and disabling the timer
+when reprobing fails).
 
-Fixes: 4891f01527bb ("clocksource/drivers/arm_arch_timer: Add standalone MMIO driver")
+Even if the driver can currently only be built-in, also switch to
+builtin_platform_driver() to prevent it from being unloaded should
+modular builds ever be enabled.
+
+Fixes: bee33f22d7c3 ("clocksource/drivers/nxp-pit: Add NXP Automotive s32g2 / s32g3 support")
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Acked-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20251111153226.579-2-johan@kernel.org
+Link: https://patch.msgid.link/20251111153226.579-3-johan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/arm_arch_timer_mmio.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clocksource/timer-nxp-pit.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/arm_arch_timer_mmio.c b/drivers/clocksource/arm_arch_timer_mmio.c
-index ebe1987d651eb..d10362692fdd3 100644
---- a/drivers/clocksource/arm_arch_timer_mmio.c
-+++ b/drivers/clocksource/arm_arch_timer_mmio.c
-@@ -426,6 +426,7 @@ static struct platform_driver arch_timer_mmio_drv = {
- 	.driver	= {
- 		.name = "arch-timer-mmio",
- 		.of_match_table	= arch_timer_mmio_of_table,
+diff --git a/drivers/clocksource/timer-nxp-pit.c b/drivers/clocksource/timer-nxp-pit.c
+index 2d0a3554b6bf7..d1740f18f7180 100644
+--- a/drivers/clocksource/timer-nxp-pit.c
++++ b/drivers/clocksource/timer-nxp-pit.c
+@@ -374,9 +374,10 @@ static struct platform_driver nxp_pit_driver = {
+ 	.driver = {
+ 		.name = "nxp-pit",
+ 		.of_match_table = pit_timer_of_match,
 +		.suppress_bind_attrs = true,
  	},
- 	.probe	= arch_timer_mmio_probe,
+ 	.probe = pit_timer_probe,
  };
-@@ -434,6 +435,7 @@ builtin_platform_driver(arch_timer_mmio_drv);
- static struct platform_driver arch_timer_mmio_acpi_drv = {
- 	.driver	= {
- 		.name = "gtdt-arm-mmio-timer",
-+		.suppress_bind_attrs = true,
- 	},
- 	.probe	= arch_timer_mmio_probe,
- };
+-module_platform_driver(nxp_pit_driver);
++builtin_platform_driver(nxp_pit_driver);
+ 
+ TIMER_OF_DECLARE(vf610, "fsl,vf610-pit", pit_timer_init);
 -- 
 2.51.0
 
