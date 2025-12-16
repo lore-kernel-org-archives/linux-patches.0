@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2792341645;
-	Tue, 16 Dec 2025 11:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B76341645;
+	Tue, 16 Dec 2025 11:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884110; cv=none; b=bwVtK+v5eJlNaIq04Ql+jLtLW8N9bfNCl4ywZiG97UpyLQhsP8ZNzMNQ82jMUF81ijrQO1OP/BRKcNh79WPM4UHBIWpiqooip03tF5kj6NEjHL+P4TQH+RbACqNDJdlZj+KdRLASApwZfqN8Agb1PYKAfNnVdP00vBrNCsyVFPQ=
+	t=1765884114; cv=none; b=OWF08pzyt4CQy4ASYUMXugOUpd8l+cUoACN30Q7DlLs8SxjmU3/EnpVfJSOitZiqM1yOoF9BmqTa88TZj5o9wyk0o6uFKCcdygxwXmvtVSwRG9SDNvESV2mQUtQArXp3sWxkSVsLUAQnumGmzN5hJzXDaxOzDr/5wLpwkhMp56g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884110; c=relaxed/simple;
-	bh=gCtcisgC1MxkzfqkrgfQ1xyUBuE+XYmj3ptszrk706Y=;
+	s=arc-20240116; t=1765884114; c=relaxed/simple;
+	bh=WphDHT85EP62IXvxFq+5GOUjL8JVYB4bjuYPy8nZRJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kbN2TzrEdTiwkpJ+3XjW21M378uW8Z+2AQOZ7XbO1ECJBL9fhxPZFMkhHT1NHmGfFfJNNhh2JAIQ7Hvco2T3EgqBk8/cDnhCGHMTCw4PibA2Pgz6LYRh7Y7mtRwGkuuCLK9y9B5C9oP7X+Bg3N9lMbGFqCLqs5i+wvVxrei8AjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rLJCcfR+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VO0GcHbJtOdqvxiEN/M/2ZMxJQ9XI2yptb85lxJG3aYAlKQFmij8ehnK0Esh57j4jG1wSZkZ8whd09gnyl/qpwy1LpDBd9bpvpVrOQ4FDUio7B9ZR/GCYf4OP1L888ryCdfHi3Todias9mQbbDZ9ExCUs3hkMMYmK4HkX6fnfc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Tbb8yQ9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rLJCcfR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B10C4CEF5;
-	Tue, 16 Dec 2025 11:21:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Tbb8yQ9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E0FC19422;
+	Tue, 16 Dec 2025 11:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884110;
-	bh=gCtcisgC1MxkzfqkrgfQ1xyUBuE+XYmj3ptszrk706Y=;
+	s=korg; t=1765884114;
+	bh=WphDHT85EP62IXvxFq+5GOUjL8JVYB4bjuYPy8nZRJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLJCcfR+arWBt4VXFy5qyVg1yd9syJUmreNE9J6imautNfosVin5kZxIvhKeAzZJX
-	 WQ2poeADBkCn/YewzF1qpWr+9s7zASuiBZnhvyvcedFaJe5Dxu81hSUkgbsBHh/gMv
-	 odxr/DKHaYVethN3skWDX9L3gqB3KOiV5WPTsSjk=
+	b=1Tbb8yQ9cNqhIqZPEJYOUgqbVKyPPhw7IYuwegnoFJ+8YB6GWJpoPyUjrGsX0aCxM
+	 OhL6fVg6lUob62SJNa/Ik//q0/GctkQQIk87i2qEiloDY7FhAOpiVjp6psQw7WNNWS
+	 efTBPYKrO83+9PmmXc5HxXWLaOQDZFWemWErdYDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Shuhao Fu <sfual@cse.ust.hk>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 093/354] pinctrl: stm32: fix hwspinlock resource leak in probe function
-Date: Tue, 16 Dec 2025 12:11:00 +0100
-Message-ID: <20251216111324.291176311@linuxfoundation.org>
+Subject: [PATCH 6.12 094/354] i3c: fix refcount inconsistency in i3c_master_register
+Date: Tue, 16 Dec 2025 12:11:01 +0100
+Message-ID: <20251216111324.327199934@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,41 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 002679f79ed605e543fbace465557317cd307c9a ]
+[ Upstream commit 9d4f219807d5ac11fb1d596e4ddb09336b040067 ]
 
-In stm32_pctl_probe(), hwspin_lock_request_specific() is called to
-request a hwspinlock, but the acquired lock is not freed on multiple
-error paths after this call. This causes resource leakage when the
-function fails to initialize properly.
+In `i3c_master_register`, a possible refcount inconsistency has been
+identified, causing possible resource leak.
 
-Use devm_hwspin_lock_request_specific() instead of
-hwspin_lock_request_specific() to automatically manage the hwspinlock
-resource lifecycle.
+Function `of_node_get` increases the refcount of `parent->of_node`. If
+function `i3c_bus_init` fails, the function returns immediately without
+a corresponding decrease, resulting in an inconsistent refcounter.
 
-Fixes: 97cfb6cd34f2 ("pinctrl: stm32: protect configuration registers with a hwspinlock")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Reviewed-by: Antonio Borneo <antonio.borneo@foss.st.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Move call i3c_bus_init() after device_initialize() to let callback
+i3c_masterdev_release() release of_node.
+
+Reported-by: Shuhao Fu <sfual@cse.ust.hk>
+Closes: https://lore.kernel.org/linux-i3c/aO2tjp_FsV_WohPG@osx.local/T/#m2c05a982beeb14e7bf039c1d8db856734bf234c7
+Fixes: 3a379bbcea0a ("i3c: Add core I3C infrastructure")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20251016143814.2551256-1-Frank.Li@nxp.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/stm32/pinctrl-stm32.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/stm32/pinctrl-stm32.c b/drivers/pinctrl/stm32/pinctrl-stm32.c
-index 2659a854a514e..857ce101fab0c 100644
---- a/drivers/pinctrl/stm32/pinctrl-stm32.c
-+++ b/drivers/pinctrl/stm32/pinctrl-stm32.c
-@@ -1537,7 +1537,7 @@ int stm32_pctl_probe(struct platform_device *pdev)
- 		if (hwlock_id == -EPROBE_DEFER)
- 			return hwlock_id;
- 	} else {
--		pctl->hwlock = hwspin_lock_request_specific(hwlock_id);
-+		pctl->hwlock = devm_hwspin_lock_request_specific(dev, hwlock_id);
- 	}
+diff --git a/drivers/i3c/master.c b/drivers/i3c/master.c
+index c8e5c9291ea43..6eb779affaba8 100644
+--- a/drivers/i3c/master.c
++++ b/drivers/i3c/master.c
+@@ -2809,10 +2809,6 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	INIT_LIST_HEAD(&master->boardinfo.i2c);
+ 	INIT_LIST_HEAD(&master->boardinfo.i3c);
  
- 	spin_lock_init(&pctl->irqmux_lock);
+-	ret = i3c_bus_init(i3cbus, master->dev.of_node);
+-	if (ret)
+-		return ret;
+-
+ 	device_initialize(&master->dev);
+ 	dev_set_name(&master->dev, "i3c-%d", i3cbus->id);
+ 
+@@ -2820,6 +2816,10 @@ int i3c_master_register(struct i3c_master_controller *master,
+ 	master->dev.coherent_dma_mask = parent->coherent_dma_mask;
+ 	master->dev.dma_parms = parent->dma_parms;
+ 
++	ret = i3c_bus_init(i3cbus, master->dev.of_node);
++	if (ret)
++		goto err_put_dev;
++
+ 	ret = of_populate_i3c_bus(master);
+ 	if (ret)
+ 		goto err_put_dev;
 -- 
 2.51.0
 
