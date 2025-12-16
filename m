@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EC4385CCF;
-	Tue, 16 Dec 2025 12:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EEE385CD5;
+	Tue, 16 Dec 2025 12:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888618; cv=none; b=EiXsG3mo/+IVoLmBXPjtZ0jSyedVsLqKgzyhAyJBXGB0qjX7dDUv19Pay8+2MMgwNUQO45dzwji2kVFsy+Eb+2+iBpGjBcoXoOucNGJJmK0d6kHw2gJxxKv68g4NgmTK8oNdGWZ2hThKoqO01QJ1ARZPFhgxNX2UQ6vdo62XgNI=
+	t=1765888621; cv=none; b=L7vbdVavZkdVI9PSrQ8SVlU3I2CZIONPTQQqxvQVvskjt2Eix/AxYD9RH9F38EdqYw+VNHHaO4aWYTIRn+rmXz8Yl7DQJg+o9ZCT9h9aK7fAkjW7wxSLohYBOk0/OpRcxtM4XeSYIKHiQZ2oz2wy1SRosW3spNpfZHezTPNq5Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888618; c=relaxed/simple;
-	bh=JvdKU0U9b6wuu2NqVLam+Mt/HALkAtq7IaHvI5bKfd8=;
+	s=arc-20240116; t=1765888621; c=relaxed/simple;
+	bh=cjUzYAatfmC6uW44mMaG3XpOg3H8wjLFTVgYJbwBhoo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EiqyKpC90ybvuh2wKHkHWUftaglaaH0J5bGx1pMVPFEA5ly4yNETt8sZnrSlzhH8Y1h96pLfE67RjljLeQg0OmETpGpnvzJAhvmrxCOSGpHZKsxoaN0SD/zdO5+ficvGxPHTRQ251SEA0BSD6tiKzqn5j5st5zOGgN7aORzksZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=repmFiSu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tf/3b8nqV4Q410JW27qbaHTi3gChsemtHCMaEetydd1naK4WK1ytV08x9haiQc4cM6GFMXy1LYy0T0ysJitYwzyoSCZRmjs1C0DTufukSHFEMC3xvODTosyEy+F0SpHGuzACeaGsC/vqltDms1xZGVnvz2SHOLTwBVt6w9RWMYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cSR2l3xu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="repmFiSu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618CFC4CEF1;
-	Tue, 16 Dec 2025 12:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cSR2l3xu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B85C4CEF1;
+	Tue, 16 Dec 2025 12:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888617;
-	bh=JvdKU0U9b6wuu2NqVLam+Mt/HALkAtq7IaHvI5bKfd8=;
+	s=korg; t=1765888621;
+	bh=cjUzYAatfmC6uW44mMaG3XpOg3H8wjLFTVgYJbwBhoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=repmFiSue/HXp7I5kqTm2WlzYbbBAY3D5YxmY3a/zEGSWRfqbce2pfr7zEeyyZ0ny
-	 IDV3tHSOzCDkqsIYd1L++UoN3WlAbqpuhRsuD5Kh2nYj0nqiorJyscbIwWzg+BoLT5
-	 hyJd7HgbIsWRHuKvN6Xbhl3aZZEIuBQ+MEO9fR6M=
+	b=cSR2l3xuy5mYJKGoVnjwv8OvHHEDJZIbg0X/GB0x42YPFms9CVSXXwU7tLxXo0v2Y
+	 1pun5RCIEV1of0waYiHjBlUWBmGZjbKUBTTaQstu47wT40Xvg7LjkdSIBKY6sVdvsA
+	 yV7AwgKm9G2FUYjXsUuZUcMoI0QZB1qcya2FVY80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 587/614] drm/{i915, xe}/fbdev: pass struct drm_device to intel_fbdev_fb_alloc()
-Date: Tue, 16 Dec 2025 12:15:54 +0100
-Message-ID: <20251216111422.660163563@linuxfoundation.org>
+Subject: [PATCH 6.18 588/614] drm/{i915, xe}/fbdev: deduplicate struct drm_mode_fb_cmd2 init
+Date: Tue, 16 Dec 2025 12:15:55 +0100
+Message-ID: <20251216111422.696053869@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,119 +54,209 @@ Content-Transfer-Encoding: 8bit
 
 From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 9e5cf822a207ee8c9856024c047abaccb4d185e5 ]
+[ Upstream commit f9ff39f940f5ddd1d4ffcff602de7206aa1ff05d ]
 
-The function doesn't actually need struct drm_fb_helper for anything,
-just pass struct drm_device.
+Pull struct drm_mode_fb_cmd2 initialization out of the driver dependent
+code into shared display code.
+
+v2: Rebase on xe stride alignment change
 
 Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://lore.kernel.org/r/16360584f80cdc5ee35fd94cfd92fd3955588dfd.1758184771.git.jani.nikula@intel.com
+Link: https://lore.kernel.org/r/e922e47bfd39f9c5777f869ff23c23309ebbb380.1758184771.git.jani.nikula@intel.com
 Signed-off-by: Jani Nikula <jani.nikula@intel.com>
 Stable-dep-of: 460b31720369 ("drm/i915/fbdev: Hold runtime PM ref during fbdev BO creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_fbdev.c    |  2 +-
- drivers/gpu/drm/i915/display/intel_fbdev_fb.c | 10 +++++-----
- drivers/gpu/drm/i915/display/intel_fbdev_fb.h |  4 ++--
- drivers/gpu/drm/xe/display/intel_fbdev_fb.c   |  7 +++----
- 4 files changed, 11 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/display/intel_fbdev.c    | 32 ++++++++++++++++++-
+ drivers/gpu/drm/i915/display/intel_fbdev_fb.c | 25 ++++-----------
+ drivers/gpu/drm/i915/display/intel_fbdev_fb.h |  4 +--
+ drivers/gpu/drm/xe/display/intel_fbdev_fb.c   | 25 ++++-----------
+ 4 files changed, 45 insertions(+), 41 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-index 7c4709d58aa34..46c6de5f60888 100644
+index 46c6de5f60888..e46c08762b847 100644
 --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
 +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -237,7 +237,7 @@ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+@@ -207,6 +207,35 @@ static const struct drm_fb_helper_funcs intel_fb_helper_funcs = {
+ 	.fb_set_suspend = intelfb_set_suspend,
+ };
+ 
++static void intel_fbdev_fill_mode_cmd(struct drm_fb_helper_surface_size *sizes,
++				      struct drm_mode_fb_cmd2 *mode_cmd)
++{
++	/* we don't do packed 24bpp */
++	if (sizes->surface_bpp == 24)
++		sizes->surface_bpp = 32;
++
++	mode_cmd->width = sizes->surface_width;
++	mode_cmd->height = sizes->surface_height;
++
++	mode_cmd->pitches[0] = ALIGN(mode_cmd->width * DIV_ROUND_UP(sizes->surface_bpp, 8), 64);
++	mode_cmd->pixel_format = drm_mode_legacy_fb_format(sizes->surface_bpp,
++							   sizes->surface_depth);
++}
++
++static struct intel_framebuffer *
++__intel_fbdev_fb_alloc(struct intel_display *display,
++		       struct drm_fb_helper_surface_size *sizes)
++{
++	struct drm_mode_fb_cmd2 mode_cmd = {};
++	struct intel_framebuffer *fb;
++
++	intel_fbdev_fill_mode_cmd(sizes, &mode_cmd);
++
++	fb = intel_fbdev_fb_alloc(display->drm, &mode_cmd);
++
++	return fb;
++}
++
+ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
+ 				   struct drm_fb_helper_surface_size *sizes)
+ {
+@@ -237,7 +266,8 @@ int intel_fbdev_driver_fbdev_probe(struct drm_fb_helper *helper,
  	if (!fb || drm_WARN_ON(display->drm, !intel_fb_bo(&fb->base))) {
  		drm_dbg_kms(display->drm,
  			    "no BIOS fb, allocating a new one\n");
--		fb = intel_fbdev_fb_alloc(helper, sizes);
-+		fb = intel_fbdev_fb_alloc(display->drm, sizes);
+-		fb = intel_fbdev_fb_alloc(display->drm, sizes);
++
++		fb = __intel_fbdev_fb_alloc(display, sizes);
  		if (IS_ERR(fb))
  			return PTR_ERR(fb);
  	} else {
 diff --git a/drivers/gpu/drm/i915/display/intel_fbdev_fb.c b/drivers/gpu/drm/i915/display/intel_fbdev_fb.c
-index b9dfd00a7d05b..4de13d1a4c7a7 100644
+index 4de13d1a4c7a7..685612e6afc53 100644
 --- a/drivers/gpu/drm/i915/display/intel_fbdev_fb.c
 +++ b/drivers/gpu/drm/i915/display/intel_fbdev_fb.c
-@@ -13,11 +13,11 @@
- #include "intel_fb.h"
+@@ -3,7 +3,7 @@
+  * Copyright © 2023 Intel Corporation
+  */
+ 
+-#include <drm/drm_fb_helper.h>
++#include <linux/fb.h>
+ 
+ #include "gem/i915_gem_lmem.h"
+ 
+@@ -14,28 +14,15 @@
  #include "intel_fbdev_fb.h"
  
--struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
-+struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
- 					       struct drm_fb_helper_surface_size *sizes)
+ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
+-					       struct drm_fb_helper_surface_size *sizes)
++					       struct drm_mode_fb_cmd2 *mode_cmd)
  {
--	struct intel_display *display = to_intel_display(helper->dev);
--	struct drm_i915_private *dev_priv = to_i915(display->drm);
-+	struct intel_display *display = to_intel_display(drm);
-+	struct drm_i915_private *dev_priv = to_i915(drm);
+ 	struct intel_display *display = to_intel_display(drm);
+ 	struct drm_i915_private *dev_priv = to_i915(drm);
  	struct drm_framebuffer *fb;
- 	struct drm_mode_fb_cmd2 mode_cmd = {};
+-	struct drm_mode_fb_cmd2 mode_cmd = {};
  	struct drm_i915_gem_object *obj;
-@@ -58,12 +58,12 @@ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
- 	}
+ 	int size;
  
- 	if (IS_ERR(obj)) {
--		drm_err(display->drm, "failed to allocate framebuffer (%pe)\n", obj);
-+		drm_err(drm, "failed to allocate framebuffer (%pe)\n", obj);
- 		return ERR_PTR(-ENOMEM);
- 	}
+-	/* we don't do packed 24bpp */
+-	if (sizes->surface_bpp == 24)
+-		sizes->surface_bpp = 32;
+-
+-	mode_cmd.width = sizes->surface_width;
+-	mode_cmd.height = sizes->surface_height;
+-
+-	mode_cmd.pitches[0] = ALIGN(mode_cmd.width *
+-				    DIV_ROUND_UP(sizes->surface_bpp, 8), 64);
+-	mode_cmd.pixel_format = drm_mode_legacy_fb_format(sizes->surface_bpp,
+-							  sizes->surface_depth);
+-
+-	size = mode_cmd.pitches[0] * mode_cmd.height;
++	size = mode_cmd->pitches[0] * mode_cmd->height;
+ 	size = PAGE_ALIGN(size);
+ 
+ 	obj = ERR_PTR(-ENODEV);
+@@ -64,9 +51,9 @@ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
  
  	fb = intel_framebuffer_create(intel_bo_to_drm_bo(obj),
--				      drm_get_format_info(display->drm,
-+				      drm_get_format_info(drm,
- 							  mode_cmd.pixel_format,
- 							  mode_cmd.modifier[0]),
- 				      &mode_cmd);
+ 				      drm_get_format_info(drm,
+-							  mode_cmd.pixel_format,
+-							  mode_cmd.modifier[0]),
+-				      &mode_cmd);
++							  mode_cmd->pixel_format,
++							  mode_cmd->modifier[0]),
++				      mode_cmd);
+ 	if (IS_ERR(fb)) {
+ 		i915_gem_object_put(obj);
+ 		goto err;
 diff --git a/drivers/gpu/drm/i915/display/intel_fbdev_fb.h b/drivers/gpu/drm/i915/display/intel_fbdev_fb.h
-index cb79572727150..668ae355f5e5b 100644
+index 668ae355f5e5b..83454ffbf79cd 100644
 --- a/drivers/gpu/drm/i915/display/intel_fbdev_fb.h
 +++ b/drivers/gpu/drm/i915/display/intel_fbdev_fb.h
-@@ -6,14 +6,14 @@
- #ifndef __INTEL_FBDEV_FB_H__
+@@ -7,14 +7,14 @@
  #define __INTEL_FBDEV_FB_H__
  
--struct drm_fb_helper;
-+struct drm_device;
- struct drm_fb_helper_surface_size;
+ struct drm_device;
+-struct drm_fb_helper_surface_size;
  struct drm_gem_object;
++struct drm_mode_fb_cmd2;
  struct fb_info;
  struct i915_vma;
  struct intel_display;
  
--struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
-+struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
- 					       struct drm_fb_helper_surface_size *sizes);
+ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
+-					       struct drm_fb_helper_surface_size *sizes);
++					       struct drm_mode_fb_cmd2 *mode_cmd);
  int intel_fbdev_fb_fill_info(struct intel_display *display, struct fb_info *info,
  			     struct drm_gem_object *obj, struct i915_vma *vma);
+ 
 diff --git a/drivers/gpu/drm/xe/display/intel_fbdev_fb.c b/drivers/gpu/drm/xe/display/intel_fbdev_fb.c
-index bce4cb16f6820..5c0874bfa6ab1 100644
+index 5c0874bfa6ab1..8eaf1cc7fdf93 100644
 --- a/drivers/gpu/drm/xe/display/intel_fbdev_fb.c
 +++ b/drivers/gpu/drm/xe/display/intel_fbdev_fb.c
-@@ -15,12 +15,11 @@
+@@ -3,7 +3,7 @@
+  * Copyright © 2023 Intel Corporation
+  */
  
+-#include <drm/drm_fb_helper.h>
++#include <linux/fb.h>
+ 
+ #include "intel_display_core.h"
+ #include "intel_display_types.h"
+@@ -16,27 +16,14 @@
  #include <generated/xe_wa_oob.h>
  
--struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
-+struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
- 					       struct drm_fb_helper_surface_size *sizes)
+ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
+-					       struct drm_fb_helper_surface_size *sizes)
++					       struct drm_mode_fb_cmd2 *mode_cmd)
  {
  	struct drm_framebuffer *fb;
--	struct drm_device *dev = helper->dev;
--	struct xe_device *xe = to_xe_device(dev);
-+	struct xe_device *xe = to_xe_device(drm);
- 	struct drm_mode_fb_cmd2 mode_cmd = {};
+ 	struct xe_device *xe = to_xe_device(drm);
+-	struct drm_mode_fb_cmd2 mode_cmd = {};
  	struct xe_bo *obj;
  	int size;
-@@ -67,7 +66,7 @@ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_fb_helper *helper,
- 	}
+ 
+-	/* we don't do packed 24bpp */
+-	if (sizes->surface_bpp == 24)
+-		sizes->surface_bpp = 32;
+-
+-	mode_cmd.width = sizes->surface_width;
+-	mode_cmd.height = sizes->surface_height;
+-
+-	mode_cmd.pitches[0] = ALIGN(mode_cmd.width *
+-				    DIV_ROUND_UP(sizes->surface_bpp, 8), 64);
+-	mode_cmd.pixel_format = drm_mode_legacy_fb_format(sizes->surface_bpp,
+-							  sizes->surface_depth);
+-
+-	size = mode_cmd.pitches[0] * mode_cmd.height;
++	size = mode_cmd->pitches[0] * mode_cmd->height;
+ 	size = PAGE_ALIGN(size);
+ 	obj = ERR_PTR(-ENODEV);
+ 
+@@ -67,9 +54,9 @@ struct intel_framebuffer *intel_fbdev_fb_alloc(struct drm_device *drm,
  
  	fb = intel_framebuffer_create(&obj->ttm.base,
--				      drm_get_format_info(dev,
-+				      drm_get_format_info(drm,
- 							  mode_cmd.pixel_format,
- 							  mode_cmd.modifier[0]),
- 				      &mode_cmd);
+ 				      drm_get_format_info(drm,
+-							  mode_cmd.pixel_format,
+-							  mode_cmd.modifier[0]),
+-				      &mode_cmd);
++							  mode_cmd->pixel_format,
++							  mode_cmd->modifier[0]),
++				      mode_cmd);
+ 	if (IS_ERR(fb)) {
+ 		xe_bo_unpin_map_no_vm(obj);
+ 		goto err;
 -- 
 2.51.0
 
