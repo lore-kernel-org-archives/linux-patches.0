@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429D0314A74;
-	Tue, 16 Dec 2025 12:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4CF314A74;
+	Tue, 16 Dec 2025 12:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888101; cv=none; b=fG8UkXJO+bdRX785uwfWw8QRmhN6kuYWXewksq86yJCJNtVkfyJqBANgOUy0iR/KL1qLB64u//T649SKTCJh3DEqFodamjYZzO6jy3yTopPuDb18p/kl2SivmoeVMyPbN7c3F4n5WOuLGVERZ3MON+76D0TpB2yFMtpsxYsXvnk=
+	t=1765888104; cv=none; b=Zw6v54+Xaa40fTkaajzrgervul92ZzaTqqS8qwBn9O+AWNBzIAg/NoPy4WJJZRzqnylBy8VJ6yKhrk4J26hD+HcKxOLgKi4mH+CGpzoRgmlGtvWX34STEYDOjMQ0+Zc2BoFS7YV94iqhybW0S+QnNxbKmzW8opBBcMUnvFSr7D8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888101; c=relaxed/simple;
-	bh=yztUb649o0Mqd+a12EeRKeCaszznhmi+Wv+FvxB5HNM=;
+	s=arc-20240116; t=1765888104; c=relaxed/simple;
+	bh=xkcnf5IE1R+362j4q5qy3NywqS8VcXd593LXtOTfqDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UPU5XiTGyWvEJeH17hWimhsfE6Recv27TSTxyu6SNnUD50fueSfsnxZoLFHC0aojOQSU/weTvV/NkxN2CWW4+7VkxwBO1yxRnbclBttozoTmf2cDg1C81eALn7HNTbbGsv63c4aeWy6H4Ky41UHmOYKW+BkbIRXItRTW5Swhi84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACoho7Yn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z7T3CrdglQuivxK9Qdxgei7/+o6nOyruo3Sr2qZaM9nDENPS3lQ3s9W9EyG/xETmeOgXXTWXo6dBQwKozlGjuIKbfuWQPlto13hsReESnM0WPlLNH44nEUaRKhlN66EvE5Xay0ETmu92B1VGhZV0DER7xRSK3ecWVbe9QnyOJUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BhwBpLi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACoho7Yn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DAAC4CEF1;
-	Tue, 16 Dec 2025 12:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BhwBpLi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6CAC4CEF1;
+	Tue, 16 Dec 2025 12:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888101;
-	bh=yztUb649o0Mqd+a12EeRKeCaszznhmi+Wv+FvxB5HNM=;
+	s=korg; t=1765888104;
+	bh=xkcnf5IE1R+362j4q5qy3NywqS8VcXd593LXtOTfqDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ACoho7YnpGResg70NKQ9YUSWQm4a9ddzN7plpQEAzykfIJePKZVDBggEjbYe5HuRA
-	 jv0Jv9E8UlU9UJj/LRo3TdIf5J6g+vNfgnNeDag3sbD7p3t0kaXZOq/gSPdRmKTZHE
-	 YIsqilkKkIv8GoP6VFHYlZnWW1dSHVMJjNTYVAw4=
+	b=0BhwBpLiJBaMHWK88yifpk86igBMRHKndranGhjsJH5Xe7I8GD8eWB27G1/WJKle1
+	 EraqutYS56b7/wm9lg68Nblx5Fcu8xi71NIYmEkoh0f+Y7ATpVONnz2xiO/Dt+sdDy
+	 Y1k4Qgl9gVF1YHZ271jyRoXBW2gehi0h/uuY+K48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johan Hovold <johan@kernel.org>,
 	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 433/614] clocksource/drivers/stm: Fix double deregistration on probe failure
-Date: Tue, 16 Dec 2025 12:13:20 +0100
-Message-ID: <20251216111417.062352691@linuxfoundation.org>
+Subject: [PATCH 6.18 434/614] clocksource/drivers/arm_arch_timer_mmio: Prevent driver unbind
+Date: Tue, 16 Dec 2025 12:13:21 +0100
+Message-ID: <20251216111417.098130728@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,38 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 6b38a8b31e2c5c2c3fd5f9848850788c190f216d ]
+[ Upstream commit 6aa10f0e2ef9eba1955be6a9d0a8eaecf6bdb7ae ]
 
-The purpose of the devm_add_action_or_reset() helper is to call the
-action function in case adding an action ever fails so drop the clock
-source deregistration from the error path to avoid deregistering twice.
+Clockevents cannot be deregistered so suppress the bind attributes to
+prevent the driver from being unbound and releasing the underlying
+resources after registration.
 
-Fixes: cec32ac75827 ("clocksource/drivers/nxp-timer: Add the System Timer Module for the s32gx platforms")
+Fixes: 4891f01527bb ("clocksource/drivers/arm_arch_timer: Add standalone MMIO driver")
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://patch.msgid.link/20251017055039.7307-1-johan@kernel.org
+Acked-by: Marc Zyngier <maz@kernel.org>
+Link: https://patch.msgid.link/20251111153226.579-2-johan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-nxp-stm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/clocksource/arm_arch_timer_mmio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clocksource/timer-nxp-stm.c b/drivers/clocksource/timer-nxp-stm.c
-index bbc40623728fa..16d52167e949b 100644
---- a/drivers/clocksource/timer-nxp-stm.c
-+++ b/drivers/clocksource/timer-nxp-stm.c
-@@ -208,10 +208,8 @@ static int __init nxp_stm_clocksource_init(struct device *dev, struct stm_timer
- 		return ret;
- 
- 	ret = devm_add_action_or_reset(dev, devm_clocksource_unregister, stm_timer);
--	if (ret) {
--		clocksource_unregister(&stm_timer->cs);
-+	if (ret)
- 		return ret;
--	}
- 
- 	stm_sched_clock = stm_timer;
- 
+diff --git a/drivers/clocksource/arm_arch_timer_mmio.c b/drivers/clocksource/arm_arch_timer_mmio.c
+index ebe1987d651eb..d10362692fdd3 100644
+--- a/drivers/clocksource/arm_arch_timer_mmio.c
++++ b/drivers/clocksource/arm_arch_timer_mmio.c
+@@ -426,6 +426,7 @@ static struct platform_driver arch_timer_mmio_drv = {
+ 	.driver	= {
+ 		.name = "arch-timer-mmio",
+ 		.of_match_table	= arch_timer_mmio_of_table,
++		.suppress_bind_attrs = true,
+ 	},
+ 	.probe	= arch_timer_mmio_probe,
+ };
+@@ -434,6 +435,7 @@ builtin_platform_driver(arch_timer_mmio_drv);
+ static struct platform_driver arch_timer_mmio_acpi_drv = {
+ 	.driver	= {
+ 		.name = "gtdt-arm-mmio-timer",
++		.suppress_bind_attrs = true,
+ 	},
+ 	.probe	= arch_timer_mmio_probe,
+ };
 -- 
 2.51.0
 
