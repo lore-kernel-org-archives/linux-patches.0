@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D37328604;
-	Tue, 16 Dec 2025 11:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB5E34405B;
+	Tue, 16 Dec 2025 11:53:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886029; cv=none; b=tfszfWe71SRqeVS/nPFxZlNMN58sF7wk0p/rQ0ioH6Yyfc1ZAivJE7supGm9tYcgRSqNtPc7I50fIJUo1mt4v01dkFokzQLJnqWBsRgwSSBwuER3Vid4GNIx6TZcX8QdXBlnk95LPMcrb+D02AjsLdKHKR1KfmADIyCTPgZ2a88=
+	t=1765886032; cv=none; b=Zn547YJChf8PHVWXfyldMF++RpGF+y5fFakY0S3FkEEM5uO2XAy5KFhgetprvkSzWQE0NSp94CHgHTyu09EL+h6xAiG4Z28B7yJwPHVTvVCfzc0RlO7LcDAVVDNGl4WoL4QIClx2joDncCLiM8SKe1L8NneNcgT86mE7ORLLfw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886029; c=relaxed/simple;
-	bh=f78bF29XqgTcsivlfKOVXPRfs0DDAhaz6GRKmrAaQDQ=;
+	s=arc-20240116; t=1765886032; c=relaxed/simple;
+	bh=TvGLya+bm7KjeuOxF8kag/wQgbT/RpA/fgVpIRtb4rg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQCLbAPphv/nHo9iXeCXh5I4Hby6QMBPBmI1d0E2gFgZSB+PT39fOQ/AKcm/vj2GH53iMcp5lehcIDQF02hfyL7vYildwdQqZfgkihrQYuE4O6PN3Rx6YKFRBJApv/YkP0VeGMtz14jMsIhBp06wEGO0wjBUU0NhOTk61j8FKN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0vvNe+1Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPs+0/IW2K8pkOkJOJgBsHiSE3Ypsj30NlAjJfbDJ+f7nzehrk7kZPZpX/a4W4W3nE5c7g5VylNTpcGQkjZICFy1UiqGLP39XqTzECU0fg5q8jojASvmgaCqvJRuZtRLRitdX/UN2DYv2I284j3RnXiGtatsOVT/Up4mC4vCXaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sy3KlP4l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0vvNe+1Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCCBC4CEF1;
-	Tue, 16 Dec 2025 11:53:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sy3KlP4l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3D4C4CEF1;
+	Tue, 16 Dec 2025 11:53:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886029;
-	bh=f78bF29XqgTcsivlfKOVXPRfs0DDAhaz6GRKmrAaQDQ=;
+	s=korg; t=1765886032;
+	bh=TvGLya+bm7KjeuOxF8kag/wQgbT/RpA/fgVpIRtb4rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0vvNe+1Y0wEtOlDXRPRoKfLeVuTTkm+eBYPFg+X7ezSOTv7FjwIKwG+O18qmazUFp
-	 YrGFyC7/jiZtKMppY9scPfkxnbeGJNq9p/FPwREjmLmvMRzu48U515LheZsr1Tu0gC
-	 kqjLAq+3W+7+46bDDUWtOh5218anKfaBurQro6yI=
+	b=sy3KlP4lymTfyqx/C+fnsqfHtQg8P9cydHqzPNhpLlnxJQO87OLvjvcF6WGqVj4O7
+	 +J15wZEbTlKCJD8ika1BiRq2nqalAPsj2WSTlq99IQOpAZYbJDU0WtmVHGxhlwnk1Z
+	 NCYMPhOfNk/vBBkP+IJlrLqCaPoD97ZK86D/U3sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chien Wong <m@xv97.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 283/507] wifi: mac80211: fix CMAC functions not handling errors
-Date: Tue, 16 Dec 2025 12:12:04 +0100
-Message-ID: <20251216111355.732233704@linuxfoundation.org>
+Subject: [PATCH 6.17 284/507] mfd: mt6397-irq: Fix missing irq_domain_remove() in error path
+Date: Tue, 16 Dec 2025 12:12:05 +0100
+Message-ID: <20251216111355.768198199@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -51,194 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chien Wong <m@xv97.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit 353cda30d30e5dc7cacf8de5d2546724708ae3bb ]
+[ Upstream commit b4b1bd1f330fdd13706382be6c90ce9f58cee3f5 ]
 
-The called hash functions could fail thus we should check return values.
+If devm_request_threaded_irq() fails after irq_domain_create_linear()
+succeeds in mt6397_irq_init(), the function returns without removing
+the created IRQ domain, leading to a resource leak.
 
-Fixes: 26717828b75d ("mac80211: aes-cmac: switch to shash CMAC driver")
-Signed-off-by: Chien Wong <m@xv97.com>
-Link: https://patch.msgid.link/20251113140511.48658-2-m@xv97.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Call irq_domain_remove() in the error path after a successful
+irq_domain_create_linear() to properly release the IRQ domain.
+
+Fixes: a4872e80ce7d ("mfd: mt6397: Extract IRQ related code from core driver")
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Link: https://patch.msgid.link/20251118121500.605-1-vulab@iscas.ac.cn
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/aes_cmac.c | 63 +++++++++++++++++++++++++++++------------
- net/mac80211/aes_cmac.h |  8 +++---
- net/mac80211/wpa.c      | 20 +++++++------
- 3 files changed, 61 insertions(+), 30 deletions(-)
+ drivers/mfd/mt6397-irq.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/aes_cmac.c b/net/mac80211/aes_cmac.c
-index 48c04f89de20a..65989c7dfc680 100644
---- a/net/mac80211/aes_cmac.c
-+++ b/net/mac80211/aes_cmac.c
-@@ -22,50 +22,77 @@
- 
- static const u8 zero[CMAC_TLEN_256];
- 
--void ieee80211_aes_cmac(struct crypto_shash *tfm, const u8 *aad,
--			const u8 *data, size_t data_len, u8 *mic)
-+int ieee80211_aes_cmac(struct crypto_shash *tfm, const u8 *aad,
-+		       const u8 *data, size_t data_len, u8 *mic)
- {
-+	int err;
- 	SHASH_DESC_ON_STACK(desc, tfm);
- 	u8 out[AES_BLOCK_SIZE];
- 	const __le16 *fc;
- 
- 	desc->tfm = tfm;
- 
--	crypto_shash_init(desc);
--	crypto_shash_update(desc, aad, AAD_LEN);
-+	err = crypto_shash_init(desc);
-+	if (err)
-+		return err;
-+	err = crypto_shash_update(desc, aad, AAD_LEN);
-+	if (err)
-+		return err;
- 	fc = (const __le16 *)aad;
- 	if (ieee80211_is_beacon(*fc)) {
- 		/* mask Timestamp field to zero */
--		crypto_shash_update(desc, zero, 8);
--		crypto_shash_update(desc, data + 8, data_len - 8 - CMAC_TLEN);
-+		err = crypto_shash_update(desc, zero, 8);
-+		if (err)
-+			return err;
-+		err = crypto_shash_update(desc, data + 8,
-+					  data_len - 8 - CMAC_TLEN);
-+		if (err)
-+			return err;
- 	} else {
--		crypto_shash_update(desc, data, data_len - CMAC_TLEN);
-+		err = crypto_shash_update(desc, data,
-+					  data_len - CMAC_TLEN);
-+		if (err)
-+			return err;
+diff --git a/drivers/mfd/mt6397-irq.c b/drivers/mfd/mt6397-irq.c
+index 0e463026c5a91..5d2e5459f7444 100644
+--- a/drivers/mfd/mt6397-irq.c
++++ b/drivers/mfd/mt6397-irq.c
+@@ -229,6 +229,7 @@ int mt6397_irq_init(struct mt6397_chip *chip)
+ 	if (ret) {
+ 		dev_err(chip->dev, "failed to register irq=%d; err: %d\n",
+ 			chip->irq, ret);
++		irq_domain_remove(chip->irq_domain);
+ 		return ret;
  	}
--	crypto_shash_finup(desc, zero, CMAC_TLEN, out);
--
-+	err = crypto_shash_finup(desc, zero, CMAC_TLEN, out);
-+	if (err)
-+		return err;
- 	memcpy(mic, out, CMAC_TLEN);
-+
-+	return 0;
- }
  
--void ieee80211_aes_cmac_256(struct crypto_shash *tfm, const u8 *aad,
--			    const u8 *data, size_t data_len, u8 *mic)
-+int ieee80211_aes_cmac_256(struct crypto_shash *tfm, const u8 *aad,
-+			   const u8 *data, size_t data_len, u8 *mic)
- {
-+	int err;
- 	SHASH_DESC_ON_STACK(desc, tfm);
- 	const __le16 *fc;
- 
- 	desc->tfm = tfm;
- 
--	crypto_shash_init(desc);
--	crypto_shash_update(desc, aad, AAD_LEN);
-+	err = crypto_shash_init(desc);
-+	if (err)
-+		return err;
-+	err = crypto_shash_update(desc, aad, AAD_LEN);
-+	if (err)
-+		return err;
- 	fc = (const __le16 *)aad;
- 	if (ieee80211_is_beacon(*fc)) {
- 		/* mask Timestamp field to zero */
--		crypto_shash_update(desc, zero, 8);
--		crypto_shash_update(desc, data + 8,
--				    data_len - 8 - CMAC_TLEN_256);
-+		err = crypto_shash_update(desc, zero, 8);
-+		if (err)
-+			return err;
-+		err = crypto_shash_update(desc, data + 8,
-+					  data_len - 8 - CMAC_TLEN_256);
-+		if (err)
-+			return err;
- 	} else {
--		crypto_shash_update(desc, data, data_len - CMAC_TLEN_256);
-+		err = crypto_shash_update(desc, data, data_len - CMAC_TLEN_256);
-+		if (err)
-+			return err;
- 	}
--	crypto_shash_finup(desc, zero, CMAC_TLEN_256, mic);
-+	return crypto_shash_finup(desc, zero, CMAC_TLEN_256, mic);
- }
- 
- struct crypto_shash *ieee80211_aes_cmac_key_setup(const u8 key[],
-diff --git a/net/mac80211/aes_cmac.h b/net/mac80211/aes_cmac.h
-index 76817446fb838..f74150542142a 100644
---- a/net/mac80211/aes_cmac.h
-+++ b/net/mac80211/aes_cmac.h
-@@ -11,10 +11,10 @@
- 
- struct crypto_shash *ieee80211_aes_cmac_key_setup(const u8 key[],
- 						  size_t key_len);
--void ieee80211_aes_cmac(struct crypto_shash *tfm, const u8 *aad,
--			const u8 *data, size_t data_len, u8 *mic);
--void ieee80211_aes_cmac_256(struct crypto_shash *tfm, const u8 *aad,
--			    const u8 *data, size_t data_len, u8 *mic);
-+int ieee80211_aes_cmac(struct crypto_shash *tfm, const u8 *aad,
-+		       const u8 *data, size_t data_len, u8 *mic);
-+int ieee80211_aes_cmac_256(struct crypto_shash *tfm, const u8 *aad,
-+			   const u8 *data, size_t data_len, u8 *mic);
- void ieee80211_aes_cmac_key_free(struct crypto_shash *tfm);
- 
- #endif /* AES_CMAC_H */
-diff --git a/net/mac80211/wpa.c b/net/mac80211/wpa.c
-index 40d5d9e484791..bb0fa505cdcae 100644
---- a/net/mac80211/wpa.c
-+++ b/net/mac80211/wpa.c
-@@ -869,8 +869,9 @@ ieee80211_crypto_aes_cmac_encrypt(struct ieee80211_tx_data *tx)
- 	/*
- 	 * MIC = AES-128-CMAC(IGTK, AAD || Management Frame Body || MMIE, 64)
- 	 */
--	ieee80211_aes_cmac(key->u.aes_cmac.tfm, aad,
--			   skb->data + 24, skb->len - 24, mmie->mic);
-+	if (ieee80211_aes_cmac(key->u.aes_cmac.tfm, aad,
-+			       skb->data + 24, skb->len - 24, mmie->mic))
-+		return TX_DROP;
- 
- 	return TX_CONTINUE;
- }
-@@ -916,8 +917,9 @@ ieee80211_crypto_aes_cmac_256_encrypt(struct ieee80211_tx_data *tx)
- 
- 	/* MIC = AES-256-CMAC(IGTK, AAD || Management Frame Body || MMIE, 128)
- 	 */
--	ieee80211_aes_cmac_256(key->u.aes_cmac.tfm, aad,
--			       skb->data + 24, skb->len - 24, mmie->mic);
-+	if (ieee80211_aes_cmac_256(key->u.aes_cmac.tfm, aad,
-+				   skb->data + 24, skb->len - 24, mmie->mic))
-+		return TX_DROP;
- 
- 	return TX_CONTINUE;
- }
-@@ -956,8 +958,9 @@ ieee80211_crypto_aes_cmac_decrypt(struct ieee80211_rx_data *rx)
- 	if (!(status->flag & RX_FLAG_DECRYPTED)) {
- 		/* hardware didn't decrypt/verify MIC */
- 		bip_aad(skb, aad);
--		ieee80211_aes_cmac(key->u.aes_cmac.tfm, aad,
--				   skb->data + 24, skb->len - 24, mic);
-+		if (ieee80211_aes_cmac(key->u.aes_cmac.tfm, aad,
-+				       skb->data + 24, skb->len - 24, mic))
-+			return RX_DROP_U_DECRYPT_FAIL;
- 		if (crypto_memneq(mic, mmie->mic, sizeof(mmie->mic))) {
- 			key->u.aes_cmac.icverrors++;
- 			return RX_DROP_U_MIC_FAIL;
-@@ -1006,8 +1009,9 @@ ieee80211_crypto_aes_cmac_256_decrypt(struct ieee80211_rx_data *rx)
- 	if (!(status->flag & RX_FLAG_DECRYPTED)) {
- 		/* hardware didn't decrypt/verify MIC */
- 		bip_aad(skb, aad);
--		ieee80211_aes_cmac_256(key->u.aes_cmac.tfm, aad,
--				       skb->data + 24, skb->len - 24, mic);
-+		if (ieee80211_aes_cmac_256(key->u.aes_cmac.tfm, aad,
-+					   skb->data + 24, skb->len - 24, mic))
-+			return RX_DROP_U_DECRYPT_FAIL;
- 		if (crypto_memneq(mic, mmie->mic, sizeof(mmie->mic))) {
- 			key->u.aes_cmac.icverrors++;
- 			return RX_DROP_U_MIC_FAIL;
 -- 
 2.51.0
 
