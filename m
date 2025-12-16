@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1BF35E53F;
-	Tue, 16 Dec 2025 12:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F6935F8A3;
+	Tue, 16 Dec 2025 12:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887328; cv=none; b=iO1/+kFSAFtZs9FsmQPe27Yauzrd2ZLjvFaZtWzz+WitfrkUIu3e3iPRmOKOhLum4xTFuFF93Tyac80oRt18MNNa+E61MMbqx1b4LFeKT8Az91bhQ3uweapgNzmtRaZt+mr6dphvH3pJAP0VdSBadWWyLFcgfmaV54+i1ffYUQg=
+	t=1765887331; cv=none; b=ReXOBrkwN/MkyEoQ1w8l6kXzgY0s31IvEz8vTRj769LbFMFMpaA4Ct1fa2wveyZXPuPfCnLyJ7qB0ZTlqsqHGU0k2ElK1ZXV2lyBLSojrGusSj0jmgiOq3RXnz+Q6ZqW+si0mOe9cOg8Ewf7X0FlhCceDthiqXFdj1vaxN/dguo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887328; c=relaxed/simple;
-	bh=QvG8sCUz37MjSQ7L/sB1qy3Py5jx103Dta3cGmOia0I=;
+	s=arc-20240116; t=1765887331; c=relaxed/simple;
+	bh=WTkHMGCouxfVCFy/tTV7PQRWhjJAQqaaIinBf7KrM9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9zK+b5Ng/awVtEKU6OvFQBOVVe7W5c8VxYdzM0ZCfSHmiLqapSzpwdqQkHS3yM9IcHbTVxCq/5j5vUN7nk+nawBj+UfcFa+MjTyGECR8DhTFCdjKUhdqeWQ3Y1JpPe5yZ+cXyCLPj2HAVzRNwXJg1FkPJ9SjuSUy5aC+txCsu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yqOXm1B9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d+501pTUP4C4lrBKer8n2TQk6PZGUkM4rIUXRO8NWku+4ZwBECWobjN536/KuNhWhaUJPrJtAdIVoL53RTYdYcqFH1gJSjYodMrzSHr3BYrS0pjwAxAnxx3AiMexsXG5M8ku6mrPK/h00sVzKNNWrgAs25xIgOetB4t46SJsWMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MT7QcEA+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yqOXm1B9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F54C4CEF1;
-	Tue, 16 Dec 2025 12:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MT7QcEA+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB53AC4CEF5;
+	Tue, 16 Dec 2025 12:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887328;
-	bh=QvG8sCUz37MjSQ7L/sB1qy3Py5jx103Dta3cGmOia0I=;
+	s=korg; t=1765887331;
+	bh=WTkHMGCouxfVCFy/tTV7PQRWhjJAQqaaIinBf7KrM9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yqOXm1B9wMTfywJpYzC/cIvbuHF/lvBv/3xcZ8Dqv176m4MOfIwMygkGbPi7GBUJd
-	 cPztMatb1rjP3o+m/w3R7OJyoj5NJ+KstVjVxK7rsxyoD7U4DeH3OuZlDsp53wrkWw
-	 GnFd7EEUS1f9hcwUmT6YQFM3EniOeaGheWlcYipo=
+	b=MT7QcEA+Tyd+pC91NwYbcE3yujnKE9sQLTXpVfjKAYXJy3I3Vdr9mQJEhkglS26HP
+	 tIu9gvzBUmWhFUjdG/TFZWUY79B2tDjkirz79NjGwvaYGna1u4gzN+OgkjR1bcrwhO
+	 PFTIw5oEREmNxktRgcK+oHhEjUDtEcA/FGfgWe0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	syzbot@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 196/614] ns: add NS_COMMON_INIT()
-Date: Tue, 16 Dec 2025 12:09:23 +0100
-Message-ID: <20251216111408.479312979@linuxfoundation.org>
+Subject: [PATCH 6.18 170/614] cgroup: add cgroup namespace to tree after owner is set
+Date: Tue, 16 Dec 2025 12:08:57 +0100
+Message-ID: <20251216111407.508992138@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,41 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit d915fe20e5cba4bd50e41e792a32dcddc7490e25 ]
+[ Upstream commit 768b1565d9d1e1eebf7567f477f7f46c05a98a4d ]
 
-Add an initializer that can be used for the ns common initialization for
-static namespace such as most init namespaces.
+Otherwise we trip VFS_WARN_ON_ONC() in __ns_tree_add_raw().
 
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://patch.msgid.link/87ecqhy2y5.ffs@tglx
+Link: https://patch.msgid.link/20251029-work-namespace-nstree-listns-v4-6-2e6f823ebdc0@kernel.org
+Fixes: 7c6059398533 ("cgroup: support ns lookup")
+Tested-by: syzbot@syzkaller.appspotmail.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 3dd50c58664e ("ns: initialize ns_list_node for initial namespaces")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ns_common.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ kernel/cgroup/namespace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/ns_common.h b/include/linux/ns_common.h
-index f5b68b8abb543..3a72c3f81eca4 100644
---- a/include/linux/ns_common.h
-+++ b/include/linux/ns_common.h
-@@ -119,6 +119,16 @@ void __ns_common_free(struct ns_common *ns);
- 		struct user_namespace *:   CLONE_NEWUSER,   \
- 		struct uts_namespace *:    CLONE_NEWUTS)
+diff --git a/kernel/cgroup/namespace.c b/kernel/cgroup/namespace.c
+index fdbe57578e688..db9617556dd70 100644
+--- a/kernel/cgroup/namespace.c
++++ b/kernel/cgroup/namespace.c
+@@ -30,7 +30,6 @@ static struct cgroup_namespace *alloc_cgroup_ns(void)
+ 	ret = ns_common_init(new_ns);
+ 	if (ret)
+ 		return ERR_PTR(ret);
+-	ns_tree_add(new_ns);
+ 	return no_free_ptr(new_ns);
+ }
  
-+#define NS_COMMON_INIT(nsname, refs)							\
-+{											\
-+	.ns_type		= ns_common_type(&nsname),				\
-+	.ns_id			= 0,							\
-+	.inum			= ns_init_inum(&nsname),				\
-+	.ops			= to_ns_operations(&nsname),				\
-+	.stashed		= NULL,							\
-+	.__ns_ref		= REFCOUNT_INIT(refs),					\
-+}
-+
- #define ns_common_init(__ns)                     \
- 	__ns_common_init(to_ns_common(__ns),     \
- 			 ns_common_type(__ns),   \
+@@ -86,6 +85,7 @@ struct cgroup_namespace *copy_cgroup_ns(u64 flags,
+ 	new_ns->ucounts = ucounts;
+ 	new_ns->root_cset = cset;
+ 
++	ns_tree_add(new_ns);
+ 	return new_ns;
+ }
+ 
 -- 
 2.51.0
 
