@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09350341069;
-	Tue, 16 Dec 2025 11:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1919341645;
+	Tue, 16 Dec 2025 11:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884169; cv=none; b=gWjQIWEB70K/M5lNCqb8jR5dytfVFKqjsve6dKHoVnsX+DtzLix2wT4u8OTdAcqdythPZSpQijQnsjeDg9yDb0sRK4gHQtEZfi0diNKyIC/TMxcZ6fkJtB/bWrHwmqDvVahzpsjOGbRvE8KdlSht3quUcqKK0Dtor1QGTHawEgo=
+	t=1765884172; cv=none; b=A+xShAyk5lmWymhm0nKc3iFh8B/nIl0/+PlSh8UzVZniORhTUDVBlN8zWjUB+CtMUy9F02ddyXWBZdF1oRXk/sPli3o5iSK9x485H8H3MHsU/wdN1G/CXLBiwyROTxpsOiiy2T+jARFdX0aQ8XEQTVgwaJjR92fPfBsivsteSaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884169; c=relaxed/simple;
-	bh=Q2f9VFPbfDJkrAKfUZGKEz220GgktzLPCsZb3hoVywc=;
+	s=arc-20240116; t=1765884172; c=relaxed/simple;
+	bh=pwg9a82r1JMdAnpe2Ypq45Tz9u5IwXVB+ZT/E+O9lsY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NSP6wcAv2fjomM1pbrbjvJMo2+6KGbBDRumASXSyXb1Lx1Ziy+IFb5snT7jU7PWA1wi43kDIjQPGiNG5LyNzUuBpqIu2BPnKVnjR7SZBbjhvQ3xyScZBENkZ60dTG4l6DPhTxhAbje7znF70PCWaE8DkwIO/BVNdVdsn8xRL7mE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vc2z5Ql4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gepszHM0LQXUz34denMjtE9fUVCzdpW+QnEfE3rP9nMsSKW6KkTeVHsBBN6xgiQPyKJ598n4ykkF4EayjECWdgzukR67VH22yoG1/Hoc/bwITLt9V/SW1MehUSEOpE8zMtnq0I+oxhcTm/yqt41aulGGmGLF79iyI3AOBjAZZGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5VHH1V+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vc2z5Ql4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80094C4CEF5;
-	Tue, 16 Dec 2025 11:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5VHH1V+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1E4C4CEF5;
+	Tue, 16 Dec 2025 11:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884168;
-	bh=Q2f9VFPbfDJkrAKfUZGKEz220GgktzLPCsZb3hoVywc=;
+	s=korg; t=1765884172;
+	bh=pwg9a82r1JMdAnpe2Ypq45Tz9u5IwXVB+ZT/E+O9lsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vc2z5Ql4draZWOxUvfbwZMRRHKghTZI2vgrEtTH3banxAKCuNO+i91WoyS2KdMp08
-	 gekmE5c7MxkLeADPXueFYWKbR3+V8Zn4tFGOZuaxq1//mOC5WqcoqgNJbeP9K3l6YM
-	 ihU82iy2j1grkIozDLDMeztWWrBh5E74/OuTUvf4=
+	b=h5VHH1V+i4OT+7riqhM2yy6EeUMmEyRBBJvcOwu1VKzuVVZNvOziSdGbc4/9PF2xX
+	 8BgQ+VhaLbEtAdgQZ6ARtf5P1r3oxxTAPpZFlzk5Wd+ioD2cDvpoJKvZaF3XV0RTb6
+	 fYYLoWUl9fnyfnFTrKsg1V7/PBZ2JUBXi+aUXT5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Adri=C3=A1n=20Larumbe?= <adrian.larumbe@collabora.com>,
+	Ketil Johnsen <ketil.johnsen@arm.com>,
 	Liviu Dudau <liviu.dudau@arm.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 113/354] drm/panthor: Fix group_free_queue() for partially initialized queues
-Date: Tue, 16 Dec 2025 12:11:20 +0100
-Message-ID: <20251216111325.016712035@linuxfoundation.org>
+Subject: [PATCH 6.12 114/354] drm/panthor: Fix UAF race between device unplug and FW event processing
+Date: Tue, 16 Dec 2025 12:11:21 +0100
+Message-ID: <20251216111325.053094475@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -46,47 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Boris Brezillon <boris.brezillon@collabora.com>
+From: Ketil Johnsen <ketil.johnsen@arm.com>
 
-[ Upstream commit 94a6d20feadbbe24e8a7b1c56394789ea5358fcc ]
+[ Upstream commit 7051f6ba968fa69918d72cc26de4d6cf7ea05b90 ]
 
-group_free_queue() can be called on a partially initialized queue
-object if something fails in group_create_queue(). Make sure we don't
-call drm_sched_entity_destroy() on an entity that hasn't been
-initialized.
+The function panthor_fw_unplug() will free the FW memory sections.
+The problem is that there could still be pending FW events which are yet
+not handled at this point. process_fw_events_work() can in this case try
+to access said freed memory.
 
-Fixes: 7d9c3442b02a ("drm/panthor: Defer scheduler entitiy destruction to queue release")
-Reviewed-by: Adrián Larumbe <adrian.larumbe@collabora.com>
+Simply call disable_work_sync() to both drain and prevent future
+invocation of process_fw_events_work().
+
+Signed-off-by: Ketil Johnsen <ketil.johnsen@arm.com>
+Fixes: de85488138247 ("drm/panthor: Add the scheduler logical block")
 Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Signed-off-by: Boris Brezillon <boris.brezillon@collabora.com>
-Link: https://patch.msgid.link/20251031160318.832427-2-boris.brezillon@collabora.com
+Link: https://patch.msgid.link/20251027140217.121274-1-ketil.johnsen@arm.com
 Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panthor/panthor_sched.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 875b9a78d34bc..81ea3a79ab49c 100644
+index 81ea3a79ab49c..1d95decddc273 100644
 --- a/drivers/gpu/drm/panthor/panthor_sched.c
 +++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -865,7 +865,8 @@ static void group_free_queue(struct panthor_group *group, struct panthor_queue *
- 	if (IS_ERR_OR_NULL(queue))
- 		return;
+@@ -3696,6 +3696,7 @@ void panthor_sched_unplug(struct panthor_device *ptdev)
+ 	struct panthor_scheduler *sched = ptdev->scheduler;
  
--	drm_sched_entity_destroy(&queue->entity);
-+	if (queue->entity.fence_context)
-+		drm_sched_entity_destroy(&queue->entity);
+ 	cancel_delayed_work_sync(&sched->tick_work);
++	disable_work_sync(&sched->fw_events_work);
  
- 	if (queue->scheduler.ops)
- 		drm_sched_fini(&queue->scheduler);
+ 	mutex_lock(&sched->lock);
+ 	if (sched->pm.has_ref) {
 -- 
 2.51.0
 
