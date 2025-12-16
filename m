@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF99033B961;
-	Tue, 16 Dec 2025 11:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE11D2459D7;
+	Tue, 16 Dec 2025 11:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883961; cv=none; b=kPIZx/rJ6fqkUuaikCQb+CFUCJ/dwfNaXxoKDvrm1KLoMFwZTXK5PlKSRnmkp5ZQX5GKSCufU7xDmmIdznH2fhZzx9h33rkGPpIOtKTH7Sk60vMKPrQfSX/l3GxbznK4WccyHOab7zV/6XNRlWKMWiZuoabqV7XAZUjS0jb7U5I=
+	t=1765883965; cv=none; b=LNn5cS+6O9/hBWT8yj0Q5+pNCBcqVpi2b5u9W+4Fkyknox+DMaHdAEBcoQ8FKSxK67QC0gOwqVLRvj2QsQ1CZEbqLR3v8JDxulbxvKxZ+OF6X9CAbo7+OZd+giDIhpI3bsgzi6iIranv8cIw0o6UiaL/3edexVhwaGguihm/6Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883961; c=relaxed/simple;
-	bh=NOwY75yUrXSjg+iFdp0ZiU9ir0ItlavmU75pVKdPpHQ=;
+	s=arc-20240116; t=1765883965; c=relaxed/simple;
+	bh=Cyv2UlWQT255qyTQHiwNLh8cBfHfFJzCQ7sedmgSZGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNg/9uAHs9o/Vo1UqfK6QuN7O3EfLVa4//LkqHUJ0m26OazJArUvL8+W46TdqUcptyxetIwgIEg3gx2IxoJ/vW/VmH1DJPEwN/LMMq7mA7Uw9UcH5/B6g23TFgas6S0BGtUSeApy7cWYO+hif2y43eXuui0wOnHQZQd6i8t4yyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UhZaTviQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9OfjOMMXkhr4LQRm1iEkBupsdhsO9K5sFve6yYzIbZnX1aB1MtGiCBx/BXJQKIrmmSVYPbE+bi35HfmOP6IzSgsEAk4NlNh/8/15sfO/zD9JxM1Taz8DsWJdttGn0LetQLwE7+GjUTEseMQPjCO3VrdHLNa5j6irq4CcMwHtsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mijd0Awn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UhZaTviQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC71C4CEF1;
-	Tue, 16 Dec 2025 11:19:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mijd0Awn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E22C4CEF1;
+	Tue, 16 Dec 2025 11:19:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883961;
-	bh=NOwY75yUrXSjg+iFdp0ZiU9ir0ItlavmU75pVKdPpHQ=;
+	s=korg; t=1765883965;
+	bh=Cyv2UlWQT255qyTQHiwNLh8cBfHfFJzCQ7sedmgSZGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UhZaTviQ+kYJ/zo00SGo/Z7F5hD/8N38yMjOPpJhSgnmWCSHaDWwQFRJxCyZ+Z9dK
-	 /d7QnOWAJ6C39euawW9vJCReXQtcmabPt+98jn1tIKPcXbEsKxegwROdonqrreZKjN
-	 gDE9JyXQcat0GLypyAB0YgX8rJVQdxEHoIxV89CY=
+	b=Mijd0AwnlLv5KR32LPV680KWyan69m4FB/1qJHTzSGNggA1zFaEcWD1Iyu68R3Bw2
+	 c4inYzNrb6ZeZzZ6jX0Nj47ZdtoCFE+R+nagsIC+n7s/ciekjS77bQ05Yl5w4mC44Y
+	 KOExo0LA+Khdrm/A2rLoKwLrhlKefDJnq4tq860g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 050/354] arm64: dts: freescale: imx8mp-venice-gw7905-2x: remove duplicate usdhc1 props
-Date: Tue, 16 Dec 2025 12:10:17 +0100
-Message-ID: <20251216111322.729489503@linuxfoundation.org>
+Subject: [PATCH 6.12 051/354] arm64: dts: imx8mm-venice-gw72xx: remove unused sdhc1 pinctrl
+Date: Tue, 16 Dec 2025 12:10:18 +0100
+Message-ID: <20251216111322.765911134@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -54,33 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Harvey <tharvey@gateworks.com>
 
-[ Upstream commit 8b7e58ab4a02601a0e86e9f9701d4612038d8b29 ]
+[ Upstream commit d949b8d12d6e8fa119bca10d3157cd42e810f6f7 ]
 
-Remove the un-intended duplicate properties from usdhc1.
+The SDHC1 interface is not used on the imx8mm-venice-gw72xx. Remove the
+unused pinctrl_usdhc1 iomux node.
 
-Fixes: 0d5b288c2110e ("arm64: dts: freescale: Add imx8mp-venice-gw7905-2x")
+Fixes: 6f30b27c5ef5 ("arm64: dts: imx8mm: Add Gateworks i.MX 8M Mini Development Kits")
 Signed-off-by: Tim Harvey <tharvey@gateworks.com>
 Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ .../boot/dts/freescale/imx8mm-venice-gw72xx.dtsi      | 11 -----------
+ 1 file changed, 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
-index 6c75a5ecf56bb..45c7082c9df71 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
-@@ -421,9 +421,6 @@ &usdhc1 {
- 	bus-width = <4>;
- 	non-removable;
- 	status = "okay";
--	bus-width = <4>;
--	non-removable;
--	status = "okay";
- };
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
+index 752caa38eb03b..266038fbbef97 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-venice-gw72xx.dtsi
+@@ -351,17 +351,6 @@ MX8MM_IOMUXC_UART4_TXD_UART4_DCE_TX	0x140
+ 		>;
+ 	};
  
- /* eMMC */
+-	pinctrl_usdhc1: usdhc1grp {
+-		fsl,pins = <
+-			MX8MM_IOMUXC_SD1_CLK_USDHC1_CLK		0x190
+-			MX8MM_IOMUXC_SD1_CMD_USDHC1_CMD		0x1d0
+-			MX8MM_IOMUXC_SD1_DATA0_USDHC1_DATA0	0x1d0
+-			MX8MM_IOMUXC_SD1_DATA1_USDHC1_DATA1	0x1d0
+-			MX8MM_IOMUXC_SD1_DATA2_USDHC1_DATA2	0x1d0
+-			MX8MM_IOMUXC_SD1_DATA3_USDHC1_DATA3	0x1d0
+-		>;
+-	};
+-
+ 	pinctrl_usdhc2: usdhc2grp {
+ 		fsl,pins = <
+ 			MX8MM_IOMUXC_SD2_CLK_USDHC2_CLK		0x190
 -- 
 2.51.0
 
