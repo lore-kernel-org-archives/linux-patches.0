@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59D5326926;
-	Tue, 16 Dec 2025 11:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE79344050;
+	Tue, 16 Dec 2025 11:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884433; cv=none; b=Ub/NXp9k2fherTwZ6s8OJuYP+wO99fLJ/r7U5pU7ujwUN7ktso6D3Izmx4vs9lsqrlVDcPZXfWBMjxqzh6yMoRnrqOTxp0g0+aFPY79CeCk4cr/OYznrCD0b9IReMC0ofMhd8C5Wa6eJZOQiexy3f3cj+S+TpL3kWMfx7z7PbNc=
+	t=1765884437; cv=none; b=CLJrdMDWW3nUoRql8kBXOBwXAcKF63lzBNAkbYpy2xJ7RV9/A5ozTC3XPUpQ+mrhViEkLRRMDq/VYKxEWimI3Drhqz4Rd09tZ3dEFVSQQOf2bR4gRUZnVhde/6HX2zCuwtyjMf8D1dKZY0Io0/9XCNENQWDJUvmeYeQwbMSUnT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884433; c=relaxed/simple;
-	bh=JJjmVDT/1DZ26GIdeUEqfEdI0kGOzKAgGT+WeiP+sHc=;
+	s=arc-20240116; t=1765884437; c=relaxed/simple;
+	bh=MU+I5xRfJruY98INg48Js0fsXFwFoqtZTnUMrWhynJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e06G7L0wezRHc8KpALZg4TJxlTb/FigrhIF43/X9//IGV12Bu0F0Ps/ecxo4OpMFmo2YPWo/4Ucb9G2Ov1bPKO2uWr05A1p8wWrn2yvD5N+U1UCQg9CGtG5XYOkfLhjB9bmjHw14S1zo5ZMMR6G/is1cchZRVv6q+NKeTpaFTBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LTtD+nkX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W0nNbctfeERlhsykuKFzbkMxcbHGJqOrQKzYXIWvG+3HGPH6BbBcdZXTUYdbdYF2HUk1mLID1lfm9ryXBD0iWgpaIplntt1NbZ7VIrfTSVVGFKKebYxVj0/DMhYAjAd6lVjz8c3C8xbW0aiIWaYk0/pVkcwXZt1cLTozlPiy/50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EOg2TYo/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LTtD+nkX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DFDC19422;
-	Tue, 16 Dec 2025 11:27:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EOg2TYo/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0C9C16AAE;
+	Tue, 16 Dec 2025 11:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884433;
-	bh=JJjmVDT/1DZ26GIdeUEqfEdI0kGOzKAgGT+WeiP+sHc=;
+	s=korg; t=1765884436;
+	bh=MU+I5xRfJruY98INg48Js0fsXFwFoqtZTnUMrWhynJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LTtD+nkXu+lgrLknf7HEia6Mc5hriZ3V7oLtWL9DSnc2tCeC9BBIV2qw5xICSXJ1e
-	 Bcts1UHMqaVGJdUkmO8sXTsglD9hL8er7QIZQ2rP93wec9eUBOycHWhSFjZJ2CilaJ
-	 2Ccr5fcqRz1upuaI9uSXWwGpmIqPpPmfcYvto4B8=
+	b=EOg2TYo/y+Met+589GkihlGcOcYoqSOVNlWsfwGF/2APPROGXG3fSFNsLe7rKWkHD
+	 KXAm9C7RAzFyBlo/F9liHgvXeUxvIrMQ+8ltx5ee+dDxM4+vyj3NtF5CDbuZmah193
+	 djZSLvXlMVuoRApWkCnq70XFh2KB0aEQOUfI28Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fenglin Wu <fenglin.wu@oss.qualcomm.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/354] leds: rgb: leds-qcom-lpg: Dont enable TRILED when configuring PWM
-Date: Tue, 16 Dec 2025 12:12:39 +0100
-Message-ID: <20251216111327.868439057@linuxfoundation.org>
+Subject: [PATCH 6.12 193/354] phy: renesas: rcar-gen3-usb2: Fix an error handling path in rcar_gen3_phy_usb2_probe()
+Date: Tue, 16 Dec 2025 12:12:40 +0100
+Message-ID: <20251216111327.904570990@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,48 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 072cd5f458d76b9e15d89ebdaea8b5cb1312eeef ]
+[ Upstream commit 662bb179d3381c7c069e44bb177396bcaee31cc8 ]
 
-The PWM signal from the LPG channel can be routed to PMIC GPIOs with
-proper GPIO configuration, and it is not necessary to enable the
-TRILED channel in that case. This also applies to the LPG channels
-that mapped to TRILED channels. Additionally, enabling the TRILED
-channel unnecessarily would cause a voltage increase in its power
-supply. Hence remove it.
+If an error occurs after the reset_control_deassert(),
+reset_control_assert() must be called, as already done in the remove
+function.
 
-Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
-Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://patch.msgid.link/20251119-lpg_triled_fix-v3-2-84b6dbdc774a@oss.qualcomm.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Use devm_add_action_or_reset() to add the missing call and simplify the
+.remove() function accordingly.
+
+While at it, drop struct rcar_gen3_chan::rstc as it is not used aymore.
+
+[claudiu.beznea: removed "struct reset_control *rstc = data;" from
+ rcar_gen3_reset_assert(), dropped struct rcar_gen3_chan::rstc]
+
+Fixes: 4eae16375357 ("phy: renesas: rcar-gen3-usb2: Add support to initialize the bus")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+Link: https://patch.msgid.link/20251023135810.1688415-3-claudiu.beznea.uj@bp.renesas.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/phy/renesas/phy-rcar-gen3-usb2.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 5d8e27e2e7ae7..84e02867f3b43 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (c) 2017-2022 Linaro Ltd
-  * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-  */
- #include <linux/bits.h>
- #include <linux/bitfield.h>
-@@ -1246,8 +1246,6 @@ static int lpg_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/drivers/phy/renesas/phy-rcar-gen3-usb2.c b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+index b45aee8f59644..256c807e7066d 100644
+--- a/drivers/phy/renesas/phy-rcar-gen3-usb2.c
++++ b/drivers/phy/renesas/phy-rcar-gen3-usb2.c
+@@ -117,7 +117,6 @@ struct rcar_gen3_chan {
+ 	struct extcon_dev *extcon;
+ 	struct rcar_gen3_phy rphys[NUM_OF_PHYS];
+ 	struct regulator *vbus;
+-	struct reset_control *rstc;
+ 	struct work_struct work;
+ 	spinlock_t lock;	/* protects access to hardware and driver data structure. */
+ 	enum usb_dr_mode dr_mode;
+@@ -671,21 +670,31 @@ static enum usb_dr_mode rcar_gen3_get_dr_mode(struct device_node *np)
+ 	return candidate;
+ }
  
- 	lpg_apply(chan);
++static void rcar_gen3_reset_assert(void *data)
++{
++	reset_control_assert(data);
++}
++
+ static int rcar_gen3_phy_usb2_init_bus(struct rcar_gen3_chan *channel)
+ {
+ 	struct device *dev = channel->dev;
++	struct reset_control *rstc;
+ 	int ret;
+ 	u32 val;
  
--	triled_set(lpg, chan->triled_mask, chan->enabled ? chan->triled_mask : 0);
--
- out_unlock:
- 	mutex_unlock(&lpg->lock);
+-	channel->rstc = devm_reset_control_array_get_shared(dev);
+-	if (IS_ERR(channel->rstc))
+-		return PTR_ERR(channel->rstc);
++	rstc = devm_reset_control_array_get_shared(dev);
++	if (IS_ERR(rstc))
++		return PTR_ERR(rstc);
+ 
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = reset_control_deassert(channel->rstc);
++	ret = reset_control_deassert(rstc);
++	if (ret)
++		goto rpm_put;
++
++	ret = devm_add_action_or_reset(dev, rcar_gen3_reset_assert, rstc);
+ 	if (ret)
+ 		goto rpm_put;
+ 
+@@ -830,7 +839,6 @@ static void rcar_gen3_phy_usb2_remove(struct platform_device *pdev)
+ 	if (channel->is_otg_channel)
+ 		device_remove_file(&pdev->dev, &dev_attr_role);
+ 
+-	reset_control_assert(channel->rstc);
+ 	pm_runtime_disable(&pdev->dev);
+ };
  
 -- 
 2.51.0
