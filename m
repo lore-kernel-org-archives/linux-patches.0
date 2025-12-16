@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BDB2BE7B2;
-	Tue, 16 Dec 2025 11:31:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3622BE7B2;
+	Tue, 16 Dec 2025 11:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884662; cv=none; b=eztcW9yO9Y1TJlccochn4EfKhEFpa8DFvNeQvQrUolBLBE1drKznJoSnLcet2EJS1WbzzPA9gifwsagF/XXIvyp+YP4I5ihbT3e2cz1zj5kOddsrnlMZWpI5IJP2S7ttBM/ZRWtsZNkW0vUIZmmFCg44dctQD7XJz8dy6Kkg6wo=
+	t=1765884666; cv=none; b=ks4LHCO+sdoCdMGd5GkIZVCltoxUOqRni1RshN0lEW7/qTRYrgaxqMGH0OqvgK/om+Dqo1Kg+fCfhMB2Nt0yFFxDHq7bZiztcE0v6VFp+qosMnV5+MlDijkESS6KjpNis7rAqT5hvt9glM+M7CqkbDuXb8gXvaL8VL/oEYflZ68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884662; c=relaxed/simple;
-	bh=2Qva6ZPd2jGJf+eAQR0ZFe10lF3nylBx6iHS2gpSaPo=;
+	s=arc-20240116; t=1765884666; c=relaxed/simple;
+	bh=rQCERNgakXqpGVsaVx+a588CJYz3v9Ll0iGa++SXK00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IXHFO1HvaLaYV+pi8OI8yR9bcGw6+UXkp58MmBRZq94O4vw0kamLtXIB9qMP8zXmyHj+wL8yAR0zUBz5XRtspnl/KHcyEFx1eALaIChDxxKNJCw7wU+q/jIPRl7N+KsbF1sPuU4k9pwKo9hkQ3h8VxkQoFfaeF02KlxqPqtuxlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2HeHsWQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLZcqWScBj8WTDRcquFFZfYCUc0a+uBlcNQlsex2glauMVAgyVkp5C9bIYV8fdoP0nPqWIl5R97guEROjtyFLUJnt50DavBlY82hHDDPgpCppo+fQnYx5loF9LLK+SdoRg/72LDwxmnkvmg7dBhlNztn6MZMik//h0swJDkCJB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CluXVRAy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2HeHsWQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684CFC4CEF1;
-	Tue, 16 Dec 2025 11:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CluXVRAy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C25C4CEF1;
+	Tue, 16 Dec 2025 11:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884661;
-	bh=2Qva6ZPd2jGJf+eAQR0ZFe10lF3nylBx6iHS2gpSaPo=;
+	s=korg; t=1765884665;
+	bh=rQCERNgakXqpGVsaVx+a588CJYz3v9Ll0iGa++SXK00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HeHsWQT5lEn4/EZHtw3a58aDodBZJRjxwAY+743E76EB7BTvUR/kfFCLvd/bwzy/
-	 ngBdkJKZg0yITuelkn789gx+1XNi6I5P9VjY7zhP0VOLUyZHF1qn4rBHvODMcVmTm+
-	 lfq61xt/qQkPIyR2Y5/5ILbBIUhvZetQjduzSd5E=
+	b=CluXVRAyd7HcHLZDWg6uAamCffjVC/PsXtA8HLiPyFq68rZdfohkfaV+sd9XYQ2RO
+	 ZrjDvd+jS8HJLJ0gGc8K2n8lSRY14BRZfNJ5Kf1Y8j337M1s4dPa2EfJky0OYkfTfz
+	 +o3qcalqH3Ubuf77B6T9UEYQOopDVnp25Ok11rHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Caleb Sander Mateos <csander@purestorage.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 244/354] ublk: prevent invalid access with DEBUG
-Date: Tue, 16 Dec 2025 12:13:31 +0100
-Message-ID: <20251216111329.753424412@linuxfoundation.org>
+Subject: [PATCH 6.12 262/354] resource: replace open coded resource_intersection()
+Date: Tue, 16 Dec 2025 12:13:49 +0100
+Message-ID: <20251216111330.409031966@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,55 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit c6a45ee7607de3a350008630f4369b1b5ac80884 ]
+[ Upstream commit 5c1edea773c98707fbb23d1df168bcff52f61e4b ]
 
-ublk_ch_uring_cmd_local() may jump to the out label before
-initialising the io pointer. This will cause trouble if DEBUG is
-defined, because the pr_devel() call dereferences io. Clang reports:
+Patch series "resource: A couple of cleanups".
 
-drivers/block/ublk_drv.c:2403:6: error: variable 'io' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
- 2403 |         if (tag >= ub->dev_info.queue_depth)
-      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/block/ublk_drv.c:2492:32: note: uninitialized use occurs here
- 2492 |                         __func__, cmd_op, tag, ret, io->flags);
-      |
+A couple of ad-hoc cleanups since there was a recent development of
+the code in question. No functional changes intended.
 
-Fix this by initialising io to NULL and checking it before
-dereferencing it.
+This patch (of 2):
 
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
-Reviewed-by: Caleb Sander Mateos <csander@purestorage.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+__region_intersects() uses open coded resource_intersection().  Replace it
+with existing API which also make more clear what we are checking.
+
+Link: https://lkml.kernel.org/r/20240925154355.1170859-1-andriy.shevchenko@linux.intel.com
+Link: https://lkml.kernel.org/r/20240925154355.1170859-2-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 6fb3acdebf65 ("Reinstate "resource: avoid unnecessary lookups in find_next_iomem_res()"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/ublk_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/resource.c | 15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
-index defcc964ecab6..b874cb84bad95 100644
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -1768,7 +1768,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
+diff --git a/kernel/resource.c b/kernel/resource.c
+index 1d48ae8646352..c3e00365f8e37 100644
+--- a/kernel/resource.c
++++ b/kernel/resource.c
+@@ -537,17 +537,16 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
+ 			       size_t size, unsigned long flags,
+ 			       unsigned long desc)
  {
- 	struct ublk_device *ub = cmd->file->private_data;
- 	struct ublk_queue *ubq;
--	struct ublk_io *io;
-+	struct ublk_io *io = NULL;
- 	u32 cmd_op = cmd->cmd_op;
- 	unsigned tag = ub_cmd->tag;
- 	int ret = -EINVAL;
-@@ -1882,7 +1882,7 @@ static int __ublk_ch_uring_cmd(struct io_uring_cmd *cmd,
+-	resource_size_t ostart, oend;
+ 	int type = 0; int other = 0;
+ 	struct resource *p, *dp;
++	struct resource res, o;
+ 	bool is_type, covered;
+-	struct resource res;
  
-  out:
- 	pr_devel("%s: complete: cmd op %d, tag %d ret %x io_flags %x\n",
--			__func__, cmd_op, tag, ret, io->flags);
-+			__func__, cmd_op, tag, ret, io ? io->flags : 0);
- 	return ret;
- }
+ 	res.start = start;
+ 	res.end = start + size - 1;
  
+ 	for (p = parent->child; p ; p = p->sibling) {
+-		if (!resource_overlaps(p, &res))
++		if (!resource_intersection(p, &res, &o))
+ 			continue;
+ 		is_type = (p->flags & flags) == flags &&
+ 			(desc == IORES_DESC_NONE || desc == p->desc);
+@@ -568,8 +567,6 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
+ 		 * |-- "System RAM" --||-- "CXL Window 0a" --|
+ 		 */
+ 		covered = false;
+-		ostart = max(res.start, p->start);
+-		oend = min(res.end, p->end);
+ 		for_each_resource(p, dp, false) {
+ 			if (!resource_overlaps(dp, &res))
+ 				continue;
+@@ -578,17 +575,17 @@ static int __region_intersects(struct resource *parent, resource_size_t start,
+ 			if (is_type) {
+ 				type++;
+ 				/*
+-				 * Range from 'ostart' to 'dp->start'
++				 * Range from 'o.start' to 'dp->start'
+ 				 * isn't covered by matched resource.
+ 				 */
+-				if (dp->start > ostart)
++				if (dp->start > o.start)
+ 					break;
+-				if (dp->end >= oend) {
++				if (dp->end >= o.end) {
+ 					covered = true;
+ 					break;
+ 				}
+ 				/* Remove covered range */
+-				ostart = max(ostart, dp->end + 1);
++				o.start = max(o.start, dp->end + 1);
+ 			}
+ 		}
+ 		if (!covered)
 -- 
 2.51.0
 
