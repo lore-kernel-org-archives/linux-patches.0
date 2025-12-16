@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C0B31A7F5;
-	Tue, 16 Dec 2025 12:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A7434C13D;
+	Tue, 16 Dec 2025 12:11:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887080; cv=none; b=AmHwgQafjLUU3aZuEj49F8iknK+Aubxw0LiFwUxobc+/V/STupkit32Urxj8+B6T1mlZWMbbj3QN9okwh7shCUuy6jR0NGKe3a2INDMLKN0cu6Tr9o2M2Hc2S0HwAR1M4c62ul1g2a401ua3xexqEi1nkP4XBRiyx7GFZHQj/m0=
+	t=1765887084; cv=none; b=iyxSZYZi9XsOCxSE320zPSrEPw2i50+FcTDaNfOHUktHu4NSjt5XdCxIe1p5ZW7hBtaRBQRw0MsaeElU2/h0DwYD0jQ8S0YQDfp26VGCGcfGZiPfIky8Ff1PpKvx8+7TO5q9MF7Wos+ooaWloZohqqvB2fm21n4QoFmEAfED6Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887080; c=relaxed/simple;
-	bh=9qFuTWcXBcBrvO1q8B1q75pZZKBq9yeLSgGD7ku8v2M=;
+	s=arc-20240116; t=1765887084; c=relaxed/simple;
+	bh=HlIwq5Y1V2G0ClfPxSAtGWUmtAIoFbqoY+hMxQsJftw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkbmB1AmBqu4xasDsHKrFFGYtkGrteSzFfxJYcmIrWuPKQJ2cG/GoTTRrcoK435jFfq+qhNoVvBUVYkR6Xmx943gEyFZJrJO7GB7N8TPl26BPO2tlkSLi0kmBfdvBXK9e8OsOwxWDFa+9oG8qQNNHQuj7OsSdpdfNeY3AO5aTaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uVNHFtC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L2OG0kKuta4wzXc7pGSWZPz8cexXIx5fghH0smeua4o1IOayKHLjoHWFjIumz7EzqvUWdl+2xURSNkF2l2DPfusdDuAD7p/xB5mQYMjon653kiqrThJ9iYG/elmXD2S8kXbLVQQ+NDlCW8X+Y1owiUnliF1EQDsUNMEtO7AGc6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wD2sw0Dc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uVNHFtC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98449C4CEF1;
-	Tue, 16 Dec 2025 12:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wD2sw0Dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CA24C4CEF1;
+	Tue, 16 Dec 2025 12:11:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887080;
-	bh=9qFuTWcXBcBrvO1q8B1q75pZZKBq9yeLSgGD7ku8v2M=;
+	s=korg; t=1765887083;
+	bh=HlIwq5Y1V2G0ClfPxSAtGWUmtAIoFbqoY+hMxQsJftw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0uVNHFtCl/eoad66/4T6MoGMGtXqxHXTyvsdHrv6vwAWO+rWqaOduLi9vPGr5ZEER
-	 CCiSnMJeCibf+YZvSgXmVBVeFtQmBOyoDUuEmc8DXLnquQ3ZZ8D61BnGUaEkd7gMLS
-	 /k88o/rQavjkFFVAohHn9LV9N7+u3UHDWIgMNJGg=
+	b=wD2sw0DcrpnG0kDYzDsjjOjK069+g+Digwf9GGsvsIlG/DIgRqPGXtVBQHLzSRMQX
+	 i2ieUbSzCCG8OG840j0JCuZXuVDRojSQH/5h2MzKgwzDwY79c6gSslWB9YoEXfx/Jt
+	 2wHPxv8aJCgUQQFs62gwvAemoRNP7BM7eZjuwn3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Martinz <amartinz@shiftphones.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Val Packett <val@packett.cool>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/614] arm64: dts: qcom: qcm6490-shift-otter: Add missing reserved-memory
-Date: Tue, 16 Dec 2025 12:08:07 +0100
-Message-ID: <20251216111405.684307349@linuxfoundation.org>
+Subject: [PATCH 6.18 121/614] arm64: dts: qcom: x1-dell-thena: Add missing pinctrl for eDP HPD
+Date: Tue, 16 Dec 2025 12:08:08 +0100
+Message-ID: <20251216111405.720178104@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -54,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Martinz <amartinz@shiftphones.com>
+From: Val Packett <val@packett.cool>
 
-[ Upstream commit f404fdcb50021fdad6bc734d69468cc777901a80 ]
+[ Upstream commit 1bdfe3edd4c862f97ac65b60da1db999981fc52a ]
 
-It seems we also need to reserve a region of 81 MiB called "removed_mem"
-otherwise we can easily hit memory errors with higher RAM usage.
+The commit a41d23142d87 ("arm64: dts: qcom: x1e80100-dell-xps13-9345:
+Add missing pinctrl for eDP HPD") has applied this change to a very
+similar machine, so apply it here too.
 
-Fixes: 249666e34c24 ("arm64: dts: qcom: add QCM6490 SHIFTphone 8")
-Signed-off-by: Alexander Martinz <amartinz@shiftphones.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Link: https://lore.kernel.org/r/20251009-otter-further-bringup-v2-3-5bb2f4a02cea@fairphone.com
+This allows us not to rely on the boot firmware to set up the pinctrl
+for the eDP HPD line of the internal display.
+
+Fixes: e7733b42111c ("arm64: dts: qcom: Add support for Dell Inspiron 7441 / Latitude 7455")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Val Packett <val@packett.cool>
+Link: https://lore.kernel.org/r/20251012224706.14311-1-val@packett.cool
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-index eb8efba1b9dda..cc99925798873 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-@@ -118,6 +118,11 @@ cdsp_mem: cdsp@88f00000 {
- 			no-map;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+index cc64558ed5e6f..9df66295660c3 100644
+--- a/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
++++ b/arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi
+@@ -1039,6 +1039,9 @@ &mdss_dp1_out {
+ &mdss_dp3 {
+ 	/delete-property/ #sound-dai-cells;
  
-+		removed_mem: removed@c0000000 {
-+			reg = <0x0 0xc0000000 0x0 0x5100000>;
-+			no-map;
-+		};
++	pinctrl-0 = <&edp0_hpd_default>;
++	pinctrl-names = "default";
 +
- 		rmtfs_mem: rmtfs@f8500000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0x0 0xf8500000 0x0 0x600000>;
+ 	status = "okay";
+ 
+ 	aux-bus {
 -- 
 2.51.0
 
