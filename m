@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F33335CBCE;
-	Tue, 16 Dec 2025 12:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA4635CBD8;
+	Tue, 16 Dec 2025 12:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886795; cv=none; b=hsthsqssNzWHPQlHXyVJIetJ2ta81vaLkoIgxfuq1ztIHO3KaqH9EKR84dK9Ysa0q1rV1ll4jXqQVm4rl0TuW8BJVccwn5KV9M555GnS3CuFbo5oHGz+waeDfklHkfm1RwuLkjsep388wjNXdOIM1LFIPfTv3W/IDqJxMBJaT54=
+	t=1765886798; cv=none; b=iYVIvtLPAYWel6WDHXsjDSzVSYYcPJuGzRn843Nz9BahmTphcG2yWCyQtqd6ntSwuO0B1WKws67sIZQjlksciXA2AA0PLC1Owm18xkrEhl1XRDCCYAjuPRxkzNMwi1nVPnkwcX5vGFKpl8hQ4ZV/Q1uia+DjTSF8HHozkdLasmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886795; c=relaxed/simple;
-	bh=+QemsGgvnu5s0St+Bop1S1RvDwCEFi2j6xFzmlRM1RE=;
+	s=arc-20240116; t=1765886798; c=relaxed/simple;
+	bh=NljZmQyGdFyE5cplQSwm+G22FiLXvpVEAsNLXC82umQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VSvGnFRJwRitoX6GLZ59PY2TtoGtIXiNdwTO0Mv7yLQ5SD594wlrLwIIZ0vU74GEsOZUg+ekeyWs7HaJ5Lx0BRslbvbpcKbsRoX+xXz44gN/Ly5z2AV9ZvOPeVaDLd9VLG0/oHdnvmtyF2qF69iLdCE1LhURa+1YM4bMQDev6Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d9MtVIy3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XLokQaSAc9m/vSRHXoknyC/D7z2p5LFMErZR0W8qQMN4oTisqMPr0kkxAGE1WTytLFPqnxDH4h9mflkIesulMbUBtCvg6UshYmX1PX0vCUPOQO3NewZGcthj53JiiK1mpxS8BUuZuO3M9Bc5ifdR9ZhAfkqvuAD4O3PBDZboMS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g88xuEDx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d9MtVIy3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E797C4CEF1;
-	Tue, 16 Dec 2025 12:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g88xuEDx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1EBC4CEF1;
+	Tue, 16 Dec 2025 12:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886794;
-	bh=+QemsGgvnu5s0St+Bop1S1RvDwCEFi2j6xFzmlRM1RE=;
+	s=korg; t=1765886798;
+	bh=NljZmQyGdFyE5cplQSwm+G22FiLXvpVEAsNLXC82umQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9MtVIy3KV6hxbDaonV33PguiCQMhCmvkuSmAt6XCvdlFRmawwQPniPP9mUnNSRD8
-	 ZvdUCvAhhnZnO8j8FB1xpb1B+g/8fYmEYRlzOW5XMPrqVAPLz+Js/OGJgejqXsUb0/
-	 Q6Q48WJjvq47PXcjD1lAEeH7CWPxFYxJrwg+6Pi8=
+	b=g88xuEDxuqjG6QZzHTqKkPY8hmS9ZnqwJuTxkagjtRX5T1qsUId/VzvIyY2oU7Qv9
+	 7ukTP+4FEQmH7QUvJqSNjHYMEtcWFFWZLDHwIKfDjxJFpg4wSZzj1Ndjsiiif6XsjB
+	 73Xz1CUekunlW106t7mZKi2pdrsV0NRzThOFMmqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wludzik, Jozef" <jozef.wludzik@intel.com>,
-	Jeff Hugo <jeff.hugo@oss.qualcomm.com>,
-	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	James Clark <james.clark@linaro.org>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 035/614] accel/ivpu: Fix race condition when mapping dmabuf
-Date: Tue, 16 Dec 2025 12:06:42 +0100
-Message-ID: <20251216111402.580898206@linuxfoundation.org>
+Subject: [PATCH 6.18 036/614] perf parse-events: Fix legacy cache events if event is duplicated in a PMU
+Date: Tue, 16 Dec 2025 12:06:43 +0100
+Message-ID: <20251216111402.616666262@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,43 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wludzik, Jozef <jozef.wludzik@intel.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 63c7870fab67b2ab2bfe75e8b46f3c37b88c47a8 ]
+[ Upstream commit b7b76f607a15f16031001687e733046b5f6f5d86 ]
 
-Fix a race that can occur when multiple jobs submit the same dmabuf.
-This could cause the sg_table to be mapped twice, leading to undefined
-behavior.
+The term list when adding an event to a PMU is expected to have the
+event name for the alias lookup. Also, set found_supported so that
+-EINVAL isn't returned.
 
-Fixes: e0c0891cd63b ("accel/ivpu: Rework bind/unbind of imported buffers")
-Signed-off-by: Wludzik, Jozef <jozef.wludzik@intel.com>
-Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
-Link: https://lore.kernel.org/r/20251014071725.3047287-1-karol.wachowski@linux.intel.com
+Fixes: 62593394f66a ("perf parse-events: Legacy cache names on all
+PMUs and lower priority")
+
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: James Clark <james.clark@linaro.org>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ivpu/ivpu_gem.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/util/parse-events.c | 28 +++++++++++++++++++++++++++-
+ tools/perf/util/parse-events.h |  3 ++-
+ tools/perf/util/parse-events.y |  2 +-
+ 3 files changed, 30 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/accel/ivpu/ivpu_gem.c b/drivers/accel/ivpu/ivpu_gem.c
-index 171e809575ad6..1fca969df19dc 100644
---- a/drivers/accel/ivpu/ivpu_gem.c
-+++ b/drivers/accel/ivpu/ivpu_gem.c
-@@ -45,12 +45,13 @@ static inline void ivpu_bo_unlock(struct ivpu_bo *bo)
+diff --git a/tools/perf/util/parse-events.c b/tools/perf/util/parse-events.c
+index da73d686f6b93..90a765016f64f 100644
+--- a/tools/perf/util/parse-events.c
++++ b/tools/perf/util/parse-events.c
+@@ -475,8 +475,10 @@ static int parse_events_add_pmu(struct parse_events_state *parse_state,
  
- static struct sg_table *ivpu_bo_map_attachment(struct ivpu_device *vdev, struct ivpu_bo *bo)
+ int parse_events_add_cache(struct list_head *list, int *idx, const char *name,
+ 			   struct parse_events_state *parse_state,
+-			   struct parse_events_terms *parsed_terms)
++			   struct parse_events_terms *parsed_terms,
++			   void *loc_)
  {
--	struct sg_table *sgt = bo->base.sgt;
-+	struct sg_table *sgt;
++	YYLTYPE *loc = loc_;
+ 	struct perf_pmu *pmu = NULL;
+ 	bool found_supported = false;
+ 	const char *config_name = get_config_name(parsed_terms);
+@@ -497,12 +499,36 @@ int parse_events_add_cache(struct list_head *list, int *idx, const char *name,
+ 			 * The PMU has the event so add as not a legacy cache
+ 			 * event.
+ 			 */
++			struct parse_events_terms temp_terms;
++			struct parse_events_term *term;
++			char *config = strdup(name);
++
++			if (!config)
++				goto out_err;
++
++			parse_events_terms__init(&temp_terms);
++			if (!parsed_terms)
++				parsed_terms = &temp_terms;
++
++			if (parse_events_term__num(&term,
++						    PARSE_EVENTS__TERM_TYPE_USER,
++						    config, /*num=*/1, /*novalue=*/true,
++						    loc, /*loc_val=*/NULL) < 0) {
++				zfree(&config);
++				goto out_err;
++			}
++			list_add(&term->list, &parsed_terms->terms);
++
+ 			ret = parse_events_add_pmu(parse_state, list, pmu,
+ 						   parsed_terms,
+ 						   first_wildcard_match,
+ 						   /*alternate_hw_config=*/PERF_COUNT_HW_MAX);
++			list_del_init(&term->list);
++			parse_events_term__delete(term);
++			parse_events_terms__exit(&temp_terms);
+ 			if (ret)
+ 				goto out_err;
++			found_supported = true;
+ 			if (first_wildcard_match == NULL)
+ 				first_wildcard_match =
+ 					container_of(list->prev, struct evsel, core.node);
+diff --git a/tools/perf/util/parse-events.h b/tools/perf/util/parse-events.h
+index 8f8c8e7fbcf18..8af19dec6a17d 100644
+--- a/tools/perf/util/parse-events.h
++++ b/tools/perf/util/parse-events.h
+@@ -237,7 +237,8 @@ int parse_events_add_numeric(struct parse_events_state *parse_state,
+ 			     bool wildcard);
+ int parse_events_add_cache(struct list_head *list, int *idx, const char *name,
+ 			   struct parse_events_state *parse_state,
+-			   struct parse_events_terms *parsed_terms);
++			   struct parse_events_terms *parsed_terms,
++			   void *loc);
+ int parse_events__decode_legacy_cache(const char *name, int pmu_type, __u64 *config);
+ int parse_events_add_breakpoint(struct parse_events_state *parse_state,
+ 				struct list_head *list,
+diff --git a/tools/perf/util/parse-events.y b/tools/perf/util/parse-events.y
+index a2361c0040d75..ced26c549c33a 100644
+--- a/tools/perf/util/parse-events.y
++++ b/tools/perf/util/parse-events.y
+@@ -353,7 +353,7 @@ PE_LEGACY_CACHE opt_event_config
+ 	if (!list)
+ 		YYNOMEM;
  
- 	drm_WARN_ON(&vdev->drm, !bo->base.base.import_attach);
+-	err = parse_events_add_cache(list, &parse_state->idx, $1, parse_state, $2);
++	err = parse_events_add_cache(list, &parse_state->idx, $1, parse_state, $2, &@1);
  
- 	ivpu_bo_lock(bo);
- 
-+	sgt = bo->base.sgt;
- 	if (!sgt) {
- 		sgt = dma_buf_map_attachment(bo->base.base.import_attach, DMA_BIDIRECTIONAL);
- 		if (IS_ERR(sgt))
+ 	parse_events_terms__delete($2);
+ 	free($1);
 -- 
 2.51.0
 
