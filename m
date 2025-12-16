@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73EF9363C66;
-	Tue, 16 Dec 2025 12:22:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA8A363C70;
+	Tue, 16 Dec 2025 12:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887754; cv=none; b=QaRA5PdyCAsAjdg/bBFW6SUxABWC98l9C7tICnc8I3ftl2/aaw2q8O/MtbYxmCn7U7EMNYiZQExDknNsddex93DxtdM+r69XHRgmDddVooLCtFyZ7Hbu58CvgRxfytNf6L1rtTgD2lFaIlcx+XJUqsPFeCHs63gMl2SpYYL02uE=
+	t=1765887757; cv=none; b=Y4AXgZ78lmmoWF5Km9UIiB5X54zQR32pYVmjABWPI1SpHT5QYj1BZFw4e+TnwGVKM+PTKWCnWRywb6htS5bWxERwCOiOploLm7K4qugIvrNRlwCaHWf5lCbqE8kUhgoALE++LwtF0x+ytwOdshZFDvU3uH476/tKxgkw7tVRx94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887754; c=relaxed/simple;
-	bh=qu7SiDJMAZEeYh+UoIwMwqBCWXvB3p+RsSHGyKhDCd0=;
+	s=arc-20240116; t=1765887757; c=relaxed/simple;
+	bh=8/XcvrO77IIY9Cmp6UBbkpNcUV0Bj2wwtuLk+uh7Rt0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HTPjAs28G6R6SBfvj0KsNbmhchZkHvNST7pFZrZU/LmLlyo/oJdOiXjPlb5ZZufjKuHzFk9CunkEnnHPLZuWzsAQiWXNnD+uPmywnxabjQVxzx5sjL3thoPZRdqX+vcW22zqS2mv5s3Tbqr9tf+JuOzk8SsnYq1UDjbyqoLa03U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q63EFwaa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BVhvYHdhVnoYBOTPXhB+s2iE+V1W6ilpC1KMEAAY2WxcXuyxwsRgnN+/qRPMJgQv+mwjl1iUOmYBWRl5p/FC14GrExE7dnN5g2xoayxC0iKidnrdir6aAvz9YSjtZx/waTmofrmy8Md43b6hebP4wMlaR+5gdpnPj/gi31T4PUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqKleGU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q63EFwaa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84EA1C4CEF1;
-	Tue, 16 Dec 2025 12:22:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqKleGU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B439C4CEF1;
+	Tue, 16 Dec 2025 12:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887754;
-	bh=qu7SiDJMAZEeYh+UoIwMwqBCWXvB3p+RsSHGyKhDCd0=;
+	s=korg; t=1765887757;
+	bh=8/XcvrO77IIY9Cmp6UBbkpNcUV0Bj2wwtuLk+uh7Rt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q63EFwaarE2Zs+dlKp/P8x52F7tZoGerkpjIShp+gL9KahI7Z0xnckz764DJLU2jb
-	 eKOp9EQrbzVXyNrdyjafaiBt7WJW6oo5qha16026yPJqDVMBwip3SngLmETF5QYnqm
-	 cl6oq1rI4Oj8yvyRXBK5qm+RIdqRDr8RMnsVpGaM=
+	b=cqKleGU5UBkMNZKP7813eWSjsscGDSVN0EaxssCD9tbkat3xrQ5FgDOGNyDzFFkIP
+	 y4D2ppgZFcvCw93cCg6uk/PlVnmbhWV3qWNUyAznVdOwOH28UFvzlorhnloZHl3rUG
+	 QqGMasBkuiRDVnqHEDN1g2+UCnrqKbZekDRJBgEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 328/614] pwm: bcm2835: Make sure the channel is enabled after pwm_request()
-Date: Tue, 16 Dec 2025 12:11:35 +0100
-Message-ID: <20251216111413.250280142@linuxfoundation.org>
+Subject: [PATCH 6.18 329/614] scsi: ufs: rockchip: Reset controller on PRE_CHANGE of hce enable notify
+Date: Tue, 16 Dec 2025 12:11:36 +0100
+Message-ID: <20251216111413.286408305@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -46,89 +45,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit cda323dbda76600bf9761970d58517648f0de67d ]
+[ Upstream commit b0ee72db9132bd19b1b80152b35e0cf6a6cbd9f2 ]
 
-The .free callback cleared among others the enable bit PWENx in the
-control register. When the PWM is requested later again this bit isn't
-restored but the core assumes the PWM is enabled and thus skips a
-request to configure the same state as before.
+This fixes the dme-reset failed when doing recovery. Because device
+reset is not enough, we could occasionally see the error below:
 
-To fix that don't touch the hardware configuration in .free(). For
-symmetry also drop .request() and configure the mode completely in
-.apply().
+ufshcd-rockchip 2a2d0000.ufs: uic cmd 0x14 with arg3 0x0 completion timeout
+ufshcd-rockchip 2a2d0000.ufs: dme-reset: error code -110
+ufshcd-rockchip 2a2d0000.ufs: DME_RESET failed
+ufshcd-rockchip 2a2d0000.ufs: ufshcd_host_reset_and_restore: Host init failed -110
 
-Fixes: e5a06dc5ac1f ("pwm: Add BCM2835 PWM driver")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251118174303.1761577-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fix this by resetting the controller on PRE_CHANGE stage of hce enable
+notify.
+
+Fixes: d3cbe455d6eb ("scsi: ufs: rockchip: Initial support for UFS")
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/1763009575-237552-1-git-send-email-shawn.lin@rock-chips.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-bcm2835.c | 28 +++-------------------------
- 1 file changed, 3 insertions(+), 25 deletions(-)
+ drivers/ufs/host/ufs-rockchip.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pwm/pwm-bcm2835.c b/drivers/pwm/pwm-bcm2835.c
-index 578e95e0296c6..532903da521fd 100644
---- a/drivers/pwm/pwm-bcm2835.c
-+++ b/drivers/pwm/pwm-bcm2835.c
-@@ -34,29 +34,6 @@ static inline struct bcm2835_pwm *to_bcm2835_pwm(struct pwm_chip *chip)
- 	return pwmchip_get_drvdata(chip);
- }
+diff --git a/drivers/ufs/host/ufs-rockchip.c b/drivers/ufs/host/ufs-rockchip.c
+index 8754085dd0ccf..8cecb28cdce41 100644
+--- a/drivers/ufs/host/ufs-rockchip.c
++++ b/drivers/ufs/host/ufs-rockchip.c
+@@ -20,9 +20,17 @@
+ #include "ufshcd-pltfrm.h"
+ #include "ufs-rockchip.h"
  
--static int bcm2835_pwm_request(struct pwm_chip *chip, struct pwm_device *pwm)
--{
--	struct bcm2835_pwm *pc = to_bcm2835_pwm(chip);
--	u32 value;
--
--	value = readl(pc->base + PWM_CONTROL);
--	value &= ~(PWM_CONTROL_MASK << PWM_CONTROL_SHIFT(pwm->hwpwm));
--	value |= (PWM_MODE << PWM_CONTROL_SHIFT(pwm->hwpwm));
--	writel(value, pc->base + PWM_CONTROL);
--
--	return 0;
--}
--
--static void bcm2835_pwm_free(struct pwm_chip *chip, struct pwm_device *pwm)
--{
--	struct bcm2835_pwm *pc = to_bcm2835_pwm(chip);
--	u32 value;
--
--	value = readl(pc->base + PWM_CONTROL);
--	value &= ~(PWM_CONTROL_MASK << PWM_CONTROL_SHIFT(pwm->hwpwm));
--	writel(value, pc->base + PWM_CONTROL);
--}
--
- static int bcm2835_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 			     const struct pwm_state *state)
- {
-@@ -102,6 +79,9 @@ static int bcm2835_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	/* set polarity */
- 	val = readl(pc->base + PWM_CONTROL);
- 
-+	val &= ~(PWM_CONTROL_MASK << PWM_CONTROL_SHIFT(pwm->hwpwm));
-+	val |= PWM_MODE << PWM_CONTROL_SHIFT(pwm->hwpwm);
++static void ufs_rockchip_controller_reset(struct ufs_rockchip_host *host)
++{
++	reset_control_assert(host->rst);
++	udelay(1);
++	reset_control_deassert(host->rst);
++}
 +
- 	if (state->polarity == PWM_POLARITY_NORMAL)
- 		val &= ~(PWM_POLARITY << PWM_CONTROL_SHIFT(pwm->hwpwm));
- 	else
-@@ -119,8 +99,6 @@ static int bcm2835_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ static int ufs_rockchip_hce_enable_notify(struct ufs_hba *hba,
+ 					 enum ufs_notify_change_status status)
+ {
++	struct ufs_rockchip_host *host = ufshcd_get_variant(hba);
+ 	int err = 0;
+ 
+ 	if (status == POST_CHANGE) {
+@@ -37,6 +45,9 @@ static int ufs_rockchip_hce_enable_notify(struct ufs_hba *hba,
+ 		return ufshcd_vops_phy_initialization(hba);
+ 	}
+ 
++	/* PRE_CHANGE */
++	ufs_rockchip_controller_reset(host);
++
+ 	return 0;
  }
  
- static const struct pwm_ops bcm2835_pwm_ops = {
--	.request = bcm2835_pwm_request,
--	.free = bcm2835_pwm_free,
- 	.apply = bcm2835_pwm_apply,
- };
+@@ -156,9 +167,7 @@ static int ufs_rockchip_common_init(struct ufs_hba *hba)
+ 		return dev_err_probe(dev, PTR_ERR(host->rst),
+ 				"failed to get reset control\n");
  
+-	reset_control_assert(host->rst);
+-	udelay(1);
+-	reset_control_deassert(host->rst);
++	ufs_rockchip_controller_reset(host);
+ 
+ 	host->ref_out_clk = devm_clk_get_enabled(dev, "ref_out");
+ 	if (IS_ERR(host->ref_out_clk))
+@@ -282,9 +291,7 @@ static int ufs_rockchip_runtime_resume(struct device *dev)
+ 		return err;
+ 	}
+ 
+-	reset_control_assert(host->rst);
+-	udelay(1);
+-	reset_control_deassert(host->rst);
++	ufs_rockchip_controller_reset(host);
+ 
+ 	return ufshcd_runtime_resume(dev);
+ }
 -- 
 2.51.0
 
