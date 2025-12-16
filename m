@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6ED345730;
-	Tue, 16 Dec 2025 11:37:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9C1345730;
+	Tue, 16 Dec 2025 11:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885031; cv=none; b=qbcDGxTh4mIRdblnsqjb+fc2FyJJeFjj7DcxwempkC2l4WZkPO3yeGs7Ssd/czUuXSjfNbsOUAdvYkP9FohDgjgOsHSSILg8juOs3gV6RLLTwVzkjLTqrf77B7qOigVxlsBUMDCZViCAXnXqPq8HP0RkfU5xE4CiQLLxkF2g16E=
+	t=1765885034; cv=none; b=cE9o4V9xRNXoErSUnXqFU1IVzNvzdUSCzUa1KYjOWPmka8nt1EEznr7PYb/OC8ByV1hJtCSjJzLfn7EaBGuxnbCk8lZ6wDYma2dQfaKwFbGn64juIq5xCrzxU9J/xvkvujXpTFPjv7rSPbf/6xMKYq3W+QxIx2WaWBOYTKGFPWQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885031; c=relaxed/simple;
-	bh=dl4FriRPdwElfT4JYQoMyaQkqiD0OHyUmCPGS5sxdNA=;
+	s=arc-20240116; t=1765885034; c=relaxed/simple;
+	bh=nJNGQe8DdGlhJoFVCJTnlSuZY61Rmjg8V3ilLv7Y0Xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n/iWF272uk9SQhh6KwIfmcyGrzck5UBvE3aQ178jfuuTeN9CByeteiOvbUj0PPSkLS8ErQXO7uXAo3dCQE7OaOyJIZp4dPlOexT+a75VUFIKv//55lISbNKvVl9p4lzr/DwqWGQfDV9HNvyC2qtxKUNwSWjMatEQHSKhJ1nlAmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMwyfnbC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nUiSKeyX72E7HDt+ok0l4kb+Zgt3u1k6vxNOwJbUQxBy0knBdfy7ri3mPrDLFDATt07tAUZ24hbyVusDtpk5g78Q5lipegsdilshCwBgVN58N8e9gspwvkvE0Z0jGlIhlWeG969Yb65+o0bAwbiX0/AQUz1+QB7CPffiptXc5p0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/TAHhae; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMwyfnbC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C79C4CEF1;
-	Tue, 16 Dec 2025 11:37:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/TAHhae"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D72DC4CEF1;
+	Tue, 16 Dec 2025 11:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885031;
-	bh=dl4FriRPdwElfT4JYQoMyaQkqiD0OHyUmCPGS5sxdNA=;
+	s=korg; t=1765885034;
+	bh=nJNGQe8DdGlhJoFVCJTnlSuZY61Rmjg8V3ilLv7Y0Xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMwyfnbCINrSH1pBxj1P12uRpLccKmTmrH/jxqpb56JI/ukhE5MCiqpTGFyR++glf
-	 5FVRe4SEY8IskalmysagOsSo4lT9z6nygU3iX0mgtZhrvWqFI5QigybSw7K9oxId59
-	 UnzZkM6HD2pp2Ni67RhNt5OsIfe4PnrIeUqiYxt8=
+	b=N/TAHhaeJ9d2rdLcgOhmIXhpGF8zjP11WS2Lqt/x8ZmpNAyyWqm0gEMg4f1zLX+ot
+	 4MFxDduOSjTC3HokjtYh1RtjEi9U4Yh+eT5VTllZGWEsG78dzU1kanWoaI5nLidZ5C
+	 uygPsGMZ0RlPQkJmrdIq7r+LTrOWHEijIgyGVk7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Willy Tarreau <w@1wt.eu>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Seungjin Bae <eeodqql09@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 018/507] tools/nolibc: handle NULL wstatus argument to waitpid()
-Date: Tue, 16 Dec 2025 12:07:39 +0100
-Message-ID: <20251216111346.196643300@linuxfoundation.org>
+Subject: [PATCH 6.17 019/507] USB: Fix descriptor count when handling invalid MBIM extended descriptor
+Date: Tue, 16 Dec 2025 12:07:40 +0100
+Message-ID: <20251216111346.232537515@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -46,68 +44,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 812f223fe9be03dc22abb85240b6f075135d2386 ]
+[ Upstream commit 5570ad1423ee60f6e972dadb63fb2e5f90a54cbe ]
 
-wstatus is allowed to be NULL. Avoid a segmentation fault in this case.
+In cdc_parse_cdc_header(), the check for the USB_CDC_MBIM_EXTENDED_TYPE
+descriptor was using 'break' upon detecting an invalid length.
 
-Fixes: 0c89abf5ab3f ("tools/nolibc: implement waitpid() in terms of waitid()")
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+This was incorrect because 'break' only exits the switch statement,
+causing the code to fall through to cnt++, thus incorrectly
+incrementing the count of parsed descriptors for a descriptor that was
+actually invalid and being discarded.
+
+This patch changes 'break' to 'goto next_desc;' to ensure that the
+logic skips the counter increment and correctly proceeds to the next
+descriptor in the buffer. This maintains an accurate count of only
+the successfully parsed descriptors.
+
+Fixes: e4c6fb7794982 ("usbnet: move the CDC parser into USB core")
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Link: https://lore.kernel.org/r/20250928185611.764589-1-eeodqql09@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/sys/wait.h | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/usb/core/message.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/include/nolibc/sys/wait.h b/tools/include/nolibc/sys/wait.h
-index 56ddb806da7f2..c1b797c234d11 100644
---- a/tools/include/nolibc/sys/wait.h
-+++ b/tools/include/nolibc/sys/wait.h
-@@ -82,23 +82,29 @@ pid_t waitpid(pid_t pid, int *status, int options)
- 
- 	switch (info.si_code) {
- 	case 0:
--		*status = 0;
-+		if (status)
-+			*status = 0;
- 		break;
- 	case CLD_EXITED:
--		*status = (info.si_status & 0xff) << 8;
-+		if (status)
-+			*status = (info.si_status & 0xff) << 8;
- 		break;
- 	case CLD_KILLED:
--		*status = info.si_status & 0x7f;
-+		if (status)
-+			*status = info.si_status & 0x7f;
- 		break;
- 	case CLD_DUMPED:
--		*status = (info.si_status & 0x7f) | 0x80;
-+		if (status)
-+			*status = (info.si_status & 0x7f) | 0x80;
- 		break;
- 	case CLD_STOPPED:
- 	case CLD_TRAPPED:
--		*status = (info.si_status << 8) + 0x7f;
-+		if (status)
-+			*status = (info.si_status << 8) + 0x7f;
- 		break;
- 	case CLD_CONTINUED:
--		*status = 0xffff;
-+		if (status)
-+			*status = 0xffff;
- 		break;
- 	default:
- 		return -1;
+diff --git a/drivers/usb/core/message.c b/drivers/usb/core/message.c
+index d2b2787be4092..6138468c67c47 100644
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -2431,7 +2431,7 @@ int cdc_parse_cdc_header(struct usb_cdc_parsed_header *hdr,
+ 			break;
+ 		case USB_CDC_MBIM_EXTENDED_TYPE:
+ 			if (elength < sizeof(struct usb_cdc_mbim_extended_desc))
+-				break;
++				goto next_desc;
+ 			hdr->usb_cdc_mbim_extended_desc =
+ 				(struct usb_cdc_mbim_extended_desc *)buffer;
+ 			break;
 -- 
 2.51.0
 
