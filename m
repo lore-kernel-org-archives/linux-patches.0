@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7DC387B06;
-	Tue, 16 Dec 2025 12:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D71387B1D;
+	Tue, 16 Dec 2025 12:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888292; cv=none; b=GAUO0kcJZVsS6MZ4oLv4vxnHxUep/5rpHEU/alMgK6Z+Tf0zgWz1umUDwmRY5K/vtJoHzd9fqYA7lMuggNV5FD4n9OWXhpHsqmtE4cTe7fer9Yetoid9dDKWECjuXUcf4CJPi3kh2jKQvK8Q8VF63exeRt9JN/huRjP6ju7nLnE=
+	t=1765888295; cv=none; b=aAYkYgtoh06Vg+P0lEdpkOffBXC7+vjipUyTPFDAN8y1Z8RFEAwWmgpl8SBiP2ZgT5mFvBglb2mZRQnU0gr9sJ61SSZH5aktEUTPmDOtOh17GiT3LSaTteKqzve5vp99e1texPFzj8qGCUqGz8QV2biaMmth+yHXnYrDPtK/5zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888292; c=relaxed/simple;
-	bh=GcaqIK3m6qeYHMP1TKFeVtUK+GGhb6ADKQ5Wfeuf+24=;
+	s=arc-20240116; t=1765888295; c=relaxed/simple;
+	bh=4HXEqFKUJZ3I48Gb13jz92hFfAr9rQugLrwtE94aqGU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZTOlRhEIv+2QGjhrLQ7AkIo9o135ZkLnZ4TbGAzorG/7Q5NBkkwjWbWMRxMf9go21jVRU/LH41N5EtjkskMkiiHhPft8g9ElhGn7q+m9npWgI8V9DPUa75u3qXGGqU+vuwQb9+RjzH9fZVZzRLp3PnkI6ykHfxnjmBTZS7EW98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hFvQUiFq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRe/q8cnIxIjMsHpytn7Jtp8RN234OrpwRevYAyhZT8dwPu0aIvKCNH2kvc5fg2AMPbC2yaz9gNTiiRQoPfBlmdtirdqVtWRU2oMT6sniTFo3o6r28C4mZWqx/FO4YN9qFmMuyVizYm2g13JtK6rvnDHlt6hIK+PI8vsssJUGuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuHqpwGj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hFvQUiFq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA572C4CEF1;
-	Tue, 16 Dec 2025 12:31:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuHqpwGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF842C16AAE;
+	Tue, 16 Dec 2025 12:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888292;
-	bh=GcaqIK3m6qeYHMP1TKFeVtUK+GGhb6ADKQ5Wfeuf+24=;
+	s=korg; t=1765888295;
+	bh=4HXEqFKUJZ3I48Gb13jz92hFfAr9rQugLrwtE94aqGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hFvQUiFquIVdRy1NkmTu/Z0+rff9bhr8yf0RrJTEJjpDuEyVHCkLmZtkE80s3QKuX
-	 /Kr3sCAQudTxAlNEH0AHiUWiFKimfJh+FQikuIvJYvKHO/Igl+SX7gZ4Szfi/JL+Wt
-	 OCY73GZBt+2w9qnDDGdBtgzxcfN0pMTMI1EFBHOs=
+	b=GuHqpwGjY1x4noNX5maw5G7Js1HySOMtEJsFBJyiRXmY6VQJPUrNxMdKRtgxJ2kG/
+	 80dZArDQDx1RRSfmcoRymL/hgZiEXHdqstRnyt++M215dDhQ3LF+diqo5JS3d3rhqw
+	 XVZCxyAXnx50CzRkaXRWTZ8wl1ngyqQbB1MkMFI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Han Gao <rabenda.cn@gmail.com>,
-	Paul Walmsley <pjw@kernel.org>,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 457/614] of: Skip devicetree kunit tests when RISCV+ACPI doesnt populate root node
-Date: Tue, 16 Dec 2025 12:13:44 +0100
-Message-ID: <20251216111417.925049909@linuxfoundation.org>
+Subject: [PATCH 6.18 458/614] virtio_vdpa: fix misleading return in void function
+Date: Tue, 16 Dec 2025 12:13:45 +0100
+Message-ID: <20251216111417.963311889@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,57 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit 546dbb0223102813ffb5bbcb9443a47c3183f195 ]
+[ Upstream commit e40b6abe0b1247d43bc61942aa7534fca7209e44 ]
 
-Starting with commit 69a8b62a7aa1 ("riscv: acpi: avoid errors caused by
-probing DT devices when ACPI is used"), riscv images no longer populate
-devicetree if ACPI is enabled. This causes unit tests to fail which require
-the root node to be set.
+virtio_vdpa_set_status() is declared as returning void, but it used
+"return vdpa_set_status()" Since vdpa_set_status() also returns
+void, the return statement is unnecessary and misleading.
+Remove it.
 
-  # Subtest: of_dtb
-  # module: of_test
-  1..2
-  # of_dtb_root_node_found_by_path: EXPECTATION FAILED at drivers/of/of_test.c:21
-  Expected np is not null, but is
-  # of_dtb_root_node_found_by_path: pass:0 fail:1 skip:0 total:1
-  not ok 1 of_dtb_root_node_found_by_path
-  # of_dtb_root_node_populates_of_root: EXPECTATION FAILED at drivers/of/of_test.c:31
-  Expected of_root is not null, but is
-  # of_dtb_root_node_populates_of_root: pass:0 fail:1 skip:0 total:1
-  not ok 2 of_dtb_root_node_populates_of_root
-
-Skip those tests for RISCV if the root node is not populated.
-
-Fixes: 69a8b62a7aa1 ("riscv: acpi: avoid errors caused by probing DT devices when ACPI is used")
-Cc: Han Gao <rabenda.cn@gmail.com>
-Cc: Paul Walmsley <pjw@kernel.org>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Paul Walmsley <pjw@kernel.org>  # arch/riscv
-Link: https://patch.msgid.link/20251023160415.705294-1-linux@roeck-us.net
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Fixes: c043b4a8cf3b ("virtio: introduce a vDPA based transport")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Message-Id: <20251001191653.1713923-1-alok.a.tiwari@oracle.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/of_kunit_helpers.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/virtio/virtio_vdpa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/of/of_kunit_helpers.c b/drivers/of/of_kunit_helpers.c
-index 7b3ed5a382aaa..f6ed1af8b62aa 100644
---- a/drivers/of/of_kunit_helpers.c
-+++ b/drivers/of/of_kunit_helpers.c
-@@ -18,8 +18,9 @@
-  */
- void of_root_kunit_skip(struct kunit *test)
+diff --git a/drivers/virtio/virtio_vdpa.c b/drivers/virtio/virtio_vdpa.c
+index f9a29045eca0d..0a801f67b5996 100644
+--- a/drivers/virtio/virtio_vdpa.c
++++ b/drivers/virtio/virtio_vdpa.c
+@@ -80,7 +80,7 @@ static void virtio_vdpa_set_status(struct virtio_device *vdev, u8 status)
  {
--	if (IS_ENABLED(CONFIG_ARM64) && IS_ENABLED(CONFIG_ACPI) && !of_root)
--		kunit_skip(test, "arm64+acpi doesn't populate a root node");
-+	if ((IS_ENABLED(CONFIG_ARM64) || IS_ENABLED(CONFIG_RISCV)) &&
-+	    IS_ENABLED(CONFIG_ACPI) && !of_root)
-+		kunit_skip(test, "arm64/riscv+acpi doesn't populate a root node");
- }
- EXPORT_SYMBOL_GPL(of_root_kunit_skip);
+ 	struct vdpa_device *vdpa = vd_get_vdpa(vdev);
  
+-	return vdpa_set_status(vdpa, status);
++	vdpa_set_status(vdpa, status);
+ }
+ 
+ static void virtio_vdpa_reset(struct virtio_device *vdev)
 -- 
 2.51.0
 
