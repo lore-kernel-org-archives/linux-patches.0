@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F1A34D920;
-	Tue, 16 Dec 2025 11:55:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A1334DB5C;
+	Tue, 16 Dec 2025 11:55:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886112; cv=none; b=udZSVxDg4cXEfIF03FUf04s1mVWD7KIe7w6zPcWsVMZlk9NpYlSoMD03I484/FYdM/0p+f9VEkqrDa8jp4q/ZKMw8Y9FDIU4BS5spvTkkRJI2SzDwFaCHLYj1uYQVIaQUnls+Hr6iWwbXzdMMbPcbWDp+Yb3KOt1i7zB0ADxYdQ=
+	t=1765886116; cv=none; b=lNLXllzc8H+hkLmcZr2fH4/IgwYpWj/q8uwxGrWlx7B4X02D6JxXc1w/TzLIOLT6hebQitPaN8Rv8I2cViX9i0R7ccgUP3PjyO8D78D2lifXb4OoQn6T/43tTRb60rYQ6YdolMd/h8OqDWyzUsllclFesbF3a7ug72PMd6a98XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886112; c=relaxed/simple;
-	bh=YZtbGg9AQ5iBI1kJ9Q2/sc+nlwXFgynxxdo5qo/pWxk=;
+	s=arc-20240116; t=1765886116; c=relaxed/simple;
+	bh=jNd092HtDJ8toCQXxtteqwCs7HFMsOZpQjuAAhM1urY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=efXS7gqPJRE/AbennLuZCGJRe77Lu5QmljSAPKmLmjPX8bZNvCly+p776AeHZP9kJJvH5v6tpheKiixPBF6dtdJE32pwFN046f+zEmQajkbXc9lUYm69vD8YZ8uEEMlEGwB8JK8qx0V4lJrPgKJpQR0S3INRRB4nAF+zG3nxz+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZMa7uUQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFxQci2WTv+GFyy+AMOLBr8GbeWEZpv4FkZi4F+NicoPHfkptwUA2D33R/4N411skJJaheYNxE5jTC2q6QQlSbVO9BaNFu48YfKSpS1ZrF42WB8k/Jk0DzxzI/TGnWhM8pF7x4AtkrDALzJ1d+ZvfxnvYiHLSJ9phrP0glsYGyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpQUzwB/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZMa7uUQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8012C4CEF1;
-	Tue, 16 Dec 2025 11:55:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpQUzwB/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F62C4CEF1;
+	Tue, 16 Dec 2025 11:55:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886112;
-	bh=YZtbGg9AQ5iBI1kJ9Q2/sc+nlwXFgynxxdo5qo/pWxk=;
+	s=korg; t=1765886115;
+	bh=jNd092HtDJ8toCQXxtteqwCs7HFMsOZpQjuAAhM1urY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZMa7uUQmwBjPz4O4EYMOtHslFZOqIYAfD4o9keuoAAFlmjR8Glq86X5v7xmaQ+5Xf
-	 2WLiX3MXP4L+B4MwkMCFByKHqmiBbpvEniYfb06Oyyfos4s3LTgRLn1//qK1OYmGl+
-	 zTGNSkk9j94kf8bsLlimbsbSE2TfvB+W+n/XZLp8=
+	b=OpQUzwB/xVIXTks0rcX8EUIhsHk2155m07XGq+1p6nbznEh/Ap71LnMWtvXzKoLK5
+	 NQZYI4YBdu5xrVLkzX6IhFJ/kux5BgysxOupRQJ3BOFdIJVzklf729OyGihN1EwVfU
+	 A/SjbNsX5qT3ZDivSAKG0NqsKca3wUtIQlp3UMs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	=?UTF-8?q?Miquel=20Sabat=C3=A9=20Sol=C3=A0?= <mssola@mssola.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 341/507] btrfs: fix double free of qgroup record after failure to add delayed ref head
-Date: Tue, 16 Dec 2025 12:13:02 +0100
-Message-ID: <20251216111357.815068017@linuxfoundation.org>
+Subject: [PATCH 6.17 342/507] btrfs: fix racy bitfield write in btrfs_clear_space_info_full()
+Date: Tue, 16 Dec 2025 12:13:03 +0100
+Message-ID: <20251216111357.850820913@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -46,156 +46,259 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.17-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miquel Sabaté Solà <mssola@mssola.com>
+From: Boris Burkov <boris@bur.io>
 
-[ Upstream commit 725e46298876a2cc1f1c3fb22ba69d29102c3ddf ]
+[ Upstream commit 38e818718c5e04961eea0fa8feff3f100ce40408 ]
 
-In the previous code it was possible to incur into a double kfree()
-scenario when calling add_delayed_ref_head(). This could happen if the
-record was reported to already exist in the
-btrfs_qgroup_trace_extent_nolock() call, but then there was an error
-later on add_delayed_ref_head(). In this case, since
-add_delayed_ref_head() returned an error, the caller went to free the
-record. Since add_delayed_ref_head() couldn't set this kfree'd pointer
-to NULL, then kfree() would have acted on a non-NULL 'record' object
-which was pointing to memory already freed by the callee.
+>From the memory-barriers.txt document regarding memory barrier ordering
+guarantees:
 
-The problem comes from the fact that the responsibility to kfree the
-object is on both the caller and the callee at the same time. Hence, the
-fix for this is to shift the ownership of the 'qrecord' object out of
-the add_delayed_ref_head(). That is, we will never attempt to kfree()
-the given object inside of this function, and will expect the caller to
-act on the 'qrecord' object on its own. The only exception where the
-'qrecord' object cannot be kfree'd is if it was inserted into the
-tracing logic, for which we already have the 'qrecord_inserted_ret'
-boolean to account for this. Hence, the caller has to kfree the object
-only if add_delayed_ref_head() reports not to have inserted it on the
-tracing logic.
+ (*) These guarantees do not apply to bitfields, because compilers often
+     generate code to modify these using non-atomic read-modify-write
+     sequences.  Do not attempt to use bitfields to synchronize parallel
+     algorithms.
 
-As a side-effect of the above, we must guarantee that
-'qrecord_inserted_ret' is properly initialized at the start of the
-function, not at the end, and then set when an actual insert
-happens. This way we avoid 'qrecord_inserted_ret' having an invalid
-value on an early exit.
+ (*) Even in cases where bitfields are protected by locks, all fields
+     in a given bitfield must be protected by one lock.  If two fields
+     in a given bitfield are protected by different locks, the compiler's
+     non-atomic read-modify-write sequences can cause an update to one
+     field to corrupt the value of an adjacent field.
 
-The documentation from the add_delayed_ref_head() has also been updated
-to reflect on the exact ownership of the 'qrecord' object.
+btrfs_space_info has a bitfield sharing an underlying word consisting of
+the fields full, chunk_alloc, and flush:
 
-Fixes: 6ef8fbce0104 ("btrfs: fix missing error handling when adding delayed ref with qgroups enabled")
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Miquel Sabaté Solà <mssola@mssola.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+struct btrfs_space_info {
+        struct btrfs_fs_info *     fs_info;              /*     0     8 */
+        struct btrfs_space_info *  parent;               /*     8     8 */
+        ...
+        int                        clamp;                /*   172     4 */
+        unsigned int               full:1;               /*   176: 0  4 */
+        unsigned int               chunk_alloc:1;        /*   176: 1  4 */
+        unsigned int               flush:1;              /*   176: 2  4 */
+        ...
+
+Therefore, to be safe from parallel read-modify-writes losing a write to
+one of the bitfield members protected by a lock, all writes to all the
+bitfields must use the lock. They almost universally do, except for
+btrfs_clear_space_info_full() which iterates over the space_infos and
+writes out found->full = 0 without a lock.
+
+Imagine that we have one thread completing a transaction in which we
+finished deleting a block_group and are thus calling
+btrfs_clear_space_info_full() while simultaneously the data reclaim
+ticket infrastructure is running do_async_reclaim_data_space():
+
+          T1                                             T2
+btrfs_commit_transaction
+  btrfs_clear_space_info_full
+  data_sinfo->full = 0
+  READ: full:0, chunk_alloc:0, flush:1
+                                              do_async_reclaim_data_space(data_sinfo)
+                                              spin_lock(&space_info->lock);
+                                              if(list_empty(tickets))
+                                                space_info->flush = 0;
+                                                READ: full: 0, chunk_alloc:0, flush:1
+                                                MOD/WRITE: full: 0, chunk_alloc:0, flush:0
+                                                spin_unlock(&space_info->lock);
+                                                return;
+  MOD/WRITE: full:0, chunk_alloc:0, flush:1
+
+and now data_sinfo->flush is 1 but the reclaim worker has exited. This
+breaks the invariant that flush is 0 iff there is no work queued or
+running. Once this invariant is violated, future allocations that go
+into __reserve_bytes() will add tickets to space_info->tickets but will
+see space_info->flush is set to 1 and not queue the work. After this,
+they will block forever on the resulting ticket, as it is now impossible
+to kick the worker again.
+
+I also confirmed by looking at the assembly of the affected kernel that
+it is doing RMW operations. For example, to set the flush (3rd) bit to 0,
+the assembly is:
+  andb    $0xfb,0x60(%rbx)
+and similarly for setting the full (1st) bit to 0:
+  andb    $0xfe,-0x20(%rax)
+
+So I think this is really a bug on practical systems.  I have observed
+a number of systems in this exact state, but am currently unable to
+reproduce it.
+
+Rather than leaving this footgun lying around for the future, take
+advantage of the fact that there is room in the struct anyway, and that
+it is already quite large and simply change the three bitfield members to
+bools. This avoids writes to space_info->full having any effect on
+writes to space_info->flush, regardless of locking.
+
+Fixes: 957780eb2788 ("Btrfs: introduce ticketed enospc infrastructure")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/delayed-ref.c | 43 ++++++++++++++++++++++++++++++++----------
- 1 file changed, 33 insertions(+), 10 deletions(-)
+ fs/btrfs/block-group.c |  6 +++---
+ fs/btrfs/space-info.c  | 22 +++++++++++-----------
+ fs/btrfs/space-info.h  |  6 +++---
+ 3 files changed, 17 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/delayed-ref.c b/fs/btrfs/delayed-ref.c
-index ca382c5b186f4..39c7ad1231675 100644
---- a/fs/btrfs/delayed-ref.c
-+++ b/fs/btrfs/delayed-ref.c
-@@ -798,9 +798,13 @@ static void init_delayed_ref_head(struct btrfs_delayed_ref_head *head_ref,
+diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
+index 499a9edf0ca31..a368d6ac98ede 100644
+--- a/fs/btrfs/block-group.c
++++ b/fs/btrfs/block-group.c
+@@ -4215,7 +4215,7 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans,
+ 			mutex_unlock(&fs_info->chunk_mutex);
+ 		} else {
+ 			/* Proceed with allocation */
+-			space_info->chunk_alloc = 1;
++			space_info->chunk_alloc = true;
+ 			wait_for_alloc = false;
+ 			spin_unlock(&space_info->lock);
+ 		}
+@@ -4264,7 +4264,7 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans,
+ 	spin_lock(&space_info->lock);
+ 	if (ret < 0) {
+ 		if (ret == -ENOSPC)
+-			space_info->full = 1;
++			space_info->full = true;
+ 		else
+ 			goto out;
+ 	} else {
+@@ -4274,7 +4274,7 @@ int btrfs_chunk_alloc(struct btrfs_trans_handle *trans,
+ 
+ 	space_info->force_alloc = CHUNK_ALLOC_NO_FORCE;
+ out:
+-	space_info->chunk_alloc = 0;
++	space_info->chunk_alloc = false;
+ 	spin_unlock(&space_info->lock);
+ 	mutex_unlock(&fs_info->chunk_mutex);
+ 
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index 0481c693ac2ea..b05ab1122a42a 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -192,7 +192,7 @@ void btrfs_clear_space_info_full(struct btrfs_fs_info *info)
+ 	struct btrfs_space_info *found;
+ 
+ 	list_for_each_entry(found, head, list)
+-		found->full = 0;
++		found->full = false;
  }
  
  /*
-- * helper function to actually insert a head node into the rbtree.
-- * this does all the dirty work in terms of maintaining the correct
-- * overall modification count.
-+ * Helper function to actually insert a head node into the xarray. This does all
-+ * the dirty work in terms of maintaining the correct overall modification
-+ * count.
-+ *
-+ * The caller is responsible for calling kfree() on @qrecord. More specifically,
-+ * if this function reports that it did not insert it as noted in
-+ * @qrecord_inserted_ret, then it's safe to call kfree() on it.
-  *
-  * Returns an error pointer in case of an error.
-  */
-@@ -814,7 +818,14 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
- 	struct btrfs_delayed_ref_head *existing;
- 	struct btrfs_delayed_ref_root *delayed_refs;
- 	const unsigned long index = (head_ref->bytenr >> fs_info->sectorsize_bits);
--	bool qrecord_inserted = false;
-+
-+	/*
-+	 * If 'qrecord_inserted_ret' is provided, then the first thing we need
-+	 * to do is to initialize it to false just in case we have an exit
-+	 * before trying to insert the record.
-+	 */
-+	if (qrecord_inserted_ret)
-+		*qrecord_inserted_ret = false;
+@@ -372,7 +372,7 @@ void btrfs_add_bg_to_space_info(struct btrfs_fs_info *info,
+ 	space_info->bytes_readonly += block_group->bytes_super;
+ 	btrfs_space_info_update_bytes_zone_unusable(space_info, block_group->zone_unusable);
+ 	if (block_group->length > 0)
+-		space_info->full = 0;
++		space_info->full = false;
+ 	btrfs_try_granting_tickets(info, space_info);
+ 	spin_unlock(&space_info->lock);
  
- 	delayed_refs = &trans->transaction->delayed_refs;
- 	lockdep_assert_held(&delayed_refs->lock);
-@@ -833,6 +844,12 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
- 
- 	/* Record qgroup extent info if provided */
- 	if (qrecord) {
-+		/*
-+		 * Setting 'qrecord' but not 'qrecord_inserted_ret' will likely
-+		 * result in a memory leakage.
-+		 */
-+		ASSERT(qrecord_inserted_ret != NULL);
-+
- 		int ret;
- 
- 		ret = btrfs_qgroup_trace_extent_nolock(fs_info, delayed_refs, qrecord,
-@@ -840,12 +857,10 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
- 		if (ret) {
- 			/* Clean up if insertion fails or item exists. */
- 			xa_release(&delayed_refs->dirty_extents, index);
--			/* Caller responsible for freeing qrecord on error. */
- 			if (ret < 0)
- 				return ERR_PTR(ret);
--			kfree(qrecord);
--		} else {
--			qrecord_inserted = true;
-+		} else if (qrecord_inserted_ret) {
-+			*qrecord_inserted_ret = true;
+@@ -1146,7 +1146,7 @@ static void do_async_reclaim_metadata_space(struct btrfs_space_info *space_info)
+ 	spin_lock(&space_info->lock);
+ 	to_reclaim = btrfs_calc_reclaim_metadata_size(fs_info, space_info);
+ 	if (!to_reclaim) {
+-		space_info->flush = 0;
++		space_info->flush = false;
+ 		spin_unlock(&space_info->lock);
+ 		return;
+ 	}
+@@ -1158,7 +1158,7 @@ static void do_async_reclaim_metadata_space(struct btrfs_space_info *space_info)
+ 		flush_space(fs_info, space_info, to_reclaim, flush_state, false);
+ 		spin_lock(&space_info->lock);
+ 		if (list_empty(&space_info->tickets)) {
+-			space_info->flush = 0;
++			space_info->flush = false;
+ 			spin_unlock(&space_info->lock);
+ 			return;
  		}
- 	}
+@@ -1201,7 +1201,7 @@ static void do_async_reclaim_metadata_space(struct btrfs_space_info *space_info)
+ 					flush_state = FLUSH_DELAYED_ITEMS_NR;
+ 					commit_cycles--;
+ 				} else {
+-					space_info->flush = 0;
++					space_info->flush = false;
+ 				}
+ 			} else {
+ 				flush_state = FLUSH_DELAYED_ITEMS_NR;
+@@ -1383,7 +1383,7 @@ static void do_async_reclaim_data_space(struct btrfs_space_info *space_info)
  
-@@ -888,8 +903,6 @@ add_delayed_ref_head(struct btrfs_trans_handle *trans,
- 		delayed_refs->num_heads++;
- 		delayed_refs->num_heads_ready++;
+ 	spin_lock(&space_info->lock);
+ 	if (list_empty(&space_info->tickets)) {
+-		space_info->flush = 0;
++		space_info->flush = false;
+ 		spin_unlock(&space_info->lock);
+ 		return;
  	}
--	if (qrecord_inserted_ret)
--		*qrecord_inserted_ret = qrecord_inserted;
+@@ -1394,7 +1394,7 @@ static void do_async_reclaim_data_space(struct btrfs_space_info *space_info)
+ 		flush_space(fs_info, space_info, U64_MAX, ALLOC_CHUNK_FORCE, false);
+ 		spin_lock(&space_info->lock);
+ 		if (list_empty(&space_info->tickets)) {
+-			space_info->flush = 0;
++			space_info->flush = false;
+ 			spin_unlock(&space_info->lock);
+ 			return;
+ 		}
+@@ -1411,7 +1411,7 @@ static void do_async_reclaim_data_space(struct btrfs_space_info *space_info)
+ 			    data_flush_states[flush_state], false);
+ 		spin_lock(&space_info->lock);
+ 		if (list_empty(&space_info->tickets)) {
+-			space_info->flush = 0;
++			space_info->flush = false;
+ 			spin_unlock(&space_info->lock);
+ 			return;
+ 		}
+@@ -1428,7 +1428,7 @@ static void do_async_reclaim_data_space(struct btrfs_space_info *space_info)
+ 				if (maybe_fail_all_tickets(fs_info, space_info))
+ 					flush_state = 0;
+ 				else
+-					space_info->flush = 0;
++					space_info->flush = false;
+ 			} else {
+ 				flush_state = 0;
+ 			}
+@@ -1444,7 +1444,7 @@ static void do_async_reclaim_data_space(struct btrfs_space_info *space_info)
  
- 	return head_ref;
+ aborted_fs:
+ 	maybe_fail_all_tickets(fs_info, space_info);
+-	space_info->flush = 0;
++	space_info->flush = false;
+ 	spin_unlock(&space_info->lock);
  }
-@@ -1049,6 +1062,14 @@ static int add_delayed_ref(struct btrfs_trans_handle *trans,
- 		xa_release(&delayed_refs->head_refs, index);
- 		spin_unlock(&delayed_refs->lock);
- 		ret = PTR_ERR(new_head_ref);
-+
-+		/*
-+		 * It's only safe to call kfree() on 'qrecord' if
-+		 * add_delayed_ref_head() has _not_ inserted it for
-+		 * tracing. Otherwise we need to handle this here.
-+		 */
-+		if (!qrecord_reserved || qrecord_inserted)
-+			goto free_head_ref;
- 		goto free_record;
- 	}
- 	head_ref = new_head_ref;
-@@ -1071,6 +1092,8 @@ static int add_delayed_ref(struct btrfs_trans_handle *trans,
  
- 	if (qrecord_inserted)
- 		return btrfs_qgroup_trace_extent_post(trans, record, generic_ref->bytenr);
-+
-+	kfree(record);
- 	return 0;
+@@ -1825,7 +1825,7 @@ static int __reserve_bytes(struct btrfs_fs_info *fs_info,
+ 				 */
+ 				maybe_clamp_preempt(fs_info, space_info);
  
- free_record:
+-				space_info->flush = 1;
++				space_info->flush = true;
+ 				trace_btrfs_trigger_flush(fs_info,
+ 							  space_info->flags,
+ 							  orig_bytes, flush,
+diff --git a/fs/btrfs/space-info.h b/fs/btrfs/space-info.h
+index 679f22efb4073..a846f63585c95 100644
+--- a/fs/btrfs/space-info.h
++++ b/fs/btrfs/space-info.h
+@@ -142,11 +142,11 @@ struct btrfs_space_info {
+ 				   flushing. The value is >> clamp, so turns
+ 				   out to be a 2^clamp divisor. */
+ 
+-	unsigned int full:1;	/* indicates that we cannot allocate any more
++	bool full;		/* indicates that we cannot allocate any more
+ 				   chunks for this space */
+-	unsigned int chunk_alloc:1;	/* set if we are allocating a chunk */
++	bool chunk_alloc;	/* set if we are allocating a chunk */
+ 
+-	unsigned int flush:1;		/* set if we are trying to make space */
++	bool flush;		/* set if we are trying to make space */
+ 
+ 	unsigned int force_alloc;	/* set if we need to force a chunk
+ 					   alloc for this space */
 -- 
 2.51.0
 
