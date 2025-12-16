@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3863451BD;
-	Tue, 16 Dec 2025 12:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C35A345CC5;
+	Tue, 16 Dec 2025 12:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887826; cv=none; b=f8PReWXOK0gnwFnBX8A3JHn9xCoSxx1xEMgfZ+QCHztwuE/fE/AEdLUhXgIYBZWwz1ogY1oDXMdsUmOt/mlIa0nBKE3Sy2eKFsIEicg6ZPYXGlJR8aVZAdtchI0s/HUXyLQ/leA+AALY0kkkGS/zLY+MR/KtPICFb6kXH/hrsqI=
+	t=1765887830; cv=none; b=SB9YgNOmFhpKPuJm8oCT8kmIsHt8lxz+fwN31qJXOE9l7PaO8v9C2Xv5RSysNCuXxcPAgbevKELWDAp9F4vQvsVU4TcQe3S8RuRw5CDAl1Hz8TYi4mefenemMOQw3iyeaTKMAqv7D+3Du9A9kiT7nMwWEQJ9TjPHC7p93RBwib4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887826; c=relaxed/simple;
-	bh=VpMbV47YXIzi9pFcqkLn2K2b/X2qFCPo3xhY3sZbvqc=;
+	s=arc-20240116; t=1765887830; c=relaxed/simple;
+	bh=BrM8c99QI1Z6EDCgpLEuKAxObrHbjAi5krWf2YM/y8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HGXwNkii1Hjs1oChuPcetKUttklVG2x+1x1ZSitx2bklgVIww+cAaLpfgpZe2m4ZlHqfZlWux7rM5Ibr3HlWiUQBT9xE/Y8XMeKA1mihIHVDlxHmmM4YxZl7CyBZgSbXu2w5hSDpYL0Xg9iPBPLPW8vA/rB4fthw27+kCRkBJ9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LiIxVm1T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PwHM6YJUnLRldaZOsQ6zaMkiNtgYm9M+Ypxv9dUMKd+ljvMJa3t+a2ajm/Gk+psdQVFvtBG7kiM1Vtvnv6aHXhI0bJVuxLfiXQDgQyyP7IEMRzI6CF8lVciCG3I/13F8dP2JZcjlD1XzR2WJL2BGdZCUlWYkWCoU1yYvewzxxRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CG5Tb2OA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LiIxVm1T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A43C4CEF1;
-	Tue, 16 Dec 2025 12:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CG5Tb2OA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A73DC4CEF1;
+	Tue, 16 Dec 2025 12:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887826;
-	bh=VpMbV47YXIzi9pFcqkLn2K2b/X2qFCPo3xhY3sZbvqc=;
+	s=korg; t=1765887829;
+	bh=BrM8c99QI1Z6EDCgpLEuKAxObrHbjAi5krWf2YM/y8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LiIxVm1T2T0PVzU10UrfXEjnoodwiCrm/4SaQ5MsSh3bcICXO7ELNs+K6dnx87apJ
-	 zxyAeQYsVCGGhG4fxNuGrYiMekduuVkpOEutn80/PObsqHhT1YBelE1zGipeVxyMoK
-	 VSenf5SvoyqPJAPJw2DDYnNZZtR2dLFPY2wlQknA=
+	b=CG5Tb2OAkqE8W2MH/jzMbJ4zJVTqul7PKAG23vcJbLZH3FRDVaTWfiQyXAmGuTNpT
+	 HwZubs+ja9eqZEUoclQhOC+HogKSuLawl3LHPv3De1omdRk9UrWZiieDHqXkbS4J3b
+	 rsyA4NVfn+4xhTXhSIXcX5SpDmGAtGjXeHACBEg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 316/614] powerpc/64s/hash: Restrict stress_hpt_struct memblock region to within RMA limit
-Date: Tue, 16 Dec 2025 12:11:23 +0100
-Message-ID: <20251216111412.814830184@linuxfoundation.org>
+Subject: [PATCH 6.18 317/614] powerpc/64s/ptdump: Fix kernel_hash_pagetable dump for ISA v3.00 HPTE format
+Date: Tue, 16 Dec 2025 12:11:24 +0100
+Message-ID: <20251216111412.850964398@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,73 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 
-[ Upstream commit 17b45ccf09882e0c808ad2cf62acdc90ad968746 ]
+[ Upstream commit eae40a6da63faa9fb63ff61f8fa2b3b57da78a84 ]
 
-When HV=0 & IR/DR=0, the Hash MMU is said to be in Virtual Real
-Addressing Mode during early boot. During this, we should ensure that
-memory region allocations for stress_hpt_struct should happen from
-within RMA region as otherwise the boot might get stuck while doing
-memset of this region.
+HPTE format was changed since Power9 (ISA 3.0) onwards. While dumping
+kernel hash page tables, nothing gets printed on powernv P9+. This patch
+utilizes the helpers added in the patch tagged as fixes, to convert new
+format to old format and dump the hptes. This fix is only needed for
+native_find() (powernv), since pseries continues to work fine with the
+old format.
 
-History behind why do we have RMA region limitation is better explained
-in these 2 patches [1] & [2]. This patch ensures that memset to
-stress_hpt_struct during early boot does not cross ppc64_rma_size
-boundary.
-
-[1]: https://lore.kernel.org/all/20190710052018.14628-1-sjitindarsingh@gmail.com/
-[2]: https://lore.kernel.org/all/87wp54usvj.fsf@linux.vnet.ibm.com/
-
-Fixes: 6b34a099faa12 ("powerpc/64s/hash: add stress_hpt kernel boot option to increase hash faults")
+Fixes: 6b243fcfb5f1e ("powerpc/64: Simplify adaptation to new ISA v3.00 HPTE format")
 Signed-off-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/ada1173933ea7617a994d6ee3e54ced8797339fc.1761834163.git.ritesh.list@gmail.com
+Link: https://patch.msgid.link/4c2bb9e5b3cfbc0dd80b61b67cdd3ccfc632684c.1761834163.git.ritesh.list@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/hash_utils.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ arch/powerpc/mm/ptdump/hashpagetable.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/powerpc/mm/book3s64/hash_utils.c b/arch/powerpc/mm/book3s64/hash_utils.c
-index 3aee3af614af8..c99be1286d517 100644
---- a/arch/powerpc/mm/book3s64/hash_utils.c
-+++ b/arch/powerpc/mm/book3s64/hash_utils.c
-@@ -1302,11 +1302,14 @@ static void __init htab_initialize(void)
- 	unsigned long table;
- 	unsigned long pteg_count;
- 	unsigned long prot;
--	phys_addr_t base = 0, size = 0, end;
-+	phys_addr_t base = 0, size = 0, end, limit = MEMBLOCK_ALLOC_ANYWHERE;
- 	u64 i;
+diff --git a/arch/powerpc/mm/ptdump/hashpagetable.c b/arch/powerpc/mm/ptdump/hashpagetable.c
+index a6baa6166d940..671d0dc00c6d0 100644
+--- a/arch/powerpc/mm/ptdump/hashpagetable.c
++++ b/arch/powerpc/mm/ptdump/hashpagetable.c
+@@ -216,6 +216,8 @@ static int native_find(unsigned long ea, int psize, bool primary, u64 *v, u64
+ 	vpn  = hpt_vpn(ea, vsid, ssize);
+ 	hash = hpt_hash(vpn, shift, ssize);
+ 	want_v = hpte_encode_avpn(vpn, psize, ssize);
++	if (cpu_has_feature(CPU_FTR_ARCH_300))
++		want_v = hpte_old_to_new_v(want_v);
  
- 	DBG(" -> htab_initialize()\n");
- 
-+	if (firmware_has_feature(FW_FEATURE_LPAR))
-+		limit = ppc64_rma_size;
-+
- 	if (mmu_has_feature(MMU_FTR_1T_SEGMENT)) {
- 		mmu_kernel_ssize = MMU_SEGSIZE_1T;
- 		mmu_highuser_ssize = MMU_SEGSIZE_1T;
-@@ -1322,7 +1325,7 @@ static void __init htab_initialize(void)
- 		// Too early to use nr_cpu_ids, so use NR_CPUS
- 		tmp = memblock_phys_alloc_range(sizeof(struct stress_hpt_struct) * NR_CPUS,
- 						__alignof__(struct stress_hpt_struct),
--						0, MEMBLOCK_ALLOC_ANYWHERE);
-+						MEMBLOCK_LOW_LIMIT, limit);
- 		memset((void *)tmp, 0xff, sizeof(struct stress_hpt_struct) * NR_CPUS);
- 		stress_hpt_struct = __va(tmp);
- 
-@@ -1356,11 +1359,10 @@ static void __init htab_initialize(void)
- 			mmu_hash_ops.hpte_clear_all();
- #endif
- 	} else {
--		unsigned long limit = MEMBLOCK_ALLOC_ANYWHERE;
- 
- 		table = memblock_phys_alloc_range(htab_size_bytes,
- 						  htab_size_bytes,
--						  0, limit);
-+						  MEMBLOCK_LOW_LIMIT, limit);
- 		if (!table)
- 			panic("ERROR: Failed to allocate %pa bytes below %pa\n",
- 			      &htab_size_bytes, &limit);
+ 	/* to check in the secondary hash table, we invert the hash */
+ 	if (!primary)
+@@ -229,6 +231,10 @@ static int native_find(unsigned long ea, int psize, bool primary, u64 *v, u64
+ 			/* HPTE matches */
+ 			*v = be64_to_cpu(hptep->v);
+ 			*r = be64_to_cpu(hptep->r);
++			if (cpu_has_feature(CPU_FTR_ARCH_300)) {
++				*v = hpte_new_to_old_v(*v, *r);
++				*r = hpte_new_to_old_r(*r);
++			}
+ 			return 0;
+ 		}
+ 		++hpte_group;
 -- 
 2.51.0
 
