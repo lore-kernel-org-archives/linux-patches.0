@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4C4345CAA;
-	Tue, 16 Dec 2025 12:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94F634D3AB;
+	Tue, 16 Dec 2025 12:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887650; cv=none; b=aPTbar4GV5EQ/DlhG98358u0Y48gzB2m2eVySOmouXragPwM319KyUreblBgFsIxBN5mY7ObmmltifOgYWzhpUFjpv9Pdf6p9A6m0TsFJZ1cYvQLhMm8PD/QifXBiNGv5ZMKYsF2Eg1yPtsbB8ZUYSx8Jn1pAkW0r2qhrrbSzc0=
+	t=1765887653; cv=none; b=T9Zs09hGALPf/Q3pPBnWDUFtQnF621fDEKVrOb4rUpGyOnms1e9nCR+Yq7/xwtLFXtDHAA2bph3UNB0YnJ0G+WLFjMMuwzFjnTFHHouNafb+8Mg6/b4BCTkSd/xzgGxcJ/zKIUgK5EZTJGxv5zZzHskkrh/WvWon9bS0BnNbCec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887650; c=relaxed/simple;
-	bh=vENa4E9xk1XGbVCcbQU77dKmtff3aJwzKijvjkFG3/M=;
+	s=arc-20240116; t=1765887653; c=relaxed/simple;
+	bh=BT3c/qGEA92CeN40JIEU5uHQ9PnDa9bVvRsoNTjUZKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7UQXg/5cCDoTGB7alxMsf881hsi81ZZqzDKN3pIRoFFN8xFsFsiJhBFISY5EXMnBlBv+YjYib9N7+JeaKHxkwlsEbbsSCd+dJ65TDfKvMX5UQttvU2ZnFvhZpT39ZUkPMv5192orvTNn+cECrmenOx4Fxffz7TAhz9vwZ1bMrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=COH4ZcEy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABO52BusBrIWuDCK2knAA649QcaqI7DmGVK6r8SxlQjIcFSSDP1Gw6nrSMqX89UNU1PTdNZRhZGwFHXvL8xaMUoDTn7df9RcbNBPV72glEKF7Z5vIPztzU9aJ8LvTfgtUCwNhc116ANTXhk5/JO0eF+5AKNTYrQv/3MQg7WveEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BpTJc54W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="COH4ZcEy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1571BC4CEF1;
-	Tue, 16 Dec 2025 12:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BpTJc54W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B24C4CEF1;
+	Tue, 16 Dec 2025 12:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887650;
-	bh=vENa4E9xk1XGbVCcbQU77dKmtff3aJwzKijvjkFG3/M=;
+	s=korg; t=1765887653;
+	bh=BT3c/qGEA92CeN40JIEU5uHQ9PnDa9bVvRsoNTjUZKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=COH4ZcEyvhGe6oRiyC7nw26OWKXD3OaIwy6qhZqSLnrajYeumRwULaNM2F4pGzn4X
-	 udTv0ASFhAZ95cgqSCFeSLkir6PmCK3/tLWnxw/1S9OP+2mqDwTn0OU0PliBxLsrKQ
-	 AUeDIoeIUy+n2gjgTp49uwtsmQDQkrytiJQcUHMQ=
+	b=BpTJc54WTOm1/PKzJAW9xfOVvQu6eifDKPvB6MOvXNTWG2mVNvO8gWRkEFuB6PWVV
+	 R3huthsJAgUFXoGrJ/Zm5nK8Yiywb9ub9hfxXxzZr1l7HKAQoVRUroVcZbtM/QHEMT
+	 VOSkf9WgvvhzjtCidd9fB8WNM77JAKxFtTCb8IYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mhklinux@outlook.com>,
-	Nuno Das Neves <nunodasneves@linux.microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Haotian Zhang <vulab@iscas.ac.cn>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 296/614] mshv: Fix create memory region overlap check
-Date: Tue, 16 Dec 2025 12:11:03 +0100
-Message-ID: <20251216111412.095300816@linuxfoundation.org>
+Subject: [PATCH 6.18 297/614] watchdog: wdat_wdt: Fix ACPI table leak in probe function
+Date: Tue, 16 Dec 2025 12:11:04 +0100
+Message-ID: <20251216111412.130877234@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,84 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nuno Das Neves <nunodasneves@linux.microsoft.com>
+From: Haotian Zhang <vulab@iscas.ac.cn>
 
-[ Upstream commit ba9eb9b86d232854e983203dc2fb1ba18e316681 ]
+[ Upstream commit 25c0b472eab8379683d4eef681185c104bed8ffd ]
 
-The current check is incorrect; it only checks if the beginning or end
-of a region is within an existing region. This doesn't account for
-userspace specifying a region that begins before and ends after an
-existing region.
+wdat_wdt_probe() calls acpi_get_table() to obtain the WDAT ACPI table but
+never calls acpi_put_table() on any paths. This causes a permanent ACPI
+table memory leak.
 
-Change the logic to a range intersection check against gfns and uaddrs
-for each region.
+Add a single cleanup path which calls acpi_put_table() to ensure
+the ACPI table is always released.
 
-Remove mshv_partition_region_by_uaddr() as it is no longer used.
-
-Fixes: 621191d709b1 ("Drivers: hv: Introduce mshv_root module to expose /dev/mshv to VMMs")
-Reported-by: Michael Kelley <mhklinux@outlook.com>
-Closes: https://lore.kernel.org/linux-hyperv/SN6PR02MB41575BE0406D3AB22E1D7DB5D4C2A@SN6PR02MB4157.namprd02.prod.outlook.com/
-Signed-off-by: Nuno Das Neves <nunodasneves@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Fixes: 058dfc767008 ("ACPI / watchdog: Add support for WDAT hardware watchdog")
+Suggested-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/mshv_root_main.c | 31 +++++++++++--------------------
- 1 file changed, 11 insertions(+), 20 deletions(-)
+ drivers/watchdog/wdat_wdt.c | 64 +++++++++++++++++++++++++------------
+ 1 file changed, 43 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
-index 5156b8b0a39f4..4e04bef544379 100644
---- a/drivers/hv/mshv_root_main.c
-+++ b/drivers/hv/mshv_root_main.c
-@@ -1174,21 +1174,6 @@ mshv_partition_region_by_gfn(struct mshv_partition *partition, u64 gfn)
- 	return NULL;
- }
+diff --git a/drivers/watchdog/wdat_wdt.c b/drivers/watchdog/wdat_wdt.c
+index 650fdc7996e1c..dd3c2d69c9df1 100644
+--- a/drivers/watchdog/wdat_wdt.c
++++ b/drivers/watchdog/wdat_wdt.c
+@@ -326,19 +326,27 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 		return -ENODEV;
  
--static struct mshv_mem_region *
--mshv_partition_region_by_uaddr(struct mshv_partition *partition, u64 uaddr)
--{
--	struct mshv_mem_region *region;
--
--	hlist_for_each_entry(region, &partition->pt_mem_regions, hnode) {
--		if (uaddr >= region->start_uaddr &&
--		    uaddr < region->start_uaddr +
--			    (region->nr_pages << HV_HYP_PAGE_SHIFT))
--			return region;
--	}
--
--	return NULL;
--}
--
- /*
-  * NB: caller checks and makes sure mem->size is page aligned
-  * Returns: 0 with regionpp updated on success, or -errno
-@@ -1198,15 +1183,21 @@ static int mshv_partition_create_region(struct mshv_partition *partition,
- 					struct mshv_mem_region **regionpp,
- 					bool is_mmio)
- {
--	struct mshv_mem_region *region;
-+	struct mshv_mem_region *region, *rg;
- 	u64 nr_pages = HVPFN_DOWN(mem->size);
- 
- 	/* Reject overlapping regions */
--	if (mshv_partition_region_by_gfn(partition, mem->guest_pfn) ||
--	    mshv_partition_region_by_gfn(partition, mem->guest_pfn + nr_pages - 1) ||
--	    mshv_partition_region_by_uaddr(partition, mem->userspace_addr) ||
--	    mshv_partition_region_by_uaddr(partition, mem->userspace_addr + mem->size - 1))
-+	hlist_for_each_entry(rg, &partition->pt_mem_regions, hnode) {
-+		u64 rg_size = rg->nr_pages << HV_HYP_PAGE_SHIFT;
-+
-+		if ((mem->guest_pfn + nr_pages <= rg->start_gfn ||
-+		     rg->start_gfn + rg->nr_pages <= mem->guest_pfn) &&
-+		    (mem->userspace_addr + mem->size <= rg->start_uaddr ||
-+		     rg->start_uaddr + rg_size <= mem->userspace_addr))
-+			continue;
-+
- 		return -EEXIST;
+ 	wdat = devm_kzalloc(dev, sizeof(*wdat), GFP_KERNEL);
+-	if (!wdat)
+-		return -ENOMEM;
++	if (!wdat) {
++		ret = -ENOMEM;
++		goto out_put_table;
 +	}
  
- 	region = vzalloc(sizeof(*region) + sizeof(struct page *) * nr_pages);
- 	if (!region)
+ 	regs = devm_kcalloc(dev, pdev->num_resources, sizeof(*regs),
+ 			    GFP_KERNEL);
+-	if (!regs)
+-		return -ENOMEM;
++	if (!regs) {
++		ret = -ENOMEM;
++		goto out_put_table;
++	}
+ 
+ 	/* WDAT specification wants to have >= 1ms period */
+-	if (tbl->timer_period < 1)
+-		return -EINVAL;
+-	if (tbl->min_count > tbl->max_count)
+-		return -EINVAL;
++	if (tbl->timer_period < 1) {
++		ret = -EINVAL;
++		goto out_put_table;
++	}
++	if (tbl->min_count > tbl->max_count) {
++		ret = -EINVAL;
++		goto out_put_table;
++	}
+ 
+ 	wdat->period = tbl->timer_period;
+ 	wdat->wdd.min_timeout = DIV_ROUND_UP(wdat->period * tbl->min_count, 1000);
+@@ -355,15 +363,20 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 		res = &pdev->resource[i];
+ 		if (resource_type(res) == IORESOURCE_MEM) {
+ 			reg = devm_ioremap_resource(dev, res);
+-			if (IS_ERR(reg))
+-				return PTR_ERR(reg);
++			if (IS_ERR(reg)) {
++				ret = PTR_ERR(reg);
++				goto out_put_table;
++			}
+ 		} else if (resource_type(res) == IORESOURCE_IO) {
+ 			reg = devm_ioport_map(dev, res->start, 1);
+-			if (!reg)
+-				return -ENOMEM;
++			if (!reg) {
++				ret = -ENOMEM;
++				goto out_put_table;
++			}
+ 		} else {
+ 			dev_err(dev, "Unsupported resource\n");
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto out_put_table;
+ 		}
+ 
+ 		regs[i] = reg;
+@@ -385,8 +398,10 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 		}
+ 
+ 		instr = devm_kzalloc(dev, sizeof(*instr), GFP_KERNEL);
+-		if (!instr)
+-			return -ENOMEM;
++		if (!instr) {
++			ret = -ENOMEM;
++			goto out_put_table;
++		}
+ 
+ 		INIT_LIST_HEAD(&instr->node);
+ 		instr->entry = entries[i];
+@@ -417,7 +432,8 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 
+ 		if (!instr->reg) {
+ 			dev_err(dev, "I/O resource not found\n");
+-			return -EINVAL;
++			ret = -EINVAL;
++			goto out_put_table;
+ 		}
+ 
+ 		instructions = wdat->instructions[action];
+@@ -425,8 +441,10 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 			instructions = devm_kzalloc(dev,
+ 						    sizeof(*instructions),
+ 						    GFP_KERNEL);
+-			if (!instructions)
+-				return -ENOMEM;
++			if (!instructions) {
++				ret = -ENOMEM;
++				goto out_put_table;
++			}
+ 
+ 			INIT_LIST_HEAD(instructions);
+ 			wdat->instructions[action] = instructions;
+@@ -443,7 +461,7 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 
+ 	ret = wdat_wdt_enable_reboot(wdat);
+ 	if (ret)
+-		return ret;
++		goto out_put_table;
+ 
+ 	platform_set_drvdata(pdev, wdat);
+ 
+@@ -460,12 +478,16 @@ static int wdat_wdt_probe(struct platform_device *pdev)
+ 
+ 	ret = wdat_wdt_set_timeout(&wdat->wdd, timeout);
+ 	if (ret)
+-		return ret;
++		goto out_put_table;
+ 
+ 	watchdog_set_nowayout(&wdat->wdd, nowayout);
+ 	watchdog_stop_on_reboot(&wdat->wdd);
+ 	watchdog_stop_on_unregister(&wdat->wdd);
+-	return devm_watchdog_register_device(dev, &wdat->wdd);
++	ret = devm_watchdog_register_device(dev, &wdat->wdd);
++
++out_put_table:
++	acpi_put_table((struct acpi_table_header *)tbl);
++	return ret;
+ }
+ 
+ static int wdat_wdt_suspend_noirq(struct device *dev)
 -- 
 2.51.0
 
