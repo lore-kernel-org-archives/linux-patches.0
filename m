@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A18FA35BDAC;
-	Tue, 16 Dec 2025 12:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD8235BDD4;
+	Tue, 16 Dec 2025 12:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887301; cv=none; b=IFIdjpTY3uk4H1gQfEOI1ulmJXVMPt04qZrt14D20eP9i2w2fIV23kFTd1lNgw/avgmALcgkUhqOJziXvPQP55WUoeRVAV7ODThQ7bytuMyOL1A2PQL8kiOQG2cjS5gV67vWw59YfaaF+J/Twjkl+gKVtkcNea3EI2vDhCBuuOY=
+	t=1765887306; cv=none; b=MooSt/R0YavoC9TB1rPNggo6zmj3ISWMuQgUQRbBgWri47Ti3PiD5Yw4iU4mtbXAcCCJEKQjpekrIAIbvixTVIq1KQTVGb4Gf44f/1LD3tLjAEG8zNQfBMFZVLmKEmeudABbeZAP0f6C5yGhBQeP21Aj0V9k6jxFQ+LBafA5OPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887301; c=relaxed/simple;
-	bh=cQd7NL2yUGO1idG1dpPXHugLdIh4UXaa/M1fy++rSg4=;
+	s=arc-20240116; t=1765887306; c=relaxed/simple;
+	bh=2gTm9/o5ejhp+EJK8jKi3H5j8MhMBOYaPJnvOSV4hQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpHFb0uv0Cyf8VRvoA6Cyvzd/+lZr05Z1X1Bl8DGV9Q27hlVaD4oIn71Jh4rU6m8b6G3U1opSIMbWyGhNbB8Skv6Yx5Ltfabck3pFcmEI9HnbbtDveO30MNDM1RrUWX5RZM4vJeTTGPtNN5rPFydLchPHygNv9AXNuiQT7vrOTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AOPnh2Xk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDgZEnq+XIH/Q8w6amOA6L3x+FjJB0dtf+ZsYCm+055y8BpwRvFPviV9FMEmJwrDvLvGhJeaHYgqd+uyYBByaeo2d4WXyPWUjZmIhWiDPrpWeB2zr+sI5WWU5mYjgrjpM86yHzlwwoD4x4UhClGfZeitNLlUmkpcgWM82g64dls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9coue4x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AOPnh2Xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185C3C4CEF1;
-	Tue, 16 Dec 2025 12:15:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9coue4x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 041A2C4CEF1;
+	Tue, 16 Dec 2025 12:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887301;
-	bh=cQd7NL2yUGO1idG1dpPXHugLdIh4UXaa/M1fy++rSg4=;
+	s=korg; t=1765887304;
+	bh=2gTm9/o5ejhp+EJK8jKi3H5j8MhMBOYaPJnvOSV4hQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOPnh2XkWD3mXfoCJTVEBZefK8FezgA0iJbMvnmKNTTPiVSIhGvL+cLv8GvHFqMfA
-	 skJ/HC5guUKlLQjdMw88Ed0ggmFEaRuOnox1wYR7W5QNlG3CnaXNlmbveskvbnHv20
-	 9GUP3eKBJfjIdgQSPFl782hJf1Wk9J9EmFiiJQdE=
+	b=V9coue4xm9QAKPiCqdFgnVfcjK2C42EXPgC3KfnQK5ZYcheK838l4GTyVLB0UahCd
+	 ec5DxJ7qlV7O6xBIW40+cMk79XEWuCBalw/+y5U9sRZafCoQj4hPs3je6GkSya94ft
+	 vkFcjTuAH9tLercGdDpM8tY3fPdEeQbhXlibQHI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tingmao Wang <m@maowtm.org>,
+	Dominique Martinet <asmadeus@codewreck.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 188/614] scsi: target: Fix LUN/device R/W and total command stats
-Date: Tue, 16 Dec 2025 12:09:15 +0100
-Message-ID: <20251216111408.184997414@linuxfoundation.org>
+Subject: [PATCH 6.18 189/614] fs/9p: Dont open remote file with APPEND mode when writeback cache is used
+Date: Tue, 16 Dec 2025 12:09:16 +0100
+Message-ID: <20251216111408.220806991@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,169 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Tingmao Wang <m@maowtm.org>
 
-[ Upstream commit 95aa2041c654161d1b5c1eca5379d67d91ef1cf2 ]
+[ Upstream commit a63dd8fd137933551bfd9aeeeaa942f04c7aad65 ]
 
-In commit 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
-I saw we sometimes use %u and also misread the spec. As a result I
-thought all the stats were supposed to be 32-bit only. However, for the
-majority of cases we support currently, the spec specifies u64 bit
-stats. This patch converts the stats changed in the commit above to u64.
+When page cache is used, writebacks are done on a page granularity, and it
+is expected that the underlying filesystem (such as v9fs) should respect
+the write position.  However, currently v9fs will passthrough O_APPEND to
+the server even on cached mode.  This causes data corruption if a sync or
+fstat gets between two writes to the same file.
 
-Fixes: 9cf2317b795d ("scsi: target: Move I/O path stats to per CPU")
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Link: https://patch.msgid.link/20250917221338.14813-2-michael.christie@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+This patch removes the APPEND flag from the open request we send to the
+server when writeback caching is involved.  I believe keeping server-side
+APPEND is probably fine for uncached mode (even if two fds are opened, one
+without O_APPEND and one with it, this should still be fine since they
+would use separate fid for the writes).
+
+Signed-off-by: Tingmao Wang <m@maowtm.org>
+Fixes: 4eb3117888a9 ("fs/9p: Rework cache modes and add new options to Documentation")
+Message-ID: <20251102235631.8724-1-m@maowtm.org>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_stat.c | 24 ++++++++++++------------
- include/target/target_core_base.h | 12 ++++++------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ fs/9p/vfs_file.c       | 11 ++++++++---
+ fs/9p/vfs_inode.c      |  3 +--
+ fs/9p/vfs_inode_dotl.c |  2 +-
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/target/target_core_stat.c b/drivers/target/target_core_stat.c
-index 6bdf2d8bd6942..4fdc307ea38bc 100644
---- a/drivers/target/target_core_stat.c
-+++ b/drivers/target/target_core_stat.c
-@@ -282,7 +282,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
- 	struct se_device *dev = to_stat_lu_dev(item);
- 	struct se_dev_io_stats *stats;
- 	unsigned int cpu;
--	u32 cmds = 0;
-+	u64 cmds = 0;
+diff --git a/fs/9p/vfs_file.c b/fs/9p/vfs_file.c
+index eb0b083da269b..d1db03093d4c3 100644
+--- a/fs/9p/vfs_file.c
++++ b/fs/9p/vfs_file.c
+@@ -43,14 +43,18 @@ int v9fs_file_open(struct inode *inode, struct file *file)
+ 	struct v9fs_session_info *v9ses;
+ 	struct p9_fid *fid;
+ 	int omode;
++	int o_append;
  
- 	for_each_possible_cpu(cpu) {
- 		stats = per_cpu_ptr(dev->stats, cpu);
-@@ -290,7 +290,7 @@ static ssize_t target_stat_lu_num_cmds_show(struct config_item *item,
+ 	p9_debug(P9_DEBUG_VFS, "inode: %p file: %p\n", inode, file);
+ 	v9ses = v9fs_inode2v9ses(inode);
+-	if (v9fs_proto_dotl(v9ses))
++	if (v9fs_proto_dotl(v9ses)) {
+ 		omode = v9fs_open_to_dotl_flags(file->f_flags);
+-	else
++		o_append = P9_DOTL_APPEND;
++	} else {
+ 		omode = v9fs_uflags2omode(file->f_flags,
+ 					v9fs_proto_dotu(v9ses));
++		o_append = P9_OAPPEND;
++	}
+ 	fid = file->private_data;
+ 	if (!fid) {
+ 		fid = v9fs_fid_clone(file_dentry(file));
+@@ -58,9 +62,10 @@ int v9fs_file_open(struct inode *inode, struct file *file)
+ 			return PTR_ERR(fid);
+ 
+ 		if ((v9ses->cache & CACHE_WRITEBACK) && (omode & P9_OWRITE)) {
+-			int writeback_omode = (omode & ~P9_OWRITE) | P9_ORDWR;
++			int writeback_omode = (omode & ~(P9_OWRITE | o_append)) | P9_ORDWR;
+ 
+ 			p9_debug(P9_DEBUG_CACHE, "write-only file with writeback enabled, try opening O_RDWR\n");
++
+ 			err = p9_client_open(fid, writeback_omode);
+ 			if (err < 0) {
+ 				p9_debug(P9_DEBUG_CACHE, "could not open O_RDWR, disabling caches\n");
+diff --git a/fs/9p/vfs_inode.c b/fs/9p/vfs_inode.c
+index d0c77ec31b1dd..0f3189a0a516a 100644
+--- a/fs/9p/vfs_inode.c
++++ b/fs/9p/vfs_inode.c
+@@ -786,7 +786,7 @@ v9fs_vfs_atomic_open(struct inode *dir, struct dentry *dentry,
+ 	p9_omode = v9fs_uflags2omode(flags, v9fs_proto_dotu(v9ses));
+ 
+ 	if ((v9ses->cache & CACHE_WRITEBACK) && (p9_omode & P9_OWRITE)) {
+-		p9_omode = (p9_omode & ~P9_OWRITE) | P9_ORDWR;
++		p9_omode = (p9_omode & ~(P9_OWRITE | P9_OAPPEND)) | P9_ORDWR;
+ 		p9_debug(P9_DEBUG_CACHE,
+ 			"write-only file with writeback enabled, creating w/ O_RDWR\n");
  	}
- 
- 	/* scsiLuNumCommands */
--	return snprintf(page, PAGE_SIZE, "%u\n", cmds);
-+	return snprintf(page, PAGE_SIZE, "%llu\n", cmds);
- }
- 
- static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
-@@ -299,7 +299,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
- 	struct se_device *dev = to_stat_lu_dev(item);
- 	struct se_dev_io_stats *stats;
- 	unsigned int cpu;
--	u32 bytes = 0;
-+	u64 bytes = 0;
- 
- 	for_each_possible_cpu(cpu) {
- 		stats = per_cpu_ptr(dev->stats, cpu);
-@@ -307,7 +307,7 @@ static ssize_t target_stat_lu_read_mbytes_show(struct config_item *item,
- 	}
- 
- 	/* scsiLuReadMegaBytes */
--	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
-+	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
- }
- 
- static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
-@@ -316,7 +316,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
- 	struct se_device *dev = to_stat_lu_dev(item);
- 	struct se_dev_io_stats *stats;
- 	unsigned int cpu;
--	u32 bytes = 0;
-+	u64 bytes = 0;
- 
- 	for_each_possible_cpu(cpu) {
- 		stats = per_cpu_ptr(dev->stats, cpu);
-@@ -324,7 +324,7 @@ static ssize_t target_stat_lu_write_mbytes_show(struct config_item *item,
- 	}
- 
- 	/* scsiLuWrittenMegaBytes */
--	return snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
-+	return snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
- }
- 
- static ssize_t target_stat_lu_resets_show(struct config_item *item, char *page)
-@@ -1044,7 +1044,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
- 	struct se_dev_entry *deve;
- 	unsigned int cpu;
- 	ssize_t ret;
--	u32 cmds = 0;
-+	u64 cmds = 0;
- 
- 	rcu_read_lock();
- 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
-@@ -1059,7 +1059,7 @@ static ssize_t target_stat_auth_num_cmds_show(struct config_item *item,
- 	}
- 
- 	/* scsiAuthIntrOutCommands */
--	ret = snprintf(page, PAGE_SIZE, "%u\n", cmds);
-+	ret = snprintf(page, PAGE_SIZE, "%llu\n", cmds);
- 	rcu_read_unlock();
- 	return ret;
- }
-@@ -1073,7 +1073,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
- 	struct se_dev_entry *deve;
- 	unsigned int cpu;
- 	ssize_t ret;
--	u32 bytes = 0;
-+	u64 bytes = 0;
- 
- 	rcu_read_lock();
- 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
-@@ -1088,7 +1088,7 @@ static ssize_t target_stat_auth_read_mbytes_show(struct config_item *item,
- 	}
- 
- 	/* scsiAuthIntrReadMegaBytes */
--	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
-+	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
- 	rcu_read_unlock();
- 	return ret;
- }
-@@ -1102,7 +1102,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
- 	struct se_dev_entry *deve;
- 	unsigned int cpu;
- 	ssize_t ret;
--	u32 bytes = 0;
-+	u64 bytes = 0;
- 
- 	rcu_read_lock();
- 	deve = target_nacl_find_deve(nacl, lacl->mapped_lun);
-@@ -1117,7 +1117,7 @@ static ssize_t target_stat_auth_write_mbytes_show(struct config_item *item,
- 	}
- 
- 	/* scsiAuthIntrWrittenMegaBytes */
--	ret = snprintf(page, PAGE_SIZE, "%u\n", bytes >> 20);
-+	ret = snprintf(page, PAGE_SIZE, "%llu\n", bytes >> 20);
- 	rcu_read_unlock();
- 	return ret;
- }
-diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
-index c4d9116904aa0..27e1f9d5f0c6c 100644
---- a/include/target/target_core_base.h
-+++ b/include/target/target_core_base.h
-@@ -671,9 +671,9 @@ struct se_lun_acl {
+@@ -1393,4 +1393,3 @@ static const struct inode_operations v9fs_symlink_inode_operations = {
+ 	.getattr = v9fs_vfs_getattr,
+ 	.setattr = v9fs_vfs_setattr,
  };
+-
+diff --git a/fs/9p/vfs_inode_dotl.c b/fs/9p/vfs_inode_dotl.c
+index be297e3354688..6312b3590f743 100644
+--- a/fs/9p/vfs_inode_dotl.c
++++ b/fs/9p/vfs_inode_dotl.c
+@@ -282,7 +282,7 @@ v9fs_vfs_atomic_open_dotl(struct inode *dir, struct dentry *dentry,
+ 	}
  
- struct se_dev_entry_io_stats {
--	u32			total_cmds;
--	u32			read_bytes;
--	u32			write_bytes;
-+	u64			total_cmds;
-+	u64			read_bytes;
-+	u64			write_bytes;
- };
- 
- struct se_dev_entry {
-@@ -806,9 +806,9 @@ struct se_device_queue {
- };
- 
- struct se_dev_io_stats {
--	u32			total_cmds;
--	u32			read_bytes;
--	u32			write_bytes;
-+	u64			total_cmds;
-+	u64			read_bytes;
-+	u64			write_bytes;
- };
- 
- struct se_device {
+ 	if ((v9ses->cache & CACHE_WRITEBACK) && (p9_omode & P9_OWRITE)) {
+-		p9_omode = (p9_omode & ~P9_OWRITE) | P9_ORDWR;
++		p9_omode = (p9_omode & ~(P9_OWRITE | P9_DOTL_APPEND)) | P9_ORDWR;
+ 		p9_debug(P9_DEBUG_CACHE,
+ 			"write-only file with writeback enabled, creating w/ O_RDWR\n");
+ 	}
 -- 
 2.51.0
 
