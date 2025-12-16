@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D666C3563D0;
-	Tue, 16 Dec 2025 12:02:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FD43563C8;
+	Tue, 16 Dec 2025 12:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886528; cv=none; b=HntHMGhqqxdK8xcXH6nHDuSBPTehu+XfCnwzdtBIiSoTkGjaI+LEKGGn/PCCw38ZVB6ARt06ku8IZYw5/MRYdMSotW5EH5JTivTeyNOAVsSdJ2ny8YQdBrt25/nP8o3TT3Nb1JkyEEcUXaMaAZJvAaJkOknnPwVz9MTND7+RDLk=
+	t=1765886532; cv=none; b=UfdxSAbMyDRjFKiMD3c2Yy4O35KmT9uk+h60rGeygIQ1f0e8o60V6/Ex08dCOWB4RcaLafUMxIy8TxNxcKR+Li21mHLOiUWi22xVuJz4nb7pjrFqXBJ/qFvTJyEJJChi/ocVvpJBYLq84cDAt8+VusWqOB+l4uZtZTrQezivNTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886528; c=relaxed/simple;
-	bh=UGCwLowlffo5ptvZomwmVVQgnTwOzca8cOrAK5Gv0pU=;
+	s=arc-20240116; t=1765886532; c=relaxed/simple;
+	bh=Xzwx1xRbielLx4xU/2EbU9G+0Jw6z0rOp27b+VxeaAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a8CXgtj8c056rRn4/eMLrOuY1diJJRFhEh4HWEagM6NHaWZF7xdjiI1ugluZAk2Yn6m3n8NFjxNmwF8WCHdNYqcLFc3B90r2o/ZkXIby/Ev0s18kUezgUUrrHI9ug5WnsL07GLoJls6bs2Hax1QXfrnuSdJLsUBziANVTZJEhLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RPaodyBn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kD90IWvH1ZaIEymLXhPeEuQKeumofVf1af+j+4F88wUd34d0Q8icEHtVw2m4706OJkhRsUw4G6xGGpSoXgwDVJbylywIYWsTJvO3N3JBI6PUh0YWpMBKClaLwNYqjZJqP7P2pI2liPwFtvGxOstGuopioWkn43UpgU+0CowHw3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BwL6vmHX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RPaodyBn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E2DC4CEF1;
-	Tue, 16 Dec 2025 12:02:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BwL6vmHX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D529C4CEF1;
+	Tue, 16 Dec 2025 12:02:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886528;
-	bh=UGCwLowlffo5ptvZomwmVVQgnTwOzca8cOrAK5Gv0pU=;
+	s=korg; t=1765886531;
+	bh=Xzwx1xRbielLx4xU/2EbU9G+0Jw6z0rOp27b+VxeaAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPaodyBnzb++X3YdEJHm3ArLOowSwuVTD8ZzgHxSHUncMZ6oGN9mnsXzD5CB/3v95
-	 4Lr09BWQCyjOGO08gR+7kxr4I5YJfxBPiWwj8tQeKWMX0neIPJCczAmIy6O7jue9s8
-	 eH1+5An0USNxJ4L5qO2KRzIAZQnV3S/DlqRI8Dfk=
+	b=BwL6vmHXUVul/8msLrQxZS7yPTiJxQPnsY7XqdkK1zqRmjIVYMK2Tsc1C+jCvng4F
+	 gaarHdp90bBORP9ZWaCAnWu/FMIl5TyYy+WvB5cvT9sPbUMU1EY/Vcu0Qgji7si6fd
+	 NQ36J5ZR6OR/Wu/LNA3uyjCSmYKM98HHeCZpnyAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 420/507] net: dsa: b53: add support for bcm63xx ARL entry format
-Date: Tue, 16 Dec 2025 12:14:21 +0100
-Message-ID: <20251216111400.677220514@linuxfoundation.org>
+Subject: [PATCH 6.17 457/507] ASoC: ak4458: Disable regulator when error happens
+Date: Tue, 16 Dec 2025 12:14:58 +0100
+Message-ID: <20251216111402.005467493@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,190 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Gorski <jonas.gorski@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 2b3013ac03028a2364d8779719bb6bfbc0212435 ]
+[ Upstream commit ae585fabb9713a43e358cf606451386757225c95 ]
 
-The ARL registers of BCM63XX embedded switches are somewhat unique. The
-normal ARL table access registers have the same format as BCM5389, but
-the ARL search registers differ:
+Disable regulator in runtime resume when error happens to balance
+the reference count of regulator.
 
-* SRCH_CTL is at the same offset of BCM5389, but 16 bits wide. It does
-  not have more fields, just needs to be accessed by a 16 bit read.
-* SRCH_RSLT_MACVID and SRCH_RSLT are aligned to 32 bit, and have shifted
-  offsets.
-* SRCH_RSLT has a different format than the normal ARL data entry
-  register.
-* There is only one set of ENTRY_N registers, implying a 1 bin layout.
-
-So add appropriate ops for bcm63xx and let it use it.
-
-Signed-off-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20251107080749.26936-9-jonas.gorski@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 3b08863469aa ("net: dsa: b53: fix BCM5325/65 ARL entry multicast port masks")
+Fixes: 7e3096e8f823 ("ASoC: ak4458: Add regulator support")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20251203100529.3841203-2-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 44 +++++++++++++++++++++++++++-----
- drivers/net/dsa/b53/b53_priv.h   | 15 +++++++++++
- drivers/net/dsa/b53/b53_regs.h   |  9 +++++++
- 3 files changed, 61 insertions(+), 7 deletions(-)
+ sound/soc/codecs/ak4458.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index 68e9162087ab4..db1ed8c9c536e 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -2042,12 +2042,20 @@ static void b53_read_arl_srch_ctl(struct b53_device *dev, u8 *val)
+diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
+index 57cf601d3df35..a6c04dd3de3ed 100644
+--- a/sound/soc/codecs/ak4458.c
++++ b/sound/soc/codecs/ak4458.c
+@@ -671,7 +671,15 @@ static int ak4458_runtime_resume(struct device *dev)
+ 	regcache_cache_only(ak4458->regmap, false);
+ 	regcache_mark_dirty(ak4458->regmap);
  
- 	if (is5325(dev) || is5365(dev))
- 		offset = B53_ARL_SRCH_CTL_25;
--	else if (dev->chip_id == BCM5389_DEVICE_ID || is5397_98(dev))
-+	else if (dev->chip_id == BCM5389_DEVICE_ID || is5397_98(dev) ||
-+		 is63xx(dev))
- 		offset = B53_ARL_SRCH_CTL_89;
- 	else
- 		offset = B53_ARL_SRCH_CTL;
- 
--	b53_read8(dev, B53_ARLIO_PAGE, offset, val);
-+	if (is63xx(dev)) {
-+		u16 val16;
+-	return regcache_sync(ak4458->regmap);
++	ret = regcache_sync(ak4458->regmap);
++	if (ret)
++		goto err;
 +
-+		b53_read16(dev, B53_ARLIO_PAGE, offset, &val16);
-+		*val = val16 & 0xff;
-+	} else {
-+		b53_read8(dev, B53_ARLIO_PAGE, offset, val);
-+	}
++	return 0;
++err:
++	regcache_cache_only(ak4458->regmap, true);
++	regulator_bulk_disable(ARRAY_SIZE(ak4458->supplies), ak4458->supplies);
++	return ret;
  }
  
- static void b53_write_arl_srch_ctl(struct b53_device *dev, u8 val)
-@@ -2056,12 +2064,16 @@ static void b53_write_arl_srch_ctl(struct b53_device *dev, u8 val)
- 
- 	if (is5325(dev) || is5365(dev))
- 		offset = B53_ARL_SRCH_CTL_25;
--	else if (dev->chip_id == BCM5389_DEVICE_ID || is5397_98(dev))
-+	else if (dev->chip_id == BCM5389_DEVICE_ID || is5397_98(dev) ||
-+		 is63xx(dev))
- 		offset = B53_ARL_SRCH_CTL_89;
- 	else
- 		offset = B53_ARL_SRCH_CTL;
- 
--	b53_write8(dev, B53_ARLIO_PAGE, offset, val);
-+	if (is63xx(dev))
-+		b53_write16(dev, B53_ARLIO_PAGE, offset, val);
-+	else
-+		b53_write8(dev, B53_ARLIO_PAGE, offset, val);
- }
- 
- static int b53_arl_search_wait(struct b53_device *dev)
-@@ -2105,6 +2117,18 @@ static void b53_arl_search_read_89(struct b53_device *dev, u8 idx,
- 	b53_arl_to_entry_89(ent, mac_vid, fwd_entry);
- }
- 
-+static void b53_arl_search_read_63xx(struct b53_device *dev, u8 idx,
-+				     struct b53_arl_entry *ent)
-+{
-+	u16 fwd_entry;
-+	u64 mac_vid;
-+
-+	b53_read64(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSLT_MACVID_63XX,
-+		   &mac_vid);
-+	b53_read16(dev, B53_ARLIO_PAGE, B53_ARL_SRCH_RSLT_63XX, &fwd_entry);
-+	b53_arl_search_to_entry_63xx(ent, mac_vid, fwd_entry);
-+}
-+
- static void b53_arl_search_read_95(struct b53_device *dev, u8 idx,
- 				   struct b53_arl_entry *ent)
- {
-@@ -2695,6 +2719,12 @@ static const struct b53_arl_ops b53_arl_ops_89 = {
- 	.arl_search_read = b53_arl_search_read_89,
- };
- 
-+static const struct b53_arl_ops b53_arl_ops_63xx = {
-+	.arl_read_entry = b53_arl_read_entry_89,
-+	.arl_write_entry = b53_arl_write_entry_89,
-+	.arl_search_read = b53_arl_search_read_63xx,
-+};
-+
- static const struct b53_arl_ops b53_arl_ops_95 = {
- 	.arl_read_entry = b53_arl_read_entry_95,
- 	.arl_write_entry = b53_arl_write_entry_95,
-@@ -2864,14 +2894,14 @@ static const struct b53_chip_data b53_switch_chips[] = {
- 		.dev_name = "BCM63xx",
- 		.vlans = 4096,
- 		.enabled_ports = 0, /* pdata must provide them */
--		.arl_bins = 4,
--		.arl_buckets = 1024,
-+		.arl_bins = 1,
-+		.arl_buckets = 4096,
- 		.imp_port = 8,
- 		.vta_regs = B53_VTA_REGS_63XX,
- 		.duplex_reg = B53_DUPLEX_STAT_63XX,
- 		.jumbo_pm_reg = B53_JUMBO_PORT_MASK_63XX,
- 		.jumbo_size_reg = B53_JUMBO_MAX_SIZE_63XX,
--		.arl_ops = &b53_arl_ops_95,
-+		.arl_ops = &b53_arl_ops_63xx,
- 	},
- 	{
- 		.chip_id = BCM53010_DEVICE_ID,
-diff --git a/drivers/net/dsa/b53/b53_priv.h b/drivers/net/dsa/b53/b53_priv.h
-index 80e7dd6169b47..ae2c615c088ed 100644
---- a/drivers/net/dsa/b53/b53_priv.h
-+++ b/drivers/net/dsa/b53/b53_priv.h
-@@ -414,6 +414,21 @@ static inline void b53_arl_from_entry_89(u64 *mac_vid, u32 *fwd_entry,
- 		*fwd_entry |= ARLTBL_AGE_89;
- }
- 
-+static inline void b53_arl_search_to_entry_63xx(struct b53_arl_entry *ent,
-+						u64 mac_vid, u16 fwd_entry)
-+{
-+	memset(ent, 0, sizeof(*ent));
-+	u64_to_ether_addr(mac_vid, ent->mac);
-+	ent->vid = mac_vid >> ARLTBL_VID_S;
-+
-+	ent->port = fwd_entry & ARL_SRST_PORT_ID_MASK_63XX;
-+	ent->port >>= 1;
-+
-+	ent->is_age = !!(fwd_entry & ARL_SRST_AGE_63XX);
-+	ent->is_static = !!(fwd_entry & ARL_SRST_STATIC_63XX);
-+	ent->is_valid = 1;
-+}
-+
- static inline void b53_arl_read_entry(struct b53_device *dev,
- 				      struct b53_arl_entry *ent, u8 idx)
- {
-diff --git a/drivers/net/dsa/b53/b53_regs.h b/drivers/net/dsa/b53/b53_regs.h
-index f2a3696d122fa..fcedd5fb00337 100644
---- a/drivers/net/dsa/b53/b53_regs.h
-+++ b/drivers/net/dsa/b53/b53_regs.h
-@@ -364,11 +364,13 @@
- #define B53_ARL_SRCH_ADDR_25		0x22
- #define B53_ARL_SRCH_ADDR_65		0x24
- #define B53_ARL_SRCH_ADDR_89		0x31
-+#define B53_ARL_SRCH_ADDR_63XX		0x32
- #define  ARL_ADDR_MASK			GENMASK(14, 0)
- 
- /* ARL Search MAC/VID Result (64 bit) */
- #define B53_ARL_SRCH_RSTL_0_MACVID	0x60
- #define B53_ARL_SRCH_RSLT_MACVID_89	0x33
-+#define B53_ARL_SRCH_RSLT_MACVID_63XX	0x34
- 
- /* Single register search result on 5325/5365 */
- #define B53_ARL_SRCH_RSTL_0_MACVID_25	0x24
-@@ -382,6 +384,13 @@
- #define B53_ARL_SRCH_RSTL_MACVID(x)	(B53_ARL_SRCH_RSTL_0_MACVID + ((x) * 0x10))
- #define B53_ARL_SRCH_RSTL(x)		(B53_ARL_SRCH_RSTL_0 + ((x) * 0x10))
- 
-+/* 63XX ARL Search Data Result (16 bit) */
-+#define B53_ARL_SRCH_RSLT_63XX		0x3c
-+#define   ARL_SRST_PORT_ID_MASK_63XX	GENMASK(9, 1)
-+#define   ARL_SRST_TC_MASK_63XX		GENMASK(13, 11)
-+#define   ARL_SRST_AGE_63XX		BIT(14)
-+#define   ARL_SRST_STATIC_63XX		BIT(15)
-+
- /*************************************************************************
-  * IEEE 802.1X Registers
-  *************************************************************************/
+ static const struct snd_soc_component_driver soc_codec_dev_ak4458 = {
 -- 
 2.51.0
 
