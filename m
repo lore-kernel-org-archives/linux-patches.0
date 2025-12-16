@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9F434B1B4;
-	Tue, 16 Dec 2025 11:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D0834B1B2;
+	Tue, 16 Dec 2025 11:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885239; cv=none; b=XgCOmffySqhvvv1GH7YhYJb+KyOPIGB+WVZDwtf9mUdciLHeJv4/1q8VD8EWaRc4/nN4dqAceWPmq1ikSIhCIlumNJ9Q5ctXlmmWGtEAaEoUBj/qD1u0b5fYkjiSa8yVUQdKm2e1etO1XV1su8EEo4Rx/zLnySswYTou3QR6D4Q=
+	t=1765885242; cv=none; b=OyWcLWVdXDVB6QlPqshmYq1itMfxTytm7rUM/mBM3FqVFU4uBYqSPgloBrUqAKUcCXKBnpPyVZzqtIgyVKpkIz2a4lhIgsJfTYCnr73CMjYb4ElXq6eUpV3bJZDjOIRwn6CYoIyJyNsPN4inVPTrnaX6y/0G6VvBl+KEjdz8OoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885239; c=relaxed/simple;
-	bh=/ZYo1U1Yb1GuDgIc0Dz8iOoyM5BvkxIdQcPI8CuSUmg=;
+	s=arc-20240116; t=1765885242; c=relaxed/simple;
+	bh=VvnzqA9DllJmXIscj/wxnu9/sBN70alGWEM9LsXD1ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOvAEQyDy5rglQsxhcWuY8kXn8soHTa7Y1Hm9qXisTq1PDSesgMx8TcW7HaAo702FPy/ETxe2edcSCiL03N//chOi1QPLn3SMwshphVuRxLvGijODyv+65LxBXA0rQ1xkj2HPJawbTPKdf9aryLG9KVQWFLgLp/wxuFZiCq7cFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EHH6s+Am; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kfw7ige2RYupqAkYRwU5u9NrwAxivphxC1F0Ba9Gf+FczCQ+vAWDtrSur97YkwuS9b8G90pZ030ZhsQbDXmTZO1Hz/scVTqsHuC7n3AC5lRe5XXNXboCgR0T/8hWkR9OIAoY1LKAjoTEvrf+PEk6C6Z++gMtrY8rNVmxS7JyiVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKiCKbFS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EHH6s+Am"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A071FC4CEF5;
-	Tue, 16 Dec 2025 11:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKiCKbFS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16E63C4CEF1;
+	Tue, 16 Dec 2025 11:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885239;
-	bh=/ZYo1U1Yb1GuDgIc0Dz8iOoyM5BvkxIdQcPI8CuSUmg=;
+	s=korg; t=1765885242;
+	bh=VvnzqA9DllJmXIscj/wxnu9/sBN70alGWEM9LsXD1ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EHH6s+AmCJxkS44tcIy85eC0z0s8z65bDWW9AR3YehQqUVoii9YML8V6/yLXrPdpc
-	 588MpnXHPTREANeM2iLs7Lz/Rp99yYdMvOyJn88BVQcChP2QLi6K5FeF02GyU7v7HZ
-	 XldiioPyz9t+Z2dasIDhpGxrmf8kcJwi7EGuKlGs=
+	b=cKiCKbFSGtpDiJF0UTDCZKwZg2RwpFT5K8JdMnF87m2Zj0nxPKdZy1rf8xJrnA9fI
+	 g4ji83bEAfXWe2JwZaYx1g/4lHvtLy9H5hyx15EReK4U5CgQQ5ngUw+W1gsMfa1245
+	 smMB/WvM8QPPqYe5hPAs/RFQ7q/9agTEBBRyxp5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Harvey <tharvey@gateworks.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	nieweiqiang <nieweiqiang@huawei.com>,
+	Chenghai Huang <huangchenghai2@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 062/507] arm64: dts: imx8mp-venice-gw702x: remove off-board uart
-Date: Tue, 16 Dec 2025 12:08:23 +0100
-Message-ID: <20251216111347.789813288@linuxfoundation.org>
+Subject: [PATCH 6.17 080/507] crypto: hisilicon/qm - restore original qos values
+Date: Tue, 16 Dec 2025 12:08:41 +0100
+Message-ID: <20251216111348.439823784@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,83 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tim Harvey <tharvey@gateworks.com>
+From: nieweiqiang <nieweiqiang@huawei.com>
 
-[ Upstream commit effe98060f70eb96e142f656e750d6af275ceac3 ]
+[ Upstream commit e7066160f5b4187ad9869b712fa7a35d3d5be6b9 ]
 
-UART1 and UART3 go to a connector for use on a baseboard and as such are
-defined in the baseboard device-trees. Remove them from the gw702x SOM
-device-tree.
+When the new qos valus setting fails, restore to
+the original qos values.
 
-Fixes: 0d5b288c2110 ("arm64: dts: freescale: Add imx8mp-venice-gw7905-2x")
-Signed-off-by: Tim Harvey <tharvey@gateworks.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 72b010dc33b9 ("crypto: hisilicon/qm - supports writing QoS int the host")
+Signed-off-by: nieweiqiang <nieweiqiang@huawei.com>
+Signed-off-by: Chenghai Huang <huangchenghai2@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/freescale/imx8mp-venice-gw702x.dtsi   | 28 -------------------
- 1 file changed, 28 deletions(-)
+ drivers/crypto/hisilicon/qm.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
-index 303995a8adce8..086ee4510cd83 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp-venice-gw702x.dtsi
-@@ -395,13 +395,6 @@ &i2c3 {
- 	status = "okay";
- };
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 60fe8cc9a7d05..dae2e4c36e53a 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -3664,6 +3664,7 @@ static void qm_clear_vft_config(struct hisi_qm *qm)
+ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
+ {
+ 	struct device *dev = &qm->pdev->dev;
++	struct qm_shaper_factor t_factor;
+ 	u32 ir = qos * QM_QOS_RATE;
+ 	int ret, total_vfs, i;
  
--/* off-board header */
--&uart1 {
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_uart1>;
--	status = "okay";
--};
--
- /* console */
- &uart2 {
- 	pinctrl-names = "default";
-@@ -409,13 +402,6 @@ &uart2 {
- 	status = "okay";
- };
+@@ -3671,6 +3672,7 @@ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
+ 	if (fun_index > total_vfs)
+ 		return -EINVAL;
  
--/* off-board header */
--&uart3 {
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_uart3>;
--	status = "okay";
--};
--
- /* off-board */
- &usdhc1 {
- 	pinctrl-names = "default";
-@@ -520,13 +506,6 @@ MX8MP_IOMUXC_I2C3_SDA__GPIO5_IO19	0x400001c2
- 		>;
- 	};
++	memcpy(&t_factor, &qm->factor[fun_index], sizeof(t_factor));
+ 	qm->factor[fun_index].func_qos = qos;
  
--	pinctrl_uart1: uart1grp {
--		fsl,pins = <
--			MX8MP_IOMUXC_UART1_RXD__UART1_DCE_RX	0x140
--			MX8MP_IOMUXC_UART1_TXD__UART1_DCE_TX	0x140
--		>;
--	};
--
- 	pinctrl_uart2: uart2grp {
- 		fsl,pins = <
- 			MX8MP_IOMUXC_UART2_RXD__UART2_DCE_RX	0x140
-@@ -534,13 +513,6 @@ MX8MP_IOMUXC_UART2_TXD__UART2_DCE_TX	0x140
- 		>;
- 	};
+ 	ret = qm_get_shaper_para(ir, &qm->factor[fun_index]);
+@@ -3684,11 +3686,21 @@ static int qm_func_shaper_enable(struct hisi_qm *qm, u32 fun_index, u32 qos)
+ 		ret = qm_set_vft_common(qm, SHAPER_VFT, fun_index, i, 1);
+ 		if (ret) {
+ 			dev_err(dev, "type: %d, failed to set shaper vft!\n", i);
+-			return -EINVAL;
++			goto back_func_qos;
+ 		}
+ 	}
  
--	pinctrl_uart3: uart3grp {
--		fsl,pins = <
--			MX8MP_IOMUXC_UART3_RXD__UART3_DCE_RX	0x140
--			MX8MP_IOMUXC_UART3_TXD__UART3_DCE_TX	0x140
--		>;
--	};
--
- 	pinctrl_usdhc1: usdhc1grp {
- 		fsl,pins = <
- 			MX8MP_IOMUXC_SD1_CLK__USDHC1_CLK	0x190
+ 	return 0;
++
++back_func_qos:
++	memcpy(&qm->factor[fun_index], &t_factor, sizeof(t_factor));
++	for (i--; i >= ALG_TYPE_0; i--) {
++		ret = qm_set_vft_common(qm, SHAPER_VFT, fun_index, i, 1);
++		if (ret)
++			dev_err(dev, "failed to restore shaper vft during rollback!\n");
++	}
++
++	return -EINVAL;
+ }
+ 
+ static u32 qm_get_shaper_vft_qos(struct hisi_qm *qm, u32 fun_index)
 -- 
 2.51.0
 
