@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B0B3557E8;
-	Tue, 16 Dec 2025 11:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711733557F6;
+	Tue, 16 Dec 2025 11:57:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886220; cv=none; b=L66OVsMOQyAD89WrEmGKKp/6uOwhZdXq9GVXhd3RC2tp1C3gD1/LSK/pNkHzAL3q5urkR43HLWVjLBdHQxjQSm9rNro5/h65+p9gGp1j3U52Jmd5OG975R/E20tzY5QHDSjZ8dTmQNhaxS6QuDkpAJQTbOj1JyyW3k34C+9Jm4E=
+	t=1765886223; cv=none; b=Kf4azemrD2j3cAkER0rT5F6MAW6OU53W/yypG79yq54XZ2OMWEucw6zDLws6xyhJZkAnWE5LyN42jZ0u7pErFrIvzUnBMwtLM//4dUG1pIFhAvr0ZgqdpeswQkRBC+4cwqdPe2D3VmwuW2UUly7wQB+KVjCqlbU9NvoxfeeutEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886220; c=relaxed/simple;
-	bh=rUBEevfXo2suuBdQQpE+UEXrd0NnuA0VDXVAjmQirh0=;
+	s=arc-20240116; t=1765886223; c=relaxed/simple;
+	bh=vZ6IEsNhYfLJtZpJAS6z7/enNwAa4kU6Kg4oTswBfno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yu6MI8cv8yYRJ0IoMSLipb6wgkFFxi66DT+In/Aw4RiCX9U3EFzkJxrRsu3aSfenIlfoEvLRBAvVx2VmJjnsVzkSCkbSk7N5F56dYnUICNviTN0+a/kwA19yYaf5PHm16Ubc3SBYO22iVr4JLxdRvDIYwhfRS58CKvNuTrkcIvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VLvOsdAE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cO9+S0HNYviLgVy6hnRd5TfP8BziJE7ntZ0nJiXTub9bQcGpBP1TKrVMPu8MKNLxlBQJFQV8jmYbe3Uq7jJxgHEMj0NQf2Xf+DuxOcFamm6kMYRt/BH/KkhY8ve0PSVQNiGgwjq5BTAZYjGH7Xlswkd7+/rLYY5hEJdxZAeFB5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RMi+Gv2g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VLvOsdAE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8885BC4CEF1;
-	Tue, 16 Dec 2025 11:56:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RMi+Gv2g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5569C4CEF1;
+	Tue, 16 Dec 2025 11:57:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886220;
-	bh=rUBEevfXo2suuBdQQpE+UEXrd0NnuA0VDXVAjmQirh0=;
+	s=korg; t=1765886223;
+	bh=vZ6IEsNhYfLJtZpJAS6z7/enNwAa4kU6Kg4oTswBfno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLvOsdAEZcVFs+10TFXLAcuZZjYzD6vf4IT2yNjZNV+sUvP35yTCpc4OVktPj035h
-	 UiNYNtcFjhQNkCZhwBwwbZOw5DQ8y1skm7K5FEOrRMdvDJlN7qrC30rwqSIGungbxn
-	 1r8LrnQLJL4/LPcQ6rw62PVOIMO3IaGzrtaBs3NQ=
+	b=RMi+Gv2gA8II4/MTCZMFgpU5Dl64s8iKfOdJe5H140+6KMYQFtERT/2xVOKWX9MJI
+	 LslieRj3MujPps3CVrAM8dA5q0ccYXC0wrU2hrqymIoR1ztvc92FblnhmI/oMwKA0C
+	 s8udePJ65Lmq90+dxV0wcBDFhxIfuFBtbp9b6FK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Neal Cardwell <ncardwell@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 372/507] ext4: improve integrity checking in __mb_check_buddy by enhancing order-0 validation
-Date: Tue, 16 Dec 2025 12:13:33 +0100
-Message-ID: <20251216111358.936285357@linuxfoundation.org>
+Subject: [PATCH 6.17 373/507] selftests/net: packetdrill: pass send_omit_free to MSG_ZEROCOPY tests
+Date: Tue, 16 Dec 2025 12:13:34 +0100
+Message-ID: <20251216111358.973505703@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,145 +52,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yongjian Sun <sunyongjian1@huawei.com>
+From: Willem de Bruijn <willemb@google.com>
 
-[ Upstream commit d9ee3ff810f1cc0e253c9f2b17b668b973cb0e06 ]
+[ Upstream commit c01a6e5b2e4f21d31cf725b9f3803cb0280b1b8d ]
 
-When the MB_CHECK_ASSERT macro is enabled, we found that the
-current validation logic in __mb_check_buddy has a gap in
-detecting certain invalid buddy states, particularly related
-to order-0 (bitmap) bits.
+The --send_omit_free flag is needed for TCP zero copy tests, to ensure
+that packetdrill doesn't free the send() buffer after the send() call.
 
-The original logic consists of three steps:
-1. Validates higher-order buddies: if a higher-order bit is
-set, at most one of the two corresponding lower-order bits
-may be free; if a higher-order bit is clear, both lower-order
-bits must be allocated (and their bitmap bits must be 0).
-2. For any set bit in order-0, ensures all corresponding
-higher-order bits are not free.
-3. Verifies that all preallocated blocks (pa) in the group
-have pa_pstart within bounds and their bitmap bits marked as
-allocated.
-
-However, this approach fails to properly validate cases where
-order-0 bits are incorrectly cleared (0), allowing some invalid
-configurations to pass:
-
-               corrupt            integral
-
-order 3           1                  1
-order 2       1       1          1       1
-order 1     1   1   1   1      1   1   1   1
-order 0    0 0 1 1 1 1 1 1    1 1 1 1 1 1 1 1
-
-Here we get two adjacent free blocks at order-0 with inconsistent
-higher-order state, and the right one shows the correct scenario.
-
-The root cause is insufficient validation of order-0 zero bits.
-To fix this and improve completeness without significant performance
-cost, we refine the logic:
-
-1. Maintain the top-down higher-order validation, but we no longer
-check the cases where the higher-order bit is 0, as this case will
-be covered in step 2.
-2. Enhance order-0 checking by examining pairs of bits:
-   - If either bit in a pair is set (1), all corresponding
-     higher-order bits must not be free.
-   - If both bits are clear (0), then exactly one of the
-     corresponding higher-order bits must be free
-3. Keep the preallocation (pa) validation unchanged.
-
-This change closes the validation gap, ensuring illegal buddy states
-involving order-0 are correctly detected, while removing redundant
-checks and maintaining efficiency.
-
-Fixes: c9de560ded61f ("ext4: Add multi block allocator for ext4")
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Yongjian Sun <sunyongjian1@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Message-ID: <20251106060614.631382-3-sunyongjian@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 1e42f73fd3c2 ("selftests/net: packetdrill: import tcp/zerocopy")
+Closes: https://lore.kernel.org/netdev/20251124071831.4cbbf412@kernel.org/
+Suggested-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20251125234029.1320984-1-willemdebruijn.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 49 +++++++++++++++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 17 deletions(-)
+ .../net/packetdrill/tcp_syscall_bad_arg_sendmsg-empty-iov.pkt | 4 ++++
+ .../testing/selftests/net/packetdrill/tcp_zerocopy_basic.pkt  | 2 ++
+ .../testing/selftests/net/packetdrill/tcp_zerocopy_batch.pkt  | 2 ++
+ .../testing/selftests/net/packetdrill/tcp_zerocopy_client.pkt | 2 ++
+ .../testing/selftests/net/packetdrill/tcp_zerocopy_closed.pkt | 2 ++
+ .../selftests/net/packetdrill/tcp_zerocopy_epoll_edge.pkt     | 3 +++
+ .../net/packetdrill/tcp_zerocopy_epoll_exclusive.pkt          | 3 +++
+ .../selftests/net/packetdrill/tcp_zerocopy_epoll_oneshot.pkt  | 3 +++
+ .../net/packetdrill/tcp_zerocopy_fastopen-client.pkt          | 2 ++
+ .../net/packetdrill/tcp_zerocopy_fastopen-server.pkt          | 2 ++
+ .../selftests/net/packetdrill/tcp_zerocopy_maxfrags.pkt       | 2 ++
+ .../testing/selftests/net/packetdrill/tcp_zerocopy_small.pkt  | 2 ++
+ 12 files changed, 29 insertions(+)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 6070d3c86678e..80d6944755b8a 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -682,6 +682,24 @@ do {									\
- 	}								\
- } while (0)
- 
-+/*
-+ * Perform buddy integrity check with the following steps:
-+ *
-+ * 1. Top-down validation (from highest order down to order 1, excluding order-0 bitmap):
-+ *    For each pair of adjacent orders, if a higher-order bit is set (indicating a free block),
-+ *    at most one of the two corresponding lower-order bits may be clear (free).
-+ *
-+ * 2. Order-0 (bitmap) validation, performed on bit pairs:
-+ *    - If either bit in a pair is set (1, allocated), then all corresponding higher-order bits
-+ *      must not be free (0).
-+ *    - If both bits in a pair are clear (0, free), then exactly one of the corresponding
-+ *      higher-order bits must be free (0).
-+ *
-+ * 3. Preallocation (pa) list validation:
-+ *    For each preallocated block (pa) in the group:
-+ *    - Verify that pa_pstart falls within the bounds of this block group.
-+ *    - Ensure the corresponding bit(s) in the order-0 bitmap are marked as allocated (1).
-+ */
- static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 				const char *function, int line)
- {
-@@ -723,15 +741,6 @@ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 				continue;
- 			}
- 
--			/* both bits in buddy2 must be 1 */
--			MB_CHECK_ASSERT(mb_test_bit(i << 1, buddy2));
--			MB_CHECK_ASSERT(mb_test_bit((i << 1) + 1, buddy2));
--
--			for (j = 0; j < (1 << order); j++) {
--				k = (i * (1 << order)) + j;
--				MB_CHECK_ASSERT(
--					!mb_test_bit(k, e4b->bd_bitmap));
--			}
- 			count++;
- 		}
- 		MB_CHECK_ASSERT(e4b->bd_info->bb_counters[order] == count);
-@@ -747,15 +756,21 @@ static void __mb_check_buddy(struct ext4_buddy *e4b, char *file,
- 				fragments++;
- 				fstart = i;
- 			}
--			continue;
-+		} else {
-+			fstart = -1;
- 		}
--		fstart = -1;
--		/* check used bits only */
--		for (j = 0; j < e4b->bd_blkbits + 1; j++) {
--			buddy2 = mb_find_buddy(e4b, j, &max2);
--			k = i >> j;
--			MB_CHECK_ASSERT(k < max2);
--			MB_CHECK_ASSERT(mb_test_bit(k, buddy2));
-+		if (!(i & 1)) {
-+			int in_use, zero_bit_count = 0;
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_syscall_bad_arg_sendmsg-empty-iov.pkt b/tools/testing/selftests/net/packetdrill/tcp_syscall_bad_arg_sendmsg-empty-iov.pkt
+index b2b2cdf27e20f..454441e7ecff6 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_syscall_bad_arg_sendmsg-empty-iov.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_syscall_bad_arg_sendmsg-empty-iov.pkt
+@@ -1,6 +1,10 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Test that we correctly skip zero-length IOVs.
 +
-+			in_use = mb_test_bit(i, buddy) || mb_test_bit(i + 1, buddy);
-+			for (j = 1; j < e4b->bd_blkbits + 2; j++) {
-+				buddy2 = mb_find_buddy(e4b, j, &max2);
-+				k = i >> j;
-+				MB_CHECK_ASSERT(k < max2);
-+				if (!mb_test_bit(k, buddy2))
-+					zero_bit_count++;
-+			}
-+			MB_CHECK_ASSERT(zero_bit_count == !in_use);
- 		}
- 	}
- 	MB_CHECK_ASSERT(!EXT4_MB_GRP_NEED_INIT(e4b->bd_info));
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
++
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+    +0 setsockopt(3, SOL_SOCKET, SO_ZEROCOPY, [1], 4) = 0
+    +0 setsockopt(3, SOL_SOCKET, SO_REUSEADDR, [1], 4) = 0
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_basic.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_basic.pkt
+index a82c8899d36bf..0a0700afdaa38 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_basic.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_basic.pkt
+@@ -4,6 +4,8 @@
+ // send a packet with MSG_ZEROCOPY and receive the notification ID
+ // repeat and verify IDs are consecutive
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_batch.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_batch.pkt
+index c01915e7f4a15..df91675d2991c 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_batch.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_batch.pkt
+@@ -3,6 +3,8 @@
+ //
+ // send multiple packets, then read one range of all notifications.
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_client.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_client.pkt
+index 6509882932e91..2963cfcb14dfd 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_client.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_client.pkt
+@@ -1,6 +1,8 @@
+ // SPDX-License-Identifier: GPL-2.0
+ // Minimal client-side zerocopy test
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_closed.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_closed.pkt
+index 2cd78755cb2ac..ea0c2fa73c2d6 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_closed.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_closed.pkt
+@@ -7,6 +7,8 @@
+ // First send on a closed socket and wait for (absent) notification.
+ // Then connect and send and verify that notification nr. is zero.
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 4
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_edge.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_edge.pkt
+index 7671c20e01cf6..4df978a9b82e7 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_edge.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_edge.pkt
+@@ -7,6 +7,9 @@
+ // fire two sends with MSG_ZEROCOPY and receive the acks. confirm that EPOLLERR
+ // is correctly fired only once, when EPOLLET is set. send another packet with
+ // MSG_ZEROCOPY. confirm that EPOLLERR is correctly fired again only once.
++
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_exclusive.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_exclusive.pkt
+index fadc480fdb7fe..36b6edc4858c4 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_exclusive.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_exclusive.pkt
+@@ -8,6 +8,9 @@
+ // fire two sends with MSG_ZEROCOPY and receive the acks. confirm that EPOLLERR
+ // is correctly fired only once, when EPOLLET is set. send another packet with
+ // MSG_ZEROCOPY. confirm that EPOLLERR is correctly fired again only once.
++
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_oneshot.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_oneshot.pkt
+index 5bfa0d1d2f4a3..1bea6f3b4558d 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_oneshot.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_epoll_oneshot.pkt
+@@ -8,6 +8,9 @@
+ // is correctly fired only once, when EPOLLONESHOT is set. send another packet
+ // with MSG_ZEROCOPY. confirm that EPOLLERR is not fired. Rearm the FD and
+ // confirm that EPOLLERR is correctly set.
++
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-client.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-client.pkt
+index 4a73bbf469610..e27c21ff5d18d 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-client.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-client.pkt
+@@ -8,6 +8,8 @@
+ // one will have no data in the initial send. On return 0 the
+ // zerocopy notification counter is not incremented. Verify this too.
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+ // Send a FastOpen request, no cookie yet so no data in SYN
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-server.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-server.pkt
+index 36086c5877ce7..b1fa77c77dfa7 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-server.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_fastopen-server.pkt
+@@ -4,6 +4,8 @@
+ // send data with MSG_FASTOPEN | MSG_ZEROCOPY and verify that the
+ // kernel returns the notification ID.
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh
+  ./set_sysctls.py /proc/sys/net/ipv4/tcp_fastopen=0x207`
+ 
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_maxfrags.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_maxfrags.pkt
+index 672f817faca0d..2f5317d0a9fab 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_maxfrags.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_maxfrags.pkt
+@@ -7,6 +7,8 @@
+ //    because each iovec element becomes a frag
+ // 3) the PSH bit is set on an skb when it runs out of fragments
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+diff --git a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_small.pkt b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_small.pkt
+index a9a1ac0aea4f4..9d5272c6b2079 100644
+--- a/tools/testing/selftests/net/packetdrill/tcp_zerocopy_small.pkt
++++ b/tools/testing/selftests/net/packetdrill/tcp_zerocopy_small.pkt
+@@ -4,6 +4,8 @@
+ // verify that SO_EE_CODE_ZEROCOPY_COPIED is set on zerocopy
+ // packets of all sizes, including the smallest payload, 1B.
+ 
++--send_omit_free	// do not reuse send buffers with zerocopy
++
+ `./defaults.sh`
+ 
+     0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
 -- 
 2.51.0
 
