@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7942B3358A8;
-	Tue, 16 Dec 2025 11:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA973233EE;
+	Tue, 16 Dec 2025 11:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883939; cv=none; b=EeLwNhvu0PmkEuLev7oJ4/7uw6jvn/Hc2i9JuvNKppxfO6KpkPNjtCuB1dPPCaEM+PM7ntaQcE4yu+a5uWwY3LE9639083/uXMAInH++FcXkgxN+2FtIUD0DZ6GV+Ha4Dr7RC1ZRQimqIaeOqdJwytbsFwTimNYMjWVQMBOA+X0=
+	t=1765883942; cv=none; b=LdGOw8zY8M3z32bk8vwweJfcqcUgmOW3zwQjgbzbDRF0wvV+Maf9j7alGbylaAd2FduNrK9x0Ih+Kc7e4N0YAaucoMTnsntsynO3fTcAdp3MsmNKaQ98YTKVJFKhL9rmuaeXxKpBzMPFTcpZCZDcT/K0moZZ6yl9U5+uBAtm7E0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883939; c=relaxed/simple;
-	bh=qUr7ierVOsdzCfr3Q5dYpYxtCBLeUHbC/J6AD1sJfhM=;
+	s=arc-20240116; t=1765883942; c=relaxed/simple;
+	bh=5p0U9E2s4neOpmsmBhSNrI7fGmfRpJBYSe9GnRxDB14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSLGsvbevZiSeKvvtsI1U0hpa+TkPItCe+n0OX97O/CKhk9NYAo6Wz5IuLm82Mk5xaekanO5bQsb26SncvEMJ4jE6Tbct2f1juk0bxXsFwxEt4J6ila0iwevzYo+52efXTUdgkU+Q2/drtYXdsrQ+yAcNbrwAOrLwcWbNoZQywc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f0N5Qcf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ro65EJYF2zY8K9H/5tZ2fTfdhKZ1/Eh5H4ViaXanKJCIRjg6JWe/lC6CpHPetxaeVeyhYLk5r3oeOzh38nW4/2EaeszVkFyEq4F95j5Bs93dVQ04icKLvcQ+VjBULEIHiVZh57SwKbVoTPb1HMDTJXChKAooRFQfbxV1RGfO+7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J27+QQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f0N5Qcf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6558C4CEF1;
-	Tue, 16 Dec 2025 11:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J27+QQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38EC5C4CEF1;
+	Tue, 16 Dec 2025 11:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883939;
-	bh=qUr7ierVOsdzCfr3Q5dYpYxtCBLeUHbC/J6AD1sJfhM=;
+	s=korg; t=1765883942;
+	bh=5p0U9E2s4neOpmsmBhSNrI7fGmfRpJBYSe9GnRxDB14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0N5Qcf8twlfNmw2bHpRGCQcxhzISulSNkwNMoFqHYD1Ntx6v1sQNrIk+P4Hl76YL
-	 gZobqVIf2DUse1cPLqAsgkHWMEbja478Xh0HFAr/sHYiv17fsfbyrAqy7Xp9BnutlP
-	 Lqygkvt8UitbH2GwXH72p4cvclOJe0zFLiNYdPvw=
+	b=1J27+QQEVQsRD+uuNjvJmN3o1V3G1Hof8YXoOXq4q8+iB2cXjMGqA/+BjWVJKAvnO
+	 tc2YUGUKd80TnL7cI0ILgijjdLVe8lHfkVM/OwEw1Ai4qvNzkeBgVVweSBAYEmcLic
+	 UrAmEEF+2FUZhN73id4GSmgnSoNSbSXpf9bvHlYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 044/354] inet: Avoid ehash lookup race in inet_ehash_insert()
-Date: Tue, 16 Dec 2025 12:10:11 +0100
-Message-ID: <20251216111322.512764396@linuxfoundation.org>
+Subject: [PATCH 6.12 045/354] inet: Avoid ehash lookup race in inet_twsk_hashdance_schedule()
+Date: Tue, 16 Dec 2025 12:10:12 +0100
+Message-ID: <20251216111322.548366513@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -56,90 +56,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 
-[ Upstream commit 1532ed0d0753c83e72595f785f82b48c28bbe5dc ]
+[ Upstream commit b8ec80b130211e7bf076ef72365952979d5f7a72 ]
 
-Since ehash lookups are lockless, if one CPU performs a lookup while
-another concurrently deletes and inserts (removing reqsk and inserting sk),
-the lookup may fail to find the socket, an RST may be sent.
+Since ehash lookups are lockless, if another CPU is converting sk to tw
+concurrently, fetching the newly inserted tw with tw->tw_refcnt == 0 cause
+lookup failure.
 
 The call trace map is drawn as follows:
-   CPU 0                           CPU 1
-   -----                           -----
-				inet_ehash_insert()
-                                spin_lock()
-                                sk_nulls_del_node_init_rcu(osk)
+   CPU 0                                CPU 1
+   -----                                -----
+				     inet_twsk_hashdance_schedule()
+				     spin_lock()
+				     inet_twsk_add_node_rcu(tw, ...)
 __inet_lookup_established()
-	(lookup failed)
-                                __sk_nulls_add_node_rcu(sk, list)
-                                spin_unlock()
+(find tw, failure due to tw_refcnt = 0)
+				     __sk_nulls_del_node_init_rcu(sk)
+				     refcount_set(&tw->tw_refcnt, 3)
+				     spin_unlock()
 
-As both deletion and insertion operate on the same ehash chain, this patch
-introduces a new sk_nulls_replace_node_init_rcu() helper functions to
-implement atomic replacement.
+By replacing sk with tw atomically via hlist_nulls_replace_init_rcu() after
+setting tw_refcnt, we ensure that tw is either fully initialized or not
+visible to other CPUs, eliminating the race.
 
-Fixes: 5e0724d027f0 ("tcp/dccp: fix hashdance race for passive sessions")
+It's worth noting that we held lock_sock() before the replacement, so
+there's no need to check if sk is hashed. Thanks to Kuniyuki Iwashima!
+
+Fixes: 3ab5aee7fe84 ("net: Convert TCP & DCCP hash tables to use RCU / hlist_nulls")
 Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
 Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
 Signed-off-by: Xuanqiang Luo <luoxuanqiang@kylinos.cn>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20251015020236.431822-3-xuanqiang.luo@linux.dev
+Link: https://patch.msgid.link/20251015020236.431822-4-xuanqiang.luo@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h         | 13 +++++++++++++
- net/ipv4/inet_hashtables.c |  8 ++++++--
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ net/ipv4/inet_timewait_sock.c | 35 ++++++++++++-----------------------
+ 1 file changed, 12 insertions(+), 23 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 722f409cccd35..6edd9cac50067 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -829,6 +829,19 @@ static inline bool sk_nulls_del_node_init_rcu(struct sock *sk)
- 	return rc;
+diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
+index 337390ba85b40..74b84ac418e93 100644
+--- a/net/ipv4/inet_timewait_sock.c
++++ b/net/ipv4/inet_timewait_sock.c
+@@ -86,12 +86,6 @@ void inet_twsk_put(struct inet_timewait_sock *tw)
  }
+ EXPORT_SYMBOL_GPL(inet_twsk_put);
  
-+static inline bool sk_nulls_replace_node_init_rcu(struct sock *old,
-+						  struct sock *new)
-+{
-+	if (sk_hashed(old)) {
-+		hlist_nulls_replace_init_rcu(&old->sk_nulls_node,
-+					     &new->sk_nulls_node);
-+		__sock_put(old);
-+		return true;
-+	}
-+
-+	return false;
-+}
-+
- static inline void __sk_add_node(struct sock *sk, struct hlist_head *list)
+-static void inet_twsk_add_node_rcu(struct inet_timewait_sock *tw,
+-				   struct hlist_nulls_head *list)
+-{
+-	hlist_nulls_add_head_rcu(&tw->tw_node, list);
+-}
+-
+ static void inet_twsk_schedule(struct inet_timewait_sock *tw, int timeo)
  {
- 	hlist_add_head(&sk->sk_node, list);
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 2b4a588247639..37a6acff537e6 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -671,8 +671,11 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	__inet_twsk_schedule(tw, timeo, false);
+@@ -111,13 +105,12 @@ void inet_twsk_hashdance_schedule(struct inet_timewait_sock *tw,
+ {
+ 	const struct inet_sock *inet = inet_sk(sk);
+ 	const struct inet_connection_sock *icsk = inet_csk(sk);
+-	struct inet_ehash_bucket *ehead = inet_ehash_bucket(hashinfo, sk->sk_hash);
+ 	spinlock_t *lock = inet_ehash_lockp(hashinfo, sk->sk_hash);
+ 	struct inet_bind_hashbucket *bhead, *bhead2;
+ 
+-	/* Step 1: Put TW into bind hash. Original socket stays there too.
+-	   Note, that any socket with inet->num != 0 MUST be bound in
+-	   binding cache, even if it is closed.
++	/* Put TW into bind hash. Original socket stays there too.
++	 * Note, that any socket with inet->num != 0 MUST be bound in
++	 * binding cache, even if it is closed.
+ 	 */
+ 	bhead = &hashinfo->bhash[inet_bhashfn(twsk_net(tw), inet->inet_num,
+ 			hashinfo->bhash_size)];
+@@ -139,19 +132,6 @@ void inet_twsk_hashdance_schedule(struct inet_timewait_sock *tw,
+ 
  	spin_lock(lock);
- 	if (osk) {
- 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
--		ret = sk_nulls_del_node_init_rcu(osk);
--	} else if (found_dup_sk) {
-+		ret = sk_nulls_replace_node_init_rcu(osk, sk);
-+		goto unlock;
-+	}
+ 
+-	/* Step 2: Hash TW into tcp ehash chain */
+-	inet_twsk_add_node_rcu(tw, &ehead->chain);
+-
+-	/* Step 3: Remove SK from hash chain */
+-	if (__sk_nulls_del_node_init_rcu(sk))
+-		sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
+-
+-
+-	/* Ensure above writes are committed into memory before updating the
+-	 * refcount.
+-	 * Provides ordering vs later refcount_inc().
+-	 */
+-	smp_wmb();
+ 	/* tw_refcnt is set to 3 because we have :
+ 	 * - one reference for bhash chain.
+ 	 * - one reference for ehash chain.
+@@ -161,6 +141,15 @@ void inet_twsk_hashdance_schedule(struct inet_timewait_sock *tw,
+ 	 */
+ 	refcount_set(&tw->tw_refcnt, 3);
+ 
++	/* Ensure tw_refcnt has been set before tw is published.
++	 * smp_wmb() provides the necessary memory barrier to enforce this
++	 * ordering.
++	 */
++	smp_wmb();
 +
-+	if (found_dup_sk) {
- 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
- 		if (*found_dup_sk)
- 			ret = false;
-@@ -681,6 +684,7 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
- 	if (ret)
- 		__sk_nulls_add_node_rcu(sk, list);
++	hlist_nulls_replace_init_rcu(&sk->sk_nulls_node, &tw->tw_node);
++	sock_prot_inuse_add(sock_net(sk), sk->sk_prot, -1);
++
+ 	inet_twsk_schedule(tw, timeo);
  
-+unlock:
  	spin_unlock(lock);
- 
- 	return ret;
 -- 
 2.51.0
 
