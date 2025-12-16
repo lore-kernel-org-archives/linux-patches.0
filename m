@@ -1,168 +1,196 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CFA21CFEF
-	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 01:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.160.180
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765847665; cv=pass; b=jMBnOvsVYeeF8MIQNLwkCEg3efranwGW7Qp5l7XtNoDyesx2GIr+wcN5oFesuwKv6768VN1WfWDgU9xUK50y9zHDaD6W7a0kB5BreMkQn7lgzYY9eh4Sa4E/d0vBKTscgcileyW0som52qZ8hGmxMm5nfCpn6C846vTAFsfc4c4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765847665; c=relaxed/simple;
-	bh=RYQZPJfFMxqkp+1nngNLsMaHBFm6+xCUj4KkP21+dYM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LAkqPNPnPn5Ya90J+AlgGvYOdB2OYYWJKhJcs2XzbfEuGELMDSj/3dcqbZs0qNMjmbwpnTVYsOPOQzIv/ox7qH2KfOfaJsAmOBEk4+tKuNnq61quE0CrVsXVkddHYli53Qdxcefk6nlgvsgu1ZGzWzkEwvKEuXo4wn4UCuvvrSg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=vGUDJtK1; arc=pass smtp.client-ip=209.85.160.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FE22F290B
+	for <patches@lists.linux.dev>; Tue, 16 Dec 2025 04:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1765858574; cv=none; b=fNZqli0pRyPjDt+IxCWasp3DdUWoD1sJcmooX2MS76xy2B/BDizzsC65WVxczBuV4rkJ7POI470ZH1/3lrcmKdLg3dym9qo/JvRmfNt7NftE7lS+uA1TxlPo4zCXrl7XDiAhNpa6CGS6w1+oO9oc3QqQQJB3MAl5RUCP6oT+bAA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1765858574; c=relaxed/simple;
+	bh=AgY+GOvmUFMhLNI02Ee8pkeMWHjqF3erk8uQ1KxoWxM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=l6ei4rIenBqwC6fhSzOPv5NT0ma1rG5w6he32cNlSqOFVrR/6iMqMTtTlDmx1lo3EH8rIb/e3g2B2IDztqx5rLVsn0RaIQkOCVf06gsZgRt1jNZF0xhJ4CiStwOGdypdzbUeDCOVfYspJZkWgwqUv1i3J2xlXgDhp5lq2VniFTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RY6e8yvK; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="vGUDJtK1"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4ed67a143c5so152331cf.0
-        for <patches@lists.linux.dev>; Mon, 15 Dec 2025 17:14:23 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1765847663; cv=none;
-        d=google.com; s=arc-20240605;
-        b=PMvpsVtfWrjIuFcmZEqXhCOq8qJL7yJk5T2aoN6WHJLXahIsgGgs5Td+H6eXa8aKRW
-         G9Chzq0JgIkIKqaNfGoVixADhTOUst6r26D8Yngo5NyfsnWWNId0WJzSDybBBJWhtjIG
-         GWUiMyJniQPhxLfqbUl2aR4eTmRmhzRLAqW+nMhxacea2Je9xMM/s1KFPhlqnp8OKAm1
-         u5HnqBGN2tMYEnqrYES6NLC1ro4lABQiLiD4qDN0kPvRcMpuxOpKTDxwpzqgKSK5ejBF
-         HtQdN1ocwHLbmzZMbIxn4+4GuRJ3ZzQVHMztDesoe0IGMKt0B6smsysIf6EjibPNVzom
-         zEPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=nNRSgDqjGCHm0cCbv9mH9lJK6eTAVlNyMNzHMF8cYvc=;
-        fh=E8k2mefM3FiVXAcDqFJoS98zC0gLAQF+z/fQ4X4wHDs=;
-        b=ijbxFeeJm1XaJfF4V+X3mUp8g9UiEaDsP9PBDo1LrENIcYe896KEPvjCajAM95dC28
-         oS6Ae5EHLMigjhQZvMgLj8Xo0Y+0sAfYI0kFsz/M/+ixyWUR3XS7TDTuBD2+91HuuSnj
-         uJNjsmDs4gdR74cI/3x20+idxvjpRZpoz8hwMeWruHEDzTDY1jOWB6WUNV5xcPcvZVKS
-         t8ifEYEhwClvIRgmos8TXOuYZHKM/9R+Thkva1VE8MHo1oaxZMp9c8sLNRhODcG8s6Ob
-         34mxZ9RW7CjrUdaHrAQ4M0sQ6IBLsXIMyl2IRHwJTnsXmONOvDv9B8wKk7aANTuMhaYe
-         XlDQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RY6e8yvK"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-2a0d06ffa2aso22586755ad.3
+        for <patches@lists.linux.dev>; Mon, 15 Dec 2025 20:16:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1765847663; x=1766452463; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1765858561; x=1766463361; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nNRSgDqjGCHm0cCbv9mH9lJK6eTAVlNyMNzHMF8cYvc=;
-        b=vGUDJtK1txL9KJyBns5NkuVGspY/0B/CNh5zdYrm2Kn88dcQxvi7x3xBWZboBRJbwz
-         Cxa3fSZhB8JKowYuE3TJ4xLyrs3/ZHGwiMDurxRbgINqiFKvkC4QdZe0pxFQvbM5idoW
-         j/JVzMLN8Sbq0qK2KZtxc/nA1Q9sgLTmywbilvBfUBIUqrKPWcfLGee/5kEXd/4KZLF/
-         6CDyxeeQYYhyLgmU55mHI8J2PcyP0XkCybiFAa4rT7ixQKRPzMc4VGI+DI8QjyWfyYcN
-         lbXLdjnA4BYZcUqEeRpyEez7xO3IQoCC97qeQuRXb01Wk4m+35t33V4zkSnjgee0s4R+
-         HNNA==
+        bh=et7rgi+ejTAPK8/dLU1hy2DZMt3jWJfRXX3Q1B4YMY0=;
+        b=RY6e8yvKvkrG9/Or3PCvUiMeTXMHoJhpeL0SOWUuT16KRU4QM0qEgXYqUV34MQWrJZ
+         QXGEb2dmn0pbUc1DsFI7buFSdzQuuhf8aJ7wKZzqiLMvvS/HGWQW+2V1bUX6oJfUF8/P
+         se9hjo1oPmIgE3jz0GN7ec2ubx2GN5hBeUZcJuM9O3nTErbYEgA7rxYhLAhtNCplSICp
+         JAutUkC7flPk9X/4N+mEUsyq3/klLixGzCg5d2XPcFFu004pRHVBXUbFD1R1TCZ151sk
+         9vB9emu+XYYH5EJs1l4+pHUx5tFBaBp0DfQASX23b2G8sfnhFD6MHjvZb9wBDgTuWOvQ
+         fbgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1765847663; x=1766452463;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+        d=1e100.net; s=20230601; t=1765858561; x=1766463361;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=nNRSgDqjGCHm0cCbv9mH9lJK6eTAVlNyMNzHMF8cYvc=;
-        b=n7YJVGcwQaplEbvgBMtkdQm4SrXg/Nyt96lfG139Ibo5hOpgYaokAABjUWX1BP/wWr
-         Jihg2u9/f5FmPUEjY5I26ghf9xEhPMGkK9Mur0JojlBF9geL1DJKqVqiAKu4D1ZszsPH
-         V//u98sanJmhPlRviAqdiamUzK+07zW1KgkdZb9/0rrWUGw01SntiYIgP4rRcDfUvp/4
-         JN5vHwuaXP9szNI/d/GLehCzwoppzMNFPOk2W+f7eY9AWgQcXEqQg3BW6nfmSJFpDM+C
-         fmM7HFBClXMkW5JiQaealziRQpLDEaVRwlZKBGupP9As9bkwfw6NA18vMPP9lW8c2OXC
-         iSPw==
-X-Forwarded-Encrypted: i=1; AJvYcCUK9wrSWefTAe5flnqyWXgFm3vgOgo7OGn0qUEFCJuN1g9MsSPqg9ogwPd2UK26x1hyAXtAiH0E@lists.linux.dev
-X-Gm-Message-State: AOJu0YwNoseNoC7KnA3a7JVMCiGLuve93aMr2azjO1HievL5ztY9+9VR
-	qOvejWrvXOwQ5tTA7Z0RZmQsFUICU2eQYpumh/dnrFp5q54S/nKq3l2BCjBmGqKlaSGEmrfWPWp
-	UdYb8NmkP2OuDZpIuSjmKgHIitqvYJeCtY75VJefO
-X-Gm-Gg: AY/fxX78sfa68kRcBiq665qYOLcbP7pvR6QRHBzB0UNeS/J/LKk2ft9ub2uOLOUZhpp
-	tyoUiD6CyudvQmQ3kPZhQjIg1BvqR3sMbmOBEoAGwDy9iFVxQseZKa/uK7IdWFOPtzl9vH+QEmT
-	VzIYxiu/ASENEHmcsmNjnDeq51Pc8ylin8EtF2M6F8+5sNtr27hWLDS09JvOD5eYUfv/veX7iai
-	EuXUPijnoKrVGHp4+0FfqS4E7y4CBSyqzcQGobpFXcVFm/pwH70GfI14KSjxyp/HPVg2GWB43p6
-	IBnFUt3dWM4SiA/MtcHN85UNWA==
-X-Google-Smtp-Source: AGHT+IHDK9Nx0ZJG9GA2+hWOGyWZ73qxIXF4H8RaWSuD2ofLYKrM3Tu07Foy0ZrKHXYTXOo9Ba7m6bZ0z05T+81FVJI=
-X-Received: by 2002:a05:622a:8a:b0:4f1:9c3f:2845 with SMTP id
- d75a77b69052e-4f347f93f08mr1579311cf.9.1765847662514; Mon, 15 Dec 2025
- 17:14:22 -0800 (PST)
+        bh=et7rgi+ejTAPK8/dLU1hy2DZMt3jWJfRXX3Q1B4YMY0=;
+        b=rNAT5lHSy+c8siYLpgkm3bI3YhzE7LDMrJGV6qXoAycMFO+mUPhoFGNksbp5wSXpoN
+         REQ6iSOFrjk5/2SkmQ7E9weUeqfd7+Luw68xKdUXeOsJw/fODaVFgJ8wTqKPoXyp94I7
+         FoCk/NAN6unDifeJVvkv8Sj5J4w0ze12PD+E/DXxRP0zdO4d2cH5gWH24Ehvq4wb8Y8E
+         uRzswhsFpitl/hWtvGf7T9oINfrKfGPgyacvSEgGoy9CA6JnZekwqVOSqXR/H1bvvBPR
+         rzsKaV/uflcVtyVhwOHc7hfkn4i4RtaiCLKujsEFh41FnW4wUnNNtEIFYrShK6YqCDXs
+         C5ow==
+X-Forwarded-Encrypted: i=1; AJvYcCU0FScpqPZ9ShkQQMHN8Ms5m9vypwSl3HuFDAtYZJcw4YAN7RT07M0rbfCncgA1v7AO/p7gLBQ7@lists.linux.dev
+X-Gm-Message-State: AOJu0Yw+EvjIcBVOiry5+PuFlqPOfGb/kMDe/7VAguf0nqZNlbhkznYn
+	8whTVfPdXmAGTY9o8EALDb2FWDl4H4Y7KrXpOabYl68fNXtg6PFErKkv
+X-Gm-Gg: AY/fxX5rM3pIc31oRvW4TgtU55hW2P8I74COuVQQNtXjZHlwbPXHRD2GPMp28v33X9o
+	PDxzEVdlCHycdWoFhxj82F20BoGvLwwvGUILDUck+tx0SXn95wb8Lj6K/cMAO4DUqRQcGUyKwOJ
+	gEOVwKCko7Qv8nx3cqZqNKkGO5pUF4HTjtGKrkkNH1fGKtnga1+R5iZ2larQx21/CEEYXxNX308
+	o1JbQBdXmQ93WJ+JMMVF9fNaAPmlJDlRg+9R7MjchEK3EE7+F+BuHFLvw6Upb+mV15VVVu+U75F
+	2fw8F3OorKHZcFlRwxmL7LS902Uekogf0uFH+b4m6oFAON2QiBdixQiiyUgTG1khwlXA+2OXGTp
+	A31WGDOAY8y1oqpQewhQoWjTjN1Lo8Z/FhhWBxNjLpAnFO053MjnE6E8cP/aKZJH3/yb8sl4tD8
+	d01tnRf28BTNuu2VAel6x8nAU=
+X-Google-Smtp-Source: AGHT+IH2mqQovxiCkW/b95paNZBu6LthD4xUYLjFce1Y8OnfM5LhJSe8DpxB02zxDVWoel9wWIWNWQ==
+X-Received: by 2002:a05:701b:2302:b0:11b:9386:7ece with SMTP id a92af1059eb24-11f34c4ef17mr7076288c88.43.1765858561192;
+        Mon, 15 Dec 2025 20:16:01 -0800 (PST)
+Received: from VM-16-24-fedora.. ([43.153.32.141])
+        by smtp.gmail.com with ESMTPSA id a92af1059eb24-11f43ced319sm17548713c88.9.2025.12.15.20.16.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Dec 2025 20:16:00 -0800 (PST)
+From: Jinliang Zheng <alexjlzheng@gmail.com>
+X-Google-Original-From: Jinliang Zheng <alexjlzheng@tencent.com>
+To: gregkh@linuxfoundation.org
+Cc: ashish.kalra@amd.com,
+	joerg.roedel@amd.com,
+	patches@lists.linux.dev,
+	sarunkod@amd.com,
+	sashal@kernel.org,
+	stable@vger.kernel.org,
+	vasant.hegde@amd.com
+Subject: Re: [PATCH 6.6 194/529] iommu/amd: Skip enabling command/event buffers for kdump
+Date: Tue, 16 Dec 2025 12:15:59 +0800
+Message-ID: <20251216041559.3348663-1-alexjlzheng@tencent.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20251121130237.919671254@linuxfoundation.org>
+References: <20251121130237.919671254@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <cover.1765834788.git.nicolinc@nvidia.com> <cb38f91526596f4efd0cd1cffa50b4c1b334f7a4.1765834788.git.nicolinc@nvidia.com>
-In-Reply-To: <cb38f91526596f4efd0cd1cffa50b4c1b334f7a4.1765834788.git.nicolinc@nvidia.com>
-From: Samiullah Khawaja <skhawaja@google.com>
-Date: Mon, 15 Dec 2025 17:14:10 -0800
-X-Gm-Features: AQt7F2pGryc6oZ72KleXBeas9fEej802hxD59J2edZO4aLe2-OI0GRs2t7Q1jUY
-Message-ID: <CAAywjhSzKM_bEm_VbPZFffY9sR3-p==gbVppSL+555D1kPg_3Q@mail.gmail.com>
-Subject: Re: [PATCH v8 1/5] iommu: Lock group->mutex in iommu_deferred_attach()
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: joro@8bytes.org, will@kernel.org, robin.murphy@arm.com, afael@kernel.org, 
-	lenb@kernel.org, bhelgaas@google.com, alex@shazbot.org, jgg@nvidia.com, 
-	kevin.tian@intel.com, baolu.lu@linux.intel.com, 
-	linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, linux-acpi@vger.kernel.org, 
-	linux-pci@vger.kernel.org, kvm@vger.kernel.org, patches@lists.linux.dev, 
-	pjaroszynski@nvidia.com, vsethi@nvidia.com, helgaas@kernel.org, 
-	etzhao1900@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Dec 15, 2025 at 1:42=E2=80=AFPM Nicolin Chen <nicolinc@nvidia.com> =
-wrote:
->
-> The iommu_deferred_attach() function invokes __iommu_attach_device(), but
-> doesn't hold the group->mutex like other __iommu_attach_device() callers.
->
-> Though there is no pratical bug being triggered so far, it would be bette=
-r
-> to apply the same locking to this __iommu_attach_device(), since the IOMM=
-U
-> drivers nowaday are more aware of the group->mutex -- some of them use th=
-e
-> iommu_group_mutex_assert() function that could be potentially in the path
-> of an attach_dev callback function invoked by the __iommu_attach_device()=
-.
->
-> Worth mentioning that the iommu_deferred_attach() will soon need to check
-> group->resetting_domain that must be locked also.
->
-> Thus, grab the mutex to guard __iommu_attach_device() like other callers.
->
-> Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-> Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-> Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-> Tested-by: Dheeraj Kumar Srivastava <dheerajkumar.srivastava@amd.com>
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+On Fri, 21 Nov 2025 14:08:13 +0100, gregkh@linuxfoundation.org wrote:
+> 6.6-stable review patch.  If anyone has any objections, please let me know.
+
+The remaining 3 prerequisite patches in [1] should probably also be integrated,
+otherwise it may cause the capture kernel to fail to run properly:
+
+  [    8.336262][    T0] AMD-Vi: Completion-Wait loop timed out
+  [    8.457132][    T0] AMD-Vi: Completion-Wait loop timed out
+  [    8.578015][    T0] AMD-Vi: Completion-Wait loop timed out
+  [    8.601978][    T0] Kernel panic - not syncing: timer doesn't work through Interrupt-remapped IO-APIC
+  [    8.612329][    T0] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.6.119-s #1
+  [    8.620057][    T0] Hardware name: Tencent AC222/TC2-SLMB-A, BIOS 1.17.00 08/26/2025
+  [    8.628759][    T0] Call Trace:
+  [    8.632297][    T0]  <TASK>
+  [    8.635445][    T0]  dump_stack_lvl+0x32/0x50
+  [    8.640354][    T0]  panic+0x156/0x310
+  [    8.644579][    T0]  panic_if_irq_remap+0x19/0x20
+  [    8.649875][    T0]  setup_IO_APIC+0x7cb/0x8e0
+  [    8.654878][    T0]  ? _raw_spin_unlock_irqrestore+0xb/0x20
+  [    8.661146][    T0]  ? ioapic_read_entry+0x39/0x50
+  [    8.666539][    T0]  ? clear_IO_APIC_pin+0xbb/0x130
+  [    8.672025][    T0]  apic_intr_mode_init+0x62/0x110
+  [    8.677511][    T0]  x86_late_time_init+0x20/0x40
+  [    8.682804][    T0]  start_kernel+0x3e4/0x6d0
+  [    8.687707][    T0]  x86_64_start_reservations+0x14/0x30
+  [    8.693679][    T0]  x86_64_start_kernel+0x92/0xa0
+  [    8.699057][    T0]  secondary_startup_64_no_verify+0x18f/0x19b
+  [    8.705715][    T0]  </TASK>
+  [    8.708966][    T0] Rebooting in 10 seconds..
+
+[1] https://lore.kernel.org/all/cover.1756157913.git.ashish.kalra@amd.com/
+
+thanks,
+Jinliang Zheng :)
+
+> 
+> ------------------
+> 
+> From: Ashish Kalra <ashish.kalra@amd.com>
+> 
+> [ Upstream commit 9be15fbfc6c5c89c22cf6e209f66ea43ee0e58bb ]
+> 
+> After a panic if SNP is enabled in the previous kernel then the kdump
+> kernel boots with IOMMU SNP enforcement still enabled.
+> 
+> IOMMU command buffers and event buffer registers remain locked and
+> exclusive to the previous kernel. Attempts to enable command and event
+> buffers in the kdump kernel will fail, as hardware ignores writes to
+> the locked MMIO registers as per AMD IOMMU spec Section 2.12.2.1.
+> 
+> Skip enabling command buffers and event buffers for kdump boot as they
+> are already enabled in the previous kernel.
+> 
+> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+> Tested-by: Sairaj Kodilkar <sarunkod@amd.com>
+> Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+> Link: https://lore.kernel.org/r/576445eb4f168b467b0fc789079b650ca7c5b037.1756157913.git.ashish.kalra@amd.com
+> Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
 > ---
->  drivers/iommu/iommu.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index 2ca990dfbb88..170e522b5bda 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -2185,10 +2185,17 @@ EXPORT_SYMBOL_GPL(iommu_attach_device);
->
->  int iommu_deferred_attach(struct device *dev, struct iommu_domain *domai=
-n)
->  {
-> -       if (dev->iommu && dev->iommu->attach_deferred)
-> -               return __iommu_attach_device(domain, dev, NULL);
-> +       /*
-> +        * This is called on the dma mapping fast path so avoid locking. =
-This is
-> +        * racy, but we have an expectation that the driver will setup it=
-s DMAs
-> +        * inside probe while being single threaded to avoid racing.
-> +        */
-> +       if (!dev->iommu || !dev->iommu->attach_deferred)
-> +               return 0;
->
-> -       return 0;
-> +       guard(mutex)(&dev->iommu_group->mutex);
-> +
-> +       return __iommu_attach_device(domain, dev, NULL);
+>  drivers/iommu/amd/init.c | 28 +++++++++++++++++++---------
+>  1 file changed, 19 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
+> index 431cea41df2af..1897619209f14 100644
+> --- a/drivers/iommu/amd/init.c
+> +++ b/drivers/iommu/amd/init.c
+> @@ -840,11 +840,16 @@ static void iommu_enable_command_buffer(struct amd_iommu *iommu)
+>  
+>  	BUG_ON(iommu->cmd_buf == NULL);
+>  
+> -	entry = iommu_virt_to_phys(iommu->cmd_buf);
+> -	entry |= MMIO_CMD_SIZE_512;
+> -
+> -	memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
+> -		    &entry, sizeof(entry));
+> +	if (!is_kdump_kernel()) {
+> +		/*
+> +		 * Command buffer is re-used for kdump kernel and setting
+> +		 * of MMIO register is not required.
+> +		 */
+> +		entry = iommu_virt_to_phys(iommu->cmd_buf);
+> +		entry |= MMIO_CMD_SIZE_512;
+> +		memcpy_toio(iommu->mmio_base + MMIO_CMD_BUF_OFFSET,
+> +			    &entry, sizeof(entry));
+> +	}
+>  
+>  	amd_iommu_reset_cmd_buffer(iommu);
 >  }
->
->  void iommu_detach_device(struct iommu_domain *domain, struct device *dev=
-)
-> --
-> 2.43.0
->
->
-
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+> @@ -893,10 +898,15 @@ static void iommu_enable_event_buffer(struct amd_iommu *iommu)
+>  
+>  	BUG_ON(iommu->evt_buf == NULL);
+>  
+> -	entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+> -
+> -	memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+> -		    &entry, sizeof(entry));
+> +	if (!is_kdump_kernel()) {
+> +		/*
+> +		 * Event buffer is re-used for kdump kernel and setting
+> +		 * of MMIO register is not required.
+> +		 */
+> +		entry = iommu_virt_to_phys(iommu->evt_buf) | EVT_LEN_MASK;
+> +		memcpy_toio(iommu->mmio_base + MMIO_EVT_BUF_OFFSET,
+> +			    &entry, sizeof(entry));
+> +	}
+>  
+>  	/* set head and tail to zero manually */
+>  	writel(0x00, iommu->mmio_base + MMIO_EVT_HEAD_OFFSET);
+> -- 
+> 2.51.0
