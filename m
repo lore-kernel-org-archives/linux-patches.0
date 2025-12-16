@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD0A347FF4;
-	Tue, 16 Dec 2025 11:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA1A347FEE;
+	Tue, 16 Dec 2025 11:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765885121; cv=none; b=JMSzXjDcict2bgytmGcF1mXJ9lk4r9vwWcYc99M7hB+O5QC7WYvILMKiVDn5IMosIghirAk4nGAAj5P/sPNLJjyZKEp1sn8Z+xfVrY1XTE+xC1WBy9BRtIVbRpfZL7ZGwL7VK638xm6l+F7D4YQ7RmHZ1MlCoIPJpYd3FTIyF80=
+	t=1765885125; cv=none; b=blT8d8jXUIfUME6FnzHXkgnhe25tJXmg4+DPBi4KXr+yv9wxlI3PvNO/ECnzSCfF2RvmkA85Lq5SPi0T6XIJnhTS9QXc2UmZ6M2dZwGxJ3+0W9YcbMPoRbH1M/qF5mdc/mt/5yjK3hcQmFmafsqhzbP4f5NBxNr3sTn2/RAxd/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765885121; c=relaxed/simple;
-	bh=85kn43mF8euOyTplU44l51mpDJKrtZNNXlu+2/nw1to=;
+	s=arc-20240116; t=1765885125; c=relaxed/simple;
+	bh=eigKj6dMQiES1hjzsZBoB9mViFoaCkNpB2Y+HDwQmqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LQyzgpTn2LVqpTQ8HV7x/ukqvRTrwj52DHeq0k433FM8kLIanOfQvs713QxF5vJuN7yeYzUhMaMlCkTcKVlY7rRoZ3yL7dZWGrz3qhENMC1NuKwE/SmqbtAKp8fBnFY6WKKomTNJJB33ofiLWTD9t/PF5EpafY+6V2uFDoUXsCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOGrVdd9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDI2cmS5Cvyr4tZLoHhQvfFOGiMhoR3ZC5pBCy7k8hzEEWdAn/+O2j9NR51RfBjp3wfL4Iz9XWqOE4k7uRhSlTUEq9aImCqrlWNZgbEM8l6HKD535RO5TQrhYdPzBpOam5R0fQY3Rd0U87uW/+cf0LtWfaPtkw9Sg416zoe1tkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rHpGOLhd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOGrVdd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D2FFC4CEF1;
-	Tue, 16 Dec 2025 11:38:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rHpGOLhd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 892C9C4CEF1;
+	Tue, 16 Dec 2025 11:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765885121;
-	bh=85kn43mF8euOyTplU44l51mpDJKrtZNNXlu+2/nw1to=;
+	s=korg; t=1765885125;
+	bh=eigKj6dMQiES1hjzsZBoB9mViFoaCkNpB2Y+HDwQmqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOGrVdd9BqqXHD2ytEL9FSvqA+BgWGV0RKfk87mukynum5EAH+5lGPD/HKlRMCcQu
-	 0/Zw4gOCvLDmQjBdbJcf2/fWUbtTNoQ6PuVCbFd3XPNNike5g6llJStRHzKTftb9xT
-	 bBlRPTSK+eLQminAJ5DD1IRRGKIxPthLjJW5iV2U=
+	b=rHpGOLhdUBytIs/qWkKNb44RnovW1EnCZhTFcY3BMuetyo94I2GLGK42y0A+QJlCt
+	 2V0LIIDfhk8qTxFEh6Lkuyt42YJDciPc9jCZcLLRR8F+tYSl1bcb7dpx48g1IwNXC8
+	 ZFSedpDeAblN1MzPTy3+bqVJPhdemVADk0XHqQo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Hiago De Franco <hiago.franco@toradex.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Johan Hovold <johan@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Changhuang Liang <changhuang.liang@starfivetech.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 027/507] remoteproc: imx_rproc: Fix runtime PM cleanup and improve remove path
-Date: Tue, 16 Dec 2025 12:07:48 +0100
-Message-ID: <20251216111346.519575908@linuxfoundation.org>
+Subject: [PATCH 6.17 045/507] irqchip/starfive-jh8100: Fix section mismatch
+Date: Tue, 16 Dec 2025 12:08:06 +0100
+Message-ID: <20251216111347.176272704@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,65 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 80405a34e1f8975cdb2d7d8679bca7f768861035 ]
+[ Upstream commit f798bdb9aa81c425184f92e3d0b44d3b53d10da7 ]
 
-Proper cleanup should be done when rproc_add() fails by invoking both
-pm_runtime_disable() and pm_runtime_put_noidle() to avoid leaving the
-device in an inconsistent power state.
+Platform drivers can be probed after their init sections have been
+discarded so the irqchip init callback must not live in init.
 
-Fix it by adding pm_runtime_put_noidle() and pm_runtime_disable()
-in the error path.
-
-Also Update the remove() callback to use pm_runtime_put_noidle() instead of
-pm_runtime_put(), to clearly indicate that only need to restore the usage
-count.
-
-Fixes: a876a3aacc43 ("remoteproc: imx_rproc: detect and attach to pre-booted remote cores")
-Cc: Ulf Hansson <ulf.hansson@linaro.org>
-Cc: Hiago De Franco <hiago.franco@toradex.com>
-Suggested-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
-Link: https://lore.kernel.org/r/20250926-imx_rproc_v3-v3-1-4c0ec279cc5f@nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: e4e535036173 ("irqchip: Add StarFive external interrupt controller")
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Changhuang Liang <changhuang.liang@starfivetech.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-starfive-jh8100-intc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index a6eef0080ca9e..2eaff813a5b9f 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -1174,11 +1174,16 @@ static int imx_rproc_probe(struct platform_device *pdev)
- 	ret = rproc_add(rproc);
- 	if (ret) {
- 		dev_err(dev, "rproc_add failed\n");
--		goto err_put_clk;
-+		goto err_put_pm;
- 	}
+diff --git a/drivers/irqchip/irq-starfive-jh8100-intc.c b/drivers/irqchip/irq-starfive-jh8100-intc.c
+index 2460798ec158b..117f2c651ebd0 100644
+--- a/drivers/irqchip/irq-starfive-jh8100-intc.c
++++ b/drivers/irqchip/irq-starfive-jh8100-intc.c
+@@ -114,8 +114,7 @@ static void starfive_intc_irq_handler(struct irq_desc *desc)
+ 	chained_irq_exit(chip, desc);
+ }
  
- 	return 0;
- 
-+err_put_pm:
-+	if (dcfg->method == IMX_RPROC_SCU_API) {
-+		pm_runtime_disable(dev);
-+		pm_runtime_put_noidle(dev);
-+	}
- err_put_clk:
- 	clk_disable_unprepare(priv->clk);
- err_put_scu:
-@@ -1198,7 +1203,7 @@ static void imx_rproc_remove(struct platform_device *pdev)
- 
- 	if (priv->dcfg->method == IMX_RPROC_SCU_API) {
- 		pm_runtime_disable(priv->dev);
--		pm_runtime_put(priv->dev);
-+		pm_runtime_put_noidle(priv->dev);
- 	}
- 	clk_disable_unprepare(priv->clk);
- 	rproc_del(rproc);
+-static int __init starfive_intc_init(struct device_node *intc,
+-				     struct device_node *parent)
++static int starfive_intc_init(struct device_node *intc, struct device_node *parent)
+ {
+ 	struct starfive_irq_chip *irqc;
+ 	struct reset_control *rst;
 -- 
 2.51.0
 
