@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03DD93314B4;
-	Tue, 16 Dec 2025 11:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42194342509;
+	Tue, 16 Dec 2025 11:36:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884959; cv=none; b=Y8aA/3Ph3svCant7Q7e/flIWdFvT6fzcANN5TXMNFFRKJjrdCuOIBYbRVVSGvgzEdtI0ASdVuKHiVDpzA6uxc6pTQN2f2d8W18pMrEIAl7dXDE/Fh5rr0K6qxQ/4EIi4oPtjzLUd7nF4NRhSgdC64dM5fgWT5hAD45ccA0HU2wA=
+	t=1765884962; cv=none; b=BIUSvXgH4HSKvy6uhOPx1VAnqIS5rw8iTfy0mT2f1aPVdvBKqQffeIAPQmmrln9Zx2qrz4O9pBWIm/1hQ3JbzFz3baytic6B3JUjhpXZYuv1iym1PvdJ+u09iUyRYAUVOPt7po5JB4xHZP2oU+ykRGMvkhYlQtoAAswvHBeG+fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884959; c=relaxed/simple;
-	bh=esQ6pfHbpy16oo46aBf375dn+IKbuKc6GINBkEVdUJY=;
+	s=arc-20240116; t=1765884962; c=relaxed/simple;
+	bh=ev+ligHSc4hHStIeM4MtEfLHhbZBAu2QjCybWzoWlEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R7GU5R/e5AGqs/CJQndEHbNAZmOPA8ke5sTNX2OagN2IG3DKgpuHSBCTRryFuYtAPAyjvrDLZB0JzaujJ6HLPHNAbtGuCbIb4aCx0ZkjjOGGu3ZmArk1sqpqo03VeUf4Ib6Rvgj2z9J6zG+WVLOJtPaEOit3wicmjj4O6jqk//E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=foWxd5O4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4cL+u3GTbVz6/YLIdnv1zee/sjZq5fZws6lhAChCvLYqQ+xEn6Hcwl0Rb1p8lT0o5NDM3iPJIN5C45rzJoEueiHrP7XR3esRfQTMfERs1DYfkGDhdHasjjk5ZkHBE120x853y7tzJGN69TB6mHsoPXO76XtLM55AbCc7n/wn+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QCpEK7qL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="foWxd5O4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D299C4CEF1;
-	Tue, 16 Dec 2025 11:35:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QCpEK7qL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6584C4CEF1;
+	Tue, 16 Dec 2025 11:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884958;
-	bh=esQ6pfHbpy16oo46aBf375dn+IKbuKc6GINBkEVdUJY=;
+	s=korg; t=1765884962;
+	bh=ev+ligHSc4hHStIeM4MtEfLHhbZBAu2QjCybWzoWlEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=foWxd5O4NG31cWPaKLkPb+3VUtgZ+G0MZe9DQLTVaD9NNvY++N9dgcBmlu3FKfVte
-	 EerpbhGmfmwQyuT9FgnLKORIywGZByoLsH7eVFKk0ZluyP+B//hTOG5i3NMKHAPdLj
-	 y9WOy4mIp7oreyeY+3x2vT7I0z5BTRMuGbUb2f3Y=
+	b=QCpEK7qLB+gMsh57lV1KNBeaxEZThA7C/3yreg7VScpR+ysZumhryCkXGIjjE9U9I
+	 GTtS4gZs86JNL3T6zpDyU7TboHVXtSf7BuPluGtiDuFWTS+ly8hTalpM2RhLVdogAN
+	 JbOmXdHY/UpiMpPI7IJ8PrN4E3eanA6WBqcOffrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Gyokhan Kochmarla <gyokhan@amazon.com>
-Subject: [PATCH 6.12 349/354] tcp_metrics: use dst_dev_net_rcu()
-Date: Tue, 16 Dec 2025 12:15:16 +0100
-Message-ID: <20251216111333.552752806@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 318/354] ASoC: ak4458: Disable regulator when error happens
+Date: Tue, 16 Dec 2025 12:14:45 +0100
+Message-ID: <20251216111332.430698157@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -52,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 50c127a69cd6285300931853b352a1918cfa180f ]
+[ Upstream commit ae585fabb9713a43e358cf606451386757225c95 ]
 
-Replace three dst_dev() with a lockdep enabled helper.
+Disable regulator in runtime resume when error happens to balance
+the reference count of regulator.
 
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-7-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Gyokhan Kochmarla <gyokhan@amazon.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7e3096e8f823 ("ASoC: ak4458: Add regulator support")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://patch.msgid.link/20251203100529.3841203-2-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_metrics.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/ak4458.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/net/ipv4/tcp_metrics.c
-+++ b/net/ipv4/tcp_metrics.c
-@@ -170,7 +170,7 @@ static struct tcp_metrics_block *tcpm_ne
- 	struct net *net;
+diff --git a/sound/soc/codecs/ak4458.c b/sound/soc/codecs/ak4458.c
+index d472d99526287..fb1ab335a4c18 100644
+--- a/sound/soc/codecs/ak4458.c
++++ b/sound/soc/codecs/ak4458.c
+@@ -676,7 +676,15 @@ static int __maybe_unused ak4458_runtime_resume(struct device *dev)
+ 	regcache_cache_only(ak4458->regmap, false);
+ 	regcache_mark_dirty(ak4458->regmap);
  
- 	spin_lock_bh(&tcp_metrics_lock);
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
+-	return regcache_sync(ak4458->regmap);
++	ret = regcache_sync(ak4458->regmap);
++	if (ret)
++		goto err;
++
++	return 0;
++err:
++	regcache_cache_only(ak4458->regmap, true);
++	regulator_bulk_disable(ARRAY_SIZE(ak4458->supplies), ak4458->supplies);
++	return ret;
+ }
+ #endif /* CONFIG_PM */
  
- 	/* While waiting for the spin-lock the cache might have been populated
- 	 * with this entry and so we have to check again.
-@@ -273,7 +273,7 @@ static struct tcp_metrics_block *__tcp_g
- 		return NULL;
- 	}
- 
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
-@@ -318,7 +318,7 @@ static struct tcp_metrics_block *tcp_get
- 	else
- 		return NULL;
- 
--	net = dev_net_rcu(dst_dev(dst));
-+	net = dst_dev_net_rcu(dst);
- 	hash ^= net_hash_mix(net);
- 	hash = hash_32(hash, tcp_metrics_hash_log);
- 
+-- 
+2.51.0
+
 
 
