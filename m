@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E945341645;
-	Tue, 16 Dec 2025 11:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B9C341069;
+	Tue, 16 Dec 2025 11:23:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884198; cv=none; b=qUR+ZSAht4074BPDQVvpGtfiJo7YJSQaQGDojGyBAoa2ffpdaPq9E8P18qBbf+nOw0EWmOVTpyLCB6hrpa8jamaPrT3J96+RT1SOgxSGezpGdfp2+iMW/4NwynuFZ/94gCfnQb95+PL1b/HAUdecpTVpMPouv8YuvV5L/mZrvuA=
+	t=1765884201; cv=none; b=Ra8OkovGMAx4m0rMy/2+2j3K2VIi22/+fMNWm68pgZpgvumHmaLhA4GVj2Uukh5F/yhgaRpwlOks9ScdKw4M4Vf+OAHmd9rA4JK9C6dVUDcb/JhHXX3OGNAdrh+1MJNE97/oWo9LVDfRAL82PFo2J1DRwnh847LjpSnmNOQg3Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884198; c=relaxed/simple;
-	bh=uCx3f8in0jRKsi3DNtV4woD17VLeFpY9gGX6n4Y0mwc=;
+	s=arc-20240116; t=1765884201; c=relaxed/simple;
+	bh=RflQ2igDhDZGOZUxIfDMJupjcMRWH2ksqGYmai82IC4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DJhxZBfrBd35U2aite5kSUMpBE05u6iIglFqlm3/ZpEf66UWCEg14h9mOubp8iICVRt7IUcKQbvCJHS+EdViSws7veQ66tboVhVrflVBHCIBAdviIoxsk5bI8OT9HypskniK8t887EmZxIGl1ggvz0TLbs/WVia/BvgvztLE1ZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Dkhfrck; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=suiI4UbrKqIYZebhXmAoRHxhxnIgiafct5nK3I7tGTwIuAVcSGT7bwWoxIx7IjibhZnEEEWmOI4KTzFj5TsWdhA74uAEcIvQIA6DBpaBjWvFHVUoXisscZxbUH3mvlYZ3c9ld/XFGcpxW6XaxY0gdVdEd05fifjIAtTP3Ecal6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhdZ1iLy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Dkhfrck"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EC1C4CEF1;
-	Tue, 16 Dec 2025 11:23:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhdZ1iLy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F06C4CEF1;
+	Tue, 16 Dec 2025 11:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884198;
-	bh=uCx3f8in0jRKsi3DNtV4woD17VLeFpY9gGX6n4Y0mwc=;
+	s=korg; t=1765884201;
+	bh=RflQ2igDhDZGOZUxIfDMJupjcMRWH2ksqGYmai82IC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Dkhfrck0GbehzzuhdLYcFdf8KcX210m9+feo8i4N8K7OjgbK/n9k2CmIprRhLFsP
-	 5W4mMoGrTQJOVPdqpkiqS1FgdG2KCvfOBpWQwxppLhNyljkjdjAsnvg5YORfYTd4qt
-	 LUkDbAzlFZ+N9xYPXJ3UYaNQqvIv/XxPkdKmCX0Y=
+	b=xhdZ1iLyUg6dvszyQyFSfXFRLOAWHN1dBQlaB/PR7+RYs6Y8z3uUS5L4DxLZzcuIr
+	 qgm6VMYtmgXElFGS5HCVso9NgfYM1lPkoQxgwuwi5p+VubAfVMdmRO1H51Ga1gRzFi
+	 05WOY4OmHxJysBoQSjhPq/kAIn4FACMoJoxwWpiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jihed Chaibi <jihed.chaibi.dev@gmail.com>,
-	Kevin Hilman <khilman@baylibre.com>,
+	Michael van der Westhuizen <rmikey@meta.com>,
+	Tobias Fleig <tfleig@meta.com>,
+	Kiryl Shutsemau <kas@kernel.org>,
+	Usama Arif <usamaarif642@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/354] ARM: dts: omap3: n900: Correct obsolete TWL4030 power compatible
-Date: Tue, 16 Dec 2025 12:11:28 +0100
-Message-ID: <20251216111325.308135539@linuxfoundation.org>
+Subject: [PATCH 6.12 122/354] x86/boot: Fix page table access in 5-level to 4-level paging transition
+Date: Tue, 16 Dec 2025 12:11:29 +0100
+Message-ID: <20251216111325.343957694@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,41 +56,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
+From: Usama Arif <usamaarif642@gmail.com>
 
-[ Upstream commit 3862123e9b56663c7a3e4a308e6e65bffe44f646 ]
+[ Upstream commit eb2266312507d7b757859e2227aa5c4ba6280ebe ]
 
-The "ti,twl4030-power-n900" compatible string is obsolete and is not
-supported by any in-kernel driver. Currently, the kernel falls back to
-the second entry, "ti,twl4030-power-idle-osc-off", to bind a driver to
-this node.
+When transitioning from 5-level to 4-level paging, the existing code
+incorrectly accesses page table entries by directly dereferencing CR3 and
+applying PAGE_MASK. This approach has several issues:
 
-Make this fallback explicit by removing the obsolete board-specific
-compatible. This preserves the existing functionality while making the
-DTS compliant with the new, stricter 'ti,twl.yaml' binding.
+- __native_read_cr3() returns the raw CR3 register value, which on x86_64
+  includes not just the physical address but also flags. Bits above the
+  physical address width of the system i.e. above __PHYSICAL_MASK_SHIFT) are
+  also not masked.
 
-Fixes: daebabd578647 ("mfd: twl4030-power: Fix PM idle pin configuration to not conflict with regulators")
-Signed-off-by: Jihed Chaibi <jihed.chaibi.dev@gmail.com>
-Link: https://lore.kernel.org/r/20250914192516.164629-4-jihed.chaibi.dev@gmail.com
-Signed-off-by: Kevin Hilman <khilman@baylibre.com>
+- The PGD entry is masked by PAGE_SIZE which doesn't take into account the
+  higher bits such as _PAGE_BIT_NOPTISHADOW.
+
+Replace this with proper accessor functions:
+
+- native_read_cr3_pa(): Uses CR3_ADDR_MASK to additionally mask metadata out
+  of CR3 (like SME or LAM bits). All remaining bits are real address bits or
+  reserved and must be 0.
+
+- mask pgd value with PTE_PFN_MASK instead of PAGE_MASK, accounting for flags
+  above bit 51 (_PAGE_BIT_NOPTISHADOW in particular). Bits below 51, but above
+  the max physical address are reserved and must be 0.
+
+Fixes: e9d0e6330eb8 ("x86/boot/compressed/64: Prepare new top-level page table for trampoline")
+Reported-by: Michael van der Westhuizen <rmikey@meta.com>
+Reported-by: Tobias Fleig <tfleig@meta.com>
+Co-developed-by: Kiryl Shutsemau <kas@kernel.org>
+Signed-off-by: Kiryl Shutsemau <kas@kernel.org>
+Signed-off-by: Usama Arif <usamaarif642@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/r/a482fd68-ce54-472d-8df1-33d6ac9f6bb5@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/ti/omap/omap3-n900.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/boot/compressed/pgtable_64.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm/boot/dts/ti/omap/omap3-n900.dts b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-index 4bde3342bb959..598a4885094d3 100644
---- a/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-+++ b/arch/arm/boot/dts/ti/omap/omap3-n900.dts
-@@ -508,7 +508,7 @@ twl_audio: audio {
- 	};
+diff --git a/arch/x86/boot/compressed/pgtable_64.c b/arch/x86/boot/compressed/pgtable_64.c
+index d8c5de40669d3..b20a5790c193d 100644
+--- a/arch/x86/boot/compressed/pgtable_64.c
++++ b/arch/x86/boot/compressed/pgtable_64.c
+@@ -3,6 +3,7 @@
+ #include <asm/bootparam.h>
+ #include <asm/bootparam_utils.h>
+ #include <asm/e820/types.h>
++#include <asm/pgtable.h>
+ #include <asm/processor.h>
+ #include "pgtable.h"
+ #include "../string.h"
+@@ -176,9 +177,10 @@ asmlinkage void configure_5level_paging(struct boot_params *bp, void *pgtable)
+ 		 * For 4- to 5-level paging transition, set up current CR3 as
+ 		 * the first and the only entry in a new top-level page table.
+ 		 */
+-		*trampoline_32bit = __native_read_cr3() | _PAGE_TABLE_NOENC;
++		*trampoline_32bit = native_read_cr3_pa() | _PAGE_TABLE_NOENC;
+ 	} else {
+-		unsigned long src;
++		u64 *new_cr3;
++		pgd_t *pgdp;
  
- 	twl_power: power {
--		compatible = "ti,twl4030-power-n900", "ti,twl4030-power-idle-osc-off";
-+		compatible = "ti,twl4030-power-idle-osc-off";
- 		ti,use_poweroff;
- 	};
- };
+ 		/*
+ 		 * For 5- to 4-level paging transition, copy page table pointed
+@@ -188,8 +190,9 @@ asmlinkage void configure_5level_paging(struct boot_params *bp, void *pgtable)
+ 		 * We cannot just point to the page table from trampoline as it
+ 		 * may be above 4G.
+ 		 */
+-		src = *(unsigned long *)__native_read_cr3() & PAGE_MASK;
+-		memcpy(trampoline_32bit, (void *)src, PAGE_SIZE);
++		pgdp = (pgd_t *)native_read_cr3_pa();
++		new_cr3 = (u64 *)(native_pgd_val(pgdp[0]) & PTE_PFN_MASK);
++		memcpy(trampoline_32bit, new_cr3, PAGE_SIZE);
+ 	}
+ 
+ 	toggle_la57(trampoline_32bit);
 -- 
 2.51.0
 
