@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 719E63314B4;
-	Tue, 16 Dec 2025 11:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB6A1DE4E1;
+	Tue, 16 Dec 2025 11:34:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884852; cv=none; b=AoASQHKmSrY0aa17LKopxChexCY0wOZ2qo/NqXw0uLzwVUOWYINbW4tFJAyNCTUTchU8UNoNHC7BgwzsMlSF+/w86d/2DD7tARDL2Oy4SvLkNuHwTl9EfqEQ/3YE0RNsOkuitpBQW2+IcxAX7MQ5iynznTklYxcu40pCXzhOF+8=
+	t=1765884855; cv=none; b=iHQogaMWpFvQ9p03KoL++UsqJAzPaUKmfV+xvhm7EF3m/3AxMZG2aFWcZCJpVdJ1Dqr13dD04IL2/RhrvCjlRPR9XiZZyCa7c/BBX0iChRSmF1S7cVBp0Mm1E8zmKZTCFDSMq69tmsAxwXUnonEzF1hkaE1wqQCwq/jCnWDxOvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884852; c=relaxed/simple;
-	bh=nl5PfJBrkGtwTcqqtM0hi4mi6A5iCdEi+TwJzhMKCLk=;
+	s=arc-20240116; t=1765884855; c=relaxed/simple;
+	bh=HpX/MM9moqfUpgf7R2dkUsAMF+zUAsD6X64K5WyPag4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmBp9dKv6uWx09JN/va5jeNsED9RGnD1jT5X9q9lKAwCwDdUWqcxmzSLv5f5Pb6pmvYd7op5/EI7TLZw5Pdmws9oowOxEcb6WL0e2180HJKFmdeBI8Jml1CLYobcQRzRKhFyfOfdSXnxjh85JEyILD5YrbEMsCbAMIZ4KN5J/98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOQLziie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rpb8qOH7aC5FtICBm5P8BDte1sdEguBWg55bVfss8YIBxXcWC+xLBTnjcDNws0f/qcqPBOH/2zXitLYJCOIqOAoOKqPs4z6MRuxBNPI3PRCMkpVw+tDEiUKGfwE6CpZswtIYdgx4sIaqrdOGuuatabDZWJlj1+eQy3xZMJP/Ts8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKmn2qNJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOQLziie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78E1C16AAE;
-	Tue, 16 Dec 2025 11:34:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKmn2qNJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403E9C4CEF1;
+	Tue, 16 Dec 2025 11:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884852;
-	bh=nl5PfJBrkGtwTcqqtM0hi4mi6A5iCdEi+TwJzhMKCLk=;
+	s=korg; t=1765884855;
+	bh=HpX/MM9moqfUpgf7R2dkUsAMF+zUAsD6X64K5WyPag4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tOQLziieEJgMWRBS5mKrZ3sOhAzkF6DWZ6+0DFMwTmMRM5fUiehqDH12PxTDSsakI
-	 wc4LyrcQwy2RoiAiBkx/VFv5RzHlxZXT7lRRohDv9Bk0oprJq+/R8h5AXiebdPlAtc
-	 t06GipzsAFZZL1dyA9D3+/6KSAyFvKjZUCVzA9+M=
+	b=UKmn2qNJZ2zU27BFvtk4mVZ/IndIN1FQvUdbhOCM5ws1na1vb4k28xDf3O2HCGLYX
+	 dhSSZVJw4PykiACkZtxk0fTSGlTIl9XQLa3CMBG/dHsLLB3PkKSOC50jwqS6KRWIZa
+	 IhMupCKQEK8bcpqNYXtoDSuCCPHHNT6hxZeOKzRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ian Rogers <irogers@google.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 285/354] perf tools: Mark split kallsyms DSOs as loaded
-Date: Tue, 16 Dec 2025 12:14:12 +0100
-Message-ID: <20251216111331.238829995@linuxfoundation.org>
+Subject: [PATCH 6.12 286/354] perf tools: Fix split kallsyms DSO counting
+Date: Tue, 16 Dec 2025 12:14:13 +0100
+Message-ID: <20251216111331.274275322@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,37 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 7da4d60db33cccd8f4c445ab20bba71531435ee5 ]
+[ Upstream commit ad0b9c4865b98dc37f4d606d26b1c19808796805 ]
 
-The maps__split_kallsyms() will split symbols to module DSOs if it comes
-from a module.  It also handled some unusual kernel symbols after modules
-by creating new kernel maps like "[kernel].0".
-
-But they are pseudo DSOs to have those unexpected symbols.  They should
-not be considered as unloaded kernel DSOs.  Otherwise the dso__load()
-for them will end up calling dso__load_kallsyms() and then
-maps__split_kallsyms() again and again.
+It's counted twice as it's increased after calling maps__insert().  I
+guess we want to increase it only after it's added properly.
 
 Reviewed-by: Ian Rogers <irogers@google.com>
 Fixes: 2e538c4a1847291cf ("perf tools: Improve kernel/modules symbol lookup")
 Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/util/symbol.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/tools/perf/util/symbol.c b/tools/perf/util/symbol.c
-index c0ec5ed4f1aa4..c60e38dc39db7 100644
+index c60e38dc39db7..249de806f8e0d 100644
 --- a/tools/perf/util/symbol.c
 +++ b/tools/perf/util/symbol.c
-@@ -950,6 +950,7 @@ static int maps__split_kallsyms(struct maps *kmaps, struct dso *dso, u64 delta,
- 				return -1;
+@@ -938,11 +938,11 @@ static int maps__split_kallsyms(struct maps *kmaps, struct dso *dso, u64 delta,
+ 			if (dso__kernel(dso) == DSO_SPACE__KERNEL_GUEST)
+ 				snprintf(dso_name, sizeof(dso_name),
+ 					"[guest.kernel].%d",
+-					kernel_range++);
++					kernel_range);
+ 			else
+ 				snprintf(dso_name, sizeof(dso_name),
+ 					"[kernel].%d",
+-					kernel_range++);
++					kernel_range);
  
- 			dso__set_kernel(ndso, dso__kernel(dso));
-+			dso__set_loaded(ndso);
- 
- 			curr_map = map__new2(pos->start, ndso);
- 			if (curr_map == NULL) {
+ 			ndso = dso__new(dso_name);
+ 			map__zput(curr_map);
 -- 
 2.51.0
 
