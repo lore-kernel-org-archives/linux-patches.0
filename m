@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D3C346A05;
-	Tue, 16 Dec 2025 11:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA9234D4F3;
+	Tue, 16 Dec 2025 11:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886285; cv=none; b=Z4NDyr2MsoeMwbXHBiIHerOIKf1DJR0B2sUJJAOZnGD1QeNfAuLJrh3ypEypfophDP862uyPH3FMxmOq3lDuceHeJeOWHfOszXqK1TnCmss04oRvn0MogwNdBqqIZ5cm1SoauHAE5TXp7FYHBwL/DmkKtO9Yh6Y01KH7+8990KY=
+	t=1765886288; cv=none; b=W9XSVTnEJF0sWrHW22f2DJPGhyHrLjONEDXxoap6Sn/QL0dd/65nhVccN8A/ABlIvAtFlMP9XGQMayWPKgAmIFzH8bgxf3u83K34iiGxi2dpXXAbmTYiFekaCdKLMI1OJ4pGzIq2fvuHLOkq5+qctshkkA/HwhsVe8hIys8Q5cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886285; c=relaxed/simple;
-	bh=pxKObb5aZpMTLOm4eylKjYs6ymxP99nw3o9V6CRcYoo=;
+	s=arc-20240116; t=1765886288; c=relaxed/simple;
+	bh=VbABBcJdA3eYuW+GRMuFLWnveqmmZedNTVYnetIMY40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJarndBfwTzNlsXYpltPv5GCcs+6R3Fk+yU4a43ze8qwB30XlEFao9Zm+qEACzsHNbHYn8MjioBZ/ThCGAiW1mEL0cJdgfxO9py+SH2VBzzqwGK7ttcLzhFUfm8519ItnNUbIWaLP93ANrfEzbBy4nBSkrEi6cQavRzliYlj+UU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyOznSeL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RanbFNiEQHEcb5+oZSzbPq0rDjnXIRKtoX9mR/FVIyF4aNXMCw/ssZEc4YyuoJDmIXR8iF0CTHAxjRjmLu0/sWBb2fpwxYP4nchq81ayCbkw8m5RON3yXsmU2HAFK0mQ475lFwqUkBulOn36zWzA3si6SG2yKxmHQ54A9p5fNEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBIkctq9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyOznSeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9124C4CEF1;
-	Tue, 16 Dec 2025 11:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBIkctq9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC4DC4CEF1;
+	Tue, 16 Dec 2025 11:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886285;
-	bh=pxKObb5aZpMTLOm4eylKjYs6ymxP99nw3o9V6CRcYoo=;
+	s=korg; t=1765886288;
+	bh=VbABBcJdA3eYuW+GRMuFLWnveqmmZedNTVYnetIMY40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyOznSeLY9GdartdYM83Eqip/uUc5wmozbztiXJ3cdFQtj1ojvD4Fqs/bYnUou1wd
-	 uIscmKpeKk6m8ivlmaebdMxzcChnpbEL4gRRcY9P/Vf/TI8fM1buxL99IM/bor0s2+
-	 XAl63RV6DOHQfRXiCohIbQQ6gv3XhVyiqStxNTj0=
+	b=HBIkctq9MMi8JRp0r8+bwV0g0ZYHZfEafSQ1jfYzVxdFG/zA3trNP4h+WKG3+kmMe
+	 QkJRpDhq4YLzQg3YX4x4ZyYqIwUXjBB8tQagxXqNsCMKfre6abwL4yhaYAzd/V1blG
+	 10nehAi1ZfNim9P6u4GYhCToVJ0tdAd8CYAkF4sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 385/507] spi: airoha-snfi: en7523: workaround flash damaging if UART_TXD was short to GND
-Date: Tue, 16 Dec 2025 12:13:46 +0100
-Message-ID: <20251216111359.406845411@linuxfoundation.org>
+Subject: [PATCH 6.17 394/507] netfilter: nft_connlimit: update the count if add was skipped
+Date: Tue, 16 Dec 2025 12:13:55 +0100
+Message-ID: <20251216111359.728184394@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -53,109 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 061795b345aff371df8f71d54ae7c7dc8ae630d0 ]
+[ Upstream commit 69894e5b4c5e28cda5f32af33d4a92b7a4b93b0e ]
 
-Airoha EN7523 specific bug
---------------------------
-We found that some serial console may pull TX line to GROUND during board
-boot time. Airoha uses TX line as one of its bootstrap pins. On the EN7523
-SoC this may lead to booting in RESERVED boot mode.
+Connlimit expression can be used for all kind of packets and not only
+for packets with connection state new. See this ruleset as example:
 
-It was found that some flashes operates incorrectly in RESERVED mode.
-Micron and Skyhigh flashes are definitely affected by the issue,
-Winbond flashes are not affected.
+table ip filter {
+        chain input {
+                type filter hook input priority filter; policy accept;
+                tcp dport 22 ct count over 4 counter
+        }
+}
 
-Details:
---------
-DMA reading of odd pages on affected flashes operates incorrectly. Page
-reading offset (start of the page) on hardware level is replaced by 0x10.
-Thus results in incorrect data reading. As result OS loading becomes
-impossible.
+Currently, if the connection count goes over the limit the counter will
+count the packets. When a connection is closed, the connection count
+won't decrement as it should because it is only updated for new
+connections due to an optimization on __nf_conncount_add() that prevents
+updating the list if the connection is duplicated.
 
-Usage of UBI make things even worse. On attaching, UBI will detects
-corruptions (because of wrong reading of odd pages) and will try to
-recover. For recovering UBI will erase and write 'damaged' blocks with
-a valid information. This will destroy all UBI data.
+To solve this problem, check whether the connection was skipped and if
+so, update the list. Adjust count_tree() too so the same fix is applied
+for xt_connlimit.
 
-Non-DMA reading is OK.
-
-This patch detects booting in reserved mode, turn off DMA and print big
-fat warning.
-
-It's worth noting that the boot configuration is preserved across reboots.
-Therefore, to boot normally, you should do the following:
-- disconnect the serial console from the board,
-- power cycle the board.
-
-Fixes: a403997c12019 ("spi: airoha: add SPI-NAND Flash controller driver")
-Signed-off-by: Mikhail Kshevetskiy <mikhail.kshevetskiy@iopsys.eu>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Link: https://patch.msgid.link/20251125234047.1101985-2-mikhail.kshevetskiy@iopsys.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 976afca1ceba ("netfilter: nf_conncount: Early exit in nf_conncount_lookup() and cleanup")
+Closes: https://lore.kernel.org/netfilter/trinity-85c72a88-d762-46c3-be97-36f10e5d9796-1761173693813@3c-app-mailcom-bs12/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-airoha-snfi.c | 25 ++++++++++++++++++++++++-
- 1 file changed, 24 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conncount.c  | 12 ++++++++----
+ net/netfilter/nft_connlimit.c | 13 +++++++++++--
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/spi/spi-airoha-snfi.c b/drivers/spi/spi-airoha-snfi.c
-index b78163eaed61d..20b5d469d519a 100644
---- a/drivers/spi/spi-airoha-snfi.c
-+++ b/drivers/spi/spi-airoha-snfi.c
-@@ -1030,6 +1030,11 @@ static const struct spi_controller_mem_ops airoha_snand_mem_ops = {
- 	.dirmap_write = airoha_snand_dirmap_write,
- };
+diff --git a/net/netfilter/nf_conncount.c b/net/netfilter/nf_conncount.c
+index 0ffc5ff78a714..b84cfb5616df4 100644
+--- a/net/netfilter/nf_conncount.c
++++ b/net/netfilter/nf_conncount.c
+@@ -179,7 +179,7 @@ static int __nf_conncount_add(struct net *net,
+ 	if (ct && nf_ct_is_confirmed(ct)) {
+ 		if (refcounted)
+ 			nf_ct_put(ct);
+-		return 0;
++		return -EEXIST;
+ 	}
  
-+static const struct spi_controller_mem_ops airoha_snand_nodma_mem_ops = {
-+	.supports_op = airoha_snand_supports_op,
-+	.exec_op = airoha_snand_exec_op,
-+};
-+
- static int airoha_snand_setup(struct spi_device *spi)
- {
- 	struct airoha_snand_ctrl *as_ctrl;
-@@ -1104,7 +1109,9 @@ static int airoha_snand_probe(struct platform_device *pdev)
- 	struct airoha_snand_ctrl *as_ctrl;
- 	struct device *dev = &pdev->dev;
- 	struct spi_controller *ctrl;
-+	bool dma_enable = true;
- 	void __iomem *base;
-+	u32 sfc_strap;
- 	int err;
+ 	if ((u32)jiffies == list->last_gc)
+@@ -398,7 +398,7 @@ insert_tree(struct net *net,
+ 			int ret;
  
- 	ctrl = devm_spi_alloc_host(dev, sizeof(*as_ctrl));
-@@ -1139,12 +1146,28 @@ static int airoha_snand_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(as_ctrl->spi_clk),
- 				     "unable to get spi clk\n");
+ 			ret = nf_conncount_add_skb(net, skb, l3num, &rbconn->list);
+-			if (ret)
++			if (ret && ret != -EEXIST)
+ 				count = 0; /* hotdrop */
+ 			else
+ 				count = rbconn->list.count;
+@@ -501,10 +501,14 @@ count_tree(struct net *net,
+ 			/* same source network -> be counted! */
+ 			ret = __nf_conncount_add(net, skb, l3num, &rbconn->list);
+ 			spin_unlock_bh(&rbconn->list.list_lock);
+-			if (ret)
++			if (ret && ret != -EEXIST) {
+ 				return 0; /* hotdrop */
+-			else
++			} else {
++				/* -EEXIST means add was skipped, update the list */
++				if (ret == -EEXIST)
++					nf_conncount_gc_list(net, &rbconn->list);
+ 				return rbconn->list.count;
++			}
+ 		}
+ 	}
  
-+	if (device_is_compatible(dev, "airoha,en7523-snand")) {
-+		err = regmap_read(as_ctrl->regmap_ctrl,
-+				  REG_SPI_CTRL_SFC_STRAP, &sfc_strap);
-+		if (err)
-+			return err;
-+
-+		if (!(sfc_strap & 0x04)) {
-+			dma_enable = false;
-+			dev_warn(dev, "Detected booting in RESERVED mode (UART_TXD was short to GND).\n");
-+			dev_warn(dev, "This mode is known for incorrect DMA reading of some flashes.\n");
-+			dev_warn(dev, "Much slower PIO mode will be used to prevent flash data damage.\n");
-+			dev_warn(dev, "Unplug UART cable and power cycle board to get full performance.\n");
+diff --git a/net/netfilter/nft_connlimit.c b/net/netfilter/nft_connlimit.c
+index d998e27713ac7..83a7d5769396c 100644
+--- a/net/netfilter/nft_connlimit.c
++++ b/net/netfilter/nft_connlimit.c
+@@ -29,8 +29,17 @@ static inline void nft_connlimit_do_eval(struct nft_connlimit *priv,
+ 
+ 	err = nf_conncount_add_skb(nft_net(pkt), pkt->skb, nft_pf(pkt), priv->list);
+ 	if (err) {
+-		regs->verdict.code = NF_DROP;
+-		return;
++		if (err == -EEXIST) {
++			/* Call gc to update the list count if any connection has
++			 * been closed already. This is useful for softlimit
++			 * connections like limiting bandwidth based on a number
++			 * of open connections.
++			 */
++			nf_conncount_gc_list(nft_net(pkt), priv->list);
++		} else {
++			regs->verdict.code = NF_DROP;
++			return;
 +		}
-+	}
-+
- 	err = dma_set_mask(as_ctrl->dev, DMA_BIT_MASK(32));
- 	if (err)
- 		return err;
+ 	}
  
- 	ctrl->num_chipselect = 2;
--	ctrl->mem_ops = &airoha_snand_mem_ops;
-+	ctrl->mem_ops = dma_enable ? &airoha_snand_mem_ops
-+				   : &airoha_snand_nodma_mem_ops;
- 	ctrl->bits_per_word_mask = SPI_BPW_MASK(8);
- 	ctrl->mode_bits = SPI_RX_DUAL;
- 	ctrl->setup = airoha_snand_setup;
+ 	count = priv->list->count;
 -- 
 2.51.0
 
