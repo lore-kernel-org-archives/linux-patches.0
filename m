@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A073659FC;
-	Tue, 16 Dec 2025 12:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDD21355802;
+	Tue, 16 Dec 2025 12:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765887191; cv=none; b=HuVdFrgPe/VrxgEDdar9aPStYlm0+P/PqLiCRfxGwl8ooAmN3YVgDKC6xBbGNpJepbi2PtyygwuzHrE9FKLyO1aSDGKkoxuk85HyK8aeemcX8OitMKaqEoylVPkLzEmi197ZTham3jKN8Da+/J74E5bqfZUPDic0yzciQOP1nu4=
+	t=1765887194; cv=none; b=JTn2m8y59Vg6Eygy7w9DEEbkLjKezQ3FkkNDf8HjdEREcTCLGpzyhy+0NxAs11liCu1e6bI9mmjgiE3CXZbsLVeUR0QuSokubA1G5a5e6At4IMW2rxYc/DkTbIfb+PbEzXQ+uq8vFMM44RrcEOqGOiSZAL9PUuQS7MSA202x6A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765887191; c=relaxed/simple;
-	bh=HomRJGJ/sTMkgf+OLUzbfQsM35kJ6kxcYhibL3EXCpk=;
+	s=arc-20240116; t=1765887194; c=relaxed/simple;
+	bh=zPH8ptpFMuDYG9Fo6aXeooUaLJY8ertEdDTNDuDAZu4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mt1oTCeChUINkzbUAjRXZrrZZHhl61a9PrCtpvEd2kIK6JCx9YUeOg9/yH3vSzuHmkBb7k6tsL6gsK2KZglZPvwXj5WCqPziigDNVy4BZcEIAi7892u25WA6jqUkMmpauMncpnYpZJunLX1n2Iovm6LJ+0cODNCREmcR1/rp+TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MXSCZzkC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ciig8rUNrQcHYpvHXqlHSPd+hx/jAiWctgt/OfQVuuAuUZmnVPgu4tHWhm9sDMMrjaT4HfM1RQ0QITKXY6hyxZHPHqahaVPc409Qev+R9VSiYd58iSWL744ynvxbFU282i5C93Qzoli5td13ZNm9Vp6mDJU8l0Dw0+/GrJ2WWnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x4v/fiIK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MXSCZzkC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047D2C4CEF1;
-	Tue, 16 Dec 2025 12:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x4v/fiIK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43ABAC4CEF1;
+	Tue, 16 Dec 2025 12:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765887191;
-	bh=HomRJGJ/sTMkgf+OLUzbfQsM35kJ6kxcYhibL3EXCpk=;
+	s=korg; t=1765887194;
+	bh=zPH8ptpFMuDYG9Fo6aXeooUaLJY8ertEdDTNDuDAZu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXSCZzkC/LnTFb9lyhCuQPPw/1YTBBmyYPeCiT8oMyB5y/sVkWvf+b4yMirDLhzGc
-	 ws2kgmuZ5rhFhF0rDc/+dWu19tqAJNFYambWvbMXD33Ka+zxniXKPyWX3FoD1lUwNq
-	 RZAHlnL45X/elthBhGxW6CqCv3IDdmZEFTYV6A4A=
+	b=x4v/fiIKgI4Wh1D0ZDUiYjzD0JWzicgkAM6D6i6SRZvitemquoU64aEH5IwFyQfbZ
+	 +AXZISWQx+a1I2r19q3gSez6dXqVS67WkhZY2/0aWDf+m1PiIXSVgL6R1U/6uOkzix
+	 9Ag4u3Z9Ywk25oodJJqKY2AKZvh6A+rGctEtjV30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Aniket Limaye <a-limaye@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 154/614] pidfs: add missing BUILD_BUG_ON() assert on struct pidfd_info
-Date: Tue, 16 Dec 2025 12:08:41 +0100
-Message-ID: <20251216111406.915819414@linuxfoundation.org>
+Subject: [PATCH 6.18 155/614] arm64: dts: ti: k3-j784s4: Fix I2C pinmux pull configuration
+Date: Tue, 16 Dec 2025 12:08:42 +0100
+Message-ID: <20251216111406.951329182@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -52,35 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Aniket Limaye <a-limaye@ti.com>
 
-[ Upstream commit d8fc51d8fa3b9894713e7eebcf574bee488fa3e1 ]
+[ Upstream commit 671c852fc53d1b6f5eccdb03c1889a484c9d1996 ]
 
-Validate that the size of struct pidfd_info is correctly updated.
+The I2C pins for some of the instances on J784S4/J742S2/AM69 are
+configured as PIN_INPUT_PULLUP while these pins are open-drain type and
+do not support internal pull-ups [0][1][2]. The pullup configuration
+bits in the corresponding padconfig registers are reserved and any
+writes to them have no effect and readback checks on those bits fail.
 
-Link: https://patch.msgid.link/20251028-work-coredump-signal-v1-4-ca449b7b7aa0@kernel.org
-Fixes: 1d8db6fd698d ("pidfs, coredump: add PIDFD_INFO_COREDUMP")
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Update the pinmux settings to use PIN_INPUT instead of PIN_INPUT_PULLUP
+to reflect the correct hardware behaviour.
+
+[0]: https://www.ti.com/lit/gpn/tda4ah-q1 (J784S4 Datasheet: Table 5-1. Pin Attributes)
+[1]: https://www.ti.com/lit/gpn/tda4ape-q1 (J742S2 Datasheet: Table 5-1. Pin Attributes)
+[2]: https://www.ti.com/lit/gpn/am69a (AM69 Datasheet: Table 5-1. Pin Attributes)
+
+Fixes: e20a06aca5c9 ("arm64: dts: ti: Add support for J784S4 EVM board")
+Fixes: 635fb18ba008 ("arch: arm64: dts: Add support for AM69 Starter Kit")
+Fixes: 0ec1a48d99dd ("arm64: dts: ti: k3-am69-sk: Add pinmux for RPi Header")
+Signed-off-by: Aniket Limaye <a-limaye@ti.com>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://patch.msgid.link/20251022122638.234367-1-a-limaye@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pidfs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/ti/k3-am69-sk.dts                   | 8 ++++----
+ arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/pidfs.c b/fs/pidfs.c
-index 0ef5b47d796a2..f4d7dac1b4494 100644
---- a/fs/pidfs.c
-+++ b/fs/pidfs.c
-@@ -306,6 +306,8 @@ static long pidfd_info(struct file *file, unsigned int cmd, unsigned long arg)
- 	const struct cred *c;
- 	__u64 mask;
+diff --git a/arch/arm64/boot/dts/ti/k3-am69-sk.dts b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
+index 5896e57b5b9ed..0e2d12cb051da 100644
+--- a/arch/arm64/boot/dts/ti/k3-am69-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am69-sk.dts
+@@ -236,8 +236,8 @@ J784S4_IOPAD(0x0d4, PIN_OUTPUT, 11) /* (AN38) SPI0_CLK.UART8_TXD */
  
-+	BUILD_BUG_ON(sizeof(struct pidfd_info) != PIDFD_INFO_SIZE_VER1);
-+
- 	if (!uinfo)
- 		return -EINVAL;
- 	if (usize < PIDFD_INFO_SIZE_VER0)
+ 	main_i2c0_pins_default: main-i2c0-default-pins {
+ 		pinctrl-single,pins = <
+-			J784S4_IOPAD(0x0e0, PIN_INPUT_PULLUP, 0) /* (AN36) I2C0_SCL */
+-			J784S4_IOPAD(0x0e4, PIN_INPUT_PULLUP, 0) /* (AP37) I2C0_SDA */
++			J784S4_IOPAD(0x0e0, PIN_INPUT, 0) /* (AN36) I2C0_SCL */
++			J784S4_IOPAD(0x0e4, PIN_INPUT, 0) /* (AP37) I2C0_SDA */
+ 		>;
+ 	};
+ 
+@@ -416,8 +416,8 @@ J784S4_WKUP_IOPAD(0x088, PIN_OUTPUT, 0) /* (J37) WKUP_GPIO0_12.MCU_UART0_TXD */
+ 
+ 	mcu_i2c0_pins_default: mcu-i2c0-default-pins {
+ 		pinctrl-single,pins = <
+-			J784S4_WKUP_IOPAD(0x0a0, PIN_INPUT_PULLUP, 0) /* (M35) MCU_I2C0_SCL */
+-			J784S4_WKUP_IOPAD(0x0a4, PIN_INPUT_PULLUP, 0) /* (G34) MCU_I2C0_SDA */
++			J784S4_WKUP_IOPAD(0x0a0, PIN_INPUT, 0) /* (M35) MCU_I2C0_SCL */
++			J784S4_WKUP_IOPAD(0x0a4, PIN_INPUT, 0) /* (G34) MCU_I2C0_SDA */
+ 		>;
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
+index 419c1a70e028d..2834f0a8bbee0 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-j742s2-evm-common.dtsi
+@@ -270,8 +270,8 @@ J784S4_IOPAD(0x0d4, PIN_OUTPUT, 11) /* (AN38) SPI0_CLK.UART8_TXD */
+ 
+ 	main_i2c0_pins_default: main-i2c0-default-pins {
+ 		pinctrl-single,pins = <
+-			J784S4_IOPAD(0x0e0, PIN_INPUT_PULLUP, 0) /* (AN36) I2C0_SCL */
+-			J784S4_IOPAD(0x0e4, PIN_INPUT_PULLUP, 0) /* (AP37) I2C0_SDA */
++			J784S4_IOPAD(0x0e0, PIN_INPUT, 0) /* (AN36) I2C0_SCL */
++			J784S4_IOPAD(0x0e4, PIN_INPUT, 0) /* (AP37) I2C0_SDA */
+ 		>;
+ 	};
+ 
 -- 
 2.51.0
 
