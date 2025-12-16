@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7AB3570CD;
-	Tue, 16 Dec 2025 12:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5765344059;
+	Tue, 16 Dec 2025 12:29:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765888149; cv=none; b=u/G5K9wwZMRbrzK1T+QiFlUVfqbSCQO04WIctaQ2Nas+wufQ2KejGu9i9WtU1E/Ke+DTWwF652LdNxToP+VF00rNKZwkQr+XgzZ/ePxKLW/SCJOOby8ja6mDOuKhWfne4eZ8bk3Ewvy61GZ22bvC5AvWaKO10l1wcIb69ZX4QVw=
+	t=1765888152; cv=none; b=IuP2+SJvsiUJA0Yn74Het2PNRM/tWmO79l2Hck0JgNI1i7PlVm+CtSyHwHevrKmXY3h0VUCXry2rWdxR+kZQSbMRTPZPc7c52U/2qmSFBeAuCBtBI/tCJm3mydVkT9xAWkJZ7e6xUz54jR3LUbMmat+aJN+hwG+T7MuHSFKqvNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765888149; c=relaxed/simple;
-	bh=puQp9YOQ/DJip3AOF60lovAXQC9bAoTss44CBIeVRMk=;
+	s=arc-20240116; t=1765888152; c=relaxed/simple;
+	bh=PfYao538m0sTLRlApZYSz+WQpZO4g/NfaajT3Q9uiOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0zdwiD65msWf5vqeq0Gr5IXp6s30GE3BRobfM8Opp3LZnay6/tid2lmQXgRdSiNKOOIIwnUPnM206/LKAkUg7QsqP3sKSDavs8bur7keCGVEACvH1Y5jnsBWLxf3qK5atCmOiRSD8HrCDGoY8121cudyiWzc35gDE0DxTty7nw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KW0htVtX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s8sG+yqYymACCwutwz52dLwDDZ6R+yxug3kAtUXU2hqLS8JT+Ru4XIrDksIUJmsjhdwNAeRCqHHZOuHyQIBtW3BzIgKGm/QhfWVQOB4YgtqOlz+bGZ/L9o/QBIbOizav1JpX7Fli2OIjY+45RP0vS8ETaigAEE8VGNZPjGXEeuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yw9g/vmz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KW0htVtX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF90BC4CEF1;
-	Tue, 16 Dec 2025 12:29:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yw9g/vmz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48D1C4CEF1;
+	Tue, 16 Dec 2025 12:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765888149;
-	bh=puQp9YOQ/DJip3AOF60lovAXQC9bAoTss44CBIeVRMk=;
+	s=korg; t=1765888152;
+	bh=PfYao538m0sTLRlApZYSz+WQpZO4g/NfaajT3Q9uiOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KW0htVtXra7jhNCjy666fOJ+rfj1T6ed6Al2UY/zTnRVnhA02i5mVGTQS7gTFHJDu
-	 +xyoqWFa5Bms71ls6ilRRQwGh1nc48zrui8CaJLp4Ixb5vNFUvOqqfqUiEjFl3QeYc
-	 +PtZmLTJbeYRA2GZMiMchhJKGJFy8P2BhOSQ02XI=
+	b=Yw9g/vmzT8P1ijb7FJdcXGc+tohm3jO91muH4IasQByyR+0lu3C736Lku/BfrZnH1
+	 y938TTuH5jnTrb9sSYRYvS8pH49W4FPkk9sGOfnNLOGWppD4ZGix8PclW6bIz1TZM/
+	 ItMRM5AwL9GI25Tlc6HD0XYGgCwrlsDx9w/K0eAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Andrea della Porta <andrea.porta@suse.com>,
+	Oliver Rosenberg <olrose55@gmail.com>,
+	Will Rosenberg <whrosenb@asu.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 446/614] misc: rp1: Fix an error handling path in rp1_probe()
-Date: Tue, 16 Dec 2025 12:13:33 +0100
-Message-ID: <20251216111417.532237198@linuxfoundation.org>
+Subject: [PATCH 6.18 447/614] kernfs: fix memory leak of kernfs_iattrs in __kernfs_new_node
+Date: Tue, 16 Dec 2025 12:13:34 +0100
+Message-ID: <20251216111417.567991274@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -51,40 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Will Rosenberg <whrosenb@asu.edu>
 
-[ Upstream commit 43cd4b634ef90c4e2ff75eaeb361786fa04c8874 ]
+[ Upstream commit 382b1e8f30f779af8d6d33268e53df7de579ef3c ]
 
-When DT is used to get the reference of 'rp1_node', it should be released
-when not needed anymore, otherwise it is leaking.
+There exists a memory leak of kernfs_iattrs contained as an element
+of kernfs_node allocated in __kernfs_new_node(). __kernfs_setattr()
+allocates kernfs_iattrs as a sub-object, and the LSM security check
+incorrectly errors out and does not free the kernfs_iattrs sub-object.
 
-In such a case, add the missing of_node_put() call at the end of the probe,
-as already done in the error handling path.
+Make an additional error out case that properly frees kernfs_iattrs if
+security_kernfs_init_security() fails.
 
-Fixes: 49d63971f963 ("misc: rp1: RaspberryPi RP1 misc driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Andrea della Porta <andrea.porta@suse.com>
-Link: https://patch.msgid.link/9bc1206de787fa86384f3e5ba0a8027947bc00ff.1762585959.git.christophe.jaillet@wanadoo.fr
+Fixes: e19dfdc83b60 ("kernfs: initialize security of newly created nodes")
+Co-developed-by: Oliver Rosenberg <olrose55@gmail.com>
+Signed-off-by: Oliver Rosenberg <olrose55@gmail.com>
+Signed-off-by: Will Rosenberg <whrosenb@asu.edu>
+Link: https://patch.msgid.link/20251125151332.2010687-1-whrosenb@asu.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/rp1/rp1_pci.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/kernfs/dir.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/rp1/rp1_pci.c b/drivers/misc/rp1/rp1_pci.c
-index 803832006ec87..a342bcc6164bb 100644
---- a/drivers/misc/rp1/rp1_pci.c
-+++ b/drivers/misc/rp1/rp1_pci.c
-@@ -289,6 +289,9 @@ static int rp1_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 		goto err_unload_overlay;
+diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
+index a670ba3e565e0..5c0efd6b239f6 100644
+--- a/fs/kernfs/dir.c
++++ b/fs/kernfs/dir.c
+@@ -675,11 +675,14 @@ static struct kernfs_node *__kernfs_new_node(struct kernfs_root *root,
+ 	if (parent) {
+ 		ret = security_kernfs_init_security(parent, kn);
+ 		if (ret)
+-			goto err_out3;
++			goto err_out4;
  	}
  
-+	if (skip_ovl)
-+		of_node_put(rp1_node);
-+
- 	return 0;
+ 	return kn;
  
- err_unload_overlay:
++ err_out4:
++	simple_xattrs_free(&kn->iattr->xattrs, NULL);
++	kmem_cache_free(kernfs_iattrs_cache, kn->iattr);
+  err_out3:
+ 	spin_lock(&root->kernfs_idr_lock);
+ 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
 -- 
 2.51.0
 
