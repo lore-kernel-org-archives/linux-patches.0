@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1919341645;
-	Tue, 16 Dec 2025 11:22:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B2B8341069;
+	Tue, 16 Dec 2025 11:22:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884172; cv=none; b=A+xShAyk5lmWymhm0nKc3iFh8B/nIl0/+PlSh8UzVZniORhTUDVBlN8zWjUB+CtMUy9F02ddyXWBZdF1oRXk/sPli3o5iSK9x485H8H3MHsU/wdN1G/CXLBiwyROTxpsOiiy2T+jARFdX0aQ8XEQTVgwaJjR92fPfBsivsteSaI=
+	t=1765884176; cv=none; b=BLiR9aUKcoce1tifQZBEPIpn2ZJj7Km365Z7twiAUn0y3KY9BuXYTAGIcxV7Ywo+iZD6zIZSeb5ddzBkKiqvWV0XFn/db6/96xEcbUnY6ANNW48WBclqQnLKblDEYh7ToQ3EgjaoWKYwQR82xeSw+V7QTPE/5BEbJi8/6HckEd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884172; c=relaxed/simple;
-	bh=pwg9a82r1JMdAnpe2Ypq45Tz9u5IwXVB+ZT/E+O9lsY=;
+	s=arc-20240116; t=1765884176; c=relaxed/simple;
+	bh=7gIG2grRrRud4HU+CXsohF+Y7NFULwyGJ4jerROMLWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gepszHM0LQXUz34denMjtE9fUVCzdpW+QnEfE3rP9nMsSKW6KkTeVHsBBN6xgiQPyKJ598n4ykkF4EayjECWdgzukR67VH22yoG1/Hoc/bwITLt9V/SW1MehUSEOpE8zMtnq0I+oxhcTm/yqt41aulGGmGLF79iyI3AOBjAZZGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5VHH1V+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=esvvF+Y3naEeIehp033MTjsqfoHPSIO3oPBMt2zzC3pAKbUDsc57th2/Flgu/woTqaC8XraPc1tJ7zbN5vsulAPRQ4Uyp1hFyEV/ZFnZHat3O2fEBGHpsxINEcWhtDMvzE5UbQeRPL5AQziOj8VfSE5ZAa66KBXXilxEx/z5/m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fqp5mKbI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5VHH1V+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA1E4C4CEF5;
-	Tue, 16 Dec 2025 11:22:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fqp5mKbI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF9EBC4CEF1;
+	Tue, 16 Dec 2025 11:22:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884172;
-	bh=pwg9a82r1JMdAnpe2Ypq45Tz9u5IwXVB+ZT/E+O9lsY=;
+	s=korg; t=1765884176;
+	bh=7gIG2grRrRud4HU+CXsohF+Y7NFULwyGJ4jerROMLWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5VHH1V+i4OT+7riqhM2yy6EeUMmEyRBBJvcOwu1VKzuVVZNvOziSdGbc4/9PF2xX
-	 8BgQ+VhaLbEtAdgQZ6ARtf5P1r3oxxTAPpZFlzk5Wd+ioD2cDvpoJKvZaF3XV0RTb6
-	 fYYLoWUl9fnyfnFTrKsg1V7/PBZ2JUBXi+aUXT5U=
+	b=Fqp5mKbIFPAmQnHM7NrkR5WcfEtbHSWoCdT3f4d5ACdlIeZWyq/L6DqrZCMVx5GtZ
+	 07+Mt2sQN/lBXRLK3l0wGGEIdDiYmKCjXea3jSiGf7k9ntH64fuCaW3AxTsk7jBnhz
+	 XgCuc/dDAENKYHrhMGAYtbbAJg08O+1GeKSslcnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ketil Johnsen <ketil.johnsen@arm.com>,
+	Boris Brezillon <boris.brezillon@collabora.com>,
 	Liviu Dudau <liviu.dudau@arm.com>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 114/354] drm/panthor: Fix UAF race between device unplug and FW event processing
-Date: Tue, 16 Dec 2025 12:11:21 +0100
-Message-ID: <20251216111325.053094475@linuxfoundation.org>
+Subject: [PATCH 6.12 115/354] drm/panthor: Fix race with suspend during unplug
+Date: Tue, 16 Dec 2025 12:11:22 +0100
+Message-ID: <20251216111325.090135121@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -53,38 +55,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Ketil Johnsen <ketil.johnsen@arm.com>
 
-[ Upstream commit 7051f6ba968fa69918d72cc26de4d6cf7ea05b90 ]
+[ Upstream commit 08be57e6e8aa20ea5a6dd2552e38ac168d6a9b11 ]
 
-The function panthor_fw_unplug() will free the FW memory sections.
-The problem is that there could still be pending FW events which are yet
-not handled at this point. process_fw_events_work() can in this case try
-to access said freed memory.
+There is a race between panthor_device_unplug() and
+panthor_device_suspend() which can lead to IRQ handlers running on a
+powered down GPU. This is how it can happen:
+- unplug routine calls drm_dev_unplug()
+- panthor_device_suspend() can now execute, and will skip a lot of
+  important work because the device is currently marked as unplugged.
+- IRQs will remain active in this case and IRQ handlers can therefore
+  try to access a powered down GPU.
 
-Simply call disable_work_sync() to both drain and prevent future
-invocation of process_fw_events_work().
+The fix is simply to take the PM ref in panthor_device_unplug() a
+little bit earlier, before drm_dev_unplug().
 
 Signed-off-by: Ketil Johnsen <ketil.johnsen@arm.com>
-Fixes: de85488138247 ("drm/panthor: Add the scheduler logical block")
+Fixes: 5fe909cae118a ("drm/panthor: Add the device logical block")
+Reviewed-by: Boris Brezillon <boris.brezillon@collabora.com>
 Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patch.msgid.link/20251027140217.121274-1-ketil.johnsen@arm.com
+Reviewed-by: Steven Price <steven.price@arm.com>
+Link: https://patch.msgid.link/20251022103242.1083311-1-ketil.johnsen@arm.com
 Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panthor/panthor_sched.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panthor/panthor_device.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/panthor/panthor_sched.c b/drivers/gpu/drm/panthor/panthor_sched.c
-index 81ea3a79ab49c..1d95decddc273 100644
---- a/drivers/gpu/drm/panthor/panthor_sched.c
-+++ b/drivers/gpu/drm/panthor/panthor_sched.c
-@@ -3696,6 +3696,7 @@ void panthor_sched_unplug(struct panthor_device *ptdev)
- 	struct panthor_scheduler *sched = ptdev->scheduler;
+diff --git a/drivers/gpu/drm/panthor/panthor_device.c b/drivers/gpu/drm/panthor/panthor_device.c
+index 01dff89bed4e1..e36d414044e02 100644
+--- a/drivers/gpu/drm/panthor/panthor_device.c
++++ b/drivers/gpu/drm/panthor/panthor_device.c
+@@ -64,6 +64,8 @@ void panthor_device_unplug(struct panthor_device *ptdev)
+ 		return;
+ 	}
  
- 	cancel_delayed_work_sync(&sched->tick_work);
-+	disable_work_sync(&sched->fw_events_work);
++	drm_WARN_ON(&ptdev->base, pm_runtime_get_sync(ptdev->base.dev) < 0);
++
+ 	/* Call drm_dev_unplug() so any access to HW blocks happening after
+ 	 * that point get rejected.
+ 	 */
+@@ -74,8 +76,6 @@ void panthor_device_unplug(struct panthor_device *ptdev)
+ 	 */
+ 	mutex_unlock(&ptdev->unplug.lock);
  
- 	mutex_lock(&sched->lock);
- 	if (sched->pm.has_ref) {
+-	drm_WARN_ON(&ptdev->base, pm_runtime_get_sync(ptdev->base.dev) < 0);
+-
+ 	/* Now, try to cleanly shutdown the GPU before the device resources
+ 	 * get reclaimed.
+ 	 */
 -- 
 2.51.0
 
