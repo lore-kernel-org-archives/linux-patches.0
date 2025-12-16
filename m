@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47F63358B0;
-	Tue, 16 Dec 2025 11:18:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6FD33D6C1;
+	Tue, 16 Dec 2025 11:18:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765883918; cv=none; b=BpDIROFEtchnRQzPoY+FaiDmBybv/J7NSKNhivxsjhdoAux2e01vkvQagm4bc/kdd8j4gBRnINB5zIJUBwUoXpr/sDQgvyYx1btZGLkDYaGSdb5zn2zfChu6nO7V+5YSDZ/eZeBU3IoQbON2zHexr8AdCPnYmS5tRSWcHvy4kK8=
+	t=1765883921; cv=none; b=r0E+6cUPURFlqgj66c2R6e9aSSWQrTliaGYr2H2+FjObirAmN5AXW5pKqsKIUDqwwZ4d4lJ4R/qR1vzO4fAS8ESUCwd31pCzDEDh5+PjZum0HEPxUJ0l2w1dUzowYmEVrdeab4Egnb+x1hoPp+D6oa8JlRdYTPwTLMInvFAyUQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765883918; c=relaxed/simple;
-	bh=RU5jHjNsplbT3KXwJBKCoOy9FklilujuUAyvv6KAgPw=;
+	s=arc-20240116; t=1765883921; c=relaxed/simple;
+	bh=rTjK5KNx2UjnKJRqDFdgyqgbEOJtJncr0oZjwPyZgME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LGAxZBv48ZZp0ng+Fbrq7en5ZEjCz0j+FxhOIEFxtaXI5K641FiDl5/8tZRddvsPYvwDKMB8fbjLB1/qV2C65DXHFwB5V2ZhBsqT+Tv5WUigllfuHxbROu3aq56k4YzSZWfSp1fmhYnEpxMlKT1IzttADeHy+gZ6bV2NRJjjLmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRtqtRkU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YD8d0ZbbRIw/m87R/jq1b0Vp7EXwsKU0VWAzkr6QSZRR/woItE6pKv4C4OQfZ9EeDbQCh3hw0E6zPnN7dyuBzrQsrkca7e2/RidVJiDUAggdov/LUuXOrH1wG5p2hyyQy9c+58AizRylorlLW7CkyfrKdWIM4jEwntMvMdv6M94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OximJOHC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRtqtRkU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09463C4CEF1;
-	Tue, 16 Dec 2025 11:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OximJOHC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C016C4CEF1;
+	Tue, 16 Dec 2025 11:18:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765883918;
-	bh=RU5jHjNsplbT3KXwJBKCoOy9FklilujuUAyvv6KAgPw=;
+	s=korg; t=1765883921;
+	bh=rTjK5KNx2UjnKJRqDFdgyqgbEOJtJncr0oZjwPyZgME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRtqtRkUDngJ25Rz7z7GRK4CFP7hEQ/wFRCxqg3mCyCD0A0DDejc529jZzaB70rhp
-	 jxO1UFHeo+OiV1BgDsbsZOj8NpMWeithe2zabux6/PWKPpceJWuv6rkIEnyn/qt2C0
-	 lbCUEfWX8Kcu+AXIsAa8ERJ8uTSnojEYO3FYb2eI=
+	b=OximJOHC8zGZiZJe8D1Obzp5t+VXkZY91faVrK5UBl6poNMlW3QpEBm5IFDUGG5g/
+	 E+8eGABryZIeWobKzyknsec1He3bcR+1JR09WhOzhqLRaCA9WwPBArqA/M8FxKi5De
+	 jHw/LJvwlcWKNYmGG3Um7IcBrynTg3wHxI1yCugw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7a2ba6b7b66340cff225@syzkaller.appspotmail.com,
-	Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>,
+	syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com,
+	Sidharth Seela <sidharthseela@gmail.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/354] ntfs3: fix uninit memory after failed mi_read in mi_format_new
-Date: Tue, 16 Dec 2025 12:10:05 +0100
-Message-ID: <20251216111322.295188376@linuxfoundation.org>
+Subject: [PATCH 6.12 039/354] ntfs3: Fix uninit buffer allocated by __getname()
+Date: Tue, 16 Dec 2025 12:10:06 +0100
+Message-ID: <20251216111322.331078240@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -46,59 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+From: Sidharth Seela <sidharthseela@gmail.com>
 
-[ Upstream commit 73e6b9dacf72a1e7a4265eacca46f8f33e0997d6 ]
+[ Upstream commit 9948dcb2f7b5a1bf8e8710eafaf6016e00be3ad6 ]
 
-Fix a KMSAN un-init bug found by syzkaller.
+Fix uninit errors caused after buffer allocation given to 'de'; by
+initializing the buffer with zeroes. The fix was found by using KMSAN.
 
-ntfs_get_bh() expects a buffer from sb_getblk(), that buffer may not be
-uptodate. We do not bring the buffer uptodate before setting it as
-uptodate. If the buffer were to not be uptodate, it could mean adding a
-buffer with un-init data to the mi record. Attempting to load that record
-will trigger KMSAN.
-
-Avoid this by setting the buffer as uptodate, if it’s not already, by
-overwriting it.
-
-Reported-by: syzbot+7a2ba6b7b66340cff225@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7a2ba6b7b66340cff225
-Tested-by: syzbot+7a2ba6b7b66340cff225@syzkaller.appspotmail.com
-Fixes: 4342306f0f0d5 ("fs/ntfs3: Add file operations and implementation")
-Signed-off-by: Raphael Pinsonneault-Thibeault <rpthibeault@gmail.com>
+Reported-by: syzbot+332bd4e9d148f11a87dc@syzkaller.appspotmail.com
+Fixes: 78ab59fee07f2 ("fs/ntfs3: Rework file operations")
+Signed-off-by: Sidharth Seela <sidharthseela@gmail.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fsntfs.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
-index 6c73e93afb478..57933576212bb 100644
---- a/fs/ntfs3/fsntfs.c
-+++ b/fs/ntfs3/fsntfs.c
-@@ -1373,7 +1373,14 @@ int ntfs_get_bh(struct ntfs_sb_info *sbi, const struct runs_tree *run, u64 vbo,
- 				}
- 				if (buffer_locked(bh))
- 					__wait_on_buffer(bh);
--				set_buffer_uptodate(bh);
-+
-+				lock_buffer(bh);
-+				if (!buffer_uptodate(bh))
-+				{
-+					memset(bh->b_data, 0, blocksize);
-+					set_buffer_uptodate(bh);
-+				}
-+				unlock_buffer(bh);
- 			} else {
- 				bh = ntfs_bread(sb, block);
- 				if (!bh) {
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 4e2629d020b75..44fbd9156a30f 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1736,6 +1736,7 @@ int ntfs_link_inode(struct inode *inode, struct dentry *dentry)
+ 	de = __getname();
+ 	if (!de)
+ 		return -ENOMEM;
++	memset(de, 0, PATH_MAX);
+ 
+ 	/* Mark rw ntfs as dirty. It will be cleared at umount. */
+ 	ntfs_set_state(sbi, NTFS_DIRTY_DIRTY);
 -- 
 2.51.0
 
