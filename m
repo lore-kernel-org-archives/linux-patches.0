@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A1133EB1A;
-	Tue, 16 Dec 2025 11:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9044139FD9;
+	Tue, 16 Dec 2025 11:29:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884596; cv=none; b=AmorBhFioqSSPEDJUVEMtZaY19rZXHhr/jYZQluvsAMT+HgCagegl6hm92MualMsQfwAwnM13JhyeZHYT2kO6AA2u/nC/w6gYH/4qrd8fkNFv69kAoZXjH+bci5qyzgYWxKWUQnpiK+pJ8ao9fpWr9hKib0Ro6GSweLU+Oxv/Ys=
+	t=1765884599; cv=none; b=ELl2woSyc8Iz7wMkdI49KzCDRzxqDbsSsPoGKLT9QgrJ2j0nttNnMoLYriLZ6BG/m9p5/J/se6Av1DQKN2ZHoyBqZ9TRzjaXNpJdQPRFN3nboylSmrqwoxDq5T6FazoeAY8K8tsinFe85YTX2S+nYVBXycJqtnhj+90nL6u6Atw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884596; c=relaxed/simple;
-	bh=OY1OuznpxEh2nq6AtVBofuF+jYtodM4Qsa+/Rkx328g=;
+	s=arc-20240116; t=1765884599; c=relaxed/simple;
+	bh=nhiq8mq81KxW0RUDVx5F4iLCwaRubqSvIqq+OCplH0o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E//fyUyt1BAuu4DBpRAJScvd1LEg1TTrPIlpF9PtMtAEfz366YZFAo1ZUVq+/Um32iuz+3Y6eWNfDBi/GN5TKOYoDxKMOwsU+9SucCHEo9H2u925jm7DIxUTAHGJFwteMmcf/TGSWC8TT38EjvnjwN02hzcBV6wBgk5PSyz7qTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrsXxRfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W986F/z2ZvXNb9wd8lH2RzO1KIDI02x7dfIdCWlpvipGMFZSJF5BMWXNv/sxuRQZg4zjY56jG241lNyARXqn/yRWic9AtDETt+JZ/hGMze1+DFWcQyusyJq+tMS1UItAtnQBaLsx8Vt1KZfZKcGwAs7au1u4zmQOKqlJgwr/BR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7klKwiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrsXxRfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88360C4CEF1;
-	Tue, 16 Dec 2025 11:29:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7klKwiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E832DC4CEF1;
+	Tue, 16 Dec 2025 11:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884596;
-	bh=OY1OuznpxEh2nq6AtVBofuF+jYtodM4Qsa+/Rkx328g=;
+	s=korg; t=1765884599;
+	bh=nhiq8mq81KxW0RUDVx5F4iLCwaRubqSvIqq+OCplH0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PrsXxRfmBpS6iPKRdQnNTR5K5UZhPlCDIrWWpCsBrmmShLsYF+5xxdrv8F4PlQmUl
-	 J9FAF6T4OMC1gYBn7J+I7EWdDUy82o41G32TfGD3gQtWe3h413wLGZUClkMKcearoN
-	 /PF/b7J9ztuAg1w5O0IK9pM/r84zfKk/sL3BuSmo=
+	b=p7klKwiLCe5FVom8TrkCthikHBvLfs08FXuaLlDcCM1zOCvUQryKQzY1APLMyw3LU
+	 UQbcMwpz9JZBwjhBJ5Vka3qljOuCg6ExNSHARwZpv1f2vgUSj1d20rZURsN/X6fdVw
+	 cfq5YS42YhU//OphSOW3rtyFPTw57hEQON9XyZuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Rosenberg <olrose55@gmail.com>,
-	Will Rosenberg <whrosenb@asu.edu>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/354] kernfs: fix memory leak of kernfs_iattrs in __kernfs_new_node
-Date: Tue, 16 Dec 2025 12:13:27 +0100
-Message-ID: <20251216111329.608256836@linuxfoundation.org>
+Subject: [PATCH 6.12 241/354] drm/amd/display: Fix logical vs bitwise bug in get_embedded_panel_info_v2_1()
+Date: Tue, 16 Dec 2025 12:13:28 +0100
+Message-ID: <20251216111329.644811605@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,49 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Will Rosenberg <whrosenb@asu.edu>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 382b1e8f30f779af8d6d33268e53df7de579ef3c ]
+[ Upstream commit 1a79482699b4d1e43948d14f0c7193dc1dcad858 ]
 
-There exists a memory leak of kernfs_iattrs contained as an element
-of kernfs_node allocated in __kernfs_new_node(). __kernfs_setattr()
-allocates kernfs_iattrs as a sub-object, and the LSM security check
-incorrectly errors out and does not free the kernfs_iattrs sub-object.
+The .H_SYNC_POLARITY and .V_SYNC_POLARITY variables are 1 bit bitfields
+of a u32.  The ATOM_HSYNC_POLARITY define is 0x2 and the
+ATOM_VSYNC_POLARITY is 0x4.  When we do a bitwise negate of 0, 2, or 4
+then the last bit is always 1 so this code always sets .H_SYNC_POLARITY
+and .V_SYNC_POLARITY to true.
 
-Make an additional error out case that properly frees kernfs_iattrs if
-security_kernfs_init_security() fails.
+This code is instead intended to check if the ATOM_HSYNC_POLARITY or
+ATOM_VSYNC_POLARITY flags are set and reverse the result.  In other
+words, it's supposed to be a logical negate instead of a bitwise negate.
 
-Fixes: e19dfdc83b60 ("kernfs: initialize security of newly created nodes")
-Co-developed-by: Oliver Rosenberg <olrose55@gmail.com>
-Signed-off-by: Oliver Rosenberg <olrose55@gmail.com>
-Signed-off-by: Will Rosenberg <whrosenb@asu.edu>
-Link: https://patch.msgid.link/20251125151332.2010687-1-whrosenb@asu.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ae79c310b1a6 ("drm/amd/display: Add DCE12 bios parser support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/kernfs/dir.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/kernfs/dir.c b/fs/kernfs/dir.c
-index 5dc90a498e75d..116ada5bc27c7 100644
---- a/fs/kernfs/dir.c
-+++ b/fs/kernfs/dir.c
-@@ -662,11 +662,14 @@ static struct kernfs_node *__kernfs_new_node(struct kernfs_root *root,
- 	if (parent) {
- 		ret = security_kernfs_init_security(parent, kn);
- 		if (ret)
--			goto err_out3;
-+			goto err_out4;
- 	}
+diff --git a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+index c9a6de110b742..af31fddb47db1 100644
+--- a/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
++++ b/drivers/gpu/drm/amd/display/dc/bios/bios_parser2.c
+@@ -1480,10 +1480,10 @@ static enum bp_result get_embedded_panel_info_v2_1(
+ 	/* not provided by VBIOS */
+ 	info->lcd_timing.misc_info.HORIZONTAL_CUT_OFF = 0;
  
- 	return kn;
+-	info->lcd_timing.misc_info.H_SYNC_POLARITY = ~(uint32_t) (lvds->lcd_timing.miscinfo
+-			& ATOM_HSYNC_POLARITY);
+-	info->lcd_timing.misc_info.V_SYNC_POLARITY = ~(uint32_t) (lvds->lcd_timing.miscinfo
+-			& ATOM_VSYNC_POLARITY);
++	info->lcd_timing.misc_info.H_SYNC_POLARITY = !(lvds->lcd_timing.miscinfo &
++						       ATOM_HSYNC_POLARITY);
++	info->lcd_timing.misc_info.V_SYNC_POLARITY = !(lvds->lcd_timing.miscinfo &
++						       ATOM_VSYNC_POLARITY);
  
-+ err_out4:
-+	simple_xattrs_free(&kn->iattr->xattrs, NULL);
-+	kmem_cache_free(kernfs_iattrs_cache, kn->iattr);
-  err_out3:
- 	spin_lock(&kernfs_idr_lock);
- 	idr_remove(&root->ino_idr, (u32)kernfs_ino(kn));
+ 	/* not provided by VBIOS */
+ 	info->lcd_timing.misc_info.VERTICAL_CUT_OFF = 0;
 -- 
 2.51.0
 
