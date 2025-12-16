@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A1A535CBB7;
-	Tue, 16 Dec 2025 12:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B11535CBC0;
+	Tue, 16 Dec 2025 12:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886788; cv=none; b=HLBKR7/257qZ48N1bxtBUmyTVUVASOXOYlROIG8EVqmcPBrkOLXzK1bZ55muColw+ikg7ciVnTw/ONsEWJFgaGs4aPFRvU2xJYKpYKI+yX6ThxRvMUq/1cXm00VOmbr5RcYbzQRBzVvok2EZhHxTKQsfEF7CVlT78YFxUXM5bcQ=
+	t=1765886791; cv=none; b=VXxmmIBUNysO0JFHI395KHWsf8g37kYsuHErEo/MoXKQmHWXtUyINAoVZkah+sp27xjM9Y1HRha86Y1Vo1JqgP39LpQV9aCfF1MsK2ctPdc9Bhp296PYRqKlAWG00N0tl/zXNXyEnlwsREkknJLccEgP95Iy4zqmoC+iBurkZ1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886788; c=relaxed/simple;
-	bh=SkBRQCB/Qhf9OBw/d9zzle+SbFRlhMtm01xBEEom5nc=;
+	s=arc-20240116; t=1765886791; c=relaxed/simple;
+	bh=vZOCk/GQgnG1oQSkPglkCD8ixAta5KkD1VLFwVNcCV4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DqdajqTgqQWgHaVTsaTCijyxnEv+EJeYMkUDu+aR+FMu+TML0CMRT9op0fqdCjEZupp9JXh0D5sc6lTUgtTCLR30CfodXlskKjdYYfxw3Z4JQ430M0pMDWCNdbBr2jZLKKqLBXj6zxVF7KgFUTgGDYnv3yT4hG8++iQKPeKC5TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhfBfgwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kdj2rwo2cTRbWCav/nsBAQUewPJEME3y+Kzs0XPIwbxVZglw1HBzl4ZKjMY/VSRG6WYGbaU/Qr5hPA0yQzFlIcdb6dviQwHMBoYrwTVhKiLczP2V6JBu9IFGjG1lv8h5ODzkd2YyU7VSN7ZaZG4VhdnwJAcURuNJpniTfuV5EZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rufk3Z9Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhfBfgwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF332C4CEF1;
-	Tue, 16 Dec 2025 12:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rufk3Z9Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02DA6C4CEF1;
+	Tue, 16 Dec 2025 12:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886788;
-	bh=SkBRQCB/Qhf9OBw/d9zzle+SbFRlhMtm01xBEEom5nc=;
+	s=korg; t=1765886791;
+	bh=vZOCk/GQgnG1oQSkPglkCD8ixAta5KkD1VLFwVNcCV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhfBfgwdrZwg4dcoyU6zAhssYI5/uvZNXKYFCXp6/b95GKeOFLNTtEKTLrAWfOReC
-	 Dxr/euzGBoBe6AHVKVJXcZJc/tyFfoR37t7HtITS1rY0tV+EZL3KCdaVDCQnFwZOKg
-	 wDDswmtvDuEToSIah1k8bv4i9Dm/xoMfLeCn9pj0=
+	b=Rufk3Z9ZNcz0QgBVRYKJGY+KB7HWEPD9Oz0Hn84ckda83nbZvzFRQAUk27EglXjL9
+	 h+dku2PknBQWfnvNskMYPttevJMWGXLD6A3eNU1FCJ760Hzpu3RN4Usp1YvHN8Fnkj
+	 QkCniFU/XwHBZRuAhT7ePHx3wBFG/PQrUt5++OBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Joe Lawrence <joe.lawrence@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 025/614] pinctrl: qcom: glymur: Fix the gpio and egpio pin functions
-Date: Tue, 16 Dec 2025 12:06:32 +0100
-Message-ID: <20251216111402.218065527@linuxfoundation.org>
+Subject: [PATCH 6.18 034/614] objtool: Fix weak symbol detection
+Date: Tue, 16 Dec 2025 12:06:41 +0100
+Message-ID: <20251216111402.545103740@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111401.280873349@linuxfoundation.org>
 References: <20251216111401.280873349@linuxfoundation.org>
@@ -53,46 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit e73fda2dcb0bad6650e654556c5242b773707257 ]
+[ Upstream commit 72567c630d32bc31f671977f78228c80937ed80e ]
 
-Mark the gpio/egpio as GPIO specific pin functions, othewise
-the pin muxing generic framework will complain about the gpio
-being already requested by a different owner.
+find_symbol_hole_containing() fails to find a symbol hole (aka stripped
+weak symbol) if its section has no symbols before the hole.  This breaks
+weak symbol detection if -ffunction-sections is enabled.
 
-Fixes: 87ebcd8baebf ("pinctrl: qcom: Add glymur pinctrl driver")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fix that by allowing the interval tree to contain section symbols, which
+are always at offset zero for a given section.
+
+Fixes a bunch of (-ffunction-sections) warnings like:
+
+  vmlinux.o: warning: objtool: .text.__x64_sys_io_setup+0x10: unreachable instruction
+
+Fixes: 4adb23686795 ("objtool: Ignore extra-symbol code")
+Acked-by: Petr Mladek <pmladek@suse.com>
+Tested-by: Joe Lawrence <joe.lawrence@redhat.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/qcom/pinctrl-glymur.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/objtool/elf.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
-index 9781e7fcb3a11..335005084b6bc 100644
---- a/drivers/pinctrl/qcom/pinctrl-glymur.c
-+++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
-@@ -1316,7 +1316,7 @@ static const char *const wcn_sw_ctrl_groups[] = {
+diff --git a/tools/objtool/elf.c b/tools/objtool/elf.c
+index ca5d77db692a2..9cb51fcde7986 100644
+--- a/tools/objtool/elf.c
++++ b/tools/objtool/elf.c
+@@ -108,7 +108,7 @@ struct symbol_hole {
  };
  
- static const struct pinfunction glymur_functions[] = {
--	MSM_PIN_FUNCTION(gpio),
-+	MSM_GPIO_PIN_FUNCTION(gpio),
- 	MSM_PIN_FUNCTION(resout_gpio_n),
- 	MSM_PIN_FUNCTION(aoss_cti),
- 	MSM_PIN_FUNCTION(asc_cci),
-@@ -1342,7 +1342,7 @@ static const struct pinfunction glymur_functions[] = {
- 	MSM_PIN_FUNCTION(edp0_hot),
- 	MSM_PIN_FUNCTION(edp0_lcd),
- 	MSM_PIN_FUNCTION(edp1_lcd),
--	MSM_PIN_FUNCTION(egpio),
-+	MSM_GPIO_PIN_FUNCTION(egpio),
- 	MSM_PIN_FUNCTION(eusb_ac_en),
- 	MSM_PIN_FUNCTION(gcc_gp1),
- 	MSM_PIN_FUNCTION(gcc_gp2),
+ /*
+- * Find !section symbol where @offset is after it.
++ * Find the last symbol before @offset.
+  */
+ static int symbol_hole_by_offset(const void *key, const struct rb_node *node)
+ {
+@@ -119,8 +119,7 @@ static int symbol_hole_by_offset(const void *key, const struct rb_node *node)
+ 		return -1;
+ 
+ 	if (sh->key >= s->offset + s->len) {
+-		if (s->type != STT_SECTION)
+-			sh->sym = s;
++		sh->sym = s;
+ 		return 1;
+ 	}
+ 
+@@ -412,7 +411,8 @@ static void elf_add_symbol(struct elf *elf, struct symbol *sym)
+ 	sym->len = sym->sym.st_size;
+ 
+ 	__sym_for_each(iter, &sym->sec->symbol_tree, sym->offset, sym->offset) {
+-		if (iter->offset == sym->offset && iter->type == sym->type)
++		if (iter->offset == sym->offset && iter->type == sym->type &&
++		    iter->len == sym->len)
+ 			iter->alias = sym;
+ 	}
+ 
 -- 
 2.51.0
 
