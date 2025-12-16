@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CF02E54AA;
-	Tue, 16 Dec 2025 11:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF613233EE;
+	Tue, 16 Dec 2025 11:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884529; cv=none; b=r1vbFp7bQpMRa1i2RWeeJBaef6ld+e/ODU+JxyQW/yE4MhDeaROA0Bn2j0Dyt94eB5k4d3uj3IocubaJBvMK/y/osni1qFAzhlcyC83I1kPsOKK8MLFxbs+FeSKelyZTAqgk42eZ0G9HpWolSGYM6lFGaIb3fU3tJlyPQFnnqwA=
+	t=1765884532; cv=none; b=Ygwh95AWRykJp/1r8MDOQ93d44hUvurgxE9cj/n8+aAed4F71eoKIr2a4CO7/8J/Xx2lDYsWgyBrqwOV127zcUnM0ouXll4YDtJr1Hmzj1cphFaPUclxsNYPzud1jFlD8jRNy756FDV9yz/rqJlQ9NhJ8O4+imBPYOyxMg5fVFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884529; c=relaxed/simple;
-	bh=BQDw6ooMIcBiojwXsq2SbDAu8IbNH5A30SnzJreYfgA=;
+	s=arc-20240116; t=1765884532; c=relaxed/simple;
+	bh=wCbht/00n0WYcxdOCLW7kM5vwm1KhzyPAL50c4d7xkA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V989kv8Ssi3cOctc6BGyfkXPJPXEOf9DmuOTmXYjQ1U27PGtRsRwAVmBNR+k7uSSCTQYyOsIPeYJj++w3/QbGfa6pU9INZmhs78XrxZYz+diY0dpuszVyaK1JHJk0P8kghQzabU6BlFpaAJMJ8Ov/rL3nD44L3R1RuP24wO6D68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCPcBQGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pCbhlFfwR3/UqKgKQZK++GkSYIaL5o/uRZuHQJ8j27cXnm5pECyK+ayUjPpjfzHMXg6z4WduzId3Ylaiw8oryetPmaKjtGmbzjfua+YKZiEzzfjXhcIfe7Wvl4EAMQiujx1WThqhxA4reg2gUsX+Zfm/yRiIPskn8nL9OCW7D30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rreGp+AC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCPcBQGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917FDC4CEF1;
-	Tue, 16 Dec 2025 11:28:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rreGp+AC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B79C4CEF1;
+	Tue, 16 Dec 2025 11:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884529;
-	bh=BQDw6ooMIcBiojwXsq2SbDAu8IbNH5A30SnzJreYfgA=;
+	s=korg; t=1765884532;
+	bh=wCbht/00n0WYcxdOCLW7kM5vwm1KhzyPAL50c4d7xkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eCPcBQGkMaDC3P/oT0+VKsvCWhyJFCCrD0PP6orMTKHOWZgZs1VlFz2zpjdz45HjP
-	 F0Ry+nrXzEjbMqO4992aWuzO3+9W1hsn0oDZu25vMj7wjEiMWdIZKOhcYLfSWMswlS
-	 ID2n6z/lRabuVsbwvjq0q8Z9MzFV63ZS6GKuwh4o=
+	b=rreGp+ACHkTfL8UDdL+jmv0JhYQ/9anfBuJAFUaS3r2Vk+9n9nJKe1elp2092dYwo
+	 mMIDl6egXcK1NQkZg9lLVU/rmnIr/rjAOCKwDn1N65L0zimNZVyEzxmitrgsq+ToBe
+	 J/D8IVsqazmy7hdS0hWbgP/3CjnVuj5OfGoNDG8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Timur Tabi <ttabi@nvidia.com>,
-	Lyude Paul <lyude@redhat.com>,
+	David Gow <davidgow@google.com>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 222/354] drm/nouveau: restrict the flush page to a 32-bit address
-Date: Tue, 16 Dec 2025 12:13:09 +0100
-Message-ID: <20251216111328.961413497@linuxfoundation.org>
+Subject: [PATCH 6.12 223/354] um: Dont rename vmap to kernel_vmap
+Date: Tue, 16 Dec 2025 12:13:10 +0100
+Message-ID: <20251216111328.997422081@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,53 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Timur Tabi <ttabi@nvidia.com>
+From: David Gow <davidgow@google.com>
 
-[ Upstream commit 04d98b3452331fa53ec3b698b66273af6ef73288 ]
+[ Upstream commit a74b6c0e53a6df8e8a096b50c06c4f872906368a ]
 
-The flush page DMA address is stored in a special register that is not
-associated with the GPU's standard DMA range.  For example, on Turing,
-the GPU's MMU can handle 47-bit addresses, but the flush page address
-register is limited to 40 bits.
+In order to work around the existence of a vmap symbol in libpcap, the
+UML makefile unconditionally redefines vmap to kernel_vmap. However,
+this not only affects the actual vmap symbol, but also anything else
+named vmap, including a number of struct members in DRM.
 
-At the point during device initialization when the flush page is
-allocated, the DMA mask is still at its default of 32 bits.  So even
-though it's unlikely that the flush page could exist above a 40-bit
-address, the dma_map_page() call could fail, e.g. if IOMMU is disabled
-and the address is above 32 bits.  The simplest way to achieve all
-constraints is to allocate the page in the DMA32 zone.  Since the flush
-page is literally just a page, this is an acceptable limitation.  The
-alternative is to temporarily set the DMA mask to 40 (or 52 for Hopper
-and later) bits, but that could have unforseen side effects.
+This would not be too much of a problem, since all uses are also
+updated, except we now have Rust DRM bindings, which expect the
+corresponding Rust structs to have 'vmap' names. Since the redefinition
+applies in bindgen, but not to Rust code, we end up with errors such as:
 
-In situations where the flush page is allocated above 32 bits and IOMMU
-is disabled, you will get an error like this:
+error[E0560]: struct `drm_gem_object_funcs` has no fields named `vmap`
+  --> rust/kernel/drm/gem/mod.rs:210:9
 
-nouveau 0000:65:00.0: DMA addr 0x0000000107c56000+4096 overflow (mask ffffffff, bus limit 0).
+Since libpcap support was removed in commit 12b8e7e69aa7 ("um: Remove
+obsolete pcap driver"), remove the, now unnecessary, define as well.
 
-Fixes: 5728d064190e ("drm/nouveau/fb: handle sysmem flush page from common code")
-Signed-off-by: Timur Tabi <ttabi@nvidia.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patch.msgid.link/20251113230323.1271726-1-ttabi@nvidia.com
+We also take this opportunity to update the comment.
+
+Signed-off-by: David Gow <davidgow@google.com>
+Acked-by: Miguel Ojeda <ojeda@kernel.org>
+Link: https://patch.msgid.link/20251122083213.3996586-1-davidgow@google.com
+Fixes: 12b8e7e69aa7 ("um: Remove obsolete pcap driver")
+[adjust commmit message a bit]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/um/Makefile | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c
-index 8a286a9349ac6..7ce1b65e2c1c2 100644
---- a/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/subdev/fb/base.c
-@@ -279,7 +279,7 @@ nvkm_fb_ctor(const struct nvkm_fb_func *func, struct nvkm_device *device,
- 	mutex_init(&fb->tags.mutex);
+diff --git a/arch/um/Makefile b/arch/um/Makefile
+index 3317d87e20920..f3f8c3ab4bfb6 100644
+--- a/arch/um/Makefile
++++ b/arch/um/Makefile
+@@ -46,19 +46,17 @@ ARCH_INCLUDE	:= -I$(srctree)/$(SHARED_HEADERS)
+ ARCH_INCLUDE	+= -I$(srctree)/$(HOST_DIR)/um/shared
+ KBUILD_CPPFLAGS += -I$(srctree)/$(HOST_DIR)/um
  
- 	if (func->sysmem.flush_page_init) {
--		fb->sysmem.flush_page = alloc_page(GFP_KERNEL | __GFP_ZERO);
-+		fb->sysmem.flush_page = alloc_page(GFP_KERNEL | GFP_DMA32 | __GFP_ZERO);
- 		if (!fb->sysmem.flush_page)
- 			return -ENOMEM;
+-# -Dvmap=kernel_vmap prevents anything from referencing the libpcap.o symbol so
+-# named - it's a common symbol in libpcap, so we get a binary which crashes.
+-#
+-# Same things for in6addr_loopback and mktime - found in libc. For these two we
+-# only get link-time error, luckily.
++# -Dstrrchr=kernel_strrchr (as well as the various in6addr symbols) prevents
++#  anything from referencing
++# libc symbols with the same name, which can cause a linker error.
+ #
+ # -Dlongjmp=kernel_longjmp prevents anything from referencing the libpthread.a
+ # embedded copy of longjmp, same thing for setjmp.
+ #
+-# These apply to USER_CFLAGS to.
++# These apply to USER_CFLAGS too.
  
+ KBUILD_CFLAGS += $(CFLAGS) $(CFLAGS-y) -D__arch_um__ \
+-	$(ARCH_INCLUDE) $(MODE_INCLUDE) -Dvmap=kernel_vmap	\
++	$(ARCH_INCLUDE) $(MODE_INCLUDE)	\
+ 	-Dlongjmp=kernel_longjmp -Dsetjmp=kernel_setjmp \
+ 	-Din6addr_loopback=kernel_in6addr_loopback \
+ 	-Din6addr_any=kernel_in6addr_any -Dstrrchr=kernel_strrchr
 -- 
 2.51.0
 
