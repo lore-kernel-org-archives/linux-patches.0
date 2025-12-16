@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F3C33E340;
-	Tue, 16 Dec 2025 11:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1C033DEE1;
+	Tue, 16 Dec 2025 11:21:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765884073; cv=none; b=QFioUAIMmpeXvVmJ4jRpU3DLHTActCknRWCDo34TzEjQS5e8gA826H5c92bahZxXJVZEK6Wp2RU/cFQ0H5WaC3DF1NH7og/S4KPhsUgJKNTyaw//DK1qqPrJOuImAOtFoCIKUowKwnn9wnImbAu5jEMnwXMqg+NYQ8C2Kd1toTg=
+	t=1765884076; cv=none; b=DQf79aL8TShcQfuzaTOYvdnPbxgsC6uKUneQ60rktQcx7YvAsLjCAaYYCp75D0OApusKK2bm5RU6z6o+UajJ9b0tLAxyyXm2xpDaShJgSBuwuxCJWVGyC0I4ag0nfTy51dUGKYI9aQdSUW1MTkUjZhUxoiJ57NSOCB2SffK4oa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765884073; c=relaxed/simple;
-	bh=Xnxj67nfQu8/lZ/oR0YFH5QkCbUSiRIDzHXigPJekgc=;
+	s=arc-20240116; t=1765884076; c=relaxed/simple;
+	bh=x1hLFdk01xDRlsK4K0aMY1KOWQ6wkUjL8RJeEdGyTDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fY6I+zC1OD8Casq4lpF7PxKh2rUBFyAQej1Y5OnDl70R0pNLnBo+UExoPjvUO3K4w42cfGbtchf8ZF/Uj35FJ06GsZspnWQzIWFAoofVd70Hw15HLnQ2L/sfOGF0MQeNEBcX1AOUC3OlgXvAlCRbQ6l8le+JD5YTV6tHgFcXTNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H3yjlk1D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJBhrdO5xUd1yGBRtiV22dhLj1Qi8yUnq1mvbXG7BtMUUFxqhae12blIAHkpyo0URznI/qO5VghBG/DcQ1QQgAsZTOsHpmn97R/kmbHsxQZCFw/zLSA/A2rD5EwQRmvMHEFcWZmxEQ47nxhicWayIvwnzTqdCzjRTw58Zt2Bcqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Su40Wp90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H3yjlk1D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673D0C19422;
-	Tue, 16 Dec 2025 11:21:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Su40Wp90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70319C4CEF5;
+	Tue, 16 Dec 2025 11:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765884072;
-	bh=Xnxj67nfQu8/lZ/oR0YFH5QkCbUSiRIDzHXigPJekgc=;
+	s=korg; t=1765884075;
+	bh=x1hLFdk01xDRlsK4K0aMY1KOWQ6wkUjL8RJeEdGyTDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3yjlk1DGW2dyvcklr0J+70Ky+THul504GGlQfg2HbEK80DZA8zdGoJwRtSHRerz2
-	 Ta7TtDewufNW6giR28dEs5m+FAy8OVHuXpNSfiTrWmQqtXQRETDhVJTyzKIOJnWXED
-	 A1oPXIQQcsl8Ii+/QILwjNR8w/IkmgcLcGyjgS9s=
+	b=Su40Wp90oxNdrr5l6AFMqXeZkePU9+m7vPpPNylLIW0LhzF8FA7X9fG6xdah1jlK0
+	 884IqFVqUULZmsNXYgE3zohQm3RcPCHQcaEkhuFIwUN9BIU9vq+aPKfpxyq9IH4Xni
+	 bMsjqVIlSLhaTlF0XOG8KBnIqm4wBWlIT2y+/F4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haotian Zhang <vulab@iscas.ac.cn>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Namhyung Kim <Namhyung@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 084/354] mtd: rawnand: lpc32xx_slc: fix GPIO descriptor leak on probe error and remove
-Date: Tue, 16 Dec 2025 12:10:51 +0100
-Message-ID: <20251216111323.967009308@linuxfoundation.org>
+Subject: [PATCH 6.12 085/354] perf: Remove get_perf_callchain() init_nr argument
+Date: Tue, 16 Dec 2025 12:10:52 +0100
+Message-ID: <20251216111324.002732154@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111320.896758933@linuxfoundation.org>
 References: <20251216111320.896758933@linuxfoundation.org>
@@ -51,47 +54,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haotian Zhang <vulab@iscas.ac.cn>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit cdf44f1add4ec9ee80569d5a43e6e9bba0d74c7a ]
+[ Upstream commit e649bcda25b5ae1a30a182cc450f928a0b282c93 ]
 
-The driver calls gpiod_get_optional() in the probe function but
-never calls gpiod_put() in the remove function or in the probe
-error path. This leads to a GPIO descriptor resource leak.
-The lpc32xx_mlc.c driver in the same directory handles this
-correctly by calling gpiod_put() on both paths.
+The 'init_nr' argument has double duty: it's used to initialize both the
+number of contexts and the number of stack entries.  That's confusing
+and the callers always pass zero anyway.  Hard code the zero.
 
-Add gpiod_put() in the remove function and in the probe error path
-to fix the resource leak.
-
-Fixes: 6b923db2867c ("mtd: rawnand: lpc32xx_slc: switch to using gpiod API")
-Signed-off-by: Haotian Zhang <vulab@iscas.ac.cn>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Namhyung Kim <Namhyung@kernel.org>
+Acked-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/r/20250820180428.259565081@kernel.org
+Stable-dep-of: 23f852daa4ba ("bpf: Fix stackmap overflow check in __bpf_get_stackid()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/lpc32xx_slc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/perf_event.h |  2 +-
+ kernel/bpf/stackmap.c      |  4 ++--
+ kernel/events/callchain.c  | 12 ++++++------
+ kernel/events/core.c       |  2 +-
+ 4 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/lpc32xx_slc.c b/drivers/mtd/nand/raw/lpc32xx_slc.c
-index ade971e4cc3b2..09d6c4f90d85a 100644
---- a/drivers/mtd/nand/raw/lpc32xx_slc.c
-+++ b/drivers/mtd/nand/raw/lpc32xx_slc.c
-@@ -937,6 +937,7 @@ static int lpc32xx_nand_probe(struct platform_device *pdev)
- 	dma_release_channel(host->dma_chan);
- enable_wp:
- 	lpc32xx_wp_enable(host);
-+	gpiod_put(host->wp_gpio);
+diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+index ce64b4b937f06..c2bd4bc45a27b 100644
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -1602,7 +1602,7 @@ DECLARE_PER_CPU(struct perf_callchain_entry, perf_callchain_entry);
+ extern void perf_callchain_user(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs);
+ extern void perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *regs);
+ extern struct perf_callchain_entry *
+-get_perf_callchain(struct pt_regs *regs, u32 init_nr, bool kernel, bool user,
++get_perf_callchain(struct pt_regs *regs, bool kernel, bool user,
+ 		   u32 max_stack, bool crosstask, bool add_mark);
+ extern int get_callchain_buffers(int max_stack);
+ extern void put_callchain_buffers(void);
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index 3615c06b7dfa9..ec3a57a5fba1f 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -314,7 +314,7 @@ BPF_CALL_3(bpf_get_stackid, struct pt_regs *, regs, struct bpf_map *, map,
+ 	if (max_depth > sysctl_perf_event_max_stack)
+ 		max_depth = sysctl_perf_event_max_stack;
  
- 	return res;
+-	trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
++	trace = get_perf_callchain(regs, kernel, user, max_depth,
+ 				   false, false);
+ 
+ 	if (unlikely(!trace))
+@@ -451,7 +451,7 @@ static long __bpf_get_stack(struct pt_regs *regs, struct task_struct *task,
+ 	else if (kernel && task)
+ 		trace = get_callchain_entry_for_task(task, max_depth);
+ 	else
+-		trace = get_perf_callchain(regs, 0, kernel, user, max_depth,
++		trace = get_perf_callchain(regs, kernel, user, max_depth,
+ 					   crosstask, false);
+ 
+ 	if (unlikely(!trace) || trace->nr < skip) {
+diff --git a/kernel/events/callchain.c b/kernel/events/callchain.c
+index 49d87e6db553f..677901f456a94 100644
+--- a/kernel/events/callchain.c
++++ b/kernel/events/callchain.c
+@@ -216,7 +216,7 @@ static void fixup_uretprobe_trampoline_entries(struct perf_callchain_entry *entr
  }
-@@ -962,6 +963,7 @@ static void lpc32xx_nand_remove(struct platform_device *pdev)
- 	writel(tmp, SLC_CTRL(host->io_base));
  
- 	lpc32xx_wp_enable(host);
-+	gpiod_put(host->wp_gpio);
+ struct perf_callchain_entry *
+-get_perf_callchain(struct pt_regs *regs, u32 init_nr, bool kernel, bool user,
++get_perf_callchain(struct pt_regs *regs, bool kernel, bool user,
+ 		   u32 max_stack, bool crosstask, bool add_mark)
+ {
+ 	struct perf_callchain_entry *entry;
+@@ -231,11 +231,11 @@ get_perf_callchain(struct pt_regs *regs, u32 init_nr, bool kernel, bool user,
+ 	if (!entry)
+ 		return NULL;
+ 
+-	ctx.entry     = entry;
+-	ctx.max_stack = max_stack;
+-	ctx.nr	      = entry->nr = init_nr;
+-	ctx.contexts       = 0;
+-	ctx.contexts_maxed = false;
++	ctx.entry		= entry;
++	ctx.max_stack		= max_stack;
++	ctx.nr			= entry->nr = 0;
++	ctx.contexts		= 0;
++	ctx.contexts_maxed	= false;
+ 
+ 	if (kernel && !user_mode(regs)) {
+ 		if (add_mark)
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index d6a86d8e9e59b..6bc8b84f12156 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7860,7 +7860,7 @@ perf_callchain(struct perf_event *event, struct pt_regs *regs)
+ 	if (!kernel && !user)
+ 		return &__empty_callchain;
+ 
+-	callchain = get_perf_callchain(regs, 0, kernel, user,
++	callchain = get_perf_callchain(regs, kernel, user,
+ 				       max_stack, crosstask, true);
+ 	return callchain ?: &__empty_callchain;
  }
- 
- static int lpc32xx_nand_resume(struct platform_device *pdev)
 -- 
 2.51.0
 
