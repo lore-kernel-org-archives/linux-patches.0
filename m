@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1823A3451BF;
-	Tue, 16 Dec 2025 11:54:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6D03451BA;
+	Tue, 16 Dec 2025 11:54:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1765886085; cv=none; b=GsImNayLVYQl6cRCyB6+5Mvsn+bznEZZgxHiuo9XUySTjBbyX79NFuJNLJ4CcgLbMREvRmG8f+H+J73zzi4Kq7mTIHgF9PiYYtg2UBxWAe1Tvsbms/niFrkPCsYN1oyoqFmK93f4IUHmkOcHaMLmbdzFnryMhElnLpJckY8nLpA=
+	t=1765886088; cv=none; b=MfVoTeUzmEq62VCjjTuJXEcxaBXcbLkS8QD9DOr5CG6pM2bc+NmAebmOYJHndmHEN9PY94n/u5LtpPh8HvOdboZgSfsMXI5lZLDgBBioM6rf/fbbA6HjXiqeO+yTEiXjqqtf0aD9Gm39YTi1enCXAKeqMxKmNArGTxlswoDixaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1765886085; c=relaxed/simple;
-	bh=l1S1Vpfuw40NMHSkHrEc48IDY6KIYSjc8uUu6Q1HgIQ=;
+	s=arc-20240116; t=1765886088; c=relaxed/simple;
+	bh=duwXP/iEnGDM8uPqsR3Po7pueXK78VvgjUvqFnup3FE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=be3QwmdsZkQLVi01dMwwqqHt8i28Nx2P3w+Iy+qkjaUYcWRz6XUnZ6FNp1UtnXs6F865Pslcxk1T7uI5Zx7rv4HGuYp0H3caxoOoR+S56cf6hhQMweDmc7V+9mE+quFmhWHcuxa3X2dsbyN4mra71aUb23lSs45b8gCJM1KtaDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eri1zfc7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sBhiErLQ2KExcmHKCVK7rz6TKFCUB0/Yuh1cmgM+jkuMOuAuOGqWNg4yS3JQoMAZgvN3Uh4Dh57Mg5vZ+qi/6USrlCyA9ecniGgsE6L3uwGgSzh2uqo+vl91eso64i5mCU7OLZqYrUSLDgUrKpwkvGB5djrkdXNFv1jFGok8k/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yfs5vFSE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eri1zfc7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8458DC4CEF1;
-	Tue, 16 Dec 2025 11:54:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yfs5vFSE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5EEFC4CEF1;
+	Tue, 16 Dec 2025 11:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1765886084;
-	bh=l1S1Vpfuw40NMHSkHrEc48IDY6KIYSjc8uUu6Q1HgIQ=;
+	s=korg; t=1765886088;
+	bh=duwXP/iEnGDM8uPqsR3Po7pueXK78VvgjUvqFnup3FE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eri1zfc7a0v7g9yERtp8JKCkB/tj6OGTm3ze2RO8P56tXH3uoBd3s5zVnb9rZLT57
-	 6yd1J6JkzIFe5iDFm7iH4Puvrh/Dao8qtZGD04Y86xRKUPdG8b9yyL37+0ACpN0kOu
-	 yKoFL68M8Hlur+0wPqp9xHgIoCOItfkpCRcRhw+s=
+	b=Yfs5vFSE5LTxYLaUG+I1D2bIc5GYXxEjuZFo2yFLa7xukqr+mUmEZrw5dwBbwf9uW
+	 uFKlJIyliLCV97GXLJQbjTfeEETlhSXm1uLPtyy0Lm0k4B5O2ByawhXNEgmico4GN2
+	 C1QfANJmHnxShvlcxEr3du3Tt3Cuj84b3PHl0f3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
 	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Ben Greear <greearb@candelatech.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.17 333/507] wifi: mt76: mt7996: fix using wrong phy to start in mt7996_mac_restart()
-Date: Tue, 16 Dec 2025 12:12:54 +0100
-Message-ID: <20251216111357.529128454@linuxfoundation.org>
+Subject: [PATCH 6.17 334/507] wifi: mt76: mt7996: grab mt76 mutex in mt7996_mac_sta_event()
+Date: Tue, 16 Dec 2025 12:12:55 +0100
+Message-ID: <20251216111357.564801081@linuxfoundation.org>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20251216111345.522190956@linuxfoundation.org>
 References: <20251216111345.522190956@linuxfoundation.org>
@@ -52,35 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit f1e9f369ae42ee433836b24467e645192d046a51 ]
+[ Upstream commit 5a4bcba26e9fbea87507a81ad891e70bb525014f ]
 
-Pass the correct mt7996_phy to mt7996_run().
+Grab mt76 mutex in mt7996_mac_sta_event routine in order to rely on
+mt76_dereference() utility macro.
 
-Fixes: 0a5df0ec47f7 ("wifi: mt76: mt7996: remove redundant per-phy mac80211 calls during restart")
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Acked-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20251106064203.1000505-11-shayne.chen@mediatek.com
+Fixes: ecd72f9695e7e ("wifi: mt76: mt7996: Support MLO in mt7996_mac_sta_event()")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Tested-by: Ben Greear <greearb@candelatech.com>
+Link: https://patch.msgid.link/20251114-mt76-fix-missing-mtx-v1-1-259ebf11f654@kernel.org
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/main.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 30e2ef1404b90..b0092794f37c9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1894,7 +1894,7 @@ mt7996_mac_restart(struct mt7996_dev *dev)
- 		if (!test_bit(MT76_STATE_RUNNING, &phy->mt76->state))
- 			continue;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/main.c b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+index 14e90ecf925e1..04b1d5f871376 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/main.c
+@@ -1140,12 +1140,15 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 	unsigned long links = sta->valid_links;
+ 	struct ieee80211_link_sta *link_sta;
+ 	unsigned int link_id;
++	int err = 0;
++
++	mutex_lock(&dev->mt76.mutex);
  
--		ret = mt7996_run(&dev->phy);
-+		ret = mt7996_run(phy);
- 		if (ret)
- 			goto out;
+ 	for_each_sta_active_link(vif, sta, link_sta, link_id) {
+ 		struct ieee80211_bss_conf *link_conf;
+ 		struct mt7996_sta_link *msta_link;
+ 		struct mt7996_vif_link *link;
+-		int i, err;
++		int i;
+ 
+ 		link_conf = link_conf_dereference_protected(vif, link_id);
+ 		if (!link_conf)
+@@ -1165,12 +1168,12 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 						 link, msta_link,
+ 						 CONN_STATE_CONNECT, true);
+ 			if (err)
+-				return err;
++				goto unlock;
+ 
+ 			err = mt7996_mcu_add_rate_ctrl(dev, msta_link->sta, vif,
+ 						       link_id, false);
+ 			if (err)
+-				return err;
++				goto unlock;
+ 
+ 			msta_link->wcid.tx_info |= MT_WCID_TX_INFO_SET;
+ 			break;
+@@ -1179,7 +1182,7 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 						 link, msta_link,
+ 						 CONN_STATE_PORT_SECURE, false);
+ 			if (err)
+-				return err;
++				goto unlock;
+ 			break;
+ 		case MT76_STA_EVENT_DISASSOC:
+ 			for (i = 0; i < ARRAY_SIZE(msta_link->twt.flow); i++)
+@@ -1199,8 +1202,10 @@ mt7996_mac_sta_event(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 			break;
+ 		}
  	}
++unlock:
++	mutex_unlock(&dev->mt76.mutex);
+ 
+-	return 0;
++	return err;
+ }
+ 
+ static void
 -- 
 2.51.0
 
